@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, memo, useCallback } from "react";
 import { Link } from "react-router-dom";
 import WorldMap from "../components/WorldMap";
 import { artists } from "../data/artists";
@@ -6,6 +6,8 @@ import { works } from "../data/works";
 import { exhibitions } from "../data/exhibitions";
 import type { Exhibition } from "../types/Exhibition";
 import ExhibitionDetails from "../components/ExhibitionDetails";
+
+const MemoizedWorldMap = memo(WorldMap);
 
 export default function HomePage() {
   const [query, setQuery] = useState("");
@@ -24,9 +26,9 @@ export default function HomePage() {
     return () => window.removeEventListener('resize', handleResize);
   }, []);
 
-  const handleSelectExhibition = (exhibition: Exhibition) => {
+  const handleSelectExhibition = useCallback((exhibition: Exhibition) => {
     setSelectedExhibition(exhibition);
-  };
+  }, []);
 
   const filteredArtists = artists.filter((artist) =>
     artist.name.toLowerCase().includes(query.toLowerCase())
@@ -187,7 +189,7 @@ export default function HomePage() {
 
       {/* 월드맵 */}
       <div style={{ marginTop: "20px" }}>
-        <WorldMap onSelectExhibition={handleSelectExhibition} />
+        <MemoizedWorldMap onSelectExhibition={handleSelectExhibition} />
       </div>
 
       {/* 선택된 전시관 상세 슬라이드 */}
