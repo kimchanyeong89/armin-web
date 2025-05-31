@@ -1,0 +1,33 @@
+.banner-container {
+  width: 100%;
+  overflow: hidden;
+  background-color: #f5f5f5;
+}
+
+.banner-slider {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+}
+
+.banner-slide {
+  min-width: 100%;
+  box-sizing: border-box;
+  position: relative;
+}
+
+.banner-slide img {
+  width: 100%;
+  height: 300px; /* 원하는 높이로 조절 가능 */
+  object-fit: cover;
+}
+
+.banner-caption {
+  position: absolute;
+  bottom: 10px;
+  left: 20px;
+  color: white;
+  background: rgba(0, 0, 0, 0.5);
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-size: 16px;
+}
