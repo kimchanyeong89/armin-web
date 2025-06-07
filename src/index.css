@@ -24,7 +24,7 @@ a:hover {
 
 body {
   margin: 0;
-  display: flex;
+  /* display: flex; */  /* Removed to allow slide-in elements to position naturally */
   place-items: center;
   min-width: 320px;
   min-height: 100vh;
@@ -72,4 +72,20 @@ html, body, #root {
   width: 100%;
   margin: 0;
   padding: 0;
+}
+
+/* Force light mode regardless of user preference */
+@media (prefers-color-scheme: dark) {
+  :root {
+    color: #000;
+    background-color: #fff;
+  }
+  body {
+    background-color: #fff;
+    color: #000;
+  }
+}
+input, textarea, select {
+  background-color: #fff;
+  color: #000;
 }

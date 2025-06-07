@@ -3,20 +3,20 @@ import * as am5map from "@amcharts/amcharts5/map";
 import am5geodata_worldLow from "@amcharts/amcharts5-geodata/worldLow";
 import am5themes_Animated from "@amcharts/amcharts5/themes/Animated";
 import { useEffect, useRef, useState } from "react";
-import { exhibitions } from "../data/exhibitions";
+import type { Exhibition } from "../types/Exhibition";
 
 type WorldMapProps = {
   onSelectExhibition: (exhibition: any) => void;
+  exhibitions: Exhibition[];  // Expect exhibitions data as a prop
 };
 
-function WorldMap({ onSelectExhibition }: WorldMapProps) {
+function WorldMap({ onSelectExhibition, exhibitions }: WorldMapProps) {
   const chartRef = useRef<am5map.MapChart | null>(null);
   const rootRef = useRef<am5.Root | null>(null);
+  const polygonSeriesRef = useRef<am5map.MapPolygonSeries | null>(null);
   const [isGlobe, setIsGlobe] = useState(true);
 
   useEffect(() => {
-    console.log("Loaded exhibitions:", exhibitions);
-
     const root = am5.Root.new("chartdiv");
     rootRef.current = root;
     root.setThemes([am5themes_Animated.new(root)]);
@@ -31,11 +31,14 @@ function WorldMap({ onSelectExhibition }: WorldMapProps) {
     );
     chartRef.current = chart;
 
+    // Removed pointerup event that forcibly resets rotationY on pointer release.
+
     const polygonSeries = chart.series.push(
       am5map.MapPolygonSeries.new(root, {
         geoJSON: am5geodata_worldLow
       })
     );
+    polygonSeriesRef.current = polygonSeries;
 
     polygonSeries.mapPolygons.template.setAll({
       tooltipText: "{name}",
@@ -46,12 +49,7 @@ function WorldMap({ onSelectExhibition }: WorldMapProps) {
       fill: am5.color(0xffd700)
     });
 
-    polygonSeries.mapPolygons.template.events.on("click", (ev) => {
-      const countryName = (ev.target.dataItem?.dataContext as any)?.name;
-      if (countryName) {
-        alert(`Clicked: ${countryName}`);
-      }
-    });
+    // Removed country click event handler to disable clicking functionality on the map.
 
     chart.children.push(am5map.ZoomControl.new(root, {}));
 
@@ -82,7 +80,6 @@ function WorldMap({ onSelectExhibition }: WorldMapProps) {
       pin.events.on("click", (ev) => {
         const dataItem = ev.target.dataItem;
         if (dataItem) {
-          console.log("Pin clicked:", dataItem.dataContext);
           onSelectExhibition(dataItem.dataContext);
         }
       });
@@ -90,25 +87,13 @@ function WorldMap({ onSelectExhibition }: WorldMapProps) {
       return am5.Bullet.new(root, { sprite: container });
     });
 
-    // Fallback bullet: red circle in case pin image fails to load
-    pointSeries.bullets.push((root) => {
-      const circle = am5.Circle.new(root, {
-        radius: 5,
-        fill: am5.color(0xff0000),
-        tooltipText: "{name}"
-      });
-      return am5.Bullet.new(root, { sprite: circle });
-    });
-
-    // Log exhibitions to debug
-    console.log("pointSeries data before setAll:", exhibitions);
 
     pointSeries.data.setAll(exhibitions);
 
     return () => {
       root.dispose();
     };
-  }, [onSelectExhibition]);
+  }, [onSelectExhibition, exhibitions]);
 
   const toggleProjection = () => {
     if (!chartRef.current) return;

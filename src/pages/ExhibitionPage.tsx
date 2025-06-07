@@ -1,8 +1,12 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-import { exhibitions } from "../data/exhibitions";
+import type { Exhibition } from "../types/Exhibition";
 
-export default function ExhibitionPage() {
+type ExhibitionPageProps = {
+  exhibitions: Exhibition[];
+};
+
+export default function ExhibitionPage({ exhibitions }: ExhibitionPageProps) {
   const { id } = useParams();
   const exhibition = exhibitions.find((e) => e.id === id);
 

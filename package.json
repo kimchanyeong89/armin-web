@@ -12,6 +12,7 @@
   "dependencies": {
     "@amcharts/amcharts5": "^5.12.2",
     "@amcharts/amcharts5-geodata": "^5.1.4",
+    "firebase": "^11.9.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
     "react-router-dom": "^7.6.1"

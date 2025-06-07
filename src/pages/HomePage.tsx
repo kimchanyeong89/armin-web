@@ -3,15 +3,22 @@ import { Link } from "react-router-dom";
 import WorldMap from "../components/WorldMap";
 import { artists } from "../data/artists";
 import { works } from "../data/works";
-import { exhibitions } from "../data/exhibitions";
-import type { Exhibition } from "../types/Exhibition";
+// exhibitions will be passed as a prop
 import ExhibitionDetails from "../components/ExhibitionDetails";
+import ExhibitionModal from "../components/ExhibitionModal";
 
 const MemoizedWorldMap = memo(WorldMap);
 
-export default function HomePage() {
+import type { Exhibition, ExhibitionItem } from "../types/Exhibition";
+
+type HomePageProps = {
+  exhibitions: Exhibition[];
+};
+
+export default function HomePage({ exhibitions }: HomePageProps) {
   const [query, setQuery] = useState("");
   const [selectedExhibition, setSelectedExhibition] = useState<Exhibition | null>(null);
+  const [selectedModalExhibition, setSelectedModalExhibition] = useState<ExhibitionItem | null>(null); // ExhibitionItem 타입으로 변경
   const [currentIndex, setCurrentIndex] = useState(1);
   const sliderRef = useRef<HTMLDivElement>(null);
   const [startX, setStartX] = useState<number | null>(null);
@@ -28,6 +35,10 @@ export default function HomePage() {
 
   const handleSelectExhibition = useCallback((exhibition: Exhibition) => {
     setSelectedExhibition(exhibition);
+  }, []);
+
+  const handleSelectExhibitionItem = useCallback((item: ExhibitionItem) => {
+    setSelectedModalExhibition(item);
   }, []);
 
   const filteredArtists = artists.filter((artist) =>
@@ -87,30 +98,17 @@ export default function HomePage() {
 
   return (
     <div style={{ position: "relative", width: "100vw", overflowX: "hidden" }}>
-      {/* 로고와 검색창 */}
-      <div style={{ padding: "20px", display: "flex", alignItems: "center" }}>
-        <Link to="/" style={{ display: "flex", alignItems: "center", textDecoration: "none", color: "inherit" }}>
-          <img
-            src="/images/armin-logo.png"
-            alt="Armin Logo"
-            style={{ width: "60px", marginRight: "18px" }}
-          />
-          <h1 style={{ fontSize: "28px", margin: 0, marginRight: "24px" }}>Armin</h1>
-        </Link>
-        <input
-          type="text"
-          placeholder="작가, 작품, 전시관 검색"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          style={{
-            width: "250px",
-            padding: "8px",
-            fontSize: "16px",
-            borderRadius: "4px",
-            border: "1px solid #ccc",
-          }}
-        />
-      </div>
+      {/* CSS for marquee animation */}
+      <style>
+        {`
+          @keyframes marquee {
+            0% { transform: translateX(0); }
+            50% { transform: translateX(-50%); }
+            100% { transform: translateX(0); }
+          }
+        `}
+      </style>
+      {/* 로고, 타이틀, 검색 입력란 제거됨 */}
 
       {/* 전시회 배너 슬라이더 */}
       <div
@@ -189,29 +187,41 @@ export default function HomePage() {
 
       {/* 월드맵 */}
       <div style={{ marginTop: "20px" }}>
-        <MemoizedWorldMap onSelectExhibition={handleSelectExhibition} />
+        <MemoizedWorldMap onSelectExhibition={handleSelectExhibition} exhibitions={exhibitions} />
       </div>
 
       {/* 선택된 전시관 상세 슬라이드 */}
-      {selectedExhibition && (
-        <div
-          style={{
-            position: "fixed",
-            top: 0,
-            right: 0,
-            width: "400px",
-            height: "100%",
-            backgroundColor: "#fff",
-            boxShadow: "-2px 0 8px rgba(0,0,0,0.2)",
-            overflowY: "auto",
-            zIndex: 1000,
-          }}
-        >
+      <div
+        style={{
+          position: "fixed",
+          top: 0,
+          right: 0,
+          width: "400px",
+          height: "100%",
+          backgroundColor: "#fff",
+          boxShadow: "-2px 0 8px rgba(0,0,0,0.2)",
+          overflowY: "auto",
+          zIndex: 1000,
+          transform: selectedExhibition ? "translateX(0)" : "translateX(100%)",
+          transition: "transform 0.3s ease",
+        }}
+      >
+        {selectedExhibition && (
           <ExhibitionDetails
             exhibition={selectedExhibition}
             onClose={() => setSelectedExhibition(null)}
+            isOpen={!!selectedExhibition}
+            onSelectExhibition={handleSelectExhibitionItem}
           />
-        </div>
+        )}
+      </div>
+
+      {/* 전시 모달 */}
+      {selectedModalExhibition && (
+        <ExhibitionModal
+          exhibition={selectedModalExhibition}
+          onClose={() => setSelectedModalExhibition(null)}
+        />
       )}
 
       {/* 검색 결과 */}

@@ -45,5 +45,10 @@ body, html, #root {
   margin: 0;
   padding: 0;
   width: 100vw;
-  overflow-x: hidden;
+  /* overflow-x: hidden; */  /* Removed to allow slide-in elements to be visible */
+}
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  50% { transform: translateX(-50%); }
+  100% { transform: translateX(0); }
 }
