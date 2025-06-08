@@ -23,6 +23,22 @@ export default function ExhibitionModal({ exhibition, onClose }: ExhibitionModal
   const [artworks, setArtworks] = useState<Artwork[]>([]);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [showImageModal, setShowImageModal] = useState<string | null>(null);
+  // Hover 상태 개별 관리 대신 배열로 상태 관리로 수정
+
+  // useState 추가 부분 수정
+  const [hoveredArtworks, setHoveredArtworks] = useState<{ [key: string]: boolean }>({});
+
+  // 대표 이미지 hover 상태 관리 변수 추가
+  const [representativeHovered, setRepresentativeHovered] = useState(false);
+
+  // hover 핸들러 수정
+  const handleMouseEnter = (artworkId: string) => {
+    setHoveredArtworks(prev => ({ ...prev, [artworkId]: true }));
+  };
+
+  const handleMouseLeave = (artworkId: string) => {
+    setHoveredArtworks(prev => ({ ...prev, [artworkId]: false }));
+  };
 
   useEffect(() => {
     const savedRooms = localStorage.getItem(`rooms_${exhibition.id}`);
@@ -152,7 +168,26 @@ export default function ExhibitionModal({ exhibition, onClose }: ExhibitionModal
 
         {/* 대표 이미지와 설명글 */}
         <div style={{ display: "flex", marginBottom: "20px" }}>
-          <div style={{ width: "50%", height: "200px", backgroundColor: "#ccc" }} />
+          <div style={{ width: "50%", height: "200px", backgroundColor: "#ccc", position: "relative" }}>
+            {/* 하트와 체크 아이콘 hover 시 표시, 우측 하단 위치 */}
+            <div
+              style={{
+                position: "absolute",
+                bottom: "5px",
+                right: "5px",
+                display: "flex",
+                gap: "5px",
+                opacity: representativeHovered ? 1 : 0,
+                transition: "opacity 0.3s"
+              }}
+              onMouseEnter={() => setRepresentativeHovered(true)}
+              onMouseLeave={() => setRepresentativeHovered(false)}
+              className="hover-icons"
+            >
+              <span style={{ fontSize: "20px", cursor: "pointer" }}>♡</span>
+              <span style={{ fontSize: "20px", cursor: "pointer" }}>☑️</span>
+            </div>
+          </div>
           <div style={{ width: "50%", paddingLeft: "20px" }}>
             <h2>{exhibition.name}</h2>
             <p>{exhibition.description}</p>
@@ -221,17 +256,22 @@ export default function ExhibitionModal({ exhibition, onClose }: ExhibitionModal
                       display: "flex",
                       flexDirection: "column",
                       alignItems: "center",
-                      justifyContent: "center"
+                      justifyContent: "center",
+                      position: "relative"
                     }}
                   >
+                    {/* 이미지와 hover 아이콘 */}
                     <div
                       style={{
                         width: "100px",
                         height: "100px",
                         backgroundColor: "#ccc",
                         marginBottom: "5px",
+                        position: "relative",
                         cursor: artwork.image ? "pointer" : "default"
                       }}
+                      onMouseEnter={() => handleMouseEnter(artwork.id)}
+                      onMouseLeave={() => handleMouseLeave(artwork.id)}
                       onClick={() => {
                         if (artwork.image) {
                           setShowImageModal(artwork.image);
@@ -247,7 +287,23 @@ export default function ExhibitionModal({ exhibition, onClose }: ExhibitionModal
                       ) : (
                         <span>이미지 없음</span>
                       )}
+                      {/* 하트 아이콘 hover 시 표시, 우측 하단 위치 */}
+                      {hoveredArtworks[artwork.id] && (
+                        <div
+                          style={{
+                            position: "absolute",
+                            bottom: "5px",
+                            right: "5px",
+                            display: "flex",
+                            gap: "5px",
+                            opacity: 1
+                          }}
+                        >
+                          <span style={{ fontSize: "20px", cursor: "pointer" }}>♡</span>
+                        </div>
+                      )}
                     </div>
+                    {/* 작품 설명 */}
                     <div style={{ fontSize: "0.8rem", textAlign: "center" }}>
                       <strong>{artwork.name}</strong><br />
                       {artwork.artist} ({artwork.year})
@@ -293,6 +349,13 @@ export default function ExhibitionModal({ exhibition, onClose }: ExhibitionModal
           </div>
         </div>
       )}
+      <style>
+        {`
+          div:hover .hover-icons {
+            opacity: 1;
+          }
+        `}
+      </style>
     </div>
   );
 }

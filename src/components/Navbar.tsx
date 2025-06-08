@@ -30,6 +30,14 @@ const Navbar: React.FC = () => {
     navigate("/");
   };
 
+  const handleMypage = () => {
+    if (!user) {
+      handleLogin();
+    } else {
+      navigate("/mypage");
+    }
+  };
+
   const handleSearchChange = (query: string) => {
     setSearchQuery(query);
   };
@@ -95,9 +103,12 @@ const Navbar: React.FC = () => {
               Login
             </span>
           )}
-          <Link to="/mypage" style={{ color: "black", textDecoration: "none" }}>
+          <span
+            style={{ color: "black", cursor: "pointer", marginLeft: "10px" }}
+            onClick={handleMypage}
+          >
             Mypage
-          </Link>
+          </span>
           <Link to="/contact" style={{ color: "black", textDecoration: "none" }}>
             Contact
           </Link>

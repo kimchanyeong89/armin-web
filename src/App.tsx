@@ -8,6 +8,7 @@ import { exhibitions } from "./data/exhibitions.js";
 import Login from "./components/Login";
 import SignUp from "./components/SignUp";
 import Navbar from "./components/Navbar";  // 추가
+import MyPage from "./components/Mypage";  // MyPage import casing fixed
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
           <Route path="/exhibition/:id" element={<ExhibitionPage exhibitions={exhibitions} />} />
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
+          <Route path="/mypage" element={<MyPage />} /> {/* MyPage route 추가 */}
         </Routes>
       </BrowserRouter>
     </AuthProvider>
