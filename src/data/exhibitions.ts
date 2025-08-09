@@ -1,5 +1,4 @@
-import exhibitions from "./exhibitions.js";  // default export import
+import { exhibitions as exhibitionsData } from "./exhibitions.js";
 import type { Exhibition } from "../types/Exhibition";
-
-export { exhibitions };
-export type { Exhibition };
+export const exhibitions: Exhibition[] = exhibitionsData as unknown as Exhibition[];
+export type { Exhibition } from "../types/Exhibition";

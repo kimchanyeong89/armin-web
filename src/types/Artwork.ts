@@ -1,4 +1,7 @@
-export interface Artwork {
+
+
+
+export type Artwork = {
   id: string;
   name: string;
   artist: string;
@@ -7,4 +10,4 @@ export interface Artwork {
   roomId: string;
   exhibitionName: string;
   exhibitionTitle: string;
-}
+};

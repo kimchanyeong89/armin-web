@@ -1,13 +1,8 @@
 import React from "react";
 import { auth } from "../firebase";
 import { GoogleAuthProvider, signInWithRedirect } from "firebase/auth";
-import { useNavigate } from "react-router-dom";
-import { getFirestore, doc, setDoc, getDoc } from "firebase/firestore";
 
 const Login: React.FC = () => {
-  const navigate = useNavigate();
-  const db = getFirestore();
-
   const handleGoogleLogin = async () => {
     try {
       const provider = new GoogleAuthProvider();

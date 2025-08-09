@@ -55,7 +55,7 @@ const MyPage: React.FC = () => {
   }, [user, navigate]);
 
   // useState로 닉네임 설정
-  const [nickname, setNickname] = useState("RandomUser123");
+  const [nickname] = useState("RandomUser123");
 
   if (loading) {
     return <div>Loading...</div>;

@@ -13,10 +13,15 @@
     "@amcharts/amcharts5": "^5.12.2",
     "@amcharts/amcharts5-geodata": "^5.1.5",
     "@react-google-maps/api": "^2.20.7",
+    "cesium": "^1.132.0",
     "firebase": "^11.9.0",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
-    "react-router-dom": "^7.6.1"
+    "react-globe.gl": "^2.35.0",
+    "react-router-dom": "^7.6.1",
+    "three": "^0.179.1",
+    "three-globe": "^2.44.0",
+    "vite-plugin-cesium": "^1.2.23"
   },
   "devDependencies": {
     "@eslint/js": "^9.25.0",

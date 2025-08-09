@@ -1,4 +1,3 @@
-import React from "react";
 import { useParams } from "react-router-dom";
 import { works } from "../data/works";
 import { artists } from "../data/artists";

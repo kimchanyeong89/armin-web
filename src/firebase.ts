@@ -1,8 +1,9 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
-import { getStorage } from "firebase/storage";
+import { getAnalytics } from "firebase/analytics";
 import { getFirestore } from "firebase/firestore";
+import { getStorage } from "firebase/storage";
+import { getAuth } from "firebase/auth";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -12,7 +13,7 @@ const firebaseConfig = {
   apiKey: "AIzaSyAZ9zjFzo6IwHC4Ope4D2lWySeJkGZhCvw",
   authDomain: "armin-web.firebaseapp.com",
   projectId: "armin-web",
-  storageBucket: "armin-web.appspot.com",
+  storageBucket: "armin-web.firebasestorage.app",
   messagingSenderId: "380952034390",
   appId: "1:380952034390:web:3c125db899cc5bdeb14ff7",
   measurementId: "G-RSQS7JC2H9"
@@ -20,6 +21,7 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-export const auth = getAuth(app);
+getAnalytics(app);
 export const db = getFirestore(app);
-export const storage = getStorage(app, "gs://armin-web");
+export const storage = getStorage(app);
+export const auth = getAuth(app);

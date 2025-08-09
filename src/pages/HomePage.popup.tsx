@@ -1,4 +1,3 @@
-import React from "react";
 import type { ExhibitionItem } from "../types/Exhibition";
 
 interface ExhibitionModalProps {
