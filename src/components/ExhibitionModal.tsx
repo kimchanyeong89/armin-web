@@ -1,13 +1,12 @@
-import { useState, useEffect } from "react";
 import type { ExhibitionItem } from "../types/Exhibition";
-import artworksData from "../data/artworks";
 import type { Artwork } from "../types/Artwork";
+import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { storage } from "../firebase";
+import { useState, useCallback, useEffect } from "react";
+import { collection, addDoc, onSnapshot, query, where } from "firebase/firestore";
+import { db } from "../firebase";
 
-interface ExhibitionModalProps {
-  exhibition: ExhibitionItem;
-  onClose: () => void;
-}
-
+// Room type for floor plan boxes
 interface Room {
   id: string;
   name: string;
@@ -17,41 +16,61 @@ interface Room {
   height: string;
 }
 
-export default function ExhibitionModal({ exhibition, onClose }: ExhibitionModalProps) {
+interface ExhibitionModalProps {
+  exhibition: ExhibitionItem;
+  onClose: () => void;
+  // Add other props as needed
+}
+
+const ExhibitionModal = ({ exhibition, onClose }: ExhibitionModalProps) => {
   const [selectedRoom, setSelectedRoom] = useState<string | null>(null);
   const [userRooms, setUserRooms] = useState<Room[]>([]);
   const [artworks, setArtworks] = useState<Artwork[]>([]);
-  const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [showImageModal, setShowImageModal] = useState<string | null>(null);
-  // Hover 상태 개별 관리 대신 배열로 상태 관리로 수정
+  // Upload progress state
+  const [isUploading, setIsUploading] = useState(false);
+  const [uploadProgress, setUploadProgress] = useState(0); // 0-100
+  const [uploadStage, setUploadStage] = useState<"idle" | "파일 업로드 중" | "데이터 저장 중" | "완료">("idle");
 
-  // useState 추가 부분 수정
-  const [hoveredArtworks, setHoveredArtworks] = useState<{ [key: string]: boolean }>({});
-
-  // 대표 이미지 hover 상태 관리 변수 추가
-  const [representativeHovered, setRepresentativeHovered] = useState(false);
-
-  // hover 핸들러 수정
-  const handleMouseEnter = (artworkId: string) => {
-    setHoveredArtworks(prev => ({ ...prev, [artworkId]: true }));
-  };
-
-  const handleMouseLeave = (artworkId: string) => {
-    setHoveredArtworks(prev => ({ ...prev, [artworkId]: false }));
-  };
-
+  // Load saved rooms from localStorage and subscribe to Firestore artworks
   useEffect(() => {
     const savedRooms = localStorage.getItem(`rooms_${exhibition.id}`);
     if (savedRooms) {
-      setUserRooms(JSON.parse(savedRooms));
+      try {
+        const parsed: Room[] = JSON.parse(savedRooms);
+        setUserRooms(parsed);
+        if (!selectedRoom && parsed.length > 0) setSelectedRoom(parsed[0].id);
+      } catch {}
     }
-    const savedArtworks = localStorage.getItem(`artworks_${exhibition.id}`);
-    if (savedArtworks) {
-      setArtworks(JSON.parse(savedArtworks));
-    } else {
-      setArtworks(artworksData);
-    }
-  }, [exhibition.id]);
+    // Subscribe to Firestore artworks for this exhibition
+    const q = query(collection(db, "artworks"), where("exhibitionTitle", "==", exhibition.title));
+    const unsub = onSnapshot(
+      q,
+      (snap) => {
+        const list: Artwork[] = [];
+        snap.forEach((d) => list.push(d.data() as Artwork));
+        // Merge snapshot with existing to avoid flicker (by id)
+        setArtworks((prev) => {
+          const map = new Map<string, Artwork>();
+          [...prev, ...list].forEach((a) => { if (a?.id) map.set(a.id, a); });
+          const merged = Array.from(map.values());
+          localStorage.setItem(`artworks_${exhibition.id}`, JSON.stringify(merged));
+          return merged;
+        });
+      },
+      (error) => {
+        console.error("Firestore onSnapshot error:", error);
+        // Fallback to localStorage cache if available
+        const cached = localStorage.getItem(`artworks_${exhibition.id}`);
+        if (cached) {
+          try { setArtworks(JSON.parse(cached)); } catch {}
+        }
+      }
+    );
+    return () => {
+      unsub();
+    };
+  }, [exhibition.id, exhibition.title, selectedRoom]);
 
   const handleAddRoom = () => {
     const nextRoomId = `Room ${userRooms.length + 1}`;
@@ -63,136 +82,177 @@ export default function ExhibitionModal({ exhibition, onClose }: ExhibitionModal
       width: "120px",
       height: "100px",
     };
-    setUserRooms([...userRooms, newRoom]);
+    setUserRooms(prev => {
+      const next = [...prev, newRoom];
+      if (!selectedRoom) setSelectedRoom(newRoom.id);
+      return next;
+    });
   };
 
-  const handleAddArtwork = () => {
+  const handleAddArtwork = useCallback(async () => {
     if (!selectedRoom) {
       alert("먼저 방을 선택해주세요!");
       return;
     }
 
+    const currentRoom = selectedRoom;
+
+    // 사용자 정보 입력
+    const promptFields = () => {
+      const name = prompt("작품 제목을 입력하세요:");
+      const year = prompt("제작연도를 입력하세요:");
+      const artist = prompt("작가 이름을 입력하세요: (선택)") || "";
+      return { name, year, artist };
+    };
+
     if (confirm("이미지를 업로드하시겠습니까? (취소 시 이미지 없이 등록됩니다.)")) {
+      // 파일 input을 함수 내부에서 직접 처리
       const fileInput = document.createElement("input");
       fileInput.type = "file";
       fileInput.accept = "image/*";
       fileInput.style.display = "none";
       document.body.appendChild(fileInput);
 
-      fileInput.addEventListener("change", (e: Event) => {
-        const file = (e.target as HTMLInputElement).files?.[0];
-        if (file) {
-          const reader = new FileReader();
-          reader.onloadend = () => {
-            const image = reader.result as string;
-            const name = prompt("작품 제목을 입력하세요:");
-            const artist = prompt("작가 이름을 입력하세요:");
-            const year = prompt("제작연도를 입력하세요:");
-            if (name && artist && year) {
-              const newArtwork: Artwork = {
-                id: `artwork_${Date.now()}`,
-                name,
-                artist,
-                year: parseInt(year),
-                image,
-                roomId: selectedRoom,
-                exhibitionName: exhibition.name,
-                exhibitionTitle: exhibition.title
-              };
-              setArtworks([...artworks, newArtwork]);
-            }
-          };
-          reader.readAsDataURL(file);
-        }
-        document.body.removeChild(fileInput);
+      // change 이벤트를 Promise로 래핑
+      const fileSelected = await new Promise<File | null>((resolve) => {
+        fileInput.onchange = () => {
+          resolve((fileInput.files && fileInput.files[0]) ? fileInput.files[0] : null);
+          document.body.removeChild(fileInput);
+        };
+        fileInput.click();
       });
 
-      fileInput.click();
+      if (fileSelected) {
+        const { name, artist, year } = promptFields();
+        if (name && year) {
+          const artworkId = `artwork_${Date.now()}`;
+          const imageRef = ref(storage, `images/${artworkId}/${fileSelected.name}`);
+          try {
+            // Start resumable upload with progress updates
+            setIsUploading(true);
+            setUploadStage("파일 업로드 중");
+            setUploadProgress(0);
+
+            const imageUrl: string = await new Promise((resolve, reject) => {
+              const uploadTask = uploadBytesResumable(imageRef, fileSelected);
+              uploadTask.on(
+                "state_changed",
+                (snapshot) => {
+                  const pct = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+                  setUploadProgress(pct);
+                },
+                (err) => {
+                  reject(err);
+                },
+                async () => {
+                  try {
+                    setUploadStage("데이터 저장 중");
+                    const url = await getDownloadURL(imageRef);
+                    resolve(url);
+                  } catch (e) {
+                    reject(e);
+                  }
+                }
+              );
+            });
+
+            const newArtwork: Artwork = {
+              id: artworkId,
+              name,
+              artist,
+              year: parseInt(year),
+              image: imageUrl,
+              roomId: currentRoom,
+              exhibitionName: exhibition.name,
+              exhibitionTitle: exhibition.title,
+            };
+            await addDoc(collection(db, "artworks"), newArtwork);
+            setArtworks((prev: Artwork[]) => {
+              const next = [...prev, newArtwork];
+              localStorage.setItem(`artworks_${exhibition.id}`, JSON.stringify(next));
+              return next;
+            });
+            setUploadStage("완료");
+            setUploadProgress(100);
+            setTimeout(() => {
+              setIsUploading(false);
+              setUploadStage("idle");
+              setUploadProgress(0);
+            }, 600);
+            alert("작품이 성공적으로 등록되었습니다!");
+          } catch (error: any) {
+            console.error("Firebase upload failed:", error);
+            setIsUploading(false);
+            setUploadStage("idle");
+            setUploadProgress(0);
+            const code = error?.code ? ` (${error.code})` : "";
+            alert(`이미지 업로드에 실패했습니다${code}. 보안 규칙을 확인해주세요.`);
+          }
+        }
+      }
     } else {
-      const name = prompt("작품 제목을 입력하세요:");
-      const artist = prompt("작가 이름을 입력하세요:");
-      const year = prompt("제작연도를 입력하세요:");
-      if (name && artist && year) {
+      // 이미지 없이 등록
+      const { name, artist, year } = promptFields();
+      if (name && year) {
         const newArtwork: Artwork = {
           id: `artwork_${Date.now()}`,
           name,
           artist,
           year: parseInt(year),
           image: "",
-          roomId: selectedRoom,
+          roomId: currentRoom,
           exhibitionName: exhibition.name,
           exhibitionTitle: exhibition.title
         };
-        setArtworks([...artworks, newArtwork]);
+        try {
+          await addDoc(collection(db, "artworks"), newArtwork);
+          setArtworks((prev: Artwork[]) => {
+            const next = [...prev, newArtwork];
+            localStorage.setItem(`artworks_${exhibition.id}`, JSON.stringify(next));
+            return next;
+          });
+      } catch (error: any) {
+        const code = error?.code ? ` (${error.code})` : "";
+        alert(`작품 저장에 실패했습니다${code}. 보안 규칙을 확인해주세요.`);
+        console.error("Firestore addDoc failed:", error);
+          return;
+        }
+        alert("작품이 성공적으로 등록되었습니다!");
       }
     }
-  };
+  }, [exhibition.name, exhibition.title, selectedRoom]);
 
+  // Save rooms and artworks
   const handleSave = () => {
     localStorage.setItem(`rooms_${exhibition.id}`, JSON.stringify(userRooms));
     localStorage.setItem(`artworks_${exhibition.id}`, JSON.stringify(artworks));
     alert("저장되었습니다. 관리자의 승인을 기다려주세요!");
-    // TODO: 여기에 서버로 전송 로직 추가 (관리자 승인 시스템 연동)
   };
 
-  const filteredArtworks: Artwork[] =
-    selectedRoom
-      ? artworks.filter(
-          (artwork) =>
-            artwork.roomId === selectedRoom &&
-            artwork.exhibitionTitle === exhibition.title
-        )
-      : [];
+  const filteredArtworks: Artwork[] = selectedRoom
+    ? artworks.filter(a => a.roomId === selectedRoom && a.exhibitionTitle === exhibition.title)
+    : [];
 
+  // ... rest of the component code ...
   return (
-    <div style={{
-      position: "fixed",
-      top: 0,
-      left: 0,
-      width: "100vw",
-      height: "100vh",
-      backgroundColor: "rgba(0,0,0,0.5)",
-      display: "flex",
-      alignItems: "center",
-      justifyContent: "center",
-      zIndex: 3000,
-    }}>
-      <div style={{
-        backgroundColor: "#fff",
-        width: "80%",
-        maxHeight: "90%",
-        overflowY: "auto",
-        padding: "20px",
-      }}>
-        <button onClick={onClose} style={{ float: "right" }}>닫기</button>
-
-        {/* 대표 이미지와 설명글 */}
-        <div style={{ display: "flex", marginBottom: "20px" }}>
-          <div style={{ width: "50%", height: "200px", backgroundColor: "#ccc", position: "relative" }}>
-            {/* 하트와 체크 아이콘 hover 시 표시, 우측 하단 위치 */}
-            <div
-              style={{
-                position: "absolute",
-                bottom: "5px",
-                right: "5px",
-                display: "flex",
-                gap: "5px",
-                opacity: representativeHovered ? 1 : 0,
-                transition: "opacity 0.3s"
-              }}
-              onMouseEnter={() => setRepresentativeHovered(true)}
-              onMouseLeave={() => setRepresentativeHovered(false)}
-              className="hover-icons"
-            >
-              <span style={{ fontSize: "20px", cursor: "pointer" }}>♡</span>
-              <span style={{ fontSize: "20px", cursor: "pointer" }}>☑️</span>
-            </div>
-          </div>
-          <div style={{ width: "50%", paddingLeft: "20px" }}>
-            <h2>{exhibition.name}</h2>
-            <p>{exhibition.description}</p>
-          </div>
-        </div>
+    <div
+      style={{
+        position: "fixed",
+        top: 0,
+        left: 0,
+        width: "100vw",
+        height: "100vh",
+        backgroundColor: "rgba(0,0,0,0.5)",
+        display: "flex",
+        alignItems: "center",
+        justifyContent: "center",
+        zIndex: 10000,
+      }}
+    >
+      <div style={{ backgroundColor: "#fff", width: "80%", maxHeight: "90%", overflowY: "auto", padding: "20px", borderRadius: 12, boxShadow: "0 8px 24px rgba(0,0,0,0.2)" }}>
+        <button onClick={onClose} style={{ float: "right", border: "none", background: "transparent", fontSize: 20, cursor: "pointer" }}>✕</button>
+        <h2 style={{ marginTop: 0 }}>{exhibition.name}</h2>
+        <p style={{ color: "#666", marginTop: -8 }}>{exhibition.title}</p>
 
         {/* 플로어 플랜 */}
         <div style={{ marginBottom: "20px" }}>
@@ -210,13 +270,16 @@ export default function ExhibitionModal({ exhibition, onClose }: ExhibitionModal
               padding: "10px",
             }}
           >
-            {userRooms.map((room, index) => (
+            {userRooms.length === 0 && (
+              <div style={{ color: "#888" }}>아직 방이 없습니다. 아래 "방 추가" 버튼으로 방을 만들어주세요.</div>
+            )}
+            {userRooms.map((room) => (
               <div
-                key={index}
+                key={room.id}
                 style={{
                   minWidth: room.width,
                   height: room.height,
-                  backgroundColor: "#ddd",
+                  backgroundColor: selectedRoom === room.id ? "#d0e8ff" : "#ddd",
                   border: "1px solid #aaa",
                   marginRight: "10px",
                   display: "flex",
@@ -260,7 +323,6 @@ export default function ExhibitionModal({ exhibition, onClose }: ExhibitionModal
                       position: "relative"
                     }}
                   >
-                    {/* 이미지와 hover 아이콘 */}
                     <div
                       style={{
                         width: "100px",
@@ -270,40 +332,16 @@ export default function ExhibitionModal({ exhibition, onClose }: ExhibitionModal
                         position: "relative",
                         cursor: artwork.image ? "pointer" : "default"
                       }}
-                      onMouseEnter={() => handleMouseEnter(artwork.id)}
-                      onMouseLeave={() => handleMouseLeave(artwork.id)}
                       onClick={() => {
-                        if (artwork.image) {
-                          setShowImageModal(artwork.image);
-                        }
+                        if (artwork.image) setShowImageModal(artwork.image);
                       }}
                     >
                       {artwork.image ? (
-                        <img
-                          src={artwork.image}
-                          alt={artwork.name}
-                          style={{ width: "100%", height: "100%", objectFit: "cover" }}
-                        />
+                        <img src={artwork.image} alt={artwork.name} style={{ width: "100%", height: "100%", objectFit: "cover" }} />
                       ) : (
                         <span>이미지 없음</span>
                       )}
-                      {/* 하트 아이콘 hover 시 표시, 우측 하단 위치 */}
-                      {hoveredArtworks[artwork.id] && (
-                        <div
-                          style={{
-                            position: "absolute",
-                            bottom: "5px",
-                            right: "5px",
-                            display: "flex",
-                            gap: "5px",
-                            opacity: 1
-                          }}
-                        >
-                          <span style={{ fontSize: "20px", cursor: "pointer" }}>♡</span>
-                        </div>
-                      )}
                     </div>
-                    {/* 작품 설명 */}
                     <div style={{ fontSize: "0.8rem", textAlign: "center" }}>
                       <strong>{artwork.name}</strong><br />
                       {artwork.artist} ({artwork.year})
@@ -317,13 +355,15 @@ export default function ExhibitionModal({ exhibition, onClose }: ExhibitionModal
           </div>
         )}
 
-        {/* 작품 추가 및 저장 버튼 */}
+        {/* 하단 액션 버튼 */}
         <div style={{ display: "flex", justifyContent: "flex-start", gap: "10px", marginTop: "20px" }}>
+          <button onClick={handleAddRoom}>방 추가</button>
           <button onClick={handleAddArtwork}>작품 추가</button>
           <button onClick={handleSave}>저장하기</button>
         </div>
       </div>
 
+      {/* 이미지 미리보기 모달 */}
       {showImageModal && (
         <div
           style={{
@@ -336,26 +376,65 @@ export default function ExhibitionModal({ exhibition, onClose }: ExhibitionModal
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
-            zIndex: 4000,
+            zIndex: 11000,
           }}
           onClick={() => setShowImageModal(null)}
         >
           <div style={{ maxWidth: "90%", maxHeight: "90%" }}>
-            <img
-              src={showImageModal}
-              alt="Artwork"
-              style={{ width: "100%", height: "auto" }}
-            />
+            <img src={showImageModal} alt="Artwork" style={{ width: "100%", height: "auto" }} />
           </div>
         </div>
       )}
-      <style>
-        {`
-          div:hover .hover-icons {
-            opacity: 1;
-          }
-        `}
-      </style>
+
+      {/* 업로드 진행 오버레이 */}
+      {isUploading && (
+        <div
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: "100vw",
+            height: "100vh",
+            backgroundColor: "rgba(0,0,0,0.4)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            zIndex: 12000,
+          }}
+        >
+          <div
+            style={{
+              width: "360px",
+              background: "#fff",
+              borderRadius: 12,
+              boxShadow: "0 6px 20px rgba(0,0,0,0.25)",
+              padding: "18px 20px",
+            }}
+          >
+            <div style={{ fontWeight: 600, marginBottom: 8 }}>이미지 업로드</div>
+            <div style={{ color: "#555", fontSize: 14, marginBottom: 12 }}>
+              {uploadStage === "파일 업로드 중" && "파일 업로드 중…"}
+              {uploadStage === "데이터 저장 중" && "데이터 저장 중…"}
+              {uploadStage === "완료" && "완료"}
+            </div>
+            <div style={{ height: 10, background: "#eee", borderRadius: 6, overflow: "hidden" }}>
+              <div
+                style={{
+                  width: `${uploadProgress}%`,
+                  height: "100%",
+                  background: "linear-gradient(90deg, #4da3ff, #1e7bff)",
+                  transition: "width 120ms ease",
+                }}
+              />
+            </div>
+            <div style={{ textAlign: "right", marginTop: 8, fontSize: 12, color: "#333" }}>
+              {uploadProgress}%
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
-}
+};
+
+export default ExhibitionModal;

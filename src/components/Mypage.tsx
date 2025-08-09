@@ -99,8 +99,19 @@ const MyPage: React.FC = () => {
         </div>
       </div>
 
-      {/* 작품/전시 전환 버튼과 정렬 버튼 함께 배치 */}
-      <div style={{ display: "flex", justifyContent: "flex-start", gap: "20px", marginBottom: "20px", marginTop: "20px", width: "100%", paddingLeft: "40px" }}>
+      {/* 작품/전시 전환 버튼과 정렬 버튼 함께 배치 (정렬을 살짝 내림) */}
+      <div
+        style={{
+          display: "flex",
+          justifyContent: "flex-start",
+          alignItems: "center",
+          gap: "20px",
+          marginBottom: "20px",
+          marginTop: "28px", // 기존보다 8px 더 내림
+          width: "100%",
+          paddingLeft: "40px"
+        }}
+      >
         <ViewModeDropdown viewMode={viewMode} setViewMode={setViewMode} />
         <SortDropdown sortMode={sortMode} setSortMode={setSortMode} />
       </div>

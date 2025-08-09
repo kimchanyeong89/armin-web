@@ -1,15 +1,13 @@
-export type Artwork = {
-  id: string;
-  title: string;
-};
 
-export type ExhibitionItem = {
+// ExhibitionItem 타입 정의
+export interface ExhibitionItem {
   id: string;
-  name: string;          // 🔥 추가
+  name: string;
   title: string;
   description: string;
   startDate: string;
   endDate: string;
+  image?: string;
   rooms?: {
     id: string;
     name: string;
@@ -18,9 +16,13 @@ export type ExhibitionItem = {
     width: string;
     height: string;
   }[];
-};
+}
 
-export type Exhibition = {
+// (중복 ExhibitionItem 타입 제거)
+
+import type { Artwork } from "./Artwork";
+
+export interface Exhibition {
   id: string;
   name: string;
   slug: string;
@@ -30,10 +32,10 @@ export type Exhibition = {
   longitude: number;
   permanentExhibitions: ExhibitionItem[];
   temporaryExhibitions: ExhibitionItem[];
-  pastExhibitions?: ExhibitionItem[];  // 🔥 추가
-  representativeImage: string;         // 🔥 추가
-  floorPlan: string;                   // 🔥 추가
+  pastExhibitions?: ExhibitionItem[];
+  representativeImage: string;
+  floorPlan: string;
   rooms: {
     [roomId: string]: Artwork[];
   };
-};
+}

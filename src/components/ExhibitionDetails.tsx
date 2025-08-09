@@ -1,8 +1,5 @@
 import { useState } from "react";
 import type { Exhibition, ExhibitionItem } from "../types/Exhibition";
-import PermanentExhibitions from "./PermanentExhibitions";
-import PastExhibitions from "./PastExhibitions";
-import TemporaryExhibitions from "./TemporaryExhibitions";
 
 interface ExhibitionDetailsProps {
   exhibition: Exhibition;
@@ -19,6 +16,21 @@ export default function ExhibitionDetails({
 }: ExhibitionDetailsProps) {
   const [isCurrentExhibitionsCollapsed, setIsCurrentExhibitionsCollapsed] = useState(false);
   const [isPastExhibitionsCollapsed, setIsPastExhibitionsCollapsed] = useState(false);
+  const [checking, setChecking] = useState(false);
+  async function runHealthcheck() {
+    setChecking(true);
+    try {
+      const { testStorageConnection, testFirestoreConnection } = await import("../utils/firebaseHealth");
+      const s = await testStorageConnection();
+      const f = await testFirestoreConnection();
+      alert(
+        `Storage: ${s.ok ? "OK" : `FAIL (${s.code || "unknown"}) - ${s.error}`}\n` +
+        `Firestore: ${f.ok ? "OK" : `FAIL (${f.code || "unknown"}) - ${f.error}`}`
+      );
+    } finally {
+      setChecking(false);
+    }
+  }
 
   return (
     <div
@@ -94,7 +106,10 @@ export default function ExhibitionDetails({
               {exhibition.permanentExhibitions.map((item) => (
                 <div
                   key={item.id}
-                  onClick={() => onSelectExhibition(item)}
+                  onClick={() => {
+                    onSelectExhibition(item);
+                    // ...existing code...
+                  }}
                   style={{
                     width: "100px",
                     height: "160px", // Slightly reduced height
@@ -176,7 +191,10 @@ export default function ExhibitionDetails({
               {exhibition.temporaryExhibitions.map((item) => (
                 <div
                   key={item.id}
-                  onClick={() => onSelectExhibition(item)}
+                  onClick={() => {
+                    onSelectExhibition(item);
+                    // ...existing code...
+                  }}
                   style={{
                     width: "100px",
                     height: "180px",
@@ -247,7 +265,7 @@ export default function ExhibitionDetails({
         </>
       )}
 
-      {/* 이전 전시 */}
+      {/* ...existing code... */}
       <h3>
         <button
           onClick={() => setIsPastExhibitionsCollapsed(!isPastExhibitionsCollapsed)}
@@ -343,6 +361,13 @@ export default function ExhibitionDetails({
           <p>이전 전시가 없습니다.</p>
         )
       )}
+
+      {/* Dev: Firebase 연결 상태 점검 버튼 */}
+      <div style={{ marginTop: 12 }}>
+        <button onClick={runHealthcheck} disabled={checking} style={{ fontSize: "0.85rem" }}>
+          {checking ? "확인 중..." : "Firebase 연결 점검"}
+        </button>
+      </div>
     </div>
   );
 }
