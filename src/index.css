@@ -89,3 +89,17 @@ input, textarea, select {
   background-color: #fff;
   color: #000;
 }
+
+/* Local Teletactile font support (uses the font installed on the user's Mac) */
+@font-face {
+  font-family: 'Teletactile';
+  src: local('Teletactile'), local('Teletactile-Regular');
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+/* Apply Teletactile only on the homepage */
+body[data-home="true"] {
+  font-family: 'Teletactile', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Helvetica Neue', Arial, sans-serif;
+}

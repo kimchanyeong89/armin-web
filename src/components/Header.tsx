@@ -1,5 +1,4 @@
 import { useNavigate } from 'react-router-dom';
-import logo from '../assets/armin-logo.png';
 
 const Header = () => {
   const navigate = useNavigate();
@@ -7,7 +6,7 @@ const Header = () => {
   return (
     <div style={{ display: 'flex', alignItems: 'center', padding: '10px' }}>
       <img
-        src={logo}
+  src={'/images/meta-header.svg'}
         alt="Armin Logo"
         style={{ width: '30px', height: '30px', marginRight: '8px', cursor: 'pointer' }}
         onClick={() => navigate('/')}
