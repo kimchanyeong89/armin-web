@@ -189,12 +189,15 @@ export default function GlobeD3({ focusLatLng = null, autorotate = false, stroke
       const phi = dragStartRotate[1] - dy * sensitivity;
       projection.rotate([lambda, Math.max(-90, Math.min(90, phi)), 0]);
       svg.selectAll('path').attr('d', path as any);
+      // keep pins in sync while dragging
+      renderPins();
     };
     const onDragEnd = () => {
       dragStartRotate = null;
       dragStartPos = null;
       // resume spin if enabled
       if (autorotate) spinningRef.current = true;
+      renderPins();
     };
     svg.call(d3.drag<SVGSVGElement, unknown>()
       .on('start', onDragStart)
@@ -209,7 +212,8 @@ export default function GlobeD3({ focusLatLng = null, autorotate = false, stroke
       renderPins();
     };
     const zoom = d3.zoom<SVGSVGElement, unknown>()
-      .scaleExtent([0.6, 2.2])
+      // allow deeper zoom-in to inspect dense pin clusters
+      .scaleExtent([0.5, 6])
       .filter((event) => event.type === 'wheel' || (event.type === 'touchstart' && (event.touches?.length || 0) === 2))
       .on('zoom', onZoom);
   svg.call(zoom as any);
