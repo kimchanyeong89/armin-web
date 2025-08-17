@@ -1,8 +1,8 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
-import cesium from 'vite-plugin-cesium'
+// Cesium plugin disabled (Cesium removed)
 
 // https://vite.dev/config/
 export default defineConfig({
-  plugins: [react(), cesium()],
+  plugins: [react()],
 })

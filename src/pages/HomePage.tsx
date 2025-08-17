@@ -3,7 +3,8 @@ import ExhibitionBanner from "../components/ExhibitionBanner";
 import CustomGoogleMap from "../components/CustomGoogleMap";
 import ExhibitionDetails from "../components/ExhibitionDetails";
 import ExhibitionModal from "../components/ExhibitionModal";
-import CesiumGlobe from "../components/CesiumGlobe";
+import GlobeHexPolygons from "../components/GlobeHexPolygons";
+import GlobeOutline from "../components/GlobeOutline";
 import type { Exhibition, ExhibitionItem } from "../types/Exhibition";
 
 type HomePageProps = {
@@ -23,6 +24,8 @@ export default function HomePage({ exhibitions }: HomePageProps) {
   const [selectedExhibition, setSelectedExhibition] = useState<Exhibition | null>(null);
   const [selectedModalExhibition, setSelectedModalExhibition] = useState<ExhibitionItem | null>(null);
   const [useGlobe, setUseGlobe] = useState(false);
+  const [useOutlineGlobe, setUseOutlineGlobe] = useState(false);
+  // Globe view uses react-globe.gl only (Cesium removed)
   const [showBanner, setShowBanner] = useState(true);
   const [focusTarget, setFocusTarget] = useState<Exhibition | null>(null);
   const lastFlowIdRef = useRef<string | null>(null);
@@ -190,11 +193,15 @@ export default function HomePage({ exhibitions }: HomePageProps) {
       {/* 지도 전체 화면 */}
       <div style={{ position: "absolute", top: 0, left: 0, width: "100vw", height: "100vh", zIndex: 1 }}>
         {useGlobe ? (
-          <CesiumGlobe
-            exhibitions={exhibitions}
-            onSelectExhibition={setSelectedExhibition}
-            focusTarget={focusTarget}
-          />
+          useOutlineGlobe ? (
+            <GlobeOutline focusLatLng={focusTarget ? { lat: focusTarget.latitude, lng: focusTarget.longitude } : null} />
+          ) : (
+            <GlobeHexPolygons
+              exhibitions={exhibitions}
+              onSelectExhibition={setSelectedExhibition}
+              focusTarget={focusTarget}
+            />
+          )
         ) : (
           <CustomGoogleMap
             exhibitions={exhibitions}
@@ -203,7 +210,7 @@ export default function HomePage({ exhibitions }: HomePageProps) {
           />
         )}
       </div>
-      {/* Bottom center controls: Globe toggle + Flow */}
+  {/* Bottom center controls: Globe toggle + Borders/Satellite (globe only) + Flow */}
       <div style={{ position: "fixed", bottom: 16, left: '50%', transform: 'translateX(-50%)', zIndex: 4000, display: 'flex', gap: 8 }}>
         <button
           onClick={() => setUseGlobe(v => !v)}
@@ -218,8 +225,25 @@ export default function HomePage({ exhibitions }: HomePageProps) {
             minWidth: 96,
           }}
         >
-          {useGlobe ? "지도로 보기" : "글로브 보기"}
+          {useGlobe ? "Map" : "Globe"}
         </button>
+        {useGlobe && (
+          <button
+            onClick={() => setUseOutlineGlobe(v => !v)}
+            style={{
+              padding: "8px 12px",
+              borderRadius: 8,
+              border: "1px solid #111827",
+              background: useOutlineGlobe ? "#111827" : "#fff",
+              color: useOutlineGlobe ? "#fff" : "#111827",
+              cursor: "pointer",
+              boxShadow: "0 2px 6px rgba(0,0,0,0.15)",
+              minWidth: 132,
+            }}
+          >
+            {useOutlineGlobe ? "Filled Globe" : "Outline Globe"}
+          </button>
+        )}
         <button
           onClick={() => {
             if (!exhibitions.length) return;

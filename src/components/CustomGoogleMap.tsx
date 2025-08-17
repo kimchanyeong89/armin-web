@@ -1,4 +1,4 @@
-import { GoogleMap, Marker, Polyline, useJsApiLoader } from '@react-google-maps/api';
+import { GoogleMap, Polyline, OverlayView, useJsApiLoader } from '@react-google-maps/api';
 import { useCallback, useRef, useState, useEffect } from 'react';
 
 import type { Exhibition } from '../types/Exhibition';
@@ -9,6 +9,9 @@ const center = { lat: 37.5665, lng: 126.9780 };
 // API 키와 새 Map ID를 상수로 선언
 const API_KEY = 'AIzaSyCjXHiVCgUGSDTBnacLnoPldQQt5C5DU4M';
 const MAP_ID = '3d00da6d7d9060e41aa19e75';  // Armin‑web 지도 ID
+// 안정적인 배열 상수 (LoadScript 재로드 방지)
+const GOOGLE_LIBRARIES = ['marker'] as const;
+const MAP_IDS = [MAP_ID] as const;
 
 type CustomGoogleMapProps = {
   exhibitions: Exhibition[];
@@ -19,6 +22,8 @@ type CustomGoogleMapProps = {
 export default function CustomGoogleMap({ exhibitions, onSelectExhibition, focusTarget }: CustomGoogleMapProps) {
   const mapRef = useRef<any>(null);
   const overlayRef = useRef<any>(null);
+  const advMarkersRef = useRef<Map<string, any>>(new Map());
+  const headMarkerRef = useRef<any>(null);
   const [zoom, setZoom] = useState(11);
   const [lastClicked, setLastClicked] = useState<Exhibition | null>(null);
   const [segments, setSegments] = useState<Array<{ from: Exhibition; to: Exhibition }>>([]);
@@ -30,7 +35,8 @@ export default function CustomGoogleMap({ exhibitions, onSelectExhibition, focus
   const { isLoaded, loadError } = useJsApiLoader({
     id: 'google-map-script',
     googleMapsApiKey: API_KEY,
-    mapIds: [MAP_ID],
+  mapIds: MAP_IDS as unknown as string[],
+  libraries: GOOGLE_LIBRARIES as unknown as ("marker")[],
   });
   // Note: Avoid early returns before hooks to keep hook order consistent
 
@@ -142,6 +148,7 @@ export default function CustomGoogleMap({ exhibitions, onSelectExhibition, focus
     });
   }, [segments.length]);
 
+
   // External focus command handler
   useEffect(() => {
     if (!focusTarget) return;
@@ -149,6 +156,123 @@ export default function CustomGoogleMap({ exhibitions, onSelectExhibition, focus
     lastFocusedIdRef.current = focusTarget.id;
     focusExhibition(focusTarget);
   }, [focusTarget]);
+
+  // Sync exhibition markers with AdvancedMarkerElement
+  useEffect(() => {
+    if (!isLoaded || !mapRef.current) return;
+    const g = (window as any).google;
+    const run = async () => {
+      // Ensure the marker library is loaded
+      if (!g?.maps?.marker?.AdvancedMarkerElement) {
+        try { await g.maps.importLibrary('marker'); } catch { /* ignore */ }
+      }
+      if (!g?.maps?.marker?.AdvancedMarkerElement) return; // give up quietly
+      const map = mapRef.current;
+
+      const visible = zoom > 2;
+      // Remove markers that no longer exist in dataset
+      const ids = new Set(exhibitions.map(e => e.id));
+      for (const [id, marker] of advMarkersRef.current) {
+        if (!ids.has(id)) {
+          marker.setMap(null);
+          advMarkersRef.current.delete(id);
+        }
+      }
+      if (!visible) {
+        for (const [, marker] of advMarkersRef.current) marker.setMap(null);
+        return;
+      }
+      exhibitions.forEach(ex => {
+        const pos = { lat: ex.latitude, lng: ex.longitude };
+        const isActive = !!(lastClicked && lastClicked.id === ex.id);
+        let marker = advMarkersRef.current.get(ex.id);
+        if (!marker) {
+          const pin = new g.maps.marker.PinElement();
+          marker = new g.maps.marker.AdvancedMarkerElement({
+            map,
+            position: pos,
+            content: pin.element,
+            title: ex.name,
+            zIndex: isActive ? 1000 : undefined,
+          });
+          marker.addListener('click', () => focusExhibition(ex));
+          advMarkersRef.current.set(ex.id, marker);
+        } else {
+          marker.map = map;
+          marker.position = pos;
+          marker.title = ex.name;
+          marker.zIndex = isActive ? 1000 : undefined;
+        }
+      });
+    };
+    run();
+  }, [isLoaded, exhibitions, zoom, lastClicked]);
+
+  // Cleanup markers on unmount
+  useEffect(() => {
+    return () => {
+      for (const [, marker] of advMarkersRef.current) marker.setMap(null);
+      advMarkersRef.current.clear();
+      if (headMarkerRef.current) {
+        headMarkerRef.current.setMap(null);
+        headMarkerRef.current = null;
+      }
+    };
+  }, []);
+
+  // Update moving head marker at the end of the latest path
+  useEffect(() => {
+    if (!isLoaded || !mapRef.current) return;
+    const g = (window as any).google;
+    const run = async () => {
+      if (!g?.maps?.marker?.AdvancedMarkerElement) {
+        try { await g.maps.importLibrary('marker'); } catch { /* ignore */ }
+      }
+      if (!g?.maps?.marker?.AdvancedMarkerElement) return;
+      const map = mapRef.current;
+      if (!paths.length) {
+        if (headMarkerRef.current) {
+          headMarkerRef.current.setMap(null);
+          headMarkerRef.current = null;
+        }
+        return;
+      }
+      const lastIdx = paths.length - 1;
+      const path = paths[lastIdx];
+      if (!path || path.length < 2) return;
+      const progress = animProgresses[lastIdx] ?? 1;
+      const index = Math.max(1, Math.floor((path.length - 1) * progress));
+      const pos = path[index];
+      const prev = path[index - 1];
+      const dy = pos.lat - prev.lat;
+      const dx = pos.lng - prev.lng;
+      const rotation = (Math.atan2(dy, dx) * 180) / Math.PI;
+
+      const headEl = document.createElement('div');
+      headEl.style.width = '0px';
+      headEl.style.height = '0px';
+      headEl.style.borderTop = '5px solid transparent';
+      headEl.style.borderBottom = '5px solid transparent';
+      headEl.style.borderLeft = '10px solid #d97706';
+      headEl.style.transform = `rotate(${rotation}deg)`;
+
+      if (!headMarkerRef.current) {
+        headMarkerRef.current = new g.maps.marker.AdvancedMarkerElement({
+          map,
+          position: pos,
+          content: headEl,
+          title: 'path-head',
+          zIndex: 1200,
+        });
+      } else {
+        headMarkerRef.current.map = map;
+        headMarkerRef.current.position = pos;
+        headMarkerRef.current.content = headEl;
+        headMarkerRef.current.zIndex = 1200;
+      }
+    };
+    run();
+  }, [isLoaded, paths, animProgresses]);
 
   // Start progressive drawing animation for newly added segment
   useEffect(() => {
@@ -211,45 +335,34 @@ export default function CustomGoogleMap({ exhibitions, onSelectExhibition, focus
         if (mapRef.current) setZoom(mapRef.current.getZoom());
       }}
     >
-      {exhibitions && exhibitions.map((exhibition) => {
-        // 줌 레벨이 2 이하이면 마커 숨김
+    {exhibitions && exhibitions.map((exhibition) => {
+        // 줌 레벨이 2 이하이면 라벨 숨김
         if (zoom <= 2) return null;
-        // 실제 핀 이미지의 원본 비율을 확인(예: 48x48, 40x48 등)
-        // 상하가 더 길도록 1:2 비율로 조정 (예: 40x80)
-  let width = Math.max(12, Math.min(24, zoom * 2));
-  const isActive = !!(lastClicked && lastClicked.id === exhibition.id);
-  if (isActive) width = Math.round(width * 1.25); // active pin slightly larger
-  const height = Math.round(width * 2); // 1:2 비율
-        // scaledSize, origin, anchor는 window.google.maps가 있을 때만 넘김
-        if (window.google && window.google.maps) {
-          return (
-            <Marker
-              key={exhibition.id}
-              position={{ lat: exhibition.latitude, lng: exhibition.longitude }}
-              title={exhibition.name}
-              icon={{
-                url: "/images/pin.png",
-                scaledSize: new window.google.maps.Size(width, height),
-                origin: new window.google.maps.Point(0, 0),
-                anchor: new window.google.maps.Point(width / 2, height),
+        return (
+          <OverlayView
+            key={`l-${exhibition.id}`}
+            position={{ lat: exhibition.latitude, lng: exhibition.longitude }}
+            mapPaneName={OverlayView.OVERLAY_MOUSE_TARGET}
+            getPixelPositionOffset={(width = 0, height = 0) => ({ x: -width / 2, y: -height - 36 })}
+          >
+            <div
+              style={{
+                pointerEvents: 'none',
+                background: 'rgba(0,0,0,0.7)',
+                color: '#fff',
+                padding: '2px 6px',
+                borderRadius: 6,
+                fontSize: 12,
+                lineHeight: 1.2,
+                whiteSpace: 'nowrap',
+                transform: 'translateY(-4px)',
+                boxShadow: '0 1px 3px rgba(0,0,0,0.3)'
               }}
-              zIndex={isActive ? 1000 : undefined}
-              onClick={() => focusExhibition(exhibition)}
-            />
-          );
-        } else {
-          // window.google.maps가 없으면 scaledSize 등은 생략
-          return (
-            <Marker
-              key={exhibition.id}
-              position={{ lat: exhibition.latitude, lng: exhibition.longitude }}
-              title={exhibition.name}
-              icon={{ url: "/images/pin.png" }}
-              zIndex={lastClicked && lastClicked.id === exhibition.id ? 1000 : undefined}
-              onClick={() => focusExhibition(exhibition)}
-            />
-          );
-        }
+            >
+              {exhibition.name}
+            </div>
+          </OverlayView>
+        );
       })}
 
       {/* Dotted curved paths between successive clicks */}
@@ -283,35 +396,7 @@ export default function CustomGoogleMap({ exhibitions, onSelectExhibition, focus
         );
       })}
 
-  {/* Moving head at the end of the latest animated path */}
-  {paths.length > 0 && (() => {
-        const lastIdx = paths.length - 1;
-        const path = paths[lastIdx];
-        if (!path || path.length < 2) return null;
-        const progress = animProgresses[lastIdx] ?? 1;
-        const index = Math.max(1, Math.floor((path.length - 1) * progress));
-        const pos = path[index];
-        const prev = path[index - 1];
-        // Approximate rotation from prev->pos
-        const dy = pos.lat - prev.lat;
-        const dx = pos.lng - prev.lng;
-        const rotation = (Math.atan2(dy, dx) * 180) / Math.PI; // degrees
-        return (
-          <Marker
-            position={pos}
-            zIndex={1200}
-            icon={{
-              path: window.google && window.google.maps ? window.google.maps.SymbolPath.FORWARD_CLOSED_ARROW : 0,
-              scale: 4,
-              strokeColor: '#d97706',
-              fillColor: '#d97706',
-              fillOpacity: 1,
-              strokeWeight: 1,
-              rotation,
-            }}
-          />
-        );
-      })()}
+  {/* Moving head marker managed imperatively via AdvancedMarkerElement */}
     </GoogleMap>
 
   {/* Head toggle removed; head always visible */}
