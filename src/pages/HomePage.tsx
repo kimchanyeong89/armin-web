@@ -5,6 +5,7 @@ import ExhibitionDetails from "../components/ExhibitionDetails";
 import ExhibitionModal from "../components/ExhibitionModal";
 import GlobeHexPolygons from "../components/GlobeHexPolygons";
 import GlobeOutline from "../components/GlobeOutline";
+import GlobeD3 from "../components/GlobeD3";
 import type { Exhibition, ExhibitionItem } from "../types/Exhibition";
 
 type HomePageProps = {
@@ -25,6 +26,7 @@ export default function HomePage({ exhibitions }: HomePageProps) {
   const [selectedModalExhibition, setSelectedModalExhibition] = useState<ExhibitionItem | null>(null);
   const [useGlobe, setUseGlobe] = useState(false);
   const [useOutlineGlobe, setUseOutlineGlobe] = useState(false);
+  const [useD3Globe, setUseD3Globe] = useState(false);
   // Globe view uses react-globe.gl only (Cesium removed)
   const [showBanner, setShowBanner] = useState(true);
   const [focusTarget, setFocusTarget] = useState<Exhibition | null>(null);
@@ -195,6 +197,13 @@ export default function HomePage({ exhibitions }: HomePageProps) {
         {useGlobe ? (
           useOutlineGlobe ? (
             <GlobeOutline focusLatLng={focusTarget ? { lat: focusTarget.latitude, lng: focusTarget.longitude } : null} />
+          ) : useD3Globe ? (
+            <GlobeD3
+              focusLatLng={focusTarget ? { lat: focusTarget.latitude, lng: focusTarget.longitude } : null}
+              autorotate={false}
+              exhibitions={exhibitions}
+              onSelectExhibition={setSelectedExhibition}
+            />
           ) : (
             <GlobeHexPolygons
               exhibitions={exhibitions}
@@ -242,6 +251,23 @@ export default function HomePage({ exhibitions }: HomePageProps) {
             }}
           >
             {useOutlineGlobe ? "Filled Globe" : "Outline Globe"}
+          </button>
+        )}
+        {useGlobe && (
+          <button
+            onClick={() => setUseD3Globe(v => !v)}
+            style={{
+              padding: "8px 12px",
+              borderRadius: 8,
+              border: "1px solid #111827",
+              background: useD3Globe ? "#111827" : "#fff",
+              color: useD3Globe ? "#fff" : "#111827",
+              cursor: "pointer",
+              boxShadow: "0 2px 6px rgba(0,0,0,0.15)",
+              minWidth: 132,
+            }}
+          >
+            {useD3Globe ? "Filled Globe" : "D3 Outline"}
           </button>
         )}
         <button
