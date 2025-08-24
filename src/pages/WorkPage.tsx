@@ -7,7 +7,7 @@ export default function WorkPage() {
   const work = works.find((w) => w.id === id);
 
   if (!work) {
-    return <div>작품을 찾을 수 없습니다.</div>;
+    return <div>Artwork not found.</div>;
   }
 
   const artist = artists.find((a) => a.id === work.artistId);
@@ -15,9 +15,9 @@ export default function WorkPage() {
   return (
     <div style={{ padding: "20px" }}>
       <h1>{work.title}</h1>
-      <p>작가: {artist ? artist.name : "알 수 없음"}</p>
-      <p>제작 연도: {work.year}</p>
-      <p>설명: {work.description}</p>
+  <p>Artist: {artist ? artist.name : "Unknown"}</p>
+  <p>Year: {work.year}</p>
+  <p>Description: {work.description}</p>
     </div>
   );
 }

@@ -16,7 +16,7 @@ const SearchResults: React.FC<SearchResultsProps> = ({ searchType, results }) =>
         {results.map((exhibition, index) => (
           <div key={index} style={{ border: '1px solid #ccc', padding: '10px', marginBottom: '5px' }}>
             <h3>{exhibition.museum} ({exhibition.location})</h3>
-            <p>전시 작품:</p>
+            <p>Exhibited works:</p>
             {exhibition.works.map((work: any, idx: number) => (
               <div key={idx} style={{ marginLeft: '20px' }}>
                 🎨 {work.title} — {work.artist} ({work.artistNationality})
@@ -54,7 +54,7 @@ const SearchResults: React.FC<SearchResultsProps> = ({ searchType, results }) =>
     );
   }
 
-  return <div>검색 결과가 없습니다.</div>;
+  return <div>No results found.</div>;
 };
 
 export default SearchResults;

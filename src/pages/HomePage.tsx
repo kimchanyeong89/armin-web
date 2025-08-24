@@ -3,7 +3,7 @@ import ExhibitionBanner from "../components/ExhibitionBanner";
 import CustomGoogleMap from "../components/CustomGoogleMap";
 import ExhibitionDetails from "../components/ExhibitionDetails";
 import ExhibitionModal from "../components/ExhibitionModal";
-import GlobeHexPolygons from "../components/GlobeHexPolygons";
+// Filled Globe temporarily hidden
 // Removed react-globe.gl Outline mode
 import GlobeD3 from "../components/GlobeD3";
 import type { Exhibition, ExhibitionItem } from "../types/Exhibition";
@@ -26,10 +26,12 @@ export default function HomePage({ exhibitions }: HomePageProps) {
   const [selectedModalExhibition, setSelectedModalExhibition] = useState<ExhibitionItem | null>(null);
   const [useGlobe, setUseGlobe] = useState(false);
   // Removed Outline Globe toggle
-  const [useD3Globe, setUseD3Globe] = useState(false);
+  // D3 globe is the only globe mode when Globe is ON
   // Globe view uses react-globe.gl only (Cesium removed)
   const [showBanner, setShowBanner] = useState(true);
   const [focusTarget, setFocusTarget] = useState<Exhibition | null>(null);
+  const [userLocation, setUserLocation] = useState<{ lat: number; lng: number } | null>(null);
+  const [resetZoomKey, setResetZoomKey] = useState(0);
   const lastFlowIdRef = useRef<string | null>(null);
   // Header reveal toggle state
   const [headerOn, setHeaderOn] = useState(false);
@@ -139,7 +141,7 @@ export default function HomePage({ exhibitions }: HomePageProps) {
             try {
               const EyeDropperCtor = (window as any).EyeDropper;
               if (!EyeDropperCtor) {
-                alert('이 브라우저는 스포이드(EyeDropper)를 지원하지 않습니다. 최신 Chrome 기반 브라우저에서 사용해 보세요.');
+                alert('This browser does not support EyeDropper. Please use a recent Chromium-based browser.');
                 return;
               }
               const eyeDropper = new EyeDropperCtor();
@@ -192,33 +194,64 @@ export default function HomePage({ exhibitions }: HomePageProps) {
           />
         </div>
       </div>
-      {/* 지도 전체 화면 */}
+  {/* Fullscreen map */}
       <div style={{ position: "absolute", top: 0, left: 0, width: "100vw", height: "100vh", zIndex: 1 }}>
   {useGlobe ? (
-    useD3Globe ? (
-            <GlobeD3
-              focusLatLng={focusTarget ? { lat: focusTarget.latitude, lng: focusTarget.longitude } : null}
-              autorotate={false}
-              exhibitions={exhibitions}
-              onSelectExhibition={setSelectedExhibition}
-            />
-          ) : (
-            <GlobeHexPolygons
-              exhibitions={exhibitions}
-              onSelectExhibition={setSelectedExhibition}
-              focusTarget={focusTarget}
-            />
-          )
-        ) : (
-          <CustomGoogleMap
-            exhibitions={exhibitions}
-            onSelectExhibition={setSelectedExhibition}
-            focusTarget={focusTarget}
-          />
-        )}
+    <GlobeD3
+      key={resetZoomKey}
+      focusLatLng={focusTarget ? { lat: focusTarget.latitude, lng: focusTarget.longitude } : userLocation}
+      autorotate={false}
+      exhibitions={exhibitions}
+      onSelectExhibition={setSelectedExhibition}
+    />
+  ) : (
+    <CustomGoogleMap
+      key={resetZoomKey}
+      exhibitions={exhibitions}
+      onSelectExhibition={setSelectedExhibition}
+      focusTarget={focusTarget}
+      userLocation={userLocation}
+      resetZoomKey={resetZoomKey}
+    />
+  )}
+  {/* 'My location' button moved to bottom-center controls to align with Globe/Flat toggle */}
       </div>
   {/* Bottom center controls: Globe toggle + D3 Outline (globe only) + Flow */}
       <div style={{ position: "fixed", bottom: 16, left: '50%', transform: 'translateX(-50%)', zIndex: 4000, display: 'flex', gap: 8 }}>
+        <button
+          onClick={() => {
+            if (!navigator.geolocation) {
+              alert("This browser does not support geolocation.");
+              return;
+            }
+            navigator.geolocation.getCurrentPosition(
+              (pos) => {
+                const { latitude, longitude } = pos.coords;
+                setUserLocation({ lat: latitude, lng: longitude });
+                setFocusTarget(null); // clear any exhibition focus
+                setResetZoomKey(k => k + 1); // force remount to reset zoom
+              },
+              (err) => {
+                alert("Unable to get your location: " + err.message);
+              },
+              { enableHighAccuracy: true, timeout: 10000 }
+            );
+          }}
+          style={{
+            padding: "8px 12px",
+            borderRadius: 8,
+            border: "1px solid #374151",
+            background: "#fff",
+            color: "#374151",
+            fontWeight: 700,
+            fontSize: "1rem",
+            boxShadow: "0 2px 6px rgba(0,0,0,0.15)",
+            cursor: "pointer",
+            minWidth: 96,
+          }}
+        >
+          My location
+        </button>
         <button
           onClick={() => setUseGlobe(v => !v)}
           style={{
@@ -232,26 +265,10 @@ export default function HomePage({ exhibitions }: HomePageProps) {
             minWidth: 96,
           }}
         >
-          {useGlobe ? "Map" : "Globe"}
+          {useGlobe ? "FLAT" : "Globe"}
         </button>
   {/* Removed Outline Globe toggle */}
-        {useGlobe && (
-          <button
-            onClick={() => setUseD3Globe(v => !v)}
-            style={{
-              padding: "8px 12px",
-              borderRadius: 8,
-              border: "1px solid #111827",
-              background: useD3Globe ? "#111827" : "#fff",
-              color: useD3Globe ? "#fff" : "#111827",
-              cursor: "pointer",
-              boxShadow: "0 2px 6px rgba(0,0,0,0.15)",
-              minWidth: 132,
-            }}
-          >
-            {useD3Globe ? "Filled Globe" : "D3 Outline"}
-          </button>
-        )}
+  {/* Filled Globe hidden; D3 Outline is the only globe mode */}
         <button
           onClick={() => {
             if (!exhibitions.length) return;
@@ -279,7 +296,7 @@ export default function HomePage({ exhibitions }: HomePageProps) {
           Flow
         </button>
       </div>
-      {/* 오른쪽 팝업 배너 */}
+  {/* Right popup banner */}
   <div style={{ position: "fixed", top: "60px", right: 0, zIndex: 3000 }}>
         {showBanner && (
           <ExhibitionBanner
@@ -298,7 +315,7 @@ export default function HomePage({ exhibitions }: HomePageProps) {
           />
         )}
       </div>
-      {/* 선택된 전시관 상세 슬라이드 */}
+  {/* Selected museum details slide */}
       <div style={{ position: "fixed", top: 0, right: 0, width: "400px", height: "100%", backgroundColor: "#fff", boxShadow: "-2px 0 8px rgba(0,0,0,0.2)", overflowY: "auto", zIndex: 1000, transform: selectedExhibition ? "translateX(0)" : "translateX(100%)", transition: "transform 0.3s ease" }}>
         {selectedExhibition && (
           <ExhibitionDetails
@@ -309,7 +326,7 @@ export default function HomePage({ exhibitions }: HomePageProps) {
           />
         )}
       </div>
-      {/* 전시 모달 */}
+  {/* Exhibition modal */}
       {selectedModalExhibition && (
         <ExhibitionModal
           exhibition={selectedModalExhibition}

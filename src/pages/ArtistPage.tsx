@@ -6,15 +6,15 @@ export default function ArtistPage() {
   const artist = artists.find((a) => a.id === id);
 
   if (!artist) {
-    return <div>작가를 찾을 수 없습니다.</div>;
+    return <div>Artist not found.</div>;
   }
 
   return (
     <div style={{ padding: "20px" }}>
       <h1>{artist.name}</h1>
-      <p>국적: {artist.nationality}</p>
-      <p>생년: {artist.birthYear}</p>
-      <p>설명: {artist.description}</p>
+  <p>Nationality: {artist.nationality}</p>
+  <p>Birth year: {artist.birthYear}</p>
+  <p>Description: {artist.description}</p>
     </div>
   );
 }

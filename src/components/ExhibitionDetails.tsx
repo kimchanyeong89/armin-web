@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { publicUrl } from "../utils/publicUrl";
+import { useMemo, useState } from "react";
 import type { Exhibition, ExhibitionItem } from "../types/Exhibition";
 
 interface ExhibitionDetailsProps {
@@ -14,9 +15,8 @@ export default function ExhibitionDetails({
   isOpen,
   onSelectExhibition
 }: ExhibitionDetailsProps) {
-  const [isCurrentExhibitionsCollapsed, setIsCurrentExhibitionsCollapsed] = useState(false);
-  const [isPastExhibitionsCollapsed, setIsPastExhibitionsCollapsed] = useState(false);
   const [checking, setChecking] = useState(false);
+  const [showDebug, setShowDebug] = useState(false);
   async function runHealthcheck() {
     setChecking(true);
     try {
@@ -31,6 +31,62 @@ export default function ExhibitionDetails({
       setChecking(false);
     }
   }
+
+  // Local-only image policy: always use exhibition.representativeImage (local)
+  const [isCurrentExhibitionsCollapsed, setIsCurrentExhibitionsCollapsed] = useState(false);
+  const [isPastExhibitionsCollapsed, setIsPastExhibitionsCollapsed] = useState(false);
+  const [isUpcomingExhibitionsCollapsed, setIsUpcomingExhibitionsCollapsed] = useState(false);
+  // Show URL debug overlay only in dev or when ?debug=1 is present
+  const canDebug = (() => {
+    try {
+      const dev = (import.meta as any)?.env?.DEV;
+      const qs = typeof window !== 'undefined' ? new URLSearchParams(window.location.search) : null;
+      const q = qs?.get('debug') === '1';
+      return !!(dev || q);
+    } catch {
+      return false;
+    }
+  })();
+
+  // Categorize temporary (special) exhibitions by date: upcoming / current / expired
+  const { upcomingSpecials, currentSpecials, expiredSpecials } = useMemo(() => {
+    const temps = exhibition.temporaryExhibitions || [];
+    const now = new Date();
+    // Normalize to start of today for comparisons
+    const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate());
+    const parseSafe = (s?: string | null) => {
+      if (!s) return null;
+      const d = new Date(s);
+      if (isNaN(d.getTime())) return null;
+      return d;
+    };
+    const upcoming: typeof temps = [];
+    const current: typeof temps = [];
+    const expired: typeof temps = [];
+    for (const item of temps) {
+      const start = parseSafe(item.startDate as any);
+      const end = parseSafe(item.endDate as any);
+      // If end is before todayStart, it's expired
+      if (end && end < todayStart) {
+        expired.push(item);
+        continue;
+      }
+      // If start is after todayStart, it's upcoming
+      if (start && start > todayStart) {
+        upcoming.push(item);
+        continue;
+      }
+      // Otherwise, consider it current (also covers missing/invalid dates)
+      current.push(item);
+    }
+    return { upcomingSpecials: upcoming, currentSpecials: current, expiredSpecials: expired };
+  }, [exhibition.temporaryExhibitions]);
+
+  // Merge any expired special exhibitions into the past list for display
+  const pastList = useMemo(() => {
+    const pastFromData = exhibition.pastExhibitions || [];
+    return [...pastFromData, ...(expiredSpecials || [])];
+  }, [exhibition.pastExhibitions, expiredSpecials]);
 
   return (
     <div
@@ -65,18 +121,69 @@ export default function ExhibitionDetails({
         ←
       </button>
       <h2>{exhibition.name}</h2>
-      {/* 전시관 이미지 프레임 추가 */}
+      {/* 전시관 대표 이미지 */}
       <div
         style={{
-          width: "95%",
-          height: "200px",
+          width: "calc(100% - 20px)", // 우측 벽과 여백 유지
+          aspectRatio: "16 / 9", // 일관된 비율 유지
+          marginBottom: "10px",
+          marginRight: "20px",
           backgroundColor: "#ccc",
-          marginBottom: "20px"
+          overflow: "hidden",
+          borderRadius: 6
         }}
-      ></div>
-      <p>{exhibition.description}</p>
+      >
+        {(() => {
+          const fallback = "/images/meta-header.svg";
+          const raw = (exhibition.representativeImage && String(exhibition.representativeImage).trim())
+            || ((exhibition as any).image && String((exhibition as any).image).trim())
+            || fallback;
+          const cleaned = raw.replace(/^\/+/, "");
+          const fb = publicUrl(fallback);
+          const candidates = useMemo(() => {
+            const list = [
+              publicUrl(raw),
+              // Ensure a relative form as a second try under sub-path or file://
+              publicUrl(`./${cleaned}`),
+            ];
+            // Deduplicate while preserving order
+            return Array.from(new Set(list));
+          }, [raw, cleaned]);
+          const [idx, setIdx] = useState(0);
+          const src = candidates[Math.min(idx, candidates.length - 1)] || fb;
+          return (
+            <div style={{ position: 'relative', width: '100%', height: '100%' }}>
+              <img
+                src={src}
+                alt={exhibition.name}
+                style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+                loading="eager"
+                decoding="async"
+                onError={(e) => {
+                  // Try next candidate if available; else fall back to placeholder
+                  if (idx < candidates.length - 1) {
+                    setIdx((v) => v + 1);
+                    return;
+                  }
+                  const target = e.currentTarget as HTMLImageElement;
+                  if (target.src !== fb) target.src = fb;
+                }}
+              />
+              {canDebug && showDebug && (
+                <div style={{ position: 'absolute', bottom: 4, left: 4, background: 'rgba(0,0,0,0.6)', color: '#fff', padding: '2px 6px', borderRadius: 4, fontSize: 11 }}>{src}</div>
+              )}
+              {canDebug && (
+                <button onClick={() => setShowDebug(v => !v)} style={{ position: 'absolute', top: 6, right: 6, fontSize: 10, padding: '2px 6px' }}>URL</button>
+              )}
+            </div>
+          );
+        })()}
+      </div>
+  {/* External links removed (by request). Only optional tiny attribution was kept out. */}
+  {/* Remote attribution removed — local-only images */}
+  <p style={{ fontSize: "0.8rem", fontWeight: 400, color: "#333", marginBottom: "12px" }}>{exhibition.description}</p>
 
-      {/* 현재 전시 */}
+  {/* Current exhibitions */}
       <h3>
         <button
           onClick={() => setIsCurrentExhibitionsCollapsed(!isCurrentExhibitionsCollapsed)}
@@ -88,13 +195,13 @@ export default function ExhibitionDetails({
         >
           {isCurrentExhibitionsCollapsed ? "▶" : "▼"}
         </button>
-        현재 전시
+  Current exhibitions
       </h3>
 
       {!isCurrentExhibitionsCollapsed && (
         <>
-          {/* 상설 전시 */}
-          <h4>상설 전시</h4>
+          {/* Permanent exhibitions */}
+          <h4>Permanent</h4>
           {exhibition.permanentExhibitions && exhibition.permanentExhibitions.length > 0 ? (
             <div
               style={{
@@ -121,7 +228,7 @@ export default function ExhibitionDetails({
                     cursor: "pointer"
                   }}
                 >
-                  {/* 전시 포스터 (임시 프레임) */}
+                  {/* Poster (placeholder frame) */}
                   <div
                     style={{
                       width: "80px",
@@ -130,7 +237,7 @@ export default function ExhibitionDetails({
                       marginBottom: "3px" // Reduced margin
                     }}
                   ></div>
-                  {/* 전시 이름 */}
+                  {/* Exhibition name */}
                   <div
                     style={{
                       textAlign: "center",
@@ -166,7 +273,7 @@ export default function ExhibitionDetails({
                       {item.name}
                     </div>
                   </div>
-                  {/* 전시 기간 */}
+                  {/* Period */}
                   <div style={{ textAlign: "center", fontSize: "0.6rem", color: "#666" }}>
                     <div>{item.startDate}</div>
                     <div>{item.endDate}</div>
@@ -175,12 +282,12 @@ export default function ExhibitionDetails({
               ))}
             </div>
           ) : (
-            <p>상설 전시가 없습니다.</p>
+            <p>No permanent exhibitions.</p>
           )}
 
-          {/* 특별 전시 */}
-          <h4>특별 전시</h4>
-          {exhibition.temporaryExhibitions && exhibition.temporaryExhibitions.length > 0 ? (
+          {/* Special exhibitions (current) */}
+          <h4>Special</h4>
+          {currentSpecials && currentSpecials.length > 0 ? (
             <div
               style={{
                 display: "flex",
@@ -188,7 +295,7 @@ export default function ExhibitionDetails({
                 gap: "10px",
               }}
             >
-              {exhibition.temporaryExhibitions.map((item) => (
+              {currentSpecials.map((item) => (
                 <div
                   key={item.id}
                   onClick={() => {
@@ -206,7 +313,7 @@ export default function ExhibitionDetails({
                     cursor: "pointer"
                   }}
                 >
-                  {/* 전시 포스터 (임시 프레임) */}
+                  {/* Poster (placeholder frame) */}
                   <div
                     style={{
                       width: "80px",
@@ -215,7 +322,7 @@ export default function ExhibitionDetails({
                       marginBottom: "5px"
                     }}
                   ></div>
-                  {/* 전시 이름 */}
+                  {/* Exhibition name */}
                   <div
                     style={{
                       textAlign: "center",
@@ -251,7 +358,7 @@ export default function ExhibitionDetails({
                       {item.name}
                     </div>
                   </div>
-                  {/* 전시 기간 */}
+                  {/* Period */}
                   <div style={{ textAlign: "center", fontSize: "0.6rem", color: "#666" }}>
                     <div>{item.startDate}</div>
                     <div>{item.endDate}</div>
@@ -260,12 +367,61 @@ export default function ExhibitionDetails({
               ))}
             </div>
           ) : (
-            <p>특별 전시가 없습니다.</p>
+            <p>No special exhibitions.</p>
           )}
+
+          {/* upcoming removed from here - it will be rendered as its own top-level section */}
         </>
       )}
 
-      {/* ...existing code... */}
+        {/* Upcoming exhibitions (top-level) */}
+        <h3>
+          <button
+            onClick={() => setIsUpcomingExhibitionsCollapsed(!isUpcomingExhibitionsCollapsed)}
+            style={{
+              marginRight: "10px",
+              fontSize: "0.9rem",
+              padding: "2px 6px"
+            }}
+          >
+            {isUpcomingExhibitionsCollapsed ? "▶" : "▼"}
+          </button>
+  Upcoming exhibitions
+        </h3>
+
+        {!isUpcomingExhibitionsCollapsed && (
+          upcomingSpecials && upcomingSpecials.length > 0 ? (
+            <div style={{ display: "flex", flexWrap: "wrap", gap: "10px" }}>
+              {upcomingSpecials.map((item) => (
+                <div
+                  key={`up-${item.id}`}
+                  onClick={() => onSelectExhibition(item)}
+                  style={{
+                    width: "100px",
+                    height: "180px",
+                    border: "1px solid #ccc",
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    cursor: "pointer"
+                  }}
+                >
+                  <div style={{ width: "80px", height: "100px", backgroundColor: "#eee", marginBottom: "5px" }} />
+                  <div style={{ textAlign: "center", fontSize: "0.75rem", fontWeight: 700, width: "80px", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{item.name}</div>
+                  <div style={{ textAlign: "center", fontSize: "0.6rem", color: "#666" }}>
+                    <div>{item.startDate}</div>
+                    <div>{item.endDate}</div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          ) : (
+            <p>No upcoming exhibitions.</p>
+          )
+        )}
+
+  {/* ...existing code... */}
       <h3>
         <button
           onClick={() => setIsPastExhibitionsCollapsed(!isPastExhibitionsCollapsed)}
@@ -277,11 +433,11 @@ export default function ExhibitionDetails({
         >
           {isPastExhibitionsCollapsed ? "▶" : "▼"}
         </button>
-        이전 전시
+  Past exhibitions
       </h3>
 
       {!isPastExhibitionsCollapsed && (
-        exhibition.pastExhibitions && exhibition.pastExhibitions.length > 0 ? (
+        pastList && pastList.length > 0 ? (
           <div
             style={{
               display: "flex",
@@ -289,7 +445,7 @@ export default function ExhibitionDetails({
               gap: "10px",
             }}
           >
-            {exhibition.pastExhibitions.map((item) => (
+            {pastList.map((item) => (
               <div
                 key={item.id}
                 onClick={() => onSelectExhibition(item)}
@@ -304,7 +460,7 @@ export default function ExhibitionDetails({
                   cursor: "pointer"
                 }}
               >
-                {/* 전시 포스터 (임시 프레임) */}
+                {/* Poster (placeholder frame) */}
                 <div
                   style={{
                     width: "80px",
@@ -313,7 +469,7 @@ export default function ExhibitionDetails({
                     marginBottom: "5px"
                   }}
                 ></div>
-                {/* 전시 이름 */}
+                {/* Exhibition name */}
                 <div
                   style={{
                     textAlign: "center",
@@ -349,7 +505,7 @@ export default function ExhibitionDetails({
                     {item.name}
                   </div>
                 </div>
-                {/* 전시 기간 */}
+                {/* Period */}
                 <div style={{ textAlign: "center", fontSize: "0.6rem", color: "#666" }}>
                   <div>{item.startDate}</div>
                   <div>{item.endDate}</div>
@@ -358,14 +514,14 @@ export default function ExhibitionDetails({
             ))}
           </div>
         ) : (
-          <p>이전 전시가 없습니다.</p>
+          <p>No past exhibitions.</p>
         )
       )}
 
-      {/* Dev: Firebase 연결 상태 점검 버튼 */}
+  {/* Dev: Firebase connection healthcheck */}
       <div style={{ marginTop: 12 }}>
         <button onClick={runHealthcheck} disabled={checking} style={{ fontSize: "0.85rem" }}>
-          {checking ? "확인 중..." : "Firebase 연결 점검"}
+          {checking ? "Checking..." : "Check Firebase connection"}
         </button>
       </div>
     </div>

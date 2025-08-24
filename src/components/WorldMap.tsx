@@ -63,21 +63,21 @@ function WorldMap({ onSelectExhibition, exhibitions }: WorldMapProps) {
 
     pointSeries.bullets.push((root) => {
       const container = am5.Container.new(root, {});
-      const pin = am5.Picture.new(root, {
-        width: 24,
-        height: 24,
+      // Use a simple black circle so there's only one visible pin color and it's interactive
+      const circle = am5.Circle.new(root, {
+        radius: 6,
+        fill: am5.color(0x111827),
+        stroke: am5.color(0xffffff),
+        strokeWidth: 1.5,
         centerX: am5.p50,
         centerY: am5.p100,
-        y: 0,
-        x: 0,
-        src: "/images/pin.png",
         tooltipText: "{name}",
         cursorOverStyle: "pointer"
       });
 
-      container.children.push(pin);
+      container.children.push(circle);
 
-      pin.events.on("click", (ev) => {
+      circle.events.on("click", (ev) => {
         const dataItem = ev.target.dataItem;
         if (dataItem) {
           onSelectExhibition(dataItem.dataContext);
@@ -149,7 +149,7 @@ function WorldMap({ onSelectExhibition, exhibitions }: WorldMapProps) {
               cursor: "pointer"
             }}
           >
-            중앙으로 가기
+            Reset center
           </button>
         )}
         <button
@@ -167,7 +167,7 @@ function WorldMap({ onSelectExhibition, exhibitions }: WorldMapProps) {
             cursor: "pointer"
           }}
         >
-          {isGlobe ? "평면 지도 보기" : "지구본 보기"}
+          {isGlobe ? "Switch to flat map" : "Switch to globe"}
         </button>
       </div>
 
@@ -182,7 +182,7 @@ function WorldMap({ onSelectExhibition, exhibitions }: WorldMapProps) {
           boxSizing: "border-box"
         }}
       >
-        <span>광고 자리 (가로 배너)</span>
+  <span>Ad placeholder (horizontal banner)</span>
       </div>
     </div>
   );

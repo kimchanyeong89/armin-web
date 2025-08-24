@@ -1,6 +1,6 @@
 import type { ExhibitionItem } from "../types/Exhibition";
 import type { Artwork } from "../types/Artwork";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useRef, useMemo } from "react";
 import { addDoc, collection, onSnapshot, query, where, getDocs, deleteDoc, doc } from "firebase/firestore";
 import { db } from "../firebase";
 
@@ -17,17 +17,14 @@ const ExhibitionModal = ({ exhibition, onClose }: ExhibitionModalProps) => {
   // Layout anchors: keep top row and metadata row in sync
   const LAYOUT_LEFT_BASE = 420; // px, push the two-line layout block to the right
   const LAYOUT_RIGHT_PAD = 0; // stick to the right edge
-  const DESCRIPTION_WIDTH_PCT = 12.5; // % width for exhibition description box
   // const STRIP_WIDTH = 150; // px, thumbnail strip width
   // const STRIP_GUTTER = 12; // px, spacing right of the strip
   const META_BASE_MARGIN = 8; // px, desired margin above metadata (raised closer to top)
-  const TITLE_DESC_X_OFFSET = 260; // px, shift title/description 100px further right
-  const ARCHIVE_LINE_TOP = 14; // px, align Y to Archive text line
-  const TITLE_HEIGHT_EST = 16; // px, estimated title line height
-  const TITLE_BELOW_GAP = 8; // px, gap between title and description
-  const META_LABEL_INSET = 24; // px, metaRowRef top -> first label top (padding 12 + label top 12)
-  const DESC_Y_NUDGE = -20; // px, lower description by 10px from previous position
+  // Title/description moved to left column header; top-bar alignment constants removed
+  // Simplified layout constants; dynamic alignment removed
   const [artworks, setArtworks] = useState<Artwork[]>([]);
+  // Room selector: 'ALL' shows every artwork; other ids map to actual roomId values
+  const [selectedRoomId, setSelectedRoomId] = useState<string>("ALL");
   const [showImageModal, setShowImageModal] = useState<string | null>(null);
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
   const [viewMode, setViewMode] = useState<'archive' | 'gallery'>('archive');
@@ -40,7 +37,50 @@ const ExhibitionModal = ({ exhibition, onClose }: ExhibitionModalProps) => {
   const relocateTimerRef = useRef<number | null>(null);
   const magnetTimerRef = useRef<number | null>(null);
   const [infoY, setInfoY] = useState<number>(0);
-  // 관성 스크롤 상태
+
+  // Allow adding simple rooms and compute a list of room buttons (ALL + defaults + custom + discovered)
+  const [customRooms, setCustomRooms] = useState<string[]>([]);
+  // Load/save custom rooms per exhibition to localStorage so rooms persist between opens
+  useEffect(() => {
+    try {
+      const key = `rooms_${exhibition.id}`;
+      const raw = localStorage.getItem(key);
+      if (raw) {
+        const parsed = JSON.parse(raw) as string[];
+        if (Array.isArray(parsed)) setCustomRooms(parsed);
+      }
+    } catch {}
+  }, [exhibition.id]);
+
+  useEffect(() => {
+    try {
+      const key = `rooms_${exhibition.id}`;
+      localStorage.setItem(key, JSON.stringify(customRooms));
+    } catch {}
+  }, [customRooms, exhibition.id]);
+  const roomButtons = useMemo(() => {
+    const buttons: { label: string; id: string }[] = [];
+    buttons.push({ label: 'ALL', id: 'ALL' });
+    // default numeric rooms
+    ['1', '2', '3'].forEach((n) => buttons.push({ label: n, id: n }));
+    // custom rooms created via + button
+    for (const r of customRooms) buttons.push({ label: r, id: r });
+    // include any artwork roomIds that aren't already represented
+    const seen = new Set(buttons.map(b => b.id));
+    for (const id of Array.from(new Set(artworks.map(a => a.roomId || 'default')))) {
+      if (!seen.has(id)) {
+        buttons.push({ label: id, id });
+        seen.add(id);
+      }
+    }
+    return buttons;
+  }, [artworks, customRooms]);
+
+  const filteredArtworks = useMemo(() => {
+    if (selectedRoomId === 'ALL') return artworks;
+    return artworks.filter(a => (a.roomId || 'default') === selectedRoomId);
+  }, [artworks, selectedRoomId]);
+  // Momentum scroll state
   const momentumRef = useRef<{ vel: number; raf: number; accelFrames: number }>({ vel: 0, raf: 0, accelFrames: 0 });
   const applyMomentumRef = useRef<((delta: number) => void) | null>(null);
   // Alignment helpers for meta row under top controls
@@ -48,9 +88,12 @@ const ExhibitionModal = ({ exhibition, onClose }: ExhibitionModalProps) => {
   const archiveRef = useRef<HTMLSpanElement | null>(null);
   const metaRowRef = useRef<HTMLDivElement | null>(null);
   const topBarRef = useRef<HTMLDivElement | null>(null);
-  const descRef = useRef<HTMLDivElement | null>(null);
+  // descRef removed (description now in left header)
+  const titleScrollRef = useRef<HTMLDivElement | null>(null);
+  const titleRafRef = useRef<number | null>(null);
+  const titleDirRef = useRef<number>(1);
   const didReseedRef = useRef(false);
-  const gallerySeedRef = useRef<number | null>(null);
+  // gallerySeedRef removed (gallery extras no longer generated)
   // Fixed symmetric columns to keep metadata spread and avoid overlap
   const META_CREATOR_X = 250; // px
   const META_DATE_X = 500; // px
@@ -69,7 +112,7 @@ const ExhibitionModal = ({ exhibition, onClose }: ExhibitionModalProps) => {
   const [metaHeight, setMetaHeight] = useState<number>(44);
   const [topBarHeight, setTopBarHeight] = useState<number>(36);
   const [metaMarginTop] = useState<number>(META_BASE_MARGIN);
-  const [descTopPx, setDescTopPx] = useState<number | null>(null);
+  // description/positioning constants removed — layout now uses fixed left-top positions
   // Left positions now derive from metaPos.dimension
   // Vertical positions now follow the Archive line (top: 14)
   const stageMonitorRef = useRef<HTMLDivElement | null>(null);
@@ -85,10 +128,10 @@ const ExhibitionModal = ({ exhibition, onClose }: ExhibitionModalProps) => {
 
   // Subscribe to Firestore artworks for this exhibition
   useEffect(() => {
-    // URL 파라미터로 랜덤 이미지 시드가 요청된 경우, 파이어스토어 구독을 생략하고 즉시 임시 이미지 20장을 표시
+  // If a random image seed is requested via URL param, skip Firestore subscription and show 20 ephemeral images immediately
     const params = new URLSearchParams(window.location.search);
     const seedMode = params.get("seed");
-    const allowSeed = exhibition.title?.trim() === "한국 고미술 컬렉션" && (seedMode === "unsplash20" || seedMode === "picsum20");
+  const allowSeed = exhibition.title?.trim() === "Korean Classical Art Collection" && (seedMode === "unsplash20" || seedMode === "picsum20");
     if (allowSeed) {
       const now = Date.now();
       const useUnsplash = seedMode === "unsplash20";
@@ -139,9 +182,9 @@ const ExhibitionModal = ({ exhibition, onClose }: ExhibitionModalProps) => {
 
   // Ensure selected index is valid when artworks update
   useEffect(() => {
-    if (artworks.length === 0) { setSelectedIndex(0); return; }
-    setSelectedIndex((prev) => Math.min(prev, artworks.length - 1));
-  }, [artworks.length]);
+    if (filteredArtworks.length === 0) { setSelectedIndex(0); return; }
+    setSelectedIndex((prev) => Math.min(prev, filteredArtworks.length - 1));
+  }, [filteredArtworks.length]);
 
   // Static columns; no DOM measurement needed
 
@@ -159,9 +202,9 @@ const ExhibitionModal = ({ exhibition, onClose }: ExhibitionModalProps) => {
       clearTimeout(id);
       window.removeEventListener('resize', measure);
     };
-  }, [metaPos, selectedIndex, artworks.length]);
+  }, [metaPos, selectedIndex, filteredArtworks.length]);
 
-  // 상단 바 높이 고정 (메타/설명 Y 계산의 기준 안정화)
+  // Fix top bar height (stabilize baseline for meta/description Y calculations)
   useEffect(() => {
     const measureTopBar = () => {
       // Fix the top bar height so metadata can move up; description is absolute and won't be clipped
@@ -175,38 +218,47 @@ const ExhibitionModal = ({ exhibition, onClose }: ExhibitionModalProps) => {
     };
   }, [exhibition.title, exhibition.description, selectedIndex, metaPos]);
 
-  // 전시 소개(설명) Y를 메타데이터의 TITLE 값 Y에 맞춤 (없으면 라벨 기준으로 폴백)
-  useEffect(() => {
-    const alignDescToMeta = () => {
-      const topBar = topBarRef.current;
-      const metaEl = metaRowRef.current;
-      if (!topBar || !metaEl) return;
-      const topBarRect = topBar.getBoundingClientRect();
-      // 우선 TITLE 값의 실제 화면 Y를 사용
-      const titleValEl = metaTitleValueRef.current;
-      let desired: number;
-      if (titleValEl) {
-        const valRect = titleValEl.getBoundingClientRect();
-        desired = Math.max(0, Math.round(valRect.top - topBarRect.top + DESC_Y_NUDGE));
-      } else {
-        // 폴백: 메타 라벨 Y 기준
-        const metaRect = metaEl.getBoundingClientRect();
-        const metaLabelTopScreen = metaRect.top + META_LABEL_INSET;
-        desired = Math.max(0, Math.round(metaLabelTopScreen - topBarRect.top + DESC_Y_NUDGE));
-      }
-      setDescTopPx(desired);
-    };
-    const id = window.setTimeout(alignDescToMeta, 0);
-    window.addEventListener('resize', alignDescToMeta);
-    return () => {
-      clearTimeout(id);
-      window.removeEventListener('resize', alignDescToMeta);
-    };
-  }, [metaPos, selectedIndex, artworks.length, exhibition.description, topBarHeight]);
+  // Description alignment simplified: using fixed left-top placement instead of dynamic computation.
 
   // Vertical alignment handled by static top values to match Archive line
 
   // No visible spacers; we'll clamp selection to first/last at extremes
+
+  // Hover-based auto-scroll (marquee) for long titles: ping-pong left/right while hovered
+  const startTitleAutoScroll = () => {
+    const el = titleScrollRef.current;
+    if (!el) return;
+    const inner = el.firstElementChild as HTMLElement | null;
+    if (!inner) return;
+    const max = inner.scrollWidth - el.clientWidth;
+    if (max <= 0) return;
+    if (titleRafRef.current) cancelAnimationFrame(titleRafRef.current);
+    titleDirRef.current = 1;
+    let last = performance.now();
+    const step = (now: number) => {
+      const dt = Math.min(40, now - last); // cap dt for large frames
+      last = now;
+      const speedPxPerMs = 0.05; // ~50px/sec
+      const delta = titleDirRef.current * speedPxPerMs * dt;
+      el.scrollLeft = Math.max(0, Math.min(max, el.scrollLeft + delta));
+      if (el.scrollLeft >= max - 0.5) {
+        titleDirRef.current = -1;
+      } else if (el.scrollLeft <= 0.5) {
+        titleDirRef.current = 1;
+      }
+      titleRafRef.current = requestAnimationFrame(step);
+    };
+    titleRafRef.current = requestAnimationFrame(step);
+  };
+
+  const stopTitleAutoScroll = (reset = true) => {
+    if (titleRafRef.current) {
+      cancelAnimationFrame(titleRafRef.current);
+      titleRafRef.current = null;
+    }
+    const el = titleScrollRef.current;
+    if (el && reset) el.scrollLeft = 0;
+  };
 
   // Optional seeding: add placeholder images for a specific exhibition if empty
   useEffect(() => {
@@ -214,7 +266,7 @@ const ExhibitionModal = ({ exhibition, onClose }: ExhibitionModalProps) => {
     if (!title || seededRef.current) return;
     const storageKey = `seeded_${exhibition.id}`;
     if (localStorage.getItem(storageKey)) { seededRef.current = true; return; }
-    if (title === "한국 고미술 컬렉션" && artworks.length === 0) {
+  if (title === "Korean Classical Art Collection" && artworks.length === 0) {
       (async () => {
         try {
           seededRef.current = true;
@@ -244,27 +296,27 @@ const ExhibitionModal = ({ exhibition, onClose }: ExhibitionModalProps) => {
     }
   }, [artworks.length, exhibition.id, exhibition.name, exhibition.title]);
 
-  // Reseed helper via URL param for 한국 고미술 컬렉션: ?seed=unsplash20 | picsum20
+  // Reseed helper via URL param for Korean Classical Art Collection: ?seed=unsplash20 | picsum20
   useEffect(() => {
     const title = exhibition.title?.trim();
     if (!title) return;
     const params = new URLSearchParams(window.location.search);
     const seedMode = params.get("seed");
     if (!seedMode) return;
-    if (title !== "한국 고미술 컬렉션") return;
-    if (didReseedRef.current) return; // 재실행 방지 (StrictMode/HMR)
+  if (title !== "Korean Classical Art Collection") return;
+  if (didReseedRef.current) return; // prevent re-run (StrictMode/HMR)
     didReseedRef.current = true;
 
     (async () => {
       try {
-        // 1) 기존 작품 삭제
+  // 1) Delete existing artworks
         const qDel = query(collection(db, "artworks"), where("exhibitionTitle", "==", exhibition.title));
         const snap = await getDocs(qDel);
         const delJobs: Promise<void>[] = [];
         snap.forEach((ds) => delJobs.push(deleteDoc(doc(db, "artworks", ds.id))));
         await Promise.all(delJobs);
 
-        // 2) 신규 20장 추가 (Unsplash Source or Picsum)
+  // 2) Add 20 new images (Unsplash source or Picsum)
         const now = Date.now();
         const count = 20;
         const useUnsplash = seedMode === "unsplash20";
@@ -368,7 +420,7 @@ const ExhibitionModal = ({ exhibition, onClose }: ExhibitionModalProps) => {
         (container as any)._lastScrollTopVel = stNow - stPrev;
         (container as any)._lastScrollTop = stNow;
 
-  // 스냅/자기장 스냅 비활성화
+  // Snap / magnetic snap disabled
 
   relocateTimerRef.current = window.setTimeout(() => {
           if (velocityHint && Math.abs((container as any)._lastScrollTopVel) > 5) return;
@@ -403,7 +455,7 @@ const ExhibitionModal = ({ exhibition, onClose }: ExhibitionModalProps) => {
   useEffect(() => {
     if (viewMode !== 'archive') return; // only in archive mode
     const el = listRef.current;
-    if (!el || artworks.length === 0) return;
+    if (!el || filteredArtworks.length === 0) return;
     didCenterRef.current = false;
     requestAnimationFrame(() => {
       if (!el || didCenterRef.current) return;
@@ -432,9 +484,9 @@ const ExhibitionModal = ({ exhibition, onClose }: ExhibitionModalProps) => {
       }
       didCenterRef.current = true;
     });
-  }, [artworks.length, viewMode]);
+  }, [filteredArtworks.length, viewMode]);
 
-  // 패널에서 발생한 휠을 관성 스크롤로 전달 (아카이브 모드에서만)
+  // Route wheel events from the panel to the momentum scroller (archive mode only)
   useEffect(() => {
     if (viewMode !== 'archive') return; // disable in gallery mode so grid scrolls naturally
     const panel = panelRef.current;
@@ -458,7 +510,7 @@ const ExhibitionModal = ({ exhibition, onClose }: ExhibitionModalProps) => {
     };
   }, [artworks.length, viewMode]);
 
-  // 스크롤러 자체에 관성 스크롤(무겁고 가속) 적용 (아카이브 모드에서만)
+  // Apply inertia/momentum scrolling to the scroller itself (archive mode only)
   useEffect(() => {
     if (viewMode !== 'archive') return; // disable in gallery mode
     const el = listRef.current;
@@ -497,7 +549,7 @@ const ExhibitionModal = ({ exhibition, onClose }: ExhibitionModalProps) => {
     applyMomentumRef.current = addVelocity;
 
     const onWheel = (e: WheelEvent) => {
-      // 기본 스크롤 막고 관성 로직으로 처리
+  // Prevent default scroll and handle via momentum logic
       e.preventDefault();
       addVelocity(e.deltaY);
     };
@@ -531,17 +583,41 @@ const ExhibitionModal = ({ exhibition, onClose }: ExhibitionModalProps) => {
     >
   <div ref={panelRef} style={{ position: "relative", backgroundColor: "#fff", width: "100%", height: "100%", padding: 0, borderRadius: 0, boxShadow: "none", display: "flex", flexDirection: "column", overflow: "hidden", ...(DEBUG_LAYOUT ? { outline: "1px solid #f0f" } : {}) }}>
         {/* Absolute full-height thumbnail scroller at far left (archive mode only) */}
-        {viewMode === 'archive' && (
-          <div style={{ position: "absolute", top: 0, bottom: 0, left: 0, width: 150, background: "transparent", zIndex: 1, ...(DEBUG_LAYOUT ? { outline: "1px solid #964B00" } : {}) }}>
-            <div
-              ref={listRef}
-              className="no-scrollbar"
-              style={{ position: "absolute", inset: 0, overflowY: "auto", WebkitOverflowScrolling: "touch", padding: "6px 8px", overscrollBehavior: "contain", msOverflowStyle: "none", scrollbarWidth: "none", scrollSnapType: "y proximity", scrollPaddingTop: "50%", scrollPaddingBottom: "50%" }}
-            >
-              {artworks.length > 0 &&
-                [0,1,2].map((block) => (
+  {(viewMode === 'archive' || viewMode === 'gallery') && (
+          <div style={{ position: "absolute", top: 0, bottom: 0, left: 0, width: 150, background: "transparent", zIndex: 1, display: 'flex', flexDirection: 'column', ...(DEBUG_LAYOUT ? { outline: "1px solid #964B00" } : {}) }}>
+            {/* Left header: title + description + room selector */}
+            <div style={{ padding: '8px 8px', borderBottom: '0px solid transparent' }}>
+              <div
+                ref={titleScrollRef}
+                onMouseEnter={() => startTitleAutoScroll()}
+                onMouseLeave={() => stopTitleAutoScroll(true)}
+                style={{ fontSize: 12, fontWeight: 700, color: '#111827', whiteSpace: 'nowrap', overflowX: 'hidden', textOverflow: 'clip', cursor: 'default' }}
+                title={exhibition.title || exhibition.name}
+              >
+                <span style={{ display: 'inline-block', paddingRight: 18 }}>{exhibition.title || exhibition.name}</span>
+              </div>
+              <div style={{ marginTop: 6, fontSize: 10, color: '#666', lineHeight: 1.3, maxHeight: 72, overflow: 'hidden' }}>
+                {exhibition.description || `${(exhibition.title || exhibition.name)} — a short introduction to the exhibition.`}
+              </div>
+              {/* room selector removed from left header; rendered between title/meta instead */}
+            </div>
+            {/* Centered placeholder area in the left column when no artworks (archive only) */}
+            {filteredArtworks.length === 0 && viewMode === 'archive' && (
+              <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                <div style={{ color: '#888', fontSize: 13, textAlign: 'center' }}>NO ARTWORKS
+                  <br />YET .</div>
+              </div>
+            )}
+            {/* Scrollable thumbnail strip below header (only when there are artworks) */}
+            {filteredArtworks.length > 0 && (
+              <div
+                ref={listRef}
+                className="no-scrollbar"
+                style={{ flex: 1, overflowY: "auto", WebkitOverflowScrolling: "touch", padding: "6px 8px", overscrollBehavior: "contain", msOverflowStyle: "none", scrollbarWidth: "none", scrollSnapType: "y proximity", scrollPaddingTop: "50%", scrollPaddingBottom: "50%" }}
+              >
+                {[0,1,2].map((block) => (
                   <div key={`block-${block}`} data-block-container={block}>
-                    {artworks.map((a, idx) => (
+                    {filteredArtworks.map((a, idx) => (
                       <div
                         key={`${block}-${a.id}`}
                         data-block={block}
@@ -565,18 +641,14 @@ const ExhibitionModal = ({ exhibition, onClose }: ExhibitionModalProps) => {
                     ))}
                   </div>
                 ))}
-              {artworks.length === 0 && (
-                <div style={{ color: "#888", fontSize: 13 }}>No artworks yet.</div>
-              )}
-            </div>
+              </div>
+            )}
           </div>
         )}
     {/* Top bar: single title + right-aligned description; no dividing line */}
   <div ref={topBarRef} style={{ position: "relative", padding: "0px 0px", display: "flex", alignItems: "flex-start", gap: 16, minHeight: topBarHeight, marginLeft: LAYOUT_LEFT_BASE, marginRight: LAYOUT_RIGHT_PAD, ...(DEBUG_LAYOUT ? { outline: "1px dashed #00f" } : {}) }}>
           {/* Title aligned vertically with Archive */}
-            <div style={{ position: "absolute", left: (metaPos.dimension + TITLE_DESC_X_OFFSET), right: "auto", top: ARCHIVE_LINE_TOP, fontSize: 12, fontWeight: 700, textAlign: "left", padding: 0, margin: 0, lineHeight: 1, whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis", zIndex: 3, ...(DEBUG_LAYOUT ? { outline: "1px solid #0a0" } : {}) }}>
-            {exhibition.title || exhibition.name}
-          </div>
+            {/* Title moved to left column header; removed duplicate here */}
           {/* Absolute-aligned controls to meta columns */}
           <span
       ref={galleryRef}
@@ -593,17 +665,61 @@ const ExhibitionModal = ({ exhibition, onClose }: ExhibitionModalProps) => {
             ARCHIVE
           </span>
           {/* Description: fixed narrow width, up to the close text on the right */}
-          <div
-            ref={descRef}
-            style={{ position: "absolute", left: (metaPos.dimension + TITLE_DESC_X_OFFSET), right: "auto", width: `${DESCRIPTION_WIDTH_PCT}%`, top: (descTopPx ?? (ARCHIVE_LINE_TOP + TITLE_HEIGHT_EST + TITLE_BELOW_GAP)), color: "#666", fontSize: 12, lineHeight: 1.4, textAlign: "left", wordBreak: "break-word", overflowWrap: "anywhere", maxWidth: "unset", minWidth: 140, zIndex: 3, ...(DEBUG_LAYOUT ? { outline: "1px solid #90f" } : {}) }}
-          >
-            {exhibition.description || `${(exhibition.title || exhibition.name)}에 대한 간략한 소개입니다. 주요 소장품과 전시 맥락을 통해 작품의 미감을 자연스럽게 경험할 수 있도록 구성했습니다.`}
-          </div>
+          {/* Description moved to left column header; removed duplicate here */}
           {/* close button moved to absolute top-right */}
         </div>
+    {/* Room selector: placed between top bar and meta row (chunked rows of 5) */}
+  {/* Room selector: absolute so it doesn't push down the metadata; wraps when it runs out of width */}
+  {(() => {
+    const selectorLeft = 170; // just right of thumbnail strip (150) + small gutter
+    const selectorTop = Math.max(4, (topBarHeight || 36) - 10);
+    const selectorWidth = Math.max(120, LAYOUT_LEFT_BASE - 260); // smaller x-area
+    return (
+      <div style={{ position: 'absolute', left: selectorLeft, top: selectorTop, width: selectorWidth, zIndex: 20 }}>
+        {/* ALL button on its own line */}
+        {roomButtons.find(b => b.id === 'ALL') && (
+          <div style={{ marginBottom: 6 }}>
+            <button
+              onClick={() => { setSelectedRoomId('ALL'); setSelectedIndex(0); }}
+              style={{ padding: '4px 8px', fontSize: 11, borderRadius: 4, border: 'none', background: selectedRoomId === 'ALL' ? '#111' : 'transparent', color: selectedRoomId === 'ALL' ? '#fff' : '#222', cursor: 'pointer' }}
+            >
+              ALL
+            </button>
+          </div>
+        )}
+  {/* numeric/custom buttons: wrap inside available width and center-align */}
+  <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap', justifyContent: 'space-between', alignItems: 'center', width: '100%' }}>
+          {roomButtons.filter(b => b.id !== 'ALL').map((btn) => (
+            <button
+              key={btn.id}
+              onClick={() => { setSelectedRoomId(btn.id); setSelectedIndex(0); }}
+              style={{
+                padding: '4px 6px',
+                fontSize: 11,
+                borderRadius: 4,
+                border: 'none',
+                background: selectedRoomId === btn.id ? '#111' : 'transparent',
+                color: selectedRoomId === btn.id ? '#fff' : '#222',
+                cursor: 'pointer',
+                marginBottom: 4
+              }}
+            >
+              {btn.label}
+            </button>
+          ))}
+          <button
+            onClick={() => setCustomRooms(prev => [...prev, String(prev.length + 4)])}
+            style={{ padding: '4px 6px', fontSize: 11, borderRadius: 4, border: 'none', background: 'transparent', cursor: 'pointer', marginBottom: 4 }}
+          >
+            +
+          </button>
+        </div>
+      </div>
+    );
+  })()}
 
     {/* Artwork meta info (below the top bar, aligned to Gallery/Archive; dynamic per selected artwork) */}
-  {viewMode === 'archive' && (
+  {(viewMode === 'archive' || viewMode === 'gallery') && (
   <div ref={metaRowRef} style={{ position: "relative", padding: "12px 12px 0 0", marginLeft: LAYOUT_LEFT_BASE, marginTop: metaMarginTop, marginRight: LAYOUT_RIGHT_PAD, minHeight: metaHeight, ...(DEBUG_LAYOUT ? { outline: "1px solid #f00" } : {}) }}>
           {(() => {
             const titleText = current?.name || "—";
@@ -700,21 +816,8 @@ const ExhibitionModal = ({ exhibition, onClose }: ExhibitionModalProps) => {
   ) : (
         // Gallery grid mode
   <div className="no-scrollbar" style={{ flex: 1, overflowY: 'auto' }}>
-          {(() => {
-            if (!gallerySeedRef.current) gallerySeedRef.current = Date.now();
-            const seed = gallerySeedRef.current;
-            const extraCount = 10;
-            const extras: Artwork[] = Array.from({ length: extraCount }, (_, i) => ({
-              id: `gallery-extra-${seed}-${i}`,
-              name: `Extra ${i + 1}`,
-              artist: artworks[i % artworks.length]?.artist || 'Random',
-              year: artworks[i % artworks.length]?.year || 0,
-              image: `https://picsum.photos/seed/${seed + i}/1200/900`,
-              roomId: 'default',
-              exhibitionName: exhibition.name,
-              exhibitionTitle: exhibition.title,
-            }));
-            const items: Artwork[] = [...artworks, ...extras];
+            {(() => {
+            const items: Artwork[] = filteredArtworks;
     return (
   <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: 64, padding: '192px 48px 96px 150px' }}>
                 {items.map((a, idx) => (

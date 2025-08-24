@@ -22,7 +22,7 @@ const Navbar: React.FC = () => {
       await signInWithPopup(auth, provider);
     } catch (error) {
       console.error(error);
-      alert("로그인 실패: " + (error as any).message);
+      alert("Login failed: " + (error as any).message);
     }
   };
 
@@ -48,7 +48,7 @@ const Navbar: React.FC = () => {
   };
 
   useEffect(() => {
-    console.log("현재 사용자:", user);
+    console.log("Current user:", user);
   }, [user]);
 
   // Listen for header toggle from HomePage to drive animations

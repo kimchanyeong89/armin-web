@@ -4,8 +4,8 @@ import type { Artwork } from "../types/Artwork";
 const defaultArtworks: Artwork[] = [
   {
     id: "artwork1",
-    name: "별이 빛나는 밤",
-    artist: "빈센트 반 고흐",
+  name: "Starry Night",
+  artist: "Vincent van Gogh",
     year: 1889,
     image: "/images/artworks/starry-night.jpg",
     roomId: "Room 2",
@@ -14,15 +14,15 @@ const defaultArtworks: Artwork[] = [
   },
   {
     id: "artwork2",
-    name: "모나리자",
-    artist: "레오나르도 다빈치",
+  name: "Mona Lisa",
+  artist: "Leonardo da Vinci",
     year: 1503,
     image: "/images/artworks/mona-lisa.jpg",
     roomId: "Room 1",
     exhibitionName: "TATE Modern",
     exhibitionTitle: "Tate Collection Highlights"
   },
-  // ... 추가 작품들
+  // ... additional artworks
 ];
 
 // Check localStorage for saved artworks

@@ -17,9 +17,17 @@ type CustomGoogleMapProps = {
   exhibitions: Exhibition[];
   onSelectExhibition?: (exhibition: Exhibition) => void;
   focusTarget?: Exhibition | null; // external command to focus
+  userLocation?: { lat: number; lng: number } | null;
+  resetZoomKey?: number;
 };
 
-export default function CustomGoogleMap({ exhibitions, onSelectExhibition, focusTarget }: CustomGoogleMapProps) {
+export default function CustomGoogleMap({ exhibitions, onSelectExhibition, focusTarget, userLocation, resetZoomKey }: CustomGoogleMapProps) {
+  // Recenter and reset zoom when userLocation or resetZoomKey changes
+  useEffect(() => {
+    if (!userLocation || !mapRef.current) return;
+    mapRef.current.setCenter(userLocation);
+    mapRef.current.setZoom(13); // or your preferred default zoom
+  }, [userLocation, resetZoomKey]);
   const mapRef = useRef<any>(null);
   const overlayRef = useRef<any>(null);
   const advMarkersRef = useRef<Map<string, any>>(new Map());
@@ -186,23 +194,40 @@ export default function CustomGoogleMap({ exhibitions, onSelectExhibition, focus
         const pos = { lat: ex.latitude, lng: ex.longitude };
         const isActive = !!(lastClicked && lastClicked.id === ex.id);
         let marker = advMarkersRef.current.get(ex.id);
-        if (!marker) {
-          const pin = new g.maps.marker.PinElement();
-          marker = new g.maps.marker.AdvancedMarkerElement({
-            map,
-            position: pos,
-            content: pin.element,
-            title: ex.name,
-            zIndex: isActive ? 1000 : undefined,
-          });
-          marker.addListener('click', () => focusExhibition(ex));
-          advMarkersRef.current.set(ex.id, marker);
-        } else {
-          marker.map = map;
-          marker.position = pos;
-          marker.title = ex.name;
-          marker.zIndex = isActive ? 1000 : undefined;
-        }
+          if (!marker) {
+            // Create a small black circular pin as an HTML element so we control color and click behavior
+            const pinEl = document.createElement('div');
+            pinEl.style.width = '14px';
+            pinEl.style.height = '14px';
+            pinEl.style.borderRadius = '50%';
+            pinEl.style.background = '#111827';
+            pinEl.style.boxShadow = '0 1px 3px rgba(0,0,0,0.3)';
+            pinEl.style.border = '2px solid #fff';
+            pinEl.style.cursor = 'pointer';
+
+            marker = new g.maps.marker.AdvancedMarkerElement({
+              map,
+              position: pos,
+              content: pinEl,
+              title: ex.name,
+              zIndex: isActive ? 1000 : undefined,
+            });
+            marker.addListener('click', () => focusExhibition(ex));
+            advMarkersRef.current.set(ex.id, marker);
+          } else {
+            marker.map = map;
+            marker.position = pos;
+            marker.title = ex.name;
+            marker.zIndex = isActive ? 1000 : undefined;
+            // ensure marker content style stays black if recreated
+            try {
+              const content = (marker as any).content as HTMLElement | null;
+              if (content && content.style) {
+                content.style.background = '#111827';
+                content.style.border = '2px solid #fff';
+              }
+            } catch {}
+          }
       });
     };
     run();
@@ -346,17 +371,20 @@ export default function CustomGoogleMap({ exhibitions, onSelectExhibition, focus
             getPixelPositionOffset={(width = 0, height = 0) => ({ x: -width / 2, y: -height - 36 })}
           >
             <div
+              onClick={() => focusExhibition(exhibition)}
               style={{
-                pointerEvents: 'none',
-                background: 'rgba(0,0,0,0.7)',
-                color: '#fff',
+                pointerEvents: 'auto',
+                background: 'transparent',
+                color: '#111827',
                 padding: '2px 6px',
                 borderRadius: 6,
                 fontSize: 12,
                 lineHeight: 1.2,
                 whiteSpace: 'nowrap',
                 transform: 'translateY(-4px)',
-                boxShadow: '0 1px 3px rgba(0,0,0,0.3)'
+                boxShadow: '0 1px 3px rgba(0,0,0,0.06)',
+                cursor: 'pointer',
+                userSelect: 'none'
               }}
             >
               {exhibition.name}

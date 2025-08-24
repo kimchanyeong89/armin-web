@@ -1,5 +1,5 @@
 // src/components/ExhibitionBanner.tsx
-import React, { useEffect, useState, useRef } from "react";
+import React, { useEffect, useState } from "react";
 import "../styles/ExhibitionBanner.css";
 import { db } from "../firebase";
 import { collection, onSnapshot, query, where } from "firebase/firestore";
@@ -17,9 +17,7 @@ const ExhibitionBanner: React.FC<ExhibitionBannerProps> = ({ onBannerClick, onCl
   const [images, setImages] = useState<Artwork[]>([]); // latest fetched candidates
   const [displaySlides, setDisplaySlides] = useState<Artwork[]>([]); // only rendered slides
   const [readyMap, setReadyMap] = useState<Record<string, boolean>>({});
-  const [isDragging, setIsDragging] = useState(false);
-  const [position, setPosition] = useState({ x: window.innerWidth - 360, y: 60 });
-  const dragOffset = useRef({ x: 0, y: 0 });
+  // Drag and position state removed (banner is fixed)
 
   // Load cached slides then subscribe to Firestore
   useEffect(() => {
@@ -93,58 +91,27 @@ const ExhibitionBanner: React.FC<ExhibitionBannerProps> = ({ onBannerClick, onCl
     if (displaySlides.length > 0 && currentIndex >= displaySlides.length) setCurrentIndex(0);
   }, [displaySlides, currentIndex]);
 
-  // Drag handling
-  useEffect(() => {
-    function handleMouseMove(e: MouseEvent) {
-      if (isDragging) {
-        setPosition({
-          x: e.clientX - dragOffset.current.x,
-          y: e.clientY - dragOffset.current.y,
-        });
-      }
-    }
-    function handleMouseUp() {
-      setIsDragging(false);
-    }
-    if (isDragging) {
-      window.addEventListener("mousemove", handleMouseMove);
-      window.addEventListener("mouseup", handleMouseUp);
-    }
-    return () => {
-      window.removeEventListener("mousemove", handleMouseMove);
-      window.removeEventListener("mouseup", handleMouseUp);
-    };
-  }, [isDragging]);
+  // Drag handling removed
 
   return (
     <div
       style={{
         position: "fixed",
-        left: position.x,
-        top: position.y,
-  width: `${SLIDE_W}px`,
-  height: `${SLIDE_H + 100}px`,
+        left: 0,
+        top: 0,
+        width: `${SLIDE_W}px`,
+        height: `${SLIDE_H + 100}px`,
         background: "#fff",
-        boxShadow: "-2px 0 12px rgba(0,0,0,0.15)",
+        boxShadow: "0 2px 16px rgba(0,0,0,0.13)",
         zIndex: 3000,
-  borderRadius: "12px",
+        borderRadius: "12px",
         overflow: "hidden",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
         justifyContent: "center",
-        cursor: isDragging ? "grabbing" : "grab",
         userSelect: "none",
-        opacity: 0.9,
-        // allow inner absolute elements (e.g., close button)
-        // position is already fixed; absolute children will anchor to this box
-      }}
-      onMouseDown={(e) => {
-        setIsDragging(true);
-        dragOffset.current = {
-          x: e.clientX - position.x,
-          y: e.clientY - position.y,
-        };
+        opacity: 0.97,
       }}
     >
       {/* Close button (top-right) */}
@@ -240,7 +207,7 @@ const ExhibitionBanner: React.FC<ExhibitionBannerProps> = ({ onBannerClick, onCl
                     display: "flex",
                     alignItems: "center",
                     justifyContent: "center",
-                    background: "#000", // letterbox/pillarbox background
+                    background: "#fff", // letterbox/pillarbox background
                     cursor: "pointer",
                   }}
                   onClick={() => onBannerClick && onBannerClick(artwork.exhibitionName || artwork.exhibitionTitle)}
@@ -261,12 +228,12 @@ const ExhibitionBanner: React.FC<ExhibitionBannerProps> = ({ onBannerClick, onCl
                       bottom: 0,
                       left: 0,
                       width: "100%",
-                      background: "rgba(0,0,0,0.5)",
-                      color: "#fff",
+                      background: "rgba(255,255,255,0.92)",
+                      color: "#222",
                       padding: "12px 16px",
                       boxSizing: "border-box",
-            borderRadius: "0 0 12px 12px",
-                      textShadow: "0 2px 8px rgba(0,0,0,0.3)",
+                      borderRadius: "0 0 12px 12px",
+                      textShadow: "none",
                     }}
                   >
                     <div style={{

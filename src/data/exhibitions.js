@@ -3,9 +3,11 @@ export const exhibitions = [
   {
     id: "1",
     name: "TATE Modern",
-    description: "20세기 현대미술의 중심지.",
+  description: "A center for 20th-century modern art.",
     latitude: 51.5074,
     longitude: -0.1278,
+  representativeImage: "/images/tate-modern.jpg",
+  floorPlan: "",
     permanentExhibitions: [
       { id: "1", name: "Tate Collection Highlights", title: "Tate Collection Highlights" },
       { id: "2", name: "Impressionist Masters", title: "Impressionist Masters" },
@@ -65,23 +67,125 @@ export const exhibitions = [
       },
     ],
   },
-  // 서울 주요 미술관/전시장
+  // London major museums
+  {
+    id: "british-museum",
+    name: "British Museum",
+    slug: "british-museum",
+    location: "Great Russell St, Bloomsbury, London WC1B 3DG",
+    description: "One of the world’s largest and most comprehensive museums of human history and culture.",
+    latitude: 51.519413,
+    longitude: -0.127022,
+    permanentExhibitions: [
+      { id: "bm-1", name: "World Cultures", title: "World Cultures", description: "Permanent displays covering global human history.", startDate: "Permanent", endDate: "Permanent" },
+      { id: "bm-2", name: "Ancient Egypt", title: "Ancient Egypt", description: "Treasures from Egypt including the Rosetta Stone.", startDate: "Permanent", endDate: "Permanent" }
+    ],
+    temporaryExhibitions: [
+  { id: "bm-t1", name: "Treasures Reimagined", title: "Treasures Reimagined", description: "A fresh look at selected highlights from the collection.", startDate: "2025.07.01", endDate: "2025.12.31" }
+    ],
+    pastExhibitions: [
+      { id: "bm-p1", name: "Ancient Lives", title: "Ancient Lives", description: "Explorations of daily life in antiquity.", startDate: "2024.03.01", endDate: "2024.09.30" }
+    ],
+  representativeImage: "/images/british-museum.jpg",
+    floorPlan: "",
+    rooms: {
+      "room-1": [
+        { id: "bm-art-1", name: "Rosetta Stone", artist: "Unknown", year: 196, image: "/images/exhibition1.png", roomId: "room-1", exhibitionName: "Ancient Egypt", exhibitionTitle: "Ancient Egypt" }
+      ]
+    }
+  },
+  {
+    id: "national-gallery",
+    name: "National Gallery",
+    slug: "national-gallery",
+    location: "Trafalgar Square, London WC2N 5DN",
+    description: "Houses a rich collection of European paintings from the 13th to the 19th centuries.",
+    latitude: 51.508929,
+    longitude: -0.128299,
+    permanentExhibitions: [
+      { id: "ng-1", name: "European Paintings", title: "European Paintings", description: "Masterworks by Botticelli, Van Gogh, Turner and more.", startDate: "Permanent", endDate: "Permanent" }
+    ],
+    temporaryExhibitions: [
+  { id: "ng-t1", name: "Rembrandt & Company", title: "Rembrandt & Company", description: "A focused display examining Rembrandt’s circle.", startDate: "2025.09.01", endDate: "2026.01.15" }
+    ],
+    pastExhibitions: [
+      { id: "ng-p1", name: "Impressionist Encounters", title: "Impressionist Encounters", description: "Highlights from the Impressionist movement.", startDate: "2024.02.01", endDate: "2024.08.31" }
+    ],
+  representativeImage: "/images/national-gallery.jpg",
+    floorPlan: "",
+    rooms: {
+      "room-1": [
+        { id: "ng-art-1", name: "Sunflowers", artist: "Vincent van Gogh", year: 1888, image: "/images/exhibition2.png", roomId: "room-1", exhibitionName: "European Paintings", exhibitionTitle: "European Paintings" }
+      ]
+    }
+  },
+  {
+    id: "vam",
+    name: "Victoria and Albert Museum",
+    slug: "vam",
+    location: "Cromwell Rd, South Kensington, London SW7 2RL",
+    description: "The world’s leading museum of art, design and performance.",
+    latitude: 51.496639,
+    longitude: -0.172201,
+    permanentExhibitions: [
+      { id: "vam-1", name: "Design Collections", title: "Design Collections", description: "Applied arts and design across centuries.", startDate: "Permanent", endDate: "Permanent" }
+    ],
+    temporaryExhibitions: [
+  { id: "vam-t1", name: "Cartier: Jewellery and Innovation", title: "Cartier", description: "A major exhibition of Cartier jewellery.", startDate: "2025.09.20", endDate: "2026.02.28" }
+    ],
+    pastExhibitions: [
+      { id: "vam-p1", name: "Fashion Forward", title: "Fashion Forward", description: "Exploring fashion and identity.", startDate: "2024.05.01", endDate: "2024.11.30" }
+    ],
+  representativeImage: "/images/vam.jpg",
+    floorPlan: "",
+    rooms: {
+      "room-1": [
+        { id: "vam-art-1", name: "Sculpture Sample", artist: "Various", year: 1900, image: "/images/exhibition3.png", roomId: "room-1", exhibitionName: "Design Collections", exhibitionTitle: "Design Collections" }
+      ]
+    }
+  },
+  {
+    id: "science-museum",
+    name: "Science Museum",
+    slug: "science-museum",
+    location: "Exhibition Rd, South Kensington, London SW7 2DD",
+    description: "Interactive science and technology museum with award-winning galleries and exhibitions.",
+    latitude: 51.497809,
+    longitude: -0.174513,
+    permanentExhibitions: [
+      { id: "sm-1", name: "Exploration and Innovation", title: "Exploration and Innovation", description: "Core displays on science and technology.", startDate: "Permanent", endDate: "Permanent" }
+    ],
+    temporaryExhibitions: [
+  { id: "sm-t1", name: "Future of Food", title: "Future of Food", description: "Examining how food systems may change.", startDate: "2025.06.01", endDate: "2026.01.04" }
+    ],
+    pastExhibitions: [
+      { id: "sm-p1", name: "Wonderlab", title: "Wonderlab", description: "Hands-on interactive gallery for families.", startDate: "2024.04.01", endDate: "2024.10.31" }
+    ],
+  representativeImage: "/images/science-museum.jpg",
+    floorPlan: "",
+    rooms: {
+      "gallery-1": [
+        { id: "sm-art-1", name: "Steam Engine", artist: "Various", year: 1850, image: "/images/exhibition4.png", roomId: "gallery-1", exhibitionName: "Exploration and Innovation", exhibitionTitle: "Exploration and Innovation" }
+      ]
+    }
+  },
+  // Seoul major museums/exhibition venues
   {
     id: "seoul-1",
-    name: "국립현대미술관 서울관",
-    description: "한국 현대미술의 중심지, 다양한 전시와 프로그램 제공.",
+  name: "National Museum of Modern and Contemporary Art, Seoul (MMCA Seoul)",
+  description: "A leading institution for Korean contemporary art, offering diverse exhibitions and public programs.",
     latitude: 37.579617,
     longitude: 126.981805,
     permanentExhibitions: [
-      { id: "s1-1", name: "한국 현대미술 컬렉션", title: "한국 현대미술 컬렉션" },
-      { id: "s1-2", name: "아시아 현대미술", title: "아시아 현대미술" }
+  { id: "s1-1", name: "Korean Contemporary Art Collection", title: "Korean Contemporary Art Collection" },
+  { id: "s1-2", name: "Asian Contemporary Art", title: "Asian Contemporary Art" }
     ],
     temporaryExhibitions: [
       {
-        id: "s1-3",
-        name: "미디어 아트 특별전",
-        title: "미디어 아트 특별전",
-        description: "최신 미디어 아트 작품을 조명하는 특별전.",
+  id: "s1-3",
+  name: "Media Art Special Exhibition",
+  title: "Media Art Special Exhibition",
+  description: "A special exhibition highlighting contemporary media art works.",
         startDate: "2025.08.01",
         endDate: "2025.10.31"
       }
@@ -89,9 +193,9 @@ export const exhibitions = [
     pastExhibitions: [
       {
         id: "s1-4",
-        name: "한국 조각 100년",
-        title: "한국 조각 100년",
-        description: "한국 조각의 흐름을 조망하는 대규모 회고전.",
+        name: "100 Years of Korean Sculpture",
+        title: "100 Years of Korean Sculpture",
+        description: "A large-scale retrospective surveying the development of Korean sculpture.",
         startDate: "2024.03.01",
         endDate: "2024.08.31"
       }
@@ -100,19 +204,19 @@ export const exhibitions = [
       "room-1": [
         {
           id: "art-1",
-          title: "예시 작품 1",
+          title: "Example Artwork 1",
           image: "/images/exhibition1.png"
         },
         {
           id: "art-2",
-          title: "예시 작품 2",
+          title: "Example Artwork 2",
           image: "/images/exhibition2.png"
         }
       ],
       "room-2": [
         {
           id: "art-3",
-          title: "예시 작품 3",
+          title: "Example Artwork 3",
           image: "/images/exhibition3.png"
         }
       ]
@@ -120,20 +224,20 @@ export const exhibitions = [
   },
   {
     id: "seoul-2",
-    name: "리움미술관",
-    description: "삼성문화재단이 운영하는 세계적 수준의 미술관.",
+  name: "Leeum Museum of Art",
+  description: "A world-class museum operated by the Samsung Foundation, showcasing traditional Korean and contemporary art.",
     latitude: 37.539307,
     longitude: 126.994715,
     permanentExhibitions: [
-      { id: "s2-1", name: "한국 고미술 컬렉션", title: "한국 고미술 컬렉션" },
-      { id: "s2-2", name: "현대미술 컬렉션", title: "현대미술 컬렉션" }
+  { id: "s2-1", name: "Korean Classical Art Collection", title: "Korean Classical Art Collection" },
+  { id: "s2-2", name: "Modern Art Collection", title: "Modern Art Collection" }
     ],
     temporaryExhibitions: [
       {
         id: "s2-3",
-        name: "국제 현대미술전",
-        title: "국제 현대미술전",
-        description: "세계 각국의 현대미술 작가들이 참여하는 대규모 전시.",
+        name: "International Contemporary Art Exhibition",
+        title: "International Contemporary Art Exhibition",
+        description: "A large exhibition featuring contemporary artists from around the world.",
         startDate: "2025.09.10",
         endDate: "2025.12.20"
       }
@@ -141,9 +245,9 @@ export const exhibitions = [
     pastExhibitions: [
       {
         id: "s2-4",
-        name: "한국 도자기 특별전",
-        title: "한국 도자기 특별전",
-        description: "한국 도자기의 아름다움을 조명하는 전시.",
+        name: "Korean Ceramics Special Exhibition",
+        title: "Korean Ceramics Special Exhibition",
+        description: "An exhibition highlighting the beauty of Korean ceramics.",
         startDate: "2024.05.01",
         endDate: "2024.09.30"
       }
@@ -152,7 +256,7 @@ export const exhibitions = [
       "main-hall": [
         {
           id: "art-4",
-          title: "리움 대표작품",
+          title: "Leeum Featured Work",
           image: "/images/exhibition4.png"
         }
       ],
@@ -160,12 +264,12 @@ export const exhibitions = [
       "hyundae-art-room": [
         {
           id: "art-7",
-          title: "현대미술관 대표작품 1",
+          title: "Modern Art Museum Featured Work 1",
           image: "/images/exhibition1.png"
         },
         {
           id: "art-8",
-          title: "현대미술관 대표작품 2",
+          title: "Modern Art Museum Featured Work 2",
           image: "/images/exhibition2.png"
         }
       ]
@@ -173,8 +277,8 @@ export const exhibitions = [
   },
   {
     id: "seoul-3",
-    name: "서울시립미술관",
-    description: "시민과 함께하는 열린 미술관, 다양한 현대미술 전시 개최.",
+  name: "Seoul Museum of Art (SeMA)",
+  description: "A public museum for the city, presenting a wide range of contemporary art exhibitions.",
     latitude: 37.564362,
     longitude: 126.975221,
     permanentExhibitions: [
@@ -183,9 +287,9 @@ export const exhibitions = [
     temporaryExhibitions: [
       {
         id: "s3-2",
-        name: "청년작가전",
-        title: "청년작가전",
-        description: "신진 작가들의 실험적 작품을 소개하는 전시.",
+        name: "Young Artists Exhibition",
+        title: "Young Artists Exhibition",
+        description: "An exhibition showcasing experimental works by emerging artists.",
         startDate: "2025.07.15",
         endDate: "2025.09.15"
       }
@@ -193,9 +297,9 @@ export const exhibitions = [
     pastExhibitions: [
       {
         id: "s3-3",
-        name: "서울의 풍경전",
-        title: "서울의 풍경전",
-        description: "서울의 다양한 풍경을 주제로 한 회화전.",
+        name: "Landscapes of Seoul",
+        title: "Landscapes of Seoul",
+        description: "A painting exhibition themed around the diverse landscapes of Seoul.",
         startDate: "2024.10.01",
         endDate: "2025.02.28"
       }
@@ -204,7 +308,7 @@ export const exhibitions = [
       "gallery-1": [
         {
           id: "art-5",
-          title: "서울의 아침",
+          title: "Seoul Morning",
           image: "/images/exhibition2.png"
         }
       ]
@@ -212,8 +316,8 @@ export const exhibitions = [
   },
   {
     id: "seoul-4",
-    name: "DDP 디자인뮤지엄",
-    description: "동대문디자인플라자 내 위치, 디자인과 창의의 허브.",
+  name: "Dongdaemun Design Plaza (DDP)",
+  description: "Located within Dongdaemun Design Plaza, a hub for design and creativity.",
     latitude: 37.566541,
     longitude: 127.009387,
     permanentExhibitions: [
@@ -222,9 +326,9 @@ export const exhibitions = [
     temporaryExhibitions: [
       {
         id: "s4-2",
-        name: "미래도시 디자인전",
-        title: "미래도시 디자인전",
-        description: "미래 도시와 건축을 주제로 한 디자인 전시.",
+        name: "Designing Future Cities",
+        title: "Designing Future Cities",
+        description: "A design exhibition focused on future cities and architecture.",
         startDate: "2025.10.01",
         endDate: "2026.01.31"
       }
@@ -232,9 +336,9 @@ export const exhibitions = [
     pastExhibitions: [
       {
         id: "s4-3",
-        name: "패션과 예술전",
-        title: "패션과 예술전",
-        description: "패션과 예술의 융합을 다룬 특별전.",
+        name: "Fashion and Art",
+        title: "Fashion and Art",
+        description: "A special exhibition exploring the intersection of fashion and art.",
         startDate: "2024.06.01",
         endDate: "2024.09.30"
       }
@@ -242,8 +346,8 @@ export const exhibitions = [
   },
   {
     id: "seoul-5",
-    name: "사비나미술관",
-    description: "현대미술의 다양한 흐름을 소개하는 사립 미술관.",
+  name: "Savina Museum",
+  description: "A private museum presenting a variety of contemporary art trends.",
     latitude: 37.601601,
     longitude: 126.957273,
     permanentExhibitions: [
@@ -252,9 +356,9 @@ export const exhibitions = [
     temporaryExhibitions: [
       {
         id: "s5-2",
-        name: "여성작가 특별전",
-        title: "여성작가 특별전",
-        description: "여성 작가들의 작품을 조명하는 특별전.",
+        name: "Women Artists Special Exhibition",
+        title: "Women Artists Special Exhibition",
+        description: "A special exhibition highlighting the works of women artists.",
         startDate: "2025.09.01",
         endDate: "2025.11.30"
       }

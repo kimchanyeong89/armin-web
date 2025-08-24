@@ -15,7 +15,7 @@ export default function PermanentExhibitions({ items }: Props) {
           </div>
         ))
       ) : (
-        <p>상설 전시가 없습니다.</p>
+        <p>No permanent exhibitions.</p>
       )}
     </div>
   );

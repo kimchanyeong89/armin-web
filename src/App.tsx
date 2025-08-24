@@ -4,7 +4,7 @@ import HomePage from "./pages/HomePage";
 import ArtistPage from "./pages/ArtistPage"; // 추가
 import WorkPage from "./pages/WorkPage"; // 추가
 import ExhibitionPage from "./pages/ExhibitionPage"; // 추가
-import { exhibitions } from "./data/exhibitions.js";
+import { exhibitions } from "./data/exhibitions";
 import Login from "./components/Login";
 import SignUp from "./components/SignUp";
 import Navbar from "./components/Navbar";  // 추가
