@@ -3,6 +3,9 @@ import type { Artwork } from "../types/Artwork";
 import { useState, useEffect, useRef, useMemo } from "react";
 import { addDoc, collection, onSnapshot, query, where, getDocs, deleteDoc, doc } from "firebase/firestore";
 import { db } from "../firebase";
+import { useProxy, buildSourceSet } from "../utils/imageProxy";
+// Removed LazyImage to restore baseline reliability
+// Removed prefetchImage as it is no longer used
 
 // Room type for floor plan boxes
 // Room/editor features removed for viewer design
@@ -26,6 +29,8 @@ const ExhibitionModal = ({ exhibition, onClose }: ExhibitionModalProps) => {
   // Title/description moved to left column header; top-bar alignment constants removed
   // Simplified layout constants; dynamic alignment removed
   const [artworks, setArtworks] = useState<Artwork[]>([]);
+  // Prevent initial empty flash on refresh by gating until we have cache or first snapshot
+  const [initialized, setInitialized] = useState<boolean>(false);
   // Room selector: 'ALL' shows every artwork; other ids map to actual roomId values
   const [selectedRoomId, setSelectedRoomId] = useState<string>("ALL");
   const [showImageModal, setShowImageModal] = useState<string | null>(null);
@@ -40,6 +45,15 @@ const ExhibitionModal = ({ exhibition, onClose }: ExhibitionModalProps) => {
   const relocateTimerRef = useRef<number | null>(null);
   const magnetTimerRef = useRef<number | null>(null);
   const [infoY, setInfoY] = useState<number>(0);
+  // Drag-to-dismiss state
+  const [dragY, setDragY] = useState<number>(0);
+  const [dragX, setDragX] = useState<number>(0);
+  // Default slight curl
+  const [curl, setCurl] = useState<number>(0.12); // 0..1
+  const dragStartYRef = useRef<number>(0);
+  const dragStartXRef = useRef<number>(0);
+  const draggingRef = useRef<boolean>(false);
+  const [panelTransition, setPanelTransition] = useState<string>("");
 
   // Allow adding simple rooms and compute a list of room buttons (ALL + defaults + custom + discovered)
   const [customRooms, setCustomRooms] = useState<string[]>([]);
@@ -128,6 +142,56 @@ const ExhibitionModal = ({ exhibition, onClose }: ExhibitionModalProps) => {
     };
   }, []);
 
+  // History integration: when modal opens we push a modal state so refresh keeps modal
+  // and back navigation can restore the underlying detail panel instead of navigating away.
+  const didHistoryInitRef = useRef(false);
+  useEffect(() => {
+    if (didHistoryInitRef.current) return; // StrictMode-safe: run once per mount
+    didHistoryInitRef.current = true;
+    // Save the current history state as underlying state (hash/scroll) then push modal state
+    try {
+      const underlying = {
+        hash: window.location.hash,
+        scrollY: window.scrollY,
+      };
+      // merge underlying into current state
+      const base = Object.assign({}, window.history.state || {});
+      base.underlying = underlying;
+      // replace current entry with one that contains underlying metadata
+      window.history.replaceState(base, document.title);
+
+  // push modal-specific state; even if we're already in a modal state (e.g., after refresh),
+  // push another entry so that Back will pop and we can close the modal via popstate.
+  const current = window.history.state as any;
+  const modalState = { ...(current || {}), modal: true, exhibitionId: exhibition.id, selectedIndex } as any;
+  window.history.pushState(modalState, document.title);
+
+  // No extra dispatch here; HomePage reads history.state on mount to auto-open
+
+      const onPop = (_e: PopStateEvent) => {
+        // Always treat back like close while modal is mounted
+        try { onClose(); } catch { /* ignore */ }
+      };
+
+      window.addEventListener('popstate', onPop);
+      return () => {
+        window.removeEventListener('popstate', onPop);
+      };
+    } catch (e) {
+      // ignore any history errors (some browsers restrict replaceState in certain navigations)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Keep selection reflected in history so forward/back updates selection
+  useEffect(() => {
+    try {
+      const st = Object.assign({}, window.history.state || {});
+      st.selectedIndex = selectedIndex;
+      window.history.replaceState(st, document.title);
+    } catch (e) {}
+  }, [selectedIndex]);
+
   // Subscribe to Firestore artworks for this exhibition
   useEffect(() => {
   // If a random image seed is requested via URL param, skip Firestore subscription and show 20 ephemeral images immediately
@@ -149,18 +213,37 @@ const ExhibitionModal = ({ exhibition, onClose }: ExhibitionModalProps) => {
         exhibitionTitle: exhibition.title,
       }));
       setArtworks(list);
+      setInitialized(true);
       return () => {};
     }
+    // 0) Prime from local cache immediately to avoid empty-state flash
+    try {
+      const cached = localStorage.getItem(`artworks_${exhibition.id}`);
+      if (cached) {
+        const cachedList = JSON.parse(cached) as Artwork[];
+        const withImages = cachedList.filter(a => !!a.image);
+        if (withImages.length > 0) {
+          setArtworks(withImages);
+          setInitialized(true);
+        }
+      }
+    } catch {}
     // Subscribe to Firestore artworks for this exhibition
     const q = query(collection(db, "artworks"), where("exhibitionTitle", "==", exhibition.title));
     const unsub = onSnapshot(
       q,
       (snap) => {
         const list: Artwork[] = [];
-        snap.forEach((d) => list.push(d.data() as Artwork));
+        snap.forEach((ds) => {
+          const data = ds.data() as Artwork;
+          // Ensure stable id exists; fall back to Firestore doc.id if missing
+          const id = (data as any)?.id ? String((data as any).id) : ds.id;
+          list.push({ ...data, id });
+        });
         // Server truth: set directly from snapshot to avoid duplicates
         const withImages = list.filter(a => !!a.image);
         setArtworks(withImages);
+        setInitialized(true);
         try {
           localStorage.setItem(`artworks_${exhibition.id}`, JSON.stringify(withImages));
         } catch {}
@@ -173,7 +256,10 @@ const ExhibitionModal = ({ exhibition, onClose }: ExhibitionModalProps) => {
           try {
             const cachedList = JSON.parse(cached) as Artwork[];
             setArtworks(cachedList.filter(a => !!a.image));
-          } catch {}
+            setInitialized(true);
+          } catch { setInitialized(true); }
+        } else {
+          setInitialized(true);
         }
       }
     );
@@ -187,6 +273,9 @@ const ExhibitionModal = ({ exhibition, onClose }: ExhibitionModalProps) => {
     if (filteredArtworks.length === 0) { setSelectedIndex(0); return; }
     setSelectedIndex((prev) => Math.min(prev, filteredArtworks.length - 1));
   }, [filteredArtworks.length]);
+
+  // Prefetch neighbor images for smoother stage switching
+  // Neighbor prefetch removed for now
 
   // Static columns; no DOM measurement needed
 
@@ -573,8 +662,17 @@ const ExhibitionModal = ({ exhibition, onClose }: ExhibitionModalProps) => {
   const selectorLeftArchive = 280; // moved left by 100px from 380
   const selectorLeft = isGalleryLayout ? 12 : selectorLeftArchive;
   const selectorTop = isGalleryLayout ? 8 : 2;
-  const selectorWidth = isGalleryLayout ? 160 : 180;
-  const perRowCount = isGalleryLayout ? 6 : 5;
+  // Selector sizing constants: separate archive vs gallery to allow tighter gallery spacing
+  const SELECTOR_COL_WIDTH_ARCHIVE = 28; // px (archive mode column width)
+  const SELECTOR_COL_GAP_ARCHIVE = 1; // px (archive mode gap)
+  const SELECTOR_COL_WIDTH_GALLERY = 24; // px (gallery mode: slightly wider for readability)
+  const SELECTOR_COL_GAP_GALLERY = 1; // px (gallery mode: small gap)
+  // Default layout uses 5 columns; gallery mode uses 20 columns per your request
+  const perRowCount = 5;
+  const selectorCols = isGalleryLayout ? 20 : perRowCount;
+  const SELECTOR_COL_WIDTH = isGalleryLayout ? SELECTOR_COL_WIDTH_GALLERY : SELECTOR_COL_WIDTH_ARCHIVE;
+  const SELECTOR_COL_GAP = isGalleryLayout ? SELECTOR_COL_GAP_GALLERY : SELECTOR_COL_GAP_ARCHIVE;
+  const selectorWidth = selectorCols * SELECTOR_COL_WIDTH + Math.max(0, selectorCols - 1) * SELECTOR_COL_GAP;
   // Info text X within the info panel should align visually to the selector's X
   // Keep info text inset inside the info panel to avoid clipping; align visually with selector
   const infoTextLeft = isGalleryLayout ? 4 : Math.max(12, selectorLeft - 150 + 12);
@@ -587,15 +685,161 @@ const ExhibitionModal = ({ exhibition, onClose }: ExhibitionModalProps) => {
         left: 0,
         width: "100vw",
         height: "100vh",
-        backgroundColor: "rgba(0,0,0,0.6)",
+        backgroundColor: (() => {
+          const half = Math.max(1, window.innerHeight * 0.5);
+          const p = Math.max(0, Math.min(1, dragY / half));
+          const alpha = 0.6 * (1 - Math.pow(p, 0.75));
+          return `rgba(0,0,0,${alpha})`;
+        })(),
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
         zIndex: 10000,
   overscrollBehavior: "contain",
+        perspective: '1200px',
+        perspectiveOrigin: 'left top',
       }}
     >
-  <div ref={panelRef} style={{ position: "relative", backgroundColor: "#fff", width: "100%", height: "100%", padding: 0, borderRadius: 0, boxShadow: "none", display: "flex", flexDirection: "column", overflow: "hidden", ...(DEBUG_LAYOUT ? { outline: "1px solid #f0f" } : {}) }}>
+  <div
+      ref={panelRef}
+      style={{
+        position: "relative",
+        backgroundColor: "#fff",
+        width: "100%",
+        height: "100%",
+        padding: 0,
+        borderRadius: 0,
+        boxShadow: "0 12px 28px rgba(0,0,0,0.25)",
+        display: "flex",
+        flexDirection: "column",
+        overflow: "hidden",
+        transformOrigin: 'left top',
+        transform: (() => {
+          const h = Math.max(1, window.innerHeight);
+          const w = Math.max(1, window.innerWidth);
+          const pY = Math.max(0, Math.min(1, (dragY + curl * 120) / (h * 0.75)));
+          const pX = Math.max(-1, Math.min(1, dragX / (w * 0.6)));
+          const rotX = Math.min(28, pY * 34); // degrees
+          const rotY = Math.max(-16, Math.min(16, pX * 24));
+          const ty = dragY * 0.35; // slight translate following the curl
+          const tx = dragX * 0.06;
+          return `translate3d(${tx}px, ${ty}px, 0) rotateX(${rotX}deg) rotateY(${rotY}deg)`;
+        })(),
+        // Clip a curved top-left corner to reveal the map under the panel
+        ...( (() => {
+          const sBase = 56; // base corner size
+          const s = sBase + curl * 160; // grow with curl
+          const cpX = s * 0.4 + dragX * 0.05;
+          const w = Math.max(1, window.innerWidth);
+          const h = Math.max(1, window.innerHeight);
+          const path = `path('M 0 0 L ${w} 0 L ${w} ${h} L 0 ${h} L 0 ${s.toFixed(2)} Q ${cpX.toFixed(2)} ${s.toFixed(2)} ${s.toFixed(2)} 0 Z')`;
+          return { clipPath: path as any, WebkitClipPath: path as any };
+        })() ),
+        transition: panelTransition,
+        ...(DEBUG_LAYOUT ? { outline: "1px solid #f0f" } : {})
+      }}
+    >
+        {/* Interactive corner area (invisible); updates curl and drag based on pointer */}
+        <div
+          onMouseDown={(e) => {
+            const rect = (panelRef.current?.getBoundingClientRect?.() || { left: 0, top: 0 }) as DOMRect;
+            const x = e.clientX - rect.left;
+            const y = e.clientY - rect.top;
+            // Only start if within corner zone
+            if (x > 180 || y > 180) return;
+            draggingRef.current = true;
+            dragStartYRef.current = e.clientY;
+            dragStartXRef.current = e.clientX;
+            setPanelTransition("");
+            const onMove = (ev: MouseEvent) => {
+              if (!draggingRef.current) return;
+              const dy = Math.max(0, ev.clientY - dragStartYRef.current);
+              const dx = ev.clientX - dragStartXRef.current;
+              setDragY(dy);
+              setDragX(dx);
+              // Curl grows with pull distance from corner
+              const dist = Math.sqrt(Math.max(0, dx*dx + dy*dy));
+              const target = Math.max(0.08, Math.min(0.9, 0.12 + (dist / 480)));
+              setCurl(target);
+            };
+            const onUp = () => {
+              draggingRef.current = false;
+              window.removeEventListener('mousemove', onMove);
+              window.removeEventListener('mouseup', onUp);
+              const shouldClose = (dragY > window.innerHeight * 0.5) || (curl > 0.6);
+              if (shouldClose) {
+                setPanelTransition('transform 260ms ease, clip-path 260ms ease');
+                setDragY(window.innerHeight);
+                setDragX(0);
+                window.setTimeout(() => {
+                  try {
+                    const st = window.history.state as any;
+                    if (st && st.modal) window.history.back(); else onClose();
+                  } catch { onClose(); }
+                }, 200);
+              } else {
+                setPanelTransition('transform 220ms ease, clip-path 260ms ease');
+                setDragY(0);
+                setDragX(0);
+                setCurl(0.12);
+                window.setTimeout(() => setPanelTransition(''), 280);
+              }
+            };
+            window.addEventListener('mousemove', onMove);
+            window.addEventListener('mouseup', onUp);
+          }}
+          onTouchStart={(e) => {
+            const t = e.touches && e.touches[0];
+            if (!t) return;
+            const rect = (panelRef.current?.getBoundingClientRect?.() || { left: 0, top: 0 }) as DOMRect;
+            const x = t.clientX - rect.left;
+            const y = t.clientY - rect.top;
+            if (x > 180 || y > 180) return;
+            draggingRef.current = true;
+            dragStartYRef.current = t.clientY;
+            dragStartXRef.current = t.clientX;
+            setPanelTransition("");
+            const onMove = (ev: TouchEvent) => {
+              if (!draggingRef.current) return;
+              const tt = ev.touches && ev.touches[0];
+              if (!tt) return;
+              const dy = Math.max(0, tt.clientY - dragStartYRef.current);
+              const dx = tt.clientX - dragStartXRef.current;
+              setDragY(dy);
+              setDragX(dx);
+              const dist = Math.sqrt(Math.max(0, dx*dx + dy*dy));
+              const target = Math.max(0.08, Math.min(0.9, 0.12 + (dist / 480)));
+              setCurl(target);
+            };
+            const onUp = () => {
+              draggingRef.current = false;
+              window.removeEventListener('touchmove', onMove as any);
+              window.removeEventListener('touchend', onUp as any);
+              const shouldClose = (dragY > window.innerHeight * 0.5) || (curl > 0.6);
+              if (shouldClose) {
+                setPanelTransition('transform 260ms ease, clip-path 260ms ease');
+                setDragY(window.innerHeight);
+                setDragX(0);
+                window.setTimeout(() => {
+                  try {
+                    const st = window.history.state as any;
+                    if (st && st.modal) window.history.back(); else onClose();
+                  } catch { onClose(); }
+                }, 200);
+              } else {
+                setPanelTransition('transform 220ms ease, clip-path 260ms ease');
+                setDragY(0);
+                setDragX(0);
+                setCurl(0.12);
+                window.setTimeout(() => setPanelTransition(''), 280);
+              }
+            };
+            window.addEventListener('touchmove', onMove as any, { passive: true } as any);
+            window.addEventListener('touchend', onUp as any);
+          }}
+          style={{ position: 'absolute', top: 0, left: 0, width: 200, height: 200, zIndex: 60, background: 'transparent' }}
+        />
+  {/* Old handle removed; the corner is now curled by default and interactive via the invisible zone above */}
         {/* Absolute full-height thumbnail scroller at far left (archive mode only) */}
   {(viewMode === 'archive') && (
           <div style={{ position: "absolute", top: 0, bottom: 0, left: 0, width: 150, background: "transparent", zIndex: 1, display: 'flex', flexDirection: 'column', ...(DEBUG_LAYOUT ? { outline: "1px solid #964B00" } : {}) }}>
@@ -616,7 +860,7 @@ const ExhibitionModal = ({ exhibition, onClose }: ExhibitionModalProps) => {
               {/* room selector removed from left header; rendered between title/meta instead */}
             </div>
             {/* Centered placeholder area in the left column when no artworks (archive only) */}
-            {filteredArtworks.length === 0 && viewMode === 'archive' && (
+            {initialized && filteredArtworks.length === 0 && viewMode === 'archive' && (
               <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
                 <div style={{ color: '#888', fontSize: 13, textAlign: 'center' }}>NO ARTWORKS
                   <br />YET .</div>
@@ -631,9 +875,9 @@ const ExhibitionModal = ({ exhibition, onClose }: ExhibitionModalProps) => {
               >
                 {[0,1,2].map((block) => (
                   <div key={`block-${block}`} data-block-container={block}>
-                    {filteredArtworks.map((a, idx) => (
+          {filteredArtworks.map((a, idx) => (
                       <div
-                        key={`${block}-${a.id}`}
+            key={`${block}-${a.id || idx}`}
                         data-block={block}
                         data-base={idx}
                         onClick={() => setSelectedIndex(idx)}
@@ -646,6 +890,9 @@ const ExhibitionModal = ({ exhibition, onClose }: ExhibitionModalProps) => {
                             <img
                               src={a.image}
                               alt={a.name}
+                              loading="lazy"
+                              decoding="async"
+                              fetchPriority="low"
                               style={{ width: "100%", height: "100%", display: "block", objectFit: "cover" }}
                             />
                           )}
@@ -685,14 +932,13 @@ const ExhibitionModal = ({ exhibition, onClose }: ExhibitionModalProps) => {
     {/* Room selector: placed between top bar and meta row (chunked rows of 5) */}
   {/* Room selector: absolute so it doesn't push down the metadata; wraps when it runs out of width */}
   {(() => {
-    // Use shared layout constants computed above: selectorLeft, selectorTop, selectorWidth, perRowCount
-    const perRow = perRowCount;
-    const isGallery = isGalleryLayout;
+    // Use shared layout constants computed above: selectorLeft, selectorTop, selectorWidth, selectorCols
+  const perRow = selectorCols;
     return (
       <div style={{ position: 'absolute', left: selectorLeft, top: selectorTop, width: selectorWidth, zIndex: 20 }}>
         {/* ALL button on its own line */}
         {roomButtons.find(b => b.id === 'ALL') && (
-          <div style={{ marginBottom: 6 }}>
+          <div style={{ marginBottom: 2 }}>
             <button
               onClick={() => { setSelectedRoomId('ALL'); setSelectedIndex(0); }}
               style={{ padding: '4px 8px', fontSize: 11, borderRadius: 4, border: 'none', background: selectedRoomId === 'ALL' ? '#111' : 'transparent', color: selectedRoomId === 'ALL' ? '#fff' : '#222', cursor: 'pointer' }}
@@ -701,50 +947,114 @@ const ExhibitionModal = ({ exhibition, onClose }: ExhibitionModalProps) => {
             </button>
           </div>
         )}
-        {/* numeric/custom buttons: render in rows of 5, each row justified space-between */}
+        {/* numeric/custom buttons: single CSS grid (5 per row), last row left-aligned, aligned columns */}
         {(() => {
-          const nums = roomButtons.filter(b => b.id !== 'ALL');
-          const rows = Math.max(1, Math.ceil(nums.length / perRow));
+          // Build a full numeric sequence rounded up to the nearest 20 so empty rooms are shown as placeholders
+          const rawNumericButtons = roomButtons.filter(b => b.id !== 'ALL' && /^\d+$/.test(b.id));
+          const existingNums = rawNumericButtons.map(b => parseInt(b.id, 10));
+          const maxExisting = existingNums.length ? Math.max(...existingNums) : 0;
+          // Known exhibition-specific maximums (override when applicable)
+          const KNOWN_MAX_ROOMS: Record<string, number> = {
+            'European Paintings': 66,
+          };
+          // Known empty rooms to always show as placeholders even if no artwork references them
+          const KNOWN_EMPTY_ROOMS: Record<string, number[]> = {
+            'European Paintings': [1, 3, 13, 47, 48, 49, 50],
+          };
+          const exhibitKey = (exhibition.title || exhibition.name || '').trim();
+          const exhibitKeyLower = exhibitKey.toLowerCase();
+          // Flexible matching: accept substring/case-insensitive matches so mapping works for variations
+          const findMatch = (map: Record<string, any>) => {
+            for (const k of Object.keys(map)) {
+              const kl = k.toLowerCase();
+              if (!kl) continue;
+              if (exhibitKeyLower.includes(kl) || kl.includes(exhibitKeyLower)) return map[k];
+            }
+            return undefined;
+          };
+          const forcedMax = findMatch(KNOWN_MAX_ROOMS) ?? 0;
+          const extraEmpty = (findMatch(KNOWN_EMPTY_ROOMS) ?? [])
+            .slice();
+          const maxEmpty = extraEmpty.length ? Math.max(...extraEmpty) : 0;
+          const maxNum = Math.max(maxExisting, forcedMax, maxEmpty);
+          // Generate sequence 1..maxNum so empty rooms are shown as placeholders
+          const nums: { id: string; label: string; exists: boolean }[] = Array.from({ length: Math.max(0, maxNum) }, (_, i) => {
+            const n = i + 1;
+            // A room 'exists' only when at least one artwork references it
+            const exists = artworks.some(a => String(a.roomId || '').trim() === String(n));
+            return { id: String(n), label: String(n), exists };
+          });
+          // If a non-numeric room like 'C' exists, append it after the numeric grid
+          const central = roomButtons.find(b => b.id === 'C');
+          if (central) nums.push({ id: central.id, label: central.label, exists: true });
+          const colWidth = SELECTOR_COL_WIDTH;
+          const colGap = SELECTOR_COL_GAP;
           return (
             <div style={{ width: '100%' }}>
-              {Array.from({ length: rows }).map((_, r) => {
-                const start = r * perRow;
-                const slice = nums.slice(start, start + perRow);
-                // const isLast = r === rows - 1; // removed (+) button
-                return (
-                  <div key={`room-row-${r}`} style={{ display: 'flex', justifyContent: 'space-between', gap: 6, marginBottom: 6 }}>
-                    {slice.map((btn) => (
-                      <button
-                        key={btn.id}
-                        onClick={() => { setSelectedRoomId(btn.id); setSelectedIndex(0); }}
-                        style={{
-                          // fixed size so single/double digit labels align
-                          width: isGallery ? 32 : 34,
-                          height: 22,
-                          display: 'inline-flex',
-                          alignItems: 'center',
-                          justifyContent: 'center',
-                          padding: 0,
-                          fontSize: 11,
-                          borderRadius: 4,
-                          border: 'none',
-                          background: selectedRoomId === btn.id ? '#111' : 'transparent',
-                          color: selectedRoomId === btn.id ? '#fff' : '#222',
-                          cursor: 'pointer'
-                        }}
-                      >
-                        {btn.label}
-                      </button>
-                    ))}
-                    {/* fill empty slots so space-between works when slice shorter than perRow */}
-                    {Array.from({ length: Math.max(0, perRow - slice.length) }).map((__, i) => (
-                      <div key={`spacer-${r}-${i}`} style={{ width: 0 }} />
-                    ))}
-                    {/* put + button at the end of the last row */}
-                    {/* '+' adder removed to avoid empty rooms */}
-                  </div>
-                );
-              })}
+              {isGalleryLayout ? (
+                // Render rows of 20 in gallery mode
+                (() => {
+                  const chunkSize = 20;
+                  const rows: typeof nums[] = [];
+                  for (let i = 0; i < nums.length; i += chunkSize) rows.push(nums.slice(i, i + chunkSize));
+                  return rows.map((row, rIdx) => (
+                    <div key={`row-${rIdx}`} style={{ display: 'grid', gridTemplateColumns: `repeat(${row.length}, ${colWidth}px)`, columnGap: colGap, rowGap: 6, justifyContent: 'start', marginBottom: 4 }}>
+                      {row.map((btn) => (
+            <button
+                          key={btn.id}
+                          onClick={() => { if (btn.exists) { setSelectedRoomId(btn.id); setSelectedIndex(0); } }}
+                          disabled={!btn.exists}
+                          style={{
+                            width: '100%',
+                            height: 18,
+                            display: 'inline-flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            padding: 0,
+                            fontSize: 9.5,
+                            borderRadius: 3,
+              border: btn.exists ? 'none' : '1px dashed rgba(0,0,0,0.18)',
+              background: btn.exists ? (selectedRoomId === btn.id ? '#111' : 'transparent') : 'rgba(0,0,0,0.03)',
+              color: btn.exists ? (selectedRoomId === btn.id ? '#fff' : '#222') : 'rgba(0,0,0,0.38)',
+              opacity: btn.exists ? 1 : 0.75,
+              cursor: btn.exists ? 'pointer' : 'default',
+              boxSizing: 'border-box'
+                          }}
+                        >
+                          {btn.label}
+                        </button>
+                      ))}
+                    </div>
+                  ));
+                })()
+              ) : (
+                // Archive/default: keep original grid behavior
+                <div style={{ display: 'grid', gridTemplateColumns: `repeat(${perRow}, ${colWidth}px)`, columnGap: colGap, rowGap: 1, justifyContent: 'start', width: '100%' }}>
+                  {nums.map((btn) => (
+                    <button
+                      key={btn.id}
+                      onClick={() => { if (btn.exists) { setSelectedRoomId(btn.id); setSelectedIndex(0); } }}
+                      disabled={!btn.exists}
+                      style={{
+                        width: '100%',
+                        height: 18,
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        padding: 0,
+                        fontSize: 9.5,
+                        borderRadius: 3,
+                        border: btn.exists ? 'none' : '1px dashed #ccc',
+                        background: btn.exists ? (selectedRoomId === btn.id ? '#111' : 'transparent') : 'transparent',
+                        color: btn.exists ? (selectedRoomId === btn.id ? '#fff' : '#222') : '#bbb',
+                        cursor: btn.exists ? 'pointer' : 'default'
+                      }}
+                    >
+                      {btn.label}
+                    </button>
+                  ))}
+                </div>
+              )}
             </div>
           );
         })()}
@@ -796,7 +1106,18 @@ const ExhibitionModal = ({ exhibition, onClose }: ExhibitionModalProps) => {
 
         {/* Textual close control at the top-right */}
         <button
-          onClick={onClose}
+          onClick={() => {
+            try {
+              const st = window.history.state as any;
+              if (st && st.modal) {
+                window.history.back();
+              } else {
+                onClose();
+              }
+            } catch {
+              onClose();
+            }
+          }}
           aria-label="Close"
           style={{
             position: "absolute",
@@ -835,14 +1156,30 @@ const ExhibitionModal = ({ exhibition, onClose }: ExhibitionModalProps) => {
           </div>
           {/* Right stage */}
           <div style={{ flex: 1, position: "relative", background: "transparent", display: "flex", alignItems: "center", justifyContent: "center" }}>
-            <div ref={stageMonitorRef} style={{ width: "80%", height: "70%", background: "transparent", display: "flex", alignItems: "center", justifyContent: "center" }}>
+            {/* Constrain image so it won't overlap metadata/top rows (reserve ~260px) */}
+            <div ref={stageMonitorRef} style={{ width: "72%", maxHeight: "calc(100vh - 260px)", background: "transparent", display: "flex", alignItems: "center", justifyContent: "center" }}>
               {current ? (
-                <img
-                  src={current.image}
-                  alt={current.name}
-                  style={{ height: "100%", width: "auto", maxWidth: "100%", maxHeight: "100%", objectFit: "contain", cursor: "zoom-in", display: "block" }}
-                  onClick={() => setShowImageModal(current.image || null)}
-                />
+                (() => {
+                  const src = current.image;
+                  const widths = [640, 960, 1280, 1600];
+                  const avif = buildSourceSet(src, widths, 'avif', 70);
+                  const webp = buildSourceSet(src, widths, 'webp', 75);
+                  const sizes = '(max-width: 768px) 100vw, 75vw';
+                  return (
+                    <picture>
+                      {useProxy && avif && <source type="image/avif" srcSet={avif} sizes={sizes} />}
+                      {useProxy && webp && <source type="image/webp" srcSet={webp} sizes={sizes} />}
+                      <img
+                        src={src}
+                        alt={current.name}
+                        decoding="async"
+                        fetchPriority="high"
+                        style={{ width: "auto", maxWidth: "100%", maxHeight: "calc(100vh - 260px)", objectFit: "contain", cursor: "zoom-in", display: "block" }}
+                        onClick={() => setShowImageModal(current.image || null)}
+                      />
+                    </picture>
+                  );
+                })()
               ) : (
                 <div style={{ color: "#bbb", margin: "auto" }}>No image</div>
               )}
@@ -859,9 +1196,27 @@ const ExhibitionModal = ({ exhibition, onClose }: ExhibitionModalProps) => {
                   {items.map((a, idx) => (
                     <div key={a.id ?? `${idx}`} style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
                       <div style={{ width: '60%', background: '#eee', borderRadius: 0 }}>
-                        {a.image && (
-                          <img src={a.image} alt={a.name} style={{ width: '100%', height: 'auto', display: 'block' }} />
-                        )}
+                        {a.image && (() => {
+                          const src = a.image;
+                          const widths = [360, 540, 720, 900];
+                          const avif = buildSourceSet(src, widths, 'avif', 65);
+                          const webp = buildSourceSet(src, widths, 'webp', 70);
+                          const sizes = '(max-width: 768px) 90vw, 40vw';
+                          return (
+                            <picture>
+                              {useProxy && avif && <source type="image/avif" srcSet={avif} sizes={sizes} />}
+                              {useProxy && webp && <source type="image/webp" srcSet={webp} sizes={sizes} />}
+                              <img
+                                src={src}
+                                alt={a.name}
+                                loading="lazy"
+                                decoding="async"
+                                fetchPriority="low"
+                                style={{ width: '100%', height: 'auto', display: 'block' }}
+                              />
+                            </picture>
+                          );
+                        })()}
                       </div>
                       <div style={{ marginTop: 10 }}>
                         <div style={{ fontSize: 12, fontWeight: 400, color: '#222' }}>{String(idx + 1).padStart(2, '0')}</div>

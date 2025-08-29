@@ -13,6 +13,23 @@ type HomePageProps = {
 };
 
 export default function HomePage({ exhibitions }: HomePageProps) {
+  // Compute initial modal/detail state from history synchronously to avoid first-paint flicker
+  const initialFromHistory = (() => {
+    if (typeof window === 'undefined') return { item: null as ExhibitionItem | null, parent: null as Exhibition | null };
+    try {
+      const st = (window.history.state || {}) as any;
+      if (st && st.modal && st.exhibitionId) {
+        for (const ex of exhibitions) {
+          const items = (ex as any).permanentExhibitions || [];
+          if (Array.isArray(items)) {
+            const hit = items.find((it: any) => it && (it.id === st.exhibitionId));
+            if (hit) return { item: hit as ExhibitionItem, parent: ex };
+          }
+        }
+      }
+    } catch {}
+    return { item: null as ExhibitionItem | null, parent: null as Exhibition | null };
+  })();
   // Approximate dark green used on the map style (adjust if needed)
   const MAP_DARK_GREEN = "#0B3D02";
   const [toggleOnColor, setToggleOnColor] = useState<string>(() => {
@@ -22,8 +39,8 @@ export default function HomePage({ exhibitions }: HomePageProps) {
       return MAP_DARK_GREEN;
     }
   });
-  const [selectedExhibition, setSelectedExhibition] = useState<Exhibition | null>(null);
-  const [selectedModalExhibition, setSelectedModalExhibition] = useState<ExhibitionItem | null>(null);
+  const [selectedExhibition, setSelectedExhibition] = useState<Exhibition | null>(initialFromHistory.parent);
+  const [selectedModalExhibition, setSelectedModalExhibition] = useState<ExhibitionItem | null>(initialFromHistory.item);
   const [useGlobe, setUseGlobe] = useState(false);
   // Removed Outline Globe toggle
   // D3 globe is the only globe mode when Globe is ON
@@ -128,6 +145,42 @@ export default function HomePage({ exhibitions }: HomePageProps) {
       if (scaleTimer) window.clearTimeout(scaleTimer);
     };
   }, [headerOn]);
+
+  // Auto-open modal after refresh if history.state indicates a modal was open.
+  useEffect(() => {
+    const openFromHistory = () => {
+      try {
+        const st = (window.history.state || {}) as any;
+        if (st && st.modal && st.exhibitionId) {
+          // find the ExhibitionItem by id across all exhibitions
+          let foundItem: ExhibitionItem | null = null;
+          let parent: Exhibition | null = null;
+          for (const ex of exhibitions) {
+            const items = (ex as any).permanentExhibitions || [];
+            if (Array.isArray(items)) {
+              const hit = items.find((it: any) => it && (it.id === st.exhibitionId));
+              if (hit) { foundItem = hit; parent = ex; break; }
+            }
+          }
+          if (foundItem) {
+            // Open underlying details (right panel) and the modal on top
+            // Avoid overriding if already set from initial state
+            setSelectedExhibition(prev => prev ?? parent);
+            setSelectedModalExhibition(prev => prev ?? foundItem);
+          }
+        }
+      } catch {}
+    };
+
+    // If not already seeded from initial state, attempt once on mount
+    if (!selectedModalExhibition) openFromHistory();
+
+    const onLoadedWithModal = () => openFromHistory();
+    window.addEventListener('exhibitionModal:loadedWithModal', onLoadedWithModal as any);
+    return () => {
+      window.removeEventListener('exhibitionModal:loadedWithModal', onLoadedWithModal as any);
+    };
+  }, [exhibitions, selectedModalExhibition]);
 
   return (
     <div style={{ position: "relative", width: "100vw", height: "100vh", overflow: "hidden" }}>
