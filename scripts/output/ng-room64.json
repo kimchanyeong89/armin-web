@@ -1,0 +1,187 @@
+{
+  "room": "64",
+  "source": "scripts/seed/ng-room64-seed.json",
+  "count": 18,
+  "items": [
+    {
+      "id": "gentile-bellini-cardinal-bessarion-with-the-bessarion-reliquary",
+      "name": "Cardinal Bessarion with the Bessarion Reliquary",
+      "artist": "Gentile Bellini",
+      "date": "about 1472-3",
+      "dimension": "102.3 × 37.2 cm",
+      "image": "https://www.nationalgallery.org.uk/media/v2mbzx00/n-6590-00-000016-web-hd.jpg?rxy=0.73548387096774193,0.50726855394032133&amp;width=720&amp;height=720&amp;v=1dbccacf45b58b0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/gentile-bellini-cardinal-bessarion-with-the-bessarion-reliquary",
+      "roomId": "64"
+    },
+    {
+      "id": "italian-venetian-ducat-of-doge-francesco-dandolo",
+      "name": "Ducat of Doge Francesco Dandolo",
+      "artist": "Italian, Venetian",
+      "date": "1329-39",
+      "dimension": "2 × 2 cm",
+      "image": "https://www.nationalgallery.org.uk/media/14spfcv5/l-1367-00-000002-fs-hd.jpg?width=720&amp;height=720&amp;v=1dbd180495296d0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/italian-venetian-ducat-of-doge-francesco-dandolo",
+      "roomId": "64"
+    },
+    {
+      "id": "italian-venetian-ducat-of-doge-giovanni-soranzo",
+      "name": "Ducat of Doge Giovanni Soranzo",
+      "artist": "Italian, Venetian",
+      "date": "1312-28",
+      "dimension": "2 × 2 cm",
+      "image": "https://www.nationalgallery.org.uk/media/xo5kxxp1/l-1366-00-000002-fs-hd.jpg?width=720&amp;height=720&amp;v=1dbd18048334420",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/italian-venetian-ducat-of-doge-giovanni-soranzo",
+      "roomId": "64"
+    },
+    {
+      "id": "italian-florentine-florin-fiorino-stretto",
+      "name": "Florin",
+      "artist": "Italian, Florentine",
+      "date": "before 1290",
+      "dimension": "2 × 2 cm",
+      "image": "https://www.nationalgallery.org.uk/media/irda20cr/l-1362-00-000002-fs-hd.jpg?width=720&amp;height=720&amp;v=1dbd18043d0ad50",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/italian-florentine-florin-fiorino-stretto",
+      "roomId": "64"
+    },
+    {
+      "id": "italian-florentine-florin-fiorino-stretto-1",
+      "name": "Florin",
+      "artist": "Italian, Florentine",
+      "date": "before 1290",
+      "dimension": "2 × 2 cm",
+      "image": "https://www.nationalgallery.org.uk/media/ofwnelso/l-1363-00-000002-fs-hd.jpg?width=720&amp;height=720&amp;v=1dbd18044e46740",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/italian-florentine-florin-fiorino-stretto-1",
+      "roomId": "64"
+    },
+    {
+      "id": "italian-genoese-genovino-genovino-d-oro",
+      "name": "Genovino",
+      "artist": "Italian, Genoese",
+      "date": "early 1270s - late 1280s",
+      "dimension": "2 × 2 cm",
+      "image": "https://www.nationalgallery.org.uk/media/2qgfroow/l-1364-00-000002-fs-hd.jpg?width=720&amp;height=720&amp;v=1dbd18045fd2a40",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/italian-genoese-genovino-genovino-d-oro",
+      "roomId": "64"
+    },
+    {
+      "id": "italian-genoese-genovino-genovino-d-oro-1",
+      "name": "Genovino",
+      "artist": "Italian, Genoese",
+      "date": "early 1270s-1300",
+      "dimension": "2 × 2 cm",
+      "image": "https://www.nationalgallery.org.uk/media/x0ypcuoh/l-1365-00-000002-fs-hd.jpg?width=720&amp;height=720&amp;v=1dbd1804716feb0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/italian-genoese-genovino-genovino-d-oro-1",
+      "roomId": "64"
+    },
+    {
+      "id": "sandro-botticelli-mystic-nativity",
+      "name": "Mystic Nativity",
+      "artist": "Sandro Botticelli",
+      "date": "1500",
+      "dimension": "108.6 × 74.9 cm",
+      "image": "https://www.nationalgallery.org.uk/media/40peqyrn/n-1034-00-000082-xl-hd.jpg?rxy=0.46,0.65747126436781611&amp;width=720&amp;height=720&amp;v=1dbcbe97b688ef0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/sandro-botticelli-mystic-nativity",
+      "roomId": "64"
+    },
+    {
+      "id": "sandro-botticelli-saint-francis-of-assisi-with-angels",
+      "name": "Saint Francis of Assisi with Angels",
+      "artist": "Sandro Botticelli",
+      "date": "about 1475-80",
+      "dimension": "49.5 × 31.8 cm",
+      "image": "https://www.nationalgallery.org.uk/media/1bqdiz2b/n-0598-00-000038-web-hd.jpg?rxy=0.539647577092511,0.26499302649930268&amp;width=720&amp;height=720&amp;v=1dbcbde3ab65e10",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/sandro-botticelli-saint-francis-of-assisi-with-angels",
+      "roomId": "64"
+    },
+    {
+      "id": "bartolome-bermejo-saint-michael-triumphs-over-the-devil",
+      "name": "Saint Michael Triumphs over the Devil",
+      "artist": "Bartolomé Bermejo",
+      "date": "1468",
+      "dimension": "179.7 × 81.9 cm",
+      "image": "https://www.nationalgallery.org.uk/media/21mjahc4/n-6553-00-000128-xl-hd.jpg?rxy=0.6449302669148899,0.2681034260524348&amp;width=720&amp;height=720&amp;v=1dbccabe09dbf30",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/bartolome-bermejo-saint-michael-triumphs-over-the-devil",
+      "roomId": "64"
+    },
+    {
+      "id": "master-of-the-saint-bartholomew-altarpiece-the-deposition",
+      "name": "The Deposition",
+      "artist": "Master of the Saint Bartholomew Altarpiece",
+      "date": "about 1500-5",
+      "dimension": "74.9 × 47.3 cm",
+      "image": "https://www.nationalgallery.org.uk/media/vlim0e5s/n-6470-00-000026-xl-hd.jpg?rxy=0.5530248457942963,0.2611471647390729&amp;width=720&amp;height=720&amp;v=1dbcca99752ffe0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/master-of-the-saint-bartholomew-altarpiece-the-deposition",
+      "roomId": "64"
+    },
+    {
+      "id": "workshop-of-nicolas-frances-the-mass-of-saint-gregory",
+      "name": "The Mass of Saint Gregory",
+      "artist": "Nicolás Francés",
+      "date": "mid-15th century",
+      "dimension": "31.1 × 20.9 cm",
+      "image": "https://www.nationalgallery.org.uk/media/h4haqwbs/l-1286-00-000003-web-hd.jpg?rxy=0.51301421218493315,0.42090130537062376&amp;width=720&amp;height=720&amp;v=1dbcbd34cffc490",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/workshop-of-nicolas-frances-the-mass-of-saint-gregory",
+      "roomId": "64"
+    },
+    {
+      "id": "possibly-by-antonello-da-messina-the-virgin-and-child",
+      "name": "The Virgin and Child",
+      "artist": "Antonello da Messina",
+      "date": "about 1460-9",
+      "dimension": "43.2 × 34.3 cm",
+      "image": "https://www.nationalgallery.org.uk/media/q3we0ocy/n-2618-00-000026-web-hd.jpg?rxy=0.42752293577981654,0.30979827089337175&amp;width=720&amp;height=720&amp;v=1dbcbf75c7e3fe0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/possibly-by-antonello-da-messina-the-virgin-and-child",
+      "roomId": "64"
+    },
+    {
+      "id": "masaccio-the-virgin-and-child",
+      "name": "The Virgin and Child",
+      "artist": "Masaccio",
+      "date": "1426",
+      "dimension": "134.8 × 73.5 cm",
+      "image": "https://www.nationalgallery.org.uk/media/gdljkrhv/n-3046-00-000069-fs-hd.jpg?rxy=0.51743119266055049,0.21031344792719919&amp;width=720&amp;height=720&amp;v=1dbcbf929a165a0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/masaccio-the-virgin-and-child",
+      "roomId": "64"
+    },
+    {
+      "id": "michael-pacher-the-virgin-and-child-enthroned-with-angels-and-saints",
+      "name": "The Virgin and Child Enthroned with Angels and Saints",
+      "artist": "Michael Pacher",
+      "date": "late 1470s to early 1480s",
+      "dimension": "40.3 × 39.4 cm",
+      "image": "https://www.nationalgallery.org.uk/media/aaqov0jh/n-5786-00-000038-xl-hd.jpg?rxy=0.432258064516129,0.48333333333333334&amp;width=720&amp;height=720&amp;v=1dbcca3152e8f30",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/michael-pacher-the-virgin-and-child-enthroned-with-angels-and-saints",
+      "roomId": "64"
+    },
+    {
+      "id": "quinten-massys-the-virgin-and-child-enthroned-with-four-angels",
+      "name": "The Virgin and Child Enthroned, with Four Angels",
+      "artist": "Quinten Massys",
+      "date": "about 1506-9",
+      "dimension": "62.3 × 43.5 cm",
+      "image": "https://www.nationalgallery.org.uk/media/dcvoyz2x/n-6282-00-000042-web-hd.jpg?rxy=0.47526881720430109,0.42319277108433734&amp;width=720&amp;height=720&amp;v=1dbcca520f3a470",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/quinten-massys-the-virgin-and-child-enthroned-with-four-angels",
+      "roomId": "64"
+    },
+    {
+      "id": "bernardino-fungai-the-virgin-and-child-with-cherubim",
+      "name": "The Virgin and Child with Cherubim",
+      "artist": "Bernardino Fungai",
+      "date": "probably about 1495-1510",
+      "dimension": "119.4 × 118.1 cm",
+      "image": "https://www.nationalgallery.org.uk/media/shxdicys/n-1331-00-000031-web-hd.jpg?rxy=0.525,0.11589403973509933&amp;width=720&amp;height=720&amp;v=1dbcbeeb5b737a0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/bernardino-fungai-the-virgin-and-child-with-cherubim",
+      "roomId": "64"
+    },
+    {
+      "id": "hans-memling-virgin-and-child",
+      "name": "Virgin and Child",
+      "artist": "Hans Memling",
+      "date": "perhaps about 1475",
+      "dimension": "37.9 × 28 cm",
+      "image": "https://www.nationalgallery.org.uk/media/3kudiibu/n-0709-00-000045-web-hd.jpg?rxy=0.50220264317180618,0.208130081300813&amp;width=720&amp;height=720&amp;v=1dbcbe1e7499180",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/hans-memling-virgin-and-child",
+      "roomId": "64"
+    }
+  ]
+}

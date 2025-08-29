@@ -9,6 +9,7 @@ import Login from "./components/Login";
 import SignUp from "./components/SignUp";
 import Navbar from "./components/Navbar";  // 추가
 import MyPage from "./components/Mypage";  // MyPage import casing fixed
+import AdminImport from "./pages/AdminImport";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/mypage" element={<MyPage />} /> {/* MyPage route 추가 */}
+          <Route path="/admin/import" element={<AdminImport />} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>

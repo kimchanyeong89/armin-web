@@ -1,0 +1,77 @@
+{
+  "room": "42",
+  "source": "scripts/seed/ng-room42-seed.json",
+  "count": 7,
+  "items": [
+    {
+      "id": "hilaire-germain-edgar-degas-after-the-bath-woman-drying-herself",
+      "name": "After the Bath, Woman drying herself",
+      "artist": "Hilaire-Germain-Edgar Degas",
+      "date": "about 1890-5",
+      "dimension": "103.5 × 98.5 cm",
+      "image": "https://www.nationalgallery.org.uk/media/axjatmhx/n-6295-00-000027-xl-hd.jpg?rxy=0.34408602150537637,0.28215767634854771&amp;width=720&amp;height=720&amp;v=1dbcca563a9bca0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/hilaire-germain-edgar-degas-after-the-bath-woman-drying-herself",
+      "roomId": "42"
+    },
+    {
+      "id": "hilaire-germain-edgar-degas-ballet-dancers-1",
+      "name": "Ballet Dancers",
+      "artist": "Hilaire-Germain-Edgar Degas",
+      "date": "1888",
+      "dimension": "62.6 × 70.8 cm",
+      "image": "https://www.nationalgallery.org.uk/media/xa4d20d3/n-6705-00-000024-xl-hd.jpg?rxy=0.4888240990192936,0.2692434639196401&amp;width=720&amp;height=720&amp;v=1dc0c5599d30850",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/hilaire-germain-edgar-degas-ballet-dancers-1",
+      "roomId": "42"
+    },
+    {
+      "id": "maurice-quentin-de-la-tour-henry-dawkins",
+      "name": "Henry Dawkins",
+      "artist": "Maurice-Quentin de La Tour",
+      "date": "about 1751",
+      "dimension": "66.7 × 53.3 cm",
+      "image": "https://www.nationalgallery.org.uk/media/51fhbuyg/n-5118-00-000029-xl-hd.jpg?rxy=0.55813953488372092,0.30879345603271985&amp;width=720&amp;height=720&amp;v=1dbcca212189210",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/maurice-quentin-de-la-tour-henry-dawkins",
+      "roomId": "42"
+    },
+    {
+      "id": "odilon-redon-ophelia-among-the-flowers",
+      "name": "Ophelia among the Flowers",
+      "artist": "Odilon Redon",
+      "date": "about 1905-8",
+      "dimension": "64 × 91 cm",
+      "image": "https://www.nationalgallery.org.uk/media/zxxp3eyl/n-6438-00-000026-xl-hd.jpg?rxy=0.59737417943107218,0.54205607476635509&amp;width=720&amp;height=720&amp;v=1dbcca8c6063830",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/odilon-redon-ophelia-among-the-flowers",
+      "roomId": "42"
+    },
+    {
+      "id": "rosalba-carriera-portrait-of-a-man",
+      "name": "Portrait of a Man",
+      "artist": "Rosalba Carriera",
+      "date": "1720s",
+      "dimension": "57.8 × 47 cm",
+      "image": "https://www.nationalgallery.org.uk/media/5wrcx4gb/n-3126-00-000009-web-hd.jpg?rxy=0.46,0.33377483443708611&amp;width=720&amp;height=720&amp;v=1dbcbfa2041b040",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/rosalba-carriera-portrait-of-a-man",
+      "roomId": "42"
+    },
+    {
+      "id": "jean-etienne-liotard-the-lavergne-family-breakfast",
+      "name": "The Lavergne Family Breakfast",
+      "artist": "Jean-Etienne Liotard",
+      "date": "1754",
+      "dimension": "80 × 106 cm",
+      "image": "https://www.nationalgallery.org.uk/media/usmpxpxz/n-6685-00-000023-xl-hd.jpg?rxy=0.5157710952120411,0.49916534910231497&amp;width=720&amp;height=720&amp;v=1dbccb05421c010",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/jean-etienne-liotard-the-lavergne-family-breakfast",
+      "roomId": "42"
+    },
+    {
+      "id": "hilaire-germain-edgar-degas-ukrainian-dancers",
+      "name": "Ukrainian Dancers",
+      "artist": "Hilaire-Germain-Edgar Degas",
+      "date": "about 1899",
+      "dimension": "73 × 59.1 cm",
+      "image": "https://www.nationalgallery.org.uk/media/t31azzzd/n-6581-00-000015-web-hd.jpg?rxy=0.40112994350282488,0.20224719101123595&amp;width=720&amp;height=720&amp;v=1dbccacccb33760",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/hilaire-germain-edgar-degas-ukrainian-dancers",
+      "roomId": "42"
+    }
+  ]
+}

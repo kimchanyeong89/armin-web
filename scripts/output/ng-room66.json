@@ -1,0 +1,37 @@
+{
+  "room": "66",
+  "source": "scripts/seed/ng-room66-seed.json",
+  "count": 3,
+  "items": [
+    {
+      "id": "piero-della-francesca-saint-michael",
+      "name": "Saint Michael",
+      "artist": "Piero della Francesca",
+      "date": "completed 1469",
+      "dimension": "133 × 59.5 cm",
+      "image": "https://www.nationalgallery.org.uk/media/rdthseuv/n-0769-00-000069-web-hd.jpg?rxy=0.52422907488986781,0.14885496183206107&amp;width=720&amp;height=720&amp;v=1dbcbe37301bcb0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/piero-della-francesca-saint-michael",
+      "roomId": "66"
+    },
+    {
+      "id": "piero-della-francesca-the-baptism-of-christ",
+      "name": "The Baptism of Christ",
+      "artist": "Piero della Francesca",
+      "date": "probably about 1437–1445",
+      "dimension": "167 × 116 cm",
+      "image": "https://www.nationalgallery.org.uk/media/dsce4ety/n-0665-00-000054-fs-hd.jpg?rxy=0.4752688172043011,0.48484848484848486&amp;width=720&amp;height=720&amp;v=1dbcbe08e6db970",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/piero-della-francesca-the-baptism-of-christ",
+      "roomId": "66"
+    },
+    {
+      "id": "piero-della-francesca-the-nativity",
+      "name": "The Nativity",
+      "artist": "Piero della Francesca",
+      "date": "early 1480s",
+      "dimension": "124.4 × 122.6 cm",
+      "image": "https://www.nationalgallery.org.uk/media/ourjygwl/n-0908-00-000202-xl-hd.jpg?rxy=0.501831335881986,0.4113385470494172&amp;width=720&amp;height=720&amp;v=1dbcbe6f79deb80",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/piero-della-francesca-the-nativity",
+      "roomId": "66"
+    }
+  ]
+}

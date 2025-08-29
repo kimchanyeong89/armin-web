@@ -1,0 +1,20 @@
+[
+  {
+    "url": "https://www.nationalgallery.org.uk/paintings/NG2906",
+    "imageUrl": "https://www.nationalgallery.org.uk/media/40peqyrn/n-1034-00-000082-xl-hd.jpg?rxy=0.46,0.65747126436781611&width=800&height=800&v=1dbcbe97b688ef0&bgcolor=fff0&format=webp",
+    "title": "Workshop of Sandro Botticelli | The Virgin and Child with a Pomegranate | NG2906 | National Gallery, London",
+    "alt": "'Mystic Nativity'",
+    "selector": "img[src*=\"media\"]",
+    "date": "1872",
+    "dimension": ""
+  },
+  {
+    "url": "https://www.nationalgallery.org.uk/paintings/NG2907",
+    "imageUrl": "https://www.nationalgallery.org.uk/media/a0vll0x3/n-1062-00-000013-web-hd.jpg?rxy=0.635,0.42350332594235035&width=800&height=800&v=1dbcbe9f5a0b490&bgcolor=fff0&format=webp",
+    "title": "Italian, North | The Madonna and Child | NG2907 | National Gallery, London",
+    "alt": "A Battle",
+    "selector": "img[src*=\"media\"]",
+    "date": "1962",
+    "dimension": ""
+  }
+]

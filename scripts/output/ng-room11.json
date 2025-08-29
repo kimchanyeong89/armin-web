@@ -1,0 +1,47 @@
+{
+  "room": "11",
+  "source": "scripts/seed/ng-room11-seed.json",
+  "count": 4,
+  "items": [
+    {
+      "id": "hans-holbein-the-younger-christina-of-denmark-duchess-of-milan",
+      "name": "Christina of Denmark, Duchess of Milan",
+      "artist": "Hans Holbein the Younger",
+      "date": "1538",
+      "dimension": "179.1 × 82.6 cm",
+      "image": "https://www.nationalgallery.org.uk/media/zwbbzc3t/n-2475-00-000073-xl-hd.jpg?rxy=0.43173649331685948,0.11995063084562037&amp;width=720&amp;height=720&amp;v=1dbcbf4da350c50",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/hans-holbein-the-younger-christina-of-denmark-duchess-of-milan",
+      "roomId": "11"
+    },
+    {
+      "id": "hilaire-germain-edgar-degas-helene-rouart-in-her-father-s-study",
+      "name": "Hélène Rouart in her Father",
+      "artist": "Hilaire-Germain-Edgar Degas",
+      "date": "about 1886",
+      "dimension": "162.5 × 121 cm",
+      "image": "https://www.nationalgallery.org.uk/media/bxjdinf0/n-6469-00-000022-web-hd.jpg?rxy=0.68644067796610164,0.23417721518987342&amp;width=720&amp;height=720&amp;v=1dbcca98cea5b70",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/hilaire-germain-edgar-degas-helene-rouart-in-her-father-s-study",
+      "roomId": "11"
+    },
+    {
+      "id": "max-pechstein-portrait-of-charlotte-cuhrt",
+      "name": "Portrait of Charlotte Cuhrt",
+      "artist": "Max Pechstein",
+      "date": "1910",
+      "dimension": "175.8 × 85.4 cm",
+      "image": "https://www.nationalgallery.org.uk/media/wwqbcxid/n-6697-00-000009-xl-hd.jpg?rxy=0.33667860884050005,0.3514786079865711&amp;width=720&amp;height=720&amp;v=1dbccb103715bc0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/max-pechstein-portrait-of-charlotte-cuhrt",
+      "roomId": "11"
+    },
+    {
+      "id": "gustav-klimt-portrait-of-hermine-gallia",
+      "name": "Portrait of Hermine Gallia",
+      "artist": "Gustav Klimt",
+      "date": "1904",
+      "dimension": "170.5 × 96.5 cm",
+      "image": "https://www.nationalgallery.org.uk/media/0tmihcl1/n-6434-00-000037-fs-hd.jpg?rxy=0.41942604856512139,0.15375&amp;width=720&amp;height=720&amp;v=1dbcca8aaa454f0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/gustav-klimt-portrait-of-hermine-gallia",
+      "roomId": "11"
+    }
+  ]
+}

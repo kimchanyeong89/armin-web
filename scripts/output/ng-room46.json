@@ -1,0 +1,77 @@
+{
+  "room": "46",
+  "source": "scripts/seed/ng-room46-seed.json",
+  "count": 7,
+  "items": [
+    {
+      "id": "claude-monet-grainstack-sunset-winter",
+      "name": "Grainstack (Sunset: winter)",
+      "artist": "Claude Monet",
+      "date": "1890-1",
+      "dimension": "64.8 × 92.1 cm",
+      "image": "https://www.nationalgallery.org.uk/media/b2wjcmb2/l-1376-00-000002-web-hd.jpg?width=720&amp;height=720&amp;v=1dbcbd3ac01d1e0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/claude-monet-grainstack-sunset-winter",
+      "roomId": "46"
+    },
+    {
+      "id": "claude-monet-irises",
+      "name": "Irises",
+      "artist": "Claude Monet",
+      "date": "about 1914-17",
+      "dimension": "200.7 × 149.9 cm",
+      "image": "https://www.nationalgallery.org.uk/media/yykht1rp/n-6383-00-000014-web-hd.jpg?rxy=0.73913043478260865,0.52505446623093677&amp;width=720&amp;height=720&amp;v=1dbcca70de1d3f0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/claude-monet-irises",
+      "roomId": "46"
+    },
+    {
+      "id": "claude-monet-poplars-on-the-epte",
+      "name": "Poplars on the Epte",
+      "artist": "Claude Monet",
+      "date": "1891",
+      "dimension": "92.4 × 73.7 cm",
+      "image": "https://www.nationalgallery.org.uk/media/yhrc1j2f/l-0717-00-000012-web-hd.jpg?rxy=0.49559471365638769,0.5060658578856152&amp;width=720&amp;height=720&amp;v=1dbcbd213707770",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/claude-monet-poplars-on-the-epte",
+      "roomId": "46"
+    },
+    {
+      "id": "claude-monet-the-water-lily-pond",
+      "name": "The Water-Lily Pond",
+      "artist": "Claude Monet",
+      "date": "1899",
+      "dimension": "88.3 × 93.1 cm",
+      "image": "https://www.nationalgallery.org.uk/media/lqobdtst/n-4240-00-000069-xl-hd.jpg?rxy=0.49032258064516127,0.39467849223946783&amp;width=720&amp;height=720&amp;v=1dbcc9fd2cb5950",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/claude-monet-the-water-lily-pond",
+      "roomId": "46"
+    },
+    {
+      "id": "claude-monet-water-lilies-1",
+      "name": "Water-lilies",
+      "artist": "Claude Monet",
+      "date": "1917",
+      "dimension": "148.5 × 164 cm",
+      "image": "https://www.nationalgallery.org.uk/media/q2kgtf1q/l-0772-00-000003-web-hd.jpg?width=720&amp;height=720&amp;v=1dbcbd241b6c7b0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/claude-monet-water-lilies-1",
+      "roomId": "46"
+    },
+    {
+      "id": "claude-monet-water-lilies",
+      "name": "Water-Lilies",
+      "artist": "Claude Monet",
+      "date": "after 1916",
+      "dimension": "200.7 × 426.7 cm",
+      "image": "https://www.nationalgallery.org.uk/media/ir0cwnrm/n-6343-00-000010-fs-hd.jpg?rxy=0.34193548387096773,0.35087719298245612&amp;width=720&amp;height=720&amp;v=1dbcca610028680",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/claude-monet-water-lilies",
+      "roomId": "46"
+    },
+    {
+      "id": "claude-monet-water-lilies-setting-sun",
+      "name": "Water-Lilies, Setting Sun",
+      "artist": "Claude Monet",
+      "date": "about 1907",
+      "dimension": "73 × 92.7 cm",
+      "image": "https://www.nationalgallery.org.uk/media/50ieqh4e/n-6608-00-000008-fs-hd.jpg?rxy=0.4463276836158192,0.49820788530465948&amp;width=720&amp;height=720&amp;v=1dbccad6da06bc0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/claude-monet-water-lilies-setting-sun",
+      "roomId": "46"
+    }
+  ]
+}

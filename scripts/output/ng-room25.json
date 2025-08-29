@@ -1,0 +1,97 @@
+{
+  "room": "25",
+  "source": "scripts/seed/ng-room25-seed.json",
+  "count": 9,
+  "items": [
+    {
+      "id": "francisco-de-zurbaran-a-cup-of-water-and-a-rose",
+      "name": "A Cup of Water and a Rose",
+      "artist": "Francisco de Zurbarán",
+      "date": "about 1630",
+      "dimension": "21.2 × 30.1 cm",
+      "image": "https://www.nationalgallery.org.uk/media/1klaqoaa/n-6566-00-000021-web-hd.jpg?rxy=0.22795698924731184,0.49090909090909091&amp;width=720&amp;height=720&amp;v=1dbccac3c547210",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/francisco-de-zurbaran-a-cup-of-water-and-a-rose",
+      "roomId": "25"
+    },
+    {
+      "id": "claude-monet-still-life",
+      "name": "Still Life",
+      "artist": "Claude Monet",
+      "date": "about 1869",
+      "dimension": "46 × 56 cm",
+      "image": "https://www.nationalgallery.org.uk/media/prchyts5/l-1377-00-000002-web-hd.jpg?width=720&amp;height=720&amp;v=1dbcbd3ae1855d0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/claude-monet-still-life",
+      "roomId": "25"
+    },
+    {
+      "id": "jan-jansz-treck-still-life-with-a-pewter-flagon-and-two-ming-bowls",
+      "name": "Still Life with a Pewter Flagon and Two Ming Bowls",
+      "artist": "Jan Jansz. Treck",
+      "date": "1651",
+      "dimension": "76.5 × 63.8 cm",
+      "image": "https://www.nationalgallery.org.uk/media/2j5lmwox/n-4562-00-000041-fs-hd.jpg?rxy=0.5916114790286976,0.50370370370370365&amp;width=720&amp;height=720&amp;v=1dbcca0ca82e050",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/jan-jansz-treck-still-life-with-a-pewter-flagon-and-two-ming-bowls",
+      "roomId": "25"
+    },
+    {
+      "id": "gustave-courbet-still-life-with-apples-and-a-pomegranate",
+      "name": "Still Life with Apples and a Pomegranate",
+      "artist": "Gustave Courbet",
+      "date": "1871-2",
+      "dimension": "44.5 × 61 cm",
+      "image": "https://www.nationalgallery.org.uk/media/q0bbmvqj/n-5983-00-000042-fs-hd.jpg?rxy=0.5161290322580645,0.48245614035087719&amp;width=720&amp;height=720&amp;v=1dbcca36b5f39e0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/gustave-courbet-still-life-with-apples-and-a-pomegranate",
+      "roomId": "25"
+    },
+    {
+      "id": "willem-kalf-still-life-with-drinking-horn",
+      "name": "Still Life with Drinking-Horn",
+      "artist": "Willem Kalf",
+      "date": "about 1653",
+      "dimension": "86.4 × 102.2 cm",
+      "image": "https://www.nationalgallery.org.uk/media/pjln4krp/n-6444-00-000015-web-hd.jpg?rxy=0.54782608695652169,0.58163265306122447&amp;width=720&amp;height=720&amp;v=1dbcca8dad07c30",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/willem-kalf-still-life-with-drinking-horn",
+      "roomId": "25"
+    },
+    {
+      "id": "juan-de-zurbaran-still-life-with-lemons-in-a-wicker-basket",
+      "name": "Still Life with Lemons in a Wicker Basket",
+      "artist": "Juan de Zurbarán",
+      "date": "about 1643-9",
+      "dimension": "81.4 × 108.5 cm",
+      "image": "https://www.nationalgallery.org.uk/media/2spgsrcj/n-6669-00-000061-xl-hd.jpg?rxy=0.5204301075268817,0.40229885057471265&amp;width=720&amp;height=720&amp;v=1dbea950c98d190",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/juan-de-zurbaran-still-life-with-lemons-in-a-wicker-basket",
+      "roomId": "25"
+    },
+    {
+      "id": "luis-melendez-still-life-with-oranges-and-walnuts",
+      "name": "Still Life with Oranges and Walnuts",
+      "artist": "Luis Meléndez",
+      "date": "1772",
+      "dimension": "61 × 81.3 cm",
+      "image": "https://www.nationalgallery.org.uk/media/4edj3xlr/n-6505-00-000044-xl-hd.jpg?width=720&amp;height=720&amp;v=1dbccaa8c8eb170",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/luis-melendez-still-life-with-oranges-and-walnuts",
+      "roomId": "25"
+    },
+    {
+      "id": "philippe-rousseau-still-life-with-oysters",
+      "name": "Still Life with Oysters",
+      "artist": "Philippe Rousseau",
+      "date": "probably 1875-87",
+      "dimension": "42.2 × 62.2 cm",
+      "image": "https://www.nationalgallery.org.uk/media/5uplu513/n-3829-00-000009-web-hd.jpg?rxy=0.53648915187376722,0.50728862973760935&amp;width=720&amp;height=720&amp;v=1dbcc9cfe228040",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/philippe-rousseau-still-life-with-oysters",
+      "roomId": "25"
+    },
+    {
+      "id": "adriaen-coorte-still-life-with-strawberries-gooseberries-and-asparagus",
+      "name": "Still Life with Strawberries, Gooseberries and Asparagus",
+      "artist": "Adriaen Coorte",
+      "date": "1703",
+      "dimension": "35.7 × 42.8 cm",
+      "image": "https://www.nationalgallery.org.uk/media/rgxdu1nk/n-6664-00-000023-xl-hd.jpg?rxy=0.51827956989247315,0.50515463917525771&amp;width=720&amp;height=720&amp;v=1dbccaf635639e0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/adriaen-coorte-still-life-with-strawberries-gooseberries-and-asparagus",
+      "roomId": "25"
+    }
+  ]
+}

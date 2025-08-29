@@ -1,0 +1,237 @@
+{
+  "room": "52",
+  "source": "scripts/seed/ng-room52-seed.json",
+  "count": 23,
+  "items": [
+    {
+      "id": "simon-marmion-a-choir-of-angels-from-left-hand-shutter",
+      "name": "A Choir of Angels: From Left Hand Shutter",
+      "artist": "Simon Marmion",
+      "date": "about 1459",
+      "dimension": "57.6 × 20.9 cm",
+      "image": "https://www.nationalgallery.org.uk/media/v1shyg2h/n-1303-00-000041-web-hd.jpg?rxy=0.44666666666666666,0.23220973782771537&amp;width=720&amp;height=720&amp;v=1dbcbed943e7350",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/simon-marmion-a-choir-of-angels-from-left-hand-shutter",
+      "roomId": "52"
+    },
+    {
+      "id": "robert-campin-a-man",
+      "name": "A Man",
+      "artist": "Robert Campin",
+      "date": "about 1435",
+      "dimension": "40.7 × 28.1 cm",
+      "image": "https://www.nationalgallery.org.uk/media/jmoatzpf/n-0653-01-000033-web-hd.jpg?rxy=0.53083700440528636,0.34782608695652173&amp;width=720&amp;height=720&amp;v=1dbcbe05559e870",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/robert-campin-a-man",
+      "roomId": "52"
+    },
+    {
+      "id": "workshop-of-rogier-van-der-weyden-a-man-reading-saint-ivo",
+      "name": "A Man Reading (Saint Ivo?)",
+      "artist": "Rogier van der Weyden",
+      "date": "about 1450",
+      "dimension": "45 × 35 cm",
+      "image": "https://www.nationalgallery.org.uk/media/qhxjayts/n-6394-00-000027-web-hd.jpg?rxy=0.72173913043478266,0.41685649202733488&amp;width=720&amp;height=720&amp;v=1dbcca76672dcd0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/workshop-of-rogier-van-der-weyden-a-man-reading-saint-ivo",
+      "roomId": "52"
+    },
+    {
+      "id": "robert-campin-a-woman",
+      "name": "A Woman",
+      "artist": "Robert Campin",
+      "date": "about 1435",
+      "dimension": "40.6 × 28.1 cm",
+      "image": "https://www.nationalgallery.org.uk/media/5bilpmwz/n-0653-02-000035-web-hd.jpg?rxy=0.42511013215859028,0.32185628742514971&amp;width=720&amp;height=720&amp;v=1dbcbe05a0c4cf0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/robert-campin-a-woman",
+      "roomId": "52"
+    },
+    {
+      "id": "hans-memling-a-young-man-at-prayer",
+      "name": "A Young Man at Prayer",
+      "artist": "Hans Memling",
+      "date": "mid 1470s",
+      "dimension": "39 × 25.4 cm",
+      "image": "https://www.nationalgallery.org.uk/media/0bbjyy45/n-2594-00-000029-web-hd.jpg?rxy=0.49908256880733948,0.278580814717477&amp;width=720&amp;height=720&amp;v=1dbcbf6ebf00290",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/hans-memling-a-young-man-at-prayer",
+      "roomId": "52"
+    },
+    {
+      "id": "juan-de-flandes-christ-appearing-to-the-virgin",
+      "name": "Christ appearing to the Virgin",
+      "artist": "Juan de Flandes",
+      "date": "about 1499-1500",
+      "dimension": "21.2 × 15.4 cm",
+      "image": "https://www.nationalgallery.org.uk/media/g1win55f/n-1280-00-000026-web-hd.jpg?rxy=0.67,0.50742574257425743&amp;width=720&amp;height=720&amp;v=1dbcbed4b482ab0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/juan-de-flandes-christ-appearing-to-the-virgin",
+      "roomId": "52"
+    },
+    {
+      "id": "dirk-bouts-christ-crowned-with-thorns",
+      "name": "Christ Crowned with Thorns",
+      "artist": "Dirk Bouts",
+      "date": "about 1470",
+      "dimension": "43.8 × 37.1 cm",
+      "image": "https://www.nationalgallery.org.uk/media/imdltn2n/n-1083-00-000037-xl-hd.jpg?rxy=0.505,0.19236209335219237&amp;width=720&amp;height=720&amp;v=1dbcbea80a64e10",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/dirk-bouts-christ-crowned-with-thorns",
+      "roomId": "52"
+    },
+    {
+      "id": "petrus-christus-edward-grimston",
+      "name": "Edward Grimston",
+      "artist": "Petrus Christus",
+      "date": "1446",
+      "dimension": "32.5 × 24 cm",
+      "image": "https://www.nationalgallery.org.uk/media/pa1jmqf1/n-2593-00-000041-fs-hd.jpg?rxy=0.50275229357798168,0.32697547683923706&width=800&height=800&v=1dbcbf6e9446a90&bgcolor=fff0&format=webp",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/petrus-christus-edward-grimston",
+      "roomId": "52"
+    },
+    {
+      "id": "workshop-of-robert-campin-portrait-of-a-franciscan",
+      "name": "Portrait of a Franciscan (?)",
+      "artist": "Robert Campin",
+      "date": "before 1432",
+      "dimension": "18.7 × 11.7 cm",
+      "image": "https://www.nationalgallery.org.uk/media/gnji1xu5/n-6377-00-000032-web-hd.jpg?rxy=0.6696428571428571,0.40082644628099173&amp;width=720&amp;height=720&amp;v=1dbcca6d0abf790",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/workshop-of-robert-campin-portrait-of-a-franciscan",
+      "roomId": "52"
+    },
+    {
+      "id": "jan-van-eyck-portrait-of-a-man-leal-souvenir",
+      "name": "Portrait of a Man",
+      "artist": "Jan van Eyck",
+      "date": "1432",
+      "dimension": "33.3 × 18.9 cm",
+      "image": "https://www.nationalgallery.org.uk/media/5buftkgq/n-0290-00-000131-xl-hd.jpg?rxy=0.36,0.32469935245143383&amp;width=720&amp;height=720&amp;v=1dbcbdc3163cf70",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/jan-van-eyck-portrait-of-a-man-leal-souvenir",
+      "roomId": "52"
+    },
+    {
+      "id": "dirk-bouts-portrait-of-a-man-jan-van-winckele",
+      "name": "Portrait of a Man (Jan van Winckele?)",
+      "artist": "Dirk Bouts",
+      "date": "1462",
+      "dimension": "31.6 × 20.5 cm",
+      "image": "https://www.nationalgallery.org.uk/media/prkaecjo/n-0943-00-000035-web-hd.jpg?rxy=0.35243760904901883,0.39405107611483764&amp;width=720&amp;height=720&amp;v=1dbcbe7e426e600",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/dirk-bouts-portrait-of-a-man-jan-van-winckele",
+      "roomId": "52"
+    },
+    {
+      "id": "jan-van-eyck-portrait-of-a-man-self-portrait",
+      "name": "Portrait of a Man (Self Portrait?)",
+      "artist": "Jan van Eyck",
+      "date": "1433",
+      "dimension": "26 × 19 cm",
+      "image": "https://www.nationalgallery.org.uk/media/l2ehil3m/n-0222-00-000044-xl-hd.jpg?rxy=0.42637362637362636,0.41217391304347828&amp;width=720&amp;height=720&amp;v=1dbcbda2d299310",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/jan-van-eyck-portrait-of-a-man-self-portrait",
+      "roomId": "52"
+    },
+    {
+      "id": "petrus-christus-portrait-of-a-young-man",
+      "name": "Portrait of a Young Man",
+      "artist": "Petrus Christus",
+      "date": "1450-60",
+      "dimension": "35.4 × 26 cm",
+      "image": "https://www.nationalgallery.org.uk/media/pa1jmqf1/n-2593-00-000041-fs-hd.jpg?rxy=0.50275229357798168,0.32697547683923706&amp;width=720&amp;height=720&amp;v=1dbcbf6e9446a90",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/petrus-christus-portrait-of-a-young-man",
+      "roomId": "52"
+    },
+    {
+      "id": "jan-van-eyck-the-arnolfini-portrait",
+      "name": "The Arnolfini Portrait",
+      "artist": "Jan van Eyck",
+      "date": "1434",
+      "dimension": "82.2 × 60 cm",
+      "image": "https://www.nationalgallery.org.uk/media/l2lpojej/n-0186-00-000230-xl-hd.jpg?rxy=0.49391727493917276,0.23851590106007067&amp;width=720&amp;height=720&amp;v=1dbcbd95bf8b7d0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/jan-van-eyck-the-arnolfini-portrait",
+      "roomId": "52"
+    },
+    {
+      "id": "michel-sittow-the-ascension",
+      "name": "The Ascension",
+      "artist": "Michel Sittow",
+      "date": "1500-2",
+      "dimension": "22 × 16.5 cm",
+      "image": "https://www.nationalgallery.org.uk/media/ejemhyfl/l-1002-00-000004-web-hd.jpg?rxy=0.49450549450549452,0.52216748768472909&amp;width=720&amp;height=720&amp;v=1dbcbd2f5275d50",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/michel-sittow-the-ascension",
+      "roomId": "52"
+    },
+    {
+      "id": "dirk-bouts-the-entombment",
+      "name": "The Entombment",
+      "artist": "Dirk Bouts",
+      "date": "probably 1450s",
+      "dimension": "87.5 × 73.6 cm",
+      "image": "https://www.nationalgallery.org.uk/media/zbtlmwhv/n-0664-00-000024-web-hd.jpg?rxy=0.20925110132158589,0.34657039711191334&amp;width=720&amp;height=720&amp;v=1dbcbe089c16f70",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/dirk-bouts-the-entombment",
+      "roomId": "52"
+    },
+    {
+      "id": "rogier-van-der-weyden-and-workshop-the-exhumation-of-saint-hubert",
+      "name": "The Exhumation of Saint Hubert",
+      "artist": "Rogier van der Weyden",
+      "date": "late 1430s",
+      "dimension": "88.2 × 81.2 cm",
+      "image": "https://www.nationalgallery.org.uk/media/hgzfo0lm/n-0783-00-000055-web-hd.jpg?rxy=0.486784140969163,0.753968253968254&amp;width=720&amp;height=720&amp;v=1dbcbe3d86bf4d0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/rogier-van-der-weyden-and-workshop-the-exhumation-of-saint-hubert",
+      "roomId": "52"
+    },
+    {
+      "id": "rogier-van-der-weyden-the-magdalen-reading",
+      "name": "The Magdalen Reading",
+      "artist": "Rogier van der Weyden",
+      "date": "about 1435",
+      "dimension": "62.2 × 54.4 cm",
+      "image": "https://www.nationalgallery.org.uk/media/muafahk4/n-0654-00-000043-web-hd.jpg?rxy=0.63985838552736163,0.27228915662650605&amp;width=720&amp;height=720&amp;v=1dbcbe05ce29e70",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/rogier-van-der-weyden-the-magdalen-reading",
+      "roomId": "52"
+    },
+    {
+      "id": "geertgen-tot-sint-jans-the-nativity-at-night",
+      "name": "The Nativity at Night",
+      "artist": "Geertgen tot Sint Jans",
+      "date": "possibly about 1490",
+      "dimension": "34 × 25.3 cm",
+      "image": "https://www.nationalgallery.org.uk/media/aosb5vzw/n-4081-00-000037-fs-hd.jpg?rxy=0.5367182353543688,0.43327375043214417&amp;width=720&amp;height=720&amp;v=1dbcc9f1475ea60",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/geertgen-tot-sint-jans-the-nativity-at-night",
+      "roomId": "52"
+    },
+    {
+      "id": "simon-marmion-the-soul-of-saint-bertin-carried-up-to-god",
+      "name": "The Soul of Saint Bertin carried up to God",
+      "artist": "Simon Marmion",
+      "date": "about 1459",
+      "dimension": "57.7 × 20.5 cm",
+      "image": "https://www.nationalgallery.org.uk/media/d1jgk1m3/n-1302-00-000040-web-hd.jpg?rxy=0.5,0.5267520723436323&amp;width=720&amp;height=720&amp;v=1dbcbed8fe99820",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/simon-marmion-the-soul-of-saint-bertin-carried-up-to-god",
+      "roomId": "52"
+    },
+    {
+      "id": "dirk-bouts-the-virgin-and-child",
+      "name": "The Virgin and Child",
+      "artist": "Dirk Bouts",
+      "date": "about 1465",
+      "dimension": "37.1 × 27.6 cm",
+      "image": "https://www.nationalgallery.org.uk/media/s0bfztm5/n-2595-00-000021-web-hd.jpg?rxy=0.45871559633027525,0.25679347826086957&amp;width=720&amp;height=720&amp;v=1dbcbf6f007d4c0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/dirk-bouts-the-virgin-and-child",
+      "roomId": "52"
+    },
+    {
+      "id": "follower-of-robert-campin-the-virgin-and-child-before-a-firescreen",
+      "name": "The Virgin and Child before a Firescreen",
+      "artist": "Robert Campin",
+      "date": "about 1440",
+      "dimension": "63.4 × 48.5 cm",
+      "image": "https://www.nationalgallery.org.uk/media/l2zdv2hl/n-2609-00-000049-web-hd.jpg?rxy=0.6403669724770642,0.170182841068917&amp;width=720&amp;height=720&amp;v=1dbcbf72d6d73b0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/follower-of-robert-campin-the-virgin-and-child-before-a-firescreen",
+      "roomId": "52"
+    },
+    {
+      "id": "workshop-of-robert-campin-possibly-jacques-daret-the-virgin-and-child-in-an-interior",
+      "name": "The Virgin and Child in an Interior",
+      "artist": "Robert Campin",
+      "date": "before 1432",
+      "dimension": "18.7 × 11.6 cm",
+      "image": "https://www.nationalgallery.org.uk/media/kcijwehi/n-6514-00-000030-web-hd.jpg?rxy=0.56559139784946233,0.46407185628742514&amp;width=720&amp;height=720&amp;v=1dbccaad95a1df0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/workshop-of-robert-campin-possibly-jacques-daret-the-virgin-and-child-in-an-interior",
+      "roomId": "52"
+    }
+  ]
+}

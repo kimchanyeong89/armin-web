@@ -1,0 +1,147 @@
+{
+  "room": "45",
+  "source": "scripts/seed/ng-room45-seed.json",
+  "count": 14,
+  "items": [
+    {
+      "id": "paul-cezanne-bathers-les-grandes-baigneuses",
+      "name": "Bathers (Les Grandes Baigneuses)",
+      "artist": "Paul Cezanne",
+      "date": "about 1894-1905",
+      "dimension": "127.2 × 196.1 cm",
+      "image": "https://www.nationalgallery.org.uk/media/15zjbyq3/n-6359-00-000043-xl-hd.jpg?rxy=0.41290322580645161,0.54285714285714282&amp;width=720&amp;height=720&amp;v=1dbcca66ef24450",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/paul-cezanne-bathers-les-grandes-baigneuses",
+      "roomId": "45"
+    },
+    {
+      "id": "hilaire-germain-edgar-degas-combing-the-hair-la-coiffure",
+      "name": "Combing the Hair",
+      "artist": "Hilaire-Germain-Edgar Degas",
+      "date": "about 1896",
+      "dimension": "114.3 × 146.7 cm",
+      "image": "https://www.nationalgallery.org.uk/media/je2d12ok/n-4865-00-000035-fs-hd.jpg?rxy=0.46236559139784944,0.46666666666666667&amp;width=720&amp;height=720&amp;v=1dbcca16236ef90",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/hilaire-germain-edgar-degas-combing-the-hair-la-coiffure",
+      "roomId": "45"
+    },
+    {
+      "id": "paul-cezanne-curtain-jug-and-dish-of-fruit",
+      "name": "Curtain, Jug and Dish of Fruit",
+      "artist": "Paul Cezanne",
+      "date": "1893-4",
+      "dimension": "59 × 72.4 cm",
+      "image": "https://www.nationalgallery.org.uk/media/f1fl04t4/l-1345-00-000002-web-hd.jpg?rxy=0.5244237817359976,0.4054931906773242&amp;width=720&amp;height=720&amp;v=1dbcbd3853e9250",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/paul-cezanne-curtain-jug-and-dish-of-fruit",
+      "roomId": "45"
+    },
+    {
+      "id": "pablo-picasso-fruit-dish-bottle-and-violin",
+      "name": "Fruit Dish, Bottle and Violin",
+      "artist": "Pablo Picasso",
+      "date": "1914",
+      "dimension": "92 × 73 cm",
+      "image": "https://www.nationalgallery.org.uk/media/y44mob55/n-6449-00-000024-fs-hd.jpg?rxy=0.53846153846153844,0.54202898550724643&amp;width=720&amp;height=720&amp;v=1dbcca8ef3399f0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/pablo-picasso-fruit-dish-bottle-and-violin",
+      "roomId": "45"
+    },
+    {
+      "id": "paul-gauguin-harvest-le-pouldu",
+      "name": "Harvest: Le Pouldu",
+      "artist": "Paul Gauguin",
+      "date": "1890",
+      "dimension": "73 × 92.1 cm",
+      "image": "https://www.nationalgallery.org.uk/media/fxofuax3/l-0709-00-000010-web-hd.jpg?width=720&amp;height=720&amp;v=1dbcbd15358e620",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/paul-gauguin-harvest-le-pouldu",
+      "roomId": "45"
+    },
+    {
+      "id": "vilhelm-hammershoi-interior",
+      "name": "Interior",
+      "artist": "Vilhelm Hammershøi",
+      "date": "1899",
+      "dimension": "64.5 × 58.1 cm",
+      "image": "https://www.nationalgallery.org.uk/media/ftsdcuya/l-0712-00-000004-web-hd.jpg?rxy=0.61453744493392071,0.39087301587301587&amp;width=720&amp;height=720&amp;v=1dbcbd15bd12c40",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/vilhelm-hammershoi-interior",
+      "roomId": "45"
+    },
+    {
+      "id": "george-bellows-men-of-the-docks",
+      "name": "Men of the Docks",
+      "artist": "George Bellows",
+      "date": "1912",
+      "dimension": "114.3 × 161.3 cm",
+      "image": "https://www.nationalgallery.org.uk/media/0hgfbse2/n-6649-00-000105-xl-hd.jpg?rxy=0.5011037527593819,0.61609907120743035&amp;width=720&amp;height=720&amp;v=1dbccaf27eedbf0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/george-bellows-men-of-the-docks",
+      "roomId": "45"
+    },
+    {
+      "id": "pablo-picasso-motherhood-la-maternite",
+      "name": "Motherhood (La Maternité)",
+      "artist": "Pablo Picasso",
+      "date": "1901",
+      "dimension": "100.1 × 72.9 cm",
+      "image": "https://www.nationalgallery.org.uk/media/y44mob55/n-6449-00-000024-fs-hd.jpg?rxy=0.53846153846153844,0.54202898550724643&width=800&height=800&v=1dbcca8ef3399f0&bgcolor=fff0&format=webp",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/pablo-picasso-motherhood-la-maternite",
+      "roomId": "45"
+    },
+    {
+      "id": "henri-matisse-portrait-of-greta-moll",
+      "name": "Portrait of Greta Moll",
+      "artist": "Henri Matisse",
+      "date": "1908",
+      "dimension": "93 × 73.5 cm",
+      "image": "https://www.nationalgallery.org.uk/media/2sud0h4t/n-6450-00-000012-web-hd.jpg?rxy=0.52542372881355937,0.19144144144144143&amp;width=720&amp;height=720&amp;v=1dbcca8f46e4140",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/henri-matisse-portrait-of-greta-moll",
+      "roomId": "45"
+    },
+    {
+      "id": "henri-rousseau-portrait-of-joseph-brummer",
+      "name": "Portrait of Joseph Brummer",
+      "artist": "Henri Rousseau",
+      "date": "1909",
+      "dimension": "115.9 × 88.3 cm",
+      "image": "https://www.nationalgallery.org.uk/media/vhilnjsb/n-6699-00-000005-fs-hd.jpg?rxy=0.5738241233962548,0.44291591584070317&amp;width=720&amp;height=720&amp;v=1dbccb115b012e0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/henri-rousseau-portrait-of-joseph-brummer",
+      "roomId": "45"
+    },
+    {
+      "id": "paul-cezanne-still-life-with-water-jug",
+      "name": "Still Life with Water Jug",
+      "artist": "Paul Cezanne",
+      "date": "about 1892-3",
+      "dimension": "53 × 71.1 cm",
+      "image": "https://www.nationalgallery.org.uk/media/ofekit2p/l-0696-00-000002-web-hd.jpg?rxy=0.4933920704845815,0.36201780415430268&amp;width=720&amp;height=720&amp;v=1dbcbd1326d7840",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/paul-cezanne-still-life-with-water-jug",
+      "roomId": "45"
+    },
+    {
+      "id": "henri-rousseau-surprised",
+      "name": "Surprised!",
+      "artist": "Henri Rousseau",
+      "date": "1891",
+      "dimension": "129.8 × 161.9 cm",
+      "image": "https://www.nationalgallery.org.uk/media/ueqb55zl/n-6421-00-000039-xl-hd.jpg?rxy=0.52173913043478259,0.72661870503597126&amp;width=720&amp;height=720&amp;v=1dbcca80d618af0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/henri-rousseau-surprised",
+      "roomId": "45"
+    },
+    {
+      "id": "joaquin-sorolla-the-drunkard-zarauz-el-borracho-zarauz",
+      "name": "The Drunkard, Zarauz (El Borracho, Zarauz)",
+      "artist": "Joaquín Sorolla",
+      "date": "1910",
+      "dimension": "115 × 140 cm",
+      "image": "https://www.nationalgallery.org.uk/media/lg0jzte5/n-6683-00-000014-xl-hd.jpg?rxy=0.60579710144927534,0.2756183745583039&amp;width=720&amp;height=720&amp;v=1dbccb0130c1170",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/joaquin-sorolla-the-drunkard-zarauz-el-borracho-zarauz",
+      "roomId": "45"
+    },
+    {
+      "id": "chaim-soutine-the-little-pastry-chef",
+      "name": "The Little Pastry Chef",
+      "artist": "Chaim Soutine",
+      "date": "about 1927",
+      "dimension": "76.5 × 68.9 cm",
+      "image": "https://www.nationalgallery.org.uk/media/njgn1ss2/l-1370-00-000003-web-hd.jpg?rxy=0.48000669302631654,0.24968930375256726&amp;width=720&amp;height=720&amp;v=1dbcbd3a5e6dcb0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/chaim-soutine-the-little-pastry-chef",
+      "roomId": "45"
+    }
+  ]
+}

@@ -1,0 +1,367 @@
+{
+  "room": "57",
+  "source": "scripts/seed/ng-room57-seed.json",
+  "count": 36,
+  "items": [
+    {
+      "id": "masolino-a-pope-saint-gregory-and-saint-matthias",
+      "name": "A Pope (Saint Gregory?) and Saint Matthias",
+      "artist": "Masolino",
+      "date": "about 1428-9",
+      "dimension": "126.3 × 59.1 cm",
+      "image": "https://www.nationalgallery.org.uk/media/faulusgk/n-5963-00-000054-web-hd.jpg?rxy=0.41880341880341881,0.22769640479360853&amp;width=720&amp;height=720&amp;v=1dbcca36589d930",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/masolino-a-pope-saint-gregory-and-saint-matthias",
+      "roomId": "57"
+    },
+    {
+      "id": "jacopo-di-cione-and-workshop-adoring-saints-left-main-tier-panel",
+      "name": "Adoring Saints: Left Main Tier Panel",
+      "artist": "Jacopo di Cione",
+      "date": "1370-1",
+      "dimension": "169 × 113 cm",
+      "image": "https://www.nationalgallery.org.uk/media/lmobemfq/n-0569-02-000038-fs-hd.jpg?rxy=0.48571428571428571,0.65125&amp;width=720&amp;height=720&amp;v=1dbcbdd1b8566e0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/jacopo-di-cione-and-workshop-adoring-saints-left-main-tier-panel",
+      "roomId": "57"
+    },
+    {
+      "id": "lorenzo-monaco-adoring-saints-left-main-tier-panel",
+      "name": "Adoring Saints: Left Main Tier Panel",
+      "artist": "Lorenzo Monaco",
+      "date": "1407-9",
+      "dimension": "194.5 × 104.8 cm",
+      "image": "https://www.nationalgallery.org.uk/media/dgwjw13z/n-0215-00-000028-web-hd.jpg?rxy=0.52967032967032968,0.31026252983293556&amp;width=720&amp;height=720&amp;v=1dbcbd9f1d68070",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/lorenzo-monaco-adoring-saints-left-main-tier-panel",
+      "roomId": "57"
+    },
+    {
+      "id": "jacopo-di-cione-and-workshop-adoring-saints-right-main-tier-panel",
+      "name": "Adoring Saints: Right Main Tier Panel",
+      "artist": "Jacopo di Cione",
+      "date": "1370-1",
+      "dimension": "169 × 113 cm",
+      "image": "https://www.nationalgallery.org.uk/media/ijhbvdar/n-0569-03-000029-fs-hd.jpg?rxy=0.47032967032967032,0.65125&amp;width=720&amp;height=720&amp;v=1dbcbdd1f17dc70",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/jacopo-di-cione-and-workshop-adoring-saints-right-main-tier-panel",
+      "roomId": "57"
+    },
+    {
+      "id": "lorenzo-monaco-adoring-saints-right-main-tier-panel",
+      "name": "Adoring Saints: Right Main Tier Panel",
+      "artist": "Lorenzo Monaco",
+      "date": "1407-9",
+      "dimension": "197.2 × 101.5 cm",
+      "image": "https://www.nationalgallery.org.uk/media/odyeftn1/n-0216-00-000043-fs-hd.jpg?rxy=0.49010989010989009,0.3329583802024747&amp;width=720&amp;height=720&amp;v=1dbcbd9f6864ce0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/lorenzo-monaco-adoring-saints-right-main-tier-panel",
+      "roomId": "57"
+    },
+    {
+      "id": "francesco-d-antonio-di-bartolomeo-the-virgin-and-child-with-six-angels-and-two-cherubim",
+      "name": "Antonio di Bartolomeo",
+      "artist": "Francesco d'Antonio di Bartolomeo",
+      "date": "about 1440-50",
+      "dimension": "113.4 × 65 cm",
+      "image": "https://www.nationalgallery.org.uk/media/3jmnlz4w/n-1456-00-000021-web-hd.jpg?rxy=0.49555950266429838,0.28099173553719009&amp;width=720&amp;height=720&amp;v=1dbcbf096cc69d0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/francesco-d-antonio-di-bartolomeo-the-virgin-and-child-with-six-angels-and-two-cherubim",
+      "roomId": "57"
+    },
+    {
+      "id": "fra-angelico-christ-glorified-in-the-court-of-heaven",
+      "name": "Christ Glorified in the Court of Heaven",
+      "artist": "Fra Angelico",
+      "date": "about 1423-4",
+      "dimension": "31.7 × 73 cm",
+      "image": "https://www.nationalgallery.org.uk/media/i02fvuvz/n-0663-01-000010-web-hd.jpg?rxy=0.47797356828193832,0.16326530612244897&amp;width=720&amp;height=720&amp;v=1dbcbe07ae914d0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/fra-angelico-christ-glorified-in-the-court-of-heaven",
+      "roomId": "57"
+    },
+    {
+      "id": "lorenzo-monaco-incidents-in-the-life-of-saint-benedict",
+      "name": "Incidents in the Life of Saint Benedict",
+      "artist": "Lorenzo Monaco",
+      "date": "1407-9",
+      "dimension": "28.4 × 52 cm",
+      "image": "https://www.nationalgallery.org.uk/media/qwqmib25/n-4062-00-000027-web-hd.jpg?rxy=0.23395703083159039,0.25065990055452109&amp;width=720&amp;height=720&amp;v=1dbcc9ee6ad2e90",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/lorenzo-monaco-incidents-in-the-life-of-saint-benedict",
+      "roomId": "57"
+    },
+    {
+      "id": "jacopo-di-cione-and-workshop-pentecost-upper-tier-panel",
+      "name": "Pentecost: Upper Tier Panel",
+      "artist": "Jacopo di Cione",
+      "date": "1370-1",
+      "dimension": "96 × 49.5 cm",
+      "image": "https://www.nationalgallery.org.uk/media/4vmpg3hw/n-0578-00-000031-web-hd.jpg?rxy=0.49010989010989009,0.63337116912599323&amp;width=720&amp;height=720&amp;v=1dbcbdd3fa7bcd0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/jacopo-di-cione-and-workshop-pentecost-upper-tier-panel",
+      "roomId": "57"
+    },
+    {
+      "id": "lorenzo-monaco-saint-benedict-admitting-saints-into-the-order",
+      "name": "Saint Benedict admitting Saints into the Order",
+      "artist": "Lorenzo Monaco",
+      "date": "1407-9",
+      "dimension": "28.8 × 38.8 cm",
+      "image": "https://www.nationalgallery.org.uk/media/zoqpvm1b/n-2862-00-000029-fs-hd.jpg?rxy=0.38899082568807342,0.50374064837905241&amp;width=720&amp;height=720&amp;v=1dbcbf8725bac20",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/lorenzo-monaco-saint-benedict-admitting-saints-into-the-order",
+      "roomId": "57"
+    },
+    {
+      "id": "giovanni-da-milano-saint-john-the-baptist-right-pinnacle-panel",
+      "name": "Saint John the Baptist: Right Pinnacle Panel",
+      "artist": "Giovanni da Milano",
+      "date": "about 1365",
+      "dimension": "89.3 × 37.3 cm",
+      "image": "https://www.nationalgallery.org.uk/media/dngjkfrf/n-0579-08-000074-web-hd.jpg?rxy=0.50329670329670328,0.514367816091954&amp;width=720&amp;height=720&amp;v=1dbcbdd59139c70",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/giovanni-da-milano-saint-john-the-baptist-right-pinnacle-panel",
+      "roomId": "57"
+    },
+    {
+      "id": "masaccio-saints-jerome-and-john-the-baptist",
+      "name": "Saints Jerome and John the Baptist",
+      "artist": "Masaccio",
+      "date": "about 1428-9",
+      "dimension": "125 × 58.9 cm",
+      "image": "https://www.nationalgallery.org.uk/media/ohlbjrhb/n-5962-00-000086-web-hd.jpg?rxy=0.47008547008547008,0.21727395411605938&amp;width=720&amp;height=720&amp;v=1dbcca3626ae5f0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/masaccio-saints-jerome-and-john-the-baptist",
+      "roomId": "57"
+    },
+    {
+      "id": "jacopo-di-cione-and-workshop-seraphim-cherubim-and-adoring-angels",
+      "name": "Seraphim, Cherubim and Adoring Angels",
+      "artist": "Jacopo di Cione",
+      "date": "1370-1",
+      "dimension": "89.4 × 37.8 cm",
+      "image": "https://www.nationalgallery.org.uk/media/j3jbtm5q/n-0571-00-000024-web-hd.jpg?rxy=0.49450549450549452,0.4069223573433115&amp;width=720&amp;height=720&amp;v=1dbcbdd2639e160",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/jacopo-di-cione-and-workshop-seraphim-cherubim-and-adoring-angels",
+      "roomId": "57"
+    },
+    {
+      "id": "jacopo-di-cione-and-workshop-seraphim-cherubim-and-adoring-angels-1",
+      "name": "Seraphim, Cherubim and Adoring Angels",
+      "artist": "Jacopo di Cione",
+      "date": "1370-1",
+      "dimension": "89.7 × 37.8 cm",
+      "image": "https://www.nationalgallery.org.uk/media/x1ph1grl/n-0572-00-000024-web-hd.jpg?rxy=0.4879120879120879,0.41209829867674858&amp;width=720&amp;height=720&amp;v=1dbcbdd29d92830",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/jacopo-di-cione-and-workshop-seraphim-cherubim-and-adoring-angels-1",
+      "roomId": "57"
+    },
+    {
+      "id": "probably-by-zanobi-strozzi-the-adoration-of-the-kings",
+      "name": "The Adoration of the Kings",
+      "artist": "Zanobi Strozzi",
+      "date": "about 1433-4",
+      "dimension": "19 × 47.4 cm",
+      "image": "https://www.nationalgallery.org.uk/media/enyjaeav/n-0582-00-000028-web-hd.jpg?rxy=0.68722466960352424,0.42076502732240439&amp;width=720&amp;height=720&amp;v=1dbcbdd8bb88be0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/probably-by-zanobi-strozzi-the-adoration-of-the-kings",
+      "roomId": "57"
+    },
+    {
+      "id": "jacopo-di-cione-and-workshop-the-adoration-of-the-kings-upper-tier-panel",
+      "name": "The Adoration of the Kings: Upper Tier Panel",
+      "artist": "Jacopo di Cione",
+      "date": "1370-1",
+      "dimension": "95.5 × 49.3 cm",
+      "image": "https://www.nationalgallery.org.uk/media/441cxli5/n-0574-00-000026-web-hd.jpg?rxy=0.53186813186813187,0.58094144661308844&amp;width=720&amp;height=720&amp;v=1dbcbdd31b09a70",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/jacopo-di-cione-and-workshop-the-adoration-of-the-kings-upper-tier-panel",
+      "roomId": "57"
+    },
+    {
+      "id": "giovanni-da-milano-the-apocalyptic-christ-son-of-man-central-pinnacle-panel",
+      "name": "The Apocalyptic Christ (Son of Man): Central Pinnacle Panel",
+      "artist": "Giovanni da Milano",
+      "date": "about 1365",
+      "dimension": "93.7 × 37.2 cm",
+      "image": "https://www.nationalgallery.org.uk/media/2cgkzw0t/n-0579-06-000067-web-hd.jpg?rxy=0.48571428571428571,0.48920863309352519&amp;width=720&amp;height=720&amp;v=1dbcbdd526c45c0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/giovanni-da-milano-the-apocalyptic-christ-son-of-man-central-pinnacle-panel",
+      "roomId": "57"
+    },
+    {
+      "id": "jacopo-di-cione-and-workshop-the-ascension-upper-tier-panel",
+      "name": "The Ascension: Upper Tier Panel",
+      "artist": "Jacopo di Cione",
+      "date": "1370-1",
+      "dimension": "95.5 × 49 cm",
+      "image": "https://www.nationalgallery.org.uk/media/uzcdbslr/n-0577-00-000031-web-hd.jpg?rxy=0.49010989010989009,0.21853546910755148&amp;width=720&amp;height=720&amp;v=1dbcbdd3bef21a0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/jacopo-di-cione-and-workshop-the-ascension-upper-tier-panel",
+      "roomId": "57"
+    },
+    {
+      "id": "gherardo-di-jacopo-starnina-master-of-the-bambino-vispo-the-beheading-of-saint-margaret",
+      "name": "The Beheading of Saint Margaret (?)",
+      "artist": "Gherardo di Jacopo Starnina (Master of the Bambino Vispo)",
+      "date": "probably about 1409",
+      "dimension": "42.3 × 65.2 cm",
+      "image": "https://www.nationalgallery.org.uk/media/1zph1moj/n-3926-00-000020-web-hd.jpg?rxy=0.41666666666666669,0.49481865284974091&amp;width=720&amp;height=720&amp;v=1dbcc9dfae4ec00",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/gherardo-di-jacopo-starnina-master-of-the-bambino-vispo-the-beheading-of-saint-margaret",
+      "roomId": "57"
+    },
+    {
+      "id": "bernardo-daddi-the-coronation-of-the-virgin",
+      "name": "The Coronation of the Virgin",
+      "artist": "Bernardo Daddi",
+      "date": "about 1340-5",
+      "dimension": "111.7 × 75.5 cm",
+      "image": "https://www.nationalgallery.org.uk/media/snnn35r1/n-6599-00-000037-xl-hd.jpg?width=720&amp;height=720&amp;v=1dbccad22c5f9d0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/bernardo-daddi-the-coronation-of-the-virgin",
+      "roomId": "57"
+    },
+    {
+      "id": "lorenzo-monaco-the-coronation-of-the-virgin",
+      "name": "The Coronation of the Virgin",
+      "artist": "Lorenzo Monaco",
+      "date": "1407-9",
+      "dimension": "220.5 × 115.2 cm",
+      "image": "https://www.nationalgallery.org.uk/media/1lvdm1ze/n-1897-00-000104-web-hd.jpg?rxy=0.38829787234042551,0.22646784715750232&amp;width=720&amp;height=720&amp;v=1dbcbf1bca1aa70",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/lorenzo-monaco-the-coronation-of-the-virgin",
+      "roomId": "57"
+    },
+    {
+      "id": "jacopo-di-cione-and-workshop-the-coronation-of-the-virgin-central-main-tier-panel",
+      "name": "The Coronation of the Virgin: Central Main Tier Panel",
+      "artist": "Jacopo di Cione",
+      "date": "1370-1",
+      "dimension": "206.5 × 113.5 cm",
+      "image": "https://www.nationalgallery.org.uk/media/rxsd5fk2/n-0569-01-000042-fs-hd.jpg?rxy=0.515977760305515,0.3469483085785392&amp;width=720&amp;height=720&amp;v=1dbcbdd17b9dff0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/jacopo-di-cione-and-workshop-the-coronation-of-the-virgin-central-main-tier-panel",
+      "roomId": "57"
+    },
+    {
+      "id": "jacopo-di-cione-the-crucifixion",
+      "name": "The Crucifixion",
+      "artist": "Jacopo di Cione",
+      "date": "about 1369-70",
+      "dimension": "154 × 138.5 cm",
+      "image": "https://www.nationalgallery.org.uk/media/xfmhxwkv/n-1468-00-000106-fs-hd.jpg?rxy=0.46985815602836878,0.30476190476190479&amp;width=720&amp;height=720&amp;v=1dbcbf0c8d7b150",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/jacopo-di-cione-the-crucifixion",
+      "roomId": "57"
+    },
+    {
+      "id": "lorenzo-monaco-the-death-of-saint-benedict-predella-panel",
+      "name": "The Death of Saint Benedict: Predella Panel",
+      "artist": "Lorenzo Monaco",
+      "date": "1407-9",
+      "dimension": "28.5 × 51.8 cm",
+      "image": "https://www.nationalgallery.org.uk/media/g4lcfzdv/l-0002-00-000011-web-hd.jpg?rxy=0.2623429811545262,0.5107504287778833&amp;width=720&amp;height=720&amp;v=1dbcbd0e49f1ab0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/lorenzo-monaco-the-death-of-saint-benedict-predella-panel",
+      "roomId": "57"
+    },
+    {
+      "id": "fra-angelico-the-dominican-blessed",
+      "name": "The Dominican Blessed",
+      "artist": "Fra Angelico",
+      "date": "about 1423-4",
+      "dimension": "31.8 × 21.9 cm",
+      "image": "https://www.nationalgallery.org.uk/media/f0sp5w1l/n-0663-04-000013-web-hd.jpg?rxy=0.54405286343612336,0.6097560975609756&amp;width=720&amp;height=720&amp;v=1dbcbe08216b280",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/fra-angelico-the-dominican-blessed",
+      "roomId": "57"
+    },
+    {
+      "id": "fra-angelico-the-dominican-blessed-1",
+      "name": "The Dominican Blessed",
+      "artist": "Fra Angelico",
+      "date": "about 1423-4",
+      "dimension": "31.6 × 21.9 cm",
+      "image": "https://www.nationalgallery.org.uk/media/l4roubkr/n-0663-05-000013-web-hd.jpg?rxy=0.45594713656387664,0.27945619335347432&amp;width=720&amp;height=720&amp;v=1dbcbe084cef4b0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/fra-angelico-the-dominican-blessed-1",
+      "roomId": "57"
+    },
+    {
+      "id": "fra-angelico-the-forerunners-of-christ-with-saints-and-martyrs",
+      "name": "The Forerunners of Christ with Saints and Martyrs",
+      "artist": "Fra Angelico",
+      "date": "about 1423-4",
+      "dimension": "31.9 × 63.5 cm",
+      "image": "https://www.nationalgallery.org.uk/media/r1bdlgjh/n-0663-03-000058-web-hd.jpg?rxy=0.42511013215859028,0.34361233480176212&amp;width=720&amp;height=720&amp;v=1dbcbe07f523b50",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/fra-angelico-the-forerunners-of-christ-with-saints-and-martyrs",
+      "roomId": "57"
+    },
+    {
+      "id": "jacopo-di-cione-and-workshop-the-nativity-with-the-annunciation-to-the-shepherds",
+      "name": "The Nativity with the Annunciation to the Shepherds",
+      "artist": "Jacopo di Cione",
+      "date": "1370-1",
+      "dimension": "95.5 × 49.4 cm",
+      "image": "https://www.nationalgallery.org.uk/media/o42fnqlq/n-0573-00-000028-web-hd.jpg?rxy=0.49450549450549452,0.59280742459396751&amp;width=720&amp;height=720&amp;v=1dbcbdd2dd7f420",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/jacopo-di-cione-and-workshop-the-nativity-with-the-annunciation-to-the-shepherds",
+      "roomId": "57"
+    },
+    {
+      "id": "gentile-da-fabriano-the-quaratesi-madonna",
+      "name": "The Quaratesi Madonna",
+      "artist": "Gentile da Fabriano",
+      "date": "1425",
+      "dimension": "139.9 × 83 cm",
+      "image": "https://www.nationalgallery.org.uk/media/jmefartm/l-0037-00-000006-web-hd.jpg?rxy=0.40969162995594716,0.49011857707509882&amp;width=720&amp;height=720&amp;v=1dbcbd0f0e0ebf0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/gentile-da-fabriano-the-quaratesi-madonna",
+      "roomId": "57"
+    },
+    {
+      "id": "jacopo-di-cione-and-workshop-the-resurrection-upper-tier-panel",
+      "name": "The Resurrection: Upper Tier Panel",
+      "artist": "Jacopo di Cione",
+      "date": "1370-1",
+      "dimension": "95.3 × 49 cm",
+      "image": "https://www.nationalgallery.org.uk/media/k1iek0zo/n-0575-00-000025-web-hd.jpg?rxy=0.50329670329670328,0.21089223638470453&amp;width=720&amp;height=720&amp;v=1dbcbdd342f07f0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/jacopo-di-cione-and-workshop-the-resurrection-upper-tier-panel",
+      "roomId": "57"
+    },
+    {
+      "id": "jacopo-di-cione-and-workshop-the-three-marys-at-the-sepulchre-upper-tier-panel",
+      "name": "The Three Marys at the Sepulchre: Upper Tier Panel",
+      "artist": "Jacopo di Cione",
+      "date": "1370-1",
+      "dimension": "95.6 × 49.1 cm",
+      "image": "https://www.nationalgallery.org.uk/media/0r2jbww4/n-0576-00-000038-web-hd.jpg?rxy=0.52307692307692311,0.543778801843318&amp;width=720&amp;height=720&amp;v=1dbcbdd382bd810",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/jacopo-di-cione-and-workshop-the-three-marys-at-the-sepulchre-upper-tier-panel",
+      "roomId": "57"
+    },
+    {
+      "id": "jacopo-di-cione-and-workshop-the-trinity-central-pinnacle-panel",
+      "name": "The Trinity: Central Pinnacle Panel",
+      "artist": "Jacopo di Cione",
+      "date": "1370-1",
+      "dimension": "89.2 × 40 cm",
+      "image": "https://www.nationalgallery.org.uk/media/txaeg4mg/n-0570-00-000027-web-hd.jpg?rxy=0.49230769230769234,0.26047904191616766&amp;width=720&amp;height=720&amp;v=1dbcbdd228fec30",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/jacopo-di-cione-and-workshop-the-trinity-central-pinnacle-panel",
+      "roomId": "57"
+    },
+    {
+      "id": "andrea-di-bonaiuto-da-firenze-the-virgin-and-child-with-ten-saints",
+      "name": "The Virgin and Child with Ten Saints",
+      "artist": "Andrea di Bonaiuto da Firenze",
+      "date": "about 1365-70",
+      "dimension": "28 × 105.8 cm",
+      "image": "https://www.nationalgallery.org.uk/media/0ofkkrno/n-5115-00-000019-web-hd.jpg?rxy=0.48578811369509045,0.44660194174757284&amp;width=720&amp;height=720&amp;v=1dbcca20b4b15c0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/andrea-di-bonaiuto-da-firenze-the-virgin-and-child-with-ten-saints",
+      "roomId": "57"
+    },
+    {
+      "id": "fra-angelico-the-virgin-mary-with-the-apostles-and-other-saints",
+      "name": "The Virgin Mary with the Apostles and Other Saints",
+      "artist": "Fra Angelico",
+      "date": "about 1423-4",
+      "dimension": "32 × 64 cm",
+      "image": "https://www.nationalgallery.org.uk/media/jmyli1du/n-0663-02-000018-web-hd.jpg?rxy=0.68502202643171806,0.36444444444444446&amp;width=720&amp;height=720&amp;v=1dbcbe07d1fa3e0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/fra-angelico-the-virgin-mary-with-the-apostles-and-other-saints",
+      "roomId": "57"
+    },
+    {
+      "id": "giovanni-da-milano-the-virgin-left-pinnacle-panel",
+      "name": "The Virgin: Left Pinnacle Panel",
+      "artist": "Giovanni da Milano",
+      "date": "about 1365",
+      "dimension": "89.3 × 37.2 cm",
+      "image": "https://www.nationalgallery.org.uk/media/kdpjpmi4/n-0579-07-000065-web-hd.jpg?rxy=0.51428571428571423,0.52390057361376674&amp;width=720&amp;height=720&amp;v=1dbcbdd55aacef0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/giovanni-da-milano-the-virgin-left-pinnacle-panel",
+      "roomId": "57"
+    },
+    {
+      "id": "nardo-di-cione-three-saints",
+      "name": "Three Saints",
+      "artist": "Nardo di Cione",
+      "date": "about 1363-5",
+      "dimension": "159.5 × 148 cm",
+      "image": "https://www.nationalgallery.org.uk/media/dvrezu5p/n-0581-00-000059-fs-hd.jpg?rxy=0.486784140969163,0.17959183673469387&amp;width=720&amp;height=720&amp;v=1dbcbdd88689d90",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/nardo-di-cione-three-saints",
+      "roomId": "57"
+    }
+  ]
+}

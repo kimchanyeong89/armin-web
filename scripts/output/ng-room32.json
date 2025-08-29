@@ -1,0 +1,357 @@
+{
+  "room": "32",
+  "source": "scripts/seed/ng-room32-seed.json",
+  "count": 35,
+  "items": [
+    {
+      "id": "bernardo-strozzi-a-personification-of-fame",
+      "name": "A Personification of Fame",
+      "artist": "Bernardo Strozzi",
+      "date": "probably 1635-6",
+      "dimension": "106.7 × 151.7 cm",
+      "image": "https://www.nationalgallery.org.uk/media/pdijioww/n-6321-00-000021-web-hd.jpg?rxy=0.34623655913978496,0.22049689440993789&amp;width=720&amp;height=720&amp;v=1dbcca5c6b03b30",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/bernardo-strozzi-a-personification-of-fame",
+      "roomId": "32"
+    },
+    {
+      "id": "michelangelo-merisi-da-caravaggio-boy-bitten-by-a-lizard",
+      "name": "Boy bitten by a Lizard",
+      "artist": "Michelangelo Merisi da Caravaggio",
+      "date": "about 1594-5",
+      "dimension": "66 × 49.5 cm",
+      "image": "https://www.nationalgallery.org.uk/media/enebzqao/n-6504-00-000048-fs-hd.jpg?rxy=0.513978494623656,0.27156549520766771&amp;width=720&amp;height=720&amp;v=1dbccaa81a34870",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/michelangelo-merisi-da-caravaggio-boy-bitten-by-a-lizard",
+      "roomId": "32"
+    },
+    {
+      "id": "gerrit-van-honthorst-christ-before-the-high-priest",
+      "name": "Christ before the High Priest",
+      "artist": "Gerrit van Honthorst",
+      "date": "about 1617",
+      "dimension": "272 × 183 cm",
+      "image": "https://www.nationalgallery.org.uk/media/n5sl01en/n-3679-00-000032-fs-hd.jpg?rxy=0.49506903353057197,0.44900662251655626&amp;width=720&amp;height=720&amp;v=1dbcc9cc49a4290",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/gerrit-van-honthorst-christ-before-the-high-priest",
+      "roomId": "32"
+    },
+    {
+      "id": "bernardo-cavallino-christ-driving-the-traders-from-the-temple",
+      "name": "Christ driving the Traders from the Temple",
+      "artist": "Bernardo Cavallino",
+      "date": "about 1645-50",
+      "dimension": "101 × 127.6 cm",
+      "image": "https://www.nationalgallery.org.uk/media/g2xn3onk/n-4778-00-000052-web-hd.jpg?rxy=0.45376344086021503,0.38211382113821141&amp;width=720&amp;height=720&amp;v=1dbcca147182fd0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/bernardo-cavallino-christ-driving-the-traders-from-the-temple",
+      "roomId": "32"
+    },
+    {
+      "id": "francesco-solimena-dido-receiving-aeneas-and-cupid-disguised-as-ascanius",
+      "name": "Dido receiving Aeneas and Cupid disguised as Ascanius",
+      "artist": "Francesco Solimena",
+      "date": "1710",
+      "dimension": "207.2 × 310.2 cm",
+      "image": "https://www.nationalgallery.org.uk/media/2ynjopqz/n-6397-00-000017-web-hd.jpg?rxy=0.26666666666666666,0.23452768729641693&amp;width=720&amp;height=720&amp;v=1dbcca76dfa8160",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/francesco-solimena-dido-receiving-aeneas-and-cupid-disguised-as-ascanius",
+      "roomId": "32"
+    },
+    {
+      "id": "guercino-elijah-fed-by-ravens",
+      "name": "Elijah fed by Ravens",
+      "artist": "Guercino",
+      "date": "1620",
+      "dimension": "195 × 156.5 cm",
+      "image": "https://www.nationalgallery.org.uk/media/hsjjzgzm/n-6612-00-000004-fs-hd.jpg?rxy=0.58064516129032262,0.26530612244897961&amp;width=720&amp;height=720&amp;v=1dbccadbbf27840",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/guercino-elijah-fed-by-ravens",
+      "roomId": "32"
+    },
+    {
+      "id": "johann-liss-judith-in-the-tent-of-holofernes",
+      "name": "Judith in the Tent of Holofernes",
+      "artist": "Johann Liss",
+      "date": "mid- to later 1620s",
+      "dimension": "128.5 × 99 cm",
+      "image": "https://www.nationalgallery.org.uk/media/sq1nt3zl/n-4597-00-000031-xl-hd.jpg?rxy=0.41304789957434473,0.24860825037504622&amp;width=720&amp;height=720&amp;v=1dbcca0efe9c430",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/johann-liss-judith-in-the-tent-of-holofernes",
+      "roomId": "32"
+    },
+    {
+      "id": "guercino-king-david",
+      "name": "King David",
+      "artist": "Guercino",
+      "date": "1651",
+      "dimension": "223.5 × 170.2 cm",
+      "image": "https://www.nationalgallery.org.uk/media/qykj534f/n-6707-00-000003-web-hd.jpg?rxy=0.4850814780812486,0.39058774986246103&amp;width=720&amp;height=720&amp;v=1dbccb181526520",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/guercino-king-david",
+      "roomId": "32"
+    },
+    {
+      "id": "salvator-rosa-landscape-with-mercury-and-the-dishonest-woodsman",
+      "name": "Landscape with Mercury and the Dishonest Woodsman",
+      "artist": "Salvator Rosa",
+      "date": "about 1663",
+      "dimension": "125.7 × 202.1 cm",
+      "image": "https://www.nationalgallery.org.uk/media/52pdweyc/n-0084-00-000015-web-hd.jpg?rxy=0.2967032967032967,0.70462633451957291&amp;width=720&amp;height=720&amp;v=1dbcbd7973e20c0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/salvator-rosa-landscape-with-mercury-and-the-dishonest-woodsman",
+      "roomId": "32"
+    },
+    {
+      "id": "salvator-rosa-landscape-with-travellers-asking-the-way",
+      "name": "Landscape with Travellers asking the Way",
+      "artist": "Salvator Rosa",
+      "date": "about 1641",
+      "dimension": "108.3 × 174.2 cm",
+      "image": "https://www.nationalgallery.org.uk/media/f00pd0hi/n-6643-00-000006-fs-hd.jpg?rxy=0.43010752688172044,0.74912891986062713&amp;width=720&amp;height=720&amp;v=1dbccaeaa3b9950",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/salvator-rosa-landscape-with-travellers-asking-the-way",
+      "roomId": "32"
+    },
+    {
+      "id": "guido-reni-lot-and-his-daughters-leaving-sodom",
+      "name": "Lot and his Daughters leaving Sodom",
+      "artist": "Guido Reni",
+      "date": "about 1614-15",
+      "dimension": "111.2 × 149.2 cm",
+      "image": "https://www.nationalgallery.org.uk/media/vphha5t1/n-0193-00-000050-xl-hd.jpg?rxy=0.48131868131868133,0.19345238095238096&amp;width=720&amp;height=720&amp;v=1dbcbd98bab6950",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/guido-reni-lot-and-his-daughters-leaving-sodom",
+      "roomId": "32"
+    },
+    {
+      "id": "luca-giordano-perseus-turning-phineus-and-his-followers-to-stone",
+      "name": "Perseus turning Phineus and his Followers to Stone",
+      "artist": "Luca Giordano",
+      "date": "about 1660",
+      "dimension": "285 × 366 cm",
+      "image": "https://www.nationalgallery.org.uk/media/fgwpc1x2/n-6487-00-000016-fs-hd.jpg?rxy=0.6172043010752688,0.34564643799472294&amp;width=720&amp;height=720&amp;v=1dbccaa1103cd10",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/luca-giordano-perseus-turning-phineus-and-his-followers-to-stone",
+      "roomId": "32"
+    },
+    {
+      "id": "salvator-rosa-philosophy",
+      "name": "Philosophy",
+      "artist": "Salvator Rosa",
+      "date": "about 1645",
+      "dimension": "116.3 × 94 cm",
+      "image": "https://www.nationalgallery.org.uk/media/gv5jvgsh/n-4680-00-000017-web-hd.jpg?rxy=0.52903225806451615,0.36062717770034841&amp;width=720&amp;height=720&amp;v=1dbcca1049583b0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/salvator-rosa-philosophy",
+      "roomId": "32"
+    },
+    {
+      "id": "pietro-da-cortona-saint-cecilia",
+      "name": "Saint Cecilia",
+      "artist": "Pietro da Cortona",
+      "date": "1620-5",
+      "dimension": "143.5 × 108.9 cm",
+      "image": "https://www.nationalgallery.org.uk/media/olfnjq2j/n-5284-00-000019-web-hd.jpg?rxy=0.53623188405797106,0.21758241758241759&amp;width=720&amp;height=720&amp;v=1dbcca2334093c0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/pietro-da-cortona-saint-cecilia",
+      "roomId": "32"
+    },
+    {
+      "id": "guercino-saint-gregory-the-great-with-jesuit-saints",
+      "name": "Saint Gregory the Great with Jesuit Saints",
+      "artist": "Guercino",
+      "date": "about 1625-6",
+      "dimension": "296 × 211 cm",
+      "image": "https://www.nationalgallery.org.uk/media/hw4j40gl/n-6622-00-000060-fs-hd.jpg?rxy=0.40860215053763443,0.23628048780487804&amp;width=720&amp;height=720&amp;v=1dbccae43323020",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/guercino-saint-gregory-the-great-with-jesuit-saints",
+      "roomId": "32"
+    },
+    {
+      "id": "guido-reni-saint-jerome",
+      "name": "Saint Jerome",
+      "artist": "Guido Reni",
+      "date": "about 1624-5",
+      "dimension": "111.8 × 86.4 cm",
+      "image": "https://www.nationalgallery.org.uk/media/eibnoftu/n-0011-00-000031-web-hd.jpg?rxy=0.55164835164835169,0.35836177474402731&amp;width=720&amp;height=720&amp;v=1dbcbd40a452310",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/guido-reni-saint-jerome",
+      "roomId": "32"
+    },
+    {
+      "id": "domenichino-saint-john-the-evangelist",
+      "name": "Saint John the Evangelist",
+      "artist": "Domenichino",
+      "date": "late 1620s",
+      "dimension": "259 × 199.4 cm",
+      "image": "https://www.nationalgallery.org.uk/media/5nni4eqd/l-0601-00-000003-web-hd.jpg?rxy=0.34801762114537443,0.26006711409395972&amp;width=720&amp;height=720&amp;v=1dbcbd103550af0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/domenichino-saint-john-the-evangelist",
+      "roomId": "32"
+    },
+    {
+      "id": "guido-reni-saint-mary-magdalene",
+      "name": "Saint Mary Magdalene",
+      "artist": "Guido Reni",
+      "date": "about 1634-5",
+      "dimension": "79.3 × 68.5 cm",
+      "image": "https://www.nationalgallery.org.uk/media/qzyj2kkt/n-0177-00-000014-web-hd.jpg?rxy=0.45934065934065932,0.33837429111531192&amp;width=720&amp;height=720&amp;v=1dbcbd944508130",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/guido-reni-saint-mary-magdalene",
+      "roomId": "32"
+    },
+    {
+      "id": "michelangelo-merisi-da-caravaggio-salome-receives-the-head-of-john-the-baptist",
+      "name": "Salome receives the Head of John the Baptist",
+      "artist": "Michelangelo Merisi da Caravaggio",
+      "date": "about 1609-10",
+      "dimension": "91.5 × 106.7 cm",
+      "image": "https://www.nationalgallery.org.uk/media/nh1ljh5f/n-6389-00-000031-fs-hd.jpg?rxy=0.43478260869565216,0.69415807560137455&amp;width=720&amp;height=720&amp;v=1dbcca722b42e40",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/michelangelo-merisi-da-caravaggio-salome-receives-the-head-of-john-the-baptist",
+      "roomId": "32"
+    },
+    {
+      "id": "salvator-rosa-self-portrait-as-pascariello",
+      "name": "Self Portrait as Pascariello",
+      "artist": "Salvator Rosa",
+      "date": "about 1645-9",
+      "dimension": "115.5 × 94 cm",
+      "image": "https://www.nationalgallery.org.uk/media/xvtjwkks/l-1283-00-000002-web-hd.jpg?rxy=0.33093525179856115,0.26070038910505838&amp;width=720&amp;height=720&amp;v=1dbcbd34a6eb970",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/salvator-rosa-self-portrait-as-pascariello",
+      "roomId": "32"
+    },
+    {
+      "id": "artemisia-gentileschi-self-portrait-as-saint-catherine-of-alexandria",
+      "name": "Self Portrait as Saint Catherine of Alexandria",
+      "artist": "Artemisia Gentileschi",
+      "date": "about 1615-17",
+      "dimension": "71.4 × 69 cm",
+      "image": "https://www.nationalgallery.org.uk/media/dztm2g33/n-6671-00-000088-xl-hd.jpg?rxy=0.524731182795699,0.2360248447204969&amp;width=720&amp;height=720&amp;v=1dbccafc3170350",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/artemisia-gentileschi-self-portrait-as-saint-catherine-of-alexandria",
+      "roomId": "32"
+    },
+    {
+      "id": "ludovico-carracci-susannah-and-the-elders",
+      "name": "Susannah and the Elders",
+      "artist": "Ludovico Carracci",
+      "date": "1616",
+      "dimension": "146.6 × 116.5 cm",
+      "image": "https://www.nationalgallery.org.uk/media/alfea3so/n-0028-00-000017-web-hd.jpg?rxy=0.73186813186813182,0.49740034662045063&amp;width=720&amp;height=720&amp;v=1dbcbd5bb88aa10",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/ludovico-carracci-susannah-and-the-elders",
+      "roomId": "32"
+    },
+    {
+      "id": "guido-reni-susannah-and-the-elders",
+      "name": "Susannah and the Elders",
+      "artist": "Guido Reni",
+      "date": "about 1622-3",
+      "dimension": "116.6 × 150.5 cm",
+      "image": "https://www.nationalgallery.org.uk/media/54ndpgiq/n-0196-00-000017-web-hd.jpg?rxy=0.48131868131868133,0.18181818181818182&amp;width=720&amp;height=720&amp;v=1dbcbd996edcbf0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/guido-reni-susannah-and-the-elders",
+      "roomId": "32"
+    },
+    {
+      "id": "carlo-dolci-the-adoration-of-the-kings",
+      "name": "The Adoration of the Kings",
+      "artist": "Carlo Dolci",
+      "date": "1649",
+      "dimension": "117 × 92 cm",
+      "image": "https://www.nationalgallery.org.uk/media/4tnfaxhd/n-6523-00-000018-web-hd.jpg?rxy=0.40677966101694918,0.4177777777777778&amp;width=720&amp;height=720&amp;v=1dbccab371e5410",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/carlo-dolci-the-adoration-of-the-kings",
+      "roomId": "32"
+    },
+    {
+      "id": "guido-reni-the-adoration-of-the-shepherds",
+      "name": "The Adoration of the Shepherds",
+      "artist": "Guido Reni",
+      "date": "about 1640",
+      "dimension": "480 × 321 cm",
+      "image": "https://www.nationalgallery.org.uk/media/jfjnsgek/n-6270-00-000106-fs-hd.jpg?rxy=0.36607142857142855,0.61643835616438358&amp;width=720&amp;height=720&amp;v=1dbcca49fc19b50",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/guido-reni-the-adoration-of-the-shepherds",
+      "roomId": "32"
+    },
+    {
+      "id": "gioacchino-assereto-the-angel-appears-to-hagar-and-ishmael",
+      "name": "The Angel appears to Hagar and Ishmael",
+      "artist": "Gioacchino Assereto",
+      "date": "about 1640",
+      "dimension": "119 × 167 cm",
+      "image": "https://www.nationalgallery.org.uk/media/u0ydzqqa/n-6621-00-000018-fs-hd.jpg?rxy=0.61505376344086027,0.22153846153846155&amp;width=720&amp;height=720&amp;v=1dbccae4000c650",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/gioacchino-assereto-the-angel-appears-to-hagar-and-ishmael",
+      "roomId": "32"
+    },
+    {
+      "id": "guercino-the-cumaean-sibyl-with-a-putto",
+      "name": "The Cumaean Sibyl with a Putto",
+      "artist": "Guercino",
+      "date": "1651",
+      "dimension": "222 × 168.5 cm",
+      "image": "https://www.nationalgallery.org.uk/media/1x2g0dq2/n-6615-00-000006-web-hd.jpg?rxy=0.43870967741935485,0.27659574468085107&amp;width=720&amp;height=720&amp;v=1dbccae132306c0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/guercino-the-cumaean-sibyl-with-a-putto",
+      "roomId": "32"
+    },
+    {
+      "id": "guercino-the-incredulity-of-saint-thomas",
+      "name": "The Incredulity of Saint Thomas",
+      "artist": "Guercino",
+      "date": "1621",
+      "dimension": "115.6 × 142.5 cm",
+      "image": "https://www.nationalgallery.org.uk/media/tinivoi0/n-3216-00-000014-web-hd.jpg?rxy=0.4908675799086758,0.46760563380281689&amp;width=720&amp;height=720&amp;v=1dbcbfa90e85790",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/guercino-the-incredulity-of-saint-thomas",
+      "roomId": "32"
+    },
+    {
+      "id": "guido-reni-the-rape-of-europa",
+      "name": "The Rape of Europa",
+      "artist": "Guido Reni",
+      "date": "1637-9",
+      "dimension": "177 × 129.5 cm",
+      "image": "https://www.nationalgallery.org.uk/media/lvzfba21/n-6642-00-000007-fs-hd.jpg?rxy=0.43010752688172044,0.30185758513931887&amp;width=720&amp;height=720&amp;v=1dbccaea5764910",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/guido-reni-the-rape-of-europa",
+      "roomId": "32"
+    },
+    {
+      "id": "orazio-gentileschi-the-rest-on-the-flight-into-egypt",
+      "name": "The Rest on the Flight into Egypt",
+      "artist": "Orazio Gentileschi",
+      "date": "about 1620",
+      "dimension": "175.6 × 218 cm",
+      "image": "https://www.nationalgallery.org.uk/media/mbmc5tag/l-1311-00-000001-web-hd.jpg?rxy=0.74697124301652351,0.53983456682629516&amp;width=720&amp;height=720&amp;v=1dbcbd355f020e0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/orazio-gentileschi-the-rest-on-the-flight-into-egypt",
+      "roomId": "32"
+    },
+    {
+      "id": "guercino-the-samian-sibyl-with-a-putto",
+      "name": "The Samian Sibyl with a Putto",
+      "artist": "Guercino",
+      "date": "1651",
+      "dimension": "218.5 × 180 cm",
+      "image": "https://www.nationalgallery.org.uk/media/3bndgqy0/n-6618-00-000003-fs-hd.jpg?rxy=0.6064516129032258,0.28360655737704921&amp;width=720&amp;height=720&amp;v=1dbccae278401a0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/guercino-the-samian-sibyl-with-a-putto",
+      "roomId": "32"
+    },
+    {
+      "id": "michelangelo-merisi-da-caravaggio-the-supper-at-emmaus",
+      "name": "The Supper at Emmaus",
+      "artist": "Michelangelo Merisi da Caravaggio",
+      "date": "1601",
+      "dimension": "141 × 196.2 cm",
+      "image": "https://www.nationalgallery.org.uk/media/wqpe1kxe/n-0172-00-000104-xl-hd.jpg?rxy=0.5067183485680302,0.37608371124968637&amp;width=720&amp;height=720&amp;v=1dc0c54cad95860",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/michelangelo-merisi-da-caravaggio-the-supper-at-emmaus",
+      "roomId": "32"
+    },
+    {
+      "id": "sassoferrato-the-virgin-and-child-embracing",
+      "name": "The Virgin and Child Embracing",
+      "artist": "Sassoferrato",
+      "date": "1660-85",
+      "dimension": "97.2 × 74 cm",
+      "image": "https://www.nationalgallery.org.uk/media/mvwf1b3c/n-0740-00-000036-web-hd.jpg?rxy=0.539647577092511,0.32558139534883723&amp;width=720&amp;height=720&amp;v=1dbcbe29a822730",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/sassoferrato-the-virgin-and-child-embracing",
+      "roomId": "32"
+    },
+    {
+      "id": "sassoferrato-the-virgin-in-prayer",
+      "name": "The Virgin in Prayer",
+      "artist": "Sassoferrato",
+      "date": "1640-50",
+      "dimension": "73 × 57.7 cm",
+      "image": "https://www.nationalgallery.org.uk/media/iddc2p5k/n-0200-00-000100-xl-hd.jpg?rxy=0.48571428571428571,0.33216783216783219&amp;width=720&amp;height=720&amp;v=1dbcbd9ad8e0870",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/sassoferrato-the-virgin-in-prayer",
+      "roomId": "32"
+    },
+    {
+      "id": "salvator-rosa-witches-at-their-incantations",
+      "name": "Witches at their Incantations",
+      "artist": "Salvator Rosa",
+      "date": "about 1646",
+      "dimension": "72 × 132 cm",
+      "image": "https://www.nationalgallery.org.uk/media/3gynqdbo/n-6491-00-000018-fs-hd.jpg?rxy=0.36344086021505378,0.4642857142857143&amp;width=720&amp;height=720&amp;v=1dbccaa1d5ef2b0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/salvator-rosa-witches-at-their-incantations",
+      "roomId": "32"
+    }
+  ]
+}

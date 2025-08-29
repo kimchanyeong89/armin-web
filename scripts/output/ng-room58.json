@@ -1,0 +1,317 @@
+{
+  "room": "58",
+  "source": "scripts/seed/ng-room58-seed.json",
+  "count": 31,
+  "items": [
+    {
+      "id": "segna-di-bonaventura-crucifix",
+      "name": "Crucifix",
+      "artist": "Segna di Bonaventura",
+      "date": "about 1310-15",
+      "dimension": "213.5 × 184 cm",
+      "image": "https://www.nationalgallery.org.uk/media/ubgbhto1/n-0567-00-000022-fs-hd.jpg?rxy=0.4699848391587418,0.3797731309911076&amp;width=720&amp;height=720&amp;v=1dbcbdd0f895130",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/segna-di-bonaventura-crucifix",
+      "roomId": "58"
+    },
+    {
+      "id": "ugolino-di-nerio-david",
+      "name": "David",
+      "artist": "Ugolino di Nerio",
+      "date": "possibly 1325-8",
+      "dimension": "55.2 × 31.2 cm",
+      "image": "https://www.nationalgallery.org.uk/media/l4gflojy/n-6485-00-000028-fs-hd.jpg?rxy=0.49247311827956991,0.42222222222222222&amp;width=720&amp;height=720&amp;v=1dbccaa08b5cb40",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/ugolino-di-nerio-david",
+      "roomId": "58"
+    },
+    {
+      "id": "ugolino-di-nerio-moses",
+      "name": "Moses",
+      "artist": "Ugolino di Nerio",
+      "date": "possibly 1325-8",
+      "dimension": "55 × 31.4 cm",
+      "image": "https://www.nationalgallery.org.uk/media/uixhkg2t/n-6484-00-000018-fs-hd.jpg?rxy=0.47526881720430109,0.39424280350438046&amp;width=720&amp;height=720&amp;v=1dbccaa00ef9710",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/ugolino-di-nerio-moses",
+      "roomId": "58"
+    },
+    {
+      "id": "sassetta-saint-francis-and-the-poor-knight-and-francis-s-vision",
+      "name": "Saint Francis and the Poor Knight, and Francis",
+      "artist": "Sassetta",
+      "date": "1437-44",
+      "dimension": "87 × 52.5 cm",
+      "image": "https://www.nationalgallery.org.uk/media/coofozwf/n-4757-00-000027-web-hd.jpg?rxy=0.24086021505376346,0.64569961489088579&amp;width=720&amp;height=720&amp;v=1dbcca124dc2610",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/sassetta-saint-francis-and-the-poor-knight-and-francis-s-vision",
+      "roomId": "58"
+    },
+    {
+      "id": "sassetta-saint-francis-before-pope-honorius-iii",
+      "name": "Saint Francis before Pope Honorius III",
+      "artist": "Sassetta",
+      "date": "1437-44",
+      "dimension": "88.4 × 52 cm",
+      "image": "https://www.nationalgallery.org.uk/media/w1wdh4vy/n-4759-00-000023-web-hd.jpg?rxy=0.65806451612903227,0.601029601029601&amp;width=720&amp;height=720&amp;v=1dbcca12f52fb50",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/sassetta-saint-francis-before-pope-honorius-iii",
+      "roomId": "58"
+    },
+    {
+      "id": "sassetta-saint-francis-before-the-sultan",
+      "name": "Saint Francis before the Sultan",
+      "artist": "Sassetta",
+      "date": "1437-44",
+      "dimension": "86.4 × 53.2 cm",
+      "image": "https://www.nationalgallery.org.uk/media/evvaxm1c/n-4761-00-000020-web-hd.jpg?rxy=0.49032258064516127,0.65778961384820245&amp;width=720&amp;height=720&amp;v=1dbcca1387dc890",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/sassetta-saint-francis-before-the-sultan",
+      "roomId": "58"
+    },
+    {
+      "id": "sassetta-saint-francis-renounces-his-earthly-father",
+      "name": "Saint Francis renounces his Earthly Father",
+      "artist": "Sassetta",
+      "date": "1437-44",
+      "dimension": "87.5 × 52.4 cm",
+      "image": "https://www.nationalgallery.org.uk/media/2mhghq5u/n-4758-00-000025-web-hd.jpg?rxy=0.24724061810154527,0.61538461538461542&amp;width=720&amp;height=720&amp;v=1dbcca1294a55a0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/sassetta-saint-francis-renounces-his-earthly-father",
+      "roomId": "58"
+    },
+    {
+      "id": "giovanni-di-paolo-saint-john-the-baptist-retiring-to-the-desert",
+      "name": "Saint John the Baptist retiring to the Desert",
+      "artist": "Giovanni di Paolo",
+      "date": "1454",
+      "dimension": "30.5 × 49 cm",
+      "image": "https://www.nationalgallery.org.uk/media/ku3mwqa2/n-5454-00-000027-web-hd.jpg?rxy=0.56639863321510153,0.319693094629156&amp;width=720&amp;height=720&amp;v=1dbcca25a01d780",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/giovanni-di-paolo-saint-john-the-baptist-retiring-to-the-desert",
+      "roomId": "58"
+    },
+    {
+      "id": "pietro-lorenzetti-and-workshop-saint-sabinus-before-the-roman-governor-of-tuscany",
+      "name": "Saint Sabinus before the Roman Governor of Tuscany",
+      "artist": "Pietro Lorenzetti",
+      "date": "1335-42",
+      "dimension": "37.7 × 33.2 cm",
+      "image": "https://www.nationalgallery.org.uk/media/isvjfneu/n-1113-00-000020-web-hd.jpg?rxy=0.59833333333333338,0.38017751479289941&amp;width=720&amp;height=720&amp;v=1dbcbeb05c03fc0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/pietro-lorenzetti-and-workshop-saint-sabinus-before-the-roman-governor-of-tuscany",
+      "roomId": "58"
+    },
+    {
+      "id": "matteo-di-giovanni-saint-sebastian",
+      "name": "Saint Sebastian",
+      "artist": "Matteo di Giovanni",
+      "date": "probably 1480-95",
+      "dimension": "126.4 × 59.7 cm",
+      "image": "https://www.nationalgallery.org.uk/media/4whpfgx2/n-1461-00-000022-web-hd.jpg?rxy=0.44680851063829785,0.12705667276051189&amp;width=720&amp;height=720&amp;v=1dbcbf0b83481c0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/matteo-di-giovanni-saint-sebastian",
+      "roomId": "58"
+    },
+    {
+      "id": "ugolino-di-nerio-saints-bartholomew-and-andrew",
+      "name": "Saints Bartholomew and Andrew",
+      "artist": "Ugolino di Nerio",
+      "date": "possibly 1325-8",
+      "dimension": "70 × 62 cm",
+      "image": "https://www.nationalgallery.org.uk/media/lzthhuh1/n-3473-00-000028-web-hd.jpg?rxy=0.48520710059171596,0.36347517730496454&amp;width=720&amp;height=720&amp;v=1dbcc9c08acd2f0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/ugolino-di-nerio-saints-bartholomew-and-andrew",
+      "roomId": "58"
+    },
+    {
+      "id": "giovanni-di-paolo-saints-fabian-and-sebastian",
+      "name": "Saints Fabian and Sebastian",
+      "artist": "Giovanni di Paolo",
+      "date": "about 1475",
+      "dimension": "84.5 × 54.5 cm",
+      "image": "https://www.nationalgallery.org.uk/media/iovjy3uo/n-3402-00-000026-web-hd.jpg?rxy=0.52268244575936884,0.26344086021505375&amp;width=720&amp;height=720&amp;v=1dbcc9bb44ffde0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/giovanni-di-paolo-saints-fabian-and-sebastian",
+      "roomId": "58"
+    },
+    {
+      "id": "ugolino-di-nerio-saints-simon-and-thaddeus",
+      "name": "Saints Simon and Thaddeus",
+      "artist": "Ugolino di Nerio",
+      "date": "possibly 1325-8",
+      "dimension": "70.4 × 62.2 cm",
+      "image": "https://www.nationalgallery.org.uk/media/kcicuxqi/n-3377-00-000027-web-hd.jpg?rxy=0.4911242603550296,0.36925795053003535&amp;width=720&amp;height=720&amp;v=1dbcc9ba360f840",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/ugolino-di-nerio-saints-simon-and-thaddeus",
+      "roomId": "58"
+    },
+    {
+      "id": "ugolino-di-nerio-spandrel-angels",
+      "name": "Spandrel Angels",
+      "artist": "Ugolino di Nerio",
+      "date": "possibly 1325-8",
+      "dimension": "28.7 × 57.2 cm",
+      "image": "https://www.nationalgallery.org.uk/media/ltxdg0td/n-3378-00-000023-web-hd.jpg?rxy=0.23471400394477318,0.24358974358974359&amp;width=720&amp;height=720&amp;v=1dbcc9ba73076d0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/ugolino-di-nerio-spandrel-angels",
+      "roomId": "58"
+    },
+    {
+      "id": "ugolino-di-nerio-spandrel-angels-1",
+      "name": "Spandrel Angels",
+      "artist": "Ugolino di Nerio",
+      "date": "possibly 1325-8",
+      "dimension": "27.5 × 56.7 cm",
+      "image": "https://www.nationalgallery.org.uk/media/aq3bm4jg/n-6486-00-000037-fs-hd.jpg?rxy=0.2135834425697906,0.18353830182519706&amp;width=720&amp;height=720&amp;v=1dbccaa0d5f0800",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/ugolino-di-nerio-spandrel-angels-1",
+      "roomId": "58"
+    },
+    {
+      "id": "duccio-the-annunciation",
+      "name": "The Annunciation",
+      "artist": "Duccio",
+      "date": "1307/8-11",
+      "dimension": "44.5 × 45.8 cm",
+      "image": "https://www.nationalgallery.org.uk/media/bxhgcaxj/n-1139-00-000063-fs-hd.jpg?rxy=0.6508474576271186,0.34440559440559443&amp;width=720&amp;height=720&amp;v=1dbcbeb646ed5e0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/duccio-the-annunciation",
+      "roomId": "58"
+    },
+    {
+      "id": "matteo-di-giovanni-the-assumption-of-the-virgin",
+      "name": "The Assumption of the Virgin",
+      "artist": "Matteo di Giovanni",
+      "date": "probably 1474",
+      "dimension": "331.5 × 174 cm",
+      "image": "https://www.nationalgallery.org.uk/media/x1chynan/n-1155-00-000146-fs-hd.jpg?rxy=0.5034602076124568,0.3&amp;width=720&amp;height=720&amp;v=1dbcbeba69dbcb0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/matteo-di-giovanni-the-assumption-of-the-virgin",
+      "roomId": "58"
+    },
+    {
+      "id": "giovanni-di-paolo-the-baptism-of-christ-predella-panel",
+      "name": "The Baptism of Christ: Predella Panel",
+      "artist": "Giovanni di Paolo",
+      "date": "1454",
+      "dimension": "31 × 45 cm",
+      "image": "https://www.nationalgallery.org.uk/media/inhby03b/n-5451-00-000021-web-hd.jpg?rxy=0.50967741935483868,0.407514450867052&amp;width=720&amp;height=720&amp;v=1dbcca24ca5e3b0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/giovanni-di-paolo-the-baptism-of-christ-predella-panel",
+      "roomId": "58"
+    },
+    {
+      "id": "ugolino-di-nerio-the-betrayal-of-christ",
+      "name": "The Betrayal of Christ",
+      "artist": "Ugolino di Nerio",
+      "date": "possibly 1325-8",
+      "dimension": "40.4 × 58.8 cm",
+      "image": "https://www.nationalgallery.org.uk/media/odjk0t1j/n-1188-00-000020-web-hd.jpg?rxy=0.47166666666666668,0.2566585956416465&amp;width=720&amp;height=720&amp;v=1dbcbec31366390",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/ugolino-di-nerio-the-betrayal-of-christ",
+      "roomId": "58"
+    },
+    {
+      "id": "giovanni-di-paolo-the-birth-of-saint-john-the-baptist-predella-panel",
+      "name": "The Birth of Saint John the Baptist: Predella Panel",
+      "artist": "Giovanni di Paolo",
+      "date": "1454",
+      "dimension": "30.5 × 36 cm",
+      "image": "https://www.nationalgallery.org.uk/media/1pycalah/n-5453-00-000017-web-hd.jpg?rxy=0.55555555555555558,0.59800664451827246&amp;width=720&amp;height=720&amp;v=1dbcca255d12620",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/giovanni-di-paolo-the-birth-of-saint-john-the-baptist-predella-panel",
+      "roomId": "58"
+    },
+    {
+      "id": "ugolino-di-nerio-the-deposition",
+      "name": "The Deposition",
+      "artist": "Ugolino di Nerio",
+      "date": "possibly 1325-8",
+      "dimension": "40.7 × 58.6 cm",
+      "image": "https://www.nationalgallery.org.uk/media/ngff1x0v/n-3375-00-000020-web-hd.jpg?rxy=0.45562130177514792,0.25852272727272729&amp;width=720&amp;height=720&amp;v=1dbcc9b9b40bd30",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/ugolino-di-nerio-the-deposition",
+      "roomId": "58"
+    },
+    {
+      "id": "sassetta-the-funeral-of-saint-francis",
+      "name": "The Funeral of Saint Francis",
+      "artist": "Sassetta",
+      "date": "1437-44",
+      "dimension": "88.4 × 53.5 cm",
+      "image": "https://www.nationalgallery.org.uk/media/y3hpd3nn/n-4763-00-000022-web-hd.jpg?rxy=0.30967741935483872,0.77966101694915257&amp;width=720&amp;height=720&amp;v=1dbcca142e70940",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/sassetta-the-funeral-of-saint-francis",
+      "roomId": "58"
+    },
+    {
+      "id": "giovanni-di-paolo-the-head-of-john-the-baptist-brought-to-herod",
+      "name": "The Head of John the Baptist brought to Herod",
+      "artist": "Giovanni di Paolo",
+      "date": "1454",
+      "dimension": "31 × 37 cm",
+      "image": "https://www.nationalgallery.org.uk/media/xkblxjf4/n-5452-00-000016-web-hd.jpg?rxy=0.42795698924731185,0.52941176470588236&amp;width=720&amp;height=720&amp;v=1dbcca2511f36d0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/giovanni-di-paolo-the-head-of-john-the-baptist-brought-to-herod",
+      "roomId": "58"
+    },
+    {
+      "id": "duccio-the-healing-of-the-man-born-blind",
+      "name": "The Healing of the Man born Blind",
+      "artist": "Duccio",
+      "date": "1307/8-11",
+      "dimension": "45.1 × 46.7 cm",
+      "image": "https://www.nationalgallery.org.uk/media/5jcbhwkh/n-1140-00-000042-web-hd.jpg?rxy=0.46610169491525422,0.47586206896551725&amp;width=720&amp;height=720&amp;v=1dbcbeb6ad09810",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/duccio-the-healing-of-the-man-born-blind",
+      "roomId": "58"
+    },
+    {
+      "id": "niccolo-di-buonaccorso-the-marriage-of-the-virgin",
+      "name": "The Marriage of the Virgin",
+      "artist": "Niccolò di Buonaccorso",
+      "date": "about 1380",
+      "dimension": "50.9 × 33 cm",
+      "image": "https://www.nationalgallery.org.uk/media/s5ino5tr/n-1109-00-000042-web-hd.jpg?rxy=0.49833333333333335,0.49945828819068255&amp;width=720&amp;height=720&amp;v=1dbcbeb02916e00",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/niccolo-di-buonaccorso-the-marriage-of-the-virgin",
+      "roomId": "58"
+    },
+    {
+      "id": "ugolino-di-nerio-the-resurrection",
+      "name": "The Resurrection",
+      "artist": "Ugolino di Nerio",
+      "date": "possibly 1325-8",
+      "dimension": "41.5 × 58.1 cm",
+      "image": "https://www.nationalgallery.org.uk/media/h2md45y4/n-4191-00-000023-web-hd.jpg?rxy=0.49892041514688551,0.24979877321046934&amp;width=720&amp;height=720&amp;v=1dbcc9fa7faf5f0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/ugolino-di-nerio-the-resurrection",
+      "roomId": "58"
+    },
+    {
+      "id": "sassetta-the-stigmatisation-of-saint-francis",
+      "name": "The Stigmatisation of Saint Francis",
+      "artist": "Sassetta",
+      "date": "1437-44",
+      "dimension": "87.8 × 52.5 cm",
+      "image": "https://www.nationalgallery.org.uk/media/2lslnfhu/n-4760-00-000021-web-hd.jpg?rxy=0.28387096774193549,0.56997455470737912&amp;width=720&amp;height=720&amp;v=1dbcca133ed9210",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/sassetta-the-stigmatisation-of-saint-francis",
+      "roomId": "58"
+    },
+    {
+      "id": "duccio-the-transfiguration",
+      "name": "The Transfiguration",
+      "artist": "Duccio",
+      "date": "1307/8-11",
+      "dimension": "48.5 × 51.4 cm",
+      "image": "https://www.nationalgallery.org.uk/media/gmti1wc3/n-1330-00-000042-web-hd.jpg?rxy=0.48833333333333334,0.12521739130434784&amp;width=720&amp;height=720&amp;v=1dbcbeeb16fa2e0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/duccio-the-transfiguration",
+      "roomId": "58"
+    },
+    {
+      "id": "master-of-the-albertini-master-of-the-casole-fresco-the-virgin-and-child-with-six-angels",
+      "name": "The Virgin and Child with Six Angels",
+      "artist": "Master of the Albertini (Master of the Casole Fresco)",
+      "date": "about 1310-15 (?)",
+      "dimension": "194.2 × 170.6 cm",
+      "image": "https://www.nationalgallery.org.uk/media/ru4d4zhu/n-0565-00-000052-web-hd.jpg?rxy=0.49670329670329672,0.34563106796116505&amp;width=720&amp;height=720&amp;v=1dbcbdd04cd3590",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/master-of-the-albertini-master-of-the-casole-fresco-the-virgin-and-child-with-six-angels",
+      "roomId": "58"
+    },
+    {
+      "id": "ugolino-di-nerio-the-way-to-calvary",
+      "name": "The Way to Calvary",
+      "artist": "Ugolino di Nerio",
+      "date": "possibly 1325-8",
+      "dimension": "40.8 × 58.5 cm",
+      "image": "https://www.nationalgallery.org.uk/media/zxapyoou/n-1189-00-000019-web-hd.jpg?rxy=0.545,0.22781774580335731&amp;width=720&amp;height=720&amp;v=1dbcbec33aa22b0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/ugolino-di-nerio-the-way-to-calvary",
+      "roomId": "58"
+    },
+    {
+      "id": "sassetta-the-wolf-of-gubbio",
+      "name": "The Wolf of Gubbio",
+      "artist": "Sassetta",
+      "date": "1437-44",
+      "dimension": "87 × 52.4 cm",
+      "image": "https://www.nationalgallery.org.uk/media/1bjhugrv/n-4762-00-000023-web-hd.jpg?rxy=0.69315673289183222,0.65415549597855227&amp;width=720&amp;height=720&amp;v=1dbcca13ce2f770",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/sassetta-the-wolf-of-gubbio",
+      "roomId": "58"
+    }
+  ]
+}
