@@ -1,5 +1,6 @@
 {
   "hosting": {
+    "site": "armin-web",
     "public": "dist",
     "ignore": [
       "firebase.json",
