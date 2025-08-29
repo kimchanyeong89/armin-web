@@ -7,7 +7,8 @@
     "dev": "vite",
     "build": "tsc -b && vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+  "preview": "vite preview",
+  "deploy:firebase": "npm run build && npx firebase deploy --only hosting"
   },
   "dependencies": {
     "@amcharts/amcharts5": "^5.12.2",
