@@ -1,0 +1,197 @@
+{
+  "room": "43",
+  "source": "scripts/seed/ng-room43-seed.json",
+  "count": 19,
+  "items": [
+    {
+      "id": "paul-gauguin-a-vase-of-flowers",
+      "name": "A Vase of Flowers",
+      "artist": "Paul Gauguin",
+      "date": "1896",
+      "dimension": "64 × 74 cm",
+      "image": "https://www.nationalgallery.org.uk/media/sfvf3d5u/n-3289-00-000015-web-hd.jpg?rxy=0.4752688172043011,0.40703517587939697&amp;width=720&amp;height=720&amp;v=1dbcc9b6549e3a0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/paul-gauguin-a-vase-of-flowers",
+      "roomId": "43"
+    },
+    {
+      "id": "vincent-van-gogh-a-wheatfield-with-cypresses",
+      "name": "A Wheatfield, with Cypresses",
+      "artist": "Vincent van Gogh",
+      "date": "1889",
+      "dimension": "72.1 x 90.9 cm",
+      "image": "https://www.nationalgallery.org.uk/media/b2gj4uld/n-3861-00-000081-xl-hd.jpg?rxy=0.5956607495069034,0.47890818858560796&amp;width=720&amp;height=720&amp;v=1dbcc9d29b214f0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/vincent-van-gogh-a-wheatfield-with-cypresses",
+      "roomId": "43"
+    },
+    {
+      "id": "hilaire-germain-edgar-degas-ballet-dancers",
+      "name": "Ballet Dancers",
+      "artist": "Hilaire-Germain-Edgar Degas",
+      "date": "about 1890-1900",
+      "dimension": "72.5 × 73 cm",
+      "image": "https://www.nationalgallery.org.uk/media/d3iei3ui/n-4168-00-000024-xl-hd.jpg?rxy=0.77767335520711389,0.29792068070699085&amp;width=720&amp;height=720&amp;v=1dbcc9f80395930",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/hilaire-germain-edgar-degas-ballet-dancers",
+      "roomId": "43"
+    },
+    {
+      "id": "paul-gauguin-bowl-of-fruit-and-tankard-before-a-window",
+      "name": "Bowl of Fruit and Tankard before a Window",
+      "artist": "Paul Gauguin",
+      "date": "probably 1890",
+      "dimension": "50.8 × 61.6 cm",
+      "image": "https://www.nationalgallery.org.uk/media/gf4bsmzu/n-6609-00-000008-fs-hd.jpg?rxy=0.56129032258064515,0.64434180138568131&amp;width=720&amp;height=720&amp;v=1dbccad71bfdf10",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/paul-gauguin-bowl-of-fruit-and-tankard-before-a-window",
+      "roomId": "43"
+    },
+    {
+      "id": "paul-gauguin-faa-iheihe",
+      "name": "Faa Iheihe",
+      "artist": "Paul Gauguin",
+      "date": "1898",
+      "dimension": "54 × 169.5 cm",
+      "image": "https://www.nationalgallery.org.uk/media/wrybmdxb/l-0708-00-000002-web-hd.jpg?rxy=0.513215859030837,0.29943502824858759&amp;width=720&amp;height=720&amp;v=1dbcbd14f8ee5d0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/paul-gauguin-faa-iheihe",
+      "roomId": "43"
+    },
+    {
+      "id": "vincent-van-gogh-farms-near-auvers",
+      "name": "Farms near Auvers",
+      "artist": "Vincent van Gogh",
+      "date": "1890",
+      "dimension": "50.2 × 100.3 cm",
+      "image": "https://www.nationalgallery.org.uk/media/wjxnepev/l-0711-00-000004-web-hd.jpg?rxy=0.5,0.56561085972850678&amp;width=720&amp;height=720&amp;v=1dbcbd15968b7c0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/vincent-van-gogh-farms-near-auvers",
+      "roomId": "43"
+    },
+    {
+      "id": "jan-toorop-high-tide",
+      "name": "High Tide",
+      "artist": "Jan Toorop",
+      "date": "1891",
+      "dimension": "67.7 × 76 cm",
+      "image": "https://www.nationalgallery.org.uk/media/ogbibv53/l-1334-00-000003-web-hd.jpg?rxy=0.49477977793963385,0.5009042836443197&amp;width=720&amp;height=720&amp;v=1dbcbd3734d10d0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/jan-toorop-high-tide",
+      "roomId": "43"
+    },
+    {
+      "id": "vincent-van-gogh-landscape-with-ploughman",
+      "name": "Landscape with Ploughman",
+      "artist": "Vincent van Gogh",
+      "date": "1889",
+      "dimension": "49 × 62 cm",
+      "image": "https://www.nationalgallery.org.uk/media/qgnbvrni/l-1333-00-000004-fs-hd.jpg?width=720&amp;height=720&amp;v=1dbcbd3704ca210",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/vincent-van-gogh-landscape-with-ploughman",
+      "roomId": "43"
+    },
+    {
+      "id": "john-russell-les-terrasses-de-monte-cassino",
+      "name": "Les Terrasses de Monte Cassino",
+      "artist": "John Russell",
+      "date": "about 1889",
+      "dimension": "65 × 81 cm",
+      "image": "https://www.nationalgallery.org.uk/media/cmodihp5/l-1217-00-000001-web-hd.jpg?width=720&amp;height=720&amp;v=1dbcbd333555550",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/john-russell-les-terrasses-de-monte-cassino",
+      "roomId": "43"
+    },
+    {
+      "id": "vincent-van-gogh-long-grass-with-butterflies",
+      "name": "Long Grass with Butterflies",
+      "artist": "Vincent van Gogh",
+      "date": "1890",
+      "dimension": "64.5 × 80.7 cm",
+      "image": "https://www.nationalgallery.org.uk/media/1pvdshbo/n-4169-00-000017-fs-hd.jpg?width=720&amp;height=720&amp;v=1dbcc9f84169360",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/vincent-van-gogh-long-grass-with-butterflies",
+      "roomId": "43"
+    },
+    {
+      "id": "pierre-auguste-renoir-misia-sert",
+      "name": "Misia Sert",
+      "artist": "Pierre-Auguste Renoir",
+      "date": "1904",
+      "dimension": "92.1 × 73 cm",
+      "image": "https://www.nationalgallery.org.uk/media/0ntbxlnn/n-6306-00-000009-web-hd.jpg?rxy=0.40869565217391307,0.22325581395348837&amp;width=720&amp;height=720&amp;v=1dbcca59cd47100",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/pierre-auguste-renoir-misia-sert",
+      "roomId": "43"
+    },
+    {
+      "id": "hilaire-germain-edgar-degas-miss-la-la-at-the-cirque-fernando",
+      "name": "Miss La La at the Cirque Fernando",
+      "artist": "Hilaire-Germain-Edgar Degas",
+      "date": "1879",
+      "dimension": "117.2 × 77.5 cm",
+      "image": "https://www.nationalgallery.org.uk/media/gw3bmtta/n-4121-00-000051-xl-hd.jpg?rxy=0.3084209370769014,0.12684706887003047&amp;width=720&amp;height=720&amp;v=1dbcc9f44849e90",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/hilaire-germain-edgar-degas-miss-la-la-at-the-cirque-fernando",
+      "roomId": "43"
+    },
+    {
+      "id": "hilaire-germain-edgar-degas-peasant-girls-bathing-in-the-sea-at-dusk",
+      "name": "Peasant Girls bathing in the Sea at Dusk",
+      "artist": "Hilaire-Germain-Edgar Degas",
+      "date": "about 1875-76",
+      "dimension": "65 × 81 cm",
+      "image": "https://www.nationalgallery.org.uk/media/ioklfewg/l-1280-00-000001-web-hd.jpg?rxy=0.28029216336086793,0.25010706638115632&amp;width=720&amp;height=720&amp;v=1dbcbd345379490",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/hilaire-germain-edgar-degas-peasant-girls-bathing-in-the-sea-at-dusk",
+      "roomId": "43"
+    },
+    {
+      "id": "hilaire-germain-edgar-degas-portrait-of-elena-carafa",
+      "name": "Portrait of Elena Carafa",
+      "artist": "Hilaire-Germain-Edgar Degas",
+      "date": "about 1875",
+      "dimension": "70.1 × 55 cm",
+      "image": "https://www.nationalgallery.org.uk/media/hk4pjwxy/n-4167-00-000019-web-hd.jpg?rxy=0.46509530225557127,0.26587913705739913&amp;width=720&amp;height=720&amp;v=1dbcc9f6fce0280",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/hilaire-germain-edgar-degas-portrait-of-elena-carafa",
+      "roomId": "43"
+    },
+    {
+      "id": "vincent-van-gogh-sunflowers",
+      "name": "Sunflowers",
+      "artist": "Vincent van Gogh",
+      "date": "1888",
+      "dimension": "92.1 × 73 cm",
+      "image": "https://www.nationalgallery.org.uk/media/pqsbysn3/n-3863-00-000130-xl-hd.jpg?rxy=0.514792899408284,0.41459627329192544&amp;width=720&amp;height=720&amp;v=1dbcc9d3ea31ad0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/vincent-van-gogh-sunflowers",
+      "roomId": "43"
+    },
+    {
+      "id": "vincent-van-gogh-two-crabs",
+      "name": "Two Crabs",
+      "artist": "Vincent van Gogh",
+      "date": "1889",
+      "dimension": "47 × 61 cm",
+      "image": "https://www.nationalgallery.org.uk/media/up4f4xoa/l-0995-00-000007-web-hd.jpg?rxy=0.48571428571428571,0.43613707165109034&amp;width=720&amp;height=720&amp;v=1dbcbd2f291be50",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/vincent-van-gogh-two-crabs",
+      "roomId": "43"
+    },
+    {
+      "id": "vincent-van-gogh-van-gogh-s-chair",
+      "name": "Van Gogh",
+      "artist": "Vincent van Gogh",
+      "date": "1888",
+      "dimension": "91.8 × 73 cm",
+      "image": "https://www.nationalgallery.org.uk/media/rjpd2aod/n-3862-00-000042-web-hd.jpg?rxy=0.45546558704453444,0.41009463722397477&amp;width=720&amp;height=720&amp;v=1dbcc9d2d6c5dd0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/vincent-van-gogh-van-gogh-s-chair",
+      "roomId": "43"
+    },
+    {
+      "id": "henri-de-toulouse-lautrec-woman-seated-in-a-garden",
+      "name": "Woman seated in a Garden",
+      "artist": "Henri de Toulouse-Lautrec",
+      "date": "1891",
+      "dimension": "66.7 × 52.8 cm",
+      "image": "https://www.nationalgallery.org.uk/media/jrfhfp2z/n-4186-00-000013-web-hd.jpg?rxy=0.5268817204301075,0.37710437710437711&amp;width=720&amp;height=720&amp;v=1dbcc9f9428cd90",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/henri-de-toulouse-lautrec-woman-seated-in-a-garden",
+      "roomId": "43"
+    },
+    {
+      "id": "edouard-manet-woman-with-a-cat",
+      "name": "Woman with a Cat",
+      "artist": "Edouard Manet",
+      "date": "about 1880-2",
+      "dimension": "92.1 × 73 cm",
+      "image": "https://www.nationalgallery.org.uk/media/xkdmubfj/l-0675-00-000003-web-hd.jpg?rxy=0.552863436123348,0.2674825174825175&amp;width=720&amp;height=720&amp;v=1dbcbd1189bd1f0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/edouard-manet-woman-with-a-cat",
+      "roomId": "43"
+    }
+  ]
+}

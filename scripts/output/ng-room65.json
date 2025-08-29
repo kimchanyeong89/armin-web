@@ -1,0 +1,157 @@
+{
+  "room": "65",
+  "source": "scripts/seed/ng-room65-seed.json",
+  "count": 15,
+  "items": [
+    {
+      "id": "margarito-d-arezzo-the-virgin-and-child-enthroned-with-narrative-scenes",
+      "name": "Arezzo",
+      "artist": "Margarito d'Arezzo",
+      "date": "probably about 1263-4",
+      "dimension": "92.1 × 183.1 cm",
+      "image": "https://www.nationalgallery.org.uk/media/qffoiq2m/n-0564-00-000094-xl-hd.jpg?width=720&amp;height=720&amp;v=1dbcbdcfb095ca0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/margarito-d-arezzo-the-virgin-and-child-enthroned-with-narrative-scenes",
+      "roomId": "65"
+    },
+    {
+      "id": "master-of-saint-francis-crucifix",
+      "name": "Crucifix",
+      "artist": "Master of Saint Francis",
+      "date": "about 1265-70",
+      "dimension": "91.8 × 70.6 cm",
+      "image": "https://www.nationalgallery.org.uk/media/hwnna5wq/n-6361-00-000046-web-hd.jpg?rxy=0.4731182795698925,0.37479541734860883&amp;width=720&amp;height=720&amp;v=1dbcca675473540",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/master-of-saint-francis-crucifix",
+      "roomId": "65"
+    },
+    {
+      "id": "simone-dei-crocefissi-dream-of-the-virgin",
+      "name": "Dream of the Virgin",
+      "artist": "Simone dei Crocefissi",
+      "date": "about 1365-80",
+      "dimension": "56.5 × 42.5 cm",
+      "image": "https://www.nationalgallery.org.uk/media/ywdd31ex/l-1030-00-000004-web-hd.jpg?rxy=0.35824175824175825,0.67387687188019962&amp;width=720&amp;height=720&amp;v=1dbcbd2fc97a950",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/simone-dei-crocefissi-dream-of-the-virgin",
+      "roomId": "65"
+    },
+    {
+      "id": "giotto-and-workshop-pentecost",
+      "name": "Pentecost",
+      "artist": "Giotto",
+      "date": "probably about 1310-18",
+      "dimension": "45.5 × 44 cm",
+      "image": "https://www.nationalgallery.org.uk/media/qpdbaz4m/n-5360-00-000029-fs-hd.jpg?rxy=0.44086021505376344,0.45360824742268041&amp;width=720&amp;height=720&amp;v=1dbcca237edef30",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/giotto-and-workshop-pentecost",
+      "roomId": "65"
+    },
+    {
+      "id": "giovanni-da-rimini-scenes-from-the-lives-of-the-virgin-and-other-saints",
+      "name": "Scenes from the Lives of the Virgin and other Saints",
+      "artist": "Giovanni da Rimini",
+      "date": "probably about 1300-1305",
+      "dimension": "54.4 × 36.5 cm",
+      "image": "https://www.nationalgallery.org.uk/media/tb2mj522/n-6656-00-000033-xl-hd.jpg?rxy=0.69252873563218387,0.18689788053949905&amp;width=720&amp;height=720&amp;v=1dbccaf41857510",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/giovanni-da-rimini-scenes-from-the-lives-of-the-virgin-and-other-saints",
+      "roomId": "65"
+    },
+    {
+      "id": "barnaba-da-modena-scenes-of-the-virgin-the-trinity-the-crucifixion",
+      "name": "Scenes of the Virgin; The Trinity; The Crucifixion",
+      "artist": "Barnaba da Modena",
+      "date": "1374",
+      "dimension": "82 × 60.7 cm",
+      "image": "https://www.nationalgallery.org.uk/media/50ikxxh0/n-2927-00-000028-web-hd.jpg?rxy=0.31192660550458717,0.10136986301369863&amp;width=720&amp;height=720&amp;v=1dbcbf8e53ade50",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/barnaba-da-modena-scenes-of-the-virgin-the-trinity-the-crucifixion",
+      "roomId": "65"
+    },
+    {
+      "id": "neapolitan-follower-of-giotto-the-dead-christ-and-the-virgin",
+      "name": "The Dead Christ and the Virgin",
+      "artist": "Giotto",
+      "date": "probably 1330s-40s",
+      "dimension": "60 × 42.3 cm",
+      "image": "https://www.nationalgallery.org.uk/media/wefdlctw/n-3895-00-000066-xl-hd.jpg?rxy=0.45364891518737671,0.47019867549668876&amp;width=720&amp;height=720&amp;v=1dbcc9d64ce3910",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/neapolitan-follower-of-giotto-the-dead-christ-and-the-virgin",
+      "roomId": "65"
+    },
+    {
+      "id": "lorenzo-veneziano-the-madonna-of-humility-with-saints-mark-and-john",
+      "name": "The Madonna of Humility with Saints Mark and John",
+      "artist": "Lorenzo Veneziano",
+      "date": "about 1366-70",
+      "dimension": "31.3 × 57.5 cm",
+      "image": "https://www.nationalgallery.org.uk/media/qxsmx34g/n-3897-00-000019-fs-hd.jpg?width=720&amp;height=720&amp;v=1dbcc9d6eae2580",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/lorenzo-veneziano-the-madonna-of-humility-with-saints-mark-and-john",
+      "roomId": "65"
+    },
+    {
+      "id": "probably-by-jacobello-del-bonomo-the-man-of-sorrows",
+      "name": "The Man of Sorrows",
+      "artist": "Jacobello del Bonomo",
+      "date": "about 1385-1400",
+      "dimension": "48 × 30.4 cm",
+      "image": "https://www.nationalgallery.org.uk/media/mdypwem3/n-3893-00-000021-web-hd.jpg?rxy=0.49901380670611439,0.47183979974968709&amp;width=720&amp;height=720&amp;v=1dbcc9d58890c70",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/probably-by-jacobello-del-bonomo-the-man-of-sorrows",
+      "roomId": "65"
+    },
+    {
+      "id": "master-of-the-borgo-crucifix-master-of-the-franciscan-crucifixes-the-man-of-sorrows",
+      "name": "The Man of Sorrows",
+      "artist": "Master of the Borgo Crucifix (Master of the Franciscan Crucifixes)",
+      "date": "about 1255-60",
+      "dimension": "32.3 × 23 cm",
+      "image": "https://www.nationalgallery.org.uk/media/pdkp21pv/n-6573-00-000037-fs-hd.jpg?rxy=0.39139784946236561,0.46879756468797562&amp;width=720&amp;height=720&amp;v=1dbccac655e9460",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/master-of-the-borgo-crucifix-master-of-the-franciscan-crucifixes-the-man-of-sorrows",
+      "roomId": "65"
+    },
+    {
+      "id": "master-of-the-borgo-crucifix-master-of-the-franciscan-crucifixes-the-virgin-and-child",
+      "name": "The Virgin and Child",
+      "artist": "Master of the Borgo Crucifix (Master of the Franciscan Crucifixes)",
+      "date": "about 1255-60",
+      "dimension": "32.2 × 22.9 cm",
+      "image": "https://www.nationalgallery.org.uk/media/dfwjokv1/n-6572-00-000043-fs-hd.jpg?rxy=0.50282485875706218,0.31653225806451613&amp;width=720&amp;height=720&amp;v=1dbccac60d562c0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/master-of-the-borgo-crucifix-master-of-the-franciscan-crucifixes-the-virgin-and-child",
+      "roomId": "65"
+    },
+    {
+      "id": "master-of-the-clarisse-possibly-rinaldo-da-siena-the-virgin-and-child",
+      "name": "The Virgin and Child",
+      "artist": "Master of the Clarisse (possibly Rinaldo da Siena)",
+      "date": "about 1265-8",
+      "dimension": "31.4 × 19.5 cm",
+      "image": "https://www.nationalgallery.org.uk/media/wc4lodmw/n-6571-00-000021-web-hd.jpg?rxy=0.5304347826086957,0.54529307282415629&amp;width=720&amp;height=720&amp;v=1dbccac5dd76500",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/master-of-the-clarisse-possibly-rinaldo-da-siena-the-virgin-and-child",
+      "roomId": "65"
+    },
+    {
+      "id": "attributed-to-ugolino-di-nerio-the-virgin-and-child-with-four-angels",
+      "name": "The Virgin and Child with Four Angels",
+      "artist": "Ugolino di Nerio",
+      "date": "about 1305",
+      "dimension": "41.2 × 28.5 cm",
+      "image": "https://www.nationalgallery.org.uk/media/jk0gz4gh/n-6386-00-000035-web-hd.jpg?rxy=0.5053763440860215,0.20827178729689808&amp;width=720&amp;height=720&amp;v=1dbcca71a8e4de0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/attributed-to-ugolino-di-nerio-the-virgin-and-child-with-four-angels",
+      "roomId": "65"
+    },
+    {
+      "id": "cimabue-the-virgin-and-child-with-two-angels",
+      "name": "The Virgin and Child with Two Angels",
+      "artist": "Cimabue",
+      "date": "about 1280-5",
+      "dimension": "25.6 × 20.8 cm",
+      "image": "https://www.nationalgallery.org.uk/media/qj2mcb4e/n-6583-00-000023-fs-hd.jpg?width=720&amp;height=720&amp;v=1dbccacd93a27f0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/cimabue-the-virgin-and-child-with-two-angels",
+      "roomId": "65"
+    },
+    {
+      "id": "francesco-da-rimini-the-vision-of-the-blessed-clare-of-rimini",
+      "name": "The Vision of the Blessed Clare of Rimini",
+      "artist": "Francesco da Rimini",
+      "date": "probably about 1333-40",
+      "dimension": "55 × 60 cm",
+      "image": "https://www.nationalgallery.org.uk/media/iyzhzx0x/n-6503-00-000016-web-hd.jpg?rxy=0.59710144927536235,0.12732919254658384&amp;width=720&amp;height=720&amp;v=1dbccaa7ed7a550",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/francesco-da-rimini-the-vision-of-the-blessed-clare-of-rimini",
+      "roomId": "65"
+    }
+  ]
+}

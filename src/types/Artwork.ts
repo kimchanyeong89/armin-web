@@ -10,4 +10,8 @@ export type Artwork = {
   roomId: string;
   exhibitionName: string;
   exhibitionTitle: string;
+  date?: string;
+  dimension?: string;
+  sourceUrl?: string;
+  createdAt?: any;
 };

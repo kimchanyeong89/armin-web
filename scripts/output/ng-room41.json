@@ -1,0 +1,297 @@
+{
+  "room": "41",
+  "source": "scripts/seed/ng-room41-seed.json",
+  "count": 29,
+  "items": [
+    {
+      "id": "adolph-menzel-afternoon-in-the-tuileries-gardens",
+      "name": "Afternoon in the Tuileries Gardens",
+      "artist": "Adolph Menzel",
+      "date": "1867",
+      "dimension": "49 × 70 cm",
+      "image": "https://www.nationalgallery.org.uk/media/tkffbcew/n-6604-00-000013-web-hd.jpg?rxy=0.56989247311827962,0.647239263803681&amp;width=720&amp;height=720&amp;v=1dbccad550c2770",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/adolph-menzel-afternoon-in-the-tuileries-gardens",
+      "roomId": "41"
+    },
+    {
+      "id": "edouard-manet-at-the-cafe",
+      "name": "At the Café",
+      "artist": "Edouard Manet",
+      "date": "1878",
+      "dimension": "78 × 84 cm",
+      "image": "https://www.nationalgallery.org.uk/media/oqsecijf/l-1353-00-000001-fs-hd.jpg?width=720&amp;height=720&amp;v=1dbd18042a8a810",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/edouard-manet-at-the-cafe",
+      "roomId": "41"
+    },
+    {
+      "id": "pierre-auguste-renoir-at-the-theatre-la-premiere-sortie",
+      "name": "At the Theatre (La Première Sortie)",
+      "artist": "Pierre-Auguste Renoir",
+      "date": "1876-7",
+      "dimension": "65 × 49.5 cm",
+      "image": "https://www.nationalgallery.org.uk/media/p35pm223/n-3859-00-000032-xl-hd.jpg?rxy=0.44575936883629191,0.29652042360060515&amp;width=720&amp;height=720&amp;v=1dbcc9d10abfc00",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/pierre-auguste-renoir-at-the-theatre-la-premiere-sortie",
+      "roomId": "41"
+    },
+    {
+      "id": "claude-monet-bathers-at-la-grenouillere",
+      "name": "Bathers at La Grenouillère",
+      "artist": "Claude Monet",
+      "date": "1869",
+      "dimension": "73 × 92 cm",
+      "image": "https://www.nationalgallery.org.uk/media/xohfio50/n-6456-00-000031-web-hd.jpg?rxy=0.827683615819209,0.34519572953736655&amp;width=720&amp;height=720&amp;v=1dbcca90822cf80",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/claude-monet-bathers-at-la-grenouillere",
+      "roomId": "41"
+    },
+    {
+      "id": "hilaire-germain-edgar-degas-beach-scene",
+      "name": "Beach Scene",
+      "artist": "Hilaire-Germain-Edgar Degas",
+      "date": "about 1869-70",
+      "dimension": "47.5 × 82.9 cm",
+      "image": "https://www.nationalgallery.org.uk/media/yjddm2f4/n-3247-00-000030-web-hd.jpg?rxy=0.54888888888888887,0.45098039215686275&amp;width=720&amp;height=720&amp;v=1dbcbfac8e3dac0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/hilaire-germain-edgar-degas-beach-scene",
+      "roomId": "41"
+    },
+    {
+      "id": "edouard-manet-corner-of-a-cafe-concert",
+      "name": "Corner of a Café-Concert",
+      "artist": "Edouard Manet",
+      "date": "probably 1878-80",
+      "dimension": "97.1 × 77.5 cm",
+      "image": "https://www.nationalgallery.org.uk/media/zdmmb41z/n-3858-00-000040-web-hd.jpg?rxy=0.55965909090909094,0.2255125284738041&amp;width=720&amp;height=720&amp;v=1dbcc9d08d266e0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/edouard-manet-corner-of-a-cafe-concert",
+      "roomId": "41"
+    },
+    {
+      "id": "jean-baptiste-camille-corot-dardagny-morning",
+      "name": "Dardagny, Morning",
+      "artist": "Jean-Baptiste-Camille Corot",
+      "date": "1853",
+      "dimension": "26 × 47 cm",
+      "image": "https://www.nationalgallery.org.uk/media/aikkl315/n-6339-00-000017-web-hd.jpg?rxy=0.64086021505376345,0.72941176470588232&amp;width=720&amp;height=720&amp;v=1dbcca605b9ed30",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/jean-baptiste-camille-corot-dardagny-morning",
+      "roomId": "41"
+    },
+    {
+      "id": "camille-pissarro-fox-hill-upper-norwood",
+      "name": "Fox Hill, Upper Norwood",
+      "artist": "Camille Pissarro",
+      "date": "1870",
+      "dimension": "35.3 × 45.7 cm",
+      "image": "https://www.nationalgallery.org.uk/media/ubnh2nr5/n-6351-00-000022-web-hd.jpg?rxy=0.4731182795698925,0.72159090909090906&amp;width=720&amp;height=720&amp;v=1dbcca635c91690",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/camille-pissarro-fox-hill-upper-norwood",
+      "roomId": "41"
+    },
+    {
+      "id": "berthe-morisot-girl-on-a-divan",
+      "name": "Girl on a Divan",
+      "artist": "Berthe Morisot",
+      "date": "about 1885",
+      "dimension": "61 × 50.2 cm",
+      "image": "https://www.nationalgallery.org.uk/media/lccguod3/l-0720-00-000005-web-hd.jpg?rxy=0.43832599118942733,0.31672597864768681&amp;width=720&amp;height=720&amp;v=1dbcbd21ac12d80",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/berthe-morisot-girl-on-a-divan",
+      "roomId": "41"
+    },
+    {
+      "id": "jean-baptiste-camille-corot-italian-woman",
+      "name": "Italian Woman",
+      "artist": "Jean-Baptiste-Camille Corot",
+      "date": "about 1870",
+      "dimension": "73 × 59 cm",
+      "image": "https://www.nationalgallery.org.uk/media/00wlekni/n-6620-00-000067-xl-hd.jpg?rxy=0.5536723163841808,0.27446300715990452&amp;width=720&amp;height=720&amp;v=1dbccae3c133870",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/jean-baptiste-camille-corot-italian-woman",
+      "roomId": "41"
+    },
+    {
+      "id": "claude-monet-lavacourt-under-snow",
+      "name": "Lavacourt under Snow",
+      "artist": "Claude Monet",
+      "date": "about 1878-81",
+      "dimension": "59.7 × 80.6 cm",
+      "image": "https://www.nationalgallery.org.uk/media/5fifs2xy/n-3262-00-000022-web-hd.jpg?rxy=0.6077354994435734,0.5057864942207088&amp;width=720&amp;height=720&amp;v=1dbcbfb28173140",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/claude-monet-lavacourt-under-snow",
+      "roomId": "41"
+    },
+    {
+      "id": "edouard-manet-music-in-the-tuileries-gardens",
+      "name": "Music in the Tuileries Gardens",
+      "artist": "Edouard Manet",
+      "date": "1862",
+      "dimension": "76.2 × 118.1 cm",
+      "image": "https://www.nationalgallery.org.uk/media/r4xhcimk/n-3260-00-000049-xl-hd.jpg?rxy=0.32998491250312312,0.62472359672605671&amp;width=720&amp;height=720&amp;v=1dbcbfb23c9f730",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/edouard-manet-music-in-the-tuileries-gardens",
+      "roomId": "41"
+    },
+    {
+      "id": "jacques-joseph-james-tissot-portrait-of-algernon-moses-marsden",
+      "name": "Portrait of Algernon Moses Marsden",
+      "artist": "Jacques Joseph (James) Tissot",
+      "date": "1877",
+      "dimension": "48 × 72.5 cm",
+      "image": "https://www.nationalgallery.org.uk/media/mkrhorlu/n-6696-00-000013-xl-hd.jpg?rxy=0.6261641536713998,0.24561141800974554&amp;width=720&amp;height=720&amp;v=1dbccb0e4fe19d0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/jacques-joseph-james-tissot-portrait-of-algernon-moses-marsden",
+      "roomId": "41"
+    },
+    {
+      "id": "hilaire-germain-edgar-degas-princess-pauline-de-metternich",
+      "name": "Princess Pauline de Metternich",
+      "artist": "Hilaire-Germain-Edgar Degas",
+      "date": "about 1865",
+      "dimension": "41 × 29 cm",
+      "image": "https://www.nationalgallery.org.uk/media/rp2f5skj/n-3337-00-000018-web-hd.jpg?rxy=0.54437869822485208,0.21787709497206703&amp;width=720&amp;height=720&amp;v=1dbcc9b97fd7910",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/hilaire-germain-edgar-degas-princess-pauline-de-metternich",
+      "roomId": "41"
+    },
+    {
+      "id": "claude-monet-snow-scene-at-argenteuil",
+      "name": "Snow Scene at Argenteuil",
+      "artist": "Claude Monet",
+      "date": "1875",
+      "dimension": "71.1 × 91.4 cm",
+      "image": "https://www.nationalgallery.org.uk/media/h1vpu2f2/n-6607-00-000048-xl-hd.jpg?rxy=0.54802259887005644,0.58422939068100355&amp;width=720&amp;height=720&amp;v=1dbccad691edb40",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/claude-monet-snow-scene-at-argenteuil",
+      "roomId": "41"
+    },
+    {
+      "id": "berthe-morisot-summer-s-day",
+      "name": "Summer",
+      "artist": "Berthe Morisot",
+      "date": "about 1879",
+      "dimension": "45.7 × 75.2 cm",
+      "image": "https://www.nationalgallery.org.uk/media/txsbfb0f/n-3264-00-000016-web-hd.jpg?rxy=0.37278106508875741,0.27419354838709675&amp;width=720&amp;height=720&amp;v=1dbcc9b377a7110",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/berthe-morisot-summer-s-day",
+      "roomId": "41"
+    },
+    {
+      "id": "camille-pissarro-the-avenue-sydenham",
+      "name": "The Avenue, Sydenham",
+      "artist": "Camille Pissarro",
+      "date": "1871",
+      "dimension": "48 × 73 cm",
+      "image": "https://www.nationalgallery.org.uk/media/uoih4vsa/n-6493-00-000024-web-hd.jpg?rxy=0.6376811594202898,0.73542600896860988&amp;width=720&amp;height=720&amp;v=1dbccaa22771de0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/camille-pissarro-the-avenue-sydenham",
+      "roomId": "41"
+    },
+    {
+      "id": "claude-monet-the-beach-at-trouville",
+      "name": "The Beach at Trouville",
+      "artist": "Claude Monet",
+      "date": "1870",
+      "dimension": "38 × 46.5 cm",
+      "image": "https://www.nationalgallery.org.uk/media/v50ju3yj/n-3951-00-000022-web-hd.jpg?rxy=0.19449439912505706,0.39049387198651769&amp;width=720&amp;height=720&amp;v=1dbcc9e8fade940",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/claude-monet-the-beach-at-trouville",
+      "roomId": "41"
+    },
+    {
+      "id": "edouard-manet-the-execution-of-maximilian",
+      "name": "The Execution of Maximilian",
+      "artist": "Edouard Manet",
+      "date": "about 1867-8",
+      "dimension": "193 × 284 cm",
+      "image": "https://www.nationalgallery.org.uk/media/dw2pl332/n-3294-00-000069-web-hd.jpg?rxy=0.52859960552268248,0.22832369942196532&amp;width=720&amp;height=720&amp;v=1dbcc9b7731a120",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/edouard-manet-the-execution-of-maximilian",
+      "roomId": "41"
+    },
+    {
+      "id": "eva-gonzales-the-full-length-mirror",
+      "name": "The Full-length Mirror",
+      "artist": "Eva Gonzalès",
+      "date": "about 1869-70",
+      "dimension": "39 × 26.5 cm",
+      "image": "https://www.nationalgallery.org.uk/media/dw1fkpn3/n-6702-00-000005-fs-hd.jpg?rxy=0.49137651638444463,0.2835203780271707&amp;width=720&amp;height=720&amp;v=1dbccb16ed32290",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/eva-gonzales-the-full-length-mirror",
+      "roomId": "41"
+    },
+    {
+      "id": "claude-monet-the-gare-st-lazare",
+      "name": "The Gare St-Lazare",
+      "artist": "Claude Monet",
+      "date": "1877",
+      "dimension": "54.3 × 73.6 cm",
+      "image": "https://www.nationalgallery.org.uk/media/tqkfrfpk/n-6479-00-000054-xl-hd.jpg?rxy=0.27966101694915252,0.75769230769230766&amp;width=720&amp;height=720&amp;v=1dbcca9d7abee30",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/claude-monet-the-gare-st-lazare",
+      "roomId": "41"
+    },
+    {
+      "id": "pierre-auguste-renoir-the-skiff-la-yole",
+      "name": "The Skiff (La Yole)",
+      "artist": "Pierre-Auguste Renoir",
+      "date": "1875",
+      "dimension": "71 × 92 cm",
+      "image": "https://www.nationalgallery.org.uk/media/dyqbuhim/n-6478-00-000036-xl-hd.jpg?rxy=0.615819209039548,0.51660516605166051&amp;width=720&amp;height=720&amp;v=1dbcca9ce312c30",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/pierre-auguste-renoir-the-skiff-la-yole",
+      "roomId": "41"
+    },
+    {
+      "id": "claude-monet-the-thames-below-westminster",
+      "name": "The Thames below Westminster",
+      "artist": "Claude Monet",
+      "date": "about 1871",
+      "dimension": "47 × 73 cm",
+      "image": "https://www.nationalgallery.org.uk/media/ivpeqsyh/n-6399-00-000054-xl-hd.jpg?rxy=0.621505376344086,0.52333333333333332&amp;width=720&amp;height=720&amp;v=1dbcca77ba3d1e0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/claude-monet-the-thames-below-westminster",
+      "roomId": "41"
+    },
+    {
+      "id": "pierre-auguste-renoir-the-umbrellas",
+      "name": "The Umbrellas",
+      "artist": "Pierre-Auguste Renoir",
+      "date": "about 1881-6",
+      "dimension": "180.3 × 114.9 cm",
+      "image": "https://www.nationalgallery.org.uk/media/4cioja2n/n-3268-00-000115-fs-hd.jpg?rxy=0.4914072159637312,0.3465411346304986&amp;width=720&amp;height=720&amp;v=1dbcc9b4a628790",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/pierre-auguste-renoir-the-umbrellas",
+      "roomId": "41"
+    },
+    {
+      "id": "jean-baptiste-camille-corot-the-wagon-souvenir-of-saintry",
+      "name": "The Wagon",
+      "artist": "Jean-Baptiste-Camille Corot",
+      "date": "1874",
+      "dimension": "46 × 55.9 cm",
+      "image": "https://www.nationalgallery.org.uk/media/gp4hyyay/n-6340-00-000014-fs-hd.jpg?rxy=0.432258064516129,0.67708333333333337&amp;width=720&amp;height=720&amp;v=1dbcca60859c560",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/jean-baptiste-camille-corot-the-wagon-souvenir-of-saintry",
+      "roomId": "41"
+    },
+    {
+      "id": "alfred-sisley-the-watering-place-at-marly-le-roi",
+      "name": "The Watering Place at Marly-le-Roi",
+      "artist": "Alfred Sisley",
+      "date": "probably 1875",
+      "dimension": "49.5 × 65.4 cm",
+      "image": "https://www.nationalgallery.org.uk/media/4vihnapz/n-4138-00-000022-web-hd.jpg?rxy=0.368836291913215,0.60309278350515461&amp;width=720&amp;height=720&amp;v=1dbcc9f58f550e0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/alfred-sisley-the-watering-place-at-marly-le-roi",
+      "roomId": "41"
+    },
+    {
+      "id": "joaquin-sorolla-valencian-fishermen",
+      "name": "Valencian Fishermen",
+      "artist": "Joaquín Sorolla",
+      "date": "1895",
+      "dimension": "65 × 87 cm",
+      "image": "https://www.nationalgallery.org.uk/media/lavgohin/l-1331-00-000001-web-hd.jpg?width=720&amp;height=720&amp;v=1dbcbd36c92f570",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/joaquin-sorolla-valencian-fishermen",
+      "roomId": "41"
+    },
+    {
+      "id": "camille-pissarro-view-from-louveciennes",
+      "name": "View from Louveciennes",
+      "artist": "Camille Pissarro",
+      "date": "1869-70",
+      "dimension": "52.7 × 81.9 cm",
+      "image": "https://www.nationalgallery.org.uk/media/gz0bkgok/n-3265-00-000017-fs-hd.jpg?rxy=0.33530571992110453,0.52777777777777779&amp;width=720&amp;height=720&amp;v=1dbcc9b3bcd5070",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/camille-pissarro-view-from-louveciennes",
+      "roomId": "41"
+    },
+    {
+      "id": "alfred-sisley-view-of-the-thames-charing-cross-bridge",
+      "name": "View of the Thames: Charing Cross Bridge",
+      "artist": "Alfred Sisley",
+      "date": "1874",
+      "dimension": "33 × 46 cm",
+      "image": "https://www.nationalgallery.org.uk/media/vjijrzpi/l-0986-00-000006-web-hd.jpg?rxy=0.49670329670329672,0.6132075471698113&amp;width=720&amp;height=720&amp;v=1dbcbd2efda6680",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/alfred-sisley-view-of-the-thames-charing-cross-bridge",
+      "roomId": "41"
+    }
+  ]
+}

@@ -1,0 +1,137 @@
+{
+  "room": "24",
+  "source": "scripts/seed/ng-room24-seed.json",
+  "count": 13,
+  "items": [
+    {
+      "id": "hendrick-ter-brugghen-a-man-playing-a-lute",
+      "name": "A Man playing a Lute",
+      "artist": "Hendrick ter Brugghen",
+      "date": "1624",
+      "dimension": "100.5 × 78.7 cm",
+      "image": "https://www.nationalgallery.org.uk/media/gkbh4b2g/n-6347-00-000025-web-hd.jpg?rxy=0.3827956989247312,0.33895446880269814&amp;width=720&amp;height=720&amp;v=1dbcca62616d6b0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/hendrick-ter-brugghen-a-man-playing-a-lute",
+      "roomId": "24"
+    },
+    {
+      "id": "ferdinand-bol-an-astronomer",
+      "name": "An Astronomer",
+      "artist": "Ferdinand Bol",
+      "date": "1652",
+      "dimension": "127 × 135 cm",
+      "image": "https://www.nationalgallery.org.uk/media/ignc14fj/n-0679-00-000062-xl-hd.jpg?rxy=0.58590308370044053,0.35866983372921613&amp;width=720&amp;height=720&amp;v=1dbcbe0fee624d0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/ferdinand-bol-an-astronomer",
+      "roomId": "24"
+    },
+    {
+      "id": "hendrick-ter-brugghen-jacob-reproaching-laban",
+      "name": "Jacob reproaching Laban",
+      "artist": "Hendrick ter Brugghen",
+      "date": "1627",
+      "dimension": "97.5 × 114.3 cm",
+      "image": "https://www.nationalgallery.org.uk/media/z2fnzehi/n-4164-00-000030-web-hd.jpg?rxy=0.61740890688259109,0.27511961722488038&amp;width=720&amp;height=720&amp;v=1dbcc9f6c1e8f10",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/hendrick-ter-brugghen-jacob-reproaching-laban",
+      "roomId": "24"
+    },
+    {
+      "id": "pieter-lastman-juno-discovering-jupiter-with-io",
+      "name": "Juno discovering Jupiter with Io",
+      "artist": "Pieter Lastman",
+      "date": "1618",
+      "dimension": "54.3 × 77.8 cm",
+      "image": "https://www.nationalgallery.org.uk/media/3btlqgcu/n-6272-00-000019-xl-hd.jpg?rxy=0.68172043010752692,0.44&amp;width=720&amp;height=720&amp;v=1dbcca4ab9fa1b0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/pieter-lastman-juno-discovering-jupiter-with-io",
+      "roomId": "24"
+    },
+    {
+      "id": "abraham-bloemaert-lot-and-his-daughters",
+      "name": "Lot and his Daughters",
+      "artist": "Abraham Bloemaert",
+      "date": "1624",
+      "dimension": "165.5 × 228.5 cm",
+      "image": "https://www.nationalgallery.org.uk/media/3n1edsjo/n-6701-00-000010-xl-hd.jpg?rxy=0.4668264155516326,0.25530559448202206&amp;width=720&amp;height=720&amp;v=1dbccb169bd8f70",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/abraham-bloemaert-lot-and-his-daughters",
+      "roomId": "24"
+    },
+    {
+      "id": "gerrit-van-honthorst-saint-sebastian",
+      "name": "Saint Sebastian",
+      "artist": "Gerrit van Honthorst",
+      "date": "about 1623",
+      "dimension": "101 × 117 cm",
+      "image": "https://www.nationalgallery.org.uk/media/xu3hnolv/n-4503-00-000023-fs-hd.jpg?rxy=0.48817204301075268,0.32668329177057359&amp;width=720&amp;height=720&amp;v=1dbcca0c708adb0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/gerrit-van-honthorst-saint-sebastian",
+      "roomId": "24"
+    },
+    {
+      "id": "bartholomaeus-spranger-the-adoration-of-the-kings",
+      "name": "The Adoration of the Kings",
+      "artist": "Bartholomaeus Spranger",
+      "date": "around 1595-6",
+      "dimension": "199.8 × 143.7 cm",
+      "image": "https://www.nationalgallery.org.uk/media/rssl5ahu/n-6392-00-000025-xl-hd.jpg?rxy=0.4983463960494722,0.6107983108787453&amp;width=720&amp;height=720&amp;v=1dbcca75650c420",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/bartholomaeus-spranger-the-adoration-of-the-kings",
+      "roomId": "24"
+    },
+    {
+      "id": "hendrick-ter-brugghen-the-concert",
+      "name": "The Concert",
+      "artist": "Hendrick ter Brugghen",
+      "date": "about 1626",
+      "dimension": "99.1 × 116.8 cm",
+      "image": "https://www.nationalgallery.org.uk/media/tmyez05a/n-6483-00-000038-xl-hd.jpg?rxy=0.62365591397849462,0.23918575063613232&amp;width=720&amp;height=720&amp;v=1dbcca9fad27f00",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/hendrick-ter-brugghen-the-concert",
+      "roomId": "24"
+    },
+    {
+      "id": "joachim-wtewael-the-judgement-of-paris",
+      "name": "The Judgement of Paris",
+      "artist": "Joachim Wtewael",
+      "date": "1615",
+      "dimension": "59.8 × 79.2 cm",
+      "image": "https://www.nationalgallery.org.uk/media/rfrfv0ih/n-6334-00-000022-web-hd.jpg?rxy=0.43870967741935485,0.33333333333333331&amp;width=720&amp;height=720&amp;v=1dbcca5f206e590",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/joachim-wtewael-the-judgement-of-paris",
+      "roomId": "24"
+    },
+    {
+      "id": "cornelis-van-haarlem-the-preaching-of-saint-john-the-baptist",
+      "name": "The Preaching of Saint John the Baptist",
+      "artist": "Cornelis van Haarlem",
+      "date": "1602",
+      "dimension": "100 × 180 cm",
+      "image": "https://www.nationalgallery.org.uk/media/frfpewyf/n-6443-00-000015-web-hd.jpg?rxy=0.45253863134657835,0.50403225806451613&amp;width=720&amp;height=720&amp;v=1dbcca8d697b480",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/cornelis-van-haarlem-the-preaching-of-saint-john-the-baptist",
+      "roomId": "24"
+    },
+    {
+      "id": "joachim-wtewael-the-raising-of-lazarus",
+      "name": "The Raising of Lazarus",
+      "artist": "Joachim Wtewael",
+      "date": "about 1605-10",
+      "dimension": "131 × 162 cm",
+      "image": "https://www.nationalgallery.org.uk/media/addbvtiw/l-1171-00-000002-web-hd.jpg?rxy=0.4,0.48484848484848486&amp;width=720&amp;height=720&amp;v=1dbcbd32c452ab0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/joachim-wtewael-the-raising-of-lazarus",
+      "roomId": "24"
+    },
+    {
+      "id": "pieter-lastman-the-rest-on-the-flight-into-egypt",
+      "name": "The Rest on the Flight into Egypt",
+      "artist": "Pieter Lastman",
+      "date": "1620",
+      "dimension": "61.8 × 98.5 cm",
+      "image": "https://www.nationalgallery.org.uk/media/jvdker5w/l-0162-00-000004-web-hd.jpg?rxy=0.58370044052863435,0.34154929577464788&amp;width=720&amp;height=720&amp;v=1dbcbd0f9527b50",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/pieter-lastman-the-rest-on-the-flight-into-egypt",
+      "roomId": "24"
+    },
+    {
+      "id": "cornelis-van-haarlem-two-followers-of-cadmus-devoured-by-a-dragon",
+      "name": "Two Followers of Cadmus devoured by a Dragon",
+      "artist": "Cornelis van Haarlem",
+      "date": "1588",
+      "dimension": "148.5 × 195.5 cm",
+      "image": "https://www.nationalgallery.org.uk/media/rhmnleyb/n-1893-00-000022-web-hd.jpg?rxy=0.73581560283687941,0.40046838407494145&amp;width=720&amp;height=720&amp;v=1dbcbf1b1aa0c70",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/cornelis-van-haarlem-two-followers-of-cadmus-devoured-by-a-dragon",
+      "roomId": "24"
+    }
+  ]
+}

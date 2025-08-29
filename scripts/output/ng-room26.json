@@ -1,0 +1,157 @@
+{
+  "room": "26",
+  "source": "scripts/seed/ng-room26-seed.json",
+  "count": 15,
+  "items": [
+    {
+      "id": "annibale-carracci-christ-appearing-to-saint-anthony-abbot",
+      "name": "Christ appearing to Saint Anthony Abbot",
+      "artist": "Annibale Carracci",
+      "date": "about 1598",
+      "dimension": "49.5 × 34.4 cm",
+      "image": "https://www.nationalgallery.org.uk/media/du0n1sxj/n-0198-00-000015-web-hd.jpg?rxy=0.45054945054945056,0.52639751552795033&amp;width=720&amp;height=720&amp;v=1dbcbd99e241c30",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/annibale-carracci-christ-appearing-to-saint-anthony-abbot",
+      "roomId": "26"
+    },
+    {
+      "id": "annibale-carracci-christ-appearing-to-saint-peter-on-the-appian-way",
+      "name": "Christ appearing to Saint Peter on the Appian Way",
+      "artist": "Annibale Carracci",
+      "date": "1601-2",
+      "dimension": "77.4 × 56.3 cm",
+      "image": "https://www.nationalgallery.org.uk/media/jhoahe1c/n-0009-00-000040-web-hd.jpg?rxy=0.38241758241758239,0.3126984126984127&amp;width=720&amp;height=720&amp;v=1dbcbd403081c10",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/annibale-carracci-christ-appearing-to-saint-peter-on-the-appian-way",
+      "roomId": "26"
+    },
+    {
+      "id": "sisto-badalocchio-christ-carried-to-the-tomb",
+      "name": "Christ carried to the Tomb",
+      "artist": "Sisto Badalocchio",
+      "date": "after 1609",
+      "dimension": "43.7 × 33.6 cm",
+      "image": "https://www.nationalgallery.org.uk/media/qv4ilq34/n-0086-00-000012-web-hd.jpg?rxy=0.545054945054945,0.47236180904522612&amp;width=720&amp;height=720&amp;v=1dbcbd79e6332f0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/sisto-badalocchio-christ-carried-to-the-tomb",
+      "roomId": "26"
+    },
+    {
+      "id": "carlo-saraceni-moses-defending-the-daughters-of-jethro",
+      "name": "Moses defending the Daughters of Jethro",
+      "artist": "Carlo Saraceni",
+      "date": "1609-10",
+      "dimension": "28.5 × 35.3 cm",
+      "image": "https://www.nationalgallery.org.uk/media/pcoar2vm/n-6446-00-000012-web-hd.jpg?rxy=0.6387096774193548,0.46276595744680848&amp;width=720&amp;height=720&amp;v=1dbcca8e21412e0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/carlo-saraceni-moses-defending-the-daughters-of-jethro",
+      "roomId": "26"
+    },
+    {
+      "id": "hans-von-aachen-the-amazement-of-the-gods",
+      "name": "The Amazement of the Gods",
+      "artist": "Hans von Aachen",
+      "date": "probably 1590s",
+      "dimension": "35.5 × 45.8 cm",
+      "image": "https://www.nationalgallery.org.uk/media/wgjbmov1/n-6475-00-000053-xl-hd.jpg?width=720&amp;height=720&amp;v=1dbcca9af0bff60",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/hans-von-aachen-the-amazement-of-the-gods",
+      "roomId": "26"
+    },
+    {
+      "id": "adam-elsheimer-the-baptism-of-christ",
+      "name": "The Baptism of Christ",
+      "artist": "Adam Elsheimer",
+      "date": "about 1599",
+      "dimension": "28.1 × 21 cm",
+      "image": "https://www.nationalgallery.org.uk/media/0rvdov35/n-3904-00-000068-fs-hd.jpg?rxy=0.1999935450004718,0.6202740727422208&amp;width=720&amp;height=720&amp;v=1dbcc9d92429350",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/adam-elsheimer-the-baptism-of-christ",
+      "roomId": "26"
+    },
+    {
+      "id": "guido-reni-the-coronation-of-the-virgin",
+      "name": "The Coronation of the Virgin",
+      "artist": "Guido Reni",
+      "date": "about 1607",
+      "dimension": "66.6 × 48.8 cm",
+      "image": "https://www.nationalgallery.org.uk/media/03plc3wn/n-0214-00-000012-web-hd.jpg?rxy=0.47546551394357833,0.27047263200746424&amp;width=720&amp;height=720&amp;v=1dbcbd9ee933c50",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/guido-reni-the-coronation-of-the-virgin",
+      "roomId": "26"
+    },
+    {
+      "id": "johann-rottenhammer-the-coronation-of-the-virgin",
+      "name": "The Coronation of the Virgin",
+      "artist": "Johann Rottenhammer",
+      "date": "around 1596-8",
+      "dimension": "92.7 × 63.5 cm",
+      "image": "https://www.nationalgallery.org.uk/media/5f3bhmqa/n-6481-00-000034-xl-hd.jpg?rxy=0.4986392066036297,0.25080163099637787&amp;width=720&amp;height=720&amp;v=1dbcca9ef3e2bd0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/johann-rottenhammer-the-coronation-of-the-virgin",
+      "roomId": "26"
+    },
+    {
+      "id": "annibale-carracci-the-dead-christ-mourned-the-three-maries",
+      "name": "The Dead Christ Mourned",
+      "artist": "Annibale Carracci",
+      "date": "about 1604",
+      "dimension": "92.8 × 103.2 cm",
+      "image": "https://www.nationalgallery.org.uk/media/uvab1vvz/n-2923-00-000040-web-hd.jpg?rxy=0.30825688073394497,0.61088709677419351&amp;width=720&amp;height=720&amp;v=1dbcbf8d428c050",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/annibale-carracci-the-dead-christ-mourned-the-three-maries",
+      "roomId": "26"
+    },
+    {
+      "id": "guercino-the-dead-christ-mourned-by-two-angels",
+      "name": "The Dead Christ mourned by Two Angels",
+      "artist": "Guercino",
+      "date": "about 1617-18",
+      "dimension": "36.8 × 44.4 cm",
+      "image": "https://www.nationalgallery.org.uk/media/clmb2o53/n-0022-00-000021-web-hd.jpg?rxy=0.47252747252747251,0.33692722371967654&amp;width=720&amp;height=720&amp;v=1dbcbd599d97700",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/guercino-the-dead-christ-mourned-by-two-angels",
+      "roomId": "26"
+    },
+    {
+      "id": "bartolomeo-schedoni-the-holy-family",
+      "name": "The Holy Family",
+      "artist": "Bartolomeo Schedoni",
+      "date": "about 1613-15",
+      "dimension": "33.6 × 28.2 cm",
+      "image": "https://www.nationalgallery.org.uk/media/hu0pyxqe/n-6644-00-000005-fs-hd.jpg?rxy=0.66666666666666663,0.61029411764705888&amp;width=720&amp;height=720&amp;v=1dbccaead0e4150",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/bartolomeo-schedoni-the-holy-family",
+      "roomId": "26"
+    },
+    {
+      "id": "annibale-carracci-the-holy-family-with-the-infant-saint-john-the-baptist",
+      "name": "The Holy Family with the Infant Saint John the Baptist",
+      "artist": "Annibale Carracci",
+      "date": "about 1600",
+      "dimension": "35 × 27.5 cm",
+      "image": "https://www.nationalgallery.org.uk/media/henhi1et/n-6597-00-000019-web-hd.jpg?rxy=0.5847457627118644,0.28540772532188841&amp;width=720&amp;height=720&amp;v=1dbccad0eaa1e40",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/annibale-carracci-the-holy-family-with-the-infant-saint-john-the-baptist",
+      "roomId": "26"
+    },
+    {
+      "id": "ludovico-carracci-the-marriage-of-the-virgin",
+      "name": "The Marriage of the Virgin",
+      "artist": "Ludovico Carracci",
+      "date": "about 1590",
+      "dimension": "41.3 × 32.4 cm",
+      "image": "https://www.nationalgallery.org.uk/media/qgaljnyk/n-6595-00-000028-xl-hd.jpg?rxy=0.5416151825068543,0.469885891008089&amp;width=720&amp;height=720&amp;v=1dbccad072eaeb0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/ludovico-carracci-the-marriage-of-the-virgin",
+      "roomId": "26"
+    },
+    {
+      "id": "guercino-the-presentation-of-jesus-in-the-temple",
+      "name": "The Presentation of Jesus in the Temple",
+      "artist": "Guercino",
+      "date": "1623",
+      "dimension": "72.5 × 65 cm",
+      "image": "https://www.nationalgallery.org.uk/media/qr2d1fld/n-6646-00-000069-fs-hd.jpg?rxy=0.33118279569892473,0.437137330754352&amp;width=720&amp;height=720&amp;v=1dbccaefe713750",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/guercino-the-presentation-of-jesus-in-the-temple",
+      "roomId": "26"
+    },
+    {
+      "id": "domenichino-the-vision-of-saint-jerome",
+      "name": "The Vision of Saint Jerome",
+      "artist": "Domenichino",
+      "date": "before 1603",
+      "dimension": "51.1 × 39.8 cm",
+      "image": "https://www.nationalgallery.org.uk/media/qyhmorun/n-0085-00-000014-web-hd.jpg?rxy=0.58241758241758246,0.35653650254668928&amp;width=720&amp;height=720&amp;v=1dbcbd79b448dd0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/domenichino-the-vision-of-saint-jerome",
+      "roomId": "26"
+    }
+  ]
+}

@@ -1,0 +1,107 @@
+{
+  "room": "2",
+  "source": "https://www.nationalgallery.org.uk/visiting/floorplans/level-2/room-2",
+  "count": 10,
+  "items": [
+    {
+      "id": "bronzino-an-allegory-with-venus-and-cupid",
+      "name": "An Allegory with Venus and Cupid",
+      "artist": "Bronzino",
+      "date": "about 1545",
+      "dimension": "146.1 × 116.2 cm",
+      "image": "https://www.nationalgallery.org.uk/media/wwweiffw/n-0651-00-000071-web-hd.jpg?rxy=0.48812095032397407,0.23287671232876711&amp;width=720&amp;height=720&amp;v=1dbcbe04d23db70",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/bronzino-an-allegory-with-venus-and-cupid",
+      "roomId": "2"
+    },
+    {
+      "id": "raphael-pope-julius-ii",
+      "name": "Pope Julius II",
+      "artist": "Raphael",
+      "date": "1511",
+      "dimension": "108.7 × 81 cm",
+      "image": "https://www.nationalgallery.org.uk/media/h1blykve/n-0027-00-000074-xl-hd.jpg?rxy=0.53186813186813187,0.31655844155844154&amp;width=720&amp;height=720&amp;v=1dbcbd5b70f56f0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/raphael-pope-julius-ii",
+      "roomId": "2"
+    },
+    {
+      "id": "sebastiano-del-piombo-portrait-of-a-lady",
+      "name": "Portrait of a Lady",
+      "artist": "Sebastiano del Piombo",
+      "date": "mid-1520s",
+      "dimension": "117 × 96 cm",
+      "image": "https://www.nationalgallery.org.uk/media/e1hons4j/l-1059-00-000003-web-hd.jpg?rxy=0.51868131868131873,0.28871892925430209&amp;width=720&amp;height=720&amp;v=1dbcbd302a81730",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/sebastiano-del-piombo-portrait-of-a-lady",
+      "roomId": "2"
+    },
+    {
+      "id": "bronzino-portrait-of-a-young-man",
+      "name": "Portrait of a Young Man",
+      "artist": "Bronzino",
+      "date": "probably 1550-5",
+      "dimension": "75 × 57.5 cm",
+      "image": "https://www.nationalgallery.org.uk/media/bmbl4g4u/l-0040-00-000013-web-hd.jpg?rxy=0.45814977973568283,0.1944922547332186&amp;width=720&amp;height=720&amp;v=1dbcbd0f4956870",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/bronzino-portrait-of-a-young-man",
+      "roomId": "2"
+    },
+    {
+      "id": "andrea-del-sarto-portrait-of-a-young-man",
+      "name": "Portrait of a Young Man",
+      "artist": "Andrea del Sarto",
+      "date": "about 1517-18",
+      "dimension": "72.4 × 57.2 cm",
+      "image": "https://www.nationalgallery.org.uk/media/ux4lr0n4/n-0690-00-000042-xl-hd.jpg?rxy=0.4348767330697446,0.23454636880017202&amp;width=720&amp;height=720&amp;v=1dbcbe1555d7570",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/andrea-del-sarto-portrait-of-a-young-man",
+      "roomId": "2"
+    },
+    {
+      "id": "michelangelo-the-entombment-or-christ-being-carried-to-his-tomb",
+      "name": "The Entombment (or Christ being carried to his Tomb)",
+      "artist": "Michelangelo",
+      "date": "about 1500-1",
+      "dimension": "161.7 × 149.9 cm",
+      "image": "https://www.nationalgallery.org.uk/media/ecmbotsl/n-0790-00-000203-xl-hd.jpg?rxy=0.47136563876651982,0.21384928716904278&amp;width=720&amp;height=720&amp;v=1dbcbe4873aeed0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/michelangelo-the-entombment-or-christ-being-carried-to-his-tomb",
+      "roomId": "2"
+    },
+    {
+      "id": "bronzino-the-madonna-and-child-with-saints",
+      "name": "The Madonna and Child with Saints",
+      "artist": "Bronzino",
+      "date": "probably about 1540",
+      "dimension": "101.6 × 81.3 cm",
+      "image": "https://www.nationalgallery.org.uk/media/xtvlkgsg/n-5280-00-000050-web-hd.jpg?rxy=0.34193548387096773,0.24054982817869416&amp;width=720&amp;height=720&amp;v=1dbcca22a8d4070",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/bronzino-the-madonna-and-child-with-saints",
+      "roomId": "2"
+    },
+    {
+      "id": "sebastiano-del-piombo-the-madonna-and-child-with-saints-and-a-donor",
+      "name": "The Madonna and Child with Saints and a Donor",
+      "artist": "Sebastiano del Piombo",
+      "date": "1517",
+      "dimension": "97.8 × 106.7 cm",
+      "image": "https://www.nationalgallery.org.uk/media/5qzbyk0z/n-1450-00-000062-fs-hd.jpg?rxy=0.56028368794326244,0.312621359223301&amp;width=720&amp;height=720&amp;v=1dbcbf079f5c0e0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/sebastiano-del-piombo-the-madonna-and-child-with-saints-and-a-donor",
+      "roomId": "2"
+    },
+    {
+      "id": "andrea-del-sarto-the-madonna-and-child-saint-elizabeth-and-the-baptist",
+      "name": "The Madonna and Child, Saint Elizabeth and the Baptist",
+      "artist": "Andrea del Sarto",
+      "date": "about 1513",
+      "dimension": "106 × 81.3 cm",
+      "image": "https://www.nationalgallery.org.uk/media/un1divcx/n-0017-00-000035-web-hd.jpg?rxy=0.51428571428571423,0.23728813559322035&amp;width=720&amp;height=720&amp;v=1dbcbd5882fd3f0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/andrea-del-sarto-the-madonna-and-child-saint-elizabeth-and-the-baptist",
+      "roomId": "2"
+    },
+    {
+      "id": "sebastiano-del-piombo-incorporating-designs-by-michelangelo-the-raising-of-lazarus",
+      "name": "The Raising of Lazarus",
+      "artist": "Sebastiano del Piombo",
+      "date": "1517-19",
+      "dimension": "381 × 289.6 cm",
+      "image": "https://www.nationalgallery.org.uk/media/0cdn2di4/n-0001-00-000075-fs-hd.jpg?rxy=0.33406593406593404,0.3946932006633499&amp;width=720&amp;height=720&amp;v=1dbcbd3b3d3c5e0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/sebastiano-del-piombo-incorporating-designs-by-michelangelo-the-raising-of-lazarus",
+      "roomId": "2"
+    }
+  ]
+}

@@ -1,0 +1,127 @@
+{
+  "room": "4",
+  "source": "scripts/seed/ng-room4-seed.json",
+  "count": 12,
+  "items": [
+    {
+      "id": "giovanni-battista-moroni-a-knight-with-his-jousting-helmet",
+      "name": "A Knight with his Jousting Helmet",
+      "artist": "Giovanni Battista Moroni",
+      "date": "about 1554-8",
+      "dimension": "202.3 × 106.5 cm",
+      "image": "https://www.nationalgallery.org.uk/media/pl4hiw2s/n-1022-00-000012-web-hd.jpg?rxy=0.93333333333333335,0.21697287839020121&amp;width=720&amp;height=720&amp;v=1dbcbe91c1135b0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/giovanni-battista-moroni-a-knight-with-his-jousting-helmet",
+      "roomId": "4"
+    },
+    {
+      "id": "lorenzo-lotto-giovanni-agostino-della-torre-and-his-son-niccolo",
+      "name": "Giovanni Agostino della Torre and his Son, Niccolò",
+      "artist": "Lorenzo Lotto",
+      "date": "about 1515-16",
+      "dimension": "85 × 68.2 cm",
+      "image": "https://www.nationalgallery.org.uk/media/g0gljqkv/n-0699-00-000071-web-hd.jpg?rxy=0.5130434782608696,0.24647887323943662&amp;width=720&amp;height=720&amp;v=1dbcbe18e59ede0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/lorenzo-lotto-giovanni-agostino-della-torre-and-his-son-niccolo",
+      "roomId": "4"
+    },
+    {
+      "id": "parmigianino-portrait-of-a-collector",
+      "name": "Portrait of a Collector",
+      "artist": "Parmigianino",
+      "date": "about 1523",
+      "dimension": "89.5 × 63.8 cm",
+      "image": "https://www.nationalgallery.org.uk/media/l53fznom/n-6441-00-000028-web-hd.jpg?rxy=0.53118279569892468,0.31297709923664124&amp;width=720&amp;height=720&amp;v=1dbcca8d1766190",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/parmigianino-portrait-of-a-collector",
+      "roomId": "4"
+    },
+    {
+      "id": "giovanni-battista-moroni-portrait-of-a-lady-la-dama-in-rosso",
+      "name": "Portrait of a Lady",
+      "artist": "Giovanni Battista Moroni",
+      "date": "about 1556-60",
+      "dimension": "155 × 106.8 cm",
+      "image": "https://www.nationalgallery.org.uk/media/di1lipoi/n-1023-00-000017-web-hd.jpg?rxy=0.5033333333333333,0.13942857142857143&amp;width=720&amp;height=720&amp;v=1dbcbe91f2f3e90",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/giovanni-battista-moroni-portrait-of-a-lady-la-dama-in-rosso",
+      "roomId": "4"
+    },
+    {
+      "id": "moretto-da-brescia-portrait-of-a-man",
+      "name": "Portrait of a Man",
+      "artist": "Moretto da Brescia",
+      "date": "1526",
+      "dimension": "201 × 92.2 cm",
+      "image": "https://www.nationalgallery.org.uk/media/t1dpl5rq/n-1025-00-000015-web-hd.jpg?rxy=0.42333333333333334,0.14253048780487804&amp;width=720&amp;height=720&amp;v=1dbcbe9270fd890",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/moretto-da-brescia-portrait-of-a-man",
+      "roomId": "4"
+    },
+    {
+      "id": "giovanni-battista-moroni-portrait-of-a-man-holding-a-letter-l-avvocato",
+      "name": "Portrait of a Man holding a Letter",
+      "artist": "Giovanni Battista Moroni",
+      "date": "about 1570",
+      "dimension": "89 × 72.5 cm",
+      "image": "https://www.nationalgallery.org.uk/media/fl1fcj4j/n-0742-00-000030-web-hd.jpg?rxy=0.47136563876651982,0.23684210526315788&amp;width=720&amp;height=720&amp;v=1dbcbe29f9940f0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/giovanni-battista-moroni-portrait-of-a-man-holding-a-letter-l-avvocato",
+      "roomId": "4"
+    },
+    {
+      "id": "palma-vecchio-portrait-of-a-poet",
+      "name": "Portrait of a Poet",
+      "artist": "Palma Vecchio",
+      "date": "about 1516",
+      "dimension": "83.8 × 63.5 cm",
+      "image": "https://www.nationalgallery.org.uk/media/sado2owd/n-0636-00-000052-web-hd.jpg?rxy=0.44713656387665196,0.34183673469387754&amp;width=720&amp;height=720&amp;v=1dbcbded6ebfdd0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/palma-vecchio-portrait-of-a-poet",
+      "roomId": "4"
+    },
+    {
+      "id": "lorenzo-lotto-portrait-of-a-woman-inspired-by-lucretia",
+      "name": "Portrait of a Woman inspired by Lucretia",
+      "artist": "Lorenzo Lotto",
+      "date": "about 1530-3",
+      "dimension": "96.5 × 110.6 cm",
+      "image": "https://www.nationalgallery.org.uk/media/qyhek5nn/n-4256-00-000069-xl-hd.jpg?rxy=0.5000819184840669,0.21517158773352765&amp;width=720&amp;height=720&amp;v=1dbcca039a54e10",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/lorenzo-lotto-portrait-of-a-woman-inspired-by-lucretia",
+      "roomId": "4"
+    },
+    {
+      "id": "frans-pourbus-the-younger-portrait-of-an-unknown-man-aged-56",
+      "name": "Portrait of an Unknown Man, aged 56",
+      "artist": "Frans Pourbus the Younger",
+      "date": "1591",
+      "dimension": "118 × 94 cm",
+      "image": "https://www.nationalgallery.org.uk/media/jeoieya3/l-1306-00-000003-web-hd.jpg?rxy=0.47833333333333333,0.14303482587064675&amp;width=720&amp;height=720&amp;v=1dbcbd3535b6c40",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/frans-pourbus-the-younger-portrait-of-an-unknown-man-aged-56",
+      "roomId": "4"
+    },
+    {
+      "id": "moretto-da-brescia-portrait-of-count-fortunato-martinengo",
+      "name": "Portrait of Count Fortunato Martinengo",
+      "artist": "Moretto da Brescia",
+      "date": "about 1540-5",
+      "dimension": "114 × 94.4 cm",
+      "image": "https://www.nationalgallery.org.uk/media/bjtbzija/n-0299-00-000027-web-hd.jpg?rxy=0.33406593406593404,0.22141560798548093&amp;width=720&amp;height=720&amp;v=1dbcbdc6277e5b0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/moretto-da-brescia-portrait-of-count-fortunato-martinengo",
+      "roomId": "4"
+    },
+    {
+      "id": "hans-holbein-the-younger-the-ambassadors",
+      "name": "The Ambassadors",
+      "artist": "Hans Holbein the Younger",
+      "date": "1533",
+      "dimension": "207 × 209.5 cm",
+      "image": "https://www.nationalgallery.org.uk/media/mhqjehnu/n-1314-00-000267-xl-hd.jpg?rxy=0.85666666666666669,0.17970049916805325&amp;width=720&amp;height=720&amp;v=1dbcbee6a9164d0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/hans-holbein-the-younger-the-ambassadors",
+      "roomId": "4"
+    },
+    {
+      "id": "giovanni-battista-moroni-the-tailor-il-tagliapanni",
+      "name": "The Tailor",
+      "artist": "Giovanni Battista Moroni",
+      "date": "1565-70",
+      "dimension": "99.5 × 77 cm",
+      "image": "https://www.nationalgallery.org.uk/media/tu2f2pwd/n-0697-00-000080-xl-hd.jpg?rxy=0.4933920704845815,0.20469798657718122&amp;width=720&amp;height=720&amp;v=1dbcbe17530bc90",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/giovanni-battista-moroni-the-tailor-il-tagliapanni",
+      "roomId": "4"
+    }
+  ]
+}

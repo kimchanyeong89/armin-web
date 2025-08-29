@@ -1,0 +1,97 @@
+{
+  "room": "17",
+  "source": "scripts/seed/ng-room17-seed.json",
+  "count": 9,
+  "items": [
+    {
+      "id": "caspar-netscher-a-lady-teaching-a-child-to-read",
+      "name": "A Lady teaching a Child to Read",
+      "artist": "Caspar Netscher",
+      "date": "probably 1670s",
+      "dimension": "45.1 × 37 cm",
+      "image": "https://www.nationalgallery.org.uk/media/gq4jq32g/n-0844-00-000038-fs-hd.jpg?rxy=0.38666666666666666,0.5383561643835616&amp;width=720&amp;height=720&amp;v=1dbcbe5d6be32e0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/caspar-netscher-a-lady-teaching-a-child-to-read",
+      "roomId": "17"
+    },
+    {
+      "id": "pieter-de-hooch-a-musical-party-in-a-courtyard",
+      "name": "A Musical Party in a Courtyard",
+      "artist": "Pieter de Hooch",
+      "date": "1677",
+      "dimension": "83.5 × 68.5 cm",
+      "image": "https://www.nationalgallery.org.uk/media/c5jlyhl5/n-3047-00-000013-web-hd.jpg?rxy=0.48256880733944957,0.53587786259541981&amp;width=720&amp;height=720&amp;v=1dbcbf92eafccd0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/pieter-de-hooch-a-musical-party-in-a-courtyard",
+      "roomId": "17"
+    },
+    {
+      "id": "gerard-ter-borch-a-woman-playing-a-lute-to-two-men",
+      "name": "A Woman playing a Lute to Two Men",
+      "artist": "Gerard ter Borch",
+      "date": "about 1667-8",
+      "dimension": "67.6 × 57.8 cm",
+      "image": "https://www.nationalgallery.org.uk/media/yljdukdw/n-0864-00-000028-web-hd.jpg?rxy=0.37,0.40313390313390313&amp;width=720&amp;height=720&amp;v=1dbcbe622c45390",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/gerard-ter-borch-a-woman-playing-a-lute-to-two-men",
+      "roomId": "17"
+    },
+    {
+      "id": "possibly-by-ludolf-de-jongh-an-interior-with-a-woman-refusing-a-glass-of-wine",
+      "name": "An Interior, with a Woman refusing a Glass of Wine",
+      "artist": "Ludolf de Jongh",
+      "date": "probably 1660-5",
+      "dimension": "117 × 92 cm",
+      "image": "https://www.nationalgallery.org.uk/media/urkb2tjx/n-2552-00-000026-xl-hd.jpg?rxy=0.53860640301318263,0.44092219020172913&amp;width=720&amp;height=720&amp;v=1dbcbf605c43660",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/possibly-by-ludolf-de-jongh-an-interior-with-a-woman-refusing-a-glass-of-wine",
+      "roomId": "17"
+    },
+    {
+      "id": "gerard-ter-borch-an-officer-dictating-a-letter",
+      "name": "An Officer dictating a Letter",
+      "artist": "Gerard ter Borch",
+      "date": "about 1655-8",
+      "dimension": "74.5 × 51 cm",
+      "image": "https://www.nationalgallery.org.uk/media/es0ms0du/n-5847-00-000031-xl-hd.jpg?rxy=0.44794473351316877,0.50901645327894&amp;width=720&amp;height=720&amp;v=1dbcca33af609a0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/gerard-ter-borch-an-officer-dictating-a-letter",
+      "roomId": "17"
+    },
+    {
+      "id": "thomas-de-keyser-portrait-of-constantijn-huygens-and-his-clerk",
+      "name": "Portrait of Constantijn Huygens and his (?) Clerk",
+      "artist": "Thomas de Keyser",
+      "date": "1627",
+      "dimension": "92.4 × 69.3 cm",
+      "image": "https://www.nationalgallery.org.uk/media/m3lnyweg/n-0212-00-000036-web-hd.jpg?rxy=0.43956043956043955,0.33169129720853857&amp;width=720&amp;height=720&amp;v=1dbcbd9e74da9d0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/thomas-de-keyser-portrait-of-constantijn-huygens-and-his-clerk",
+      "roomId": "17"
+    },
+    {
+      "id": "jan-steen-the-effects-of-intemperance",
+      "name": "The Effects of Intemperance",
+      "artist": "Jan Steen",
+      "date": "about 1663-5",
+      "dimension": "76 × 106.5 cm",
+      "image": "https://www.nationalgallery.org.uk/media/orjf5kxg/n-6442-00-000026-web-hd.jpg?rxy=0.38494623655913979,0.44236760124610591&amp;width=720&amp;height=720&amp;v=1dbcca8d47067b0",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/jan-steen-the-effects-of-intemperance",
+      "roomId": "17"
+    },
+    {
+      "id": "nicolaes-maes-the-idle-servant",
+      "name": "The Idle Servant",
+      "artist": "Nicolaes Maes",
+      "date": "1655",
+      "dimension": "70 × 53.3 cm",
+      "image": "https://www.nationalgallery.org.uk/media/mf3fmurd/n-0207-00-000040-xl-hd.jpg?rxy=0.63956043956043951,0.39833333333333332&amp;width=720&amp;height=720&amp;v=1dbcbd9c547f250",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/nicolaes-maes-the-idle-servant",
+      "roomId": "17"
+    },
+    {
+      "id": "gabriel-metsu-two-men-with-a-sleeping-woman",
+      "name": "Two Men with a Sleeping Woman",
+      "artist": "Gabriel Metsu",
+      "date": "about 1655-60",
+      "dimension": "37.1 × 32.4 cm",
+      "image": "https://www.nationalgallery.org.uk/media/nzeeovxv/n-0970-00-000020-web-hd.jpg?rxy=0.625,0.454014598540146&amp;width=720&amp;height=720&amp;v=1dbcbe83e694860",
+      "sourceUrl": "https://www.nationalgallery.org.uk/paintings/gabriel-metsu-two-men-with-a-sleeping-woman",
+      "roomId": "17"
+    }
+  ]
+}
