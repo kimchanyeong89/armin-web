@@ -41,7 +41,7 @@ export default function HomePage({ exhibitions }: HomePageProps) {
   });
   const [selectedExhibition, setSelectedExhibition] = useState<Exhibition | null>(initialFromHistory.parent);
   const [selectedModalExhibition, setSelectedModalExhibition] = useState<ExhibitionItem | null>(initialFromHistory.item);
-  const [useGlobe, setUseGlobe] = useState(false);
+  const [useGlobe, setUseGlobe] = useState(true); // default Globe ON for debugging
   // Removed Outline Globe toggle
   // D3 globe is the only globe mode when Globe is ON
   // Globe view uses react-globe.gl only (Cesium removed)

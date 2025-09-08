@@ -1,7 +1,7 @@
 :root {
-  font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'DIN Alternate', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Helvetica Neue', Arial, sans-serif;
   line-height: 1.5;
-  font-weight: 400;
+  font-weight: 700;
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
@@ -91,15 +91,19 @@ input, textarea, select {
 }
 
 /* Local Teletactile font support (uses the font installed on the user's Mac) */
+/* Prefer system-installed DIN Alternate Bold on macOS; fallback to defaults */
 @font-face {
-  font-family: 'Teletactile';
-  src: local('Teletactile'), local('Teletactile-Regular');
+  font-family: 'DIN Alternate';
+  src:
+    local('DIN Alternate'), local('DIN Alternate Bold'), local('DINAlternate-Bold'), local('DINAlternate'),
+    url('/fonts/din-alternate-bold.woff2') format('woff2'),
+    url('/fonts/din-alternate-bold.woff') format('woff');
   font-style: normal;
-  font-weight: 400;
+  font-weight: 700;
   font-display: swap;
 }
 
 /* Apply Teletactile only on the homepage */
 body[data-home="true"] {
-  font-family: 'Teletactile', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Helvetica Neue', Arial, sans-serif;
+  font-family: 'DIN Alternate', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Helvetica Neue', Arial, sans-serif;
 }

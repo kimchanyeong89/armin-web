@@ -8,6 +8,7 @@ export interface ExhibitionItem {
   startDate: string;
   endDate: string;
   image?: string;
+  url?: string;
   rooms?: {
     id: string;
     name: string;

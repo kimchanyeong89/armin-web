@@ -1,5 +1,5 @@
+import { useEffect, useMemo, useRef, useState } from "react";
 import { publicUrl } from "../utils/publicUrl";
-import { useMemo, useState } from "react";
 import type { Exhibition, ExhibitionItem } from "../types/Exhibition";
 
 interface ExhibitionDetailsProps {
@@ -15,8 +15,30 @@ export default function ExhibitionDetails({
   isOpen,
   onSelectExhibition
 }: ExhibitionDetailsProps) {
+  const rootRef = useRef<HTMLDivElement | null>(null);
+  // Format to YYYY-MM-DD from various possible inputs (ISO, yyyy/mm/dd, yyyy.mm.dd, ISO datetime)
+  const formatYMD = (input?: string | null): string => {
+    if (!input) return "";
+    const s = String(input).trim();
+    // ISO date-time or date, prefer first 10 chars when in ISO 8601
+    if (/^\d{4}-\d{2}-\d{2}T/.test(s)) return s.slice(0, 10);
+    // yyyy-mm-dd / yyyy.mm.dd / yyyy/mm/dd
+    const m = s.match(/^(\d{4})[-\/.](\d{1,2})[-\/.](\d{1,2})/);
+    if (m) {
+      const [, y, mo, d] = m;
+      return `${y}-${mo.padStart(2, "0")}-${d.padStart(2, "0")}`;
+    }
+    // Fallback: Date parse and format in UTC to avoid TZ shifts
+    const dObj = new Date(s);
+    if (!isNaN(dObj.getTime())) {
+      const y = dObj.getUTCFullYear();
+      const mo = String(dObj.getUTCMonth() + 1).padStart(2, "0");
+      const dd = String(dObj.getUTCDate()).padStart(2, "0");
+      return `${y}-${mo}-${dd}`;
+    }
+    return s; // As-is fallback
+  };
   const [checking, setChecking] = useState(false);
-  const [showDebug, setShowDebug] = useState(false);
   async function runHealthcheck() {
     setChecking(true);
     try {
@@ -36,21 +58,69 @@ export default function ExhibitionDetails({
   const [isCurrentExhibitionsCollapsed, setIsCurrentExhibitionsCollapsed] = useState(false);
   const [isPastExhibitionsCollapsed, setIsPastExhibitionsCollapsed] = useState(false);
   const [isUpcomingExhibitionsCollapsed, setIsUpcomingExhibitionsCollapsed] = useState(false);
-  // Show URL debug overlay only in dev or when ?debug=1 is present
-  const canDebug = (() => {
-    try {
-      const dev = (import.meta as any)?.env?.DEV;
-      const qs = typeof window !== 'undefined' ? new URLSearchParams(window.location.search) : null;
-      const q = qs?.get('debug') === '1';
-      return !!(dev || q);
-    } catch {
-      return false;
+  // Debug overlay removed with header image
+
+  // Optional auto-feed for National Gallery: load from local JSON if present
+  const [ngOverride, setNgOverride] = useState<Partial<Exhibition> | null>(null);
+  useEffect(() => {
+    let aborted = false;
+    async function loadNG() {
+      if (!exhibition || (exhibition.id !== "national-gallery" && exhibition.id !== 'tate-modern')) { setNgOverride(null); return; }
+      try {
+        const feedPath = exhibition.id === 'tate-modern' ? '/data/tate-modern.json' : '/data/national-gallery-exhibitions.json';
+        const res = await fetch(feedPath, { cache: "no-store" });
+        if (!res.ok) return; // keep defaults when not found
+        const data = await res.json();
+        if (aborted) return;
+        // Validate minimal shape and map to Exhibition fields
+        const mapItem = (it: any) => ({
+          id: String(it.id || it.slug || cryptoRandom()),
+          name: String(it.name || it.title || ""),
+          title: String(it.title || it.name || ""),
+          description: String(it.description || ""),
+          startDate: String(it.startDate || it.start || ""),
+          endDate: String(it.endDate || it.end || ""),
+          image: typeof it.image === 'string' ? it.image : (typeof it.imageUrl === 'string' ? it.imageUrl : undefined),
+          url: typeof it.url === 'string' ? it.url : undefined,
+        });
+        const over: Partial<Exhibition> = {
+          // Always keep local representative image from homepage dataset; do not override from feed
+          representativeImage: exhibition.representativeImage,
+          description: typeof data.description === 'string' && data.description ? data.description : exhibition.description,
+          // For Tate: data.items = all future shows; for NG: use special/upcoming/past
+          temporaryExhibitions: exhibition.id === 'tate-modern'
+            ? (Array.isArray(data.items) ? data.items.map(mapItem) : exhibition.temporaryExhibitions)
+            : ([
+                ...(Array.isArray(data.special) ? data.special.map(mapItem) : []),
+                ...(Array.isArray(data.upcoming) ? data.upcoming.map(mapItem) : []),
+              ].length ? [
+                ...(Array.isArray(data.special) ? data.special.map(mapItem) : []),
+                ...(Array.isArray(data.upcoming) ? data.upcoming.map(mapItem) : []),
+              ] : exhibition.temporaryExhibitions),
+          pastExhibitions: exhibition.id === 'tate-modern'
+            ? (exhibition.pastExhibitions || [])
+            : (Array.isArray(data.past) ? data.past.map(mapItem) : (exhibition.pastExhibitions || [])),
+        } as Partial<Exhibition>;
+        setNgOverride(over);
+      } catch {
+        // ignore
+      }
     }
-  })();
+    loadNG();
+    return () => { aborted = true; };
+  }, [exhibition]);
+
+  function cryptoRandom() {
+    try {
+      const arr = new Uint32Array(2);
+      crypto.getRandomValues(arr);
+      return `${arr[0].toString(16)}${arr[1].toString(16)}`;
+    } catch { return `${Date.now()}-${Math.random().toString(16).slice(2)}`; }
+  }
 
   // Categorize temporary (special) exhibitions by date: upcoming / current / expired
   const { upcomingSpecials, currentSpecials, expiredSpecials } = useMemo(() => {
-    const temps = exhibition.temporaryExhibitions || [];
+    const temps = (ngOverride?.temporaryExhibitions ?? exhibition.temporaryExhibitions) || [];
     const now = new Date();
     // Normalize to start of today for comparisons
     const todayStart = new Date(now.getFullYear(), now.getMonth(), now.getDate());
@@ -80,27 +150,46 @@ export default function ExhibitionDetails({
       current.push(item);
     }
     return { upcomingSpecials: upcoming, currentSpecials: current, expiredSpecials: expired };
-  }, [exhibition.temporaryExhibitions]);
+  }, [ngOverride?.temporaryExhibitions, exhibition.temporaryExhibitions]);
 
   // Merge any expired special exhibitions into the past list for display
   const pastList = useMemo(() => {
-    const pastFromData = exhibition.pastExhibitions || [];
+    const pastFromData = (ngOverride?.pastExhibitions ?? exhibition.pastExhibitions) || [];
     return [...pastFromData, ...(expiredSpecials || [])];
-  }, [exhibition.pastExhibitions, expiredSpecials]);
+  }, [ngOverride?.pastExhibitions, exhibition.pastExhibitions, expiredSpecials]);
+
+  // Defensive: hide any stray heading labeled 'EXHIBITIONS' that may be injected by older markup/styles
+  useEffect(() => {
+    const root = rootRef.current;
+    if (!root) return;
+    const nodes = root.querySelectorAll('h1,h2,h3,h4,p,span,div');
+    nodes.forEach((el) => {
+      const txt = (el.textContent || '').trim();
+      if (!txt) return;
+      const up = txt.toUpperCase();
+      if (up === 'EXHIBITIONS' || up === 'EXHIBITION') {
+        (el as HTMLElement).style.display = 'none';
+      }
+    });
+  }, [isOpen, exhibition.id]);
 
   return (
     <div
+      ref={rootRef}
       style={{
         position: "fixed",
         top: "20px", // Add top margin to create space
-        right: 0,
-        width: "400px",
+  right: 0,
+  width: "min(400px, 90vw)",
         height: "calc(100% - 20px)", // Adjust height to account for top margin
         backgroundColor: "#fff",
         overflowY: "auto",
-        paddingLeft: "30px",
+  paddingLeft: "30px",
+  paddingRight: "30px", // Make right spacing equal to left spacing
+  boxSizing: "border-box", // Include padding within width to avoid clipping on small screens
         boxShadow: "none",
-        transform: isOpen ? "translateX(20px)" : "translateX(100%)",
+  // Ensure full visibility when open
+  transform: isOpen ? "translateX(0)" : "translateX(100%)",
         transition: "transform 0.3s ease",
         zIndex: 2000
       }}
@@ -120,68 +209,64 @@ export default function ExhibitionDetails({
       >
         ←
       </button>
-      <h2>{exhibition.name}</h2>
-      {/* 전시관 대표 이미지 */}
-      <div
+  <h2>{exhibition.name}</h2>
+  {/* 상단 대표 이미지를 로컬 아카이브에서 표시 (외부 링크/리다이렉트 금지) */}
+  {(() => {
+    const rep = exhibition.representativeImage || "";
+    const cleaned = rep.replace(/^\//, "");
+    const isLocal = /^images\//.test(cleaned); // only allow files under public/images
+    if (!isLocal) return null;
+    const src = publicUrl(rep);
+    return (
+    <div
         style={{
-          width: "calc(100% - 20px)", // 우측 벽과 여백 유지
-          aspectRatio: "16 / 9", // 일관된 비율 유지
-          marginBottom: "10px",
-          marginRight: "20px",
-          backgroundColor: "#ccc",
+          width: "100%",
+      height: "120px", // Reduce image height to prevent layout cut-off
+          margin: "8px 0 10px",
           overflow: "hidden",
-          borderRadius: 6
+          borderRadius: 6,
+          background: "#f2f2f2",
+          border: "1px solid #e5e5e5"
         }}
+        aria-hidden={!src}
       >
-        {(() => {
-          const fallback = "/images/meta-header.svg";
-          const raw = (exhibition.representativeImage && String(exhibition.representativeImage).trim())
-            || ((exhibition as any).image && String((exhibition as any).image).trim())
-            || fallback;
-          const cleaned = raw.replace(/^\/+/, "");
-          const fb = publicUrl(fallback);
-          const candidates = useMemo(() => {
-            const list = [
-              publicUrl(raw),
-              // Ensure a relative form as a second try under sub-path or file://
-              publicUrl(`./${cleaned}`),
-            ];
-            // Deduplicate while preserving order
-            return Array.from(new Set(list));
-          }, [raw, cleaned]);
-          const [idx, setIdx] = useState(0);
-          const src = candidates[Math.min(idx, candidates.length - 1)] || fb;
-          return (
-            <div style={{ position: 'relative', width: '100%', height: '100%' }}>
-              <img
-                src={src}
-                alt={exhibition.name}
-                style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
-                loading="eager"
-                decoding="async"
-                onError={(e) => {
-                  // Try next candidate if available; else fall back to placeholder
-                  if (idx < candidates.length - 1) {
-                    setIdx((v) => v + 1);
-                    return;
-                  }
-                  const target = e.currentTarget as HTMLImageElement;
-                  if (target.src !== fb) target.src = fb;
-                }}
-              />
-              {canDebug && showDebug && (
-                <div style={{ position: 'absolute', bottom: 4, left: 4, background: 'rgba(0,0,0,0.6)', color: '#fff', padding: '2px 6px', borderRadius: 4, fontSize: 11 }}>{src}</div>
-              )}
-              {canDebug && (
-                <button onClick={() => setShowDebug(v => !v)} style={{ position: 'absolute', top: 6, right: 6, fontSize: 10, padding: '2px 6px' }}>URL</button>
-              )}
-            </div>
-          );
-        })()}
+        {src ? (
+          <img
+            src={src}
+            alt={`${exhibition.name} building exterior`}
+            style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }}
+            loading="lazy"
+            decoding="async"
+          />
+        ) : null}
       </div>
-  {/* External links removed (by request). Only optional tiny attribution was kept out. */}
-  {/* Remote attribution removed — local-only images */}
-  <p style={{ fontSize: "0.8rem", fontWeight: 400, color: "#333", marginBottom: "12px" }}>{exhibition.description}</p>
+    );
+  })()}
+  {(() => {
+    // Build a concise one-line intro from description
+    const full = (ngOverride?.description || exhibition.description || "").trim();
+    const firstSentence = (() => {
+      const match = full.match(/^[^.!?\n]+[.!?]?/);
+      return match ? match[0] : full;
+    })();
+    const intro = firstSentence.length > 140 ? `${firstSentence.slice(0, 137)}…` : firstSentence;
+    return (
+    <p
+        style={{
+      fontSize: "0.72rem",
+          fontWeight: 400,
+      color: "#555",
+          marginBottom: "12px",
+          whiteSpace: "nowrap",
+          overflow: "hidden",
+          textOverflow: "ellipsis"
+        }}
+        title={full}
+      >
+        {intro}
+      </p>
+    );
+  })()}
 
   {/* Current exhibitions */}
       <h3>
@@ -195,7 +280,7 @@ export default function ExhibitionDetails({
         >
           {isCurrentExhibitionsCollapsed ? "▶" : "▼"}
         </button>
-  Current exhibitions
+  Current
       </h3>
 
       {!isCurrentExhibitionsCollapsed && (
@@ -205,9 +290,10 @@ export default function ExhibitionDetails({
           {exhibition.permanentExhibitions && exhibition.permanentExhibitions.length > 0 ? (
             <div
               style={{
-                display: "flex",
-                flexWrap: "wrap",
+                display: "grid",
+                gridTemplateColumns: "repeat(3, 100px)",
                 gap: "10px",
+                justifyContent: "center",
               }}
             >
               {exhibition.permanentExhibitions.map((item) => (
@@ -228,15 +314,12 @@ export default function ExhibitionDetails({
                     cursor: "pointer"
                   }}
                 >
-                  {/* Poster (placeholder frame) */}
-                  <div
-                    style={{
-                      width: "80px",
-                      height: "100px",
-                      backgroundColor: "#eee",
-                      marginBottom: "3px" // Reduced margin
-                    }}
-                  ></div>
+                  {/* Poster (image if available) */}
+                  <div style={{ width: "80px", height: "100px", backgroundColor: "#eee", marginBottom: "3px", overflow: 'hidden', borderRadius: 3 }}>
+                    {item.image ? (
+                      <img src={item.image} alt={item.name} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} loading="lazy" decoding="async" />
+                    ) : null}
+                  </div>
                   {/* Exhibition name */}
                   <div
                     style={{
@@ -273,26 +356,26 @@ export default function ExhibitionDetails({
                       {item.name}
                     </div>
                   </div>
-                  {/* Period */}
-                  <div style={{ textAlign: "center", fontSize: "0.6rem", color: "#666" }}>
-                    <div>{item.startDate}</div>
-                    <div>{item.endDate}</div>
+                  {/* Period or tag */}
+                  <div style={{ textAlign: "center", fontSize: "0.65rem", color: "#555", marginTop: 2 }}>
+                    <div style={{ fontWeight: 600 }}>Permanent</div>
                   </div>
                 </div>
               ))}
             </div>
           ) : (
-            <p>No permanent exhibitions.</p>
+            <p>No permanent items.</p>
           )}
 
-          {/* Special exhibitions (current) */}
-          <h4>Special</h4>
+          {/* Temporary (time-limited) exhibitions (current) */}
+          <h4>Temporary</h4>
           {currentSpecials && currentSpecials.length > 0 ? (
             <div
               style={{
-                display: "flex",
-                flexWrap: "wrap",
+                display: "grid",
+                gridTemplateColumns: "repeat(3, 100px)",
                 gap: "10px",
+                justifyContent: "center",
               }}
             >
               {currentSpecials.map((item) => (
@@ -313,15 +396,12 @@ export default function ExhibitionDetails({
                     cursor: "pointer"
                   }}
                 >
-                  {/* Poster (placeholder frame) */}
-                  <div
-                    style={{
-                      width: "80px",
-                      height: "100px",
-                      backgroundColor: "#eee",
-                      marginBottom: "5px"
-                    }}
-                  ></div>
+                  {/* Poster (image if available) */}
+                  <div style={{ width: "80px", height: "100px", backgroundColor: "#eee", marginBottom: "5px", overflow: 'hidden', borderRadius: 3 }}>
+                    {item.image ? (
+                      <img src={item.image} alt={item.name} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} loading="lazy" decoding="async" />
+                    ) : null}
+                  </div>
                   {/* Exhibition name */}
                   <div
                     style={{
@@ -358,16 +438,16 @@ export default function ExhibitionDetails({
                       {item.name}
                     </div>
                   </div>
-                  {/* Period */}
-                  <div style={{ textAlign: "center", fontSize: "0.6rem", color: "#666" }}>
-                    <div>{item.startDate}</div>
-                    <div>{item.endDate}</div>
+                  {/* Period: two lines (start on top, end on bottom) */}
+                  <div style={{ textAlign: "center", fontSize: "0.65rem", color: "#555", marginTop: 2, lineHeight: 1.2 }}>
+                    <div>{formatYMD(item.startDate as any) || ""}</div>
+                    <div>{formatYMD(item.endDate as any) || ""}</div>
                   </div>
                 </div>
               ))}
             </div>
           ) : (
-            <p>No special exhibitions.</p>
+            <p>No temporary items.</p>
           )}
 
           {/* upcoming removed from here - it will be rendered as its own top-level section */}
@@ -386,12 +466,12 @@ export default function ExhibitionDetails({
           >
             {isUpcomingExhibitionsCollapsed ? "▶" : "▼"}
           </button>
-  Upcoming exhibitions
+  Upcoming
         </h3>
 
         {!isUpcomingExhibitionsCollapsed && (
           upcomingSpecials && upcomingSpecials.length > 0 ? (
-            <div style={{ display: "flex", flexWrap: "wrap", gap: "10px" }}>
+            <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 100px)", gap: "10px", justifyContent: "center" }}>
               {upcomingSpecials.map((item) => (
                 <div
                   key={`up-${item.id}`}
@@ -407,17 +487,22 @@ export default function ExhibitionDetails({
                     cursor: "pointer"
                   }}
                 >
-                  <div style={{ width: "80px", height: "100px", backgroundColor: "#eee", marginBottom: "5px" }} />
+                  <div style={{ width: "80px", height: "100px", backgroundColor: "#eee", marginBottom: "5px", overflow: 'hidden', borderRadius: 3 }}>
+                    {item.image ? (
+                      <img src={item.image} alt={item.name} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} loading="lazy" decoding="async" />
+                    ) : null}
+                  </div>
                   <div style={{ textAlign: "center", fontSize: "0.75rem", fontWeight: 700, width: "80px", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{item.name}</div>
-                  <div style={{ textAlign: "center", fontSize: "0.6rem", color: "#666" }}>
-                    <div>{item.startDate}</div>
-                    <div>{item.endDate}</div>
+                  {/* Period: two lines (start on top, end on bottom) */}
+                  <div style={{ textAlign: "center", fontSize: "0.65rem", color: "#555", marginTop: 2, lineHeight: 1.2 }}>
+                    <div>{formatYMD(item.startDate as any) || ""}</div>
+                    <div>{formatYMD(item.endDate as any) || ""}</div>
                   </div>
                 </div>
               ))}
             </div>
           ) : (
-            <p>No upcoming exhibitions.</p>
+            <p>No upcoming items.</p>
           )
         )}
 
@@ -433,16 +518,17 @@ export default function ExhibitionDetails({
         >
           {isPastExhibitionsCollapsed ? "▶" : "▼"}
         </button>
-  Past exhibitions
+  Past
       </h3>
 
       {!isPastExhibitionsCollapsed && (
         pastList && pastList.length > 0 ? (
           <div
             style={{
-              display: "flex",
-              flexWrap: "wrap",
+              display: "grid",
+              gridTemplateColumns: "repeat(3, 100px)",
               gap: "10px",
+              justifyContent: "center",
             }}
           >
             {pastList.map((item) => (
@@ -461,14 +547,11 @@ export default function ExhibitionDetails({
                 }}
               >
                 {/* Poster (placeholder frame) */}
-                <div
-                  style={{
-                    width: "80px",
-                    height: "100px",
-                    backgroundColor: "#eee",
-                    marginBottom: "5px"
-                  }}
-                ></div>
+                <div style={{ width: "80px", height: "100px", backgroundColor: "#eee", marginBottom: "5px", overflow: 'hidden', borderRadius: 3 }}>
+                  {item.image ? (
+                    <img src={item.image} alt={item.name} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} loading="lazy" decoding="async" />
+                  ) : null}
+                </div>
                 {/* Exhibition name */}
                 <div
                   style={{
@@ -505,16 +588,16 @@ export default function ExhibitionDetails({
                     {item.name}
                   </div>
                 </div>
-                {/* Period */}
-                <div style={{ textAlign: "center", fontSize: "0.6rem", color: "#666" }}>
-                  <div>{item.startDate}</div>
-                  <div>{item.endDate}</div>
+                {/* Period: two lines (start on top, end on bottom) */}
+                <div style={{ textAlign: "center", fontSize: "0.65rem", color: "#555", marginTop: 2, lineHeight: 1.2 }}>
+                  <div>{formatYMD(item.startDate as any) || ""}</div>
+                  <div>{formatYMD(item.endDate as any) || ""}</div>
                 </div>
               </div>
             ))}
           </div>
-        ) : (
-          <p>No past exhibitions.</p>
+  ) : (
+          <p>No past items.</p>
         )
       )}
 

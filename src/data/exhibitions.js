@@ -1,70 +1,27 @@
 // src/data/exhibitions.js
 export const exhibitions = [
   {
-    id: "1",
-    name: "TATE Modern",
-  description: "A center for 20th-century modern art.",
-    latitude: 51.5074,
-    longitude: -0.1278,
-  representativeImage: "/images/tate-modern.jpg",
-  floorPlan: "",
+    id: "tate-modern",
+    slug: "tate-modern",
+    name: "Tate Modern",
+    location: "Bankside, London SE1 9TG, United Kingdom",
+    description: "Britain’s national museum of international modern and contemporary art on the South Bank.",
+    latitude: 51.5076,
+    longitude: -0.0994,
+    representativeImage: "/images/tate-modern-building.jpg",
+    floorPlan: "",
     permanentExhibitions: [
-      { id: "1", name: "Tate Collection Highlights", title: "Tate Collection Highlights" },
-      { id: "2", name: "Impressionist Masters", title: "Impressionist Masters" },
-      { id: "3", name: "Contemporary Art", title: "Contemporary Art" },
-      { id: "4", name: "Abstract Revolution", title: "Abstract Revolution" },
+      { id: "tm-perm-1", name: "Tate Collection Highlights", title: "Tate Collection Highlights", description: "Key works from the international modern collection.", startDate: "Permanent", endDate: "Permanent" },
+      { id: "tm-perm-2", name: "Surrealism and Beyond", title: "Surrealism and Beyond", description: "Surrealist movements and their legacies.", startDate: "Permanent", endDate: "Permanent" }
     ],
     temporaryExhibitions: [
-      {
-        id: "5",
-        name: "Modern Sculpture",
-        title: "Modern Sculpture",
-        description: "A special exhibition of modern sculptures.",
-        startDate: "2025.06.01",
-        endDate: "2025.09.01",
-      },
-      {
-        id: "6",
-        name: "Photography Now",
-        title: "Photography Now",
-        description: "A journey through contemporary photography.",
-        startDate: "2025.09.15",
-        endDate: "2025.12.31",
-      },
-      {
-        id: "7",
-        name: "Digital Horizons",
-        title: "Digital Horizons",
-        description: "Exploring digital art and media.",
-        startDate: "2026.01.10",
-        endDate: "2026.04.30",
-      },
+      { id: "tm-temp-1", name: "Modern Sculpture", title: "Modern Sculpture", description: "A special exhibition of modern sculptures.", startDate: "2025-06-01", endDate: "2025-09-01" },
+      { id: "tm-temp-2", name: "Photography Now", title: "Photography Now", description: "A journey through contemporary photography.", startDate: "2025-09-15", endDate: "2025-12-31" }
     ],
     pastExhibitions: [
-      {
-        id: "8",
-        name: "Post-War Art",
-        title: "Post-War Art",
-        description: "A retrospective exhibition of post-war art.",
-        startDate: "2023.06.01",
-        endDate: "2023.12.31",
-      },
-      {
-        id: "9",
-        name: "Baroque Treasures",
-        title: "Baroque Treasures",
-        description: "Masterpieces from the Baroque era.",
-        startDate: "2024.01.01",
-        endDate: "2024.05.31",
-      },
-      {
-        id: "10",
-        name: "Minimalist Perspectives",
-        title: "Minimalist Perspectives",
-        description: "The evolution of minimalism in art.",
-        startDate: "2024.06.15",
-        endDate: "2024.10.15",
-      },
+      { id: "tm-past-1", name: "Post-War Art", title: "Post-War Art", description: "A retrospective exhibition of post-war art.", startDate: "2023-06-01", endDate: "2023-12-31" },
+      { id: "tm-past-2", name: "Baroque Treasures", title: "Baroque Treasures", description: "Masterpieces from the Baroque era.", startDate: "2024-01-01", endDate: "2024-05-31" },
+      { id: "tm-past-3", name: "Minimalist Perspectives", title: "Minimalist Perspectives", description: "The evolution of minimalism in art.", startDate: "2024-06-15", endDate: "2024-10-15" }
     ],
   },
   // London major museums
@@ -86,7 +43,7 @@ export const exhibitions = [
     pastExhibitions: [
       { id: "bm-p1", name: "Ancient Lives", title: "Ancient Lives", description: "Explorations of daily life in antiquity.", startDate: "2024.03.01", endDate: "2024.09.30" }
     ],
-  representativeImage: "/images/british-museum.jpg",
+  representativeImage: "/images/british-museum-building.jpg",
     floorPlan: "",
     rooms: {
       "room-1": [
@@ -111,7 +68,7 @@ export const exhibitions = [
     pastExhibitions: [
       { id: "ng-p1", name: "Impressionist Encounters", title: "Impressionist Encounters", description: "Highlights from the Impressionist movement.", startDate: "2024.02.01", endDate: "2024.08.31" }
     ],
-  representativeImage: "/images/national-gallery.jpg",
+  representativeImage: "/images/national-gallery-building.jpg",
     floorPlan: "",
     rooms: {
       "room-1": [
@@ -136,7 +93,7 @@ export const exhibitions = [
     pastExhibitions: [
       { id: "vam-p1", name: "Fashion Forward", title: "Fashion Forward", description: "Exploring fashion and identity.", startDate: "2024.05.01", endDate: "2024.11.30" }
     ],
-  representativeImage: "/images/vam.jpg",
+  representativeImage: "/images/vam-building.png",
     floorPlan: "",
     rooms: {
       "room-1": [
@@ -161,7 +118,7 @@ export const exhibitions = [
     pastExhibitions: [
       { id: "sm-p1", name: "Wonderlab", title: "Wonderlab", description: "Hands-on interactive gallery for families.", startDate: "2024.04.01", endDate: "2024.10.31" }
     ],
-  representativeImage: "/images/science-museum.jpg",
+  representativeImage: "/images/science-museum-building.jpg",
     floorPlan: "",
     rooms: {
       "gallery-1": [
