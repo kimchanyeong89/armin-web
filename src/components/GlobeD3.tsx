@@ -469,12 +469,12 @@ export default function GlobeD3({ focusLatLng = null, autorotate = false, stroke
           .attr('class', 'urban-area')
           .attr('d', path as any)
           .style('fill', 'none')
-          .style('stroke', '#4B5563')
-          .style('stroke-width', '0.8')
+          .style('stroke', stroke)
+          .style('stroke-width', String(strokeWidth))
           .style('vector-effect', 'non-scaling-stroke')
           .style('stroke-linejoin', 'round')
           .style('stroke-linecap', 'round')
-          .style('opacity', 0.85);
+          .style('opacity', 0.9);
         hasUrbanAreas = true;
         updateLayerVisibility();
         svg.selectAll('path').attr('d', path as any);
