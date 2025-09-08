@@ -161,6 +161,7 @@ export default function GlobeD3({ focusLatLng = null, autorotate = false, stroke
   const gAdmin = gViewport.append('g').style('display', 'none'); // admin (states/provinces) boundaries
   const gCities = gViewport.append('g').style('display', 'none'); // city boundaries (from local geo if available)
   const gUrban = gViewport.append('g').style('display', 'none'); // urban fallback (rings), shown only at high zoom
+  const gUrbanAreas = gViewport.append('g').style('display', 'none'); // global urban areas polygons (approx city boundaries)
   // Higher-detail atlas layers (TopoJSON)
   const gAtlasCountries = gViewport.append('g').style('display', 'none').style('pointer-events', 'none');
   const gAtlasStates = gViewport.append('g').style('display', 'none').style('pointer-events', 'none');
@@ -172,6 +173,8 @@ export default function GlobeD3({ focusLatLng = null, autorotate = false, stroke
   let hasAtlasStates = false;
   let atlasCountriesLoadAttempted = false;
   let atlasStatesLoadAttempted = false;
+  let hasUrbanAreas = false;
+  let urbanAreasLoadAttempted = false;
   
   // Below this zoom, city-level markers are shown; separate threshold not used anymore
   // 핀 그룹을 가장 먼저 생성하여 다른 요소들 위에 표시되도록 함
@@ -191,10 +194,15 @@ export default function GlobeD3({ focusLatLng = null, autorotate = false, stroke
       gAdmin.style('display', hasAdminGeo ? 'block' : 'none');
       if (hasCityGeo) {
         gCities.style('display', 'block');
+        gUrbanAreas.style('display', 'none');
+        gUrban.style('display', 'none');
+      } else if (hasUrbanAreas) {
+        gCities.style('display', 'none');
+        gUrbanAreas.style('display', 'block');
         gUrban.style('display', 'none');
       } else {
         gCities.style('display', 'none');
-        // fallback rings visible when city boundaries are unavailable
+        gUrbanAreas.style('display', 'none');
         gUrban.style('display', 'block');
       }
     };
@@ -258,14 +266,22 @@ export default function GlobeD3({ focusLatLng = null, autorotate = false, stroke
       return keys.find(k => regex.test(k)) || keys[0];
     };
 
-  const loadAtlasCountriesIfNeeded = async () => {
+    const loadAtlasCountriesIfNeeded = async () => {
       if (atlasCountriesLoadAttempted || hasAtlasCountries) return;
       atlasCountriesLoadAttempted = true;
       try {
-        console.log('[GlobeD3] loading atlas /atlas/countries-110m.json');
-        const res = await fetch('/atlas/countries-110m.json', { cache: 'no-store' });
-        if (!res.ok) return;
-        const json = await res.json();
+        const urls = ['/atlas/countries-110m.json', '/atlas/package/countries-110m.json'];
+        let json: any | null = null;
+        for (const url of urls) {
+          try {
+            console.log('[GlobeD3] loading atlas', url);
+            const res = await fetch(url, { cache: 'no-store' });
+            if (!res.ok) continue;
+            json = await res.json();
+            if (json) break;
+          } catch {}
+        }
+        if (!json) return;
         const key = pickObject(json.objects, /countries|nation|land/i);
         const fc = topojsonFeature(json as any, json.objects[key]) as any;
         gAtlasCountries
@@ -293,14 +309,14 @@ export default function GlobeD3({ focusLatLng = null, autorotate = false, stroke
       if (atlasStatesLoadAttempted || hasAtlasStates) return;
       atlasStatesLoadAttempted = true;
       try {
-        // Load US states from local world.geo.json-master tree
-        const US_STATES = [
-          'AL','AK','AZ','AR','CA','CO','CT','DE','FL','GA','HI','ID','IL','IN','IA','KS','KY','LA','ME','MD','MA','MI','MN','MS','MO','MT','NE','NV','NH','NJ','NM','NY','NC','ND','OH','OK','OR','PA','RI','SC','SD','TN','TX','UT','VT','VA','WA','WV','WI','WY','DC','PR'
-        ];
+        // Load US states only when a manifest exists under /us; avoids 404s in production
+        const idx = await fetch('/us/states-index.json', { cache: 'no-store' });
+        if (!idx.ok) return;
+        const codes: string[] = await idx.json();
         const features: any[] = [];
-        for (const code of US_STATES) {
+        for (const code of codes) {
           try {
-            const url = `/world.geo.json-master/countries/USA/${code}.geo.json`;
+            const url = `/us/${code}.geo.json`;
             const res = await fetch(url, { cache: 'no-store' });
             if (!res.ok) continue;
             const geo = await res.json();
@@ -309,9 +325,7 @@ export default function GlobeD3({ focusLatLng = null, autorotate = false, stroke
             } else if (geo?.type === 'Feature') {
               features.push(geo);
             }
-          } catch {
-            // skip missing files
-          }
+          } catch {}
         }
         if (!features.length) return;
         gAtlasStates
@@ -369,7 +383,7 @@ export default function GlobeD3({ focusLatLng = null, autorotate = false, stroke
       try {
         console.log('[GlobeD3] trying local /geo/cities.geo.json');
         const res = await fetch('/geo/cities.geo.json', { cache: 'no-store' });
-        if (!res.ok) return;
+  if (!res.ok) return; // silent if missing
         const ct = (res.headers.get('content-type') || '').toLowerCase();
         if (!/json/.test(ct)) return;
         const geo = await res.json();
@@ -388,6 +402,58 @@ export default function GlobeD3({ focusLatLng = null, autorotate = false, stroke
         hasCityGeo = true;
     updateLayerVisibility();
     svg.selectAll('path').attr('d', path as any);
+      } catch {
+        // ignore
+      }
+    };
+
+    // Optional: load global urban areas (approximate city boundary polygons) if present
+    const loadUrbanAreasIfNeeded = async () => {
+      if (urbanAreasLoadAttempted || hasUrbanAreas) return;
+      urbanAreasLoadAttempted = true;
+      try {
+        // Try package location first, then top-level
+        const urls = ['/atlas/package/urban-areas.json', '/atlas/urban-areas.json'];
+        let json: any | null = null;
+        for (const url of urls) {
+          try {
+            const res = await fetch(url, { cache: 'no-store' });
+            if (!res.ok) continue;
+            const ct = (res.headers.get('content-type') || '').toLowerCase();
+            if (!/json/.test(ct)) continue;
+            json = await res.json();
+            if (json) break;
+          } catch {
+            // try next
+          }
+        }
+        if (!json) return;
+        let features: any[] = [];
+        if (json.type === 'Topology' && json.objects) {
+          const key = (Object.keys(json.objects).find(k => /urban|areas|city/i.test(k)) || Object.keys(json.objects)[0]);
+          if (!key) return;
+          const fc = topojsonFeature(json as any, json.objects[key]) as any;
+          features = fc.features || [];
+        } else if (json.type === 'FeatureCollection') {
+          features = json.features || [];
+        }
+        if (!features.length) return;
+        gUrbanAreas
+          .selectAll('path.urban-area')
+          .data(features)
+          .join('path')
+          .attr('class', 'urban-area')
+          .attr('d', path as any)
+          .style('fill', 'none')
+          .style('stroke', '#4B5563')
+          .style('stroke-width', '0.8')
+          .style('vector-effect', 'non-scaling-stroke')
+          .style('stroke-linejoin', 'round')
+          .style('stroke-linecap', 'round')
+          .style('opacity', 0.85);
+        hasUrbanAreas = true;
+        updateLayerVisibility();
+        svg.selectAll('path').attr('d', path as any);
       } catch {
         // ignore
       }
@@ -1068,6 +1134,7 @@ export default function GlobeD3({ focusLatLng = null, autorotate = false, stroke
   loadAtlasStatesIfNeeded();
   loadAdminIfNeeded();
   loadCitiesIfNeeded();
+  loadUrbanAreasIfNeeded();
   updateLayerVisibility();
 
     // Initial pin render and focus/autospin
