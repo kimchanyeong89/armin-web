@@ -169,7 +169,9 @@ export default function GlobeD3({ focusLatLng = null, autorotate = false, stroke
   let adminLoadAttempted = false;
   let citiesLoadAttempted = false;
   let hasAtlasCountries = false;
+  let hasAtlasStates = false;
   let atlasCountriesLoadAttempted = false;
+  let atlasStatesLoadAttempted = false;
   
   // Below this zoom, city-level markers are shown; separate threshold not used anymore
   // 핀 그룹을 가장 먼저 생성하여 다른 요소들 위에 표시되도록 함
@@ -184,8 +186,8 @@ export default function GlobeD3({ focusLatLng = null, autorotate = false, stroke
         gAtlasCountries.style('display', 'none');
         gCountries.style('display', 'block');
       }
-  // Hide US-only states overlay to keep detail consistent globally
-  gAtlasStates.style('display', 'none');
+  // Show US states overlay only if dataset is present
+  gAtlasStates.style('display', hasAtlasStates ? 'block' : 'none');
       gAdmin.style('display', hasAdminGeo ? 'block' : 'none');
       if (hasCityGeo) {
         gCities.style('display', 'block');
@@ -287,7 +289,40 @@ export default function GlobeD3({ focusLatLng = null, autorotate = false, stroke
       }
     };
 
-  // Removed atlas states loader; the provided dataset is US-centric and can mislead outside US.
+    const loadAtlasStatesIfNeeded = async () => {
+      if (atlasStatesLoadAttempted || hasAtlasStates) return;
+      atlasStatesLoadAttempted = true;
+      try {
+        // Use the extracted states-10m from the package folder if present
+        const url = '/atlas/package/states-10m.json';
+        console.log('[GlobeD3] loading atlas', url);
+        const res = await fetch(url, { cache: 'no-store' });
+        if (!res.ok) return;
+        const json = await res.json();
+        const key = pickObject(json.objects, /states|provinces|admin|subunit/i);
+        if (!key) return;
+        const fc = topojsonFeature(json as any, json.objects[key]) as any;
+        const feats = fc.features || [];
+        if (!feats.length) return;
+        gAtlasStates
+          .selectAll('path.atlas-state')
+          .data(feats)
+          .join('path')
+          .attr('class', 'atlas-state')
+          .attr('d', path as any)
+          .style('fill', 'none')
+          .style('stroke', '#9CA3AF')
+          .style('stroke-width', '0.7')
+          .style('vector-effect', 'non-scaling-stroke')
+          .style('stroke-linejoin', 'round')
+          .style('stroke-linecap', 'round');
+        hasAtlasStates = true;
+        updateLayerVisibility();
+        svg.selectAll('path').attr('d', path as any);
+      } catch {
+        // ignore
+      }
+    };
     const loadAdminIfNeeded = async () => {
       if (adminLoadAttempted || hasAdminGeo) return;
       adminLoadAttempted = true;
@@ -1020,6 +1055,7 @@ export default function GlobeD3({ focusLatLng = null, autorotate = false, stroke
 
   // Eagerly load all optional layers (always-on detail); update visibility as they arrive
   loadAtlasCountriesIfNeeded();
+  loadAtlasStatesIfNeeded();
   loadAdminIfNeeded();
   loadCitiesIfNeeded();
   updateLayerVisibility();
