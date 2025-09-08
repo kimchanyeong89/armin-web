@@ -1,6 +1,6 @@
 import { useEffect, useRef } from 'react';
 import * as d3 from 'd3';
-// topojson-client not needed for local GeoJSON borders
+import { feature as topojsonFeature } from 'topojson-client';
 import type { Exhibition } from '../types/Exhibition';
 
 // Minimal D3 orthographic globe with stroke-only borders on white background
@@ -161,16 +161,41 @@ export default function GlobeD3({ focusLatLng = null, autorotate = false, stroke
   const gAdmin = gViewport.append('g').style('display', 'none'); // admin (states/provinces) boundaries
   const gCities = gViewport.append('g').style('display', 'none'); // city boundaries (from local geo if available)
   const gUrban = gViewport.append('g').style('display', 'none'); // urban fallback (rings), shown only at high zoom
-  // Show admin boundaries earlier so they're noticeable without extreme zoom
-  const adminVisibleThreshold = 1.8;
-  const cityVisibleThreshold = 2.8;
+  // Higher-detail atlas layers (TopoJSON)
+  const gAtlasCountries = gViewport.append('g').style('display', 'none').style('pointer-events', 'none');
+  const gAtlasStates = gViewport.append('g').style('display', 'none').style('pointer-events', 'none');
   let hasAdminGeo = false;
   let hasCityGeo = false;
   let adminLoadAttempted = false;
   let citiesLoadAttempted = false;
+  let hasAtlasCountries = false;
+  let hasAtlasStates = false;
+  let atlasCountriesLoadAttempted = false;
+  let atlasStatesLoadAttempted = false;
   // Below this zoom, city-level markers are shown; separate threshold not used anymore
   // 핀 그룹을 가장 먼저 생성하여 다른 요소들 위에 표시되도록 함
   const gPins = gViewport.append('g').style('pointer-events', 'all');
+
+    // Centralized layer visibility (always prefer most detailed layers available, independent of zoom)
+    const updateLayerVisibility = () => {
+      if (hasAtlasCountries) {
+        gAtlasCountries.style('display', 'block');
+        gCountries.style('display', 'none');
+      } else {
+        gAtlasCountries.style('display', 'none');
+        gCountries.style('display', 'block');
+      }
+      gAtlasStates.style('display', hasAtlasStates ? 'block' : 'none');
+      gAdmin.style('display', hasAdminGeo ? 'block' : 'none');
+      if (hasCityGeo) {
+        gCities.style('display', 'block');
+        gUrban.style('display', 'none');
+      } else {
+        gCities.style('display', 'none');
+        // fallback rings visible when city boundaries are unavailable
+        gUrban.style('display', 'block');
+      }
+    };
 
     // Dev guard: detect unexpected external fetches from old bundles (debug only)
     try {
@@ -226,6 +251,71 @@ export default function GlobeD3({ focusLatLng = null, autorotate = false, stroke
     })();
 
   // Lazy loaders: only fetch when threshold is crossed
+    const pickObject = (objects: any, regex: RegExp) => {
+      const keys = Object.keys(objects || {});
+      return keys.find(k => regex.test(k)) || keys[0];
+    };
+
+  const loadAtlasCountriesIfNeeded = async () => {
+      if (atlasCountriesLoadAttempted || hasAtlasCountries) return;
+      atlasCountriesLoadAttempted = true;
+      try {
+        console.log('[GlobeD3] loading atlas /atlas/countries-110m.json');
+        const res = await fetch('/atlas/countries-110m.json', { cache: 'no-store' });
+        if (!res.ok) return;
+        const json = await res.json();
+        const key = pickObject(json.objects, /countries|nation|land/i);
+        const fc = topojsonFeature(json as any, json.objects[key]) as any;
+        gAtlasCountries
+          .selectAll('path.atlas-country')
+          .data(fc.features || [])
+          .join('path')
+          .attr('class', 'atlas-country')
+          .attr('d', path as any)
+          .style('fill', 'none')
+          .style('stroke', stroke)
+          .style('stroke-width', String(strokeWidth * 0.9))
+          .style('vector-effect', 'non-scaling-stroke')
+          .style('stroke-linejoin', 'round')
+          .style('stroke-linecap', 'round');
+        hasAtlasCountries = true;
+    // refresh visibility and paths
+    updateLayerVisibility();
+    svg.selectAll('path').attr('d', path as any);
+      } catch {
+        // ignore
+      }
+    };
+
+    const loadAtlasStatesIfNeeded = async () => {
+      if (atlasStatesLoadAttempted || hasAtlasStates) return;
+      atlasStatesLoadAttempted = true;
+      try {
+        console.log('[GlobeD3] loading atlas /atlas/states-10m.json');
+        const res = await fetch('/atlas/states-10m.json', { cache: 'no-store' });
+        if (!res.ok) return;
+        const json = await res.json();
+        const key = pickObject(json.objects, /states|provinces|admin|subunit/i);
+        const fc = topojsonFeature(json as any, json.objects[key]) as any;
+        gAtlasStates
+          .selectAll('path.atlas-state')
+          .data(fc.features || [])
+          .join('path')
+          .attr('class', 'atlas-state')
+          .attr('d', path as any)
+          .style('fill', 'none')
+          .style('stroke', '#9CA3AF')
+          .style('stroke-width', '0.7')
+          .style('vector-effect', 'non-scaling-stroke')
+          .style('stroke-linejoin', 'round')
+          .style('stroke-linecap', 'round');
+        hasAtlasStates = true;
+    updateLayerVisibility();
+    svg.selectAll('path').attr('d', path as any);
+      } catch {
+        // ignore
+      }
+    };
     const loadAdminIfNeeded = async () => {
       if (adminLoadAttempted || hasAdminGeo) return;
       adminLoadAttempted = true;
@@ -249,6 +339,8 @@ export default function GlobeD3({ focusLatLng = null, autorotate = false, stroke
           .style('stroke-linejoin', 'round')
           .style('stroke-linecap', 'round');
         hasAdminGeo = true;
+    updateLayerVisibility();
+    svg.selectAll('path').attr('d', path as any);
       } catch {
         // ignore
       }
@@ -277,6 +369,8 @@ export default function GlobeD3({ focusLatLng = null, autorotate = false, stroke
           .style('stroke-linejoin', 'round')
           .style('stroke-linecap', 'round');
         hasCityGeo = true;
+    updateLayerVisibility();
+    svg.selectAll('path').attr('d', path as any);
       } catch {
         // ignore
       }
@@ -613,7 +707,10 @@ export default function GlobeD3({ focusLatLng = null, autorotate = false, stroke
         .style('stroke', '#fff')
         .style('stroke-width', 3)
         .style('paint-order', 'stroke')
-        .text((d: any) => d.title || d.name);
+        .text((d: any) => {
+          const t = (d.title ?? d.name ?? '').toString();
+          return t.toUpperCase();
+        });
 
   // 클릭 이벤트
       const merged = enter.merge(sel as any);
@@ -906,23 +1003,8 @@ export default function GlobeD3({ focusLatLng = null, autorotate = false, stroke
       gViewport.attr('transform', null);
       svg.selectAll('path').attr('d', path as any);
       renderPins();
-      // Trigger lazy loads when crossing thresholds
-      if (zoomK >= adminVisibleThreshold) loadAdminIfNeeded();
-      if (zoomK >= cityVisibleThreshold) loadCitiesIfNeeded();
-      // Toggle layers by zoom thresholds
-      gAdmin.style('display', hasAdminGeo && zoomK >= adminVisibleThreshold ? 'block' : 'none');
-      if (zoomK >= cityVisibleThreshold) {
-        if (hasCityGeo) {
-          gCities.style('display', 'block');
-          gUrban.style('display', 'none');
-        } else {
-          gCities.style('display', 'none');
-          gUrban.style('display', 'block');
-        }
-      } else {
-        gCities.style('display', 'none');
-        gUrban.style('display', 'none');
-      }
+  // Visibility independent of zoom; always prefer the most detailed available
+  updateLayerVisibility();
     };
 
     const onZoomEnd = () => {
@@ -955,28 +1037,21 @@ export default function GlobeD3({ focusLatLng = null, autorotate = false, stroke
         projection.scale(baseRadius * zoomK);
         svg.selectAll('path').attr('d', path as any);
       }
-      // Sync zoom's internal k without applying pan (identity translate)
+    // Sync zoom's internal k without applying pan (identity translate)
   (svg as any).call((zoom as any).transform, d3.zoomIdentity.scale(zoomK));
-  // Initial toggle and potential lazy load (in case initial zoom already high)
-  if (zoomK >= adminVisibleThreshold) loadAdminIfNeeded();
-  if (zoomK >= cityVisibleThreshold) loadCitiesIfNeeded();
-  gAdmin.style('display', hasAdminGeo && zoomK >= adminVisibleThreshold ? 'block' : 'none');
-  if (zoomK >= cityVisibleThreshold) {
-    if (hasCityGeo) {
-      gCities.style('display', 'block');
-      gUrban.style('display', 'none');
-    } else {
-      gCities.style('display', 'none');
-      gUrban.style('display', 'block');
-    }
-  } else {
-    gCities.style('display', 'none');
-    gUrban.style('display', 'none');
-  }
+  // Visibility doesn't depend on zoom anymore
+  updateLayerVisibility();
     };
 
     svg.call(zoom as any);
     applyZoomExtents();
+
+  // Eagerly load all optional layers (always-on detail); update visibility as they arrive
+  loadAtlasCountriesIfNeeded();
+  loadAtlasStatesIfNeeded();
+  loadAdminIfNeeded();
+  loadCitiesIfNeeded();
+  updateLayerVisibility();
 
     // Initial pin render and focus/autospin
     renderPins();
