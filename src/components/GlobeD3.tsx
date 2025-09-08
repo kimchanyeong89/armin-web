@@ -293,20 +293,30 @@ export default function GlobeD3({ focusLatLng = null, autorotate = false, stroke
       if (atlasStatesLoadAttempted || hasAtlasStates) return;
       atlasStatesLoadAttempted = true;
       try {
-        // Use the extracted states-10m from the package folder if present
-        const url = '/atlas/package/states-10m.json';
-        console.log('[GlobeD3] loading atlas', url);
-        const res = await fetch(url, { cache: 'no-store' });
-        if (!res.ok) return;
-        const json = await res.json();
-        const key = pickObject(json.objects, /states|provinces|admin|subunit/i);
-        if (!key) return;
-        const fc = topojsonFeature(json as any, json.objects[key]) as any;
-        const feats = fc.features || [];
-        if (!feats.length) return;
+        // Load US states from local world.geo.json-master tree
+        const US_STATES = [
+          'AL','AK','AZ','AR','CA','CO','CT','DE','FL','GA','HI','ID','IL','IN','IA','KS','KY','LA','ME','MD','MA','MI','MN','MS','MO','MT','NE','NV','NH','NJ','NM','NY','NC','ND','OH','OK','OR','PA','RI','SC','SD','TN','TX','UT','VT','VA','WA','WV','WI','WY','DC','PR'
+        ];
+        const features: any[] = [];
+        for (const code of US_STATES) {
+          try {
+            const url = `/world.geo.json-master/countries/USA/${code}.geo.json`;
+            const res = await fetch(url, { cache: 'no-store' });
+            if (!res.ok) continue;
+            const geo = await res.json();
+            if (geo?.type === 'FeatureCollection' && Array.isArray(geo.features)) {
+              for (const f of geo.features) features.push(f);
+            } else if (geo?.type === 'Feature') {
+              features.push(geo);
+            }
+          } catch {
+            // skip missing files
+          }
+        }
+        if (!features.length) return;
         gAtlasStates
           .selectAll('path.atlas-state')
-          .data(feats)
+          .data(features)
           .join('path')
           .attr('class', 'atlas-state')
           .attr('d', path as any)
