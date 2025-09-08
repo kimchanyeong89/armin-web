@@ -351,15 +351,39 @@ export default function GlobeD3({ focusLatLng = null, autorotate = false, stroke
       if (adminLoadAttempted || hasAdminGeo) return;
       adminLoadAttempted = true;
       try {
-        console.log('[GlobeD3] trying local /geo/admin.geo.json');
-        const res = await fetch('/geo/admin.geo.json', { cache: 'no-store' });
-        if (!res.ok) return;
-        const ct = (res.headers.get('content-type') || '').toLowerCase();
-        if (!/json/.test(ct)) return;
-        const geo = await res.json();
+        console.log('[GlobeD3] trying admin boundaries');
+        // Try local GeoJSON first
+        const tryUrls = ['/geo/admin.geo.json', '/atlas/package/admin-1.json', '/atlas/admin-1.json'];
+        let data: any | null = null;
+        let isTopo = false;
+        for (const url of tryUrls) {
+          try {
+            const res = await fetch(url, { cache: 'no-store' });
+            if (!res.ok) continue;
+            const ct = (res.headers.get('content-type') || '').toLowerCase();
+            if (!/json/.test(ct)) continue;
+            const j = await res.json();
+            if (j && (j.type === 'FeatureCollection' || j.type === 'Topology')) {
+              data = j; isTopo = j.type === 'Topology';
+              console.log('[GlobeD3] admin loaded from', url);
+              break;
+            }
+          } catch {}
+        }
+        if (!data) return;
+        let features: any[] = [];
+        if (isTopo) {
+          const key = (Object.keys(data.objects).find((k) => /admin|states|provinces|subunit/i.test(k)) || Object.keys(data.objects)[0]);
+          if (!key) return;
+          const fc = topojsonFeature(data as any, data.objects[key]) as any;
+          features = fc.features || [];
+        } else {
+          features = data.features || [];
+        }
+        if (!features.length) return;
         gAdmin
           .selectAll('path.admin')
-          .data(geo.features || [])
+          .data(features)
           .join('path')
           .attr('class', 'admin')
           .attr('d', path as any)
