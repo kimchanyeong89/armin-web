@@ -133,15 +133,15 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng }) =
             .attr('transform', `translate(${offsetX}, 0)`)
             .attr('fill', 'rgba(255, 255, 255, 0.01)') // 거의 투명한 fill 추가 (호버 영역용)
             .attr('stroke', '#000000')
-            .attr('stroke-width', 0.4)
+            .attr('stroke-width', 0.2)
             .attr('stroke-opacity', 0.8)
             .style('cursor', 'pointer')
             .on('mouseover', function(event) {
-              d3.select(this).attr('stroke-width', 0.8);
+              d3.select(this).attr('stroke-width', 0.4);
               showTooltip(svg, event, `🏳️ ${country.properties?.name || 'Unknown Country'}`);
             })
             .on('mouseout', function() {
-              d3.select(this).attr('stroke-width', 0.4);
+              d3.select(this).attr('stroke-width', 0.2);
               svg.select('.tooltip').remove();
             });
         } catch (error) {

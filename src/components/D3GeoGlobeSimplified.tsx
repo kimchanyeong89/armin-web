@@ -25,8 +25,11 @@ export default function D3GeoGlobeSimplified() {
         };
 
   // Switch to Natural Earth GeoJSON linework directly (different data path)
-  const countriesGeo = await fetchJsonSafe('/atlas/ne_110m_admin_0_countries.geojson');
-  const statesGeo = await fetchJsonSafe('/atlas/ne_50m_admin_1_states_provinces.geojson');
+        // Prefer pre-simplified linework if available, else fallback to NE GeoJSON
+        const countriesGeo = await fetchJsonSafe('/atlas/simplified-admin0-lines.geojson')
+          || await fetchJsonSafe('/atlas/ne_110m_admin_0_countries.geojson');
+        const statesGeo = await fetchJsonSafe('/atlas/simplified-admin1-lines.geojson')
+          || await fetchJsonSafe('/atlas/ne_50m_admin_1_states_provinces.geojson');
 
         if (!alive) return;
         if (!countriesGeo || countriesGeo.type !== 'FeatureCollection') throw new Error('Failed to load countries GeoJSON');

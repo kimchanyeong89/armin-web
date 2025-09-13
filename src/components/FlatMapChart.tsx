@@ -23,8 +23,11 @@ const FlatMapChart: React.FC = () => {
       geoJSON: am5geodata_worldLow
     });
 
-    // Tooltip 설정 추가
+    // Tooltip + thinner borders
     polygonSeries.mapPolygons.template.set("tooltipText", "{name}");
+    polygonSeries.mapPolygons.template.setAll({
+      strokeWidth: 0.5 // thinner borders (about half the default)
+    });
 
     chart.series.push(polygonSeries);
 
