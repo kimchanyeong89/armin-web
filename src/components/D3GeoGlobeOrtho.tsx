@@ -4,10 +4,24 @@ import { feature as topojsonFeature } from 'topojson-client';
 
 interface Props {
   focusLatLng?: { lat: number; lng: number } | null;
+  // Disable high-res swap to prevent frame drops (default: false)
+  enableHiResSwap?: boolean;
+  // If enabled, zoomK threshold to swap countries to hi-res (default: 2.2)
+  hiResThreshold?: number;
+  // Control Admin1 (states/provinces) layer fetch/rendering
+  enableAdmin1?: boolean; // default: true
+  // Minimum zoomK required before fetching Admin1 and showing them (default: 3.0)
+  admin1MinZoom?: number;
 }
 
 // D3GEO-based orthographic globe with Google Earth-style smooth controls
-export default function D3GeoGlobeOrtho({ focusLatLng = null }: Props) {
+export default function D3GeoGlobeOrtho({
+  focusLatLng = null,
+  enableHiResSwap = false,
+  hiResThreshold = 2.2,
+  enableAdmin1 = true,
+  admin1MinZoom = 3.0,
+}: Props) {
   const svgRef = useRef<SVGSVGElement>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -50,14 +64,16 @@ export default function D3GeoGlobeOrtho({ focusLatLng = null }: Props) {
 
         setCountries(toFeatures(countriesRaw, ['countries', 'admin0', 'ne_50m_admin_0', 'ne_110m_admin_0']));
 
-        // Prefetch high-res countries in background
-        try {
-          fetch('/geodata/countries-50m.json').then(r => r.ok ? r.json() : null).then(raw => {
-            if (!raw) return;
-            const hi = toFeatures(raw, ['countries', 'admin0', 'ne_50m_admin_0']);
-            hiResCountriesRef.current = hi;
-          }).catch(() => {});
-        } catch {}
+        // Prefetch high-res countries in background only if enabled
+        if (enableHiResSwap) {
+          try {
+            fetch('/geodata/countries-50m.json').then(r => r.ok ? r.json() : null).then(raw => {
+              if (!raw) return;
+              const hi = toFeatures(raw, ['countries', 'admin0', 'ne_50m_admin_0']);
+              hiResCountriesRef.current = hi;
+            }).catch(() => {});
+          } catch {}
+        }
 
         // Defer states loading until needed (on demand)
       } catch (e: any) {
@@ -67,7 +83,7 @@ export default function D3GeoGlobeOrtho({ focusLatLng = null }: Props) {
       }
     };
     loadAll();
-  }, []);
+  }, [enableHiResSwap]);
 
   useEffect(() => {
     if (!svgRef.current || loading || error) return;
@@ -344,8 +360,8 @@ export default function D3GeoGlobeOrtho({ focusLatLng = null }: Props) {
   const next = current + (target - current) * 0.12; // slower, smoother convergence
       projection.scale(next);
       zoomK = next / base;
-      // Swap to high-res countries when zoomed enough and data is prefetched
-      if (!hiResAppliedRef.current && hiResCountriesRef.current && zoomK > 1.8) {
+      // Swap to high-res countries when zoomed enough and data is prefetched (if enabled)
+      if (enableHiResSwap && !hiResAppliedRef.current && hiResCountriesRef.current && zoomK > hiResThreshold) {
         hiResAppliedRef.current = true;
         setCountries(hiResCountriesRef.current || []);
       }
@@ -397,7 +413,7 @@ export default function D3GeoGlobeOrtho({ focusLatLng = null }: Props) {
         projection.precision(0.55 + 0.4 * t);
     requestRender(true, true); // force both updates for pinch
       });
-    (svg as any).call(zoom as any).call((zoom as any).transform, d3.zoomIdentity.scale(1));
+  (svg as any).call(zoom as any).call((zoom as any).transform, d3.zoomIdentity.scale(1));
 
     // Resize
     const onResize = () => {
@@ -448,39 +464,7 @@ export default function D3GeoGlobeOrtho({ focusLatLng = null }: Props) {
       .on('click', (event: any, d: any) => {
         if (event && event.stopPropagation) event.stopPropagation();
         selectedCountry = d;
-        // Lazy-load states data if not loaded yet
-        if (states.length === 0 && !statesFetchingRef.current) {
-          statesFetchingRef.current = true;
-          fetch('/geodata/admin1-states-10m.json')
-            .then(r => r.ok ? r.json() : null)
-            .then((raw) => {
-              if (!raw) return;
-              // convert using same helper
-              const preferKeys = ['states', 'provinces', 'admin1', 'ne_50m_admin_1'];
-              let feats: any[] = [];
-              try {
-                if (raw.type === 'FeatureCollection') feats = raw.features || [];
-                else if (raw.type === 'Topology' && raw.objects) {
-                  const keys = Object.keys(raw.objects);
-                  let picked: string | null = null;
-                  for (const pref of preferKeys) {
-                    const hit = keys.find(k => k.toLowerCase().includes(pref));
-                    if (hit) { picked = hit; break; }
-                  }
-                  if (!picked) picked = keys[0];
-                  const fc: any = topojsonFeature(raw, (raw.objects as any)[picked]);
-                  feats = fc.features || [];
-                }
-              } catch {}
-              setStates(feats);
-            })
-            .finally(() => { statesFetchingRef.current = false; });
-        }
-        // Filter states by centroid containment
-        try {
-          filteredStates = states.filter((s: any) => d3.geoContains(d, (s as any).__centroid || d3.geoCentroid(s)));
-        } catch { filteredStates = []; }
-        requestRender();
+        // We'll compute target zoom first, then decide on Admin1 fetch based on threshold
 
         // Smooth animate to center + zoom
         const target = d3.geoCentroid(d) as [number, number];
@@ -491,7 +475,50 @@ export default function D3GeoGlobeOrtho({ focusLatLng = null }: Props) {
         const minZoomIn = Math.min(width, height) * 0.38 * 2.2;
         const relativeZoomIn = startScale * 1.25;
         const targetScale = Math.max(minZoomIn, relativeZoomIn);
+        const projectedBase = Math.min(width, height) * 0.38;
+        const clickTargetZoomK = targetScale / projectedBase;
         const scaleInterp = d3.interpolateNumber(startScale, targetScale);
+        
+        // Conditionally lazy-load states data if allowed and zoom threshold met
+        if (enableAdmin1 && clickTargetZoomK >= admin1MinZoom) {
+          if (states.length === 0 && !statesFetchingRef.current) {
+            statesFetchingRef.current = true;
+            fetch('/geodata/admin1-states-10m.json')
+              .then(r => r.ok ? r.json() : null)
+              .then((raw) => {
+                if (!raw) return;
+                // convert using same helper
+                const preferKeys = ['states', 'provinces', 'admin1', 'ne_50m_admin_1'];
+                let feats: any[] = [];
+                try {
+                  if (raw.type === 'FeatureCollection') feats = raw.features || [];
+                  else if (raw.type === 'Topology' && raw.objects) {
+                    const keys = Object.keys(raw.objects);
+                    let picked: string | null = null;
+                    for (const pref of preferKeys) {
+                      const hit = keys.find(k => k.toLowerCase().includes(pref));
+                      if (hit) { picked = hit; break; }
+                    }
+                    if (!picked) picked = keys[0];
+                    const fc: any = topojsonFeature(raw, (raw.objects as any)[picked]);
+                    feats = fc.features || [];
+                  }
+                } catch {}
+                setStates(feats);
+              })
+              .finally(() => { statesFetchingRef.current = false; });
+          }
+        }
+
+        // Filter states by centroid containment (only show when zoom is high enough)
+        try {
+          if (enableAdmin1 && zoomK >= admin1MinZoom) {
+            filteredStates = states.filter((s: any) => d3.geoContains(d, (s as any).__centroid || d3.geoCentroid(s)));
+          } else {
+            filteredStates = [];
+          }
+        } catch { filteredStates = []; }
+        requestRender();
         
         isAnimating = true;
         const dur = 1200; // slightly longer for smoother feel
@@ -510,6 +537,13 @@ export default function D3GeoGlobeOrtho({ focusLatLng = null }: Props) {
             rafId = requestAnimationFrame(tick);
           } else {
             isAnimating = false;
+            // After animation completes, if Admin1 is allowed and final zoom satisfies threshold, update state paths once
+            if (enableAdmin1 && zoomK >= admin1MinZoom) {
+              try {
+                filteredStates = states.filter((s: any) => d3.geoContains(selectedCountry, (s as any).__centroid || d3.geoCentroid(s)));
+              } catch { filteredStates = []; }
+              requestRender(true, true);
+            }
           }
         };
         rafId = requestAnimationFrame(tick);
