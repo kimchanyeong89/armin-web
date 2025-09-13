@@ -15,23 +15,50 @@ export default function D3GeoGlobeSimplified() {
     const load = async () => {
       try {
         setLoading(true);
-        const [countriesResp, urbanResp] = await Promise.all([
-          fetch('/atlas/simplified-countries-topo.json').then(r => r.ok ? r.json() : null),
-          fetch('/atlas/simplified-urban-topo.json').then(r => r.ok ? r.json() : null),
-        ]);
+        const fetchJsonSafe = async (url: string) => {
+          try {
+            const res = await fetch(url);
+            if (!res.ok) return null;
+            const text = await res.text();
+            if (!text || text.trim().startsWith('<!doctype') || text.trim().startsWith('<html')) return null;
+            return JSON.parse(text);
+          } catch { return null; }
+        };
+
+        // Countries: try simplified topo -> simplified geo -> fallback to existing countries-110m (Topo/Geo)
+        let countriesRaw = await fetchJsonSafe('/atlas/simplified-countries-topo.json');
+        if (!countriesRaw) countriesRaw = await fetchJsonSafe('/atlas/simplified-countries.geojson');
+        if (!countriesRaw) countriesRaw = await fetchJsonSafe('/geodata/countries-110m.json');
+
+        // Urban: try simplified topo -> simplified geo -> fallback to ne_50m urban
+        let urbanRaw = await fetchJsonSafe('/atlas/simplified-urban-topo.json');
+        if (!urbanRaw) urbanRaw = await fetchJsonSafe('/atlas/simplified-urban.geojson');
+        if (!urbanRaw) urbanRaw = await fetchJsonSafe('/atlas/ne_50m_urban_areas.geojson');
+
         if (!alive) return;
-        // fallback to geojson if topo missing
-        if (countriesResp && countriesResp.type === 'Topology') {
-          setCountriesFC(topojsonFeature(countriesResp, (countriesResp.objects as any).countries));
+
+        // Normalize countries to FeatureCollection
+        if (countriesRaw) {
+          if (countriesRaw.type === 'Topology') {
+            const fc = topojsonFeature(countriesRaw, (countriesRaw.objects as any).countries || (Object.values(countriesRaw.objects || {}) as any)[0]);
+            setCountriesFC(fc);
+          } else {
+            setCountriesFC(countriesRaw);
+          }
         } else {
-          const fallback = await fetch('/atlas/simplified-countries.geojson').then(r => r.ok ? r.json() : null);
-          setCountriesFC(fallback);
+          throw new Error('Failed to load countries data');
         }
-        if (urbanResp && urbanResp.type === 'Topology') {
-          setUrbanFC(topojsonFeature(urbanResp, (urbanResp.objects as any).urban));
+
+        // Normalize urban to FeatureCollection (optional)
+        if (urbanRaw) {
+          if (urbanRaw.type === 'Topology') {
+            const fcU = topojsonFeature(urbanRaw, (urbanRaw.objects as any).urban || (Object.values(urbanRaw.objects || {}) as any)[0]);
+            setUrbanFC(fcU);
+          } else {
+            setUrbanFC(urbanRaw);
+          }
         } else {
-          const fallbackU = await fetch('/atlas/simplified-urban.geojson').then(r => r.ok ? r.json() : null);
-          setUrbanFC(fallbackU);
+          setUrbanFC(null);
         }
       } catch (e: any) {
         setError(e?.message || 'Load failed');
