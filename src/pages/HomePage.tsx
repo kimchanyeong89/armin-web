@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import OpenStreetMapComponent from '../components/OpenStreetMapComponent';
 import D3GeoGlobeOrtho from "../components/D3GeoGlobeOrtho";
+import D3GeoGlobeSimplified from "../components/D3GeoGlobeSimplified";
 import ExhibitionBanner from "../components/ExhibitionBanner";
 import ExhibitionDetails from "../components/ExhibitionDetails";
 import ExhibitionModal from "../components/ExhibitionModal";
@@ -43,7 +44,7 @@ export default function HomePage({ exhibitions }: HomePageProps) {
   });
   const [selectedExhibition, setSelectedExhibition] = useState<Exhibition | null>(initialFromHistory.parent);
   const [selectedModalExhibition, setSelectedModalExhibition] = useState<ExhibitionItem | null>(initialFromHistory.item);
-  const [mapMode, setMapMode] = useState<'globe' | 'd3geo' | 'd3geo-globe'>('d3geo');
+  const [mapMode, setMapMode] = useState<'globe' | 'd3geo' | 'd3geo-globe' | 'd3geo-globe-simplified'>('d3geo');
   // Removed Outline Globe toggle
   // D3 globe is the only globe mode when Globe is ON
   // Globe view uses react-globe.gl only (Cesium removed)
@@ -264,6 +265,8 @@ export default function HomePage({ exhibitions }: HomePageProps) {
       key={resetZoomKey}
       focusLatLng={focusTarget ? { lat: focusTarget.latitude, lng: focusTarget.longitude } : userLocation || undefined}
     />
+  ) : mapMode === 'd3geo-globe-simplified' ? (
+    <D3GeoGlobeSimplified />
   ) : (
     <OpenStreetMapComponent
       key={resetZoomKey}
@@ -307,6 +310,22 @@ export default function HomePage({ exhibitions }: HomePageProps) {
           }}
         >
           My location
+        </button>
+        <button
+          onClick={() => setMapMode('d3geo-globe-simplified')}
+          style={{
+            padding: "8px 12px",
+            borderRadius: 8,
+            border: mapMode === 'd3geo-globe-simplified' ? "1px solid #111827" : "1px solid #374151",
+            background: mapMode === 'd3geo-globe-simplified' ? "#111827" : "#fff",
+            color: mapMode === 'd3geo-globe-simplified' ? "#fff" : "#374151",
+            cursor: "pointer",
+            boxShadow: "0 2px 6px rgba(0,0,0,0.15)",
+            minWidth: 96,
+            fontWeight: 700,
+          }}
+        >
+          SIMPLE GLOBE
         </button>
         <button
           onClick={() => setMapMode('globe')}
