@@ -33,9 +33,9 @@ export default function D3GeoGlobeSimplified() {
         if (!countriesTopo) countriesTopo = await fetchJsonSafe('/atlas/countries-110m.json');
         if (!countriesTopo) countriesTopo = await fetchJsonSafe('/atlas/package/countries-50m.json');
 
-        // Admin-1 states/provinces (topo). Use 10m if available, else skip.
-        let statesTopo = await fetchJsonSafe('/atlas/states-10m.json');
-        if (!statesTopo) statesTopo = await fetchJsonSafe('/atlas/package/countries-50m.json'); // harmless fallback (won't render admin1)
+  // Admin-1 states/provinces: prefer TopoJSON (10m) then GeoJSON fallback
+  let statesTopo = await fetchJsonSafe('/atlas/states-10m.json');
+  const statesGeo = statesTopo ? null : await fetchJsonSafe('/atlas/ne_50m_admin_1_states_provinces.geojson');
 
         if (!alive) return;
         if (!countriesTopo || countriesTopo.type !== 'Topology') throw new Error('Failed to load TopoJSON for countries');
@@ -49,13 +49,21 @@ export default function D3GeoGlobeSimplified() {
         } catch {}
 
         if (statesTopo && statesTopo.type === 'Topology') {
-          const statesObj = (statesTopo.objects as any).states || (Object.values(statesTopo.objects || {}) as any)[0];
-          try {
-            const admin1 = topojsonMesh(statesTopo, statesObj, (a: any, b: any) => a !== b);
-            setAdmin1Lines(admin1);
-          } catch {
+          const objects = statesTopo.objects || {};
+          const key = Object.keys(objects).find(k => /state|admin.?1|province/i.test(k)) || null;
+          if (key) {
+            try {
+              const admin1 = topojsonMesh(statesTopo, (objects as any)[key], (a: any, b: any) => a !== b);
+              setAdmin1Lines(admin1);
+            } catch {
+              setAdmin1Lines(null);
+            }
+          } else {
             setAdmin1Lines(null);
           }
+        } else if (statesGeo && statesGeo.type === 'FeatureCollection') {
+          // Use polygons as stroke-only outlines
+          setAdmin1Lines(statesGeo);
         } else {
           setAdmin1Lines(null);
         }
