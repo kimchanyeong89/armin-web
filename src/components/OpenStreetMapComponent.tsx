@@ -168,6 +168,28 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng }) =
                 setMuniError('No ISO3 code available for this country');
                 return;
               }
+              // 1) 선택 국가로 확대/중심 이동 (부드러운 트랜지션)
+              try {
+                const b = path.bounds(country);
+                const dx = b[1][0] - b[0][0];
+                const dy = b[1][1] - b[0][1];
+                const x = (b[0][0] + b[1][0]) / 2;
+                const y = (b[0][1] + b[1][1]) / 2;
+                // viewport에 여유롭게 맞추는 배율
+                let k = 0.9 / Math.max(dx / width, dy / height);
+                // 도시/지자체 보이도록 하한 보장
+                k = Math.max(k, 2.2, minZoom);
+                k = Math.min(k, 8);
+                const tx = width / 2 - k * x;
+                const ty = height / 2 - k * y;
+                d3.select(svgRef.current)
+                  .transition()
+                  .duration(800)
+                  .ease(d3.easeCubicOut)
+                  .call(zoom.transform as any, d3.zoomIdentity.translate(tx, ty).scale(k));
+              } catch (e) {
+                console.warn('fit to country failed', e);
+              }
               setSelectedISO3(iso3);
               await loadMunicipalities(iso3);
             });
@@ -222,7 +244,11 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng }) =
             .style('pointer-events', 'visibleStroke')
             .on('mouseover', function(event) {
               d3.select(this).attr('stroke-width', 0.35);
-              showTooltip(svg, event, `🏙️ ${getMunicipalityName((feat.properties || {}))}`);
+                  const p = feat.properties || {};
+                  const city = getMunicipalityName(p);
+                  const parent = p?.ADM1_EN || p?.NAME_1 || p?.region || p?.province || '';
+                  const txt = parent ? `🏙️ ${city} · ${parent}` : `🏙️ ${city}`;
+                  showTooltip(svg, event, txt);
             })
             .on('mouseout', function() {
               d3.select(this).attr('stroke-width', 0.2);
