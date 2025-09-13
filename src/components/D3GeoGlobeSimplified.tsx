@@ -120,25 +120,23 @@ export default function D3GeoGlobeSimplified() {
         .join('path')
         .attr('d', path as any)
         .attr('fill', '#000')
-        .attr('fill-opacity', 0.001)
+        .style('opacity', 0)
         .attr('stroke', 'none')
         .style('cursor', 'pointer')
         .on('click', async (_evt: any, d: any) => {
           const props = d?.properties || {};
-          const iso2 = props.iso_a2 || props.ISO_A2 || props.iso2 || props.ISO2 || null;
-          const iso3 = props.iso_a3 || props.ISO_A3 || props.iso3 || props.ISO3 || d?.id || null;
-          const isoCandidates = [iso2, iso3].filter(Boolean) as string[];
+          const iso3 = getISO3(props);
           let loaded: any | null = null;
-          for (const iso of isoCandidates) {
-            if (muniCacheRef.current.has(iso)) {
-              loaded = muniCacheRef.current.get(iso);
-              break;
-            }
-            const muni = await fetchMunicipalGeo(iso);
-            if (muni && muni.geojson) {
-              loaded = muni.geojson;
-              muniCacheRef.current.set(iso, loaded);
-              break;
+          if (iso3) {
+            const key = iso3;
+            if (muniCacheRef.current.has(key)) {
+              loaded = muniCacheRef.current.get(key);
+            } else {
+              const muni = await fetchMunicipalGeo(iso3);
+              if (muni && muni.geojson) {
+                loaded = muni.geojson;
+                muniCacheRef.current.set(key, loaded);
+              }
             }
           }
           setMunicipalFC(loaded);
@@ -187,12 +185,32 @@ export default function D3GeoGlobeSimplified() {
     return () => { try { ro.disconnect(); } catch {} };
   }, [admin0Lines, admin1Lines, countriesFC, municipalFC, loading, error]);
 
+  // Derive robust ISO3 code from Natural Earth properties
+  function getISO3(props: any): string | null {
+    const cands = [
+      props?.adm0_a3,
+      props?.ADM0_A3,
+      props?.A3,
+      props?.SOV_A3,
+      props?.GU_A3,
+      props?.WB_A3,
+      props?.ISO_A3,
+      props?.iso_a3,
+    ].filter(Boolean) as string[];
+    for (const c of cands) {
+      const v = String(c).toUpperCase();
+      if (/^[A-Z]{3}$/.test(v)) return v;
+    }
+    return null;
+  }
+
   // Fetch municipal boundaries helper (GeoBoundaries) — returns GeoJSON polygons rendered as stroke-only outlines
   async function fetchMunicipalGeo(iso: string): Promise<{ level: string; geojson: any } | null> {
     const tryLevels = ["ADM3", "ADM2", "ADM4"];
     for (const level of tryLevels) {
       try {
-        const url = `https://www.geoboundaries.org/gbRequest.html?ISO=${encodeURIComponent(iso)}&ADM=${encodeURIComponent(level)}`;
+        const iso3 = String(iso).toUpperCase();
+        const url = `https://www.geoboundaries.org/gbRequest.html?ISO=${encodeURIComponent(iso3)}&ADM=${encodeURIComponent(level)}`;
         const resp = await fetch(url, { mode: 'cors' });
         if (!resp.ok) continue;
         const data = await resp.json();
