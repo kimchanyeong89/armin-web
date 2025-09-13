@@ -167,7 +167,7 @@ function WorldMap({ onSelectExhibition, exhibitions }: WorldMapProps) {
             cursor: "pointer"
           }}
         >
-          {isGlobe ? "Switch to flat map" : "Switch to globe"}
+          {isGlobe ? "Switch to 2D map" : "Switch to globe"}
         </button>
       </div>
 
