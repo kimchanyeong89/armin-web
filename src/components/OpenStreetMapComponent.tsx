@@ -12,6 +12,10 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng }) =
   const [error, setError] = useState<string | null>(null);
   const [countries, setCountries] = useState<any[]>([]);
   const [states, setStates] = useState<any[]>([]);
+  const [selectedISO3, setSelectedISO3] = useState<string | null>(null);
+  const [muniFeatures, setMuniFeatures] = useState<any[] | null>(null);
+  const [muniLoading, setMuniLoading] = useState(false);
+  const [muniError, setMuniError] = useState<string | null>(null);
 
   useEffect(() => {
     const loadAllData = async () => {
@@ -106,11 +110,20 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng }) =
 
     const path = geoPath().projection(projection);
 
-    // 배경 (흰색)
+    // 배경 (흰색) - 배경 클릭 시 도시 모드 해제
     svg.append('rect')
       .attr('width', width)
       .attr('height', height)
-      .attr('fill', '#ffffff');
+      .attr('fill', '#ffffff')
+      .style('cursor', selectedISO3 ? 'pointer' : 'default')
+      .on('click', () => {
+        // 빈 배경 클릭으로 도시 호버 모드 해제
+        if (selectedISO3) {
+          setSelectedISO3(null);
+          setMuniFeatures(null);
+          setMuniError(null);
+        }
+      });
 
     // 1. 국가 경계선 그리기 (매우 얇은 검은색) - 무한 반복을 위해 정확한 측정
     const countryGroup = svg.append('g').attr('class', 'countries');
@@ -124,7 +137,7 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng }) =
     console.log('Left Bound:', leftBound, 'Right Bound:', rightBound);
     
   // 무한 스크롤용 복제 수를 5 -> 3개로 축소 (좌/원/우)
-  for (let offset = -1; offset <= 1; offset++) {
+    for (let offset = -1; offset <= 1; offset++) {
       const offsetX = offset * actualWorldWidth;
       countries.forEach((country, index) => {
         try {
@@ -140,11 +153,23 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng }) =
             .style('cursor', 'pointer')
             .on('mouseover', function(event) {
               d3.select(this).attr('stroke-width', 0.8);
-              showTooltip(svg, event, `🏳️ ${country.properties?.name || 'Unknown Country'}`);
+              showTooltip(svg, event, `🏳️ ${getCountryName(country.properties)}`);
             })
             .on('mouseout', function() {
               d3.select(this).attr('stroke-width', 0.4);
               svg.select('.tooltip').remove();
+            })
+            .on('click', async (event) => {
+              // 중앙 복제본에 대해서만 로드 트리거 (offset===0인 path만)
+              if (offset !== 0) return;
+              event.stopPropagation();
+              const iso3 = getISO3(country.properties);
+              if (!iso3) {
+                setMuniError('No ISO3 code available for this country');
+                return;
+              }
+              setSelectedISO3(iso3);
+              await loadMunicipalities(iso3);
             });
         } catch (error) {
           console.warn(`국가 ${index} 렌더링 실패:`, error);
@@ -153,7 +178,7 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng }) =
     }
 
     // 2. 주/도 경계선 그리기 (극도로 얇은 회색) - 무한 반복을 위해 5개 복사본
-    const stateGroup = svg.append('g').attr('class', 'states');
+  const stateGroup = svg.append('g').attr('class', 'states');
     
   // 주/도 경계도 5 -> 3개로 축소 (좌/원/우). 이벤트는 비활성화하여 히트 테스트 비용 절감
   for (let offset = -1; offset <= 1; offset++) {
@@ -175,6 +200,39 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng }) =
         }
       });
     }
+
+    // 3. 도시/지자체 경계 오버레이 (선택된 국가만 표시)
+    const muniGroup = svg.append('g').attr('class', 'municipalities');
+    const CITY_VISIBLE_K = 2.2;
+
+    const renderMunicipalities = () => {
+      muniGroup.selectAll('*').remove();
+      if (!muniFeatures || !muniFeatures.length) return;
+      // 중앙에만 렌더 (wrap 미적용)
+      muniFeatures.forEach((feat, idx) => {
+        try {
+          muniGroup.append('path')
+            .datum(feat)
+            .attr('d', path as any)
+            .attr('fill', 'none')
+            .attr('stroke', '#000')
+            .attr('stroke-width', 0.2)
+            .attr('vector-effect', 'non-scaling-stroke')
+            .attr('stroke-opacity', 0.9)
+            .style('pointer-events', 'visibleStroke')
+            .on('mouseover', function(event) {
+              d3.select(this).attr('stroke-width', 0.35);
+              showTooltip(svg, event, `🏙️ ${getMunicipalityName((feat.properties || {}))}`);
+            })
+            .on('mouseout', function() {
+              d3.select(this).attr('stroke-width', 0.2);
+              svg.select('.tooltip').remove();
+            });
+        } catch (e) {
+          console.warn(`지자체 ${idx} 렌더링 실패:`, e);
+        }
+      });
+    };
 
     // 툴팁 표시 함수
     function showTooltip(svg: any, event: any, text: string) {
@@ -218,9 +276,12 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng }) =
         // 단순히 모든 레이어에 동일한 transform 적용
         countryGroup.attr('transform', transform);
         stateGroup.attr('transform', transform);
+    muniGroup.attr('transform', transform);
 
     // 낮은 배율에서는 주/도 경계 숨김 (페인트 비용 절감)
     stateGroup.attr('display', transform.k >= STATE_VISIBLE_K ? null : 'none');
+    // 도시/지자체는 더 높은 배율에서만 표시
+    muniGroup.attr('display', transform.k >= CITY_VISIBLE_K && selectedISO3 ? null : 'none');
       });
 
     console.log('Min Zoom:', minZoom.toFixed(3), 'Base Min Zoom:', baseMinZoom.toFixed(3), 'Width Ratio:', minZoomForWidth.toFixed(3));
@@ -238,6 +299,7 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng }) =
 
   // 초기 표시 상태도 배율 기준으로 맞춤
   stateGroup.attr('display', baseMinZoom >= STATE_VISIBLE_K ? null : 'none');
+  muniGroup.attr('display', baseMinZoom >= CITY_VISIBLE_K && selectedISO3 ? null : 'none');
     }
 
     console.log('상세 지도 렌더링 완료!');
@@ -247,7 +309,77 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng }) =
       window.removeEventListener('resize', handleResize);
     };
 
-  }, [countries, states, loading, error, focusLatLng]);
+    // 국가 선택/도시데이터 변경 시 오버레이 업데이트
+    renderMunicipalities();
+
+  }, [countries, states, loading, error, focusLatLng, selectedISO3, muniFeatures]);
+
+  // 국가별 도시/지자체 경계 로더
+  async function loadMunicipalities(iso3: string) {
+    try {
+      setMuniLoading(true);
+      setMuniError(null);
+      setMuniFeatures(null);
+
+      // 1) GeoBoundaries gbRequest로 ADM2 시도
+      const reqUrl = `https://www.geoboundaries.org/gbRequest.html?ISO=${encodeURIComponent(iso3)}&ADM=ADM2`;
+      const req = await fetch(reqUrl, { mode: 'cors' });
+      if (req.ok) {
+        const info = await req.json();
+        const dl = (Array.isArray(info) ? info[0]?.gjDownloadURL : info?.gjDownloadURL) || null;
+        if (dl) {
+          const gj = await fetch(dl, { mode: 'cors' });
+          if (gj.ok) {
+            const data = await gj.json();
+            const feats = data.features || [];
+            if (feats.length) {
+              setMuniFeatures(feats);
+              setMuniLoading(false);
+              return;
+            }
+          }
+        }
+      }
+
+      // 2) 실패 시 ADM1(주/도)로 폴백 (기존 states에서 ISO3 일치 필터)
+      const filtered = states.filter((s: any) => {
+        const p = s.properties || {};
+        const cIso = (p.adm0_a3 || p.ADM0_A3 || p.iso_a3 || p.ISO_A3 || p.GU_A3 || '').toUpperCase();
+        return cIso === iso3.toUpperCase();
+      });
+      if (filtered.length) {
+        setMuniFeatures(filtered);
+        setMuniLoading(false);
+        return;
+      }
+
+      throw new Error('No municipal/subdivision data available');
+    } catch (e: any) {
+      console.warn('Municipality load failed:', e);
+      setMuniError(e?.message || 'Failed to load city boundaries');
+    } finally {
+      setMuniLoading(false);
+    }
+  }
+
+  // 이름 보조 유틸
+  function getCountryName(p: any): string {
+    return (
+      p?.name || p?.NAME || p?.ADMIN || p?.name_long || p?.SOVEREIGNT || p?.FORMAL_EN || p?.BRK_NAME || 'Unknown Country'
+    );
+  }
+  function getISO3(p: any): string | null {
+    const v = p?.iso_a3 || p?.ISO_A3 || p?.adm0_a3 || p?.ADM0_A3 || p?.WB_A3 || p?.GU_A3;
+    if (!v) return null;
+    const s = String(v).toUpperCase();
+    if (s === '---' || s === 'XXX') return null;
+    return s;
+  }
+  function getMunicipalityName(p: any): string {
+    return (
+      p?.shapeName || p?.NAME || p?.NAME_2 || p?.NAME_1 || p?.name || p?.full_name || p?.ENGTYPE_2 || 'Unknown City'
+    );
+  }
 
   if (loading) {
     return (
@@ -331,8 +463,18 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng }) =
         <div style={{ color: '#666', marginBottom: '4px' }}>
           🏛️ 주/도 경계 ({states.length}개)
         </div>
+        {selectedISO3 && (
+          <div style={{ color: '#111', marginTop: '6px' }}>
+            도시 경계 모드: <strong>{selectedISO3}</strong>
+            {muniLoading && <span style={{ marginLeft: 8, color: '#059669' }}>불러오는 중…</span>}
+            {muniError && <span style={{ marginLeft: 8, color: '#B91C1C' }}>실패: {muniError}</span>}
+            {!muniLoading && !muniError && muniFeatures && (
+              <span style={{ marginLeft: 8, color: '#4B5563' }}>경계 {muniFeatures.length}개</span>
+            )}
+          </div>
+        )}
         <div style={{ marginTop: '8px', fontSize: '11px', color: '#666' }}>
-          마우스오버: 상세정보 | 스크롤: 줌 | 드래그: 이동
+          마우스오버: 상세정보 | 스크롤: 줌 | 드래그: 이동 | 국가 클릭: 도시 경계 보기
         </div>
       </div>
     </div>
