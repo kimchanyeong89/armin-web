@@ -123,7 +123,8 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng }) =
     console.log('Actual World Width:', actualWorldWidth, 'Screen Width:', width);
     console.log('Left Bound:', leftBound, 'Right Bound:', rightBound);
     
-    for (let offset = -2; offset <= 2; offset++) {
+  // 무한 스크롤용 복제 수를 5 -> 3개로 축소 (좌/원/우)
+  for (let offset = -1; offset <= 1; offset++) {
       const offsetX = offset * actualWorldWidth;
       countries.forEach((country, index) => {
         try {
@@ -134,6 +135,7 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng }) =
             .attr('fill', 'rgba(255, 255, 255, 0.01)') // 거의 투명한 fill 추가 (호버 영역용)
             .attr('stroke', '#000000')
             .attr('stroke-width', 0.2)
+      .attr('vector-effect', 'non-scaling-stroke')
             .attr('stroke-opacity', 0.8)
             .style('cursor', 'pointer')
             .on('mouseover', function(event) {
@@ -153,7 +155,8 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng }) =
     // 2. 주/도 경계선 그리기 (극도로 얇은 회색) - 무한 반복을 위해 5개 복사본
     const stateGroup = svg.append('g').attr('class', 'states');
     
-    for (let offset = -2; offset <= 2; offset++) {
+  // 주/도 경계도 5 -> 3개로 축소 (좌/원/우). 이벤트는 비활성화하여 히트 테스트 비용 절감
+  for (let offset = -1; offset <= 1; offset++) {
       const offsetX = offset * actualWorldWidth;
       states.forEach((state, index) => {
         try {
@@ -161,20 +164,12 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng }) =
             .datum(state)
             .attr('d', path as any)
             .attr('transform', `translate(${offsetX}, 0)`)
-            .attr('fill', 'rgba(255, 255, 255, 0.01)') // 거의 투명한 fill 추가 (호버 영역용)
+      .attr('fill', 'none')
             .attr('stroke', '#888888')
             .attr('stroke-width', 0.08)
+      .attr('vector-effect', 'non-scaling-stroke')
             .attr('stroke-opacity', 0.3)
-            .style('cursor', 'pointer')
-            .on('mouseover', function(event) {
-              d3.select(this).attr('stroke-width', 0.25).attr('stroke-opacity', 0.6);
-              const stateName = state.properties?.name || state.properties?.NAME || 'Unknown State';
-              showTooltip(svg, event, `🏛️ ${stateName}`);
-            })
-            .on('mouseout', function() {
-              d3.select(this).attr('stroke-width', 0.08).attr('stroke-opacity', 0.3);
-              svg.select('.tooltip').remove();
-            });
+      .style('pointer-events', 'none');
         } catch (error) {
           console.warn(`주/도 ${index} 렌더링 실패:`, error);
         }
@@ -214,7 +209,8 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng }) =
     const baseMinZoom = Math.max(minZoomForWidth, minZoomForHeight * 0.8); // 안전 마진 추가
     const minZoom = baseMinZoom * 0.85; // 중간값: 15% 정도 더 줌아웃 가능하도록 설정
     
-    const zoom = d3.zoom<SVGSVGElement, unknown>()
+  const STATE_VISIBLE_K = 1.6; // 이 배율 이상에서만 주/도 경계 표시
+  const zoom = d3.zoom<SVGSVGElement, unknown>()
       .scaleExtent([minZoom, 8]) // 최소 줌을 동적으로 계산
       .on('zoom', (event) => {
         const transform = event.transform;
@@ -222,6 +218,9 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng }) =
         // 단순히 모든 레이어에 동일한 transform 적용
         countryGroup.attr('transform', transform);
         stateGroup.attr('transform', transform);
+
+    // 낮은 배율에서는 주/도 경계 숨김 (페인트 비용 절감)
+    stateGroup.attr('display', transform.k >= STATE_VISIBLE_K ? null : 'none');
       });
 
     console.log('Min Zoom:', minZoom.toFixed(3), 'Base Min Zoom:', baseMinZoom.toFixed(3), 'Width Ratio:', minZoomForWidth.toFixed(3));
@@ -230,12 +229,15 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng }) =
       d3.select(svgRef.current).call(zoom);
       
       // 초기 줌과 위치를 훨씬 아래로, 조금 오른쪽으로 설정
-      d3.select(svgRef.current).call(
+  d3.select(svgRef.current).call(
         zoom.transform,
         d3.zoomIdentity
           .scale(baseMinZoom)
           .translate(width * 0.05, -height * 0.25) // 오른쪽으로 5%, 아래로 25% 이동
       );
+
+  // 초기 표시 상태도 배율 기준으로 맞춤
+  stateGroup.attr('display', baseMinZoom >= STATE_VISIBLE_K ? null : 'none');
     }
 
     console.log('상세 지도 렌더링 완료!');
