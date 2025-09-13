@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import * as d3 from 'd3';
-import { mesh as topojsonMesh } from 'topojson-client';
+import { mesh as topojsonMesh, feature as topojsonFeature } from 'topojson-client';
 
 // Minimal orthographic globe rendering ONLY boundary lines (admin-0 and admin-1)
 export default function D3GeoGlobeSimplified() {
@@ -9,6 +9,9 @@ export default function D3GeoGlobeSimplified() {
   const [error, setError] = useState<string | null>(null);
   const [admin0Lines, setAdmin0Lines] = useState<any | null>(null);
   const [admin1Lines, setAdmin1Lines] = useState<any | null>(null);
+  const [countriesFC, setCountriesFC] = useState<any | null>(null);
+  const [municipalFC, setMunicipalFC] = useState<any | null>(null);
+  const muniCacheRef = useRef<Map<string, any>>(new Map());
 
   useEffect(() => {
     let alive = true;
@@ -40,6 +43,10 @@ export default function D3GeoGlobeSimplified() {
         const countriesObj = (countriesTopo.objects as any).countries || (Object.values(countriesTopo.objects || {}) as any)[0];
         const admin0 = topojsonMesh(countriesTopo, countriesObj, (a: any, b: any) => a !== b);
         setAdmin0Lines(admin0);
+        try {
+          const fc = topojsonFeature(countriesTopo, countriesObj as any);
+          setCountriesFC(fc);
+        } catch {}
 
         if (statesTopo && statesTopo.type === 'Topology') {
           const statesObj = (statesTopo.objects as any).states || (Object.values(statesTopo.objects || {}) as any)[0];
@@ -96,6 +103,53 @@ export default function D3GeoGlobeSimplified() {
         .attr('d', path as any);
     }
 
+    // Country hit layer for click-to-load municipal boundaries
+    if (countriesFC) {
+      const features: any[] = (countriesFC.features || []) as any[];
+      svg.append('g').attr('class', 'countries-hit')
+        .selectAll('path')
+        .data(features)
+        .join('path')
+        .attr('d', path as any)
+        .attr('fill', '#000')
+        .attr('fill-opacity', 0.001)
+        .attr('stroke', 'none')
+        .style('cursor', 'pointer')
+        .on('click', async (_evt: any, d: any) => {
+          const props = d?.properties || {};
+          const iso2 = props.iso_a2 || props.ISO_A2 || props.iso2 || props.ISO2 || null;
+          const iso3 = props.iso_a3 || props.ISO_A3 || props.iso3 || props.ISO3 || d?.id || null;
+          const isoCandidates = [iso2, iso3].filter(Boolean) as string[];
+          let loaded: any | null = null;
+          for (const iso of isoCandidates) {
+            if (muniCacheRef.current.has(iso)) {
+              loaded = muniCacheRef.current.get(iso);
+              break;
+            }
+            const muni = await fetchMunicipalGeo(iso);
+            if (muni && muni.geojson) {
+              loaded = muni.geojson;
+              muniCacheRef.current.set(iso, loaded);
+              break;
+            }
+          }
+          setMunicipalFC(loaded);
+          svg.selectAll('path').attr('d', path as any);
+        });
+    }
+
+    // Municipal (city admin) boundaries overlay as stroke-only lines
+    if (municipalFC) {
+      svg.append('path')
+        .datum(municipalFC)
+        .attr('fill', 'none')
+        .attr('stroke', '#000')
+        .attr('stroke-width', 0.45)
+        .attr('vector-effect', 'non-scaling-stroke')
+        .attr('shape-rendering', 'crispEdges')
+        .attr('d', path as any);
+    }
+
     // Basic drag to rotate
     let prev: [number, number] | null = null;
     svg.call(d3.drag<SVGSVGElement, unknown>()
@@ -123,9 +177,31 @@ export default function D3GeoGlobeSimplified() {
     const ro = new ResizeObserver(onResize);
     ro.observe(svgRef.current as any);
     return () => { try { ro.disconnect(); } catch {} };
-  }, [admin0Lines, admin1Lines, loading, error]);
+  }, [admin0Lines, admin1Lines, countriesFC, municipalFC, loading, error]);
 
-  if (loading) return <div style={{position:'fixed',inset:0,display:'grid',placeItems:'center'}}>로딩…(경계선 지도)</div>;
+  // Fetch municipal boundaries helper (GeoBoundaries) — returns GeoJSON polygons rendered as stroke-only outlines
+  async function fetchMunicipalGeo(iso: string): Promise<{ level: string; geojson: any } | null> {
+    const tryLevels = ["ADM3", "ADM2", "ADM4"];
+    for (const level of tryLevels) {
+      try {
+        const url = `https://www.geoboundaries.org/gbRequest.html?ISO=${encodeURIComponent(iso)}&ADM=${encodeURIComponent(level)}`;
+        const resp = await fetch(url, { mode: 'cors' });
+        if (!resp.ok) continue;
+        const data = await resp.json();
+        const item = Array.isArray(data) ? (data[0] || null) : data;
+        const gj = item?.gjDownloadURL || item?.gjDownloadUrl || item?.geojson || item?.downloadURL || null;
+        if (gj && typeof gj === 'string') {
+          const gjResp = await fetch(gj, { mode: 'cors' });
+          if (!gjResp.ok) continue;
+          const gjData = await gjResp.json();
+          return { level, geojson: gjData };
+        }
+      } catch {}
+    }
+    return null;
+  }
+
+  if (loading) return <div style={{position:'fixed',inset:0,display:'grid',placeItems:'center'}}>로딩…(경계선+행정 라인)</div>;
   if (error) return <div style={{position:'fixed',inset:0,display:'grid',placeItems:'center',color:'#b91c1c'}}>에러: {error}</div>;
   return <svg ref={svgRef} style={{position:'fixed',top:0,left:0,width:'100vw',height:'100vh',display:'block',background:'#fff'}} />;
 }
