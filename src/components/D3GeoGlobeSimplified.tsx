@@ -77,7 +77,7 @@ export default function D3GeoGlobeSimplified() {
     const rect = (svgRef.current as any).getBoundingClientRect();
     const width = rect.width, height = rect.height;
     svg.attr('width', width).attr('height', height);
-    const base = Math.min(width, height) * 0.38;
+  const base = Math.min(width, height) * 0.5;
     const projection = d3.geoOrthographic().scale(base).translate([width/2, height/2]).clipAngle(90).precision(0.6);
     const path = d3.geoPath(projection);
 
@@ -123,7 +123,7 @@ export default function D3GeoGlobeSimplified() {
       const rr = (svgRef.current as any).getBoundingClientRect();
       const w = rr.width, h = rr.height;
       svg.attr('width', w).attr('height', h);
-      const s = Math.min(w, h) * 0.38;
+  const s = Math.min(w, h) * 0.5;
       projection.translate([w/2, h/2]).scale(s);
       svg.selectAll('path').attr('d', path as any);
     };
