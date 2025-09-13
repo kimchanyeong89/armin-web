@@ -4,7 +4,7 @@ import { mesh as topojsonMesh, feature as topojsonFeature } from 'topojson-clien
 
 // Minimal orthographic globe rendering ONLY boundary lines (admin-0 and admin-1)
 export default function D3GeoGlobeSimplified() {
-  const svgRef = useRef<SVGSVGElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [admin0Lines, setAdmin0Lines] = useState<any | null>(null);
@@ -78,111 +78,137 @@ export default function D3GeoGlobeSimplified() {
   }, []);
 
   useEffect(() => {
-    if (!svgRef.current || loading || error || !admin0Lines) return;
-    const svg = d3.select(svgRef.current);
-    svg.selectAll('*').remove();
-    const width = window.innerWidth;
-    const height = window.innerHeight;
-    svg.attr('width', width).attr('height', height)
-      .attr('viewBox', `0 0 ${width} ${height}`);
+    if (!canvasRef.current || loading || error || !admin0Lines) return;
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
+
+    const setupCanvas = () => {
+      const dpr = Math.max(1, Math.floor(window.devicePixelRatio || 1));
+      const width = window.innerWidth;
+      const height = window.innerHeight;
+      canvas.style.width = width + 'px';
+      canvas.style.height = height + 'px';
+      canvas.width = width * dpr;
+      canvas.height = height * dpr;
+      ctx.setTransform(1, 0, 0, 1, 0, 0);
+      ctx.scale(dpr, dpr);
+      return { width, height, dpr };
+    };
+
+    const { width, height } = setupCanvas();
     const base = Math.min(width, height) * 0.52;
     const projection = d3.geoOrthographic().scale(base).translate([width/2, height/2]).clipAngle(90).precision(0.6);
-    const path = d3.geoPath(projection);
+    const path = d3.geoPath(projection, ctx);
 
-    // Admin-0 country boundaries
-    svg.append('path')
-      .datum(admin0Lines)
-      .attr('fill', 'none')
-      .attr('stroke', '#000')
-      .attr('stroke-width', 0.6)
-      .attr('vector-effect', 'non-scaling-stroke')
-      .attr('shape-rendering', 'crispEdges')
-      .attr('d', path as any);
+    const render = () => {
+      ctx.clearRect(0, 0, width, height);
+      ctx.lineJoin = 'round';
+      ctx.lineCap = 'round';
 
-    // Admin-1 state/province boundaries (if available)
-    if (admin1Lines) {
-      svg.append('path')
-        .datum(admin1Lines)
-        .attr('fill', 'none')
-        .attr('stroke', '#000')
-        .attr('stroke-width', 0.35)
-        .attr('vector-effect', 'non-scaling-stroke')
-        .attr('shape-rendering', 'crispEdges')
-        .attr('d', path as any);
-    }
+      // Admin-1 first (thin)
+      if (admin1Lines) {
+        ctx.beginPath();
+        path(admin1Lines as any);
+        ctx.strokeStyle = '#000';
+        ctx.lineWidth = 0.35;
+        ctx.stroke();
+      }
 
-    // Country hit layer for click-to-load municipal boundaries
-    if (countriesFC) {
-      const features: any[] = (countriesFC.features || []) as any[];
-      svg.append('g').attr('class', 'countries-hit')
-        .selectAll('path')
-        .data(features)
-        .join('path')
-        .attr('d', path as any)
-        .attr('fill', '#000')
-        .style('opacity', 0)
-        .attr('stroke', 'none')
-        .style('cursor', 'pointer')
-        .on('click', async (_evt: any, d: any) => {
-          const props = d?.properties || {};
-          const iso3 = getISO3(props);
-          let loaded: any | null = null;
-          if (iso3) {
-            const key = iso3;
-            if (muniCacheRef.current.has(key)) {
-              loaded = muniCacheRef.current.get(key);
-            } else {
-              const muni = await fetchMunicipalGeo(iso3);
-              if (muni && muni.geojson) {
-                loaded = muni.geojson;
-                muniCacheRef.current.set(key, loaded);
-              }
-            }
-          }
-          setMunicipalFC(loaded);
-          svg.selectAll('path').attr('d', path as any);
-        });
-    }
+      // Admin-0 borders (thicker)
+      ctx.beginPath();
+      path(admin0Lines as any);
+      ctx.strokeStyle = '#000';
+      ctx.lineWidth = 0.6;
+      ctx.stroke();
 
-    // Municipal (city admin) boundaries overlay as stroke-only lines
-    if (municipalFC) {
-      svg.append('path')
-        .datum(municipalFC)
-        .attr('fill', 'none')
-        .attr('stroke', '#000')
-        .attr('stroke-width', 0.45)
-        .attr('vector-effect', 'non-scaling-stroke')
-        .attr('shape-rendering', 'crispEdges')
-        .attr('d', path as any);
-    }
+      // Municipal overlays (if present)
+      if (municipalFC) {
+        ctx.beginPath();
+        path(municipalFC as any);
+        ctx.strokeStyle = '#000';
+        ctx.lineWidth = 0.45;
+        ctx.stroke();
+      }
+    };
 
-    // Basic drag to rotate
+    render();
+
+    // Drag rotate
     let prev: [number, number] | null = null;
-    svg.call(d3.drag<SVGSVGElement, unknown>()
-      .on('start', (ev: any) => { prev = [ev.x, ev.y]; })
-      .on('drag', (ev: any) => {
-        if (!prev) return;
-        const dx = ev.x - prev[0];
-        const dy = ev.y - prev[1];
-        const r = projection.rotate();
-        projection.rotate([r[0] + dx * 0.5, Math.max(-85, Math.min(85, r[1] - dy * 0.5)), r[2]]);
-        prev = [ev.x, ev.y];
-        svg.selectAll('path').attr('d', path as any);
-      })
-      .on('end', () => { prev = null; }) as any);
+    const onPointerDown = (ev: PointerEvent) => {
+      prev = [ev.clientX, ev.clientY];
+      canvas.setPointerCapture(ev.pointerId);
+    };
+    const onPointerMove = (ev: PointerEvent) => {
+      if (!prev) return;
+      const dx = ev.clientX - prev[0];
+      const dy = ev.clientY - prev[1];
+      const r = projection.rotate();
+      projection.rotate([r[0] + dx * 0.5, Math.max(-85, Math.min(85, r[1] - dy * 0.5)), r[2]]);
+      prev = [ev.clientX, ev.clientY];
+      render();
+    };
+    const onPointerUp = (ev: PointerEvent) => {
+      try { canvas.releasePointerCapture(ev.pointerId); } catch {}
+      prev = null;
+    };
+    canvas.addEventListener('pointerdown', onPointerDown);
+    canvas.addEventListener('pointermove', onPointerMove);
+    canvas.addEventListener('pointerup', onPointerUp);
+    canvas.addEventListener('pointercancel', onPointerUp);
 
-    // Resize handling
+    // Click to fetch municipal using geoContains
+    const onClick = async (ev: MouseEvent) => {
+      if (!countriesFC) return;
+      const rect = canvas.getBoundingClientRect();
+      const x = ev.clientX - rect.left;
+      const y = ev.clientY - rect.top;
+      const lonlat = (projection.invert ? projection.invert([x, y]) : null) as any;
+      if (!lonlat) return;
+      const feats: any[] = (countriesFC.features || []) as any[];
+      let picked: any | null = null;
+      for (const f of feats) {
+        try {
+          if (d3.geoContains(f as any, lonlat as any)) { picked = f; break; }
+        } catch {}
+      }
+      if (!picked) return;
+      const iso3 = getISO3(picked.properties || {});
+      if (!iso3) return;
+      let loaded: any | null = null;
+      if (muniCacheRef.current.has(iso3)) {
+        loaded = muniCacheRef.current.get(iso3);
+      } else {
+        const muni = await fetchMunicipalGeo(iso3);
+        if (muni && muni.geojson) {
+          loaded = muni.geojson;
+          muniCacheRef.current.set(iso3, loaded);
+        }
+      }
+      setMunicipalFC(loaded);
+      render();
+    };
+    canvas.addEventListener('click', onClick);
+
+    // Resize
     const onResize = () => {
-      const w = window.innerWidth;
-      const h = window.innerHeight;
-      svg.attr('width', w).attr('height', h).attr('viewBox', `0 0 ${w} ${h}`);
+      const { width: w, height: h } = setupCanvas();
       const s = Math.min(w, h) * 0.52;
       projection.translate([w/2, h/2]).scale(s);
-      svg.selectAll('path').attr('d', path as any);
+      render();
     };
     const ro = new ResizeObserver(onResize);
-    ro.observe(svgRef.current as any);
-    return () => { try { ro.disconnect(); } catch {} };
+    ro.observe(document.body);
+
+    return () => {
+      try { ro.disconnect(); } catch {}
+      canvas.removeEventListener('pointerdown', onPointerDown);
+      canvas.removeEventListener('pointermove', onPointerMove);
+      canvas.removeEventListener('pointerup', onPointerUp);
+      canvas.removeEventListener('pointercancel', onPointerUp);
+      canvas.removeEventListener('click', onClick);
+    };
   }, [admin0Lines, admin1Lines, countriesFC, municipalFC, loading, error]);
 
   // Derive robust ISO3 code from Natural Earth properties
@@ -227,7 +253,7 @@ export default function D3GeoGlobeSimplified() {
     return null;
   }
 
-  if (loading) return <div style={{position:'fixed',inset:0,display:'grid',placeItems:'center'}}>로딩…(경계선+행정 라인)</div>;
+  if (loading) return <div style={{position:'fixed',inset:0,display:'grid',placeItems:'center'}}>로딩…(캔버스 경계선)</div>;
   if (error) return <div style={{position:'fixed',inset:0,display:'grid',placeItems:'center',color:'#b91c1c'}}>에러: {error}</div>;
-  return <svg ref={svgRef} style={{position:'fixed',top:0,left:0,width:'100vw',height:'100vh',display:'block',background:'#fff'}} />;
+  return <canvas ref={canvasRef} style={{position:'fixed',top:0,left:0,width:'100vw',height:'100vh',display:'block',background:'#fff'}} />;
 }
