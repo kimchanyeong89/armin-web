@@ -160,8 +160,6 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng }) =
               svg.select('.tooltip').remove();
             })
             .on('click', async (event) => {
-              // 중앙 복제본에 대해서만 로드 트리거 (offset===0인 path만)
-              if (offset !== 0) return;
               event.stopPropagation();
               const iso3 = getISO3(country.properties);
               if (!iso3) {
@@ -170,16 +168,19 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng }) =
               }
               // 1) 선택 국가로 확대/중심 이동 (부드러운 트랜지션)
               try {
+                // 현재 렌더링된 경계의 경계박스 계산 (wrap된 복제본 클릭에도 동작)
                 const b = path.bounds(country);
                 const dx = b[1][0] - b[0][0];
                 const dy = b[1][1] - b[0][1];
-                const x = (b[0][0] + b[1][0]) / 2;
-                const y = (b[0][1] + b[1][1]) / 2;
-                // viewport에 여유롭게 맞추는 배율
-                let k = 0.9 / Math.max(dx / width, dy / height);
-                // 도시/지자체 보이도록 하한 보장
+                // fit extent 방식으로 목표 transform 계산 (여백 5%)
+                const margin = 0.05;
+                const targetW = width * (1 - margin * 2);
+                const targetH = height * (1 - margin * 2);
+                let k = Math.min(targetW / dx, targetH / dy);
                 k = Math.max(k, 2.2, minZoom);
                 k = Math.min(k, 8);
+                const x = (b[0][0] + b[1][0]) / 2;
+                const y = (b[0][1] + b[1][1]) / 2;
                 const tx = width / 2 - k * x;
                 const ty = height / 2 - k * y;
                 d3.select(svgRef.current)
