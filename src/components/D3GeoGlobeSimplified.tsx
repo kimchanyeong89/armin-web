@@ -72,12 +72,13 @@ export default function D3GeoGlobeSimplified() {
 
   useEffect(() => {
     if (!svgRef.current || loading || error || !countriesFC) return;
-    const svg = d3.select(svgRef.current);
-    svg.selectAll('*').remove();
-    const rect = (svgRef.current as any).getBoundingClientRect();
-    const width = rect.width, height = rect.height;
-    svg.attr('width', width).attr('height', height);
-  const base = Math.min(width, height) * 0.5;
+   const svg = d3.select(svgRef.current);
+   svg.selectAll('*').remove();
+   const width = window.innerWidth;
+   const height = window.innerHeight;
+   svg.attr('width', width).attr('height', height)
+     .attr('viewBox', `0 0 ${width} ${height}`);
+   const base = Math.min(width, height) * 0.52;
     const projection = d3.geoOrthographic().scale(base).translate([width/2, height/2]).clipAngle(90).precision(0.6);
     const path = d3.geoPath(projection);
 
@@ -120,10 +121,10 @@ export default function D3GeoGlobeSimplified() {
 
     // Resize
     const onResize = () => {
-      const rr = (svgRef.current as any).getBoundingClientRect();
-      const w = rr.width, h = rr.height;
-      svg.attr('width', w).attr('height', h);
-  const s = Math.min(w, h) * 0.5;
+      const w = window.innerWidth;
+      const h = window.innerHeight;
+      svg.attr('width', w).attr('height', h).attr('viewBox', `0 0 ${w} ${h}`);
+      const s = Math.min(w, h) * 0.52;
       projection.translate([w/2, h/2]).scale(s);
       svg.selectAll('path').attr('d', path as any);
     };
@@ -134,5 +135,5 @@ export default function D3GeoGlobeSimplified() {
 
   if (loading) return <div style={{position:'fixed',inset:0,display:'grid',placeItems:'center'}}>로딩…(단순화 지도)</div>;
   if (error) return <div style={{position:'fixed',inset:0,display:'grid',placeItems:'center',color:'#b91c1c'}}>에러: {error}</div>;
-  return <svg ref={svgRef} style={{position:'fixed',inset:0,display:'block',background:'#fff'}} />;
+  return <svg ref={svgRef} style={{position:'fixed',top:0,left:0,width:'100vw',height:'100vh',display:'block',background:'#fff'}} />;
 }
