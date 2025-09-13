@@ -122,8 +122,7 @@ export default function D3GeoGlobeOrtho({
   let { width, height } = measure();
   svg.attr('width', width).attr('height', height);
 
-  const BASE_SCALE_FACTOR = 0.5; // enlarge globe footprint
-  const baseScale = Math.min(width, height) * BASE_SCALE_FACTOR;
+  const baseScale = Math.min(width, height) * 0.38;
     const projection = d3.geoOrthographic()
       .scale(baseScale)
       .translate([width / 2, height / 2])
@@ -429,7 +428,7 @@ export default function D3GeoGlobeOrtho({
     
     const smoothZoom = () => {
       zoomEaseId = 0;
-  const base = Math.min(width, height) * BASE_SCALE_FACTOR;
+      const base = Math.min(width, height) * 0.38;
       const current = projection.scale();
       const target = base * targetZoomK;
   const next = current + (target - current) * 0.12; // slower, smoother convergence
@@ -483,7 +482,7 @@ export default function D3GeoGlobeOrtho({
       .on('zoom', (event) => {
         if (isAnimating) return;
         zoomK = Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, event.transform.k));
-  projection.scale(Math.min(width, height) * BASE_SCALE_FACTOR * zoomK);
+        projection.scale(Math.min(width, height) * 0.38 * zoomK);
         const t = Math.max(0, Math.min(1, (zoomK - MIN_ZOOM) / (MAX_ZOOM - MIN_ZOOM)));
         projection.precision(0.55 + 0.4 * t);
     requestRender(true, true); // force both updates for pinch
@@ -495,7 +494,7 @@ export default function D3GeoGlobeOrtho({
       const rect = measure();
       width = rect.width; height = rect.height;
       svg.attr('width', width).attr('height', height);
-  const newBase = Math.min(width, height) * BASE_SCALE_FACTOR;
+      const newBase = Math.min(width, height) * 0.38;
       projection.translate([width / 2, height / 2]).scale(newBase * zoomK);
   // Invalidate cache on size change
   pathCache.clear();
@@ -549,7 +548,7 @@ export default function D3GeoGlobeOrtho({
         const startScale = projection.scale();
         // Ensure first-click zoom meets admin1MinZoom when enabled
         const minZoomInK = enableAdmin1 ? Math.max(2.2, admin1MinZoom) : 2.2;
-  const minZoomIn = Math.min(width, height) * BASE_SCALE_FACTOR * minZoomInK;
+        const minZoomIn = Math.min(width, height) * 0.38 * minZoomInK;
         const relativeZoomIn = startScale * 1.25;
         const targetScale = Math.max(minZoomIn, relativeZoomIn);
         const scaleInterp = d3.interpolateNumber(startScale, targetScale);
@@ -595,7 +594,7 @@ export default function D3GeoGlobeOrtho({
           const rot = rotInterp(e) as [number, number, number];
           projection.rotate(rot);
           projection.scale(scaleInterp(e));
-          zoomK = projection.scale() / (Math.min(width, height) * BASE_SCALE_FACTOR);
+          zoomK = projection.scale() / (Math.min(width, height) * 0.38);
           requestRender();
           
           if (t < 1 && isAnimating) {
