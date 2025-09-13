@@ -164,9 +164,9 @@ export default function D3GeoGlobeOrtho({
       .attr('class', 'states-merged')
       .datum({ type: 'FeatureCollection', features: [] } as any)
       .attr('fill', 'none')
-      .attr('stroke', '#888')
-      .attr('stroke-width', 0.2)
-      .attr('opacity', 0.35)
+  .attr('stroke', '#000')
+  .attr('stroke-width', 0.35)
+  .attr('opacity', 1)
       .attr('vector-effect', 'non-scaling-stroke')
       .attr('shape-rendering', 'crispEdges')
       .style('display', 'none');
@@ -179,8 +179,8 @@ export default function D3GeoGlobeOrtho({
       .datum({ type: 'FeatureCollection', features: [] } as any)
       .attr('fill', 'none')
   .attr('stroke', '#000')
-  .attr('stroke-width', 0.28)
-  .attr('opacity', 1.0)
+  .attr('stroke-width', 0.4)
+  .attr('stroke-opacity', 1)
       .attr('vector-effect', 'non-scaling-stroke')
       .attr('shape-rendering', 'crispEdges')
       .style('display', 'none');
