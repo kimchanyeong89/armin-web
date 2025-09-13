@@ -38,6 +38,12 @@ export default function D3GeoGlobeOrtho({
   const [states, setStates] = useState<any[]>([]);
   const [urbanAreas, setUrbanAreas] = useState<any[]>([]);
   const [showUrban, setShowUrban] = useState<boolean>(urbanShowDefault);
+  // Persist selected country across data reloads (e.g., when states load)
+  const selectedCountryRef = useRef<any>(null);
+  // Keep latest states without forcing D3 re-init
+  const statesRef = useRef<any[]>([]);
+  // Expose internal requestRender to react to async data loads
+  const requestRenderRef = useRef<() => void>(() => {});
   // LOD & fetch state
   const hiResCountriesRef = useRef<any[] | null>(null);
   const hiResAppliedRef = useRef<boolean>(false);
@@ -218,9 +224,7 @@ export default function D3GeoGlobeOrtho({
     // Optimized Google Earth-style controls state
     let rafId = 0;
   let zoomK = MIN_ZOOM; // start at new minimum zoom level (more restricted zoom-out)
-    let isAnimating = false;
-    let selectedCountry: any = null;
-    let filteredStates: any[] = [];
+  let isAnimating = false;
     let hoverVisible = false;
     // Inertial rotation state
     let vx = 0, vy = 0; // velocity in degrees per frame
@@ -233,16 +237,17 @@ export default function D3GeoGlobeOrtho({
     const FRAME_BUDGET_MS = 12; // target 60fps with 4ms buffer
 
     // Lightweight path string cache for countries (limits memory)
-    const pathCache = new Map<string, string>();
+  const pathCache = new Map<string, string>();
     const cacheOrder: string[] = [];
     const MAX_CACHE = 32;
     const getCacheKey = (base: string) => {
       const r = projection.rotate();
       const s = projection.scale();
       // Round to reduce key churn
-      const r0 = Math.round(r[0] * 4) / 4;
-      const r1 = Math.round(r[1] * 4) / 4;
-      const sc = Math.round(s * 2) / 2;
+  // Tighter rounding to avoid visible misalignment with hit paths
+  const r0 = Math.round(r[0] * 20) / 20; // 0.05°
+  const r1 = Math.round(r[1] * 20) / 20; // 0.05°
+  const sc = Math.round(s * 10) / 10;    // 0.1 scale
       return `${base}@r${r0},${r1}|s${sc}|w${Math.round(width)}h${Math.round(height)}`;
     };
     const getCountriesD = () => {
@@ -273,7 +278,7 @@ export default function D3GeoGlobeOrtho({
       return d;
     };
 
-    const render = () => {
+  const render = () => {
       const frameStart = performance.now();
       rafId = 0;
       
@@ -298,13 +303,24 @@ export default function D3GeoGlobeOrtho({
       }
       
       // Selected country and states
+      const selectedCountry = selectedCountryRef.current;
       if (selectedCountry) {
         selectedPath.style('display', 'block').datum(selectedCountry).attr('d', path as any);
-        if (filteredStates.length > 0) {
-          statesPath
-            .style('display', 'block')
-            .datum({ type: 'FeatureCollection', features: filteredStates } as any)
-            .attr('d', path as any);
+        // Compute filtered states on-demand (only when zoomed in enough)
+        const latestStates = statesRef.current;
+        if (enableAdmin1 && zoomK >= admin1MinZoom && latestStates.length > 0) {
+          let filtered: any[] = [];
+          try {
+            filtered = latestStates.filter((s: any) => d3.geoContains(selectedCountry, (s as any).__centroid || d3.geoCentroid(s)));
+          } catch { filtered = []; }
+          if (filtered.length > 0) {
+            statesPath
+              .style('display', 'block')
+              .datum({ type: 'FeatureCollection', features: filtered } as any)
+              .attr('d', path as any);
+          } else {
+            statesPath.style('display', 'none');
+          }
         } else {
           statesPath.style('display', 'none');
         }
@@ -331,6 +347,8 @@ export default function D3GeoGlobeOrtho({
       if (forceHitUpdate) needsHitUpdate = true;
       rafId = requestAnimationFrame(render);
     };
+    // Expose a safe external trigger that forces both
+    requestRenderRef.current = () => requestRender(true, true);
 
     // Google Earth-style drag with inertia
     let dragPrev: [number, number] | null = null;
@@ -528,7 +546,7 @@ export default function D3GeoGlobeOrtho({
       })
       .on('click', (event: any, d: any) => {
         if (event && event.stopPropagation) event.stopPropagation();
-        selectedCountry = d;
+        selectedCountryRef.current = d;
         // We'll compute target zoom first, then decide on Admin1 fetch based on threshold
 
         // Smooth animate to center + zoom
@@ -537,52 +555,42 @@ export default function D3GeoGlobeOrtho({
         const endRot: [number, number, number] = [-target[0], -target[1], 0];
         const rotInterp = d3.interpolateArray(startRot, endRot);
         const startScale = projection.scale();
-        const minZoomIn = Math.min(width, height) * 0.38 * 2.2;
+        // Ensure first-click zoom meets admin1MinZoom when enabled
+        const minZoomInK = enableAdmin1 ? Math.max(2.2, admin1MinZoom) : 2.2;
+        const minZoomIn = Math.min(width, height) * 0.38 * minZoomInK;
         const relativeZoomIn = startScale * 1.25;
         const targetScale = Math.max(minZoomIn, relativeZoomIn);
-        const projectedBase = Math.min(width, height) * 0.38;
-        const clickTargetZoomK = targetScale / projectedBase;
         const scaleInterp = d3.interpolateNumber(startScale, targetScale);
         
-        // Conditionally lazy-load states data if allowed and zoom threshold met
-        if (enableAdmin1 && clickTargetZoomK >= admin1MinZoom) {
-          if (states.length === 0 && !statesFetchingRef.current) {
-            statesFetchingRef.current = true;
-            fetch('/geodata/admin1-states-10m.json')
-              .then(r => r.ok ? r.json() : null)
-              .then((raw) => {
-                if (!raw) return;
-                // convert using same helper
-                const preferKeys = ['states', 'provinces', 'admin1', 'ne_50m_admin_1'];
-                let feats: any[] = [];
-                try {
-                  if (raw.type === 'FeatureCollection') feats = raw.features || [];
-                  else if (raw.type === 'Topology' && raw.objects) {
-                    const keys = Object.keys(raw.objects);
-                    let picked: string | null = null;
-                    for (const pref of preferKeys) {
-                      const hit = keys.find(k => k.toLowerCase().includes(pref));
-                      if (hit) { picked = hit; break; }
-                    }
-                    if (!picked) picked = keys[0];
-                    const fc: any = topojsonFeature(raw, (raw.objects as any)[picked]);
-                    feats = fc.features || [];
+        // Prefetch states data on first click if allowed (independent of target zoom)
+        if (enableAdmin1 && states.length === 0 && !statesFetchingRef.current) {
+          statesFetchingRef.current = true;
+          fetch('/geodata/admin1-states-10m.json')
+            .then(r => r.ok ? r.json() : null)
+            .then((raw) => {
+              if (!raw) return;
+              // convert using same helper
+              const preferKeys = ['states', 'provinces', 'admin1', 'ne_50m_admin_1'];
+              let feats: any[] = [];
+              try {
+                if (raw.type === 'FeatureCollection') feats = raw.features || [];
+                else if (raw.type === 'Topology' && raw.objects) {
+                  const keys = Object.keys(raw.objects);
+                  let picked: string | null = null;
+                  for (const pref of preferKeys) {
+                    const hit = keys.find(k => k.toLowerCase().includes(pref));
+                    if (hit) { picked = hit; break; }
                   }
-                } catch {}
-                setStates(feats);
-              })
-              .finally(() => { statesFetchingRef.current = false; });
-          }
+                  if (!picked) picked = keys[0];
+                  const fc: any = topojsonFeature(raw, (raw.objects as any)[picked]);
+                  feats = fc.features || [];
+                }
+              } catch {}
+              setStates(feats);
+            })
+            .finally(() => { statesFetchingRef.current = false; });
         }
 
-        // Filter states by centroid containment (only show when zoom is high enough)
-        try {
-          if (enableAdmin1 && zoomK >= admin1MinZoom) {
-            filteredStates = states.filter((s: any) => d3.geoContains(d, (s as any).__centroid || d3.geoCentroid(s)));
-          } else {
-            filteredStates = [];
-          }
-        } catch { filteredStates = []; }
         requestRender();
         
         isAnimating = true;
@@ -602,13 +610,8 @@ export default function D3GeoGlobeOrtho({
             rafId = requestAnimationFrame(tick);
           } else {
             isAnimating = false;
-            // After animation completes, if Admin1 is allowed and final zoom satisfies threshold, update state paths once
-            if (enableAdmin1 && zoomK >= admin1MinZoom) {
-              try {
-                filteredStates = states.filter((s: any) => d3.geoContains(selectedCountry, (s as any).__centroid || d3.geoCentroid(s)));
-              } catch { filteredStates = []; }
-              requestRender(true, true);
-            }
+            // After animation completes, just request a full render; filtered states will compute on-demand
+            requestRender(true, true);
           }
         };
         rafId = requestAnimationFrame(tick);
@@ -618,8 +621,7 @@ export default function D3GeoGlobeOrtho({
     svg.on('click', (event: any) => {
       const targetEl = event?.target as Element | null;
       if (targetEl && targetEl.closest && targetEl.closest('g.countries-hit')) return;
-      selectedCountry = null;
-      filteredStates = [];
+  selectedCountryRef.current = null;
       hoverVisible = false;
       tooltip.style.display = 'none';
       requestRender();
@@ -637,7 +639,21 @@ export default function D3GeoGlobeOrtho({
       svg.selectAll('*').remove();
       try { document.body.removeChild(tooltip); } catch {}
     };
-  }, [countries, states, loading, error, focusLatLng]);
+  }, [countries, loading, error, focusLatLng]);
+
+  // When states change, precompute centroids, sync ref, and trigger a render without re-initializing D3
+  useEffect(() => {
+    if (!states) return;
+    try {
+      for (const s of states as any[]) {
+        const ss: any = s;
+        if (!ss.__centroid) ss.__centroid = d3.geoCentroid(ss);
+      }
+    } catch {}
+    statesRef.current = states;
+    // ask D3 to render with the new states if component is mounted
+    try { requestRenderRef.current && requestRenderRef.current(); } catch {}
+  }, [states]);
 
   if (loading) {
     return (
