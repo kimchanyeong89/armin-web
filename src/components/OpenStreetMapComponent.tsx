@@ -54,6 +54,9 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng }) =
     loadAllData();
   }, []);
 
+  // 현재 줌 변환을 보관 (도시 레이어 표시 게이트/위치에 사용)
+  const zoomTransformRef = useRef<any>(d3.zoomIdentity);
+
   useEffect(() => {
     if ((!countries.length && !states.length) || loading || error) return;
 
@@ -227,7 +230,7 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng }) =
 
     // 3. 도시/지자체 경계 오버레이 (선택된 국가만 표시)
   const muniGroup = svg.append('g').attr('class', 'municipalities').attr('pointer-events', 'none');
-    const CITY_VISIBLE_K = 2.2;
+  const CITY_VISIBLE_K = 2.2;
 
     const renderMunicipalities = () => {
       muniGroup.selectAll('*').remove();
@@ -301,6 +304,7 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng }) =
       .scaleExtent([minZoom, 8]) // 최소 줌을 동적으로 계산
       .on('zoom', (event) => {
         const transform = event.transform;
+    zoomTransformRef.current = transform;
         
         // 단순히 모든 레이어에 동일한 transform 적용
         countryGroup.attr('transform', transform);
@@ -341,7 +345,83 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng }) =
     // 국가 선택/도시데이터 변경 시 오버레이 업데이트
     renderMunicipalities();
 
-  }, [countries, states, loading, error, focusLatLng, selectedISO3, muniFeatures]);
+  }, [countries, states, loading, error, focusLatLng]);
+
+  // 도시/지자체 오버레이만 갱신 (SVG 재초기화 없이)
+  useEffect(() => {
+    const svg = d3.select(svgRef.current);
+    if (svg.empty()) return;
+    const svgAny: any = svg as any;
+    let muniGroupSel: any = svgAny.select('g.municipalities');
+    if (muniGroupSel.empty()) {
+      muniGroupSel = svgAny.append('g').attr('class', 'municipalities').attr('pointer-events', 'none');
+    }
+    muniGroupSel.selectAll('*').remove();
+    if (!selectedISO3 || !muniFeatures || !muniFeatures.length) {
+      return;
+    }
+    const projection = geoMercator()
+      .scale(Math.min(window.innerWidth, window.innerHeight) / 7)
+      .translate([window.innerWidth / 2, window.innerHeight / 2])
+      .center([0, 35]);
+    const path = geoPath().projection(projection);
+    // 로컬 툴팁 헬퍼
+    const showLocalTooltip = (root: any, evt: any, text: string) => {
+      const tooltip = root.append('g').attr('class', 'tooltip');
+      const rect = tooltip.append('rect')
+        .attr('fill', 'rgba(255, 255, 255, 0.95)')
+        .attr('stroke', '#000000')
+        .attr('stroke-width', 1)
+        .attr('rx', 4);
+      const textElement = tooltip.append('text')
+        .attr('fill', '#000000')
+        .attr('font-size', '12px')
+        .attr('font-weight', 'bold')
+        .attr('text-anchor', 'start')
+        .text(text);
+      const bbox = (textElement.node() as SVGTextElement).getBBox();
+      rect.attr('x', bbox.x - 8)
+          .attr('y', bbox.y - 4)
+          .attr('width', bbox.width + 16)
+          .attr('height', bbox.height + 8);
+      const [mouseX, mouseY] = d3.pointer(evt, svgRef.current as any);
+      tooltip.attr('transform', `translate(${mouseX + 10}, ${mouseY - 10})`);
+    };
+
+    muniFeatures.forEach((feat: any, idx: number) => {
+      try {
+        muniGroupSel.append('path')
+          .datum(feat)
+          .attr('d', path as any)
+          .attr('fill', 'none')
+          .attr('stroke', '#000')
+          .attr('stroke-width', 0.2)
+          .attr('vector-effect', 'non-scaling-stroke')
+          .attr('stroke-opacity', 0.9)
+          .style('pointer-events', 'visibleStroke')
+          .on('mouseover', function(this: SVGPathElement, event: MouseEvent) {
+            d3.select(this).attr('stroke-width', 0.35);
+            const p = (feat.properties || {});
+            const city = getMunicipalityName(p);
+            const parent = p?.ADM1_EN || p?.NAME_1 || p?.region || p?.province || '';
+            const txt = parent ? `🏙️ ${city} · ${parent}` : `🏙️ ${city}`;
+            // tooltip은 최상위 svg에 렌더
+            const rootSvg = d3.select(svgRef.current);
+            showLocalTooltip(rootSvg, event, txt);
+          })
+          .on('mouseout', function(this: SVGPathElement) {
+            d3.select(this).attr('stroke-width', 0.2);
+            d3.select(svgRef.current).select('.tooltip').remove();
+          });
+      } catch (e) {
+        console.warn(`지자체 ${idx} 렌더링 실패:`, e);
+      }
+    });
+    // 현재 줌 상태 반영
+    const k = (zoomTransformRef.current && (zoomTransformRef.current as any).k) || 1;
+    muniGroupSel.attr('transform', zoomTransformRef.current as any);
+    muniGroupSel.attr('display', k >= 2.2 && selectedISO3 ? null : 'none');
+  }, [selectedISO3, muniFeatures]);
 
   // 국가별 도시/지자체 경계 로더
   async function loadMunicipalities(iso3: string) {
