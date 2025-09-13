@@ -1,4 +1,6 @@
 import { useEffect, useRef, useState } from "react";
+import OpenStreetMapComponent from '../components/OpenStreetMapComponent';
+import D3GeoGlobeOrtho from "../components/D3GeoGlobeOrtho";
 import ExhibitionBanner from "../components/ExhibitionBanner";
 import CustomGoogleMap from "../components/CustomGoogleMap";
 import ExhibitionDetails from "../components/ExhibitionDetails";
@@ -6,6 +8,7 @@ import ExhibitionModal from "../components/ExhibitionModal";
 // Filled Globe temporarily hidden
 // Removed react-globe.gl Outline mode
 import GlobeD3 from "../components/GlobeD3";
+// Removed LeafletInteractiveMap import
 import type { Exhibition, ExhibitionItem } from "../types/Exhibition";
 
 type HomePageProps = {
@@ -41,7 +44,7 @@ export default function HomePage({ exhibitions }: HomePageProps) {
   });
   const [selectedExhibition, setSelectedExhibition] = useState<Exhibition | null>(initialFromHistory.parent);
   const [selectedModalExhibition, setSelectedModalExhibition] = useState<ExhibitionItem | null>(initialFromHistory.item);
-  const [useGlobe, setUseGlobe] = useState(true); // default Globe ON for debugging
+  const [mapMode, setMapMode] = useState<'flat' | 'globe' | 'd3geo' | 'd3geo-globe'>('d3geo');
   // Removed Outline Globe toggle
   // D3 globe is the only globe mode when Globe is ON
   // Globe view uses react-globe.gl only (Cesium removed)
@@ -249,15 +252,7 @@ export default function HomePage({ exhibitions }: HomePageProps) {
       </div>
   {/* Fullscreen map */}
       <div style={{ position: "absolute", top: 0, left: 0, width: "100vw", height: "100vh", zIndex: 1 }}>
-  {useGlobe ? (
-    <GlobeD3
-      key={resetZoomKey}
-      focusLatLng={focusTarget ? { lat: focusTarget.latitude, lng: focusTarget.longitude } : userLocation}
-      autorotate={false}
-      exhibitions={exhibitions}
-      onSelectExhibition={setSelectedExhibition}
-    />
-  ) : (
+  {mapMode === 'flat' ? (
     <CustomGoogleMap
       key={resetZoomKey}
       exhibitions={exhibitions}
@@ -265,6 +260,24 @@ export default function HomePage({ exhibitions }: HomePageProps) {
       focusTarget={focusTarget}
       userLocation={userLocation}
       resetZoomKey={resetZoomKey}
+    />
+  ) : mapMode === 'globe' ? (
+    <GlobeD3
+      key={resetZoomKey}
+      focusLatLng={focusTarget ? { lat: focusTarget.latitude, lng: focusTarget.longitude } : userLocation}
+      autorotate={false}
+      exhibitions={exhibitions}
+      onSelectExhibition={setSelectedExhibition}
+    />
+  ) : mapMode === 'd3geo-globe' ? (
+    <D3GeoGlobeOrtho
+      key={resetZoomKey}
+      focusLatLng={focusTarget ? { lat: focusTarget.latitude, lng: focusTarget.longitude } : userLocation || undefined}
+    />
+  ) : (
+    <OpenStreetMapComponent
+      key={resetZoomKey}
+      focusLatLng={focusTarget ? { lat: focusTarget.latitude, lng: focusTarget.longitude } : userLocation || undefined}
     />
   )}
   {/* 'My location' button moved to bottom-center controls to align with Globe/Flat toggle */}
@@ -306,19 +319,68 @@ export default function HomePage({ exhibitions }: HomePageProps) {
           My location
         </button>
         <button
-          onClick={() => setUseGlobe(v => !v)}
+          onClick={() => setMapMode('flat')}
           style={{
             padding: "8px 12px",
             borderRadius: 8,
-            border: "1px solid #d97706",
-            background: useGlobe ? "#d97706" : "#fff",
-            color: useGlobe ? "#fff" : "#d97706",
+            border: mapMode === 'flat' ? "1px solid #d97706" : "1px solid #374151",
+            background: mapMode === 'flat' ? "#d97706" : "#fff",
+            color: mapMode === 'flat' ? "#fff" : "#374151",
             cursor: "pointer",
             boxShadow: "0 2px 6px rgba(0,0,0,0.15)",
             minWidth: 96,
+            fontWeight: 700,
           }}
         >
-          {useGlobe ? "FLAT" : "Globe"}
+          FLAT
+        </button>
+        <button
+          onClick={() => setMapMode('globe')}
+          style={{
+            padding: "8px 12px",
+            borderRadius: 8,
+            border: mapMode === 'globe' ? "1px solid #059669" : "1px solid #374151",
+            background: mapMode === 'globe' ? "#059669" : "#fff",
+            color: mapMode === 'globe' ? "#fff" : "#374151",
+            cursor: "pointer",
+            boxShadow: "0 2px 6px rgba(0,0,0,0.15)",
+            minWidth: 96,
+            fontWeight: 700,
+          }}
+        >
+          GLOBE
+        </button>
+        <button
+          onClick={() => setMapMode('d3geo')}
+          style={{
+            padding: "8px 12px",
+            borderRadius: 8,
+            border: mapMode === 'd3geo' ? "1px solid #111827" : "1px solid #374151",
+            background: mapMode === 'd3geo' ? "#111827" : "#fff",
+            color: mapMode === 'd3geo' ? "#fff" : "#374151",
+            cursor: "pointer",
+            boxShadow: "0 2px 6px rgba(0,0,0,0.15)",
+            minWidth: 96,
+            fontWeight: 700,
+          }}
+        >
+          D3GEO
+        </button>
+        <button
+          onClick={() => setMapMode('d3geo-globe')}
+          style={{
+            padding: "8px 12px",
+            borderRadius: 8,
+            border: mapMode === 'd3geo-globe' ? "1px solid #1f2937" : "1px solid #374151",
+            background: mapMode === 'd3geo-globe' ? "#1f2937" : "#fff",
+            color: mapMode === 'd3geo-globe' ? "#fff" : "#374151",
+            cursor: "pointer",
+            boxShadow: "0 2px 6px rgba(0,0,0,0.15)",
+            minWidth: 96,
+            fontWeight: 700,
+          }}
+        >
+          D3GEO GLOBE
         </button>
   {/* Removed Outline Globe toggle */}
   {/* Filled Globe hidden; D3 Outline is the only globe mode */}
