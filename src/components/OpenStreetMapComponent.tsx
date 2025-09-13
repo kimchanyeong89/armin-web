@@ -181,7 +181,8 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng }) =
                 k = Math.min(k, 8);
                 const x = (b[0][0] + b[1][0]) / 2;
                 const y = (b[0][1] + b[1][1]) / 2;
-                const tx = width / 2 - k * x;
+                // 클릭한 복제본의 오프셋을 적용하여 정확히 그 복제본을 중앙에 배치
+                const tx = width / 2 - k * (x + offsetX);
                 const ty = height / 2 - k * y;
                 d3.select(svgRef.current)
                   .transition()
@@ -225,7 +226,7 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng }) =
     }
 
     // 3. 도시/지자체 경계 오버레이 (선택된 국가만 표시)
-    const muniGroup = svg.append('g').attr('class', 'municipalities');
+  const muniGroup = svg.append('g').attr('class', 'municipalities').attr('pointer-events', 'none');
     const CITY_VISIBLE_K = 2.2;
 
     const renderMunicipalities = () => {
@@ -255,6 +256,7 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng }) =
               d3.select(this).attr('stroke-width', 0.2);
               svg.select('.tooltip').remove();
             });
+          // 도시 경계 상호작용만 허용하도록 그룹의 pointer-events는 none으로 두고 각 path만 활성화
         } catch (e) {
           console.warn(`지자체 ${idx} 렌더링 실패:`, e);
         }
