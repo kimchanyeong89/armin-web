@@ -356,8 +356,8 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng }) =
     if (muniGroupSel.empty()) {
       muniGroupSel = svgAny.append('g').attr('class', 'municipalities').attr('pointer-events', 'none');
     }
-    muniGroupSel.selectAll('*').remove();
-    if (!selectedISO3 || !muniFeatures || !muniFeatures.length) {
+  muniGroupSel.selectAll('*').remove();
+  if (!selectedISO3 || !muniFeatures || muniFeatures.length < 2) {
       return;
     }
     const projection = geoMercator()
@@ -430,24 +430,39 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng }) =
       setMuniError(null);
       setMuniFeatures(null);
 
-      // 1) GeoBoundaries gbRequest로 ADM2 시도
-      const reqUrl = `https://www.geoboundaries.org/gbRequest.html?ISO=${encodeURIComponent(iso3)}&ADM=ADM2`;
-      const req = await fetch(reqUrl, { mode: 'cors' });
-      if (req.ok) {
-        const info = await req.json();
-        const dl = (Array.isArray(info) ? info[0]?.gjDownloadURL : info?.gjDownloadURL) || null;
-        if (dl) {
-          const gj = await fetch(dl, { mode: 'cors' });
-          if (gj.ok) {
-            const data = await gj.json();
-            const feats = data.features || [];
-            if (feats.length) {
-              setMuniFeatures(feats);
-              setMuniLoading(false);
-              return;
+      // 1) GeoBoundaries gbRequest로 ADM2 시도 (실패해도 폴백 계속)
+      try {
+        const reqUrl = `https://www.geoboundaries.org/gbRequest.html?ISO=${encodeURIComponent(iso3)}&ADM=ADM2`;
+        const req = await fetch(reqUrl, { mode: 'cors' });
+        if (req.ok) {
+          let info: any = null;
+          try {
+            info = await req.json();
+          } catch {
+            info = null;
+          }
+          const pick = Array.isArray(info) ? info.find((x: any) => x && typeof x.gjDownloadURL === 'string' && x.gjDownloadURL.includes('.geojson')) : info;
+          const dl = pick?.gjDownloadURL || null;
+          if (dl) {
+            const gj = await fetch(dl, { mode: 'cors' });
+            if (gj.ok) {
+              let data: any = null;
+              try {
+                data = await gj.json();
+              } catch {
+                data = null;
+              }
+              const feats = data?.features || [];
+              if (feats.length) {
+                setMuniFeatures(feats);
+                setMuniLoading(false);
+                return;
+              }
             }
           }
         }
+      } catch (e) {
+        // swallow and fallback
       }
 
       // 2) 실패 시 ADM1(주/도)로 폴백 (기존 states에서 ISO3 일치 필터)
@@ -482,7 +497,9 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng }) =
     if (!v) return null;
     const s = String(v).toUpperCase();
     if (s === '---' || s === 'XXX') return null;
-    return s;
+  // 일부 데이터셋의 중국 표기 보정
+  if (s === 'CHN' || s === 'CN') return 'CHN';
+  return s;
   }
   function getMunicipalityName(p: any): string {
     return (
