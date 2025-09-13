@@ -12,6 +12,12 @@ interface Props {
   enableAdmin1?: boolean; // default: true
   // Minimum zoomK required before fetching Admin1 and showing them (default: 3.0)
   admin1MinZoom?: number;
+  // Optional Urban Areas layer (city boundaries). Default: enabled but hidden until toggled.
+  enableUrbanAreas?: boolean; // default: true
+  // Minimum zoomK required before drawing urban areas to avoid clutter/perf (default: 2.2)
+  urbanMinZoom?: number;
+  // Initial visibility of urban areas (default: false)
+  urbanShowDefault?: boolean;
 }
 
 // D3GEO-based orthographic globe with Google Earth-style smooth controls
@@ -21,12 +27,17 @@ export default function D3GeoGlobeOrtho({
   hiResThreshold = 2.2,
   enableAdmin1 = true,
   admin1MinZoom = 3.0,
+  enableUrbanAreas = true,
+  urbanMinZoom = 2.2,
+  urbanShowDefault = false,
 }: Props) {
   const svgRef = useRef<SVGSVGElement>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [countries, setCountries] = useState<any[]>([]);
   const [states, setStates] = useState<any[]>([]);
+  const [urbanAreas, setUrbanAreas] = useState<any[]>([]);
+  const [showUrban, setShowUrban] = useState<boolean>(urbanShowDefault);
   // LOD & fetch state
   const hiResCountriesRef = useRef<any[] | null>(null);
   const hiResAppliedRef = useRef<boolean>(false);
@@ -75,6 +86,21 @@ export default function D3GeoGlobeOrtho({
           } catch {}
         }
 
+        // Prefetch Urban Areas (GeoJSON) in background if enabled
+        if (enableUrbanAreas) {
+          try {
+            fetch('/atlas/ne_50m_urban_areas.geojson')
+              .then(r => r.ok ? r.json() : null)
+              .then((raw) => {
+                if (!raw) return;
+                if (raw.type === 'FeatureCollection' && Array.isArray(raw.features)) {
+                  setUrbanAreas(raw.features);
+                }
+              })
+              .catch(() => {});
+          } catch {}
+        }
+
         // Defer states loading until needed (on demand)
       } catch (e: any) {
         setError(e?.message || 'Failed to load data');
@@ -83,7 +109,7 @@ export default function D3GeoGlobeOrtho({
       }
     };
     loadAll();
-  }, [enableHiResSwap]);
+  }, [enableHiResSwap, enableUrbanAreas]);
 
   useEffect(() => {
     if (!svgRef.current || loading || error) return;
@@ -121,7 +147,7 @@ export default function D3GeoGlobeOrtho({
 
     // Countries merged into a single path (reduces DOM updates)
     const countriesFC = { type: 'FeatureCollection', features: countries } as any;
-    const gCountries = svg.append('g').attr('class', 'countries').style('pointer-events', 'none');
+  const gCountries = svg.append('g').attr('class', 'countries').style('pointer-events', 'none');
     const countriesPath = gCountries
       .append('path')
       .attr('class', 'countries-merged')
@@ -144,6 +170,20 @@ export default function D3GeoGlobeOrtho({
       .attr('stroke', '#888')
       .attr('stroke-width', 0.2)
       .attr('opacity', 0.35)
+      .attr('vector-effect', 'non-scaling-stroke')
+      .attr('shape-rendering', 'crispEdges')
+      .style('display', 'none');
+
+    // Urban Areas layer (merged path). Hidden by default; shows when toggled and zoomed in.
+    const gUrban = svg.append('g').attr('class', 'urban').style('pointer-events', 'none');
+    const urbanPath = gUrban
+      .append('path')
+      .attr('class', 'urban-merged')
+      .datum({ type: 'FeatureCollection', features: [] } as any)
+      .attr('fill', 'none')
+      .attr('stroke', '#999')
+      .attr('stroke-width', 0.18)
+      .attr('opacity', 0.5)
       .attr('vector-effect', 'non-scaling-stroke')
       .attr('shape-rendering', 'crispEdges')
       .style('display', 'none');
@@ -219,6 +259,20 @@ export default function D3GeoGlobeOrtho({
       return d;
     };
 
+    const getUrbanD = (urbanFC: any) => {
+      const key = getCacheKey('urban');
+      const hit = pathCache.get(key);
+      if (hit) return hit;
+      const d = (path as any)(urbanFC) as string;
+      pathCache.set(key, d);
+      cacheOrder.push(key);
+      if (cacheOrder.length > MAX_CACHE) {
+        const old = cacheOrder.shift();
+        if (old) pathCache.delete(old);
+      }
+      return d;
+    };
+
     const render = () => {
       const frameStart = performance.now();
       rafId = 0;
@@ -257,6 +311,17 @@ export default function D3GeoGlobeOrtho({
       } else {
         selectedPath.style('display', 'none');
         statesPath.style('display', 'none');
+      }
+
+      // Urban areas: draw only when toggled on and zoom is high enough
+      if (enableUrbanAreas && showUrban && zoomK >= urbanMinZoom && urbanAreas.length > 0) {
+        const urbanFC = { type: 'FeatureCollection', features: urbanAreas } as any;
+        gUrban.style('display', 'block');
+        // Cache path for performance
+        const d = getUrbanD(urbanFC);
+        urbanPath.datum(urbanFC).attr('d', d);
+      } else {
+        gUrban.style('display', 'none');
       }
     };
 
@@ -601,11 +666,23 @@ export default function D3GeoGlobeOrtho({
   return (
     <div style={{ position: 'fixed', inset: 0 }}>
       <svg ref={svgRef} style={{ width: '100%', height: '100%', display: 'block', background: '#fff' }} />
-      <div style={{ position: 'absolute', bottom: 20, left: 20, background: 'rgba(255,255,255,0.95)', border: '1px solid #ccc', borderRadius: 6, padding: 12, fontSize: 12, color: '#000' }}>
+      <div style={{ position: 'absolute', bottom: 20, left: 20, background: 'rgba(255,255,255,0.95)', border: '1px solid #ccc', borderRadius: 6, padding: 12, fontSize: 12, color: '#000', minWidth: 240 }}>
         <div style={{ fontWeight: 700, marginBottom: 6 }}>🌐 D3GEO Globe (Google Earth Style)</div>
         <div>🏳️ 국가 경계: {countries.length}개</div>
         <div style={{ color: '#555' }}>🏛️ 주/도 경계: {states.length}개</div>
         <div style={{ marginTop: 6, color: '#666' }}>드래그: 관성 회전 | 휠: 포커스 줌</div>
+        {enableUrbanAreas && (
+          <div style={{ marginTop: 8, display: 'flex', alignItems: 'center', gap: 8 }}>
+            <label style={{ display: 'flex', alignItems: 'center', gap: 6, cursor: 'pointer' }}>
+              <input
+                type="checkbox"
+                checked={showUrban}
+                onChange={(e) => setShowUrban(e.target.checked)}
+              />
+              <span>도시 경계 표시 (줌 {urbanMinZoom}+)</span>
+            </label>
+          </div>
+        )}
       </div>
     </div>
   );
