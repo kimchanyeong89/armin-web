@@ -44,6 +44,10 @@ export default function D3GeoGlobeOrtho({
   const statesRef = useRef<any[]>([]);
   // Expose internal requestRender to react to async data loads
   const requestRenderRef = useRef<() => void>(() => {});
+  // Track whether urban areas fetch has started to avoid duplicate requests
+  const urbanFetchStartedRef = useRef<boolean>(false);
+  // Track admin1 prefetch to avoid duplicate requests
+  const admin1PrefetchStartedRef = useRef<boolean>(false);
   // LOD & fetch state
   const hiResCountriesRef = useRef<any[] | null>(null);
   const hiResAppliedRef = useRef<boolean>(false);
@@ -92,20 +96,7 @@ export default function D3GeoGlobeOrtho({
           } catch {}
         }
 
-        // Prefetch Urban Areas (GeoJSON) in background if enabled
-        if (enableUrbanAreas) {
-          try {
-            fetch('/atlas/ne_50m_urban_areas.geojson')
-              .then(r => r.ok ? r.json() : null)
-              .then((raw) => {
-                if (!raw) return;
-                if (raw.type === 'FeatureCollection' && Array.isArray(raw.features)) {
-                  setUrbanAreas(raw.features);
-                }
-              })
-              .catch(() => {});
-          } catch {}
-        }
+  // Urban Areas are now fetched on-demand when toggled, to reduce initial load time
 
         // Defer states loading until needed (on demand)
       } catch (e: any) {
@@ -187,9 +178,9 @@ export default function D3GeoGlobeOrtho({
       .attr('class', 'urban-merged')
       .datum({ type: 'FeatureCollection', features: [] } as any)
       .attr('fill', 'none')
-      .attr('stroke', '#999')
-      .attr('stroke-width', 0.18)
-      .attr('opacity', 0.5)
+  .attr('stroke', '#000')
+  .attr('stroke-width', 0.28)
+  .attr('opacity', 1.0)
       .attr('vector-effect', 'non-scaling-stroke')
       .attr('shape-rendering', 'crispEdges')
       .style('display', 'none');
@@ -641,6 +632,54 @@ export default function D3GeoGlobeOrtho({
     };
   }, [countries, loading, error, focusLatLng]);
 
+  // Idle prefetch of Admin1 and Urban Areas after first paint
+  useEffect(() => {
+    if (loading || error) return;
+    const ric: any = (window as any).requestIdleCallback || ((cb: any) => setTimeout(() => cb({ timeRemaining: () => 50 }), 500));
+    const cancelRic: any = (window as any).cancelIdleCallback || clearTimeout;
+    const id = ric(async () => {
+      try {
+        // Prefetch Admin1 if enabled and not loaded
+        if (enableAdmin1 && !admin1PrefetchStartedRef.current && (!statesRef.current || statesRef.current.length === 0)) {
+          admin1PrefetchStartedRef.current = true;
+          const r = await fetch('/geodata/admin1-states-10m.json');
+          if (r && r.ok) {
+            const raw = await r.json();
+            const preferKeys = ['states', 'provinces', 'admin1', 'ne_50m_admin_1'];
+            let feats: any[] = [];
+            try {
+              if (raw.type === 'FeatureCollection') feats = raw.features || [];
+              else if (raw.type === 'Topology' && raw.objects) {
+                const keys = Object.keys(raw.objects);
+                let picked: string | null = null;
+                for (const pref of preferKeys) {
+                  const hit = keys.find((k: string) => k.toLowerCase().includes(pref));
+                  if (hit) { picked = hit; break; }
+                }
+                if (!picked) picked = keys[0];
+                const fc: any = topojsonFeature(raw, (raw.objects as any)[picked]);
+                feats = fc.features || [];
+              }
+            } catch {}
+            setStates(feats);
+          }
+        }
+        // Prefetch Urban Areas if enabled and not loaded
+        if (enableUrbanAreas && !urbanFetchStartedRef.current && (!urbanAreas || urbanAreas.length === 0)) {
+          urbanFetchStartedRef.current = true;
+          const r = await fetch('/atlas/ne_50m_urban_areas.geojson');
+          if (r && r.ok) {
+            const raw = await r.json();
+            if (raw && raw.type === 'FeatureCollection' && Array.isArray(raw.features)) {
+              setUrbanAreas(raw.features);
+            }
+          }
+        }
+      } catch {}
+    });
+    return () => { try { cancelRic(id); } catch {} };
+  }, [loading, error, enableAdmin1, enableUrbanAreas]);
+
   // When states change, precompute centroids, sync ref, and trigger a render without re-initializing D3
   useEffect(() => {
     if (!states) return;
@@ -654,6 +693,26 @@ export default function D3GeoGlobeOrtho({
     // ask D3 to render with the new states if component is mounted
     try { requestRenderRef.current && requestRenderRef.current(); } catch {}
   }, [states]);
+
+  // On-demand fetch of Urban Areas when toggled on to reduce initial load
+  useEffect(() => {
+    if (!enableUrbanAreas) return;
+    if (!showUrban) return;
+    if (urbanAreas.length > 0) return;
+    if (urbanFetchStartedRef.current) return;
+    urbanFetchStartedRef.current = true;
+    fetch('/atlas/ne_50m_urban_areas.geojson')
+      .then(r => (r && r.ok ? r.json() : null))
+      .then((raw) => {
+        if (!raw) return;
+        if (raw.type === 'FeatureCollection' && Array.isArray(raw.features)) {
+          setUrbanAreas(raw.features);
+          // trigger a render in case the globe is already visible/zoomed
+          try { requestRenderRef.current && requestRenderRef.current(); } catch {}
+        }
+      })
+      .catch(() => { urbanFetchStartedRef.current = false; });
+  }, [enableUrbanAreas, showUrban, urbanAreas.length]);
 
   if (loading) {
     return (
