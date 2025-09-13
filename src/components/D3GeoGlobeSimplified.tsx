@@ -1,14 +1,14 @@
 import { useEffect, useRef, useState } from 'react';
 import * as d3 from 'd3';
-import { feature as topojsonFeature } from 'topojson-client';
+import { mesh as topojsonMesh } from 'topojson-client';
 
-// Minimal orthographic globe using pre-simplified datasets (countries + urban)
+// Minimal orthographic globe rendering ONLY boundary lines (admin-0 and admin-1)
 export default function D3GeoGlobeSimplified() {
   const svgRef = useRef<SVGSVGElement>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const [countriesFC, setCountriesFC] = useState<any | null>(null);
-  const [urbanFC, setUrbanFC] = useState<any | null>(null);
+  const [admin0Lines, setAdmin0Lines] = useState<any | null>(null);
+  const [admin1Lines, setAdmin1Lines] = useState<any | null>(null);
 
   useEffect(() => {
     let alive = true;
@@ -25,40 +25,32 @@ export default function D3GeoGlobeSimplified() {
           } catch { return null; }
         };
 
-        // Countries: try simplified topo -> simplified geo -> fallback to existing countries-110m (Topo/Geo)
-        let countriesRaw = await fetchJsonSafe('/atlas/simplified-countries-topo.json');
-        if (!countriesRaw) countriesRaw = await fetchJsonSafe('/atlas/simplified-countries.geojson');
-        if (!countriesRaw) countriesRaw = await fetchJsonSafe('/geodata/countries-110m.json');
+        // Prefer medium-res for boundary lines; fallbacks available in repo
+        let countriesTopo = await fetchJsonSafe('/atlas/countries-50m.json');
+        if (!countriesTopo) countriesTopo = await fetchJsonSafe('/atlas/countries-110m.json');
+        if (!countriesTopo) countriesTopo = await fetchJsonSafe('/atlas/package/countries-50m.json');
 
-        // Urban: try simplified topo -> simplified geo -> fallback to ne_50m urban
-        let urbanRaw = await fetchJsonSafe('/atlas/simplified-urban-topo.json');
-        if (!urbanRaw) urbanRaw = await fetchJsonSafe('/atlas/simplified-urban.geojson');
-        if (!urbanRaw) urbanRaw = await fetchJsonSafe('/atlas/ne_50m_urban_areas.geojson');
+        // Admin-1 states/provinces (topo). Use 10m if available, else skip.
+        let statesTopo = await fetchJsonSafe('/atlas/states-10m.json');
+        if (!statesTopo) statesTopo = await fetchJsonSafe('/atlas/package/countries-50m.json'); // harmless fallback (won't render admin1)
 
         if (!alive) return;
+        if (!countriesTopo || countriesTopo.type !== 'Topology') throw new Error('Failed to load TopoJSON for countries');
 
-        // Normalize countries to FeatureCollection
-        if (countriesRaw) {
-          if (countriesRaw.type === 'Topology') {
-            const fc = topojsonFeature(countriesRaw, (countriesRaw.objects as any).countries || (Object.values(countriesRaw.objects || {}) as any)[0]);
-            setCountriesFC(fc);
-          } else {
-            setCountriesFC(countriesRaw);
+        const countriesObj = (countriesTopo.objects as any).countries || (Object.values(countriesTopo.objects || {}) as any)[0];
+        const admin0 = topojsonMesh(countriesTopo, countriesObj, (a: any, b: any) => a !== b);
+        setAdmin0Lines(admin0);
+
+        if (statesTopo && statesTopo.type === 'Topology') {
+          const statesObj = (statesTopo.objects as any).states || (Object.values(statesTopo.objects || {}) as any)[0];
+          try {
+            const admin1 = topojsonMesh(statesTopo, statesObj, (a: any, b: any) => a !== b);
+            setAdmin1Lines(admin1);
+          } catch {
+            setAdmin1Lines(null);
           }
         } else {
-          throw new Error('Failed to load countries data');
-        }
-
-        // Normalize urban to FeatureCollection (optional)
-        if (urbanRaw) {
-          if (urbanRaw.type === 'Topology') {
-            const fcU = topojsonFeature(urbanRaw, (urbanRaw.objects as any).urban || (Object.values(urbanRaw.objects || {}) as any)[0]);
-            setUrbanFC(fcU);
-          } else {
-            setUrbanFC(urbanRaw);
-          }
-        } else {
-          setUrbanFC(null);
+          setAdmin1Lines(null);
         }
       } catch (e: any) {
         setError(e?.message || 'Load failed');
@@ -71,31 +63,31 @@ export default function D3GeoGlobeSimplified() {
   }, []);
 
   useEffect(() => {
-    if (!svgRef.current || loading || error || !countriesFC) return;
-   const svg = d3.select(svgRef.current);
-   svg.selectAll('*').remove();
-   const width = window.innerWidth;
-   const height = window.innerHeight;
-   svg.attr('width', width).attr('height', height)
-     .attr('viewBox', `0 0 ${width} ${height}`);
-   const base = Math.min(width, height) * 0.52;
+    if (!svgRef.current || loading || error || !admin0Lines) return;
+    const svg = d3.select(svgRef.current);
+    svg.selectAll('*').remove();
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+    svg.attr('width', width).attr('height', height)
+      .attr('viewBox', `0 0 ${width} ${height}`);
+    const base = Math.min(width, height) * 0.52;
     const projection = d3.geoOrthographic().scale(base).translate([width/2, height/2]).clipAngle(90).precision(0.6);
     const path = d3.geoPath(projection);
 
-    // Countries
+    // Admin-0 country boundaries
     svg.append('path')
-      .datum(countriesFC)
+      .datum(admin0Lines)
       .attr('fill', 'none')
       .attr('stroke', '#000')
-      .attr('stroke-width', 0.4)
+      .attr('stroke-width', 0.6)
       .attr('vector-effect', 'non-scaling-stroke')
       .attr('shape-rendering', 'crispEdges')
       .attr('d', path as any);
 
-    // Urban (optional)
-    if (urbanFC) {
+    // Admin-1 state/province boundaries (if available)
+    if (admin1Lines) {
       svg.append('path')
-        .datum(urbanFC)
+        .datum(admin1Lines)
         .attr('fill', 'none')
         .attr('stroke', '#000')
         .attr('stroke-width', 0.35)
@@ -104,7 +96,7 @@ export default function D3GeoGlobeSimplified() {
         .attr('d', path as any);
     }
 
-    // Basic drag
+    // Basic drag to rotate
     let prev: [number, number] | null = null;
     svg.call(d3.drag<SVGSVGElement, unknown>()
       .on('start', (ev: any) => { prev = [ev.x, ev.y]; })
@@ -119,7 +111,7 @@ export default function D3GeoGlobeSimplified() {
       })
       .on('end', () => { prev = null; }) as any);
 
-    // Resize
+    // Resize handling
     const onResize = () => {
       const w = window.innerWidth;
       const h = window.innerHeight;
@@ -131,9 +123,9 @@ export default function D3GeoGlobeSimplified() {
     const ro = new ResizeObserver(onResize);
     ro.observe(svgRef.current as any);
     return () => { try { ro.disconnect(); } catch {} };
-  }, [countriesFC, urbanFC, loading, error]);
+  }, [admin0Lines, admin1Lines, loading, error]);
 
-  if (loading) return <div style={{position:'fixed',inset:0,display:'grid',placeItems:'center'}}>로딩…(단순화 지도)</div>;
+  if (loading) return <div style={{position:'fixed',inset:0,display:'grid',placeItems:'center'}}>로딩…(경계선 지도)</div>;
   if (error) return <div style={{position:'fixed',inset:0,display:'grid',placeItems:'center',color:'#b91c1c'}}>에러: {error}</div>;
   return <svg ref={svgRef} style={{position:'fixed',top:0,left:0,width:'100vw',height:'100vh',display:'block',background:'#fff'}} />;
 }
