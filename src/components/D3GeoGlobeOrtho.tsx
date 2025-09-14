@@ -57,10 +57,18 @@ export default function D3GeoGlobeOrtho({
   const loadAll = async () => {
       try {
         setLoading(true);
-    // Load low-res countries first for fast first paint
-    const countriesLowResRes = await fetch('/geodata/countries-110m.json');
-    if (!countriesLowResRes.ok) throw new Error('Countries load failed');
-    const countriesRaw = await countriesLowResRes.json();
+    // Load low-res countries first for fast first paint with fallbacks
+    const fetchJsonSafe = async (url: string) => {
+      try {
+        const r = await fetch(url);
+        if (!r || !r.ok) return null;
+        return await r.json();
+      } catch { return null; }
+    };
+    let countriesRaw: any = await fetchJsonSafe('/geodata/countries-110m.json');
+    if (!countriesRaw) countriesRaw = await fetchJsonSafe('/geodata/countries-50m.json');
+    if (!countriesRaw) countriesRaw = await fetchJsonSafe('/atlas/ne_110m_admin_0_countries.geojson');
+    if (!countriesRaw) throw new Error('Countries load failed');
         // Handle both GeoJSON FeatureCollection and TopoJSON Topology
         const toFeatures = (raw: any, preferKeys: string[]): any[] => {
           if (!raw) return [];
@@ -85,10 +93,10 @@ export default function D3GeoGlobeOrtho({
 
         setCountries(toFeatures(countriesRaw, ['countries', 'admin0', 'ne_50m_admin_0', 'ne_110m_admin_0']));
 
-        // Prefetch high-res countries in background only if enabled
+    // Prefetch high-res countries in background only if enabled
         if (enableHiResSwap) {
           try {
-            fetch('/geodata/countries-50m.json').then(r => r.ok ? r.json() : null).then(raw => {
+      fetch('/geodata/countries-50m.json').then(r => r.ok ? r.json() : null).then(raw => {
               if (!raw) return;
               const hi = toFeatures(raw, ['countries', 'admin0', 'ne_50m_admin_0']);
               hiResCountriesRef.current = hi;
@@ -557,7 +565,12 @@ export default function D3GeoGlobeOrtho({
         if (enableAdmin1 && states.length === 0 && !statesFetchingRef.current) {
           statesFetchingRef.current = true;
           fetch('/geodata/admin1-states-10m.json')
-            .then(r => r.ok ? r.json() : null)
+            .then(async r => {
+              if (r && r.ok) return r.json();
+              const alt = await fetch('/atlas/ne_50m_admin_1_states_provinces.geojson').catch(() => null);
+              if (alt && alt.ok) return alt.json();
+              return null;
+            })
             .then((raw) => {
               if (!raw) return;
               // convert using same helper
@@ -642,9 +655,18 @@ export default function D3GeoGlobeOrtho({
         // Prefetch Admin1 if enabled and not loaded
         if (enableAdmin1 && !admin1PrefetchStartedRef.current && (!statesRef.current || statesRef.current.length === 0)) {
           admin1PrefetchStartedRef.current = true;
-          const r = await fetch('/geodata/admin1-states-10m.json');
-          if (r && r.ok) {
-            const raw = await r.json();
+          let raw: any = null;
+          try {
+            const r = await fetch('/geodata/admin1-states-10m.json');
+            if (r && r.ok) raw = await r.json();
+          } catch {}
+          if (!raw) {
+            try {
+              const r2 = await fetch('/atlas/ne_50m_admin_1_states_provinces.geojson');
+              if (r2 && r2.ok) raw = await r2.json();
+            } catch {}
+          }
+          if (raw) {
             const preferKeys = ['states', 'provinces', 'admin1', 'ne_50m_admin_1'];
             let feats: any[] = [];
             try {
@@ -667,12 +689,15 @@ export default function D3GeoGlobeOrtho({
         // Prefetch Urban Areas if enabled and not loaded
         if (enableUrbanAreas && !urbanFetchStartedRef.current && (!urbanAreas || urbanAreas.length === 0)) {
           urbanFetchStartedRef.current = true;
-          const r = await fetch('/atlas/ne_50m_urban_areas.geojson');
-          if (r && r.ok) {
-            const raw = await r.json();
-            if (raw && raw.type === 'FeatureCollection' && Array.isArray(raw.features)) {
-              setUrbanAreas(raw.features);
-            }
+          const r1 = await fetch('/atlas/ne_50m_urban_areas.geojson').catch(() => null);
+          let raw: any = null;
+          if (r1 && r1.ok) raw = await r1.json();
+          if (!raw) {
+            const r2 = await fetch('/atlas/ne_10m_urban_areas.geojson').catch(() => null);
+            if (r2 && r2.ok) raw = await r2.json();
+          }
+          if (raw && raw.type === 'FeatureCollection' && Array.isArray(raw.features)) {
+            setUrbanAreas(raw.features);
           }
         }
       } catch {}

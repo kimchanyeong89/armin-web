@@ -57,9 +57,10 @@ export default function D3GeoGlobeSimplified() {
     const projection = geoOrthographic().scale(base).translate([width/2, height/2]).clipAngle(90).precision(0.6);
     const path = geoPath(projection);
 
-    // Groups
-    const gCountries = svg.append('g').attr('class', 'hit-countries');
-    const gCities = svg.append('g').attr('class', 'cities');
+  // Groups
+  const gOutline = svg.append('g').attr('class', 'country-outline').style('pointer-events', 'none');
+  const gCountries = svg.append('g').attr('class', 'hit-countries');
+  const gCities = svg.append('g').attr('class', 'cities');
 
     // Context: sphere outline + light graticule (very subtle)
     svg.append('path')
@@ -76,6 +77,19 @@ export default function D3GeoGlobeSimplified() {
       .attr('stroke', '#e5e7eb')
       .attr('stroke-width', 0.3)
       .attr('vector-effect', 'non-scaling-stroke');
+
+    // Visible country outlines for context (stroke-only)
+    if (countries && countries.length) {
+      gOutline.append('path')
+        .datum({ type: 'FeatureCollection', features: countries } as any)
+        .attr('d', path as any)
+        .attr('fill', 'none')
+        .attr('stroke', '#9ca3af')
+        .attr('stroke-width', 0.4)
+        .attr('stroke-opacity', 0.9)
+        .attr('vector-effect', 'non-scaling-stroke')
+        .attr('shape-rendering', 'crispEdges');
+    }
 
     // Invisible hit layer for countries
     gCountries.selectAll('path')
@@ -125,7 +139,7 @@ export default function D3GeoGlobeSimplified() {
       })
       .on('mouseover', function(event: any, d: any){
         const name = getCountryName(d?.properties);
-        showTooltip(svg, event, `🏳️ ${name} — click for cities`);
+        showTooltip(svg, event, `🏳️ ${name} — click to load city boundaries`);
       })
       .on('mouseout', () => svg.select('.tooltip').remove());
 
