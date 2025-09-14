@@ -7,4 +7,15 @@ export default defineConfig({
   // Use relative base so assets and public/ resolve under sub-paths and file://
   base: './',
   plugins: [react()],
+  server: {
+    proxy: {
+      // Proxy GeoBoundaries to avoid browser CORS in dev
+      '/geoboundaries': {
+        target: 'https://www.geoboundaries.org',
+        changeOrigin: true,
+        secure: true,
+        rewrite: (path) => path.replace(/^\/geoboundaries/, ''),
+      },
+    },
+  },
 })

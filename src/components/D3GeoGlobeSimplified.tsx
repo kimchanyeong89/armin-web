@@ -251,7 +251,9 @@ export default function D3GeoGlobeSimplified() {
           setMuniLevel(loaded.level);
           renderCitiesWith(loaded.features);
         }
-      } catch {}
+      } catch (e) {
+        // network/CORS error; keep silent here, we fall back below
+      }
     };
     // kick off shortly after first paint
     setTimeout(autoLoadDefault, 50);
@@ -277,7 +279,8 @@ export default function D3GeoGlobeSimplified() {
       let feats: any[] = [];
       let level: 'ADM2' | 'ADM1' = 'ADM2';
       try {
-        const reqUrl = `https://www.geoboundaries.org/gbRequest.html?ISO=${encodeURIComponent(iso3)}&ADM=ADM2`;
+  // Use dev proxy to avoid CORS in local; production will still work with absolute URL
+  const reqUrl = `/geoboundaries/gbRequest.html?ISO=${encodeURIComponent(iso3)}&ADM=ADM2`;
         const req = await fetch(reqUrl, { mode: 'cors' });
         if (req.ok) {
           let info: any = null;
@@ -297,7 +300,7 @@ export default function D3GeoGlobeSimplified() {
       // Fallback to ADM1 when ADM2 not available
       if (!feats || feats.length < 2) {
         try {
-          const reqUrl = `https://www.geoboundaries.org/gbRequest.html?ISO=${encodeURIComponent(iso3)}&ADM=ADM1`;
+          const reqUrl = `/geoboundaries/gbRequest.html?ISO=${encodeURIComponent(iso3)}&ADM=ADM1`;
           const req = await fetch(reqUrl, { mode: 'cors' });
           if (req.ok) {
             let info: any = null;
@@ -314,10 +317,12 @@ export default function D3GeoGlobeSimplified() {
               }
             }
           }
-        } catch {}
+        } catch (e) {
+          // network/CORS error on fallback too
+        }
       }
       if (!feats || feats.length < 2) {
-        setMuniError('No boundaries available');
+        setMuniError('No boundaries available or blocked by CORS');
         setMuniLoading(false);
         return null;
       }
