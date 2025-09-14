@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { geoOrthographic, geoPath } from 'd3-geo';
+import { geoOrthographic, geoPath, geoGraticule10 } from 'd3-geo';
 import * as d3 from 'd3';
 
 // Orthographic globe that only shows city/municipality boundaries (ADM2), loaded on country click.
@@ -10,8 +10,11 @@ export default function D3GeoGlobeSimplified() {
   const [countries, setCountries] = useState<any[] | null>(null);
   const [selectedISO3, setSelectedISO3] = useState<string | null>(null);
   const [muniFeatures, setMuniFeatures] = useState<any[] | null>(null);
+  const [muniLevel, setMuniLevel] = useState<'ADM2' | 'ADM1' | null>(null);
   const [muniLoading, setMuniLoading] = useState(false);
   const [muniError, setMuniError] = useState<string | null>(null);
+  // Cache ISO3 -> { level, features }
+  const muniCacheRef = useRef<Map<string, { level: 'ADM2' | 'ADM1'; features: any[] }>>(new Map());
 
   // Load admin-0 countries for click-hit only (not rendered)
   useEffect(() => {
@@ -58,36 +61,67 @@ export default function D3GeoGlobeSimplified() {
     const gCountries = svg.append('g').attr('class', 'hit-countries');
     const gCities = svg.append('g').attr('class', 'cities');
 
+    // Context: sphere outline + light graticule (very subtle)
+    svg.append('path')
+      .datum({ type: 'Sphere' } as any)
+      .attr('d', path as any)
+      .attr('fill', '#ffffff')
+      .attr('stroke', '#d1d5db')
+      .attr('stroke-width', 0.5)
+      .attr('vector-effect', 'non-scaling-stroke');
+    svg.append('path')
+      .datum(geoGraticule10() as any)
+      .attr('d', path as any)
+      .attr('fill', 'none')
+      .attr('stroke', '#e5e7eb')
+      .attr('stroke-width', 0.3)
+      .attr('vector-effect', 'non-scaling-stroke');
+
     // Invisible hit layer for countries
     gCountries.selectAll('path')
       .data(countries)
       .enter()
       .append('path')
       .attr('d', path as any)
-      .attr('fill', 'rgba(255,255,255,0.001)')
+  .attr('fill', 'transparent')
       .attr('stroke', 'none')
       .style('cursor', 'pointer')
-      .on('click', async function(_, d: any) {
+  .style('pointer-events', 'all')
+  .on('click', async function(_, d: any) {
         const iso3 = getISO3(d?.properties) || '';
         if (!iso3) return;
-        // center globe to country centroid
+        // center and fit country tightly
         try {
           const c = d3.geoCentroid(d);
           const r = projection.rotate();
           const target = [-c[0], -c[1]] as [number, number];
-          const interp = d3.interpolate([r[0], r[1]], target);
-          const scale0 = projection.scale();
-          const scale1 = Math.min(Math.max(scale0 * 1.2, Math.min(width, height) * 0.55), Math.min(width, height) * 0.8);
+          const interpRot = d3.interpolate([r[0], r[1]], target);
+          const s0 = projection.scale();
+          // prelim rotate to compute bounds
+          projection.rotate([target[0], target[1], r[2]]);
+          const b = path.bounds(d);
+          const dx = Math.max(1, b[1][0] - b[0][0]);
+          const dy = Math.max(1, b[1][1] - b[0][1]);
+          const margin = 0.10; // leave 10% padding
+          const targetW = width * (1 - margin * 2);
+          const targetH = height * (1 - margin * 2);
+          const fitScale = s0 * Math.min(targetW / dx, targetH / dy);
+          const s1 = Math.min(Math.max(fitScale, s0 * 1.15), Math.min(width, height) * 0.9);
+          // animate rotate+scale
           const t = svg.transition().duration(900).ease(d3.easeCubicOut);
-          t.tween('rotate', () => (u: number) => {
-            const rr = interp(u);
-            projection.rotate([rr[0], rr[1], r[2]]).scale(scale0 + (scale1 - scale0) * u);
+          t.tween('rotate+scale', () => (u: number) => {
+            const rr = interpRot(u);
+            projection.rotate([rr[0], rr[1], r[2]]).scale(s0 + (s1 - s0) * u);
             svg.selectAll('path').attr('d', path as any);
           });
         } catch {}
         setSelectedISO3(iso3);
-        await loadMunicipalities(iso3);
-        renderCities();
+        const loaded = await loadMunicipalities(iso3);
+        if (loaded && Array.isArray(loaded.features) && loaded.features.length) {
+          setMuniFeatures(loaded.features as any[]);
+          setMuniLevel(loaded.level);
+          renderCitiesWith(loaded.features as any[]);
+        }
       })
       .on('mouseover', function(event: any, d: any){
         const name = getCountryName(d?.properties);
@@ -111,7 +145,7 @@ export default function D3GeoGlobeSimplified() {
       .on('end', () => { prev = null; }) as any);
 
     // Render cities (ADM2) when loaded
-    function renderCities() {
+  function renderCities() {
       gCities.selectAll('*').remove();
       if (!muniFeatures || !muniFeatures.length) return;
       gCities.selectAll('path')
@@ -121,17 +155,39 @@ export default function D3GeoGlobeSimplified() {
         .attr('d', path as any)
         .attr('fill', 'none')
         .attr('stroke', '#000')
-        .attr('stroke-width', 0.25)
+        .attr('stroke-width', 0.6)
         .attr('vector-effect', 'non-scaling-stroke')
         .attr('stroke-opacity', 0.95)
         .on('mouseover', function(event: any, f: any){
           const city = getMunicipalityName(f?.properties || {});
           showTooltip(svg, event, `🏙️ ${city}`);
-          d3.select(this as any).attr('stroke-width', 0.4);
+          d3.select(this as any).attr('stroke-width', 0.9);
         })
         .on('mouseout', function(){
           svg.select('.tooltip').remove();
-          d3.select(this as any).attr('stroke-width', 0.25);
+          d3.select(this as any).attr('stroke-width', 0.6);
+        });
+    }
+    function renderCitiesWith(feats: any[]) {
+      gCities.selectAll('*').remove();
+      gCities.selectAll('path')
+        .data(feats)
+        .enter()
+        .append('path')
+        .attr('d', path as any)
+        .attr('fill', 'none')
+        .attr('stroke', '#000')
+        .attr('stroke-width', 0.6)
+        .attr('vector-effect', 'non-scaling-stroke')
+        .attr('stroke-opacity', 0.95)
+        .on('mouseover', function(event: any, f: any){
+          const city = getMunicipalityName(f?.properties || {});
+          showTooltip(svg, event, `🏙️ ${city}`);
+          d3.select(this as any).attr('stroke-width', 0.9);
+        })
+        .on('mouseout', function(){
+          svg.select('.tooltip').remove();
+          d3.select(this as any).attr('stroke-width', 0.6);
         });
     }
 
@@ -156,14 +212,22 @@ export default function D3GeoGlobeSimplified() {
   // we intentionally omit muniFeatures here to avoid full re-init; we call renderCities manually
   }, [countries, loading, error]);
 
-  // Loader: ADM2 via GeoBoundaries, fallback to ADM1-like if missing
-  async function loadMunicipalities(iso3: string) {
+  // Loader: ADM2 via GeoBoundaries with cache; fallback to ADM1 if missing
+  async function loadMunicipalities(iso3: string): Promise<{ level: 'ADM2' | 'ADM1'; features: any[] } | null> {
     try {
       setMuniLoading(true);
       setMuniError(null);
       setMuniFeatures(null);
+      setMuniLevel(null);
+
+      // Cache hit
+      const cached = muniCacheRef.current.get(iso3);
+      if (cached && Array.isArray(cached.features) && cached.features.length) {
+        return cached;
+      }
       // gbRequest
       let feats: any[] = [];
+      let level: 'ADM2' | 'ADM1' = 'ADM2';
       try {
         const reqUrl = `https://www.geoboundaries.org/gbRequest.html?ISO=${encodeURIComponent(iso3)}&ADM=ADM2`;
         const req = await fetch(reqUrl, { mode: 'cors' });
@@ -182,15 +246,41 @@ export default function D3GeoGlobeSimplified() {
           }
         }
       } catch {}
+      // Fallback to ADM1 when ADM2 not available
       if (!feats || feats.length < 2) {
-        // fallback: none
-        setMuniError('No city boundaries available');
+        try {
+          const reqUrl = `https://www.geoboundaries.org/gbRequest.html?ISO=${encodeURIComponent(iso3)}&ADM=ADM1`;
+          const req = await fetch(reqUrl, { mode: 'cors' });
+          if (req.ok) {
+            let info: any = null;
+            try { info = await req.json(); } catch { info = null; }
+            const pick = Array.isArray(info) ? info.find((x: any) => x && typeof x.gjDownloadURL === 'string' && x.gjDownloadURL.includes('.geojson')) : info;
+            const dl = pick?.gjDownloadURL || null;
+            if (dl) {
+              const gj = await fetch(dl, { mode: 'cors' });
+              if (gj.ok) {
+                let data: any = null;
+                try { data = await gj.json(); } catch { data = null; }
+                feats = data?.features || [];
+                level = 'ADM1';
+              }
+            }
+          }
+        } catch {}
+      }
+      if (!feats || feats.length < 2) {
+        setMuniError('No boundaries available');
         setMuniLoading(false);
-        return;
+        return null;
       }
       setMuniFeatures(feats);
+      setMuniLevel(level);
+      const payload = { level, features: feats };
+      muniCacheRef.current.set(iso3, payload);
+      return payload;
     } catch (e: any) {
-      setMuniError(e?.message || 'Failed to load city boundaries');
+      setMuniError(e?.message || 'Failed to load boundaries');
+      return null;
     } finally {
       setMuniLoading(false);
     }
@@ -220,6 +310,7 @@ export default function D3GeoGlobeSimplified() {
       <div style={{ position:'fixed', left: 16, bottom: 16, background:'rgba(255,255,255,0.95)', border:'1px solid #ccc', padding:8, borderRadius:6, fontSize:12 }}>
         City globe
         {selectedISO3 && <span style={{ marginLeft: 8 }}>ISO3: {selectedISO3}</span>}
+  {muniLevel && <span style={{ marginLeft: 8 }}>level: {muniLevel}</span>}
         {muniLoading && <span style={{ marginLeft: 8, color:'#059669' }}>loading…</span>}
         {muniError && <span style={{ marginLeft: 8, color:'#B91C1C' }}>fail: {muniError}</span>}
         {muniFeatures && <span style={{ marginLeft: 8, color:'#4B5563' }}>features: {muniFeatures.length}</span>}
