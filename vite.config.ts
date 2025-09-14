@@ -16,6 +16,13 @@ export default defineConfig({
         secure: true,
         rewrite: (path) => path.replace(/^\/geoboundaries/, ''),
       },
+      // Proxy GitHub raw content (for gbOpen download URLs)
+      '/ghraw': {
+        target: 'https://raw.githubusercontent.com',
+        changeOrigin: true,
+        secure: true,
+        rewrite: (path) => path.replace(/^\/ghraw\/?/, '/'),
+      },
     },
   },
 })

@@ -287,7 +287,11 @@ export default function D3GeoGlobeSimplified() {
           const pick = Array.isArray(info) ? (info[0] || null) : info;
           const dl: string | null = pick?.gjDownloadURL || pick?.gjDownloadURLz || null;
           if (dl) {
-            const dlUrl = dl.includes('www.geoboundaries.org') ? dl.replace('https://www.geoboundaries.org', '/geoboundaries') : dl;
+            const dlUrl = dl.includes('www.geoboundaries.org')
+              ? dl.replace('https://www.geoboundaries.org', '/geoboundaries')
+              : dl.includes('https://github.com/wmgeolab/geoBoundaries/raw')
+                ? dl.replace('https://github.com/wmgeolab/geoBoundaries/raw', '/ghraw/wmgeolab/geoBoundaries')
+                : dl;
             const gj = await fetch(dlUrl, { mode: 'cors' }).catch(() => null);
             if (gj && gj.ok) {
               let data: any = null;
@@ -308,7 +312,11 @@ export default function D3GeoGlobeSimplified() {
             const pick = Array.isArray(info) ? (info[0] || null) : info;
             const dl: string | null = pick?.gjDownloadURL || pick?.gjDownloadURLz || null;
             if (dl) {
-              const dlUrl = dl.includes('www.geoboundaries.org') ? dl.replace('https://www.geoboundaries.org', '/geoboundaries') : dl;
+              const dlUrl = dl.includes('www.geoboundaries.org')
+                ? dl.replace('https://www.geoboundaries.org', '/geoboundaries')
+                : dl.includes('https://github.com/wmgeolab/geoBoundaries/raw')
+                  ? dl.replace('https://github.com/wmgeolab/geoBoundaries/raw', '/ghraw/wmgeolab/geoBoundaries')
+                  : dl;
               const gj = await fetch(dlUrl, { mode: 'cors' }).catch(() => null);
               if (gj && gj.ok) {
                 let data: any = null;
