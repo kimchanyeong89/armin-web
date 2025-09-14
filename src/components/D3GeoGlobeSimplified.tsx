@@ -15,6 +15,7 @@ export default function D3GeoGlobeSimplified() {
   const [muniError, setMuniError] = useState<string | null>(null);
   // Cache ISO3 -> { level, features }
   const muniCacheRef = useRef<Map<string, { level: 'ADM2' | 'ADM1'; features: any[] }>>(new Map());
+  const hasAutoLoadedRef = useRef<boolean>(false);
 
   // Load admin-0 countries for click-hit only (not rendered)
   useEffect(() => {
@@ -143,7 +144,7 @@ export default function D3GeoGlobeSimplified() {
       })
       .on('mouseout', () => svg.select('.tooltip').remove());
 
-    // Drag rotate
+  // Drag rotate
     let prev: [number, number] | null = null;
     svg.call(d3.drag<SVGSVGElement, unknown>()
       .on('start', (ev: any) => { prev = [ev.x, ev.y]; })
@@ -222,6 +223,39 @@ export default function D3GeoGlobeSimplified() {
     // simple hook via microtask
     setTimeout(renderCities, 0);
 
+    // Auto-load last selected ISO3 or nearest-to-center country once
+    const autoLoadDefault = async () => {
+      if (hasAutoLoadedRef.current) return;
+      hasAutoLoadedRef.current = true;
+      try {
+        const saved = localStorage.getItem('cityGlobe.lastISO3');
+        const tryISO = saved || (() => {
+          if (!countries || countries.length === 0) return null;
+          const inv = (projection as any).invert;
+          const center = typeof inv === 'function' ? (inv([width/2, height/2]) as [number, number]) : ([0, 0] as [number, number]);
+          let best: any = null; let bestD = Infinity;
+          for (const f of countries) {
+            let c: [number, number] = [0,0];
+            try { c = d3.geoCentroid(f) as [number, number]; } catch {}
+            let d = Infinity;
+            try { d = d3.geoDistance(c as any, center as any); } catch {}
+            if (isFinite(d) && d < bestD) { bestD = d; best = f; }
+          }
+          return best ? getISO3(best.properties) : null;
+        })();
+        if (!tryISO) return;
+        setSelectedISO3(tryISO);
+        const loaded = await loadMunicipalities(tryISO);
+        if (loaded && loaded.features?.length) {
+          setMuniFeatures(loaded.features);
+          setMuniLevel(loaded.level);
+          renderCitiesWith(loaded.features);
+        }
+      } catch {}
+    };
+    // kick off shortly after first paint
+    setTimeout(autoLoadDefault, 50);
+
     return () => { try { ro.disconnect(); observer.disconnect(); } catch {} };
   // we intentionally omit muniFeatures here to avoid full re-init; we call renderCities manually
   }, [countries, loading, error]);
@@ -287,10 +321,11 @@ export default function D3GeoGlobeSimplified() {
         setMuniLoading(false);
         return null;
       }
-      setMuniFeatures(feats);
+  setMuniFeatures(feats);
       setMuniLevel(level);
       const payload = { level, features: feats };
       muniCacheRef.current.set(iso3, payload);
+  try { localStorage.setItem('cityGlobe.lastISO3', iso3); } catch {}
       return payload;
     } catch (e: any) {
       setMuniError(e?.message || 'Failed to load boundaries');
