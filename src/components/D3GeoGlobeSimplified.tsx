@@ -79,15 +79,15 @@ export default function D3GeoGlobeSimplified() {
       .attr('stroke-width', 0.3)
       .attr('vector-effect', 'non-scaling-stroke');
 
-    // Visible country outlines for context (stroke-only)
+  // Visible country outlines for context (stroke-only)
     if (countries && countries.length) {
       gOutline.append('path')
         .datum({ type: 'FeatureCollection', features: countries } as any)
         .attr('d', path as any)
         .attr('fill', 'none')
-        .attr('stroke', '#9ca3af')
-        .attr('stroke-width', 0.4)
-        .attr('stroke-opacity', 0.9)
+    .attr('stroke', '#111827')
+    .attr('stroke-width', 0.8)
+    .attr('stroke-opacity', 0.85)
         .attr('vector-effect', 'non-scaling-stroke')
         .attr('shape-rendering', 'crispEdges');
     }
@@ -275,21 +275,21 @@ export default function D3GeoGlobeSimplified() {
       if (cached && Array.isArray(cached.features) && cached.features.length) {
         return cached;
       }
-      // gbRequest
+      // GeoBoundaries gbOpen API via Vite proxy (avoids CORS in dev)
       let feats: any[] = [];
       let level: 'ADM2' | 'ADM1' = 'ADM2';
       try {
-  // Use dev proxy to avoid CORS in local; production will still work with absolute URL
-  const reqUrl = `/geoboundaries/gbRequest.html?ISO=${encodeURIComponent(iso3)}&ADM=ADM2`;
-        const req = await fetch(reqUrl, { mode: 'cors' });
-        if (req.ok) {
+        const reqUrl = `/geoboundaries/api/current/gbOpen/${encodeURIComponent(iso3)}/ADM2`;
+        const req = await fetch(reqUrl, { mode: 'cors' }).catch(() => null);
+        if (req && req.ok) {
           let info: any = null;
           try { info = await req.json(); } catch { info = null; }
-          const pick = Array.isArray(info) ? info.find((x: any) => x && typeof x.gjDownloadURL === 'string' && x.gjDownloadURL.includes('.geojson')) : info;
-          const dl = pick?.gjDownloadURL || null;
+          const pick = Array.isArray(info) ? (info[0] || null) : info;
+          const dl: string | null = pick?.gjDownloadURL || pick?.gjDownloadURLz || null;
           if (dl) {
-            const gj = await fetch(dl, { mode: 'cors' });
-            if (gj.ok) {
+            const dlUrl = dl.includes('www.geoboundaries.org') ? dl.replace('https://www.geoboundaries.org', '/geoboundaries') : dl;
+            const gj = await fetch(dlUrl, { mode: 'cors' }).catch(() => null);
+            if (gj && gj.ok) {
               let data: any = null;
               try { data = await gj.json(); } catch { data = null; }
               feats = data?.features || [];
@@ -300,16 +300,17 @@ export default function D3GeoGlobeSimplified() {
       // Fallback to ADM1 when ADM2 not available
       if (!feats || feats.length < 2) {
         try {
-          const reqUrl = `/geoboundaries/gbRequest.html?ISO=${encodeURIComponent(iso3)}&ADM=ADM1`;
-          const req = await fetch(reqUrl, { mode: 'cors' });
-          if (req.ok) {
+          const reqUrl = `/geoboundaries/api/current/gbOpen/${encodeURIComponent(iso3)}/ADM1`;
+          const req = await fetch(reqUrl, { mode: 'cors' }).catch(() => null);
+          if (req && req.ok) {
             let info: any = null;
             try { info = await req.json(); } catch { info = null; }
-            const pick = Array.isArray(info) ? info.find((x: any) => x && typeof x.gjDownloadURL === 'string' && x.gjDownloadURL.includes('.geojson')) : info;
-            const dl = pick?.gjDownloadURL || null;
+            const pick = Array.isArray(info) ? (info[0] || null) : info;
+            const dl: string | null = pick?.gjDownloadURL || pick?.gjDownloadURLz || null;
             if (dl) {
-              const gj = await fetch(dl, { mode: 'cors' });
-              if (gj.ok) {
+              const dlUrl = dl.includes('www.geoboundaries.org') ? dl.replace('https://www.geoboundaries.org', '/geoboundaries') : dl;
+              const gj = await fetch(dlUrl, { mode: 'cors' }).catch(() => null);
+              if (gj && gj.ok) {
                 let data: any = null;
                 try { data = await gj.json(); } catch { data = null; }
                 feats = data?.features || [];
@@ -320,6 +321,27 @@ export default function D3GeoGlobeSimplified() {
         } catch (e) {
           // network/CORS error on fallback too
         }
+      }
+      // Tertiary local fallback: try bundled Admin1 and filter by ISO3
+      if (!feats || feats.length < 2) {
+        try {
+          const local1 = await fetch('/geodata/admin1-states-10m.json').catch(() => null);
+          let raw: any = null;
+          if (local1 && local1.ok) raw = await local1.json().catch(() => null);
+          if (!raw) {
+            const local2 = await fetch('/atlas/ne_50m_admin_1_states_provinces.geojson').catch(() => null);
+            if (local2 && local2.ok) raw = await local2.json().catch(() => null);
+          }
+          if (raw) {
+            const arr = raw.features || [];
+            const pickISO = (p: any) => p?.adm0_a3 || p?.ADM0_A3 || p?.iso_a3 || p?.ISO_A3 || null;
+            const filtered = Array.isArray(arr) ? arr.filter((f: any) => (pickISO(f?.properties) || '').toUpperCase() === iso3.toUpperCase()) : [];
+            if (filtered.length > 0) {
+              feats = filtered;
+              level = 'ADM1';
+            }
+          }
+        } catch {}
       }
       if (!feats || feats.length < 2) {
         setMuniError('No boundaries available or blocked by CORS');
