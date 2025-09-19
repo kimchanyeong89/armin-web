@@ -17,8 +17,11 @@ const D3GeoGlobeSimplified: React.FC = () => {
   const [admin1OverlayMesh, setAdmin1OverlayMesh] = useState<any | null>(null);
   const [hoverInfo, setHoverInfo] = useState<{x:number;y:number;text:string}|null>(null);
   const [hoverCountry, setHoverCountry] = useState<any | null>(null);
-  const [flagCache] = useState<Map<string, {png:string;svg?:string}>>(new Map());
+  const [flagCache] = useState<Map<string, {url:string}>>(new Map());
   const [hoverFlagUrl, setHoverFlagUrl] = useState<string | null>(null);
+  const animatingRef = useRef(false);
+  const hoverFetchTimeoutRef = useRef<number | null>(null);
+  const hoverAbortRef = useRef<AbortController | null>(null);
 
   // Refs to keep latest values inside event handlers without reattaching listeners
   const rotationRef = useRef(rotation);
@@ -175,6 +178,55 @@ const D3GeoGlobeSimplified: React.FC = () => {
     return () => window.removeEventListener('resize', handleResize);
   }, [rotation, scale, countries, admin1OverlayMesh, hoverCountry]);
 
+  // Helpers for click-to-center zoom
+  const easeInOutCubic = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
+  const shortestDeltaDeg = (from: number, to: number) => {
+    let d = to - from;
+    while (d > 180) d -= 360;
+    while (d < -180) d += 360;
+    return d;
+  };
+  const animateTo = (targetRot: {x:number;y:number}, targetScale: number, duration = 800) => {
+    const startRot = { x: rotationRef.current.x, y: rotationRef.current.y };
+    const startScale = scaleRef.current;
+    const dx = shortestDeltaDeg(startRot.x, targetRot.x);
+    const dy = shortestDeltaDeg(startRot.y, targetRot.y);
+    const ds = targetScale - startScale;
+    const t0 = performance.now();
+    animatingRef.current = true;
+    const step = (now: number) => {
+      const t = Math.min(1, (now - t0) / duration);
+      const e = easeInOutCubic(t);
+      setRotation({ x: startRot.x + dx * e, y: startRot.y + dy * e });
+      setScale(Math.max(0.5, Math.min(2.0, startScale + ds * e)));
+      if (t < 1) {
+        requestAnimationFrame(step);
+      } else {
+        animatingRef.current = false;
+      }
+    };
+    requestAnimationFrame(step);
+  };
+  const computeFitScale = (feature: any, targetRot: {x:number;y:number}, width: number, height: number) => {
+    const minWH = Math.min(width, height);
+    // Binary search for the largest scale that keeps feature within 85% of minWH
+    let lo = 0.6, hi = 2.0, best = scaleRef.current;
+    for (let i = 0; i < 14; i++) {
+      const mid = (lo + hi) / 2;
+      const projection = d3.geoOrthographic()
+        .scale(mid * minWH)
+        .translate([width / 2, height / 2])
+        .rotate([targetRot.x, -targetRot.y]);
+      const path = d3.geoPath().projection(projection as any);
+      const b = path.bounds(feature as any);
+      const w = b[1][0] - b[0][0];
+      const h = b[1][1] - b[0][1];
+      const maxDim = Math.max(w, h);
+      if (maxDim <= 0.85 * minWH) { best = mid; lo = mid; } else { hi = mid; }
+    }
+    return Math.max(0.5, Math.min(2.0, best));
+  };
+
   // Mouse interactions: drag for rotation, wheel for zoom
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -185,12 +237,14 @@ const D3GeoGlobeSimplified: React.FC = () => {
     let moved = 0;
 
     const handleMouseDown = (event: MouseEvent) => {
+      if (animatingRef.current) return;
       isDragging = true;
       lastMouse = { x: event.clientX, y: event.clientY };
       canvas.style.cursor = 'grabbing';
       moved = 0;
     };
 
+    let hoverRAF = 0;
     const handleMouseMove = (event: MouseEvent) => {
       if (isDragging) {
         const dx = event.clientX - lastMouse.x;
@@ -206,68 +260,94 @@ const D3GeoGlobeSimplified: React.FC = () => {
         lastMouse = { x: event.clientX, y: event.clientY };
         moved += Math.abs(dx) + Math.abs(dy);
       } else {
+        if (animatingRef.current) return;
         // Hover detection when not dragging
-        const rect = canvas.getBoundingClientRect();
-        const x = event.clientX - rect.left;
-        const y = event.clientY - rect.top;
-        const width = rect.width;
-        const height = rect.height;
-        const projection = d3.geoOrthographic()
-          .scale(scaleRef.current * Math.min(width, height))
-          .translate([width / 2, height / 2])
-          .rotate([rotationRef.current.x, -rotationRef.current.y]);
-  const inv = (projection as any).invert?.bind(projection);
-  const p = inv ? inv([x, y]) : null;
-        if (!p || !countriesRef.current.length) {
-          setHoverInfo(null);
-          setHoverCountry(null);
-          setHoverFlagUrl(null);
-        } else {
-          let found: any = null;
-          for (let i = 0; i < countriesRef.current.length; i++) {
-            if (d3.geoContains(countriesRef.current[i], p)) {
-              found = countriesRef.current[i];
-              break;
-            }
-          }
-          if (found) {
-            const name = (found.properties && (found.properties.name || found.properties.ADMIN || found.properties.admin)) || 'Unknown';
-            setHoverInfo({ x: event.clientX + 12, y: event.clientY + 12, text: name });
-            setHoverCountry(found);
-            // try to resolve ISO3 for flag lookup
-            const iso3 = (found.properties && (found.properties.iso_a3 || found.properties.ISO_A3 || found.properties.ADM0_A3 || found.properties.adm0_a3))
-              || null;
-            if (iso3) {
-              const code = String(iso3).toUpperCase();
-              const cached = flagCache.get(code);
-              if (cached) {
-                setHoverFlagUrl(cached.png);
-              } else {
-                // fetch from REST Countries v3 by alpha code
-                fetch(`https://restcountries.com/v3.1/alpha/${encodeURIComponent(code)}`)
-                  .then(r => r.ok ? r.json() : null)
-                  .then((j:any) => {
-                    if (!j) return;
-                    const entry = Array.isArray(j) ? j[0] : j;
-                    const png = entry?.flags?.png as string | undefined;
-                    const svg = entry?.flags?.svg as string | undefined;
-                    if (png) {
-                      flagCache.set(code, { png, svg });
-                      // ensure still hovering same country before set
-                      setHoverFlagUrl(prev => (hoverCountry === found ? png : prev));
-                    }
-                  })
-                  .catch(() => {});
-              }
-            } else {
-              setHoverFlagUrl(null);
-            }
-          } else {
+        if (hoverRAF) cancelAnimationFrame(hoverRAF);
+        hoverRAF = requestAnimationFrame(() => {
+          const rect = canvas.getBoundingClientRect();
+          const x = event.clientX - rect.left;
+          const y = event.clientY - rect.top;
+          const width = rect.width;
+          const height = rect.height;
+          const projection = d3.geoOrthographic()
+            .scale(scaleRef.current * Math.min(width, height))
+            .translate([width / 2, height / 2])
+            .rotate([rotationRef.current.x, -rotationRef.current.y]);
+          const inv = (projection as any).invert?.bind(projection);
+          const p = inv ? inv([x, y]) : null;
+          if (!p || !countriesRef.current.length) {
             setHoverInfo(null);
             setHoverCountry(null);
             setHoverFlagUrl(null);
+            if (hoverAbortRef.current) hoverAbortRef.current.abort();
+          } else {
+            let found: any = null;
+            for (let i = 0; i < countriesRef.current.length; i++) {
+              if (d3.geoContains(countriesRef.current[i], p)) { found = countriesRef.current[i]; break; }
+            }
+            if (found) {
+              const name = (found.properties && (found.properties.name || found.properties.ADMIN || found.properties.admin)) || 'Unknown';
+              setHoverInfo({ x: event.clientX + 12, y: event.clientY + 12, text: name });
+              setHoverCountry(found);
+              // Resolve flag URL quickly via ISO2 (FlagCDN) or fallback to REST
+              const prop = found.properties || {};
+              const iso2 = (prop.iso_a2 || prop.ISO_A2 || prop.adm0_a2 || prop.ADM0_A2 || prop.A2) as string | undefined;
+              const iso3 = (prop.iso_a3 || prop.ISO_A3 || prop.adm0_a3 || prop.ADM0_A3) as string | undefined;
+              const normalizedISO2 = (iso2 && /^[A-Z]{2}$/i.test(iso2)) ? String(iso2).toLowerCase() : undefined;
+              const normalizedISO3 = (iso3 && /^[A-Z]{3}$/i.test(iso3) && iso3 !== '-99') ? String(iso3).toUpperCase() : undefined;
+              const kosovoA2 = (normalizedISO3 === 'XKX') ? 'xk' : undefined;
+              const key = (normalizedISO2 || kosovoA2 || normalizedISO3 || name) as string;
+              const cached = flagCache.get(key);
+              if (cached) {
+                setHoverFlagUrl(cached.url);
+              } else if (normalizedISO2 || kosovoA2) {
+                const code2 = (normalizedISO2 || kosovoA2)!;
+                const url = `https://flagcdn.com/w24/${code2}.png`;
+                flagCache.set(key, { url });
+                setHoverFlagUrl(url);
+              } else if (normalizedISO3) {
+                if (hoverFetchTimeoutRef.current) window.clearTimeout(hoverFetchTimeoutRef.current);
+                hoverFetchTimeoutRef.current = window.setTimeout(() => {
+                  if (hoverAbortRef.current) hoverAbortRef.current.abort();
+                  const ctl = new AbortController();
+                  hoverAbortRef.current = ctl;
+                  fetch(`https://restcountries.com/v3.1/alpha/${encodeURIComponent(normalizedISO3)}`, { signal: ctl.signal })
+                    .then(r => r.ok ? r.json() : null)
+                    .then((j:any) => {
+                      if (!j) return;
+                      const entry = Array.isArray(j) ? j[0] : j;
+                      const a2 = (entry?.cca2 && typeof entry.cca2 === 'string') ? String(entry.cca2).toLowerCase() : undefined;
+                      const url = a2 ? `https://flagcdn.com/w24/${a2}.png` : (entry?.flags?.png as string | undefined);
+                      if (url) { flagCache.set(key, { url }); setHoverFlagUrl(url); }
+                    })
+                    .catch(() => {});
+                }, 120);
+              } else {
+                // fallback by name (fullText) with debounce
+                if (hoverFetchTimeoutRef.current) window.clearTimeout(hoverFetchTimeoutRef.current);
+                hoverFetchTimeoutRef.current = window.setTimeout(() => {
+                  if (hoverAbortRef.current) hoverAbortRef.current.abort();
+                  const ctl = new AbortController();
+                  hoverAbortRef.current = ctl;
+                  fetch(`https://restcountries.com/v3.1/name/${encodeURIComponent(name)}?fullText=true`, { signal: ctl.signal })
+                    .then(r => r.ok ? r.json() : null)
+                    .then((j:any) => {
+                      if (!j || !j[0]) return;
+                      const a2 = (j[0]?.cca2 && typeof j[0].cca2 === 'string') ? String(j[0].cca2).toLowerCase() : undefined;
+                      const url = a2 ? `https://flagcdn.com/w24/${a2}.png` : (j[0]?.flags?.png as string | undefined);
+                      if (url) { flagCache.set(key, { url }); setHoverFlagUrl(url); }
+                    })
+                    .catch(() => {});
+                }, 160);
+              }
+            } else {
+              setHoverInfo(null);
+              setHoverCountry(null);
+              setHoverFlagUrl(null);
+              if (hoverAbortRef.current) hoverAbortRef.current.abort();
+            }
           }
-        }
+        });
       }
     };
 
@@ -277,7 +357,8 @@ const D3GeoGlobeSimplified: React.FC = () => {
     };
 
     const handleClick = async (event: MouseEvent) => {
-      if (moved > 5) return; // ignore drags
+  if (animatingRef.current) return;
+  if (moved > 5) return; // ignore drags
       if (!countriesRef.current.length) return;
       const rect = canvas.getBoundingClientRect();
       const x = event.clientX - rect.left;
@@ -336,6 +417,14 @@ const D3GeoGlobeSimplified: React.FC = () => {
       } catch (e) {
         console.error('Overlay mesh error', e);
       }
+
+      // Animate center/zoom to the clicked country
+      try {
+        const centroid = d3.geoCentroid(countryFeature as any) as [number, number];
+        const targetRot = { x: -centroid[0], y: centroid[1] };
+        const targetScale = computeFitScale(countryFeature, targetRot, width, height);
+        animateTo(targetRot, targetScale, 900);
+      } catch {}
     };
 
     const handleWheel = (event: WheelEvent) => {
