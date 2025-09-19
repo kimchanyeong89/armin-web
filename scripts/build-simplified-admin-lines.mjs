@@ -3,7 +3,7 @@ import fs from 'node:fs/promises';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 // Defer topojson imports to runtime to allow graceful skip when not installed
-let topology, mesh, presimplify, simplify, quantile;
+let topology, mesh, feature, presimplify, simplify, quantile;
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -95,8 +95,8 @@ async function main() {
   // Try load topojson modules dynamically
   try {
     ({ topology } = await import('topojson-server'));
-    ({ mesh } = await import('topojson-client'));
-    ({ presimplify, simplify, quantile } = await import('topojson-simplify'));
+  ({ mesh, feature } = await import('topojson-client'));
+  ({ presimplify, simplify, quantile } = await import('topojson-simplify'));
   } catch (e) {
     console.warn('[build:admin-lines] topojson packages not available; using fallback simplifier');
     await fallbackSimplifyGeojson(pub);
@@ -113,9 +113,13 @@ async function main() {
   // Build linework by boundary mesh (admin-0)
   const admin0Mesh = mesh(countriesTopo, countriesObj, (a, b) => a !== b);
   const admin0Topo = topology({ admin0: admin0Mesh });
+  // presimplify then simplify by topology weight (shared-boundary-aware)
   presimplify(admin0Topo);
   simplify(admin0Topo, quantile(admin0Topo, 0.65)); // strong simplification
-  await writeJSON(path.join(pub, 'simplified-admin0-lines.geojson'), admin0Topo.objects.admin0);
+  // write both topojson and geojson flavors
+  await writeJSON(path.join(pub, 'simplified-admin0-lines.topo.json'), admin0Topo);
+  const admin0FC = feature(admin0Topo, admin0Topo.objects.admin0);
+  await writeJSON(path.join(pub, 'simplified-admin0-lines.geojson'), admin0FC);
 
   // States/provinces
   const statesTopoPath = path.join(pub, 'states-10m.json');
@@ -123,10 +127,12 @@ async function main() {
   if (statesTopo && statesTopo.type === 'Topology') {
     const statesObj = statesTopo.objects.states || Object.values(statesTopo.objects)[0];
     const admin1Mesh = mesh(statesTopo, statesObj, (a, b) => a !== b);
-  const admin1Topo = topology({ admin1: admin1Mesh });
+    const admin1Topo = topology({ admin1: admin1Mesh });
     presimplify(admin1Topo);
     simplify(admin1Topo, quantile(admin1Topo, 0.7)); // even stronger
-    await writeJSON(path.join(pub, 'simplified-admin1-lines.geojson'), admin1Topo.objects.admin1);
+    await writeJSON(path.join(pub, 'simplified-admin1-lines.topo.json'), admin1Topo);
+    const admin1FC = feature(admin1Topo, admin1Topo.objects.admin1);
+    await writeJSON(path.join(pub, 'simplified-admin1-lines.geojson'), admin1FC);
   } else {
     console.warn('states-10m TopoJSON not found; skipping admin1 lines');
   }

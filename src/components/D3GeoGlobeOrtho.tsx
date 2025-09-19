@@ -20,7 +20,7 @@ interface Props {
   urbanShowDefault?: boolean;
 }
 
-// D3GEO-based orthographic globe with Google Earth-style smooth controls
+// D3GEO-bsed orthographic globe with Google Earth-style smooth controls
 export default function D3GeoGlobeOrtho({
   focusLatLng = null,
   enableHiResSwap = false,
@@ -141,7 +141,7 @@ export default function D3GeoGlobeOrtho({
       projection.rotate([-focusLatLng.lng, -focusLatLng.lat, 0]);
     }
 
-    const path = d3.geoPath(projection);
+  const path = d3.geoPath(projection);
     // Precompute state centroids once
     try {
       for (const s of states as any[]) {
@@ -234,6 +234,12 @@ export default function D3GeoGlobeOrtho({
     let needsHitUpdate = true;
     let lastUpdateTime = 0;
     const FRAME_BUDGET_MS = 12; // target 60fps with 4ms buffer
+    // Light path mode: during drag/zoom/inertia, skip heavy updates and hit paths
+    let lightMode = false;
+    const enableLightMode = () => { if (!lightMode) { lightMode = true; gHit.style('pointer-events', 'none'); } };
+    const disableLightMode = () => { if (lightMode) { lightMode = false; gHit.style('pointer-events', 'all'); } };
+    // Throttle hover to reduce work
+    let lastHoverTs = 0;
 
     // Lightweight path string cache for countries (limits memory)
   const pathCache = new Map<string, string>();
@@ -285,15 +291,19 @@ export default function D3GeoGlobeOrtho({
       if (needsPathUpdate || (frameStart - lastUpdateTime > FRAME_BUDGET_MS)) {
         // Countries path via cache (visuals identical)
         countriesPath.attr('d', getCountriesD());
-        // Keep hit layer geometry exactly in sync whenever paths update
-        hitPaths.attr('d', path as any);
+        // Keep hit layer geometry in sync unless in light mode (defer to end of interaction)
+        if (!lightMode) {
+          hitPaths.attr('d', path as any);
+          needsHitUpdate = false;
+        } // else keep needsHitUpdate true
         needsPathUpdate = false;
-        needsHitUpdate = false;
         lastUpdateTime = frameStart;
       } else if (needsHitUpdate) {
-        // Fallback: update hit layer if explicitly requested
-        hitPaths.attr('d', path as any);
-        needsHitUpdate = false;
+        // Fallback: update hit layer if explicitly requested and not in light mode
+        if (!lightMode) {
+          hitPaths.attr('d', path as any);
+          needsHitUpdate = false;
+        }
       }
       
       // Hover path - only update when visible
@@ -356,6 +366,7 @@ export default function D3GeoGlobeOrtho({
       dragPrev = [event.x, event.y];
       vx = 0; vy = 0;
       if (inertiaId) { cancelAnimationFrame(inertiaId); inertiaId = 0; }
+      enableLightMode();
     };
 
     const onDragged = (event: any) => {
@@ -377,10 +388,10 @@ export default function D3GeoGlobeOrtho({
         r[2]
       ];
       projection.rotate(newRot);
-      // dynamic precision based on zoomK
+      // dynamic precision based on zoomK (lower floor for performance)
       {
         const t = Math.max(0, Math.min(1, (zoomK - 1.3) / (5 - 1.3)));
-        projection.precision(0.55 + 0.4 * t);
+        projection.precision(0.45 + 0.35 * t);
       }
       
       dragPrev = [event.x, event.y];
@@ -406,7 +417,7 @@ export default function D3GeoGlobeOrtho({
         projection.rotate(newRot);
         {
           const t = Math.max(0, Math.min(1, (zoomK - 1.3) / (5 - 1.3)));
-          projection.precision(0.55 + 0.4 * t);
+          projection.precision(0.45 + 0.35 * t);
         }
         
         // Higher decay for smoother deceleration
@@ -419,9 +430,11 @@ export default function D3GeoGlobeOrtho({
         } else {
           inertiaId = 0;
           // Update hit paths once inertia stops
+          disableLightMode();
           requestRender(false, true);
         }
       };
+      enableLightMode();
       inertiaId = requestAnimationFrame(step);
     };
 
@@ -449,8 +462,9 @@ export default function D3GeoGlobeOrtho({
       }
       // Dynamic precision: lower when zoomed out, higher when zoomed in
       const t = Math.max(0, Math.min(1, (zoomK - MIN_ZOOM) / (MAX_ZOOM - MIN_ZOOM)));
-      projection.precision(0.55 + 0.4 * t);
-      requestRender(true, true); // keep hit layer in sync during zoom
+      projection.precision(0.45 + 0.35 * t);
+      // During smooth zoom, deprioritize hit updates for performance
+      requestRender(true, false);
       
       if (Math.abs(target - next) > 1.0) { // higher threshold to prevent jitter
         zoomEaseId = requestAnimationFrame(smoothZoom);
@@ -459,7 +473,8 @@ export default function D3GeoGlobeOrtho({
   projection.scale(target);
   zoomK = targetZoomK;
   const tt = Math.max(0, Math.min(1, (zoomK - MIN_ZOOM) / (MAX_ZOOM - MIN_ZOOM)));
-  projection.precision(0.55 + 0.4 * tt);
+  projection.precision(0.45 + 0.35 * tt);
+  disableLightMode();
   requestRender(true, true);
       }
     };
@@ -478,7 +493,10 @@ export default function D3GeoGlobeOrtho({
   const zoomFactor = Math.exp(-event.deltaY * 0.0015); // even less sensitive
   targetZoomK = Math.max(MIN_ZOOM, Math.min(MAX_ZOOM, targetZoomK * zoomFactor));
       
-      if (!zoomEaseId) zoomEaseId = requestAnimationFrame(smoothZoom);
+      if (!zoomEaseId) {
+        enableLightMode();
+        zoomEaseId = requestAnimationFrame(smoothZoom);
+      }
       
       // Remove cursor focus rotation entirely - it was causing aiming issues
       // The zoom will simply zoom in/out at current center point
@@ -526,7 +544,10 @@ export default function D3GeoGlobeOrtho({
       .attr('stroke', 'none')
       .style('pointer-events', 'all')
       .on('mousemove', (event: any, d: any) => {
-        if (isAnimating) return;
+        if (isAnimating || lightMode) return;
+        const now = performance.now();
+        if (now - lastHoverTs < 40) return; // throttle hover updates ~25fps
+        lastHoverTs = now;
         hoverVisible = true;
         hoverPath.style('display', 'block').datum(d).attr('d', path as any);
         const name = d.properties?.name || d.properties?.NAME || d.properties?.NAME_EN || 'Unknown';

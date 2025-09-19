@@ -155,12 +155,21 @@ export default function GlobeD3({ focusLatLng = null, autorotate = false, stroke
   let selectedCountry: any | null = null;
   
   // 극한 성능 최적화: path 업데이트 공통 함수
+  let lightPathMode = false;
   const updateAllPaths = () => {
+    // In light mode, update only essential paths for interaction responsiveness
+    if (lightPathMode) {
+      gCountries.selectAll('path').attr('d', path as any);
+      gCountryHighlight.selectAll('path').attr('d', path as any);
+      gAtlasCountries.selectAll('path').attr('d', path as any);
+      // Skip heavy layers (hits/admin/urban) during continuous interactions
+      return;
+    }
     gCountries.selectAll('path').attr('d', path as any);
-  gCountriesHit.selectAll('path').attr('d', path as any);
-  gCountryHighlight.selectAll('path').attr('d', path as any);
-  gUrban.selectAll('path').attr('d', path as any);
-  gAdmin.selectAll('path').attr('d', path as any);
+    gCountriesHit.selectAll('path').attr('d', path as any);
+    gCountryHighlight.selectAll('path').attr('d', path as any);
+    gUrban.selectAll('path').attr('d', path as any);
+    gAdmin.selectAll('path').attr('d', path as any);
     gAtlasCountries.selectAll('path').attr('d', path as any);
     gAtlasStates.selectAll('path').attr('d', path as any);
   };
@@ -171,6 +180,9 @@ export default function GlobeD3({ focusLatLng = null, autorotate = false, stroke
   let needsPinUpdate = false;
   let isUpdatingPaths = false;
   let isRenderingPins = false;
+  // Throttle pin rendering to limit work during continuous interactions
+  const PIN_UPDATE_MIN_INTERVAL = 50; // ms
+  let lastPinUpdateTs = 0;
   
   const scheduleRender = () => {
     if (animationFrameId) return; // 이미 스케줄됨
@@ -184,13 +196,21 @@ export default function GlobeD3({ focusLatLng = null, autorotate = false, stroke
       }
       
       if (needsPinUpdate && !isRenderingPins) {
-        isRenderingPins = true;
-        renderPins();
-        needsPinUpdate = false;
-        isRenderingPins = false;
+        const now = performance.now();
+        if (now - lastPinUpdateTs >= PIN_UPDATE_MIN_INTERVAL) {
+          isRenderingPins = true;
+          renderPins();
+          needsPinUpdate = false;
+          isRenderingPins = false;
+          lastPinUpdateTs = now;
+        }
       }
       
       animationFrameId = null;
+      // If work remains (e.g., throttled), schedule next frame
+      if (needsPathUpdate || needsPinUpdate) {
+        scheduleRender();
+      }
     });
   };
   
@@ -582,14 +602,15 @@ export default function GlobeD3({ focusLatLng = null, autorotate = false, stroke
     
     // Pins: geographic-grid clustering with stable centroid spiderfy (precomputed clusters)
     const renderPins = () => {
-      const rotate = projection.rotate();
+  const rotate = projection.rotate();
       const rotationKey = `${rotate[0].toFixed(1)},${rotate[1].toFixed(1)},${zoomK.toFixed(2)}`;
       if (lastRotation === rotationKey) return;
       lastRotation = rotationKey;
 
       // Build nodes from precomputed clusters
       const nodes: any[] = [];
-      for (const c of clustersList) {
+  const MAX_EXPANDED_ITEMS = 40; // cap expanded pins per cluster
+  for (const c of clustersList) {
         const key = c.key;
         const items = c.items as any[];
         if (items.length === 1) {
@@ -606,12 +627,14 @@ export default function GlobeD3({ focusLatLng = null, autorotate = false, stroke
         } else if (expandedClustersRef.current.has(key)) {
           const center = projection([c.centerLon, c.centerLat]);
           if (center) {
-            const V_SPACING = 28;
-            const sorted = c.sortedByName as any[];
+            const sorted = (c.sortedByName as any[]);
+            const count = Math.min(sorted.length, MAX_EXPANDED_ITEMS);
+            const V_SPACING = Math.max(20, 360 / Math.max(8, count));
             const isExpanding = animateExpandKeyRef.current === key;
             const isCollapsing = collapseAnimKeyRef.current === key;
-            if (isCollapsing) collapsePendingRef.current = sorted.length;
-            sorted.forEach((d: any, i: number) => {
+            if (isCollapsing) collapsePendingRef.current = count;
+            for (let i = 0; i < count; i++) {
+              const d = sorted[i];
               const rank = Math.floor(i / 2) + 1;
               const sign = (i % 2 === 0) ? +1 : -1;
               const offsetIndex = sign * rank;
@@ -627,7 +650,7 @@ export default function GlobeD3({ focusLatLng = null, autorotate = false, stroke
                 _labelVisible: true,
                 _cluster: false
               });
-            });
+            }
           }
         } else {
           const center = projection([c.centerLon, c.centerLat]);
@@ -648,7 +671,7 @@ export default function GlobeD3({ focusLatLng = null, autorotate = false, stroke
 
       const sel = gPins.selectAll('g.pin').data(nodes, (d: any) => (d._cluster ? d.key : d.id));
       sel.exit().remove();
-      const enter = sel.enter().append('g').attr('class', 'pin').style('cursor', 'pointer');
+  const enter = sel.enter().append('g').attr('class', 'pin').style('cursor', 'pointer');
 
       // 클러스터 버튼 렌더링 (검정 네모 + 흰색 숫자)
   const enterCluster = enter.filter((d: any) => d._cluster);
@@ -766,20 +789,24 @@ export default function GlobeD3({ focusLatLng = null, autorotate = false, stroke
 
         const isCollapsing = (d as any)._collapsing;
         const collapseOrder = (d as any)._collapseOrder ?? 0;
-        const ease = d3.easeCubicOut;
+  const ease = d3.easeCubicOut;
+  // scale durations by node count to reduce workload when many pins visible
+  const visiblePins = nodes.length;
+  const PIN_DUR = visiblePins > 200 ? 120 : visiblePins > 100 ? 180 : PIN_MOVE_DURATION;
+  const LABEL_DUR = visiblePins > 200 ? 100 : visiblePins > 100 ? 160 : LABEL_SLIDE_DURATION;
         // 엔터 애니메이션(펼침): 핀은 중앙에서 목표 위치로 이동
         if ((d as any)._originX != null && (d as any)._originY != null) {
           g.attr('transform', `translate(${(d as any)._originX},${(d as any)._originY})`);
-          g.transition().duration(PIN_MOVE_DURATION).ease(ease)
+          g.transition().duration(PIN_DUR).ease(ease)
             .attr('transform', `translate(${d.px},${d.py})`);
         } else if (isCollapsing) {
           // 닫힘 애니메이션: 라벨 먼저 숨김(아래 라벨 처리에서 딜레이), 그 다음 핀이 중앙으로 수렴
           // 역순으로 사라지도록 collapseOrder 기반 지연 적용
-          const delayMs = Math.max(0, COLLAPSE_STAGGER * collapseOrder) + LABEL_SLIDE_DURATION + 10;
+          const delayMs = Math.max(0, COLLAPSE_STAGGER * collapseOrder) + LABEL_DUR + 10;
           g.attr('transform', `translate(${d.px},${d.py})`)
             .transition()
             .delay(delayMs as any)
-            .duration(PIN_MOVE_DURATION)
+            .duration(PIN_DUR)
             .ease(ease)
             .attr('transform', `translate(${(d as any)._collapseX},${(d as any)._collapseY})`)
             .on('end', () => {
@@ -813,11 +840,11 @@ export default function GlobeD3({ focusLatLng = null, autorotate = false, stroke
               .style('opacity', 0);
           } else if (d._labelVisible) {
             // 펼침 직후에는 핀 이동 후 라벨 등장
-            const delay = (d as any)._delayLabelAfterMove ? (PIN_MOVE_DURATION + 30) : 0;
+            const delay = (d as any)._delayLabelAfterMove ? (PIN_DUR + 30) : 0;
             label
               .attr('x', 0)
               .style('opacity', 0)
-              .transition().delay(delay).duration(LABEL_SLIDE_DURATION).ease(d3.easeCubicOut)
+              .transition().delay(delay).duration(LABEL_DUR).ease(d3.easeCubicOut)
               .attr('x', 12)
               .style('opacity', 1);
           } else {
@@ -915,6 +942,7 @@ export default function GlobeD3({ focusLatLng = null, autorotate = false, stroke
         }
         dragActive = true;
         stopSpin();
+        lightPathMode = true; // enable lightweight path updates while dragging
       }
       if (!dragActive) return;
   // Pixel delta rotation with per-step clamp and pole folding via setRotationContinuous
@@ -937,6 +965,11 @@ export default function GlobeD3({ focusLatLng = null, autorotate = false, stroke
   dragPrevPos = null;
   dragStartPos = null;
   dragActive = false;
+  // restore full path updates and refresh once
+  if (lightPathMode) {
+    lightPathMode = false;
+    requestPathUpdate();
+  }
   if (wasActive) {
     // resume spin if enabled
     startSpin();
@@ -988,6 +1021,7 @@ export default function GlobeD3({ focusLatLng = null, autorotate = false, stroke
       }
       // pause autorotate during zoom
       stopSpin();
+      lightPathMode = true; // lighten path updates during zoom
     };
 
     const onZoom = (event: any) => {
@@ -1027,6 +1061,11 @@ export default function GlobeD3({ focusLatLng = null, autorotate = false, stroke
       gViewport.attr('transform', null);
       // zoom 제스처 종료 시 앵커 해제
       zoomAnchorLonLat = null;
+      // restore full path updates and refresh once
+      if (lightPathMode) {
+        lightPathMode = false;
+        requestPathUpdate();
+      }
     };
     const zoom = d3.zoom<SVGSVGElement, unknown>()
       .filter((event) => event.type === 'wheel' || (event.type === 'touchstart' && (event.touches?.length || 0) === 2))
