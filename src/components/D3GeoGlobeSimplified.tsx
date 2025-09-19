@@ -3,28 +3,37 @@ import * as d3 from 'd3';
 import * as topojson from 'topojson-client';
 
 const D3GeoGlobeSimplified: React.FC = () => {
-  const svgRef = useRef<SVGSVGElement>(null);
+  const canvasRef = useRef<HTMLCanvasElement>(null);
   const [rotation, setRotation] = useState({ x: 0, y: 0 });
   const [loadingStatus, setLoadingStatus] = useState<string>('Ready');
   const [loadedFeatures, setLoadedFeatures] = useState<any[]>([]);
+  const [scale, setScale] = useState<number>(1); // 줌 스케일 (0.5 ~ 2.0, 지구 꽉 차는 최소)
+  const [currentLevel, setCurrentLevel] = useState<'low' | 'mid' | 'high'>('mid'); // LOD 레벨
 
-  // Mapshaper로 단순화한 경량 경계 데이터 (기존 topojson-simplify 방법 대신)
-  const dataSources = [
-    {
-      name: '경량화 경계 (주/성, 50m 20% 단순화)',
-      url: '/atlas/simplified-admin1-50m-20pct-mapshaper.topo.json',
-      size: '~170KB',
-      type: 'topojson',
-      objectKey: 'ne_50m_admin_1_states_provinces'
+  // LOD data sources based on zoom level
+  const lodDataSources = {
+    low: {
+      name: '국가 경계 (멀리)',
+      url: '/atlas/simplified-admin0-50pct-mapshaper.topo.json',
+      size: '~78KB',
+      type: 'topojson' as const,
+      objectKey: 'countries'
     },
-    {
-      name: '경량화 경계 (주/성, 50m 기본)',
-      url: '/atlas/simplified-admin1-mapshaper.topo.json',
-      size: '~307KB',
-      type: 'topojson',
-      objectKey: 'ne_50m_admin_1_states_provinces'
+    mid: {
+      name: '주/성 경계 10% (중간)',
+      url: '/atlas/simplified-admin1-10m-10pct-mapshaper.topo.json',
+      size: '~2.0MB',
+      type: 'topojson' as const,
+      objectKey: 'ne_10m_admin_1_states_provinces'
+    },
+    high: {
+      name: '주/성 경계 1% (가까이)',
+      url: '/atlas/simplified-admin1-10m-1pct-mapshaper.topo.json',
+      size: '~1.3MB',
+      type: 'topojson' as const,
+      objectKey: 'ne_10m_admin_1_states_provinces'
     }
-  ];
+  };
 
   // Test data loading function
   const loadDataSource = async (source: any) => {
@@ -157,103 +166,166 @@ const D3GeoGlobeSimplified: React.FC = () => {
     }
   };
 
-  // Render globe and features
+  // Render globe and features with Canvas for better performance
   const renderGlobe = () => {
-    const svg = d3.select(svgRef.current);
-    if (!svgRef.current) return;
-    
-    svg.selectAll('*').remove();
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const ctx = canvas.getContext('2d');
+    if (!ctx) return;
 
     // Get full screen size
     const width = window.innerWidth;
     const height = window.innerHeight;
-    svg.attr('width', width).attr('height', height);
+    canvas.width = width;
+    canvas.height = height;
 
-    // Large orthographic projection
+    // Clear canvas
+    ctx.clearRect(0, 0, width, height);
+
+    // Large orthographic projection with zoom, fixed center
     const projection = d3.geoOrthographic()
-      .scale(Math.min(width, height) * 0.4)
+      .scale(scale * Math.min(width, height))
       .translate([width / 2, height / 2])
       .rotate([rotation.x, -rotation.y]);
 
-    const path = d3.geoPath().projection(projection);
+    const path = d3.geoPath().projection(projection).context(ctx);
 
     // Draw white sphere background
-    svg.append('path')
-      .datum({ type: 'Sphere' })
-      .attr('d', (d: any) => path(d))
-      .attr('fill', '#ffffff')
-      .attr('stroke', '#000000')
-      .attr('stroke-width', 2);
+    ctx.fillStyle = '#ffffff';
+    ctx.strokeStyle = '#000000';
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    path({ type: 'Sphere' });
+    ctx.fill();
+    ctx.stroke();
 
     // Draw graticule with black lines
+    ctx.strokeStyle = '#000000';
+    ctx.lineWidth = 0.5;
+    ctx.globalAlpha = 0.3;
     const graticule = d3.geoGraticule();
-    svg.append('path')
-      .datum(graticule())
-      .attr('d', (d: any) => path(d))
-      .attr('fill', 'none')
-      .attr('stroke', '#000000')
-      .attr('stroke-width', 0.5)
-      .attr('opacity', 0.3);
+    ctx.beginPath();
+    path(graticule());
+    ctx.stroke();
+    ctx.globalAlpha = 1;
 
     // Render loaded features if any
     if (loadedFeatures.length > 0) {
-      svg.selectAll('.feature-path')
-        .data(loadedFeatures)
-        .enter()
-        .append('path')
-        .attr('class', 'feature-path')
-        .attr('d', (d: any) => path(d))
-        .attr('fill', loadedFeatures[0]?.geometry?.type === 'Point' ? '#000000' : 'none')
-        .attr('stroke', '#000000')
-        .attr('stroke-width', loadedFeatures[0]?.geometry?.type === 'Point' ? 2 : 1)
-        .attr('opacity', 0.8);
+      ctx.strokeStyle = '#000000';
+      ctx.lineWidth = 1;
+      ctx.fillStyle = 'none';
+      ctx.globalAlpha = 0.8;
+
+      loadedFeatures.forEach(feature => {
+        ctx.beginPath();
+        path(feature);
+        ctx.stroke();
+      });
     }
   };
 
-  // Initialize and handle rotation updates
+  // Initial load of mid level data
   useEffect(() => {
-    renderGlobe();
-  }, [rotation, loadedFeatures]);
+    loadDataSource(lodDataSources.mid);
+  }, []);
+
+  // Update LOD level based on scale
+  useEffect(() => {
+    let newLevel: 'low' | 'mid' | 'high';
+    if (scale < 0.7) {
+      newLevel = 'low';
+    } else if (scale < 1.2) {
+      newLevel = 'mid';
+    } else {
+      newLevel = 'high';
+    }
+    if (newLevel !== currentLevel) {
+      setCurrentLevel(newLevel);
+      // Load new data
+      loadDataSource(lodDataSources[newLevel]);
+    }
+  }, [scale, currentLevel]);
 
   // Handle window resize
   useEffect(() => {
     const handleResize = () => renderGlobe();
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
-  }, [rotation, loadedFeatures]);
+  }, [rotation, loadedFeatures, scale]);
 
-  // Mouse drag for rotation
+  // Mouse interactions: drag for rotation, wheel for zoom
   useEffect(() => {
-    const svg = d3.select(svgRef.current);
-    if (!svgRef.current) return;
+    const canvas = canvasRef.current;
+    if (!canvas) return;
     
     let isDragging = false;
     let lastMouse = { x: 0, y: 0 };
 
-    const drag = d3.drag<SVGSVGElement, unknown>()
-      .on('start', (event) => {
-        isDragging = true;
-        lastMouse = { x: event.x, y: event.y };
-      })
-      .on('drag', (event) => {
-        if (isDragging) {
-          const sensitivity = 0.25;
-          const dx = (event.x - lastMouse.x) * sensitivity;
-          const dy = (event.y - lastMouse.y) * sensitivity;
-          
-          setRotation(prev => ({
-            x: prev.x + dx,
-            y: Math.max(-90, Math.min(90, prev.y + dy))
-          }));
-          
-          lastMouse = { x: event.x, y: event.y };
-        }
-      })
-      .on('end', () => {
-        isDragging = false;
-      });
+    const handleMouseDown = (event: MouseEvent) => {
+      isDragging = true;
+      lastMouse = { x: event.clientX, y: event.clientY };
+      canvas.style.cursor = 'grabbing';
+    };
 
-    svg.call(drag as any);
+    const handleMouseMove = (event: MouseEvent) => {
+      if (isDragging) {
+        const dx = event.clientX - lastMouse.x;
+        const dy = event.clientY - lastMouse.y;
+        
+        // Rotate
+        const sensitivity = 0.25;
+        setRotation(prev => ({
+          x: prev.x + dx * sensitivity,
+          y: Math.max(-90, Math.min(90, prev.y + dy * sensitivity))
+        }));
+        
+        lastMouse = { x: event.clientX, y: event.clientY };
+      }
+    };
+
+    const handleMouseUp = () => {
+      isDragging = false;
+      canvas.style.cursor = 'grab';
+    };
+
+    const handleWheel = (event: WheelEvent) => {
+      // Only zoom if mouse is over canvas
+      const rect = canvas.getBoundingClientRect();
+      const mouseX = event.clientX - rect.left;
+      const mouseY = event.clientY - rect.top;
+      if (mouseX >= 0 && mouseX <= rect.width && mouseY >= 0 && mouseY <= rect.height) {
+        event.preventDefault();
+        const zoomFactor = 0.05;
+        const delta = event.deltaY > 0 ? -zoomFactor : zoomFactor;
+        setScale(prevScale => {
+          const newScale = Math.max(0.5, Math.min(2.0, prevScale + delta));
+          // Zoom towards mouse direction by adjusting rotation
+          const centerX = rect.width / 2;
+          const centerY = rect.height / 2;
+          const dirX = (mouseX - centerX) / centerX; // -1 to 1
+          const dirY = (mouseY - centerY) / centerY; // -1 to 1
+          const rotateFactor = 0.1 * (newScale - prevScale);
+          setRotation(prev => ({
+            x: prev.x + dirX * rotateFactor,
+            y: Math.max(-90, Math.min(90, prev.y - dirY * rotateFactor))
+          }));
+          return newScale;
+        });
+      }
+    };
+
+    canvas.addEventListener('mousedown', handleMouseDown);
+    window.addEventListener('mousemove', handleMouseMove);
+    window.addEventListener('mouseup', handleMouseUp);
+    window.addEventListener('wheel', handleWheel);
+
+    return () => {
+      canvas.removeEventListener('mousedown', handleMouseDown);
+      window.removeEventListener('mousemove', handleMouseMove);
+      window.removeEventListener('mouseup', handleMouseUp);
+      window.removeEventListener('wheel', handleWheel);
+    };
   }, []);
 
   return (
@@ -284,56 +356,23 @@ const D3GeoGlobeSimplified: React.FC = () => {
           City Boundaries Globe
         </h2>
         <div style={{ color: '#666', marginBottom: '15px', fontSize: '14px' }}>
-          Status: {loadingStatus}
+          Status: {loadingStatus} | LOD: {currentLevel === 'low' ? '멀리 (국가)' : currentLevel === 'mid' ? '중간 (주/성 10%)' : '가까이 (주/성 1%)'}
         </div>
-        
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr', gap: '6px' }}>
-          {dataSources.map((source, index) => (
-            <button
-              key={index}
-              onClick={() => loadDataSource(source)}
-              style={{ 
-                padding: '10px 12px',
-                backgroundColor: '#f8fafc',
-                border: '1px solid #e2e8f0',
-                borderRadius: '6px',
-                fontSize: '12px',
-                cursor: 'pointer',
-                textAlign: 'left',
-                transition: 'all 0.2s'
-              }}
-              onMouseOver={(e) => {
-                e.currentTarget.style.backgroundColor = '#f1f5f9';
-                e.currentTarget.style.borderColor = '#cbd5e1';
-              }}
-              onMouseOut={(e) => {
-                e.currentTarget.style.backgroundColor = '#f8fafc';
-                e.currentTarget.style.borderColor = '#e2e8f0';
-              }}
-            >
-              <div style={{ fontWeight: 'bold', marginBottom: '3px', fontSize: '13px' }}>
-                {source.name}
-              </div>
-              <div style={{ color: '#64748b', fontSize: '11px' }}>
-                Size: {source.size}
-              </div>
-            </button>
-          ))}
-        </div>
-        
         <div style={{ 
           marginTop: '15px', 
           fontSize: '12px', 
           color: '#666',
           lineHeight: '1.4'
         }}>
-          마우스로 드래그하여 지구본을 회전할 수 있습니다.
+          • 드래그: 지구본 회전<br/>
+          • 마우스 휠: 커서 방향으로 확대/축소<br/>
+          • 줌 레벨에 따라 자동으로 상세도 조절
         </div>
       </div>
       
       {/* Globe */}
-      <svg 
-        ref={svgRef} 
+      <canvas 
+        ref={canvasRef} 
         style={{ 
           cursor: 'grab',
           display: 'block'
