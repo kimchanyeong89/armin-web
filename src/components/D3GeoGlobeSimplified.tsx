@@ -6,165 +6,86 @@ const D3GeoGlobeSimplified: React.FC = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [rotation, setRotation] = useState({ x: 0, y: 0 });
   const [loadingStatus, setLoadingStatus] = useState<string>('Ready');
-  const [loadedFeatures, setLoadedFeatures] = useState<any[]>([]);
+  // Legacy holder removed; we render directly from datasets
   const [scale, setScale] = useState<number>(1); // 줌 스케일 (0.5 ~ 2.0, 지구 꽉 차는 최소)
-  const [currentLevel, setCurrentLevel] = useState<'low' | 'mid' | 'high'>('mid'); // LOD 레벨
 
-  // LOD data sources based on zoom level
-  const lodDataSources = {
-    low: {
-      name: '국가 경계 (멀리)',
-      url: '/atlas/simplified-admin0-50pct-mapshaper.topo.json',
-      size: '~78KB',
-      type: 'topojson' as const,
-      objectKey: 'countries'
-    },
-    mid: {
-      name: '주/성 경계 10% (중간)',
-      url: '/atlas/simplified-admin1-10m-10pct-mapshaper.topo.json',
-      size: '~2.0MB',
-      type: 'topojson' as const,
-      objectKey: 'ne_10m_admin_1_states_provinces'
-    },
-    high: {
-      name: '주/성 경계 1% (가까이)',
-      url: '/atlas/simplified-admin1-10m-1pct-mapshaper.topo.json',
-      size: '~1.3MB',
-      type: 'topojson' as const,
-      objectKey: 'ne_10m_admin_1_states_provinces'
-    }
-  };
+  // Always-available datasets for interactions
+  const [countries, setCountries] = useState<any[]>([]);
+  const [admin1Topo, setAdmin1Topo] = useState<any | null>(null);
+  const [selectedCountry, setSelectedCountry] = useState<string | null>(null);
+  const admin1OverlayCacheRef = useRef<Map<string, any>>(new Map());
+  const [admin1OverlayMesh, setAdmin1OverlayMesh] = useState<any | null>(null);
+  const [hoverInfo, setHoverInfo] = useState<{x:number;y:number;text:string}|null>(null);
+  const [hoverCountry, setHoverCountry] = useState<any | null>(null);
+  const [flagCache] = useState<Map<string, {png:string;svg?:string}>>(new Map());
+  const [hoverFlagUrl, setHoverFlagUrl] = useState<string | null>(null);
 
-  // Test data loading function
-  const loadDataSource = async (source: any) => {
+  // Refs to keep latest values inside event handlers without reattaching listeners
+  const rotationRef = useRef(rotation);
+  const scaleRef = useRef(scale);
+  const countriesRef = useRef(countries);
+  const admin1TopoRef = useRef(admin1Topo);
+
+  useEffect(() => { rotationRef.current = rotation; }, [rotation]);
+  useEffect(() => { scaleRef.current = scale; }, [scale]);
+  useEffect(() => { countriesRef.current = countries; }, [countries]);
+  useEffect(() => { admin1TopoRef.current = admin1Topo; }, [admin1Topo]);
+
+  // 자동 LOD 전환은 사용하지 않습니다. (클릭 시 디테일 표시)
+
+  // Dedicated loaders to keep base datasets available
+  const loadCountries = async () => {
     try {
-      setLoadingStatus(`Loading ${source.name} (${source.size})...`);
-      console.log(`🔄 Testing: ${source.name}`);
-      console.log(`📊 Size: ${source.size}`);
-      console.log(`🔗 URL: ${source.url}`);
-
-      const response = await fetch(source.url, {
-        method: 'GET',
-        headers: {
-          'Accept': 'application/json,text/plain,*/*',
-          'User-Agent': 'Mozilla/5.0 (compatible; DataLoader/1.0)'
-        }
-      });
-      
-      if (!response.ok) {
-        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+      setLoadingStatus('Loading countries (50m, detailed)...');
+      // Try 50m first (matches D3 GEO view), then fall back
+      const tryFetch = async (url: string) => {
+        try {
+          const r = await fetch(url);
+          if (!r.ok) return null;
+          return await r.json();
+        } catch { return null; }
+      };
+      let raw: any = await tryFetch('/geodata/countries-50m.json');
+      if (!raw) raw = await tryFetch('/geodata/countries-110m.json');
+      if (!raw) raw = await tryFetch('/atlas/countries-110m.json');
+      if (!raw) raw = await tryFetch('/atlas/ne_110m_admin_0_countries.geojson');
+      if (!raw) throw new Error('No countries dataset available');
+      let feats: any[] = [];
+      if (raw.type === 'FeatureCollection') {
+        feats = raw.features || [];
+      } else if (raw.type === 'Topology' && raw.objects) {
+        const keys = Object.keys(raw.objects);
+        const pick = keys.find(k => k.toLowerCase().includes('countries'))
+          || keys.find(k => k.toLowerCase().includes('admin_0'))
+          || keys[0];
+        const fc: any = topojson.feature(raw, (raw.objects as any)[pick]);
+        feats = fc.features || [];
       }
-
-      const contentType = response.headers.get('content-type') || '';
-      console.log(`Content-Type: ${contentType}`);
-
-      if (source.type === 'csv' || contentType.includes('text/csv')) {
-        // CSV 처리
-        const csvText = await response.text();
-        console.log(`CSV text length: ${csvText.length}`);
-        
-        const lines = csvText.split('\n').slice(1).filter(line => line.trim());
-        console.log(`CSV lines: ${lines.length}`);
-        
-        const features = lines.slice(0, 200).map((line, index) => {
-          try {
-            const columns = line.split(',');
-            const name = columns[0]?.replace(/"/g, '') || `City${index}`;
-            const country = columns[1]?.replace(/"/g, '') || 'Unknown';
-            const lat = parseFloat(columns[2] || '0');
-            const lng = parseFloat(columns[3] || '0');
-            
-            if (isNaN(lat) || isNaN(lng) || Math.abs(lat) > 90 || Math.abs(lng) > 180) {
-              return null;
-            }
-            
-            return {
-              type: 'Feature',
-              properties: { name, country },
-              geometry: { type: 'Point', coordinates: [lng, lat] }
-            };
-          } catch (e) {
-            return null;
-          }
-        }).filter(Boolean);
-        
-        console.log(`✅ CSV loaded: ${features.length} cities`);
-        setLoadingStatus(`✅ ${source.name}: ${features.length} cities loaded`);
-        setLoadedFeatures(features);
-        
-      } else if (source.type === 'topojson') {
-        // TopoJSON 처리
-        const data = await response.json();
-        console.log(`TopoJSON objects:`, Object.keys(data.objects || {}));
-        
-        if (!data.objects) {
-          throw new Error('No objects in TopoJSON data');
-        }
-        
-        let objectName = source.objectKey;
-        if (!objectName || !data.objects[objectName]) {
-          objectName = Object.keys(data.objects)[0];
-        }
-        
-        console.log(`Using TopoJSON object: "${objectName}"`);
-        
-        const geojson = topojson.feature(data, data.objects[objectName]);
-        const features = geojson.features || [];
-        
-        console.log(`✅ TopoJSON converted: ${features.length} features`);
-        setLoadingStatus(`✅ ${source.name}: ${features.length} boundaries loaded`);
-        setLoadedFeatures(features);
-        
-      } else {
-        // GeoJSON 또는 JSON 처리
-        const data = await response.json();
-        console.log(`JSON data type:`, typeof data, Array.isArray(data) ? 'array' : 'object');
-        
-        let features = [];
-        
-        if (data.features && Array.isArray(data.features)) {
-          // 표준 GeoJSON
-          features = data.features;
-        } else if (Array.isArray(data)) {
-          // JSON 배열 (도시 데이터 등)
-          features = data.slice(0, 200).map((item: any, index: number) => {
-            try {
-              const name = item.name || item.city || item.country || `Item${index}`;
-              const lat = parseFloat(item.lat || item.latitude || '0');
-              const lng = parseFloat(item.lng || item.longitude || '0');
-              
-              if (isNaN(lat) || isNaN(lng)) return null;
-              
-              return {
-                type: 'Feature',
-                properties: { name },
-                geometry: { type: 'Point', coordinates: [lng, lat] }
-              };
-            } catch (e) {
-              return null;
-            }
-          }).filter(Boolean);
-        } else {
-          throw new Error('Unsupported data format');
-        }
-        
-        console.log(`✅ JSON loaded: ${features.length} features`);
-        setLoadingStatus(`✅ ${source.name}: ${features.length} items loaded`);
-        setLoadedFeatures(features);
-      }
-
-    } catch (error) {
-      console.error(`❌ Detailed error for ${source.name}:`, error);
-      
-      if (error instanceof TypeError && error.message.includes('fetch')) {
-        setLoadingStatus(`❌ Network Error: ${source.name} - CORS or URL issue`);
-      } else if (error instanceof SyntaxError) {
-        setLoadingStatus(`❌ Parse Error: ${source.name} - Invalid JSON/data format`);
-      } else {
-        setLoadingStatus(`❌ Failed: ${source.name} - ${error instanceof Error ? error.message : String(error)}`);
-      }
+      setCountries(feats);
+      setLoadingStatus(`✅ Countries (detailed) ready (${feats.length})`);
+    } catch (e:any) {
+      console.error('Failed to load countries', e);
+      setLoadingStatus(`❌ Countries load failed: ${e.message || e}`);
     }
   };
+
+  const loadAdmin1 = async (): Promise<any | null> => {
+    try {
+      setLoadingStatus('Loading Admin-1 20% TopoJSON...');
+      const res = await fetch('/atlas/simplified-admin1-10m-20pct-q.topo.json');
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      const topology = await res.json();
+      setAdmin1Topo(topology);
+      setLoadingStatus('✅ Admin-1 data ready');
+      return topology;
+    } catch (e:any) {
+      console.error('Failed to load admin-1', e);
+      setLoadingStatus(`❌ Admin-1 load failed: ${e.message || e}`);
+      return null;
+    }
+  };
+
+  // (legacy loader removed)
 
   // Render globe and features with Canvas for better performance
   const renderGlobe = () => {
@@ -200,59 +121,59 @@ const D3GeoGlobeSimplified: React.FC = () => {
     ctx.fill();
     ctx.stroke();
 
-    // Draw graticule with black lines
-    ctx.strokeStyle = '#000000';
-    ctx.lineWidth = 0.5;
-    ctx.globalAlpha = 0.3;
-    const graticule = d3.geoGraticule();
-    ctx.beginPath();
-    path(graticule());
-    ctx.stroke();
-    ctx.globalAlpha = 1;
+  // Graticule removed per request
 
-    // Render loaded features if any
-    if (loadedFeatures.length > 0) {
-      ctx.strokeStyle = '#000000';
-      ctx.lineWidth = 1;
-      ctx.fillStyle = 'none';
-      ctx.globalAlpha = 0.8;
-
-      loadedFeatures.forEach(feature => {
+    // Base: draw country boundaries
+    if (countries.length > 0) {
+      ctx.strokeStyle = '#111111';
+      ctx.lineWidth = 0.8;
+      ctx.globalAlpha = 0.9;
+      countries.forEach((feature: any) => {
+        // fill hovered country white beneath stroke
+        const isHover = hoverCountry && feature === hoverCountry;
+        if (isHover) {
+          ctx.fillStyle = '#ffffff';
+          ctx.beginPath();
+          path(feature);
+          ctx.fill();
+        }
         ctx.beginPath();
         path(feature);
         ctx.stroke();
       });
+      ctx.globalAlpha = 1;
+    }
+
+    // Selected overlay mesh for a specific country (emphasized)
+    if (admin1OverlayMesh) {
+      ctx.save();
+      ctx.strokeStyle = '#000';
+      ctx.setLineDash([4, 3]);
+      ctx.lineWidth = 1.2;
+      ctx.globalAlpha = 0.95;
+      ctx.beginPath();
+      path(admin1OverlayMesh as any);
+      ctx.stroke();
+      ctx.restore();
+      ctx.globalAlpha = 1;
     }
   };
 
-  // Initial load of mid level data
+  // Initial load of datasets
   useEffect(() => {
-    loadDataSource(lodDataSources.mid);
+    loadCountries();
   }, []);
 
   // Update LOD level based on scale
-  useEffect(() => {
-    let newLevel: 'low' | 'mid' | 'high';
-    if (scale < 0.7) {
-      newLevel = 'low';
-    } else if (scale < 1.2) {
-      newLevel = 'mid';
-    } else {
-      newLevel = 'high';
-    }
-    if (newLevel !== currentLevel) {
-      setCurrentLevel(newLevel);
-      // Load new data
-      loadDataSource(lodDataSources[newLevel]);
-    }
-  }, [scale, currentLevel]);
+  // No auto LOD switching; details shown only on click
 
-  // Handle window resize
+  // Handle window resize and initial render
   useEffect(() => {
+    renderGlobe();
     const handleResize = () => renderGlobe();
     window.addEventListener('resize', handleResize);
     return () => window.removeEventListener('resize', handleResize);
-  }, [rotation, loadedFeatures, scale]);
+  }, [rotation, scale, countries, admin1OverlayMesh, hoverCountry]);
 
   // Mouse interactions: drag for rotation, wheel for zoom
   useEffect(() => {
@@ -261,11 +182,13 @@ const D3GeoGlobeSimplified: React.FC = () => {
     
     let isDragging = false;
     let lastMouse = { x: 0, y: 0 };
+    let moved = 0;
 
     const handleMouseDown = (event: MouseEvent) => {
       isDragging = true;
       lastMouse = { x: event.clientX, y: event.clientY };
       canvas.style.cursor = 'grabbing';
+      moved = 0;
     };
 
     const handleMouseMove = (event: MouseEvent) => {
@@ -281,12 +204,138 @@ const D3GeoGlobeSimplified: React.FC = () => {
         }));
         
         lastMouse = { x: event.clientX, y: event.clientY };
+        moved += Math.abs(dx) + Math.abs(dy);
+      } else {
+        // Hover detection when not dragging
+        const rect = canvas.getBoundingClientRect();
+        const x = event.clientX - rect.left;
+        const y = event.clientY - rect.top;
+        const width = rect.width;
+        const height = rect.height;
+        const projection = d3.geoOrthographic()
+          .scale(scaleRef.current * Math.min(width, height))
+          .translate([width / 2, height / 2])
+          .rotate([rotationRef.current.x, -rotationRef.current.y]);
+  const inv = (projection as any).invert?.bind(projection);
+  const p = inv ? inv([x, y]) : null;
+        if (!p || !countriesRef.current.length) {
+          setHoverInfo(null);
+          setHoverCountry(null);
+          setHoverFlagUrl(null);
+        } else {
+          let found: any = null;
+          for (let i = 0; i < countriesRef.current.length; i++) {
+            if (d3.geoContains(countriesRef.current[i], p)) {
+              found = countriesRef.current[i];
+              break;
+            }
+          }
+          if (found) {
+            const name = (found.properties && (found.properties.name || found.properties.ADMIN || found.properties.admin)) || 'Unknown';
+            setHoverInfo({ x: event.clientX + 12, y: event.clientY + 12, text: name });
+            setHoverCountry(found);
+            // try to resolve ISO3 for flag lookup
+            const iso3 = (found.properties && (found.properties.iso_a3 || found.properties.ISO_A3 || found.properties.ADM0_A3 || found.properties.adm0_a3))
+              || null;
+            if (iso3) {
+              const code = String(iso3).toUpperCase();
+              const cached = flagCache.get(code);
+              if (cached) {
+                setHoverFlagUrl(cached.png);
+              } else {
+                // fetch from REST Countries v3 by alpha code
+                fetch(`https://restcountries.com/v3.1/alpha/${encodeURIComponent(code)}`)
+                  .then(r => r.ok ? r.json() : null)
+                  .then((j:any) => {
+                    if (!j) return;
+                    const entry = Array.isArray(j) ? j[0] : j;
+                    const png = entry?.flags?.png as string | undefined;
+                    const svg = entry?.flags?.svg as string | undefined;
+                    if (png) {
+                      flagCache.set(code, { png, svg });
+                      // ensure still hovering same country before set
+                      setHoverFlagUrl(prev => (hoverCountry === found ? png : prev));
+                    }
+                  })
+                  .catch(() => {});
+              }
+            } else {
+              setHoverFlagUrl(null);
+            }
+          } else {
+            setHoverInfo(null);
+            setHoverCountry(null);
+            setHoverFlagUrl(null);
+          }
+        }
       }
     };
 
     const handleMouseUp = () => {
       isDragging = false;
       canvas.style.cursor = 'grab';
+    };
+
+    const handleClick = async (event: MouseEvent) => {
+      if (moved > 5) return; // ignore drags
+      if (!countriesRef.current.length) return;
+      const rect = canvas.getBoundingClientRect();
+      const x = event.clientX - rect.left;
+      const y = event.clientY - rect.top;
+      const width = rect.width;
+      const height = rect.height;
+      const projection = d3.geoOrthographic()
+        .scale(scaleRef.current * Math.min(width, height))
+        .translate([width / 2, height / 2])
+        .rotate([rotationRef.current.x, -rotationRef.current.y]);
+      const inv = (projection as any).invert?.bind(projection);
+      const p = inv ? inv([x, y]) : null;
+      if (!p) return;
+      let countryFeature: any | null = null;
+      for (let i = 0; i < countriesRef.current.length; i++) {
+        if (d3.geoContains(countriesRef.current[i], p)) {
+          countryFeature = countriesRef.current[i];
+          break;
+        }
+      }
+      if (!countryFeature) return;
+      const countryName = (countryFeature.properties && (countryFeature.properties.name || countryFeature.properties.ADMIN || countryFeature.properties.admin)) || 'Unknown';
+      setSelectedCountry(countryName);
+
+      const cached = admin1OverlayCacheRef.current.get(countryName);
+      if (cached) {
+        setAdmin1OverlayMesh(cached);
+        return;
+      }
+      try {
+        let topology = admin1TopoRef.current;
+        if (!topology) {
+          topology = await loadAdmin1();
+          if (!topology) return;
+        }
+        const objectKey = topology.objects.ne_10m_admin_1_states_provinces ? 'ne_10m_admin_1_states_provinces' : Object.keys(topology.objects)[0];
+        const topoObj = topology.objects[objectKey];
+        const geoms: any[] = topoObj.geometries || [];
+        const subsetGeoms: any[] = [];
+        for (let i = 0; i < geoms.length; i++) {
+          const g = geoms[i];
+          try {
+            const fc = topojson.feature(topology, { type: 'GeometryCollection', geometries: [g] } as any) as any;
+            const feat = fc.type === 'FeatureCollection' ? fc.features[0] : fc;
+            const c = d3.geoCentroid(feat as any);
+            if (c && d3.geoContains(countryFeature, c)) subsetGeoms.push(g);
+          } catch {
+            // ignore
+          }
+        }
+        if (!subsetGeoms.length) return;
+        const subsetObj = { type: 'GeometryCollection', geometries: subsetGeoms } as any;
+        const mesh = topojson.mesh(topology, subsetObj, (a: any, b: any) => a !== b);
+        admin1OverlayCacheRef.current.set(countryName, mesh as any);
+        setAdmin1OverlayMesh(mesh as any);
+      } catch (e) {
+        console.error('Overlay mesh error', e);
+      }
     };
 
     const handleWheel = (event: WheelEvent) => {
@@ -318,12 +367,14 @@ const D3GeoGlobeSimplified: React.FC = () => {
     canvas.addEventListener('mousedown', handleMouseDown);
     window.addEventListener('mousemove', handleMouseMove);
     window.addEventListener('mouseup', handleMouseUp);
+    canvas.addEventListener('click', handleClick);
     window.addEventListener('wheel', handleWheel);
 
     return () => {
       canvas.removeEventListener('mousedown', handleMouseDown);
       window.removeEventListener('mousemove', handleMouseMove);
       window.removeEventListener('mouseup', handleMouseUp);
+      canvas.removeEventListener('click', handleClick);
       window.removeEventListener('wheel', handleWheel);
     };
   }, []);
@@ -356,7 +407,7 @@ const D3GeoGlobeSimplified: React.FC = () => {
           City Boundaries Globe
         </h2>
         <div style={{ color: '#666', marginBottom: '15px', fontSize: '14px' }}>
-          Status: {loadingStatus} | LOD: {currentLevel === 'low' ? '멀리 (국가)' : currentLevel === 'mid' ? '중간 (주/성 10%)' : '가까이 (주/성 1%)'}
+          Status: {loadingStatus} | 상세도: 국가(50m) · 국가 클릭 시 주/성 디테일
         </div>
         <div style={{ 
           marginTop: '15px', 
@@ -366,8 +417,21 @@ const D3GeoGlobeSimplified: React.FC = () => {
         }}>
           • 드래그: 지구본 회전<br/>
           • 마우스 휠: 커서 방향으로 확대/축소<br/>
-          • 줌 레벨에 따라 자동으로 상세도 조절
+          • 자동 상세도 전환 없음 (국가 클릭 시만 상세 표시)<br/>
+          • 국가 위에 마우스를 올리면 이름 표시<br/>
+          • 국가를 클릭하면 해당 국가의 주/성 경계를 강조 표시
         </div>
+        {selectedCountry && (
+          <div style={{ marginTop: '10px' }}>
+            <div style={{ fontSize: '12px', color: '#333' }}>선택된 국가: {selectedCountry}</div>
+            <button
+              style={{ marginTop: '6px', fontSize: '12px', padding: '6px 10px', borderRadius: 6, border: '1px solid #ccc', background: '#f7f7f7', cursor: 'pointer' }}
+              onClick={() => { setSelectedCountry(null); setAdmin1OverlayMesh(null); }}
+            >
+              강조 해제
+            </button>
+          </div>
+        )}
       </div>
       
       {/* Globe */}
@@ -378,6 +442,37 @@ const D3GeoGlobeSimplified: React.FC = () => {
           display: 'block'
         }}
       />
+
+      {/* Tooltip */}
+      {hoverInfo && (
+        <div
+          style={{
+            position: 'fixed',
+            left: hoverInfo.x,
+            top: hoverInfo.y,
+            padding: '6px 8px',
+            background: 'rgba(0,0,0,0.75)',
+            color: '#fff',
+            borderRadius: 6,
+            fontSize: 12,
+            pointerEvents: 'none',
+            zIndex: 1001
+          }}
+        >
+          <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+            {hoverFlagUrl && (
+              <img
+                src={hoverFlagUrl}
+                alt="flag"
+                width={18}
+                height={12}
+                style={{ display: 'block', borderRadius: 2 }}
+              />
+            )}
+            <span>{hoverInfo.text}</span>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

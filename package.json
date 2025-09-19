@@ -11,7 +11,10 @@
     "preview": "vite preview",
     "build:urban-topo": "node ./scripts/generate-urban-topo.mjs",
     "build:simplified-geo": "node ./scripts/build-simplified-geo.mjs",
-    "build:admin-lines": "node ./scripts/build-simplified-admin-lines.mjs",
+  "build:admin-lines": "node ./scripts/build-simplified-admin-lines.mjs",
+  "build:maps:countries50": "mapshaper -i public/atlas/ne_110m_admin_0_countries.geojson name=countries -simplify 50% keep-shapes -o format=topojson quantization=1e5 public/atlas/simplified-admin0-50pct-mapshaper.topo.json",
+  "build:maps:admin1-10m-50": "mapshaper -i public/atlas/ne_10m_admin_1_states_provinces.geojson name=ne_10m_admin_1_states_provinces -simplify 50% keep-shapes -o format=topojson quantization=1e5 public/atlas/simplified-admin1-10m-50pct-q.topo.json",
+  "build:maps:50": "npm run build:maps:countries50 && npm run build:maps:admin1-10m-50",
     "deploy:firebase": "npm run build && npx firebase deploy --only hosting",
     "fetch:ng": "node ./scripts/fetch-national-gallery.js",
     "update:ng-image": "node ./scripts/update-national-gallery-image.js",
@@ -64,6 +67,7 @@
     "topojson-simplify": "^3.0.3",
     "typescript": "~5.8.3",
     "typescript-eslint": "^8.30.1",
-    "vite": "^6.3.5"
+    "vite": "^6.3.5",
+    "mapshaper": "^0.6.114"
   }
 }
