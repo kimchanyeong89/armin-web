@@ -8,33 +8,21 @@ const D3GeoGlobeSimplified: React.FC = () => {
   const [loadingStatus, setLoadingStatus] = useState<string>('Ready');
   const [loadedFeatures, setLoadedFeatures] = useState<any[]>([]);
 
-  // Lightweight local boundary linework built via scripts/build-simplified-admin-lines.mjs
+  // Mapshaper로 단순화한 경량 경계 데이터 (기존 topojson-simplify 방법 대신)
   const dataSources = [
     {
-      name: '경량화 경계 (전세계 국가)',
-      url: '/atlas/simplified-admin0-lines.topo.json',
-      size: '~116KB',
+      name: '경량화 경계 (주/성, 50m 20% 단순화)',
+      url: '/atlas/simplified-admin1-50m-20pct-mapshaper.topo.json',
+      size: '~170KB',
       type: 'topojson',
-      objectKey: 'admin0'
+      objectKey: 'ne_50m_admin_1_states_provinces'
     },
     {
-      name: '경량화 경계 (주/성)',
-      url: '/atlas/simplified-admin1-lines.topo.json',
-      size: '~112KB',
+      name: '경량화 경계 (주/성, 50m 기본)',
+      url: '/atlas/simplified-admin1-mapshaper.topo.json',
+      size: '~307KB',
       type: 'topojson',
-      objectKey: 'admin1'
-    },
-    {
-      name: '경량화 경계 GeoJSON (국가)',
-      url: '/atlas/simplified-admin0-lines.geojson',
-      size: '~108KB',
-      type: 'geojson'
-    },
-    {
-      name: '경량화 경계 GeoJSON (주/성)',
-      url: '/atlas/simplified-admin1-lines.geojson',
-      size: '~109KB',
-      type: 'geojson'
+      objectKey: 'ne_50m_admin_1_states_provinces'
     }
   ];
 
@@ -111,10 +99,8 @@ const D3GeoGlobeSimplified: React.FC = () => {
         
         console.log(`Using TopoJSON object: "${objectName}"`);
         
-        const geojson = topojson.feature(data, data.objects[objectName]) as any;
-        const features = geojson.type === 'FeatureCollection'
-          ? (geojson.features || [])
-          : [geojson];
+        const geojson = topojson.feature(data, data.objects[objectName]);
+        const features = geojson.features || [];
         
         console.log(`✅ TopoJSON converted: ${features.length} features`);
         setLoadingStatus(`✅ ${source.name}: ${features.length} boundaries loaded`);
@@ -149,8 +135,6 @@ const D3GeoGlobeSimplified: React.FC = () => {
               return null;
             }
           }).filter(Boolean);
-        } else if (data.type && (data.type === 'MultiLineString' || data.type === 'LineString')) {
-          features = [{ type: 'Feature', properties: {}, geometry: data }];
         } else {
           throw new Error('Unsupported data format');
         }
@@ -297,7 +281,7 @@ const D3GeoGlobeSimplified: React.FC = () => {
         overflowY: 'auto'
       }}>
         <h2 style={{ margin: '0 0 10px 0', fontSize: '18px', fontWeight: 'bold' }}>
-          경량화 경계 지구본
+          City Boundaries Globe
         </h2>
         <div style={{ color: '#666', marginBottom: '15px', fontSize: '14px' }}>
           Status: {loadingStatus}
