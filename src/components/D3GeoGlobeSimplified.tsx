@@ -14,9 +14,9 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
   const [rotation, setRotation] = useState({ x: 0, y: 0 });
   // Removed UI status panel
   // Legacy holder removed; we render directly from datasets
-  const [scale, setScale] = useState<number>(1); // 줌 스케일 최소 0.9로 소폭 완화
-  const MIN_ZOOM = 0.9;
-  const MAX_ZOOM = 12.0; // 더 깊게 확대 가능하도록 상한 상향
+  const MIN_ZOOM = 0.9; // 가장 줌아웃
+  const MAX_ZOOM = 10.0; // 최대 확대를 살짝 제한
+  const [scale, setScale] = useState<number>(MIN_ZOOM); // 첫 로드 시 최저 배율로 시작
 
   // Always-available datasets for interactions
   const [countries, setCountries] = useState<any[]>([]);
@@ -154,7 +154,6 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
 
     // Base: draw country boundaries
     if (countries.length > 0) {
-      ctx.strokeStyle = '#111111';
       ctx.lineWidth = 0.8;
       ctx.globalAlpha = 1;
       countries.forEach((feature: any) => {
@@ -168,6 +167,7 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
         }
         ctx.beginPath();
         path(feature);
+        ctx.strokeStyle = isHover ? '#ffffff' : '#111111';
         ctx.stroke();
       });
       ctx.globalAlpha = 1;
