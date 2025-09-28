@@ -1,0 +1,16 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    // Allow public read for exhibition and artwork images placed under these prefixes
+    match /paintings/{allPaths=**} {
+      allow read: if true;
+      // optional: restrict writes to admins
+      allow write: if request.auth != null && request.auth.token.admin == true;
+    }
+
+    // Default deny for other paths unless configured
+    match /{path=**} {
+      allow read, write: if false;
+    }
+  }
+}

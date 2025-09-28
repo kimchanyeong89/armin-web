@@ -1,0 +1,16 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Allow public read of artworks collection (images and metadata) without auth
+    match /artworks/{docId} {
+      allow read: if true;
+      // writes remain restricted to authenticated users with a custom claim 'admin' or via console
+      allow write: if request.auth != null && (request.auth.token.admin == true);
+    }
+
+    // Other collections default: no public access
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
