@@ -63,6 +63,8 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
   const zoomTransformRef = useRef<any>(d3.zoomIdentity);
   // Pins/groups refs
   const pinsGroupRef = useRef<SVGGElement | null>(null);
+  // Keep a handle to the active d3-zoom behavior so we can programmatically zoom
+  const zoomBehaviorRef = useRef<d3.ZoomBehavior<SVGSVGElement, unknown> | null>(null);
   const expandedClustersRef = useRef<Set<string>>(new Set());
   const animateExpandKeyRef = useRef<string | null>(null);
   const collapseAnimKeyRef = useRef<string | null>(null);
@@ -386,6 +388,8 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
     console.log('Min Zoom:', minZoom.toFixed(3), 'Base Min Zoom:', baseMinZoom.toFixed(3), 'Width Ratio:', minZoomForWidth.toFixed(3));
 
     if (svgRef.current) {
+      // expose zoom behavior for programmatic transforms (cluster click, country fit, etc.)
+      zoomBehaviorRef.current = zoom;
       d3.select(svgRef.current).call(zoom);
       
       // 초기 줌과 위치를 훨씬 아래로, 조금 오른쪽으로 설정
@@ -515,7 +519,7 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
     // Bind
     const sel = pins.selectAll<SVGGElement, any>('g.pin').data(nodes, (d: any) => (d._cluster ? d.key : d.id));
     sel.exit().remove();
-    const enter = sel.enter().append('g').attr('class','pin').style('cursor','pointer');
+  const enter = sel.enter().append('g').attr('class','pin').style('cursor','pointer');
     // clusters
     const enterCluster = enter.filter((d: any) => d._cluster);
     enterCluster.append('rect')
@@ -570,13 +574,20 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
           const cx = (b[0][0] + b[1][0]) / 2; const cy = (b[0][1] + b[1][1]) / 2;
           const tx1 = width/2 - k1 * cx; const ty1 = height/2 - k1 * cy;
           const selSvg = d3.select(svgRef.current);
-          selSvg.transition().duration(1200).ease(d3.easeCubicOut)
-            .call((d3.zoom() as any).transform, d3.zoomIdentity.translate(tx1, ty1).scale(k1))
-            .on('end', () => {
-              const k2 = 8; const tx2 = width/2 - k2 * cx; const ty2 = height/2 - k2 * cy;
-              selSvg.transition().duration(1600).ease(d3.easeCubicInOut)
-                .call((d3.zoom() as any).transform, d3.zoomIdentity.translate(tx2, ty2).scale(k2));
-            });
+          const zoomBeh = zoomBehaviorRef.current;
+          if (zoomBeh) {
+            selSvg.transition().duration(1200).ease(d3.easeCubicOut)
+              .call(zoomBeh.transform as any, d3.zoomIdentity.translate(tx1, ty1).scale(k1))
+              .on('end', () => {
+                const k2 = 8; const tx2 = width/2 - k2 * cx; const ty2 = height/2 - k2 * cy;
+                selSvg.transition().duration(1600).ease(d3.easeCubicInOut)
+                  .call(zoomBeh.transform as any, d3.zoomIdentity.translate(tx2, ty2).scale(k2));
+              });
+          } else {
+            // Fallback: apply transform immediately without animation if zoom behavior is unavailable
+            (svgRef.current as any) && d3.select(svgRef.current)
+              .call((zoomBeh as any)?.transform || (()=>{}), d3.zoomIdentity.translate(tx1, ty1).scale(k1));
+          }
           // admin overlay by country ISO3
           if (countryFeature) {
             const iso3 = getISO3(countryFeature.properties);
