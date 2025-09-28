@@ -260,6 +260,8 @@ export default function HomePage({ exhibitions }: HomePageProps) {
     <OpenStreetMapComponent
       key={resetZoomKey}
       focusLatLng={focusTarget ? { lat: focusTarget.latitude, lng: focusTarget.longitude } : userLocation || undefined}
+      exhibitions={exhibitions}
+      onSelectExhibition={setSelectedExhibition}
     />
   )}
   {/* 'My location' button moved to bottom-center controls to align with Globe/2D toggle */}

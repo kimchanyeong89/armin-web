@@ -1,12 +1,15 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as d3 from 'd3';
 import { geoPath, geoMercator } from 'd3-geo';
+import type { Exhibition } from '../types/Exhibition';
 
 interface OpenStreetMapProps {
   focusLatLng?: { lat: number; lng: number };
+  exhibitions?: Exhibition[];
+  onSelectExhibition?: (ex: Exhibition) => void;
 }
 
-const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng }) => {
+const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exhibitions = [], onSelectExhibition }) => {
   const svgRef = useRef<SVGSVGElement>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -16,6 +19,8 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng }) =
   const [muniFeatures, setMuniFeatures] = useState<any[] | null>(null);
   const [muniLoading, setMuniLoading] = useState(false);
   const [muniError, setMuniError] = useState<string | null>(null);
+  const onSelectExhibitionRef = useRef<typeof onSelectExhibition | undefined>(onSelectExhibition);
+  useEffect(() => { onSelectExhibitionRef.current = onSelectExhibition; }, [onSelectExhibition]);
 
   useEffect(() => {
     const loadAllData = async () => {
@@ -56,6 +61,61 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng }) =
 
   // 현재 줌 변환을 보관 (도시 레이어 표시 게이트/위치에 사용)
   const zoomTransformRef = useRef<any>(d3.zoomIdentity);
+  // Pins/groups refs
+  const pinsGroupRef = useRef<SVGGElement | null>(null);
+  const expandedClustersRef = useRef<Set<string>>(new Set());
+  const animateExpandKeyRef = useRef<string | null>(null);
+  const collapseAnimKeyRef = useRef<string | null>(null);
+  const collapsePendingRef = useRef<number>(0);
+  const collapseFinalizedRef = useRef<boolean>(false);
+  // Cluster prep (city normalize + grid)
+  const CLUSTER_GRID_SIZE = 0.8;
+  const roundToGrid = (v: number) => Math.round(v / CLUSTER_GRID_SIZE) * CLUSTER_GRID_SIZE;
+  const normalizeCity = (s: unknown) => {
+    if (typeof s !== 'string') return '';
+    const raw = s.toLowerCase().replace(/[()]/g, '').split(/[,:]/).map(t => t.trim()).filter(Boolean);
+    if (!raw.length) return '';
+    const removeTail = new Set(['uk','u.k.','united kingdom','great britain','gb','england','scotland','wales','northern ireland','south korea','korea','republic of korea','대한민국','united states','united states of america','usa','us','u.s.','canada','japan','france','germany','italy','spain','china','australia','ireland']);
+    const tokens: string[] = [...raw];
+    while (tokens.length && removeTail.has(tokens[tokens.length - 1])) tokens.pop();
+    if (!tokens.length) return '';
+    if (tokens.some(t => /\blondon\b/.test(t))) return 'london';
+    const seoulIdx = tokens.findIndex(t => /\bseoul\b|서울|서울특별시/.test(t));
+    if (seoulIdx >= 0) return 'seoul';
+    const noDigits = tokens.filter(t => !/[0-9]/.test(t));
+    let candidate = (noDigits.length ? noDigits : tokens)[(noDigits.length ? noDigits : tokens).length - 1];
+    candidate = candidate.replace(/^(city of|greater|metropolitan|metropolitan city)\s+/, '');
+    candidate = candidate.replace(/\s+\d.*$/, '');
+    candidate = candidate.replace(/\s+/g, ' ').trim();
+    return candidate;
+  };
+  type ClusterInfo = { key: string; items: Exhibition[]; centerLon: number; centerLat: number; sortedByName: Exhibition[] };
+  const clustersListRef = useRef<ClusterInfo[] | null>(null);
+  // Rebuild clusters when exhibitions changes
+  useEffect(() => {
+    const list = exhibitions || [];
+    const map: Record<string, Exhibition[]> = {};
+    for (const d of list) {
+      const cityKey = normalizeCity((d as any).city || (d as any).location);
+      let key: string;
+      if (cityKey) key = `city:${cityKey}`;
+      else {
+        const gridLon = roundToGrid((d as any).longitude);
+        const gridLat = roundToGrid((d as any).latitude);
+        key = `grid:${gridLon},${gridLat}`;
+      }
+      (map[key] ||= []).push(d);
+    }
+    clustersListRef.current = Object.entries(map).map(([key, items]) => ({
+      key,
+      items,
+      centerLon: d3.mean(items as any, (d: any) => d.longitude) as number,
+      centerLat: d3.mean(items as any, (d: any) => d.latitude) as number,
+      sortedByName: [...items].sort((a: any, b: any) => String(a.name || a.title).localeCompare(String(b.name || b.title)))
+    }));
+    // collapse on data change
+    expandedClustersRef.current.clear();
+  }, [exhibitions]);
 
   useEffect(() => {
     if ((!countries.length && !states.length) || loading || error) return;
@@ -232,6 +292,10 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng }) =
   const muniGroup = svg.append('g').attr('class', 'municipalities').attr('pointer-events', 'none');
   const CITY_VISIBLE_K = 2.2;
 
+    // 4. Pins/Clusters layer (screen-space rendering)
+    const pinsLayer = svg.append('g').attr('class', 'pins-layer');
+    pinsGroupRef.current = pinsLayer.node() as SVGGElement;
+
     const renderMunicipalities = () => {
       muniGroup.selectAll('*').remove();
       if (!muniFeatures || !muniFeatures.length) return;
@@ -300,7 +364,7 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng }) =
     const minZoom = baseMinZoom * 0.85; // 중간값: 15% 정도 더 줌아웃 가능하도록 설정
     
   const STATE_VISIBLE_K = 1.6; // 이 배율 이상에서만 주/도 경계 표시
-  const zoom = d3.zoom<SVGSVGElement, unknown>()
+    const zoom = d3.zoom<SVGSVGElement, unknown>()
       .scaleExtent([minZoom, 8]) // 최소 줌을 동적으로 계산
       .on('zoom', (event) => {
         const transform = event.transform;
@@ -310,6 +374,8 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng }) =
         countryGroup.attr('transform', transform);
         stateGroup.attr('transform', transform);
     muniGroup.attr('transform', transform);
+    // pins는 화면 좌표로 다시 그리므로 transform 미적용
+    renderPins();
 
     // 낮은 배율에서는 주/도 경계 숨김 (페인트 비용 절감)
     stateGroup.attr('display', transform.k >= STATE_VISIBLE_K ? null : 'none');
@@ -333,7 +399,7 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng }) =
   // 초기 표시 상태도 배율 기준으로 맞춤
   stateGroup.attr('display', baseMinZoom >= STATE_VISIBLE_K ? null : 'none');
   muniGroup.attr('display', baseMinZoom >= CITY_VISIBLE_K && selectedISO3 ? null : 'none');
-    }
+  }
 
     console.log('상세 지도 렌더링 완료!');
 
@@ -344,8 +410,193 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng }) =
 
     // 국가 선택/도시데이터 변경 시 오버레이 업데이트
     renderMunicipalities();
+    renderPins();
 
-  }, [countries, states, loading, error, focusLatLng]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [countries, states, loading, error, focusLatLng, exhibitions]);
+
+  // Render pins/clusters using current projection and zoom transform
+  function renderPins() {
+    if (!pinsGroupRef.current || !clustersListRef.current) return;
+    const pins = d3.select(pinsGroupRef.current);
+    const projection = geoMercator()
+      .scale(Math.min(window.innerWidth, window.innerHeight) / 7)
+      .translate([window.innerWidth / 2, window.innerHeight / 2])
+      .center([0, 35]);
+    if (focusLatLng) {
+      projection.center([focusLatLng.lng, focusLatLng.lat]).scale(1000);
+    }
+    const path = geoPath().projection(projection);
+    const t: any = zoomTransformRef.current;
+    const applyT = (pt: [number, number]) => (t && t.apply) ? (t.apply(pt) as [number, number]) : pt;
+    // Measure wrap width in projection coords
+    const leftBound = projection([-180, 0]);
+    const rightBound = projection([180, 0]);
+    const worldW = rightBound && leftBound ? (rightBound[0] - leftBound[0]) : window.innerWidth;
+    // Build nodes
+    const nodes: any[] = [];
+    const MAX_EXPANDED_ITEMS = 60;
+    for (const c of (clustersListRef.current || [])) {
+      const items = c.items as any[];
+      const center = [c.centerLon, c.centerLat] as [number, number];
+      const pCenter = projection(center) as [number, number] | null;
+      if (!pCenter) continue;
+      const pCenterT = applyT(pCenter);
+      const key = c.key;
+      if (items.length === 1) {
+        const d0 = items[0];
+        const p = projection([d0.longitude, d0.latitude]) as [number, number] | null;
+        if (!p) continue;
+        const [sx, sy] = applyT(p);
+        nodes.push({ ...d0, _cluster: false, px: sx, py: sy });
+      } else if (expandedClustersRef.current.has(key)) {
+        const sorted = c.sortedByName as any[];
+        const count = Math.min(sorted.length, MAX_EXPANDED_ITEMS);
+  const isCollapsing = collapseAnimKeyRef.current === key;
+        if (isCollapsing) collapsePendingRef.current = count;
+        const pts: any[] = [];
+        for (let i = 0; i < count; i++) {
+          const d0 = sorted[i];
+          const pp = projection([d0.longitude, d0.latitude]) as [number, number] | null;
+          if (!pp) continue;
+          const [sx, sy] = applyT(pp);
+          pts.push({ data: d0, x: sx, y: sy, ax: sx, ay: sy });
+        }
+        // Collision + row packing
+        if (pts.length > 1) {
+          const MIN_SEP_PX = 20;
+          const MAX_OFFSET = 40;
+          try {
+            const sim = (d3 as any).forceSimulation(pts)
+              .force('collide', (d3 as any).forceCollide(MIN_SEP_PX))
+              .force('x', (d3 as any).forceX((d:any) => d.ax).strength(0.08))
+              .force('y', (d3 as any).forceY((d:any) => d.ay).strength(0.08))
+              .alpha(0.9)
+              .alphaDecay(0.15)
+              .stop();
+            for (let i = 0; i < 30; i++) sim.tick();
+            for (const n of pts) {
+              const dx = n.x - n.ax, dy = n.y - n.ay; const dist = Math.hypot(dx, dy);
+              if (dist > MAX_OFFSET) { const k = MAX_OFFSET / dist; n.x = n.ax + dx * k; n.y = n.ay + dy * k; }
+            }
+          } catch {}
+          const ROW_H = 20; const ROW_MAX_DRIFT = 60;
+          const viewH = Math.max(400, Math.min(window.innerHeight || 800, 2000));
+          const maxRow = Math.max(0, Math.floor(viewH / ROW_H) - 1);
+          const usedRows = new Set<number>();
+          const assignRow = (y:number, ay:number) => {
+            let best = Math.round(y / ROW_H);
+            if (!usedRows.has(best)) return best;
+            const target = Math.round(ay / ROW_H); let dlt = 1;
+            while (dlt < 200) {
+              const r1 = target - dlt; if (r1 >= 0 && r1 <= maxRow && !usedRows.has(r1)) return r1;
+              const r2 = target + dlt; if (r2 >= 0 && r2 <= maxRow && !usedRows.has(r2)) return r2; dlt++;
+            }
+            return Math.max(0, Math.min(maxRow, best));
+          };
+          pts.sort((a,b) => a.ay - b.ay);
+          for (const n of pts) {
+            const row = assignRow(n.y, n.ay); usedRows.add(row); n.y = row * ROW_H;
+            const dyy = n.y - n.ay; if (Math.abs(dyy) > ROW_MAX_DRIFT) n.y = n.ay + Math.sign(dyy || 1) * ROW_MAX_DRIFT;
+          }
+        }
+        for (const n of pts) {
+          nodes.push({ ...n.data, _cluster: false, px: n.x, py: n.y, _originX: pCenterT[0], _originY: pCenterT[1], _delayLabelAfterMove: true });
+        }
+      } else {
+        nodes.push({ _cluster: true, key, count: items.length, longitude: c.centerLon, latitude: c.centerLat, px: pCenterT[0], py: pCenterT[1] });
+        // also add wrapped duplicates for -1 and +1
+        const left = applyT([pCenter[0] - worldW, pCenter[1]]);
+        const right = applyT([pCenter[0] + worldW, pCenter[1]]);
+        nodes.push({ _cluster: true, key: key+':L', count: items.length, longitude: c.centerLon, latitude: c.centerLat, px: left[0], py: left[1], _wrap: -1 });
+        nodes.push({ _cluster: true, key: key+':R', count: items.length, longitude: c.centerLon, latitude: c.centerLat, px: right[0], py: right[1], _wrap: +1 });
+      }
+    }
+    // Bind
+    const sel = pins.selectAll<SVGGElement, any>('g.pin').data(nodes, (d: any) => (d._cluster ? d.key : d.id));
+    sel.exit().remove();
+    const enter = sel.enter().append('g').attr('class','pin').style('cursor','pointer');
+    // clusters
+    const enterCluster = enter.filter((d: any) => d._cluster);
+    enterCluster.append('rect')
+      .attr('class','cluster-bg')
+      .attr('rx', 8).attr('ry', 8)
+      .attr('fill', '#111827').attr('stroke', '#E5E7EB').attr('stroke-width', 1.2)
+      .attr('x', (d:any) => -Math.max(22, 14 + Math.log2(d.count) * 4) / 2)
+      .attr('y', (d:any) => -Math.max(22, 14 + Math.log2(d.count) * 4) / 2)
+      .attr('width', (d:any) => Math.max(22, 14 + Math.log2(d.count) * 4))
+      .attr('height',(d:any) => Math.max(22, 14 + Math.log2(d.count) * 4));
+    enterCluster.append('text')
+      .attr('class','cluster-count')
+      .attr('text-anchor','middle')
+      .attr('dy','0.35em')
+      .attr('font-size', (d:any) => Math.max(10, 9 + Math.log2(d.count) * 1.1))
+      .attr('font-weight','bold')
+      .attr('fill','#ffffff')
+      .text((d:any) => d.count);
+    // pins
+    const enterPin = enter.filter((d:any) => !d._cluster);
+    enterPin.append('rect')
+      .attr('class','pin-bg')
+      .attr('x', -4).attr('y', -4).attr('width', 8).attr('height', 8)
+      .attr('rx',2).attr('ry',2)
+      .attr('fill','#111827').attr('stroke','#111827').attr('stroke-width',1);
+    enterPin.append('text')
+      .attr('class','pin-label')
+      .attr('dy','0.35em').attr('x',8).attr('text-anchor','start')
+      .style('font-size','10px').style('font-weight','bold')
+      .style('fill','#333').style('stroke','#fff').style('stroke-width',1.5).style('paint-order','stroke')
+      .text((d:any) => String(d.title ?? d.name ?? '').toUpperCase());
+    // merge
+    const merged = enter.merge(sel as any);
+    merged.attr('transform', (d:any) => `translate(${d.px},${d.py})`)
+      .on('click', (evt:any, d:any) => {
+        evt?.stopPropagation?.();
+        if (d._cluster) {
+          const key = (d.key as string).split(':')[0];
+          // focus and zoom to cluster center (two-stage)
+          const width = window.innerWidth, height = window.innerHeight;
+          const p = projection([d.longitude, d.latitude]) as [number, number];
+          const tNow: any = zoomTransformRef.current || d3.zoomIdentity;
+          // Stage 1: fit to containing country
+          let countryFeature: any | null = null;
+          for (const f of countries) {
+            try { if (d3.geoContains(f as any, [d.longitude, d.latitude])) { countryFeature = f; break; } } catch {}
+          }
+          const b = countryFeature ? path.bounds(countryFeature) : [[p[0]-50,p[1]-50],[p[0]+50,p[1]+50]];
+          const dx = b[1][0] - b[0][0]; const dy = b[1][1] - b[0][1];
+          const margin = 0.05; const targetW = width * (1 - margin*2); const targetH = height * (1 - margin*2);
+          let k1 = Math.min(targetW / dx, targetH / dy); k1 = Math.max(k1, (tNow.k||1)); k1 = Math.min(k1, 8);
+          const cx = (b[0][0] + b[1][0]) / 2; const cy = (b[0][1] + b[1][1]) / 2;
+          const tx1 = width/2 - k1 * cx; const ty1 = height/2 - k1 * cy;
+          const selSvg = d3.select(svgRef.current);
+          selSvg.transition().duration(1200).ease(d3.easeCubicOut)
+            .call((d3.zoom() as any).transform, d3.zoomIdentity.translate(tx1, ty1).scale(k1))
+            .on('end', () => {
+              const k2 = 8; const tx2 = width/2 - k2 * cx; const ty2 = height/2 - k2 * cy;
+              selSvg.transition().duration(1600).ease(d3.easeCubicInOut)
+                .call((d3.zoom() as any).transform, d3.zoomIdentity.translate(tx2, ty2).scale(k2));
+            });
+          // admin overlay by country ISO3
+          if (countryFeature) {
+            const iso3 = getISO3(countryFeature.properties);
+            if (iso3) { setSelectedISO3(iso3); loadMunicipalities(iso3); }
+          }
+          if (expandedClustersRef.current.has(key)) {
+            collapseAnimKeyRef.current = key; collapseFinalizedRef.current = false;
+          } else {
+            expandedClustersRef.current.clear(); expandedClustersRef.current.add(key); animateExpandKeyRef.current = key;
+          }
+          renderPins();
+        } else {
+          try { onSelectExhibitionRef.current && onSelectExhibitionRef.current(d as Exhibition); } catch {}
+        }
+      });
+    // Cluster hover weight
+    merged.filter((d:any) => d._cluster)
+      .on('mouseover', function(){ d3.select(this as any).select('.cluster-bg').transition().duration(120).attr('stroke-width', 2); })
+      .on('mouseout', function(){ d3.select(this as any).select('.cluster-bg').transition().duration(120).attr('stroke-width', 1.2); });
+  }
 
   // 도시/지자체 오버레이만 갱신 (SVG 재초기화 없이)
   useEffect(() => {

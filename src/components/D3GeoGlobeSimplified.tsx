@@ -14,8 +14,8 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
   const [rotation, setRotation] = useState({ x: 0, y: 0 });
   // Removed UI status panel
   // Legacy holder removed; we render directly from datasets
-  const MIN_ZOOM = 0.9; // 가장 줌아웃
-  const MAX_ZOOM = 10.0; // 최대 확대를 살짝 제한
+  const MIN_ZOOM = 0.95; // 가장 줌아웃 (요청에 따라 0.95로 제한)
+  const MAX_ZOOM = 100.0; // 줌인 사실상 무제한에 가깝게 확대 허용
   const [scale, setScale] = useState<number>(MIN_ZOOM); // 첫 로드 시 최저 배율로 시작
 
   // Always-available datasets for interactions
@@ -165,10 +165,11 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
           path(feature);
           ctx.fill();
         }
-        ctx.beginPath();
-        path(feature);
-        ctx.strokeStyle = isHover ? '#ffffff' : '#111111';
-        ctx.stroke();
+  ctx.beginPath();
+  path(feature);
+  // Hover 시 국경선 색을 검정(#111)에서 약간 밝은 회색으로 변경
+  ctx.strokeStyle = isHover ? '#444444' : '#111111';
+  ctx.stroke();
       });
       ctx.globalAlpha = 1;
     }
@@ -350,31 +351,108 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
         if (!p) continue;
         nodes.push({ ...d0, _cluster: false, px: p[0], py: p[1] });
       } else if (expandedClustersRef.current.has(key)) {
+        // Spread to real coordinates with minimal collision to avoid overlap
         const center = proj([c.centerLon, c.centerLat]) as [number, number] | null;
         if (!center) continue;
         const sorted = c.sortedByName as any[];
-  const count = Math.min(sorted.length, MAX_EXPANDED_ITEMS);
-  // Normalize spacing independent of zoom using viewport height and count
-  const vh = Math.max(400, Math.min(window.innerHeight || 800, 1200));
-  const perItem = Math.floor((vh * 0.5) / Math.max(6, count));
-  const V_SPACING = Math.max(12, Math.min(20, perItem));
+        const count = Math.min(sorted.length, MAX_EXPANDED_ITEMS);
         const isExpanding = animateExpandKeyRef.current === key;
         const isCollapsing = collapseAnimKeyRef.current === key;
         if (isCollapsing) collapsePendingRef.current = count;
+        const pts: any[] = [];
         for (let i = 0; i < count; i++) {
           const d0 = sorted[i];
-          const rank = Math.floor(i / 2) + 1;
-          const sign = (i % 2 === 0) ? +1 : -1;
-          const offsetIndex = sign * rank;
-          const py = center[1] + offsetIndex * V_SPACING;
-          const px = center[0];
+          const p = proj([d0.longitude, d0.latitude]) as [number, number] | null;
+          if (!p) continue;
+          pts.push({ data: d0, x: p[0], y: p[1], ax: p[0], ay: p[1] });
+        }
+        // Apply a light force-collision to keep a minimum separation while staying near anchors
+        if (pts.length > 1) {
+          const MIN_SEP_PX = 20; // 최소 간격(px) 더 크게
+          const MAX_OFFSET = 40; // 앵커에서 최대 허용 이탈(px) 증가
+          try {
+            const sim = (d3 as any).forceSimulation(pts)
+              .force('collide', (d3 as any).forceCollide(MIN_SEP_PX))
+              .force('x', (d3 as any).forceX((d:any) => d.ax).strength(0.08))
+              .force('y', (d3 as any).forceY((d:any) => d.ay).strength(0.08))
+              .alpha(0.9)
+              .alphaDecay(0.15)
+              .stop();
+            for (let i = 0; i < 30; i++) sim.tick();
+            // Clamp drift from anchors
+            for (const n of pts) {
+              const dx = n.x - n.ax;
+              const dy = n.y - n.ay;
+              const dist = Math.hypot(dx, dy);
+              if (dist > MAX_OFFSET) {
+                const k = MAX_OFFSET / dist;
+                n.x = n.ax + dx * k;
+                n.y = n.ay + dy * k;
+              }
+            }
+          } catch {
+            // Fallback simple greedy separation if force fails
+            for (let it = 0; it < 2; it++) {
+              for (let i = 0; i < pts.length; i++) {
+                for (let j = i + 1; j < pts.length; j++) {
+                  const a = pts[i], b = pts[j];
+                  const dx = b.x - a.x, dy = b.y - a.y;
+                  const d = Math.hypot(dx, dy) || 1e-6;
+                  const need = 14 - d;
+                  if (need > 0) {
+                    const ux = dx / d, uy = dy / d;
+                    a.x -= ux * (need / 2);
+                    a.y -= uy * (need / 2);
+                    b.x += ux * (need / 2);
+                    b.y += uy * (need / 2);
+                  }
+                }
+              }
+            }
+          }
+        }
+        // Row packing: ensure only one pin per horizontal row to avoid label overlaps
+  const ROW_H = 20; // 한 행 높이를 키워 라벨 겹침을 더 줄임
+  const ROW_MAX_DRIFT = 60; // 최대 행 이탈 허용(px) 증가
+        const viewH = Math.max(400, Math.min(window.innerHeight || 800, 2000));
+        const maxRow = Math.max(0, Math.floor(viewH / ROW_H) - 1);
+        const usedRows = new Set<number>();
+        const assignRow = (y: number, anchorY: number): number => {
+          let bestRow = Math.round(y / ROW_H);
+          if (!usedRows.has(bestRow)) return bestRow;
+          // search nearest free row around anchor
+          const target = Math.round(anchorY / ROW_H);
+          let delta = 1;
+          while (delta < 200) {
+            const r1 = target - delta;
+            if (r1 >= 0 && r1 <= maxRow && !usedRows.has(r1)) return r1;
+            const r2 = target + delta;
+            if (r2 >= 0 && r2 <= maxRow && !usedRows.has(r2)) return r2;
+            delta++;
+          }
+          return Math.max(0, Math.min(maxRow, bestRow));
+        };
+        // Sort by anchor Y to keep rows near natural order
+        pts.sort((a, b) => a.ay - b.ay);
+        for (const n of pts) {
+          const row = assignRow(n.y, n.ay);
+          usedRows.add(row);
+          n.y = row * ROW_H;
+          // keep near original anchor on Y
+          const dyy = n.y - n.ay;
+          if (Math.abs(dyy) > ROW_MAX_DRIFT) {
+            n.y = n.ay + Math.sign(dyy || 1) * ROW_MAX_DRIFT;
+          }
+        }
+        // Emit nodes
+        for (const n of pts) {
           nodes.push({
-            ...d0,
+            ...n.data,
             _cluster: false,
-            px,
-            py,
+            px: n.x,
+            py: n.y,
             ...(isExpanding ? { _originX: center[0], _originY: center[1], _delayLabelAfterMove: true } : {}),
-            ...(isCollapsing ? { _collapsing: true, _collapseX: center[0], _collapseY: center[1], _collapseOrder: (count - 1 - i) } : {}),
+            ...(isCollapsing ? { _collapsing: true, _collapseX: center[0], _collapseY: center[1], _collapseOrder: 0 } : {}),
           });
         }
       } else {
@@ -486,6 +564,90 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
         evt?.stopPropagation?.();
         if (d._cluster) {
           const k = d.key as string;
+          // Recenter and zoom to the cluster's geographic center at max zoom
+          try {
+            const width = window.innerWidth;
+            const height = window.innerHeight;
+            setProjTranslate([width / 2, height / 2]);
+            const targetRot = { x: -Number(d.longitude), y: Number(d.latitude) };
+            // Two-stage zoom for a "pulled-in" feel:
+            // 1) Fit to containing country
+            // 2) Then continue to MAX_ZOOM
+            // Find containing country by cluster center
+            let countryFeature: any | null = null;
+            const list = countriesRef.current || [];
+            for (let i = 0; i < list.length; i++) {
+              const f: any = list[i];
+              const c = d3.geoCentroid(f as any);
+              if (c && d3.geoContains(f, [Number(d.longitude), Number(d.latitude)])) { countryFeature = f; break; }
+            }
+            const fitScale = countryFeature ? computeFitScale(countryFeature, targetRot, width, height) : Math.max(scaleRef.current, 2.0);
+            const stage1 = Math.max(scaleRef.current, fitScale);
+            const stage2 = MAX_ZOOM;
+            const dur1 = 1200; // gentle approach
+            const dur2 = 1600; // slower pull-in
+            animateTo(targetRot, stage1, dur1, () => {
+              animateTo(targetRot, stage2, dur2);
+            });
+          } catch {}
+          // Show admin-1 overlay for the country containing this cluster
+          (async () => {
+            try {
+              const lon = Number(d.longitude);
+              const lat = Number(d.latitude);
+              if (!Number.isFinite(lon) || !Number.isFinite(lat)) return;
+              let countryFeature: any | null = null;
+              const list = countriesRef.current || [];
+              for (let i = 0; i < list.length; i++) {
+                const f: any = list[i];
+                const bb = f._bbox as [[number,number],[number,number]] | undefined;
+                if (bb) {
+                  const lonMin = bb[0][0], latMin = bb[0][1];
+                  const lonMax = bb[1][0], latMax = bb[1][1];
+                  const lonIn = lonMin <= lonMax ? (lon >= lonMin && lon <= lonMax) : (lon >= lonMin || lon <= lonMax);
+                  if (!(lonIn && lat >= latMin && lat <= latMax)) continue;
+                }
+                if (d3.geoContains(f, [lon, lat])) { countryFeature = f; break; }
+              }
+              if (!countryFeature) return;
+              const countryName = (countryFeature.properties && (countryFeature.properties.name || countryFeature.properties.ADMIN || countryFeature.properties.admin)) || 'Unknown';
+              const cachedMesh = admin1OverlayCacheRef.current.get(countryName);
+              const cachedFeats = admin1SubsetCacheRef.current.get(countryName);
+              if (cachedMesh) {
+                setAdmin1OverlayMesh(cachedMesh);
+                if (cachedFeats) admin1SubsetFeaturesRef.current = cachedFeats;
+                return;
+              }
+              let topology = admin1TopoRef.current;
+              if (!topology) {
+                topology = await loadAdmin1();
+                if (!topology) return;
+              }
+              const objectKey = topology.objects.ne_10m_admin_1_states_provinces ? 'ne_10m_admin_1_states_provinces' : Object.keys(topology.objects)[0];
+              const topoObj = topology.objects[objectKey];
+              const geoms: any[] = topoObj.geometries || [];
+              const subsetGeoms: any[] = [];
+              for (let i = 0; i < geoms.length; i++) {
+                const g = geoms[i];
+                try {
+                  const fc = topojson.feature(topology, { type: 'GeometryCollection', geometries: [g] } as any) as any;
+                  const feat = fc.type === 'FeatureCollection' ? fc.features[0] : fc;
+                  const c = d3.geoCentroid(feat as any);
+                  if (c && d3.geoContains(countryFeature, c)) subsetGeoms.push(g);
+                } catch { /* ignore */ }
+              }
+              if (!subsetGeoms.length) return;
+              const subsetObj = { type: 'GeometryCollection', geometries: subsetGeoms } as any;
+              const mesh = topojson.mesh(topology, subsetObj, (a: any, b: any) => a !== b);
+              const fc = topojson.feature(topology, subsetObj) as any;
+              const feats: any[] = fc && fc.type === 'FeatureCollection' ? (fc.features || []) : [];
+              feats.forEach((f: any) => { try { (f as any)._bbox = d3.geoBounds(f); } catch {} });
+              admin1SubsetFeaturesRef.current = feats;
+              admin1SubsetCacheRef.current.set(countryName, feats);
+              admin1OverlayCacheRef.current.set(countryName, mesh as any);
+              setAdmin1OverlayMesh(mesh as any);
+            } catch { /* ignore */ }
+          })();
           if (expandedClustersRef.current.has(k)) {
             // collapse with animation
             collapseAnimKeyRef.current = k;
@@ -521,7 +683,7 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
     while (d < -180) d += 360;
     return d;
   };
-  const animateTo = (targetRot: {x:number;y:number}, targetScale: number, duration = 800) => {
+  const animateTo = (targetRot: {x:number;y:number}, targetScale: number, duration = 800, onDone?: () => void) => {
     const startRot = { x: rotationRef.current.x, y: rotationRef.current.y };
     const startScale = scaleRef.current;
     const dx = shortestDeltaDeg(startRot.x, targetRot.x);
@@ -538,6 +700,7 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
         requestAnimationFrame(step);
       } else {
         animatingRef.current = false;
+        try { onDone && onDone(); } catch {}
       }
     };
     requestAnimationFrame(step);
