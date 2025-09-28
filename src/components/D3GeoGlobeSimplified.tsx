@@ -14,8 +14,8 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
   const [rotation, setRotation] = useState({ x: 0, y: 0 });
   // Removed UI status panel
   // Legacy holder removed; we render directly from datasets
-  const [scale, setScale] = useState<number>(1); // 줌 스케일 최소 1.0
-  const MIN_ZOOM = 1.0;
+  const [scale, setScale] = useState<number>(1); // 줌 스케일 최소 0.9로 소폭 완화
+  const MIN_ZOOM = 0.9;
   const MAX_ZOOM = 12.0; // 더 깊게 확대 가능하도록 상한 상향
 
   // Always-available datasets for interactions
@@ -141,10 +141,10 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
 
     const path = d3.geoPath().projection(projection).context(ctx);
 
-    // Draw white sphere background
+  // Draw white sphere background
     ctx.fillStyle = '#ffffff';
     ctx.strokeStyle = '#000000';
-    ctx.lineWidth = 2;
+  ctx.lineWidth = 0.8; // 글로브 테두리 더 얇게
     ctx.beginPath();
     path({ type: 'Sphere' });
     ctx.fill();
