@@ -531,7 +531,7 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
     sel.exit().remove();
   const enter = sel.enter().append('g').attr('class','pin').style('cursor','pointer');
     // clusters
-    const enterCluster = enter.filter((d: any) => d._cluster);
+  const enterCluster = enter.filter((d: any) => d._cluster).attr('pointer-events','all');
     enterCluster.append('rect')
       .attr('class','cluster-bg')
       .attr('rx', 8).attr('ry', 8)
