@@ -180,6 +180,7 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
       .attr('width', width)
       .attr('height', height)
       .attr('fill', '#ffffff')
+      .attr('pointer-events', 'all')
       .style('cursor', selectedISO3 ? 'pointer' : 'default')
       .on('click', () => {
         // 빈 배경 클릭으로 도시 호버 모드 해제
@@ -191,7 +192,7 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
       });
 
     // 1. 국가 경계선 그리기 (매우 얇은 검은색) - 무한 반복을 위해 정확한 측정
-    const countryGroup = svg.append('g').attr('class', 'countries');
+  const countryGroup = svg.append('g').attr('class', 'countries').attr('pointer-events','all');
     
     // 실제 지도 경계 측정 (-180도에서 180도까지)
     const leftBound = projection([-180, 0]);
@@ -267,7 +268,7 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
     }
 
     // 2. 주/도 경계선 그리기 (극도로 얇은 회색) - 무한 반복을 위해 5개 복사본
-  const stateGroup = svg.append('g').attr('class', 'states');
+  const stateGroup = svg.append('g').attr('class', 'states').attr('pointer-events','none');
     
   // 주/도 경계도 5 -> 3개로 축소 (좌/원/우). 이벤트는 비활성화하여 히트 테스트 비용 절감
   for (let offset = -1; offset <= 1; offset++) {
@@ -295,7 +296,9 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
   const CITY_VISIBLE_K = 2.2;
 
     // 4. Pins/Clusters layer (screen-space rendering)
-    const pinsLayer = svg.append('g').attr('class', 'pins-layer');
+  const pinsLayer = svg.append('g').attr('class', 'pins-layer').attr('pointer-events','all');
+  // ensure pins are on top for interactions
+  pinsLayer.raise();
     pinsGroupRef.current = pinsLayer.node() as SVGGElement;
 
     const renderMunicipalities = () => {
@@ -334,7 +337,7 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
 
     // 툴팁 표시 함수
     function showTooltip(svg: any, event: any, text: string) {
-      const tooltip = svg.append('g').attr('class', 'tooltip');
+      const tooltip = svg.append('g').attr('class', 'tooltip').attr('pointer-events','none');
       const rect = tooltip.append('rect')
         .attr('fill', 'rgba(255, 255, 255, 0.95)')
         .attr('stroke', '#000000')
@@ -407,14 +410,14 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
 
     console.log('상세 지도 렌더링 완료!');
 
+    // 초기 1회 렌더 (줌/레이어 준비 직후)
+    renderMunicipalities();
+    renderPins();
+
     // 컴포넌트 언마운트 시 이벤트 리스너 정리
     return () => {
       window.removeEventListener('resize', handleResize);
     };
-
-    // 국가 선택/도시데이터 변경 시 오버레이 업데이트
-    renderMunicipalities();
-    renderPins();
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [countries, states, loading, error, focusLatLng, exhibitions]);
@@ -508,7 +511,7 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
           nodes.push({ ...n.data, _cluster: false, px: n.x, py: n.y, _originX: pCenterT[0], _originY: pCenterT[1], _delayLabelAfterMove: true });
         }
       } else {
-        nodes.push({ _cluster: true, key, count: items.length, longitude: c.centerLon, latitude: c.centerLat, px: pCenterT[0], py: pCenterT[1] });
+        nodes.push({ _cluster: true, key, count: items.length, longitude: c.centerLon, latitude: c.centerLat, px: pCenterT[0], py: pCenterT[1], _wrap: 0 });
         // also add wrapped duplicates for -1 and +1
         const left = applyT([pCenter[0] - worldW, pCenter[1]]);
         const right = applyT([pCenter[0] + worldW, pCenter[1]]);
@@ -517,7 +520,14 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
       }
     }
     // Bind
-    const sel = pins.selectAll<SVGGElement, any>('g.pin').data(nodes, (d: any) => (d._cluster ? d.key : d.id));
+    const sel = pins.selectAll<SVGGElement, any>('g.pin').data(nodes, (d: any) => {
+      if (d._cluster) {
+        // normalize wrapped duplicates to share same base key for consistent enter/update
+        const base = String(d.key || '').split(':')[0];
+        return `cluster:${base}:${d._wrap || 0}`; // include wrap tag so each copy is clickable
+      }
+      return `pin:${d.id}`;
+    });
     sel.exit().remove();
   const enter = sel.enter().append('g').attr('class','pin').style('cursor','pointer');
     // clusters
@@ -557,7 +567,9 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
       .on('click', (evt:any, d:any) => {
         evt?.stopPropagation?.();
         if (d._cluster) {
-          const key = (d.key as string).split(':')[0];
+          try { console.debug('[flat] cluster click', d); } catch {}
+          const rk = String(d.key || '');
+          const key = rk.endsWith(':L') || rk.endsWith(':R') ? rk.slice(0, -2) : rk;
           // focus and zoom to cluster center (two-stage)
           const width = window.innerWidth, height = window.innerHeight;
           const p = projection([d.longitude, d.latitude]) as [number, number];
@@ -629,7 +641,7 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
     const path = geoPath().projection(projection);
     // 로컬 툴팁 헬퍼
     const showLocalTooltip = (root: any, evt: any, text: string) => {
-      const tooltip = root.append('g').attr('class', 'tooltip');
+      const tooltip = root.append('g').attr('class', 'tooltip').attr('pointer-events','none');
       const rect = tooltip.append('rect')
         .attr('fill', 'rgba(255, 255, 255, 0.95)')
         .attr('stroke', '#000000')
