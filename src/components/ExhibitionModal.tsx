@@ -44,6 +44,9 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
     target: { left: number; top: number; width: number; height: number };
     animate: boolean;
   } | null>(null);
+  // Progressive image loading state (Step 1): main stage / panorama
+  const [mainLoaded, setMainLoaded] = useState(false);
+  const mainImgRef = useRef<HTMLImageElement | null>(null);
   // Representative image (from local feed or exhibition data)
   const [repImage, setRepImage] = useState<string | null>(null);
   // Close guards
@@ -167,6 +170,34 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
     loadRep();
     return () => { aborted = true; };
   }, [exhibition]);
+
+  // Reset progressive state & load high-res when selected artwork changes
+  useEffect(() => {
+    const currentArt = (() => {
+      if (!filteredArtworks.length) return null;
+      return filteredArtworks[Math.min(selectedIndex, filteredArtworks.length - 1)];
+    })();
+    setMainLoaded(false);
+    if (!currentArt || !currentArt.image) return;
+    let cancelled = false;
+    const hi = new Image();
+    hi.decoding = 'async';
+    hi.loading = 'eager';
+    hi.src = currentArt.image;
+    hi.onload = () => {
+      if (cancelled) return;
+      setMainLoaded(true);
+      if (mainImgRef.current) {
+        // Swap to full-res if still on low-res
+        if (mainImgRef.current.getAttribute('data-hi') !== '1') {
+          mainImgRef.current.src = currentArt.image;
+          mainImgRef.current.setAttribute('data-hi','1');
+        }
+      }
+    };
+    hi.onerror = () => { if (!cancelled) setMainLoaded(true); };
+    return () => { cancelled = true; };
+  }, [selectedIndex, filteredArtworks]);
 
   // History integration: when modal opens we push a modal state so refresh keeps modal
   // and back navigation can restore the underlying detail panel instead of navigating away.
@@ -1096,17 +1127,37 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
                   const avif = buildSourceSet(src, widths, 'avif', 70);
                   const webp = buildSourceSet(src, widths, 'webp', 75);
                   const sizes = '(max-width: 768px) 100vw, 75vw';
+                  // Progressive: use lq / thumb (if provided) as blurred placeholder
+                  const lowSrc = (current as any).lq || (current as any).thumb || src;
                   return (
                     <picture>
                       {useProxy && avif && <source type="image/avif" srcSet={avif || undefined} sizes={sizes} />}
                       {useProxy && webp && <source type="image/webp" srcSet={webp || undefined} sizes={sizes} />}
                       <img
-                        src={src}
+                        ref={mainImgRef}
+                        src={lowSrc}
                         alt={current.name}
                         decoding="async"
                         fetchPriority="high"
-                        style={{ width: "auto", maxWidth: "100%", maxHeight: "calc(100vh - 260px)", objectFit: "contain", cursor: "zoom-in", display: "block" }}
+                        style={{
+                          width: "auto",
+                          maxWidth: "100%",
+                          maxHeight: "calc(100vh - 260px)",
+                          objectFit: "contain",
+                          cursor: "zoom-in",
+                          display: "block",
+                          filter: mainLoaded ? 'none' : 'blur(14px)',
+                          transition: 'filter 420ms ease, opacity 420ms ease',
+                          opacity: mainLoaded ? 1 : 0.88,
+                          background: '#f5f5f5'
+                        }}
                         onClick={(e) => openLightbox(e, current.image || "")}
+                        onLoad={(e) => {
+                          // If placeholder was already hi-res, mark loaded
+                          if ((e.currentTarget.getAttribute('data-hi') === '1') && !mainLoaded) {
+                            setMainLoaded(true);
+                          }
+                        }}
                       />
                     </picture>
                   );
@@ -1219,17 +1270,29 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
               const avif = buildSourceSet(src, widths, 'avif', 70);
               const webp = buildSourceSet(src, widths, 'webp', 75);
               const sizes = '(max-width: 768px) 100vw, 90vw';
+              const lowSrc = (current as any).lq || (current as any).thumb || src;
               return (
                 <picture>
                   {useProxy && avif && <source type="image/avif" srcSet={avif || undefined} sizes={sizes} />}
                   {useProxy && webp && <source type="image/webp" srcSet={webp || undefined} sizes={sizes} />}
                   <img
-                    src={src}
+                    ref={mainImgRef}
+                    src={lowSrc}
                     alt={current.name}
                     decoding="async"
                     fetchPriority="high"
                     draggable={false}
-                    style={{ width: 'auto', maxWidth: '92%', maxHeight: 'calc(100vh - 200px)', objectFit: 'contain', display: 'block' }}
+                    style={{
+                      width: 'auto',
+                      maxWidth: '92%',
+                      maxHeight: 'calc(100vh - 200px)',
+                      objectFit: 'contain',
+                      display: 'block',
+                      filter: mainLoaded ? 'none' : 'blur(14px)',
+                      transition: 'filter 420ms ease, opacity 420ms ease',
+                      opacity: mainLoaded ? 1 : 0.88,
+                      background: '#111'
+                    }}
                   />
                 </picture>
               );

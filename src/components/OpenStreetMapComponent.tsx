@@ -154,8 +154,8 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
       const newBaseMinZoom = Math.max(newMinZoomForWidth, newMinZoomForHeight * 0.8);
       const newMinZoom = newBaseMinZoom * 0.85; // 중간값: 15% 정도 더 줌아웃 가능
       
-      // 줌 제한 업데이트
-      zoom.scaleExtent([newMinZoom, 8]);
+        // 줌 제한 업데이트
+        zoom.scaleExtent([newMinZoom, 100]); // Set maximum zoom to 100
     };
 
     window.addEventListener('resize', handleResize);
@@ -312,9 +312,9 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
             .attr('d', path as any)
             .attr('fill', 'none')
             .attr('stroke', '#000')
-            .attr('stroke-width', 0.2)
+            .attr('stroke-width', 0.35) // 더 선명하게 기본 두께 상향
             .attr('vector-effect', 'non-scaling-stroke')
-            .attr('stroke-opacity', 0.9)
+            .attr('stroke-opacity', 1)
             .style('pointer-events', 'visibleStroke')
             .on('mouseover', function(event) {
               d3.select(this).attr('stroke-width', 0.35);
@@ -325,7 +325,7 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
                   showTooltip(svg, event, txt);
             })
             .on('mouseout', function() {
-              d3.select(this).attr('stroke-width', 0.2);
+              d3.select(this).attr('stroke-width', 0.35);
               svg.select('.tooltip').remove();
             });
           // 도시 경계 상호작용만 허용하도록 그룹의 pointer-events는 none으로 두고 각 path만 활성화
@@ -370,7 +370,7 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
     
   const STATE_VISIBLE_K = 1.6; // 이 배율 이상에서만 주/도 경계 표시
     const zoom = d3.zoom<SVGSVGElement, unknown>()
-      .scaleExtent([minZoom, 8]) // 최소 줌을 동적으로 계산
+      .scaleExtent([minZoom, 100]) // 최소 줌을 동적으로 계산, 최대는 100
       .on('zoom', (event) => {
         const transform = event.transform;
     zoomTransformRef.current = transform;
@@ -386,6 +386,13 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
     stateGroup.attr('display', transform.k >= STATE_VISIBLE_K ? null : 'none');
     // 도시/지자체는 더 높은 배율에서만 표시
     muniGroup.attr('display', transform.k >= CITY_VISIBLE_K && selectedISO3 ? null : 'none');
+    // 확대 정도에 따라 도시 경계선 두께/불투명도 동적 강화
+    const logk = Math.log2(Math.max(1, transform.k));
+    const strokeW = Math.min(1.4, 0.25 + 0.22 * logk);
+    const strokeO = Math.min(1, 0.6 + 0.4 * (logk / 3)); // k≈8(log2=3)에서 1.0
+    try {
+      muniGroup.selectAll('path').attr('stroke-width', strokeW).attr('stroke-opacity', strokeO);
+    } catch {}
       });
 
     console.log('Min Zoom:', minZoom.toFixed(3), 'Base Min Zoom:', baseMinZoom.toFixed(3), 'Width Ratio:', minZoomForWidth.toFixed(3));
@@ -522,9 +529,10 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
     // Bind
     const sel = pins.selectAll<SVGGElement, any>('g.pin').data(nodes, (d: any) => {
       if (d._cluster) {
-        // normalize wrapped duplicates to share same base key for consistent enter/update
-        const base = String(d.key || '').split(':')[0];
-        return `cluster:${base}:${d._wrap || 0}`; // include wrap tag so each copy is clickable
+        // Use the full key (e.g., 'city:seoul' or 'grid:127.1,37.5'); only strip wrap suffix ':L' / ':R'
+        const raw = String(d.key || '');
+        const base = raw.endsWith(':L') || raw.endsWith(':R') ? raw.slice(0, -2) : raw;
+        return `cluster:${base}:${d._wrap ?? 0}`; // include wrap tag so each copy is clickable
       }
       return `pin:${d.id}`;
     });
@@ -591,7 +599,8 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
             selSvg.transition().duration(1200).ease(d3.easeCubicOut)
               .call(zoomBeh.transform as any, d3.zoomIdentity.translate(tx1, ty1).scale(k1))
               .on('end', () => {
-                const k2 = 8; const tx2 = width/2 - k2 * cx; const ty2 = height/2 - k2 * cy;
+                // Stage 2: go deeper to MAX_ZOOM and center on the cluster itself
+                const k2 = 100; const tx2 = width/2 - k2 * p[0]; const ty2 = height/2 - k2 * p[1];
                 selSvg.transition().duration(1600).ease(d3.easeCubicInOut)
                   .call(zoomBeh.transform as any, d3.zoomIdentity.translate(tx2, ty2).scale(k2));
               });
@@ -669,12 +678,12 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
           .attr('d', path as any)
           .attr('fill', 'none')
           .attr('stroke', '#000')
-          .attr('stroke-width', 0.2)
+          .attr('stroke-width', 0.35) // 기본 두께 상향
           .attr('vector-effect', 'non-scaling-stroke')
-          .attr('stroke-opacity', 0.9)
+          .attr('stroke-opacity', 1)
           .style('pointer-events', 'visibleStroke')
           .on('mouseover', function(this: SVGPathElement, event: MouseEvent) {
-            d3.select(this).attr('stroke-width', 0.35);
+            d3.select(this).attr('stroke-width', 0.45);
             const p = (feat.properties || {});
             const city = getMunicipalityName(p);
             const parent = p?.ADM1_EN || p?.NAME_1 || p?.region || p?.province || '';
@@ -684,7 +693,7 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
             showLocalTooltip(rootSvg, event, txt);
           })
           .on('mouseout', function(this: SVGPathElement) {
-            d3.select(this).attr('stroke-width', 0.2);
+            d3.select(this).attr('stroke-width', 0.35);
             d3.select(svgRef.current).select('.tooltip').remove();
           });
       } catch (e) {
