@@ -4,6 +4,7 @@ import { useState, useEffect, useRef, useMemo } from "react";
 import { collection, query, where, onSnapshot, addDoc, getDocs, deleteDoc, doc } from "firebase/firestore";
 import { db } from "../firebase";
 import { buildSourceSet, useProxy } from "../utils/imageProxy";
+import { usePrefetchNeighbors } from "../hooks/usePrefetchNeighbors";
 
 // Layout constants (original)
 const LAYOUT_LEFT_BASE = 420; // px, push the two-line layout block to the right
@@ -338,7 +339,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
   }, [filteredArtworks.length]);
 
   // Prefetch neighbor images for smoother stage switching
-  // Neighbor prefetch removed for now
+  usePrefetchNeighbors(filteredArtworks as any[], selectedIndex, 1);
 
   // Static columns; no DOM measurement needed
 
