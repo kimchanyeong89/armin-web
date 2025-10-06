@@ -1124,10 +1124,11 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
               {current ? (
                 (() => {
                   const src = current.image;
-                  const widths = [640, 960, 1280, 1600];
+                  // Adaptive width set: smaller steps early to reduce over-fetching on mobile, larger on desktop
+                  const widths = window.innerWidth < 900 ? [480, 720, 960] : [640, 960, 1280, 1600];
                   const avif = buildSourceSet(src, widths, 'avif', 70);
                   const webp = buildSourceSet(src, widths, 'webp', 75);
-                  const sizes = '(max-width: 768px) 100vw, 75vw';
+                  const sizes = '(max-width: 640px) 100vw, (max-width: 1024px) 82vw, 75vw';
                   // Progressive: use lq / thumb (if provided) as blurred placeholder
                   const lowSrc = (current as any).lq || (current as any).thumb || src;
                   return (
@@ -1188,10 +1189,10 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
                       >
                         {a.image && (() => {
                           const src = a.image;
-                          const widths = [360, 540, 720, 900];
+                          const widths = window.innerWidth < 900 ? [320, 480, 640] : [360, 540, 720, 900];
                           const avif = buildSourceSet(src, widths, 'avif', 65);
                           const webp = buildSourceSet(src, widths, 'webp', 70);
-                          const sizes = '(max-width: 768px) 90vw, 40vw';
+                          const sizes = '(max-width: 640px) 90vw, (max-width: 1024px) 55vw, 40vw';
                           return (
                             <picture>
                               {useProxy && avif && <source type="image/avif" srcSet={avif || undefined} sizes={sizes} />}
@@ -1267,10 +1268,10 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
           {current ? (
             (() => {
               const src = current.image;
-              const widths = [960, 1280, 1600, 1920];
+              const widths = window.innerWidth < 900 ? [800, 1200] : [960, 1280, 1600, 1920];
               const avif = buildSourceSet(src, widths, 'avif', 70);
               const webp = buildSourceSet(src, widths, 'webp', 75);
-              const sizes = '(max-width: 768px) 100vw, 90vw';
+              const sizes = '(max-width: 640px) 100vw, (max-width: 1024px) 95vw, 90vw';
               const lowSrc = (current as any).lq || (current as any).thumb || src;
               return (
                 <picture>

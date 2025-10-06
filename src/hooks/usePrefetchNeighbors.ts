@@ -1,6 +1,9 @@
 import { useEffect } from 'react';
 import { prefetchImage } from '../utils/imageQueue';
 
+// Session-level simple cache to avoid re-prefetching identical URLs repeatedly
+const seen = new Set<string>();
+
 /**
  * Prefetch adjacent (neighbor) high-res images around the current index to make next/prev navigation instant.
  * radius=1 prefetches index-1 and index+1; can be increased (keep small for bandwidth).
@@ -23,7 +26,10 @@ export function usePrefetchNeighbors<T extends { image?: string | null }>(
     const uniq = Array.from(new Set(targets));
     uniq.forEach(i => {
       const img = list[i]?.image;
-      if (img) prefetchImage(img).catch(()=>{});
+      if (img && !seen.has(img)) {
+        seen.add(img);
+        prefetchImage(img).catch(()=>{});
+      }
     });
   }, [list, index, radius]);
 }
