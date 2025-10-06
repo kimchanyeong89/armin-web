@@ -1126,8 +1126,10 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
                   const src = current.image;
                   // Adaptive width set: smaller steps early to reduce over-fetching on mobile, larger on desktop
                   const widths = window.innerWidth < 900 ? [480, 720, 960] : [640, 960, 1280, 1600];
-                  const avif = buildSourceSet(src, widths, 'avif', 70);
-                  const webp = buildSourceSet(src, widths, 'webp', 75);
+                  // variants 메타가 있으면 그것을 우선 사용 (사전 생성된 정적 URL)
+                  const variants = (current as any).variants;
+                  const avif = variants?.avif ? widths.filter(w=>variants.avif[String(w)]).map(w=>`${variants.avif[String(w)]} ${w}w`).join(', ') : buildSourceSet(src, widths, 'avif', 70);
+                  const webp = variants?.webp ? widths.filter(w=>variants.webp[String(w)]).map(w=>`${variants.webp[String(w)]} ${w}w`).join(', ') : buildSourceSet(src, widths, 'webp', 75);
                   const sizes = '(max-width: 640px) 100vw, (max-width: 1024px) 82vw, 75vw';
                   // Progressive: use lq / thumb (if provided) as blurred placeholder
                   const lowSrc = (current as any).lq || (current as any).thumb || src;
@@ -1190,8 +1192,9 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
                         {a.image && (() => {
                           const src = a.image;
                           const widths = window.innerWidth < 900 ? [320, 480, 640] : [360, 540, 720, 900];
-                          const avif = buildSourceSet(src, widths, 'avif', 65);
-                          const webp = buildSourceSet(src, widths, 'webp', 70);
+                          const variants = (a as any).variants;
+                          const avif = variants?.avif ? widths.filter(w=>variants.avif[String(w)]).map(w=>`${variants.avif[String(w)]} ${w}w`).join(', ') : buildSourceSet(src, widths, 'avif', 65);
+                          const webp = variants?.webp ? widths.filter(w=>variants.webp[String(w)]).map(w=>`${variants.webp[String(w)]} ${w}w`).join(', ') : buildSourceSet(src, widths, 'webp', 70);
                           const sizes = '(max-width: 640px) 90vw, (max-width: 1024px) 55vw, 40vw';
                           return (
                             <picture>
@@ -1269,8 +1272,9 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
             (() => {
               const src = current.image;
               const widths = window.innerWidth < 900 ? [800, 1200] : [960, 1280, 1600, 1920];
-              const avif = buildSourceSet(src, widths, 'avif', 70);
-              const webp = buildSourceSet(src, widths, 'webp', 75);
+              const variants = (current as any).variants;
+              const avif = variants?.avif ? widths.filter(w=>variants.avif[String(w)]).map(w=>`${variants.avif[String(w)]} ${w}w`).join(', ') : buildSourceSet(src, widths, 'avif', 70);
+              const webp = variants?.webp ? widths.filter(w=>variants.webp[String(w)]).map(w=>`${variants.webp[String(w)]} ${w}w`).join(', ') : buildSourceSet(src, widths, 'webp', 75);
               const sizes = '(max-width: 640px) 100vw, (max-width: 1024px) 95vw, 90vw';
               const lowSrc = (current as any).lq || (current as any).thumb || src;
               return (

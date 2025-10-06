@@ -18,7 +18,8 @@
     "update:uk-buildings": "node ./scripts/update-uk-building-images.js",
     "scrape:tate": "node ./scripts/scrape-tate-modern.js",
     "scrape:tate:lite": "node ./scripts/scrape-tate-modern-lite.js",
-    "mirror:tate": "node ./scripts/mirror-tate-images.js"
+  "mirror:tate": "node ./scripts/mirror-tate-images.js",
+  "build:art-variants": "node ./scripts/generate-artwork-variants.cjs raw-artworks public/generated"
   },
   "dependencies": {
     "@amcharts/amcharts5": "^5.12.2",

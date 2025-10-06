@@ -7,6 +7,15 @@ export type Artwork = {
   artist: string;
   year: number;
   image: string;
+  // 고해상도 원본 (image) 외에 최적화 파이프라인에서 추가될 파생 필드들
+  thumb?: string;    // 아주 작은 썸네일 (예: 120~200w)
+  lq?: string;       // 블러/LQIP 용 중간 저품질 (예: 400w, quality 20~30)
+  variants?: {
+    // 사전 생성된 width 세트 (jpg/webp/avif). 키는 포맷, 값은 넓이별 URL 매핑
+    webp?: Record<string, string>; // width -> url
+    avif?: Record<string, string>;
+    jpg?: Record<string, string>;
+  };
   roomId: string;
   exhibitionName: string;
   exhibitionTitle: string;
