@@ -285,10 +285,10 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
             .attr('d', path as any)
             .attr('transform', `translate(${offsetX}, 0)`)
             .attr('fill', 'none')
-            .attr('stroke', '#000000')
-            .attr('stroke-width', 1.5)
+            .attr('stroke', '#666666')
+            .attr('stroke-width', 0.8)
             .attr('vector-effect', 'non-scaling-stroke')
-            .attr('stroke-opacity', 1)
+            .attr('stroke-opacity', 0.6)
             .style('pointer-events', 'none');
         } catch (error) {
           console.warn(`주/도 ${index} 렌더링 실패:`, error);
@@ -354,7 +354,7 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
     renderPins();
 
     // 낮은 배율에서는 주/도 경계 숨김 (페인트 비용 절감)
-    stateGroup.attr('display', transform.k >= STATE_VISIBLE_K ? null : 'none');
+    stateGroup.attr('display', transform.k >= STATE_VISIBLE_K && selectedISO3 ? null : 'none');
     // 도시/지자체는 더 높은 배율에서만 표시
     muniGroup.attr('display', transform.k >= CITY_VISIBLE_K && selectedISO3 ? null : 'none');
     // 확대 정도에 따라 도시 경계선 두께/불투명도 동적 강화
@@ -385,7 +385,7 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
       );
 
   // 초기 표시 상태도 배율 기준으로 맞춤
-  stateGroup.attr('display', baseMinZoom >= STATE_VISIBLE_K ? null : 'none');
+  stateGroup.attr('display', baseMinZoom >= STATE_VISIBLE_K && selectedISO3 ? null : 'none');
   muniGroup.attr('display', baseMinZoom >= CITY_VISIBLE_K && selectedISO3 ? null : 'none');
   }
 
