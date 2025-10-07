@@ -1,6 +1,21 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as d3 from 'd3';
 import { geoPath, geoMercator } from 'd3-geo';
+// Lightweight internal-boundary builder (avoid topojson dependency to keep bundle lean)
+import { mesh } from 'topojson-client';
+type AnyFeature = any;
+function buildInternalMesh(features: AnyFeature[]): any | null {
+  try {
+    // Dynamically import topojson-server only when needed (skip type requirement at compile time)
+    // eslint-disable-next-line @typescript-eslint/no-var-requires
+    const topoServer = require('topojson-server');
+    const topo = topoServer.topology({ munis: { type: 'FeatureCollection', features } });
+    return mesh(topo, topo.objects.munis, (a: any, b: any) => a !== b);
+  } catch (e) {
+    console.warn('buildInternalMesh fallback failed:', e);
+    return null;
+  }
+}
 import type { Exhibition } from '../types/Exhibition';
 
 interface OpenStreetMapProps {
@@ -17,6 +32,7 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
   const [states, setStates] = useState<any[]>([]);
   const [selectedISO3, setSelectedISO3] = useState<string | null>(null);
   const [muniFeatures, setMuniFeatures] = useState<any[] | null>(null);
+  const [muniInternal, setMuniInternal] = useState<any | null>(null); // MultiLineString of internal boundaries only
   const [muniLoading, setMuniLoading] = useState(false);
   const [muniError, setMuniError] = useState<string | null>(null);
   const onSelectExhibitionRef = useRef<typeof onSelectExhibition | undefined>(onSelectExhibition);
@@ -93,10 +109,11 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
   };
   type ClusterInfo = { key: string; items: Exhibition[]; centerLon: number; centerLat: number; sortedByName: Exhibition[] };
   const clustersListRef = useRef<ClusterInfo[] | null>(null);
-  const MUNICIPAL_STROKE_COLOR = '#000000';
+  const MUNICIPAL_STROKE_COLOR = '#444444';
   // Use a thinner base stroke; we'll amplify with outline for contrast
   const MUNICIPAL_BASE_STROKE_WIDTH = 1.3;
-  const MUNICIPAL_HOVER_STROKE_WIDTH = MUNICIPAL_BASE_STROKE_WIDTH + 0.5;
+  // Hover width unused (no interactive municipal paths after mesh simplification)
+  // const MUNICIPAL_HOVER_STROKE_WIDTH = MUNICIPAL_BASE_STROKE_WIDTH + 0.5;
   // Lower opacity for municipality stroke to be less dominant
   const MUNICIPAL_BASE_STROKE_OPACITY = 0.4;
   const MUNICIPAL_MAX_STROKE_WIDTH = 3.0;
@@ -625,76 +642,68 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
       .center([0, 35]);
     const path = geoPath().projection(projection);
     // 로컬 툴팁 헬퍼
-    const showLocalTooltip = (root: any, evt: any, text: string) => {
-      const tooltip = root.append('g').attr('class', 'tooltip').attr('pointer-events','none');
-      const rect = tooltip.append('rect')
-        .attr('fill', 'rgba(255, 255, 255, 0.95)')
-        .attr('stroke', '#000000')
-        .attr('stroke-width', 1)
-        .attr('rx', 4);
-      const textElement = tooltip.append('text')
-        .attr('fill', '#000000')
-        .attr('font-size', '12px')
-        .attr('font-weight', 'bold')
-        .attr('text-anchor', 'start')
-        .text(text);
-      const bbox = (textElement.node() as SVGTextElement).getBBox();
-      rect.attr('x', bbox.x - 8)
-          .attr('y', bbox.y - 4)
-          .attr('width', bbox.width + 16)
-          .attr('height', bbox.height + 8);
-      const [mouseX, mouseY] = d3.pointer(evt, svgRef.current as any);
-      tooltip.attr('transform', `translate(${mouseX + 10}, ${mouseY - 10})`);
-    };
+    // Tooltip disabled for municipal internal mesh (no per-region hover now)
 
-    muniFeatures.forEach((feat: any, idx: number) => {
-      try {
-        const halo = muniGroupSel.append('path')
-          .datum(feat)
-          .attr('d', path as any)
-          .attr('fill', 'none')
-          .attr('stroke', '#ffffff')
-          .attr('stroke-width', MUNICIPAL_BASE_STROKE_WIDTH + 0.9)
-          .attr('vector-effect', 'non-scaling-stroke')
-          .attr('stroke-opacity', MUNICIPAL_BASE_STROKE_OPACITY * 0.5)
-          .attr('stroke-linejoin', 'round')
-          .attr('stroke-linecap', 'round')
-          .style('pointer-events', 'none');
-
-        muniGroupSel.append('path')
-          .datum(feat)
-          .attr('d', path as any)
-          .attr('fill', 'none')
-          .attr('stroke', MUNICIPAL_STROKE_COLOR)
-          .attr('stroke-width', MUNICIPAL_BASE_STROKE_WIDTH)
-          .attr('vector-effect', 'non-scaling-stroke')
-          .attr('stroke-opacity', MUNICIPAL_BASE_STROKE_OPACITY)
-          .attr('stroke-linejoin', 'round')
-          .attr('stroke-linecap', 'round')
-          .style('pointer-events', 'visibleStroke')
-          .on('mouseover', function(this: SVGPathElement, event: MouseEvent) {
-            d3.select(this)
-              .attr('stroke-width', MUNICIPAL_HOVER_STROKE_WIDTH)
-              .attr('stroke-opacity', 0.9);
-            halo.attr('stroke-opacity', 0.7);
-            const p = (feat.properties || {});
-            const city = getMunicipalityName(p);
-            const parent = p?.ADM1_EN || p?.NAME_1 || p?.region || p?.province || '';
-            const txt = parent ? `🏙️ ${city} · ${parent}` : `🏙️ ${city}`;
-            const rootSvg = d3.select(svgRef.current);
-            showLocalTooltip(rootSvg, event, txt);
-          })
-          .on('mouseout', function(this: SVGPathElement) {
-            d3.select(this)
-              .attr('stroke-width', MUNICIPAL_BASE_STROKE_WIDTH)
-              .attr('stroke-opacity', MUNICIPAL_BASE_STROKE_OPACITY);
-            halo.attr('stroke-opacity', MUNICIPAL_BASE_STROKE_OPACITY * 0.5);
-            d3.select(svgRef.current).select('.tooltip').remove();
-          });
-      } catch (e) {
-        console.warn(`지자체 ${idx} 렌더링 실패:`, e);
-      }
-    });
+    let internalRef = muniInternal;
+    if (!internalRef) {
+      // Lazy attempt (e.g., dynamic require succeeded only client-side)
+      try { internalRef = buildInternalMesh(muniFeatures as any) || null; if (internalRef) setMuniInternal(internalRef); } catch {}
+    }
+    if (internalRef) {
+      // 내부 경계만 한 번에 렌더
+      muniGroupSel.append('path')
+        .datum(internalRef)
+        .attr('d', path as any)
+        .attr('fill', 'none')
+        .attr('stroke', '#ffffff')
+        .attr('stroke-width', MUNICIPAL_BASE_STROKE_WIDTH + 0.9)
+        .attr('vector-effect', 'non-scaling-stroke')
+        .attr('stroke-opacity', MUNICIPAL_BASE_STROKE_OPACITY * 0.55)
+        .attr('stroke-linejoin', 'round')
+        .attr('stroke-linecap', 'round')
+        .style('pointer-events', 'none');
+      muniGroupSel.append('path')
+        .datum(internalRef)
+        .attr('d', path as any)
+        .attr('fill', 'none')
+        .attr('stroke', MUNICIPAL_STROKE_COLOR)
+        .attr('stroke-width', MUNICIPAL_BASE_STROKE_WIDTH)
+        .attr('vector-effect', 'non-scaling-stroke')
+        .attr('stroke-opacity', MUNICIPAL_BASE_STROKE_OPACITY)
+        .attr('stroke-linejoin', 'round')
+        .attr('stroke-linecap', 'round')
+        .style('pointer-events', 'none');
+    } else {
+      // 폴백: 기존 방식 (ADM1만 있는 등 mesh 실패 시)
+      muniFeatures.forEach((feat: any, idx: number) => {
+        try {
+          muniGroupSel.append('path')
+            .datum(feat)
+            .attr('d', path as any)
+            .attr('fill', 'none')
+            .attr('stroke', '#ffffff')
+            .attr('stroke-width', MUNICIPAL_BASE_STROKE_WIDTH + 0.9)
+            .attr('vector-effect', 'non-scaling-stroke')
+            .attr('stroke-opacity', MUNICIPAL_BASE_STROKE_OPACITY * 0.55)
+            .attr('stroke-linejoin', 'round')
+            .attr('stroke-linecap', 'round')
+            .style('pointer-events', 'none');
+          muniGroupSel.append('path')
+            .datum(feat)
+            .attr('d', path as any)
+            .attr('fill', 'none')
+            .attr('stroke', MUNICIPAL_STROKE_COLOR)
+            .attr('stroke-width', MUNICIPAL_BASE_STROKE_WIDTH)
+            .attr('vector-effect', 'non-scaling-stroke')
+            .attr('stroke-opacity', MUNICIPAL_BASE_STROKE_OPACITY)
+            .attr('stroke-linejoin', 'round')
+            .attr('stroke-linecap', 'round')
+            .style('pointer-events', 'none');
+        } catch (e) {
+          console.warn(`지자체 ${idx} 렌더링 실패:`, e);
+        }
+      });
+    }
     // 현재 줌 상태 반영
     const k = (zoomTransformRef.current && (zoomTransformRef.current as any).k) || 1;
     muniGroupSel.attr('transform', zoomTransformRef.current as any);
@@ -706,7 +715,8 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
     try {
       setMuniLoading(true);
       setMuniError(null);
-      setMuniFeatures(null);
+  setMuniFeatures(null);
+  setMuniInternal(null);
 
       // 1) GeoBoundaries gbRequest로 ADM2 시도 (실패해도 폴백 계속)
       try {
@@ -733,6 +743,10 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
               const feats = data?.features || [];
               if (feats.length) {
                 setMuniFeatures(feats);
+                try {
+                  const internal = buildInternalMesh(feats as any);
+                  if (internal) setMuniInternal(internal);
+                } catch (e) { console.warn('Internal mesh build failed (ADM2):', e); }
                 setTimeout(() => {
                   try {
                     const svg = d3.select(svgRef.current);
@@ -760,6 +774,10 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
       });
       if (filtered.length) {
         setMuniFeatures(filtered);
+        try {
+          const internal = buildInternalMesh(filtered as any);
+          if (internal) setMuniInternal(internal);
+        } catch (e) { console.warn('Internal mesh build failed (ADM1 fallback):', e); }
         setTimeout(() => {
           try {
             const svg = d3.select(svgRef.current);
@@ -798,11 +816,7 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
   if (s === 'CHN' || s === 'CN') return 'CHN';
   return s;
   }
-  function getMunicipalityName(p: any): string {
-    return (
-      p?.shapeName || p?.NAME || p?.NAME_2 || p?.NAME_1 || p?.name || p?.full_name || p?.ENGTYPE_2 || 'Unknown City'
-    );
-  }
+  // getMunicipalityName removed (not needed without per-municipality hover)
 
   if (loading) {
     return (
