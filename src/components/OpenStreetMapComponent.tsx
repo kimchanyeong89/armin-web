@@ -737,19 +737,8 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
         // swallow and fallback
       }
 
-      // 2) 실패 시 ADM1(주/도)로 폴백 (기존 states에서 ISO3 일치 필터)
-      const filtered = states.filter((s: any) => {
-        const p = s.properties || {};
-        const cIso = (p.adm0_a3 || p.ADM0_A3 || p.iso_a3 || p.ISO_A3 || p.GU_A3 || '').toUpperCase();
-        return cIso === iso3.toUpperCase();
-      });
-      if (filtered.length) {
-        setMuniFeatures(filtered);
-        setMuniLoading(false);
-        return;
-      }
-
-      throw new Error('No municipal/subdivision data available');
+      // 2) 실패 시 표시하지 않음 (ADM1 폴백 제거)
+      throw new Error('No ADM2 municipal data available');
     } catch (e: any) {
       console.warn('Municipality load failed:', e);
       setMuniError(e?.message || 'Failed to load city boundaries');
