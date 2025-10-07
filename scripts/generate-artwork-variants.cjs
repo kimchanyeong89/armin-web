@@ -22,8 +22,11 @@ const widths = [320,480,640,720,960,1280,1600];
   for (const file of files) {
     const base = file.replace(/\.(jpe?g|png)$/i,'');
     const srcPath = path.join(sourceDir, file);
-    const img = sharp(srcPath);
-    const meta = await img.metadata();
+  const img = sharp(srcPath);
+  const meta = await img.metadata();
+  const origName = `${base}${path.extname(file).toLowerCase()}`;
+  const origPath = path.join(outDir, origName);
+  await fs.promises.copyFile(srcPath, origPath);
 
     // thumb (가로 160px)
     const thumbName = base + '.thumb.jpg';
@@ -49,7 +52,7 @@ const widths = [320,480,640,720,960,1280,1600];
 
     manifest.push({
       id: base,
-      original: `/generated/${base}.orig${path.extname(file).toLowerCase()}`,
+  original: `/generated/${origName}`,
       thumb: `/generated/${thumbName}`,
       lq: `/generated/${lqName}`,
       variants,

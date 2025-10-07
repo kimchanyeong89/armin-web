@@ -1,14 +1,15 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, Suspense, lazy } from "react";
 import OpenStreetMapComponent from '../components/OpenStreetMapComponent';
 import D3GeoGlobeSimplified from "../components/D3GeoGlobeSimplified";
 import ExhibitionBanner from "../components/ExhibitionBanner";
 import ExhibitionDetails from "../components/ExhibitionDetails";
-import ExhibitionModal from "../components/ExhibitionModal";
 // Filled Globe temporarily hidden
 // Removed react-globe.gl Outline mode
 // Heavy globe modes removed for performance on homepage
 // Removed LeafletInteractiveMap import
 import type { Exhibition, ExhibitionItem } from "../types/Exhibition";
+
+const ExhibitionModal = lazy(() => import("../components/ExhibitionModal"));
 
 type HomePageProps = {
   exhibitions: Exhibition[];
@@ -395,10 +396,12 @@ export default function HomePage({ exhibitions }: HomePageProps) {
       </div>
   {/* Exhibition modal */}
       {selectedModalExhibition && (
-        <ExhibitionModal
-          exhibition={selectedModalExhibition}
-          onClose={() => setSelectedModalExhibition(null)}
-        />
+        <Suspense fallback={null}>
+          <ExhibitionModal
+            exhibition={selectedModalExhibition}
+            onClose={() => setSelectedModalExhibition(null)}
+          />
+        </Suspense>
       )}
     </div>
   );

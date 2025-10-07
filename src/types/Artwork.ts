@@ -16,6 +16,7 @@ export type Artwork = {
     avif?: Record<string, string>;
     jpg?: Record<string, string>;
   };
+  imageLocal?: string;
   roomId: string;
   exhibitionName: string;
   exhibitionTitle: string;

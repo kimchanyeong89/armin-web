@@ -90,6 +90,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
   // Progressive image loading state (Step 1): main stage / panorama
   const [mainLoaded, setMainLoaded] = useState(false);
   const mainImgRef = useRef<HTMLImageElement | null>(null);
+  const idleDecodeHandlesRef = useRef<number[]>([]);
   // Representative image (from local feed or exhibition data)
   const [repImage, setRepImage] = useState<string | null>(null);
   // Close guards
@@ -382,6 +383,44 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
 
   // Prefetch neighbor images for smoother stage switching
   usePrefetchNeighbors(filteredArtworks as any[], selectedIndex, 1);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const supportsIdle = typeof (window as any).requestIdleCallback === 'function';
+    const schedule: (cb: () => void) => number = supportsIdle
+      ? (cb) => (window as any).requestIdleCallback(cb, { timeout: 800 })
+      : (cb) => window.setTimeout(cb, 200);
+    const cancel: (handle: number) => void = typeof (window as any).cancelIdleCallback === 'function'
+      ? (handle) => (window as any).cancelIdleCallback(handle)
+      : (handle) => window.clearTimeout(handle);
+
+    idleDecodeHandlesRef.current.forEach(cancel);
+    idleDecodeHandlesRef.current = [];
+
+    const neighbors = [selectedIndex - 1, selectedIndex + 1];
+    const seen = new Set<string>();
+    neighbors.forEach((idx) => {
+      if (idx < 0 || idx >= filteredArtworks.length) return;
+      const url = filteredArtworks[idx]?.image;
+      if (!url || seen.has(url)) return;
+      seen.add(url);
+      const handle = schedule(() => {
+        try {
+          const preload = new Image();
+          preload.decoding = 'async';
+          preload.loading = 'eager';
+          preload.src = url;
+          if (preload.decode) preload.decode().catch(() => {});
+        } catch {}
+      });
+      idleDecodeHandlesRef.current.push(handle);
+    });
+
+    return () => {
+      idleDecodeHandlesRef.current.forEach(cancel);
+      idleDecodeHandlesRef.current = [];
+    };
+  }, [filteredArtworks, selectedIndex]);
 
   // Static columns; no DOM measurement needed
 
