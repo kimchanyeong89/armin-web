@@ -94,10 +94,10 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
   type ClusterInfo = { key: string; items: Exhibition[]; centerLon: number; centerLat: number; sortedByName: Exhibition[] };
   const clustersListRef = useRef<ClusterInfo[] | null>(null);
   const MUNICIPAL_STROKE_COLOR = '#000000';
-  const MUNICIPAL_BASE_STROKE_WIDTH = 0.95;
-  const MUNICIPAL_HOVER_STROKE_WIDTH = MUNICIPAL_BASE_STROKE_WIDTH + 0.35;
+  const MUNICIPAL_BASE_STROKE_WIDTH = 1.5;
+  const MUNICIPAL_HOVER_STROKE_WIDTH = MUNICIPAL_BASE_STROKE_WIDTH + 0.5;
   const MUNICIPAL_BASE_STROKE_OPACITY = 1;
-  const MUNICIPAL_MAX_STROKE_WIDTH = 2.4;
+  const MUNICIPAL_MAX_STROKE_WIDTH = 3.0;
   // Rebuild clusters when exhibitions changes
   useEffect(() => {
     const list = exhibitions || [];
