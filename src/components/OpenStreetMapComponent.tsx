@@ -33,6 +33,7 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
   const [selectedISO3, setSelectedISO3] = useState<string | null>(null);
   const [muniFeatures, setMuniFeatures] = useState<any[] | null>(null);
   const [muniInternal, setMuniInternal] = useState<any | null>(null); // MultiLineString of internal boundaries only
+  const [showMunicipalities, setShowMunicipalities] = useState(false);
   const [muniLoading, setMuniLoading] = useState(false);
   const [muniError, setMuniError] = useState<string | null>(null);
   const onSelectExhibitionRef = useRef<typeof onSelectExhibition | undefined>(onSelectExhibition);
@@ -109,7 +110,7 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
   };
   type ClusterInfo = { key: string; items: Exhibition[]; centerLon: number; centerLat: number; sortedByName: Exhibition[] };
   const clustersListRef = useRef<ClusterInfo[] | null>(null);
-  const MUNICIPAL_STROKE_COLOR = '#1d4ed8'; // temp vivid blue for visibility debug
+  const MUNICIPAL_STROKE_COLOR = '#555555';
   // Use a thinner base stroke; we'll amplify with outline for contrast
   const MUNICIPAL_BASE_STROKE_WIDTH = 1.3;
   // Hover width unused (no interactive municipal paths after mesh simplification)
@@ -212,6 +213,7 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
           setSelectedISO3(null);
           setMuniFeatures(null);
           setMuniError(null);
+          setShowMunicipalities(false);
         }
       });
 
@@ -256,6 +258,8 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
                 setMuniError('No ISO3 code available for this country');
                 return;
               }
+              // Enable municipalities layer visibility intent
+              setShowMunicipalities(true);
               // 1) 선택 국가로 확대/중심 이동 (부드러운 트랜지션)
               try {
                 // 현재 렌더링된 경계의 경계박스 계산 (wrap된 복제본 클릭에도 동작)
@@ -376,7 +380,7 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
   // 주/도 경계: 확대 수준 기반 (국가 선택 여부와 무관하게 기본 구조 맥락 제공)
   stateGroup.attr('display', transform.k >= STATE_VISIBLE_K ? null : 'none');
   // 도시/지자체: 국가 선택 후 즉시 표시, 단 너무 축소된 경우 숨김
-  muniGroup.attr('display', (selectedISO3 && transform.k >= (CITY_VISIBLE_K * 0.6)) ? null : 'none');
+  muniGroup.attr('display', (showMunicipalities && selectedISO3 && transform.k >= (CITY_VISIBLE_K * 0.6)) ? null : 'none');
     // 확대 정도에 따라 도시 경계선 두께/불투명도 동적 강화
     const logk = Math.log2(Math.max(1, transform.k));
     const strokeW = Math.min(
@@ -406,7 +410,7 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
 
   // 초기 표시 상태도 배율 기준으로 맞춤
   stateGroup.attr('display', baseMinZoom >= STATE_VISIBLE_K ? null : 'none');
-  muniGroup.attr('display', (selectedISO3 && baseMinZoom >= CITY_VISIBLE_K * 0.6) ? null : 'none');
+  muniGroup.attr('display', (showMunicipalities && selectedISO3 && baseMinZoom >= CITY_VISIBLE_K * 0.6) ? null : 'none');
   }
 
     console.log('상세 지도 렌더링 완료!');
@@ -633,7 +637,7 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
       muniGroupSel = svgAny.append('g').attr('class', 'municipalities').attr('pointer-events', 'none');
     }
   muniGroupSel.selectAll('*').remove();
-  if (!selectedISO3 || !muniFeatures || muniFeatures.length < 2) {
+  if (!showMunicipalities || !selectedISO3 || !muniFeatures || muniFeatures.length < 2) {
       return;
     }
     const projection = geoMercator()
@@ -716,7 +720,7 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
     const k = (zoomTransformRef.current && (zoomTransformRef.current as any).k) || 1;
     muniGroupSel.attr('transform', zoomTransformRef.current as any);
   // Force display if a country is selected even if k slightly below threshold (debug)
-  muniGroupSel.attr('display', selectedISO3 && k >= 1.1 ? null : 'none');
+  muniGroupSel.attr('display', showMunicipalities && selectedISO3 && k >= 1.1 ? null : 'none');
   }, [selectedISO3, muniFeatures]);
 
   // 국가별 도시/지자체 경계 로더
