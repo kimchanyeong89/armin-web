@@ -362,7 +362,7 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
     const baseMinZoom = Math.max(minZoomForWidth, minZoomForHeight * 0.8); // 안전 마진 추가
     const minZoom = baseMinZoom * 0.85; // 중간값: 15% 정도 더 줌아웃 가능하도록 설정
     
-  const STATE_VISIBLE_K = 1.6; // 이 배율 이상에서만 주/도 경계 표시
+  const STATE_VISIBLE_K = 1.6; // 이 배율 이상에서만 주/도 경계 표시 (선택 국가 시에만)
     const zoom = d3.zoom<SVGSVGElement, unknown>()
       .scaleExtent([minZoom, 100]) // 최소 줌을 동적으로 계산, 최대는 100
       .on('zoom', (event) => {
@@ -378,7 +378,8 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
 
     // 낮은 배율에서는 주/도 경계 숨김 (페인트 비용 절감)
   // 주/도 경계: 확대 수준 기반 (국가 선택 여부와 무관하게 기본 구조 맥락 제공)
-  stateGroup.attr('display', transform.k >= STATE_VISIBLE_K ? null : 'none');
+  // 주/도 경계: 국가 선택 + 도시 레이어 활성화 상태에서만 노출
+  stateGroup.attr('display', (showMunicipalities && selectedISO3 && transform.k >= STATE_VISIBLE_K) ? null : 'none');
   // 도시/지자체: 국가 선택 후 즉시 표시, 단 너무 축소된 경우 숨김
   muniGroup.attr('display', (showMunicipalities && selectedISO3 && transform.k >= (CITY_VISIBLE_K * 0.6)) ? null : 'none');
     // 확대 정도에 따라 도시 경계선 두께/불투명도 동적 강화
@@ -409,8 +410,9 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
       );
 
   // 초기 표시 상태도 배율 기준으로 맞춤
-  stateGroup.attr('display', baseMinZoom >= STATE_VISIBLE_K ? null : 'none');
-  muniGroup.attr('display', (showMunicipalities && selectedISO3 && baseMinZoom >= CITY_VISIBLE_K * 0.6) ? null : 'none');
+  // 초기에는 항상 주/도/도시 경계 숨김 (국가 클릭 전 단순 뷰 유지)
+  stateGroup.attr('display', 'none');
+  muniGroup.attr('display', 'none');
   }
 
     console.log('상세 지도 렌더링 완료!');
@@ -721,7 +723,7 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
     muniGroupSel.attr('transform', zoomTransformRef.current as any);
   // Force display if a country is selected even if k slightly below threshold (debug)
   muniGroupSel.attr('display', showMunicipalities && selectedISO3 && k >= 1.1 ? null : 'none');
-  }, [selectedISO3, muniFeatures]);
+  }, [selectedISO3, muniFeatures, showMunicipalities, muniInternal]);
 
   // 국가별 도시/지자체 경계 로더
   async function loadMunicipalities(iso3: string) {
@@ -760,15 +762,7 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
                   const internal = buildInternalMesh(feats as any);
                   if (internal) setMuniInternal(internal);
                 } catch (e) { console.warn('Internal mesh build failed (ADM2):', e); }
-                setTimeout(() => {
-                  try {
-                    const svg = d3.select(svgRef.current);
-                    const g = svg.select('g.municipalities');
-                    if (!g.empty()) {
-                      g.attr('display', null);
-                    }
-                  } catch {}
-                }, 0);
+                // 표시 여부는 zoom 핸들러/효과에서 showMunicipalities 조건으로 제어
                 setMuniLoading(false);
                 return;
               }
@@ -791,15 +785,7 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
           const internal = buildInternalMesh(filtered as any);
           if (internal) setMuniInternal(internal);
         } catch (e) { console.warn('Internal mesh build failed (ADM1 fallback):', e); }
-        setTimeout(() => {
-          try {
-            const svg = d3.select(svgRef.current);
-            const g = svg.select('g.municipalities');
-            if (!g.empty()) {
-              g.attr('display', null);
-            }
-          } catch {}
-        }, 0);
+        // 표시 여부는 zoom 핸들러/효과에서 showMunicipalities 조건으로 제어
         setMuniLoading(false);
         return;
       }
