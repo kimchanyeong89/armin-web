@@ -93,6 +93,11 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
   };
   type ClusterInfo = { key: string; items: Exhibition[]; centerLon: number; centerLat: number; sortedByName: Exhibition[] };
   const clustersListRef = useRef<ClusterInfo[] | null>(null);
+  const MUNICIPAL_STROKE_COLOR = '#000000';
+  const MUNICIPAL_BASE_STROKE_WIDTH = 0.95;
+  const MUNICIPAL_HOVER_STROKE_WIDTH = MUNICIPAL_BASE_STROKE_WIDTH + 0.35;
+  const MUNICIPAL_BASE_STROKE_OPACITY = 1;
+  const MUNICIPAL_MAX_STROKE_WIDTH = 2.4;
   // Rebuild clusters when exhibitions changes
   useEffect(() => {
     const list = exhibitions || [];
@@ -301,40 +306,6 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
   pinsLayer.raise();
     pinsGroupRef.current = pinsLayer.node() as SVGGElement;
 
-    const renderMunicipalities = () => {
-      muniGroup.selectAll('*').remove();
-      if (!muniFeatures || !muniFeatures.length) return;
-      // 중앙에만 렌더 (wrap 미적용)
-      muniFeatures.forEach((feat, idx) => {
-        try {
-          muniGroup.append('path')
-            .datum(feat)
-            .attr('d', path as any)
-            .attr('fill', 'none')
-            .attr('stroke', '#000')
-            .attr('stroke-width', 0.35) // 더 선명하게 기본 두께 상향
-            .attr('vector-effect', 'non-scaling-stroke')
-            .attr('stroke-opacity', 1)
-            .style('pointer-events', 'visibleStroke')
-            .on('mouseover', function(event) {
-              d3.select(this).attr('stroke-width', 0.35);
-                  const p = feat.properties || {};
-                  const city = getMunicipalityName(p);
-                  const parent = p?.ADM1_EN || p?.NAME_1 || p?.region || p?.province || '';
-                  const txt = parent ? `🏙️ ${city} · ${parent}` : `🏙️ ${city}`;
-                  showTooltip(svg, event, txt);
-            })
-            .on('mouseout', function() {
-              d3.select(this).attr('stroke-width', 0.35);
-              svg.select('.tooltip').remove();
-            });
-          // 도시 경계 상호작용만 허용하도록 그룹의 pointer-events는 none으로 두고 각 path만 활성화
-        } catch (e) {
-          console.warn(`지자체 ${idx} 렌더링 실패:`, e);
-        }
-      });
-    };
-
     // 툴팁 표시 함수
     function showTooltip(svg: any, event: any, text: string) {
       const tooltip = svg.append('g').attr('class', 'tooltip').attr('pointer-events','none');
@@ -388,8 +359,11 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
     muniGroup.attr('display', transform.k >= CITY_VISIBLE_K && selectedISO3 ? null : 'none');
     // 확대 정도에 따라 도시 경계선 두께/불투명도 동적 강화
     const logk = Math.log2(Math.max(1, transform.k));
-    const strokeW = Math.min(1.4, 0.25 + 0.22 * logk);
-    const strokeO = Math.min(1, 0.6 + 0.4 * (logk / 3)); // k≈8(log2=3)에서 1.0
+    const strokeW = Math.min(
+      MUNICIPAL_MAX_STROKE_WIDTH,
+      MUNICIPAL_BASE_STROKE_WIDTH + 0.45 * Math.max(0, logk - Math.log2(CITY_VISIBLE_K))
+    );
+    const strokeO = Math.min(1, MUNICIPAL_BASE_STROKE_OPACITY + 0.08 * Math.max(0, logk - Math.log2(CITY_VISIBLE_K)));
     try {
       muniGroup.selectAll('path').attr('stroke-width', strokeW).attr('stroke-opacity', strokeO);
     } catch {}
@@ -418,7 +392,6 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
     console.log('상세 지도 렌더링 완료!');
 
     // 초기 1회 렌더 (줌/레이어 준비 직후)
-    renderMunicipalities();
     renderPins();
 
     // 컴포넌트 언마운트 시 이벤트 리스너 정리
@@ -677,13 +650,15 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
           .datum(feat)
           .attr('d', path as any)
           .attr('fill', 'none')
-          .attr('stroke', '#000')
-          .attr('stroke-width', 0.35) // 기본 두께 상향
+          .attr('stroke', MUNICIPAL_STROKE_COLOR)
+          .attr('stroke-width', MUNICIPAL_BASE_STROKE_WIDTH)
           .attr('vector-effect', 'non-scaling-stroke')
-          .attr('stroke-opacity', 1)
+          .attr('stroke-opacity', MUNICIPAL_BASE_STROKE_OPACITY)
+          .attr('stroke-linejoin', 'round')
+          .attr('stroke-linecap', 'round')
           .style('pointer-events', 'visibleStroke')
           .on('mouseover', function(this: SVGPathElement, event: MouseEvent) {
-            d3.select(this).attr('stroke-width', 0.45);
+            d3.select(this).attr('stroke-width', MUNICIPAL_HOVER_STROKE_WIDTH);
             const p = (feat.properties || {});
             const city = getMunicipalityName(p);
             const parent = p?.ADM1_EN || p?.NAME_1 || p?.region || p?.province || '';
@@ -693,7 +668,7 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
             showLocalTooltip(rootSvg, event, txt);
           })
           .on('mouseout', function(this: SVGPathElement) {
-            d3.select(this).attr('stroke-width', 0.35);
+            d3.select(this).attr('stroke-width', MUNICIPAL_BASE_STROKE_WIDTH);
             d3.select(svgRef.current).select('.tooltip').remove();
           });
       } catch (e) {
