@@ -646,6 +646,20 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
 
     muniFeatures.forEach((feat: any, idx: number) => {
       try {
+        // 흰색 테두리 path (pointer-events 없음)
+        muniGroupSel.append('path')
+          .datum(feat)
+          .attr('d', path as any)
+          .attr('fill', 'none')
+          .attr('stroke', '#ffffff')
+          .attr('stroke-width', 2.5)
+          .attr('vector-effect', 'non-scaling-stroke')
+          .attr('stroke-opacity', 1)
+          .attr('stroke-linejoin', 'round')
+          .attr('stroke-linecap', 'round')
+          .style('pointer-events', 'none');
+
+        // 검은색 메인 path
         muniGroupSel.append('path')
           .datum(feat)
           .attr('d', path as any)
