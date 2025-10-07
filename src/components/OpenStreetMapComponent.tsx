@@ -280,16 +280,29 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
       const offsetX = offset * actualWorldWidth;
       states.forEach((state, index) => {
         try {
+          // 흰색 테두리 path
           stateGroup.append('path')
             .datum(state)
             .attr('d', path as any)
             .attr('transform', `translate(${offsetX}, 0)`)
-      .attr('fill', 'none')
-            .attr('stroke', '#888888')
-            .attr('stroke-width', 0.08)
-      .attr('vector-effect', 'non-scaling-stroke')
-            .attr('stroke-opacity', 0.3)
-      .style('pointer-events', 'none');
+            .attr('fill', 'none')
+            .attr('stroke', '#ffffff')
+            .attr('stroke-width', 1.2)
+            .attr('vector-effect', 'non-scaling-stroke')
+            .attr('stroke-opacity', 1)
+            .style('pointer-events', 'none');
+
+          // 검은색 메인 path
+          stateGroup.append('path')
+            .datum(state)
+            .attr('d', path as any)
+            .attr('transform', `translate(${offsetX}, 0)`)
+            .attr('fill', 'none')
+            .attr('stroke', '#000000')
+            .attr('stroke-width', 0.8)
+            .attr('vector-effect', 'non-scaling-stroke')
+            .attr('stroke-opacity', 1)
+            .style('pointer-events', 'none');
         } catch (error) {
           console.warn(`주/도 ${index} 렌더링 실패:`, error);
         }
@@ -737,7 +750,19 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
         // swallow and fallback
       }
 
-      // 2) 실패 시 표시하지 않음 (ADM1 폴백 제거)
+      // 2) 실패 시 ADM1(주/도)로 폴백
+      const filtered = states.filter((s: any) => {
+        const p = s.properties || {};
+        const cIso = (p.adm0_a3 || p.ADM0_A3 || p.iso_a3 || p.ISO_A3 || p.GU_A3 || '').toUpperCase();
+        return cIso === iso3.toUpperCase();
+      });
+      if (filtered.length) {
+        setMuniFeatures(filtered);
+        setMuniLoading(false);
+        return;
+      }
+
+      // 3) 실패 시 표시하지 않음 (ADM1 폴백 제거)
       throw new Error('No ADM2 municipal data available');
     } catch (e: any) {
       console.warn('Municipality load failed:', e);
