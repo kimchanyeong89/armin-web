@@ -118,6 +118,8 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
   // Lower opacity for municipality stroke to be less dominant
   const MUNICIPAL_BASE_STROKE_OPACITY = 0.4;
   const MUNICIPAL_MAX_STROKE_WIDTH = 3.0;
+  // TEMP DEBUG FLAG
+  const DEBUG_MUNI = true;
   // Rebuild clusters when exhibitions changes
   useEffect(() => {
     const list = exhibitions || [];
@@ -638,7 +640,10 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
     if (muniGroupSel.empty()) {
       muniGroupSel = svgAny.append('g').attr('class', 'municipalities').attr('pointer-events', 'none');
     }
-  muniGroupSel.selectAll('*').remove();
+    muniGroupSel.selectAll('*').remove();
+    if (DEBUG_MUNI) {
+      console.debug('[muni-effect] run: showMunicipalities=%s selectedISO3=%s muniFeatures=%s internal? %s', showMunicipalities, selectedISO3, muniFeatures?.length, !!muniInternal);
+    }
   if (!showMunicipalities || !selectedISO3 || !muniFeatures || muniFeatures.length < 2) {
       return;
     }
@@ -722,7 +727,9 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
     const k = (zoomTransformRef.current && (zoomTransformRef.current as any).k) || 1;
     muniGroupSel.attr('transform', zoomTransformRef.current as any);
   // Force display if a country is selected even if k slightly below threshold (debug)
-  muniGroupSel.attr('display', showMunicipalities && selectedISO3 && k >= 1.1 ? null : 'none');
+    const shouldDisplay = showMunicipalities && selectedISO3 && k >= 1.1;
+    muniGroupSel.attr('display', shouldDisplay ? null : 'none');
+    if (DEBUG_MUNI) console.debug('[muni-effect] render complete. display=%s k=%s paths=%d', shouldDisplay, k, muniGroupSel.selectAll('path').size());
   }, [selectedISO3, muniFeatures, showMunicipalities, muniInternal]);
 
   // 국가별 도시/지자체 경계 로더
@@ -735,6 +742,7 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
 
       // 1) GeoBoundaries gbRequest로 ADM2 시도 (실패해도 폴백 계속)
       try {
+        if (DEBUG_MUNI) console.debug('[muni-load] ADM2 request start', iso3);
         const reqUrl = `https://www.geoboundaries.org/gbRequest.html?ISO=${encodeURIComponent(iso3)}&ADM=ADM2`;
         const req = await fetch(reqUrl, { mode: 'cors' });
         if (req.ok) {
@@ -747,6 +755,7 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
           const pick = Array.isArray(info) ? info.find((x: any) => x && typeof x.gjDownloadURL === 'string' && x.gjDownloadURL.includes('.geojson')) : info;
           const dl = pick?.gjDownloadURL || null;
           if (dl) {
+            if (DEBUG_MUNI) console.debug('[muni-load] ADM2 geojson url', dl);
             const gj = await fetch(dl, { mode: 'cors' });
             if (gj.ok) {
               let data: any = null;
@@ -756,13 +765,14 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
                 data = null;
               }
               const feats = data?.features || [];
+              if (DEBUG_MUNI) console.debug('[muni-load] ADM2 features length', feats.length);
               if (feats.length) {
                 setMuniFeatures(feats);
                 try {
                   const internal = buildInternalMesh(feats as any);
                   if (internal) setMuniInternal(internal);
                 } catch (e) { console.warn('Internal mesh build failed (ADM2):', e); }
-                // 표시 여부는 zoom 핸들러/효과에서 showMunicipalities 조건으로 제어
+                if (DEBUG_MUNI) console.debug('[muni-load] ADM2 success; features set');
                 setMuniLoading(false);
                 return;
               }
@@ -771,6 +781,7 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
         }
       } catch (e) {
         // swallow and fallback
+        if (DEBUG_MUNI) console.warn('[muni-load] ADM2 request error', e);
       }
 
       // 2) 실패 시 ADM1(주/도)로 폴백
@@ -780,12 +791,13 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
         return cIso === iso3.toUpperCase();
       });
       if (filtered.length) {
+        if (DEBUG_MUNI) console.debug('[muni-load] ADM1 fallback count', filtered.length);
         setMuniFeatures(filtered);
         try {
           const internal = buildInternalMesh(filtered as any);
           if (internal) setMuniInternal(internal);
         } catch (e) { console.warn('Internal mesh build failed (ADM1 fallback):', e); }
-        // 표시 여부는 zoom 핸들러/효과에서 showMunicipalities 조건으로 제어
+        if (DEBUG_MUNI) console.debug('[muni-load] ADM1 fallback success; features set');
         setMuniLoading(false);
         return;
       }
@@ -794,9 +806,11 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
       throw new Error('No ADM2 municipal data available');
     } catch (e: any) {
       console.warn('Municipality load failed:', e);
+      if (DEBUG_MUNI) console.warn('[muni-load] ultimate failure', e);
       setMuniError(e?.message || 'Failed to load city boundaries');
     } finally {
       setMuniLoading(false);
+      if (DEBUG_MUNI) console.debug('[muni-load] done');
     }
   }
 
