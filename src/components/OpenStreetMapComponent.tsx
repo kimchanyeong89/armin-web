@@ -1,21 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import * as d3 from 'd3';
-import { geoPath, geoMercator } from 'd3-geo';
-// Lightweight internal-boundary builder (avoid topojson dependency to keep bundle lean)
-import { mesh } from 'topojson-client';
-type AnyFeature = any;
-function buildInternalMesh(features: AnyFeature[]): any | null {
-  try {
-    // Dynamically import topojson-server only when needed (skip type requirement at compile time)
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
-    const topoServer = require('topojson-server');
-    const topo = topoServer.topology({ munis: { type: 'FeatureCollection', features } });
-    return mesh(topo, topo.objects.munis, (a: any, b: any) => a !== b);
-  } catch (e) {
-    console.warn('buildInternalMesh fallback failed:', e);
-    return null;
-  }
-}
+import { geoPath, geoMercator, geoCentroid } from 'd3-geo';
 import type { Exhibition } from '../types/Exhibition';
 
 interface OpenStreetMapProps {
@@ -32,7 +17,8 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
   const [states, setStates] = useState<any[]>([]);
   const [selectedISO3, setSelectedISO3] = useState<string | null>(null);
   const [muniFeatures, setMuniFeatures] = useState<any[] | null>(null);
-  const [muniInternal, setMuniInternal] = useState<any | null>(null); // MultiLineString of internal boundaries only
+  // internal mesh 제거 (require 불가 및 CORS 실패 시 단순 경계 표시로 다운그레이드)
+  const [muniInternal] = useState<any | null>(null);
   const [showMunicipalities, setShowMunicipalities] = useState(false);
   const [muniLoading, setMuniLoading] = useState(false);
   const [muniError, setMuniError] = useState<string | null>(null);
@@ -47,7 +33,8 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
         // 모든 지리 데이터를 병렬로 로드 (더 상세한 국가 경계 사용)
         const [countriesResponse, statesResponse] = await Promise.all([
           fetch('/geodata/countries-50m.json'), // 50m 해상도로 변경
-          fetch('/geodata/admin1-states-10m.json')
+          // admin1-states-10m.json 이 비어있어 실제 데이터가 있는 states-provinces-10m.json 사용
+          fetch('/geodata/states-provinces-10m.json')
         ]);
 
         if (!countriesResponse.ok) throw new Error('Countries data failed to load');
@@ -655,74 +642,37 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
     // 로컬 툴팁 헬퍼
     // Tooltip disabled for municipal internal mesh (no per-region hover now)
 
-    let internalRef = muniInternal;
-    if (!internalRef) {
+  // mesh 제거됨: internalRef 사용 안 함
+    // 단순 per-feature 렌더 (halo + stroke)
+    muniFeatures.forEach((feat: any, idx: number) => {
       try {
-        console.debug('[muni] building internal mesh lazily');
-        internalRef = buildInternalMesh(muniFeatures as any) || null;
-        if (internalRef) setMuniInternal(internalRef);
-        else console.warn('[muni] internal mesh build returned null');
-      } catch (e) { console.warn('[muni] lazy mesh build failed', e); }
-    } else {
-      console.debug('[muni] using cached internal mesh');
-    }
-    if (internalRef) {
-      // 내부 경계만 한 번에 렌더
-      muniGroupSel.append('path')
-        .datum(internalRef)
-        .attr('d', path as any)
-        .attr('fill', 'none')
-        .attr('stroke', '#ffffff')
-        .attr('stroke-width', MUNICIPAL_BASE_STROKE_WIDTH + 0.9)
-        .attr('vector-effect', 'non-scaling-stroke')
-        .attr('stroke-opacity', 0.25)
-        .attr('stroke-linejoin', 'round')
-        .attr('stroke-linecap', 'round')
-        .style('pointer-events', 'none');
-      muniGroupSel.append('path')
-        .datum(internalRef)
-        .attr('d', path as any)
-        .attr('fill', 'none')
-        .attr('stroke', MUNICIPAL_STROKE_COLOR)
-        .attr('stroke-width', MUNICIPAL_BASE_STROKE_WIDTH)
-        .attr('vector-effect', 'non-scaling-stroke')
-        .attr('stroke-opacity', 0.55)
-        .attr('stroke-dasharray', '3,2')
-        .attr('stroke-linejoin', 'round')
-        .attr('stroke-linecap', 'round')
-        .style('pointer-events', 'none');
-    } else {
-      // 폴백: 기존 방식 (ADM1만 있는 등 mesh 실패 시)
-      muniFeatures.forEach((feat: any, idx: number) => {
-        try {
-          muniGroupSel.append('path')
-            .datum(feat)
-            .attr('d', path as any)
-            .attr('fill', 'none')
-            .attr('stroke', '#ffffff')
-            .attr('stroke-width', MUNICIPAL_BASE_STROKE_WIDTH + 0.9)
-            .attr('vector-effect', 'non-scaling-stroke')
-            .attr('stroke-opacity', 0.25)
-            .attr('stroke-linejoin', 'round')
-            .attr('stroke-linecap', 'round')
-            .style('pointer-events', 'none');
-          muniGroupSel.append('path')
-            .datum(feat)
-            .attr('d', path as any)
-            .attr('fill', 'none')
-            .attr('stroke', MUNICIPAL_STROKE_COLOR)
-            .attr('stroke-width', MUNICIPAL_BASE_STROKE_WIDTH)
-            .attr('vector-effect', 'non-scaling-stroke')
-            .attr('stroke-opacity', 0.55)
-            .attr('stroke-dasharray', '3,2')
-            .attr('stroke-linejoin', 'round')
-            .attr('stroke-linecap', 'round')
-            .style('pointer-events', 'none');
-        } catch (e) {
-          console.warn(`지자체 ${idx} 렌더링 실패:`, e);
-        }
-      });
-    }
+        muniGroupSel.append('path')
+          .datum(feat)
+          .attr('d', path as any)
+          .attr('fill', 'none')
+          .attr('stroke', '#ffffff')
+          .attr('stroke-width', MUNICIPAL_BASE_STROKE_WIDTH + 0.9)
+          .attr('vector-effect', 'non-scaling-stroke')
+          .attr('stroke-opacity', 0.25)
+          .attr('stroke-linejoin', 'round')
+          .attr('stroke-linecap', 'round')
+          .style('pointer-events', 'none');
+        muniGroupSel.append('path')
+          .datum(feat)
+          .attr('d', path as any)
+          .attr('fill', 'none')
+          .attr('stroke', MUNICIPAL_STROKE_COLOR)
+          .attr('stroke-width', MUNICIPAL_BASE_STROKE_WIDTH)
+          .attr('vector-effect', 'non-scaling-stroke')
+          .attr('stroke-opacity', 0.7)
+          .attr('stroke-dasharray', '3,2')
+          .attr('stroke-linejoin', 'round')
+          .attr('stroke-linecap', 'round')
+          .style('pointer-events', 'none');
+      } catch (e) {
+        console.warn(`지자체 ${idx} 렌더링 실패:`, e);
+      }
+    });
     // 현재 줌 상태 반영
     const k = (zoomTransformRef.current && (zoomTransformRef.current as any).k) || 1;
     muniGroupSel.attr('transform', zoomTransformRef.current as any);
@@ -730,7 +680,7 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
     const shouldDisplay = showMunicipalities && selectedISO3 && k >= 1.1;
     muniGroupSel.attr('display', shouldDisplay ? null : 'none');
     if (DEBUG_MUNI) console.debug('[muni-effect] render complete. display=%s k=%s paths=%d', shouldDisplay, k, muniGroupSel.selectAll('path').size());
-  }, [selectedISO3, muniFeatures, showMunicipalities, muniInternal]);
+  }, [selectedISO3, muniFeatures, showMunicipalities]);
 
   // 국가별 도시/지자체 경계 로더
   async function loadMunicipalities(iso3: string) {
@@ -738,68 +688,47 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
       setMuniLoading(true);
       setMuniError(null);
   setMuniFeatures(null);
-  setMuniInternal(null);
+  // mesh state 제거됨: muniInternal reset 불필요
 
       // 1) GeoBoundaries gbRequest로 ADM2 시도 (실패해도 폴백 계속)
-      try {
-        if (DEBUG_MUNI) console.debug('[muni-load] ADM2 request start', iso3);
-        const reqUrl = `https://www.geoboundaries.org/gbRequest.html?ISO=${encodeURIComponent(iso3)}&ADM=ADM2`;
-        const req = await fetch(reqUrl, { mode: 'cors' });
-        if (req.ok) {
-          let info: any = null;
-          try {
-            info = await req.json();
-          } catch {
-            info = null;
-          }
-          const pick = Array.isArray(info) ? info.find((x: any) => x && typeof x.gjDownloadURL === 'string' && x.gjDownloadURL.includes('.geojson')) : info;
-          const dl = pick?.gjDownloadURL || null;
-          if (dl) {
-            if (DEBUG_MUNI) console.debug('[muni-load] ADM2 geojson url', dl);
-            const gj = await fetch(dl, { mode: 'cors' });
-            if (gj.ok) {
-              let data: any = null;
-              try {
-                data = await gj.json();
-              } catch {
-                data = null;
-              }
-              const feats = data?.features || [];
-              if (DEBUG_MUNI) console.debug('[muni-load] ADM2 features length', feats.length);
-              if (feats.length) {
-                setMuniFeatures(feats);
-                try {
-                  const internal = buildInternalMesh(feats as any);
-                  if (internal) setMuniInternal(internal);
-                } catch (e) { console.warn('Internal mesh build failed (ADM2):', e); }
-                if (DEBUG_MUNI) console.debug('[muni-load] ADM2 success; features set');
-                setMuniLoading(false);
-                return;
-              }
-            }
-          }
-        }
-      } catch (e) {
-        // swallow and fallback
-        if (DEBUG_MUNI) console.warn('[muni-load] ADM2 request error', e);
-      }
+      // 1) (비활성화) GeoBoundaries 원격 ADM2 : CORS 차단으로 스킵 -> 바로 로컬 fallback
+      if (DEBUG_MUNI) console.debug('[muni-load] skip remote ADM2 due to CORS; using local fallback only');
 
       // 2) 실패 시 ADM1(주/도)로 폴백
-      const filtered = states.filter((s: any) => {
+      // (A) 속성 기반 필터 (데이터에 ISO 속성이 거의 없으므로 대개 빈 결과)
+      const filteredByProp = states.filter((s: any) => {
         const p = s.properties || {};
         const cIso = (p.adm0_a3 || p.ADM0_A3 || p.iso_a3 || p.ISO_A3 || p.GU_A3 || '').toUpperCase();
-        return cIso === iso3.toUpperCase();
+        return cIso && cIso === iso3.toUpperCase();
       });
-      if (filtered.length) {
-        if (DEBUG_MUNI) console.debug('[muni-load] ADM1 fallback count', filtered.length);
-        setMuniFeatures(filtered);
-        try {
-          const internal = buildInternalMesh(filtered as any);
-          if (internal) setMuniInternal(internal);
-        } catch (e) { console.warn('Internal mesh build failed (ADM1 fallback):', e); }
-        if (DEBUG_MUNI) console.debug('[muni-load] ADM1 fallback success; features set');
+      if (filteredByProp.length) {
+        if (DEBUG_MUNI) console.debug('[muni-load] ADM1 property match count', filteredByProp.length);
+        setMuniFeatures(filteredByProp);
         setMuniLoading(false);
         return;
+      }
+      // (B) 지오메트리 포함 기반 필터: 주/도(States-Provinces) 중심점이 선택 국가 폴리곤 안에 있는 경우 선택
+      const countryFeature = countries.find(f => {
+        try { return getISO3(f.properties) === iso3; } catch { return false; }
+      });
+      if (countryFeature) {
+        const geomFiltered: any[] = [];
+        for (const st of states) {
+          try {
+            const c = geoCentroid(st as any);
+            if (c && d3.geoContains(countryFeature as any, c)) geomFiltered.push(st);
+          } catch {}
+        }
+        if (geomFiltered.length) {
+          if (DEBUG_MUNI) console.debug('[muni-load] centroid containment match count', geomFiltered.length);
+          setMuniFeatures(geomFiltered);
+          setMuniLoading(false);
+          return;
+        } else {
+          if (DEBUG_MUNI) console.warn('[muni-load] centroid containment produced 0 matches for', iso3);
+        }
+      } else if (DEBUG_MUNI) {
+        console.warn('[muni-load] country feature not found for iso', iso3);
       }
 
       // 3) 실패 시 표시하지 않음 (ADM1 폴백 제거)
