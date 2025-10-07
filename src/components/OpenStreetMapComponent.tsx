@@ -94,7 +94,7 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
   type ClusterInfo = { key: string; items: Exhibition[]; centerLon: number; centerLat: number; sortedByName: Exhibition[] };
   const clustersListRef = useRef<ClusterInfo[] | null>(null);
   const MUNICIPAL_STROKE_COLOR = '#000000';
-  const MUNICIPAL_BASE_STROKE_WIDTH = 1.5;
+  const MUNICIPAL_BASE_STROKE_WIDTH = 3.0;
   const MUNICIPAL_HOVER_STROKE_WIDTH = MUNICIPAL_BASE_STROKE_WIDTH + 0.5;
   const MUNICIPAL_BASE_STROKE_OPACITY = 1;
   const MUNICIPAL_MAX_STROKE_WIDTH = 3.0;
@@ -280,26 +280,13 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
       const offsetX = offset * actualWorldWidth;
       states.forEach((state, index) => {
         try {
-          // 흰색 테두리 path
-          stateGroup.append('path')
-            .datum(state)
-            .attr('d', path as any)
-            .attr('transform', `translate(${offsetX}, 0)`)
-            .attr('fill', 'none')
-            .attr('stroke', '#ffffff')
-            .attr('stroke-width', 1.2)
-            .attr('vector-effect', 'non-scaling-stroke')
-            .attr('stroke-opacity', 1)
-            .style('pointer-events', 'none');
-
-          // 검은색 메인 path
           stateGroup.append('path')
             .datum(state)
             .attr('d', path as any)
             .attr('transform', `translate(${offsetX}, 0)`)
             .attr('fill', 'none')
             .attr('stroke', '#000000')
-            .attr('stroke-width', 0.8)
+            .attr('stroke-width', 1.5)
             .attr('vector-effect', 'non-scaling-stroke')
             .attr('stroke-opacity', 1)
             .style('pointer-events', 'none');
