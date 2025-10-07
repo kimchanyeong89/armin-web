@@ -45,12 +45,37 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
           statesResponse.json()
         ]);
 
-        setCountries(countriesData.features || []);
-        setStates(statesData.features || []);
+        const countryFeatures = countriesData.features || [];
+        const stateFeatures = statesData.features || [];
+
+        setCountries(countryFeatures);
+        setStates(stateFeatures);
+
+        // --- Diagnostics: Detect if the so-called states dataset is actually just another copy of admin0 (countries)
+        let statesLookLikeCountries = false;
+        try {
+          if (stateFeatures.length === countryFeatures.length) {
+            // Heuristic: properties only contain a name + maybe few fields, and feature ids look like ISO3 codes matching countries
+            const sample = stateFeatures.slice(0, 10);
+            const simplePropRatio = sample.filter((f: any) => {
+              const keys = Object.keys(f.properties || {});
+              return keys.length <= 2 && keys.includes('name');
+            }).length / Math.max(1, sample.length);
+            const countryIds = new Set(countryFeatures.map((f: any) => (f.id || f.properties?.iso_a3 || f.properties?.adm0_a3)));
+            const idMatchRatio = sample.filter((f: any) => countryIds.has(f.id)).length / Math.max(1, sample.length);
+            if (simplePropRatio > 0.7 && idMatchRatio > 0.7) statesLookLikeCountries = true;
+          }
+        } catch (diagErr) {
+          console.warn('[diag] state dataset inspection failed', diagErr);
+        }
 
         console.log('지리 데이터 로드 완료:');
-        console.log('- 국가:', countriesData.features?.length || 0);
-        console.log('- 주/도:', statesData.features?.length || 0);
+        console.log('- 국가:', countryFeatures.length);
+        console.log('- 주/도(raw):', stateFeatures.length, statesLookLikeCountries ? '(⚠ admin1 데이터 아님: countries 복제처럼 보임)' : '');
+        if (statesLookLikeCountries) {
+          console.warn('[경고] states-provinces-10m.json 이 실제 주/도(ADM1)가 아니라 국가 경계(admin0)로 보입니다.');
+          console.warn('> 실제 세부 경계 표시를 원하면 Natural Earth 의 ne_10m_admin_1_states_provinces 또는 GeoBoundaries ADM1/ADM2 데이터를 변환/번들 하십시오.');
+        }
         
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Unknown error');
@@ -631,7 +656,9 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
     if (DEBUG_MUNI) {
       console.debug('[muni-effect] run: showMunicipalities=%s selectedISO3=%s muniFeatures=%s internal? %s', showMunicipalities, selectedISO3, muniFeatures?.length, !!muniInternal);
     }
-  if (!showMunicipalities || !selectedISO3 || !muniFeatures || muniFeatures.length < 2) {
+  // 렌더 게이트: 하나 이상의 피처만 있어도 표시 (기존 2개 이상 조건 완화)
+  if (!showMunicipalities || !selectedISO3 || !muniFeatures || muniFeatures.length === 0) {
+      if (DEBUG_MUNI) console.debug('[muni-effect] skip render: showMunicipalities=%s selectedISO3=%s muniFeaturesLen=%s', showMunicipalities, selectedISO3, muniFeatures?.length);
       return;
     }
     const projection = geoMercator()
@@ -650,10 +677,10 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
           .datum(feat)
           .attr('d', path as any)
           .attr('fill', 'none')
-          .attr('stroke', '#ffffff')
-          .attr('stroke-width', MUNICIPAL_BASE_STROKE_WIDTH + 0.9)
+          .attr('stroke', '#ffffff') // halo
+          .attr('stroke-width', MUNICIPAL_BASE_STROKE_WIDTH + 1.6)
           .attr('vector-effect', 'non-scaling-stroke')
-          .attr('stroke-opacity', 0.25)
+          .attr('stroke-opacity', 0.5)
           .attr('stroke-linejoin', 'round')
           .attr('stroke-linecap', 'round')
           .style('pointer-events', 'none');
@@ -662,10 +689,11 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
           .attr('d', path as any)
           .attr('fill', 'none')
           .attr('stroke', MUNICIPAL_STROKE_COLOR)
-          .attr('stroke-width', MUNICIPAL_BASE_STROKE_WIDTH)
+          .attr('stroke-width', MUNICIPAL_BASE_STROKE_WIDTH + 0.4)
           .attr('vector-effect', 'non-scaling-stroke')
-          .attr('stroke-opacity', 0.7)
-          .attr('stroke-dasharray', '3,2')
+          .attr('stroke-opacity', 0.9)
+          // 가독성 향상을 위해 점선 제거
+          //.attr('stroke-dasharray', '3,2')
           .attr('stroke-linejoin', 'round')
           .attr('stroke-linecap', 'round')
           .style('pointer-events', 'none');
@@ -727,6 +755,28 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
         } else {
           if (DEBUG_MUNI) console.warn('[muni-load] centroid containment produced 0 matches for', iso3);
         }
+        // (C) 바운딩 박스 교차 기반 폴백 (겹치는 주/도 전부 포함)
+        try {
+          const cb = d3.geoBounds(countryFeature as any); // [[minLon,minLat],[maxLon,maxLat]]
+          const bboxFiltered: any[] = [];
+          for (const st of states) {
+            try {
+              const sb = d3.geoBounds(st as any);
+              const intersects = !(sb[1][0] < cb[0][0] || sb[0][0] > cb[1][0] || sb[1][1] < cb[0][1] || sb[0][1] > cb[1][1]);
+              if (intersects) bboxFiltered.push(st);
+            } catch {}
+          }
+          if (bboxFiltered.length) {
+            if (DEBUG_MUNI) console.debug('[muni-load] bbox intersection fallback count', bboxFiltered.length);
+            setMuniFeatures(bboxFiltered);
+            setMuniLoading(false);
+            return;
+          } else if (DEBUG_MUNI) {
+            console.warn('[muni-load] bbox fallback also 0 for', iso3);
+          }
+        } catch (e2) {
+          if (DEBUG_MUNI) console.warn('[muni-load] bbox fallback error', e2);
+        }
       } else if (DEBUG_MUNI) {
         console.warn('[muni-load] country feature not found for iso', iso3);
       }
@@ -750,7 +800,8 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
     );
   }
   function getISO3(p: any): string | null {
-    const v = p?.iso_a3 || p?.ISO_A3 || p?.adm0_a3 || p?.ADM0_A3 || p?.WB_A3 || p?.GU_A3;
+    // Accept common property names or fallback to feature id (many Natural Earth variants place ISO3 in id)
+    const v = p?.iso_a3 || p?.ISO_A3 || p?.adm0_a3 || p?.ADM0_A3 || p?.WB_A3 || p?.GU_A3 || p?.id;
     if (!v) return null;
     const s = String(v).toUpperCase();
     if (s === '---' || s === 'XXX') return null;
