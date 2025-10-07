@@ -94,7 +94,8 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
   type ClusterInfo = { key: string; items: Exhibition[]; centerLon: number; centerLat: number; sortedByName: Exhibition[] };
   const clustersListRef = useRef<ClusterInfo[] | null>(null);
   const MUNICIPAL_STROKE_COLOR = '#000000';
-  const MUNICIPAL_BASE_STROKE_WIDTH = 3.0;
+  // Use a thinner base stroke; we'll amplify with outline for contrast
+  const MUNICIPAL_BASE_STROKE_WIDTH = 1.3;
   const MUNICIPAL_HOVER_STROKE_WIDTH = MUNICIPAL_BASE_STROKE_WIDTH + 0.5;
   const MUNICIPAL_BASE_STROKE_OPACITY = 1;
   const MUNICIPAL_MAX_STROKE_WIDTH = 3.0;
@@ -354,9 +355,10 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
     renderPins();
 
     // 낮은 배율에서는 주/도 경계 숨김 (페인트 비용 절감)
-    stateGroup.attr('display', transform.k >= STATE_VISIBLE_K && selectedISO3 ? null : 'none');
-    // 도시/지자체는 더 높은 배율에서만 표시
-    muniGroup.attr('display', transform.k >= CITY_VISIBLE_K && selectedISO3 ? null : 'none');
+  // 주/도 경계: 확대 수준 기반 (국가 선택 여부와 무관하게 기본 구조 맥락 제공)
+  stateGroup.attr('display', transform.k >= STATE_VISIBLE_K ? null : 'none');
+  // 도시/지자체: 국가 선택 후 즉시 표시, 단 너무 축소된 경우 숨김
+  muniGroup.attr('display', (selectedISO3 && transform.k >= (CITY_VISIBLE_K * 0.6)) ? null : 'none');
     // 확대 정도에 따라 도시 경계선 두께/불투명도 동적 강화
     const logk = Math.log2(Math.max(1, transform.k));
     const strokeW = Math.min(
@@ -385,8 +387,8 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
       );
 
   // 초기 표시 상태도 배율 기준으로 맞춤
-  stateGroup.attr('display', baseMinZoom >= STATE_VISIBLE_K && selectedISO3 ? null : 'none');
-  muniGroup.attr('display', baseMinZoom >= CITY_VISIBLE_K && selectedISO3 ? null : 'none');
+  stateGroup.attr('display', baseMinZoom >= STATE_VISIBLE_K ? null : 'none');
+  muniGroup.attr('display', (selectedISO3 && baseMinZoom >= CITY_VISIBLE_K * 0.6) ? null : 'none');
   }
 
     console.log('상세 지도 렌더링 완료!');
@@ -652,7 +654,7 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
           .attr('d', path as any)
           .attr('fill', 'none')
           .attr('stroke', '#ffffff')
-          .attr('stroke-width', 2.5)
+          .attr('stroke-width', MUNICIPAL_BASE_STROKE_WIDTH + 1.2)
           .attr('vector-effect', 'non-scaling-stroke')
           .attr('stroke-opacity', 1)
           .attr('stroke-linejoin', 'round')
@@ -727,6 +729,15 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
               const feats = data?.features || [];
               if (feats.length) {
                 setMuniFeatures(feats);
+                setTimeout(() => {
+                  try {
+                    const svg = d3.select(svgRef.current);
+                    const g = svg.select('g.municipalities');
+                    if (!g.empty()) {
+                      g.attr('display', null);
+                    }
+                  } catch {}
+                }, 0);
                 setMuniLoading(false);
                 return;
               }
@@ -745,6 +756,15 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
       });
       if (filtered.length) {
         setMuniFeatures(filtered);
+        setTimeout(() => {
+          try {
+            const svg = d3.select(svgRef.current);
+            const g = svg.select('g.municipalities');
+            if (!g.empty()) {
+              g.attr('display', null);
+            }
+          } catch {}
+        }, 0);
         setMuniLoading(false);
         return;
       }
