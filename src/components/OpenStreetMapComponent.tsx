@@ -109,7 +109,7 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
   };
   type ClusterInfo = { key: string; items: Exhibition[]; centerLon: number; centerLat: number; sortedByName: Exhibition[] };
   const clustersListRef = useRef<ClusterInfo[] | null>(null);
-  const MUNICIPAL_STROKE_COLOR = '#444444';
+  const MUNICIPAL_STROKE_COLOR = '#1d4ed8'; // temp vivid blue for visibility debug
   // Use a thinner base stroke; we'll amplify with outline for contrast
   const MUNICIPAL_BASE_STROKE_WIDTH = 1.3;
   // Hover width unused (no interactive municipal paths after mesh simplification)
@@ -646,8 +646,14 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
 
     let internalRef = muniInternal;
     if (!internalRef) {
-      // Lazy attempt (e.g., dynamic require succeeded only client-side)
-      try { internalRef = buildInternalMesh(muniFeatures as any) || null; if (internalRef) setMuniInternal(internalRef); } catch {}
+      try {
+        console.debug('[muni] building internal mesh lazily');
+        internalRef = buildInternalMesh(muniFeatures as any) || null;
+        if (internalRef) setMuniInternal(internalRef);
+        else console.warn('[muni] internal mesh build returned null');
+      } catch (e) { console.warn('[muni] lazy mesh build failed', e); }
+    } else {
+      console.debug('[muni] using cached internal mesh');
     }
     if (internalRef) {
       // 내부 경계만 한 번에 렌더
@@ -658,7 +664,7 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
         .attr('stroke', '#ffffff')
         .attr('stroke-width', MUNICIPAL_BASE_STROKE_WIDTH + 0.9)
         .attr('vector-effect', 'non-scaling-stroke')
-        .attr('stroke-opacity', MUNICIPAL_BASE_STROKE_OPACITY * 0.55)
+        .attr('stroke-opacity', 0.25)
         .attr('stroke-linejoin', 'round')
         .attr('stroke-linecap', 'round')
         .style('pointer-events', 'none');
@@ -669,7 +675,8 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
         .attr('stroke', MUNICIPAL_STROKE_COLOR)
         .attr('stroke-width', MUNICIPAL_BASE_STROKE_WIDTH)
         .attr('vector-effect', 'non-scaling-stroke')
-        .attr('stroke-opacity', MUNICIPAL_BASE_STROKE_OPACITY)
+        .attr('stroke-opacity', 0.55)
+        .attr('stroke-dasharray', '3,2')
         .attr('stroke-linejoin', 'round')
         .attr('stroke-linecap', 'round')
         .style('pointer-events', 'none');
@@ -684,7 +691,7 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
             .attr('stroke', '#ffffff')
             .attr('stroke-width', MUNICIPAL_BASE_STROKE_WIDTH + 0.9)
             .attr('vector-effect', 'non-scaling-stroke')
-            .attr('stroke-opacity', MUNICIPAL_BASE_STROKE_OPACITY * 0.55)
+            .attr('stroke-opacity', 0.25)
             .attr('stroke-linejoin', 'round')
             .attr('stroke-linecap', 'round')
             .style('pointer-events', 'none');
@@ -695,7 +702,8 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
             .attr('stroke', MUNICIPAL_STROKE_COLOR)
             .attr('stroke-width', MUNICIPAL_BASE_STROKE_WIDTH)
             .attr('vector-effect', 'non-scaling-stroke')
-            .attr('stroke-opacity', MUNICIPAL_BASE_STROKE_OPACITY)
+            .attr('stroke-opacity', 0.55)
+            .attr('stroke-dasharray', '3,2')
             .attr('stroke-linejoin', 'round')
             .attr('stroke-linecap', 'round')
             .style('pointer-events', 'none');
@@ -707,7 +715,8 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
     // 현재 줌 상태 반영
     const k = (zoomTransformRef.current && (zoomTransformRef.current as any).k) || 1;
     muniGroupSel.attr('transform', zoomTransformRef.current as any);
-    muniGroupSel.attr('display', k >= 2.2 && selectedISO3 ? null : 'none');
+  // Force display if a country is selected even if k slightly below threshold (debug)
+  muniGroupSel.attr('display', selectedISO3 && k >= 1.1 ? null : 'none');
   }, [selectedISO3, muniFeatures]);
 
   // 국가별 도시/지자체 경계 로더
