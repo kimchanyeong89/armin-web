@@ -22,6 +22,7 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
   const [showMunicipalities, setShowMunicipalities] = useState(false);
   const [muniLoading, setMuniLoading] = useState(false);
   const [muniError, setMuniError] = useState<string | null>(null);
+  const [muniDebugInfo, setMuniDebugInfo] = useState<string | null>(null);
   const onSelectExhibitionRef = useRef<typeof onSelectExhibition | undefined>(onSelectExhibition);
   useEffect(() => { onSelectExhibitionRef.current = onSelectExhibition; }, [onSelectExhibition]);
 
@@ -724,13 +725,15 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
 
       // 2) 실패 시 ADM1(주/도)로 폴백
       // (A) 속성 기반 필터 (데이터에 ISO 속성이 거의 없으므로 대개 빈 결과)
+      let propCount = 0, centroidCount = 0, bboxCount = 0;
       const filteredByProp = states.filter((s: any) => {
         const p = s.properties || {};
         const cIso = (p.adm0_a3 || p.ADM0_A3 || p.iso_a3 || p.ISO_A3 || p.GU_A3 || '').toUpperCase();
-        return cIso && cIso === iso3.toUpperCase();
+        const ok = cIso && cIso === iso3.toUpperCase(); if (ok) propCount++; return ok;
       });
       if (filteredByProp.length) {
         if (DEBUG_MUNI) console.debug('[muni-load] ADM1 property match count', filteredByProp.length);
+        setMuniDebugInfo(`propertyMatch=${filteredByProp.length}`);
         setMuniFeatures(filteredByProp);
         setMuniLoading(false);
         return;
@@ -744,11 +747,12 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
         for (const st of states) {
           try {
             const c = geoCentroid(st as any);
-            if (c && d3.geoContains(countryFeature as any, c)) geomFiltered.push(st);
+            if (c && d3.geoContains(countryFeature as any, c)) { geomFiltered.push(st); centroidCount++; }
           } catch {}
         }
         if (geomFiltered.length) {
           if (DEBUG_MUNI) console.debug('[muni-load] centroid containment match count', geomFiltered.length);
+          setMuniDebugInfo(`propertyMatch=0 centroidMatch=${geomFiltered.length}`);
           setMuniFeatures(geomFiltered);
           setMuniLoading(false);
           return;
@@ -763,11 +767,12 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
             try {
               const sb = d3.geoBounds(st as any);
               const intersects = !(sb[1][0] < cb[0][0] || sb[0][0] > cb[1][0] || sb[1][1] < cb[0][1] || sb[0][1] > cb[1][1]);
-              if (intersects) bboxFiltered.push(st);
+              if (intersects) { bboxFiltered.push(st); bboxCount++; }
             } catch {}
           }
           if (bboxFiltered.length) {
             if (DEBUG_MUNI) console.debug('[muni-load] bbox intersection fallback count', bboxFiltered.length);
+            setMuniDebugInfo(`propertyMatch=0 centroidMatch=0 bboxMatch=${bboxFiltered.length}`);
             setMuniFeatures(bboxFiltered);
             setMuniLoading(false);
             return;
@@ -782,7 +787,8 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
       }
 
       // 3) 실패 시 표시하지 않음 (ADM1 폴백 제거)
-      throw new Error('No ADM2 municipal data available');
+      setMuniDebugInfo(`propertyMatch=${propCount} centroidMatch=${centroidCount} bboxMatch=${bboxCount}`);
+      throw new Error('No ADM2/ADM1 fallback polygons matched (dataset likely lacks subnational features)');
     } catch (e: any) {
       console.warn('Municipality load failed:', e);
       if (DEBUG_MUNI) console.warn('[muni-load] ultimate failure', e);
@@ -901,6 +907,14 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
             {!muniLoading && !muniError && muniFeatures && (
               <span style={{ marginLeft: 8, color: '#4B5563' }}>경계 {muniFeatures.length}개</span>
             )}
+            {!muniLoading && selectedISO3 && !muniError && (!muniFeatures || muniFeatures.length === 0) && (
+              <span style={{ marginLeft: 8, color: '#B45309' }}>하위 행정구역 없음 (데이터 부족)</span>
+            )}
+          </div>
+        )}
+        {muniDebugInfo && (
+          <div style={{ marginTop: 4, fontSize: 11, color: '#6B7280', fontFamily: 'monospace' }}>
+            muniDebug: {muniDebugInfo}
           </div>
         )}
         <div style={{ marginTop: '8px', fontSize: '11px', color: '#666' }}>
