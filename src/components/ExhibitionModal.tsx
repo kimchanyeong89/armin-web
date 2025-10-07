@@ -6,6 +6,48 @@ import { db } from "../firebase";
 import { buildSourceSet, useProxy } from "../utils/imageProxy";
 import { usePrefetchNeighbors } from "../hooks/usePrefetchNeighbors";
 
+const sortNumericKeys = (map?: Record<string, string>) => {
+  if (!map) return [] as number[];
+  return Object.keys(map)
+    .map((k) => Number(k))
+    .filter((n) => Number.isFinite(n))
+    .sort((a, b) => a - b);
+};
+
+const pickLowPlaceholder = (artwork: Artwork) => {
+  if (artwork.lq) return artwork.lq;
+  if (artwork.thumb) return artwork.thumb;
+  const jpgKeys = sortNumericKeys(artwork.variants?.jpg);
+  if (jpgKeys.length) {
+    const url = artwork.variants?.jpg?.[String(jpgKeys[0])];
+    if (url) return url;
+  }
+  const webpKeys = sortNumericKeys(artwork.variants?.webp);
+  if (webpKeys.length) {
+    const url = artwork.variants?.webp?.[String(webpKeys[0])];
+    if (url) return url;
+  }
+  return artwork.image;
+};
+
+const buildVariantSourceSet = (
+  artwork: Artwork,
+  format: keyof NonNullable<Artwork["variants"]>,
+  widths: number[],
+  fallbackQuality: number
+) => {
+  const map = artwork.variants?.[format];
+  if (map) {
+    const rows = widths.filter((w) => map[String(w)]).map((w) => `${map[String(w)]} ${w}w`);
+    if (rows.length) return rows.join(", ");
+  }
+  if (!useProxy) return null;
+  if (format === "avif" || format === "webp") {
+    return buildSourceSet(artwork.image, widths, format, fallbackQuality);
+  }
+  return null;
+};
+
 // Layout constants (original)
 const LAYOUT_LEFT_BASE = 420; // px, push the two-line layout block to the right
 const LAYOUT_RIGHT_PAD = 0; // px, stick to the right edge
@@ -1123,16 +1165,11 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
             <div ref={stageMonitorRef} style={{ width: "72%", maxHeight: "calc(100vh - 260px)", background: "transparent", display: "flex", alignItems: "center", justifyContent: "center" }}>
               {current ? (
                 (() => {
-                  const src = current.image;
-                  // Adaptive width set: smaller steps early to reduce over-fetching on mobile, larger on desktop
                   const widths = window.innerWidth < 900 ? [480, 720, 960] : [640, 960, 1280, 1600];
-                  // variants 메타가 있으면 그것을 우선 사용 (사전 생성된 정적 URL)
-                  const variants = (current as any).variants;
-                  const avif = variants?.avif ? widths.filter(w=>variants.avif[String(w)]).map(w=>`${variants.avif[String(w)]} ${w}w`).join(', ') : buildSourceSet(src, widths, 'avif', 70);
-                  const webp = variants?.webp ? widths.filter(w=>variants.webp[String(w)]).map(w=>`${variants.webp[String(w)]} ${w}w`).join(', ') : buildSourceSet(src, widths, 'webp', 75);
+                  const avif = buildVariantSourceSet(current, 'avif', widths, 70);
+                  const webp = buildVariantSourceSet(current, 'webp', widths, 75);
                   const sizes = '(max-width: 640px) 100vw, (max-width: 1024px) 82vw, 75vw';
-                  // Progressive: use lq / thumb (if provided) as blurred placeholder
-                  const lowSrc = (current as any).lq || (current as any).thumb || src;
+                  const lowSrc = pickLowPlaceholder(current);
                   return (
                     <picture>
                       {useProxy && avif && <source type="image/avif" srcSet={avif || undefined} sizes={sizes} />}
@@ -1143,6 +1180,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
                         alt={current.name}
                         decoding="async"
                         fetchPriority="high"
+                        data-hi={lowSrc === current.image ? '1' : '0'}
                         style={{
                           width: "auto",
                           maxWidth: "100%",
@@ -1190,18 +1228,18 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
                         onMouseLeave={() => setHoveredIndex(null)}
                       >
                         {a.image && (() => {
-                          const src = a.image;
                           const widths = window.innerWidth < 900 ? [320, 480, 640] : [360, 540, 720, 900];
-                          const variants = (a as any).variants;
-                          const avif = variants?.avif ? widths.filter(w=>variants.avif[String(w)]).map(w=>`${variants.avif[String(w)]} ${w}w`).join(', ') : buildSourceSet(src, widths, 'avif', 65);
-                          const webp = variants?.webp ? widths.filter(w=>variants.webp[String(w)]).map(w=>`${variants.webp[String(w)]} ${w}w`).join(', ') : buildSourceSet(src, widths, 'webp', 70);
+                          const avif = buildVariantSourceSet(a, 'avif', widths, 65);
+                          const webp = buildVariantSourceSet(a, 'webp', widths, 70);
                           const sizes = '(max-width: 640px) 90vw, (max-width: 1024px) 55vw, 40vw';
+                          const preview = pickLowPlaceholder(a);
                           return (
                             <picture>
                               {useProxy && avif && <source type="image/avif" srcSet={avif || undefined} sizes={sizes} />}
                               {useProxy && webp && <source type="image/webp" srcSet={webp || undefined} sizes={sizes} />}
                               <img
-                                src={src}
+                                src={preview}
+                                data-full={a.image}
                                 alt={a.name}
                                 loading="lazy"
                                 decoding="async"
@@ -1270,13 +1308,11 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
         >
           {current ? (
             (() => {
-              const src = current.image;
               const widths = window.innerWidth < 900 ? [800, 1200] : [960, 1280, 1600, 1920];
-              const variants = (current as any).variants;
-              const avif = variants?.avif ? widths.filter(w=>variants.avif[String(w)]).map(w=>`${variants.avif[String(w)]} ${w}w`).join(', ') : buildSourceSet(src, widths, 'avif', 70);
-              const webp = variants?.webp ? widths.filter(w=>variants.webp[String(w)]).map(w=>`${variants.webp[String(w)]} ${w}w`).join(', ') : buildSourceSet(src, widths, 'webp', 75);
+              const avif = buildVariantSourceSet(current, 'avif', widths, 70);
+              const webp = buildVariantSourceSet(current, 'webp', widths, 75);
               const sizes = '(max-width: 640px) 100vw, (max-width: 1024px) 95vw, 90vw';
-              const lowSrc = (current as any).lq || (current as any).thumb || src;
+              const lowSrc = pickLowPlaceholder(current);
               return (
                 <picture>
                   {useProxy && avif && <source type="image/avif" srcSet={avif || undefined} sizes={sizes} />}
@@ -1288,6 +1324,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
                     decoding="async"
                     fetchPriority="high"
                     draggable={false}
+                    data-hi={lowSrc === current.image ? '1' : '0'}
                     style={{
                       width: 'auto',
                       maxWidth: '92%',
