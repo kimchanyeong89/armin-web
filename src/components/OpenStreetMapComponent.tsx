@@ -97,7 +97,8 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
   // Use a thinner base stroke; we'll amplify with outline for contrast
   const MUNICIPAL_BASE_STROKE_WIDTH = 1.3;
   const MUNICIPAL_HOVER_STROKE_WIDTH = MUNICIPAL_BASE_STROKE_WIDTH + 0.5;
-  const MUNICIPAL_BASE_STROKE_OPACITY = 1;
+  // Lower opacity for municipality stroke to be less dominant
+  const MUNICIPAL_BASE_STROKE_OPACITY = 0.4;
   const MUNICIPAL_MAX_STROKE_WIDTH = 3.0;
   // Rebuild clusters when exhibitions changes
   useEffect(() => {
@@ -648,20 +649,18 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
 
     muniFeatures.forEach((feat: any, idx: number) => {
       try {
-        // 흰색 테두리 path (pointer-events 없음)
-        muniGroupSel.append('path')
+        const halo = muniGroupSel.append('path')
           .datum(feat)
           .attr('d', path as any)
           .attr('fill', 'none')
           .attr('stroke', '#ffffff')
-          .attr('stroke-width', MUNICIPAL_BASE_STROKE_WIDTH + 1.2)
+          .attr('stroke-width', MUNICIPAL_BASE_STROKE_WIDTH + 0.9)
           .attr('vector-effect', 'non-scaling-stroke')
-          .attr('stroke-opacity', 1)
+          .attr('stroke-opacity', MUNICIPAL_BASE_STROKE_OPACITY * 0.5)
           .attr('stroke-linejoin', 'round')
           .attr('stroke-linecap', 'round')
           .style('pointer-events', 'none');
 
-        // 검은색 메인 path
         muniGroupSel.append('path')
           .datum(feat)
           .attr('d', path as any)
@@ -674,17 +673,22 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
           .attr('stroke-linecap', 'round')
           .style('pointer-events', 'visibleStroke')
           .on('mouseover', function(this: SVGPathElement, event: MouseEvent) {
-            d3.select(this).attr('stroke-width', MUNICIPAL_HOVER_STROKE_WIDTH);
+            d3.select(this)
+              .attr('stroke-width', MUNICIPAL_HOVER_STROKE_WIDTH)
+              .attr('stroke-opacity', 0.9);
+            halo.attr('stroke-opacity', 0.7);
             const p = (feat.properties || {});
             const city = getMunicipalityName(p);
             const parent = p?.ADM1_EN || p?.NAME_1 || p?.region || p?.province || '';
             const txt = parent ? `🏙️ ${city} · ${parent}` : `🏙️ ${city}`;
-            // tooltip은 최상위 svg에 렌더
             const rootSvg = d3.select(svgRef.current);
             showLocalTooltip(rootSvg, event, txt);
           })
           .on('mouseout', function(this: SVGPathElement) {
-            d3.select(this).attr('stroke-width', MUNICIPAL_BASE_STROKE_WIDTH);
+            d3.select(this)
+              .attr('stroke-width', MUNICIPAL_BASE_STROKE_WIDTH)
+              .attr('stroke-opacity', MUNICIPAL_BASE_STROKE_OPACITY);
+            halo.attr('stroke-opacity', MUNICIPAL_BASE_STROKE_OPACITY * 0.5);
             d3.select(svgRef.current).select('.tooltip').remove();
           });
       } catch (e) {
