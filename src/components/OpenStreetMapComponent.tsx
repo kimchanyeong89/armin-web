@@ -354,7 +354,7 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
     renderPins();
 
     // 낮은 배율에서는 주/도 경계 숨김 (페인트 비용 절감)
-    stateGroup.attr('display', transform.k >= STATE_VISIBLE_K && selectedISO3 ? null : 'none');
+    stateGroup.attr('display', transform.k >= STATE_VISIBLE_K ? null : 'none');
     // 도시/지자체는 더 높은 배율에서만 표시
     muniGroup.attr('display', transform.k >= CITY_VISIBLE_K && selectedISO3 ? null : 'none');
     // 확대 정도에 따라 도시 경계선 두께/불투명도 동적 강화
