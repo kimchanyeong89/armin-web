@@ -35,8 +35,6 @@ const SearchBar: React.FC<SearchBarProps> = ({
 
   return (
     <input
-      id="global-search"
-      name="global-search"
       type="text"
       value={searchQuery}
       onChange={(e) => onSearchChange(e.target.value)}
@@ -57,7 +55,7 @@ const SearchBar: React.FC<SearchBarProps> = ({
           // ignore cancel/errors
         }
       }}
-  style={{
+      style={{
         width: '100%',
   padding: `${padY}px ${padX}px`,
   fontSize: `${fontPx}px`,

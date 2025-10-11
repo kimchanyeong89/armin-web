@@ -45,6 +45,9 @@ download "https://upload.wikimedia.org/wikipedia/commons/f/f4/Victoria_and_Alber
 # 4) Science Museum (exterior) - exact upload URL
 download "https://upload.wikimedia.org/wikipedia/commons/1/1e/The_Science_Museum_-_geograph.org.uk_-_2581044.jpg" "science-museum.jpg" || true
 
+# 5) Tate Britain (exterior) - Wikimedia Commons thumbnail
+download "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9e/Tate_Britain.jpg/800px-Tate_Britain.jpg" "tate-britain.jpg" || true
+
 # Note: TATE Modern is already present as tate-modern.jpg; not re-downloading by default.
 
 

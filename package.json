@@ -19,6 +19,9 @@
     "scrape:tate": "node ./scripts/scrape-tate-modern.js",
     "scrape:tate:lite": "node ./scripts/scrape-tate-modern-lite.js",
     "mirror:tate": "node ./scripts/mirror-tate-images.js",
+    "scrape:tate-britain": "node ./scripts/scrape-tate-britain.js",
+  "scrape:tate:artworks": "node ./scripts/scrape-tate-artworks.js",
+  "mirror:tate:artworks": "node ./scripts/mirror-tate-artwork-images.js",
     "build:art-variants": "node ./scripts/generate-artwork-variants.cjs raw-artworks public/generated",
     "apply:art-variants": "node ./scripts/apply-artwork-variants.cjs public/generated/manifest.json"
   },

@@ -70,6 +70,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
   const [initialized, setInitialized] = useState<boolean>(false);
   const [selectedIndex, setSelectedIndex] = useState<number>(initialSelectedIndex);
   const [selectedRoomId, setSelectedRoomId] = useState<string>('ALL');
+  const [selectedYearRange, setSelectedYearRange] = useState<string>('ALL');
   const [viewMode, setViewMode] = useState<'archive' | 'gallery' | 'panorama'>('archive');
   const panelRef = useRef<HTMLDivElement | null>(null);
   const listRef = useRef<HTMLDivElement | null>(null);
@@ -130,14 +131,13 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
     } catch {}
   }, [customRooms, exhibition.id]);
   const roomButtons = useMemo(() => {
-    // Always include level-2 rooms 1–7 in numeric order, plus any discovered numeric rooms
-    const defaultRooms = ['1','2','3','4','5','6','7'];
+    // Only include rooms that actually have artworks, plus any discovered numeric rooms
     const discovered = Array.from(new Set(
       artworks
         .map(a => (a.roomId || '').trim())
         .filter(id => id && id.toLowerCase() !== 'default')
     ));
-    const numeric = Array.from(new Set([...defaultRooms, ...discovered].filter(id => /^\d+$/.test(id))));
+    const numeric = Array.from(new Set(discovered.filter(id => /^\d+$/.test(id))));
     numeric.sort((a, b) => parseInt(a, 10) - parseInt(b, 10));
     const hasC = discovered.some(id => id.toUpperCase() === 'C');
     const buttons: { label: string; id: string }[] = [{ label: 'ALL', id: 'ALL' }];
@@ -147,9 +147,32 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
   }, [artworks]);
 
   const filteredArtworks = useMemo(() => {
-    if (selectedRoomId === 'ALL') return artworks;
-    return artworks.filter(a => (a.roomId || 'default') === selectedRoomId);
-  }, [artworks, selectedRoomId]);
+    let filtered = artworks;
+    
+    // Room filtering
+    if (selectedRoomId === 'ALL') {
+      filtered = artworks;
+    } else {
+      filtered = artworks.filter(a => (a.roomId || 'default') === selectedRoomId);
+    }
+    
+    // Year filtering
+    if (selectedYearRange !== 'ALL') {
+      filtered = filtered.filter(a => {
+        const year = a.year || 0;
+        if (selectedYearRange === 'under 1900') {
+          return year < 1900;
+        } else if (selectedYearRange === 'over 2000') {
+          return year > 2000;
+        } else {
+          const startYear = parseInt(selectedYearRange);
+          return year >= startYear && year < startYear + 10;
+        }
+      });
+    }
+    
+    return filtered;
+  }, [artworks, selectedRoomId, selectedYearRange]);
   // Momentum scroll state
   const momentumRef = useRef<{ vel: number; raf: number; accelFrames: number }>({ vel: 0, raf: 0, accelFrames: 0 });
   const applyMomentumRef = useRef<((delta: number) => void) | null>(null);
@@ -321,6 +344,32 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
       }));
       setArtworks(list);
       setInitialized(true);
+      return () => {};
+    }
+    // Special case for Tate Collection: load from local JSON
+    if (exhibition.id === 'tm-perm-3') {
+      (async () => {
+        try {
+          const res = await fetch('/data/tate-artworks.json');
+          if (!res.ok) throw new Error('Failed to load local artworks');
+          const data = await res.json();
+          const list = (data.items || []).map((item: any) => ({
+            id: item.id,
+            name: item.title,
+            artist: item.artist,
+            year: item.dateText ? parseInt(item.dateText.match(/\d{4}/)?.[0] || '0', 10) : 0,
+            image: item.thumb || item.image,
+            roomId: "default",
+            exhibitionName: exhibition.name,
+            exhibitionTitle: exhibition.title,
+          }));
+          setArtworks(list);
+          setInitialized(true);
+        } catch (e) {
+          console.error('Failed to load Tate Collection artworks:', e);
+          setInitialized(true);
+        }
+      })();
       return () => {};
     }
     // 0) Prime from local cache immediately to avoid empty-state flash
@@ -1082,8 +1131,9 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
   {/* Room selector: absolute so it doesn't push down the metadata; wraps when it runs out of width */}
           <div style={{ position: 'absolute', left: selectorLeft, top: selectorTop, width: selectorWidth, zIndex: 20 }}>
             {roomButtons.find(b => b.id === 'ALL') && (
-              <div style={{ marginBottom: 2 }}>
+              <div style={{ marginBottom: 2, display: 'flex', alignItems: 'center', gap: 8 }}>
                 <button onClick={() => { setSelectedRoomId('ALL'); setSelectedIndex(0); }} style={{ padding: '4px 8px', fontSize: 11, borderRadius: 4, border: 'none', background: selectedRoomId === 'ALL' ? '#111' : 'transparent', color: selectedRoomId === 'ALL' ? '#fff' : '#222', cursor: 'pointer' }}>ALL</button>
+                <span style={{ fontSize: 10, color: '#666' }}>({filteredArtworks.length})</span>
               </div>
             )}
             <div style={{ width: '100%' }}>
@@ -1106,6 +1156,62 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
                       {btn.label}
                     </button>
                   ))}
+                </div>
+              )}
+            </div>
+            
+            {/* Year filtering buttons - moved below room buttons */}
+            <div style={{ marginTop: 8, padding: '4px 0', borderTop: '1px solid #eee', borderBottom: '1px solid #eee' }}>
+              <div style={{ fontSize: 9, color: '#888', marginBottom: 4, textAlign: 'center' }}>YEAR</div>
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 2 }}>
+                {[
+                  { label: '<1900', value: 'under 1900' },
+                  { label: '1900', value: '1900' },
+                  { label: '1910', value: '1910' },
+                  { label: '1920', value: '1920' },
+                  { label: '1930', value: '1930' },
+                  { label: '1940', value: '1940' },
+                  { label: '1950', value: '1950' },
+                  { label: '1960', value: '1960' },
+                  { label: '1970', value: '1970' },
+                  { label: '1980', value: '1980' },
+                  { label: '1990', value: '1990' },
+                  { label: '>2000', value: 'over 2000' },
+                ].map((yearBtn) => (
+                  <button
+                    key={yearBtn.value}
+                    onClick={() => { setSelectedYearRange(yearBtn.value); setSelectedIndex(0); }}
+                    style={{
+                      padding: '2px 4px',
+                      fontSize: 9,
+                      borderRadius: 3,
+                      border: 'none',
+                      background: selectedYearRange === yearBtn.value ? '#111' : 'transparent',
+                      color: selectedYearRange === yearBtn.value ? '#fff' : '#666',
+                      cursor: 'pointer',
+                      textAlign: 'center'
+                    }}
+                  >
+                    {yearBtn.label}
+                  </button>
+                ))}
+              </div>
+              {selectedYearRange !== 'ALL' && (
+                <div style={{ marginTop: 4, textAlign: 'center' }}>
+                  <button
+                    onClick={() => { setSelectedYearRange('ALL'); setSelectedIndex(0); }}
+                    style={{
+                      padding: '2px 6px',
+                      fontSize: 8,
+                      borderRadius: 3,
+                      border: '1px solid #ccc',
+                      background: 'transparent',
+                      color: '#666',
+                      cursor: 'pointer'
+                    }}
+                  >
+                    Clear
+                  </button>
                 </div>
               )}
             </div>

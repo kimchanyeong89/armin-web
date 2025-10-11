@@ -17,6 +17,8 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
   const MIN_ZOOM = 0.95; // 가장 줌아웃 (요청에 따라 0.95로 제한)
   const MAX_ZOOM = 100.0; // 줌인 사실상 무제한에 가깝게 확대 허용
   const [scale, setScale] = useState<number>(MIN_ZOOM); // 첫 로드 시 최저 배율로 시작
+  // 통일된 선(Stroke) 기본 불투명도 (요청: 약 90%)
+  const BASE_STROKE_OPACITY = 0.9;
 
   // Always-available datasets for interactions
   const [countries, setCountries] = useState<any[]>([]);
@@ -64,7 +66,11 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
   const loadCountries = async () => {
     try {
   // status: loading countries
-      // Try 50m first (matches D3 GEO view), then fall back
+      // Resolution strategy (slight upgrade):
+      // 1) Try 10m (if present) -> 50m -> 110m fallbacks.
+      //    10m gives sharper coastlines but is heavier. We only try it once here.
+      // 2) If 10m is missing in deployment, existing 50m path still works.
+      // NOTE: Keep this lightweight ("살짝" 상승) — no dynamic LOD switching yet.
       const tryFetch = async (url: string) => {
         try {
           const r = await fetch(url);
@@ -72,7 +78,10 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
           return await r.json();
         } catch { return null; }
       };
-      let raw: any = await tryFetch('/geodata/countries-50m.json');
+      let raw: any = await tryFetch('/geodata/countries-10m.json');
+      if (!raw) raw = await tryFetch('/geodata/ne_10m_admin_0_countries.topo.json');
+      // Fallback to previous 50m / 110m chain
+      if (!raw) raw = await tryFetch('/geodata/countries-50m.json');
       if (!raw) raw = await tryFetch('/geodata/countries-110m.json');
       if (!raw) raw = await tryFetch('/atlas/countries-110m.json');
       if (!raw) raw = await tryFetch('/atlas/ne_110m_admin_0_countries.geojson');
@@ -125,8 +134,14 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
     // Get full screen size
     const width = window.innerWidth;
     const height = window.innerHeight;
-    canvas.width = width;
-    canvas.height = height;
+    const dpr = Math.min(2, window.devicePixelRatio || 1); // cap DPR to 2 for perf
+    // HiDPI canvas: internal pixel buffer scaled, CSS size unchanged
+    canvas.width = Math.round(width * dpr);
+    canvas.height = Math.round(height * dpr);
+    canvas.style.width = width + 'px';
+    canvas.style.height = height + 'px';
+    ctx.setTransform(1,0,0,1,0,0);
+    ctx.scale(dpr, dpr);
 
     // Clear canvas
     ctx.clearRect(0, 0, width, height);
@@ -137,41 +152,48 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
     const projection = d3.geoOrthographic()
       .scale(scale * 0.5 * Math.min(width, height))
       .translate([tx, ty])
-      .rotate([rotation.x, -rotation.y]);
+      .rotate([rotation.x, -rotation.y])
+      .precision(0.25); // finer resampling for smoother coastlines
 
     const path = d3.geoPath().projection(projection).context(ctx);
 
   // Draw white sphere background
     ctx.fillStyle = '#ffffff';
     ctx.strokeStyle = '#000000';
-  ctx.lineWidth = 0.8; // 글로브 테두리 더 얇게
+    ctx.lineWidth = 0.8; // 글로브 테두리 더 얇게
     ctx.beginPath();
     path({ type: 'Sphere' });
     ctx.fill();
+    ctx.save();
+    ctx.globalAlpha = BASE_STROKE_OPACITY; // 테두리만 90%
     ctx.stroke();
+    ctx.restore();
 
   // Graticule removed per request
 
     // Base: draw country boundaries
     if (countries.length > 0) {
       ctx.lineWidth = 0.8;
-      ctx.globalAlpha = 1;
       countries.forEach((feature: any) => {
-        // fill hovered country white beneath stroke
         const isHover = hoverCountry && feature === hoverCountry;
         if (isHover) {
+          // Hover fill 은 100% 불투명 유지
+          ctx.save();
           ctx.fillStyle = '#ffffff';
+          ctx.globalAlpha = 1;
           ctx.beginPath();
           path(feature);
           ctx.fill();
+          ctx.restore();
         }
-  ctx.beginPath();
-  path(feature);
-  // Hover 시 국경선 색을 검정(#111)에서 약간 밝은 회색으로 변경
-  ctx.strokeStyle = isHover ? '#444444' : '#111111';
-  ctx.stroke();
+        ctx.beginPath();
+        path(feature);
+        ctx.save();
+        ctx.globalAlpha = BASE_STROKE_OPACITY; // 국경선 90%
+        ctx.strokeStyle = isHover ? '#444444' : '#111111';
+        ctx.stroke();
+        ctx.restore();
       });
-      ctx.globalAlpha = 1;
     }
 
     // Selected overlay mesh for a specific country (emphasized)
@@ -180,12 +202,11 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
       ctx.strokeStyle = '#000';
       ctx.setLineDash([4, 3]);
       ctx.lineWidth = 1.2;
-      ctx.globalAlpha = 0.8; // 80% 불투명도
+      ctx.globalAlpha = BASE_STROKE_OPACITY; // 오버레이 선도 90%
       ctx.beginPath();
       path(admin1OverlayMesh as any);
       ctx.stroke();
       ctx.restore();
-      ctx.globalAlpha = 1;
     }
   };
 
@@ -451,6 +472,8 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
             _cluster: false,
             px: n.x,
             py: n.y,
+            _anchorX: n.ax, // 정확한 원래 좌표 (충돌 후 이동된 위치와 분리)
+            _anchorY: n.ay,
             ...(isExpanding ? { _originX: center[0], _originY: center[1], _delayLabelAfterMove: true } : {}),
             ...(isCollapsing ? { _collapsing: true, _collapseX: center[0], _collapseY: center[1], _collapseOrder: 0 } : {}),
           });
@@ -484,7 +507,36 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
     enterCluster.append('title').text((d: any) => `${d.count}개의 전시관`);
 
     const enterPin = enter.filter((d: any) => !d._cluster);
-    // Single black rounded square marker (smaller)
+    // Connecting line from true anchor to displaced label (added only if offset)
+    enterPin.each(function(d: any){
+      const g = d3.select(this);
+      if (d._anchorX != null && d._anchorY != null) {
+        const dx = (d._anchorX - d.px);
+        const dy = (d._anchorY - d.py);
+        if (Math.hypot(dx, dy) > 1) {
+          g.append('line')
+            .attr('class','pin-link')
+            .attr('x1', dx)
+            .attr('y1', dy)
+            .attr('x2', 0)
+            .attr('y2', 0)
+            .attr('stroke', '#1f2937')
+            .attr('stroke-width', 1)
+            .attr('stroke-opacity', 0.55);
+          g.append('circle')
+            .attr('class','pin-anchor')
+            .attr('cx', dx)
+            .attr('cy', dy)
+            .attr('r', 2.4)
+            .attr('fill', '#111827')
+            .attr('stroke', '#ffffff')
+            .attr('stroke-width', 0.8)
+            .attr('stroke-opacity', 0.9)
+            .attr('fill-opacity', 0.9);
+        }
+      }
+    });
+    // Label marker (displaced position)
     enterPin.append('rect')
       .attr('class', 'pin-bg')
       .attr('x', -4).attr('y', -4)
@@ -542,6 +594,40 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
              });
         } else {
           gEl.attr('transform', `translate(${d.px},${d.py})`);
+        }
+        // Update or (re)draw link + anchor for expanded pins
+        if (d._anchorX != null && d._anchorY != null) {
+          const dx = (d._anchorX - d.px);
+          const dy = (d._anchorY - d.py);
+          const hasOffset = Math.hypot(dx, dy) > 1;
+          // Select existing elements or create
+          let link = gEl.select<SVGLineElement>('line.pin-link');
+          let anchor = gEl.select<SVGCircleElement>('circle.pin-anchor');
+            if (hasOffset) {
+              if (link.empty()) {
+                link = gEl.insert('line', ':first-child')
+                  .attr('class','pin-link')
+                  .attr('stroke','#1f2937')
+                  .attr('stroke-width',1)
+                  .attr('stroke-opacity',0.55);
+              }
+              link.attr('x1', dx).attr('y1', dy).attr('x2', 0).attr('y2', 0);
+              if (anchor.empty()) {
+                anchor = gEl.insert('circle', ':first-child')
+                  .attr('class','pin-anchor')
+                  .attr('r',2.4)
+                  .attr('fill','#111827')
+                  .attr('stroke','#ffffff')
+                  .attr('stroke-width',0.8)
+                  .attr('stroke-opacity',0.9)
+                  .attr('fill-opacity',0.9);
+              }
+              anchor.attr('cx', dx).attr('cy', dy).style('display','');
+              link.style('display','');
+            } else {
+              if (!link.empty()) link.style('display','none');
+              if (!anchor.empty()) anchor.style('display','none');
+            }
         }
         // Label slide/fade for pins
         const label = gEl.select<SVGTextElement>('.pin-label');

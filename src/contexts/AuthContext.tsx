@@ -11,27 +11,29 @@ interface AuthContextProps {
 const AuthContext = createContext<AuthContextProps>({ user: null });
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
+  const enableAnonAuth = import.meta.env.VITE_ENABLE_ANON_AUTH === "true";
   const [user, setUser] = useState<User | null>(null);
-  const [attemptedAnon, setAttemptedAnon] = useState(false);
-  // Allow turning off implicit anonymous auth attempts if backend not enabled
-  const DISABLE_ANON_AUTO = true; // set false if you enable Anonymous auth in Firebase console
+  const [attemptedAnon, setAttemptedAnon] = useState(() => !enableAnonAuth);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
       console.log("AuthContext.tsx: currentUser ->", currentUser);
       setUser(currentUser);
-      if (!currentUser && !attemptedAnon && !DISABLE_ANON_AUTO) {
+      if (!currentUser && enableAnonAuth && !attemptedAnon) {
         try {
           await signInAnonymously(auth);
         } catch (e) {
-          console.warn("Anonymous sign-in failed (enable in Firebase Console > Authentication)", e);
+          console.warn(
+            "Anonymous sign-in failed (enable in Firebase Console > Authentication or disable via VITE_ENABLE_ANON_AUTH)",
+            e
+          );
         } finally {
           setAttemptedAnon(true);
         }
       }
     });
     return () => unsubscribe();
-  }, [attemptedAnon]);
+  }, [attemptedAnon, enableAnonAuth]);
 
   return (
     <AuthContext.Provider value={{ user }}>

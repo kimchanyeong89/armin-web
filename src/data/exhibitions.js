@@ -12,7 +12,8 @@ export const exhibitions = [
     floorPlan: "",
     permanentExhibitions: [
       { id: "tm-perm-1", name: "Tate Collection Highlights", title: "Tate Collection Highlights", description: "Key works from the international modern collection.", startDate: "Permanent", endDate: "Permanent" },
-      { id: "tm-perm-2", name: "Surrealism and Beyond", title: "Surrealism and Beyond", description: "Surrealist movements and their legacies.", startDate: "Permanent", endDate: "Permanent" }
+      { id: "tm-perm-2", name: "Surrealism and Beyond", title: "Surrealism and Beyond", description: "Surrealist movements and their legacies.", startDate: "Permanent", endDate: "Permanent" },
+      { id: "tm-perm-3", name: "Tate Collection", title: "Tate Collection", description: "Complete collection of artworks from Tate galleries.", startDate: "Permanent", endDate: "Permanent" }
     ],
     temporaryExhibitions: [
       { id: "tm-temp-1", name: "Modern Sculpture", title: "Modern Sculpture", description: "A special exhibition of modern sculptures.", startDate: "2025-06-01", endDate: "2025-09-01" },
@@ -22,6 +23,33 @@ export const exhibitions = [
       { id: "tm-past-1", name: "Post-War Art", title: "Post-War Art", description: "A retrospective exhibition of post-war art.", startDate: "2023-06-01", endDate: "2023-12-31" },
       { id: "tm-past-2", name: "Baroque Treasures", title: "Baroque Treasures", description: "Masterpieces from the Baroque era.", startDate: "2024-01-01", endDate: "2024-05-31" },
       { id: "tm-past-3", name: "Minimalist Perspectives", title: "Minimalist Perspectives", description: "The evolution of minimalism in art.", startDate: "2024-06-15", endDate: "2024-10-15" }
+    ],
+  },
+  // Tate Britain
+  {
+    id: "tate-britain",
+    slug: "tate-britain",
+    name: "Tate Britain",
+    location: "Millbank, London SW1P 4RG, United Kingdom",
+    description: "Britain's largest museum of British art from the 1500s to the present day, housing the world's greatest collection of British art.",
+    latitude: 51.4920,
+    longitude: -0.1275,
+  representativeImage: "/images/tate-britain-building.jpg",
+    floorPlan: "",
+    permanentExhibitions: [
+      { id: "tb-perm-1", name: "British Art 1500-1900", title: "British Art 1500-1900", description: "Masterpieces from the Tudor period to the Victorian era.", startDate: "Permanent", endDate: "Permanent" },
+      { id: "tb-perm-2", name: "British Art 1900-Present", title: "British Art 1900-Present", description: "Modern and contemporary British art from 1900 to the present day.", startDate: "Permanent", endDate: "Permanent" },
+      { id: "tb-perm-3", name: "Turner Collection", title: "Turner Collection", description: "The world's largest collection of works by J.M.W. Turner.", startDate: "Permanent", endDate: "Permanent" },
+      // Mirror Tate Modern's "Tate Collection" so the modal loads the same local artworks feed
+      { id: "tm-perm-3", name: "Tate Collection", title: "Tate Collection", description: "Complete collection of artworks from Tate galleries.", startDate: "Permanent", endDate: "Permanent" }
+    ],
+    temporaryExhibitions: [
+      { id: "tb-temp-1", name: "Pre-Raphaelite Sisters", title: "Pre-Raphaelite Sisters", description: "Exploring the lives and works of women artists associated with the Pre-Raphaelite movement.", startDate: "2025-10-01", endDate: "2026-01-31" },
+      { id: "tb-temp-2", name: "Francis Bacon: Man and Beast", title: "Francis Bacon: Man and Beast", description: "A major exhibition exploring Francis Bacon's fascination with animals and the human form.", startDate: "2025-09-15", endDate: "2026-02-28" }
+    ],
+    pastExhibitions: [
+      { id: "tb-past-1", name: "The EY Exhibition: Lucian Freud", title: "The EY Exhibition: Lucian Freud", description: "A comprehensive retrospective of Lucian Freud's work.", startDate: "2024-10-01", endDate: "2025-01-31" },
+      { id: "tb-past-2", name: "The EY Exhibition: Van Gogh and Britain", title: "The EY Exhibition: Van Gogh and Britain", description: "Exploring Van Gogh's influence on British artists.", startDate: "2024-03-01", endDate: "2024-08-31" }
     ],
   },
   // London major museums

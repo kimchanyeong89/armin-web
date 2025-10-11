@@ -119,21 +119,19 @@ export default function AdminImport(){
     <div style={{ padding: 16, maxWidth: 900, margin: '0 auto' }}>
       <h2>Admin Import (링크 기반)</h2>
       <div style={{ display: 'flex', gap: 8, alignItems: 'center', marginBottom: 8 }}>
-  <label htmlFor="exhibition-id">Exhibition ID: </label>
-  <input id="exhibition-id" name="exhibitionId" value={exhibitionId} onChange={e=>setExhibitionId(e.target.value)} style={{ width: 140 }} />
-  <label htmlFor="room-id" style={{ marginLeft: 8 }}>Room ID: </label>
-  <input id="room-id" name="roomId" value={roomId} onChange={e=>setRoomId(e.target.value)} style={{ width: 80 }} />
+        <label>Exhibition ID: <input value={exhibitionId} onChange={e=>setExhibitionId(e.target.value)} style={{ width: 140 }} /></label>
+        <label>Room ID: <input value={roomId} onChange={e=>setRoomId(e.target.value)} style={{ width: 80 }} /></label>
         <button id="btn-parse" onClick={parse}>미리보기</button>
         <button id="btn-upload" onClick={onUpload} disabled={busy || items.length===0}>문서 저장</button>
-        <label htmlFor="thumb-upload" style={{ marginLeft: 'auto' }}>썸네일 업로드(선택): </label>
-        <input id="thumb-upload" name="thumbnailFiles" type="file" multiple accept="image/*" onChange={onFileThumbs} />
+        <label style={{ marginLeft: 'auto' }}>
+          썸네일 업로드(선택): <input type="file" multiple accept="image/*" onChange={onFileThumbs} />
+        </label>
       </div>
       <div style={{ margin: '8px 0', padding: 8, background: '#f6f6f6' }}>
         <div style={{ marginBottom: 4 }}>북마클릿: 아래 링크를 즐겨찾기바에 드래그하세요. 해당 룸 페이지에서 클릭하면 자동으로 이 페이지로 전송/저장됩니다.</div>
         <a href={bookmarklet} style={{ color: '#0066cc', textDecoration: 'underline' }}>NG → Import (현재 Room {roomId})</a>
       </div>
-  <label htmlFor="json-input" style={{ display: 'block', marginTop: 8, fontWeight: 600 }}>JSON 입력</label>
-  <textarea id="json-input" name="jsonInput" value={jsonText} onChange={e=>setJsonText(e.target.value)} placeholder="[{ id, title, itemUrl, remoteImageUrl }] 또는 { items: [...] }" style={{ width: '100%', height: 160 }} />
+      <textarea value={jsonText} onChange={e=>setJsonText(e.target.value)} placeholder="[{ id, title, itemUrl, remoteImageUrl }] 또는 { items: [...] }" style={{ width: '100%', height: 160 }} />
       <div style={{ marginTop: 12 }}>
         <strong>항목 {items.length}개</strong>
         <ul>

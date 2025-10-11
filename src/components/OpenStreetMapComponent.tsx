@@ -1,6 +1,6 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import * as d3 from 'd3';
-import { geoPath, geoMercator, geoCentroid } from 'd3-geo';
+import { geoPath, geoMercator } from 'd3-geo';
 import type { Exhibition } from '../types/Exhibition';
 
 interface OpenStreetMapProps {
@@ -16,15 +16,47 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
   const [countries, setCountries] = useState<any[]>([]);
   const [states, setStates] = useState<any[]>([]);
   const [selectedISO3, setSelectedISO3] = useState<string | null>(null);
+  const [viewport, setViewport] = useState(() => ({
+    width: typeof window !== 'undefined' ? window.innerWidth : 1024,
+    height: typeof window !== 'undefined' ? window.innerHeight : 768
+  }));
+  const viewportRef = useRef(viewport);
+  const [filteredStates, setFilteredStates] = useState<any[]>([]);
   const [muniFeatures, setMuniFeatures] = useState<any[] | null>(null);
-  // internal mesh 제거 (require 불가 및 CORS 실패 시 단순 경계 표시로 다운그레이드)
-  const [muniInternal] = useState<any | null>(null);
   const [showMunicipalities, setShowMunicipalities] = useState(false);
   const [muniLoading, setMuniLoading] = useState(false);
   const [muniError, setMuniError] = useState<string | null>(null);
-  const [muniDebugInfo, setMuniDebugInfo] = useState<string | null>(null);
   const onSelectExhibitionRef = useRef<typeof onSelectExhibition | undefined>(onSelectExhibition);
   useEffect(() => { onSelectExhibitionRef.current = onSelectExhibition; }, [onSelectExhibition]);
+
+  const resolveStaticUrl = useCallback((relativePath: string) => {
+    const base = (import.meta.env.BASE_URL ?? '/').replace(/\/+$/, '');
+    const clean = relativePath.replace(/^\/+/, '');
+    if (base === '' || base === '/') return `/${clean}`;
+    if (base === '.' || base === './') return `./${clean}`;
+    return `${base}/${clean}`;
+  }, []);
+
+  const municipalStyle = useMemo(() => {
+    const normalized = Math.min(1, Math.max(0.55, viewport.width / 1400));
+    const baseWidth = 0.9 + 0.6 * normalized;
+    const hoverWidth = baseWidth + 0.4;
+    const outlineWidth = Math.max(baseWidth + 0.55, baseWidth * 1.35);
+    const opacity = 0.75 + 0.1 * normalized;
+    const dashLength = Math.max(6, baseWidth * 5.5);
+    const gapLength = Math.max(5, baseWidth * 3.4);
+    const dashArray = `${dashLength.toFixed(2)} ${gapLength.toFixed(2)}`;
+    const dashOffset = (dashLength / 2).toFixed(2);
+    return {
+      color: '#1f2937',
+      baseWidth,
+      hoverWidth,
+      outlineWidth,
+      opacity,
+      dashArray,
+      dashOffset,
+    };
+  }, [viewport.width]);
 
   useEffect(() => {
     const loadAllData = async () => {
@@ -32,10 +64,11 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
         setLoading(true);
         
         // 모든 지리 데이터를 병렬로 로드 (더 상세한 국가 경계 사용)
+        const countriesUrl = resolveStaticUrl('geodata/countries-50m.json');
+        const statesUrl = resolveStaticUrl('geodata/admin1-states-10m.json');
         const [countriesResponse, statesResponse] = await Promise.all([
-          fetch('/geodata/countries-50m.json'), // 50m 해상도로 변경
-          // admin1-states-10m.json 이 비어있어 실제 데이터가 있는 states-provinces-10m.json 사용
-          fetch('/geodata/states-provinces-10m.json')
+          fetch(countriesUrl), // 50m 해상도로 변경
+          fetch(statesUrl)
         ]);
 
         if (!countriesResponse.ok) throw new Error('Countries data failed to load');
@@ -46,37 +79,12 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
           statesResponse.json()
         ]);
 
-        const countryFeatures = countriesData.features || [];
-        const stateFeatures = statesData.features || [];
-
-        setCountries(countryFeatures);
-        setStates(stateFeatures);
-
-        // --- Diagnostics: Detect if the so-called states dataset is actually just another copy of admin0 (countries)
-        let statesLookLikeCountries = false;
-        try {
-          if (stateFeatures.length === countryFeatures.length) {
-            // Heuristic: properties only contain a name + maybe few fields, and feature ids look like ISO3 codes matching countries
-            const sample = stateFeatures.slice(0, 10);
-            const simplePropRatio = sample.filter((f: any) => {
-              const keys = Object.keys(f.properties || {});
-              return keys.length <= 2 && keys.includes('name');
-            }).length / Math.max(1, sample.length);
-            const countryIds = new Set(countryFeatures.map((f: any) => (f.id || f.properties?.iso_a3 || f.properties?.adm0_a3)));
-            const idMatchRatio = sample.filter((f: any) => countryIds.has(f.id)).length / Math.max(1, sample.length);
-            if (simplePropRatio > 0.7 && idMatchRatio > 0.7) statesLookLikeCountries = true;
-          }
-        } catch (diagErr) {
-          console.warn('[diag] state dataset inspection failed', diagErr);
-        }
+        setCountries(countriesData.features || []);
+        setStates(statesData.features || []);
 
         console.log('지리 데이터 로드 완료:');
-        console.log('- 국가:', countryFeatures.length);
-        console.log('- 주/도(raw):', stateFeatures.length, statesLookLikeCountries ? '(⚠ admin1 데이터 아님: countries 복제처럼 보임)' : '');
-        if (statesLookLikeCountries) {
-          console.warn('[경고] states-provinces-10m.json 이 실제 주/도(ADM1)가 아니라 국가 경계(admin0)로 보입니다.');
-          console.warn('> 실제 세부 경계 표시를 원하면 Natural Earth 의 ne_10m_admin_1_states_provinces 또는 GeoBoundaries ADM1/ADM2 데이터를 변환/번들 하십시오.');
-        }
+        console.log('- 국가:', countriesData.features?.length || 0);
+        console.log('- 주/도:', statesData.features?.length || 0);
         
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Unknown error');
@@ -87,7 +95,7 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
     };
 
     loadAllData();
-  }, []);
+  }, [resolveStaticUrl]);
 
   // 현재 줌 변환을 보관 (도시 레이어 표시 게이트/위치에 사용)
   const zoomTransformRef = useRef<any>(d3.zoomIdentity);
@@ -123,16 +131,6 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
   };
   type ClusterInfo = { key: string; items: Exhibition[]; centerLon: number; centerLat: number; sortedByName: Exhibition[] };
   const clustersListRef = useRef<ClusterInfo[] | null>(null);
-  const MUNICIPAL_STROKE_COLOR = '#555555';
-  // Use a thinner base stroke; we'll amplify with outline for contrast
-  const MUNICIPAL_BASE_STROKE_WIDTH = 1.3;
-  // Hover width unused (no interactive municipal paths after mesh simplification)
-  // const MUNICIPAL_HOVER_STROKE_WIDTH = MUNICIPAL_BASE_STROKE_WIDTH + 0.5;
-  // Lower opacity for municipality stroke to be less dominant
-  const MUNICIPAL_BASE_STROKE_OPACITY = 0.4;
-  const MUNICIPAL_MAX_STROKE_WIDTH = 3.0;
-  // TEMP DEBUG FLAG
-  const DEBUG_MUNI = true;
   // Rebuild clusters when exhibitions changes
   useEffect(() => {
     const list = exhibitions || [];
@@ -165,44 +163,13 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
     const svg = d3.select(svgRef.current);
     svg.selectAll('*').remove();
 
-    // 전체 화면 크기 사용
-    const width = window.innerWidth;
-    const height = window.innerHeight;
+    const { width, height } = viewport;
 
     svg.attr('width', width).attr('height', height);
 
-    // 화면 크기 변경 시 리사이즈
-    const handleResize = () => {
-      const newWidth = window.innerWidth;
-      const newHeight = window.innerHeight;
-      svg.attr('width', newWidth).attr('height', newHeight);
-      
-      // 투영법도 새 크기에 맞게 업데이트
-      projection
-        .scale(Math.min(newWidth, newHeight) / 7)
-        .translate([newWidth / 2, newHeight / 2]);
-      
-      // 모든 경로 다시 그리기
-      svg.selectAll('path').attr('d', path as any);
-      
-      // 새로운 화면 크기에 맞게 줌 제한 업데이트
-      const newLeftBound = projection([-180, 0]);
-      const newRightBound = projection([180, 0]);
-      const newActualWorldWidth = newRightBound ? newRightBound[0] - (newLeftBound ? newLeftBound[0] : 0) : newWidth;
-      const newMinZoomForWidth = newWidth / newActualWorldWidth;
-      const newMinZoomForHeight = newHeight / (newActualWorldWidth * 0.6);
-      const newBaseMinZoom = Math.max(newMinZoomForWidth, newMinZoomForHeight * 0.8);
-      const newMinZoom = newBaseMinZoom * 0.85; // 중간값: 15% 정도 더 줌아웃 가능
-      
-        // 줌 제한 업데이트
-        zoom.scaleExtent([newMinZoom, 100]); // Set maximum zoom to 100
-    };
-
-    window.addEventListener('resize', handleResize);
-
     // 투영법 설정 (메르카토르 - 완전 평면 + 무한 스크롤)
     const projection = geoMercator()
-      .scale(Math.min(width, height) / 7) // 화면 크기에 맞게 동적 스케일
+      .scale(Math.min(width, height) / 7)
       .translate([width / 2, height / 2])
       .center([0, 35]); // 중심을 북위 35도로 조정 (지도를 아래로 내림)
 
@@ -229,6 +196,7 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
           setMuniFeatures(null);
           setMuniError(null);
           setShowMunicipalities(false);
+          setFilteredStates([]); // 선택 해제 시 주/도 경계선 제거
         }
       });
 
@@ -248,7 +216,7 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
       const offsetX = offset * actualWorldWidth;
       countries.forEach((country, index) => {
         try {
-          countryGroup.append('path')
+          const countryPath = countryGroup.append('path')
             .datum(country)
             .attr('d', path as any)
             .attr('transform', `translate(${offsetX}, 0)`)
@@ -257,14 +225,28 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
             .attr('stroke-width', 0.4)
       .attr('vector-effect', 'non-scaling-stroke')
             .attr('stroke-opacity', 0.8)
-            .style('cursor', 'pointer')
+            .style('cursor', 'pointer');
+
+          countryPath
             .on('mouseover', function(event) {
               d3.select(this).attr('stroke-width', 0.8);
-              showTooltip(svg, event, `🏳️ ${getCountryName(country.properties)}`);
+              const countryName = getCountryName(country.properties);
+              const emoji = getFlagEmoji(country.properties);
+              const centroidLonLat = d3.geoCentroid(country as any);
+              const projected = projection(centroidLonLat as [number, number]);
+              if (projected) {
+                let [cx, cy] = projected;
+                cx += offsetX;
+                const transform = zoomTransformRef.current && (zoomTransformRef.current as any).apply ? zoomTransformRef.current as any : d3.zoomIdentity;
+                const [tx, ty] = transform.apply([cx, cy]);
+                showTooltip(svg, event, `${emoji} ${countryName}`, { x: tx, y: ty - 14 });
+              } else {
+                showTooltip(svg, event, `${emoji} ${countryName}`);
+              }
             })
             .on('mouseout', function() {
               d3.select(this).attr('stroke-width', 0.4);
-              svg.select('.tooltip').remove();
+              svg.selectAll('.tooltip').remove();
             })
             .on('click', async (event) => {
               event.stopPropagation();
@@ -273,35 +255,52 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
                 setMuniError('No ISO3 code available for this country');
                 return;
               }
-              // Enable municipalities layer visibility intent
-              setShowMunicipalities(true);
-              // 1) 선택 국가로 확대/중심 이동 (부드러운 트랜지션)
               try {
-                // 현재 렌더링된 경계의 경계박스 계산 (wrap된 복제본 클릭에도 동작)
                 const b = path.bounds(country);
                 const dx = b[1][0] - b[0][0];
                 const dy = b[1][1] - b[0][1];
-                // fit extent 방식으로 목표 transform 계산 (여백 5%)
-                const margin = 0.05;
-                const targetW = width * (1 - margin * 2);
-                const targetH = height * (1 - margin * 2);
-                let k = Math.min(targetW / dx, targetH / dy);
-                k = Math.max(k, 2.2, minZoom);
-                k = Math.min(k, 8);
-                const x = (b[0][0] + b[1][0]) / 2;
-                const y = (b[0][1] + b[1][1]) / 2;
-                // 클릭한 복제본의 오프셋을 적용하여 정확히 그 복제본을 중앙에 배치
-                const tx = width / 2 - k * (x + offsetX);
-                const ty = height / 2 - k * y;
-                d3.select(svgRef.current)
-                  .transition()
-                  .duration(800)
-                  .ease(d3.easeCubicOut)
-                  .call(zoom.transform as any, d3.zoomIdentity.translate(tx, ty).scale(k));
+                const safeDx = Math.max(dx, 1e-6);
+                const safeDy = Math.max(dy, 1e-6);
+                const targetW = width * 0.9;
+                const targetH = height * 0.9;
+                const scale = Math.max(2.2, Math.min(8, 0.9 / Math.max(safeDx / targetW, safeDy / targetH)));
+
+                const svgNode = svgRef.current;
+                if (svgNode) {
+                  const pointer = d3.pointer(event, svgNode as any);
+                  const currentTransform = zoomTransformRef.current || d3.zoomIdentity;
+                  const [px] = currentTransform.invert(pointer as [number, number]);
+
+                  const centroid = d3.geoCentroid(country);
+                  const projectedCentroid = projection(centroid);
+                  if (projectedCentroid) {
+                    const [baseX, baseY] = projectedCentroid;
+                    const wraps = Math.round((px - baseX) / actualWorldWidth);
+                    const wrappedX = baseX + wraps * actualWorldWidth;
+
+                    const transform = d3.zoomIdentity
+                      .translate(width / 2, height / 2)
+                      .scale(scale)
+                      .translate(-wrappedX, -baseY);
+
+                    d3.select(svgNode)
+                      .transition()
+                      .duration(850)
+                      .ease(d3.easeCubicOut)
+                      .call(zoom.transform as any, transform);
+                  }
+                }
               } catch (e) {
                 console.warn('fit to country failed', e);
               }
               setSelectedISO3(iso3);
+              setShowMunicipalities(true);
+              const filtered = states.filter((s: any) => {
+                const p = s.properties || {};
+                const cIso = (p.adm0_a3 || p.ADM0_A3 || p.iso_a3 || p.ISO_A3 || p.GU_A3 || '').toUpperCase();
+                return cIso === iso3.toUpperCase();
+              });
+              setFilteredStates(filtered);
               await loadMunicipalities(iso3);
             });
         } catch (error) {
@@ -310,29 +309,8 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
       });
     }
 
-    // 2. 주/도 경계선 그리기 (극도로 얇은 회색) - 무한 반복을 위해 5개 복사본
-  const stateGroup = svg.append('g').attr('class', 'states').attr('pointer-events','none');
-    
-  // 주/도 경계도 5 -> 3개로 축소 (좌/원/우). 이벤트는 비활성화하여 히트 테스트 비용 절감
-  for (let offset = -1; offset <= 1; offset++) {
-      const offsetX = offset * actualWorldWidth;
-      states.forEach((state, index) => {
-        try {
-          stateGroup.append('path')
-            .datum(state)
-            .attr('d', path as any)
-            .attr('transform', `translate(${offsetX}, 0)`)
-            .attr('fill', 'none')
-            .attr('stroke', '#666666')
-            .attr('stroke-width', 0.8)
-            .attr('vector-effect', 'non-scaling-stroke')
-            .attr('stroke-opacity', 0.6)
-            .style('pointer-events', 'none');
-        } catch (error) {
-          console.warn(`주/도 ${index} 렌더링 실패:`, error);
-        }
-      });
-    }
+    // 2. 주/도 경계선 그룹 (초기에는 비어 있음)
+    const stateGroup = svg.append('g').attr('class', 'states').attr('pointer-events','none');
 
     // 3. 도시/지자체 경계 오버레이 (선택된 국가만 표시)
   const muniGroup = svg.append('g').attr('class', 'municipalities').attr('pointer-events', 'none');
@@ -345,7 +323,8 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
     pinsGroupRef.current = pinsLayer.node() as SVGGElement;
 
     // 툴팁 표시 함수
-    function showTooltip(svg: any, event: any, text: string) {
+    function showTooltip(svg: any, event: any, text: string, position?: { x: number; y: number }) {
+      svg.selectAll('.tooltip').remove();
       const tooltip = svg.append('g').attr('class', 'tooltip').attr('pointer-events','none');
       const rect = tooltip.append('rect')
         .attr('fill', 'rgba(255, 255, 255, 0.95)')
@@ -366,8 +345,17 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
           .attr('width', bbox.width + 16)
           .attr('height', bbox.height + 8);
 
-      const [mouseX, mouseY] = d3.pointer(event);
-      tooltip.attr('transform', `translate(${mouseX + 10}, ${mouseY - 10})`);
+      let targetX: number;
+      let targetY: number;
+      if (position) {
+        targetX = position.x;
+        targetY = position.y;
+      } else {
+        const [mouseX, mouseY] = d3.pointer(event, svgRef.current as any);
+        targetX = mouseX + 10;
+        targetY = mouseY - 10;
+      }
+      tooltip.attr('transform', `translate(${targetX}, ${targetY})`);
     }
 
     // 줌 기능 (국가, 주/도 레이어에 적용) - 줌아웃 제한 추가
@@ -377,7 +365,7 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
     const baseMinZoom = Math.max(minZoomForWidth, minZoomForHeight * 0.8); // 안전 마진 추가
     const minZoom = baseMinZoom * 0.85; // 중간값: 15% 정도 더 줌아웃 가능하도록 설정
     
-  const STATE_VISIBLE_K = 1.6; // 이 배율 이상에서만 주/도 경계 표시 (선택 국가 시에만)
+  const STATE_VISIBLE_K = 1.6; // 이 배율 이상에서만 주/도 경계 표시
     const zoom = d3.zoom<SVGSVGElement, unknown>()
       .scaleExtent([minZoom, 100]) // 최소 줌을 동적으로 계산, 최대는 100
       .on('zoom', (event) => {
@@ -392,20 +380,22 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
     renderPins();
 
     // 낮은 배율에서는 주/도 경계 숨김 (페인트 비용 절감)
-  // 주/도 경계: 확대 수준 기반 (국가 선택 여부와 무관하게 기본 구조 맥락 제공)
-  // 주/도 경계: 국가 선택 + 도시 레이어 활성화 상태에서만 노출
-  stateGroup.attr('display', (showMunicipalities && selectedISO3 && transform.k >= STATE_VISIBLE_K) ? null : 'none');
-  // 도시/지자체: 국가 선택 후 즉시 표시, 단 너무 축소된 경우 숨김
-  muniGroup.attr('display', (showMunicipalities && selectedISO3 && transform.k >= (CITY_VISIBLE_K * 0.6)) ? null : 'none');
-    // 확대 정도에 따라 도시 경계선 두께/불투명도 동적 강화
-    const logk = Math.log2(Math.max(1, transform.k));
-    const strokeW = Math.min(
-      MUNICIPAL_MAX_STROKE_WIDTH,
-      MUNICIPAL_BASE_STROKE_WIDTH + 0.45 * Math.max(0, logk - Math.log2(CITY_VISIBLE_K))
-    );
-    const strokeO = Math.min(1, MUNICIPAL_BASE_STROKE_OPACITY + 0.08 * Math.max(0, logk - Math.log2(CITY_VISIBLE_K)));
+    stateGroup.attr('display', transform.k >= STATE_VISIBLE_K ? null : 'none');
+    // 도시/지자체는 더 높은 배율에서만 표시
+    muniGroup.attr('display', transform.k >= CITY_VISIBLE_K && selectedISO3 && showMunicipalities ? null : 'none');
+    // 확대 정도와 관계없이 도시 경계선 두께/투명도를 일정하게 유지
     try {
-      muniGroup.selectAll('path').attr('stroke-width', strokeW).attr('stroke-opacity', strokeO);
+      muniGroup
+        .selectAll<SVGPathElement, any>('path.municipality-stroke')
+        .attr('stroke-width', municipalStyle.baseWidth)
+        .attr('stroke-opacity', municipalStyle.opacity)
+        .attr('stroke-dasharray', municipalStyle.dashArray)
+        .attr('stroke-dashoffset', municipalStyle.dashOffset);
+      muniGroup
+        .selectAll<SVGPathElement, any>('path.municipality-outline')
+        .attr('stroke-width', municipalStyle.outlineWidth)
+        .attr('stroke-dasharray', municipalStyle.dashArray)
+        .attr('stroke-dashoffset', municipalStyle.dashOffset);
     } catch {}
       });
 
@@ -414,20 +404,18 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
     if (svgRef.current) {
       // expose zoom behavior for programmatic transforms (cluster click, country fit, etc.)
       zoomBehaviorRef.current = zoom;
-      d3.select(svgRef.current).call(zoom);
-      
-      // 초기 줌과 위치를 훨씬 아래로, 조금 오른쪽으로 설정
-  d3.select(svgRef.current).call(
-        zoom.transform,
-        d3.zoomIdentity
-          .scale(baseMinZoom)
-          .translate(width * 0.05, -height * 0.25) // 오른쪽으로 5%, 아래로 25% 이동
-      );
+      const svgSelection = d3.select(svgRef.current);
+      svgSelection.call(zoom);
+
+      const initialTransform = d3.zoomIdentity
+        .scale(baseMinZoom)
+        .translate(width * 0.05, -height * 0.25);
+      svgSelection.call(zoom.transform as any, initialTransform);
+      zoomTransformRef.current = initialTransform;
 
   // 초기 표시 상태도 배율 기준으로 맞춤
-  // 초기에는 항상 주/도/도시 경계 숨김 (국가 클릭 전 단순 뷰 유지)
-  stateGroup.attr('display', 'none');
-  muniGroup.attr('display', 'none');
+  stateGroup.attr('display', baseMinZoom >= STATE_VISIBLE_K ? null : 'none');
+  muniGroup.attr('display', baseMinZoom >= CITY_VISIBLE_K && selectedISO3 && showMunicipalities ? null : 'none');
   }
 
     console.log('상세 지도 렌더링 완료!');
@@ -437,19 +425,20 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
 
     // 컴포넌트 언마운트 시 이벤트 리스너 정리
     return () => {
-      window.removeEventListener('resize', handleResize);
+      // eslint-disable-next-line react-hooks/exhaustive-deps
     };
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [countries, states, loading, error, focusLatLng, exhibitions]);
+  }, [countries, states, loading, error, focusLatLng, exhibitions, viewport, municipalStyle]);
 
   // Render pins/clusters using current projection and zoom transform
   function renderPins() {
     if (!pinsGroupRef.current || !clustersListRef.current) return;
     const pins = d3.select(pinsGroupRef.current);
+    const { width, height } = viewportRef.current;
     const projection = geoMercator()
-      .scale(Math.min(window.innerWidth, window.innerHeight) / 7)
-      .translate([window.innerWidth / 2, window.innerHeight / 2])
+      .scale(Math.min(width, height) / 7)
+      .translate([width / 2, height / 2])
       .center([0, 35]);
     if (focusLatLng) {
       projection.center([focusLatLng.lng, focusLatLng.lat]).scale(1000);
@@ -457,10 +446,9 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
     const path = geoPath().projection(projection);
     const t: any = zoomTransformRef.current;
     const applyT = (pt: [number, number]) => (t && t.apply) ? (t.apply(pt) as [number, number]) : pt;
-    // Measure wrap width in projection coords
     const leftBound = projection([-180, 0]);
     const rightBound = projection([180, 0]);
-    const worldW = rightBound && leftBound ? (rightBound[0] - leftBound[0]) : window.innerWidth;
+    const worldW = rightBound && leftBound ? (rightBound[0] - leftBound[0]) : width;
     // Build nodes
     const nodes: any[] = [];
     const MAX_EXPANDED_ITEMS = 60;
@@ -593,7 +581,7 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
           const rk = String(d.key || '');
           const key = rk.endsWith(':L') || rk.endsWith(':R') ? rk.slice(0, -2) : rk;
           // focus and zoom to cluster center (two-stage)
-          const width = window.innerWidth, height = window.innerHeight;
+          const { width, height } = viewportRef.current;
           const p = projection([d.longitude, d.latitude]) as [number, number];
           const tNow: any = zoomTransformRef.current || d3.zoomIdentity;
           // Stage 1: fit to containing country
@@ -626,7 +614,18 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
           // admin overlay by country ISO3
           if (countryFeature) {
             const iso3 = getISO3(countryFeature.properties);
-            if (iso3) { setSelectedISO3(iso3); loadMunicipalities(iso3); }
+            if (iso3) {
+              setSelectedISO3(iso3);
+              setShowMunicipalities(true);
+              // 클러스터 클릭 시에도 주/도 경계 필터링
+              const filtered = states.filter((s: any) => {
+                const p = s.properties || {};
+                const cIso = (p.adm0_a3 || p.ADM0_A3 || p.iso_a3 || p.ISO_A3 || p.GU_A3 || '').toUpperCase();
+                return cIso === iso3.toUpperCase();
+              });
+              setFilteredStates(filtered);
+              loadMunicipalities(iso3);
+            }
           }
           if (expandedClustersRef.current.has(key)) {
             collapseAnimKeyRef.current = key; collapseFinalizedRef.current = false;
@@ -644,6 +643,56 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
       .on('mouseout', function(){ d3.select(this as any).select('.cluster-bg').transition().duration(120).attr('stroke-width', 1.2); });
   }
 
+  // 선택된 국가의 주/도 경계선 렌더링
+  useEffect(() => {
+    const svg = d3.select(svgRef.current);
+    if (svg.empty()) return;
+    const stateGroup = svg.select('g.states');
+    stateGroup.selectAll('*').remove();
+
+    if (!selectedISO3 || filteredStates.length === 0) {
+      return;
+    }
+
+    const { width, height } = viewportRef.current;
+    const projection = geoMercator()
+      .scale(Math.min(width, height) / 7)
+      .translate([width / 2, height / 2])
+      .center([0, 35]);
+    const path = geoPath().projection(projection);
+
+    const leftBound = projection([-180, 0]);
+    const rightBound = projection([180, 0]);
+    const actualWorldWidth = rightBound && leftBound ? rightBound[0] - leftBound[0] : width;
+
+    for (let offset = -1; offset <= 1; offset++) {
+      const offsetX = offset * actualWorldWidth;
+      filteredStates.forEach((state, index) => {
+        try {
+          stateGroup.append('path')
+            .datum(state)
+            .attr('d', path as any)
+            .attr('transform', `translate(${offsetX}, 0)`)
+            .attr('fill', 'none')
+            .attr('stroke', '#888888')
+            .attr('stroke-width', 0.6)
+            .attr('vector-effect', 'non-scaling-stroke')
+            .attr('stroke-opacity', 0.9)
+            .style('pointer-events', 'none');
+        } catch (error) {
+          console.warn(`주/도 ${index} 렌더링 실패:`, error);
+        }
+      });
+    }
+
+    const transform = zoomTransformRef.current;
+    stateGroup.attr('transform', transform as any);
+    const k = (transform && (transform as any).k) || 1;
+    const STATE_VISIBLE_K = 1.6;
+    stateGroup.attr('display', k >= STATE_VISIBLE_K ? null : 'none');
+
+  }, [selectedISO3, filteredStates, viewport]);
+
   // 도시/지자체 오버레이만 갱신 (SVG 재초기화 없이)
   useEffect(() => {
     const svg = d3.select(svgRef.current);
@@ -653,51 +702,96 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
     if (muniGroupSel.empty()) {
       muniGroupSel = svgAny.append('g').attr('class', 'municipalities').attr('pointer-events', 'none');
     }
-    muniGroupSel.selectAll('*').remove();
-    if (DEBUG_MUNI) {
-      console.debug('[muni-effect] run: showMunicipalities=%s selectedISO3=%s muniFeatures=%s internal? %s', showMunicipalities, selectedISO3, muniFeatures?.length, !!muniInternal);
-    }
-  // 렌더 게이트: 하나 이상의 피처만 있어도 표시 (기존 2개 이상 조건 완화)
-  if (!showMunicipalities || !selectedISO3 || !muniFeatures || muniFeatures.length === 0) {
-      if (DEBUG_MUNI) console.debug('[muni-effect] skip render: showMunicipalities=%s selectedISO3=%s muniFeaturesLen=%s', showMunicipalities, selectedISO3, muniFeatures?.length);
+  muniGroupSel.selectAll('*').remove();
+  if (!showMunicipalities || !selectedISO3 || !muniFeatures || muniFeatures.length < 2) {
       return;
     }
+    const { width, height } = viewportRef.current;
     const projection = geoMercator()
-      .scale(Math.min(window.innerWidth, window.innerHeight) / 7)
-      .translate([window.innerWidth / 2, window.innerHeight / 2])
+      .scale(Math.min(width, height) / 7)
+      .translate([width / 2, height / 2])
       .center([0, 35]);
     const path = geoPath().projection(projection);
     // 로컬 툴팁 헬퍼
-    // Tooltip disabled for municipal internal mesh (no per-region hover now)
+    const showLocalTooltip = (root: any, evt: any, text: string) => {
+      const tooltip = root.append('g').attr('class', 'tooltip').attr('pointer-events','none');
+      const rect = tooltip.append('rect')
+        .attr('fill', 'rgba(255, 255, 255, 0.95)')
+        .attr('stroke', '#000000')
+        .attr('stroke-width', 1)
+        .attr('rx', 4);
+      const textElement = tooltip.append('text')
+        .attr('fill', '#000000')
+        .attr('font-size', '12px')
+        .attr('font-weight', 'bold')
+        .attr('text-anchor', 'start')
+        .text(text);
+      const bbox = (textElement.node() as SVGTextElement).getBBox();
+      rect.attr('x', bbox.x - 8)
+          .attr('y', bbox.y - 4)
+          .attr('width', bbox.width + 16)
+          .attr('height', bbox.height + 8);
+      const [mouseX, mouseY] = d3.pointer(evt, svgRef.current as any);
+      tooltip.attr('transform', `translate(${mouseX + 10}, ${mouseY - 10})`);
+    };
 
-  // mesh 제거됨: internalRef 사용 안 함
-    // 단순 per-feature 렌더 (halo + stroke)
+    const hoverOpacity = Math.min(1, municipalStyle.opacity + 0.12);
+
     muniFeatures.forEach((feat: any, idx: number) => {
       try {
+        // 흰색 테두리 path (pointer-events 없음)
         muniGroupSel.append('path')
           .datum(feat)
           .attr('d', path as any)
+          .attr('class', 'municipality-outline')
           .attr('fill', 'none')
-          .attr('stroke', '#ffffff') // halo
-          .attr('stroke-width', MUNICIPAL_BASE_STROKE_WIDTH + 1.6)
+          .attr('stroke', '#ffffff')
+          .attr('stroke-width', municipalStyle.outlineWidth)
+          .attr('stroke-dasharray', municipalStyle.dashArray)
+          .attr('stroke-dashoffset', municipalStyle.dashOffset)
           .attr('vector-effect', 'non-scaling-stroke')
-          .attr('stroke-opacity', 0.5)
+          .attr('stroke-opacity', 1)
           .attr('stroke-linejoin', 'round')
           .attr('stroke-linecap', 'round')
           .style('pointer-events', 'none');
+
+        // 검은색 메인 path
         muniGroupSel.append('path')
           .datum(feat)
           .attr('d', path as any)
+          .attr('class', 'municipality-stroke')
           .attr('fill', 'none')
-          .attr('stroke', MUNICIPAL_STROKE_COLOR)
-          .attr('stroke-width', MUNICIPAL_BASE_STROKE_WIDTH + 0.4)
+          .attr('stroke', municipalStyle.color)
+          .attr('stroke-width', municipalStyle.baseWidth)
+          .attr('stroke-dasharray', municipalStyle.dashArray)
+          .attr('stroke-dashoffset', municipalStyle.dashOffset)
           .attr('vector-effect', 'non-scaling-stroke')
-          .attr('stroke-opacity', 0.9)
-          // 가독성 향상을 위해 점선 제거
-          //.attr('stroke-dasharray', '3,2')
+          .attr('stroke-opacity', municipalStyle.opacity)
           .attr('stroke-linejoin', 'round')
           .attr('stroke-linecap', 'round')
-          .style('pointer-events', 'none');
+          .style('pointer-events', 'visibleStroke')
+          .on('mouseover', function(this: SVGPathElement, event: MouseEvent) {
+            d3.select(this)
+              .attr('stroke-width', municipalStyle.hoverWidth)
+              .attr('stroke-opacity', hoverOpacity)
+              .attr('stroke-dasharray', municipalStyle.dashArray)
+              .attr('stroke-dashoffset', municipalStyle.dashOffset);
+            const p = (feat.properties || {});
+            const city = getMunicipalityName(p);
+            const parent = p?.ADM1_EN || p?.NAME_1 || p?.region || p?.province || '';
+            const txt = parent ? `🏙️ ${city} · ${parent}` : `🏙️ ${city}`;
+            // tooltip은 최상위 svg에 렌더
+            const rootSvg = d3.select(svgRef.current);
+            showLocalTooltip(rootSvg, event, txt);
+          })
+          .on('mouseout', function(this: SVGPathElement) {
+            d3.select(this)
+              .attr('stroke-width', municipalStyle.baseWidth)
+              .attr('stroke-opacity', municipalStyle.opacity)
+              .attr('stroke-dasharray', municipalStyle.dashArray)
+              .attr('stroke-dashoffset', municipalStyle.dashOffset);
+            d3.select(svgRef.current).select('.tooltip').remove();
+          });
       } catch (e) {
         console.warn(`지자체 ${idx} 렌더링 실패:`, e);
       }
@@ -705,97 +799,67 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
     // 현재 줌 상태 반영
     const k = (zoomTransformRef.current && (zoomTransformRef.current as any).k) || 1;
     muniGroupSel.attr('transform', zoomTransformRef.current as any);
-  // Force display if a country is selected even if k slightly below threshold (debug)
-    const shouldDisplay = showMunicipalities && selectedISO3 && k >= 1.1;
-    muniGroupSel.attr('display', shouldDisplay ? null : 'none');
-    if (DEBUG_MUNI) console.debug('[muni-effect] render complete. display=%s k=%s paths=%d', shouldDisplay, k, muniGroupSel.selectAll('path').size());
-  }, [selectedISO3, muniFeatures, showMunicipalities]);
+    muniGroupSel.attr('display', k >= 2.2 && selectedISO3 && showMunicipalities ? null : 'none');
+  }, [selectedISO3, muniFeatures, showMunicipalities, viewport, municipalStyle]);
 
   // 국가별 도시/지자체 경계 로더
   async function loadMunicipalities(iso3: string) {
     try {
       setMuniLoading(true);
       setMuniError(null);
-  setMuniFeatures(null);
-  // mesh state 제거됨: muniInternal reset 불필요
+      setMuniFeatures(null);
 
-      // 1) GeoBoundaries gbRequest로 ADM2 시도 (실패해도 폴백 계속)
-      // 1) (비활성화) GeoBoundaries 원격 ADM2 : CORS 차단으로 스킵 -> 바로 로컬 fallback
-      if (DEBUG_MUNI) console.debug('[muni-load] skip remote ADM2 due to CORS; using local fallback only');
+      let adm2Features: any[] = [];
 
-      // 2) 실패 시 ADM1(주/도)로 폴백
-      // (A) 속성 기반 필터 (데이터에 ISO 속성이 거의 없으므로 대개 빈 결과)
-      let propCount = 0, centroidCount = 0, bboxCount = 0;
-      const filteredByProp = states.filter((s: any) => {
-        const p = s.properties || {};
-        const cIso = (p.adm0_a3 || p.ADM0_A3 || p.iso_a3 || p.ISO_A3 || p.GU_A3 || '').toUpperCase();
-        const ok = cIso && cIso === iso3.toUpperCase(); if (ok) propCount++; return ok;
-      });
-      if (filteredByProp.length) {
-        if (DEBUG_MUNI) console.debug('[muni-load] ADM1 property match count', filteredByProp.length);
-        setMuniDebugInfo(`propertyMatch=${filteredByProp.length}`);
-        setMuniFeatures(filteredByProp);
-        setMuniLoading(false);
-        return;
-      }
-      // (B) 지오메트리 포함 기반 필터: 주/도(States-Provinces) 중심점이 선택 국가 폴리곤 안에 있는 경우 선택
-      const countryFeature = countries.find(f => {
-        try { return getISO3(f.properties) === iso3; } catch { return false; }
-      });
-      if (countryFeature) {
-        const geomFiltered: any[] = [];
-        for (const st of states) {
-          try {
-            const c = geoCentroid(st as any);
-            if (c && d3.geoContains(countryFeature as any, c)) { geomFiltered.push(st); centroidCount++; }
-          } catch {}
+      // 1) GeoBoundaries gbRequest로 ADM2 시도 (corsproxy.io 사용)
+      try {
+        const apiUrl = `https://www.geoboundaries.org/gbRequest.html?ISO=${encodeURIComponent(iso3)}&ADM=ADM2`;
+        const reqUrl = `https://corsproxy.io/?${encodeURIComponent(apiUrl)}`;
+        
+        const req = await fetch(reqUrl);
+        if (req.ok) {
+          const info: any = await req.json();
+          const pick = Array.isArray(info) ? info.find((x: any) => x && typeof x.gjDownloadURL === 'string' && x.gjDownloadURL.includes('.geojson')) : info;
+          const dl = pick?.gjDownloadURL || null;
+
+          if (dl) {
+            const proxiedDlUrl = `https://corsproxy.io/?${encodeURIComponent(dl)}`;
+            const gj = await fetch(proxiedDlUrl);
+            if (gj.ok) {
+              const data: any = await gj.json();
+              if (data?.features?.length) {
+                adm2Features = data.features;
+              }
+            }
+          }
         }
-        if (geomFiltered.length) {
-          if (DEBUG_MUNI) console.debug('[muni-load] centroid containment match count', geomFiltered.length);
-          setMuniDebugInfo(`propertyMatch=0 centroidMatch=${geomFiltered.length}`);
-          setMuniFeatures(geomFiltered);
-          setMuniLoading(false);
-          return;
+      } catch (e) {
+        console.warn('ADM2 data fetch failed, will try to fall back to ADM1.', e);
+      }
+
+      // 2) ADM2 데이터가 있으면 사용, 없으면 ADM1(주/도) 데이터로 폴백
+      if (adm2Features.length > 0) {
+        setMuniFeatures(adm2Features);
+      } else {
+        const adm1Fallback = states.filter((s: any) => {
+          const p = s.properties || {};
+          const cIso = (p.adm0_a3 || p.ADM0_A3 || p.iso_a3 || p.ISO_A3 || p.GU_A3 || '').toUpperCase();
+          return cIso === iso3.toUpperCase();
+        });
+        if (adm1Fallback.length) {
+          console.log(`No ADM2 data for ${iso3}, falling back to ADM1 data (${adm1Fallback.length} features).`);
+          setFilteredStates(adm1Fallback);
+          setMuniFeatures(adm1Fallback);
         } else {
-          if (DEBUG_MUNI) console.warn('[muni-load] centroid containment produced 0 matches for', iso3);
+          throw new Error(`No ADM2 or ADM1 data available for ${iso3}`);
         }
-        // (C) 바운딩 박스 교차 기반 폴백 (겹치는 주/도 전부 포함)
-        try {
-          const cb = d3.geoBounds(countryFeature as any); // [[minLon,minLat],[maxLon,maxLat]]
-          const bboxFiltered: any[] = [];
-          for (const st of states) {
-            try {
-              const sb = d3.geoBounds(st as any);
-              const intersects = !(sb[1][0] < cb[0][0] || sb[0][0] > cb[1][0] || sb[1][1] < cb[0][1] || sb[0][1] > cb[1][1]);
-              if (intersects) { bboxFiltered.push(st); bboxCount++; }
-            } catch {}
-          }
-          if (bboxFiltered.length) {
-            if (DEBUG_MUNI) console.debug('[muni-load] bbox intersection fallback count', bboxFiltered.length);
-            setMuniDebugInfo(`propertyMatch=0 centroidMatch=0 bboxMatch=${bboxFiltered.length}`);
-            setMuniFeatures(bboxFiltered);
-            setMuniLoading(false);
-            return;
-          } else if (DEBUG_MUNI) {
-            console.warn('[muni-load] bbox fallback also 0 for', iso3);
-          }
-        } catch (e2) {
-          if (DEBUG_MUNI) console.warn('[muni-load] bbox fallback error', e2);
-        }
-      } else if (DEBUG_MUNI) {
-        console.warn('[muni-load] country feature not found for iso', iso3);
       }
 
-      // 3) 실패 시 표시하지 않음 (ADM1 폴백 제거)
-      setMuniDebugInfo(`propertyMatch=${propCount} centroidMatch=${centroidCount} bboxMatch=${bboxCount}`);
-      throw new Error('No ADM2/ADM1 fallback polygons matched (dataset likely lacks subnational features)');
     } catch (e: any) {
-      console.warn('Municipality load failed:', e);
-      if (DEBUG_MUNI) console.warn('[muni-load] ultimate failure', e);
+      console.error('Municipality load failed:', e);
       setMuniError(e?.message || 'Failed to load city boundaries');
     } finally {
       setMuniLoading(false);
-      if (DEBUG_MUNI) console.debug('[muni-load] done');
     }
   }
 
@@ -806,16 +870,94 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
     );
   }
   function getISO3(p: any): string | null {
-    // Accept common property names or fallback to feature id (many Natural Earth variants place ISO3 in id)
-    const v = p?.iso_a3 || p?.ISO_A3 || p?.adm0_a3 || p?.ADM0_A3 || p?.WB_A3 || p?.GU_A3 || p?.id;
+    const v = p?.iso_a3 || p?.ISO_A3 || p?.adm0_a3 || p?.ADM0_A3 || p?.WB_A3 || p?.GU_A3;
     if (!v) return null;
     const s = String(v).toUpperCase();
-    if (s === '---' || s === 'XXX') return null;
-  // 일부 데이터셋의 중국 표기 보정
-  if (s === 'CHN' || s === 'CN') return 'CHN';
-  return s;
+    if (s === '---' || s === 'XXX' || s === '-99') return null;
+    // 프랑스 및 일부 국가 코드 보정
+    if (p?.SOVEREIGNT === 'France' || p?.ADMIN === 'France') return 'FRA';
+    if (s === 'CHN' || s === 'CN') return 'CHN';
+    return s;
   }
-  // getMunicipalityName removed (not needed without per-municipality hover)
+  function getMunicipalityName(p: any): string {
+    return (
+      p?.shapeName || p?.NAME || p?.NAME_2 || p?.NAME_1 || p?.name || p?.full_name || p?.ENGTYPE_2 || 'Unknown City'
+    );
+  }
+  function getFlagEmoji(p: any): string {
+    const iso2 = getISO2(p);
+    if (!iso2) return '🏳️';
+    return iso2ToFlag(iso2);
+  }
+
+  function iso2ToFlag(iso2: string): string {
+    if (!iso2 || iso2.length !== 2) return '🏳️';
+    const upper = iso2.toUpperCase();
+    const codePoints = [...upper].map(ch => 0x1F1E6 + (ch.charCodeAt(0) - 65));
+    return String.fromCodePoint(...codePoints);
+  }
+
+  function getISO2(p: any): string | null {
+    const raw = p?.iso_a2 || p?.ISO_A2 || p?.adm0_a2 || p?.ADM0_A2 || p?.WB_A2 || p?.GU_A2;
+    if (raw && typeof raw === 'string' && raw.trim().length === 2) {
+      const val = raw.trim().toUpperCase();
+      if (val !== '--') return val;
+    }
+    const iso3 = getISO3(p);
+    if (!iso3) return null;
+    const mapped = ISO3_TO_ISO2[iso3];
+    return mapped || null;
+  }
+
+  const ISO3_TO_ISO2: Record<string, string> = {
+    FRA: 'FR',
+    CHN: 'CN',
+    USA: 'US',
+    GBR: 'GB',
+    KOR: 'KR',
+    PRK: 'KP',
+    RUS: 'RU',
+    DEU: 'DE',
+    ESP: 'ES',
+    ITA: 'IT',
+    BRA: 'BR',
+    CAN: 'CA',
+    AUS: 'AU',
+    JPN: 'JP',
+    MEX: 'MX',
+    IND: 'IN',
+    TUR: 'TR',
+    GRC: 'GR',
+    LBY: 'LY',
+    EGY: 'EG',
+    DZA: 'DZ',
+    MAR: 'MA',
+    SWE: 'SE',
+    FIN: 'FI',
+    NLD: 'NL',
+    PRT: 'PT',
+    POL: 'PL',
+    ALB: 'AL',
+    SRB: 'RS',
+    BIH: 'BA',
+    MNE: 'ME',
+    BGR: 'BG',
+    MKD: 'MK'
+  };
+
+  useEffect(() => {
+    viewportRef.current = viewport;
+  }, [viewport]);
+
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const handleResize = () => {
+      setViewport({ width: window.innerWidth, height: window.innerHeight });
+    };
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   if (loading) {
     return (
@@ -907,14 +1049,6 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
             {!muniLoading && !muniError && muniFeatures && (
               <span style={{ marginLeft: 8, color: '#4B5563' }}>경계 {muniFeatures.length}개</span>
             )}
-            {!muniLoading && selectedISO3 && !muniError && (!muniFeatures || muniFeatures.length === 0) && (
-              <span style={{ marginLeft: 8, color: '#B45309' }}>하위 행정구역 없음 (데이터 부족)</span>
-            )}
-          </div>
-        )}
-        {muniDebugInfo && (
-          <div style={{ marginTop: 4, fontSize: 11, color: '#6B7280', fontFamily: 'monospace' }}>
-            muniDebug: {muniDebugInfo}
           </div>
         )}
         <div style={{ marginTop: '8px', fontSize: '11px', color: '#666' }}>

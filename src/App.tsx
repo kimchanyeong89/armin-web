@@ -10,6 +10,7 @@ import SignUp from "./components/SignUp";
 import Navbar from "./components/Navbar";  // 추가
 import MyPage from "./components/Mypage";  // MyPage import casing fixed
 import AdminImport from "./pages/AdminImport";
+import TateModernPermanentPage from "./pages/TateModernPermanentPage";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
           <Route path="/signup" element={<SignUp />} />
           <Route path="/mypage" element={<MyPage />} /> {/* MyPage route 추가 */}
           <Route path="/admin/import" element={<AdminImport />} />
+          <Route path="/tate-modern/permanent" element={<TateModernPermanentPage />} />
         </Routes>
       </BrowserRouter>
     </AuthProvider>

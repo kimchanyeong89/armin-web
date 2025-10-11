@@ -60,14 +60,14 @@ export default function ExhibitionDetails({
   const [isUpcomingExhibitionsCollapsed, setIsUpcomingExhibitionsCollapsed] = useState(false);
   // Debug overlay removed with header image
 
-  // Optional auto-feed for National Gallery: load from local JSON if present
+  // Optional auto-feed for National Gallery and Tate Britain: load from local JSON if present
   const [ngOverride, setNgOverride] = useState<Partial<Exhibition> | null>(null);
   useEffect(() => {
     let aborted = false;
     async function loadNG() {
-      if (!exhibition || (exhibition.id !== "national-gallery" && exhibition.id !== 'tate-modern')) { setNgOverride(null); return; }
+      if (!exhibition || (exhibition.id !== "national-gallery" && exhibition.id !== 'tate-modern' && exhibition.id !== 'tate-britain')) { setNgOverride(null); return; }
       try {
-        const feedPath = exhibition.id === 'tate-modern' ? '/data/tate-modern.json' : '/data/national-gallery-exhibitions.json';
+        const feedPath = exhibition.id === 'tate-modern' ? '/data/tate-modern.json' : exhibition.id === 'tate-britain' ? '/data/tate-britain.json' : '/data/national-gallery-exhibitions.json';
         const res = await fetch(feedPath, { cache: "no-store" });
         if (!res.ok) return; // keep defaults when not found
         const data = await res.json();
@@ -87,8 +87,8 @@ export default function ExhibitionDetails({
           // Always keep local representative image from homepage dataset; do not override from feed
           representativeImage: exhibition.representativeImage,
           description: typeof data.description === 'string' && data.description ? data.description : exhibition.description,
-          // For Tate: data.items = all future shows; for NG: use special/upcoming/past
-          temporaryExhibitions: exhibition.id === 'tate-modern'
+          // For Tate galleries: data.items = all future shows; for NG: use special/upcoming/past
+          temporaryExhibitions: exhibition.id.startsWith('tate-')
             ? (Array.isArray(data.items) ? data.items.map(mapItem) : exhibition.temporaryExhibitions)
             : ([
                 ...(Array.isArray(data.special) ? data.special.map(mapItem) : []),
@@ -97,7 +97,7 @@ export default function ExhibitionDetails({
                 ...(Array.isArray(data.special) ? data.special.map(mapItem) : []),
                 ...(Array.isArray(data.upcoming) ? data.upcoming.map(mapItem) : []),
               ] : exhibition.temporaryExhibitions),
-          pastExhibitions: exhibition.id === 'tate-modern'
+          pastExhibitions: exhibition.id.startsWith('tate-')
             ? (exhibition.pastExhibitions || [])
             : (Array.isArray(data.past) ? data.past.map(mapItem) : (exhibition.pastExhibitions || [])),
         } as Partial<Exhibition>;
@@ -108,6 +108,30 @@ export default function ExhibitionDetails({
     }
     loadNG();
     return () => { aborted = true; };
+  }, [exhibition]);
+
+  // Load Tate Modern artworks archive (scraped) when viewing tate-modern panel
+  useEffect(() => {
+    let cancelled = false;
+    async function loadTateArtworks() {
+      if (!exhibition || (exhibition.id !== 'tate-modern' && exhibition.id !== 'tm-perm-1')) { return; }
+      try {
+        const dataFile = exhibition.id === 'tm-perm-1' ? '/data/tate-collection-highlights-artworks.json' : '/data/tate-artworks.json';
+        const res = await fetch(dataFile, { cache: 'no-store' });
+        if (!res.ok) return;
+        const json = await res.json();
+        if (cancelled) return;
+        const items = Array.isArray(json.items) ? json.items : [];
+        // Light filtering: drop entries missing title or image entirely
+        items.filter((it: any) => it && it.title && (it.thumb || it.image));
+        // Limit to first 60 to keep side panel light; can expand later
+        // Removed: setTateArtworks(cleaned.slice(0, 60));
+      } catch {
+        // ignore failures (keep null)
+      }
+    }
+    loadTateArtworks();
+    return () => { cancelled = true; };
   }, [exhibition]);
 
   function cryptoRandom() {
@@ -287,7 +311,7 @@ export default function ExhibitionDetails({
         <>
           {/* Permanent exhibitions */}
           <h4>Permanent</h4>
-          {exhibition.permanentExhibitions && exhibition.permanentExhibitions.length > 0 ? (
+          {exhibition.permanentExhibitions && exhibition.permanentExhibitions.filter(item => item.id === 'tm-perm-3').length > 0 ? (
             <div
               style={{
                 display: "grid",
@@ -296,7 +320,7 @@ export default function ExhibitionDetails({
                 justifyContent: "center",
               }}
             >
-              {exhibition.permanentExhibitions.map((item) => (
+              {exhibition.permanentExhibitions.filter(item => item.id === 'tm-perm-3').map((item) => (
                 <div
                   key={item.id}
                   onClick={() => {

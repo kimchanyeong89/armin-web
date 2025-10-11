@@ -5,6 +5,7 @@
 - Victoria and Albert Museum (V&A): https://commons.wikimedia.org/wiki/File:Victoria_and_Albert_Museum_(14).jpg
 - Science Museum (London): https://commons.wikimedia.org/wiki/File:At_the_Science_Museum_-_geograph.org.uk_-_6221150.jpg
  - Tate Modern (London): https://commons.wikimedia.org/wiki/File:Tate_Modern_Turbine_Hall_2018.jpg
+ - Tate Britain (London): https://commons.wikimedia.org/wiki/File:Tate_Britain_art_museum,_London,_England_(U.K.)_(53337196625).jpg
 서울(Seoul) 전시관 외관 이미지 출처
 - MMCA Seoul (국립현대미술관 서울): https://www.mmca.go.kr/ (메인 비주얼) — 대체: https://commons.wikimedia.org/wiki/Category:National_Museum_of_Modern_and_Contemporary_Art,_Seoul
 - Leeum Museum of Art: https://commons.wikimedia.org/wiki/File:Leeum_Samsung_Museum_of_Art_2014.jpg
