@@ -144,23 +144,33 @@ function classifyArtworkType(title, description = '') {
 
 function delay(ms) { return new Promise(r => setTimeout(r, ms)); }
 
-// macOS에서 Chromium 창 숨기기
+// OS 감지
+const isMac = process.platform === 'darwin';
+const isWindows = process.platform === 'win32';
+
+// Chromium 창 숨기기 (OS별 처리)
 function minimizeChrome() {
-  exec(`osascript -e '
-    tell application "System Events"
-      set visible of process "Chromium" to false
-    end tell
-  '`);
+  if (isMac) {
+    exec(`osascript -e '
+      tell application "System Events"
+        set visible of process "Chromium" to false
+      end tell
+    '`);
+  }
+  // Windows/Linux에서는 아무것도 안 함 (창이 보이는 상태로 유지)
 }
 
 // Chromium 창 보이기 (CAPTCHA용)
 function showChrome() {
-  exec(`osascript -e '
-    tell application "System Events"
-      set visible of process "Chromium" to true
-      set frontmost of process "Chromium" to true
-    end tell
-  '`);
+  if (isMac) {
+    exec(`osascript -e '
+      tell application "System Events"
+        set visible of process "Chromium" to true
+        set frontmost of process "Chromium" to true
+      end tell
+    '`);
+  }
+  // Windows/Linux에서는 이미 보이는 상태
 }
 
 async function collectLinks() {
@@ -175,8 +185,13 @@ async function collectLinks() {
     ]
   });
 
+  // OS에 맞는 User-Agent 사용
+  const userAgent = isWindows 
+    ? 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36'
+    : 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36';
+
   const context = await browser.newContext({
-    userAgent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36',
+    userAgent,
     viewport: { width: 800, height: 600 }
   });
 
