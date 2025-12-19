@@ -1,10 +1,15 @@
 import type { ExhibitionItem } from "../types/Exhibition";
 import type { Artwork } from "../types/Artwork";
-import { useState, useEffect, useRef, useMemo } from "react";
-import { collection, query, where, onSnapshot, addDoc, getDocs, deleteDoc, doc } from "firebase/firestore";
-import { db } from "../firebase";
+import { useNavigate } from 'react-router-dom';
+import { useState, useEffect, useRef, useMemo, useCallback } from "react";
+import { collection, query, where, onSnapshot, getDocs, deleteDoc, doc, setDoc, serverTimestamp, addDoc } from "firebase/firestore";
+import { onAuthStateChanged, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { db, auth } from "../firebase";
 import { buildSourceSet, useProxy } from "../utils/imageProxy";
 import { usePrefetchNeighbors } from "../hooks/usePrefetchNeighbors";
+import { LoginButton } from "./LoginButton";
+import { HeartOverlay } from "./HeartOverlay";
+import { SubmissionForm } from "./SubmissionForm";
 
 const sortNumericKeys = (map?: Record<string, string>) => {
   if (!map) return [] as number[];
@@ -27,7 +32,12 @@ const pickLowPlaceholder = (artwork: Artwork) => {
     const url = artwork.variants?.webp?.[String(webpKeys[0])];
     if (url) return url;
   }
-  return artwork.image;
+  // Avoid demo placeholder or suspicious '1' filenames
+  const img = artwork.image || '';
+  if (/exhibition1\.png$/i.test(img) || /\/(?:1|1\.jpg|1\.png)$/i.test(img) || img === '1' || img === '1.jpg' || img === '1.png') {
+    return FALLBACK_ARTWORK_IMAGE;
+  }
+  return img;
 };
 
 const buildVariantSourceSet = (
@@ -48,6 +58,33 @@ const buildVariantSourceSet = (
   return null;
 };
 
+// Use a transparent 1x1 PNG as the fallback so no visible '1' placeholder appears
+const FALLBACK_ARTWORK_IMAGE = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMB/6XjVvcAAAAASUVORK5CYII=";
+
+// Extract YouTube video ID from various URL formats
+const extractYouTubeId = (text: string): string | null => {
+  if (!text) return null;
+  // Match various YouTube URL formats
+  const patterns = [
+    /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/|youtube\.com\/v\/)([a-zA-Z0-9_-]{11})/,
+    /youtube\.com\/shorts\/([a-zA-Z0-9_-]{11})/,
+  ];
+  for (const pattern of patterns) {
+    const match = text.match(pattern);
+    if (match) return match[1];
+  }
+  return null;
+};
+
+// Remove YouTube URLs from text for cleaner display
+const removeYouTubeUrls = (text: string): string => {
+  if (!text) return '';
+  return text
+    .replace(/(?:https?:\/\/)?(?:www\.)?(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/|youtube\.com\/v\/|youtube\.com\/shorts\/)[a-zA-Z0-9_-]{11}[^\s]*/g, '')
+    .replace(/\s{2,}/g, ' ')
+    .trim();
+};
+
 // Layout constants (original)
 const LAYOUT_LEFT_BASE = 420; // px, push the two-line layout block to the right
 const LAYOUT_RIGHT_PAD = 0; // px, stick to the right edge
@@ -65,28 +102,142 @@ interface ExhibitionModalProps {
   initialSelectedIndex?: number;
 }
 
+
+
+// Room metadata for display exhibitions
+interface RoomMeta {
+  id: string;
+  name: string;
+  coverImage?: string;
+  description?: string;
+  location?: string;
+  url?: string;
+  hasArtworks: boolean;
+}
+
 const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, initialSelectedIndex = 0 }) => {
+  const navigate = useNavigate();
   const [artworks, setArtworks] = useState<Artwork[]>([]);
   const [initialized, setInitialized] = useState<boolean>(false);
   const [selectedIndex, setSelectedIndex] = useState<number>(initialSelectedIndex);
   const [selectedRoomId, setSelectedRoomId] = useState<string>('ALL');
+  const [roomMetas, setRoomMetas] = useState<RoomMeta[]>([]);
   const [selectedYearRange, setSelectedYearRange] = useState<string>('ALL');
-  const [viewMode, setViewMode] = useState<'archive' | 'gallery' | 'panorama'>('archive');
+  const [dateLevel, setDateLevel] = useState<'century' | 'decade'>('century');
+  const [selectedCentury, setSelectedCentury] = useState<string | null>(null); // '~17' -> ≤1699, '18' -> 1700s, '19' -> 1800s, etc.
+  const [viewMode, setViewMode] = useState<'archive' | 'gallery' | 'panorama'>('gallery');
+  // Virtualization state for archive mode
+  const [archiveScrollTop, setArchiveScrollTop] = useState(0);
+  const [archiveContainerHeight, setArchiveContainerHeight] = useState(600);
+  // Liked artworks feature
+  const [likedArtworks, setLikedArtworks] = useState<Set<string>>(new Set());
+  const [currentUser, setCurrentUser] = useState<any>(null);
+  // Submission form for temporary exhibitions
+  const [showSubmissionForm, setShowSubmissionForm] = useState(false);
+  // Exhibition description expanded state
+  const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false);
+  // Enriched exhibition data (with descriptionHtml from JSON)
+  const [_enrichedExhibition, setEnrichedExhibition] = useState<any>(null);
+  // Hayward Gallery: toggle to show artworks only (hide archival documents)
+  const [showArtworksOnly, setShowArtworksOnly] = useState(false);
+  // 2D/3D artwork type filter (multi-select)
+  const [selectedTypes, setSelectedTypes] = useState<Set<'2D' | '3D'>>(new Set());
+
+  useEffect(() => {
+    const unsub = onAuthStateChanged(auth, (user) => {
+      setCurrentUser(user);
+      if (!user) {
+        setLikedArtworks(new Set());
+      }
+    });
+    return () => unsub();
+  }, []);
+
+  useEffect(() => {
+    if (!currentUser) return;
+    const q = collection(db, `users/${currentUser.uid}/liked_artworks`);
+    // Subscribe to the whole collection of likes (assuming < 10k likes, this is fine for now)
+    // Optimization: we could load only IDs.
+    const unsub = onSnapshot(q, (snap) => {
+      const s = new Set<string>();
+      snap.forEach(doc => s.add(doc.id));
+      setLikedArtworks(s);
+    });
+    return () => unsub();
+  }, [currentUser]);
+
+  const toggleLike = useCallback(async (e: React.MouseEvent, artwork: Artwork) => {
+    e.stopPropagation();
+    e.preventDefault();
+
+    let userToUse = currentUser;
+
+    // Prompt login if not logged in or is anonymous
+    if (!currentUser || currentUser.isAnonymous) {
+      try {
+        const provider = new GoogleAuthProvider();
+        provider.setCustomParameters({ prompt: 'select_account' });
+        const result = await signInWithPopup(auth, provider);
+        userToUse = result.user; // Use the newly signed-in user
+      } catch (err) {
+        console.error("Login failed", err);
+        return; // Only return if login actually failed
+      }
+    }
+
+    if (!userToUse) return; // Safety check
+
+    const artworkId = artwork.id;
+    const isLiked = likedArtworks.has(artworkId);
+    const ref = doc(db, `users/${userToUse.uid}/liked_artworks/${artworkId}`);
+    try {
+      if (isLiked) {
+        // Optimistic update
+        setLikedArtworks(prev => {
+          const next = new Set(prev);
+          next.delete(artworkId);
+          return next;
+        });
+        await deleteDoc(ref);
+      } else {
+        // Optimistic update
+        setLikedArtworks(prev => {
+          const next = new Set(prev);
+          next.add(artworkId);
+          return next;
+        });
+        await setDoc(ref, {
+          likedAt: serverTimestamp(),
+          artworkId,
+          title: artwork.name || '',
+          artist: artwork.artist || '',
+          year: artwork.year || 0,
+          image: artwork.image || '',
+        });
+      }
+    } catch (error) {
+      console.error("Failed to toggle like", error);
+    }
+  }, [currentUser, likedArtworks]);
+
+
+
+  useEffect(() => {
+    setViewMode((prev) => (prev === 'gallery' ? prev : 'gallery'));
+  }, [exhibition.id]);
   const panelRef = useRef<HTMLDivElement | null>(null);
   const listRef = useRef<HTMLDivElement | null>(null);
   const infoPanelRef = useRef<HTMLDivElement | null>(null);
-  const didCenterRef = useRef(false);
-  const blockHeightsRef = useRef<{ h: number } | null>(null);
-  const relocateTimerRef = useRef<number | null>(null);
-  const magnetTimerRef = useRef<number | null>(null);
   const seededRef = useRef(false);
-  const [infoY, setInfoY] = useState<number>(0);
+
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
   const [lightbox, setLightbox] = useState<{
-    src: string;
+    artwork: Artwork;
     start: { left: number; top: number; width: number; height: number };
     target: { left: number; top: number; width: number; height: number };
     animate: boolean;
+    natWidth?: number;
+    natHeight?: number;
   } | null>(null);
   // Progressive image loading state (Step 1): main stage / panorama
   const [mainLoaded, setMainLoaded] = useState(false);
@@ -107,8 +258,28 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
       delete st.exhibitionId;
       delete st.selectedIndex;
       window.history.replaceState(st, document.title);
-    } catch {}
+    } catch { }
   };
+
+  // Responsive check for top bar layout
+  const [isNarrow, setIsNarrow] = useState(() => typeof window !== "undefined" ? window.innerWidth < 1100 : false);
+  // Mobile detection (for touch devices with narrow screens)
+  const [isMobile, setIsMobile] = useState(() => typeof window !== "undefined" ? window.innerWidth < 768 : false);
+  useEffect(() => {
+    const onResize = () => {
+      setIsNarrow(window.innerWidth < 1100);
+      setIsMobile(window.innerWidth < 768);
+    };
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
+  }, []);
+
+  // Force gallery mode on mobile
+  useEffect(() => {
+    if (isMobile && viewMode !== 'gallery') {
+      setViewMode('gallery');
+    }
+  }, [isMobile, viewMode]);
 
   // Allow adding simple rooms and compute a list of room buttons (ALL + defaults + custom + discovered)
   const [customRooms, setCustomRooms] = useState<string[]>([]);
@@ -121,17 +292,28 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
         const parsed = JSON.parse(raw) as string[];
         if (Array.isArray(parsed)) setCustomRooms(parsed);
       }
-    } catch {}
+    } catch { }
   }, [exhibition.id]);
 
   useEffect(() => {
     try {
       const key = `rooms_${exhibition.id}`;
       localStorage.setItem(key, JSON.stringify(customRooms));
-    } catch {}
+    } catch { }
   }, [customRooms, exhibition.id]);
+  
   const roomButtons = useMemo(() => {
-    // Only include rooms that actually have artworks, plus any discovered numeric rooms
+    // For display exhibitions (both Tate Britain and Tate Modern), use roomMetas to include all rooms
+    const isTateBritainDisplay = exhibition.id.startsWith('tate-britain-display-');
+    if ((isTateBritainDisplay || exhibition.id.startsWith('display-')) && roomMetas.length > 0) {
+      const buttons: { label: string; id: string }[] = [{ label: 'ALL', id: 'ALL' }];
+      for (const meta of roomMetas) {
+        buttons.push({ label: meta.id, id: meta.id });
+      }
+      return buttons;
+    }
+    
+    // For non-display exhibitions: only include rooms that actually have artworks
     const discovered = Array.from(new Set(
       artworks
         .map(a => (a.roomId || '').trim())
@@ -139,42 +321,142 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
     ));
     const numeric = Array.from(new Set(discovered.filter(id => /^\d+$/.test(id))));
     numeric.sort((a, b) => parseInt(a, 10) - parseInt(b, 10));
+    // Letter rooms (A-G for ground floor)
+    const letters = Array.from(new Set(discovered.filter(id => /^[A-G]$/i.test(id))));
+    letters.sort();
     const hasC = discovered.some(id => id.toUpperCase() === 'C');
+    // Check for both 'n' and 'Not on display' as Archive
+    const hasArchive = discovered.some(id => id === 'Not on display' || id === 'n');
+
     const buttons: { label: string; id: string }[] = [{ label: 'ALL', id: 'ALL' }];
     for (const id of numeric) buttons.push({ label: id, id });
-    if (hasC) buttons.push({ label: 'C', id: 'C' }); // append Central Hall at the end
+    for (const id of letters) {
+      if (id.toUpperCase() !== 'C') buttons.push({ label: id.toUpperCase(), id }); // add letter rooms except C (handled separately)
+    }
+    if (hasC) buttons.push({ label: 'C', id: 'C' }); // append Central Hall
+    if (hasArchive) buttons.push({ label: 'n', id: 'n' }); // append Archive (n) at the end
     return buttons;
+  }, [artworks, roomMetas, exhibition.id]);
+
+  // Room-only filtered (for deriving century/decade availability)
+  const roomFiltered = useMemo(() => {
+    if (selectedRoomId === 'ALL') return artworks;
+    return artworks.filter(a => (a.roomId || 'default') === selectedRoomId);
+  }, [artworks, selectedRoomId]);
+
+  // Apply date filter: if decade is selected, filter by that decade; otherwise if a century is selected (in decade view), filter by the whole century
+  const filteredArtworks = useMemo(() => {
+    let filtered = roomFiltered;
+
+    // Filter out archival materials if toggle is on (generic for all collections with isArchival field)
+    if (showArtworksOnly) {
+      filtered = filtered.filter(a => !a.isArchival);
+    }
+
+    // 2D/3D type filter (if any type selected, filter to those types)
+    if (selectedTypes.size > 0) {
+      filtered = filtered.filter(a => a.type && selectedTypes.has(a.type as '2D' | '3D'));
+    }
+
+    // If in decade view and a century is chosen, limit to that century
+    if (dateLevel === 'decade' && selectedCentury) {
+      if (selectedCentury === '~17') {
+        // Pre-1700
+        filtered = filtered.filter(a => (a.year || 0) > 0 && (a.year || 0) < 1700);
+      } else {
+        const cNum = parseInt(selectedCentury);
+        const cStart = (cNum - 1) * 100;
+        const cEnd = cStart + 100;
+        filtered = filtered.filter(a => {
+          const y = a.year || 0;
+          return y >= cStart && y < cEnd;
+        });
+      }
+    }
+
+    // If a decade/century is explicitly selected, further narrow
+    if (selectedYearRange !== 'ALL') {
+      const startYear = parseInt(selectedYearRange);
+      if (Number.isFinite(startYear)) {
+        const dStart = startYear;
+        // For ~17c selections, use 100-year range; otherwise 10-year
+        const dEnd = (selectedCentury === '~17') ? dStart + 100 : dStart + 10;
+        filtered = filtered.filter(a => {
+          const y = a.year || 0;
+          return y >= dStart && y < dEnd;
+        });
+      }
+    }
+
+    return filtered;
+  }, [roomFiltered, dateLevel, selectedCentury, selectedYearRange, likedArtworks, showArtworksOnly, selectedTypes]);
+
+  // Check if any artwork has type field (2D/3D) for showing filter buttons
+  const hasTypedArtworks = useMemo(() => {
+    return artworks.some(a => a.type === '2D' || a.type === '3D');
   }, [artworks]);
 
-  const filteredArtworks = useMemo(() => {
-    let filtered = artworks;
-    
-    // Room filtering
-    if (selectedRoomId === 'ALL') {
-      filtered = artworks;
-    } else {
-      filtered = artworks.filter(a => (a.roomId || 'default') === selectedRoomId);
+  // Check if any artwork has isArchival field for showing artworks only button
+  const hasArchivalArtworks = useMemo(() => {
+    return artworks.some(a => a.isArchival === true);
+  }, [artworks]);
+
+  // Derive available centuries and decades from roomFiltered
+  const availableCenturies = useMemo(() => {
+    const set = new Set<string>();
+    for (const a of roomFiltered) {
+      const y = a.year || 0;
+      if (!y) continue;
+      if (y < 1700) set.add('~17');      // 17c and earlier
+      else if (y < 1800) set.add('18');  // 18c (1700-1799)
+      else if (y < 1900) set.add('19');  // 19c (1800-1899)
+      else if (y < 2000) set.add('20');  // 20c (1900-1999)
+      else set.add('21');                 // 21c (2000+)
     }
-    
-    // Year filtering
-    if (selectedYearRange !== 'ALL') {
-      filtered = filtered.filter(a => {
-        const year = a.year || 0;
-        if (selectedYearRange === 'under 1900') {
-          return year < 1900;
-        } else if (selectedYearRange === 'over 2000') {
-          return year > 2000;
-        } else {
-          const startYear = parseInt(selectedYearRange);
-          return year >= startYear && year < startYear + 10;
+    // Sort: ~17 first, then numeric ascending
+    return Array.from(set).sort((a, b) => {
+      if (a === '~17') return -1;
+      if (b === '~17') return 1;
+      return Number(a) - Number(b);
+    });
+  }, [roomFiltered]);
+
+  const availableDecades = useMemo(() => {
+    if (!selectedCentury) return [] as number[];
+    const present = new Set<number>();
+    if (selectedCentury === '~17') {
+      // Pre-1700: group by centuries (100-year intervals) instead of decades
+      for (const a of roomFiltered) {
+        const y = a.year || 0;
+        if (y > 0 && y < 1700) {
+          // Group by century: 1200-1299 -> 1200, 1300-1399 -> 1300, etc.
+          const c = Math.floor(y / 100) * 100;
+          present.add(c);
         }
-      });
+      }
+    } else {
+      const cNum = parseInt(selectedCentury);
+      const start = (cNum - 1) * 100;
+      const end = start + 100;
+      for (const a of roomFiltered) {
+        const y = a.year || 0;
+        if (y >= start && y < end) {
+          const d = Math.floor(y / 10) * 10;
+          present.add(d);
+        }
+      }
     }
-    
-    return filtered;
-  }, [artworks, selectedRoomId, selectedYearRange]);
+    return Array.from(present).sort((a, b) => a - b);
+  }, [roomFiltered, selectedCentury]);
+
+  // Reset date drilldown when room or exhibition changes
+  useEffect(() => {
+    setDateLevel('century');
+    setSelectedCentury(null);
+    setSelectedYearRange('ALL');
+  }, [selectedRoomId, exhibition.id]);
   // Momentum scroll state
-  const momentumRef = useRef<{ vel: number; raf: number; accelFrames: number }>({ vel: 0, raf: 0, accelFrames: 0 });
+  const momentumRef = useRef<{ vel: number; raf: number }>({ vel: 0, raf: 0 });
   const applyMomentumRef = useRef<((delta: number) => void) | null>(null);
   // Alignment helpers for meta row under top controls
   const galleryRef = useRef<HTMLSpanElement | null>(null);
@@ -192,12 +474,77 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
   const META_DATE_X = 500; // px
   const META_GAP = META_DATE_X - META_CREATOR_X; // 250px by default
   const FIXED_META_HEIGHT = 56; // px, lock meta row height to prevent layout shift
-  const metaPos = {
+  const metaPos = isNarrow ? {
+    title: 0,
+    creator: 0,
+    date: 200,
+    dimension: 200
+  } : {
     title: Math.max(0, META_CREATOR_X - META_GAP),
     creator: META_CREATOR_X,
     date: META_DATE_X,
     dimension: META_DATE_X + META_GAP,
-  } as const;
+  };
+  const applyFallbackImage = useCallback((target: HTMLImageElement | null) => {
+    if (!target) return;
+    if (target.dataset.fallbackApplied === '1') return;
+    target.dataset.fallbackApplied = '1';
+    target.src = FALLBACK_ARTWORK_IMAGE;
+    try {
+      target.srcset = '';
+    } catch { }
+    target.removeAttribute('srcset');
+  }, []);
+
+  // Heuristic: try to upgrade known width-constrained URLs to larger sizes
+  const upgradeImageUrl = useCallback((url?: string | null) => {
+    if (!url) return '';
+    let out = url;
+    // Tate pattern: ...width-600.jpg → width-2000.jpg
+    out = out.replace(/width-(\d+)(?=\.(?:jpg|jpeg|png|webp|avif)(?:$|\?))/i, 'width-2000');
+    // Common query params: w= / width=
+    out = out.replace(/([?&])(w|width)=(\d+)/i, (_, p1, p2) => `${p1}${p2}=2000`);
+    // Heuristic: quality too low? bump q param if present
+    out = out.replace(/([?&])(q|quality)=(\d+)/i, (_, p1, p2) => `${p1}${p2}=90`);
+    return out;
+  }, []);
+
+  const parseIntendedWidth = useCallback((url?: string | null): number | undefined => {
+    if (!url) return undefined;
+    const m1 = url.match(/width-(\d+)(?=\.(?:jpg|jpeg|png|webp|avif)(?:$|\?))/i);
+    if (m1) return parseInt(m1[1], 10);
+    const m2 = url.match(/[?&](w|width)=(\d+)/i);
+    if (m2) return parseInt(m2[2], 10);
+    return undefined;
+  }, []);
+
+  const getLargestVariantUrl = useCallback((a: Artwork): { url: string; width: number } | null => {
+    const pickMax = (rec?: Record<string, string> | undefined): { url: string; width: number } | null => {
+      if (!rec) return null;
+      const keys = Object.keys(rec).map((k) => Number(k)).filter((n) => Number.isFinite(n));
+      if (keys.length === 0) return null;
+      const maxW = Math.max(...keys);
+      const url = rec[String(maxW)];
+      return url ? { url, width: maxW } : null;
+    };
+    // Prefer jpg variants for original-like fidelity if available
+    const jpg = pickMax(a.variants?.jpg);
+    if (jpg) return jpg;
+    // Otherwise try webp/avif largest (still better than tiny base)
+    const webp = pickMax(a.variants?.webp);
+    if (webp) return webp;
+    const avif = pickMax(a.variants?.avif);
+    if (avif) return avif;
+    return null;
+  }, []);
+
+  const getBestFullUrl = useCallback((a: Artwork): { url: string; width?: number } => {
+    const v = getLargestVariantUrl(a);
+    if (v) return { url: v.url, width: v.width };
+    const upgraded = upgradeImageUrl(a.image);
+    const intended = parseIntendedWidth(upgraded) || parseIntendedWidth(a.image);
+    return { url: upgraded || a.image, width: intended };
+  }, [getLargestVariantUrl, upgradeImageUrl, parseIntendedWidth]);
   const titleRef = useRef<HTMLDivElement | null>(null);
   const metaTitleValueRef = useRef<HTMLDivElement | null>(null);
   const creatorRef = useRef<HTMLDivElement | null>(null);
@@ -218,9 +565,13 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
   // Lock background scroll when modal is open
   useEffect(() => {
     const original = document.body.style.overflow;
+    const prevModalOpen = document.body.dataset.modalOpen;
     document.body.style.overflow = "hidden";
+    document.body.dataset.modalOpen = '1';
     return () => {
       document.body.style.overflow = original;
+      if (prevModalOpen == null) delete document.body.dataset.modalOpen;
+      else document.body.dataset.modalOpen = prevModalOpen;
     };
   }, []);
 
@@ -258,7 +609,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
         // Swap to full-res if still on low-res
         if (mainImgRef.current.getAttribute('data-hi') !== '1') {
           mainImgRef.current.src = currentArt.image;
-          mainImgRef.current.setAttribute('data-hi','1');
+          mainImgRef.current.setAttribute('data-hi', '1');
         }
       }
     };
@@ -284,18 +635,18 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
       // replace current entry with one that contains underlying metadata
       window.history.replaceState(base, document.title);
 
-  // push modal-specific state once; avoid duplicates to prevent double-close requirement
-  const current = (window.history.state as any) || {};
-  const guardKey = `modalGuard_${exhibition.id}`;
-  const alreadyModal = !!(current.modal && current.exhibitionId === exhibition.id);
-  const alreadyPushed = sessionStorage.getItem(guardKey) === '1';
-  if (!alreadyModal && !alreadyPushed) {
-    const modalState = { ...current, modal: true, exhibitionId: exhibition.id, selectedIndex } as any;
-    window.history.pushState(modalState, document.title);
-    try { sessionStorage.setItem(guardKey, '1'); } catch {}
-  }
+      // push modal-specific state once; avoid duplicates to prevent double-close requirement
+      const current = (window.history.state as any) || {};
+      const guardKey = `modalGuard_${exhibition.id}`;
+      const alreadyModal = !!(current.modal && current.exhibitionId === exhibition.id);
+      const alreadyPushed = sessionStorage.getItem(guardKey) === '1';
+      if (!alreadyModal && !alreadyPushed) {
+        const modalState = { ...current, modal: true, exhibitionId: exhibition.id, selectedIndex } as any;
+        window.history.pushState(modalState, document.title);
+        try { sessionStorage.setItem(guardKey, '1'); } catch { }
+      }
 
-  // No extra dispatch here; HomePage reads history.state on mount to auto-open
+      // No extra dispatch here; HomePage reads history.state on mount to auto-open
 
       const onPop = (_e: PopStateEvent) => {
         // Always treat back like close while modal is mounted
@@ -305,7 +656,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
       window.addEventListener('popstate', onPop);
       return () => {
         window.removeEventListener('popstate', onPop);
-  try { sessionStorage.removeItem(guardKey); } catch {}
+        try { sessionStorage.removeItem(guardKey); } catch { }
       };
     } catch (e) {
       // ignore any history errors (some browsers restrict replaceState in certain navigations)
@@ -319,15 +670,83 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
       const st = Object.assign({}, window.history.state || {});
       st.selectedIndex = selectedIndex;
       window.history.replaceState(st, document.title);
-    } catch (e) {}
+    } catch (e) { }
   }, [selectedIndex]);
 
   // Subscribe to Firestore artworks for this exhibition
   useEffect(() => {
-  // If a random image seed is requested via URL param, skip Firestore subscription and show 20 ephemeral images immediately
+    // DEBUG: Log exhibition ID
+    console.log('[ExhibitionModal] exhibition.id =', exhibition.id);
+    
+    // British Museum Rooms archive: load from local scraped JSON
+    if (exhibition.id === 'bm-archive-rooms') {
+      (async () => {
+        try {
+          const res = await fetch('/data/british-museum-galleries.json', { cache: 'no-store' });
+          if (!res.ok) throw new Error('Missing british-museum-galleries.json');
+          const data = await res.json();
+          const rooms: Array<{ id: string; title: string; items: any[] }> = Array.isArray(data.rooms) ? data.rooms : [];
+          const list = rooms.flatMap((room) => {
+            const rid = (room.id || room.title || 'default').toString();
+            return (Array.isArray(room.items) ? room.items : []).map((it: any) => ({
+              id: it.id || `${rid}-${Math.random().toString(36).slice(2)}`,
+              name: it.name || it.title || 'Object',
+              artist: it.artist || '',
+              year: typeof it.year === 'number' ? it.year : 0,
+              image: it.image || it.thumb || it.thumbnail,
+              url: it.url,
+              roomId: rid,
+              exhibitionName: exhibition.name,
+              exhibitionTitle: exhibition.title,
+            }));
+          });
+          // Keep only those with images to avoid empty tiles
+          const withImages = list.filter((a) => !!a.image);
+          setArtworks(withImages);
+          setInitialized(true);
+        } catch (e) {
+          console.error('Failed to load BM galleries:', e);
+          setInitialized(true);
+        }
+      })();
+      return () => { };
+    }
+    // NPG Floor 3 Rooms archive: load from local scraped JSON
+    if (exhibition.id === 'npg-floor3-rooms') {
+      (async () => {
+        try {
+          const res = await fetch('/data/npg-floor3.json', { cache: 'no-store' });
+          if (!res.ok) throw new Error('Missing npg-floor3.json');
+          const data = await res.json();
+          const rooms: Array<{ id: string; title: string; items: any[] }> = Array.isArray(data.rooms) ? data.rooms : [];
+          const list = rooms.flatMap((room) => {
+            const rid = (room.id || room.title || 'default').toString();
+            return (Array.isArray(room.items) ? room.items : []).map((it: any, idx: number) => ({
+              id: it.id || `${rid}-${idx}`,
+              name: it.name || it.title || 'Artwork',
+              artist: it.artist || '',
+              year: typeof it.year === 'number' ? it.year : 0,
+              image: it.image || it.thumb || it.thumbnail,
+              url: it.url,
+              roomId: rid,
+              exhibitionName: exhibition.name,
+              exhibitionTitle: exhibition.title,
+            }));
+          });
+          const withImages = list.filter((a) => !!a.image);
+          setArtworks(withImages);
+          setInitialized(true);
+        } catch (e) {
+          console.error('Failed to load NPG rooms:', e);
+          setInitialized(true);
+        }
+      })();
+      return () => { };
+    }
+    // If a random image seed is requested via URL param, skip Firestore subscription and show 20 ephemeral images immediately
     const params = new URLSearchParams(window.location.search);
     const seedMode = params.get("seed");
-  const allowSeed = exhibition.title?.trim() === "Korean Classical Art Collection" && (seedMode === "unsplash20" || seedMode === "picsum20");
+    const allowSeed = exhibition.title?.trim() === "Korean Classical Art Collection" && (seedMode === "unsplash20" || seedMode === "picsum20");
     if (allowSeed) {
       const now = Date.now();
       const useUnsplash = seedMode === "unsplash20";
@@ -344,21 +763,305 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
       }));
       setArtworks(list);
       setInitialized(true);
-      return () => {};
+      return () => { };
     }
-    // Special case for Tate Collection: load from local JSON
-    if (exhibition.id === 'tm-perm-3') {
+    // Special case for Tate Collection feeds: load from local scraped JSON (bypass Firestore)
+    if (exhibition.id === 'tm-perm-1' || exhibition.id === 'tm-perm-3') {
       (async () => {
         try {
-          const res = await fetch('/data/tate-artworks.json');
+          const dataFile = exhibition.id === 'tm-perm-1'
+            ? '/data/tate-collection-highlights-artworks.json'
+            : '/data/tate-artworks.json';
+          const res = await fetch(dataFile, { cache: 'no-store' });
+          if (!res.ok) throw new Error(`Failed to load ${dataFile}`);
+          const data = await res.json();
+          const toYear = (dateText: string | undefined) => {
+            if (!dateText) return 0;
+            const match = dateText.match(/(\d{4})/);
+            return match ? parseInt(match[1], 10) : 0;
+          };
+          // Helper to convert URL-based ID to Firestore-compatible ID
+          const sanitizeId = (rawId: string, idx: number) => {
+            if (!rawId) return `tate-${idx}`;
+            // If it's a URL, extract the accession number (e.g., "t15912" from the end)
+            if (rawId.startsWith('http')) {
+              const match = rawId.match(/([a-z]\d+)$/i);
+              if (match) return `tate-${match[1]}`;
+              // Fallback: use URL path slug
+              const slug = rawId.split('/').pop() || '';
+              return `tate-${slug.replace(/[^a-zA-Z0-9-_]/g, '')}`;
+            }
+            // Replace any invalid characters for Firestore document IDs
+            return rawId.replace(/[\/\.#$\[\]]/g, '-');
+          };
+          const list: Artwork[] = Array.isArray(data.items)
+            ? data.items.map((item: any, idx: number) => {
+              const image = item.image || item.thumb || '';
+              return {
+                id: sanitizeId(item.id || item.url || '', idx),
+                name: item.title || item.name || 'Untitled',
+                artist: item.artist || item.creator || 'Unknown',
+                year: toYear(item.dateText),
+                date: item.dateText,
+                image,
+                thumb: item.thumb,
+                dimension: item.dimensions,
+                sourceUrl: item.url,
+                roomId: 'default',
+                exhibitionName: exhibition.name,
+                exhibitionTitle: exhibition.title,
+              };
+            })
+            : [];
+          const withImages = list.filter((a) => !!a.image);
+          setArtworks(withImages);
+          setInitialized(true);
+          try {
+            localStorage.setItem(`artworks_${exhibition.id}`, JSON.stringify(withImages));
+          } catch { }
+        } catch (error) {
+          console.error('Failed to load Tate artworks:', error);
+          setInitialized(true);
+        }
+      })();
+      return () => { };
+    }
+    // Tate St Ives Collection: load from local scraped JSON
+    if (exhibition.id === 'tsi-perm-1') {
+      (async () => {
+        try {
+          const res = await fetch('/data/tate-st-ives-artworks.json', { cache: 'no-store' });
+          if (!res.ok) throw new Error('Failed to load Tate St Ives artworks');
+          const data = await res.json();
+          const toYear = (yearText: string | undefined) => {
+            if (!yearText) return 0;
+            const match = String(yearText).match(/(\d{4})/);
+            return match ? parseInt(match[1], 10) : 0;
+          };
+          const list: Artwork[] = Array.isArray(data)
+            ? data.map((item: any, idx: number) => ({
+              id: item.id || `tsi-${idx}`,
+              name: item.title || item.name || 'Untitled',
+              artist: item.artist || 'Unknown',
+              year: toYear(item.year),
+              date: item.year,
+              image: item.image,
+              sourceUrl: item.url,
+              roomId: 'default',
+              exhibitionName: exhibition.name,
+              exhibitionTitle: exhibition.title,
+            }))
+            : [];
+          const withImages = list.filter((a) => !!a.image);
+          setArtworks(withImages);
+          setInitialized(true);
+        } catch (error) {
+          console.error('Failed to load Tate St Ives artworks:', error);
+          setInitialized(true);
+        }
+      })();
+      return () => { };
+    }
+    // Tate Britain Collection: load from local scraped JSON
+    if (exhibition.id === 'tbc-perm-1') {
+      (async () => {
+        try {
+          const res = await fetch('/data/tate-britain-artworks.json', { cache: 'no-store' });
+          if (!res.ok) throw new Error('Failed to load Tate Britain artworks');
+          const data = await res.json();
+          const toYear = (yearText: string | number | undefined) => {
+            if (!yearText) return 0;
+            const match = String(yearText).match(/(\d{4})/);
+            return match ? parseInt(match[1], 10) : 0;
+          };
+          const list: Artwork[] = Array.isArray(data)
+            ? data.map((item: any, idx: number) => ({
+              id: item.id || `tbc-${idx}`,
+              name: item.title || item.name || 'Untitled',
+              artist: item.artist || 'Unknown',
+              year: toYear(item.year),
+              date: item.year,
+              image: item.image,
+              sourceUrl: item.sourceUrl,
+              roomId: 'default',
+              exhibitionName: exhibition.name,
+              exhibitionTitle: exhibition.title,
+            }))
+            : [];
+          const withImages = list.filter((a) => !!a.image);
+          setArtworks(withImages);
+          setInitialized(true);
+        } catch (error) {
+          console.error('Failed to load Tate Britain artworks:', error);
+          setInitialized(true);
+        }
+      })();
+      return () => { };
+    }
+    // Dulwich Picture Gallery Collection: load from local scraped JSON
+    if (exhibition.id === 'dpg-1') {
+      (async () => {
+        try {
+          const res = await fetch('/data/dulwich-collection.json', { cache: 'no-store' });
+          if (!res.ok) throw new Error('Failed to load Dulwich artworks');
+          const data = await res.json();
+          const toYear = (yearText: string | number | undefined) => {
+            if (!yearText) return 0;
+            const match = String(yearText).match(/(\d{4})/);
+            return match ? parseInt(match[1], 10) : 0;
+          };
+          const list: Artwork[] = Array.isArray(data.objects)
+            ? data.objects.map((item: any, idx: number) => ({
+              id: item.id || `dpg-${idx}`,
+              name: item.title || item.name || 'Untitled',
+              artist: item.artist || 'Unknown',
+              year: toYear(item.year),
+              date: item.year,
+              image: item.image,
+              sourceUrl: item.url,
+              roomId: 'default',
+              exhibitionName: exhibition.name,
+              exhibitionTitle: exhibition.title,
+            }))
+            : [];
+          const withImages = list.filter((a) => !!a.image);
+          setArtworks(withImages);
+          setInitialized(true);
+        } catch (error) {
+          console.error('Failed to load Dulwich artworks:', error);
+          setInitialized(true);
+        }
+      })();
+      return () => { };
+    }
+    // Hayward Gallery Collection: load from local scraped JSON
+    if (exhibition.id === 'hayward-gallery-collection') {
+      (async () => {
+        try {
+          const res = await fetch('/data/hayward-gallery-collection.json', { cache: 'no-store' });
+          if (!res.ok) throw new Error('Failed to load Hayward Gallery artworks');
+          const data = await res.json();
+          const toYear = (yearText: string | number | undefined) => {
+            if (!yearText) return 0;
+            const match = String(yearText).match(/(\d{4})/);
+            return match ? parseInt(match[1], 10) : 0;
+          };
+          
+          // Patterns for archival/documentary materials (not actual artworks)
+          const archivalPatterns = [
+            /^installation view/i,
+            /installation view:/i,
+            /exterior view/i,
+            /hayward exterior/i,
+            /gallery exterior/i,
+            /^maintenance information/i,
+            /^letter /i,
+            /^draft text/i,
+            /^text for /i,
+            /^text on /i,
+            /^list of /i,
+            /^document /i,
+            /^sample letter/i,
+            /^thank you letter/i,
+            /^short exhibition description/i,
+            /^exhibition guide/i,
+            /^marketing leaflet/i,
+            /^press cutting/i,
+            /^press release/i,
+            /^private view/i,
+            /^exhibitions leaflet/i,
+            /^diagram /i,
+            /^floorplan /i,
+            /^freesheet /i,
+            /walk guide/i,
+            /^notes on /i,
+            /^note on /i,
+            /^catalogue /i,
+          ];
+          
+          const isArchival = (title: string) => {
+            for (const pattern of archivalPatterns) {
+              if (pattern.test(title)) return true;
+            }
+            return false;
+          };
+          
+          const allObjects = Array.isArray(data.objects) ? data.objects : [];
+          
+          const list: Artwork[] = allObjects.map((item: any, idx: number) => ({
+              id: item.id || `hayward-gac-${idx}`,
+              name: item.title || item.name || 'Untitled',
+              artist: item.artist === 'Additional Items' ? 'Unknown' : (item.artist || 'Unknown'),
+              year: toYear(item.year),
+              date: item.year,
+              image: item.image,
+              sourceUrl: item.url,
+              roomId: 'default',
+              exhibitionName: exhibition.name,
+              exhibitionTitle: exhibition.title,
+              isArchival: isArchival(item.title || ''),
+            }));
+          const withImages = list.filter((a) => !!a.image);
+          setArtworks(withImages);
+          setInitialized(true);
+        } catch (error) {
+          console.error('Failed to load Hayward Gallery artworks:', error);
+          setInitialized(true);
+        }
+      })();
+      return () => { };
+    }
+    // British Museum GAC Collection: load from local scraped JSON
+    if (exhibition.id === 'british-museum-gac-collection') {
+      (async () => {
+        try {
+          const res = await fetch('/data/british-museum-gac-collection.json', { cache: 'no-store' });
+          if (!res.ok) throw new Error('Failed to load British Museum artworks');
+          const data = await res.json();
+          const toYear = (yearText: string | number | undefined) => {
+            if (!yearText) return 0;
+            const match = String(yearText).match(/(\d{4})/);
+            return match ? parseInt(match[1], 10) : 0;
+          };
+          
+          const allObjects = Array.isArray(data.objects) ? data.objects : [];
+          
+          const list: Artwork[] = allObjects.map((item: any, idx: number) => ({
+              id: item.id || `bm-gac-${idx}`,
+              name: item.title || item.name || 'Untitled',
+              artist: item.artist === 'Additional Items' ? 'Unknown' : (item.artist || 'Unknown'),
+              year: toYear(item.year),
+              date: item.year,
+              image: item.image,
+              sourceUrl: item.sourceUrl,
+              roomId: 'default',
+              exhibitionName: exhibition.name,
+              exhibitionTitle: exhibition.title,
+              type: item.type || 'unknown',  // 2D, 3D, or unknown
+            }));
+          const withImages = list.filter((a) => !!a.image);
+          setArtworks(withImages);
+          setInitialized(true);
+        } catch (error) {
+          console.error('Failed to load British Museum artworks:', error);
+          setInitialized(true);
+        }
+      })();
+      return () => { };
+    }
+    // Special case for V&A Painting collection: load from local JSON
+    if (exhibition.id === 'vam-painting') {
+      (async () => {
+        try {
+          const res = await fetch('/data/vam-paintings.json', { cache: 'no-store' });
           if (!res.ok) throw new Error('Failed to load local artworks');
           const data = await res.json();
           const list = (data.items || []).map((item: any) => ({
             id: item.id,
-            name: item.title,
+            name: item.name,
             artist: item.artist,
-            year: item.dateText ? parseInt(item.dateText.match(/\d{4}/)?.[0] || '0', 10) : 0,
-            image: item.thumb || item.image,
+            year: item.year,
+            image: item.image,
             roomId: "default",
             exhibitionName: exhibition.name,
             exhibitionTitle: exhibition.title,
@@ -366,11 +1069,361 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
           setArtworks(list);
           setInitialized(true);
         } catch (e) {
-          console.error('Failed to load Tate Collection artworks:', e);
+          console.error('Failed to load V&A paintings:', e);
           setInitialized(true);
         }
       })();
-      return () => {};
+      return () => { };
+    }
+    // Special case for V&A Posters collection: load from local JSON
+    if (exhibition.id === 'vam-posters') {
+      (async () => {
+        try {
+          const res = await fetch('/data/vam-posters.json', { cache: 'no-store' });
+          if (!res.ok) throw new Error('Failed to load local posters');
+          const data = await res.json();
+          const list = (data.items || []).map((item: any) => ({
+            id: item.id,
+            name: item.name,
+            artist: item.artist,
+            year: item.year,
+            image: item.image,
+            roomId: "default",
+            exhibitionName: exhibition.name,
+            exhibitionTitle: exhibition.title,
+          }));
+          setArtworks(list);
+          setInitialized(true);
+        } catch (e) {
+          console.error('Failed to load V&A posters:', e);
+          setInitialized(true);
+        }
+      })();
+      return () => { };
+    }
+    // Special case for V&A Photographs collection: load from local JSON
+    if (exhibition.id === 'vam-photographs') {
+      (async () => {
+        try {
+          const res = await fetch('/data/vam-photographs.json', { cache: 'no-store' });
+          if (!res.ok) throw new Error('Failed to load local photographs');
+          const data = await res.json();
+          const list = (data.items || []).map((item: any) => ({
+            id: item.id,
+            name: item.name,
+            artist: item.artist,
+            year: item.year,
+            image: item.image,
+            roomId: "default",
+            exhibitionName: exhibition.name,
+            exhibitionTitle: exhibition.title,
+          }));
+          setArtworks(list);
+          setInitialized(true);
+        } catch (e) {
+          console.error('Failed to load V&A photographs:', e);
+          setInitialized(true);
+        }
+      })();
+      return () => { };
+    }
+    // Special case for V&A Portraits collection: load from local JSON
+    if (exhibition.id === 'vam-portraits') {
+      (async () => {
+        try {
+          const res = await fetch('/data/vam-portraits.json', { cache: 'no-store' });
+          if (!res.ok) throw new Error('Failed to load local portraits');
+          const data = await res.json();
+          const list = (data.items || []).map((item: any) => ({
+            id: item.id,
+            name: item.name,
+            artist: item.artist,
+            year: item.year,
+            image: item.image,
+            roomId: "default",
+            exhibitionName: exhibition.name,
+            exhibitionTitle: exhibition.title,
+          }));
+          setArtworks(list);
+          setInitialized(true);
+        } catch (e) {
+          console.error('Failed to load V&A portraits:', e);
+          setInitialized(true);
+        }
+      })();
+      return () => { };
+    }
+
+    // National Gallery Permanent Collection: load from local JSON
+    if (exhibition.id === 'ng-1') {
+      (async () => {
+        try {
+          const res = await fetch('/data/national-gallery-permanent.json', { cache: 'no-store' });
+          if (!res.ok) throw new Error('Failed to load National Gallery data');
+          const data = await res.json();
+          const list = (data.items || []).map((item: any) => ({
+            id: item.id,
+            name: item.name,
+            artist: item.artist,
+            year: item.year,
+            image: item.image,
+            roomId: item.roomId || "default",
+            exhibitionName: exhibition.name,
+            exhibitionTitle: exhibition.title,
+            url: item.url
+          }));
+          setArtworks(list);
+          setInitialized(true);
+        } catch (e) {
+          console.error('Failed to load National Gallery data:', e);
+          setInitialized(true);
+        }
+      })();
+      return () => { };
+    }
+    // Tate Britain Display exhibitions: load rooms and artworks from tate-britain.json
+    if (exhibition.id.startsWith('tate-britain-display-')) {
+      (async () => {
+        try {
+          const res = await fetch('/data/tate-britain.json', { cache: 'no-store' });
+          if (!res.ok) throw new Error('Missing tate-britain.json');
+          const data = await res.json();
+          const items = Array.isArray(data.items) ? data.items : [];
+          const displayExhibition = items.find((item: any) => item.id === exhibition.id);
+          
+          if (displayExhibition && Array.isArray(displayExhibition.rooms)) {
+            const list: Artwork[] = [];
+            const metas: RoomMeta[] = [];
+            // Use sequential room numbers (1, 2, 3...) instead of actual building room numbers
+            displayExhibition.rooms.forEach((room: any, roomIndex: number) => {
+              const roomId = String(roomIndex + 1); // 1-based sequential numbering
+              const hasArtworks = Array.isArray(room.artworks) && room.artworks.length > 0;
+              
+              // Store room metadata (including rooms without artworks)
+              metas.push({
+                id: roomId,
+                name: room.name || `Room ${roomId}`,
+                coverImage: room.coverImage,
+                description: room.description,
+                location: room.location,
+                url: room.url,
+                hasArtworks,
+              });
+              
+              // Check if cover image represents the same artwork as any in the room
+              // Compare by title (normalized) since cover and artwork may have different image URLs
+              const coverTitle = room.coverTitle || '';
+              const normalizedCoverTitle = coverTitle.toLowerCase().replace(/[^a-z0-9]/g, '');
+              const isDuplicateCover = room.coverImage && hasArtworks && 
+                room.artworks.some((a: any) => {
+                  const artworkTitle = (a.title || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+                  return artworkTitle && normalizedCoverTitle && artworkTitle === normalizedCoverTitle;
+                });
+              
+              // Add coverImage as the first artwork of each room (room intro/cover)
+              // Only add if it's not a duplicate of an existing artwork
+              if (room.coverImage && !isDuplicateCover) {
+                const coverId = `room-cover-${roomId}-${list.length}`;
+                // Use coverArtist/coverTitle/coverYear if available, otherwise fallback to room info
+                const coverTitleFinal = room.coverTitle || room.name || `Room ${roomId}`;
+                const coverArtist = room.coverArtist || room.location || 'Tate Britain';
+                const coverYear = room.coverYear || 0;
+                list.push({
+                  id: coverId,
+                  name: coverTitleFinal,
+                  artist: coverArtist,
+                  year: coverYear,
+                  date: coverYear ? String(coverYear) : '',
+                  image: room.coverImage,
+                  roomId: roomId,
+                  exhibitionName: exhibition.name,
+                  exhibitionTitle: exhibition.title,
+                  sourceUrl: room.url,
+                });
+              }
+              
+              if (hasArtworks) {
+                for (const artwork of room.artworks) {
+                  // Extract Tate work ID from URL
+                  const urlMatch = artwork.url?.match(/([a-z]\d+)$/);
+                  const tateId = urlMatch ? urlMatch[1] : null;
+                  
+                  // Use image from JSON, or build from ID as fallback
+                  let imageUrl = artwork.image || '';
+                  if (!imageUrl && tateId) {
+                    const idUpper = tateId.toUpperCase();
+                    const prefix = idUpper.charAt(0);
+                    const midPart = idUpper.substring(0, 3);
+                    imageUrl = `https://media.tate.org.uk/art/images/work/${prefix}/${midPart}/${idUpper}_9.jpg`;
+                  }
+                  
+                  // Get year directly from JSON, or parse from year string if needed
+                  let year = 0;
+                  if (typeof artwork.year === 'number') {
+                    year = artwork.year;
+                  } else if (typeof artwork.year === 'string') {
+                    const yearMatch = artwork.year.match(/\d{4}/);
+                    year = yearMatch ? parseInt(yearMatch[0], 10) : 0;
+                  }
+                  
+                  // Use roomId + list index to ensure completely unique IDs
+                  const uniqueId = `${tateId || 'artwork'}-room${roomId}-${list.length}`;
+                  list.push({
+                    id: uniqueId,
+                    name: artwork.title || 'Untitled',
+                    artist: artwork.artist || '',
+                    year: year,
+                    date: artwork.year ? String(artwork.year) : '',
+                    image: imageUrl,
+                    roomId: roomId,
+                    exhibitionName: exhibition.name,
+                    exhibitionTitle: exhibition.title,
+                    sourceUrl: artwork.url,
+                  });
+                }
+              }
+            });
+            setRoomMetas(metas);
+            setArtworks(list);
+            setInitialized(true);
+          } else {
+            console.error('Display exhibition not found:', exhibition.id);
+            setInitialized(true);
+          }
+        } catch (e) {
+          console.error('Failed to load Tate Britain display:', e);
+          setInitialized(true);
+        }
+      })();
+      return () => { };
+    }
+    // Tate Modern Display exhibitions: load rooms and artworks from tate-modern.json
+    if (exhibition.id.startsWith('display-')) {
+      (async () => {
+        try {
+          const res = await fetch('/data/tate-modern.json', { cache: 'no-store' });
+          if (!res.ok) throw new Error('Missing tate-modern.json');
+          const data = await res.json();
+          const items = Array.isArray(data.items) ? data.items : [];
+          const displayExhibition = items.find((item: any) => item.id === exhibition.id);
+          
+          if (displayExhibition && Array.isArray(displayExhibition.rooms)) {
+            // Save enriched exhibition data (including descriptionHtml)
+            setEnrichedExhibition(displayExhibition);
+            const list: Artwork[] = [];
+            const metas: RoomMeta[] = [];
+            
+            displayExhibition.rooms.forEach((room: any, roomIndex: number) => {
+              const roomId = String(roomIndex + 1);
+              const hasArtworks = Array.isArray(room.artworks) && room.artworks.length > 0;
+              
+              metas.push({
+                id: roomId,
+                name: room.name || `Room ${roomId}`,
+                coverImage: room.coverImage,
+                description: room.description,
+                location: room.location,
+                url: room.url,
+                hasArtworks,
+              });
+              
+              if (hasArtworks) {
+                for (const artwork of room.artworks) {
+                  const urlMatch = artwork.url?.match(/([a-z]\d+)$/i);
+                  const tateId = urlMatch ? urlMatch[1] : null;
+                  
+                  let imageUrl = artwork.image || '';
+                  if (!imageUrl && tateId) {
+                    const idUpper = tateId.toUpperCase();
+                    const prefix = idUpper.charAt(0);
+                    const midPart = idUpper.substring(0, 3);
+                    imageUrl = `https://media.tate.org.uk/art/images/work/${prefix}/${midPart}/${idUpper}_9.jpg`;
+                  }
+                  
+                  let year = 0;
+                  if (typeof artwork.year === 'number') {
+                    year = artwork.year;
+                  } else if (typeof artwork.year === 'string') {
+                    const yearMatch = artwork.year.match(/\d{4}/);
+                    year = yearMatch ? parseInt(yearMatch[0], 10) : 0;
+                  }
+                  
+                  const uniqueId = `${tateId || artwork.id || 'artwork'}-room${roomId}-${list.length}`;
+                  list.push({
+                    id: uniqueId,
+                    name: artwork.title || 'Untitled',
+                    artist: artwork.artist || '',
+                    year: year,
+                    date: artwork.year ? String(artwork.year) : '',
+                    image: imageUrl,
+                    roomId: roomId,
+                    exhibitionName: exhibition.name,
+                    exhibitionTitle: exhibition.title,
+                    sourceUrl: artwork.url,
+                  });
+                }
+              }
+            });
+            setRoomMetas(metas);
+            setArtworks(list);
+            setInitialized(true);
+          } else {
+            console.error('Tate Modern display exhibition not found:', exhibition.id);
+            setInitialized(true);
+          }
+        } catch (e) {
+          console.error('Failed to load Tate Modern display:', e);
+          setInitialized(true);
+        }
+      })();
+      return () => { };
+    }
+    // Temporary exhibitions with artworks array: use directly with proper metadata
+    // Per Archive Rule 11 & 12: artworks need name, artist, year, image
+    if (Array.isArray((exhibition as any).artworks) && (exhibition as any).artworks.length > 0) {
+      const exhibitionArtworks = (exhibition as any).artworks as { id: string; name: string; artist: string; year: number; image: string }[];
+      const list: Artwork[] = exhibitionArtworks.map((art) => ({
+        id: art.id,
+        name: art.name,
+        artist: art.artist,
+        year: art.year,
+        image: art.image,
+        roomId: 'gallery',
+        exhibitionName: exhibition.name,
+        exhibitionTitle: exhibition.title,
+      }));
+      setArtworks(list);
+      setInitialized(true);
+      return () => { };
+    }
+    // Fallback: Temporary exhibitions with galleryImages (legacy support)
+    if (Array.isArray((exhibition as any).galleryImages) && (exhibition as any).galleryImages.length > 0) {
+      const galleryImages = (exhibition as any).galleryImages as string[];
+      const exhibitionName = exhibition.name || exhibition.title || 'Exhibition';
+      const list: Artwork[] = galleryImages.map((imgUrl, idx) => {
+        const filename = imgUrl.split('/').pop() || '';
+        const nameFromFile = filename
+          .replace(/\.(jpg|jpeg|png|webp|gif)$/i, '')
+          .replace(/\.[a-z0-9]+\.(fill|width)-\d+x?\d*/i, '')
+          .replace(/_/g, ' ')
+          .replace(/-/g, ' ')
+          .replace(/\s+/g, ' ')
+          .trim();
+        
+        return {
+          id: `gallery-${exhibition.id}-${idx}`,
+          name: nameFromFile || `${exhibitionName} - Image ${idx + 1}`,
+          artist: (exhibition as any).artist || exhibitionName,
+          year: 0,
+          image: imgUrl,
+          roomId: 'gallery',
+          exhibitionName: exhibition.name,
+          exhibitionTitle: exhibition.title,
+        };
+      });
+      setArtworks(list);
+      setInitialized(true);
+      return () => { };
     }
     // 0) Prime from local cache immediately to avoid empty-state flash
     try {
@@ -383,7 +1436,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
           setInitialized(true);
         }
       }
-    } catch {}
+    } catch { }
     // Subscribe to Firestore artworks for this exhibition
     const q = query(collection(db, "artworks"), where("exhibitionTitle", "==", exhibition.title));
     const unsub = onSnapshot(
@@ -402,7 +1455,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
         setInitialized(true);
         try {
           localStorage.setItem(`artworks_${exhibition.id}`, JSON.stringify(withImages));
-        } catch {}
+        } catch { }
       },
       (error) => {
         console.error("Firestore onSnapshot error:", error);
@@ -424,6 +1477,52 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
     };
   }, [exhibition.id, exhibition.title]);
 
+  // Load user-submitted artworks from exhibition_artworks collection
+  useEffect(() => {
+    const exhibitionId = exhibition.id;
+
+    // Query exhibition_artworks where exhibitionId matches
+    const q = query(
+      collection(db, 'exhibition_artworks'),
+      where('exhibitionId', '==', exhibitionId)
+    );
+
+    const unsub = onSnapshot(q, (snap) => {
+      if (snap.empty) return;
+
+      const userSubmissions: Artwork[] = [];
+      snap.forEach((docSnap) => {
+        const data = docSnap.data();
+        userSubmissions.push({
+          id: data.id || docSnap.id,
+          name: data.name || data.title || 'User Submission',
+          artist: data.artist || '',
+          year: data.year || 0,
+          image: data.image || '',
+          dimensions: data.dimensions || '',
+          materials: data.materials || '',
+          roomId: 'user-submissions', // Default room for user submissions
+          exhibitionName: data.exhibitionName || exhibition.name || '',
+          exhibitionTitle: data.exhibitionName || exhibition.title || '',
+        } as Artwork);
+      });
+
+      if (userSubmissions.length > 0) {
+        setArtworks((prev) => {
+          // Avoid duplicates by checking IDs
+          const existingIds = new Set(prev.map(a => a.id));
+          const newOnes = userSubmissions.filter(s => !existingIds.has(s.id));
+          if (newOnes.length === 0) return prev;
+          return [...prev, ...newOnes];
+        });
+      }
+    }, (err) => {
+      console.warn('Failed to load user submissions:', err);
+    });
+
+    return () => unsub();
+  }, [exhibition.id, exhibition.name, exhibition.title]);
+
   // Ensure selected index is valid when artworks update
   useEffect(() => {
     if (filteredArtworks.length === 0) { setSelectedIndex(0); return; }
@@ -432,6 +1531,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
 
   // Prefetch neighbor images for smoother stage switching
   usePrefetchNeighbors(filteredArtworks as any[], selectedIndex, 1);
+
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -459,8 +1559,8 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
           preload.decoding = 'async';
           preload.loading = 'eager';
           preload.src = url;
-          if (preload.decode) preload.decode().catch(() => {});
-        } catch {}
+          if (preload.decode) preload.decode().catch(() => { });
+        } catch { }
       });
       idleDecodeHandlesRef.current.push(handle);
     });
@@ -537,7 +1637,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
     if (!title || seededRef.current) return;
     const storageKey = `seeded_${exhibition.id}`;
     if (localStorage.getItem(storageKey)) { seededRef.current = true; return; }
-  if (title === "Korean Classical Art Collection" && artworks.length === 0) {
+    if (title === "Korean Classical Art Collection" && artworks.length === 0) {
       (async () => {
         try {
           seededRef.current = true;
@@ -574,20 +1674,20 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
     const params = new URLSearchParams(window.location.search);
     const seedMode = params.get("seed");
     if (!seedMode) return;
-  if (title !== "Korean Classical Art Collection") return;
-  if (didReseedRef.current) return; // prevent re-run (StrictMode/HMR)
+    if (title !== "Korean Classical Art Collection") return;
+    if (didReseedRef.current) return; // prevent re-run (StrictMode/HMR)
     didReseedRef.current = true;
 
     (async () => {
       try {
-  // 1) Delete existing artworks
+        // 1) Delete existing artworks
         const qDel = query(collection(db, "artworks"), where("exhibitionTitle", "==", exhibition.title));
         const snap = await getDocs(qDel);
         const delJobs: Promise<void>[] = [];
         snap.forEach((ds) => delJobs.push(deleteDoc(doc(db, "artworks", ds.id))));
         await Promise.all(delJobs);
 
-  // 2) Add 20 new images (Unsplash source or Picsum)
+        // 2) Add 20 new images (Unsplash source or Picsum)
         const now = Date.now();
         const count = 20;
         const useUnsplash = seedMode === "unsplash20";
@@ -611,8 +1711,8 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
           jobs.push(addDoc(collection(db, "artworks"), docData));
         }
         await Promise.all(jobs);
-  // eslint-disable-next-line no-console
-  console.info(`[seed] Replaced with ${count} images via ${useUnsplash ? "Unsplash" : "Picsum"}.`);
+        // eslint-disable-next-line no-console
+        console.info(`[seed] Replaced with ${count} images via ${useUnsplash ? "Unsplash" : "Picsum"}.`);
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error("Reseed failed:", e);
@@ -634,38 +1734,62 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
     return current;
   }, [viewMode, hoveredIndex, current, filteredArtworks]);
 
-  // Open animated lightbox from clicked image (Genie-like)
-  const openLightbox = (e: React.MouseEvent<HTMLImageElement, MouseEvent>, src: string) => {
+  // Open lightbox with simple scale/translate animation
+  const openLightbox = (e: React.MouseEvent<HTMLImageElement, MouseEvent>, artwork: Artwork) => {
     const img = e.currentTarget;
-    if (!img || !src) return;
+    if (!img || !artwork) return;
+    const best = getBestFullUrl(artwork);
     const rect = img.getBoundingClientRect();
     const vw = window.innerWidth;
     const vh = window.innerHeight;
-    const maxW = vw * 0.9;
-    const maxH = vh * 0.9;
-    // Use thumb aspect as an approximation
-    const aspect = rect.width > 0 && rect.height > 0 ? rect.width / rect.height : 4 / 3;
-    let targetW = maxW;
-    let targetH = targetW / aspect;
-    if (targetH > maxH) {
-      targetH = maxH;
-      targetW = targetH * aspect;
-    }
-    const targetLeft = Math.round((vw - targetW) / 2);
-    const targetTop = Math.round((vh - targetH) / 2);
-    setLightbox({
-      src,
-      start: { left: rect.left, top: rect.top, width: rect.width, height: rect.height },
-      target: { left: targetLeft, top: targetTop, width: targetW, height: targetH },
-      animate: false,
-    });
-    // Next frame: trigger transition
-    requestAnimationFrame(() => setLightbox((s) => (s ? { ...s, animate: true } : s)));
+    const maxW = vw * 0.96;
+    const maxH = vh * 0.96;
+    const dpr = Math.max(1, window.devicePixelRatio || 1);
+    const thumbAspect = rect.width > 0 && rect.height > 0 ? rect.width / rect.height : 4 / 3;
+    const UPSCALE = 2.2; // increase upscale to make zoom-in more pronounced
+
+    // Preload to get natural dimensions and cap target appropriately
+    const probe = new Image();
+    probe.decoding = 'async';
+    probe.src = best.url;
+    const finalize = (natW?: number, natH?: number) => {
+      const aspect = natW && natH && natW > 0 && natH > 0 ? natW / natH : thumbAspect;
+      // Allowed display caps: permit modest upscale to make zoom noticeable
+      const capWByNat = natW ? (natW / dpr) * UPSCALE : (best.width ? (best.width / dpr) * UPSCALE : Number.POSITIVE_INFINITY);
+      const capHByNat = natH ? (natH / dpr) * UPSCALE : Number.POSITIVE_INFINITY;
+      // Start from width cap
+      let targetW = Math.min(maxW, capWByNat);
+      let targetH = targetW / aspect;
+      // Respect viewport height and natural height cap
+      const heightCap = Math.min(maxH, capHByNat);
+      if (targetH > heightCap) {
+        targetH = heightCap;
+        targetW = targetH * aspect;
+      }
+      // Re-check width against maxW
+      if (targetW > maxW) {
+        targetW = maxW;
+        targetH = targetW / aspect;
+      }
+      const targetLeft = Math.round((vw - targetW) / 2);
+      const targetTop = Math.round((vh - targetH) / 2);
+      setLightbox({
+        artwork,
+        start: { left: rect.left, top: rect.top, width: rect.width, height: rect.height },
+        target: { left: targetLeft, top: targetTop, width: targetW, height: targetH },
+        animate: false,
+        natWidth: natW,
+        natHeight: natH,
+      });
+      requestAnimationFrame(() => setLightbox((s) => (s ? { ...s, animate: true } : s)));
+    };
+    probe.onload = () => finalize(probe.naturalWidth || undefined, probe.naturalHeight || undefined);
+    probe.onerror = () => finalize(undefined, undefined);
   };
 
   const closeLightbox = () => {
     setLightbox((s) => (s ? { ...s, animate: false } : s));
-    window.setTimeout(() => setLightbox(null), 320);
+    window.setTimeout(() => setLightbox(null), 300);
   };
 
   // ESC to close lightbox
@@ -678,136 +1802,27 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
   // Debug outlines disabled
   const DEBUG_LAYOUT = false;
 
-  // Sync selected index to the thumbnail nearest the vertical center on scroll (looped list)
+  // Sync selected index from scroll - now handled inline in JSX onScroll
+  // (Removed duplicate useEffect to avoid conflicts)
+
+  // Scroll to middle section when entering archive mode (for infinite loop)
   useEffect(() => {
-    if (viewMode !== 'archive') return; // only in archive mode
-    const container = listRef.current;
-    if (!container || filteredArtworks.length === 0) return;
-    let raf = 0;
-    const onScroll = () => {
-      if (raf) return; // throttle by rAF
-      raf = requestAnimationFrame(() => {
-        raf = 0;
-        const rect = container.getBoundingClientRect();
-        const centerY = rect.top + rect.height / 2;
-  // Find nearest element by DOM sampling (do not mutate scrollTop here)
-        const nodes = Array.from(container.querySelectorAll('[data-base]')) as HTMLElement[];
-        let nearestBase = 0;
-        let bestDist = Number.POSITIVE_INFINITY;
-  // let nearestEl: HTMLElement | null = null; // no longer used (snap disabled)
-        for (const node of nodes) {
-          const r = node.getBoundingClientRect();
-          const mid = r.top + r.height / 2;
-          const d = Math.abs(mid - centerY);
-          if (d < bestDist) {
-            bestDist = d;
-            nearestBase = parseInt(node.dataset.base || '0', 10);
-            // nearestEl = node;
-          }
-        }
-        setSelectedIndex(nearestBase);
-
-        // Update floating info Y pinned to the scroller center line, adjusted to info panel coords
-        const containerRect = container.getBoundingClientRect();
-        const infoEl = infoPanelRef.current;
-        if (infoEl) {
-          const infoRect = infoEl.getBoundingClientRect();
-          const computed = window.getComputedStyle(infoEl);
-          const padTop = parseFloat(computed.paddingTop || '0');
-          const centerLine = containerRect.top + (container.clientHeight / 2);
-          setInfoY(centerLine - infoRect.top - padTop);
-        }
-
-        // Immediate wrap at hard edges to avoid getting stuck at top/bottom
-        const hNow = (blockHeightsRef.current?.h && blockHeightsRef.current.h > 0)
-          ? blockHeightsRef.current.h
-          : (container.scrollHeight / 3);
-        if (hNow && hNow > 0) {
-          const st = container.scrollTop;
-          // push back into the middle block if we hit extreme edges
-          if (st <= hNow * 0.02) {
-            container.scrollTop = st + hNow;
-          } else if (st >= hNow * 1.98) {
-            container.scrollTop = st - hNow;
-          }
-        }
-
-        // Debounced recentre: only after scrolling settles
-        if (relocateTimerRef.current) {
-          clearTimeout(relocateTimerRef.current);
-        }
-        // If user is flinging fast (large delta between frames), skip recentre this cycle
-        const velocityHint = Math.abs((container as any)._lastScrollTopVel ?? 0);
-        const stNow = container.scrollTop;
-        const stPrev = (container as any)._lastScrollTop ?? stNow;
-        (container as any)._lastScrollTopVel = stNow - stPrev;
-        (container as any)._lastScrollTop = stNow;
-
-  // Snap / magnetic snap disabled
-
-  relocateTimerRef.current = window.setTimeout(() => {
-          if (velocityHint && Math.abs((container as any)._lastScrollTopVel) > 5) return;
-          const st = container.scrollTop;
-          // Measure one-block height precisely
-          const h = blockHeightsRef.current?.h ?? (container.scrollHeight / 3);
-          if (!h || h <= 0) return;
-          if (st < h * 0.1) {
-            container.scrollTop = st + h;
-          } else if (st > h * 1.9) {
-            container.scrollTop = st - h;
-          }
-        }, 240);
-      });
-    };
-  container.addEventListener('scroll', onScroll, { passive: true });
-    return () => {
-      container.removeEventListener('scroll', onScroll as any);
-      if (raf) cancelAnimationFrame(raf);
-      if (relocateTimerRef.current) {
-        clearTimeout(relocateTimerRef.current);
-        relocateTimerRef.current = null;
-      }
-      if (magnetTimerRef.current) {
-        clearTimeout(magnetTimerRef.current);
-        magnetTimerRef.current = null;
-      }
-    };
-  }, [filteredArtworks.length, selectedRoomId, viewMode]);
-
-  // Center to middle block initially so we can scroll infinitely
-  useEffect(() => {
-    if (viewMode !== 'archive') return; // only in archive mode
+    if (viewMode !== 'archive') return;
     const el = listRef.current;
     if (!el || filteredArtworks.length === 0) return;
-    didCenterRef.current = false;
-    requestAnimationFrame(() => {
-      if (!el || didCenterRef.current) return;
-      const block1 = el.querySelector('[data-block-container="1"]') as HTMLElement | null;
-      const block0 = el.querySelector('[data-block-container="0"]') as HTMLElement | null;
-      if (block1 && block0) {
-        const h = block1.offsetHeight; // one block height
-        blockHeightsRef.current = { h };
-      }
-      const target = el.querySelector(`[data-block="1"][data-base="${selectedIndex}"]`) as HTMLElement | null;
-      if (target) {
-        const desiredScroll = (target.offsetTop + target.offsetHeight / 2) - (el.clientHeight / 2);
-        el.scrollTo({ top: desiredScroll });
-        // Set initial info Y pinned to scroller center line
-        const infoEl = infoPanelRef.current;
-        if (infoEl) {
-          const scRect = el.getBoundingClientRect();
-          const infoRect = infoEl.getBoundingClientRect();
-          const computed = window.getComputedStyle(infoEl);
-          const padTop = parseFloat(computed.paddingTop || '0');
-          const centerLine = scRect.top + (el.clientHeight / 2);
-          setInfoY(centerLine - infoRect.top - padTop);
-        } else {
-          setInfoY(el.clientHeight / 2);
-        }
-      }
-      didCenterRef.current = true;
-    });
-  }, [filteredArtworks.length, viewMode]);
+
+    // For 3x duplication: start in the middle section
+    const ITEM_HEIGHT = 120;
+    const total = filteredArtworks.length;
+    const middleSectionStart = total * ITEM_HEIGHT; // Start of middle copy
+    const targetScroll = middleSectionStart + selectedIndex * ITEM_HEIGHT;
+    
+    // Set scroll position to middle section
+    el.scrollTop = targetScroll;
+  }, [viewMode]); // Run once on enter archive
+
+  // Momentum scrolling setup (Archive only)
+  // ... (Removed redundant effects if combined, but keep momentum separate if cleaner)
 
   // Route wheel events from the panel to the momentum scroller (archive mode only)
   useEffect(() => {
@@ -839,44 +1854,49 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
     const el = listRef.current;
     if (!el || filteredArtworks.length === 0) return;
     const m = momentumRef.current;
-  const MAX_VEL = 38; // 최대 속도 제한(더 낮춤)
-  const GAIN = 0.35; // 입력 게인 축소(더 무겁게)
-  const ACCEL_FRAMES = 8; // 가속 프레임 수 축소
-  const ACCEL_FACTOR = 1.02; // 가속 배율 축소(덜 급격)
-  const FRICTION = 0.88; // 마찰 강화(더 빨리 감속)
+    
+    // Natural physics: no artificial acceleration, just friction decay
+    const MAX_VEL = 35; // Max velocity (lower = slower)
+    const GAIN = 0.15; // Response to wheel delta (lower = slower)
+    const FRICTION = 0.93; // Smooth exponential decay
+    const STOP_THRESHOLD = 0.4; // Stop when velocity is negligible
 
     const step = () => {
-      // 가속 단계
-      if (m.accelFrames > 0) {
-        m.vel *= ACCEL_FACTOR;
-        m.accelFrames -= 1;
-      }
-      // 마찰 적용
+      // Apply friction (exponential decay like real physics)
       m.vel *= FRICTION;
 
-      // 매우 작은 속도는 정지 처리
-      if (Math.abs(m.vel) < 0.15) {
+      // Stop when velocity is very small
+      if (Math.abs(m.vel) < STOP_THRESHOLD) {
         m.vel = 0;
         m.raf = 0;
         return;
       }
-      el.scrollTop += m.vel;
+      
+      const newScrollTop = el.scrollTop + m.vel;
+      const maxScroll = el.scrollHeight - el.clientHeight;
+      
+      // Clamp to boundaries (no infinite loop for now)
+      el.scrollTop = Math.max(0, Math.min(maxScroll, newScrollTop));
+      
       m.raf = requestAnimationFrame(step);
     };
 
     const addVelocity = (delta: number) => {
-      m.vel = Math.max(-MAX_VEL, Math.min(MAX_VEL, m.vel + delta * GAIN));
-      m.accelFrames = ACCEL_FRAMES;
+      // Add velocity proportional to wheel input, clamped to max
+      const newVel = m.vel + delta * GAIN;
+      m.vel = Math.max(-MAX_VEL, Math.min(MAX_VEL, newVel));
+      
+      // Start animation if not running
       if (!m.raf) m.raf = requestAnimationFrame(step);
     };
     applyMomentumRef.current = addVelocity;
 
     const onWheel = (e: WheelEvent) => {
-  // Prevent default scroll and handle via momentum logic
+      // Prevent default scroll and handle via momentum logic
       e.preventDefault();
       addVelocity(e.deltaY);
     };
-  el.addEventListener('wheel', onWheel, { passive: false });
+    el.addEventListener('wheel', onWheel, { passive: false });
     return () => {
       el.removeEventListener('wheel', onWheel as any);
       if (m.raf) cancelAnimationFrame(m.raf);
@@ -888,64 +1908,45 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
   // Selection is driven purely by scroll position
 
   // Shared layout values for room selector + info text
-  // Treat panorama like gallery for selector layout/positioning
-  const isGalleryLayout = (viewMode === 'gallery' || viewMode === 'panorama');
-  // Archive: move noticeably into the gap but avoid overlapping metadata (150 .. 420)
-  // Shift archive-specific UI left by 100px per request
-  const selectorLeftArchive = 280; // original 380 -> 280
-  const selectorLeft = isGalleryLayout ? 12 : selectorLeftArchive;
-  const selectorTop = isGalleryLayout ? 8 : 2;
-  // Selector sizing constants: separate archive vs gallery to allow tighter gallery spacing
-  const SELECTOR_COL_WIDTH_ARCHIVE = 28; // px (archive mode column width)
-  const SELECTOR_COL_GAP_ARCHIVE = 1; // px (archive mode gap)
-  const SELECTOR_COL_WIDTH_GALLERY = 24; // px (gallery mode: slightly wider for readability)
-  const SELECTOR_COL_GAP_GALLERY = 1; // px (gallery mode: small gap)
-  // Default layout uses 5 columns; gallery mode uses 20 columns per your request
-  const perRowCount = 5;
-  const selectorCols = isGalleryLayout ? 20 : perRowCount;
-  const SELECTOR_COL_WIDTH = isGalleryLayout ? SELECTOR_COL_WIDTH_GALLERY : SELECTOR_COL_WIDTH_ARCHIVE;
-  const SELECTOR_COL_GAP = isGalleryLayout ? SELECTOR_COL_GAP_GALLERY : SELECTOR_COL_GAP_ARCHIVE;
+  // Wide screen: center between thumbnails (~150px) and metadata (~500px) = ~325px
+  // Narrow screen: below title, centered position
+  const selectorLeft = isMobile ? 12 : (isNarrow ? 180 : 250);
+  // Wide screen: same top margin as mode tabs (8px)
+  // Narrow screen: below title area
+  const selectorTop = isMobile ? 80 : (isNarrow ? 75 : 8);
+  // Info text position (same center as room selector on wide screen)
+  const infoTextLeft = isMobile ? 12 : (isNarrow ? 200 : 300);
+  // Selector sizing constants: narrower on narrow screens
+  const SELECTOR_COL_WIDTH = isNarrow ? 14 : 18; // px
+  const SELECTOR_COL_GAP = 0; // px (no gap between buttons)
+  // Max 15 rooms per row
+  const selectorCols = isMobile ? 10 : 15;
   const selectorWidth = selectorCols * SELECTOR_COL_WIDTH + Math.max(0, selectorCols - 1) * SELECTOR_COL_GAP;
   // Info text X within the info panel should align visually to the selector's X
   // Keep info text inset inside the info panel to avoid clipping; align visually with selector
-  const infoTextLeft = isGalleryLayout ? 4 : Math.max(12, selectorLeft - 150 + 12);
+
 
   // Compute selector data outside JSX and replace the problematic IIFE-based room selector block with simpler JSX using this data to fix the syntax error
   const selectorData = useMemo(() => {
-    // Build a full numeric sequence rounded up to known max so empty rooms are shown as placeholders
-    const rawNumericButtons = roomButtons.filter(b => b.id !== 'ALL' && /^\d+$/.test(b.id));
-    const existingNums = rawNumericButtons.map(b => parseInt(b.id, 10));
-    const maxExisting = existingNums.length ? Math.max(...existingNums) : 0;
-    const KNOWN_MAX_ROOMS: Record<string, number> = { 'European Paintings': 66 };
-    const KNOWN_EMPTY_ROOMS: Record<string, number[]> = { 'European Paintings': [1,3,13,47,48,49,50] };
-    const exhibitKey = (exhibition.title || exhibition.name || '').trim();
-    const exhibitKeyLower = exhibitKey.toLowerCase();
-    const findMatch = (map: Record<string, any>) => {
-      for (const k of Object.keys(map)) {
-        const kl = k.toLowerCase();
-        if (!kl) continue;
-        if (exhibitKeyLower.includes(kl) || kl.includes(exhibitKeyLower)) return map[k];
-      }
-      return undefined;
-    };
-    const forcedMax = findMatch(KNOWN_MAX_ROOMS) ?? 0;
-    const extraEmpty = (findMatch(KNOWN_EMPTY_ROOMS) ?? []).slice();
-    const maxEmpty = extraEmpty.length ? Math.max(...extraEmpty) : 0;
-    const maxNum = Math.max(maxExisting, forcedMax, maxEmpty);
-    const nums: { id: string; label: string; exists: boolean }[] = Array.from({ length: Math.max(0, maxNum) }, (_, i) => {
-      const n = i + 1;
-      const exists = artworks.some(a => String(a.roomId || '').trim() === String(n));
-      return { id: String(n), label: String(n), exists };
-    });
+    // Only use actually assigned numeric rooms discovered from buttons (which derive from artworks)
+    const numericButtons = roomButtons.filter(b => /^\d+$/.test(b.id));
+    const nums: { id: string; label: string; exists: boolean }[] = numericButtons.map(b => ({ id: b.id, label: b.label, exists: true }));
+    // Add letter rooms (A-G)
+    const letterButtons = roomButtons.filter(b => /^[A-G]$/i.test(b.id) && b.id !== 'C');
+    for (const lb of letterButtons) nums.push({ id: lb.id, label: lb.label, exists: true });
+    // Add Central Hall (C)
     const central = roomButtons.find(b => b.id === 'C');
     if (central) nums.push({ id: central.id, label: central.label, exists: true });
+    // Add Archive (n) at the end
+    const archive = roomButtons.find(b => b.id === 'n');
+    if (archive) nums.push({ id: archive.id, label: archive.label, exists: true });
 
-    // Chunk for gallery rows of 20
+    // Chunk for gallery rows of 15
     const rows: typeof nums[] = [];
-    for (let i = 0; i < nums.length; i += 20) rows.push(nums.slice(i, i + 20));
+    for (let i = 0; i < nums.length; i += 15) rows.push(nums.slice(i, i + 15));
 
     return { nums, rows };
-  }, [artworks, roomButtons, exhibition.title, exhibition.name]);
+  }, [roomButtons]);
 
   return (
     <div
@@ -955,7 +1956,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
         left: 0,
         width: "100vw",
         height: "100vh",
-  backgroundColor: "rgba(0,0,0,0.6)",
+        backgroundColor: "rgba(0,0,0,0.6)",
         display: "flex",
         alignItems: "center",
         justifyContent: "center",
@@ -963,119 +1964,289 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
         overscrollBehavior: "contain",
       }}
     >
-  <div
-      ref={panelRef}
-      style={{
-        position: "relative",
-  backgroundColor: "#fff",
-        width: "100%",
-        height: "100%",
-        padding: 0,
-        borderRadius: 0,
-  boxShadow: "0 12px 28px rgba(0,0,0,0.25)",
-        display: "flex",
-        flexDirection: "column",
-        overflow: "hidden",
-        ...(DEBUG_LAYOUT ? { outline: "1px solid #f0f" } : {})
-      }}
-    >
+      <div
+        ref={panelRef}
+        style={{
+          position: "relative",
+          backgroundColor: "#fff",
+          width: "100%",
+          height: "100%",
+          padding: 0,
+          borderRadius: 0,
+          boxShadow: "0 12px 28px rgba(0,0,0,0.25)",
+          display: "flex",
+          flexDirection: "column",
+          overflow: "hidden",
+          ...(DEBUG_LAYOUT ? { outline: "1px solid #f0f" } : {})
+        }}
+      >
         {/* Old handle removed; the corner is now curled by default and interactive via the invisible zone above */}
-        {/* Absolute full-height thumbnail scroller at far left (archive mode only) */}
-  {(viewMode === 'archive') && (
-          <div style={{ position: "absolute", top: 0, bottom: 0, left: 0, width: 150, background: "transparent", zIndex: 1, display: 'flex', flexDirection: 'column', ...(DEBUG_LAYOUT ? { outline: "1px solid #964B00" } : {}) }}>
-            {/* Left header: title + description + room selector */}
-            <div style={{ padding: '8px 8px', borderBottom: '0px solid transparent' }}>
-              {repImage && (
-                <div style={{ width: '100%', marginBottom: 8, background: '#ddd', borderRadius: 4, overflow: 'hidden' }}>
-                  <img
-                    src={repImage}
-                    alt={(exhibition.title || exhibition.name) + ' cover'}
-                    style={{ width: '100%', height: 'auto', display: 'block', objectFit: 'cover' }}
-                    decoding="async"
-                    loading="eager"
-                    onError={() => setRepImage(null)}
-                  />
-                </div>
-              )}
-              <div
-                ref={titleScrollRef}
-                onMouseEnter={() => startTitleAutoScroll()}
-                onMouseLeave={() => stopTitleAutoScroll(true)}
-                style={{ fontSize: 12, fontWeight: 700, color: '#111827', whiteSpace: 'nowrap', overflowX: 'hidden', textOverflow: 'clip', cursor: 'default' }}
-                title={exhibition.title || exhibition.name}
-              >
-                <span style={{ display: 'inline-block', paddingRight: 18 }}>{exhibition.title || exhibition.name}</span>
-              </div>
-              <div
-                style={{
-                  marginTop: 6,
-                  fontSize: 10,
-                  color: '#666',
-                  lineHeight: 1.4,
-                  maxHeight: 72, // visible viewport
-                  overflow: 'hidden',
-                  position: 'relative',
-                }}
-                onMouseEnter={(e) => {
-                  const el = e.currentTarget;
-                  // if content overflows, animate vertical scroll up/down
-                  const canScroll = el.scrollHeight > el.clientHeight + 2;
-                  if (!canScroll) return;
-                  // Prevent duplicate RAFs
-                  if ((el as any)._raf) cancelAnimationFrame((el as any)._raf);
-                  let dir = 1; // 1: down, -1: up
-                  const maxScroll = el.scrollHeight - el.clientHeight;
-                  let last = performance.now();
-                  const speed = 18; // px per second
-                  const step = (now: number) => {
-                    const dt = Math.min(40, now - last);
-                    last = now;
-                    el.scrollTop += dir * (speed * (dt / 1000));
-                    if (el.scrollTop <= 0) { el.scrollTop = 0; dir = 1; }
-                    else if (el.scrollTop >= maxScroll) { el.scrollTop = maxScroll; dir = -1; }
-                    (el as any)._raf = requestAnimationFrame(step);
-                  };
-                  (el as any)._raf = requestAnimationFrame(step);
-                }}
-                onMouseLeave={(e) => {
-                  const el = e.currentTarget;
-                  if ((el as any)._raf) {
-                    cancelAnimationFrame((el as any)._raf);
-                    (el as any)._raf = 0;
-                  }
-                  // Smoothly return to top so the first lines are visible next time
-                  el.scrollTo({ top: 0, behavior: 'smooth' });
-                }}
-              >
-                {exhibition.description || `${(exhibition.title || exhibition.name)} — a short introduction to the exhibition.`}
-              </div>
-              {/* room selector removed from left header; rendered between title/meta instead */}
-            </div>
-            {/* Centered placeholder area in the left column when no artworks (archive only) */}
-            {initialized && filteredArtworks.length === 0 && viewMode === 'archive' && (
-              <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                <div style={{ color: '#888', fontSize: 13, textAlign: 'center' }}>NO ARTWORKS
-                  <br />YET .</div>
+        {/* Absolute full-height exhibition info panel at far left (all modes) */}
+        <div style={{ position: "absolute", top: 0, bottom: 0, left: 0, width: 150, background: "transparent", zIndex: 1, display: 'flex', flexDirection: 'column', ...(DEBUG_LAYOUT ? { outline: "1px solid #964B00" } : {}) }}>
+          {/* Left header: title + description + room selector */}
+          <div style={{ padding: '8px 8px', borderBottom: '0px solid transparent' }}>
+            {repImage && (
+              <div style={{ width: '100%', marginBottom: 8, background: '#ddd', borderRadius: 4, overflow: 'hidden' }}>
+                <img
+                  src={repImage}
+                  alt={(exhibition.title || exhibition.name) + ' cover'}
+                  style={{ width: '100%', height: 'auto', display: 'block', objectFit: 'cover' }}
+                  decoding="async"
+                  loading="eager"
+                  referrerPolicy="no-referrer"
+                  onError={() => setRepImage(null)}
+                />
               </div>
             )}
-            {/* Scrollable thumbnail strip below header (only when there are artworks) */}
-            {filteredArtworks.length > 0 && (
-              <div
-                ref={listRef}
-                className="no-scrollbar"
-                style={{ flex: 1, overflowY: "auto", WebkitOverflowScrolling: "touch", padding: "6px 8px", overscrollBehavior: "contain", msOverflowStyle: "none", scrollbarWidth: "none", scrollSnapType: "y proximity", scrollPaddingTop: "50%", scrollPaddingBottom: "50%" }}
+            <div
+              ref={titleScrollRef}
+              onMouseEnter={() => startTitleAutoScroll()}
+              onMouseLeave={() => stopTitleAutoScroll(true)}
+              style={{ fontSize: 12, fontWeight: 700, color: '#111827', whiteSpace: 'nowrap', overflowX: 'hidden', textOverflow: 'clip', cursor: 'default' }}
+              title={exhibition.title || exhibition.name}
+            >
+              <span style={{ display: 'inline-block', paddingRight: 18 }}>{exhibition.title || exhibition.name}</span>
+            </div>
+            <div
+              style={{
+                marginTop: 6,
+                fontSize: 10,
+                color: '#666',
+                lineHeight: 1.4,
+                maxHeight: isDescriptionExpanded ? 'none' : 72,
+                overflow: isDescriptionExpanded ? 'visible' : 'hidden',
+                position: 'relative',
+              }}
+              onMouseEnter={(e) => {
+                const el = e.currentTarget;
+                // if content overflows, animate vertical scroll up/down
+                const canScroll = el.scrollHeight > el.clientHeight + 2;
+                if (!canScroll) return;
+                // Prevent duplicate RAFs
+                if ((el as any)._raf) cancelAnimationFrame((el as any)._raf);
+                let dir = 1; // 1: down, -1: up
+                const maxScroll = el.scrollHeight - el.clientHeight;
+                let last = performance.now();
+                const speed = 18; // px per second
+                const step = (now: number) => {
+                  const dt = Math.min(40, now - last);
+                  last = now;
+                  el.scrollTop += dir * (speed * (dt / 1000));
+                  if (el.scrollTop <= 0) { el.scrollTop = 0; dir = 1; }
+                  else if (el.scrollTop >= maxScroll) { el.scrollTop = maxScroll; dir = -1; }
+                  (el as any)._raf = requestAnimationFrame(step);
+                };
+                (el as any)._raf = requestAnimationFrame(step);
+              }}
+              onMouseLeave={(e) => {
+                const el = e.currentTarget;
+                if ((el as any)._raf) {
+                  cancelAnimationFrame((el as any)._raf);
+                  (el as any)._raf = 0;
+                }
+                // Smoothly return to top so the first lines are visible next time
+                el.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
+            >
+              {exhibition.description || `${(exhibition.title || exhibition.name)} — a short introduction to the exhibition.`}
+            </div>
+            {/* Description button - opens overlay with full exhibition details */}
+            {((exhibition as any).detailedDescription || (exhibition as any).descriptionHtml || (exhibition as any).url || (exhibition as any).fullDescription || (Array.isArray((exhibition as any).galleryImages) && (exhibition as any).galleryImages.length > 0) || (Array.isArray((exhibition as any).videos) && (exhibition as any).videos.length > 0)) && (
+              <button
+                onClick={() => setIsDescriptionExpanded(true)}
+                style={{
+                  marginTop: 8,
+                  fontSize: 10,
+                  color: '#fff',
+                  background: '#111827',
+                  border: 'none',
+                  cursor: 'pointer',
+                  padding: '4px 10px',
+                  borderRadius: 3,
+                  fontWeight: 600,
+                }}
               >
-                {[0,1,2].map((block) => (
-                  <div key={`block-${block}`} data-block-container={block}>
-          {filteredArtworks.map((a, idx) => (
+                Description
+              </button>
+            )}
+            {/* room selector removed from left header; rendered between title/meta instead */}
+          </div>
+          {/* Centered placeholder area in the left column when no artworks (archive only) */}
+          {initialized && filteredArtworks.length === 0 && viewMode === 'archive' && (
+            <div style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+              <div style={{ color: '#888', fontSize: 13, textAlign: 'center', padding: '20px' }}>
+                {((exhibition as any).detailedDescription || exhibition.description) ? (
+                  <>SEE DESCRIPTION<br />→</>
+                ) : (
+                  <>NO ARTWORKS<br />YET .</>
+                )}
+              </div>
+            </div>
+          )}
+          {/* Scrollable thumbnail strip below header (archive mode only) */}
+          {viewMode === 'archive' && filteredArtworks.length > 0 && (() => {
+            const total = filteredArtworks.length;
+            const useVirtualization = total > 500; // Enable virtualization for large lists
+            
+            // Item dimensions for virtualization
+            const ITEM_HEIGHT = 144; // ~60px thumbnail + 84px margin
+            const BUFFER_COUNT = 10; // Extra items above/below viewport
+            
+            // Create 3x list for infinite loop (only if not virtualized)
+            const tripleList = useVirtualization ? filteredArtworks : [...filteredArtworks, ...filteredArtworks, ...filteredArtworks];
+            
+            const scrollToIndex = (realIdx: number) => {
+              const el = listRef.current;
+              if (!el) return;
+              
+              if (useVirtualization) {
+                // For virtualized list, calculate scroll position directly
+                const targetScroll = realIdx * ITEM_HEIGHT - el.clientHeight / 2 + ITEM_HEIGHT / 2;
+                el.scrollTo({ top: Math.max(0, targetScroll), behavior: 'smooth' });
+              } else {
+                // Original behavior for non-virtualized
+                const items = el.querySelectorAll('[data-base]');
+                const targetItem = Array.from(items).find((item, idx) => {
+                  const base = parseInt(item.getAttribute('data-base') || '-1');
+                  return base === realIdx && idx >= total && idx < total * 2;
+                }) as HTMLElement | null;
+                
+                if (targetItem) {
+                  const containerHeight = el.clientHeight;
+                  const itemTop = targetItem.offsetTop;
+                  const itemHeight = targetItem.offsetHeight;
+                  const targetScroll = itemTop + itemHeight / 2 - containerHeight / 2;
+                  el.scrollTo({ top: targetScroll, behavior: 'smooth' });
+                }
+              }
+              setSelectedIndex(realIdx);
+            };
+
+            return (
+              <div
+                ref={(el) => {
+                  (listRef as React.MutableRefObject<HTMLDivElement | null>).current = el;
+                  if (el && useVirtualization) {
+                    setArchiveContainerHeight(el.clientHeight);
+                  }
+                }}
+                className="no-scrollbar"
+                style={{ flex: 1, overflowY: "auto", WebkitOverflowScrolling: "touch", padding: "6px 8px", overscrollBehavior: "none", msOverflowStyle: "none", scrollbarWidth: "none" }}
+                onScroll={(e) => {
+                  const el = e.currentTarget;
+                  const currentScrollTop = el.scrollTop;
+                  
+                  if (useVirtualization) {
+                    setArchiveScrollTop(currentScrollTop);
+                    // Calculate which item is at center
+                    const centerY = currentScrollTop + el.clientHeight / 2;
+                    const centerIdx = Math.floor(centerY / ITEM_HEIGHT);
+                    const clampedIdx = Math.max(0, Math.min(centerIdx, total - 1));
+                    if (clampedIdx !== selectedIndex) {
+                      setSelectedIndex(clampedIdx);
+                    }
+                  } else {
+                    // Original non-virtualized scroll handling
+                    const elContainerHeight = el.clientHeight;
+                    const centerY = currentScrollTop + elContainerHeight / 2;
+                    
+                    const items = el.querySelectorAll('[data-base]');
+                    let closestIdx = 0;
+                    let closestDistance = Infinity;
+                    
+                    items.forEach((item) => {
+                      const htmlItem = item as HTMLElement;
+                      const itemTop = htmlItem.offsetTop;
+                      const itemHeight = htmlItem.offsetHeight;
+                      const itemCenter = itemTop + itemHeight / 2;
+                      const distance = Math.abs(itemCenter - centerY);
+                      
+                      if (distance < closestDistance) {
+                        closestDistance = distance;
+                        closestIdx = parseInt(item.getAttribute('data-base') || '0');
+                      }
+                    });
+                    
+                    if (closestIdx !== selectedIndex) {
+                      setSelectedIndex(closestIdx);
+                    }
+                    
+                    // Infinite loop
+                    const totalHeight = el.scrollHeight;
+                    const sectionHeight = totalHeight / 3;
+                    
+                    if (currentScrollTop < sectionHeight * 0.3) {
+                      el.scrollTop = currentScrollTop + sectionHeight;
+                    } else if (currentScrollTop > sectionHeight * 1.7) {
+                      el.scrollTop = currentScrollTop - sectionHeight;
+                    }
+                  }
+                }}
+              >
+                {useVirtualization ? (
+                  // Virtualized rendering - only render visible items
+                  <div style={{ height: total * ITEM_HEIGHT, position: 'relative' }}>
+                    {(() => {
+                      const startIdx = Math.max(0, Math.floor(archiveScrollTop / ITEM_HEIGHT) - BUFFER_COUNT);
+                      const endIdx = Math.min(total, Math.ceil((archiveScrollTop + archiveContainerHeight) / ITEM_HEIGHT) + BUFFER_COUNT);
+                      const visibleItems = [];
+                      
+                      for (let i = startIdx; i < endIdx; i++) {
+                        const a = filteredArtworks[i];
+                        visibleItems.push(
+                          <div
+                            key={i}
+                            data-base={i}
+                            onClick={() => scrollToIndex(i)}
+                            role="button"
+                            tabIndex={0}
+                            style={{
+                              position: 'absolute',
+                              top: i * ITEM_HEIGHT,
+                              left: 0,
+                              right: 0,
+                              height: ITEM_HEIGHT,
+                              display: "flex",
+                              flexDirection: "column",
+                              alignItems: "center",
+                              justifyContent: "flex-start",
+                              paddingTop: 0,
+                              cursor: "pointer",
+                              opacity: i === selectedIndex ? 1 : 0.65
+                            }}
+                          >
+                            <div style={{ width: "40%", aspectRatio: "1 / 1", background: "#eee", borderRadius: 0, overflow: "hidden" }}>
+                              {a.image && (
+                                <img
+                                  src={a.image}
+                                  alt={a.name}
+                                  loading="lazy"
+                                  decoding="async"
+                                  fetchPriority="low"
+                                  referrerPolicy="no-referrer"
+                                  style={{ width: "100%", height: "100%", display: "block", objectFit: "cover" }}
+                                  onError={(e) => applyFallbackImage(e.currentTarget)}
+                                />
+                              )}
+                            </div>
+                          </div>
+                        );
+                      }
+                      return visibleItems;
+                    })()}
+                  </div>
+                ) : (
+                  // Original 3x list for smaller collections
+                  tripleList.map((a, idx) => {
+                    const realIdx = idx % total;
+                    return (
                       <div
-            key={`${block}-${a.id || idx}`}
-                        data-block={block}
-                        data-base={idx}
-                        onClick={() => setSelectedIndex(idx)}
+                        key={`${realIdx}-${Math.floor(idx / total)}`}
+                        data-base={realIdx}
+                        onClick={() => scrollToIndex(realIdx)}
                         role="button"
                         tabIndex={0}
-                        style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 36, marginBottom: 84, cursor: "pointer", opacity: idx === selectedIndex ? 1 : 0.65, scrollSnapAlign: "center" }}
+                        style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 36, marginBottom: 84, cursor: "pointer", opacity: realIdx === selectedIndex ? 1 : 0.65 }}
                       >
                         <div style={{ width: "40%", aspectRatio: "1 / 1", background: "#eee", borderRadius: 0, overflow: "hidden" }}>
                           {a.image && (
@@ -1085,470 +2256,931 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
                               loading="lazy"
                               decoding="async"
                               fetchPriority="low"
+                              referrerPolicy="no-referrer"
                               style={{ width: "100%", height: "100%", display: "block", objectFit: "cover" }}
+                              onError={(e) => applyFallbackImage(e.currentTarget)}
                             />
                           )}
                         </div>
-                        {/* captions moved to the right stage for the current item only */}
                       </div>
-                    ))}
-                  </div>
-                ))}
+                    );
+                  })
+                )}
               </div>
-            )}
-          </div>
-        )}
-    {/* Top bar: single title + right-aligned description; no dividing line */}
-  <div ref={topBarRef} style={{ position: "relative", padding: "0px 0px", display: "flex", alignItems: "flex-start", gap: 16, minHeight: topBarHeight, marginLeft: (LAYOUT_LEFT_BASE + META_SHIFT), marginRight: LAYOUT_RIGHT_PAD, ...(DEBUG_LAYOUT ? { outline: "1px dashed #00f" } : {}) }}>
-          {/* Title aligned vertically with Archive */}
-            {/* Title moved to left column header; removed duplicate here */}
-          {/* Absolute-aligned controls to meta columns */}
-          <span
-      ref={galleryRef}
-            onClick={() => setViewMode('gallery')}
-            style={{ position: "absolute", left: (metaPos.date), top: 14, fontSize: 12, lineHeight: 1, fontWeight: 700, color: viewMode === 'gallery' ? "#000" : "#333", cursor: "pointer", userSelect: "none", whiteSpace: "nowrap", textDecoration: viewMode === 'gallery' ? 'underline' : 'none', ...(DEBUG_LAYOUT ? { outline: "1px solid #fa0" } : {}) }}
-          >
-            GALLERY
-          </span>
-          <span
-      ref={archiveRef}
-            onClick={() => setViewMode('archive')}
-            style={{ position: "absolute", left: (metaPos.creator), top: 14, fontSize: 12, lineHeight: 1, fontWeight: 700, color: viewMode === 'archive' ? "#000" : "#333", cursor: "pointer", userSelect: "none", whiteSpace: "nowrap", textDecoration: viewMode === 'archive' ? 'underline' : 'none', ...(DEBUG_LAYOUT ? { outline: "1px solid #fa0" } : {}) }}
-          >
-            ARCHIVE
-          </span>
-          <span
-            onClick={() => setViewMode('panorama')}
-            style={{ position: "absolute", left: (metaPos.title), top: 14, fontSize: 12, lineHeight: 1, fontWeight: 700, color: viewMode === 'panorama' ? "#000" : "#333", cursor: "pointer", userSelect: "none", whiteSpace: "nowrap", textDecoration: viewMode === 'panorama' ? 'underline' : 'none', ...(DEBUG_LAYOUT ? { outline: "1px solid #fa0" } : {}) }}
-          >
-            PANORAMA
-          </span>
-          {/* Description: fixed narrow width, up to the close text on the right */}
-          {/* Description moved to left column header; removed duplicate here */}
-          {/* close button moved to absolute top-right */}
+            );
+          })()}
         </div>
-    {/* Room selector: placed between top bar and meta row (chunked rows of 5) */}
-  {/* Room selector: absolute so it doesn't push down the metadata; wraps when it runs out of width */}
-          <div style={{ position: 'absolute', left: selectorLeft, top: selectorTop, width: selectorWidth, zIndex: 20 }}>
-            {roomButtons.find(b => b.id === 'ALL') && (
-              <div style={{ marginBottom: 2, display: 'flex', alignItems: 'center', gap: 8 }}>
-                <button onClick={() => { setSelectedRoomId('ALL'); setSelectedIndex(0); }} style={{ padding: '4px 8px', fontSize: 11, borderRadius: 4, border: 'none', background: selectedRoomId === 'ALL' ? '#111' : 'transparent', color: selectedRoomId === 'ALL' ? '#fff' : '#222', cursor: 'pointer' }}>ALL</button>
-                <span style={{ fontSize: 10, color: '#666' }}>({filteredArtworks.length})</span>
-              </div>
-            )}
-            <div style={{ width: '100%' }}>
-              {isGalleryLayout ? (
-                // Gallery mode: render rows of 20
-                selectorData.rows.map((row, rIdx) => (
-                  <div key={`row-${rIdx}`} style={{ display: 'grid', gridTemplateColumns: `repeat(${row.length}, ${SELECTOR_COL_WIDTH}px)`, columnGap: SELECTOR_COL_GAP, rowGap: 6, justifyContent: 'start', marginBottom: 4 }}>
-                    {row.map((btn) => (
-                      <button key={btn.id} onClick={() => { if (btn.exists) { setSelectedRoomId(btn.id); setSelectedIndex(0); } }} disabled={!btn.exists} style={{ width: '100%', height: 18, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', padding: 0, fontSize: 9.5, borderRadius: 3, border: btn.exists ? 'none' : '1px dashed rgba(0,0,0,0.18)', background: btn.exists ? (selectedRoomId === btn.id ? '#111' : 'transparent') : 'rgba(0,0,0,0.03)', color: btn.exists ? (selectedRoomId === btn.id ? '#fff' : '#222') : 'rgba(0,0,0,0.38)', opacity: btn.exists ? 1 : 0.75, cursor: btn.exists ? 'pointer' : 'default', boxSizing: 'border-box' }}>
-                        {btn.label}
-                      </button>
-                    ))}
-                  </div>
-                ))
-              ) : (
-                // Archive mode: simple grid with fixed columns
-                <div style={{ display: 'grid', gridTemplateColumns: `repeat(${perRowCount}, ${SELECTOR_COL_WIDTH}px)`, columnGap: SELECTOR_COL_GAP, rowGap: 1, justifyContent: 'start', width: '100%' }}>
-                  {selectorData.nums.map((btn) => (
-                    <button key={btn.id} onClick={() => { if (btn.exists) { setSelectedRoomId(btn.id); setSelectedIndex(0); } }} disabled={!btn.exists} style={{ width: '100%', height: 18, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', padding: 0, fontSize: 9.5, borderRadius: 3, border: btn.exists ? 'none' : '1px dashed #ccc', background: btn.exists ? (selectedRoomId === btn.id ? '#111' : 'transparent') : 'transparent', color: btn.exists ? (selectedRoomId === btn.id ? '#fff' : '#222') : '#bbb', cursor: btn.exists ? 'pointer' : 'default' }}>
-                      {btn.label}
-                    </button>
-                  ))}
-                </div>
-              )}
+        {/* Top bar: mode tabs + controls */}
+        {/* Top bar: mode tabs + controls */}
+        <div ref={topBarRef} style={{ position: "relative", padding: "8px 0", display: isNarrow ? "flex" : "block", alignItems: isNarrow ? "center" : undefined, justifyContent: isNarrow ? "space-evenly" : undefined, minHeight: topBarHeight, marginLeft: isNarrow ? 150 : (LAYOUT_LEFT_BASE + META_SHIFT), marginRight: 16, zIndex: 100, ...(DEBUG_LAYOUT ? { outline: "1px dashed #00f" } : {}) }}>
+          {/* Mode tabs - hidden on mobile, responsive positioning for others */}
+          {!isMobile && (
+            <>
+              <span
+                onClick={() => setViewMode('panorama')}
+                style={{
+                  fontSize: 12, lineHeight: 1, fontWeight: 700,
+                  color: viewMode === 'panorama' ? "#000" : "#666",
+                  cursor: "pointer", userSelect: "none", whiteSpace: "nowrap",
+                  textDecoration: viewMode === 'panorama' ? 'underline' : 'none',
+                  ...(isNarrow ? {} : { position: 'absolute', left: metaPos.title })
+                }}
+              >
+                PANORAMA
+              </span>
+              <span
+                ref={archiveRef}
+                onClick={() => setViewMode('archive')}
+                style={{
+                  fontSize: 12, lineHeight: 1, fontWeight: 700,
+                  color: viewMode === 'archive' ? "#000" : "#666",
+                  cursor: "pointer", userSelect: "none", whiteSpace: "nowrap",
+                  textDecoration: viewMode === 'archive' ? 'underline' : 'none',
+                  ...(isNarrow ? {} : { position: 'absolute', left: metaPos.creator })
+                }}
+              >
+                ARCHIVE
+              </span>
+              <span
+                ref={galleryRef}
+                onClick={() => setViewMode('gallery')}
+                style={{
+                  fontSize: 12, lineHeight: 1, fontWeight: 700,
+                  color: viewMode === 'gallery' ? "#000" : "#666",
+                  cursor: "pointer", userSelect: "none", whiteSpace: "nowrap",
+                  textDecoration: viewMode === 'gallery' ? 'underline' : 'none',
+                  ...(isNarrow ? {} : { position: 'absolute', left: metaPos.date })
+                }}
+              >
+                GALLERY
+              </span>
+            </>
+          )}
+          {/* Submit Artwork button - only for temporary exhibitions, aligned with DIMENSION metadata */}
+          {exhibition.startDate && !String(exhibition.startDate).toLowerCase().includes('permanent') && (
+            <span
+              onClick={() => setShowSubmissionForm(true)}
+              style={{
+                fontSize: 12, lineHeight: 1, fontWeight: 700,
+                color: "#666",
+                cursor: "pointer", userSelect: "none", whiteSpace: "nowrap",
+                textDecoration: 'none',
+                position: 'relative',
+                display: 'inline-block',
+                padding: '4px 8px',
+                ...(isNarrow ? {} : { position: 'absolute', left: metaPos.dimension })
+              }}
+            >
+              {/* Hand-drawn circle effect */}
+              <svg
+                style={{ position: 'absolute', top: -8, left: -12, width: 'calc(100% + 24px)', height: 'calc(100% + 16px)', pointerEvents: 'none' }}
+                viewBox="0 0 100 40"
+                preserveAspectRatio="none"
+              >
+                <ellipse
+                  cx="50" cy="20" rx="48" ry="18"
+                  fill="none"
+                  stroke="#333"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeDasharray="3,2"
+                  style={{ transform: 'rotate(-2deg)', transformOrigin: 'center' }}
+                />
+              </svg>
+              + SUBMIT
+            </span>
+          )}
+        </div>
+        {/* Room selector: placed between top bar and meta row (chunked rows of 5) */}
+        {/* Room selector: absolute so it doesn't push down the metadata; wraps when it runs out of width */}
+        <div style={{ position: 'absolute', left: selectorLeft, top: selectorTop, width: selectorWidth, zIndex: 110 }}>
+          {roomButtons.find(b => b.id === 'ALL') && (
+            <div style={{ marginBottom: 2, display: 'flex', alignItems: 'center', gap: 8 }}>
+              <button onClick={() => { setSelectedRoomId('ALL'); setSelectedIndex(0); }} style={{ padding: '2px 6px', fontSize: 9.5, borderRadius: 3, border: 'none', background: selectedRoomId === 'ALL' ? '#111' : 'transparent', color: selectedRoomId === 'ALL' ? '#fff' : '#222', cursor: 'pointer' }}>ALL</button>
+              <span style={{ fontSize: 10, color: '#666' }}>({filteredArtworks.length})</span>
             </div>
-            
-            {/* Year filtering buttons - moved below room buttons */}
-            <div style={{ marginTop: 8, padding: '4px 0', borderTop: '1px solid #eee', borderBottom: '1px solid #eee' }}>
-              <div style={{ fontSize: 9, color: '#888', marginBottom: 4, textAlign: 'center' }}>YEAR</div>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 2 }}>
-                {[
-                  { label: '<1900', value: 'under 1900' },
-                  { label: '1900', value: '1900' },
-                  { label: '1910', value: '1910' },
-                  { label: '1920', value: '1920' },
-                  { label: '1930', value: '1930' },
-                  { label: '1940', value: '1940' },
-                  { label: '1950', value: '1950' },
-                  { label: '1960', value: '1960' },
-                  { label: '1970', value: '1970' },
-                  { label: '1980', value: '1980' },
-                  { label: '1990', value: '1990' },
-                  { label: '>2000', value: 'over 2000' },
-                ].map((yearBtn) => (
-                  <button
-                    key={yearBtn.value}
-                    onClick={() => { setSelectedYearRange(yearBtn.value); setSelectedIndex(0); }}
-                    style={{
-                      padding: '2px 4px',
-                      fontSize: 9,
-                      borderRadius: 3,
-                      border: 'none',
-                      background: selectedYearRange === yearBtn.value ? '#111' : 'transparent',
-                      color: selectedYearRange === yearBtn.value ? '#fff' : '#666',
-                      cursor: 'pointer',
-                      textAlign: 'center'
-                    }}
-                  >
-                    {yearBtn.label}
+          )}
+          <div style={{ width: '100%' }}>
+            {/* Unified gallery-style room selector for all modes */}
+            {(selectorData.rows.length > 0 ? selectorData.rows : []).map((row, rIdx) => (
+              <div key={`row-${rIdx}`} style={{ display: 'grid', gridTemplateColumns: `repeat(${row.length}, ${SELECTOR_COL_WIDTH}px)`, columnGap: SELECTOR_COL_GAP, rowGap: 2, justifyContent: 'start', marginBottom: 1 }}>
+                {row.map((btn) => (
+                  <button key={btn.id} onClick={() => { if (btn.exists) { setSelectedRoomId(btn.id); setSelectedIndex(0); } }} disabled={!btn.exists} style={{ width: '100%', height: 18, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', padding: 0, fontSize: 9.5, borderRadius: 3, border: btn.exists ? 'none' : '1px dashed rgba(0,0,0,0.18)', background: btn.exists ? (selectedRoomId === btn.id ? '#111' : 'transparent') : 'rgba(0,0,0,0.03)', color: btn.exists ? (selectedRoomId === btn.id ? '#fff' : '#222') : 'rgba(0,0,0,0.38)', opacity: btn.exists ? 1 : 0.75, cursor: btn.exists ? 'pointer' : 'default', boxSizing: 'border-box' }}>
+                    {btn.label}
                   </button>
                 ))}
               </div>
-              {selectedYearRange !== 'ALL' && (
-                <div style={{ marginTop: 4, textAlign: 'center' }}>
+            ))}
+          </div>
+
+          {/* Year filtering buttons - moved below room buttons */}
+          <div style={{ marginTop: 8, padding: '6px 0' }}>
+            {dateLevel === 'century' ? (
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
+                {availableCenturies.map((c) => (
                   <button
-                    onClick={() => { setSelectedYearRange('ALL'); setSelectedIndex(0); }}
+                    key={`c-${c}`}
+                    onClick={() => { setSelectedCentury(c); setSelectedYearRange('ALL'); setDateLevel('decade'); setSelectedIndex(0); }}
                     style={{
-                      padding: '2px 6px',
-                      fontSize: 8,
-                      borderRadius: 3,
-                      border: '1px solid #ccc',
-                      background: 'transparent',
-                      color: '#666',
+                      padding: '2px 8px',
+                      fontSize: 11,
+                      borderRadius: 4,
+                      border: '1px solid #ddd',
+                      background: '#f8f8f8',
+                      color: '#222',
                       cursor: 'pointer'
                     }}
                   >
-                    Clear
+                    {`${c}c`}
                   </button>
-                </div>
-              )}
-            </div>
-          </div>
-
-    {/* Artwork meta info (below the top bar, aligned to Gallery/Archive; dynamic per selected artwork) */}
-  {(viewMode === 'archive' || viewMode === 'gallery' || viewMode === 'panorama') && (
-  <div ref={metaRowRef} style={{ position: "relative", padding: "12px 12px 0 0", marginLeft: (LAYOUT_LEFT_BASE + META_SHIFT), marginTop: metaMarginTop, marginRight: LAYOUT_RIGHT_PAD, minHeight: (FIXED_META_HEIGHT + META_VERTICAL_PAD), ...(DEBUG_LAYOUT ? { outline: "1px solid #f00" } : {}) }}>
-          {(() => {
-                    const titleText = displayArtwork?.name || "—";
-                    const creatorText = displayArtwork?.artist || "—";
-                    const dateText = displayArtwork?.date || (displayArtwork?.year ? String(displayArtwork.year) : "—");
-                    const dimensionText = displayArtwork?.dimension || "—";
-                    const gap = Math.max(160, Math.min(360, metaPos.date - metaPos.creator - 12));
-                    // shrink horizontal allocation to avoid cramped columns; allow content to wrap vertically
-                    const shrunk = Math.max(80, Math.floor(gap * META_HOR_SCALE));
-                    const titleW = shrunk;
-                    const creatorW = shrunk;
-                    const dateW = shrunk;
-            return (
-              <>
-                {/* TITLE */}
-                <div ref={titleRef} style={{ position: "absolute", left: metaPos.title, top: 12, maxWidth: titleW, ...(DEBUG_LAYOUT ? { outline: "1px dashed #f66" } : {}) }}>
-                  <div style={{ fontSize: 10, letterSpacing: 1.2, color: "#888", marginBottom: 4 }}>TITLE</div>
-                  <div ref={metaTitleValueRef} style={{ fontSize: 12, color: "#222", fontWeight: 700, lineHeight: 1.3, whiteSpace: "normal", wordBreak: "break-word", overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', maxHeight: 36 }}>{titleText}</div>
-                </div>
-                {/* CREATOR (aligned under Gallery) */}
-                <div ref={creatorRef} style={{ position: "absolute", left: metaPos.creator, top: 12, maxWidth: creatorW, ...(DEBUG_LAYOUT ? { outline: "1px dashed #6f6" } : {}) }}>
-                  <div style={{ fontSize: 10, letterSpacing: 1.2, color: "#888", marginBottom: 4 }}>CREATOR</div>
-                  <div style={{ fontSize: 12, color: "#222", lineHeight: 1.3, whiteSpace: "normal", wordBreak: "break-word", overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', maxHeight: 36 }}>{creatorText}</div>
-                </div>
-                {/* DATE (aligned under Archive) */}
-                <div ref={dateRef} style={{ position: "absolute", left: metaPos.date, top: 12, maxWidth: dateW, ...(DEBUG_LAYOUT ? { outline: "1px dashed #66f" } : {}) }}>
-                  <div style={{ fontSize: 10, letterSpacing: 1.2, color: "#888", marginBottom: 4 }}>DATE</div>
-                  <div style={{ fontSize: 12, color: "#222", lineHeight: 1.3, whiteSpace: "normal", wordBreak: "break-word", overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', maxHeight: 36 }}>{dateText}</div>
-                </div>
-                {/* DIMENSION (to the right of DATE by the same gap) */}
-                <div ref={dimensionRef} style={{ position: "absolute", left: metaPos.dimension, right: 0, top: 12, ...(DEBUG_LAYOUT ? { outline: "1px dashed #f6f" } : {}) }}>
-                  <div style={{ fontSize: 10, letterSpacing: 1.2, color: "#888", marginBottom: 4 }}>DIMENSION</div>
-                  <div style={{ fontSize: 12, color: "#222", lineHeight: 1.3, whiteSpace: "normal", wordBreak: "break-word", overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', maxHeight: 36 }}>{dimensionText}</div>
-                </div>
-              </>
-            );
-          })()}
-  </div>
-  )}
-
-        {/* Textual close control at the top-right */}
-        <button
-          onClick={() => {
-            // 한 번의 클릭으로 즉시 닫기 + 모달 플래그 제거
-            if (closeGuardRef.current) return;
-            clearModalFlag();
-            closeGuardRef.current = true;
-            onClose();
-          }}
-          aria-label="Close"
-          style={{
-            position: "absolute",
-            top: 6,
-            right: 8,
-            padding: 6,
-            border: "none",
-            background: "transparent",
-            cursor: "pointer",
-            display: "inline-flex",
-            alignItems: "center",
-            justifyContent: "center",
-            color: "#333",
-            fontSize: 12,
-            fontWeight: 700,
-            letterSpacing: 0.4,
-            textTransform: "lowercase",
-          }}
-        >
-          close
-        </button>
-
-    {/* Content area */}
-  <div style={{ flex: 1, display: "flex", minHeight: 0, paddingLeft: viewMode === 'archive' ? 150 : 0 }}>
-
-  {viewMode === 'archive' ? (
-        <>
-          {/* Middle info panel (floats next to selected thumbnail position) */}
-          <div ref={infoPanelRef} style={{ width: 260, background: "#fff", padding: "12px 10px 12px 12px", position: "relative" }}>
-        {current ? (
-          <div style={{ position: "absolute", top: infoY, left: infoTextLeft, right: 6, transform: "translateY(-50%)", color: "#222", lineHeight: 1.5 }}>
-                <div style={{ fontSize: 13, fontWeight: 700, marginBottom: 4, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }} title={current.name}>{current.name}</div>
-                <div style={{ fontSize: 11.5, color: "#666" }}>{current.artist}{current.year ? ` (${current.year})` : ""}</div>
+                ))}
               </div>
-            ) : null}
+            ) : (
+              <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                  <button
+                    onClick={() => { setDateLevel('century'); setSelectedCentury(null); setSelectedYearRange('ALL'); }}
+                    style={{ padding: '2px 8px', fontSize: 11, borderRadius: 4, border: '1px solid #ddd', background: '#fafafa', color: '#222', cursor: 'pointer' }}
+                  >
+                    Back
+                  </button>
+                  <span style={{ fontSize: 11, color: '#666' }}>{selectedCentury ? `${selectedCentury}c` : ''}</span>
+                </div>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
+                  {availableDecades.map((d) => (
+                    <button
+                      key={`d-${d}`}
+                      onClick={() => { setSelectedYearRange(String(d)); setSelectedIndex(0); }}
+                      style={{
+                        padding: '2px 8px',
+                        fontSize: 11,
+                        borderRadius: 4,
+                        border: '1px solid ' + (selectedYearRange === String(d) ? '#111' : '#ddd'),
+                        background: selectedYearRange === String(d) ? '#111' : '#f8f8f8',
+                        color: selectedYearRange === String(d) ? '#fff' : '#222',
+                        cursor: 'pointer'
+                      }}
+                    >
+                      {d}
+                    </button>
+                  ))}
+                </div>
+                {selectedYearRange !== 'ALL' && (
+                  <div>
+                    <button
+                      onClick={() => { setSelectedYearRange('ALL'); setSelectedIndex(0); }}
+                      style={{ padding: '2px 8px', fontSize: 11, borderRadius: 4, border: '1px solid #ddd', background: '#fafafa', color: '#222', cursor: 'pointer' }}
+                    >
+                      Clear
+                    </button>
+                  </div>
+                )}
+              </div>
+            )}
+            {/* 2D/3D type filter + ARTWORKS ONLY - shown when relevant */}
+            {(hasTypedArtworks || hasArchivalArtworks) && (
+              <div style={{ marginTop: 8, display: 'flex', flexWrap: 'wrap', gap: 6 }}>
+                {hasTypedArtworks && (['2D', '3D'] as const).map(t => (
+                  <button
+                    key={t}
+                    onClick={() => {
+                      setSelectedTypes(prev => {
+                        const next = new Set(prev);
+                        if (next.has(t)) next.delete(t);
+                        else next.add(t);
+                        return next;
+                      });
+                      setSelectedIndex(0);
+                    }}
+                    style={{
+                      padding: '2px 8px',
+                      fontSize: 11,
+                      borderRadius: 4,
+                      border: selectedTypes.has(t) ? '1px solid #111' : '1px solid #ddd',
+                      background: selectedTypes.has(t) ? '#111' : '#f8f8f8',
+                      color: selectedTypes.has(t) ? '#fff' : '#222',
+                      cursor: 'pointer',
+                    }}
+                  >
+                    {t}
+                  </button>
+                ))}
+                {hasArchivalArtworks && (
+                  <button
+                    onClick={() => { setShowArtworksOnly(!showArtworksOnly); setSelectedIndex(0); }}
+                    style={{
+                      padding: '2px 8px',
+                      fontSize: 11,
+                      borderRadius: 4,
+                      border: showArtworksOnly ? '1px solid #111' : '1px solid #ddd',
+                      background: showArtworksOnly ? '#111' : '#f8f8f8',
+                      color: showArtworksOnly ? '#fff' : '#222',
+                      cursor: 'pointer',
+                    }}
+                  >
+                    ARTWORKS ONLY
+                  </button>
+                )}
+              </div>
+            )}
           </div>
-          {/* Right stage */}
-          <div style={{ flex: 1, position: "relative", background: "transparent", display: "flex", alignItems: "center", justifyContent: "center" }}>
-            {/* Constrain image so it won't overlap metadata/top rows (reserve ~260px) */}
-            <div ref={stageMonitorRef} style={{ width: "72%", maxHeight: "calc(100vh - 260px)", background: "transparent", display: "flex", alignItems: "center", justifyContent: "center" }}>
+        </div>
+
+        {/* Artwork meta info (below the top bar, aligned to Gallery/Archive; dynamic per selected artwork) */}
+        {(viewMode === 'archive' || viewMode === 'gallery' || viewMode === 'panorama') && (
+          <div ref={metaRowRef} style={{ position: "relative", padding: "12px 12px 0 0", marginLeft: isNarrow ? 460 : (LAYOUT_LEFT_BASE + META_SHIFT), marginTop: metaMarginTop, marginRight: LAYOUT_RIGHT_PAD, minHeight: isNarrow ? 140 : (FIXED_META_HEIGHT + META_VERTICAL_PAD), ...(DEBUG_LAYOUT ? { outline: "1px solid #f00" } : {}) }}>
+            {(() => {
+              const titleText = displayArtwork?.name || "—";
+              const creatorText = displayArtwork?.artist || "—";
+              const dateText = displayArtwork?.date || (displayArtwork?.year ? String(displayArtwork.year) : "—");
+              const dimensionText = displayArtwork?.dimension || "—";
+              const gap = Math.max(160, Math.min(360, metaPos.date - metaPos.creator - 12));
+              // shrink horizontal allocation to avoid cramped columns; allow content to wrap vertically
+              const shrunk = Math.max(80, Math.floor(gap * META_HOR_SCALE));
+              const titleW = shrunk;
+              const creatorW = shrunk;
+              const dateW = shrunk;
+              return (
+                <>
+                  {/* TITLE */}
+                  <div ref={titleRef} style={{ position: "absolute", left: metaPos.title, top: 12, maxWidth: titleW, ...(DEBUG_LAYOUT ? { outline: "1px dashed #f66" } : {}) }}>
+                    <div style={{ fontSize: 10, letterSpacing: 1.2, color: "#888", marginBottom: 4 }}>TITLE</div>
+                    <div ref={metaTitleValueRef} style={{ fontSize: 12, color: "#222", fontWeight: 700, lineHeight: 1.3, whiteSpace: "normal", wordBreak: "break-word", overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', maxHeight: 36 }}>{titleText}</div>
+                  </div>
+                  {/* CREATOR (aligned under Gallery, or under Title in Narrow) */}
+                  <div ref={creatorRef} style={{ position: "absolute", left: metaPos.creator, top: isNarrow ? 72 : 12, maxWidth: creatorW, ...(DEBUG_LAYOUT ? { outline: "1px dashed #6f6" } : {}) }}>
+                    <div style={{ fontSize: 10, letterSpacing: 1.2, color: "#888", marginBottom: 4 }}>CREATOR</div>
+                    <div style={{ fontSize: 12, color: "#222", lineHeight: 1.3, whiteSpace: "normal", wordBreak: "break-word", overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', maxHeight: 36 }}>{creatorText}</div>
+                  </div>
+                  {/* DATE (aligned under Archive, or right side in Narrow) */}
+                  <div ref={dateRef} style={{ position: "absolute", left: metaPos.date, top: 12, maxWidth: dateW, ...(DEBUG_LAYOUT ? { outline: "1px dashed #66f" } : {}) }}>
+                    <div style={{ fontSize: 10, letterSpacing: 1.2, color: "#888", marginBottom: 4 }}>DATE</div>
+                    <div style={{ fontSize: 12, color: "#222", lineHeight: 1.3, whiteSpace: "normal", wordBreak: "break-word", overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', maxHeight: 36 }}>{dateText}</div>
+                  </div>
+                  {/* DIMENSION (to the right of DATE by the same gap, or under Date in Narrow) */}
+                  <div ref={dimensionRef} style={{ position: "absolute", left: metaPos.dimension, right: 0, top: isNarrow ? 72 : 12, ...(DEBUG_LAYOUT ? { outline: "1px dashed #f6f" } : {}) }}>
+                    <div style={{ fontSize: 10, letterSpacing: 1.2, color: "#888", marginBottom: 4 }}>DIMENSION</div>
+                    <div style={{ fontSize: 12, color: "#222", lineHeight: 1.3, whiteSpace: "normal", wordBreak: "break-word", overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', maxHeight: 36 }}>{dimensionText}</div>
+                  </div>
+                </>
+              );
+            })()}
+          </div>
+        )}
+
+        {/* Top Right Controls Group: Heart, Login, Close - aligned with mode tabs */}
+        <div style={{ position: "absolute", top: 8, right: 0, display: "flex", alignItems: "center", gap: 8, paddingRight: 16, zIndex: 200 }}>
+          {/* Heart button to navigate to MyPage */}
+          <button
+            onClick={() => navigate('/mypage')}
+            aria-label="Go to My Page"
+            title="Go to My Page"
+            style={{
+              padding: 6,
+              border: "none",
+              background: "transparent",
+              cursor: "pointer",
+              display: "inline-flex",
+              alignItems: "center",
+              justifyContent: "center",
+              color: "#000",
+              fontSize: 16,
+            }}
+          >
+            ♡
+          </button>
+
+          {/* Login Button */}
+          <LoginButton />
+
+          {/* Close Button */}
+          <button
+            onClick={() => {
+              if (closeGuardRef.current) return;
+              clearModalFlag();
+              closeGuardRef.current = true;
+              onClose();
+            }}
+            aria-label="Close"
+            style={{
+              padding: "0 8px",
+              border: "none",
+              background: "transparent",
+              cursor: "pointer",
+              display: "inline-flex",
+              alignItems: "center",
+              justifyContent: "center",
+              color: "#333",
+              fontSize: 12,
+              fontWeight: 700,
+              letterSpacing: 0.4,
+              textTransform: "lowercase",
+            }}
+          >
+            close
+          </button>
+        </div>
+
+        {/* Content area */}
+        <div style={{ 
+          flex: 1, 
+          display: "flex", 
+          flexDirection: viewMode === 'gallery' ? 'column' : 'row', 
+          minHeight: 0, 
+          maxHeight: '100%',
+          paddingLeft: viewMode === 'archive' ? 150 : 0, 
+          position: 'relative',
+          overflow: viewMode === 'gallery' ? 'hidden' : undefined
+        }}>
+
+          {viewMode === 'archive' ? (
+            <>
+              {/* Middle info panel (floats next to selected thumbnail position) */}
+              <div ref={infoPanelRef} style={{ width: 260, background: "#fff", padding: "12px 10px 12px 12px", position: "relative" }}>
+                {current ? (
+                  <div style={{ position: "fixed", top: "50%", left: infoTextLeft, width: 240, transform: "translateY(-50%)", color: "#222", lineHeight: 1.5, zIndex: 10 }}>
+                    <div style={{ fontSize: 13, fontWeight: 700, marginBottom: 4, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }} title={current.name}>{current.name}</div>
+                    <div style={{ fontSize: 11.5, color: "#666" }}>{current.artist}{current.year ? ` (${current.year})` : ""}</div>
+                  </div>
+                ) : (initialized && filteredArtworks.length === 0 ? (
+                  <div style={{ position: 'fixed', top: "50%", left: infoTextLeft, width: 240, transform: 'translateY(-50%)', color: '#999', fontSize: 12, fontWeight: 700, zIndex: 10 }}>
+                    update soon
+                  </div>
+                ) : null)}
+              </div>
+              {/* Right stage */}
+              <div style={{ flex: 1, position: "relative", background: "transparent", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                {/* Constrain image so it won't overlap metadata/top rows (reserve ~260px) */}
+                <div
+                  ref={stageMonitorRef}
+                  style={{ width: "72%", maxHeight: "calc(100vh - 260px)", background: "transparent", display: "flex", alignItems: "center", justifyContent: "center", position: "relative" }}
+                >
+                  {(current ? (
+                    (() => {
+                      const widths = window.innerWidth < 900 ? [480, 720, 960] : [640, 960, 1280, 1600];
+                      const avif = buildVariantSourceSet(current, 'avif', widths, 70);
+                      const webp = buildVariantSourceSet(current, 'webp', widths, 75);
+                      const sizes = '(max-width: 640px) 100vw, (max-width: 1024px) 82vw, 75vw';
+                      const lowSrc = pickLowPlaceholder(current);
+                      return (
+                        <picture>
+                          {useProxy && avif && <source type="image/avif" srcSet={avif || undefined} sizes={sizes} />}
+                          {useProxy && webp && <source type="image/webp" srcSet={webp || undefined} sizes={sizes} />}
+                          <img
+                            ref={mainImgRef}
+                            src={lowSrc}
+                            alt={current.name}
+                            decoding="async"
+                            fetchPriority="high"
+                            referrerPolicy="no-referrer"
+                            data-hi={lowSrc === current.image ? '1' : '0'}
+                            style={{
+                              width: "auto",
+                              maxWidth: "100%",
+                              maxHeight: "calc(100vh - 260px)",
+                              objectFit: "contain",
+                              cursor: "zoom-in",
+                              display: "block",
+                              filter: mainLoaded ? 'none' : 'blur(14px)',
+                              transition: 'filter 420ms ease, opacity 420ms ease',
+                              opacity: mainLoaded ? 1 : 0.88,
+                              background: '#f5f5f5'
+                            }}
+                            onClick={(e) => openLightbox(e, current)}
+                            onLoad={(e) => {
+                              if ((e.currentTarget.getAttribute('data-hi') === '1') && !mainLoaded) {
+                                setMainLoaded(true);
+                              }
+                            }}
+                            onError={(e) => {
+                              applyFallbackImage(e.currentTarget);
+                              if (!mainLoaded) setMainLoaded(true);
+                            }}
+                          />
+                        </picture>
+                      );
+                    })()
+                  ) : (
+                    initialized && filteredArtworks.length === 0 ? (
+                      // Show description and YouTube embed when no artworks
+                      (() => {
+                        const desc = (exhibition as any).detailedDescription || exhibition.description || '';
+                        const youtubeId = extractYouTubeId(desc);
+                        const cleanDesc = removeYouTubeUrls(desc);
+                        
+                        return (
+                          <div style={{ 
+                            width: '100%', 
+                            maxWidth: 700, 
+                            padding: '40px 32px',
+                            display: 'flex',
+                            flexDirection: 'column',
+                            gap: 24,
+                            alignItems: 'center'
+                          }}>
+                            {/* YouTube embed if found */}
+                            {youtubeId && (
+                              <div style={{ 
+                                width: '100%', 
+                                maxWidth: 640,
+                                aspectRatio: '16/9',
+                                borderRadius: 8,
+                                overflow: 'hidden',
+                                boxShadow: '0 4px 20px rgba(0,0,0,0.1)'
+                              }}>
+                                <iframe
+                                  width="100%"
+                                  height="100%"
+                                  src={`https://www.youtube.com/embed/${youtubeId}?rel=0`}
+                                  title="Exhibition Video"
+                                  frameBorder="0"
+                                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                                  allowFullScreen
+                                  style={{ display: 'block' }}
+                                />
+                              </div>
+                            )}
+                            {/* Description text */}
+                            {cleanDesc ? (
+                              <div style={{ 
+                                fontSize: 14, 
+                                lineHeight: 1.8, 
+                                color: '#333',
+                                textAlign: 'left',
+                                maxWidth: 580,
+                                whiteSpace: 'pre-wrap'
+                              }}>
+                                {cleanDesc}
+                              </div>
+                            ) : (
+                              <div style={{ color: '#999', fontWeight: 700 }}>update soon</div>
+                            )}
+                          </div>
+                        );
+                      })()
+                    ) : (
+                      <div style={{ color: "#bbb", margin: "auto" }}>No image</div>
+                    )
+                  ))}
+                  {current && (
+                    <div style={{ position: "absolute", bottom: 16, right: 16, zIndex: 30 }} className="hover-trigger">
+                      <HeartOverlay
+                        isLiked={likedArtworks.has(current.id)}
+                        onToggle={(e) => toggleLike(e, current)}
+                        style={{
+                          background: 'none',
+                          padding: 0,
+                          opacity: 0, // initially hidden
+                          transition: 'opacity 0.2s'
+                        }}
+                        size={20}
+                        color="#e11d48"
+                        emptyColor="#fff"
+                      />
+                      <style>{`
+                        .hover-trigger:hover .heart-btn { opacity: 1 !important; transform: scale(1.1); }
+                        div:hover > .hover-trigger .heart-btn { opacity: 1 !important; }
+                      `}</style>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </>
+          ) : viewMode === 'gallery' ? (
+            // Gallery grid mode - use absolute positioning with explicit dimensions for reliable scroll
+            <div className="no-scrollbar gallery-scroll-container" style={{ 
+              flex: 1,
+              minHeight: 0,
+              width: '100%',
+              overflowY: 'auto',
+              overflowX: 'hidden',
+              WebkitOverflowScrolling: 'touch',
+              overscrollBehavior: 'contain'
+            }}>
+              {(() => {
+                const items: Artwork[] = filteredArtworks;
+                // Mobile: 3 columns with smaller images, Desktop: 5 columns
+                const gridColumns = isMobile ? 'repeat(3, 1fr)' : 'repeat(5, 1fr)';
+                const gridGap = isMobile ? 8 : 64;
+                // Narrow screens need more top padding to avoid overlapping with room/century selectors
+                const gridPadding = isMobile ? '100px 8px 60px 8px' : (isNarrow ? '240px 48px 96px 150px' : '192px 48px 96px 150px');
+                return (
+                  <div style={{ display: 'grid', gridTemplateColumns: gridColumns, gap: gridGap, padding: gridPadding }}>
+                    {items.map((a, idx) => (
+                      <div
+                        key={a.id ?? `${idx}`}
+                        className="group"
+                        style={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}
+                      >
+                        <div
+                          style={{ width: isMobile ? '100%' : '60%', background: '#eee', borderRadius: 0, position: 'relative' }}
+                          onMouseEnter={() => setHoveredIndex(idx)}
+                          onMouseLeave={() => setHoveredIndex(null)}
+                        >
+                          {a.image && (() => {
+                            const widths = window.innerWidth < 900 ? [320, 480, 640] : [360, 540, 720, 900];
+                            const avif = buildVariantSourceSet(a, 'avif', widths, 65);
+                            const webp = buildVariantSourceSet(a, 'webp', widths, 70);
+                            const sizes = '(max-width: 640px) 90vw, (max-width: 1024px) 55vw, 40vw';
+                            const preview = pickLowPlaceholder(a);
+                            return (
+                              <picture>
+                                {useProxy && avif && <source type="image/avif" srcSet={avif || undefined} sizes={sizes} />}
+                                {useProxy && webp && <source type="image/webp" srcSet={webp || undefined} sizes={sizes} />}
+                                <img
+                                  src={preview}
+                                  data-full={a.image}
+                                  alt={a.name}
+                                  loading="lazy"
+                                  decoding="async"
+                                  fetchPriority="low"
+                                  referrerPolicy="no-referrer"
+                                  style={{ width: '100%', height: 'auto', display: 'block', cursor: 'zoom-in' }}
+                                  onClick={(e) => openLightbox(e, a)}
+                                  onError={(e) => applyFallbackImage(e.currentTarget)}
+                                />
+                              </picture>
+                            );
+                          })()}
+                        </div>
+                        <div style={{ marginTop: 10, display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
+                          <div>
+                            <div style={{ fontSize: isMobile ? 10 : 12, fontWeight: 400, color: '#222', display: 'flex', alignItems: 'center', gap: 6 }}>
+                              {String(idx + 1).padStart(2, '0')}
+                              <div style={{ opacity: isMobile ? 1 : 0 }} className="gallery-heart-trigger">
+                                <HeartOverlay
+                                  isLiked={likedArtworks.has(a.id)}
+                                  onToggle={(e) => toggleLike(e, a)}
+                                  style={{ padding: 0, background: 'none' }}
+                                  size={isMobile ? 12 : 14}
+                                  color="#e11d48"
+                                  emptyColor="#888"
+                                />
+                              </div>
+                            </div>
+                            <div style={{ fontSize: isMobile ? 10 : 12, fontWeight: 700, color: '#222', marginTop: 2 }}>{a.name}{a.year ? ` (${a.year})` : ''}</div>
+                            <div style={{ fontSize: isMobile ? 9 : 11, color: '#777', marginTop: 2 }}>{a.artist}</div>
+                          </div>
+                        </div>
+                        <style>{`
+                          .group:hover .gallery-heart-trigger { opacity: 1 !important; }
+                        `}</style>
+                      </div>
+                    ))}
+                  </div>
+                );
+              })()}
+            </div>
+          ) : (
+            // Panorama mode
+            <div style={{ flex: 1, position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', userSelect: panoramaDragging ? 'none' : 'auto', cursor: 'ew-resize', touchAction: 'none' }}
+              onMouseDown={(e) => {
+                e.preventDefault();
+                if (filteredArtworks.length === 0) return;
+                setPanoramaDragging(true);
+                panStartXRef.current = e.clientX;
+                panStartIndexRef.current = selectedIndex;
+                const onMove = (ev: MouseEvent) => {
+                  const dx = ev.clientX - panStartXRef.current;
+                  const n = Math.max(1, filteredArtworks.length);
+                  const pxPerImage = Math.max(12, Math.min(160, 480 / n));
+                  const delta = Math.round(-dx / pxPerImage);
+                  const next = Math.max(0, Math.min(n - 1, panStartIndexRef.current + delta));
+                  setSelectedIndex(next);
+                };
+                const onUp = () => {
+                  setPanoramaDragging(false);
+                  window.removeEventListener('mousemove', onMove);
+                  window.removeEventListener('mouseup', onUp);
+                };
+                window.addEventListener('mousemove', onMove);
+                window.addEventListener('mouseup', onUp);
+              }}
+              onTouchStart={(e) => {
+                if (filteredArtworks.length === 0) return;
+                const t = e.touches[0];
+                setPanoramaDragging(true);
+                panStartXRef.current = t.clientX;
+                panStartIndexRef.current = selectedIndex;
+              }}
+              onTouchMove={(e) => {
+                if (!panoramaDragging) return;
+                const t = e.touches[0];
+                const dx = t.clientX - panStartXRef.current;
+                const n = Math.max(1, filteredArtworks.length);
+                const pxPerImage = Math.max(12, Math.min(160, 480 / n));
+                const delta = Math.round(-dx / pxPerImage);
+                const next = Math.max(0, Math.min(n - 1, panStartIndexRef.current + delta));
+                setSelectedIndex(next);
+              }}
+              onTouchEnd={() => setPanoramaDragging(false)}
+            >
               {current ? (
                 (() => {
-                  const widths = window.innerWidth < 900 ? [480, 720, 960] : [640, 960, 1280, 1600];
+                  const widths = window.innerWidth < 900 ? [800, 1200] : [960, 1280, 1600, 1920];
                   const avif = buildVariantSourceSet(current, 'avif', widths, 70);
                   const webp = buildVariantSourceSet(current, 'webp', widths, 75);
-                  const sizes = '(max-width: 640px) 100vw, (max-width: 1024px) 82vw, 75vw';
+                  const sizes = '(max-width: 640px) 100vw, (max-width: 1024px) 95vw, 90vw';
                   const lowSrc = pickLowPlaceholder(current);
                   return (
-                    <picture>
-                      {useProxy && avif && <source type="image/avif" srcSet={avif || undefined} sizes={sizes} />}
-                      {useProxy && webp && <source type="image/webp" srcSet={webp || undefined} sizes={sizes} />}
-                      <img
-                        ref={mainImgRef}
-                        src={lowSrc}
-                        alt={current.name}
-                        decoding="async"
-                        fetchPriority="high"
-                        data-hi={lowSrc === current.image ? '1' : '0'}
-                        style={{
-                          width: "auto",
-                          maxWidth: "100%",
-                          maxHeight: "calc(100vh - 260px)",
-                          objectFit: "contain",
-                          cursor: "zoom-in",
-                          display: "block",
-                          filter: mainLoaded ? 'none' : 'blur(14px)',
-                          transition: 'filter 420ms ease, opacity 420ms ease',
-                          opacity: mainLoaded ? 1 : 0.88,
-                          background: '#f5f5f5'
-                        }}
-                        onClick={(e) => openLightbox(e, current.image || "")}
-                        onLoad={(e) => {
-                          // If placeholder was already hi-res, mark loaded
-                          if ((e.currentTarget.getAttribute('data-hi') === '1') && !mainLoaded) {
-                            setMainLoaded(true);
-                          }
-                        }}
-                      />
-                    </picture>
+                    <div style={{ position: 'relative', width: 'fit-content' }}>
+                      <picture>
+                        {useProxy && avif && <source type="image/avif" srcSet={avif || undefined} sizes={sizes} />}
+                        {useProxy && webp && <source type="image/webp" srcSet={webp || undefined} sizes={sizes} />}
+                        <img
+                          ref={mainImgRef}
+                          src={lowSrc}
+                          alt={current.name}
+                          decoding="async"
+                          fetchPriority="high"
+                          draggable={false}
+                          referrerPolicy="no-referrer"
+                          data-hi={lowSrc === current.image ? '1' : '0'}
+                          style={{
+                            width: 'auto',
+                            maxWidth: '92%',
+                            maxHeight: 'calc(100vh - 200px)',
+                            objectFit: 'contain',
+                            display: 'block',
+                            filter: mainLoaded ? 'none' : 'blur(14px)',
+                            transition: 'filter 420ms ease, opacity 420ms ease',
+                            opacity: mainLoaded ? 1 : 0.88,
+                            background: '#111'
+                          }}
+                          onError={(e) => {
+                            applyFallbackImage(e.currentTarget);
+                            if (!mainLoaded) setMainLoaded(true);
+                          }}
+                        />
+                      </picture>
+                      {current && (
+                        <HeartOverlay
+                          isLiked={likedArtworks.has(current.id)}
+                          onToggle={(e) => toggleLike(e, current)}
+                          style={{ position: "absolute", bottom: 16, left: 16, zIndex: 30, padding: 0, background: 'none' }}
+                          size={20}
+                          color="#e11d48"
+                          emptyColor="#fff"
+                        />
+                      )}
+                    </div>
                   );
                 })()
               ) : (
-                <div style={{ color: "#bbb", margin: "auto" }}>No image</div>
+                initialized && filteredArtworks.length === 0 ? (
+                  <div aria-label="update soon" role="img" title="update soon" style={{ color: '#999', margin: 'auto', fontWeight: 700 }}>update soon</div>
+                ) : (
+                  <div style={{ color: '#bbb', margin: 'auto' }}>No image</div>
+                )
               )}
             </div>
-          </div>
-        </>
-  ) : viewMode === 'gallery' ? (
-        // Gallery grid mode
-  <div className="no-scrollbar" style={{ flex: 1, overflowY: 'auto', paddingLeft: 0 }}>
-            {(() => {
-              const items: Artwork[] = filteredArtworks;
-              return (
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(5, 1fr)', gap: 64, padding: '192px 48px 96px 150px' }}>
-                  {items.map((a, idx) => (
-                    <div 
-                      key={a.id ?? `${idx}`} 
-                      style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}
-                    >
-                      <div
-                        style={{ width: '60%', background: '#eee', borderRadius: 0 }}
-                        onMouseEnter={() => setHoveredIndex(idx)}
-                        onMouseLeave={() => setHoveredIndex(null)}
-                      >
-                        {a.image && (() => {
-                          const widths = window.innerWidth < 900 ? [320, 480, 640] : [360, 540, 720, 900];
-                          const avif = buildVariantSourceSet(a, 'avif', widths, 65);
-                          const webp = buildVariantSourceSet(a, 'webp', widths, 70);
-                          const sizes = '(max-width: 640px) 90vw, (max-width: 1024px) 55vw, 40vw';
-                          const preview = pickLowPlaceholder(a);
-                          return (
-                            <picture>
-                              {useProxy && avif && <source type="image/avif" srcSet={avif || undefined} sizes={sizes} />}
-                              {useProxy && webp && <source type="image/webp" srcSet={webp || undefined} sizes={sizes} />}
-                              <img
-                                src={preview}
-                                data-full={a.image}
-                                alt={a.name}
-                                loading="lazy"
-                                decoding="async"
-                                fetchPriority="low"
-                                style={{ width: '100%', height: 'auto', display: 'block', cursor: 'zoom-in' }}
-                                onClick={(e) => openLightbox(e, a.image || "")}
-                              />
-                            </picture>
-                          );
-                        })()}
-                      </div>
-                      <div style={{ marginTop: 10 }}>
-                        <div style={{ fontSize: 12, fontWeight: 400, color: '#222' }}>{String(idx + 1).padStart(2, '0')}</div>
-                        <div style={{ fontSize: 12, fontWeight: 700, color: '#222', marginTop: 2 }}>{a.name}{a.year ? ` (${a.year})` : ''}</div>
-                        <div style={{ fontSize: 11, color: '#777', marginTop: 2 }}>{a.artist}</div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
-              );
-            })()}
-        </div>
-      ) : (
-        // Panorama mode
-  <div style={{ flex: 1, position: 'relative', display: 'flex', alignItems: 'center', justifyContent: 'center', userSelect: panoramaDragging ? 'none' : 'auto', cursor: 'ew-resize', touchAction: 'none' }}
-          onMouseDown={(e) => {
-            e.preventDefault();
-            if (filteredArtworks.length === 0) return;
-            setPanoramaDragging(true);
-            panStartXRef.current = e.clientX;
-            panStartIndexRef.current = selectedIndex;
-            const onMove = (ev: MouseEvent) => {
-              const dx = ev.clientX - panStartXRef.current;
-              const n = Math.max(1, filteredArtworks.length);
-              const pxPerImage = Math.max(12, Math.min(160, 480 / n));
-              const delta = Math.round(-dx / pxPerImage);
-              const next = Math.max(0, Math.min(n - 1, panStartIndexRef.current + delta));
-              setSelectedIndex(next);
-            };
-            const onUp = () => {
-              setPanoramaDragging(false);
-              window.removeEventListener('mousemove', onMove);
-              window.removeEventListener('mouseup', onUp);
-            };
-            window.addEventListener('mousemove', onMove);
-            window.addEventListener('mouseup', onUp);
-          }}
-          onTouchStart={(e) => {
-            if (filteredArtworks.length === 0) return;
-            const t = e.touches[0];
-            setPanoramaDragging(true);
-            panStartXRef.current = t.clientX;
-            panStartIndexRef.current = selectedIndex;
-          }}
-          onTouchMove={(e) => {
-            if (!panoramaDragging) return;
-            const t = e.touches[0];
-            const dx = t.clientX - panStartXRef.current;
-            const n = Math.max(1, filteredArtworks.length);
-            const pxPerImage = Math.max(12, Math.min(160, 480 / n));
-            const delta = Math.round(-dx / pxPerImage);
-            const next = Math.max(0, Math.min(n - 1, panStartIndexRef.current + delta));
-            setSelectedIndex(next);
-          }}
-          onTouchEnd={() => setPanoramaDragging(false)}
-        >
-          {current ? (
-            (() => {
-              const widths = window.innerWidth < 900 ? [800, 1200] : [960, 1280, 1600, 1920];
-              const avif = buildVariantSourceSet(current, 'avif', widths, 70);
-              const webp = buildVariantSourceSet(current, 'webp', widths, 75);
-              const sizes = '(max-width: 640px) 100vw, (max-width: 1024px) 95vw, 90vw';
-              const lowSrc = pickLowPlaceholder(current);
-              return (
-                <picture>
-                  {useProxy && avif && <source type="image/avif" srcSet={avif || undefined} sizes={sizes} />}
-                  {useProxy && webp && <source type="image/webp" srcSet={webp || undefined} sizes={sizes} />}
-                  <img
-                    ref={mainImgRef}
-                    src={lowSrc}
-                    alt={current.name}
-                    decoding="async"
-                    fetchPriority="high"
-                    draggable={false}
-                    data-hi={lowSrc === current.image ? '1' : '0'}
-                    style={{
-                      width: 'auto',
-                      maxWidth: '92%',
-                      maxHeight: 'calc(100vh - 200px)',
-                      objectFit: 'contain',
-                      display: 'block',
-                      filter: mainLoaded ? 'none' : 'blur(14px)',
-                      transition: 'filter 420ms ease, opacity 420ms ease',
-                      opacity: mainLoaded ? 1 : 0.88,
-                      background: '#111'
-                    }}
-                  />
-                </picture>
-              );
-            })()
-          ) : (
-            <div style={{ color: '#bbb', margin: 'auto' }}>No image</div>
           )}
-        </div>
-      )}
         </div>
       </div>
 
       {/* Animated lightbox (Genie-like) */}
-      {lightbox && (
-        <div
-          onClick={closeLightbox}
-          style={{
-            position: 'fixed',
-            inset: 0,
-            background: lightbox.animate ? 'rgba(0,0,0,0.85)' : 'rgba(0,0,0,0)',
-            transition: 'background 300ms ease',
-            zIndex: 11000,
-          }}
-        >
+      {
+        lightbox && (
           <div
+            onClick={closeLightbox}
             style={{
               position: 'fixed',
-              left: 0,
-              top: 0,
-              width: lightbox.target.width,
-              height: lightbox.target.height,
-              transformOrigin: 'top left',
-              transform: lightbox.animate
-                ? `translate(${lightbox.target.left}px, ${lightbox.target.top}px) scale(1, 1)`
-                : `translate(${lightbox.start.left}px, ${lightbox.start.top}px) scale(${Math.max(0.01, lightbox.start.width / Math.max(1, lightbox.target.width))}, ${Math.max(0.01, lightbox.start.height / Math.max(1, lightbox.target.height))})`,
-              transition: 'transform 320ms cubic-bezier(0.22, 0.61, 0.36, 1), clip-path 320ms ease, -webkit-clip-path 320ms ease',
-              boxShadow: lightbox.animate ? '0 24px 64px rgba(0,0,0,0.5)' : '0 0 0 rgba(0,0,0,0)',
-              borderRadius: lightbox.animate ? 8 : 0,
-              overflow: 'hidden',
-              background: '#000',
-              // Genie/funnel mask: start from a narrow neck shape, expand to full rectangle
-              clipPath: lightbox.animate
-                ? 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)'
-                : 'polygon(48% 0%, 52% 0%, 80% 20%, 95% 60%, 100% 100%, 0% 100%, 5% 60%, 20% 20%)',
-              WebkitClipPath: lightbox.animate
-                ? 'polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%)'
-                : 'polygon(48% 0%, 52% 0%, 80% 20%, 95% 60%, 100% 100%, 0% 100%, 5% 60%, 20% 20%)',
-              willChange: 'transform, clip-path',
+              inset: 0,
+              background: lightbox.animate ? 'rgba(0,0,0,0.9)' : 'rgba(0,0,0,0)',
+              transition: 'background 300ms ease',
+              zIndex: 11000,
             }}
           >
-            <img
-              src={lightbox.src}
-              alt="Artwork"
-              style={{ width: '100%', height: '100%', objectFit: 'contain', display: 'block', background: '#000' }}
-              draggable={false}
-            />
+            <div
+              style={{
+                position: 'fixed',
+                left: 0,
+                top: 0,
+                width: lightbox.target.width,
+                height: lightbox.target.height,
+                transformOrigin: 'top left',
+                transform: lightbox.animate
+                  ? `translate(${lightbox.target.left}px, ${lightbox.target.top}px) scale(1, 1)`
+                  : `translate(${lightbox.start.left}px, ${lightbox.start.top}px) scale(${Math.max(0.01, lightbox.start.width / Math.max(1, lightbox.target.width))}, ${Math.max(0.01, lightbox.start.height / Math.max(1, lightbox.target.height))})`,
+                transition: 'transform 300ms cubic-bezier(0.22, 0.61, 0.36, 1)',
+                overflow: 'hidden',
+                background: '#000',
+              }}
+            >
+              {(() => {
+                const a = lightbox.artwork;
+                const best = getBestFullUrl(a);
+                let widths = window.innerWidth < 900 ? [960, 1280] : [1280, 1600, 1920, 2560];
+                // Avoid generating src widths larger than the natural width to reduce upscaled picks
+                if (lightbox.natWidth && Number.isFinite(lightbox.natWidth)) {
+                  widths = widths.filter((w) => w <= (lightbox.natWidth as number));
+                  if (widths.length === 0) widths = [Math.min(960, lightbox.natWidth as number)];
+                }
+                // Build srcsets off the best base URL using proxy (if available)
+                const avif = useProxy ? buildSourceSet(best.url, widths, 'avif', 75) : null;
+                const webp = useProxy ? buildSourceSet(best.url, widths, 'webp', 80) : null;
+                const sizes = '(max-width: 640px) 100vw, (max-width: 1024px) 95vw, 90vw';
+                const full = best.url;
+                return (
+                  <picture>
+                    {useProxy && avif && <source type="image/avif" srcSet={avif || undefined} sizes={sizes} />}
+                    {useProxy && webp && <source type="image/webp" srcSet={webp || undefined} sizes={sizes} />}
+                    <img
+                      src={full}
+                      alt={a.name}
+                      style={{ width: '100%', height: '100%', objectFit: 'contain', display: 'block', background: '#000' }}
+                      draggable={false}
+                      referrerPolicy="no-referrer"
+                      onError={(e) => applyFallbackImage(e.currentTarget)}
+                    />
+                  </picture>
+                );
+              })()}
+            </div>
           </div>
-        </div>
-      )}
+        )
+      }
 
-  {/* Upload overlay removed in viewer mode */}
-      {/* Hide scrollbars for filmstrip */}
+      {/* Upload overlay removed in viewer mode */}
+      {/* Hide scrollbars for filmstrip + ensure gallery scroll works */}
       <style>
         {`
           .no-scrollbar::-webkit-scrollbar { width: 0; height: 0; display: none; }
           .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+          .gallery-scroll-container { 
+            overflow-y: scroll !important; 
+            -webkit-overflow-scrolling: touch !important;
+          }
         `}
       </style>
+
+      {/* Submission Form Modal */}
+      {showSubmissionForm && (
+        <SubmissionForm
+          exhibitionId={exhibition.id}
+          exhibitionName={exhibition.name || exhibition.title || 'Exhibition'}
+          museumName={(exhibition as any).museumName || (exhibition as any).parentMuseum || ''}
+          onClose={() => setShowSubmissionForm(false)}
+          onSuccess={() => setShowSubmissionForm(false)}
+        />
+      )}
+
+      {/* Description Overlay Panel */}
+      {isDescriptionExpanded && (
+        <div
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            background: 'rgba(0,0,0,0.7)',
+            zIndex: 20000,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+          onClick={() => setIsDescriptionExpanded(false)}
+        >
+          <div
+            style={{
+              background: '#fff',
+              width: '90%',
+              maxWidth: 600,
+              maxHeight: '85vh',
+              borderRadius: 8,
+              overflow: 'hidden',
+              display: 'flex',
+              flexDirection: 'column',
+            }}
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Header */}
+            <div style={{ padding: '16px 20px', borderBottom: '1px solid #eee', display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+              <div>
+                <h2 style={{ margin: 0, fontSize: 18, fontWeight: 700, color: '#111' }}>{exhibition.title || exhibition.name}</h2>
+                {(exhibition as any).startDate && (exhibition as any).endDate && (
+                  <div style={{ fontSize: 12, color: '#666', marginTop: 4 }}>
+                    {(exhibition as any).startDate} – {(exhibition as any).endDate}
+                  </div>
+                )}
+                {(exhibition as any).pricing && (
+                  <div style={{ fontSize: 11, color: '#888', marginTop: 2 }}>{(exhibition as any).pricing}</div>
+                )}
+              </div>
+              <button
+                onClick={() => setIsDescriptionExpanded(false)}
+                style={{
+                  background: 'none',
+                  border: 'none',
+                  fontSize: 20,
+                  cursor: 'pointer',
+                  color: '#666',
+                  padding: '0 4px',
+                }}
+              >
+                ×
+              </button>
+            </div>
+            {/* Content - scrollable area including cover image */}
+            <div style={{ flex: 1, overflowY: 'auto', padding: '0' }}>
+              {/* Cover Image - use coverImage first, then image, then first artwork */}
+              {(() => {
+                const coverImage = (exhibition as any).coverImage;
+                const exhibitionImage = (exhibition as any).image;
+                const fallbackImage = artworks.length > 0 ? artworks[0].image : null;
+                const imageToShow = coverImage || exhibitionImage || fallbackImage;
+                
+                if (!imageToShow) return null;
+                return (
+                  <div style={{ width: '100%', background: '#f5f5f5' }}>
+                    <img
+                      src={imageToShow}
+                      alt={exhibition.title || exhibition.name}
+                      style={{ width: '100%', height: 'auto', display: 'block', objectFit: 'contain' }}
+                      referrerPolicy="no-referrer"
+                    />
+                  </div>
+                );
+              })()}
+              {/* Description content */}
+              <div style={{ padding: '20px' }}>
+                {/* Gallery Images - horizontal scroll */}
+                {Array.isArray((exhibition as any).galleryImages) && (exhibition as any).galleryImages.length > 0 && (
+                  <div style={{ marginBottom: 20 }}>
+                    <h4 style={{ margin: '0 0 12px 0', fontSize: 12, fontWeight: 700, color: '#666', textTransform: 'uppercase' }}>Gallery</h4>
+                    <div style={{ display: 'flex', gap: 10, overflowX: 'auto', paddingBottom: 8 }}>
+                      {(exhibition as any).galleryImages.map((img: string, idx: number) => (
+                        <img
+                          key={idx}
+                          src={img}
+                          alt={`Gallery ${idx + 1}`}
+                          style={{ height: 150, width: 'auto', borderRadius: 4, flexShrink: 0, objectFit: 'cover' }}
+                          referrerPolicy="no-referrer"
+                        />
+                      ))}
+                    </div>
+                  </div>
+                )}
+                {/* Videos */}
+                {Array.isArray((exhibition as any).videos) && (exhibition as any).videos.length > 0 && (
+                  <div style={{ marginBottom: 20 }}>
+                    <h4 style={{ margin: '0 0 12px 0', fontSize: 12, fontWeight: 700, color: '#666', textTransform: 'uppercase' }}>Videos</h4>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: 12 }}>
+                      {(exhibition as any).videos.map((videoUrl: string, idx: number) => (
+                        <div key={idx} style={{ aspectRatio: '16/9', borderRadius: 6, overflow: 'hidden' }}>
+                          <iframe
+                            width="100%"
+                            height="100%"
+                            src={videoUrl}
+                            title={`Video ${idx + 1}`}
+                            frameBorder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            allowFullScreen
+                            style={{ display: 'block' }}
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                )}
+                {/* Description text - support fullDescription */}
+                {(exhibition as any).descriptionHtml ? (
+                  <div
+                    style={{ fontSize: 14, lineHeight: 1.7, color: '#333' }}
+                    className="exhibition-description-html"
+                    dangerouslySetInnerHTML={{ __html: (exhibition as any).descriptionHtml }}
+                  />
+                ) : (
+                  <div style={{ fontSize: 14, lineHeight: 1.7, color: '#333', whiteSpace: 'pre-wrap' }}>
+                    {(exhibition as any).fullDescription || (exhibition as any).detailedDescription || exhibition.description || 'No description available.'}
+                  </div>
+                )}
+                {/* Date range */}
+                {(exhibition as any).dateRange && (
+                  <div style={{ marginTop: 24, paddingTop: 16, borderTop: '1px solid #eee' }}>
+                    <h4 style={{ margin: '0 0 8px 0', fontSize: 12, fontWeight: 700, color: '#666', textTransform: 'uppercase' }}>Date</h4>
+                    <div style={{ fontSize: 13, color: '#333' }}>{(exhibition as any).dateRange}</div>
+                  </div>
+                )}
+                {/* External link - hidden but preserved */}
+                {false && (exhibition as any).url && (
+                  <div style={{ marginTop: 16 }}>
+                    <a
+                      href={(exhibition as any).url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{ fontSize: 13, color: '#3b82f6', textDecoration: 'none' }}
+                    >
+                      Visit official page →
+                    </a>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

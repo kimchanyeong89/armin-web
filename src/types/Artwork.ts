@@ -24,4 +24,6 @@ export type Artwork = {
   dimension?: string;
   sourceUrl?: string;
   createdAt?: any;
+  type?: '2D' | '3D' | 'unknown';  // 작품 유형 (2D: 회화/사진, 3D: 조각/유물)
+  isArchival?: boolean;  // 아카이브 자료 여부
 };
