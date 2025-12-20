@@ -1,0 +1,2784 @@
+{
+  "galleryId": "courtauld-gallery",
+  "galleryName": "The Courtauld Gallery",
+  "coverImage": "https://lh3.googleusercontent.com/ci/AL18g_Tz3G2GRQzZT1xDfzZ9P_OpoBYb7llfaoPhNwsOh90FFySrHo142u6fLEQf9TmWQlc_O-SF=w1200",
+  "scrapedAt": "2025-12-20T11:42:39.052Z",
+  "totalObjects": 316,
+  "videoCount": 11,
+  "excludedCount": 1,
+  "failedCount": 0,
+  "objects": [
+    {
+      "id": "courtauld-gallery-gac-1",
+      "title": "The Family of Jan Brueghel the Elder",
+      "artist": "Peter Paul Rubens",
+      "year": 1613,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RmvHsTbmZTh_Y7oWrrUmdNjVjjCdvcCQBVVAWkHcRWyz8FqeQCbCCssfGfwry3V5T6zezFycY=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-family-of-jan-brueghel-the-elder/aAH-Pi-eIPQ61w",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-2",
+      "title": "The Card Players",
+      "artist": "Paul Cézanne",
+      "year": 1892,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QYWJNOASITUYP1GjrkDnfxHuCWct0aHP2ldt50x5SIJWM7QFGEaETlhChYvvuceqXg3WKN3Q=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-card-players/mAHiruLqRZXD7w",
+      "artworkType": "painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-3",
+      "title": "A Bar at the Folies-Bergère",
+      "artist": "Eduard Manet",
+      "year": 1882,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_ROxl_WImpQbxj4Ki4ICSvWBqTbL8mdrM38dyUJQW9Vh8YxyRzMdXaend5VEIa2yF0PJ0b1LA=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/a-bar-at-the-folies-berg%C3%A8re/NQE8B0Mjo2nq2g",
+      "artworkType": "painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-4",
+      "title": "Te Rerioa",
+      "artist": "Paul Gauguin",
+      "year": 1897,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QLeeHda0rhLVcyGnq-ml8dRn64fXwl1BycVsXeza0DCQ4LQ5cjpfzFDf9yEXQdeQKcc0LR9GY=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/te-rerioa/lwHMZQWRvR001A",
+      "artworkType": "painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-5",
+      "title": "La Loge (Theatre box)",
+      "artist": "Pierre-Auguste Renoir",
+      "year": 1874,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_R0KYaVXfCrWIFGDMICVI-wtV1ETo7G3tZA3v5IUKBtj5ywRqWUU-0utcQE1LKczUdq8ATU=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/la-loge-theatre-box/WgFFCi2innydLg",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-6",
+      "title": "Self-Portrait with Bandaged Ear",
+      "artist": "Vincent van Gogh",
+      "year": 1889,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QxuXPG338yDqzmv2aZ7JS1euZcupS9Z9cjcjNcEOPA7AefPm0kTgza2A1h841-Bi3x5Ag0EAV9=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/self-portrait-with-bandaged-ear/dgH-_w8Z3lOVlA",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-7",
+      "title": "Trinity with Saint Mary Magdalen and Saint John the Baptist, Archangel Raphael and Tobias",
+      "artist": "Sandro Botticelli",
+      "year": 1491,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RCpvHCxnuhi0kVhm4AcaU2b8S0kLYa-OcFcJT9rKm4ekZbp3Pys_a7CuKE5UrXOw2d5Dy_Ni4=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/trinity-with-saint-mary-magdalen-and-saint-john-the-baptist-archangel-raphael-and-tobias/5wEMo7wzpv-xxQ",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-8",
+      "title": "Landscape with Flight into Egypt",
+      "artist": "Pieter Breughel the Elder",
+      "year": 1563,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QVYbdvMhoc8uRSzLDjDCIgAhdugTVuM8lBQvykhg893up7ZytfKoLxRRW4bRnbYxIDGdB6Z8k=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/landscape-with-flight-into-egypt/pwHsbSquR0wuWw",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-9",
+      "title": "Adam and Eve",
+      "artist": "Lucas Cranach the Elder",
+      "year": 1525,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RwJBsyZNoWktp0S9TltigtV7yThcBjO1HkAuwihWL8KZwrq2GJkc5mDxIRDX2MY7nf4iJYNi1S=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/adam-and-eve/MAGF51W07qZEHQ",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-10",
+      "title": "Young Woman Powdering Herself",
+      "artist": "Georges Seurat",
+      "year": 1888,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Sb8iDlFHHXmxFxTt9Edqs39KpSoYZhq5Y61uNLTmKbYY5EGzSoDPROH3q7Nah9aLFUVyd6A4YV=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/young-woman-powdering-herself/8AH2sQ7s0pyPHw"
+    },
+    {
+      "id": "courtauld-gallery-gac-11",
+      "title": "After the Bath — Woman Drying Herself",
+      "artist": "Edgar Degas",
+      "year": 1895,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Qq9Zr7adKgbEwJuwa0rarXPhXP5mkmIC_BZh-EUeV0hgLs3ygg8X6oZXKuVMtHrBUQ9vdyUCc=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/after-the-bath-%E2%80%94-woman-drying-herself/uwH_28bZi9RdXQ",
+      "artworkType": "painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-12",
+      "title": "Dancer Looking at the Sole of her Right Foot",
+      "artist": "Edgar Degas",
+      "year": 1919,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QCRU-ktdpZqwdLsXgCieurnGoNAapq3JT4mpD5-a1krbOPLB69OXcZUsV76AuS3Fj-iPBWRN2R=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/dancer-looking-at-the-sole-of-her-right-foot/kgFh8OufqNJsDg"
+    },
+    {
+      "id": "courtauld-gallery-gac-13",
+      "title": "Female Nude",
+      "artist": "Amedeo Modigliani",
+      "year": 1916,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Q3_-v1nYPSrTgyEf93aJ3od_mKekix46WHyHd6kBulwmht6RpGeyAmx57pl1ABtmnPfBeF5MJ4=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/female-nude/MAGnArsLrOZSfw",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-14",
+      "title": "The Entombment",
+      "artist": "Attributed to Robert Campin",
+      "year": 1425,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RN3cm5h6yImstLC67oA2CxJN6JgDUL3o_KokiogXDYoNOfvb2HmPfoYpgSO2hR-xQeWx8wcPE=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-entombment/UwGU9O-ArAVPRA",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-15",
+      "title": "The Courtauld Metal Bag",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_S3ZFCXOzyg51UkRf1iw0jMQwq_KNT37nPzshFxDU_N1EiKCTlYS-yR7AstLaXz2nJtD5a0huU=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-courtauld-metal-bag/VwHh38copu6YNQ"
+    },
+    {
+      "id": "courtauld-gallery-gac-16",
+      "title": "Portrait of Margaret Gainsborough",
+      "artist": "Thomas Gainsborough",
+      "year": 1777,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_R2ewbDDHMoDf3MEacDxPjzaonkm6VdmDS0kuoZU14-A46tkGEfozzJS_MKiss37zkDxmw3yNgk=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/portrait-of-margaret-gainsborough/BQHxB906rhM_Kw",
+      "medium": "Oi paint",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-17",
+      "title": "Landscape by Moonlight",
+      "artist": "Peter Paul Rubens",
+      "year": 1635,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_R6iNyrjhP820k2HzCEKouvT-FI7RUaCTmK7a5pK1tZ4-iivdgGsIVsKQtFe1FKoKQMkfjaN6ML=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/landscape-by-moonlight/wAFjSuAYg2T_VA",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-18",
+      "title": "Montagne Sainte-Victoire with Large Pine",
+      "artist": "Paul Cézanne",
+      "year": 1887,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SK-fTi5ip0kJmJcH4nN9ZrBMPgX3eC620RN8k2pcOiiID8FAZBuhlY-Z4UpJMczuN5XiTeipU=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/montagne-sainte-victoire-with-large-pine/qgFmCxb3V5zoTg",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-19",
+      "title": "Pair of marriage chests: The Morelli Chest",
+      "artist": "Biagio di Antonio, Jacopo del Sellaio and Zanobi di Domenico",
+      "year": 1472,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_R14nma7Ve3Fhgp11xp7WmBNLWtog0qclaoFIDHTPrPAsA3ihkzs1puQll8DBAAaqfdo4P0-W5W=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/pair-of-marriage-chests-the-morelli-chest/1wEqfi04kEJNSQ",
+      "artworkType": "Chest"
+    },
+    {
+      "id": "courtauld-gallery-gac-20",
+      "title": "Apples, Bottle and Chairback",
+      "artist": "Paul Cézanne",
+      "year": 1904,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RZGoS2-bOMiD_GlDel3s-eL9JorFf0hlWuE8tDksnsK6GnH17HXA6p2AfYyTFoypKWOtQKAA=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/apples-bottle-and-chairback/dQF2S9oM00xS2g"
+    },
+    {
+      "id": "courtauld-gallery-gac-21",
+      "title": "The Dream (Il Sogno)",
+      "artist": "Michelangelo Buonarroti",
+      "year": 1533,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_ThDs2zs-FIT10g3wFrWrA4HbrC9QnggAAKpfY19tpdW-CsX4spiC8d_3yg7RPwgINZZ3mR4A=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-dream-il-sogno/JAG0xfdzXpH6Ag",
+      "medium": "Black"
+    },
+    {
+      "id": "courtauld-gallery-gac-22",
+      "title": "Nevermore",
+      "artist": "Paul Gauguin",
+      "year": 1897,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RpipvfOe8gdPNITmpJO0JMkN1XyXj0MgpxYQzJaEgFv0fDL-3i7wZS_zZSXdNvyMGuId1bZHPb=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/nevermore/sAGx3nRzuVUlSw",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-23",
+      "title": "Young Woman powdering Herself",
+      "artist": "Georges Seurat",
+      "year": 1888,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Tr2uwian3wZHGyJTdDA8sH5W7s1PiWQAwLm7S6e5Xptqv3mAxTYbBtPyfAG-bvn0gEw_XZiG0=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/young-woman-powdering-herself/wwGok_tPWbSjTw",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-24",
+      "title": "Portrait of Mette Gauguin",
+      "artist": "Paul Gauguin",
+      "year": 1877,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QV5oCYGuTUVs9Qd3RKgTw1UbS0SbpOHErigCNNhTDWQCsv-E6TtNxkcS5zGT1zv9BXvM6snA=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/portrait-of-mette-gauguin/aQGMPT9O6yVd9Q"
+    },
+    {
+      "id": "courtauld-gallery-gac-25",
+      "title": "Autumn Effect at Argenteuil",
+      "artist": "Claude Monet",
+      "year": 1873,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QONwLjzQ6Leth32l1u9XHfDeoE5FVxkqVQXiym3Ktb_pU6vCiMa_dBDR9Ne56aK3b-mnI_=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/autumn-effect-at-argenteuil/kgFYnJE4ypj_vQ",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-26",
+      "title": "Footed bowl with the Crucifixion",
+      "artist": "Orazio Fontana or Antonio Patanazzi",
+      "year": 1560,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QYVfpJHUHPOYu41PN2V-ofmfITE98SOpQeSspBOZ07HqNX6ZQBy6aB_dy3JO9OKrWrb31bAA=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/footed-bowl-with-the-crucifixion/uwGgC2Wx4LBx4A",
+      "medium": "Tin-glazed earthenware"
+    },
+    {
+      "id": "courtauld-gallery-gac-27",
+      "title": "Portrait of Francisco de Saavedra",
+      "artist": "Francisco de Goya",
+      "year": 1798,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SnCxUFDc83OPLbwXw64mh1DUIWEbC3my64771DOXCAz4pVa13NywZ7PZNeKid0R6M3bZr-cQcd=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/portrait-of-francisco-de-saavedra/OgExZg3Xa1GO6A",
+      "medium": "Oi paint",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-28",
+      "title": "Portrait of King Charles I",
+      "artist": "Workshop of Louis-François Roubilia",
+      "year": 1759,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RtPBD46NtkUdsbU_e79gugr-JIeDI944vYUPeNjXn8yciKXC9RVozCaf-z5DBtNE3ZRmlPBs8=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/portrait-of-king-charles-i/gwGiFbyE_78dvA"
+    },
+    {
+      "id": "courtauld-gallery-gac-29",
+      "title": "Enamel plaque with The Adoration of the Magi",
+      "artist": "Monvaerni Master",
+      "year": 1470,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QRJIDrPq6MuhSpLR0FBsOTBJBdXVNxW5VqiXt4Gs8IAKFKVVodR51R4-j6A9vU2qsKu_SW=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/enamel-plaque-with-the-adoration-of-the-magi/hAEomo1OPpEpgw",
+      "medium": "Enamel",
+      "artworkType": "Enamel"
+    },
+    {
+      "id": "courtauld-gallery-gac-30",
+      "title": "Chair with flora seatback",
+      "artist": "Roger Fry and Omega Workshops",
+      "year": 1913,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RE03Q83oS-y9YShcq91qhb5O21JbvruWUbxEZmyt03so3rBpGYcfBHgZLgCwrL4rI0TQoPrLAq=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/chair-with-flora-seatback/ZgFskwI6LR-v4A",
+      "artworkType": "Forniture"
+    },
+    {
+      "id": "courtauld-gallery-gac-31",
+      "title": "Tea kettle with stand",
+      "artist": "Samuel Courtauld I",
+      "year": 1748,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Tz_hqzulXaHViL431Ac9zc2hrDg3lSQKuH-xnhUiSkBDl5TCaAYEXgCPqxivW8MPK3SlFKpw=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/tea-kettle-with-stand/zQFJRWOSVKIqOA"
+    },
+    {
+      "id": "courtauld-gallery-gac-32",
+      "title": "Incense burner",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TBYlOanTcII6W3GSOtpypMdIuCJk3mWNYkrQa7eentJXssD-J5_gYVz-xcoEkntTGhsdEShII=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/incense-burner/0AG_BQCu4qU4oQ"
+    },
+    {
+      "id": "courtauld-gallery-gac-33",
+      "title": "Dish with one of the Magi (wise men or kings)",
+      "artist": "Nicola Francioli",
+      "year": 1520,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Qcj9WGFSAL1am9avqhwXt4fitjeWdlX0CDptu0wq-vuTiHtNuN5pK9xN1uk_ZKvOUjpKPhAXFG=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/dish-with-one-of-the-magi-wise-men-or-kings/rQG-1McTEptOBQ",
+      "medium": "Tin-glazed earthenware painted with"
+    },
+    {
+      "id": "courtauld-gallery-gac-34",
+      "title": "Bucket",
+      "artist": "Zayn al-Din",
+      "year": 1450,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SlBB5_9Dbzye0OPDUyDQHYlddhZzXyEpRgL4K0swHCJcbEuTRpxtU2YfLa0QS8oE0t09icyOA=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/bucket/-wF69LjR3_wMmw"
+    },
+    {
+      "id": "courtauld-gallery-gac-35",
+      "title": "Diptych with Scenes of the Passion of Christ",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QJxSmb9j_cj6X6e-rXVq-cBr1AjooVVOL8fFxbK48SX2ZWWjHaKDeL39BtXQtyk3z9rhKV3YA=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/diptych-with-scenes-of-the-passion-of-christ/AgFA7W-nzkcn6w",
+      "medium": "Carved"
+    },
+    {
+      "id": "courtauld-gallery-gac-36",
+      "title": "Dish with Diana and Actaeon",
+      "artist": "Ludovico Picchi, Angelo Picchi",
+      "year": 1550,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QPHniEiN0d2I2INbDy9Uwk6GoTkvVLpb6g30OCqWDucXI0RMyG34uIn2Btph9_WOcn2-8dY-ef=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/dish-with-diana-and-actaeon/rwGlu0u-ffcy4g",
+      "medium": "Tin-glazed earthenware"
+    },
+    {
+      "id": "courtauld-gallery-gac-37",
+      "title": "Dish with the Sagredo family coat of arms Front",
+      "artist": "Unknown",
+      "year": 1530,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SxokRp0Soaj5VWyoy4aakHXIhN0S1Tm-FEMbe7-KIoKAQimqgeHlW0asixW0CJkRUcXkHdAjQ=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/dish-with-the-sagredo-family-coat-of-arms/eQG6aAdY9neU8w"
+    },
+    {
+      "id": "courtauld-gallery-gac-38",
+      "title": "Floor tile with sunburst, emblem of the Gonzaga",
+      "artist": "Unknown",
+      "year": 1493,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Q76ZDHp_r6-T3W7LmVA8okbyQfN64JD8Ny6c0OYckuvxubLcdNReJISvXo3a8pkfCi5uC62xY=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/floor-tile-with-sunburst-emblem-of-the-gonzaga/HQEyOOCvd8NBYg",
+      "medium": "Tin-glazed earthenware"
+    },
+    {
+      "id": "courtauld-gallery-gac-39",
+      "title": "Diptych with the Virgin and Child and the Crucifixion",
+      "artist": "Around–50",
+      "year": 1325,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SCZOeynQAZLrCX9rXxowtRz4YQ0e6rQTPdxjA6bnXuAbbdVyxzpzbpfHDWOdw5L017et28Zxo=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/diptych-with-the-virgin-and-child-and-the-crucifixion/ugHHWKNHSBJUqA"
+    },
+    {
+      "id": "courtauld-gallery-gac-40",
+      "title": "Pharmacy jar for root preparation",
+      "artist": "Unknown",
+      "year": 1540,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QHY-Sr9OHejQwPTAqXDt6g_i-jKMKlhMtX_aXdt7s9WhS9R4PWOCTOC7EnbxG5PIOvWlqG=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/pharmacy-jar-for-root-preparation/swFGbO-9YMmIIQ",
+      "medium": "Tin-glazed earthenware"
+    },
+    {
+      "id": "courtauld-gallery-gac-41",
+      "title": "Bowl with ideal profile of a woman",
+      "artist": "Unknown",
+      "year": 1520,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QgEg8tZjAV5Mvxz6SfzuFoszF9pZHvTKWJ8BOESzy3goNK_BwxJCxpxBM7FzrAwjuJ2qYTsLk=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/bowl-with-ideal-profile-of-a-woman/5QHnwNoWME2Mgw",
+      "medium": "Tin-glazed earthenware"
+    },
+    {
+      "id": "courtauld-gallery-gac-42",
+      "title": "Condiment vase and cover",
+      "artist": "Louisa Perina Courtauld and George Cowles",
+      "year": 1771,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_T6FYPlwZR6ioPe_YIfYzMCuNpYpZ1gHgfYsnrrk1_fdCiwMgtezurottn7ec_mldOZpTyXm3o=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/condiment-vase-and-cover/bAF_iwt5A-C8_A"
+    },
+    {
+      "id": "courtauld-gallery-gac-43",
+      "title": "Jug with saz leaves on a green fish-scale ground",
+      "artist": "Around",
+      "year": 1560,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_R20L4sVmwtuLhSLixlDUyAUx7_3C8-V-yrzOPxTlvKiy57bzRsxr1fEJDdQ5qWG4QDhFZnBX4=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/jug-with-saz-leaves-on-a-green-fish-scale-ground/PQHjhKpvK1Exsw",
+      "medium": "Fritware and underglaze painting, with 19th-century"
+    },
+    {
+      "id": "courtauld-gallery-gac-44",
+      "title": "Coffee pot",
+      "artist": "Augustin Courtauld",
+      "year": 1720,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RoFXcvG3WqTLpMYkEl45Fn2_3p6fuHEi9U35F2gDehdiB2J6gEgoOhjvoCG3o8A6nwQgVa=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/coffee-pot/JQFuwU0pov9NdQ"
+    },
+    {
+      "id": "courtauld-gallery-gac-45",
+      "title": "Side table, one of a pair",
+      "artist": "William Chambers, probably made by Sefferin Alken",
+      "year": 1774,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SVToFUp_jxddlH3aN16TWODaelkpTIuNkLeu-z3GUR5jpvDt32Qudcup9vfltVnKrauvBPfRQ=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/side-table-one-of-a-pair/JgHSTj5Xo624oQ",
+      "medium": "Carved",
+      "artworkType": "Design,"
+    },
+    {
+      "id": "courtauld-gallery-gac-46",
+      "title": "Brass and Silver Box",
+      "artist": "Mahmud al-Kurdi (Master Mahmud the Kurd)",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QD731ELlhsF-lXauk-xilUIu0e7S0MkMXtuoLd6gLw5jQScgUd9Wuk41qXq5gXgmCk6R0n=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/brass-and-silver-box/dgHQhArvp5Nt_A"
+    },
+    {
+      "id": "courtauld-gallery-gac-47",
+      "title": "Cain Slaying Abel",
+      "artist": "Peter Paul Rubens",
+      "year": 1608,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Q7x7hsGnLlcPPp6EQ032nS3OVVmw_nZEHP9Xg1wAowhaKEzVXUZg_DS1PVkPhWA7yLxHlR=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/cain-slaying-abel/vQG3SVahLs2P8Q",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-48",
+      "title": "Study for ‘Le Déjeuner sur l’herbe’ (Luncheon on the Grass)",
+      "artist": "Édouard Manet",
+      "year": 1863,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QzQ-POO-liZiVHB4Az5qP7l3Yavw1PBkwwEmdC9qs4Do9bk8jbqqoDQIGaEjPnlOmVSLruCw=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/study-for-%E2%80%98le-d%C3%A9jeuner-sur-l%E2%80%99herbe%E2%80%99-luncheon-on-the-grass/qgEzE32Qs3R2xg",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-49",
+      "title": "Christ and the Woman taken in Adultery",
+      "artist": "Pieter the Elder Bruegel",
+      "year": 1565,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TCGzhSLMjAMcscuSmqVv2MRK2nu-R-BtKCVHo1YLLdq9Q6qfOjkw5XWTV5cRGGDS8b6do5_h4=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/christ-and-the-woman-taken-in-adultery/QgFgh4bMp75Bwg",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-50",
+      "title": "Study for 'Le Chahut'",
+      "artist": "Georges Seurat",
+      "year": 1889,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QkD6s0hIqU7RQwp8phFPfgu8OuBf7fxgJGbdJK46wSRMMrSJ_Xm7pH1-CVoDKAgf9vNwKfWTNa=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/study-for-le-chahut/8wE3fjSYq3EMZw",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-51",
+      "title": "Singing and Dancing (Cantar y bailar)",
+      "artist": "Francisco de Goya",
+      "year": 1819,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Sqjm5Fwzy_QD9fW4LMNVZbaBQF1A29_pUZ8oSbbGfdnImHUYKOe63P57vw2eW0LZ4xlCZJkCE=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/singing-and-dancing-cantar-y-bailar/7gFnRhY4Avns0A",
+      "medium": "Brush and black and grey"
+    },
+    {
+      "id": "courtauld-gallery-gac-52",
+      "title": "Self-Portrait",
+      "artist": "Roger Fry",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RWYNWB0qoqapWoJqB97PkxapfP2i9bzDQsGJ3BrIXqfm-KdF3D83TC6ZKaWEcoGZwB4mr6OYM=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/self-portrait/WwEutQy3cVZkRA",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-53",
+      "title": "Virgin and Child",
+      "artist": "Parmigianino",
+      "year": 1527,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TO7ZVoHNd8IWf_B0890jXsw-22cv3-PwfAhNuzxzd54RF1uvY9tkDEpb0vTaL_2U0RTBQYrGuk=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/virgin-and-child/DAFRQgK5di0uWw",
+      "artworkType": "painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-54",
+      "title": "Death of Achilles",
+      "artist": "Peter Paul Rubens",
+      "year": 1630,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QKeB3oFZZb5uwfZndbnaf_f9xpbdiBrScF5uKS98hIzwz-ZWzg0bnFxCwzgiQwnKgCLP9YT94=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/death-of-achilles/IgGz-03Odzz14w",
+      "artworkType": "painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-55",
+      "title": "Assassination of Saint Peter Martyr",
+      "artist": "Workshop of Giovanni Bellini",
+      "year": 1509,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_R3LLi8WhbA_niGnZJ2ANkjauM7y1oUWz12nBPmYe3A-U15o_WN96fFJB-fl2oJ5-e48TBE0xY=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/assassination-of-saint-peter-martyr/UAFVdp3Pu-JWiA",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-56",
+      "title": "Man with a Pipe",
+      "artist": "Paul Cézanne",
+      "year": 1892,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_R039FgIuSp0CT0jq6_AA50J6ebVguUwtaZVQ0piBGjAgliWSfJx9nwV68iEQaBAME5maSslywY=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/man-with-a-pipe/9gFZos9MdngmhQ",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-57",
+      "title": "The Louvre, East Façade (study for the First Project)",
+      "artist": "Gian Lorenzo Bernini",
+      "year": 1664,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QOHNyiE1dVIpzBYzjg-1TY0yMhNY8A2CTgKkv0huL7IxKo6QvdjwM6EfTBwlMIS9ahbEubDMI=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-louvre-east-fa%C3%A7ade-study-for-the-first-project/OgHQusPWbvDRuQ"
+    },
+    {
+      "id": "courtauld-gallery-gac-58",
+      "title": "Two Dancers on a Stage",
+      "artist": "Edgar Degas",
+      "year": 1874,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RGa2MIkNiA-A9ZbxqAbpWsjoU-ZCfoV4pUuV8I9OUjxRFO2o3bahsHqY_ELgFZcCjUaYvjli8=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/two-dancers-on-a-stage/PwGAGRyZgrt1Cw",
+      "artworkType": "painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-59",
+      "title": "Pot of Flowers and Fruit",
+      "artist": "Paul Cézanne",
+      "year": 1888,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QEZOQK5N2M5GLHPnJQs2w2_uAepkXTGjjLTy7ut8XS9GTJonKQoA7Dl-9PNA7IQEaeesSqOYEN=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/pot-of-flowers-and-fruit/UwHamxX_0XTI0A",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-60",
+      "title": "Portrait of Ambroise Vollard",
+      "artist": "Unknown",
+      "year": 1908,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QXf7OQiL2x74EVLKHzMiXSccUKOWCMYPI-Ehft_N9EydaY5P5opBcaLBTj_ML3KMsUJ0jndw=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/portrait-of-ambroise-vollard/WgFx_IkAQKHsqA",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-61",
+      "title": "Kermis at Hoboken",
+      "artist": "Pieter Bruegel the Elder",
+      "year": 1559,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QITBTysmQxRswEFls_lKFNjQuqm-H3Bte2ia34c2WBhvxXDVPKf00M49j0cG0fUFmbeyEMWPE=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/kermis-at-hoboken/bAHB9Hd7DInWPQ"
+    },
+    {
+      "id": "courtauld-gallery-gac-62",
+      "title": "Portrait of a Woman",
+      "artist": "Berthe Morisot",
+      "year": 1872,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RXk4D7Nv-Xnv9nFgmoTCWALKrB6rY32uSDrKU1-EtRPxKee3yH8yEd8yAYh7JyIvd8wO7thQY=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/portrait-of-a-woman/zQGHVaezCfCiyw",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-63",
+      "title": "Holy Family with Saint John the Baptist",
+      "artist": "Perino del Vaga",
+      "year": 1528,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Tj2gG94psObEev8EKuXYEGfs74rZIPOZL_SI0JgGsLoLiv_rZSNRjg3tQEo5yWmacXnsukmw=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/holy-family-with-saint-john-the-baptist/vwFaT12I1_X97w",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-64",
+      "title": "Descent from the Cross",
+      "artist": "Peter Paul Rubens",
+      "year": 1611,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Tx85D4h60t26uVKD-I_3OFtEzNw3nbtxV1pRwo9HdyFxKnAYJalD3hQZHCnpAiFD079MSV2SY=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/descent-from-the-cross/CgGQgU50QqEA5A",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-65",
+      "title": "Still Life with Plaster Cupid",
+      "artist": "Paul Cézanne",
+      "year": 1894,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TSNT31lZM8ecXtr-PCqPbT9GODyc4Tk9pwSuQGYxpdbiz0aExVGclSdlHBOn3XZ5p-tAewobs=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/still-life-with-plaster-cupid/ewHpScbvWbb6VQ",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-66",
+      "title": "Jane Avril in the Entrance to the Moulin Rouge, putting on her Gloves",
+      "artist": "Henri de Toulouse-Lautre",
+      "year": 1892,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Si8_Dek5nQO2fWQ2b9QR1nGOP_rrK_i53uLGKDk5xEq1bfhdv4QgDl0RbcmSkPENI-ECr20dw=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/jane-avril-in-the-entrance-to-the-moulin-rouge-putting-on-her-gloves/qgHFC6krj-TZwA",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-67",
+      "title": "Lordship Lane Station, Dulwich",
+      "artist": "Camille Pissarro",
+      "year": 1948,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RN_5m_iiO8f45QnZKSAvPDoh0aB-Mdt-MW_hnRMyXQvpBfWlusZsp3jCjlaOcQ7BIftQrwbLY=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/lordship-lane-station-dulwich/uwEprn1oGQIGbg",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-68",
+      "title": "Vase of Flowers",
+      "artist": "Claude Monet",
+      "year": 1881,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QAHDykyqorwRR_UH6vxK_krVJ_yWrIytqNlmi6-USuyQVd1QX1l8vPcYZJlg3JuLBQzgKscg=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/vase-of-flowers/SwEXFkNAL1D49A",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-69",
+      "title": "Landscape with an imaginary view of Tivoli",
+      "artist": "Claude Lorrain",
+      "year": 1642,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_ToG4P6rlLUKHt4613vFRo_fqB02jPVoR12XSbiGkYxxpLAgVv-xf6B0aAceyd2OmeHC9We=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/landscape-with-an-imaginary-view-of-tivoli/bAGhxBe9tDSljA",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-70",
+      "title": "Esther before Ahasuerus",
+      "artist": "Peter Paul Rubens",
+      "year": 1620,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RlLW4K5KdRGJeoLfine5sLEVnsuM5koZ9jQLbvysQyic0UULlR2nP_nK8onG2VVkNZqOrllLY=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/esther-before-ahasuerus/CAGJfAx7qRLj6g",
+      "artworkType": "painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-71",
+      "title": "Still Life with Coffee Pot",
+      "artist": "Roger Fry",
+      "year": 1915,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_R_2fQmd-Xs3KBGyUxR8ZzwoV9vWQ6sCzBcEVm5vPodO9w4sOHCR4wv8hfY_1Otc4Q-9LsH6w=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/still-life-with-coffee-pot/xQHMKpZ8oepiqw",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-72",
+      "title": "In a Private Dining Room",
+      "artist": "Henri de Toulouse-Lautre",
+      "year": 1899,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RdmbGOwgd1wSH6CB0NyQwMHo4HUw8UiQ55RUWH_Ubl_5lWZvPMIpDqrh2E3QgkYZ2YNnlU=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/in-a-private-dining-room/GgHuYa44QVBVsA",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-73",
+      "title": "Banks of the Seine at Argenteuil",
+      "artist": "Édouard Manet",
+      "year": 1874,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TI0Q2d8rq9xVimSQAykQW--YgyJCes2pl2EGH1zrq8J_JDdwvGGZUliJVL2obMJahxWMZz5A=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/banks-of-the-seine-at-argenteuil/CAEqsx7oKKQ8Sg",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-74",
+      "title": "Hercules killing the Hydra",
+      "artist": "Peter Paul Rubens",
+      "year": 1639,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_R1h7t1cRJ-yTAx79r_i7Cv_XUUREu9ckkhAl6nlG1CzwBCkNiNHDWW5Ob-qN_hEivDriO1va4=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/hercules-killing-the-hydra/4QEuo1ASiAEI5w",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-75",
+      "title": "Moses and the Brazen Serpent",
+      "artist": "Peter Paul Rubens",
+      "year": 1609,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RcO7z2UsruSZEoYn25xZISmcgpNktj0kP4-Bdlmk-J-LQzsaXtMrSy9RT_EasjSeoj8AdYZwWn=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/moses-and-the-brazen-serpent/fgELDPeR9n-Exg",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-76",
+      "title": "Virgin and Child with Saints",
+      "artist": "Bernardo Daddi",
+      "year": 1338,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_T6KykXLvtDnRPsiBYohbiL8YmfCwarZMtSzYIuJ4UadpMb4rEag1nywhdgyXT0x4m8HjRXFxdD=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/virgin-and-child-with-saints/KwEdpDqtZCwlFA",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-77",
+      "title": "Lac d’Annecy (Lake Annecy)",
+      "artist": "Paul Cézanne",
+      "year": 1896,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Qv2uElnRUH5BwxvuqQ9AYsOIaMsLIofCoiKGVo4nf3m8U8Fs4lr3j6kXwttmaN-ja2HEPyVZ8=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/lac-d%E2%80%99annecy-lake-annecy/HwFWkk3CZTEIvA",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-78",
+      "title": "Saskia Sitting up in Bed, Holding a Child",
+      "artist": "Rembrandt van Rijn",
+      "year": 1635,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SSbvYduYsv2qOkRYEED5Evu2Jt4KL74zcc6ZJgSVUlrwXTkvjjzYHcGTIS0gohKtUGPlSODw=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/saskia-sitting-up-in-bed-holding-a-child/zAGhkrLA2WAIRw"
+    },
+    {
+      "id": "courtauld-gallery-gac-79",
+      "title": "A View of the River Dee",
+      "artist": "Richard Wilson",
+      "year": 1760,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RvZBCLVuFY6O1E9z_xID4Jc8fRc7B2MVSqSCglVVXRj5Yj47VdFOJGQi9F1aASM30MqXkW4F4=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/a-view-of-the-river-dee/mwFzGtb1EyQrWA",
+      "medium": "Oi paint",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-80",
+      "title": "Faith, Hope and Charity",
+      "artist": "Pietro da Cortona",
+      "year": 1640,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SrXZyeVJ3KJz3gkX-9-VQOgykiEEpsaHiVTX8EMM3T3HNfdhD7FH_zHZrh51E1Lce3JPP-9i4=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/faith-hope-and-charity/dAFzkzUJ8KhyDQ",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-81",
+      "title": "Outskirts of Pont-Aven",
+      "artist": "Pierre-Auguste Renoir",
+      "year": 1888,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QTWE4uxTuyPo60LxMCdwoNFWK5g-3gHv2T6sCjDpTTCHpMA7wrfDh8cIh_4G-crsyMT24Dn0Q=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/outskirts-of-pont-aven/kwHyvtKbqTrVkg",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-82",
+      "title": "Album of Ten Woodcuts The Night (Te Po)",
+      "artist": "Paul Gaugin",
+      "year": 1893,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_ShX49nDkNzF0N_YTAaQq8cQJvqxJS83570y6TGD0jiHe24kg5hY7LVPVbhcOpVm_wpzmbTf-IC=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/album-of-ten-woodcuts/5AGVTFMy6yLaZA",
+      "medium": "Woodblock print",
+      "artworkType": "Print",
+      "is3D": true
+    },
+    {
+      "id": "courtauld-gallery-gac-83",
+      "title": "The Interior of a Picture Gallery",
+      "artist": "Frans Francken the Younger and David Teniers the Younger",
+      "year": 1640,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Tams1N1tsdzh71DODyFPmRQscIEYMODcfTo7RfGR-i5FovTj0t3pAC7Arury96Um-whRE=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-interior-of-a-picture-gallery/tQElcZBPLERKkA",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-84",
+      "title": "The Old Farm Garden",
+      "artist": "Frederick Walker",
+      "year": 1871,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QUlrRs-7gwvPDuqeRWmPlsi_kCsOLW4qxG8VV12Z65NoQHEn3ZAm0DC7uRknvJQFk_XXxT=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-old-farm-garden/5AEWO-hcY0TU6g"
+    },
+    {
+      "id": "courtauld-gallery-gac-85",
+      "title": "Bounty of James I triumphing over Avarice",
+      "artist": "Peter Paul Rubens",
+      "year": 1632,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_THAxGKb504EwzX8uBby5o8aIbsZtpgWR3NWpqlB7ZhVE9ghSMfY19MjVQI31cvHZqKR26i=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/bounty-of-james-i-triumphing-over-avarice/GAFFmOWqXgdJug",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-86",
+      "title": "A View from Somerset Gardens Looking Towards London Bridge",
+      "artist": "Canaletto (Giovanni Antonio Canal)",
+      "year": 1746,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QquqGILT3edYLoiBYLXvGAJz5s3omWL1l85STtGPlFahUfsbNn97q1uZ-6WUkqY6zDSp1yqA=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/a-view-from-somerset-gardens-looking-towards-london-bridge/_gGFwjRkXalIhQ"
+    },
+    {
+      "id": "courtauld-gallery-gac-87",
+      "title": "Bridge at Courbevoie",
+      "artist": "Georges Seurat",
+      "year": 1886,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TrxV1zX7nrCEDb_B2HbO152tNu7ZgmqUYpy5fVVXFPR5PuPHR4kzYwGF6AoE96voaeTwGedg=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/bridge-at-courbevoie/lwHr_f9oRX030g",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-88",
+      "title": "Woman Seated on the Ground/Woman Holding a Distaff Woman Seated on the Ground (recto)",
+      "artist": "Parmigianino (Girolamo Francesco Maria Mazzola)",
+      "year": 1523,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_T-12CssUM-PcrBGeDzX3pHOCu3B4v6NC-KSqIWibSsSG7dB22I57DEEPi-x1Pnh6XdROJl4BY=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/woman-seated-on-the-ground-woman-holding-a-distaff/bAHqeeZZbGr_zg",
+      "medium": "Black"
+    },
+    {
+      "id": "courtauld-gallery-gac-89",
+      "title": "Peach Trees in Blossom",
+      "artist": "Vincent van Gogh",
+      "year": 1889,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SExGFRzVu1SaRcjn9tWHcH5bX0v1u7De-3GvZ_AXHT8QBT3SyJfCwBqHMHve5Lb85SYMuC1eNd=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/peach-trees-in-blossom/kAGpFWfutEP8KQ",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-90",
+      "title": "The Jockey",
+      "artist": "Henri de Toulouse-Lautre",
+      "year": 1899,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TV53zAuPUNU8GBb0TGmZjSHb4Hz1T-VDS1y6OuiJoFo3MlpWK6UaIPtQM0nZyq6lvbu8fvc2-b=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-jockey/8QGAZTON1aqi9A",
+      "medium": "Lithograph",
+      "artworkType": "Print"
+    },
+    {
+      "id": "courtauld-gallery-gac-91",
+      "title": "La Toilette",
+      "artist": "Édouard Manet",
+      "year": 1860,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QugbtHhydvWA8rmI3LA8KiF8oD_wvp8j85CnP1b92FRgrPKrlGujq08P4879oLsmcjNYOvuVI=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/la-toilette/HQGGqjeJmsmADw",
+      "medium": "Redchalk on"
+    },
+    {
+      "id": "courtauld-gallery-gac-92",
+      "title": "The Crucifixion with Donors",
+      "artist": "Ugolino di Nerio",
+      "year": 1320,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QfSeWZIGEO-mwJbpcaSVdGa3ROWuHFUjE5IpYIU8ttcutMTecXYV1UfFcih4E2oUZVN7TCFw=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-crucifixion-with-donors/lwEuVgEw4tG71g",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-93",
+      "title": "Conversion of Saint Paul",
+      "artist": "Peter Paul Rubens",
+      "year": 1610,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Q34_EqL-sA7WSQQU9sfXYaO4TXQDXqNtT8hIxjBc_14Y2PUYWs78tJLwsr04l5nR3O0fa_cWg=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/conversion-of-saint-paul/9QHPbInZ3vEXfw",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-94",
+      "title": "The Life Class at the Royal Academy of Painting and Sculpture",
+      "artist": "Charles-Joseph Natoire",
+      "year": 1746,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RiDUB_1WAxgG_D7lzUSMj8nTqRGx7scLrFUIS9--IfhvDfL3KbuEtA87TKyQHihKshgUB5Jdy2=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-life-class-at-the-royal-academy-of-painting-and-sculpture/PgGSPAtE-ETgcw",
+      "is3D": true
+    },
+    {
+      "id": "courtauld-gallery-gac-95",
+      "title": "Saint Sebastian (after Andrea Mantegna)",
+      "artist": "David Teniers the Younger",
+      "year": 1650,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RELHFDM5kZYoQUWCJvpgyV1ffxuJE8anuUWC2OLfFKsglzvD0yQYPsjeyKiXG7HpehXa9p-hg=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/saint-sebastian-after-andrea-mantegna/rgEX6z2gnIaX4g",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-96",
+      "title": "Woman at a Window",
+      "artist": "Edgar Degas",
+      "year": 1871,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_T5haBlz0eNulA64s1cQ6EFfqMyqQCjMAKGBvDnOQiYrLKMpUFDaCIJdtzXVgdZbMMYNzr5n0Q=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/woman-at-a-window/MAE0qh9-YIXjTQ",
+      "artworkType": "painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-97",
+      "title": "The Virgin Reading to the Infant Christ/The Virgin Adoring the Infant Christ with Saint John The Virgin Reading to the Infant Christ (recto)",
+      "artist": "Vittore Carpaccio",
+      "year": 1480,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_R1F7QkbcCQhLo03aNl8l4i6WS2nU-IbX2ayWzPG2taKC-EdkN62t675isAUSoBWk5sG1mxSBs=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-virgin-reading-to-the-infant-christ-the-virgin-adoring-the-infant-christ-with-saint-john/5QESYiaBhdRg0w"
+    },
+    {
+      "id": "courtauld-gallery-gac-98",
+      "title": "Frapper? (Beat?)",
+      "artist": "Louis Soutter",
+      "year": 1937,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RAiftbM5gYhea3D1v4P8iJUc1mwPwSN88Y2aAXOtMPDd3CJuSIqDiESPJhJ8oVir7uTdokIA=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/frapper-beat/EgHZEpvMTpoEnA",
+      "medium": "Black"
+    },
+    {
+      "id": "courtauld-gallery-gac-99",
+      "title": "Portrait of Baldassare Castiglione",
+      "artist": "Peter Paul Rubens",
+      "year": 1630,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QzzMRS1rYDKhRJzNxBg97RNiRymFYqLA6X8GUQ1XUrYWE4060tNn40EhDEzNV9bu7hCLhX98U=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/portrait-of-baldassare-castiglione/kwGkGFBtRnrAaw",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-100",
+      "title": "Man painting a boat",
+      "artist": "Georges Seurat",
+      "year": 1883,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_R2Na4zjuvfXU54U9oV6NFdjotbBw43HNo0RuvXVkN85nafGdyvnL5qIE-kHnUREWWrSpztmg=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/man-painting-a-boat/RgHz1A056nQQKQ",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-101",
+      "title": "Portrait of a Man with an Open Book (front) Branch of Holly (back)",
+      "artist": "Workshop of Rogier van der Weyden",
+      "year": 1430,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SymYFSBCmB6pX7QDjw5izlWKAoajM5Y153-zN2RaTnWJM3ErELk0d8Rv234Bw5nHgKbULJw3A=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/portrait-of-a-man-with-an-open-book-front-branch-of-holly-back/vQG1OJXlzqe46A",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-102",
+      "title": "Colchester, Essex",
+      "artist": "Joseph Mallord William Turner",
+      "year": 1825,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RGojIpBbkuFWAtEnjxW717oMZ7N2jMuDGgD3hznNJ4zDnE6bzGquF40Xs2mVebux9XTx4aIA=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/colchester-essex/twGvv-eGD4BKAQ"
+    },
+    {
+      "id": "courtauld-gallery-gac-103",
+      "title": "Adam and Eve at Work",
+      "artist": "Domenico Fetti",
+      "year": 1618,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RH4-T8Dz7r1CDJ6mz6TkefuHIeVlAxaMVJVEYC5FKgB9iBiOLTuAS5lfdfJZ7l2ROkiDVQNg=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/adam-and-eve-at-work/HwHq2KyNSWuPWg",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-104",
+      "title": "The Annunciation",
+      "artist": "Francesco di Stefano, called Pesellino",
+      "year": 1450,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TVkXZFSBRPVNNhKHZS1y_B1XE0NDts7h6pwyDoaLRbFmYVX6QIprMlJIaAOalqSJFOt_iawA=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-annunciation/PQEQjWOrZuILSA",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-105",
+      "title": "Studies for Christ at the Column Recto",
+      "artist": "Andrea Mantegna",
+      "year": 1460,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TMQi_Y4f1UgQSflquaUtN-0h_ZiH0pXMyYJpiOWMmW_QM3p_YxCVMOk96PegXQFFJvtjFc=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/studies-for-christ-at-the-column/ugHlRojUVL2n9w",
+      "medium": "Pen and brown ink, with traces of a framing line in pen and black"
+    },
+    {
+      "id": "courtauld-gallery-gac-106",
+      "title": "Annunciation",
+      "artist": "Master of the Judgment of Paris",
+      "year": 1430,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_S8oxf3KN8hnlXRUKnYk87MJBw5imG7ilxf6SUHGx0rFgudpRRcnEUrTMCo9-I8Efcy7QrUBPQ=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/annunciation/xwGyyKESxhxXxA",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-107",
+      "title": "Solomon receiving the Queen of Sheba",
+      "artist": "Peter Paul Rubens",
+      "year": 1620,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QIbUDp1rezW_1RqWq182PzQbnThfFhiWLirqWhRQej10FpCIZqek9Qp2XnZOEhPS90AcWKIy4=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/solomon-receiving-the-queen-of-sheba/WQFeMiXOO-cC-A",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-108",
+      "title": "Virgin and Child with a Papal Saint and Saint Dominic",
+      "artist": "Attributed to Benozzo Gozzoli",
+      "year": 1440,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RW4pDWnRHfi3XlAKWSNEPlme15FGwdiF2qHTzG1wus57CE-6JkkjPewAfZn0bMIQ6sCvjGrg=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/virgin-and-child-with-a-papal-saint-and-saint-dominic/XwGvRczhOINr9w",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-109",
+      "title": "Studies for Saint Mary Magdalene",
+      "artist": "Leonardo da Vinci",
+      "year": 1480,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Rm9DGoJ8US4moaXWGbNloECWwksPLNAHeztcIONSEQtg5XmkJ-406ILbaFfoq6GAr0_DidNHg=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/studies-for-saint-mary-magdalene/eQH4DwtwzglSUw"
+    },
+    {
+      "id": "courtauld-gallery-gac-110",
+      "title": "Rabbit hunt",
+      "artist": "Pieter Bruegel the Elder",
+      "year": 1560,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_S8d_MDPVIK2NddB6VNSusGI9qXEsdQ7V7wIBW3gsbcHqRx2oxdhxzIrsq-jxeRyu9Hu2Pf9cfm=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/rabbit-hunt/pwFwy__SLZLMBA",
+      "medium": "Etching",
+      "artworkType": "Print"
+    },
+    {
+      "id": "courtauld-gallery-gac-111",
+      "title": "Conversion of Saint Paul",
+      "artist": "Peter Paul Rubens",
+      "year": 1610,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_R0RsEYCeO0BWauHZc_yEEfQYLaoSo6JSuMz-ixZxAO-x86ag7Qb3vtZt8Ih4Rx4FbzQDB5CA=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/conversion-of-saint-paul/fwFXHINi5guniQ",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-112",
+      "title": "Vorticist Composition with Figures, Black and White",
+      "artist": "Helen Saunders",
+      "year": 1915,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_R57MQA0dMDDfBSj1zy88DWVZ46lighWxpiq5p_7FBkJu-KJTxhTyWH8jpFN2Fa-ySAQCksH44=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/vorticist-composition-with-figures-black-and-white/5AECxixTrMTlTA"
+    },
+    {
+      "id": "courtauld-gallery-gac-113",
+      "title": "Wrath of Achilles",
+      "artist": "Peter Paul Rubens",
+      "year": 1630,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_T8CYu8gJ7YjbLu9wJxf4DGS5hC99jVnAgWESkfPb0tQiKOY7zFNjBHlZQwRTljZ-LB_uFL5k8=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/wrath-of-achilles/zQEBG4zYyLAzwA",
+      "artworkType": "painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-114",
+      "title": "Portrait of John Taylor and John Denham",
+      "artist": "William Dobson",
+      "year": 1643,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TVJmjJ1_8R0xnpbS8tW1b-WegwCkQEX9GXI3YjdiHvyUmjzJkj-JAEJLlqqW65l0XHMZZCsQ=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/portrait-of-john-taylor-and-john-denham/NQGb1odASTJ8uQ",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-115",
+      "title": "Portrait of Thomas Gainsborough",
+      "artist": "Thomas Gainsborough Completed by Gainsborough Dupont",
+      "year": 1760,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RgnB4r0zfj9TA0KyfXS1CeCTMCGpgGz7Z_PLSq5v9AKWUdw_AiMJ78j5z54-KRaOi33BjkhPJe=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/portrait-of-thomas-gainsborough/PAFKiaHy-VNdeA",
+      "medium": "Oi paint",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-116",
+      "title": "The Etang des Soeurs, Osny, near Pontoise",
+      "artist": "Paul Cézanne",
+      "year": 1875,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SPKilGXcnm69bxV-BtyzVfgfIfRJqMOG0426MhUYrSVSYY_b9mMbs39ALpP4rP1YtYviC1oA=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-etang-des-soeurs-osny-near-pontoise/UAE_kuQQFKdDGg",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-117",
+      "title": "Christ on the Cross",
+      "artist": "Workshop of Quinten Massys",
+      "year": 1490,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QtX-nz-vShJCj8-aqB33aG2g9Z5hMT6BKNkMVE4yWgjNEzo81RVwzf2t7BaN6C-8ixN46q8b5c=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/christ-on-the-cross/EQFlmRQ0qP-A8Q",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-118",
+      "title": "Coronation of the Virgin",
+      "artist": "Lorenzo Monaco",
+      "year": 1388,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QTXj3KDbqAQnBJ-U2jb8BehH-lXxCmO9ippVzDCsJQv0WNhyw4qFu0HDJ2JZUlJuD8mUAmpK0=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/coronation-of-the-virgin/qwG8KuNDskdDEQ",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-119",
+      "title": "Two Men in Discussion",
+      "artist": "Rembrandt van Rijn",
+      "year": 1641,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TqnLnp6WH8T9ebKlp0nhMtNDjxgNQ95b5a_aa_9m4VBr-Utb-RWTZY30Qsgt9ye6WQf_VVz6U=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/two-men-in-discussion/BQG8-50m2GQfjw",
+      "medium": "Quill and reed"
+    },
+    {
+      "id": "courtauld-gallery-gac-120",
+      "title": "Tall Trees at the Jas de Bouffan",
+      "artist": "Paul Cézanne",
+      "year": 1883,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Qhzifo4TU1FXBsWr1xpPhO-Nl2eCHewqITJkPy3cZQJyTtmNvMJ8cdr7WQKwtAUi9GB2eHsV4=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/tall-trees-at-the-jas-de-bouffan/PQGvkETpmEdadA",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-121",
+      "title": "White tin-glazed coffee pot",
+      "artist": "Roger Eliot Fry and Omega Workshops",
+      "year": 1918,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RQp0_oqWPg1C_FAW6sa1Di8N6GWEIKJEzfq4XHZ_bh4LSwTWKmNTXxiZTRVHPPfdBT9-0rFQ=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/white-tin-glazed-coffee-pot/8QHYgrq0Hjk6QA"
+    },
+    {
+      "id": "courtauld-gallery-gac-122",
+      "title": "La Toilette",
+      "artist": "Édouard Manet",
+      "year": 1862,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TtdryPQHwTiPxJEHN3-Wj767Gf5oPcqvv8tUylePqPdJubSSqUF5UxUuEYq6q0W5VJhnWmwi4=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/la-toilette/cAEFqthHsgCptA",
+      "medium": "Etching",
+      "artworkType": "Print"
+    },
+    {
+      "id": "courtauld-gallery-gac-123",
+      "title": "Boat by the Riverbank",
+      "artist": "Georges Seurat",
+      "year": 1883,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QvTa7oHaNJ6KLUDv6dSS8UcJTzmM1dRoqbOxHz6sZaMBDoQw9PVs0OjuZchTkCJUpzlXUhLQ=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/boat-by-the-riverbank/EAHadhBH_KzoYQ",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-124",
+      "title": "Creation and Fall of Man",
+      "artist": "Mariotto Albertinelli",
+      "year": 1513,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SsW9I2DbYNYo3j7DBHucnjdsx024My0H87-1xP0YN5KGPERJt454_W2m_MAG5qs84joLZCoRE=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/creation-and-fall-of-man/hgHdBV21nuH3fA",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-125",
+      "title": "The Emperors Charlemagne and Sigismund",
+      "artist": "Albrecht Dürer",
+      "year": 1507,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QC6XohMqqDzxmfpCXrd_I1M69dvc5pUPK0vEnaWlrsGi0KN6guLTmAV5esNdkrPYH9nCkKHFU=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-emperors-charlemagne-and-sigismund/0QH7uLzJtIz53g"
+    },
+    {
+      "id": "courtauld-gallery-gac-126",
+      "title": "Atlas supporting the Heavens",
+      "artist": "Peter Paul Rubens",
+      "year": 1635,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SjsfFClry2zHXlsSrrGjZkSi9sfNGPy8lKHgv1rdeV4io_SSj5BrjDXwQx9F3Gp5bij42eS_o=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/atlas-supporting-the-heavens/oAF-FoM3WIY62A",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-127",
+      "title": "Head of a Man against a Landscape",
+      "artist": "Master of the Saint Bartholomew Altarpiece",
+      "year": 1495,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TyJBCd8urf1Zcs7U1Wv9c3gHqvCgF0Vna11NmN_FUe3KVfDSHw5ERNSQTD4SnOHFvrTqSuzA=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/head-of-a-man-against-a-landscape/3wEoRzF7fF3-DA",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-128",
+      "title": "The Colossus of Rhodes",
+      "artist": "Maerten van Heemskerck",
+      "year": 1570,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RSe54v2F-7OgeCGGZV0Qer2_cj1bv1S3aW_gBCvmSIMB1g_3b2OK8CwqxzZ2MdEZC4IdZ6pyc=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-colossus-of-rhodes/zgFP2yU_ogoLfw"
+    },
+    {
+      "id": "courtauld-gallery-gac-129",
+      "title": "The Lamentation over the Dead Christ",
+      "artist": "Attributed to Alessandro Allori",
+      "year": 1553,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QssbgsCxp75xlDqnK4VN8R6wsI5fRc0NcIYUia9LL0h-nPXjT6MB3Y0XM45eikRzRLz4t7Y-FE=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-lamentation-over-the-dead-christ/ywEhfZAr0EbRHg",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-130",
+      "title": "Virgin and Child with Angels",
+      "artist": "Quentin Massys",
+      "year": 1500,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QiabPWEgxnArP7qnFNKPuKe9Bh2pQTDAZR8RYnfWLLdBTTibyQysVS3PbJIqk5BQOKhtZY-Q=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/virgin-and-child-with-angels/ugFj3uRWvBy8WQ",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-131",
+      "title": "White tin-glazed side plate",
+      "artist": "Roger Eliot Fry and Omega Workshops",
+      "year": 1914,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Tb08314_vro1_SARRzc8zmSoBMV4YDgwMld_wa5LNULagudQf1bqBVojqh8SrwfpG8RsI4I80p=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/white-tin-glazed-side-plate/bQFCqCUmPIxjYw"
+    },
+    {
+      "id": "courtauld-gallery-gac-132",
+      "title": "Rest on the Flight into Egypt",
+      "artist": "Parmigianino",
+      "year": 1523,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RNqZCgVY_r4yi4FZ4YGhQ49Npwi0jq1vLlxAvFoqWeT0FqrklD_c89VH56phWuwA6iHu_DrjY=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/rest-on-the-flight-into-egypt/IwGG42Qy5K6bWw",
+      "artworkType": "painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-133",
+      "title": "Don Quixote and Sancho Panza",
+      "artist": "Honoré Daumier",
+      "year": 1868,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SOYnAtP1nHYHseL7QowX32_u9VAs4_n-5WEk0xmWv7DyMG_4_pZpy5Yl4AO_uujqW7J3PRNuU=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/don-quixote-and-sancho-panza/TAFL-PDNL8EfnA",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-134",
+      "title": "The Haystacks",
+      "artist": "Paul Gauguin",
+      "year": 1889,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Suh6LFbkLDzsjO0V1XISKzDu11GYoCdon21YSQhqRX29VomT31uIADOyKpaeFejfVtX_TQb_g=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-haystacks/sAFlmdvekhNmtQ",
+      "artworkType": "painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-135",
+      "title": "Christ Bearing the Cross (front) The Annunciation (back)",
+      "artist": "Pieter Aertsen",
+      "year": 1530,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TEksOne1bRw011Y9XZ_5VGgkhEwmJAvGeRhaDKoDgYJEkLhb5SgnhIOAiA4ycZwQkm9CSX9mU=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/christ-bearing-the-cross-front-the-annunciation-back/4AEBV1bLN194og",
+      "artworkType": "painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-136",
+      "title": "The Flagellation, with paved floor",
+      "artist": "Andrea Mantegna",
+      "year": 1465,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RCEZyWfnrFIbB5e_zB8P-4L1LohPeKqY7xpgKzc_XeTs6Rz_E-O4wZfdkS5t6cNoRbN-eINg=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-flagellation-with-paved-floor/2gHtkf0CjGFiLA",
+      "artworkType": "Print"
+    },
+    {
+      "id": "courtauld-gallery-gac-137",
+      "title": "A Storm in the River Schelde with a View of Antwerp",
+      "artist": "Pieter Bruegel the Elder",
+      "year": 1559,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SHLyBiPy_684p3CH9U1Ts-0xMafUjkwIhljO9Mp3XDUBMzj_wSlk4sP3UpTN8rUV02B-vcTMI=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/a-storm-in-the-river-schelde-with-a-view-of-antwerp/nQEM8TZQcwuk0w"
+    },
+    {
+      "id": "courtauld-gallery-gac-138",
+      "title": "Stanway Mill, near Colchester",
+      "artist": "John Constable",
+      "year": 1776,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_R8W-1aVnI5Y2AtrSdd-zqINim66h2rCNIccqN2UxwIL4r7Vti1dsmYECWufaVoyobATcdoO28=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/stanway-mill-near-colchester/2gHLm2PmQSP0Ew"
+    },
+    {
+      "id": "courtauld-gallery-gac-139",
+      "title": "Pair of marriage chests: The Morelli Chest",
+      "artist": "Biagio di Antonio, Jacopo del Sellaio and Zanobi di Domenico",
+      "year": 1472,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TqYCYMWeimsCq1UZcMTKloNeiB6dzp0IHXk1Leygeb902EFgTNm3OizQLgw4TmcSML58-irw=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/pair-of-marriage-chests-the-morelli-chest/6gGfsK3yA3kTTw",
+      "medium": "gg",
+      "artworkType": "Chest"
+    },
+    {
+      "id": "courtauld-gallery-gac-140",
+      "title": "Three predella panels. Centre panel",
+      "artist": "Fra Angelico",
+      "year": 1420,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RqJtN_Wk8LYJmWfa-T2mPmtJbNLABvnYNYJL4EL3fZeeIuOP7dHKxp4yIHqeikrb_cemgGH_8=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/three-predella-panels/PQGnx9VWiRNg-A",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-141",
+      "title": "Dish with a woman teaching a child to read, after a design by Raphael",
+      "artist": "Unknown",
+      "year": 1520,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Qnged2IDoHMv7_U4LEaQ7nYPSZRov6Iad_YKBMJIxknKjDYZDHsl5_joRpV2b0wcMrskaLQBw=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/dish-with-a-woman-teaching-a-child-to-read-after-a-design-by-raphael/rwGOBtuFWRmWFA",
+      "medium": "Tin-glazed earthenware painted with"
+    },
+    {
+      "id": "courtauld-gallery-gac-142",
+      "title": "Nativity",
+      "artist": "Spinello Aretino",
+      "year": 1380,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RnaWkMtGvx1Y2qLCflBHeFVqV-ZYT5OqOxpaPhb0o0deZbEMbmE0WeWtWhAxczWs9WmJ7jLSI=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/nativity/2AHrVKmOD_62sQ",
+      "artworkType": "painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-143",
+      "title": "Landscape with sheep and cattle on the bank of a stream",
+      "artist": "Thomas Gainsborough",
+      "year": 1780,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TheHKerbmaRt4LwsJx-mIipdcHX5-23slv0qre-C5TtGeJD3SiGnXi6bt9Wd3sGt8CvB0L3Q=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/landscape-with-sheep-and-cattle-on-the-bank-of-a-stream/GwEOE9AoRtPxKA",
+      "medium": "Synthetic black"
+    },
+    {
+      "id": "courtauld-gallery-gac-144",
+      "title": "Hortense Fiquet (Madame Cézanne) Sewing",
+      "artist": "Paul Cézanne",
+      "year": 1880,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QTOhy9Svq6PTeADQ3TAGwWAsL72fSw51qyyZ2shSsme50vDs1BulGZcUQJlxfU69xMmnJ4w5zm=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/hortense-fiquet-madame-c%C3%A9zanne-sewing/cwH9id8NMwu1zA"
+    },
+    {
+      "id": "courtauld-gallery-gac-145",
+      "title": "A Tile Factory",
+      "artist": "Vincent van Gogh",
+      "year": 1888,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Q3qzZ1QVY6kuW6YbGvtHpYm_flCBNe3ALAuLR7sh5YWjrX3sSZWu5m7DR_0J8MQsYzv9Ofnrc=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/a-tile-factory/oQFCFuvHGX6csg"
+    },
+    {
+      "id": "courtauld-gallery-gac-146",
+      "title": "Antibes",
+      "artist": "Claude Monet",
+      "year": 1888,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TeT4s_vTzPA_QRwFUEwF4CzB62OpIrux8Gp40GVzc0uVJUD9QV2vwWCk9G8xMvCqpJ6Dk3x9Qv=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/antibes/0AEKxf1MuVGN-A",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-147",
+      "title": "Woman in Bed — Waking",
+      "artist": "Henri de Toulouse-Lautre",
+      "year": 1896,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SFPz5QhVT7FgNcIVfvl56iLMRle2CVxOwcyhaOA2RNtRA_EnhK7Ik8Ku4CJEtKpyGCoouZlw=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/woman-in-bed-%E2%80%94-waking/cgGY1fGbTzGBbA",
+      "medium": "Colour lithograph on",
+      "artworkType": "Print"
+    },
+    {
+      "id": "courtauld-gallery-gac-148",
+      "title": "East Bergholt Church, from the South-West",
+      "artist": "John Constable",
+      "year": 1815,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SQEzyvDWY1QjrhkHLNxIwQecM4dkWRMA0io-Qgc78hKvwnlGNY5kp5trNboiqY63NFItqkS2mG=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/east-bergholt-church-from-the-south-west/qAFxLwW1avxtGA"
+    },
+    {
+      "id": "courtauld-gallery-gac-149",
+      "title": "Helena Fourment",
+      "artist": "Peter Paul Rubens",
+      "year": 1630,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TkzAYi4A4PKBgT-y-W6_Smyq9lb6pnWYboTUA_rkgRBkn7LvzmU_dKl9-kqvvdpzDKtj7CbSs=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/helena-fourment/8wGejT98SGED6w",
+      "medium": "Black, red and white"
+    },
+    {
+      "id": "courtauld-gallery-gac-150",
+      "title": "The Nativity",
+      "artist": "Attributed to Giovanni Bellini",
+      "year": 1480,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TFptBj1P8MIjf0ShA1RxhbrwPFex_-iha_yUt3dLYy4zR9Q-s9PYi3k2roQcQycOXVh_MUa9Q=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-nativity/nAFvVyyv_u2PhA"
+    },
+    {
+      "id": "courtauld-gallery-gac-151",
+      "title": "Rome from San Pietro in Montorio",
+      "artist": "Joseph Mallord William Turner",
+      "year": 1820,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QvcvW2jC7aTUjzSuIOHGPVm78YTv_rqx0hV-NObBc00dT1LeDDIit1X7Evu50noXTvvqq_IB0=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/rome-from-san-pietro-in-montorio/JgEBgQnhX7Ne5w",
+      "medium": "Watercolour with some added"
+    },
+    {
+      "id": "courtauld-gallery-gac-152",
+      "title": "A ruined fort near Salerno",
+      "artist": "John Robert Cozens",
+      "year": 1782,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_T6JhydyRCh8gbKzkD4d73Nk6oO0c7RMns0D4jg_T8gn2Mhozy6WRT9IVyVyjH-8UOqRS4Z9pU=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/a-ruined-fort-near-salerno/mgFmuBWgRv47CA"
+    },
+    {
+      "id": "courtauld-gallery-gac-153",
+      "title": "Pearl Diving",
+      "artist": "Johannes Stradanus (Jan van der Straet)",
+      "year": 1596,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_T9cAwbXCosP3CLcLfsePr83078PGwoHs87yrvuAdanmJ-NR-tHHQgNaspKCTsH6iiNsbcXoQ=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/pearl-diving/KgGtgvwKjizzPg"
+    },
+    {
+      "id": "courtauld-gallery-gac-154",
+      "title": "Virgin and Child with a Donor",
+      "artist": "Unknown artist, Bruges (Belgium)",
+      "year": 1490,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QlRfQ51bNExsTuNcrAT6-6fPuqL-qRIo-Q6GocjmOdkHMyxvY-yHiZLyq4OokiEf3q7UQI=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/virgin-and-child-with-a-donor/RwEiiU7TXknFzw",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-155",
+      "title": "Black-glazed bowl",
+      "artist": "Roger Eliot Fry and Omega Workshops",
+      "year": 1916,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Rsq2V9o4hjYze3IMpw_G0KhjjfsydNOAvE5RUb4Mvun0DNCrE685nckLZ6BDe1EylMOxm0Lqs=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/black-glazed-bowl/xwEI_JXayr9SKg"
+    },
+    {
+      "id": "courtauld-gallery-gac-156",
+      "title": "Plate with a female saint",
+      "artist": "Unknown",
+      "year": 1510,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Sf44jk5uQdZqnCOgN2qCavfGfthEL4Bh4Cl4X6D_YXEoDASOQauGnntYaym9YVT-m_UoyIiQ=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/plate-with-a-female-saint/UQH00UKzmjMIig",
+      "medium": "Tin-glazed earthenware"
+    },
+    {
+      "id": "courtauld-gallery-gac-157",
+      "title": "Allegorical Portrait of Sir John Luttrell",
+      "artist": "Hans Eworth",
+      "year": 1550,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_R8B73B1LDpSUU9EWYO1u_LIAjFLxhj-rEglGGx9iqFQ-Q6Ss7UjCjPKr5uNJyL06VC3c98tA=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/allegorical-portrait-of-sir-john-luttrell/sAGenng1hb25cQ",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-158",
+      "title": "Avant et après (Before and after)",
+      "artist": "Paul Gauguin",
+      "year": 1903,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TJ_8qIwRF3a0lcHo-NPlhSEt_X6BgAHF3vACHgwItGsP6Mg0RB_u-AweE4d76UI9-aKUc4wIo=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/avant-et-apr%C3%A8s-before-and-after/qwGAvN4klEHrTQ",
+      "medium": "Manuscript",
+      "artworkType": "Manuscript"
+    },
+    {
+      "id": "courtauld-gallery-gac-159",
+      "title": "Visitation",
+      "artist": "Peter Paul Rubens",
+      "year": 1611,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_R8sUJJEpteAZ3hR6h_kI-DfF_-VEwuwuFowaZ1BXpUAiVAlIC5XxpSavIvgIz-7lyy4JOTbcU=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/visitation/BQE2Hu_EETB3bg",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-160",
+      "title": "Portrait of Cardinal Granvelle",
+      "artist": "Scipione Pulzone",
+      "year": 1576,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TlvZsn5hgP4Vxv41psBcj8TkbUWKqQGlQfZwL3MTyWCt959o5llWZ0F5MZJK4Mgod1ZLyIC-U=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/portrait-of-cardinal-granvelle/SwGz663osOQUiA",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-161",
+      "title": "Death and the Lovers",
+      "artist": "Abraham Bloemaert",
+      "year": 1620,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Tko85MDprsNVcjxvSurCjA9xauaN4k-5Yf9omvBlWJLOn4GOgR4HP-HopBvskuf186FhlsrZXK=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/death-and-the-lovers/4wGeDXTXTK051A",
+      "medium": "Black"
+    },
+    {
+      "id": "courtauld-gallery-gac-162",
+      "title": "A Porter of the Royal Academy",
+      "artist": "John Russell",
+      "year": 1792,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TyNXJsoQwGyuDaybPLGcR8G3Xl0mAv4hBItizrBCLNivt6zWHgOgGExHcttSp4wcVW2eHpIQ=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/a-porter-of-the-royal-academy/_QEmjKQQHUm22A",
+      "medium": "Pastel on",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-163",
+      "title": "The Adoration of the Magi",
+      "artist": "Giovanni Baronzio",
+      "year": 1326,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QnHKlY3KsjF_AcDcf3y-RmSaHv52N7gpVQAnUbBywWTU5bKRlm6eQPiHTodclODIH17xjcVw=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-adoration-of-the-magi/nQF8br3TFj6P9w",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-164",
+      "title": "The Entombment of Christ",
+      "artist": "Peter Paul Rubens",
+      "year": 1615,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Sq5DVHeGTLGUm3H06WBy8iWa0-t0Syi6Z8sw3MqsIp8qkBYXX10W1sMASyEr6Nl7k9zF0sg5Y=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-entombment-of-christ/agHJtMbElM33Ow",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-165",
+      "title": "Young Girl Seated",
+      "artist": "Jean-Honoré Fragonard",
+      "year": 1785,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RmBsZVuECfZocWVuqbxk-NCzbarPh9bgUf1niLlKQGpBJOxgRoqQ7IbgqMtPrCMkfcm9JLSg=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/young-girl-seated/xAHDlbj1q91NLA"
+    },
+    {
+      "id": "courtauld-gallery-gac-166",
+      "title": "Studies for Christ Carrying the Cross",
+      "artist": "Paolo Veronese",
+      "year": 1571,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Q7kMcpPvBW_hH5hahcLARgJ0okVSzxCkkuXK7s98b7FAEC14NK9MrhqMwlVQv-UCRzA5VaC7mz=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/studies-for-christ-carrying-the-cross/QQEyStf21ls9ww"
+    },
+    {
+      "id": "courtauld-gallery-gac-167",
+      "title": "Blue glazed side or fruit plate",
+      "artist": "Roger Eliot Fry and Omega Workshops",
+      "year": 1914,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TqgXd9ADOfJKQed5s5HFSXsv7x7za1ej7DkRpKYBEPy3s2dWpawOJcFvJhsWryC-wp9ufL5vaj=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/blue-glazed-side-or-fruit-plate/9gHijEU81zA06g"
+    },
+    {
+      "id": "courtauld-gallery-gac-168",
+      "title": "Saint Jerome in his Study",
+      "artist": "Hendrick van, the younger Steenwijck",
+      "year": 1624,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Rhv1F_MbRk7xvd4ABdvHb1MrjDc69BFgJN6hKvgzEI0JugVg5pp1w-_mOIW3cZ7jQXf0DDdw=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/saint-jerome-in-his-study/7gGawgU6EdFptg",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-169",
+      "title": "View of Tivoli",
+      "artist": "Thomas Jones",
+      "year": 1777,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QK3wCUQtWiEAzMWP8AuKZRaLHoCUX4xwp9ooscJnGBFcIUDkmPsGXg6_qWfhIkUh-MwiE-Yhg=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/view-of-tivoli/sQGs9B5uloAtHw"
+    },
+    {
+      "id": "courtauld-gallery-gac-170",
+      "title": "Beach at Gravelines",
+      "artist": "Georges Seurat",
+      "year": 1890,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_T49RU7ZQ9WlBgksqKWEWzeHRFKR4ZtHxf_1IO17pXTFK1CMGuRTSBgR65ZZp_d6sY_GnkVjs_Y=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/beach-at-gravelines/lQFd-BMwLtSciw",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-171",
+      "title": "White tin-glazed bowl",
+      "artist": "Roger Eliot Fry and Omega Workshops",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Qb9BN6YIw2ZzUiVQUxGgcA22eIKqQ4FM8b-joYr2SN59S2CbKSv9MJbaIibClA5ygyvEOjUA=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/white-tin-glazed-bowl/owEdo38fzP7Z-A"
+    },
+    {
+      "id": "courtauld-gallery-gac-172",
+      "title": "The Holy Family with Saint Joseph Reading",
+      "artist": "Giovanni Battista Tiepolo",
+      "year": 1757,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SoiKFer-snRM9oir1zBTtfW3URMMiOH34oM6n8QKapru7dtwghg6m2TsyR01i7R7mzzfTT=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-holy-family-with-saint-joseph-reading/kAEhA4pcYoUpNQ"
+    },
+    {
+      "id": "courtauld-gallery-gac-173",
+      "title": "Virgin and Child",
+      "artist": "Barnaba da Modena",
+      "year": 1365,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Sp7zJ964HCmURW-RhAxfpHQ5Ym4HpnUsehprLtZdVs8eeiy6ongMFN1NFIXnVkclWyNM2AFg=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/virgin-and-child/kAGv5Pc-rCOEjw",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-174",
+      "title": "Nude",
+      "artist": "George Seurat",
+      "year": 1879,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TGqgH7mwnMmsx5XgJGiCbzffi-EfM7jpQvq1jed-ZIg-Lz4ZY60_IgCFPYt7FzKVW-G2rm=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/nude/XAHHGZuaGVtFYg",
+      "medium": "Black"
+    },
+    {
+      "id": "courtauld-gallery-gac-175",
+      "title": "Vertumnus and Pomona",
+      "artist": "Domenico Fetti",
+      "year": 1621,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Q2pNXcuBkBsxcVj5OHhk1qfjPxE4eECWeEjn-JcSdS-9M3Hyo7kz3glfTywxFRJgT3d10JNvY=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/vertumnus-and-pomona/AAHJ1vGVLTSneg",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-176",
+      "title": "Susannah and the Elders (after Guido Reni)",
+      "artist": "David Teniers the Younger",
+      "year": 1650,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Sk-8-n4vvCzWItIGdf8EX79qsqQKYQ_ASlHEP1MbLOVKmld8aZdfEVEeJepURe8OJCwnxORoQ=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/susannah-and-the-elders-after-guido-reni/RQHG0w3AcadFvQ",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-177",
+      "title": "Cupid and Psyche",
+      "artist": "Joshua Reynolds",
+      "year": 1789,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SCDOwr_bGkxtVbLFtYthSPCkHoKT6fZZJ7482ipab7YdbKugHCplayDCH4quQWPr2U64E4FA=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/cupid-and-psyche/mgEqp-cPQChdMw",
+      "medium": "Oi paint",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-178",
+      "title": "Deauville",
+      "artist": "Eugène Boudin",
+      "year": 1893,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TMwP28A-f77aKZeEx5fFJEvRqBSz_CHPqhCid4RjjegmgLcqou-MgF8rdGUeKXk3hhXEfM9w=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/deauville/UQHsfpBgIsYlSA",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-179",
+      "title": "The Crucifixion with Saints",
+      "artist": "Bernardo Daddi",
+      "year": 1348,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TmcxO0TRJZqZP0ybi-VFVK7gKCAeQUiA8NuGTSOvuZWh1vsBnIuXv5drCId3i543cBYGxZ-do=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-crucifixion-with-saints/NwEyyOju0isvvA",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-180",
+      "title": "Candlestick",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_R9UTYw1PaNh-p0zutQxywOopRz-IO8oQIlzoJ3lroLACqKIVmP6QjbUrLHEcLrzfeKGmu_ZAE=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/candlestick/AQGf9-dxjCDcvQ"
+    },
+    {
+      "id": "courtauld-gallery-gac-181",
+      "title": "Cupid overcoming Pan (after Annibale Carracci)",
+      "artist": "David Teniers the Younger",
+      "year": 1650,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SfuXr_rSQK4SOGu0st-73XPicsgCgaBF4Z17gSIcy_bF3HkAweqg2XRY7xWzmeqKxnTBhc2xU6=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/cupid-overcoming-pan-after-annibale-carracci/3gHIbC50adLFTA",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-182",
+      "title": "Saint Peter as Pope",
+      "artist": "Lippo Vanni",
+      "year": 1365,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QSlPcwTAmXsYVr-0Bt5IuUCNhnePmSn6vu6QtEWce1vrIhPiLIxcHUdTWxDW9r9sqSI3eO=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/saint-peter-as-pope/gQF_hdnDZzLmiA",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-183",
+      "title": "Portrait of Charles and John Sealy",
+      "artist": "Tilly Kettle",
+      "year": 1773,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_T9XAEi8t0auQrzy_mjEyuUp5YpVM1Kvm2huhpDMWC5OOpzgaa_zv3lWVRz2PIgv4pxdNtnAmw=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/portrait-of-charles-and-john-sealy/AwEsCbQcCkMT0w",
+      "medium": "Oi paint",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-184",
+      "title": "Fisherman in a Moored Boat",
+      "artist": "Georges Seurat",
+      "year": 1882,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QDPg9ynwImOetAescRmpzj5fhjBv9RMoW__6-UJYre-sEDCBgczLB4NoU9NiB4oHO8EPQo=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/fisherman-in-a-moored-boat/CwFww30eHLkGvA",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-185",
+      "title": "Saints George and Cecilia (after Antonello da Messina)",
+      "artist": "David Teniers the Younger",
+      "year": 1650,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_T1SJQFDabb-jqBfZMXES1ETykLRDE6AhICUXswZEaDJR-E4mtVKKCcu7oPsyt_YZw9VrLTrQ=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/saints-george-and-cecilia-after-antonello-da-messina/bgGyBa5DFLnaSw",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-186",
+      "title": "Box with European shields",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QInwHPBTLShJPJf9_AcKscEQNGiVJKWvFTN0dARsRqUgp2_iaHFKBR_y2ehfz8ufxRiNZVKQ=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/box-with-european-shields/3gE-0dioi-H4Xg"
+    },
+    {
+      "id": "courtauld-gallery-gac-187",
+      "title": "Bowl of brass",
+      "artist": "Unknown",
+      "year": 1375,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QJvPOqZyPtKpHez8edF3JjM5K7eVOQxKMYP49RsecxVn3aK6Ta7hhxNytG8taQ891FpLSlGhI=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/bowl-of-brass/AwE5qJtM0pUXHQ"
+    },
+    {
+      "id": "courtauld-gallery-gac-188",
+      "title": "Untitled",
+      "artist": "Wassily Kandinsky",
+      "year": 1916,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TxOhwBuhjwlC0K8JSRsBLYMgEE2SUw_sNgAeIee80129_viAB8KADfZo8O2_2nzBCHSBHhbg=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/untitled/rQEWK9f8A9mYfw",
+      "medium": "Brush and black"
+    },
+    {
+      "id": "courtauld-gallery-gac-189",
+      "title": "David slaying Goliath",
+      "artist": "Peter Paul Rubens",
+      "year": 1620,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SIvrpJwkwIeBpKOH0okJhFutB6pDNAS0fICtc27ypXsUbxtWeltLynTR5KnRjQO9u01GAxiuk=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/david-slaying-goliath/gQGH9qHslFM0CA",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-190",
+      "title": "Lady with a Parasol",
+      "artist": "Edgar Degas",
+      "year": 1870,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QeAnrN9r6ziG0E4eLqottTvqTsN5mR_cOb8bJfm-Cy6AA556Ism3CeQA1Ve7_uZ0I1e-le_bg=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/lady-with-a-parasol/GgGp9quErP8PGQ",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-191",
+      "title": "Doorway to the refectory, Kirkham Priory, Yorkshire",
+      "artist": "John Sell Cotman",
+      "year": 1804,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TNQj_4mGRVDzCPeQIMIgBJ0gDqY6WH81SY7tyzE0mLZodEl2lbuUTfdQW0Lfp3WuY9mxVP5p8=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/doorway-to-the-refectory-kirkham-priory-yorkshire/VgG1IuYWbV1Q3Q"
+    },
+    {
+      "id": "courtauld-gallery-gac-192",
+      "title": "The Angler",
+      "artist": "Georges Seurat",
+      "year": 1884,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TCUUlhWrEoL0g_-AGMzSvdobwpbCHkedsAoXNnJK_0FboSNyQhYKtVwMX9lFRK-Tb0yuxw3ONi=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-angler/lwHaZx7ji3XArA",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-193",
+      "title": "Saint Peter",
+      "artist": "Nicola di Maestro Antonio d'Ancona",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TDaJivikvpkq5z5xuNcykFsfjjSbIhfllMOtrVd83bCLslYHOOWeMATrZLg1NLDKUJEmuIalQ=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/saint-peter/RwHk-x2mVaMkaQ"
+    },
+    {
+      "id": "courtauld-gallery-gac-194",
+      "title": "Triptych with the Crucifixion",
+      "artist": "Unknown artist, western Germany",
+      "year": 1350,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TnN155qBO4SOB06X2qmRtEHRUrCgYeFPEziulOwmi6gnvbEyhUWt-zdqQE1_vxunuy3hMZlWM=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/triptych-with-the-crucifixion/BAEzArn3-RzVdg",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-195",
+      "title": "Horses in the Water",
+      "artist": "Georges Seurat",
+      "year": 1883,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RTvqw-Vj1Pk4qQ9t8lEXy3MfB0Sc7keyq8XpU2XnsxeXqNHyGrBB4xKoNfQ-DbzVl6C6Y43A=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/horses-in-the-water/8AGBooJuT2vhhw",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-196",
+      "title": "Study of two heralds in ceremonial dress of the Order of the Garter",
+      "artist": "Peter Lely",
+      "year": 1660,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QzBjY0XKQhYjub464SrF2X1gIXDUdhrzFYvZBQXxltPBz92eawgYa6mZOGlxBPiIduw_Svzw=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/study-of-two-heralds-in-ceremonial-dress-of-the-order-of-the-garter/5AHiJjp2ysMJlQ",
+      "medium": "Black and white"
+    },
+    {
+      "id": "courtauld-gallery-gac-197",
+      "title": "Spring at Chatou",
+      "artist": "Pierre-Auguste Renoir",
+      "year": 1873,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_T2JxZLgwFNe3g2vb16ebEQMV6Pf9lXsdrTHLxNdR8PuqSirXziMeeHXHlGZeeouLx7JLN_MnY=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/spring-at-chatou/qwFctEW2LeAPXw",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-198",
+      "title": "Portrait of Georgiana, Lady Greville",
+      "artist": "George Romney",
+      "year": 1771,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QyRVLFITD5vYKdhbTdZqx93YEd-GsaxPkjAApJZOlkX1BVEE8PQyHzBFD1HMgrgHQHSAwKO7M=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/portrait-of-georgiana-lady-greville/VgHJ42OqpuU7cA",
+      "medium": "Oi paint",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-199",
+      "title": "The Hypochondriac (Le Malade imaginaire)",
+      "artist": "Honoré Daumier",
+      "year": 1860,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Ta0ZyhSnZvNj1uENnX5YRsEf1zIux7Jfbrpz-lc-QSbxMJffClkeYHsLDxnlsxcfiHV5W3yw=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-hypochondriac-le-malade-imaginaire/dgFNVi6Ouv7pXw",
+      "medium": "Black"
+    },
+    {
+      "id": "courtauld-gallery-gac-200",
+      "title": "Part of base, or predella, of a large altarpiece. Saint Lawrence",
+      "artist": "Master of the Fogg Pietà",
+      "year": 1335,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RIX5w3Ccfp5L5NDH-cQPxvVGbHvhITA5lYfUpRsUXO0nKLbP3AMHj87IxYVqFGm-L8HaDOQ5U=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/part-of-base-or-predella-of-a-large-altarpiece/IgHcdjmzrkFy1Q",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-201",
+      "title": "Saint Sebastian in a Rocky Landscape with Saints Jerome, Anthony Abbot and Christopher",
+      "artist": "Marco Zoppo",
+      "year": 1475,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_T6WxdXT2amAFApCUF65zBaPXpfum7nRAaWWphOBw6ttuYbrLsvtOh2WTf5JBlEd1KBywJVFg=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/saint-sebastian-in-a-rocky-landscape-with-saints-jerome-anthony-abbot-and-christopher/wwG0EHWxf_cKZw",
+      "medium": "Unidentified paint surface on panel",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-202",
+      "title": "Two Women with Muffs (Deux femmes aux manchons)",
+      "artist": "Constantin Guys",
+      "year": 1864,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Ty3akVs6W9P7KsxF9BuORINlsma4g_hZ_6zKMpSOR3C0_4gbe_ehXkX09cC5IRpdzA-lo86Jg=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/two-women-with-muffs-deux-femmes-aux-manchons/igE4a0jj-7C1tA"
+    },
+    {
+      "id": "courtauld-gallery-gac-204",
+      "title": "Entombment",
+      "artist": "Lorenzo Lotto",
+      "year": 1550,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QQV088K_DSRY-PuPnGiryvvV-w0cWVXqSCBy2Pm8qXASPw7BpeLrieLSWFRYIvizU99IPeAA=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/entombment/egEoVXLiwB-hcQ",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-205",
+      "title": "The Crucifixion with Saints",
+      "artist": "Bernardo Daddi",
+      "year": 1348,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RwYzhHM59k_2EPQ3Oqu4A_ksLnJ_QxNDIS0cOCX8VMmBYATtgDmYYCTWxTgPFYmmkrCJ39ZZI=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-crucifixion-with-saints/zgGiwH2b8SSh0g",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-206",
+      "title": "Box with cover of cylindrical form, of engraved brass inlaid with silver, with later gilding and possible addition of inner band",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TKng-64_gvCeJbQX4CwBrp1BCBbVY3dioB31h-_rVW_Z1R_Xo2cn-Ed7C15ariXNRZLYVX=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/box-with-cover-of-cylindrical-form-of-engraved-brass-inlaid-with-silver-with-later-gilding-and-possible-addition-of-inner-band/mgHwK4gGEX4UGQ"
+    },
+    {
+      "id": "courtauld-gallery-gac-207",
+      "title": "Carmelite Friar, Standing",
+      "artist": "Jean-Antoine Watteau",
+      "year": 1715,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QTMxF98MYGClGfh3Q2yc-7ugI4kOE4SoDNCSm5f1AumaMAE5v1PsCbto1BOAjQ_BK7OYHsZg=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/carmelite-friar-standing/mQEpeDxbOe6jNQ",
+      "medium": "Black and"
+    },
+    {
+      "id": "courtauld-gallery-gac-208",
+      "title": "A Shed",
+      "artist": "Paul Cézanne",
+      "year": 1880,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RjRa9W70v-NfJVxg5IEVKFlbtgPWYAmoSSlOSoHCN6qzva4NIUCmcJwNqcO_24uUHD6eYCeg=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/a-shed/KQFPx-lJc8HFYg"
+    },
+    {
+      "id": "courtauld-gallery-gac-209",
+      "title": "Chaffinch nest and May blossom",
+      "artist": "William Henry Hunt",
+      "year": 1845,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Riwj7M30RMiYmP_hgiZV1lyJ7rQ9M1WLyvZxOIomLNegBbHJYfuYIRTFxhQQGM_tboKZm7qQ=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/chaffinch-nest-and-may-blossom/JAGjT13HHGIISA",
+      "medium": "Traces of"
+    },
+    {
+      "id": "courtauld-gallery-gac-210",
+      "title": "La Montagne Sainte-Victoire",
+      "artist": "Paul Cézanne",
+      "year": 1885,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_R5A1c9tf__Sw63_Ogrh9qWCEHyXshmpJInGM3TR36iQ5lWpcVuJRskVxkaxoKBkNm7zzmNAGE=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/la-montagne-sainte-victoire/jgHJZJle-zCMXw"
+    },
+    {
+      "id": "courtauld-gallery-gac-211",
+      "title": "Man Tied to a Tree, and a Figure Resting",
+      "artist": "Jusepe de Ribera",
+      "year": 1630,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QTjhEi1sgkHBFugZyRpN_yrH4yDWQDWlxDbXEiYZSfa_u3dhyQ7TqV6_kfhAdeJHYXoi4FOQ=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/man-tied-to-a-tree-and-a-figure-resting/XgGzonkKKDRT_g"
+    },
+    {
+      "id": "courtauld-gallery-gac-212",
+      "title": "The Forest of Radnor, with the Black Mountains in the Distance",
+      "artist": "Francis Towne",
+      "year": 1810,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Q65rqKDma01QtWb72PjARBLZ3wnmolaqr-QFM2MtY7YTOL1WCIMpdcr5XASL28uxU2CCsmqQ=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-forest-of-radnor-with-the-black-mountains-in-the-distance/OwEh9Qr_htgchw"
+    },
+    {
+      "id": "courtauld-gallery-gac-213",
+      "title": "The Coronation of the Virgin",
+      "artist": "Guido da Siena",
+      "year": 1260,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RY3nrYQ8Qiw-HeefX6hlxoBN6NH_0jBi5fUFASMTyZBKGMAmryc3OMLcK6VNpwUljQmUvJZQ=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-coronation-of-the-virgin/XwEVkJYbkR1J0A",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-214",
+      "title": "Dancer ready to dance, right foot forward (Préparation à la danse, pied droit en avant)",
+      "artist": "Edgar Degas",
+      "year": 1885,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TtHpTX4Ouzg2G9uOAUTXjpQcHRI89tgUY2WXe5O7BycjRi0qHYz1JbNtK96El5NLLMdVHT1Dy4=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/dancer-ready-to-dance-right-foot-forward-pr%C3%A9paration-%C3%A0-la-danse-pied-droit-en-avant/pAHm9NT4eqCuZw",
+      "artworkType": "cast",
+      "is3D": true
+    },
+    {
+      "id": "courtauld-gallery-gac-215",
+      "title": "The South Ambulatory of St. Bavokerk, Haarlem",
+      "artist": "Pieter Saenredam",
+      "year": 1634,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_R5f4qQQzLhKXr8tqNERGkoCZVPD2LZsR9ZcLiM4g7GteyDoqA-xgjfSXgqXEF0LtKkj41R-J9D=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-south-ambulatory-of-st-bavokerk-haarlem/WAFGJRJRtgPlMw"
+    },
+    {
+      "id": "courtauld-gallery-gac-216",
+      "title": "Virgin and Child",
+      "artist": "Unknown sculptor, Florence (Italy)",
+      "year": 1410,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_T_3aCzxw64tnmmB-p6JscSvvEjCzSTvl2IH053UQUZ2YmJw6l8gdS_u0qEzLmZq6rKbUm6yxs=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/virgin-and-child/LwGok96Q4DXw-w",
+      "medium": "Painted",
+      "artworkType": "Relief",
+      "is3D": true
+    },
+    {
+      "id": "courtauld-gallery-gac-217",
+      "title": "Virgin and Child",
+      "artist": "Gregorio di Lorenzo",
+      "year": 1470,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TTaISgKygwtrpyXzgNhgCq1gBMJRPb8FJAtjF9w1TE80Fgu-hlfmgbi79sefQiCQF49RzLrls=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/virgin-and-child/HQHdv7KJIsBIgA"
+    },
+    {
+      "id": "courtauld-gallery-gac-218",
+      "title": "Sheet of Figure Studies",
+      "artist": "Théodore Géricault",
+      "year": 1817,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_T46Kf0VdH0LB75f_Z_Np2wf3zZ57-mUMdiSvWfaZsl87Wv1rZShisPX6f-pbOk4rm2SvBa=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/sheet-of-figure-studies/HAFabn6kftS6NA"
+    },
+    {
+      "id": "courtauld-gallery-gac-219",
+      "title": "Man in a boat",
+      "artist": "Georges Seurat",
+      "year": 1884,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QFlOBu5jcMQ0IHd7kCseaHktvzKPblcnQBWQXgnLYQ6zGu4lwktwSqX0ZWAOVcI5Fu6PJSSKU=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/man-in-a-boat/ggEbAjgyroXAJA",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-220",
+      "title": "Adoration of the Shepherds",
+      "artist": "Unknown painter, Antwerp (Belgium)",
+      "year": 1535,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SeoBHehApKYmgcl_gu2q1JxOQvArQqIHRiu003v8KT3BpzxDBwkCo5nwn8j55lqFmXZT_5G_BN=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/adoration-of-the-shepherds/bAFpij7IJ32qTQ",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-221",
+      "title": "Reclining woman in a Landscape",
+      "artist": "Jacopo Palma, called Palma Vecchio",
+      "year": 1520,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TDfjbRmovi3Ws7XHiyEB2NIAppjeVbS0AVYQvh35opIhiyhjalZcumEFaOOBpNLCz_IziCnp_I=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/reclining-woman-in-a-landscape/NQG9zO1n65gOMg",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-222",
+      "title": "The King’s Clock Case",
+      "artist": "William Chambers and made by Matthew Boulton with clock movement by Eardley Norton",
+      "year": 1772,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SAuh-LY2sQFOyz14UMEDKY3jFBAXZsn2hSO2orlRg5IgNa0KqPsFwRQ_vLfzuibSK_6oUFSrE=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-king%E2%80%99s-clock-case/lQHcu0eV6dy1jQ",
+      "artworkType": "Design,"
+    },
+    {
+      "id": "courtauld-gallery-gac-223",
+      "title": "A Wise Virgin and Studies of the Artist's Left Leg (recto)",
+      "artist": "Albrecht Dürer",
+      "year": 1493,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QB1pDRPL5Qp0iD-IHSjDALiASplcbj1jbVKDPAD04eKOkwN7omorZ5-SxP1sxGRvoEOsAu4rs=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/a-wise-virgin-and-studies-of-the-artist-s-left-leg/yQGPpex5gn3Www"
+    },
+    {
+      "id": "courtauld-gallery-gac-224",
+      "title": "Landscape with Travellers on a Road",
+      "artist": "Pieter de Molyn",
+      "year": 1650,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SE5cliM23eaSKlXf-ZOwB3VSpdSf6wLkZQlZBaC4_6zCI0ZKpVjSkfWyThCD7oBuTYfTI-SRPi=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/landscape-with-travellers-on-a-road/nAEjfRXnXDdP_A"
+    },
+    {
+      "id": "courtauld-gallery-gac-225",
+      "title": "Satyr Pouring Wine",
+      "artist": "Jean-Antoine Watteau",
+      "year": 1717,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SN7Ikvyhmk1_Ek5HnEUdkAgAyFh-VyHpGVSKzHRKfdPbFE21h-swT1OpqAccA1KAhwGNktAiw=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/satyr-pouring-wine/swHzU1boJ93kJQ",
+      "medium": "Black, red and white"
+    },
+    {
+      "id": "courtauld-gallery-gac-226",
+      "title": "Study of A Flying Angel/A Man Seen From Behind Study of A Flying Angel (recto)",
+      "artist": "Pinturicchio (Bernardino di Betto)",
+      "year": 1481,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Te8q1w4xWZl-lxbBhT4szDN_yy0FqvvwXGF6IAB3kbm5DI7gdBOpw4wKYxyWg9iojhkxHFGAQb=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/study-of-a-flying-angel-a-man-seen-from-behind/jwGut-BDwbdTvQ",
+      "medium": "Metalpoint (silverpoint?),",
+      "is3D": true
+    },
+    {
+      "id": "courtauld-gallery-gac-227",
+      "title": "The Adoration of the Shepherds",
+      "artist": "Master of the Twelve Apostles",
+      "year": 1530,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_STB1a-pEhGe9fbnE8TVbbnSoyhuAldAO9kDuz_8hNKkqbtebJnZI_XNdX2-jfUG2z7hkfDo8Q=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-adoration-of-the-shepherds/YgHTESM9lX_vzw",
+      "artworkType": "painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-228",
+      "title": "The Trinity in a quatrefoil, left wing of a diptych",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RHENd-mXmR2dZhSFqVaZ8dWWYAXWCpx_bkXxyxHmFBf8TmD8_KadCgQ971kWnBYKGrrWW3aKA=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-trinity-in-a-quatrefoil-left-wing-of-a-diptych/PwEsFBC-FoyGEw"
+    },
+    {
+      "id": "courtauld-gallery-gac-229",
+      "title": "Studies for The Flight into Egypt",
+      "artist": "Joseph Heintz",
+      "year": 1595,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SO2FPYAsae1qWgD5iBwgt2_Yj6sC7thDE_khOZpS6Vk4Cqq21ooMHqVhJn8Uw2VNi6Qp8EK5rJ=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/studies-for-the-flight-into-egypt/NwFEFeIxZeyInw",
+      "medium": "Black, red and (traces of) white"
+    },
+    {
+      "id": "courtauld-gallery-gac-230",
+      "title": "Sheet with Two Studies of a Female Nude",
+      "artist": "Eugène Delacroix",
+      "year": 1847,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SACI9uFCDxHNYCOsQE2V7OgiuMz7ehDW7EKtPXF9L8VQhzAzIG22Qwgbu_u21SCGbdK3s8mG4=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/sheet-with-two-studies-of-a-female-nude/dQE4dDgM1ADJpw"
+    },
+    {
+      "id": "courtauld-gallery-gac-231",
+      "title": "Man of Sorrows - Ecce Homo (recto)",
+      "artist": "Anthony van Dyck",
+      "year": 1622,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Tvx8EN3SHoOhMAdYGcrghZ89Hh0IkloZHAJgBga4UfORcAHbgoFgGuWUig29e_62D_HJ7jrg=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/man-of-sorrows-ecce-homo-recto/gQHqCYaqUuhRkQ",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-232",
+      "title": "Reliquary Figure",
+      "artist": "Kota people",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_S5m2iYKITiKGAVlm4R03XMZD_L3yVtd3O19jTj2Ck6yNPT_np_SIzrfGcF7UEMH1SXz0E3dA=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/reliquary-figure/FwHTZInNSQHLng"
+    },
+    {
+      "id": "courtauld-gallery-gac-233",
+      "title": "Fox mask stirrup cup",
+      "artist": "Louisa Perina Courtauld and George Cowles",
+      "year": 1773,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QGCKACfrZWjbzswmF5LW0draEh1MS0dJ4FHxNXLGtk5JnAZ_dvaflfZIA6KUYEWDWAYt7b=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/fox-mask-stirrup-cup/sgEjbjquSiNt3Q"
+    },
+    {
+      "id": "courtauld-gallery-gac-234",
+      "title": "Two-handled vase",
+      "artist": "Unknown",
+      "year": 1490,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Q2dlhL68M5BnbakeyS058NeCwiOKKLUYQOuGkpCitSGZSFQkMFdeNVKatk_GRN2NFICLMpTA=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/two-handled-vase/jgHCkd80It6jGw",
+      "medium": "Tin-glazed earthenware"
+    },
+    {
+      "id": "courtauld-gallery-gac-235",
+      "title": "Saint Gregory the Great",
+      "artist": "Peter Paul Rubens",
+      "year": 1620,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Q7Qk-YdLVQ2Hx1NVD6vSLlredGlAIZVCQGn_pFsi_j1stamL-L1hNQvcLThiwbmz0NyoytPg=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/saint-gregory-the-great/uwHOWRfKnqmn7w",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-236",
+      "title": "Castel Sant-Angelo, Rome",
+      "artist": "John Robert Cozens",
+      "year": 1780,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_T35y-8NFro9-uYccF9Y-IaNxxaeqJEcJQrf8dl9aRIQ1Lwe1RIx2b5BBpaKD2ByairRw2VRiRg=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/castel-sant-angelo-rome/ywE_d_3CIcJApA"
+    },
+    {
+      "id": "courtauld-gallery-gac-237",
+      "title": "Woman Adjusting her Hair",
+      "artist": "Edgar Degas",
+      "year": 1884,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SFE462SW-k2PlvBAFde21GT15UB0abvuZ8ZwX4GLTFx4c9k1VXSG_e7vdWoAvzjHaEuPcTp4o=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/woman-adjusting-her-hair/DgG57pI2wxnSBw"
+    },
+    {
+      "id": "courtauld-gallery-gac-238",
+      "title": "Dish with the incredulity of Saint Thomas",
+      "artist": "Unknown",
+      "year": 1520,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RGtR7m7Yh-s4MD9dG1YUNHnkG-DdxPwYJMJP9ZPko_SRA3t5SsWkhdCOuWQupYyPma62q3CCw=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/dish-with-the-incredulity-of-saint-thomas/_wFbXmi8PWk6QA",
+      "medium": "Tin-glazed earthenware painted with"
+    },
+    {
+      "id": "courtauld-gallery-gac-239",
+      "title": "Centrepiece with detachable dishes",
+      "artist": "Samuel Courtauld I",
+      "year": 1751,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Q4G2UtFCFkoryWaUVfQy5XSPFvLypqtG7qxc1BIDcjhdqL3v_RwTq4sHxynX6iyiDZyjQfHM4=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/centrepiece-with-detachable-dishes/fgEoWr-vwBy7Ew"
+    },
+    {
+      "id": "courtauld-gallery-gac-240",
+      "title": "Study for La Grande Odalisque",
+      "artist": "Jean-Auguste-Dominique Ingres",
+      "year": 1814,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QkpS217HSxMwhRBqUoCRqwGKuvymc55EurcKXmEU1T1nq6FRbzjBevek3xi3PorD_o3JtMrPo=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/study-for-la-grande-odalisque/PwF6uYeRqdhJOA"
+    },
+    {
+      "id": "courtauld-gallery-gac-241",
+      "title": "Cup and Cover",
+      "artist": "After a design by architect William Chambers, Louisa Perina Courtauld and George Cowles",
+      "year": 1770,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_R_mzJaZI9moukdsgGVlM8FMrXtkR1xm7KPxFcVL3tNlP6Aaz_pDz6pLxu3qrCT0BaB09Ra=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/cup-and-cover/nwF_EuNBnCPecQ"
+    },
+    {
+      "id": "courtauld-gallery-gac-242",
+      "title": "Portrait of a Sculptor (Alessandro Vittoria) (after Giovanni Battista Moroni)",
+      "artist": "David Teniers the Younger",
+      "year": 1650,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Q3WMmesMhhj8h3KcTMoDuuohd4RFoY0Jotiq4v2lDWxH-Q6imrFWNDDZzV-9RxyE4HFWN3kQ=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/portrait-of-a-sculptor-alessandro-vittoria-after-giovanni-battista-moroni/6wFzu9osTlVEgg",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-243",
+      "title": "Teapot",
+      "artist": "Louisa Perina Courtauld",
+      "year": 1765,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_S0NBcQXli20j7O3rUlA1pso-5gIpraiDKZcnaAc_sVcT8rVTlhSJhp4JTnO3L_xLzXlL4LbQ=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/teapot/ewHyHlJP1oSnGA"
+    },
+    {
+      "id": "courtauld-gallery-gac-244",
+      "title": "Latona changing the Lycian peasants into frogs",
+      "artist": "Johann König",
+      "year": 1610,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TSroQ07BQmTTr6ssflqxnSRfMItqzMdjFzKOmvgwAw5neJwwoC-jCnkZoAYq8K0Wx2zi8fRpfR=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/latona-changing-the-lycian-peasants-into-frogs/zAEk9unZPgzJng",
+      "artworkType": "painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-245",
+      "title": "Dish with a sphinx holding a shield",
+      "artist": "Unknown",
+      "year": 1530,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RoyX8WR11t3BM_3WwRxTDCN9-3MZE9eNBSfImgdStg7thrFLgW9aek-g6wKCrkg9ls8UHuePc=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/dish-with-a-sphinx-holding-a-shield/BwFV9dFL2BSxKQ",
+      "medium": "Tin-glazed earthenware painted with"
+    },
+    {
+      "id": "courtauld-gallery-gac-246",
+      "title": "A Child seen from Behind, Standing Between his Mother's Knees",
+      "artist": "Guercino (Giovanni Francesco Barbieri)",
+      "year": 1625,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Q3lCj-eDQKJ5Yn7nPlFHR9gtksrlgZdy2V1wBa7PB-C8OPX8dAd5n2F8hdoR3i2OmcJLLUTeQ=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/a-child-seen-from-behind-standing-between-his-mother-s-knees/GgGJqevTeAjkTg"
+    },
+    {
+      "id": "courtauld-gallery-gac-247",
+      "title": "Bowl with the crossing of the Red Sea",
+      "artist": "Unknown",
+      "year": 1560,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RjljDES-jLKEh-z28joFWeHBE1fuw6CB8DCE_6bfQ5QcFPjqyO3QUKAvwFCv70QsGYUecDLps=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/bowl-with-the-crossing-of-the-red-sea/8QHIFeDCxZLQXA",
+      "medium": "Tin-glazed earthenware"
+    },
+    {
+      "id": "courtauld-gallery-gac-248",
+      "title": "Study of A Male Figure Bending Forward",
+      "artist": "Jacopo Tintoretto",
+      "year": 1575,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QtwXMBDzw_j3QHip1_5adVQ3rb7YWrG8Mt5i-2AfRLVzD5iz2ZKN__HMvh7FrJVNKMdnPS48qU=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/study-of-a-male-figure-bending-forward/LwE0uW4qzxEm_A",
+      "medium": "Black chalk, and traces of white"
+    },
+    {
+      "id": "courtauld-gallery-gac-249",
+      "title": "Black-glazed dinner or dessert plate",
+      "artist": "Roger Eliot Fry and Omega Workshops",
+      "year": 1914,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SSV4IkdZQrrPGXDp6kbKaODWpeDhGwmuDB-xbx4rO99xyN-QRQV7zqobrTWePpWdntE2_i2Q=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/black-glazed-dinner-or-dessert-plate/CQE5Kg65AOCFRg"
+    },
+    {
+      "id": "courtauld-gallery-gac-250",
+      "title": "Study of two female figures",
+      "artist": "1st Baron Leighton of Stretton",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TvR60hCzCDgoUTjw-iS5OM7_STuTTL-3pmOpmnTQccZ3-S0Ju0-BkJ2PJPubMq3TE41HK84aVG=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/study-of-two-female-figures/JQFE0ImriIdFlQ",
+      "medium": "Black and white"
+    },
+    {
+      "id": "courtauld-gallery-gac-251",
+      "title": "Footed bowl with Hannibal elected general",
+      "artist": "Unknown",
+      "year": 1560,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TwRy05ZomKV8ZMwQE1ArQCA3i42gWTpvlibORiNWwr6XxQef1243PDIJBKx50gbWDNHdYcVw=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/footed-bowl-with-hannibal-elected-general/ugFIj9HOw7ojjQ",
+      "medium": "Tin-glazed earthenware"
+    },
+    {
+      "id": "courtauld-gallery-gac-252",
+      "title": "Presentation in the Temple",
+      "artist": "Peter Paul Rubens",
+      "year": 1611,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RgnC_h4PwQjthCkRNglapraXKB88sD_JboLXxMirtdj-0yK-gggjvTFnqtENXrEB37VSJHVvs=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/presentation-in-the-temple/wgHeUeO3QugDWg",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-253",
+      "title": "Sugar box",
+      "artist": "Augustin Courtauld",
+      "year": 1737,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SxOHjrILG3DG-ZJ8KFMiuy14yOYUGHr9i8xFFLrNW2YqBJldARjEQVH5jLW3TiYXFS3-Vwj0o=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/sugar-box/YwF_AiVXnisZ6g"
+    },
+    {
+      "id": "courtauld-gallery-gac-254",
+      "title": "Pharmacy jar for apple syrup",
+      "artist": "Orazio Pompei",
+      "year": 1550,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_So74tXptX0OTV_17x8k4NQf5goSJvK1FbaDDwY0oRKItkjnUKfmsyCW7B9C-CLjFqubd4vk_E=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/pharmacy-jar-for-apple-syrup/nwG7U3VmMG4n4Q",
+      "medium": "Tin-glazed earthenware"
+    },
+    {
+      "id": "courtauld-gallery-gac-255",
+      "title": "Standing Virgin and Child statuette",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Rxm0tUtohp3SDmNJEadOZskrXscbHrQ9r-TSKWMVY3IS9TMYHaczlXTUsyAtpc4cDs4cI90SO6=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/standing-virgin-and-child-statuette/cgHe7urydl79_g",
+      "is3D": true
+    },
+    {
+      "id": "courtauld-gallery-gac-256",
+      "title": "Figure studies",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TgB0RMEeH5LAJrhRidFx0soFZZX76gRvpLs9iE7VJoUbuHsXgBRn5_S_xIRKJevQfaJdeW=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/figure-studies/GgGMxgxNXXVqRg"
+    },
+    {
+      "id": "courtauld-gallery-gac-257",
+      "title": "Dawn after the Wreck",
+      "artist": "J.M.W. Turner",
+      "year": 1841,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RsGrp1YkuvK7I0DUemhcqobQi4iDQMmv6osy0gea0f7dgjW9F4kQNnUqB2ZWnxxujw1NhV0w=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/dawn-after-the-wreck/XAFSO5Ig9HUMOQ"
+    },
+    {
+      "id": "courtauld-gallery-gac-258",
+      "title": "Allegory of Charity Charity",
+      "artist": "Jacques Blanchard",
+      "year": 1637,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RKWH5XwUeEXV3xsrNgw69Qa-nTYbol-10taIWBE7IVAzkUFdKtfJe4P51VM_fnb5zzn-C-Yuo=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/allegory-of-charity/FgFoy6yjaWHeUw",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-259",
+      "title": "Dish with a bird feeding its young",
+      "artist": "Unknown",
+      "year": 1500,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RHLz-iuNyOMbgG51fVNP90qDinP1tP-bXBGYTLLFYD89HiH4eiziMznJaIXTam3PYN0lrb6yg=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/dish-with-a-bird-feeding-its-young/zwEV0moc1Lu-0Q",
+      "medium": "Tin-glazed earthenware painted with"
+    },
+    {
+      "id": "courtauld-gallery-gac-260",
+      "title": "Sugar Caster",
+      "artist": "Augustin Courtauld",
+      "year": 1721,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_S2-NVPlz9se_aYUTuA1b0b4lu8TrHB2Hwi7egKqJvNoUfTCjPGOVsCc9cc7x8qZga38kyINRA=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/sugar-caster/3QFwO9i8Zr4PEg"
+    },
+    {
+      "id": "courtauld-gallery-gac-261",
+      "title": "Saint Julian",
+      "artist": "Master of San Torpè",
+      "year": 1320,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TXnGFPqJd_gmuqVDYItOHFZ4MkznlJlh3g5qP6WV7wbUJ905EGFsIWD7X9r2mqKfZ08ar0oKc=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/saint-julian/2AHoceMuHuqX4g",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-262",
+      "title": "Pharmacy jar for bayberry poultice",
+      "artist": "Unknown",
+      "year": 1500,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_ScgKSL2FHoXD56TzFrnMB1lLkcEQzW4c8cJMdgr3OqBjQLU9JM0suwd_cMxScZeHo85d3EYA=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/pharmacy-jar-for-bayberry-poultice/qQFshB_gEonZ6A",
+      "medium": "Tin-glazed earthenware"
+    },
+    {
+      "id": "courtauld-gallery-gac-263",
+      "title": "Soup tureen and cover",
+      "artist": "Samuel Courtauld I",
+      "year": 1751,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RH-GVfzQNnsPI8U0kWj8B3eUs7FinOhDsygBL4JkMAILr_vfVRmKlJI5x5i0JWvbdEsDZzcnk=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/soup-tureen-and-cover/JAE-enJLNSY0jA"
+    },
+    {
+      "id": "courtauld-gallery-gac-264",
+      "title": "Large jug with the Fumanti family coat of arms",
+      "artist": "Unknown",
+      "year": 1560,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RYMVNiWgJ_wyRiY4Zk66OjZbTeNJogDCTmzIy9BotvCT9j3Y4fqe6ReSF7Ul6CIoiaDfbds4Y=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/large-jug-with-the-fumanti-family-coat-of-arms/JQFGHKpUFuCoiw",
+      "medium": "Tin-glazed earthenware"
+    },
+    {
+      "id": "courtauld-gallery-gac-265",
+      "title": "Lustred dish",
+      "artist": "Unknown",
+      "year": 1500,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SSIp2wrqdjZJtLT35MOTQhSiCkZzM1rad4-ggf5jBbkIWpNJ_E16Thdt9X2F4ZpZrNl9t2Hw=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/lustred-dish/igEqExz_27Bz5Q",
+      "medium": "Tin-glazed earthenware, painted with"
+    },
+    {
+      "id": "courtauld-gallery-gac-266",
+      "title": "Jug decorated with heart-shaped green-striped leaves",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QHsXFu1qmICFmadndZXP3H0OAKhW3fDaZc_iPVUyUJNxC3SPrkp19c2ANK-EzH953f5vWbig=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/jug-decorated-with-heart-shaped-green-striped-leaves/XwGr2qIYZ9pFbw"
+    },
+    {
+      "id": "courtauld-gallery-gac-267",
+      "title": "Two tea caddies, a sugar box and a tea chest",
+      "artist": "Samuel Courtauld I",
+      "year": 1750,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Th3oe3Kj6WSC3LZ9hosOzvHBR3dCt6Z3TRIX4qSJml8uZbQ9ieaFw43434slZ156q1R-6iRg=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/two-tea-caddies-a-sugar-box-and-a-tea-chest/QgHlIpMlp3E92Q"
+    },
+    {
+      "id": "courtauld-gallery-gac-268",
+      "title": "Pharmacy jar with the Abduction of Proserpina Front",
+      "artist": "Savona, Italy, probably workshop of Giovanni Maria Veneziano",
+      "year": 1738,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RZUnAy2noq_89bRHowUqmTNxCA1Zweb9S5WeDYouwmzHimqtrGNz2hdaVFXJgHHjKEwczZ4w=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/pharmacy-jar-with-the-abduction-of-proserpina/8QF4pEHZNKKaOw",
+      "medium": "Tin-glazed earthenware",
+      "artworkType": "Earthenware"
+    },
+    {
+      "id": "courtauld-gallery-gac-269",
+      "title": "Design for the ceiling of the Painted Hall, Greenwich Hospital",
+      "artist": "James Thornhill",
+      "year": 1707,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Ra0M_IvAM4PQoRxxv8nE4RZbq1niNVduyq9f0ETiyCd4AIhpWUKxpb5iluup1lpFA1Kirl3g=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/design-for-the-ceiling-of-the-painted-hall-greenwich-hospital/KgHo6740zMDpEA"
+    },
+    {
+      "id": "courtauld-gallery-gac-270",
+      "title": "Box or inkwell",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Trg1aXReTvWNmfQkK_R5Xs210vKN0Q0S4XUr8En1I6G4OR0LFJagD3QWD_CjE6gJH7H30MSyS-=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/box-or-inkwell/dAFqA6MV8ISmfQ"
+    },
+    {
+      "id": "courtauld-gallery-gac-271",
+      "title": "The Crucifixion, right wing of a diptych",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RVrX7y1RgzGTM5PEkWlxZ3UWtJESggVfSjiDtVIZsUwpXov3K7xLVAk7i2Y549ONuKmbL5zJQ=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-crucifixion-right-wing-of-a-diptych/3AFNI7fzBU7b7g"
+    },
+    {
+      "id": "courtauld-gallery-gac-272",
+      "title": "Scenes of romance on a small marriage casket",
+      "artist": "Embriachi workshop",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SfNCwJdJDTtKaWRusr0n36SYDTYRGdPiJVS6U-wmyc5hBkBeYgzYWFQvA3s985GAsAVJsB3A=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/scenes-of-romance-on-a-small-marriage-casket/fAE1iEHS4E9wTQ"
+    },
+    {
+      "id": "courtauld-gallery-gac-273",
+      "title": "Bowl with stylised birds against a scale design",
+      "artist": "Unknown",
+      "year": 1099,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_S8E0W4eixSzwQwhQYgi-4dC3NjCU8ItomFRRFOzrm_IkcMg4XXe2bii2bkStyDsWYotOJxdp0=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/bowl-with-stylised-birds-against-a-scale-design/kgGF2LRN4pU6WQ"
+    },
+    {
+      "id": "courtauld-gallery-gac-274",
+      "title": "Dishes with coats of arms of Mazzarosa and Sardi families",
+      "artist": "Unknown",
+      "year": 1663,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RUIcNTkaTyv9mHDVdQKbfM4NNxdFVKzqG22kpu8LfftrIunCIDVxH_8tgvCfKxF4dfKNjRSZE=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/dishes-with-coats-of-arms-of-mazzarosa-and-sardi-families/YAGtbEDznz0FRw",
+      "medium": "Tin-glazed earthenware",
+      "artworkType": "Earthenware"
+    },
+    {
+      "id": "courtauld-gallery-gac-275",
+      "title": "Spice Canister",
+      "artist": "Samuel Courtauld I",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_T0vx3DCOPG28RJ0SBCsT3gFFUByYJIl_e1s8-tqIsXDrIHUTissqObI_uT4wtBJBsNBfahD_Mx=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/spice-canister/wgHn21h_U6d2Hw"
+    },
+    {
+      "id": "courtauld-gallery-gac-276",
+      "title": "The Defence (La Défense)",
+      "artist": "Honoré Daumier",
+      "year": 1865,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RhYOa0wdVTBbhIBpIriE_wL1jqp-QeMxznThHGXXBGcspN6P8JiVgtRBrhOpO3lhkvmfnya8Y=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-defence-la-d%C3%A9fense/QwE4GkwICTC6jw"
+    },
+    {
+      "id": "courtauld-gallery-gac-277",
+      "title": "Black-glazed dinner or dessert plate",
+      "artist": "Roger Eliot Fry",
+      "year": 1914,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RskElZF841xmMQVYxgoZbPBkqRT7kmSx7R1x8E_p1NY0gIj9_-Mn62WhKorJnsuSmLPu_T3OI=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/black-glazed-dinner-or-dessert-plate/TwFKtDqJ75gF_g"
+    },
+    {
+      "id": "courtauld-gallery-gac-278",
+      "title": "In Bed (Au Lit)",
+      "artist": "Henri de Toulouse-Lautre",
+      "year": 1896,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_S5XRR-8soFF-TZ-95t7qWFrxUqJ4b3YWba7yHuX18Nn4Y23dpUbBTWgQA4tJGRlap1oUqlEAQ=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/in-bed-au-lit/HQEFehMAfpjw5A"
+    },
+    {
+      "id": "courtauld-gallery-gac-279",
+      "title": "Bowl of engraved brass inlaid with silver",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QZ8VvrOg9tBzYqjuUYCGtIbr-XgvktTyy9HzZYwKl3KG8YYKGHgQya4PAnnbZ2xi-QIZSllw=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/bowl-of-engraved-brass-inlaid-with-silver/-QHyFbgQWH6WuA"
+    },
+    {
+      "id": "courtauld-gallery-gac-280",
+      "title": "View of Appledore, North Devon, from Instow Sands",
+      "artist": "Thomas Girtin",
+      "year": 1798,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RmwCUMglEpq3gqoQ_HdNzudE-CuHnNuj4v1znioxkor6HFCNhXC4Yy9MqapgZvmG_l89sS1do=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/view-of-appledore-north-devon-from-instow-sands/EgFoAxH3-hXseA",
+      "medium": "Brown"
+    },
+    {
+      "id": "courtauld-gallery-gac-281",
+      "title": "Diptych of Saint Louis crowned by Christ and the Crucifixion",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Q6gHL_FAJodmojNDfibnGUk3go2H9siPOdvj33IewwX0ePLHyxdyAWLAOC8H_LvpbA42fSvg=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/diptych-of-saint-louis-crowned-by-christ-and-the-crucifixion/9wHXzWGsUXHgCQ"
+    },
+    {
+      "id": "courtauld-gallery-gac-282",
+      "title": "Head of the Farnese Hercules/Studies of the head and profile of the Farnese Hercules, seen from a lower viewpoint Head of the Farnese Hercules (recto)",
+      "artist": "Peter Paul Rubens",
+      "year": 1608,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_S3aljGFOeCqL46i6sSYNV0ZQkW78Dz7QrgSZGKvJr38Fp7tfRa6Imi_ZtxnUa7sNRR9JbxEA=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/head-of-the-farnese-hercules-studies-of-the-head-and-profile-of-the-farnese-hercules-seen-from-a-lower-viewpoint/XgFfLNiv0vQtIg",
+      "medium": "Black chalk, heightened with white"
+    },
+    {
+      "id": "courtauld-gallery-gac-283",
+      "title": "Terrace in an Italian Garden",
+      "artist": "Hubert Robert",
+      "year": 1760,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SXpt6u-NE9Mf4ypF88G77rTEVuUG9hxzpBcNw2O7nNR3iXxMhfDtkBHQKRH5IASgLrFnE9n8Q4=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/terrace-in-an-italian-garden/VAF-9f84fh5BWg"
+    },
+    {
+      "id": "courtauld-gallery-gac-284",
+      "title": "The Sweep of a River with Fishermen and a Town in the Background",
+      "artist": "Fra Bartolommeo (Bartolommeo della Porta)",
+      "year": 1495,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SIv9n0zKHSWfttomXXKUWBiP8_3lnbEwq5qwaVYWO6OrCmkO8ymgQQ00UsPZF3UYFuzUNmD3M=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-sweep-of-a-river-with-fishermen-and-a-town-in-the-background/LgHb0gcHyI6EbQ"
+    },
+    {
+      "id": "courtauld-gallery-gac-285",
+      "title": "The Head of a Boy and of an Old Man",
+      "artist": "Giovanni Battista Piazzetta",
+      "year": 1739,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RdgFCGZx6yJlaWFa2SI3JfWv9avPZVRifwMieMcL5G6aoRs4xbJdZW3qwsDcEAygeW0HPRxtu8=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-head-of-a-boy-and-of-an-old-man/qgF4e03ujBFV_g",
+      "medium": "Black"
+    },
+    {
+      "id": "courtauld-gallery-gac-286",
+      "title": "A Seated Female Saint",
+      "artist": "Workshop of Hugo van der Goes",
+      "year": 1475,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TIBcVjM_WiiLONHGYt_9Lb6twQTOf6xpp7SGCPYNH-qJGafC6IZ7ftO4y8pWLh2FcB-t0KMA=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/a-seated-female-saint/ZwFJinpXDrRNfg"
+    },
+    {
+      "id": "courtauld-gallery-gac-287",
+      "title": "Candlestick base of engraved brass with traces of former silver inlay; later cover to base",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QzOCaB4yCngBjNWMsuRSeUIXn0CFU0-Ot3CdXvtbpCbaPIr3Zn529l31pDrtniUkxQ5YEYLVo=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/candlestick-base-of-engraved-brass-with-traces-of-former-silver-inlay-later-cover-to-base/4QFTg-EdYKPIUg"
+    },
+    {
+      "id": "courtauld-gallery-gac-288",
+      "title": "Holy Family with the Infant Saint John and Saint Elizabeth",
+      "artist": "Benvenuto Tisi da Garofalo",
+      "year": 1520,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TpMssTby5UVgVSco986rCzSuOjntFrDW_Wlc2F3LxDVpa0lGMYtKy11DPoxIHjgUw5eT1qZgw=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/holy-family-with-the-infant-saint-john-and-saint-elizabeth/0AHivGONQbyVQA",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-289",
+      "title": "Seated Woman (Femme assise)",
+      "artist": "Pablo Picasso",
+      "year": 1923,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QIsDZxiBQooSR8KQukloRRMbbeE_G_XMirZA1LloxUMgvv4BmLjeF1H3iVgBGuqwtljfnxRkY=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/seated-woman-femme-assise/twED99bfxjKtsw"
+    },
+    {
+      "id": "courtauld-gallery-gac-290",
+      "title": "Brown-glazed 'martaban' jar",
+      "artist": "South east Asia",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Rkl9-AYYOp6Ynq6sA_Z1BIJgw44D7zGTgXDm5sTtfbus7rAsmOt-RU7Kr6vwqMggRL6_yj2g=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/brown-glazed-martaban-jar/VQFvna6Zg4EUNw"
+    },
+    {
+      "id": "courtauld-gallery-gac-291",
+      "title": "The Nativity and the Adoration of the Magi, front cover of a set of writing tablets",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QADGguJcSy8CV1IowaiEkIxz176TYh7BsFxKxIKGR4Qx3ImRLL9LCzqPBwhIBSgaa6nDe1mzk=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-nativity-and-the-adoration-of-the-magi-front-cover-of-a-set-of-writing-tablets/lQGvwqi5gYq7xA"
+    },
+    {
+      "id": "courtauld-gallery-gac-292",
+      "title": "A pair of beakers from Bohemia",
+      "artist": "Unknown",
+      "year": 1720,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TSTxPyiKqXE__rHphmRiyV9L3TMGJcG_oUr8Em8oz2xioeQ9O8h5PYPxi18Bn9TLZiiLii28BK=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/a-pair-of-beakers-from-bohemia/mwFJGu_Tw6ZhuA"
+    },
+    {
+      "id": "courtauld-gallery-gac-293",
+      "title": "Blue-grey glazed covered bowl and cover",
+      "artist": "Roger Eliot Fry and Omega Workshops",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RTm6G2Su5l0_fh5AbVt6B7ToxR7EusFuq-v1KCdAEPTgawBhwC7CGrbAHT9A1C9ErQKYQ_9g=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/blue-grey-glazed-covered-bowl-and-cover/BwE3CC-Dkl3WZA"
+    },
+    {
+      "id": "courtauld-gallery-gac-294",
+      "title": "Portrait of Jan de Mol",
+      "artist": "Master of the Guild of Saint George",
+      "year": 1498,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RJnpf45_bzRX-TkRzUQoI0WvVaUeU938GS1XvKEhiGHhHCsccdNUwsvtK9ofOvIN_xveF_2_0=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/portrait-of-jan-de-mol/KgF3InfbOTohqQ",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "courtauld-gallery-gac-295",
+      "title": "Hemispherical half of incense burner of engraved brass inlaid with silver and pierced",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_ToWXgqxyymQyVuSIox4OOyseTPq0MDdrmxBo_qrIATbcyQ8yHyVfn73VgF6cx30KWYZvrCLVXc=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/hemispherical-half-of-incense-burner-of-engraved-brass-inlaid-with-silver-and-pierced/PQF_nWi6GRAKUw"
+    },
+    {
+      "id": "courtauld-gallery-gac-296",
+      "title": "Triptych with the Virgin and Child",
+      "artist": "Unknown",
+      "year": 1325,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TBH9uzvyYtc0cxd8DReeMazdW3DqYKZi59cVDQLh4qBRgdiXjbjVzwxjqpCFQV85CP95dyDwY=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/triptych-with-the-virgin-and-child/kQEh_PqD5ZYUSw"
+    },
+    {
+      "id": "courtauld-gallery-gac-297",
+      "title": "Blue-glazed covered tureen with handle in the form of a bison or Chinese lion",
+      "artist": "Roger Eliot Fry and Omega Workshops",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_R4PHs8rcMbMTkXReGXlWAexwnZqQIZrKTf23X5LXeSp0yqmMj55xIuPebIaLoW2aHWDHOOuPI=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/blue-glazed-covered-tureen-with-handle-in-the-form-of-a-bison-or-chinese-lion/EQEnM15tNMO7eg"
+    },
+    {
+      "id": "courtauld-gallery-gac-299",
+      "title": "Samuel Courtauld: A Vision for Impressionism",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://img.youtube.com/vi/DphbNLPZ6qI/maxresdefault.jpg",
+      "youtubeId": "DphbNLPZ6qI",
+      "mediaType": "video",
+      "sourceUrl": "https://artsandculture.google.com/asset/samuel-courtauld-a-vision-for-impressionism/jgFnz0xXKXJHFw"
+    },
+    {
+      "id": "courtauld-gallery-gac-300",
+      "title": "Shallow footed dish",
+      "artist": "Unknown",
+      "year": 1475,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_R6YT1DyZiQaZnJ2G12C8kf-eeEaNzab7JzEwVcVCSIeEJvv1Wn8BZ6A2neYN6khE7BIOfYm70=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/shallow-footed-dish/TQESm6bUZK5Uog"
+    },
+    {
+      "id": "courtauld-gallery-gac-301",
+      "title": "Profile self-portrait in a cap",
+      "artist": "Jonathan Richardson the elder",
+      "year": 1730,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QUxS1WdRk4GxwpwvSxxWDyxtPc8txs-Ooqg0QDEzhJP85hm8nxpwV7E7g7Y7LXczurgYjdG-M=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/profile-self-portrait-in-a-cap/SwFmnaxO_grSzw",
+      "medium": "Black and white"
+    },
+    {
+      "id": "courtauld-gallery-gac-302",
+      "title": "Discover Van Gogh's self-portraits with Dr Karen Serres at The Courtauld Gallery",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://img.youtube.com/vi/zgBWuLeukM4/maxresdefault.jpg",
+      "youtubeId": "zgBWuLeukM4",
+      "mediaType": "video",
+      "sourceUrl": "https://artsandculture.google.com/asset/discover-van-gogh-s-self-portraits-with-dr-karen-serres-at-the-courtauld-gallery/pQGvRHx9PK-Etg"
+    },
+    {
+      "id": "courtauld-gallery-gac-303",
+      "title": "Pot on three feet (incense burner)",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_T2qsHRwBwVc4je9UWoES6xex2FZLyNBaRroXdGbIeO6iksbbyuScpNp7JHvO1fohBmGvoIA_V0=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/pot-on-three-feet-incense-burner/BgEu_6JgTI0CQw"
+    },
+    {
+      "id": "courtauld-gallery-gac-304",
+      "title": "In Detail: 'Still Life with Plaster Cupid' by Paul Cézanne",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://img.youtube.com/vi/8lHb8qXP-_U/maxresdefault.jpg",
+      "youtubeId": "8lHb8qXP-_U",
+      "mediaType": "video",
+      "sourceUrl": "https://artsandculture.google.com/asset/in-detail-still-life-with-plaster-cupid-by-paul-c%C3%A9zanne/wAGdNqJYJLLGFA"
+    },
+    {
+      "id": "courtauld-gallery-gac-305",
+      "title": "Scenes of romance on a small box",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Sud-6YBX30wKxS2RQybMvDy7W_eSvSppisOohxDKQN-yrtNDgD5aoOImOYaDqLSVihTUyxijE=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/scenes-of-romance-on-a-small-box/RAEaj7dD4hTxxQ"
+    },
+    {
+      "id": "courtauld-gallery-gac-308",
+      "title": "In Detail: 'Young Woman Powdering Herself' by Georges Seurat",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://img.youtube.com/vi/vwv--QpspmQ/maxresdefault.jpg",
+      "youtubeId": "vwv--QpspmQ",
+      "mediaType": "video",
+      "sourceUrl": "https://artsandculture.google.com/asset/in-detail-young-woman-powdering-herself-by-georges-seurat/-wEG-GAopVPCDw"
+    },
+    {
+      "id": "courtauld-gallery-gac-309",
+      "title": "In Detail: ‘The Trinity with Saints’ by Sandro Botticelli",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://img.youtube.com/vi/3r76g5iZAgQ/maxresdefault.jpg",
+      "youtubeId": "3r76g5iZAgQ",
+      "mediaType": "video",
+      "sourceUrl": "https://artsandculture.google.com/asset/in-detail-%E2%80%98the-trinity-with-saints%E2%80%99-by-sandro-botticelli/tgEq0omJ2RVKmw"
+    },
+    {
+      "id": "courtauld-gallery-gac-310",
+      "title": "In Detail: ‘Landscape with the Flight into Egypt’ by Pieter Bruegel the Elder",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://img.youtube.com/vi/2-o19kD2gcE/maxresdefault.jpg",
+      "youtubeId": "2-o19kD2gcE",
+      "mediaType": "video",
+      "sourceUrl": "https://artsandculture.google.com/asset/in-detail-%E2%80%98landscape-with-the-flight-into-egypt%E2%80%99-by-pieter-bruegel-the-elder/eAETkmobM8hXiA"
+    },
+    {
+      "id": "courtauld-gallery-gac-312",
+      "title": "Bowl with blue slip beaded rim",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SfcAexZdQu0_PkJt4z4LgAkFsdUEJk4jJSJm_qyb8Gble0f679o5Z6Rm2ouA6lAHFQ0r4l30U=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/bowl-with-blue-slip-beaded-rim/KgFGu1i_Lwms5w"
+    },
+    {
+      "id": "courtauld-gallery-gac-313",
+      "title": "The Courtauld appears on the iconic Piccadilly Lights",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://img.youtube.com/vi/y1WWWn1vQ94/maxresdefault.jpg",
+      "youtubeId": "y1WWWn1vQ94",
+      "mediaType": "video",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-courtauld-appears-on-the-iconic-piccadilly-lights/hgHeUu26Yp05kA"
+    },
+    {
+      "id": "courtauld-gallery-gac-314",
+      "title": "Walrus ivory figures mounted on a medieval-style box",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RLEnmZDt0afZJDCGo-irF0furIv-ViLW6DUvnuwWVQK5LysdunSLRx07O8TlwJiJcYmXnSJQ=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/walrus-ivory-figures-mounted-on-a-medieval-style-box/ygEIQXuBlKoOQA"
+    },
+    {
+      "id": "courtauld-gallery-gac-315",
+      "title": "Landscape with Trees and Buildings/ (untitled) Landscape with Trees and Buildings",
+      "artist": "Claude Lorrain (Claude Gellée)",
+      "year": 1640,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QK4YCNstrCSJ0txTb7dCjVisqFhicksbSl8lw__sxJ-ahPztiYWG0T8aqJr2MFkUVXh5rQMg=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/landscape-with-trees-and-buildings-untitled/LgFrRpLofMlYuQ"
+    },
+    {
+      "id": "courtauld-gallery-gac-316",
+      "title": "Turquoise vase",
+      "artist": "Roger Eliot Fry and Omega Workshops",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Sn7CPV3Of5PFJNV8yp8n2r8K0qnfPJmCNV9KVQIcHr-7NxZVgkfhLpVK19c6DDJv-wGWtK=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/turquoise-vase/7wFnTmVhn3egsA"
+    },
+    {
+      "id": "courtauld-gallery-gac-317",
+      "title": "Life at The Courtauld. Students in a seminar at The Courtauld",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_StPB2xswvWRCLI23W7uTKfRjd8ErD098S7zD7stVWRnouNK2zt7Sd7GBBWkHsMrG6V8yb8gA=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/life-at-the-courtauld/dgFE2KAfLznyGw"
+    },
+    {
+      "id": "courtauld-gallery-gac-298",
+      "title": "In Focus: Lucas Cranach the Elder's Adam and Eve",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://img.youtube.com/vi/9-rdl-gDVxw/maxresdefault.jpg",
+      "youtubeId": "9-rdl-gDVxw",
+      "mediaType": "video",
+      "sourceUrl": "https://artsandculture.google.com/asset/in-focus-lucas-cranach-the-elder-s-adam-and-eve/jAGd_vHZ6RJwXw"
+    },
+    {
+      "id": "courtauld-gallery-gac-307",
+      "title": "In Detail: 'The Dream' by Michelangelo Buonarroti",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://img.youtube.com/vi/3VdnxHnUTkg/maxresdefault.jpg",
+      "youtubeId": "3VdnxHnUTkg",
+      "mediaType": "video",
+      "sourceUrl": "https://artsandculture.google.com/asset/in-detail-the-dream-by-michelangelo-buonarroti/cwGcSuFdI9YAUQ"
+    },
+    {
+      "id": "courtauld-gallery-gac-306",
+      "title": "In Detail: ‘La Loge’ by Pierre Auguste Renoir",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://img.youtube.com/vi/860FRThc-9U/maxresdefault.jpg",
+      "youtubeId": "860FRThc-9U",
+      "mediaType": "video",
+      "sourceUrl": "https://artsandculture.google.com/asset/in-detail-%E2%80%98la-loge%E2%80%99-by-pierre-auguste-renoir/xQGMgAEt9nEXoQ"
+    },
+    {
+      "id": "courtauld-gallery-gac-311",
+      "title": "In Detail: 'Virgin and child’ by Parmigianino",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SWvu4z22McaPWZe0lcIqTsh76fz7hOv34hWop-_nUEyWFNINxDh_T4yVI3g0ldvS77sCGhzQ=w800",
+      "youtubeId": "gj4nsRWLRnw",
+      "mediaType": "video",
+      "sourceUrl": "https://artsandculture.google.com/asset/in-detail-virgin-and-child%E2%80%99-by-parmigianino/NgEG7F6o9I6CvQ"
+    }
+  ]
+}

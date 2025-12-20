@@ -31,10 +31,10 @@ export default function GlobeWithCities({ focusLatLng = null, autorotate = false
   const collapseFinalizedRef = useRef<boolean>(false);
 
   useEffect(() => {
-  const buildTag = 'GlobeWithCities-no-external-2025-09-08-01';
-  // Clear identifier to verify correct build is loaded in the browser
-  console.log(`[GlobeWithCities] build tag: ${buildTag}`);
-  try { (window as any).__GlobeWithCitiesBuildTag = buildTag; } catch {}
+    const buildTag = 'GlobeWithCities-no-external-2025-09-08-01';
+    // Clear identifier to verify correct build is loaded in the browser
+    console.log(`[GlobeWithCities] build tag: ${buildTag}`);
+    try { (window as any).__GlobeWithCitiesBuildTag = buildTag; } catch { }
     console.log(`[GlobeWithCities] exhibitions prop received: ${exhibitions.length} exhibitions`);
     console.log('[GlobeWithCities] First few exhibitions:', exhibitions.slice(0, 3).map(ex => ({ name: ex.name, lat: ex.latitude, lng: ex.longitude })));
 
@@ -52,48 +52,49 @@ export default function GlobeWithCities({ focusLatLng = null, autorotate = false
       console.log(`  - ${ex.name}: lat=${ex.latitude}, lng=${ex.longitude}`);
     });
 
-  const container = containerRef.current;
+    const container = containerRef.current;
     if (!container) return;
 
     // Setup
-  // Interaction sensitivity knobs (tweak to taste)
-  const WHEEL_ZOOM_SENSITIVITY = 0.006; // higher = faster zoom
-  const ROTATE_TO_CURSOR_ALPHA = 0.12; // softer re-centering while zooming (0..1)
-  const ROTATE_MAX_STEP_LON = 4; // deg per event
-  const ROTATE_MAX_STEP_LAT = 2; // deg per event
-  const DRAG_PX_SENS = 0.24; // deg per pixel for drag
-  const PIN_MOVE_DURATION = 260; // ms
-  const LABEL_SLIDE_DURATION = 220; // ms
-  const COLLAPSE_STAGGER = 40; // ms per step (reverse order)
-  let width = container.clientWidth || window.innerWidth;
-  let height = container.clientHeight || window.innerHeight;
-  let baseRadius = Math.min(width, height) * 0.38; // matches the screenshot scale
-  let zoomK = 1;
+    // Interaction sensitivity knobs (tweak to taste)
+    const WHEEL_ZOOM_SENSITIVITY = 0.006; // higher = faster zoom
+    const ROTATE_TO_CURSOR_ALPHA = 0.12; // softer re-centering while zooming (0..1)
+    const ROTATE_MAX_STEP_LON = 4; // deg per event
+    const ROTATE_MAX_STEP_LAT = 2; // deg per event
+    const DRAG_PX_SENS = 0.24; // deg per pixel for drag
+    const PIN_MOVE_DURATION = 180; // ms (faster cluster animation)
+    const LABEL_SLIDE_DURATION = 150; // ms (faster label slide)
+    const COLLAPSE_STAGGER = 25; // ms per step (reverse order)
+    let width = container.clientWidth || window.innerWidth;
+    let height = container.clientHeight || window.innerHeight;
+    let baseRadius = Math.min(width, height) * 0.38; // matches the screenshot scale
+    let zoomK = 1;
 
     // Clear container
     container.innerHTML = '';
 
-  const svg = d3
+    const svg = d3
       .select(container)
       .append('svg')
       .attr('width', width)
       .attr('height', height)
       .style('display', 'block')
-      .style('background', '#fff');
+      .style('background', '#fff')
+      .style('touch-action', 'none');
 
-  // Viewport group (kept simple; no transform for center-anchored zoom)
-  const gViewport = svg.append('g').attr('class', 'viewport');
-  // 빈 공간 클릭 시 펼친 클러스터를 역순 애니메이션으로 닫기
-  svg.on('click', () => {
-    const expanded = Array.from(expandedClustersRef.current);
-    if (!expanded.length) return;
-    const key = expanded[0];
-    // 시작: 닫힘 애니메이션 상태로 전환
-    collapseAnimKeyRef.current = key;
-    collapseFinalizedRef.current = false;
-    // 렌더하여 각 핀이 중앙으로 수렴하도록 트리거
-    renderPins();
-  });
+    // Viewport group (kept simple; no transform for center-anchored zoom)
+    const gViewport = svg.append('g').attr('class', 'viewport');
+    // 빈 공간 클릭 시 펼친 클러스터를 역순 애니메이션으로 닫기
+    svg.on('click', () => {
+      const expanded = Array.from(expandedClustersRef.current);
+      if (!expanded.length) return;
+      const key = expanded[0];
+      // 시작: 닫힘 애니메이션 상태로 전환
+      collapseAnimKeyRef.current = key;
+      collapseFinalizedRef.current = false;
+      // 렌더하여 각 핀이 중앙으로 수렴하도록 트리거
+      renderPins();
+    });
 
     const projection = d3.geoOrthographic()
       .translate([width / 2, height / 2])
@@ -101,12 +102,12 @@ export default function GlobeWithCities({ focusLatLng = null, autorotate = false
       // larger precision value = fewer segments (faster)
       .precision(0.9);
 
-  const path = d3.geoPath(projection);
+    const path = d3.geoPath(projection);
 
     // Initialize last rotation after projection is created
     lastRotateRef.current = projection.rotate() as [number, number, number];
 
-  // (removed versor helpers; reverted to simpler drag)
+    // (removed versor helpers; reverted to simpler drag)
 
     const unwrapAngle = (prev: number, next: number) => prev + (((next - prev + 540) % 360) - 180);
     const setRotationContinuous = (next: [number, number, number]) => {
@@ -146,35 +147,35 @@ export default function GlobeWithCities({ focusLatLng = null, autorotate = false
     // Graticule for the outer circle (sphere outline)
     const sphere: d3.GeoSphere = { type: 'Sphere' } as any;
 
-  const gSphere = gViewport.append('g');
-  gSphere.append('path')
+    const gSphere = gViewport.append('g');
+    gSphere.append('path')
       .datum(sphere)
       .attr('d', path as any)
       .style('fill', 'none')
       .style('stroke', stroke)
       .style('stroke-width', String(strokeWidth))
-  .style('vector-effect', 'non-scaling-stroke')
+      .style('vector-effect', 'non-scaling-stroke')
       .style('stroke-linejoin', 'round')
-    .style('stroke-linecap', 'round')
-    .style('pointer-events', 'none');
-  const gCountries = gViewport.append('g').style('pointer-events', 'none');
-  const gAdmin = gViewport.append('g').style('display', 'none'); // admin (states/provinces) boundaries
-  const gCities = gViewport.append('g').style('display', 'none'); // city boundaries (from local geo if available)
-  const gUrban = gViewport.append('g').style('display', 'none'); // urban fallback (rings), shown only at high zoom
-  const gUrbanAreas = gViewport.append('g').style('display', 'block'); // global urban areas polygons (approx city boundaries) - ALWAYS VISIBLE
-  // Higher-detail atlas layers (TopoJSON)
-  const gAtlasCountries = gViewport.append('g').style('display', 'none').style('pointer-events', 'none');
-  const gAtlasStates = gViewport.append('g').style('display', 'none').style('pointer-events', 'none');
-  let hasAdminGeo = false;
-  let hasCityGeo = false;
-  let hasAtlasCountries = false;
-  let hasAtlasStates = false;
-  let hasUrbanAreas = false;
-  let urbanAreasLoadAttempted = false;
+      .style('stroke-linecap', 'round')
+      .style('pointer-events', 'none');
+    const gCountries = gViewport.append('g').style('pointer-events', 'none');
+    const gAdmin = gViewport.append('g').style('display', 'none'); // admin (states/provinces) boundaries
+    const gCities = gViewport.append('g').style('display', 'none'); // city boundaries (from local geo if available)
+    const gUrban = gViewport.append('g').style('display', 'none'); // urban fallback (rings), shown only at high zoom
+    const gUrbanAreas = gViewport.append('g').style('display', 'block'); // global urban areas polygons (approx city boundaries) - ALWAYS VISIBLE
+    // Higher-detail atlas layers (TopoJSON)
+    const gAtlasCountries = gViewport.append('g').style('display', 'none').style('pointer-events', 'none');
+    const gAtlasStates = gViewport.append('g').style('display', 'none').style('pointer-events', 'none');
+    let hasAdminGeo = false;
+    let hasCityGeo = false;
+    let hasAtlasCountries = false;
+    let hasAtlasStates = false;
+    let hasUrbanAreas = false;
+    let urbanAreasLoadAttempted = false;
 
-  // Below this zoom, city-level markers are shown; separate threshold not used anymore
-  // 핀 그룹을 가장 먼저 생성하여 다른 요소들 위에 표시되도록 함
-  const gPins = gViewport.append('g').style('pointer-events', 'all');
+    // Below this zoom, city-level markers are shown; separate threshold not used anymore
+    // 핀 그룹을 가장 먼저 생성하여 다른 요소들 위에 표시되도록 함
+    const gPins = gViewport.append('g').style('pointer-events', 'all');
 
     // Centralized layer visibility - 도시 경계는 항상 표시
     const updateLayerVisibility = () => {
@@ -187,8 +188,8 @@ export default function GlobeWithCities({ focusLatLng = null, autorotate = false
         gAtlasCountries.style('display', 'none');
         gCountries.style('display', 'block');
       }
-  // Show US states overlay only if dataset is present
-  gAtlasStates.style('display', 'none'); // Disabled US states to avoid uneven detail
+      // Show US states overlay only if dataset is present
+      gAtlasStates.style('display', 'none'); // Disabled US states to avoid uneven detail
       gAdmin.style('display', hasAdminGeo ? 'block' : 'none');
 
       // 도시 경계는 항상 표시 (우선순위: urban areas > local cities > fallback rings)
@@ -221,25 +222,25 @@ export default function GlobeWithCities({ focusLatLng = null, autorotate = false
         }
         return origFetch(input as any, init);
       };
-    } catch {}
+    } catch { }
 
 
-  // Load countries from local static GeoJSON to draw borders
-  // Helper: try multiple URLs until one succeeds (kept for potential future use)
-  // const fetchJsonWithFallback = async (urls: string[]) => {
-  //   for (const url of urls) {
-  //     try {
-  //       const res = await fetch(url);
-  //       if (!res.ok) continue;
-  //       return await res.json();
-  //     } catch {
-  //       // try next
-  //     }
-  //   }
-  //   throw new Error(`All sources failed: ${urls.join(' | ')}`);
-  // };
+    // Load countries from local static GeoJSON to draw borders
+    // Helper: try multiple URLs until one succeeds (kept for potential future use)
+    // const fetchJsonWithFallback = async (urls: string[]) => {
+    //   for (const url of urls) {
+    //     try {
+    //       const res = await fetch(url);
+    //       if (!res.ok) continue;
+    //       return await res.json();
+    //     } catch {
+    //       // try next
+    //     }
+    //   }
+    //   throw new Error(`All sources failed: ${urls.join(' | ')}`);
+    // };
 
-  (async () => {
+    (async () => {
       try {
         console.log('[GlobeWithCities] loading local /geo/countries.geo.json');
         const res = await fetch('/geo/countries.geo.json');
@@ -263,7 +264,7 @@ export default function GlobeWithCities({ focusLatLng = null, autorotate = false
       }
     })();
 
-  // Lazy loaders: only fetch when threshold is crossed
+    // Lazy loaders: only fetch when threshold is crossed
     const pickObject = (objects: any, regex: RegExp) => {
       const keys = Object.keys(objects || {});
       return keys.find(k => regex.test(k)) || keys[0];
@@ -281,7 +282,7 @@ export default function GlobeWithCities({ focusLatLng = null, autorotate = false
             if (!res.ok) continue;
             json = await res.json();
             if (json) break;
-          } catch {}
+          } catch { }
         }
         if (!json) return;
         const key = pickObject(json.objects, /countries|nation|land/i);
@@ -299,9 +300,9 @@ export default function GlobeWithCities({ focusLatLng = null, autorotate = false
           .style('stroke-linejoin', 'round')
           .style('stroke-linecap', 'round');
         hasAtlasCountries = true;
-    // refresh visibility and paths
-    updateLayerVisibility();
-    svg.selectAll('path').attr('d', path as any);
+        // refresh visibility and paths
+        updateLayerVisibility();
+        svg.selectAll('path').attr('d', path as any);
       } catch {
         // ignore
       }
@@ -326,7 +327,7 @@ export default function GlobeWithCities({ focusLatLng = null, autorotate = false
             } else if (geo?.type === 'Feature') {
               features.push(geo);
             }
-          } catch {}
+          } catch { }
         }
         if (!features.length) return;
         gAtlasStates
@@ -368,7 +369,7 @@ export default function GlobeWithCities({ focusLatLng = null, autorotate = false
               console.log('[GlobeWithCities] admin loaded from', url);
               break;
             }
-          } catch {}
+          } catch { }
         }
         if (!data) return;
         let features: any[] = [];
@@ -394,8 +395,8 @@ export default function GlobeWithCities({ focusLatLng = null, autorotate = false
           .style('stroke-linejoin', 'round')
           .style('stroke-linecap', 'round');
         hasAdminGeo = true;
-    updateLayerVisibility();
-    svg.selectAll('path').attr('d', path as any);
+        updateLayerVisibility();
+        svg.selectAll('path').attr('d', path as any);
       } catch {
         // ignore
       }
@@ -406,7 +407,7 @@ export default function GlobeWithCities({ focusLatLng = null, autorotate = false
       try {
         console.log('[GlobeWithCities] trying local /geo/cities.geo.json');
         const res = await fetch('/geo/cities.geo.json', { cache: 'no-store' });
-  if (!res.ok) return; // silent if missing
+        if (!res.ok) return; // silent if missing
         const ct = (res.headers.get('content-type') || '').toLowerCase();
         if (!/json/.test(ct)) return;
         const geo = await res.json();
@@ -423,8 +424,8 @@ export default function GlobeWithCities({ focusLatLng = null, autorotate = false
           .style('stroke-linejoin', 'round')
           .style('stroke-linecap', 'round');
         hasCityGeo = true;
-    updateLayerVisibility();
-    svg.selectAll('path').attr('d', path as any);
+        updateLayerVisibility();
+        svg.selectAll('path').attr('d', path as any);
       } catch {
         // ignore
       }
@@ -551,37 +552,41 @@ export default function GlobeWithCities({ focusLatLng = null, autorotate = false
           'canada', 'japan', 'france', 'germany', 'italy', 'spain', 'china', 'australia', 'ireland'
         ]);
 
-  // 뒤쪽에서부터 국가/지역 토큰 제거
-  const tokens: string[] = [...raw];
+        // 뒤쪽에서부터 국가/지역 토큰 제거
+        const tokens: string[] = [...raw];
         while (tokens.length && removeTail.has(tokens[tokens.length - 1])) {
           tokens.pop();
         }
         if (!tokens.length) return '';
 
-  // 1) 런던 케이스: 토큰 중에 'london'이 있으면 'london'으로 강제
-  const hasLondon = tokens.some(t => /\blondon\b/.test(t));
-  if (hasLondon) return 'london';
+        // 1) 런던 케이스: 토큰 중에 'london'이 있으면 'london'으로 강제
+        const hasLondon = tokens.some(t => /\blondon\b/.test(t));
+        if (hasLondon) return 'london';
 
-  // 2) 서울/기타 몇몇 케이스 보정 (선택적; 이미 서울은 잘 동작하지만 안전망)
-  const seoulIdx = tokens.findIndex(t => /\bseoul\b|서울|서울특별시/.test(t));
-  if (seoulIdx >= 0) return 'seoul';
+        // 2) 서울/기타 몇몇 케이스 보정 (선택적; 이미 서울은 잘 동작하지만 안전망)
+        const seoulIdx = tokens.findIndex(t => /\bseoul\b|서울|서울특별시/.test(t));
+        if (seoulIdx >= 0) return 'seoul';
 
-  // 3) 숫자(우편번호 등) 포함 토큰은 도시 후보에서 제외하고, 남은 것 중 마지막을 사용
-  const noDigits = tokens.filter(t => !/[0-9]/.test(t));
-  let candidate = (noDigits.length ? noDigits : tokens)[(noDigits.length ? noDigits : tokens).length - 1];
+        // 3) 숫자(우편번호 등) 포함 토큰은 도시 후보에서 제외하고, 남은 것 중 마지막을 사용
+        const noDigits = tokens.filter(t => !/[0-9]/.test(t));
+        let candidate = (noDigits.length ? noDigits : tokens)[(noDigits.length ? noDigits : tokens).length - 1];
 
-  // 4) 접두어 제거 및 우편번호/코드 꼬리 제거
-  candidate = candidate.replace(/^(city of|greater|metropolitan|metropolitan city)\s+/, '');
-  candidate = candidate.replace(/\s+\d.*$/, ''); // 뒤쪽 숫자 시작 부분 제거 (예: "london se1 9tg")
-  candidate = candidate.replace(/\s+/g, ' ').trim();
-  return candidate;
+        // 4) 접두어 제거 및 우편번호/코드 꼬리 제거
+        candidate = candidate.replace(/^(city of|greater|metropolitan|metropolitan city)\s+/, '');
+        candidate = candidate.replace(/\s+\d.*$/, ''); // 뒤쪽 숫자 시작 부분 제거 (예: "london se1 9tg")
+        candidate = candidate.replace(/\s+/g, ' ').trim();
+        return candidate;
       };
 
       const clusters: { [key: string]: any[] } = {};
       for (const d of pinData) {
-        const cityKey = normalizeCity((d as any).city || (d as any).location);
+        // region 필드를 우선 사용, 없으면 기존 location 파싱
+        const regionKey = (d as any).region;
+        const cityKey = regionKey || normalizeCity((d as any).city || (d as any).location);
         let key: string;
-        if (cityKey) {
+        if (regionKey) {
+          key = `region:${regionKey}`;
+        } else if (cityKey) {
           key = `city:${cityKey}`;
         } else {
           const gridLon = roundToGrid(d.longitude);
@@ -593,24 +598,24 @@ export default function GlobeWithCities({ focusLatLng = null, autorotate = false
       }
 
       // 노드 생성
-  const nodes: any[] = [];
+      const nodes: any[] = [];
 
-  for (const [key, items] of Object.entries(clusters)) {
+      for (const [key, items] of Object.entries(clusters)) {
         console.log(`클러스터 ${key}: ${items.length}개 아이템`);
 
-    if (items.length === 1) {
+        if (items.length === 1) {
           // 단일 아이템은 개별 핀으로
           const d = items[0];
           nodes.push({
             ...d,
-      px: d.p ? d.p[0] : 0,
-      py: d.p ? d.p[1] : 0,
-      _projected: !!d.p,
+            px: d.p ? d.p[0] : 0,
+            py: d.p ? d.p[1] : 0,
+            _projected: !!d.p,
             _labelVisible: true,
             _cluster: false
           });
           console.log(`  → 단일 핀: ${d.name}`);
-  } else if (expandedClustersRef.current.has(key)) {
+        } else if (expandedClustersRef.current.has(key)) {
           // 펼쳐진 클러스터: 개별 핀들을 수직으로 정렬하여 표시
           console.log(`  → 펼쳐진 클러스터(수직 배치): ${items.length}개 핀으로 표시`);
           const centerLon = d3.mean(items, (d: any) => d.longitude) as number;
@@ -651,10 +656,21 @@ export default function GlobeWithCities({ focusLatLng = null, autorotate = false
           const centerLon = d3.mean(items, (d: any) => d.longitude) as number;
           const centerLat = d3.mean(items, (d: any) => d.latitude) as number;
           const center = projection([centerLon, centerLat]);
+          // key에서 지역 이름 추출 (region:West London -> West London, city:london -> London)
+          let regionName = key;
+          if (key.startsWith('region:')) {
+            regionName = key.replace('region:', '');
+          } else if (key.startsWith('city:')) {
+            regionName = key.replace('city:', '');
+            regionName = regionName.charAt(0).toUpperCase() + regionName.slice(1);
+          } else if (key.startsWith('grid:')) {
+            regionName = '';
+          }
           nodes.push({
             _cluster: true,
             key: key,
             count: items.length,
+            regionName: regionName,
             longitude: centerLon,
             latitude: centerLat,
             px: center ? center[0] : 0,
@@ -668,7 +684,7 @@ export default function GlobeWithCities({ focusLatLng = null, autorotate = false
 
       console.log(`렌더링할 핀 수: ${nodes.length}`);
       console.log('클러스터 정보:', nodes.filter(n => n._cluster).map(n => `${n.key}: ${n.count}개`));
-      
+
       // 클러스터가 제대로 생성되었는지 확인
       const clusterNodes = nodes.filter(n => n._cluster);
       console.log(`총 클러스터 수: ${clusterNodes.length}`);
@@ -676,10 +692,10 @@ export default function GlobeWithCities({ focusLatLng = null, autorotate = false
         console.log('⚠️ 클러스터가 생성되지 않았습니다!');
         console.log('전체 노드:', nodes.map(n => ({ name: n.name, cluster: n._cluster, count: n.count })));
       }
-      
+
       // 영국 박물관 클러스터 확인
-      const ukClusters = nodes.filter(n => n._cluster && 
-        n.latitude > 50 && n.latitude < 60 && 
+      const ukClusters = nodes.filter(n => n._cluster &&
+        n.latitude > 50 && n.latitude < 60 &&
         n.longitude > -5 && n.longitude < 2
       );
       console.log(`영국 클러스터 수: ${ukClusters.length}`);
@@ -687,7 +703,7 @@ export default function GlobeWithCities({ focusLatLng = null, autorotate = false
         console.log(`  영국 클러스터 ${cluster.key}: ${cluster.count}개 박물관`);
         console.log(`    위치: ${cluster.latitude.toFixed(3)}, ${cluster.longitude.toFixed(3)}`);
       });
-      
+
       // Tate Modern 확인
       const tateModern = nodes.find(n => n.name === 'Tate Modern' || n.id === 'tate-modern');
       if (tateModern) {
@@ -699,58 +715,80 @@ export default function GlobeWithCities({ focusLatLng = null, autorotate = false
       console.log('=== 핀 렌더링 시작 ===');
       const sel = gPins.selectAll('g.pin').data(nodes, (d: any) => (d._cluster ? d.key : d.id));
       console.log(`선택된 요소 수: ${sel.size()}`);
-      
+
       sel.exit().remove();
-  const enter = sel.enter().append('g').attr('class', 'pin').style('cursor', 'pointer');
+      const enter = sel.enter().append('g').attr('class', 'pin').style('cursor', 'pointer');
       console.log(`새로 생성된 요소 수: ${enter.size()}`);
 
-      // 클러스터 버튼 렌더링 (검정 네모 + 흰색 숫자)
+      // 클러스터 버튼 렌더링 (기본: 숫자만, 호버: 지역명 + 숫자로 확장)
       const enterCluster = enter.filter((d: any) => d._cluster);
       console.log(`클러스터 버튼 생성 수: ${enterCluster.size()}`);
 
-      // 검정 네모(둥근 모서리) 배경 (크기 더 소형화)
+      // 기본 크기 (숫자만 표시) 계산 함수
+      const getCollapsedWidth = (d: any) => {
+        const countText = String(d.count);
+        return Math.max(28, countText.length * 8 + 16);
+      };
+      
+      // 확장 크기 (지역명 + 숫자) 계산 함수
+      const getExpandedWidth = (d: any) => {
+        const text = d.regionName ? `${d.regionName} ${d.count}` : String(d.count);
+        return Math.max(40, text.length * 7 + 16);
+      };
+
+      // Pill 모양 배경 (기본: 숫자만)
       enterCluster.append('rect')
         .attr('class', 'cluster-bg')
-        .attr('x', (d: any) => {
-          const size = Math.max(26, 18 + Math.log2(d.count) * 5);
-          return -size / 2;
-        })
-        .attr('y', (d: any) => {
-          const size = Math.max(26, 18 + Math.log2(d.count) * 5);
-          return -size / 2;
-        })
-        .attr('width', (d: any) => Math.max(26, 18 + Math.log2(d.count) * 5))
-        .attr('height', (d: any) => Math.max(26, 18 + Math.log2(d.count) * 5))
-        .attr('rx', 10)
-        .attr('ry', 10)
+        .attr('x', (d: any) => -getCollapsedWidth(d) / 2)
+        .attr('y', -12)
+        .attr('width', (d: any) => getCollapsedWidth(d))
+        .attr('height', 24)
+        .attr('rx', 12)
+        .attr('ry', 12)
         .attr('fill', '#111827')
         .attr('stroke', '#E5E7EB')
         .attr('stroke-width', 1.5)
         .style('filter', 'drop-shadow(0 3px 6px rgba(0,0,0,0.45))')
         .style('cursor', 'pointer');
 
-      // 클러스터 개수 텍스트 (흰색, 굵게)
+      // 클러스터 텍스트 - 숫자 (항상 표시, 위쪽)
       enterCluster.append('text')
         .attr('class', 'cluster-count')
         .attr('text-anchor', 'middle')
-        .attr('dy', '0.35em')
-  .attr('font-size', (d: any) => Math.max(11, 10 + Math.log2(d.count) * 1.4))
+        .attr('dy', '-0.15em')
+        .attr('font-size', 13)
         .attr('font-weight', 'bold')
         .attr('fill', '#ffffff')
         .style('text-shadow', '1px 1px 2px rgba(0,0,0,0.6)')
         .style('cursor', 'pointer')
         .text((d: any) => d.count);
 
-      // 클릭 히트영역 확장 (투명 원)
-      enterCluster.append('circle')
+      // 클러스터 텍스트 - 지역명 (호버 시에만 표시, 아래쪽)
+      enterCluster.append('text')
+        .attr('class', 'cluster-region')
+        .attr('text-anchor', 'middle')
+        .attr('dy', '0.95em')
+        .attr('font-size', 8)
+        .attr('font-weight', 'bold')
+        .attr('fill', '#ffffff')
+        .style('text-shadow', '1px 1px 2px rgba(0,0,0,0.6)')
+        .style('cursor', 'pointer')
+        .style('opacity', 0)
+        .text((d: any) => d.regionName || '');
+
+      // 클릭 히트영역 확장 (투명 rect - 확장 크기 기준)
+      enterCluster.append('rect')
         .attr('class', 'hit')
-  .attr('r', (d: any) => Math.max(16, 12 + Math.log2(d.count) * 4))
+        .attr('x', (d: any) => -getExpandedWidth(d) / 2)
+        .attr('y', -12)
+        .attr('width', (d: any) => getExpandedWidth(d))
+        .attr('height', 24)
         .attr('fill', 'transparent')
         .style('pointer-events', 'all');
 
       // 툴팁
       enterCluster.append('title')
-        .text((d: any) => `${d.count}개의 전시관이 있습니다.\n클릭하여 펼쳐보세요.`);
+        .text((d: any) => `${d.regionName || d.key}에 ${d.count}개의 미술관이 있습니다.\n클릭하여 펼쳐보세요.`);
 
       // 개별 핀 렌더링 (검정 원 + 흰 점)
       const enterPin = enter.filter((d: any) => !d._cluster);
@@ -784,7 +822,7 @@ export default function GlobeWithCities({ focusLatLng = null, autorotate = false
           return t.toUpperCase();
         });
 
-  // 클릭 이벤트
+      // 클릭 이벤트
       const merged = enter.merge(sel as any);
       merged.on('click', (evt: any, d: any) => {
         evt?.stopPropagation?.();
@@ -885,25 +923,78 @@ export default function GlobeWithCities({ focusLatLng = null, autorotate = false
           }
         }
 
-        // 클러스터 hover 효과 (클릭은 중앙 핸들러 사용)
+        // 클러스터 hover 효과: 확장/축소 애니메이션
         if (d._cluster) {
           console.log(`클러스터 ${d.key} 위치: (${d.px}, ${d.py}), 표시: ${Math.abs(((d.longitude + rotate[0] + 180) % 360) - 180) <= 90}`);
+          
+          // 크기 계산 함수
+          const collapsedW = Math.max(28, String(d.count).length * 8 + 16);
+          const expandedText = d.regionName || '';
+          const expandedW = Math.max(40, Math.max(expandedText.length, String(d.count).length) * 8 + 20);
+          
+          // 클러스터 초기 상태 강제 설정 (숫자만 표시, 축소된 크기)
+          g.select('.cluster-bg')
+            .attr('x', -collapsedW / 2)
+            .attr('width', collapsedW)
+            .attr('height', 24);
+          g.select('.cluster-count')
+            .style('opacity', 1)
+            .attr('dy', '0.35em')
+            .text(d.count);
+          g.select('.cluster-region')
+            .style('opacity', 0)
+            .text(d.regionName || '');
+          
           g.on('mouseover', function () {
-            d3.select(this as SVGGElement).select('.cluster-bg')
-              .transition().duration(180)
+            const el = d3.select(this as SVGGElement);
+            
+            // 배경 확장 애니메이션 (세로로도 확장)
+            el.select('.cluster-bg')
+              .transition().duration(200).ease(d3.easeCubicOut)
+              .attr('x', -expandedW / 2)
+              .attr('width', expandedW)
+              .attr('height', 36)
+              .attr('y', -14)
               .style('filter', 'drop-shadow(0 5px 10px rgba(0,0,0,0.55))');
+            
+            // 숫자 위로 이동
+            el.select('.cluster-count')
+              .transition().duration(150).ease(d3.easeCubicOut)
+              .attr('dy', '-0.15em');
+            
+            // 지역명 페이드인
+            el.select('.cluster-region')
+              .transition().delay(80).duration(150).ease(d3.easeCubicOut)
+              .style('opacity', 1);
           })
             .on('mouseout', function () {
-              d3.select(this as SVGGElement).select('.cluster-bg')
-                .transition().duration(180)
+              const el = d3.select(this as SVGGElement);
+              
+              // 배경 축소 애니메이션
+              el.select('.cluster-bg')
+                .transition().duration(200).ease(d3.easeCubicOut)
+                .attr('x', -collapsedW / 2)
+                .attr('width', collapsedW)
+                .attr('height', 24)
+                .attr('y', -12)
                 .style('filter', 'drop-shadow(0 3px 6px rgba(0,0,0,0.45))');
+              
+              // 숫자 중앙으로 복원
+              el.select('.cluster-count')
+                .transition().duration(150).ease(d3.easeCubicOut)
+                .attr('dy', '0.35em');
+              
+              // 지역명 페이드아웃
+              el.select('.cluster-region')
+                .transition().duration(100)
+                .style('opacity', 0);
             });
         }
       });
-      
-  // 애니메이션 키는 한 번 사용 후 초기화 (줌/드래그에서 재애니메이션 방지)
-  animateExpandKeyRef.current = null;
-  console.log('=== 핀 렌더링 완료 ===');
+
+      // 애니메이션 키는 한 번 사용 후 초기화 (줌/드래그에서 재애니메이션 방지)
+      animateExpandKeyRef.current = null;
+      console.log('=== 핀 렌더링 완료 ===');
     };
 
 
@@ -924,9 +1015,9 @@ export default function GlobeWithCities({ focusLatLng = null, autorotate = false
       const animate = (ts: number) => {
         const t = Math.min(1, (ts - t0) / duration);
         const e = ease(t);
-  const lambda = startRot[0] + dLambda * e;
-  const phi = startRot[1] + dPhi * e;
-  setRotationContinuous([lambda, phi, 0]);
+        const lambda = startRot[0] + dLambda * e;
+        const phi = startRot[1] + dPhi * e;
+        setRotationContinuous([lambda, phi, 0]);
         svg.selectAll('path').attr('d', path as any);
         renderPins();
         if (t < 1) {
@@ -941,28 +1032,28 @@ export default function GlobeWithCities({ focusLatLng = null, autorotate = false
     };
 
     // Autorotate loop
-  function step(_ts: number) {
+    function step(_ts: number) {
       if (!spinningRef.current) return;
       const cur = projection.rotate() as [number, number, number];
       const speedDegPerSec = 6; // gentle spin
       // Use ts to derive delta; requestAnimationFrame ~60fps -> ~16ms per frame
       // We can't get previous ts cleanly here without a ref; approximate fixed-step
-  const lambda = cur[0] + (speedDegPerSec / 60);
-  setRotationContinuous([lambda, cur[1], 0]);
+      const lambda = cur[0] + (speedDegPerSec / 60);
+      setRotationContinuous([lambda, cur[1], 0]);
       svg.selectAll('path').attr('d', path as any);
       renderPins();
       rafRef.current = requestAnimationFrame(step);
     }
 
-  // Drag to rotate (pixel-delta with continuous angles)
-  let dragPrevPos: [number, number] | null = null;
-  let dragStartPos: [number, number] | null = null;
-  let dragActive = false; // becomes true after threshold is exceeded
+    // Drag to rotate (pixel-delta with continuous angles)
+    let dragPrevPos: [number, number] | null = null;
+    let dragStartPos: [number, number] | null = null;
+    let dragActive = false; // becomes true after threshold is exceeded
     const onDragStart = (event: any) => {
       dragPrevPos = [event.x, event.y];
       dragStartPos = [event.x, event.y];
       dragActive = false;
-  // Do not stop spin yet; wait until user actually drags
+      // Do not stop spin yet; wait until user actually drags
     };
     const onDragged = (event: any) => {
       if (!dragPrevPos) return;
@@ -979,31 +1070,31 @@ export default function GlobeWithCities({ focusLatLng = null, autorotate = false
         stopSpin();
       }
       if (!dragActive) return;
-  // Pixel delta rotation with per-step clamp and pole folding via setRotationContinuous
-  const dx = (event.x - dragPrevPos[0]);
-  const dy = (event.y - dragPrevPos[1]);
-  const STEP_MAX_LON = 24; // deg per event
-  const STEP_MAX_LAT = 16; // deg per event
-  const dLon = Math.max(-STEP_MAX_LON, Math.min(STEP_MAX_LON, dx * DRAG_PX_SENS));
-  const dLat = Math.max(-STEP_MAX_LAT, Math.min(STEP_MAX_LAT, -dy * DRAG_PX_SENS));
-  const prev = lastRotateRef.current;
-  const nextLambda = prev[0] + dLon;
-  const nextPhi = prev[1] + dLat; // folding handled in setRotationContinuous
-  setRotationContinuous([nextLambda, nextPhi, 0]);
-  dragPrevPos = [event.x, event.y];
+      // Pixel delta rotation with per-step clamp and pole folding via setRotationContinuous
+      const dx = (event.x - dragPrevPos[0]);
+      const dy = (event.y - dragPrevPos[1]);
+      const STEP_MAX_LON = 24; // deg per event
+      const STEP_MAX_LAT = 16; // deg per event
+      const dLon = Math.max(-STEP_MAX_LON, Math.min(STEP_MAX_LON, dx * DRAG_PX_SENS));
+      const dLat = Math.max(-STEP_MAX_LAT, Math.min(STEP_MAX_LAT, -dy * DRAG_PX_SENS));
+      const prev = lastRotateRef.current;
+      const nextLambda = prev[0] + dLon;
+      const nextPhi = prev[1] + dLat; // folding handled in setRotationContinuous
+      setRotationContinuous([nextLambda, nextPhi, 0]);
+      dragPrevPos = [event.x, event.y];
       svg.selectAll('path').attr('d', path as any);
       // keep pins in sync while dragging
       renderPins();
     };
     const onDragEnd = () => {
-  const wasActive = dragActive;
-  dragPrevPos = null;
-  dragStartPos = null;
-  dragActive = false;
-  if (wasActive) {
-    // resume spin if enabled
-    startSpin();
-  }
+      const wasActive = dragActive;
+      dragPrevPos = null;
+      dragStartPos = null;
+      dragActive = false;
+      if (wasActive) {
+        // resume spin if enabled
+        startSpin();
+      }
       renderPins();
     };
     svg.call(d3.drag<SVGSVGElement, unknown>()
@@ -1022,8 +1113,8 @@ export default function GlobeWithCities({ focusLatLng = null, autorotate = false
       .on('end', onDragEnd) as any);
 
     // Zoom (wheel/pinch): scale the projection, keep center fixed (axis stable)
-  // thresholds declared above near group creation
-  // no additional zoom gesture state needed for center-anchored zoom
+    // thresholds declared above near group creation
+    // no additional zoom gesture state needed for center-anchored zoom
 
     // Track the geographic point under the cursor at the start of a zoom gesture
     let zoomAnchorLonLat: [number, number] | null = null;
@@ -1049,7 +1140,7 @@ export default function GlobeWithCities({ focusLatLng = null, autorotate = false
 
     const onZoom = (event: any) => {
       const k = event.transform.k;
-  // 확대 제스처 중에는 시작 시점 기준의 앵커 지점을 사용 (지나친 회전 방지)
+      // 확대 제스처 중에는 시작 시점 기준의 앵커 지점을 사용 (지나친 회전 방지)
 
       // 스케일 업데이트
       zoomK = k;
@@ -1068,15 +1159,15 @@ export default function GlobeWithCities({ focusLatLng = null, autorotate = false
         dPhi = Math.max(-ROTATE_MAX_STEP_LAT, Math.min(ROTATE_MAX_STEP_LAT, dPhi * ROTATE_TO_CURSOR_ALPHA));
         const newLambda = cur[0] + dLambda;
         const newPhi = Math.max(-80, Math.min(80, cur[1] + dPhi)); // 과도한 극 회전 방지
-    setRotationContinuous([newLambda, newPhi, 0]);
+        setRotationContinuous([newLambda, newPhi, 0]);
       }
 
       // Viewport는 고정(중심 기준), 경로/핀 재그리기
       gViewport.attr('transform', null);
       svg.selectAll('path').attr('d', path as any);
       renderPins();
-  // Visibility doesn't depend on zoom anymore
-  updateLayerVisibility();
+      // Visibility doesn't depend on zoom anymore
+      updateLayerVisibility();
     };
 
     const onZoomEnd = () => {
@@ -1093,9 +1184,9 @@ export default function GlobeWithCities({ focusLatLng = null, autorotate = false
         const dy = event.deltaMode === 1 ? event.deltaY * 16 : event.deltaMode ? event.deltaY * 120 : event.deltaY;
         return -WHEEL_ZOOM_SENSITIVITY * dy; // moderated zoom per wheel step
       })
-  .on('start', onZoomStart)
-  .on('zoom', onZoom)
-  .on('end', onZoomEnd);
+      .on('start', onZoomStart)
+      .on('zoom', onZoom)
+      .on('end', onZoomEnd);
 
     // Compute dynamic min/max zoom and apply; min zoom fits the globe within the viewport
     const applyZoomExtents = () => {
@@ -1109,24 +1200,24 @@ export default function GlobeWithCities({ focusLatLng = null, autorotate = false
         projection.scale(baseRadius * zoomK);
         svg.selectAll('path').attr('d', path as any);
       }
-  // Sync zoom's internal k without applying pan (identity translate)
-  (svg as any).call((zoom as any).transform, d3.zoomIdentity.scale(zoomK));
-  // Visibility doesn't depend on zoom anymore
-  updateLayerVisibility();
+      // Sync zoom's internal k without applying pan (identity translate)
+      (svg as any).call((zoom as any).transform, d3.zoomIdentity.scale(zoomK));
+      // Visibility doesn't depend on zoom anymore
+      updateLayerVisibility();
     };
 
     svg.call(zoom as any);
     applyZoomExtents();
 
-  // Eagerly load all optional layers (always-on detail); update visibility as they arrive
-  loadAtlasCountriesIfNeeded();
-  loadAtlasStatesIfNeeded();
-  loadAdminIfNeeded();
-  loadCitiesIfNeeded();
-  // 도시 경계는 항상 로드 (이 컴포넌트의 핵심 기능)
-  loadUrbanAreas();
+    // Eagerly load all optional layers (always-on detail); update visibility as they arrive
+    loadAtlasCountriesIfNeeded();
+    loadAtlasStatesIfNeeded();
+    loadAdminIfNeeded();
+    loadCitiesIfNeeded();
+    // 도시 경계는 항상 로드 (이 컴포넌트의 핵심 기능)
+    loadUrbanAreas();
 
-  updateLayerVisibility();
+    updateLayerVisibility();
 
     // Initial pin render and focus/autospin
     renderPins();
@@ -1149,14 +1240,14 @@ export default function GlobeWithCities({ focusLatLng = null, autorotate = false
       renderPins();
       applyZoomExtents();
     };
-  window.addEventListener('resize', onResize);
+    window.addEventListener('resize', onResize);
 
     return () => {
-  window.removeEventListener('resize', onResize);
-  stopSpin();
+      window.removeEventListener('resize', onResize);
+      stopSpin();
       container.innerHTML = '';
     };
   }, [focusLatLng, autorotate, stroke, strokeWidth, exhibitions, onSelectExhibition]);
 
-  return <div ref={containerRef} style={{ position: 'absolute', inset: 0, background: '#f7f7f7' }} />;
+  return <div ref={containerRef} style={{ position: 'absolute', inset: 0, background: '#f7f7f7', touchAction: 'none', overflow: 'hidden' }} />;
 }

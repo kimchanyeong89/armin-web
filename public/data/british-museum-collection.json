@@ -1,0 +1,14 @@
+{
+  "museum": "British Museum",
+  "museumId": "british-museum",
+  "description": "British Museum Collection - Highlight objects from official website",
+  "source": "https://www.britishmuseum.org/collection",
+  "scrapedAt": "2025-12-18T14:40:41.963Z",
+  "stats": {
+    "totalRooms": 0,
+    "totalItems": 0,
+    "itemsWithImages": 0,
+    "itemsWithoutImages": 0
+  },
+  "rooms": []
+}

@@ -1,0 +1,4139 @@
+{
+  "museum": "British Museum",
+  "museumId": "british-museum",
+  "collectionName": "The Collection",
+  "partnerUrl": "https://artsandculture.google.com/partner/the-british-museum",
+  "scrapedAt": "2025-12-19T09:41:04.658Z",
+  "totalObjects": 458,
+  "coverImage": "https://lh3.googleusercontent.com/ci/AL18g_Rb3EvIrKt1dRn35M9npveljRfQG6CCqjuIVm53fG7uWHp8e7Kmd7kDA2hH3rO0TaJWAX22O98A=fcrop64=1,00000000ffffffac",
+  "stats": {
+    "total": 458,
+    "type2D": 83,
+    "type3D": 158,
+    "typeUnknown": 217
+  },
+  "objects": [
+    {
+      "id": "bm-gac-1",
+      "title": "A Scene at the London Museum Piccadilly",
+      "artist": "George Cruikshank",
+      "year": 1816,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Ru5DlLkEbtVIOAEcQju_X6i6ZXIoM7abO0ASKJzGUj286C6ns9QjiIlWaXT8-cO84r603OyQ=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-2",
+      "title": "Mummy of Katebet",
+      "artist": "Unknown",
+      "year": "1320 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_R34vV_rKmALpLwi__pPtpyvua80HlKpp8-O4NXII14dOXu-lU3-3ZWm17ae4gxZ-4iz-QkI20=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-3",
+      "title": "Marble metope from the Parthenon",
+      "artist": "Unknown",
+      "year": "447 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QVxeRSzQDgRogSrZNDmHcN4k1coal2mmXjrca3nxx32bAs9OwpsMsNrKVND14eZhcN8jDLR4E=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-4",
+      "title": "Icon of St George",
+      "artist": "Unknown",
+      "year": 1400,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RfmD7WZoib-Dwa8HAraOG-FDWvq_MydqN5IMDsusp8I4js6NFQawctFfjwOJM7qCFDAJm8RMBU=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-5",
+      "title": "Mummy mask of Satdjehuty",
+      "artist": "Unknown",
+      "year": "1500 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QYCgqCpqoacbHR944D5UEp74_ayWB5P9_JxqC0ki-S31QggNWkIezvBJwJuHs1rkwtMqfNfOgP=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-6",
+      "title": "Aegis of Isis",
+      "artist": "Unknown",
+      "year": "250 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RMKP5XXzlucT9umkw_FtD3Mby42L7eO0QN2HsoIclZGZWdIV9FegPXd28ZjnSRhpYnIAb_SGs=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-7",
+      "title": "Granite statue of Amun in the form of a ram protecting King Taharqa",
+      "artist": "Unknown",
+      "year": "690 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_R1Vyh9apFwXfxgUDgvmTI2v5ruwyCH3WGe7s0Bral0DRmHzfF6gTxdSDg1dr5S2-ViVHceYQ=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-8",
+      "title": "Engraved Portrait of William Shakespeare (1564-1616)",
+      "artist": "Unknown",
+      "year": 1800,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Ss6SLfqDPpTgYys0vQxzHXZo9vWox32-DxWRkipOfqbR4bTPCH8aA7JoCcUOcSNzuxGo9tbQ8=w800",
+      "type": "2D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-9",
+      "title": "Yaxchilan Lintel 24",
+      "artist": "Unknown",
+      "year": 723,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QG2tirQI75V2nzKXvpZnjnQZODH8QzwRS7E1P2mOUc_iqTKqq6Q6w1jfPduNVVA4CEKpKA=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-10",
+      "title": "Katsushika Hokusai, 'South Wind, Clear Sky' (Gaifū kaisei) ['Red Fuji'], a colour woodblock print",
+      "artist": "Unknown",
+      "year": 1831,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_R3AUNyN7U3ufvlJS74OoS1yxgJfj-oM1DO8fi3EIqxKfRCt39HStGWW4Fffip9PpHTTq92Xg=w800",
+      "type": "2D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-11",
+      "title": "Pottery dog",
+      "artist": "Unknown",
+      "year": "300 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SQDZy3tZ0zdwmQJ_O2dJzDs0ts6K-PteVnt1zp0de4GMQEEDvVJDmaNU_gYswM-4dxkp1RjQ=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-12",
+      "title": "Page from the Book of the Dead of Hunefer",
+      "artist": "Unknown",
+      "year": "1285 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RVZlnmiFotBUjjjfIoEBHPywjSPvjt-H10fsI9LWkIM_9acliDY_mUZi4iKvO1VuYGaJUOH9LO=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-13",
+      "title": "The mechanical galleon",
+      "artist": "Unknown",
+      "year": 1580,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TadFreatga6dhxOLWFJfdOdVqYxLO_0LNliSZGMxrqz6jTr-E4O_Xmwb-bY6YDB0SpvxP_REs=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-14",
+      "title": "Ivory plaque depicting a winged sphinx",
+      "artist": "Unknown",
+      "year": "900 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Sng5kGqSZTrkJxAIrDclWoKi5HisZRZfPGayWw1uMnmDtDJFayIWM2zTpgTl8L6HRHecW2ew=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-15",
+      "title": "Limestone stela of Penbuy",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QMynkKYJcHmxZNmsfkeZCG3iDTCfeKp3n9eXUtnDQfcimD7y_ewky2c5_z8RHqKMjxcI-VPLXu=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-16",
+      "title": "Pollyanna club badge",
+      "artist": "Unknown",
+      "year": 1900,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Q61Uu1bM_GepX-QMh0pmrbNDFBQrYV2SqXveCm2dXYIjIAlQCPDA624C8DVl1CATRtz20uWQ=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-17",
+      "title": "Icon of Triumph of Orthodoxy",
+      "artist": "Unknown",
+      "year": 1400,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RCsy4uq7vgmBDHEOVKpROzQ6uITuCff9HqrjeiuyzqyVjFrv3jMp1P7DGuz6YN655Ca3g3Esa_=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-18",
+      "title": "Bronze head of Augustus",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SL7zEyCB3978J1X6mrOI3RKCCNvINnDQk46MTDo8pCAzZAWM9LlNefGORWJOdvspIR5uXeI-w=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-19",
+      "title": "Limestone drum slab with carving on two sides",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TSOHZTuO9u_LpaorxcFwEGfURzapVZPuihRsXzyM3JQ_z0sx5Ne4njjbLdaA5tVT4k8oazqdg=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-20",
+      "title": "Manohar, Emperor Jahangir receiving his two sons, an album-painting in gouache on paper",
+      "artist": "Unknown",
+      "year": 1610,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TXIMO3D4l9BA-1d5QxYGSI4ygZBn8u1AU8SWIUHeP7qcXVhoRHxUHknsOWlv7qq5xnnpYQ4g=w800",
+      "type": "2D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-21",
+      "title": "Tōshūsai Sharaku, The Actors Nakamura Wadaemon and Nakamura Konozō, a woodblock print",
+      "artist": "Unknown",
+      "year": 1794,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Sqig_IB9SCnI9eA5JD485vfhEAP9LxeJdKJzT5eCRVDFACb_tL7fkFMInaLa_rAMMFmNGffpfm=w800",
+      "type": "2D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-22",
+      "title": "Red-figured cup attributed to the Kodros Painter",
+      "artist": "Unknown",
+      "year": "440 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_T-M4aOX37XePHVe71EHTMxcDMOCWmBJ2eSm2toHEXPnrApClUMIt8qZdZlq9tEX1XhO1O7wzU=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-23",
+      "title": "The Lewis Chessmen",
+      "artist": "Unknown",
+      "year": 1150,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TYdw5XaDOiU3vV9Li5Gj5Lv15DJRrZUMmRQUij6T-gloBZwCR5QCth8AMXnOFOBON6wxnbSSs=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-24",
+      "title": "Wall-painting with the three Hebrews in the fiery furnace and the martyrs Cosmas and Damian",
+      "artist": "Unknown",
+      "year": 500,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Sg8ErClRY7JeblyY6ZtGwGxolzCcmz8Pj4Josei0I0rUYMgO9pwlK-VLHwmCOMVVvWQhv1jns=w800",
+      "type": "2D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-25",
+      "title": "The Lycurgus Cup",
+      "artist": "Unknown",
+      "year": 300,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RjuWDIfxP2tyHGs4fyK0jt2niBdmlepUWQnk67Qm8S_4889mbwMm1ELXJIV6z5w42rDYWTI5Y=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-26",
+      "title": "Conch shell trumpet",
+      "artist": "Unknown",
+      "year": 1700,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SXIjLm75cnrJAqAdkDjh8_NebG5qU0a8Xe6D3wm9zZv4tPMtY6bPi5Iu5yih9G2r4YmRi3M2sc=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-27",
+      "title": "Grey schist relief panel showing the maha-pari-nirvana",
+      "artist": "Unknown",
+      "year": 100,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Syzm_7ikr7FQItYnIWAnA3tzXS_Gr8u7vp8uOzGRgeX4we46bhP9GT-V1NEwgdWnfOG3mnViE=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-28",
+      "title": "Shabti box and figures of Henutmehyt",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QUpiP16LyM2x1e4q6-HQzSJGwlD7udAJzo1N_72fqcCeEJLB6m1c96YEmTM6q7UNAxpfUg5Q=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-29",
+      "title": "Fragment of painted plaster from the tomb of Sebekhotep",
+      "artist": "Unknown",
+      "year": "1400 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QT9t_egXSDfydtLkdAV4KPA-Ee74to35_Tc8Qqq2gCPfk2WATOzwuW5L3mkoZYnErjnaPD50bC=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-30",
+      "title": "Gold florin of Edward III of England",
+      "artist": "Unknown",
+      "year": 1344,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_S9uokJ-IDylkMV9RnroSl12ylbiW6AjeAkVyX13NXZULbjOZBGUWh4MzUXnuo-noCSKyb_AI4=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-31",
+      "title": "Vaison Diadumenos",
+      "artist": "Unknown",
+      "year": 118,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SnfzKAShMvBFi-_AwNtx4wMnS5vMrW_C25gEaxfsQJ65NTR-9iUnvxvPGY8riTX2KNOvYcUoQ=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-32",
+      "title": "Sandstone figure of a sphinx",
+      "artist": "Unknown",
+      "year": "1800 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Q4vmeFSUFhz1GCM9sX8iF8a7i9YJcFfkWFLHXI34quAewKl6YxlUw1utmy2rBc9_xE6nKYyA=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-33",
+      "title": "Alabaster cinerary urn with reclining figure on lid",
+      "artist": "Unknown",
+      "year": "200 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QHNUj_RBNPGVWatiG9JRII_r1teSp-9us4ljeGKVIxfG7zTT9PRrY0WaHJB08zlGG708E2V90=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-34",
+      "title": "Pointy boots, Turkey",
+      "artist": "Unknown",
+      "year": 1800,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TiJZSWIY9LVeQuymUtQSg7mpsRP7lPMQ2JXa20Gn1xN-RPxyLVHH1HFRIrN08yc7i9iV0ur2Q=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-35",
+      "title": "Diplomatic links between Syria and Egypt",
+      "artist": "Unknown",
+      "year": "1350 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_R8Eaw9jJvkUwg1f0WgGTYIyF0Ak3qsHxCGHUqXhdGefooo52JC7DpdGjm00tX4ES9Jb9gFUg=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-36",
+      "title": "Painted wooden mask in the form of a wolf",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_T6o-w1YFxBbB20v2lMI8JTozUFyULj0HAPHJWWuloUadOiATQztEUCPMc_XMGIhZkrITTGTg=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-37",
+      "title": "Limestone roundel depicting the worship of a reliquary",
+      "artist": "Unknown",
+      "year": 200,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_ROuVPawJCa-8r0mjhSey8qrMJctEw-AsZPKvhk5eTGEyhhcW5IVEQpjzQF_Kv4NqCEkpHlnD0B=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-38",
+      "title": "Bimaran Reliquary",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SzXzHMxSJjG48zstSfjWSRHAchG3r3HcjpFEAae9OyGYeuH_6jKarblAM4d2lvpt1rNW9JqA=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-39",
+      "title": "The Wonders of Creation and the Oddities of Existence, a page from a manuscript",
+      "artist": "Unknown",
+      "year": 1375,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TM4R1o5vBLRXOXCtoh4KihyeClcA_NHUwaEu4ViIFPWl75nGC4beutpx0ZkwXur9m4j8O-Ddv5=w800",
+      "type": "2D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-40",
+      "title": "Rollout photograph of the Fenton Vase, Late Classic Maya, 600-800AD",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TMCzuZpL6Fh8LN0_d9OdqzPC3IolAHy1Ji6ZkgaUwkvE6WynpQPRWdTn5eb5M2SVWXFwhxCirb=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-41",
+      "title": "Painted sarcophagus of Seianti Hanunia Tlesnasa",
+      "artist": "Unknown",
+      "year": "250 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TkV9b06hNCVyzyzspmMUpvBMQI-3jhm3cRqW0iMyc1dDBwxHibNO12AQeX6RgwYD9RDgsPxTgs=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-42",
+      "title": "Coffin of Djedhoriufankh",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TSyhXabj7iMDZ_shJ99hOuSgblCB6vmrbfCpXwaEe3FHJIomvA0A46YjKDQw1E4_ZATj1AEKFz=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-43",
+      "title": "Peter Mundy, A briefe relation of the Turckes, their Kings, Emperors or Grandsigneurs, their conquests, religion, customes, habbits at Constantinople, etc, an ilustrated manuscript",
+      "artist": "Unknown",
+      "year": 1618,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_T6RnzoJXAiK5LW141JM_jYCVoowLxS2tW-_TjznTfzATG2AwM-87Px7acJ6Cwwy72xy1gTjQ=w800",
+      "type": "2D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-44",
+      "title": "Photograph of Chichén Itzá taken by A.P. Maudslay",
+      "artist": "Alfred Percival Maudslay",
+      "year": 1881,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Rjh4YpFBjDVxMkwz_8CrDUT0ow8eCU5rWGInORql936-5i9HhFZC7Ta34Osvk0-zJreNvI_C4=w800",
+      "type": "2D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-45",
+      "title": "Fragment of painted plaster from the tomb of Sebekhotep",
+      "artist": "Unknown",
+      "year": "1400 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Q5g5HdqN6zzYTlXU5HK-47xjeOqTluzCSJyorZPztaQW6YNnhlrsy2xsUZMfr4f21yY6oZCg=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-46",
+      "title": "Ganesha",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_THvjY75obJ683S2bAIJ9G7i-j1PaNr6qN6_P3XlNSp1sFkap7t1LcLOgsjmbflX8AxNTru9J6-=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-47",
+      "title": "Miniature of a Mughal prince",
+      "artist": "Unknown",
+      "year": 1610,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Qu-MhNdYBtq_5BKADKygTXk7L_Fe2te7yBwarwRDpd7fBwcjHeBGpHbCYBvYDCgxY6aAMtg3WT=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-48",
+      "title": "Red-figured volute-krater attributed to the Berlin Painter",
+      "artist": "Unknown",
+      "year": "490 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TpWs69jUa7Z2GFu_ZxuE-aQgZjWgWVz3hbCbkB023B-8zPu0mMBc7CiU1oyfkzYBx3ucm0HQ=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-49",
+      "title": "Shoes fit for a Maharaja, Jaipur, Rajasthan, India",
+      "artist": "Unknown",
+      "year": 1780,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_R9pciE4TZZj3HRPyBbgejLwgZMUyi_VGKDQe1oc4LtZM3aU-iZwUfKmB2Q4UB_ISPBB_fq5ao=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-50",
+      "title": "Funerary cloth of Isetnefret",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SDF2rr5Qw8s1xJaUtGGRniBuTSKzkfxdlFu4EKX5TGRRfhoIW9h_yiP2tkkYp8pKn6Z6NdXcvI=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-51",
+      "title": "Leaves 46 to 49 from a facsimile of the Dresden Codex, a Maya screenfold book. Am2006,Drg.224",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QSuPoM4X1ttLevUW6MoOkwSrCh1CfKc2zHGGOrR1iOjcinZsGCBu5Xtgrfe2Bgb5PHjwdAeA=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-52",
+      "title": "Black-figured amphora",
+      "artist": "Unknown",
+      "year": "540 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QwU1YM-yoLPBkICIFHNqZ3bW1WqOafMlsRyeSBM-0EZS7nSV9psJL4E1hqCRVBMxwVfmUa1g=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-53",
+      "title": "Red-figured plate, signed by Epiktetos as painter",
+      "artist": "Unknown",
+      "year": "520 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QQoCE038o1QwMEahkRbIWu2p6Q8vBSkLc97FoaH4wZyubPTJvqjWT_hXj_Z-qjVOGXiohr8Q=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-54",
+      "title": "Sculpture of a deity known as A’a",
+      "artist": "Unknown",
+      "year": 1505,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SsNZyoISyBgJ34Hw-qDhp_00zHE_pvhVO15l2kyhfv2O9AyzhtboyvssC9KhbrzURkl2J4GFvH=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-55",
+      "title": "Shell cosmetic container",
+      "artist": "Unknown",
+      "year": "700 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Qg87mbARKt-8dXv6yWmdIbs9rH5EdgtFnFpqbMmwGNBgA4KuYp4WuS5eUPozHIaDUOW2q5V5DD=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-56",
+      "title": "Colossal statue of a lion",
+      "artist": "Unknown",
+      "year": "865 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_S8WI2V56VntoZTpL8T3z_FLIVgES_e4Gmn02kLsc5LdxVBg_n-5zovGRcWEfbIsrIisAum=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-57",
+      "title": "Ivory pyxis with St Menas",
+      "artist": "Unknown",
+      "year": 500,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SV4bD300PlPuqID8I9K2nk_BW-a0ztnAKRD6BRpS6-Mwhyb7WYT-iXK8viAqLBDSPzNWI87i4=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-58",
+      "title": "Marble well-head",
+      "artist": "Unknown",
+      "year": 1,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_R90UT2gLlBWTHe_5d6JjVboUn-XTgeGqks2A34ACMaDLF7Z2ULWWXId5BkIUUSWE-28iJM13U=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-59",
+      "title": "Pipes and smoking sets",
+      "artist": "Unknown",
+      "year": 1800,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QjCCEwddOKNs3Vt3ei4xwQvj1LjPvyyqGvTZtxgiy6FWP8Wb5pAiVicc2hhESfwzRZmJKZsA=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-60",
+      "title": "Red-figured cup, attributed to the Brygos Painter",
+      "artist": "Unknown",
+      "year": "490 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TxYmt7nGkafhiUFmIR-LaCLm3kR7C2JhNtaC_cbM4RJT9PZeQ5Ms2ursbUr_lTqj_jK_JGBi4=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-61",
+      "title": "Sculpture of Ganesha",
+      "artist": "Unknown",
+      "year": 1200,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TFzqZ-eDeKIFdG5-Qrq0ZH3pYmcEh1tTXLGL45efo3sMJVCpL1bjGIKnXPWjp9a8a2wLlfww=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-62",
+      "title": "Dali yuanbao coin",
+      "artist": "Unknown",
+      "year": 769,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Q01zHO9CjxlpwamMcv-RPLdFhlRI1g8wK5nwypWtUMzZu1DFhP57vKD4Xgpn3RqVmY6rOQaQ=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-63",
+      "title": "Statue of a retired townsman",
+      "artist": "Unknown",
+      "year": 1600,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Rvsybp4wyjH7GASMr7XsfNq1PBHGZyZ-KoymrHZXjIQtZHenzyidsj5rp0FtjH3OPBYuUFlbxL=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-64",
+      "title": "Lachish Letter II",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RcaoHAruJKklovttb0svpCknKb4SIXz9Zvt6wHO8rXEYIv7TgGY2O99GwJfso9738yCg8bmJs=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-65",
+      "title": "Gold head from the Oxus treasure",
+      "artist": "Unknown",
+      "year": "499 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_T0XM5mCDR6zHMFGLUoQrqQXqX1SmIiFF774rDKAh6Wt2rXJ6QUhiDyXpwn6UjuLMeHoP1pcw=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-66",
+      "title": "Wooden stela of Tjenetdiashakhet",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SJQiRI5TE1-n_XPgzljA__p2L9iWXPf2ogCgk7lGLEWpKoDpawAROZJEFOMAEe00rJKYxdUkg=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-67",
+      "title": "Section of a marble inscription from a funerary monument",
+      "artist": "Unknown",
+      "year": 900,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QNLyiuyn25A70W9eTGSL6PZxI71FgjuykAu6RNLSWJ0yjh59iJHZiBhfksyKlfFm5gLro=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-68",
+      "title": "Gold masks",
+      "artist": "Unknown",
+      "year": 100,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Q6WoPUtkHLjrFebhcfUCWQKgryc9OZbIzsMt-BNUDplYX1Nq65JQwAsNM_kOe8Azsdoa25TJc=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-69",
+      "title": "tile",
+      "artist": "Unknown",
+      "year": 1338,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SatUdwMTTiAX_424VeLceFnQZe2VSd_jTMc1XMgFkps7KWgJzmQucAAGbUSgPFJ2-by1sUW70=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-70",
+      "title": "Diablada dance mask",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SHpZh2pjzhpv_8U9T7Y5Q8FCSzH_GdAZuBKLG_a3kEQlLn23pFZ_HMA-QmUeyrkfEredDLBA=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-71",
+      "title": "Painting of a religious procession, by an unknown artist",
+      "artist": "Unknown",
+      "year": 1800,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TO1QHd8FEUeTCj_AKqRpjgGGlQJNFhi18NgEOfV8rZ-EpKxYlvhqsVBhmINoV3Q5kunta01HU=w800",
+      "type": "2D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-72",
+      "title": "Beads and pendants",
+      "artist": "Unknown",
+      "year": "2600 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QzateO1jseNmEqwgS9zXcg6ZbQZ0Ll52h9Z3ihTgiESOD1bvHFzFIhHvTmwvHpxhvDs6C8Kos=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-73",
+      "title": "Admonitions Scroll painting and brocade colophon",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TofvPIAea10esTo6Knun8N9PYOmu1VyRxQk30XfAzB5Jq4FzqJUPQV8q7f2FJJSyoRZUhiww=w800",
+      "type": "2D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-74",
+      "title": "The Atomic Apocalypse – Day of the Dead",
+      "artist": "Unknown",
+      "year": 1980,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Rc0K_Otz_dfDIeyl-2LC3hC9yQk-q7ejKcDpFBpBQ3G1uQvHiyBLSkVtePl3gfq8iorGRzZVXR=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-75",
+      "title": "Oval lidded basket of figs and dates",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Qik6Q6dzobJeNMhSIhEL4rpaGyzvZq9LYs8RjBq1yjnT9pZF9I3MIgxduyPIoSUk4VamoNIu2W=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-76",
+      "title": "Harvest Scenes, tomb of Menna",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Tepiyvavape_vmeH_XHtv09YR51NrePE0b40sixVDrqooKboJcSJUMVhJ6mOt1KzzRemMVpg=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-77",
+      "title": "The Townley Discobolus",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RvSHGl3YW10cp_OXqXvUlMVYea8pfvp0iRZR-BR1JipaQK0MofRbe0G8J0VLaf03qdwL5A6C8=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-78",
+      "title": "Shi'a religious parade standard",
+      "artist": "Unknown",
+      "year": 1700,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TBAzBkwHHeYj1e9qyk2U-fCVljr4xCgt16RqB4QZXX1Ll0McRIT3dgxiiZSoQ01x6mG5fqIA=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-79",
+      "title": "Kitagawa Utamaro, Woman at her morning toilette, a hanging scroll painting",
+      "artist": "Unknown",
+      "year": 1801,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Sk3sIxz5z937KIToBeLNUkZ23QB9UYLxXBLulMsAENHSIwjKEuGtABDqjwyIjiUAx7-cIGTO5t=w800",
+      "type": "2D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-80",
+      "title": "Limestone tomb slab",
+      "artist": "Museo Archeologico Regionale ‘Paolo Orsi’",
+      "year": 200,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_ST3QkrcHfRzdgYaVMCdwL0WBydGM3C63n6-3EHrrypaSeABbmzGYoU8Hv_hQswG8AFdt1m=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-81",
+      "title": "A woman's shirt / chemise from the Former Yugoslav Republic of Macedonia",
+      "artist": "Unknown",
+      "year": 1800,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_S_m4HFPFn_sA_I1AZ4QYHGWlSt7ncJ3UVhxARZDPsfjCPOv9RiCTrV6LD59xWDuZnSc3c9Vg=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-82",
+      "title": "Bronze axe-head",
+      "artist": "Unknown",
+      "year": "520 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TEp_SX_rOs2EKhTkj4DXl0YEYF3GtLg75dXZ6AxDk0vg8OQvvE0aeB7sSgPuIVG7GcrCf_awTK=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-83",
+      "title": "Jacket",
+      "artist": "Unknown",
+      "year": 1900,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_R3zx3tdoJQWPzVMgs_6YZAlgU3Lo0u5u3_vtxnP9ttTcVtkRhvspthG9kak73nfkLdRrHq3w=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-84",
+      "title": "Brass tankard",
+      "artist": "Unknown",
+      "year": 1498,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Ro7a_AQPhW7oMjQRENEqLccXUvq4iMCNxGswttaHqJaOEBOOjfrnSHXBj8cUWexoA9tej_thZ5=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-85",
+      "title": "Page from a manuscript of Dioscorides' De Materia Medica",
+      "artist": "Unknown",
+      "year": 1224,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SEp1S1G9XR1grLCuS5Z73anVug8SUyGc3PYT_fXBKOgcsLPOtiY8JRuxQ4vw9SdhZ6ZQfREElT=w800",
+      "type": "2D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-86",
+      "title": "Stela D at Quiriguá",
+      "artist": "A.P Maudslay",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QnbCArEkWVaFHj9gUZYv18re5E7y2I6IPbt_1XuQHY4uGsk_aj6tvKyt8vHxlU2ObKpEFFYTs=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-87",
+      "title": "Feather headdress",
+      "artist": "Unknown",
+      "year": 1800,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Tb7V5wfuEtcbbnAWe3Z4kSFIKcmKgkeVgIUa5oSoUSjYG_uKB4OchFb08XeeVUDPr7Km4Wp9E=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-88",
+      "title": "Fragment of a cornelian breccia cameo, 'The Head of Flora', carved by Benedetto Pistrucci",
+      "artist": "Unknown",
+      "year": 1800,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TTZ8ZVDg4eXd6cuFT2L5EwRgnEHAGXS-BS37QnZ1T3hOYJmgU9hifCtaCUCcvOrX-sT9hB5Q=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-89",
+      "title": "Papyrus from the Book of the Dead of Ani",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SRg4yd3FX-2fIg8zZlVKEntiHzYWBd5oCWc08AdLLXr0If9TTGgNCUxWXewiYMO5jiUen1=w800",
+      "type": "2D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-90",
+      "title": "Limestone roundel depicting the Mandhata jataka",
+      "artist": "Unknown",
+      "year": 100,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RvZgOzf_AeJLk6Uf5V_Eh1wkQArSSCgazled0itnofJKexJti3GjiixkEGCZH44lUDz5KTzDI=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-91",
+      "title": "Bulgarian costume, bridal headdress (kaitsa)",
+      "artist": "Unknown",
+      "year": 1900,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SkAFFTxkYV7WkvC4OuS6K-TeUrtf-teZyjcEhHhJ4v7s28ehnM3Wj-IxqYWUs8JcieKK0Zz_I=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-92",
+      "title": "Terracotta tablet with Cypro-Syllabic inscription",
+      "artist": "Unknown",
+      "year": "410 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_S27_dAnYeEUUSajDYI8PHVUUbfNeCL7qSKVaCzgok8QV5UXuVpjFlK4cZgHULi0nRGbuY6viw=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-93",
+      "title": "Faience vessel in the form of Eros riding a duck",
+      "artist": "Unknown",
+      "year": "300 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TDkTyG7t6DgQ8LOtpEA4EeyFPMDQiS9h4kXcnSWI4U8ie01PlV4w5PeJWjf_SUH7LFF3nTXQ=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-94",
+      "title": "Calcite panel with bull’s head",
+      "artist": "Unknown",
+      "year": "199 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_S0ND35C5JTEEOJzenRxiWVvEZPudF8U9XJHV0rZrxfVoMFBVeLOASegygz0RwMbtHeC8P5nBw=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-95",
+      "title": "Mummy portrait of a woman",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SD5ne1ARPmPA1Y5o7b7geRnCrjT9qXn_NNn14Vlaf8CUjpHd1XzuwWtgQ4rZ8rVKg_iQuCaWx3=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-96",
+      "title": "Limestone figure of an old man and boy",
+      "artist": "Unknown",
+      "year": 900,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QQpbmU29DCpkUMOw0K8l8quIv2hQFM5wPBY57IYGKYIyif_tIzmTY0QI2E8I3Vp8COEFpRyxQ=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-97",
+      "title": "Kobayashi Kiyochika, The journalist Fukuchi Gen'ichirō, a colour woodblock print",
+      "artist": "Unknown",
+      "year": 1885,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SgC6FBuZo5p4NhaGgCr9GkYN3M7HerjWJGoW7hLrrqAZiCnsKdJ5vTX2dSf-T7KY-Q12sHZnl8=w800",
+      "type": "2D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-98",
+      "title": "Winged bull with human torso and head and clasped hands",
+      "artist": "Unknown",
+      "year": "750 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QzI7TnZlZENIhQK1RtfGfK1GaVO3rmDmgknKvhTLKupupa4jg3-Hha2Wpyyw186pJphLUvXQ=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-99",
+      "title": "Four Imari ware porcelain figures",
+      "artist": "Unknown",
+      "year": 1710,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_T5OuO8SGWoeihIG9I_CZgRZz-OH4GqIEKpdmzXIHr_skY7ZmziVNQwJCfzohS8o_r0M06xlQ=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-100",
+      "title": "Serbian costume front view",
+      "artist": "Unknown",
+      "year": 1930,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TSx9NK2IGvuW7eZkXKyHzB7s21h7dDrPt5IeVyw9Qc0xzYlJR32U4hUP3RAcT1t2hgFGoRuN0=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-101",
+      "title": "Carvings of soldiers",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QjBrry9oP4-zOZJmU9245JGH90LTbhMLpHR9yHPFqLf5XjNHD29lCgIPAGKOFkhwnVXtdYC-5t=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-102",
+      "title": "Bronze figurine of a horse and rider",
+      "artist": "Unknown",
+      "year": "499 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RKMwCLbM8hgVWQM98ZDLs56RmwSj7mdDO0v1E7bTu_hdGrMWYHd0LBgjT14ilt_9e79v6IIQ=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-103",
+      "title": "Leaves 58 to 60 from a facsimile of the Dresden Codex, a Maya screenfold book. Am2006,Drg.224",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SRsptNdl6Qvk8tWs8oh33vVzT64BXvhr3yq7t37SYMjpIloVT8KxJiB5omBTi6W2JDZ4r-iuM=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-104",
+      "title": "Jasper ware portrait plaque of Sir William Hamilton, by Josiah Wedgwood I and Thomas Bentley",
+      "artist": "Unknown",
+      "year": 1779,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RslYxDAUqfLMmajzFjqILNqgTo_phRPKI3r28nFng7r2oxo5-p4ocMsO9n7kqBVB_GSKUzsA=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-105",
+      "title": "hat-ornament",
+      "artist": "Unknown",
+      "year": 1550,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_ROT8AIkUk4k_mklLb54KjKO_sRAF3Bs41533JjZwyAuvxXI_OZErpRhUZ_CD7eBUP4X0xR=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-106",
+      "title": "Iron helmet",
+      "artist": "Unknown",
+      "year": 1500,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RM-nWNYU6GJlOHo-wPdBlRO7ql5Ti1p4jvXDq91uYBWwK1_4CKjXZ8BJ_lR_zVt3nVyIuDIg=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-107",
+      "title": "Faience pectoral",
+      "artist": "Unknown",
+      "year": "1250 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SVDVzWmar3RftL7ubj5KfBkfcu2B8fNgKXAlEy8WodF7AEMaPEy4RaUIxCl76PCgP3DINzTQ=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-108",
+      "title": "Altar cross",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SdE-kmZi2nIhYm_pjfkBSvtUZ5cruppCEuwWeNQkAioNv695dQm6hF5KUThZQizoKoM-fGpzs=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-109",
+      "title": "Enamel portrait plaques of King George III and Queen Charlotte, painted by William Hopkins Craft",
+      "artist": "Unknown",
+      "year": 1773,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_T-whCqxmKH6PC560TLj2c-xPP4YcQ70Z-fYgz0IyyjI2jjUHBfA5rnBS_bcwmoS5fMOkI8x6k=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-110",
+      "title": "Bonnet of turtle shell, gift of Queen Victoria",
+      "artist": "Unknown",
+      "year": 1800,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Q3fW7gwmWoKmLeWz3xtTVopLs_TwTIaInbGq7kWpiRMDU-wkLFie6PpX6eRXMe3Rujgbsu5h0=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-111",
+      "title": "Wooden male and female figures",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TbPbZ_OOZvyuvwcqARI2rOl3mP0dzH9yuOXBavGqPOKmwvdv48rXlIXGWfSp5KY4XxLLtxWA=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-112",
+      "title": "Spouted jug with dragon handle",
+      "artist": "Unknown",
+      "year": 1510,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RW4uz7FOuq0lNv1ca_hQuTNfxOuGRmVB1z_ZDOJITUr9jLtIsoalLLMVOTL_dsMd25pAb26Cc=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-113",
+      "title": "Buffalo robe",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RyO02l98h8JoWMxd8ELde6ueSX1jnfXzpbMIDzBmL8Js4ZmaappY8I_9OmBp7YB9tF-98iLg=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-114",
+      "title": "Kolam dancer's mask",
+      "artist": "Unknown",
+      "year": 1800,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TxnmzzSLaUtv7uSOG9EcvwmpD85XZoq0dvcvcAgScXXRkixMQqBp1N-Gfi8761zcXAPvxIuw=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-115",
+      "title": "Alvarado Mask, Am1981,06.17\n\nAlvarado Mask, Am1981,06.17",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SDKyGbrupYuG3koonxyd0yX1sxl1E5pYXoQKoh5lxmeMPeb-dxE1Shh9qCHbKS8A4yTW8ct3s=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-116",
+      "title": "Lacquer chest with weights and scales, for weighing jewellery",
+      "artist": "Unknown",
+      "year": 1840,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RQDXx_YuA-XfX98NftUltWcZWO1_JSjIIEU0UfLAK91Ol_2nahCTSozjkVZn21H0oJ3GcNAg=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-117",
+      "title": "World map from The Book of Roger",
+      "artist": "Unknown",
+      "year": 1300,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RZNkMsnii6XkdYLqOIPh1suBwydiV1RM8No0VL86gMSvtzPwvgnZRKXkX96Ied8ccxN5vTKCo=w800",
+      "type": "2D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-118",
+      "title": "Embroidered slippers, India",
+      "artist": "Unknown",
+      "year": 1800,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SryxNpNgiuvWaxZvKsZ_7p5-MHjGk2dzTLrr4wJL-54qjFCopl-Ts9BJYWRhjmOW02soDl8zM=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-119",
+      "title": "Enamelled vase",
+      "artist": "Unknown",
+      "year": 1736,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Rzyr8arVXM-ls0ikvnLpoNJWw837h-G8eJS5rfZ-XJYxWSjPJ7mahqNBnlTzmNhihOVUFD=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-120",
+      "title": "Photograph of a drawing of Quiriguá taken by A.P. Maudslay",
+      "artist": "Alfred Percival Maudslay",
+      "year": 1881,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Tc7c0tD0DWeL5kkNQNqJ3sJSp-bKPoV43Hg1NMeA18qd1V3r7XX0GGhZpzWX58qNz0iLf_zw=w800",
+      "type": "2D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-121",
+      "title": "Married woman's hat or bridal headdress\n\nFront",
+      "artist": "Unknown",
+      "year": 1840,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QRcP4saCRY77nQlZeS-66oR4LFtnhu46LgGqhfZNU0ieXs-jbg3E7KSyh0ovLk1O3YGZkJMg=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-122",
+      "title": "Cuneiform tablet recording barley rations",
+      "artist": "Unknown",
+      "year": "2351 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QfkCuemreTAgSmSHnvIzapjlMG8LfdD11Z1OosYcgvtn61fOAMiRvUvfUXGjV4sL_kV8e_=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-123",
+      "title": "Galičnik bride's costume, silver alloy clasp (pafta or kolen) and coin-belt (nizalka)",
+      "artist": "Unknown",
+      "year": 1870,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QW_kJgFF3szeBDvRxai47OkvogSgbkbhY2i-6RLT0jJ6Zy2wC7msrnb1qZAIo4NN-3Q4ef2w=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-124",
+      "title": "Wooden coffin of Pasenhor",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_ReqTJIQGKUmdoBQOWDrclxWTsbhQxNqRqMvJx-Sjnmdc4FrZ8CT8d9i4K6bqz49YeQcXuIvA=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-125",
+      "title": "Black steatite cippus",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Rbo5bCt2XPeUwIY7MJ1sojYj2pAIOpkl6RpVxwOfK8eUP2WQBD08ITQTg-mMrjCmBwSD9lMsQC=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-126",
+      "title": "Stucco head of a monk",
+      "artist": "Unknown",
+      "year": 300,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TxkjXRLFyKsMd07GrKMILXFmHsSaLDLR7awIbtbSq36xWUU_jgWI-ly0kUMWpab5o4TEUfImQ=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-127",
+      "title": "Shadow puppet",
+      "artist": "Unknown",
+      "year": 1900,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QVTjrJ7XHuDSCpxlvGrz3zi1HA8m2ptKQzLndUL2lCi9ttDplg08IqS2tQGr_YdokAZmme0A=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-128",
+      "title": "Majiayao Pot",
+      "artist": "Unknown",
+      "year": 2500,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RMP1BzWVSWPm8CZBdcqDEBCzomuzY5NL7O-sp7XJcu84YZcYTgr226i0M1YT83Xe43VvWD=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-129",
+      "title": "Siguas Ornament",
+      "artist": "Unknown",
+      "year": "200 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TaTWdUVPEt2rNvy4aaWBQW4MU5ypofDwXJ29VCjjbvN-nm4Jy9AU6YHjlXENMQ_Z4goLF3=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-130",
+      "title": "Kanō Tōsen Nakanobu, Birds and Flowers after Classical Chinese Paintings, a hanging scroll painting",
+      "artist": "Unknown",
+      "year": 1835,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Tym5pkFsfKskg5XK2v77Yznsc1hQyucBmg_1mZCw8g4MEw_csBw4FqpT7VkxmPHTsTHo4TfA=w800",
+      "type": "2D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-131",
+      "title": "Wooden inner coffin of Nestawedjat",
+      "artist": "Unknown",
+      "year": "700 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QQGbPtiZ18IsiVbyjNzmnXQdqrBvDtd0pCmse18LMDtksUSxgcefWrOfhM8MGxhlb4TCkFKyg=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-132",
+      "title": "Basalt door jamb",
+      "artist": "Unknown",
+      "year": "999 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Sj6-I-Dp61gYnb5ZZPD3IRqMcRqVztc-KgQqUqfRMmDEt-RQbxpNjBIRP6n-fs6B9Cin82e2s=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-133",
+      "title": "Silver pfennig of Agnes II von Meissen, abbess of Quedlinburg",
+      "artist": "Unknown",
+      "year": 1148,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SglSFTvY53ZhBPtR6fDoqR77lMKWklzQ8tj2whrvDnVE7dZmMZXnrR_RYBm1nI5jDNczMqHtU=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-134",
+      "title": "Glass pendant with menorah",
+      "artist": "Unknown",
+      "year": 300,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Q7plfTFhWGmXywhchSApCblMqlCmuY75wyNM1tNLx-IjIMTnwyWIfjMif-CvXjB91qX4gkmr0=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-135",
+      "title": "Gallo Belgic type E stater",
+      "artist": "Portable Antiquities Scheme",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RHycUhqV6CRB8_0h6gzaqjpTjRIUY-SKr0dVGtwmUHIKd0tXmxoPxX6tV7j55pEDG2TeKiT4M=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-136",
+      "title": "Nuristan red boots, Shudgul, Nuristan, Afghanistan",
+      "artist": "Unknown",
+      "year": 1950,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TCN7uvIezVYznNSrAP_LeZPH2CiVmjwHGBRZxbWPlJD746blKh3wiMNXjGb2bsKfbixaWS=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-137",
+      "title": "Saucepan pot",
+      "artist": "Hampshire Cultural Trust",
+      "year": "250 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SMg8Mkz4n1zevv8MHay68-ga4KUjbhqL-YstuS9_CHYAlUq90tCqW-YKDLHGVvIUFpWYUB=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-138",
+      "title": "Coat",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_St1NNEILFwNAdLSOZL-IwvQZA6xoWkpGpZrdjaNJFfFEnemApjiM6E_dSUK_swAK1wdhXVhQ=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-139",
+      "title": "wedding-ring",
+      "artist": "Unknown",
+      "year": 1500,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_ShmdvI_QJfasr3fKEUEzxqfVv5-_0OvlKtnb8_eaX3vS-eYiizhJqjubf64j2c9Z1pONw_EA=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-140",
+      "title": "medallion",
+      "artist": "Unknown",
+      "year": 1550,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_ScY1Q9x4dzfn0pfNNL6mL0GEMtvFTk9TN4H8M56b0t-9lkUA8oIMGc-ewD-B_clw40Jb1nonU=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-141",
+      "title": "textile~garment",
+      "artist": "Unknown",
+      "year": 600,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Qg8pOIYdIB0UXOcKzMpu06EDvabxVJ0brtpB4dbO4OoSHSu6RksyXgEORY2Z4z1Zr2axeZbuPf=w800",
+      "type": "2D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-142",
+      "title": "Admonitions Scroll",
+      "artist": "Unknown",
+      "year": 344,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_S2-2yGaLPxl4milO3VkURroAXL_VvPW0oOTcluwHbRA-2C_Dx2GMgGqUmYz10kk1rqGyDnVps=w800",
+      "type": "2D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-143",
+      "title": "Printed cloth (shweshwe)",
+      "artist": "Unknown",
+      "year": 2008,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TAKmSrP_sQOYkYve_8sUpP1qM2aJdgnzvH08L8CBB6MiA_v84LQfE6ewR2jYoGwqLzW8-c1OMI=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-144",
+      "title": "Sceptre",
+      "artist": "Unknown",
+      "year": "2600 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RDcPnDQoNewMxgbnblOz8MhyAvubbE-pGifqdOAM9EjJRWgtH42w8nqoouFk48x7H_wC_NNQ=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-145",
+      "title": "Camel decoration",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Rb1TKwf3CxirY6rV3pI5N658AqF8TVJ7boIxmk2Bo4rLhgQE6wwxOQA-24jtuAziQ0FVUEU4o=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-146",
+      "title": "plate",
+      "artist": "Unknown",
+      "year": 1896,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RN9H2v-43WxKgJHYyDHqpf7cOdLpucRhrTWfX76nXXNeVtTNazFrQhW8pBTsmUBQDWN-6zRA=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-147",
+      "title": "Dress",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_S-vS6bR_tcDhgGxu6v1Jv-v-G3Pfm2z_8t4QPic1HxdmgryzppnuGKou3a4DcXc5hgeZ5BOz4=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-148",
+      "title": "Faience wedjat eye",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RnA8y0OQNYRO5-9Ktka_o4IOfIjc19x3dXXbi9n6CLXh9lLubeRRnzSvZHOyAkFjKtbCS4Fk92=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-149",
+      "title": "El sueño de la razón produce monstruos",
+      "artist": "Francisco José de Goya y Lucientes",
+      "year": 1799,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Q8UmQBQfoLmXPiY6WCf1SavcNqmren7Im1QYHvEBKIK7erRirh5J4jm7rDwLQ3jVib4qr_acM=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-150",
+      "title": "A Stag at Sharkey’s",
+      "artist": "George Bellows",
+      "year": 1917,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TFMoCe-_206Ao3qIbgoun7g6QaYu8tp6REgBrKVffmiedZryd3pohWv9Yp25-QfiaM983O=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-151",
+      "title": "Albion Rose",
+      "artist": "William Blake",
+      "year": 1794,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RLELhEah-h12iM-7x_DNGMWkSX6SB72hRO57bYsKlSuv3uFe0-z8CMAWuos5Df6mk8_d1Vdg=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-152",
+      "title": "Rhinoceros",
+      "artist": "Albrecht Dürer",
+      "year": 1515,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RnqGWqDqRxoO5E643AWFMDki3PsnM1UtoITxzQhNgwX5rbTlp8zHY_mvp6qNG9F-f8WskHAw=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-153",
+      "title": "Self-portrait leaning on a stone sill",
+      "artist": "Rembrandt van Rijn",
+      "year": 1638,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SBi9zvmkuHxNSCWocmauH-ozuqSHINxFAOF-CVZqkioTseQkWk6Ee5SjUZKydV5hOAr9Lu=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-154",
+      "title": "A voluptuary under the horrors of digestion",
+      "artist": "James Gillray",
+      "year": 1792,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RD-SI1R_jGkIK8cxSIQcqUZgXl69rQiQw8i7RTFvtYLMrOc1ip9erLINU4ruF3SCOahuFu8Q=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-155",
+      "title": "Self-portrait with skeleton arm",
+      "artist": "Edvard Munch",
+      "year": 1895,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RRHK0v6zrnPoz8Y7bzbujs24bO-z-Cd_HYg7zHLhMdnKM0q5hn1FPY2_LKZdDbDVu7fbqS6w=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-156",
+      "title": "Jean-Francois Janinet, Marie Antoinette, a print after Jean-Baptiste-André Gautier-Dagoty",
+      "artist": "Unknown",
+      "year": 1777,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QKARIpO-rWmWKITkt10OhYidr1Bt72TMgqUoNnHeF9zrgZTOCfqIKXeT3WHYMHyOswejFwUQ=w800",
+      "type": "2D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-157",
+      "title": "Terracotta protome of Dionysos",
+      "artist": "Unknown",
+      "year": "350 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_S3oORLyueCCFOHzn6fVZzMbLQjBvYgabLZxzBHFI8w5lOPBpOHqjUqwWP7SZBPSzDFeD_tGA=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-158",
+      "title": "Bust of Ramesses",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TzWnkTWJGQJZs_YXiSiCbHklpLDT9Vh85nijHQj_JtDpZE3FixptaZBkifpJ342YTFv9ll=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-159",
+      "title": "Carved jade terrapin",
+      "artist": "Unknown",
+      "year": 1600,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SAPXvfUaDHuiPZIRTTstr2LeMmb8HUffycn-i2Nh697dyBl7ebrCXHUdBq7Bk9VBTmP0Kc2g=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-160",
+      "title": "Origine de l’étouffoir impérial",
+      "artist": "Lacroix",
+      "year": 1815,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SwLzfnbZ-yhFWePMlpXdUsTEd3p9XX9TubH5hgIQO8HoIgGKdG4oVFdOcpcXZaT4nCJY9KnQ=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-161",
+      "title": "Statue of Ramesses II, the 'Younger Memnon'",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Tn0183PAKByuCBy7xrf__OHGAFhsOJEF1U1vqDSGLKhpNM0ghgzucXLxfLjrDYVNwC6oYuJA=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-162",
+      "title": "Military Machines",
+      "artist": "Leonardo da Vinci",
+      "year": 1485,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_ReLHqQ-c9i1Gaf-igRZjHlQmt3tXUcOit0hEC6FrbnXkC-fd_dGC5ioP5kQLN27tPHwSnFjxX7=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-163",
+      "title": "Henry Fuseli, The Death of Brutus, a charcoal drawing with white chalk",
+      "artist": "Unknown",
+      "year": 1780,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SD52l_bRsNt8BoPkMreN1xskS2oYKJydawtjOtvDrEsaSuZYeM1VQsYP_8-fLZav-GA43clZxn=w800",
+      "type": "2D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-164",
+      "title": "Albrecht Dürer, Dürer's coat of arms, a woodcut",
+      "artist": "Unknown",
+      "year": 1523,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QhYe-xBHsHbFf7oR8-1m6euflJzfTEbDrhw72aQkZSOpV3FugkJ3kkBqtfEj98pyAJUs2LoA=w800",
+      "type": "2D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-165",
+      "title": "Head of a horse of Selene from the east pediment of the Parthenon",
+      "artist": "Unknown",
+      "year": "438 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SAHqX-_Ly3M-UgnnWwQ84icwy6xZ-RhPLE3OtQePckrbFvxz6bL5SJS07fHb0EJEVRvY-jVA=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-166",
+      "title": "Dante Gabriel Rossetti, The M's at Ems, a pen drawing",
+      "artist": "Unknown",
+      "year": 1869,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SmXF9yT1TlZ1RuBmKlJx7D8uXhkbtTt5vvzZt83C07HLsNggWTvZIHTx2xRZPebWb6ytSD=w800",
+      "type": "2D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-167",
+      "title": "A Grand Manoeuvre! or, The Rogues march to the Island of Elba",
+      "artist": "George Cruikshank",
+      "year": 1814,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Tz9OzUyofjhaNfbWNHf5WB4behfx5Qk8v9Cx-YAXOhzR1ROYC9fQP0IA-BJXIjWKTIkHiGQA=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-168",
+      "title": "Raphael, The Virgin and Child, a drawing",
+      "artist": "Unknown",
+      "year": 1509,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Sk7WW0-SGHaUwe9Y_QYi40tmoNWqdonWeV7dm8DgUt2q0OOh1Xn9Z3bgy6lPuLiHoq8UMPxg=w800",
+      "type": "2D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-169",
+      "title": "Marble funerary relief of Lucius Antistius Sarculo and Antistia Plutia",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RwI-ZBYROacV3k3VvU4xUpir4zY0NyyXXm20m7TFugn-fOTQpEPwQJ9AWwqUWi5NYWQ5jCCA=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-170",
+      "title": "Aztec ?llamalitzli players",
+      "artist": "Christoph Weiditz",
+      "year": 1528,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_R6V2o73cvi-w9uFee6rUGeKGVilWJZZFF9as5977LnJl7dS2vnNDkks7dob_CK31dmPb03lw=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-171",
+      "title": "Piecing the helmet from the ship burial at Sutton Hoo back together",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RSdCJlGBvNfyfaqKqL10O-T8ZUwsajw4eiuq1iftHaMxGjLdCECvfNP8aCa9OM4_b7M7CMmg=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-172",
+      "title": "Perfume bottle (aryballos) with lion-head mouth, attributed to the Chigi Painter",
+      "artist": "Unknown",
+      "year": "640 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_S7GAOHZQzsNZT8tjaY72yJYafzHfNbtk-UmeH0B8frnXz6eF1qynz8MOcQy3-SFILwJTb9HA=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-173",
+      "title": "Mummy of Hornedjitef (inner coffin)",
+      "artist": "Unknown",
+      "year": "240 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SF2LcVqHu8rGdOVi9TSJENp0aS0yqEJtdF9gP_ukVI_JdzVpZrZdHBA9J0ZGdDYICg9kiX1Nw=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-174",
+      "title": "Marble portrait bust of Homer",
+      "artist": "Unknown",
+      "year": 100,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SQrKU36_FEtSgsxXaG_wdjbN4rKx4ei-1WQH4PceYWlyg84I49JHmxXxU4yCkeHJ1Fku5pySSk=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-175",
+      "title": "Study for Adam",
+      "artist": "Michelangelo Buonarroti",
+      "year": 1511,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_R49pBZoHyeatOc9Euo7a_MbOdp5N-Oiuly6kW7NcVx1iZdwK2v43sEkZeQ0kDVw9JEsKsEpEc=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-176",
+      "title": "Figures of three goddesses from the east pediment of the Parthenon",
+      "artist": "Unknown",
+      "year": "438 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Rs55eGNXlUBYP4Dl6HN2EM6ldzprbCE-8CouJ4AGjLIDosMfOKSHEOliXbWugcoKu-Urxm_yUP=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-177",
+      "title": "standing cup",
+      "artist": "Unknown",
+      "year": 1594,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RCxSY_gaIni9n67AagEasXSENSdWoq2Jksm70CxJa6gmzSe4iSs_EXAuogZrURTsOODQ9eXyM=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-178",
+      "title": "Silver double shekel of Carthage",
+      "artist": "Unknown",
+      "year": "237 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QBBtlf-hHmQmOVRaXkS1uI-bXJ2HBCHHzeoBO6zRbRGrWyVxaDeVa5-AGY1dmqiRYW8j_yynM=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-179",
+      "title": "hat-ornament~brooch",
+      "artist": "Unknown",
+      "year": 1525,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TKJlTdFwjilRfVlswjsXpPW8ZuG_zaMhAJO9GN2kvaD-7UfVomvV4JLe14R3AYo5n72ANjiuU=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-180",
+      "title": "Michelangelo, Studies for the 'Last Judgement'",
+      "artist": "Unknown",
+      "year": 1534,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_T1LtJP7E1S0f5T_nWq6YmYcOFiU4yIbP529NiPAFAXjI0WTJy_Otm9OPrs14IhtJThHgQlXSg=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-181",
+      "title": "Gold belt buckle from the ship burial at Sutton Hoo",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SaBTwhyIJZdpNb_wadLvbcCBSy8B36NWWadnMAc-Rlg8bhIh3fGlxhsocqMNUcNbsOvTduQlU=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-182",
+      "title": "The first writing: counting beer for the workers",
+      "artist": "Unknown",
+      "year": "3100 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RDUtumFfEsM0kvMiyn_6x9xDV5zZgGERZtAk8t0RpHyTtnQbjUvCaDWS8xICocGcHnJGgtH9g=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-183",
+      "title": "Stela of Shamshi-Adad V",
+      "artist": "Unknown",
+      "year": "815 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Q9ueHJfC0j6S1-W2Hw-sbzNCM0V1-EmbavtWAyiIDSz1tr7UTqBWKKH3t25uBpWTJmxrE8TL4d=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-184",
+      "title": "Wooden model of a man ploughing with oxen",
+      "artist": "Unknown",
+      "year": "1985 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_S7GMc8l78Pxha1iiQuGHUaubsJxEwYGKNfkTDBcsDlU3ckAHPxTCa_BgOdH2d5fhGMpXM7phg=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-185",
+      "title": "Women celebrating the Feast of Diwali",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QT8BZDF0Mu8LHqVl2h3U0oo6JZMuQJ9NTjKR5pNiO1Rkka1wVJlvIQsgtxEbKFyb_LHWwyJEsD=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-186",
+      "title": "Landscape with a Woodland Pool",
+      "artist": "Albrecht Dürer",
+      "year": 1497,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RZW2Fu9Fbc6N9-7iTKsRpPHdEyPn3CkY-959ZKICwHHz9APHIZSbooqAwkNA7kpWLQwt9Cvg=w800",
+      "type": "2D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-187",
+      "title": "Silver tetradrachm of Azes I",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SpfOB1Bk_bAc9ZI-xhZEpkZYLzjQc5TFuF6dTmS7Qd-aqZrSGdK1VPkIeeSm01cc4Fc1qYwg=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-188",
+      "title": "Wooden model of a man ploughing with oxen",
+      "artist": "Unknown",
+      "year": "1985 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_T9zipjJ7WVIKvL4VQFW-AncuZ1LoPwdtn1PT68wRbRDKYCZwDXWoF22Uhl_TDCIvzz2Xrdo78=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-189",
+      "title": "Chinese Tang tomb figures",
+      "artist": "Unknown",
+      "year": 728,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SD9mJg2wbV5mRTJA1bZcrusxmRZisBqHW1JTLyWxVIzDxgHYHhIpNqYCdFPcRoY8rZK9bVYQ=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-190",
+      "title": "Albrecht Dürer, St Jerome in his Study, a copperplate engraving",
+      "artist": "Unknown",
+      "year": 1514,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SgNZAmAiVBDKianOJHppz_dhJWCmTjc8cX-L0tP8Mh5-k6WqcjJqeATWhoQ2aM38rDLDI1BdQ5=w800",
+      "type": "2D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-191",
+      "title": "Dancers Practising at the Barre",
+      "artist": "Edgar Degas",
+      "year": 1876,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QNoejDyeS0pN_nn6-9FQ8KgxfYBoHWurVA_uNpA_CxCFZJnvGN9wGFE57K0OkRWvr3VQamDGPG=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-192",
+      "title": "Re-enactment of the Battle of Hastings",
+      "artist": "English Heritage",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_T1O6HhP-IoR53b0Rj95YLso8Uxs6K2ziK0ETxriadp2B8V8cXyy2nt5iJGm3WRaFUBywattR4=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-193",
+      "title": "Cast bronze medal of Isabella d'Este, Marchioness of Mantua, by Gian Cristoforo Romano",
+      "artist": "Unknown",
+      "year": 1498,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Tf2UVmN2IKgTH5UoYZcT6mCrjNzJMOZOWbXAT152Jvb7PgiykEaKZOsKVxnW-4OvHTiKxOGzYL=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-194",
+      "title": "The Bayeux Tapestry",
+      "artist": "City of Bayeux",
+      "year": 1070,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Qio5nMAzVONvYm7MH4CVjbTRyPiR_DHy8B1wu0vMnhzVM5R2lFnOaEU9xQDNC_jsqubvRmttAG=w800",
+      "type": "2D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-195",
+      "title": "Black-figured amphora (wine-jar) signed by Exekias as potter and attributed to him as painter",
+      "artist": "Unknown",
+      "year": "530 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Rhci2_6dh1r_KJG-9YJwFEZYpBYwEeG_SmMjTYH4nLTrkBKQ79o4wsLi_cMXRHciGODYw_gGI=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-196",
+      "title": "Photograph of Chichén Itzá taken by A.P. Maudslay",
+      "artist": "Alfred Percival Maudslay",
+      "year": 1881,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QxMHqnT1buOVcgB51c6Ysjm-QQ6nmT1dgDwZVho4UW9CVRlSiiKkSaaoM0qspkwWmxQKFXQFo=w800",
+      "type": "2D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-197",
+      "title": "Struck silver military award for the Battle of Dunbar by Thomas Simon",
+      "artist": "Unknown",
+      "year": 1650,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RboTDK9TICUHWvndW_6ZYaFdsnHsUSFNIoPwZN561K_W9a0h14OJDa1a4rFoZ9xEBH9TFN-OB6=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-198",
+      "title": "Painted plaques",
+      "artist": "Unknown",
+      "year": "560 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TBt5EraorEmToO_32SWx8T08zQuGP4i9YvG7xRya52gy3NiqVblw1rwSAIoUztw8ytMXz9Bg8=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-199",
+      "title": "Silver rupee of the East India Company",
+      "artist": "Unknown",
+      "year": 1835,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_STSL0oTDiDHrQC88FOqbq0PIBcis4QRifVyt5ZpiXKBbA9b1QBHxTGSqX-780ZCF38a7LuiA=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-200",
+      "title": "The Black Obelisk of Shalmaneser III",
+      "artist": "Unknown",
+      "year": "825 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_S6MINrUcwBuIFZoWDufRkKXBUkuRuaRGZFAB4bVprc8e-OtHiqFhRLYKNAm5Ny0KGAKySGug=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-201",
+      "title": "Photo of Bonampak mural",
+      "artist": "Claudia Zehrt",
+      "year": 2018,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QzauD9w-sQ-Pp6iZoFMRLFdjfZAZF7K-lgnazhE568Gr_0vGDb8B8zZCdFFiauGq-wGhqZcix_=w800",
+      "type": "2D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-202",
+      "title": "Minoan bull leaper",
+      "artist": "Unknown",
+      "year": "1600 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SkaIw9XrQ-xcTrhrTci6wJpIxpMnVj0xnnWgBtQHvbEzwACL4OZ66_LfGx53sg8AHTj1zykrc_=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-203",
+      "title": "Futur Imparfait",
+      "artist": "Canan Tolon",
+      "year": 1986,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QS6SUDwhXTBFjpPaSQt315A4Ah_ZeEW77wZLX6OtVcuaTsINnzxPg7hdy4psEciWLwPPO3gQ=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-204",
+      "title": "Cuneiform tablet with observations of Venus",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_StH00QLQq1Z033BHTiPzS59xL8pvgKV9E31GEdwXDZa23pX3VHnFdH7Gpg_CH0QpCojopETw=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-205",
+      "title": "Silver tetradrachm of Orophernes",
+      "artist": "Unknown",
+      "year": "161 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Q2av3J18r8LOYhoTL_fxM--nz34Nl-uBsXpIvMnWR9DihQ0wWaczIKe5f54VdIbDEaydsFdHMV=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-206",
+      "title": "Gold belt buckle from the ship burial at Sutton Hoo",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SaPFEsSGgYinmdhy66uLZoVsysaivapr2SCSipVegWs4bT_Ot_7p5N3tNVsB_K5oGoc03bHjB_=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-207",
+      "title": "Antonio Pollaiuolo, The Battle of the Nudes, a copperplate engraving",
+      "artist": "Unknown",
+      "year": 1470,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QSWa7wHf7PgLfX5NmujCf3gikTjSTfaHM-7ReQdN7QRj0k1OenFL0O6bex20wmKI46uj_8aMU=w800",
+      "type": "2D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-208",
+      "title": "Colossal statue of a winged lion from the North-West Palace of Ashurnasirpal II (Room B)",
+      "artist": "Unknown",
+      "year": "865 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_R7EtOqQYGD9Nq-D5NIVLthgli8pqVPTB-PHwf5bNAG2Rto7rNB-OlSk7HQmjMXVATWYSe5oIW8=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-209",
+      "title": "Limestone statue of a husband and wife",
+      "artist": "Unknown",
+      "year": "1300 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SGcu32g3DUeNCaVFsqut1_ZZsLqdYguFVgaeyW2Cve7QHjf2H--97ZGiSBuqJSD4WAwOvX0JM=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-210",
+      "title": "Albrecht Dürer The Four Horsemen of the Apocalypse, a woodcut",
+      "artist": "Unknown",
+      "year": 1497,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Q5V9MF1rV1LXEFAo4Vt_Fjoe4LiEoTIvLBbO3scM8MS9xEP1NqSYYlS4LHGWPz7sXWpR6GPyE=w800",
+      "type": "2D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-211",
+      "title": "London from Hampstead, with a double rainbow",
+      "artist": "John Constable",
+      "year": 1831,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SR7NgVuk4B8bynfzwPaWaCfMWzg3A0dxNgyL-EjDQod6WbzZGNaGg0mlWGuWQE4oxJTtgZTcU=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-212",
+      "title": "Gold medal of Captain James Cook, by Lewis Pingo",
+      "artist": "Unknown",
+      "year": 1784,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QPOaGBNJWfQnVOZkwAjdseUvbg4Xmrd0DZs1qy_vBklyccujewyrK7KHtdAnvHniK7YzpHbfU=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-213",
+      "title": "Page from the Book of the Dead of Hunefer",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SWmiR3smQCNGBVQx0EBINSjpzzeBZITANGAZetGNT-eK1a7JO-mVMq51uM4SCD3Qhj49vK4FI=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-214",
+      "title": "Bronze zun (ritual wine vessel)",
+      "artist": "Unknown",
+      "year": "1200 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SWfjHADhC1wBSUmwmZY1OEYlW7PwWqmj1GpgTNIuyv42G-uvXA2STT7ILfX64e8GvOjnMQMA=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-215",
+      "title": "Marble statue of Dionysos",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SD9-NErzD_Tpq3N812SSaVeWLxGp8qcQZtmTLTc_eR4bNnj8qv1aIN5pmxmZJ1R9VhhoPooTM=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-216",
+      "title": "Greta Bridge",
+      "artist": "John Sell Cotman",
+      "year": 1805,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QqZ8kGXeVzv50gZZz_iBKYCLjkMjweFI8ekHCtPvLmCRD7q3WxXzqqmJ5c3BObPivryFc4DeWx=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-217",
+      "title": "Stone figure of Brahma",
+      "artist": "Unknown",
+      "year": 1001,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RxPECOsyvzodvTfh2ACG8NmrqyGYInanfdm2nNR5vzSp5ZrtPu7YJ8VLwXSUL8YMrlBk8AJjBS=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-218",
+      "title": "Gold griffin-headed armlet from the Oxus treasure",
+      "artist": "Unknown",
+      "year": "499 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TFPMoAqCunrgIWMmWnK-npMEiOIqKVL7oH0pwaYtkE3JvHJd1kKoa4uOmCg_VxXLWLXJMz2r0=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-219",
+      "title": "Silver dinar of the Alchon Huns",
+      "artist": "Unknown",
+      "year": 300,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RjBXD8LtPgWJR3xhFZws8aNQ5pcaSjj3IQ7znZ1rmrGYyHlSWeZzAvr0I7PoMp22oxMsVN6_ec=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-220",
+      "title": "20 dragon tiles",
+      "artist": "Unknown",
+      "year": 1400,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TlEZEeYcUxVRUPTKVMBPTNwXvQIqQdkW-3DwVIGtgUvvUJGb2qW0MHU8B8KPXoZtNhyIxYCQ=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-221",
+      "title": "Great Court",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Si8YbRdmuy5PbO9QLDTWz-rJ-JwAp3zDeBJFrp7vS4epslqiR5qy86xYT7cJ0gd6qMiskJvg=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-222",
+      "title": "Terracotta relief showing Skylla",
+      "artist": "Unknown",
+      "year": "450 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RClqaUXKMD3d_LG7Grm1UECQ3BS19pA04fisnRNz_oGxdnLJsuwR3xVpybSDSvqwrxcxREoQ=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-223",
+      "title": "Papyrus from the Book of the Dead of Nedjmet",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TEbCNp2bcPMWyF8KivbD-3sU8fDnJCq18dYU6rNPIG4y0slcvK6G2_hdF_fz097hxiawQQqw=w800",
+      "type": "2D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-224",
+      "title": "Spanish 8 reales silver coin countermarked as 5 shillings",
+      "artist": "Unknown",
+      "year": 1782,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Sa-PStvhBW_-HFL0lxnuMrrDci74G8omMapJesSju5ctvV9B26IJ_iOq08gPRVYbbkWT6-Ew=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-225",
+      "title": "Katsushika Hokusai, Tametomo and the inhabitants of Onigashima Island, a hanging scroll painting",
+      "artist": "Unknown",
+      "year": 1811,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Tx_HKqmkMUg4yUdYw-9WANQN_KQD3QIwTxJbQAzFp2oFTzyb8uqEq3V2yBKaFEy7gj4v27mA=w800",
+      "type": "2D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-226",
+      "title": "Sutton Hoo ship-burial helmet",
+      "artist": "Unknown",
+      "year": 600,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QbzblSZTaG4wP8fdk8PaDanz0t4pubTQ3Uh_7PlCyvzV180Ye7EbF5BuBx-eyHV-upDK4FPpb3=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-227",
+      "title": "Gold unicorn of James III, king of Scotland",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TQbVI8aA2hMBtEqFtshIBimd0iqExVLCQRnwck2yjYQ7sgrmH58nqzXV0j1QWR4p3Bff8OZ1c=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-228",
+      "title": "Granite statue of Senwosret III",
+      "artist": "Unknown",
+      "year": "1874 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QMcSgk4Iw4tTDyYOYMCthE2MmMODJSjm5S1tp-cViWJJoGDnqSDuP_5g_IY5cShP77TmOH6Q=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-229",
+      "title": "Model from the tomb of Nebhepetre Mentuhotep II",
+      "artist": "Unknown",
+      "year": "2050 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QFY2_A0pQahHZ8BuHDgx2NWdV2vLK130KYkUXg7LKYV7_gTPwyEQwVJTYZBYc3n5G5I9FCE-g=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-230",
+      "title": "Dr Dee's magic",
+      "artist": "Unknown",
+      "year": 1550,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TNmKu90TFzeVEj2gz3_Poq5SAgZ3Vg5Zq5I9G89lgFP1HZRGL86v15qdrA0RbKOSkTn0NxSMM=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-231",
+      "title": "John White, The manner of their attire and painting them selves ..., a watercolour",
+      "artist": "Unknown",
+      "year": 1585,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RcWHMqRmfwQCJZHFbUEfxDRcYfbOAOopOKaDTkmxewX8ntqNaR9e6A-88-l9P0tytxeAsh=w800",
+      "type": "2D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-232",
+      "title": "Double-headed serpent turquoise mosaic",
+      "artist": "Unknown",
+      "year": 1400,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Sp_HDbX3ZPO3Qe28TKIRiVY4dYf2W7CYqGBncwIUpbvgzKsPSmSTMTdtMisKquJ6TuM8uDPQ=w800",
+      "type": "2D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-233",
+      "title": "Pottery ancestor figure",
+      "artist": "Unknown",
+      "year": "200 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_ReLNxWNbli2KIzmqLWN5Vk_4dbdcRGTWCAup3JwNg1qMi_45gCU-Owaz7pQg7YdxT9PDZ9sZY=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-234",
+      "title": "Xie Chufang, Fascination of Nature, a handscroll painting",
+      "artist": "Unknown",
+      "year": 1321,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SoVd9YLWwz0xTevPmdAJAZGxthqGd2d760RTsvmfFqNcLUSqqHcIZaGNhiFSkHfp_uXGKkjDZ0=w800",
+      "type": "2D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-235",
+      "title": "Purse lid from the ship-burial at Sutton Hoo",
+      "artist": "Unknown",
+      "year": 600,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TMlRHMPgoWKHC1yavEnMF8kRVDPOxRLviGh6_ZD-ZbXYAm7oyQhMbMwCpjaZf7DsqhXjw4SQ=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-236",
+      "title": "Colossal marble lion from a tomb monument",
+      "artist": "Unknown",
+      "year": "199 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QTXzvdbGg59zd5Ilk4r8e9BnHOGklN48Tdzcatn8l4IRr1_WlYoyIgYkgo8ApJFzgxmJX4mA=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-237",
+      "title": "Nebamun’s geese, a fragment of a scene from the tomb-chapel of Nebamun",
+      "artist": "Unknown",
+      "year": "1350 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QxwWNSrHgAoKuz63mCjpyhvBG7wM9ub5fri-s19_vgCmEGP4Zdpoyxh75ps3JOZ1F9QvoP_g=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-238",
+      "title": "statuette",
+      "artist": "Unknown",
+      "year": 1650,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Se0Dxh9r_VgpfAx5rEGNh3R1xncO7BdrxuZTa1ogzyYxYXFSPiRDuDtQ7rrOw1ABfuE4D38SU=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-239",
+      "title": "Etienne Delaune, Goldsmith's Workshop, an engraving",
+      "artist": "Unknown",
+      "year": 1576,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SQusLgfBI2rebsb97d8Zt_OyHpibUeUSp_CtW0LlSVtyKUNpo8KtPmuP1QEjeHdpgDNDHb9Q=w800",
+      "type": "2D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-240",
+      "title": "Photograph of Quiriguá taken by A.P. Maudslay",
+      "artist": "Alfred Percival Maudslay",
+      "year": 1881,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RHD3HECkHTXehw_3G-q2rwwI7Gb4sRsRqDBeZ5jQfdhf1c-WPDYZ8G01sPZxd-KNNAso9ShEc=w800",
+      "type": "2D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-241",
+      "title": "Jean-Auguste-Dominique Ingres, The Apotheosis of Napoleon I, a brown-wash pencil drawing",
+      "artist": "Unknown",
+      "year": 1859,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TUR8WogXrSehuE2s0qalS5dCDYo-zwpxc3mEGFrh8xMgK1eLtNZW3cM6sM0ukg7lzKtLt8Kw=w800",
+      "type": "2D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-242",
+      "title": "Bronze statuette group of the king before the Apis bull",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TwfxO_fYLOCtHu5RdpWtfGxC6U6PeESXs-dtIKcyB3Fm8Vwc3xACsMUO6R_mvRsqeKkQG-ydO7=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-243",
+      "title": "Benin Plaque",
+      "artist": "Unknown",
+      "year": 1550,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_T6fuJzvg3FZhvwmen_Eja1ht7WPwStkVRZATgDqNkTak2zpgcD_Hrmmx99Zs3H9JrDTbz6ig=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-244",
+      "title": "Bronze figure of the cat-headed goddess Bastet",
+      "artist": "Unknown",
+      "year": "900 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QpIP-bGzgAPleN8z6i70XcbunQBxUa8mnlen_WY7Gtd3p5z317UsfbA2d_c4LQmzxKJXPRg0Y=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-245",
+      "title": "Woodblock print of St Sebastian",
+      "artist": "Unknown",
+      "year": 1820,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Stffb0pOHNnEFQYOJitRvazhnrmUqY1YwbaAbDgbYgg9S-jowbQX35a0lwS54ZYfDFLWKMRQ=w800",
+      "type": "2D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-246",
+      "title": "John White, A Festive Dance",
+      "artist": "Unknown",
+      "year": 1585,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Qja1xMS359mT4QiYVMmQi77Xs9Qezb-TVWvNq0Dbs93QmNabhLK01FXDS3mwB7er7fJUEUDg=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-247",
+      "title": "Lachish relief: Stone panel from the South-West Palace of Sennacherib (Room 36, no. 10)",
+      "artist": "Unknown",
+      "year": "700 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Ss9Sc9IZScczUEKP3Lufk1YDlAl3WgG46Q5A5oD31cBJ9ShbELzcBQ417ZkKonUDWE0PcDzOY=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-248",
+      "title": "Stone relief from the Apadana (audience hall) at Persepolis",
+      "artist": "Unknown",
+      "year": "599 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Rw99c1taw1Vge_L81zE5CnG3M4_vYQdqbajhkkMLxSzoC9jFhgwrQrFtlTkP19SkcGN1PhBSU=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-249",
+      "title": "Silver denarii of the Roman Social War",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QgqlycYRC62zyV5G-Xl3rmGtmiS20zeaIcvAWGi-wwZBoAlsFmpLhuMD1jo96YearCm6AfZa0=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-250",
+      "title": "Lintel 25 from Yaxchilán, Mexico; Am1923,Maud.5",
+      "artist": "BM Imaging",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TuN9XAGWjJVfQEqCBfKvSbab37Pkz-ijpcoHGaJayYeXK2eNPaxe5Q-Gmi_wiYAIfutve0mrA=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-251",
+      "title": "Brass whist marker",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RrCcEySi5N9r41XSd7ySqI8lcDDPUIoNzxRiu-OOMrsfaLDkyIlQIi-TZZLXhOmOCaVztw5Foo=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-252",
+      "title": "Musical chamber clock by Nicholas Vallin",
+      "artist": "Unknown",
+      "year": 1598,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TVCQ28FgDPdDHIsMmAWpK3AWsY-8vF2xLP_HuJHO0Y2pjDZofty2-bToNXq2HhmMcEwHw28WM=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-253",
+      "title": "Tablet of Shamash",
+      "artist": "Unknown",
+      "year": "860 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RfatvCyFsyOxjWtxqVyqryjKD2IIK6yrsRcIyMb0EkNV2yCHLgRKgoVTjO-od5CuHwboX-Ii0=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-254",
+      "title": "Mermaid",
+      "artist": "Unknown",
+      "year": 1700,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QA6QPGbSNOiThHfOm_ARFMzXtKfJvLnS39deAGVkNvRYcAWRYPQxj2R33ztrU2qo7mktWh4SU=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-255",
+      "title": "Glass bottle in the form of a fish",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QEOuXAJZky1nbakBU6cPZfK9N3nuALtCP7O73QPPpMyAXtRQDxJab4yNweXGLHTAI81UQam9s=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-256",
+      "title": "Red granite lion of Amenhotep III",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Rbwm7hgUPZL8oCMpH-3HUP-GJIcLqHuxnrgcAqSQd6RN2hdD6q2dafGk2CNSpzeOxSxZFUZw=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-257",
+      "title": "Parchment fragment from the Cotton Genesis with Abraham",
+      "artist": "The British Library",
+      "year": 400,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_T5JlcGPpS-S8Er70GDIuH3hbCH0cuPz16vjXB8PY7vt07CilIrZgieN_7PRv8rkrM-Bh4eDbCh=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-258",
+      "title": "The Standard of Ur",
+      "artist": "Unknown",
+      "year": "2500 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RpN-YlU26Tlv74_jfjrg52SUCzeL8s12Cj2ZF9jW6EvNNCZ5tA3HQEeOAUzDsPYH83yauN6g=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-259",
+      "title": "Colossal granite head of Amenhotep III",
+      "artist": "Unknown",
+      "year": "1370 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TFZk9UkmJKh40n2eJDGcqvmHpk_0GPZ-ETajSBpM50eXXbRGiPazmujxI6taLZLY-pV5MDGQ=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-260",
+      "title": "Badge of the Organisationen til Oplysning om Atomkraft",
+      "artist": "Unknown",
+      "year": 1984,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_ShEm2td8USLP3gXpCDiuO8RmH4uhWbGbU1l1LELpcYaIoNRD2Ydc7qFlg2gJmrAvPY98cza1Ig=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-261",
+      "title": "Gold pendant with designs copied from a Kushan coin and a Roman coin",
+      "artist": "Unknown",
+      "year": 300,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Tv5-H8S_9fzz_a7JXpHodNS1Q-rgWM6sWfbLIKUgZGOL5_ImFXtcvTbUhiElbdRY-1eH78miY=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-262",
+      "title": "Knife with a mosaic handle and a chalcedony blade",
+      "artist": "Unknown",
+      "year": 1400,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TIMqUq5NwUuY7EpjneljqUtLbxs_MScPxSucAf11bDHN5rcxrUz2mPkEgOxO47W1Slzycs3Q=w800",
+      "type": "2D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-263",
+      "title": "Gold mohur of Jahangir",
+      "artist": "Unknown",
+      "year": 1618,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TPILHFfzUQV-KZ59I-JWUstZk9j7YtUEk6mljFbj9Tu0TngowstcO-9wCo0sYt58Wq9tdg6Q=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-264",
+      "title": "Lothair Crystal",
+      "artist": "Unknown",
+      "year": 855,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TlZ-KrD4T4VRpltzw4DHInamuiA2e8I5wY7vkgBZKFBdezKJxuGVQg342uxrwGvYk9nrOUO-I=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-265",
+      "title": "Photograph by A.P. Maudslay",
+      "artist": "Alfred Percival Maudslay",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Sn3yMfK4-tPVbeRR1EvrQE84lwdK8-_uLFyL2NO6SSUDEeaJWva8GsS_3BdiIRBn9b0Cy1JYjd=w800",
+      "type": "2D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-266",
+      "title": "Brass sestertius of Nero",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RLSTiyaZPwpnGq6MqSQXona5YmcPeC3w91mptZH_mP4ZGifyLA46I7F-0NLsvi-modb3jebA=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-267",
+      "title": "Limestone statue of a woman",
+      "artist": "Unknown",
+      "year": "1099 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SCEhC0fohilog-mY4tu-d8_y0yt1PDOn7OiJkg2A-EYiJgx-Mq4eCX8QhwSSw2j5PqM96Jjw=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-268",
+      "title": "Photo: Library of Congress Prints and Photographs Division",
+      "artist": "Pascal Sébah (1823-1886)",
+      "year": 1873,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RU0OQsYhmWcqH5iZvg4PuVkS_VgVe6jI8NJxikUcnGPi-7QdzcSAbakAOGSsBH1bwIaO-8BA=w800",
+      "type": "2D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-269",
+      "title": "Cast bronze medal of Baron Justus von Liebig, by David d'Angers",
+      "artist": "Unknown",
+      "year": 1800,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_T3XZYSMbnRI-cAdLf-RtvOGiGOo_OuL_dY0IYDzXZ8g4f49Yq6tNC6bamyqm8sTfrStmUo=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-270",
+      "title": "Serpentinite cylinder seal",
+      "artist": "Unknown",
+      "year": "2250 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QkaHp_q6x8HntxZmSNaokZiJA_MBQqbazOow0hFKVuJXVu3CNY27E28N8HdnJLegv1rBLINQ=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-271",
+      "title": "Amphora likely depicting Sappho",
+      "artist": "Unknown",
+      "year": "450 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RjpIFteGbS6yZ8laMhsRMRvUBB75cWiLBDifYKLSYP_kIkKuNwUN78mvSg8PpNjUORFXvZ=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-272",
+      "title": "Fragment of wall relief showing the sister of Djehutyhotep",
+      "artist": "Unknown",
+      "year": "1850 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Tiew9TMGSWgR4Ap1NOjQQQA6XXSGFnZ2ASZRpcx2cjcYhQWJvFo7gkSLW3XDLhXdBc6D9Onx_k=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-273",
+      "title": "Gold mohur (coin) of Shah Jahangir, with his portrait",
+      "artist": "Unknown",
+      "year": 1611,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SQQa9nKMbih6a0pBpeMryR3EwjhnxubjnEozDbRVxOdQEjfd5wnbJBsaoFzds1om23uxJfZw=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-274",
+      "title": "Statue from the Nereid Monument",
+      "artist": "Unknown",
+      "year": "390 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QuxSPPgBZ3l69C1aGPid_lVsIDUq0D8l-RIWdNfvVX3oWq5UJvy5sAfyg6EgYuKTiDpcXoUU5j=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-275",
+      "title": "Yaxchilan Lintels 24 and 17",
+      "artist": "GMP team",
+      "year": 2019,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QzRkABwyrFLJiP4OIiG1uGSnQkEb7IJ4T8aDnIsWXcCKtus7e0A6l3mKmdTMoSz3ejXipvw4Pb=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-276",
+      "title": "Bugaku mask of Ryō-ō, the 'Dragon King'",
+      "artist": "Unknown",
+      "year": 1600,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QmvLDouJXvKQaZy-387ASVa_XYFkOOnKLeyR2kuwF4_kmyg1-bM-4ne-b_kUelIPFT9ulZWg=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-277",
+      "title": "Tosa Mitsumochi, Horse-breaking, a 2-fold screen painting",
+      "artist": "Unknown",
+      "year": 1560,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Q6Pa45oSmqeiLXaMPVG6eIf1RYs0v0TwQ6DA33I0xqrMePQ167SA7W_zcgvNOy9en_ff8020o=w800",
+      "type": "2D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-278",
+      "title": "Gold goblet",
+      "artist": "Unknown",
+      "year": "1500 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RYZZmD7H2d4s9fxYf-BzGpVmzyKZZfsp9FxILHymhd22LtyfSrumBSXbBdlJg1AdHJp2t0gAo=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-279",
+      "title": "Carved ivory leaf from a diptych",
+      "artist": "Unknown",
+      "year": 402,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SNdEcGZsxDUGlVTemVkk2TkRHkF4ZIU9_MTmIkEOwhrn5MQjEHRuSVlWswsH1DMpQFr-e3yw=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-280",
+      "title": "Red granite statue of Sobekemzaf I",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TXIAULQdqX_VUVSx8dkW1drjjgbiaMwP9pAzhqxJBpNyYxre8nK9FC2svQcPJ69iPtEEfNRw=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-281",
+      "title": "Valentine Green, Sir Joshua Reynolds, a mezzotint",
+      "artist": "Unknown",
+      "year": 1780,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SfMnR0Ear8WlCuhbMZWpcvKiobUSFzHEq0Fe97BhC8qKHbVa-C9e5uyPAGmjrUZIH9ptFgJ88=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-282",
+      "title": "Oxus chariot model",
+      "artist": "Unknown",
+      "year": "499 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TABpt52Y7Ty3gvXmtBmc8KQ4l9egfieXPsQ5FvnYtVamYbMQdEWbMAdfI6ih3lixFMzVDP=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-283",
+      "title": "Caryatid from the Erechtheion",
+      "artist": "Unknown",
+      "year": "415 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RvFqMhbwNC52vYyJ7MXquYPyujNrxF7tT6t2Uj52Ltvsj45EHRpw2iM80a7rtTLkrxUSnu=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-284",
+      "title": "Two dōtaku (ritual bells)",
+      "artist": "Unknown",
+      "year": "200 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_S3kUnaA4rveGiQlbW7mIzZwRBAzHeYWkHsj4Yi0K1PkTzM1U4VKLIxYYvLWuZBv9Pxh_hn=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-285",
+      "title": "Sarcophagus of Hapmen",
+      "artist": "Unknown",
+      "year": "600 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TKy_1EPdaHJQoPC-D7wLGY4Ea1EbgIn1VHls0mS4avKkaZSpIFdyZNcQXZec9YpoD7DwBPeFM=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-286",
+      "title": "Relief dedicated to the Thracian goddess Bendis",
+      "artist": "Unknown",
+      "year": "400 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TEZzM-s0s9p4EHfcsAztaQE0YZsRpRD3P8PyAg-LbEtNHtyOF1tY6Wo7iuyQ2oab6oS97hSj4=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-287",
+      "title": "Gypsum statue of a man",
+      "artist": "Unknown",
+      "year": "2500 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RmepF44UZE2eJeSEcJD1dTHk4MJqrFW3SDeq1ltERw0LxznVmBm5LnKwhSOaCJCTv-Lam1mDjP=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-288",
+      "title": "Photograph of Copán taken by A.P. Maudslay",
+      "artist": "Alfred Percival Maudslay",
+      "year": 1881,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Rb6bLCXReg2jAhhLN8HLoU4LJ3rbVz1HJqGtfkjMiX74vJ8LTU5RD8YRTPGy-o2uzFhCK0Yw=w800",
+      "type": "2D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-289",
+      "title": "Martin Schongauer, The Temptation of St Anthony, a copperplate engraving",
+      "artist": "Unknown",
+      "year": 1469,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SrZMBWidEff8awBdnlT8yPjg6cMyHFZBpm2SUqEVJNb7j7yAzUcnnOe9sA86G1qwJb2CV3E9M=w800",
+      "type": "2D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-290",
+      "title": "Boundary stone (kudurru)",
+      "artist": "Unknown",
+      "year": "1125 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TVdeq8QwqSwEs8l_tCM-kdQT69AMptTo7YzUBh9z1MrQNW4MapCIhIrf1TeAax4GgHUnyBLbc=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-291",
+      "title": "Quartzite head of Amenhotep III",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RA7cODnuiWaWhf1PgAdSpn1URl7Wk5tzS76r2i6IyBAF85KE8ZM2ShgBPIUXWKW_KOKFSQNaCH=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-292",
+      "title": "Kanō Ryūsetsu Hidenobu, Genji monogatari ('The Tale of Genji'), a pair of handscroll paintings",
+      "artist": "Unknown",
+      "year": 1650,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TcRl9qck4Tlt-mZqox0zrBT-Vd4VKJd0rQsfdf7VMp7QE2GNOtZdEHcU5vFbO0orT3VTaqkd8=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-293",
+      "title": "Nebamun’s cattle, fragment of a scene from the tomb-chapel of Nebamun",
+      "artist": "Unknown",
+      "year": "1350 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SdRvskoLBbn_XnkSZ-EQfEu2opTrlMEU0VApCn5lc7b2_AJlVpczA_iH_2BDP9EXdTeDwCtHA=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-294",
+      "title": "George Cruikshank, Snuffing out Boney, an etching",
+      "artist": "Unknown",
+      "year": 1814,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TeM9ebA6ln533-0qQGNMluoczp61J5xZ5ziHqHx8BHn8UgZE0-cdqbCKwQ04GCfwDAQWEUog=w800",
+      "type": "2D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-295",
+      "title": "Gold S.Vincente of João III, king of Portugal",
+      "artist": "Unknown",
+      "year": 1521,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SS5xalWfHK0DKIv-w6Su6RAeGnnxtxTAI5CXV0CEhlUrIvNeUvkwXjcXIBGaYxKR5NX1P5kmg=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-296",
+      "title": "x00966337_001_JPG-1-1219x1536.jpg.pagespeed.ic.Es7BdfoeAH",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TiFb-hW3AHJtnxWnqUz5FoK_sqN5SR7AejdHDNVZqk6uGHy-JF0pSE9ZLcTC1007MfWJMs8OPx=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-297",
+      "title": "Sennacherib the Assyrian lays siege to Jerusalem",
+      "artist": "Unknown",
+      "year": "691 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SIsuYVW4l0UYr9ANmsG6NerAohYOm3SS0C9iDarZbrWL7X20enMYAZiXDx-DL4KqGalkNtN5Ny=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-298",
+      "title": "Red deer antler head-dress",
+      "artist": "Unknown",
+      "year": "8000 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SPyF2bFJ200zgm1if8RoRk8P6gK3G2y6tUxM0AbmW08Gxi4yzR6u1Zh-GmyS26kzCcGapgSQ=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-299",
+      "title": "Blood Sacrifice",
+      "artist": "The British Museum, Google Arts & Culture",
+      "year": 2018,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RqbGIhGFv3cy2j-21H8jyv7xxsRQreY2QG8X6anOsKOTZe60mHBhFkbgelSFzT3QbTE1Dpn8uD=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-300",
+      "title": "statue",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_R7DZGjiM62uoVe6nXwoDJ7OkVR73ox_o-CN2qvenCEqqAuLMz0RX5j9l_4edKzLNrllnhvnxXa=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-301",
+      "title": "Albrecht Dürer, Knight, Death and the Devil, a copperplate engraving",
+      "artist": "Unknown",
+      "year": 1513,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SHtzshpfMDryYBQTkjO1zQ4LBicHILDEDRNqEve_P_HCBRyx9pM0FolMQhoWRW6ZP9uPmjig=w800",
+      "type": "2D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-302",
+      "title": "Pottery stemmed bowl decorated with a procession of riders in chariots",
+      "artist": "Unknown",
+      "year": "1375 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SWVgI9j-izXeM5o7vsXW0uuue383PgnPLoldGT86Ur4aa4PA9Te_8RbmteQyGbAfBTkC1uE-s=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-303",
+      "title": "Sword",
+      "artist": "Unknown",
+      "year": 500,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_S6eKWgDVSnm3UbmJz-KlYouyQW4AUtAeW5FavSQpOV6e0WSlE5d3tFWdmARJb5gMoq2T8zzeQ=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-304",
+      "title": "Gold dagger handle",
+      "artist": "Unknown",
+      "year": "599 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SftJoAKw8LMoUy-2PJVDsZAMAjHT62zP5Ay9UbXNlBPd5PSaPBVgfKEMZYXUGFd31b2rlv9U0=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-305",
+      "title": "The Sloane Astrolabe",
+      "artist": "Unknown",
+      "year": 1290,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QCZe6m_z-tqeEZq1xbjqPOJcMV0GNRfoi8FuanbsLnKjhvcCw27jo10RuLTKPJQf21DzJBbQ=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-306",
+      "title": "Dinar of Sultan Al-Malik al-Zahir Baybars",
+      "artist": "Unknown",
+      "year": 1260,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RTDCBZxsRmf-FW87PdlKdZhmM1RvVraymv3HW00i6wUjcVoDwSiex48ZNEQRWf-rfuRagw6g=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-307",
+      "title": "Glazed brick relief panel",
+      "artist": "Unknown",
+      "year": "599 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TbOeqcpBuefPPdJy2A2agzENUb4y8n8XoRepDdvETpWkzMh-KLity-K35VxdNb6hOOkFLJjjBo=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-308",
+      "title": "Map of the World",
+      "artist": "Unknown",
+      "year": "599 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RZYXAh0_znUbfGYTwhb2NYuzrpiIOP4G13zrkNjGBrZ7QdL1tfN-qyi43e35tr21lrpZP8f717=w800",
+      "type": "2D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-309",
+      "title": "Bronze model of a 2-horse chariot (biga)",
+      "artist": "Unknown",
+      "year": 199,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_R7TZkqjew-ax2tucm-fCAzxGSfS9mxnRaZ-feFFdjdCoj2Nah7NpPrasoRn-YUyjw1Emsqgg=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-310",
+      "title": "Clay mask of the demon Huwawa",
+      "artist": "Unknown",
+      "year": "1800 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TwCM4snVa9a0NfDy5Edim1MQfp-TxfxG7zZooUgKStZLXFaSn9xfpNRcVCvlS-U3Ytf-eIPfc=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-311",
+      "title": "Harvest Scenes, replica of a  wall painting from the tomb of Menna",
+      "artist": "Nina M. Davies",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Qsy4YdAo_QZT0Hq-0OjS2NWXVORegkbKoKUYohcFrGDtfgnbNfKQRD_ivSBNLE01QdUtYtDA=w800",
+      "type": "2D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-312",
+      "title": "Sudanese slit drum",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_S_6nKwwSPyZ8RwkgNne13nicjS4ZIA-_owHZIUm1-aFg4L9FGITHJ0anpSx-JCuQfAgxNBrQ4=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-313",
+      "title": "Dinar of Abdallah al-Musta'sim",
+      "artist": "Unknown",
+      "year": 1245,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_S2zxexqX-3CCh_PupYvT9hufB5kDvOclR2sXhRTPLOUGR6kr3aGBigXAa19-VZjEiwjelLnv0=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-314",
+      "title": "The prophet Elijah rescuing Hamza's nephew, Prince Nur ad-Dahr, a painting in gouache on cotton",
+      "artist": "Unknown",
+      "year": 1564,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RSHhqiFIosbFDxRyR2lTO4sW-RvvQ0qhSruBnBpU0cy7pM__8w6TbeuWFM3rJWoPS53UOVV3w=w800",
+      "type": "2D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-315",
+      "title": "The Strangford Apollo",
+      "artist": "Unknown",
+      "year": "490 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_T2kqjuWaIVpztYFZe2-NJnXk61sfOlmfg3zj41AmdZrvZBUFIYCuqh4ytT-mKZRUowAVmtMuyP=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-316",
+      "title": "Bronze statuette of a legionary",
+      "artist": "Unknown",
+      "year": 100,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RWtVrC9cvD6Hb9UkByOhmtk9-i5Uwv0CIiDdnUzhRwNPZhoCrgeSzDdbDkhdhtbI9O3LbDi1I=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-317",
+      "title": "Gilded bronze figure of Vajrasattva",
+      "artist": "Unknown",
+      "year": 1400,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_S3klSSGKfhMumIjE5nbSVRinvzpAUFiurd3Lo9ubgybW8Q5pcAuuIgoxO6P_TzTQLPIcvU=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-318",
+      "title": "Famille rose butterfly bowl",
+      "artist": "Unknown",
+      "year": 1723,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TprfhNbd5db75PFFaOZb7CSRAdlTXqHy9wexw0dE7w7Z9hjUHJf1Ayqq8ZRelWDNIOZKH3yw=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-319",
+      "title": "Sculpture of a Huastec goddess",
+      "artist": "Unknown",
+      "year": 900,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RrATX5DofXJFJ2GRZL05nALCQgWveSpKNEP004VttcDXzZ6zNN1yjPCdKl9RAcnZWvJOq2kExn=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-320",
+      "title": "North American buckskin map",
+      "artist": "Unknown",
+      "year": 1770,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_T8prRFeqsK-4imjI07grMLFNGkynJz2EWigZk-m8IYmddQdDay_PjZgvwHm8RsqsxL7eRLdQ=w800",
+      "type": "2D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-321",
+      "title": "William Hogarth, A Rake's Progress, plate 8, a print",
+      "artist": "Unknown",
+      "year": 1735,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SwUFjCObDaocRwaR9cLmmnNf5NjKTjlxlcniznaY0HcIEbtvyy6We_3p4Y1IDORhCkqdz3gA=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-322",
+      "title": "totem-pole",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TzLLFOc_C_ujE3EOlQ_GLoWlVjM6k4b4uhkct-mfR-U6EffynJa8Pc2KuE6ocTeQspzm2JVA=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-323",
+      "title": "Parthenon sculpture: Centaur and Lapith",
+      "artist": "Unknown",
+      "year": "447 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SRROeZuPQW93tAG4dJ41lXYnfpCCClBDwXKsWYeNeyup5yiIAUyU6UDbtepmGnWAZjMZ32wA=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-324",
+      "title": "Silver dish",
+      "artist": "Unknown",
+      "year": 100,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QIIEhWIvISsYlQPUvU17MDgSPEAsuCs5UZ-sdxylOpgSjhtAhFWMsmcHFsKJyGG5GwS14SsQ=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-325",
+      "title": "Kakiemon elephants",
+      "artist": "Unknown",
+      "year": 1650,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SnrIX-BG4aIt2RKaImxBTl7cX5uIo1rZinvjfLoNDsGn1M4SOx1R8eAcrjaQRdkurcGj9E-g=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-326",
+      "title": "Sword mounting in itamaki tachi style",
+      "artist": "Unknown",
+      "year": 1521,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Rr561nIf1jD-mMtR8QWkqoCOUYksqXGPg4bT-ItAC8Uyu4ZCuA5IVOzfx3nfzuvBrhZdTq6s-g=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-327",
+      "title": "The London Medical papyrus",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_T301guADUVaNhkJ75_sMeQHXpr9VqvslVa57wDsV985GDjGN9IWZCdarpMN9W4bobf2nekatxk=w800",
+      "type": "2D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-328",
+      "title": "Bronze head from a statue of the Emperor Hadrian",
+      "artist": "Unknown",
+      "year": 117,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_R3KsBD5K4koIBxxMjHQaWrrUSFTcZe_Aj6jHkECh9srtGi6h50FxOCC-hQ9hUtWTTYhpmsOPjq=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-329",
+      "title": "The Tiber from Monte Mario",
+      "artist": "Claude Lorrain",
+      "year": 1640,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_S9uoOlPFKz55BjvNZFZJ9rO0jetgloBF1QZuNOM0H5APpLfxHa85fW3eTmvh_UhBHCliEfO3Iu=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-330",
+      "title": "Claude Mellan, The Sudarium, or Veil of St Veronica, an engraving",
+      "artist": "Unknown",
+      "year": 1649,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QBHBNy_6yLH2uX6aldHYUlmuqXHKUWDJ2WLxAqvFqiMjUe4tD5q1oHoas9iqbx6xKFqsydew=w800",
+      "type": "2D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-331",
+      "title": "Senet game",
+      "artist": "Unknown",
+      "year": "1400 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Q64nOHo6ZpiNNBVM4vwTOXrOtCIPfemzXkwspzRIfgs7G8PBfFQGL6KBG6rKHkvTAwNcz7C3HA=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-332",
+      "title": "A feast for Nebamun, the top half of a scene from the tomb-chapel of Nebamun",
+      "artist": "Unknown",
+      "year": "1370 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_R_6MwTYAYqcZR72qOePmiBfQI81_jDy7ehf7xLLkZElSyedusf0txkn0zfc5AFzFOMpcUFOpU=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-333",
+      "title": "Terracotta head of a ewe",
+      "artist": "Unknown",
+      "year": "3300 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QbJLoKTIpylvlqm4_2Yone6m-jXu_91dVcgQU9pRy7PuLeBmFM4EAXcHzLBo4hmW-qtZq_jzM=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-334",
+      "title": "Pottery juglet",
+      "artist": "Unknown",
+      "year": "2400 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SAt4DsGX_qEDJ0fb87Wr7Ib4uyGpYhvB7Ywo9Wr5dllz9u6R3ZxgV_V-B9Z9wkuNkHPiFp=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-335",
+      "title": "Bronze figure of Nataraja",
+      "artist": "Unknown",
+      "year": 1100,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TtBiT3wZG0QpMbGnV8bRHLNG7C0J7BY2iT-6viWKVGDlXMIfHlHiyckiDi_gzu2ZJkgYQkSg=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-336",
+      "title": "Victims of Violence",
+      "artist": "Unknown",
+      "year": 1100,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SmgOMfp8DqhH0FYeTYqUepjt3GxLTIHTSQ8MsgGmy-Q5aMpRwnGwuqkggjK6iXBbBvJioz=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-337",
+      "title": "The west pediment of the Parthenon",
+      "artist": "Unknown",
+      "year": "438 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Q6a4L37BbW7b5GcHk-u2gu2NyolB64namZZkq0MR_gLTdVUtggj_YjauqQtGscjRghGzOh_g=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-338",
+      "title": "Protective Spirits",
+      "artist": "Unknown",
+      "year": "645 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SFGzO2xY-54kFf-U8SJ9DXCE8JdlG86J6NS4HYiSHSAllsW96nuJneUZ5jqf3yd-nQWFY6yCE=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-339",
+      "title": "Francisco José de Goya y Lucientes Otra locura suya en la misma plaza, an etching",
+      "artist": "Unknown",
+      "year": 1815,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Sf8EL--pFSNyGv4oniP1JUFve8IlZNIG2k7glZ4vVSzbchWJFnEga2sJrq9WyQ1LdBFEg9Xjg=w800",
+      "type": "2D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-340",
+      "title": "Stone seated figure of Xochipilli",
+      "artist": "Unknown",
+      "year": 1350,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QVTG0Kp8sQt4I4uXjeq0nOT9y88NTUj1gayqwb0ATYjCUhpsqHl_3HFO8vR6i3QaNdb3b-5gY=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-341",
+      "title": "The Portland Vase",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RX16u94QvLbh454XTySJ_nbpK1NcW5GFnQo3qh4Jx84_MIF-IRPlND4QPTjL5O8JR4a6q6UQ=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-342",
+      "title": "Central scene of the east frieze of the Parthenon",
+      "artist": "Unknown",
+      "year": "438 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QZRlxDKny1w5yr5A1ILyLJjNcgyfgucWP2_CRai7aj3IRVx7M527J5TsaQUFEa297J5jbORQ=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-343",
+      "title": "Marble statue of a pair of dogs",
+      "artist": "Unknown",
+      "year": 199,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TH7PZtFJedaEuizw-AkXfG9p-CxAFZ9PIfYIR0WGV6LH4rUEVm0BwIjXlNx8Cc1gBDT6lApi-G=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-344",
+      "title": "Red-figured cup, attributed to the Foundry Painter",
+      "artist": "Unknown",
+      "year": "490 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TWVSgeuMrKUObDmdNRr4dt0xbEU9GiEELBBhAED4FciQ-JDdHI4Gxel2rtwnZoZDAYaHSknYo8=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-345",
+      "title": "The Plumb-pudding in Danger",
+      "artist": "James Gillray",
+      "year": 1805,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_T8fu4QLQL1qd3E6wKM_iaWe-2OPnfZ0Thi2rlDNdVMHO_ux0xJfGkO32OyCMgcCvni2_MpZA=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-346",
+      "title": "Katsushika Hokusai, 'Ejiri in Suruga Province' (Sunshū Ejiri), a colour woodblock print",
+      "artist": "Unknown",
+      "year": 1831,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QqIqhIvNEzmJdcrbII6tykj0XVb0CB5C3JsRuQeR1W6Nwzm0fxv-_dIDt9C4TIcVJrWDVILlw=w800",
+      "type": "2D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-347",
+      "title": "A feast for Nebamun, the bottom half of a scene from the tomb-chapel of Nebamun",
+      "artist": "Unknown",
+      "year": "1350 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RbULp18UPBVcAbMgFRodRxALXUsoqLTC7xervfcXdLG9T4ecZuvVJiEiJPM8HZqdnbGnTsqg=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-348",
+      "title": "Marble statue of Hermes",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RUTQeBQKlqRN0TWGeqXUAA7F8jtJJCkbmCJC3C6_SpSN9P6AEsCsziKpnfisMxoeeJ6F1suA=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-349",
+      "title": "metope",
+      "artist": "Unknown",
+      "year": "447 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TCFseVkXcns4kHOQLwKSYaIczlA27agXhAXg-2TOHKUG5nif3As_pNVL-6rgDVnnn3rjoGBOc=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-350",
+      "title": "Label with a scene showing the jubilee of King Den",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TWUu04vhgxnsfXmV4Ck7Qe52R7XVB4NwlYJzi8jOBn79PjdiVULDdujqx-kcjj_n-DfhXoIvw=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-351",
+      "title": "Igarashi Shummei, Lao Zi, a hanging scroll painting",
+      "artist": "Unknown",
+      "year": 1700,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SHOJ4zk5UQLE6DIVyMLmwIDIRChtBpfQCPD7gJK-qkWaVrfe3zDLyCdPno9H9aDoJC285zBlo=w800",
+      "type": "2D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-352",
+      "title": "Statue of Tara",
+      "artist": "Unknown",
+      "year": 700,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TZ8kmttlcfj_UPZyYbfVvqzcWITZ1zUDw7v5Pz1jpJjx-djDRRQXeaRYneeNVgXEgrA1euJiU=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-353",
+      "title": "lekythos",
+      "artist": "Unknown",
+      "year": "435 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_T-zR_RtwHs8zcU1f5mEMKhIPYXfRaoNFEfvfeEHcSWwZFunJwpgQXosXQFnX6CXS4QJkGj2Q=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-354",
+      "title": "Bronze head of a goddess, probably Aphrodite",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Tqn1JiyeUaH8hir5iEL5N9vkyah9a31sdjFwRkZ3iKPUujfaqNyZqriVRBdEgaWnMjDETB4s0=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-355",
+      "title": "Cyrus cylinder",
+      "artist": "Unknown",
+      "year": "539 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RDF6Bbu_MFsrjg-iQn_kjd2-hczP0tuHj4jCUAVk2V_EBY9mINEHtUrQ6Nb6b1ofEtqzTq3TU=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-356",
+      "title": "Gypsum wall-panel depicting a eunuch in relief",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QWPFBdYlFnggaMQmrJgHhBUcU8oPO81ISwawsGszCUYIGY5VSxLp1E-BXGQj7xLqjwMed6ow=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-357",
+      "title": "Pendant from the Tell el-cAjjul hoard",
+      "artist": "Unknown",
+      "year": "1599 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Ri5P1KKfg48BwRw8uX37CH-XfN-MvmjWxeNFSHAlAvja2MdfVg79B6QGg7o1SHHsQm1LBSxQ=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-358",
+      "title": "Luke Clennell, The Fair on the Thames, February 4th 1814, a hand-coloured etching",
+      "artist": "Unknown",
+      "year": 1814,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RfWHtoBbovSzjly_kO_HusZDTMnzKzU8AzLvqLgfxp1Pd73sToa6FxpNQ9yGbyKgoRh5eQJw=w800",
+      "type": "2D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-359",
+      "title": "Group of pottery model temples",
+      "artist": "Unknown",
+      "year": 1325,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_T4M0ry5DTPnOo5WJG5ohpcp0NMCGhKkpN5Yd4p4BIJRqyGBHqbCM-HAn2_CBjSuS-8OublUdU=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-360",
+      "title": "Albrecht Dürer, Head of the dead Christ, a drawing",
+      "artist": "Unknown",
+      "year": 1503,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Szv8AI2EAzSVvfABz2yUAXhPBK9D4PpWlRj_auuxd9Ygkorcev5jItd_FmkIHSCRw1DXN5-dw=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-361",
+      "title": "Aubrey Beardsley, The Toilet of Salome, a design in pen and ink",
+      "artist": "Unknown",
+      "year": 1893,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TMPpB79pVl9_9jba-rA5Q6m0hy78r4K8nUP_cDRJ-sE0pU3BwJTGqMKh8gkMZFzhQXFPbRq3k=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-362",
+      "title": "Gold belt buckle from the ship burial at Sutton Hoo",
+      "artist": "Unknown",
+      "year": 600,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RjKDhuaIwq5xadhkeicAijVa2fEEg5sByAo8zoy8Hm9ypj5j8I9oceA7uR5oURqiqmL4ojiAc=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-363",
+      "title": "Michelangelo, Lazarus, a red chalk drawing",
+      "artist": "Unknown",
+      "year": 1516,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SHGnUYEUEtwRb50vVYIiHIkD83x-IeV0dYlMOG9sPKXfu-ooIxTtVbsmBj11bq3es1kOA82mc=w800",
+      "type": "2D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-364",
+      "title": "Bronze portrait of a man",
+      "artist": "Unknown",
+      "year": "300 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SciPJV3L5O48uVjQwJq16jS8FFaYMVnx9l3lL64u-JyJJeB6-_-4Xx_YP7ltgUX15p2-oc_w=w800",
+      "type": "2D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-365",
+      "title": "Surveying the fields for Nebamun, fragment of a scene from the tomb-chapel of Nebamun",
+      "artist": "Unknown",
+      "year": "1350 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TvKUC__k1fCctQD5oLAnf3nVdrcEu18R3Qlm39RkVsV0MjoEogxpW8HxsDb11G8LC_btYIWa4=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-366",
+      "title": "The Field of Waterloo",
+      "artist": "Matthew Dubourg",
+      "year": 1817,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RcKc8xlD8xTbwjcLtzDTSdHFuo8gDPkBAln8dlxbnO0H9x7HV5f5bQLutYrfjz9Zg6dHhfnw=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-367",
+      "title": "Porcelain soup plate made for Lord Anson",
+      "artist": "Unknown",
+      "year": 1743,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Q7qciURol0zFqoBamsU3wAB6jWWO4tBGmkUZ5a4cghb6KUXAcqNLOZyE7BG61EJRwMr9V8ew=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-368",
+      "title": "Cast bronze medal of René de Birague by Germain Pilon",
+      "artist": "Unknown",
+      "year": 1577,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QSGa0aUSJTQzvpJTFxPc8n981tGwdF5rq3mUE7Mh6yalPtPTTyTDD2tQQkd5BouGoDDdcsDg=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-369",
+      "title": "Limestone false door of Ptahshepses",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QZ3J0_m4TBAFBiZjXArxzhjIPw36aMoSLZfnQQAwGKxPkTkiWAvF25eiZcCjJicelZzMDK_g=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-370",
+      "title": "Marble relief with female gladiators",
+      "artist": "Unknown",
+      "year": 199,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Q8VwkKXGI41x6Zsa66e6J9CdC_pxoHzMbd6Vam7nwdhXAvl1pW9wjLPH5QBMFGQpm74CCuTg=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-371",
+      "title": "Bronze mirror showing Herekele and Mlacuch",
+      "artist": "Unknown",
+      "year": "500 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_T1flnou9EqQqNermpf4XsU34TLQEnCM9TydeMZtYoarrY5cKJMSdqk_rQ9vfoGvoA4FPw=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-372",
+      "title": "Stall for the sale of painted figures, a painting in the Company style",
+      "artist": "Unknown",
+      "year": 1870,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Qob1z0mQ-2Hn20uR6kxPOOT-KcasHk9rxfeSKoedhStatIJyzx2sc-sXHbfUnAONUeUjtoVVo=w800",
+      "type": "2D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-373",
+      "title": "Rembrandt van Rijn, Christ Healing the Sick, an etching",
+      "artist": "Unknown",
+      "year": 1648,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RcbPFlJvdr6xtBPMlhv2eOxrE2w5OKF0RLtoeGrifSE0Gdp__WW7kz8lN_W2e_WmOeH4dCU7c=w800",
+      "type": "2D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-374",
+      "title": "Photograph of Palenque taken by A.P. Maudslay",
+      "artist": "Alfred Percival Maudslay",
+      "year": 1881,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Tc42NVNkuFFBKvdHb4lVhQgBf_YAGYcIi7cB-3GnU9dzK_Tasu45zEHSlEjg-5H9yOrfzOHEE=w800",
+      "type": "2D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-375",
+      "title": "Gold funerary mask",
+      "artist": "Unknown",
+      "year": "500 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_T4U5qX2ExiDrqydW3Lc-_9b_CA7gJDkVEfCDrdJLaQQnR_j_rx7mXhj4Drgdq4aoLE0gkgf7rs=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-376",
+      "title": "Holy Thorn Reliquary of Jean, duc de Berry",
+      "artist": "Late Medieval",
+      "year": 1397,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_R0alPbCdwZHKkeEwMDDzq34m3GxlC91z-HbSg7kCD_h5rjUA-K9Xo5X4Mu8BvwOSbRKAJ8tQ=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-377",
+      "title": "Sandstone figure of Shalabhanjika Yakshi",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SBylj-uiT0qVQ1YIbf0QFnvfFDF7FTdhhfjUdHkdmrCzYzLhNyMWpQI5Lggd8hP_NFsY5eIeg5=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-378",
+      "title": "Kylix (drinking cup)",
+      "artist": "Unknown",
+      "year": "485 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_R71r-qdpwUWXx9qI1Npm3k9eFG1hxFtXMZtQbi257mNjZQD2PsHpFHJ1dlCK-mj7cmfCxNd1A=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-379",
+      "title": "Gold bracteate",
+      "artist": "Unknown",
+      "year": 400,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SfDQ_zKXMXjUoYDqCI2HE9jRpF7dfwVcghxzOKMnjiPNByTJ41YjiH-LfGX9pgA_rgDvs-9NQH=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-380",
+      "title": "Wood and ivory netsuke, The Dream of Rōsei, carved by Kagetoshi",
+      "artist": "Unknown",
+      "year": 1800,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TgzsrgQBtKiVLbRPa0CzCPVUProlP-cxmCjYr4QqitKlN4fTUz-x85zNQ-UiO2D_7BhZuXjSc=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-381",
+      "title": "The Queen of the Night",
+      "artist": "Unknown",
+      "year": "1899 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RLcEP43NLGBngX6sHWZ5OiQTdvjcB4X4VPQRhgy8BWIB6pPjU9kO64k9fANwOPN7UxT99q0W5T=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-382",
+      "title": "Thomas Rowlandson, Exhibition Stare Case, a print",
+      "artist": "Unknown",
+      "year": 1811,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Rl8gRt8YwBYJ4SkxCDQGV9qGHlDbRadd7RZ7JLeONvyQTxvY1Ksvx8xihgKpCKRs2YZhihTg=w800",
+      "type": "2D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-383",
+      "title": "The Corsican and his Blood Hounds at the Window of the Thuilleries Looking over Paris",
+      "artist": "Thomas Rowlandson",
+      "year": 1815,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Qw2Hst4FKYEc7z10TcF9aFBIOYCZu4n-_8vrAKbZt2XpTZHqzZ4QLYiTknlovafNWVZiJHNQ=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-384",
+      "title": "Rembrandt van Rijn, Christ presented to the People, a drypoint",
+      "artist": "Unknown",
+      "year": 1655,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RzrUvRhpS4J93cwrvGNRoydtXHdYeDHfaYFQhgo5MlhKJB46XK-c8M128JFJ390-bfZ4LBkBf9=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-385",
+      "title": "Alabaster wall-panel relief",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QJWnl3Hk6dQ-cy84DllhpgTddPEWKAtmFeiHL4-aOKaTJgxwSo0pAUsvccDSbjZliC=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-386",
+      "title": "Marble statue of a youth on horseback",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_S_lRVWlPFQKpoksRxm83WPzj5FCZakfkuG5vyUZOA7Kglo7_eoNFmeYqUa9Xi2PsYrmDUQ5A=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-387",
+      "title": "Marble statue of Venus",
+      "artist": "Unknown",
+      "year": 100,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Tbi2CT7_WAvKdafMbG9kOb8GVfxUrIfOONoMbSX_hzr1tfP94UdWQT7laLRq6Ne5H9JrT3Z70=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-388",
+      "title": "Boundary stone (kudurru)",
+      "artist": "Unknown",
+      "year": "954 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SPWNi_oHUdU4cFqiYbGdAuUq4Ck4BJ7EbsbItBLfad7-uNNH0NEn5YdpnvXRlQVY9zrtwK=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-389",
+      "title": "Helmet from the ship burial at Sutton Hoo",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TM2DKwmJgHj8hv6MumbK8NVXKe6L7n7xcubb17tiqKAhM28E7hyMd4UKkv2U8Tz2dv8aaM6g=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-390",
+      "title": "Stela of Ashurbanipal",
+      "artist": "Unknown",
+      "year": "668 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_R4_9rTHNt5qTLznHq47KMXlLN-TcBT36Wb4bYTDx28cQA8s6H6BjX4smSpATpkQMwNv4FZBZQ=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-391",
+      "title": "Painted clay and wood figure of a horse",
+      "artist": "Unknown",
+      "year": 725,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Tu7yg1Yx4wLwsjojosZEBScWV9B5kWsxBMqsCGkaaVJN6TlPAAexDAssD0sFsIYdRnCUDotg=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-392",
+      "title": "Sicily’s earliest surviving map",
+      "artist": "The Bodleian Libraries",
+      "year": 1200,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RWWWrBxVH29Foa91UjbgdRawMoe0-VdHq9XaKsv0bLUDb8HZfvu4No3ZRe2az11W4Cn0AmwjM=w800",
+      "type": "2D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-393",
+      "title": "Vase decorated with bulls and birds",
+      "artist": "Unknown",
+      "year": "1300 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_ROPK9-HOlK_dUNNjFbFVVppMZ2H1efB-8Yf-2bETTmZIUKmK3Fr0idH2Wmecy7ji1DlQ12wNA=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-394",
+      "title": "Mosaic mask of Tezcatlipoca",
+      "artist": "Unknown",
+      "year": 1400,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QIXbLkOFvJZKnpPob8dFJngRzqYSAWDVcT8Ugun0cmuTyjwd5JOsnPnJU5LyIGpDgGSJxXwmc=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-395",
+      "title": "Jacopo Pontormo, Two Monks Standing, a chalk drawing",
+      "artist": "Unknown",
+      "year": 1522,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RqIpmAjUZL56_IoZNLmu0TDwFJLyDJ-Khgn-0lZz469E-WbkrYcrHYPUbxvBBR7TX562na8ns=w800",
+      "type": "2D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-396",
+      "title": "Photo of the hut built by Maudslay at Quiriguá.",
+      "artist": "A.P. Maudslay",
+      "year": 1881,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Tss9FfP82JkWMAwu1iaw5aeJBBn2fPGTe09QIB3KQtWrRQVvFpG3yDuVpBTpShDVDrWY5m-g=w800",
+      "type": "2D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-397",
+      "title": "Bronze head of Hypnos",
+      "artist": "Unknown",
+      "year": "350 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QOHonpHL_YCfZrXe0it6PpEE6DnJmbsecLj4bBKGifKs_d9lGzoyuA1svGwQ-EPgHV6kZS6kA=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-398",
+      "title": "Servants bringing offerings, fragment of a scene from the tomb-chapel of Nebamun",
+      "artist": "Unknown",
+      "year": "1350 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_S5D38ldLzUyQ7odNclmEVwfz755vJMFg0-wbVxbGbth06_PMV3g3yc2FWgvgPa23aduqmI1yY=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-399",
+      "title": "William Blake, The Judgment of Paris, a watercolour",
+      "artist": "Unknown",
+      "year": 1806,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SrVShgj1HMeKwHPxd6FcjR11N6ts62Y5hY2Zr924eC3lZF0rxMV40YQAk1JTAYCyXlljGJGgvg=w800",
+      "type": "2D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-400",
+      "title": "Photograph of Palenque taken by A.P. Maudslay",
+      "artist": "Alfred Percival Maudslay",
+      "year": 1881,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Sz1lKx1nnJkOu14cXQAmHWRSSwfu4a3PddeqIwrJx2XcdePC8QwfgFBuv1kXwFwv7p-HfRi15C=w800",
+      "type": "2D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-401",
+      "title": "John Martin, The Fall of Babylon, a mezzotint with etching",
+      "artist": "Unknown",
+      "year": 1831,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TcI00ZINYoj89hgdDOq2-dCslyHiMYs3-VHkK5pmWLQXLlcBCwT4P9WIc3D7JCyEq6mH-H7QMA=w800",
+      "type": "2D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-402",
+      "title": "Alfred Maudslay at Chichén Itzá",
+      "artist": "Unknown",
+      "year": 1889,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TVFF4URBByUqJk6YUkIQHNP0w1wtkGtZMEOovXdgsfjdze0mFagoMw_gKvY6bXIwbSyLCyFEI=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-403",
+      "title": "Hosoda Eishi, The Chinese beauty Yang Guifei, a hanging scroll painting",
+      "artist": "Unknown",
+      "year": 1795,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Qb7m_yL95mILjFi8LD3R0YoEdvTbm1yrfPecnq2o_99hsrtg7XSGSrCEJoEBHgMYHTWEmamg=w800",
+      "type": "2D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-404",
+      "title": "Nebamun hunting in the marshes, fragment of a scene from the tomb-chapel of Nebamun",
+      "artist": "Unknown",
+      "year": "1350 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Rr93ifIVXRZEtp4fB651a5tnNMkY3GTTdAwWm0ES8yWmVhFYk7eEETiYGkGZ_dU0z2d4DpLoWY=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-405",
+      "title": "'Vandal' horseman mosaic",
+      "artist": "Unknown",
+      "year": 450,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SEKu8sCElrK1Z0vOXyqONSvVPjkAWHmNI8lt6UOX_sGoJU23pmfXeRlcLSLSTLs9rgokChYEmg=w800",
+      "type": "2D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-406",
+      "title": "Kanō Isen'in Naganobu, Twelve Famous Places in Japan, an album of 12 paintings",
+      "artist": "Unknown",
+      "year": 1800,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_T6Mmc8wAdHHS8jOm0hSBIGZyz6fAiQ6sjjK1u83kkzQkVo_dD2BHjeENly3yDrIdgaOizuZkw=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-407",
+      "title": "Edouard Manet, Les Courses, a lithograph",
+      "artist": "Unknown",
+      "year": 1864,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QG7PqK5YZ10X3OcqY_wo2A2jkYOf_GMydFwrevXlE0su6cEow3qwc5c2if7H9GxP2KoCfO97o=w800",
+      "type": "2D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-408",
+      "title": "Utagawa Kuniyoshi, Princess Takiyasha summons a skeleton spectre to frighten Mitsukuni, a triptych of colour woodblock prints",
+      "artist": "Unknown",
+      "year": 1844,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_T9YQ-zGtLIuNYHd0LRrjyH9r_TzdM6o2aj0QKGFGoAsE-uVqd50UARkHr_uiKB7mjNAaf6sw=w800",
+      "type": "2D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-409",
+      "title": "Vale of York hoard",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TUe8Jf80CS8EDztmdCoK6Wlha_wGH5gnMrW7CVyq-ahrBSeeOTSiDyqYzDGYgNE30KUXDFbAw=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-410",
+      "title": "Limestone cup",
+      "artist": "Unknown",
+      "year": "3300 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QXhKap_d2i3b67_evyy7Vv2RDzD4gKx9y15os894LVZYGMCkm-xw_Au1N0o-IfhvpguAYlXxU=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-411",
+      "title": "Photograph of Palenque taken by A.P. Maudslay",
+      "artist": "Alfred Percival Maudslay",
+      "year": 1881,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QihxmBu-9GmmjUAjhfMioWDMs0yBTzLxC6et2BUEf1ZtJ8_A7-IWwr0WFbiTsYisANGAiKLJM=w800",
+      "type": "2D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-412",
+      "title": "Silver coin of Vadfradad I",
+      "artist": "Unknown",
+      "year": "299 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Q1Wi61O_DaF5ITdb47si1c47G_rvQK_FxHXrBTqMCCqV2vOxu7-iLpxS6nrIxXyY059U_myA=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-413",
+      "title": "Silver tetradrachm with the head of Alexander",
+      "artist": "Unknown",
+      "year": "305 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QlQq0iM64xPKeUqnwBkD9lRwsPyG6VoeLC40To4CMcKZa5LwcLjtO3XdEPFgQMhe1ZgCccVSF_=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-414",
+      "title": "The Hinton St Mary Mosaic",
+      "artist": "Unknown",
+      "year": 300,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TSlaUthfX5vMQBkXuefOGdCo7orMZZ39-H9JMn7Pc6vuFJv0hXizoMfx0DIAwJU2_9rQauO2u8=w800",
+      "type": "2D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-415",
+      "title": "Ivory plaque with the Adoration of the Magi",
+      "artist": "Unknown",
+      "year": 500,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TflerRoMOgOCDwYQUaJPE2n-y3BwXnywl36eiGQmngFs5qX0AgmWYA-fZs6wXkLTSPPSmu480z=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-416",
+      "title": "Ivory cosmetic box in the shape of a fish",
+      "artist": "Unknown",
+      "year": "1250 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SuqOYD3DlIMpLyJVlp3jWBuHbAjKR2vsvrju_go8UFq58vKWMbbmIWnOXF1wpb_geB8fOp57A=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-417",
+      "title": "Sled of bone, ivory and wood",
+      "artist": "Unknown",
+      "year": 1818,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TPkc3OCjqt0xZHVavJmVYweDOZg2Wf4GWgOsLwWmnY45er1LDjsQn-V0QhRhPGP9Ho9nwFI6Kf=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-418",
+      "title": "Discus-thrower (discobolus)",
+      "artist": "Unknown",
+      "year": 100,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QNYECNA9WGnfSjiQ8d3lrtvugVKS_8lZeRGU2pHfbUFSJGpG-ZR3MectDDEv60uGcCoTVLM-2M=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-419",
+      "title": "Canopic jars of Neskhons",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Tg_GWPBndwK5-swjHXq6gcUxKzIoFIYiJgtaVA5EppUb2fYIQ4WDeupuJvKu7jBHvJZyjFkiSK=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-420",
+      "title": "Hokusai's The Great Wave",
+      "artist": "Unknown",
+      "year": 1831,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Se2h24nUqYmig9J5bKqSDe_fBsvnI9NW_V_8AHykxwYgvIkzfKzJu8-MLP-TLeEhxq1wM_opA=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-421",
+      "title": "Albrecht Dürer, Melancholia, an engraving",
+      "artist": "Unknown",
+      "year": 1514,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TIYHnmRM458EvX6ZglC-lagXgbd1YUkGCRWe-31Se0YZhdC022e6kejAptU5x3tzQTNwC9CdI=w800",
+      "type": "2D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-422",
+      "title": "Bronze horse and rider",
+      "artist": "Unknown",
+      "year": "560 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SMaRwmFWlhiNnEHHWobZT4rM1ygWRGxp2IbJFeefb9MUzZTmTLWixictVDQZVR8ek3yL1ksQ=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-423",
+      "title": "Predynastic Egyptian man",
+      "artist": "Unknown",
+      "year": 3500,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Tmi6OFWRhN0-wc2qE4mAWcuwHfA623UNUBaGd0Fqw4awzVRELbDi5I4vSB93gJWq9nRCoVhQ0=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-424",
+      "title": "Tin pattern for a silver dollar",
+      "artist": "Unknown",
+      "year": 1776,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QcXH_4FeN10KW-3qj30-_CL3keGDqomXzxpNr8hB0yrKKgrPeeMSOUtNK-eQF_jHA9u1ZW=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-425",
+      "title": "Carving of a European official, by Bamgboye",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_T3dHGxMb_iMLf0O2WHN9xU59zFb7nKOpW2HTNgXR0-yV_kccg2eJIB19Iy-g3KJ48MQqiQt9M=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-426",
+      "title": "Photograph of Palenque taken by A.P. Maudslay",
+      "artist": "Alfred Percival Maudslay",
+      "year": 1881,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SQPdA3DT951RxqV3ylVZ2xbVGoeYk-7dd0Sf3A_3aclZgeCciAmtyGA3RpyHgByUQwBcOe1Ok=w800",
+      "type": "2D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-427",
+      "title": "Pair of oval brooches",
+      "artist": "Unknown",
+      "year": 850,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RBjBY98_bPwgbIxwi2pOX9WfVy-NKKAeaXjZBY2N07DskHIsqtZLncaJ7VKHBCJvw-CP6Jj5k=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-428",
+      "title": "Fragment of a stone panel from the South-West Palace of Sennacherib",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Qv5VNtukjdOiJEjI2RDpveglqNfJbhSDflobmNh1Ek8HH6YMPvIff1AELMrDFD2eW1vGc2JQ=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-429",
+      "title": "Silver-gilt casket with royal armorials",
+      "artist": "Unknown",
+      "year": 1303,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Q-1-ZUKkpS0AnhcENQrQRPcduFBIpvm2q-Nd0dV31fD6G-sQ-RFHlEYXzwHtwz6IOqjkZwcvQ=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-430",
+      "title": "Bronze head of a Roman Emperor",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RDylv4UgIhRYWUijLz5XoHmTbFAAP90NFfiNznYPeGaT3366sjvfrODvE69du9DEIGG9rRxQ=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-431",
+      "title": "The young Maize God, from Copán, Honduras",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Q2wFe6sv1gvUMNRANfEDzb5f4JLybSaseDNJifgH4fjNsnQKqgXXz5JCgMC3XMh45VyA-INw=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-432",
+      "title": "Red-figured wine bowl (calyx-krater), attributed to the Niobid Painter",
+      "artist": "Unknown",
+      "year": "460 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_R268USijh9jcef72oJbKxdqW2Jx2X-OeQ58M9Ja2apkLrYZpDN8ss8cDi7qPOc640yhdfP=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-433",
+      "title": "Ostrakon of The Tale of Sinuhe",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QVU191fnWSHYaW06FDKdKUOEPM5K3-9TVhLN7WMWipa1CuXDG7_49uu8Bf96erwvZi616g=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-434",
+      "title": "Nebamun’s garden, fragment of a scene from the tomb-chapel of Nebamun",
+      "artist": "Unknown",
+      "year": "1350 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Q1oILjniLbP39mR_45UkMqIOzkFc41as2BHSzboqxU2PfEC5OmOR7AGJXaYcuqKwkXT_pfaA=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-435",
+      "title": "Snake designs on the gold belt buckle from the ship burial at Sutton Hoo",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QmLY3XKYt3yyoddegaGmwzmlW5Un8675HlWHieXB_J_kEA5lm6kgToUNXdWvLfiKA6nPhThA=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-436",
+      "title": "Raphael, The Dream of Scipio or Vision of a Knight, a drawing",
+      "artist": "Unknown",
+      "year": 1504,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Sx25yNenCtckbSCk_sYIsKkESOohSn3HigmolUT4sg7aWaHUo-wKPTQM45aZ-ijAZwxsy1qjQ=w800",
+      "type": "2D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-437",
+      "title": "Paul Klee, Woman and Animal, an etching and aquatint",
+      "artist": "Unknown",
+      "year": 1904,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QpjaafDmiszPaMl72SR7AnAQ4KLFedUAlg31LPIoVgjI7CANZCH_BeMZWpQfnd420mNDvoCQ=w800",
+      "type": "2D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-438",
+      "title": "William Hogarth, Gulielmus Hogarth, a print",
+      "artist": "Unknown",
+      "year": 1749,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Qmg_jBsLe1DH2jkI91r16IOmEcxfVbeDzU1R4CsF0PB7ZK1as_uwlqnTX1_kL-w7ePwXDrWnw=w800",
+      "type": "2D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-439",
+      "title": "Bronze coin of Cleopatra VII",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_ScWsr39WJHL5-tfLClzD187GSXv8znDLL-U-lebkfxrFOSZlNuZhfVYri_T0F5hMffhFZk6g=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-440",
+      "title": "Ballcourt at Chichen Itza",
+      "artist": "GMP team",
+      "year": 2015,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SQhQLx6BaFO-Cd_m3h9sN_CVPLCj33BcXlZEiWz8neYGF2s749MWqgh99dgFBYWrHurbcVxtc=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-441",
+      "title": "Silver drachm of Khusrau II",
+      "artist": "Unknown",
+      "year": 605,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QvD8o8-d0Cx7o0Dr3Ekzk1I0HLFdeiGops81xKqjqUaA9-5Fx2rR3_xCYFX7O3_ZoeBQnd4kQ=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-442",
+      "title": "Lucas van Leyden, Christ Presented to the People, a copperplate engraving",
+      "artist": "Unknown",
+      "year": 1510,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Rdc7uGk3MKK8b8ZM8n-GnG8a9iqi4sIkBYZlKP8wgDPWYgNMIOm7oINz97cAowpaY8Eqko_Q=w800",
+      "type": "2D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-443",
+      "title": "Marble statue of the emperor Septimius Severus",
+      "artist": "Unknown",
+      "year": 193,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RDPCJ5McGIUdeh_Q4_yCcj0SSg9WOyLJlWpoHsXZWDt5vObem5wM9qQrmwH5DazzghdB8nMFD3=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-444",
+      "title": "William Hogarth, Marriage A-la-Mode, Plate II, etching and engraving",
+      "artist": "Unknown",
+      "year": 1745,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QeMMoMJdy9EOKn_2ebhdR0Y_UI31WP0Vok5rvQNv2lp6E3ZY38y_rUmjUbRpIvp6Wm6C0tSdI=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-445",
+      "title": "Statue of Idrimi",
+      "artist": "Unknown",
+      "year": "1599 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RW1LlGwcWCGMTwLGsaDE3JJRFy50_K2Tn0keZ2B-3RZLK6MntdpqG8XXmUE585mfOqDULsvVY=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-446",
+      "title": "The Carlton-in-Lindrick Knight",
+      "artist": "Bassetlaw Museum",
+      "year": 1150,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RDyIxTMAxuauZCqlZEKiWBbdmmkRPIrUsqXBP_EBjHK5XGLevLMjaN3s2b0rZ0VVRg8mPMS8Y=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-447",
+      "title": "Fikellura style amphora with a running man",
+      "artist": "Unknown",
+      "year": "530 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TX0tD5lAgLOdZk8-7EObEwPyD8G3tQHL8oSQv3pmW773A2jVYO8k4tyvtVC8I5V-zz3nnqHQ=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-448",
+      "title": "The Prunay vase",
+      "artist": "Unknown",
+      "year": "400 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_T3eJA7OJzaxFFUzpx6nnf5qbkD7G5_yQkf1VEg60AFJKIQjOTXfkHC3pdi9GP_Hhy5a2l2n_U=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-449",
+      "title": "Photo of A.P. Maudslay on horseback",
+      "artist": "A.P. Maudslay",
+      "year": 1881,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Ry_EUeKUcc8Tel3reyw9fcN0AwJRYWVP0IGws_xwgdoNOjXCQ4jOnoRJtOeezaT_XHCTx6Lmw=w800",
+      "type": "2D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-450",
+      "title": "Stone relief showing a charioteer",
+      "artist": "Unknown",
+      "year": "599 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_R92bjjerX9tLd4rJs2LJsNfYNHec-NU33tw7tUjAURW-_ajNtijVKB74eXnqentNN4eq7E=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-451",
+      "title": "Yaxchilan lintel 16",
+      "artist": "Unknown",
+      "year": 755,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_R4OZGZU0iWa7FkUdVBH9OcdV-p7-rvxLUYV8cWkyUUINwwKu5WybEPFny-MkgPFlo5p3EDDA=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-452",
+      "title": "Queen's Lyre",
+      "artist": "Unknown",
+      "year": "2600 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QSTKRx1ZaMA5lILPTM9_Qj1aq6g441V8mVN16mpKdrXwg01kPrT-82ExGgV4kN9czzamtxSA=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-453",
+      "title": "Life of Edward",
+      "artist": "Cambridge University Library",
+      "year": 1250,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TvN0WfPsMYepwxM7gDNwf_568ohmujSrLkFB5w10rXSu94E3L-RcBsc9ZBLhikfj4EvNDCYg=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-454",
+      "title": "An Elephant",
+      "artist": "Rembrandt van Rijn",
+      "year": 1637,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QpGc87HP5KZzz7MLOQyDEpyA5YWfjECvirH_gfRc09yo2iJR1Nb7xyXRPDA11VuOir7QLF=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-455",
+      "title": "Plastered skull",
+      "artist": "Unknown",
+      "year": "8500 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Twj9AHyncz4k3MmcnCLDqZZCYpnhN5RDJfSmzIxLZZBLrwxWanVTEPz1YLR9JLAmz1Ek2MrUY=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-456",
+      "title": "Silver tetradrachm of Mithradates I",
+      "artist": "Unknown",
+      "year": "171 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_S01Isz3ZoEnzRhGdvqmrMHpCSgbW2971G-1BHtU8ojUgJM8fYjI-GQDwjBukTdzlhQvVml5g=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-457",
+      "title": "Silver bowl",
+      "artist": "Unknown",
+      "year": "499 BC",
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RynMJslpaHbYzUsF_hqfUuwDICNz7rNyHhJmzTsTSydqTIZj2fagOG_QjwNj6EDeKDpj7ISg=w800",
+      "type": "3D",
+      "sourceUrl": ""
+    },
+    {
+      "id": "bm-gac-458",
+      "title": "Kū-ka’ili-moku, God of War",
+      "artist": "Unknown",
+      "year": 1750,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Sgu01bWTUS500-0fOmOoyyTXf3cwq_8yweossJnXAWvCeyY0NIEs7D8clloccmecyykzAog6hi=w800",
+      "type": "unknown",
+      "sourceUrl": ""
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+=== BRITISH MUSEUM COLLECTION RESEARCH ===
+
+1. Navigating to galleries page...
+   (no cookie banner or already accepted)
+
+   Found 0 gallery links:
+
+   Page structure: {"tagName":"DIV","classList":["main-wrapper"],"childCount":1,"h1":"www.britishmuseum.org"}
+
+3. Visiting example object page...

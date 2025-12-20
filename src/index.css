@@ -107,3 +107,89 @@ input, textarea, select {
 body[data-home="true"] {
   font-family: 'DIN Alternate', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Helvetica Neue', Arial, sans-serif;
 }
+
+/* Exhibition Description HTML Content Styles */
+.exhibition-description-html {
+  font-family: 'Apple SD Gothic Neo', 'Noto Sans KR', 'Helvetica Neue', Arial, sans-serif;
+  font-weight: 400;
+}
+
+.exhibition-description-html p {
+  margin: 0 0 1em 0;
+}
+
+.exhibition-description-html h2,
+.exhibition-description-html h3,
+.exhibition-description-html h4 {
+  margin: 1.5em 0 0.5em 0;
+  font-weight: 600;
+  color: #111;
+}
+
+.exhibition-description-html h2 {
+  font-size: 1.3em;
+}
+
+.exhibition-description-html h3 {
+  font-size: 1.1em;
+}
+
+.exhibition-description-html img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  margin: 1em 0;
+  border-radius: 4px;
+}
+
+.exhibition-description-html figure {
+  margin: 1.5em 0;
+  padding: 0;
+}
+
+.exhibition-description-html figcaption {
+  font-size: 0.85em;
+  color: #666;
+  margin-top: 0.5em;
+  line-height: 1.4;
+}
+
+.exhibition-description-html iframe {
+  max-width: 100%;
+  width: 100%;
+  height: auto;
+  min-height: 200px;
+  aspect-ratio: 16 / 9;
+  border: none;
+  border-radius: 4px;
+  margin: 1em 0;
+}
+
+.exhibition-description-html a {
+  color: inherit;
+  text-decoration: none;
+  pointer-events: none;
+  cursor: default;
+}
+
+.exhibition-description-html a:hover {
+  text-decoration: none;
+}
+
+.exhibition-description-html ul,
+.exhibition-description-html ol {
+  padding-left: 1.5em;
+  margin: 1em 0;
+}
+
+.exhibition-description-html li {
+  margin: 0.3em 0;
+}
+
+.exhibition-description-html blockquote {
+  margin: 1em 0;
+  padding-left: 1em;
+  border-left: 3px solid #ddd;
+  color: #555;
+  font-style: italic;
+}

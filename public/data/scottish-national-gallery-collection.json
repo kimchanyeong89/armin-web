@@ -1,0 +1,1431 @@
+{
+  "galleryId": "scottish-national-gallery",
+  "galleryName": "Scottish National Gallery",
+  "coverImage": "https://lh3.googleusercontent.com/ci/AL18g_QvkV8t79l9-ApFdWi0v7CU-cvjvuKboSCtQWL1OVwdIiNF7nk3xmM0oYDS09gE_ARPzDlp9IY=w1200",
+  "scrapedAt": "2025-12-20T12:02:52.290Z",
+  "totalObjects": 160,
+  "videoCount": 0,
+  "excludedCount": 0,
+  "failedCount": 0,
+  "objects": [
+    {
+      "id": "scottish-national-gallery-gac-1",
+      "title": "A Study for 'Une Baignade'",
+      "artist": "Georges Seurat",
+      "year": 1883,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TqArt7nHBQnnF20zTWo31k7GYFjORhxuX_0bLIOa_uJzCxblltrmB_6Y6WEOfANcW48vYqXzY=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/a-study-for-une-baignade/0QH6wvxikg8YWA",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-2",
+      "title": "Andromache Bewailing the Death of Hector",
+      "artist": "Gavin Hamilton",
+      "year": 1759,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SiunndXJo7HKEJk9-aD6R_CT8N3WwzJBsVBfoKxK14L63RfyFHeig-GBV6uvCTKWdfVVLdBFc=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/andromache-bewailing-the-death-of-hector/lQEUm6Cy7Ds4UA",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-3",
+      "title": "The Robber of the Sparrow's Nest",
+      "artist": "Jean-Antoine Watteau",
+      "year": 1712,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_THDXaqd2APrirCd9BxXVZRwqAP1kEg_M-de3fqwNAwu-ulNHESF7chDjxeseH8cBpvWzLqsQ=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-robber-of-the-sparrow-s-nest/hgGgpti6pMSQCw",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-4",
+      "title": "Santa Maria della Salute, Venice",
+      "artist": "Francesco Guardi",
+      "year": 1770,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SiupoBhL--PjkpbkiQSAJN8SG_hI64jRBJgZxL6gAhkrAaS3U6HCg5gSA5BkuoEBp4N5K0ukM=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/santa-maria-della-salute-venice/-QHda7BteSvBVA",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-5",
+      "title": "A Druids' Ceremony",
+      "artist": "Noël Hallé",
+      "year": 1737,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TEijIAWH8VvrT6_3OIQSTh-vKofwMn6uRvBn9uH1AgPiAZQU9CqAmg-WWeVMakyBZNw9pbEg=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/a-druids-ceremony/zQFahfu4aK7dMw",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-6",
+      "title": "A Lady in Grey",
+      "artist": "Daniel Macnee",
+      "year": 1859,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Q2tXt20ffMzUve6BtTIoMxELPCon2oXrBzrNQGJwMTjxaLWkabG9NmwFlPH_bsmNj5crnHCvY=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/a-lady-in-grey/AwFYtWhJUCjBFQ",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-7",
+      "title": "A Daydream",
+      "artist": "Edward Arthur Walton",
+      "year": 1885,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_StHBmb7rGokKgbmMsXRPHUU59mr7xulAOsHtwCsdhTyPXBExpTDHPKU4rkP9lubrPesfgsfh4=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/a-daydream/WAHlULhOs7KDqw",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-8",
+      "title": "Ville-d'Avray: Entrance to the Wood",
+      "artist": "Jean-Baptiste Camille Corot",
+      "year": 1825,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TRoy-hxx4NsH1aL2LduCBJ6BZ9BC9Z3jxBf6sksCzavvHgCdM46uF4ll0-3bia-xxZkHG8jLI=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/ville-d-avray-entrance-to-the-wood/bwHtrt6FZH7ASw",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-9",
+      "title": "Christ Healing the Blind Man",
+      "artist": "Sebastiano Ricci",
+      "year": 1712,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_R2ETQQ0RP3XsofYku50CZbK08wquuNJI6POPpEFed2XyIZkmYOUX487QgRXXoh2V20gfwvwRM=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/christ-healing-the-blind-man/XgGUsCrH7DwRNQ",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-10",
+      "title": "A Woman and Child in a Garden",
+      "artist": "Berthe Morisot",
+      "year": 1883,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_S1YUDtPRuZPkm7MlbWLPB11A85964-0t4QRsP07QCtUDsN3JBciug0WgpBr0OIYlofYwKyAw=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/a-woman-and-child-in-a-garden/mwHmArgKxNFhdA",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-11",
+      "title": "Mary Degg, Lady Robert Manners",
+      "artist": "Allan Ramsay",
+      "year": 1756,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SMETl2juoC2pCog-OjDH5e2t3dOWVkebvRewe2d5_TZFSqxSf23Jg4Ns11_n_GTaQf_BmTuA=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/mary-degg-lady-robert-manners-1737-1829/BQHh1dSuABdm-Q",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-12",
+      "title": "Bailie Duncan McWheeble at Breakfast (from Scott's 'Waverley')",
+      "artist": "James Eckford Lauder",
+      "year": 1854,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SBLliWOI7UlHoGnKZKUyRMpu9s9Om8lmdUK2kapZhTc6v8umd10Ea23h6OVTR8ShbKmqMLQ6U=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/bailie-duncan-mcwheeble-at-breakfast-from-scott-s-waverley/fAEyIbqqUsl8TQ",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-13",
+      "title": "The Sailing of the Emigrant Ship",
+      "artist": "William McTaggart",
+      "year": 1895,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TOx2njhFleCQ8S_amQSCbAPqVN0u7-e6MjkY2mkojkpAglVEd5Yzlw5fkeZdeP4BpcMJJGLA=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-sailing-of-the-emigrant-ship/hAG_dOyt4G3tiQ",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-14",
+      "title": "Mary Nisbet, Countess of Elgin",
+      "artist": "Francois-Pascal-Simon Gerard",
+      "year": 1804,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SgWi89vc5aVIGJpHF8dqc0aZsM9anmm0fztyRgb9LPNDIuuH1neB5KVFEcExOHz_3d0qXAMA=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/mary-nisbet-countess-of-elgin-1777-1855/EAGkVXYIfJAiqA",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-15",
+      "title": "Autumn in Glencairn, Moniaive",
+      "artist": "James Paterson",
+      "year": 1887,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TV4fgSLhY1o-_rvumgfdYoyimiFj62YWEJqyzlXf4s5NmS0Iu2PXqt_fXx243_wFSFLyxTBw=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/autumn-in-glencairn-moniaive/LAH8Dw_jnx7JiA",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-16",
+      "title": "Classical Landscape",
+      "artist": "Jean-Victor Bertin",
+      "year": 1800,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RwOXrSi54FKowLnKgRtGfa37MRuONip7oPOFWmdrsfAcGIE0nI4w4vUHF7ehfWlQZLUZBCHSJF=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/classical-landscape/qQFcZ8KSVGIqWA",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-17",
+      "title": "Les Salinieres near Trouville",
+      "artist": "Richard Parkes Bonington",
+      "year": 1827,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SANlbkg-c023UwAXvJjhyOlxxrsXMzspV_l5VFRn5893nI9Yj_lRTiLet5qPSObIqfok9qz32T=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/les-salinieres-near-trouville/9AH4vO2NpJv4Lg",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-18",
+      "title": "Roses",
+      "artist": "Henri-Jean-Theodore Fantin-Latour",
+      "year": 1888,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_T9-J1SDqiklXJjXrB5t28QBrsm7m4RFr6bXnfxk4P6xOHgMr5qpBV7T2jybYnsc7_uAH6WrsCh=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/roses/tAHyAdkNhtdDdw",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-19",
+      "title": "Princess Cecilia Mahony Giustiniani",
+      "artist": "Pompeo Girolamo Batoni",
+      "year": 1785,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_T5nCTb93sk0BrKS3X7fC20zMS6xGjkX0POz_cyoeP572-RiafhkKVC-l_dvbih7QPmkOPm0g=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/princess-cecilia-mahony-giustiniani/KQGao2LGh886Kg",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-20",
+      "title": "The Vegetable Stall",
+      "artist": "William York Macgregor",
+      "year": 1884,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QHHeXY45lamd7GBvHKceXf6qZ-n6H5dgaJeGLm8hUbrhAdRBrRpHtPmcDKHn9O9eWEt4yWwiaE=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-vegetable-stall/BgHbo2ZiSw-UNw",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-21",
+      "title": "The Psalms of David",
+      "artist": "Phoebe Anna Traquair",
+      "year": 1884,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_R-fGIrAE7cjxKl6LpuEvy59W7W3gKP_tot2YxUu9lEQA5COwPrpB4VG15U8sa1KxPxN-cJIhqI=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-psalms-of-david/PQGWJzUdYWdvnw",
+      "artworkType": "Work on"
+    },
+    {
+      "id": "scottish-national-gallery-gac-22",
+      "title": "Two Pages, Illuminated, 'Sonnets from the Portuguese' by Elizabeth Barrett Browning Two Pages, Illuminated, 'Sonnets from the Portuguese' by Elizabeth Barrett Browning",
+      "artist": "Phoebe Anna Traquair",
+      "year": 1894,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_S7T5or-O0dPaJenPI2tjNZ5jyONgywfLtjTwjKG2Yk9Hi0Q2AiVnMGCcXKi5WkJ9-AfCih4IU=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/two-pages-illuminated-sonnets-from-the-portuguese-by-elizabeth-barrett-browning/9wEtap01nblGgQ",
+      "medium": "Pen and",
+      "artworkType": "Work on"
+    },
+    {
+      "id": "scottish-national-gallery-gac-23",
+      "title": "Vision of the Sermon (Jacob Wrestling with the Angel)",
+      "artist": "Paul Gauguin",
+      "year": 1888,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_S_B7GMYGrrlb35ZDcgBuitXnxNHbLRmyY3JlLeCZEFBgfbUBue8PctLPjcM-FiO9lp3SYqCkHi=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/vision-of-the-sermon-jacob-wrestling-with-the-angel/6wFbVArdERFQ9Q",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-24",
+      "title": "An Old Woman Cooking Eggs",
+      "artist": "Diego Velazquez",
+      "year": 1618,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RDFaRiibX1OFWP0gfgD9fMAXOkCWUVwJaJhGCCXunYphfdl9k4OdLogp1oGoXz4N07Yp8pQIg=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/an-old-woman-cooking-eggs/yAExwHvTwQkv1Q",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-25",
+      "title": "Seated Nude: Study for 'Une Baignade'",
+      "artist": "Georges Seurat",
+      "year": 1883,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Ti4gRQFzK0FuX9SdbCXh8vE5ECOmTftw4SEeZ8bvvPFSdq85NPZK9TYN9LEO2ruyFK63eu-7A=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/seated-nude-study-for-une-baignade/mAEqafwKG81eHA"
+    },
+    {
+      "id": "scottish-national-gallery-gac-26",
+      "title": "The Monarch of the Glen",
+      "artist": "Sir Edwin Landseer",
+      "year": 1851,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SEIxpT11ru5b5-6zR6j-XKtJyJmJfEH63gqS_iDJCttRXWcuceXH2OFJsldBxBowP8FjF2Hy4=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-monarch-of-the-glen/MgH5ExFNd5FL5A",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-27",
+      "title": "Achilles Lamenting the Death of Patroclus",
+      "artist": "Gavin Hamilton",
+      "year": 1760,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Q1Wg13bn1wk_ETEm2t1JQSOz4Gbp5HJFjAeDuEDAiUKEgi6CdSBWpLX9WxjAe4oqyUmFGWSk4=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/achilles-lamenting-the-death-of-patroclus/eAGC8KQr5nh2WQ",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-28",
+      "title": "The Quarrel of Oberon and Titania",
+      "artist": "Joseph Noel Paton",
+      "year": 1849,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SaFTkA0rp8LUokzoNc-BblXQI27H0Jpe4_txsnyhCnQspLB0rFEtNANw3osJCvxs46C5KKDwyM=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-quarrel-of-oberon-and-titania/1QFMMW8v3-ayhA",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-29",
+      "title": "Venus Rising from the Sea ('Venus Anadyomene')",
+      "artist": "Titian",
+      "year": 1520,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RbyVkzboi1vK9cJPNxJTNChsR-XSxaRdoY2qXEU3DeNRUH3JI301pMp_aHXRO8rjPpHXIWuCw=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/venus-rising-from-the-sea-venus-anadyomene/uQGKnofM6hmw5g",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-30",
+      "title": "Christ in the House of Martha and Mary",
+      "artist": "Johannes Vermeer",
+      "year": 1654,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RggdKdIOu2ZI7NJSzb75-FNcv53y4vEytOogOKjmc5RnweMeZpQcpu6Fqq4WdTI7GBCchYPA=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/christ-in-the-house-of-martha-and-mary/qQFE84jjbAZMxw",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-31",
+      "title": "The Honourable Mrs Graham",
+      "artist": "Thomas Gainsborough",
+      "year": 1775,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RDPIQIULX3BC2ijA_UGBUOQybtL5i9fRFQu4O2qHzI55aTipfmc58UjaDRJW-LEU7eDMBG=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-honourable-mrs-graham-1757-1792/TgHatHjpBVyqrg",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-32",
+      "title": "The Vale of Dedham",
+      "artist": "John Constable",
+      "year": 1828,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SePg8PU-H9HG6wag7bNBUkMw8wJovALdoHjILgN8VxBPH0jhI-celRNzvtKTM6B3U7WEiyAw=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-vale-of-dedham/3wH6bKPjBycRxg",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-33",
+      "title": "The Reconciliation of Oberon and Titania",
+      "artist": "Sir Joseph Noel Paton",
+      "year": 1847,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SfDuH4T16NZt8mZ6DovbosE9mkHQADIJXeUkpgT-iFES4eRgHFHqHDhLMYpOje-3xAb-XUjQ=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-reconciliation-of-oberon-and-titania/lgGUkUYODXc6rA"
+    },
+    {
+      "id": "scottish-national-gallery-gac-34",
+      "title": "Fetes Venitiennes",
+      "artist": "Jean-Antoine Watteau",
+      "year": 1718,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QFjU62ms4gKEEC0zNGvbNPumNz_DWWo6ORekN7UHuziXaYseFuqI3jE5rIhxwg9pocPVZyisJw=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/fetes-venitiennes/UAGfGLe1x0yn-g",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-35",
+      "title": "The Murder of David Rizzio",
+      "artist": "Sir William Allan",
+      "year": 1833,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TUFbXzmsxaxMzcPyPnxI_dgw3RXcbzkO6z2Jf3QpKQMJKXX0eMjEmjze1VvfsxlKz_EhS04w=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-murder-of-david-rizzio/WQHsTgCp1ViXTA"
+    },
+    {
+      "id": "scottish-national-gallery-gac-36",
+      "title": "The Ladies Waldegrave",
+      "artist": "Joshua Reynolds",
+      "year": 1780,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RsmWv1UqoNLHrpEZgYhai-da4xgXi4PrDk1YvTvFzD3BZqN5QUeF_TyH_DpMi5YDgz7wCOIUex=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-ladies-waldegrave/2gFUfp9ERPG2xw",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-37",
+      "title": "The Lomellini Family",
+      "artist": "Anthony Van Dyck",
+      "year": 1625,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QFa7WaqPh5atpWoMjfenGZjvAiFu5uEPTDSudZpUV4a5mE9n54yrLr98alW0V4uv8zk1reag=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-lomellini-family/rgHzt6wXf4mRdg",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-38",
+      "title": "Poplars on the Epte",
+      "artist": "Claude Monet",
+      "year": 1891,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RK6iKjYXdI1XRXYDHAawU7F7RCQmtW7ZebW3PI23IH2Kd2lZl1uMTs4cBd7yJj2Ltz5O96dptZ=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/poplars-on-the-epte/tAF_YbFvVelS9Q",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-39",
+      "title": "The Mysterious Garden",
+      "artist": "Margaret Macdonald Mackintosh",
+      "year": 1911,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SF_MGfBK8gPhZbE_Yh3XBj8RDlkE0rJEYK3t1zhazdM3JDxSGbd7RI_xdUorajNwaGlHZU5MQw=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-mysterious-garden/6QGOlDd6FXHt0A"
+    },
+    {
+      "id": "scottish-national-gallery-gac-40",
+      "title": "A Girl with a Dead Canary",
+      "artist": "Jean-Baptiste Greuze",
+      "year": 1765,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TNURDQafDpzOr-gcJjKz6ya_M6RZ6-FARPem0thTgHGynfeoAGkH_AHqBagzHb7JZ-AnTc1ts=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/a-girl-with-a-dead-canary/kAHCWaaAJVQ2vQ",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-41",
+      "title": "Niagara Falls, from the American Side",
+      "artist": "Frederic Edwin Church",
+      "year": 1867,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RXuih7wX_3pWNo5klNPHhFqz7I0VUV8jO7lAzWspnIH9IwDW1MFbqN3iX1lxcMm_fURfgE6itK=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/niagara-falls-from-the-american-side/qQE5jAFm16XHjQ",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-42",
+      "title": "Cleopatra and Octavian",
+      "artist": "Louis Gauffier",
+      "year": 1787,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TZrdH1O6GUGiE3QGuOrw71c7qlBGSZDdkzJARWSa5uM_pmumtpipUZJVZKatZEvvanp4S_dnU=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/cleopatra-and-octavian/TQHFlgn-F1KU4A",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-43",
+      "title": "The Feast of Herod",
+      "artist": "Peter Paul Rubens",
+      "year": 1635,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QsTpoNEgxXrup5BbCx16XAQgyWCldpC1zzHOeB-HxSVSxBDQeHdXMQh06XjluwMC5W_1YF=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-feast-of-herod/BQE7lubhCX9uyw",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-44",
+      "title": "The Music of the Woods",
+      "artist": "Edward Atkinson Hornel",
+      "year": 1906,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_To344iAqg3wSAKhvwtBPZ5je4U5MYnh7I7WvXqBLH_hqUHlRuVu1y9w4jsRKjwrG8S64E1Sg=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-music-of-the-woods/KwElNrex9phs3A",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-45",
+      "title": "Mars, Venus and Cupid",
+      "artist": "Paolo Veronese",
+      "year": 1580,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TAg1OaObruwBGSsUB3ZdeBNvnfkazPwqpXL4YduQN8A69nwxzdXlmcbGbcM7-24TOkuWEHiw=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/mars-venus-and-cupid/PAFFt3eSxCVi4g",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-46",
+      "title": "A School for Boys and Girls",
+      "artist": "Jan Steen",
+      "year": 1670,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_T3-tLMOf835Okq30MyVFMqL1Nx_xFjnHu3IWPhykuw0a5L7V6wi2lTQOVhXuMqvtUrKanV=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/a-school-for-boys-and-girls/gQE0-8lJSrXjoQ",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-47",
+      "title": "Madame de Pompadour (Jeanne-Antoinette Poisson, 1721 - 1764)",
+      "artist": "Francois Boucher",
+      "year": 1756,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QaQOVKjgtwfnIGp1EiWAPXaKGcvfJ1hVmUIixTW-HTMYctCm4GKJMUieDCz73I4juE_I5OfA=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/madame-de-pompadour-jeanne-antoinette-poisson-1721-1764/0gHLdbYo0N_5TQ",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-48",
+      "title": "Three Tahitians",
+      "artist": "Paul Gauguin",
+      "year": 1899,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QAYUVNqOioKbV26P1bNqHXeX2BVfXJA1vm4lsnJEZ8-SJei3XppAzgGKYYDA-Y9uRFdxk_=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/three-tahitians/wQFxEs74xYplKw",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-49",
+      "title": "The Meeting of Anthony and Cleopatra",
+      "artist": "Giovanni Battista Tiepolo",
+      "year": 1747,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SAGdYitwAgbs6a3TB5kwIE3N95sUAzeUzir7OZ--wPRQOoQm0kY2cTyVSWOdvbaVGTLjE5SFo=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-meeting-of-anthony-and-cleopatra/1wFnc3lXlUzJtw",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-50",
+      "title": "An Allegory of the Old and New Testaments",
+      "artist": "Hans Holbein the Younger",
+      "year": 1530,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QYUiPX5AwP_ejgj-KhNn52PlNE-DTWPZYCPjBdfk8j78c9vChowYn7Rez399XWD_ibFm3KJSYP=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/an-allegory-of-the-old-and-new-testaments/0gH2qqi0RXigxw",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-51",
+      "title": "Distraining for Rent",
+      "artist": "David Wilkie",
+      "year": 1815,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_R3vrT8Cb839LVRarNFtrlc85vaSsWVkLahfnXQTHg6YMW4iR0rxNQzw2gXvCGwX0NaJDYLSA=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/distraining-for-rent/TQHXabPSI6vxQQ",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-52",
+      "title": "The Marne at Chennevières",
+      "artist": "Camille Pissarro",
+      "year": 1864,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_ShtBIoVXPKfxAX6rDLhIYW5GEPQxTQpNSiMPJme-X4QgjTaSLUiQG0hU3PjpP76oORpfIQ-3Q=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-marne-at-chennevi%C3%A8res/OwFrXWN_Z1gVvg",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-53",
+      "title": "Mary, Queen of Scots: The Farewell to France",
+      "artist": "Robert Herdman",
+      "year": 1869,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TSjX-u7AiISvWoWftK4ujrJstTheRehXmVX0H6lMMyHepoPUmK4eeiNIYCxKfSRlPBnPq4YKE=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/mary-queen-of-scots-the-farewell-to-france/3AFA0pqVvS6q6A"
+    },
+    {
+      "id": "scottish-national-gallery-gac-54",
+      "title": "The Return of Mary Queen of Scots to Edinburgh",
+      "artist": "James Drummond",
+      "year": 1870,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QopMi4YQFJWuHN5P40tqZEJZVU9crdjw6r-AnJmTBqUmwIuTG-2ZwapaNB65yLTtbYeyKihw=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-return-of-mary-queen-of-scots-to-edinburgh/AwEA5VF9A6TrVg",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-55",
+      "title": "A Seascape, Shipping by Moonlight",
+      "artist": "Claude Monet",
+      "year": 1864,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RJd4hQXUBRSgEpwUNmpFIMqlnhpGySpj4p6CYVc18Wf7atdTQ4R44E24b9bpGaRlazlqwJruc=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/a-seascape-shipping-by-moonlight/IAGkIdZveew5CQ",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-56",
+      "title": "Snowballing Outside Edinburgh University",
+      "artist": "Samuel Bough",
+      "year": 1853,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QOAPSPU9BoUAWsACNrXuj76s3Ed1AfkOeuVlIeN6GiAxgW9a6OAZRGBYKtkMf5-sqMZePrWGs=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/snowballing-outside-edinburgh-university/HAFm8JYYJuKmJA"
+    },
+    {
+      "id": "scottish-national-gallery-gac-57",
+      "title": "The Artist's Wife: Margaret Lindsay of Evelick, c",
+      "artist": "Allan Ramsay",
+      "year": 1758,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QKCBMjWNVcRQrXNXkWCNPid8XzFmyk1byAvN9gi91oW4DijJvE54-VQXWJeGQPEvrlYa6tKWE=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-artist-s-wife-margaret-lindsay-of-evelick-c-1726-1782/MAEqMyZ6q9jj7w",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-58",
+      "title": "The White Drake",
+      "artist": "Joseph Crawhall",
+      "year": 1895,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Syg-QD_4wG4PF0luwo3qShKLXGbYLOu4QL2SGVke08jOo72c7Aq9RLNUhT-p547OkI1-9VY24=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-white-drake/TQFFXRE2sxIVbw",
+      "medium": "Brush and"
+    },
+    {
+      "id": "scottish-national-gallery-gac-59",
+      "title": "Orchard in Blossom (Apricot Trees)",
+      "artist": "Vincent van Gogh",
+      "year": 1888,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SKnu93u99GIUS7Gn9FpXlTonoXDDQ3ugwm__geEuJgfbRg0iG4BlfbCXx5eAgtJ4kkO0Ka0xw=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/orchard-in-blossom-apricot-trees/dgF6-P_Hz_n3ng",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-60",
+      "title": "Pitlessie Fair",
+      "artist": "David Wilkie",
+      "year": 1804,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TW88Bm9UXgbXJsdxR-AFIZI8JjjDHxCB04_sigjtOlS2Ekkpao0se87IME7xdT8oxKyVWZsQ=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/pitlessie-fair/DQFeGcXB_E8d_Q",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-61",
+      "title": "A Vase of Flowers",
+      "artist": "Jean-Baptiste-Siméon Chardin",
+      "year": 1760,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_R37FE6tPjNL3CwscfJK4m_i44VURBGExfx5gYHMq_7dU9obmbHi9K0JLXcUfP5cXIkH6xrCg=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/a-vase-of-flowers/AAFYC-qlSsA9yA",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-62",
+      "title": "An Arab Interior",
+      "artist": "Arthur Melville",
+      "year": 1881,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SMCUJXcrEgv8epDp1t6ATqfOnuy25PGAWMPLjbldJTu_KxSRejAtBnK2uZomAzWi4UA4mKjg=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/an-arab-interior/IwHd1_uYf5Gbgw",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-63",
+      "title": "Edinburgh from Calton Hill",
+      "artist": "Joseph Mallord William Turner",
+      "year": 1819,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TH3yDU8tXlWLvmaFthmU7MuJ3vS6uqQdDspZoItLf6NW_xcs5j3EG_3tAZcEftSghQyTiw7Zs=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/edinburgh-from-calton-hill/EAE_55VAy4I4IQ"
+    },
+    {
+      "id": "scottish-national-gallery-gac-64",
+      "title": "Scene from the Life of Mary, Queen of Scots - Mary is Forced to Abdicate",
+      "artist": "David Allan",
+      "year": 1790,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Tp9MoAfZDBc105165V-8JUVwH9qbQAnmIADMalzAstCJ_kGvGNyN8zhiAvwIkDBx1yiN4GmBI=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/scene-from-the-life-of-mary-queen-of-scots-mary-is-forced-to-abdicate/BgGsg0wKjiM2sQ"
+    },
+    {
+      "id": "scottish-national-gallery-gac-65",
+      "title": "Piety: The Knights of the Round Table about to Depart in Quest of the Holy Grail",
+      "artist": "William Dyce",
+      "year": 1849,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_T2V-EBtjRB9zoD4iBIC1Nj0eiFBXz02n8-TuACQNon9e3HOkEfZDJrIT4CJWao66oNeKenTdxY=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/piety-the-knights-of-the-round-table-about-to-depart-in-quest-of-the-holy-grail/aQGlq42LL_J3hg"
+    },
+    {
+      "id": "scottish-national-gallery-gac-66",
+      "title": "Christ Blessing ('The Saviour of the World')",
+      "artist": "El Greco",
+      "year": 1600,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QhzI-t3r_45uskedFP0LPSWZd8lw0kLZwKey5zvwfc_T5Z2CFOfEHQwrFwGZnvwsfXaNMMfhM=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/christ-blessing-the-saviour-of-the-world/7QFG_T532yg-_A",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-67",
+      "title": "A Woman in Bed",
+      "artist": "Rembrandt van Rijn",
+      "year": 1647,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Tys5EW9VEWxxxNlJVb5l-B0ImD1bkHaOVm4IQdD-O0staiZaSh3hkt9tqVRhxzFVJeokd1jqE=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/a-woman-in-bed/QgHrurH8r_oCbA",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-68",
+      "title": "The Nativity with Two Angels",
+      "artist": "Filippino Lippi",
+      "year": 1490,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SI61903v1od0iEKhrXxK2I4_VK2KCDmgU0xD0s6QfZ3DTfwkyOnMzZvCPkWtgGktfkGKkpqQU=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-nativity-with-two-angels/SwHcVw2XS5wCTQ",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-69",
+      "title": "Francesca da Rimini",
+      "artist": "William Dyce",
+      "year": 1837,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TBkd9QbuXXy00csYjjtBoLsxSZJ8Y7mbefVNSToyC8cYvnIZFE8R3hfxktN_9MdTNRs6fJ0A=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/francesca-da-rimini/bQEam7xDPHXTww",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-70",
+      "title": "Landscape with Apollo and the Muses",
+      "artist": "Claude Lorrain",
+      "year": 1652,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QtWDjP0N5zkf1Aa5fz0VEnSbVFMyWATQShlIMIrGjFyA8KXR9icJJLuMmsSpsy97M6Z1mlnVA5=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/landscape-with-apollo-and-the-muses/aQEesPfhh39EPw",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-71",
+      "title": "Pas Mèche [Nothing Doing]",
+      "artist": "Jules Bastien-Lepage",
+      "year": 1882,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SzYlwqBYHqjoRkIYailunzbzls_rIHnLc-3em5ZUjFPo7oBiqTmAqMC2CjFaNvTMtCcfo0APU=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/pas-m%C3%A8che-nothing-doing/8gHTGc5k0zKtcg",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-72",
+      "title": "Princes Street with the Commencement of the Building of the Royal Institution",
+      "artist": "Alexander Nasmyth",
+      "year": 1825,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TawNtjZzBWHjEdPMqGshncp1f6wA2q8x7QqwmvDGg5h7hMfnle8xOt--ayodC6GVthZ0rB6Q=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/princes-street-with-the-commencement-of-the-building-of-the-royal-institution/eQFa1UfxbM5NOw",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-73",
+      "title": "The Mystic Marriage of Saint Catherine",
+      "artist": "Nicolas Poussin",
+      "year": 1628,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_S3aEu3M3vqdfx4gknWhhiZOBVQz2k7fi5_mqTKCzSf1KjkYGXoRCzipUC2VGwv62G-tA2EQRN8=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-mystic-marriage-of-saint-catherine/1QGGe-AE4ySQfw",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-74",
+      "title": "Alexander III of Scotland Rescued from the Fury of a Stag by the Intrepidity of Colin Fitzgerald ('The Death of the Stag')",
+      "artist": "Benjamin West",
+      "year": 1786,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_T0o8YANQBT6piliP3zI4uUmQvQPmwL6n1LIIGZVHLpcYnNPGG34DHSag5SIk38TVizpOEzNg=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/alexander-iii-of-scotland-rescued-from-the-fury-of-a-stag-by-the-intrepidity-of-colin-fitzgerald-the-death-of-the-stag/fwEBK31tKrFQyg",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-75",
+      "title": "The Interior of St Bavo's Church, Haarlem",
+      "artist": "Pieter Jansz Saenredam",
+      "year": 1648,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SK5doqHnF8yMtqE_z225D9F1geR4VaJayYoyIC6-s1cooTL6ei-81MpTZS7QW-EAkGWgHnuKo=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-interior-of-st-bavo-s-church-haarlem/4AGDhmFvQtQW-A",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-76",
+      "title": "Kite Flying, Japan",
+      "artist": "Edward Atkinson Hornel",
+      "year": 1896,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_T7Txbp_6c498FFwzgAV2k1TVtcutnbAs2VLSAEtd6ZbyMcwHojNsZx-dqhxmFCgjmpiacKPIA=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/kite-flying-japan/xQHkbShW9YpMSw",
+      "artworkType": "Painting,  PAINTING"
+    },
+    {
+      "id": "scottish-national-gallery-gac-77",
+      "title": "Bell Rock Lighthouse",
+      "artist": "Joseph Mallord William Turner",
+      "year": 1819,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TRt2fag-2aaVCN6SBoMsxAHmmJkPCGp4Nlp9c1Fz-i-r38Ex03s2_8hzUg05HTT74pUysA-q8=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/bell-rock-lighthouse/LQEZojMomM-PzA"
+    },
+    {
+      "id": "scottish-national-gallery-gac-78",
+      "title": "Flower Still Life with Bird's Nest",
+      "artist": "Jan van Huysum",
+      "year": 1718,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Rn8WO9H2L2LodvgcRdHH4dG3v6XgP2SvWn8TUHAEfuG2UULZ31TKEU-wjm8U4IMeCCVG1HfGY=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/flower-still-life-with-bird-s-nest/BQGrgWjzcBLuxg",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-79",
+      "title": "A Cabbage Garden",
+      "artist": "Arthur Melville",
+      "year": 1877,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_T_FCRtAZCBDznxw3SSoOO_APi96bEW590LRDWLeTh6qZdai9iBNtiYwrDIAiMY2eI1WdKssw=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/a-cabbage-garden/1AHQ-9EAfu7PoQ",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-80",
+      "title": "Bathers",
+      "artist": "Paul Cezanne",
+      "year": 1896,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Tm9aQM22_uCQDU1P8HGgkdP_vthVdWQGsM7BeOoVcul-J26NG051_UfK2OG3r8r32Fyu7gfA=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/bathers/HgHwpvoJZRvEnA",
+      "medium": "Lithograph on",
+      "artworkType": "Print"
+    },
+    {
+      "id": "scottish-national-gallery-gac-81",
+      "title": "The Monument to Philopappos, Athens",
+      "artist": "Giovanni Battista Lusieri",
+      "year": 1805,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SD1qUbfpoygJFzOECX6yvM-6Y0m2NA5AnsszjLE1n1bkIvS8AjW0U4xxk6tSiO5nQBHwiqzro=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-monument-to-philopappos-athens/UQEl9U_cQxCeyA",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-82",
+      "title": "The Marquess of Rockingham's Arabian Stallion",
+      "artist": "George Stubbs",
+      "year": 1780,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Qaoh_CeZA_mKCXW84SSH1H2famhQH7OLm8w_U9lTwGOTEEXnvepDi9QGP32f2yLAYIwjWuag=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-marquess-of-rockingham-s-arabian-stallion/OAEz0Qd635UWzA",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-83",
+      "title": "A Highland Dance",
+      "artist": "David Allan",
+      "year": 1780,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TdYj9tW2L_UHwqnsjvHLE3miUJI-k7xNOPLKlemdu8OMKUMCt4BYD2xDit0QG5PNrChoLcd7YN=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/a-highland-dance/wAGNv5zReGS9HA"
+    },
+    {
+      "id": "scottish-national-gallery-gac-84",
+      "title": "A Moorish Procession, Tangier",
+      "artist": "Arthur Melville",
+      "year": 1893,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Qm4kSMzsoVyYDyPnF1zRCJe8KQIBemXEv8vAfNry8pqjronvIrrWNlWPCd45XhKKiv-3D9KMs=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/a-moorish-procession-tangier/wQEu2EJE0A4n8A"
+    },
+    {
+      "id": "scottish-national-gallery-gac-85",
+      "title": "A Dead Stag",
+      "artist": "Sir Edwin Landseer",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_S55obWMJlO1qyjuqe65RftMfc20A72eXBy0-9-emeoRUGDyYydraVw7bwLxLPqd-GwXyaKFLk=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/a-dead-stag/yAF0Zuraw-l4uA",
+      "medium": "Black and white"
+    },
+    {
+      "id": "scottish-national-gallery-gac-86",
+      "title": "Macbeth",
+      "artist": "John Martin",
+      "year": 1820,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QXGiIptfAItYmhbREnuMsnyAfh2F0unFTKmAd9qAZCou3xDruRGFHjIORm6wb9GqgdOvADi-bm=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/macbeth/WQFckR8VFzEl5A",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-87",
+      "title": "Colonel Alastair Ranaldson Macdonell of Glengarry",
+      "artist": "Henry Raeburn",
+      "year": 1812,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SszCGbDnLp-GDhwOmne-RiciU3XUZwSFxUX00gXYGZKLTCgYUt3ypmukXw1AxAxRd1Ge8jZvs=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/colonel-alastair-ranaldson-macdonell-of-glengarry-1771-1828/GgEDEPJ-LXa7Dg",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-88",
+      "title": "Phoebe Anna Traquair, 1852 - 1936. Artist (Self-portrait)",
+      "artist": "Phoebe Anna Traquair",
+      "year": 1911,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RHrTkRbIGnGb3EsMp2I3Hz3g6xYT2gIjCqbmpL8ovanOuJnYo3Wv6ElL9__Gs37PDD9-jtMA=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/phoebe-anna-traquair-1852-1936-artist-self-portrait/cwHli1F19TGJkw",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-89",
+      "title": "La Luzerne, Saint-Denis",
+      "artist": "Georges Seurat",
+      "year": 1884,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Sk0jFliBD4nH4jdSRrgnjULwdBy6SQw7_tKqLoIwp_w3pRjltbIkJ8bQGlI3aJHGmjq4q2yQ=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/la-luzerne-saint-denis/RQFlltI9TXhF9Q",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-90",
+      "title": "The Adoration of the Magi",
+      "artist": "Giorgio Vasari",
+      "year": 1566,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SJEqgKV0w3DbD6TJdEdP1sTa9pvwDPpOsiRnbYWPM6QZTkkL8Wn9uFu_6n23pv6wmxB6ENxTc=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-adoration-of-the-magi/dgGh0kZ3RFjtHw",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-91",
+      "title": "Three Studies for the Decoration of the first Mortuary Chapel, the Royal Hospital for Sick Children, Edinburgh",
+      "artist": "Phoebe Anna Traquair",
+      "year": 1885,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_REgL6acEebQFPSRdkcHhoMwMEXUlVBjWvfeWKesUHKa1SxOK4CQlHhoCX-yt743X4ucWbl9ZE=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/three-studies-for-the-decoration-of-the-first-mortuary-chapel-the-royal-hospital-for-sick-children-edinburgh/wgGE3VmQnN7cAQ",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-92",
+      "title": "Alexander Gordon, 4th Duke of Gordon",
+      "artist": "Pompeo Girolamo Batoni",
+      "year": 1764,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TjifxUUVjtllhjwVnV6J4oHUhAhZUJQHJF30sZIBwjwtoYsM5qextPktI_zvhRNDrXCTXVR54=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/alexander-gordon-4th-duke-of-gordon-1743-1827/3gE7uI3cO9K2ZA",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-93",
+      "title": "Profile of Light",
+      "artist": "Odilon Redon",
+      "year": 1885,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Sb63DCb_nQ0deswHfDXIS7tBMCMnuy_oInAQ5egUHL4CZuMlH7e6Sc0qFOpA5O_Iqd-pNOpHwW=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/profile-of-light/BQGn1c6Zts1dhg",
+      "medium": "Lithograph on",
+      "artworkType": "Print"
+    },
+    {
+      "id": "scottish-national-gallery-gac-94",
+      "title": "The South-east Corner of the Parthenon, Athens",
+      "artist": "Giovanni Battista Lusieri",
+      "year": 1803,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TXU01PK3HW--eBazIVc-rM_wpP3zZw7As2lqigeL6MM09QYxFKFp83zlMpQ2s1NC4K6ZXG4C8=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-south-east-corner-of-the-parthenon-athens/rgGfrlu1T1LMOA"
+    },
+    {
+      "id": "scottish-national-gallery-gac-95",
+      "title": "James Watt and the Steam Engine: the Dawn of the Nineteenth Century",
+      "artist": "James Eckford Lauder",
+      "year": 1855,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TbfcPIB9gQ6G4XPwvpr_uY9qrDD5sWYmbq3q2E_rTSkQ_9iECykXmLA805SYrJvKzLNIikceCr=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/james-watt-and-the-steam-engine-the-dawn-of-the-nineteenth-century/ZQHmRL2lUCzwug",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-96",
+      "title": "The Awakening",
+      "artist": "Phoebe Anna Traquair",
+      "year": 1904,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RPhDG903kffB8JLxoB5fvO1NyuS1g2uevW6ruMpM_hpOe4l0ZzDp-sPeFK9bbeTTqCJngIUg=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-awakening/JAHRpzE6CLIoHw",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-97",
+      "title": "The Virgin Adoring the Christ Child ('The Ruskin Madonna')",
+      "artist": "Attributed to Andrea del Verrocchio; and Workshop",
+      "year": 1470,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RjiKblAigIpZyiQlQ6oN9Svq45_Q73lTgQc7tNAU2N8PO2pySSGzfOCuZcqUMpRItkIwpsRfq8=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-virgin-adoring-the-christ-child-the-ruskin-madonna/JQEDoOjjl07sLQ",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-98",
+      "title": "Triptych. Motherhood",
+      "artist": "Phoebe Anna Traquair",
+      "year": 1902,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_T7-cbo9GcWSdV-VlMk-zi17iRD_4dqGnWsIBhKB_zCMy3VAnFyQyMl1rjz4tFlP5jCHcKaQw=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/triptych-motherhood/QwEwbxSEJ_HNnw",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-99",
+      "title": "A Woman Nursing a Child",
+      "artist": "Pierre-Auguste Renoir",
+      "year": 1893,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QsKgOYaHQA577IhqrNIpaN2zD_-C_UsnL2JFvSE9iMehngHMdfHcPCq5RRsIpikvy_qNu3=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/a-woman-nursing-a-child/7gG3c_qlC7rc7A",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-100",
+      "title": "The Church at Vétheuil",
+      "artist": "Claude Monet",
+      "year": 1878,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_S3t_FywKn1E63cphxag7xwuh9XWS7QCm5k4n4P2KJoqKKG2Y-MeFCKKpazaglFoIy5Y46M7w=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-church-at-v%C3%A9theuil/sgF-uoJCnkAu7g",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-101",
+      "title": "The Letter of Introduction",
+      "artist": "David Wilkie",
+      "year": 1813,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TW_pqO4WcMO0cqE7Sm7giHLOvqeyTqDXkrQYdOteJZ8VmY2yBvSbGugojH_BZ-jQ2RO7s3TRnv=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-letter-of-introduction/lQFgrxakxziNug",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-102",
+      "title": "Bluette",
+      "artist": "Edward Arthur Walton",
+      "year": 1891,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RwSGoU3BnsjK2Nvq8WQOWO3N3BZxLLlpQVaKkpMDv1rcfb-kHTWds-0_veltDXM4bw7VAkIn70=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/bluette/ZgEN_7NrUhrXgQ",
+      "artworkType": "Painting,  Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-103",
+      "title": "The Chalk Cutting",
+      "artist": "Arthur Melville",
+      "year": 1898,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_R_21Be0cgxPzHexhb3uwcgUlmkX_juoiBCY-Sxhd-3A6mKNPgJMZSfAEhjboM1U4m6k-l_hA=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-chalk-cutting/AgHwMUVYLFAQDA",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-104",
+      "title": "Phoebe Anna Traquair, 1852 - 1936. Artist",
+      "artist": "Peter Induni",
+      "year": 1927,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TrevQjB6DCHR4bg1gWtSVEGVZqsIF19YOXhx7i2hJZmcQgKVZBEuq-jC7etFjhoqdt-4QmH1E=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/phoebe-anna-traquair-1852-1936-artist/zwHKRPIcniuGlA"
+    },
+    {
+      "id": "scottish-national-gallery-gac-105",
+      "title": "Fantastic Landscape",
+      "artist": "Paul Bril",
+      "year": 1598,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TfKsRf2IzsVSZelGydNZzpCTtE7eWEnXtE-kxPgI2X-xc17zFLgilRvi7WNzTOfhE7xcLyBgk=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/fantastic-landscape/TwG4_S4xTpQbGA",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-106",
+      "title": "Edinburgh from the West",
+      "artist": "James Norie senior",
+      "year": 1745,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RejTjhbZ_CzfGtcbt7za_OiM3_fAat_b0O6mvJmuxmEbeJI3-R5YUUfgmwmEJvef-iYBgyCKc=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/edinburgh-from-the-west/EAE6dUDl4WiuPQ",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-107",
+      "title": "Angus Og, God of Love and Courtesy, Putting a Spell of Summer Calm on the Sea",
+      "artist": "John Duncan",
+      "year": 1908,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SLUWITCjkFBkhK5k773rNn2t59lXM7SlgttmFobacFtFeIqgbUL5O9OSq8jZm71u-qmHdWrrT8=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/angus-og-god-of-love-and-courtesy-putting-a-spell-of-summer-calm-on-the-sea/yAEYe62rDq8I7g",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-108",
+      "title": "The Falls of Clyde (Corra Linn)",
+      "artist": "Jacob More",
+      "year": 1771,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RRTUmZA1vsPY_s56ZLYQn4IXRQyxpMNLaIm81NCMmMhjYxvVed9GLMCYiy26O1-GDLC4FzqVw=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-falls-of-clyde-corra-linn/NgGuxFvpauy7NQ",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-109",
+      "title": "Geisha Girl",
+      "artist": "George Henry",
+      "year": 1894,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RQ4kiCyJ_tA6T-Xcevr9zMnK1ta3AA7mP3E_36L6SfEPjn_eR39DPwTfROEfel6sJ7oAbK_A=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/geisha-girl/agGxe5yhtRWo9w",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-110",
+      "title": "Horse Fair on Bruntsfield Links, Edinburgh",
+      "artist": "Paul Sandby",
+      "year": 1750,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SF-JMiqAhB9hKW2ohLcaAGYxhKG5zh7ry-Q_xeUOY5m2pnQIIgo0Ug0pFhG-LlxOH3VQ86nnVy=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/horse-fair-on-bruntsfield-links-edinburgh/RgFxY5f92UrnuQ"
+    },
+    {
+      "id": "scottish-national-gallery-gac-111",
+      "title": "Pan",
+      "artist": "Phoebe Anna Traquair",
+      "year": 1912,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RjEKiVfhdrkxcWKVjEdEkC3Q4Y2WBIyO4c80n8M7frz9jx5wzSX_OSqULvIRcGvoFgZw1v8iE=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/pan/VAG-zLzVtzeflw",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-112",
+      "title": "A Kneeling Nude Woman with her Left Arm Raised",
+      "artist": "Raphael",
+      "year": 1518,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SsNErksliXeVlxA5d8TgvYUd6AFXe7O105AAtgWK3QkxwqcTEhseOuQ5O0T71azlM5PrH_e9WC=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/a-kneeling-nude-woman-with-her-left-arm-raised/fAHqn1cG-xjFIA"
+    },
+    {
+      "id": "scottish-national-gallery-gac-113",
+      "title": "Mary, Queen of Scots Escaping from Lochleven Castle",
+      "artist": "William Craig Shirreff",
+      "year": 1805,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QsMd4qMU5EdxfgQIh1meHwHg6bzdAXWTTHDcRzOGqlhk1ZtjchylO8LkWgkgDTaJi6fQHB=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/mary-queen-of-scots-escaping-from-lochleven-castle/mwF85ohV55UcNQ"
+    },
+    {
+      "id": "scottish-national-gallery-gac-114",
+      "title": "Rent-day in the Wilderness",
+      "artist": "Edwin Landseer",
+      "year": 1868,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RTSaZQ6J2DRwbDrk0AVEHioJMmJhSF0nQMekp2r7IS-_D-52KppaxqIZDkXorUJuRLelJWsg=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/rent-day-in-the-wilderness/wgGt5MA3NPM3sw",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-115",
+      "title": "A Group of Dancers",
+      "artist": "Hilaire-Germain-Edgar Degas",
+      "year": 1898,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QqgiKq1tz8Mfdi8tDBdx9QgLE8LqQrzBkVNrmQX8eosJK9g2dLV3usJRHr7De-e29Ri-Mu=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/a-group-of-dancers/gAF0Hkt2mGBMEQ",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-116",
+      "title": "The Adoration of the Kings",
+      "artist": "Jacopo Bassano",
+      "year": 1540,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_R2KLURH2zgHZCGD-ybAKvDSW7gqpM4jMVUgSpZPSyib9k6UKuDJ0hnb4-7PUJofzY0hQSH=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-adoration-of-the-kings/mwEl0egxAGOaKQ",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-117",
+      "title": "Edinburgh Milkmaid with Butter Churn",
+      "artist": "David Allan",
+      "year": 1785,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RndO-vmVJ7wA8gdxWBcAe16C9CeLKmGceUFXZN2XuMxT4LsmA0-z1wgUD8Eb6f0pFwgX2N=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/edinburgh-milkmaid-with-butter-churn/5wHpTUdt_NU1kA",
+      "artworkType": "Work on"
+    },
+    {
+      "id": "scottish-national-gallery-gac-118",
+      "title": "Molesey Weir, Hampton Court",
+      "artist": "Alfred Sisley",
+      "year": 1874,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SnbKd4GsxR4K6uEnWzYKTF9cro_JpBJddHjfrNwK0COUSjrLiBKpc1gvJ6AWQSdzJJtcNPgXU=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/molesey-weir-hampton-court/1AHPRPadPs05WQ",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-119",
+      "title": "Haystacks: Snow Effect",
+      "artist": "Claude Monet",
+      "year": 1891,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QfATCxDTaeVhW8QL4nYTsIqdq9-2yOQmbXQ7md_ZyGT5M1Bo1Bz2eVCz91HrX7OtU9Xn1ST8M=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/haystacks-snow-effect/TgH5tEmR0EYNag",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-120",
+      "title": "'For So He Giveth His Beloved Sleep': Fragment of a Mural from the Mortuary Chapel, the Royal Hospital for Sick Children, Edinburgh",
+      "artist": "Phoebe Anna Traquair",
+      "year": 1886,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QsMDsT2kywl0-Gw18wFYHVutOaL_p8FsNipoRgHoxI5sHGNgdBCOSgppsFSbzQU4EsdnlLow=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/for-so-he-giveth-his-beloved-sleep-fragment-of-a-mural-from-the-mortuary-chapel-the-royal-hospital-for-sick-children-edinburgh/TgE9j0yDv2ptiQ",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-121",
+      "title": "The Waning Light",
+      "artist": "David Young Cameron",
+      "year": 1905,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TwHcNulbieLA3uIu0VyhMjhV-p5j1_5u-fTU7rBYo2umYN0BWvvU2EYHUueVcdNhzFRrIpwrTy=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-waning-light/swHmPJD4mgjADA"
+    },
+    {
+      "id": "scottish-national-gallery-gac-122",
+      "title": "The Virgin Adoring the Sleeping Christ Child",
+      "artist": "Sandro Botticelli (Alessandro Filipepi)",
+      "year": 1485,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QtuJAMemwhQQnNFD39oYnWCd-LRuwyZQhh-CGj0ISeiDZjw20gC8sFGRB78vMJGQQUr5McgKg=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-virgin-adoring-the-sleeping-christ-child/JQGSNn9pnq22jw",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-123",
+      "title": "Market Scene (Bruges)",
+      "artist": "Flora Macdonald Reid",
+      "year": 1895,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_S4dpqSrYrOMHhJ_Ll97VxQ58Qx_u-T9TsnkdG3b1gePRtStneFssmWL7ATEL_I8sptNjI2dg=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/market-scene-bruges/QgFIVh_Wulz9Dw",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-124",
+      "title": "Saint Bride",
+      "artist": "John Duncan",
+      "year": 1913,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QI9tzLpRJSyDtm_RyPOtgurFjzxQ7zwggcClUPiMB7cnEK-CQFHgrqyD8WPNvAlVIGR3OFRNou=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/saint-bride/GgGXUo6FZ7QKLQ",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-125",
+      "title": "Spring",
+      "artist": "William McTaggart",
+      "year": 1864,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Tp8UiBdrA4ASrYvPRTAUb_sqjjhqT9pYjQqyXl3izdc4owDHEdJun_04sike7BiNVCRJp-VA=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/spring/cwHS3fPJ-gCm-Q",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-126",
+      "title": "The Sun of Venice",
+      "artist": "Joseph Mallord William Turner",
+      "year": 1840,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RaMQqNvU_A3sjlzfHSZtf8V9gXYR4dGkdLf2s2GQ1BF_uYs7lv873tFL1mY7S0V-YACJrZLYU=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-sun-of-venice/fgF-Kobq4M6xPQ"
+    },
+    {
+      "id": "scottish-national-gallery-gac-127",
+      "title": "Master Baby",
+      "artist": "William Quiller Orchardson",
+      "year": 1886,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SQNVn1EDj4KAlrQJT5nMQYBRrZfbxmN2p3fP0nSAJUDNJ9qretaDb1N5D2tT8p9TEeKLABh6M=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/master-baby/tQHgEMOTYTx1gw",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-128",
+      "title": "Jean-Jacques Rousseau",
+      "artist": "Allan Ramsay",
+      "year": 1766,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QoV11zLGnXNlpdVdj6az3TbfCCZsfm6rBxaQ-igdbZAYd-EbjvdEp1nJqo8jDzhDOy93t3Uw=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/jean-jacques-rousseau-1712-1778/OgFNdS_JutqvtQ",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-129",
+      "title": "Illustration to 'Tam O'Shanter' by Robert Burns. Study for an Engraving",
+      "artist": "John Faed",
+      "year": 1860,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_STaY6SIaAdQ92q5q5pnzjSuvI2pVeOE0KxliXb3ammoYU6aignx-BgzXyX7Rb6Dy30XgfJ7ds=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/illustration-to-tam-o-shanter-by-robert-burns-study-for-an-engraving/YwHL72rt8Z7esA"
+    },
+    {
+      "id": "scottish-national-gallery-gac-130",
+      "title": "Montagne Sainte-Victoire",
+      "artist": "Paul Cezanne",
+      "year": 1890,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_S7kWBGw1l-4XL6NNMBWgyVfgiG-wcha-caP4GLJjASzQ56f5v22GXxsOEgVBSxLVFZbnY9=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/montagne-sainte-victoire/sgHnFanUtHKRBQ",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-131",
+      "title": "The Progress of a Soul: The Entrance",
+      "artist": "Phoebe Anna Traquair",
+      "year": 1895,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Q7TYAaH-tNJrBe3gqeZyfSLOtmdlDalTZoyQpmvlML7S8_sJp4Yjcv1D-48ff0x23QzAvLlw=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-progress-of-a-soul/NgHlNXCbLE-EDA",
+      "medium": "Silk and",
+      "artworkType": "Decorative and applied art"
+    },
+    {
+      "id": "scottish-national-gallery-gac-132",
+      "title": "Landscape with Tourists at Loch Katrine",
+      "artist": "John Knox",
+      "year": 1815,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QgtV5ZdKFAzEesZN_KJQsyAYRwdnjBKB5eel8Y9ZbHcbnmCazV4H4Y_PtQAYl59hhVY8JSzJw=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/landscape-with-tourists-at-loch-katrine/LAELqegbUPQ8Zg",
+      "artworkType": "Highlands,  Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-133",
+      "title": "The Hunt (previously known as Diana and Her Nymphs)",
+      "artist": "Robert Burns",
+      "year": 1926,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TwpyzGudoM5BThjSzcv_HI54FE2DLBvP2ol6z3o_Ed5KVQSFNbHnozVSm1nV9eI5i7nDzWbQ=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-hunt-previously-known-as-diana-and-her-nymphs/eQF9QXhzMO8hPw",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-134",
+      "title": "Fast Castle from below",
+      "artist": "Rev. John Thomson",
+      "year": 1824,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_R7DbLdqk-6tbRARu5Qu126L3i5LJjysU-gf02fl7WrxJF0j61TMvYvULasJavC_Jr85h0SQpo=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/fast-castle-from-below/_AGIrAR_REMx3w",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-135",
+      "title": "Saint Sebastian",
+      "artist": "Francesco Furini",
+      "year": 1633,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TuMdmI1PK-kcruxXNO6avfKlEhrQvXxIif1mTddflUgFzSwC0Qfd9G-y4ofiGGwhSH_-4Zzg_p=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/saint-sebastian/qQHa1S_WdP3bqg",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-136",
+      "title": "Olive Trees",
+      "artist": "Vincent van Gogh",
+      "year": 1889,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QZikduIDth8lLJWyGnPzkAso7N09ZRDBI24yFkw_l76tr2yRrrHiz0GfRzu90kcdvIzY8RsF0=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/olive-trees/SAG2nw6jYgv0PQ",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-137",
+      "title": "Christ Carried to the Tomb",
+      "artist": "Tintoretto (Jacopo Robusti)",
+      "year": 1550,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SAvw6DbiDaFauj3vvBitJ4H8vv4QpRjn96YDuN9DdwG71-yQTNWON1VSJSyoedfuKcV21RdEs=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/christ-carried-to-the-tomb/PQHOy-HTBuoIOA",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-138",
+      "title": "Huntsman and Dead Game",
+      "artist": "Weenix",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QXWmgnhQXPAXQrmq3o-Kx26MQTWI_cCZRBnuBkaj_D081WIrLIG9GBLRnmge-JffGncYUHlkA=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/huntsman-and-dead-game/HAEWaiOr06xwvQ"
+    },
+    {
+      "id": "scottish-national-gallery-gac-139",
+      "title": "The Shepherd Boy",
+      "artist": "Phoebe Anna Traquair",
+      "year": 1891,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SbmsSKYJoNiJAMObF1wTsFQ2CinQc1bdVLnmH4ar60BsnAMGlgUikHZ_z3RZ0HNVfr4y_M-Q=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-shepherd-boy/ewFSpkzsFld-dQ",
+      "artworkType": "Painting,  Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-140",
+      "title": "The Vegetable Stall",
+      "artist": "William York Macgregor",
+      "year": 1884,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Qz7oa7AVrh6GqfV0_ss_WJ4z_JwtfYN9paRKACcb8oxiic4AjhTNmzLkk4Ouj4VVMQjOYODro=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-vegetable-stall/0wFyUhSTC3Hi1g",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-141",
+      "title": "Female Nude, Seen from the Back",
+      "artist": "Jacob Jordaens",
+      "year": 1878,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Saglq0ABVxr6gfkYNmMSL6TDk6CUu_kc-u9hqFt9u0tpx9_TmWIqcLGvSIE-XrmQN6799X09o=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/female-nude-seen-from-the-back/-gFhI-BztKO4ow",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-142",
+      "title": "Saint Jerome in Penitence",
+      "artist": "El Greco (Domenikos Theotokopoulos)",
+      "year": 1595,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QuAYwksDgXQy002FWqd-tl8CqxrYHj6rK22WjFqEU4_agkdXnVHyP97mL2K8rcMxcgcHBzaw=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/saint-jerome-in-penitence/1QH0rkaJchIqng",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-143",
+      "title": "The Cook",
+      "artist": "Bernardo Strozzi",
+      "year": 1630,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QFUKSNz-pgVcpKV7dZ9Epfe8LKqtLtbQRpY-oedhWx9slO1aHId8aXETdDg9AI1QRPpLMq13b8=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-cook/rAEvrlqTYOdxqA",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-144",
+      "title": "Six Butterflies and a Moth on a Rose Branch",
+      "artist": "William Gouw Ferguson",
+      "year": 1690,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Q8dt-qmGYtSBQT9liNHC6a3gHuqXLYOvOlUicPfo77iJf6U1ogcsxyn-vuYlkkJYJ5BOdYXlBJ=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/six-butterflies-and-a-moth-on-a-rose-branch/ywEsjCxnmAFX8A",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-145",
+      "title": "Laura Moubray, née Hobson (born 1788)",
+      "artist": "John Constable",
+      "year": 1808,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RUHkzGV5FTEOA5_CZTugTtAr8_ipncA7PdKFXsAvHqXX5HOI0UnWnLqMPGwi1PqUt6u3HvS0g=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/laura-moubray-n%C3%A9e-hobson-born-1788/NAGuAVma-K5Yeg",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-146",
+      "title": "Study of a Head (St Ambrose)",
+      "artist": "Peter Paul Rubens",
+      "year": 1618,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TCgGcXnopXxrM4OKksHe_2U0aqtEnCOBe4BSkEBLw5wFC8PalaIrkAtLx5YITZIdBIsv_J1kg=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/study-of-a-head-st-ambrose/qAH6EPYrfDSUDA",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-147",
+      "title": "Entrance to the Cuiraing, Skye",
+      "artist": "Waller Hugh Paton",
+      "year": 1873,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SokiUYkZAzANoIPfAzjMbrxU55QTUmqRlU6pX4irujThy1B8fhx3v3EBibczkAtse_KwZezA=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/entrance-to-the-cuiraing-skye/6AHrYM5mZVKyqg",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-148",
+      "title": "Portrait of a Man",
+      "artist": "Francois-Xavier Fabre",
+      "year": 1809,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QOVC2rt23PpADiydsHacl2t2r2y0u8kbGsWyRiDoYCGM2awSIdeJGntYozcwXVQzzUMtsG2Q=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/portrait-of-a-man/2gFAjRBRl82msw",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-149",
+      "title": "Glencoe, Argyllshire",
+      "artist": "Horatio McCulloch",
+      "year": 1825,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QClD_QdCkayFw0GoI-6agcr1tnKQNXUjbxaqwlV2Sx7xNa9DE7AjrfhbBGnNWylX1b9-_8=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/glencoe-argyllshire/-AELnrmi17Dp1w"
+    },
+    {
+      "id": "scottish-national-gallery-gac-150",
+      "title": "Wandering Shadows",
+      "artist": "Peter Graham",
+      "year": 1878,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RCY7UghGG_2fbe4iIMHe-IBp1VlBLlOoXsGbebZySrEHJOFr53yfJH7qbmqtj3x_yWkmoc=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/wandering-shadows/sgGBc0SKvcZR2g",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-151",
+      "title": "Melrose",
+      "artist": "Joseph Mallord William Turner",
+      "year": 1831,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_THT7-GI6A1ilhIn4Dch8pi8fny4DX8OqF17rrOHmP-YIkkIE-NTcPhyEZgPHlyMBt3Z9A3gGY0=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/melrose/LwHVBTSigNIpIQ"
+    },
+    {
+      "id": "scottish-national-gallery-gac-152",
+      "title": "Before the Performance",
+      "artist": "Hilaire-Germain-Edgar Degas",
+      "year": 1896,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SznZOecYCA__2KeUZv_bFKGqhEb-r4HefsgvM2Ss8IBnyohUKQ2qXyH5bI_3x9MTHiaDkUVQ=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/before-the-performance/3gEa9Afc6Rs9Kg",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-153",
+      "title": "Scene from Life of Mary, Queen of Scots. Led through Edinburgh Streets after Battle of Carberry Hill",
+      "artist": "David Allan",
+      "year": 1790,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_R_5zhNCQ6S5JNfngtotpu3aSkynVyPlfOr3tJyJa_5eWSA_QlErPr1MqrFkVLaB5Z5b90UWQs=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/scene-from-life-of-mary-queen-of-scots-led-through-edinburgh-streets-after-battle-of-carberry-hill/GwHyHiJUMCVU5g"
+    },
+    {
+      "id": "scottish-national-gallery-gac-154",
+      "title": "The Wave",
+      "artist": "Gustave Courbet",
+      "year": 1869,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RVd_kQDrCLU8UNVZsUddJavq3CfH36J5J63yc-oLhAFH8g4vn46uV45b5borzY4Xeh2C7U5L4=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-wave/lQE6Ek7Yg9i5qg",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-155",
+      "title": "Edinburgh Castle from the Foot of the Vennel",
+      "artist": "Horatio McCulloch",
+      "year": 1845,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RCtLw-May2MyKlnRD-8iYe5OwMqOzfIJ239aom7m0DsjR2sYHGuwU7AieiR-KD72StZ--A_N4=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/edinburgh-castle-from-the-foot-of-the-vennel/JAFNzcLdqCRKUg",
+      "medium": "Black, red and white"
+    },
+    {
+      "id": "scottish-national-gallery-gac-156",
+      "title": "Pastoral",
+      "artist": "Sir James Guthrie",
+      "year": 1885,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Qv6fQpZanKzMp3CqUwVRq8S0INVSgPqw2pImvZuAEJbTjR25R-dwDcCVm0ooK6IB_0DVt11do=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/pastoral/CwE7UhqEoK7Lmg",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-157",
+      "title": "Holyrood Palace and Fountain, Edinburgh",
+      "artist": "Unknowncir",
+      "year": 1985,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SJXWK8udtvkZgsoKFBJEKXgJSl68lSji-9yq3UduPkz2K2KR4yYiMVIJ4g_9-cwJtxKAJ1DcVJ=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/holyrood-palace-and-fountain-edinburgh/8QGHO4G5xFwwCg"
+    },
+    {
+      "id": "scottish-national-gallery-gac-158",
+      "title": "Margaret Helen Sowerby (known as Helen Sowerby)",
+      "artist": "Sir James Guthrie",
+      "year": 1882,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Ru4cBCe_JwTC7AD01vT5qG_KXkVVl3OpUL0Ko9ka4nZ3h_xrCfyXNLcgec2yYjLW3A0DkRsYo=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/margaret-helen-sowerby-known-as-helen-sowerby/rAF68EeRtrZyIA",
+      "artworkType": "Painting,  Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-159",
+      "title": "The Dutch Cocoa House at the Glasgow International Exhibition of",
+      "artist": "Sir John Lavery",
+      "year": 1888,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SUxkyQ_D7A7FbXKb1iX5rH1J_kXlcE-LnRCax1kFg-4vbklJB8eO5tdmXBgywuA8T6R5iIPNtx=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-dutch-cocoa-house-at-the-glasgow-international-exhibition-of-1888/7AGbMOKrYi0EBw",
+      "artworkType": "Painting,  Painting"
+    },
+    {
+      "id": "scottish-national-gallery-gac-160",
+      "title": "Scene from the Life of Mary, Queen of Scots - The Surrender of Inverness Castle",
+      "artist": "David Allan",
+      "year": 1790,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TM_-MKcJLqh7APK5USvxXqRZbka8-3CoTycJOfqQEXMFZvRvXBJnwW2QTz6hptTpRDtMrpkDYI=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/scene-from-the-life-of-mary-queen-of-scots-the-surrender-of-inverness-castle/egFgSNoq9-ru9Q"
+    }
+  ],
+  "partnerDescription": "Immerse yourself in this breath-taking art collection. Experience paintings by internationally renowned artists such as Vermeer, Titian, Rembrandt, Velázquez and the Impressionists. Explore the newly opened Scottish galleries where you can encounter the very best of Scottish art from 1800 to 1945."
+}

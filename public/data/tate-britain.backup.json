@@ -1,0 +1,205 @@
+{
+  "description": "Explore exhibitions, events, tours and workshops at Tate's four galleries. These pages are updated continually.",
+  "items": [
+    {
+      "id": "https://www.tate.org.uk/whats-on/tate-britain/lee-miller",
+      "name": "Tate Britain",
+      "title": "Tate Britain",
+      "description": "",
+      "startDate": "",
+      "endDate": "",
+      "image": "https://media.tate.org.uk/aztate-prd-ew-dg-wgtail-st1-ctr-data/images/Lee_Miller.width-600.jpg",
+      "url": "https://www.tate.org.uk/whats-on/tate-britain/lee-miller"
+    },
+    {
+      "id": "https://www.tate.org.uk/whats-on/tate-britain/edward-burra",
+      "name": "Edward Burra",
+      "title": "Edward Burra",
+      "description": "",
+      "startDate": "Until 19 Oct 2025",
+      "endDate": "",
+      "image": "https://media.tate.org.uk/aztate-prd-ew-dg-wgtail-st1-ctr-data/images/Burra_crop_for_final_exhibition_page_image.width-600.jpg",
+      "url": "https://www.tate.org.uk/whats-on/tate-britain/edward-burra"
+    },
+    {
+      "id": "https://www.tate.org.uk/whats-on/tate-britain/ithell-colquhoun",
+      "name": "Ithell Colquhoun",
+      "title": "Ithell Colquhoun",
+      "description": "",
+      "startDate": "Until 19 Oct 2025",
+      "endDate": "",
+      "image": "https://media.tate.org.uk/aztate-prd-ew-dg-wgtail-st1-ctr-data/images/Ithell_Colquhoun_Alcove_1946.width-600.jpg",
+      "url": "https://www.tate.org.uk/whats-on/tate-britain/ithell-colquhoun"
+    },
+    {
+      "id": "https://www.tate.org.uk/whats-on/tate-britain/turner-and-constable",
+      "name": "Turner and Constable",
+      "title": "Turner and Constable",
+      "description": "",
+      "startDate": "27 Nov 2025",
+      "endDate": "12 Apr 2026",
+      "image": "https://media.tate.org.uk/aztate-prd-ew-dg-wgtail-st1-ctr-data/images/J.M.W._Turner_The_Burning_of_the_Houses_of_Lor.width-600.jpg",
+      "url": "https://www.tate.org.uk/whats-on/tate-britain/turner-and-constable"
+    },
+    {
+      "id": "https://www.tate.org.uk/whats-on/tate-britain/hurvin-anderson",
+      "name": "Hurvin Anderson",
+      "title": "Hurvin Anderson",
+      "description": "",
+      "startDate": "26 Mar",
+      "endDate": "23 Aug 2026",
+      "image": "https://media.tate.org.uk/aztate-prd-ew-dg-wgtail-st1-ctr-data/images/image_Hurvin_Anderson.width-600.jpg",
+      "url": "https://www.tate.org.uk/whats-on/tate-britain/hurvin-anderson"
+    },
+    {
+      "id": "https://www.tate.org.uk/whats-on/tate-britain/whistler",
+      "name": "James McNeill Whistler",
+      "title": "James McNeill Whistler",
+      "description": "",
+      "startDate": "21 May 2026",
+      "endDate": "27 Sept 2026",
+      "image": "https://media.tate.org.uk/aztate-prd-ew-dg-wgtail-st1-ctr-data/images/Whistler_86-001131.width-600.jpg",
+      "url": "https://www.tate.org.uk/whats-on/tate-britain/whistler"
+    },
+    {
+      "id": "https://www.tate.org.uk/whats-on/tate-britain/the-90s",
+      "name": "The 90s",
+      "title": "The 90s",
+      "description": "",
+      "startDate": "1 Oct 2026",
+      "endDate": "14 Feb 2027",
+      "image": "https://media.tate.org.uk/aztate-prd-ew-dg-wgtail-st1-ctr-data/images/Juergen_Teller_Young_Pink_Kate_London_1998_Jue.width-600.jpg",
+      "url": "https://www.tate.org.uk/whats-on/tate-britain/the-90s"
+    },
+    {
+      "id": "https://www.tate.org.uk/whats-on/tate-britain/vanessa-bell-and-duncan-grant",
+      "name": "Vanessa Bell & Duncan Grant",
+      "title": "Vanessa Bell & Duncan Grant",
+      "description": "",
+      "startDate": "12 Nov 2026",
+      "endDate": "11 Apr 2027",
+      "image": "https://media.tate.org.uk/aztate-prd-ew-dg-wgtail-st1-ctr-data/images/Vanessa_Bell_and_Duncan_Grant_holder_image_low.width-600.jpg",
+      "url": "https://www.tate.org.uk/whats-on/tate-britain/vanessa-bell-and-duncan-grant"
+    },
+    {
+      "id": "https://www.tate.org.uk/whats-on/tate-britain/art-now-onyeka-igwe",
+      "name": "Art Now: Onyeka Igwe",
+      "title": "Art Now: Onyeka Igwe",
+      "description": "",
+      "startDate": "19 September 2025",
+      "endDate": "17 May 2026",
+      "image": "https://media.tate.org.uk/aztate-prd-ew-dg-wgtail-st1-ctr-data/images/our_generous_mother_Onyeka_Igwe_2025_high_res_.width-600.jpg",
+      "url": "https://www.tate.org.uk/whats-on/tate-britain/art-now-onyeka-igwe"
+    },
+    {
+      "id": "https://www.tate.org.uk/whats-on/tate-britain/chris-ofili-requiem",
+      "name": "Commission: Chris Ofili: Requiem",
+      "title": "Commission: Chris Ofili: Requiem",
+      "description": "",
+      "startDate": "Ongoing",
+      "endDate": "",
+      "image": "https://media.tate.org.uk/aztate-prd-ew-dg-wgtail-st1-ctr-data/images/Chris_Ofili_-_Requiem_-_1_fTbdr1p.width-600.jpg",
+      "url": "https://www.tate.org.uk/whats-on/tate-britain/chris-ofili-requiem"
+    },
+    {
+      "id": "https://www.tate.org.uk/whats-on/tate-britain/edward-burra/edward-burra--ithell-colquhoun-exhibition-tour",
+      "name": "Exhibition Tour: Edward Burra and Ithell Colquhoun",
+      "title": "Exhibition Tour: Edward Burra and Ithell Colquhoun",
+      "description": "",
+      "startDate": "13 Sep 2025, 11 Oct 2025",
+      "endDate": "",
+      "image": "https://media.tate.org.uk/aztate-prd-ew-dg-wgtail-st1-ctr-data/images/Burra_and_Colquhoun_low_resolution_joint_image.width-600.jpg",
+      "url": "https://www.tate.org.uk/whats-on/tate-britain/edward-burra/edward-burra--ithell-colquhoun-exhibition-tour"
+    },
+    {
+      "id": "https://www.tate.org.uk/whats-on/tate-britain/edward-burra/relaxed-hours-edward-burra",
+      "name": "Relaxed Hours: Edward Burra",
+      "title": "Relaxed Hours: Edward Burra",
+      "description": "",
+      "startDate": "Third Wednesday of the month at 10.00",
+      "endDate": "11.00",
+      "image": "https://media.tate.org.uk/aztate-prd-ew-dg-wgtail-st1-ctr-data/images/Burra_crop_for_final_exhibition_page_image.width-600.jpg",
+      "url": "https://www.tate.org.uk/whats-on/tate-britain/edward-burra/relaxed-hours-edward-burra"
+    },
+    {
+      "id": "https://www.tate.org.uk/whats-on/tate-britain/ithell-colquhoun/relaxed-hours-ithell-colquhoun",
+      "name": "Relaxed Hours: Ithell Colquhoun",
+      "title": "Relaxed Hours: Ithell Colquhoun",
+      "description": "",
+      "startDate": "Third Wednesday of the month at 10.00",
+      "endDate": "11.00",
+      "image": "https://media.tate.org.uk/aztate-prd-ew-dg-wgtail-st1-ctr-data/images/Ithell_Colquhoun_Alcove_1946..._j48CDkZ.width-600.jpg",
+      "url": "https://www.tate.org.uk/whats-on/tate-britain/ithell-colquhoun/relaxed-hours-ithell-colquhoun"
+    },
+    {
+      "id": "https://www.tate.org.uk/whats-on/tate-britain/edward-burra/exhibition-lecture-edward-burra--ithell-colquhoun",
+      "name": "Exhibition Talk: Edward Burra and Ithell Colquhoun",
+      "title": "Exhibition Talk: Edward Burra and Ithell Colquhoun",
+      "description": "",
+      "startDate": "18 Jul 2025, 26 Sep 2025, 17 Oct 2025",
+      "endDate": "",
+      "image": "https://media.tate.org.uk/aztate-prd-ew-dg-wgtail-st1-ctr-data/images/Burra_and_Colquhoun_low_resolution_joint_image.width-600.jpg",
+      "url": "https://www.tate.org.uk/whats-on/tate-britain/edward-burra/exhibition-lecture-edward-burra--ithell-colquhoun"
+    },
+    {
+      "id": "https://www.tate.org.uk/whats-on/tate-britain/the-irish-face-frank-wasser",
+      "name": "The Irish face: Frank Wasser",
+      "title": "The Irish face: Frank Wasser",
+      "description": "",
+      "startDate": "17 Oct 2025",
+      "endDate": "",
+      "image": "https://media.tate.org.uk/aztate-prd-ew-dg-wgtail-st1-ctr-data/images/ShelfHallTintTB.width-600.jpg",
+      "url": "https://www.tate.org.uk/whats-on/tate-britain/the-irish-face-frank-wasser"
+    },
+    {
+      "id": "https://www.tate.org.uk/whats-on/tate-britain/tate-britain-architecture-tour",
+      "name": "Tate Britain Architecture Tour",
+      "title": "Tate Britain Architecture Tour",
+      "description": "",
+      "startDate": "18 Oct 2025",
+      "endDate": "",
+      "image": "https://media.tate.org.uk/aztate-prd-ew-dg-wgtail-st1-ctr-data/images/duveens_gallery_tate_britain_eaA5OjV.width-600.jpg",
+      "url": "https://www.tate.org.uk/whats-on/tate-britain/tate-britain-architecture-tour"
+    },
+    {
+      "id": "https://www.tate.org.uk/whats-on/tate-britain/edward-burra/members-hours-edward-burra",
+      "name": "Members Hours: Edward Burra",
+      "title": "Members Hours: Edward Burra",
+      "description": "",
+      "startDate": "4 Oct 2025, 5 Oct 2025, 11 Oct 2025, 12 Oct 2025, 18 Oct 2025, 19 Oct 2025",
+      "endDate": "",
+      "image": "https://media.tate.org.uk/aztate-prd-ew-dg-wgtail-st1-ctr-data/images/Burra_crop_for_final_exhibition_page_image.width-600.jpg",
+      "url": "https://www.tate.org.uk/whats-on/tate-britain/edward-burra/members-hours-edward-burra"
+    },
+    {
+      "id": "https://www.tate.org.uk/whats-on/tate-britain/ithell-colquhoun/members-hours-ithell-colquhoun",
+      "name": "Members Hours: Ithell Colquhoun",
+      "title": "Members Hours: Ithell Colquhoun",
+      "description": "",
+      "startDate": "4 Oct 2025, 5 Oct 2025, 11 Oct 2025, 12 Oct 2025, 18 Oct 2025, 19 Oct 2025",
+      "endDate": "",
+      "image": "https://media.tate.org.uk/aztate-prd-ew-dg-wgtail-st1-ctr-data/images/Ithell_Colquhoun_Alcove_1946..._j48CDkZ.width-600.jpg",
+      "url": "https://www.tate.org.uk/whats-on/tate-britain/ithell-colquhoun/members-hours-ithell-colquhoun"
+    },
+    {
+      "id": "https://www.tate.org.uk/whats-on/tate-britain/lee-miller/lee-miller-slow-looking",
+      "name": "Lee Miller: Slow Looking",
+      "title": "Lee Miller: Slow Looking",
+      "description": "",
+      "startDate": "25 Oct 2025",
+      "endDate": "",
+      "image": "https://media.tate.org.uk/aztate-prd-ew-dg-wgtail-st1-ctr-data/images/Lee_Miller.width-600.jpg",
+      "url": "https://www.tate.org.uk/whats-on/tate-britain/lee-miller/lee-miller-slow-looking"
+    },
+    {
+      "id": "https://www.tate.org.uk/whats-on/tate-britain/members-conservation-tour",
+      "name": "Members Conservation Tour",
+      "title": "Members Conservation Tour",
+      "description": "",
+      "startDate": "5 Nov 2025",
+      "endDate": "",
+      "image": "https://media.tate.org.uk/aztate-prd-ew-dg-wgtail-st1-ctr-data/images/paintings-cons39_3_B5jf7VU.width-600.jpg",
+      "url": "https://www.tate.org.uk/whats-on/tate-britain/members-conservation-tour"
+    }
+  ]
+}

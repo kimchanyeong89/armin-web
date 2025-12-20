@@ -1,0 +1,131 @@
+{
+  "scrapedAt": "2025-12-20T08:53:44.649Z",
+  "gallery": "Royal Academy of Arts",
+  "summary": {
+    "total": 277,
+    "success": 259,
+    "videos": 5,
+    "excluded": 18,
+    "failed": 0
+  },
+  "videos": [
+    {
+      "title": "The Summer Exhibition in 60 seconds",
+      "youtubeId": "eWHfwRyCqKg",
+      "url": "https://artsandculture.google.com/asset/the-summer-exhibition-in-60-seconds/oQGMeq8f28ROtw"
+    },
+    {
+      "title": "David Wilkie and the Summer Exhibition’s first blockbuster",
+      "youtubeId": "6CC9eCyhMCk",
+      "url": "https://artsandculture.google.com/asset/david-wilkie-and-the-summer-exhibition%E2%80%99s-first-blockbuster/-gGDAlnvvwsHpQ"
+    },
+    {
+      "title": "The story of the Royal Academy of Arts",
+      "youtubeId": "uuegzLttsUk",
+      "url": "https://artsandculture.google.com/asset/the-story-of-the-royal-academy-of-arts/OgHJE6uHmR2BVA"
+    },
+    {
+      "title": "The New RA in 90 seconds",
+      "youtubeId": "Oym2DAD8P-8",
+      "url": "https://artsandculture.google.com/asset/the-new-ra-in-90-seconds/RwF5hDzHWtaWuQ"
+    },
+    {
+      "title": "Grayson Perry's Summer Exhibition",
+      "youtubeId": "SRIA0aKcFhI",
+      "url": "https://artsandculture.google.com/asset/grayson-perry-s-summer-exhibition/HgGKR1XahNGMqQ"
+    }
+  ],
+  "excluded": [
+    {
+      "title": "Installation view of Sarah Kauffman's 'An Allegory of Painting' at the Royal Academy of Arts",
+      "reason": "/installation view/i",
+      "url": "https://artsandculture.google.com/asset/installation-view-of-sarah-kauffman-s-an-allegory-of-painting-at-the-royal-academy-of-arts/MQHSo1nWxUWrEg"
+    },
+    {
+      "title": "The Private View at the Royal Academy in 1881",
+      "reason": "/private view/i",
+      "url": "https://artsandculture.google.com/asset/the-private-view-at-the-royal-academy-in-1881/OwH3TkgzPTQfnw"
+    },
+    {
+      "title": "The Life Room, Royal Academy Schools, 2010",
+      "reason": "/royal academy schools/i",
+      "url": "https://artsandculture.google.com/asset/the-life-room-royal-academy-schools-2010/7AGYXjFJHgB6qg"
+    },
+    {
+      "title": "Installation view of Sarah Pickstone's 'An Allegory of Painting' at the Royal Academy of Arts",
+      "reason": "/installation view/i",
+      "url": "https://artsandculture.google.com/asset/installation-view-of-sarah-pickstone-s-an-allegory-of-painting-at-the-royal-academy-of-arts/kQEHEKsDWwJRlw"
+    },
+    {
+      "title": "Exhibition view of 'Kiki Smith: Procession' at Belvedere, Vienna",
+      "reason": "/exhibition view/i",
+      "url": "https://artsandculture.google.com/asset/exhibition-view-of-kiki-smith-procession-at-belvedere-vienna/PgHH-IiN4GTBww"
+    },
+    {
+      "title": "Photograph of the making of Sarah Pickstone's 'An Allegory of Painting'",
+      "reason": "/photograph of/i",
+      "url": "https://artsandculture.google.com/asset/photograph-of-the-making-of-sarah-pickstone-s-an-allegory-of-painting/pgF2oLkOi7WjDQ"
+    },
+    {
+      "title": "Photograph of the making of Sarah Pickstone's 'An Allegory of Painting'",
+      "reason": "/photograph of/i",
+      "url": "https://artsandculture.google.com/asset/photograph-of-the-making-of-sarah-pickstone-s-an-allegory-of-painting/NQHYZeVEzFDe3Q"
+    },
+    {
+      "title": "Installation view of 'Lubaina Himid – The Grab Test' at Frans Hals Museum, Haarlem, on view 16 November 2019 – 23 February 2020",
+      "reason": "/installation view/i",
+      "url": "https://artsandculture.google.com/asset/installation-view-of-lubaina-himid-%E2%80%93-the-grab-test-at-frans-hals-museum-haarlem-on-view-16-november-2019-%E2%80%93-23-february-2020/GQHul53D5CjuHg"
+    },
+    {
+      "title": "Photograph of Jim Lambie RA's 'Zobop' staircase at the Royal Academy Summer Exhibition 2015",
+      "reason": "/photograph of/i",
+      "url": "https://artsandculture.google.com/asset/photograph-of-jim-lambie-ra-s-zobop-staircase-at-the-royal-academy-summer-exhibition-2015/OQHxtrdknCJ6DA"
+    },
+    {
+      "title": "Photograph of the making of Sarah Pickstone's 'An Allegory of Painting'",
+      "reason": "/photograph of/i",
+      "url": "https://artsandculture.google.com/asset/photograph-of-the-making-of-sarah-pickstone-s-an-allegory-of-painting/XwEsIiI40fR6SQ"
+    },
+    {
+      "title": "Photograph of Sarah Pickstone sitting in front of her work, 'An Allegory of Painting'",
+      "reason": "/photograph of/i",
+      "url": "https://artsandculture.google.com/asset/photograph-of-sarah-pickstone-sitting-in-front-of-her-work-an-allegory-of-painting/RgFIjJVHFSJvSw"
+    },
+    {
+      "title": "Photograph of the making of Sarah Pickstone's 'An Allegory of Painting'",
+      "reason": "/photograph of/i",
+      "url": "https://artsandculture.google.com/asset/photograph-of-the-making-of-sarah-pickstone-s-an-allegory-of-painting/3gGQbbQZp0wNfg"
+    },
+    {
+      "title": "Photograph of the making of Sarah Pickstone's 'An Allegory of Painting'",
+      "reason": "/photograph of/i",
+      "url": "https://artsandculture.google.com/asset/photograph-of-the-making-of-sarah-pickstone-s-an-allegory-of-painting/TwHlRnyJztp-Fg"
+    },
+    {
+      "title": "Photograph of the making of Sarah Pickstone's 'An Allegory of Painting'",
+      "reason": "/photograph of/i",
+      "url": "https://artsandculture.google.com/asset/photograph-of-the-making-of-sarah-pickstone-s-an-allegory-of-painting/pwGA97ccPG9LZQ"
+    },
+    {
+      "title": "Photograph of the making of Sarah Pickstone's 'An Allegory of Painting'",
+      "reason": "/photograph of/i",
+      "url": "https://artsandculture.google.com/asset/photograph-of-the-making-of-sarah-pickstone-s-an-allegory-of-painting/XAFOgvmcak5Xgg"
+    },
+    {
+      "title": "Installation view of 'Lubaina Himid – The Grab Test' at Frans Hals Museum, Haarlem, on view 16 November 2019 – 23 February 2020",
+      "reason": "/installation view/i",
+      "url": "https://artsandculture.google.com/asset/installation-view-of-lubaina-himid-%E2%80%93-the-grab-test-at-frans-hals-museum-haarlem-on-view-16-november-2019-%E2%80%93-23-february-2020/fQETWvRqDAHBpA"
+    },
+    {
+      "title": "Photograph of the making of Sarah Pickstone's 'An Allegory of Painting'",
+      "reason": "/photograph of/i",
+      "url": "https://artsandculture.google.com/asset/photograph-of-the-making-of-sarah-pickstone-s-an-allegory-of-painting/lwFknPKycN84_Q"
+    },
+    {
+      "title": "Photograph of the making of Sarah Pickstone's 'An Allegory of Painting'",
+      "reason": "/photograph of/i",
+      "url": "https://artsandculture.google.com/asset/photograph-of-the-making-of-sarah-pickstone-s-an-allegory-of-painting/IAEvkWEnSUbLZw"
+    }
+  ],
+  "failed": []
+}

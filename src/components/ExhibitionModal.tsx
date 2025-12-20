@@ -213,6 +213,8 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
           artist: artwork.artist || '',
           year: artwork.year || 0,
           image: artwork.image || '',
+          youtubeId: artwork.youtubeId || null,
+          mediaType: artwork.mediaType || 'image',
         });
       }
     } catch (error) {
@@ -241,6 +243,13 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
   } | null>(null);
   // Progressive image loading state (Step 1): main stage / panorama
   const [mainLoaded, setMainLoaded] = useState(false);
+  // Archive mode: control iframe and thumbnail visibility
+  const [archiveVideoReady, setArchiveVideoReady] = useState(false);
+  const [archiveThumbnailHidden, setArchiveThumbnailHidden] = useState(false);
+  // Gallery mode: control iframe and thumbnail visibility on hover
+  const [galleryVideoReadyIdx, setGalleryVideoReadyIdx] = useState<number | null>(null);
+  const [galleryThumbnailHiddenIdx, setGalleryThumbnailHiddenIdx] = useState<number | null>(null);
+  
   const mainImgRef = useRef<HTMLImageElement | null>(null);
   const idleDecodeHandlesRef = useRef<number[]>([]);
   // Representative image (from local feed or exhibition data)
@@ -910,6 +919,14 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
             const match = String(yearText).match(/(\d{4})/);
             return match ? parseInt(match[1], 10) : 0;
           };
+          
+          // Detect artwork type: paintings are 2D, sculptures/objects are 3D
+          const detectType = (title: string): '2D' | '3D' | 'unknown' => {
+            if (/sculpture|bust|statue|figure|relief/i.test(title)) return '3D';
+            if (/painting|portrait|landscape|still life|view|scene/i.test(title)) return '2D';
+            return '2D'; // Dulwich is primarily a paintings gallery
+          };
+          
           const list: Artwork[] = Array.isArray(data.objects)
             ? data.objects.map((item: any, idx: number) => ({
               id: item.id || `dpg-${idx}`,
@@ -922,6 +939,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
               roomId: 'default',
               exhibitionName: exhibition.name,
               exhibitionTitle: exhibition.title,
+              type: detectType(item.title || ''),
             }))
             : [];
           const withImages = list.filter((a) => !!a.image);
@@ -986,6 +1004,14 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
             return false;
           };
           
+          // Detect artwork type for Hayward (contemporary art - mix of 2D/3D)
+          const detectType = (title: string): '2D' | '3D' | 'unknown' => {
+            if (/sculpture|installation|figure|object|astronomer|horse/i.test(title)) return '3D';
+            if (/painting|drawing|print|photograph|portrait|canvas|paper/i.test(title)) return '2D';
+            // Default to unknown for contemporary art
+            return 'unknown';
+          };
+          
           const allObjects = Array.isArray(data.objects) ? data.objects : [];
           
           const list: Artwork[] = allObjects.map((item: any, idx: number) => ({
@@ -1000,6 +1026,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
               exhibitionName: exhibition.name,
               exhibitionTitle: exhibition.title,
               isArchival: isArchival(item.title || ''),
+              type: detectType(item.title || ''),
             }));
           const withImages = list.filter((a) => !!a.image);
           setArtworks(withImages);
@@ -1011,11 +1038,432 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
       })();
       return () => { };
     }
-    // British Museum GAC Collection: load from local scraped JSON
-    if (exhibition.id === 'british-museum-gac-collection') {
+    // Royal Academy Collection: load from local scraped JSON
+    if (exhibition.id === 'ra-1') {
       (async () => {
         try {
-          const res = await fetch('/data/british-museum-gac-collection.json', { cache: 'no-store' });
+          const res = await fetch('/data/royal-academy-collection.json', { cache: 'no-store' });
+          if (!res.ok) throw new Error('Failed to load Royal Academy artworks');
+          const data = await res.json();
+          const toYear = (yearText: string | number | undefined) => {
+            if (!yearText) return 0;
+            const match = String(yearText).match(/(\d{4})/);
+            return match ? parseInt(match[1], 10) : 0;
+          };
+          
+          // Patterns for archival/documentary materials
+          const archivalPatterns = [
+            /^petition of/i,
+            /^from '/i,
+            /^students working/i,
+            /^visitors queuing/i,
+            /^working from life/i,
+            /^record drawing/i,
+            /^watercolour test paper/i,
+            /^palette owned by/i,
+            /exhibition room/i,
+            /life class/i,
+            /antique school/i,
+            /painting school/i,
+            /lecture on/i,
+            /lecturing at/i,
+            /sending in day/i,
+            /photographed by/i,
+            /on display with/i,
+            /burlington house/i,
+            /somerset house$/i,
+            /^cast of/i,  // Casts of sculptures
+          ];
+          
+          const isArchival = (title: string) => {
+            for (const pattern of archivalPatterns) {
+              if (pattern.test(title)) return true;
+            }
+            return false;
+          };
+          
+          // Detect artwork type: paintings/drawings are 2D, sculptures are 3D
+          const detectType = (title: string): '2D' | '3D' | 'unknown' => {
+            if (/sculpture|bust|figure|statue|horse|rolling horse|cast of/i.test(title)) return '3D';
+            if (/painting|portrait|landscape|seascape|study|drawing|watercolour|sketch/i.test(title)) return '2D';
+            // Default to 2D for Royal Academy
+            return '2D';
+          };
+          
+          const allObjects = Array.isArray(data.objects) ? data.objects : [];
+          
+          const list: Artwork[] = allObjects.map((item: any, idx: number) => ({
+              id: item.id || `ra-gac-${idx}`,
+              name: item.title || item.name || 'Untitled',
+              artist: item.artist || 'Unknown',
+              year: toYear(item.year),
+              date: item.year,
+              image: item.image,
+              sourceUrl: item.sourceUrl,
+              roomId: 'default',
+              exhibitionName: exhibition.name,
+              exhibitionTitle: exhibition.title,
+              isArchival: isArchival(item.title || ''),
+              type: detectType(item.title || ''),
+              youtubeId: item.youtubeId,
+              mediaType: item.mediaType,
+            }));
+          const withImages = list.filter((a) => !!a.image);
+          setArtworks(withImages);
+          setInitialized(true);
+        } catch (error) {
+          console.error('Failed to load Royal Academy artworks:', error);
+          setInitialized(true);
+        }
+      })();
+      return () => { };
+    }
+    // Serpentine Gallery Collection: load from local scraped JSON
+    if (exhibition.id === 'serp-collection') {
+      (async () => {
+        try {
+          const res = await fetch('/data/serpentine-gallery-collection.json', { cache: 'no-store' });
+          if (!res.ok) throw new Error('Failed to load Serpentine artworks');
+          const data = await res.json();
+          const toYear = (yearText: string | number | undefined) => {
+            if (!yearText) return 0;
+            const match = String(yearText).match(/(\d{4})/);
+            return match ? parseInt(match[1], 10) : 0;
+          };
+          
+          // Patterns for instructional/documentary materials (not visual artworks)
+          const archivalPatterns = [
+            /instruction/i,  // matches any "instruction" anywhere
+            /do it/i,  // matches any "do it" title anywhere (including zero-width chars)
+            /^screenshot/i,
+            /^roundtable/i,
+            /^recipe /i,
+            /^untitled$/i,
+            /^untitled \(/i,
+            /^visas$/i,
+            /report/i,
+            /^mental floss/i,
+            /^#faismoidanser$/i,
+            /^cold$/i,
+            /^treatment$/i,
+            /^tear crystal$/i,
+            /^shoot it$/i,
+            /^delighted$/i,
+            /^precedent piece$/i,
+            /^homage to/i,
+            /^xxl color/i,
+            /^walk walk walk/i,
+            /^three how to/i,
+            /^how to /i,
+            /^the masque-culotte$/i,
+            /^what would/i,
+            /^study for time$/i,
+            /^dig a hole/i,
+            /^to create sympathy/i,
+            /^art as a generative/i,
+            /^the potential for/i,
+            /^potential deeper/i,
+            /^deeper understanding/i,
+            /^moving towards/i,
+            /^consideration of/i,
+            /^new connections/i,
+            /^sheela \(na-gig\)/i,
+            /^it's ok for/i,
+            /^gilding the lily/i,
+            /variations.*gionales/i,  // Variations régionales (handles Unicode normalization)
+            /^park nights$/i,
+            /^1993$/i,
+            /^99 cents$/i,
+            /^a snail walk/i,
+            /^wish piece$/i,
+            /^placing a dream/i,
+            /^ten commandments/i,
+            /les.*coliers/i,  // Les Écoliers (The Schoolchildren) - text piece
+            /chatelet theatre/i,
+            // French instruction texts (use flexible apostrophe matching)
+            /^donne quelque/i,
+            /^supprime un/i,
+            /^changement de/i,
+            /oublier l.instant/i,  // Oublier l'instant T
+            /partage d.intimit/i,  // Partage d'intimité  
+            /^vers new york/i,
+            /^copier-coller$/i,
+            /^protection au/i,
+            /^rayon de soleil/i,
+            /mesure$/i,  // À mesure, à mesure
+            /^affiner la/i,
+            /^cinq et cinq/i,
+            // Roundtable/AI report illustrations by Jonny Glover
+            /jonny glover/i,
+          ];
+          
+          // Known artist-name-only entries (text/portrait cards) - title equals artist
+          const artistNameOnlyTitles = [
+            'Mohamed Bourouissa', 'Chino Amobi', 'Phillipe Parreno', 'Hans-Ulrich Obrist',
+            'Anna Halprin', 'Simone Forti', 'Oscar Murillo', 'Rirkrit Tiravanija',
+            'Christodoulos Panayiotou', 'Rachel Rose', 'Kwame Kwei-Armah', 'Evan Ifekoya',
+            'Bertrand Lavier', 'Studio Formafantasma', 'Ian Cheng', 'Heman Chong',
+            'Arca', 'ES Devlin', 'Aria Dean', 'David Lamelas', 'Geta Bratescu',
+            'Rafael Bonachela', 'Carla Juaçaba', 'Edouard Glissant', 'Kelsey Lu',
+            'Latai Taumoepeau', 'Saskia Havekes', 'Gerald Murnane', 'Dale Harding',
+            'Megan Cope', 'James Bridle', 'Janet Laurence', 'Shilpa Gupta',
+            'Nairy Baghramian', 'Complicité', 'Holly Herndon and Mat Dryhurst', 'BTS',
+            'Precious Okoyomon, do it', 'Yue Yuan', 'Sophia Al Maria',
+          ];
+          
+          // Detect text-based instruction pieces by checking artist field too
+          const isArchival = (title: string, artist: string) => {
+            // Check if title is just an artist name
+            if (artistNameOnlyTitles.includes(title)) return true;
+            // Check patterns
+            for (const pattern of archivalPatterns) {
+              if (pattern.test(title)) return true;
+            }
+            // If title equals artist name, it's likely a text card
+            if (title === artist && title.length > 0) return true;
+            // Check artist field for Jonny Glover illustrations
+            if (/jonny glover/i.test(artist)) return true;
+            return false;
+          };
+          
+          // Detect artwork type: Pavilions are 3D, most others are 2D or unknown
+          const detectType = (title: string): '2D' | '3D' | 'unknown' => {
+            if (/pavilion/i.test(title) || /summer house/i.test(title)) return '3D';
+            if (/tower/i.test(title) || /sculpture/i.test(title)) return '3D';
+            // Zaha Hadid architectural works
+            if (/tektonik/i.test(title) || /isometric/i.test(title)) return '2D';
+            if (/earth perspectives/i.test(title)) return '2D';
+            // Default to unknown for mixed collections
+            return 'unknown';
+          };
+          
+          const allObjects = Array.isArray(data.objects) ? data.objects : [];
+          
+          const list: Artwork[] = allObjects.map((item: any, idx: number) => ({
+              id: item.id || `serp-gac-${idx}`,
+              name: item.title || item.name || 'Untitled',
+              artist: item.artist || 'Unknown',
+              year: toYear(item.year),
+              date: item.year,
+              image: item.image,
+              sourceUrl: item.sourceUrl,
+              roomId: 'default',
+              exhibitionName: exhibition.name,
+              exhibitionTitle: exhibition.title,
+              isArchival: isArchival(item.title || '', item.artist || ''),
+              type: detectType(item.title || ''),
+              youtubeId: item.youtubeId,
+              mediaType: item.mediaType,
+            }));
+          const withImages = list.filter((a) => !!a.image);
+          setArtworks(withImages);
+          setInitialized(true);
+        } catch (error) {
+          console.error('Failed to load Serpentine artworks:', error);
+          setInitialized(true);
+        }
+      })();
+      return () => { };
+    }
+    // Courtauld Gallery Collection: load from local scraped JSON
+    if (exhibition.id === 'cg-1') {
+      (async () => {
+        try {
+          const res = await fetch('/data/courtauld-gallery-collection.json', { cache: 'no-store' });
+          if (!res.ok) throw new Error('Failed to load Courtauld artworks');
+          const data = await res.json();
+          const toYear = (yearText: string | number | undefined) => {
+            if (!yearText) return 0;
+            const match = String(yearText).match(/(\d{4})/);
+            return match ? parseInt(match[1], 10) : 0;
+          };
+          
+          // Detect artwork type for Courtauld (mostly paintings, some decorative arts)
+          const detectType = (title: string): '2D' | '3D' | 'unknown' => {
+            // 3D objects
+            if (/sculpture|bust|figure|statue|chest|bowl|dish|jar|jug|vase|pot|box|table|chair|kettle|burner|tile|bucket/i.test(title)) return '3D';
+            // 2D works (paintings, drawings, prints)
+            if (/painting|portrait|landscape|view|scene|study|drawing|print|album/i.test(title)) return '2D';
+            // Default to 2D for Courtauld (primarily paintings)
+            return '2D';
+          };
+          
+          const allObjects = Array.isArray(data.objects) ? data.objects : [];
+          
+          const list: Artwork[] = allObjects.map((item: any, idx: number) => ({
+              id: item.id || `cg-gac-${idx}`,
+              name: item.title || item.name || 'Untitled',
+              artist: item.artist || 'Unknown',
+              year: toYear(item.year),
+              date: item.year,
+              image: item.image,
+              sourceUrl: item.sourceUrl,
+              roomId: 'default',
+              exhibitionName: exhibition.name,
+              exhibitionTitle: exhibition.title,
+              type: detectType(item.title || ''),
+              youtubeId: item.youtubeId,
+              mediaType: item.mediaType,
+            }));
+          const withImages = list.filter((a) => !!a.image);
+          setArtworks(withImages);
+          setInitialized(true);
+        } catch (error) {
+          console.error('Failed to load Courtauld artworks:', error);
+          setInitialized(true);
+        }
+      })();
+      return () => { };
+    }
+    // Walker Art Gallery Collection: load from local scraped JSON
+    if (exhibition.id === 'wag-collection') {
+      (async () => {
+        try {
+          const res = await fetch('/data/walker-art-gallery-collection.json', { cache: 'no-store' });
+          if (!res.ok) throw new Error('Failed to load Walker artworks');
+          const data = await res.json();
+          const toYear = (yearText: string | number | undefined) => {
+            if (!yearText) return 0;
+            const match = String(yearText).match(/(\d{4})/);
+            return match ? parseInt(match[1], 10) : 0;
+          };
+          const allObjects = Array.isArray(data.objects) ? data.objects : [];
+          const list: Artwork[] = allObjects.map((item: any, idx: number) => ({
+              id: item.id || `wag-gac-${idx}`,
+              name: item.title || item.name || 'Untitled',
+              artist: item.artist || 'Unknown',
+              year: toYear(item.year),
+              date: item.year,
+              image: item.image,
+              sourceUrl: item.sourceUrl,
+              roomId: 'default',
+              exhibitionName: exhibition.name,
+              exhibitionTitle: exhibition.title,
+              type: '2D',
+            }));
+          const withImages = list.filter((a) => !!a.image);
+          setArtworks(withImages);
+          setInitialized(true);
+        } catch (error) {
+          console.error('Failed to load Walker artworks:', error);
+          setInitialized(true);
+        }
+      })();
+      return () => { };
+    }
+    // Scottish National Gallery Collection: load from local scraped JSON
+    if (exhibition.id === 'sng-collection') {
+      (async () => {
+        try {
+          const res = await fetch('/data/scottish-national-gallery-collection.json', { cache: 'no-store' });
+          if (!res.ok) throw new Error('Failed to load Scottish National Gallery artworks');
+          const data = await res.json();
+          const toYear = (yearText: string | number | undefined) => {
+            if (!yearText) return 0;
+            const match = String(yearText).match(/(\d{4})/);
+            return match ? parseInt(match[1], 10) : 0;
+          };
+          const allObjects = Array.isArray(data.objects) ? data.objects : [];
+          const list: Artwork[] = allObjects.map((item: any, idx: number) => ({
+              id: item.id || `sng-gac-${idx}`,
+              name: item.title || item.name || 'Untitled',
+              artist: item.artist || 'Unknown',
+              year: toYear(item.year),
+              date: item.year,
+              image: item.image,
+              sourceUrl: item.sourceUrl,
+              roomId: 'default',
+              exhibitionName: exhibition.name,
+              exhibitionTitle: exhibition.title,
+              type: '2D',
+            }));
+          const withImages = list.filter((a) => !!a.image);
+          setArtworks(withImages);
+          setInitialized(true);
+        } catch (error) {
+          console.error('Failed to load Scottish National Gallery artworks:', error);
+          setInitialized(true);
+        }
+      })();
+      return () => { };
+    }
+    // Scottish National Portrait Gallery Collection: load from local scraped JSON
+    if (exhibition.id === 'snpg-collection') {
+      (async () => {
+        try {
+          const res = await fetch('/data/scottish-national-portrait-gallery-collection.json', { cache: 'no-store' });
+          if (!res.ok) throw new Error('Failed to load Scottish National Portrait Gallery artworks');
+          const data = await res.json();
+          const toYear = (yearText: string | number | undefined) => {
+            if (!yearText) return 0;
+            const match = String(yearText).match(/(\d{4})/);
+            return match ? parseInt(match[1], 10) : 0;
+          };
+          const allObjects = Array.isArray(data.objects) ? data.objects : [];
+          const list: Artwork[] = allObjects.map((item: any, idx: number) => ({
+              id: item.id || `snpg-gac-${idx}`,
+              name: item.title || item.name || 'Untitled',
+              artist: item.artist || 'Unknown',
+              year: toYear(item.year),
+              date: item.year,
+              image: item.image,
+              sourceUrl: item.sourceUrl,
+              roomId: 'default',
+              exhibitionName: exhibition.name,
+              exhibitionTitle: exhibition.title,
+              type: '2D',
+            }));
+          const withImages = list.filter((a) => !!a.image);
+          setArtworks(withImages);
+          setInitialized(true);
+        } catch (error) {
+          console.error('Failed to load Scottish National Portrait Gallery artworks:', error);
+          setInitialized(true);
+        }
+      })();
+      return () => { };
+    }
+    // Scottish National Gallery of Modern Art Collection: load from local scraped JSON
+    if (exhibition.id === 'sngma-collection') {
+      (async () => {
+        try {
+          const res = await fetch('/data/scottish-national-gallery-of-modern-art-collection.json', { cache: 'no-store' });
+          if (!res.ok) throw new Error('Failed to load Scottish National Gallery of Modern Art artworks');
+          const data = await res.json();
+          const toYear = (yearText: string | number | undefined) => {
+            if (!yearText) return 0;
+            const match = String(yearText).match(/(\d{4})/);
+            return match ? parseInt(match[1], 10) : 0;
+          };
+          const allObjects = Array.isArray(data.objects) ? data.objects : [];
+          const list: Artwork[] = allObjects.map((item: any, idx: number) => ({
+              id: item.id || `sngma-gac-${idx}`,
+              name: item.title || item.name || 'Untitled',
+              artist: item.artist || 'Unknown',
+              year: toYear(item.year),
+              date: item.year,
+              image: item.image,
+              sourceUrl: item.sourceUrl,
+              roomId: 'default',
+              exhibitionName: exhibition.name,
+              exhibitionTitle: exhibition.title,
+              type: '2D',
+            }));
+          const withImages = list.filter((a) => !!a.image);
+          setArtworks(withImages);
+          setInitialized(true);
+        } catch (error) {
+          console.error('Failed to load Scottish National Gallery of Modern Art artworks:', error);
+          setInitialized(true);
+        }
+      })();
+      return () => { };
+    }
+    // British Museum Collection: load from local scraped JSON
+    if (exhibition.id === 'bm-collection') {
+      (async () => {
+        try {
+          const res = await fetch('/data/the-british-museum-collection.json', { cache: 'no-store' });
           if (!res.ok) throw new Error('Failed to load British Museum artworks');
           const data = await res.json();
           const toYear = (yearText: string | number | undefined) => {
@@ -1723,6 +2171,44 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
   // Viewer mode only; editing/upload removed
 
   const current = filteredArtworks[selectedIndex];
+  
+  // Archive mode: reset video when current artwork changes (force remount for animation)
+  useEffect(() => {
+    if (current?.youtubeId) {
+      // iframe 바로 마운트, 썸네일은 보여줌
+      setArchiveVideoReady(true);
+      setArchiveThumbnailHidden(false);
+      // 1초 후 썸네일 디졸브 시작
+      const timer = setTimeout(() => {
+        setArchiveThumbnailHidden(true);
+      }, 1000);
+      return () => clearTimeout(timer);
+    } else {
+      setArchiveVideoReady(false);
+      setArchiveThumbnailHidden(false);
+    }
+  }, [current?.id, current?.youtubeId]);
+  
+  // Gallery mode: delay before showing YouTube iframe on hover
+  useEffect(() => {
+    if (hoveredIndex !== null) {
+      const artwork = filteredArtworks[hoveredIndex];
+      if (artwork?.youtubeId) {
+        // iframe 바로 마운트, 썸네일은 보여줌
+        setGalleryVideoReadyIdx(hoveredIndex);
+        setGalleryThumbnailHiddenIdx(null);
+        // 1초 후 썸네일 디졸브 시작
+        const timer = setTimeout(() => {
+          setGalleryThumbnailHiddenIdx(hoveredIndex);
+        }, 1000);
+        return () => clearTimeout(timer);
+      }
+    } else {
+      setGalleryVideoReadyIdx(null);
+      setGalleryThumbnailHiddenIdx(null);
+    }
+  }, [hoveredIndex, filteredArtworks]);
+  
   const displayArtwork = useMemo(() => {
     if (viewMode === 'gallery') {
       if (hoveredIndex !== null && filteredArtworks[hoveredIndex]) {
@@ -2215,8 +2701,19 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
                               opacity: i === selectedIndex ? 1 : 0.65
                             }}
                           >
-                            <div style={{ width: "40%", aspectRatio: "1 / 1", background: "#eee", borderRadius: 0, overflow: "hidden" }}>
-                              {a.image && (
+                            <div 
+                              style={{ width: "40%", aspectRatio: "1 / 1", background: "#eee", borderRadius: 0, overflow: "hidden" }}
+                            >
+                              {a.youtubeId ? (
+                                <img
+                                  src={`https://img.youtube.com/vi/${a.youtubeId}/mqdefault.jpg`}
+                                  alt={a.name}
+                                  loading="lazy"
+                                  referrerPolicy="no-referrer"
+                                  style={{ width: "100%", height: "100%", display: "block", objectFit: "cover" }}
+                                  onError={(e) => { e.currentTarget.src = a.image; }}
+                                />
+                              ) : a.image && (
                                 <img
                                   src={a.image}
                                   alt={a.name}
@@ -2248,8 +2745,19 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
                         tabIndex={0}
                         style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 36, marginBottom: 84, cursor: "pointer", opacity: realIdx === selectedIndex ? 1 : 0.65 }}
                       >
-                        <div style={{ width: "40%", aspectRatio: "1 / 1", background: "#eee", borderRadius: 0, overflow: "hidden" }}>
-                          {a.image && (
+                        <div 
+                          style={{ width: "40%", aspectRatio: "1 / 1", background: "#eee", borderRadius: 0, overflow: "hidden" }}
+                        >
+                          {a.youtubeId ? (
+                            <img
+                              src={`https://img.youtube.com/vi/${a.youtubeId}/mqdefault.jpg`}
+                              alt={a.name}
+                              loading="lazy"
+                              referrerPolicy="no-referrer"
+                              style={{ width: "100%", height: "100%", display: "block", objectFit: "cover" }}
+                              onError={(e) => { e.currentTarget.src = a.image; }}
+                            />
+                          ) : a.image && (
                             <img
                               src={a.image}
                               alt={a.name}
@@ -2616,7 +3124,76 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
                   style={{ width: "72%", maxHeight: "calc(100vh - 260px)", background: "transparent", display: "flex", alignItems: "center", justifyContent: "center", position: "relative" }}
                 >
                   {(current ? (
-                    (() => {
+                    current.youtubeId ? (
+                      // YouTube 영상인 경우 - iframe 아래, 썸네일 위에서 디졸브
+                      <div style={{ 
+                        width: '100%', 
+                        maxWidth: 'calc(100vh - 260px) * 16 / 9',
+                        aspectRatio: '16/9',
+                        background: '#000',
+                        overflow: 'hidden',
+                        position: 'relative'
+                      }}>
+                        {/* iframe - 아래 레이어 (z-index: 1) */}
+                        {archiveVideoReady && (
+                          <iframe
+                            src={`https://www.youtube.com/embed/${current.youtubeId}?autoplay=1&mute=1&controls=0&showinfo=0&loop=1&playlist=${current.youtubeId}&modestbranding=1&rel=0&iv_load_policy=3&disablekb=1&fs=0&playsinline=1&cc_load_policy=0&origin=${window.location.origin}`}
+                            title={current.name}
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            style={{ 
+                              position: 'absolute',
+                              top: '-60px',
+                              left: 0,
+                              width: '100%', 
+                              height: 'calc(100% + 120px)', 
+                              border: 'none',
+                              pointerEvents: 'none',
+                              zIndex: 1
+                            }}
+                          />
+                        )}
+                        {/* 썸네일 - 위 레이어 (z-index: 2), 1초 후 디졸브로 사라짐 */}
+                        {archiveVideoReady && (
+                          <img
+                            src={`https://img.youtube.com/vi/${current.youtubeId}/maxresdefault.jpg`}
+                            alt={current.name}
+                            style={{
+                              position: 'absolute',
+                              top: 0,
+                              left: 0,
+                              width: '100%',
+                              height: '100%',
+                              objectFit: 'cover',
+                              zIndex: 2,
+                              opacity: archiveThumbnailHidden ? 0 : 1,
+                              transition: 'opacity 0.5s ease-out',
+                              pointerEvents: 'none'
+                            }}
+                            onError={(e) => {
+                              e.currentTarget.src = `https://img.youtube.com/vi/${current.youtubeId}/mqdefault.jpg`;
+                            }}
+                          />
+                        )}
+                        {/* 초기 썸네일 (영상 준비 전) */}
+                        {!archiveVideoReady && (
+                          <img
+                            src={`https://img.youtube.com/vi/${current.youtubeId}/maxresdefault.jpg`}
+                            alt={current.name}
+                            style={{
+                              position: 'absolute',
+                              top: 0,
+                              left: 0,
+                              width: '100%',
+                              height: '100%',
+                              objectFit: 'cover'
+                            }}
+                            onError={(e) => {
+                              e.currentTarget.src = `https://img.youtube.com/vi/${current.youtubeId}/mqdefault.jpg`;
+                            }}
+                          />
+                        )}
+                      </div>
+                    ) : (() => {
                       const widths = window.innerWidth < 900 ? [480, 720, 960] : [640, 960, 1280, 1600];
                       const avif = buildVariantSourceSet(current, 'avif', widths, 70);
                       const webp = buildVariantSourceSet(current, 'webp', widths, 75);
@@ -2766,18 +3343,80 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
                 const gridPadding = isMobile ? '100px 8px 60px 8px' : (isNarrow ? '240px 48px 96px 150px' : '192px 48px 96px 150px');
                 return (
                   <div style={{ display: 'grid', gridTemplateColumns: gridColumns, gap: gridGap, padding: gridPadding }}>
-                    {items.map((a, idx) => (
+                    {items.map((a, idx) => {
+                      // YouTube 영상 여부 확인
+                      const isVideo = a.youtubeId || a.mediaType === 'video';
+                      const isCurrentlyHovered = hoveredIndex === idx;
+                      // 컨포넌트 레벨에서 관리하는 딜레이 상태 사용
+                      const showIframe = isCurrentlyHovered && isVideo && galleryVideoReadyIdx === idx;
+                      
+                      return (
                       <div
                         key={a.id ?? `${idx}`}
                         className="group"
                         style={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}
                       >
                         <div
-                          style={{ width: isMobile ? '100%' : '60%', background: '#eee', borderRadius: 0, position: 'relative' }}
+                          style={{ width: isMobile ? '100%' : '60%', background: '#eee', borderRadius: 0, position: 'relative', aspectRatio: isVideo ? '16/9' : undefined }}
                           onMouseEnter={() => setHoveredIndex(idx)}
                           onMouseLeave={() => setHoveredIndex(null)}
                         >
-                          {a.image && (() => {
+                          {/* YouTube 영상인 경우 - iframe 아래, 썸네일 위에서 디졸브 */}
+                          {isVideo && a.youtubeId ? (
+                            <div style={{ width: '100%', height: '100%', position: 'relative', overflow: 'hidden' }}>
+                              {/* iframe - 아래 레이어 (호버 시 바로 마운트) */}
+                              {showIframe && (
+                                <iframe
+                                  src={`https://www.youtube.com/embed/${a.youtubeId}?autoplay=1&mute=1&controls=0&showinfo=0&loop=1&playlist=${a.youtubeId}&modestbranding=1&rel=0&iv_load_policy=3&disablekb=1&fs=0&playsinline=1&cc_load_policy=0`}
+                                  title={a.name}
+                                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                  style={{ 
+                                    position: 'absolute',
+                                    top: '-60px',
+                                    left: '-10%',
+                                    width: '120%', 
+                                    height: 'calc(100% + 120px)', 
+                                    border: 'none',
+                                    pointerEvents: 'none',
+                                    zIndex: 1
+                                  }}
+                                />
+                              )}
+                              {/* 썸네일 - 위 레이어, 1초 후 디졸브로 사라짐 */}
+                              {showIframe ? (
+                                <img
+                                  src={`https://img.youtube.com/vi/${a.youtubeId}/mqdefault.jpg`}
+                                  alt={a.name}
+                                  loading="lazy"
+                                  referrerPolicy="no-referrer"
+                                  style={{ 
+                                    position: 'absolute',
+                                    top: 0,
+                                    left: 0,
+                                    width: '100%', 
+                                    height: '100%', 
+                                    objectFit: 'cover',
+                                    zIndex: 2,
+                                    opacity: galleryThumbnailHiddenIdx === idx ? 0 : 1,
+                                    transition: 'opacity 0.5s ease-out',
+                                    pointerEvents: 'none'
+                                  }}
+                                  onError={(e) => { e.currentTarget.src = a.image; }}
+                                />
+                              ) : (
+                                <img
+                                  src={`https://img.youtube.com/vi/${a.youtubeId}/mqdefault.jpg`}
+                                  alt={a.name}
+                                  loading="lazy"
+                                  referrerPolicy="no-referrer"
+                                  style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+                                  onError={(e) => { e.currentTarget.src = a.image; }}
+                                />
+                              )}
+                            </div>
+                          ) : (
+                            /* 일반 이미지 */
+                            a.image && (() => {
                             const widths = window.innerWidth < 900 ? [320, 480, 640] : [360, 540, 720, 900];
                             const avif = buildVariantSourceSet(a, 'avif', widths, 65);
                             const webp = buildVariantSourceSet(a, 'webp', widths, 70);
@@ -2801,12 +3440,17 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
                                 />
                               </picture>
                             );
-                          })()}
+                          })()
+                          )}
                         </div>
                         <div style={{ marginTop: 10, display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
                           <div>
                             <div style={{ fontSize: isMobile ? 10 : 12, fontWeight: 400, color: '#222', display: 'flex', alignItems: 'center', gap: 6 }}>
                               {String(idx + 1).padStart(2, '0')}
+                              {/* 영상에는 재생 아이콘 표시 */}
+                              {isVideo && (
+                                <span style={{ fontSize: 10, color: '#e11d48' }}>▶</span>
+                              )}
                               <div style={{ opacity: isMobile ? 1 : 0 }} className="gallery-heart-trigger">
                                 <HeartOverlay
                                   isLiked={likedArtworks.has(a.id)}
@@ -2826,7 +3470,8 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
                           .group:hover .gallery-heart-trigger { opacity: 1 !important; }
                         `}</style>
                       </div>
-                    ))}
+                    );
+                    })}
                   </div>
                 );
               })()}

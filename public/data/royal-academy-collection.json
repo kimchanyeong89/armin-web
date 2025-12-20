@@ -1,0 +1,2122 @@
+{
+  "galleryId": "royal-academy",
+  "galleryName": "Royal Academy of Arts",
+  "coverImage": null,
+  "scrapedAt": "2025-12-20T08:53:44.646Z",
+  "totalObjects": 259,
+  "videoCount": 5,
+  "excludedCount": 18,
+  "failedCount": 0,
+  "objects": [
+    {
+      "id": "royal-academy-gac-1",
+      "title": "Colour",
+      "artist": "Angelica Kauffman",
+      "year": 1780,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SxZPFQVkQYUmZ70HLKMIGLpm_s_XkFOuLJf2IEvkYoxvedielPSQtT5pUn75J0-Z_Ejel_3IA=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/colour/hwHNaKrI9aT5Dg"
+    },
+    {
+      "id": "royal-academy-gac-2",
+      "title": "Summer",
+      "artist": "Mary Moser",
+      "year": 1780,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_T0wxPKjPA3vdRTaTn5_V5C5wEIf5sx2fi2MgOMlS2EZIucY-_YI7IGh5DdwbEf83VhXuZ6Ug=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/summer/FAFsdZTSK8AilA"
+    },
+    {
+      "id": "royal-academy-gac-3",
+      "title": "Cheeky Little Astronomer",
+      "artist": "Yinka Shonibare RA",
+      "year": 2013,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SjSJEsyl6W9Gx3sZtm8fJqKwl8u8u6nni7kFbXSJCGZdnPX9wa-4L-eSiSTEVu3AYuUdbF-SZ9=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/cheeky-little-astronomer/zQHfiNoko2d_3Q"
+    },
+    {
+      "id": "royal-academy-gac-4",
+      "title": "Annie Swynnerton A.R.A",
+      "artist": "Unidentified photographer",
+      "year": 1931,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Tvq-buXP4cSGBTDWh5P9_jTWy3XzGtGUNTR1lkK5t3BhwuMs2kMYYZLNBcEIaTv4Z-cJ4JvQ8=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/annie-swynnerton-a-r-a/twGASPpux6r6cg"
+    },
+    {
+      "id": "royal-academy-gac-5",
+      "title": "Self-portrait",
+      "artist": "Angelica Kauffman",
+      "year": 1770,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QsXx3HEyDJr2tsrbqsSEEXJE9haYRt8tPT8yT6U329h4QylaCG2uY7PuIubcZHSqDpyrlookj7=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/self-portrait/uAFpUaNxF1xQTg"
+    },
+    {
+      "id": "royal-academy-gac-6",
+      "title": "Blast Boadicea",
+      "artist": "Jean Cooke RA",
+      "year": 1966,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QNKNaaDFio2yWIGRAdTNvy7QaT4yBZHFf5n5GH6Jt8z57v9q2rQ-JV8SLYk3oCkwbsR5OU-A=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/blast-boadicea/ygFeHEN8jKS6rg"
+    },
+    {
+      "id": "royal-academy-gac-7",
+      "title": "RA Students painting an Italian Subject in the Women's Large Life Room at Burlington House",
+      "artist": "Unknown",
+      "year": 1925,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Seb3jdUc2qxPg1EOGhbMD03UH4b1BJK0X895o8qt666ujOgpfMalMwwHWDgmhnSYMg1ATAig=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/ra-students-painting-an-italian-subject-in-the-women-s-large-life-room-at-burlington-house/ggEn-1-xim0xiA"
+    },
+    {
+      "id": "royal-academy-gac-8",
+      "title": "untitled: female",
+      "artist": "Phyllida Barlow",
+      "year": 2018,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QMGkd1HhmleBRHxPwO79YqS-aSeCnybnauuH_nnYQZyCLjSN5ns52zLAgobpn_5ljLudKIZQ=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/untitled-female/uQH1l49_MlG9HA"
+    },
+    {
+      "id": "royal-academy-gac-9",
+      "title": "Wintergreens",
+      "artist": "Frank Bowling RA",
+      "year": 1986,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SDw9gQHX52fDquutBA_vxS2WYy1obbUJ4NJ-6Ip2ek0eOXKygJUgz7MxOZxnegFKNYm5jyBjce=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/wintergreens/7wH_k47gBw8law"
+    },
+    {
+      "id": "royal-academy-gac-10",
+      "title": "The Letter",
+      "artist": "Annie Swynnerton ARA",
+      "year": 1900,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SsjdI90CboCKZNfDABLn6m84znWjma0fZ1BeCuXmkHTpjslUY90pneLVl4eET50PmdXU9yejU=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-letter/MgEfJRMIN1Zo0Q"
+    },
+    {
+      "id": "royal-academy-gac-11",
+      "title": "Lubaina Himid in her studio",
+      "artist": "Unknown",
+      "year": 2020,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QIjS3SWSc1Dmqvy7CfCJuJL9MxKIs7u0dq_IUfd8mNPHgbgEZTjN1YROaoUO8b-ym77Bdp7zud=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/lubaina-himid-in-her-studio/XgGQVcoRGc17Tw"
+    },
+    {
+      "id": "royal-academy-gac-12",
+      "title": "Rolling Horse",
+      "artist": "Elisabeth Frink",
+      "year": 1976,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SOWD4ZGq24z36ZnX-B8mJ0T9Z0AimxFpaJz5kb1mAtu7VHcSY23OlGrBVxWUMTLQyEkLhHMw=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/rolling-horse/iwG0Yie8uiiSRA"
+    },
+    {
+      "id": "royal-academy-gac-13",
+      "title": "Midsummer",
+      "artist": "Margaret Fisher Prout ARA",
+      "year": 1960,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_REi48NurV0Nk9EKnU2z67cMF970SJTHN-GB36uZ7-1OaeJ2wjE9EokqhF5nBv_WtoqnH7lIOAp=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/midsummer/JgFJMmDNyj5dfg"
+    },
+    {
+      "id": "royal-academy-gac-15",
+      "title": "A Mermaid",
+      "artist": "John William Waterhouse",
+      "year": 1900,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_S8ygW1rQ_OUvUzJvrcuSugssmDKGcdGPLBLcrxXx2h7VechecRYknk8CkeCnSxri8YvPCHx193=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/a-mermaid/0wGJTrnhYkSPyA"
+    },
+    {
+      "id": "royal-academy-gac-16",
+      "title": "The Last Supper",
+      "artist": "Giampietrino, Giovanni Antonio Boltraffio",
+      "year": 1515,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_T09uBponfZVutocj_wF793iOuL_kyTX8GhMchP4g7j19GMvcCVUKnK_iw_Zf7wlcnucv_Foa06=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-last-supper/gAEISwj5Pus85w"
+    },
+    {
+      "id": "royal-academy-gac-17",
+      "title": "Cast of the Farnese Hercules; National Archaeological Museum, Naples",
+      "artist": "Glycon the Athenian; Lysippus",
+      "year": 1790,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TGmjOEzOHjT6mfdgnmovQ4Vi2n3pgrGsfAzK7fhE0cLG_nmWdv7gRiTEuyVw02PgSBzayt2qQ=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/cast-of-the-farnese-hercules-national-archaeological-museum-naples/jQEZ6LYZZwHxDw",
+      "is3D": true
+    },
+    {
+      "id": "royal-academy-gac-18",
+      "title": "Detail of the portrait of Henry James O.M. by J.S. Sargent R.A. after being damaged",
+      "artist": "Unidentified photographer",
+      "year": 1914,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SewCB_isUOiRS3Vgrz9Himjc0GpdGdRYpSFUu-Wa-pU54EyvdX3iPVtC7G45Y6oQPc2I1AgZh1=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/detail-of-the-portrait-of-henry-james-o-m-by-j-s-sargent-r-a-after-being-damaged-by-a-suffragette-may-1914/cQFt1RDFcML4Pw"
+    },
+    {
+      "id": "royal-academy-gac-19",
+      "title": "The Blinding of Elymas",
+      "artist": "James Thornhill",
+      "year": 1514,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_St3mMIVcDixZVuLzdXmIN1zwiykLpxc5xcoixxAOwuxDb_IA8Cw-WmrsYEv3hcw5ZUZAaocQ=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-blinding-of-elymas/5QGaO8M6MWdIng"
+    },
+    {
+      "id": "royal-academy-gac-20",
+      "title": "The Last Supper LHS",
+      "artist": "Giampietrino, Giovanni Antonio Boltraffio",
+      "year": 1515,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SttOFI05-bJdEZt4IydtMvGedemFd2yQYRUxP58ZiGVCeO-V78imdnVdcxHF-yGcESgVXnV5A=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-last-supper-lhs/zQH1dW8rW5118w"
+    },
+    {
+      "id": "royal-academy-gac-21",
+      "title": "Vanity",
+      "artist": "Frank Cadogan Cowper RA",
+      "year": 1907,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RIWodQcxBIelC-6WUKPZfdsOJRh3bDyZbduOwbZp_kh0rNG-dpGH4Y289Cj-QKXanCBAo5xnJ6=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/vanity/oAFJGE8Q0QKw2g"
+    },
+    {
+      "id": "royal-academy-gac-22",
+      "title": "Self-portrait of Sir Joshua Reynolds, PRA",
+      "artist": "Joshua Reynolds",
+      "year": 1780,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QKgq0Zh_p8qDd6UTFKsPrSPkSOnM85AznQUF2IAJd5W9QEXMCKcvGEj9A_NZVuSmZvfP3A6JY=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/self-portrait-of-sir-joshua-reynolds-pra/XAFCwc851hpdoQ"
+    },
+    {
+      "id": "royal-academy-gac-23",
+      "title": "Cast of Belvedere Torso; Hercules; Dionysos; Marsyas; Original in Vatican Museums, Rome",
+      "artist": "Unknown maker, Apollonius",
+      "year": 1816,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_S29YjNkcs9No8h-jutmZlOC8WeRfighF7hH8UFlGt7wCsVVqOLSUq20JFB9R-BtI49BAHBXg=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/cast-of-belvedere-torso-hercules-dionysos-marsyas-original-in-vatican-museums-rome/AAGOjZ8s7DyFxw",
+      "is3D": true
+    },
+    {
+      "id": "royal-academy-gac-24",
+      "title": "The Virgin and Child with the Infant St John; Taddei Tondo",
+      "artist": "Michelangelo",
+      "year": 1505,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_S-7vWNBBWmDdbMavPTjCfcZXLjX3yiWJxm5CLf7XSvROoXcwCGrsROQO7JLErBtN32PrKgmGs=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-virgin-and-child-with-the-infant-st-john-taddei-tondo/jQFiOmD4l2u4DA",
+      "is3D": true
+    },
+    {
+      "id": "royal-academy-gac-25",
+      "title": "Design",
+      "artist": "Angelica Kauffman",
+      "year": 1780,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SNrBoAcLIgxjdIVL9qCvNd-zbuHA7U-DNNTP5WtHZFLsq1NVPOI0bRvCmv0GPs31rjk006Dw=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/design/ogGDDMHPq_ePOA"
+    },
+    {
+      "id": "royal-academy-gac-26",
+      "title": "Salisbury Cathedral from the Meadows; The Rainbow, Salisbury Cathedral; Salisbury Cathedral (Large plate); The Church under a Cloud",
+      "artist": "John Constable",
+      "year": 1837,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RHPRU2jzw4MdptTnUAsPV59KGIdgJOccN53ZL2E7aXL0GvIUOauMo_zdSTC5pvydycar3a6FqF=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/salisbury-cathedral-from-the-meadows-the-rainbow-salisbury-cathedral-salisbury-cathedral-large-plate-the-church-under-a-cloud/ugFRqXoWSUv5Ew"
+    },
+    {
+      "id": "royal-academy-gac-27",
+      "title": "Thor battering the Midgard Serpent",
+      "artist": "Henry Fuseli",
+      "year": 1790,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_S3FNjDj-YjjKNGe6sLwgT1MPZFDYnuT-ZourmdbfHmSZAlpsVwdC21QDs4IfW0Y4aaDuFOGA=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/thor-battering-the-midgard-serpent/fQEH7Ro3EE5c7w"
+    },
+    {
+      "id": "royal-academy-gac-28",
+      "title": "Portrait of King George III",
+      "artist": "Joshua Reynolds PRA",
+      "year": 1779,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SJTNC-hVHE-P3-Qnj7R2jTAJido9Dqfvzj4xyXrC_XH5p-YRCvPlblLtTksSutmefCTOom9g=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/portrait-of-king-george-iii/cQHc_uVOceyLgA"
+    },
+    {
+      "id": "royal-academy-gac-29",
+      "title": "The Ghauts at Benares; View of part of the City of Benares on the River Ganges, in the East Indies; The Ghats at Benares",
+      "artist": "William Hodges RA",
+      "year": 1787,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_S3m3NT6LDu3_Au83oUBWvDBPJ1bOFOyBzVQXfVC6ZFzeXQ-vxfJFhprvSwJqK31IM5sjxL=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-ghauts-at-benares-view-of-part-of-the-city-of-benares-on-the-river-ganges-in-the-east-indies-the-ghats-at-benares/PgHtOLPE_EHuWg"
+    },
+    {
+      "id": "royal-academy-gac-30",
+      "title": "Self-portrait of Thomas Gainsborough, R.A",
+      "artist": "Thomas Gainsborough",
+      "year": 1787,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QNLBvSlpj5aP-FywHIFpehSGecq33lRWh_gVCmgyoCvhBKxcZZpXkjZB1ijmLlI0W4o7J0aw=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/self-portrait-of-thomas-gainsborough-r-a/FwEar62Pd9NaMA"
+    },
+    {
+      "id": "royal-academy-gac-31",
+      "title": "Simeon Solomon",
+      "artist": "David Wilkie Wynfieldca.1860s",
+      "year": 1860,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RdcOePCNTkDfAYon_Kc9VMsP8HI9t1pKUdq2WmC5ZbrbOsdW1gvLnAZae1rZDtY27afeEw03s=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/simeon-solomon-1841-1905/cwF5SKn3RtbiBg"
+    },
+    {
+      "id": "royal-academy-gac-32",
+      "title": "Portrait of the Artist's Son, William",
+      "artist": "Martin Archer Shee",
+      "year": 1820,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SwLLcMt1yIsbqa5oNMhJBftkNmRI3QJcTlqgKRmuz0IXqcUsZ5ym5Zs45ozgLThDkwcceZca8=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/portrait-of-the-artist-s-son-william/iQE6qnxtHQBqLw"
+    },
+    {
+      "id": "royal-academy-gac-33",
+      "title": "Self-portrait of Benjamin West, P.R.A",
+      "artist": "Benjamin West PRA",
+      "year": 1793,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_T2_dTMZLXhSgumbG8du9Vhxf4xce0qeBrAi9muTK4fzye5IgTAjqEx20uaaJimeciN6vjQiA=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/self-portrait-of-benjamin-west-p-r-a/NgHHI89E-6Uy5g"
+    },
+    {
+      "id": "royal-academy-gac-34",
+      "title": "Composition",
+      "artist": "Angelica Kauffman",
+      "year": 1780,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Su3QdCBydqLvGnXx9zBSBUHMgzDyH_UcB4MbmiwH6eAXfxEaVlGCs1ULfh6rbKIcyMLgfZYA=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/composition/awFxF3PzXHSR-w"
+    },
+    {
+      "id": "royal-academy-gac-35",
+      "title": "Boy and Rabbit",
+      "artist": "Henry Raeburn",
+      "year": 1814,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RPLR8PvBeReAc4jJhfKiludXV9LQE-WiPjY-U4lWkt3PwsedpL_4W2sS08rlcse-T8GN6UXA=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/boy-and-rabbit/twEEglvYcmkLJQ"
+    },
+    {
+      "id": "royal-academy-gac-36",
+      "title": "Station Approach",
+      "artist": "L. S. Lowry",
+      "year": 1962,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Tauhdc8gY0wxsqX03nqoHNfcT5Lx-nFU9KV6nKlq-cQvz5tqD0mQT3QV-BHRu_6-nTcHKOThQ=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/station-approach/fQHHJZ9Ng5o9Hw"
+    },
+    {
+      "id": "royal-academy-gac-37",
+      "title": "A Souvenir of Velazquez",
+      "artist": "John Everett Millais",
+      "year": 1868,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RubHbq_WGEPPrQOTqZro06ss92LOcTdktEG8rMHczAxMMssCbjzsEL7s-Ul4x4TjtV4tcUFw=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/a-souvenir-of-velazquez/VQE7p5UxQqdcEQ"
+    },
+    {
+      "id": "royal-academy-gac-38",
+      "title": "Spring",
+      "artist": "Mary Moser",
+      "year": 1780,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TdIKFySvOLUKuf1gDUkEXR0xDXodGqsIPqrB9sLaE8q6C9nG9Hiz5xkw2415TctB-YiNZbU-U=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/spring/pAEldzIRisRdqw"
+    },
+    {
+      "id": "royal-academy-gac-39",
+      "title": "The Festival of Esther",
+      "artist": "Edward Armitage",
+      "year": 1865,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RD-mEDil81kSzdY1fck0JTfCsTU3m3K_AoTKNZdK8jPmoaVtTPasL0HVXmE5BPlvpl4BKjCw=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-festival-of-esther/ggEmcXqjlUApSA"
+    },
+    {
+      "id": "royal-academy-gac-40",
+      "title": "Romantic Landscape with Sheep at a Spring",
+      "artist": "Thomas Gainsborough",
+      "year": 1783,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RXNjNQWDsDhGqXgLAgXQ_MCnkxkoLxLJd2Nf2ivi3sSJoSV9prRaMUyfZJKKU18o86_1zowA=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/romantic-landscape-with-sheep-at-a-spring/uwEbyzVHWia1YQ"
+    },
+    {
+      "id": "royal-academy-gac-41",
+      "title": "Seascape Study: Boat and Stormy Sky",
+      "artist": "John Constable",
+      "year": 1828,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SzOyWr0q6_Vo4M9mT2Ou5GCKCFrvubZIyenfy4OG04KvX8pkTpaxH4Q_0DkdEi0gB1E5UypMmM=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/seascape-study-boat-and-stormy-sky/8AGqs9xPey4yhg"
+    },
+    {
+      "id": "royal-academy-gac-42",
+      "title": "Somerset House",
+      "artist": "John Constable",
+      "year": 1819,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_R_e77MtAjuKDryJoWAgBUHbFdOFcvaCJXq8_xSNczOP4Zrl1EKzgDFNVt4aATDwtm5xyWQL2iM=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/somerset-house/pQHLeNxIUm6_yg"
+    },
+    {
+      "id": "royal-academy-gac-43",
+      "title": "A Gipsy Girl",
+      "artist": "Thomas Lawrence PRA",
+      "year": 1794,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_R4ko15aLf7CmB_q4TH9GiGcdNSbeFdtUj76oCcFS67quGDvLqCmzeF3ISCgJBfFOzdNC5vtyRi=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/a-gipsy-girl/8gGl7QQ1dsISTA"
+    },
+    {
+      "id": "royal-academy-gac-44",
+      "title": "Lamia",
+      "artist": "George Frampton RA",
+      "year": 1900,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RdJhdn65BYEn531mrpy0egqaiS070m1pj0PbzstKcGMikG1d0dx8BAQy6bw1sSCiKDq0bqr7kV=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/lamia/-AE6BD9TPqul6g"
+    },
+    {
+      "id": "royal-academy-gac-45",
+      "title": "The Sleeping Model",
+      "artist": "William Powell Frith",
+      "year": 1853,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QCLb3j9R7NDMPdYUFnNBo0cdHH-jwYHEFMsTZg8X5kOTv7_3xFBibF1MKGh1PLqDzEo7pP4-A3=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-sleeping-model/9QG6J2-M3zQQmg",
+      "is3D": true
+    },
+    {
+      "id": "royal-academy-gac-46",
+      "title": "Seascape Study: Brighton Beach looking west",
+      "artist": "John Constable",
+      "year": 1824,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TUyh82XoeiYFrzooa_FkSAzj85nqSobT5juFJhvG-0j3mmqQe7XYkujmR1Rt5xEXZAL2fm5A=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/seascape-study-brighton-beach-looking-west/LgGJ_DTv8ymIew"
+    },
+    {
+      "id": "royal-academy-gac-47",
+      "title": "The Drawing Room, Townshend House",
+      "artist": "Anna Alma-Tadema",
+      "year": 1885,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SvyFEy_fxIRk7w3iE7tZOCYSYmoqQSqVh6wS5hHAZbPnlEQBENO66kgEJJqLmyyP5giE8wshc=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-drawing-room-townshend-house/pgHz-AvZPJgPEg"
+    },
+    {
+      "id": "royal-academy-gac-48",
+      "title": "The Antique School at New Somerset House",
+      "artist": "Edward Francis Burney",
+      "year": 1780,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RpBLKw1dUIeeyYXcujVL3lUXWLHiBRbN1QoJVdqI2Gs2oe3sbGuRuD-SHYOP23PLqV3t9UdA=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-antique-school-at-new-somerset-house/bAGtd_kpbSOCsQ"
+    },
+    {
+      "id": "royal-academy-gac-49",
+      "title": "Portrait of John Constable RA",
+      "artist": "Charles Robert Leslie",
+      "year": 1830,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Totv1d93ZGZM3WOtkw75oaApHx34H8AYPaLbKJXj4cYpmXKHJ2sJBMumVURmXumWcK2q1tChY=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/portrait-of-john-constable-ra/IwEdWVJqj5EgGQ"
+    },
+    {
+      "id": "royal-academy-gac-50",
+      "title": "Theory",
+      "artist": "Joshua Reynolds PRA",
+      "year": 1780,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Q5cYB9hgSIbLUqSChQjKq_grcS_M5aWXsIsgWcL9ee-NmTgvkbTx7yfmI8u-Pp7Si5W6r_Japr=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/theory/xwH6iTK47Gq_Eg"
+    },
+    {
+      "id": "royal-academy-gac-51",
+      "title": "The Council of the Royal Academy selecting Pictures for the Exhibition",
+      "artist": "Charles West Cope RA",
+      "year": 1876,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_R2dd99cDSzWUn0xriFeHZ0v1D53txkCcCC52vVwkppktlvWolXt0yxYrY9dUNmFMTMFg67OQ=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-council-of-the-royal-academy-selecting-pictures-for-the-exhibition-1875/GwED42u8hIfgpQ"
+    },
+    {
+      "id": "royal-academy-gac-52",
+      "title": "The Professor's Dream",
+      "artist": "C.R. Cockerell RA",
+      "year": 1848,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RbrbQ3Thl7ONbBNLu318sDxEQnnugAZPhq1xL868X2-QynV6-cPflvWoKxLsIKjbshn42uFlA=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-professor-s-dream/EQG1Ger79_j01w"
+    },
+    {
+      "id": "royal-academy-gac-53",
+      "title": "Marching at Night",
+      "artist": "Paul Nash",
+      "year": 1918,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SlTKUvRS1myOKPsom1sCX5l22ia-xp3qrqPk-h_J0T2bs3mRrV4pwMgBr4gTHuMFlgzUfYv1A=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/marching-at-night/ogFUHdaX0adegg"
+    },
+    {
+      "id": "royal-academy-gac-54",
+      "title": "The Way to the Temple",
+      "artist": "Lawrence Alma-Tadema RA",
+      "year": 1882,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RXJHIhHqQ2t170UB3raQfexrmuZhKF65J8jlz3oGF_Ub0eJIZACtKvDk8MoZCrAWMDU0Zzgg=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-way-to-the-temple/NwGm-tU6zFyccw"
+    },
+    {
+      "id": "royal-academy-gac-55",
+      "title": "The Royal Academicians in General Assembly",
+      "artist": "Henry Singleton",
+      "year": 1795,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TXwaJ8xUTWHdcU_RWKfudNVXH2VBy6O8WSkcie4mVllRZUjOC0MV4Qd4c4u-K_Qyl61hsv=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-royal-academicians-in-general-assembly/2AFcevRH4zn6OQ"
+    },
+    {
+      "id": "royal-academy-gac-56",
+      "title": "Finished study for 'The Third Anatomical Table of the Skeleton of the Horse'",
+      "artist": "George Stubbs ARA",
+      "year": 1758,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RKz7k4D2oojBpKunD3q18SIa_hSdst3Ue1ffSx7u9tm35fCOAdsXQk_NQ3-hOI-3-Gcc2O2OY=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/finished-study-for-the-third-anatomical-table-of-the-skeleton-of-the-horse/hwHucMuZlb2tPw"
+    },
+    {
+      "id": "royal-academy-gac-57",
+      "title": "Cloud Study: Horizon of Trees",
+      "artist": "John Constable",
+      "year": 1821,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SntnFUNKU99yHPgZ1ROokkYxxBLRC_iDcgeLBUJntHGbvQVxPEIu88GiS-fUN8nXbw75LuDQ=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/cloud-study-horizon-of-trees/zwEV_o2mN8fn_Q"
+    },
+    {
+      "id": "royal-academy-gac-58",
+      "title": "Landscape Study: Figures",
+      "artist": "John Constable",
+      "year": 1822,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RjXkke03RV5cLbhifC55wYYR2yJ539HZk1m02QOjYf0eLiKRU3OreHdszC6hoMBNgGARPzMA=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/landscape-study-figures-by-a-clump-of-trees/QAF6OlvbV1msRg",
+      "is3D": true
+    },
+    {
+      "id": "royal-academy-gac-59",
+      "title": "Cast of composite capital",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SURSBI-3xFtPzShgKdkfRkF_GbCtDAut3TVPZDTc5bMMxO1hJjR-S80vmxDsjwHy8SHB9x=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/cast-of-composite-capital/TgGzWLeQij1k9A",
+      "is3D": true
+    },
+    {
+      "id": "royal-academy-gac-60",
+      "title": "An Interior in Venice",
+      "artist": "John Singer Sargent",
+      "year": 1899,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SZr-UCkM8b2T4FCz_Q18u48iNQol0ESLYqZSs1YCSmh8J8S8TrfR7ZL4_jNgtj_fBcfy2gqBQ=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/an-interior-in-venice/NwGjxlTljYU65w"
+    },
+    {
+      "id": "royal-academy-gac-61",
+      "title": "Travelling watercolour box owned by J.M.W. Turner, R.A",
+      "artist": "J. M. W. Turner",
+      "year": 1842,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RF28fgsEACRFA017N6wUS6bmiz2--vEaj0GSU-4SuBXtrMppAXfqLO-m9KjYR8e0VTTNBj6g=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/travelling-watercolour-box-owned-by-j-m-w-turner-r-a/2AGKSmiSf3XVIg"
+    },
+    {
+      "id": "royal-academy-gac-62",
+      "title": "Edouard Manet",
+      "artist": "David Wilkie Wynfield",
+      "year": 1868,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_R6wRtXUT0aUlN_CEls1uTsfwN47K_rWHSr2eVs9SugO1g3R0IOzWB66H8jDd7fRJT-qsG-zQk=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/edouard-manet/OQH_3TIKyxY8-Q"
+    },
+    {
+      "id": "royal-academy-gac-63",
+      "title": "Self-portrait of Richard Wilson, R.A",
+      "artist": "Richard Wilson RA (attributed to)1760s or 1770s",
+      "year": 1760,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RxVGewcLQaVW53oXb-rRslBpe0tc5qxMe14htRX_-uWh3-nAf7DaKfrDqv_fq18OhNxefmFSw=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/self-portrait-of-richard-wilson-r-a/KgG0FdLUKjjH0g"
+    },
+    {
+      "id": "royal-academy-gac-64",
+      "title": "The Gatehouse of Battle Abbey, Sussex",
+      "artist": "Michael Angelo Rooker",
+      "year": 1792,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SMJNVMuHUh1DNrrYApYmtD6BJOiUB-rxWHEAHNpqypA1lIMv-2yc-k4fR6dorHkHXnOUFS_HrB=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-gatehouse-of-battle-abbey-sussex/ewHDCKk1r6EYYg"
+    },
+    {
+      "id": "royal-academy-gac-65",
+      "title": "The Silence",
+      "artist": "Carel Weight RA",
+      "year": 1965,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SfVJ1pr_-XGg1KmZrBaCoqxm9S-CLLPNLjm6SKsO4liK76N6xlyByVeoFMbfOlJbf9dXOF3Xrf=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-silence/FgFhMK_o5fwDIA"
+    },
+    {
+      "id": "royal-academy-gac-66",
+      "title": "Distant View of the Grove, Hampstead",
+      "artist": "John Constable",
+      "year": 1822,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_ScfVR31ieul6XasYZLultywDVLs_idGhbKiU-j22Gz33Fq2LoxewIfXqh1S7KNBacm90r43w=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/distant-view-of-the-grove-hampstead/KgGU-emYg5A6KQ"
+    },
+    {
+      "id": "royal-academy-gac-67",
+      "title": "Landscape Study: Hampstead looking West",
+      "artist": "John Constable",
+      "year": 1821,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Rki6QBMr0ZNY59820BnJbT8CnS4nD6BlmcT5bigrgKxXcIln2-lecrnzKThmSx3xptozgwOV8=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/landscape-study-hampstead-looking-west/ZgHA1wRTueO8UQ"
+    },
+    {
+      "id": "royal-academy-gac-68",
+      "title": "Hampstead Heath looking towards Harrow (I)",
+      "artist": "John Constable",
+      "year": 1821,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SYxoU_FieXYwkXL2jH9STOTqFCh71lnNOlxokG_GoJy6ctg6CRuZaTTlnKHRaRuD67grILMw=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/hampstead-heath-looking-towards-harrow-i/LgFWwJvmSzSlBw"
+    },
+    {
+      "id": "royal-academy-gac-69",
+      "title": "Record drawing of Manchester Town Hall: perspective",
+      "artist": "Alfred Waterhouse RA",
+      "year": 1887,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QOWOVFCa67DpIlMyO260pxzfz7gJqFOGDisBYlf8qJhjULXRef7HvD29AMxmlv8O3cMgfdPA=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/record-drawing-of-manchester-town-hall-perspective/5QHucg6LK9GxWw"
+    },
+    {
+      "id": "royal-academy-gac-70",
+      "title": "Hampstead Heath looking West towards Harrow (II)",
+      "artist": "John Constable",
+      "year": 1821,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_R110ayNZR1fazgR5qhVavOaoOYMV3mMAV3YgISpRtl2seqD7jp6A3IJF-ci5caqqadKvx3XAg=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/hampstead-heath-looking-west-towards-harrow-ii/CAFtlNovx-cBQw"
+    },
+    {
+      "id": "royal-academy-gac-71",
+      "title": "South front of Burlington House",
+      "artist": "Stephen Aylingca.1860s",
+      "year": 1860,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QEkPtJBCn16kmrixn7jOTCi78fThatjbU4vSY3Ae_SPEL2m8xUMFocRl7tmTmiL_LbH46tCWk=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/south-front-of-burlington-house/0gGU_FMsCQYNPw"
+    },
+    {
+      "id": "royal-academy-gac-72",
+      "title": "Record drawing for Elephant and Rhinoceros Pavilion, Zoological Society of London Zoo, Regent's Park, London: plan, elevation and section",
+      "artist": "Hugh Casson",
+      "year": 1971,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TIyxkhkgjMvDE7WsCLYLj3UfRlV2AnEUaebkCIj6MfqsJ0J6uo3wJxR_Z8Z7W1rk6hBjVfRQ=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/record-drawing-for-elephant-and-rhinoceros-pavilion-zoological-society-of-london-zoo-regent-s-park-london-plan-elevation-and-section/PQE81BLR7DSz5g"
+    },
+    {
+      "id": "royal-academy-gac-73",
+      "title": "A Family Group",
+      "artist": "Lawrence Alma-Tadema RA",
+      "year": 1896,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SMZj7xhI-L2m-NhkJmkZa-H_P6u8aPHSMjN5GL0u64pyspg23HLlnvYO-EyQ6_mKLtY2o-cpU=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/a-family-group/hQF8VEBNOoHNQg"
+    },
+    {
+      "id": "royal-academy-gac-74",
+      "title": "The Falling Titan; A Falling Giant",
+      "artist": "Thomas Banks RA",
+      "year": 1786,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_R-IkQ_S2-SQmtQ6_mkc2AjFyUyoJQr_wsO2prxFNrDrb_eeEJT8Auyb7WoFgCadVqqSiBx5w=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-falling-titan-a-falling-giant/JgH8O-ye67Af2A"
+    },
+    {
+      "id": "royal-academy-gac-75",
+      "title": "Cast of the Borghese Gladiator; Discobolus; Fighting Gladiator; Hector; Héros Combattant; Borghese Warrior; Original in Musée du Louvre, Paris; Warrior of Agasias",
+      "artist": "Agasias of Ephesus",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TyBbG4qZf4PzC4kzxaPlIV1M3qZtKoeg5Mvf0JF_uQ20_QfNjaCD3skfy5aAPQt7RcBTcM=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/cast-of-the-borghese-gladiator-discobolus-fighting-gladiator-hector-h%C3%A9ros-combattant-borghese-warrior-original-in-mus%C3%A9e-du-louvre-paris-warrior-of-agasias/ewFljgf_fcJNEA",
+      "is3D": true
+    },
+    {
+      "id": "royal-academy-gac-76",
+      "title": "The Women going to the Sepulchre",
+      "artist": "Robert Anning Bell",
+      "year": 1912,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TnMA47Gdo7jMgVd9_ssTnptT9raBXQxzDh5459n9_DvF_y-iVbMTI2Hl8fU-2tXX_0hTjoaA=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-women-going-to-the-sepulchre/JwENlL3N8PezDQ"
+    },
+    {
+      "id": "royal-academy-gac-77",
+      "title": "Cast of the Dancing Faun; Medici Faun; Faun with clappers; Original in Uffizi, Florence",
+      "artist": "Unknown maker, after unidentified Roman sculptorpossibly",
+      "year": 1781,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TvfAevHRh0Qy9zzOiZ_sTw4wTk0RkmfVqFy_HZG5hhlPmjh3FlLKbYh_8URgY_5c1RqDwSmA=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/cast-of-the-dancing-faun-medici-faun-faun-with-clappers-original-in-uffizi-florence/VgEZNgOcc8_59g",
+      "is3D": true
+    },
+    {
+      "id": "royal-academy-gac-78",
+      "title": "Rainstorm over the Sea",
+      "artist": "John Constable",
+      "year": 1824,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_R62_VDbEpNKVHbCjXAIpND1Cr2D2dHQ4_8EUSoSbTdZO5ukiiwSg4GXlFdp2pkj1QZOPEtAAg=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/rainstorm-over-the-sea/jAHcfhbW_fQU5g"
+    },
+    {
+      "id": "royal-academy-gac-79",
+      "title": "Cincinnatus (Roman version of a Greek original); Lansdowne Sandal Binder; Jason; Hermes",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_R6dDtfhiSbnFLbR3LQhNyhfVmndAZocHjcoJam_Jy1rjk4EPEMdvfB3EsLfcRBPIKbAgmVYPQ=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/cincinnatus-roman-version-of-a-greek-original-lansdowne-sandal-binder-jason-hermes/pAGSEf9P1-tT9g"
+    },
+    {
+      "id": "royal-academy-gac-80",
+      "title": "Cottage Children",
+      "artist": "William Owen RA",
+      "year": 1804,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_T0q0w_wUwMfkc9BsFQYb7MQ87nVlwvO0NMDDz9ZtLqce5RxA3UmfjQ0gAcoH3Y_agFpEVQXrA=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/cottage-children/AwG5VpbPNWyOIA"
+    },
+    {
+      "id": "royal-academy-gac-81",
+      "title": "A Boat passing a Lock",
+      "artist": "John Constable",
+      "year": 1826,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RnV-qjY4sYUfAej7QfZFJrQLLmdQnXMybkLPNacUVzp7dxcHMdDGHJtKFyTYgshbHttiDSNYs=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/a-boat-passing-a-lock/SwEyFEb_JqiOIg"
+    },
+    {
+      "id": "royal-academy-gac-82",
+      "title": "The King Drinks",
+      "artist": "Briton Rivière RA",
+      "year": 1881,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Si3OzC6Tb8a0xCe75Bi9bWi50VCYRnnzV-2pjaW3Ewgkjws-KplWsrXtQL2IfdxBlDXnky=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-king-drinks/fwGeEfxh8Mu0nQ"
+    },
+    {
+      "id": "royal-academy-gac-83",
+      "title": "The Summer Snow",
+      "artist": "Edward Burne-Jones",
+      "year": 1863,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QFt2COQHV3uwAb2uYeXnZlUA7H1eICiiFyOdINhFGT3o_kE6EUzuxAmh_G_zJ_Gbcu-946CA=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-summer-snow/9wHHNGp89llUFw"
+    },
+    {
+      "id": "royal-academy-gac-84",
+      "title": "Cloud Study, Hampstead, Tree at Right",
+      "artist": "John Constable",
+      "year": 1821,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_THnY8gHeXUdMpmWffKTTzbOLkP4EE_Yed3k_hmAmEeR4TrdiSP_bZ5nbMfFPgoqahDoKjwiw=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/cloud-study-hampstead-tree-at-right/RgH4MGcY1YjWvA"
+    },
+    {
+      "id": "royal-academy-gac-85",
+      "title": "Fishing rod belonging to J.M.W. Turner RA",
+      "artist": "J.M.W. Turner RA",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QaOBBwbKzVJZ6iTOIziCjm_pGa0ZhmAj_R0N0_yz2sv5Azn8VFS-uOaHqu1WYvGh6l82T_Dw=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/fishing-rod-belonging-to-j-m-w-turner-ra/zAHZChaY1iERTQ"
+    },
+    {
+      "id": "royal-academy-gac-86",
+      "title": "A Bathing Group",
+      "artist": "Henry Tuke RA",
+      "year": 1914,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Rv_rDgfGSb2JYCM7Ek7NZzAJIUXLwTX_F5Mts1mia-zGDIBYMtsDIWNUFikVGSWvyed473WOE=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/a-bathing-group/qAEq7BfHbuELpw"
+    },
+    {
+      "id": "royal-academy-gac-87",
+      "title": "Fog is an Urban Experience",
+      "artist": "Will Alsop RA",
+      "year": 2007,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_R3E2JmwDGEEsYuK13KL1_zys8-YHTiC7Lg_1yNSgC2oaaEbReHg1maUfgsWJh_ejSTrsTbWYqA=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/fog-is-an-urban-experience/SwGEdSWpNWPM2w"
+    },
+    {
+      "id": "royal-academy-gac-88",
+      "title": "The Leaping Horse",
+      "artist": "John Constable",
+      "year": 1825,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QsXS4Z3qkwlZ8Umf6jhI_Zb0uU5iMEb0Mf7kuCR_tm6VOvJ6SRExNvtOVcOyOa5euz_wYDNQ=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-leaping-horse/BwHCQ3EgfQMREg"
+    },
+    {
+      "id": "royal-academy-gac-89",
+      "title": "Dump of war material, Iceland",
+      "artist": "Thomas Hennell",
+      "year": 1943,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QN4eaHtZMowLk38v3Ht8PNxEUCxVhu18XyRz4MWtpJZPwu3gYttXVLQ5q04D-wXdiaDdn7_cQ=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/dump-of-war-material-iceland/CwHm1asP_2WpHg"
+    },
+    {
+      "id": "royal-academy-gac-90",
+      "title": "Invention",
+      "artist": "Angelica Kauffman",
+      "year": 1780,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TfEsMK8e0NppodUXW7_VTp4HXjvmI_IfFVoMTLVHWZ_EmeCAYNYSOcxr5QaS0Cy9fIZyVB17vP=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/invention/twHcv3VgINYsEg"
+    },
+    {
+      "id": "royal-academy-gac-91",
+      "title": "Teddy Boy and Girl",
+      "artist": "Lynn Chadwick RA2002 after a 1955 version",
+      "year": 2002,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TI40bC9PL4MRRX9aEqOQJx3WgGBSbGXR26RwS00UpPcZyiD7fa4Xyu6Av7ynwjHy7HUMQQlfDm=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/teddy-boy-and-girl-1955/_AFqQ6K5ETAo9g"
+    },
+    {
+      "id": "royal-academy-gac-92",
+      "title": "Palette owned by John Constable RA",
+      "artist": "John Constable RA",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QajwtC9SwVHFda3SMY1yj1YLraqnHClYvk0F-2zX3Xxj6Y8gCbNABjdErw4zZoabqDFwd1Pvjo=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/palette-owned-by-john-constable-ra/sQEjla-5slsisA"
+    },
+    {
+      "id": "royal-academy-gac-93",
+      "title": "Smugglerius",
+      "artist": "William Pink, Agostino Carlini RA",
+      "year": 1776,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SBEZI_zKPz9KgUSzHkbJRnz7KDCfKEM71J47vAw5PdrI5g6m5KwLiXzatUsC1GrPUaWaI0ZA=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/smugglerius/7AFR1BBfpFQf_Q"
+    },
+    {
+      "id": "royal-academy-gac-94",
+      "title": "Bewitched Groom; The Sleeping Groom and Sorceress",
+      "artist": "Hans Baldung",
+      "year": 1544,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QkL09DXwN7-JORx2H92ELEU6Wfib5g4rjushJAV6UrqYdmWaHHl88PQNl2y2fqEJsg13WLFsc=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/bewitched-groom-the-sleeping-groom-and-sorceress/4gHKbAoMG061Gw"
+    },
+    {
+      "id": "royal-academy-gac-95",
+      "title": "Cat",
+      "artist": "Robert Clatworthy RA",
+      "year": 1955,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_T0qXEB-j9JBJc4SHSmFpvEBvL8sdaUy0fima3NkcMnxOcZceZo2ICR-xMlYNP7oJonwa5Ayg=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/cat/9QGxF978JWbVJg"
+    },
+    {
+      "id": "royal-academy-gac-96",
+      "title": "Waterloo Bridge from the left bank of the Thames",
+      "artist": "John Constable",
+      "year": 1820,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Ruxrz1cIs5n2Z0hX636ciDxXOBMSPG7alAveOhSGU2H_1xEEBb29yJLXCmfNXVAIedhlCUCRw=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/waterloo-bridge-from-the-left-bank-of-the-thames/IAGQDulhA4DzEg"
+    },
+    {
+      "id": "royal-academy-gac-97",
+      "title": "Leda and the swan",
+      "artist": "Unknown artist. Attributed to Rosso Fiorentino and formerly attributed to Michelangelo Buonarrotimid-",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_ThnhfTdAImznwWhY4W6jxh4aKge0HU3CuTh3s3V92xRguro7DL1fMutGHFxp1a6TXiS92i518=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/leda-and-the-swan/DAGpPXoOm_BiPg"
+    },
+    {
+      "id": "royal-academy-gac-98",
+      "title": "St Kilda - Stac Lee and Stac an Armin",
+      "artist": "Norman Ackroyd RA",
+      "year": 1990,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_T7Vu1_XAvM-VHOSwwV9rbC78EK1yL5Vupbp0o0Rifq1OhLlxiZvXdLDteZyP86WZhKAsTI_oQ=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/st-kilda-stac-lee-and-stac-an-armin/aQG81VkB45OK2A"
+    },
+    {
+      "id": "royal-academy-gac-99",
+      "title": "Watercolour test paper taken from travelling watercolour box owned by J.M.W. Turner RA",
+      "artist": "J.M.W. Turner RA",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SkA2yrRb-TecFrEuofXqWQtNMrNwNBpK24uiNHxaZV1eRXAXIVXu7QaDnZ4TugL6pjUqJjlhg=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/watercolour-test-paper-taken-from-travelling-watercolour-box-owned-by-j-m-w-turner-ra/5AGybSl0cXPYHA"
+    },
+    {
+      "id": "royal-academy-gac-100",
+      "title": "Dolbadern Castle, North Wales",
+      "artist": "J. M. W. Turner",
+      "year": 1800,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TANQ-h9AyolUjI1POWPj7TL3X1aIaqoTycIqzynlCPZEoEX-7H491OT718K23DfNtd99NjqT8=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/dolbadern-castle-north-wales/bAGNsdOUmSJ_iw",
+      "is3D": true
+    },
+    {
+      "id": "royal-academy-gac-101",
+      "title": "Portrait of Elizabeth Malin, Housekeeper at the Royal Academy",
+      "artist": "Philip Jean",
+      "year": 1788,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_R8hY4BYKAmvpmi9AOU1WnwNcPBsrYNp5lDz6GJgXIrQDwVV9_z_dvmkI7oCzi75WWkdGpkFq8=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/portrait-of-elizabeth-malin-housekeeper-at-the-royal-academy/6wEzQlbV7kRYow"
+    },
+    {
+      "id": "royal-academy-gac-102",
+      "title": "Queen Victoria's satchel and art equipment",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TnnDdmzJUY4pfcb9PP2rVYCHN_mhtns9Ob_z8dtVlH_IifaQZeg65cTBhqO8ttA183hNsv=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/queen-victoria-s-satchel-and-art-equipment/2QET-bUaSUuw2A"
+    },
+    {
+      "id": "royal-academy-gac-103",
+      "title": "Grecian Lady at the Bath; Thomas Baxter, An illustration of the Egyptian, Grecian, and Roman costume : in forty outlines, with descriptions, London",
+      "artist": "Thomas Baxter",
+      "year": 1810,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RWho6LeC2ZIbqeA2NcOwKJj-3LtOgYKW2UHc8SPC5AIVZSKsuvIHAm2PwR6dO5X6kZSZnp9A=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/grecian-lady-at-the-bath-thomas-baxter-an-illustration-of-the-egyptian-grecian-and-roman-costume-in-forty-outlines-with-descriptions-london-1810-pl-27/4AGqy_q38tsAzQ"
+    },
+    {
+      "id": "royal-academy-gac-104",
+      "title": "Samson and Delilah",
+      "artist": "John Francis Rigaud",
+      "year": 1784,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QK6R526dR0_T6ccxHR3Btol-ovnzOUxJ4qzet0fmaioDNuDUBYfq3OoCUL_PCFCSp6GrWd7A=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/samson-and-delilah/vwEQTTqtRKgSkQ"
+    },
+    {
+      "id": "royal-academy-gac-105",
+      "title": "Landscape Study: Scene in a Park",
+      "artist": "John Constable",
+      "year": 1823,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Qcm9X80boJNyeriWd_EWPLP32d_oAAlAqBqfwu3JjFSMGcrpS5OdOnAV8nDrA5dBAHb_Ezg8Q=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/landscape-study-scene-in-a-park/xgGhpUuBI7kEzw"
+    },
+    {
+      "id": "royal-academy-gac-106",
+      "title": "Battle for the Standard' after a drawing attributed to Raffaello Sanzio",
+      "artist": "William Young Ottley",
+      "year": 1823,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Tnl8wmHDg4LWnVGhdqL9hoyB54Kchk93kmzMUVc8mpUJLtCZYj6vVSegFJZ41GGEcOkZMOiDs=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/battle-for-the-standard-after-a-drawing-attributed-to-raffaello-sanzio/CwEr1oigaxd9Yg"
+    },
+    {
+      "id": "royal-academy-gac-107",
+      "title": "Sir, I listen to your energetick relation with pleasure",
+      "artist": "George Dance the Younger",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RjRxBUQbuGr4sh9CnblpCWZCJ24xGwShpOp1TMuNdCjhbAj3RbEfyNZ3ZyakVu41tPtSerIA=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/sir-i-listen-to-your-energetick-relation-with-pleasure/uAGjWThpj-UMkw"
+    },
+    {
+      "id": "royal-academy-gac-108",
+      "title": "The Deposition",
+      "artist": "Norman Adams RA",
+      "year": 1991,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SpoVZNaxyaZ-NtlULPGzhWIOwxcBH0xz0uvjd0L-d__oH-pxMHZGtzfhPFvyX_IXKCXo4Mxow=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-deposition/aQEj8qTRRdUQOg"
+    },
+    {
+      "id": "royal-academy-gac-109",
+      "title": "Petition of female students to the President and Council",
+      "artist": "Unknown",
+      "year": 1883,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QR8GtB9fjKn0LNcfPIAHfMBBMupKKZ99J-Seln322pra5sLU-9s3pt8zxlHXpWvuUzkNlpJiNf=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/petition-of-female-students-to-the-president-and-council/JQEZj5N8ZkMCDA"
+    },
+    {
+      "id": "royal-academy-gac-110",
+      "title": "Royal Academy Summer Exhibition 1931. ‘Sending in Day’",
+      "artist": "Unidentified photographer working for Sport & General Press Agency Ltd",
+      "year": 1931,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Rg2-9qvNeNOxr4Kjcf1HuLfiTQronMJU4mS-qdF6QGS6IuUWaEIesYtVKB2PVoT9T1K0agsZU=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/royal-academy-summer-exhibition-1931-%E2%80%98sending-in-day%E2%80%99/9gF-Vl5TN4E2Hw"
+    },
+    {
+      "id": "royal-academy-gac-111",
+      "title": "A Shilling well laid out. Tom and Jerry at the Exhibition of Pictures at the Royal Academy; Pierce Egan, ‘Life in London’",
+      "artist": "George Cruikshank",
+      "year": 1821,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TEP1rf-996wKkQboUvovUUIC2zvbqfzjew0L9IpGp92H5h0bR-KFWU-fBQa3vueoD_bhRmLg=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/a-shilling-well-laid-out-tom-and-jerry-at-the-exhibition-of-pictures-at-the-royal-academy-pierce-egan-%E2%80%98life-in-london%E2%80%99-1821-pl-31/ngFoj9PnZC-iVQ"
+    },
+    {
+      "id": "royal-academy-gac-113",
+      "title": "Exhibition Room, Somerset House; from ‘Microcosm of London’, London: R. Ackermann",
+      "artist": "Augustus Charles Pugin, Thomas Rowlandson",
+      "year": 1808,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TqNciKDOt6lQFyhlw9mySCNd3gJyKEOTrO7mnlRD31t2nSucAOA_qtLu2x9_vm1ew3GOWt0WV8=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/exhibition-room-somerset-house-from-%E2%80%98microcosm-of-london%E2%80%99-london-r-ackermann-1808-10-vol-i-pl-2/8wE7EeK8ZxBnOQ"
+    },
+    {
+      "id": "royal-academy-gac-114",
+      "title": "A Life Class at the Royal Academy, Somerset House",
+      "artist": "Thomas Rowlandson",
+      "year": 1811,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RBk1N508etBPyCvf6DqD6yTyeb_icMZeF4NS5LSBBlfb6DkkVXCnqBnn1-d0bklmMGZWDmyFFu=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/a-life-class-at-the-royal-academy-somerset-house/_AED9HmGN_w6dw"
+    },
+    {
+      "id": "royal-academy-gac-115",
+      "title": "Self-portrait",
+      "artist": "Angelica Kauffman",
+      "year": 1805,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_S6w5CUwaI3AM-n0AGJvGA0ZzbFs3URBVa2vHv77cVjGgJAx44VR2No_crkygVmCXayRHObGQ=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/self-portrait/5QHAsk_TIk9W2w"
+    },
+    {
+      "id": "royal-academy-gac-116",
+      "title": "Westmacott lecturing at Somerset House in 1830; Lecture on Sculpture",
+      "artist": "Charles Joseph Hullmandel",
+      "year": 1850,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Q-bb7ac8xS60EiQAfJYUJkINIzAGdap5t0L9D55RF7ObwgRL9T-VknK7ZdRvDF1mxF2Gw3XWg=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/westmacott-lecturing-at-somerset-house-in-1830-lecture-on-sculpture-by-sir-richard-westmacott-at-the-royal-academy/9QH697cVFkY-JA",
+      "is3D": true
+    },
+    {
+      "id": "royal-academy-gac-117",
+      "title": "The Antique School at Old Somerset House",
+      "artist": "Edward Francis Burney",
+      "year": 1779,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SPFh-10yArE7NRwmFztdplAfgB5sxhxaD8K5umwlw3OTnvmApbwS62YdyONejkN-wvKQVDOQ=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-antique-school-at-old-somerset-house/kQGXj70EYUcidw"
+    },
+    {
+      "id": "royal-academy-gac-118",
+      "title": "Self-portrait of Nathaniel Hone, R.A",
+      "artist": "Nathaniel Hone the Elder",
+      "year": 1768,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QREYLqHAQMrOJyoE7PXtTz32_8x2r_HGKmBPc6pHS1PZ-3AKNZMOjr1heeeWcx9CjeGRovp-4=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/self-portrait-of-nathaniel-hone-r-a/TQHIoBRil-l5ZQ"
+    },
+    {
+      "id": "royal-academy-gac-119",
+      "title": "Unpacking exhibits from Japan. The International Exhibition of Chinese Art at the Royal Academy 1935-6. Photograph ; International Exhibition of Chinese Art",
+      "artist": "an unknown photographer from Topical Press Agency",
+      "year": 1935,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QrCKJvjWJXxrvXPAsSIrg9ds_gaS0nrnbzZfa08X5N-ur-vr6MpwxsvFAIegHiD10B6v6Fmg=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/unpacking-exhibits-from-japan-the-international-exhibition-of-chinese-art-at-the-royal-academy-1935-6-photograph-by-an-unknown-photographer-from-topical-press-agency-international-exhibition-of-chinese-art-1935-36/hAGhps2fufRUQg"
+    },
+    {
+      "id": "royal-academy-gac-120",
+      "title": "The Royal Academy of Arts",
+      "artist": "Richard Earlom, Johann ZoffanyPublished 2 August 1773 by Robert Sayer",
+      "year": 1773,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SssEaHYsMlGDZ0VmczHU2d5aK1UkSr9XuCSeVF1Ooya8rFZVFa6QxGrrqLWvlwFlpnapjDaQ=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-royal-academy-of-arts/ZgF8vzuK2z8Dfg"
+    },
+    {
+      "id": "royal-academy-gac-121",
+      "title": "From 'Artists at Home', photographed by J.P. Mayall, London",
+      "artist": "Sir F. Leighton PRA",
+      "year": 1884,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_R7dgXOH9sKdM06DCYO3J9_IY9ZP-9YfyE4ieYgIO0-KZ4s-18XzoVH7EBqB8wcIYQhyhsi6VY=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/from-artists-at-home-photographed-by-j-p-mayall-london-1884-pl-2/HAFrv-JSQoX_HQ"
+    },
+    {
+      "id": "royal-academy-gac-122",
+      "title": "The Antique School of the Royal Academy at New Somerset House",
+      "artist": "Johann Zoffany",
+      "year": 1783,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QFmD-ZsIBuBfZrPWqA0IftmhBG2ob23X1GEz1fGlOoZ2o59rDhKWsYQsmlytrd7VpgkNO52w=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-antique-school-of-the-royal-academy-at-new-somerset-house/tQHj6SXGOAPBoQ"
+    },
+    {
+      "id": "royal-academy-gac-123",
+      "title": "New Buildings of the London University, Burlington Gardens; ‘The Illustrated London News’",
+      "artist": "Unknown",
+      "year": 1870,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_R8tCIx-CppY1bgek6djn4vIRivIKSvP_-cWpmgNjMllGp5HEMaeMucCasV_jyZAu2mQ747g1A=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/new-buildings-of-the-london-university-burlington-gardens-%E2%80%98the-illustrated-london-news%E2%80%99/SgGpiZcA9D_wpw"
+    },
+    {
+      "id": "royal-academy-gac-124",
+      "title": "Portrait of J.M.W. Turner, R.A",
+      "artist": "George Dance the Younger",
+      "year": 1800,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QVPbCrwfwIbGPdF-Dsx1T5OClyzxNuf4tejHM7Q4cNMqCQGkF8yAH3fdL8sWO925PXcixl=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/portrait-of-j-m-w-turner-r-a/-QEs-Zxi4EA-bg"
+    },
+    {
+      "id": "royal-academy-gac-125",
+      "title": "View of the old Royal Academy in Pall Mall",
+      "artist": "Edmund Evans",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_T9RotWQU7wgze_feWjEC1FKOpkUGgZoUn1Tk3DG-tibUK6OKxTeRI84zbo_ZguKrNhfY8Kbg=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/view-of-the-old-royal-academy-in-pall-mall/PwHdMbt-3i0aow"
+    },
+    {
+      "id": "royal-academy-gac-126",
+      "title": "Students working from the life in the Ladys Painting School [sic]",
+      "artist": "Unidentified photographerFrom article published in The Lady’s Pictorial",
+      "year": 1916,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TBKLzIMt_rE7JBuEvM-sEI02-7SC8Ns1MiNQ4QuQARWTM8VndBVTbggps0zwUfBhAvfn4xCA=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/students-working-from-the-life-in-the-ladys-painting-school-sic/KAHETzZBbaz98A"
+    },
+    {
+      "id": "royal-academy-gac-127",
+      "title": "The Royal Academy annual exhibition of 1792: The Antique Academy",
+      "artist": "Thomas SandbyApril",
+      "year": 1792,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QZZIfsC0dFdMs8cSjmEDiEbDCd7danL9IIL2frew5DdMOz4qQQJ17z9d7fkICurqANX4xo=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-royal-academy-annual-exhibition-of-1792-the-antique-academy/cQF01Y9oyWRLLg"
+    },
+    {
+      "id": "royal-academy-gac-128",
+      "title": "‘In the women's Large Life Room - a group of students working from a female model at the RA Schools’",
+      "artist": "Unidentified photographerPhotograph published in 'The Sphere'",
+      "year": 1925,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_ShDWRY182WPhkcbE2dzr5vPimDjE_de012f5tQOYj3KjIoIUa5Iyog3L5iPdm_BhqawZE4HbU=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/%E2%80%98in-the-women-s-large-life-room-a-group-of-students-working-from-a-female-model-at-the-ra-schools%E2%80%99/SAE8dbRuj1PGyA",
+      "is3D": true
+    },
+    {
+      "id": "royal-academy-gac-129",
+      "title": "Sarah Pickstone standing in front of 'The Rainbow', part of her project, 'An Allegory of Painting'",
+      "artist": "Unknown",
+      "year": 2019,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QO26sK9_b-Ugd-b9cZVfbZBoS9JeE6qjw4L7eZE1-o9RgZ5BkpKJPd-qfyG_H7QIssYVW6Bg=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/sarah-pickstone-standing-in-front-of-the-rainbow-part-of-her-project-an-allegory-of-painting/PQEjgWCpqOww9w",
+      "is3D": true
+    },
+    {
+      "id": "royal-academy-gac-131",
+      "title": "Visitors queuing in Burlington House courtyard to see the Royal Academy exhibition ‘Turner 1775-1851’",
+      "artist": "Unidentified photographer",
+      "year": 1974,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QpRbFpvkxWUMjKhN6ir88erjrrw3ufqB2ut4pr5dhlop8FuUckUzfR6Fqt3DqufL_hfxDTUwF6=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/visitors-queuing-in-burlington-house-courtyard-to-see-the-royal-academy-exhibition-%E2%80%98turner-1775-1851%E2%80%99/HgHE_Wt3f5A5wg"
+    },
+    {
+      "id": "royal-academy-gac-133",
+      "title": "View of Burlington House courtyard during the ‘Exhibition of French Art 1200-1900’ at the Royal Academy of Arts",
+      "artist": "Unidentified photographer working for Keystone View Co",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SsX-zKXm9K7Z1bmzlzemQb1CVTMheLQ7Oaopty7MToCdlLzQPIQ1onYGdSeWnvqSfIC9qaqbg=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/view-of-burlington-house-courtyard-during-the-%E2%80%98exhibition-of-french-art-1200-1900%E2%80%99-at-the-royal-academy-of-arts-1932/vwG6C2jCCB77KA"
+    },
+    {
+      "id": "royal-academy-gac-134",
+      "title": "Sarah Pickstone working on 'An Allegory of Painting'",
+      "artist": "Unknown",
+      "year": 2019,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QwKRVSkU2a6Pskj5eymuPiz0YmEOkxUhJx5AT-tzM0ETJGcismQnbWrvHhbsVWL34u7KEL540=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/sarah-pickstone-working-on-an-allegory-of-painting/8QFIaOuoABU3ug",
+      "is3D": true
+    },
+    {
+      "id": "royal-academy-gac-135",
+      "title": "Working from life in the men's painting school",
+      "artist": "Unidentified photographerFrom article published in The Lady’s Pictorial",
+      "year": 1916,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RPIjtNG92qehonglygxVM42QFQtVXAg41mJrT-OfhK_ZgkHBS0KWkUCoHA1WS0k58VwvHNKoCq=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/working-from-life-in-the-men-s-painting-school/BQGhx3b6prtHRA"
+    },
+    {
+      "id": "royal-academy-gac-136",
+      "title": "Crucifixion 1988/89",
+      "artist": "Craigie Aitchison RA",
+      "year": 1989,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_T54eJIU0JYZ6GbMjsGxQ_xVGWtAQ1E7MyR7qw_m31uXmDlwS7xpkyU44ZUJvItOQck106jCYM=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/crucifixion-1988-89/KAF-2zXcsFtqqg"
+    },
+    {
+      "id": "royal-academy-gac-137",
+      "title": "Sarah Pickstone's 'An Allegory of Painting' on display with Angelica Kauffman's 'Composition' at the Royal Academy of Arts, London",
+      "artist": "Unknown",
+      "year": 2019,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RhQyKsRSvULJTegZQJiUgFM_gD7k0luAoRzamS6_8Bffx9Uscgbc8oAMMVBx6RQNPXZ45VWko=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/sarah-pickstone-s-an-allegory-of-painting-on-display-with-angelica-kauffman-s-composition-at-the-royal-academy-of-arts-london/wgGCburVW6yhag",
+      "is3D": true
+    },
+    {
+      "id": "royal-academy-gac-138",
+      "title": "Sarah Pickstone working on 'An Allegory of Painting' at the Royal Academy of Arts, London",
+      "artist": "Unknown",
+      "year": 2019,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_R73E_hFA23Cprt-3TGN2o-VbqWxL5jU4UfxdRiaSWkIZtLsok-7SmSIjMlN4fbRYs7j154Qcg=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/sarah-pickstone-working-on-an-allegory-of-painting-at-the-royal-academy-of-arts-london/hwE6M33q8jYzVw",
+      "is3D": true
+    },
+    {
+      "id": "royal-academy-gac-139",
+      "title": "Sarah Pickstone's 'An Allegory of Painting' on display with Angelica Kauffman's 'Composition' at the Royal Academy of Arts, London",
+      "artist": "Unknown",
+      "year": 2019,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RifVSDQOL36xPZVBFUOBj7XM0rRFLWceg30zExo1dc6HU2-TkT8dIW0Jq3IjhcN5cp6MnDKwk=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/sarah-pickstone-s-an-allegory-of-painting-on-display-with-angelica-kauffman-s-composition-at-the-royal-academy-of-arts-london/IwEVsvJGEak_Og",
+      "is3D": true
+    },
+    {
+      "id": "royal-academy-gac-140",
+      "title": "Royal Academy Instrument of Foundation",
+      "artist": "10 De",
+      "year": 1768,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TG_MYx6T8iGRL76GG3biFnfnd0CFknj59n93xn6SlLMYQPgocnaMogBI55J9CVeOJY1Xv9JZyy=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/royal-academy-instrument-of-foundation/tgF72pm4x41YIQ"
+    },
+    {
+      "id": "royal-academy-gac-141",
+      "title": "The Exhibition at the Royal Academy in Pall Mall in",
+      "artist": "Richard EarlomPublished 1772, Robert Sayer",
+      "year": 1772,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_S__iVwpptz5cC_LlXY28sEqNepa-AVc0qgbUbD2j10IJn22fGDy_gSezLIA3qYeiQRAY05BQ=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-exhibition-at-the-royal-academy-in-pall-mall-in-1771/yQHyhkx36zevhA"
+    },
+    {
+      "id": "royal-academy-gac-142",
+      "title": "The Collection Gallery at the Royal Academy of Arts, London",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SKuuY_T1di_qHA8zCJzJc4hcXb-2dz02QY2VhIIpJBXf-ZXY6mhqI1BePrMOGjdUh3rjPm=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-collection-gallery-at-the-royal-academy-of-arts-london/WgFJdXtEqAN4JA"
+    },
+    {
+      "id": "royal-academy-gac-143",
+      "title": "The Burlington Gardens staircase and The Wohl Entrance Hall at the Royal Academy of Arts, London",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Sk5z8ootpKwzOIKmourzyY3Gqgs2RpyyFv5siPEKy6qGlODciLTi6EkUX2nmZa6ybV_hhE=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-burlington-gardens-staircase-and-the-wohl-entrance-hall-at-the-royal-academy-of-arts-london/HAEuP2u0ejkxsA"
+    },
+    {
+      "id": "royal-academy-gac-144",
+      "title": "6 Burlington Gardens, London, home to the Royal Academy of Arts",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Tx3bnaiVrPPrcmRtHgs1rhURpCwv6MkOP9vxWO671uxEiV7rscfKSpJr3uU5RySwcU7gYiGNRh=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/6-burlington-gardens-london-home-to-the-royal-academy-of-arts/vQHMLxBp2cQO6w"
+    },
+    {
+      "id": "royal-academy-gac-145",
+      "title": "Portrait of Sir William Chambers, R.A",
+      "artist": "Joshua Reynolds PRA",
+      "year": 1780,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SiqKA-XSqCgnxu2IOqCwS3Dl1pSZ7Qi7cdriA1aOltuzCFPaH0tJjBuXDy-gZ253yC_Zs_-w=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/portrait-of-sir-william-chambers-r-a/3AGwfAkaASVKfA"
+    },
+    {
+      "id": "royal-academy-gac-146",
+      "title": "Burlington House, London, home to the Royal Academy of Arts",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QDyUkKxyCgtJwNtaxQhFxMtFubYvzTXDYbcG1MmznXnCxTgVFzBCCHZcup6doEjrZ0waCk0g=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/burlington-house-london-home-to-the-royal-academy-of-arts/JQEZRFOKRybbgg"
+    },
+    {
+      "id": "royal-academy-gac-147",
+      "title": "Design for a New House of Lords: plan (insert) and perspective",
+      "artist": "John Soane RA",
+      "year": 1794,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RrvRTQDgjvd3RnYK40Du5qrAn-nEY4fJtgFP9E_JpnaY8TIbIc0lv5xHaPyWJzWQ2JwPWU=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/design-for-a-new-house-of-lords-plan-insert-and-perspective/-gHnrlyi6OYmpQ"
+    },
+    {
+      "id": "royal-academy-gac-148",
+      "title": "The Julia and Hans Rausing Hall at the Royal Academy of Arts, London",
+      "artist": "Unknown",
+      "year": 2018,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Rpi598B7ihnAHcnHQBQzleFOMLH_YdnP5BLw7vyh3r_ojf0p8NNeJObBccjI7B9U_NuR-W6PM=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-julia-and-hans-rausing-hall-at-the-royal-academy-of-arts-london/EAGLKY94EULWUA"
+    },
+    {
+      "id": "royal-academy-gac-149",
+      "title": "Behind the scenes at the RA Schools",
+      "artist": "Unknown",
+      "year": 2017,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TF_uHZs8oQcN4_xcaJrssc5pGpFt0L9WcMPd4vocQhBRW6g3T3CtQrnW-qbOcixjjq28ZJ5LU=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/behind-the-scenes-at-the-ra-schools/_wFFuWODLWR-YQ"
+    },
+    {
+      "id": "royal-academy-gac-150",
+      "title": "A stash of paint and pencils in the RA Schools",
+      "artist": "Unknown",
+      "year": 2019,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RD8KUwJoHvS4ejmqzEL0E7oO_Je45DwaTf6J02zK4EiMrfwPwhvkIGeAhHAxjbuXLh4QJNwhw=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/a-stash-of-paint-and-pencils-in-the-ra-schools-2019/KgEx8LHkIj5-sw"
+    },
+    {
+      "id": "royal-academy-gac-151",
+      "title": "A free display, 'Richard Deacon RA Selects', in The Dame Jillian Sackler Sculpture Gallery at the Royal Academy of Arts",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RB2dxnee5B_h8rAf7sjXyYrkcreGAD_lLr8yr7ImKH6hhNYEaDN9z0GmLNEE1yFB9xMAbk7EU=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/a-free-display-richard-deacon-ra-selects-in-the-dame-jillian-sackler-sculpture-gallery-at-the-royal-academy-of-arts-2017/NwEfQ89dHOtFlw",
+      "is3D": true
+    },
+    {
+      "id": "royal-academy-gac-152",
+      "title": "A free display, 'Richard Deacon RA Selects', in The Dame Jillian Sackler Sculpture Gallery at the Royal Academy of Arts",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Tzt8eoZF1j1EIct5fqMBqTXROpilU729cEVAPLVWWLLyBwYiMNfCXRRLDT_hxSm_pDIhVptA=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/a-free-display-richard-deacon-ra-selects-in-the-dame-jillian-sackler-sculpture-gallery-at-the-royal-academy-of-arts-2017/KgFLpxK_JzriWw",
+      "is3D": true
+    },
+    {
+      "id": "royal-academy-gac-153",
+      "title": "The library at the Royal Academy of Arts, London",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_T26cpGpXRh_8lobOaKAEMTBhj9GkABgRyB6WDQ-BKel3stIC5JlnmKMMZnQm2KFmvrnv2yQ8c=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-library-at-the-royal-academy-of-arts-london/IAEBbwE19bXjMg"
+    },
+    {
+      "id": "royal-academy-gac-154",
+      "title": "A free display, 'Richard Deacon RA Selects', in The Dame Jillian Sackler Sculpture Gallery at the Royal Academy of Arts",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RjziECbOoXOzZ-WlNjJ_4_fe3bvL_bIRE-OR-g50mMImmc1ItAEbwDw90jP8PxbLM1pwPVKAk=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/a-free-display-richard-deacon-ra-selects-in-the-dame-jillian-sackler-sculpture-gallery-at-the-royal-academy-of-arts-2017/wQEgW-X5MUygWw",
+      "is3D": true
+    },
+    {
+      "id": "royal-academy-gac-155",
+      "title": "Behind the scenes at the RA Schools",
+      "artist": "Unknown",
+      "year": 2017,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SU8zBRxXUmirF2bB-c4yA0-ECe7HvQyHqOIfFR6w1sNODgdpX7pt1g2AQ0ifBvwpa-0zXROFc=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/behind-the-scenes-at-the-ra-schools/iAFkGyhgEhEYOQ"
+    },
+    {
+      "id": "royal-academy-gac-156",
+      "title": "Conservation process of 'The Waterloo Cartoon'",
+      "artist": "Daniel Maclise RA",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QJeXPHrXrltvoI3088dnXZWunaogE2po75SnUX1RglbQZ71GTyWHhV629AS1nwzr2gbbN9OW1Q=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/conservation-process-of-the-waterloo-cartoon-by-daniel-maclise-ra/bgF6NdT4-Om1Ag"
+    },
+    {
+      "id": "royal-academy-gac-157",
+      "title": "Poster for Royal Academy Summer Exhibition",
+      "artist": "Harry Pearce of Pentagram",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Q_nm1B7VcSmBHE9kMsrxZEuwOv9Q2z8Q1eaeDXsBTe_O_cfRCn45vNpz9iq8DI_dJojza0kL0f=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/poster-for-royal-academy-summer-exhibition-2011/zQGyXbV0VnEeYQ"
+    },
+    {
+      "id": "royal-academy-gac-158",
+      "title": "Poster for Royal Academy Summer Exhibition",
+      "artist": "The Curwen Press",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TP1aLMuTL6GcL0QtCGr3O7s71c9msA7ccAx9MUhyJM8pfZcIIaIRC9T_YclbaOhGcnNTaGlBQ=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/poster-for-royal-academy-summer-exhibition-1943/XQGUiEN5M2k_lg"
+    },
+    {
+      "id": "royal-academy-gac-159",
+      "title": "Gallery III of the Royal Academy Summer Exhibition",
+      "artist": "Unknown",
+      "year": 2015,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RQD9A_amY2qFuKpQ-hbdxjnlj_jTjFtx0eti1ZnQrXxk2GxbdFN9tqamhD0jzNJPeeoH955uQ=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/gallery-iii-of-the-royal-academy-summer-exhibition-2015/PAEF76uPfymeag"
+    },
+    {
+      "id": "royal-academy-gac-160",
+      "title": "Royal Academicians gathered in the entrance hall of the Royal Academy",
+      "artist": "Unknown",
+      "year": 2018,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QzM7xUWTaA3Dpi5g3tdgf3o-4puFY4VmSLN_pYlQdHARfG8lafU-PYuWRiG9Qg0ijdHDDCLg=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/royal-academicians-gathered-in-the-entrance-hall-of-the-royal-academy/bgGRAn2D6a6l4A"
+    },
+    {
+      "id": "royal-academy-gac-161",
+      "title": "Behind the scenes with the RA Archive",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_S02iBDa-l0O5eAa3tBpb9wRrHHFqmJ7dXAxmLXAgQbxAl3-jNgfpcID2pN_oB_kmrEpqGj4zI=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/behind-the-scenes-with-the-ra-archive/dwEDs3r5ywcBuA"
+    },
+    {
+      "id": "royal-academy-gac-162",
+      "title": "Royal Academy Poster for International Exhibition of Chinese Art",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TKcr-04Re8XG7ZygQn8_Bb9WjDF7gTseW_uJz8cCmcPM8MdL5LbI3ZbxJwncgYNB1IDY6aixA=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/royal-academy-poster-for-international-exhibition-of-chinese-art-1935/pQEap_ZrF1OM9g"
+    },
+    {
+      "id": "royal-academy-gac-163",
+      "title": "Student Jenkin van Zyl working in his studio at the RA Schools",
+      "artist": "Unknown",
+      "year": 2019,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SFBcqrwKMr7ZH3yE7OTYutJH9oNnh7VilJ7lTrE2b5-NdhwZ-6fl8lkr814cXEJ_8JjfIW=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/student-jenkin-van-zyl-working-in-his-studio-at-the-ra-schools-2019/FAHiHsa568FD2w"
+    },
+    {
+      "id": "royal-academy-gac-164",
+      "title": "Student Clara Hastrup tests out new work at the RA Schools",
+      "artist": "Unknown",
+      "year": 2019,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TzcEtQG4uPqtMbV1cdstoSnAFIX5-gpoSSfrcEzTqELpW99Ev5xl6XMzc8W6FKGnKVydXWqQ=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/student-clara-hastrup-tests-out-new-work-at-the-ra-schools-2019/6gEOtxzBIyhNwQ"
+    },
+    {
+      "id": "royal-academy-gac-165",
+      "title": "Royal Academy Poster for Dante Gabriel Rossetti: Painter and Poet Exhibition",
+      "artist": "Christopher Firmstone",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RxYscJQ5JggK4mbVPL1uAGaJhdmVNlkVCGWy55ypz6YK5tD8wy2mBbkJWDnmfRT8oijR2E0jo=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/royal-academy-poster-for-dante-gabriel-rossetti-painter-and-poet-exhibition-1973/gwFv8_bWQGFOZw"
+    },
+    {
+      "id": "royal-academy-gac-166",
+      "title": "Gallery V of the Royal Academy 2017 Summer Exhibition",
+      "artist": "Unknown",
+      "year": 2015,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_S8J8bYp4mpA90m-UyA1S_RfaGn_D8qHMLu_7IXWf7zs84kMe-upwy7wmGRZuZevQEQQQQcgA=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/gallery-v-of-the-royal-academy-2017-summer-exhibition/vwF1z6ZN52raSg"
+    },
+    {
+      "id": "royal-academy-gac-167",
+      "title": "Poster for Royal Academy Summer Exhibition",
+      "artist": "Theo Ramos",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_ScQhpGLZ6J0a4kDKnZpTIyVfffN_Y22SPqmNJXOYmPbvZtf4yVfM6Jhj8puSOvpkafXOg_vQ=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/poster-for-royal-academy-summer-exhibition-1961/awHKIo-t6cqIWA"
+    },
+    {
+      "id": "royal-academy-gac-168",
+      "title": "Student Millie Layton working in her studio at the RA Schools",
+      "artist": "Unknown",
+      "year": 2019,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TcImuehEtEOKRWJG4zlBgcEGYCptJ0MGAcH3kXYkayy6VgHiXsyS2yKf7ZqgXpupZhJL_V=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/student-millie-layton-working-in-her-studio-at-the-ra-schools-2019/pgERbdD74LQT7w"
+    },
+    {
+      "id": "royal-academy-gac-169",
+      "title": "The RA Schools class of 2020 in the Life Room at the Royal Academy",
+      "artist": "Unknown",
+      "year": 2019,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RFJ26zTZg4fQyF2xVyv54GFpme6CL1xOU4U_a8CjMr2TxrCckrUmhsxhhT98lF076fGQeR=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-ra-schools-class-of-2020-in-the-life-room-at-the-royal-academy/YAH4YwuGzwqgNw"
+    },
+    {
+      "id": "royal-academy-gac-170",
+      "title": "Behind the scenes at the RA Schools",
+      "artist": "Unknown",
+      "year": 2017,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SzdwbVqi5CZy2ji85ZtbQTEDFw8tuaJ5Yi6ADq9ShKDLa_FVdOW-VSVtrsZ9aUHkfml0kcmA=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/behind-the-scenes-at-the-ra-schools/kQHSCuKbZyuqxQ"
+    },
+    {
+      "id": "royal-academy-gac-171",
+      "title": "A student works on a sculpture at the RA Schools",
+      "artist": "Unknown",
+      "year": 2019,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_S0yF64fe68Q4bd-wjkdoIQkNKyzExNesaX7ll78hkcRAjaI4BFpANhncVVByMlYmIbX5xyyFw=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/a-student-works-on-a-sculpture-at-the-ra-schools-2019/GQEq8ilRxtj2JQ",
+      "is3D": true
+    },
+    {
+      "id": "royal-academy-gac-172",
+      "title": "Royal Academy Poster for The Great Japan Exhibition",
+      "artist": "Guyatt/Jenkins",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_S1qH9imzMVOuTawAgGoyMRbAgQuigR4MZ7tGwAnApL-lVRJVCwcss085U_G0aY1y4ApWTO0g=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/royal-academy-poster-for-the-great-japan-exhibition-1981/vAHUxN1gX4nPYA"
+    },
+    {
+      "id": "royal-academy-gac-173",
+      "title": "The Fine Rooms at the Royal Academy of Arts, London",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SP8gG7MdN7bJ-BMCO0_mDxu2Qgh2XzGa0Yq34EOQNhVE5I8yMVambWkin10V5AKn5B8QKjveo=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-fine-rooms-at-the-royal-academy-of-arts-london/dgH4eme61gpc6w"
+    },
+    {
+      "id": "royal-academy-gac-174",
+      "title": "Royal Academy Poster for Millais Exhibition",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SKLPHofTJqYmRs-oQ9NfTY2_uKbrqgGzRiztM7MSpobgdCsPykuPTxQ5qQP-E-zjkCKlpt9eRf=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/royal-academy-poster-for-millais-exhibition-1967/-QEq--ZMMe4Nrg"
+    },
+    {
+      "id": "royal-academy-gac-175",
+      "title": "The staircase at Burlington House, London, home to the Royal Academy of Arts",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RzOHwiYfcgXa2DugESUoKa5Of6Xsc_2BN_cCe_P_kx1fpYoBLs7Wli6Lt9xqjpJCGBmm4l3w=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-staircase-at-burlington-house-london-home-to-the-royal-academy-of-arts/jAFYEP_rN_UpTg"
+    },
+    {
+      "id": "royal-academy-gac-176",
+      "title": "Self-portrait as Timanthes",
+      "artist": "James Barry",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RfGRmBQWGeXiCRJMcOCaJyzb4RWlf4JD8meDGNgr-pA59MqBGfPMtHAe_nVXxoeqHal6Spycc=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/self-portrait-as-timanthes/egFa5RGf1-2bfQ"
+    },
+    {
+      "id": "royal-academy-gac-177",
+      "title": "Model of 8 Bishopsgate",
+      "artist": "WilkinsonEyre",
+      "year": 2019,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RZ7K8tmj3hHgMDtUekdRtyJ2Dj1fsGgU-xqZlXWJviJoY2s1KAvucK26Yu7JWItz8AP9fAu-U=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/model-of-8-bishopsgate-by-wilkinsoneyre/IQH5nztSAhl5cw",
+      "is3D": true
+    },
+    {
+      "id": "royal-academy-gac-178",
+      "title": "Behind the scenes at the RA Schools",
+      "artist": "Unknown",
+      "year": 2019,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SeZLCNsocDVPEG4n_hoPnUv4WuEJ0QAVuD1lWvnd3PsPVtpXdWps2zoa47Ltbl9QdB3JcHkqw=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/behind-the-scenes-at-the-ra-schools/LwEqG0yntZkOlg"
+    },
+    {
+      "id": "royal-academy-gac-179",
+      "title": "Behind the scenes at the RA Schools",
+      "artist": "Unknown",
+      "year": 2017,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TgCiVGyA19ejM1Pd2klP-HK9ZFS0RN_1EtYT-OP_9tBmAYQF6mpsuEyTCrNG2Y9bEz45Efb-g=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/behind-the-scenes-at-the-ra-schools/UgHywlXRv2oSLg"
+    },
+    {
+      "id": "royal-academy-gac-180",
+      "title": "Behind the scenes with the RA Collection",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TRQrb-NhYk51XrFVSmzlWttldcsixvfYhD3ca7qDn0P438hEuWAN5CEzgg7oUDk9btEPVUqj4=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/behind-the-scenes-with-the-ra-collection/lAGhEq-vH9hW3g"
+    },
+    {
+      "id": "royal-academy-gac-181",
+      "title": "The Fine Rooms at the Royal Academy of Arts, London",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SCDIkUWuNhq-aKqeKejOz6vhFkdoPL9A72qqtLWHPlrCkDUdI5hbXhdVYE5UDsxQgLuPHm_w4=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-fine-rooms-at-the-royal-academy-of-arts-london/QAGmoeVWPhO7uQ"
+    },
+    {
+      "id": "royal-academy-gac-182",
+      "title": "Behind the scenes at the RA Schools",
+      "artist": "Unknown",
+      "year": 2019,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RdkApa6tQjy56cAxv9YdON2nnNKyt9p3hFkjFjtQPMML5jPGQffkqyz-tFXb2hYm7s6YmDZw=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/behind-the-scenes-at-the-ra-schools/qwF8GcfAHmiKdQ"
+    },
+    {
+      "id": "royal-academy-gac-183",
+      "title": "Behind the scenes at the RA Schools",
+      "artist": "Unknown",
+      "year": 2019,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SwNkxEDsKVuxUEZALe3xqQC5OiSZV-8_d6nyhgFy5AY2RpR0Fc8qacYnegELFBw-6T5748bxdE=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/behind-the-scenes-at-the-ra-schools/SwF7OHFVWjamsQ"
+    },
+    {
+      "id": "royal-academy-gac-184",
+      "title": "Architect Chris Wilkinson RA in his studio, London",
+      "artist": "Unknown",
+      "year": 2019,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Rk0NJshvDmzPrRdD6B4lHwC_yHKLQvYoY6bFW5fQwgyEDpHFgCL1AACLEDFP7KX3gi0KVvka4=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/architect-chris-wilkinson-ra-in-his-studio-london/rgHXA0d0KcQewA"
+    },
+    {
+      "id": "royal-academy-gac-185",
+      "title": "Behind the scenes at the RA Schools",
+      "artist": "Unknown",
+      "year": 2019,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QBtkHxt4MaMI3HUzAB1C7WIcKgpRqN2R5dQVs6GgpzGkd6hAyhVRsqX07lu2pStvju6O2zqs0=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/behind-the-scenes-at-the-ra-schools/rgE6_bpKVhG1zw"
+    },
+    {
+      "id": "royal-academy-gac-186",
+      "title": "Dinnertime in the RA Schools canteen, 2019, where students get subsidised meals and a space to talk over the day",
+      "artist": "Unknown",
+      "year": 2019,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RWtL5v6VfvLZ15DniARvI_R0qb5LurIZFmDGYZYj2AyF4-WXfFP4ZQJ1tfWbZh4Gxw6C2Iow=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/dinnertime-in-the-ra-schools-canteen-2019-where-students-get-subsidised-meals-and-a-space-to-talk-over-the-day/PAEnmYV_O3Gftg"
+    },
+    {
+      "id": "royal-academy-gac-187",
+      "title": "Behind the scenes at the RA Schools",
+      "artist": "Unknown",
+      "year": 2019,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TkhcCm_4twJ8cLsNqm6SBBlFFCptdh-n4_Tuz3ftVpYONNdCYc7-5HxitbRfhSKBJ-aGdf=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/behind-the-scenes-at-the-ra-schools/iQH6f2T3KTcHJw"
+    },
+    {
+      "id": "royal-academy-gac-188",
+      "title": "Behind the scenes at the RA Schools",
+      "artist": "Unknown",
+      "year": 2017,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RFN3uJyPRgw8pgrpxsKN5li1qDBX42vgHuq_pMfxoT2bOBuCoD-48IzjxheR9qO_pY6VpyKQ=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/behind-the-scenes-at-the-ra-schools/7AGeN1N96JB8Zg"
+    },
+    {
+      "id": "royal-academy-gac-189",
+      "title": "Behind the scenes at the RA Schools",
+      "artist": "Unknown",
+      "year": 2017,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_R2C1niAjQ8fYYcIdYSp_A21AlNqf0bGcrqA0oEI9Fsa7wjw4ot1aQ8FilZ64bSKORBzVhD=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/behind-the-scenes-at-the-ra-schools/wgHrfufeKWo1pA"
+    },
+    {
+      "id": "royal-academy-gac-190",
+      "title": "Architect Chris Wilkinson RA in his studio, London",
+      "artist": "Unknown",
+      "year": 2019,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RrG5pybw3XAac1CZl48xyHIkNk9-Y2v64AyFtKuCIg7UbUcizF1bZWliuY38YxvaXMng0T=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/architect-chris-wilkinson-ra-in-his-studio-london/FwHNZ_SxNkeycQ"
+    },
+    {
+      "id": "royal-academy-gac-191",
+      "title": "Poster for Royal Academy Summer Exhibition",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QzGIbqSmOmexrnQI8sJQsRxVDfsUwu4Aow38TaaNEfs2ul2TW9-W_i_FHMqJUQykBu-9iFGA=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/poster-for-royal-academy-summer-exhibition-1933/mAEk3SSGXwDtBQ"
+    },
+    {
+      "id": "royal-academy-gac-192",
+      "title": "Behind the scenes at the RA Schools",
+      "artist": "Unknown",
+      "year": 2019,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RgPZzt_ZCWLG83xw1bRCIHLxZUtgDy1yV6cZZXMd481N9peVlwU22-qX_r39doBBwMcdcDldh_=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/behind-the-scenes-at-the-ra-schools/cwE32ksyiQZmIw"
+    },
+    {
+      "id": "royal-academy-gac-193",
+      "title": "Behind the scenes at the RA Schools",
+      "artist": "Unknown",
+      "year": 2019,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TOj1ybDT78OnKYzM9SjYRO2GAJS51ebinN49ukHV-9FLfgyV9kKO069vJX21B0FkJ7c06C0iw=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/behind-the-scenes-at-the-ra-schools/yQEOZ0a_HfyMNw"
+    },
+    {
+      "id": "royal-academy-gac-194",
+      "title": "Behind the scenes at the RA Schools",
+      "artist": "Unknown",
+      "year": 2017,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RIbPdOot_g7nyWfUYES6vrAY5HQs6I1PzK5Uu07OFTutkmobKKVaGEFmRjv-R9yXHWkNgrhQ=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/behind-the-scenes-at-the-ra-schools/lAFdv9uZfF4Cfw"
+    },
+    {
+      "id": "royal-academy-gac-195",
+      "title": "Drawing of Battersea Power Station, inside architect Chris Wilkinson RA's studio, London",
+      "artist": "Unknown",
+      "year": 2019,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QJVs0YAXG7BBaopscFIub-du0LbQIkBdgAtKKSqnk9zqXUemROp2yHIIPZtF5vpogfZz-DEqw=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/drawing-of-battersea-power-station-inside-architect-chris-wilkinson-ra-s-studio-london/nAFfwOAkEyvDFg"
+    },
+    {
+      "id": "royal-academy-gac-196",
+      "title": "Behind the scenes with the RA Collection",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RfBo108NCFtpJdwOzdv_7onGbkglL87iPIwUmcBjpBzwevExPkZg7pnF5Pt7Af4mxl320Ie0w=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/behind-the-scenes-with-the-ra-collection/AQF9P1pgXCJbyA"
+    },
+    {
+      "id": "royal-academy-gac-197",
+      "title": "Behind the scenes at the RA Schools",
+      "artist": "Unknown",
+      "year": 2019,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SJrnzC2mST9bY4eCAhi0A48FrhKaUwOjUVbIkJZVcPtKVYvRqKilN2Ihp9T_pgjHyqUXQWgc2X=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/behind-the-scenes-at-the-ra-schools/mAHeQAAZSW-0Kw"
+    },
+    {
+      "id": "royal-academy-gac-198",
+      "title": "Behind the scenes at the RA Schools",
+      "artist": "Unknown",
+      "year": 2019,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SIiAxxtLx3jyE5esvi6EEkLncfk_jdHjQGzQRFMrr5NTkwhXXezEFaRYH-RGTy19nJUwZBK_B4=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/behind-the-scenes-at-the-ra-schools/ZAHBh4-BfJuKFQ"
+    },
+    {
+      "id": "royal-academy-gac-199",
+      "title": "Behind the scenes at the RA Schools",
+      "artist": "Unknown",
+      "year": 2019,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_ScMCcAaXzUcU7nJyP1Ewi1lLVmi2kfKPQJ8MNJui7k5z4H5aC-KA2IMY72PqbBO20WzViwFrk=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/behind-the-scenes-at-the-ra-schools/GAEP96HkEfLBiw"
+    },
+    {
+      "id": "royal-academy-gac-200",
+      "title": "Students Toby Jury Morgan and Amanda Kyritsopoulou in the wood workshop at the RA Schools",
+      "artist": "Unknown",
+      "year": 2019,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_S8_NIU-lZPaETlyPD06APWReJRWKAK210znkR0N2Lv71BAXkbd5lzXmKaFkyL72LEc3RZH6A=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/students-toby-jury-morgan-and-amanda-kyritsopoulou-in-the-wood-workshop-at-the-ra-schools-2019/1QH2cJqxKBmVfg"
+    },
+    {
+      "id": "royal-academy-gac-201",
+      "title": "Behind the scenes at the RA Schools",
+      "artist": "Unknown",
+      "year": 2019,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RicqzXXxxk1yO-_Fe_-3L1rRxX-kU9-Pwk4Fujjs7eq8GWwt56OBM7uLymMrBaLF1zOODsgQA=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/behind-the-scenes-at-the-ra-schools/2QF4gk4AyspyBQ"
+    },
+    {
+      "id": "royal-academy-gac-202",
+      "title": "Behind the scenes at the RA Schools",
+      "artist": "Unknown",
+      "year": 2019,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_S-aSy49Pdzb9bRAbrxLrYaHOjkQilRYKw_7eu_M86L968Vs15DMDP4AFHHTlPJlcWeRKZU2Q=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/behind-the-scenes-at-the-ra-schools/owE5Me6OkN-bHA"
+    },
+    {
+      "id": "royal-academy-gac-203",
+      "title": "Behind the scenes with the RA Collection",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RBA3E_i1ezm89u1-fAQgs5dTbRmDLIsWxkzmUzScu5C6K4r-6wwt0d19N7EQWHlx_HtdCOZQ=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/behind-the-scenes-with-the-ra-collection/2gGqHkty-jjgWQ"
+    },
+    {
+      "id": "royal-academy-gac-204",
+      "title": "Inside architect Chris Wilkinson RA's studio, London",
+      "artist": "Unknown",
+      "year": 2019,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Ssk6IQsSW7HehpAIM82lqyc3dlfZWn-CcTUBjMTr2nQdCXEmz11juMJZNHXxur5jbosi1Tebc=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/inside-architect-chris-wilkinson-ra-s-studio-london/twFr0jPlk-mtcw"
+    },
+    {
+      "id": "royal-academy-gac-205",
+      "title": "Behind the scenes at the RA Schools",
+      "artist": "Unknown",
+      "year": 2017,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SbP_xTPcpOIq-BlL2-c1b9vj8sPJl3aq2nf_1Qn8jvYtXtqVRzMy9Vlt4mKEIaFR_CGCf-zvY=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/behind-the-scenes-at-the-ra-schools/jQF-eG5tDfdrVQ"
+    },
+    {
+      "id": "royal-academy-gac-206",
+      "title": "Behind the scenes at the RA Schools",
+      "artist": "Unknown",
+      "year": 2017,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QdGceFjRMlt7rn17001KBjPfWtf8S-RLoEdwxBQ1yYlyCV6m_Z3IDvt2VVMd318PHmsig43w=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/behind-the-scenes-at-the-ra-schools/5wEqwjuRKkNC0Q"
+    },
+    {
+      "id": "royal-academy-gac-207",
+      "title": "Behind the scenes at the RA Schools",
+      "artist": "Unknown",
+      "year": 2019,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_R1uBwyY0QaemHslrPmfZOGq16HdvQnPDeM3AjIeQpw0cS72NboTrmBl1q58jFr9zrrGbvwmg=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/behind-the-scenes-at-the-ra-schools/4AFKCYc4v-31kQ"
+    },
+    {
+      "id": "royal-academy-gac-208",
+      "title": "Student Millie Layton working in her studio at the RA Schools",
+      "artist": "Unknown",
+      "year": 2019,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Rd6icgpN4JaWGDAIMpoLQO54YKEHqQNjkglIU1pRxWUHGKCyVRpPyafTRL31YjwQYkddd6Ow=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/student-millie-layton-working-in-her-studio-at-the-ra-schools-2019/OgFWuGvuO3j8eA"
+    },
+    {
+      "id": "royal-academy-gac-209",
+      "title": "Architect Chris Wilkinson RA in his studio, London",
+      "artist": "Unknown",
+      "year": 2019,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QmDExB5DaKXAFqnTcefr1FHhLp_cdAOuE1Uvdsz7GiZOfKmupgOmdWtVzhSGGgbM_OEwjEEBw=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/architect-chris-wilkinson-ra-in-his-studio-london/xgEEGlvXCe_yiQ"
+    },
+    {
+      "id": "royal-academy-gac-210",
+      "title": "Behind the scenes at the RA Schools",
+      "artist": "Unknown",
+      "year": 2017,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TUGGMvzqWP7sjLiIjoWzhasu4VicWTKmNDjdrlCwRN4oepQhbdSJvbSVWPtMHAPW3_8gZCDDM=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/behind-the-scenes-at-the-ra-schools/PwFq9rT-Jb7mVw"
+    },
+    {
+      "id": "royal-academy-gac-211",
+      "title": "Behind the scenes at the RA Schools",
+      "artist": "Unknown",
+      "year": 2019,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TJSPawT8rFhV9Jo0wtthdzmSh1WZzBWzcqBTGyJLA1tAmdrSgMU1xtzLvVo_yveOrMRBcriaY=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/behind-the-scenes-at-the-ra-schools/cQFP-c2tB-UVyw"
+    },
+    {
+      "id": "royal-academy-gac-212",
+      "title": "Behind the scenes at the RA Schools",
+      "artist": "Unknown",
+      "year": 2019,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QYNSq0sVATwkDL2lcsnb1VOlrvAyGw4ug9yvTRnTsuT7vwM75wFnLb6Nrj76dkYy353qb0=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/behind-the-scenes-at-the-ra-schools/7gFtcjcBChzpAw"
+    },
+    {
+      "id": "royal-academy-gac-213",
+      "title": "Behind the scenes at the RA Schools",
+      "artist": "Unknown",
+      "year": 2019,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QeZ6Aw3Z5NCBm92DYz9hGawtDnRwuy2_rvS_OKS-T1PnKeg1Dl_sRTDccqT81jBzACiatZNCg=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/behind-the-scenes-at-the-ra-schools/dAHSzw_amimwDQ"
+    },
+    {
+      "id": "royal-academy-gac-214",
+      "title": "Behind the scenes at the RA Schools",
+      "artist": "Unknown",
+      "year": 2019,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Q9tiN0gUlgePe27vdmdiII1VKVOcCfYRL0HIyjMClYw8xo62DTuOzCqzeIb0lVJKr4BlKm_g=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/behind-the-scenes-at-the-ra-schools/UwE0LM-_R1voUQ"
+    },
+    {
+      "id": "royal-academy-gac-215",
+      "title": "Royal Academy Poster for Portuguese Art 800-1800 Exhibition",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TaaHpr5MihDkqy9wd-A_J0FD8SCAVQCAB6xfA4-CEO2E4s2h5yKp03MUEVuRhTDbB29Q_I=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/royal-academy-poster-for-portuguese-art-800-1800-exhibition-1955-1956/PgHaoVRZ-Kf15A"
+    },
+    {
+      "id": "royal-academy-gac-216",
+      "title": "Behind the scenes at the RA Schools",
+      "artist": "Unknown",
+      "year": 2019,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RlXbzVBMYXu58pgV5BrrrJfvFcglNnl1raaAt-zn743xvmT0vc8ztspLIZniPgDuC3HMB5jQ=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/behind-the-scenes-at-the-ra-schools/SQEVvEeYlMQp8w"
+    },
+    {
+      "id": "royal-academy-gac-217",
+      "title": "Portrait of George Michael Moser, R.A",
+      "artist": "George Dance the Younger",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Si9rv0wIFRxfJl2YvkNRULTAUnSdpitxTa5rnqb0o4_ByiGyyI-wHH1QyUx94oFFL8PM-_pg=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/portrait-of-george-michael-moser-r-a/PAFcvL-3th8fKA"
+    },
+    {
+      "id": "royal-academy-gac-218",
+      "title": "Architect Chris Wilkinson RA in his studio, London",
+      "artist": "Unknown",
+      "year": 2019,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SKgzWojKCGg71exnieuJ5er5IEITfWyrqXsh9pmbmXaz0wquOpEadJaCTb20yBMbJ199eXu8U=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/architect-chris-wilkinson-ra-in-his-studio-london/hAHlaOEjxgzfVQ"
+    },
+    {
+      "id": "royal-academy-gac-219",
+      "title": "Behind the scenes with the RA Collection",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QJdd3z_DaUHE4nfW_6zRb_0sNhAkmgx0KPArFZoqBDBc7B9iGPwRX9FlUvDb9HvnbPnqyO=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/behind-the-scenes-with-the-ra-collection/CwFufuq7RlESiA"
+    },
+    {
+      "id": "royal-academy-gac-220",
+      "title": "Humphrey Ocean RA gives a lecture on perspective for students, in the RA Library",
+      "artist": "Unknown",
+      "year": 2019,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QjHE0VQgB6IynS-R2YUyu9C2dL7sU-ElCnI5ejtosyjL2jx6FzdakEZ434jtTcWA8GwdhwekA=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/humphrey-ocean-ra-gives-a-lecture-on-perspective-for-students-in-the-ra-library/pAG1sB_9B2c9dg"
+    },
+    {
+      "id": "royal-academy-gac-221",
+      "title": "Inside architect Chris Wilkinson RA's studio, London",
+      "artist": "Unknown",
+      "year": 2019,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TjHIiQ4hlPeDbD9O86mY5Bpb4qPyJExZN9wGmg6ghQVlAgCvG3dZH4SponMtYDXbw1IZWAfm0=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/inside-architect-chris-wilkinson-ra-s-studio-london/rgGGFu0jI5NaQw"
+    },
+    {
+      "id": "royal-academy-gac-222",
+      "title": "Cathedral",
+      "artist": "Kiki Smith",
+      "year": 2012,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RLknaTvOrEv-qGXzzZwF0J6KzHaSnMfZJOV_01kYJrvoWY923fzOD3WGSZJNSi9CMlfEdzlWk=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/cathedral/cAH7XSEbdGJDTw"
+    },
+    {
+      "id": "royal-academy-gac-223",
+      "title": "Guangzhou International Finance Center",
+      "artist": "WilkinsonEyre",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RZ5nlvNNP_S52Hu3DFJjLie43TflBJpS6-YGr4YRDC9XIBD0EFAo-hCEjTB0o2vpW8MrzbG5c=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/guangzhou-international-finance-center-by-wilkinsoneyre/NQGsmjxzbc6G9A"
+    },
+    {
+      "id": "royal-academy-gac-224",
+      "title": "Le Rodeur: The Lock",
+      "artist": "Lubaina Himid",
+      "year": 2016,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Qle59iQ598LUhis_U-PHx0XII7h6fGSTootLGNOtY4P-hML08hJxcnKWA0wH83c1H9iv5vBYY=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/le-rodeur-the-lock/PAFr0rxDWtsBrQ"
+    },
+    {
+      "id": "royal-academy-gac-225",
+      "title": "Rapture",
+      "artist": "Kiki Smith",
+      "year": 2001,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_S4YRoyVeHWFK4fD8h-wHgi9ohzx65fLC_KMpkjQ4JbzF9KUWDzGN8qUd-M99v6ZH6WJWtD1tk=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/rapture/gwEjIVKQvmEd4A"
+    },
+    {
+      "id": "royal-academy-gac-226",
+      "title": "Sky",
+      "artist": "Kiki Smith",
+      "year": 2012,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_R5rW4W1nL3NmNl694VtKlOez1C-3MDeOIHRXHeJ46-dKpjLOSYuVnDshtqBwdRyL5OOoHjX3k=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/sky/VwFQGIesmIPHAw"
+    },
+    {
+      "id": "royal-academy-gac-227",
+      "title": "The Exhibition of the Royal Academy",
+      "artist": "Unknown",
+      "year": 1787,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RX7SownrHtE3U3UnFFmSeqVEQ3unvlmh9HcNCTCaizt_PgQyirmNDdepJBkRvLWITrGol1rD5A=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-exhibition-of-the-royal-academy-1787/wAGJZd_XBsY8Gg"
+    },
+    {
+      "id": "royal-academy-gac-228",
+      "title": "Pool of Tears II",
+      "artist": "Kiki Smith",
+      "year": 2000,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SORkrzpVh1fa8EGW2iTJMwRM5ItHPI_p5PUFW9LpD3e8NVRh4-_lWPB2YCYjmIhBLgjv1uBsA=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/pool-of-tears-ii/oQHx84rzoSZRSA"
+    },
+    {
+      "id": "royal-academy-gac-229",
+      "title": "Crashed Bat",
+      "artist": "Kiki Smith",
+      "year": 1998,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QA0eClO4jMvrYkPwNIHZq8M_kBCdgyArdH8Y1UZdRDIEMiLwMUmIWxfv4RbyC7bVecrux3DQ=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/crashed-bat/0wFPyX0EumsDeg"
+    },
+    {
+      "id": "royal-academy-gac-230",
+      "title": "Gasholders London",
+      "artist": "WilkinsonEyre",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RSq9qR-S13VX6pnJqH_s9U26GaMxhMl-nlzWawStzpMPcnX0Y31pACZ_BSxA3-fqOU6mAxBCRC=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/gasholders-london-by-wilkinsoneyre/KgGl3mnqfWf3kg"
+    },
+    {
+      "id": "royal-academy-gac-231",
+      "title": "Battersea Power Station",
+      "artist": "WilkinsonEyre",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SDQKJ5mI6gL-2hQU9eSYem5yvc5Ob7mgs901_II4aiivyFBGS35O4xGpZUXCDoM5mnpQr-dA=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/battersea-power-station-by-wilkinsoneyre/xAF4--Pa25Ttmg"
+    },
+    {
+      "id": "royal-academy-gac-232",
+      "title": "Naming the Money",
+      "artist": "Lubaina Himid",
+      "year": 2004,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RMeK90ZkCwShjYwvfgR3D3_cyGYaWdip_ZXEHMuj7bQCGenxUWwQxD6u9szhCRImR0Jas7=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/naming-the-money/0AHoXA-7QqQzwA"
+    },
+    {
+      "id": "royal-academy-gac-233",
+      "title": "Dyson Institute of Engineering and Technology",
+      "artist": "WilkinsonEyre",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_R7_qGadueHa4RIaqhYyiWnwWH0wOsobuke6BPyIJ-90a33pdVc_3tXkg7b_4PsoGZJIut49Qk=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/dyson-institute-of-engineering-and-technology-by-wilkinsoneyre/3AHGAP-eFDO-EA"
+    },
+    {
+      "id": "royal-academy-gac-234",
+      "title": "My Blue Lake",
+      "artist": "Kiki Smith",
+      "year": 1995,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RN1rV1_BoSZfzj6RmLVfSeReQB6fKCxhABzg_S744EMkQlQG5f-0nazGbnb7VkHYnPiIV49w=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/my-blue-lake/mQFwhLLoPPO07A"
+    },
+    {
+      "id": "royal-academy-gac-235",
+      "title": "Guangzhou International Finance Center",
+      "artist": "WilkinsonEyre",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Qq5hiQtD1xz4jmfyztquxWRP2ctm78Fg9FxjPy6FqSAvoahIE7FwEvY5x1g1Oa_SZ775uR-w=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/guangzhou-international-finance-center-by-wilkinsoneyre/jQHRKcSQ3ynOiQ"
+    },
+    {
+      "id": "royal-academy-gac-236",
+      "title": "Naming the Money",
+      "artist": "Lubaina Himid",
+      "year": 2004,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Q7i-XGVWIZ0DgDJtPnbxNHTpQ3fq0hz7UAfnNhaG66np0Gk570DB4bLPfGOEIImjfGf_3-B1Y=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/naming-the-money/swHljdiWSpP1EQ"
+    },
+    {
+      "id": "royal-academy-gac-238",
+      "title": "Swallow Hard: The Lancaster Dinner Service (detail)",
+      "artist": "Lubaina Himid",
+      "year": 2007,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Rl2Cq_MypkVOduz24RJ4RW5e7OkgGYHQnauS1oPOJtR5E6xcIe9oTA3erqxQz1zaUffS6_gRw=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/swallow-hard-the-lancaster-dinner-service-detail/JgGdIiC6icYCSA",
+      "is3D": true
+    },
+    {
+      "id": "royal-academy-gac-239",
+      "title": "Gallery IX, Burlington House after the explosion of a German bomb in",
+      "artist": "Unknown",
+      "year": 1917,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QFXye62Z7X0uPlr1n3Wv58czgbB6vU409cvWgYZQhKHFNkhXp0DTrtGuif9jif_g2xu4KBxlw=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/gallery-ix-burlington-house-after-the-explosion-of-a-german-bomb-in-1917/dQHSXmUkRRC9gw"
+    },
+    {
+      "id": "royal-academy-gac-240",
+      "title": "Swallow Hard: The Lancaster Dinner Service (detail)",
+      "artist": "Lubaina Himid",
+      "year": 2007,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QYQqr4yodQJhxWgyJRz1WuQCeiB86ifQFmA0o7G2HlhlwTH3YdpemME33bySdB8sjMIFkSYA=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/swallow-hard-the-lancaster-dinner-service-detail/PAFJMZ9HCZk_rw",
+      "is3D": true
+    },
+    {
+      "id": "royal-academy-gac-241",
+      "title": "Shell",
+      "artist": "Kiki Smith",
+      "year": 1995,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_T0AcYPO-z6BknB_Jy8U_5WLGLj1A-X4u_jeb8tOBYQwbBph9NvpFJ5Z0KyCUSRHyeaYCXA=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/shell/rgEUlFqK_76POg"
+    },
+    {
+      "id": "royal-academy-gac-242",
+      "title": "Why Are You Looking",
+      "artist": "Lubaina Himid",
+      "year": 2018,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QGJAj7n1yBJsiRzttEdZwNe7UrAFbJNK9NgQgexkOkaCecWz7ysv-y_c7Kpw2-3kplqrpK=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/why-are-you-looking/aAH05-9WELO9ZA"
+    },
+    {
+      "id": "royal-academy-gac-244",
+      "title": "Former President of the Royal Academy, Christopher Le Brun, standing in front of one of his paintings",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SVfqmvPUu21WXWv-K1y0-W2xoqHssYSOp7PSGpp1RG7q3EqSCnWMv3MwkfEPxhuEdtQRvzPg=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/former-president-of-the-royal-academy-christopher-le-brun-standing-in-front-of-one-of-his-paintings/iAFtgYL_tT3NBQ"
+    },
+    {
+      "id": "royal-academy-gac-246",
+      "title": "Man Overboard (Freedom)",
+      "artist": "Lubaina Himid",
+      "year": 2016,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TwBuFZVyWQX9anwH5TKYkKuNjWJltEpbGceNxUXRE5za2hXkvpsbiB5sk9aC8z_VxCOllPixI=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/man-overboard-freedom/lQESHy0CvQXa_g"
+    },
+    {
+      "id": "royal-academy-gac-248",
+      "title": "Rebecca Salter, President of the Royal Academy of Arts",
+      "artist": "Unknown",
+      "year": 2019,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QpGabumKuM4ZP1hv2cD6EzLc04lso_L2pJLNP_vob2byQaq99CRdrfOZjTpGzetLHLCSOvVVh2=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/rebecca-salter-president-of-the-royal-academy-of-arts/SQEJRb00qfMsnA"
+    },
+    {
+      "id": "royal-academy-gac-250",
+      "title": "Royal Botanic Gardens, Kew: Davies Alpine House",
+      "artist": "WilkinsonEyre",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QzV3GI6FmyJUWRwSk7af3uscsCtmCZBg9BVdBnR_k_IKu6gOxanVlnr12i6k8j_qAhehWlLA=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/royal-botanic-gardens-kew-davies-alpine-house-by-wilkinsoneyre/2wHvyntNR4Q5uw"
+    },
+    {
+      "id": "royal-academy-gac-251",
+      "title": "Swallow Hard: The Lancaster Dinner Service (detail)",
+      "artist": "Lubaina Himid",
+      "year": 2007,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QxShXzDTSUVmaB6i2aoB2SUhFmDyCAvqoNYRwFnz5OpPBKvQrR_Oc-ZFT8XkuLOQkGI3AOiA=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/swallow-hard-the-lancaster-dinner-service-detail/ZgFeoSeW75HcGA",
+      "is3D": true
+    },
+    {
+      "id": "royal-academy-gac-252",
+      "title": "Stratford Market Depot",
+      "artist": "WilkinsonEyre",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_ThcOG_BaHmnRwKvmXCtIuTVfzJj5-WgF_SpDuzxqpXznlv6LXIxcSPbgZIGOpa5SoAsMvd=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/stratford-market-depot-by-wilkinsoneyre/PAGCWlhY-Dxh0Q"
+    },
+    {
+      "id": "royal-academy-gac-254",
+      "title": "CW Sketch Battersea Power Station",
+      "artist": "Chris Wilkinson RA",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_T3lYHRhsAJXTaNlvzbRCBDeBUp_ypLO0k3ghDaO236apnk7EonIB5SWBR-XHG8BVblbzW287en=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/cw-sketch-battersea-power-station/qgELM1WqyKVLyA"
+    },
+    {
+      "id": "royal-academy-gac-257",
+      "title": "Gateshead Millennium Bridge",
+      "artist": "WilkinsonEyre",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RpRXmNi_OVT8qfyzfpHzypdlruTFnlOBkyE5HiBmB2QyALSNHDLDTFGS9cfDSHes0rkzFJcII=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/gateshead-millennium-bridge-by-wilkinsoneyre/2wFubo-mm4WC3w"
+    },
+    {
+      "id": "royal-academy-gac-258",
+      "title": "Rebecca Salter PRA in the Keeper's Studio at the Royal Academy",
+      "artist": "Unknown",
+      "year": 2017,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SN016hZcfLgJ9zMI5wWT2piDnCrpOXWKPs4QNhkzBfW1Y2ziy09ZNAZumhilNa8E954v8fJr_b=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/rebecca-salter-pra-in-the-keeper-s-studio-at-the-royal-academy/KwGDgJ1YkBLLnA"
+    },
+    {
+      "id": "royal-academy-gac-261",
+      "title": "Cover of 'The Sketchbooks of Chris Wilkinson'",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_R_ova1FwzP2VUsCr0WZDPWI1lJuXF-B5MF_ldcqJrkbLZ3o9nwc74zmsbwRU2EECn0ZZhaoA=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/cover-of-the-sketchbooks-of-chris-wilkinson/hAE-gU77dpMsfQ"
+    },
+    {
+      "id": "royal-academy-gac-266",
+      "title": "Apollo pythien' [Apollo Belvedere] (front view); Girard Audran, Les Proportions Du Corps Humain, Mesurées sur les plus belles Figures de l'Antiquité (Paris: 1683)",
+      "artist": "Gérard Audran",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TwMYL0yMTPh6LFub05E3EIvJJy7vzHPlvDKeQs1swZtykUvAwsDvPy5Y2m48teaHvEG-MKZFkY=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/apollo-pythien-apollo-belvedere-front-view-girard-audran-les-proportions-du-corps-humain-mesur%C3%A9es-sur-les-plus-belles-figures-de-l-antiquit%C3%A9-paris-1683-pl-18/-QHMsGxqQYo9Bg",
+      "is3D": true
+    },
+    {
+      "id": "royal-academy-gac-267",
+      "title": "Portrait of Kiki Smith",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_R7w0W2-0EY6__wYH_E58Hb2WgeLkgg6S5EP5o4oq62DVoZM08M5EhZowP7vqoRPSGpWAbo3Q=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/portrait-of-kiki-smith-2011/hAGQCSotOT21jw"
+    },
+    {
+      "id": "royal-academy-gac-268",
+      "title": "Tenderness Only We Can Bear",
+      "artist": "Lubaina Himid",
+      "year": 2018,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TiOAMelGvG81wmNMPT2zHuZf0XYCZoZjjWZyvs-iOFRsnKJtbXr0uG9NdA8C10T5BMMsVaXyQ=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/tenderness-only-we-can-bear/5gECdeO_rTZb-Q"
+    },
+    {
+      "id": "royal-academy-gac-269",
+      "title": "Scylla",
+      "artist": "John Flaxman",
+      "year": 1793,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RHMuXR0-onlvr_Do8kWo9xy8RA-55x8bqPH4gheAcKw6iI3XNhyT2XOkYsFNDc-8ncERiw4w=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/scylla/eAGJQUr6NSEyuQ"
+    },
+    {
+      "id": "royal-academy-gac-270",
+      "title": "Behind the scenes at the RA Schools",
+      "artist": "Unknown",
+      "year": 2017,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TgL1z9gFCLNWoPt4dCa5gC9FPnDA0XNUXeUY9fAskIZgWNkBz_5ps3IsV9RcURyG-pUTlYgTg=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/behind-the-scenes-at-the-ra-schools/IgHVe0Ge15iEMg"
+    },
+    {
+      "id": "royal-academy-gac-271",
+      "title": "Sketch of WilkinsonEyre's Crown Hotel Sydney",
+      "artist": "Chris Wilkinson RA",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Sc5JLjb2QXzbtCpkJ4DP3fY9sIi3jU6gX_upinGNl_ez0Z5EFiZy56QZxTaiJD_XZ4fLMY6Q=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/sketch-of-wilkinsoneyre-s-crown-hotel-sydney-by-chris-wilkinson-ra/xAEWC3Z8df8S6Q"
+    },
+    {
+      "id": "royal-academy-gac-272",
+      "title": "Model of 8 Bishopsgate",
+      "artist": "WilkinsonEyre",
+      "year": 2019,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QnUKe1lsXcNxz3PvFevEAYT-Ib2g3dMIJo_VM9zYKa0czhEf4QzHKsUR5XOmwJXkGf4Kbm=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/model-of-8-bishopsgate-by-wilkinsoneyre/pwF9S9LmaEfzDQ",
+      "is3D": true
+    },
+    {
+      "id": "royal-academy-gac-276",
+      "title": "The Summer Exhibition in 60 seconds",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RNe6dY7pN3a_mnMfJJSHJIUBxjLrzX_MSPhz3jqiZ-Gc2r1b_p9j5VvqokQMH0CzMe6tp4CLw=w800",
+      "youtubeId": "eWHfwRyCqKg",
+      "mediaType": "video",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-summer-exhibition-in-60-seconds/oQGMeq8f28ROtw"
+    },
+    {
+      "id": "royal-academy-gac-277",
+      "title": "David Wilkie and the Summer Exhibition’s first blockbuster",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RNe6dY7pN3a_mnMfJJSHJIUBxjLrzX_MSPhz3jqiZ-Gc2r1b_p9j5VvqokQMH0CzMe6tp4CLw=w800",
+      "youtubeId": "6CC9eCyhMCk",
+      "mediaType": "video",
+      "sourceUrl": "https://artsandculture.google.com/asset/david-wilkie-and-the-summer-exhibition%E2%80%99s-first-blockbuster/-gGDAlnvvwsHpQ",
+      "is3D": true
+    },
+    {
+      "id": "royal-academy-gac-274",
+      "title": "The story of the Royal Academy of Arts",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RMRtR29V_XNaMCF2Q3mWoWofKnBM2baJ9X0cuMxNrL3HyVO9bcdLbLQsr6TE00r409wTT3UKw=w800",
+      "youtubeId": "uuegzLttsUk",
+      "mediaType": "video",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-story-of-the-royal-academy-of-arts/OgHJE6uHmR2BVA"
+    },
+    {
+      "id": "royal-academy-gac-275",
+      "title": "The New RA in 90 seconds",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RMRtR29V_XNaMCF2Q3mWoWofKnBM2baJ9X0cuMxNrL3HyVO9bcdLbLQsr6TE00r409wTT3UKw=w800",
+      "youtubeId": "Oym2DAD8P-8",
+      "mediaType": "video",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-new-ra-in-90-seconds/RwF5hDzHWtaWuQ"
+    },
+    {
+      "id": "royal-academy-gac-273",
+      "title": "Grayson Perry's Summer Exhibition",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RKwczw94Wq3-0-E9edzfAYj7r1k0a2HSpX7-a0y4RWybcMLs9v4alPj5IORwjh8uDLO6dwFfQ=w800",
+      "youtubeId": "SRIA0aKcFhI",
+      "mediaType": "video",
+      "sourceUrl": "https://artsandculture.google.com/asset/grayson-perry-s-summer-exhibition/HgGKR1XahNGMqQ"
+    }
+  ],
+  "processedAt": "2025-12-20T09:27:40.219Z"
+}

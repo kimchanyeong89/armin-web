@@ -52,3 +52,21 @@ body, html, #root {
   50% { transform: translateX(-50%); }
   100% { transform: translateX(0); }
 }
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* YouTube: 썸네일이 위에 있다가 사라지며 아래 iframe이 보임 */
+@keyframes thumbnailFadeOut {
+  0% { opacity: 1; visibility: visible; }
+  80% { opacity: 1; visibility: visible; }
+  99% { opacity: 0; visibility: visible; }
+  100% { opacity: 0; visibility: hidden; }
+}
+
+.youtube-thumbnail-fade {
+  animation: thumbnailFadeOut 2.5s ease-out forwards;
+  pointer-events: none;
+}

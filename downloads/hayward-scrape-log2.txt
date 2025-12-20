@@ -1,0 +1,803 @@
+
+🎨 Hayward Gallery 전시 상세 정보 스크래핑 시작
+
+📊 총 99개 전시 처리 예정
+
+
+[1/99] Yoshitomo Nara
+  📡 Fetching: https://www.newexhibitions.com/e/65720
+  📅 Period: 2025-06-10 ~ 2025-08-31
+  📝 Description: Dive into the captivating, creative world of Yoshitomo Nara in the largest Europ...
+  🖼️  Cover image found
+    📥 Downloading: https://www.newexhibitions.com/uploads/4/8/large/67812d9730e...
+  ✅ Done
+
+[2/99] Ghazaleh Avarzamani and Ali Ahadi: Freudian Typo
+  📡 Fetching: https://www.newexhibitions.com/e/66729
+  📅 Period: 2025-06-10 ~ 2025-08-31
+  📝 Description: In the HENI Project Space, Hayward Gallery Explore a multi-layered exhibition of...
+  🖼️  Cover image found
+    📥 Downloading: https://www.newexhibitions.com/uploads/0/b/large/683ee19be03...
+  ✅ Done
+
+[3/99] Linder: Danger Came Smiling
+  📡 Fetching: https://www.newexhibitions.com/e/64916
+  📅 Period: 2025-02-11 ~ 2025-05-05
+  📝 Description: Linder's first London retrospective showcases 50 years of the pioneering feminis...
+  🖼️  Cover image found
+    📥 Downloading: https://www.newexhibitions.com/uploads/f/8/large/67aa166cbd3...
+  ✅ Done
+
+[4/99] Mickalene Thomas: All About Love
+  📡 Fetching: https://www.newexhibitions.com/e/64917
+  📅 Period: 2025-02-11 ~ 2025-05-05
+  📝 Description: Mickalene Thomas' vibrant, large-scale portraits of Black women at rest reclaim ...
+  🖼️  Cover image found
+    📥 Downloading: https://www.newexhibitions.com/uploads/5/d/large/66e1749cb9a...
+  ✅ Done
+
+[5/99] Haegue Yang: Leap Year
+  📡 Fetching: https://www.newexhibitions.com/e/64913
+  📅 Period:  ~ 
+  📝 Description: A world of inventive, immersive and multisensory installations and sculptures th...
+  🖼️  Cover image found
+    📥 Downloading: https://www.newexhibitions.com/uploads/e/9/large/66e173d6b8c...
+  ✅ Done
+
+[6/99] Huang Po-Chih: Waves
+  📡 Fetching: https://www.newexhibitions.com/e/64914
+  📅 Period:  ~ 
+  📝 Description: Taiwanese artist Huang Po-Chih uses the personal narratives of workers to invest...
+  🖼️  Cover image found
+    📥 Downloading: https://www.newexhibitions.com/uploads/8/2/large/66e172eeb2b...
+  ✅ Done
+
+[7/99] Tavares Strachan: There Is Light Somewhere
+  📡 Fetching: https://www.newexhibitions.com/e/64275
+  📅 Period: 2024-06-18 ~ 2024-09-01
+  📝 Description: Unsung trailblazers and lost cultural connections are vividly commemorated in ar...
+  🖼️  Cover image found
+    📥 Downloading: https://www.newexhibitions.com/uploads/5/7/large/66730ae09b4...
+  ✅ Done
+
+[8/99] The Life of Forms
+  📡 Fetching: https://www.newexhibitions.com/e/62951
+  📅 Period: 2024-02-07 ~ 2024-05-06
+  📝 Description: Spanning over 50 years of contemporary art, this exhibition highlights ways in w...
+  🖼️  Cover image found
+    📥 Downloading: https://www.newexhibitions.com/uploads/d/e/large/655cd77f698...
+  ✅ Done
+
+[9/99] Hiroshi Sugimoto
+  📡 Fetching: https://www.newexhibitions.com/e/62389
+  📅 Period:  ~ 
+  📝 Description: The largest retrospective to date of Hiroshi Sugimoto, an artist renowned for cr...
+  🖼️  Cover image found
+    📥 Downloading: https://www.newexhibitions.com/uploads/f/4/large/64fb3dc9298...
+  ✅ Done
+
+[10/99] Dear Earth: Art and Hope in a Time of Crisis
+  📡 Fetching: https://www.newexhibitions.com/e/61497
+  📅 Period: 2023-06-21 ~ 2023-09-03
+  📝 Description: This pioneering group show of artistic responses to the climate emergency explor...
+  🖼️  Cover image found
+    📥 Downloading: https://www.newexhibitions.com/uploads/4/4/large/645ce617c63...
+  ✅ Done
+
+[11/99] Mike Nelson: Extinction Beckons
+  📡 Fetching: https://www.newexhibitions.com/e/60467
+  📅 Period: 2023-02-22 ~ 2023-05-07
+  📝 Description: The first major survey of work by internationally acclaimed British artist Mike ...
+  🖼️  Cover image found
+    📥 Downloading: https://www.newexhibitions.com/uploads/6/8/large/63dcfc3d6e9...
+  ✅ Done
+
+[12/99] Strange Clay: Ceramics in Contemporary Art
+  📡 Fetching: https://www.newexhibitions.com/e/59920
+  📅 Period:  ~ 
+  📝 Description: Strange Clay: Ceramics in Contemporary Art is the first large-scale group exhibi...
+  🖼️  Cover image found
+    📥 Downloading: https://www.newexhibitions.com/uploads/e/2/large/62eaa45b44d...
+  ✅ Done
+
+[13/99] Koestler Arts: Freedom
+  📡 Fetching: https://www.newexhibitions.com/e/60035
+  📅 Period: 2022-10-27 ~ 2022-12-18
+  📝 Description: Koestler Arts marks the 60th anniversary of the Koestler Awards with an ambitiou...
+  🖼️  Cover image found
+    📥 Downloading: https://www.newexhibitions.com/uploads/4/c/large/630e048fa24...
+  ✅ Done
+
+[14/99] In the Black Fantastic
+  📡 Fetching: https://www.newexhibitions.com/e/59323
+  📅 Period: 2022-06-29 ~ 2022-09-18
+  📝 Description: Myth, science fiction, spiritual traditions and the legacy of Afrofuturism are a...
+  🖼️  Cover image found
+    📥 Downloading: https://www.newexhibitions.com/uploads/5/d/large/6245943045d...
+  ✅ Done
+
+[15/99] Louise Bourgeois: The Woven Child
+  📡 Fetching: https://www.newexhibitions.com/e/58472
+  📅 Period: 2022-02-09 ~ 2022-05-15
+  📝 Description: In the last two decades of her career, Bourgeois began to incorporate clothes fr...
+  🖼️  Cover image found
+    📥 Downloading: https://www.newexhibitions.com/uploads/3/c/large/62019dbf6b6...
+  ✅ Done
+
+[16/99] Anthea Hamilton Commission
+  📡 Fetching: https://www.newexhibitions.com/e/59237
+  📅 Period: 2022-03-12 ~ 2022-04-24
+  📝 Description: Running day and night on a six-metre LED screen outside the Hayward Gallery, Ant...
+  🖼️  Cover image found
+    📥 Downloading: https://www.newexhibitions.com/uploads/8/2/large/622b63e6c65...
+  ✅ Done
+
+[17/99] Mixing It Up: Painting Today
+  📡 Fetching: https://www.newexhibitions.com/e/58251
+  📅 Period: 2021-09-09 ~ 2021-12-12
+  📝 Description: Mixing It Up brings together 31 contemporary painters who exploit the unique cha...
+  🖼️  Cover image found
+    📥 Downloading: https://www.newexhibitions.com/uploads/8/c/large/613612ec608...
+  ✅ Done
+
+[18/99] Gerhard Richter: Drawings, 1999 – 2021
+  📡 Fetching: https://www.newexhibitions.com/e/58252
+  📅 Period: 2021-09-09 ~ 2021-12-12
+  📝 Description: Including several new series of experimental drawings, this exhibition – Richter...
+  🖼️  Cover image found
+    📥 Downloading: https://www.newexhibitions.com/uploads/1/f/large/6136139b349...
+  ✅ Done
+
+[19/99] Matthew Barney: Redoubt
+  📡 Fetching: https://www.newexhibitions.com/e/57642
+  📅 Period: 2021-05-19 ~ 2021-07-25
+  📝 Description: ...
+  🖼️  Cover image found
+    📥 Downloading: https://www.newexhibitions.com/uploads/3/e/medium/68cbd8ddda...
+  ✅ Done
+
+[20/99] Igshaan Adams: Kicking Dust
+  📡 Fetching: https://www.newexhibitions.com/e/57643
+  📅 Period: 2021-05-19 ~ 2021-07-25
+  📝 Description: ...
+  🖼️  Cover image found
+    📥 Downloading: https://www.newexhibitions.com/uploads/3/e/medium/68cbd8ddda...
+  ✅ Done
+
+[21/99] Winter Light
+  📡 Fetching: https://www.newexhibitions.com/e/25037
+  📅 Period:  ~ 
+  📝 Description: Featuring more than 15 artworks and new commissions, the exhibition is installed...
+  🖼️  Cover image found
+    📥 Downloading: https://www.newexhibitions.com/uploads/3/e/medium/68cbd8ddda...
+  ✅ Done
+
+[22/99] Among the trees
+  📡 Fetching: https://www.newexhibitions.com/e/25038
+  📅 Period: 2020-08-01 ~ 2020-10-31
+  📝 Description: In meditative works across different media, they explore how trees &#8211; with ...
+  🖼️  Cover image found
+    📥 Downloading: https://www.newexhibitions.com/uploads/b/3/large/607d766bb58...
+  ✅ Done
+
+[23/99] Nevin Aladağ: Fanfare
+  📡 Fetching: https://www.newexhibitions.com/e/25040
+  📅 Period: 2020-02-12 ~ 2020-04-13
+  📝 Description: HENI Project Space presents a free exhibition of playful, musical works by Nevin...
+  🖼️  Cover image found
+    📥 Downloading: https://www.newexhibitions.com/uploads/d/e/large/607d766c353...
+  ✅ Done
+
+[24/99] Joo Yeon Park: Libation
+  📡 Fetching: https://www.newexhibitions.com/e/25041
+  📅 Period:  ~ 
+  📝 Description: Joo Yeon Park&#8217;s 'Library of the Unword' commemorates the 30th anniversary ...
+  🖼️  Cover image found
+    📥 Downloading: https://www.newexhibitions.com/uploads/9/b/large/607d766c722...
+  ✅ Done
+
+[25/99] Bridget Riley
+  📡 Fetching: https://www.newexhibitions.com/e/25042
+  📅 Period:  ~ 
+  📝 Description: Spanning 70 years of Bridget&#8217;s career, the exhibition includes rarely seen...
+  🖼️  Cover image found
+    📥 Downloading: https://www.newexhibitions.com/uploads/a/0/large/607d766cb19...
+  ✅ Done
+
+[26/99] Kiss My Genders
+  📡 Fetching: https://www.newexhibitions.com/e/25043
+  📅 Period: 2019-06-12 ~ 2019-09-08
+  📝 Description: In summer 2019 Hayward Gallery will open Kiss My Genders, a group exhibition cel...
+  🖼️  Cover image found
+    📥 Downloading: https://www.newexhibitions.com/uploads/3/2/large/607d766d01c...
+  ✅ Done
+
+[27/99] Kader Attia: The Museum of Emotion
+  📡 Fetching: https://www.newexhibitions.com/e/25045
+  📅 Period: 2019-02-13 ~ 2019-05-06
+  📝 Description: ...
+  🖼️  Cover image found
+    📥 Downloading: https://www.newexhibitions.com/uploads/3/e/medium/68cbd8ddda...
+  ✅ Done
+
+[28/99] diane arbus: in the beginning
+  📡 Fetching: https://www.newexhibitions.com/e/25046
+  📅 Period: 2019-02-13 ~ 2019-05-06
+  📝 Description: The exhibition is organised by The Metropolitan Museum of Art, New York....
+  🖼️  Cover image found
+    📥 Downloading: https://www.newexhibitions.com/uploads/3/e/medium/68cbd8ddda...
+  ✅ Done
+
+[29/99] Aleksandra Mir: Presents the Pre-Presidential Library
+  📡 Fetching: https://www.newexhibitions.com/e/25044
+  📅 Period: 2019-01-07 ~ 2019-02-07
+  📝 Description: A free Heni Project Space exhibition....
+  🖼️  Cover image found
+    📥 Downloading: https://www.newexhibitions.com/uploads/3/e/medium/68cbd8ddda...
+  ✅ Done
+
+[30/99] Space Shifters
+  📡 Fetching: https://www.newexhibitions.com/e/25048
+  📅 Period:  ~ 
+  📝 Description: Space Shifters is a major thematic exhibition that features artworks by over 20 ...
+  🖼️  Cover image found
+    📥 Downloading: https://www.newexhibitions.com/uploads/3/e/medium/68cbd8ddda...
+  ✅ Done
+
+[31/99] Emmanuelle Lainé
+  📡 Fetching: https://www.newexhibitions.com/e/25047
+  📅 Period: 2018-10-25 ~ 2018-12-24
+  📝 Description: ...
+  🖼️  Cover image found
+    📥 Downloading: https://www.newexhibitions.com/uploads/6/a/large/607d766d429...
+  ✅ Done
+
+[32/99] DRAG: Self-portraits and Body Politics
+  📡 Fetching: https://www.newexhibitions.com/e/25049
+  📅 Period: 2018-08-22 ~ 2018-10-14
+  📝 Description: Works by more than 30 artists who have used drag to explore or question identity...
+  🖼️  Cover image found
+    📥 Downloading: https://www.newexhibitions.com/uploads/3/e/medium/68cbd8ddda...
+  ✅ Done
+
+[33/99] Lee Bul
+  📡 Fetching: https://www.newexhibitions.com/e/25050
+  📅 Period: 2018-05-30 ~ 2018-08-19
+  📝 Description: Lee Bul transforms Hayward Gallery into a spectacular dream-like landscape featu...
+  🖼️  Cover image found
+    📥 Downloading: https://www.newexhibitions.com/uploads/5/4/large/607d766d941...
+  ✅ Done
+
+[34/99] Andreas Gursky
+  📡 Fetching: https://www.newexhibitions.com/e/25051
+  📅 Period: 2018-01-25 ~ 2018-04-22
+  📝 Description: Hayward Gallery reopens in January 2018 with the first major UK retrospective of...
+  🖼️  Cover image found
+    📥 Downloading: https://www.newexhibitions.com/uploads/b/6/large/607d766e156...
+  ✅ Done
+
+[35/99] Dineo Seshee Bopape
+  📡 Fetching: https://www.newexhibitions.com/e/25052
+  📅 Period: 2015-08-26 ~ 2015-09-27
+  📝 Description: Hayward Gallery presents the first UK solo exhibition by South African artist Di...
+  🖼️  Cover image found
+    📥 Downloading: https://www.newexhibitions.com/uploads/3/e/medium/68cbd8ddda...
+  ✅ Done
+
+[36/99] Carsten Höller: Decision
+  📡 Fetching: https://www.newexhibitions.com/e/25055
+  📅 Period: 2015-06-10 ~ 2015-09-06
+  📝 Description: Carsten Höller: Decision is the artist's first major survey show in the UK. The ...
+  🖼️  Cover image found
+    📥 Downloading: https://www.newexhibitions.com/uploads/0/4/large/607d766ebd1...
+  ✅ Done
+
+[37/99] Echoes & Reverberations
+  📡 Fetching: https://www.newexhibitions.com/e/25053
+  📅 Period: 2015-06-23 ~ 2015-08-16
+  📝 Description: Through objects, performances and videos, this group exhibition explores perform...
+  🖼️  Cover image found
+    📥 Downloading: https://www.newexhibitions.com/uploads/6/6/large/607d766e5db...
+  ✅ Done
+
+[38/99] Neha Choksi: Minds to lose
+  📡 Fetching: https://www.newexhibitions.com/e/25054
+  📅 Period: 2015-04-30 ~ 2015-06-14
+  📝 Description: Minds to Lose marks the first UK solo exhibition by multimedia artist Neha Choks...
+  🖼️  Cover image found
+    📥 Downloading: https://www.newexhibitions.com/uploads/3/e/medium/68cbd8ddda...
+  ✅ Done
+
+[39/99] History is Now: 7 artists take on Britain
+  📡 Fetching: https://www.newexhibitions.com/e/25056
+  📅 Period: 2015-02-10 ~ 2015-04-26
+  📝 Description: For History is Now, seven artists have been invited to each curate a section of ...
+  🖼️  Cover image found
+    📥 Downloading: https://www.newexhibitions.com/uploads/8/7/large/607d766ef2e...
+  ✅ Done
+
+[40/99] MIRRORCITY: London artists on fiction and reality
+  📡 Fetching: https://www.newexhibitions.com/e/25057
+  📅 Period:  ~ 
+  📝 Description: "Cities, like dreams, are made of desires and fears, even if the thread of their...
+  🖼️  Cover image found
+    📥 Downloading: https://www.newexhibitions.com/uploads/b/b/large/607d766f4a6...
+  ✅ Done
+
+[41/99] The Human Factor
+  📡 Fetching: https://www.newexhibitions.com/e/25058
+  📅 Period: 2014-06-17 ~ 2014-09-07
+  📝 Description: International artists confront the question of how we represent the 'human' toda...
+  🖼️  Cover image found
+    📥 Downloading: https://www.newexhibitions.com/uploads/3/e/medium/68cbd8ddda...
+  ✅ Done
+
+[42/99] Martin Creed: What's the point of it?
+  📡 Fetching: https://www.newexhibitions.com/e/25059
+  📅 Period: 2014-01-29 ~ 2014-04-27
+  📝 Description: Martin Creed: What's the point of it? is the first major retrospective of Creed'...
+  🖼️  Cover image found
+    📥 Downloading: https://www.newexhibitions.com/uploads/e/e/large/607d766fc26...
+  ✅ Done
+
+[43/99] Dayanita Singh: Go Away Closer
+  📡 Fetching: https://www.newexhibitions.com/e/25060
+  📅 Period: 2013-10-08 ~ 2013-12-15
+  📝 Description: ...
+  🖼️  Cover image found
+    📥 Downloading: https://www.newexhibitions.com/uploads/f/6/large/607d767024e...
+  ✅ Done
+
+[44/99] Ana Mendieta: Traces
+  📡 Fetching: https://www.newexhibitions.com/e/25061
+  📅 Period: 2013-09-24 ~ 2013-12-15
+  📝 Description: Using her own body, together with elemental materials such as blood, fire, earth...
+  🖼️  Cover image found
+    📥 Downloading: https://www.newexhibitions.com/uploads/1/2/large/607d7670750...
+  ✅ Done
+
+[45/99] The Alternative Guide to the Universe
+  📡 Fetching: https://www.newexhibitions.com/e/25063
+  📅 Period: 2013-06-11 ~ 2013-08-26
+  📝 Description: Visions from Maverick Arts and Sciences. *Featuring The Museum of Everything!* F...
+  🖼️  Cover image found
+    📥 Downloading: https://www.newexhibitions.com/uploads/3/e/medium/68cbd8ddda...
+  ✅ Done
+
+[46/99] Aura Satz: Impulsive Synchronisation
+  📡 Fetching: https://www.newexhibitions.com/e/25062
+  📅 Period: 2013-03-22 ~ 2013-05-26
+  📝 Description: At Hayward Gallery Project Space. Aura Satz premieres a new film and sound insta...
+  🖼️  Cover image found
+    📥 Downloading: https://www.newexhibitions.com/uploads/3/e/medium/68cbd8ddda...
+  ✅ Done
+
+[47/99] Light Show
+  📡 Fetching: https://www.newexhibitions.com/e/25064
+  📅 Period: 2013-01-30 ~ 2013-05-06
+  📝 Description: Light Show explores the experiential and phenomenal nature of light, bringing to...
+  🖼️  Cover image found
+    📥 Downloading: https://www.newexhibitions.com/uploads/5/e/large/607d7670a4d...
+  ✅ Done
+
+[48/99] Art of Change: New Directions from China
+  📡 Fetching: https://www.newexhibitions.com/e/25065
+  📅 Period: 2012-09-06 ~ 2012-12-09
+  📝 Description: ...
+  🖼️  Cover image found
+    📥 Downloading: https://www.newexhibitions.com/uploads/3/e/medium/68cbd8ddda...
+  ✅ Done
+
+[49/99] Invisible Art
+  📡 Fetching: https://www.newexhibitions.com/e/25067
+  📅 Period: 2012-06-12 ~ 2012-08-05
+  📝 Description: A work of art that exists solely in the mind of the viewer and an invisiblefilm ...
+  🖼️  Cover image found
+    📥 Downloading: https://www.newexhibitions.com/uploads/3/e/medium/68cbd8ddda...
+  ✅ Done
+
+[50/99] Wide Open School
+  📡 Fetching: https://www.newexhibitions.com/e/25066
+  📅 Period: 2012-06-11 ~ 2012-07-11
+  📝 Description: For one month only, the Hayward Gallery transforms into Wide Open School. An exp...
+  🖼️  Cover image found
+    📥 Downloading: https://www.newexhibitions.com/uploads/3/e/medium/68cbd8ddda...
+  ✅ Done
+
+[51/99] JEREMY DELLER: JOY IN PEOPLE
+  📡 Fetching: https://www.newexhibitions.com/e/25069
+  📅 Period: 2012-02-22 ~ 2012-05-13
+  📝 Description: A hugely influential artist for much of the past two decades, Turner Prize-winne...
+  🖼️  Cover image found
+    📥 Downloading: https://www.newexhibitions.com/uploads/3/e/medium/68cbd8ddda...
+  ✅ Done
+
+[52/99] DAVID SHRIGLEY: BRAIN ACTIVITY
+  📡 Fetching: https://www.newexhibitions.com/e/25070
+  📅 Period: 2012-02-01 ~ 2012-05-13
+  📝 Description: This is the first major survey in the UK of works by Glasgow-based artist David ...
+  🖼️  Cover image found
+    📥 Downloading: https://www.newexhibitions.com/uploads/3/e/medium/68cbd8ddda...
+  ✅ Done
+
+[53/99] Hayward Project Space: Euan MacDonald
+  📡 Fetching: https://www.newexhibitions.com/e/25068
+  📅 Period: 2012-01-14 ~ 2012-02-14
+  📝 Description: Euan Macdonald - Open-Tuning features the recent video 9000 Pieces (2010), which...
+  🖼️  Cover image found
+    📥 Downloading: https://www.newexhibitions.com/uploads/3/e/medium/68cbd8ddda...
+  ✅ Done
+
+[54/99] George Condo: Mental States
+  📡 Fetching: https://www.newexhibitions.com/e/25072
+  📅 Period:  ~ 
+  📝 Description: This is the first major retrospective of the American artist George Condo. Since...
+  🖼️  Cover image found
+    📥 Downloading: https://www.newexhibitions.com/uploads/3/e/medium/68cbd8ddda...
+  ✅ Done
+
+[55/99] Pipilotti Rist
+  📡 Fetching: https://www.newexhibitions.com/e/25073
+  📅 Period:  ~ 
+  📝 Description: wiss artist Pipilotti Rist is one of the world&#8217;s leading contemporary arti...
+  🖼️  Cover image found
+    📥 Downloading: https://www.newexhibitions.com/uploads/3/e/medium/68cbd8ddda...
+  ✅ Done
+
+[56/99] Tracey Emin: Love is What You Want
+  📡 Fetching: https://www.newexhibitions.com/e/25076
+  📅 Period: 2011-05-18 ~ 2011-08-29
+  📝 Description: ...
+  🖼️  Cover image found
+    📥 Downloading: https://www.newexhibitions.com/uploads/3/e/medium/68cbd8ddda...
+  ✅ Done
+
+[57/99] The Royal Family: Hayward Gallery Project Space
+  📡 Fetching: https://www.newexhibitions.com/e/25077
+  📅 Period: 2011-03-12 ~ 2011-05-02
+  📝 Description: Royal Family focuses on contemporary artists' representations of the House of Wi...
+  🖼️  Cover image found
+    📥 Downloading: https://www.newexhibitions.com/uploads/5/3/large/607d76712b2...
+  ✅ Done
+
+[58/99] British Art Show 7: In the Days of the Comet
+  📡 Fetching: https://www.newexhibitions.com/e/25078
+  📅 Period: 2011-02-18 ~ 2011-04-17
+  📝 Description: Paintings, sculpture, installations, video, film, performance and all points in ...
+  🖼️  Cover image found
+    📥 Downloading: https://www.newexhibitions.com/uploads/3/e/medium/68cbd8ddda...
+  ✅ Done
+
+[59/99] Move: Choreographing You
+  📡 Fetching: https://www.newexhibitions.com/e/25081
+  📅 Period:  ~ 
+  📝 Description: Move: Choreographing You invites the visitor to become a participant - and in so...
+  🖼️  Cover image found
+    📥 Downloading: https://www.newexhibitions.com/uploads/8/6/large/607d7671984...
+  ✅ Done
+
+[60/99] Ron Terada: Who I Think I Am
+  📡 Fetching: https://www.newexhibitions.com/e/25079
+  📅 Period: 2010-09-28 ~ 2010-11-07
+  📝 Description: Painting, signage, photography, interventions, books and music...
+  🖼️  Cover image found
+    📥 Downloading: https://www.newexhibitions.com/uploads/3/e/medium/68cbd8ddda...
+  ✅ Done
+
+[61/99] Jess Flood-Paddock: Gangsta's Paradise
+  📡 Fetching: https://www.newexhibitions.com/e/25080
+  📅 Period: 2010-08-04 ~ 2010-09-19
+  📝 Description: Hayward Gallery Project Space...
+  🖼️  Cover image found
+    📥 Downloading: https://www.newexhibitions.com/uploads/5/d/large/607d76715a3...
+  ✅ Done
+
+[62/99] Silberkuppe: Rooms Without Walls
+  📡 Fetching: https://www.newexhibitions.com/e/25083
+  📅 Period:  ~ 
+  📝 Description: Project Space show guest-curated by Berlin-based collective....
+  🖼️  Cover image found
+    📥 Downloading: https://www.newexhibitions.com/uploads/3/e/medium/68cbd8ddda...
+  ✅ Done
+
+[63/99] Ed Ruscha: Fifty Years of Painting
+  📡 Fetching: https://www.newexhibitions.com/e/25086
+  📅 Period:  ~ 
+  📝 Description: First major UK retrospective to focus exclusively on the paintings of the Los An...
+  🖼️  Cover image found
+    📥 Downloading: https://www.newexhibitions.com/uploads/b/0/large/607d76720a1...
+  ✅ Done
+
+[64/99] Victor Man: If Mind Were All There Was
+  📡 Fetching: https://www.newexhibitions.com/e/25084
+  📅 Period:  ~ 
+  📝 Description: Paintings and found objects....
+  🖼️  Cover image found
+    📥 Downloading: https://www.newexhibitions.com/uploads/3/e/medium/68cbd8ddda...
+  ✅ Done
+
+[65/99] Martin Sastre
+  📡 Fetching: https://www.newexhibitions.com/e/25085
+  📅 Period: 2009-09-08 ~ 2009-09-30
+  📝 Description: Video art in Hayward Gallery Project Space....
+  🖼️  Cover image found
+    📥 Downloading: https://www.newexhibitions.com/uploads/c/e/large/607d7671c8d...
+  ✅ Done
+
+[66/99] Walking in My Mind
+  📡 Fetching: https://www.newexhibitions.com/e/25089
+  📅 Period: 2009-06-23 ~ 2009-09-06
+  📝 Description: Explores the inner working of the artist's imagination through dramatic, large-s...
+  🖼️  Cover image found
+    📥 Downloading: https://www.newexhibitions.com/uploads/9/a/large/607d767239a...
+  ✅ Done
+
+[67/99] Deceitful Moon
+  📡 Fetching: https://www.newexhibitions.com/e/25087
+  📅 Period: 2009-07-21 ~ 2009-08-30
+  📝 Description: Opening 40 years after the Apollo 11 moon landings, the group exhibition Deceitf...
+  🖼️  Cover image found
+    📥 Downloading: https://www.newexhibitions.com/uploads/3/e/medium/68cbd8ddda...
+  ✅ Done
+
+[68/99] Matthew Darbyshire: Funhouse
+  📡 Fetching: https://www.newexhibitions.com/e/25088
+  📅 Period: 2009-05-20 ~ 2009-07-12
+  📝 Description: ...
+  🖼️  Cover image found
+    📥 Downloading: https://www.newexhibitions.com/uploads/3/e/medium/68cbd8ddda...
+  ✅ Done
+
+[69/99] PaulMart: Beton brut
+  📡 Fetching: https://www.newexhibitions.com/e/25090
+  📅 Period: 2009-04-21 ~ 2009-05-31
+  📝 Description: As a collaborative duo, PaulMart (Paul Teigh and Martin Russell, both b.1980) ex...
+  🖼️  Cover image found
+    📥 Downloading: https://www.newexhibitions.com/uploads/3/e/medium/68cbd8ddda...
+  ✅ Done
+
+[70/99] Annette Messager: The Messengers
+  📡 Fetching: https://www.newexhibitions.com/e/25092
+  📅 Period: 2009-03-04 ~ 2009-05-25
+  📝 Description: Retrospective. This exhibition presents a panoramic survey from the intimate and...
+  🖼️  Cover image found
+    📥 Downloading: https://www.newexhibitions.com/uploads/8/1/large/607d7672706...
+  ✅ Done
+
+[71/99] Mark Wallinger Curates: The Russian Linesman
+  📡 Fetching: https://www.newexhibitions.com/e/25093
+  📅 Period: 2009-02-18 ~ 2009-05-04
+  📝 Description: ...
+  🖼️  Cover image found
+    📥 Downloading: https://www.newexhibitions.com/uploads/0/e/large/607d76729be...
+  ✅ Done
+
+[72/99] Ujino and the Rotators
+  📡 Fetching: https://www.newexhibitions.com/e/25091
+  📅 Period: 2009-02-18 ~ 2009-04-24
+  📝 Description: ...
+  🖼️  Cover image found
+    📥 Downloading: https://www.newexhibitions.com/uploads/3/e/medium/68cbd8ddda...
+  ✅ Done
+
+[73/99] Andy Warhol: Other Voices, Other Rooms
+  📡 Fetching: https://www.newexhibitions.com/e/25094
+  📅 Period:  ~ 
+  📝 Description: The Hayward presents a fresh perspective on Warhol, presenting Warhol&#8217;s fi...
+  🖼️  Cover image found
+    📥 Downloading: https://www.newexhibitions.com/uploads/4/a/large/607d7672e72...
+  ✅ Done
+
+[74/99] Robin Rhode: Who Saw Who
+  📡 Fetching: https://www.newexhibitions.com/e/25095
+  📅 Period: 2008-09-23 ~ 2008-12-07
+  📝 Description: A major new talent on the international art scene, Robin Rhode has a reputation ...
+  🖼️  Cover image found
+    📥 Downloading: https://www.newexhibitions.com/uploads/e/9/large/607d767323b...
+  ✅ Done
+
+[75/99] Psycho Buildings: Artists take on Architecture
+  📡 Fetching: https://www.newexhibitions.com/e/25096
+  📅 Period: 2008-05-28 ~ 2008-08-25
+  📝 Description: The work of artists who create habitat-like structures and architectural environ...
+  🖼️  Cover image found
+    📥 Downloading: https://www.newexhibitions.com/uploads/7/f/large/607d76736e6...
+  ✅ Done
+
+[76/99] Laughing in a Foreign Language
+  📡 Fetching: https://www.newexhibitions.com/e/25097
+  📅 Period: 2008-01-25 ~ 2008-04-13
+  📝 Description: Investigates the whole spectrum of humour, from jokes, gags and slapstick to iro...
+  🖼️  Cover image found
+    📥 Downloading: https://www.newexhibitions.com/uploads/3/e/medium/68cbd8ddda...
+  ✅ Done
+
+[77/99] alexander rodchenko: revolution in photography
+  📡 Fetching: https://www.newexhibitions.com/e/25098
+  📅 Period: 2008-01-25 ~ 2008-04-13
+  📝 Description: ...
+  🖼️  Cover image found
+    📥 Downloading: https://www.newexhibitions.com/uploads/3/e/medium/68cbd8ddda...
+  ✅ Done
+
+[78/99] Klara Liden
+  📡 Fetching: https://www.newexhibitions.com/e/25099
+  📅 Period:  ~ 
+  📝 Description: Short films documenting illicit, radical performances...
+  🖼️  Cover image found
+    📥 Downloading: https://www.newexhibitions.com/uploads/3/e/medium/68cbd8ddda...
+  ✅ Done
+
+[79/99] the painting of modern life
+  📡 Fetching: https://www.newexhibitions.com/e/25101
+  📅 Period: 2007-10-04 ~ 2007-12-30
+  📝 Description: ...
+  🖼️  Cover image found
+    📥 Downloading: https://www.newexhibitions.com/uploads/3/e/medium/68cbd8ddda...
+  ✅ Done
+
+[80/99] kota ezawa: hotel california
+  📡 Fetching: https://www.newexhibitions.com/e/25100
+  📅 Period: 2007-10-04 ~ 2007-11-18
+  📝 Description: Hayward Projects Space...
+  🖼️  Cover image found
+    📥 Downloading: https://www.newexhibitions.com/uploads/3/e/medium/68cbd8ddda...
+  ✅ Done
+
+[81/99] Antony Gormley: Blind Light
+  📡 Fetching: https://www.newexhibitions.com/e/25102
+  📅 Period: 2007-05-17 ~ 2007-08-19
+  📝 Description: ...
+  🖼️  Cover image found
+    📥 Downloading: https://www.newexhibitions.com/uploads/3/e/medium/68cbd8ddda...
+  ✅ Done
+
+[82/99] How to Improve the World: British Art 1946 - 2006
+  📡 Fetching: https://www.newexhibitions.com/e/25103
+  📅 Period: 2006-09-07 ~ 2006-11-19
+  📝 Description: The Arts Council Collection...
+  🖼️  Cover image found
+    📥 Downloading: https://www.newexhibitions.com/uploads/3/e/medium/68cbd8ddda...
+  ✅ Done
+
+[83/99] Undercover Surrealism
+  📡 Fetching: https://www.newexhibitions.com/e/25104
+  📅 Period: 2006-05-11 ~ 2006-07-30
+  📝 Description: ...
+  🖼️  Cover image found
+    📥 Downloading: https://www.newexhibitions.com/uploads/3/e/medium/68cbd8ddda...
+  ✅ Done
+
+[84/99] Universal Experience: Art, Life and the Tourist's Eye
+  📡 Fetching: https://www.newexhibitions.com/e/25106
+  📅 Period: 2005-10-06 ~ 2005-12-11
+  📝 Description: Around the world in 1000 images. Travel with 50 international artists...
+  🖼️  Cover image found
+    📥 Downloading: https://www.newexhibitions.com/uploads/3/e/medium/68cbd8ddda...
+  ✅ Done
+
+[85/99] Rebecca Horn: Bodylandscapes
+  📡 Fetching: https://www.newexhibitions.com/e/25107
+  📅 Period: 2005-05-26 ~ 2005-08-29
+  📝 Description: ...
+  🖼️  Cover image found
+    📥 Downloading: https://www.newexhibitions.com/uploads/9/e/large/607d7673abe...
+  ✅ Done
+
+[86/99] Africa Remix
+  📡 Fetching: https://www.newexhibitions.com/e/25108
+  📅 Period: 2005-02-10 ~ 2005-04-17
+  📝 Description: Contemporary Art of a Continent...
+  🖼️  Cover image found
+    📥 Downloading: https://www.newexhibitions.com/uploads/3/e/medium/68cbd8ddda...
+  ✅ Done
+
+[87/99] saved!
+  📡 Fetching: https://www.newexhibitions.com/e/25109
+  📅 Period:  ~ 
+  📝 Description: 100 years of the National Art Collections Fund. A once in a lifetime exhibition ...
+  🖼️  Cover image found
+    📥 Downloading: https://www.newexhibitions.com/uploads/3/e/medium/68cbd8ddda...
+  ✅ Done
+
+[88/99] douglas gordon what have i done
+  📡 Fetching: https://www.newexhibitions.com/e/25111
+  📅 Period:  ~ 
+  📝 Description: ...
+  🖼️  Cover image found
+    📥 Downloading: https://www.newexhibitions.com/uploads/3/e/medium/68cbd8ddda...
+  ✅ Done
+
+[89/99] william eggleston
+  📡 Fetching: https://www.newexhibitions.com/e/25112
+  📅 Period: 2002-07-11 ~ 2002-09-22
+  📝 Description: Photographs...
+  🖼️  Cover image found
+    📥 Downloading: https://www.newexhibitions.com/uploads/3/e/medium/68cbd8ddda...
+  ✅ Done
+
+[90/99] ansel adams at 100
+  📡 Fetching: https://www.newexhibitions.com/e/25113
+  📅 Period: 2002-07-11 ~ 2002-09-22
+  📝 Description: ...
+  🖼️  Cover image found
+    📥 Downloading: https://www.newexhibitions.com/uploads/3/e/medium/68cbd8ddda...
+  ✅ Done
+
+[91/99] Gerhard Richter: Forty Years of Painting
+  📡 Fetching: https://www.newexhibitions.com/e/25114
+  📅 Period: 2002-04-15 ~ 2002-06-21
+  📝 Description: ...
+  🖼️  Cover image found
+    📥 Downloading: https://www.newexhibitions.com/uploads/3/e/medium/68cbd8ddda...
+  ✅ Done
+
+[92/99] Paris Capital of the Arts 1900-1968
+  📡 Fetching: https://www.newexhibitions.com/e/25115
+  📅 Period:  ~ 
+  📝 Description: ...
+  🖼️  Cover image found
+    📥 Downloading: https://www.newexhibitions.com/uploads/3/e/medium/68cbd8ddda...
+  ✅ Done
+
+[93/99] Moving Targets
+  📡 Fetching: https://www.newexhibitions.com/e/25116
+  📅 Period: 2002-01-17 ~ 2002-04-01
+  📝 Description: Large scale video installation by the Swedish artist...
+  🖼️  Cover image found
+    📥 Downloading: https://www.newexhibitions.com/uploads/3/e/medium/68cbd8ddda...
+  ✅ Done
+
+[94/99] Give and Take
+  📡 Fetching: https://www.newexhibitions.com/e/25117
+  📅 Period: 2002-01-17 ~ 2002-04-01
+  📝 Description: The Nature of Creation...
+  🖼️  Cover image found
+    📥 Downloading: https://www.newexhibitions.com/uploads/3/e/medium/68cbd8ddda...
+  ✅ Done
+
+[95/99] Bridget Riley
+  📡 Fetching: https://www.newexhibitions.com/e/25118
+  📅 Period: 2001-10-04 ~ 2001-12-09
+  📝 Description: Facts of Life presents some of the most innovative & stimulating art being made ...
+  🖼️  Cover image found
+    📥 Downloading: https://www.newexhibitions.com/uploads/3/e/medium/68cbd8ddda...
+  ✅ Done
+
+[96/99] Century City: Art and Culture in the Modern Metropolis
+  📡 Fetching: https://www.newexhibitions.com/e/25119
+  📅 Period: 2012-07-19 ~ 2012-10-21
+  📝 Description: Ordinary Things explores Sarah Lucas' (b. London 1962) consistent questioning of...
+  🖼️  Cover image found
+    📥 Downloading: https://www.newexhibitions.com/uploads/0/7/medium/68ca94d6e6...
+  ✅ Done
+
+[97/99] Painting at the Edge of the World
+  📡 Fetching: https://www.newexhibitions.com/e/25120
+  📅 Period: 2012-05-30 ~ 2012-09-01
+  📝 Description: From the late 1950s Vlassis Caniaris (1928&#8211;2011) made use of materials rea...
+  🖼️  Cover image found
+    📥 Downloading: https://www.newexhibitions.com/uploads/0/7/medium/68ca94d6e6...
+  ✅ Done
+
+[98/99] Here and Now
+  📡 Fetching: https://www.newexhibitions.com/e/25121
+  📅 Period: 2012-04-12 ~ 2012-06-17
+  📝 Description: An artist and teacher who constantly questions the possibilities of sculpture by...
+  🖼️  Cover image found
+    📥 Downloading: https://www.newexhibitions.com/uploads/0/7/medium/68ca94d6e6...
+  ✅ Done
+
+[99/99] Carlo Scarpa
+  📡 Fetching: https://www.newexhibitions.com/e/25122
+  📅 Period: 2012-02-29 ~ 2012-05-13
+  📝 Description: The first in a series of exhibitions presenting sculptures from the past that ha...
+  🖼️  Cover image found
+    📥 Downloading: https://www.newexhibitions.com/uploads/6/4/large/607d7679372...
+  ✅ Done
+
+==================================================
+✅ 완료: 99개 성공, 0개 실패
+📁 저장: /Users/kietzsche/armin-web-main/public/data/hayward-gallery-exhibitions.json
+==================================================
+

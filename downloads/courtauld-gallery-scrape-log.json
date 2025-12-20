@@ -1,0 +1,76 @@
+{
+  "scrapedAt": "2025-12-20T11:42:39.057Z",
+  "gallery": "The Courtauld Gallery",
+  "summary": {
+    "total": 317,
+    "success": 316,
+    "videos": 11,
+    "excluded": 1,
+    "failed": 0
+  },
+  "videos": [
+    {
+      "title": "Samuel Courtauld: A Vision for Impressionism",
+      "youtubeId": "DphbNLPZ6qI",
+      "url": "https://artsandculture.google.com/asset/samuel-courtauld-a-vision-for-impressionism/jgFnz0xXKXJHFw"
+    },
+    {
+      "title": "Discover Van Gogh's self-portraits with Dr Karen Serres at The Courtauld Gallery",
+      "youtubeId": "zgBWuLeukM4",
+      "url": "https://artsandculture.google.com/asset/discover-van-gogh-s-self-portraits-with-dr-karen-serres-at-the-courtauld-gallery/pQGvRHx9PK-Etg"
+    },
+    {
+      "title": "In Detail: 'Still Life with Plaster Cupid' by Paul Cézanne",
+      "youtubeId": "8lHb8qXP-_U",
+      "url": "https://artsandculture.google.com/asset/in-detail-still-life-with-plaster-cupid-by-paul-c%C3%A9zanne/wAGdNqJYJLLGFA"
+    },
+    {
+      "title": "In Detail: 'Young Woman Powdering Herself' by Georges Seurat",
+      "youtubeId": "vwv--QpspmQ",
+      "url": "https://artsandculture.google.com/asset/in-detail-young-woman-powdering-herself-by-georges-seurat/-wEG-GAopVPCDw"
+    },
+    {
+      "title": "In Detail: ‘The Trinity with Saints’ by Sandro Botticelli",
+      "youtubeId": "3r76g5iZAgQ",
+      "url": "https://artsandculture.google.com/asset/in-detail-%E2%80%98the-trinity-with-saints%E2%80%99-by-sandro-botticelli/tgEq0omJ2RVKmw"
+    },
+    {
+      "title": "In Detail: ‘Landscape with the Flight into Egypt’ by Pieter Bruegel the Elder",
+      "youtubeId": "2-o19kD2gcE",
+      "url": "https://artsandculture.google.com/asset/in-detail-%E2%80%98landscape-with-the-flight-into-egypt%E2%80%99-by-pieter-bruegel-the-elder/eAETkmobM8hXiA"
+    },
+    {
+      "title": "The Courtauld appears on the iconic Piccadilly Lights",
+      "youtubeId": "y1WWWn1vQ94",
+      "url": "https://artsandculture.google.com/asset/the-courtauld-appears-on-the-iconic-piccadilly-lights/hgHeUu26Yp05kA"
+    },
+    {
+      "title": "In Focus: Lucas Cranach the Elder's Adam and Eve",
+      "youtubeId": "9-rdl-gDVxw",
+      "url": "https://artsandculture.google.com/asset/in-focus-lucas-cranach-the-elder-s-adam-and-eve/jAGd_vHZ6RJwXw"
+    },
+    {
+      "title": "In Detail: 'The Dream' by Michelangelo Buonarroti",
+      "youtubeId": "3VdnxHnUTkg",
+      "url": "https://artsandculture.google.com/asset/in-detail-the-dream-by-michelangelo-buonarroti/cwGcSuFdI9YAUQ"
+    },
+    {
+      "title": "In Detail: ‘La Loge’ by Pierre Auguste Renoir",
+      "youtubeId": "860FRThc-9U",
+      "url": "https://artsandculture.google.com/asset/in-detail-%E2%80%98la-loge%E2%80%99-by-pierre-auguste-renoir/xQGMgAEt9nEXoQ"
+    },
+    {
+      "title": "In Detail: 'Virgin and child’ by Parmigianino",
+      "youtubeId": "gj4nsRWLRnw",
+      "url": "https://artsandculture.google.com/asset/in-detail-virgin-and-child%E2%80%99-by-parmigianino/NgEG7F6o9I6CvQ"
+    }
+  ],
+  "excluded": [
+    {
+      "title": "Somerset House seen from the Thames",
+      "reason": "/somerset house/i",
+      "url": "https://artsandculture.google.com/asset/somerset-house-seen-from-the-thames/AQG7P5_iB7PC4w"
+    }
+  ],
+  "failed": []
+}

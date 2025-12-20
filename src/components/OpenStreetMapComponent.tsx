@@ -22,6 +22,7 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
   }));
   const viewportRef = useRef(viewport);
   const [filteredStates, setFilteredStates] = useState<any[]>([]);
+  const selectedCountryFeatureRef = useRef<any | null>(null);
   const [muniFeatures, setMuniFeatures] = useState<any[] | null>(null);
   const [showMunicipalities, setShowMunicipalities] = useState(false);
   const [muniLoading, setMuniLoading] = useState(false);
@@ -108,42 +109,33 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
   const collapseAnimKeyRef = useRef<string | null>(null);
   const collapsePendingRef = useRef<number>(0);
   const collapseFinalizedRef = useRef<boolean>(false);
-  // Cluster prep (city normalize + grid)
-  const CLUSTER_GRID_SIZE = 0.8;
-  const roundToGrid = (v: number) => Math.round(v / CLUSTER_GRID_SIZE) * CLUSTER_GRID_SIZE;
-  const normalizeCity = (s: unknown) => {
-    if (typeof s !== 'string') return '';
-    const raw = s.toLowerCase().replace(/[()]/g, '').split(/[,:]/).map(t => t.trim()).filter(Boolean);
-    if (!raw.length) return '';
-    const removeTail = new Set(['uk','u.k.','united kingdom','great britain','gb','england','scotland','wales','northern ireland','south korea','korea','republic of korea','대한민국','united states','united states of america','usa','us','u.s.','canada','japan','france','germany','italy','spain','china','australia','ireland']);
-    const tokens: string[] = [...raw];
-    while (tokens.length && removeTail.has(tokens[tokens.length - 1])) tokens.pop();
-    if (!tokens.length) return '';
-    if (tokens.some(t => /\blondon\b/.test(t))) return 'london';
-    const seoulIdx = tokens.findIndex(t => /\bseoul\b|서울|서울특별시/.test(t));
-    if (seoulIdx >= 0) return 'seoul';
-    const noDigits = tokens.filter(t => !/[0-9]/.test(t));
-    let candidate = (noDigits.length ? noDigits : tokens)[(noDigits.length ? noDigits : tokens).length - 1];
-    candidate = candidate.replace(/^(city of|greater|metropolitan|metropolitan city)\s+/, '');
-    candidate = candidate.replace(/\s+\d.*$/, '');
-    candidate = candidate.replace(/\s+/g, ' ').trim();
-    return candidate;
+  // Dynamic cluster grid size based on zoom level
+  const getClusterGridSize = (zoomK: number) => {
+    // 줌 스케일에 따른 그리드 크기 (도 단위)
+    // 런던 박물관들 위도 범위: 약 51.4~51.55, 경도 범위: 약 -0.25~0.05
+    // 줌 레벨이 낮을 때 (멀리서 볼 때) 큰 그리드로 클러스터링
+    if (zoomK < 8) return 20.0;       // 초기/멀리 - 영국 전체가 하나
+    if (zoomK < 15) return 5.0;       // 중간 - 대도시 단위
+    if (zoomK < 30) return 1.0;       // 가까이 - 도시 내 구역
+    if (zoomK < 60) return 0.2;       // 더 가까이
+    return 0.05;                       // 아주 가까이 - 개별 표시
   };
   type ClusterInfo = { key: string; items: Exhibition[]; centerLon: number; centerLat: number; sortedByName: Exhibition[] };
   const clustersListRef = useRef<ClusterInfo[] | null>(null);
-  // Rebuild clusters when exhibitions changes
-  useEffect(() => {
+  const currentZoomKRef = useRef<number>(1);
+  
+  // Function to rebuild clusters based on current zoom level
+  const rebuildClusters = (zoomK: number) => {
     const list = exhibitions || [];
+    const gridSize = getClusterGridSize(zoomK);
+    const roundToGrid = (v: number) => Math.round(v / gridSize) * gridSize;
+    
     const map: Record<string, Exhibition[]> = {};
     for (const d of list) {
-      const cityKey = normalizeCity((d as any).city || (d as any).location);
-      let key: string;
-      if (cityKey) key = `city:${cityKey}`;
-      else {
-        const gridLon = roundToGrid((d as any).longitude);
-        const gridLat = roundToGrid((d as any).latitude);
-        key = `grid:${gridLon},${gridLat}`;
-      }
+      // 좌표 기반 그리드 클러스터링만 사용 (줌에 따라 동적)
+      const gridLon = roundToGrid((d as any).longitude);
+      const gridLat = roundToGrid((d as any).latitude);
+      const key = `grid:${gridLon},${gridLat}`;
       (map[key] ||= []).push(d);
     }
     clustersListRef.current = Object.entries(map).map(([key, items]) => ({
@@ -153,7 +145,13 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
       centerLat: d3.mean(items as any, (d: any) => d.latitude) as number,
       sortedByName: [...items].sort((a: any, b: any) => String(a.name || a.title).localeCompare(String(b.name || b.title)))
     }));
-    // collapse on data change
+    console.log(`[Cluster] Built ${clustersListRef.current.length} clusters at zoom ${zoomK.toFixed(2)}, gridSize ${gridSize}`, 
+      clustersListRef.current.map(c => `${c.key}: ${c.items.length} items`));
+  };
+  
+  // Initial cluster build
+  useEffect(() => {
+    rebuildClusters(currentZoomKRef.current);
     expandedClustersRef.current.clear();
   }, [exhibitions]);
 
@@ -294,6 +292,7 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
                 console.warn('fit to country failed', e);
               }
               setSelectedISO3(iso3);
+              selectedCountryFeatureRef.current = country; // remember exact clicked country polygon for spatial fallback
               setShowMunicipalities(true);
               const filtered = states.filter((s: any) => {
                 const p = s.properties || {};
@@ -316,7 +315,7 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
   const muniGroup = svg.append('g').attr('class', 'municipalities').attr('pointer-events', 'none');
   const CITY_VISIBLE_K = 2.2;
 
-    // 4. Pins/Clusters layer (screen-space rendering)
+  // 4. Pins/Clusters layer (screen-space rendering)
   const pinsLayer = svg.append('g').attr('class', 'pins-layer').attr('pointer-events','all');
   // ensure pins are on top for interactions
   pinsLayer.raise();
@@ -420,11 +419,30 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
 
     console.log('상세 지도 렌더링 완료!');
 
+    // Global outside-click: collapse any expanded cluster unless clicking a pin
+    const onDocClick = (e: MouseEvent) => {
+      if (!expandedClustersRef.current.size) return;
+      const target = e.target as Element | null;
+      if (target && target.closest('.pin')) return;
+      expandedClustersRef.current.clear();
+      renderPins();
+    };
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key !== 'Escape') return;
+      if (!expandedClustersRef.current.size) return;
+      expandedClustersRef.current.clear();
+      renderPins();
+    };
+    document.addEventListener('click', onDocClick, true);
+    window.addEventListener('keydown', onKeyDown);
+
     // 초기 1회 렌더 (줌/레이어 준비 직후)
     renderPins();
 
     // 컴포넌트 언마운트 시 이벤트 리스너 정리
     return () => {
+      document.removeEventListener('click', onDocClick, true);
+      window.removeEventListener('keydown', onKeyDown);
       // eslint-disable-next-line react-hooks/exhaustive-deps
     };
 
@@ -445,6 +463,19 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
     }
     const path = geoPath().projection(projection);
     const t: any = zoomTransformRef.current;
+    
+    // 줌 레벨이 변경되면 클러스터 재계산 (임계값 낮춤)
+    const zoomK = t?.k || 1;
+    const prevZoomK = currentZoomKRef.current;
+    const prevGridSize = getClusterGridSize(prevZoomK);
+    const newGridSize = getClusterGridSize(zoomK);
+    // 그리드 크기가 바뀌었을 때만 재계산
+    if (prevGridSize !== newGridSize) {
+      console.log(`[Cluster] Zoom changed: ${prevZoomK.toFixed(2)} → ${zoomK.toFixed(2)}, grid: ${prevGridSize} → ${newGridSize}`);
+      currentZoomKRef.current = zoomK;
+      rebuildClusters(zoomK);
+    }
+    
     const applyT = (pt: [number, number]) => (t && t.apply) ? (t.apply(pt) as [number, number]) : pt;
     const leftBound = projection([-180, 0]);
     const rightBound = projection([180, 0]);
@@ -465,7 +496,7 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
         if (!p) continue;
         const [sx, sy] = applyT(p);
         nodes.push({ ...d0, _cluster: false, px: sx, py: sy });
-      } else if (expandedClustersRef.current.has(key)) {
+  } else if (expandedClustersRef.current.has(key)) {
         const sorted = c.sortedByName as any[];
         const count = Math.min(sorted.length, MAX_EXPANDED_ITEMS);
   const isCollapsing = collapseAnimKeyRef.current === key;
@@ -517,7 +548,16 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
           }
         }
         for (const n of pts) {
-          nodes.push({ ...n.data, _cluster: false, px: n.x, py: n.y, _originX: pCenterT[0], _originY: pCenterT[1], _delayLabelAfterMove: true });
+          nodes.push({
+            ...n.data,
+            _cluster: false,
+            px: n.x,
+            py: n.y,
+            // keep original projected (screen-space) anchor
+            _anchorX: n.ax,
+            _anchorY: n.ay,
+            _delayLabelAfterMove: true
+          });
         }
       } else {
         nodes.push({ _cluster: true, key, count: items.length, longitude: c.centerLon, latitude: c.centerLat, px: pCenterT[0], py: pCenterT[1], _wrap: 0 });
@@ -560,6 +600,25 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
       .text((d:any) => d.count);
     // pins
     const enterPin = enter.filter((d:any) => !d._cluster);
+    // link line + origin anchor when pin is displaced from original coordinate
+    enterPin.each(function(d:any){
+      const g = d3.select(this);
+      if (d._anchorX != null && d._anchorY != null) {
+        const dx = (d._anchorX - d.px);
+        const dy = (d._anchorY - d.py);
+        if (Math.hypot(dx, dy) > 1) {
+          g.append('line')
+            .attr('class','pin-link')
+            .attr('x1', dx).attr('y1', dy).attr('x2', 0).attr('y2', 0)
+            .attr('stroke', '#1f2937').attr('stroke-width', 1).attr('stroke-opacity', 0.55);
+          g.append('circle')
+            .attr('class','pin-anchor')
+            .attr('cx', dx).attr('cy', dy).attr('r', 2.2)
+            .attr('fill', '#111827')
+            .attr('stroke', '#ffffff').attr('stroke-width', 0.8).attr('stroke-opacity', 0.9).attr('fill-opacity', 0.9);
+        }
+      }
+    });
     enterPin.append('rect')
       .attr('class','pin-bg')
       .attr('x', -4).attr('y', -4).attr('width', 8).attr('height', 8)
@@ -574,6 +633,39 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
     // merge
     const merged = enter.merge(sel as any);
     merged.attr('transform', (d:any) => `translate(${d.px},${d.py})`)
+      .each(function(d:any){
+        const gEl = d3.select(this as SVGGElement);
+        if (d._anchorX != null && d._anchorY != null) {
+          const dx = (d._anchorX - d.px);
+          const dy = (d._anchorY - d.py);
+          const hasOffset = Math.hypot(dx, dy) > 1;
+          let link = gEl.select<SVGLineElement>('line.pin-link');
+          let anchor = gEl.select<SVGCircleElement>('circle.pin-anchor');
+          if (hasOffset) {
+            if (link.empty()) {
+              link = gEl.insert('line', ':first-child')
+                .attr('class','pin-link')
+                .attr('stroke','#1f2937').attr('stroke-width',1).attr('stroke-opacity',0.55);
+            }
+            link.attr('x1', dx).attr('y1', dy).attr('x2', 0).attr('y2', 0).style('display','');
+            if (anchor.empty()) {
+              anchor = gEl.insert('circle', ':first-child')
+                .attr('class','pin-anchor')
+                .attr('r',2.2)
+                .attr('fill','#111827')
+                .attr('stroke','#ffffff').attr('stroke-width',0.8).attr('stroke-opacity',0.9).attr('fill-opacity',0.9);
+            }
+            anchor.attr('cx', dx).attr('cy', dy).style('display','');
+          } else {
+            if (!link.empty()) link.style('display','none');
+            if (!anchor.empty()) anchor.style('display','none');
+          }
+        } else {
+          // ensure cleaned when not expanded
+          gEl.select('line.pin-link').style('display','none');
+          gEl.select('circle.pin-anchor').style('display','none');
+        }
+      })
       .on('click', (evt:any, d:any) => {
         evt?.stopPropagation?.();
         if (d._cluster) {
@@ -703,7 +795,7 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
       muniGroupSel = svgAny.append('g').attr('class', 'municipalities').attr('pointer-events', 'none');
     }
   muniGroupSel.selectAll('*').remove();
-  if (!showMunicipalities || !selectedISO3 || !muniFeatures || muniFeatures.length < 2) {
+  if (!showMunicipalities || !selectedISO3 || !muniFeatures || muniFeatures.length < 1) {
       return;
     }
     const { width, height } = viewportRef.current;
@@ -841,11 +933,20 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
       if (adm2Features.length > 0) {
         setMuniFeatures(adm2Features);
       } else {
-        const adm1Fallback = states.filter((s: any) => {
+        let adm1Fallback = states.filter((s: any) => {
           const p = s.properties || {};
           const cIso = (p.adm0_a3 || p.ADM0_A3 || p.iso_a3 || p.ISO_A3 || p.GU_A3 || '').toUpperCase();
           return cIso === iso3.toUpperCase();
         });
+        // If no direct ISO3 match, spatial fallback: pick features whose centroid lies inside the clicked country geometry
+        if (!adm1Fallback.length && selectedCountryFeatureRef.current) {
+          try {
+            const countryGeom = selectedCountryFeatureRef.current;
+            adm1Fallback = states.filter((s: any) => {
+              try { const c = d3.geoCentroid(s as any); return d3.geoContains(countryGeom as any, c); } catch { return false; }
+            });
+          } catch {}
+        }
         if (adm1Fallback.length) {
           console.log(`No ADM2 data for ${iso3}, falling back to ADM1 data (${adm1Fallback.length} features).`);
           setFilteredStates(adm1Fallback);

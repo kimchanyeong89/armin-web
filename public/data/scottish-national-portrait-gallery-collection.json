@@ -1,0 +1,887 @@
+{
+  "galleryId": "scottish-national-portrait-gallery",
+  "galleryName": "Scottish National Portrait Gallery",
+  "coverImage": "https://lh3.googleusercontent.com/ci/AL18g_Qg0XLHRFOrRsMCDPXeMOCUXMf4b_WQKro70Esk5onBNR15YJd7_c9IgSKji8ZYpOPTPctwVc4-=w1200",
+  "scrapedAt": "2025-12-20T12:03:35.509Z",
+  "totalObjects": 99,
+  "videoCount": 0,
+  "excludedCount": 0,
+  "failedCount": 0,
+  "objects": [
+    {
+      "id": "scottish-national-portrait-gallery-gac-1",
+      "title": "Queen Anne, when Princess of Denmark",
+      "artist": "Willem Wissing and Jan van der Vaardt",
+      "year": 1685,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TiUUTHsIdoEJTpB4DlRkDmCaCeN2rcqzBp0eX7bmik85IVAC3IoW1Z1M8G6qi3mrwW0B7KLg=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/queen-anne-when-princess-of-denmark/RQGvV3O1DKHQIA",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-portrait-gallery-gac-2",
+      "title": "'Hookey Alf' of Whitechapel",
+      "artist": "John Thomson",
+      "year": 1877,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QTrJl1CSFCgW_UzKC-FIguI4IUfogFEckKj8zo7tOQXj4QPQjiEvAxD_ncPw-e1Jv44k7ZPA=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/hookey-alf-of-whitechapel/iAFO1gvP5sYixA",
+      "medium": "Woodburytype",
+      "is3D": true
+    },
+    {
+      "id": "scottish-national-portrait-gallery-gac-3",
+      "title": "Lord Mungo Murray [Am Morair Mungo Moireach]",
+      "artist": "John Michael Wright",
+      "year": 1683,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Sdamr6_o5VZeabUMjCIX30Daij96CoYw7WRHgGLH3b8BEXSR5L-ecdOZ7_zu5LwEBfaDmvt3HT=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/lord-mungo-murray-am-morair-mungo-moireach/iwEOJxVm09bgfQ",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-portrait-gallery-gac-4",
+      "title": "James Hepburn, 4th Earl of Bothwell",
+      "artist": "Unknown",
+      "year": 1566,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TMP-7toUPnLvvYGcJP6OZOZxZ1EylkLDC2pYKUJAZ0RxT7Dux0hG2MAloBzvEUQ4x0Fo8vLJb9=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/james-hepburn-4th-earl-of-bothwell/IAEr7geJMtQbkQ",
+      "artworkType": "Painting,  Painting"
+    },
+    {
+      "id": "scottish-national-portrait-gallery-gac-5",
+      "title": "The Battle of Alexandria, 21 March",
+      "artist": "Philip James de Loutherbourg",
+      "year": 1802,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SeiVmgKLm9z6u7Fm9vo-a4ZQ7OXGX7G6FKownJ7REdCTNND4ZqniZEX8gODtITO9fffZ2shg=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-battle-of-alexandria-21-march-1801/agGbPluF2SUZhg",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-portrait-gallery-gac-6",
+      "title": "Charles Edward Stuart, \"Bonnie Prince Charlie\"",
+      "artist": "William Mosman",
+      "year": 1750,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Qnmhdc8wRspVnahHF8nkzJz9gvpy4CXwro6zI2MstJkONnUohqHNcAgMf7_2eN9sQeWcdWp5A=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/charles-edward-stuart-bonnie-prince-charlie/XgFmg85fEsKbwA",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-portrait-gallery-gac-7",
+      "title": "Field-Marshal George Wade",
+      "artist": "Johan van Diest",
+      "year": 1731,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Q2TD_gzOCEPhT0500mz4HAFevPX2JmqCPDs5-8BRe3GjdT6e1PEQQ9mvWoOBJneWgf3DGvSQ=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/field-marshal-george-wade/HAHwM6UcY6OJzA",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-portrait-gallery-gac-8",
+      "title": "James VI and I as a Boy",
+      "artist": "Arnold Bronckorst",
+      "year": 1574,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SmGEXAhpsRePm-On90K4j-OQ5yE6118cD_9XCCIWQpTARLjjIrUxLwLa4wjKJhYyxqcjA1hUM=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/james-vi-and-i-as-a-boy/xgGrF4l7N5nPCQ",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-portrait-gallery-gac-9",
+      "title": "Robert Burns, 1759 - 1796. Poet",
+      "artist": "Alexander Nasmyth",
+      "year": 1787,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_R1PstPhWN7btl4BxTO7J3QCKiFnnHJL8_wdabiBOKPb8xozwlGxLva7ZstxleB-grbXPIDwg=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/robert-burns-1759-1796-poet/rQFKBsq9Rn8Kxw",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-portrait-gallery-gac-10",
+      "title": "The Battle of Glenshiel",
+      "artist": "Peter Tillemans",
+      "year": 1719,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TJNrSrCUh0NllV4qZBn7AXg4RHlHea3PBzxJRCMIL-A3w9XKStdFJN0RSyGI8UfLAN2_rWygI=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-battle-of-glenshiel/yAF4Fs8N7Kd6BQ",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-portrait-gallery-gac-11",
+      "title": "Sir Alexander Macdonald",
+      "artist": "George Chalmers",
+      "year": 1772,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Qmiceeg2BZMGmX9ya_-GTRsYzrJ-Yqt6BfPwtgJBvGgtCym3bIpNJi6MfcrAEJHO-QGpRH59Qd=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/sir-alexander-macdonald/AwHblPPY7R4Z1Q",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-portrait-gallery-gac-12",
+      "title": "John Campbell, 4th Duke of Argyll",
+      "artist": "Thomas Gainsborough",
+      "year": 1767,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RfbGJKRmkxgXuIbxAucDv0ZDm-PqHEm1_j3ivtNhZ2Zz2cuiNOET1vqWS623668m16Bqi4=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/john-campbell-4th-duke-of-argyll/0gEXfuWXH8iZDg",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-portrait-gallery-gac-13",
+      "title": "Princess Elizabeth and Princess Anne",
+      "artist": "Anthony van Dyck",
+      "year": 1637,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_R7ikSFnwmJz8S3ud5KNTU6QCymrULJB9EPFq5slht4CfbLq7raQwXZQLYvIFcZXLJ8bzO1zA=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/princess-elizabeth-and-princess-anne/AwEwRCoyJzEJAA",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-portrait-gallery-gac-14",
+      "title": "Robert Burns, 1759 - 1796. Poet",
+      "artist": "Alexander Nasmyth",
+      "year": 1828,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TnuGVQDorYJ2oADz1-GfcuYTfzuZnCZ0mrW2JPKvyBEm-CxOjK_2dz88Hbihur_f2A67dKqA=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/robert-burns-1759-1796-poet/hwG4mhNoRrOPlw",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-portrait-gallery-gac-15",
+      "title": "Mary Somerville",
+      "artist": "Thomas Phillips",
+      "year": 1834,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Q4BJltaA1p3ftPkcsIzfULNYve2p8kQBKhLGiE3bcakFJHycLZ6opLiIEikiXrfGg9GgznUCM=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/mary-somerville/LAH6LDlkQO8NMg",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-portrait-gallery-gac-16",
+      "title": "John Murray",
+      "artist": "Joshua Reynolds",
+      "year": 1765,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_R_lEHiHTJ5MxZ3DzPh2pKpxRY2rNDGSReIG41D3cZlc9nevf5glXhR2Klfl5BpCm8d8CviuA=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/john-murray/BgFi1uF1qL_yrw",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-portrait-gallery-gac-17",
+      "title": "James Hogg",
+      "artist": "John Watson Gordon",
+      "year": 1830,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Ta3XHXoau2PvyE1mG3yB3VIHgFVmYbJ7bhOvttxKxZeyGf8dtczLrmULZTz92gDU9oCDK9AUw=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/james-hogg/JQFGByh_xRIGzg",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-portrait-gallery-gac-18",
+      "title": "Mary J. MacDonald dreaming of her father and brother",
+      "artist": "Lewis Carroll",
+      "year": 1864,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QOtcbfGTULE-8MA9zzgHFVlm4u0HBgRAm-owpgojgDuuDo1pmdgRetEk9swL-P6yweMpegk5M=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/mary-j-macdonald-dreaming-of-her-father-and-brother/DwH85rNV5Fh6Bg",
+      "medium": "Albumen print, composite image"
+    },
+    {
+      "id": "scottish-national-portrait-gallery-gac-19",
+      "title": "Mary of Guise",
+      "artist": "Corneille de Lyon",
+      "year": 1537,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_R5fA0kUQiAaLz-6H2gEx0B6fikEAaFFYSXnRp98WRQYgimKligJW8tz-_w9QWf7m7x5p8RPLsW=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/mary-of-guise/fwG2lIrXjB0p6g",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-portrait-gallery-gac-20",
+      "title": "James Boswell",
+      "artist": "George Willison",
+      "year": 1765,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QBFUmk_UBHAaQ4C6M_nY0TMkQAM-ybP4FZoswU6V0ESOGKRgGgXrvCpMeW02JnnaOtRX7B_D0=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/james-boswell/IAHiE5LS0YPoJA",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-portrait-gallery-gac-21",
+      "title": "Queen of Scots, Sovereign of the Most Ancient and Noble Order of the Thistle and Chief of Chiefs",
+      "artist": "Julian Calder",
+      "year": 2010,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RT7vqZspzPObrOqZuyqDYCx7oZAtUsTFraue2xWpaL-CQKQ5dbaNmpNmPwXbYLWZIn9Ziz_wJZ=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/queen-of-scots-sovereign-of-the-most-ancient-and-noble-order-of-the-thistle-and-chief-of-chiefs/DwERf_JrYaIzug",
+      "medium": "Chromogenic print"
+    },
+    {
+      "id": "scottish-national-portrait-gallery-gac-22",
+      "title": "The Baptism of Prince Charles Edward Stuart",
+      "artist": "Antonio David",
+      "year": 1725,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QEYDSKhDGML8k2-I8r7BMR7kY009C9kXVlgbuxZiD-Sy0xbnNQWvfq50HQMPiy1VdQwgnmrrM=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-baptism-of-prince-charles-edward-stuart/mAHwRBHhgID_KQ",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-portrait-gallery-gac-23",
+      "title": "James VI and I, 1566 - 1625. King of Scotland 1567 - 1625. King of England and Ireland",
+      "artist": "John de Critz",
+      "year": 1604,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TQZNPcI0ul5zCywniK7qgfBpXmm1vuIapnJMxpWcA1wAHXhJ_C6XzX_yX92PMpDN8a1dIZyg=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/james-vi-and-i-1566-1625-king-of-scotland-1567-1625-king-of-england-and-ireland-1603-1625/dgHZWrGrerIe0w",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-portrait-gallery-gac-24",
+      "title": "Mary, Queen of Scots , 1542 - 1587. Reigned 1542 - 1567 (In white mourning)",
+      "artist": "UnknownProbably a 19th century replica after an image of",
+      "year": 1561,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_S8fzSPCvVzaQe384ig3HzLGBaEmAO-Nq2XARP4Lndql7x_7PuMLjlJhGQTnGH4vCPIAqJF=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/mary-queen-of-scots-1542-1587-reigned-1542-1567-in-white-mourning/7QG8IjNWF3S4WA",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-portrait-gallery-gac-25",
+      "title": "David Hume",
+      "artist": "Allan Ramsay",
+      "year": 1766,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SGNfFO7KdK5DOP0hXdgZzUKtHrm7e4btjV0LMFzWxEwHJPt_bytDIMrGvt5RFsP65UGPGlKg=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/david-hume/KgH_IR3l3MzLIQ",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-portrait-gallery-gac-26",
+      "title": "The Entrance of George IV at the Palace of Holyroodhouse",
+      "artist": "David Wilkie",
+      "year": 1828,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QAHIsJvrjYWKpQ6ahESg8S1lXC_MG0JEfBEweQc4jfxPqyjF8mdJR904h2a-SmPWoN5HYk=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-entrance-of-george-iv-at-the-palace-of-holyroodhouse/vgEQ_DyxqZS8-Q",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-portrait-gallery-gac-27",
+      "title": "Curling at Carsebreck",
+      "artist": "Charles Martin Hardie",
+      "year": 1899,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SQLGbrHLQzk4DDYcwBtEO84bG2miLqIWVyST9ME8kgLaKRlfLVHeSl9RW6KU4-o6won9O98w=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/curling-at-carsebreck/LgGh8rEe812pYw",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-portrait-gallery-gac-28",
+      "title": "James Hutton",
+      "artist": "Henry Raeburn",
+      "year": 1776,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QnpAzKhG4y1F-HzIQodYQ1grdGWmSy5qyfqosJoKOmXAwXXpNSqTkPQ93WprSoXDBiRWMWBg=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/james-hutton/uQF3S0R6yQt2Wg",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-portrait-gallery-gac-29",
+      "title": "The Sir Walter Scott Monument, Edinburgh",
+      "artist": "David Octavius Hill and Robert Adamson",
+      "year": 1845,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_R01W7VLidOvX842x589qSQDtcONlGlNMVvG4TS1SMDzFQCFdg8JsW_Sn8Y9NWQaCKm2aZBrbI=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-sir-walter-scott-monument-edinburgh/7AE_aXHpJH6kgA"
+    },
+    {
+      "id": "scottish-national-portrait-gallery-gac-30",
+      "title": "Robert Louis Stevenson",
+      "artist": "Girolamo Nerli",
+      "year": 1892,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QSQutzv9YrQ-nX567VN7BvXUdqufB8UHsJWJl0HiqizZtFEvzN1VR_3p1b-DJ7d8e70vdUMHE=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/robert-louis-stevenson/0QHQC_2uRXuaYA",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-portrait-gallery-gac-31",
+      "title": "Henry Stuart, Lord Darnley, 1545 - 1567. Consort of Mary, Queen of Scots",
+      "artist": "UnknownAbout",
+      "year": 1564,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RT7RyUalXIRz4w-qZtoygG-oNPiuOEG-W36CBmhuSSMzuYEJAy1geCusRn_1CwN5M6ib-rO08=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/henry-stuart-lord-darnley-1545-1567-consort-of-mary-queen-of-scots/gwEPuWW0OPsBPQ",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-portrait-gallery-gac-32",
+      "title": "Charles Rennie Mackintosh",
+      "artist": "Francis Henry Newbery",
+      "year": 1914,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QZZe2PrM6A8G4UJ3mTncdWi9PYQEpW-uwbnfCt8p1TBSRhs040bSHSg0CC_MvphKSckOv__Uui=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/charles-rennie-mackintosh/ZgGF6KS4C9Ro0g",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-portrait-gallery-gac-33",
+      "title": "Self Portrait",
+      "artist": "Francis Campbell Boileau Cadell",
+      "year": 1914,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RWiooGsOOvqiCokDxFB5GbinNZoMYZNAyjDFU7AyxYteIHM23BD-57_ZNVOy8JDBOyST5PCg=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/self-portrait/2gHudd35Rfbo6Q",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-portrait-gallery-gac-34",
+      "title": "James VI and I",
+      "artist": "Adrian Vanson",
+      "year": 1595,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Sgu6w85I5NHSp6g7ns43EyThyb2CDbajaIE5EabB-Wx_NYAXu14fmjlqwZl6FkBDU-rNDPLw=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/james-vi-and-i/agGTeiP7fFV3Jg",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-portrait-gallery-gac-35",
+      "title": "The Cromartie Fool",
+      "artist": "Richard Waitt",
+      "year": 1731,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_S5hu4x9UVub9SXnweJ2a2WKXUFG_F9a-hony3v48-OkLChQPlqbN3R1hSDiwyYSc2SJpWVYg=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-cromartie-fool/KgFFmuGtFzVUKA",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-portrait-gallery-gac-36",
+      "title": "James Douglas, 4th Earl of Morton",
+      "artist": "Arnold Bronckorst",
+      "year": 1580,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TDPdVChDFhFyYN2x7zlOqPN4An8QCx8ZjQslHR2PRV5oqS_TVawTNVlS7gDZmx-9k0JmKuvbs=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/james-douglas-4th-earl-of-morton/JAGOu9NkYNP8YQ",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-portrait-gallery-gac-37",
+      "title": "Sir Edwin Henry Landseer",
+      "artist": "Samuel Cousins",
+      "year": 1867,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QBFXA8y_hecl1zcEMaOsn0hkbIcC-8YXIujQ0RLeiqg_xg06naXsgtZMr86g4lxZdojD89PzUZ=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/sir-edwin-henry-landseer/FAEKYQlloFe-gw",
+      "medium": "Mezzotint on"
+    },
+    {
+      "id": "scottish-national-portrait-gallery-gac-38",
+      "title": "Niel Gow",
+      "artist": "Henry Raeburn",
+      "year": 1787,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_ST7Y80b2VsHcK8qUn5PSMcxhRNj1NuVF-jKHXloRbmzoA_BlZthflVSKUcy2Z35OMNmeM08cAA=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/niel-gow/fAFUlJU6QXtbxQ",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-portrait-gallery-gac-39",
+      "title": "Marjory Kennedy-Fraser, 1857 - 1930. Musician and collector of Hebridean songs",
+      "artist": "John Duncan",
+      "year": 1931,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SkrAf7xx-5VyTeR8vHXebZFIuY3yz9VSIa8EAVohIl2zk4uRTdqNMxgrjxC_ciey0D4BfVRXJU=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/marjory-kennedy-fraser-1857-1930-musician-and-collector-of-hebridean-songs/5wHRAEviL69J_A",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-portrait-gallery-gac-40",
+      "title": "James VII and II, when Duke of York",
+      "artist": "Peter Lely",
+      "year": 1661,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TjPVkA8UpPsd3_qIUgKiUOnXabQTyXV4utgn7jBm0Jc3_Bazzd2pCuvjdkbLhUz5LWWu5Wsy9f=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/james-vii-and-ii-when-duke-of-york/SgG4plmZ18i1qQ",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-portrait-gallery-gac-41",
+      "title": "Queen Victoria on Fyvie with John Brown at Balmoral",
+      "artist": "George Washington Wilson",
+      "year": 1863,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Q7c7m1ouF806si4TQAbYnal4CCd5k0yepvuA2eAzPeG_n2bJgXdp_vnVCRdxq-xd6TS2TlI0_8=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/queen-victoria-on-fyvie-with-john-brown-at-balmoral/YgGLt0GqC4IN5w",
+      "medium": "Carte de visite"
+    },
+    {
+      "id": "scottish-national-portrait-gallery-gac-42",
+      "title": "John Graham of Claverhouse, Viscount Dundee",
+      "artist": "UnknownAbout",
+      "year": 1675,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Sw8m1ipJO-hfR8ahK2xtXqQyOCmoKwfbLXBn0fdphbV7UDihrHvxxJY5oF2T3FHCJHqwv3NQ=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/john-graham-of-claverhouse-viscount-dundee/2AHXfsHs2TzLgw",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-portrait-gallery-gac-43",
+      "title": "Skating, Duddingston Loch",
+      "artist": "John Patrick",
+      "year": 1900,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Sb5PBIdcf-NhyhhiDT17060QLJXs5scFZggW7zhiMW9yB7TS2K7lvDQz0boCzkG5VwNxqLng=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/skating-duddingston-loch/_wEIbvHLS9_bmA",
+      "medium": "albumen print"
+    },
+    {
+      "id": "scottish-national-portrait-gallery-gac-44",
+      "title": "Kenneth Mackenzie, 1st Earl of Seaforth at home in Naples",
+      "artist": "Pietro Fabris",
+      "year": 1771,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RVJ8jXDZUDm6a1ihdyy_meQ7XJCC239xlzePik8WDRGTqx7nsm9q_by-w4OCGEG1viEEsfXQ=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/kenneth-mackenzie-1st-earl-of-seaforth-at-home-in-naples/NQF_OtW39NSDsg",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-portrait-gallery-gac-45",
+      "title": "Kenneth Mackenzie, 1st Earl of Seaforth 1744 - 1781 at home in Naples: fencing scene",
+      "artist": "Unknown",
+      "year": 1771,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Qk93wP8Q1UgvTOzRpnyYuhc2f467Jeu2eWVSfqt_tbYsgdc8hP7MPKe-fH4d4cfHXyBtzIhRM=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/kenneth-mackenzie-1st-earl-of-seaforth-1744-1781-at-home-in-naples-fencing-scene/oQEPH6WBPDl3hQ",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-portrait-gallery-gac-46",
+      "title": "Three Heads: The Witches of Macbeth",
+      "artist": "John Runciman",
+      "year": 1767,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TY-8A9yDXufT8iNEfsL8PT50Q3LxLApSMnaJ4SzlCOyIjxn0pe27moboaezX5BlGyuOsXX=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/three-heads-the-witches-of-macbeth/XgFGfohLbALBzQ",
+      "artworkType": "Print"
+    },
+    {
+      "id": "scottish-national-portrait-gallery-gac-47",
+      "title": "Charles Edward Stuart, \"Bonnie Prince Charlie\"",
+      "artist": "Antonio David",
+      "year": 1732,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RxZj2arJ79jxKPnJ-6sKhDaBttTY-S9Nr3MXqoc9GU-nFBGZCgvrmlITSPpkj3-306b7FU0g=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/charles-edward-stuart-bonnie-prince-charlie/vgFpm9q4Ahu_Cw",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-portrait-gallery-gac-48",
+      "title": "Dame Muriel Spark",
+      "artist": "Alexander Moffat",
+      "year": 1984,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SqpboRmzyZxCzqFuBa7DMhrEKqyP5LHq6zDV2xJ6wt0yL_UWb0GWM2vibrJPuUg478fwz_QA=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/dame-muriel-spark/RgFM4-b2fUU9Ew"
+    },
+    {
+      "id": "scottish-national-portrait-gallery-gac-49",
+      "title": "Forth Bridge under construction",
+      "artist": "George Washington Wilson",
+      "year": 1889,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QkHmLp8ZLHDbIWi16mTbmNvlWDI-Inb6cz2mSw2-j6-bgrf_e8sEbUZxWARnQKpz_T_mjnoXND=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/forth-bridge-under-construction/SQHzb85N9aSBaA"
+    },
+    {
+      "id": "scottish-national-portrait-gallery-gac-50",
+      "title": "Charles II, when Prince of Wales",
+      "artist": "William Dobson",
+      "year": 1642,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QcwzNWShLhfvWgPHWlvB2SIGbLKyhnuuz6pm4Cg10uIadPNVc9vauu3JtAoQM8o3yldrgL7wdu=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/charles-ii-when-prince-of-wales/NgFMuPZyJ_0k2Q",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-portrait-gallery-gac-51",
+      "title": "Sir Walter Scott",
+      "artist": "William Allan",
+      "year": 1844,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QeO6p5T5jxPlfx9Nr73jdjqDuEXls0EtmBQxAv3R8KtT4VIdWVGcbTH1PFrcSzvljycgEU_Tk=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/sir-walter-scott/PAHtKGhkgiMPzw",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-portrait-gallery-gac-52",
+      "title": "James Hamilton, 1st Duke of Hamilton",
+      "artist": "Daniel Mytens",
+      "year": 1629,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_R3fXvs8P_hKIws_W_4DtWsBN57uCt6HrcdzX3xPeuEcf9YsqZIAHvx1YdH0oLG-z3MPhiRXwvy=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/james-hamilton-1st-duke-of-hamilton/NwEFmLZXF1oJBQ",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-portrait-gallery-gac-53",
+      "title": "Illustration to 'Tam O'Shanter' by Robert Burns. Study for an Engraving",
+      "artist": "John Faed",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SNjF2c-0kwSEB4Nrpcf_K-1dlAhWtuzWYeBkGRSqKPjvCmYnjhGZrFYC9F7pgAEJ73P-bo8BJf=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/illustration-to-tam-o-shanter-by-robert-burns-study-for-an-engraving/SwHeBnWH3u5L5Q",
+      "medium": "Brush, dark brown wash and white heightening on"
+    },
+    {
+      "id": "scottish-national-portrait-gallery-gac-54",
+      "title": "The Defeat of Hako King of Norway by Alexander III at Largs A.D",
+      "artist": "William Brassey Hole",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Tk0tYCpAJ4VCz4KnDww9_4g5i58xVh7Dtt_DY-sPUj1br132f5YT70DudjAP6pBMCyTV-kmmri=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-defeat-of-hako-king-of-norway-by-alexander-iii-at-largs-a-d-1263/GgGWgON7B6bUrg",
+      "medium": "Variant of spirit fresco",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-portrait-gallery-gac-55",
+      "title": "Robert Fergusson",
+      "artist": "Alexander Runciman",
+      "year": 1772,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QD-semhbEWRm2Y460n17YpjmOqBdFSSbyD_LZBoxZOStEJrnDM-srVFsDPaqtPpilTY3SZQ82U=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/robert-fergusson/ZQErmqa_K66YNQ",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-portrait-gallery-gac-56",
+      "title": "Sir James Matthew Barrie",
+      "artist": "Sir William Nicholson",
+      "year": 1904,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RGB_QRZ750WrazeguyyVadd9G5x2m5FGk6KuBlSH3T8HVemy0Ry89wCRIio9DcZrGLoIQaBTw=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/sir-james-matthew-barrie/OgGDYRrXtPNE5g"
+    },
+    {
+      "id": "scottish-national-portrait-gallery-gac-57",
+      "title": "William Drummond of Hawthornden",
+      "artist": "Abraham van Blijenberch",
+      "year": 1612,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Sm0FJ5wUfA23Yeqn9YjaifrROQ8JOY8-OPveabFrgDUK9YehlfQU6K61CVYVCh_6Sg0M-D1CY=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/william-drummond-of-hawthornden/UQHleRSzKVNuLw",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-portrait-gallery-gac-58",
+      "title": "Robert Louis Stevenson",
+      "artist": "Count Girolamo Nerli",
+      "year": 1892,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_T3Pv9U5WvxMKKOwz9JUKSTkbkWid_mtzIlXvfLwkn1AiUXsVcjGRhqJTyS1P2e0eh6t8bLEQ=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/robert-louis-stevenson/VAGkW8RRZEMEgg"
+    },
+    {
+      "id": "scottish-national-portrait-gallery-gac-59",
+      "title": "Visitor at the Portrait Gallery",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SeVVTIyWsP3zsyqd7NC7cOS8pbP6Uht0JZJz7RS2ZGjo89swQjIwG2jZ3r2SXRa2g3RJ-mgtE=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/visitor-at-the-portrait-gallery/TQHM_DtzRCO4-w",
+      "medium": "Digital"
+    },
+    {
+      "id": "scottish-national-portrait-gallery-gac-60",
+      "title": "Adam Smith",
+      "artist": "UnknownAbout",
+      "year": 1795,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TybPJLQyr-_WVtq1gqC_OCAFTnJ5ckNgXPGL8I8oKd6DssrzyfhdhapnmBy3Anum6EPWrcImo=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/adam-smith/QQHsBqSlLhlFCg",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-portrait-gallery-gac-61",
+      "title": "Hugh Montgomerie, 12th Earl of Eglinton",
+      "artist": "John Singleton Copley",
+      "year": 1780,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SjEUhQNcxidU2wh4A48bv0X6UIOAs1bDLYbD6DsgWyClvGU3_A4B2234wXLQZZe0sNnbA3BVI=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/hugh-montgomerie-12th-earl-of-eglinton/5QEHxhFAEyKmhw",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-portrait-gallery-gac-62",
+      "title": "Thomas Carlyle",
+      "artist": "Helen Allingham",
+      "year": 1879,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TFs3A1G80lgC8BhewPDit9eMJpCkWIrQJXts1lGc4DvCuFoNGMiplchXPNRDM1TkZffplQvA=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/thomas-carlyle/awG974lySYYOgg"
+    },
+    {
+      "id": "scottish-national-portrait-gallery-gac-63",
+      "title": "Jackie Kay",
+      "artist": "Norman McBeath",
+      "year": 2001,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TfK9XkHuOFcB9xrfmjnfTAUmiOekv_seeCWCZPq5JajhQQQAVxvKoxHXc043XqRo5LRh-77w=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/jackie-kay/kwGShGmykIKWog"
+    },
+    {
+      "id": "scottish-national-portrait-gallery-gac-64",
+      "title": "Sir John Buchan",
+      "artist": "Thomas John Clapperton",
+      "year": 1935,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Tw-ndsj4LgbFM1vpb9NIQGN8yZ0K2SJnglsJQnzebDHLXRR-rCh1tKdE7IV4KF6TSjbsTNpg=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/sir-john-buchan/_AGrfRBgTfOYgQ"
+    },
+    {
+      "id": "scottish-national-portrait-gallery-gac-65",
+      "title": "Robert Burns",
+      "artist": "Alexander Nasmyth",
+      "year": 1828,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TIAG7Nss_OiQkLmSamyHWj9LiPYG9ncqVk7GXbzU1cHubEvhrN5l67w5zfQ9_5IRiMAyxsWnk=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/robert-burns/rQF-xu8F3CGw3g"
+    },
+    {
+      "id": "scottish-national-portrait-gallery-gac-66",
+      "title": "Patrick Byrne",
+      "artist": "David Octavius Hill and Robert Adamson",
+      "year": 1845,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_T3X_xaqiqk9gKR1ZOTaxXE6kcCF_dhJZNJsdqtMlJT-0BVY-Nc4qHTpTVyVK1lRyKkC0JmLDc=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/patrick-byrne/fgGAyt1F703AzA"
+    },
+    {
+      "id": "scottish-national-portrait-gallery-gac-67",
+      "title": "Sir James Macdonald and Sir Alexander Macdonald",
+      "artist": "William Mosman",
+      "year": 1749,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QSA6gqX_WhHGYSGTGFKbatf9-HATJx9He5QBApYjYUZBA0JtJC_HiiiJxhMpHfszAvaenlRkI=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/sir-james-macdonald-and-sir-alexander-macdonald/6gFCmVSF4QgIPQ",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-portrait-gallery-gac-68",
+      "title": "The Royal High School, Edinburgh",
+      "artist": "Robert Adamson",
+      "year": 1843,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Q_5qllkyjIATSIPu2G42fLUuhI3dOLrENY8itaHSu3IauGvf60fPsxj1kbf9Cbp1bOysPPSHU=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-royal-high-school-edinburgh/YAFmaGVKiyjnvA"
+    },
+    {
+      "id": "scottish-national-portrait-gallery-gac-69",
+      "title": "Willie Liston, Newhaven fisherman 'Redding the line'",
+      "artist": "David Octavius Hill and Robert Adamson",
+      "year": 1843,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SHxAI6SAB3N1UP-PjK9XxDvin__Lfo4S0s1GNig0lLF-pSyiEiuG80SXD3CdXgVBt_MrpByuB3=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/willie-liston-newhaven-fisherman-redding-the-line/bQFOvFtzrqpWaA"
+    },
+    {
+      "id": "scottish-national-portrait-gallery-gac-70",
+      "title": "Miss Maidie and Miss Elsie Scott",
+      "artist": "Eric Harald Macbeth Robertson",
+      "year": 1915,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Txe3SWgVsOrt4WZm9Lk0g21RvL3ESx2nI20OVk_EqcIN18Kj9Ayy4ml8SxH0lptUEDFba2zo8=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/miss-maidie-and-miss-elsie-scott/FQHmjTSN_2eu8Q",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-portrait-gallery-gac-71",
+      "title": "Robert Burns",
+      "artist": "Archibald Skirving",
+      "year": 1796,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SEiH4KzH8NOI1ODcVfQxrPH1wMfXt8_9-k-d8TVUk8zTI3vmfLYMHkNYqsJgUmQQtQBsB9jw=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/robert-burns/VQENgLx8eKvJhw"
+    },
+    {
+      "id": "scottish-national-portrait-gallery-gac-72",
+      "title": "William Inglis",
+      "artist": "David Allan",
+      "year": 1787,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TiSeiWL9n1jZNhrKQKBU9TN3ri3DcGLu9NqZohy8Hsr-kuDVsULjXa9jYUnYXAo3kbDiOxrtQ=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/william-inglis/TgEvAxxXHXg3Og",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-portrait-gallery-gac-73",
+      "title": "Captain Francis Grose, 1731 - 1791. Antiquary",
+      "artist": "John Kay",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Svw3UYINdxhFGYNQmzWZGLYyDZ5TaHE9UkcFop0cN_wTfjOTfSdbkzmbjdlO1asaXBBNQT9Z0=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/captain-francis-grose-1731-1791-antiquary/UAF3gPvUdRjUig"
+    },
+    {
+      "id": "scottish-national-portrait-gallery-gac-74",
+      "title": "Captain Francis Grose",
+      "artist": "John Kay",
+      "year": 1800,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Tm8YzS-gzeRUJ4pD1PTLBK4CFPcymMbt0jbNfPzcfrp6UW_yk8WyZUAVY8vsZn-dCcfLNdqMqx=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/captain-francis-grose/_QHeW9pYBznIZQ"
+    },
+    {
+      "id": "scottish-national-portrait-gallery-gac-75",
+      "title": "Rev. Peter Jones [Kahkew?quon?by]",
+      "artist": "David Octavius Hill and Robert Adamson",
+      "year": 1845,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QyJbdg_h7qWPIJJk6P-puX75lDuXE-DdlrKEbYH8FWLzGuYsKIdIflBkw261r9oQwIxP8T_sMS=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/rev-peter-jones-kahkew-quon-by/swEb52hp0p7B2g"
+    },
+    {
+      "id": "scottish-national-portrait-gallery-gac-76",
+      "title": "The National Gallery and Royal Institution (Royal Scottish Academy), Edinburgh",
+      "artist": "William Donaldson Clark",
+      "year": 1858,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_R2DlaRYcu8PoE1v0RZBWuGoAzD_O90sB2XHrjFmaZPgfIrtUOpuAPnvxHg-QjrC0nTlU2QRw=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-national-gallery-and-royal-institution-royal-scottish-academy-edinburgh/9QGMkAPlkfXt2A",
+      "medium": "Albumen print"
+    },
+    {
+      "id": "scottish-national-portrait-gallery-gac-77",
+      "title": "Falkland Palace and the Howe of Fife",
+      "artist": "Alexander Keirincx",
+      "year": 1839,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_T0c2CVNtN5PYuEpfQIE3xu0FwaU35Yf13n_5kbnnbN0u5BQKRJYR_3VVlmG5NLZ5b-jDqc22M=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/falkland-palace-and-the-howe-of-fife/VAH8DCKrvlUHJA",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-portrait-gallery-gac-78",
+      "title": "Tam O'Shanter at Alloway Kirk",
+      "artist": "Alexander Cares",
+      "year": 1800,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_R7IGZNpE0QVcGmc0ub_r0AxsBPqYPhAQ0S1doKXPsZfeY6a5PSE8qgRIC33PLwOeI1G75Odw=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/tam-o-shanter-at-alloway-kirk/jQEiF6ExCIZ5og",
+      "medium": "Watercolour, brown and grey wash and slight touches of bodycolour over"
+    },
+    {
+      "id": "scottish-national-portrait-gallery-gac-79",
+      "title": "James Graham, 1st Marquess of Montrose",
+      "artist": "Willem van Honthorst",
+      "year": 1646,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SoVds4jtr1XW3zo7equ_KosdHTEyqzhXMyAwtgVb_Bm38xez6AW5KTS-2V_h9x8f0os6WEbSM=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/james-graham-1st-marquess-of-montrose/jAG8JlkV0OK2Tg",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-portrait-gallery-gac-80",
+      "title": "Robert Owen",
+      "artist": "Mary Ann Knight",
+      "year": 1800,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_ToMKDnkIWtlkx6Emn5I0v9gCAUziWkFVg0819yCE3_uljnm0maHLpkaPLYdfFSMGJ_W3Tw=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/robert-owen/ngFqhK8LfcBDPA"
+    },
+    {
+      "id": "scottish-national-portrait-gallery-gac-81",
+      "title": "Patrick Grant [Pàdraig Grannd an Dubh-bhruaich]",
+      "artist": "Colvin Smith",
+      "year": 1822,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TYZPlhDZymURsZ40KVaFcYq2FswjWV5aMKzGTWrLtS2HZD2VAn7Pba5EIcrbTwEIhZjf2VWA=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/patrick-grant-p%C3%A0draig-grannd-an-dubh-bhruaich/igGe2ecwSgiRYA",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-portrait-gallery-gac-82",
+      "title": "Princes Street from Nelson Monument",
+      "artist": "Princes Street in Edinburgh, photographed from Nelson Monument in the twenty-first century",
+      "year": 2019,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TsK7_T1HDFztP-sbASANOkG6Xv7v3q4bdjhOVojlTDZHs9-7mLVl2DaG3feErXMlk9BezD=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/princes-street-from-nelson-monument/hAElVQhAXOJ_iQ",
+      "medium": "Digital"
+    },
+    {
+      "id": "scottish-national-portrait-gallery-gac-83",
+      "title": "Self-portrait",
+      "artist": "Allan Ramsay",
+      "year": 1755,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TXMnlWyFQZvmzDZB_HXFU95LGtX11C_AUPNNqJftD7LyWau5JPS1Rfa0nkJ62Jf5XxQl9jybc=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/self-portrait/EgESQ442Dmx8gg",
+      "medium": "Pastel on"
+    },
+    {
+      "id": "scottish-national-portrait-gallery-gac-84",
+      "title": "Forth Bridge under construction",
+      "artist": "Alexander Adam Inglis",
+      "year": 1885,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SQtdysO8iOSHnDViDw8EIbOAK6dcMeEUKtjmOLqSVlGJ1YjHgeExys62zXyT-3eaBoP0LFjqI=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/forth-bridge-under-construction/1AG6N6tLnS2G-Q",
+      "medium": "Albumen print"
+    },
+    {
+      "id": "scottish-national-portrait-gallery-gac-85",
+      "title": "George Buchanan [Seòras Bochanan], 1506 - 1582. Historian, poet and reformer",
+      "artist": "Attributed to Arnold Bronckorst",
+      "year": 1581,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Q_rjtz3CpZyn7FBGzZsxA1VKPGZyStWrAaIVWeYyDD__VNG4K_SmJKteM_uDkbOcwXcMNWBsQ=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/george-buchanan-se%C3%B2ras-bochanan-1506-1582-historian-poet-and-reformer/qAH6LJEZ1xhzVQ",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-portrait-gallery-gac-86",
+      "title": "Falkland Palace",
+      "artist": "Zero Design Limited",
+      "year": 2021,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QqE7-SFfcxcV78T46EVt0Ln1jNfZZmElLZxZSMu_KX8njzn4EqOkpG_9dyKBsmbV1KraeQDA=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/falkland-palace/gAGHfWKqS30Aqg",
+      "medium": "Digital",
+      "artworkType": "Digital"
+    },
+    {
+      "id": "scottish-national-portrait-gallery-gac-87",
+      "title": "Forth Bridge from north",
+      "artist": "James Valentine",
+      "year": 1890,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RJhW56Gw5QUVLmBMSeSPEb4v7ndFa-FdLbZEn31pH2VN2P8HjebMbXDbFjWtIk5eSlokILl48=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/forth-bridge-from-north/2QGM099FJY1FAQ",
+      "medium": "Albumen print"
+    },
+    {
+      "id": "scottish-national-portrait-gallery-gac-88",
+      "title": "Loch Skiport, South Uist",
+      "artist": "George Washington Wilson",
+      "year": 1860,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RW4WJLKPDbBMpOiUaEtSevBT75A0SOs0zlfIJDi9gpGRKpgjK385Xuuxj2tDKT9cdhpUt1iDA=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/loch-skiport-south-uist/hQGSiothB7q-Vw",
+      "medium": "Albumen print"
+    },
+    {
+      "id": "scottish-national-portrait-gallery-gac-89",
+      "title": "Princes Street from Nelson Monument",
+      "artist": "UnknownBetweenand",
+      "year": 1910,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SHtj1L3XmYLrQIJJ6dLRiQo9Nw5RNAlxEDNi5fWOr4VxhWcu1D2pgCSXErEfDhMxRB4HQL_P0=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/princes-street-from-nelson-monument/BQEjtJ24rpPTKg"
+    },
+    {
+      "id": "scottish-national-portrait-gallery-gac-90",
+      "title": "John Erskine, 2nd Earl of Mar, about 1562 - 1634. Lord High Treasurer of Scotland",
+      "artist": "Adam de Colone",
+      "year": 1626,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TlMUlHAu_bM-p7kNb66ig49aC-At065i4bZ7Ryqfv1YHGXlphHfUQJglYEsGQcUBRYeLw_ZyPE=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/john-erskine-2nd-earl-of-mar-about-1562-1634-lord-high-treasurer-of-scotland/EQEb4uZAPM-Wcw",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-portrait-gallery-gac-91",
+      "title": "Visitors at the Portrait Gallery",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SGhOR6Em-ECOkr3FLd39XtpXcgHPs7--3RkqqfrM3MA4k1vGdSHaj9HwAtZQfRHljCXb_qXUA=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/visitors-at-the-portrait-gallery/tgFyd_9nLVPJMg",
+      "medium": "Digital"
+    },
+    {
+      "id": "scottish-national-portrait-gallery-gac-92",
+      "title": "Pipers near Forth Bridge",
+      "artist": "Underwood & Underwood",
+      "year": 1900,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Tw5FtnJ7Tyk2lHugOUqnDmZa_LMHuBklGB0AHECdnYQyGr9vwwn8yxxR7-tfh4EPXf3wPcovp2=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/pipers-near-forth-bridge/hQEKJj_Ybmb36g"
+    },
+    {
+      "id": "scottish-national-portrait-gallery-gac-93",
+      "title": "Tam O'Shanter at Alloway Kirk",
+      "artist": "Alexander Carse",
+      "year": 1800,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Rw4U7Itcg6DiXBmoJooe5VxSTHbSi0DpcB2sILVfEjROdXFu0o0yJh140El-ty7KArIbrAHQ=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/tam-o-shanter-at-alloway-kirk/0gFYI7l7MVzPBw"
+    },
+    {
+      "id": "scottish-national-portrait-gallery-gac-94",
+      "title": "Visitors at the Portrait Gallery Great Hall",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TGOYNNMiSr6kyNcG_rc4SoGtQklQbB8dWATRLn_ooltsMQpRdyQd3tGknsd9eCLKUAiCFicWM=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/visitors-at-the-portrait-gallery-great-hall/RgGNzyz0UxD4kg",
+      "medium": "Digital"
+    },
+    {
+      "id": "scottish-national-portrait-gallery-gac-95",
+      "title": "Anne of Denmark, 1574 - 1619. Queen of James VI and I",
+      "artist": "Atributed to Adrian Vanson",
+      "year": 1595,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_S2ZOpID_w3zmw4XximngezxVWfKsL95kmYtwWz6I2AqVRxKs6SzQyqO1Dl7B38YOvM65SHc5f0=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/anne-of-denmark-1574-1619-queen-of-james-vi-and-i/PwEUhUA_9X0EgA",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-portrait-gallery-gac-96",
+      "title": "Aeroplane",
+      "artist": "Zero Design Limited",
+      "year": 2021,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_T2lnBY6LcP-s0_oHypUa09ES6u19_QdQZbYxDhgHXQ4dGdrYVccqEizA8MHWgMRh3VY0PLFV8d=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/aeroplane/7wEH1yTva2lS8Q",
+      "medium": "Digital",
+      "artworkType": "Digital"
+    },
+    {
+      "id": "scottish-national-portrait-gallery-gac-97",
+      "title": "Dumbarton Castle",
+      "artist": "John Clerk",
+      "year": 1770,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Qjixi5I4o9e9iJ5f5gTqxzMMNZR-MHFOICnlBkZHcvRvcyOcGp8x990c0RZZmH_Hd_4VFtHBGV=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/dumbarton-castle/0AE5rBZO6LLBeg",
+      "artworkType": "Work on"
+    },
+    {
+      "id": "scottish-national-portrait-gallery-gac-98",
+      "title": "Timber Fronted House, Cowgate, Edinburgh",
+      "artist": "Archibald Burns",
+      "year": 1858,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Q7RKfgzaqcB2pjXmC-AAR9H4rTkA_7-OUp3fnkljsKUPz24BWwJTCZzDXxA3xs4LVDNtVc7g=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/timber-fronted-house-cowgate-edinburgh/KwHHhbJyupigNQ",
+      "medium": "Albumen print"
+    },
+    {
+      "id": "scottish-national-portrait-gallery-gac-99",
+      "title": "Barra Sands",
+      "artist": "Unknown",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QsaY8spymbvKzYt297vcaUMPc4aL09EdlaH8hTi-JQQXvLNAETUnDzo-gRFHPl9vwjTdWS=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/barra-sands/VwFPPew7MOqJvg"
+    }
+  ],
+  "partnerDescription": "The world's first purpose-built portrait gallery, housing Scotland's collection of portraits. The gallery is decorated in elaborate murals and sculptural embellishments inside and out - take time to look up at the Zodiac ceiling in the world-famous Great Hall."
+}

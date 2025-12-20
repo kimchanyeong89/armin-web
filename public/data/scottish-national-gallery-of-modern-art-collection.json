@@ -1,0 +1,434 @@
+{
+  "galleryId": "scottish-national-gallery-of-modern-art",
+  "galleryName": "Scottish National Gallery of Modern Art",
+  "coverImage": "https://lh3.googleusercontent.com/ci/AL18g_TqH51xPRRvI1b-_k7adgg5Ttgmkd1qfieZ8gevjELe739jGRCDwlFJw-1qfj9erWlhIkzZlic=w1200",
+  "partnerDescription": "Take a leap forward at the Modern. You will find the many contemporary artworks on display to be playful, thought provoking and compelling. Weave your way through two exciting gallery spaces featuring leading artists' works which define the Modern era. Explore the grounds and enjoy further sculptural works by Eduardo Paolozzi, Charles Jencks, Dan Graham, Nathan Coley and other major artists.",
+  "scrapedAt": "2025-12-20T13:14:17.359Z",
+  "totalObjects": 48,
+  "videoCount": 0,
+  "excludedCount": 0,
+  "failedCount": 0,
+  "objects": [
+    {
+      "id": "scottish-national-gallery-of-modern-art-gac-1",
+      "title": "Ghost of a Genius",
+      "artist": "Paul Klee",
+      "year": 1922,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Rs54GhkX1HqA9N-UeS6FxddV0eRlR8aj7jPVdj0XdOZQY7kZNVOrX-m2bruG1APesBPthaOg=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/ghost-of-a-genius/QgGHzGidGhPIdg"
+    },
+    {
+      "id": "scottish-national-gallery-of-modern-art-gac-2",
+      "title": "Boats at Royan",
+      "artist": "Samuel John Peploe",
+      "year": 1910,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QL7c-bc9d-zR-85jcEB0JA19sZSy5S8WMbZySc5nog5KvEFHKhwQ2CCE2uFkMOCcftluXMDA=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/boats-at-royan/SgHlUXzLxnB6ug",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-of-modern-art-gac-3",
+      "title": "Portrait of a Lady in Black",
+      "artist": "Francis Campbell Boileau Cadell",
+      "year": 1921,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Q8UcZDMnougOKN7tvLPcgtgaxXFMvtkcqDtaIwJWMcvf2lNM6Y2MhIaG5FuvxlFBYMPOrYqQ=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/portrait-of-a-lady-in-black/kgGwbuwtxkF3aA",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-of-modern-art-gac-4",
+      "title": "Nature morte au bougeoir",
+      "artist": "Edouard Vuillard",
+      "year": 1900,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_S6j04JLf90ZcfLeRq8Ubjf6O_rzCKqnW2dXkJ1FiwfsC6TLcsbbIBMpV1-rxgIGIzVt_w0F5Q=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/nature-morte-au-bougeoir/BwECXwvQw2jQxQ",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-of-modern-art-gac-5",
+      "title": "Reflections, Balloch",
+      "artist": "George Leslie Hunter",
+      "year": 1929,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SmqAzMTJQADdUVhjYaWDylQrRYEXdUYecW2Vb28-USnWvtyK0oj22dIAsxy8nVVERkj7g22w=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/reflections-balloch/dQEXZwBC_osIjQ",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-of-modern-art-gac-6",
+      "title": "Iona Croft",
+      "artist": "Francis Campbell Boileau Cadell",
+      "year": 1920,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TMzyqO8ZIzBGhTP2aVdx-OpgFG7C-NpLHR2qVX7lhYPB4Qk3VkyWp3vaBYoI2kFSLG-rJyU40=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/iona-croft/7gHUTWZZZyB7Hg",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-of-modern-art-gac-7",
+      "title": "Iona Landscape: Rocks",
+      "artist": "Samuel John Peploe",
+      "year": 1925,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Q3tpdVo963CZ5uUwxQal8cNR7TifTIgv17g4CyXelSmnJ1LycTFb-41qFhgJ-fZfeBWCiCOXA=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/iona-landscape-rocks/PwFueQ9GwqEqMw",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-of-modern-art-gac-8",
+      "title": "Interior with Nude Woman and Man",
+      "artist": "Ernst Ludwig Kirchner",
+      "year": 1924,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SH15BU6wKfwHQVDTqF7aMpVwKSUSCQZhS0o6neIVr-rgCsLiWJbJwVtUN7v8cM2nSNA-GCUw=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/interior-with-nude-woman-and-man/UQFRecAOQw89pg",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-of-modern-art-gac-9",
+      "title": "Bridge over the Seine",
+      "artist": "Christopher Wood",
+      "year": 1927,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TEBlqVwDxTx-477RstJZU0BskohxdW5O7Qh6DiWzERLzpmcLAEAjqN8SALSwOkyVAqsP_WcFz7=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/bridge-over-the-seine/0QGao3ig47FF_A",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-of-modern-art-gac-10",
+      "title": "Jack and Tommy",
+      "artist": "Francis Campbell Boileau Cadell",
+      "year": 1915,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_T4S_54vg2iYBm4MR02i1XMJrquC61dex_JH6UykcSlQuThT2lTmaJxeYFO7lCMPc6gVHufhyz_=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/jack-and-tommy/5AG8ACJYAzZC7w"
+    },
+    {
+      "id": "scottish-national-gallery-of-modern-art-gac-11",
+      "title": "Head of a Woman",
+      "artist": "Alexej von Jawlensky",
+      "year": 1911,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QvGH2yA1AHXxGW6Hl0Hf0qWsQpczJ1pVLOJBfGpFRnZJRKyv445DNILhQG1A8miST6nmrFwoM=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/head-of-a-woman/0gHlflLW5w6N-w",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-of-modern-art-gac-12",
+      "title": "The Steps, Chelsea",
+      "artist": "Christopher Wood",
+      "year": 1927,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RH2u3jGktWklT1E9syR0fzFjbY9E5V989PA5bOICekBpJOoRLOaeszvEyKlyaMrxmmyiJusoFi=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-steps-chelsea/mAGVWkWblidZwA",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-of-modern-art-gac-13",
+      "title": "Japanese Theatre",
+      "artist": "Ernst Ludwig Kirchner",
+      "year": 1909,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QlUCH2ZYmT06vdPjppl7LUqjJpuf0Ag7t-o7MHvhjfOEtLsi5dpejj6CHtdk01IFaNnbaQNA=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/japanese-theatre/-gFk16qqzXE1tQ",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-of-modern-art-gac-14",
+      "title": "The Blue Fan",
+      "artist": "Francis Campbell Boileau Cadell",
+      "year": 1922,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RHP42Ffka-t4OEeWK3lzEcdidEDKITewNbPHqmoCCtDleOcsr0znET_LAEb86VjADLq8Pn=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-blue-fan/dAEqO-XdpmY_Mw",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-of-modern-art-gac-15",
+      "title": "Le Mas Passe-Temps, Céret",
+      "artist": "Chaim Soutine",
+      "year": 1920,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TjqFf7zNyo7MhAUYEkwwUhf8kaJ954yR8ts5SU-JkTi6pyKzi6UJBpGzorXlJ78sGKZ3xvQg=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/le-mas-passe-temps-c%C3%A9ret/sgHGCWhYSgznjg",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-of-modern-art-gac-16",
+      "title": "Pink Roses, Chinese Vase",
+      "artist": "Samuel John Peploe",
+      "year": 1916,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_T3cnPPj4H4qfYMPPL5luWjDOIRLXVstO1XoWSkTBAYpNyQTzhJjjdj4VCq-ICAP_jMooTuag=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/pink-roses-chinese-vase/HQFLuyurj4r5_g",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-of-modern-art-gac-17",
+      "title": "View of the River, Vernon",
+      "artist": "Pierre Bonnard",
+      "year": 1923,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SVK5XtMW46bwTfkFGlRM0GaT_VjXMGCWzU8KIT5FeDIvEFSFeKM8vWmxCL2cehMlRiDvRWwA=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/view-of-the-river-vernon/_wEY2hHYxq1sqg",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-of-modern-art-gac-18",
+      "title": "Nude Boy in a Bedroom",
+      "artist": "Christopher Wood",
+      "year": 1930,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_R6aA8-um_Vj3QGpPlZuespn2nthfeR4wmO3ANuYeu5okGts_XpIy3lwHBA96Z9INTUjfuSZw=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/nude-boy-in-a-bedroom/iAFOtFHDwNNzCg",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-of-modern-art-gac-19",
+      "title": "Two Seamstresses in the Workroom",
+      "artist": "Edouard Vuillard",
+      "year": 1893,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Rj4mzG__V2xDtIcZd23ooiERVx3VwEz1idrbaq_hjlm1uhgbg0QUPUEUidiU2TVgMjtmnyZA=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/two-seamstresses-in-the-workroom/fwF8M87EfFJsug",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-of-modern-art-gac-20",
+      "title": "Still Life",
+      "artist": "George Leslie Hunter",
+      "year": 1920,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_ScvIV2P7BBuT1cIh8DbTidrjedFkxYKAooQAIuULC-AAa6MDyPXh98HOfth6jS9AqLXrbVVVE=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/still-life/NAHDgBBoOMdS8g",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-of-modern-art-gac-21",
+      "title": "Delicate Banter",
+      "artist": "Francis Campbell Boileau Cadell",
+      "year": 1915,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TyjqI5NYJacYmODGVKhPwlM7dB56SZLx7mWNKmUB9PeEGTqe4DkZZkJM3ZsSNOiZokX8w7dNNp=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/delicate-banter/UAErekc-PeWIRQ"
+    },
+    {
+      "id": "scottish-national-gallery-of-modern-art-gac-22",
+      "title": "Île de Bréhat",
+      "artist": "Samuel John Peploe",
+      "year": 1911,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RNzk5YfMkLAEzXSqG6OmRCMbVsH5CqqmzXAj-lQRKb6EeLUDjJei0_jXl0izTZEepYyKyz=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/%C3%8Ele-de-br%C3%A9hat/zgHJ9SLp_7JN_w",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-of-modern-art-gac-23",
+      "title": "Peonies",
+      "artist": "Alphonse Mucha",
+      "year": 1897,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SQGlnKlE4FLsUgpBMiA7zoDLtQ0T8lxFq6aBVZngLVMK32laFCSb4KPCHAox0u4ObrO3LFuA=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/peonies/GwGk6gLkaCOKhQ"
+    },
+    {
+      "id": "scottish-national-gallery-of-modern-art-gac-24",
+      "title": "Still Life",
+      "artist": "Samuel John Peploe",
+      "year": 1913,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SqRG2JdtPOZ-7_X_kPORP-A-CVK360M6gIQi3J_LFopLWlh__KOyHDXpVPLcSZyyu1WFa-bg=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/still-life/dAHIKW1JtUQrYA",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-of-modern-art-gac-25",
+      "title": "A Sailor",
+      "artist": "Francis Campbell Boileau Cadell",
+      "year": 1915,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QqwThPm8gzMjvYJSJBb3faWAf6yp1bKk-uLUSFSkFbXAx0lSaLMKG8vnKHBu-hZQjYvWs7=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/a-sailor/kgHuMzeH-O5mMQ"
+    },
+    {
+      "id": "scottish-national-gallery-of-modern-art-gac-26",
+      "title": "Pot of Flowers",
+      "artist": "Edouard Vuillard",
+      "year": 1900,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SupL72q112vc8kQDfdVyIPo8zGZqqxMSMoYvRaveqpyH9GtRqcqV9jkdQhY-PUtHQA0Im5cQ=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/pot-of-flowers/QAHJPi-ivboWJw",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-of-modern-art-gac-27",
+      "title": "From the Calcina Hotel",
+      "artist": "Francis Campbell Boileau Cadell",
+      "year": 1910,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Qi79dwWAu3SJc64-6bVipUPA3It8U_QwZxFh0CvukoO9YX9QiM0gDhNM_Q-VplSU_8t0gM0GqT=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/from-the-calcina-hotel/xAHK0a-50zYBzw",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-of-modern-art-gac-28",
+      "title": "Two Nude Girls in a Sand Dune, One Sitting, One Lying",
+      "artist": "Otto Mueller",
+      "year": 1920,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_R0eMncfRn4MhrOc5Ff8-ppMTS2sxH0j7d62HDxVuwT2k20XE4R_1o91ppB5D29clPylYpAgGc=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/two-nude-girls-in-a-sand-dune-one-sitting-one-lying/JAHK7fEmlDgFIA",
+      "medium": "Colour lithograph on",
+      "artworkType": "Print"
+    },
+    {
+      "id": "scottish-national-gallery-of-modern-art-gac-29",
+      "title": "Painterly Architectonic",
+      "artist": "Lyubov Popova",
+      "year": 1916,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QCwWzLHHRSgBcFsrpfZug9P-mr20a9pdPL2YshpjKZiCVn1erHTuKvpAPhLuSioRocmNZkEclA=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/painterly-architectonic/nQGQXoTwlo-RRQ",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-of-modern-art-gac-30",
+      "title": "The Parting",
+      "artist": "Francis Campbell Boileau Cadell",
+      "year": 1915,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SYo0zugPOwTMdyBZy_njmWzRQdt2U9Egy7DZpmdD-6vmzUvACAOPJMwZ5mnPzSmElibB7Yrdo=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-parting/SwFnlCFCnUYzEg"
+    },
+    {
+      "id": "scottish-national-gallery-of-modern-art-gac-31",
+      "title": "Composition with Double Line and Yellow",
+      "artist": "Piet Mondrian",
+      "year": 1932,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SmxdZsp3jmEOSRv5ZSOqN0dWhG49whb3wI6bjFc3UrD2AgI_XCzCAqP1tDlhzBgdoMWCcRL8s=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/composition-with-double-line-and-yellow-1932/aAEJpE7kUzf_CA",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-of-modern-art-gac-32",
+      "title": "1o Kestnermappe Proun Cover",
+      "artist": "El Lissitzky",
+      "year": 1923,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Q4YXqpml3JticScJsMRa5Pt73Rz4nk5_hSYCg8bKRDrsLSLIYgZQn_RcT8qAJHBArPHQklfo2Y=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/1o-kestnermappe-proun/nQHfYjGWeBVleg",
+      "medium": "Portfolio of six lithographs (two with collage), cover and title page,  Lithograph with collage on",
+      "artworkType": "Print Collection: Portfolio,  Print"
+    },
+    {
+      "id": "scottish-national-gallery-of-modern-art-gac-33",
+      "title": "Still Life with Melon",
+      "artist": "Samuel John Peploe",
+      "year": 1920,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TWxOoRHE9uE9qv637VhnCtiEd2ndZ_8GkQqBmvWjoaGsdPdL5ZMHe4bw1SFXQwJiMinhS9nVU=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/still-life-with-melon/mAGgTJIpPt1BCQ",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-of-modern-art-gac-34",
+      "title": "The Black Bottle",
+      "artist": "Samuel John Peploe",
+      "year": 1905,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SyhCNmBkeHqLARBRC_MkY6vImBQ2gxppzZSlGhAa06kYbxjoy-rG1foWOZR7Mzx6B7snx9Yg=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-black-bottle/4wEoofadXuPcQQ",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-of-modern-art-gac-35",
+      "title": "Veules-les-Roses",
+      "artist": "Samuel John Peploe",
+      "year": 1910,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QUYe8vnpkc3R1VVEwB3ULmAPzgKT8Vp6WG7D1-hROO-4agidZeG4ZC2GIqs6AfLLsj3XxxjQ=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/veules-les-roses/ZgGnSEUm4uSL0w",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-of-modern-art-gac-36",
+      "title": "Santa Maria della Salute, Venice",
+      "artist": "Francis Campbell Boileau Cadell",
+      "year": 1910,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SFqsk5aR8TrHl4NX2-0gyomEpjPn7Hb5bIct2sMP67YuAum4RdFPygg5_i8rt_Mo8f1HrxHrc=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/santa-maria-della-salute-venice/vwGzFFqi3dWiOg",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-of-modern-art-gac-37",
+      "title": "Tightrope Walker",
+      "artist": "Paul Klee",
+      "year": 1923,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RbeZa-S0bJkOcxHbujLtpQ3M3NUYxNP4BoQlyz3IODjQSEZt4shqGCMRM8BRK0Jmk2a-OaJg=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/tightrope-walker/RgGdN8i8NO0QbQ",
+      "medium": "Colour lithograph on",
+      "artworkType": "Print"
+    },
+    {
+      "id": "scottish-national-gallery-of-modern-art-gac-38",
+      "title": "The Green Blouse",
+      "artist": "Samuel John Peploe",
+      "year": 1904,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SJvwwsI3heevgqPH_CrQPrnoLD8ypDHp2ljJCSbgBMf9kQVe1zqb3Ibtng0b1aMeoSj0J9aclE=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-green-blouse/1AGDdhbnzJra-Q",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-of-modern-art-gac-39",
+      "title": "Still Life",
+      "artist": "George Leslie Hunter",
+      "year": 1930,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_ShQwg6nU8JE617g5rTT09fXcZBvMz4YFuyICc14y33bwJEmcmhlP9TS1rqAaEBjcVcqoYxYw=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/still-life/XgFw9sSH-z8QlA",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-of-modern-art-gac-40",
+      "title": "Barra",
+      "artist": "Samuel John Peploe",
+      "year": 1903,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TivIOQ38IMYWnRsJqcHtoAo_61vDmmVsWEafGpQIUklrApvjC-HZ0P_USOSORMaDlbAtKSWck=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/barra/ZAHQW1pI3SFR9A",
+      "artworkType": "Painting"
+    },
+    {
+      "id": "scottish-national-gallery-of-modern-art-gac-41",
+      "title": "Two Sailors",
+      "artist": "Francis Campbell Boileau Cadell",
+      "year": null,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RaJyhmMPNWQWq3m3RYXtJ6cNqwcMKzEhyGLiPtf4aXJzFXEE4249zuQaz9VrvLXL3BPIpx=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/two-sailors/cQEMCAgsZIp4Aw"
+    },
+    {
+      "id": "scottish-national-gallery-of-modern-art-gac-42",
+      "title": "The Air Ship",
+      "artist": "Francis Campbell Boileau Cadell",
+      "year": 1915,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SdyVbcVcGTDSTpSiCU7KWtC3LBNw2346RZV3qESHxc_o7I_B_Olw9NSnRbgf14eKp5Dt9wDbk=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-air-ship/PgESpZLQqCkz_Q"
+    },
+    {
+      "id": "scottish-national-gallery-of-modern-art-gac-43",
+      "title": "Their Lordships",
+      "artist": "Francis Campbell Boileau Cadell",
+      "year": 1915,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Rq2_j_odQzo8OmOS2nebBO2wmr0CsDVSRXecd_qIenNAOq3xejjW93ULS8NubfM4nUIWe1bw=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/their-lordships/ywHVSUzE3z-Tww"
+    },
+    {
+      "id": "scottish-national-gallery-of-modern-art-gac-44",
+      "title": "In the Park - Sylvan",
+      "artist": "Francis Campbell Boileau Cadell",
+      "year": 1915,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RuaUZs0A2dhD44xj6RN89JfUYLaIFA-7mFQdO8MQKUKzItnM2bkZa_lH8nnt5y70vdaf8pObA=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/in-the-park-sylvan/IAEF0Z1LJRIkxw"
+    },
+    {
+      "id": "scottish-national-gallery-of-modern-art-gac-45",
+      "title": "Tommy and the Flapper",
+      "artist": "Francis Campbell Boileau Cadell",
+      "year": 1915,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_S8650OVXYYD2su3sU5JH5ZYDoDqFf8i23nl7hBaaHMn7j1XlktonnOKiS_pl2d8ByNjyPRkR4=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/tommy-and-the-flapper/HQEJfLDX-R1KLQ"
+    },
+    {
+      "id": "scottish-national-gallery-of-modern-art-gac-46",
+      "title": "The Recruit",
+      "artist": "Francis Campbell Boileau Cadell",
+      "year": 1915,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Rpb3QvrN6i6N0zTYcXSjA97t8f9oLA92NE0ErndaZaklikk5SGBzb2mDmh8dCvl-9fny63qQ=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-recruit/swHCAj-1T3Qeug"
+    },
+    {
+      "id": "scottish-national-gallery-of-modern-art-gac-47",
+      "title": "Woman seated on ground",
+      "artist": "Francis Campbell Boileau Cadell",
+      "year": 1915,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_T_GTRbppRJqs0a8E5R6WrJytppkFYX9ET2FQ2tVzWdqCT08PJ_1h-eQ9_khWyoedLOfTzHFA=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/woman-seated-on-ground/EQHRUqpzZWu7Gg"
+    },
+    {
+      "id": "scottish-national-gallery-of-modern-art-gac-48",
+      "title": "Portrait of a Man, Seated",
+      "artist": "Francis Campbell Boileau Cadell",
+      "year": 1908,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Q2q59CYz9a10iuMqkP5jjXCHiVTU8b0_rc0ewWwDeROlgffSqmu8a3NClRY63i-7dp6L2b-vHN=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/portrait-of-a-man-seated/NAGX8l7VDSaoSQ"
+    }
+  ]
+}

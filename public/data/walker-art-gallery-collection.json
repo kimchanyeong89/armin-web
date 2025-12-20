@@ -1,0 +1,1223 @@
+{
+  "galleryId": "walker-art-gallery",
+  "galleryName": "Walker Art Gallery",
+  "coverImage": "https://lh3.googleusercontent.com/ci/AL18g_RUa6Oubw6QnXJUVCEK3fWMZi5Mg0RoBTEGGCR7gMVT28W1uOfvYgV7IkcqYpmcPiOKlCB8CpB-=w2000",
+  "scrapedAt": "2025-12-20T12:01:50.229Z",
+  "totalObjects": 151,
+  "videoCount": 0,
+  "excludedCount": 0,
+  "failedCount": 0,
+  "objects": [
+    {
+      "id": "walker-art-gallery-gac-1",
+      "title": "Dante and Beatrice",
+      "artist": "Henry Holiday",
+      "year": 1882,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SPNkk3_rgmpvUNYEKZCG6T-MvW3FiBFb5RR9q4Y8xZ0FJDalo-z7PNViFhKha7ZTzNkzWT4Q=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/dante-and-beatrice/XAEGdUo8BUOPYQ"
+    },
+    {
+      "id": "walker-art-gallery-gac-2",
+      "title": "Echo and Narcissus",
+      "artist": "John William Waterhouse",
+      "year": 1903,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_T1m3sVccxwJWtR5EZ-Eb21UVpyI2CTNZ9NQgH525hwmPE3T3XfTEitYrC6hECjYsYNE3-RskC7=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/echo-and-narcissus/cgGohYq-VdecNw"
+    },
+    {
+      "id": "walker-art-gallery-gac-3",
+      "title": "Isabella",
+      "artist": "John Everett Millais",
+      "year": 1848,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SSgXOI_SLE7-XWvxJ72CPC9gFekzSD7hZ_Xpkr6QWzL8u0erFUaziO-xmaJH-SWAXiTkKqjZk=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/isabella/CwFtBpu0rX8J_w"
+    },
+    {
+      "id": "walker-art-gallery-gac-4",
+      "title": "The Martyr of the Solway",
+      "artist": "John Everett Millais",
+      "year": 1871,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QVGFSH-7q3QfBkgNyp-9dLiWWGfQrcp0UdTMHN3dQjRjW9ze6twmYIaR3TuTbpgp5I8sIega0=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-martyr-of-the-solway/zgHu888n3_dObw"
+    },
+    {
+      "id": "walker-art-gallery-gac-5",
+      "title": "The Punishment of Lust",
+      "artist": "Giovanni Segantini",
+      "year": 1891,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QivEkyfGOz-erdYLTf7WuZDplQfVd7g__FUBsZAWIXE5ii1IY15Igzb7SQAroHz9RgRd74Kf4=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-punishment-of-lust/ZgFteROYPN6p9A"
+    },
+    {
+      "id": "walker-art-gallery-gac-6",
+      "title": "And when did you last see your father?",
+      "artist": "William Frederick Yeames",
+      "year": 1878,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QHG1UMBuKdt9aovFmtxf7F0w02ZOWIEez5jPVZWeSxfnIWiGq8EebfmOVfxKw1FNV8w5lOsh9f=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/and-when-did-you-last-see-your-father/7QH3jR1ZzNIXpg"
+    },
+    {
+      "id": "walker-art-gallery-gac-7",
+      "title": "The Ruins of Holyrood Chapel",
+      "artist": "Louis Daguerre",
+      "year": 1824,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RzecAvCJPwHnhzlZ5DthTOmDzKTFKU54gyxsKer6g3c1n4-Vpgz2kgz-UwIyld8PM27Bwn07E=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-ruins-of-holyrood-chapel/YwEH1vGfMtqgXw"
+    },
+    {
+      "id": "walker-art-gallery-gac-8",
+      "title": "The Death of Nelson",
+      "artist": "Benjamin West",
+      "year": 1806,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_STdxTILJHZ4a-cAC3Ppyls8S70fIgK_aQysksDyKlfc1t8ajNqaeV2x2BT-ZfQMXYvhPN96taY=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-death-of-nelson/fgH3BO69Ed2eNg"
+    },
+    {
+      "id": "walker-art-gallery-gac-9",
+      "title": "Old Man's Treasure (Das Katzchen)",
+      "artist": "Karl Gussow",
+      "year": 1876,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RNT68rvfWN94lIBKiKR85J2F-4mdmUK_yMUVdbZZ8C2gMq4eUt1X84KxvbwqM5Hrrs6yA-eg=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/old-man-s-treasure-das-katzchen/PwHp-MmZ0YTUrw"
+    },
+    {
+      "id": "walker-art-gallery-gac-10",
+      "title": "The Funeral of Shelley",
+      "artist": "Louis Edouard Fournier",
+      "year": 1889,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Skd-ca_snNcaqPCcFdcCGaa4UPbIgBeona5DlwDLbFFEbwQ7WLqgdFPeIW3CbzJp4LGLBmKw=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-funeral-of-shelley/uwFW5-eMuEhgAA"
+    },
+    {
+      "id": "walker-art-gallery-gac-11",
+      "title": "Faithful Unto Death",
+      "artist": "Edward John Poynter",
+      "year": 1865,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Q5vUB7mleXzyD8w7Go6xpdaVch0wbbIeHerLfRsdZFeiSs46a4VEXG3pb9dQ0e3unGtgOnBRq5=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/faithful-unto-death/UAEfV-4qLo6o7w"
+    },
+    {
+      "id": "walker-art-gallery-gac-12",
+      "title": "Diana and Endymion",
+      "artist": "Francesco Solimena",
+      "year": 1705,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QDcRNvb08d1EqjGmwnQWlI0j7nXagiX6Za4doB1MN2cKneWOmOoxVCiZ25ILkCP7Ie7fUxng=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/diana-and-endymion/BwHkto9SogEGGg"
+    },
+    {
+      "id": "walker-art-gallery-gac-13",
+      "title": "Landscape with the Ashes of Phocion",
+      "artist": "Nicolas Poussin",
+      "year": 1648,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_R7FhHgnUxGtIJRUPlNqDv9N-wrqv2G1AdcRzU3Ya7KlIXWX-ARWYDsbDIkKFkEvv_hm1jrlQtq=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/landscape-with-the-ashes-of-phocion/HAEBMqm6WA164A"
+    },
+    {
+      "id": "walker-art-gallery-gac-14",
+      "title": "Elijah in the Wilderness",
+      "artist": "Frederic, Lord Leighton",
+      "year": 1877,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TJ_irDkQ0yKdrU_IZPqwcmX5TKcEOvx0IOzLHg9riKC5hl7Yv7QIBZIhj5qc4KMoqNUGAtaY26=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/elijah-in-the-wilderness/uQG9WGfbc10kDw"
+    },
+    {
+      "id": "walker-art-gallery-gac-15",
+      "title": "Venus and Anchises",
+      "artist": "William Blake Richmond",
+      "year": 1889,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TQcyTVQLJq39BuPWGVw0rJvB5zydIxrahfoBRMNeomeCrnUEJEdPc3-aXKDpwyMUzOuS8e-g=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/venus-and-anchises/NwFx7tib70X5aQ"
+    },
+    {
+      "id": "walker-art-gallery-gac-16",
+      "title": "Perseus and Andromeda",
+      "artist": "Frederic, Lord Leighton",
+      "year": 1891,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Sq6e4dwclZudy5SSDlL8JkHePbvRBXTXHY2-cKQHNk9kcUncOOTJb0Yh0jQQB_OEpUOemqI0M=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/perseus-and-andromeda/kgGQB4KvGibQ7g"
+    },
+    {
+      "id": "walker-art-gallery-gac-17",
+      "title": "Horse Frightened by a Lion",
+      "artist": "George Stubbs",
+      "year": 1770,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TNh2UUY1KvukiNjimbeFY_48bc_dDG_7j8KLYwqSU_uxF8QQxKWfXP0Xzh0bVdzf2CM6T7SPk=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/horse-frightened-by-a-lion/IgHUdOdTC_mlkg"
+    },
+    {
+      "id": "walker-art-gallery-gac-18",
+      "title": "The Death of Nelson",
+      "artist": "Daniel Maclise",
+      "year": 1859,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SaUNXN4ja24lva1T5sQkadirodxswKE1dliZUf-bbnFgtMIfRA4-qsSY39HcH0qvK1neM3GQ=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-death-of-nelson/TQGzQR0Xk952rA"
+    },
+    {
+      "id": "walker-art-gallery-gac-19",
+      "title": "Portrait of Marguerite of Navarre",
+      "artist": "Jean Clouet (Attributed)",
+      "year": 1527,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SnUd4Vd4UYY40KMqYyRRVrik8jWhO7dk7NBeXF1X1mHEwegnGIw1w7BWEe9r6v8pA3uleX=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/portrait-of-marguerite-of-navarre/UgGlchBfaSf7hA"
+    },
+    {
+      "id": "walker-art-gallery-gac-20",
+      "title": "Christ Discovered in the Temple",
+      "artist": "Simone Martini",
+      "year": 1342,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TFNGptGanxxdT9az0Nc2VjJjk5I7ZyV-KAMdwET2zxEbV2z45A8DrIplmAu8q618PNdziMqd4=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/christ-discovered-in-the-temple/jwG5CBwYZObuvA"
+    },
+    {
+      "id": "walker-art-gallery-gac-21",
+      "title": "Portrait of Henry VIII",
+      "artist": "Workshop of Hans Holbein the Younger",
+      "year": 1537,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Rb2-9_X95Ufg8vbVBf2ZbEgUGdCh8eGGcCnSYbQkJrn7qkBFvzjO7MeMeupZLF6semZgtPVpc=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/portrait-of-henry-viii/eAHC0d0WiemXSA"
+    },
+    {
+      "id": "walker-art-gallery-gac-22",
+      "title": "The Eve of the Battle of Edge Hill",
+      "artist": "Charles Landseer",
+      "year": 1845,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TQRRJqI4ghTTrVtr7Q6CafqrLtBBXyUpnNGKx_vlj6HpQHzRqowyZl_7JT8nwRO34lEulkudc=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-eve-of-the-battle-of-edge-hill-1642/XQGUNMAEYfaXKw"
+    },
+    {
+      "id": "walker-art-gallery-gac-23",
+      "title": "One of the Family",
+      "artist": "Frederick George Cotman",
+      "year": 1880,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QuDOg0k9HpzyPu13ZPSbnY4xVuSQ6WoTJcxiO39pRp_A176eJdc6KxzviF5XnREtzafntiyA=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/one-of-the-family/HgGCACv_q9ktgA"
+    },
+    {
+      "id": "walker-art-gallery-gac-24",
+      "title": "David Garrick as Richard III",
+      "artist": "William Hogarth",
+      "year": 1745,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Sd9AORVWR4TnqeOnMFfU1Gu86nW0Zf003eA_PYk0gW3M7HGnV8iQcL83RLUf6Q4axcpE3zQi8=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/david-garrick-as-richard-iii/8AHFGbq7ICVHbA"
+    },
+    {
+      "id": "walker-art-gallery-gac-25",
+      "title": "The Family of Sir William Young",
+      "artist": "Johan Zoffany",
+      "year": 1767,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SJt-kKi1ZFnIpoRX5A9Wo6BGv7Qfwpiz1COIyda7YSRT0Q8DjsPLzsjnofM3KGTPeow7SpN6Y=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-family-of-sir-william-young/WQFYdyTtjQvajA"
+    },
+    {
+      "id": "walker-art-gallery-gac-26",
+      "title": "The Executioner with the Head of John the Baptist",
+      "artist": "William Dobson",
+      "year": 1640,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RA1TGLbfLHnO7sEmQnVBpJyysGAxGnhCXyzhDgol1TWxd5DocpbCdiud-o_JJ1gKuw02gVbQ=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-executioner-with-the-head-of-john-the-baptist/QwG-QweSJkkKOA"
+    },
+    {
+      "id": "walker-art-gallery-gac-27",
+      "title": "Pietà",
+      "artist": "Ercole de’ Roberti",
+      "year": 1482,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TNR_64oLT9ael_omQ8U2EhtuJM8X7iUbNj1YLZ8ba4lZsMyCrMOunQ9WAcZ2hktVjg2Zi8MNk=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/piet%C3%A0/cgHWdq-Pua-Nvg"
+    },
+    {
+      "id": "walker-art-gallery-gac-28",
+      "title": "Elaine",
+      "artist": "Sophie Anderson",
+      "year": 1870,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TlwAMIzWeWNvgJiVpRzo8Rk08BraIWkj8KW1w327Kqb-4oZp0-Uz8zdpb5CJilBnz0ykmH1g=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/elaine/cAHNQPanXfxpkw"
+    },
+    {
+      "id": "walker-art-gallery-gac-29",
+      "title": "Eventide: A Scene at the Westminster Union",
+      "artist": "Sir Hubert von Herkomer",
+      "year": 1878,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TuWk3a3ZTCcErrrGrFS3gyDRo7swV-KPn5VheR9ktw06y3I8E1XFfkM5BfE_0EWK7DbF_B5A=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/eventide-a-scene-at-the-westminster-union/RQHjRS3ZAzayCA"
+    },
+    {
+      "id": "walker-art-gallery-gac-30",
+      "title": "Flower Sellers of London",
+      "artist": "Gustave Doré",
+      "year": 1875,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_S468sW8UOYe2WVS1CQvWPDw8Itk_kdP9ISO4xNXoBcFbRX9sghTRttbXcDIaKt-y2HyKERuXE=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/flower-sellers-of-london/7wH2vOfM1Nfwtw"
+    },
+    {
+      "id": "walker-art-gallery-gac-31",
+      "title": "Miss Elizabeth Ingram",
+      "artist": "Sir Joshua Reynolds",
+      "year": 1757,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TgCQxlpOklfTGu1ovAjnGf03dmTPcFjWlkyM5AblFPFHj-VMqHJ6faDze2zyOAWc9jtKAXGSxk=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/miss-elizabeth-ingram/KQFR9ETS753PLQ"
+    },
+    {
+      "id": "walker-art-gallery-gac-32",
+      "title": "An Idyll",
+      "artist": "Maurice William Greiffenhagen",
+      "year": 1891,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QPUiKlGCCO0q51YFoWwC6jkUjB17_yAZWkPIcBZSPOJwJp6FDjUEpo5cpk6Z6i68flZpIzIEo=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/an-idyll/LgHrVLEcNIT3pg"
+    },
+    {
+      "id": "walker-art-gallery-gac-33",
+      "title": "A Pageant of Childhood",
+      "artist": "Thomas Cooper Gotch",
+      "year": 1899,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Td11Yb5_kJlCOgJQwBCMud7vaz4_kRTsNdW2DekOcBCNYQxgg6x6b0wcndYdBbhcxeiD6ER9Yp=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/a-pageant-of-childhood/TAGAt2NXZpDgIg"
+    },
+    {
+      "id": "walker-art-gallery-gac-34",
+      "title": "Psyche in the Temple of Love",
+      "artist": "Edward John Poynter",
+      "year": 1882,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TWHwWFLx5-qOoVhCA9Vrv81-5isZbfwNExhPsMJsMkMrUztdivTfF2LRZbRtSLqkJaxTTPMw=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/psyche-in-the-temple-of-love/LwEBRovpSAUVMA"
+    },
+    {
+      "id": "walker-art-gallery-gac-35",
+      "title": "Waiting for Legal Advice",
+      "artist": "James Campbell",
+      "year": 1857,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SkSuoo4H_3EKMaH3afHA0ISvzhaodZAddfICI0Wkh3hfmR5viZmcVxCOLlLcN03qsr1waM-SN_=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/waiting-for-legal-advice/vAGF2AhhbFXyOQ"
+    },
+    {
+      "id": "walker-art-gallery-gac-36",
+      "title": "The Murder",
+      "artist": "Paul Cézanne",
+      "year": 1867,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_T3yJxHLUSij8Ua1DeTxG3DMKDKbOd_TOtozF7h4aLC8fHE3waE-5s7KINDaxCXF0m5ekjnZg=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-murder/QgFHUh8XXI0eFQ"
+    },
+    {
+      "id": "walker-art-gallery-gac-37",
+      "title": "Portrait of Mrs Catherine Smith Gill and Two of her Children",
+      "artist": "James Tissot",
+      "year": 1877,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QW4JGzmuxUqZam-UHSj34a6SiG2Q9c2cy03oGkOx8WRlk7A8A5DIStD2aXcyFEa_n_wToaHGI=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/portrait-of-mrs-catherine-smith-gill-and-two-of-her-children/9AF6KBZk-0rBpw"
+    },
+    {
+      "id": "walker-art-gallery-gac-38",
+      "title": "Portrait of Queen Elizabeth I",
+      "artist": "Nicholas Hilliard (called)",
+      "year": 1573,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QKqSRdlR2mn5_AdvTqZBUadfD4xImOIf-30rHNvL8TBiX5QegiFmXzfG3eXjeSqlXgDyDWqw=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/portrait-of-queen-elizabeth-i/VgG8ronTPh8jDg"
+    },
+    {
+      "id": "walker-art-gallery-gac-39",
+      "title": "Interior of a Foundry",
+      "artist": "Léonard Defrance",
+      "year": 1789,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QVr54_5QvqDXY4uEwhCkKQCfsv7U0ud8cbJzrJJB2tNIJVZsdYToj04xra_xY-3-B_xllB8LY9=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/interior-of-a-foundry/AQF9QWYD9Mv6MA"
+    },
+    {
+      "id": "walker-art-gallery-gac-40",
+      "title": "Molly Long-legs with her Jockey",
+      "artist": "George Stubbs",
+      "year": 1761,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QUNypP_nGPk2gkjXacabAv_Kkcypm6QyC9pidCa1-sj1y0GDXSZLbHE0x9jJt35F-BLoKEqcM=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/molly-long-legs-with-her-jockey/HAGVMzLJJ8uwNQ"
+    },
+    {
+      "id": "walker-art-gallery-gac-41",
+      "title": "Portrait of Princess Emilia of Saxony",
+      "artist": "Hans Krell",
+      "year": 1532,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_T4k0-W6ZxMkRYl8HUp1r6bf6M2gPDgfIOos4LUYt3ZmmVj2FipXi9DEH3UZlwX1BwRF2Uw8w=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/portrait-of-princess-emilia-of-saxony/2AEb5-UkNNV6mQ"
+    },
+    {
+      "id": "walker-art-gallery-gac-42",
+      "title": "Mrs Richard Le Doux",
+      "artist": "Vlaho Bukova",
+      "year": 1892,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_STdypjYntZ3p0e_gbBHUavb0uLGZnRM-LeOSvL2RnNyTtYw7twqBjosS6f3tJdEaw-2rmSHA=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/mrs-richard-le-doux/ZQEUed1rCdPAVw"
+    },
+    {
+      "id": "walker-art-gallery-gac-43",
+      "title": "Our First Tiff",
+      "artist": "Robert Walker Macbeth",
+      "year": 1878,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QBJ9cni7IR6ULDon5pchxVUAOI8YgWuIIEwB-PoBigToSNZytAaH-6EyBLghHFlvLPtXoLk9w=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/our-first-tiff/YwFw3TvHtugeHw"
+    },
+    {
+      "id": "walker-art-gallery-gac-44",
+      "title": "Blackberry Gathering",
+      "artist": "Elizabeth Forbes",
+      "year": 1912,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_R1WKl5Vk_KJsOkht13gT1UkdQ3OInYrCcb5LtaHrIaeULf2Rx4thF7D1PA-zCoyxIltbIxnM8=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/blackberry-gathering/ewE3mAskzTtQ7g"
+    },
+    {
+      "id": "walker-art-gallery-gac-45",
+      "title": "Richard Gildart",
+      "artist": "Joseph Wright (of Derby)",
+      "year": 1768,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TWPVRuMOb1lTPV67xOYrIv7Ol2WGpkBCIhTMOeWTEEVaC0We0JWl-or_JFmKZ9URcFwsxllg=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/richard-gildart/zwFvqtq3483F-w"
+    },
+    {
+      "id": "walker-art-gallery-gac-46",
+      "title": "Portrait of the Artist as a Young Man",
+      "artist": "Rembrandt van Rijn",
+      "year": 1630,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QJE200YtoPnUgZLdSUvNQqY7rUwqiicVOIGWVFz1XNLgWRBld7CyCvKsR-EhxOTSp2CI6TUXQ=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/portrait-of-the-artist-as-a-young-man/QgEfUHzCkN472g"
+    },
+    {
+      "id": "walker-art-gallery-gac-47",
+      "title": "The Coat of Many Colours",
+      "artist": "Ford Madox Brown",
+      "year": 1864,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SvJ28cHVxQUBFEjYHEjLaSB-ylyX9OlILffzNiDkbgvwuvJ9hZVXhM-TbQaazdQZXSXoICi1Y=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-coat-of-many-colours/6AGSfaDeVwiunQ"
+    },
+    {
+      "id": "walker-art-gallery-gac-48",
+      "title": "Spring, Arnside Knot and Coniston range of hills from Warton Crag",
+      "artist": "Daniel Alexander Williamson",
+      "year": 1863,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RLS7bGwIyFGlh5eJxMPZ8ohI9DTlyJRV-jqgHoagxgpQloAX2btf0nSX8hJtRv2sdVLXekrfQ=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/spring-arnside-knot-and-coniston-range-of-hills-from-warton-crag/mgGR11f18tRLMg"
+    },
+    {
+      "id": "walker-art-gallery-gac-49",
+      "title": "The Lincolnshire Ox",
+      "artist": "George Stubbs",
+      "year": 1790,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TtwXv41MU07l2LDEgIhaD8Zg3oBCINya1TL-SGneRoXpWEXWC1HYgmTAU5vOcgAACe48coRp4=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-lincolnshire-ox/lwF4_R0hZcuS1g"
+    },
+    {
+      "id": "walker-art-gallery-gac-50",
+      "title": "The Virgin and Child with a Saint",
+      "artist": "Bartolomeo Montagna",
+      "year": 1483,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QIoN3s9YOV2ItSLfd0ABrLXlPPvsL8R0eGoZjqEV4EUSIdd4KxCt6lguKb9YOx0-rmHKHehB_1=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-virgin-and-child-with-a-saint/2QHeQXJhxqD_Og"
+    },
+    {
+      "id": "walker-art-gallery-gac-51",
+      "title": "The Guitar Player",
+      "artist": "Jacob van Schuppen",
+      "year": 1700,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TPY_IVRa1qgOR0vqchihljxo0Kj9UXs9Mssys8zQBJZoK_mauCzwzfxG4iLiu5zQ9TDzzpmw=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-guitar-player/pAG7_pRtW7WlMg"
+    },
+    {
+      "id": "walker-art-gallery-gac-52",
+      "title": "Waiting: an English fireside of",
+      "artist": "Ford Madox Brown",
+      "year": 1851,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RdeYuoyFoZNXy4HCB2xVkfi6Kd8tRRl5asa56z2KYfTt2OHplAPSzJVhBs5ArF8SPIu4tCJh0=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/waiting-an-english-fireside-of-1854-55/oAFQmmLVnpSh6A"
+    },
+    {
+      "id": "walker-art-gallery-gac-53",
+      "title": "Madame Hessel au Sofa (Madame Hessel on the Sofa)",
+      "artist": "Edouard Vuillard",
+      "year": 1900,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RfyVx7Y1AaZiclBzDAopbR_omVdup-gHIFAlsMYDoaWZYPfw9NGD5dMr0n7255gjjVyCdixkk=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/madame-hessel-au-sofa-madame-hessel-on-the-sofa/YwFXkZvSxsyapg"
+    },
+    {
+      "id": "walker-art-gallery-gac-54",
+      "title": "Meleager and Atalanta",
+      "artist": "Peter Paul Rubens (studio of)",
+      "year": 1635,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Sr7IrD185_1xnCdF7p10lClJeXN_Ggp4L10526Mkp_H9p_kcBW6bGlxYhAxpqxVv2nH8xRPmI=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/meleager-and-atalanta/0gH6uBE-7QPvzg"
+    },
+    {
+      "id": "walker-art-gallery-gac-55",
+      "title": "Study for 'The Sleeping Knights'",
+      "artist": "Edward Burne-Jones",
+      "year": 1870,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SVa550WzjUndHIZYXnjWUBr8Qm24ZWPvg8RryoCxmu79x3uX7bSMAPQa5fdlK2du3qQTDpKpQ=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/study-for-the-sleeping-knights/_AHwQjWVZhPeNA"
+    },
+    {
+      "id": "walker-art-gallery-gac-56",
+      "title": "Fantine",
+      "artist": "Margaret Bernardine Hall",
+      "year": 1886,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_T4BHyBmtQeDqbfv0zB7khil3v92VQWCBNhVdk_8Vg4z2meL54TqCho4BKiPFOEJrtDOgIF5W4=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/fantine/kAHK30YdbHwHVg"
+    },
+    {
+      "id": "walker-art-gallery-gac-57",
+      "title": "Table d'Hote at a Dogs' Home",
+      "artist": "John Charles Dollman",
+      "year": 1879,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_S2LEl0kUa_yr-yHhpSkeFzgE0VrofBSEVuDbDMkL3xLEk7RPNH0Qh30yYsgaIbM9CrnsQv5E4=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/table-d-hote-at-a-dogs-home/kgGx2yaJ7wII4A"
+    },
+    {
+      "id": "walker-art-gallery-gac-58",
+      "title": "News from My Lad",
+      "artist": "James Campbell",
+      "year": 1858,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Qsw8F5gmAb7vzYHDiA7HZcA1JaHH9iAxq6o2wEZ1-rtd0Mh347flEIx05A6Izgwe6oDa3uLQ=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/news-from-my-lad/agHT5hJSNeKt9Q"
+    },
+    {
+      "id": "walker-art-gallery-gac-59",
+      "title": "A Summer Night",
+      "artist": "Albert Joseph Moore",
+      "year": 1887,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Qop3nYOWtE9MFQOzvlLs2HG0EtIC2ExRKBdvU2fao0OTx_v7V9AOfMN4aI-nH-JcgMAwHSfg=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/a-summer-night/wQHns_Vyx6foyQ"
+    },
+    {
+      "id": "walker-art-gallery-gac-60",
+      "title": "Puritan and Cavalier",
+      "artist": "Frederick Goodall",
+      "year": 1886,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_To0mg65jcHrdzw5nDKynWOnmuD6oQXr66LPBo7Oug0wbo6HYH2gY4IpEeUkKrjBNrFJUCve5c=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/puritan-and-cavalier/9QGprzgAvT8eLA"
+    },
+    {
+      "id": "walker-art-gallery-gac-61",
+      "title": "Susannah and the Elders",
+      "artist": "Master of Apollo and Daphne",
+      "year": 1490,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QQ133BJHpS88GCujftCOk1WO_oe7s0gmIcWhzkFWy3TiozwOp7BahH1pUKyjxkySor897pcA=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/susannah-and-the-elders/VgGQ7TYbqCw_1A"
+    },
+    {
+      "id": "walker-art-gallery-gac-62",
+      "title": "River scene with ferry boat",
+      "artist": "Salomon van Ruysdael",
+      "year": 1650,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TY4uS970UPOlvaeRuiuubXEu-dFRkKWbk_U0X6CEgoDAUFUnFfpkqhpFotSUtI50V519x2=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/river-scene-with-ferry-boat/kgF_4z5ZB_YbEA"
+    },
+    {
+      "id": "walker-art-gallery-gac-63",
+      "title": "Mr and Mrs Atherton",
+      "artist": "Arthur Devis",
+      "year": 1743,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_T6-OgOVBpt73HMiKIoFduyz4lIvUl6kJs5Fo-VLOHTGDnYbHXQIsaLFmF_sVLYAu1NbUc-Eg=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/mr-and-mrs-atherton/vQHLeD8w6YVTqQ"
+    },
+    {
+      "id": "walker-art-gallery-gac-64",
+      "title": "Pin Up 1963 – for Francis Bacon",
+      "artist": "Sam Walsh",
+      "year": 1963,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Q3rXt5KX5nBnlVT6jMoiB8CBqdbgWe9ZlTjh6XjRhW8NemZdYqHqIEi18H09pvEKbBAuYK9g=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/pin-up-1963-%E2%80%93-for-francis-bacon/oAFQsyDaYP-5Vg"
+    },
+    {
+      "id": "walker-art-gallery-gac-65",
+      "title": "Isabella,Viscountess Molyneux, later Countess of Sefton",
+      "artist": "Thomas Gainsborough",
+      "year": 1769,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TdbR8h7APQIf9DrDJRMwpaRh7Z2UDRj4A2o-kGRxzeafAbDn_U_KNLxZLdgnRmtdiJGha7LA=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/isabella-viscountess-molyneux-later-countess-of-sefton/xAHkOfZTtUUggA"
+    },
+    {
+      "id": "walker-art-gallery-gac-66",
+      "title": "Baalbec - Ruins of the Temple of Bacchus",
+      "artist": "David Roberts",
+      "year": 1840,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_T6tShEcD0iv70NJ93RPzq04k9eLKMObkt9HdK8Lr7-DzwaiPvv32UxjpBrdv6EDkkgmjdaYg=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/baalbec-ruins-of-the-temple-of-bacchus/XgE-S8tPYTmIvg"
+    },
+    {
+      "id": "walker-art-gallery-gac-67",
+      "title": "The Virgin and Child with Sts. Elizabeth and John the Baptist",
+      "artist": "Peter Paul Rubens",
+      "year": 1632,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TVu5Q-p4K8Yqs2P2a-Cl4CNSxJJIDEuNV4NbAODiUCGRNBd2LftBqGjjlk7Tiqq_PLqKikBQ=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-virgin-and-child-with-sts-elizabeth-and-john-the-baptist/wwFG-Hz8pP7FNA"
+    },
+    {
+      "id": "walker-art-gallery-gac-68",
+      "title": "Millie Smith",
+      "artist": "Ford Madox Brown",
+      "year": 1846,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RiKJAEcXGo2KLcdfslISpDpzSo48m7DddVt05Bpw3gvWuae9XdlASojayV4BYFz7jRsjZtLzYB=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/millie-smith/xAFYvQKKbRuQdg"
+    },
+    {
+      "id": "walker-art-gallery-gac-69",
+      "title": "Snowdon from Llyn Nantlle",
+      "artist": "Richard Wilson",
+      "year": 1765,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_R-o8VRgQB9ntFTFrQbQ7NU6xOxKdGFgPJvhzg1zbNlpcP62tqxpL_tuPBORczsUHZbj9M0iQ=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/snowdon-from-llyn-nantlle/zwEzEszy22EHrg"
+    },
+    {
+      "id": "walker-art-gallery-gac-70",
+      "title": "Self Portrait",
+      "artist": "Anton Raphael Mengs",
+      "year": 1774,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SUvc-Z3vRCLXnXsyr-SifebZRBIsbLmbabeJMd86xch2-dXma0InQr06HBlg4AxrTB-58Juw=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/self-portrait/GgG_sBDuY-X79g"
+    },
+    {
+      "id": "walker-art-gallery-gac-71",
+      "title": "Scenes from the Life of St John the Baptist",
+      "artist": "Francesco Granacci (circle of)",
+      "year": 1505,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Qvn5IHK4aYCEZXdaE-Qm0ArPqOUOHtugxCW0cqazUra4nzolYTNUQV2l5MjRXfx_Br1ISWgxgz=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/scenes-from-the-life-of-st-john-the-baptist/RgFtf1kpTFdq0Q"
+    },
+    {
+      "id": "walker-art-gallery-gac-72",
+      "title": "King Charles II",
+      "artist": "Godfrey Kneller",
+      "year": 1685,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TVpyk7TGwRXxV8pRlKmcgTsqglSwy19duH62_IoB_uG7lRdjmEM65tYYfp36CvDrdXH2NdQbU=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/king-charles-ii/nwHxRRoAFi5aAg"
+    },
+    {
+      "id": "walker-art-gallery-gac-73",
+      "title": "Returning from the Haunts of the Seafowl",
+      "artist": "William Collins",
+      "year": 1833,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SLUquiuqIv_TrmPCI03ngE78QN8xug5SIADKtYhk2Ixrn8YGKQIxymwf5PjSUkw5in7i_gm8IH=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/returning-from-the-haunts-of-the-seafowl/owHX9S6BaSf_XQ"
+    },
+    {
+      "id": "walker-art-gallery-gac-74",
+      "title": "Lady in Pink",
+      "artist": "Frederick Carl Frieseke",
+      "year": 1902,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SePcnSk8bi1anONxeXonqo_wqwpAG8TWJtHs-DIHMWdZDOq_edr0FRcXTetRADwlGzM0lmmEI=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/lady-in-pink/hgGnz6D3uE1Ucw"
+    },
+    {
+      "id": "walker-art-gallery-gac-75",
+      "title": "Low Tide at Trouville",
+      "artist": "Gustave Courbet",
+      "year": 1865,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QPXrrXAXGTQifNCSdfOKGhtCwLsAN1V8gM4xO1MPGszz0HLwZzKTDgJqPvXEd352wVos-ohb4=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/low-tide-at-trouville/8AGc55iCyzCQwA"
+    },
+    {
+      "id": "walker-art-gallery-gac-76",
+      "title": "View of Dordrecht with the Grote Kirk Across the Maas",
+      "artist": "Jan Josefsz. van Goyen",
+      "year": 1644,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QLLZfVyI9v_tvYONA_dHT26POunq6t1ebM7zKZsMMnDle9R3b7kNKrDdKU3_--3zcPp7R9Jg=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/view-of-dordrecht-with-the-grote-kirk-across-the-maas/AQHffXzYHW1MJg"
+    },
+    {
+      "id": "walker-art-gallery-gac-77",
+      "title": "The Annual Girandola at the Castel Sant’Angelo, Rome",
+      "artist": "Joseph Wright (of Derby)",
+      "year": 1775,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RvvfpPUc-q8FaDktHRo5HAFX5YlXoRDwi2Ht9PIT0xt5F0c21Ul_U1Nq1yNE1MCLXkhMSPzJc=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-annual-girandola-at-the-castel-sant%E2%80%99angelo-rome/XQGaIosfH76Fsg"
+    },
+    {
+      "id": "walker-art-gallery-gac-78",
+      "title": "Virgin and Child with Saints and a Donor",
+      "artist": "Vincenzo Catena",
+      "year": 1500,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Qj7y8jd00bb6V7FoF37RrKE6sbP-demSMFpKKBEfegBmrTVX6EvgCkUNaoGZ1JpMBEPWXR0Q=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/virgin-and-child-with-saints-and-a-donor/vgG6U-CEl-56hA"
+    },
+    {
+      "id": "walker-art-gallery-gac-79",
+      "title": "Ophelia",
+      "artist": "Henrietta Rae",
+      "year": 1890,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TQMSbrGcnhQDkEyewjdIi6CH0o6_iMPS5dEIdHrIeGi73njHv-bBFq3j42bfKE736TUZf1TPSH=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/ophelia/mQH7HDdPEXGiWQ"
+    },
+    {
+      "id": "walker-art-gallery-gac-80",
+      "title": "Apollo and Coronis",
+      "artist": "Adam Elsheimer",
+      "year": 1607,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RjZGXtBPYi1U2G9IVmUnQ4ffMLy82SX8eH6_lmrtO666ko1-QTmzijA4EHEoo1KR-ogzA_kz9X=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/apollo-and-coronis/YgH4p5cImVq9eQ"
+    },
+    {
+      "id": "walker-art-gallery-gac-81",
+      "title": "The Stonebreaker",
+      "artist": "John Brett",
+      "year": 1857,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SjMZ4Pjt_-ZOcwJQteEh219eSrQvulaXD7zChoW_XpzEyvVa8HblRD_1P3WLl3e-d0MHrZkEc=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-stonebreaker/ngECQ4ZVeQMWMg"
+    },
+    {
+      "id": "walker-art-gallery-gac-82",
+      "title": "Virgin and Child in Glory",
+      "artist": "Bartolomé Esteban Murillo",
+      "year": 1673,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TNhdTTLaqWDFi5p27BCUwj0AlxyUJQDYWxRI2ax36LH_FKZGjk-wDukYPdcXUNbAi6BrOUr6Eh=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/virgin-and-child-in-glory/SgFi8Ulrq4GL9Q"
+    },
+    {
+      "id": "walker-art-gallery-gac-83",
+      "title": "A Monkey",
+      "artist": "George Stubbs",
+      "year": 1799,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_T0VQuCMWLGczE6akX1tCzEUZv_VKSCXlfWLeKkuKiNvWupgElpr2VSCvgP5N08VpUdbcOWQ8k=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/a-monkey/xAEBfnkFVM3Tgw"
+    },
+    {
+      "id": "walker-art-gallery-gac-84",
+      "title": "Sweethearts and Wives",
+      "artist": "John J Lee",
+      "year": 1850,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Q403akRp0SObvi4uesAh7NqWDo-pBn1ev1tk07q93IzYiP6ds3_1XITTI4yKzhhTw7xdqvRHHh=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/sweethearts-and-wives/CAHhMPlJPjyESQ"
+    },
+    {
+      "id": "walker-art-gallery-gac-85",
+      "title": "The Triumph of the Innocents",
+      "artist": "William Holman Hunt",
+      "year": 1876,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TLe9a70DsGW2IugUvDWX3s3WW5VFyFhynXmfZH0ZCNfwsscMs6CkdrE1oqeBYBm0djHh0JSA=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-triumph-of-the-innocents/lgHIjI8RxFqNTQ"
+    },
+    {
+      "id": "walker-art-gallery-gac-86",
+      "title": "Ice breaking up on the Seine near Bennecourt",
+      "artist": "Claude Monet",
+      "year": 1893,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QNm1SCBeqwegOjkCbMxO3hOG46bAKKckqinYrDWbwHOydtRsXiSEjHpr4f0Uvj16le-rL7tKA=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/ice-breaking-up-on-the-seine-near-bennecourt/NwEGALYxxMINSA"
+    },
+    {
+      "id": "walker-art-gallery-gac-87",
+      "title": "Fleetwood Hesketh",
+      "artist": "Joseph Wright (of Derby)",
+      "year": 1769,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TU3PYFLYg3VkrctHTCVxkhSPAL9pRhvJcpS2bxEOLSqJIVtMr7b2x-Uv5I7AOISLvBIuLWito=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/fleetwood-hesketh/OQFyaebDPR-dIA"
+    },
+    {
+      "id": "walker-art-gallery-gac-88",
+      "title": "Salome",
+      "artist": "Spinello Aretino [Spinello di Luca Spinelli]",
+      "year": 1390,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_ToLP1Qzk_hgvI22D1a_qYWWhMsVomiFeeJC18dZkEgJlGiQbJIeK_XmVQ7ML5hndr4mIFzQfg=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/salome/dwE1ASGIHEHo1g",
+      "artworkType": "Fresco"
+    },
+    {
+      "id": "walker-art-gallery-gac-89",
+      "title": "The Promise",
+      "artist": "Henry Scott Tuke",
+      "year": 1888,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QqG0bjEIhhckojhF-WUT1Z-QuX2awVALs2F0nv47cnChV9pPEB_qcKRIedq_chxtBNKXPn3w=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-promise/UgHo7eH3FbHv3w"
+    },
+    {
+      "id": "walker-art-gallery-gac-90",
+      "title": "William Roscoe",
+      "artist": "Martin Archer Shee",
+      "year": 1815,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SQs1kwyDkId_gmoHNvm_-xw5-W4ugU6Z9RaufrvzQ0Tn6rYQC58OFktvymJNyUtKBBn23ifXQ=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/william-roscoe/SgH2vGkulhsNWQ"
+    },
+    {
+      "id": "walker-art-gallery-gac-91",
+      "title": "Warmond Castle in a Winter Landscape",
+      "artist": "Jan Beerstraten",
+      "year": 1661,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QGwWvsUBIcarjtZQqGaP--ZZR6W_EuKwxTJVJ4PuFjRBpBrcoUjq8UMzZBavjvi756rBG4gs_R=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/warmond-castle-in-a-winter-landscape/ywFf7vs5lcu9SQ"
+    },
+    {
+      "id": "walker-art-gallery-gac-92",
+      "title": "The Adoration of the Shepherds",
+      "artist": "Mattia Preti",
+      "year": 1660,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SwuzdqIOvsCY0hmiselojlRLcBbaDFxFeJjIhAhol_caL2L8hM7LZHwIIV6weqz858NJ5PtA=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-adoration-of-the-shepherds/BAGkwz67Nl7afA"
+    },
+    {
+      "id": "walker-art-gallery-gac-93",
+      "title": "Interior of the New Church at Delft, with the tomb of William the Silent",
+      "artist": "Hendrick (Cornelisz.) van Vliet",
+      "year": 1667,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TH9MBxXtcps0Wnk9F2jYjJM35ob0Oy5c-dgNKdtcMmjwdcq9JeDsBuuuUpzbANoDT-BQp7uQg=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/interior-of-the-new-church-at-delft-with-the-tomb-of-william-the-silent/ZwEJnGKueAkMRA"
+    },
+    {
+      "id": "walker-art-gallery-gac-94",
+      "title": "Virgin and Child with Saints Nicholas, Sebastian, Roch and Martin",
+      "artist": "Lucchese School",
+      "year": 1400,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TpJZPYJ5NL2DJ3LWRm0PIMYJ08yaIIRPqrbtbseID26WhSIGDx1gaNQRrhNpFR_wWaER2sTg=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/virgin-and-child-with-saints-nicholas-sebastian-roch-and-martin/xAFcRCOFoTYROg"
+    },
+    {
+      "id": "walker-art-gallery-gac-95",
+      "title": "Dutch Merchant - Ships in a Storm",
+      "artist": "Ludolf Bakhuizen",
+      "year": 1670,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QKaou_AnJ0GNOmeSRa_r_iZGExJyqpjxaCEJPaBna4bWTti56w02W4dw_AhMM88fWZ7oTjVjA3=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/dutch-merchant-ships-in-a-storm/KQF_FQxlBWZvZw"
+    },
+    {
+      "id": "walker-art-gallery-gac-96",
+      "title": "The flight of Madeline and Porphyro during the drunkenness attending the revelry (The Eve of St. Agnes)",
+      "artist": "William Holman Hunt",
+      "year": 1847,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_T3zefqLimsN36j78PSaPdkfrg4RkWaTIRxYE1jykEOs7-3xygTEyFbfy56Kh7lJ_48RTJ3=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-flight-of-madeline-and-porphyro-during-the-drunkenness-attending-the-revelry-the-eve-of-st-agnes/mgEdwnkyJnevZQ"
+    },
+    {
+      "id": "walker-art-gallery-gac-97",
+      "title": "Virgin and Child with Angels",
+      "artist": "Joos van Cleve",
+      "year": 1525,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RZ6Y4-XCziafVa0Ds7HUPtTADDMAi7kVMOHafcLTXFE1OnZymNazlZ29r8CPUhLc2KFcafkQ=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/virgin-and-child-with-angels/mgGcWO7R1WkCew"
+    },
+    {
+      "id": "walker-art-gallery-gac-98",
+      "title": "Rest on the Flight into Egypt",
+      "artist": "Netherlandish School",
+      "year": 1500,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RHLwnSiYAcZKEGyXlFjKQR3FWVQVlHDSU6p_Wq7rjakrrbfzP19Lr73wqeuKDXiibEHDAGees=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/rest-on-the-flight-into-egypt/gAHP0nipl7TEcA"
+    },
+    {
+      "id": "walker-art-gallery-gac-99",
+      "title": "The Sense of Sight",
+      "artist": "Annie Louisa Swynnerton [née Robinson]",
+      "year": 1895,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QNzP5MNDvkJFOFMwnUsrcoEaBBk2DOcBpvHY7PJ8_T4QJgtYnSP-IxljbTKA4Zic_tpKERw5I=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-sense-of-sight/OQGS1pA-98rTeQ"
+    },
+    {
+      "id": "walker-art-gallery-gac-100",
+      "title": "Christ and the woman of Samaria",
+      "artist": "Ascribed to Michelangelo",
+      "year": 1536,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QDcx2G8LjndbP3rM7UfbV0ZJbBDuzz9Mw1WD_48cQ3mnbo6854gA-CgjqU2MoDuhevUjf5m4g=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/christ-and-the-woman-of-samaria/twF1zwxlh7Ow-w"
+    },
+    {
+      "id": "walker-art-gallery-gac-101",
+      "title": "St. Paul’s from the River: Morning Sun in Winter",
+      "artist": "Henri Le Sidaner",
+      "year": 1906,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Q1vl2C6WyKrssrNSAzP875OlKUxKTrnw-TOFbKDYwxWYZHO2AHJoXAZZce-5kE3Vc9nPlby2-m=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/st-paul%E2%80%99s-from-the-river-morning-sun-in-winter/0gHAvRZZZeZepw"
+    },
+    {
+      "id": "walker-art-gallery-gac-102",
+      "title": "Triptych with Scenes from Christ's Passion (reverse of right wing) Two Kneeling Donors",
+      "artist": "Master of the Aachen Altarpiece",
+      "year": 1500,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SHjVbqfjy1qNNKqtv8amQPMw7DMiacP9N6z_zG_vU8gP45xVHxbjil9h_oHbuxxmxh9p_0oQ=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/triptych-with-scenes-from-christ-s-passion-reverse-of-right-wing-two-kneeling-donors/uQGLrkP9WJInDg"
+    },
+    {
+      "id": "walker-art-gallery-gac-103",
+      "title": "Portrait of a Young Man",
+      "artist": "Jan Mostaert",
+      "year": 1530,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RCcjDdviyRma_4rTPpyebrE6Smf3I4vV7vTxbOIUK6yPop2BSAIQGav_FwYDt9lWt6vGn03uA=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/portrait-of-a-young-man/igGprMQPWxn-oA"
+    },
+    {
+      "id": "walker-art-gallery-gac-104",
+      "title": "View from Bidston Hill",
+      "artist": "William Davis",
+      "year": 1856,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SFHNvCbQ-kjvQt0qBsq7NjLj9XCL5U3x1l2EOPf_slM0CgcW3xXxs-mYA51V2LMTmGv56HSgI=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/view-from-bidston-hill/rwEWZjfwa3vI8w"
+    },
+    {
+      "id": "walker-art-gallery-gac-105",
+      "title": "Summer",
+      "artist": "Edward Atkinson Hornel",
+      "year": 1891,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_S18sP_3hxwgGBc_YZrE6TJJP3iheBAbdrX76ZbHlY3w4CN7zYkjuWZj-7HR9YLrupoHm1gGBs=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/summer/IAGJEwUelvQPXw"
+    },
+    {
+      "id": "walker-art-gallery-gac-106",
+      "title": "Landscape",
+      "artist": "Adrian Wiszniewski",
+      "year": 1987,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QT3ATzuCsAcko-AA7eR9b0PpCbqkdVQxa1jE5YoYcr5WRqAdiUSCwnMuSsUU_P3VPpeXU_ac_6=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/landscape/HgGOW2y1rPAh-Q"
+    },
+    {
+      "id": "walker-art-gallery-gac-107",
+      "title": "Portrait of Sir Thomas Lucy and his Family",
+      "artist": "Cornelius Johnson, After",
+      "year": 1740,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_R89f-u4jPSUK-jCJzT953XMqNOfXvTAYiGIOZ0FruAagjSPjRVz8dAlhiq-AIAIr9CgNQduv-F=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/portrait-of-sir-thomas-lucy-and-his-family/TwE6FjyR_baFkw"
+    },
+    {
+      "id": "walker-art-gallery-gac-108",
+      "title": "Vespers",
+      "artist": "John Singer Sargent",
+      "year": 1909,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RyHYz1F89ryAxMM13N4UKpzs0CMfRxguD_T6A3KhZ7fz9qW3tCiBgxAfdHySYeJQDSi1_UwA=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/vespers/WwGXm7peclRYfQ"
+    },
+    {
+      "id": "walker-art-gallery-gac-109",
+      "title": "Portrait of George Delves and a Female Companion",
+      "artist": "British School",
+      "year": 1577,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RLdBVvxD1fAYlNopjiSRhOpie2ie-Vr0IxU1jNu7Zx9yTO4bfbTDy04JKJsuTSolCfsL1s2A=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/portrait-of-george-delves-and-a-female-companion/ywH1n_9pCndu8g"
+    },
+    {
+      "id": "walker-art-gallery-gac-110",
+      "title": "Linlithgow Palace",
+      "artist": "Joseph Mallord William Turner",
+      "year": 1806,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_S6e7T97XtcvGDS806k6f00twNWY7iVZmdjfU47BgK4g3Ri8yAWIR7P7gkJzh16dj4T4wz7fF8=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/linlithgow-palace/SQGDHWt5XOVyOQ"
+    },
+    {
+      "id": "walker-art-gallery-gac-111",
+      "title": "Woman Ironing",
+      "artist": "Edgar Degas",
+      "year": 1892,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QEdtA-ZB-NVQ2mc_6eriu9jlplqv4LQpVCV_750Cq9GXLhPOv4DzNnjLXsI5nYRSy4EpquLA=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/woman-ironing/0gFLG-nty7IWFQ"
+    },
+    {
+      "id": "walker-art-gallery-gac-112",
+      "title": "Virgin and Child with Saints",
+      "artist": "Marco Palmezzano (studio of)",
+      "year": 1458,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Q2fj-13eMfz2FWW_PCfHNY756BnKV1pIyMCdoCJKv3hxsUawbV1nyX6cRVjrWo-Ihdwc-lb_o=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/virgin-and-child-with-saints/EwHvM43b2dSjgw"
+    },
+    {
+      "id": "walker-art-gallery-gac-113",
+      "title": "Lamentation over the Dead Christ",
+      "artist": "Master of the Virgo inter Virgines",
+      "year": 1486,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_T_FL7RWs-Z2z0Xu1-SIUB2VN4Q82FE6UaMuz2cqYasP3DIALYWhjjDl-7TMNYK2RNzMHkwR_U=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/lamentation-over-the-dead-christ/sQGK7aWGOWJGig"
+    },
+    {
+      "id": "walker-art-gallery-gac-114",
+      "title": "Friday",
+      "artist": "Walter Dendy Sadler",
+      "year": 1882,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TmB3BabSdFtB9F1Im8WLtS63_3u4zr2xKSAAIQFh0XP9d7Tz5W7IAtsi9CiqWjyHWY5ROfZA=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/friday/yAFbxqc5GnAfJw"
+    },
+    {
+      "id": "walker-art-gallery-gac-115",
+      "title": "Under the Hammer",
+      "artist": "Robert Bevan",
+      "year": 1914,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SWAbirRwMMjfc8Pz5-FwaBEMePVa3H3V9PJXVF3KedL-dzqelEtuDiujrodAJ6Pm82ZfQvFuY=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/under-the-hammer/GwEW_OQaPFDJAA"
+    },
+    {
+      "id": "walker-art-gallery-gac-116",
+      "title": "The Dragon’s Den",
+      "artist": "James Campbell",
+      "year": 1854,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_STXb4K9FxaFvlh-oO59YxIirrn1E5c9JSqQH2IAmxuFM02DEz7uCGTa-kjIYigzQj2VSqoQck=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-dragon%E2%80%99s-den/9wHh79USbUidmg"
+    },
+    {
+      "id": "walker-art-gallery-gac-117",
+      "title": "Landscape",
+      "artist": "Joseph Mallord William Turner",
+      "year": 1840,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SkjWma421moKcix7a1-KDHnfsYuODzYi3l3_WrOAr2rOJFX-MPDCpHOGZ6i5nTUa8S9vgOLHg=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/landscape/7wHyOsfaZB4pYA"
+    },
+    {
+      "id": "walker-art-gallery-gac-118",
+      "title": "Portrait of John Naylor",
+      "artist": "Sir Francis Grant",
+      "year": 1857,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_ThnwKGgs2-T_GPV2N4Lw6QopI-6EwzpzW5TiaGtHdOsEwTXBNVIz_q3oGFKZZWr-8ROlIGAeg=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/portrait-of-john-naylor/nQGhL3DPUS8-cw"
+    },
+    {
+      "id": "walker-art-gallery-gac-119",
+      "title": "Holy Family with Music Making Angels",
+      "artist": "Attributed to the Master of Frankfurt",
+      "year": 1515,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TytjX_-1YmJMOVeiQWzEjPEYQX9lEVkk75lDC--d4sepyMk0hM_BJRX-jJijaftxdUO7oSel4=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/holy-family-with-music-making-angels/pQG-azSbX4dhUA"
+    },
+    {
+      "id": "walker-art-gallery-gac-120",
+      "title": "The Infant St. John the Baptist presented to Zacharias",
+      "artist": "Spinello Aretino [Spinello di Luca Spinelli]",
+      "year": 1390,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Rkc4Xy9NX3kES1pbw40Urjikv2qzE0s2QIkDZL-o9J8Y6mjSVsCjVJB2w3WXeSRWkZzka1xuU6=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-infant-st-john-the-baptist-presented-to-zacharias/CwHcpuNYXKB3iA",
+      "artworkType": "Fresco"
+    },
+    {
+      "id": "walker-art-gallery-gac-121",
+      "title": "St Bernardino Preaching",
+      "artist": "Lorenzo di Pietro di Giovanni Vecchietta (studio of)",
+      "year": 1462,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Qr8dd3wD7ItZDBP6_qKNd4F9rVsr02IYdEpzHjqMiBQCf1DcEjMXvXcS7daZ-WB8-F5D6GJMY=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/st-bernardino-preaching/iAECZYUlP54sOg"
+    },
+    {
+      "id": "walker-art-gallery-gac-122",
+      "title": "At Hale, Lancashire",
+      "artist": "William Davis",
+      "year": 1860,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Tosrvks4E6k1bij7MeYfcd_q1WTyg9D-qtox2Cwsf5LjgcNawRTARliJGswctdsxCBnPLufW2f=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/at-hale-lancashire/PAHPBkrYG-mCqQ"
+    },
+    {
+      "id": "walker-art-gallery-gac-123",
+      "title": "Joseph Mayer",
+      "artist": "William Daniels",
+      "year": 1843,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RbczAqf1vHXD2nGZuSMrfWIrTLghRP5c_VTKg-e-PMJzMvWhzmTHm8wiUx4ojU1-F1eHUTuw=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/joseph-mayer/TgHeytu61xGzOg"
+    },
+    {
+      "id": "walker-art-gallery-gac-124",
+      "title": "Willendorf Venus",
+      "artist": "Claude Heath",
+      "year": 1997,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QhOXZ05fQ970_tRZCPLUrmHl1iJMagh-FbH3PVcKt26nyBn1zCPAWJQTUOlhHcODyCJdtJG2c=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/willendorf-venus/1AHuKLpIvRBIgw"
+    },
+    {
+      "id": "walker-art-gallery-gac-125",
+      "title": "Girl with Jug of Ale and Pipes",
+      "artist": "James Campbell",
+      "year": 1856,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TlA6QW5fDJr0TKl05HMqYYgXbZpgnM4m3L49eF06WIBGiFnb1cJHwgVy9x2WTnwZb5JGxAlu0=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/girl-with-jug-of-ale-and-pipes/DgEbfdQvtLiTiA"
+    },
+    {
+      "id": "walker-art-gallery-gac-126",
+      "title": "Landscape with Figures and Animals",
+      "artist": "Philippe Jacques de Loutherbourg",
+      "year": 1762,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SiKtDKWLGTXYeT6z29Vo19gqo-v_bdijZjsu85KPVe5jvVKT_v2C9czq7mjuS75AL3tA-W=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/landscape-with-figures-and-animals/_AEPGwZZKpMGdQ"
+    },
+    {
+      "id": "walker-art-gallery-gac-127",
+      "title": "March",
+      "artist": "Roger Hilton",
+      "year": 1963,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TPjA4Lo5tCfJt1IWxKyy8TGKWSGCc2r3AMUdwfH42rqDf65CWRvN8B14SEr3Pp31rWn8Jl=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/march-1963/9AFjMJKVWEEivw"
+    },
+    {
+      "id": "walker-art-gallery-gac-128",
+      "title": "The Hunted Slaves",
+      "artist": "Richard Ansdell",
+      "year": 1861,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RdiQZTQbPdUIjfs_AFwtPjrxQMBiLB6ahbGcV8HYlalSBmA3hebt5OarstdgNE6OuM8fzoxTQ=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-hunted-slaves/tAGQ07WvIWROyA"
+    },
+    {
+      "id": "walker-art-gallery-gac-129",
+      "title": "Ladies in a Garden",
+      "artist": "Adolphe Joseph Thomas Monticelli",
+      "year": 1870,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TS9oD_TmktPjXb7VVxCwfMIVzVeE9alsnJ4SdfxRDHBHXjGkjfCniUf63xlPTjzFkUSclANQ=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/ladies-in-a-garden/fgEm1EQ7lUU0Ww"
+    },
+    {
+      "id": "walker-art-gallery-gac-130",
+      "title": "Mrs Frances Hesketh",
+      "artist": "Joseph Wright (of Derby)",
+      "year": 1769,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Q-A3q9z7q--5qN_Is6lOl_9BkC7ibNIniSPlvPbnW4gb0h5Y1OrJ116YYl9F6rI0TZm3Q7DQ=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/mrs-frances-hesketh/pwFs9jhoOYjnnw"
+    },
+    {
+      "id": "walker-art-gallery-gac-131",
+      "title": "Sir Robert Clayton",
+      "artist": "Thomas Gainsborough",
+      "year": 1769,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RDDkl7tiGWy0W9ZGglq-MvoaX6vUShF2UOdzqqwaLU2B3S6FDg6-kGVDRMusuSqohD9KcIbUc=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/sir-robert-clayton/EgHu_T-AH96ZmA"
+    },
+    {
+      "id": "walker-art-gallery-gac-132",
+      "title": "Napoleon Crossing the Alps",
+      "artist": "Paul Delaroche",
+      "year": 1850,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SPQGZ-oUw5Ln_OQ1S85YPQa8ggPdgv0LnYQJE1113vjQAWUpmutEDWkbsXqeISlOpP7cXkHQ=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/napoleon-crossing-the-alps/cwF8_mSi8tlbXw"
+    },
+    {
+      "id": "walker-art-gallery-gac-133",
+      "title": "Christ Blessing the Little Children",
+      "artist": "Benjamin Robert Haydon",
+      "year": 1837,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SZ_ql1kIkd40Q0r-ClZ4ABku0-eqAlSCQnBJubFW_S98EvCl66EPqU7E8vOsuL-5qBgxdyGjE=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/christ-blessing-the-little-children/zwE36jcGDPbdFg"
+    },
+    {
+      "id": "walker-art-gallery-gac-134",
+      "title": "Leonora of Mantua",
+      "artist": "Valentine Cameron Prinsep",
+      "year": 1873,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SWQEW9V2yGDfe5o1TpheTL_RKUzwLWIJ7qhOR9JounfTjrjQbyW7f_-L_wGmJMsE4yipWFqpE=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/leonora-of-mantua/lAHXsVZfINYgXg"
+    },
+    {
+      "id": "walker-art-gallery-gac-135",
+      "title": "The Magdalen",
+      "artist": "Paulus Bor",
+      "year": 1635,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QjMvVVm9YLkjKeuDifIN6yIZ0lxriCpBNVqtRbrht0WhoUb5Z2PHoJrfjLp6u40Uo5rDQijZCx=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-magdalen/rwHEBlRyfjQhPg"
+    },
+    {
+      "id": "walker-art-gallery-gac-136",
+      "title": "Samson",
+      "artist": "Solomon J Solomon",
+      "year": 1887,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SwVEtXANH20YJR-QykudIhBZi2_MiWgZovGKa_sAmo3ksJvVmx4--Vc-o-yYXuZ9mQYlov1g=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/samson/6AFRiIReWUH60g"
+    },
+    {
+      "id": "walker-art-gallery-gac-137",
+      "title": "The Nymph of the Fountain",
+      "artist": "Lucas Cranach the Elder",
+      "year": 1534,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QZutpdFjyr9zTnWAmIvghfg1L_r-5-KNZn3oL_X5O1Lt4wBga62nfgJrkanBCOWovR0H88FlA=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-nymph-of-the-fountain/XgHqH5CggjAJpA"
+    },
+    {
+      "id": "walker-art-gallery-gac-138",
+      "title": "The Oyster Girl",
+      "artist": "Karl Gussow",
+      "year": 1882,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_S0IxuVV5rJyhN9U2o3QqXVeNe1lM_1gvBVy2N2c_KNs9Nuq2-i265J6AB6l-qCRPUUCWg_TQjF=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-oyster-girl/vAGT74R3Ai6ErA"
+    },
+    {
+      "id": "walker-art-gallery-gac-139",
+      "title": "The Morning of St Valentine",
+      "artist": "John Callcott Horsley",
+      "year": 1865,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SbwNmMxRUHCfk3-kRKWb4pVUdmzvzFDsOaXbA0KFj6Ri-DIvEmWiVLN80GOLSm51ctCe19cJQ=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-morning-of-st-valentine/BQESYBPhAeI22g"
+    },
+    {
+      "id": "walker-art-gallery-gac-140",
+      "title": "Going to Market",
+      "artist": "John J Lee",
+      "year": 1860,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Rlyh9UekTnXAsw7iMcl8Wcqr_EnNydQ6Zc4YUzRAdWjDvpuFIDfp0jfFlgrp5z8D-FW-jxfg=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/going-to-market/_AHfTMwYqqeV3w"
+    },
+    {
+      "id": "walker-art-gallery-gac-141",
+      "title": "The Finding of Aesculapius",
+      "artist": "Giovanni Tognolli",
+      "year": 1822,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_S7IWgzpdk8epDCGiLiiTOubUvL3cALUPqgH-S62R34KthwOU7bCC6u71NSOn2ns6F8NxDEoQ=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-finding-of-aesculapius/xgHwPi3Dqu-kDQ"
+    },
+    {
+      "id": "walker-art-gallery-gac-142",
+      "title": "Triptych with Scenes from Christ’s Passion (reverse of left wing) Mass of St. Gregory",
+      "artist": "Master of the Aachen Altarpiece",
+      "year": 1500,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QVJilRd0msEOHH20v85BDiwm96raIAo4xPE7De6txv4PMSjfl-EJ7DvLF_Dj7zDz26j89Pqlw=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/triptych-with-scenes-from-christ%E2%80%99s-passion-reverse-of-left-wing-mass-of-st-gregory/jwGFEtOoZmQvmw"
+    },
+    {
+      "id": "walker-art-gallery-gac-143",
+      "title": "Men of War in Harbour",
+      "artist": "Charles Brooking (attributed )",
+      "year": 1745,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_TXyjW4kNMRV2kyimccysyyDXkxhmdVDKkiaLKem9iipN897mNW67qyZ9NbnlRtf6LfUIHT9Q=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/men-of-war-in-harbour/dwHZp6-c-VMRlw"
+    },
+    {
+      "id": "walker-art-gallery-gac-144",
+      "title": "James Stanley",
+      "artist": "George Stubbs",
+      "year": 1755,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QJy6YKt4kcM5lWfk66A4BkQ3usKGKqx8Ha-WqUR3WcsOLeEBAVpQ21fVmj2GqNqFk-csYSug=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/james-stanley/5gFq1q-NkZ9LbA"
+    },
+    {
+      "id": "walker-art-gallery-gac-145",
+      "title": "Mrs Mounter",
+      "artist": "Harold Gilman",
+      "year": 1916,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SKewaqce8K3rdMa0CDTyNK3vxQnxgwxIvZmPbwTMLTZhm3zaUBCgnGy1PgUUk-dcahDKB8zrI=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/mrs-mounter/mQEcdOcp4feikw"
+    },
+    {
+      "id": "walker-art-gallery-gac-146",
+      "title": "The Fairy Tale",
+      "artist": "James Sant",
+      "year": 1845,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_T5Htyh59nUcqQXkbskKQmbpkftluWWidTHJWiqilMRbVy1cgVfNwUbIrzA0xgETkgnusaY9NPc=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-fairy-tale/kgGytSElqrqSFg"
+    },
+    {
+      "id": "walker-art-gallery-gac-147",
+      "title": "The Betrothal",
+      "artist": "Rembrandt (circle of)",
+      "year": 1640,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_SEaOtSssipnuUJ4BwKGH392l6i6Ad2rlkb860C9s5QWXq9pYkDm1Ne3p7KfQBKpNI7lMxZJg=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-betrothal/AQFyDgLtVuCNbA"
+    },
+    {
+      "id": "walker-art-gallery-gac-148",
+      "title": "Yellow, Blue and Violet",
+      "artist": "Michael Kidner",
+      "year": 1963,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_Q77B32ZAXA1mNfH1vLhwJ6hT_38yFltLYhinBT7geRfvmEbeXHM7kTK4apOdhoK_0my-XJ1bM=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/yellow-blue-and-violet/7AGFHMw1q4H-uQ"
+    },
+    {
+      "id": "walker-art-gallery-gac-149",
+      "title": "The Black Boy",
+      "artist": "William Lindsay Windus",
+      "year": 1844,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_RLP2y50QZy7IPTVOoqUHXT0jb8cXRCBNFGKJGNYEm9XTZGQRzSzBlGKuro7hoEJzIQwlS-6w2g=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/the-black-boy/8AGED7OjTv-3DA"
+    },
+    {
+      "id": "walker-art-gallery-gac-150",
+      "title": "Morecambe Bay from Warton Crag",
+      "artist": "Daniel Alexander Williamson",
+      "year": 1862,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_S6duURRn4Nli3ugjtOVIQzlOarHbCsZgHjJ9FDc0MhyQQGljZMDa0SDvrq-PuGdF0qwUWrJ1Q=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/morecambe-bay-from-warton-crag/tAGXIS9GYxdU4A"
+    },
+    {
+      "id": "walker-art-gallery-gac-151",
+      "title": "Alesso ‘B’",
+      "artist": "Michael Tyzack",
+      "year": 1965,
+      "image": "https://lh3.googleusercontent.com/ci/AL18g_QqvhqCtQXdonTmk9ztcZ4eYjf992miHSrqB1S6v9xvU0NWAQYgohhnyubZofSPY1xZiFM3q4w=w800",
+      "sourceUrl": "https://artsandculture.google.com/asset/alesso-%E2%80%98b%E2%80%99/kwGvbKSJjpDgWA"
+    }
+  ],
+  "partnerDescription": "The Walker Art Gallery in Liverpool is home to a national collection of paintings, decorative art and sculpture from the 13th century to the present day. Originally developed for the people of the city, it now holds the best collection of historic art outside of London."
+}

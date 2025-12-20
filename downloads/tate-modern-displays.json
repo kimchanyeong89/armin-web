@@ -1,0 +1,72 @@
+[
+  {
+    "id": "display-artist-and-society",
+    "title": "Artist and Society",
+    "description": "Explore artworks from Tate's collection that respond to their social and political context",
+    "location": "Natalie Bell Building Level 2 West",
+    "url": "https://www.tate.org.uk/visit/tate-modern/display/artist-and-society",
+    "dateRange": "Ongoing",
+    "roomCount": 13,
+    "artworks": []
+  },
+  {
+    "id": "display-in-the-studio",
+    "title": "In the Studio",
+    "description": "Investigate the processes artists use to make artworks, and how our responses are integral to the piece",
+    "location": "Natalie Bell Building Level 2 East",
+    "url": "https://www.tate.org.uk/visit/tate-modern/display/in-the-studio",
+    "dateRange": "Ongoing",
+    "roomCount": 11,
+    "artworks": []
+  },
+  {
+    "id": "display-materials-and-objects",
+    "title": "Materials and Objects",
+    "description": "Discover artists from Tate's collection who have embraced new and unusual materials and methods",
+    "location": "Natalie Bell Building Level 4 West",
+    "url": "https://www.tate.org.uk/visit/tate-modern/display/materials-and-objects",
+    "dateRange": "Ongoing",
+    "roomCount": 9,
+    "artworks": []
+  },
+  {
+    "id": "display-media-networks",
+    "title": "Media Networks",
+    "description": "See how artists in Tate's collection have responded to the impact of mass media",
+    "location": "Natalie Bell Building Level 4 East",
+    "url": "https://www.tate.org.uk/visit/tate-modern/display/media-networks",
+    "dateRange": "Ongoing",
+    "roomCount": 10,
+    "artworks": []
+  },
+  {
+    "id": "display-performer-and-participant",
+    "title": "Performer and Participant",
+    "description": "Discover how artists working between the 1960s and the 1990s opened up new spaces for participation",
+    "location": "Blavatnik Building Level 3",
+    "url": "https://www.tate.org.uk/visit/tate-modern/display/performer-and-participant",
+    "dateRange": "Ongoing",
+    "roomCount": 8,
+    "artworks": []
+  },
+  {
+    "id": "display-the-tanks",
+    "title": "The Tanks",
+    "description": "Experience live art, performance, film and video art in these gallery spaces",
+    "location": "Level 0",
+    "url": "https://www.tate.org.uk/visit/tate-modern/display/tanks",
+    "dateRange": "Ongoing",
+    "roomCount": 2,
+    "artworks": []
+  },
+  {
+    "id": "display-artist-rooms-richard-long",
+    "title": "ARTIST ROOMS: Richard Long",
+    "description": "Through the simple creative act of moving through the landscape, Richard Long extends the possibilities of sculpture to explore ideas of place, time and distance",
+    "location": "Natalie Bell Building Level 4 East",
+    "url": "https://www.tate.org.uk/visit/tate-modern/display/artist-rooms-richard-long",
+    "dateRange": "Ongoing",
+    "roomCount": 1,
+    "artworks": []
+  }
+]

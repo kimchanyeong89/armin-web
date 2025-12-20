@@ -1,0 +1,27 @@
+{
+  "cookies": [
+    {
+      "name": "cf_chl_rc_ni",
+      "value": "13",
+      "domain": "www.npg.org.uk",
+      "path": "/",
+      "expires": 1760845072,
+      "httpOnly": false,
+      "secure": true,
+      "sameSite": "None",
+      "partitionKey": "https://npg.org.uk",
+      "_crHasCrossSiteAncestor": false
+    }
+  ],
+  "origins": [
+    {
+      "origin": "https://challenges.cloudflare.com",
+      "localStorage": [
+        {
+          "name": "cf.turnstile.u",
+          "value": "RuGBM9risFb6unX417abvutDFwNZUyY05l3M_8VC67k-1760840973-1.3.1.1-tEp5u7hCawfxRL2w.vyT_p9seTOf.XMCPson1RsuVQ4o8984ak8RSXlKW6YdYz04RKMPvYHZ82VTvtCEv3b85g"
+        }
+      ]
+    }
+  ]
+}

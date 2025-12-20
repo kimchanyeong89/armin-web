@@ -199,47 +199,7 @@ export const exhibitions = [
       ]
     }
   },
-  {
-    id: "science-museum",
-    name: "Science Museum",
-    slug: "science-museum",
-    location: "Exhibition Rd, South Kensington, London SW7 2DD",
-    description: "Interactive science and technology museum with award-winning galleries and exhibitions.",
-    latitude: 51.497809,
-    longitude: -0.174513,
-    region: "London",
-    permanentExhibitions: [
-      { id: "sm-1", name: "Space", title: "Space", description: "See iconic spacecraft and out-of-this-world objects in our exciting new free gallery. In a world first, see Soyuz and Apollo 10 spacecraft displayed together. Discover a 3.5 billion-year-old moon rock and Neil Armstrong's Apollo 11 headset.", startDate: "Permanent", endDate: "Permanent", admission: "Free" },
-      { id: "sm-2", name: "Exploring Space", title: "Exploring Space", description: "From rockets to satellites, probes to landers, this gallery showcases some out-of-this world objects.", startDate: "Permanent", endDate: "Permanent", admission: "Free" },
-      { id: "sm-3", name: "Wonderlab", title: "Wonderlab", description: "The most spectacular interactive gallery on the planet. Experiment with real scientific phenomena across 50 exhibits in 7 different zones including Maths, Electricity, Forces, Space, Light, Matter and Sound. See real-life lightning strikes at the giant Tesla coil!", startDate: "Permanent", endDate: "Permanent", admission: "£15 Day Pass / £24 Annual Pass" },
-      { id: "sm-4", name: "Power Up", title: "Power Up", description: "160 consoles. Five decades. Game on! Hands-on gaming experience featuring the very best video games and consoles from the past 50 years. From Pong to Pacman and Minecraft to Mario, battle in 16-player Halo ring and test next-gen VR experiences.", startDate: "Permanent", endDate: "Permanent", admission: "£12 Day Pass / £18 Annual Pass" },
-      { id: "sm-5", name: "Energy Revolution: The Adani Green Energy Gallery", title: "Energy Revolution", description: "Discover how the world can undergo the fastest energy transition in history to curb climate change.", startDate: "Permanent", endDate: "Permanent", admission: "Free" },
-      { id: "sm-6", name: "Medicine: The Wellcome Galleries", title: "Medicine", description: "A magnificent home for the most significant medical collections in the world.", startDate: "Permanent", endDate: "Permanent", admission: "Free" },
-      { id: "sm-7", name: "Engineers", title: "Engineers", description: "Explore our fascinating new gallery celebrating engineers and their extraordinary stories.", startDate: "Permanent", endDate: "Permanent", admission: "Free" },
-      { id: "sm-8", name: "Technicians: The David Sainsbury Gallery", title: "Technicians", description: "Step into an interactive world of careers and take a peek behind the scenes.", startDate: "Permanent", endDate: "Permanent", admission: "Free" }
-    ],
-    temporaryExhibitions: [
-      { id: "sm-t1", name: "Future of Food", title: "Future of Food", description: "A new, free exhibition about how food must change to protect the planet. Discover how science is creating more sustainable ways of growing, making, cooking and eating food. See a 3,500-year-old loaf of bread and the first beef steak grown outside a cow.", startDate: "2025-01-01", endDate: "2026-09-01", admission: "Free (ticketed)" },
-      { id: "sm-t2", name: "Versailles: Science and Splendour", title: "Versailles", description: "Discover how the Palace of Versailles used science to project power in this illuminating new exhibition, full of opulent objects and intriguing human stories.", startDate: "2025-01-01", endDate: "2025-04-21", admission: "Ticketed" },
-      { id: "sm-t3", name: "Water Pantanal Fire", title: "Water Pantanal Fire", description: "This thought-provoking free photography exhibition reveals the fragile beauty of the Pantanal, the world's largest wetland.", startDate: "2026-02-06", endDate: "2026-05-31", admission: "Free" },
-      { id: "sm-t4", name: "Horrible Science: Cosmic Chaos", title: "Horrible Science: Cosmic Chaos", description: "A new world premiere exhibition from the Science Museum Group.", startDate: "2027-03-18", endDate: "2028-02-27", admission: "TBA" },
-      { id: "sm-t5", name: "The Odyssey (IMAX)", title: "The Odyssey", description: "Experience the first IMAX 70mm screenings of Christopher Nolan's The Odyssey.", startDate: "2026-07-17", endDate: "2026-07-19", admission: "Ticketed" },
-      { id: "sm-t6", name: "IMAX 70mm Season", title: "IMAX 70mm Season", description: "Experience a season of stunning IMAX 70mm film classics at the Science Museum this winter.", startDate: "2025-12-01", endDate: "2026-02-28", admission: "Ticketed" }
-    ],
-    pastExhibitions: [
-      { id: "sm-p1", name: "Turn It Up: The Power of Music", title: "Turn It Up", description: "Explore how music shapes our lives in this major interactive exhibition.", startDate: "2024-01-01", endDate: "2024-09-01" },
-      { id: "sm-p2", name: "Zimingzhong: Clockwork Treasures from China's Forbidden City", title: "Zimingzhong", description: "Turn back the hands of time and discover mechanical marvels prized by the emperors of China.", startDate: "2024-01-01", endDate: "2024-06-02" },
-      { id: "sm-p3", name: "Injecting Hope: The Race for a COVID-19 Vaccine", title: "Injecting Hope", description: "How do you develop a vaccine quickly and effectively to combat a global pandemic?", startDate: "2022-11-30", endDate: "2024-05-12" },
-      { id: "sm-p4", name: "Science Fiction: Voyage to the Edge of Imagination", title: "Science Fiction", description: "An immersive genre-defying exhibition exploring visions of the future through the science of today.", startDate: "2022-10-01", endDate: "2023-08-20" }
-    ],
-    representativeImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/galleries/science-museum/building.webp",
-    floorPlan: "",
-    rooms: {
-      "gallery-1": [
-        { id: "sm-art-1", name: "Steam Engine", artist: "Various", year: 1850, image: "/images/exhibition4.png", roomId: "gallery-1", exhibitionName: "Exploration and Innovation", exhibitionTitle: "Exploration and Innovation" }
-      ]
-    }
-  },
+
   // Seoul major museums/exhibition venues
   {
     id: "seoul-1",
@@ -503,79 +463,19 @@ export const exhibitions = [
       { id: "tsi-p3", name: "Emma Critchley: Soundings", title: "Emma Critchley: Soundings", description: "Immersive installation exploring the deep sea through moving image, soundscapes, and dance.", startDate: "2025-05-24", endDate: "2025-10-05" }
     ]
   },
-  {
-    id: "ashmolean-museum",
-    slug: "ashmolean",
-    name: "Ashmolean Museum",
-    location: "Beaumont Street, Oxford OX1 2PH",
-    description: "The world's first public museum, housing an extraordinary collection of art and archaeology.",
-    latitude: 51.7551,
-    longitude: -1.2607,
-    region: "Oxford",
-    representativeImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/galleries/ashmolean/building.webp",
-    permanentExhibitions: [
-      { id: "ash-1", name: "Ancient Egypt", title: "Ancient Egypt", description: "Mummies, sarcophagi, and treasures from ancient Egypt.", startDate: "Permanent", endDate: "Permanent" },
-      { id: "ash-2", name: "Western Art", title: "Western Art", description: "European paintings from the Renaissance to the 20th century.", startDate: "Permanent", endDate: "Permanent" },
-      { id: "ash-3", name: "Eastern Art", title: "Eastern Art", description: "Art from China, Japan, India, and the Islamic world.", startDate: "Permanent", endDate: "Permanent" }
-    ],
-    temporaryExhibitions: [
-      { id: "ash-t1", name: "Kabuki Kimono: Bandō Tamasaburō V", title: "Kabuki Kimono", description: "Spectacular kimonos worn by the renowned kabuki actor Bandō Tamasaburō V.", startDate: "2024-12-14", endDate: "2025-11-09" },
-      { id: "ash-t2", name: "Anselm Kiefer: Early Works", title: "Anselm Kiefer: Early Works", description: "First UK exhibition exploring the early output of Anselm Kiefer, featuring 45 works from 1969-1982.", startDate: "2025-02-14", endDate: "2025-06-15" },
-      { id: "ash-t3", name: "Stanley Donwood & Radiohead", title: "This Is What You Get", description: "Exploring the unique partnership between visual artist Stanley Donwood and Radiohead.", startDate: "2025-08-06", endDate: "2026-01-11" },
-      { id: "ash-t4", name: "IN BLOOM: How Plants Changed Our World", title: "IN BLOOM", description: "Exploring the profound impact of plants on human civilization.", startDate: "2025-09-20", endDate: "2026-06-28" }
-    ],
-    pastExhibitions: []
-  },
-  {
-    id: "fitzwilliam-museum",
-    slug: "fitzwilliam",
-    name: "Fitzwilliam Museum",
-    location: "Trumpington Street, Cambridge CB2 1RB",
-    description: "Cambridge's art and antiquities museum, one of the oldest public museums in Britain, housing world-class collections spanning centuries.",
-    latitude: 52.2004,
-    longitude: 0.1192,
-    region: "Cambridge",
-    representativeImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/galleries/fitzwilliam/building.webp",
-    permanentExhibitions: [
-      { id: "fitz-1", name: "Antiquities", title: "Antiquities", description: "Egyptian, Greek, Roman, and Mesopotamian artifacts from ancient civilizations.", startDate: "Permanent", endDate: "Permanent" },
-      { id: "fitz-2", name: "Old Master Paintings", title: "Old Master Paintings", description: "Works by Titian, Rubens, Constable, and other European masters.", startDate: "Permanent", endDate: "Permanent" },
-      { id: "fitz-3", name: "Applied Arts", title: "Applied Arts", description: "Ceramics, glass, and decorative arts from around the world.", startDate: "Permanent", endDate: "Permanent" },
-      { id: "fitz-4", name: "Galleries 1-5", title: "Galleries 1-5", description: "Rotating displays from the permanent collection.", startDate: "2024-03-15", endDate: "2025-11-30" }
-    ],
-    temporaryExhibitions: [
-      { id: "fitz-t1", name: "Made in Ancient Egypt", title: "Made in Ancient Egypt", description: "Revealing stories of makers, technology, and techniques behind ancient Egyptian objects.", startDate: "2025-10-03", endDate: "2026-04-12" },
-      { id: "fitz-t2", name: "Journeys with Mai", title: "Journeys with Mai", description: "An artistic journey exploring cultural connections and personal narratives.", startDate: "2025-10-17", endDate: "2026-02-08" },
-      { id: "fitz-t3", name: "Essence and Presence", title: "Essence and Presence", description: "Exploring concepts of presence through art and artifacts.", startDate: "2025-04-15", endDate: "2026-01-01" },
-      { id: "fitz-t4", name: "Bound Together: Leather from Northern Nigeria", title: "Bound Together", description: "Revealing the hidden skills behind northern Nigerian leathers.", startDate: "2025-08-19", endDate: "2026-02-08" }
-    ],
-    upcomingExhibitions: [
-      { id: "fitz-u1", name: "War Craft", title: "War Craft", description: "Exploring the intersection of war and craftsmanship.", startDate: "2026-02-24", endDate: "2026-08-01" },
-      { id: "fitz-u2", name: "Frank Bowling: Seeking the Sublime", title: "Frank Bowling: Seeking the Sublime", description: "Major exhibition of works by British-Guyanese artist Frank Bowling.", startDate: "2026-03-27", endDate: "2026-10-01" },
-      { id: "fitz-u3", name: "A Mughal Songbook: Art, Music and Empire", title: "A Mughal Songbook", description: "Exploring the relationship between art, music and power in the Mughal Empire.", startDate: "2026-09-08", endDate: "2027-03-01" },
-      { id: "fitz-u4", name: "An Enamel Revolution: China and the World", title: "An Enamel Revolution", description: "The story of enamelwork in China and its global influence.", startDate: "2026-10-20", endDate: "2027-04-01" },
-      { id: "fitz-u5", name: "A Call to Art: William Morris & the Pre-Raphaelites", title: "William Morris & the Pre-Raphaelites", description: "Exploring the Arts and Crafts movement and its Pre-Raphaelite roots.", startDate: "2026-10-23", endDate: "2027-04-01" }
-    ],
-    pastExhibitions: [
-      { id: "fitz-p1", name: "What's New XXL", title: "What's New XXL", description: "Showcasing large-scale acquisitions and commissions.", startDate: "2025-05-16", endDate: "2025-08-17" },
-      { id: "fitz-p2", name: "Discovering Dürer", title: "Discovering Dürer", description: "Over 50 prints by Albrecht Dürer from the museum's collection.", startDate: "2025-04-01", endDate: "2025-08-03" },
-      { id: "fitz-p3", name: "Rise Up", title: "Rise Up: Resistance, Revolution, Abolition", description: "The multifaceted story of the fight to end transatlantic slavery, its aftermath, and ongoing legacies.", startDate: "2025-02-21", endDate: "2025-06-01" }
-    ]
-  },
   // Additional UK Art Galleries (10 more for total 20)
   {
     id: "scottish-national-gallery",
     slug: "sng",
     name: "Scottish National Gallery",
     location: "The Mound, Edinburgh EH2 2EL, Scotland",
-    description: "Scotland's premier art gallery housing masterpieces from the Renaissance to Post-Impressionism.",
+    description: "Immerse yourself in this breath-taking art collection. Experience paintings by internationally renowned artists such as Vermeer, Titian, Rembrandt, Velázquez and the Impressionists. Explore the newly opened Scottish galleries with the very best of Scottish art from 1800 to 1945.",
     latitude: 55.9508,
     longitude: -3.1958,
     region: "Edinburgh",
-    representativeImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/galleries/scottish-national/building.webp?v=2",
+    representativeImage: "https://lh3.googleusercontent.com/ci/AL18g_QvkV8t79l9-ApFdWi0v7CU-cvjvuKboSCtQWL1OVwdIiNF7nk3xmM0oYDS09gE_ARPzDlp9IY=w1200",
     permanentExhibitions: [
-      { id: "sng-1", name: "Renaissance to 19th Century", title: "Renaissance to 19th Century", description: "Works by Botticelli, Raphael, Titian, Vermeer, and Rembrandt.", startDate: "Permanent", endDate: "Permanent" },
-      { id: "sng-2", name: "Scottish Art", title: "Scottish Art", description: "The finest collection of Scottish paintings.", startDate: "Permanent", endDate: "Permanent" },
-      { id: "sng-3", name: "Impressionism Collection", title: "Impressionism Collection", description: "Works by Monet, Degas, Cézanne, and Van Gogh.", startDate: "Permanent", endDate: "Permanent" }
+      { id: "sng-collection", name: "SNG Collection", title: "Scottish National Gallery Collection", description: "Masterpieces from the Renaissance to Post-Impressionism, including works by Botticelli, Raphael, Titian, Vermeer, Rembrandt, Monet, Degas, Cézanne, and Van Gogh.", startDate: "Permanent", endDate: "Permanent", collectionFile: "scottish-national-gallery-collection.json" }
     ],
     temporaryExhibitions: [
       { id: "sng-t1", name: "Turner in January: The Vaughan Bequest", title: "Turner in January", description: "Free exhibition featuring over 30 of Turner's watercolours, commemorating his 250th birthday.", startDate: "2025-01-01", endDate: "2025-01-31" },
@@ -593,9 +493,9 @@ export const exhibitions = [
     latitude: 51.5094,
     longitude: -0.1397,
     region: "London",
-    representativeImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/galleries/royal-academy/building.webp",
+    representativeImage: "https://lh3.googleusercontent.com/ci/AL18g_RBwci_hGJRaX-iMX12Daw4mv4naX9hOtVzxoWErSXR98S00mYN-TWt1n9HRdMbIefLR3avCK0=w1200",
     permanentExhibitions: [
-      { id: "ra-1", name: "RA Collection", title: "RA Collection", description: "Works acquired since the Academy's founding in 1768.", startDate: "Permanent", endDate: "Permanent" },
+      { id: "ra-1", name: "RA Collection", title: "RA Collection", description: "Works acquired since the Academy's founding in 1768, including works by Reynolds, Constable, Turner, and contemporary Royal Academicians.", startDate: "Permanent", endDate: "Permanent", collectionFile: "royal-academy-collection.json" },
       { id: "ra-2", name: "The John Madejski Fine Rooms", title: "The John Madejski Fine Rooms", description: "Historic rooms showcasing the RA's collection of paintings and sculptures.", startDate: "2025-12-16", endDate: "2026-02-01" },
       { id: "ra-3", name: "Architecture Wall", title: "Architecture Wall", description: "Rotating display of architectural drawings and models.", startDate: "2024-02-18", endDate: "2025-12-31" }
     ],
@@ -618,30 +518,6 @@ export const exhibitions = [
     ]
   },
   {
-    id: "wallace-collection",
-    slug: "wallace",
-    name: "The Wallace Collection",
-    location: "Hertford House, Manchester Square, London W1U 3BN",
-    description: "One of the finest collections of art ever assembled by one family, including Old Masters and French 18th-century art.",
-    latitude: 51.5173,
-    longitude: -0.1530,
-    region: "London",
-    representativeImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/galleries/wallace/building.webp",
-    permanentExhibitions: [
-      { id: "wc-1", name: "Old Master Paintings", title: "Old Master Paintings", description: "Works by Titian, Rembrandt, Rubens, and Velázquez.", startDate: "Permanent", endDate: "Permanent" },
-      { id: "wc-2", name: "French 18th Century", title: "French 18th Century", description: "Furniture, paintings, and decorative arts from Versailles era.", startDate: "Permanent", endDate: "Permanent" },
-      { id: "wc-3", name: "European Arms and Armour", title: "European Arms and Armour", description: "One of the finest collections of arms and armour in the world.", startDate: "Permanent", endDate: "Permanent" }
-    ],
-    temporaryExhibitions: [
-      { id: "wc-t1", name: "Caravaggio's Cupid", title: "Caravaggio's Cupid", description: "The first UK showing of Caravaggio's masterpiece Amor Vincit Omnia (Victorious Cupid), celebrating the triumph of earthly love.", startDate: "2025-11-26", endDate: "2026-04-12" },
-      { id: "wc-t2", name: "Swords of Lucknow", title: "Swords of Lucknow", description: "Exploration of the Indian swords from Lucknow, featuring key works from the Wallace Collection.", startDate: "2025-12-01", endDate: "2026-03-31" }
-    ],
-    pastExhibitions: [
-      { id: "wc-p1", name: "Keeping Time: Clocks by Boulle", title: "Clocks by Boulle", description: "Five timepieces by André-Charles Boulle, renowned cabinetmaker for Louis XIV.", startDate: "2024-11-27", endDate: "2025-03-02" },
-      { id: "wc-p2", name: "Grayson Perry: Delusions of Grandeur", title: "Grayson Perry", description: "Over 40 new artworks by Turner Prize-winner Sir Grayson Perry, inspired by the Wallace Collection.", startDate: "2025-03-28", endDate: "2025-10-26" }
-    ]
-  },
-  {
     id: "serpentine-gallery",
     slug: "serpentine",
     name: "Serpentine Galleries",
@@ -650,8 +526,10 @@ export const exhibitions = [
     latitude: 51.5050,
     longitude: -0.1750,
     region: "London",
-    representativeImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/galleries/serpentine/building.webp",
-    permanentExhibitions: [],
+    representativeImage: "https://lh3.googleusercontent.com/ci/AL18g_QkEHohu0-XdIikIIvHJaJ2kuENDnn7k9MVt0zZvSoX6bRSOqst5wfvcJx75ODw3QQwHM_k0A=w1200",
+    permanentExhibitions: [
+      { id: "serp-collection", name: "The Serpentine Archive", title: "The Serpentine Archive", description: "Archives from Serpentine's history of cutting-edge contemporary art exhibitions and the iconic annual Pavilion commissions since 2000.", startDate: "Permanent", endDate: "Permanent", collectionFile: "serpentine-gallery-collection.json" }
+    ],
     temporaryExhibitions: [
       { id: "serp-t1", name: "Danielle Brathwaite-Shirley: THE DELUSION", title: "Danielle Brathwaite-Shirley: THE DELUSION", description: "A new video game commission and multiplayer immersive experience exploring themes of polarisation, censorship and social connection.", startDate: "2025-09-30", endDate: "2026-01-18" },
       { id: "serp-t2", name: "Peter Doig: House of Music", title: "Peter Doig: House of Music", description: "Exploring the role of music, film, and sites of communal gathering, listening and creative exchange within his practice.", startDate: "2025-10-10", endDate: "2026-02-08" },
@@ -773,9 +651,9 @@ export const exhibitions = [
     latitude: 51.5115,
     longitude: -0.1178,
     region: "London",
-    representativeImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/galleries/courtauld/building.webp",
+    representativeImage: "https://lh3.googleusercontent.com/ci/AL18g_Q_jPxh9wb8SBzaSTdQm99rUaaNrNmZpNQOEB6aOKcAE0phknJYHZ7fMn68gyAdWqdm4Ymn=w1200",
     permanentExhibitions: [
-      { id: "cg-1", name: "The Courtauld Collection", title: "The Courtauld Collection", description: "Manet's Bar at the Folies-Bergère, Van Gogh's Self-Portrait, Cézanne's Card Players, and many more masterpieces.", startDate: "Permanent", endDate: "Permanent" }
+      { id: "cg-1", name: "The Courtauld Collection", title: "The Courtauld Collection", description: "Manet's Bar at the Folies-Bergère, Van Gogh's Self-Portrait, Cézanne's Card Players, and many more masterpieces from the world-renowned collection of Impressionist and Post-Impressionist art.", startDate: "Permanent", endDate: "Permanent", collectionFile: "courtauld-gallery-collection.json" }
     ],
     temporaryExhibitions: [
       { id: "cg-t1", name: "Wayne Thiebaud. American Still Life", title: "Wayne Thiebaud. American Still Life", description: "The first ever UK museum show devoted to the work of Wayne Thiebaud (1920-2021), featuring his vibrant and lushly painted still-lifes. Five star reviews from The Guardian, Telegraph, and The i.", startDate: "2025-10-10", endDate: "2026-01-18" },
@@ -790,33 +668,6 @@ export const exhibitions = [
       { id: "cg-p2", name: "Goya to Impressionism: Oskar Reinhart Collection", title: "Goya to Impressionism", description: "Masterpieces from the Oskar Reinhart Collection, first time outside Switzerland.", startDate: "2025-02-14", endDate: "2025-05-26" },
       { id: "cg-p3", name: "Henri Michaux: The Mescaline Drawings", title: "Henri Michaux", description: "Unique works from the Franco-Belgian poet's mescaline experiments.", startDate: "2025-02-12", endDate: "2025-06-04" },
       { id: "cg-p4", name: "Abstract Erotic: Bourgeois, Hesse, Adams", title: "Abstract Erotic", description: "Groundbreaking 20th-century sculpture exploring sexuality and bodies.", startDate: "2025-06-20", endDate: "2025-09-14" }
-    ]
-  },
-  {
-    id: "whitechapel-gallery",
-    slug: "whitechapel",
-    name: "Whitechapel Gallery",
-    location: "77-82 Whitechapel High Street, London E1 7QX",
-    description: "Pioneering contemporary art gallery in East London, famous for first showing Picasso's Guernica in Britain in 1939.",
-    latitude: 51.5156,
-    longitude: -0.0708,
-    region: "London",
-    representativeImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/galleries/whitechapel/building.webp",
-    permanentExhibitions: [],
-    temporaryExhibitions: [
-      { id: "wg-t1", name: "Joy Gregory: Catching Flies with Honey", title: "Joy Gregory: Catching Flies with Honey", description: "Major retrospective of photographer Joy Gregory's four-decade career.", startDate: "2025-10-08", endDate: "2026-03-01" },
-      { id: "wg-t2", name: "Candice Lin: g/hosti", title: "Candice Lin: g/hosti", description: "New installation by Candice Lin exploring themes of hospitality and hostility.", startDate: "2025-10-08", endDate: "2026-03-01" },
-      { id: "wg-t3", name: "Joy Gregory: Fierce and Fearless", title: "Joy Gregory: Fierce and Fearless", description: "Companion exhibition to Catching Flies with Honey.", startDate: "2025-10-08", endDate: "2026-03-01" }
-    ],
-    upcomingExhibitions: [
-      { id: "wg-u1", name: "Duchamp & Sons x Maz Murray", title: "Duchamp & Sons x Maz Murray", description: "Collaboration between Whitechapel's youth collective and artist Maz Murray.", startDate: "2026-02-18", endDate: "2026-02-22" },
-      { id: "wg-u2", name: "Veronica Ryan: Multiple Conversations", title: "Veronica Ryan: Multiple Conversations", description: "Major exhibition by Turner Prize winner Veronica Ryan.", startDate: "2026-04-01", endDate: "2026-06-14" }
-    ],
-    pastExhibitions: [
-      { id: "wg-p1", name: "The Film London Jarman Award 2025", title: "Jarman Award 2025", description: "Showcasing nominees for the 2025 Film London Jarman Award.", startDate: "2025-11-18", endDate: "2025-12-14" },
-      { id: "wg-p2", name: "Donald Rodney: Visceral Canker", title: "Donald Rodney", description: "Comprehensive survey addressing racial identity, chronic illness, and colonialism.", startDate: "2025-02-12", endDate: "2025-05-04" },
-      { id: "wg-p3", name: "Hamad Butt: Apprehensions", title: "Hamad Butt", description: "First major survey exploring desire, death, and racial difference.", startDate: "2025-06-04", endDate: "2025-09-07" },
-      { id: "wg-p4", name: "The London Open Live", title: "London Open Live", description: "Triennial focusing on live art reflecting life in London.", startDate: "2025-06-04", endDate: "2025-09-07" }
     ]
   },
   {
@@ -847,14 +698,13 @@ export const exhibitions = [
     slug: "walker",
     name: "Walker Art Gallery",
     location: "William Brown Street, Liverpool L3 8EL",
-    description: "The national gallery of the North, housing an outstanding collection of European art.",
+    description: "The Walker Art Gallery in Liverpool is home to a national collection of paintings, decorative art and sculpture from the 13th century to the present day. Originally developed for the people of the city, it now holds the best collection of historic art outside of London.",
     latitude: 53.4107,
     longitude: -2.9799,
     region: "Liverpool",
-    representativeImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/galleries/walker/building.webp",
+    representativeImage: "https://lh3.googleusercontent.com/ci/AL18g_RUa6Oubw6QnXJUVCEK3fWMZi5Mg0RoBTEGGCR7gMVT28W1uOfvYgV7IkcqYpmcPiOKlCB8CpB-=w1200",
     permanentExhibitions: [
-      { id: "wag-1", name: "Medieval & Renaissance", title: "Medieval & Renaissance", description: "Religious art and early European paintings.", startDate: "Permanent", endDate: "Permanent" },
-      { id: "wag-2", name: "Victorian Collection", title: "Victorian Collection", description: "Major Pre-Raphaelite and Victorian paintings.", startDate: "Permanent", endDate: "Permanent" }
+      { id: "wag-collection", name: "Walker Collection", title: "Walker Art Gallery Collection", description: "Outstanding collection of European art from the 13th to 21st century, with renowned Pre-Raphaelite and Victorian paintings.", startDate: "Permanent", endDate: "Permanent", collectionFile: "walker-art-gallery-collection.json" }
     ],
     temporaryExhibitions: [
       { id: "wag-t1", name: "Conversations", title: "Conversations", description: "Celebrating Black British women and non-binary artists, nearly 40 leading artists.", startDate: "2024-10-19", endDate: "2025-03-09" },
@@ -868,30 +718,37 @@ export const exhibitions = [
     ]
   },
   {
-    id: "scottish-national-gallery-modern-art",
-    slug: "sngma",
-    name: "Scottish National Gallery of Modern Art",
-    location: "75 Belford Road, Edinburgh EH4 3DR, Scotland",
-    description: "Scotland's national collection of modern and contemporary art in beautiful parkland setting.",
-    latitude: 55.9523,
-    longitude: -3.2313,
+    id: "scottish-national-portrait-gallery",
+    slug: "snpg",
+    name: "Scottish National Portrait Gallery",
+    location: "1 Queen Street, Edinburgh EH2 1JD, Scotland",
+    description: "The world's first purpose-built portrait gallery, housing Scotland's collection of portraits. The gallery is decorated in elaborate murals and sculptural embellishments inside and out - take time to look up at the Zodiac ceiling in the world-famous Great Hall.",
+    latitude: 55.9551,
+    longitude: -3.1938,
     region: "Edinburgh",
-    representativeImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/galleries/sngma/building.webp?v=2",
+    representativeImage: "https://lh3.googleusercontent.com/ci/AL18g_Qg0XLHRFOrRsMCDPXeMOCUXMf4b_WQKro70Esk5onBNR15YJd7_c9IgSKji8ZYpOPTPctwVc4-=w1200",
     permanentExhibitions: [
-      { id: "sngma-1", name: "Modern Art Collection", title: "Modern Art Collection", description: "Works by Picasso, Matisse, Hockney, and Warhol.", startDate: "Permanent", endDate: "Permanent" },
-      { id: "sngma-2", name: "Scottish Modern Art", title: "Scottish Modern Art", description: "The finest modern Scottish art.", startDate: "Permanent", endDate: "Permanent" }
+      { id: "snpg-collection", name: "SNPG Collection", title: "Scottish National Portrait Gallery Collection", description: "Portraits of famous Scots from monarchs and poets to scientists and sports heroes, housed in the world's first purpose-built portrait gallery.", startDate: "Permanent", endDate: "Permanent", collectionFile: "scottish-national-portrait-gallery-collection.json" }
     ],
-    temporaryExhibitions: [
-      { id: "sngma-t1", name: "Women in Revolt! Art and Activism 1970–1990", title: "Women in Revolt!", description: "Art and activism in the UK from 1970 to 1990.", startDate: "2024-05-25", endDate: "2025-01-26" },
-      { id: "sngma-t2", name: "Bruce McLean: I Want My Crown", title: "Bruce McLean", description: "Major exhibition of Bruce McLean's work.", startDate: "2024-06-29", endDate: "2025-11-23" },
-      { id: "sngma-t3", name: "Ian Hamilton Finlay", title: "Ian Hamilton Finlay", description: "Celebrating the centenary of the Scottish artist.", startDate: "2025-03-08", endDate: "2025-05-26" },
-      { id: "sngma-t4", name: "Resistance", title: "Resistance", description: "Exploring themes of resistance through art.", startDate: "2025-06-21", endDate: "2026-01-04" },
-      { id: "sngma-t5", name: "ARTIST ROOMS: Bourgeois, Chadwick, Mapplethorpe", title: "ARTIST ROOMS", description: "Works by Louise Bourgeois, Helen Chadwick, and Robert Mapplethorpe.", startDate: "2025-07-12", endDate: "2026-05-31" }
+    temporaryExhibitions: [],
+    pastExhibitions: []
+  },
+  // Scottish National Gallery of Modern Art
+  {
+    id: "scottish-national-gallery-of-modern-art",
+    slug: "scottish-national-gallery-of-modern-art-modern-one",
+    name: "Scottish National Gallery of Modern Art",
+    location: "75 Belford Rd, Edinburgh EH4 3DR",
+    description: "Take a leap forward at the Modern. You will find the many contemporary artworks on display to be playful, thought provoking and compelling. Weave your way through two exciting gallery spaces featuring works by some of the most influential artists of the 20th and 21st centuries.",
+    latitude: 55.9513,
+    longitude: -3.2322,
+    region: "Edinburgh",
+    representativeImage: "https://lh3.googleusercontent.com/ci/AL18g_QkIe4x8UAYQKgP8bD5Mx7sKk_iVeTL2LeNuHt0hEVNdpy4E9RnIkOhcVbXUpIa9P4O7qd16Q=w2000",
+    permanentExhibitions: [
+      { id: "sngma-collection", name: "Modern Art Collection", title: "Scottish National Gallery of Modern Art Collection", description: "Contemporary artworks from some of the most influential artists of the 20th and 21st centuries.", startDate: "Permanent", endDate: "Permanent", collectionFile: "scottish-national-gallery-of-modern-art-collection.json" }
     ],
-    pastExhibitions: [
-      { id: "sngma-p1", name: "Paolozzi at 100", title: "Paolozzi at 100", description: "Celebrating the centenary of Eduardo Paolozzi.", startDate: "2024-01-27", endDate: "2024-04-21" },
-      { id: "sngma-p2", name: "Do Ho Suh: Tracing Time", title: "Do Ho Suh", description: "Works by the Korean-American artist Do Ho Suh.", startDate: "2024-02-17", endDate: "2024-09-01" }
-    ]
+    temporaryExhibitions: [],
+    pastExhibitions: []
   },
   // British Museum
   {
@@ -899,20 +756,20 @@ export const exhibitions = [
     slug: "british-museum",
     name: "British Museum",
     location: "Great Russell St, London WC1B 3DG",
-    description: "One of the world's greatest museums of human history and culture, with a collection spanning over two million years of history.",
+    description: "The British Museum's remarkable collection spans over two million years of human history and culture. Over 6 million visitors every year experience the collection, including world-famous objects such as the Rosetta Stone and Egyptian mummies.",
     latitude: 51.5194,
     longitude: -0.1270,
     region: "London",
-    representativeImage: "https://lh3.googleusercontent.com/ci/AL18g_RdEXu4iJBm_ObVJhfIXPNr_LaRij1c1eXFXfOlxPlYl2IaDgFn3wCXyw1dkj95EurMzBvJUhY=w800",
+    representativeImage: "https://lh3.googleusercontent.com/ci/AL18g_QpZqEJPzN_PYkYIirsuLY5y26gbXSeHTg-5ojyWlSbImFCVUbXVdh87rVXgva6rKnhbAmKsg=w2000",
     permanentExhibitions: [
       {
-        id: "british-museum-gac-collection",
+        id: "bm-collection",
         name: "The Collection",
         title: "The Collection",
-        description: "Explore the British Museum's vast collection including the Rosetta Stone, Parthenon sculptures, Egyptian mummies, and treasures from across human civilization.",
+        description: "Explore the British Museum's vast collection of paintings including works spanning over two million years of human history and culture.",
         startDate: "Permanent",
         endDate: "Permanent",
-        image: "https://lh3.googleusercontent.com/ci/AL18g_RdEXu4iJBm_ObVJhfIXPNr_LaRij1c1eXFXfOlxPlYl2IaDgFn3wCXyw1dkj95EurMzBvJUhY=w800"
+        collectionFile: "the-british-museum-collection.json"
       }
     ],
     temporaryExhibitions: [],
@@ -1676,45 +1533,6 @@ export const exhibitions = [
       { id: "hayward-25109", name: "saved!", title: "saved!", description: "100 years of the National Art Collections Fund. A once in a lifetime exhibition presenting 400 world masterpieces from UK collections in celebration of Art Fund's centenary", detailedDescription: "100 years of the National Art Collections Fund. A once in a lifetime exhibition presenting 400 world masterpieces from UK collections in celebration of Art Fund's centenary", coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/hayward-gallery/hayward-25109/image-0.webp", url: "https://www.newexhibitions.com/e/25109" },
       { id: "hayward-25111", name: "douglas gordon what have i done", title: "douglas gordon what have i done", coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/hayward-gallery/hayward-25111/image-0.webp", url: "https://www.newexhibitions.com/e/25111" },
       { id: "hayward-25115", name: "ANN SOFI SIDEN VIDEO INSTALLATION", title: "ANN SOFI SIDEN VIDEO INSTALLATION", coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/hayward-gallery/hayward-25115/image-0.webp", url: "https://www.newexhibitions.com/e/25115" }
-    ]
-  },
-  {
-    id: "ica-london",
-    slug: "ica",
-    name: "Institute of Contemporary Arts",
-    location: "The Mall, London SW1Y 5AH",
-    description: "Pioneering artistic and cultural centre founded in 1946, featuring galleries, theatre, cinemas and a bar. Known for launching Pop art, Op art and British Brutalism.",
-    latitude: 51.5066,
-    longitude: -0.1306,
-    region: "London",
-    representativeImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/galleries/ica/building.webp",
-    permanentExhibitions: [
-      {
-        id: "hayward-gallery-collection",
-        name: "The Collection",
-        title: "The Collection",
-        description: "Explore the Hayward Gallery's collection featuring 22 works from renowned contemporary artists including Bridget Riley, Tracey Emin, Wolfgang Tillmans, and many more.",
-        startDate: "Permanent",
-        endDate: "Permanent",
-        image: "https://lh3.googleusercontent.com/ci/AL18g_RIGjsNsAXz2dmt5WT-C1l3PCctQoZ6LTmUN_EVE_G-cPtipCsTh4tdIFEw_YLb_DKcn5lZ",
-        artworks: [
-          { id: "hayward-gac-1", image: "https://lh3.googleusercontent.com/ci/AL18g_RIGjsNsAXz2dmt5WT-C1l3PCctQoZ6LTmUN_EVE_G-cPtipCsTh4tdIFEw_YLb_DKcn5lZ", artistName: "Bridget Riley", title: "Movement in Squares", year: "1961" },
-          { id: "hayward-gac-11", image: "https://lh3.googleusercontent.com/ci/AL18g_RIGjsNsAXz2dmt5WT-C1l3PCctQoZ6LTmUN_EVE_G-cPtipCsTh4tdIFEw_YLb_DKcn5lZ", artistName: "Marlene Dumas", title: "The Visitor", year: "1995" },
-          { id: "hayward-gac-21", image: "https://lh3.googleusercontent.com/ci/AL18g_RIGjsNsAXz2dmt5WT-C1l3PCctQoZ6LTmUN_EVE_G-cPtipCsTh4tdIFEw_YLb_DKcn5lZ", artistName: "Unknown", title: "Annette Messager, Casino", year: "2004" },
-          { id: "hayward-gac-52", image: "https://lh3.googleusercontent.com/ci/AL18g_RIGjsNsAXz2dmt5WT-C1l3PCctQoZ6LTmUN_EVE_G-cPtipCsTh4tdIFEw_YLb_DKcn5lZ", artistName: "Antony Gormley", title: "Blind Light", year: "2007" }
-        ]
-      }
-    ],
-    temporaryExhibitions: [
-      { id: "ica-t1", name: "Tanoa Sasraku: Morale Patch", title: "Tanoa Sasraku: Morale Patch", description: "An exhibition of new work examining the seductive and destructive power of oil – its ties to war and national identity – through a meditation on emblems and mementos.", startDate: "2025-10-07", endDate: "2026-01-11" }
-    ],
-    upcomingExhibitions: [
-      { id: "ica-u1", name: "Carrier presents Rhythm Immortal (live AV)", title: "Carrier: Rhythm Immortal", description: "Guy Brewer AKA Carrier presents the live debut of his much-acclaimed debut record.", startDate: "2026-01-29", endDate: "2026-01-29" },
-      { id: "ica-u2", name: "GENA (Liv.e & Karriem Riggins) + B. Cool-Aid", title: "GENA + B. Cool-Aid", description: "Dynamic Dallas-born, LA-based artist Liv.e and renowned drummer/producer Karriem Riggins as collaborative duo GENA.", startDate: "2026-01-30", endDate: "2026-01-30" }
-    ],
-    pastExhibitions: [
-      { id: "ica-p1", name: "Damien Hirst: International Affairs", title: "Damien Hirst", description: "His first solo exhibition in a public gallery.", startDate: "1991-01-01", endDate: "1991-03-31" },
-      { id: "ica-p2", name: "Jake and Dinos Chapman: Chapman World", title: "Jake and Dinos Chapman", description: "Featuring Tragic Anatomies sculptures.", startDate: "1996-01-01", endDate: "1996-03-31" }
     ]
   },
 ];

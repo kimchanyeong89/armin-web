@@ -6,13 +6,15 @@ import { auth } from "../firebase";
 
 interface AuthContextProps {
   user: User | null;
+  loading: boolean;
 }
 
-const AuthContext = createContext<AuthContextProps>({ user: null });
+const AuthContext = createContext<AuthContextProps>({ user: null, loading: true });
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const enableAnonAuth = import.meta.env.VITE_ENABLE_ANON_AUTH === "true";
   const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState(true);
   const [attemptedAnon, setAttemptedAnon] = useState(() => !enableAnonAuth);
 
   useEffect(() => {
@@ -29,14 +31,17 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
           );
         } finally {
           setAttemptedAnon(true);
+          setLoading(false);
         }
+      } else {
+        setLoading(false);
       }
     });
     return () => unsubscribe();
   }, [attemptedAnon, enableAnonAuth]);
 
   return (
-    <AuthContext.Provider value={{ user }}>
+    <AuthContext.Provider value={{ user, loading }}>
       {children}
     </AuthContext.Provider>
   );
