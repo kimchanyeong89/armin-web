@@ -409,6 +409,16 @@ export default function ExhibitionDetails({
           datasetEmptyRef.current[exhibitionItemId] = !(items && items.some((it: any) => it && it.image));
           return put(img);
         }
+      } else if (exhibitionItemId === 'mam-perm-painting') {
+        // MAM Paris Painting Collection
+        const res = await fetch('/data/mam-painting-collection.json', { cache: 'no-store' });
+        if (res.ok) {
+          const data = await res.json();
+          const items = Array.isArray(data.artworks) ? data.artworks : [];
+          const img = items.find((it: any) => it && it.image)?.image || null;
+          datasetEmptyRef.current[exhibitionItemId] = !(items && items.some((it: any) => it && it.image));
+          return put(img);
+        }
       }
       // Generic: try local cache populated by ExhibitionModal snapshots
       try {

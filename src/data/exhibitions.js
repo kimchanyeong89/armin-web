@@ -1508,6 +1508,11 @@ export const exhibitions = [
     longitude: 2.2972,
     description: "듀피의 '전기의 요정' 등 거대 벽화와 20세기 주요 현대 회화 소장.",
     representativeImage: "",
+    permanentExhibitions: [
+      { id: "mam-perm-painting", name: "Painting Collection", title: "MAM Paris Painting Collection", description: "Modern and contemporary paintings from the Musée d'Art Moderne de Paris collection.", startDate: "Permanent", endDate: "Permanent" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
     exhibitions: []
   },
   {

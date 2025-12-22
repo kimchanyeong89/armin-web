@@ -1617,14 +1617,15 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
       })();
       return () => { };
     }
-    // Centre Pompidou Cinema Collection: load from local scraped JSON
-    if (exhibition.id === 'pompidou-cinema' || exhibition.id === 'pompidou-painting' || exhibition.id === 'pompidou-drawing' || exhibition.id === 'pompidou-newmedia' || exhibition.id === 'pompidou-design') {
+    // Centre Pompidou & MAM Paris Collections: load from local scraped JSON
+    if (exhibition.id === 'pompidou-cinema' || exhibition.id === 'pompidou-painting' || exhibition.id === 'pompidou-drawing' || exhibition.id === 'pompidou-newmedia' || exhibition.id === 'pompidou-design' || exhibition.id === 'mam-perm-painting') {
       const jsonFiles: Record<string, string> = {
         'pompidou-cinema': '/data/pompidou-cinema-collection.json',
         'pompidou-painting': '/data/pompidou-painting-collection.json',
         'pompidou-drawing': '/data/pompidou-drawing-collection.json',
         'pompidou-newmedia': '/data/pompidou-newmedia-collection.json',
-        'pompidou-design': '/data/pompidou-design-collection.json'
+        'pompidou-design': '/data/pompidou-design-collection.json',
+        'mam-perm-painting': '/data/mam-painting-collection.json'
       };
       const jsonFile = jsonFiles[exhibition.id];
       (async () => {
@@ -1639,12 +1640,12 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
           };
           
           const allObjects = Array.isArray(data.artworks) ? data.artworks : (Array.isArray(data.objects) ? data.objects : []);
-          const is2D = exhibition.id === 'pompidou-painting' || exhibition.id === 'pompidou-drawing' || exhibition.id === 'pompidou-design';
+          const is2D = exhibition.id === 'pompidou-painting' || exhibition.id === 'pompidou-drawing' || exhibition.id === 'pompidou-design' || exhibition.id === 'mam-perm-painting';
           
           const list: Artwork[] = allObjects.map((item: any, idx: number) => ({
               id: item.id || `${exhibition.id}-${idx}`,
               name: item.title || item.name || 'Untitled',
-              artist: item.artist || 'Unknown',
+              artist: item.artist || item.artistName || 'Unknown',
               year: toYear(item.year),
               date: item.year,
               image: item.image,
