@@ -1,4 +1,4 @@
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useMemo } from 'react';
 import * as d3 from 'd3';
 import { feature } from 'topojson-client';
 import type { Exhibition } from '../types/Exhibition';
@@ -12,6 +12,31 @@ export type GlobeD3Props = {
   onSelectExhibition?: (ex: Exhibition) => void;
 };
 
+// 클러스터링 - 국가+도시별로 그룹화 (한 번만 계산)
+function clusterByCountryCity(exhibitions: Exhibition[]) {
+  const groups: { [key: string]: Exhibition[] } = {};
+  
+  for (const ex of exhibitions) {
+    const country = (ex as any).country || 'unknown';
+    const city = (ex as any).city || (ex as any).region || 'default';
+    const key = `${country}::${city}`;
+    if (!groups[key]) groups[key] = [];
+    groups[key].push(ex);
+  }
+  
+  return Object.entries(groups).map(([key, exs]) => {
+    const centerLat = d3.mean(exs, d => d.latitude) || 0;
+    const centerLon = d3.mean(exs, d => d.longitude) || 0;
+    return {
+      key,
+      exhibitions: exs,
+      centerLat,
+      centerLon,
+      isCluster: exs.length > 1,
+    };
+  });
+}
+
 export default function GlobeD3({ 
   focusLatLng = null, 
   autorotate = false, 
@@ -21,24 +46,17 @@ export default function GlobeD3({
   onSelectExhibition 
 }: GlobeD3Props) {
   const containerRef = useRef<HTMLDivElement | null>(null);
+  const expandedRef = useRef<Set<string>>(new Set());
+  
+  // 클러스터 데이터를 메모이제이션
+  const clusters = useMemo(() => clusterByCountryCity(exhibitions), [exhibitions]);
 
   useEffect(() => {
-    // mark unused prop as referenced to satisfy noUnusedLocals
     void focusLatLng;
-    console.log(`[GlobeD3] exhibitions prop received: ${exhibitions.length} exhibitions`);
     
-    const ukExhibitions = exhibitions.filter((ex: any) => 
-      ex.country === 'United Kingdom' || ex.country === 'UK' || ex.country === 'England'
-    );
-    console.log(`영국 박물관 수: ${ukExhibitions.length}`);
-    ukExhibitions.forEach((ex: any) => {
-      console.log(`영국 박물관: ${ex.title} - 위치: ${ex.city}, 좌표: [${ex.longitude}, ${ex.latitude}]`);
-    });
-
     const container = containerRef.current;
     if (!container) return;
 
-    // 기존 SVG 제거
     d3.select(container).selectAll("*").remove();
 
     const canvasSize = 600;
@@ -48,7 +66,6 @@ export default function GlobeD3({
       .attr('height', canvasSize)
       .style('background', '#fff');
 
-    // 투영법 설정
     const projection = d3.geoOrthographic()
       .scale(250)
       .translate([canvasSize / 2, canvasSize / 2])
@@ -56,11 +73,9 @@ export default function GlobeD3({
 
     const path = d3.geoPath().projection(projection);
 
-    // 회전 상태
-  let rotate: [number, number] = [0, 0];
+    let rotate: [number, number] = [0, 0];
     let zoomK = 1;
 
-    // 지구 배경
     svg.append('circle')
       .attr('cx', canvasSize / 2)
       .attr('cy', canvasSize / 2)
@@ -69,66 +84,15 @@ export default function GlobeD3({
       .attr('stroke', stroke)
       .attr('stroke-width', strokeWidth);
 
-    // 줌 동작
-    const zoom = d3.zoom()
-      .scaleExtent([1, 8])
-      .on('zoom', (event: any) => {
-        zoomK = event.transform.k;
-        projection.scale(250 * zoomK);
-        renderAll();
-      });
-
-    svg.call(zoom as any);
-
-    // 드래그 동작
-    const drag = d3.drag()
-      .on('drag', (event: any) => {
-        const sensitivity = 0.5;
-        rotate[0] += event.dx * sensitivity;
-        rotate[1] -= event.dy * sensitivity;
-        rotate[1] = Math.max(-90, Math.min(90, rotate[1]));
-        projection.rotate(rotate);
-        renderAll();
-      });
-
-    svg.call(drag as any);
-
-    // 그룹 요소들
     const gCountries = svg.append('g').attr('class', 'countries');
     const gPins = svg.append('g').attr('class', 'pins');
 
-    // 지도 데이터 로드 및 렌더링
     const renderCountries = async () => {
       try {
-        // 대체 URL들을 시도
-        const urls = [
-          'https://cdn.jsdelivr.net/npm/world-atlas@1.1.0/countries-110m.json',
-          'https://unpkg.com/world-atlas@1.1.0/countries-110m.json'
-        ];
-
-        let topo = null;
-        for (const url of urls) {
-          try {
-            console.log(`지도 데이터 로드 시도: ${url}`);
-            const response = await fetch(url);
-            if (response.ok) {
-              topo = await response.json();
-              console.log('지도 데이터 로드 성공');
-              break;
-            }
-          } catch (error) {
-            console.warn(`URL ${url} 실패:`, error);
-          }
-        }
-
-        if (!topo) {
-          console.warn('모든 지도 데이터 URL 실패. 간단한 대체 지도 사용');
-          renderSimpleMap();
-          return;
-        }
-
+        const response = await fetch('https://cdn.jsdelivr.net/npm/world-atlas@1.1.0/countries-110m.json');
+        if (!response.ok) return;
+        const topo = await response.json();
         const countries = feature(topo, topo.objects.countries as any);
-        
         gCountries.selectAll('path')
           .data(countries.features)
           .enter().append('path')
@@ -136,235 +100,152 @@ export default function GlobeD3({
           .attr('fill', 'none')
           .attr('stroke', stroke)
           .attr('stroke-width', strokeWidth);
-
       } catch (error) {
-        console.error('지도 렌더링 실패:', error);
-        renderSimpleMap();
+        console.error('지도 로드 실패');
       }
     };
 
-    // 간단한 대체 지도
-    const renderSimpleMap = () => {
-      // 간단한 격자 패턴으로 지구 표현
-      const graticule = d3.geoGraticule();
+    const createPins = () => {
+      gPins.selectAll('*').remove();
       
-      gCountries.append('path')
-        .datum(graticule())
-        .attr('d', path as any)
-        .attr('fill', 'none')
-        .attr('stroke', '#e2e8f0')
-        .attr('stroke-width', 0.5);
-    };
-
-    // 클러스터링 상태 관리
-    const expandedClusters = new Set<string>();
-
-    // 핀 렌더링
-    const renderPins = () => {
-      console.log('핀 렌더링 시작');
-      
-      // 전시회 데이터를 투영 좌표로 변환
-      const pinData = exhibitions.map((d: any) => {
-        const coords = projection([d.longitude, d.latitude]);
-        return { ...d, coords };
-      }).filter(d => d.coords); // 유효한 좌표만
-
-      console.log(`투영된 핀 데이터: ${pinData.length}개`);
-      
-      // 클러스터링: 0.5도 그리드로 그룹화
-      const CLUSTER_GRID_SIZE = 0.5;
-      const roundToGrid = (v: number) => Math.round(v / CLUSTER_GRID_SIZE) * CLUSTER_GRID_SIZE;
-      
-      const clusters: { [key: string]: any[] } = {};
-      for (const d of pinData) {
-        const gridLon = roundToGrid(d.longitude);
-        const gridLat = roundToGrid(d.latitude);
-        const key = `${gridLon},${gridLat}`;
-        if (!clusters[key]) clusters[key] = [];
-        clusters[key].push(d);
-      }
-
-      // 노드 생성
+      const expanded = expandedRef.current;
       const nodes: any[] = [];
       
-      for (const [key, items] of Object.entries(clusters)) {
-        if (items.length === 1) {
-          // 단일 아이템은 개별 핀으로
-          const d = items[0];
-          nodes.push({
-            ...d,
-            px: d.coords[0],
-            py: d.coords[1],
-            _labelVisible: zoomK >= 2,
-            _cluster: false
-          });
-        } else if (expandedClusters.has(key)) {
-          // 펼쳐진 클러스터: 개별 핀들로
-          const centerLon = d3.mean(items, (d: any) => d.longitude) as number;
-          const centerLat = d3.mean(items, (d: any) => d.latitude) as number;
-          const center = projection([centerLon, centerLat]);
-          if (!center) continue;
-          
-          items.forEach((d: any, i: number) => {
-            const angle = (i / items.length) * 2 * Math.PI;
-            const radius = 30 + Math.floor(i / 6) * 20; // 여러 원으로 배치
-            const px = center[0] + Math.cos(angle) * radius;
-            const py = center[1] + Math.sin(angle) * radius;
-            
+      for (const cluster of clusters) {
+        if (!cluster.isCluster || cluster.exhibitions.length === 1) {
+          const ex = cluster.exhibitions[0];
+          nodes.push({ ...ex, _cluster: false, _key: cluster.key });
+        } else if (expanded.has(cluster.key)) {
+          cluster.exhibitions.forEach((ex, i) => {
+            const angle = (i / cluster.exhibitions.length) * 2 * Math.PI;
+            const radius = 0.25 + Math.floor(i / 8) * 0.15;
             nodes.push({
-              ...d,
-              px,
-              py,
-              _labelVisible: zoomK >= 2,
-              _cluster: false
+              ...ex,
+              latitude: cluster.centerLat + Math.sin(angle) * radius,
+              longitude: cluster.centerLon + Math.cos(angle) * radius,
+              _cluster: false,
+              _key: cluster.key,
+              _expanded: true,
             });
           });
         } else {
-          // 접힌 클러스터: 클러스터 버튼으로
-          const centerLon = d3.mean(items, (d: any) => d.longitude) as number;
-          const centerLat = d3.mean(items, (d: any) => d.latitude) as number;
-          const center = projection([centerLon, centerLat]);
-          if (!center) continue;
-          
           nodes.push({
             _cluster: true,
-            key: key,
-            count: items.length,
-            longitude: centerLon,
-            latitude: centerLat,
-            px: center[0],
-            py: center[1],
-            _labelVisible: true,
-            _items: items
+            _key: cluster.key,
+            count: cluster.exhibitions.length,
+            latitude: cluster.centerLat,
+            longitude: cluster.centerLon,
+            _items: cluster.exhibitions,
           });
         }
       }
-
-      console.log(`렌더링할 노드 수: ${nodes.length}`);
-      console.log('클러스터 정보:', nodes.filter(n => n._cluster).map(n => `${n.key}: ${n.count}개`));
-
-      // 핀 그룹 생성
-      const pins = gPins.selectAll('.pin')
-        .data(nodes, (d: any) => d._cluster ? d.key : d.id || d.title);
-
-      pins.exit().remove();
-
-      const pinsEnter = pins.enter()
+      
+      const pinGroups = gPins.selectAll('.pin')
+        .data(nodes, (d: any) => d._cluster ? `c-${d._key}` : d.id || d.name)
+        .enter()
         .append('g')
         .attr('class', 'pin')
         .style('cursor', 'pointer');
-
-      // 클러스터 버튼
-      const clusterEnter = pinsEnter.filter((d: any) => d._cluster);
       
-      clusterEnter.append('circle')
-        .attr('class', 'cluster-bg')
-        .attr('r', (d: any) => Math.max(15, 10 + Math.log2(d.count) * 3))
+      const clusterPins = pinGroups.filter((d: any) => d._cluster);
+      clusterPins.append('circle')
+        .attr('r', (d: any) => Math.max(14, 10 + Math.log2(d.count) * 4))
         .attr('fill', '#dc2626')
-        .attr('stroke', '#ffffff')
+        .attr('stroke', '#fff')
         .attr('stroke-width', 2);
-
-      clusterEnter.append('text')
-        .attr('class', 'cluster-count')
+      clusterPins.append('text')
         .attr('text-anchor', 'middle')
         .attr('dy', '0.35em')
-        .attr('font-size', 12)
+        .attr('font-size', 11)
         .attr('font-weight', 'bold')
-        .attr('fill', '#ffffff')
+        .attr('fill', '#fff')
         .text((d: any) => d.count);
-
-      clusterEnter.append('title')
-        .text((d: any) => `${d.count}개의 전시관이 있습니다.\n클릭하여 펼쳐보세요.`);
-
-      // 개별 핀
-      const pinEnter = pinsEnter.filter((d: any) => !d._cluster);
       
-      pinEnter.append('circle')
-        .attr('class', 'pin-bg')
+      const singlePins = pinGroups.filter((d: any) => !d._cluster);
+      singlePins.append('circle')
         .attr('r', 6)
         .attr('fill', '#dc2626')
-        .attr('stroke', '#ffffff')
+        .attr('stroke', '#fff')
         .attr('stroke-width', 2);
-
-      pinEnter.append('circle')
-        .attr('class', 'pin-dot')
+      singlePins.append('circle')
         .attr('r', 2)
-        .attr('fill', '#ffffff');
-
-      pinEnter.append('text')
-        .attr('class', 'pin-label')
+        .attr('fill', '#fff');
+      singlePins.append('text')
         .attr('dy', -10)
         .attr('text-anchor', 'middle')
-        .style('font-size', '10px')
+        .style('font-size', '9px')
         .style('font-weight', 'bold')
         .style('fill', '#333')
         .style('stroke', '#fff')
         .style('stroke-width', 2)
         .style('paint-order', 'stroke')
-        .text((d: any) => d.title || d.name);
-
-      // 클릭 이벤트
-      pinsEnter.on('click', (_event: any, d: any) => {
+        .style('opacity', 0)
+        .text((d: any) => d.name || d.title);
+      
+      pinGroups.on('click', (_event: any, d: any) => {
         if (d._cluster) {
-          // 클러스터 클릭: 펼치기/접기
-          if (expandedClusters.has(d.key)) {
-            expandedClusters.delete(d.key);
-            console.log(`클러스터 ${d.key} 접기`);
-          } else {
-            expandedClusters.add(d.key);
-            console.log(`클러스터 ${d.key} 펼치기`);
-          }
-          renderAll();
+          if (expanded.has(d._key)) expanded.delete(d._key);
+          else expanded.add(d._key);
+          createPins();
+          updatePositions();
         } else {
-          // 개별 핀 클릭
-          console.log('핀 클릭됨:', d.title);
-          if (onSelectExhibition) {
-            onSelectExhibition(d);
-          }
+          if (onSelectExhibition) onSelectExhibition(d);
         }
       });
-
-      // 위치 업데이트
-      gPins.selectAll('.pin')
-        .attr('transform', (d: any) => `translate(${d.px},${d.py})`)
-        .style('display', (d: any) => {
-          const lon = d._cluster ? d.longitude : d.longitude;
-          const rotatedLon = lon + rotate[0];
-          const normalizedLon = ((rotatedLon + 180) % 360) - 180;
-          const visible = Math.abs(normalizedLon) <= 90;
-          return visible ? 'block' : 'none';
-        });
-
-      // 라벨 표시/숨기기
-      gPins.selectAll('.pin-label')
-        .style('opacity', (d: any) => d._labelVisible ? 1 : 0);
     };
 
-    // 전체 렌더링
-    const renderAll = () => {
+    const updatePositions = () => {
       gCountries.selectAll('path').attr('d', path as any);
-      renderPins();
+      
+      gPins.selectAll('.pin')
+        .attr('transform', (d: any) => {
+          const coords = projection([d.longitude, d.latitude]);
+          return coords ? `translate(${coords[0]},${coords[1]})` : 'translate(-9999,-9999)';
+        })
+        .style('display', (d: any) => {
+          const rotatedLon = d.longitude + rotate[0];
+          const normalizedLon = ((rotatedLon + 180) % 360) - 180;
+          return Math.abs(normalizedLon) <= 90 ? 'block' : 'none';
+        });
+      
+      gPins.selectAll('.pin text')
+        .filter((d: any) => !d._cluster)
+        .style('opacity', zoomK >= 2.5 ? 1 : 0);
     };
 
-    // 초기 렌더링
+    const zoom = d3.zoom()
+      .scaleExtent([1, 8])
+      .on('zoom', (event: any) => {
+        zoomK = event.transform.k;
+        projection.scale(250 * zoomK);
+        updatePositions();
+      });
+    svg.call(zoom as any);
+
+    const drag = d3.drag()
+      .on('drag', (event: any) => {
+        rotate[0] += event.dx * 0.5;
+        rotate[1] -= event.dy * 0.5;
+        rotate[1] = Math.max(-90, Math.min(90, rotate[1]));
+        projection.rotate(rotate);
+        updatePositions();
+      });
+    svg.call(drag as any);
+
     renderCountries().then(() => {
-      renderPins();
+      createPins();
+      updatePositions();
     });
 
-    // 자동 회전
     if (autorotate) {
       const timer = d3.timer(() => {
-        rotate[0] += 0.5;
+        rotate[0] += 0.3;
         projection.rotate(rotate);
-        renderAll();
+        updatePositions();
       });
-
-      return () => {
-        timer.stop();
-      };
+      return () => timer.stop();
     }
-
-  }, [exhibitions, autorotate, stroke, strokeWidth, onSelectExhibition]);
+  }, [clusters, autorotate, stroke, strokeWidth, onSelectExhibition, focusLatLng]);
 
   return <div ref={containerRef} style={{ width: '600px', height: '600px' }} />;
 }

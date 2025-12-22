@@ -26,6 +26,14 @@
 - `image`: R2에 저장된 WebP URL
 - `id`: 고유 식별자
 
+선택 필드 (있으면 수집):
+- `dimensions`: 작품 크기, 형식: `가로 x 세로 cm` (예: "46 x 38 cm")
+  - 원본 형식이 다르면 변환 (예: "H. 46 ; L. 38 cm" → "46 x 38 cm")
+- `medium`: 재료/기법 (예: "Oil on canvas", "Gouache on paper")
+- `accessionNumber`: 소장품 번호 (예: "RF 1938 43")
+- `credit`: 작품 출처/기증 정보 (예: "Gift of John Smith, 1937")
+- `detailUrl`: 상세 페이지 URL
+
 ### 4. 방(Room) 구조
 - 미술관이 방 구조로 되어 있으면 방 구조를 유지
 - `rooms` 객체로 그룹화: `{ "room-1": [...], "room-2": [...] }`

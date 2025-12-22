@@ -8,23 +8,18 @@ export const exhibitions = [
     description: "Britain’s national museum of international modern and contemporary art on the South Bank.",
     latitude: 51.5076,
     longitude: -0.0994,
+    country: "United Kingdom",
     region: "London",
     representativeImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/galleries/tate-modern/building-v2.webp",
     floorPlan: "",
     permanentExhibitions: [
       { id: "tm-perm-1", name: "Tate Collection Highlights", title: "Tate Collection Highlights", description: "Key works from the international modern collection.", startDate: "Permanent", endDate: "Permanent" },
-      { id: "tm-perm-2", name: "Surrealism and Beyond", title: "Surrealism and Beyond", description: "Surrealist movements and their legacies.", startDate: "Permanent", endDate: "Permanent" },
       { id: "tm-perm-3", name: "Tate Collection", title: "Tate Collection", description: "Complete collection of artworks from Tate galleries.", startDate: "Permanent", endDate: "Permanent" }
     ],
     temporaryExhibitions: [
-      { id: "tm-temp-1", name: "Modern Sculpture", title: "Modern Sculpture", description: "A special exhibition of modern sculptures.", startDate: "2025-06-01", endDate: "2025-09-01" },
-      { id: "tm-temp-2", name: "Photography Now", title: "Photography Now", description: "A journey through contemporary photography.", startDate: "2025-09-15", endDate: "2025-12-31" }
-    ],
+      ],
     pastExhibitions: [
-      { id: "tm-past-1", name: "Post-War Art", title: "Post-War Art", description: "A retrospective exhibition of post-war art.", startDate: "2023-06-01", endDate: "2023-12-31" },
-      { id: "tm-past-2", name: "Baroque Treasures", title: "Baroque Treasures", description: "Masterpieces from the Baroque era.", startDate: "2024-01-01", endDate: "2024-05-31" },
-      { id: "tm-past-3", name: "Minimalist Perspectives", title: "Minimalist Perspectives", description: "The evolution of minimalism in art.", startDate: "2024-06-15", endDate: "2024-10-15" }
-    ],
+      ],
   },
   // Tate Britain
   {
@@ -35,6 +30,7 @@ export const exhibitions = [
     description: "Britain's largest museum of British art from the 1500s to the present day, housing the world's greatest collection of British art.",
     latitude: 51.4920,
     longitude: -0.1275,
+    country: "United Kingdom",
     region: "London",
     representativeImage: "/images/tate-britain-building.jpg",
     floorPlan: "",
@@ -45,13 +41,9 @@ export const exhibitions = [
       { id: "tm-perm-3", name: "Tate Collection", title: "Tate Collection", description: "Complete collection of artworks from Tate galleries.", startDate: "Permanent", endDate: "Permanent" }
     ],
     temporaryExhibitions: [
-      { id: "tb-temp-1", name: "Pre-Raphaelite Sisters", title: "Pre-Raphaelite Sisters", description: "Exploring the lives and works of women artists associated with the Pre-Raphaelite movement.", startDate: "2025-10-01", endDate: "2026-01-31" },
-      { id: "tb-temp-2", name: "Francis Bacon: Man and Beast", title: "Francis Bacon: Man and Beast", description: "A major exhibition exploring Francis Bacon's fascination with animals and the human form.", startDate: "2025-09-15", endDate: "2026-02-28" }
-    ],
+      ],
     pastExhibitions: [
-      { id: "tb-past-1", name: "The EY Exhibition: Lucian Freud", title: "The EY Exhibition: Lucian Freud", description: "A comprehensive retrospective of Lucian Freud's work.", startDate: "2024-10-01", endDate: "2025-01-31" },
-      { id: "tb-past-2", name: "The EY Exhibition: Van Gogh and Britain", title: "The EY Exhibition: Van Gogh and Britain", description: "Exploring Van Gogh's influence on British artists.", startDate: "2024-03-01", endDate: "2024-08-31" }
-    ],
+      ],
   },
   // London major museums
   {
@@ -62,16 +54,15 @@ export const exhibitions = [
     description: "Houses a rich collection of European paintings from the 13th to the 19th centuries.",
     latitude: 51.508929,
     longitude: -0.128299,
+    country: "United Kingdom",
     region: "London",
     permanentExhibitions: [
       { id: "ng-1", name: "European Paintings", title: "European Paintings", description: "Masterworks by Botticelli, Van Gogh, Turner and more.", startDate: "Permanent", endDate: "Permanent" }
     ],
     temporaryExhibitions: [
-      { id: "ng-t1", name: "Rembrandt & Company", title: "Rembrandt & Company", description: "A focused display examining Rembrandt’s circle.", startDate: "2025.09.01", endDate: "2026.01.15" }
-    ],
+      ],
     pastExhibitions: [
-      { id: "ng-p1", name: "Impressionist Encounters", title: "Impressionist Encounters", description: "Highlights from the Impressionist movement.", startDate: "2024.02.01", endDate: "2024.08.31" }
-    ],
+      ],
     representativeImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/national-gallery/building.jpg",
     floorPlan: "",
     rooms: {
@@ -89,6 +80,7 @@ export const exhibitions = [
     description: "The world’s largest collection of portraits, from the Middle Ages to the present day.",
     latitude: 51.5094,
     longitude: -0.1281,
+    country: "United Kingdom",
     region: "London",
     representativeImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/galleries/npg/building.webp",
     floorPlan: "https://www.npg.org.uk/visit/floor-plans/floor-3/",
@@ -96,62 +88,9 @@ export const exhibitions = [
       { id: "npg-floor3-rooms", name: "National Portrait Gallery Collection", title: "National Portrait Gallery Collection", description: "Room-based archive of artworks on Floor 3.", startDate: "Permanent", endDate: "Permanent" }
     ],
     temporaryExhibitions: [
-      {
-        id: "npg-temp-1",
-        name: "Francis Bacon: Human Presence",
-        title: "Francis Bacon: Human Presence",
-        description: "Five decades of portraiture by one of the 20th century's most powerful painters.",
-        startDate: "2024-10-10",
-        endDate: "2025-01-19",
-        image: "/images/npg-bacon.webp"
-      },
-      {
-        id: "npg-temp-2",
-        name: "Taylor Wessing Photo Portrait Prize 2024",
-        title: "Taylor Wessing Photo Portrait Prize 2024",
-        description: "The leading international competition, celebrating the very best in contemporary portrait photography.",
-        startDate: "2024-11-14",
-        endDate: "2025-02-16",
-        image: "/images/npg-taylor-wessing.webp"
-      },
-      {
-        id: "npg-temp-3",
-        name: "Cecil Beaton’s Fashionable World",
-        title: "Cecil Beaton’s Fashionable World",
-        description: "A major exhibition exploring the work of the trailblazing 20th-century photographer and designer.",
-        startDate: "2025-11-19",
-        endDate: "2026-01-11",
-        image: "/images/npg-beaton.webp"
-      },
-      {
-        id: "npg-temp-4",
-        name: "Lucian Freud: Drawing into Painting",
-        title: "Lucian Freud: Drawing into Painting",
-        description: "The first exhibition to focus on Lucian Freud’s works on paper and his mastery of drawing.",
-        startDate: "2026-02-12",
-        endDate: "2026-05-03",
-        image: "/images/npg-freud.webp"
-      }
-    ],
+      ],
     pastExhibitions: [
-      {
-        id: "npg-past-1",
-        name: "Six Lives: The Stories of Henry VIII’s Queens",
-        title: "Six Lives",
-        description: "A major exhibition chronicling the representation of the six women who married Henry VIII.",
-        startDate: "2024-06-20",
-        endDate: "2024-09-08",
-        image: "/images/npg-six-lives.webp"
-      },
-      {
-        id: "npg-past-2",
-        name: "The Time is Always Now",
-        title: "The Time is Always Now",
-        description: "Artists Reframe the Black Figure.",
-        startDate: "2024-02-22",
-        endDate: "2024-05-19"
-      }
-    ],
+      ],
   },
   {
     id: "vam",
@@ -161,36 +100,23 @@ export const exhibitions = [
     description: "The world’s leading museum of art, design and performance.",
     latitude: 51.496639,
     longitude: -0.172201,
+    country: "United Kingdom",
     region: "London",
     permanentExhibitions: [
       { id: "vam-painting", name: "Paintings", title: "Paintings", description: "Collection of paintings from V&A.", startDate: "Permanent", endDate: "Permanent" },
       { id: "vam-portraits", name: "Portraits", title: "Portraits", description: "Portraits from the V&A collection.", startDate: "Permanent", endDate: "Permanent" },
       { id: "vam-posters", name: "Posters", title: "Posters", description: "Posters from the V&A collection.", startDate: "Permanent", endDate: "Permanent" },
       { id: "vam-photographs", name: "Photographs", title: "Photographs", description: "Photographs from the V&A collection.", startDate: "Permanent", endDate: "Permanent" },
-      { id: "vam-collections", name: "Explore the Collections", title: "Explore the Collections", description: "Antonio Canova, Mary Quant, Elsa Schiaparelli, Glasses and more.", startDate: "Permanent", endDate: "Permanent" }
     ],
     temporaryExhibitions: [
       { id: "vam-t1", name: "Design and Disability", title: "Design and Disability", description: "Both a celebration and a call to action, showcasing the radical contributions of Disabled, Deaf, and neurodivergent people and communities to design history and contemporary culture, from the 1940s to now. Free tickets available for Disabled people and a companion.", startDate: "2025-01-01", endDate: "2026-02-15", admission: "£16.00", image: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/galleries/vam/exhibitions/design-and-disability.webp" },
       { id: "vam-t2", name: "Marie Antoinette Style", title: "Marie Antoinette Style", description: "Shaped by the most fashionable queen in history. A complex fashion icon, Marie Antoinette's timeless appeal is defined by her style, youth and notoriety. Explore the lasting influence of the most fashionable (and ill-fated) queen in history – with over 250 years of design, fashion, film and art.", startDate: "2025-01-01", endDate: "2026-03-22", admission: "Weekday £23.00 / Weekend £25.00", image: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/galleries/vam/exhibitions/marie-antoinette.webp" },
       { id: "vam-t3", name: "David Bowie Centre", title: "David Bowie Centre", description: "A new permanent home for David Bowie's archive at V&A East Storehouse. A single room featuring guest-curated displays, including spaces where you can book time one-to-one with items from the archive.", startDate: "2025-01-01", endDate: "Ongoing", admission: "Free (timed ticket required, sold out)", image: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/galleries/vam/exhibitions/david-bowie.webp" },
-      { id: "vam-t4", name: "Adobe Creative Residents On Display", title: "Adobe Creative Residents", description: "Showcasing works from Adobe Creative Residents.", startDate: "2025-01-01", endDate: "2026-11-01", admission: "Free" },
       { id: "vam-t5", name: "Inside Aardman: Wallace & Gromit and Friends", title: "Inside Aardman", description: "Go behind the scenes of stop-motion animation and explore how Aardman's iconic characters and worlds are brought to life. In Aardman's 50th anniversary year, peek behind the scenes of your favourite stop-motion animations. Visit Wallace & Gromit, Shaun the Sheep and Morph.", startDate: "2026-02-12", endDate: "2026-12-31", admission: "£11.00", venue: "Young V&A", image: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/galleries/vam/exhibitions/aardman.webp" },
-      { id: "vam-t6", name: "Schiaparelli: Fashion Becomes Art", title: "Schiaparelli", description: "The UK's first exhibition on Elsa Schiaparelli spans the 1920s to today, celebrating the innovative designer's influence. It traces the fashion house's groundbreaking origins and its evolution under current creative director Daniel Roseberry. 'In difficult times fashion is always outrageous.' – Elsa Schiaparelli", startDate: "2026-03-28", endDate: "2026-09-30", admission: "Weekday £28.00 / Weekend £30.00", image: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/galleries/vam/exhibitions/schiaparelli.webp" },
-      { id: "vam-t7", name: "American Photographs", title: "American Photographs", description: "Photography display at V&A South Kensington.", startDate: "2025-01-01", endDate: "2027-05-16" },
-      { id: "vam-t8", name: "Lasting Impressions: Women Printmakers 1900–Now", title: "Women Printmakers", description: "Celebrating women printmakers from 1900 to present.", startDate: "2025-01-01", endDate: "2026-09-27" },
-      { id: "vam-t9", name: "Dimensions: Contemporary Chinese Studio Crafts", title: "Chinese Studio Crafts", description: "Contemporary Chinese studio crafts display.", startDate: "2025-01-01", endDate: "2026-09-17" },
-      { id: "vam-t10", name: "John Constable and David Lucas: A Unison of Feeling", title: "Constable & Lucas", description: "Display exploring the partnership between Constable and Lucas.", startDate: "2025-01-01", endDate: "2026-06-21" },
-      { id: "vam-t11", name: "Enthoven Unboxed: 100 Years of Collecting Performance", title: "Enthoven Unboxed", description: "100 years of collecting performance at V&A.", startDate: "2025-01-01", endDate: "2026-04-12" },
-      { id: "vam-t12", name: "Sofia Coppola's Photography Bookshelf", title: "Sofia Coppola", description: "Photography bookshelf curated by Sofia Coppola.", startDate: "2025-01-01", endDate: "2026-03-22" },
-      { id: "vam-t13", name: "Tatreez: Palestinian Embroidery", title: "Tatreez", description: "Palestinian embroidery display.", startDate: "2025-01-01", endDate: "2026-05-31" },
-      { id: "vam-t14", name: "Picturing Canada", title: "Picturing Canada", description: "Photography display.", startDate: "2025-01-01", endDate: "2026-06-14" },
-      { id: "vam-t15", name: "Photography Now", title: "Photography Now", description: "Contemporary photography display.", startDate: "2025-01-01", endDate: "2026-09-12" },
-      { id: "vam-t16", name: "dRMM: Building from Forests", title: "Building from Forests", description: "Architecture and sustainability display.", startDate: "2025-11-25", endDate: "2026-10-30" },
-      { id: "vam-t17", name: "ATRATO", title: "ATRATO", description: "Display at V&A South Kensington.", startDate: "2025-01-01", endDate: "2026-02-22" }
-    ],
+      { id: "vam-t6", name: "Schiaparelli: Fashion Becomes Art", title: "Schiaparelli", description: "The UK's first exhibition on Elsa Schiaparelli spans the 1920s to today, celebrating the innovative designer's influence. It traces the fashion house's groundbreaking origins and its evolution under current creative director Daniel Roseberry. 'In difficult times fashion is always outrageous.' – Elsa Schiaparelli", startDate: "2026-03-28", endDate: "2026-09-30", admission: "Weekday £28.00 / Weekend £30.00", image: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/galleries/vam/exhibitions/schiaparelli.webp" }
+      ],
     pastExhibitions: [
-      { id: "vam-p1", name: "Polish Posters Now! Polski Plakat Dziś!", title: "Polish Posters Now!", description: "Exhibition of contemporary Polish poster design.", startDate: "2025-09-13", endDate: "2025-11-16" }
-    ],
+      ],
     representativeImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/galleries/vam/building.webp",
     floorPlan: "",
     rooms: {
@@ -414,10 +340,10 @@ export const exhibitions = [
     description: "Now at RIBA North while the Royal Albert Dock home is temporarily closed for redevelopment. Home to the national collection of modern and contemporary art in the North of England.",
     latitude: 53.4015,
     longitude: -2.9943,
+    country: "United Kingdom",
     region: "Liverpool",
     representativeImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/galleries/tate-liverpool/building.webp",
     permanentExhibitions: [
-      { id: "tl-1", name: "Tate Collection North", title: "Tate Collection North", description: "Rotating displays from the Tate's world-renowned collection.", startDate: "Permanent", endDate: "Permanent" },
       { id: "tm-perm-3", name: "Tate Collection", title: "Tate Collection", description: "Complete collection of artworks from Tate galleries.", startDate: "Permanent", endDate: "Permanent" }
     ],
     temporaryExhibitions: [
@@ -432,9 +358,7 @@ export const exhibitions = [
       { id: "tl-t9", name: "Branching Out", title: "Branching Out", description: "Easter family activities at Tate Liverpool + RIBA North.", startDate: "2026-04-04", endDate: "2026-04-20", admission: "Free", image: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/galleries/tate-liverpool/exhibitions/branching-out.webp" }
     ],
     pastExhibitions: [
-      { id: "tl-p1", name: "The Plant that Stowed Away", title: "The Plant that Stowed Away", description: "Tracing connections between Liverpool's trading history and the movement of plants and people.", startDate: "2025-02-01", endDate: "2025-06-01" },
-      { id: "tl-p2", name: "Liverpool Biennial 2025", title: "Liverpool Biennial 2025", description: "The UK's largest free festival of contemporary visual art.", startDate: "2025-06-07", endDate: "2025-09-14" }
-    ]
+      ]
   },
   {
     id: "tate-st-ives",
@@ -444,6 +368,7 @@ export const exhibitions = [
     description: "Overlooking the Atlantic Ocean, Tate St Ives showcases work by artists including Barbara Hepworth, Marlow Moss, Naum Gabo and Patrick Heron, whose captivating works have brought international attention to St Ives and West Cornwall.",
     latitude: 50.2115,
     longitude: -5.4796,
+    country: "United Kingdom",
     region: "Cornwall",
     representativeImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/galleries/tate-st-ives/building.webp",
     permanentExhibitions: [
@@ -458,10 +383,7 @@ export const exhibitions = [
       { id: "tsi-t5", name: "Wilhelmina Barns-Graham", title: "Wilhelmina Barns-Graham", description: "Celebrating the vibrant abstract paintings and works of Wilhelmina Barns-Graham, a key member of the St Ives School who captured the energy and light of the Cornish landscape.", detailedDescription: "This major retrospective exhibition is the first to chart the full length of Wilhelmina Barns-Graham's incredible career, covering eight decades. One of the most innovative British artists of the 20th century, Barns-Graham played a central role in the development of abstraction in the UK.\n\nBorn in St Andrews, Scotland in 1912, she studied at Edinburgh College of Art before moving to St Ives in 1940, where she became a key member of the modernist artistic community. Her work was profoundly influenced by the Cornish landscape, particularly the light and atmosphere of the coastline.\n\nFeaturing over 170 paintings, drawings, prints and archive materials, this exhibition traces her artistic development from early figurative works to her later bold abstractions. Her famous Glacier paintings, inspired by a transformative visit to the Grindelwald Glacier in Switzerland in 1949, marked a turning point in her career.\n\nThe exhibition culminates with her vibrant Scorpio Series, created in the final years of her life when she worked with renewed energy and freedom, producing some of her most celebrated paintings.", url: "https://www.tate.org.uk/whats-on/tate-st-ives/wilhelmina-barns-graham", startDate: "2026-10-24", endDate: "2027-04-11", image: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/galleries/tate-st-ives/exhibitions/wilhelmina-barns-graham.webp" }
     ],
     pastExhibitions: [
-      { id: "tsi-p1", name: "Ithell Colquhoun", title: "Ithell Colquhoun", description: "A landmark exhibition dedicated to one of the most radical artists of British Surrealism.", startDate: "2025-02-01", endDate: "2025-05-05" },
-      { id: "tsi-p2", name: "Liliane Lijn: Arise Alive", title: "Liliane Lijn: Arise Alive", description: "A major, career-spanning exhibition showcasing five decades of pioneering kinetic sculptures.", startDate: "2025-05-24", endDate: "2025-11-02" },
-      { id: "tsi-p3", name: "Emma Critchley: Soundings", title: "Emma Critchley: Soundings", description: "Immersive installation exploring the deep sea through moving image, soundscapes, and dance.", startDate: "2025-05-24", endDate: "2025-10-05" }
-    ]
+      ]
   },
   // Additional UK Art Galleries (10 more for total 20)
   {
@@ -472,16 +394,14 @@ export const exhibitions = [
     description: "Immerse yourself in this breath-taking art collection. Experience paintings by internationally renowned artists such as Vermeer, Titian, Rembrandt, Velázquez and the Impressionists. Explore the newly opened Scottish galleries with the very best of Scottish art from 1800 to 1945.",
     latitude: 55.9508,
     longitude: -3.1958,
+    country: "United Kingdom",
     region: "Edinburgh",
     representativeImage: "https://lh3.googleusercontent.com/ci/AL18g_QvkV8t79l9-ApFdWi0v7CU-cvjvuKboSCtQWL1OVwdIiNF7nk3xmM0oYDS09gE_ARPzDlp9IY=w1200",
     permanentExhibitions: [
       { id: "sng-collection", name: "SNG Collection", title: "Scottish National Gallery Collection", description: "Masterpieces from the Renaissance to Post-Impressionism, including works by Botticelli, Raphael, Titian, Vermeer, Rembrandt, Monet, Degas, Cézanne, and Van Gogh.", startDate: "Permanent", endDate: "Permanent", collectionFile: "scottish-national-gallery-collection.json" }
     ],
     temporaryExhibitions: [
-      { id: "sng-t1", name: "Turner in January: The Vaughan Bequest", title: "Turner in January", description: "Free exhibition featuring over 30 of Turner's watercolours, commemorating his 250th birthday.", startDate: "2025-01-01", endDate: "2025-01-31" },
-      { id: "sng-t2", name: "Your Art World", title: "Your Art World", description: "Creative works by young people aged 3 to 18 from across Scotland.", startDate: "2025-05-10", endDate: "2025-11-02" },
-      { id: "sng-t3", name: "Andy Goldsworthy: Fifty Years", title: "Andy Goldsworthy: Fifty Years", description: "Major exhibition showcasing five decades of Goldsworthy's work with natural materials.", startDate: "2025-07-26", endDate: "2025-11-02" }
-    ],
+      ],
     pastExhibitions: []
   },
   {
@@ -492,30 +412,19 @@ export const exhibitions = [
     description: "Britain's oldest society devoted to promoting the arts, hosting world-class exhibitions since 1768.",
     latitude: 51.5094,
     longitude: -0.1397,
+    country: "United Kingdom",
     region: "London",
     representativeImage: "https://lh3.googleusercontent.com/ci/AL18g_RBwci_hGJRaX-iMX12Daw4mv4naX9hOtVzxoWErSXR98S00mYN-TWt1n9HRdMbIefLR3avCK0=w1200",
     permanentExhibitions: [
-      { id: "ra-1", name: "RA Collection", title: "RA Collection", description: "Works acquired since the Academy's founding in 1768, including works by Reynolds, Constable, Turner, and contemporary Royal Academicians.", startDate: "Permanent", endDate: "Permanent", collectionFile: "royal-academy-collection.json" },
-      { id: "ra-2", name: "The John Madejski Fine Rooms", title: "The John Madejski Fine Rooms", description: "Historic rooms showcasing the RA's collection of paintings and sculptures.", startDate: "2025-12-16", endDate: "2026-02-01" },
-      { id: "ra-3", name: "Architecture Wall", title: "Architecture Wall", description: "Rotating display of architectural drawings and models.", startDate: "2024-02-18", endDate: "2025-12-31" }
-    ],
+      { id: "ra-1", name: "RA Collection", title: "RA Collection", description: "Works acquired since the Academy's founding in 1768, including works by Reynolds, Constable, Turner, and contemporary Royal Academicians.", startDate: "Permanent", endDate: "Permanent", collectionFile: "royal-academy-collection.json" }
+      ],
     temporaryExhibitions: [
-      { id: "ra-t1", name: "Kerry James Marshall: The Histories", title: "Kerry James Marshall: The Histories", description: "Major exhibition of works by the acclaimed American artist exploring Black life and history.", startDate: "2025-09-20", endDate: "2026-01-18" },
-      { id: "ra-t2", name: "A Story of South Asian Art", title: "A Story of South Asian Art", description: "Exploring the rich artistic traditions of South Asia through contemporary perspectives.", startDate: "2025-10-31", endDate: "2026-02-24" },
-      { id: "ra-t3", name: "Dusk Chorus", title: "Dusk Chorus", description: "Free exhibition exploring sound and nature through immersive installation.", startDate: "2025-11-14", endDate: "2026-01-11" },
-      { id: "ra-t4", name: "Anything is possible", title: "Anything is possible", description: "Featured selling display by Kip Gresham.", startDate: "2025-03-04", endDate: "2026-03-09" },
-      { id: "ra-t5", name: "Nigel Hall RA: Place and Space", title: "Nigel Hall RA: Place and Space", description: "Featured selling display exploring sculptural concepts of place and space.", startDate: "2025-03-25", endDate: "2026-03-09" },
-      { id: "ra-t6", name: "Eileen Cooper OBE RA: Evergreen", title: "Eileen Cooper OBE RA: Evergreen", description: "Free selling display by the former Keeper of the Royal Academy.", startDate: "2025-04-01", endDate: "2026-02-09" }
-    ],
+      ],
     upcomingExhibitions: [
       { id: "ra-u1", name: "Rose Wylie", title: "Rose Wylie", description: "Major exhibition of works by the celebrated British painter.", startDate: "2026-02-28", endDate: "2026-04-19" }
     ],
     pastExhibitions: [
-      { id: "ra-p1", name: "Brasil! The Birth of Modernism", title: "Brasil! The Birth of Modernism", description: "Over 130 works from the 1910s to 1970s by ten significant Brazilian artists.", startDate: "2025-01-28", endDate: "2025-04-21" },
-      { id: "ra-p2", name: "Astonishing Things: The Drawings of Victor Hugo", title: "Victor Hugo Drawings", description: "Highlighting Hugo's lesser-known talent as a visual artist.", startDate: "2025-03-21", endDate: "2025-06-29" },
-      { id: "ra-p3", name: "257th Summer Exhibition", title: "Summer Exhibition 2025", description: "The world's largest open submission contemporary art show.", startDate: "2025-06-17", endDate: "2025-08-17" },
-      { id: "ra-p4", name: "Kiefer/Van Gogh", title: "Kiefer/Van Gogh", description: "Pairing the German artist Anselm Kiefer with Vincent van Gogh.", startDate: "2025-06-28", endDate: "2025-10-26" }
-    ]
+      ]
   },
   {
     id: "serpentine-gallery",
@@ -525,25 +434,21 @@ export const exhibitions = [
     description: "Two contemporary art galleries in Hyde Park, known for cutting-edge exhibitions and the annual summer Pavilion commission.",
     latitude: 51.5050,
     longitude: -0.1750,
+    country: "United Kingdom",
     region: "London",
     representativeImage: "https://lh3.googleusercontent.com/ci/AL18g_QkEHohu0-XdIikIIvHJaJ2kuENDnn7k9MVt0zZvSoX6bRSOqst5wfvcJx75ODw3QQwHM_k0A=w1200",
     permanentExhibitions: [
       { id: "serp-collection", name: "The Serpentine Archive", title: "The Serpentine Archive", description: "Archives from Serpentine's history of cutting-edge contemporary art exhibitions and the iconic annual Pavilion commissions since 2000.", startDate: "Permanent", endDate: "Permanent", collectionFile: "serpentine-gallery-collection.json" }
     ],
     temporaryExhibitions: [
-      { id: "serp-t1", name: "Danielle Brathwaite-Shirley: THE DELUSION", title: "Danielle Brathwaite-Shirley: THE DELUSION", description: "A new video game commission and multiplayer immersive experience exploring themes of polarisation, censorship and social connection.", startDate: "2025-09-30", endDate: "2026-01-18" },
-      { id: "serp-t2", name: "Peter Doig: House of Music", title: "Peter Doig: House of Music", description: "Exploring the role of music, film, and sites of communal gathering, listening and creative exchange within his practice.", startDate: "2025-10-10", endDate: "2026-02-08" },
-      { id: "serp-t3", name: "Dr Esther Mahlangu: Umuntu ngumuntu ngabantu", title: "Dr Esther Mahlangu", description: "Public art mural by Dr Esther Mahlangu in the Serpentine North Garden.", startDate: "2024-10-04", endDate: "2026-03-31" }
-    ],
+      ],
     upcomingExhibitions: [
       { id: "serp-u1", name: "David Hockney", title: "David Hockney", description: "Serpentine presents an exhibition with David Hockney.", startDate: "2026-03-12", endDate: "2026-08-23" },
       { id: "serp-u2", name: "Cecily Brown: Picture Making", title: "Cecily Brown: Picture Making", description: "Known for vigorous brushwork, vivid colour and dynamic compositions, Cecily Brown presents paintings inspired by Serpentine's unique location in Kensington Gardens.", startDate: "2026-03-27", endDate: "2026-09-06" },
       { id: "serp-u3", name: "Amar Kanwar", title: "Amar Kanwar", description: "New Delhi-based artist and filmmaker Amar Kanwar presents lyrical films moving between documentary, travelogue and visual essay.", startDate: "2026-09-01", endDate: "2027-01-31" }
     ],
     pastExhibitions: [
-      { id: "serp-p1", name: "Arpita Singh: Remembering", title: "Arpita Singh", description: "First solo exhibition outside India, showcasing six decades of work.", startDate: "2025-03-13", endDate: "2025-07-27" },
-      { id: "serp-p2", name: "Giuseppe Penone: Thoughts in the Roots", title: "Giuseppe Penone", description: "Major retrospective exploring humanity's connection with the natural world.", startDate: "2025-04-03", endDate: "2025-09-30" }
-    ]
+      ]
   },
   {
     id: "dulwich-picture-gallery",
@@ -553,6 +458,7 @@ export const exhibitions = [
     description: "England's first purpose-built public art gallery, designed by Sir John Soane in 1811, featuring works by Rembrandt, Poussin, Rubens and many others.",
     latitude: 51.4458,
     longitude: -0.0857,
+    country: "United Kingdom",
     region: "London",
     representativeImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/galleries/dulwich/building.webp",
     permanentExhibitions: [
@@ -637,10 +543,7 @@ export const exhibitions = [
       }
     ],
     pastExhibitions: [
-      { id: "dpg-p1", name: "Tirzah Garwood: Beyond Ravilious", title: "Tirzah Garwood", description: "Exploring the life and work of Tirzah Garwood.", startDate: "2024-11-19", endDate: "2025-05-26" },
-      { id: "dpg-p2", name: "Somaya Critchlow: The Chamber", title: "Somaya Critchlow", description: "Contemporary reinterpretation of the Old Masters in the Dulwich collection.", startDate: "2025-02-04", endDate: "2025-07-20" },
-      { id: "dpg-p3", name: "Rachel Jones: Gated Canyons", title: "Rachel Jones", description: "First solo contemporary show in the Gallery's main exhibition space.", startDate: "2025-06-10", endDate: "2025-10-19" }
-    ]
+      ]
   },
   {
     id: "courtauld-gallery",
@@ -650,25 +553,20 @@ export const exhibitions = [
     description: "World-renowned collection of Impressionist and Post-Impressionist paintings housed in the elegant Somerset House.",
     latitude: 51.5115,
     longitude: -0.1178,
+    country: "United Kingdom",
     region: "London",
     representativeImage: "https://lh3.googleusercontent.com/ci/AL18g_Q_jPxh9wb8SBzaSTdQm99rUaaNrNmZpNQOEB6aOKcAE0phknJYHZ7fMn68gyAdWqdm4Ymn=w1200",
     permanentExhibitions: [
       { id: "cg-1", name: "The Courtauld Collection", title: "The Courtauld Collection", description: "Manet's Bar at the Folies-Bergère, Van Gogh's Self-Portrait, Cézanne's Card Players, and many more masterpieces from the world-renowned collection of Impressionist and Post-Impressionist art.", startDate: "Permanent", endDate: "Permanent", collectionFile: "courtauld-gallery-collection.json" }
     ],
     temporaryExhibitions: [
-      { id: "cg-t1", name: "Wayne Thiebaud. American Still Life", title: "Wayne Thiebaud. American Still Life", description: "The first ever UK museum show devoted to the work of Wayne Thiebaud (1920-2021), featuring his vibrant and lushly painted still-lifes. Five star reviews from The Guardian, Telegraph, and The i.", startDate: "2025-10-10", endDate: "2026-01-18" },
-      { id: "cg-t2", name: "Wayne Thiebaud. Delights", title: "Wayne Thiebaud. Delights", description: "Display of 17 prints complementing the main Thiebaud exhibition.", startDate: "2025-10-10", endDate: "2026-01-18" }
-    ],
+      ],
     upcomingExhibitions: [
       { id: "cg-u1", name: "A View of One's Own: Landscapes by British Women Artists, 1760-1860", title: "A View of One's Own", description: "Showcasing early landscape watercolours by British women artists, representing a growing area of The Courtauld's Collection.", startDate: "2026-01-28", endDate: "2026-05-20" },
       { id: "cg-u2", name: "Seurat and the Sea", title: "Seurat and the Sea", description: "The first ever exhibition dedicated to the seascapes of the French artist Georges Seurat (1859-1891).", startDate: "2026-02-13", endDate: "2026-05-17" }
     ],
     pastExhibitions: [
-      { id: "cg-p1", name: "Monet and London: Views of the Thames", title: "Monet and London", description: "Reuniting Monet's Impressionist paintings of London for the first time in 120 years.", startDate: "2024-09-27", endDate: "2025-01-19" },
-      { id: "cg-p2", name: "Goya to Impressionism: Oskar Reinhart Collection", title: "Goya to Impressionism", description: "Masterpieces from the Oskar Reinhart Collection, first time outside Switzerland.", startDate: "2025-02-14", endDate: "2025-05-26" },
-      { id: "cg-p3", name: "Henri Michaux: The Mescaline Drawings", title: "Henri Michaux", description: "Unique works from the Franco-Belgian poet's mescaline experiments.", startDate: "2025-02-12", endDate: "2025-06-04" },
-      { id: "cg-p4", name: "Abstract Erotic: Bourgeois, Hesse, Adams", title: "Abstract Erotic", description: "Groundbreaking 20th-century sculpture exploring sexuality and bodies.", startDate: "2025-06-20", endDate: "2025-09-14" }
-    ]
+      ]
   },
   {
     id: "manchester-art-gallery",
@@ -678,20 +576,15 @@ export const exhibitions = [
     description: "Home to over 25,000 objects spanning centuries of art and design.",
     latitude: 53.4793,
     longitude: -2.2419,
+    country: "United Kingdom",
     region: "Manchester",
     representativeImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/galleries/manchester/building.webp?v=2",
     permanentExhibitions: [
-      { id: "mag-1", name: "Pre-Raphaelites", title: "Pre-Raphaelites", description: "One of the finest collections of Pre-Raphaelite art.", startDate: "Permanent", endDate: "Permanent" },
-      { id: "mag-2", name: "Dutch Golden Age", title: "Dutch Golden Age", description: "17th century Dutch masterpieces.", startDate: "Permanent", endDate: "Permanent" }
-    ],
+      ],
     temporaryExhibitions: [
-      { id: "mag-t1", name: "Trading Station: How Hot Drinks Shape Our Lives", title: "Trading Station", description: "Tracing the global impact of hot drinks on our lives, ideas, and home design.", startDate: "2025-05-14", endDate: "2025-12-31" },
-      { id: "mag-t2", name: "Holly Graham: The Warp/The Weft/The Wake", title: "Holly Graham", description: "Exploring memory and narrative, focusing on colonialism and cotton legacies.", startDate: "2025-03-14", endDate: "2026-03-15" }
-    ],
+      ],
     pastExhibitions: [
-      { id: "mag-p1", name: "Unpicking Couture", title: "Unpicking Couture", description: "Exploring the intricate world of couture fashion.", startDate: "2023-07-21", endDate: "2026-01-04" },
-      { id: "mag-p2", name: "Room to Breathe", title: "Room to Breathe", description: "An ongoing exhibition exploring space and art.", startDate: "2022-04-02", endDate: "2025-04-06" }
-    ]
+      ]
   },
   {
     id: "walker-art-gallery",
@@ -701,21 +594,16 @@ export const exhibitions = [
     description: "The Walker Art Gallery in Liverpool is home to a national collection of paintings, decorative art and sculpture from the 13th century to the present day. Originally developed for the people of the city, it now holds the best collection of historic art outside of London.",
     latitude: 53.4107,
     longitude: -2.9799,
+    country: "United Kingdom",
     region: "Liverpool",
     representativeImage: "https://lh3.googleusercontent.com/ci/AL18g_RUa6Oubw6QnXJUVCEK3fWMZi5Mg0RoBTEGGCR7gMVT28W1uOfvYgV7IkcqYpmcPiOKlCB8CpB-=w1200",
     permanentExhibitions: [
       { id: "wag-collection", name: "Walker Collection", title: "Walker Art Gallery Collection", description: "Outstanding collection of European art from the 13th to 21st century, with renowned Pre-Raphaelite and Victorian paintings.", startDate: "Permanent", endDate: "Permanent", collectionFile: "walker-art-gallery-collection.json" }
     ],
     temporaryExhibitions: [
-      { id: "wag-t1", name: "Conversations", title: "Conversations", description: "Celebrating Black British women and non-binary artists, nearly 40 leading artists.", startDate: "2024-10-19", endDate: "2025-03-09" },
-      { id: "wag-t2", name: "Vivienne Westwood: Designer in Focus", title: "Vivienne Westwood", description: "Celebrating the groundbreaking fashion designer's career spanning five decades.", startDate: "2025-04-07", endDate: "2026-10-17" },
-      { id: "wag-t3", name: "John Moores Painting Prize 2025", title: "John Moores Painting Prize", description: "One of the UK's most prestigious contemporary painting exhibitions.", startDate: "2025-09-06", endDate: "2026-03-01" },
-      { id: "wag-t4", name: "Turner: Always Contemporary", title: "Turner: Always Contemporary", description: "Marking 250 years since Turner's birth, exploring his enduring impact.", startDate: "2025-10-25", endDate: "2026-02-22" }
-    ],
+      ],
     pastExhibitions: [
-      { id: "wag-p1", name: "National Treasures: Velázquez in Liverpool", title: "Velázquez in Liverpool", description: "Displaying The Rokeby Venus from the National Gallery.", startDate: "2024-05-10", endDate: "2024-12-01" },
-      { id: "wag-p2", name: "Stitching Souls: Threads of Silence", title: "Stitching Souls", description: "British-Trinidadian artist Karen McLean explores Liverpool's colonial legacies.", startDate: "2024-09-28", endDate: "2025-03-02" }
-    ]
+      ]
   },
   {
     id: "scottish-national-portrait-gallery",
@@ -725,6 +613,7 @@ export const exhibitions = [
     description: "The world's first purpose-built portrait gallery, housing Scotland's collection of portraits. The gallery is decorated in elaborate murals and sculptural embellishments inside and out - take time to look up at the Zodiac ceiling in the world-famous Great Hall.",
     latitude: 55.9551,
     longitude: -3.1938,
+    country: "United Kingdom",
     region: "Edinburgh",
     representativeImage: "https://lh3.googleusercontent.com/ci/AL18g_Qg0XLHRFOrRsMCDPXeMOCUXMf4b_WQKro70Esk5onBNR15YJd7_c9IgSKji8ZYpOPTPctwVc4-=w1200",
     permanentExhibitions: [
@@ -742,6 +631,7 @@ export const exhibitions = [
     description: "Take a leap forward at the Modern. You will find the many contemporary artworks on display to be playful, thought provoking and compelling. Weave your way through two exciting gallery spaces featuring works by some of the most influential artists of the 20th and 21st centuries.",
     latitude: 55.9513,
     longitude: -3.2322,
+    country: "United Kingdom",
     region: "Edinburgh",
     representativeImage: "https://lh3.googleusercontent.com/ci/AL18g_QkIe4x8UAYQKgP8bD5Mx7sKk_iVeTL2LeNuHt0hEVNdpy4E9RnIkOhcVbXUpIa9P4O7qd16Q=w2000",
     permanentExhibitions: [
@@ -759,6 +649,7 @@ export const exhibitions = [
     description: "The British Museum's remarkable collection spans over two million years of human history and culture. Over 6 million visitors every year experience the collection, including world-famous objects such as the Rosetta Stone and Egyptian mummies.",
     latitude: 51.5194,
     longitude: -0.1270,
+    country: "United Kingdom",
     region: "London",
     representativeImage: "https://lh3.googleusercontent.com/ci/AL18g_QpZqEJPzN_PYkYIirsuLY5y26gbXSeHTg-5ojyWlSbImFCVUbXVdh87rVXgva6rKnhbAmKsg=w2000",
     permanentExhibitions: [
@@ -783,6 +674,7 @@ export const exhibitions = [
     description: "A world-renowned contemporary art gallery and a landmark of brutalist architecture on the South Bank.",
     latitude: 51.5061,
     longitude: -0.1163,
+    country: "United Kingdom",
     region: "London",
     representativeImage: "https://lh3.googleusercontent.com/ci/AL18g_RgKllBYJI9Wz3-spHw9pifMP6PNP6CEB9MjAOvgECBKw19bf9-fTGEY5By_arzpwlQJcg6BA=w800",
     permanentExhibitions: [
@@ -1448,91 +1340,361 @@ export const exhibitions = [
       { id: "hayward-59237", name: "Anthea Hamilton Commission", title: "Anthea Hamilton Commission", description: "Running day and night on a six-metre LED screen outside the Hayward Gallery, Anthea Hamilton's new film maps still and moving images onto the 24-hour cycle of a clock.\n\nThe film features a found photograph from the early 1980s intercut with new footage of four performers, each with their own distinctive discipline and style.\n\nThe movement sequences draw on a wide repertoire of images from popular culture and Hamilton's own work, including her previous collaborations with the performers.\n\nThis major new film commission has been conceived in response to the Hayward Gallery's architecture and locality.\n\nAnthea Hamilton was born in 1978 in London where she lives and works.\n\nThis commissioned sculpture by Anthea Hamilton is generously supported by the Hayward Gallery Commissioning Committee, with additional support from Thomas Dane Gallery, Candida and Zak Gertler, and kaufmann repetto, Milan / New York.\n\nDirector: Anthea Hamilton\n\nPerformers: Jasmine Chiu, Jordan Johnhope, Duane Nasis and Bakani Pick-Up\n\nProducer: Ese Onojeruo\n\nProduction assistant: Marla Kellard-Jones\n\nDirector of photography: Shamica Ruddock\n\nSecond camera: Miles Williams\n\nEditor: Spike Silverton\n\nLighting designer: Joshua Harriette\n\nMake-up artist: Tina Khatri\n\nStills photographer: Miles Perry\n\nLocation: open 24-hours, Hayward Gallery Terrace", detailedDescription: "Running day and night on a six-metre LED screen outside the Hayward Gallery, Anthea Hamilton's new film maps still and moving images onto the 24-hour cycle of a clock.\n\nThe film features a found photograph from the early 1980s intercut with new footage of four performers, each with their own distinctive discipline and style.\n\nThe movement sequences draw on a wide repertoire of images from popular culture and Hamilton's own work, including her previous collaborations with the performers.\n\nThis major new film commission has been conceived in response to the Hayward Gallery's architecture and locality.\n\nAnthea Hamilton was born in 1978 in London where she lives and works.\n\nThis commissioned sculpture by Anthea Hamilton is generously supported by the Hayward Gallery Commissioning Committee, with additional support from Thomas Dane Gallery, Candida and Zak Gertler, and kaufmann repetto, Milan / New York.\n\nDirector: Anthea Hamilton\n\nPerformers: Jasmine Chiu, Jordan Johnhope, Duane Nasis and Bakani Pick-Up\n\nProducer: Ese Onojeruo\n\nProduction assistant: Marla Kellard-Jones\n\nDirector of photography: Shamica Ruddock\n\nSecond camera: Miles Williams\n\nEditor: Spike Silverton\n\nLighting designer: Joshua Harriette\n\nMake-up artist: Tina Khatri\n\nStills photographer: Miles Perry\n\nLocation: open 24-hours, Hayward Gallery Terrace", coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/hayward-gallery/hayward-59237/image-0.webp", url: "https://www.newexhibitions.com/e/59237", startDate: "2022-03-12", endDate: "2022-04-24" },
       { id: "hayward-58251", name: "Mixing It Up: Painting Today", title: "Mixing It Up: Painting Today", description: "Mixing It Up brings together 31 contemporary painters who exploit the unique characteristics of their medium to create fresh, compelling works of art that speak to this moment.\n\n★★★★ 'absorbing and dynamic' The Observer ★★★★★ 'painting's not just alive, it's as essential as it's ever been' Time Out\n\nApproaching painting as a platform for speculative thinking and unexpected conversations, the artists in this exhibition make works that oscillate between observation and invention, depiction and allegory, illusion and materiality.\n\nInstead of trying to craft iconic images, they treat the canvas as a site of assemblage where references converge from diverse territories including music, design, advertising, vernacular and documentary photography, viral memes, fashion and cinema, as well as art history.\n\nResonantly ambiguous, their paintings invite viewers to recruit their own imaginations in working out different ways to interpret them, while often questioning how their social reception might shift among different audiences.\n\nInstead of seeming like the most conservative and traditional art form, this kind of painting is arguably the most conceptually adventurous. It draws on the power of the medium to both transfix us and to undo our ingrained ways of seeing and thinking.\n\nFeaturing three generations of artists who live and work here, Mixing It Up highlights the UK's emergence as a vital international centre of contemporary painting.\n\nReflecting the international character of the painting scene in this country, the participating artists come from a diverse range of backgrounds and nationalities: over a third of the participating artists were born in other places, including countries in Africa, Asia, South America and North America.\n\n★★★★ 'a big, punchy, entertaining show with an unstoppably upbeat vibe' The independent \n\nMixing It Up: Painting Today features 31 artists: Tasha Amini, Hurvin Anderson, Alvaro Barrington, Lydia Blakeley, Gabriella Boyd, Lisa Brice, Gareth Cadwallader, Caroline Coon, Somaya Critchlow, Peter Doig, Jad&eacute; Fadojutimi, Denzil Forrester, Louise Giovanelli, Andrew Pierre Hart, Lubaina Himid, Kudzanai-Violet Hwami, Merlin James, Rachel Jones, Allison Katz, Matthew Krishanu, Graham Little, Oscar Murillo, Mohammed Sami, Samara Scott, Daniel Sinsel, Caragh Thuring, Sophie von Hellermann, Jonathan Wateridge, Rose Wylie, Issy Wood and Vivien Zhang.", detailedDescription: "Mixing It Up brings together 31 contemporary painters who exploit the unique characteristics of their medium to create fresh, compelling works of art that speak to this moment.\n\n★★★★ 'absorbing and dynamic' The Observer ★★★★★ 'painting's not just alive, it's as essential as it's ever been' Time Out\n\nApproaching painting as a platform for speculative thinking and unexpected conversations, the artists in this exhibition make works that oscillate between observation and invention, depiction and allegory, illusion and materiality.\n\nInstead of trying to craft iconic images, they treat the canvas as a site of assemblage where references converge from diverse territories including music, design, advertising, vernacular and documentary photography, viral memes, fashion and cinema, as well as art history.\n\nResonantly ambiguous, their paintings invite viewers to recruit their own imaginations in working out different ways to interpret them, while often questioning how their social reception might shift among different audiences.\n\nInstead of seeming like the most conservative and traditional art form, this kind of painting is arguably the most conceptually adventurous. It draws on the power of the medium to both transfix us and to undo our ingrained ways of seeing and thinking.\n\nFeaturing three generations of artists who live and work here, Mixing It Up highlights the UK's emergence as a vital international centre of contemporary painting.\n\nReflecting the international character of the painting scene in this country, the participating artists come from a diverse range of backgrounds and nationalities: over a third of the participating artists were born in other places, including countries in Africa, Asia, South America and North America.\n\n★★★★ 'a big, punchy, entertaining show with an unstoppably upbeat vibe' The independent \n\nMixing It Up: Painting Today features 31 artists: Tasha Amini, Hurvin Anderson, Alvaro Barrington, Lydia Blakeley, Gabriella Boyd, Lisa Brice, Gareth Cadwallader, Caroline Coon, Somaya Critchlow, Peter Doig, Jad&eacute; Fadojutimi, Denzil Forrester, Louise Giovanelli, Andrew Pierre Hart, Lubaina Himid, Kudzanai-Violet Hwami, Merlin James, Rachel Jones, Allison Katz, Matthew Krishanu, Graham Little, Oscar Murillo, Mohammed Sami, Samara Scott, Daniel Sinsel, Caragh Thuring, Sophie von Hellermann, Jonathan Wateridge, Rose Wylie, Issy Wood and Vivien Zhang.", coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/hayward-gallery/hayward-58251/image-0.webp", url: "https://www.newexhibitions.com/e/58251", startDate: "2021-09-09", endDate: "2021-12-12" },
       { id: "hayward-58252", name: "Gerhard Richter: Drawings, 1999 – 2021", title: "Gerhard Richter: Drawings, 1999 – 2021", description: "Including several new series of experimental drawings, this exhibition – Richter's first presentation in a major London gallery in a decade – brings together more than 60 works on paper made between 1999 and 2021.\n\nAlongside drawings in pencil and charcoal, and a series of over-painted photographs, a set of rarely-seen painterly works created using coloured inks are featured in the show.\n\nIn these works, the fluidity and unpredictability of the pools of ink, in some cases reaching right to the edges of the paper, are counterbalanced by structures of linear graphite markings.\n\nInks and watercolour have played an important role in the development of Richter's paintings.\n\nHis earliest known works, a series of monotypes titled Elbe made in 1957, were the result of experimentation with the fluid nature of ink on paper.\n\nGerhard Richter (b. 1932 in Dresden) is regarded as one of the most important and influential painters working today.\n\nHis pioneering painting practice over the past six decades has gained him wide international acclaim and numerous prestigious awards, including the Golden Lion of the 47th Venice Biennale.\n\nRichter's paintings have been exhibited extensively across the globe, with recent solo exhibitions at institutions including the Met Breuer, New York (2020); Museum Ludwig, Cologne (2017); and Queensland Art Gallery, Brisbane, Australia (2017).\n\nGerhard Richter: Drawings, 1999-2021 is organised in conjunction with HENI.", detailedDescription: "Including several new series of experimental drawings, this exhibition – Richter's first presentation in a major London gallery in a decade – brings together more than 60 works on paper made between 1999 and 2021.\n\nAlongside drawings in pencil and charcoal, and a series of over-painted photographs, a set of rarely-seen painterly works created using coloured inks are featured in the show.\n\nIn these works, the fluidity and unpredictability of the pools of ink, in some cases reaching right to the edges of the paper, are counterbalanced by structures of linear graphite markings.\n\nInks and watercolour have played an important role in the development of Richter's paintings.\n\nHis earliest known works, a series of monotypes titled Elbe made in 1957, were the result of experimentation with the fluid nature of ink on paper.\n\nGerhard Richter (b. 1932 in Dresden) is regarded as one of the most important and influential painters working today.\n\nHis pioneering painting practice over the past six decades has gained him wide international acclaim and numerous prestigious awards, including the Golden Lion of the 47th Venice Biennale.\n\nRichter's paintings have been exhibited extensively across the globe, with recent solo exhibitions at institutions including the Met Breuer, New York (2020); Museum Ludwig, Cologne (2017); and Queensland Art Gallery, Brisbane, Australia (2017).\n\nGerhard Richter: Drawings, 1999-2021 is organised in conjunction with HENI.", coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/hayward-gallery/hayward-58252/image-0.webp", url: "https://www.newexhibitions.com/e/58252", startDate: "2021-09-09", endDate: "2021-12-12" },
-      { id: "hayward-57642", name: "Matthew Barney: Redoubt", title: "Matthew Barney: Redoubt", coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/hayward-gallery/hayward-57642/image-0.webp", url: "https://www.newexhibitions.com/e/57642", startDate: "2021-05-19", endDate: "2021-07-25" },
-      { id: "hayward-57643", name: "Igshaan Adams: Kicking Dust", title: "Igshaan Adams: Kicking Dust", coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/hayward-gallery/hayward-57643/image-0.webp", url: "https://www.newexhibitions.com/e/57643", startDate: "2021-05-19", endDate: "2021-07-25" },
       { id: "hayward-25038", name: "Among the trees", title: "Among the trees", description: "In meditative works across different media, they explore how trees &#8211; with lifespans much longer than our own &#8211; challenge how we think about time, and consider how intimately entangled they are with human affairs. \nThey invite us to appreciate their soaring scale, in art works such as a monumental sculpture cast from a 2,000-year-old olive tree by Ugo Rondinone, a cinematic portrait of a 30-metre-high spruce tree by Eija-Liisa Ahtila, and a vast forest of trees constructed entirely from cardboard by Eva Jospin.\nAmong the Trees transports us around the world &#8211; from Colombian rainforests and remote Japanese islands to olive orchards in Israel and a 9,550-year-old spruce in Sweden.\nAt a time when the destruction of the world&#8217;s forests is accelerating at a record pace, see the natural world through new eyes, on a walk through the woods, real and imagined.\n\nFeatured artists:\nRobert Adams, Eija-Liisa Ahtila, Yto Barrada, Johanna Calle, Gillian Carnegie, Tacita Dean, Peter Doig, Jimmie Durham, Kirsten Everberg, Simryn Gill, Rodney Graham, Shi Guowei, Hugh Hayden, Eva Jospin, Kazuo Kadonaga, William Kentridge, Toba Khedoori, Luisa Lambri, Myoung Ho Lee, Zoe Leonard, Robert Longo, Sally Mann, Steve McQueen, Jean-Luc Mylayne, Mariele Neudecker, Virginia Overton, Roxy Paine, Giuseppe Penone, Abel Rodríguez, Ugo Rondinone, George Shaw, Robert Smithson, Jennifer Steinkamp, Thomas Struth, Rachel Sussman, Pascale Marthine Tayou, Jeff Wall.\nThe exhibition is kindly supported by the Swiss Arts Council Pro Helvetia.", detailedDescription: "In meditative works across different media, they explore how trees &#8211; with lifespans much longer than our own &#8211; challenge how we think about time, and consider how intimately entangled they are with human affairs. \nThey invite us to appreciate their soaring scale, in art works such as a monumental sculpture cast from a 2,000-year-old olive tree by Ugo Rondinone, a cinematic portrait of a 30-metre-high spruce tree by Eija-Liisa Ahtila, and a vast forest of trees constructed entirely from cardboard by Eva Jospin.\nAmong the Trees transports us around the world &#8211; from Colombian rainforests and remote Japanese islands to olive orchards in Israel and a 9,550-year-old spruce in Sweden.\nAt a time when the destruction of the world&#8217;s forests is accelerating at a record pace, see the natural world through new eyes, on a walk through the woods, real and imagined.\n\nFeatured artists:\nRobert Adams, Eija-Liisa Ahtila, Yto Barrada, Johanna Calle, Gillian Carnegie, Tacita Dean, Peter Doig, Jimmie Durham, Kirsten Everberg, Simryn Gill, Rodney Graham, Shi Guowei, Hugh Hayden, Eva Jospin, Kazuo Kadonaga, William Kentridge, Toba Khedoori, Luisa Lambri, Myoung Ho Lee, Zoe Leonard, Robert Longo, Sally Mann, Steve McQueen, Jean-Luc Mylayne, Mariele Neudecker, Virginia Overton, Roxy Paine, Giuseppe Penone, Abel Rodríguez, Ugo Rondinone, George Shaw, Robert Smithson, Jennifer Steinkamp, Thomas Struth, Rachel Sussman, Pascale Marthine Tayou, Jeff Wall.\nThe exhibition is kindly supported by the Swiss Arts Council Pro Helvetia.", coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/hayward-gallery/hayward-25038/image-0.webp", url: "https://www.newexhibitions.com/e/25038", startDate: "2020-08-01", endDate: "2020-10-31" },
       { id: "hayward-25040", name: "Nevin Alada&#287; : Fanfare", title: "Nevin Alada&#287; : Fanfare", description: "HENI Project Space presents a free exhibition of playful, musical works by Nevin Alada&#287;.\n\nThe exhibition &#8211; Alada&#287;&#8217;s first solo show in the UK &#8211; brings together a group of recent artworks that explore sound, rhythm and music.", detailedDescription: "HENI Project Space presents a free exhibition of playful, musical works by Nevin Alada&#287;.\n\nThe exhibition &#8211; Alada&#287;&#8217;s first solo show in the UK &#8211; brings together a group of recent artworks that explore sound, rhythm and music.", coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/hayward-gallery/hayward-25040/image-0.webp", url: "https://www.newexhibitions.com/e/25040", startDate: "2020-02-12", endDate: "2020-04-13" },
       { id: "hayward-25043", name: "Kiss My Genders", title: "Kiss My Genders", description: "In summer 2019 Hayward Gallery will open Kiss My Genders, a group exhibition celebrating more than 30 international artists whose work explores and engages with gender fluidity, as well as non-binary, trans and intersex identities.\n\nKiss My Genders features works from the late 1960s and early 1970s through to the present moment, and focuses on artists who draw on their own experiences to create content and forms that challenge accepted or stable definitions of gender.\n\nWorking across painting, immersive installations, sculpture, text, photography and film, many of these artists treat the body as a sculpture, and in doing so open up new possibilities for gender, beauty and representations of the human form.", detailedDescription: "In summer 2019 Hayward Gallery will open Kiss My Genders, a group exhibition celebrating more than 30 international artists whose work explores and engages with gender fluidity, as well as non-binary, trans and intersex identities.\n\nKiss My Genders features works from the late 1960s and early 1970s through to the present moment, and focuses on artists who draw on their own experiences to create content and forms that challenge accepted or stable definitions of gender.\n\nWorking across painting, immersive installations, sculpture, text, photography and film, many of these artists treat the body as a sculpture, and in doing so open up new possibilities for gender, beauty and representations of the human form.", coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/hayward-gallery/hayward-25043/image-0.webp", url: "https://www.newexhibitions.com/e/25043", startDate: "2019-06-12", endDate: "2019-09-08" },
-      { id: "hayward-25045", name: "Kader Attia : The Museum of Emotion", title: "Kader Attia : The Museum of Emotion", coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/hayward-gallery/hayward-25045/image-0.webp", url: "https://www.newexhibitions.com/e/25045", startDate: "2019-02-13", endDate: "2019-05-06" },
-      { id: "hayward-25046", name: "diane arbus : in the beginning", title: "diane arbus : in the beginning", description: "The exhibition is organised by The Metropolitan Museum of Art, New York.", detailedDescription: "The exhibition is organised by The Metropolitan Museum of Art, New York.", coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/hayward-gallery/hayward-25046/image-0.webp", url: "https://www.newexhibitions.com/e/25046", startDate: "2019-02-13", endDate: "2019-05-06" },
-      { id: "hayward-25044", name: "Aleksandra Mir : Presents the Pre-Presidential Library", title: "Aleksandra Mir : Presents the Pre-Presidential Library", description: "A free Heni Project Space exhibition.", detailedDescription: "A free Heni Project Space exhibition.", coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/hayward-gallery/hayward-25044/image-0.webp", url: "https://www.newexhibitions.com/e/25044", startDate: "2019-01-07", endDate: "2019-02-07" },
       { id: "hayward-25047", name: "Emmanuelle Lainé", title: "Emmanuelle Lainé", coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/hayward-gallery/hayward-25047/image-0.webp", url: "https://www.newexhibitions.com/e/25047", startDate: "2018-10-25", endDate: "2018-12-24" },
-      { id: "hayward-25049", name: "DRAG : Self-portraits and Body Politics", title: "DRAG : Self-portraits and Body Politics", description: "Works by more than 30 artists who have used drag to explore or question identity, gender, class and politics, from the 1960s to the present day.\nAlongside key figures such as Pierre Molinier, VALIE EXPORT, Robert Mapplethorpe and Cindy Sherman, the exhibition also includes self-portraits by a younger generation of contemporary artists who have recently embraced drag as an art form, including Adam Christensen and Victoria Sin.", detailedDescription: "Works by more than 30 artists who have used drag to explore or question identity, gender, class and politics, from the 1960s to the present day.\nAlongside key figures such as Pierre Molinier, VALIE EXPORT, Robert Mapplethorpe and Cindy Sherman, the exhibition also includes self-portraits by a younger generation of contemporary artists who have recently embraced drag as an art form, including Adam Christensen and Victoria Sin.", coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/hayward-gallery/hayward-25049/image-0.webp", url: "https://www.newexhibitions.com/e/25049", startDate: "2018-08-22", endDate: "2018-10-14" },
       { id: "hayward-25050", name: "Lee Bul", title: "Lee Bul", description: "Lee Bul transforms Hayward Gallery into a spectacular dream-like landscape featuring monstrous bodies, futuristic cyborgs, glittering mirrored environments and an exquisitely surreal monumental foil Zeppelin.", detailedDescription: "Lee Bul transforms Hayward Gallery into a spectacular dream-like landscape featuring monstrous bodies, futuristic cyborgs, glittering mirrored environments and an exquisitely surreal monumental foil Zeppelin.", coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/hayward-gallery/hayward-25050/image-0.webp", url: "https://www.newexhibitions.com/e/25050", startDate: "2018-05-30", endDate: "2018-08-19" },
       { id: "hayward-25051", name: "Andreas Gursky", title: "Andreas Gursky", description: "Hayward Gallery reopens in January 2018 with the first major UK retrospective of the work of acclaimed German photographer Andreas Gursky.\n\nGursky, known for his large-scale, often spectacular pictures that portray emblematic sites and scenes of the global economy and contemporary life, is widely regarded as one of the most significant photographers of our time.", detailedDescription: "Hayward Gallery reopens in January 2018 with the first major UK retrospective of the work of acclaimed German photographer Andreas Gursky.\n\nGursky, known for his large-scale, often spectacular pictures that portray emblematic sites and scenes of the global economy and contemporary life, is widely regarded as one of the most significant photographers of our time.", coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/hayward-gallery/hayward-25051/image-0.webp", url: "https://www.newexhibitions.com/e/25051", startDate: "2018-01-25", endDate: "2018-04-22" },
-      { id: "hayward-25052", name: "Dineo Seshee Bopape", title: "Dineo Seshee Bopape", description: "Hayward Gallery presents the first UK solo exhibition by South African artist Dineo Seshee Bopape. Combining dense sculptural installation with digital video montages, her artwork engages viewers with powerful political and social notions of the self, gender, nature and race.", detailedDescription: "Hayward Gallery presents the first UK solo exhibition by South African artist Dineo Seshee Bopape. Combining dense sculptural installation with digital video montages, her artwork engages viewers with powerful political and social notions of the self, gender, nature and race.", coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/hayward-gallery/hayward-25052/image-0.webp", url: "https://www.newexhibitions.com/e/25052", startDate: "2015-08-26", endDate: "2015-09-27" },
       { id: "hayward-25055", name: "Carsten Holler : Decision", title: "Carsten Holler : Decision", description: "Carsten Höller: Decision is the artist's first major survey show in the UK.\n\nThe exhibition, which sprawls across Hayward Gallery and erupts beyond its roof and walls, explores perception and decision making.\n\nThe exhibition confronts visitors with a series of choices involving mirrors, disconcerting doubles and mysterious objects, in a world where nothing is quite as it seems.", detailedDescription: "Carsten Höller: Decision is the artist's first major survey show in the UK.\n\nThe exhibition, which sprawls across Hayward Gallery and erupts beyond its roof and walls, explores perception and decision making.\n\nThe exhibition confronts visitors with a series of choices involving mirrors, disconcerting doubles and mysterious objects, in a world where nothing is quite as it seems.", coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/hayward-gallery/hayward-25055/image-0.webp", url: "https://www.newexhibitions.com/e/25055", startDate: "2015-06-10", endDate: "2015-09-06" },
       { id: "hayward-25053", name: "Echoes & Reverberations", title: "Echoes & Reverberations", description: "Through objects, performances and videos, this group exhibition explores performative approaches to aural culture and oral history. From Jumana Emil Abboud&#8217;s weaving of Palestinian folk-tales into everyday life to Joe Namy&#8217;s interest in forms of collective sound and music, the artists in the exhibition employ different strategies to conjure and challenge cultural memory.", detailedDescription: "Through objects, performances and videos, this group exhibition explores performative approaches to aural culture and oral history. From Jumana Emil Abboud&#8217;s weaving of Palestinian folk-tales into everyday life to Joe Namy&#8217;s interest in forms of collective sound and music, the artists in the exhibition employ different strategies to conjure and challenge cultural memory.", coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/hayward-gallery/hayward-25053/image-0.webp", url: "https://www.newexhibitions.com/e/25053", startDate: "2015-06-23", endDate: "2015-08-16" },
-      { id: "hayward-25054", name: "Neha Choksi : Minds to lose", title: "Neha Choksi : Minds to lose", description: "Minds to Lose marks the first UK solo exhibition by multimedia artist Neha Choksi (b. 1973, lives and works in Los Angeles and Mumbai). Beginning from a single proposition &#8211; rowing a boat made of ice out into a lake, or stripping all the leaves from a tree to isolate one sprig &#8211; Choksi&#8217;s works unfold \n\noutwards into wide-ranging reflections on presence, absence, and what the artist describes as &#8216;our tragic-comic relationships with the natural world&#8217;. A trilogy of recent video works will be presented, together with a new performance devised for the Hayward Gallery Project Space.", detailedDescription: "Minds to Lose marks the first UK solo exhibition by multimedia artist Neha Choksi (b. 1973, lives and works in Los Angeles and Mumbai). Beginning from a single proposition &#8211; rowing a boat made of ice out into a lake, or stripping all the leaves from a tree to isolate one sprig &#8211; Choksi&#8217;s works unfold \n\noutwards into wide-ranging reflections on presence, absence, and what the artist describes as &#8216;our tragic-comic relationships with the natural world&#8217;. A trilogy of recent video works will be presented, together with a new performance devised for the Hayward Gallery Project Space.", coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/hayward-gallery/hayward-25054/image-0.webp", url: "https://www.newexhibitions.com/e/25054", startDate: "2015-04-30", endDate: "2015-06-14" },
       { id: "hayward-25056", name: "History is Now : 7 artists take on Britain", title: "History is Now : 7 artists take on Britain", description: "For History is Now, seven artists have been invited to each curate a section of the exhibition which brings together artworks and objects relating to historical moments of their own choosing. Participating artists are: Richard Wentworth, John Akomfrah, Jane and Louise Wilson, Hannah Starkey, Roger Hiorns and Simon Fujiwara.\nHistory Is Now is accompanied by a public programme, and is a part of Southbank Centre's Changing Britain 1945&#8211;2015 festival, which runs from 30 January to 9 May 2015. Visit our website for more information.", detailedDescription: "For History is Now, seven artists have been invited to each curate a section of the exhibition which brings together artworks and objects relating to historical moments of their own choosing. Participating artists are: Richard Wentworth, John Akomfrah, Jane and Louise Wilson, Hannah Starkey, Roger Hiorns and Simon Fujiwara.\nHistory Is Now is accompanied by a public programme, and is a part of Southbank Centre's Changing Britain 1945&#8211;2015 festival, which runs from 30 January to 9 May 2015. Visit our website for more information.", coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/hayward-gallery/hayward-25056/image-0.webp", url: "https://www.newexhibitions.com/e/25056", startDate: "2015-02-10", endDate: "2015-04-26" },
-      { id: "hayward-25058", name: "The Human Factor", title: "The Human Factor", description: "International artists confront the question of how we represent the 'human' today, featuring Pawel Althamer, Frank Benson, Huma Bhabha, Katharina Fritsch, Ryan Gander, Rachel Harrison, Georg Herold, Thomas Hirschhorn, Jeff Koons, Paul McCarthy, John Miller, Cady Noland, Ugo Rondinone, Yinka Shonibare, Thomas Schütte, Paloma Varga Weisz, Rebecca Warren, Andro Wekua and Cathy Wilkes.", detailedDescription: "International artists confront the question of how we represent the 'human' today, featuring Pawel Althamer, Frank Benson, Huma Bhabha, Katharina Fritsch, Ryan Gander, Rachel Harrison, Georg Herold, Thomas Hirschhorn, Jeff Koons, Paul McCarthy, John Miller, Cady Noland, Ugo Rondinone, Yinka Shonibare, Thomas Schütte, Paloma Varga Weisz, Rebecca Warren, Andro Wekua and Cathy Wilkes.", coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/hayward-gallery/hayward-25058/image-0.webp", url: "https://www.newexhibitions.com/e/25058", startDate: "2014-06-17", endDate: "2014-09-07" },
       { id: "hayward-25059", name: "Martin Creed : What's the point of it?", title: "Martin Creed : What's the point of it?", description: "Martin Creed: What's the point of it? is the first major retrospective of Creed's ingenious and often highly provocative work. Since the beginning of his career, when he made small objects that could be placed anywhere, Creed has made work that questions the very nature of art and challenges taboos. His work takes on a multitude of forms&#8212;from sculpture, paintings, neons, films and installations, to music and performance&#8212;appearing both in the art gallery and in broader public circulation. At once rigorous and humorous, his art continually surprises, disrupts and overturns our expectations. It reflects on the unease we face in making choices, the comfort we find in repetition, the desire to control, and the inevitable losses of control that shape existence.", detailedDescription: "Martin Creed: What's the point of it? is the first major retrospective of Creed's ingenious and often highly provocative work. Since the beginning of his career, when he made small objects that could be placed anywhere, Creed has made work that questions the very nature of art and challenges taboos. His work takes on a multitude of forms&#8212;from sculpture, paintings, neons, films and installations, to music and performance&#8212;appearing both in the art gallery and in broader public circulation. At once rigorous and humorous, his art continually surprises, disrupts and overturns our expectations. It reflects on the unease we face in making choices, the comfort we find in repetition, the desire to control, and the inevitable losses of control that shape existence.", coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/hayward-gallery/hayward-25059/image-0.webp", url: "https://www.newexhibitions.com/e/25059", startDate: "2014-01-29", endDate: "2014-04-27" },
       { id: "hayward-25060", name: "Dayanita Singh : Go Away Closer", title: "Dayanita Singh : Go Away Closer", coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/hayward-gallery/hayward-25060/image-0.webp", url: "https://www.newexhibitions.com/e/25060", startDate: "2013-10-08", endDate: "2013-12-15" },
       { id: "hayward-25061", name: "Ana Mendieta : Traces", title: "Ana Mendieta : Traces", description: "Using her own body, together with elemental materials such as blood, fire, earth and water, Ana Mendieta creates visceral performances and ephemeral &#8216;earth-body&#8217; sculptures that combine ritual with metaphors about life, death, rebirth and spiritual transformation. &#8216;I wanted my images to have power, to be magic,&#8217; she said. &#8216;I decided that for the images to have magic qualities I had to work directly with nature.&#8217;", detailedDescription: "Using her own body, together with elemental materials such as blood, fire, earth and water, Ana Mendieta creates visceral performances and ephemeral &#8216;earth-body&#8217; sculptures that combine ritual with metaphors about life, death, rebirth and spiritual transformation. &#8216;I wanted my images to have power, to be magic,&#8217; she said. &#8216;I decided that for the images to have magic qualities I had to work directly with nature.&#8217;", coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/hayward-gallery/hayward-25061/image-0.webp", url: "https://www.newexhibitions.com/e/25061", startDate: "2013-09-24", endDate: "2013-12-15" },
-      { id: "hayward-25063", name: "The Alternative Guide to the Universe", title: "The Alternative Guide to the Universe", description: "Visions from Maverick Arts and Sciences. \n*Featuring The Museum of Everything!*\nFocusing on self-taught practitioners whose work is generally produced outside of conventional channels, The Alternative Guide to the Universe features a range of contributors from fringe physicists to the inventors of new languages; from artists who map cities of the future to others who design imaginary technologies.\nInspiringly original and bracingly eccentric, their work re-imagines our social and cultural conventions. Come and experience a kind of a parallel universe where ingenuity and inventiveness trump common sense and received wisdom.", detailedDescription: "Visions from Maverick Arts and Sciences. \n*Featuring The Museum of Everything!*\nFocusing on self-taught practitioners whose work is generally produced outside of conventional channels, The Alternative Guide to the Universe features a range of contributors from fringe physicists to the inventors of new languages; from artists who map cities of the future to others who design imaginary technologies.\nInspiringly original and bracingly eccentric, their work re-imagines our social and cultural conventions. Come and experience a kind of a parallel universe where ingenuity and inventiveness trump common sense and received wisdom.", coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/hayward-gallery/hayward-25063/image-0.webp", url: "https://www.newexhibitions.com/e/25063", startDate: "2013-06-11", endDate: "2013-08-26" },
-      { id: "hayward-25062", name: "Aura Satz : Impulsive Synchronisation", title: "Aura Satz : Impulsive Synchronisation", description: "At Hayward Gallery Project Space.\nAura Satz premieres a new film and sound installation that centres on the invention of 'frequency hopping', patented in 1941 by Hollywood star Hedy Lamarr and composer George Antheil.\nThe 'Secret Communication System' enabled radio-controlled guidance of torpedoes by synchronising frequency changes in transmitter and receiver, thus avoiding enemy detection.", detailedDescription: "At Hayward Gallery Project Space.\nAura Satz premieres a new film and sound installation that centres on the invention of 'frequency hopping', patented in 1941 by Hollywood star Hedy Lamarr and composer George Antheil.\nThe 'Secret Communication System' enabled radio-controlled guidance of torpedoes by synchronising frequency changes in transmitter and receiver, thus avoiding enemy detection.", coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/hayward-gallery/hayward-25062/image-0.webp", url: "https://www.newexhibitions.com/e/25062", startDate: "2013-03-22", endDate: "2013-05-26" },
       { id: "hayward-25064", name: "Light Show", title: "Light Show", description: "Light Show explores the experiential and phenomenal nature of light, bringing together sculptures and installations that use light in different ways. The exhibition showcases artworks created since the 1960s in which light is used to sculpt and shape space, often operating at the edges of perception.", detailedDescription: "Light Show explores the experiential and phenomenal nature of light, bringing together sculptures and installations that use light in different ways. The exhibition showcases artworks created since the 1960s in which light is used to sculpt and shape space, often operating at the edges of perception.", coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/hayward-gallery/hayward-25064/image-0.webp", url: "https://www.newexhibitions.com/e/25064", startDate: "2013-01-30", endDate: "2013-05-06" },
-      { id: "hayward-25065", name: "Art of Change : New Directions from China", title: "Art of Change : New Directions from China", coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/hayward-gallery/hayward-25065/image-0.webp", url: "https://www.newexhibitions.com/e/25065", startDate: "2012-09-06", endDate: "2012-12-09" },
-      { id: "hayward-25119", name: "Sarah Lucas : Ordinary Things", title: "Sarah Lucas : Ordinary Things", description: "Ordinary Things explores Sarah Lucas' (b. London 1962) consistent questioning of the definition of sculpture, in a selection of works made from 1993 to the present day. From 'Big Fat Anarchic Spider' (1993) to 'NUDS' (2009&#8211;11), via 'Bunny' (1994) and 'Penetralia' (2008), this exhibition takes a journey across the conflicting currencies of sculpture the artist has employed over the last three decades. Lucas' sculptures are physical, formal objects produced through the languages that surround them&#8212;be that sculptural, historical or vernacular. Cutting, welding, moulding, handling, stuffing, assembling; monumental, ready-made, formal, quick-build, bombastic, representational, abstract, true-to-materials. Each of Lucas' sculptures confidently asserts itself, pulling and pushing all that visually surrounds it for its own ends. Each work is economical and complete.", detailedDescription: "Ordinary Things explores Sarah Lucas' (b. London 1962) consistent questioning of the definition of sculpture, in a selection of works made from 1993 to the present day. From 'Big Fat Anarchic Spider' (1993) to 'NUDS' (2009&#8211;11), via 'Bunny' (1994) and 'Penetralia' (2008), this exhibition takes a journey across the conflicting currencies of sculpture the artist has employed over the last three decades. Lucas' sculptures are physical, formal objects produced through the languages that surround them&#8212;be that sculptural, historical or vernacular. Cutting, welding, moulding, handling, stuffing, assembling; monumental, ready-made, formal, quick-build, bombastic, representational, abstract, true-to-materials. Each of Lucas' sculptures confidently asserts itself, pulling and pushing all that visually surrounds it for its own ends. Each work is economical and complete.", coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/hayward-gallery/hayward-25119/image-0.webp", url: "https://www.newexhibitions.com/e/25119", startDate: "2012-07-19", endDate: "2012-10-21" },
-      { id: "hayward-25120", name: "Vlassis Caniaris : Composition (1974)", title: "Vlassis Caniaris : Composition (1974)", description: "From the late 1950s Vlassis Caniaris (1928&#8211;2011) made use of materials ready at hand, deploying colour and surface to make human-scale sculptures from makeshift and abandoned objects. From the 1960s he began to create resourceful, caustic compositions made from objects and materials bearing the traces of use, such as wire netting, plaster, clothes, artificial flowers, cardboard boxes, newspaper clippings and suitcases. This display presents a single work, 'Composition'. A pair of yellow legs stand on a white stool, both feet wearing buckled grey shoes; the legs are a pair of tights, shaped to stand tall, albeit rather misshapen.", detailedDescription: "From the late 1950s Vlassis Caniaris (1928&#8211;2011) made use of materials ready at hand, deploying colour and surface to make human-scale sculptures from makeshift and abandoned objects. From the 1960s he began to create resourceful, caustic compositions made from objects and materials bearing the traces of use, such as wire netting, plaster, clothes, artificial flowers, cardboard boxes, newspaper clippings and suitcases. This display presents a single work, 'Composition'. A pair of yellow legs stand on a white stool, both feet wearing buckled grey shoes; the legs are a pair of tights, shaped to stand tall, albeit rather misshapen.", coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/hayward-gallery/hayward-25120/image-0.webp", url: "https://www.newexhibitions.com/e/25120", startDate: "2012-05-30", endDate: "2012-09-01" },
-      { id: "hayward-25067", name: "Invisible Art", title: "Invisible Art", description: "A work of art that exists solely in the mind of the viewer and an invisiblefilm are some of the artworks on show (or not?) at the Hayward Gallery&#8217;ssummer show, Invisible. Conceived against a backdrop of art institutions competing to mount ever larger and more spectacular exhibitions, Invisible is a much-needed tonic for our thinking about art and the roles that the audience plays in expanding its potential meanings. It brings together artworks from the past six decades that place an emphasis on conceptual and communicative possibilities of art, while bypassing the requirements of visibility and materiality. \nFeatures artists including Robert Barry, James Lee Byars, Maurizio Cattelan, Jay Chung, Song Dong, Tom Friedman, Carsten Höller, Tehching Hsieh, Yves Klein, Roman Ondák, Mario Garcia Torres, and Andy Warhol.\nhttp://www.southbankcentre.co.uk/invisible", detailedDescription: "A work of art that exists solely in the mind of the viewer and an invisiblefilm are some of the artworks on show (or not?) at the Hayward Gallery&#8217;ssummer show, Invisible. Conceived against a backdrop of art institutions competing to mount ever larger and more spectacular exhibitions, Invisible is a much-needed tonic for our thinking about art and the roles that the audience plays in expanding its potential meanings. It brings together artworks from the past six decades that place an emphasis on conceptual and communicative possibilities of art, while bypassing the requirements of visibility and materiality. \nFeatures artists including Robert Barry, James Lee Byars, Maurizio Cattelan, Jay Chung, Song Dong, Tom Friedman, Carsten Höller, Tehching Hsieh, Yves Klein, Roman Ondák, Mario Garcia Torres, and Andy Warhol.\nhttp://www.southbankcentre.co.uk/invisible", coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/hayward-gallery/hayward-25067/image-0.webp", url: "https://www.newexhibitions.com/e/25067", startDate: "2012-06-12", endDate: "2012-08-05" },
-      { id: "hayward-25066", name: "Wide Open School", title: "Wide Open School", description: "For one month only, the Hayward Gallery transforms into Wide Open School. An experiment in public learning, Wide Open School offers a programme devised and fuelled by the imaginations of more than 80 artists from over 40 different countries. In June, explore areas as diverse as making sculptures from reclaimed materials to the relationship between visual arts and contemporary choreography. It&#8217;s the perfect place for people who love learning but don&#8217;t necessarily like being taught.\nhttp://www.southbankcentre.co.uk/wos", detailedDescription: "For one month only, the Hayward Gallery transforms into Wide Open School. An experiment in public learning, Wide Open School offers a programme devised and fuelled by the imaginations of more than 80 artists from over 40 different countries. In June, explore areas as diverse as making sculptures from reclaimed materials to the relationship between visual arts and contemporary choreography. It&#8217;s the perfect place for people who love learning but don&#8217;t necessarily like being taught.\nhttp://www.southbankcentre.co.uk/wos", coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/hayward-gallery/hayward-25066/image-0.webp", url: "https://www.newexhibitions.com/e/25066", startDate: "2012-06-11", endDate: "2012-07-11" },
-      { id: "hayward-25121", name: "Phyllida Barlow : Bad Copies", title: "Phyllida Barlow : Bad Copies", description: "An artist and teacher who constantly questions the possibilities of sculpture by capturing a sense of the 'now', Phyllida Barlow (b. Newcastle 1944) is known primarily for her large-scale installations made from salvaged materials that are constructed on-site. This selection of drawings spans the 1960s to the present. Describing them as 'bad copies', Barlow's drawings are derived from her environment, filtered through memory and reconfigured in the light of her own sculptural concerns.", detailedDescription: "An artist and teacher who constantly questions the possibilities of sculpture by capturing a sense of the 'now', Phyllida Barlow (b. Newcastle 1944) is known primarily for her large-scale installations made from salvaged materials that are constructed on-site. This selection of drawings spans the 1960s to the present. Describing them as 'bad copies', Barlow's drawings are derived from her environment, filtered through memory and reconfigured in the light of her own sculptural concerns.", coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/hayward-gallery/hayward-25121/image-0.webp", url: "https://www.newexhibitions.com/e/25121", startDate: "2012-04-12", endDate: "2012-06-17" },
-      { id: "hayward-25069", name: "JEREMY DELLER : JOY IN PEOPLE", title: "JEREMY DELLER : JOY IN PEOPLE", description: "A hugely influential artist for much of the past two decades, Turner Prize-winner Jeremy Deller has helped to rewrite the rules of contemporary art in many respects. Inventively collaborating with varied groups of people, he has developed an aesthetic that he calls &#8216;social surrealism&#8217; that mixes the serious and the absurd while exploring everyday culture and history. &#8216;Jeremy Deller: Joy in People&#8217; will incorporate his most important gallery-based works to date, and will also include a new narrative slide show in which the artist discusses his many non-gallery projects and interventions. Featuring major installations, photographs, videos, posters, banners, performance works and sound pieces, the exhibition will include a re-creation of Open Bedroom, Deller&#8217;s first solo major exhibition held in his parents&#8217; house whilst they were away on holiday.", detailedDescription: "A hugely influential artist for much of the past two decades, Turner Prize-winner Jeremy Deller has helped to rewrite the rules of contemporary art in many respects. Inventively collaborating with varied groups of people, he has developed an aesthetic that he calls &#8216;social surrealism&#8217; that mixes the serious and the absurd while exploring everyday culture and history. &#8216;Jeremy Deller: Joy in People&#8217; will incorporate his most important gallery-based works to date, and will also include a new narrative slide show in which the artist discusses his many non-gallery projects and interventions. Featuring major installations, photographs, videos, posters, banners, performance works and sound pieces, the exhibition will include a re-creation of Open Bedroom, Deller&#8217;s first solo major exhibition held in his parents&#8217; house whilst they were away on holiday.", coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/hayward-gallery/hayward-25069/image-0.webp", url: "https://www.newexhibitions.com/e/25069", startDate: "2012-02-22", endDate: "2012-05-13" },
-      { id: "hayward-25070", name: "DAVID SHRIGLEY : BRAIN ACTIVITY", title: "DAVID SHRIGLEY : BRAIN ACTIVITY", description: "This is the first major survey in the UK of works by Glasgow-based artist David Shrigley. Spanning the upper galleries, the exhibition covers the full range of Shrigley&#8217;s diverse work from the past two decades, including drawing, animation, painting, photography, and sculpture. Shrigley is best known for his pared down drawings (which he has published in numerous books) that make wry and often dark observations on the absurdities of life, death and everything in between. To coincide with the exhibition, Southbank Centre will present the London premiere of Pass the Spoon (5 & 6 May, Queen Elizabeth Hall), a &#8216;sort-of opera&#8217; by David Shrigley, composer David Fennessy and director Nicholas Bone, featuring singing vegetables, a giant butcher, an ambitious banana and a panic-stricken pair of celebrity chefs.", detailedDescription: "This is the first major survey in the UK of works by Glasgow-based artist David Shrigley. Spanning the upper galleries, the exhibition covers the full range of Shrigley&#8217;s diverse work from the past two decades, including drawing, animation, painting, photography, and sculpture. Shrigley is best known for his pared down drawings (which he has published in numerous books) that make wry and often dark observations on the absurdities of life, death and everything in between. To coincide with the exhibition, Southbank Centre will present the London premiere of Pass the Spoon (5 & 6 May, Queen Elizabeth Hall), a &#8216;sort-of opera&#8217; by David Shrigley, composer David Fennessy and director Nicholas Bone, featuring singing vegetables, a giant butcher, an ambitious banana and a panic-stricken pair of celebrity chefs.", coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/hayward-gallery/hayward-25070/image-0.webp", url: "https://www.newexhibitions.com/e/25070", startDate: "2012-02-01", endDate: "2012-05-13" },
       { id: "hayward-25122", name: "John McCracken: 'IV' (1985) and 'Neon' (1989)", title: "John McCracken: 'IV' (1985) and 'Neon' (1989)", description: "The first in a series of exhibitions presenting sculptures from the past that have made sculpture in the present possible, launching with two works from the 1980s by the American artist John McCracken (1934&#8211;2011). McCracken's sculptures ask a fundamental question: 'how do things sit in space?' Condensing the possibilities of sculpture into single obstructive objects, these are handmade to smooth perfection, utilising the basic languages of sculpture: scale, colour, height, width, and breadth.", detailedDescription: "The first in a series of exhibitions presenting sculptures from the past that have made sculpture in the present possible, launching with two works from the 1980s by the American artist John McCracken (1934&#8211;2011). McCracken's sculptures ask a fundamental question: 'how do things sit in space?' Condensing the possibilities of sculpture into single obstructive objects, these are handmade to smooth perfection, utilising the basic languages of sculpture: scale, colour, height, width, and breadth.", coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/hayward-gallery/hayward-25122/image-0.webp", url: "https://www.newexhibitions.com/e/25122", startDate: "2012-02-29", endDate: "2012-05-13" },
-      { id: "hayward-25068", name: "Hayward Project Space : Euan MacDonald", title: "Hayward Project Space : Euan MacDonald", description: "Euan Macdonald - Open-Tuning features the recent video 9000 Pieces (2010), which focuses on a piano-testing machine in a Chinese musical instrument factory (the title refers to the number of separate parts in a piano).\n\nAn exploration of the different meanings of noise, 9,000 Pieces is a sonic tour-de-force that plays with the way we make sense of the world. The show also includes a transcribed 'score' of the testing machine's cacophonous performance.\n\nIn addition, Open-Tuning features Macdonald's Brakestand (1999), a video loop depicting a 1970s BMW spinning its wheels and burning rubber - the car furiously going nowhere fast while producing a squealing roar that conjures extreme speed.", detailedDescription: "Euan Macdonald - Open-Tuning features the recent video 9000 Pieces (2010), which focuses on a piano-testing machine in a Chinese musical instrument factory (the title refers to the number of separate parts in a piano).\n\nAn exploration of the different meanings of noise, 9,000 Pieces is a sonic tour-de-force that plays with the way we make sense of the world. The show also includes a transcribed 'score' of the testing machine's cacophonous performance.\n\nIn addition, Open-Tuning features Macdonald's Brakestand (1999), a video loop depicting a 1970s BMW spinning its wheels and burning rubber - the car furiously going nowhere fast while producing a squealing roar that conjures extreme speed.", coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/hayward-gallery/hayward-25068/image-0.webp", url: "https://www.newexhibitions.com/e/25068", startDate: "2012-01-14", endDate: "2012-02-14" },
-      { id: "hayward-25076", name: "Tracey Emin : Love is What You Want", title: "Tracey Emin : Love is What You Want", coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/hayward-gallery/hayward-25076/image-0.webp", url: "https://www.newexhibitions.com/e/25076", startDate: "2011-05-18", endDate: "2011-08-29" },
       { id: "hayward-25077", name: "The Royal Family : Hayward Gallery Project Space", title: "The Royal Family : Hayward Gallery Project Space", description: "Royal Family focuses on contemporary artists' representations of the House of Windsor ahead of the royal wedding. It presents works in a range of media that examine the individual family members, as well as the signs and signifiers, of the celebrated and peculiar institution of the British royal family. Artists featured in the exhibition include Adam Dant, Hans Peter Feldman, Alison Jackson, Alan Kane, Lars Laumann, Otto Muehl, Tony Oursler, Francis Upritchard.", detailedDescription: "Royal Family focuses on contemporary artists' representations of the House of Windsor ahead of the royal wedding. It presents works in a range of media that examine the individual family members, as well as the signs and signifiers, of the celebrated and peculiar institution of the British royal family. Artists featured in the exhibition include Adam Dant, Hans Peter Feldman, Alison Jackson, Alan Kane, Lars Laumann, Otto Muehl, Tony Oursler, Francis Upritchard.", coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/hayward-gallery/hayward-25077/image-0.webp", url: "https://www.newexhibitions.com/e/25077", startDate: "2011-03-12", endDate: "2011-05-02" },
-      { id: "hayward-25078", name: "British Art Show 7 : In the Days of the Comet", title: "British Art Show 7 : In the Days of the Comet", description: "Paintings, sculpture, installations, video, film, performance and all points in between by 38 artists and artist's groups.", detailedDescription: "Paintings, sculpture, installations, video, film, performance and all points in between by 38 artists and artist's groups.", coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/hayward-gallery/hayward-25078/image-0.webp", url: "https://www.newexhibitions.com/e/25078", startDate: "2011-02-18", endDate: "2011-04-17" },
-      { id: "hayward-25079", name: "Ron Terada : Who I Think I Am", title: "Ron Terada : Who I Think I Am", description: "Painting, signage, photography, interventions, books and music", detailedDescription: "Painting, signage, photography, interventions, books and music", coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/hayward-gallery/hayward-25079/image-0.webp", url: "https://www.newexhibitions.com/e/25079", startDate: "2010-09-28", endDate: "2010-11-07" },
       { id: "hayward-25080", name: "Jess Flood-Paddock : Gangsta's Paradise", title: "Jess Flood-Paddock : Gangsta's Paradise", description: "Hayward Gallery Project Space", detailedDescription: "Hayward Gallery Project Space", coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/hayward-gallery/hayward-25080/image-0.webp", url: "https://www.newexhibitions.com/e/25080", startDate: "2010-08-04", endDate: "2010-09-19" },
       { id: "hayward-25085", name: "Martin Sastre", title: "Martin Sastre", description: "Video art in Hayward Gallery Project Space.", detailedDescription: "Video art in Hayward Gallery Project Space.", coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/hayward-gallery/hayward-25085/image-0.webp", url: "https://www.newexhibitions.com/e/25085", startDate: "2009-09-08", endDate: "2009-09-30" },
       { id: "hayward-25089", name: "Walking in My Mind", title: "Walking in My Mind", description: "Explores the inner working of the artist's imagination through dramatic, large-scale installation art. Charles Avery, Thomas Hirschhorn, Yayoi Kusama, Bo Christian Larsson, Mark Manders, Yoshitomo Nara, Jason Rhoades, Pipilotti Rist, Chiharu Shiota and Keith Tyson.", detailedDescription: "Explores the inner working of the artist's imagination through dramatic, large-scale installation art. Charles Avery, Thomas Hirschhorn, Yayoi Kusama, Bo Christian Larsson, Mark Manders, Yoshitomo Nara, Jason Rhoades, Pipilotti Rist, Chiharu Shiota and Keith Tyson.", coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/hayward-gallery/hayward-25089/image-0.webp", url: "https://www.newexhibitions.com/e/25089", startDate: "2009-06-23", endDate: "2009-09-06" },
-      { id: "hayward-25087", name: "Deceitful Moon", title: "Deceitful Moon", description: "Opening 40 years after the Apollo 11 moon landings, the group exhibition Deceitful Moon does not mark the anniversary of this world-shaping event, but rather commemorates the coeval doubt that it took place at all.", detailedDescription: "Opening 40 years after the Apollo 11 moon landings, the group exhibition Deceitful Moon does not mark the anniversary of this world-shaping event, but rather commemorates the coeval doubt that it took place at all.", coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/hayward-gallery/hayward-25087/image-0.webp", url: "https://www.newexhibitions.com/e/25087", startDate: "2009-07-21", endDate: "2009-08-30" },
-      { id: "hayward-25088", name: "Matthew Darbyshire: Funhouse", title: "Matthew Darbyshire: Funhouse", coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/hayward-gallery/hayward-25088/image-0.webp", url: "https://www.newexhibitions.com/e/25088", startDate: "2009-05-20", endDate: "2009-07-12" },
-      { id: "hayward-25090", name: "PaulMart : Beton brut", title: "PaulMart : Beton brut", description: "As a collaborative duo, PaulMart (Paul Teigh and Martin Russell, both b.1980) experiment with sculptural form.", detailedDescription: "As a collaborative duo, PaulMart (Paul Teigh and Martin Russell, both b.1980) experiment with sculptural form.", coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/hayward-gallery/hayward-25090/image-0.webp", url: "https://www.newexhibitions.com/e/25090", startDate: "2009-04-21", endDate: "2009-05-31" },
       { id: "hayward-25092", name: "Annette Messager : The Messengers", title: "Annette Messager : The Messengers", description: "Retrospective. This exhibition presents a panoramic survey from the intimate and conceptually driven pieces Messager made in the early 1970s to the very large sculptural installations of the past 15 years, in which movement plays an increasingly important role.", detailedDescription: "Retrospective. This exhibition presents a panoramic survey from the intimate and conceptually driven pieces Messager made in the early 1970s to the very large sculptural installations of the past 15 years, in which movement plays an increasingly important role.", coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/hayward-gallery/hayward-25092/image-0.webp", url: "https://www.newexhibitions.com/e/25092", startDate: "2009-03-04", endDate: "2009-05-25" },
       { id: "hayward-25093", name: "Mark Wallinger Curates : The Russian Linesman", title: "Mark Wallinger Curates : The Russian Linesman", coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/hayward-gallery/hayward-25093/image-0.webp", url: "https://www.newexhibitions.com/e/25093", startDate: "2009-02-18", endDate: "2009-05-04" },
-      { id: "hayward-25091", name: "Ujino and the Rotators", title: "Ujino and the Rotators", coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/hayward-gallery/hayward-25091/image-0.webp", url: "https://www.newexhibitions.com/e/25091", startDate: "2009-02-18", endDate: "2009-04-24" },
       { id: "hayward-25095", name: "Robin Rhode: Who Saw Who", title: "Robin Rhode: Who Saw Who", description: "A major new talent on the international art scene, Robin Rhode has a reputation for brilliantly inventive performances, photographs, video animations and drawings. Rhode's art uses the barest of means to comment on urban poverty and the politics of leisure.", detailedDescription: "A major new talent on the international art scene, Robin Rhode has a reputation for brilliantly inventive performances, photographs, video animations and drawings. Rhode's art uses the barest of means to comment on urban poverty and the politics of leisure.", coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/hayward-gallery/hayward-25095/image-0.webp", url: "https://www.newexhibitions.com/e/25095", startDate: "2008-09-23", endDate: "2008-12-07" },
       { id: "hayward-25096", name: "Psycho Buildings : Artists take on Architecture", title: "Psycho Buildings : Artists take on Architecture", description: "The work of artists who create habitat-like structures and architectural environments that are mental and perceptual spaces as much as physical ones. Artists include: Los Carpinteros, Mike Nelson, Ernesto Neto, Do-Ho Suh and Rachel Whiteread.", detailedDescription: "The work of artists who create habitat-like structures and architectural environments that are mental and perceptual spaces as much as physical ones. Artists include: Los Carpinteros, Mike Nelson, Ernesto Neto, Do-Ho Suh and Rachel Whiteread.", coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/hayward-gallery/hayward-25096/image-0.webp", url: "https://www.newexhibitions.com/e/25096", startDate: "2008-05-28", endDate: "2008-08-25" },
-      { id: "hayward-25097", name: "Laughing in a Foreign Language", title: "Laughing in a Foreign Language", description: "Investigates the whole spectrum of humour, from jokes, gags and slapstick to irony, wit and satire", detailedDescription: "Investigates the whole spectrum of humour, from jokes, gags and slapstick to irony, wit and satire", coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/hayward-gallery/hayward-25097/image-0.webp", url: "https://www.newexhibitions.com/e/25097", startDate: "2008-01-25", endDate: "2008-04-13" },
-      { id: "hayward-25098", name: "alexander rodchenko : revolution in photography", title: "alexander rodchenko : revolution in photography", coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/hayward-gallery/hayward-25098/image-0.webp", url: "https://www.newexhibitions.com/e/25098", startDate: "2008-01-25", endDate: "2008-04-13" },
-      { id: "hayward-25101", name: "the painting of modern life", title: "the painting of modern life", coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/hayward-gallery/hayward-25101/image-0.webp", url: "https://www.newexhibitions.com/e/25101", startDate: "2007-10-04", endDate: "2007-12-30" },
-      { id: "hayward-25100", name: "kota ezawa : hotel california", title: "kota ezawa : hotel california", description: "Hayward Projects Space", detailedDescription: "Hayward Projects Space", coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/hayward-gallery/hayward-25100/image-0.webp", url: "https://www.newexhibitions.com/e/25100", startDate: "2007-10-04", endDate: "2007-11-18" },
-      { id: "hayward-25102", name: "Antony Gormley : Blind Light", title: "Antony Gormley : Blind Light", coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/hayward-gallery/hayward-25102/image-0.webp", url: "https://www.newexhibitions.com/e/25102", startDate: "2007-05-17", endDate: "2007-08-19" },
-      { id: "hayward-25103", name: "How to Improve the World : British Art 1946 - 2006", title: "How to Improve the World : British Art 1946 - 2006", description: "The Arts Council Collection", detailedDescription: "The Arts Council Collection", coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/hayward-gallery/hayward-25103/image-0.webp", url: "https://www.newexhibitions.com/e/25103", startDate: "2006-09-07", endDate: "2006-11-19" },
-      { id: "hayward-25104", name: "Undercover Surrealism", title: "Undercover Surrealism", coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/hayward-gallery/hayward-25104/image-0.webp", url: "https://www.newexhibitions.com/e/25104", startDate: "2006-05-11", endDate: "2006-07-30" },
-      { id: "hayward-25106", name: "Universal Experience: Art, Life and the Tourist's Eye", title: "Universal Experience: Art, Life and the Tourist's Eye", description: "Around the world in 1000 images. Travel with 50 international artists", detailedDescription: "Around the world in 1000 images. Travel with 50 international artists", coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/hayward-gallery/hayward-25106/image-0.webp", url: "https://www.newexhibitions.com/e/25106", startDate: "2005-10-06", endDate: "2005-12-11" },
       { id: "hayward-25107", name: "Rebecca Horn: Bodylandscapes", title: "Rebecca Horn: Bodylandscapes", coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/hayward-gallery/hayward-25107/image-0.webp", url: "https://www.newexhibitions.com/e/25107", startDate: "2005-05-26", endDate: "2005-08-29" },
-      { id: "hayward-25108", name: "Africa Remix", title: "Africa Remix", description: "Contemporary Art of a Continent", detailedDescription: "Contemporary Art of a Continent", coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/hayward-gallery/hayward-25108/image-0.webp", url: "https://www.newexhibitions.com/e/25108", startDate: "2005-02-10", endDate: "2005-04-17" },
-      { id: "hayward-25112", name: "william eggleston", title: "william eggleston", description: "Photographs", detailedDescription: "Photographs", coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/hayward-gallery/hayward-25112/image-0.webp", url: "https://www.newexhibitions.com/e/25112", startDate: "2002-07-11", endDate: "2002-09-22" },
-      { id: "hayward-25113", name: "ansel adams at 100", title: "ansel adams at 100", coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/hayward-gallery/hayward-25113/image-0.webp", url: "https://www.newexhibitions.com/e/25113", startDate: "2002-07-11", endDate: "2002-09-22" },
-      { id: "hayward-25114", name: "SAM TAYLOR-WOOD", title: "SAM TAYLOR-WOOD", coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/hayward-gallery/hayward-25114/image-0.webp", url: "https://www.newexhibitions.com/e/25114", startDate: "2002-04-15", endDate: "2002-06-21" },
-      { id: "hayward-25116", name: "WARTE MAL! PROSTUTION AFTER THE VELVET REVOLUTION", title: "WARTE MAL! PROSTUTION AFTER THE VELVET REVOLUTION", description: "Large scale video installation by the\nSwedish artist", detailedDescription: "Large scale video installation by the\nSwedish artist", coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/hayward-gallery/hayward-25116/image-0.webp", url: "https://www.newexhibitions.com/e/25116", startDate: "2002-01-17", endDate: "2002-04-01" },
-      { id: "hayward-25117", name: "PAUL KLEE", title: "PAUL KLEE", description: "The Nature of Creation", detailedDescription: "The Nature of Creation", coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/hayward-gallery/hayward-25117/image-0.webp", url: "https://www.newexhibitions.com/e/25117", startDate: "2002-01-17", endDate: "2002-04-01" },
-      { id: "hayward-25118", name: "FACTS OF LIFE: Contemporary Japanese Art", title: "FACTS OF LIFE: Contemporary Japanese Art", description: "Facts of Life presents some of the most innovative & stimulating art being made in Japan today. Co-organised by the Hayward Gallery & The Japan Foundation", detailedDescription: "Facts of Life presents some of the most innovative & stimulating art being made in Japan today. Co-organised by the Hayward Gallery & The Japan Foundation", coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/hayward-gallery/hayward-25118/image-0.webp", url: "https://www.newexhibitions.com/e/25118", startDate: "2001-10-04", endDate: "2001-12-09" },
       { id: "hayward-64913", name: "Haegue Yang: Leap Year", title: "Haegue Yang: Leap Year", description: "A world of inventive, immersive and multisensory installations and sculptures that weave connections between disparate histories, cultures and traditions.\n\nHaegue Yang's work spans a vast range of media – from paper collage to performative sculpture and immense sensorial installations.\n\nEqually as wide-ranging, her inspiration draws on diverse histories and customs, including East Asian traditions and folklore, modernism, contemporary art history and nature.\n\nYang uses a variety of crafts, techniques and materials in her work, tapping into the cultural connotations they carry. Her works often feature a variety of household and industrial objects, including drying racks, light bulbs, metal-plated bells, nylon pom-poms, hand-knitted yarn and hanji (Korean paper).\n\nLeap Year is the first major survey of the internationally celebrated artist in the UK. It presents a comprehensive study of Yang's work from the early 2000s to today, highlighting how her artworks resonate on a personal and sensory level while also speaking to social, political and spiritual ideas.\n\nThe exhibition features key works from some of her most notable series, including Light Sculptures and Sonic Sculptures, complemented by three new major commissions and a number of new productions.\n\nThese works bring together a wide spectrum of visual and sensory experiences through the mediums of installation, sculpture, collage, text, video, wallpaper, sound.\n\nYang (born 1971, Seoul) lives and works in both Berlin and Seoul. Her multisensory environments encourage perception beyond the visual, creating immersive experiences that highlight issues such as labour, migration, and displacement.\n\nShe has had recent solo exhibitions at Helsinki Art Museum (2024); National Gallery of Australia, Canberra (2023); S.M.A.K., Ghent (2023); and Pinacoteca de S&atilde;o Paulo (2023).\n\nTickets\n\nStandard entry from &pound;19 / Members free. Concessions available for full-time students, Lambeth residents, under-30s and recipients of Universal or Pension Credit, Tue – Fri & after 5pm on Sat.", detailedDescription: "A world of inventive, immersive and multisensory installations and sculptures that weave connections between disparate histories, cultures and traditions.\n\nHaegue Yang's work spans a vast range of media – from paper collage to performative sculpture and immense sensorial installations.\n\nEqually as wide-ranging, her inspiration draws on diverse histories and customs, including East Asian traditions and folklore, modernism, contemporary art history and nature.\n\nYang uses a variety of crafts, techniques and materials in her work, tapping into the cultural connotations they carry. Her works often feature a variety of household and industrial objects, including drying racks, light bulbs, metal-plated bells, nylon pom-poms, hand-knitted yarn and hanji (Korean paper).\n\nLeap Year is the first major survey of the internationally celebrated artist in the UK. It presents a comprehensive study of Yang's work from the early 2000s to today, highlighting how her artworks resonate on a personal and sensory level while also speaking to social, political and spiritual ideas.\n\nThe exhibition features key works from some of her most notable series, including Light Sculptures and Sonic Sculptures, complemented by three new major commissions and a number of new productions.\n\nThese works bring together a wide spectrum of visual and sensory experiences through the mediums of installation, sculpture, collage, text, video, wallpaper, sound.\n\nYang (born 1971, Seoul) lives and works in both Berlin and Seoul. Her multisensory environments encourage perception beyond the visual, creating immersive experiences that highlight issues such as labour, migration, and displacement.\n\nShe has had recent solo exhibitions at Helsinki Art Museum (2024); National Gallery of Australia, Canberra (2023); S.M.A.K., Ghent (2023); and Pinacoteca de S&atilde;o Paulo (2023).\n\nTickets\n\nStandard entry from &pound;19 / Members free. Concessions available for full-time students, Lambeth residents, under-30s and recipients of Universal or Pension Credit, Tue – Fri & after 5pm on Sat.", coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/hayward-gallery/hayward-64913/image-0.webp", url: "https://www.newexhibitions.com/e/64913" },
       { id: "hayward-64914", name: "Huang Po-Chih: Waves", title: "Huang Po-Chih: Waves", description: "Taiwanese artist Huang Po-Chih uses the personal narratives of workers to investigate globalised trade, with a focus on the textile industry in East Asia.\n\nDrawing upon his family heritage – particularly his mother's experiences as a garment worker in Taoyuan, Taiwan – Huang engages with the personal narratives of individuals involved in the textile industry across China, Hong Kong, South Korea and Taiwan.\n\nThe exhibition features new video and text-based work as part of a presentation of installation, photography and sculpture. Stories and anecdotes from the 1960s to the present day take place against a backdrop of migration and trade, and Huang addresses the role that his own artistic production plays within this system of global capitalism.\n\nThroughout the work, narratives and themes circulate like the waves and ocean currents that transport people and materials via trade routes in the region and beyond. This sense of fluidity also serves as a metaphor for the turbulent conditions faced by the generally low-paid workers in the East Asian textile industry.\n\nNominated for the HUGO BOSS Asia Art Award in 2015, and recipient of the Prudential Eye Awards in 2016, Po-Chih's work has been widely shown internationally. Huang Po-Chih: Waves is the artist's first solo exhibition in the UK.\n\nPresented with support from the RC Foundation, Taiwan (R.O.C.). Additional support provided by the Ministry of Culture, Taiwan (R.O.C.)\n\nStandard entry Free – no ticket required", detailedDescription: "Taiwanese artist Huang Po-Chih uses the personal narratives of workers to investigate globalised trade, with a focus on the textile industry in East Asia.\n\nDrawing upon his family heritage – particularly his mother's experiences as a garment worker in Taoyuan, Taiwan – Huang engages with the personal narratives of individuals involved in the textile industry across China, Hong Kong, South Korea and Taiwan.\n\nThe exhibition features new video and text-based work as part of a presentation of installation, photography and sculpture. Stories and anecdotes from the 1960s to the present day take place against a backdrop of migration and trade, and Huang addresses the role that his own artistic production plays within this system of global capitalism.\n\nThroughout the work, narratives and themes circulate like the waves and ocean currents that transport people and materials via trade routes in the region and beyond. This sense of fluidity also serves as a metaphor for the turbulent conditions faced by the generally low-paid workers in the East Asian textile industry.\n\nNominated for the HUGO BOSS Asia Art Award in 2015, and recipient of the Prudential Eye Awards in 2016, Po-Chih's work has been widely shown internationally. Huang Po-Chih: Waves is the artist's first solo exhibition in the UK.\n\nPresented with support from the RC Foundation, Taiwan (R.O.C.). Additional support provided by the Ministry of Culture, Taiwan (R.O.C.)\n\nStandard entry Free – no ticket required", coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/hayward-gallery/hayward-64914/image-0.webp", url: "https://www.newexhibitions.com/e/64914" },
       { id: "hayward-62389", name: "Hiroshi Sugimoto", title: "Hiroshi Sugimoto", description: "The largest retrospective to date of Hiroshi Sugimoto, an artist renowned for creating some of the most alluringly enigmatic photographs of our time.\n\nOver the past 50 years, Sugimoto has created pictures which are meticulously crafted, deeply thought-provoking and quietly subversive. \n\nFeaturing key works from all of the artist's major photographic series, this retrospective highlights Sugimoto's philosophical yet playful inquiry into our understanding of time and memory, and photography's ability to both document and invent. \n\nThe exhibition also includes lesser-known works that reveal the artist's interest in the history of photography, as well as in mathematics and optical sciences. \n\nOften employing a large-format wooden camera and mixing his own darkroom chemicals, Sugimoto has repeatedly re-explored ideas and practices from 19th century photography while capturing subjects including dioramas, wax figures and architecture. His work has stretched and rearranged concepts of time, space and light that are integral to the medium.\n\nBorn and raised in Tokyo, Japan, Hiroshi Sugimoto divides his time between Tokyo and New York City. Over the past five decades, his photographs have received international acclaim and have been presented in major institutions across the globe. \n\nWhile best known as a photographer, Sugimoto has more recently added architecture, sculpture and set design to his multidisciplinary practice. \n\nHis work is represented in major public collections including the Metropolitan Museum of Art, New York; Centre Pompidou, Paris; Museum of Modern Art, New York; and National Gallery, London.\n\nHiroshi Sugimoto is generously supported by the Exhibition Supporters' Group: Fraenkel Gallery, Marian Goodman Gallery, Gallery Koyanagi, the Rory and Elizabeth Brooks Foundation, Beth and Michele Colocci, Suling C Mead, Manizeh and Danny Rimer, Maria and Malek Sukkar, Michael G and C Jane Wilson and those who wish to remain anonymous. \n\nAdditional support has been provided by the Japan Foundation and the Daiwa Anglo-Japanese Foundation. \n\nThe exhibition catalogue is kindly supported by Joe and Marie Donnelly and the Great Britain Sasakawa Foundation.", detailedDescription: "The largest retrospective to date of Hiroshi Sugimoto, an artist renowned for creating some of the most alluringly enigmatic photographs of our time.\n\nOver the past 50 years, Sugimoto has created pictures which are meticulously crafted, deeply thought-provoking and quietly subversive. \n\nFeaturing key works from all of the artist's major photographic series, this retrospective highlights Sugimoto's philosophical yet playful inquiry into our understanding of time and memory, and photography's ability to both document and invent. \n\nThe exhibition also includes lesser-known works that reveal the artist's interest in the history of photography, as well as in mathematics and optical sciences. \n\nOften employing a large-format wooden camera and mixing his own darkroom chemicals, Sugimoto has repeatedly re-explored ideas and practices from 19th century photography while capturing subjects including dioramas, wax figures and architecture. His work has stretched and rearranged concepts of time, space and light that are integral to the medium.\n\nBorn and raised in Tokyo, Japan, Hiroshi Sugimoto divides his time between Tokyo and New York City. Over the past five decades, his photographs have received international acclaim and have been presented in major institutions across the globe. \n\nWhile best known as a photographer, Sugimoto has more recently added architecture, sculpture and set design to his multidisciplinary practice. \n\nHis work is represented in major public collections including the Metropolitan Museum of Art, New York; Centre Pompidou, Paris; Museum of Modern Art, New York; and National Gallery, London.\n\nHiroshi Sugimoto is generously supported by the Exhibition Supporters' Group: Fraenkel Gallery, Marian Goodman Gallery, Gallery Koyanagi, the Rory and Elizabeth Brooks Foundation, Beth and Michele Colocci, Suling C Mead, Manizeh and Danny Rimer, Maria and Malek Sukkar, Michael G and C Jane Wilson and those who wish to remain anonymous. \n\nAdditional support has been provided by the Japan Foundation and the Daiwa Anglo-Japanese Foundation. \n\nThe exhibition catalogue is kindly supported by Joe and Marie Donnelly and the Great Britain Sasakawa Foundation.", coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/hayward-gallery/hayward-62389/image-0.webp", url: "https://www.newexhibitions.com/e/62389" },
       { id: "hayward-59920", name: "Strange Clay: Ceramics in Contemporary Art", title: "Strange Clay: Ceramics in Contemporary Art", description: "Strange Clay: Ceramics in Contemporary Art is the first large-scale group exhibition in the UK exploring how contemporary artists have used clay in unexpected ways.\n\nFeaturing 23 international artists working across recent decades, the exhibition examines the plasticity and the possibilities of ceramics.\n\nThe artworks on show encompass fantastical creatures and uncanny representations of the everyday, as well as ranging from small abstract works to large-scale installations that take the medium beyond the kiln.\n\nStrange Clay does not present a comprehensive survey of artists who work with ceramics today – instead the exhibition explores the possibilities of thinking through making.\n\nThe artworks vary in scale, finish and technique, and address topics that range from architecture, to social justice, the body, the domestic and the organic.\n\nWhile contributing to the broadening dialogue between art and craft, this exhibition provides a closer look at this tactile medium.\n\nThe exhibition features works by Aaron Angell, Salvatore Arancio, Leilah Babirye, Jonathan Baldock, Lubna Chowdhary, Edmund de Waal, Emma Hart, Liu Jianhua, Rachel Kneebone, Serena Korda, Klara Kristalova, Beate Kuhn, Takuro Kuwata, Lindsey Mendick, Ron Nagle, Magdalene Odundo, Woody De Othello, Grayson Perry, Shahpour Pouyan, Ken Price, Brie Ruais, Betty Woodman and David Zink Yi.\n\nThe exhibition is accompanied by a fully illustrated catalogue, co-published by Hayward Publishing and Hatje Cantz.", detailedDescription: "Strange Clay: Ceramics in Contemporary Art is the first large-scale group exhibition in the UK exploring how contemporary artists have used clay in unexpected ways.\n\nFeaturing 23 international artists working across recent decades, the exhibition examines the plasticity and the possibilities of ceramics.\n\nThe artworks on show encompass fantastical creatures and uncanny representations of the everyday, as well as ranging from small abstract works to large-scale installations that take the medium beyond the kiln.\n\nStrange Clay does not present a comprehensive survey of artists who work with ceramics today – instead the exhibition explores the possibilities of thinking through making.\n\nThe artworks vary in scale, finish and technique, and address topics that range from architecture, to social justice, the body, the domestic and the organic.\n\nWhile contributing to the broadening dialogue between art and craft, this exhibition provides a closer look at this tactile medium.\n\nThe exhibition features works by Aaron Angell, Salvatore Arancio, Leilah Babirye, Jonathan Baldock, Lubna Chowdhary, Edmund de Waal, Emma Hart, Liu Jianhua, Rachel Kneebone, Serena Korda, Klara Kristalova, Beate Kuhn, Takuro Kuwata, Lindsey Mendick, Ron Nagle, Magdalene Odundo, Woody De Othello, Grayson Perry, Shahpour Pouyan, Ken Price, Brie Ruais, Betty Woodman and David Zink Yi.\n\nThe exhibition is accompanied by a fully illustrated catalogue, co-published by Hayward Publishing and Hatje Cantz.", coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/hayward-gallery/hayward-59920/image-0.webp", url: "https://www.newexhibitions.com/e/59920" },
-      { id: "hayward-25037", name: "Winter Light", title: "Winter Light", description: "Featuring more than 15 artworks and new commissions, the exhibition is installed across our buildings and along the riverfront.\n\nAt a time when we view so much of the world through digital screens, the artists in this exhibition celebrate how the medium of light can transform our physical spaces. \n\nThe artworks also explore ideas about nature, politics and society, gender, aesthetics and the act of looking.\n\nWinter Light features a series of newly commissioned writings by author Jini Reddy, inspired by seasonal variations in light.\n\nThe exhibition is free and is visible from outdoor locations around our site, from dusk until late. Artworks will be added to the site until the exhibition is fully realised in mid-December.\n\nTeemu Määttänen's installation is commissioned with the generous support of The Finnish Institute and the Embassy of Finland London.", detailedDescription: "Featuring more than 15 artworks and new commissions, the exhibition is installed across our buildings and along the riverfront.\n\nAt a time when we view so much of the world through digital screens, the artists in this exhibition celebrate how the medium of light can transform our physical spaces. \n\nThe artworks also explore ideas about nature, politics and society, gender, aesthetics and the act of looking.\n\nWinter Light features a series of newly commissioned writings by author Jini Reddy, inspired by seasonal variations in light.\n\nThe exhibition is free and is visible from outdoor locations around our site, from dusk until late. Artworks will be added to the site until the exhibition is fully realised in mid-December.\n\nTeemu Määttänen's installation is commissioned with the generous support of The Finnish Institute and the Embassy of Finland London.", coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/hayward-gallery/hayward-25037/image-0.webp", url: "https://www.newexhibitions.com/e/25037" },
       { id: "hayward-25041", name: "Joo Yeon Park : Library of the Unword", title: "Joo Yeon Park : Library of the Unword", description: "Joo Yeon Park&#8217;s 'Library of the Unword' commemorates the 30th anniversary of Samuel Beckett&#8217;s death. The exhibition includes an installation O (22800) in response to Beckett&#8217;s 1935 collection of poems Echo's Bones and Other Precipitates (1935). The work comprises 126 framed mirrors and writings/drawings that consist of circles on Korean manuscript paper. The exhibition also features archival items on Beckett from the National Poetry Library collection, including audio, images, press cuttings and a rare copy of his poetry collection.", detailedDescription: "Joo Yeon Park&#8217;s 'Library of the Unword' commemorates the 30th anniversary of Samuel Beckett&#8217;s death. The exhibition includes an installation O (22800) in response to Beckett&#8217;s 1935 collection of poems Echo's Bones and Other Precipitates (1935). The work comprises 126 framed mirrors and writings/drawings that consist of circles on Korean manuscript paper. The exhibition also features archival items on Beckett from the National Poetry Library collection, including audio, images, press cuttings and a rare copy of his poetry collection.", coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/hayward-gallery/hayward-25041/image-0.webp", url: "https://www.newexhibitions.com/e/25041" },
       { id: "hayward-25042", name: "Bridget Riley", title: "Bridget Riley", description: "Spanning 70 years of Bridget&#8217;s career, the exhibition includes rarely seen cartoons and sketches from her early days as an art student right up to site-specific wall paintings for the Hayward Gallery. This will be the third time Riley has exhibited her work in a solo show at Hayward Gallery, marking her longstanding relationship with the space. The exhibition will also show Riley&#8217;s only 3-D work, Continuum, and a rarely seen &#8216;70s work, Flag.", detailedDescription: "Spanning 70 years of Bridget&#8217;s career, the exhibition includes rarely seen cartoons and sketches from her early days as an art student right up to site-specific wall paintings for the Hayward Gallery. This will be the third time Riley has exhibited her work in a solo show at Hayward Gallery, marking her longstanding relationship with the space. The exhibition will also show Riley&#8217;s only 3-D work, Continuum, and a rarely seen &#8216;70s work, Flag.", coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/hayward-gallery/hayward-25042/image-0.webp", url: "https://www.newexhibitions.com/e/25042" },
-      { id: "hayward-25048", name: "Space Shifters", title: "Space Shifters", description: "Space Shifters is a major thematic exhibition that features artworks by over 20 international artists that alter or disrupt our sense of space and re-orient our understanding of our surroundings in ways that are by turns subtle and dramatic.\nOften constructed from reflective or translucent materials, including glass and resin, the artworks in Space Shifters elicit responses that are both physiological and psychological.\nFeaturing pioneering minimal sculptures from the 1960s concerned with light, volume and scale, this exhibition also includes large-scale installations and ambitious architectural interventions. A number of site-specific commissions respond to the gallery&#8217;s brutalist architecture, providing a dramatic and fitting conclusion to Hayward Gallery&#8217;s 50th anniversary year.", detailedDescription: "Space Shifters is a major thematic exhibition that features artworks by over 20 international artists that alter or disrupt our sense of space and re-orient our understanding of our surroundings in ways that are by turns subtle and dramatic.\nOften constructed from reflective or translucent materials, including glass and resin, the artworks in Space Shifters elicit responses that are both physiological and psychological.\nFeaturing pioneering minimal sculptures from the 1960s concerned with light, volume and scale, this exhibition also includes large-scale installations and ambitious architectural interventions. A number of site-specific commissions respond to the gallery&#8217;s brutalist architecture, providing a dramatic and fitting conclusion to Hayward Gallery&#8217;s 50th anniversary year.", coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/hayward-gallery/hayward-25048/image-0.webp", url: "https://www.newexhibitions.com/e/25048" },
       { id: "hayward-25057", name: "MIRRORCITY : London artists on fiction and reality", title: "MIRRORCITY : London artists on fiction and reality", description: "\"Cities, like dreams, are made of desires and fears, even if the thread of their discourse is secret, their rules are absurd, their perspectives deceitful, and everything conceals something else.\"\n&#8211;Italo Calvino\nMIRRORCITY features recent work and new commissions by key emerging and established artists working in London who all seek to address the dilemmas, realities and consequences of living in our digital age. \nArtists in the exhibition are Mohammed Qasim Ashfaq, Michael Dean, Tim Etchells, Anne Hardy, Susan Hiller, LuckyPDF, Lloyd Corporation, Helen Marten, Ursula Mayer, Emma McNally, Karen Mirza and Brad Butler, Katrina Palmer, Pil and Galia Kollectiv, Laure Prouvost, Aura Satz, Hannah Sawtell, Lindsay Seers, Tai Shani, Daniel Sinsel, John Stezaker, Volumes Project, Lynette Yiadom-Boakye and James Bridle.", detailedDescription: "\"Cities, like dreams, are made of desires and fears, even if the thread of their discourse is secret, their rules are absurd, their perspectives deceitful, and everything conceals something else.\"\n&#8211;Italo Calvino\nMIRRORCITY features recent work and new commissions by key emerging and established artists working in London who all seek to address the dilemmas, realities and consequences of living in our digital age. \nArtists in the exhibition are Mohammed Qasim Ashfaq, Michael Dean, Tim Etchells, Anne Hardy, Susan Hiller, LuckyPDF, Lloyd Corporation, Helen Marten, Ursula Mayer, Emma McNally, Karen Mirza and Brad Butler, Katrina Palmer, Pil and Galia Kollectiv, Laure Prouvost, Aura Satz, Hannah Sawtell, Lindsay Seers, Tai Shani, Daniel Sinsel, John Stezaker, Volumes Project, Lynette Yiadom-Boakye and James Bridle.", coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/hayward-gallery/hayward-25057/image-0.webp", url: "https://www.newexhibitions.com/e/25057" },
-      { id: "hayward-25072", name: "George Condo : Mental States", title: "George Condo : Mental States", description: "This is the first major retrospective of the American artist George Condo. Since his emergence in New York&#8217;s East Village in the early 1980s, George Condo has developed a provocative body of work that, for all its outlandish humour and outrageousness, is deeply engaged with the memory of European and American traditions of painting. Focusing on his &#8216;imaginary portraits&#8217;, which conjure varied mental states with a mixture of comic absurdity and the heart-rending pathos, and incorporating sculpture as well painting, the exhibition offers a comprehensive survey of three decades of his art.", detailedDescription: "This is the first major retrospective of the American artist George Condo. Since his emergence in New York&#8217;s East Village in the early 1980s, George Condo has developed a provocative body of work that, for all its outlandish humour and outrageousness, is deeply engaged with the memory of European and American traditions of painting. Focusing on his &#8216;imaginary portraits&#8217;, which conjure varied mental states with a mixture of comic absurdity and the heart-rending pathos, and incorporating sculpture as well painting, the exhibition offers a comprehensive survey of three decades of his art.", coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/hayward-gallery/hayward-25072/image-0.webp", url: "https://www.newexhibitions.com/e/25072" },
-      { id: "hayward-25073", name: "Pipilotti Rist", title: "Pipilotti Rist", description: "wiss artist Pipilotti Rist is one of the world&#8217;s leading contemporary artists, acclaimed for her innovative video installations. This exhibition, her first survey show in the UK, presents single channel videos, sculptures, photographs, wallpapers and video installations spanning her career from the 1980s to today. Highly accomplished technically and employing dazzling colour, Rist&#8217;s practice fuses sensual images, music and text to create mesmerising installations. Rist creates a total sensory experience for her audience by showing her works within architectural installations conceived specially for particular spaces.", detailedDescription: "wiss artist Pipilotti Rist is one of the world&#8217;s leading contemporary artists, acclaimed for her innovative video installations. This exhibition, her first survey show in the UK, presents single channel videos, sculptures, photographs, wallpapers and video installations spanning her career from the 1980s to today. Highly accomplished technically and employing dazzling colour, Rist&#8217;s practice fuses sensual images, music and text to create mesmerising installations. Rist creates a total sensory experience for her audience by showing her works within architectural installations conceived specially for particular spaces.", coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/hayward-gallery/hayward-25073/image-0.webp", url: "https://www.newexhibitions.com/e/25073" },
       { id: "hayward-25081", name: "Move : Choreographing You", title: "Move : Choreographing You", description: "Move: Choreographing You invites the visitor to become a participant - and in some cases a dancer - in installations and sculptures by internationally renowned visual artists and choreographers. \nExploring how dance has been a driving force in the development of contemporary art since the 1960s, the exhibition presents a series of sculptural works, set pieces and installations, which can be activated by the public and by a group of resident dancers in the gallery.\n\nFeatured artists include Tania Bruguera, Boris Charmatz, William Forsythe, Isaac Julien, Mike Kelley, La Ribot, Robert Morris, Bruce Nauman, Tino Sehgal, Yvonne Rainer, Simone Forti and Trisha Brown.\n\nMove: Choreographing You is supported by the German Federal Cultural Foundation and Louis Vuitton.", detailedDescription: "Move: Choreographing You invites the visitor to become a participant - and in some cases a dancer - in installations and sculptures by internationally renowned visual artists and choreographers. \nExploring how dance has been a driving force in the development of contemporary art since the 1960s, the exhibition presents a series of sculptural works, set pieces and installations, which can be activated by the public and by a group of resident dancers in the gallery.\n\nFeatured artists include Tania Bruguera, Boris Charmatz, William Forsythe, Isaac Julien, Mike Kelley, La Ribot, Robert Morris, Bruce Nauman, Tino Sehgal, Yvonne Rainer, Simone Forti and Trisha Brown.\n\nMove: Choreographing You is supported by the German Federal Cultural Foundation and Louis Vuitton.", coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/hayward-gallery/hayward-25081/image-0.webp", url: "https://www.newexhibitions.com/e/25081" },
-      { id: "hayward-25083", name: "Silberkuppe : Rooms Without Walls", title: "Silberkuppe : Rooms Without Walls", description: "Project Space show guest-curated by Berlin-based collective.", detailedDescription: "Project Space show guest-curated by Berlin-based collective.", coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/hayward-gallery/hayward-25083/image-0.webp", url: "https://www.newexhibitions.com/e/25083" },
       { id: "hayward-25086", name: "Ed Ruscha : Fifty Years of Painting", title: "Ed Ruscha : Fifty Years of Painting", description: "First major UK retrospective to focus exclusively on the paintings of the Los Angeles-based artist, one of the most influential and pioneering American artists of the past half century.", detailedDescription: "First major UK retrospective to focus exclusively on the paintings of the Los Angeles-based artist, one of the most influential and pioneering American artists of the past half century.", coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/hayward-gallery/hayward-25086/image-0.webp", url: "https://www.newexhibitions.com/e/25086" },
-      { id: "hayward-25084", name: "Victor Man : If Mind Were All There Was", title: "Victor Man : If Mind Were All There Was", description: "Paintings and found objects.", detailedDescription: "Paintings and found objects.", coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/hayward-gallery/hayward-25084/image-0.webp", url: "https://www.newexhibitions.com/e/25084" },
-      { id: "hayward-25094", name: "Andy Warhol : Other Voices, Other Rooms", title: "Andy Warhol : Other Voices, Other Rooms", description: "The Hayward presents a fresh perspective on Warhol, presenting Warhol&#8217;s films, screen-tests, videos and television programmes, which combined with extraordinary archive material, seminal paintings and installations, illuminates his creative process.", detailedDescription: "The Hayward presents a fresh perspective on Warhol, presenting Warhol&#8217;s films, screen-tests, videos and television programmes, which combined with extraordinary archive material, seminal paintings and installations, illuminates his creative process.", coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/hayward-gallery/hayward-25094/image-0.webp", url: "https://www.newexhibitions.com/e/25094" },
-      { id: "hayward-25099", name: "Klara Liden", title: "Klara Liden", description: "Short films documenting illicit, radical performances", detailedDescription: "Short films documenting illicit, radical performances", coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/hayward-gallery/hayward-25099/image-0.webp", url: "https://www.newexhibitions.com/e/25099" },
-      { id: "hayward-25109", name: "saved!", title: "saved!", description: "100 years of the National Art Collections Fund. A once in a lifetime exhibition presenting 400 world masterpieces from UK collections in celebration of Art Fund's centenary", detailedDescription: "100 years of the National Art Collections Fund. A once in a lifetime exhibition presenting 400 world masterpieces from UK collections in celebration of Art Fund's centenary", coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/hayward-gallery/hayward-25109/image-0.webp", url: "https://www.newexhibitions.com/e/25109" },
-      { id: "hayward-25111", name: "douglas gordon what have i done", title: "douglas gordon what have i done", coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/hayward-gallery/hayward-25111/image-0.webp", url: "https://www.newexhibitions.com/e/25111" },
-      { id: "hayward-25115", name: "ANN SOFI SIDEN VIDEO INSTALLATION", title: "ANN SOFI SIDEN VIDEO INSTALLATION", coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/hayward-gallery/hayward-25115/image-0.webp", url: "https://www.newexhibitions.com/e/25115" }
+      { id: "hayward-25094", name: "Andy Warhol : Other Voices, Other Rooms", title: "Andy Warhol : Other Voices, Other Rooms", description: "The Hayward presents a fresh perspective on Warhol, presenting Warhol&#8217;s films, screen-tests, videos and television programmes, which combined with extraordinary archive material, seminal paintings and installations, illuminates his creative process.", detailedDescription: "The Hayward presents a fresh perspective on Warhol, presenting Warhol&#8217;s films, screen-tests, videos and television programmes, which combined with extraordinary archive material, seminal paintings and installations, illuminates his creative process.", coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/hayward-gallery/hayward-25094/image-0.webp", url: "https://www.newexhibitions.com/e/25094" }
     ]
   },
+
+  // ===== FRANCE =====
+  // Paris - Major Museums
+  {
+    id: "musee-du-louvre",
+    name: "Musée du Louvre",
+    city: "Paris",
+    country: "France",
+    latitude: 48.8606,
+    longitude: 2.3376,
+    description: "세계 최대의 회화관. '모나리자'를 포함한 서양 고전 회화의 절대 성지.",
+    representativeImage: "",
+    exhibitions: []
+  },
+  {
+    id: "musee-dorsay",
+    slug: "musee-dorsay",
+    name: "Musée d'Orsay",
+    location: "1 Rue de la Légion d'Honneur, 75007 Paris, France",
+    city: "Paris",
+    country: "France",
+    region: "Paris",
+    latitude: 48.8600,
+    longitude: 2.3266,
+    description: "19세기 인상주의 회화의 중심. 고흐, 모네, 르누아르의 마스터피스 집결지.",
+    representativeImage: "https://cdn.mediatheque.epmoo.fr/link/3c9igq/ztl19e6a7dgqq00.jpg",
+    floorPlan: "",
+    permanentExhibitions: [
+      { id: "orsay-collection", name: "Orsay Collection", title: "Musée d'Orsay Permanent Collection", description: "Masterpieces of Impressionism and Post-Impressionism including works by Monet, Van Gogh, Renoir, Degas, Cézanne, and more.", startDate: "Permanent", endDate: "Permanent" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    exhibitions: []
+  },
+  {
+    id: "centre-pompidou",
+    name: "Centre Pompidou",
+    city: "Paris",
+    country: "France",
+    latitude: 48.8607,
+    longitude: 2.3522,
+    description: "유럽 최대 현대 미술 갤러리. 20세기 평면 예술의 흐름을 주도하는 영향력.",
+    representativeImage: "",
+    permanentExhibitions: [
+      { id: "pompidou-cinema", name: "Cinema Collection", title: "Centre Pompidou Cinema Collection", description: "Experimental cinema, video art, and film installations from the Centre Pompidou collection.", startDate: "Permanent", endDate: "Permanent" },
+      { id: "pompidou-painting", name: "Painting Collection", title: "Centre Pompidou Painting Collection", description: "Modern and contemporary paintings from the Centre Pompidou collection, featuring masterworks from Picasso, Matisse, Kandinsky, and more.", startDate: "Permanent", endDate: "Permanent" },
+      { id: "pompidou-drawing", name: "Drawing Collection", title: "Centre Pompidou Drawing Collection", description: "Works on paper from the Cabinet d'art graphique, featuring drawings, sketches, and graphic works.", startDate: "Permanent", endDate: "Permanent" },
+      { id: "pompidou-newmedia", name: "New Media Collection", title: "Centre Pompidou New Media Collection", description: "Digital art, interactive installations, and new media works from the collection.", startDate: "Permanent", endDate: "Permanent" },
+      { id: "pompidou-design", name: "Design Collection", title: "Centre Pompidou Design Collection", description: "Graphic design, posters, typography and industrial design from the Centre Pompidou collection.", startDate: "Permanent", endDate: "Permanent" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    exhibitions: []
+  },
+  {
+    id: "fondation-louis-vuitton",
+    name: "Fondation Louis Vuitton",
+    city: "Paris",
+    country: "France",
+    latitude: 48.8808,
+    longitude: 2.2647,
+    description: "막강한 자본력을 바탕으로 한 현대 회화 기획전의 절대 강자.",
+    representativeImage: "",
+    exhibitions: []
+  },
+  {
+    id: "musee-de-lorangerie",
+    slug: "musee-de-lorangerie",
+    name: "Musée de l'Orangerie",
+    location: "Jardin des Tuileries, 75001 Paris, France",
+    city: "Paris",
+    country: "France",
+    region: "Paris",
+    latitude: 48.8638,
+    longitude: 2.3225,
+    description: "모네의 '수련' 연작을 위해 설계된, 가장 '갤러리다운' 미학적 공간.",
+    representativeImage: "",
+    floorPlan: "",
+    permanentExhibitions: [
+      { id: "orangerie-collection", name: "Orangerie Collection", title: "Musée de l'Orangerie Permanent Collection", description: "Monet's Water Lilies and the Jean Walter and Paul Guillaume collection of Impressionist and Post-Impressionist masterpieces.", startDate: "Permanent", endDate: "Permanent" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    exhibitions: []
+  },
+  {
+    id: "petit-palais",
+    name: "Petit Palais",
+    city: "Paris",
+    country: "France",
+    latitude: 48.8660,
+    longitude: 2.3140,
+    description: "파리 시립 미술관. 중세부터 20세기까지의 방대한 유화 및 판화 컬렉션.",
+    representativeImage: "",
+    exhibitions: []
+  },
+  {
+    id: "musee-picasso-paris",
+    name: "Musée Picasso Paris",
+    city: "Paris",
+    country: "France",
+    latitude: 48.8598,
+    longitude: 2.3623,
+    description: "피카소의 회화, 드로잉, 판화를 세계에서 가장 체계적으로 소장한 곳.",
+    representativeImage: "",
+    exhibitions: []
+  },
+  {
+    id: "bourse-de-commerce-pinault-collection",
+    name: "Bourse de Commerce - Pinault Collection",
+    city: "Paris",
+    country: "France",
+    latitude: 48.8626,
+    longitude: 2.3429,
+    description: "케링 그룹 회장의 개인 컬렉션. 동시대 평면 예술의 가장 힙한 트렌드.",
+    representativeImage: "",
+    floorPlan: "",
+    permanentExhibitions: [
+      { id: "pinault-collection", name: "Pinault Collection", title: "Pinault Collection Artworks", description: "François Pinault's world-renowned contemporary art collection featuring works by leading artists of our time.", startDate: "Permanent", endDate: "Permanent" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    exhibitions: []
+  },
+  {
+    id: "musee-dart-moderne-de-paris",
+    name: "Musée d'Art Moderne de Paris",
+    city: "Paris",
+    country: "France",
+    latitude: 48.8647,
+    longitude: 2.2972,
+    description: "듀피의 '전기의 요정' 등 거대 벽화와 20세기 주요 현대 회화 소장.",
+    representativeImage: "",
+    exhibitions: []
+  },
+  {
+    id: "musee-marmottan-monet",
+    name: "Musée Marmottan Monet",
+    city: "Paris",
+    country: "France",
+    latitude: 48.8587,
+    longitude: 2.2666,
+    description: "모네의 '인상, 일출' 소장처. 인상주의 연구의 핵심적인 갤러리.",
+    representativeImage: "",
+    exhibitions: []
+  },
+  {
+    id: "musee-jacquemart-andre",
+    name: "Musée Jacquemart-André",
+    city: "Paris",
+    country: "France",
+    latitude: 48.8753,
+    longitude: 2.3109,
+    description: "개인 저택형 갤러리. 이탈리아 르네상스 및 프랑스 고전 회화의 정수.",
+    representativeImage: "",
+    exhibitions: []
+  },
+  {
+    id: "jeu-de-paume",
+    name: "Jeu de Paume",
+    city: "Paris",
+    country: "France",
+    latitude: 48.8658,
+    longitude: 2.3234,
+    description: "프랑스 사진 갤러리의 상징. 현대 사진과 영상 예술의 최고 권위.",
+    representativeImage: "",
+    exhibitions: []
+  },
+  {
+    id: "maison-europeenne-de-la-photographie",
+    slug: "maison-europeenne-de-la-photographie",
+    name: "Maison Européenne de la Photographie",
+    location: "5/7 rue de Fourcy, 75004 Paris, France",
+    city: "Paris",
+    country: "France",
+    region: "Paris",
+    latitude: 48.8541,
+    longitude: 2.3590,
+    description: "현대 사진 예술에 집중된 세계적인 수준의 전문 갤러리.",
+    representativeImage: "",
+    floorPlan: "",
+    permanentExhibitions: [
+      { id: "mep-photography", name: "The Collection", title: "MEP: The Collection", description: "Photography and video works from legendary artists including Brassaï, Robert Frank, Nan Goldin, Irving Penn, William Klein, Erwin Wurm, and contemporary artists.", startDate: "Permanent", endDate: "Permanent" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    exhibitions: []
+  },
+  {
+    id: "palais-de-tokyo",
+    name: "Palais de Tokyo",
+    city: "Paris",
+    country: "France",
+    latitude: 48.8640,
+    longitude: 2.2970,
+    description: "파리의 전위적인 현대 미술 공간. 실험적인 기획전과 설치 예술의 중심지.",
+    representativeImage: "",
+    exhibitions: []
+  },
+
+  // France - Regional Museums
+  {
+    id: "palais-des-beaux-arts-de-lille",
+    name: "Palais des Beaux-Arts de Lille",
+    city: "Lille",
+    country: "France",
+    latitude: 50.6305,
+    longitude: 3.0614,
+    description: "루브르 다음으로 큰 회화 컬렉션을 보유한 프랑스 북부의 자존심.",
+    representativeImage: "",
+    exhibitions: []
+  },
+  {
+    id: "musee-des-beaux-arts-de-lyon",
+    name: "Musée des Beaux-Arts de Lyon",
+    city: "Lyon",
+    country: "France",
+    latitude: 45.7672,
+    longitude: 4.8335,
+    description: "'작은 루브르'라 불릴 만큼 시대별 회화의 밀도가 높은 갤러리.",
+    representativeImage: "",
+    exhibitions: []
+  },
+  {
+    id: "musee-conde",
+    name: "Musée Condé",
+    city: "Chantilly",
+    country: "France",
+    latitude: 49.1941,
+    longitude: 2.4867,
+    description: "라파엘로 등 루브르에 견줄만한 올드 마스터들의 유화가 즐비한 곳.",
+    representativeImage: "",
+    exhibitions: []
+  },
+  {
+    id: "musee-fabre",
+    name: "Musée Fabre",
+    city: "Montpellier",
+    country: "France",
+    latitude: 43.6115,
+    longitude: 3.8801,
+    description: "프랑스 남부 최고의 갤러리. 고전부터 추상 회화까지 폭넓은 스펙트럼.",
+    representativeImage: "",
+    exhibitions: []
+  },
+  {
+    id: "musee-toulouse-lautrec",
+    name: "Musée Toulouse-Lautrec",
+    city: "Albi",
+    country: "France",
+    latitude: 43.9286,
+    longitude: 2.1441,
+    description: "로트레크의 독창적인 포스터와 유화를 세계에서 가장 많이 보유.",
+    representativeImage: "",
+    exhibitions: []
+  },
+  {
+    id: "musee-de-grenoble",
+    name: "Musée de Grenoble",
+    city: "Grenoble",
+    country: "France",
+    latitude: 45.1949,
+    longitude: 5.7317,
+    description: "프랑스 최초로 현대 미술을 수집한 곳으로, 2D 현대 예술의 보고.",
+    representativeImage: "",
+    exhibitions: []
+  },
+  {
+    id: "musee-granet",
+    name: "Musée Granet",
+    city: "Aix-en-Provence",
+    country: "France",
+    latitude: 43.5265,
+    longitude: 5.4481,
+    description: "세잔의 고향에서 만나는 인상주의 및 피카소, 자코메티의 평면 작품들.",
+    representativeImage: "",
+    exhibitions: []
+  },
+  {
+    id: "musee-des-beaux-arts-de-rouen",
+    name: "Musée des Beaux-Arts de Rouen",
+    city: "Rouen",
+    country: "France",
+    latitude: 49.4434,
+    longitude: 1.0960,
+    description: "'인상주의의 수도' 루앙의 핵심 갤러리. 모네의 '루앙 대성당' 시리즈 보유.",
+    representativeImage: "",
+    exhibitions: []
+  },
+  {
+    id: "mamcs-strasbourg",
+    name: "Musée d'Art Moderne et Contemporain de Strasbourg",
+    city: "Strasbourg",
+    country: "France",
+    latitude: 48.5836,
+    longitude: 7.7542,
+    description: "라인강 유역 현대 예술의 중심. 그래픽 디자인과 회화 전시가 강점.",
+    representativeImage: "",
+    exhibitions: []
+  },
+  {
+    id: "musee-des-beaux-arts-de-bordeaux",
+    name: "Musée des Beaux-Arts de Bordeaux",
+    city: "Bordeaux",
+    country: "France",
+    latitude: 44.8372,
+    longitude: -0.5801,
+    description: "15세기부터 현대까지, 남서부 프랑스를 대표하는 고전 회화 갤러리.",
+    representativeImage: "",
+    exhibitions: []
+  },
+  {
+    id: "musee-de-lannonciade",
+    name: "Musée de l'Annonciade",
+    city: "Saint-Tropez",
+    country: "France",
+    latitude: 43.2732,
+    longitude: 6.6386,
+    description: "작지만 강하다. 야수파(Fauvism) 회화의 발상지로서 독보적인 위치.",
+    representativeImage: "",
+    exhibitions: []
+  }
 ];

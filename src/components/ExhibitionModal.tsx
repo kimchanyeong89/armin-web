@@ -272,23 +272,22 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
 
   // Responsive check for top bar layout
   const [isNarrow, setIsNarrow] = useState(() => typeof window !== "undefined" ? window.innerWidth < 1100 : false);
+  // Very narrow detection (between mobile and narrow) for tighter layouts
+  const [isVeryNarrow, setIsVeryNarrow] = useState(() => typeof window !== "undefined" ? window.innerWidth < 900 : false);
   // Mobile detection (for touch devices with narrow screens)
   const [isMobile, setIsMobile] = useState(() => typeof window !== "undefined" ? window.innerWidth < 768 : false);
+  // Window width for dynamic gap calculation
+  const [windowWidth, setWindowWidth] = useState(() => typeof window !== "undefined" ? window.innerWidth : 1200);
   useEffect(() => {
     const onResize = () => {
       setIsNarrow(window.innerWidth < 1100);
+      setIsVeryNarrow(window.innerWidth < 900);
       setIsMobile(window.innerWidth < 768);
+      setWindowWidth(window.innerWidth);
     };
     window.addEventListener('resize', onResize);
     return () => window.removeEventListener('resize', onResize);
   }, []);
-
-  // Force gallery mode on mobile
-  useEffect(() => {
-    if (isMobile && viewMode !== 'gallery') {
-      setViewMode('gallery');
-    }
-  }, [isMobile, viewMode]);
 
   // Allow adding simple rooms and compute a list of room buttons (ALL + defaults + custom + discovered)
   const [customRooms, setCustomRooms] = useState<string[]>([]);
@@ -483,11 +482,18 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
   const META_DATE_X = 500; // px
   const META_GAP = META_DATE_X - META_CREATOR_X; // 250px by default
   const FIXED_META_HEIGHT = 56; // px, lock meta row height to prevent layout shift
-  const metaPos = isNarrow ? {
-    title: 0,
-    creator: 0,
-    date: 200,
-    dimension: 200
+  // Narrow screens: center metadata area by computing offset based on windowWidth
+  const narrowMetaOffset = isMobile ? 12 : (isVeryNarrow ? Math.max(160, (windowWidth - 400) / 2) : (isNarrow ? Math.max(180, (windowWidth - 500) / 2) : 0));
+  const metaPos = isVeryNarrow ? {
+    title: narrowMetaOffset,
+    creator: narrowMetaOffset,
+    date: narrowMetaOffset + 120,
+    dimension: narrowMetaOffset + 120
+  } : isNarrow ? {
+    title: narrowMetaOffset,
+    creator: narrowMetaOffset,
+    date: narrowMetaOffset + 160,
+    dimension: narrowMetaOffset + 160
   } : {
     title: Math.max(0, META_CREATOR_X - META_GAP),
     creator: META_CREATOR_X,
@@ -1497,6 +1503,208 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
       })();
       return () => { };
     }
+    // Musée d'Orsay Collection: load from local scraped JSON
+    if (exhibition.id === 'orsay-collection') {
+      (async () => {
+        try {
+          const res = await fetch('/data/orsay-collection.json', { cache: 'no-store' });
+          if (!res.ok) throw new Error('Failed to load Orsay artworks');
+          const data = await res.json();
+          const toYear = (yearText: string | number | undefined) => {
+            if (!yearText) return 0;
+            const match = String(yearText).match(/(\d{4})/);
+            return match ? parseInt(match[1], 10) : 0;
+          };
+          
+          const allObjects = Array.isArray(data.objects) ? data.objects : [];
+          
+          const list: Artwork[] = allObjects.map((item: any, idx: number) => ({
+              id: item.id || `orsay-${idx}`,
+              name: item.title || item.name || 'Untitled',
+              artist: item.artist || 'Unknown',
+              year: toYear(item.year),
+              date: item.year,
+              image: item.image,
+              dimension: item.dimensions,
+              roomId: 'default',
+              exhibitionName: exhibition.name,
+              exhibitionTitle: exhibition.title,
+            }));
+          const withImages = list.filter((a) => !!a.image);
+          setArtworks(withImages);
+          setInitialized(true);
+        } catch (error) {
+          console.error('Failed to load Orsay artworks:', error);
+          setInitialized(true);
+        }
+      })();
+      return () => { };
+    }
+    // Musée de l'Orangerie Collection: load from local scraped JSON
+    if (exhibition.id === 'orangerie-collection') {
+      (async () => {
+        try {
+          const res = await fetch('/data/orangerie-collection.json', { cache: 'no-store' });
+          if (!res.ok) throw new Error('Failed to load Orangerie artworks');
+          const data = await res.json();
+          const toYear = (yearText: string | number | undefined) => {
+            if (!yearText) return 0;
+            const match = String(yearText).match(/(\d{4})/);
+            return match ? parseInt(match[1], 10) : 0;
+          };
+          
+          const allObjects = Array.isArray(data.objects) ? data.objects : [];
+          
+          const list: Artwork[] = allObjects.map((item: any, idx: number) => ({
+              id: item.id || `orangerie-${idx}`,
+              name: item.title || item.name || 'Untitled',
+              artist: item.artist || 'Unknown',
+              year: toYear(item.year),
+              date: item.year,
+              image: item.image,
+              dimension: item.dimensions,
+              type: item.type || 'unknown',
+              isArchival: item.isArchival || false,
+              roomId: 'default',
+              exhibitionName: exhibition.name,
+              exhibitionTitle: exhibition.title,
+            }));
+          const withImages = list.filter((a) => !!a.image);
+          setArtworks(withImages);
+          setInitialized(true);
+        } catch (error) {
+          console.error('Failed to load Orangerie artworks:', error);
+          setInitialized(true);
+        }
+      })();
+      return () => { };
+    }
+    // Pinault Collection: load from local scraped JSON
+    if (exhibition.id === 'pinault-collection') {
+      (async () => {
+        try {
+          const res = await fetch('/data/pinault-collection.json', { cache: 'no-store' });
+          if (!res.ok) throw new Error('Failed to load Pinault artworks');
+          const data = await res.json();
+          const toYear = (yearText: string | number | undefined) => {
+            if (!yearText) return 0;
+            const match = String(yearText).match(/(\d{4})/);
+            return match ? parseInt(match[1], 10) : 0;
+          };
+          
+          const allObjects = Array.isArray(data.objects) ? data.objects : [];
+          
+          const list: Artwork[] = allObjects.map((item: any, idx: number) => ({
+              id: item.id || `pinault-${idx}`,
+              name: item.title || item.name || 'Untitled',
+              artist: item.artist || 'Unknown',
+              year: toYear(item.year),
+              date: item.year,
+              image: item.image,
+              dimension: item.dimensions,
+              type: item.type || 'unknown',
+              roomId: 'default',
+              exhibitionName: exhibition.name,
+              exhibitionTitle: exhibition.title,
+            }));
+          const withImages = list.filter((a) => !!a.image);
+          setArtworks(withImages);
+          setInitialized(true);
+        } catch (error) {
+          console.error('Failed to load Pinault artworks:', error);
+          setInitialized(true);
+        }
+      })();
+      return () => { };
+    }
+    // Centre Pompidou Cinema Collection: load from local scraped JSON
+    if (exhibition.id === 'pompidou-cinema' || exhibition.id === 'pompidou-painting' || exhibition.id === 'pompidou-drawing' || exhibition.id === 'pompidou-newmedia' || exhibition.id === 'pompidou-design') {
+      const jsonFiles: Record<string, string> = {
+        'pompidou-cinema': '/data/pompidou-cinema-collection.json',
+        'pompidou-painting': '/data/pompidou-painting-collection.json',
+        'pompidou-drawing': '/data/pompidou-drawing-collection.json',
+        'pompidou-newmedia': '/data/pompidou-newmedia-collection.json',
+        'pompidou-design': '/data/pompidou-design-collection.json'
+      };
+      const jsonFile = jsonFiles[exhibition.id];
+      (async () => {
+        try {
+          const res = await fetch(jsonFile, { cache: 'no-store' });
+          if (!res.ok) throw new Error('Failed to load Pompidou artworks');
+          const data = await res.json();
+          const toYear = (yearText: string | number | undefined) => {
+            if (!yearText) return 0;
+            const match = String(yearText).match(/(\d{4})/);
+            return match ? parseInt(match[1], 10) : 0;
+          };
+          
+          const allObjects = Array.isArray(data.artworks) ? data.artworks : (Array.isArray(data.objects) ? data.objects : []);
+          const is2D = exhibition.id === 'pompidou-painting' || exhibition.id === 'pompidou-drawing' || exhibition.id === 'pompidou-design';
+          
+          const list: Artwork[] = allObjects.map((item: any, idx: number) => ({
+              id: item.id || `${exhibition.id}-${idx}`,
+              name: item.title || item.name || 'Untitled',
+              artist: item.artist || 'Unknown',
+              year: toYear(item.year),
+              date: item.year,
+              image: item.image,
+              dimension: item.dimensions,
+              duration: item.duration,  // Video/film duration
+              medium: item.medium,
+              type: is2D ? (item.type || '2D') : (item.type || 'video'),
+              roomId: 'default',
+              exhibitionName: exhibition.name,
+              exhibitionTitle: exhibition.title,
+            }));
+          const withImages = list.filter((a) => !!a.image);
+          setArtworks(withImages);
+          setInitialized(true);
+        } catch (error) {
+          console.error('Failed to load Pompidou artworks:', error);
+          setInitialized(true);
+        }
+      })();
+      return () => { };
+    }
+    // MEP Photography Collection: load from local scraped JSON
+    if (exhibition.id === 'mep-photography') {
+      (async () => {
+        try {
+          const res = await fetch('/data/mep-photography-collection.json', { cache: 'no-store' });
+          if (!res.ok) throw new Error('Failed to load MEP artworks');
+          const data = await res.json();
+          const allObjects = Array.isArray(data.objects) ? data.objects : [];
+          const list: Artwork[] = allObjects.map((item: any, idx: number) => {
+            // 년도 범위인 경우 끝 년도만 사용 (1958-1960 → 1960)
+            let yearStr = item.year || '';
+            if (yearStr.includes('-')) {
+              const parts = yearStr.split('-');
+              yearStr = parts[parts.length - 1];
+            }
+            return {
+              id: item.id || `mep-${idx}`,
+              name: item.title || item.name || 'Untitled',
+              artist: item.artist || 'Unknown',
+              year: yearStr,
+              date: yearStr,
+              image: item.image,
+              type: item.video ? 'video' : '2D',
+              video: item.video || null,
+              roomId: 'default',
+              exhibitionName: exhibition.name,
+              exhibitionTitle: exhibition.title,
+            };
+          });
+          const withImages = list.filter((a) => !!a.image);
+          setArtworks(withImages);
+          setInitialized(true);
+        } catch (error) {
+          console.error('Failed to load MEP artworks:', error);
+          setInitialized(true);
+        }
+      })();
+      return () => { };
+    }
     // Special case for V&A Painting collection: load from local JSON
     if (exhibition.id === 'vam-painting') {
       (async () => {
@@ -2395,15 +2603,15 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
 
   // Shared layout values for room selector + info text
   // Wide screen: center between thumbnails (~150px) and metadata (~500px) = ~325px
-  // Narrow screen: below title, centered position
-  const selectorLeft = isMobile ? 12 : (isNarrow ? 180 : 250);
+  // Narrow screen: same left margin as grid for alignment
+  const selectorLeft = isMobile ? 12 : (isVeryNarrow ? 16 : (isNarrow ? 24 : 250));
   // Wide screen: same top margin as mode tabs (8px)
-  // Narrow screen: below title area
-  const selectorTop = isMobile ? 80 : (isNarrow ? 75 : 8);
+  // Narrow screen: align with metadata row Y position (after mode tabs)
+  const selectorTop = isMobile ? 140 : (isVeryNarrow ? 50 : (isNarrow ? 50 : 8));
   // Info text position (same center as room selector on wide screen)
-  const infoTextLeft = isMobile ? 12 : (isNarrow ? 200 : 300);
+  const infoTextLeft = isMobile ? 12 : (isVeryNarrow ? 160 : (isNarrow ? 180 : 300));
   // Selector sizing constants: narrower on narrow screens
-  const SELECTOR_COL_WIDTH = isNarrow ? 14 : 18; // px
+  const SELECTOR_COL_WIDTH = isVeryNarrow ? 12 : (isNarrow ? 14 : 18); // px
   const SELECTOR_COL_GAP = 0; // px (no gap between buttons)
   // Max 15 rooms per row
   const selectorCols = isMobile ? 10 : 15;
@@ -2468,9 +2676,9 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
       >
         {/* Old handle removed; the corner is now curled by default and interactive via the invisible zone above */}
         {/* Absolute full-height exhibition info panel at far left (all modes) */}
-        <div style={{ position: "absolute", top: 0, bottom: 0, left: 0, width: 150, background: "transparent", zIndex: 1, display: 'flex', flexDirection: 'column', ...(DEBUG_LAYOUT ? { outline: "1px solid #964B00" } : {}) }}>
+        <div style={{ position: "absolute", top: 0, bottom: 0, left: 0, width: 150, background: "transparent", zIndex: 200, display: 'flex', flexDirection: 'column', pointerEvents: 'none', ...(DEBUG_LAYOUT ? { outline: "1px solid #964B00" } : {}) }}>
           {/* Left header: title + description + room selector */}
-          <div style={{ padding: '8px 8px', borderBottom: '0px solid transparent' }}>
+          <div style={{ padding: '8px 8px', borderBottom: '0px solid transparent', pointerEvents: 'auto', background: '#fff' }}>
             {repImage && (
               <div style={{ width: '100%', marginBottom: 8, background: '#ddd', borderRadius: 4, overflow: 'hidden' }}>
                 <img
@@ -2780,87 +2988,223 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
         </div>
         {/* Top bar: mode tabs + controls */}
         {/* Top bar: mode tabs + controls */}
-        <div ref={topBarRef} style={{ position: "relative", padding: "8px 0", display: isNarrow ? "flex" : "block", alignItems: isNarrow ? "center" : undefined, justifyContent: isNarrow ? "space-evenly" : undefined, minHeight: topBarHeight, marginLeft: isNarrow ? 150 : (LAYOUT_LEFT_BASE + META_SHIFT), marginRight: 16, zIndex: 100, ...(DEBUG_LAYOUT ? { outline: "1px dashed #00f" } : {}) }}>
-          {/* Mode tabs - hidden on mobile, responsive positioning for others */}
-          {!isMobile && (
-            <>
-              <span
-                onClick={() => setViewMode('panorama')}
-                style={{
-                  fontSize: 12, lineHeight: 1, fontWeight: 700,
-                  color: viewMode === 'panorama' ? "#000" : "#666",
-                  cursor: "pointer", userSelect: "none", whiteSpace: "nowrap",
-                  textDecoration: viewMode === 'panorama' ? 'underline' : 'none',
-                  ...(isNarrow ? {} : { position: 'absolute', left: metaPos.title })
-                }}
-              >
-                PANORAMA
-              </span>
-              <span
-                ref={archiveRef}
-                onClick={() => setViewMode('archive')}
-                style={{
-                  fontSize: 12, lineHeight: 1, fontWeight: 700,
-                  color: viewMode === 'archive' ? "#000" : "#666",
-                  cursor: "pointer", userSelect: "none", whiteSpace: "nowrap",
-                  textDecoration: viewMode === 'archive' ? 'underline' : 'none',
-                  ...(isNarrow ? {} : { position: 'absolute', left: metaPos.creator })
-                }}
-              >
-                ARCHIVE
-              </span>
-              <span
-                ref={galleryRef}
-                onClick={() => setViewMode('gallery')}
-                style={{
-                  fontSize: 12, lineHeight: 1, fontWeight: 700,
-                  color: viewMode === 'gallery' ? "#000" : "#666",
-                  cursor: "pointer", userSelect: "none", whiteSpace: "nowrap",
-                  textDecoration: viewMode === 'gallery' ? 'underline' : 'none',
-                  ...(isNarrow ? {} : { position: 'absolute', left: metaPos.date })
-                }}
-              >
-                GALLERY
-              </span>
-            </>
-          )}
-          {/* Submit Artwork button - only for temporary exhibitions, aligned with DIMENSION metadata */}
-          {exhibition.startDate && !String(exhibition.startDate).toLowerCase().includes('permanent') && (
-            <span
-              onClick={() => setShowSubmissionForm(true)}
-              style={{
-                fontSize: 12, lineHeight: 1, fontWeight: 700,
-                color: "#666",
-                cursor: "pointer", userSelect: "none", whiteSpace: "nowrap",
-                textDecoration: 'none',
-                position: 'relative',
-                display: 'inline-block',
-                padding: '4px 8px',
-                ...(isNarrow ? {} : { position: 'absolute', left: metaPos.dimension })
-              }}
-            >
-              {/* Hand-drawn circle effect */}
-              <svg
-                style={{ position: 'absolute', top: -8, left: -12, width: 'calc(100% + 24px)', height: 'calc(100% + 16px)', pointerEvents: 'none' }}
-                viewBox="0 0 100 40"
-                preserveAspectRatio="none"
-              >
-                <ellipse
-                  cx="50" cy="20" rx="48" ry="18"
-                  fill="none"
-                  stroke="#333"
-                  strokeWidth="1.5"
-                  strokeLinecap="round"
-                  strokeDasharray="3,2"
-                  style={{ transform: 'rotate(-2deg)', transformOrigin: 'center' }}
-                />
-              </svg>
-              + SUBMIT
-            </span>
-          )}
-        </div>
+        {/* Wide screen: absolute positions at metaPos, Narrow: flex centered with dynamic spacing */}
+        {(() => {
+          // Wide screen: use absolute positioning
+          // Narrow screen: use flex centering
+          if (!isNarrow) {
+            return (
+              <div ref={topBarRef} style={{ position: "relative", padding: "8px 0", minHeight: topBarHeight, marginLeft: LAYOUT_LEFT_BASE + META_SHIFT, marginRight: 80, zIndex: 100, ...(DEBUG_LAYOUT ? { outline: "1px dashed #00f" } : {}) }}>
+                <span
+                  onClick={() => setViewMode('panorama')}
+                  style={{
+                    fontSize: 12, lineHeight: 1, fontWeight: 700,
+                    color: viewMode === 'panorama' ? "#000" : "#666",
+                    cursor: "pointer", userSelect: "none", whiteSpace: "nowrap",
+                    textDecoration: viewMode === 'panorama' ? 'underline' : 'none',
+                    position: 'absolute',
+                    left: metaPos.title,
+                  }}
+                >
+                  PANORAMA
+                </span>
+                <span
+                  ref={archiveRef}
+                  onClick={() => setViewMode('archive')}
+                  style={{
+                    fontSize: 12, lineHeight: 1, fontWeight: 700,
+                    color: viewMode === 'archive' ? "#000" : "#666",
+                    cursor: "pointer", userSelect: "none", whiteSpace: "nowrap",
+                    textDecoration: viewMode === 'archive' ? 'underline' : 'none',
+                    position: 'absolute',
+                    left: metaPos.creator,
+                  }}
+                >
+                  ARCHIVE
+                </span>
+                <span
+                  ref={galleryRef}
+                  onClick={() => setViewMode('gallery')}
+                  style={{
+                    fontSize: 12, lineHeight: 1, fontWeight: 700,
+                    color: viewMode === 'gallery' ? "#000" : "#666",
+                    cursor: "pointer", userSelect: "none", whiteSpace: "nowrap",
+                    textDecoration: viewMode === 'gallery' ? 'underline' : 'none',
+                    position: 'absolute',
+                    left: metaPos.date,
+                  }}
+                >
+                  GALLERY
+                </span>
+                {exhibition.startDate && !String(exhibition.startDate).toLowerCase().includes('permanent') && (
+                  <span
+                    onClick={() => setShowSubmissionForm(true)}
+                    style={{
+                      fontSize: 12, lineHeight: 1, fontWeight: 700,
+                      color: "#666",
+                      cursor: "pointer", userSelect: "none", whiteSpace: "nowrap",
+                      textDecoration: 'none',
+                      position: 'absolute',
+                      left: metaPos.dimension,
+                      display: 'inline-block',
+                      padding: '4px 8px',
+                    }}
+                  >
+                    <svg
+                      style={{ position: 'absolute', top: -8, left: -12, width: 'calc(100% + 24px)', height: 'calc(100% + 16px)', pointerEvents: 'none' }}
+                      viewBox="0 0 100 40"
+                      preserveAspectRatio="none"
+                    >
+                      <ellipse
+                        cx="50" cy="20" rx="48" ry="18"
+                        fill="none"
+                        stroke="#333"
+                        strokeWidth="1.5"
+                        strokeLinecap="round"
+                        strokeDasharray="3,2"
+                        style={{ transform: 'rotate(-2deg)', transformOrigin: 'center' }}
+                      />
+                    </svg>
+                    + SUBMIT
+                  </span>
+                )}
+              </div>
+            );
+          }
+          
+          // Narrow screen: 3-column grid layout
+          // Column 1 (PANORAMA): Room selector + year filter
+          // Column 2 (ARCHIVE): TITLE + CREATOR
+          // Column 3 (GALLERY): DATE + DIMENSION
+          // Left margin must clear the left panel (150px) + some padding
+          const narrowMarginLeft = 160;
+          const narrowMarginRight = isVeryNarrow ? 16 : 24;
+          const titleText = displayArtwork?.name || "—";
+          const creatorText = displayArtwork?.artist || "—";
+          const dateText = displayArtwork?.date || (displayArtwork?.year ? String(displayArtwork.year) : "—");
+          const dimensionText = displayArtwork?.dimension || "—";
+          const durationText = displayArtwork?.duration || null;  // Video/film duration
+          
+          return (
+            <div ref={topBarRef} style={{ position: "relative", padding: "8px 0", marginLeft: narrowMarginLeft, marginRight: narrowMarginRight, zIndex: 100, ...(DEBUG_LAYOUT ? { outline: "1px dashed #00f" } : {}) }}>
+              {/* Row 1: Mode tabs */}
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 8, marginBottom: 12 }}>
+                <span
+                  onClick={() => setViewMode('panorama')}
+                  style={{
+                    fontSize: 12, lineHeight: 1, fontWeight: 700,
+                    color: viewMode === 'panorama' ? "#000" : "#666",
+                    cursor: "pointer", userSelect: "none", whiteSpace: "nowrap",
+                    textDecoration: viewMode === 'panorama' ? 'underline' : 'none',
+                  }}
+                >
+                  PANORAMA
+                </span>
+                <span
+                  ref={archiveRef}
+                  onClick={() => setViewMode('archive')}
+                  style={{
+                    fontSize: 12, lineHeight: 1, fontWeight: 700,
+                    color: viewMode === 'archive' ? "#000" : "#666",
+                    cursor: "pointer", userSelect: "none", whiteSpace: "nowrap",
+                    textDecoration: viewMode === 'archive' ? 'underline' : 'none',
+                  }}
+                >
+                  ARCHIVE
+                </span>
+                <span
+                  ref={galleryRef}
+                  onClick={() => setViewMode('gallery')}
+                  style={{
+                    fontSize: 12, lineHeight: 1, fontWeight: 700,
+                    color: viewMode === 'gallery' ? "#000" : "#666",
+                    cursor: "pointer", userSelect: "none", whiteSpace: "nowrap",
+                    textDecoration: viewMode === 'gallery' ? 'underline' : 'none',
+                  }}
+                >
+                  GALLERY
+                </span>
+              </div>
+              
+              {/* Row 2: Content under each tab - 3 columns */}
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 8, alignItems: "start" }}>
+                {/* Column 1: Room selector + Year filter (under PANORAMA) */}
+                <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+                  {/* ALL button */}
+                  {roomButtons.find(b => b.id === 'ALL') && (
+                    <div style={{ display: 'flex', alignItems: 'center', gap: 4, flexWrap: 'wrap' }}>
+                      <button onClick={() => { setSelectedRoomId('ALL'); setSelectedIndex(0); }} style={{ padding: '2px 6px', fontSize: 9.5, borderRadius: 3, border: 'none', background: selectedRoomId === 'ALL' ? '#111' : 'transparent', color: selectedRoomId === 'ALL' ? '#fff' : '#222', cursor: 'pointer' }}>ALL</button>
+                      <span style={{ fontSize: 9, color: '#666' }}>({filteredArtworks.length})</span>
+                    </div>
+                  )}
+                  {/* Year/Century buttons */}
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4 }}>
+                    {dateLevel === 'century' ? (
+                      availableCenturies.map((c) => (
+                        <button
+                          key={`c-${c}`}
+                          onClick={() => { setSelectedCentury(c); setSelectedYearRange('ALL'); setDateLevel('decade'); setSelectedIndex(0); }}
+                          style={{ padding: '2px 6px', fontSize: 9.5, borderRadius: 3, border: 'none', background: '#f0f0f0', color: '#222', cursor: 'pointer' }}
+                        >
+                          {`${c}c`}
+                        </button>
+                      ))
+                    ) : null}
+                  </div>
+                  {/* 2D/3D buttons - only show if artworks have type field */}
+                  {hasTypedArtworks && (
+                    <div style={{ display: 'flex', gap: 4 }}>
+                      {(['2D', '3D'] as const).map(t => (
+                        <button
+                          key={t}
+                          onClick={() => setSelectedTypes(prev => { const next = new Set(prev); if (next.has(t)) next.delete(t); else next.add(t); return next; })}
+                          style={{ padding: '2px 6px', fontSize: 9.5, borderRadius: 3, border: selectedTypes.has(t) ? '1px solid #111' : '1px solid #ddd', background: selectedTypes.has(t) ? '#111' : '#f8f8f8', color: selectedTypes.has(t) ? '#fff' : '#222', cursor: 'pointer' }}
+                        >
+                          {t}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
+                
+                {/* Column 2: TITLE + CREATOR (under ARCHIVE) */}
+                <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                  <div>
+                    <div style={{ fontSize: 10, letterSpacing: 1.2, color: "#888", marginBottom: 2 }}>TITLE</div>
+                    <div style={{ fontSize: 11, color: "#222", fontWeight: 700, lineHeight: 1.3, overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' }}>{titleText}</div>
+                  </div>
+                  <div>
+                    <div style={{ fontSize: 10, letterSpacing: 1.2, color: "#888", marginBottom: 2 }}>CREATOR</div>
+                    <div style={{ fontSize: 11, color: "#222", lineHeight: 1.3, overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' }}>{creatorText}</div>
+                  </div>
+                </div>
+                
+                {/* Column 3: DATE + DIMENSION/DURATION (under GALLERY) */}
+                <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+                  <div>
+                    <div style={{ fontSize: 10, letterSpacing: 1.2, color: "#888", marginBottom: 2 }}>DATE</div>
+                    <div style={{ fontSize: 11, color: "#222", lineHeight: 1.3, overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' }}>{dateText}</div>
+                  </div>
+                  {durationText ? (
+                    <div>
+                      <div style={{ fontSize: 10, letterSpacing: 1.2, color: "#888", marginBottom: 2 }}>DURATION</div>
+                      <div style={{ fontSize: 11, color: "#222", lineHeight: 1.3, overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' }}>{durationText}</div>
+                    </div>
+                  ) : (
+                    <div>
+                      <div style={{ fontSize: 10, letterSpacing: 1.2, color: "#888", marginBottom: 2 }}>DIMENSION</div>
+                      <div style={{ fontSize: 11, color: "#222", lineHeight: 1.3, overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' }}>{dimensionText}</div>
+                    </div>
+                  )}
+                </div>
+              </div>
+            </div>
+          );
+        })()}
         {/* Room selector: placed between top bar and meta row (chunked rows of 5) */}
         {/* Room selector: absolute so it doesn't push down the metadata; wraps when it runs out of width */}
+        {/* Hide on narrow screens - included in the 3-column layout above */}
+        {!isNarrow && (
         <div style={{ position: 'absolute', left: selectorLeft, top: selectorTop, width: selectorWidth, zIndex: 110 }}>
           {roomButtons.find(b => b.id === 'ALL') && (
             <div style={{ marginBottom: 2, display: 'flex', alignItems: 'center', gap: 8 }}>
@@ -2993,21 +3337,25 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
             )}
           </div>
         </div>
+        )}
 
         {/* Artwork meta info (below the top bar, aligned to Gallery/Archive; dynamic per selected artwork) */}
-        {(viewMode === 'archive' || viewMode === 'gallery' || viewMode === 'panorama') && (
-          <div ref={metaRowRef} style={{ position: "relative", padding: "12px 12px 0 0", marginLeft: isNarrow ? 460 : (LAYOUT_LEFT_BASE + META_SHIFT), marginTop: metaMarginTop, marginRight: LAYOUT_RIGHT_PAD, minHeight: isNarrow ? 140 : (FIXED_META_HEIGHT + META_VERTICAL_PAD), ...(DEBUG_LAYOUT ? { outline: "1px solid #f00" } : {}) }}>
+        {/* Hide on narrow screens - included in the 3-column layout above */}
+        {!isNarrow && (viewMode === 'archive' || viewMode === 'gallery' || viewMode === 'panorama') && (
+          <div ref={metaRowRef} style={{ position: "relative", padding: "12px 12px 0 0", marginLeft: LAYOUT_LEFT_BASE + META_SHIFT, marginTop: metaMarginTop, marginRight: LAYOUT_RIGHT_PAD, minHeight: FIXED_META_HEIGHT + META_VERTICAL_PAD, ...(DEBUG_LAYOUT ? { outline: "1px solid #f00" } : {}) }}>
             {(() => {
               const titleText = displayArtwork?.name || "—";
               const creatorText = displayArtwork?.artist || "—";
               const dateText = displayArtwork?.date || (displayArtwork?.year ? String(displayArtwork.year) : "—");
               const dimensionText = displayArtwork?.dimension || "—";
+              const durationText = displayArtwork?.duration || null;  // Video/film duration
               const gap = Math.max(160, Math.min(360, metaPos.date - metaPos.creator - 12));
               // shrink horizontal allocation to avoid cramped columns; allow content to wrap vertically
               const shrunk = Math.max(80, Math.floor(gap * META_HOR_SCALE));
               const titleW = shrunk;
               const creatorW = shrunk;
               const dateW = shrunk;
+              // Wide screens: use absolute positioning
               return (
                 <>
                   {/* TITLE */}
@@ -3015,20 +3363,20 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
                     <div style={{ fontSize: 10, letterSpacing: 1.2, color: "#888", marginBottom: 4 }}>TITLE</div>
                     <div ref={metaTitleValueRef} style={{ fontSize: 12, color: "#222", fontWeight: 700, lineHeight: 1.3, whiteSpace: "normal", wordBreak: "break-word", overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', maxHeight: 36 }}>{titleText}</div>
                   </div>
-                  {/* CREATOR (aligned under Gallery, or under Title in Narrow) */}
-                  <div ref={creatorRef} style={{ position: "absolute", left: metaPos.creator, top: isNarrow ? 72 : 12, maxWidth: creatorW, ...(DEBUG_LAYOUT ? { outline: "1px dashed #6f6" } : {}) }}>
+                  {/* CREATOR */}
+                  <div ref={creatorRef} style={{ position: "absolute", left: metaPos.creator, top: 12, maxWidth: creatorW, ...(DEBUG_LAYOUT ? { outline: "1px dashed #6f6" } : {}) }}>
                     <div style={{ fontSize: 10, letterSpacing: 1.2, color: "#888", marginBottom: 4 }}>CREATOR</div>
                     <div style={{ fontSize: 12, color: "#222", lineHeight: 1.3, whiteSpace: "normal", wordBreak: "break-word", overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', maxHeight: 36 }}>{creatorText}</div>
                   </div>
-                  {/* DATE (aligned under Archive, or right side in Narrow) */}
+                  {/* DATE */}
                   <div ref={dateRef} style={{ position: "absolute", left: metaPos.date, top: 12, maxWidth: dateW, ...(DEBUG_LAYOUT ? { outline: "1px dashed #66f" } : {}) }}>
                     <div style={{ fontSize: 10, letterSpacing: 1.2, color: "#888", marginBottom: 4 }}>DATE</div>
                     <div style={{ fontSize: 12, color: "#222", lineHeight: 1.3, whiteSpace: "normal", wordBreak: "break-word", overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', maxHeight: 36 }}>{dateText}</div>
                   </div>
-                  {/* DIMENSION (to the right of DATE by the same gap, or under Date in Narrow) */}
-                  <div ref={dimensionRef} style={{ position: "absolute", left: metaPos.dimension, right: 0, top: isNarrow ? 72 : 12, ...(DEBUG_LAYOUT ? { outline: "1px dashed #f6f" } : {}) }}>
-                    <div style={{ fontSize: 10, letterSpacing: 1.2, color: "#888", marginBottom: 4 }}>DIMENSION</div>
-                    <div style={{ fontSize: 12, color: "#222", lineHeight: 1.3, whiteSpace: "normal", wordBreak: "break-word", overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', maxHeight: 36 }}>{dimensionText}</div>
+                  {/* DIMENSION or DURATION */}
+                  <div ref={dimensionRef} style={{ position: "absolute", left: metaPos.dimension, right: 0, top: 12, ...(DEBUG_LAYOUT ? { outline: "1px dashed #f6f" } : {}) }}>
+                    <div style={{ fontSize: 10, letterSpacing: 1.2, color: "#888", marginBottom: 4 }}>{durationText ? 'DURATION' : 'DIMENSION'}</div>
+                    <div style={{ fontSize: 12, color: "#222", lineHeight: 1.3, whiteSpace: "normal", wordBreak: "break-word", overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', maxHeight: 36 }}>{durationText || dimensionText}</div>
                   </div>
                 </>
               );
@@ -3340,7 +3688,8 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
                 const gridColumns = isMobile ? 'repeat(3, 1fr)' : 'repeat(5, 1fr)';
                 const gridGap = isMobile ? 8 : 64;
                 // Narrow screens need more top padding to avoid overlapping with room/century selectors
-                const gridPadding = isMobile ? '100px 8px 60px 8px' : (isNarrow ? '240px 48px 96px 150px' : '192px 48px 96px 150px');
+                // Symmetric padding on narrow screens, left padding on wide to clear left panel
+                const gridPadding = isMobile ? '100px 8px 60px 8px' : (isVeryNarrow ? '200px 16px 96px 16px' : (isNarrow ? '200px 24px 96px 24px' : '192px 48px 96px 160px'));
                 return (
                   <div style={{ display: 'grid', gridTemplateColumns: gridColumns, gap: gridGap, padding: gridPadding }}>
                     {items.map((a, idx) => {

@@ -24,9 +24,11 @@ export type Artwork = {
   dimension?: string;
   sourceUrl?: string;
   createdAt?: any;
-  type?: '2D' | '3D' | 'unknown';  // 작품 유형 (2D: 회화/사진, 3D: 조각/유물)
+  type?: '2D' | '3D' | 'video' | 'unknown';  // 작품 유형 (2D: 회화/사진, 3D: 조각/유물, video: 영상)
   isArchival?: boolean;  // 아카이브 자료 여부
   // 영상 컨텐츠 지원
+  duration?: string;     // 영상 작품 재생 시간 (예: "4 minutes 29 secondes")
+  medium?: string;       // 기법/매체 (예: "Film 16 mm couleur, sonore")
   youtubeId?: string;    // YouTube 영상 ID (11자)
   mediaType?: 'image' | 'video';  // 미디어 타입
 };

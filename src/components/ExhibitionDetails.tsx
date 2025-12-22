@@ -319,6 +319,96 @@ export default function ExhibitionDetails({
           datasetEmptyRef.current[exhibitionItemId] = !(items && items.some((it: any) => it && it.image));
           return put(img);
         }
+      } else if (exhibitionItemId === 'orsay-collection') {
+        // Musée d'Orsay Collection
+        const res = await fetch('/data/orsay-collection.json', { cache: 'no-store' });
+        if (res.ok) {
+          const data = await res.json();
+          const items = Array.isArray(data.objects) ? data.objects : [];
+          const img = items.find((it: any) => it && it.image)?.image || null;
+          datasetEmptyRef.current[exhibitionItemId] = !(items && items.some((it: any) => it && it.image));
+          return put(img);
+        }
+      } else if (exhibitionItemId === 'orangerie-collection') {
+        // Musée de l'Orangerie Collection
+        const res = await fetch('/data/orangerie-collection.json', { cache: 'no-store' });
+        if (res.ok) {
+          const data = await res.json();
+          const items = Array.isArray(data.objects) ? data.objects : [];
+          const img = items.find((it: any) => it && it.image)?.image || null;
+          datasetEmptyRef.current[exhibitionItemId] = !(items && items.some((it: any) => it && it.image));
+          return put(img);
+        }
+      } else if (exhibitionItemId === 'pinault-collection') {
+        // Pinault Collection
+        const res = await fetch('/data/pinault-collection.json', { cache: 'no-store' });
+        if (res.ok) {
+          const data = await res.json();
+          const items = Array.isArray(data.objects) ? data.objects : [];
+          const img = items.find((it: any) => it && it.image)?.image || null;
+          datasetEmptyRef.current[exhibitionItemId] = !(items && items.some((it: any) => it && it.image));
+          return put(img);
+        }
+      } else if (exhibitionItemId === 'mep-photography') {
+        // MEP Photography Collection
+        const res = await fetch('/data/mep-photography-collection.json', { cache: 'no-store' });
+        if (res.ok) {
+          const data = await res.json();
+          const items = Array.isArray(data.objects) ? data.objects : [];
+          const img = items.find((it: any) => it && it.image)?.image || null;
+          datasetEmptyRef.current[exhibitionItemId] = !(items && items.some((it: any) => it && it.image));
+          return put(img);
+        }
+      } else if (exhibitionItemId === 'pompidou-cinema') {
+        // Centre Pompidou Cinema Collection
+        const res = await fetch('/data/pompidou-cinema-collection.json', { cache: 'no-store' });
+        if (res.ok) {
+          const data = await res.json();
+          const items = Array.isArray(data.artworks) ? data.artworks : [];
+          const img = items.find((it: any) => it && it.image)?.image || null;
+          datasetEmptyRef.current[exhibitionItemId] = !(items && items.some((it: any) => it && it.image));
+          return put(img);
+        }
+      } else if (exhibitionItemId === 'pompidou-painting') {
+        // Centre Pompidou Painting Collection
+        const res = await fetch('/data/pompidou-painting-collection.json', { cache: 'no-store' });
+        if (res.ok) {
+          const data = await res.json();
+          const items = Array.isArray(data.artworks) ? data.artworks : [];
+          const img = items.find((it: any) => it && it.image)?.image || null;
+          datasetEmptyRef.current[exhibitionItemId] = !(items && items.some((it: any) => it && it.image));
+          return put(img);
+        }
+      } else if (exhibitionItemId === 'pompidou-drawing') {
+        // Centre Pompidou Drawing Collection
+        const res = await fetch('/data/pompidou-drawing-collection.json', { cache: 'no-store' });
+        if (res.ok) {
+          const data = await res.json();
+          const items = Array.isArray(data.artworks) ? data.artworks : [];
+          const img = items.find((it: any) => it && it.image)?.image || null;
+          datasetEmptyRef.current[exhibitionItemId] = !(items && items.some((it: any) => it && it.image));
+          return put(img);
+        }
+      } else if (exhibitionItemId === 'pompidou-newmedia') {
+        // Centre Pompidou New Media Collection
+        const res = await fetch('/data/pompidou-newmedia-collection.json', { cache: 'no-store' });
+        if (res.ok) {
+          const data = await res.json();
+          const items = Array.isArray(data.artworks) ? data.artworks : [];
+          const img = items.find((it: any) => it && it.image)?.image || null;
+          datasetEmptyRef.current[exhibitionItemId] = !(items && items.some((it: any) => it && it.image));
+          return put(img);
+        }
+      } else if (exhibitionItemId === 'pompidou-design') {
+        // Centre Pompidou Design Collection
+        const res = await fetch('/data/pompidou-design-collection.json', { cache: 'no-store' });
+        if (res.ok) {
+          const data = await res.json();
+          const items = Array.isArray(data.artworks) ? data.artworks : [];
+          const img = items.find((it: any) => it && it.image)?.image || null;
+          datasetEmptyRef.current[exhibitionItemId] = !(items && items.some((it: any) => it && it.image));
+          return put(img);
+        }
       }
       // Generic: try local cache populated by ExhibitionModal snapshots
       try {

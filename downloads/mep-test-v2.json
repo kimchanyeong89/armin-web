@@ -1,0 +1,193 @@
+{
+  "museum": "Maison Européenne de la Photographie",
+  "scrapeDate": "2025-12-22T11:24:16.042Z",
+  "artists": [
+    {
+      "artistName": "Brassaï",
+      "artistBio": "« Tous les sujets peuvent être photographiés en couleur, mais très peu le méritent. Le vrai sujet d’une photo en couleur ne peut être que la couleur. »",
+      "artworks": [
+        {
+          "image": "https://www.mep-fr.org/wp-content/thumbnails/uploads/2021/09/2012-108-000-tt-width-800-height-1187-bgcolor-ffffff-lazyload-1.jpg",
+          "title": "Le rouge et le noir",
+          "artist": "BRASSAÏ",
+          "year": "1958-1960",
+          "dimensions": "80 x 54 cm",
+          "medium": "Tirage couleur à destruction de colorants"
+        },
+        {
+          "image": "https://www.mep-fr.org/wp-content/thumbnails/uploads/2021/09/2012-111-000-tt-width-550-height-367-bgcolor-ffffff-lazyload-1.jpg",
+          "title": "Lambeaux d’affiche à pois blancs",
+          "artist": "BRASSAÏ",
+          "year": "1958-1960",
+          "dimensions": "40 x 60 cm",
+          "medium": "Tirage couleur à destruction de colorants"
+        },
+        {
+          "image": "https://www.mep-fr.org/wp-content/thumbnails/uploads/2021/09/2012-106-000-tt-width-550-height-385-bgcolor-ffffff-lazyload-1.jpg",
+          "title": "Drame",
+          "artist": "BRASSAÏ",
+          "year": "1958-1960",
+          "dimensions": "28 x 40 cm",
+          "medium": "Tirage couleur à destruction de colorants"
+        },
+        {
+          "image": "https://www.mep-fr.org/wp-content/thumbnails/uploads/2021/09/2012-102-000-tt-width-800-height-537-bgcolor-ffffff-lazyload-1.jpg",
+          "title": "Battement d’ailes",
+          "artist": "BRASSAÏ",
+          "year": "1958-1960",
+          "dimensions": "54 x 80 cm",
+          "medium": "Tirage couleur à destruction de colorants"
+        },
+        {
+          "image": "https://www.mep-fr.org/wp-content/thumbnails/uploads/2021/09/2012-104-000-tt-width-800-height-532-bgcolor-ffffff-lazyload-1.jpg",
+          "title": "Contestation",
+          "artist": "BRASSAÏ",
+          "year": "1958-1960",
+          "dimensions": "40 x 60 cm",
+          "medium": "Tirage couleur à destruction de colorants"
+        },
+        {
+          "image": "https://www.mep-fr.org/wp-content/thumbnails/uploads/2021/09/2012-103-000-tt-width-550-height-813-bgcolor-ffffff-lazyload-1.jpg",
+          "title": "Lueurs (Chicago)",
+          "artist": "BRASSAÏ",
+          "year": "1958-1960",
+          "dimensions": "60 x 40 cm",
+          "medium": "Tirage couleur à destruction de colorants"
+        }
+      ]
+    },
+    {
+      "artistName": "Coco Capitán",
+      "artistBio": "« Si vous avez tout vu, fermez les yeux »",
+      "artworks": [
+        {
+          "image": "https://www.mep-fr.org/wp-content/thumbnails/uploads/2021/10/principale_2019-083-tt-width-800-height-604-bgcolor-ffffff-lazyload-1.jpg",
+          "title": "Obsolete mailboxes, Santa Cruz, California, USA",
+          "artist": "Coco CAPITÁN",
+          "year": "2017",
+          "dimensions": "",
+          "medium": "Tirage au gélatino-bromure d'argent"
+        },
+        {
+          "image": "https://www.mep-fr.org/wp-content/thumbnails/uploads/2021/10/2019-089-tt-width-550-height-702-bgcolor-ffffff-lazyload-1.jpg",
+          "title": "Sleep tight, Santa Cruz, California, USA",
+          "artist": "Coco CAPITÁN",
+          "year": "2017",
+          "dimensions": "52 x 42 cm",
+          "medium": "Tirage au gélatino-bromure d'argent"
+        },
+        {
+          "image": "https://www.mep-fr.org/wp-content/thumbnails/uploads/2021/10/2019-087-tt-width-550-height-797-bgcolor-ffffff-lazyload-1.jpg",
+          "title": "Lydia on snow, London, UK",
+          "artist": "Coco CAPITÁN",
+          "year": "2013",
+          "dimensions": "64 x 46 cm",
+          "medium": "Tirage au gélatino-bromure d'argent"
+        },
+        {
+          "image": "https://www.mep-fr.org/wp-content/thumbnails/uploads/2021/10/2019-086-tt-width-800-height-596-bgcolor-ffffff-lazyload-1.jpg",
+          "title": "Nature Framing Nature, Santa Teresa, Costa Rica",
+          "artist": "Coco CAPITÁN",
+          "year": "2017",
+          "dimensions": "",
+          "medium": "Tirage au gélatino-bromure d'argent"
+        },
+        {
+          "image": "https://www.mep-fr.org/wp-content/thumbnails/uploads/2021/10/2019-084-tt-width-800-height-1059-bgcolor-ffffff-lazyload-1.jpg",
+          "title": "Obsolete telephone booth, Big Sur, California, USA",
+          "artist": "Coco CAPITÁN",
+          "year": "2017",
+          "dimensions": "76 x 60 cm",
+          "medium": "Tirage au gélatino-bromure d'argent"
+        },
+        {
+          "image": "https://www.mep-fr.org/wp-content/thumbnails/uploads/2021/10/2019-082-tt-width-550-height-416-bgcolor-ffffff-lazyload-1.jpg",
+          "title": "Vacancy, Leamington, USA",
+          "artist": "Coco CAPITÁN",
+          "year": "2017",
+          "dimensions": "63 x 80 cm",
+          "medium": "Tirage au gélatino-bromure d'argent"
+        },
+        {
+          "image": "https://www.mep-fr.org/wp-content/thumbnails/uploads/2021/10/2019-085-002-1-tt-width-550-height-401-bgcolor-ffffff-lazyload-1.jpg",
+          "title": "Funeral Car, Los Angeles, California, USA",
+          "artist": "Coco CAPITÁN",
+          "year": "2018",
+          "dimensions": "",
+          "medium": "Tirage au gélatino-bromure d'argent"
+        },
+        {
+          "image": "https://www.mep-fr.org/wp-content/thumbnails/uploads/2021/10/2019-085-001-1-tt-width-800-height-583-bgcolor-ffffff-lazyload-1.jpg",
+          "title": "Funeral Car, Los Angeles, California, USA",
+          "artist": "Coco CAPITÁN",
+          "year": "2018",
+          "dimensions": "",
+          "medium": "Tirage au gélatino-bromure d'argent"
+        }
+      ]
+    },
+    {
+      "artistName": "Robert Frank",
+      "artistBio": "« Je désire réaliser un document contemporain authentique, dont l’impact visuel soit tel qu’il se passe d’un quelconque commentaire. »",
+      "artworks": [
+        {
+          "image": "https://www.mep-fr.org/wp-content/thumbnails/uploads/2021/10/frank_1992-344-000-tt-width-800-height-530-bgcolor-ffffff-lazyload-1.jpg",
+          "title": "Parade – Hoboken, New Jersey",
+          "artist": "Robert FRANK",
+          "year": "1955",
+          "dimensions": "30 x 40 cm",
+          "medium": "Tirage gélatino-argentique"
+        },
+        {
+          "image": "https://www.mep-fr.org/wp-content/thumbnails/uploads/2021/10/frank_1992-361-000-tt-width-550-height-356-bgcolor-ffffff-lazyload-1.jpg",
+          "title": "Trolley – New Orleans",
+          "artist": "Robert FRANK",
+          "year": "1955",
+          "dimensions": "30 x 40 cm",
+          "medium": "Tirage gélatino-argentique"
+        },
+        {
+          "image": "https://www.mep-fr.org/wp-content/thumbnails/uploads/2021/10/frank_1992-372-000-tt-width-550-height-841-bgcolor-ffffff-lazyload-1.jpg",
+          "title": "Bar – Gallup, New Mexico",
+          "artist": "Robert FRANK",
+          "year": "1955",
+          "dimensions": "40 x 30 cm",
+          "medium": "Tirage gélatino-argentique"
+        },
+        {
+          "image": "https://www.mep-fr.org/wp-content/thumbnails/uploads/2021/10/frank_1992-398-000-tt-width-800-height-535-bgcolor-ffffff-lazyload-1.jpg",
+          "title": "Beaufort, South Carolina",
+          "artist": "Robert FRANK",
+          "year": "1955",
+          "dimensions": "30 x 40 cm",
+          "medium": "Tirage gélatino-argentique"
+        },
+        {
+          "image": "https://www.mep-fr.org/wp-content/thumbnails/uploads/2021/10/frank_1992-404-000-tt-width-800-height-1209-bgcolor-ffffff-lazyload-1.jpg",
+          "title": "Los Angeles",
+          "artist": "Robert FRANK",
+          "year": "1955-1956",
+          "dimensions": "40 x 30 cm",
+          "medium": "Tirage gélatino-argentique"
+        },
+        {
+          "image": "https://www.mep-fr.org/wp-content/thumbnails/uploads/2021/10/frank_1992-411-000-tt-width-550-height-817-bgcolor-ffffff-lazyload-1.jpg",
+          "title": "Cafeteria – San Francisco",
+          "artist": "Robert FRANK",
+          "year": "1956",
+          "dimensions": "40 x 30 cm",
+          "medium": "Tirage gélatino-argentique"
+        },
+        {
+          "image": "https://www.mep-fr.org/wp-content/thumbnails/uploads/2021/10/principale-frank_1992-379-000-tt-width-550-height-808-bgcolor-ffffff-lazyload-1.jpg",
+          "title": "U.S. 285, New Mexico",
+          "artist": "Robert FRANK",
+          "year": "1955",
+          "dimensions": "40 x 30 cm",
+          "medium": "Tirage gélatino-argentique"
+        }
+      ]
+    }
+  ],
+  "totalWorks": 21
+}

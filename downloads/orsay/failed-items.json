@@ -1,0 +1,195 @@
+[
+  {
+    "href": "/en/artworks/portrait-du-comte-de-montalivet-69582",
+    "title": "Portrait du comte de Montalivet",
+    "artist": "Léon\n            Bonnat",
+    "reason": "duplicate_image",
+    "duplicateOf": "https://cdn.mediatheque.epmoo.fr/link/3c9igq/hmi1butspmp9xxc.jpg",
+    "retryReason": "still_duplicate"
+  },
+  {
+    "href": "/en/artworks/les-trois-escadres-de-la-mediterranee-69711",
+    "title": "Les Trois Escadres de la Méditerranée",
+    "artist": "Octave de\n            Champeaux",
+    "reason": "duplicate_image",
+    "duplicateOf": "https://cdn.mediatheque.epmoo.fr/link/3c9igq/djq1atx6ccp6d4w.jpg",
+    "retryReason": "still_duplicate"
+  },
+  {
+    "href": "/en/artworks/alphonse-osbert-78694",
+    "title": "Alphonse Osbert",
+    "artist": "Jules\n            Valadon",
+    "reason": "duplicate_image",
+    "duplicateOf": "https://cdn.mediatheque.epmoo.fr/link/3c9igq/vcr1bbmae7e3hb4.jpg",
+    "retryReason": "still_duplicate"
+  },
+  {
+    "href": "/en/artworks/benedicite-20703",
+    "title": "Bénédicité",
+    "artist": "Louis-Marie\n            Désiré-Lucas",
+    "reason": "duplicate_image",
+    "duplicateOf": "https://cdn.mediatheque.epmoo.fr/link/3c9igq/bjs1aziul1c3c8w.jpg",
+    "retryReason": "still_duplicate"
+  },
+  {
+    "href": "/en/artworks/apres-midi-dete-78576",
+    "title": "Après-midi d'été",
+    "artist": "Léon\n            Félix",
+    "reason": "duplicate_image",
+    "duplicateOf": "https://cdn.mediatheque.epmoo.fr/link/3c9igq/yzr1aul9makpfa8.jpg",
+    "retryReason": "still_duplicate"
+  },
+  {
+    "href": "/en/artworks/fille-deve-78577",
+    "title": "Fille d'Eve",
+    "artist": "Léon\n            Félix",
+    "reason": "duplicate_image",
+    "duplicateOf": "https://cdn.mediatheque.epmoo.fr/link/3c9igq/yzr1aul9makpfa8.jpg",
+    "retryReason": "still_duplicate"
+  },
+  {
+    "href": "/en/artworks/le-pont-neuf-paris-78555",
+    "title": "Le Pont Neuf à Paris",
+    "artist": "Jules Eugène\n            Pagès",
+    "reason": "scrape_failed",
+    "retryReason": "still_duplicate"
+  },
+  {
+    "href": "/en/artworks/reve-de-bonheur-167768",
+    "title": "Rêve de bonheur",
+    "artist": "Dominique Louis\n            Papety",
+    "reason": "duplicate_image",
+    "duplicateOf": "https://cdn.mediatheque.epmoo.fr/link/3c9igq/vwq1b1i515nrbr4.jpg",
+    "retryReason": "still_duplicate"
+  },
+  {
+    "href": "/en/artworks/marecage-la-tour-carree-69761",
+    "title": "Marécage à la tour carrée",
+    "artist": "Camille\n            Corot",
+    "reason": "duplicate_image",
+    "duplicateOf": "https://cdn.mediatheque.epmoo.fr/link/3c9igq/qgt1bw0p4e845ts.jpg",
+    "retryReason": "still_duplicate"
+  },
+  {
+    "href": "/en/artworks/le-pont-de-palluel-69762",
+    "title": "Le Pont de Palluel",
+    "artist": "Camille\n            Corot",
+    "reason": "duplicate_image",
+    "duplicateOf": "https://cdn.mediatheque.epmoo.fr/link/3c9igq/qgt1bw0p4e845ts.jpg",
+    "retryReason": "still_duplicate"
+  },
+  {
+    "href": "/en/artworks/maisons-arabes-80023",
+    "title": "Maisons arabes",
+    "artist": "Rodolphe François d'\n            Erlanger",
+    "reason": "scrape_failed",
+    "retryReason": "still_duplicate"
+  },
+  {
+    "href": "/en/artworks/pont-du-havre-le-soir-149636",
+    "title": "Pont du Havre le soir",
+    "artist": "Siebe Johannes\n            Ten Cate",
+    "reason": "scrape_failed",
+    "retryReason": "still_duplicate"
+  },
+  {
+    "href": "/en/artworks/madame-maximilien-wey-401",
+    "title": "Madame Maximilien Wey",
+    "artist": "Ernest\n            Hébert",
+    "reason": "duplicate_image",
+    "duplicateOf": "https://cdn.mediatheque.epmoo.fr/link/3c9igq/fgi1buwr7utl200.jpg",
+    "retryReason": "still_duplicate"
+  },
+  {
+    "href": "/en/artworks/les-vieilles-de-la-place-navone-santa-maria-della-pace-75486",
+    "title": "Les Vieilles de la place Navone, à Santa Maria della Pace",
+    "artist": "Tony\n            Robert-Fleury",
+    "reason": "duplicate_image",
+    "duplicateOf": "https://cdn.mediatheque.epmoo.fr/link/3c9igq/rxg1c8fs1fy0q80.jpg",
+    "retryReason": "still_duplicate"
+  },
+  {
+    "href": "/en/artworks/portrait-de-femme-75162",
+    "title": "Portrait de femme",
+    "artist": "Ernest\n            Hébert",
+    "reason": "duplicate_image",
+    "duplicateOf": "https://cdn.mediatheque.epmoo.fr/link/3c9igq/fgi1buwr7utl200.jpg",
+    "retryReason": "still_duplicate"
+  },
+  {
+    "href": "/en/artworks/paysage-172718",
+    "title": "Paysage",
+    "artist": "Carolus-Duran",
+    "reason": "duplicate_image",
+    "duplicateOf": "https://cdn.mediatheque.epmoo.fr/link/3c9igq/xel1bxyx3y1klog.jpg",
+    "retryReason": "still_duplicate"
+  },
+  {
+    "href": "/en/artworks/limperatrice-eugenie-78688",
+    "title": "L'Impératrice Eugénie",
+    "artist": "Anonyme",
+    "reason": "duplicate_image",
+    "duplicateOf": "https://cdn.mediatheque.epmoo.fr/link/3c9igq/axz1bxi1mtbe4w0.jpg",
+    "retryReason": "still_duplicate"
+  },
+  {
+    "href": "/en/artworks/limperatrice-eugenie-78691",
+    "title": "L'Impératrice Eugénie",
+    "artist": "Anonyme",
+    "reason": "duplicate_image",
+    "duplicateOf": "https://cdn.mediatheque.epmoo.fr/link/3c9igq/axz1bxi1mtbe4w0.jpg",
+    "retryReason": "still_duplicate"
+  },
+  {
+    "href": "/en/artworks/lempereur-napoleon-iii-78692",
+    "title": "L'Empereur Napoléon III",
+    "artist": "Anonyme",
+    "reason": "duplicate_image",
+    "duplicateOf": "https://cdn.mediatheque.epmoo.fr/link/3c9igq/axz1bxi1mtbe4w0.jpg",
+    "retryReason": "still_duplicate"
+  },
+  {
+    "href": "/en/artworks/le-transport-la-correze-80121",
+    "title": "Le Transport \"la Corrèze\"",
+    "artist": "Frédéric\n            Montenard",
+    "reason": "scrape_failed",
+    "retryReason": "still_duplicate"
+  },
+  {
+    "href": "/en/artworks/la-veille-dune-execution-capitale-souvenir-de-rome-78246",
+    "title": "La Veille d'une exécution capitale, souvenir de Rome",
+    "artist": "Paul Emile\n            Sautai",
+    "reason": "duplicate_image",
+    "duplicateOf": "https://cdn.mediatheque.epmoo.fr/link/3c9igq/ttd1aqr5v7o3e74.jpg",
+    "retryReason": "still_duplicate"
+  },
+  {
+    "href": "/en/artworks/tranche-de-saumon-147331",
+    "title": "Tranche de saumon",
+    "artist": "Jean-Siméon\n            Chardin",
+    "reason": "scrape_failed",
+    "retryReason": "still_duplicate"
+  },
+  {
+    "href": "/en/artworks/femme-au-balcon-147361",
+    "title": "Femme au balcon",
+    "artist": "Pablo\n            Picasso",
+    "reason": "scrape_failed",
+    "retryReason": "still_duplicate"
+  },
+  {
+    "href": "/en/artworks/henri-iii-et-le-duc-de-guise-69749",
+    "title": "Henri III et le duc de Guise",
+    "artist": "Pierre Charles\n            Comte",
+    "reason": "scrape_failed",
+    "retryReason": "still_duplicate"
+  },
+  {
+    "href": "/en/artworks/portrait-de-la-mere-de-lartiste-20685",
+    "title": "Portrait de la mère de l'artiste",
+    "artist": "Henry\n            Lerolle",
+    "reason": "duplicate_image",
+    "duplicateOf": "https://cdn.mediatheque.epmoo.fr/link/3c9igq/awg1assq7qplaps.jpg",
+    "retryReason": "still_duplicate"
+  }
+]

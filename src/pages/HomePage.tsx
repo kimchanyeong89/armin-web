@@ -465,7 +465,7 @@ export default function HomePage({ exhibitions }: HomePageProps) {
               fontWeight: 700,
             }}
           >
-            line
+            테스트
           </button>
         </div>
       </div>

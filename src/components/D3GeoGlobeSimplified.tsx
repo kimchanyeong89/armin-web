@@ -57,6 +57,8 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
   const collapseFinalizedRef = useRef<boolean>(false);
   const lastPinsKeyRef = useRef<string>('');
   const expandedLayoutCacheRef = useRef<Map<string, any>>(new Map());
+  // Store merged cluster items for expansion (when clicking merged cluster at high zoom)
+  const mergedItemsForExpansionRef = useRef<Map<string, any[]>>(new Map());
   const onSelectExhibitionRef = useRef<typeof onSelectExhibition | undefined>(onSelectExhibition);
   useEffect(() => { onSelectExhibitionRef.current = onSelectExhibition; }, [onSelectExhibition]);
 
@@ -392,6 +394,11 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
 
   // Extract country name from exhibition location
   const extractCountry = (d: any): string => {
+    // First check direct country field
+    if (d.country && typeof d.country === 'string') {
+      return d.country;
+    }
+    
     const s = d.location;
     if (typeof s !== 'string') return '';
     const raw = s.toLowerCase();
@@ -460,15 +467,19 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
     const list = (exhibitions && exhibitions.length ? exhibitions : (exhibitionsData as Exhibition[]));
     const map: Record<string, Exhibition[]> = {};
 
-    // Initial grouping
+    // Initial grouping - 반드시 국가별로 먼저 분리
     for (const d of list) {
+      const country = (d as any).country || extractCountry(d) || 'unknown';
       const cityKey = normalizeCity(d);
       let key: string;
-      if (cityKey) key = `city:${cityKey}`;
-      else {
+      if (cityKey) {
+        // 국가 + 도시로 클러스터 키 생성 (다른 나라 절대 합쳐지지 않음)
+        key = `${country}::city:${cityKey}`;
+      } else {
         const gridLon = roundToGrid(d.longitude);
         const gridLat = roundToGrid(d.latitude);
-        key = `grid:${gridLon},${gridLat}`;
+        // 국가 + 그리드로 클러스터 키 생성
+        key = `${country}::grid:${gridLon},${gridLat}`;
       }
       (map[key] ||= []).push(d);
     }
@@ -606,6 +617,7 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
       g.selectAll('g.pin').remove();
       expandedClustersRef.current.clear();
       expandedLayoutCacheRef.current.clear();
+      mergedItemsForExpansionRef.current.clear();
       collapseAnimKeyRef.current = null;
       animateExpandKeyRef.current = null;
     }
@@ -666,6 +678,8 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
         if (usedIndices.has(i)) continue;
 
         const c1 = clusterCenters[i];
+        // 클러스터 키에서 국가 추출 (예: "United Kingdom::city:london")
+        const c1Country = c1.cluster.key.split('::')[0];
         const mergedItems: Exhibition[] = [...c1.cluster.items];
         const mergedKeys: string[] = [c1.cluster.key];
         let totalPx = c1.px;
@@ -677,13 +691,18 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
         usedIndices.add(i);
 
         // Always check for overlapping clusters to merge (regardless of zoom level)
+        // 단, 같은 나라끼리만 머지! 다른 나라는 절대 합치지 않음
         for (let j = i + 1; j < clusterCenters.length; j++) {
           if (usedIndices.has(j)) continue;
 
           const c2 = clusterCenters[j];
+          // 국가가 다르면 머지하지 않음
+          const c2Country = c2.cluster.key.split('::')[0];
+          if (c1Country !== c2Country) continue;
+          
           const dist = Math.hypot(c1.px - c2.px, c1.py - c2.py);
 
-          // Merge if close enough on screen
+          // Merge if close enough on screen AND same country
           if (dist < MERGE_THRESHOLD_PX) {
             mergedItems.push(...c2.cluster.items);
             mergedKeys.push(c2.cluster.key);
@@ -716,21 +735,42 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
 
         // Check if this cluster (or any of its merged clusters) is expanded
         const isExpanded = mc.keys.some(k => expandedClustersRef.current.has(k)) && items.length > 1;
+        console.log('[renderPins] cluster key:', key, 'isExpanded:', isExpanded, 'expandedClusters:', [...expandedClustersRef.current], 'mc.keys:', mc.keys, 'items.length:', items.length);
 
         if (isExpanded) {
           // Find which key is expanded
           const expandedKey = mc.keys.find(k => expandedClustersRef.current.has(k)) || key;
-          const originalCluster = clustersListRef.current?.find(c => c.key === expandedKey);
-          if (!originalCluster) continue;
+          
+          // Check if we have pre-stored merged items for this expansion
+          const mergedItems = mergedItemsForExpansionRef.current.get(expandedKey);
+          
+          // For merged clusters with pre-stored items, use those
+          // For single-city clusters, find the original cluster from clustersListRef
+          // For dynamically merged clusters (mc._level > 0), use mc
+          let clusterData: any;
+          if (mergedItems && mergedItems.length > 0) {
+            // Use pre-stored merged items
+            clusterData = {
+              centerLon: mc.centerLon,
+              centerLat: mc.centerLat,
+              sortedByName: [...mergedItems].sort((a: any, b: any) =>
+                String(a.name || a.title).localeCompare(String(b.name || b.title)))
+            };
+          } else if (mc._level > 0) {
+            clusterData = mc;
+          } else {
+            clusterData = clustersListRef.current?.find(c => c.key === expandedKey);
+          }
+          if (!clusterData) continue;
 
           // --- STABLE PIN LAYOUT LOGIC ---
           let layout = expandedLayoutCacheRef.current.get(expandedKey);
 
           if (!layout) {
-            const center = proj([originalCluster.centerLon, originalCluster.centerLat]) as [number, number] | null;
+            const center = proj([clusterData.centerLon, clusterData.centerLat]) as [number, number] | null;
             if (!center) continue;
 
-            const sorted = originalCluster.sortedByName as any[];
+            const sorted = clusterData.sortedByName as any[];
             const count = Math.min(sorted.length, MAX_EXPANDED_ITEMS);
 
             const MIN_SPACING = 26;
@@ -754,8 +794,8 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
 
             layout = {
               baseScale: scaleRef.current,
-              centerLon: originalCluster.centerLon,
-              centerLat: originalCluster.centerLat,
+              centerLon: clusterData.centerLon,
+              centerLat: clusterData.centerLat,
               items: layoutItems
             };
             expandedLayoutCacheRef.current.set(expandedKey, layout);
@@ -801,13 +841,9 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
           let displayName = '';
           
           // Determine if this is a multi-city merged cluster
-          // Check if items span multiple distinct cities by checking their normalized city names
-          const uniqueCities = new Set<string>();
-          for (const item of items) {
-            const cityKey = normalizeCity(item);
-            if (cityKey) uniqueCities.add(cityKey);
-          }
-          const isMultiCity = mc.keys.length > 1 || uniqueCities.size > 1;
+          // Use _level to check if clusters were dynamically merged at current zoom
+          // mc._level > 0 means multiple city clusters were merged due to screen proximity
+          const isMultiCity = mc._level > 0;
           
           if (isMultiCity) {
             // Try to get country name from the first item
@@ -819,16 +855,24 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
               }
             }
             // Fallback to first city name if no country found
-            if (!displayName && key.startsWith('city:')) {
-              let rawCity = key.slice(5);
+            // Handle new key format: "Country::city:cityname" or old format "city:cityname"
+            if (!displayName) {
+              const cityMatch = key.match(/::city:([^:]+)$/) || key.match(/^city:([^:]+)$/);
+              if (cityMatch) {
+                let rawCity = cityMatch[1];
+                rawCity = rawCity.replace(/:north|:south|:west|:east$/, '');
+                displayName = rawCity.charAt(0).toUpperCase() + rawCity.slice(1);
+              }
+            }
+          } else {
+            // Single city cluster - show city name
+            // Handle new key format: "Country::city:cityname" or old format "city:cityname"
+            const cityMatch = key.match(/::city:([^:]+)$/) || key.match(/^city:([^:]+)$/);
+            if (cityMatch) {
+              let rawCity = cityMatch[1];
               rawCity = rawCity.replace(/:north|:south|:west|:east$/, '');
               displayName = rawCity.charAt(0).toUpperCase() + rawCity.slice(1);
             }
-          } else if (key.startsWith('city:')) {
-            // Single city cluster - show city name
-            let rawCity = key.slice(5);
-            rawCity = rawCity.replace(/:north|:south|:west|:east$/, '');
-            displayName = rawCity.charAt(0).toUpperCase() + rawCity.slice(1);
           }
           // Skip clusters with invalid positions
           if (!Number.isFinite(mc.px) || !Number.isFinite(mc.py)) continue;
@@ -946,7 +990,8 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
     }
     
     // Animate when clusters change (split or merge)
-    if (clustersChanged && existingClusters.size() > 0) {
+    // BUT skip animation if we have expanded clusters (user clicked to see museums)
+    if (clustersChanged && existingClusters.size() > 0 && expandedClustersRef.current.size === 0 && !animateExpandKeyRef.current) {
       // Mark transition as in progress
       clusterTransitionInProgressRef.current = true;
       
@@ -993,47 +1038,52 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
         }
       });
       
-      // Animate shrinking of old clusters - move toward THEIR specific merge center (not global)
+      // Animate shrinking of old clusters with a SINGLE shared animation loop
+      const shrinkStartTime = performance.now();
+      const shrinkDuration = 250;
+      let shrinkAnimationId: number | null = null;
+      void shrinkAnimationId; // Mark as intentionally unused (stored for potential cancellation)
+      
+      // Pre-calculate start positions for all clusters
       existingClusters.each(function(d: any) {
-        const el = d3.select(this);
-        const duration = 250;
-        const startTime = performance.now();
-        
-        // Get starting position
         const startP = proj([d.longitude, d.latitude]) as [number, number] | null;
-        const startX = startP ? startP[0] + (d._shrinkOffsetX ?? 0) : 0;
-        const startY = startP ? startP[1] + (d._shrinkOffsetY ?? 0) : 0;
+        d._animStartX = startP ? startP[0] + (d._shrinkOffsetX ?? 0) : 0;
+        d._animStartY = startP ? startP[1] + (d._shrinkOffsetY ?? 0) : 0;
+        d._animTargetX = d._mergeCenterX ?? d._animStartX;
+        d._animTargetY = d._mergeCenterY ?? d._animStartY;
+      });
+      
+      const animateShrinkAll = () => {
+        const elapsed = performance.now() - shrinkStartTime;
+        const t = Math.min(1, elapsed / shrinkDuration);
         
-        // Target: this cluster's specific merge center, or stay in place if not merging
-        const targetX = d._mergeCenterX ?? startX;
-        const targetY = d._mergeCenterY ?? startY;
+        const eased = t < 0.5 
+          ? 2 * t * t
+          : 1 - Math.pow(-2 * t + 2, 2) / 2;
         
-        const animate = () => {
-          const elapsed = performance.now() - startTime;
-          const t = Math.min(1, elapsed / duration);
-          
-          // Custom easing: smooth acceleration toward center
-          const eased = t < 0.5 
-            ? 2 * t * t  // Accelerate
-            : 1 - Math.pow(-2 * t + 2, 2) / 2; // Decelerate
-          
-          // Move toward THIS cluster's merge center while shrinking
-          const currentX = startX + (targetX - startX) * eased;
-          const currentY = startY + (targetY - startY) * eased;
-          const currentScale = 1 - eased * 0.7; // Shrink to 0.3
+        existingClusters.each(function(d: any) {
+          const el = d3.select(this);
+          const currentX = d._animStartX + (d._animTargetX - d._animStartX) * eased;
+          const currentY = d._animStartY + (d._animTargetY - d._animStartY) * eased;
+          const currentScale = 1 - eased * 0.7;
           
           el.attr('transform', `translate(${currentX}, ${currentY}) scale(${currentScale})`);
           d.px = currentX;
           d.py = currentY;
-          
-          if (t < 1) {
-            requestAnimationFrame(animate);
-          } else {
-            el.remove();
-          }
-        };
-        requestAnimationFrame(animate);
-      });
+        });
+        
+        if (t < 1) {
+          shrinkAnimationId = requestAnimationFrame(animateShrinkAll);
+        } else {
+          // Animation complete - remove all at once
+          shrinkAnimationId = null;
+          existingClusters.remove();
+        }
+      };
+      
+      if (existingClusters.size() > 0) {
+        shrinkAnimationId = requestAnimationFrame(animateShrinkAll);
+      }
       
       // Create and animate new clusters after a delay
       setTimeout(() => {
@@ -1140,67 +1190,214 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
           el.append('title').text(`${d.cityName || 'Cluster'}: ${d.count}개의 전시관`);
         });
         
-        // Animate with water drop effect: start from parent center, move to final position
-        newEnter.each(function(d: any) {
-          const el = d3.select(this);
-          const duration = 300; // Fast but smooth
-          const startTime = performance.now();
+        // Add hover handlers immediately after creation (don't wait for animation)
+        newEnter
+          .on('mouseenter', function (_event: any, d: any) {
+            if (frozenClusterKeyRef.current === d.key) return;
+            const el = d3.select(this);
+            const bg = el.select('.cluster-bg');
+            const count = el.select('.cluster-count');
+            const city = el.select('.cluster-city');
+            bg.interrupt('hover'); count.interrupt('hover'); city.interrupt('hover');
+            bg.transition('hover').duration(200).ease(d3.easeCubicOut)
+              .attr('x', -d._expandedW / 2).attr('y', -d._expandedH / 2)
+              .attr('width', d._expandedW).attr('height', d._expandedH);
+            count.transition('hover').duration(150).ease(d3.easeCubicOut)
+              .attr('dy', d.cityName ? '-0.1em' : '0.35em');
+            if (d.cityName) {
+              city.transition('hover').delay(50).duration(150).ease(d3.easeCubicOut).attr('opacity', 0.9);
+            }
+          })
+          .on('mouseleave', function (_event: any, d: any) {
+            if (frozenClusterKeyRef.current === d.key) return;
+            const el = d3.select(this);
+            const bg = el.select('.cluster-bg');
+            const count = el.select('.cluster-count');
+            const city = el.select('.cluster-city');
+            bg.interrupt('hover'); count.interrupt('hover'); city.interrupt('hover');
+            bg.transition('hover').duration(200).ease(d3.easeCubicOut)
+              .attr('x', -d._collapsedW / 2).attr('y', -d._collapsedH / 2)
+              .attr('width', d._collapsedW).attr('height', d._collapsedH);
+            count.transition('hover').duration(150).ease(d3.easeCubicOut).attr('dy', '0.35em');
+            city.transition('hover').duration(100).attr('opacity', 0);
+          })
+          .on('mouseover', function (this: SVGGElement) {
+            d3.select(this).select('.cluster-bg').transition().duration(120).attr('stroke-width', 2);
+          })
+          .on('mouseout', function (this: SVGGElement) {
+            d3.select(this).select('.cluster-bg').transition().duration(120).attr('stroke-width', 1.5);
+          })
+          .on('click', (_evt: any, d: any) => {
+            console.log('[newEnter click] d.key:', d.key, '_allKeys:', d._allKeys, '_isMerged:', d._isMerged, 'items:', d._items?.length);
+            if (d._cluster) {
+              const k = d.key as string;
+              console.log('[newEnter click] cluster key:', k);
+              // Use _isMerged flag instead of _allKeys.length for more accurate detection
+              const isMergedCluster = d._isMerged === true;
+              console.log('[newEnter click] isMergedCluster:', isMergedCluster);
+              if (d._items && d._items.length === 1 && !isMergedCluster) {
+                try { onSelectExhibitionRef.current && onSelectExhibitionRef.current(d._items[0] as Exhibition); } catch { }
+                return;
+              }
+              try {
+                const currentScale = scaleRef.current;
+                const width = window.innerWidth;
+                const height = window.innerHeight;
+                const targetRot = { x: -Number(d.longitude), y: Number(d.latitude) };
+                let countryFeature: any | null = null;
+                const list = countriesRef.current || [];
+                for (let i = 0; i < list.length; i++) {
+                  const f: any = list[i];
+                  const c = d3.geoCentroid(f as any);
+                  if (c && d3.geoContains(f, [Number(d.longitude), Number(d.latitude)])) { countryFeature = f; break; }
+                }
+                const fitScale = countryFeature ? computeFitScale(countryFeature, targetRot, width, height) : Math.max(currentScale, 2.0);
+                const targetScale = Math.min(15, Math.max(fitScale * 2, 8));
+                const duration = currentScale > 1 ? 1200 : 2500;
+                frozenClusterKeyRef.current = k;
+                if (isMergedCluster) {
+                  // Don't freeze merged clusters - allow them to split during zoom
+                  frozenClusterKeyRef.current = null;
+                  
+                  // If already zoomed in enough (scale >= 6), clusters won't split further
+                  // In this case, expand the merged cluster showing ALL items
+                  if (currentScale >= 6) {
+                    console.log('[newEnter click] merged cluster at high zoom, expanding ALL items:', d._items?.length);
+                    
+                    // Use the first key as the expansion key
+                    const expandKey = k;
+                    const allItems = d._items || [];
+                    
+                    // Store merged items for use in renderPins (layout will be created there with correct projection)
+                    if (allItems.length > 0) {
+                      mergedItemsForExpansionRef.current.set(expandKey, allItems);
+                    }
+                    
+                    // Clear any stale layout cache for this key
+                    expandedLayoutCacheRef.current.delete(expandKey);
+                    
+                    // Freeze the current cluster to prevent flashing during transition
+                    frozenClusterKeyRef.current = expandKey;
+                    
+                    // Expand using the primary key (don't clear first to avoid flash)
+                    expandedClustersRef.current.clear();
+                    expandedClustersRef.current.add(expandKey);
+                    animateExpandKeyRef.current = expandKey;
+                    // Don't reset lastPinsKeyRef to avoid full re-render flash
+                    
+                    // Zoom enough to split the merged cluster (so user sees both clusters)
+                    const splitZoomScale = Math.min(15, Math.max(currentScale * 1.8, 10));
+                    animateTo(targetRot, splitZoomScale, duration * 0.8, () => {
+                      frozenClusterKeyRef.current = null;
+                      renderPins(false);
+                    });
+                    return;
+                  }
+                  
+                  // Just zoom to split the merged cluster - user clicks individual cluster to expand
+                  animateTo(targetRot, targetScale, duration, () => { frozenClusterKeyRef.current = null; });
+                  return;
+                }
+                const willExpand = !expandedClustersRef.current.has(k);
+                console.log('[newEnter click] willExpand:', willExpand, 'alreadyZoomedIn:', currentScale >= 4);
+                const alreadyZoomedIn = currentScale >= 4;
+                const hasExpandedCluster = expandedClustersRef.current.size > 0;
+                if (willExpand && alreadyZoomedIn && hasExpandedCluster) {
+                  frozenClusterKeyRef.current = null;
+                  expandedClustersRef.current.clear();
+                  expandedClustersRef.current.add(k);
+                  expandedLayoutCacheRef.current.delete(k);
+                  animateExpandKeyRef.current = k ? String(k) : null;
+                  lastPinsKeyRef.current = '';
+                  console.log('[newEnter click] calling renderPins (alreadyZoomedIn path)');
+                  renderPins(false);
+                  return;
+                } else if (willExpand) {
+                  const expandDelay = Math.floor(duration * 0.7);
+                  setTimeout(() => {
+                    expandedClustersRef.current.clear();
+                    expandedClustersRef.current.add(k);
+                    expandedLayoutCacheRef.current.delete(k);
+                    animateExpandKeyRef.current = k ? String(k) : null;
+                    lastPinsKeyRef.current = '';
+                    console.log('[newEnter click] calling renderPins (delayed expand path)');
+                    renderPins(false);
+                  }, expandDelay);
+                  animateTo(targetRot, targetScale, duration, () => { frozenClusterKeyRef.current = null; return true; });
+                } else {
+                  animateTo(targetRot, targetScale, duration, () => { frozenClusterKeyRef.current = null; });
+                  collapseAnimKeyRef.current = k ? String(k) : null;
+                  collapseFinalizedRef.current = false;
+                  lastPinsKeyRef.current = '';
+                  renderPins();
+                }
+              } catch { }
+            } else {
+              try { onSelectExhibitionRef.current && onSelectExhibitionRef.current(d as Exhibition); } catch { }
+            }
+          });
+        
+        // Animate all new clusters with a SINGLE shared animation loop
+        // This prevents multiple renderPins calls and infinite loops
+        const animationStartTime = performance.now();
+        const animationDuration = 300;
+        let animationFrameId: number | null = null;
+        void animationFrameId; // Mark as intentionally unused (stored for potential cancellation)
+        
+        const animateAllNewClusters = () => {
+          const elapsed = performance.now() - animationStartTime;
+          const t = Math.min(1, elapsed / animationDuration);
           
-          // Start position (parent center)
-          const startX = d._parentCenterX ?? d._geoPx ?? 0;
-          const startY = d._parentCenterY ?? d._geoPy ?? 0;
-          const startScale = 0.3;
+          // Custom easing: slow start, smooth middle, gentle end
+          const eased = t < 0.5 
+            ? (1 - Math.cos(t * Math.PI)) / 2
+            : (1 + Math.sin((t - 0.5) * Math.PI)) / 2;
           
-          const animate = () => {
-            const elapsed = performance.now() - startTime;
-            const t = Math.min(1, elapsed / duration);
+          const currentProj = getProjection();
+          
+          newEnter.each(function(d: any) {
+            const el = d3.select(this);
+            const startX = d._parentCenterX ?? d._geoPx ?? 0;
+            const startY = d._parentCenterY ?? d._geoPy ?? 0;
+            const startScale = 0.3;
             
-            // Custom easing: slow start, smooth middle, gentle end (like water drop)
-            // Using sine easing for organic feel
-            const eased = t < 0.5 
-              ? (1 - Math.cos(t * Math.PI)) / 2  // Slow acceleration
-              : (1 + Math.sin((t - 0.5) * Math.PI)) / 2; // Smooth deceleration
-            
-            // Recalculate target position based on current projection
-            const currentProj = getProjection();
             const p = currentProj([d.longitude ?? d.centerLon, d.latitude ?? d.centerLat]) as [number, number] | null;
             
             if (p && Number.isFinite(p[0]) && Number.isFinite(p[1])) {
               const targetX = p[0];
               const targetY = p[1];
-              
-              // Interpolate position from parent center to final position
               const currentX = startX + (targetX - startX) * eased;
               const currentY = startY + (targetY - startY) * eased;
-              
-              // Scale: start small, end at 1
               const currentScale = startScale + (1 - startScale) * eased;
               
               el.attr('transform', `translate(${currentX}, ${currentY}) scale(${currentScale})`);
               d.px = currentX;
               d.py = currentY;
             }
-            
-            if (t < 1) {
-              requestAnimationFrame(animate);
-            } else {
-              // Animation complete
-              clusterTransitionInProgressRef.current = false;
-              prevScaleForMergeRef.current = scaleRef.current;
-              lastPinsKeyRef.current = '';
-              // Force a full re-render to attach all event handlers
-              renderPins(false);
-            }
-          };
-          requestAnimationFrame(animate);
-        });
+          });
+          
+          if (t < 1) {
+            animationFrameId = requestAnimationFrame(animateAllNewClusters);
+          } else {
+            // Animation complete - only call once for all elements
+            animationFrameId = null;
+            clusterTransitionInProgressRef.current = false;
+            prevScaleForMergeRef.current = scaleRef.current;
+            // Don't call renderPins here - just update the key to allow future re-renders
+            lastPinsKeyRef.current = '';
+            // Handlers were already attached immediately after newEnter creation
+          }
+        };
+        
+        if (newEnter.size() > 0) {
+          animationFrameId = requestAnimationFrame(animateAllNewClusters);
+        }
         
         // If no new clusters, just end the transition
         if (clusterNodes.length === 0) {
           clusterTransitionInProgressRef.current = false;
           prevScaleForMergeRef.current = scaleRef.current;
           lastPinsKeyRef.current = '';
-          renderPins(false);
         }
       }, 100); // Start expanding after old clusters begin shrinking
       
@@ -1548,7 +1745,9 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
           const k = d.key as string;
 
           // Check if this is a merged cluster (super-cluster containing multiple clusters)
-          const isMergedCluster = d._allKeys && d._allKeys.length > 1;
+          // Use _isMerged flag for accurate detection
+          const isMergedCluster = d._isMerged === true;
+          console.log('[enter click] key:', k, '_isMerged:', d._isMerged, '_allKeys:', d._allKeys?.length);
 
           // If single item cluster, directly select it
           if (d._items && d._items.length === 1 && !isMergedCluster) {
@@ -1591,11 +1790,44 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
             if (isMergedCluster) {
               // Don't freeze merged clusters - allow them to split during zoom
               frozenClusterKeyRef.current = null;
-              // Zoom directly to the final level where individual clusters can expand
-              // Use the same targetScale as individual clusters (8-15 range)
+              
+              // If already zoomed in enough (scale >= 6), clusters won't split further
+              // In this case, expand the merged cluster showing ALL items
+              if (scaleRef.current >= 6) {
+                console.log('[enter click] merged cluster at high zoom, expanding ALL items:', d._items?.length);
+                
+                // Use the first key as the expansion key
+                const expandKey = k;
+                const allItems = d._items || [];
+                
+                // Store merged items for use in renderPins (layout will be created there with correct projection)
+                if (allItems.length > 0) {
+                  mergedItemsForExpansionRef.current.set(expandKey, allItems);
+                }
+                
+                // Clear any stale layout cache for this key
+                expandedLayoutCacheRef.current.delete(expandKey);
+                
+                // Freeze the current cluster to prevent flashing during transition
+                frozenClusterKeyRef.current = expandKey;
+                
+                // Expand using the primary key (don't clear first to avoid flash)
+                expandedClustersRef.current.clear();
+                expandedClustersRef.current.add(expandKey);
+                animateExpandKeyRef.current = expandKey;
+                // Don't reset lastPinsKeyRef to avoid full re-render flash
+                
+                // Zoom enough to split the merged cluster (so user sees both clusters)
+                const splitZoomScale = Math.min(15, Math.max(scaleRef.current * 1.8, 10));
+                animateTo(targetRot, splitZoomScale, duration * 0.8, () => {
+                  frozenClusterKeyRef.current = null;
+                  renderPins(false);
+                });
+                return;
+              }
+              
+              // Just zoom to split the merged cluster - user clicks individual cluster to expand
               animateTo(targetRot, targetScale, duration, () => {
-                // After zoom completes, find and expand the cluster at this location
-                // The cluster system will have resolved to the lowest level by now
                 frozenClusterKeyRef.current = null;
               });
               return;
@@ -2083,6 +2315,40 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
       if (!countryFeature) return;
       const countryName = (countryFeature.properties && (countryFeature.properties.name || countryFeature.properties.ADMIN || countryFeature.properties.admin)) || 'Unknown';
 
+      // Check if this country has any clusters - if so, ignore background click
+      // User should click on the cluster directly
+      const clustersList = clustersListRef.current || [];
+      
+      // Helper to normalize country name for matching
+      // Maps UK constituent countries to 'united kingdom'
+      const normalizeCountryForMatch = (name: string): string => {
+        const n = name.toLowerCase().trim();
+        const ukNames = ['england', 'scotland', 'wales', 'northern ireland', 'uk', 'great britain', 'gb'];
+        if (ukNames.includes(n) || n.includes('united kingdom')) return 'united kingdom';
+        return n;
+      };
+      
+      const normalizedClickedCountry = normalizeCountryForMatch(countryName);
+      
+      const hasClusterInCountry = clustersList.some((c: any) => {
+        if (!c.items || c.items.length === 0) return false;
+        // Check if any item in this cluster belongs to this country
+        return c.items.some((item: any) => {
+          const itemCountry = item.country || extractCountry(item);
+          if (!itemCountry) return false;
+          const normalizedItemCountry = normalizeCountryForMatch(itemCountry);
+          // Exact match after normalization, or partial match for other countries
+          return normalizedClickedCountry === normalizedItemCountry ||
+                 normalizedClickedCountry.includes(normalizedItemCountry) ||
+                 normalizedItemCountry.includes(normalizedClickedCountry);
+        });
+      });
+      
+      if (hasClusterInCountry) {
+        // Don't respond to background click - user should click on cluster
+        return;
+      }
+
       // START ANIMATION IMMEDIATELY (no flicker)
       const centroid = d3.geoCentroid(countryFeature as any) as [number, number];
       const targetRot = { x: -centroid[0], y: centroid[1] };
@@ -2198,16 +2464,19 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
           translateRef.current = [width / 2, height / 2];
         }
 
-        // Render immediately with refs
+        // Render immediately with refs (fast update - no animation)
         renderGlobe();
-        renderPins();
+        renderPins(true);  // true = fast update, positions only
 
-        // Debounced state sync (only after zooming stops)
+        // Debounced state sync and full re-render (only after zooming stops)
         if (zoomSyncTimeout) window.clearTimeout(zoomSyncTimeout);
         zoomSyncTimeout = window.setTimeout(() => {
           setScale(scaleRef.current);
           setProjTranslate(translateRef.current);
-        }, 150);
+          // Force full re-render to update clusters after zoom stabilizes
+          lastPinsKeyRef.current = '';
+          renderPins(false);
+        }, 200);
       }
     };
 

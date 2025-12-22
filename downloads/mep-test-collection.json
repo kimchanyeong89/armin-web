@@ -1,0 +1,196 @@
+{
+  "museum": "Maison Européenne de la Photographie",
+  "museumId": "mep",
+  "collectionName": "Photography Collection",
+  "scrapedAt": "2025-12-22T10:59:49.360Z",
+  "totalObjects": 17,
+  "objects": [
+    {
+      "id": "mep-brassaï-1",
+      "title": "Brassaï",
+      "artist": "Brassaï",
+      "image": "https://www.mep-fr.org/wp-content/thumbnails/uploads/2021/09/2012-102-000-tt-width-883-height-593-bgcolor-ffffff-lazyload-1.jpg",
+      "type": "2D",
+      "video": null,
+      "source": "MEP",
+      "detailUrl": "https://www.mep-fr.org/les-collections/brassai/",
+      "caption": ""
+    },
+    {
+      "id": "mep-brassaï-2",
+      "title": "Untitled 2",
+      "artist": "Brassaï",
+      "image": "https://www.mep-fr.org/wp-content/thumbnails/uploads/2021/09/2012-108-000-tt-width-800-height-1187-bgcolor-ffffff-lazyload-1.jpg",
+      "type": "2D",
+      "video": null,
+      "source": "MEP",
+      "detailUrl": "https://www.mep-fr.org/les-collections/brassai/",
+      "caption": ""
+    },
+    {
+      "id": "mep-brassaï-3",
+      "title": "Untitled 3",
+      "artist": "Brassaï",
+      "image": "https://www.mep-fr.org/wp-content/thumbnails/uploads/2021/09/2012-111-000-tt-width-550-height-367-bgcolor-ffffff-lazyload-1.jpg",
+      "type": "2D",
+      "video": null,
+      "source": "MEP",
+      "detailUrl": "https://www.mep-fr.org/les-collections/brassai/",
+      "caption": ""
+    },
+    {
+      "id": "mep-brassaï-4",
+      "title": "Untitled 4",
+      "artist": "Brassaï",
+      "image": "https://www.mep-fr.org/wp-content/thumbnails/uploads/2021/09/2012-106-000-tt-width-550-height-385-bgcolor-ffffff-lazyload-1.jpg",
+      "type": "2D",
+      "video": null,
+      "source": "MEP",
+      "detailUrl": "https://www.mep-fr.org/les-collections/brassai/",
+      "caption": ""
+    },
+    {
+      "id": "mep-brassaï-5",
+      "title": "Untitled 5",
+      "artist": "Brassaï",
+      "image": "https://www.mep-fr.org/wp-content/thumbnails/uploads/2021/09/2012-102-000-tt-width-800-height-537-bgcolor-ffffff-lazyload-1.jpg",
+      "type": "2D",
+      "video": null,
+      "source": "MEP",
+      "detailUrl": "https://www.mep-fr.org/les-collections/brassai/",
+      "caption": ""
+    },
+    {
+      "id": "mep-brassaï-6",
+      "title": "Untitled 6",
+      "artist": "Brassaï",
+      "image": "https://www.mep-fr.org/wp-content/thumbnails/uploads/2021/09/2012-104-000-tt-width-800-height-532-bgcolor-ffffff-lazyload-1.jpg",
+      "type": "2D",
+      "video": null,
+      "source": "MEP",
+      "detailUrl": "https://www.mep-fr.org/les-collections/brassai/",
+      "caption": ""
+    },
+    {
+      "id": "mep-brassaï-7",
+      "title": "Untitled 7",
+      "artist": "Brassaï",
+      "image": "https://www.mep-fr.org/wp-content/thumbnails/uploads/2021/09/2012-103-000-tt-width-550-height-813-bgcolor-ffffff-lazyload-1.jpg",
+      "type": "2D",
+      "video": null,
+      "source": "MEP",
+      "detailUrl": "https://www.mep-fr.org/les-collections/brassai/",
+      "caption": ""
+    },
+    {
+      "id": "mep-coco-capitán-1",
+      "title": "Coco Capitán",
+      "artist": "Coco Capitán",
+      "image": "https://www.mep-fr.org/wp-content/thumbnails/uploads/2021/10/principale_2019-083-tt-width-2000-height-1511-bgcolor-ffffff-lazyload-1.jpg",
+      "type": "2D",
+      "video": null,
+      "source": "MEP",
+      "detailUrl": "https://www.mep-fr.org/les-collections/coco-capitan/",
+      "caption": ""
+    },
+    {
+      "id": "mep-coco-capitán-2",
+      "title": "Untitled 2",
+      "artist": "Coco Capitán",
+      "image": "https://www.mep-fr.org/wp-content/thumbnails/uploads/2021/10/principale_2019-083-tt-width-800-height-604-bgcolor-ffffff-lazyload-1.jpg",
+      "type": "2D",
+      "video": null,
+      "source": "MEP",
+      "detailUrl": "https://www.mep-fr.org/les-collections/coco-capitan/",
+      "caption": ""
+    },
+    {
+      "id": "mep-coco-capitán-3",
+      "title": "Untitled 3",
+      "artist": "Coco Capitán",
+      "image": "https://www.mep-fr.org/wp-content/thumbnails/uploads/2021/10/2019-089-tt-width-550-height-702-bgcolor-ffffff-lazyload-1.jpg",
+      "type": "2D",
+      "video": null,
+      "source": "MEP",
+      "detailUrl": "https://www.mep-fr.org/les-collections/coco-capitan/",
+      "caption": ""
+    },
+    {
+      "id": "mep-coco-capitán-4",
+      "title": "Untitled 4",
+      "artist": "Coco Capitán",
+      "image": "https://www.mep-fr.org/wp-content/thumbnails/uploads/2021/10/2019-087-tt-width-550-height-797-bgcolor-ffffff-lazyload-1.jpg",
+      "type": "2D",
+      "video": null,
+      "source": "MEP",
+      "detailUrl": "https://www.mep-fr.org/les-collections/coco-capitan/",
+      "caption": ""
+    },
+    {
+      "id": "mep-coco-capitán-5",
+      "title": "Untitled 5",
+      "artist": "Coco Capitán",
+      "image": "https://www.mep-fr.org/wp-content/thumbnails/uploads/2021/10/2019-086-tt-width-800-height-596-bgcolor-ffffff-lazyload-1.jpg",
+      "type": "2D",
+      "video": null,
+      "source": "MEP",
+      "detailUrl": "https://www.mep-fr.org/les-collections/coco-capitan/",
+      "caption": ""
+    },
+    {
+      "id": "mep-coco-capitán-6",
+      "title": "Untitled 6",
+      "artist": "Coco Capitán",
+      "image": "https://www.mep-fr.org/wp-content/thumbnails/uploads/2021/10/2019-084-tt-width-800-height-1059-bgcolor-ffffff-lazyload-1.jpg",
+      "type": "2D",
+      "video": null,
+      "source": "MEP",
+      "detailUrl": "https://www.mep-fr.org/les-collections/coco-capitan/",
+      "caption": ""
+    },
+    {
+      "id": "mep-coco-capitán-7",
+      "title": "Untitled 7",
+      "artist": "Coco Capitán",
+      "image": "https://www.mep-fr.org/wp-content/thumbnails/uploads/2021/10/2019-082-tt-width-550-height-416-bgcolor-ffffff-lazyload-1.jpg",
+      "type": "2D",
+      "video": null,
+      "source": "MEP",
+      "detailUrl": "https://www.mep-fr.org/les-collections/coco-capitan/",
+      "caption": ""
+    },
+    {
+      "id": "mep-coco-capitán-8",
+      "title": "Untitled 8",
+      "artist": "Coco Capitán",
+      "image": "https://www.mep-fr.org/wp-content/thumbnails/uploads/2021/10/2019-085-002-1-tt-width-550-height-401-bgcolor-ffffff-lazyload-1.jpg",
+      "type": "2D",
+      "video": null,
+      "source": "MEP",
+      "detailUrl": "https://www.mep-fr.org/les-collections/coco-capitan/",
+      "caption": ""
+    },
+    {
+      "id": "mep-coco-capitán-9",
+      "title": "Untitled 9",
+      "artist": "Coco Capitán",
+      "image": "https://www.mep-fr.org/wp-content/thumbnails/uploads/2021/10/2019-085-001-1-tt-width-800-height-583-bgcolor-ffffff-lazyload-1.jpg",
+      "type": "2D",
+      "video": null,
+      "source": "MEP",
+      "detailUrl": "https://www.mep-fr.org/les-collections/coco-capitan/",
+      "caption": ""
+    },
+    {
+      "id": "mep-coco-capitán-10",
+      "title": "Coco Capitán",
+      "artist": "Coco Capitán",
+      "image": "https://www.mep-fr.org/wp-content/thumbnails/uploads/2019/01/cc01-tt-width-400-height-521-bgcolor-ffffff-lazyload-1.jpg",
+      "type": "2D",
+      "video": null,
+      "source": "MEP",
+      "detailUrl": "https://www.mep-fr.org/les-collections/coco-capitan/",
+      "caption": ""
+    }
+  ]
+}

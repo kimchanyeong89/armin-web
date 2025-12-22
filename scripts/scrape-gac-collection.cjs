@@ -1,8 +1,18 @@
 /**
- * Courtauld Gallery & Serpentine Galleries 영구전시 구축
+ * Google Arts & Culture 컬렉션 스크래핑 표준 스크립트
  * 
- * ra-test 스크립트와 동일한 구조
- * - 1회 CAPTCHA로 두 갤러리 연달아 처리
+ * 사용법:
+ * 1. galleries 배열에 스크래핑할 갤러리 정보 추가
+ *    - id: JSON 파일명 (예: 'the-british-museum' → the-british-museum-collection.json)
+ *    - name: 갤러리 표시 이름
+ *    - slug: Google Arts 파트너 슬러그 (파트너 페이지 로고/설명 추출용)
+ *    - url: Google Arts 컬렉션 페이지 URL
+ * 2. node scripts/scrape-gac-collection.cjs 실행
+ * 3. CAPTCHA 통과 후 Enter
+ * 
+ * 출력:
+ * - public/data/{id}-collection.json (작품 데이터)
+ * - downloads/{id}-scrape-log.json (스크래핑 로그)
  */
 
 const { chromium } = require('playwright');
