@@ -1617,15 +1617,25 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
       })();
       return () => { };
     }
-    // Centre Pompidou & MAM Paris Collections: load from local scraped JSON
-    if (exhibition.id === 'pompidou-cinema' || exhibition.id === 'pompidou-painting' || exhibition.id === 'pompidou-drawing' || exhibition.id === 'pompidou-newmedia' || exhibition.id === 'pompidou-design' || exhibition.id === 'mam-perm-painting') {
+    // Centre Pompidou & MAM Paris & Louvre & Jacquemart-André & Marmottan & Picasso & Palais de Tokyo & Petit Palais Collections: load from local scraped JSON
+    if (exhibition.id === 'pompidou-cinema' || exhibition.id === 'pompidou-painting' || exhibition.id === 'pompidou-drawing' || exhibition.id === 'pompidou-newmedia' || exhibition.id === 'pompidou-design' || exhibition.id === 'mam-perm-painting' || exhibition.id === 'mam-perm-photography' || exhibition.id === 'louvre-painting' || exhibition.id === 'jacquemart-collection' || exhibition.id === 'marmottan-collection' || exhibition.id === 'picasso-drawings' || exhibition.id === 'picasso-paintings' || exhibition.id === 'picasso-sculptures' || exhibition.id === 'picasso-prints' || exhibition.id === 'palais-de-tokyo-collection' || exhibition.id === 'petit-palais-collection') {
       const jsonFiles: Record<string, string> = {
         'pompidou-cinema': '/data/pompidou-cinema-collection.json',
         'pompidou-painting': '/data/pompidou-painting-collection.json',
         'pompidou-drawing': '/data/pompidou-drawing-collection.json',
         'pompidou-newmedia': '/data/pompidou-newmedia-collection.json',
         'pompidou-design': '/data/pompidou-design-collection.json',
-        'mam-perm-painting': '/data/mam-painting-collection.json'
+        'mam-perm-painting': '/data/mam-painting-collection.json',
+        'mam-perm-photography': '/data/mam-photography-collection.json',
+        'louvre-painting': '/data/louvre-painting-collection.json',
+        'jacquemart-collection': '/data/jacquemart-andre-collection.json',
+        'marmottan-collection': '/data/marmottan-collection.json',
+        'picasso-drawings': '/data/picasso-drawings-collection.json',
+        'picasso-paintings': '/data/picasso-paintings-collection.json',
+        'picasso-sculptures': '/data/picasso-sculptures-collection.json',
+        'picasso-prints': '/data/picasso-prints-collection.json',
+        'palais-de-tokyo-collection': '/data/palais-de-tokyo-collection.json',
+        'petit-palais-collection': '/data/petit-palais-collection.json'
       };
       const jsonFile = jsonFiles[exhibition.id];
       (async () => {
@@ -1640,7 +1650,8 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
           };
           
           const allObjects = Array.isArray(data.artworks) ? data.artworks : (Array.isArray(data.objects) ? data.objects : []);
-          const is2D = exhibition.id === 'pompidou-painting' || exhibition.id === 'pompidou-drawing' || exhibition.id === 'pompidou-design' || exhibition.id === 'mam-perm-painting';
+          const is2D = exhibition.id === 'pompidou-painting' || exhibition.id === 'pompidou-drawing' || exhibition.id === 'pompidou-design' || exhibition.id === 'mam-perm-painting' || exhibition.id === 'mam-perm-photography' || exhibition.id === 'louvre-painting' || exhibition.id === 'jacquemart-collection' || exhibition.id === 'marmottan-collection' || exhibition.id === 'picasso-drawings' || exhibition.id === 'picasso-paintings' || exhibition.id === 'picasso-prints' || exhibition.id === 'palais-de-tokyo-collection' || exhibition.id === 'petit-palais-collection';
+          const is3D = exhibition.id === 'picasso-sculptures';
           
           const list: Artwork[] = allObjects.map((item: any, idx: number) => ({
               id: item.id || `${exhibition.id}-${idx}`,
@@ -1652,7 +1663,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
               dimension: item.dimensions,
               duration: item.duration,  // Video/film duration
               medium: item.medium,
-              type: is2D ? (item.type || '2D') : (item.type || 'video'),
+              type: is2D ? (item.type || '2D') : (is3D ? (item.type || '3D') : (item.type || 'video')),
               roomId: 'default',
               exhibitionName: exhibition.name,
               exhibitionTitle: exhibition.title,

@@ -1,0 +1,17 @@
+{
+  "scrapedAt": "2025-12-24T06:53:10.647Z",
+  "totalLinks": 244,
+  "success": 179,
+  "failed": 65,
+  "categoryStats": {
+    "masterpieces": 23,
+    "classical-world": 12,
+    "icons": 22,
+    "middle-ages": 9,
+    "renaissance": 16,
+    "17th-century": 25,
+    "18th-century": 18,
+    "19th-century": 72,
+    "paris-1900": 77
+  }
+}

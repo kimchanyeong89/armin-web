@@ -419,6 +419,46 @@ export default function ExhibitionDetails({
           datasetEmptyRef.current[exhibitionItemId] = !(items && items.some((it: any) => it && it.image));
           return put(img);
         }
+      } else if (exhibitionItemId === 'louvre-painting') {
+        // Louvre Painting Collection
+        const res = await fetch('/data/louvre-painting-collection.json', { cache: 'no-store' });
+        if (res.ok) {
+          const data = await res.json();
+          const items = Array.isArray(data.objects) ? data.objects : [];
+          const img = items.find((it: any) => it && it.image)?.image || null;
+          datasetEmptyRef.current[exhibitionItemId] = !(items && items.some((it: any) => it && it.image));
+          return put(img);
+        }
+      } else if (exhibitionItemId === 'jacquemart-collection') {
+        // Jacquemart-André Collection
+        const res = await fetch('/data/jacquemart-andre-collection.json', { cache: 'no-store' });
+        if (res.ok) {
+          const data = await res.json();
+          const items = Array.isArray(data.objects) ? data.objects : [];
+          const img = items.find((it: any) => it && it.image)?.image || null;
+          datasetEmptyRef.current[exhibitionItemId] = !(items && items.some((it: any) => it && it.image));
+          return put(img);
+        }
+      } else if (exhibitionItemId === 'mam-perm-photography') {
+        // MAM Paris Photography Collection
+        const res = await fetch('/data/mam-photography-collection.json', { cache: 'no-store' });
+        if (res.ok) {
+          const data = await res.json();
+          const items = Array.isArray(data.objects) ? data.objects : [];
+          const img = items.find((it: any) => it && it.image)?.image || null;
+          datasetEmptyRef.current[exhibitionItemId] = !(items && items.some((it: any) => it && it.image));
+          return put(img);
+        }
+      } else if (exhibitionItemId === 'marmottan-collection') {
+        // Musée Marmottan Monet Collection
+        const res = await fetch('/data/marmottan-collection.json', { cache: 'no-store' });
+        if (res.ok) {
+          const data = await res.json();
+          const items = Array.isArray(data.objects) ? data.objects : [];
+          const img = items.find((it: any) => it && it.image)?.image || null;
+          datasetEmptyRef.current[exhibitionItemId] = !(items && items.some((it: any) => it && it.image));
+          return put(img);
+        }
       }
       // Generic: try local cache populated by ExhibitionModal snapshots
       try {

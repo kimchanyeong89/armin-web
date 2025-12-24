@@ -1381,12 +1381,18 @@ export const exhibitions = [
   {
     id: "musee-du-louvre",
     name: "Musée du Louvre",
+    slug: "louvre",
     city: "Paris",
     country: "France",
     latitude: 48.8606,
     longitude: 2.3376,
     description: "세계 최대의 회화관. '모나리자'를 포함한 서양 고전 회화의 절대 성지.",
-    representativeImage: "",
+    representativeImage: "https://collections.louvre.fr/media/cache/large/0000000021/0000048442/0000040685_OG.JPG",
+    permanentExhibitions: [
+      { id: "louvre-painting", name: "Painting Collection", title: "Musée du Louvre Painting Collection", description: "Over 10,000 paintings from the world's largest art museum, featuring masterpieces from the Renaissance to the 19th century including the Mona Lisa, Winged Victory, and Venus de Milo.", startDate: "Permanent", endDate: "Permanent" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
     exhibitions: []
   },
   {
@@ -1468,7 +1474,12 @@ export const exhibitions = [
     latitude: 48.8660,
     longitude: 2.3140,
     description: "파리 시립 미술관. 중세부터 20세기까지의 방대한 유화 및 판화 컬렉션.",
-    representativeImage: "",
+    representativeImage: "https://www.petitpalais.paris.fr/sites/default/files/17536-12.jpg",
+    permanentExhibitions: [
+      { id: "petit-palais-collection", name: "Collection", title: "Petit Palais - Musée des Beaux-Arts de la Ville de Paris", description: "고대부터 아르누보까지, 쿠르베, 르누아르, 들라크루아 등 프랑스 미술의 정수를 담은 74점의 대표 소장품.", startDate: "Permanent", endDate: "Permanent" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
     exhibitions: []
   },
   {
@@ -1479,7 +1490,15 @@ export const exhibitions = [
     latitude: 48.8598,
     longitude: 2.3623,
     description: "피카소의 회화, 드로잉, 판화를 세계에서 가장 체계적으로 소장한 곳.",
-    representativeImage: "",
+    representativeImage: "https://cep.museepicassoparis.fr/sites/default/files/styles/image_liste_visionneuse_desktop/public/medias/image/import/navigart/4C23074.jpg",
+    permanentExhibitions: [
+      { id: "picasso-drawings", name: "Drawings Collection", title: "Musée Picasso Paris - Drawings Collection (Dessins)", description: "1,492 drawings from Pablo Picasso's extensive collection at Musée Picasso Paris.", startDate: "Permanent", endDate: "Permanent" },
+      { id: "picasso-paintings", name: "Paintings Collection", title: "Musée Picasso Paris - Paintings Collection (Peintures)", description: "306 paintings from Pablo Picasso's collection at Musée Picasso Paris.", startDate: "Permanent", endDate: "Permanent" },
+      { id: "picasso-sculptures", name: "Sculptures & Objects", title: "Musée Picasso Paris - Sculptures & Objects Collection", description: "340 sculptures and 3D objects from Pablo Picasso's collection at Musée Picasso Paris.", startDate: "Permanent", endDate: "Permanent" },
+      { id: "picasso-prints", name: "Prints Collection", title: "Musée Picasso Paris - Prints Collection (Estampes)", description: "1,349 prints (estampes) from Pablo Picasso's extensive collection at Musée Picasso Paris.", startDate: "Permanent", endDate: "Permanent" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
     exhibitions: []
   },
   {
@@ -1509,7 +1528,8 @@ export const exhibitions = [
     description: "듀피의 '전기의 요정' 등 거대 벽화와 20세기 주요 현대 회화 소장.",
     representativeImage: "",
     permanentExhibitions: [
-      { id: "mam-perm-painting", name: "Painting Collection", title: "MAM Paris Painting Collection", description: "Modern and contemporary paintings from the Musée d'Art Moderne de Paris collection.", startDate: "Permanent", endDate: "Permanent" }
+      { id: "mam-perm-painting", name: "Painting Collection", title: "MAM Paris Painting Collection", description: "Modern and contemporary paintings from the Musée d'Art Moderne de Paris collection.", startDate: "Permanent", endDate: "Permanent" },
+      { id: "mam-perm-photography", name: "Photography Collection", title: "MAM Paris Photography Collection", description: "Contemporary photography from the Musée d'Art Moderne de Paris collection.", startDate: "Permanent", endDate: "Permanent" }
     ],
     temporaryExhibitions: [],
     pastExhibitions: [],
@@ -1524,17 +1544,28 @@ export const exhibitions = [
     longitude: 2.2666,
     description: "모네의 '인상, 일출' 소장처. 인상주의 연구의 핵심적인 갤러리.",
     representativeImage: "",
+    permanentExhibitions: [
+      { id: "marmottan-collection", name: "Collection", title: "Musée Marmottan Monet Collection", description: "Home to Monet's 'Impression, Sunrise' and masterpieces by Berthe Morisot and other Impressionists.", startDate: "Permanent", endDate: "Permanent" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
     exhibitions: []
   },
   {
     id: "musee-jacquemart-andre",
     name: "Musée Jacquemart-André",
+    slug: "jacquemart-andre",
     city: "Paris",
     country: "France",
     latitude: 48.8753,
     longitude: 2.3109,
     description: "개인 저택형 갤러리. 이탈리아 르네상스 및 프랑스 고전 회화의 정수.",
     representativeImage: "",
+    permanentExhibitions: [
+      { id: "jacquemart-collection", name: "Must-See Works", title: "Musée Jacquemart-André Must-See Works", description: "Masterpieces by Botticelli, Rembrandt, Fragonard, and other masters in an elegant 19th-century mansion.", startDate: "Permanent", endDate: "Permanent" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
     exhibitions: []
   },
   {
@@ -1576,7 +1607,12 @@ export const exhibitions = [
     latitude: 48.8640,
     longitude: 2.2970,
     description: "파리의 전위적인 현대 미술 공간. 실험적인 기획전과 설치 예술의 중심지.",
-    representativeImage: "",
+    representativeImage: "https://lh3.googleusercontent.com/ci/AL18g_STKOuuuHEvwz7M7LKRr8gGC21mtAxcu8MgqgXfT_nD862Rl0mRjDn_wSWrfbB2xMPWVhrk6g=w1200",
+    permanentExhibitions: [
+      { id: "palais-de-tokyo-collection", name: "Permanent Collection", title: "Underground Doesn't Exist Anymore", description: "파리 현대미술의 실험적 공간 팔레 드 도쿄의 컬렉션. Lek & Sowat, Mode 2, Futura 2000 등 스트리트 아트와 현대 미술의 경계를 탐구합니다.", startDate: "Permanent", endDate: "Permanent" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
     exhibitions: []
   },
 

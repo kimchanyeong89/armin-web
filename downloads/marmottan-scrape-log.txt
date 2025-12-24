@@ -1,0 +1,22 @@
+[2025-12-23T15:24:51.152Z] 🖼️  Musée Marmottan Monet 스크래핑 시작
+[2025-12-23T15:24:51.333Z] 📂 컬렉션 시작: Highlights
+[2025-12-23T15:25:02.961Z]    → Highlights: 90개 작품 발견
+[2025-12-23T15:25:02.964Z]    📊 현재 총: 90개 (중복 제거됨)
+[2025-12-23T15:25:02.964Z] 📂 컬렉션 시작: Middle Ages and Ancien Régime
+[2025-12-23T15:25:11.058Z]    → Middle Ages and Ancien Régime: 20개 작품 발견
+[2025-12-23T15:25:11.059Z]    📊 현재 총: 90개 (중복 제거됨)
+[2025-12-23T15:25:11.059Z] 📂 컬렉션 시작: Revolutionary Decade to Second Empire
+[2025-12-23T15:25:19.280Z]    → Revolutionary Decade to Second Empire: 26개 작품 발견
+[2025-12-23T15:25:19.281Z]    📊 현재 총: 90개 (중복 제거됨)
+[2025-12-23T15:25:19.282Z] 📂 컬렉션 시작: Impressionism and Modern Times
+[2025-12-23T15:25:27.824Z]    → Impressionism and Modern Times: 14개 작품 발견
+[2025-12-23T15:25:27.825Z]    📊 현재 총: 90개 (중복 제거됨)
+[2025-12-23T15:25:27.825Z] 📂 컬렉션 시작: Berthe Morisot
+[2025-12-23T15:25:37.871Z]    → Berthe Morisot: 11개 작품 발견
+[2025-12-23T15:25:37.873Z]    📊 현재 총: 90개 (중복 제거됨)
+[2025-12-23T15:25:37.873Z] 📂 컬렉션 시작: Claude Monet
+[2025-12-23T15:25:46.159Z]    → Claude Monet: 19개 작품 발견
+[2025-12-23T15:25:46.161Z]    📊 현재 총: 90개 (중복 제거됨)
+[2025-12-23T15:25:46.204Z] 
+✅ 완료! 총 수집: 90개
+[2025-12-23T15:25:46.204Z] 📁 저장: /Users/kietzsche/armin-web-main/public/data/marmottan-collection.json

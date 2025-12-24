@@ -1,0 +1,20 @@
+{
+  "scrapedAt": "2025-12-24T03:37:33.569Z",
+  "gallery": "Palais de Tokyo",
+  "summary": {
+    "total": 62,
+    "success": 62,
+    "videos": 1,
+    "excluded": 0,
+    "failed": 0
+  },
+  "videos": [
+    {
+      "title": "Interview VHILS",
+      "youtubeId": "tMz5YQfPx68",
+      "url": "https://artsandculture.google.com/asset/interview-vhils/xgFh0lKj4J5sHw"
+    }
+  ],
+  "excluded": [],
+  "failed": []
+}

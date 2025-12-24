@@ -1,0 +1,2449 @@
+{
+  "galleryId": "petit-palais",
+  "galleryName": "Petit Palais - Musée des Beaux-Arts de la Ville de Paris",
+  "scrapedAt": "2025-12-24T06:53:10.638Z",
+  "totalObjects": 243,
+  "categoryStats": {
+    "masterpieces": 23,
+    "classical-world": 12,
+    "icons": 22,
+    "middle-ages": 9,
+    "renaissance": 16,
+    "17th-century": 25,
+    "18th-century": 18,
+    "19th-century": 72,
+    "paris-1900": 77
+  },
+  "objects": [
+    {
+      "title": "Three Bathers",
+      "artist": "Paul Cézanne Aix-en-Provence",
+      "year": 1879,
+      "date": "1879 - 1882",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/1995-PPA-0280.JPG",
+      "medium": "Oil on canvas",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/three-bathers",
+      "id": "petit-palais-1"
+    },
+    {
+      "title": "Organ pipe clock with a monkey orchestra",
+      "artist": "Jean Moisy (clockmaker) and Jean-Claude Chambellan known as Duplessis (goldsmith)Porcelain figures based on models by Johann-Joachim Kändler and Peter Reinicke",
+      "year": 1755,
+      "date": "Circa 1755-1760",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/moisy_pend.jpg",
+      "medium": "Gilded bronze work, Vincennes soft-paste porcelain flowers, hard-paste Meissen porcelain figurines",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/organ-pipe-clock-monkey-orchestra",
+      "id": "petit-palais-2"
+    },
+    {
+      "title": "Young Ladies on the Banks of the Seine (Summer)",
+      "artist": "Gustave Courbet",
+      "year": 1857,
+      "date": "1857",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/demoisellesgf.jpg",
+      "medium": "Oil on canvas",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/young-ladies-banks-seine-summer",
+      "id": "petit-palais-3"
+    },
+    {
+      "title": "Self-portrait in Oriental Attire",
+      "artist": "Rembrandt",
+      "year": 1631,
+      "date": "1631",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/content/images/rembrandt_pdut925.jpg",
+      "medium": "Oil on wooden panel",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/self-portrait-oriental-attire",
+      "id": "petit-palais-4"
+    },
+    {
+      "title": "Jérôme de La Lande",
+      "artist": "Jean-Honoré Fragonard",
+      "year": 1769,
+      "date": "circa 1769",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/fragonard_lalande.JPG",
+      "medium": "Oil on canvas",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/jerome-de-la-lande",
+      "id": "petit-palais-5"
+    },
+    {
+      "title": "Virgin of the Annunciation",
+      "artist": "Giovanni di",
+      "year": 1420,
+      "date": "circa 1420-1430",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/content/images/img169.jpg",
+      "medium": "Polychrome wood",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/virgin-annunciation",
+      "id": "petit-palais-6"
+    },
+    {
+      "title": "The Little Alms Collector",
+      "artist": "Jan Steen",
+      "year": 1663,
+      "date": "Circa 1663-1665",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/steen_queteur.JPG",
+      "medium": "Oil on wooden panel",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/little-alms-collector",
+      "id": "petit-palais-7"
+    },
+    {
+      "title": "Sunset on the Seine at Lavacourt, Winter Effect",
+      "artist": "Claude Monet",
+      "year": 1880,
+      "date": "1880",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/content/images/monet_3.jpg",
+      "medium": "Oil on canvas",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/sunset-seine-lavacourt-winter-effect",
+      "id": "petit-palais-8"
+    },
+    {
+      "title": "Jardinière",
+      "artist": "Paul Gauguin",
+      "year": 1886,
+      "date": "Circa1886-1887",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/jardinieregauguin.jpg",
+      "medium": "Partially painted and enamelled stoneware, incised and modelled decoration",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/jardiniere",
+      "id": "petit-palais-9"
+    },
+    {
+      "title": "Book of the conquests and deeds of Alexander",
+      "artist": "Jean Wauquelin",
+      "year": 1467,
+      "date": "Before 1467",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/content/images/m111108_pp-ldut00456_0015.jpg",
+      "medium": "Illuminated manuscript on vellum. Red Morocco binding adorned with blind-stamped fillets and lined with Red Morocco with petits fers gilding. Gilt edge",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/book-conquests-and-deeds-alexander",
+      "id": "petit-palais-10"
+    },
+    {
+      "title": "\"Cascade\" Pendant",
+      "artist": "Georges Fouquet",
+      "year": 1900,
+      "date": "Circa 1900",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/Fouquet_PendantCascade.JPG",
+      "medium": "Gold, open enamel on spangles, opals, diamonds and baroque pearl",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/cascade-pendant",
+      "id": "petit-palais-11"
+    },
+    {
+      "title": "The Triumph of the Republic",
+      "artist": "Aimé Jules Dalou",
+      "year": 1879,
+      "date": "Study for the monument at Place de la Nation, 1879",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/DalouEnsemble40612_6.jpg",
+      "medium": "Patinated plaster",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/triumph-republic",
+      "id": "petit-palais-12"
+    },
+    {
+      "title": "Woman wearing gloves, also known as The Parisienne",
+      "artist": "Charles-Alexandre Giron Genève",
+      "year": 1883,
+      "date": "1883",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/Parisienne1997%20PPA%200309.JPG",
+      "medium": "Oil on canvas",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/woman-wearing-gloves-also-known-parisienne",
+      "id": "petit-palais-13"
+    },
+    {
+      "title": "Marietta, or Roman Odalisque",
+      "artist": "Jean-Baptiste-Camille Corot",
+      "year": 1843,
+      "date": "Rome, 1843",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/CorotMarietta%20.JPG",
+      "medium": "Oil on paper marouflaged on canvas",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/marietta-or-roman-odalisque",
+      "id": "petit-palais-14"
+    },
+    {
+      "title": "Catalogue of the Crozat Sale",
+      "artist": "Gabriel de Saint-Aubin",
+      "year": 1755,
+      "date": "1755",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/content/images/m111107_pp-ldut01153_010_1.jpg",
+      "medium": "Brown marocco binding with gold decorations. Drawings",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/catalogue-crozat-sale",
+      "id": "petit-palais-15"
+    },
+    {
+      "title": "Portrait of Ambroise Vollard",
+      "artist": "Paul Cézanne Aix-en-Provence",
+      "year": 1899,
+      "date": "1899",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/content/images/lpdp_25399-1.jpg",
+      "medium": "Oil on canvas",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/portrait-ambroise-vollard",
+      "id": "petit-palais-16"
+    },
+    {
+      "title": "White ground hydria (CVA 310)",
+      "artist": "Psiax",
+      "year": 0,
+      "date": "c. 525 BC",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/content/images/img4_0.jpg",
+      "medium": "Ceramic with black figures on a white background with polychrome highlights",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/white-ground-hydria-cva-310",
+      "id": "petit-palais-17"
+    },
+    {
+      "title": "Combat of the Giaour and the Pasha",
+      "artist": "Eugène Delacroix",
+      "year": 1835,
+      "date": "1835",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/pdut1162.jpg",
+      "medium": "Oil on canvas",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/combat-giaour-and-pasha",
+      "id": "petit-palais-18"
+    },
+    {
+      "title": "Madame Alexis Rouart and her Children",
+      "artist": "Edgar Degas",
+      "year": 1905,
+      "date": "circa 1905",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/content/images/img73.jpg",
+      "medium": "Charcoal and pastel on tracing paper, mounted on card",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/madame-alexis-rouart-and-her-children",
+      "id": "petit-palais-19"
+    },
+    {
+      "title": "Red-legged partridge in a niche",
+      "artist": "Nicolas de Largillierre",
+      "year": 1680,
+      "date": "Circa 1680-1685",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/largilliere_perdrix.jpg",
+      "medium": "Oil on canvas",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/red-legged-partridge-niche",
+      "id": "petit-palais-20"
+    },
+    {
+      "title": "Sedan chair",
+      "artist": "Anonymous",
+      "year": 1700,
+      "date": "Circa 1700-1715",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/content/images/pl-otuck00059.jpg",
+      "medium": "Gilded wood, carved and painted",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/sedan-chair",
+      "id": "petit-palais-21"
+    },
+    {
+      "title": "The Nativity",
+      "artist": "Anonymous",
+      "year": 1480,
+      "date": "Circa 1480-1500",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/content/images/nativite_pdut1975.jpg",
+      "medium": "Tempera on coated wood",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/nativity",
+      "id": "petit-palais-22"
+    },
+    {
+      "title": "The Bacchus of the via del Babuino",
+      "artist": "Anonymous",
+      "year": 0,
+      "date": "1st century AD",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/bacchus_1_1.jpg",
+      "medium": "Bronze. Hollow cast. Silver, brass and black patinated copper alloy ornamentation",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/bacchus-del-babuino",
+      "id": "petit-palais-23"
+    },
+    {
+      "title": "Calyx-Krater : Herakles in the garden of the Hesperides (CVA 327)",
+      "artist": "Anonymous",
+      "year": 0,
+      "date": "Circa 360 BC",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/content/images/adut339-01.jpg",
+      "medium": "Yellowish clay, red figures, numerous white highlights",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/calyx-krater-herakles-garden-hesperides-cva-327",
+      "id": "petit-palais-24"
+    },
+    {
+      "title": "Ephebe from the Fins d’Annecy",
+      "artist": "Polykleitos",
+      "year": 0,
+      "date": "Circa 30 BC",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/ephebe_1_3.JPG",
+      "medium": "Bronze",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/ephebe-fins-d-annecy",
+      "id": "petit-palais-25"
+    },
+    {
+      "title": "Head flask in the form of a smiling negro head",
+      "artist": "Tryphon",
+      "year": 0,
+      "date": "1st century AD",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/gobelet-face.jpg",
+      "medium": "Blown glass shaped in a bivalve mould",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/head-flask-form-smiling-negro-head",
+      "id": "petit-palais-26"
+    },
+    {
+      "title": "Oinochoe with a trefoil-shaped mouth (CVA 315)",
+      "artist": "Dutuit painter",
+      "year": 0,
+      "date": "Circa 500-475 BC",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/content/images/adut327_0.jpg",
+      "medium": "Ceramic with red figures",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/oinochoe-trefoil-shaped-mouth-cva-315",
+      "id": "petit-palais-27"
+    },
+    {
+      "title": "Plaque in cameo glass : satyr holding out a bunch of grapes to the child Dionysus",
+      "artist": "Anonymous",
+      "year": 0,
+      "date": "1st half of the 1st century AD",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/adut00240.jpg",
+      "medium": "Three layers of superimposed glass (white, blue and white)",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/plaque-cameo-glass-satyr-holding-out-bunch-grapes-child-dionysus",
+      "id": "petit-palais-28"
+    },
+    {
+      "title": "Poseidon or Zeus ?",
+      "artist": "Hybrisstas",
+      "year": 0,
+      "date": "1st or 2nd quarter of the 5th century BC",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/Hybrisstas_2.JPG",
+      "medium": "Bronze",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/poseidon-or-zeus",
+      "id": "petit-palais-29"
+    },
+    {
+      "title": "The Esquiline patera",
+      "artist": "Anonymous",
+      "year": 0,
+      "date": "Circa 380 AD",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/patere_2.jpg",
+      "medium": "Silver",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/esquiline-patera",
+      "id": "petit-palais-30"
+    },
+    {
+      "title": "Christ of Pity",
+      "artist": "Creto-Venetian school (Nicolas Tzafouris?)",
+      "year": 1480,
+      "date": "1480-1500",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/26320-15.jpg",
+      "medium": "Tempera and gold on wood",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/christ-pity",
+      "id": "petit-palais-31"
+    },
+    {
+      "title": "In You rejoices",
+      "artist": "Franghias Kavertsas Crete, working between",
+      "year": 0,
+      "date": "1st half of the 17th century",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/kavertsas_rejouit%20.JPG",
+      "medium": "Tempera and gold on coated canvas applied to wood",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/you-rejoices",
+      "id": "petit-palais-32"
+    },
+    {
+      "title": "Ivory book cover plaque : the Virgin and Child enthroned",
+      "artist": "Anonymous",
+      "year": 0,
+      "date": "2nd half of the 10th century",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/Plaque%20de%20reliure%20%20%28c%29Petit%20Palais-Roger%20Viollet.JPG",
+      "medium": "Elephant ivory",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/ivory-book-cover-plaque-virgin-and-child-enthroned",
+      "id": "petit-palais-33"
+    },
+    {
+      "title": "Pietà",
+      "artist": "Cretan-Venitian school (Andreas Pavias? Nicolas Tzafouris?)",
+      "year": 1480,
+      "date": "1480-1500",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/content/images/pieta_pdut1973.jpg",
+      "medium": "Tempera and gold on coated canvas, applied to wood",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/pieta",
+      "id": "petit-palais-34"
+    },
+    {
+      "title": "Saint Charalambos and the Devil",
+      "artist": "Anonymous (Ionian Islands)",
+      "year": 0,
+      "date": "18th century",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/ppp04897-lpdp_72599-1.jpg",
+      "medium": "Tempera on wood",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/saint-charalambos-and-devil",
+      "id": "petit-palais-35"
+    },
+    {
+      "title": "Saint George",
+      "artist": "Anonymous (Novgorod School, Russia)",
+      "year": 0,
+      "date": "16th century",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/ppp04907-lpdp_48566-10.jpg",
+      "medium": "Tempera and gold on wood",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/saint-george",
+      "id": "petit-palais-36"
+    },
+    {
+      "title": "Saint Simeon Stylites",
+      "artist": "Anonymous (Greece)",
+      "year": 1807,
+      "date": "June 20th 1807",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/ppp04900.jpg",
+      "medium": "Tempera on wood",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/saint-simeon-stylites",
+      "id": "petit-palais-37"
+    },
+    {
+      "title": "St John the Baptist",
+      "artist": "Anonymous",
+      "year": 0,
+      "date": "End of the 17th century",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/content/images/saint_jean_baptiste_ppp4909.jpg",
+      "medium": "Tempera on wood",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/st-john-baptist",
+      "id": "petit-palais-38"
+    },
+    {
+      "title": "St Martin",
+      "artist": "Anonymous",
+      "year": 1500,
+      "date": "Circa 1500",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/saint_martin.jpg",
+      "medium": "Tempera and gold on wood",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/st-martin",
+      "id": "petit-palais-39"
+    },
+    {
+      "title": "The Archangel Michael and the Archangel Gabriel",
+      "artist": "Anonyme",
+      "year": 0,
+      "date": "",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/content/images/michel_ppp4921.jpg",
+      "medium": "",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/archangel-michael-and-archangel-gabriel",
+      "id": "petit-palais-40"
+    },
+    {
+      "title": "The Communion of St Mary of Egypt",
+      "artist": "Anonymous (Macedonia or Serbia)",
+      "year": 0,
+      "date": "17th century",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/ppp04884.jpg",
+      "medium": "Tempera and gold on wood",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/communion-st-mary-egypt",
+      "id": "petit-palais-41"
+    },
+    {
+      "title": "The creation of the world",
+      "artist": "Anonymous",
+      "year": 0,
+      "date": "End of the 18th century",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/content/images/creation_monde_ppp4936.jpg",
+      "medium": "Tempera on wood",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/creation-world",
+      "id": "petit-palais-42"
+    },
+    {
+      "title": "The Dormition of the Virgin",
+      "artist": "Anonymous",
+      "year": 0,
+      "date": "16th century",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/content/images/dormition_ppp4867.jpg",
+      "medium": "Tempera and gold on coated wood",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/dormition-virgin",
+      "id": "petit-palais-43"
+    },
+    {
+      "title": "The Forty Martyrs of Sebaste",
+      "artist": "Nikitarea",
+      "year": 0,
+      "date": "171(1 ?)",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/content/images/martyrs_sebaste_ppp4891.jpg",
+      "medium": "Tempera and gold on wood",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/forty-martyrs-sebaste",
+      "id": "petit-palais-44"
+    },
+    {
+      "title": "The Holy Face",
+      "artist": "School of the Tsars’ palace",
+      "year": 0,
+      "date": "16th century",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/content/images/sainte_face_ppp4904.jpg",
+      "medium": "Tempera on wood",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/holy-face",
+      "id": "petit-palais-45"
+    },
+    {
+      "title": "The Lamentation over the Dead Christ",
+      "artist": "Anonymous (Crete)",
+      "year": 0,
+      "date": "17th century",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/ladeploration.jpg",
+      "medium": "Tempera and gold on wood",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/lamentation-over-dead-christ",
+      "id": "petit-palais-46"
+    },
+    {
+      "title": "The Martyrs of Libya",
+      "artist": "Nikola Sarić born in Serbia in",
+      "year": 0,
+      "date": "Hanover",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/content/images/aze_ppd05704_001.jpg",
+      "medium": "Watercolour and ink on paper",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/martyrs-libya",
+      "id": "petit-palais-47"
+    },
+    {
+      "title": "The Mother of God Glykophilousa",
+      "artist": "Cretan School",
+      "year": 1500,
+      "date": "Circa 1500-1520",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/content/images/lpdp_112281-8.jpg",
+      "medium": "Tempera and gold on wood",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/mother-god-glykophilousa",
+      "id": "petit-palais-48"
+    },
+    {
+      "title": "The Prophet Elijah",
+      "artist": "Anonymous (Bulgaria)",
+      "year": 1700,
+      "date": "Circa 1700",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/ppp04889.jpg",
+      "medium": "Tempera and gold on wood",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/prophet-elijah",
+      "id": "petit-palais-49"
+    },
+    {
+      "title": "The Virgin, Inviolate Mountain",
+      "artist": "Anonymous",
+      "year": 0,
+      "date": "Beginning of the 16th century",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/montagne_inviolee.JPG",
+      "medium": "Tempera on wood",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/virgin-inviolate-mountain",
+      "id": "petit-palais-50"
+    },
+    {
+      "title": "Adoration of the Child",
+      "artist": "Master of the St. Bartholomew Altarpiece The",
+      "year": 1480,
+      "date": "Circa 1480",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/stbarth_adoration_0.JPG",
+      "medium": "Oil on wooden panel",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/adoration-child",
+      "id": "petit-palais-51"
+    },
+    {
+      "title": "Altarpiece : scenes from the life and Passion of Christ",
+      "artist": "Anonymous",
+      "year": 1370,
+      "date": "Circa 1370-1380",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/26322-6.jpg",
+      "medium": "Ivory",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/altarpiece-scenes-life-and-passion-christ",
+      "id": "petit-palais-52"
+    },
+    {
+      "title": "La Vierge assise dans une cour (Bartsch 32)",
+      "artist": "Martin Schongauer",
+      "year": 1475,
+      "date": "Between 1475 and 1480",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/Schongauer%2C%20la%20Vierge%20assise%20dans%20une%20cour.jpg",
+      "medium": "Single state. Burin engraving",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/la-vierge-assise-dans-une-cour-bartsch-32",
+      "id": "petit-palais-53"
+    },
+    {
+      "title": "Reliquary of the True Cross",
+      "artist": "Anonymous",
+      "year": 1170,
+      "date": "Circa 1170-1180",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/24210-10.jpg",
+      "medium": "Copper or brass, repoussé work, stamped, chased, engraved and gilded ; copper plaques with champlevé work, enamel and gilt ; silver with repoussé work and gilt ; semi-precious stones (agate and jasper) inserted in cabochons ; wooden core",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/reliquary-true-cross",
+      "id": "petit-palais-54"
+    },
+    {
+      "title": "Saint Paul and Saint Thomas",
+      "artist": "Anonymous",
+      "year": 1220,
+      "date": "Circa 1220-1230",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/saint_paul.jpg",
+      "medium": "Engraved and gilded repoussé copper, plaques of champlevé, enamelled and gilded copper, glass cabochons",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/saint-paul-and-saint-thomas",
+      "id": "petit-palais-55"
+    },
+    {
+      "title": "Virgin and Child",
+      "artist": "Anonymous",
+      "year": 1220,
+      "date": "Circa 1220-1230",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/statuette_vierge_enf.JPG",
+      "medium": "Ivory, traces of gilt and polychrome colour",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/virgin-and-child",
+      "id": "petit-palais-56"
+    },
+    {
+      "title": "Bowl : The Dance of the Cupids",
+      "artist": "Anonymous",
+      "year": 0,
+      "date": "Middle of the 16th century",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/coupe_danse.JPG",
+      "medium": "Clear glass, polychrome decoration cold-painted on the reverse, gold.",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/bowl-dance-cupids",
+      "id": "petit-palais-57"
+    },
+    {
+      "title": "Candlestick",
+      "artist": "Anonymous",
+      "year": 1551,
+      "date": "Before 1551",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/chandelier.JPG",
+      "medium": "Kaolinic clay, plumbiferous glaze",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/candlestick",
+      "id": "petit-palais-58"
+    },
+    {
+      "title": "Ewer : scenes from the story of Jason and the Golden Fleece",
+      "artist": "Master I.C.",
+      "year": 0,
+      "date": "Late 16th-early 17th century",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/aiguiere_jason.jpg",
+      "medium": "Painted enamel",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/ewer-scenes-story-jason-and-golden-fleece",
+      "id": "petit-palais-59"
+    },
+    {
+      "title": "Hore Beate Virginis Mariae (Dutuit Hours)",
+      "artist": "Noël Bellemarre (entourage)",
+      "year": 1526,
+      "date": "Between 1526 and 1540",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/content/images/m111108_pp-ldut00037_0012.jpg",
+      "medium": "Illuminated manuscript on vellum",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/hore-beate-virginis-mariae-dutuit-hours",
+      "id": "petit-palais-60"
+    },
+    {
+      "title": "Knight, Death and the Devil  (Bartsch 98)",
+      "artist": "Albrecht Dürer",
+      "year": 1513,
+      "date": "1513",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/DurerPF.jpg",
+      "medium": "Burin engraving",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/knight-death-and-devil-bartsch-98",
+      "id": "petit-palais-61"
+    },
+    {
+      "title": "Large bowl : two women in profile on either side of a tree of life",
+      "artist": "Anonymous",
+      "year": 0,
+      "date": "First half of the 16th century",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/bassin_femmes.jpg",
+      "medium": "Earthenware",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/large-bowl-two-women-profile-either-side-tree-life",
+      "id": "petit-palais-62"
+    },
+    {
+      "title": "Le Nouvelin de vénerie",
+      "artist": "Louis de Gouvy",
+      "year": 0,
+      "date": "First quarter of the 16th century",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/content/images/m111108_pp-ldut00217_0010.jpg",
+      "medium": "Illuminated manuscript on vellum. Binding in red and gold Morocco leather lined with blue Morocco leather",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/le-nouvelin-de-venerie",
+      "id": "petit-palais-63"
+    },
+    {
+      "title": "Nativity",
+      "artist": "Workshop of Weckmann the Elder",
+      "year": 1525,
+      "date": "circa 1525",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/content/images/lpdp_81444-2.jpg",
+      "medium": "Polychrome limewood",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/nativity-0",
+      "id": "petit-palais-64"
+    },
+    {
+      "title": "Oval dish with « rustic figuline » decoration",
+      "artist": "Bernard Palissy (Follower of)",
+      "year": 0,
+      "date": "Late 16th-early 17th century",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/palissy.jpg",
+      "medium": "“Glazed” earthenware",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/oval-dish-rustic-figuline-decoration",
+      "id": "petit-palais-65"
+    },
+    {
+      "title": "Platter : the Judgement of Paris",
+      "artist": "Painter of the Judgement of",
+      "year": 1520,
+      "date": "1520",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/plat_jugement.JPG",
+      "medium": "Earthenware",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/platter-judgement-paris",
+      "id": "petit-palais-66"
+    },
+    {
+      "title": "Portrait of Joost van Bronkhorst",
+      "artist": "Jan Mostaert (Haarlem, circa",
+      "year": 0,
+      "date": "",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/jan_mostaert.JPG",
+      "medium": "Oil on panel",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/portrait-joost-van-bronkhorst",
+      "id": "petit-palais-67"
+    },
+    {
+      "title": "The Carcass or On the Sabbath Road (Bartsch 426)",
+      "artist": "Marc Antoine Raimondi Environs de Bologne, vers",
+      "year": 0,
+      "date": "",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/content/images/img114.jpg",
+      "medium": "Burin engraving. 1st state",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/carcass-or-sabbath-road-bartsch-426",
+      "id": "petit-palais-68"
+    },
+    {
+      "title": "The destruction of Troy per person",
+      "artist": "Jacques Millet, writer, Jean Driart, printer, and Antoine Vérard, editor",
+      "year": 1498,
+      "date": "1498",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/content/images/m111108_pp-ldut00397_0209.jpg",
+      "medium": "31 illuminations, ruled pages, printed on vellum, with the back decorated with gold fillets. Binding in blue Morocco leather",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/destruction-troy-person",
+      "id": "petit-palais-69"
+    },
+    {
+      "title": "The most excellent and holy mystery of the Old Testament",
+      "artist": "Jean Real, publisher and Vincent Certenas, printer",
+      "year": 1542,
+      "date": "1542",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/content/images/img161.jpg",
+      "medium": "Binding in red and gold Morocco leather. Engravings on wood",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/most-excellent-and-holy-mystery-old-testament",
+      "id": "petit-palais-70"
+    },
+    {
+      "title": "Virgin and Child",
+      "artist": "Giovanni-Batista Cima da Conegliano",
+      "year": 1497,
+      "date": "Circa 1497",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/content/images/cima_pp-ptuck00005.jpg",
+      "medium": "Oil on panel",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/virgin-and-child-0",
+      "id": "petit-palais-71"
+    },
+    {
+      "title": "A scene of gallantry in a palace",
+      "artist": "Dirck Van Delen",
+      "year": 1636,
+      "date": "Circa 1636",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/delen_sc_galante.JPG",
+      "medium": "Oil on wooden panel",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/scene-gallantry-palace",
+      "id": "petit-palais-72"
+    },
+    {
+      "title": "Cavalry Clash",
+      "artist": "Adam Frans Van der Meulen",
+      "year": 1660,
+      "date": "circa 1660",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/content/images/pdut948-choc.jpg",
+      "medium": "Oil on canvas",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/cavalry-clash",
+      "id": "petit-palais-73"
+    },
+    {
+      "title": "Composite Landscape",
+      "artist": "Henri Mauperché",
+      "year": 1650,
+      "date": "Circa 1650",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/mauperche_paysage.JPG",
+      "medium": "Oil on canvas",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/composite-landscape",
+      "id": "petit-palais-74"
+    },
+    {
+      "title": "Diana Discovering that Callisto is Pregnant",
+      "artist": "Michel Dorigny",
+      "year": 0,
+      "date": "",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/content/images/pm_pp-pdut01191.jpg",
+      "medium": "Oil on canvas",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/diana-discovering-callisto-pregnant",
+      "id": "petit-palais-75"
+    },
+    {
+      "title": "Diana Resting",
+      "artist": "Jacob Jordaens",
+      "year": 1640,
+      "date": "Circa 1640-1650",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/jordaens_diane.JPG",
+      "medium": "Oil on canvas",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/diana-resting",
+      "id": "petit-palais-76"
+    },
+    {
+      "title": "Landscape of dunes with a windmill",
+      "artist": "Jan Van Goyen",
+      "year": 1652,
+      "date": "1652 or 1655 (?)",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/content/images/img622.jpg",
+      "medium": "Drawing in black lead pencil and grey wash",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/landscape-dunes-windmill",
+      "id": "petit-palais-77"
+    },
+    {
+      "title": "Landscape of the Roman Campagna seen from the Prato Longo",
+      "artist": "Le Lorrain (Claude Gellée)",
+      "year": 1643,
+      "date": "1643",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/C.Gelee_.jpg",
+      "medium": "Pen drawing with brown and grey wash",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/landscape-roman-campagna-seen-prato-longo",
+      "id": "petit-palais-78"
+    },
+    {
+      "title": "Landscape with the Port of Santa Marinella",
+      "artist": "Claude Gellée, known as Claude Lorrain",
+      "year": 1637,
+      "date": "Circa 1637/1638",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/claude-gellee.JPG",
+      "medium": "Oil on copper",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/landscape-port-santa-marinella",
+      "id": "petit-palais-79"
+    },
+    {
+      "title": "Large Landscape with Tower (Bartsch 223)",
+      "artist": "Rembrandt Harmensz Van Rijn",
+      "year": 1651,
+      "date": "circa 1651",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/content/images/img109.jpg",
+      "medium": "Etching and drypoint on Japanese paper. First state of four.",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/large-landscape-tower-bartsch-223",
+      "id": "petit-palais-80"
+    },
+    {
+      "title": "Portrait of a man",
+      "artist": "Abraham de Vries circa",
+      "year": 1629,
+      "date": "1629",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/de_vries.jpg",
+      "medium": "Oil on wooden panel",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/portrait-man",
+      "id": "petit-palais-81"
+    },
+    {
+      "title": "Rest of the Holy Family on the Flight into Egypt",
+      "artist": "After Hans Rottenhammer",
+      "year": 1600,
+      "date": "between 1600 and 1620",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/content/images/ppp2501_sainte_famille.jpg",
+      "medium": "Oil on copper",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/rest-holy-family-flight-egypt",
+      "id": "petit-palais-82"
+    },
+    {
+      "title": "Smokers and drinkers at a table underneath a trellised vine",
+      "artist": "Adriaen Van Ostade Haarlem (Netherlands)",
+      "year": 1676,
+      "date": "1676",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/AVanOstade_0.jpg",
+      "medium": "Black lead, watercolour and gouache, pen and black ink",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/smokers-and-drinkers-table-underneath-trellised-vine",
+      "id": "petit-palais-83"
+    },
+    {
+      "title": "The Abduction of Proserpina",
+      "artist": "Petrus Paulus Rubens Siegen (Westphalie)",
+      "year": 1614,
+      "date": "Circa 1614-1615",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/rubens_proserpine.jpg",
+      "medium": "Oil on wooden panel",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/abduction-proserpina",
+      "id": "petit-palais-84"
+    },
+    {
+      "title": "The Analysis",
+      "artist": "Adriaen Van Ostade Haarlem",
+      "year": 1666,
+      "date": "1666",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/ostade_analyse.JPG",
+      "medium": "Oil on wooden panel",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/analysis",
+      "id": "petit-palais-85"
+    },
+    {
+      "title": "The interrupted song",
+      "artist": "Frans Van Mieris, known as Mieris the Elder",
+      "year": 1671,
+      "date": "1671",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/mieris_chant.JPG",
+      "medium": "Oil on wooden panel",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/interrupted-song",
+      "id": "petit-palais-86"
+    },
+    {
+      "title": "The Labyrinth of Versailles",
+      "artist": "Jacques Bailly",
+      "year": 1675,
+      "date": "Between 1675 and 1679",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/content/images/ldut724_lpdp_75488-21.jpg",
+      "medium": "Old binding in red and gold Morocco leather",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/labyrinth-versailles",
+      "id": "petit-palais-87"
+    },
+    {
+      "title": "The Massacre of the Innocents",
+      "artist": "Nicolas Poussin Les Andelys (Eure)",
+      "year": 1626,
+      "date": "Circa 1626-1627",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/poussin_innocents.JPG",
+      "medium": "Oil on canvas",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/massacre-innocents",
+      "id": "petit-palais-88"
+    },
+    {
+      "title": "The smokers",
+      "artist": "David Teniers the Younger",
+      "year": 0,
+      "date": "",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/teniers_fumeurs.JPG",
+      "medium": "Oil on wooden panel",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/smokers",
+      "id": "petit-palais-89"
+    },
+    {
+      "title": "The Three Trees (Bartsch 212)",
+      "artist": "Rembrandt Harmensz Van Rijn",
+      "year": 1643,
+      "date": "1643",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/RembrandtPaysageAuxArbres.jpg",
+      "medium": "First state. Etching and drypoint on watermarked paper",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/three-trees-bartsch-212",
+      "id": "petit-palais-90"
+    },
+    {
+      "title": "The Water Mills",
+      "artist": "Meindert Hobbema Amsterdam",
+      "year": 1664,
+      "date": "Circa 1664-1668",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/hobbema_moulin.JPG",
+      "medium": "Oil on canvas",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/water-mills",
+      "id": "petit-palais-91"
+    },
+    {
+      "title": "The Wedding Procession",
+      "artist": "Pieter Brueghel the Younger",
+      "year": 1623,
+      "date": "1623",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/content/images/ppp2500_cortege.jpg",
+      "medium": "Oil on panel",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/wedding-procession",
+      "id": "petit-palais-92"
+    },
+    {
+      "title": "A Jaunt by Carriage",
+      "artist": "Théobald Michau",
+      "year": 0,
+      "date": "First half of the 18th century",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/content/images/michau-ppp2462.jpg",
+      "medium": "Oil on copper",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/jaunt-carriage",
+      "id": "petit-palais-93"
+    },
+    {
+      "title": "Alexander and Bucephalus",
+      "artist": "Giambattista Tiepolo",
+      "year": 1757,
+      "date": "Circa 1757-1760",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/tiepolo_alex%20.JPG",
+      "medium": "Oil on canvas",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/alexander-and-bucephalus",
+      "id": "petit-palais-94"
+    },
+    {
+      "title": "Chest of drawers",
+      "artist": "Adrien Delorme and Pierre Roussel",
+      "year": 1750,
+      "date": "Circa 1750-1760",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/com_delorme.JPG",
+      "medium": "Of beechwood construction with pine drawers. Rosewood, purple heart, pear wood and hornbeam veneers with gilded bronze work.",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/chest-drawers",
+      "id": "petit-palais-95"
+    },
+    {
+      "title": "Combination furniture : commode with doors, secretaire in drawer, wardrobe",
+      "artist": "Roger Van der Cruse known as La Croix",
+      "year": 1760,
+      "date": "Circa 1760",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/la_croix_secret.JPG",
+      "medium": "oak, flower pattern marquetry, rosewood and amaranth border ; gilt bronze ; Breccia di Aleppo, marble",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/combination-furniture-commode-doors-secretaire-drawer-wardrobe",
+      "id": "petit-palais-96"
+    },
+    {
+      "title": "Sketch for the ceiling of the Banque Royale: Unloading goods from Louisiana on the banks of the Seine",
+      "artist": "Giovanni Antonio (dit Gianantonio) Pellegrini",
+      "year": 1720,
+      "date": "1720",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/pellegrini.jpg",
+      "medium": "Oil on canvas",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/sketch-ceiling-banque-royale-unloading-goods-louisiana-banks-seine",
+      "id": "petit-palais-97"
+    },
+    {
+      "title": "Tapestry : Psyche Led by the West Wind into the Palace of Love and Psyche Showing Her Wealth to Her Sisters",
+      "artist": "Beauvais Manufactory. After design by François Boucher",
+      "year": 1741,
+      "date": "After 1741",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/tapisserie_psyche.jpg",
+      "medium": "Wool and silk",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/tapestry-psyche-led-west-wind-palace-love-and-psyche-showing-her-wealth-her-sisters",
+      "id": "petit-palais-98"
+    },
+    {
+      "title": "The death of Seneca",
+      "artist": "Jacques Louis David",
+      "year": 1773,
+      "date": "1773",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/content/images/lpdp_26986-3.jpg",
+      "medium": "Oil on canvas",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/death-seneca",
+      "id": "petit-palais-99"
+    },
+    {
+      "title": "The Laundry",
+      "artist": "Hubert Robert",
+      "year": 1758,
+      "date": "Circa 1758-1759",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/robert_blanch.jpg",
+      "medium": "Oil on canvas",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/laundry",
+      "id": "petit-palais-100"
+    },
+    {
+      "title": "The little dog’s dance",
+      "artist": "François Boucher",
+      "year": 1758,
+      "date": "1758",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/boucher_chien.JPG",
+      "medium": "Oil on oval canvas",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/little-dog-s-dance",
+      "id": "petit-palais-101"
+    },
+    {
+      "title": "The Tivoli Cascades",
+      "artist": "Claude Joseph Vernet",
+      "year": 1740,
+      "date": "Between 1740 and 1748",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/vernet_tivoli.JPG",
+      "medium": "Oil on canvas",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/tivoli-cascades",
+      "id": "petit-palais-102"
+    },
+    {
+      "title": "Washerwomen in a garden",
+      "artist": "Hubert Robert",
+      "year": 1775,
+      "date": "Circa 1775",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/robert_lavand.JPG",
+      "medium": "Oil on canvas",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/washerwomen-garden",
+      "id": "petit-palais-103"
+    },
+    {
+      "title": "Young Shepherd Holding a Flower",
+      "artist": "Jean-Baptiste Greuze Tournus",
+      "year": 1760,
+      "date": "1760-1761",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/greuze_berger.JPG",
+      "medium": "Oil on oval canvas",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/young-shepherd-holding-flower",
+      "id": "petit-palais-104"
+    },
+    {
+      "title": "« Mazarin » table desk",
+      "artist": "Nicolas Sageot",
+      "year": 1700,
+      "date": "Circa 1700-1720",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/Nicolas%20Sageot%2C%20table%20bureau%20dit%20mazarin%20%28c%29Petit%20Palais-Roger%20Viollet.JPG",
+      "medium": "Structure in conifer wood, veneer in tortoiseshell with brass, gilt bronze",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/mazarin-table-desk",
+      "id": "petit-palais-105"
+    },
+    {
+      "title": "A Corner of the Painter's Salon",
+      "artist": "Jean-François Gigoux",
+      "year": 1852,
+      "date": "After 1852",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/content/images/gigoux_ppp4991.jpg",
+      "medium": "Oil on canvas",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/corner-painter-s-salon",
+      "id": "petit-palais-106"
+    },
+    {
+      "title": "A Parisian Woman",
+      "artist": "Emile Chatrousse",
+      "year": 1876,
+      "date": "1876",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/ChatrousseUneParisienne3_.jpg",
+      "medium": "patinated plaster",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/parisian-woman",
+      "id": "petit-palais-107"
+    },
+    {
+      "title": "Bust of Samuel Welles de La Valette",
+      "artist": "Unknown",
+      "year": 1866,
+      "date": "1866",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/71433-2_2.jpg",
+      "medium": "Plaster",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/bust-samuel-welles-de-la-valette",
+      "id": "petit-palais-108"
+    },
+    {
+      "title": "Ciborium",
+      "artist": "Placide Poussielgue-Rusand (1829-1889)",
+      "year": 1850,
+      "date": "pattern created in 1850",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/CiboirePoussielgueRusand.jpg",
+      "medium": "Silver gilt, stamped, moulded and chased, emeralds, garnets, turquoises and rock crystal",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/ciborium",
+      "id": "petit-palais-109"
+    },
+    {
+      "title": "Coast of Belleville",
+      "artist": "Octave Penguilly L’Haridon",
+      "year": 1868,
+      "date": "1868",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/penguilly-ppp04981.jpg",
+      "medium": "Oil on canvas",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/coast-belleville",
+      "id": "petit-palais-110"
+    },
+    {
+      "title": "Courbet with a black dog",
+      "artist": "Gustave Courbet",
+      "year": 1842,
+      "date": "1842-1844",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/17536-12.jpg",
+      "medium": "Oil on canvas",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/courbet-black-dog",
+      "id": "petit-palais-111"
+    },
+    {
+      "title": "Dante",
+      "artist": "Jean-Paul Aubé",
+      "year": 1879,
+      "date": "1879",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/content/images/aube_88056-30.jpg",
+      "medium": "Original plaster",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/dante",
+      "id": "petit-palais-112"
+    },
+    {
+      "title": "Departure of the prodigal son/Return of the prodigal son",
+      "artist": "James Tissot",
+      "year": 1863,
+      "date": "1863 / 1862",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/24826-1.jpg",
+      "medium": "Oil on canvas",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/departure-prodigal-sonreturn-prodigal-son",
+      "id": "petit-palais-113"
+    },
+    {
+      "title": "Display cabinet",
+      "artist": "Léon-Joseph Alessandri and son Ravenne",
+      "year": 1867,
+      "date": "1867",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/Vitrine_1.jpg",
+      "medium": "Ebony, ivory and gilded bronze",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/display-cabinet-0",
+      "id": "petit-palais-114"
+    },
+    {
+      "title": "Eagle holding a heron",
+      "artist": "Antoine Louis Barye",
+      "year": 1857,
+      "date": "Between 1857 and 1875",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/BaryeAigleTenantUnHeron%20.JPG",
+      "medium": "Patinated plaster and wax",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/eagle-holding-heron",
+      "id": "petit-palais-115"
+    },
+    {
+      "title": "Ecran de cheminée",
+      "artist": "Escalier de cristal",
+      "year": 1885,
+      "date": "Circa 1885",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/content/images/img143.jpg",
+      "medium": "Rosewood, gilded bronze and lacquer; the back and front of the screen are decorated with Japanese prints (kakemono-e)",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/ecran-de-cheminee",
+      "id": "petit-palais-116"
+    },
+    {
+      "title": "Eve",
+      "artist": "Aimé Jules Dalou",
+      "year": 1866,
+      "date": "1866",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/content/images/sdut1925-lpdp_40612-16.jpg",
+      "medium": "Marble",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/eve",
+      "id": "petit-palais-117"
+    },
+    {
+      "title": "Fight in front of the City Hall on 28 July 1830",
+      "artist": "Jean-Victor Schnetz Versailles",
+      "year": 1833,
+      "date": "1833",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/content/images/ppp3767.jpg",
+      "medium": "Oil on canvas",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/fight-front-city-hall-28-july-1830",
+      "id": "petit-palais-118"
+    },
+    {
+      "title": "Firemen running to a blaze",
+      "artist": "Gustave Courbet",
+      "year": 1851,
+      "date": "1851",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/CourbetPompiersPP.jpg",
+      "medium": "Oil on canvas",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/firemen-running-blaze",
+      "id": "petit-palais-119"
+    },
+    {
+      "title": "Fountain with Triton",
+      "artist": "Félicie de Fauveau Livorno (Italy)",
+      "year": 1855,
+      "date": "circa 1855",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/content/images/m1111_pps03833_001.jpg",
+      "medium": "White Marble",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/fountain-triton",
+      "id": "petit-palais-120"
+    },
+    {
+      "title": "Francis I Receives the Last Breaths of Leonardo da Vinci",
+      "artist": "Jean-Auguste-Dominique Ingres Montauban",
+      "year": 1818,
+      "date": "1818",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/IngresFrancois1er.JPG",
+      "medium": "Oil on canvas",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/francis-i-receives-last-breaths-leonardo-da-vinci",
+      "id": "petit-palais-121"
+    },
+    {
+      "title": "Funeral for Charles Le Bon, Count of Flanders, held in Bruges in St Christophe church on 22 April 1127",
+      "artist": "Jan Van Beers Lierre (Belgique)",
+      "year": 1876,
+      "date": "1876",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/25538-10.jpg",
+      "medium": "Oil on canvas",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/funeral-charles-le-bon-count-flanders-held-bruges-st-christophe-church-22-april-1127",
+      "id": "petit-palais-122"
+    },
+    {
+      "title": "Gloria Victis",
+      "artist": "Antonin Mercié Toulouse",
+      "year": 1872,
+      "date": "1872 (plaster) - 1875 (bronze)",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/content/images/pps3351-lpdp_50551-12.jpg",
+      "medium": "Bronze",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/gloria-victis",
+      "id": "petit-palais-123"
+    },
+    {
+      "title": "Great Peasant Rolling up his Sleeves",
+      "artist": "Aimé Jules Dalou",
+      "year": 1899,
+      "date": "circa 1899",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/content/images/pps333-lpdp_40613-2.jpg",
+      "medium": "Full-size plaster model",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/great-peasant-rolling-his-sleeves",
+      "id": "petit-palais-124"
+    },
+    {
+      "title": "Gustave Courbet painting \"Death of the deer\"",
+      "artist": "Etienne Carjat Fareins",
+      "year": 1867,
+      "date": "1867",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/content/images/carjat-ppph00701_0.jpg",
+      "medium": "Print on albumen paper",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/gustave-courbet-painting-death-deer",
+      "id": "petit-palais-125"
+    },
+    {
+      "title": "Italian landscape",
+      "artist": "Achille Bénouville (Paris",
+      "year": 1852,
+      "date": "1852",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/benouville_paysage_3.jpg",
+      "medium": "Gouache retouched with watercolour on paper",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/italian-landscape",
+      "id": "petit-palais-126"
+    },
+    {
+      "title": "Italian landscape with three knights",
+      "artist": "Pierre-Athanase Chauvin",
+      "year": 1806,
+      "date": "1806",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/Chauvin42462_5.jpg",
+      "medium": "Oil on canvas,",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/italian-landscape-three-knights",
+      "id": "petit-palais-127"
+    },
+    {
+      "title": "Joan of Arc",
+      "artist": "Emmanuel Frémiet",
+      "year": 1875,
+      "date": "1875",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/content/images/fremiet_-_pps976-01.jpg",
+      "medium": "Life-size plaster model",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/joan-arc",
+      "id": "petit-palais-128"
+    },
+    {
+      "title": "Lampe de mosquée",
+      "artist": "Philippe-Joseph Brocard",
+      "year": 1868,
+      "date": "1868",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/brocardlampemosqueegf.jpg",
+      "medium": "Blown glass, enamelled and gilded",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/lampe-de-mosquee",
+      "id": "petit-palais-129"
+    },
+    {
+      "title": "Landscape in the vicinity of Rome",
+      "artist": "Henri Joseph Harpignies (Valenciennes",
+      "year": 1851,
+      "date": "1851",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/harpignies_paysage.jpg",
+      "medium": "Watercolour on paper",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/landscape-vicinity-rome",
+      "id": "petit-palais-130"
+    },
+    {
+      "title": "Landscape with a tomb",
+      "artist": "Théodore Géricault Rouen",
+      "year": 1818,
+      "date": "Circa 1818",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/content/images/meero_pp-pdut01170_001.jpg",
+      "medium": "Oil on canvas",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/landscape-tomb",
+      "id": "petit-palais-131"
+    },
+    {
+      "title": "Lazare Hoche",
+      "artist": "Aimé-Jules Dalou",
+      "year": 1906,
+      "date": "After 1906",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/dalou_hoche.jpg",
+      "medium": "Bronze copy. Lost-wax casting",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/lazare-hoche",
+      "id": "petit-palais-132"
+    },
+    {
+      "title": "Mademoiselle de Lancey",
+      "artist": "Charles Durand known as Carolus-Duran Lille",
+      "year": 1876,
+      "date": "1876",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/24650-1.jpg",
+      "medium": "Oil on canvas",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/mademoiselle-de-lancey",
+      "id": "petit-palais-133"
+    },
+    {
+      "title": "Mademoiselle Fiocre",
+      "artist": "Jean-Baptiste Carpeaux Valenciennes",
+      "year": 1869,
+      "date": "Circa 1869-1870",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/MademoiselleFiocre.jpg",
+      "medium": "Plaster",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/mademoiselle-fiocre",
+      "id": "petit-palais-134"
+    },
+    {
+      "title": "Mameluke clock",
+      "artist": "Jacob Mardochée known as Jacob Petit",
+      "year": 1845,
+      "date": "Circa 1845",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/JacobPetitPpenduleAuMamenluck1.JPG",
+      "medium": "Paris porcelain",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/mameluke-clock",
+      "id": "petit-palais-135"
+    },
+    {
+      "title": "Mask of Silenus",
+      "artist": "Sèvres factory, model from Dalou",
+      "year": 1930,
+      "date": "1930 or 1934, based on a model made before 1885",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/silene_74273-1.jpg",
+      "medium": "Stoneware",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/mask-silenus",
+      "id": "petit-palais-136"
+    },
+    {
+      "title": "Old Man with a Stick",
+      "artist": "Paul Gauguin",
+      "year": 1888,
+      "date": "December 1888",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/VielHomme.jpg",
+      "medium": "Oil on canvas",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/old-man-stick",
+      "id": "petit-palais-137"
+    },
+    {
+      "title": "Pair of chairs from the Gothic study of the Comtesse d’Osmond",
+      "artist": "François-Honoré-Georges Jacob, know as Jacob-Desmalter",
+      "year": 1817,
+      "date": "circa 1817-1820",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/PaireDeChaisesDuCabinet%20.jpg",
+      "medium": "Gilded and carved wood, modern upholstery",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/pair-chairs-gothic-study-comtesse-d-osmond",
+      "id": "petit-palais-138"
+    },
+    {
+      "title": "Paire de vases",
+      "artist": "Ernest Chaplet (1835-1909) Albert Dammouse (1849-1926)",
+      "year": 1882,
+      "date": "Between 1882 and 1885",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/content/images/img12.jpg",
+      "medium": "Brown stoneware with coloured clay inlays and gold highlights",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/paire-de-vases",
+      "id": "petit-palais-139"
+    },
+    {
+      "title": "Peasant’s head",
+      "artist": "Aimé Jules Dalou",
+      "year": 1894,
+      "date": "Study, 1894",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/DalouTetePaysan%20_1.jpg",
+      "medium": "Terracotta",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/peasant-s-head",
+      "id": "petit-palais-140"
+    },
+    {
+      "title": "Plate",
+      "artist": "François-Emile Ehrmann (Strasbourg",
+      "year": 1869,
+      "date": "1869",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/odut1621.jpg",
+      "medium": "Earthenware and painted wooden frame",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/plate",
+      "id": "petit-palais-141"
+    },
+    {
+      "title": "Pont Royal and the Pavillon de Flore",
+      "artist": "Camille Pissarro Saint-Tomas, Antilles danoises",
+      "year": 1903,
+      "date": "1903",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/pissarro.jpg",
+      "medium": "Oil on canvas",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/pont-royal-and-pavillon-de-flore",
+      "id": "petit-palais-142"
+    },
+    {
+      "title": "Portrait of Horace Delaroche",
+      "artist": "Paul Delaroche",
+      "year": 1838,
+      "date": "1838",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/delaroche_-_ppp04983.jpg",
+      "medium": "Oil",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/portrait-horace-delaroche",
+      "id": "petit-palais-143"
+    },
+    {
+      "title": "Portrait of Jeanne et Mrs Albert Dammouse",
+      "artist": "Jean-Désiré Ringel d'Illzach Illzach",
+      "year": 1885,
+      "date": "1885",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/ringell.jpg",
+      "medium": "Terracotta",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/portrait-jeanne-et-mrs-albert-dammouse",
+      "id": "petit-palais-144"
+    },
+    {
+      "title": "Portrait of Juliette Courbet",
+      "artist": "Gustave Courbet",
+      "year": 1844,
+      "date": "1844",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/25759-11.jpg",
+      "medium": "Oil on canvas",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/portrait-juliette-courbet",
+      "id": "petit-palais-145"
+    },
+    {
+      "title": "Portrait of Mademoiselle Athénaïs d’Albenas",
+      "artist": "Louis Léopold Boilly La Bassée (Nord)",
+      "year": 1807,
+      "date": "1807",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/Boilly.jpg",
+      "medium": "Oil on canvas",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/portrait-mademoiselle-athenais-d-albenas",
+      "id": "petit-palais-146"
+    },
+    {
+      "title": "Portrait of Mr and Mrs Mosselman and their two daughters",
+      "artist": "Alfred de Dreux",
+      "year": 1848,
+      "date": "1848",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/26305-2.jpg",
+      "medium": "Oil on canvas",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/portrait-mr-and-mrs-mosselman-and-their-two-daughters",
+      "id": "petit-palais-147"
+    },
+    {
+      "title": "Portrait of Théodore Duret",
+      "artist": "Édouard Manet",
+      "year": 1868,
+      "date": "1868",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/content/images/manet_duret.jpg",
+      "medium": "Oil on canvas",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/portrait-theodore-duret",
+      "id": "petit-palais-148"
+    },
+    {
+      "title": "Priam asking Achilles for the body of Hector",
+      "artist": "Théobald Chartran",
+      "year": 1876,
+      "date": "1876",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/ppp4985.jpg",
+      "medium": "Oil on cavas",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/priam-asking-achilles-body-hector",
+      "id": "petit-palais-149"
+    },
+    {
+      "title": "Recumbent Bacchante",
+      "artist": "Jean-Baptiste Clesinger, known as Auguste Clesinger",
+      "year": 1848,
+      "date": "1848",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/ClesingerBacchanteCouchee%20.JPG",
+      "medium": "Marble",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/recumbent-bacchante",
+      "id": "petit-palais-150"
+    },
+    {
+      "title": "Siesta during the haying season (mountain in the Doubs)",
+      "artist": "Gustave Courbet",
+      "year": 1868,
+      "date": "1868",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/courbet_ppp00035.jpg",
+      "medium": "Oil on canvas",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/siesta-during-haying-season-mountain-doubs",
+      "id": "petit-palais-151"
+    },
+    {
+      "title": "Sketch for a Monument to Marshal Moncey",
+      "artist": "Jean-Baptiste Carpeaux Valenciennes",
+      "year": 1861,
+      "date": "1861-1864",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/content/images/pps954-lpdp_78930-1.jpg",
+      "medium": "Original plaster",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/sketch-monument-marshal-moncey",
+      "id": "petit-palais-152"
+    },
+    {
+      "title": "Study for the Republic",
+      "artist": "Aimé-Jules Dalou",
+      "year": 1879,
+      "date": "1879",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/dalou.jpg",
+      "medium": "Pen and pencil on paper",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/study-republic",
+      "id": "petit-palais-153"
+    },
+    {
+      "title": "The Ascension",
+      "artist": "Gustave Doré Strasbourg",
+      "year": 1879,
+      "date": "1879",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/dore-pdut1438.jpg",
+      "medium": "Oil on canvas",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/ascension",
+      "id": "petit-palais-154"
+    },
+    {
+      "title": "The Church at Moret (Evening)",
+      "artist": "Alfred Sisley",
+      "year": 1894,
+      "date": "1894",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/ppp118.jpg",
+      "medium": "Oil on canvas",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/church-moret-evening",
+      "id": "petit-palais-155"
+    },
+    {
+      "title": "The conquerors of the Bastille in front of the City Hall 14 July 1789",
+      "artist": "Paul Delaroche",
+      "year": 1830,
+      "date": "Between 1830 and 1838",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/content/images/img127.jpg",
+      "medium": "Oil on canvas",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/conquerors-bastille-front-city-hall-14-july-1789",
+      "id": "petit-palais-156"
+    },
+    {
+      "title": "The Courtyard of the Bargello Palace in Florence",
+      "artist": "Charles Garnier (Paris",
+      "year": 1849,
+      "date": "1849",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/garnier_bargello.jpg",
+      "medium": "Watercolour on paper",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/courtyard-bargello-palace-florence",
+      "id": "petit-palais-157"
+    },
+    {
+      "title": "The Defence of Paris",
+      "artist": "Louis Ernest Barrias",
+      "year": 1880,
+      "date": "1880",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/content/images/pps3484.jpg",
+      "medium": "Plaster with bronze patina",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/defence-paris",
+      "id": "petit-palais-158"
+    },
+    {
+      "title": "The first funeral",
+      "artist": "Louis Ernest Barrias",
+      "year": 1883,
+      "date": "1883",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/BarriasFace.jpg",
+      "medium": "Marble",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/first-funeral",
+      "id": "petit-palais-159"
+    },
+    {
+      "title": "The Fool and Death",
+      "artist": "Sarah Bernhardt",
+      "year": 1877,
+      "date": "1877",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/content/images/m1111_pps03831_001.jpg",
+      "medium": "Bronze",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/fool-and-death",
+      "id": "petit-palais-160"
+    },
+    {
+      "title": "The Funeral Day, a scene from Morocco (Death of the Emir)",
+      "artist": "Benjamin-Constant, Jean-Joseph Benjamin Constant dit",
+      "year": 1889,
+      "date": "1889",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/benjaminconstantfunerailles.jpg",
+      "medium": "Oil on canvas",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/funeral-day-scene-morocco-death-emir",
+      "id": "petit-palais-161"
+    },
+    {
+      "title": "The Good Samaritan",
+      "artist": "Aimé-Nicolas Morot Nancy",
+      "year": 1880,
+      "date": "1880",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/morot.jpg",
+      "medium": "Oil on canvas",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/good-samaritan",
+      "id": "petit-palais-162"
+    },
+    {
+      "title": "The print collector",
+      "artist": "Honoré Daumier",
+      "year": 1860,
+      "date": "Circa 1860",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/DaumierAmateurEstampe.jpg",
+      "medium": "Oil on canvas",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/print-collector",
+      "id": "petit-palais-163"
+    },
+    {
+      "title": "The Sleepers",
+      "artist": "Gustave Courbet",
+      "year": 1866,
+      "date": "1866",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/CourbetSommeil.JPG",
+      "medium": "Oil on canvas",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/sleepers",
+      "id": "petit-palais-164"
+    },
+    {
+      "title": "The Vale of Tears",
+      "artist": "Gustave Doré Strasbourg",
+      "year": 1883,
+      "date": "1883",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/ValleeLarmesP%20DUT%201437.JPG",
+      "medium": "Oil on canvas",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/vale-tears",
+      "id": "petit-palais-165"
+    },
+    {
+      "title": "The “Titans” Jardinière",
+      "artist": "Auguste Rodin(Paris",
+      "year": 1877,
+      "date": "Circa 1877",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/JardiniereCarrierBelleuse26363-14.jpg",
+      "medium": "Earthenware",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/titans-jardiniere",
+      "id": "petit-palais-166"
+    },
+    {
+      "title": "Three models of statues for the dining room in the Hôtel de Ville in Paris",
+      "artist": "Unknown",
+      "year": 0,
+      "date": "",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/content/images/pps3397-lpdp_145008-30.jpg",
+      "medium": "",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/three-models-statues-dining-room-hotel-de-ville-paris",
+      "id": "petit-palais-167"
+    },
+    {
+      "title": "Ugolino",
+      "artist": "Jean-Baptiste Carpeaux Valenciennes",
+      "year": 1862,
+      "date": "1862 ?",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/CarpeauxUgolin.jpg",
+      "medium": "Plaster patinated",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/ugolino",
+      "id": "petit-palais-168"
+    },
+    {
+      "title": "Vase : Van Dyck painting his first canvas",
+      "artist": "Louis-Ferdinand Lachassaigne Working in",
+      "year": 1822,
+      "date": "After 1822",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/VaseLachassaigneFace.jpg",
+      "medium": "Paris porcelain",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/vase-van-dyck-painting-his-first-canvas",
+      "id": "petit-palais-169"
+    },
+    {
+      "title": "Study for the pianist in the White Ball",
+      "artist": "Joseph-Marius Avy",
+      "year": 1903,
+      "date": "1903",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/bal_blanc.jpg",
+      "medium": "Red chalk on paper",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/study-pianist-white-ball",
+      "id": "petit-palais-170"
+    },
+    {
+      "title": "1918 or The Last Bulletin",
+      "artist": "Georges Paul Leroux",
+      "year": 1920,
+      "date": "1920",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/content/images/lpdp_156859-8.jpg",
+      "medium": "Oil on canvas",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/1918-or-last-bulletin",
+      "id": "petit-palais-171"
+    },
+    {
+      "title": "Aetas Aurea (The Golden Age)",
+      "artist": "Medardo Rosso",
+      "year": 1885,
+      "date": "1885",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/Rosso%2C%20Aetas%20Aurea%20%28l%27Age%20d%27or%29.JPG",
+      "medium": "Wax",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/aetas-aurea-golden-age",
+      "id": "petit-palais-172"
+    },
+    {
+      "title": "Ambroise Vollard in a Red Scarf",
+      "artist": "Pierre-Auguste Renoir",
+      "year": 1899,
+      "date": "Circa 1899",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/lpdp_24779-2.jpg",
+      "medium": "Oil on canvas",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/ambroise-vollard-red-scarf",
+      "id": "petit-palais-173"
+    },
+    {
+      "title": "Arion",
+      "artist": "Gustave Moreau",
+      "year": 1891,
+      "date": "1891",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/moreau.jpg",
+      "medium": "Oil on canvas",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/arion",
+      "id": "petit-palais-174"
+    },
+    {
+      "title": "Ball on the 14th of July",
+      "artist": "Théophile Alexandre Steinlen",
+      "year": 1889,
+      "date": "1889",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/SteinlenBal2.jpg",
+      "medium": "Oil on canvas",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/ball-14th-july",
+      "id": "petit-palais-175"
+    },
+    {
+      "title": "Bastille Day 1880, inauguration of the monument to the Republic",
+      "artist": "Alfred-Philippe Roll",
+      "year": 1882,
+      "date": "Circa 1882",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/1997%20PPA%200308.JPG",
+      "medium": "Oil on canvas",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/bastille-day-1880-inauguration-monument-republic",
+      "id": "petit-palais-176"
+    },
+    {
+      "title": "Birth of Venus",
+      "artist": "Odilon Redon",
+      "year": 1912,
+      "date": "circa 1912",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/content/images/lpdp_26340-17.jpg",
+      "medium": "Pastel on paper, mounted on card",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/birth-venus",
+      "id": "petit-palais-177"
+    },
+    {
+      "title": "Birthwort vase",
+      "artist": "Henri Husson (Grand",
+      "year": 1909,
+      "date": "Circa 1909",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/HussonVaseAuxAristoloches.jpg",
+      "medium": "Beaten copper with repoussé work, metal filings and silver appliqué work",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/birthwort-vase",
+      "id": "petit-palais-178"
+    },
+    {
+      "title": "Bust of a child (portrait presumed to be of Marcel Lerolle)",
+      "artist": "Raoul Larche Saint-André-de-Cubzac",
+      "year": 1889,
+      "date": "1889",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/content/images/pps3810.jpg",
+      "medium": "Patinated plaster",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/bust-child-portrait-presumed-be-marcel-lerolle",
+      "id": "petit-palais-179"
+    },
+    {
+      "title": "Centaur and Dryad",
+      "artist": "Henry Cros Narbonne",
+      "year": 1903,
+      "date": "Before 1903",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/Cros%20Centaure%20et%20Dryade%20%28c%29%20Petit%20Palais-Roger%20Viollet.jpg",
+      "medium": "Polychromed terracotta",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/centaur-and-dryad",
+      "id": "petit-palais-180"
+    },
+    {
+      "title": "Commode, The Blood of Armenia or The Field of Blood",
+      "artist": "Emile Gallé Nancy",
+      "year": 1900,
+      "date": "1900",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/ppo03818.jpg",
+      "medium": "Turkish walnut, marquetry in various woods, onyx",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/commode-blood-armenia-or-field-blood",
+      "id": "petit-palais-181"
+    },
+    {
+      "title": "Compote dish. Rousseau dinner service",
+      "artist": "Bracquemond (Félix), Rousseau (Eugène), Creil and Montereau factory",
+      "year": 1866,
+      "date": "Pattern created in 1866, produced between 1866 and 1875",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/BracquemondRousseauCompotiern%20.jpg",
+      "medium": "Earthenware",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/compote-dish-rousseau-dinner-service",
+      "id": "petit-palais-182"
+    },
+    {
+      "title": "Conversation in Arcachon",
+      "artist": "Pierre Bonnard Fontenay-aux-Roses",
+      "year": 1926,
+      "date": "1926-1930",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/bonnard_-_conversation.jpg",
+      "medium": "Oil on canvas",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/conversation-arcachon",
+      "id": "petit-palais-183"
+    },
+    {
+      "title": "Dagger: seaweed",
+      "artist": "Sarah Bernhardt",
+      "year": 1900,
+      "date": "1900",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/daguesb1_0.jpg",
+      "medium": "Bronze with golden-brown patina. Lost-wax casting",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/dagger-seaweed",
+      "id": "petit-palais-184"
+    },
+    {
+      "title": "Deux portraits du peintre Bellanger peignant en plein air",
+      "artist": "Anonyme",
+      "year": 0,
+      "date": "",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/content/images/img4.jpg",
+      "medium": "Gelatin silver prints on paper",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/deux-portraits-du-peintre-bellanger-peignant-en-plein-air",
+      "id": "petit-palais-185"
+    },
+    {
+      "title": "Dish: The judgment of Paris",
+      "artist": "Pierre-Adrien Dalpayrat",
+      "year": 1893,
+      "date": "Between 1893 et 1906",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/dalpayrat-70007-2.jpg",
+      "medium": "Glazed stoneware",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/dish-judgment-paris",
+      "id": "petit-palais-186"
+    },
+    {
+      "title": "Display cabinet",
+      "artist": "François-Rupert Carabin Saverne",
+      "year": 1895,
+      "date": "1895",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/pp-ogal00040_001.jpg",
+      "medium": "Walnut, metal, glass and ceramic",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/display-cabinet",
+      "id": "petit-palais-187"
+    },
+    {
+      "title": "Female bathers at Perros-Guirec",
+      "artist": "Maurice Denis Granville",
+      "year": 1912,
+      "date": "Circa 1912",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/DenisBaigneusesPP.jpg",
+      "medium": "Oil on canvas",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/female-bathers-perros-guirec",
+      "id": "petit-palais-188"
+    },
+    {
+      "title": "Figures in an Interior",
+      "artist": "Edouard Vuillard Cuiseaux",
+      "year": 0,
+      "date": "",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/vuillard_lintimite9_c_petit_palais-roger_viollet_0.jpg.crop_display.jpg",
+      "medium": "Glue-based paint on canvas",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/figures-interior",
+      "id": "petit-palais-189"
+    },
+    {
+      "title": "Florentine Evening: Cantata, Bathers, Poem",
+      "artist": "Maurice Denis Granville",
+      "year": 1910,
+      "date": "1910",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/baigneuses.jpg",
+      "medium": "Oil on canvas",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/florentine-evening-cantata-bathers-poem",
+      "id": "petit-palais-190"
+    },
+    {
+      "title": "The four seasons : Spring, Summer, Autumn, Winter",
+      "artist": "Paul Cézanne Aix-en-Provence",
+      "year": 1860,
+      "date": "Circa 1860",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/Printemps.jpg",
+      "medium": "Oil on canvas",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/four-seasons-spring-summer-autumn-winter",
+      "id": "petit-palais-191"
+    },
+    {
+      "title": "The gourmet Pelican",
+      "artist": "Emmanuel Frémiet",
+      "year": 1890,
+      "date": "1890",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/content/images/fremiet-05.jpg",
+      "medium": "Bronze with gold patina",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/gourmet-pelican",
+      "id": "petit-palais-192"
+    },
+    {
+      "title": "Greek revival vase",
+      "artist": "Baccarat Factory (founded in",
+      "year": 1867,
+      "date": "1867",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/54535-1.jpg",
+      "medium": "Double crystal etched with hydrofluoric acid, gold highlights",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/greek-revival-vase",
+      "id": "petit-palais-193"
+    },
+    {
+      "title": "Grotesque mask, fragment of the reverse side",
+      "artist": "Jean Carriès",
+      "year": 1891,
+      "date": "Between 1891 and 1894",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/Jean-Joseph%20Carries%2C%20masque%20grotesque%20%28c%29Petit%20Palais-Roger%20Viollet.jpg",
+      "medium": "Enamelled stoneware",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/grotesque-mask-fragment-reverse-side",
+      "id": "petit-palais-194"
+    },
+    {
+      "title": "The Guimard dining room",
+      "artist": "Hector Guimard",
+      "year": 1909,
+      "date": "Circa 1909",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/SAMGuimardPF.jpg",
+      "medium": "Furniture in pear wood",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/guimard-dining-room",
+      "id": "petit-palais-195"
+    },
+    {
+      "title": "Guimard-Lachenal vase",
+      "artist": "Edmond Lachenal Ceramicist. After a model by Hector Guimard",
+      "year": 1898,
+      "date": "circa 1898",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/lpdp_190294-9.jpg",
+      "medium": "Glazed terracotta with turquoise drips on a green jade background",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/guimard-lachenal-vase",
+      "id": "petit-palais-196"
+    },
+    {
+      "title": "Kneeling woman in profile with floral motifs",
+      "artist": "Henry Cros (1840, Narbonne -",
+      "year": 1891,
+      "date": "Circa 1891",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/cros_femme_agenouillee.jpg",
+      "medium": "Pencil and watercolour on paper",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/kneeling-woman-profile-floral-motifs",
+      "id": "petit-palais-197"
+    },
+    {
+      "title": "Knitter with a pink stocking",
+      "artist": "Paul Sérusier",
+      "year": 1920,
+      "date": "1920",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/serusier_-_tricoteuse.jpg",
+      "medium": "Oil on canvas",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/knitter-pink-stocking",
+      "id": "petit-palais-198"
+    },
+    {
+      "title": "La Vachalcade",
+      "artist": "Fernand Pelez",
+      "year": 1896,
+      "date": "1896-1900",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/25800-11.jpg",
+      "medium": "Oil on canvas",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/la-vachalcade",
+      "id": "petit-palais-199"
+    },
+    {
+      "title": "Lekythoi with a bistre background (CVA 335 et CVA 336)",
+      "artist": "Petit Palais Painter 336",
+      "year": 0,
+      "date": "Circa 480-470 BC",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/content/images/adut346-adut347.jpg",
+      "medium": "Ceramic with black figures on a bistre background",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/lekythoi-bistre-background-cva-335-et-cva-336",
+      "id": "petit-palais-200"
+    },
+    {
+      "title": "Les Halles",
+      "artist": "Léon Lhermitte Mont-Saint-Père",
+      "year": 1895,
+      "date": "1895",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/75329-26mf.jpg",
+      "medium": "Oil on canvas",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/les-halles",
+      "id": "petit-palais-201"
+    },
+    {
+      "title": "Madame Pascal Blanchard at a party",
+      "artist": "George Desvallières",
+      "year": 1903,
+      "date": "1903",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/content/images/img207.jpg",
+      "medium": "Oil on paper marouflaged on canvas",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/madame-pascal-blanchard-party",
+      "id": "petit-palais-202"
+    },
+    {
+      "title": "Male Torso",
+      "artist": "Auguste Rodin",
+      "year": 1887,
+      "date": "Circa 1887",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/content/images/lpdp_190001-21.jpg",
+      "medium": "Bronze",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/male-torso",
+      "id": "petit-palais-203"
+    },
+    {
+      "title": "Miss Ella Carmichaël",
+      "artist": "Edmond Aman-Jean Chevry-Cossigny (Seine-et-Marne)",
+      "year": 1906,
+      "date": "1906",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/ppp00494-25538-15.jpg",
+      "medium": "Oil on canvas",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/miss-ella-carmichael",
+      "id": "petit-palais-204"
+    },
+    {
+      "title": "Mouthful of bread. Sketches",
+      "artist": "Fernand Pelez",
+      "year": 1904,
+      "date": "Circa 1904",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/content/images/ppp36921.jpg",
+      "medium": "Oil on canvas",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/mouthful-bread-sketches",
+      "id": "petit-palais-205"
+    },
+    {
+      "title": "Mr Pelez, painter of fin de siècle elegance",
+      "artist": "François Flameng (1856",
+      "year": 1895,
+      "date": "1895",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/flameng.jpg",
+      "medium": "Graphite pencil drawing on laid paper",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/mr-pelez-painter-fin-de-siecle-elegance",
+      "id": "petit-palais-206"
+    },
+    {
+      "title": "Mule rhyton (CVA 367)",
+      "artist": "Colmar painter (decoration attributed to the)",
+      "year": 0,
+      "date": "Circa 500-480 BC",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/content/images/adut376-01.jpg",
+      "medium": "Ceramic with red figures, white and red highlights",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/mule-rhyton-cva-367",
+      "id": "petit-palais-207"
+    },
+    {
+      "title": "My Portrait",
+      "artist": "Jean Carriès",
+      "year": 1887,
+      "date": "Circa 1887-1888",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/carriesportrait.jpg",
+      "medium": "Virgin wax on plaster core",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/my-portrait",
+      "id": "petit-palais-208"
+    },
+    {
+      "title": "Nice, on the Promenade des Anglais",
+      "artist": "Henri-Marie-Raymond de Toulouse-Lautrec Monfa dit Toulouse-Lautrec Albi",
+      "year": 1880,
+      "date": "1880",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/NiceSouvenirPromenadeAnglaisGF.jpg",
+      "medium": "Oil on canvas",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/nice-promenade-des-anglais",
+      "id": "petit-palais-209"
+    },
+    {
+      "title": "The painter Louis-Robert Carrier-Belleuse (?) painting in the open air – street scene",
+      "artist": "M. Meys\n(possibly Marcel Meys, working in France in the",
+      "year": 0,
+      "date": "Late 19th century – early 20th century",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/Carrier_Belleuse_peignant_en_plein_air_7.jpg",
+      "medium": "Print on albumen paper on cardboard backing",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/painter-louis-robert-carrier-belleuse-painting-open-air-street-scene",
+      "id": "petit-palais-210"
+    },
+    {
+      "title": "Pair of vases",
+      "artist": "Pierre-Adrien Dalpayrat (Limoges",
+      "year": 1900,
+      "date": "Design presented at the Universal Exhibition of 1900",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/Dalpayrat%2C%20vase%20%28c%29%20Petit%20Palais-Roger%20Viollet.JPG",
+      "medium": "Vases in the shape of amphorae in glazed stoneware",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/pair-vases",
+      "id": "petit-palais-211"
+    },
+    {
+      "title": "Parisienne, Portrait of Irma",
+      "artist": "Marie Constantine Bashkirtseff Gavronzi (Ukraine)",
+      "year": 1882,
+      "date": "1882",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/ParisienneGF.jpg",
+      "medium": "Oil on canvas",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/parisienne-portrait-irma",
+      "id": "petit-palais-212"
+    },
+    {
+      "title": "Peacock Casket",
+      "artist": "Armand Point Alger",
+      "year": 1899,
+      "date": "1899",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/content/images/img37.jpg",
+      "medium": "Wood, chase gilt bronze, enamel, lapis-lazuli, cabochons",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/peacock-casket",
+      "id": "petit-palais-213"
+    },
+    {
+      "title": "Pénélope",
+      "artist": "Antoine Bourdelle Montauban",
+      "year": 1909,
+      "date": "1909",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/PenelopeSurSocle26344-17.jpg",
+      "medium": "Bronze, after the plaster model",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/penelope",
+      "id": "petit-palais-214"
+    },
+    {
+      "title": "Photographic collection of ornamental motifs",
+      "artist": "Anonymous",
+      "year": 0,
+      "date": "Late 19th century – early 20th century",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/dessin_industriel.jpg",
+      "medium": "Prints on albumen paper on cardboard backing",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/photographic-collection-ornamental-motifs",
+      "id": "petit-palais-215"
+    },
+    {
+      "title": "Pine cone bowl",
+      "artist": "René Lalique Ay",
+      "year": 1902,
+      "date": "Circa 1902",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/ogal579-02.jpg",
+      "medium": "Glass, crystal, silver",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/pine-cone-bowl",
+      "id": "petit-palais-216"
+    },
+    {
+      "title": "Pomona",
+      "artist": "Aristide Maillol Banyuls-sur-Mer",
+      "year": 1937,
+      "date": "1937",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/content/images/pomone1.jpg",
+      "medium": "White marble",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/pomona",
+      "id": "petit-palais-217"
+    },
+    {
+      "title": "Portrait of André Rivoire",
+      "artist": "Henri de Toulouse-Lautrec Albi",
+      "year": 1901,
+      "date": "Circa 1901",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/portraitandrerivoiregf.jpg",
+      "medium": "Oil on canvas",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/portrait-andre-rivoire",
+      "id": "petit-palais-218"
+    },
+    {
+      "title": "Portrait of Carriès (right profile)",
+      "artist": "Émile Grittel Strasbourg",
+      "year": 0,
+      "date": "",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/71433-1-ptt.jpg",
+      "medium": "Wax in a wood and velvet frame",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/portrait-carries-right-profile",
+      "id": "petit-palais-219"
+    },
+    {
+      "title": "Portrait of Charles Girault",
+      "artist": "Denys Puech Gavernac",
+      "year": 1920,
+      "date": "1920",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/content/images/img61.jpg",
+      "medium": "Terracotta",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/portrait-charles-girault",
+      "id": "petit-palais-220"
+    },
+    {
+      "title": "Portrait of Jane Hading",
+      "artist": "Alfred Roll",
+      "year": 1890,
+      "date": "1890",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/roll_janehardinggf.jpg",
+      "medium": "Oil on canvas",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/portrait-jane-hading",
+      "id": "petit-palais-221"
+    },
+    {
+      "title": "Portrait of Madame de Bonnières",
+      "artist": "Pierre-Auguste Renoir",
+      "year": 1889,
+      "date": "1889",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/renoir_-_bonnieres.jpg",
+      "medium": "Oil on canvas",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/portrait-madame-de-bonnieres",
+      "id": "petit-palais-222"
+    },
+    {
+      "title": "Portrait of Mademoiselle Yvonne Robiquet",
+      "artist": "George Desvallières",
+      "year": 1911,
+      "date": "1911",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/content/images/ppp4979-01.jpg",
+      "medium": "Oil on paper mounted on unvarnished canvas",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/portrait-mademoiselle-yvonne-robiquet",
+      "id": "petit-palais-223"
+    },
+    {
+      "title": "Portrait of Mathilde Sée",
+      "artist": "James Tissot (1836",
+      "year": 1885,
+      "date": "circa 1885",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/tissot-ppd5394.jpg",
+      "medium": "Pastel on paper, mounted on canvas",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/portrait-mathilde-see",
+      "id": "petit-palais-224"
+    },
+    {
+      "title": "Portrait of Sarah Bernhardt",
+      "artist": "Georges Clairin",
+      "year": 1876,
+      "date": "1876",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/Sarah1997%20PPA%200412.JPG",
+      "medium": "Oil on canvas",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/portrait-sarah-bernhardt",
+      "id": "petit-palais-225"
+    },
+    {
+      "title": "Round dish. Rousseau dinner service",
+      "artist": "Bracquemond (Félix), Rousseau (Eugène), Creil and Montereau factory",
+      "year": 1866,
+      "date": "Model created in 1866, produced between 1866 and 1875",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/ppo03813-01.jpg",
+      "medium": "Earthenware",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/round-dish-rousseau-dinner-service",
+      "id": "petit-palais-226"
+    },
+    {
+      "title": "Seated female nude with her left hand on her head. Study for The Mediterranean",
+      "artist": "Aristide Maillol Banyuls-sur-Mer",
+      "year": 1900,
+      "date": "Between 1900 and 1902",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/1990-PPA-0022.jpg",
+      "medium": "Terracotta",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/seated-female-nude-her-left-hand-her-head-study-mediterranean",
+      "id": "petit-palais-227"
+    },
+    {
+      "title": "Silence or Immortality",
+      "artist": "Georges-Henri Lemaire Bailly (Oise)",
+      "year": 0,
+      "date": "",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/LemaireSilence.jpg",
+      "medium": "Lapis-lazuli, agate, jasper, opal and gold",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/silence-or-immortality",
+      "id": "petit-palais-228"
+    },
+    {
+      "title": "Stone fragment of a door post for an ancient abbey, 15th century, also known as the soul of old stones",
+      "artist": "Emile Derré (Paris",
+      "year": 1895,
+      "date": "1895",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/Derre.jpg",
+      "medium": "Salt-glazed stoneware made by Janin and Guérineau in Paris",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/stone-fragment-door-post-ancient-abbey-15th-century-also-known-soul-old-stones",
+      "id": "petit-palais-229"
+    },
+    {
+      "title": "The Struggle for Life vase",
+      "artist": "Louis-Robert Carrier-Belleuse",
+      "year": 1894,
+      "date": "1894-1895",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/FaiencedeChoisyRoi%20.jpg",
+      "medium": "Earthenware",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/struggle-life-vase",
+      "id": "petit-palais-230"
+    },
+    {
+      "title": "Study IV for the wedding vase of the Princess Marguerite of Chartres",
+      "artist": "Emile Gallé Nancy",
+      "year": 1896,
+      "date": "1896",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/content/images/img74.jpg",
+      "medium": "Crystal blown in several layers, inclusions, cabochons and applied handles",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/study-iv-wedding-vase-princess-marguerite-chartres",
+      "id": "petit-palais-231"
+    },
+    {
+      "title": "Two half-length portraits of the painter Camille-Félix Bellanger",
+      "artist": "Maison Ad. Braun & Cie (which operated under this name from",
+      "year": 0,
+      "date": "",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/content/images/img199.jpg",
+      "medium": "Gelatin silver prints on paper backed with gilt-edged card.",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/two-half-length-portraits-painter-camille-felix-bellanger",
+      "id": "petit-palais-232"
+    },
+    {
+      "title": "Two mothers and their children in a boat",
+      "artist": "Mary Cassatt Alleghency (United state)",
+      "year": 1910,
+      "date": "1910",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/CassatBain26313-17.jpg",
+      "medium": "Oil on canvas",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/two-mothers-and-their-children-boat",
+      "id": "petit-palais-233"
+    },
+    {
+      "title": "Two nudes in a landscape (recto). Ladies with a hat and landscape study (verso)",
+      "artist": "Aristide Maillol Banyuls-sur-Mer",
+      "year": 0,
+      "date": "",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/maillol_2nusdansunpaysage.jpg",
+      "medium": "Oil on canvas, painted on both sides",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/two-nudes-landscape-recto-ladies-hat-and-landscape-study-verso",
+      "id": "petit-palais-234"
+    },
+    {
+      "title": "Two photochromes depicting works from the Dutuit collection (Petit Palais)",
+      "artist": "Léon Vidal",
+      "year": 0,
+      "date": "",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/content/images/img53.jpg",
+      "medium": "Photomechanical proofs backed with card in a cutaway mount",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/two-photochromes-depicting-works-dutuit-collection-petit-palais",
+      "id": "petit-palais-235"
+    },
+    {
+      "title": "Two sketches for the \"Scarf Dance\"",
+      "artist": "Agathon Léonard Lille",
+      "year": 1897,
+      "date": "1897",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/content/images/leonard-pps3824.jpg",
+      "medium": "Terracotta",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/two-sketches-scarf-dance",
+      "id": "petit-palais-236"
+    },
+    {
+      "title": "Vase with cactus decoration",
+      "artist": "Baccarat Factory (founded in",
+      "year": 1909,
+      "date": "Circa 1909",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/ppo01960-85198-6.jpg",
+      "medium": "Colourless crystal, lined with coloured crystal, gold decoration and acid engraving",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/vase-cactus-decoration",
+      "id": "petit-palais-237"
+    },
+    {
+      "title": "Venus victrix",
+      "artist": "Pierre Auguste Renoir (Limoges",
+      "year": 1916,
+      "date": "1916 ?",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/content/images/lpdp_122896-1.jpg",
+      "medium": "Bronze",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/venus-victrix",
+      "id": "petit-palais-238"
+    },
+    {
+      "title": "The Wave",
+      "artist": "Aristide Maillol Banyuls-sur-Mer",
+      "year": 1891,
+      "date": "Circa 1891-1898",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/Maillol.jpg",
+      "medium": "Oil on canvas",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/wave",
+      "id": "petit-palais-239"
+    },
+    {
+      "title": "The White Ball",
+      "artist": "Joseph-Marius Avy",
+      "year": 1903,
+      "date": "1903",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/25799-1.jpg",
+      "medium": "Oil on canvas",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/white-ball",
+      "id": "petit-palais-240"
+    },
+    {
+      "title": "Woman with a bouquet",
+      "artist": "Félix Vallotton",
+      "year": 1922,
+      "date": "1922",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/content/images/cm_pp-dbarrett_02.jpg",
+      "medium": "Oil on canvas",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/woman-bouquet",
+      "id": "petit-palais-241"
+    },
+    {
+      "title": "Woman with Monkey",
+      "artist": "Camille Alaphilippe Tours",
+      "year": 1908,
+      "date": "1908",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/content/images/pps893-lpdp_200694-23.jpg",
+      "medium": "Stoneware and bronze",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/woman-monkey",
+      "id": "petit-palais-242"
+    },
+    {
+      "title": "Young girl in a low cut dress with a flower in her hair",
+      "artist": "Berthe Morisot Bourges",
+      "year": 1893,
+      "date": "1893",
+      "image": "https://www.petitpalais.paris.fr/sites/default/files/morisot.jpg",
+      "medium": "Huile sur toile",
+      "sourceUrl": "https://www.petitpalais.paris.fr/en/oeuvre/young-girl-low-cut-dress-flower-her-hair",
+      "id": "petit-palais-243"
+    }
+  ]
+}
