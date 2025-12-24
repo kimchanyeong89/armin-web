@@ -5,6 +5,18 @@
   <meta charset="UTF-8" />
   <link rel="icon" type="image/svg+xml" href="/vite.svg" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  
+  <!-- Preconnect to R2 for faster geo data loading -->
+  <link rel="preconnect" href="https://pub-6ce5ae60b244951ac36ffd277fd6ef76.r2.dev" crossorigin>
+  <link rel="dns-prefetch" href="//pub-6ce5ae60b244951ac36ffd277fd6ef76.r2.dev">
+  
+  <!-- Preconnect to Firebase for auth/data -->
+  <link rel="preconnect" href="https://firestore.googleapis.com" crossorigin>
+  <link rel="preconnect" href="https://identitytoolkit.googleapis.com" crossorigin>
+  
+  <!-- Preload critical fonts -->
+  <link rel="preload" href="/fonts/din-alternate-bold.woff2" as="font" type="font/woff2" crossorigin>
+  
   <!-- Performance hints: speed up external image/CDN connections -->
   <link rel="preconnect" href="https://www.nationalgallery.org.uk" crossorigin>
   <link rel="dns-prefetch" href="//www.nationalgallery.org.uk">
@@ -17,7 +29,7 @@
   <link rel="dns-prefetch" href="//maps.gstatic.com">
   <link rel="preconnect" href="https://www.google-analytics.com" crossorigin>
   <link rel="dns-prefetch" href="//www.google-analytics.com">
-  <title>Vite + React + TS</title>
+  <title>Armin Gallery</title>
 </head>
 
 <body>
