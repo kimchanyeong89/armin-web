@@ -65,15 +65,6 @@ const FALLBACK_ARTWORK_IMAGE = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAA
 const R2_DOMAIN = 'pub-396fad1f96754c2f816f260faf970e63.r2.dev';
 const isR2Image = (url: string): boolean => url?.includes(R2_DOMAIN);
 
-// Cloudflare Image Resizing URL 생성 (R2 이미지용)
-// 85% 품질로 축소된 이미지 로드, 클릭시 원본 100% 표시
-const getOptimizedR2Url = (url: string, quality: number = 85): string => {
-  if (!isR2Image(url)) return url;
-  // Cloudflare Image Resizing format: /cdn-cgi/image/quality=85,format=auto/URL
-  // R2 public bucket은 직접 리사이징이 안 되므로 CSS로 처리
-  return url;
-};
-
 // Extract YouTube video ID from various URL formats
 const extractYouTubeId = (text: string): string | null => {
   if (!text) return null;
