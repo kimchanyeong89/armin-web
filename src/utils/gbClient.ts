@@ -1,4 +1,5 @@
 // Centralized GeoBoundaries client with Vite proxy URL rewrites
+import { resolveStaticUrl } from './staticAssets';
 export type GBLevel = 'ADM2' | 'ADM1';
 
 const pickDownloadUrl = (info: any): string | null => {
@@ -33,12 +34,12 @@ export async function localFallbackADM1(iso3: string): Promise<any[] | null> {
   try {
     let raw: any = null;
     try {
-      const r1 = await fetch('/geodata/admin1-states-10m.json');
+      const r1 = await fetch(resolveStaticUrl('geodata/admin1-states-10m.json'));
       if (r1 && r1.ok) raw = await r1.json();
     } catch {}
     if (!raw) {
       try {
-        const r2 = await fetch('/atlas/ne_50m_admin_1_states_provinces.geojson');
+        const r2 = await fetch(resolveStaticUrl('atlas/ne_50m_admin_1_states_provinces.geojson'));
         if (r2 && r2.ok) raw = await r2.json();
       } catch {}
     }

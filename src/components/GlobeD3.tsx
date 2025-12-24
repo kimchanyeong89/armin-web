@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import * as d3 from 'd3';
 import { mesh as topojsonMesh } from 'topojson-client';
 import type { Exhibition } from '../types/Exhibition';
+import { resolveStaticUrl } from '../utils/staticAssets';
 
 // Minimal D3 orthographic globe with stroke-only borders on white background
 // Props allow focusing a lat/lng and optional auto-rotation
@@ -569,7 +570,7 @@ export default function GlobeD3({ focusLatLng = null, autorotate = false, stroke
       if (adminStatesLoadAttempted || hasAdminStates) return;
       adminStatesLoadAttempted = true;
       try {
-        const res = await fetch('/geodata/admin1-states-10m.json', { cache: 'no-store' });
+        const res = await fetch(resolveStaticUrl('geodata/admin1-states-10m.json'), { cache: 'no-store' });
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const fc = await res.json();
         adminAllFeatures = (fc.features || []);

@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import * as d3 from 'd3';
 import { feature as topojsonFeature } from 'topojson-client';
+import { resolveStaticUrl } from '../utils/staticAssets';
 
 interface Props {
   focusLatLng?: { lat: number; lng: number } | null;
@@ -585,10 +586,10 @@ export default function D3GeoGlobeOrtho({
         // Prefetch states data on first click if allowed (independent of target zoom)
         if (enableAdmin1 && states.length === 0 && !statesFetchingRef.current) {
           statesFetchingRef.current = true;
-          fetch('/geodata/admin1-states-10m.json')
+          fetch(resolveStaticUrl('geodata/admin1-states-10m.json'))
             .then(async r => {
               if (r && r.ok) return r.json();
-              const alt = await fetch('/atlas/ne_50m_admin_1_states_provinces.geojson').catch(() => null);
+              const alt = await fetch(resolveStaticUrl('atlas/ne_50m_admin_1_states_provinces.geojson')).catch(() => null);
               if (alt && alt.ok) return alt.json();
               return null;
             })
@@ -678,12 +679,12 @@ export default function D3GeoGlobeOrtho({
           admin1PrefetchStartedRef.current = true;
           let raw: any = null;
           try {
-            const r = await fetch('/geodata/admin1-states-10m.json');
+            const r = await fetch(resolveStaticUrl('geodata/admin1-states-10m.json'));
             if (r && r.ok) raw = await r.json();
           } catch {}
           if (!raw) {
             try {
-              const r2 = await fetch('/atlas/ne_50m_admin_1_states_provinces.geojson');
+              const r2 = await fetch(resolveStaticUrl('atlas/ne_50m_admin_1_states_provinces.geojson'));
               if (r2 && r2.ok) raw = await r2.json();
             } catch {}
           }
@@ -710,11 +711,11 @@ export default function D3GeoGlobeOrtho({
         // Prefetch Urban Areas if enabled and not loaded
         if (enableUrbanAreas && !urbanFetchStartedRef.current && (!urbanAreas || urbanAreas.length === 0)) {
           urbanFetchStartedRef.current = true;
-          const r1 = await fetch('/atlas/ne_50m_urban_areas.geojson').catch(() => null);
+          const r1 = await fetch(resolveStaticUrl('atlas/ne_50m_urban_areas.geojson')).catch(() => null);
           let raw: any = null;
           if (r1 && r1.ok) raw = await r1.json();
           if (!raw) {
-            const r2 = await fetch('/atlas/ne_10m_urban_areas.geojson').catch(() => null);
+            const r2 = await fetch(resolveStaticUrl('atlas/ne_10m_urban_areas.geojson')).catch(() => null);
             if (r2 && r2.ok) raw = await r2.json();
           }
           if (raw && raw.type === 'FeatureCollection' && Array.isArray(raw.features)) {

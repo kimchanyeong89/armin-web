@@ -1,7 +1,8 @@
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import * as d3 from 'd3';
 import { geoPath, geoMercator } from 'd3-geo';
 import type { Exhibition } from '../types/Exhibition';
+import { resolveStaticUrl } from '../utils/staticAssets';
 
 interface OpenStreetMapProps {
   focusLatLng?: { lat: number; lng: number };
@@ -30,13 +31,7 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
   const onSelectExhibitionRef = useRef<typeof onSelectExhibition | undefined>(onSelectExhibition);
   useEffect(() => { onSelectExhibitionRef.current = onSelectExhibition; }, [onSelectExhibition]);
 
-  const resolveStaticUrl = useCallback((relativePath: string) => {
-    const base = (import.meta.env.BASE_URL ?? '/').replace(/\/+$/, '');
-    const clean = relativePath.replace(/^\/+/, '');
-    if (base === '' || base === '/') return `/${clean}`;
-    if (base === '.' || base === './') return `./${clean}`;
-    return `${base}/${clean}`;
-  }, []);
+  // resolveStaticUrl imported from utils/staticAssets
 
   const municipalStyle = useMemo(() => {
     const normalized = Math.min(1, Math.max(0.55, viewport.width / 1400));
@@ -96,7 +91,7 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
     };
 
     loadAllData();
-  }, [resolveStaticUrl]);
+  }, []);
 
   // 현재 줌 변환을 보관 (도시 레이어 표시 게이트/위치에 사용)
   const zoomTransformRef = useRef<any>(d3.zoomIdentity);
