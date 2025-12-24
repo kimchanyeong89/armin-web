@@ -1,0 +1,12 @@
+{
+  "config": {
+    "id": "palais-beaux-arts-lille",
+    "name": "Palais des Beaux-Arts de Lille",
+    "url": "https://pba.lille.fr/en/Collections/Highlights",
+    "city": "Lille",
+    "country": "France"
+  },
+  "totalLinks": 20,
+  "successfulScrapes": 20,
+  "timestamp": "2025-12-24T09:05:49.558Z"
+}

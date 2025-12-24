@@ -1,0 +1,60 @@
+{
+  "startTime": "2025-12-24T09:28:39.111Z",
+  "endTime": "2025-12-24T09:46:03.915Z",
+  "duration": 1045,
+  "totalArtworks": 1100,
+  "successCount": 6,
+  "museums": [
+    {
+      "museum": "Palais des Beaux-Arts de Lille",
+      "id": "palais-beaux-arts-lille",
+      "success": true,
+      "count": 20,
+      "outputPath": "/Users/kietzsche/armin-web-main/public/data/palais-beaux-arts-lille-collection.json"
+    },
+    {
+      "museum": "Musée des Beaux-Arts de Rouen",
+      "id": "musee-beaux-arts-rouen",
+      "success": true,
+      "count": 116,
+      "outputPath": "/Users/kietzsche/armin-web-main/public/data/musee-beaux-arts-rouen-collection.json"
+    },
+    {
+      "museum": "Musée d'Art Moderne et Contemporain de Strasbourg",
+      "collection": "MAMCS Strasbourg - Drawings",
+      "id": "mamcs-strasbourg-drawings",
+      "success": true,
+      "count": 201,
+      "pages": 50,
+      "outputPath": "/Users/kietzsche/armin-web-main/public/data/mamcs-strasbourg-drawings-collection.json"
+    },
+    {
+      "museum": "Musée d'Art Moderne et Contemporain de Strasbourg",
+      "collection": "MAMCS Strasbourg - Paintings",
+      "id": "mamcs-strasbourg-paintings",
+      "success": true,
+      "count": 433,
+      "pages": 110,
+      "outputPath": "/Users/kietzsche/armin-web-main/public/data/mamcs-strasbourg-paintings-collection.json"
+    },
+    {
+      "museum": "Musée d'Art Moderne et Contemporain de Strasbourg",
+      "collection": "MAMCS Strasbourg - Photography",
+      "id": "mamcs-strasbourg-photography",
+      "success": true,
+      "count": 197,
+      "pages": 50,
+      "outputPath": "/Users/kietzsche/armin-web-main/public/data/mamcs-strasbourg-photography-collection.json"
+    },
+    {
+      "museum": "Musée d'Art Moderne et Contemporain de Strasbourg",
+      "collection": "MAMCS Strasbourg - Graphic Design",
+      "id": "mamcs-strasbourg-graphic-design",
+      "success": true,
+      "count": 133,
+      "pages": 30,
+      "outputPath": "/Users/kietzsche/armin-web-main/public/data/mamcs-strasbourg-graphic-design-collection.json"
+    }
+  ],
+  "errors": []
+}

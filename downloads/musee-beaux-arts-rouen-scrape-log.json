@@ -1,0 +1,13 @@
+{
+  "config": {
+    "id": "musee-beaux-arts-rouen",
+    "name": "Musée des Beaux-Arts de Rouen",
+    "baseUrl": "https://mbarouen.fr",
+    "collectionsUrl": "https://mbarouen.fr/en/collections",
+    "city": "Rouen",
+    "country": "France"
+  },
+  "collections": 14,
+  "totalArtworks": 133,
+  "timestamp": "2025-12-24T09:15:11.513Z"
+}

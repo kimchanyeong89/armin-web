@@ -61,6 +61,19 @@ const buildVariantSourceSet = (
 // Use a transparent 1x1 PNG as the fallback so no visible '1' placeholder appears
 const FALLBACK_ARTWORK_IMAGE = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMB/6XjVvcAAAAASUVORK5CYII=";
 
+// R2 이미지 URL 확인 및 축소 버전 생성 헬퍼
+const R2_DOMAIN = 'pub-396fad1f96754c2f816f260faf970e63.r2.dev';
+const isR2Image = (url: string): boolean => url?.includes(R2_DOMAIN);
+
+// Cloudflare Image Resizing URL 생성 (R2 이미지용)
+// 85% 품질로 축소된 이미지 로드, 클릭시 원본 100% 표시
+const getOptimizedR2Url = (url: string, quality: number = 85): string => {
+  if (!isR2Image(url)) return url;
+  // Cloudflare Image Resizing format: /cdn-cgi/image/quality=85,format=auto/URL
+  // R2 public bucket은 직접 리사이징이 안 되므로 CSS로 처리
+  return url;
+};
+
 // Extract YouTube video ID from various URL formats
 const extractYouTubeId = (text: string): string | null => {
   if (!text) return null;
@@ -1617,8 +1630,8 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
       })();
       return () => { };
     }
-    // Centre Pompidou & MAM Paris & Louvre & Jacquemart-André & Marmottan & Picasso & Palais de Tokyo & Petit Palais Collections: load from local scraped JSON
-    if (exhibition.id === 'pompidou-cinema' || exhibition.id === 'pompidou-painting' || exhibition.id === 'pompidou-drawing' || exhibition.id === 'pompidou-newmedia' || exhibition.id === 'pompidou-design' || exhibition.id === 'mam-perm-painting' || exhibition.id === 'mam-perm-photography' || exhibition.id === 'louvre-painting' || exhibition.id === 'jacquemart-collection' || exhibition.id === 'marmottan-collection' || exhibition.id === 'picasso-drawings' || exhibition.id === 'picasso-paintings' || exhibition.id === 'picasso-sculptures' || exhibition.id === 'picasso-prints' || exhibition.id === 'palais-de-tokyo-collection' || exhibition.id === 'petit-palais-collection') {
+    // Centre Pompidou & MAM Paris & Louvre & Jacquemart-André & Marmottan & Picasso & Palais de Tokyo & Petit Palais & Rouen & Lille & MAMCS Collections: load from local scraped JSON
+    if (exhibition.id === 'pompidou-cinema' || exhibition.id === 'pompidou-painting' || exhibition.id === 'pompidou-drawing' || exhibition.id === 'pompidou-newmedia' || exhibition.id === 'pompidou-design' || exhibition.id === 'mam-perm-painting' || exhibition.id === 'mam-perm-photography' || exhibition.id === 'louvre-painting' || exhibition.id === 'jacquemart-collection' || exhibition.id === 'marmottan-collection' || exhibition.id === 'picasso-drawings' || exhibition.id === 'picasso-paintings' || exhibition.id === 'picasso-sculptures' || exhibition.id === 'picasso-prints' || exhibition.id === 'palais-de-tokyo-collection' || exhibition.id === 'petit-palais-collection' || exhibition.id === 'rouen-mba-collection' || exhibition.id === 'lille-pba-collection' || exhibition.id === 'mamcs-drawings' || exhibition.id === 'mamcs-paintings' || exhibition.id === 'mamcs-photography' || exhibition.id === 'mamcs-graphic-design') {
       const jsonFiles: Record<string, string> = {
         'pompidou-cinema': '/data/pompidou-cinema-collection.json',
         'pompidou-painting': '/data/pompidou-painting-collection.json',
@@ -1635,13 +1648,19 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
         'picasso-sculptures': '/data/picasso-sculptures-collection.json',
         'picasso-prints': '/data/picasso-prints-collection.json',
         'palais-de-tokyo-collection': '/data/palais-de-tokyo-collection.json',
-        'petit-palais-collection': '/data/petit-palais-collection.json'
+        'petit-palais-collection': '/data/petit-palais-collection.json',
+        'rouen-mba-collection': '/data/rouen-mba.json',
+        'lille-pba-collection': '/data/lille-pba.json',
+        'mamcs-drawings': '/data/mamcs-strasbourg-drawings-collection.json',
+        'mamcs-paintings': '/data/mamcs-strasbourg-paintings-collection.json',
+        'mamcs-photography': '/data/mamcs-strasbourg-photography-collection.json',
+        'mamcs-graphic-design': '/data/mamcs-strasbourg-graphic-design-collection.json'
       };
       const jsonFile = jsonFiles[exhibition.id];
       (async () => {
         try {
           const res = await fetch(jsonFile, { cache: 'no-store' });
-          if (!res.ok) throw new Error('Failed to load Pompidou artworks');
+          if (!res.ok) throw new Error('Failed to load artworks');
           const data = await res.json();
           const toYear = (yearText: string | number | undefined) => {
             if (!yearText) return 0;
@@ -1649,8 +1668,10 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
             return match ? parseInt(match[1], 10) : 0;
           };
           
-          const allObjects = Array.isArray(data.artworks) ? data.artworks : (Array.isArray(data.objects) ? data.objects : []);
-          const is2D = exhibition.id === 'pompidou-painting' || exhibition.id === 'pompidou-drawing' || exhibition.id === 'pompidou-design' || exhibition.id === 'mam-perm-painting' || exhibition.id === 'mam-perm-photography' || exhibition.id === 'louvre-painting' || exhibition.id === 'jacquemart-collection' || exhibition.id === 'marmottan-collection' || exhibition.id === 'picasso-drawings' || exhibition.id === 'picasso-paintings' || exhibition.id === 'picasso-prints' || exhibition.id === 'palais-de-tokyo-collection' || exhibition.id === 'petit-palais-collection';
+          // Handle different JSON structures: array (Rouen/Lille/MAMCS) vs object with artworks/objects
+          const isArrayFormat = Array.isArray(data);
+          const allObjects = isArrayFormat ? data : (Array.isArray(data.artworks) ? data.artworks : (Array.isArray(data.objects) ? data.objects : []));
+          const is2D = exhibition.id === 'pompidou-painting' || exhibition.id === 'pompidou-drawing' || exhibition.id === 'pompidou-design' || exhibition.id === 'mam-perm-painting' || exhibition.id === 'mam-perm-photography' || exhibition.id === 'louvre-painting' || exhibition.id === 'jacquemart-collection' || exhibition.id === 'marmottan-collection' || exhibition.id === 'picasso-drawings' || exhibition.id === 'picasso-paintings' || exhibition.id === 'picasso-prints' || exhibition.id === 'palais-de-tokyo-collection' || exhibition.id === 'petit-palais-collection' || exhibition.id === 'rouen-mba-collection' || exhibition.id === 'lille-pba-collection' || exhibition.id.startsWith('mamcs-');
           const is3D = exhibition.id === 'picasso-sculptures';
           
           const list: Artwork[] = allObjects.map((item: any, idx: number) => ({
@@ -1659,7 +1680,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
               artist: item.artist || item.artistName || 'Unknown',
               year: toYear(item.year),
               date: item.year,
-              image: item.image,
+              image: item.image || item.imageUrl,  // Support both image and imageUrl fields
               dimension: item.dimensions,
               duration: item.duration,  // Video/film duration
               medium: item.medium,
@@ -1672,7 +1693,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
           setArtworks(withImages);
           setInitialized(true);
         } catch (error) {
-          console.error('Failed to load Pompidou artworks:', error);
+          console.error('Failed to load artworks:', error);
           setInitialized(true);
         }
       })();
@@ -3559,6 +3580,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
                       const webp = buildVariantSourceSet(current, 'webp', widths, 75);
                       const sizes = '(max-width: 640px) 100vw, (max-width: 1024px) 82vw, 75vw';
                       const lowSrc = pickLowPlaceholder(current);
+                      const isR2 = isR2Image(current.image);
                       return (
                         <picture>
                           {useProxy && avif && <source type="image/avif" srcSet={avif || undefined} sizes={sizes} />}
@@ -3573,7 +3595,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
                             data-hi={lowSrc === current.image ? '1' : '0'}
                             style={{
                               width: "auto",
-                              maxWidth: "100%",
+                              maxWidth: isR2 ? "117.65%" : "100%",
                               maxHeight: "calc(100vh - 260px)",
                               objectFit: "contain",
                               cursor: "zoom-in",
@@ -3581,7 +3603,9 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
                               filter: mainLoaded ? 'none' : 'blur(14px)',
                               transition: 'filter 420ms ease, opacity 420ms ease',
                               opacity: mainLoaded ? 1 : 0.88,
-                              background: '#f5f5f5'
+                              background: '#f5f5f5',
+                              transform: isR2 ? 'scale(0.85)' : 'none',
+                              transformOrigin: 'center center'
                             }}
                             onClick={(e) => openLightbox(e, current)}
                             onLoad={(e) => {
@@ -3783,6 +3807,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
                             const webp = buildVariantSourceSet(a, 'webp', widths, 70);
                             const sizes = '(max-width: 640px) 90vw, (max-width: 1024px) 55vw, 40vw';
                             const preview = pickLowPlaceholder(a);
+                            const isR2 = isR2Image(a.image);
                             return (
                               <picture>
                                 {useProxy && avif && <source type="image/avif" srcSet={avif || undefined} sizes={sizes} />}
@@ -3795,7 +3820,14 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
                                   decoding="async"
                                   fetchPriority="low"
                                   referrerPolicy="no-referrer"
-                                  style={{ width: '100%', height: 'auto', display: 'block', cursor: 'zoom-in' }}
+                                  style={{ 
+                                    width: isR2 ? '117.65%' : '100%', // 1/0.85 = 117.65% to fill container when scaled
+                                    height: 'auto', 
+                                    display: 'block', 
+                                    cursor: 'zoom-in',
+                                    transform: isR2 ? 'scale(0.85)' : 'none',
+                                    transformOrigin: 'top left'
+                                  }}
                                   onClick={(e) => openLightbox(e, a)}
                                   onError={(e) => applyFallbackImage(e.currentTarget)}
                                 />

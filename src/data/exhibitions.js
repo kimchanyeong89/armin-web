@@ -1626,6 +1626,27 @@ export const exhibitions = [
     longitude: 3.0614,
     description: "루브르 다음으로 큰 회화 컬렉션을 보유한 프랑스 북부의 자존심.",
     representativeImage: "",
+    permanentExhibitions: [
+      { id: "lille-pba-collection", name: "Collection", title: "Palais des Beaux-Arts de Lille Collection", description: "16세기부터 20세기까지의 회화, 조각, 도자기, 드로잉을 아우르는 종합 컬렉션.", startDate: "Permanent", endDate: "Permanent" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    exhibitions: []
+  },
+  {
+    id: "musee-des-beaux-arts-de-rouen",
+    name: "Musée des Beaux-Arts de Rouen",
+    city: "Rouen",
+    country: "France",
+    latitude: 49.4434,
+    longitude: 1.0960,
+    description: "'인상주의의 수도' 루앙의 핵심 갤러리. 모네의 '루앙 대성당' 시리즈 보유.",
+    representativeImage: "",
+    permanentExhibitions: [
+      { id: "rouen-mba-collection", name: "Collection", title: "Musée des Beaux-Arts de Rouen Collection", description: "인상주의, 풍경화, 바로크, 초상화 등 르네상스부터 20세기까지의 유럽 미술 컬렉션.", startDate: "Permanent", endDate: "Permanent" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
     exhibitions: []
   },
   {
@@ -1695,17 +1716,6 @@ export const exhibitions = [
     exhibitions: []
   },
   {
-    id: "musee-des-beaux-arts-de-rouen",
-    name: "Musée des Beaux-Arts de Rouen",
-    city: "Rouen",
-    country: "France",
-    latitude: 49.4434,
-    longitude: 1.0960,
-    description: "'인상주의의 수도' 루앙의 핵심 갤러리. 모네의 '루앙 대성당' 시리즈 보유.",
-    representativeImage: "",
-    exhibitions: []
-  },
-  {
     id: "mamcs-strasbourg",
     name: "Musée d'Art Moderne et Contemporain de Strasbourg",
     city: "Strasbourg",
@@ -1714,6 +1724,14 @@ export const exhibitions = [
     longitude: 7.7542,
     description: "라인강 유역 현대 예술의 중심. 그래픽 디자인과 회화 전시가 강점.",
     representativeImage: "",
+    permanentExhibitions: [
+      { id: "mamcs-drawings", name: "Drawings", title: "MAMCS Drawings Collection", description: "스트라스부르 현대미술관의 드로잉 컬렉션.", startDate: "Permanent", endDate: "Permanent" },
+      { id: "mamcs-paintings", name: "Paintings", title: "MAMCS Paintings Collection", description: "스트라스부르 현대미술관의 회화 컬렉션.", startDate: "Permanent", endDate: "Permanent" },
+      { id: "mamcs-photography", name: "Photography", title: "MAMCS Photography Collection", description: "스트라스부르 현대미술관의 사진 컬렉션.", startDate: "Permanent", endDate: "Permanent" },
+      { id: "mamcs-graphic-design", name: "Graphic Design", title: "MAMCS Graphic Design Collection", description: "스트라스부르 현대미술관의 그래픽 디자인 컬렉션.", startDate: "Permanent", endDate: "Permanent" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
     exhibitions: []
   },
   {

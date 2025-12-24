@@ -459,6 +459,105 @@ export default function ExhibitionDetails({
           datasetEmptyRef.current[exhibitionItemId] = !(items && items.some((it: any) => it && it.image));
           return put(img);
         }
+      } else if (exhibitionItemId === 'petit-palais-collection') {
+        // Petit Palais Collection
+        const res = await fetch('/data/petit-palais-collection.json', { cache: 'no-store' });
+        if (res.ok) {
+          const data = await res.json();
+          const items = Array.isArray(data.objects) ? data.objects : [];
+          const img = items.find((it: any) => it && it.image)?.image || null;
+          datasetEmptyRef.current[exhibitionItemId] = !(items && items.some((it: any) => it && it.image));
+          return put(img);
+        }
+      } else if (exhibitionItemId === 'palais-de-tokyo-collection') {
+        // Palais de Tokyo Collection
+        const res = await fetch('/data/palais-de-tokyo-collection.json', { cache: 'no-store' });
+        if (res.ok) {
+          const data = await res.json();
+          const items = Array.isArray(data.objects) ? data.objects : [];
+          const img = items.find((it: any) => it && it.image)?.image || null;
+          datasetEmptyRef.current[exhibitionItemId] = !(items && items.some((it: any) => it && it.image));
+          return put(img);
+        }
+      } else if (exhibitionItemId === 'picasso-drawings') {
+        // Picasso Drawings Collection
+        const res = await fetch('/data/picasso-drawings-collection.json', { cache: 'no-store' });
+        if (res.ok) {
+          const data = await res.json();
+          const items = Array.isArray(data.objects) ? data.objects : [];
+          const img = items.find((it: any) => it && it.image)?.image || null;
+          datasetEmptyRef.current[exhibitionItemId] = !(items && items.some((it: any) => it && it.image));
+          return put(img);
+        }
+      } else if (exhibitionItemId === 'picasso-paintings') {
+        // Picasso Paintings Collection
+        const res = await fetch('/data/picasso-paintings-collection.json', { cache: 'no-store' });
+        if (res.ok) {
+          const data = await res.json();
+          const items = Array.isArray(data.objects) ? data.objects : [];
+          const img = items.find((it: any) => it && it.image)?.image || null;
+          datasetEmptyRef.current[exhibitionItemId] = !(items && items.some((it: any) => it && it.image));
+          return put(img);
+        }
+      } else if (exhibitionItemId === 'picasso-sculptures') {
+        // Picasso Sculptures Collection
+        const res = await fetch('/data/picasso-sculptures-collection.json', { cache: 'no-store' });
+        if (res.ok) {
+          const data = await res.json();
+          const items = Array.isArray(data.objects) ? data.objects : [];
+          const img = items.find((it: any) => it && it.image)?.image || null;
+          datasetEmptyRef.current[exhibitionItemId] = !(items && items.some((it: any) => it && it.image));
+          return put(img);
+        }
+      } else if (exhibitionItemId === 'picasso-prints') {
+        // Picasso Prints Collection
+        const res = await fetch('/data/picasso-prints-collection.json', { cache: 'no-store' });
+        if (res.ok) {
+          const data = await res.json();
+          const items = Array.isArray(data.objects) ? data.objects : [];
+          const img = items.find((it: any) => it && it.image)?.image || null;
+          datasetEmptyRef.current[exhibitionItemId] = !(items && items.some((it: any) => it && it.image));
+          return put(img);
+        }
+      } else if (exhibitionItemId === 'rouen-mba-collection') {
+        // Musée des Beaux-Arts de Rouen Collection
+        const res = await fetch('/data/rouen-mba.json', { cache: 'no-store' });
+        if (res.ok) {
+          const data = await res.json();
+          const items = Array.isArray(data) ? data : [];
+          const img = items.find((it: any) => it && it.imageUrl)?.imageUrl || null;
+          datasetEmptyRef.current[exhibitionItemId] = !(items && items.some((it: any) => it && it.imageUrl));
+          return put(img);
+        }
+      } else if (exhibitionItemId === 'lille-pba-collection') {
+        // Palais des Beaux-Arts de Lille Collection
+        const res = await fetch('/data/lille-pba.json', { cache: 'no-store' });
+        if (res.ok) {
+          const data = await res.json();
+          const items = Array.isArray(data) ? data : [];
+          const img = items.find((it: any) => it && it.imageUrl)?.imageUrl || null;
+          datasetEmptyRef.current[exhibitionItemId] = !(items && items.some((it: any) => it && it.imageUrl));
+          return put(img);
+        }
+      } else if (exhibitionItemId.startsWith('mamcs-')) {
+        // MAMCS Strasbourg Collections
+        const typeMap: Record<string, string> = {
+          'mamcs-drawings': '/data/mamcs-strasbourg-drawings-collection.json',
+          'mamcs-paintings': '/data/mamcs-strasbourg-paintings-collection.json',
+          'mamcs-photography': '/data/mamcs-strasbourg-photography-collection.json',
+          'mamcs-graphic-design': '/data/mamcs-strasbourg-graphic-design-collection.json'
+        };
+        const jsonFile = typeMap[exhibitionItemId];
+        if (jsonFile) {
+          const res = await fetch(jsonFile, { cache: 'no-store' });
+          if (res.ok) {
+            const data = await res.json();
+            const items = Array.isArray(data) ? data : [];
+            const img = items.find((it: any) => it && it.imageUrl)?.imageUrl || null;
+            datasetEmptyRef.current[exhibitionItemId] = !(items && items.some((it: any) => it && it.imageUrl));
+            return put(img);
+          }
+        }
       }
       // Generic: try local cache populated by ExhibitionModal snapshots
       try {
