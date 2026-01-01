@@ -1,0 +1,1748 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml"><head>
+<meta name="generator" content="Tapestry Application Framework, version 3.0.2">
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<title>Wallace Collection Online - Landing</title>
+<!-- Version: 5.5.1.47 -->
+<!-- $EMP$MODULE name="room" -->
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate, max-age=0">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<meta name="gwt:property" content="locale=en_US">
+<link rel="stylesheet" type="text/css" href="/eMP/eMuseumPlus?service=DynamicAsset&amp;sp=SU5mxm4Yx%2FVbhp94nksEmWhUPPCPARCxmLhZFs2eu1kWTI7PZ7jbbqdMDGNEcANDvJo6XWJomycpz%0AD4leSZ7DzQ%3D%3D&amp;sp=Stext%2Fcss">
+<link rel="stylesheet" type="text/css" href="/eMP/eMuseumPlus?service=DynamicAsset&amp;sp=SU5mxm4Yx%2FVbhp94nksEmWhUPPCPARCxmLhZFs2eu1kWTI7PZ7jbbqdMDGNEcANDvk477%2Fm9rnSWT%0A2Xh2WUoAZUrkNDD4uHnr&amp;sp=Stext%2Fcss" media="print">
+<link rel="icon" href="?service=WebAsset&amp;url=/favicon.ico&amp;contentType=image/x-icon">
+<link rel="shortcut icon" href="?service=WebAsset&amp;url=/favicon.ico&amp;contentType=image/x-icon">
+<meta content="width=device-width" name="viewport">
+<link rel="stylesheet" type="text/css" href="?service=WebAsset&amp;url=css/fluid.css&amp;contentType=text/css">
+<!--<link rel="stylesheet" type="text/css" href="?service=WebAsset&url=css/london.css&contentType=text/css" />-->
+<!-- <link rel="stylesheet" type="text/css" href="?service=WebAsset&url=/css/floorplan.css&contentType=text/css" media="screen" /> -->
+<!--[if IE]>
+<link rel="stylesheet" type="text/css" href="?service=WebAsset&url=css/eMuseumPlus_ie.css&contentType=text/css" />
+<![endif]-->
+<!--[if lte IE 6]>
+<link rel="stylesheet" type="text/css" href="?service=WebAsset&url=css/eMuseumPlus_ie6.css&contentType=text/css" />
+<![endif]-->
+<script type="text/javascript" async="" src="https://www.google-analytics.com/analytics.js"></script><script type="text/javascript" src="?service=WebAsset&amp;url=css/gotopage.js&amp;contentType=text/javascript"></script>
+<script type="text/javascript" src="?service=WebAsset&amp;url=css/start.js&amp;contentType=text/javascript"></script>
+<meta name="google-site-verification" content="deT_PzqAeubwgAdHEZnIrpNYY7_mG8uvg6QnN7q6UIk">
+<!--<link rel="stylesheet" type="text/css" href="?service=WebAsset&url=/css/london.css&contentType=text/css" />-->
+<!--<script type="text/javascript" src="?service=WebAsset&url=/svg/snap.svg-min.js&contentType=application/javascript"></script>-->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cloud.typography.com/7903836/7196192/css/fonts.css">
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-49621938-1"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag() {
+dataLayer.push(arguments);
+}
+gtag('js', new Date());
+gtag('config', 'UA-49621938-1');
+</script>
+<script type="text/javascript">
+var id = 0;
+function makeHttpObject() {
+try {
+return new XMLHttpRequest();
+} catch (error) {}
+try {
+return new ActiveXObject("Msxml2.XMLHTTP");
+} catch (error) {}
+try {
+return new ActiveXObject("Microsoft.XMLHTTP");
+} catch (error) {}
+throw new Error("Could not create HTTP request object.");
+}
+$(document).ready(function() {
+$('<svg><use xlink:href="#icon-arrow-down"></use></svg>').insertAfter($('.formItem select'));
+$('<svg><use xlink:href="#icon-arrow-down"></use></svg>').insertAfter($('.dropdownMenuFromTo ul'));
+$('<svg><use xlink:href="#icon-search"></use></svg>').insertAfter($('#fullTextField'));
+$('<svg><use xlink:href="#icon-arrow-left"></use></svg>').appendTo($('.contextMenu .elementNavigatorBack a .arrowButton'));
+$('<svg><use xlink:href="#icon-arrow-right"></use></svg>').appendTo($('.contextMenu .elementNavigatorNext a .arrowButton'));
+$('body').prepend($('<div class="page-background"><div class="page-background__fade"></div></div>'));
+$('#formItem_field_10612').prepend('<form><input type="checkbox" name="imageYes" value="imageYes" onchange="imageSelected(this)">Images results only</form>');
+$('.collectionContainerDetailList #searchForm .formButton .startButton').clone().insertAfter('.collectionContainerDetailList #searchForm .searchFulltext');
+if ($('.roomContainerDetailView').length) {
+$('<svg><use xlink:href="#icon-plus"></use></svg>').insertAfter($('#webFilterGroupdId_10033 ul .filterItem:first-child a'));
+$('<svg><use xlink:href="#icon-plus"></use></svg>').insertAfter($('#webFilterGroupdId_10034 ul .filterItem:first-child a'));
+$('<svg><use xlink:href="#icon-plus"></use></svg>').insertAfter($('#webFilterGroupdId_10035 ul .filterItem:first-child a'));
+$.each($('#webFilterGroupdId_10033 ul .filterItem a'), function() {
+var groundIsSelected = false;
+if ($(this).hasClass('active')) {
+$('#webFilterGroupdId_10033 ul .filterItem:first-child a').attr('style', 'background-color: #006E88;');
+groundIsSelected = true;
+} else {
+}
+if (groundIsSelected) {
+$('#webFilterGroupdId_10033 ul .filterItem').attr('style', 'display: block;');
+$('#webFilterGroupdId_10033 ul .filterItem:first-child svg').replaceWith($('<svg><use xlink:href="#icon-minus"></use></svg>'));
+}
+});
+$.each($('#webFilterGroupdId_10034 ul .filterItem a'), function() {
+var groundIsSelected = false;
+if ($(this).hasClass('active')) {
+$('#webFilterGroupdId_10034 ul .filterItem:first-child a').attr('style', 'background-color: #006E88;');
+groundIsSelected = true;
+} else {}
+if (groundIsSelected) {
+$('#webFilterGroupdId_10034 ul .filterItem').attr('style', 'display: block;')
+$('#webFilterGroupdId_10034 ul .filterItem:first-child svg').replaceWith($('<svg><use xlink:href="#icon-minus"></use></svg>'));
+}
+});
+$.each($('#webFilterGroupdId_10035 ul .filterItem a'), function() {
+var groundIsSelected = false;
+if ($(this).hasClass('active')) {
+$('#webFilterGroupdId_10035 ul .filterItem:first-child a').attr('style', 'background-color: #006E88;');
+groundIsSelected = true;
+}
+if (groundIsSelected) {
+$('#webFilterGroupdId_10035 ul .filterItem').attr('style', 'display: block;');
+$('#webFilterGroupdId_10035 ul .filterItem:first-child svg').replaceWith($('<svg><use xlink:href="#icon-minus"></use></svg>'));
+}
+});
+if ($('.roomContainerDetailView .detailList').length) {
+$('.backLink').attr('style', 'display:none;')
+}
+var linkInlineImageList = $("#viewTypes-inline-detailList a").attr("href");
+$(".backLink a").attr("href", linkInlineImageList);
+viewTypes - detailList
+}
+var linkImageList = $("#viewTypes-detailList a").attr("href");
+var linkSimpleList = $("#viewTypes-simpleList a").attr("href");
+$(".collectionContainer .backLink a").attr("href", linkImageList);
+$(".artistContainer .backLink a").attr("href", linkSimpleList);
+$(".contextMenu #pageSetEntries-nextSet").insertAfter(".contextMenu .elementNavigatorBack");
+$("<span>PREVIOUS</span>").insertAfter(".bottomContextMenuContainer .elementNavigatorBack svg");
+$("<span>NEXT</span>").insertAfter(".bottomContextMenuContainer .elementNavigatorNext svg");
+});
+function imageSelected(checkboxElem) {
+$('#formItem_field_10612 #field_10612 option').removeAttr('selected');
+if (checkboxElem.checked) {
+$("#formItem_field_10612 #field_10612 option[value='2'").attr("selected", 'selected');
+} else {
+$("#formItem_field_10612 #field_10612 option[value='0'").attr("selected", 'selected');
+}
+};
+</script>
+<script type="text/javascript">
+(function backgroundFade() {
+$(window).on('scroll', function() {
+var $body = $('body');
+var $main = $('#container');
+var eTop = $main.offset().top;
+var $backgroundFade = $('.page-background__fade');
+var fadeSpeed = 500;
+var offset = (eTop - $(window).scrollTop()) * -1;
+var opacity = offset / fadeSpeed;
+if (opacity >= 1) {
+opacity = 1;
+}
+$backgroundFade.css({
+'opacity': opacity
+})
+})
+})();
+</script>
+</head>
+<body><div class="page-background"><div class="page-background__fade" style="opacity: 0.726;"></div></div>
+<div id="container" class="roomContainer roomContainerDetailView">
+<!--
+***********************************************************
+Include Code Container
+Date: 2009-12-18
+Author: ks
+************************************************************
+-->
+<div class="c-overlay | js-overlay js-overlay-search" role="dialog" aria-labelledby="search-title" style="opacity: 1; display: none;">
+<button class="c-overlay__btn | js-overlay-close-btn">
+<span class="c-overlay__btn-label">Press ESC or click here to close</span>
+<svg class="c-icon c-icon--cross"><title>Close overlay</title><use xlink:href="#icon-cross"></use></svg>
+</button>
+<div class="c-overlay__content | js-overlay-content" style="opacity: 1; transform: matrix(1, 0, 0, 1, 0, 0);">
+<div class="c-search">
+<h2 class="c-search__title" id="search-title">Search the website</h2>
+<form class="form" action="https://www.wallacecollection.org/search/?query=anything" method="get">
+<div class="form-item">
+<label for="site-search" class="form-label | u-visually-hidden">Site search</label>
+<input class="form-input | js-site-search-input" name="query" id="site-search" type="text" style="">
+<button class="form-submit-icon form-submit-icon--overlay" type="submit"><span class="u-visually-hidden">Search</span><svg class="c-icon c-icon--fill-white"><use xlink:href="#icon-search"></use></svg></button>
+</div>
+</form>
+<p class="c-search__description">This is a site-wide search. To search for specific collection objects, please return to the <a style="text-decoration: underline !important;" href="https://wallacelive.wallacecollection.org/eMP/eMuseumPlus">Collection Search</a> page.</p>
+</div>
+</div>
+</div>
+<header class="c-header">
+<div class="c-header__group | js-fixed-header">
+<!-- <div class='c-header__logo'> -->
+<a href="http://www.wallacecollection.org " class="c-logo-link c-logo-link--header">
+<h1 class="u-visually-hidden">Collection Highlights</h1>
+<svg class="c-logo" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 114.9 48.2" style="enable-background:new 0 0 114.9 48.2;" xml:space="preserve" role="img" aria-labelledby="site-logo-header">
+<title id="site-logo-header">The Wallace Collection</title>
+<g>
+<path class="st0" d="M113.5,21.5L113.5,21.5L113.5,21.5 M107.3,21.7"></path>
+<path class="st0" d="M8,47c-1.1-0.9-1.4-2.2-1.4-3.3c0-0.8,0.2-2.1,1.3-3c0.8-0.7,1.8-1.2,3.5-1.2c0.7,0,1.1,0,1.6,0.1
+c0.4,0.1,0.8,0.2,1.1,0.2c0.1,0,0.2,0.1,0.2,0.1c0,0.1,0,0.2-0.1,0.6c0,0.4,0,1,0,1.2c0,0.2,0,0.3-0.1,0.3C14,42.1,14,42,14,41.8
+c0-0.3-0.2-0.7-0.4-1c-0.4-0.4-1.2-0.7-2.2-0.7c-1,0-1.6,0.2-2.1,0.7c-0.8,0.7-1,1.8-1,2.9c0,2.6,2,3.9,3.5,3.9c1,0,1.6-0.1,2-0.6
+c0.2-0.2,0.3-0.5,0.4-0.7c0-0.2,0.1-0.2,0.1-0.2c0.1,0,0.1,0.1,0.1,0.2c0,0.1-0.1,1.1-0.2,1.5C14,47.9,14,47.9,13.8,48
+c-0.4,0.2-1.3,0.3-2,0.3C10.3,48.2,9,47.9,8,47"></path>
+<path class="st0" d="M18.6,43.9c0-1.9,1.2-4.3,4.6-4.3c2.8,0,4.5,1.6,4.5,4.1c0,2.5-1.8,4.5-4.6,4.5C19.9,48.2,18.6,45.9,18.6,43.9
+M26.1,44.1c0-2.5-1.4-4-3.2-4c-1.3,0-2.7,0.7-2.7,3.5c0,2.3,1.3,4.1,3.4,4.1C24.3,47.7,26.1,47.3,26.1,44.1z"></path>
+<path class="st0" d="M34.2,44.9c0,1.4,0,2.2,0.2,2.4c0.2,0.2,0.5,0.2,1.3,0.2c0.6,0,1,0,1.3-0.3c0.1-0.1,0.3-0.5,0.3-0.7
+c0-0.1,0-0.2,0.1-0.2c0.1,0,0.1,0.1,0.1,0.2c0,0.1-0.1,0.9-0.2,1.3c-0.1,0.2-0.1,0.3-0.7,0.3c-1.6,0-2.3-0.1-3.2-0.1
+c-0.3,0-1,0-1.4,0c-0.1,0-0.2,0-0.2-0.1c0-0.1,0-0.1,0.2-0.1c0.2,0,0.3,0,0.4,0c0.2,0,0.3-0.3,0.3-0.6c0.1-0.5,0.1-1.3,0.1-2.4
+v-1.9c0-1.7,0-2,0-2.3c0-0.4-0.1-0.6-0.5-0.6c-0.1,0-0.2,0-0.4,0c-0.1,0-0.2,0-0.2-0.1c0-0.1,0.1-0.1,0.2-0.1c0.5,0,1.2,0,1.5,0
+c0.3,0,1.1,0,1.5,0c0.2,0,0.2,0,0.2,0.1c0,0.1-0.1,0.1-0.2,0.1c-0.1,0-0.3,0-0.4,0c-0.3,0.1-0.4,0.2-0.4,0.6c0,0.4,0,0.7,0,2.3
+V44.9"></path>
+<path class="st0" d="M44.1,44.9c0,1.4,0,2.2,0.2,2.4c0.2,0.2,0.5,0.2,1.3,0.2c0.6,0,1,0,1.3-0.3c0.1-0.1,0.3-0.5,0.3-0.7
+c0-0.1,0-0.2,0.1-0.2c0.1,0,0.1,0.1,0.1,0.2c0,0.1-0.1,0.9-0.2,1.3c-0.1,0.2-0.1,0.3-0.7,0.3c-1.6,0-2.3-0.1-3.2-0.1
+c-0.3,0-1,0-1.4,0c-0.1,0-0.2,0-0.2-0.1c0-0.1,0-0.1,0.2-0.1c0.2,0,0.3,0,0.4,0c0.2,0,0.3-0.3,0.3-0.6c0.1-0.5,0.1-1.3,0.1-2.4
+v-1.9c0-1.7,0-2,0-2.3c0-0.4-0.1-0.6-0.5-0.6c-0.1,0-0.2,0-0.4,0c-0.1,0-0.2,0-0.2-0.1c0-0.1,0.1-0.1,0.2-0.1c0.5,0,1.2,0,1.5,0
+c0.3,0,1.1,0,1.5,0c0.2,0,0.2,0,0.2,0.1c0,0.1-0.1,0.1-0.2,0.1c-0.1,0-0.3,0-0.4,0c-0.3,0.1-0.4,0.2-0.4,0.6c0,0.4,0,0.7,0,2.3
+V44.9"></path>
+<path class="st0" d="M52.6,42.9c0-1.7,0-2,0-2.3c0-0.4-0.1-0.6-0.5-0.6c-0.1,0-0.3,0-0.4,0c-0.1,0-0.2,0-0.2-0.1
+c0-0.1,0.1-0.1,0.2-0.1c0.6,0,1.3,0,1.6,0c0.4,0,2.6,0,2.8,0c0.2,0,0.4,0,0.5-0.1c0.1,0,0.1,0,0.2,0c0.1,0,0.1,0,0.1,0.1
+c0,0.1-0.1,0.2-0.1,0.7c0,0.1,0,0.6-0.1,0.7c0,0.1,0,0.1-0.1,0.1c-0.1,0-0.1-0.1-0.1-0.2c0-0.1,0-0.3-0.1-0.4
+c-0.1-0.2-0.2-0.3-0.7-0.4c-0.2,0-1.3,0-1.6,0c-0.1,0-0.1,0-0.1,0.1v2.8c0,0.1,0,0.1,0.1,0.1c0.2,0,1.5,0,1.8,0
+c0.3,0,0.4-0.1,0.5-0.2c0.1-0.1,0.1-0.1,0.2-0.1c0,0,0.1,0,0.1,0.1c0,0.1-0.1,0.2-0.1,0.8c0,0.2,0,0.7,0,0.7c0,0.1,0,0.2-0.1,0.2
+c-0.1,0-0.1,0-0.1-0.1c0-0.1,0-0.3,0-0.4c-0.1-0.2-0.2-0.4-0.6-0.4c-0.2,0-1.3,0-1.6,0c-0.1,0-0.1,0-0.1,0.1v0.9c0,0.4,0,1.4,0,1.7
+c0,0.8,0.2,0.9,1.3,0.9c0.3,0,0.8,0,1-0.1c0.3-0.1,0.4-0.4,0.5-0.8c0-0.1,0-0.2,0.1-0.2c0.1,0,0.1,0.1,0.1,0.2c0,0.3-0.1,1-0.1,1.2
+c-0.1,0.3-0.2,0.3-0.6,0.3c-1.7,0-2.4-0.1-3.1-0.1c-0.3,0-1,0-1.4,0c-0.1,0-0.2,0-0.2-0.1c0-0.1,0-0.1,0.2-0.1c0.2,0,0.3,0,0.4,0
+c0.2,0,0.3-0.3,0.3-0.6c0.1-0.5,0.1-1.3,0.1-2.4V42.9"></path>
+<path class="st0" d="M62.8,47c-1.1-0.9-1.4-2.2-1.4-3.3c0-0.8,0.2-2.1,1.3-3c0.8-0.7,1.8-1.2,3.5-1.2c0.7,0,1.1,0,1.6,0.1
+c0.4,0.1,0.8,0.2,1.1,0.2c0.1,0,0.2,0.1,0.2,0.1c0,0.1,0,0.2-0.1,0.6c0,0.4,0,1,0,1.2c0,0.2,0,0.3-0.1,0.3c-0.1,0-0.1-0.1-0.1-0.2
+c0-0.3-0.2-0.7-0.4-1c-0.4-0.4-1.2-0.7-2.2-0.7c-1,0-1.6,0.2-2.1,0.7c-0.8,0.7-1,1.8-1,2.9c0,2.6,2,3.9,3.5,3.9c1,0,1.6-0.1,2-0.6
+c0.2-0.2,0.3-0.5,0.4-0.7c0-0.2,0.1-0.2,0.1-0.2c0.1,0,0.1,0.1,0.1,0.2c0,0.1-0.1,1.1-0.2,1.5c-0.1,0.2-0.1,0.2-0.3,0.3
+c-0.4,0.2-1.3,0.3-2,0.3C65.1,48.2,63.8,47.9,62.8,47"></path>
+<path class="st0" d="M76.4,40.4l-1.6,0c-0.6,0-0.9,0.1-1.1,0.3c-0.1,0.2-0.2,0.3-0.2,0.4c0,0.1-0.1,0.1-0.1,0.1
+c-0.1,0-0.1-0.1-0.1-0.2c0-0.2,0.2-1.2,0.2-1.3c0-0.1,0.1-0.2,0.1-0.2c0.1,0,0.2,0.1,0.5,0.1c0.3,0,0.7,0.1,1.1,0.1h4.4
+c0.7,0,1-0.1,1.1-0.1c0.1,0,0.1,0.1,0.1,0.2c0,0.2,0,1,0,1.3c0,0.1,0,0.2-0.1,0.2c-0.1,0-0.1-0.1-0.1-0.2l0-0.1
+c0-0.3-0.3-0.6-1.3-0.6l-1.4,0v4.5c0,1,0,1.9,0.1,2.4c0,0.3,0.1,0.6,0.4,0.6c0.2,0,0.4,0,0.6,0c0.1,0,0.2,0,0.2,0.1
+c0,0.1-0.1,0.1-0.2,0.1c-0.7,0-1.4,0-1.7,0c-0.3,0-1,0-1.4,0c-0.1,0-0.2,0-0.2-0.1c0-0.1,0-0.1,0.2-0.1c0.2,0,0.3,0,0.4,0
+c0.2,0,0.3-0.3,0.3-0.6c0.1-0.5,0.1-1.3,0.1-2.4V40.4"></path>
+<path class="st0" d="M86,42.9c0-1.7,0-2,0-2.3c0-0.4-0.1-0.6-0.4-0.6c-0.1,0-0.3,0-0.4,0c-0.1,0-0.2,0-0.2-0.1
+c0-0.1,0.1-0.1,0.3-0.1c0.4,0,1.1,0,1.4,0c0.3,0,0.9,0,1.3,0c0.1,0,0.2,0,0.2,0.1c0,0.1-0.1,0.1-0.2,0.1c-0.1,0-0.2,0-0.3,0
+c-0.3,0.1-0.4,0.2-0.4,0.6c0,0.4,0,0.7,0,2.3v1.9c0,1.1,0,1.9,0,2.4c0,0.3,0.1,0.5,0.4,0.5c0.2,0,0.4,0,0.6,0c0.1,0,0.2,0,0.2,0.1
+c0,0.1-0.1,0.1-0.2,0.1c-0.7,0-1.4,0-1.7,0c-0.3,0-1,0-1.4,0c-0.1,0-0.2,0-0.2-0.1c0-0.1,0-0.1,0.2-0.1c0.2,0,0.3,0,0.4,0
+c0.2,0,0.3-0.2,0.3-0.6C86,46.8,86,46,86,44.9V42.9"></path>
+<path class="st0" d="M92.6,43.9c0-1.9,1.2-4.3,4.6-4.3c2.8,0,4.5,1.6,4.5,4.1c0,2.5-1.8,4.5-4.6,4.5C93.9,48.2,92.6,45.9,92.6,43.9
+M100.1,44.1c0-2.5-1.4-4-3.2-4c-1.3,0-2.7,0.7-2.7,3.5c0,2.3,1.3,4.1,3.4,4.1C98.3,47.7,100.1,47.3,100.1,44.1z"></path>
+<path class="st0" d="M107.5,46.6c0,0.9,0.2,1.2,0.4,1.2c0.2,0.1,0.4,0.1,0.6,0.1c0.1,0,0.2,0,0.2,0.1c0,0.1-0.1,0.1-0.3,0.1
+c-0.7,0-1.2,0-1.4,0c-0.1,0-0.6,0-1.2,0c-0.1,0-0.2,0-0.2-0.1c0-0.1,0.1-0.1,0.2-0.1c0.1,0,0.3,0,0.5-0.1c0.3-0.1,0.3-0.4,0.3-1.4
+l0.1-6.5c0-0.2,0-0.4,0.1-0.4c0.1,0,0.2,0.1,0.4,0.3c0.1,0.1,1.8,1.9,3.4,3.5c0.8,0.8,2.2,2.3,2.4,2.5h0.1l-0.1-5
+c0-0.7-0.1-0.9-0.4-1c-0.2-0.1-0.4-0.1-0.6-0.1c-0.1,0-0.2,0-0.2-0.1c0-0.1,0.1-0.1,0.3-0.1c0.6,0,1.1,0,1.3,0c0.1,0,0.5,0,1.1,0
+c0.1,0,0.3,0,0.3,0.1c0,0.1-0.1,0.1-0.2,0.1c-0.1,0-0.2,0-0.3,0c-0.3,0.1-0.4,0.3-0.4,0.9l-0.1,7c0,0.2,0,0.3-0.1,0.3
+c-0.1,0-0.3-0.1-0.4-0.2c-0.7-0.7-2.1-2.1-3.3-3.2c-1.2-1.2-2.4-2.6-2.6-2.8h0L107.5,46.6"></path>
+<path class="st0" d="M113.5,21.7L113.5,21.7L113.5,21.7 M107.3,21.9"></path>
+<path class="st0" d="M49.3,4.8c0.4-0.2,0.6-0.4,0.9-0.7c0.2-0.3,0.4-0.6,0.6-1c0.1-0.2,0.1-0.4,0.2-0.6c0-0.2,0.1-0.4,0.2-0.6
+c0.1-0.2,0.2-0.3,0.3-0.5c0.1-0.1,0.3-0.2,0.3-0.3c-0.1-0.3-0.5-0.2-0.7-0.2c-0.4,0-0.8,0.1-1.2,0.4c-0.2,0.1-0.5,0.4-0.3,0.7
+C49.7,2,50,2,50.1,2.1c0.2,0.1,0.3,0.3,0.3,0.5c0.1,0.6-0.4,1.2-0.8,1.5c-0.1,0.1-0.5,0.4-0.6,0.4c0-0.1,0-0.2,0-0.3
+c-0.1-0.5-0.4-1-0.9-1.2C48,3,47.8,3,47.7,3c-0.6,0.1-1.1,0.6-0.9,1.3c0.2,0.6,0.9,0.8,1.5,0.8c0.1,0,0.3-0.1,0.4,0
+c0.1,0.1-0.1,0.5-0.2,0.6c-0.3,0.6-1,1.1-1.6,1.4c-0.2,0.1-0.4,0.2-0.6,0.2c-0.2,0-0.3,0-0.5,0.1c0,0-0.1,0-0.1,0.1
+c-0.1,0-0.3,0-0.4,0c-0.1,0-0.1-0.2-0.2-0.3c-0.2-0.2-0.6-0.1-0.8-0.1c-0.1,0-0.2,0.1-0.3,0.1c0,0-0.1,0.1-0.1,0.1
+c-0.1,0-0.2-0.1-0.3-0.1c0,0-0.1,0.1-0.1,0.1c0,0,0,0.1,0,0.1c0,0,0,0,0.1,0c0.1,0,0.1,0.1,0.2,0.1c0.1,0.1,0,0.3,0.1,0.4
+c0,0,0.1,0.1,0.1,0.1c0,0,0,0,0,0c0,0,0,0.1-0.1,0.2c-0.1,0.2-0.2,0.4-0.3,0.5c-0.1,0.1-0.1,0.3-0.2,0.3c-0.1,0-0.2,0-0.3,0
+c-0.1,0-0.1-0.1-0.2-0.2c-0.1-0.1-0.2-0.3-0.3-0.4c-0.1-0.1-0.2-0.2-0.2-0.2c0-0.1,0-0.1-0.1-0.1c-0.1-0.1,0-0.2,0.1-0.3
+c0.1-0.1,0.1-0.3,0.3-0.2c0.1,0,0.2,0.1,0.3,0c0.2,0,0.2-0.2,0.3-0.3c0,0,0.1,0,0.1-0.1c0.1-0.1,0.1-0.1,0-0.2c0,0,0-0.1,0-0.1
+c0-0.1,0-0.1,0.1-0.1c0.1,0,0.2,0,0.3-0.1c0-0.1,0-0.2,0-0.3c0.1,0,0.1-0.1,0.2-0.1c0.1,0,0.2,0,0.1-0.1c0-0.1-0.1-0.1-0.2-0.1
+c-0.2-0.1-0.3-0.4-0.3-0.6c0-0.1,0-0.1,0-0.2c0-0.1,0.1-0.1,0.1-0.2c0,0,0,0,0,0C43.6,5,43.5,5,43.4,5c-0.1,0-0.3,0-0.4,0
+c-0.1,0-0.2-0.2-0.3-0.1c0,0.1-0.1,0.2-0.1,0.2c-0.1,0.1-0.2-0.1-0.3,0c-0.1,0-0.1,0.2-0.2,0.3c-0.1,0.1-0.3,0.1-0.4,0.1
+c-0.1,0-0.1-0.1-0.1-0.2c0-0.1,0.1-0.2,0.2-0.3c0.1,0,0.2,0,0.2-0.1c0-0.1,0-0.1,0.1-0.2c0.1-0.1,0.2,0,0.4,0
+c0.1,0,0.1-0.1,0.2-0.2c0.1-0.1,0.3-0.1,0.4,0c0.2,0,0.2,0.1,0.4,0.3c0.1,0.1,0.2,0.1,0.3,0.2c0.1,0,0.2,0,0.3,0
+c0.1,0,0.1-0.2,0.1-0.2c0-0.2-0.1-0.3-0.3-0.3c-0.1,0-0.2,0-0.2,0c0,0-0.1-0.1-0.1-0.1c-0.1-0.1-0.2-0.2-0.4-0.2
+c-0.1,0-0.3,0-0.4,0c0,0-0.1,0.1-0.1,0c0,0,0-0.1,0-0.1c0-0.2,0-0.3,0-0.5c0-0.1,0-0.2,0-0.2c0-0.1,0.1-0.1,0.1-0.2
+c0.2-0.3,0.4-0.6,0.8-0.7c0.2,0,0.3-0.1,0.5,0c0.1,0,0.3,0.1,0.3,0c0-0.1-0.1-0.1-0.1-0.1c-0.4-0.2-1-0.2-1.3,0.2
+c-0.1,0.1-0.2,0.2-0.3,0.4c0,0.1-0.1,0.3-0.2,0.2c0,0,0-0.1,0-0.1c0-0.2,0-0.3-0.1-0.5c-0.1-0.2-0.2-0.4-0.4-0.6
+c-0.2-0.2-0.4-0.4-0.6-0.6C41,1,40.8,0.8,40.7,0.7c-0.1-0.1-0.3-0.3-0.3-0.4c0-0.1,0-0.2,0-0.2C40.3,0,40.2,0,40.2,0
+c-0.1,0.1-0.1,0.2,0,0.3c0,0.2,0.2,0.4,0.3,0.6c0.2,0.3,0.5,0.6,0.7,0.9c0.1,0.1,0.1,0.2,0.2,0.3c0,0-0.1,0-0.1,0
+C41.1,2,41.1,1.9,41,1.8c-0.3-0.3-0.8-0.6-1.3-0.6c-0.2,0-0.8,0.1-0.7,0.4c0,0.1,0.2,0,0.3,0c0.4-0.2,0.8-0.1,1.2,0.1
+c0.4,0.2,0.6,0.6,0.9,0.9c0,0,0.2,0.3,0.2,0.3c0,0-0.2-0.1-0.3-0.1c-0.2-0.1-0.4-0.2-0.6-0.2c-0.4,0-0.9,0.3-0.9,0.8
+c0,0.2,0.1,0.5,0.4,0.5c0,0,0,0,0-0.1c0-0.1-0.1-0.2-0.1-0.3c-0.1-0.4,0.4-0.6,0.7-0.5c0.1,0,0.2,0.1,0.3,0.1
+c0.3,0.2,0.5,0.6,0.5,1c0,0.1,0,0.2,0,0.3c0,0,0,0,0,0c-0.1,0-0.2,0-0.4,0c-0.3,0.1-0.5,0.5-0.3,0.7c0,0,0,0,0,0.1c0,0,0,0.1,0,0.1
+c-0.1,0.2-0.1,0.4-0.1,0.5c0,0.1,0,0.2,0.1,0.3c0,0.1,0.1,0.2,0.2,0.2c0.1,0,0.2,0,0.3,0.1c0.1,0.1,0,0.5-0.1,0.6
+c-0.1,0.1-0.2,0.2-0.3,0.2c0,0-0.1,0-0.2,0c-0.1,0-0.1,0-0.2,0c-0.7,0.1-1,0.9-1.1,1.5c0,0.7,0.2,1.3,0.4,2c0,0.2,0.1,0.4,0.1,0.7
+c0,0.2-0.1,0.3-0.1,0.4c0,0.1,0,0.2-0.1,0.3c0,0.1-0.1,0.3-0.2,0.5c-0.1,0.1-0.3,0.2-0.4,0.2c-0.2,0.1-0.3,0.2-0.5,0.3
+c-0.1,0.1-0.4,0.2-0.3,0.3c0,0.1,0.1,0.2,0.2,0.3c0.1,0.1,0.3,0.3,0.4,0.3c0.1,0,0.2,0.1,0.3,0.2c0.1,0.1,0,0.2,0,0.3
+c0,0.1-0.2,0.5,0,0.6c0.1,0.1,0.3,0,0.4,0c0.2,0,0.3,0,0.5,0c0.1,0,0.5,0,0.4,0.1c0,0-0.2,0-0.2,0c-0.2,0-0.4,0-0.6,0
+c-0.6,0.1-1.1,0.2-1.7,0.5c-0.4,0.2-0.8,0.5-1.2,0.8c-0.4,0.3-0.7,0.6-0.9,0.9c-0.2,0.2-0.3,0.4-0.4,0.6c-0.1,0.2-0.2,0.4-0.3,0.6
+c-0.2,0.4-0.2,0.8-0.3,1.2c0,0-0.1,0.1-0.1,0.2c0,0.1,0,0.1,0,0.2c0,0.2,0.2,0.5,0.4,0.4c0.1,0,0.1,0,0.2-0.1
+c0.1-0.1,0.1-0.3,0.1-0.4c0-0.1-0.1-0.2-0.1-0.2c-0.1-0.1,0-0.3,0-0.4c0-0.1,0.1-0.3,0.1-0.4c0.1-0.3,0.2-0.6,0.4-0.8
+c0.2-0.3,0.4-0.5,0.6-0.7c0.4-0.4,0.9-0.8,1.4-1.1c0.4-0.2,0.7-0.3,1.1-0.4c1-0.3,2.1-0.2,3.1-0.1c0.8,0.2,1.6,0.5,2.2,1
+c0.8,0.6,1.3,1.3,1.8,2.2c0.1,0.3,0.3,0.6,0.4,0.8c0,0.1,0.1,0.5,0.2,0.5c0.3,0.1,0.7,0,1,0c0.5,0,1.1,0,1.7,0c0.2,0,0.4,0,0.6,0
+c0.2,0,0.3-0.1,0.5-0.2c0.1,0,0.3-0.1,0.4-0.2c0.1-0.1,0.1-0.2,0.2-0.2c0.1,0,0.3,0,0.5-0.1c0.4,0,0.8-0.2,1-0.5
+c0.1-0.1,0.2-0.2,0.3-0.4c0.1-0.1,0.1-0.2,0.2-0.3c0.1-0.2-0.2-0.1-0.3-0.1c0.1-0.1,0.2-0.3,0.2-0.4c0.1-0.2,0.1-0.4,0.2-0.6
+c0-0.2,0.1-0.4,0.1-0.6c0-0.1,0.1-0.3-0.1-0.4c-0.2-0.1-0.3,0.1-0.5,0c0-0.1-0.1-0.1-0.1-0.2c-0.2-0.3-0.4-0.6-0.7-0.7
+c-0.3-0.1-0.7-0.1-1,0.1c-0.3,0.2-0.3,0.8,0.1,0.9c0.3,0.1,0.5,0,0.6-0.3c0-0.1,0.2,0,0.3,0c0.4,0.1,0.7,0.6,0.7,1
+c0.1,0.5-0.1,1.5-0.8,1.4c-0.2,0-0.3-0.3-0.3-0.5c-0.1-0.2-0.1-0.4-0.4-0.5c-0.2-0.1-0.5-0.1-0.7,0.1c-0.2,0.2-0.2,0.5,0,0.7
+c0.1,0.1,0.2,0.1,0.4,0c0.2-0.1,0.3-0.1,0.5,0c0.2,0.2,0,0.6-0.2,0.7c-0.3,0.2-0.7,0.3-1,0.2c-0.7-0.2-1.3-0.8-1.6-1.4
+c-0.2-0.4-0.3-0.7-0.3-1.1c-0.1-0.5-0.2-0.9-0.3-1.3c-0.1-0.3-0.2-0.5-0.3-0.7c-0.1-0.2-0.2-0.4-0.3-0.5c-0.4-0.5-1-1-1.6-1.3
+c-0.2-0.1-0.5-0.2-0.8-0.2c-0.1,0-0.2-0.1-0.3,0c-0.1,0.1-0.2,0.2-0.3,0.3c-0.1,0.1-0.2,0.1-0.4,0.2c0,0-0.2,0-0.2,0
+c0.1-0.1,0.3-0.3,0.4-0.4c0.1-0.1,0.2-0.2,0.3-0.3c0.1-0.1,0.2-0.2,0.1-0.3c-0.1-0.1-0.2-0.1-0.3-0.1c-0.3-0.1-0.6-0.2-0.9-0.4
+c-0.1,0-0.1-0.1-0.2-0.1c0,0-0.1-0.1-0.1-0.1c-0.1,0,0.1,0.2,0.1,0.3c0.1,0.1,0.2,0.2,0.3,0.3c0.1,0.1,0.2,0.2,0.3,0.3
+c-0.1,0-0.1,0-0.2-0.1c-0.2-0.1-0.4-0.3-0.5-0.4c-0.1-0.1-0.1-0.2-0.2-0.2c-0.1,0-0.3,0-0.4,0c-0.1,0.1,0,0.1,0,0.2
+c0,0.1,0.1,0.1,0.1,0.2c0.1,0.2,0.1,0.4,0.1,0.6c0,0,0,0.3,0,0.3c-0.1,0-0.1-0.1-0.1-0.2c-0.1-0.3-0.2-0.6-0.3-0.9
+c0-0.1-0.1-0.1-0.1-0.2c-0.1-0.1-0.2,0-0.3,0c-0.1,0-0.1,0.2-0.1,0.3c0,0.1,0,0.3,0,0.4c0,0.1-0.1,0.3-0.1,0.4c0,0.1,0,0.1,0,0.2
+c0,0,0-0.1,0-0.1c-0.1-0.2,0-0.3,0-0.5c0-0.2-0.1-0.4-0.1-0.5c0-0.1,0-0.2-0.1-0.2c-0.1-0.1-0.2,0-0.3,0c0,0-0.3,0-0.3,0
+c0,0,0-0.1,0.1-0.2c0.1-0.1,0.3-0.1,0.5-0.1c0.3,0,0.6,0,0.8-0.1c0.2,0,0.4-0.1,0.6-0.1c0.1,0,0.3,0,0.4-0.1c0.1-0.1,0-0.4,0-0.5
+c0-0.1,0-0.1,0-0.1c0-0.1,0.1-0.2,0.1-0.3c0,0,0,0,0,0c-0.1-0.1-0.2-0.1-0.2-0.1c-0.3,0-0.6-0.1-0.8-0.2c-0.2-0.2-0.4-0.4-0.6-0.6
+c-0.3-0.2-0.6-0.4-1-0.6v0h0v0c0.1,0,0.2,0,0.3,0c0.5,0.2,0.9,0.5,1.3,0.8c0.1,0.1,0.3,0.1,0.4,0.2c0.4,0.1,0.7,0.2,1.1,0.2
+c0.3-0.1,0.7-0.2,1.1-0.1c0.4,0.1,0.4,0.6,0.6,0.8c0.1,0.1,0.1,0.2,0.3,0.2c0-0.2,0.1-0.3,0.2-0.4c0.1-0.3,0.1-0.6,0.1-0.9
+c0-0.1,0-0.3,0-0.4c0-0.1,0.1-0.3,0.1-0.4c0.1-0.1,0.2-0.2,0.3-0.3C46,9,46.3,8.8,46.4,8.6c0.1-0.1,0.1-0.3,0.1-0.4
+C46.6,8,46.8,7.8,47,7.7c0.1-0.1,0.1-0.1,0.2-0.2c0.1-0.1,0.2-0.1,0.2-0.2c0-0.1,0.1-0.1,0.1-0.2c0,0,0.1-0.1,0.2-0.1
+c0.5-0.5,1-0.9,1.3-1.5c0-0.1,0.1-0.2,0.1-0.3C49,5.2,49,5,49,4.9 M50.4,1.8c-0.1,0-0.3,0-0.4-0.1c-0.1-0.1,0.2-0.3,0.3-0.4
+c0.2-0.1,0.6-0.3,0.8-0.3c0.1,0,0.2,0,0.2,0c0.1,0.1-0.1,0.2-0.2,0.3c-0.2,0.1-0.4,0.3-0.6,0.4C50.5,1.7,50.5,1.8,50.4,1.8z
+M48.8,4.6c0,0.1-0.1,0.1-0.2,0.2c-0.3,0.1-0.6,0.2-0.9,0C47.3,4.7,47,4.3,47,4c0-0.3,0.2-0.5,0.4-0.6c0.3-0.1,0.6-0.1,0.8,0.1
+c0.2,0.2,0.4,0.4,0.5,0.6C48.7,4.2,48.8,4.4,48.8,4.6z M44.7,8.3C44.7,8.3,44.7,8.3,44.7,8.3c0.1-0.1,0.1-0.1,0.1-0.1
+c0,0,0.1-0.1,0.1-0.1c0,0,0.1,0,0.1-0.1c0,0,0.1-0.1,0.1-0.1c0.1,0,0.1,0,0.2-0.1c0.1,0,0.3,0,0.4,0c0,0,0,0.1,0,0.1
+c0,0.2-0.1,0.3-0.2,0.4c-0.1,0-0.2-0.1-0.3-0.1c-0.1,0-0.4,0.2-0.4,0.3c-0.1,0-0.2,0.2-0.3,0.1C44.5,8.6,44.6,8.4,44.7,8.3z
+M43.2,5.8C43.2,5.7,43.2,5.7,43.2,5.8c0.1,0.1,0.1,0.1,0.1,0.2c0,0-0.2,0.1-0.2,0.1c0,0,0-0.1,0-0.1C43,5.8,43.1,5.8,43.2,5.8
+C43.1,5.8,43.1,5.8,43.2,5.8z M48.2,20.3c-0.2,0-0.4,0-0.5,0c-0.2,0-0.4,0-0.6,0c-0.2,0-0.2-0.2-0.2-0.3c-0.2-0.5-0.5-1-0.8-1.5
+c-0.3-0.4-0.6-0.9-0.9-1.2c-0.2-0.2-0.4-0.4-0.7-0.6c-0.1-0.1-0.3-0.2-0.4-0.2c-0.1-0.1-0.3-0.1-0.3-0.3c0.1-0.1,0.4-0.2,0.5-0.3
+c0.1,0,0.2,0,0.2-0.1c0.1-0.1,0-0.4-0.1-0.5c-0.1-0.1-0.2-0.3-0.2-0.5c0-0.3,0.3,0,0.3,0.1c0.1,0.1,0.2,0.2,0.3,0.4
+c0.2,0.3,0.3,0.7,0.2,1.1c0,0.1-0.1,0.2-0.1,0.3c0,0.2,0,0.2,0.2,0.2c0.1,0,0.1-0.1,0.2,0c0.1,0.1,0.2,0.2,0.3,0.3
+c0.1,0.1,0.1,0.2,0.2,0.3c0,0,0.1,0.1,0.2,0.1c0.2,0.1,0.1-0.3,0.1-0.4c0-0.8-0.2-1.7-0.6-2.4c-0.2-0.2-0.3-0.4-0.6-0.6
+c0,0-0.1,0-0.1-0.1c0,0,0.5,0.2,0.5,0.2c0.3,0.2,0.5,0.4,0.7,0.7c0.1,0.2,0.5,0.7,0.3,1c-0.1,0.2-0.1,0.4,0,0.6
+c0,0.1,0.1,0.1,0.2,0.2c0,0.1,0,0.2,0,0.3c0,0.1,0,0.2,0.1,0.3c0,0.1,0.1,0.1,0.2,0.2c0.1,0.1,0.1,0.1,0,0.2c-0.2,0.3-0.1,0.7,0,1
+c0.1,0.3,0.2,0.9,0.6,0.9c0.2,0,0.1-0.3,0.2-0.2c0.1,0,0.2,0.1,0.2,0.2c0.1,0.1,0.2,0.2,0.3,0.3C48.1,20.2,48.3,20.3,48.2,20.3z"></path>
+<path class="st0" d="M61.9,11.3l-1.2,0c-0.5,0-0.6,0.1-0.8,0.2c-0.1,0.1-0.1,0.2-0.1,0.3c0,0.1,0,0.1-0.1,0.1c-0.1,0-0.1,0-0.1-0.1
+c0-0.1,0.2-0.8,0.2-0.9c0-0.1,0-0.2,0.1-0.2c0.1,0,0.1,0.1,0.3,0.1c0.2,0,0.5,0,0.8,0h3.1c0.5,0,0.7-0.1,0.8-0.1
+c0.1,0,0.1,0,0.1,0.2c0,0.2,0,0.7,0,0.9c0,0.1,0,0.1-0.1,0.1c-0.1,0-0.1,0-0.1-0.2l0-0.1c0-0.2-0.2-0.4-0.9-0.4l-1,0v3.2
+c0,0.7,0,1.4,0,1.7c0,0.2,0.1,0.4,0.3,0.4c0.1,0,0.3,0,0.4,0c0.1,0,0.1,0,0.1,0.1c0,0.1-0.1,0.1-0.2,0.1c-0.5,0-1,0-1.2,0
+c-0.2,0-0.7,0-1,0c-0.1,0-0.2,0-0.2-0.1c0,0,0-0.1,0.1-0.1c0.1,0,0.2,0,0.3,0c0.2,0,0.2-0.2,0.2-0.4c0-0.3,0-1,0-1.7V11.3"></path>
+<path class="st0" d="M88.8,13.4C88.8,13.4,88.8,13.4,88.8,13.4l0-0.2c0-1.2,0-1.4,0-1.7c0-0.3-0.1-0.4-0.3-0.5c-0.1,0-0.2,0-0.3,0
+C88.1,11,88,11,88,11c0-0.1,0.1-0.1,0.2-0.1c0.4,0,0.9,0,1.1,0c0.2,0,0.7,0,1,0c0.1,0,0.2,0,0.2,0.1c0,0.1,0,0.1-0.1,0.1
+c-0.1,0-0.1,0-0.2,0c-0.2,0-0.3,0.2-0.3,0.5c0,0.3,0,0.5,0,1.7v1.4c0,0.7,0,1.4,0,1.7c0,0.2,0.1,0.4,0.3,0.4c0.1,0,0.3,0,0.4,0
+c0.1,0,0.1,0,0.1,0.1c0,0.1-0.1,0.1-0.2,0.1c-0.5,0-1,0-1.2,0c-0.2,0-0.7,0-1,0c-0.1,0-0.2,0-0.2-0.1c0,0,0-0.1,0.1-0.1
+c0.1,0,0.2,0,0.3,0c0.2,0,0.2-0.2,0.2-0.4c0-0.3,0-1,0-1.7v-0.7c0,0,0,0,0,0h-3c0,0,0,0,0,0v0.7c0,0.7,0,1.4,0,1.7
+c0,0.2,0.1,0.4,0.3,0.4c0.1,0,0.3,0,0.4,0c0.1,0,0.1,0,0.1,0.1c0,0.1-0.1,0.1-0.2,0.1c-0.5,0-1,0-1.2,0c-0.2,0-0.7,0-1,0
+c-0.1,0-0.2,0-0.2-0.1c0,0,0-0.1,0.1-0.1c0.1,0,0.2,0,0.3,0c0.2,0,0.2-0.2,0.2-0.4c0-0.3,0-1,0-1.7v-1.4c0-1.2,0-1.4,0-1.7
+c0-0.3-0.1-0.4-0.3-0.5c-0.1,0-0.2,0-0.3,0c-0.1,0-0.1,0-0.1-0.1c0-0.1,0.1-0.1,0.2-0.1c0.4,0,0.9,0,1.1,0c0.2,0,0.7,0,1,0
+c0.1,0,0.2,0,0.2,0.1c0,0.1,0,0.1-0.1,0.1c-0.1,0-0.1,0-0.2,0c-0.2,0-0.3,0.2-0.3,0.5c0,0.3,0,0.5,0,1.7v0.2c0,0,0,0.1,0,0.1H88.8"></path>
+<path class="st0" d="M110.4,13.2c0-1.2,0-1.4,0-1.7c0-0.3-0.1-0.4-0.3-0.5c-0.1,0-0.2,0-0.3,0c-0.1,0-0.1,0-0.1-0.1
+c0-0.1,0.1-0.1,0.2-0.1c0.4,0,0.9,0,1.1,0c0.3,0,1.8,0,2,0c0.2,0,0.3,0,0.3,0c0,0,0.1,0,0.1,0c0,0,0,0,0,0.1c0,0.1,0,0.2-0.1,0.5
+c0,0.1,0,0.4,0,0.5c0,0,0,0.1-0.1,0.1c-0.1,0-0.1,0-0.1-0.1c0-0.1,0-0.2,0-0.3c-0.1-0.1-0.1-0.2-0.5-0.3c-0.1,0-1,0-1.1,0
+c0,0-0.1,0-0.1,0.1v2c0,0.1,0,0.1,0.1,0.1c0.2,0,1.1,0,1.3,0c0.2,0,0.3,0,0.4-0.1c0.1-0.1,0.1-0.1,0.1-0.1c0,0,0.1,0,0.1,0.1
+c0,0,0,0.2-0.1,0.6c0,0.2,0,0.5,0,0.5c0,0.1,0,0.2-0.1,0.2c-0.1,0-0.1,0-0.1-0.1c0-0.1,0-0.2,0-0.3c0-0.2-0.1-0.3-0.4-0.3
+c-0.2,0-0.9,0-1.1,0c0,0,0,0,0,0.1v0.6c0,0.3,0,1,0,1.2c0,0.5,0.1,0.7,0.9,0.7c0.2,0,0.5,0,0.7-0.1c0.2-0.1,0.3-0.3,0.4-0.6
+c0-0.1,0-0.1,0.1-0.1c0.1,0,0.1,0.1,0.1,0.1c0,0.2-0.1,0.7-0.1,0.9c-0.1,0.2-0.1,0.2-0.4,0.2c-1.2,0-1.7,0-2.2,0c-0.2,0-0.7,0-1,0
+c-0.1,0-0.2,0-0.2-0.1c0,0,0-0.1,0.1-0.1c0.1,0,0.2,0,0.3,0c0.2,0,0.2-0.2,0.2-0.4c0-0.3,0-1,0-1.7V13.2"></path>
+<path class="st0" d="M102.5,31.2c-0.3,0-0.3,0.3-0.4,0.4c0,0.3-0.3,1-0.6,1.4c-0.7,0.7-1.8,0.8-2.9,0.8c-3.8,0-6-3.1-6-6.1
+c0-1.5,0.2-3.1,1.5-4.4c0.8-0.8,2.1-1.2,3.8-1.2c1.5,0,2.8,0.5,3.3,0.9c0.4,0.3,0.7,1,0.7,1.6c0,0.2,0,0.6,0.3,0.6
+c0.3,0,0.3-0.4,0.4-0.6c0,0,0.1-1.8,0.1-1.8c0,0,0.1-1,0.1-1c0-0.2-0.1-0.4-0.4-0.4c0,0-1.7-0.2-1.7-0.2C99.6,21,98.5,21,98.1,21
+c-2.4,0-4.1,0.6-5.4,1.9c-1.5,1.5-2,3.5-2,4.9c0,2.2,0.7,4,2.2,5.3c1.5,1.3,3.3,1.9,5.8,1.9c1,0,2.4-0.1,3.2-0.4
+c0.4-0.2,0.4-0.2,0.6-0.6c0.2-0.6,0.4-2.1,0.4-2.3C102.8,31.2,102.6,31.2,102.5,31.2"></path>
+<path class="st0" d="M114.1,32c-0.2,0-0.2,0.2-0.3,0.4c-0.1,0.7-0.3,1-0.7,1.2c-0.4,0.2-1.2,0.2-1.6,0.2c-1.7,0-1.8-0.2-1.9-1.3
+l0-2.2l0-0.8V28c0,0,2.4,0.1,2.4,0.1c0.6,0.1,0.7,0.3,0.8,0.5l0.1,0.5c0,0.2,0.1,0.3,0.2,0.3c0.2,0,0.2-0.3,0.2-0.4l0.1-1.1l0.1-1
+c0-0.2-0.2-0.3-0.2-0.3l-0.3,0.2c-0.2,0.2-0.4,0.2-0.8,0.2l-2.7,0l0-4.8c0-0.1,2.3,0,2.3,0c0.9,0.1,1,0.3,1.1,0.5
+c0,0,0.1,0.6,0.1,0.6c0,0.3,0.2,0.3,0.2,0.3c0.1,0,0.2,0,0.2-0.3l0.1-0.8l0-0.3c0,0,0.1-0.8,0.1-0.8c0-0.3-0.1-0.3-0.2-0.3
+l-0.2,0.1c-0.1,0-0.8,0.1-0.8,0.1l-3.9,0l-0.2,0l-1.7,0c-0.1,0-0.4,0-0.4,0.3c0,0.1,0.1,0.2,0.3,0.2c0,0,0.2,0,0.2,0l0.4,0
+c0.5,0.1,0.6,0.3,0.7,0.9l0,3.7v3c0,1.7,0,3-0.1,3.7c-0.1,0.5-0.2,0.8-0.4,0.8l-0.5,0.1c-0.2,0-0.3,0.1-0.3,0.2
+c0,0.3,0.3,0.3,0.4,0.3l1,0c0,0,0.6,0,0.6,0l0.1,0l0.4,0l3.8,0.1c0.7,0,0.9,0,1-0.5c0,0,0.2-1.7,0.2-1.7
+C114.3,32.3,114.3,32,114.1,32 M108,26.4C108,26.4,108.1,26.3,108,26.4L108,26.4C108.1,26.3,108,26.4,108,26.4z"></path>
+<path class="st0" d="M88.1,34l-0.6-0.1c-0.4-0.1-0.8-0.4-1.4-1.8L83,24.1l-0.9-2.4c-0.2-0.5-0.3-0.7-0.6-0.7
+c-0.3,0-0.4,0.2-0.6,0.8l-3.9,10.7c-0.3,0.9-0.6,1.4-1.3,1.5c0,0-0.5,0-0.5,0c-0.2,0-0.4,0.1-0.4,0.3c0,0.3,0.4,0.3,0.5,0.3
+c0,0,1.6,0,1.6,0c0,0,0.4,0,0.4,0c0,0,0.4,0,0.4,0l0.9,0c0.4,0,0.5-0.2,0.5-0.3c0-0.1-0.1-0.3-0.4-0.3h-0.2c-0.1,0-0.5-0.1-0.5-0.3
+c0-0.3,0.1-0.7,0.2-1.1c0,0,0.1-0.2,1-3.1c0,0,3.7,0,3.7,0c0,0,0.2,0.6,1.6,4.2l0,0.1c-0.2,0.1-0.3,0.2-0.3,0.4
+c0,0.3,0.3,0.3,0.6,0.3c0.1,0,2.8,0,2.8,0c0.5,0,0.5-0.2,0.5-0.3C88.5,34.2,88.4,34,88.1,34 M79.8,28.5c0.1-0.3,1.3-4,1.4-4.3
+c0.1,0.3,0.5,1.4,1.5,4.3C82.5,28.5,80.1,28.5,79.8,28.5z"></path>
+<path class="st0" d="M71.8,31.9c-0.2,0-0.3,0.1-0.3,0.4c0,0.3-0.2,0.7-0.4,0.9c-0.3,0.4-1,0.4-1.9,0.4c-1.3,0-1.7-0.1-1.9-0.3
+c-0.3-0.3-0.3-2-0.3-3.8c0-0.1,0-3,0-3l0-3.7c0-0.6,0.2-0.7,0.5-0.8c0,0,0.5,0,0.5,0c0.2,0,0.3-0.1,0.3-0.3c0-0.2-0.1-0.3-0.5-0.3
+c0,0-1.5,0-1.5,0c0,0-0.3,0-0.3,0l-0.2,0c0,0-1.7,0-1.7,0c-0.4,0-0.5,0.2-0.5,0.3c0,0.2,0.1,0.3,0.3,0.3l0.5,0
+c0.5,0.1,0.5,0.3,0.6,0.8l0,3.7v3c0,1.6,0,3-0.1,3.7c-0.1,0.5-0.2,0.7-0.3,0.8c0,0-0.5,0.1-0.5,0.1c-0.2,0-0.3,0.2-0.3,0.3
+c0,0.2,0.1,0.4,0.5,0.4c0,0,1,0,1,0c0,0,0.7,0,0.7,0l1.1,0c0,0,3.5,0.1,3.5,0.1c0.9,0,1.1-0.1,1.3-0.6c0.1-0.5,0.3-1.6,0.3-1.8
+C72.1,32.2,72.1,31.9,71.8,31.9"></path>
+<path class="st0" d="M59.4,31.9c-0.1,0-0.3,0.1-0.3,0.4c0,0.3-0.2,0.7-0.4,0.9c-0.3,0.4-1,0.4-1.9,0.4c-1.3,0-1.7-0.1-1.9-0.3
+c-0.3-0.3-0.3-2-0.3-3.8c0-0.1,0-3,0-3l0-3.7c0-0.6,0.2-0.7,0.5-0.8c0,0,0.5,0,0.5,0c0.2,0,0.3-0.1,0.3-0.3c0-0.2-0.2-0.3-0.5-0.3
+c0,0-1.5,0-1.5,0c0,0-0.3,0-0.3,0l-0.2,0c0,0-1.7,0-1.7,0c-0.4,0-0.5,0.2-0.5,0.3c0,0.2,0.1,0.3,0.3,0.3l0.5,0
+c0.5,0.1,0.5,0.3,0.6,0.8l0,3.7v3c0,1.6,0,3-0.1,3.7c-0.1,0.5-0.2,0.7-0.3,0.8c0,0-0.5,0.1-0.5,0.1c-0.2,0-0.3,0.2-0.3,0.3
+c0,0.2,0.1,0.4,0.5,0.4c0,0,1,0,1,0c0,0,0.7,0,0.7,0l1.1,0c0,0,3.5,0.1,3.5,0.1c0.9,0,1.1-0.1,1.3-0.6c0.1-0.5,0.3-1.6,0.3-1.8
+C59.7,32.2,59.7,31.9,59.4,31.9"></path>
+<path class="st0" d="M47.1,34l-0.6-0.1c-0.4-0.1-0.8-0.4-1.4-1.8l-3.3-8.6l-0.7-1.8c-0.2-0.5-0.3-0.7-0.6-0.7
+c-0.3,0-0.4,0.2-0.6,0.8l-3.9,10.7c-0.3,0.9-0.6,1.4-1.3,1.5c0,0-0.5,0-0.5,0c-0.2,0-0.3,0.1-0.3,0.3c0,0.3,0.4,0.3,0.5,0.3
+c0,0,1.6,0,1.6,0c0,0,0.4,0,0.4,0l0.4,0l0.9,0c0.4,0,0.5-0.2,0.5-0.3c0-0.1-0.1-0.3-0.4-0.3h-0.2c-0.1,0-0.5-0.1-0.5-0.3
+c0-0.3,0.1-0.7,0.2-1.1c0,0,1-3.1,1-3.1s3.7,0,3.7,0c0,0,0.2,0.6,1.6,4.2l0,0.1c-0.2,0.1-0.3,0.3-0.3,0.4c0,0.3,0.3,0.3,0.6,0.3
+c0.1,0,2.8,0,2.8,0c0.5,0,0.5-0.2,0.5-0.3C47.5,34.2,47.5,34,47.1,34 M38.9,28.5c0.1-0.3,1.3-4,1.4-4.3c0.1,0.3,0.5,1.3,1.5,4.3
+C41.5,28.5,39.2,28.5,38.9,28.5z"></path>
+<path class="st0" d="M35.4,10.4l-2.1,0.1l-0.5,0l-0.5,0l-2.7-0.1c-0.2,0-0.7,0-0.7,0.3c0,0.2,0.2,0.3,0.4,0.3
+c1.5,0,1.7,0.4,1.7,0.8c0,0.4,0,0.8-0.3,2l-3.4,11.2c0,0-1.4,4.6-1.5,4.9c-0.1-0.3-6.3-18-6.3-18c-0.4-1.2-0.6-1.6-0.9-1.6
+c-0.3,0-0.4,0.2-0.9,1.5c0,0-5.9,15.8-6.6,17.9C10.6,28.1,7.4,16.7,7,14.7l-0.2-0.7c-0.2-1-0.4-1.9-0.4-2.2c0-0.4,0.2-0.6,0.3-0.7
+C7.1,11,7.6,11,7.9,11c0.4,0,0.4-0.2,0.4-0.3c0-0.3-0.5-0.3-0.7-0.3l-2.7,0.1l-0.5,0l-0.7,0l-3-0.1c-0.4,0-0.6,0.1-0.6,0.3
+C0,10.9,0.1,11,0.4,11c0.2,0,1,0,1.4,0.2c0.8,0.3,1.2,0.7,1.7,2.4l5.6,18.9c0.7,2.3,0.8,2.6,1.2,2.6c0.5,0,0.6-0.4,1.2-1.8
+l6.1-16.2c0,0,0.4-1,0.5-1.3c0.1,0.4,6.1,17.5,6.1,17.5c0.4,1.3,0.7,1.7,1.1,1.7c0.4,0,0.6-0.4,1.4-2.8l5.8-17.7
+c0.6-1.8,1.1-3,2-3.4l1-0.2c0.2,0,0.4-0.1,0.4-0.4C36,10.5,35.9,10.4,35.4,10.4 M25.9,30.1L25.9,30.1C25.9,30,25.9,30,25.9,30.1
+C25.9,30,25.9,30,25.9,30.1z"></path>
+</g>
+</svg>
+</a>
+<!-- </div> -->
+<nav class="c-nav-primary">
+<ul class="u-list-reset | c-nav-primary__list menu-top">
+<li class="c-nav-primary__item ">
+<a class="c-nav-primary__link " href="https://wallacecollection.digitickets.co.uk/tickets"><span class="link-underline"> <img src="?service=WebAsset&amp;url=/images/Ticket.png&amp;contentType=image/png"> Tickets</span></a>
+</li>
+<li class="c-nav-primary__item ">
+<a class="c-nav-primary__link " href="https://wallacecollectionshop.org/"><span class="link-underline"> <img src="?service=WebAsset&amp;url=/images/Shop.png&amp;contentType=image/png"> Shop</span></a>
+</li>
+<li class="c-nav-primary__item " style="margin-top: ">
+<button class="c-nav-primary__link | c-button-icon | c-header__search-btn | js-search-btn" style="padding: 2px 4px !important; margin: 0px !important"><span class="link-underline"> <img src="?service=WebAsset&amp;url=/images/Search.png&amp;contentType=image/png"> Search</span></button>
+</li>
+</ul>
+<ul class="u-list-reset | c-nav-primary__list">
+<li class="c-nav-primary__item ">
+<a class="c-nav-primary__link " href="https://www.wallacecollection.org/visit/"><span class="link-underline">Visit</span></a>
+</li>
+<li class="c-nav-primary__item ">
+<a class="c-nav-primary__link " href="https://www.wallacecollection.org/whats-on/"><span class="link-underline">What's On</span></a>
+</li>
+<li class="c-nav-primary__item ">
+<a class="c-nav-primary__link active" href="https://www.wallacecollection.org/explore/"><span class="link-underline">Explore</span></a>
+</li>
+<li class="c-nav-primary__item ">
+<a class="c-nav-primary__link " href="https://www.wallacecollection.org/learn/"><span class="link-underline">Learn</span></a>
+</li>
+<li class="c-nav-primary__item ">
+<a class="c-nav-primary__link " href="https://www.wallacecollection.org/join-and-support/"><span class="link-underline">Join and Support</span></a>
+</li>
+</ul>
+</nav>
+<div class="c-header__button-group">
+<button class="c-button-icon | c-header__menu-btn | js-hamburger-btn">
+<svg class="c-icon c-icon--hamburger"><title>Menu</title><use xlink:href="#icon-hamburger"></use></svg>
+</button>
+<button class="c-button-icon | c-header__search-btn | js-search-btn">
+<svg class="c-icon c-icon--search"><title>Search</title><use xlink:href="#icon-search"></use></svg>
+</button>
+</div>
+<!-- Mobile menu overlay -->
+<div class="c-overlay | js-overlay js-overlay-menu" role="dialog" aria-labelledby="overlay-menu-title">
+<h2 class="u-visually-hidden" id="overlay-menu-title">Mobile main menu</h2>
+<div class="c-overlay__content | js-overlay-content ">
+<!-- Mobile menu -->
+<nav class="c-mobile-nav | js-mobile-nav">
+<ul class="u-list-reset | c-mobile-nav__list">
+<li class="c-nav-primary__item ">
+<a class="c-nav-primary__link " href="https://www.wallacecollection.org/visit/"><span class="link-underline">Visit</span></a>
+</li>
+<li class="c-nav-primary__item ">
+<a class="c-nav-primary__link " href="https://www.wallacecollection.org/whats-on/"><span class="link-underline">What's On</span></a>
+</li>
+<li class="c-nav-primary__item ">
+<a class="c-nav-primary__link active" href="https://www.wallacecollection.org/explore/"><span class="link-underline">Explore</span></a>
+</li>
+<li class="c-nav-primary__item ">
+<a class="c-nav-primary__link " href="https://www.wallacecollection.org/learn/"><span class="link-underline">Learn</span></a>
+</li>
+<li class="c-nav-primary__item ">
+<a class="c-nav-primary__link " href="https://www.wallacecollection.org/join-and-support/"><span class="link-underline">Join and Support</span></a>
+</li>
+<li class="c-nav-primary__item ">
+<a class="c-nav-primary__link " href="https://wallacecollection.digitickets.co.uk/tickets"><span class="link-underline">Tickets</span></a>
+</li>
+<li class="c-nav-primary__item ">
+<a class="c-nav-primary__link " href="https://wallacecollectionshop.org/"><span class="link-underline">Shop</span></a>
+</li>
+<li class="c-nav-primary__item ">
+<a href="javascript:void(0);" class="c-nav-primary__link | c-button-icon | c-header__search-btn | js-search-btn" style="padding: 2px 4px !important; display: block !important; margin: 0px !important"><span class="link-underline"> Search</span></a>
+</li>
+</ul>
+</nav>
+</div>
+<button class="c-overlay__btn | js-overlay-close-btn">
+<span class="c-overlay__btn-label link-underline">Press ESC or click here to close</span>
+<svg class="c-icon c-icon--cross"><title>Close overlay</title><use xlink:href="#icon-cross"></use></svg>
+</button>
+</div>
+</div>
+</header>
+<div id="pageTitle">Search the Collection</div>
+<nav id="secNav" role="navigation">
+<ul>
+<li>
+<a href="https://www.wallacecollection.org/collection/">Collection Highlights</a>
+</li>
+<li>
+<a href="?service=ExternalInterface&amp;module=collection&amp;moduleFunction=search">Search the collection</a>
+</li>
+<li>
+<a href="https://www.wallacecollection.org/collection/history-collection/">History of the collection</a>
+</li>
+</ul>
+</nav>
+<div id="terNav">
+<ul>
+<li id="quickFindWallace">
+<form name="quickFindForm" action="" method="post">
+<select language="javascript" class="dropDown" id="quickFindDd" onchange="javascript:gotoPageQuick()" name="quickFind">
+<option value="" selected="selected">Quick find</option>
+<option value="?service=ExternalSearch&amp;module=collection&amp;fieldValue=[Obj_Ownership_S|Arms%20and%20Armour]">Arms and Armour</option>
+<option value="?service=ExternalSearch&amp;module=collection&amp;fieldValue=[Obj_Ownership_S|Porcelain]&amp;fieldValue=[Obj_Ownership_S|Earthenware]">Ceramics</option>
+<option value="?service=ExternalSearch&amp;module=collection&amp;fieldValue=[Obj_Ownership_S|Furniture]">Furniture</option>
+<option value="?service=ExternalSearch&amp;module=collection&amp;fieldValue=[Obj_Ownership_S|Pictures and Miniatures]">Paintings</option>
+<option value="?service=ExternalSearch&amp;module=collection&amp;fieldValue=[Obj_Ownership_S|Sculpture]">Sculpture</option>
+<option value="?service=ExternalSearch&amp;module=collection&amp;fieldValue=[Obj_Ownership_S|Limoges Enamels]">Limoges Enamels</option>
+<option value="?service=ExternalSearch&amp;module=collection&amp;fieldValue=[Obj_Ownership_S|Glass]">Glass</option>
+<option value="?service=ExternalSearch&amp;module=collection&amp;fieldValue=[Obj_Ownership_S|Works%20of%20Art]&amp;fieldValue=[Obj_Ownership_S|Asian and African Art]">Works of Art</option>
+</select>
+</form>
+<svg><use xlink:href="#icon-arrow-down"></use></svg>
+<!-- end Quick Find Wallace -->
+</li>
+<li>
+<a href="?service=ExternalInterface&amp;module=collection&amp;moduleFunction=search">Collection Search</a>
+</li>
+<li>
+<a href="?service=ExternalInterface&amp;module=artist&amp;viewType=simpleList&amp;filterName=filter.artist.all">Artist A-Z</a>
+</li>
+<li>
+<a class="active" href="?service=ExternalInterface&amp;module=room&amp;viewType=detailList">Explore by Gallery</a>
+</li>
+</ul>
+</div>
+<!--
+***********************************************************
+End Include Code Container
+************************************************************
+-->
+<div id="siteFunctions">
+<ul id="siteFunctionsContainer">
+<li id="siteSearchContainer">
+<form method="post" name="Form0" action="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D" id="siteSearch" enctype="multipart/form-data">
+<input type="hidden" name="service" value="direct/1/ResultDetailView/border.siteFunctionBar.$Form" style="">
+<input type="hidden" name="sp" value="S0" style="">
+<input type="hidden" name="Form0" value="siteSearchInput" style="">
+<fieldset id="siteSearchItems">
+<label for="siteSearchInput" class="siteSearchLabel">
+Advanced Search	</label>
+<input type="text" name="siteSearchInput" id="siteSearchInput" class="text" accesskey="7" style="">
+<input value="Search" tabindex="2" id="siteSearchButton" class="submitButton" type="submit" style="">	</fieldset>
+</form>	</li>
+</ul>
+<!-- <div class="cleaner"></div> -->
+</div>
+<div id="navigation">
+<ul id="mainNav">
+<li id="mainNavItem-collection" class="mainNavItem">
+<a href="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D?service=direct/1/ResultDetailView/border.moduleSelectionBar.module.link&amp;sp=13&amp;sp=Sroom&amp;sp=SfilterDefinition&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailView&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=T&amp;sp=0&amp;sp=SdetailList&amp;sp=0&amp;sp=Scollection" id="moduleLink-collection" class="a">
+The Collection
+</a>
+</li>
+<li id="mainNavItem-artist" class="mainNavItem">
+<a href="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D?service=direct/1/ResultDetailView/border.moduleSelectionBar.module.link&amp;sp=13&amp;sp=Sroom&amp;sp=SfilterDefinition&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailView&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=T&amp;sp=0&amp;sp=SdetailList&amp;sp=0&amp;sp=Sartist" id="moduleLink-artist" class="a">
+Artist/Maker
+</a>
+</li>
+<li id="mainNavItem-room" class="mainNavItem">
+<a href="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D?service=direct/1/ResultDetailView/border.moduleSelectionBar.module.link&amp;sp=13&amp;sp=Sroom&amp;sp=SfilterDefinition&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailView&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=T&amp;sp=0&amp;sp=SdetailList&amp;sp=0&amp;sp=Sroom" id="moduleLink-room" class="active">
+Gallery by Gallery
+</a>
+</li>
+<li id="mainNavItem-multimedia" class="mainNavItem">
+<a href="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D?service=direct/1/ResultDetailView/border.moduleSelectionBar.module.link&amp;sp=13&amp;sp=Sroom&amp;sp=SfilterDefinition&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailView&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=T&amp;sp=0&amp;sp=SdetailList&amp;sp=0&amp;sp=Smultimedia" id="moduleLink-multimedia" class="a">
+Multimedia
+</a>
+</li>
+</ul>
+<ul id="externalNav">
+<li id="externalNavItem-5" class="externalNavItem">
+<a href="http://www.wallacecollection.org/wallacelive/helpwithsearching" target="_self" id="externalReference-5">
+Help with Searching
+</a>
+</li>
+<li id="externalNavItem-100000" class="externalNavItem">
+<a href="http://www.wallacecollection.org/wallacelive/feedbackform" target="_self" id="externalReference-100000">
+Feedback Form
+</a>
+</li>
+</ul>
+</div>
+<div id="header">
+<h1 id="title">
+Gallery by Gallery	</h1>
+<ul id="moduleFunctions">
+<li id="moduleFunctionHighlight" class="moduleFunctionItem">
+<a href="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D?service=direct/1/ResultDetailView/border.moduleFunctionBar.moduleFunctionLink.link&amp;sp=13&amp;sp=Sroom&amp;sp=SfilterDefinition&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailView&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=T&amp;sp=0&amp;sp=SdetailList&amp;sp=0&amp;sp=1" id="highlight-1" class="">
+Highlights
+</a>
+</li>
+<li id="moduleFunctionSearch" class="moduleFunctionItem">
+<a href="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D?service=direct/1/ResultDetailView/border.moduleFunctionBar.moduleFunctionLink.link&amp;sp=13&amp;sp=Sroom&amp;sp=SfilterDefinition&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailView&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=T&amp;sp=0&amp;sp=SdetailList&amp;sp=0&amp;sp=2" id="search-2" class="">
+Advanced Search
+</a>
+</li>
+<li id="moduleFunctionResult" class="moduleFunctionItem">
+<a href="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D?service=direct/1/ResultDetailView/border.moduleFunctionBar.moduleFunctionLink.link&amp;sp=13&amp;sp=Sroom&amp;sp=SfilterDefinition&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailView&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=T&amp;sp=0&amp;sp=SdetailList&amp;sp=0&amp;sp=3" id="result-3" class="active">
+Result
+</a>
+</li>
+<li id="moduleFunctionReference" class="moduleFunctionItem">
+<a href="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D?service=direct/1/ResultDetailView/border.moduleFunctionBar.moduleFunctionLink.link&amp;sp=13&amp;sp=Sroom&amp;sp=SfilterDefinition&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailView&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=T&amp;sp=0&amp;sp=SdetailList&amp;sp=0&amp;sp=999" id="reference-999" class="">
+Result
+</a>
+</li>
+</ul>
+<div class="cleaner"></div>
+</div> <!-- id=header -->
+<!--
+***********************************************************
+Include Code Container 2
+Date: 2009-12-18
+Author: ks
+************************************************************
+-->
+<div class="cleaner"></div>
+<!-- id=headerBox -->
+<div id="contentBox">
+<!--
+***********************************************************
+End Include Code Container2
+************************************************************
+-->
+<div id="content" class="contentContainer">
+<!--
+***********************************************************
+Include Code Content
+Date: 2009-12-18
+Author: ks
+************************************************************
+-->
+<div class="backLink" style="display:none;"><a href="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D?service=direct/1/ResultDetailView/result.inline.moduleContextFunctionBar.viewType&amp;sp=13&amp;sp=Sroom&amp;sp=SfilterDefinition&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailView&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=T&amp;sp=0&amp;sp=SdetailList&amp;sp=0&amp;sp=SdetailList">Back to list</a></div>
+<!--
+***********************************************************
+End Include Code Content
+************************************************************
+-->
+<div id="filterSection_detailView" class="filterSection filterType_preselect">
+<form method="post" name="Form1" action="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D" enctype="multipart/form-data">
+<input type="hidden" name="service" value="direct/1/ResultDetailView/preselectFilterSection.$Form" style="">
+<input type="hidden" name="sp" value="S1" style="">
+<input type="hidden" name="Form1" value="" style="">
+<ul>
+<li class="filterGroupItem">
+<fieldset id="webFilterGroupdId_10033" class="filterGroupControl_list">	<legend class="filterGroupLabel">
+First floor	</legend>
+<ul>
+<li class="filterItem" style="display: block;">
+<a href="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D?service=direct/1/ResultDetailView/preselectFilterSection.$FilterGroupControl.$MpDirectLink&amp;sp=13&amp;sp=Sroom&amp;sp=SfilterDefinition&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailView&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=T&amp;sp=0&amp;sp=SdetailList&amp;sp=0&amp;sp=S10033&amp;sp=S1" class="active" style="background-color: #006E88;">First Floor</a><svg><use xlink:href="#icon-minus"></use></svg>	</li>
+<li class="filterItem" style="display: block;">
+<a href="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D?service=direct/1/ResultDetailView/preselectFilterSection.$FilterGroupControl.$MpDirectLink&amp;sp=13&amp;sp=Sroom&amp;sp=SfilterDefinition&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailView&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=T&amp;sp=0&amp;sp=SdetailList&amp;sp=0&amp;sp=S10033&amp;sp=S2" class="">West Room</a>	</li>
+<li class="filterItem" style="display: block;">
+<a href="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D?service=direct/1/ResultDetailView/preselectFilterSection.$FilterGroupControl.$MpDirectLink&amp;sp=13&amp;sp=Sroom&amp;sp=SfilterDefinition&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailView&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=T&amp;sp=0&amp;sp=SdetailList&amp;sp=0&amp;sp=S10033&amp;sp=S3" class="">West Gallery I</a>	</li>
+<li class="filterItem" style="display: block;">
+<a href="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D?service=direct/1/ResultDetailView/preselectFilterSection.$FilterGroupControl.$MpDirectLink&amp;sp=13&amp;sp=Sroom&amp;sp=SfilterDefinition&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailView&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=T&amp;sp=0&amp;sp=SdetailList&amp;sp=0&amp;sp=S10033&amp;sp=S4" class="">West Gallery II</a>	</li>
+<li class="filterItem" style="display: block;">
+<a href="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D?service=direct/1/ResultDetailView/preselectFilterSection.$FilterGroupControl.$MpDirectLink&amp;sp=13&amp;sp=Sroom&amp;sp=SfilterDefinition&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailView&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=T&amp;sp=0&amp;sp=SdetailList&amp;sp=0&amp;sp=S10033&amp;sp=S5" class="">West Gallery III</a>	</li>
+<li class="filterItem" style="display: block;">
+<a href="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D?service=direct/1/ResultDetailView/preselectFilterSection.$FilterGroupControl.$MpDirectLink&amp;sp=13&amp;sp=Sroom&amp;sp=SfilterDefinition&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailView&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=T&amp;sp=0&amp;sp=SdetailList&amp;sp=0&amp;sp=S10033&amp;sp=S6" class="">Great Gallery</a>	</li>
+<li class="filterItem" style="display: block;">
+<a href="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D?service=direct/1/ResultDetailView/preselectFilterSection.$FilterGroupControl.$MpDirectLink&amp;sp=13&amp;sp=Sroom&amp;sp=SfilterDefinition&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailView&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=T&amp;sp=0&amp;sp=SdetailList&amp;sp=0&amp;sp=S10033&amp;sp=S7" class="">East Galleries III</a>	</li>
+<li class="filterItem" style="display: block;">
+<a href="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D?service=direct/1/ResultDetailView/preselectFilterSection.$FilterGroupControl.$MpDirectLink&amp;sp=13&amp;sp=Sroom&amp;sp=SfilterDefinition&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailView&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=T&amp;sp=0&amp;sp=SdetailList&amp;sp=0&amp;sp=S10033&amp;sp=S8" class="">East Galleries II</a>	</li>
+<li class="filterItem" style="display: block;">
+<a href="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D?service=direct/1/ResultDetailView/preselectFilterSection.$FilterGroupControl.$MpDirectLink&amp;sp=13&amp;sp=Sroom&amp;sp=SfilterDefinition&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailView&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=T&amp;sp=0&amp;sp=SdetailList&amp;sp=0&amp;sp=S10033&amp;sp=S9" class="">East Galleries I</a>	</li>
+<li class="filterItem" style="display: block;">
+<a href="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D?service=direct/1/ResultDetailView/preselectFilterSection.$FilterGroupControl.$MpDirectLink&amp;sp=13&amp;sp=Sroom&amp;sp=SfilterDefinition&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailView&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=T&amp;sp=0&amp;sp=SdetailList&amp;sp=0&amp;sp=S10033&amp;sp=S10" class="">East Drawing Room</a>	</li>
+<li class="filterItem" style="display: block;">
+<a href="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D?service=direct/1/ResultDetailView/preselectFilterSection.$FilterGroupControl.$MpDirectLink&amp;sp=13&amp;sp=Sroom&amp;sp=SfilterDefinition&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailView&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=T&amp;sp=0&amp;sp=SdetailList&amp;sp=0&amp;sp=S10033&amp;sp=S11" class="">Small Drawing Room</a>	</li>
+<li class="filterItem" style="display: block;">
+<a href="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D?service=direct/1/ResultDetailView/preselectFilterSection.$FilterGroupControl.$MpDirectLink&amp;sp=13&amp;sp=Sroom&amp;sp=SfilterDefinition&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailView&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=T&amp;sp=0&amp;sp=SdetailList&amp;sp=0&amp;sp=S10033&amp;sp=S12" class="">Large Drawing Room</a>	</li>
+<li class="filterItem" style="display: block;">
+<a href="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D?service=direct/1/ResultDetailView/preselectFilterSection.$FilterGroupControl.$MpDirectLink&amp;sp=13&amp;sp=Sroom&amp;sp=SfilterDefinition&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailView&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=T&amp;sp=0&amp;sp=SdetailList&amp;sp=0&amp;sp=S10033&amp;sp=S13" class="">Landing</a>	</li>
+<li class="filterItem" style="display: block;">
+<a href="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D?service=direct/1/ResultDetailView/preselectFilterSection.$FilterGroupControl.$MpDirectLink&amp;sp=13&amp;sp=Sroom&amp;sp=SfilterDefinition&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailView&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=T&amp;sp=0&amp;sp=SdetailList&amp;sp=0&amp;sp=S10033&amp;sp=S14" class="">Oval Drawing Room</a>	</li>
+<li class="filterItem" style="display: block;">
+<a href="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D?service=direct/1/ResultDetailView/preselectFilterSection.$FilterGroupControl.$MpDirectLink&amp;sp=13&amp;sp=Sroom&amp;sp=SfilterDefinition&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailView&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=T&amp;sp=0&amp;sp=SdetailList&amp;sp=0&amp;sp=S10033&amp;sp=S15" class="">The Study</a>	</li>
+<li class="filterItem" style="display: block;">
+<a href="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D?service=direct/1/ResultDetailView/preselectFilterSection.$FilterGroupControl.$MpDirectLink&amp;sp=13&amp;sp=Sroom&amp;sp=SfilterDefinition&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailView&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=T&amp;sp=0&amp;sp=SdetailList&amp;sp=0&amp;sp=S10033&amp;sp=S16" class="">Boudoir</a>	</li>
+<li class="filterItem" style="display: block;">
+<a href="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D?service=direct/1/ResultDetailView/preselectFilterSection.$FilterGroupControl.$MpDirectLink&amp;sp=13&amp;sp=Sroom&amp;sp=SfilterDefinition&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailView&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=T&amp;sp=0&amp;sp=SdetailList&amp;sp=0&amp;sp=S10033&amp;sp=S17" class="">Boudoir Cabinet</a>	</li>
+</ul>
+</fieldset>	</li>
+<li class="filterGroupItem">
+<fieldset id="webFilterGroupdId_10034" class="filterGroupControl_list">	<legend class="filterGroupLabel">
+Ground Floor	</legend>
+<ul>
+<li class="filterItem">
+<a href="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D?service=direct/1/ResultDetailView/preselectFilterSection.$FilterGroupControl.$MpDirectLink&amp;sp=13&amp;sp=Sroom&amp;sp=SfilterDefinition&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailView&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=T&amp;sp=0&amp;sp=SdetailList&amp;sp=0&amp;sp=S10034&amp;sp=S1" class="">Ground Floor</a><svg><use xlink:href="#icon-plus"></use></svg>	</li>
+<li class="filterItem">
+<a href="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D?service=direct/1/ResultDetailView/preselectFilterSection.$FilterGroupControl.$MpDirectLink&amp;sp=13&amp;sp=Sroom&amp;sp=SfilterDefinition&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailView&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=T&amp;sp=0&amp;sp=SdetailList&amp;sp=0&amp;sp=S10034&amp;sp=S2" class="">Armouries Corridor</a>	</li>
+<li class="filterItem">
+<a href="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D?service=direct/1/ResultDetailView/preselectFilterSection.$FilterGroupControl.$MpDirectLink&amp;sp=13&amp;sp=Sroom&amp;sp=SfilterDefinition&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailView&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=T&amp;sp=0&amp;sp=SdetailList&amp;sp=0&amp;sp=S10034&amp;sp=S3" class="">Arms and Armour I</a>	</li>
+<li class="filterItem">
+<a href="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D?service=direct/1/ResultDetailView/preselectFilterSection.$FilterGroupControl.$MpDirectLink&amp;sp=13&amp;sp=Sroom&amp;sp=SfilterDefinition&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailView&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=T&amp;sp=0&amp;sp=SdetailList&amp;sp=0&amp;sp=S10034&amp;sp=S4" class="">Arms and Armour II</a>	</li>
+<li class="filterItem">
+<a href="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D?service=direct/1/ResultDetailView/preselectFilterSection.$FilterGroupControl.$MpDirectLink&amp;sp=13&amp;sp=Sroom&amp;sp=SfilterDefinition&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailView&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=T&amp;sp=0&amp;sp=SdetailList&amp;sp=0&amp;sp=S10034&amp;sp=S5" class="">Arms and Armour III</a>	</li>
+<li class="filterItem">
+<a href="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D?service=direct/1/ResultDetailView/preselectFilterSection.$FilterGroupControl.$MpDirectLink&amp;sp=13&amp;sp=Sroom&amp;sp=SfilterDefinition&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailView&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=T&amp;sp=0&amp;sp=SdetailList&amp;sp=0&amp;sp=S10034&amp;sp=S6" class="">Arms and Armour IV</a>	</li>
+<li class="filterItem">
+<a href="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D?service=direct/1/ResultDetailView/preselectFilterSection.$FilterGroupControl.$MpDirectLink&amp;sp=13&amp;sp=Sroom&amp;sp=SfilterDefinition&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailView&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=T&amp;sp=0&amp;sp=SdetailList&amp;sp=0&amp;sp=S10034&amp;sp=S7" class="">Back State Room</a>	</li>
+<li class="filterItem">
+<a href="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D?service=direct/1/ResultDetailView/preselectFilterSection.$FilterGroupControl.$MpDirectLink&amp;sp=13&amp;sp=Sroom&amp;sp=SfilterDefinition&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailView&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=T&amp;sp=0&amp;sp=SdetailList&amp;sp=0&amp;sp=S10034&amp;sp=S8" class="">Billiard Room</a>	</li>
+<li class="filterItem">
+<a href="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D?service=direct/1/ResultDetailView/preselectFilterSection.$FilterGroupControl.$MpDirectLink&amp;sp=13&amp;sp=Sroom&amp;sp=SfilterDefinition&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailView&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=T&amp;sp=0&amp;sp=SdetailList&amp;sp=0&amp;sp=S10034&amp;sp=S9" class="">Dining Room</a>	</li>
+<li class="filterItem">
+<a href="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D?service=direct/1/ResultDetailView/preselectFilterSection.$FilterGroupControl.$MpDirectLink&amp;sp=13&amp;sp=Sroom&amp;sp=SfilterDefinition&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailView&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=T&amp;sp=0&amp;sp=SdetailList&amp;sp=0&amp;sp=S10034&amp;sp=S10" class="">East Galleries III Staircase</a>	</li>
+<li class="filterItem">
+<a href="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D?service=direct/1/ResultDetailView/preselectFilterSection.$FilterGroupControl.$MpDirectLink&amp;sp=13&amp;sp=Sroom&amp;sp=SfilterDefinition&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailView&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=T&amp;sp=0&amp;sp=SdetailList&amp;sp=0&amp;sp=S10034&amp;sp=S11" class="">Front State Room</a>	</li>
+<li class="filterItem">
+<a href="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D?service=direct/1/ResultDetailView/preselectFilterSection.$FilterGroupControl.$MpDirectLink&amp;sp=13&amp;sp=Sroom&amp;sp=SfilterDefinition&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailView&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=T&amp;sp=0&amp;sp=SdetailList&amp;sp=0&amp;sp=S10034&amp;sp=S12" class="">Grand Staircase</a>	</li>
+<li class="filterItem">
+<a href="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D?service=direct/1/ResultDetailView/preselectFilterSection.$FilterGroupControl.$MpDirectLink&amp;sp=13&amp;sp=Sroom&amp;sp=SfilterDefinition&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailView&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=T&amp;sp=0&amp;sp=SdetailList&amp;sp=0&amp;sp=S10034&amp;sp=S13" class="">Hall</a>	</li>
+<li class="filterItem">
+<a href="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D?service=direct/1/ResultDetailView/preselectFilterSection.$FilterGroupControl.$MpDirectLink&amp;sp=13&amp;sp=Sroom&amp;sp=SfilterDefinition&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailView&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=T&amp;sp=0&amp;sp=SdetailList&amp;sp=0&amp;sp=S10034&amp;sp=S14" class="">Sixteenth Century Gallery</a>	</li>
+<li class="filterItem">
+<a href="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D?service=direct/1/ResultDetailView/preselectFilterSection.$FilterGroupControl.$MpDirectLink&amp;sp=13&amp;sp=Sroom&amp;sp=SfilterDefinition&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailView&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=T&amp;sp=0&amp;sp=SdetailList&amp;sp=0&amp;sp=S10034&amp;sp=S15" class="">Smoking Room</a>	</li>
+<li class="filterItem">
+<a href="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D?service=direct/1/ResultDetailView/preselectFilterSection.$FilterGroupControl.$MpDirectLink&amp;sp=13&amp;sp=Sroom&amp;sp=SfilterDefinition&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailView&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=T&amp;sp=0&amp;sp=SdetailList&amp;sp=0&amp;sp=S10034&amp;sp=S16" class="">West Gallery III Staircase</a>	</li>
+</ul>
+</fieldset>	</li>
+<li class="filterGroupItem">
+<fieldset id="webFilterGroupdId_10035" class="filterGroupControl_list">	<legend class="filterGroupLabel">
+Lower Ground Floor	</legend>
+<ul>
+<li class="filterItem">
+<a href="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D?service=direct/1/ResultDetailView/preselectFilterSection.$FilterGroupControl.$MpDirectLink&amp;sp=13&amp;sp=Sroom&amp;sp=SfilterDefinition&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailView&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=T&amp;sp=0&amp;sp=SdetailList&amp;sp=0&amp;sp=S10035&amp;sp=S1" class="">Lower Ground Floor</a><svg><use xlink:href="#icon-plus"></use></svg>	</li>
+<li class="filterItem">
+<a href="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D?service=direct/1/ResultDetailView/preselectFilterSection.$FilterGroupControl.$MpDirectLink&amp;sp=13&amp;sp=Sroom&amp;sp=SfilterDefinition&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailView&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=T&amp;sp=0&amp;sp=SdetailList&amp;sp=0&amp;sp=S10035&amp;sp=S2" class="">Porphyry Court</a>	</li>
+</ul>
+</fieldset>	</li>
+</ul>
+</form>	<div class="filterCleaner"></div>
+</div>
+<div class="contextMenuContainer">
+<p class="resultCount">
+Results:&nbsp;
+<span class="highlight">1</span>	</p>
+<ul class="contextMenu">
+<li class="dropdownMenu contentViews">
+View: Detail<span class="arrowDownButton">&nbsp;</span>
+<ul>
+<li id="viewTypes-simpleList" class="menuItem">
+<a href="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D?service=direct/1/ResultDetailView/moduleContextFunctionBar.viewType&amp;sp=13&amp;sp=Sroom&amp;sp=SfilterDefinition&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailView&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=T&amp;sp=0&amp;sp=SdetailList&amp;sp=0&amp;sp=SsimpleList">
+Summary List
+</a>
+</li>
+<li id="viewTypes-detailView" class="menuItem">
+<a href="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D?service=direct/1/ResultDetailView/moduleContextFunctionBar.viewType&amp;sp=13&amp;sp=Sroom&amp;sp=SfilterDefinition&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailView&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=T&amp;sp=0&amp;sp=SdetailList&amp;sp=0&amp;sp=SdetailView">
+Detail
+</a>
+</li>
+</ul>
+</li>
+<li class="dropdownMenu elementNavigator">
+<span id="pageSetEntries-previousSet" class="back elementNavigatorBack">
+<span class="arrowButton">&nbsp;</span>
+</span>
+<span class="menuTitle elementNavigatorCurrent">1</span>
+<span id="pageSetEntries-nextSet" class="next elementNavigatorNext">
+<span class="arrowButton">&nbsp;</span>
+</span>
+<ul>
+<li id="pageSetEntries-0" class="menuItem">
+<a href="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D?service=direct/1/ResultDetailView/moduleContextFunctionBar.navigator.item2&amp;sp=13&amp;sp=Sroom&amp;sp=SfilterDefinition&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailView&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=T&amp;sp=0&amp;sp=SdetailList&amp;sp=0&amp;sp=0">1</a>
+</li>
+<li id="pageSetEntries-first" class="menuItem elementNavigatorToFirst">
+<div class="disabled">
+First	</div>
+</li>
+<li id="pageSetEntries-last" class="menuItem elementNavigatorToLast">
+<div class="disabled">
+Last	</div>
+</li>	</ul>
+</li>
+</ul>
+<div class="cleaner"></div>
+</div>
+<div id="roomDetail" class="detail">
+<dl id="roomDetailItem" class="detailItem">
+<!--		<dt jwcid="@TspImage" htmlElement="dt" class="listImg"/> -->
+<dt class="listTitle"></dt>
+<dd class="listDescription">
+<ul>
+<!--<li class="galleryFloor" jwcid="@TspText" propertyName="comment" htmlElement="li" />
+<li class="galleryTitle" jwcid="@TspText" propertyName="name" htmlElement="li"/>
+<li class="galleryText" jwcid="@TspText" propertyName="spareMField01" htmlElement="li"/>-->
+</ul>
+</dd>
+<dd class="cleaner"></dd>
+</dl>
+<dl id="roomReferences" class="referenceContainer">
+<dt id="referenceTab-00" class="referenceTabItemActive">
+<a href="#" class="active">
+Works of Art
+</a>
+</dt>
+<dd id="roomReferences-inlineBlock" class="reference">
+<div id="collectionInlineModule" class="inlineModule">
+<div class="contextMenuContainer">
+<p class="resultCount">
+Results:&nbsp;
+<span class="highlight">19</span>	</p>
+<ul class="contextMenu">
+<li class="dropdownMenu contentSortings">
+Sorting:&nbsp;
+Artist/Maker<span class="arrowDownButton">&nbsp;</span>
+<ul>
+<li id="sortFields-inline-0" class="menuItem">
+<a href="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D?service=direct/1/ResultDetailView/result.inline.moduleContextFunctionBar.sorting&amp;sp=13&amp;sp=Sroom&amp;sp=SfilterDefinition&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailView&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=T&amp;sp=0&amp;sp=SdetailList&amp;sp=0&amp;sp=0">
+Artist/Maker
+</a>
+</li>
+<li id="sortFields-inline-1" class="menuItem">
+<a href="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D?service=direct/1/ResultDetailView/result.inline.moduleContextFunctionBar.sorting&amp;sp=13&amp;sp=Sroom&amp;sp=SfilterDefinition&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailView&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=T&amp;sp=0&amp;sp=SdetailList&amp;sp=0&amp;sp=1">
+Year from
+</a>
+</li>
+<li id="sortFields-inline-2" class="menuItem">
+<a href="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D?service=direct/1/ResultDetailView/result.inline.moduleContextFunctionBar.sorting&amp;sp=13&amp;sp=Sroom&amp;sp=SfilterDefinition&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailView&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=T&amp;sp=0&amp;sp=SdetailList&amp;sp=0&amp;sp=2">
+Museum Number
+</a>
+</li>
+</ul>
+</li>
+<li class="dropdownMenu contentViews">
+View: Image List<span class="arrowDownButton">&nbsp;</span>
+<ul>
+<li id="viewTypes-inline-simpleList" class="menuItem">
+<a href="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D?service=direct/1/ResultDetailView/result.inline.moduleContextFunctionBar.viewType&amp;sp=13&amp;sp=Sroom&amp;sp=SfilterDefinition&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailView&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=T&amp;sp=0&amp;sp=SdetailList&amp;sp=0&amp;sp=SsimpleList">
+Summary List
+</a>
+</li>
+<li id="viewTypes-inline-detailList" class="menuItem">
+<a href="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D?service=direct/1/ResultDetailView/result.inline.moduleContextFunctionBar.viewType&amp;sp=13&amp;sp=Sroom&amp;sp=SfilterDefinition&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailView&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=T&amp;sp=0&amp;sp=SdetailList&amp;sp=0&amp;sp=SdetailList">
+Image List
+</a>
+</li>
+<li id="viewTypes-inline-detailView" class="menuItem">
+<a href="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D?service=direct/1/ResultDetailView/result.inline.moduleContextFunctionBar.viewType&amp;sp=13&amp;sp=Sroom&amp;sp=SfilterDefinition&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailView&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=T&amp;sp=0&amp;sp=SdetailList&amp;sp=0&amp;sp=SdetailView">
+Detail
+</a>
+</li>
+<li id="viewTypes-inline-lightbox_1x1" class="menuItem">
+<a href="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D?service=direct/1/ResultDetailView/result.inline.moduleContextFunctionBar.viewType&amp;sp=13&amp;sp=Sroom&amp;sp=SfilterDefinition&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailView&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=T&amp;sp=0&amp;sp=SdetailList&amp;sp=0&amp;sp=Slightbox_1x1">
+Lightbox 1x1
+</a>
+</li>
+<li id="viewTypes-inline-lightbox_1x2" class="menuItem">
+<a href="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D?service=direct/1/ResultDetailView/result.inline.moduleContextFunctionBar.viewType&amp;sp=13&amp;sp=Sroom&amp;sp=SfilterDefinition&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailView&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=T&amp;sp=0&amp;sp=SdetailList&amp;sp=0&amp;sp=Slightbox_1x2">
+Lightbox 1x2
+</a>
+</li>
+<li id="viewTypes-inline-lightbox_2x3" class="menuItem">
+<a href="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D?service=direct/1/ResultDetailView/result.inline.moduleContextFunctionBar.viewType&amp;sp=13&amp;sp=Sroom&amp;sp=SfilterDefinition&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailView&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=T&amp;sp=0&amp;sp=SdetailList&amp;sp=0&amp;sp=Slightbox_2x3">
+Lightbox 2x3
+</a>
+</li>
+<li id="viewTypes-inline-lightbox_3x4" class="menuItem">
+<a href="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D?service=direct/1/ResultDetailView/result.inline.moduleContextFunctionBar.viewType&amp;sp=13&amp;sp=Sroom&amp;sp=SfilterDefinition&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailView&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=T&amp;sp=0&amp;sp=SdetailList&amp;sp=0&amp;sp=Slightbox_3x4">
+Lightbox 3x4
+</a>
+</li>
+<li id="viewTypes-inline-lightbox_4x5" class="menuItem">
+<a href="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D?service=direct/1/ResultDetailView/result.inline.moduleContextFunctionBar.viewType&amp;sp=13&amp;sp=Sroom&amp;sp=SfilterDefinition&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailView&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=T&amp;sp=0&amp;sp=SdetailList&amp;sp=0&amp;sp=Slightbox_4x5">
+Lightbox 4x5
+</a>
+</li>
+</ul>
+</li>
+<li class="dropdownMenu elementNavigator dropdownMenuFromTo">
+<span id="pageSetEntries-inline-previousSet" class="back elementNavigatorBack">
+<span class="arrowButton">&nbsp;</span>
+</span>
+<span class="menuTitle elementNavigatorCurrent elementNavigatorFromTo"><span class="elementFrom">1</span> - 19</span>
+<span id="pageSetEntries-inline-nextSet" class="next elementNavigatorNext">
+<span class="arrowButton">&nbsp;</span>
+</span>
+<ul>
+<li id="pageSetEntries-inline-0" class="menuItem elementNavigatorFromTo">
+<a href="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D?service=direct/1/ResultDetailView/result.inline.moduleContextFunctionBar.navigator.item1&amp;sp=13&amp;sp=Sroom&amp;sp=SfilterDefinition&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailView&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=T&amp;sp=0&amp;sp=SdetailList&amp;sp=0&amp;sp=0"><span class="elementFrom">1</span> - 19</a>
+</li>
+<li id="pageSetEntries-inline-first" class="menuItem elementNavigatorToFirst">
+<div class="disabled">
+First	</div>
+</li>
+<li id="pageSetEntries-inline-last" class="menuItem elementNavigatorToLast">
+<div class="disabled">
+Last	</div>
+</li>	</ul><svg><use xlink:href="#icon-arrow-down"></use></svg>
+</li>
+</ul>
+<div class="cleaner"></div>
+</div>
+<div id="collectionDetailList" class="detailList">
+<dl id="detailListItem-0" class="detailListItem">
+<dt class="listImg">
+<a href="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D?service=direct/1/ResultDetailView/result.inline.list.t1.collection_list.$TspTitleImageLink.link&amp;sp=13&amp;sp=Sroom&amp;sp=SfilterDefinition&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailView&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=T&amp;sp=0&amp;sp=SdetailList&amp;sp=0&amp;sp=F&amp;sp=Scollection&amp;sp=l65319"><img src="/eMP/eMuseumPlus?service=DynamicAsset&amp;sp=SU5mxm4Yx%2FVbhp94nksEmWhUPPCPARCxmRF3wZoiekBYI9dLioBnZzXySIRTomizoxxT9oo9OlonT%0APnyO6EhNhnnmeNvDgFCJQ27ZneIRPJD9lo6ukwhqtcD4dgAhRme8LIkaqeU1Wmc%3D&amp;sp=Simage%2Fjpeg" title="Daphnis and Chloe" alt="Daphnis and Chloe"></a> </dt>
+<dt class="listTitle"></dt>
+<dd class="listDescription">
+<ul>
+<li class="LbArtist">
+<span class="underline">	<span class="tspReferenceLinkList"><a href="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D?service=direct/1/ResultDetailView/result.inline.list.t1.collection_list.$TspReferenceLink.link&amp;sp=13&amp;sp=Sroom&amp;sp=SfilterDefinition&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailView&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=T&amp;sp=0&amp;sp=SdetailList&amp;sp=0&amp;sp=Sartist&amp;sp=l4490"><span class="tspReferenceLink">François Boucher</span></a><span class="tspPrefix"> (</span><span class="tspValue">1703 - 1770</span><span class="tspSuffix">)</span><span class="tspEnd"></span>	</span></span>
+<!--<span jwcid="@TspText" propertyName="spareSField02" htmlElement="span" prefix=", " />
+<span jwcid="@TspText" propertyName="spareSField03" htmlElement="span" prefix=", "/> -->
+</li>
+<li class="underline"><a href="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D?service=direct/1/ResultDetailView/result.inline.list.t1.collection_list.$TspTitleLink$1.link&amp;sp=13&amp;sp=Sroom&amp;sp=SfilterDefinition&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailView&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=T&amp;sp=0&amp;sp=SdetailList&amp;sp=0&amp;sp=F&amp;sp=Scollection&amp;sp=l65319"><span class="tspTitleLink">Daphnis and Chloe</span></a></li>
+<li class="LbPlaceartist"><span class="tspValue">France</span><span class="tspEnd"></span></li>
+<li class="LbDate"><span class="tspValue">1743</span><span class="tspEnd"></span></li>
+<!--<li class="LbMuseumno" jwcid="@TspText" propertyName="identNr" htmlElement="li" />
+<li class="LbLocation" jwcid="@TspText" propertyName="spareSField05" htmlElement="li" />
+<li class="hidden"><a jwcid="@TspUrlLink" hrefPropertyName="bookmarkableLink" useImplicitLabel="false" class="Bookmark">Bookmarkable URL</a><span class="Commentary" jwcid="@TspText" propertyName="spareMField03" htmlElement="span" /></li>-->
+</ul>
+</dd>
+<!--<dd class="listDescription">
+<ul>
+<li class="ListObjectname" jwcid="@TspTitleLink" labelPropertyName="title1" htmlElement="li" />
+<li class="ListDate" jwcid="@TspText" propertyName="dating" htmlElement="li" />
+<li class="ListIdentNr" jwcid="@TspText" propertyName="identNr" htmlElement="li" />
+</ul>
+</dd>-->
+<dd class="cleaner"></dd>
+</dl>
+<dl id="detailListItem-1" class="detailListItem">
+<dt class="listImg">
+<a href="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D?service=direct/1/ResultDetailView/result.inline.list.t1.collection_list.$TspTitleImageLink.link&amp;sp=13&amp;sp=Sroom&amp;sp=SfilterDefinition&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailView&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=T&amp;sp=0&amp;sp=SdetailList&amp;sp=0&amp;sp=F&amp;sp=Scollection&amp;sp=l65333"><img src="/eMP/eMuseumPlus?service=DynamicAsset&amp;sp=SU5mxm4Yx%2FVbhp94nksEmWhUPPCPARCxmRF3wZoiekBYI9dLioBnZzXySIRTomizoxxT9oo9OlonT%0APnyO6EhNhnnmeNvDgFCJQ27ZneIRPJD9lo6ukwhqtXcu3gF75LcQLIkaqeU1Wmc%3D&amp;sp=Simage%2Fjpeg" title="Shepherd Piping to a Shepherdess" alt="Shepherd Piping to a Shepherdess"></a> </dt>
+<dt class="listTitle"></dt>
+<dd class="listDescription">
+<ul>
+<li class="LbArtist">
+<span class="underline">	<span class="tspReferenceLinkList"><a href="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D?service=direct/1/ResultDetailView/result.inline.list.t1.collection_list.$TspReferenceLink.link&amp;sp=13&amp;sp=Sroom&amp;sp=SfilterDefinition&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailView&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=T&amp;sp=0&amp;sp=SdetailList&amp;sp=0&amp;sp=Sartist&amp;sp=l4490"><span class="tspReferenceLink">François Boucher</span></a><span class="tspPrefix"> (</span><span class="tspValue">1703 - 1770</span><span class="tspSuffix">)</span><span class="tspEnd"></span>	</span></span>
+<!--<span jwcid="@TspText" propertyName="spareSField02" htmlElement="span" prefix=", " />
+<span jwcid="@TspText" propertyName="spareSField03" htmlElement="span" prefix=", "/> -->
+</li>
+<li class="underline"><a href="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D?service=direct/1/ResultDetailView/result.inline.list.t1.collection_list.$TspTitleLink$1.link&amp;sp=13&amp;sp=Sroom&amp;sp=SfilterDefinition&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailView&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=T&amp;sp=0&amp;sp=SdetailList&amp;sp=0&amp;sp=F&amp;sp=Scollection&amp;sp=l65333"><span class="tspTitleLink">Shepherd Piping to a Shepherdess</span></a></li>
+<li class="LbPlaceartist"><span class="tspValue">France</span><span class="tspEnd"></span></li>
+<li class="LbDate"><span class="tspValue">about 1747 - 1750</span><span class="tspEnd"></span></li>
+<!--<li class="LbMuseumno" jwcid="@TspText" propertyName="identNr" htmlElement="li" />
+<li class="LbLocation" jwcid="@TspText" propertyName="spareSField05" htmlElement="li" />
+<li class="hidden"><a jwcid="@TspUrlLink" hrefPropertyName="bookmarkableLink" useImplicitLabel="false" class="Bookmark">Bookmarkable URL</a><span class="Commentary" jwcid="@TspText" propertyName="spareMField03" htmlElement="span" /></li>-->
+</ul>
+</dd>
+<!--<dd class="listDescription">
+<ul>
+<li class="ListObjectname" jwcid="@TspTitleLink" labelPropertyName="title1" htmlElement="li" />
+<li class="ListDate" jwcid="@TspText" propertyName="dating" htmlElement="li" />
+<li class="ListIdentNr" jwcid="@TspText" propertyName="identNr" htmlElement="li" />
+</ul>
+</dd>-->
+<dd class="cleaner"></dd>
+</dl>
+<dl id="detailListItem-2" class="detailListItem">
+<dt class="listImg">
+<a href="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D?service=direct/1/ResultDetailView/result.inline.list.t1.collection_list.$TspTitleImageLink.link&amp;sp=13&amp;sp=Sroom&amp;sp=SfilterDefinition&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailView&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=T&amp;sp=0&amp;sp=SdetailList&amp;sp=0&amp;sp=F&amp;sp=Scollection&amp;sp=l65352"><img src="/eMP/eMuseumPlus?service=DynamicAsset&amp;sp=SU5mxm4Yx%2FVbhp94nksEmWhUPPCPARCxmRF3wZoiekBYI9dLioBnZzXySIRTomizoxxT9oo9OlonT%0APnyO6EhNhnnmeNvDgFCJQ27ZneIRPJD9lo6ukwhqtYekIlCCbLyWLIkaqeU1Wmc%3D&amp;sp=Simage%2Fjpeg" title="Madame de Pompadour" alt="Madame de Pompadour"></a> </dt>
+<dt class="listTitle"></dt>
+<dd class="listDescription">
+<ul>
+<li class="LbArtist">
+<span class="underline">	<span class="tspReferenceLinkList"><a href="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D?service=direct/1/ResultDetailView/result.inline.list.t1.collection_list.$TspReferenceLink.link&amp;sp=13&amp;sp=Sroom&amp;sp=SfilterDefinition&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailView&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=T&amp;sp=0&amp;sp=SdetailList&amp;sp=0&amp;sp=Sartist&amp;sp=l4490"><span class="tspReferenceLink">François Boucher</span></a><span class="tspPrefix"> (</span><span class="tspValue">1703 - 1770</span><span class="tspSuffix">)</span><span class="tspEnd"></span>	</span></span>
+<!--<span jwcid="@TspText" propertyName="spareSField02" htmlElement="span" prefix=", " />
+<span jwcid="@TspText" propertyName="spareSField03" htmlElement="span" prefix=", "/> -->
+</li>
+<li class="underline"><a href="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D?service=direct/1/ResultDetailView/result.inline.list.t1.collection_list.$TspTitleLink$1.link&amp;sp=13&amp;sp=Sroom&amp;sp=SfilterDefinition&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailView&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=T&amp;sp=0&amp;sp=SdetailList&amp;sp=0&amp;sp=F&amp;sp=Scollection&amp;sp=l65352"><span class="tspTitleLink">Madame de Pompadour</span></a></li>
+<li class="LbPlaceartist"><span class="tspValue">France</span><span class="tspEnd"></span></li>
+<li class="LbDate"><span class="tspValue">1759</span><span class="tspEnd"></span></li>
+<!--<li class="LbMuseumno" jwcid="@TspText" propertyName="identNr" htmlElement="li" />
+<li class="LbLocation" jwcid="@TspText" propertyName="spareSField05" htmlElement="li" />
+<li class="hidden"><a jwcid="@TspUrlLink" hrefPropertyName="bookmarkableLink" useImplicitLabel="false" class="Bookmark">Bookmarkable URL</a><span class="Commentary" jwcid="@TspText" propertyName="spareMField03" htmlElement="span" /></li>-->
+</ul>
+</dd>
+<!--<dd class="listDescription">
+<ul>
+<li class="ListObjectname" jwcid="@TspTitleLink" labelPropertyName="title1" htmlElement="li" />
+<li class="ListDate" jwcid="@TspText" propertyName="dating" htmlElement="li" />
+<li class="ListIdentNr" jwcid="@TspText" propertyName="identNr" htmlElement="li" />
+</ul>
+</dd>-->
+<dd class="cleaner"></dd>
+</dl>
+<dl id="detailListItem-3" class="detailListItem">
+<dt class="listImg">
+<a href="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D?service=direct/1/ResultDetailView/result.inline.list.t1.collection_list.$TspTitleImageLink.link&amp;sp=13&amp;sp=Sroom&amp;sp=SfilterDefinition&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailView&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=T&amp;sp=0&amp;sp=SdetailList&amp;sp=0&amp;sp=F&amp;sp=Scollection&amp;sp=l65379"><img src="/eMP/eMuseumPlus?service=DynamicAsset&amp;sp=SU5mxm4Yx%2FVbhp94nksEmWhUPPCPARCxmRF3wZoiekBYI9dLioBnZzXySIRTomizoxxT9oo9OlonT%0APnyO6EhNhnnmeNvDgFCJQ27ZneIRPJD9lo6ukwhqtfeKXP0fjHKhLIkaqeU1Wmc%3D&amp;sp=Simage%2Fjpeg" title="Pastoral Make-Up" alt="Pastoral Make-Up"></a> </dt>
+<dt class="listTitle"></dt>
+<dd class="listDescription">
+<ul>
+<li class="LbArtist">
+<span class="underline">	<span class="tspReferenceLinkList"><a href="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D?service=direct/1/ResultDetailView/result.inline.list.t1.collection_list.$TspReferenceLink.link&amp;sp=13&amp;sp=Sroom&amp;sp=SfilterDefinition&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailView&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=T&amp;sp=0&amp;sp=SdetailList&amp;sp=0&amp;sp=Sartist&amp;sp=l4490"><span class="tspReferenceLink">François Boucher</span></a><span class="tspPrefix"> (</span><span class="tspValue">1703 - 1770</span><span class="tspSuffix">)</span><span class="tspEnd"></span>	</span></span>
+<!--<span jwcid="@TspText" propertyName="spareSField02" htmlElement="span" prefix=", " />
+<span jwcid="@TspText" propertyName="spareSField03" htmlElement="span" prefix=", "/> -->
+</li>
+<li class="underline"><a href="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D?service=direct/1/ResultDetailView/result.inline.list.t1.collection_list.$TspTitleLink$1.link&amp;sp=13&amp;sp=Sroom&amp;sp=SfilterDefinition&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailView&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=T&amp;sp=0&amp;sp=SdetailList&amp;sp=0&amp;sp=F&amp;sp=Scollection&amp;sp=l65379"><span class="tspTitleLink">Pastoral Make-Up</span></a></li>
+<li class="LbPlaceartist"><span class="tspValue">France</span><span class="tspEnd"></span></li>
+<li class="LbDate"><span class="tspValue">1745</span><span class="tspEnd"></span></li>
+<!--<li class="LbMuseumno" jwcid="@TspText" propertyName="identNr" htmlElement="li" />
+<li class="LbLocation" jwcid="@TspText" propertyName="spareSField05" htmlElement="li" />
+<li class="hidden"><a jwcid="@TspUrlLink" hrefPropertyName="bookmarkableLink" useImplicitLabel="false" class="Bookmark">Bookmarkable URL</a><span class="Commentary" jwcid="@TspText" propertyName="spareMField03" htmlElement="span" /></li>-->
+</ul>
+</dd>
+<!--<dd class="listDescription">
+<ul>
+<li class="ListObjectname" jwcid="@TspTitleLink" labelPropertyName="title1" htmlElement="li" />
+<li class="ListDate" jwcid="@TspText" propertyName="dating" htmlElement="li" />
+<li class="ListIdentNr" jwcid="@TspText" propertyName="identNr" htmlElement="li" />
+</ul>
+</dd>-->
+<dd class="cleaner"></dd>
+</dl>
+<dl id="detailListItem-4" class="detailListItem">
+<dt class="listImg">
+<a href="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D?service=direct/1/ResultDetailView/result.inline.list.t1.collection_list.$TspTitleImageLink.link&amp;sp=13&amp;sp=Sroom&amp;sp=SfilterDefinition&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailView&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=T&amp;sp=0&amp;sp=SdetailList&amp;sp=0&amp;sp=F&amp;sp=Scollection&amp;sp=l65381"><img src="/eMP/eMuseumPlus?service=DynamicAsset&amp;sp=SU5mxm4Yx%2FVbhp94nksEmWhUPPCPARCxmRF3wZoiekBYI9dLioBnZzXySIRTomizoxxT9oo9OlonT%0APnyO6EhNhnnmeNvDgFCJQ27ZneIRPJD9lo6ukwhqtV%2FvaTkpnC5ILIkaqeU1Wmc%3D&amp;sp=Simage%2Fjpeg" title="Erigone Conquered (Erigone vaincue)" alt="Erigone Conquered (Erigone vaincue)"></a> </dt>
+<dt class="listTitle"></dt>
+<dd class="listDescription">
+<ul>
+<li class="LbArtist">
+<span class="underline">	<span class="tspReferenceLinkList"><a href="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D?service=direct/1/ResultDetailView/result.inline.list.t1.collection_list.$TspReferenceLink.link&amp;sp=13&amp;sp=Sroom&amp;sp=SfilterDefinition&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailView&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=T&amp;sp=0&amp;sp=SdetailList&amp;sp=0&amp;sp=Sartist&amp;sp=l4490"><span class="tspReferenceLink">François Boucher</span></a><span class="tspPrefix"> (</span><span class="tspValue">1703 - 1770</span><span class="tspSuffix">)</span><span class="tspEnd"></span>	</span></span>
+<!--<span jwcid="@TspText" propertyName="spareSField02" htmlElement="span" prefix=", " />
+<span jwcid="@TspText" propertyName="spareSField03" htmlElement="span" prefix=", "/> -->
+</li>
+<li class="underline"><a href="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D?service=direct/1/ResultDetailView/result.inline.list.t1.collection_list.$TspTitleLink$1.link&amp;sp=13&amp;sp=Sroom&amp;sp=SfilterDefinition&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailView&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=T&amp;sp=0&amp;sp=SdetailList&amp;sp=0&amp;sp=F&amp;sp=Scollection&amp;sp=l65381"><span class="tspTitleLink">Erigone Conquered (Erigone vaincue)</span></a></li>
+<li class="LbPlaceartist"><span class="tspValue">France</span><span class="tspEnd"></span></li>
+<li class="LbDate"><span class="tspValue">1745</span><span class="tspEnd"></span></li>
+<!--<li class="LbMuseumno" jwcid="@TspText" propertyName="identNr" htmlElement="li" />
+<li class="LbLocation" jwcid="@TspText" propertyName="spareSField05" htmlElement="li" />
+<li class="hidden"><a jwcid="@TspUrlLink" hrefPropertyName="bookmarkableLink" useImplicitLabel="false" class="Bookmark">Bookmarkable URL</a><span class="Commentary" jwcid="@TspText" propertyName="spareMField03" htmlElement="span" /></li>-->
+</ul>
+</dd>
+<!--<dd class="listDescription">
+<ul>
+<li class="ListObjectname" jwcid="@TspTitleLink" labelPropertyName="title1" htmlElement="li" />
+<li class="ListDate" jwcid="@TspText" propertyName="dating" htmlElement="li" />
+<li class="ListIdentNr" jwcid="@TspText" propertyName="identNr" htmlElement="li" />
+</ul>
+</dd>-->
+<dd class="cleaner"></dd>
+</dl>
+<dl id="detailListItem-5" class="detailListItem">
+<dt class="listImg">
+<a href="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D?service=direct/1/ResultDetailView/result.inline.list.t1.collection_list.$TspTitleImageLink.link&amp;sp=13&amp;sp=Sroom&amp;sp=SfilterDefinition&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailView&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=T&amp;sp=0&amp;sp=SdetailList&amp;sp=0&amp;sp=F&amp;sp=Scollection&amp;sp=l65416"><img src="/eMP/eMuseumPlus?service=DynamicAsset&amp;sp=SU5mxm4Yx%2FVbhp94nksEmWhUPPCPARCxmRF3wZoiekBYI9dLioBnZzXySIRTomizoxxT9oo9OlonT%0APnyO6EhNhnnmeNvDgFCJQ27ZneIRPJD9lo6ukwhqtcKFhqQW2Rc9LIkaqeU1Wmc%3D&amp;sp=Simage%2Fjpeg" title="Pastoral with a Couple near a Fountain" alt="Pastoral with a Couple near a Fountain"></a> </dt>
+<dt class="listTitle"></dt>
+<dd class="listDescription">
+<ul>
+<li class="LbArtist">
+<span class="underline">	<span class="tspReferenceLinkList"><a href="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D?service=direct/1/ResultDetailView/result.inline.list.t1.collection_list.$TspReferenceLink.link&amp;sp=13&amp;sp=Sroom&amp;sp=SfilterDefinition&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailView&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=T&amp;sp=0&amp;sp=SdetailList&amp;sp=0&amp;sp=Sartist&amp;sp=l4490"><span class="tspReferenceLink">François Boucher</span></a><span class="tspPrefix"> (</span><span class="tspValue">1703 - 1770</span><span class="tspSuffix">)</span><span class="tspEnd"></span>	</span></span>
+<!--<span jwcid="@TspText" propertyName="spareSField02" htmlElement="span" prefix=", " />
+<span jwcid="@TspText" propertyName="spareSField03" htmlElement="span" prefix=", "/> -->
+</li>
+<li class="underline"><a href="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D?service=direct/1/ResultDetailView/result.inline.list.t1.collection_list.$TspTitleLink$1.link&amp;sp=13&amp;sp=Sroom&amp;sp=SfilterDefinition&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailView&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=T&amp;sp=0&amp;sp=SdetailList&amp;sp=0&amp;sp=F&amp;sp=Scollection&amp;sp=l65416"><span class="tspTitleLink">Pastoral with a Couple near a Fountain</span></a></li>
+<li class="LbPlaceartist"><span class="tspValue">France</span><span class="tspEnd"></span></li>
+<li class="LbDate"><span class="tspValue">1749</span><span class="tspEnd"></span></li>
+<!--<li class="LbMuseumno" jwcid="@TspText" propertyName="identNr" htmlElement="li" />
+<li class="LbLocation" jwcid="@TspText" propertyName="spareSField05" htmlElement="li" />
+<li class="hidden"><a jwcid="@TspUrlLink" hrefPropertyName="bookmarkableLink" useImplicitLabel="false" class="Bookmark">Bookmarkable URL</a><span class="Commentary" jwcid="@TspText" propertyName="spareMField03" htmlElement="span" /></li>-->
+</ul>
+</dd>
+<!--<dd class="listDescription">
+<ul>
+<li class="ListObjectname" jwcid="@TspTitleLink" labelPropertyName="title1" htmlElement="li" />
+<li class="ListDate" jwcid="@TspText" propertyName="dating" htmlElement="li" />
+<li class="ListIdentNr" jwcid="@TspText" propertyName="identNr" htmlElement="li" />
+</ul>
+</dd>-->
+<dd class="cleaner"></dd>
+</dl>
+<dl id="detailListItem-6" class="detailListItem">
+<dt class="listImg">
+<a href="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D?service=direct/1/ResultDetailView/result.inline.list.t1.collection_list.$TspTitleImageLink.link&amp;sp=13&amp;sp=Sroom&amp;sp=SfilterDefinition&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailView&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=T&amp;sp=0&amp;sp=SdetailList&amp;sp=0&amp;sp=F&amp;sp=Scollection&amp;sp=l65423"><img src="/eMP/eMuseumPlus?service=DynamicAsset&amp;sp=SU5mxm4Yx%2FVbhp94nksEmWhUPPCPARCxmRF3wZoiekBYI9dLioBnZzXySIRTomizoxxT9oo9OlonT%0APnyO6EhNhnnmeNvDgFCJQ27ZneIRPJD9lo6ukwhqtUx8Hb2sYzzMLIkaqeU1Wmc%3D&amp;sp=Simage%2Fjpeg" title="Pastoral with a Bagpipe Player" alt="Pastoral with a Bagpipe Player"></a> </dt>
+<dt class="listTitle"></dt>
+<dd class="listDescription">
+<ul>
+<li class="LbArtist">
+<span class="underline">	<span class="tspReferenceLinkList"><a href="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D?service=direct/1/ResultDetailView/result.inline.list.t1.collection_list.$TspReferenceLink.link&amp;sp=13&amp;sp=Sroom&amp;sp=SfilterDefinition&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailView&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=T&amp;sp=0&amp;sp=SdetailList&amp;sp=0&amp;sp=Sartist&amp;sp=l4490"><span class="tspReferenceLink">François Boucher</span></a><span class="tspPrefix"> (</span><span class="tspValue">1703 - 1770</span><span class="tspSuffix">)</span><span class="tspEnd"></span>	</span></span>
+<!--<span jwcid="@TspText" propertyName="spareSField02" htmlElement="span" prefix=", " />
+<span jwcid="@TspText" propertyName="spareSField03" htmlElement="span" prefix=", "/> -->
+</li>
+<li class="underline"><a href="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D?service=direct/1/ResultDetailView/result.inline.list.t1.collection_list.$TspTitleLink$1.link&amp;sp=13&amp;sp=Sroom&amp;sp=SfilterDefinition&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailView&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=T&amp;sp=0&amp;sp=SdetailList&amp;sp=0&amp;sp=F&amp;sp=Scollection&amp;sp=l65423"><span class="tspTitleLink">Pastoral with a Bagpipe Player</span></a></li>
+<li class="LbPlaceartist"><span class="tspValue">France</span><span class="tspEnd"></span></li>
+<li class="LbDate"><span class="tspValue">1749</span><span class="tspEnd"></span></li>
+<!--<li class="LbMuseumno" jwcid="@TspText" propertyName="identNr" htmlElement="li" />
+<li class="LbLocation" jwcid="@TspText" propertyName="spareSField05" htmlElement="li" />
+<li class="hidden"><a jwcid="@TspUrlLink" hrefPropertyName="bookmarkableLink" useImplicitLabel="false" class="Bookmark">Bookmarkable URL</a><span class="Commentary" jwcid="@TspText" propertyName="spareMField03" htmlElement="span" /></li>-->
+</ul>
+</dd>
+<!--<dd class="listDescription">
+<ul>
+<li class="ListObjectname" jwcid="@TspTitleLink" labelPropertyName="title1" htmlElement="li" />
+<li class="ListDate" jwcid="@TspText" propertyName="dating" htmlElement="li" />
+<li class="ListIdentNr" jwcid="@TspText" propertyName="identNr" htmlElement="li" />
+</ul>
+</dd>-->
+<dd class="cleaner"></dd>
+</dl>
+<dl id="detailListItem-7" class="detailListItem">
+<dt class="listImg">
+<a href="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D?service=direct/1/ResultDetailView/result.inline.list.t1.collection_list.$TspTitleImageLink.link&amp;sp=13&amp;sp=Sroom&amp;sp=SfilterDefinition&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailView&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=T&amp;sp=0&amp;sp=SdetailList&amp;sp=0&amp;sp=F&amp;sp=Scollection&amp;sp=l65324"><img src="/eMP/eMuseumPlus?service=DynamicAsset&amp;sp=SU5mxm4Yx%2FVbhp94nksEmWhUPPCPARCxmRF3wZoiekBYI9dLioBnZzXySIRTomizoxxT9oo9OlonT%0APnyO6EhNhnnmeNvDgFCJQ27ZneIRPJD9lo6ukwhqtT3EzMHLBmGCLIkaqeU1Wmc%3D&amp;sp=Simage%2Fjpeg" title="The Modiste" alt="The Modiste"></a> </dt>
+<dt class="listTitle"></dt>
+<dd class="listDescription">
+<ul>
+<li class="LbArtist">
+<span><span class="tspValue">Studio of</span><span class="tspSuffix"> </span><span class="tspEnd"></span></span>
+<span class="underline">	<span class="tspReferenceLinkList"><a href="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D?service=direct/1/ResultDetailView/result.inline.list.t1.collection_list.$TspReferenceLink.link&amp;sp=13&amp;sp=Sroom&amp;sp=SfilterDefinition&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailView&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=T&amp;sp=0&amp;sp=SdetailList&amp;sp=0&amp;sp=Sartist&amp;sp=l4490"><span class="tspReferenceLink">François Boucher</span></a><span class="tspPrefix"> (</span><span class="tspValue">1703 - 1770</span><span class="tspSuffix">)</span><span class="tspEnd"></span>	</span></span>
+<!--<span jwcid="@TspText" propertyName="spareSField02" htmlElement="span" prefix=", " />
+<span jwcid="@TspText" propertyName="spareSField03" htmlElement="span" prefix=", "/> -->
+</li>
+<li class="underline"><a href="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D?service=direct/1/ResultDetailView/result.inline.list.t1.collection_list.$TspTitleLink$1.link&amp;sp=13&amp;sp=Sroom&amp;sp=SfilterDefinition&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailView&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=T&amp;sp=0&amp;sp=SdetailList&amp;sp=0&amp;sp=F&amp;sp=Scollection&amp;sp=l65324"><span class="tspTitleLink">The Modiste</span></a></li>
+<li class="LbDate"><span class="tspValue">probably c. 1746</span><span class="tspEnd"></span></li>
+<!--<li class="LbMuseumno" jwcid="@TspText" propertyName="identNr" htmlElement="li" />
+<li class="LbLocation" jwcid="@TspText" propertyName="spareSField05" htmlElement="li" />
+<li class="hidden"><a jwcid="@TspUrlLink" hrefPropertyName="bookmarkableLink" useImplicitLabel="false" class="Bookmark">Bookmarkable URL</a><span class="Commentary" jwcid="@TspText" propertyName="spareMField03" htmlElement="span" /></li>-->
+</ul>
+</dd>
+<!--<dd class="listDescription">
+<ul>
+<li class="ListObjectname" jwcid="@TspTitleLink" labelPropertyName="title1" htmlElement="li" />
+<li class="ListDate" jwcid="@TspText" propertyName="dating" htmlElement="li" />
+<li class="ListIdentNr" jwcid="@TspText" propertyName="identNr" htmlElement="li" />
+</ul>
+</dd>-->
+<dd class="cleaner"></dd>
+</dl>
+<dl id="detailListItem-8" class="detailListItem">
+<dt class="listImg">
+<a href="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D?service=direct/1/ResultDetailView/result.inline.list.t1.collection_list.$TspTitleImageLink.link&amp;sp=13&amp;sp=Sroom&amp;sp=SfilterDefinition&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailView&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=T&amp;sp=0&amp;sp=SdetailList&amp;sp=0&amp;sp=F&amp;sp=Scollection&amp;sp=l63993"><img src="/eMP/eMuseumPlus?service=DynamicAsset&amp;sp=SU5mxm4Yx%2FVbhp94nksEmWhUPPCPARCxmRF3wZoiekBYI9dLioBnZzXySIRTomizoxxT9oo9OlonT%0APnyO6EhNhnnmeNvDgFCJQ27ZneIRPJD9lo6ukwhqtVptgD5A6ejLLIkaqeU1Wmc%3D&amp;sp=Simage%2Fjpeg" title="Break-Front Bookcase" alt="Break-Front Bookcase"></a> </dt>
+<dt class="listTitle"></dt>
+<dd class="listDescription">
+<ul>
+<li class="LbTitle  underline"><a href="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D?service=direct/1/ResultDetailView/result.inline.list.t1.collection_list.$TspTitleLink$0.link&amp;sp=13&amp;sp=Sroom&amp;sp=SfilterDefinition&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailView&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=T&amp;sp=0&amp;sp=SdetailList&amp;sp=0&amp;sp=F&amp;sp=Scollection&amp;sp=l63993"><span class="tspTitleLink">Break-Front Bookcase</span></a></li>	<li class="LbArtist">
+<span class="underline">	<span class="tspReferenceLinkList"><a href="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D?service=direct/1/ResultDetailView/result.inline.list.t1.collection_list.$TspReferenceLink.link&amp;sp=13&amp;sp=Sroom&amp;sp=SfilterDefinition&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailView&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=T&amp;sp=0&amp;sp=SdetailList&amp;sp=0&amp;sp=Sartist&amp;sp=l5755"><span class="tspReferenceLink">Jean-Louis Faizelot Delorme</span></a><span class="tspPrefix"> (</span><span class="tspValue">master 1763</span><span class="tspSuffix">)</span><span class="tspEnd"></span>	</span></span>
+<!--<span jwcid="@TspText" propertyName="spareSField02" htmlElement="span" prefix=", " />
+<span jwcid="@TspText" propertyName="spareSField03" htmlElement="span" prefix=", "/> -->
+</li>
+<li class="LbPlaceartist"><span class="tspValue">France</span><span class="tspEnd"></span></li>
+<li class="LbDate"><span class="tspValue">about 1770</span><span class="tspEnd"></span></li>
+<!--<li class="LbMuseumno" jwcid="@TspText" propertyName="identNr" htmlElement="li" />
+<li class="LbLocation" jwcid="@TspText" propertyName="spareSField05" htmlElement="li" />
+<li class="hidden"><a jwcid="@TspUrlLink" hrefPropertyName="bookmarkableLink" useImplicitLabel="false" class="Bookmark">Bookmarkable URL</a><span class="Commentary" jwcid="@TspText" propertyName="spareMField03" htmlElement="span" /></li>-->
+</ul>
+</dd>
+<!--<dd class="listDescription">
+<ul>
+<li class="ListObjectname" jwcid="@TspTitleLink" labelPropertyName="title1" htmlElement="li" />
+<li class="ListDate" jwcid="@TspText" propertyName="dating" htmlElement="li" />
+<li class="ListIdentNr" jwcid="@TspText" propertyName="identNr" htmlElement="li" />
+</ul>
+</dd>-->
+<dd class="cleaner"></dd>
+</dl>
+<dl id="detailListItem-9" class="detailListItem">
+<dt class="listImg">
+<a href="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D?service=direct/1/ResultDetailView/result.inline.list.t1.collection_list.$TspTitleImageLink.link&amp;sp=13&amp;sp=Sroom&amp;sp=SfilterDefinition&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailView&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=T&amp;sp=0&amp;sp=SdetailList&amp;sp=0&amp;sp=F&amp;sp=Scollection&amp;sp=l63994"><img src="/eMP/eMuseumPlus?service=DynamicAsset&amp;sp=SU5mxm4Yx%2FVbhp94nksEmWhUPPCPARCxmRF3wZoiekBYI9dLioBnZzXySIRTomizoxxT9oo9OlonT%0APnyO6EhNhnnmeNvDgFCJQ27ZneIRPJD9lo6ukwhqtWDOX%2B9lKn%2F6LIkaqeU1Wmc%3D&amp;sp=Simage%2Fjpeg" title="Break-Front Bookcase" alt="Break-Front Bookcase"></a> </dt>
+<dt class="listTitle"></dt>
+<dd class="listDescription">
+<ul>
+<li class="LbTitle  underline"><a href="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D?service=direct/1/ResultDetailView/result.inline.list.t1.collection_list.$TspTitleLink$0.link&amp;sp=13&amp;sp=Sroom&amp;sp=SfilterDefinition&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailView&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=T&amp;sp=0&amp;sp=SdetailList&amp;sp=0&amp;sp=F&amp;sp=Scollection&amp;sp=l63994"><span class="tspTitleLink">Break-Front Bookcase</span></a></li>	<li class="LbArtist">
+<span class="underline">	<span class="tspReferenceLinkList"><a href="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D?service=direct/1/ResultDetailView/result.inline.list.t1.collection_list.$TspReferenceLink.link&amp;sp=13&amp;sp=Sroom&amp;sp=SfilterDefinition&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailView&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=T&amp;sp=0&amp;sp=SdetailList&amp;sp=0&amp;sp=Sartist&amp;sp=l5755"><span class="tspReferenceLink">Jean-Louis Faizelot Delorme</span></a><span class="tspPrefix"> (</span><span class="tspValue">master 1763</span><span class="tspSuffix">)</span><span class="tspEnd"></span>	</span></span>
+<!--<span jwcid="@TspText" propertyName="spareSField02" htmlElement="span" prefix=", " />
+<span jwcid="@TspText" propertyName="spareSField03" htmlElement="span" prefix=", "/> -->
+</li>
+<li class="LbPlaceartist"><span class="tspValue">France</span><span class="tspEnd"></span></li>
+<li class="LbDate"><span class="tspValue">about 1770</span><span class="tspEnd"></span></li>
+<!--<li class="LbMuseumno" jwcid="@TspText" propertyName="identNr" htmlElement="li" />
+<li class="LbLocation" jwcid="@TspText" propertyName="spareSField05" htmlElement="li" />
+<li class="hidden"><a jwcid="@TspUrlLink" hrefPropertyName="bookmarkableLink" useImplicitLabel="false" class="Bookmark">Bookmarkable URL</a><span class="Commentary" jwcid="@TspText" propertyName="spareMField03" htmlElement="span" /></li>-->
+</ul>
+</dd>
+<!--<dd class="listDescription">
+<ul>
+<li class="ListObjectname" jwcid="@TspTitleLink" labelPropertyName="title1" htmlElement="li" />
+<li class="ListDate" jwcid="@TspText" propertyName="dating" htmlElement="li" />
+<li class="ListIdentNr" jwcid="@TspText" propertyName="identNr" htmlElement="li" />
+</ul>
+</dd>-->
+<dd class="cleaner"></dd>
+</dl>
+<dl id="detailListItem-10" class="detailListItem">
+<dt class="listImg">
+<a href="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D?service=direct/1/ResultDetailView/result.inline.list.t1.collection_list.$TspTitleImageLink.link&amp;sp=13&amp;sp=Sroom&amp;sp=SfilterDefinition&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailView&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=T&amp;sp=0&amp;sp=SdetailList&amp;sp=0&amp;sp=F&amp;sp=Scollection&amp;sp=l63953"><img src="/eMP/eMuseumPlus?service=DynamicAsset&amp;sp=SU5mxm4Yx%2FVbhp94nksEmWhUPPCPARCxmRF3wZoiekBYI9dLioBnZzXySIRTomizoxxT9oo9OlonT%0APnyO6EhNhnnmeNvDgFCJQ27ZneIRPJD9lo6ukwhqtV7AMWfH5ABqLIkaqeU1Wmc%3D&amp;sp=Simage%2Fjpeg" title="Tripod Vase (one of a pair)" alt="Tripod Vase (one of a pair)"></a> </dt>
+<dt class="listTitle"></dt>
+<dd class="listDescription">
+<ul>
+<li class="LbTitle  underline"><a href="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D?service=direct/1/ResultDetailView/result.inline.list.t1.collection_list.$TspTitleLink$0.link&amp;sp=13&amp;sp=Sroom&amp;sp=SfilterDefinition&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailView&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=T&amp;sp=0&amp;sp=SdetailList&amp;sp=0&amp;sp=F&amp;sp=Scollection&amp;sp=l63953"><span class="tspTitleLink">Tripod Vase (one of a pair)</span></a></li>	<li class="LbArtist">
+<span><span class="tspValue">Attributed to</span><span class="tspSuffix"> </span><span class="tspEnd"></span></span>
+<span class="underline">	<span class="tspReferenceLinkList"><a href="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D?service=direct/1/ResultDetailView/result.inline.list.t1.collection_list.$TspReferenceLink.link&amp;sp=13&amp;sp=Sroom&amp;sp=SfilterDefinition&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailView&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=T&amp;sp=0&amp;sp=SdetailList&amp;sp=0&amp;sp=Sartist&amp;sp=l4767"><span class="tspReferenceLink">Pierre-Philippe Thomire</span></a><span class="tspPrefix"> (</span><span class="tspValue">1751–1843</span><span class="tspSuffix">)</span><span class="tspEnd"></span>	</span></span>
+<!--<span jwcid="@TspText" propertyName="spareSField02" htmlElement="span" prefix=", " />
+<span jwcid="@TspText" propertyName="spareSField03" htmlElement="span" prefix=", "/> -->
+</li>
+<li class="LbPlaceartist"><span class="tspValue">France</span><span class="tspEnd"></span></li>
+<li class="LbDate"><span class="tspValue">1785 - 1786</span><span class="tspEnd"></span></li>
+<!--<li class="LbMuseumno" jwcid="@TspText" propertyName="identNr" htmlElement="li" />
+<li class="LbLocation" jwcid="@TspText" propertyName="spareSField05" htmlElement="li" />
+<li class="hidden"><a jwcid="@TspUrlLink" hrefPropertyName="bookmarkableLink" useImplicitLabel="false" class="Bookmark">Bookmarkable URL</a><span class="Commentary" jwcid="@TspText" propertyName="spareMField03" htmlElement="span" /></li>-->
+</ul>
+</dd>
+<!--<dd class="listDescription">
+<ul>
+<li class="ListObjectname" jwcid="@TspTitleLink" labelPropertyName="title1" htmlElement="li" />
+<li class="ListDate" jwcid="@TspText" propertyName="dating" htmlElement="li" />
+<li class="ListIdentNr" jwcid="@TspText" propertyName="identNr" htmlElement="li" />
+</ul>
+</dd>-->
+<dd class="cleaner"></dd>
+</dl>
+<dl id="detailListItem-11" class="detailListItem">
+<dt class="listImg">
+<a href="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D?service=direct/1/ResultDetailView/result.inline.list.t1.collection_list.$TspTitleImageLink.link&amp;sp=13&amp;sp=Sroom&amp;sp=SfilterDefinition&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailView&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=T&amp;sp=0&amp;sp=SdetailList&amp;sp=0&amp;sp=F&amp;sp=Scollection&amp;sp=l63954"><img src="/eMP/eMuseumPlus?service=DynamicAsset&amp;sp=SU5mxm4Yx%2FVbhp94nksEmWhUPPCPARCxmRF3wZoiekBYI9dLioBnZzXySIRTomizoxxT9oo9OlonT%0APnyO6EhNhnnmeNvDgFCJQ27ZneIRPJD9lo6ukwhqtQIFTeoM8xmCLIkaqeU1Wmc%3D&amp;sp=Simage%2Fjpeg" title="Tripod Vase (one of a pair)" alt="Tripod Vase (one of a pair)"></a> </dt>
+<dt class="listTitle"></dt>
+<dd class="listDescription">
+<ul>
+<li class="LbTitle  underline"><a href="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D?service=direct/1/ResultDetailView/result.inline.list.t1.collection_list.$TspTitleLink$0.link&amp;sp=13&amp;sp=Sroom&amp;sp=SfilterDefinition&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailView&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=T&amp;sp=0&amp;sp=SdetailList&amp;sp=0&amp;sp=F&amp;sp=Scollection&amp;sp=l63954"><span class="tspTitleLink">Tripod Vase (one of a pair)</span></a></li>	<li class="LbArtist">
+<span><span class="tspValue">Attributed to</span><span class="tspSuffix"> </span><span class="tspEnd"></span></span>
+<span class="underline">	<span class="tspReferenceLinkList"><a href="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D?service=direct/1/ResultDetailView/result.inline.list.t1.collection_list.$TspReferenceLink.link&amp;sp=13&amp;sp=Sroom&amp;sp=SfilterDefinition&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailView&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=T&amp;sp=0&amp;sp=SdetailList&amp;sp=0&amp;sp=Sartist&amp;sp=l4767"><span class="tspReferenceLink">Pierre-Philippe Thomire</span></a><span class="tspPrefix"> (</span><span class="tspValue">1751–1843</span><span class="tspSuffix">)</span><span class="tspEnd"></span>	</span></span>
+<!--<span jwcid="@TspText" propertyName="spareSField02" htmlElement="span" prefix=", " />
+<span jwcid="@TspText" propertyName="spareSField03" htmlElement="span" prefix=", "/> -->
+</li>
+<li class="LbPlaceartist"><span class="tspValue">France</span><span class="tspEnd"></span></li>
+<li class="LbDate"><span class="tspValue">1785 - 1786</span><span class="tspEnd"></span></li>
+<!--<li class="LbMuseumno" jwcid="@TspText" propertyName="identNr" htmlElement="li" />
+<li class="LbLocation" jwcid="@TspText" propertyName="spareSField05" htmlElement="li" />
+<li class="hidden"><a jwcid="@TspUrlLink" hrefPropertyName="bookmarkableLink" useImplicitLabel="false" class="Bookmark">Bookmarkable URL</a><span class="Commentary" jwcid="@TspText" propertyName="spareMField03" htmlElement="span" /></li>-->
+</ul>
+</dd>
+<!--<dd class="listDescription">
+<ul>
+<li class="ListObjectname" jwcid="@TspTitleLink" labelPropertyName="title1" htmlElement="li" />
+<li class="ListDate" jwcid="@TspText" propertyName="dating" htmlElement="li" />
+<li class="ListIdentNr" jwcid="@TspText" propertyName="identNr" htmlElement="li" />
+</ul>
+</dd>-->
+<dd class="cleaner"></dd>
+</dl>
+<dl id="detailListItem-12" class="detailListItem">
+<dt class="listImg">
+<a href="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D?service=direct/1/ResultDetailView/result.inline.list.t1.collection_list.$TspTitleImageLink.link&amp;sp=13&amp;sp=Sroom&amp;sp=SfilterDefinition&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailView&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=T&amp;sp=0&amp;sp=SdetailList&amp;sp=0&amp;sp=F&amp;sp=Scollection&amp;sp=l63956"><img src="/eMP/eMuseumPlus?service=DynamicAsset&amp;sp=SU5mxm4Yx%2FVbhp94nksEmWhUPPCPARCxmRF3wZoiekBYI9dLioBnZzXySIRTomizoxxT9oo9OlonT%0APnyO6EhNhnnmeNvDgFCJQ27ZneIRPJD9lo6ukwhqtdWQ2K5TEnhQLIkaqeU1Wmc%3D&amp;sp=Simage%2Fjpeg" title="Vase" alt="Vase"></a> </dt>
+<dt class="listTitle"></dt>
+<dd class="listDescription">
+<ul>
+<li class="LbTitle  underline"><a href="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D?service=direct/1/ResultDetailView/result.inline.list.t1.collection_list.$TspTitleLink$0.link&amp;sp=13&amp;sp=Sroom&amp;sp=SfilterDefinition&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailView&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=T&amp;sp=0&amp;sp=SdetailList&amp;sp=0&amp;sp=F&amp;sp=Scollection&amp;sp=l63956"><span class="tspTitleLink">Vase</span></a></li>	<li class="LbArtist">
+<span class="underline">	<span class="tspReferenceLinkList"><a href="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D?service=direct/1/ResultDetailView/result.inline.list.t1.collection_list.$TspReferenceLink.link&amp;sp=13&amp;sp=Sroom&amp;sp=SfilterDefinition&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailView&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=T&amp;sp=0&amp;sp=SdetailList&amp;sp=0&amp;sp=Sartist&amp;sp=l1"><span class="tspReferenceLink"></span></a>	</span></span>
+<!--<span jwcid="@TspText" propertyName="spareSField02" htmlElement="span" prefix=", " />
+<span jwcid="@TspText" propertyName="spareSField03" htmlElement="span" prefix=", "/> -->
+</li>
+<li class="LbPlacenoartist"><span class="tspValue">France</span><span class="tspEnd"></span></li>
+<li class="LbDate"><span class="tspValue">about 1765</span><span class="tspEnd"></span></li>
+<!--<li class="LbMuseumno" jwcid="@TspText" propertyName="identNr" htmlElement="li" />
+<li class="LbLocation" jwcid="@TspText" propertyName="spareSField05" htmlElement="li" />
+<li class="hidden"><a jwcid="@TspUrlLink" hrefPropertyName="bookmarkableLink" useImplicitLabel="false" class="Bookmark">Bookmarkable URL</a><span class="Commentary" jwcid="@TspText" propertyName="spareMField03" htmlElement="span" /></li>-->
+</ul>
+</dd>
+<!--<dd class="listDescription">
+<ul>
+<li class="ListObjectname" jwcid="@TspTitleLink" labelPropertyName="title1" htmlElement="li" />
+<li class="ListDate" jwcid="@TspText" propertyName="dating" htmlElement="li" />
+<li class="ListIdentNr" jwcid="@TspText" propertyName="identNr" htmlElement="li" />
+</ul>
+</dd>-->
+<dd class="cleaner"></dd>
+</dl>
+<dl id="detailListItem-13" class="detailListItem">
+<dt class="listImg">
+<a href="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D?service=direct/1/ResultDetailView/result.inline.list.t1.collection_list.$TspTitleImageLink.link&amp;sp=13&amp;sp=Sroom&amp;sp=SfilterDefinition&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailView&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=T&amp;sp=0&amp;sp=SdetailList&amp;sp=0&amp;sp=F&amp;sp=Scollection&amp;sp=l63957"><img src="/eMP/eMuseumPlus?service=DynamicAsset&amp;sp=SU5mxm4Yx%2FVbhp94nksEmWhUPPCPARCxmRF3wZoiekBYI9dLioBnZzXySIRTomizoxxT9oo9OlonT%0APnyO6EhNhnnmeNvDgFCJQ27ZneIRPJD9lo6ukwhqtfPzDhGcagMYLIkaqeU1Wmc%3D&amp;sp=Simage%2Fjpeg" title="Vase" alt="Vase"></a> </dt>
+<dt class="listTitle"></dt>
+<dd class="listDescription">
+<ul>
+<li class="LbTitle  underline"><a href="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D?service=direct/1/ResultDetailView/result.inline.list.t1.collection_list.$TspTitleLink$0.link&amp;sp=13&amp;sp=Sroom&amp;sp=SfilterDefinition&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailView&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=T&amp;sp=0&amp;sp=SdetailList&amp;sp=0&amp;sp=F&amp;sp=Scollection&amp;sp=l63957"><span class="tspTitleLink">Vase</span></a></li>	<li class="LbArtist">
+<span class="underline">	<span class="tspReferenceLinkList"><a href="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D?service=direct/1/ResultDetailView/result.inline.list.t1.collection_list.$TspReferenceLink.link&amp;sp=13&amp;sp=Sroom&amp;sp=SfilterDefinition&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailView&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=T&amp;sp=0&amp;sp=SdetailList&amp;sp=0&amp;sp=Sartist&amp;sp=l1"><span class="tspReferenceLink"></span></a>	</span></span>
+<!--<span jwcid="@TspText" propertyName="spareSField02" htmlElement="span" prefix=", " />
+<span jwcid="@TspText" propertyName="spareSField03" htmlElement="span" prefix=", "/> -->
+</li>
+<li class="LbPlacenoartist"><span class="tspValue">France</span><span class="tspEnd"></span></li>
+<li class="LbDate"><span class="tspValue">about 1765</span><span class="tspEnd"></span></li>
+<!--<li class="LbMuseumno" jwcid="@TspText" propertyName="identNr" htmlElement="li" />
+<li class="LbLocation" jwcid="@TspText" propertyName="spareSField05" htmlElement="li" />
+<li class="hidden"><a jwcid="@TspUrlLink" hrefPropertyName="bookmarkableLink" useImplicitLabel="false" class="Bookmark">Bookmarkable URL</a><span class="Commentary" jwcid="@TspText" propertyName="spareMField03" htmlElement="span" /></li>-->
+</ul>
+</dd>
+<!--<dd class="listDescription">
+<ul>
+<li class="ListObjectname" jwcid="@TspTitleLink" labelPropertyName="title1" htmlElement="li" />
+<li class="ListDate" jwcid="@TspText" propertyName="dating" htmlElement="li" />
+<li class="ListIdentNr" jwcid="@TspText" propertyName="identNr" htmlElement="li" />
+</ul>
+</dd>-->
+<dd class="cleaner"></dd>
+</dl>
+<dl id="detailListItem-14" class="detailListItem">
+<dt class="listImg">
+<a href="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D?service=direct/1/ResultDetailView/result.inline.list.t1.collection_list.$TspTitleImageLink.link&amp;sp=13&amp;sp=Sroom&amp;sp=SfilterDefinition&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailView&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=T&amp;sp=0&amp;sp=SdetailList&amp;sp=0&amp;sp=F&amp;sp=Scollection&amp;sp=l63958"><img src="/eMP/eMuseumPlus?service=DynamicAsset&amp;sp=SU5mxm4Yx%2FVbhp94nksEmWhUPPCPARCxmRF3wZoiekBYI9dLioBnZzXySIRTomizoxxT9oo9OlonT%0APnyO6EhNhnnmeNvDgFCJQ27ZneIRPJD9lo6ukwhqtVDBf%2BufhwseLIkaqeU1Wmc%3D&amp;sp=Simage%2Fjpeg" title="Ewer" alt="Ewer"></a> </dt>
+<dt class="listTitle"></dt>
+<dd class="listDescription">
+<ul>
+<li class="LbTitle  underline"><a href="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D?service=direct/1/ResultDetailView/result.inline.list.t1.collection_list.$TspTitleLink$0.link&amp;sp=13&amp;sp=Sroom&amp;sp=SfilterDefinition&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailView&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=T&amp;sp=0&amp;sp=SdetailList&amp;sp=0&amp;sp=F&amp;sp=Scollection&amp;sp=l63958"><span class="tspTitleLink">Ewer</span></a></li>	<li class="LbArtist">
+<span class="underline">	<span class="tspReferenceLinkList"><a href="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D?service=direct/1/ResultDetailView/result.inline.list.t1.collection_list.$TspReferenceLink.link&amp;sp=13&amp;sp=Sroom&amp;sp=SfilterDefinition&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailView&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=T&amp;sp=0&amp;sp=SdetailList&amp;sp=0&amp;sp=Sartist&amp;sp=l1"><span class="tspReferenceLink"></span></a>	</span></span>
+<!--<span jwcid="@TspText" propertyName="spareSField02" htmlElement="span" prefix=", " />
+<span jwcid="@TspText" propertyName="spareSField03" htmlElement="span" prefix=", "/> -->
+</li>
+<li class="LbPlacenoartist"><span class="tspValue">France</span><span class="tspEnd"></span></li>
+<li class="LbDate"><span class="tspValue">about 1775</span><span class="tspEnd"></span></li>
+<!--<li class="LbMuseumno" jwcid="@TspText" propertyName="identNr" htmlElement="li" />
+<li class="LbLocation" jwcid="@TspText" propertyName="spareSField05" htmlElement="li" />
+<li class="hidden"><a jwcid="@TspUrlLink" hrefPropertyName="bookmarkableLink" useImplicitLabel="false" class="Bookmark">Bookmarkable URL</a><span class="Commentary" jwcid="@TspText" propertyName="spareMField03" htmlElement="span" /></li>-->
+</ul>
+</dd>
+<!--<dd class="listDescription">
+<ul>
+<li class="ListObjectname" jwcid="@TspTitleLink" labelPropertyName="title1" htmlElement="li" />
+<li class="ListDate" jwcid="@TspText" propertyName="dating" htmlElement="li" />
+<li class="ListIdentNr" jwcid="@TspText" propertyName="identNr" htmlElement="li" />
+</ul>
+</dd>-->
+<dd class="cleaner"></dd>
+</dl>
+<dl id="detailListItem-15" class="detailListItem">
+<dt class="listImg">
+<a href="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D?service=direct/1/ResultDetailView/result.inline.list.t1.collection_list.$TspTitleImageLink.link&amp;sp=13&amp;sp=Sroom&amp;sp=SfilterDefinition&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailView&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=T&amp;sp=0&amp;sp=SdetailList&amp;sp=0&amp;sp=F&amp;sp=Scollection&amp;sp=l63963"><img src="/eMP/eMuseumPlus?service=DynamicAsset&amp;sp=SU5mxm4Yx%2FVbhp94nksEmWhUPPCPARCxmRF3wZoiekBYI9dLioBnZzXySIRTomizoxxT9oo9OlonT%0APnyO6EhNhnnmeNvDgFCJQ27ZneIRPJD9lo6ukwhqtYvVZo7zqfMHLIkaqeU1Wmc%3D&amp;sp=Simage%2Fjpeg" title="Covered Vase (one of a pair)" alt="Covered Vase (one of a pair)"></a> </dt>
+<dt class="listTitle"></dt>
+<dd class="listDescription">
+<ul>
+<li class="LbTitle  underline"><a href="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D?service=direct/1/ResultDetailView/result.inline.list.t1.collection_list.$TspTitleLink$0.link&amp;sp=13&amp;sp=Sroom&amp;sp=SfilterDefinition&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailView&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=T&amp;sp=0&amp;sp=SdetailList&amp;sp=0&amp;sp=F&amp;sp=Scollection&amp;sp=l63963"><span class="tspTitleLink">Covered Vase (one of a pair)</span></a></li>	<li class="LbArtist">
+<span class="underline">	<span class="tspReferenceLinkList"><a href="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D?service=direct/1/ResultDetailView/result.inline.list.t1.collection_list.$TspReferenceLink.link&amp;sp=13&amp;sp=Sroom&amp;sp=SfilterDefinition&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailView&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=T&amp;sp=0&amp;sp=SdetailList&amp;sp=0&amp;sp=Sartist&amp;sp=l1"><span class="tspReferenceLink"></span></a>	</span></span>
+<!--<span jwcid="@TspText" propertyName="spareSField02" htmlElement="span" prefix=", " />
+<span jwcid="@TspText" propertyName="spareSField03" htmlElement="span" prefix=", "/> -->
+</li>
+<li class="LbPlacenoartist"><span class="tspValue">France</span><span class="tspEnd"></span></li>
+<li class="LbDate"><span class="tspValue">1770 - 1775</span><span class="tspEnd"></span></li>
+<!--<li class="LbMuseumno" jwcid="@TspText" propertyName="identNr" htmlElement="li" />
+<li class="LbLocation" jwcid="@TspText" propertyName="spareSField05" htmlElement="li" />
+<li class="hidden"><a jwcid="@TspUrlLink" hrefPropertyName="bookmarkableLink" useImplicitLabel="false" class="Bookmark">Bookmarkable URL</a><span class="Commentary" jwcid="@TspText" propertyName="spareMField03" htmlElement="span" /></li>-->
+</ul>
+</dd>
+<!--<dd class="listDescription">
+<ul>
+<li class="ListObjectname" jwcid="@TspTitleLink" labelPropertyName="title1" htmlElement="li" />
+<li class="ListDate" jwcid="@TspText" propertyName="dating" htmlElement="li" />
+<li class="ListIdentNr" jwcid="@TspText" propertyName="identNr" htmlElement="li" />
+</ul>
+</dd>-->
+<dd class="cleaner"></dd>
+</dl>
+<dl id="detailListItem-16" class="detailListItem">
+<dt class="listImg">
+<a href="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D?service=direct/1/ResultDetailView/result.inline.list.t1.collection_list.$TspTitleImageLink.link&amp;sp=13&amp;sp=Sroom&amp;sp=SfilterDefinition&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailView&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=T&amp;sp=0&amp;sp=SdetailList&amp;sp=0&amp;sp=F&amp;sp=Scollection&amp;sp=l63964"><img src="/eMP/eMuseumPlus?service=DynamicAsset&amp;sp=SU5mxm4Yx%2FVbhp94nksEmWhUPPCPARCxmRF3wZoiekBYI9dLioBnZzXySIRTomizoxxT9oo9OlonT%0APnyO6EhNhnnmeNvDgFCJQ27ZneIRPJD9lo6ukwhqtbs0G9tVe6iaLIkaqeU1Wmc%3D&amp;sp=Simage%2Fjpeg" title="Covered Vase (one of a pair)" alt="Covered Vase (one of a pair)"></a> </dt>
+<dt class="listTitle"></dt>
+<dd class="listDescription">
+<ul>
+<li class="LbTitle  underline"><a href="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D?service=direct/1/ResultDetailView/result.inline.list.t1.collection_list.$TspTitleLink$0.link&amp;sp=13&amp;sp=Sroom&amp;sp=SfilterDefinition&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailView&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=T&amp;sp=0&amp;sp=SdetailList&amp;sp=0&amp;sp=F&amp;sp=Scollection&amp;sp=l63964"><span class="tspTitleLink">Covered Vase (one of a pair)</span></a></li>	<li class="LbArtist">
+<span class="underline">	<span class="tspReferenceLinkList"><a href="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D?service=direct/1/ResultDetailView/result.inline.list.t1.collection_list.$TspReferenceLink.link&amp;sp=13&amp;sp=Sroom&amp;sp=SfilterDefinition&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailView&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=T&amp;sp=0&amp;sp=SdetailList&amp;sp=0&amp;sp=Sartist&amp;sp=l1"><span class="tspReferenceLink"></span></a>	</span></span>
+<!--<span jwcid="@TspText" propertyName="spareSField02" htmlElement="span" prefix=", " />
+<span jwcid="@TspText" propertyName="spareSField03" htmlElement="span" prefix=", "/> -->
+</li>
+<li class="LbPlacenoartist"><span class="tspValue">France</span><span class="tspEnd"></span></li>
+<li class="LbDate"><span class="tspValue">1770 - 1775</span><span class="tspEnd"></span></li>
+<!--<li class="LbMuseumno" jwcid="@TspText" propertyName="identNr" htmlElement="li" />
+<li class="LbLocation" jwcid="@TspText" propertyName="spareSField05" htmlElement="li" />
+<li class="hidden"><a jwcid="@TspUrlLink" hrefPropertyName="bookmarkableLink" useImplicitLabel="false" class="Bookmark">Bookmarkable URL</a><span class="Commentary" jwcid="@TspText" propertyName="spareMField03" htmlElement="span" /></li>-->
+</ul>
+</dd>
+<!--<dd class="listDescription">
+<ul>
+<li class="ListObjectname" jwcid="@TspTitleLink" labelPropertyName="title1" htmlElement="li" />
+<li class="ListDate" jwcid="@TspText" propertyName="dating" htmlElement="li" />
+<li class="ListIdentNr" jwcid="@TspText" propertyName="identNr" htmlElement="li" />
+</ul>
+</dd>-->
+<dd class="cleaner"></dd>
+</dl>
+<dl id="detailListItem-17" class="detailListItem">
+<dt class="listImg">
+<a href="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D?service=direct/1/ResultDetailView/result.inline.list.t1.collection_list.$TspTitleImageLink.link&amp;sp=13&amp;sp=Sroom&amp;sp=SfilterDefinition&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailView&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=T&amp;sp=0&amp;sp=SdetailList&amp;sp=0&amp;sp=F&amp;sp=Scollection&amp;sp=l65909"><img src="/eMP/eMuseumPlus?service=DynamicAsset&amp;sp=SU5mxm4Yx%2FVbhp94nksEmWhUPPCPARCxmRF3wZoiekBYI9dLioBnZzXySIRTomizoxxT9oo9OlonT%0APnyO6EhNhnnmeNvDgFCJQ27ZneIRPJD9lo6ukwhqtQxyd3Cvm6UdLIkaqeU1Wmc%3D&amp;sp=Simage%2Fjpeg" title="Figure of a Vestal" alt="Figure of a Vestal"></a> </dt>
+<dt class="listTitle"></dt>
+<dd class="listDescription">
+<ul>
+<li class="LbArtist">
+<span class="underline">	<span class="tspReferenceLinkList"><a href="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D?service=direct/1/ResultDetailView/result.inline.list.t1.collection_list.$TspReferenceLink.link&amp;sp=13&amp;sp=Sroom&amp;sp=SfilterDefinition&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailView&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=T&amp;sp=0&amp;sp=SdetailList&amp;sp=0&amp;sp=Sartist&amp;sp=l1"><span class="tspReferenceLink"></span></a>	</span></span>
+<!--<span jwcid="@TspText" propertyName="spareSField02" htmlElement="span" prefix=", " />
+<span jwcid="@TspText" propertyName="spareSField03" htmlElement="span" prefix=", "/> -->
+</li>
+<li class="LbPlacenoartist"><span class="tspValue">France</span><span class="tspEnd"></span></li>
+<li class="underline"><a href="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D?service=direct/1/ResultDetailView/result.inline.list.t1.collection_list.$TspTitleLink$1.link&amp;sp=13&amp;sp=Sroom&amp;sp=SfilterDefinition&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailView&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=T&amp;sp=0&amp;sp=SdetailList&amp;sp=0&amp;sp=F&amp;sp=Scollection&amp;sp=l65909"><span class="tspTitleLink">Figure of a Vestal</span></a></li>
+<li class="LbDate"><span class="tspValue">about 1790</span><span class="tspEnd"></span></li>
+<!--<li class="LbMuseumno" jwcid="@TspText" propertyName="identNr" htmlElement="li" />
+<li class="LbLocation" jwcid="@TspText" propertyName="spareSField05" htmlElement="li" />
+<li class="hidden"><a jwcid="@TspUrlLink" hrefPropertyName="bookmarkableLink" useImplicitLabel="false" class="Bookmark">Bookmarkable URL</a><span class="Commentary" jwcid="@TspText" propertyName="spareMField03" htmlElement="span" /></li>-->
+</ul>
+</dd>
+<!--<dd class="listDescription">
+<ul>
+<li class="ListObjectname" jwcid="@TspTitleLink" labelPropertyName="title1" htmlElement="li" />
+<li class="ListDate" jwcid="@TspText" propertyName="dating" htmlElement="li" />
+<li class="ListIdentNr" jwcid="@TspText" propertyName="identNr" htmlElement="li" />
+</ul>
+</dd>-->
+<dd class="cleaner"></dd>
+</dl>
+<dl id="detailListItem-18" class="detailListItem">
+<dt class="listImg">
+<a href="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D?service=direct/1/ResultDetailView/result.inline.list.t1.collection_list.$TspTitleImageLink.link&amp;sp=13&amp;sp=Sroom&amp;sp=SfilterDefinition&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailView&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=T&amp;sp=0&amp;sp=SdetailList&amp;sp=0&amp;sp=F&amp;sp=Scollection&amp;sp=l64982"><img src="/eMP/eMuseumPlus?service=DynamicAsset&amp;sp=SU5mxm4Yx%2FVbhp94nksEmWhUPPCPARCxmRF3wZoiekBYI9dLioBnZzXySIRTomizoxxT9oo9OlonT%0APnyO6EhNhnnmeNvDgFCJQ27ZneIRPJD9lo6ukwhqtSjn0hxCtjjXLIkaqeU1Wmc%3D&amp;sp=Simage%2Fjpeg" title="Cupid and Psyche" alt="Cupid and Psyche"></a> </dt>
+<dt class="listTitle"></dt>
+<dd class="listDescription">
+<ul>
+<li class="LbArtist">
+<span class="underline">	<span class="tspReferenceLinkList"><a href="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D?service=direct/1/ResultDetailView/result.inline.list.t1.collection_list.$TspReferenceLink.link&amp;sp=13&amp;sp=Sroom&amp;sp=SfilterDefinition&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailView&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=T&amp;sp=0&amp;sp=SdetailList&amp;sp=0&amp;sp=Sartist&amp;sp=l5217"><span class="tspReferenceLink">Filippo della Valle</span></a><span class="tspPrefix"> (</span><span class="tspValue">1698 - 1768</span><span class="tspSuffix">)</span><span class="tspEnd"></span>	</span></span>
+<!--<span jwcid="@TspText" propertyName="spareSField02" htmlElement="span" prefix=", " />
+<span jwcid="@TspText" propertyName="spareSField03" htmlElement="span" prefix=", "/> -->
+</li>
+<li class="underline"><a href="/eMP/eMuseumPlus;jsessionid=650C435F20A0264C6593B67F68C4A17D?service=direct/1/ResultDetailView/result.inline.list.t1.collection_list.$TspTitleLink$1.link&amp;sp=13&amp;sp=Sroom&amp;sp=SfilterDefinition&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailView&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=T&amp;sp=0&amp;sp=SdetailList&amp;sp=0&amp;sp=F&amp;sp=Scollection&amp;sp=l64982"><span class="tspTitleLink">Cupid and Psyche</span></a></li>
+<li class="LbPlaceartist"><span class="tspValue">Rome, Italy</span><span class="tspEnd"></span></li>
+<li class="LbDate"><span class="tspValue">about 1730</span><span class="tspEnd"></span></li>
+<!--<li class="LbMuseumno" jwcid="@TspText" propertyName="identNr" htmlElement="li" />
+<li class="LbLocation" jwcid="@TspText" propertyName="spareSField05" htmlElement="li" />
+<li class="hidden"><a jwcid="@TspUrlLink" hrefPropertyName="bookmarkableLink" useImplicitLabel="false" class="Bookmark">Bookmarkable URL</a><span class="Commentary" jwcid="@TspText" propertyName="spareMField03" htmlElement="span" /></li>-->
+</ul>
+</dd>
+<!--<dd class="listDescription">
+<ul>
+<li class="ListObjectname" jwcid="@TspTitleLink" labelPropertyName="title1" htmlElement="li" />
+<li class="ListDate" jwcid="@TspText" propertyName="dating" htmlElement="li" />
+<li class="ListIdentNr" jwcid="@TspText" propertyName="identNr" htmlElement="li" />
+</ul>
+</dd>-->
+<dd class="cleaner"></dd>
+</dl>
+</div>
+</div>
+</dd>
+</dl>
+</div>
+</div> <!-- id=content -->
+<!--
+***********************************************************
+Include Code Container 3
+Date: 2010-01-05
+Author: ks
+************************************************************
+-->
+<div class="cleaner"></div>
+</div><!-- id=contentBox -->
+<!--
+***********************************************************
+End Include Code Container3
+************************************************************
+-->
+</div> <!-- id=container -->
+<div id="footer"> <div class="c-footer__group">
+<section class="c-footer__block c-footer__block--communication">
+<h3 class="c-footer__heading">Connect with us</h3>
+<ul class="u-list-reset | c-social-pages">
+<li class="c-social-pages__item">
+<a class="c-social-pages__link" href="https://en-gb.facebook.com/wallacecollection/"><svg class="c-icon"><title>Find us on Facebook</title><use xlink:href="#icon-facebook"></use></svg></a>
+</li>
+<li class="c-social-pages__item">
+<a class="c-social-pages__link" href="https://twitter.com/WallaceMuseum"><svg class="c-icon"><title>Find us on Twitter</title><use xlink:href="#icon-twitter"></use></svg></a>
+</li>
+<li class="c-social-pages__item">
+<a class="c-social-pages__link" href="https://www.youtube.com/user/TheWallacecollection"><svg class="c-icon"><title>Find us on Youtube</title><use xlink:href="#icon-youtube"></use></svg></a>
+</li>
+<li class="c-social-pages__item">
+<a class="c-social-pages__link" href="https://www.instagram.com/wallacemuseum"><svg class="c-icon"><title>Find us on Instagram</title><use xlink:href="#icon-instagram"></use></svg></a>
+</li>
+</ul>
+</section>
+<!--     <section class="c-footer__block c-footer__block--communication">
+<h3 class="c-footer__heading">Sign up to our newsletter</h3>
+<!-- Begin MailChimp Signup Form
+<form action="https://wallacecollection.us7.list-manage.com/subscribe/post?u=ee2d62f4a8315dfe633378745&amp;id=8df992a153" method="post" id="footer-newsletter-form" name="footer-newsletter-form" class="form" target="_blank" data-parsley-validate="" novalidate="">
+<div class="form-group">
+<div class="form-item form-item--flex">
+<input value="" name="EMAIL" class="form-input form-input--email-newsletter" id="mce-EMAIL-FOOTER" placeholder="Please enter your email address" data-parsley-required="" data-parsley-errors-container="#footer-newsletter-form" data-parsley-required-message="Please enter your email address"
+data-parsley-type-message="Please enter a valid email address" type="email">
+</div>
+<div class="form-item">
+<input value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="form-submit | c-button c-button--slim" type="submit">
+</div>
+</div>
+<div id="mce-responses">
+<div class="response" id="mce-error-response" style="display:none"></div>
+<div class="response" id="mce-success-response" style="display:none"></div>
+</div>
+<!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups
+<div style="position: absolute; left: -5000px;" aria-hidden="true">
+<input name="b_ee2d62f4a8315dfe633378745_8df992a153" tabindex="-1" value="" type="text">
+</div>
+</form>
+<!-- End mc_embed_signup
+</section> -->
+<section class="c-footer__block c-footer__block--communication">
+<h3 class="c-footer__heading">Sign up to our email newsletter</h3>
+<a href="https://www.wallacecollection.org/newsletter/" class="c-button">Sign up <span class="u-visually-hidden">to our newsletter</span></a>
+</section>
+</div>
+<div class="c-footer__group c-footer__group--menus">
+<div class="c-footer__block">
+<a class="c-logo-link c-logo-link--footer">
+<svg class="c-logo" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 114.9 48.2" style="enable-background:new 0 0 114.9 48.2;" xml:space="preserve" role="img" aria-labelledby="site-logo">
+<title id="site-logo">The Wallace Collection</title>
+<g>
+<path class="st0" d="M113.5,21.5L113.5,21.5L113.5,21.5 M107.3,21.7"></path>
+<path class="st0" d="M8,47c-1.1-0.9-1.4-2.2-1.4-3.3c0-0.8,0.2-2.1,1.3-3c0.8-0.7,1.8-1.2,3.5-1.2c0.7,0,1.1,0,1.6,0.1
+c0.4,0.1,0.8,0.2,1.1,0.2c0.1,0,0.2,0.1,0.2,0.1c0,0.1,0,0.2-0.1,0.6c0,0.4,0,1,0,1.2c0,0.2,0,0.3-0.1,0.3C14,42.1,14,42,14,41.8
+c0-0.3-0.2-0.7-0.4-1c-0.4-0.4-1.2-0.7-2.2-0.7c-1,0-1.6,0.2-2.1,0.7c-0.8,0.7-1,1.8-1,2.9c0,2.6,2,3.9,3.5,3.9c1,0,1.6-0.1,2-0.6
+c0.2-0.2,0.3-0.5,0.4-0.7c0-0.2,0.1-0.2,0.1-0.2c0.1,0,0.1,0.1,0.1,0.2c0,0.1-0.1,1.1-0.2,1.5C14,47.9,14,47.9,13.8,48
+c-0.4,0.2-1.3,0.3-2,0.3C10.3,48.2,9,47.9,8,47"></path>
+<path class="st0" d="M18.6,43.9c0-1.9,1.2-4.3,4.6-4.3c2.8,0,4.5,1.6,4.5,4.1c0,2.5-1.8,4.5-4.6,4.5C19.9,48.2,18.6,45.9,18.6,43.9
+M26.1,44.1c0-2.5-1.4-4-3.2-4c-1.3,0-2.7,0.7-2.7,3.5c0,2.3,1.3,4.1,3.4,4.1C24.3,47.7,26.1,47.3,26.1,44.1z"></path>
+<path class="st0" d="M34.2,44.9c0,1.4,0,2.2,0.2,2.4c0.2,0.2,0.5,0.2,1.3,0.2c0.6,0,1,0,1.3-0.3c0.1-0.1,0.3-0.5,0.3-0.7
+c0-0.1,0-0.2,0.1-0.2c0.1,0,0.1,0.1,0.1,0.2c0,0.1-0.1,0.9-0.2,1.3c-0.1,0.2-0.1,0.3-0.7,0.3c-1.6,0-2.3-0.1-3.2-0.1
+c-0.3,0-1,0-1.4,0c-0.1,0-0.2,0-0.2-0.1c0-0.1,0-0.1,0.2-0.1c0.2,0,0.3,0,0.4,0c0.2,0,0.3-0.3,0.3-0.6c0.1-0.5,0.1-1.3,0.1-2.4
+v-1.9c0-1.7,0-2,0-2.3c0-0.4-0.1-0.6-0.5-0.6c-0.1,0-0.2,0-0.4,0c-0.1,0-0.2,0-0.2-0.1c0-0.1,0.1-0.1,0.2-0.1c0.5,0,1.2,0,1.5,0
+c0.3,0,1.1,0,1.5,0c0.2,0,0.2,0,0.2,0.1c0,0.1-0.1,0.1-0.2,0.1c-0.1,0-0.3,0-0.4,0c-0.3,0.1-0.4,0.2-0.4,0.6c0,0.4,0,0.7,0,2.3
+V44.9"></path>
+<path class="st0" d="M44.1,44.9c0,1.4,0,2.2,0.2,2.4c0.2,0.2,0.5,0.2,1.3,0.2c0.6,0,1,0,1.3-0.3c0.1-0.1,0.3-0.5,0.3-0.7
+c0-0.1,0-0.2,0.1-0.2c0.1,0,0.1,0.1,0.1,0.2c0,0.1-0.1,0.9-0.2,1.3c-0.1,0.2-0.1,0.3-0.7,0.3c-1.6,0-2.3-0.1-3.2-0.1
+c-0.3,0-1,0-1.4,0c-0.1,0-0.2,0-0.2-0.1c0-0.1,0-0.1,0.2-0.1c0.2,0,0.3,0,0.4,0c0.2,0,0.3-0.3,0.3-0.6c0.1-0.5,0.1-1.3,0.1-2.4
+v-1.9c0-1.7,0-2,0-2.3c0-0.4-0.1-0.6-0.5-0.6c-0.1,0-0.2,0-0.4,0c-0.1,0-0.2,0-0.2-0.1c0-0.1,0.1-0.1,0.2-0.1c0.5,0,1.2,0,1.5,0
+c0.3,0,1.1,0,1.5,0c0.2,0,0.2,0,0.2,0.1c0,0.1-0.1,0.1-0.2,0.1c-0.1,0-0.3,0-0.4,0c-0.3,0.1-0.4,0.2-0.4,0.6c0,0.4,0,0.7,0,2.3
+V44.9"></path>
+<path class="st0" d="M52.6,42.9c0-1.7,0-2,0-2.3c0-0.4-0.1-0.6-0.5-0.6c-0.1,0-0.3,0-0.4,0c-0.1,0-0.2,0-0.2-0.1
+c0-0.1,0.1-0.1,0.2-0.1c0.6,0,1.3,0,1.6,0c0.4,0,2.6,0,2.8,0c0.2,0,0.4,0,0.5-0.1c0.1,0,0.1,0,0.2,0c0.1,0,0.1,0,0.1,0.1
+c0,0.1-0.1,0.2-0.1,0.7c0,0.1,0,0.6-0.1,0.7c0,0.1,0,0.1-0.1,0.1c-0.1,0-0.1-0.1-0.1-0.2c0-0.1,0-0.3-0.1-0.4
+c-0.1-0.2-0.2-0.3-0.7-0.4c-0.2,0-1.3,0-1.6,0c-0.1,0-0.1,0-0.1,0.1v2.8c0,0.1,0,0.1,0.1,0.1c0.2,0,1.5,0,1.8,0
+c0.3,0,0.4-0.1,0.5-0.2c0.1-0.1,0.1-0.1,0.2-0.1c0,0,0.1,0,0.1,0.1c0,0.1-0.1,0.2-0.1,0.8c0,0.2,0,0.7,0,0.7c0,0.1,0,0.2-0.1,0.2
+c-0.1,0-0.1,0-0.1-0.1c0-0.1,0-0.3,0-0.4c-0.1-0.2-0.2-0.4-0.6-0.4c-0.2,0-1.3,0-1.6,0c-0.1,0-0.1,0-0.1,0.1v0.9c0,0.4,0,1.4,0,1.7
+c0,0.8,0.2,0.9,1.3,0.9c0.3,0,0.8,0,1-0.1c0.3-0.1,0.4-0.4,0.5-0.8c0-0.1,0-0.2,0.1-0.2c0.1,0,0.1,0.1,0.1,0.2c0,0.3-0.1,1-0.1,1.2
+c-0.1,0.3-0.2,0.3-0.6,0.3c-1.7,0-2.4-0.1-3.1-0.1c-0.3,0-1,0-1.4,0c-0.1,0-0.2,0-0.2-0.1c0-0.1,0-0.1,0.2-0.1c0.2,0,0.3,0,0.4,0
+c0.2,0,0.3-0.3,0.3-0.6c0.1-0.5,0.1-1.3,0.1-2.4V42.9"></path>
+<path class="st0" d="M62.8,47c-1.1-0.9-1.4-2.2-1.4-3.3c0-0.8,0.2-2.1,1.3-3c0.8-0.7,1.8-1.2,3.5-1.2c0.7,0,1.1,0,1.6,0.1
+c0.4,0.1,0.8,0.2,1.1,0.2c0.1,0,0.2,0.1,0.2,0.1c0,0.1,0,0.2-0.1,0.6c0,0.4,0,1,0,1.2c0,0.2,0,0.3-0.1,0.3c-0.1,0-0.1-0.1-0.1-0.2
+c0-0.3-0.2-0.7-0.4-1c-0.4-0.4-1.2-0.7-2.2-0.7c-1,0-1.6,0.2-2.1,0.7c-0.8,0.7-1,1.8-1,2.9c0,2.6,2,3.9,3.5,3.9c1,0,1.6-0.1,2-0.6
+c0.2-0.2,0.3-0.5,0.4-0.7c0-0.2,0.1-0.2,0.1-0.2c0.1,0,0.1,0.1,0.1,0.2c0,0.1-0.1,1.1-0.2,1.5c-0.1,0.2-0.1,0.2-0.3,0.3
+c-0.4,0.2-1.3,0.3-2,0.3C65.1,48.2,63.8,47.9,62.8,47"></path>
+<path class="st0" d="M76.4,40.4l-1.6,0c-0.6,0-0.9,0.1-1.1,0.3c-0.1,0.2-0.2,0.3-0.2,0.4c0,0.1-0.1,0.1-0.1,0.1
+c-0.1,0-0.1-0.1-0.1-0.2c0-0.2,0.2-1.2,0.2-1.3c0-0.1,0.1-0.2,0.1-0.2c0.1,0,0.2,0.1,0.5,0.1c0.3,0,0.7,0.1,1.1,0.1h4.4
+c0.7,0,1-0.1,1.1-0.1c0.1,0,0.1,0.1,0.1,0.2c0,0.2,0,1,0,1.3c0,0.1,0,0.2-0.1,0.2c-0.1,0-0.1-0.1-0.1-0.2l0-0.1
+c0-0.3-0.3-0.6-1.3-0.6l-1.4,0v4.5c0,1,0,1.9,0.1,2.4c0,0.3,0.1,0.6,0.4,0.6c0.2,0,0.4,0,0.6,0c0.1,0,0.2,0,0.2,0.1
+c0,0.1-0.1,0.1-0.2,0.1c-0.7,0-1.4,0-1.7,0c-0.3,0-1,0-1.4,0c-0.1,0-0.2,0-0.2-0.1c0-0.1,0-0.1,0.2-0.1c0.2,0,0.3,0,0.4,0
+c0.2,0,0.3-0.3,0.3-0.6c0.1-0.5,0.1-1.3,0.1-2.4V40.4"></path>
+<path class="st0" d="M86,42.9c0-1.7,0-2,0-2.3c0-0.4-0.1-0.6-0.4-0.6c-0.1,0-0.3,0-0.4,0c-0.1,0-0.2,0-0.2-0.1
+c0-0.1,0.1-0.1,0.3-0.1c0.4,0,1.1,0,1.4,0c0.3,0,0.9,0,1.3,0c0.1,0,0.2,0,0.2,0.1c0,0.1-0.1,0.1-0.2,0.1c-0.1,0-0.2,0-0.3,0
+c-0.3,0.1-0.4,0.2-0.4,0.6c0,0.4,0,0.7,0,2.3v1.9c0,1.1,0,1.9,0,2.4c0,0.3,0.1,0.5,0.4,0.5c0.2,0,0.4,0,0.6,0c0.1,0,0.2,0,0.2,0.1
+c0,0.1-0.1,0.1-0.2,0.1c-0.7,0-1.4,0-1.7,0c-0.3,0-1,0-1.4,0c-0.1,0-0.2,0-0.2-0.1c0-0.1,0-0.1,0.2-0.1c0.2,0,0.3,0,0.4,0
+c0.2,0,0.3-0.2,0.3-0.6C86,46.8,86,46,86,44.9V42.9"></path>
+<path class="st0" d="M92.6,43.9c0-1.9,1.2-4.3,4.6-4.3c2.8,0,4.5,1.6,4.5,4.1c0,2.5-1.8,4.5-4.6,4.5C93.9,48.2,92.6,45.9,92.6,43.9
+M100.1,44.1c0-2.5-1.4-4-3.2-4c-1.3,0-2.7,0.7-2.7,3.5c0,2.3,1.3,4.1,3.4,4.1C98.3,47.7,100.1,47.3,100.1,44.1z"></path>
+<path class="st0" d="M107.5,46.6c0,0.9,0.2,1.2,0.4,1.2c0.2,0.1,0.4,0.1,0.6,0.1c0.1,0,0.2,0,0.2,0.1c0,0.1-0.1,0.1-0.3,0.1
+c-0.7,0-1.2,0-1.4,0c-0.1,0-0.6,0-1.2,0c-0.1,0-0.2,0-0.2-0.1c0-0.1,0.1-0.1,0.2-0.1c0.1,0,0.3,0,0.5-0.1c0.3-0.1,0.3-0.4,0.3-1.4
+l0.1-6.5c0-0.2,0-0.4,0.1-0.4c0.1,0,0.2,0.1,0.4,0.3c0.1,0.1,1.8,1.9,3.4,3.5c0.8,0.8,2.2,2.3,2.4,2.5h0.1l-0.1-5
+c0-0.7-0.1-0.9-0.4-1c-0.2-0.1-0.4-0.1-0.6-0.1c-0.1,0-0.2,0-0.2-0.1c0-0.1,0.1-0.1,0.3-0.1c0.6,0,1.1,0,1.3,0c0.1,0,0.5,0,1.1,0
+c0.1,0,0.3,0,0.3,0.1c0,0.1-0.1,0.1-0.2,0.1c-0.1,0-0.2,0-0.3,0c-0.3,0.1-0.4,0.3-0.4,0.9l-0.1,7c0,0.2,0,0.3-0.1,0.3
+c-0.1,0-0.3-0.1-0.4-0.2c-0.7-0.7-2.1-2.1-3.3-3.2c-1.2-1.2-2.4-2.6-2.6-2.8h0L107.5,46.6"></path>
+<path class="st0" d="M113.5,21.7L113.5,21.7L113.5,21.7 M107.3,21.9"></path>
+<path class="st0" d="M49.3,4.8c0.4-0.2,0.6-0.4,0.9-0.7c0.2-0.3,0.4-0.6,0.6-1c0.1-0.2,0.1-0.4,0.2-0.6c0-0.2,0.1-0.4,0.2-0.6
+c0.1-0.2,0.2-0.3,0.3-0.5c0.1-0.1,0.3-0.2,0.3-0.3c-0.1-0.3-0.5-0.2-0.7-0.2c-0.4,0-0.8,0.1-1.2,0.4c-0.2,0.1-0.5,0.4-0.3,0.7
+C49.7,2,50,2,50.1,2.1c0.2,0.1,0.3,0.3,0.3,0.5c0.1,0.6-0.4,1.2-0.8,1.5c-0.1,0.1-0.5,0.4-0.6,0.4c0-0.1,0-0.2,0-0.3
+c-0.1-0.5-0.4-1-0.9-1.2C48,3,47.8,3,47.7,3c-0.6,0.1-1.1,0.6-0.9,1.3c0.2,0.6,0.9,0.8,1.5,0.8c0.1,0,0.3-0.1,0.4,0
+c0.1,0.1-0.1,0.5-0.2,0.6c-0.3,0.6-1,1.1-1.6,1.4c-0.2,0.1-0.4,0.2-0.6,0.2c-0.2,0-0.3,0-0.5,0.1c0,0-0.1,0-0.1,0.1
+c-0.1,0-0.3,0-0.4,0c-0.1,0-0.1-0.2-0.2-0.3c-0.2-0.2-0.6-0.1-0.8-0.1c-0.1,0-0.2,0.1-0.3,0.1c0,0-0.1,0.1-0.1,0.1
+c-0.1,0-0.2-0.1-0.3-0.1c0,0-0.1,0.1-0.1,0.1c0,0,0,0.1,0,0.1c0,0,0,0,0.1,0c0.1,0,0.1,0.1,0.2,0.1c0.1,0.1,0,0.3,0.1,0.4
+c0,0,0.1,0.1,0.1,0.1c0,0,0,0,0,0c0,0,0,0.1-0.1,0.2c-0.1,0.2-0.2,0.4-0.3,0.5c-0.1,0.1-0.1,0.3-0.2,0.3c-0.1,0-0.2,0-0.3,0
+c-0.1,0-0.1-0.1-0.2-0.2c-0.1-0.1-0.2-0.3-0.3-0.4c-0.1-0.1-0.2-0.2-0.2-0.2c0-0.1,0-0.1-0.1-0.1c-0.1-0.1,0-0.2,0.1-0.3
+c0.1-0.1,0.1-0.3,0.3-0.2c0.1,0,0.2,0.1,0.3,0c0.2,0,0.2-0.2,0.3-0.3c0,0,0.1,0,0.1-0.1c0.1-0.1,0.1-0.1,0-0.2c0,0,0-0.1,0-0.1
+c0-0.1,0-0.1,0.1-0.1c0.1,0,0.2,0,0.3-0.1c0-0.1,0-0.2,0-0.3c0.1,0,0.1-0.1,0.2-0.1c0.1,0,0.2,0,0.1-0.1c0-0.1-0.1-0.1-0.2-0.1
+c-0.2-0.1-0.3-0.4-0.3-0.6c0-0.1,0-0.1,0-0.2c0-0.1,0.1-0.1,0.1-0.2c0,0,0,0,0,0C43.6,5,43.5,5,43.4,5c-0.1,0-0.3,0-0.4,0
+c-0.1,0-0.2-0.2-0.3-0.1c0,0.1-0.1,0.2-0.1,0.2c-0.1,0.1-0.2-0.1-0.3,0c-0.1,0-0.1,0.2-0.2,0.3c-0.1,0.1-0.3,0.1-0.4,0.1
+c-0.1,0-0.1-0.1-0.1-0.2c0-0.1,0.1-0.2,0.2-0.3c0.1,0,0.2,0,0.2-0.1c0-0.1,0-0.1,0.1-0.2c0.1-0.1,0.2,0,0.4,0
+c0.1,0,0.1-0.1,0.2-0.2c0.1-0.1,0.3-0.1,0.4,0c0.2,0,0.2,0.1,0.4,0.3c0.1,0.1,0.2,0.1,0.3,0.2c0.1,0,0.2,0,0.3,0
+c0.1,0,0.1-0.2,0.1-0.2c0-0.2-0.1-0.3-0.3-0.3c-0.1,0-0.2,0-0.2,0c0,0-0.1-0.1-0.1-0.1c-0.1-0.1-0.2-0.2-0.4-0.2
+c-0.1,0-0.3,0-0.4,0c0,0-0.1,0.1-0.1,0c0,0,0-0.1,0-0.1c0-0.2,0-0.3,0-0.5c0-0.1,0-0.2,0-0.2c0-0.1,0.1-0.1,0.1-0.2
+c0.2-0.3,0.4-0.6,0.8-0.7c0.2,0,0.3-0.1,0.5,0c0.1,0,0.3,0.1,0.3,0c0-0.1-0.1-0.1-0.1-0.1c-0.4-0.2-1-0.2-1.3,0.2
+c-0.1,0.1-0.2,0.2-0.3,0.4c0,0.1-0.1,0.3-0.2,0.2c0,0,0-0.1,0-0.1c0-0.2,0-0.3-0.1-0.5c-0.1-0.2-0.2-0.4-0.4-0.6
+c-0.2-0.2-0.4-0.4-0.6-0.6C41,1,40.8,0.8,40.7,0.7c-0.1-0.1-0.3-0.3-0.3-0.4c0-0.1,0-0.2,0-0.2C40.3,0,40.2,0,40.2,0
+c-0.1,0.1-0.1,0.2,0,0.3c0,0.2,0.2,0.4,0.3,0.6c0.2,0.3,0.5,0.6,0.7,0.9c0.1,0.1,0.1,0.2,0.2,0.3c0,0-0.1,0-0.1,0
+C41.1,2,41.1,1.9,41,1.8c-0.3-0.3-0.8-0.6-1.3-0.6c-0.2,0-0.8,0.1-0.7,0.4c0,0.1,0.2,0,0.3,0c0.4-0.2,0.8-0.1,1.2,0.1
+c0.4,0.2,0.6,0.6,0.9,0.9c0,0,0.2,0.3,0.2,0.3c0,0-0.2-0.1-0.3-0.1c-0.2-0.1-0.4-0.2-0.6-0.2c-0.4,0-0.9,0.3-0.9,0.8
+c0,0.2,0.1,0.5,0.4,0.5c0,0,0,0,0-0.1c0-0.1-0.1-0.2-0.1-0.3c-0.1-0.4,0.4-0.6,0.7-0.5c0.1,0,0.2,0.1,0.3,0.1
+c0.3,0.2,0.5,0.6,0.5,1c0,0.1,0,0.2,0,0.3c0,0,0,0,0,0c-0.1,0-0.2,0-0.4,0c-0.3,0.1-0.5,0.5-0.3,0.7c0,0,0,0,0,0.1c0,0,0,0.1,0,0.1
+c-0.1,0.2-0.1,0.4-0.1,0.5c0,0.1,0,0.2,0.1,0.3c0,0.1,0.1,0.2,0.2,0.2c0.1,0,0.2,0,0.3,0.1c0.1,0.1,0,0.5-0.1,0.6
+c-0.1,0.1-0.2,0.2-0.3,0.2c0,0-0.1,0-0.2,0c-0.1,0-0.1,0-0.2,0c-0.7,0.1-1,0.9-1.1,1.5c0,0.7,0.2,1.3,0.4,2c0,0.2,0.1,0.4,0.1,0.7
+c0,0.2-0.1,0.3-0.1,0.4c0,0.1,0,0.2-0.1,0.3c0,0.1-0.1,0.3-0.2,0.5c-0.1,0.1-0.3,0.2-0.4,0.2c-0.2,0.1-0.3,0.2-0.5,0.3
+c-0.1,0.1-0.4,0.2-0.3,0.3c0,0.1,0.1,0.2,0.2,0.3c0.1,0.1,0.3,0.3,0.4,0.3c0.1,0,0.2,0.1,0.3,0.2c0.1,0.1,0,0.2,0,0.3
+c0,0.1-0.2,0.5,0,0.6c0.1,0.1,0.3,0,0.4,0c0.2,0,0.3,0,0.5,0c0.1,0,0.5,0,0.4,0.1c0,0-0.2,0-0.2,0c-0.2,0-0.4,0-0.6,0
+c-0.6,0.1-1.1,0.2-1.7,0.5c-0.4,0.2-0.8,0.5-1.2,0.8c-0.4,0.3-0.7,0.6-0.9,0.9c-0.2,0.2-0.3,0.4-0.4,0.6c-0.1,0.2-0.2,0.4-0.3,0.6
+c-0.2,0.4-0.2,0.8-0.3,1.2c0,0-0.1,0.1-0.1,0.2c0,0.1,0,0.1,0,0.2c0,0.2,0.2,0.5,0.4,0.4c0.1,0,0.1,0,0.2-0.1
+c0.1-0.1,0.1-0.3,0.1-0.4c0-0.1-0.1-0.2-0.1-0.2c-0.1-0.1,0-0.3,0-0.4c0-0.1,0.1-0.3,0.1-0.4c0.1-0.3,0.2-0.6,0.4-0.8
+c0.2-0.3,0.4-0.5,0.6-0.7c0.4-0.4,0.9-0.8,1.4-1.1c0.4-0.2,0.7-0.3,1.1-0.4c1-0.3,2.1-0.2,3.1-0.1c0.8,0.2,1.6,0.5,2.2,1
+c0.8,0.6,1.3,1.3,1.8,2.2c0.1,0.3,0.3,0.6,0.4,0.8c0,0.1,0.1,0.5,0.2,0.5c0.3,0.1,0.7,0,1,0c0.5,0,1.1,0,1.7,0c0.2,0,0.4,0,0.6,0
+c0.2,0,0.3-0.1,0.5-0.2c0.1,0,0.3-0.1,0.4-0.2c0.1-0.1,0.1-0.2,0.2-0.2c0.1,0,0.3,0,0.5-0.1c0.4,0,0.8-0.2,1-0.5
+c0.1-0.1,0.2-0.2,0.3-0.4c0.1-0.1,0.1-0.2,0.2-0.3c0.1-0.2-0.2-0.1-0.3-0.1c0.1-0.1,0.2-0.3,0.2-0.4c0.1-0.2,0.1-0.4,0.2-0.6
+c0-0.2,0.1-0.4,0.1-0.6c0-0.1,0.1-0.3-0.1-0.4c-0.2-0.1-0.3,0.1-0.5,0c0-0.1-0.1-0.1-0.1-0.2c-0.2-0.3-0.4-0.6-0.7-0.7
+c-0.3-0.1-0.7-0.1-1,0.1c-0.3,0.2-0.3,0.8,0.1,0.9c0.3,0.1,0.5,0,0.6-0.3c0-0.1,0.2,0,0.3,0c0.4,0.1,0.7,0.6,0.7,1
+c0.1,0.5-0.1,1.5-0.8,1.4c-0.2,0-0.3-0.3-0.3-0.5c-0.1-0.2-0.1-0.4-0.4-0.5c-0.2-0.1-0.5-0.1-0.7,0.1c-0.2,0.2-0.2,0.5,0,0.7
+c0.1,0.1,0.2,0.1,0.4,0c0.2-0.1,0.3-0.1,0.5,0c0.2,0.2,0,0.6-0.2,0.7c-0.3,0.2-0.7,0.3-1,0.2c-0.7-0.2-1.3-0.8-1.6-1.4
+c-0.2-0.4-0.3-0.7-0.3-1.1c-0.1-0.5-0.2-0.9-0.3-1.3c-0.1-0.3-0.2-0.5-0.3-0.7c-0.1-0.2-0.2-0.4-0.3-0.5c-0.4-0.5-1-1-1.6-1.3
+c-0.2-0.1-0.5-0.2-0.8-0.2c-0.1,0-0.2-0.1-0.3,0c-0.1,0.1-0.2,0.2-0.3,0.3c-0.1,0.1-0.2,0.1-0.4,0.2c0,0-0.2,0-0.2,0
+c0.1-0.1,0.3-0.3,0.4-0.4c0.1-0.1,0.2-0.2,0.3-0.3c0.1-0.1,0.2-0.2,0.1-0.3c-0.1-0.1-0.2-0.1-0.3-0.1c-0.3-0.1-0.6-0.2-0.9-0.4
+c-0.1,0-0.1-0.1-0.2-0.1c0,0-0.1-0.1-0.1-0.1c-0.1,0,0.1,0.2,0.1,0.3c0.1,0.1,0.2,0.2,0.3,0.3c0.1,0.1,0.2,0.2,0.3,0.3
+c-0.1,0-0.1,0-0.2-0.1c-0.2-0.1-0.4-0.3-0.5-0.4c-0.1-0.1-0.1-0.2-0.2-0.2c-0.1,0-0.3,0-0.4,0c-0.1,0.1,0,0.1,0,0.2
+c0,0.1,0.1,0.1,0.1,0.2c0.1,0.2,0.1,0.4,0.1,0.6c0,0,0,0.3,0,0.3c-0.1,0-0.1-0.1-0.1-0.2c-0.1-0.3-0.2-0.6-0.3-0.9
+c0-0.1-0.1-0.1-0.1-0.2c-0.1-0.1-0.2,0-0.3,0c-0.1,0-0.1,0.2-0.1,0.3c0,0.1,0,0.3,0,0.4c0,0.1-0.1,0.3-0.1,0.4c0,0.1,0,0.1,0,0.2
+c0,0,0-0.1,0-0.1c-0.1-0.2,0-0.3,0-0.5c0-0.2-0.1-0.4-0.1-0.5c0-0.1,0-0.2-0.1-0.2c-0.1-0.1-0.2,0-0.3,0c0,0-0.3,0-0.3,0
+c0,0,0-0.1,0.1-0.2c0.1-0.1,0.3-0.1,0.5-0.1c0.3,0,0.6,0,0.8-0.1c0.2,0,0.4-0.1,0.6-0.1c0.1,0,0.3,0,0.4-0.1c0.1-0.1,0-0.4,0-0.5
+c0-0.1,0-0.1,0-0.1c0-0.1,0.1-0.2,0.1-0.3c0,0,0,0,0,0c-0.1-0.1-0.2-0.1-0.2-0.1c-0.3,0-0.6-0.1-0.8-0.2c-0.2-0.2-0.4-0.4-0.6-0.6
+c-0.3-0.2-0.6-0.4-1-0.6v0h0v0c0.1,0,0.2,0,0.3,0c0.5,0.2,0.9,0.5,1.3,0.8c0.1,0.1,0.3,0.1,0.4,0.2c0.4,0.1,0.7,0.2,1.1,0.2
+c0.3-0.1,0.7-0.2,1.1-0.1c0.4,0.1,0.4,0.6,0.6,0.8c0.1,0.1,0.1,0.2,0.3,0.2c0-0.2,0.1-0.3,0.2-0.4c0.1-0.3,0.1-0.6,0.1-0.9
+c0-0.1,0-0.3,0-0.4c0-0.1,0.1-0.3,0.1-0.4c0.1-0.1,0.2-0.2,0.3-0.3C46,9,46.3,8.8,46.4,8.6c0.1-0.1,0.1-0.3,0.1-0.4
+C46.6,8,46.8,7.8,47,7.7c0.1-0.1,0.1-0.1,0.2-0.2c0.1-0.1,0.2-0.1,0.2-0.2c0-0.1,0.1-0.1,0.1-0.2c0,0,0.1-0.1,0.2-0.1
+c0.5-0.5,1-0.9,1.3-1.5c0-0.1,0.1-0.2,0.1-0.3C49,5.2,49,5,49,4.9 M50.4,1.8c-0.1,0-0.3,0-0.4-0.1c-0.1-0.1,0.2-0.3,0.3-0.4
+c0.2-0.1,0.6-0.3,0.8-0.3c0.1,0,0.2,0,0.2,0c0.1,0.1-0.1,0.2-0.2,0.3c-0.2,0.1-0.4,0.3-0.6,0.4C50.5,1.7,50.5,1.8,50.4,1.8z
+M48.8,4.6c0,0.1-0.1,0.1-0.2,0.2c-0.3,0.1-0.6,0.2-0.9,0C47.3,4.7,47,4.3,47,4c0-0.3,0.2-0.5,0.4-0.6c0.3-0.1,0.6-0.1,0.8,0.1
+c0.2,0.2,0.4,0.4,0.5,0.6C48.7,4.2,48.8,4.4,48.8,4.6z M44.7,8.3C44.7,8.3,44.7,8.3,44.7,8.3c0.1-0.1,0.1-0.1,0.1-0.1
+c0,0,0.1-0.1,0.1-0.1c0,0,0.1,0,0.1-0.1c0,0,0.1-0.1,0.1-0.1c0.1,0,0.1,0,0.2-0.1c0.1,0,0.3,0,0.4,0c0,0,0,0.1,0,0.1
+c0,0.2-0.1,0.3-0.2,0.4c-0.1,0-0.2-0.1-0.3-0.1c-0.1,0-0.4,0.2-0.4,0.3c-0.1,0-0.2,0.2-0.3,0.1C44.5,8.6,44.6,8.4,44.7,8.3z
+M43.2,5.8C43.2,5.7,43.2,5.7,43.2,5.8c0.1,0.1,0.1,0.1,0.1,0.2c0,0-0.2,0.1-0.2,0.1c0,0,0-0.1,0-0.1C43,5.8,43.1,5.8,43.2,5.8
+C43.1,5.8,43.1,5.8,43.2,5.8z M48.2,20.3c-0.2,0-0.4,0-0.5,0c-0.2,0-0.4,0-0.6,0c-0.2,0-0.2-0.2-0.2-0.3c-0.2-0.5-0.5-1-0.8-1.5
+c-0.3-0.4-0.6-0.9-0.9-1.2c-0.2-0.2-0.4-0.4-0.7-0.6c-0.1-0.1-0.3-0.2-0.4-0.2c-0.1-0.1-0.3-0.1-0.3-0.3c0.1-0.1,0.4-0.2,0.5-0.3
+c0.1,0,0.2,0,0.2-0.1c0.1-0.1,0-0.4-0.1-0.5c-0.1-0.1-0.2-0.3-0.2-0.5c0-0.3,0.3,0,0.3,0.1c0.1,0.1,0.2,0.2,0.3,0.4
+c0.2,0.3,0.3,0.7,0.2,1.1c0,0.1-0.1,0.2-0.1,0.3c0,0.2,0,0.2,0.2,0.2c0.1,0,0.1-0.1,0.2,0c0.1,0.1,0.2,0.2,0.3,0.3
+c0.1,0.1,0.1,0.2,0.2,0.3c0,0,0.1,0.1,0.2,0.1c0.2,0.1,0.1-0.3,0.1-0.4c0-0.8-0.2-1.7-0.6-2.4c-0.2-0.2-0.3-0.4-0.6-0.6
+c0,0-0.1,0-0.1-0.1c0,0,0.5,0.2,0.5,0.2c0.3,0.2,0.5,0.4,0.7,0.7c0.1,0.2,0.5,0.7,0.3,1c-0.1,0.2-0.1,0.4,0,0.6
+c0,0.1,0.1,0.1,0.2,0.2c0,0.1,0,0.2,0,0.3c0,0.1,0,0.2,0.1,0.3c0,0.1,0.1,0.1,0.2,0.2c0.1,0.1,0.1,0.1,0,0.2c-0.2,0.3-0.1,0.7,0,1
+c0.1,0.3,0.2,0.9,0.6,0.9c0.2,0,0.1-0.3,0.2-0.2c0.1,0,0.2,0.1,0.2,0.2c0.1,0.1,0.2,0.2,0.3,0.3C48.1,20.2,48.3,20.3,48.2,20.3z"></path>
+<path class="st0" d="M61.9,11.3l-1.2,0c-0.5,0-0.6,0.1-0.8,0.2c-0.1,0.1-0.1,0.2-0.1,0.3c0,0.1,0,0.1-0.1,0.1c-0.1,0-0.1,0-0.1-0.1
+c0-0.1,0.2-0.8,0.2-0.9c0-0.1,0-0.2,0.1-0.2c0.1,0,0.1,0.1,0.3,0.1c0.2,0,0.5,0,0.8,0h3.1c0.5,0,0.7-0.1,0.8-0.1
+c0.1,0,0.1,0,0.1,0.2c0,0.2,0,0.7,0,0.9c0,0.1,0,0.1-0.1,0.1c-0.1,0-0.1,0-0.1-0.2l0-0.1c0-0.2-0.2-0.4-0.9-0.4l-1,0v3.2
+c0,0.7,0,1.4,0,1.7c0,0.2,0.1,0.4,0.3,0.4c0.1,0,0.3,0,0.4,0c0.1,0,0.1,0,0.1,0.1c0,0.1-0.1,0.1-0.2,0.1c-0.5,0-1,0-1.2,0
+c-0.2,0-0.7,0-1,0c-0.1,0-0.2,0-0.2-0.1c0,0,0-0.1,0.1-0.1c0.1,0,0.2,0,0.3,0c0.2,0,0.2-0.2,0.2-0.4c0-0.3,0-1,0-1.7V11.3"></path>
+<path class="st0" d="M88.8,13.4C88.8,13.4,88.8,13.4,88.8,13.4l0-0.2c0-1.2,0-1.4,0-1.7c0-0.3-0.1-0.4-0.3-0.5c-0.1,0-0.2,0-0.3,0
+C88.1,11,88,11,88,11c0-0.1,0.1-0.1,0.2-0.1c0.4,0,0.9,0,1.1,0c0.2,0,0.7,0,1,0c0.1,0,0.2,0,0.2,0.1c0,0.1,0,0.1-0.1,0.1
+c-0.1,0-0.1,0-0.2,0c-0.2,0-0.3,0.2-0.3,0.5c0,0.3,0,0.5,0,1.7v1.4c0,0.7,0,1.4,0,1.7c0,0.2,0.1,0.4,0.3,0.4c0.1,0,0.3,0,0.4,0
+c0.1,0,0.1,0,0.1,0.1c0,0.1-0.1,0.1-0.2,0.1c-0.5,0-1,0-1.2,0c-0.2,0-0.7,0-1,0c-0.1,0-0.2,0-0.2-0.1c0,0,0-0.1,0.1-0.1
+c0.1,0,0.2,0,0.3,0c0.2,0,0.2-0.2,0.2-0.4c0-0.3,0-1,0-1.7v-0.7c0,0,0,0,0,0h-3c0,0,0,0,0,0v0.7c0,0.7,0,1.4,0,1.7
+c0,0.2,0.1,0.4,0.3,0.4c0.1,0,0.3,0,0.4,0c0.1,0,0.1,0,0.1,0.1c0,0.1-0.1,0.1-0.2,0.1c-0.5,0-1,0-1.2,0c-0.2,0-0.7,0-1,0
+c-0.1,0-0.2,0-0.2-0.1c0,0,0-0.1,0.1-0.1c0.1,0,0.2,0,0.3,0c0.2,0,0.2-0.2,0.2-0.4c0-0.3,0-1,0-1.7v-1.4c0-1.2,0-1.4,0-1.7
+c0-0.3-0.1-0.4-0.3-0.5c-0.1,0-0.2,0-0.3,0c-0.1,0-0.1,0-0.1-0.1c0-0.1,0.1-0.1,0.2-0.1c0.4,0,0.9,0,1.1,0c0.2,0,0.7,0,1,0
+c0.1,0,0.2,0,0.2,0.1c0,0.1,0,0.1-0.1,0.1c-0.1,0-0.1,0-0.2,0c-0.2,0-0.3,0.2-0.3,0.5c0,0.3,0,0.5,0,1.7v0.2c0,0,0,0.1,0,0.1H88.8"></path>
+<path class="st0" d="M110.4,13.2c0-1.2,0-1.4,0-1.7c0-0.3-0.1-0.4-0.3-0.5c-0.1,0-0.2,0-0.3,0c-0.1,0-0.1,0-0.1-0.1
+c0-0.1,0.1-0.1,0.2-0.1c0.4,0,0.9,0,1.1,0c0.3,0,1.8,0,2,0c0.2,0,0.3,0,0.3,0c0,0,0.1,0,0.1,0c0,0,0,0,0,0.1c0,0.1,0,0.2-0.1,0.5
+c0,0.1,0,0.4,0,0.5c0,0,0,0.1-0.1,0.1c-0.1,0-0.1,0-0.1-0.1c0-0.1,0-0.2,0-0.3c-0.1-0.1-0.1-0.2-0.5-0.3c-0.1,0-1,0-1.1,0
+c0,0-0.1,0-0.1,0.1v2c0,0.1,0,0.1,0.1,0.1c0.2,0,1.1,0,1.3,0c0.2,0,0.3,0,0.4-0.1c0.1-0.1,0.1-0.1,0.1-0.1c0,0,0.1,0,0.1,0.1
+c0,0,0,0.2-0.1,0.6c0,0.2,0,0.5,0,0.5c0,0.1,0,0.2-0.1,0.2c-0.1,0-0.1,0-0.1-0.1c0-0.1,0-0.2,0-0.3c0-0.2-0.1-0.3-0.4-0.3
+c-0.2,0-0.9,0-1.1,0c0,0,0,0,0,0.1v0.6c0,0.3,0,1,0,1.2c0,0.5,0.1,0.7,0.9,0.7c0.2,0,0.5,0,0.7-0.1c0.2-0.1,0.3-0.3,0.4-0.6
+c0-0.1,0-0.1,0.1-0.1c0.1,0,0.1,0.1,0.1,0.1c0,0.2-0.1,0.7-0.1,0.9c-0.1,0.2-0.1,0.2-0.4,0.2c-1.2,0-1.7,0-2.2,0c-0.2,0-0.7,0-1,0
+c-0.1,0-0.2,0-0.2-0.1c0,0,0-0.1,0.1-0.1c0.1,0,0.2,0,0.3,0c0.2,0,0.2-0.2,0.2-0.4c0-0.3,0-1,0-1.7V13.2"></path>
+<path class="st0" d="M102.5,31.2c-0.3,0-0.3,0.3-0.4,0.4c0,0.3-0.3,1-0.6,1.4c-0.7,0.7-1.8,0.8-2.9,0.8c-3.8,0-6-3.1-6-6.1
+c0-1.5,0.2-3.1,1.5-4.4c0.8-0.8,2.1-1.2,3.8-1.2c1.5,0,2.8,0.5,3.3,0.9c0.4,0.3,0.7,1,0.7,1.6c0,0.2,0,0.6,0.3,0.6
+c0.3,0,0.3-0.4,0.4-0.6c0,0,0.1-1.8,0.1-1.8c0,0,0.1-1,0.1-1c0-0.2-0.1-0.4-0.4-0.4c0,0-1.7-0.2-1.7-0.2C99.6,21,98.5,21,98.1,21
+c-2.4,0-4.1,0.6-5.4,1.9c-1.5,1.5-2,3.5-2,4.9c0,2.2,0.7,4,2.2,5.3c1.5,1.3,3.3,1.9,5.8,1.9c1,0,2.4-0.1,3.2-0.4
+c0.4-0.2,0.4-0.2,0.6-0.6c0.2-0.6,0.4-2.1,0.4-2.3C102.8,31.2,102.6,31.2,102.5,31.2"></path>
+<path class="st0" d="M114.1,32c-0.2,0-0.2,0.2-0.3,0.4c-0.1,0.7-0.3,1-0.7,1.2c-0.4,0.2-1.2,0.2-1.6,0.2c-1.7,0-1.8-0.2-1.9-1.3
+l0-2.2l0-0.8V28c0,0,2.4,0.1,2.4,0.1c0.6,0.1,0.7,0.3,0.8,0.5l0.1,0.5c0,0.2,0.1,0.3,0.2,0.3c0.2,0,0.2-0.3,0.2-0.4l0.1-1.1l0.1-1
+c0-0.2-0.2-0.3-0.2-0.3l-0.3,0.2c-0.2,0.2-0.4,0.2-0.8,0.2l-2.7,0l0-4.8c0-0.1,2.3,0,2.3,0c0.9,0.1,1,0.3,1.1,0.5
+c0,0,0.1,0.6,0.1,0.6c0,0.3,0.2,0.3,0.2,0.3c0.1,0,0.2,0,0.2-0.3l0.1-0.8l0-0.3c0,0,0.1-0.8,0.1-0.8c0-0.3-0.1-0.3-0.2-0.3
+l-0.2,0.1c-0.1,0-0.8,0.1-0.8,0.1l-3.9,0l-0.2,0l-1.7,0c-0.1,0-0.4,0-0.4,0.3c0,0.1,0.1,0.2,0.3,0.2c0,0,0.2,0,0.2,0l0.4,0
+c0.5,0.1,0.6,0.3,0.7,0.9l0,3.7v3c0,1.7,0,3-0.1,3.7c-0.1,0.5-0.2,0.8-0.4,0.8l-0.5,0.1c-0.2,0-0.3,0.1-0.3,0.2
+c0,0.3,0.3,0.3,0.4,0.3l1,0c0,0,0.6,0,0.6,0l0.1,0l0.4,0l3.8,0.1c0.7,0,0.9,0,1-0.5c0,0,0.2-1.7,0.2-1.7
+C114.3,32.3,114.3,32,114.1,32 M108,26.4C108,26.4,108.1,26.3,108,26.4L108,26.4C108.1,26.3,108,26.4,108,26.4z"></path>
+<path class="st0" d="M88.1,34l-0.6-0.1c-0.4-0.1-0.8-0.4-1.4-1.8L83,24.1l-0.9-2.4c-0.2-0.5-0.3-0.7-0.6-0.7
+c-0.3,0-0.4,0.2-0.6,0.8l-3.9,10.7c-0.3,0.9-0.6,1.4-1.3,1.5c0,0-0.5,0-0.5,0c-0.2,0-0.4,0.1-0.4,0.3c0,0.3,0.4,0.3,0.5,0.3
+c0,0,1.6,0,1.6,0c0,0,0.4,0,0.4,0c0,0,0.4,0,0.4,0l0.9,0c0.4,0,0.5-0.2,0.5-0.3c0-0.1-0.1-0.3-0.4-0.3h-0.2c-0.1,0-0.5-0.1-0.5-0.3
+c0-0.3,0.1-0.7,0.2-1.1c0,0,0.1-0.2,1-3.1c0,0,3.7,0,3.7,0c0,0,0.2,0.6,1.6,4.2l0,0.1c-0.2,0.1-0.3,0.2-0.3,0.4
+c0,0.3,0.3,0.3,0.6,0.3c0.1,0,2.8,0,2.8,0c0.5,0,0.5-0.2,0.5-0.3C88.5,34.2,88.4,34,88.1,34 M79.8,28.5c0.1-0.3,1.3-4,1.4-4.3
+c0.1,0.3,0.5,1.4,1.5,4.3C82.5,28.5,80.1,28.5,79.8,28.5z"></path>
+<path class="st0" d="M71.8,31.9c-0.2,0-0.3,0.1-0.3,0.4c0,0.3-0.2,0.7-0.4,0.9c-0.3,0.4-1,0.4-1.9,0.4c-1.3,0-1.7-0.1-1.9-0.3
+c-0.3-0.3-0.3-2-0.3-3.8c0-0.1,0-3,0-3l0-3.7c0-0.6,0.2-0.7,0.5-0.8c0,0,0.5,0,0.5,0c0.2,0,0.3-0.1,0.3-0.3c0-0.2-0.1-0.3-0.5-0.3
+c0,0-1.5,0-1.5,0c0,0-0.3,0-0.3,0l-0.2,0c0,0-1.7,0-1.7,0c-0.4,0-0.5,0.2-0.5,0.3c0,0.2,0.1,0.3,0.3,0.3l0.5,0
+c0.5,0.1,0.5,0.3,0.6,0.8l0,3.7v3c0,1.6,0,3-0.1,3.7c-0.1,0.5-0.2,0.7-0.3,0.8c0,0-0.5,0.1-0.5,0.1c-0.2,0-0.3,0.2-0.3,0.3
+c0,0.2,0.1,0.4,0.5,0.4c0,0,1,0,1,0c0,0,0.7,0,0.7,0l1.1,0c0,0,3.5,0.1,3.5,0.1c0.9,0,1.1-0.1,1.3-0.6c0.1-0.5,0.3-1.6,0.3-1.8
+C72.1,32.2,72.1,31.9,71.8,31.9"></path>
+<path class="st0" d="M59.4,31.9c-0.1,0-0.3,0.1-0.3,0.4c0,0.3-0.2,0.7-0.4,0.9c-0.3,0.4-1,0.4-1.9,0.4c-1.3,0-1.7-0.1-1.9-0.3
+c-0.3-0.3-0.3-2-0.3-3.8c0-0.1,0-3,0-3l0-3.7c0-0.6,0.2-0.7,0.5-0.8c0,0,0.5,0,0.5,0c0.2,0,0.3-0.1,0.3-0.3c0-0.2-0.2-0.3-0.5-0.3
+c0,0-1.5,0-1.5,0c0,0-0.3,0-0.3,0l-0.2,0c0,0-1.7,0-1.7,0c-0.4,0-0.5,0.2-0.5,0.3c0,0.2,0.1,0.3,0.3,0.3l0.5,0
+c0.5,0.1,0.5,0.3,0.6,0.8l0,3.7v3c0,1.6,0,3-0.1,3.7c-0.1,0.5-0.2,0.7-0.3,0.8c0,0-0.5,0.1-0.5,0.1c-0.2,0-0.3,0.2-0.3,0.3
+c0,0.2,0.1,0.4,0.5,0.4c0,0,1,0,1,0c0,0,0.7,0,0.7,0l1.1,0c0,0,3.5,0.1,3.5,0.1c0.9,0,1.1-0.1,1.3-0.6c0.1-0.5,0.3-1.6,0.3-1.8
+C59.7,32.2,59.7,31.9,59.4,31.9"></path>
+<path class="st0" d="M47.1,34l-0.6-0.1c-0.4-0.1-0.8-0.4-1.4-1.8l-3.3-8.6l-0.7-1.8c-0.2-0.5-0.3-0.7-0.6-0.7
+c-0.3,0-0.4,0.2-0.6,0.8l-3.9,10.7c-0.3,0.9-0.6,1.4-1.3,1.5c0,0-0.5,0-0.5,0c-0.2,0-0.3,0.1-0.3,0.3c0,0.3,0.4,0.3,0.5,0.3
+c0,0,1.6,0,1.6,0c0,0,0.4,0,0.4,0l0.4,0l0.9,0c0.4,0,0.5-0.2,0.5-0.3c0-0.1-0.1-0.3-0.4-0.3h-0.2c-0.1,0-0.5-0.1-0.5-0.3
+c0-0.3,0.1-0.7,0.2-1.1c0,0,1-3.1,1-3.1s3.7,0,3.7,0c0,0,0.2,0.6,1.6,4.2l0,0.1c-0.2,0.1-0.3,0.3-0.3,0.4c0,0.3,0.3,0.3,0.6,0.3
+c0.1,0,2.8,0,2.8,0c0.5,0,0.5-0.2,0.5-0.3C47.5,34.2,47.5,34,47.1,34 M38.9,28.5c0.1-0.3,1.3-4,1.4-4.3c0.1,0.3,0.5,1.3,1.5,4.3
+C41.5,28.5,39.2,28.5,38.9,28.5z"></path>
+<path class="st0" d="M35.4,10.4l-2.1,0.1l-0.5,0l-0.5,0l-2.7-0.1c-0.2,0-0.7,0-0.7,0.3c0,0.2,0.2,0.3,0.4,0.3
+c1.5,0,1.7,0.4,1.7,0.8c0,0.4,0,0.8-0.3,2l-3.4,11.2c0,0-1.4,4.6-1.5,4.9c-0.1-0.3-6.3-18-6.3-18c-0.4-1.2-0.6-1.6-0.9-1.6
+c-0.3,0-0.4,0.2-0.9,1.5c0,0-5.9,15.8-6.6,17.9C10.6,28.1,7.4,16.7,7,14.7l-0.2-0.7c-0.2-1-0.4-1.9-0.4-2.2c0-0.4,0.2-0.6,0.3-0.7
+C7.1,11,7.6,11,7.9,11c0.4,0,0.4-0.2,0.4-0.3c0-0.3-0.5-0.3-0.7-0.3l-2.7,0.1l-0.5,0l-0.7,0l-3-0.1c-0.4,0-0.6,0.1-0.6,0.3
+C0,10.9,0.1,11,0.4,11c0.2,0,1,0,1.4,0.2c0.8,0.3,1.2,0.7,1.7,2.4l5.6,18.9c0.7,2.3,0.8,2.6,1.2,2.6c0.5,0,0.6-0.4,1.2-1.8
+l6.1-16.2c0,0,0.4-1,0.5-1.3c0.1,0.4,6.1,17.5,6.1,17.5c0.4,1.3,0.7,1.7,1.1,1.7c0.4,0,0.6-0.4,1.4-2.8l5.8-17.7
+c0.6-1.8,1.1-3,2-3.4l1-0.2c0.2,0,0.4-0.1,0.4-0.4C36,10.5,35.9,10.4,35.4,10.4 M25.9,30.1L25.9,30.1C25.9,30,25.9,30,25.9,30.1
+C25.9,30,25.9,30,25.9,30.1z"></path>
+</g>
+</svg>
+</a>
+</div>
+<div class="c-footer__block">
+<address>
+<strong>The Wallace Collection</strong><br>
+Hertford House, <br>
+Manchester Square, <br>
+London W1U 3BN
+</address>
+</div>
+<div class="c-footer__block c-footer__block--menus">
+<nav class="c-footer-menu footer_menu_column_one no_heading">
+<ul class="u-list-reset | c-footer-menu__list">
+<li class="c-footer-menu__item ">
+<a class="c-footer-menu__link" href="http://www.wallacecollection.org/about-us">About Us</a>
+</li>
+<li class="c-footer-menu__item ">
+<a class="c-footer-menu__link" href="https://www.wallacecollection.org/contact-us/">Contact Us</a>
+</li>
+<li class="c-footer-menu__item ">
+<a class="c-footer-menu__link" href="https://www.wallacecollection.org/venue-hire/">Venue Hire</a>
+</li>
+<li class="c-footer-menu__item ">
+<a class="c-footer-menu__link" href="https://www.wallacecollection.org/about-us/join-team/">Join The Team</a>
+</li>
+<li class="c-footer-menu__item ">
+<a class="c-footer-menu__link" href="http://www.wallacecollection.org/about-us/press/">Press</a>
+</li>
+</ul>
+</nav>
+<nav class="c-footer-menu footer_menu_column_two no_heading">
+<ul class="u-list-reset | c-footer-menu__list">
+<li class="c-footer-menu__item ">
+<a class="c-footer-menu__link" href="https://www.wallacecollection.org/about-us/governance/">Governance</a>
+</li>
+<li class="c-footer-menu__item ">
+<a class="c-footer-menu__link" href="https://www.wallacecollection.org/privacy-and-cookies/">Privacy and Cookies</a>
+</li>
+<li class="c-footer-menu__item ">
+<a class="c-footer-menu__link" href="javascript:void(0);">Cookie Settings</a>
+</li>
+<li class="c-footer-menu__item ">
+<a class="c-footer-menu__link" href="https://www.wallacecollection.org/copyright-and-images/">Copyright and Images</a>
+</li>
+<li class="c-footer-menu__item ">
+<a class="c-footer-menu__link" href="https://www.wallacecollection.org/accessibility-statement/">Accessibility Statement</a>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+<svg id="footerSVG" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<symbol viewBox="0 0 26 26" id="icon-arrow-down" xmlns="http://www.w3.org/2000/svg"><path d="M6.9 7.6h12.2L13 18.4z"></path></symbol>
+<symbol viewBox="0 0 26 26" id="icon-arrow-left" xmlns="http://www.w3.org/2000/svg"><path fill="#fff" d="M17.9 6.9v12.2L7.1 13z"></path></symbol>
+<symbol viewBox="0 0 26 26" id="icon-arrow-right" xmlns="http://www.w3.org/2000/svg"><path d="M8.2 19.1V6.9L19 13z"></path></symbol>
+<symbol viewBox="0 0 26 26" id="icon-arrow-up" xmlns="http://www.w3.org/2000/svg"><path d="M19.1 17.9H6.9L13 7.1z"></path></symbol>
+<symbol viewBox="0 0 26 26" id="icon-calendar" xmlns="http://www.w3.org/2000/svg"><path d="M2 24.1h22v-22H2v22zm6.7-2H4v-4.7h4.7v4.7zm0-6.7H4v-4.7h4.7v4.7zm6.6 6.7h-4.7v-4.7h4.7v4.7zm0-6.7h-4.7v-4.7h4.7v4.7zm6.7 6.7h-4.7v-4.7H22v4.7zm0-6.7h-4.7v-4.7H22v4.7zM4 8.7V4.1h18v4.7H4z"></path></symbol>
+<symbol viewBox="0 0 26 26" id="icon-chevron" xmlns="http://www.w3.org/2000/svg"><path d="M20.4 8.4c.6-.6 1.5-.6 2.1 0 .6.6.6 1.5 0 2L14 18.5c-.6.6-1.5.6-2.1 0l-8.5-8c-.6-.6-.6-1.5 0-2 .6-.6 1.6-.6 2.2-.1l7.4 6.7 7.4-6.7z"></path></symbol>
+<symbol viewBox="0 0 26 26" id="icon-cross" xmlns="http://www.w3.org/2000/svg"><path d="M20 7.4L18.6 6 13 11.5 7.4 6 6 7.4l5.6 5.6L6 18.5 7.4 20l5.6-5.6 5.6 5.6 1.4-1.5-5.6-5.5z"></path></symbol>
+<symbol viewBox="0 0 26 26" id="icon-download" xmlns="http://www.w3.org/2000/svg"><path d="M21 13.5v5H5v-5H3v7h20v-7z"></path><path d="M12 5.5v6.6L9.7 9.8l-1.4 1.4 4.7 4.7 4.7-4.7-1.4-1.4-2.3 2.3V5.5z"></path></symbol>
+<symbol viewBox="0 0 26 26" id="icon-facebook" xmlns="http://www.w3.org/2000/svg"><path d="M10.1 23h3.8v-9.5h2.9l.4-3.8h-3V8.2c0-.8.5-1 .9-1h2.1V4h-2.9c-3.2 0-4 2.5-4 4v1.7H8.2v3.8h1.9V23z"></path></symbol>
+<symbol viewBox="0 0 26 26" id="icon-hamburger" xmlns="http://www.w3.org/2000/svg"><path d="M2 4h22v2H2zM2 12.1h22v2H2zM2 20.1h22v2H2z"></path></symbol>
+<symbol viewBox="0 0 26 26" id="icon-instagram" xmlns="http://www.w3.org/2000/svg"><path d="M13 3c-2.7 0-3.1 0-4.1.1-1.1 0-1.8.2-2.4.5-.7.2-1.3.5-1.8 1.1-.6.5-.9 1.1-1.2 1.7-.2.7-.4 1.4-.4 2.5C3 9.9 3 10.3 3 13c0 2.7 0 3.1.1 4.1 0 1.1.2 1.8.5 2.4.3.7.6 1.2 1.2 1.8.6.6 1.1.9 1.8 1.2.6.2 1.4.4 2.4.5h4c2.7 0 3.1 0 4.1-.1 1.1 0 1.8-.2 2.4-.5.7-.3 1.2-.6 1.8-1.2.6-.6.9-1.1 1.2-1.8.2-.6.4-1.4.5-2.4 0-1.1.1-1.4.1-4.1 0-2.7 0-3.1-.1-4.1 0-1.1-.2-1.8-.5-2.4-.3-.7-.6-1.2-1.2-1.8-.6-.6-1.1-.9-1.8-1.2-.6-.2-1.4-.4-2.4-.5-1 .1-1.4.1-4.1.1zm0 1.8c2.7 0 3 0 4 .1 1 0 1.5.2 1.9.3.5.2.8.4 1.1.8.3.3.6.7.7 1.1.2.4.4.9.4 1.9 0 1.1.1 1.4.1 4 0 2.7 0 3-.1 4 0 1-.2 1.5-.3 1.9-.2.5-.4.8-.7 1.1-.3.3-.7.6-1.1.7-.4.1-.9.3-1.9.3-1.1 0-1.4.1-4 .1-2.7 0-3 0-4-.1-1 0-1.5-.2-1.9-.3-.6-.1-.9-.3-1.2-.7-.3-.3-.6-.7-.7-1.1-.2-.4-.4-.9-.4-1.9 0-1.1-.1-1.4-.1-4 0-2.7 0-3 .1-4 0-1 .2-1.5.3-1.9.2-.5.4-.8.8-1.1.3-.3.7-.6 1.1-.7.4-.2.9-.4 1.9-.4 1-.1 1.3-.1 4-.1zm0 3.1c-2.8 0-5.1 2.3-5.1 5.1s2.3 5.1 5.1 5.1 5.1-2.3 5.1-5.1-2.3-5.1-5.1-5.1zm0 8.4c-1.8 0-3.3-1.5-3.3-3.3 0-1.8 1.5-3.3 3.3-3.3 1.8 0 3.3 1.5 3.3 3.3 0 1.8-1.5 3.3-3.3 3.3zm6.5-8.6c0 .7-.5 1.2-1.2 1.2s-1.2-.5-1.2-1.2.5-1.2 1.2-1.2 1.2.5 1.2 1.2z"></path></symbol>
+<symbol viewBox="0 0 26 26" id="icon-minus" xmlns="http://www.w3.org/2000/svg"><path d="M4.4 14.1h18v-2h-18"></path></symbol>
+<symbol viewBox="0 0 26 26" id="icon-plus" xmlns="http://www.w3.org/2000/svg"><path d="M14.4 12.1v-8h-2v8h-8v2h8V22h2v-7.9h8v-2z"></path></symbol>
+<symbol viewBox="0 0 26 26" id="icon-scroll" xmlns="http://www.w3.org/2000/svg"><path d="M12.9 2.7c-3 0-5.5 2.5-5.5 5.5v7c0 1.8.9 3.6 2.5 4.6l.6-.9c-1.2-.8-2-2.2-2-3.7v-7c0-2.4 2-4.4 4.4-4.4s4.4 2 4.4 4.4v7c0 1.5-.7 2.8-2 3.7l.6.9c1.5-1 2.5-2.7 2.5-4.6v-7c-.1-3.1-2.5-5.5-5.5-5.5z"></path><path d="M13.4 8.3V6.2c0-.3-.2-.5-.5-.5s-.5.2-.5.5v2.1c0 .3.2.5.5.5s.5-.2.5-.5zM13.4 22.6v-7.3h-1.1v7.3l-1.1-1.1-.7.7 2.4 2.5 2.4-2.5-.8-.7z"></path></symbol>
+<symbol viewBox="0 0 26 26" id="icon-search" xmlns="http://www.w3.org/2000/svg"><path d="M18.5 17.2c1.1-1.4 1.8-3.1 1.8-5.1 0-4.4-3.6-8.1-8.1-8.1s-8.1 3.6-8.1 8.1 3.6 8.1 8.1 8.1c1.8 0 3.5-.6 4.8-1.6l3.4 3.4 1.4-1.4-3.3-3.4zm-6.3 1c-3.3 0-6.1-2.7-6.1-6.1C6.1 8.8 8.8 6 12.2 6s6.1 2.7 6.1 6.1c-.1 3.4-2.8 6.1-6.1 6.1z"></path></symbol>
+<symbol viewBox="0 0 26 26" id="icon-twitter" xmlns="http://www.w3.org/2000/svg"><path d="M9.3 22C7 22 4.8 21.3 3 20.1c.3 0 .6.1 1 .1 1.9 0 3.7-.7 5.1-1.8-1.8 0-3.3-1.3-3.8-3 .3 0 .5.1.8.1.4 0 .7-.1 1.1-.2-2-.5-3.4-2.2-3.4-4.3v-.1c.6.4 1.2.6 1.9.6-1.1-.8-1.9-2.1-1.9-3.6 0-.8.2-1.5.6-2.2 2 2.6 5 4.3 8.5 4.5-.1-.2-.2-.6-.2-.9 0-2.4 1.8-4.3 4.1-4.3 1.2 0 2.2.5 3 1.4.9-.2 1.8-.5 2.6-1-.3 1-1 1.8-1.8 2.4.9-.2 1.7-.4 2.4-.8-.6.9-1.2 1.6-2 2.2v.6C21 15.5 16.8 22 9.3 22"></path></symbol>
+<symbol viewBox="0 0 26 26" id="icon-youtube" xmlns="http://www.w3.org/2000/svg"><path d="M10.6 16.5V10l6.2 3.3-6.2 3.2zm13.7-7.7s-.2-1.6-.9-2.3c-.9-.9-1.9-.9-2.3-1-3.2-.2-8-.2-8-.2s-4.8 0-8 .2c-.4.1-1.4.1-2.3 1-.8.7-1.1 2.3-1.1 2.3s-.2 1.9-.2 3.7v1.8c0 1.9.2 3.7.2 3.7s.2 1.6.9 2.3c.9.9 2 .9 2.5 1 1.9.3 7.9.3 7.9.3s4.8 0 8.1-.2c.4-.1 1.4-.1 2.3-1 .7-.7.9-2.3.9-2.3s.2-1.9.2-3.7v-1.8c0-1.9-.2-3.8-.2-3.8z"></path></symbol>
+<symbol viewBox="0 0 114.9 48.2" id="wallace-logo" xmlns="http://www.w3.org/2000/svg"><path class="sst0" d="M8 47c-1.1-.9-1.4-2.2-1.4-3.3 0-.8.2-2.1 1.3-3 .8-.7 1.8-1.2 3.5-1.2.7 0 1.1 0 1.6.1.4.1.8.2 1.1.2.1 0 .2.1.2.1 0 .1 0 .2-.1.6v1.2c0 .2 0 .3-.1.3-.1.1-.1 0-.1-.2 0-.3-.2-.7-.4-1-.4-.4-1.2-.7-2.2-.7-1 0-1.6.2-2.1.7-.8.7-1 1.8-1 2.9 0 2.6 2 3.9 3.5 3.9 1 0 1.6-.1 2-.6.2-.2.3-.5.4-.7 0-.2.1-.2.1-.2.1 0 .1.1.1.2s-.1 1.1-.2 1.5l-.4.2c-.4.2-1.3.3-2 .3-1.5-.1-2.8-.4-3.8-1.3M18.6 43.9c0-1.9 1.2-4.3 4.6-4.3 2.8 0 4.5 1.6 4.5 4.1 0 2.5-1.8 4.5-4.6 4.5-3.2 0-4.5-2.3-4.5-4.3m7.5.2c0-2.5-1.4-4-3.2-4-1.3 0-2.7.7-2.7 3.5 0 2.3 1.3 4.1 3.4 4.1.7 0 2.5-.4 2.5-3.6zM34.2 44.9c0 1.4 0 2.2.2 2.4.2.2.5.2 1.3.2.6 0 1 0 1.3-.3.1-.1.3-.5.3-.7 0-.1 0-.2.1-.2s.1.1.1.2-.1.9-.2 1.3c-.1.2-.1.3-.7.3-1.6 0-2.3-.1-3.2-.1H32c-.1 0-.2 0-.2-.1s0-.1.2-.1h.4c.2 0 .3-.3.3-.6.1-.5.1-1.3.1-2.4v-1.9-2.3c0-.4-.1-.6-.5-.6h-.4c-.1 0-.2 0-.2-.1s.1-.1.2-.1h3c.2 0 .2 0 .2.1s-.1.1-.2.1h-.4c-.3.1-.4.2-.4.6v4.3M44.1 44.9c0 1.4 0 2.2.2 2.4.2.2.5.2 1.3.2.6 0 1 0 1.3-.3.1-.1.3-.5.3-.7 0-.1 0-.2.1-.2s.1.1.1.2-.1.9-.2 1.3c-.1.2-.1.3-.7.3-1.6 0-2.3-.1-3.2-.1h-1.4c-.1 0-.2 0-.2-.1s0-.1.2-.1h.4c.2 0 .3-.3.3-.6.1-.5.1-1.3.1-2.4v-1.9-2.3c0-.4-.1-.6-.5-.6h-.4c-.1 0-.2 0-.2-.1s.1-.1.2-.1h3c.2 0 .2 0 .2.1s-.1.1-.2.1h-.4c-.3.1-.4.2-.4.6v4.3M52.6 42.9v-2.3c0-.4-.1-.6-.5-.6h-.4c-.1 0-.2 0-.2-.1s.1-.1.2-.1h4.4c.2 0 .4 0 .5-.1h.2c.1 0 .1 0 .1.1s-.1.2-.1.7c0 .1 0 .6-.1.7 0 .1 0 .1-.1.1s-.1-.1-.1-.2 0-.3-.1-.4c-.1-.2-.2-.3-.7-.4h-1.6c-.1 0-.1 0-.1.1v2.8c0 .1 0 .1.1.1h1.8c.3 0 .4-.1.5-.2.1-.1.1-.1.2-.1 0 0 .1 0 .1.1s-.1.2-.1.8v.7c0 .1 0 .2-.1.2s-.1 0-.1-.1v-.4c-.1-.2-.2-.4-.6-.4h-1.6c-.1 0-.1 0-.1.1v2.6c0 .8.2.9 1.3.9.3 0 .8 0 1-.1.3-.1.4-.4.5-.8 0-.1 0-.2.1-.2s.1.1.1.2c0 .3-.1 1-.1 1.2-.1.3-.2.3-.6.3-1.7 0-2.4-.1-3.1-.1h-1.4c-.1 0-.2 0-.2-.1s0-.1.2-.1h.4c.2 0 .3-.3.3-.6.1-.5.1-1.3.1-2.4v-1.9M62.8 47c-1.1-.9-1.4-2.2-1.4-3.3 0-.8.2-2.1 1.3-3 .8-.7 1.8-1.2 3.5-1.2.7 0 1.1 0 1.6.1.4.1.8.2 1.1.2.1 0 .2.1.2.1 0 .1 0 .2-.1.6v1.2c0 .2 0 .3-.1.3s-.1-.1-.1-.2c0-.3-.2-.7-.4-1-.4-.4-1.2-.7-2.2-.7-1 0-1.6.2-2.1.7-.8.7-1 1.8-1 2.9 0 2.6 2 3.9 3.5 3.9 1 0 1.6-.1 2-.6.2-.2.3-.5.4-.7 0-.2.1-.2.1-.2.1 0 .1.1.1.2s-.1 1.1-.2 1.5c-.1.2-.1.2-.3.3-.4.2-1.3.3-2 .3-1.6-.2-2.9-.5-3.9-1.4M76.4 40.4h-1.6c-.6 0-.9.1-1.1.3-.1.2-.2.3-.2.4 0 .1-.1.1-.1.1-.1 0-.1-.1-.1-.2 0-.2.2-1.2.2-1.3 0-.1.1-.2.1-.2.1 0 .2.1.5.1s.7.1 1.1.1h4.4c.7 0 1-.1 1.1-.1.1 0 .1.1.1.2v1.3c0 .1 0 .2-.1.2s-.1-.1-.1-.2V41c0-.3-.3-.6-1.3-.6h-1.4v4.5c0 1 0 1.9.1 2.4 0 .3.1.6.4.6h.6c.1 0 .2 0 .2.1s-.1.1-.2.1H75.9c-.1 0-.2 0-.2-.1s0-.1.2-.1h.4c.2 0 .3-.3.3-.6.1-.5.1-1.3.1-2.4v-4.5M86 42.9v-2.3c0-.4-.1-.6-.4-.6h-.4c-.1 0-.2 0-.2-.1s.1-.1.3-.1H88c.1 0 .2 0 .2.1s-.1.1-.2.1h-.3c-.3.1-.4.2-.4.6v6.6c0 .3.1.5.4.5h.6c.1 0 .2 0 .2.1s-.1.1-.2.1H85.2c-.1 0-.2 0-.2-.1s0-.1.2-.1h.4c.2 0 .3-.2.3-.6.1-.3.1-1.1.1-2.2v-2M92.6 43.9c0-1.9 1.2-4.3 4.6-4.3 2.8 0 4.5 1.6 4.5 4.1 0 2.5-1.8 4.5-4.6 4.5-3.2 0-4.5-2.3-4.5-4.3m7.5.2c0-2.5-1.4-4-3.2-4-1.3 0-2.7.7-2.7 3.5 0 2.3 1.3 4.1 3.4 4.1.7 0 2.5-.4 2.5-3.6zM107.5 46.6c0 .9.2 1.2.4 1.2.2.1.4.1.6.1.1 0 .2 0 .2.1s-.1.1-.3.1H105.8c-.1 0-.2 0-.2-.1s.1-.1.2-.1.3 0 .5-.1c.3-.1.3-.4.3-1.4l.1-6.5c0-.2 0-.4.1-.4s.2.1.4.3c.1.1 1.8 1.9 3.4 3.5.8.8 2.2 2.3 2.4 2.5h.1l-.1-5c0-.7-.1-.9-.4-1-.2-.1-.4-.1-.6-.1-.1 0-.2 0-.2-.1s.1-.1.3-.1H114.5c.1 0 .3 0 .3.1s-.1.1-.2.1h-.3c-.3.1-.4.3-.4.9l-.1 7c0 .2 0 .3-.1.3s-.3-.1-.4-.2c-.7-.7-2.1-2.1-3.3-3.2-1.2-1.2-2.4-2.6-2.6-2.8l.1 4.9M49.3 4.8c.4-.2.6-.4.9-.7.2-.3.4-.6.6-1 .1-.2.1-.4.2-.6 0-.2.1-.4.2-.6.1-.2.2-.3.3-.5.1-.1.3-.2.3-.3-.1-.3-.5-.2-.7-.2-.4 0-.8.1-1.2.4-.2.1-.5.4-.3.7.1 0 .4 0 .5.1.2.1.3.3.3.5.1.6-.4 1.2-.8 1.5-.1.1-.5.4-.6.4v-.3c-.1-.5-.4-1-.9-1.2h-.4c-.6.1-1.1.6-.9 1.3.2.6.9.8 1.5.8.1 0 .3-.1.4 0 .1.1-.1.5-.2.6-.3.6-1 1.1-1.6 1.4-.2.1-.4.2-.6.2-.2 0-.3 0-.5.1 0 0-.1 0-.1.1h-.4c-.1 0-.1-.2-.2-.3-.2-.2-.6-.1-.8-.1-.1 0-.2.1-.3.1l-.1.1c-.1 0-.2-.1-.3-.1l-.1.1v.1h.1c.1 0 .1.1.2.1.1.1 0 .3.1.4l.1.1s0 .1-.1.2c-.1.2-.2.4-.3.5-.1.1-.1.3-.2.3h-.3c-.1 0-.1-.1-.2-.2s-.2-.3-.3-.4l-.2-.2c0-.1 0-.1-.1-.1-.1-.1 0-.2.1-.3.1-.1.1-.3.3-.2.1 0 .2.1.3 0 .2 0 .2-.2.3-.3 0 0 .1 0 .1-.1.1-.1.1-.1 0-.2v-.1c0-.1 0-.1.1-.1s.2 0 .3-.1v-.3c.1 0 .1-.1.2-.1s.2 0 .1-.1c0-.1-.1-.1-.2-.1-.2-.1-.3-.4-.3-.6v-.2c0-.1.1-.1.1-.2-.1-.1-.2-.1-.3-.1H43c-.1 0-.2-.2-.3-.1 0 .1-.1.2-.1.2-.1.1-.2-.1-.3 0-.1 0-.1.2-.2.3-.1.1-.3.1-.4.1-.1 0-.1-.1-.1-.2s.1-.2.2-.3c.1 0 .2 0 .2-.1s0-.1.1-.2.2 0 .4 0c.1 0 .1-.1.2-.2s.3-.1.4 0c.2 0 .2.1.4.3.1.1.2.1.3.2h.3c.1 0 .1-.2.1-.2 0-.2-.1-.3-.3-.3h-.2l-.1-.1c-.1-.1-.2-.2-.4-.2h-.4s-.1.1-.1 0v-.1-.5-.2c0-.1.1-.1.1-.2.2-.3.4-.6.8-.7.2 0 .3-.1.5 0 .1 0 .3.1.3 0s-.1-.1-.1-.1c-.4-.2-1-.2-1.3.2-.1.1-.2.2-.3.4 0 .1-.1.3-.2.2v-.1c0-.2 0-.3-.1-.5s-.2-.4-.4-.6l-.6-.6-.7-.7c-.1-.1-.3-.3-.3-.4V.1c-.1-.1-.2-.1-.2-.1-.1.1-.1.2 0 .3 0 .2.2.4.3.6.2.3.5.6.7.9.1.1.1.2.2.3h-.1c-.2-.1-.2-.2-.3-.3-.3-.3-.8-.6-1.3-.6-.2 0-.8.1-.7.4 0 .1.2 0 .3 0 .4-.2.8-.1 1.2.1.4.2.6.6.9.9l.2.3s-.2-.1-.3-.1c-.2-.1-.4-.2-.6-.2-.4 0-.9.3-.9.8 0 .2.1.5.4.5v-.1c0-.1-.1-.2-.1-.3-.1-.4.4-.6.7-.5.1 0 .2.1.3.1.3.2.5.6.5 1v.3h-.4c-.3.1-.5.5-.3.7v.2c-.1.2-.1.4-.1.5 0 .1 0 .2.1.3 0 .1.1.2.2.2s.2 0 .3.1c.1.1 0 .5-.1.6-.1.1-.2.2-.3.2h-.4c-.7.1-1 .9-1.1 1.5 0 .7.2 1.3.4 2 0 .2.1.4.1.7 0 .2-.1.3-.1.4 0 .1 0 .2-.1.3 0 .1-.1.3-.2.5-.1.1-.3.2-.4.2-.2.1-.3.2-.5.3-.1.1-.4.2-.3.3 0 .1.1.2.2.3.1.1.3.3.4.3.1 0 .2.1.3.2.1.1 0 .2 0 .3 0 .1-.2.5 0 .6.1.1.3 0 .4 0h.5c.1 0 .5 0 .4.1h-.8c-.6.1-1.1.2-1.7.5-.4.2-.8.5-1.2.8-.4.3-.7.6-.9.9-.2.2-.3.4-.4.6l-.3.6c-.2.4-.2.8-.3 1.2 0 0-.1.1-.1.2v.2c0 .2.2.5.4.4.1 0 .1 0 .2-.1s.1-.3.1-.4c0-.1-.1-.2-.1-.2-.1-.1 0-.3 0-.4 0-.1.1-.3.1-.4.1-.3.2-.6.4-.8.2-.3.4-.5.6-.7.4-.4.9-.8 1.4-1.1.4-.2.7-.3 1.1-.4 1-.3 2.1-.2 3.1-.1.8.2 1.6.5 2.2 1 .8.6 1.3 1.3 1.8 2.2.1.3.3.6.4.8 0 .1.1.5.2.5.3.1.7 0 1 0h2.3c.2 0 .3-.1.5-.2.1 0 .3-.1.4-.2.1-.1.1-.2.2-.2s.3 0 .5-.1c.4 0 .8-.2 1-.5.1-.1.2-.2.3-.4.1-.1.1-.2.2-.3.1-.2-.2-.1-.3-.1.1-.1.2-.3.2-.4.1-.2.1-.4.2-.6 0-.2.1-.4.1-.6 0-.1.1-.3-.1-.4-.2-.1-.3.1-.5 0 0-.1-.1-.1-.1-.2-.2-.3-.4-.6-.7-.7-.3-.1-.7-.1-1 .1-.3.2-.3.8.1.9.3.1.5 0 .6-.3 0-.1.2 0 .3 0 .4.1.7.6.7 1 .1.5-.1 1.5-.8 1.4-.2 0-.3-.3-.3-.5-.1-.2-.1-.4-.4-.5-.2-.1-.5-.1-.7.1-.2.2-.2.5 0 .7.1.1.2.1.4 0s.3-.1.5 0c.2.2 0 .6-.2.7-.3.2-.7.3-1 .2-.7-.2-1.3-.8-1.6-1.4-.2-.4-.3-.7-.3-1.1-.1-.5-.2-.9-.3-1.3-.1-.3-.2-.5-.3-.7-.1-.2-.2-.4-.3-.5-.4-.5-1-1-1.6-1.3-.2-.1-.5-.2-.8-.2-.1 0-.2-.1-.3 0l-.3.3c-.1.1-.2.1-.4.2h-.2l.4-.4.3-.3c.1-.1.2-.2.1-.3-.1-.1-.2-.1-.3-.1-.3-.1-.6-.2-.9-.4-.1 0-.1-.1-.2-.1l-.1-.1c-.1 0 .1.2.1.3l.3.3.3.3c-.1 0-.1 0-.2-.1-.2-.1-.4-.3-.5-.4-.1-.1-.1-.2-.2-.2h-.4c-.1.1 0 .1 0 .2s.1.1.1.2c.1.2.1.4.1.6v.3c-.1 0-.1-.1-.1-.2l-.3-.9c0-.1-.1-.1-.1-.2-.1-.1-.2 0-.3 0-.1 0-.1.2-.1.3v.4c0 .1-.1.3-.1.4v.1c-.1-.2 0-.3 0-.5s-.1-.4-.1-.5c0-.1 0-.2-.1-.2-.1-.1-.2 0-.3 0h-.3s0-.1.1-.2.3-.1.5-.1c.3 0 .6 0 .8-.1.2 0 .4-.1.6-.1.1 0 .3 0 .4-.1.1-.1 0-.4 0-.5v-.1c0-.1.1-.2.1-.3-.1-.1-.2-.1-.2-.1-.3 0-.6-.1-.8-.2l-.6-.6c-.3-.2-.6-.4-1-.6h.3c.5.2.9.5 1.3.8.1.1.3.1.4.2.4.1.7.2 1.1.2.3-.1.7-.2 1.1-.1.4.1.4.6.6.8.1.1.1.2.3.2 0-.2.1-.3.2-.4.1-.3.1-.6.1-.9v-.4c0-.1.1-.3.1-.4l.3-.3c-.6.4-.3.2-.2 0 .1-.1.1-.3.1-.4.1-.2.3-.4.5-.5l.2-.2c.1-.1.2-.1.2-.2s.1-.1.1-.2c0 0 .1-.1.2-.1.5-.5 1-.9 1.3-1.5 0-.1.1-.2.1-.3-.1 0-.1-.2-.1-.3m1.4-3.1c-.1 0-.3 0-.4-.1-.1-.1.2-.3.3-.4.2-.1.6-.3.8-.3h.2c.1.1-.1.2-.2.3-.2.1-.4.3-.6.4 0 0 0 .1-.1.1zm-1.6 2.8c0 .1-.1.1-.2.2-.3.1-.6.2-.9 0-.4-.1-.7-.5-.7-.8 0-.3.2-.5.4-.6.3-.1.6-.1.8.1.2.2.4.4.5.6 0 .1.1.3.1.5zm-4.1 3.7l.1-.1.1-.1s.1 0 .1-.1l.1-.1c.1 0 .1 0 .2-.1h.4v.1c0 .2-.1.3-.2.4-.1 0-.2-.1-.3-.1-.1 0-.4.2-.4.3-.1 0-.2.2-.3.1 0 0 .1-.2.2-.3zm-1.5-2.5c0-.1 0-.1 0 0 .1.1.1.1.1.2l-.2.1V6c-.1-.2 0-.2.1-.2-.1 0-.1 0 0 0zm5 14.5h-1.1c-.2 0-.2-.2-.2-.3-.2-.5-.5-1-.8-1.5-.3-.4-.6-.9-.9-1.2-.2-.2-.4-.4-.7-.6-.1-.1-.3-.2-.4-.2-.1-.1-.3-.1-.3-.3.1-.1.4-.2.5-.3.1 0 .2 0 .2-.1.1-.1 0-.4-.1-.5-.1-.1-.2-.3-.2-.5 0-.3.3 0 .3.1.1.1.2.2.3.4.2.3.3.7.2 1.1 0 .1-.1.2-.1.3 0 .2 0 .2.2.2.1 0 .1-.1.2 0l.3.3c.1.1.1.2.2.3 0 0 .1.1.2.1.2.1.1-.3.1-.4 0-.8-.2-1.7-.6-2.4-.2-.2-.3-.4-.6-.6 0 0-.1 0-.1-.1l.5.2c.3.2.5.4.7.7.1.2.5.7.3 1-.1.2-.1.4 0 .6 0 .1.1.1.2.2v.3c0 .1 0 .2.1.3 0 .1.1.1.2.2s.1.1 0 .2c-.2.3-.1.7 0 1 .1.3.2.9.6.9.2 0 .1-.3.2-.2.1 0 .2.1.2.2l.3.3c0 .2.2.3.1.3zM61.9 11.3h-1.2c-.5 0-.6.1-.8.2-.1.1-.1.2-.1.3 0 .1 0 .1-.1.1s-.1 0-.1-.1.2-.8.2-.9c0-.1 0-.2.1-.2s.1.1.3.1H64.1c.5 0 .7-.1.8-.1.1 0 .1 0 .1.2v.9c0 .1 0 .1-.1.1s-.1 0-.1-.2v-.1c0-.2-.2-.4-.9-.4h-1v4.9c0 .2.1.4.3.4h.4c.1 0 .1 0 .1.1s-.1.1-.2.1h-2.2c-.1 0-.2 0-.2-.1 0 0 0-.1.1-.1h.3c.2 0 .2-.2.2-.4v-4.8M88.8 13.4v-.2-1.7c0-.3-.1-.4-.3-.5H88c0-.1.1-.1.2-.1h2.1c.1 0 .2 0 .2.1s0 .1-.1.1h-.2c-.2 0-.3.2-.3.5v4.8c0 .2.1.4.3.4h.4c.1 0 .1 0 .1.1s-.1.1-.2.1h-2.2c-.1 0-.2 0-.2-.1 0 0 0-.1.1-.1h.3c.2 0 .2-.2.2-.4V14h-3v2.4c0 .2.1.4.3.4h.4c.1 0 .1 0 .1.1s-.1.1-.2.1h-2.2c-.1 0-.2 0-.2-.1 0 0 0-.1.1-.1h.3c.2 0 .2-.2.2-.4V13.3v-1.7c0-.3-.1-.4-.3-.5h-.3c-.1 0-.1 0-.1-.1s.1-.1.2-.1h2.1c.1 0 .2 0 .2.1s0 .1-.1.1H86c-.2 0-.3.2-.3.5v2h3.1M110.4 13.2v-1.7c0-.3-.1-.4-.3-.5h-.3c-.1 0-.1 0-.1-.1s.1-.1.2-.1h3.5v.1c0 .1 0 .2-.1.5v.5s0 .1-.1.1-.1 0-.1-.1v-.3c-.1-.1-.1-.2-.5-.3h-1.1s-.1 0-.1.1v2c0 .1 0 .1.1.1h1.3c.2 0 .3 0 .4-.1l.1-.1s.1 0 .1.1c0 0 0 .2-.1.6v.5c0 .1 0 .2-.1.2s-.1 0-.1-.1v-.3c0-.2-.1-.3-.4-.3h-1.1v1.9c0 .5.1.7.9.7.2 0 .5 0 .7-.1.2-.1.3-.3.4-.6 0-.1 0-.1.1-.1s.1.1.1.1c0 .2-.1.7-.1.9-.1.2-.1.2-.4.2h-3.2c-.1 0-.2 0-.2-.1 0 0 0-.1.1-.1h.3c.2 0 .2-.2.2-.4v-3.2M102.5 31.2c-.3 0-.3.3-.4.4 0 .3-.3 1-.6 1.4-.7.7-1.8.8-2.9.8-3.8 0-6-3.1-6-6.1 0-1.5.2-3.1 1.5-4.4.8-.8 2.1-1.2 3.8-1.2 1.5 0 2.8.5 3.3.9.4.3.7 1 .7 1.6 0 .2 0 .6.3.6s.3-.4.4-.6l.1-1.8.1-1c0-.2-.1-.4-.4-.4l-1.7-.2c-1.1-.2-2.2-.2-2.6-.2-2.4 0-4.1.6-5.4 1.9-1.5 1.5-2 3.5-2 4.9 0 2.2.7 4 2.2 5.3 1.5 1.3 3.3 1.9 5.8 1.9 1 0 2.4-.1 3.2-.4.4-.2.4-.2.6-.6.2-.6.4-2.1.4-2.3-.1-.5-.3-.5-.4-.5M114.1 32c-.2 0-.2.2-.3.4-.1.7-.3 1-.7 1.2-.4.2-1.2.2-1.6.2-1.7 0-1.8-.2-1.9-1.3V28l2.4.1c.6.1.7.3.8.5l.1.5c0 .2.1.3.2.3.2 0 .2-.3.2-.4l.1-1.1.1-1c0-.2-.2-.3-.2-.3l-.3.2c-.2.2-.4.2-.8.2h-2.7v-4.8c0-.1 2.3 0 2.3 0 .9.1 1 .3 1.1.5l.1.6c0 .3.2.3.2.3.1 0 .2 0 .2-.3l.1-.8v-.3l.1-.8c0-.3-.1-.3-.2-.3l-.2.1c-.1 0-.8.1-.8.1h-5.8c-.1 0-.4 0-.4.3 0 .1.1.2.3.2H107.1c.5.1.6.3.7.9v6.7c0 1.7 0 3-.1 3.7-.1.5-.2.8-.4.8l-.5.1c-.2 0-.3.1-.3.2 0 .3.3.3.4.3h2.1l3.8.1c.7 0 .9 0 1-.5l.2-1.7c.3-.1.3-.4.1-.4m-6.1-5.6s.1-.1 0 0c.1-.1 0 0 0 0zM88.1 34l-.6-.1c-.4-.1-.8-.4-1.4-1.8l-3.1-8-.9-2.4c-.2-.5-.3-.7-.6-.7s-.4.2-.6.8L77 32.5c-.3.9-.6 1.4-1.3 1.5h-.5c-.2 0-.4.1-.4.3 0 .3.4.3.5.3h3.3c.4 0 .5-.2.5-.3 0-.1-.1-.3-.4-.3h-.2c-.1 0-.5-.1-.5-.3 0-.3.1-.7.2-1.1 0 0 .1-.2 1-3.1h3.7s.2.6 1.6 4.2v.1c-.2.1-.3.2-.3.4 0 .3.3.3.6.3h2.8c.5 0 .5-.2.5-.3.4 0 .3-.2 0-.2m-8.3-5.5c.1-.3 1.3-4 1.4-4.3.1.3.5 1.4 1.5 4.3h-2.9zM71.8 31.9c-.2 0-.3.1-.3.4 0 .3-.2.7-.4.9-.3.4-1 .4-1.9.4-1.3 0-1.7-.1-1.9-.3-.3-.3-.3-2-.3-3.8v-6.7c0-.6.2-.7.5-.8h.5c.2 0 .3-.1.3-.3 0-.2-.1-.3-.5-.3h-1.5-.5-1.7c-.4 0-.5.2-.5.3 0 .2.1.3.3.3h.5c.5.1.5.3.6.8v6.7c0 1.6 0 3-.1 3.7-.1.5-.2.7-.3.8l-.5.1c-.2 0-.3.2-.3.3 0 .2.1.4.5.4h2.8l3.5.1c.9 0 1.1-.1 1.3-.6.1-.5.3-1.6.3-1.8-.1-.3-.1-.6-.4-.6M59.4 31.9c-.1 0-.3.1-.3.4 0 .3-.2.7-.4.9-.3.4-1 .4-1.9.4-1.3 0-1.7-.1-1.9-.3-.3-.3-.3-2-.3-3.8v-6.7c0-.6.2-.7.5-.8h.5c.2 0 .3-.1.3-.3 0-.2-.2-.3-.5-.3h-1.5-.5-1.7c-.4 0-.5.2-.5.3 0 .2.1.3.3.3h.5c.5.1.5.3.6.8v6.7c0 1.6 0 3-.1 3.7-.1.5-.2.7-.3.8l-.5.1c-.2 0-.3.2-.3.3 0 .2.1.4.5.4h2.8l3.5.1c.9 0 1.1-.1 1.3-.6.1-.5.3-1.6.3-1.8-.1-.3-.1-.6-.4-.6M47.1 34l-.6-.1c-.4-.1-.8-.4-1.4-1.8l-3.3-8.6-.7-1.8c-.2-.5-.3-.7-.6-.7s-.4.2-.6.8L36 32.5c-.3.9-.6 1.4-1.3 1.5h-.5c-.2 0-.3.1-.3.3 0 .3.4.3.5.3h3.3c.4 0 .5-.2.5-.3 0-.1-.1-.3-.4-.3h-.2c-.1 0-.5-.1-.5-.3 0-.3.1-.7.2-1.1l1-3.1H42s.2.6 1.6 4.2v.1c-.2.1-.3.3-.3.4 0 .3.3.3.6.3h2.8c.5 0 .5-.2.5-.3.3 0 .3-.2-.1-.2m-8.2-5.5c.1-.3 1.3-4 1.4-4.3.1.3.5 1.3 1.5 4.3h-2.9zM35.4 10.4l-2.1.1h-1l-2.7-.1c-.2 0-.7 0-.7.3 0 .2.2.3.4.3 1.5 0 1.7.4 1.7.8s0 .8-.3 2L27.3 25s-1.4 4.6-1.5 4.9c-.1-.3-6.3-18-6.3-18-.4-1.2-.6-1.6-.9-1.6-.3 0-.4.2-.9 1.5 0 0-5.9 15.8-6.6 17.9-.5-1.6-3.7-13-4.1-15l-.2-.7c-.2-1-.4-1.9-.4-2.2 0-.4.2-.6.3-.7.4-.1.9-.1 1.2-.1.4 0 .4-.2.4-.3 0-.3-.5-.3-.7-.3l-2.7.1H3.7l-3-.1c-.4 0-.6.1-.6.3-.1.2 0 .3.3.3.2 0 1 0 1.4.2.8.3 1.2.7 1.7 2.4l5.6 18.9c.7 2.3.8 2.6 1.2 2.6.5 0 .6-.4 1.2-1.8l6.1-16.2s.4-1 .5-1.3c.1.4 6.1 17.5 6.1 17.5.4 1.3.7 1.7 1.1 1.7.4 0 .6-.4 1.4-2.8l5.8-17.7c.6-1.8 1.1-3 2-3.4l1-.2c.2 0 .4-.1.4-.4.1 0 0-.1-.5-.1m-9.5 19.7c0-.1 0-.1 0 0 0-.1 0-.1 0 0z"></path></symbol></svg>
+<script type="text/javascript" src="?service=WebAsset&amp;url=js/bundle.js&amp;contentType=text/javascript"></script>
+<!-- Include jQuery Popup Overlay -->
+<script src="https://cdn.rawgit.com/vast-engineering/jquery-popup-overlay/1.7.13/jquery.popupoverlay.js"></script>
+<script>
+$(document).ready(function() {
+// Initialize the popup plugin
+$('#my_popup').popup();
+});
+</script>
+</div>
+
+
+
+
+</body></html>

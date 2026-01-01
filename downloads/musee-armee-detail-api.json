@@ -1,0 +1,95 @@
+{
+  "allowImageSubmission": false,
+  "contentType": "InterestProfile",
+  "domain": "bibliomondo",
+  "hideFavoriteAction": false,
+  "hideShareAction": false,
+  "id": "5d9f27b0-02aa-46d7-9f68-e1456a7a0867",
+  "inBaskets": [],
+  "locale": "fr",
+  "owner": "admin",
+  "redirectRequireLogin": false,
+  "stickers": [],
+  "summary": [
+    {
+      "name": "title",
+      "value": "Objets de la période napoléonienne"
+    },
+    {
+      "name": "id",
+      "value": "h::5d9f27b0-02aa-46d7-9f68-e1456a7a0867"
+    },
+    {
+      "name": "TypeOfDocumentFacet",
+      "value": "InterestProfile"
+    },
+    {
+      "name": "DomainFacet",
+      "value": "bibliomondo"
+    },
+    {
+      "name": "hideFavoriteAction"
+    },
+    {
+      "name": "hideShareAction"
+    },
+    {
+      "name": "disableNoticeConsultation"
+    },
+    {
+      "name": "ark"
+    },
+    {
+      "name": "IsPhysicalDocument",
+      "value": "0"
+    },
+    {
+      "name": "DateLastChange",
+      "value": "2025-10-14T15:51:28.790Z"
+    },
+    {
+      "name": "DateCreated",
+      "value": "2017-07-19T13:10:18.270Z"
+    },
+    {
+      "name": "stateFacet",
+      "value": "Accepted"
+    },
+    {
+      "name": "isExternalContent",
+      "value": "true"
+    },
+    {
+      "name": "readerLabel",
+      "value": "default"
+    },
+    {
+      "name": "imageSource_128",
+      "value": "/in/rest/Thumb/image?id=5d9f27b0-02aa-46d7-9f68-e1456a7a0867&title=Objets+de+la+p%C3%A9riode+napol%C3%A9onienne&TypeOfDocument=InterestProfile&mat=InterestProfile&ct=true&size=128"
+    },
+    {
+      "name": "imageSource_256",
+      "value": "/in/rest/Thumb/image?id=5d9f27b0-02aa-46d7-9f68-e1456a7a0867&title=Objets+de+la+p%C3%A9riode+napol%C3%A9onienne&TypeOfDocument=InterestProfile&mat=InterestProfile&ct=true&size=256"
+    },
+    {
+      "name": "imageSource_512",
+      "value": "/in/rest/Thumb/image?id=5d9f27b0-02aa-46d7-9f68-e1456a7a0867&title=Objets+de+la+p%C3%A9riode+napol%C3%A9onienne&TypeOfDocument=InterestProfile&mat=InterestProfile&ct=true&size=512"
+    },
+    {
+      "display": "",
+      "name": "createdBy",
+      "value": "admin"
+    },
+    {
+      "display": "",
+      "name": "zmatIndex",
+      "value": "InterestProfile"
+    },
+    {
+      "display": "Type de document",
+      "name": "zmatDisplay",
+      "value": "Profil d'intérêt"
+    }
+  ],
+  "zmat": "InterestProfile"
+}

@@ -1,0 +1,4033 @@
+{
+  "*": {
+    "annotatedSavedSearch": {
+      "item": {
+        "id": "8ee99802-e96b-4ed1-ac33-960e70039d12",
+        "includeInSearchHistory": true,
+        "isSaved": false,
+        "lastFetched": "2025-12-25T16:35:07.655+0000",
+        "lastNumHits": 4180,
+        "lastQueryTimeInMs": 0,
+        "order": "score",
+        "q": {
+          "terms": [
+            {
+              "index": "text",
+              "logical": "AND",
+              "match": "CCL",
+              "value": "*"
+            }
+          ]
+        },
+        "query": [
+          "*"
+        ],
+        "saved": false,
+        "sectionFacet": "*"
+      },
+      "model": {
+        "terms": [
+          {
+            "display": true,
+            "index": "text",
+            "logicalOp": "AND",
+            "matching": "CCL",
+            "term": "*",
+            "termid": 0
+          },
+          {
+            "display": true,
+            "index": "title_t",
+            "logicalOp": "AND",
+            "matching": "WORDS",
+            "termid": 1
+          },
+          {
+            "display": true,
+            "index": "subject_t",
+            "logicalOp": "AND",
+            "matching": "WORDS",
+            "termid": 2
+          }
+        ]
+      },
+      "query": "*",
+      "searchSection": {
+        "defaultSection": true,
+        "displayMode": "list",
+        "id": "Tout",
+        "searchByImage": false,
+        "searchIndex": "",
+        "sf": "*",
+        "title": "Recherche simple"
+      },
+      "searchStatement": "*",
+      "type": "SimpleQuery"
+    },
+    "facets": [
+      {
+        "caption": "Domaine",
+        "code": "domain_s",
+        "config": {
+          "displayRemoveFacet": true,
+          "displayValuesOnLoad": true,
+          "dynamicFacet": false,
+          "facetQueries": [],
+          "facetQuery": [],
+          "index": "domain_s",
+          "justSearchLimit": false,
+          "multilingualFacet": false,
+          "multiselect": false,
+          "pivotFacet": false,
+          "pivotNames": [],
+          "queryBasedFacet": false,
+          "showThePlusButton": false,
+          "sort": "-",
+          "sortOrderAsc": false,
+          "title": {
+            "CAT": "",
+            "DUT": "",
+            "ENG": "Domain",
+            "ES": "",
+            "FRE": "Domaine",
+            "GER": ""
+          },
+          "treeValuesOpened": [],
+          "visualization": ":"
+        },
+        "display": "Domaine",
+        "items": [
+          {
+            "caption": "Dessin",
+            "classLink": "Dessin",
+            "count": 1068,
+            "quotedValue": "\"Dessin\"",
+            "value": "Dessin"
+          },
+          {
+            "caption": "Photographie",
+            "classLink": "Photographie",
+            "count": 332,
+            "quotedValue": "\"Photographie\"",
+            "value": "Photographie"
+          },
+          {
+            "caption": "Estampe",
+            "classLink": "Estampe",
+            "count": 307,
+            "quotedValue": "\"Estampe\"",
+            "value": "Estampe"
+          },
+          {
+            "caption": "Uniforme/vêtement de guerre",
+            "classLink": "Uniformevtementdeguerre",
+            "count": 260,
+            "quotedValue": "\"Uniforme/vêtement de guerre\"",
+            "value": "Uniforme/vêtement de guerre"
+          },
+          {
+            "caption": "Artillerie",
+            "classLink": "Artillerie",
+            "count": 214,
+            "quotedValue": "\"Artillerie\"",
+            "value": "Artillerie"
+          },
+          {
+            "caption": "Arme blanche",
+            "classLink": "Armeblanche",
+            "count": 201,
+            "quotedValue": "\"Arme blanche\"",
+            "value": "Arme blanche"
+          },
+          {
+            "caption": "Coiffure",
+            "classLink": "Coiffure",
+            "count": 174,
+            "quotedValue": "\"Coiffure\"",
+            "value": "Coiffure"
+          },
+          {
+            "caption": "Modèle d'artillerie",
+            "classLink": "Modledartillerie",
+            "count": 150,
+            "quotedValue": "\"Modèle d'artillerie\"",
+            "value": "Modèle d'artillerie"
+          },
+          {
+            "caption": "Défense de corps/protection",
+            "classLink": "Dfensedecorpsprotection",
+            "count": 144,
+            "quotedValue": "\"Défense de corps/protection\"",
+            "value": "Défense de corps/protection"
+          },
+          {
+            "caption": "Équipement",
+            "classLink": "quipement",
+            "count": 138,
+            "quotedValue": "\"Équipement\"",
+            "value": "Équipement"
+          }
+        ],
+        "multiSelect": false,
+        "name": "domain_s",
+        "rawCount": 0,
+        "seeMore": true,
+        "showPaginate": false,
+        "total": 0,
+        "totalPage": 0
+      },
+      {
+        "caption": "Département",
+        "code": "department_s",
+        "config": {
+          "displayRemoveFacet": false,
+          "displayValuesOnLoad": true,
+          "dynamicFacet": false,
+          "facetQueries": [],
+          "facetQuery": [],
+          "index": "department_s",
+          "justSearchLimit": false,
+          "multilingualFacet": false,
+          "multiselect": false,
+          "pivotFacet": false,
+          "pivotNames": [],
+          "queryBasedFacet": false,
+          "showThePlusButton": false,
+          "sort": "-",
+          "sortOrderAsc": false,
+          "title": {
+            "CAT": "",
+            "DUT": "",
+            "ENG": "Department",
+            "ES": "",
+            "FRE": "Département",
+            "GER": ""
+          },
+          "treeValuesOpened": [],
+          "visualization": ":"
+        },
+        "display": "Département",
+        "items": [
+          {
+            "caption": "Estampes/dessins/photos",
+            "classLink": "Estampesdessinsphotos",
+            "count": 1720,
+            "quotedValue": "\"Estampes/dessins/photos\"",
+            "value": "Estampes/dessins/photos"
+          },
+          {
+            "caption": "Contemporain",
+            "classLink": "Contemporain",
+            "count": 748,
+            "quotedValue": "\"Contemporain\"",
+            "value": "Contemporain"
+          },
+          {
+            "caption": "Ancien/Armes et armures",
+            "classLink": "AncienArmesetarmures",
+            "count": 449,
+            "quotedValue": "\"Ancien/Armes et armures\"",
+            "value": "Ancien/Armes et armures"
+          },
+          {
+            "caption": "Artillerie",
+            "classLink": "Artillerie",
+            "count": 339,
+            "quotedValue": "\"Artillerie\"",
+            "value": "Artillerie"
+          },
+          {
+            "caption": "XIXe 1792-1871",
+            "classLink": "XIXe17921871",
+            "count": 217,
+            "quotedValue": "\"XIXe 1792-1871\"",
+            "value": "XIXe 1792-1871"
+          },
+          {
+            "caption": "Figurines historiques",
+            "classLink": "Figurineshistoriques",
+            "count": 160,
+            "quotedValue": "\"Figurines historiques\"",
+            "value": "Figurines historiques"
+          },
+          {
+            "caption": "Époque classique",
+            "classLink": "poqueclassique",
+            "count": 142,
+            "quotedValue": "\"Époque classique\"",
+            "value": "Époque classique"
+          },
+          {
+            "caption": "Peintures/sculptures",
+            "classLink": "Peinturessculptures",
+            "count": 95,
+            "quotedValue": "\"Peintures/sculptures\"",
+            "value": "Peintures/sculptures"
+          },
+          {
+            "caption": "Drapeaux/Emblèmes",
+            "classLink": "DrapeauxEmblmes",
+            "count": 45,
+            "quotedValue": "\"Drapeaux/Emblèmes\"",
+            "value": "Drapeaux/Emblèmes"
+          },
+          {
+            "caption": "Collections orientales",
+            "classLink": "Collectionsorientales",
+            "count": 33,
+            "quotedValue": "\"Collections orientales\"",
+            "value": "Collections orientales"
+          }
+        ],
+        "multiSelect": false,
+        "name": "department_s",
+        "rawCount": 0,
+        "seeMore": true,
+        "showPaginate": false,
+        "total": 0,
+        "totalPage": 0
+      },
+      {
+        "caption": "Personne",
+        "code": "subjectPerson_s",
+        "config": {
+          "displayRemoveFacet": true,
+          "displayValuesOnLoad": true,
+          "dynamicFacet": false,
+          "facetQueries": [],
+          "facetQuery": [],
+          "index": "subjectPerson_s",
+          "justSearchLimit": false,
+          "multilingualFacet": false,
+          "multiselect": false,
+          "pivotFacet": false,
+          "pivotNames": [],
+          "queryBasedFacet": false,
+          "showThePlusButton": false,
+          "sort": "-",
+          "sortOrderAsc": false,
+          "title": {
+            "CAT": "",
+            "DUT": "",
+            "ENG": "Person",
+            "ES": "",
+            "FRE": "Personne",
+            "GER": ""
+          },
+          "treeValuesOpened": [],
+          "visualization": ":"
+        },
+        "display": "Personne",
+        "items": [
+          {
+            "caption": "Napoléon Ier",
+            "classLink": "NapolonIer",
+            "count": 148,
+            "quotedValue": "\"Napoléon Ier\"",
+            "value": "Napoléon Ier"
+          },
+          {
+            "caption": "Berraud, Madame",
+            "classLink": "BerraudMadame",
+            "count": 87,
+            "quotedValue": "\"Berraud, Madame\"",
+            "value": "Berraud, Madame"
+          },
+          {
+            "caption": "Franchet d' Espèrey, Louis Félix Marie François",
+            "classLink": "FranchetdEspreyLouisFlixMarieFranois",
+            "count": 33,
+            "quotedValue": "\"Franchet d' Espèrey, Louis Félix Marie François\"",
+            "value": "Franchet d' Espèrey, Louis Félix Marie François"
+          },
+          {
+            "caption": "Gribeauval, Jean-Baptiste Vacquette de",
+            "classLink": "GribeauvalJeanBaptisteVacquettede",
+            "count": 30,
+            "quotedValue": "\"Gribeauval, Jean-Baptiste Vacquette de\"",
+            "value": "Gribeauval, Jean-Baptiste Vacquette de"
+          },
+          {
+            "caption": "Dorgelès, Roland Lecavelé, dit",
+            "classLink": "DorgelsRolandLecaveldit",
+            "count": 28,
+            "quotedValue": "\"Dorgelès, Roland Lecavelé, dit\"",
+            "value": "Dorgelès, Roland Lecavelé, dit"
+          },
+          {
+            "caption": "Louis XIV",
+            "classLink": "LouisXIV",
+            "count": 28,
+            "quotedValue": "\"Louis XIV\"",
+            "value": "Louis XIV"
+          },
+          {
+            "caption": "Napoléon III",
+            "classLink": "NapolonIII",
+            "count": 21,
+            "quotedValue": "\"Napoléon III\"",
+            "value": "Napoléon III"
+          },
+          {
+            "caption": "Valée, Sylvain Charles",
+            "classLink": "ValeSylvainCharles",
+            "count": 17,
+            "quotedValue": "\"Valée, Sylvain Charles\"",
+            "value": "Valée, Sylvain Charles"
+          },
+          {
+            "caption": "Emeneya, Kevin",
+            "classLink": "EmeneyaKevin",
+            "count": 14,
+            "quotedValue": "\"Emeneya, Kevin\"",
+            "value": "Emeneya, Kevin"
+          },
+          {
+            "caption": "Foch, François Ferdinand",
+            "classLink": "FochFranoisFerdinand",
+            "count": 12,
+            "quotedValue": "\"Foch, François Ferdinand\"",
+            "value": "Foch, François Ferdinand"
+          }
+        ],
+        "multiSelect": false,
+        "name": "subjectPerson_s",
+        "rawCount": 0,
+        "seeMore": true,
+        "showPaginate": false,
+        "total": 0,
+        "totalPage": 0
+      },
+      {
+        "caption": "Événement",
+        "code": "subjectEvent_s",
+        "config": {
+          "displayRemoveFacet": true,
+          "displayValuesOnLoad": true,
+          "dynamicFacet": false,
+          "facetQueries": [],
+          "facetQuery": [],
+          "index": "subjectEvent_s",
+          "justSearchLimit": false,
+          "multilingualFacet": false,
+          "multiselect": false,
+          "pivotFacet": false,
+          "pivotNames": [],
+          "queryBasedFacet": false,
+          "showThePlusButton": false,
+          "sort": "-",
+          "sortOrderAsc": false,
+          "title": {
+            "CAT": "",
+            "DUT": "",
+            "ENG": "Event",
+            "ES": "",
+            "FRE": "Événement",
+            "GER": ""
+          },
+          "treeValuesOpened": [],
+          "visualization": ":"
+        },
+        "display": "Événement",
+        "items": [
+          {
+            "caption": "Seconde Guerre mondiale (1939-1945)",
+            "classLink": "SecondeGuerremondiale19391945",
+            "count": 943,
+            "quotedValue": "\"Seconde Guerre mondiale (1939-1945)\"",
+            "value": "Seconde Guerre mondiale (1939-1945)"
+          },
+          {
+            "caption": "Première Guerre mondiale (1914-1918)",
+            "classLink": "PremireGuerremondiale19141918",
+            "count": 459,
+            "quotedValue": "\"Première Guerre mondiale (1914-1918)\"",
+            "value": "Première Guerre mondiale (1914-1918)"
+          },
+          {
+            "caption": "FIAS",
+            "classLink": "FIAS",
+            "count": 108,
+            "quotedValue": "\"FIAS\"",
+            "value": "FIAS"
+          },
+          {
+            "caption": "Guerre de 1870-1871",
+            "classLink": "Guerrede18701871",
+            "count": 89,
+            "quotedValue": "\"Guerre de 1870-1871\"",
+            "value": "Guerre de 1870-1871"
+          },
+          {
+            "caption": "Premier Empire",
+            "classLink": "PremierEmpire",
+            "count": 77,
+            "quotedValue": "\"Premier Empire\"",
+            "value": "Premier Empire"
+          },
+          {
+            "caption": "Libération de Paris (août 1944)",
+            "classLink": "LibrationdeParisaot1944",
+            "count": 51,
+            "quotedValue": "\"Libération de Paris (août 1944)\"",
+            "value": "Libération de Paris (août 1944)"
+          },
+          {
+            "caption": "Guerre d'Indochine (1945-1954)",
+            "classLink": "GuerredIndochine19451954",
+            "count": 45,
+            "quotedValue": "\"Guerre d'Indochine (1945-1954)\"",
+            "value": "Guerre d'Indochine (1945-1954)"
+          },
+          {
+            "caption": "Guerre du Golfe (1991)",
+            "classLink": "GuerreduGolfe1991",
+            "count": 41,
+            "quotedValue": "\"Guerre du Golfe (1991)\"",
+            "value": "Guerre du Golfe (1991)"
+          },
+          {
+            "caption": "Guerres de Yougoslavie",
+            "classLink": "GuerresdeYougoslavie",
+            "count": 34,
+            "quotedValue": "\"Guerres de Yougoslavie\"",
+            "value": "Guerres de Yougoslavie"
+          },
+          {
+            "caption": "Guerre du Kosovo",
+            "classLink": "GuerreduKosovo",
+            "count": 33,
+            "quotedValue": "\"Guerre du Kosovo\"",
+            "value": "Guerre du Kosovo"
+          }
+        ],
+        "multiSelect": false,
+        "name": "subjectEvent_s",
+        "rawCount": 0,
+        "seeMore": true,
+        "showPaginate": false,
+        "total": 0,
+        "totalPage": 0
+      },
+      {
+        "caption": "Thème",
+        "code": "subjectTheme_s",
+        "config": {
+          "displayRemoveFacet": true,
+          "displayValuesOnLoad": true,
+          "dynamicFacet": false,
+          "facetQueries": [],
+          "facetQuery": [],
+          "index": "subjectTheme_s",
+          "justSearchLimit": false,
+          "multilingualFacet": false,
+          "multiselect": false,
+          "pivotFacet": false,
+          "pivotNames": [],
+          "queryBasedFacet": false,
+          "showThePlusButton": false,
+          "sort": "-",
+          "sortOrderAsc": false,
+          "title": {
+            "CAT": "",
+            "DUT": "",
+            "ENG": "Theme",
+            "ES": "",
+            "FRE": "Thème",
+            "GER": ""
+          },
+          "treeValuesOpened": [],
+          "visualization": ":"
+        },
+        "display": "Thème",
+        "items": [
+          {
+            "caption": "Scène",
+            "classLink": "Scne",
+            "count": 777,
+            "quotedValue": "\"Scène\"",
+            "value": "Scène"
+          },
+          {
+            "caption": "Soldat",
+            "classLink": "Soldat",
+            "count": 722,
+            "quotedValue": "\"Soldat\"",
+            "value": "Soldat"
+          },
+          {
+            "caption": "Français",
+            "classLink": "Franais",
+            "count": 303,
+            "quotedValue": "\"Français\"",
+            "value": "Français"
+          },
+          {
+            "caption": "Uniforme",
+            "classLink": "Uniforme",
+            "count": 251,
+            "quotedValue": "\"Uniforme\"",
+            "value": "Uniforme"
+          },
+          {
+            "caption": "Portrait",
+            "classLink": "Portrait",
+            "count": 250,
+            "quotedValue": "\"Portrait\"",
+            "value": "Portrait"
+          },
+          {
+            "caption": "Paysage",
+            "classLink": "Paysage",
+            "count": 246,
+            "quotedValue": "\"Paysage\"",
+            "value": "Paysage"
+          },
+          {
+            "caption": "Artillerie",
+            "classLink": "Artillerie",
+            "count": 203,
+            "quotedValue": "\"Artillerie\"",
+            "value": "Artillerie"
+          },
+          {
+            "caption": "Représentation d'objet",
+            "classLink": "Reprsentationdobjet",
+            "count": 182,
+            "quotedValue": "\"Représentation d'objet\"",
+            "value": "Représentation d'objet"
+          },
+          {
+            "caption": "Homme",
+            "classLink": "Homme",
+            "count": 134,
+            "quotedValue": "\"Homme\"",
+            "value": "Homme"
+          },
+          {
+            "caption": "Modèle réduit",
+            "classLink": "Modlerduit",
+            "count": 119,
+            "quotedValue": "\"Modèle réduit\"",
+            "value": "Modèle réduit"
+          }
+        ],
+        "multiSelect": false,
+        "name": "subjectTheme_s",
+        "rawCount": 0,
+        "seeMore": true,
+        "showPaginate": false,
+        "total": 0,
+        "totalPage": 0
+      },
+      {
+        "caption": "Auteur",
+        "code": "author_s",
+        "config": {
+          "displayRemoveFacet": true,
+          "displayValuesOnLoad": true,
+          "dynamicFacet": false,
+          "facetQueries": [],
+          "facetQuery": [],
+          "index": "author_s",
+          "justSearchLimit": false,
+          "multilingualFacet": false,
+          "multiselect": false,
+          "pivotFacet": false,
+          "pivotNames": [],
+          "queryBasedFacet": false,
+          "showThePlusButton": false,
+          "sort": "-",
+          "sortOrderAsc": false,
+          "title": {
+            "CAT": "",
+            "DUT": "",
+            "ENG": "Author",
+            "ES": "",
+            "FRE": "Auteur",
+            "GER": ""
+          },
+          "treeValuesOpened": [],
+          "visualization": ":"
+        },
+        "display": "Auteur",
+        "items": [
+          {
+            "caption": "Delpech, Jean",
+            "classLink": "DelpechJean",
+            "count": 822,
+            "quotedValue": "\"Delpech, Jean\"",
+            "value": "Delpech, Jean"
+          },
+          {
+            "caption": "Caran D'Ache",
+            "classLink": "CaranDAche",
+            "count": 89,
+            "quotedValue": "\"Caran D'Ache\"",
+            "value": "Caran D'Ache"
+          },
+          {
+            "caption": "Berraud, Alexandre François-Joseph",
+            "classLink": "BerraudAlexandreFranoisJoseph",
+            "count": 88,
+            "quotedValue": "\"Berraud, Alexandre François-Joseph\"",
+            "value": "Berraud, Alexandre François-Joseph"
+          },
+          {
+            "caption": "Anonyme",
+            "classLink": "Anonyme",
+            "count": 85,
+            "quotedValue": "\"Anonyme\"",
+            "value": "Anonyme"
+          },
+          {
+            "caption": "Wurtz",
+            "classLink": "Wurtz",
+            "count": 68,
+            "quotedValue": "\"Wurtz\"",
+            "value": "Wurtz"
+          },
+          {
+            "caption": "Peulot, Ernest",
+            "classLink": "PeulotErnest",
+            "count": 66,
+            "quotedValue": "\"Peulot, Ernest\"",
+            "value": "Peulot, Ernest"
+          },
+          {
+            "caption": "Poulpiquet, Philippe de",
+            "classLink": "PoulpiquetPhilippede",
+            "count": 66,
+            "quotedValue": "\"Poulpiquet, Philippe de\"",
+            "value": "Poulpiquet, Philippe de"
+          },
+          {
+            "caption": "Flameng, François",
+            "classLink": "FlamengFranois",
+            "count": 51,
+            "quotedValue": "\"Flameng, François\"",
+            "value": "Flameng, François"
+          },
+          {
+            "caption": "Bouvet, Éric",
+            "classLink": "Bouvetric",
+            "count": 42,
+            "quotedValue": "\"Bouvet, Éric\"",
+            "value": "Bouvet, Éric"
+          },
+          {
+            "caption": "Morvan, Yan",
+            "classLink": "MorvanYan",
+            "count": 38,
+            "quotedValue": "\"Morvan, Yan\"",
+            "value": "Morvan, Yan"
+          }
+        ],
+        "multiSelect": false,
+        "name": "author_s",
+        "rawCount": 0,
+        "seeMore": true,
+        "showPaginate": false,
+        "total": 0,
+        "totalPage": 0
+      },
+      {
+        "caption": "Image",
+        "code": "hasImageFields_b",
+        "config": {
+          "displayRemoveFacet": true,
+          "displayValuesOnLoad": true,
+          "dynamicFacet": false,
+          "facetQueries": [],
+          "facetQuery": [],
+          "index": "hasImageFields_b",
+          "justSearchLimit": false,
+          "multilingualFacet": false,
+          "multiselect": false,
+          "pivotFacet": false,
+          "pivotNames": [],
+          "queryBasedFacet": false,
+          "showThePlusButton": false,
+          "sort": "-",
+          "sortOrderAsc": false,
+          "title": {
+            "CAT": "",
+            "DUT": "",
+            "ENG": "Image",
+            "ES": "",
+            "FRE": "Image",
+            "GER": ""
+          },
+          "treeValuesOpened": [],
+          "visualization": ":"
+        },
+        "display": "Image",
+        "items": [
+          {
+            "caption": "Avec image",
+            "classLink": "Avecimage",
+            "count": 4011,
+            "display": "Avec image",
+            "quotedValue": "\"true\"",
+            "value": "true"
+          },
+          {
+            "caption": "Sans image",
+            "classLink": "Sansimage",
+            "count": 2,
+            "display": "Sans image",
+            "quotedValue": "\"false\"",
+            "value": "false"
+          }
+        ],
+        "multiSelect": false,
+        "name": "hasImageFields_b",
+        "rawCount": 0,
+        "seeMore": false,
+        "showPaginate": false,
+        "total": 0,
+        "totalPage": 0
+      },
+      {
+        "caption": "Notice",
+        "code": "TypeOfDocumentFacet",
+        "config": {
+          "displayRemoveFacet": true,
+          "displayValuesOnLoad": true,
+          "dynamicFacet": false,
+          "facetQueries": [],
+          "facetQuery": [],
+          "index": "TypeOfDocumentFacet",
+          "justSearchLimit": false,
+          "multilingualFacet": false,
+          "multiselect": false,
+          "pivotFacet": false,
+          "pivotNames": [],
+          "queryBasedFacet": false,
+          "showThePlusButton": false,
+          "sort": "-",
+          "sortOrderAsc": false,
+          "title": {
+            "CAT": "",
+            "DUT": "",
+            "ENG": "Record",
+            "ES": "",
+            "FRE": "Notice",
+            "GER": ""
+          },
+          "treeValuesOpened": [],
+          "visualization": ":"
+        },
+        "display": "Notice",
+        "items": [
+          {
+            "caption": "Objet",
+            "classLink": "Objet",
+            "count": 4004,
+            "display": "Objet",
+            "quotedValue": "\"MuseumDocument\"",
+            "value": "MuseumDocument"
+          },
+          {
+            "caption": "Institution partenaire",
+            "classLink": "Institutionpartenaire",
+            "count": 91,
+            "display": "Institution partenaire",
+            "quotedValue": "\"MuseumPartner\"",
+            "value": "MuseumPartner"
+          },
+          {
+            "caption": "Recherche prédéfinie",
+            "classLink": "Rechercheprdfinie",
+            "count": 59,
+            "display": "Recherche prédéfinie",
+            "quotedValue": "\"InterestProfile\"",
+            "value": "InterestProfile"
+          },
+          {
+            "caption": "Personne",
+            "classLink": "Personne",
+            "count": 16,
+            "display": "Personne",
+            "quotedValue": "\"MuseumPerson\"",
+            "value": "MuseumPerson"
+          },
+          {
+            "caption": "Document numérisé",
+            "classLink": "Documentnumris",
+            "count": 9,
+            "display": "Document numérisé",
+            "quotedValue": "\"MuseumBook\"",
+            "value": "MuseumBook"
+          },
+          {
+            "caption": "Événement",
+            "classLink": "vnement",
+            "count": 1,
+            "display": "Événement",
+            "quotedValue": "\"MuseumEvent\"",
+            "value": "MuseumEvent"
+          }
+        ],
+        "multiSelect": false,
+        "name": "TypeOfDocumentFacet",
+        "rawCount": 0,
+        "seeMore": false,
+        "showPaginate": false,
+        "total": 0,
+        "totalPage": 0
+      },
+      {
+        "caption": "Type de mouvements",
+        "code": "loanType_s",
+        "config": {
+          "displayRemoveFacet": true,
+          "displayValuesOnLoad": true,
+          "dynamicFacet": false,
+          "facetQueries": [],
+          "facetQuery": [],
+          "index": "loanType_s",
+          "justSearchLimit": false,
+          "multilingualFacet": false,
+          "multiselect": false,
+          "pivotFacet": false,
+          "pivotNames": [],
+          "queryBasedFacet": false,
+          "showThePlusButton": false,
+          "sort": "-",
+          "sortOrderAsc": false,
+          "title": {
+            "CAT": "",
+            "DUT": "",
+            "ENG": "",
+            "ES": "",
+            "FRE": "Type de mouvements",
+            "GER": ""
+          },
+          "treeValuesOpened": [],
+          "visualization": ":"
+        },
+        "display": "Type de mouvements",
+        "items": [
+          {
+            "caption": "Dépôt",
+            "classLink": "Dpt",
+            "count": 75,
+            "display": "Dépôt",
+            "quotedValue": "\"deposit\"",
+            "value": "deposit"
+          },
+          {
+            "caption": "Prêt",
+            "classLink": "Prt",
+            "count": 17,
+            "display": "Prêt",
+            "quotedValue": "\"loan\"",
+            "value": "loan"
+          }
+        ],
+        "multiSelect": false,
+        "name": "loanType_s",
+        "rawCount": 0,
+        "seeMore": false,
+        "showPaginate": false,
+        "total": 0,
+        "totalPage": 0
+      }
+    ],
+    "maxPageNo": 523,
+    "maxScore": 1,
+    "numHits": 4180,
+    "pageNo": 1,
+    "pageSize": 8,
+    "query": "*",
+    "queryComponents": [
+      {
+        "query": "*"
+      }
+    ],
+    "querySyntax": "ccl",
+    "queryid": "8ee99802-e96b-4ed1-ac33-960e70039d12",
+    "resultSet": [
+      {
+        "posInSet": [
+          {
+            "value": "1"
+          }
+        ],
+        "DateCreated": [
+          {
+            "value": "2018-10-15T20:19:19.726Z"
+          }
+        ],
+        "DomainFacet": [
+          {
+            "value": ""
+          }
+        ],
+        "title": [
+          {
+            "value": "Graduel et antiphonaire à l'usage de la maison royale de Saint-Louis des Invalides, pour les fêtes les plus solennelles de toute l'année"
+          }
+        ],
+        "TypeOfDocumentFacet": [
+          {
+            "value": "MuseumBook"
+          }
+        ],
+        "score": [
+          {
+            "value": "1.0"
+          }
+        ],
+        "imageSource_128": [
+          {
+            "value": "/in/rest/Thumb/image?id=ark%3A%2F66008%2F5389_bis_2&author=Atelier+d%27enluminure+de+l%27H%C3%B4tel+royal+des+Invalides&title=Graduel+et+antiphonaire+%C3%A0+l%27usage+de+la+maison+royale+de+Saint-Louis+des+Invalides%2C+pour+les+f%C3%AAtes+les+plus+solennelles+de+toute+l%27ann%C3%A9e&TypeOfDocument=MuseumBook&mat=livre_numerise&ct=true&size=128"
+          }
+        ],
+        "__thumbSVCQueryParam": [
+          {
+            "value": "id=ark%3A%2F66008%2F5389_bis_2&title=Graduel+et+antiphonaire+%C3%A0+l%27usage+de+la+maison+royale+de+Saint-Louis+des+Invalides%2C+pour+les+f%C3%AAtes+les+plus+solennelles+de+toute+l%27ann%C3%A9e&TypeOfDocument=MuseumBook&icon=%24ICON%24&size=%24SIZE%24&isPhysical=0"
+          }
+        ],
+        "id": [
+          {
+            "value": "h::ark:/66008/5389_bis_2"
+          }
+        ],
+        "ark": [
+          {
+            "value": "66008/5389_bis_2"
+          }
+        ],
+        "hideFavoriteAction": [
+          {}
+        ],
+        "readerLabel": [
+          {
+            "value": "image"
+          }
+        ],
+        "stateFacet": [
+          {
+            "value": "Accepted"
+          }
+        ],
+        "disableNoticeConsultation": [
+          {}
+        ],
+        "isExternalContent": [
+          {
+            "value": "false"
+          }
+        ],
+        "hideShareAction": [
+          {}
+        ],
+        "readerEnabled": [
+          {
+            "value": "ImageReader"
+          }
+        ],
+        "zmatDisplay": [
+          {
+            "display": "Type de document",
+            "value": "Livre numérisé"
+          }
+        ],
+        "DateLastChange": [
+          {
+            "value": "2018-10-24T08:46:53.326Z"
+          }
+        ],
+        "zmatIndex": [
+          {
+            "display": "",
+            "value": "livre_numerise"
+          }
+        ],
+        "imageSource_512": [
+          {
+            "value": "/in/rest/Thumb/image?id=ark%3A%2F66008%2F5389_bis_2&author=Atelier+d%27enluminure+de+l%27H%C3%B4tel+royal+des+Invalides&title=Graduel+et+antiphonaire+%C3%A0+l%27usage+de+la+maison+royale+de+Saint-Louis+des+Invalides%2C+pour+les+f%C3%AAtes+les+plus+solennelles+de+toute+l%27ann%C3%A9e&TypeOfDocument=MuseumBook&mat=livre_numerise&ct=true&size=512"
+          }
+        ],
+        "IsPhysicalDocument": [
+          {
+            "value": "0"
+          }
+        ],
+        "createdBy": [
+          {
+            "display": "",
+            "value": "import"
+          }
+        ],
+        "meta": {
+          "titleOriginal": [
+            {
+              "display": "Titre original",
+              "html": false,
+              "value": "Graduale et antiphonale ad usum S. Ludovici Domus Regiae Invalidorum, pro solemnioribus totius annis festivitatibus."
+            }
+          ],
+          "identifierInventory": [
+            {
+              "display": "Numéro d'inventaire",
+              "html": false,
+              "value": "5389 bis-2"
+            }
+          ],
+          "creator": [
+            {
+              "display": "Auteur",
+              "displayCount": true,
+              "exploreIndex": "author_t",
+              "exploreQuery": "Auteur: \"Atelier d'enluminure de l'Hôtel royal des Invalides\"",
+              "html": false,
+              "value": "Atelier d'enluminure de l'Hôtel royal des Invalides"
+            }
+          ],
+          "dateDescription": [
+            {
+              "display": "Date de création",
+              "html": false,
+              "value": "1682"
+            }
+          ],
+          "place": [
+            {
+              "display": "Lieu de création",
+              "displayCount": true,
+              "exploreIndex": "place_t",
+              "exploreQuery": "Lieu: \"Paris, Hôtel des Invalides\"",
+              "html": false,
+              "value": "Paris, Hôtel des Invalides"
+            }
+          ],
+          "descriptionCollation": [
+            {
+              "display": "Collation",
+              "html": false,
+              "value": "295 pages"
+            }
+          ]
+        },
+        "imageSource_256": [
+          {
+            "value": "/in/rest/Thumb/image?id=ark%3A%2F66008%2F5389_bis_2&author=Atelier+d%27enluminure+de+l%27H%C3%B4tel+royal+des+Invalides&title=Graduel+et+antiphonaire+%C3%A0+l%27usage+de+la+maison+royale+de+Saint-Louis+des+Invalides%2C+pour+les+f%C3%AAtes+les+plus+solennelles+de+toute+l%27ann%C3%A9e&TypeOfDocument=MuseumBook&mat=livre_numerise&ct=true&size=256"
+          }
+        ]
+      },
+      {
+        "stateFacet": [
+          {
+            "value": "Accepted"
+          }
+        ],
+        "disableNoticeConsultation": [
+          {}
+        ],
+        "isExternalContent": [
+          {
+            "value": "true"
+          }
+        ],
+        "posInSet": [
+          {
+            "value": "2"
+          }
+        ],
+        "DateCreated": [
+          {
+            "value": "2018-02-21T14:01:04.556Z"
+          }
+        ],
+        "hideShareAction": [
+          {}
+        ],
+        "zmatDisplay": [
+          {
+            "display": "Type de document",
+            "value": "Profil d'intérêt"
+          }
+        ],
+        "DomainFacet": [
+          {
+            "value": "bibliomondo"
+          }
+        ],
+        "title": [
+          {
+            "value": "Le cabinet des dessins, estampes et photographies"
+          }
+        ],
+        "TypeOfDocumentFacet": [
+          {
+            "value": "InterestProfile"
+          }
+        ],
+        "DateLastChange": [
+          {
+            "value": "2020-12-09T11:36:16.825Z"
+          }
+        ],
+        "zmatIndex": [
+          {
+            "display": "",
+            "value": "InterestProfile"
+          }
+        ],
+        "imageSource_512": [
+          {
+            "value": "/in/rest/Thumb/image?id=0d562f10-adc1-4fda-9e52-45e6b4601a97&title=Le+cabinet+des+dessins%2C+estampes+et+photographies&TypeOfDocument=InterestProfile&mat=InterestProfile&ct=true&size=512"
+          }
+        ],
+        "score": [
+          {
+            "value": "1.0"
+          }
+        ],
+        "imageSource_128": [
+          {
+            "value": "/in/rest/Thumb/image?id=0d562f10-adc1-4fda-9e52-45e6b4601a97&title=Le+cabinet+des+dessins%2C+estampes+et+photographies&TypeOfDocument=InterestProfile&mat=InterestProfile&ct=true&size=128"
+          }
+        ],
+        "IsPhysicalDocument": [
+          {
+            "value": "0"
+          }
+        ],
+        "createdBy": [
+          {
+            "display": "",
+            "value": "xavier.ndala"
+          }
+        ],
+        "imageSource_256": [
+          {
+            "value": "/in/rest/Thumb/image?id=0d562f10-adc1-4fda-9e52-45e6b4601a97&title=Le+cabinet+des+dessins%2C+estampes+et+photographies&TypeOfDocument=InterestProfile&mat=InterestProfile&ct=true&size=256"
+          }
+        ],
+        "__thumbSVCQueryParam": [
+          {
+            "value": "id=0d562f10-adc1-4fda-9e52-45e6b4601a97&title=Le+cabinet+des+dessins%2C+estampes+et+photographies&TypeOfDocument=InterestProfile&icon=%24ICON%24&size=%24SIZE%24&isPhysical=0"
+          }
+        ],
+        "id": [
+          {
+            "value": "h::0d562f10-adc1-4fda-9e52-45e6b4601a97"
+          }
+        ],
+        "ark": [
+          {}
+        ],
+        "hideFavoriteAction": [
+          {}
+        ],
+        "readerLabel": [
+          {
+            "value": "default"
+          }
+        ]
+      },
+      {
+        "posInSet": [
+          {
+            "value": "3"
+          }
+        ],
+        "DateCreated": [
+          {
+            "value": "2019-03-20T10:07:42.210Z"
+          }
+        ],
+        "DomainFacet": [
+          {
+            "value": ""
+          }
+        ],
+        "title": [
+          {
+            "value": "La Légende de France"
+          }
+        ],
+        "TypeOfDocumentFacet": [
+          {
+            "value": "MuseumBook"
+          }
+        ],
+        "score": [
+          {
+            "value": "1.0"
+          }
+        ],
+        "imageSource_128": [
+          {
+            "value": "/in/rest/Thumb/image?id=ark%3A%2F66008%2F2018_49_1_2018_49_86&author=Raoul+Tonnelier+et+Gustave+Alaux&title=La+L%C3%A9gende+de+France&TypeOfDocument=MuseumBook&mat=livre_numerise&ct=true&size=128"
+          }
+        ],
+        "__thumbSVCQueryParam": [
+          {
+            "value": "id=ark%3A%2F66008%2F2018_49_1_2018_49_86&title=La+L%C3%A9gende+de+France&TypeOfDocument=MuseumBook&icon=%24ICON%24&size=%24SIZE%24&isPhysical=0"
+          }
+        ],
+        "id": [
+          {
+            "value": "h::ark:/66008/2018_49_1_2018_49_86"
+          }
+        ],
+        "ark": [
+          {
+            "value": "66008/2018_49_1_2018_49_86"
+          }
+        ],
+        "hideFavoriteAction": [
+          {}
+        ],
+        "readerLabel": [
+          {
+            "value": "image"
+          }
+        ],
+        "stateFacet": [
+          {
+            "value": "Accepted"
+          }
+        ],
+        "disableNoticeConsultation": [
+          {}
+        ],
+        "isExternalContent": [
+          {
+            "value": "false"
+          }
+        ],
+        "hideShareAction": [
+          {}
+        ],
+        "readerEnabled": [
+          {
+            "value": "ImageReader"
+          }
+        ],
+        "zmatDisplay": [
+          {
+            "display": "Type de document",
+            "value": "Livre numérisé"
+          }
+        ],
+        "DateLastChange": [
+          {
+            "value": "2019-09-23T14:45:01.225Z"
+          }
+        ],
+        "zmatIndex": [
+          {
+            "display": "",
+            "value": "livre_numerise"
+          }
+        ],
+        "imageSource_512": [
+          {
+            "value": "/in/rest/Thumb/image?id=ark%3A%2F66008%2F2018_49_1_2018_49_86&author=Raoul+Tonnelier+et+Gustave+Alaux&title=La+L%C3%A9gende+de+France&TypeOfDocument=MuseumBook&mat=livre_numerise&ct=true&size=512"
+          }
+        ],
+        "IsPhysicalDocument": [
+          {
+            "value": "0"
+          }
+        ],
+        "createdBy": [
+          {
+            "display": "",
+            "value": "import"
+          }
+        ],
+        "meta": {
+          "identifierInventory": [
+            {
+              "display": "Numéro d'inventaire",
+              "html": false,
+              "value": "2018.49.1-2018.49.86"
+            }
+          ],
+          "creator": [
+            {
+              "display": "Auteur",
+              "displayCount": true,
+              "exploreIndex": "author_t",
+              "exploreQuery": "Auteur: \"Raoul Tonnelier et Gustave Alaux\"",
+              "html": false,
+              "value": "Raoul Tonnelier et Gustave Alaux"
+            }
+          ],
+          "dateDescription": [
+            {
+              "display": "Date de création",
+              "html": false,
+              "value": "1915"
+            }
+          ],
+          "descriptionCollation": [
+            {
+              "display": "Collation",
+              "html": false,
+              "value": "1 lanterne, 1 affiche et 84 dessins"
+            }
+          ]
+        },
+        "imageSource_256": [
+          {
+            "value": "/in/rest/Thumb/image?id=ark%3A%2F66008%2F2018_49_1_2018_49_86&author=Raoul+Tonnelier+et+Gustave+Alaux&title=La+L%C3%A9gende+de+France&TypeOfDocument=MuseumBook&mat=livre_numerise&ct=true&size=256"
+          }
+        ]
+      },
+      {
+        "posInSet": [
+          {
+            "value": "4"
+          }
+        ],
+        "DateCreated": [
+          {
+            "value": "2020-04-15T10:41:46.390Z"
+          }
+        ],
+        "DomainFacet": [
+          {
+            "value": ""
+          }
+        ],
+        "title": [
+          {
+            "value": "Carnet de croquis. Secteur fortifié de Faulquemont"
+          }
+        ],
+        "TypeOfDocumentFacet": [
+          {
+            "value": "MuseumBook"
+          }
+        ],
+        "score": [
+          {
+            "value": "1.0"
+          }
+        ],
+        "imageSource_128": [
+          {
+            "value": "/in/rest/Thumb/image?id=ark%3A%2F66008%2F30301&author=Charles+Fran%C3%A7ois+Courtet&title=Carnet+de+croquis.+Secteur+fortifi%C3%A9+de+Faulquemont&TypeOfDocument=MuseumBook&mat=livre_numerise&ct=true&size=128"
+          }
+        ],
+        "__thumbSVCQueryParam": [
+          {
+            "value": "id=ark%3A%2F66008%2F30301&title=Carnet+de+croquis.+Secteur+fortifi%C3%A9+de+Faulquemont&TypeOfDocument=MuseumBook&icon=%24ICON%24&size=%24SIZE%24&isPhysical=0"
+          }
+        ],
+        "id": [
+          {
+            "value": "h::ark:/66008/30301"
+          }
+        ],
+        "ark": [
+          {
+            "value": "66008/30301"
+          }
+        ],
+        "hideFavoriteAction": [
+          {}
+        ],
+        "readerLabel": [
+          {
+            "value": "image"
+          }
+        ],
+        "stateFacet": [
+          {
+            "value": "Accepted"
+          }
+        ],
+        "disableNoticeConsultation": [
+          {}
+        ],
+        "isExternalContent": [
+          {
+            "value": "false"
+          }
+        ],
+        "hideShareAction": [
+          {}
+        ],
+        "readerEnabled": [
+          {
+            "value": "ImageReader"
+          }
+        ],
+        "zmatDisplay": [
+          {
+            "display": "Type de document",
+            "value": "Livre numérisé"
+          }
+        ],
+        "DateLastChange": [
+          {
+            "value": "2020-04-15T16:59:56.713Z"
+          }
+        ],
+        "zmatIndex": [
+          {
+            "display": "",
+            "value": "livre_numerise"
+          }
+        ],
+        "imageSource_512": [
+          {
+            "value": "/in/rest/Thumb/image?id=ark%3A%2F66008%2F30301&author=Charles+Fran%C3%A7ois+Courtet&title=Carnet+de+croquis.+Secteur+fortifi%C3%A9+de+Faulquemont&TypeOfDocument=MuseumBook&mat=livre_numerise&ct=true&size=512"
+          }
+        ],
+        "IsPhysicalDocument": [
+          {
+            "value": "0"
+          }
+        ],
+        "createdBy": [
+          {
+            "display": "",
+            "value": "import"
+          }
+        ],
+        "meta": {
+          "identifierInventory": [
+            {
+              "display": "Numéro d'inventaire",
+              "html": false,
+              "value": "30301"
+            }
+          ],
+          "creator": [
+            {
+              "display": "Auteur",
+              "displayCount": true,
+              "exploreIndex": "author_t",
+              "exploreQuery": "Auteur: \"Charles François Courtet\"",
+              "html": false,
+              "value": "Charles François Courtet"
+            }
+          ],
+          "dateDescription": [
+            {
+              "display": "Date de création",
+              "html": false,
+              "value": "1939-1940"
+            }
+          ],
+          "descriptionCollation": [
+            {
+              "display": "Collation",
+              "html": false,
+              "value": "1 carnet comprenant 51 pages"
+            }
+          ]
+        },
+        "imageSource_256": [
+          {
+            "value": "/in/rest/Thumb/image?id=ark%3A%2F66008%2F30301&author=Charles+Fran%C3%A7ois+Courtet&title=Carnet+de+croquis.+Secteur+fortifi%C3%A9+de+Faulquemont&TypeOfDocument=MuseumBook&mat=livre_numerise&ct=true&size=256"
+          }
+        ]
+      },
+      {
+        "stateFacet": [
+          {
+            "value": "Accepted"
+          }
+        ],
+        "disableNoticeConsultation": [
+          {}
+        ],
+        "isExternalContent": [
+          {
+            "value": "true"
+          }
+        ],
+        "posInSet": [
+          {
+            "value": "5"
+          }
+        ],
+        "DateCreated": [
+          {
+            "value": "2020-10-27T15:27:44.105Z"
+          }
+        ],
+        "hideShareAction": [
+          {}
+        ],
+        "zmatDisplay": [
+          {
+            "display": "Type de document",
+            "value": "Profil d'intérêt"
+          }
+        ],
+        "DomainFacet": [
+          {
+            "value": "bibliomondo"
+          }
+        ],
+        "title": [
+          {
+            "value": "Halloween"
+          }
+        ],
+        "TypeOfDocumentFacet": [
+          {
+            "value": "InterestProfile"
+          }
+        ],
+        "DateLastChange": [
+          {
+            "value": "2020-12-16T09:55:59.462Z"
+          }
+        ],
+        "zmatIndex": [
+          {
+            "display": "",
+            "value": "InterestProfile"
+          }
+        ],
+        "imageSource_512": [
+          {
+            "value": "/in/rest/Thumb/image?id=9b7bcbd5-033f-4908-a576-b5756e1f805f&title=Halloween&TypeOfDocument=InterestProfile&mat=InterestProfile&ct=true&size=512"
+          }
+        ],
+        "score": [
+          {
+            "value": "1.0"
+          }
+        ],
+        "imageSource_128": [
+          {
+            "value": "/in/rest/Thumb/image?id=9b7bcbd5-033f-4908-a576-b5756e1f805f&title=Halloween&TypeOfDocument=InterestProfile&mat=InterestProfile&ct=true&size=128"
+          }
+        ],
+        "IsPhysicalDocument": [
+          {
+            "value": "0"
+          }
+        ],
+        "createdBy": [
+          {
+            "display": "",
+            "value": "xavier.ndala"
+          }
+        ],
+        "imageSource_256": [
+          {
+            "value": "/in/rest/Thumb/image?id=9b7bcbd5-033f-4908-a576-b5756e1f805f&title=Halloween&TypeOfDocument=InterestProfile&mat=InterestProfile&ct=true&size=256"
+          }
+        ],
+        "__thumbSVCQueryParam": [
+          {
+            "value": "id=9b7bcbd5-033f-4908-a576-b5756e1f805f&title=Halloween&TypeOfDocument=InterestProfile&icon=%24ICON%24&size=%24SIZE%24&isPhysical=0"
+          }
+        ],
+        "id": [
+          {
+            "value": "h::9b7bcbd5-033f-4908-a576-b5756e1f805f"
+          }
+        ],
+        "ark": [
+          {}
+        ],
+        "hideFavoriteAction": [
+          {}
+        ],
+        "readerLabel": [
+          {
+            "value": "default"
+          }
+        ]
+      },
+      {
+        "stateFacet": [
+          {
+            "value": "Accepted"
+          }
+        ],
+        "disableNoticeConsultation": [
+          {}
+        ],
+        "isExternalContent": [
+          {
+            "value": "true"
+          }
+        ],
+        "posInSet": [
+          {
+            "value": "6"
+          }
+        ],
+        "DateCreated": [
+          {
+            "value": "2019-04-03T13:07:25.955Z"
+          }
+        ],
+        "hideShareAction": [
+          {}
+        ],
+        "zmatDisplay": [
+          {
+            "display": "Type de document",
+            "value": "Profil d'intérêt"
+          }
+        ],
+        "DomainFacet": [
+          {
+            "value": "bibliomondo"
+          }
+        ],
+        "title": [
+          {
+            "value": "Picasso et la guerre"
+          }
+        ],
+        "TypeOfDocumentFacet": [
+          {
+            "value": "InterestProfile"
+          }
+        ],
+        "DateLastChange": [
+          {
+            "value": "2020-12-09T11:43:36.309Z"
+          }
+        ],
+        "zmatIndex": [
+          {
+            "display": "",
+            "value": "InterestProfile"
+          }
+        ],
+        "imageSource_512": [
+          {
+            "value": "/in/rest/Thumb/image?id=86874708-8fa3-4f20-a20f-8a5612b646d9&title=Picasso+et+la+guerre&TypeOfDocument=InterestProfile&mat=InterestProfile&ct=true&size=512"
+          }
+        ],
+        "score": [
+          {
+            "value": "1.0"
+          }
+        ],
+        "imageSource_128": [
+          {
+            "value": "/in/rest/Thumb/image?id=86874708-8fa3-4f20-a20f-8a5612b646d9&title=Picasso+et+la+guerre&TypeOfDocument=InterestProfile&mat=InterestProfile&ct=true&size=128"
+          }
+        ],
+        "IsPhysicalDocument": [
+          {
+            "value": "0"
+          }
+        ],
+        "createdBy": [
+          {
+            "display": "",
+            "value": "xavier.ndala"
+          }
+        ],
+        "imageSource_256": [
+          {
+            "value": "/in/rest/Thumb/image?id=86874708-8fa3-4f20-a20f-8a5612b646d9&title=Picasso+et+la+guerre&TypeOfDocument=InterestProfile&mat=InterestProfile&ct=true&size=256"
+          }
+        ],
+        "__thumbSVCQueryParam": [
+          {
+            "value": "id=86874708-8fa3-4f20-a20f-8a5612b646d9&title=Picasso+et+la+guerre&TypeOfDocument=InterestProfile&icon=%24ICON%24&size=%24SIZE%24&isPhysical=0"
+          }
+        ],
+        "id": [
+          {
+            "value": "h::86874708-8fa3-4f20-a20f-8a5612b646d9"
+          }
+        ],
+        "ark": [
+          {}
+        ],
+        "hideFavoriteAction": [
+          {}
+        ],
+        "readerLabel": [
+          {
+            "value": "default"
+          }
+        ]
+      },
+      {
+        "posInSet": [
+          {
+            "value": "7"
+          }
+        ],
+        "DateCreated": [
+          {
+            "value": "2020-04-22T09:29:08.008Z"
+          }
+        ],
+        "DomainFacet": [
+          {
+            "value": ""
+          }
+        ],
+        "title": [
+          {
+            "value": "La Guerre franco-allemande en l'an 1920"
+          }
+        ],
+        "TypeOfDocumentFacet": [
+          {
+            "value": "MuseumBook"
+          }
+        ],
+        "score": [
+          {
+            "value": "1.0"
+          }
+        ],
+        "imageSource_128": [
+          {
+            "value": "/in/rest/Thumb/image?id=ark%3A%2F66008%2F28565&author=Pierre+Baudry&title=La+Guerre+franco-allemande+en+l%27an+1920&TypeOfDocument=MuseumBook&mat=livre_numerise&ct=true&size=128"
+          }
+        ],
+        "__thumbSVCQueryParam": [
+          {
+            "value": "id=ark%3A%2F66008%2F28565&title=La+Guerre+franco-allemande+en+l%27an+1920&TypeOfDocument=MuseumBook&icon=%24ICON%24&size=%24SIZE%24&isPhysical=0"
+          }
+        ],
+        "id": [
+          {
+            "value": "h::ark:/66008/28565"
+          }
+        ],
+        "ark": [
+          {
+            "value": "66008/28565"
+          }
+        ],
+        "hideFavoriteAction": [
+          {}
+        ],
+        "readerLabel": [
+          {
+            "value": "image"
+          }
+        ],
+        "stateFacet": [
+          {
+            "value": "Accepted"
+          }
+        ],
+        "disableNoticeConsultation": [
+          {}
+        ],
+        "isExternalContent": [
+          {
+            "value": "false"
+          }
+        ],
+        "hideShareAction": [
+          {}
+        ],
+        "readerEnabled": [
+          {
+            "value": "ImageReader"
+          }
+        ],
+        "zmatDisplay": [
+          {
+            "display": "Type de document",
+            "value": "Livre numérisé"
+          }
+        ],
+        "DateLastChange": [
+          {
+            "value": "2020-04-22T09:29:08.008Z"
+          }
+        ],
+        "zmatIndex": [
+          {
+            "display": "",
+            "value": "livre_numerise"
+          }
+        ],
+        "imageSource_512": [
+          {
+            "value": "/in/rest/Thumb/image?id=ark%3A%2F66008%2F28565&author=Pierre+Baudry&title=La+Guerre+franco-allemande+en+l%27an+1920&TypeOfDocument=MuseumBook&mat=livre_numerise&ct=true&size=512"
+          }
+        ],
+        "IsPhysicalDocument": [
+          {
+            "value": "0"
+          }
+        ],
+        "createdBy": [
+          {
+            "display": "",
+            "value": "import"
+          }
+        ],
+        "meta": {
+          "identifierInventory": [
+            {
+              "display": "Numéro d'inventaire",
+              "html": false,
+              "value": "28565"
+            }
+          ],
+          "creator": [
+            {
+              "display": "Auteur",
+              "displayCount": true,
+              "exploreIndex": "author_t",
+              "exploreQuery": "Auteur: \"Pierre Baudry\"",
+              "html": false,
+              "value": "Pierre Baudry"
+            },
+            {
+              "display": "Auteur",
+              "displayCount": true,
+              "exploreIndex": "author_t",
+              "exploreQuery": "Auteur: \"Lucien Sinard\"",
+              "html": false,
+              "value": "Lucien Sinard"
+            }
+          ],
+          "dateDescription": [
+            {
+              "display": "Date de création",
+              "html": false,
+              "value": "1909-1910"
+            }
+          ],
+          "descriptionCollation": [
+            {
+              "display": "Collation",
+              "html": false,
+              "value": "1 album comprenant 41 pages"
+            }
+          ]
+        },
+        "imageSource_256": [
+          {
+            "value": "/in/rest/Thumb/image?id=ark%3A%2F66008%2F28565&author=Pierre+Baudry&title=La+Guerre+franco-allemande+en+l%27an+1920&TypeOfDocument=MuseumBook&mat=livre_numerise&ct=true&size=256"
+          }
+        ]
+      },
+      {
+        "posInSet": [
+          {
+            "value": "8"
+          }
+        ],
+        "DateCreated": [
+          {
+            "value": "2020-04-15T10:41:46.413Z"
+          }
+        ],
+        "DomainFacet": [
+          {
+            "value": ""
+          }
+        ],
+        "title": [
+          {
+            "value": "Captivité. Camp de Nuremberg"
+          }
+        ],
+        "TypeOfDocumentFacet": [
+          {
+            "value": "MuseumBook"
+          }
+        ],
+        "score": [
+          {
+            "value": "1.0"
+          }
+        ],
+        "imageSource_128": [
+          {
+            "value": "/in/rest/Thumb/image?id=ark%3A%2F66008%2F30300&author=Charles+Fran%C3%A7ois+Courtet&title=Captivit%C3%A9.+Camp+de+Nuremberg&TypeOfDocument=MuseumBook&mat=livre_numerise&ct=true&size=128"
+          }
+        ],
+        "__thumbSVCQueryParam": [
+          {
+            "value": "id=ark%3A%2F66008%2F30300&title=Captivit%C3%A9.+Camp+de+Nuremberg&TypeOfDocument=MuseumBook&icon=%24ICON%24&size=%24SIZE%24&isPhysical=0"
+          }
+        ],
+        "id": [
+          {
+            "value": "h::ark:/66008/30300"
+          }
+        ],
+        "ark": [
+          {
+            "value": "66008/30300"
+          }
+        ],
+        "hideFavoriteAction": [
+          {}
+        ],
+        "readerLabel": [
+          {
+            "value": "image"
+          }
+        ],
+        "stateFacet": [
+          {
+            "value": "Accepted"
+          }
+        ],
+        "disableNoticeConsultation": [
+          {}
+        ],
+        "isExternalContent": [
+          {
+            "value": "false"
+          }
+        ],
+        "hideShareAction": [
+          {}
+        ],
+        "readerEnabled": [
+          {
+            "value": "ImageReader"
+          }
+        ],
+        "zmatDisplay": [
+          {
+            "display": "Type de document",
+            "value": "Livre numérisé"
+          }
+        ],
+        "DateLastChange": [
+          {
+            "value": "2020-04-15T16:59:56.734Z"
+          }
+        ],
+        "zmatIndex": [
+          {
+            "display": "",
+            "value": "livre_numerise"
+          }
+        ],
+        "imageSource_512": [
+          {
+            "value": "/in/rest/Thumb/image?id=ark%3A%2F66008%2F30300&author=Charles+Fran%C3%A7ois+Courtet&title=Captivit%C3%A9.+Camp+de+Nuremberg&TypeOfDocument=MuseumBook&mat=livre_numerise&ct=true&size=512"
+          }
+        ],
+        "IsPhysicalDocument": [
+          {
+            "value": "0"
+          }
+        ],
+        "createdBy": [
+          {
+            "display": "",
+            "value": "import"
+          }
+        ],
+        "meta": {
+          "identifierInventory": [
+            {
+              "display": "Numéro d'inventaire",
+              "html": false,
+              "value": "30300"
+            }
+          ],
+          "creator": [
+            {
+              "display": "Auteur",
+              "displayCount": true,
+              "exploreIndex": "author_t",
+              "exploreQuery": "Auteur: \"Charles François Courtet\"",
+              "html": false,
+              "value": "Charles François Courtet"
+            }
+          ],
+          "dateDescription": [
+            {
+              "display": "Date de création",
+              "html": false,
+              "value": "1939-1941"
+            }
+          ],
+          "descriptionCollation": [
+            {
+              "display": "Collation",
+              "html": false,
+              "value": "1 carnet comprenant 34 pages"
+            }
+          ]
+        },
+        "imageSource_256": [
+          {
+            "value": "/in/rest/Thumb/image?id=ark%3A%2F66008%2F30300&author=Charles+Fran%C3%A7ois+Courtet&title=Captivit%C3%A9.+Camp+de+Nuremberg&TypeOfDocument=MuseumBook&mat=livre_numerise&ct=true&size=256"
+          }
+        ]
+      }
+    ],
+    "solrQuery": "stateFacet:*",
+    "sortCriteria": [
+      {
+        "label": "Pertinence",
+        "value": "score"
+      },
+      {
+        "label": "Titre (A-Z)",
+        "value": "title_sort_ASC"
+      },
+      {
+        "label": "Titre (Z-A)",
+        "value": "title_sort_DESC"
+      }
+    ],
+    "sortOrder": "score"
+  },
+  "domain_s:\"Peinture\"": {
+    "annotatedSavedSearch": {
+      "item": {
+        "id": "712c7a39-2ed1-4bd9-8e83-81ba13fe335d",
+        "includeInSearchHistory": true,
+        "isSaved": false,
+        "lastFetched": "2025-12-25T16:35:14.257+0000",
+        "lastNumHits": 77,
+        "lastQueryTimeInMs": 0,
+        "order": "score",
+        "q": {
+          "terms": [
+            {
+              "index": "text",
+              "logical": "AND",
+              "match": "CCL",
+              "value": "domain_s:\"Peinture\""
+            }
+          ]
+        },
+        "query": [
+          "domain_s:\"Peinture\""
+        ],
+        "saved": false,
+        "sectionFacet": "*"
+      },
+      "model": {
+        "terms": [
+          {
+            "display": true,
+            "index": "text",
+            "logicalOp": "AND",
+            "matching": "CCL",
+            "term": "domain_s:\"Peinture\"",
+            "termid": 0
+          },
+          {
+            "display": true,
+            "index": "title_t",
+            "logicalOp": "AND",
+            "matching": "WORDS",
+            "termid": 1
+          },
+          {
+            "display": true,
+            "index": "subject_t",
+            "logicalOp": "AND",
+            "matching": "WORDS",
+            "termid": 2
+          }
+        ]
+      },
+      "query": "domain_s:\"Peinture\"",
+      "searchSection": {
+        "defaultSection": true,
+        "displayMode": "list",
+        "id": "Tout",
+        "searchByImage": false,
+        "searchIndex": "",
+        "sf": "*",
+        "title": "Recherche simple"
+      },
+      "searchStatement": "domain_s:\"Peinture\"",
+      "type": "SimpleQuery"
+    },
+    "facets": [
+      {
+        "caption": "Domaine",
+        "code": "domain_s",
+        "config": {
+          "displayRemoveFacet": true,
+          "displayValuesOnLoad": true,
+          "dynamicFacet": false,
+          "facetQueries": [],
+          "facetQuery": [],
+          "index": "domain_s",
+          "justSearchLimit": false,
+          "multilingualFacet": false,
+          "multiselect": false,
+          "pivotFacet": false,
+          "pivotNames": [],
+          "queryBasedFacet": false,
+          "showThePlusButton": false,
+          "sort": "-",
+          "sortOrderAsc": false,
+          "title": {
+            "CAT": "",
+            "DUT": "",
+            "ENG": "Domain",
+            "ES": "",
+            "FRE": "Domaine",
+            "GER": ""
+          },
+          "treeValuesOpened": [],
+          "visualization": ":"
+        },
+        "display": "Domaine",
+        "items": [
+          {
+            "caption": "Peinture",
+            "classLink": "Peinture",
+            "count": 77,
+            "quotedValue": "\"Peinture\"",
+            "value": "Peinture"
+          },
+          {
+            "caption": "Miniature",
+            "classLink": "Miniature",
+            "count": 1,
+            "quotedValue": "\"Miniature\"",
+            "value": "Miniature"
+          }
+        ],
+        "multiSelect": false,
+        "name": "domain_s",
+        "rawCount": 0,
+        "seeMore": false,
+        "showPaginate": false,
+        "total": 0,
+        "totalPage": 0
+      },
+      {
+        "caption": "Département",
+        "code": "department_s",
+        "config": {
+          "displayRemoveFacet": false,
+          "displayValuesOnLoad": true,
+          "dynamicFacet": false,
+          "facetQueries": [],
+          "facetQuery": [],
+          "index": "department_s",
+          "justSearchLimit": false,
+          "multilingualFacet": false,
+          "multiselect": false,
+          "pivotFacet": false,
+          "pivotNames": [],
+          "queryBasedFacet": false,
+          "showThePlusButton": false,
+          "sort": "-",
+          "sortOrderAsc": false,
+          "title": {
+            "CAT": "",
+            "DUT": "",
+            "ENG": "Department",
+            "ES": "",
+            "FRE": "Département",
+            "GER": ""
+          },
+          "treeValuesOpened": [],
+          "visualization": ":"
+        },
+        "display": "Département",
+        "items": [
+          {
+            "caption": "Peintures/sculptures",
+            "classLink": "Peinturessculptures",
+            "count": 75,
+            "quotedValue": "\"Peintures/sculptures\"",
+            "value": "Peintures/sculptures"
+          },
+          {
+            "caption": "Estampes/dessins/photos",
+            "classLink": "Estampesdessinsphotos",
+            "count": 2,
+            "quotedValue": "\"Estampes/dessins/photos\"",
+            "value": "Estampes/dessins/photos"
+          }
+        ],
+        "multiSelect": false,
+        "name": "department_s",
+        "rawCount": 0,
+        "seeMore": false,
+        "showPaginate": false,
+        "total": 0,
+        "totalPage": 0
+      },
+      {
+        "caption": "Personne",
+        "code": "subjectPerson_s",
+        "config": {
+          "displayRemoveFacet": true,
+          "displayValuesOnLoad": true,
+          "dynamicFacet": false,
+          "facetQueries": [],
+          "facetQuery": [],
+          "index": "subjectPerson_s",
+          "justSearchLimit": false,
+          "multilingualFacet": false,
+          "multiselect": false,
+          "pivotFacet": false,
+          "pivotNames": [],
+          "queryBasedFacet": false,
+          "showThePlusButton": false,
+          "sort": "-",
+          "sortOrderAsc": false,
+          "title": {
+            "CAT": "",
+            "DUT": "",
+            "ENG": "Person",
+            "ES": "",
+            "FRE": "Personne",
+            "GER": ""
+          },
+          "treeValuesOpened": [],
+          "visualization": ":"
+        },
+        "display": "Personne",
+        "items": [
+          {
+            "caption": "Napoléon Ier",
+            "classLink": "NapolonIer",
+            "count": 7,
+            "quotedValue": "\"Napoléon Ier\"",
+            "value": "Napoléon Ier"
+          },
+          {
+            "caption": "Bourbon-Condé, Louis II",
+            "classLink": "BourbonCondLouisII",
+            "count": 4,
+            "quotedValue": "\"Bourbon-Condé, Louis II\"",
+            "value": "Bourbon-Condé, Louis II"
+          },
+          {
+            "caption": "Louis XIV",
+            "classLink": "LouisXIV",
+            "count": 3,
+            "quotedValue": "\"Louis XIV\"",
+            "value": "Louis XIV"
+          },
+          {
+            "caption": "Hardouin-Mansart, Jules",
+            "classLink": "HardouinMansartJules",
+            "count": 2,
+            "quotedValue": "\"Hardouin-Mansart, Jules\"",
+            "value": "Hardouin-Mansart, Jules"
+          },
+          {
+            "caption": "Lasalle de, Antoine Charles Louis",
+            "classLink": "LasalledeAntoineCharlesLouis",
+            "count": 2,
+            "quotedValue": "\"Lasalle de, Antoine Charles Louis\"",
+            "value": "Lasalle de, Antoine Charles Louis"
+          },
+          {
+            "caption": "Louvois, François Michel Le Tellier",
+            "classLink": "LouvoisFranoisMichelLeTellier",
+            "count": 2,
+            "quotedValue": "\"Louvois, François Michel Le Tellier\"",
+            "value": "Louvois, François Michel Le Tellier"
+          },
+          {
+            "caption": "Saint Ambroise",
+            "classLink": "SaintAmbroise",
+            "count": 2,
+            "quotedValue": "\"Saint Ambroise\"",
+            "value": "Saint Ambroise"
+          },
+          {
+            "caption": "Saint Jérôme",
+            "classLink": "SaintJrme",
+            "count": 2,
+            "quotedValue": "\"Saint Jérôme\"",
+            "value": "Saint Jérôme"
+          },
+          {
+            "caption": "Arnoux, Paul Edouard",
+            "classLink": "ArnouxPaulEdouard",
+            "count": 1,
+            "quotedValue": "\"Arnoux, Paul Edouard\"",
+            "value": "Arnoux, Paul Edouard"
+          },
+          {
+            "caption": "Aurelle de Paladines, Louis Jean Baptiste, d'",
+            "classLink": "AurelledePaladinesLouisJeanBaptisted",
+            "count": 1,
+            "quotedValue": "\"Aurelle de Paladines, Louis Jean Baptiste, d'\"",
+            "value": "Aurelle de Paladines, Louis Jean Baptiste, d'"
+          }
+        ],
+        "multiSelect": false,
+        "name": "subjectPerson_s",
+        "rawCount": 0,
+        "seeMore": true,
+        "showPaginate": false,
+        "total": 0,
+        "totalPage": 0
+      },
+      {
+        "caption": "Événement",
+        "code": "subjectEvent_s",
+        "config": {
+          "displayRemoveFacet": true,
+          "displayValuesOnLoad": true,
+          "dynamicFacet": false,
+          "facetQueries": [],
+          "facetQuery": [],
+          "index": "subjectEvent_s",
+          "justSearchLimit": false,
+          "multilingualFacet": false,
+          "multiselect": false,
+          "pivotFacet": false,
+          "pivotNames": [],
+          "queryBasedFacet": false,
+          "showThePlusButton": false,
+          "sort": "-",
+          "sortOrderAsc": false,
+          "title": {
+            "CAT": "",
+            "DUT": "",
+            "ENG": "Event",
+            "ES": "",
+            "FRE": "Événement",
+            "GER": ""
+          },
+          "treeValuesOpened": [],
+          "visualization": ":"
+        },
+        "display": "Événement",
+        "items": [
+          {
+            "caption": "Première Guerre mondiale (1914-1918)",
+            "classLink": "PremireGuerremondiale19141918",
+            "count": 14,
+            "quotedValue": "\"Première Guerre mondiale (1914-1918)\"",
+            "value": "Première Guerre mondiale (1914-1918)"
+          },
+          {
+            "caption": "Guerre de 1870-1871",
+            "classLink": "Guerrede18701871",
+            "count": 6,
+            "quotedValue": "\"Guerre de 1870-1871\"",
+            "value": "Guerre de 1870-1871"
+          },
+          {
+            "caption": "Seconde Guerre mondiale (1939-1945)",
+            "classLink": "SecondeGuerremondiale19391945",
+            "count": 4,
+            "quotedValue": "\"Seconde Guerre mondiale (1939-1945)\"",
+            "value": "Seconde Guerre mondiale (1939-1945)"
+          },
+          {
+            "caption": "Guerre de Crimée",
+            "classLink": "GuerredeCrime",
+            "count": 3,
+            "quotedValue": "\"Guerre de Crimée\"",
+            "value": "Guerre de Crimée"
+          },
+          {
+            "caption": "Siège de Sébastopol",
+            "classLink": "SigedeSbastopol",
+            "count": 3,
+            "quotedValue": "\"Siège de Sébastopol\"",
+            "value": "Siège de Sébastopol"
+          },
+          {
+            "caption": "Campagne du Tonkin",
+            "classLink": "CampagneduTonkin",
+            "count": 2,
+            "quotedValue": "\"Campagne du Tonkin\"",
+            "value": "Campagne du Tonkin"
+          },
+          {
+            "caption": "Monarchie de Juillet (1830-1848)",
+            "classLink": "MonarchiedeJuillet18301848",
+            "count": 2,
+            "quotedValue": "\"Monarchie de Juillet (1830-1848)\"",
+            "value": "Monarchie de Juillet (1830-1848)"
+          },
+          {
+            "caption": "Retour des cendres",
+            "classLink": "Retourdescendres",
+            "count": 2,
+            "quotedValue": "\"Retour des cendres\"",
+            "value": "Retour des cendres"
+          },
+          {
+            "caption": "Bataille d'Oued el Alleug",
+            "classLink": "BatailledOuedelAlleug",
+            "count": 1,
+            "quotedValue": "\"Bataille d'Oued el Alleug\"",
+            "value": "Bataille d'Oued el Alleug"
+          },
+          {
+            "caption": "Bataille de Champigny",
+            "classLink": "BatailledeChampigny",
+            "count": 1,
+            "quotedValue": "\"Bataille de Champigny\"",
+            "value": "Bataille de Champigny"
+          }
+        ],
+        "multiSelect": false,
+        "name": "subjectEvent_s",
+        "rawCount": 0,
+        "seeMore": true,
+        "showPaginate": false,
+        "total": 0,
+        "totalPage": 0
+      },
+      {
+        "caption": "Thème",
+        "code": "subjectTheme_s",
+        "config": {
+          "displayRemoveFacet": true,
+          "displayValuesOnLoad": true,
+          "dynamicFacet": false,
+          "facetQueries": [],
+          "facetQuery": [],
+          "index": "subjectTheme_s",
+          "justSearchLimit": false,
+          "multilingualFacet": false,
+          "multiselect": false,
+          "pivotFacet": false,
+          "pivotNames": [],
+          "queryBasedFacet": false,
+          "showThePlusButton": false,
+          "sort": "-",
+          "sortOrderAsc": false,
+          "title": {
+            "CAT": "",
+            "DUT": "",
+            "ENG": "Theme",
+            "ES": "",
+            "FRE": "Thème",
+            "GER": ""
+          },
+          "treeValuesOpened": [],
+          "visualization": ":"
+        },
+        "display": "Thème",
+        "items": [
+          {
+            "caption": "Scène",
+            "classLink": "Scne",
+            "count": 27,
+            "quotedValue": "\"Scène\"",
+            "value": "Scène"
+          },
+          {
+            "caption": "Portrait",
+            "classLink": "Portrait",
+            "count": 23,
+            "quotedValue": "\"Portrait\"",
+            "value": "Portrait"
+          },
+          {
+            "caption": "Soldat",
+            "classLink": "Soldat",
+            "count": 17,
+            "quotedValue": "\"Soldat\"",
+            "value": "Soldat"
+          },
+          {
+            "caption": "Uniforme",
+            "classLink": "Uniforme",
+            "count": 17,
+            "quotedValue": "\"Uniforme\"",
+            "value": "Uniforme"
+          },
+          {
+            "caption": "Français",
+            "classLink": "Franais",
+            "count": 15,
+            "quotedValue": "\"Français\"",
+            "value": "Français"
+          },
+          {
+            "caption": "En pied",
+            "classLink": "Enpied",
+            "count": 9,
+            "quotedValue": "\"En pied\"",
+            "value": "En pied"
+          },
+          {
+            "caption": "Scène historique",
+            "classLink": "Scnehistorique",
+            "count": 9,
+            "quotedValue": "\"Scène historique\"",
+            "value": "Scène historique"
+          },
+          {
+            "caption": "Bataille",
+            "classLink": "Bataille",
+            "count": 8,
+            "quotedValue": "\"Bataille\"",
+            "value": "Bataille"
+          },
+          {
+            "caption": "De trois-quarts",
+            "classLink": "Detroisquarts",
+            "count": 8,
+            "quotedValue": "\"De trois-quarts\"",
+            "value": "De trois-quarts"
+          },
+          {
+            "caption": "Femme",
+            "classLink": "Femme",
+            "count": 7,
+            "quotedValue": "\"Femme\"",
+            "value": "Femme"
+          }
+        ],
+        "multiSelect": false,
+        "name": "subjectTheme_s",
+        "rawCount": 0,
+        "seeMore": true,
+        "showPaginate": false,
+        "total": 0,
+        "totalPage": 0
+      },
+      {
+        "caption": "Auteur",
+        "code": "author_s",
+        "config": {
+          "displayRemoveFacet": true,
+          "displayValuesOnLoad": true,
+          "dynamicFacet": false,
+          "facetQueries": [],
+          "facetQuery": [],
+          "index": "author_s",
+          "justSearchLimit": false,
+          "multilingualFacet": false,
+          "multiselect": false,
+          "pivotFacet": false,
+          "pivotNames": [],
+          "queryBasedFacet": false,
+          "showThePlusButton": false,
+          "sort": "-",
+          "sortOrderAsc": false,
+          "title": {
+            "CAT": "",
+            "DUT": "",
+            "ENG": "Author",
+            "ES": "",
+            "FRE": "Auteur",
+            "GER": ""
+          },
+          "treeValuesOpened": [],
+          "visualization": ":"
+        },
+        "display": "Auteur",
+        "items": [
+          {
+            "caption": "Anonyme",
+            "classLink": "Anonyme",
+            "count": 8,
+            "quotedValue": "\"Anonyme\"",
+            "value": "Anonyme"
+          },
+          {
+            "caption": "Boullogne, dit l'Aîné, Bon",
+            "classLink": "BoullogneditlAnBon",
+            "count": 4,
+            "quotedValue": "\"Boullogne, dit l'Aîné, Bon\"",
+            "value": "Boullogne, dit l'Aîné, Bon"
+          },
+          {
+            "caption": "Detaille, Jean-Baptiste-Édouard",
+            "classLink": "DetailleJeanBaptistedouard",
+            "count": 4,
+            "quotedValue": "\"Detaille, Jean-Baptiste-Édouard\"",
+            "value": "Detaille, Jean-Baptiste-Édouard"
+          },
+          {
+            "caption": "Scott, Georges Bertin",
+            "classLink": "ScottGeorgesBertin",
+            "count": 4,
+            "quotedValue": "\"Scott, Georges Bertin\"",
+            "value": "Scott, Georges Bertin"
+          },
+          {
+            "caption": "Delpech, Jean",
+            "classLink": "DelpechJean",
+            "count": 2,
+            "quotedValue": "\"Delpech, Jean\"",
+            "value": "Delpech, Jean"
+          },
+          {
+            "caption": "Gervex, Henri",
+            "classLink": "GervexHenri",
+            "count": 2,
+            "quotedValue": "\"Gervex, Henri\"",
+            "value": "Gervex, Henri"
+          },
+          {
+            "caption": "Grolleron, Paul-Louis-Narcisse",
+            "classLink": "GrolleronPaulLouisNarcisse",
+            "count": 2,
+            "quotedValue": "\"Grolleron, Paul-Louis-Narcisse\"",
+            "value": "Grolleron, Paul-Louis-Narcisse"
+          },
+          {
+            "caption": "Gérard, François",
+            "classLink": "GrardFranois",
+            "count": 2,
+            "quotedValue": "\"Gérard, François\"",
+            "value": "Gérard, François"
+          },
+          {
+            "caption": "Neuville (dit), Deneuville, Alphonse Marie de",
+            "classLink": "NeuvilleditDeneuvilleAlphonseMariede",
+            "count": 2,
+            "quotedValue": "\"Neuville (dit), Deneuville, Alphonse Marie de\"",
+            "value": "Neuville (dit), Deneuville, Alphonse Marie de"
+          },
+          {
+            "caption": "Philippoteaux, Henri Félix Emmanuel",
+            "classLink": "PhilippoteauxHenriFlixEmmanuel",
+            "count": 2,
+            "quotedValue": "\"Philippoteaux, Henri Félix Emmanuel\"",
+            "value": "Philippoteaux, Henri Félix Emmanuel"
+          }
+        ],
+        "multiSelect": false,
+        "name": "author_s",
+        "rawCount": 0,
+        "seeMore": true,
+        "showPaginate": false,
+        "total": 0,
+        "totalPage": 0
+      },
+      {
+        "caption": "Image",
+        "code": "hasImageFields_b",
+        "config": {
+          "displayRemoveFacet": true,
+          "displayValuesOnLoad": true,
+          "dynamicFacet": false,
+          "facetQueries": [],
+          "facetQuery": [],
+          "index": "hasImageFields_b",
+          "justSearchLimit": false,
+          "multilingualFacet": false,
+          "multiselect": false,
+          "pivotFacet": false,
+          "pivotNames": [],
+          "queryBasedFacet": false,
+          "showThePlusButton": false,
+          "sort": "-",
+          "sortOrderAsc": false,
+          "title": {
+            "CAT": "",
+            "DUT": "",
+            "ENG": "Image",
+            "ES": "",
+            "FRE": "Image",
+            "GER": ""
+          },
+          "treeValuesOpened": [],
+          "visualization": ":"
+        },
+        "display": "Image",
+        "items": [
+          {
+            "caption": "Avec image",
+            "classLink": "Avecimage",
+            "count": 77,
+            "display": "Avec image",
+            "quotedValue": "\"true\"",
+            "value": "true"
+          }
+        ],
+        "multiSelect": false,
+        "name": "hasImageFields_b",
+        "rawCount": 0,
+        "seeMore": false,
+        "showPaginate": false,
+        "total": 0,
+        "totalPage": 0
+      },
+      {
+        "caption": "Notice",
+        "code": "TypeOfDocumentFacet",
+        "config": {
+          "displayRemoveFacet": true,
+          "displayValuesOnLoad": true,
+          "dynamicFacet": false,
+          "facetQueries": [],
+          "facetQuery": [],
+          "index": "TypeOfDocumentFacet",
+          "justSearchLimit": false,
+          "multilingualFacet": false,
+          "multiselect": false,
+          "pivotFacet": false,
+          "pivotNames": [],
+          "queryBasedFacet": false,
+          "showThePlusButton": false,
+          "sort": "-",
+          "sortOrderAsc": false,
+          "title": {
+            "CAT": "",
+            "DUT": "",
+            "ENG": "Record",
+            "ES": "",
+            "FRE": "Notice",
+            "GER": ""
+          },
+          "treeValuesOpened": [],
+          "visualization": ":"
+        },
+        "display": "Notice",
+        "items": [
+          {
+            "caption": "Objet",
+            "classLink": "Objet",
+            "count": 77,
+            "display": "Objet",
+            "quotedValue": "\"MuseumDocument\"",
+            "value": "MuseumDocument"
+          }
+        ],
+        "multiSelect": false,
+        "name": "TypeOfDocumentFacet",
+        "rawCount": 0,
+        "seeMore": false,
+        "showPaginate": false,
+        "total": 0,
+        "totalPage": 0
+      }
+    ],
+    "maxPageNo": 10,
+    "maxScore": 4.8319683,
+    "numHits": 77,
+    "pageNo": 1,
+    "pageSize": 8,
+    "query": "domain_s:\"Peinture\"",
+    "queryComponents": [
+      {
+        "query": "domain_s:\"Peinture\""
+      }
+    ],
+    "querySyntax": "ccl",
+    "queryid": "712c7a39-2ed1-4bd9-8e83-81ba13fe335d",
+    "resultSet": [
+      {
+        "stateFacet": [
+          {
+            "value": "Accepted"
+          }
+        ],
+        "disableNoticeConsultation": [
+          {
+            "value": ""
+          }
+        ],
+        "isExternalContent": [
+          {
+            "value": "false"
+          }
+        ],
+        "posInSet": [
+          {
+            "value": "1"
+          }
+        ],
+        "DateCreated": [
+          {
+            "value": "2024-12-06T10:44:18.507Z"
+          }
+        ],
+        "hideShareAction": [
+          {
+            "value": ""
+          }
+        ],
+        "readerEnabled": [
+          {
+            "value": "ImageReader"
+          }
+        ],
+        "DomainFacet": [
+          {
+            "value": ""
+          }
+        ],
+        "title": [
+          {
+            "value": "Le général Lasalle à Wagram, le 6 juillet 1809"
+          }
+        ],
+        "TypeOfDocumentFacet": [
+          {
+            "value": "MuseumDocument"
+          }
+        ],
+        "DateLastChange": [
+          {
+            "value": "2025-04-30T10:02:00.339Z"
+          }
+        ],
+        "imageSource_512": [
+          {
+            "value": "/in/rest/Thumb/image?id=ark%3A%2F66008%2F035&author=Detaille%2C+Jean-Baptiste-%C3%89douard&title=Le+g%C3%A9n%C3%A9ral+Lasalle+%C3%A0+Wagram%2C+le+6+juillet+1809&TypeOfDocument=MuseumDocument&ct=true&size=512"
+          }
+        ],
+        "score": [
+          {
+            "value": "4.8319683"
+          }
+        ],
+        "imageSource_128": [
+          {
+            "value": "/in/rest/Thumb/image?id=ark%3A%2F66008%2F035&author=Detaille%2C+Jean-Baptiste-%C3%89douard&title=Le+g%C3%A9n%C3%A9ral+Lasalle+%C3%A0+Wagram%2C+le+6+juillet+1809&TypeOfDocument=MuseumDocument&ct=true&size=128"
+          }
+        ],
+        "IsPhysicalDocument": [
+          {
+            "value": "0"
+          }
+        ],
+        "createdBy": [
+          {
+            "display": "",
+            "value": "import"
+          }
+        ],
+        "meta": {
+          "identifierInventory": [
+            {
+              "display": "Numéro d'inventaire",
+              "html": false,
+              "value": "035"
+            }
+          ],
+          "identifierCallnumber": [
+            {
+              "display": "Autre numéro d'identification",
+              "html": false,
+              "value": "Cote : Ea 5 D"
+            }
+          ],
+          "creator": [
+            {
+              "display": "Auteur / Exécutant",
+              "displayCount": true,
+              "exploreIndex": "author_t",
+              "exploreQuery": "Auteur: \"Detaille, Jean-Baptiste-Édouard\"",
+              "html": false,
+              "value": "Detaille, Jean-Baptiste-Édouard"
+            }
+          ],
+          "place": [
+            {
+              "display": "Lieu de création",
+              "displayCount": true,
+              "exploreIndex": "place_t",
+              "exploreQuery": "Lieu: \"Paris\"",
+              "html": false,
+              "value": "Paris"
+            }
+          ]
+        },
+        "imageSource_256": [
+          {
+            "value": "/in/rest/Thumb/image?id=ark%3A%2F66008%2F035&author=Detaille%2C+Jean-Baptiste-%C3%89douard&title=Le+g%C3%A9n%C3%A9ral+Lasalle+%C3%A0+Wagram%2C+le+6+juillet+1809&TypeOfDocument=MuseumDocument&ct=true&size=256"
+          }
+        ],
+        "__thumbSVCQueryParam": [
+          {
+            "value": "id=ark%3A%2F66008%2F035&title=Le+g%C3%A9n%C3%A9ral+Lasalle+%C3%A0+Wagram%2C+le+6+juillet+1809&TypeOfDocument=MuseumDocument&icon=%24ICON%24&size=%24SIZE%24&isPhysical=0"
+          }
+        ],
+        "id": [
+          {
+            "value": "h::ark:/66008/035"
+          }
+        ],
+        "ark": [
+          {
+            "value": "66008/035"
+          }
+        ],
+        "hideFavoriteAction": [
+          {
+            "value": ""
+          }
+        ],
+        "readerLabel": [
+          {
+            "value": "image"
+          }
+        ]
+      },
+      {
+        "stateFacet": [
+          {
+            "value": "Accepted"
+          }
+        ],
+        "disableNoticeConsultation": [
+          {
+            "value": ""
+          }
+        ],
+        "isExternalContent": [
+          {
+            "value": "false"
+          }
+        ],
+        "posInSet": [
+          {
+            "value": "2"
+          }
+        ],
+        "DateCreated": [
+          {
+            "value": "2020-02-26T10:55:19.390Z"
+          }
+        ],
+        "hideShareAction": [
+          {
+            "value": ""
+          }
+        ],
+        "readerEnabled": [
+          {
+            "value": "ImageReader"
+          }
+        ],
+        "DomainFacet": [
+          {
+            "value": ""
+          }
+        ],
+        "title": [
+          {
+            "value": "Icône des saints Habib, Samonas et Gurias"
+          }
+        ],
+        "TypeOfDocumentFacet": [
+          {
+            "value": "MuseumDocument"
+          }
+        ],
+        "DateLastChange": [
+          {
+            "value": "2025-04-30T10:01:54.242Z"
+          }
+        ],
+        "imageSource_512": [
+          {
+            "value": "/in/rest/Thumb/image?id=ark%3A%2F66008%2F6415-1&author=Anonyme&title=Ic%C3%B4ne+des+saints+Habib%2C+Samonas+et+Gurias&TypeOfDocument=MuseumDocument&ct=true&size=512"
+          }
+        ],
+        "score": [
+          {
+            "value": "4.8319683"
+          }
+        ],
+        "imageSource_128": [
+          {
+            "value": "/in/rest/Thumb/image?id=ark%3A%2F66008%2F6415-1&author=Anonyme&title=Ic%C3%B4ne+des+saints+Habib%2C+Samonas+et+Gurias&TypeOfDocument=MuseumDocument&ct=true&size=128"
+          }
+        ],
+        "IsPhysicalDocument": [
+          {
+            "value": "0"
+          }
+        ],
+        "createdBy": [
+          {
+            "display": "",
+            "value": "import"
+          }
+        ],
+        "meta": {
+          "identifierInventory": [
+            {
+              "display": "Numéro d'inventaire",
+              "html": false,
+              "value": "6415-1"
+            }
+          ],
+          "identifierCallnumber": [
+            {
+              "display": "Autre numéro d'identification",
+              "html": false,
+              "value": "Cote : Cd 193"
+            }
+          ],
+          "creator": [
+            {
+              "display": "Auteur / Exécutant",
+              "displayCount": true,
+              "exploreIndex": "author_t",
+              "exploreQuery": "Auteur: \"Anonyme\"",
+              "html": false,
+              "value": "Anonyme"
+            }
+          ],
+          "place": [
+            {
+              "display": "Lieu de création",
+              "displayCount": true,
+              "exploreIndex": "place_t",
+              "exploreQuery": "Lieu: \"Ukraine\"",
+              "html": false,
+              "value": "Ukraine"
+            },
+            {
+              "display": "Lieu de création",
+              "displayCount": true,
+              "exploreIndex": "place_t",
+              "exploreQuery": "Lieu: \"Russie (Fédération de)\"",
+              "html": false,
+              "value": "Russie (Fédération de)"
+            }
+          ]
+        },
+        "imageSource_256": [
+          {
+            "value": "/in/rest/Thumb/image?id=ark%3A%2F66008%2F6415-1&author=Anonyme&title=Ic%C3%B4ne+des+saints+Habib%2C+Samonas+et+Gurias&TypeOfDocument=MuseumDocument&ct=true&size=256"
+          }
+        ],
+        "__thumbSVCQueryParam": [
+          {
+            "value": "id=ark%3A%2F66008%2F6415-1&title=Ic%C3%B4ne+des+saints+Habib%2C+Samonas+et+Gurias&TypeOfDocument=MuseumDocument&icon=%24ICON%24&size=%24SIZE%24&isPhysical=0"
+          }
+        ],
+        "id": [
+          {
+            "value": "h::ark:/66008/6415-1"
+          }
+        ],
+        "ark": [
+          {
+            "value": "66008/6415-1"
+          }
+        ],
+        "hideFavoriteAction": [
+          {
+            "value": ""
+          }
+        ],
+        "readerLabel": [
+          {
+            "value": "image"
+          }
+        ]
+      },
+      {
+        "stateFacet": [
+          {
+            "value": "Accepted"
+          }
+        ],
+        "disableNoticeConsultation": [
+          {
+            "value": ""
+          }
+        ],
+        "isExternalContent": [
+          {
+            "value": "false"
+          }
+        ],
+        "posInSet": [
+          {
+            "value": "3"
+          }
+        ],
+        "DateCreated": [
+          {
+            "value": "2024-01-12T11:38:01.979Z"
+          }
+        ],
+        "hideShareAction": [
+          {
+            "value": ""
+          }
+        ],
+        "readerEnabled": [
+          {
+            "value": "ImageReader"
+          }
+        ],
+        "DomainFacet": [
+          {
+            "value": ""
+          }
+        ],
+        "title": [
+          {
+            "value": "Portrait de Nelly Martyl en infirmière portant la Légion d’Honneur et la Croix de Guerre 1914-1918"
+          }
+        ],
+        "TypeOfDocumentFacet": [
+          {
+            "value": "MuseumDocument"
+          }
+        ],
+        "DateLastChange": [
+          {
+            "value": "2025-04-30T10:01:55.041Z"
+          }
+        ],
+        "imageSource_512": [
+          {
+            "value": "/in/rest/Thumb/image?id=ark%3A%2F66008%2F2023481&author=Scott%2C+Georges+Bertin&title=Portrait+de+Nelly+Martyl+en+infirmi%C3%A8re+portant+la+L%C3%A9gion+d%E2%80%99Honneur+et+la+Croix+de+Guerre+1914-1918&TypeOfDocument=MuseumDocument&ct=true&size=512"
+          }
+        ],
+        "score": [
+          {
+            "value": "4.8319683"
+          }
+        ],
+        "imageSource_128": [
+          {
+            "value": "/in/rest/Thumb/image?id=ark%3A%2F66008%2F2023481&author=Scott%2C+Georges+Bertin&title=Portrait+de+Nelly+Martyl+en+infirmi%C3%A8re+portant+la+L%C3%A9gion+d%E2%80%99Honneur+et+la+Croix+de+Guerre+1914-1918&TypeOfDocument=MuseumDocument&ct=true&size=128"
+          }
+        ],
+        "IsPhysicalDocument": [
+          {
+            "value": "0"
+          }
+        ],
+        "createdBy": [
+          {
+            "display": "",
+            "value": "import"
+          }
+        ],
+        "meta": {
+          "identifierInventory": [
+            {
+              "display": "Numéro d'inventaire",
+              "html": false,
+              "value": "2023.48.1"
+            }
+          ],
+          "creator": [
+            {
+              "display": "Auteur / Exécutant",
+              "displayCount": true,
+              "exploreIndex": "author_t",
+              "exploreQuery": "Auteur: \"Scott, Georges Bertin\"",
+              "html": false,
+              "value": "Scott, Georges Bertin"
+            }
+          ],
+          "place": [
+            {
+              "display": "Lieu de création",
+              "displayCount": true,
+              "exploreIndex": "place_t",
+              "exploreQuery": "Lieu: \"France\"",
+              "html": false,
+              "value": "France"
+            }
+          ]
+        },
+        "imageSource_256": [
+          {
+            "value": "/in/rest/Thumb/image?id=ark%3A%2F66008%2F2023481&author=Scott%2C+Georges+Bertin&title=Portrait+de+Nelly+Martyl+en+infirmi%C3%A8re+portant+la+L%C3%A9gion+d%E2%80%99Honneur+et+la+Croix+de+Guerre+1914-1918&TypeOfDocument=MuseumDocument&ct=true&size=256"
+          }
+        ],
+        "__thumbSVCQueryParam": [
+          {
+            "value": "id=ark%3A%2F66008%2F2023481&title=Portrait+de+Nelly+Martyl+en+infirmi%C3%A8re+portant+la+L%C3%A9gion+d%E2%80%99Honneur+et+la+Croix+de+Guerre+1914-1918&TypeOfDocument=MuseumDocument&icon=%24ICON%24&size=%24SIZE%24&isPhysical=0"
+          }
+        ],
+        "id": [
+          {
+            "value": "h::ark:/66008/2023481"
+          }
+        ],
+        "ark": [
+          {
+            "value": "66008/2023481"
+          }
+        ],
+        "hideFavoriteAction": [
+          {
+            "value": ""
+          }
+        ],
+        "readerLabel": [
+          {
+            "value": "image"
+          }
+        ]
+      },
+      {
+        "stateFacet": [
+          {
+            "value": "Accepted"
+          }
+        ],
+        "disableNoticeConsultation": [
+          {
+            "value": ""
+          }
+        ],
+        "isExternalContent": [
+          {
+            "value": "false"
+          }
+        ],
+        "posInSet": [
+          {
+            "value": "4"
+          }
+        ],
+        "DateCreated": [
+          {
+            "value": "2021-03-19T18:01:58.504Z"
+          }
+        ],
+        "hideShareAction": [
+          {
+            "value": ""
+          }
+        ],
+        "readerEnabled": [
+          {
+            "value": "ImageReader"
+          }
+        ],
+        "DomainFacet": [
+          {
+            "value": ""
+          }
+        ],
+        "title": [
+          {
+            "value": "Un capitaine du génie"
+          }
+        ],
+        "TypeOfDocumentFacet": [
+          {
+            "value": "MuseumDocument"
+          }
+        ],
+        "DateLastChange": [
+          {
+            "value": "2025-04-30T10:02:23.048Z"
+          }
+        ],
+        "imageSource_512": [
+          {
+            "value": "/in/rest/Thumb/image?id=ark%3A%2F66008%2F13224&author=Anonyme&title=Un+capitaine+du+g%C3%A9nie&TypeOfDocument=MuseumDocument&ct=true&size=512"
+          }
+        ],
+        "score": [
+          {
+            "value": "4.8319683"
+          }
+        ],
+        "imageSource_128": [
+          {
+            "value": "/in/rest/Thumb/image?id=ark%3A%2F66008%2F13224&author=Anonyme&title=Un+capitaine+du+g%C3%A9nie&TypeOfDocument=MuseumDocument&ct=true&size=128"
+          }
+        ],
+        "IsPhysicalDocument": [
+          {
+            "value": "0"
+          }
+        ],
+        "createdBy": [
+          {
+            "display": "",
+            "value": "import"
+          }
+        ],
+        "meta": {
+          "identifierInventory": [
+            {
+              "display": "Numéro d'inventaire",
+              "html": false,
+              "value": "13224"
+            }
+          ],
+          "identifierCallnumber": [
+            {
+              "display": "Autre numéro d'identification",
+              "html": false,
+              "value": "Cote : Ec 1146"
+            },
+            {
+              "display": "Autre numéro d'identification",
+              "html": false,
+              "value": "Autre n°inv.non MA : 2917"
+            }
+          ],
+          "creator": [
+            {
+              "display": "Auteur / Exécutant",
+              "displayCount": true,
+              "exploreIndex": "author_t",
+              "exploreQuery": "Auteur: \"Anonyme\"",
+              "html": false,
+              "value": "Anonyme"
+            }
+          ],
+          "place": [
+            {
+              "display": "Lieu de création",
+              "displayCount": true,
+              "exploreIndex": "place_t",
+              "exploreQuery": "Lieu: \"France\"",
+              "html": false,
+              "value": "France"
+            }
+          ]
+        },
+        "imageSource_256": [
+          {
+            "value": "/in/rest/Thumb/image?id=ark%3A%2F66008%2F13224&author=Anonyme&title=Un+capitaine+du+g%C3%A9nie&TypeOfDocument=MuseumDocument&ct=true&size=256"
+          }
+        ],
+        "__thumbSVCQueryParam": [
+          {
+            "value": "id=ark%3A%2F66008%2F13224&title=Un+capitaine+du+g%C3%A9nie&TypeOfDocument=MuseumDocument&icon=%24ICON%24&size=%24SIZE%24&isPhysical=0"
+          }
+        ],
+        "id": [
+          {
+            "value": "h::ark:/66008/13224"
+          }
+        ],
+        "ark": [
+          {
+            "value": "66008/13224"
+          }
+        ],
+        "hideFavoriteAction": [
+          {
+            "value": ""
+          }
+        ],
+        "readerLabel": [
+          {
+            "value": "image"
+          }
+        ]
+      },
+      {
+        "stateFacet": [
+          {
+            "value": "Accepted"
+          }
+        ],
+        "disableNoticeConsultation": [
+          {
+            "value": ""
+          }
+        ],
+        "isExternalContent": [
+          {
+            "value": "false"
+          }
+        ],
+        "posInSet": [
+          {
+            "value": "5"
+          }
+        ],
+        "DateCreated": [
+          {
+            "value": "2017-10-12T22:46:44.040Z"
+          }
+        ],
+        "hideShareAction": [
+          {
+            "value": ""
+          }
+        ],
+        "readerEnabled": [
+          {
+            "value": "ImageReader"
+          }
+        ],
+        "DomainFacet": [
+          {
+            "value": ""
+          }
+        ],
+        "title": [
+          {
+            "value": "La défaite des Anglais en l'Île de Ré par l'armée française le 8 novembre 1627"
+          }
+        ],
+        "TypeOfDocumentFacet": [
+          {
+            "value": "MuseumDocument"
+          }
+        ],
+        "DateLastChange": [
+          {
+            "value": "2025-04-30T10:02:43.184Z"
+          }
+        ],
+        "imageSource_512": [
+          {
+            "value": "/in/rest/Thumb/image?id=ark%3A%2F66008%2F2009271&author=La+Hyre%2C+Laurent+de&title=La+d%C3%A9faite+des+Anglais+en+l%27%C3%8Ele+de+R%C3%A9+par+l%27arm%C3%A9e+fran%C3%A7aise+le+8+novembre+1627&TypeOfDocument=MuseumDocument&ct=true&size=512"
+          }
+        ],
+        "score": [
+          {
+            "value": "4.8319683"
+          }
+        ],
+        "imageSource_128": [
+          {
+            "value": "/in/rest/Thumb/image?id=ark%3A%2F66008%2F2009271&author=La+Hyre%2C+Laurent+de&title=La+d%C3%A9faite+des+Anglais+en+l%27%C3%8Ele+de+R%C3%A9+par+l%27arm%C3%A9e+fran%C3%A7aise+le+8+novembre+1627&TypeOfDocument=MuseumDocument&ct=true&size=128"
+          }
+        ],
+        "IsPhysicalDocument": [
+          {
+            "value": "0"
+          }
+        ],
+        "createdBy": [
+          {
+            "display": "",
+            "value": "import"
+          }
+        ],
+        "meta": {
+          "identifierInventory": [
+            {
+              "display": "Numéro d'inventaire",
+              "html": false,
+              "value": "2009.27.1"
+            }
+          ],
+          "creator": [
+            {
+              "display": "Auteur / Exécutant",
+              "displayCount": true,
+              "exploreIndex": "author_t",
+              "exploreQuery": "Auteur: \"La Hyre, Laurent de\"",
+              "html": false,
+              "value": "La Hyre, Laurent de"
+            }
+          ],
+          "place": [
+            {
+              "display": "Lieu de création",
+              "displayCount": true,
+              "exploreIndex": "place_t",
+              "exploreQuery": "Lieu: \"France\"",
+              "html": false,
+              "value": "France"
+            }
+          ]
+        },
+        "imageSource_256": [
+          {
+            "value": "/in/rest/Thumb/image?id=ark%3A%2F66008%2F2009271&author=La+Hyre%2C+Laurent+de&title=La+d%C3%A9faite+des+Anglais+en+l%27%C3%8Ele+de+R%C3%A9+par+l%27arm%C3%A9e+fran%C3%A7aise+le+8+novembre+1627&TypeOfDocument=MuseumDocument&ct=true&size=256"
+          }
+        ],
+        "__thumbSVCQueryParam": [
+          {
+            "value": "id=ark%3A%2F66008%2F2009271&title=La+d%C3%A9faite+des+Anglais+en+l%27%C3%8Ele+de+R%C3%A9+par+l%27arm%C3%A9e+fran%C3%A7aise+le+8+novembre+1627&TypeOfDocument=MuseumDocument&icon=%24ICON%24&size=%24SIZE%24&isPhysical=0"
+          }
+        ],
+        "id": [
+          {
+            "value": "h::ark:/66008/2009271"
+          }
+        ],
+        "ark": [
+          {
+            "value": "66008/2009271"
+          }
+        ],
+        "hideFavoriteAction": [
+          {
+            "value": ""
+          }
+        ],
+        "readerLabel": [
+          {
+            "value": "image"
+          }
+        ]
+      },
+      {
+        "stateFacet": [
+          {
+            "value": "Accepted"
+          }
+        ],
+        "disableNoticeConsultation": [
+          {
+            "value": ""
+          }
+        ],
+        "isExternalContent": [
+          {
+            "value": "false"
+          }
+        ],
+        "posInSet": [
+          {
+            "value": "6"
+          }
+        ],
+        "DateCreated": [
+          {
+            "value": "2017-10-12T22:46:53.224Z"
+          }
+        ],
+        "hideShareAction": [
+          {
+            "value": ""
+          }
+        ],
+        "readerEnabled": [
+          {
+            "value": "ImageReader"
+          }
+        ],
+        "DomainFacet": [
+          {
+            "value": ""
+          }
+        ],
+        "title": [
+          {
+            "value": "Gare de l'Est, 1917"
+          }
+        ],
+        "TypeOfDocumentFacet": [
+          {
+            "value": "MuseumDocument"
+          }
+        ],
+        "DateLastChange": [
+          {
+            "value": "2025-04-30T10:02:49.629Z"
+          }
+        ],
+        "imageSource_512": [
+          {
+            "value": "/in/rest/Thumb/image?id=ark%3A%2F66008%2F11071&author=Luce%2C+Maximilien&title=Gare+de+l%27Est%2C+1917&TypeOfDocument=MuseumDocument&ct=true&size=512"
+          }
+        ],
+        "score": [
+          {
+            "value": "4.8319683"
+          }
+        ],
+        "imageSource_128": [
+          {
+            "value": "/in/rest/Thumb/image?id=ark%3A%2F66008%2F11071&author=Luce%2C+Maximilien&title=Gare+de+l%27Est%2C+1917&TypeOfDocument=MuseumDocument&ct=true&size=128"
+          }
+        ],
+        "IsPhysicalDocument": [
+          {
+            "value": "0"
+          }
+        ],
+        "createdBy": [
+          {
+            "display": "",
+            "value": "import"
+          }
+        ],
+        "meta": {
+          "identifierInventory": [
+            {
+              "display": "Numéro d'inventaire",
+              "html": false,
+              "value": "11071"
+            }
+          ],
+          "identifierCallnumber": [
+            {
+              "display": "Autre numéro d'identification",
+              "html": false,
+              "value": "Cote : Eb 400"
+            }
+          ],
+          "creator": [
+            {
+              "display": "Auteur / Exécutant",
+              "displayCount": true,
+              "exploreIndex": "author_t",
+              "exploreQuery": "Auteur: \"Luce, Maximilien\"",
+              "html": false,
+              "value": "Luce, Maximilien"
+            }
+          ],
+          "place": [
+            {
+              "display": "Lieu de création",
+              "displayCount": true,
+              "exploreIndex": "place_t",
+              "exploreQuery": "Lieu: \"Paris\"",
+              "html": false,
+              "value": "Paris"
+            }
+          ]
+        },
+        "imageSource_256": [
+          {
+            "value": "/in/rest/Thumb/image?id=ark%3A%2F66008%2F11071&author=Luce%2C+Maximilien&title=Gare+de+l%27Est%2C+1917&TypeOfDocument=MuseumDocument&ct=true&size=256"
+          }
+        ],
+        "__thumbSVCQueryParam": [
+          {
+            "value": "id=ark%3A%2F66008%2F11071&title=Gare+de+l%27Est%2C+1917&TypeOfDocument=MuseumDocument&icon=%24ICON%24&size=%24SIZE%24&isPhysical=0"
+          }
+        ],
+        "id": [
+          {
+            "value": "h::ark:/66008/11071"
+          }
+        ],
+        "ark": [
+          {
+            "value": "66008/11071"
+          }
+        ],
+        "hideFavoriteAction": [
+          {
+            "value": ""
+          }
+        ],
+        "readerLabel": [
+          {
+            "value": "image"
+          }
+        ]
+      },
+      {
+        "stateFacet": [
+          {
+            "value": "Accepted"
+          }
+        ],
+        "disableNoticeConsultation": [
+          {
+            "value": ""
+          }
+        ],
+        "isExternalContent": [
+          {
+            "value": "false"
+          }
+        ],
+        "posInSet": [
+          {
+            "value": "7"
+          }
+        ],
+        "DateCreated": [
+          {
+            "value": "2017-10-12T22:46:48.374Z"
+          }
+        ],
+        "hideShareAction": [
+          {
+            "value": ""
+          }
+        ],
+        "readerEnabled": [
+          {
+            "value": "ImageReader"
+          }
+        ],
+        "DomainFacet": [
+          {
+            "value": ""
+          }
+        ],
+        "title": [
+          {
+            "value": "Les premiers masques, soldats avec un masque à gaz"
+          }
+        ],
+        "TypeOfDocumentFacet": [
+          {
+            "value": "MuseumDocument"
+          }
+        ],
+        "DateLastChange": [
+          {
+            "value": "2025-04-30T10:02:50.776Z"
+          }
+        ],
+        "imageSource_512": [
+          {
+            "value": "/in/rest/Thumb/image?id=ark%3A%2F66008%2F05392C1&author=Scott%2C+Georges+Bertin&title=Les+premiers+masques%2C+soldats+avec+un+masque+%C3%A0+gaz&TypeOfDocument=MuseumDocument&ct=true&size=512"
+          }
+        ],
+        "score": [
+          {
+            "value": "4.8319683"
+          }
+        ],
+        "imageSource_128": [
+          {
+            "value": "/in/rest/Thumb/image?id=ark%3A%2F66008%2F05392C1&author=Scott%2C+Georges+Bertin&title=Les+premiers+masques%2C+soldats+avec+un+masque+%C3%A0+gaz&TypeOfDocument=MuseumDocument&ct=true&size=128"
+          }
+        ],
+        "IsPhysicalDocument": [
+          {
+            "value": "0"
+          }
+        ],
+        "createdBy": [
+          {
+            "display": "",
+            "value": "import"
+          }
+        ],
+        "meta": {
+          "identifierInventory": [
+            {
+              "display": "Numéro d'inventaire",
+              "html": false,
+              "value": "05392 C1"
+            }
+          ],
+          "identifierCallnumber": [
+            {
+              "display": "Autre numéro d'identification",
+              "html": false,
+              "value": "Cote : Eb 1536"
+            }
+          ],
+          "creator": [
+            {
+              "display": "Auteur / Exécutant",
+              "displayCount": true,
+              "exploreIndex": "author_t",
+              "exploreQuery": "Auteur: \"Scott, Georges Bertin\"",
+              "html": false,
+              "value": "Scott, Georges Bertin"
+            }
+          ],
+          "place": [
+            {
+              "display": "Lieu de création",
+              "displayCount": true,
+              "exploreIndex": "place_t",
+              "exploreQuery": "Lieu: \"France\"",
+              "html": false,
+              "value": "France"
+            }
+          ]
+        },
+        "imageSource_256": [
+          {
+            "value": "/in/rest/Thumb/image?id=ark%3A%2F66008%2F05392C1&author=Scott%2C+Georges+Bertin&title=Les+premiers+masques%2C+soldats+avec+un+masque+%C3%A0+gaz&TypeOfDocument=MuseumDocument&ct=true&size=256"
+          }
+        ],
+        "__thumbSVCQueryParam": [
+          {
+            "value": "id=ark%3A%2F66008%2F05392C1&title=Les+premiers+masques%2C+soldats+avec+un+masque+%C3%A0+gaz&TypeOfDocument=MuseumDocument&icon=%24ICON%24&size=%24SIZE%24&isPhysical=0"
+          }
+        ],
+        "id": [
+          {
+            "value": "h::ark:/66008/05392C1"
+          }
+        ],
+        "ark": [
+          {
+            "value": "66008/05392C1"
+          }
+        ],
+        "hideFavoriteAction": [
+          {
+            "value": ""
+          }
+        ],
+        "readerLabel": [
+          {
+            "value": "image"
+          }
+        ]
+      },
+      {
+        "stateFacet": [
+          {
+            "value": "Accepted"
+          }
+        ],
+        "disableNoticeConsultation": [
+          {
+            "value": ""
+          }
+        ],
+        "isExternalContent": [
+          {
+            "value": "false"
+          }
+        ],
+        "posInSet": [
+          {
+            "value": "8"
+          }
+        ],
+        "DateCreated": [
+          {
+            "value": "2017-10-12T22:46:41.453Z"
+          }
+        ],
+        "hideShareAction": [
+          {
+            "value": ""
+          }
+        ],
+        "readerEnabled": [
+          {
+            "value": "ImageReader"
+          }
+        ],
+        "DomainFacet": [
+          {
+            "value": ""
+          }
+        ],
+        "title": [
+          {
+            "value": "Un garde mobile aux avant-postes pendant le siège de Paris en 1870-1871"
+          }
+        ],
+        "TypeOfDocumentFacet": [
+          {
+            "value": "MuseumDocument"
+          }
+        ],
+        "DateLastChange": [
+          {
+            "value": "2025-04-30T10:02:41.618Z"
+          }
+        ],
+        "imageSource_512": [
+          {
+            "value": "/in/rest/Thumb/image?id=ark%3A%2F66008%2F19557&author=Grolleron%2C+Paul-Louis-Narcisse&title=Un+garde+mobile+aux+avant-postes+pendant+le+si%C3%A8ge+de+Paris+en+1870-1871&TypeOfDocument=MuseumDocument&ct=true&size=512"
+          }
+        ],
+        "score": [
+          {
+            "value": "4.8319683"
+          }
+        ],
+        "imageSource_128": [
+          {
+            "value": "/in/rest/Thumb/image?id=ark%3A%2F66008%2F19557&author=Grolleron%2C+Paul-Louis-Narcisse&title=Un+garde+mobile+aux+avant-postes+pendant+le+si%C3%A8ge+de+Paris+en+1870-1871&TypeOfDocument=MuseumDocument&ct=true&size=128"
+          }
+        ],
+        "IsPhysicalDocument": [
+          {
+            "value": "0"
+          }
+        ],
+        "createdBy": [
+          {
+            "display": "",
+            "value": "import"
+          }
+        ],
+        "meta": {
+          "identifierInventory": [
+            {
+              "display": "Numéro d'inventaire",
+              "html": false,
+              "value": "19557"
+            }
+          ],
+          "identifierCallnumber": [
+            {
+              "display": "Autre numéro d'identification",
+              "html": false,
+              "value": "Cote : Ec 873"
+            }
+          ],
+          "creator": [
+            {
+              "display": "Auteur / Exécutant",
+              "displayCount": true,
+              "exploreIndex": "author_t",
+              "exploreQuery": "Auteur: \"Grolleron, Paul-Louis-Narcisse\"",
+              "html": false,
+              "value": "Grolleron, Paul-Louis-Narcisse"
+            }
+          ],
+          "place": [
+            {
+              "display": "Lieu de création",
+              "displayCount": true,
+              "exploreIndex": "place_t",
+              "exploreQuery": "Lieu: \"Paris\"",
+              "html": false,
+              "value": "Paris"
+            }
+          ]
+        },
+        "imageSource_256": [
+          {
+            "value": "/in/rest/Thumb/image?id=ark%3A%2F66008%2F19557&author=Grolleron%2C+Paul-Louis-Narcisse&title=Un+garde+mobile+aux+avant-postes+pendant+le+si%C3%A8ge+de+Paris+en+1870-1871&TypeOfDocument=MuseumDocument&ct=true&size=256"
+          }
+        ],
+        "__thumbSVCQueryParam": [
+          {
+            "value": "id=ark%3A%2F66008%2F19557&title=Un+garde+mobile+aux+avant-postes+pendant+le+si%C3%A8ge+de+Paris+en+1870-1871&TypeOfDocument=MuseumDocument&icon=%24ICON%24&size=%24SIZE%24&isPhysical=0"
+          }
+        ],
+        "id": [
+          {
+            "value": "h::ark:/66008/19557"
+          }
+        ],
+        "ark": [
+          {
+            "value": "66008/19557"
+          }
+        ],
+        "hideFavoriteAction": [
+          {
+            "value": ""
+          }
+        ],
+        "readerLabel": [
+          {
+            "value": "image"
+          }
+        ]
+      }
+    ],
+    "solrQuery": "domain_s:\"Peinture\"",
+    "sortCriteria": [
+      {
+        "label": "Pertinence",
+        "value": "score"
+      },
+      {
+        "label": "Titre (A-Z)",
+        "value": "title_sort_ASC"
+      },
+      {
+        "label": "Titre (Z-A)",
+        "value": "title_sort_DESC"
+      }
+    ],
+    "sortOrder": "score"
+  }
+}

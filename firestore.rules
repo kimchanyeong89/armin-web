@@ -28,6 +28,11 @@ service cloud.firestore {
       allow read, write: if request.auth != null && request.auth.uid == userId;
     }
 
+    // Allow authenticated users to read/write their own liked_museums subcollection
+    match /users/{userId}/liked_museums/{museumId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+
     // Allow authenticated users to create pending submissions
     match /pending_submissions/{submissionId} {
       // Anyone authenticated can create a submission

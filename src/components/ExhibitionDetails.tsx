@@ -26,6 +26,8 @@ export default function ExhibitionDetails({
   const datasetEmptyRef = useRef<Record<string, boolean>>({});
   // Liked exhibitions feature
   const [likedExhibitions, setLikedExhibitions] = useState<Set<string>>(new Set());
+  // Liked museums feature
+  const [likedMuseums, setLikedMuseums] = useState<Set<string>>(new Set());
   const [currentUser, setCurrentUser] = useState<any>(null);
   
   // Slide-in animation state - starts false to trigger animation on mount
@@ -46,7 +48,10 @@ export default function ExhibitionDetails({
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, (user) => {
       setCurrentUser(user);
-      if (!user) setLikedExhibitions(new Set());
+      if (!user) {
+        setLikedExhibitions(new Set());
+        setLikedMuseums(new Set());
+      }
     });
     return () => unsub();
   }, []);
@@ -66,6 +71,66 @@ export default function ExhibitionDetails({
     });
     return () => unsub();
   }, [currentUser]);
+
+  // Subscribe to liked museums
+  useEffect(() => {
+    if (!currentUser) return;
+    const q = collection(db, `users/${currentUser.uid}/liked_museums`);
+    const unsub = onSnapshot(q, (snap) => {
+      const s = new Set<string>();
+      snap.forEach(doc => {
+        const data = doc.data();
+        const originalId = data.museumId || doc.id;
+        s.add(originalId);
+      });
+      setLikedMuseums(s);
+    });
+    return () => unsub();
+  }, [currentUser]);
+
+  // Toggle museum like
+  const toggleMuseumLike = useCallback(async (e: React.MouseEvent) => {
+    e.stopPropagation();
+    e.preventDefault();
+    let userToUse = currentUser;
+    if (!currentUser || currentUser.isAnonymous) {
+      try {
+        const provider = new GoogleAuthProvider();
+        provider.setCustomParameters({ prompt: 'select_account' });
+        const result = await signInWithPopup(auth, provider);
+        userToUse = result.user;
+      } catch (err) {
+        console.error("Login failed", err);
+        return;
+      }
+    }
+    if (!userToUse) return;
+    
+    const rawId = exhibition.slug || exhibition.id;
+    const museumId = rawId.replace(/[\/\\#\[\].*]/g, '_').replace(/^https?:_+/i, '').slice(0, 200);
+    const isLiked = likedMuseums.has(rawId);
+    const ref = doc(db, `users/${userToUse.uid}/liked_museums/${museumId}`);
+    
+    try {
+      if (isLiked) {
+        setLikedMuseums(prev => { const next = new Set(prev); next.delete(rawId); return next; });
+        await deleteDoc(ref);
+      } else {
+        setLikedMuseums(prev => { const next = new Set(prev); next.add(rawId); return next; });
+        const docData = {
+          likedAt: serverTimestamp(),
+          museumId: rawId,
+          slug: exhibition.slug || '',
+          name: exhibition.name || '',
+          image: exhibition.representativeImage || '',
+          location: exhibition.location || '',
+        };
+        await setDoc(ref, docData);
+      }
+    } catch (error) {
+      console.error("Failed to toggle museum like", error);
+    }
+  }, [currentUser, likedMuseums, exhibition]);
 
   const toggleExhibitionLike = useCallback(async (e: React.MouseEvent, item: ExhibitionItem) => {
     e.stopPropagation();
@@ -558,6 +623,56 @@ export default function ExhibitionDetails({
             return put(img);
           }
         }
+      } else if (exhibitionItemId === 'toulouse-lautrec-collection') {
+        // Musée Toulouse-Lautrec Collection
+        const res = await fetch('/data/toulouse-lautrec-collection.json', { cache: 'no-store' });
+        if (res.ok) {
+          const data = await res.json();
+          const items = Array.isArray(data) ? data : [];
+          const img = items.find((it: any) => it && it.imageUrl)?.imageUrl || null;
+          datasetEmptyRef.current[exhibitionItemId] = !(items && items.some((it: any) => it && it.imageUrl));
+          return put(img);
+        }
+      } else if (exhibitionItemId === 'granet-collection') {
+        // Musée Granet Collection
+        const res = await fetch('/data/musee-granet-collection.json', { cache: 'no-store' });
+        if (res.ok) {
+          const data = await res.json();
+          const items = Array.isArray(data) ? data : [];
+          const img = items.find((it: any) => it && it.imageUrl)?.imageUrl || null;
+          datasetEmptyRef.current[exhibitionItemId] = !(items && items.some((it: any) => it && it.imageUrl));
+          return put(img);
+        }
+      } else if (exhibitionItemId.startsWith('rodin-')) {
+        // Musée Rodin Collections
+        const typeMap: Record<string, string> = {
+          'rodin-peintures': '/data/rodin-peintures.json',
+          'rodin-sculptures': '/data/rodin-sculptures.json',
+          'rodin-gravures': '/data/rodin-gravures.json'
+        };
+        const jsonFile = typeMap[exhibitionItemId];
+        if (jsonFile) {
+          const res = await fetch(jsonFile, { cache: 'no-store' });
+          if (res.ok) {
+            const data = await res.json();
+            const items = data.artworks || (Array.isArray(data) ? data : []);
+            // Filter out no-image placeholders
+            const validItems = items.filter((it: any) => it && it.imageUrl && !it.imageUrl.includes('no-image'));
+            const img = validItems[0]?.imageUrl || null;
+            datasetEmptyRef.current[exhibitionItemId] = validItems.length === 0;
+            return put(img);
+          }
+        }
+      } else if (exhibitionItemId === 'flv-collection') {
+        // Fondation Louis Vuitton Collection
+        const res = await fetch('/data/flv-collection.json', { cache: 'no-store' });
+        if (res.ok) {
+          const data = await res.json();
+          const items = Array.isArray(data) ? data : [];
+          const img = items.find((it: any) => it && it.imageUrl)?.imageUrl || null;
+          datasetEmptyRef.current[exhibitionItemId] = !(items && items.some((it: any) => it && it.imageUrl));
+          return put(img);
+        }
       }
       // Generic: try local cache populated by ExhibitionModal snapshots
       try {
@@ -933,7 +1048,17 @@ export default function ExhibitionDetails({
       >
         ←
       </button>
-      <h2>{exhibition.name}</h2>
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 4 }}>
+        <h2 style={{ margin: 0, flex: 1 }}>{exhibition.name}</h2>
+        <HeartOverlay
+          isLiked={likedMuseums.has(exhibition.slug || exhibition.id)}
+          onToggle={toggleMuseumLike}
+          style={{ marginLeft: 12, padding: 0, background: 'none' }}
+          size={22}
+          color="#e11d48"
+          emptyColor="#999"
+        />
+      </div>
       {/* 상단 대표 이미지를 로컬 아카이브에서 표시 (외부 링크/리다이렉트 금지) */}
       {(() => {
         const rep = exhibition.representativeImage || "";

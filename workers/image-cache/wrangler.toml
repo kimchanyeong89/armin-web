@@ -1,0 +1,8 @@
+name = "image-cache"
+main = "src/index.ts"
+compatibility_date = "2024-01-01"
+
+# 커스텀 도메인 (나중에 설정 가능)
+# routes = [
+#   { pattern = "img.armin.gallery/*", zone_name = "armin.gallery" }
+# ]

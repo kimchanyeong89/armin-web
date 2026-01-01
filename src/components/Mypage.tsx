@@ -9,6 +9,13 @@ const MyPage: React.FC = () => {
   const [loading, setLoading] = useState(true);
   const [likedArtworks, setLikedArtworks] = useState<any[]>([]);
   const [likedExhibitions, setLikedExhibitions] = useState<any[]>([]);
+  const [likedMuseums, setLikedMuseums] = useState<any[]>([]);
+  
+  // Lightbox closing animation states
+  const [isLightboxClosing, setIsLightboxClosing] = useState(false);
+  const [isYoutubeClosing, setIsYoutubeClosing] = useState(false);
+  const [closingImage, setClosingImage] = useState<string | null>(null);
+  const [closingYoutubeId, setClosingYoutubeId] = useState<string | null>(null);
 
   // Mobile detection
   const [isMobile, setIsMobile] = useState(() => typeof window !== "undefined" ? window.innerWidth < 768 : false);
@@ -21,7 +28,7 @@ const MyPage: React.FC = () => {
   // visitedCount는 현재 숨김 처리 - 나중에 필요시 복원
   // const [visitedCount, setVisitedCount] = useState<number>(0);
 
-  const [viewMode, setViewMode] = useState<"artworks" | "exhibitions">("artworks");
+  const [viewMode, setViewMode] = useState<"artworks" | "exhibitions" | "museums">("artworks");
   const [sortMode, setSortMode] = useState<"recent" | "oldest" | "newest">("recent");
   const [lightboxImage, setLightboxImage] = useState<string | null>(null);
   const [lightboxYoutubeId, setLightboxYoutubeId] = useState<string | null>(null);
@@ -31,11 +38,11 @@ const MyPage: React.FC = () => {
   const [hoveredItem, setHoveredItem] = useState<string | null>(null);
   const [unlikedItems, setUnlikedItems] = useState<Set<string>>(new Set());
 
-  // Handle unlike for artworks and exhibitions - mark as unliked but don't remove from UI immediately
-  const handleUnlike = async (itemId: string, isExhibition: boolean) => {
+  // Handle unlike for artworks, exhibitions, and museums - mark as unliked but don't remove from UI immediately
+  const handleUnlike = async (itemId: string, itemType: 'artwork' | 'exhibition' | 'museum') => {
     if (!user) return;
     const db = getFirestore();
-    const collectionName = isExhibition ? 'liked_exhibitions' : 'liked_artworks';
+    const collectionName = itemType === 'museum' ? 'liked_museums' : itemType === 'exhibition' ? 'liked_exhibitions' : 'liked_artworks';
     const ref = doc(db, `users/${user.uid}/${collectionName}/${itemId}`);
     try {
       // Mark as unliked in UI (shows empty heart)
@@ -49,11 +56,11 @@ const MyPage: React.FC = () => {
   };
 
   // Handle re-like for items that were unliked
-  const handleRelike = async (item: any, isExhibition: boolean) => {
+  const handleRelike = async (item: any, itemType: 'artwork' | 'exhibition' | 'museum') => {
     if (!user) return;
     const db = getFirestore();
-    const itemId = isExhibition ? (item.exhibitionId || item.id) : (item.artworkId || item.id);
-    const collectionName = isExhibition ? 'liked_exhibitions' : 'liked_artworks';
+    const itemId = itemType === 'museum' ? (item.museumId || item.id) : itemType === 'exhibition' ? (item.exhibitionId || item.id) : (item.artworkId || item.id);
+    const collectionName = itemType === 'museum' ? 'liked_museums' : itemType === 'exhibition' ? 'liked_exhibitions' : 'liked_artworks';
     const ref = doc(db, `users/${user.uid}/${collectionName}/${itemId}`);
     try {
       // Remove from unliked set
@@ -82,6 +89,9 @@ const MyPage: React.FC = () => {
         
         const exhibitionsSnap = await getDocs(collection(db, `users/${user.uid}/liked_exhibitions`));
         setLikedExhibitions(exhibitionsSnap.docs.map(doc => ({ id: doc.id, ...doc.data() })));
+        
+        const museumsSnap = await getDocs(collection(db, `users/${user.uid}/liked_museums`));
+        setLikedMuseums(museumsSnap.docs.map(doc => ({ id: doc.id, ...doc.data() })));
         
         setLoading(false);
       } catch (error) {
@@ -210,15 +220,15 @@ const MyPage: React.FC = () => {
 
       {/* Counters */}
       <div style={{ display: "flex", justifyContent: "space-around", margin: "20px 0", textAlign: "center", width: "100%" }}>
-        <div>
+        <div style={{ cursor: 'pointer' }} onClick={() => setViewMode('museums')}>
           <div>Museums</div>
-          <div style={{ fontSize: "24px", fontWeight: "bold" }}>0</div>
+          <div style={{ fontSize: "24px", fontWeight: "bold" }}>{likedMuseums.length}</div>
         </div>
-        <div>
+        <div style={{ cursor: 'pointer' }} onClick={() => setViewMode('exhibitions')}>
           <div>Exhibitions</div>
           <div style={{ fontSize: "24px", fontWeight: "bold" }}>{likedExhibitions.length}</div>
         </div>
-        <div>
+        <div style={{ cursor: 'pointer' }} onClick={() => setViewMode('artworks')}>
           <div>Artworks</div>
           <div style={{ fontSize: "24px", fontWeight: "bold" }}>{likedArtworks.length}</div>
         </div>
@@ -238,7 +248,7 @@ const MyPage: React.FC = () => {
           paddingRight: isMobile ? "0" : "40px"
         }}
       >
-        <ViewModeToggle viewMode={viewMode} setViewMode={setViewMode} artworksCount={likedArtworks.length} exhibitionsCount={likedExhibitions.length} isMobile={isMobile} />
+        <ViewModeToggle viewMode={viewMode} setViewMode={setViewMode} artworksCount={likedArtworks.length} exhibitionsCount={likedExhibitions.length} museumsCount={likedMuseums.length} isMobile={isMobile} />
         <SortToggle sortMode={sortMode} setSortMode={setSortMode} isMobile={isMobile} />
       </div>
 
@@ -251,7 +261,7 @@ const MyPage: React.FC = () => {
         }}
       >
         {(() => {
-          const items = viewMode === "artworks" ? likedArtworks : likedExhibitions;
+          const items = viewMode === "artworks" ? likedArtworks : viewMode === "exhibitions" ? likedExhibitions : likedMuseums;
           const sorted = [...items].sort((a, b) => {
             if (sortMode === 'recent') {
               // Sort by likedAt timestamp (most recent first)
@@ -269,7 +279,8 @@ const MyPage: React.FC = () => {
           });
           return sorted.map((item, i) => {
             const isExhibition = viewMode === 'exhibitions';
-            const itemId = isExhibition ? (item.exhibitionId || item.id) : (item.artworkId || item.id);
+            const isMuseum = viewMode === 'museums';
+            const itemId = isMuseum ? (item.museumId || item.id) : isExhibition ? (item.exhibitionId || item.id) : (item.artworkId || item.id);
             const isHovered = hoveredItem === `${viewMode}-${i}`;
             return (
               <div
@@ -285,7 +296,18 @@ const MyPage: React.FC = () => {
                 onMouseEnter={() => setHoveredItem(`${viewMode}-${i}`)}
                 onMouseLeave={() => setHoveredItem(null)}
                 onClick={() => {
-                  if (isExhibition) {
+                  if (isMuseum) {
+                    // Navigate to homepage and open this museum's detail panel
+                    const targetId = item.museumId || item.slug || item.id;
+                    if (targetId) {
+                      sessionStorage.setItem('pendingMuseum', JSON.stringify({
+                        id: targetId,
+                        name: item.name || '',
+                        image: item.image || '',
+                      }));
+                      navigate(`/?museum=${encodeURIComponent(targetId)}`);
+                    }
+                  } else if (isExhibition) {
                     // Save exhibition data to sessionStorage for HomePage to read
                     const targetId = item.exhibitionId || item.id;
                     if (targetId) {
@@ -360,7 +382,14 @@ const MyPage: React.FC = () => {
                   </div>
                 )}
                 <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, background: "rgba(0,0,0,0.6)", color: "#fff", padding: "8px" }}>
-                  {isExhibition ? (
+                  {isMuseum ? (
+                    <>
+                      <div style={{ fontSize: 13, fontWeight: "bold", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>
+                        {item.name}
+                      </div>
+                      <div style={{ fontSize: 11, opacity: 0.8 }}>{item.location || ''}</div>
+                    </>
+                  ) : isExhibition ? (
                     <>
                       <div style={{ fontSize: 11, opacity: 0.8, marginBottom: 2 }}>
                         {item.museumName || ''}
@@ -382,6 +411,7 @@ const MyPage: React.FC = () => {
                 {/* Heart icon - always visible on mobile, hover on desktop */}
                 {(() => {
                   const isUnliked = unlikedItems.has(itemId);
+                  const itemType: 'artwork' | 'exhibition' | 'museum' = isMuseum ? 'museum' : isExhibition ? 'exhibition' : 'artwork';
                   return (
                     <div
                       style={{
@@ -395,9 +425,9 @@ const MyPage: React.FC = () => {
                       onClick={(e) => {
                         e.stopPropagation();
                         if (isUnliked) {
-                          handleRelike(item, isExhibition);
+                          handleRelike(item, itemType);
                         } else {
-                          handleUnlike(itemId, isExhibition);
+                          handleUnlike(itemId, itemType);
                         }
                       }}
                       title={isUnliked ? "Like again" : "Unlike"}
@@ -425,9 +455,18 @@ const MyPage: React.FC = () => {
       </div>
 
       {/* Lightbox Modal with smooth animation */}
-      {lightboxImage && (
+      {(lightboxImage || isLightboxClosing) && (
         <div
-          onClick={() => setLightboxImage(null)}
+          onClick={() => {
+            if (isLightboxClosing) return;
+            setClosingImage(lightboxImage);
+            setIsLightboxClosing(true);
+            setLightboxImage(null);
+            setTimeout(() => {
+              setIsLightboxClosing(false);
+              setClosingImage(null);
+            }, 200);
+          }}
           style={{
             position: 'fixed',
             inset: 0,
@@ -437,18 +476,18 @@ const MyPage: React.FC = () => {
             justifyContent: 'center',
             zIndex: 10000,
             cursor: 'zoom-out',
-            animation: 'fadeIn 0.2s ease-out'
+            animation: isLightboxClosing ? 'fadeOut 0.2s ease-out forwards' : 'fadeIn 0.2s ease-out'
           }}
         >
           <img
-            src={lightboxImage}
+            src={lightboxImage || closingImage || ''}
             alt="Full size"
             style={{
               maxWidth: '95vw',
               maxHeight: '95vh',
               objectFit: 'contain',
               borderRadius: '4px',
-              animation: 'zoomIn 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+              animation: isLightboxClosing ? 'zoomOut 0.2s ease-out forwards' : 'zoomIn 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
               transformOrigin: 'center center'
             }}
           />
@@ -462,7 +501,17 @@ const MyPage: React.FC = () => {
               cursor: 'pointer',
               fontWeight: 'bold'
             }}
-            onClick={(e) => { e.stopPropagation(); setLightboxImage(null); }}
+            onClick={(e) => {
+              e.stopPropagation();
+              if (isLightboxClosing) return;
+              setClosingImage(lightboxImage);
+              setIsLightboxClosing(true);
+              setLightboxImage(null);
+              setTimeout(() => {
+                setIsLightboxClosing(false);
+                setClosingImage(null);
+              }, 200);
+            }}
           >
             ✕
           </div>
@@ -470,9 +519,18 @@ const MyPage: React.FC = () => {
       )}
 
       {/* YouTube Video Lightbox Modal */}
-      {lightboxYoutubeId && (
+      {(lightboxYoutubeId || isYoutubeClosing) && (
         <div
-          onClick={() => setLightboxYoutubeId(null)}
+          onClick={() => {
+            if (isYoutubeClosing) return;
+            setClosingYoutubeId(lightboxYoutubeId);
+            setIsYoutubeClosing(true);
+            setLightboxYoutubeId(null);
+            setTimeout(() => {
+              setIsYoutubeClosing(false);
+              setClosingYoutubeId(null);
+            }, 200);
+          }}
           style={{
             position: 'fixed',
             inset: 0,
@@ -482,7 +540,7 @@ const MyPage: React.FC = () => {
             justifyContent: 'center',
             zIndex: 10000,
             cursor: 'pointer',
-            animation: 'fadeIn 0.2s ease-out'
+            animation: isYoutubeClosing ? 'fadeOut 0.2s ease-out forwards' : 'fadeIn 0.2s ease-out'
           }}
         >
           <div
@@ -491,11 +549,11 @@ const MyPage: React.FC = () => {
               width: '90vw',
               maxWidth: '1200px',
               aspectRatio: '16/9',
-              animation: 'zoomIn 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
+              animation: isYoutubeClosing ? 'zoomOut 0.2s ease-out forwards' : 'zoomIn 0.25s cubic-bezier(0.25, 0.46, 0.45, 0.94)',
             }}
           >
             <iframe
-              src={`https://www.youtube.com/embed/${lightboxYoutubeId}?autoplay=1&rel=0&modestbranding=1`}
+              src={`https://www.youtube.com/embed/${lightboxYoutubeId || closingYoutubeId}?autoplay=1&rel=0&modestbranding=1`}
               title="Video"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
               allowFullScreen
@@ -517,7 +575,17 @@ const MyPage: React.FC = () => {
               cursor: 'pointer',
               fontWeight: 'bold'
             }}
-            onClick={(e) => { e.stopPropagation(); setLightboxYoutubeId(null); }}
+            onClick={(e) => {
+              e.stopPropagation();
+              if (isYoutubeClosing) return;
+              setClosingYoutubeId(lightboxYoutubeId);
+              setIsYoutubeClosing(true);
+              setLightboxYoutubeId(null);
+              setTimeout(() => {
+                setIsYoutubeClosing(false);
+                setClosingYoutubeId(null);
+              }, 200);
+            }}
           >
             ✕
           </div>
@@ -529,9 +597,17 @@ const MyPage: React.FC = () => {
             from { opacity: 0; }
             to { opacity: 1; }
           }
+          @keyframes fadeOut {
+            from { opacity: 1; }
+            to { opacity: 0; }
+          }
           @keyframes zoomIn {
             from { transform: scale(0.85); opacity: 0; }
             to { transform: scale(1); opacity: 1; }
+          }
+          @keyframes zoomOut {
+            from { transform: scale(1); opacity: 1; }
+            to { transform: scale(0.85); opacity: 0; }
           }
         `}
       </style>
@@ -580,14 +656,15 @@ const SortToggle: React.FC<{
     </div>
   );
 };
-// ViewModeToggle - 탭 형태로 Artworks와 Exhibitions 표시 (모바일: 세로 배치)
+// ViewModeToggle - 탭 형태로 Museums, Exhibitions, Artworks 표시
 const ViewModeToggle: React.FC<{
-  viewMode: "artworks" | "exhibitions";
-  setViewMode: (mode: "artworks" | "exhibitions") => void;
+  viewMode: "artworks" | "exhibitions" | "museums";
+  setViewMode: (mode: "artworks" | "exhibitions" | "museums") => void;
   artworksCount: number;
   exhibitionsCount: number;
+  museumsCount: number;
   isMobile?: boolean;
-}> = ({ viewMode, setViewMode, artworksCount, exhibitionsCount, isMobile = false }) => {
+}> = ({ viewMode, setViewMode, artworksCount, exhibitionsCount, museumsCount, isMobile = false }) => {
   return (
     <div style={{
       display: "flex",
@@ -598,15 +675,15 @@ const ViewModeToggle: React.FC<{
       background: "#f5f5f5"
     }}>
       <button
-        onClick={() => setViewMode("artworks")}
+        onClick={() => setViewMode("museums")}
         style={{
-          padding: isMobile ? "6px 12px" : "10px 20px",
+          padding: isMobile ? "6px 8px" : "10px 16px",
           border: "none",
           cursor: "pointer",
           fontSize: isMobile ? "11px" : "14px",
-          fontWeight: viewMode === "artworks" ? "600" : "400",
-          background: viewMode === "artworks" ? "#111" : "transparent",
-          color: viewMode === "artworks" ? "#fff" : "#666",
+          fontWeight: viewMode === "museums" ? "600" : "400",
+          background: viewMode === "museums" ? "#111" : "transparent",
+          color: viewMode === "museums" ? "#fff" : "#666",
           transition: "all 0.2s ease",
           display: "flex",
           alignItems: "center",
@@ -614,20 +691,20 @@ const ViewModeToggle: React.FC<{
           gap: "4px"
         }}
       >
-        Artworks
+        {isMobile ? "Mus." : "Museums"}
         <span style={{
-          background: viewMode === "artworks" ? "rgba(255,255,255,0.2)" : "#ddd",
+          background: viewMode === "museums" ? "rgba(255,255,255,0.2)" : "#ddd",
           padding: isMobile ? "1px 5px" : "2px 8px",
           borderRadius: "12px",
           fontSize: isMobile ? "10px" : "12px"
         }}>
-          {artworksCount}
+          {museumsCount}
         </span>
       </button>
       <button
         onClick={() => setViewMode("exhibitions")}
         style={{
-          padding: isMobile ? "6px 12px" : "10px 20px",
+          padding: isMobile ? "6px 8px" : "10px 16px",
           border: "none",
           cursor: "pointer",
           fontSize: isMobile ? "11px" : "14px",
@@ -641,7 +718,7 @@ const ViewModeToggle: React.FC<{
           gap: "4px"
         }}
       >
-        Exhibitions
+        {isMobile ? "Exh." : "Exhibitions"}
         <span style={{
           background: viewMode === "exhibitions" ? "rgba(255,255,255,0.2)" : "#ddd",
           padding: isMobile ? "1px 5px" : "2px 8px",
@@ -649,6 +726,33 @@ const ViewModeToggle: React.FC<{
           fontSize: isMobile ? "10px" : "12px"
         }}>
           {exhibitionsCount}
+        </span>
+      </button>
+      <button
+        onClick={() => setViewMode("artworks")}
+        style={{
+          padding: isMobile ? "6px 8px" : "10px 16px",
+          border: "none",
+          cursor: "pointer",
+          fontSize: isMobile ? "11px" : "14px",
+          fontWeight: viewMode === "artworks" ? "600" : "400",
+          background: viewMode === "artworks" ? "#111" : "transparent",
+          color: viewMode === "artworks" ? "#fff" : "#666",
+          transition: "all 0.2s ease",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          gap: "4px"
+        }}
+      >
+        {isMobile ? "Art" : "Artworks"}
+        <span style={{
+          background: viewMode === "artworks" ? "rgba(255,255,255,0.2)" : "#ddd",
+          padding: isMobile ? "1px 5px" : "2px 8px",
+          borderRadius: "12px",
+          fontSize: isMobile ? "10px" : "12px"
+        }}>
+          {artworksCount}
         </span>
       </button>
     </div>

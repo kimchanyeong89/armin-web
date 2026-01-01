@@ -19,6 +19,54 @@ const sortNumericKeys = (map?: Record<string, string>) => {
     .sort((a, b) => a - b);
 };
 
+// Strip parenthesized years from artist names, e.g. "Greuze Jean-Baptiste (1725-1805)" -> "Greuze Jean-Baptiste"
+// Also filters out copyright info that shouldn't be artist names
+const cleanArtistName = (artist: string | undefined | null): string => {
+  if (!artist) return '';
+
+  // If the value is pure copyright info, return empty to show "Unknown"
+  const lower = artist.toLowerCase();
+  if (
+    artist.includes('©') ||
+    lower.includes('all rights reserved') ||
+    lower.includes('adagp') ||
+    lower.includes('sabam') ||
+    lower.includes('vegap') ||
+    lower.includes('dacs') ||
+    lower.includes('siae') ||
+    lower.includes('vg bild-kunst') ||
+    lower === 'droits réservés' ||
+    lower === 'tous droits réservés' ||
+    lower === 'copyright'
+  ) {
+    return '';
+  }
+
+  // Remove patterns like (1725-1805), (1604-1692, 1603-1677), (born 1960), (1823-...), etc.
+  return artist.replace(/\s*\([^)]*\d{4}[^)]*\)\s*/g, '').trim();
+};
+
+// Clean up date/year text by removing garbage data after century info
+// Examples: "15th century, 199398" → "15th century"
+//           "16th century, modern age, 199633" → "16th century, modern age"
+//           "1765" → "1765"
+const cleanDateText = (dateStr: string | undefined | null): string => {
+  if (!dateStr) return '';
+
+  // If it's a simple 4-digit year, return as is
+  if (/^\d{4}$/.test(dateStr.trim())) {
+    return dateStr.trim();
+  }
+
+  // Remove trailing garbage numbers (6+ digits that look like IDs)
+  let cleaned = dateStr.replace(/,?\s*\d{6,}$/g, '').trim();
+
+  // Remove trailing comma if any
+  cleaned = cleaned.replace(/,\s*$/, '').trim();
+
+  return cleaned || dateStr;
+};
+
 const pickLowPlaceholder = (artwork: Artwork) => {
   if (artwork.lq) return artwork.lq;
   if (artwork.thumb) return artwork.thumb;
@@ -231,6 +279,20 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
   useEffect(() => {
     setViewMode((prev) => (prev === 'gallery' ? prev : 'gallery'));
   }, [exhibition.id]);
+
+  // Reset selected index and gallery scroll when viewMode changes (archive mode scroll is handled separately)
+  useEffect(() => {
+    // Reset selected index to 0 for all modes
+    setSelectedIndex(0);
+    // Reset archive scroll position state
+    setArchiveScrollTop(0);
+    // Reset gallery scroll container
+    const galleryContainer = document.querySelector('.gallery-scroll-container');
+    if (galleryContainer) {
+      galleryContainer.scrollTop = 0;
+    }
+  }, [viewMode]);
+
   const panelRef = useRef<HTMLDivElement | null>(null);
   const listRef = useRef<HTMLDivElement | null>(null);
   const infoPanelRef = useRef<HTMLDivElement | null>(null);
@@ -245,6 +307,18 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
     natWidth?: number;
     natHeight?: number;
   } | null>(null);
+  // Hover-based zoom overlay (blur background, fade-in large image)
+  const [hoverZoom, setHoverZoom] = useState<{
+    artwork: Artwork;
+    imageUrl: string;
+    animate: boolean;
+  } | null>(null);
+  // Track the hoverZoom during closing animation
+  const [closingHoverZoom, setClosingHoverZoom] = useState<{
+    artwork: Artwork;
+    imageUrl: string;
+  } | null>(null);
+  const hoverZoomTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   // Progressive image loading state (Step 1): main stage / panorama
   const [mainLoaded, setMainLoaded] = useState(false);
   // Archive mode: control iframe and thumbnail visibility
@@ -253,7 +327,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
   // Gallery mode: control iframe and thumbnail visibility on hover
   const [galleryVideoReadyIdx, setGalleryVideoReadyIdx] = useState<number | null>(null);
   const [galleryThumbnailHiddenIdx, setGalleryThumbnailHiddenIdx] = useState<number | null>(null);
-  
+
   const mainImgRef = useRef<HTMLImageElement | null>(null);
   const idleDecodeHandlesRef = useRef<number[]>([]);
   // Representative image (from local feed or exhibition data)
@@ -313,8 +387,15 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
       localStorage.setItem(key, JSON.stringify(customRooms));
     } catch { }
   }, [customRooms, exhibition.id]);
-  
+
   const roomButtons = useMemo(() => {
+    // Debug: log artworks for room detection
+    if (exhibition.id === 'wallace-permanent') {
+      console.log('[Wallace roomButtons] artworks count:', artworks.length);
+      const roomIds = artworks.map(a => a.roomId).filter(Boolean);
+      console.log('[Wallace roomButtons] unique roomIds:', [...new Set(roomIds)]);
+    }
+
     // For display exhibitions (both Tate Britain and Tate Modern), use roomMetas to include all rooms
     const isTateBritainDisplay = exhibition.id.startsWith('tate-britain-display-');
     if ((isTateBritainDisplay || exhibition.id.startsWith('display-')) && roomMetas.length > 0) {
@@ -324,24 +405,59 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
       }
       return buttons;
     }
-    
+
     // For non-display exhibitions: only include rooms that actually have artworks
     const discovered = Array.from(new Set(
       artworks
         .map(a => (a.roomId || '').trim())
         .filter(id => id && id.toLowerCase() !== 'default')
     ));
+
+    // Pure numeric rooms (1, 2, 3...)
     const numeric = Array.from(new Set(discovered.filter(id => /^\d+$/.test(id))));
     numeric.sort((a, b) => parseInt(a, 10) - parseInt(b, 10));
+
     // Letter rooms (A-G for ground floor)
     const letters = Array.from(new Set(discovered.filter(id => /^[A-G]$/i.test(id))));
     letters.sort();
+
+    // String rooms like "Room 1", "West Gallery", etc. - extract numbers or assign sequential numbers
+    const stringRooms = discovered.filter(id => !(/^\d+$/.test(id)) && !(/^[A-G]$/i.test(id)) && id !== 'Not on display' && id !== 'n');
+
+    // Sort string rooms: if they contain numbers (like "Room 1"), sort by number; otherwise alphabetically
+    const sortedStringRooms = stringRooms.sort((a, b) => {
+      const numA = a.match(/\d+/);
+      const numB = b.match(/\d+/);
+      if (numA && numB) {
+        return parseInt(numA[0], 10) - parseInt(numB[0], 10);
+      }
+      return a.localeCompare(b);
+    });
+
     const hasC = discovered.some(id => id.toUpperCase() === 'C');
     // Check for both 'n' and 'Not on display' as Archive
     const hasArchive = discovered.some(id => id === 'Not on display' || id === 'n');
 
     const buttons: { label: string; id: string }[] = [{ label: 'ALL', id: 'ALL' }];
+
+    // If we have pure numeric rooms, add them first
     for (const id of numeric) buttons.push({ label: id, id });
+
+    // If we have string rooms (like "Room 1", "West Gallery"), assign sequential numbers starting from 1
+    // Only if there are no pure numeric rooms already
+    if (sortedStringRooms.length > 0 && numeric.length === 0) {
+      sortedStringRooms.forEach((roomId, index) => {
+        buttons.push({ label: String(index + 1), id: roomId });
+      });
+    } else if (sortedStringRooms.length > 0) {
+      // If we have both numeric and string rooms, add string rooms after numeric with sequential labels
+      const startNum = numeric.length > 0 ? Math.max(...numeric.map(n => parseInt(n, 10))) + 1 : 1;
+      sortedStringRooms.forEach((roomId, index) => {
+        buttons.push({ label: String(startNum + index), id: roomId });
+      });
+    }
+
+    // Add letter rooms
     for (const id of letters) {
       if (id.toUpperCase() !== 'C') buttons.push({ label: id.toUpperCase(), id }); // add letter rooms except C (handled separately)
     }
@@ -558,6 +674,10 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
   }, []);
 
   const getBestFullUrl = useCallback((a: Artwork): { url: string; width?: number } => {
+    // Use originalImage if available (National Gallery high-res)
+    if ((a as any).originalImage) {
+      return { url: (a as any).originalImage, width: undefined };
+    }
     const v = getLargestVariantUrl(a);
     if (v) return { url: v.url, width: v.width };
     const upgraded = upgradeImageUrl(a.image);
@@ -576,6 +696,10 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
   // Left positions now derive from metaPos.dimension
   // Vertical positions now follow the Archive line (top: 14)
   const stageMonitorRef = useRef<HTMLDivElement | null>(null);
+  // Mobile archive horizontal scroll ref
+  const mobileArchiveScrollRef = useRef<HTMLDivElement | null>(null);
+  // Track if archive mode was already initialized (only init once per exhibition)
+  const hasInitializedArchiveRef = useRef<boolean>(false);
   // Panorama drag state
   const [panoramaDragging, setPanoramaDragging] = useState(false);
   const panStartXRef = useRef<number>(0);
@@ -696,7 +820,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
   useEffect(() => {
     // DEBUG: Log exhibition ID
     console.log('[ExhibitionModal] exhibition.id =', exhibition.id);
-    
+
     // British Museum Rooms archive: load from local scraped JSON
     if (exhibition.id === 'bm-archive-rooms') {
       (async () => {
@@ -929,14 +1053,14 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
             const match = String(yearText).match(/(\d{4})/);
             return match ? parseInt(match[1], 10) : 0;
           };
-          
+
           // Detect artwork type: paintings are 2D, sculptures/objects are 3D
           const detectType = (title: string): '2D' | '3D' | 'unknown' => {
             if (/sculpture|bust|statue|figure|relief/i.test(title)) return '3D';
             if (/painting|portrait|landscape|still life|view|scene/i.test(title)) return '2D';
             return '2D'; // Dulwich is primarily a paintings gallery
           };
-          
+
           const list: Artwork[] = Array.isArray(data.objects)
             ? data.objects.map((item: any, idx: number) => ({
               id: item.id || `dpg-${idx}`,
@@ -974,7 +1098,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
             const match = String(yearText).match(/(\d{4})/);
             return match ? parseInt(match[1], 10) : 0;
           };
-          
+
           // Patterns for archival/documentary materials (not actual artworks)
           const archivalPatterns = [
             /^installation view/i,
@@ -1006,14 +1130,14 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
             /^note on /i,
             /^catalogue /i,
           ];
-          
+
           const isArchival = (title: string) => {
             for (const pattern of archivalPatterns) {
               if (pattern.test(title)) return true;
             }
             return false;
           };
-          
+
           // Detect artwork type for Hayward (contemporary art - mix of 2D/3D)
           const detectType = (title: string): '2D' | '3D' | 'unknown' => {
             if (/sculpture|installation|figure|object|astronomer|horse/i.test(title)) return '3D';
@@ -1021,23 +1145,23 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
             // Default to unknown for contemporary art
             return 'unknown';
           };
-          
+
           const allObjects = Array.isArray(data.objects) ? data.objects : [];
-          
+
           const list: Artwork[] = allObjects.map((item: any, idx: number) => ({
-              id: item.id || `hayward-gac-${idx}`,
-              name: item.title || item.name || 'Untitled',
-              artist: item.artist === 'Additional Items' ? 'Unknown' : (item.artist || 'Unknown'),
-              year: toYear(item.year),
-              date: item.year,
-              image: item.image,
-              sourceUrl: item.url,
-              roomId: 'default',
-              exhibitionName: exhibition.name,
-              exhibitionTitle: exhibition.title,
-              isArchival: isArchival(item.title || ''),
-              type: detectType(item.title || ''),
-            }));
+            id: item.id || `hayward-gac-${idx}`,
+            name: item.title || item.name || 'Untitled',
+            artist: item.artist === 'Additional Items' ? 'Unknown' : (item.artist || 'Unknown'),
+            year: toYear(item.year),
+            date: item.year,
+            image: item.image,
+            sourceUrl: item.url,
+            roomId: 'default',
+            exhibitionName: exhibition.name,
+            exhibitionTitle: exhibition.title,
+            isArchival: isArchival(item.title || ''),
+            type: detectType(item.title || ''),
+          }));
           const withImages = list.filter((a) => !!a.image);
           setArtworks(withImages);
           setInitialized(true);
@@ -1060,7 +1184,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
             const match = String(yearText).match(/(\d{4})/);
             return match ? parseInt(match[1], 10) : 0;
           };
-          
+
           // Patterns for archival/documentary materials
           const archivalPatterns = [
             /^petition of/i,
@@ -1084,14 +1208,14 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
             /somerset house$/i,
             /^cast of/i,  // Casts of sculptures
           ];
-          
+
           const isArchival = (title: string) => {
             for (const pattern of archivalPatterns) {
               if (pattern.test(title)) return true;
             }
             return false;
           };
-          
+
           // Detect artwork type: paintings/drawings are 2D, sculptures are 3D
           const detectType = (title: string): '2D' | '3D' | 'unknown' => {
             if (/sculpture|bust|figure|statue|horse|rolling horse|cast of/i.test(title)) return '3D';
@@ -1099,25 +1223,25 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
             // Default to 2D for Royal Academy
             return '2D';
           };
-          
+
           const allObjects = Array.isArray(data.objects) ? data.objects : [];
-          
+
           const list: Artwork[] = allObjects.map((item: any, idx: number) => ({
-              id: item.id || `ra-gac-${idx}`,
-              name: item.title || item.name || 'Untitled',
-              artist: item.artist || 'Unknown',
-              year: toYear(item.year),
-              date: item.year,
-              image: item.image,
-              sourceUrl: item.sourceUrl,
-              roomId: 'default',
-              exhibitionName: exhibition.name,
-              exhibitionTitle: exhibition.title,
-              isArchival: isArchival(item.title || ''),
-              type: detectType(item.title || ''),
-              youtubeId: item.youtubeId,
-              mediaType: item.mediaType,
-            }));
+            id: item.id || `ra-gac-${idx}`,
+            name: item.title || item.name || 'Untitled',
+            artist: item.artist || 'Unknown',
+            year: toYear(item.year),
+            date: item.year,
+            image: item.image,
+            sourceUrl: item.sourceUrl,
+            roomId: 'default',
+            exhibitionName: exhibition.name,
+            exhibitionTitle: exhibition.title,
+            isArchival: isArchival(item.title || ''),
+            type: detectType(item.title || ''),
+            youtubeId: item.youtubeId,
+            mediaType: item.mediaType,
+          }));
           const withImages = list.filter((a) => !!a.image);
           setArtworks(withImages);
           setInitialized(true);
@@ -1140,7 +1264,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
             const match = String(yearText).match(/(\d{4})/);
             return match ? parseInt(match[1], 10) : 0;
           };
-          
+
           // Patterns for instructional/documentary materials (not visual artworks)
           const archivalPatterns = [
             /instruction/i,  // matches any "instruction" anywhere
@@ -1206,7 +1330,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
             // Roundtable/AI report illustrations by Jonny Glover
             /jonny glover/i,
           ];
-          
+
           // Known artist-name-only entries (text/portrait cards) - title equals artist
           const artistNameOnlyTitles = [
             'Mohamed Bourouissa', 'Chino Amobi', 'Phillipe Parreno', 'Hans-Ulrich Obrist',
@@ -1220,7 +1344,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
             'Nairy Baghramian', 'Complicité', 'Holly Herndon and Mat Dryhurst', 'BTS',
             'Precious Okoyomon, do it', 'Yue Yuan', 'Sophia Al Maria',
           ];
-          
+
           // Detect text-based instruction pieces by checking artist field too
           const isArchival = (title: string, artist: string) => {
             // Check if title is just an artist name
@@ -1235,7 +1359,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
             if (/jonny glover/i.test(artist)) return true;
             return false;
           };
-          
+
           // Detect artwork type: Pavilions are 3D, most others are 2D or unknown
           const detectType = (title: string): '2D' | '3D' | 'unknown' => {
             if (/pavilion/i.test(title) || /summer house/i.test(title)) return '3D';
@@ -1246,25 +1370,25 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
             // Default to unknown for mixed collections
             return 'unknown';
           };
-          
+
           const allObjects = Array.isArray(data.objects) ? data.objects : [];
-          
+
           const list: Artwork[] = allObjects.map((item: any, idx: number) => ({
-              id: item.id || `serp-gac-${idx}`,
-              name: item.title || item.name || 'Untitled',
-              artist: item.artist || 'Unknown',
-              year: toYear(item.year),
-              date: item.year,
-              image: item.image,
-              sourceUrl: item.sourceUrl,
-              roomId: 'default',
-              exhibitionName: exhibition.name,
-              exhibitionTitle: exhibition.title,
-              isArchival: isArchival(item.title || '', item.artist || ''),
-              type: detectType(item.title || ''),
-              youtubeId: item.youtubeId,
-              mediaType: item.mediaType,
-            }));
+            id: item.id || `serp-gac-${idx}`,
+            name: item.title || item.name || 'Untitled',
+            artist: item.artist || 'Unknown',
+            year: toYear(item.year),
+            date: item.year,
+            image: item.image,
+            sourceUrl: item.sourceUrl,
+            roomId: 'default',
+            exhibitionName: exhibition.name,
+            exhibitionTitle: exhibition.title,
+            isArchival: isArchival(item.title || '', item.artist || ''),
+            type: detectType(item.title || ''),
+            youtubeId: item.youtubeId,
+            mediaType: item.mediaType,
+          }));
           const withImages = list.filter((a) => !!a.image);
           setArtworks(withImages);
           setInitialized(true);
@@ -1287,7 +1411,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
             const match = String(yearText).match(/(\d{4})/);
             return match ? parseInt(match[1], 10) : 0;
           };
-          
+
           // Detect artwork type for Courtauld (mostly paintings, some decorative arts)
           const detectType = (title: string): '2D' | '3D' | 'unknown' => {
             // 3D objects
@@ -1297,24 +1421,24 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
             // Default to 2D for Courtauld (primarily paintings)
             return '2D';
           };
-          
+
           const allObjects = Array.isArray(data.objects) ? data.objects : [];
-          
+
           const list: Artwork[] = allObjects.map((item: any, idx: number) => ({
-              id: item.id || `cg-gac-${idx}`,
-              name: item.title || item.name || 'Untitled',
-              artist: item.artist || 'Unknown',
-              year: toYear(item.year),
-              date: item.year,
-              image: item.image,
-              sourceUrl: item.sourceUrl,
-              roomId: 'default',
-              exhibitionName: exhibition.name,
-              exhibitionTitle: exhibition.title,
-              type: detectType(item.title || ''),
-              youtubeId: item.youtubeId,
-              mediaType: item.mediaType,
-            }));
+            id: item.id || `cg-gac-${idx}`,
+            name: item.title || item.name || 'Untitled',
+            artist: item.artist || 'Unknown',
+            year: toYear(item.year),
+            date: item.year,
+            image: item.image,
+            sourceUrl: item.sourceUrl,
+            roomId: 'default',
+            exhibitionName: exhibition.name,
+            exhibitionTitle: exhibition.title,
+            type: detectType(item.title || ''),
+            youtubeId: item.youtubeId,
+            mediaType: item.mediaType,
+          }));
           const withImages = list.filter((a) => !!a.image);
           setArtworks(withImages);
           setInitialized(true);
@@ -1339,18 +1463,18 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
           };
           const allObjects = Array.isArray(data.objects) ? data.objects : [];
           const list: Artwork[] = allObjects.map((item: any, idx: number) => ({
-              id: item.id || `wag-gac-${idx}`,
-              name: item.title || item.name || 'Untitled',
-              artist: item.artist || 'Unknown',
-              year: toYear(item.year),
-              date: item.year,
-              image: item.image,
-              sourceUrl: item.sourceUrl,
-              roomId: 'default',
-              exhibitionName: exhibition.name,
-              exhibitionTitle: exhibition.title,
-              type: '2D',
-            }));
+            id: item.id || `wag-gac-${idx}`,
+            name: item.title || item.name || 'Untitled',
+            artist: item.artist || 'Unknown',
+            year: toYear(item.year),
+            date: item.year,
+            image: item.image,
+            sourceUrl: item.sourceUrl,
+            roomId: 'default',
+            exhibitionName: exhibition.name,
+            exhibitionTitle: exhibition.title,
+            type: '2D',
+          }));
           const withImages = list.filter((a) => !!a.image);
           setArtworks(withImages);
           setInitialized(true);
@@ -1375,18 +1499,18 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
           };
           const allObjects = Array.isArray(data.objects) ? data.objects : [];
           const list: Artwork[] = allObjects.map((item: any, idx: number) => ({
-              id: item.id || `sng-gac-${idx}`,
-              name: item.title || item.name || 'Untitled',
-              artist: item.artist || 'Unknown',
-              year: toYear(item.year),
-              date: item.year,
-              image: item.image,
-              sourceUrl: item.sourceUrl,
-              roomId: 'default',
-              exhibitionName: exhibition.name,
-              exhibitionTitle: exhibition.title,
-              type: '2D',
-            }));
+            id: item.id || `sng-gac-${idx}`,
+            name: item.title || item.name || 'Untitled',
+            artist: item.artist || 'Unknown',
+            year: toYear(item.year),
+            date: item.year,
+            image: item.image,
+            sourceUrl: item.sourceUrl,
+            roomId: 'default',
+            exhibitionName: exhibition.name,
+            exhibitionTitle: exhibition.title,
+            type: '2D',
+          }));
           const withImages = list.filter((a) => !!a.image);
           setArtworks(withImages);
           setInitialized(true);
@@ -1411,18 +1535,18 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
           };
           const allObjects = Array.isArray(data.objects) ? data.objects : [];
           const list: Artwork[] = allObjects.map((item: any, idx: number) => ({
-              id: item.id || `snpg-gac-${idx}`,
-              name: item.title || item.name || 'Untitled',
-              artist: item.artist || 'Unknown',
-              year: toYear(item.year),
-              date: item.year,
-              image: item.image,
-              sourceUrl: item.sourceUrl,
-              roomId: 'default',
-              exhibitionName: exhibition.name,
-              exhibitionTitle: exhibition.title,
-              type: '2D',
-            }));
+            id: item.id || `snpg-gac-${idx}`,
+            name: item.title || item.name || 'Untitled',
+            artist: item.artist || 'Unknown',
+            year: toYear(item.year),
+            date: item.year,
+            image: item.image,
+            sourceUrl: item.sourceUrl,
+            roomId: 'default',
+            exhibitionName: exhibition.name,
+            exhibitionTitle: exhibition.title,
+            type: '2D',
+          }));
           const withImages = list.filter((a) => !!a.image);
           setArtworks(withImages);
           setInitialized(true);
@@ -1447,18 +1571,18 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
           };
           const allObjects = Array.isArray(data.objects) ? data.objects : [];
           const list: Artwork[] = allObjects.map((item: any, idx: number) => ({
-              id: item.id || `sngma-gac-${idx}`,
-              name: item.title || item.name || 'Untitled',
-              artist: item.artist || 'Unknown',
-              year: toYear(item.year),
-              date: item.year,
-              image: item.image,
-              sourceUrl: item.sourceUrl,
-              roomId: 'default',
-              exhibitionName: exhibition.name,
-              exhibitionTitle: exhibition.title,
-              type: '2D',
-            }));
+            id: item.id || `sngma-gac-${idx}`,
+            name: item.title || item.name || 'Untitled',
+            artist: item.artist || 'Unknown',
+            year: toYear(item.year),
+            date: item.year,
+            image: item.image,
+            sourceUrl: item.sourceUrl,
+            roomId: 'default',
+            exhibitionName: exhibition.name,
+            exhibitionTitle: exhibition.title,
+            type: '2D',
+          }));
           const withImages = list.filter((a) => !!a.image);
           setArtworks(withImages);
           setInitialized(true);
@@ -1481,22 +1605,22 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
             const match = String(yearText).match(/(\d{4})/);
             return match ? parseInt(match[1], 10) : 0;
           };
-          
+
           const allObjects = Array.isArray(data.objects) ? data.objects : [];
-          
+
           const list: Artwork[] = allObjects.map((item: any, idx: number) => ({
-              id: item.id || `bm-gac-${idx}`,
-              name: item.title || item.name || 'Untitled',
-              artist: item.artist === 'Additional Items' ? 'Unknown' : (item.artist || 'Unknown'),
-              year: toYear(item.year),
-              date: item.year,
-              image: item.image,
-              sourceUrl: item.sourceUrl,
-              roomId: 'default',
-              exhibitionName: exhibition.name,
-              exhibitionTitle: exhibition.title,
-              type: item.type || 'unknown',  // 2D, 3D, or unknown
-            }));
+            id: item.id || `bm-gac-${idx}`,
+            name: item.title || item.name || 'Untitled',
+            artist: item.artist === 'Additional Items' ? 'Unknown' : (item.artist || 'Unknown'),
+            year: toYear(item.year),
+            date: item.year,
+            image: item.image,
+            sourceUrl: item.sourceUrl,
+            roomId: 'default',
+            exhibitionName: exhibition.name,
+            exhibitionTitle: exhibition.title,
+            type: item.type || 'unknown',  // 2D, 3D, or unknown
+          }));
           const withImages = list.filter((a) => !!a.image);
           setArtworks(withImages);
           setInitialized(true);
@@ -1519,21 +1643,21 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
             const match = String(yearText).match(/(\d{4})/);
             return match ? parseInt(match[1], 10) : 0;
           };
-          
+
           const allObjects = Array.isArray(data.objects) ? data.objects : [];
-          
+
           const list: Artwork[] = allObjects.map((item: any, idx: number) => ({
-              id: item.id || `orsay-${idx}`,
-              name: item.title || item.name || 'Untitled',
-              artist: item.artist || 'Unknown',
-              year: toYear(item.year),
-              date: item.year,
-              image: item.image,
-              dimension: item.dimensions,
-              roomId: 'default',
-              exhibitionName: exhibition.name,
-              exhibitionTitle: exhibition.title,
-            }));
+            id: item.id || `orsay-${idx}`,
+            name: item.title || item.name || 'Untitled',
+            artist: item.artist || 'Unknown',
+            year: toYear(item.year),
+            date: item.year,
+            image: item.image,
+            dimension: item.dimensions,
+            roomId: 'default',
+            exhibitionName: exhibition.name,
+            exhibitionTitle: exhibition.title,
+          }));
           const withImages = list.filter((a) => !!a.image);
           setArtworks(withImages);
           setInitialized(true);
@@ -1556,23 +1680,23 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
             const match = String(yearText).match(/(\d{4})/);
             return match ? parseInt(match[1], 10) : 0;
           };
-          
+
           const allObjects = Array.isArray(data.objects) ? data.objects : [];
-          
+
           const list: Artwork[] = allObjects.map((item: any, idx: number) => ({
-              id: item.id || `orangerie-${idx}`,
-              name: item.title || item.name || 'Untitled',
-              artist: item.artist || 'Unknown',
-              year: toYear(item.year),
-              date: item.year,
-              image: item.image,
-              dimension: item.dimensions,
-              type: item.type || 'unknown',
-              isArchival: item.isArchival || false,
-              roomId: 'default',
-              exhibitionName: exhibition.name,
-              exhibitionTitle: exhibition.title,
-            }));
+            id: item.id || `orangerie-${idx}`,
+            name: item.title || item.name || 'Untitled',
+            artist: item.artist || 'Unknown',
+            year: toYear(item.year),
+            date: item.year,
+            image: item.image,
+            dimension: item.dimensions,
+            type: item.type || 'unknown',
+            isArchival: item.isArchival || false,
+            roomId: 'default',
+            exhibitionName: exhibition.name,
+            exhibitionTitle: exhibition.title,
+          }));
           const withImages = list.filter((a) => !!a.image);
           setArtworks(withImages);
           setInitialized(true);
@@ -1595,22 +1719,22 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
             const match = String(yearText).match(/(\d{4})/);
             return match ? parseInt(match[1], 10) : 0;
           };
-          
+
           const allObjects = Array.isArray(data.objects) ? data.objects : [];
-          
+
           const list: Artwork[] = allObjects.map((item: any, idx: number) => ({
-              id: item.id || `pinault-${idx}`,
-              name: item.title || item.name || 'Untitled',
-              artist: item.artist || 'Unknown',
-              year: toYear(item.year),
-              date: item.year,
-              image: item.image,
-              dimension: item.dimensions,
-              type: item.type || 'unknown',
-              roomId: 'default',
-              exhibitionName: exhibition.name,
-              exhibitionTitle: exhibition.title,
-            }));
+            id: item.id || `pinault-${idx}`,
+            name: item.title || item.name || 'Untitled',
+            artist: item.artist || 'Unknown',
+            year: toYear(item.year),
+            date: item.year,
+            image: item.image,
+            dimension: item.dimensions,
+            type: item.type || 'unknown',
+            roomId: 'default',
+            exhibitionName: exhibition.name,
+            exhibitionTitle: exhibition.title,
+          }));
           const withImages = list.filter((a) => !!a.image);
           setArtworks(withImages);
           setInitialized(true);
@@ -1621,8 +1745,8 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
       })();
       return () => { };
     }
-    // Centre Pompidou & MAM Paris & Louvre & Jacquemart-André & Marmottan & Picasso & Palais de Tokyo & Petit Palais & Rouen & Lille & MAMCS Collections: load from local scraped JSON
-    if (exhibition.id === 'pompidou-cinema' || exhibition.id === 'pompidou-painting' || exhibition.id === 'pompidou-drawing' || exhibition.id === 'pompidou-newmedia' || exhibition.id === 'pompidou-design' || exhibition.id === 'mam-perm-painting' || exhibition.id === 'mam-perm-photography' || exhibition.id === 'louvre-painting' || exhibition.id === 'jacquemart-collection' || exhibition.id === 'marmottan-collection' || exhibition.id === 'picasso-drawings' || exhibition.id === 'picasso-paintings' || exhibition.id === 'picasso-sculptures' || exhibition.id === 'picasso-prints' || exhibition.id === 'palais-de-tokyo-collection' || exhibition.id === 'petit-palais-collection' || exhibition.id === 'rouen-mba-collection' || exhibition.id === 'lille-pba-collection' || exhibition.id === 'mamcs-drawings' || exhibition.id === 'mamcs-paintings' || exhibition.id === 'mamcs-photography' || exhibition.id === 'mamcs-graphic-design') {
+    // Centre Pompidou & MAM Paris & Louvre & Jacquemart-André & Marmottan & Picasso & Palais de Tokyo & Petit Palais & Rouen & Lille & MAMCS & Lyon & Grenoble & Bordeaux & Rodin & FLV & MAD Paris & Carnavalet & Condé & Versailles & Guimet & MAC/VAL & Mucem & Fabre & Chagall & La Piscine & Wallace & Soane & Vatican & Wales & Uffizi & Accademia & Palazzo Ducale Collections: load from local scraped JSON
+    if (exhibition.id === 'pompidou-cinema' || exhibition.id === 'pompidou-painting' || exhibition.id === 'pompidou-drawing' || exhibition.id === 'pompidou-newmedia' || exhibition.id === 'pompidou-design' || exhibition.id === 'mam-perm-painting' || exhibition.id === 'mam-perm-photography' || exhibition.id === 'louvre-painting' || exhibition.id === 'jacquemart-collection' || exhibition.id === 'marmottan-collection' || exhibition.id === 'picasso-drawings' || exhibition.id === 'picasso-paintings' || exhibition.id === 'picasso-sculptures' || exhibition.id === 'picasso-prints' || exhibition.id === 'palais-de-tokyo-collection' || exhibition.id === 'petit-palais-collection' || exhibition.id === 'petit-palais-drawings' || exhibition.id === 'rouen-mba-collection' || exhibition.id === 'lille-pba-collection' || exhibition.id === 'mamcs-drawings' || exhibition.id === 'mamcs-paintings' || exhibition.id === 'mamcs-photography' || exhibition.id === 'mamcs-graphic-design' || exhibition.id === 'lyon-collection' || exhibition.id === 'grenoble-paintings' || exhibition.id === 'grenoble-drawings' || exhibition.id === 'grenoble-photography' || exhibition.id === 'bordeaux-paintings' || exhibition.id === 'bordeaux-drawings' || exhibition.id === 'toulouse-lautrec-collection' || exhibition.id === 'granet-collection' || exhibition.id === 'rodin-peintures' || exhibition.id === 'rodin-sculptures' || exhibition.id === 'rodin-gravures' || exhibition.id === 'flv-collection' || exhibition.id === 'mad-collection' || exhibition.id === 'carnavalet-collection' || exhibition.id === 'carnavalet-paintings' || exhibition.id === 'carnavalet-prints' || exhibition.id === 'musee-armee-peinture' || exhibition.id === 'musee-armee-photographie' || exhibition.id === 'musee-armee-dessin' || exhibition.id === 'conde-paintings' || exhibition.id === 'conde-drawings' || exhibition.id === 'versailles-collection' || exhibition.id === 'guimet-collection' || exhibition.id === 'macval-collection' || exhibition.id === 'mucem-prints' || exhibition.id === 'mucem-drawings' || exhibition.id === 'mucem-collection' || exhibition.id === 'fabre-collection' || exhibition.id === 'chagall-collection' || exhibition.id === 'piscine-collection' || exhibition.id === 'wallace-permanent' || exhibition.id === 'soane-paintings' || exhibition.id === 'vatican-collection' || exhibition.id === 'wales-art' || exhibition.id === 'wales-industry' || exhibition.id === 'uffizi-collection' || exhibition.id === 'uffizi-gallery-collection' || exhibition.id === 'pitti-collection' || exhibition.id === 'accademia-collection' || exhibition.id === 'palazzo-ducale-collection' || exhibition.id === 'borghese-paintings' || exhibition.id === 'borghese-arte-antica' || exhibition.id === 'guggenheim-collection') {
       const jsonFiles: Record<string, string> = {
         'pompidou-cinema': '/data/pompidou-cinema-collection.json',
         'pompidou-painting': '/data/pompidou-painting-collection.json',
@@ -1640,12 +1764,56 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
         'picasso-prints': '/data/picasso-prints-collection.json',
         'palais-de-tokyo-collection': '/data/palais-de-tokyo-collection.json',
         'petit-palais-collection': '/data/petit-palais-collection.json',
+        'petit-palais-drawings': '/data/petit-palais-drawings.json',
         'rouen-mba-collection': '/data/rouen-mba.json',
         'lille-pba-collection': '/data/lille-pba.json',
         'mamcs-drawings': '/data/mamcs-strasbourg-drawings-collection.json',
         'mamcs-paintings': '/data/mamcs-strasbourg-paintings-collection.json',
         'mamcs-photography': '/data/mamcs-strasbourg-photography-collection.json',
-        'mamcs-graphic-design': '/data/mamcs-strasbourg-graphic-design-collection.json'
+        'mamcs-graphic-design': '/data/mamcs-strasbourg-graphic-design-collection.json',
+        'lyon-collection': '/data/mba-lyon-collection.json',
+        'grenoble-paintings': '/data/musee-grenoble-paintings-collection.json',
+        'grenoble-drawings': '/data/musee-grenoble-drawings-collection.json',
+        'grenoble-photography': '/data/musee-grenoble-photography-collection.json',
+        'bordeaux-paintings': '/data/musba-bordeaux-paintings-collection.json',
+        'bordeaux-drawings': '/data/musba-bordeaux-drawings-collection.json',
+        'toulouse-lautrec-collection': '/data/toulouse-lautrec-collection.json',
+        'granet-collection': '/data/musee-granet-collection.json',
+        'rodin-peintures': '/data/rodin-peintures.json',
+        'rodin-sculptures': '/data/rodin-sculptures.json',
+        'rodin-gravures': '/data/rodin-gravures.json',
+        'flv-collection': '/data/flv-collection.json',
+        'mad-collection': '/data/mad-paris-collection.json',
+        'carnavalet-collection': '/data/carnavalet-collection.json',
+        'carnavalet-paintings': '/data/carnavalet-paintings.json',
+        'carnavalet-prints': '/data/carnavalet-prints.json',
+        'musee-armee-peinture': '/data/musee-armee-peinture.json',
+        'musee-armee-photographie': '/data/musee-armee-photographie.json',
+        'musee-armee-dessin': '/data/musee-armee-dessin.json',
+        'conde-paintings': '/data/musee-conde-paintings.json',
+        'conde-drawings': '/data/musee-conde-drawings.json',
+        'versailles-collection': '/data/versailles-collection.json',
+        'guimet-collection': '/data/musee-guimet-collection.json',
+        'macval-collection': '/data/macval-collection.json',
+        'mucem-prints': '/data/mucem-prints.json',
+        'mucem-drawings': '/data/mucem-drawings.json',
+        'mucem-collection': '/data/mucem-collection.json',
+        'fabre-collection': '/data/musee-fabre-collection.json',
+        'chagall-collection': '/data/musee-chagall-collection.json',
+        'piscine-collection': '/data/la-piscine-collection.json',
+        'wallace-permanent': '/data/wallace-collection.json',
+        'soane-paintings': '/data/soane-paintings.json',
+        'vatican-collection': '/data/vatican-collection.json',
+        'wales-art': '/data/museum-wales-art.json',
+        'wales-industry': '/data/museum-wales-industry.json',
+        'uffizi-collection': '/data/uffizi-collection.json',
+        'uffizi-gallery-collection': '/data/uffizi-gallery-collection.json',
+        'pitti-collection': '/data/pitti-palace-collection.json',
+        'accademia-collection': '/data/accademia-collection.json',
+        'palazzo-ducale-collection': '/data/palazzo-ducale-collection.json',
+        'borghese-paintings': '/data/galleria-borghese-collection.json',
+        'borghese-arte-antica': '/data/borghese-arte-antica-collection.json',
+        'guggenheim-collection': '/data/guggenheim-venice-collection.json'
       };
       const jsonFile = jsonFiles[exhibition.id];
       (async () => {
@@ -1658,29 +1826,139 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
             const match = String(yearText).match(/(\d{4})/);
             return match ? parseInt(match[1], 10) : 0;
           };
-          
-          // Handle different JSON structures: array (Rouen/Lille/MAMCS) vs object with artworks/objects
+
+          // Handle different JSON structures: array (Rouen/Lille/MAMCS) vs object with artworks/objects vs rooms structure (Wallace)
           const isArrayFormat = Array.isArray(data);
-          const allObjects = isArrayFormat ? data : (Array.isArray(data.artworks) ? data.artworks : (Array.isArray(data.objects) ? data.objects : []));
-          const is2D = exhibition.id === 'pompidou-painting' || exhibition.id === 'pompidou-drawing' || exhibition.id === 'pompidou-design' || exhibition.id === 'mam-perm-painting' || exhibition.id === 'mam-perm-photography' || exhibition.id === 'louvre-painting' || exhibition.id === 'jacquemart-collection' || exhibition.id === 'marmottan-collection' || exhibition.id === 'picasso-drawings' || exhibition.id === 'picasso-paintings' || exhibition.id === 'picasso-prints' || exhibition.id === 'palais-de-tokyo-collection' || exhibition.id === 'petit-palais-collection' || exhibition.id === 'rouen-mba-collection' || exhibition.id === 'lille-pba-collection' || exhibition.id.startsWith('mamcs-');
-          const is3D = exhibition.id === 'picasso-sculptures';
-          
-          const list: Artwork[] = allObjects.map((item: any, idx: number) => ({
+          let allObjects: any[] = [];
+          if (isArrayFormat) {
+            allObjects = data;
+          } else if (Array.isArray(data.rooms)) {
+            // Wallace Collection: rooms structure - flatten all artworks from all rooms with roomId
+            allObjects = data.rooms.flatMap((room: any) =>
+              (room.artworks || []).map((art: any) => ({
+                ...art,
+                roomName: room.originalName || room.name,
+                roomId: room.name || room.id  // Use room name (Room 1, Room 2, etc.) as roomId
+              }))
+            );
+          } else if (Array.isArray(data.artworks)) {
+            allObjects = data.artworks;
+          } else if (Array.isArray(data.objects)) {
+            allObjects = data.objects;
+          }
+          const is2D = exhibition.id === 'pompidou-painting' || exhibition.id === 'pompidou-drawing' || exhibition.id === 'pompidou-design' || exhibition.id === 'mam-perm-painting' || exhibition.id === 'mam-perm-photography' || exhibition.id === 'louvre-painting' || exhibition.id === 'jacquemart-collection' || exhibition.id === 'marmottan-collection' || exhibition.id === 'picasso-drawings' || exhibition.id === 'picasso-paintings' || exhibition.id === 'picasso-prints' || exhibition.id === 'palais-de-tokyo-collection' || exhibition.id === 'petit-palais-collection' || exhibition.id === 'rouen-mba-collection' || exhibition.id === 'lille-pba-collection' || exhibition.id.startsWith('mamcs-') || exhibition.id === 'lyon-collection' || exhibition.id.startsWith('grenoble-') || exhibition.id.startsWith('bordeaux-') || exhibition.id === 'toulouse-lautrec-collection' || exhibition.id === 'granet-collection' || exhibition.id === 'rodin-peintures' || exhibition.id === 'rodin-gravures' || exhibition.id === 'flv-collection' || exhibition.id.startsWith('musee-armee-') || exhibition.id.startsWith('conde-') || exhibition.id === 'versailles-collection' || exhibition.id === 'guimet-collection' || exhibition.id === 'macval-collection' || exhibition.id === 'wallace-permanent';
+          const is3D = exhibition.id === 'picasso-sculptures' || exhibition.id === 'rodin-sculptures' || exhibition.id === 'borghese-arte-antica';
+          const isMAD = exhibition.id === 'mad-collection';
+          const isCarnavalet = exhibition.id === 'carnavalet-collection';
+          const isBorghese = exhibition.id === 'borghese-paintings' || exhibition.id === 'borghese-arte-antica';
+
+          // Borghese: clean up artist names - invalid entries like "art Roman" should show as Unknown
+          const cleanBorgheseArtist = (artist: string) => {
+            if (!artist) return 'Unknown';
+            // Filter out invalid artist names
+            const invalidPatterns = ['art Roman', 'art Greek', 'Unknown', 'unknown'];
+            if (invalidPatterns.some(p => artist.trim().toLowerCase() === p.toLowerCase())) {
+              return 'Unknown';
+            }
+            return artist.trim();
+          };
+
+          // Borghese: format century years - "3rd-4th century A.D." -> "4c", "2nd century B.C." -> "2c BC"
+          const formatCenturyYear = (yearStr: string) => {
+            if (!yearStr) return '';
+            // If it's a regular year (4 digits), return as is
+            if (/^\d{4}$/.test(yearStr.trim())) return yearStr.trim();
+
+            // Match century patterns like "3rd-4th century", "2nd century", "1st-2nd century A.D."
+            const centuryMatch = yearStr.match(/(\d+)(?:st|nd|rd|th)(?:-(\d+)(?:st|nd|rd|th))?\s*century/i);
+            if (centuryMatch) {
+              // Use the later century if range, otherwise the single century
+              const century = centuryMatch[2] || centuryMatch[1];
+              const hasBC = /B\.?C\.?/i.test(yearStr);
+              return hasBC ? `${century}c BC` : `${century}c`;
+            }
+
+            // Return original if no century pattern found
+            return yearStr;
+          };
+
+          // MAD Paris: clean up title and artist display
+          const cleanMADTitle = (title: string) => {
+            // "Cafetière à filtre - Cafetière-filtre" → "Cafetière à filtre"
+            if (title.includes(' - ')) {
+              return title.split(' - ')[0].trim();
+            }
+            return title;
+          };
+          const cleanMADArtist = (artist: string) => {
+            // "Hoentschel, Georges (1855-1915) (céramiste)" → "Georges Hoentschel"
+            // "Manufacture royale de porcelaine de Copenhague (1775- (fabricant)" → "Manufacture royale de porcelaine de Copenhague"
+            // "1520/1530 (vers)" → "Unknown" (date-only entries)
+
+            // Check if this is a date-only entry (starts with a number)
+            if (/^\d/.test(artist)) {
+              return 'Unknown';
+            }
+
+            // Step 1: Remove all parenthetical content (including malformed ones like "(1775-")
+            let cleaned = artist
+              .replace(/\s*\([^)]*\)\s*/g, '')  // Remove complete parentheses
+              .replace(/\s*\([^)]*$/g, '')      // Remove unclosed parentheses at end
+              .trim();
+
+            // Step 2: Convert "Last, First" → "First Last" (only for simple 2-part names)
+            if (cleaned.includes(', ')) {
+              const parts = cleaned.split(', ');
+              if (parts.length === 2 && !parts[0].includes(' ')) {
+                // Only convert if last name is a single word (avoid "Company Name, Inc")
+                cleaned = `${parts[1].trim()} ${parts[0].trim()}`;
+              }
+            }
+
+            // Step 3: Remove trailing punctuation (dots, commas)
+            cleaned = cleaned.replace(/[.,;:]+$/, '').trim();
+
+            return cleaned || 'Unknown';
+          };
+
+          const list: Artwork[] = allObjects.map((item: any, idx: number) => {
+            const rawTitle = item.title || item.name || 'Untitled';
+            const rawArtist = item.artist || item.artistName || 'Unknown';
+            // Support both 'year' and 'date' field names (Uffizi/Accademia use 'date')
+            const yearOrDate = item.year || item.date || '';
+            // Support both 'medium' and 'technique' field names (Uffizi/Accademia use 'technique')
+            const mediumOrTechnique = item.medium || item.technique || '';
+            // Support both 'dimensions' and 'size' field names (Uffizi uses 'size')
+            const dimensionsOrSize = item.dimensions || item.size || '';
+
+            return {
               id: item.id || `${exhibition.id}-${idx}`,
-              name: item.title || item.name || 'Untitled',
-              artist: item.artist || item.artistName || 'Unknown',
-              year: toYear(item.year),
-              date: item.year,
+              name: isMAD ? cleanMADTitle(rawTitle) : rawTitle,
+              artist: isMAD ? cleanMADArtist(rawArtist) : (isBorghese ? cleanBorgheseArtist(rawArtist) : rawArtist),
+              year: toYear(yearOrDate),
+              date: isBorghese ? formatCenturyYear(yearOrDate) : yearOrDate,
               image: item.image || item.imageUrl,  // Support both image and imageUrl fields
-              dimension: item.dimensions,
+              dimension: dimensionsOrSize,
               duration: item.duration,  // Video/film duration
-              medium: item.medium,
-              type: is2D ? (item.type || '2D') : (is3D ? (item.type || '3D') : (item.type || 'video')),
-              roomId: 'default',
+              medium: mediumOrTechnique,
+              type: isMAD ? '3D' : (isCarnavalet ? 'unknown' : (is2D ? (item.type || '2D') : (is3D ? (item.type || '3D') : (item.type || 'video')))),
+              roomId: item.roomId || 'default',  // Use roomId from item (Wallace rooms) or default
               exhibitionName: exhibition.name,
               exhibitionTitle: exhibition.title,
-            }));
-          const withImages = list.filter((a) => !!a.image);
+            };
+          });
+          // Debug: log Wallace Collection data
+          if (exhibition.id === 'wallace-permanent') {
+            console.log('[Wallace] allObjects:', allObjects.length);
+            console.log('[Wallace] allObjects sample roomIds:', allObjects.slice(0, 5).map((o: any) => o.roomId));
+            console.log('[Wallace] list:', list.length);
+            console.log('[Wallace] list sample roomIds:', list.slice(0, 5).map((a: any) => a.roomId));
+          }
+          // Filter out items without images or with placeholder "no-image" URLs
+          const withImages = list.filter((a) => !!a.image && !a.image.includes('no-image'));
+          if (exhibition.id === 'wallace-permanent') {
+            console.log('[Wallace] withImages:', withImages.length);
+          }
           setArtworks(withImages);
           setInitialized(true);
         } catch (error) {
@@ -1847,6 +2125,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
             artist: item.artist,
             year: item.year,
             image: item.image,
+            originalImage: item.originalImage,
             roomId: item.roomId || "default",
             exhibitionName: exhibition.name,
             exhibitionTitle: exhibition.title,
@@ -1870,7 +2149,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
           const data = await res.json();
           const items = Array.isArray(data.items) ? data.items : [];
           const displayExhibition = items.find((item: any) => item.id === exhibition.id);
-          
+
           if (displayExhibition && Array.isArray(displayExhibition.rooms)) {
             const list: Artwork[] = [];
             const metas: RoomMeta[] = [];
@@ -1878,7 +2157,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
             displayExhibition.rooms.forEach((room: any, roomIndex: number) => {
               const roomId = String(roomIndex + 1); // 1-based sequential numbering
               const hasArtworks = Array.isArray(room.artworks) && room.artworks.length > 0;
-              
+
               // Store room metadata (including rooms without artworks)
               metas.push({
                 id: roomId,
@@ -1889,17 +2168,17 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
                 url: room.url,
                 hasArtworks,
               });
-              
+
               // Check if cover image represents the same artwork as any in the room
               // Compare by title (normalized) since cover and artwork may have different image URLs
               const coverTitle = room.coverTitle || '';
               const normalizedCoverTitle = coverTitle.toLowerCase().replace(/[^a-z0-9]/g, '');
-              const isDuplicateCover = room.coverImage && hasArtworks && 
+              const isDuplicateCover = room.coverImage && hasArtworks &&
                 room.artworks.some((a: any) => {
                   const artworkTitle = (a.title || '').toLowerCase().replace(/[^a-z0-9]/g, '');
                   return artworkTitle && normalizedCoverTitle && artworkTitle === normalizedCoverTitle;
                 });
-              
+
               // Add coverImage as the first artwork of each room (room intro/cover)
               // Only add if it's not a duplicate of an existing artwork
               if (room.coverImage && !isDuplicateCover) {
@@ -1921,13 +2200,13 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
                   sourceUrl: room.url,
                 });
               }
-              
+
               if (hasArtworks) {
                 for (const artwork of room.artworks) {
                   // Extract Tate work ID from URL
                   const urlMatch = artwork.url?.match(/([a-z]\d+)$/);
                   const tateId = urlMatch ? urlMatch[1] : null;
-                  
+
                   // Use image from JSON, or build from ID as fallback
                   let imageUrl = artwork.image || '';
                   if (!imageUrl && tateId) {
@@ -1936,7 +2215,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
                     const midPart = idUpper.substring(0, 3);
                     imageUrl = `https://media.tate.org.uk/art/images/work/${prefix}/${midPart}/${idUpper}_9.jpg`;
                   }
-                  
+
                   // Get year directly from JSON, or parse from year string if needed
                   let year = 0;
                   if (typeof artwork.year === 'number') {
@@ -1945,7 +2224,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
                     const yearMatch = artwork.year.match(/\d{4}/);
                     year = yearMatch ? parseInt(yearMatch[0], 10) : 0;
                   }
-                  
+
                   // Use roomId + list index to ensure completely unique IDs
                   const uniqueId = `${tateId || 'artwork'}-room${roomId}-${list.length}`;
                   list.push({
@@ -1986,17 +2265,17 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
           const data = await res.json();
           const items = Array.isArray(data.items) ? data.items : [];
           const displayExhibition = items.find((item: any) => item.id === exhibition.id);
-          
+
           if (displayExhibition && Array.isArray(displayExhibition.rooms)) {
             // Save enriched exhibition data (including descriptionHtml)
             setEnrichedExhibition(displayExhibition);
             const list: Artwork[] = [];
             const metas: RoomMeta[] = [];
-            
+
             displayExhibition.rooms.forEach((room: any, roomIndex: number) => {
               const roomId = String(roomIndex + 1);
               const hasArtworks = Array.isArray(room.artworks) && room.artworks.length > 0;
-              
+
               metas.push({
                 id: roomId,
                 name: room.name || `Room ${roomId}`,
@@ -2006,12 +2285,12 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
                 url: room.url,
                 hasArtworks,
               });
-              
+
               if (hasArtworks) {
                 for (const artwork of room.artworks) {
                   const urlMatch = artwork.url?.match(/([a-z]\d+)$/i);
                   const tateId = urlMatch ? urlMatch[1] : null;
-                  
+
                   let imageUrl = artwork.image || '';
                   if (!imageUrl && tateId) {
                     const idUpper = tateId.toUpperCase();
@@ -2019,7 +2298,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
                     const midPart = idUpper.substring(0, 3);
                     imageUrl = `https://media.tate.org.uk/art/images/work/${prefix}/${midPart}/${idUpper}_9.jpg`;
                   }
-                  
+
                   let year = 0;
                   if (typeof artwork.year === 'number') {
                     year = artwork.year;
@@ -2027,7 +2306,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
                     const yearMatch = artwork.year.match(/\d{4}/);
                     year = yearMatch ? parseInt(yearMatch[0], 10) : 0;
                   }
-                  
+
                   const uniqueId = `${tateId || artwork.id || 'artwork'}-room${roomId}-${list.length}`;
                   list.push({
                     id: uniqueId,
@@ -2089,7 +2368,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
           .replace(/-/g, ' ')
           .replace(/\s+/g, ' ')
           .trim();
-        
+
         return {
           id: `gallery-${exhibition.id}-${idx}`,
           name: nameFromFile || `${exhibitionName} - Image ${idx + 1}`,
@@ -2403,7 +2682,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
   // Viewer mode only; editing/upload removed
 
   const current = filteredArtworks[selectedIndex];
-  
+
   // Archive mode: reset video when current artwork changes (force remount for animation)
   useEffect(() => {
     if (current?.youtubeId) {
@@ -2420,7 +2699,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
       setArchiveThumbnailHidden(false);
     }
   }, [current?.id, current?.youtubeId]);
-  
+
   // Gallery mode: delay before showing YouTube iframe on hover
   useEffect(() => {
     if (hoveredIndex !== null) {
@@ -2440,8 +2719,12 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
       setGalleryThumbnailHiddenIdx(null);
     }
   }, [hoveredIndex, filteredArtworks]);
-  
+
   const displayArtwork = useMemo(() => {
+    // If lightbox is open, show that artwork's metadata
+    if (hoverZoom?.artwork) {
+      return hoverZoom.artwork;
+    }
     if (viewMode === 'gallery') {
       if (hoveredIndex !== null && filteredArtworks[hoveredIndex]) {
         return filteredArtworks[hoveredIndex];
@@ -2450,7 +2733,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
       return null as unknown as Artwork | null;
     }
     return current;
-  }, [viewMode, hoveredIndex, current, filteredArtworks]);
+  }, [viewMode, hoveredIndex, current, filteredArtworks, hoverZoom]);
 
   // Open lightbox with simple scale/translate animation
   const openLightbox = (e: React.MouseEvent<HTMLImageElement, MouseEvent>, artwork: Artwork) => {
@@ -2510,34 +2793,165 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
     window.setTimeout(() => setLightbox(null), 300);
   };
 
-  // ESC to close lightbox
+  // Close zoom overlay with animation
+  const closeHoverZoomFromOverlay = () => {
+    if (hoverZoomTimeoutRef.current) {
+      clearTimeout(hoverZoomTimeoutRef.current);
+      hoverZoomTimeoutRef.current = null;
+    }
+    // Save current hoverZoom for rendering during close animation
+    if (hoverZoom) {
+      setClosingHoverZoom({ artwork: hoverZoom.artwork, imageUrl: hoverZoom.imageUrl });
+    }
+    setHoverZoom((s) => (s ? { ...s, animate: false } : s));
+    setTimeout(() => {
+      setHoverZoom(null);
+      setClosingHoverZoom(null);
+    }, 320);
+  };
+
+  // Cleanup hover zoom timeout on unmount
   useEffect(() => {
-    if (!lightbox) return;
-    const onKey = (ev: KeyboardEvent) => { if (ev.key === 'Escape') closeLightbox(); };
+    return () => {
+      if (hoverZoomTimeoutRef.current) {
+        clearTimeout(hoverZoomTimeoutRef.current);
+      }
+    };
+  }, []);
+
+  // ESC to close lightbox or hover zoom
+  useEffect(() => {
+    if (!lightbox && !hoverZoom) return;
+    const onKey = (ev: KeyboardEvent) => {
+      if (ev.key === 'Escape') {
+        if (lightbox) closeLightbox();
+        if (hoverZoom) closeHoverZoomFromOverlay();
+      }
+    };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [lightbox]);
+  }, [lightbox, hoverZoom]);
   // Debug outlines disabled
   const DEBUG_LAYOUT = false;
 
   // Sync selected index from scroll - now handled inline in JSX onScroll
   // (Removed duplicate useEffect to avoid conflicts)
 
-  // Scroll to middle section when entering archive mode (for infinite loop)
+  // Scroll to first item when entering archive mode - ONLY on first time
+  // For virtualized lists (500+), start at 0
+  // For non-virtualized (3x loop), find the first item in middle section and scroll to it
   useEffect(() => {
     if (viewMode !== 'archive') return;
+    // Only initialize once per exhibition session
+    if (hasInitializedArchiveRef.current) return;
+
     const el = listRef.current;
     if (!el || filteredArtworks.length === 0) return;
 
-    // For 3x duplication: start in the middle section
-    const ITEM_HEIGHT = 120;
-    const total = filteredArtworks.length;
-    const middleSectionStart = total * ITEM_HEIGHT; // Start of middle copy
-    const targetScroll = middleSectionStart + selectedIndex * ITEM_HEIGHT;
-    
-    // Set scroll position to middle section
-    el.scrollTop = targetScroll;
-  }, [viewMode]); // Run once on enter archive
+    hasInitializedArchiveRef.current = true; // Mark as initialized
+
+    // Use requestAnimationFrame to ensure DOM is rendered
+    requestAnimationFrame(() => {
+      const total = filteredArtworks.length;
+      const useVirtualization = total > 500;
+
+      if (useVirtualization) {
+        // For virtualized lists, just scroll to top
+        el.scrollTop = 0;
+      } else {
+        // For 3x duplication: find the first item with data-base="0" in middle section
+        const items = el.querySelectorAll('[data-base="0"]');
+        // There are 3 copies, we want the middle one (index 1)
+        const middleItem = items[1] as HTMLElement | undefined;
+        if (middleItem) {
+          const containerHeight = el.clientHeight;
+          const itemTop = middleItem.offsetTop;
+          const itemHeight = middleItem.offsetHeight;
+          // Scroll so item is centered in viewport
+          const targetScroll = itemTop + itemHeight / 2 - containerHeight / 2;
+          el.scrollTop = Math.max(0, targetScroll);
+        }
+      }
+      // Ensure selectedIndex is 0
+      setSelectedIndex(0);
+    });
+  }, [viewMode, filteredArtworks.length]); // Run when entering archive or when artworks change
+
+  // Mobile archive mode: initial scroll to middle section - ONLY on first archive entry
+  useEffect(() => {
+    if (!isMobile || viewMode !== 'archive') return;
+    if (hasInitializedArchiveRef.current) return; // Skip if already initialized
+
+    const el = mobileArchiveScrollRef.current;
+    if (!el || filteredArtworks.length === 0) return;
+
+    hasInitializedArchiveRef.current = true;
+
+    requestAnimationFrame(() => {
+      const items = el.querySelectorAll('[data-base="0"]');
+      const middleItem = items[1] as HTMLElement | undefined;
+      if (middleItem) {
+        const containerWidth = el.clientWidth;
+        const itemLeft = middleItem.offsetLeft;
+        const itemWidth = middleItem.offsetWidth;
+        const targetScroll = itemLeft + itemWidth / 2 - containerWidth / 2;
+        el.scrollLeft = Math.max(0, targetScroll);
+      }
+      setSelectedIndex(0);
+    });
+  }, [isMobile, viewMode, filteredArtworks.length]); // NO selectedIndex dependency!
+
+  // Sync scroll position when switching between PC and mobile
+  const prevIsMobileRef = useRef<boolean | null>(null);
+  useEffect(() => {
+    if (viewMode !== 'archive') return;
+
+    // First run - just record current state
+    if (prevIsMobileRef.current === null) {
+      prevIsMobileRef.current = isMobile;
+      return;
+    }
+
+    // No change
+    if (prevIsMobileRef.current === isMobile) return;
+
+    prevIsMobileRef.current = isMobile;
+
+    // Need multiple frames for DOM to be ready
+    setTimeout(() => {
+      requestAnimationFrame(() => {
+        if (isMobile) {
+          // Switched to mobile - scroll mobileArchiveScrollRef to current selectedIndex
+          const el = mobileArchiveScrollRef.current;
+          if (el) {
+            const items = el.querySelectorAll(`[data-base="${selectedIndex}"]`);
+            const middleItem = items[1] as HTMLElement | undefined;
+            if (middleItem) {
+              const containerWidth = el.clientWidth;
+              const itemLeft = middleItem.offsetLeft;
+              const itemWidth = middleItem.offsetWidth;
+              const targetScroll = itemLeft + itemWidth / 2 - containerWidth / 2;
+              el.scrollLeft = targetScroll;
+            }
+          }
+        } else {
+          // Switched to PC - scroll listRef to current selectedIndex
+          const el = listRef.current;
+          if (el) {
+            const items = el.querySelectorAll(`[data-base="${selectedIndex}"]`);
+            const middleItem = items[1] as HTMLElement | undefined;
+            if (middleItem) {
+              const containerHeight = el.clientHeight;
+              const itemTop = middleItem.offsetTop;
+              const itemHeight = middleItem.offsetHeight;
+              const targetScroll = itemTop + itemHeight / 2 - containerHeight / 2;
+              el.scrollTop = targetScroll;
+            }
+          }
+        }
+      });
+    }, 100); // Wait 100ms for layout to stabilize
+  }, [isMobile, viewMode, selectedIndex]);
 
   // Momentum scrolling setup (Archive only)
   // ... (Removed redundant effects if combined, but keep momentum separate if cleaner)
@@ -2572,7 +2986,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
     const el = listRef.current;
     if (!el || filteredArtworks.length === 0) return;
     const m = momentumRef.current;
-    
+
     // Natural physics: no artificial acceleration, just friction decay
     const MAX_VEL = 35; // Max velocity (lower = slower)
     const GAIN = 0.15; // Response to wheel delta (lower = slower)
@@ -2589,13 +3003,13 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
         m.raf = 0;
         return;
       }
-      
+
       const newScrollTop = el.scrollTop + m.vel;
       const maxScroll = el.scrollHeight - el.clientHeight;
-      
+
       // Clamp to boundaries (no infinite loop for now)
       el.scrollTop = Math.max(0, Math.min(maxScroll, newScrollTop));
-      
+
       m.raf = requestAnimationFrame(step);
     };
 
@@ -2603,7 +3017,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
       // Add velocity proportional to wheel input, clamped to max
       const newVel = m.vel + delta * GAIN;
       m.vel = Math.max(-MAX_VEL, Math.min(MAX_VEL, newVel));
-      
+
       // Start animation if not running
       if (!m.raf) m.raf = requestAnimationFrame(step);
     };
@@ -2646,17 +3060,48 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
 
   // Compute selector data outside JSX and replace the problematic IIFE-based room selector block with simpler JSX using this data to fix the syntax error
   const selectorData = useMemo(() => {
-    // Only use actually assigned numeric rooms discovered from buttons (which derive from artworks)
-    const numericButtons = roomButtons.filter(b => /^\d+$/.test(b.id));
-    const nums: { id: string; label: string; exists: boolean }[] = numericButtons.map(b => ({ id: b.id, label: b.label, exists: true }));
-    // Add letter rooms (A-G)
-    const letterButtons = roomButtons.filter(b => /^[A-G]$/i.test(b.id) && b.id !== 'C');
+    // Get all room buttons except 'ALL'
+    const allRoomButtons = roomButtons.filter(b => b.id !== 'ALL');
+
+    // Separate by type:
+    // 1. Pure numeric IDs (1, 2, 3...)
+    const numericButtons = allRoomButtons.filter(b => /^\d+$/.test(b.id));
+
+    // 2. String rooms with numeric labels (Room 1 → label "1", id "Room 1")
+    const stringRoomButtons = allRoomButtons.filter(b =>
+      !(/^\d+$/.test(b.id)) &&
+      !(/^[A-G]$/i.test(b.id)) &&
+      b.id !== 'C' &&
+      b.id !== 'n' &&
+      /^\d+$/.test(b.label)  // Label is numeric (like "1", "2", "3")
+    );
+
+    // 3. Letter rooms (A-G except C)
+    const letterButtons = allRoomButtons.filter(b => /^[A-G]$/i.test(b.id) && b.id !== 'C');
+
+    // 4. Central Hall (C)
+    const central = allRoomButtons.find(b => b.id === 'C');
+
+    // 5. Archive (n)
+    const archive = allRoomButtons.find(b => b.id === 'n');
+
+    // Build the nums array in order
+    const nums: { id: string; label: string; exists: boolean }[] = [];
+
+    // Add numeric buttons first
+    for (const b of numericButtons) nums.push({ id: b.id, label: b.label, exists: true });
+
+    // Add string room buttons (sorted by their numeric label)
+    const sortedStringRooms = [...stringRoomButtons].sort((a, b) => parseInt(a.label, 10) - parseInt(b.label, 10));
+    for (const b of sortedStringRooms) nums.push({ id: b.id, label: b.label, exists: true });
+
+    // Add letter rooms
     for (const lb of letterButtons) nums.push({ id: lb.id, label: lb.label, exists: true });
+
     // Add Central Hall (C)
-    const central = roomButtons.find(b => b.id === 'C');
     if (central) nums.push({ id: central.id, label: central.label, exists: true });
+
     // Add Archive (n) at the end
-    const archive = roomButtons.find(b => b.id === 'n');
     if (archive) nums.push({ id: archive.id, label: archive.label, exists: true });
 
     // Chunk for gallery rows of 15
@@ -2699,8 +3144,220 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
         }}
       >
         {/* Old handle removed; the corner is now curled by default and interactive via the invisible zone above */}
-        {/* Absolute full-height exhibition info panel at far left (all modes) */}
-        <div style={{ position: "absolute", top: 0, bottom: 0, left: 0, width: 150, background: "transparent", zIndex: 200, display: 'flex', flexDirection: 'column', pointerEvents: 'none', ...(DEBUG_LAYOUT ? { outline: "1px solid #964B00" } : {}) }}>
+        {/* Mobile: full-width top header bar - hide in archive mode */}
+        {isMobile && viewMode !== 'archive' && (
+          <div style={{ position: 'absolute', top: 0, left: 0, right: 0, background: '#fff', zIndex: 199, padding: '6px 12px 8px 12px' }}>
+            {/* Row 1: Title + Filter buttons + Controls */}
+            <div style={{ display: 'flex', alignItems: 'flex-start', gap: 8 }}>
+              {/* Title (left) */}
+              <div style={{ fontSize: 12, fontWeight: 700, color: '#111827', flex: '0 0 auto', maxWidth: 120 }}>{exhibition.title || exhibition.name}</div>
+              {/* Filter buttons (center, flexible) - century only, no decade drill-down on mobile */}
+              <div style={{ flex: 1, display: 'flex', flexWrap: 'wrap', gap: 3, alignItems: 'center' }}>
+                {/* ALL button */}
+                <button
+                  onClick={() => { setDateLevel('century'); setSelectedCentury(null); setSelectedYearRange('ALL'); setSelectedIndex(0); }}
+                  style={{ padding: '2px 6px', fontSize: 9, borderRadius: 3, border: 'none', background: !selectedCentury ? '#111' : '#f0f0f0', color: !selectedCentury ? '#fff' : '#222', cursor: 'pointer' }}
+                >
+                  ALL
+                </button>
+                {availableCenturies.length > 0 && availableCenturies.map((c) => (
+                  <button
+                    key={`mobile-c-${c}`}
+                    onClick={() => { setDateLevel('decade'); setSelectedCentury(c); setSelectedYearRange('ALL'); setSelectedIndex(0); }}
+                    style={{ padding: '2px 6px', fontSize: 9, borderRadius: 3, border: 'none', background: selectedCentury === c ? '#111' : '#f0f0f0', color: selectedCentury === c ? '#fff' : '#222', cursor: 'pointer' }}
+                  >
+                    {`${c}c`}
+                  </button>
+                ))}
+                {hasTypedArtworks && (['2D', '3D'] as const).map(t => (
+                  <button
+                    key={`mobile-${t}`}
+                    onClick={() => { setSelectedTypes(prev => { const next = new Set(prev); if (next.has(t)) next.delete(t); else next.add(t); return next; }); setSelectedIndex(0); }}
+                    style={{ padding: '2px 6px', fontSize: 9, borderRadius: 3, border: 'none', background: selectedTypes.has(t) ? '#111' : '#f0f0f0', color: selectedTypes.has(t) ? '#fff' : '#222', cursor: 'pointer' }}
+                  >
+                    {t}
+                  </button>
+                ))}
+              </div>
+            </div>
+            {/* Row 2: Description (optional, smaller) */}
+            <div style={{ fontSize: 9, color: '#888', lineHeight: 1.3, marginTop: 4, maxHeight: 26, overflow: 'hidden' }}>{exhibition.description}</div>
+          </div>
+        )}
+        {/* Mobile Archive Mode: full-screen layout with horizontal scrolling thumbnails (same as PC but horizontal) */}
+        {isMobile && viewMode === 'archive' && filteredArtworks.length > 0 && (() => {
+          const total = filteredArtworks.length;
+          const current = filteredArtworks[selectedIndex];
+          const THUMB_SIZE = 48;
+          const THUMB_GAP = 84; // Same gap as PC
+
+          // 3x list for infinite loop (same as PC)
+          const tripleList = [...filteredArtworks, ...filteredArtworks, ...filteredArtworks];
+
+          const scrollToIndex = (realIdx: number) => {
+            const el = mobileArchiveScrollRef.current;
+            if (!el) return;
+
+            const items = el.querySelectorAll('[data-base]');
+            const targetItem = Array.from(items).find((item, idx) => {
+              const base = parseInt(item.getAttribute('data-base') || '-1');
+              return base === realIdx && idx >= total && idx < total * 2;
+            }) as HTMLElement | null;
+
+            if (targetItem) {
+              const containerWidth = el.clientWidth;
+              const itemLeft = targetItem.offsetLeft;
+              const itemWidth = targetItem.offsetWidth;
+              const targetScroll = itemLeft + itemWidth / 2 - containerWidth / 2;
+              el.scrollTo({ left: targetScroll, behavior: 'smooth' });
+            }
+            setSelectedIndex(realIdx);
+          };
+
+          return (
+            <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, display: 'flex', flexDirection: 'column', background: '#fff', zIndex: 198 }}>
+              {/* Top row: horizontal scrolling thumbnails with 3x infinite loop */}
+              <div
+                ref={mobileArchiveScrollRef}
+                className="no-scrollbar"
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: THUMB_GAP,
+                  padding: '12px 16px',
+                  overflowX: 'scroll',
+                  overflowY: 'hidden',
+                  WebkitOverflowScrolling: 'touch',
+                  flexShrink: 0,
+                  height: THUMB_SIZE + 24,
+                  minHeight: THUMB_SIZE + 24,
+                  scrollBehavior: 'auto',
+                  overscrollBehavior: 'contain'
+                }}
+                onScroll={(e) => {
+                  const el = e.currentTarget;
+                  const currentScrollLeft = el.scrollLeft;
+                  const containerWidth = el.clientWidth;
+                  const centerX = currentScrollLeft + containerWidth / 2;
+
+                  // Find closest item to center (exactly like PC)
+                  const items = el.querySelectorAll('[data-base]');
+                  let closestIdx = 0;
+                  let closestDistance = Infinity;
+
+                  items.forEach((item) => {
+                    const htmlItem = item as HTMLElement;
+                    const itemLeft = htmlItem.offsetLeft;
+                    const itemWidth = htmlItem.offsetWidth;
+                    const itemCenter = itemLeft + itemWidth / 2;
+                    const distance = Math.abs(itemCenter - centerX);
+
+                    if (distance < closestDistance) {
+                      closestDistance = distance;
+                      closestIdx = parseInt(item.getAttribute('data-base') || '0');
+                    }
+                  });
+
+                  if (closestIdx !== selectedIndex) {
+                    setSelectedIndex(closestIdx);
+                  }
+
+                  // Infinite loop (exactly like PC)
+                  const totalWidth = el.scrollWidth;
+                  const sectionWidth = totalWidth / 3;
+
+                  if (currentScrollLeft < sectionWidth * 0.3) {
+                    el.scrollLeft = currentScrollLeft + sectionWidth;
+                  } else if (currentScrollLeft > sectionWidth * 1.7) {
+                    el.scrollLeft = currentScrollLeft - sectionWidth;
+                  }
+                }}
+              >
+                {tripleList.map((a, idx) => {
+                  const realIdx = idx % total;
+                  return (
+                    <div
+                      key={`mobile-thumb-${idx}`}
+                      data-base={realIdx}
+                      onClick={() => scrollToIndex(realIdx)}
+                      style={{
+                        width: THUMB_SIZE,
+                        height: THUMB_SIZE,
+                        flexShrink: 0,
+                        background: '#eee',
+                        borderRadius: 0,
+                        overflow: 'hidden',
+                        cursor: 'pointer',
+                        opacity: realIdx === selectedIndex ? 1 : 0.65
+                      }}
+                    >
+                      <img
+                        src={a.youtubeId ? `https://img.youtube.com/vi/${a.youtubeId}/mqdefault.jpg` : a.image}
+                        alt={a.name}
+                        loading="lazy"
+                        referrerPolicy="no-referrer"
+                        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                        onError={(e) => applyFallbackImage(e.currentTarget)}
+                      />
+                    </div>
+                  );
+                })}
+              </div>
+
+              {/* Center: main image - wheel scrolls thumbnails, touch is native on thumbnail strip */}
+              <div
+                style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '8px 16px', minHeight: 0, overflow: 'hidden' }}
+                onWheel={(e) => {
+                  e.preventDefault();
+                  // Just scroll the thumbnails - let onScroll handle selectedIndex (like PC)
+                  const el = mobileArchiveScrollRef.current;
+                  if (el) {
+                    el.scrollBy({ left: e.deltaY * 0.5, behavior: 'auto' });
+                  }
+                }}
+              >
+                {current && (
+                  <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', maxHeight: '100%', width: '100%' }}>
+                    <div style={{ position: 'relative', display: 'inline-block' }}>
+                      <img
+                        src={current.youtubeId ? `https://img.youtube.com/vi/${current.youtubeId}/mqdefault.jpg` : ((current as any).originalImage || current.image)}
+                        alt={current.name}
+                        referrerPolicy="no-referrer"
+                        style={{
+                          maxWidth: '100%',
+                          maxHeight: '50vh',
+                          objectFit: 'contain',
+                          display: 'block',
+                          pointerEvents: 'none'
+                        }}
+                        onError={(e) => applyFallbackImage(e.currentTarget)}
+                      />
+                      <HeartOverlay
+                        isLiked={likedArtworks.has(current.id)}
+                        onToggle={(e) => toggleLike(e, current)}
+                        style={{ position: 'absolute', bottom: 8, left: 8, zIndex: 30, padding: 0, background: 'none' }}
+                        size={18}
+                        color="#e11d48"
+                        emptyColor="#fff"
+                      />
+                    </div>
+                    <div style={{ marginTop: 10, textAlign: 'center', padding: '0 16px' }}>
+                      <div style={{ fontSize: 13, fontWeight: 700, color: '#222' }}>{current.name}</div>
+                      <div style={{ fontSize: 11, color: '#666', marginTop: 3 }}>{cleanArtistName(current.artist)}{current.year ? ` (${cleanDateText(String(current.year))})` : ''}</div>
+                    </div>
+                  </div>
+                )}
+              </div>
+
+              {/* Index indicator - moved up to avoid overlap with mode tabs */}
+              <div style={{ textAlign: 'center', fontSize: 10, color: '#888', padding: '6px 0 80px 0' }}>
+                {selectedIndex + 1} / {total}
+              </div>
+            </div>
+          );
+        })()}
+        {/* Absolute full-height exhibition info panel at far left (all modes) - hidden on mobile */}
+        <div style={{ position: "absolute", top: 0, bottom: 0, left: 0, width: 150, background: "transparent", zIndex: 200, display: isMobile ? 'none' : 'flex', flexDirection: 'column', pointerEvents: 'none', ...(DEBUG_LAYOUT ? { outline: "1px solid #964B00" } : {}) }}>
           {/* Left header: title + description + room selector */}
           <div style={{ padding: '8px 8px', borderBottom: '0px solid transparent', pointerEvents: 'auto', background: '#fff' }}>
             {repImage && (
@@ -2801,22 +3458,22 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
               </div>
             </div>
           )}
-          {/* Scrollable thumbnail strip below header (archive mode only) */}
-          {viewMode === 'archive' && filteredArtworks.length > 0 && (() => {
+          {/* Desktop: Scrollable thumbnail strip below header (archive mode only) */}
+          {viewMode === 'archive' && filteredArtworks.length > 0 && !isMobile && (() => {
             const total = filteredArtworks.length;
             const useVirtualization = total > 500; // Enable virtualization for large lists
-            
+
             // Item dimensions for virtualization
             const ITEM_HEIGHT = 144; // ~60px thumbnail + 84px margin
             const BUFFER_COUNT = 10; // Extra items above/below viewport
-            
+
             // Create 3x list for infinite loop (only if not virtualized)
             const tripleList = useVirtualization ? filteredArtworks : [...filteredArtworks, ...filteredArtworks, ...filteredArtworks];
-            
+
             const scrollToIndex = (realIdx: number) => {
               const el = listRef.current;
               if (!el) return;
-              
+
               if (useVirtualization) {
                 // For virtualized list, calculate scroll position directly
                 const targetScroll = realIdx * ITEM_HEIGHT - el.clientHeight / 2 + ITEM_HEIGHT / 2;
@@ -2828,7 +3485,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
                   const base = parseInt(item.getAttribute('data-base') || '-1');
                   return base === realIdx && idx >= total && idx < total * 2;
                 }) as HTMLElement | null;
-                
+
                 if (targetItem) {
                   const containerHeight = el.clientHeight;
                   const itemTop = targetItem.offsetTop;
@@ -2853,7 +3510,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
                 onScroll={(e) => {
                   const el = e.currentTarget;
                   const currentScrollTop = el.scrollTop;
-                  
+
                   if (useVirtualization) {
                     setArchiveScrollTop(currentScrollTop);
                     // Calculate which item is at center
@@ -2867,32 +3524,32 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
                     // Original non-virtualized scroll handling
                     const elContainerHeight = el.clientHeight;
                     const centerY = currentScrollTop + elContainerHeight / 2;
-                    
+
                     const items = el.querySelectorAll('[data-base]');
                     let closestIdx = 0;
                     let closestDistance = Infinity;
-                    
+
                     items.forEach((item) => {
                       const htmlItem = item as HTMLElement;
                       const itemTop = htmlItem.offsetTop;
                       const itemHeight = htmlItem.offsetHeight;
                       const itemCenter = itemTop + itemHeight / 2;
                       const distance = Math.abs(itemCenter - centerY);
-                      
+
                       if (distance < closestDistance) {
                         closestDistance = distance;
                         closestIdx = parseInt(item.getAttribute('data-base') || '0');
                       }
                     });
-                    
+
                     if (closestIdx !== selectedIndex) {
                       setSelectedIndex(closestIdx);
                     }
-                    
+
                     // Infinite loop
                     const totalHeight = el.scrollHeight;
                     const sectionHeight = totalHeight / 3;
-                    
+
                     if (currentScrollTop < sectionHeight * 0.3) {
                       el.scrollTop = currentScrollTop + sectionHeight;
                     } else if (currentScrollTop > sectionHeight * 1.7) {
@@ -2908,7 +3565,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
                       const startIdx = Math.max(0, Math.floor(archiveScrollTop / ITEM_HEIGHT) - BUFFER_COUNT);
                       const endIdx = Math.min(total, Math.ceil((archiveScrollTop + archiveContainerHeight) / ITEM_HEIGHT) + BUFFER_COUNT);
                       const visibleItems = [];
-                      
+
                       for (let i = startIdx; i < endIdx; i++) {
                         const a = filteredArtworks[i];
                         visibleItems.push(
@@ -2933,7 +3590,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
                               opacity: i === selectedIndex ? 1 : 0.65
                             }}
                           >
-                            <div 
+                            <div
                               style={{ width: "40%", aspectRatio: "1 / 1", background: "#eee", borderRadius: 0, overflow: "hidden" }}
                             >
                               {a.youtubeId ? (
@@ -2977,7 +3634,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
                         tabIndex={0}
                         style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 36, marginBottom: 84, cursor: "pointer", opacity: realIdx === selectedIndex ? 1 : 0.65 }}
                       >
-                        <div 
+                        <div
                           style={{ width: "40%", aspectRatio: "1 / 1", background: "#eee", borderRadius: 0, overflow: "hidden" }}
                         >
                           {a.youtubeId ? (
@@ -3016,11 +3673,12 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
         {(() => {
           // Wide screen: use absolute positioning
           // Narrow screen: use flex centering
+          // Hide mode tabs when hover zoom is active
           if (!isNarrow) {
             return (
-              <div ref={topBarRef} style={{ position: "relative", padding: "8px 0", minHeight: topBarHeight, marginLeft: LAYOUT_LEFT_BASE + META_SHIFT, marginRight: 80, zIndex: 100, ...(DEBUG_LAYOUT ? { outline: "1px dashed #00f" } : {}) }}>
+              <div ref={topBarRef} style={{ position: "relative", padding: "8px 0", minHeight: topBarHeight, marginLeft: LAYOUT_LEFT_BASE + META_SHIFT, marginRight: 80, zIndex: 100, opacity: hoverZoom ? 0 : 1, transition: 'opacity 200ms ease', pointerEvents: hoverZoom ? 'none' : 'auto', ...(DEBUG_LAYOUT ? { outline: "1px dashed #00f" } : {}) }}>
                 <span
-                  onClick={() => setViewMode('panorama')}
+                  onClick={() => { setViewMode('panorama'); setSelectedIndex(0); }}
                   style={{
                     fontSize: 12, lineHeight: 1, fontWeight: 700,
                     color: viewMode === 'panorama' ? "#000" : "#666",
@@ -3034,7 +3692,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
                 </span>
                 <span
                   ref={archiveRef}
-                  onClick={() => setViewMode('archive')}
+                  onClick={() => { setViewMode('archive'); setSelectedIndex(0); }}
                   style={{
                     fontSize: 12, lineHeight: 1, fontWeight: 700,
                     color: viewMode === 'archive' ? "#000" : "#666",
@@ -3048,7 +3706,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
                 </span>
                 <span
                   ref={galleryRef}
-                  onClick={() => setViewMode('gallery')}
+                  onClick={() => { setViewMode('gallery'); setSelectedIndex(0); }}
                   style={{
                     fontSize: 12, lineHeight: 1, fontWeight: 700,
                     color: viewMode === 'gallery' ? "#000" : "#666",
@@ -3095,26 +3753,85 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
               </div>
             );
           }
-          
+
           // Narrow screen: 3-column grid layout
           // Column 1 (PANORAMA): Room selector + year filter
           // Column 2 (ARCHIVE): TITLE + CREATOR
           // Column 3 (GALLERY): DATE + DIMENSION
           // Left margin must clear the left panel (150px) + some padding
-          const narrowMarginLeft = 160;
+          const narrowMarginLeft = isMobile ? 12 : 160;
           const narrowMarginRight = isVeryNarrow ? 16 : 24;
           const titleText = displayArtwork?.name || "—";
-          const creatorText = displayArtwork?.artist || "—";
-          const dateText = displayArtwork?.date || (displayArtwork?.year ? String(displayArtwork.year) : "—");
+          const creatorText = cleanArtistName(displayArtwork?.artist) || "—";
+          const rawDate = displayArtwork?.date || (displayArtwork?.year ? String(displayArtwork.year) : "");
+          const dateText = cleanDateText(rawDate) || "—";
           const dimensionText = displayArtwork?.dimension || "—";
           const durationText = displayArtwork?.duration || null;  // Video/film duration
-          
+
+          // Mobile: mode tabs at bottom, fixed position
+          if (isMobile) {
+            return (
+              <>
+                {/* Mode tabs - fixed at bottom, transparent */}
+                <div style={{
+                  position: 'fixed',
+                  bottom: 0,
+                  left: 0,
+                  right: 0,
+                  display: 'flex',
+                  justifyContent: 'space-around',
+                  alignItems: 'center',
+                  padding: '8px 0 12px 0',
+                  background: 'transparent',
+                  zIndex: 300
+                }}>
+                  <span
+                    onClick={() => { setViewMode('panorama'); setSelectedIndex(0); }}
+                    style={{
+                      fontSize: 10, fontWeight: 700,
+                      color: viewMode === 'panorama' ? '#000' : '#888',
+                      cursor: 'pointer', userSelect: 'none',
+                      textDecoration: viewMode === 'panorama' ? 'underline' : 'none',
+                      textShadow: '0 0 4px rgba(255,255,255,0.9)'
+                    }}
+                  >
+                    PANORAMA
+                  </span>
+                  <span
+                    onClick={() => { setViewMode('archive'); setSelectedIndex(0); }}
+                    style={{
+                      fontSize: 10, fontWeight: 700,
+                      color: viewMode === 'archive' ? '#000' : '#888',
+                      cursor: 'pointer', userSelect: 'none',
+                      textDecoration: viewMode === 'archive' ? 'underline' : 'none',
+                      textShadow: '0 0 4px rgba(255,255,255,0.9)'
+                    }}
+                  >
+                    ARCHIVE
+                  </span>
+                  <span
+                    onClick={() => { setViewMode('gallery'); setSelectedIndex(0); }}
+                    style={{
+                      fontSize: 10, fontWeight: 700,
+                      color: viewMode === 'gallery' ? '#000' : '#888',
+                      cursor: 'pointer', userSelect: 'none',
+                      textDecoration: viewMode === 'gallery' ? 'underline' : 'none',
+                      textShadow: '0 0 4px rgba(255,255,255,0.9)'
+                    }}
+                  >
+                    GALLERY
+                  </span>
+                </div>
+              </>
+            );
+          }
+
           return (
             <div ref={topBarRef} style={{ position: "relative", padding: "8px 0", marginLeft: narrowMarginLeft, marginRight: narrowMarginRight, zIndex: 100, ...(DEBUG_LAYOUT ? { outline: "1px dashed #00f" } : {}) }}>
               {/* Row 1: Mode tabs */}
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 8, marginBottom: 12 }}>
                 <span
-                  onClick={() => setViewMode('panorama')}
+                  onClick={() => { setViewMode('panorama'); setSelectedIndex(0); }}
                   style={{
                     fontSize: 12, lineHeight: 1, fontWeight: 700,
                     color: viewMode === 'panorama' ? "#000" : "#666",
@@ -3126,7 +3843,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
                 </span>
                 <span
                   ref={archiveRef}
-                  onClick={() => setViewMode('archive')}
+                  onClick={() => { setViewMode('archive'); setSelectedIndex(0); }}
                   style={{
                     fontSize: 12, lineHeight: 1, fontWeight: 700,
                     color: viewMode === 'archive' ? "#000" : "#666",
@@ -3138,7 +3855,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
                 </span>
                 <span
                   ref={galleryRef}
-                  onClick={() => setViewMode('gallery')}
+                  onClick={() => { setViewMode('gallery'); setSelectedIndex(0); }}
                   style={{
                     fontSize: 12, lineHeight: 1, fontWeight: 700,
                     color: viewMode === 'gallery' ? "#000" : "#666",
@@ -3149,7 +3866,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
                   GALLERY
                 </span>
               </div>
-              
+
               {/* Row 2: Content under each tab - 3 columns */}
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 8, alignItems: "start" }}>
                 {/* Column 1: Room selector + Year filter (under PANORAMA) */}
@@ -3190,7 +3907,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
                     </div>
                   )}
                 </div>
-                
+
                 {/* Column 2: TITLE + CREATOR (under ARCHIVE) */}
                 <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
                   <div>
@@ -3202,7 +3919,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
                     <div style={{ fontSize: 11, color: "#222", lineHeight: 1.3, overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' }}>{creatorText}</div>
                   </div>
                 </div>
-                
+
                 {/* Column 3: DATE + DIMENSION/DURATION (under GALLERY) */}
                 <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
                   <div>
@@ -3229,176 +3946,191 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
         {/* Room selector: absolute so it doesn't push down the metadata; wraps when it runs out of width */}
         {/* Hide on narrow screens - included in the 3-column layout above */}
         {!isNarrow && (
-        <div style={{ position: 'absolute', left: selectorLeft, top: selectorTop, width: selectorWidth, zIndex: 110 }}>
-          {roomButtons.find(b => b.id === 'ALL') && (
-            <div style={{ marginBottom: 2, display: 'flex', alignItems: 'center', gap: 8 }}>
-              <button onClick={() => { setSelectedRoomId('ALL'); setSelectedIndex(0); }} style={{ padding: '2px 6px', fontSize: 9.5, borderRadius: 3, border: 'none', background: selectedRoomId === 'ALL' ? '#111' : 'transparent', color: selectedRoomId === 'ALL' ? '#fff' : '#222', cursor: 'pointer' }}>ALL</button>
-              <span style={{ fontSize: 10, color: '#666' }}>({filteredArtworks.length})</span>
-            </div>
-          )}
-          <div style={{ width: '100%' }}>
-            {/* Unified gallery-style room selector for all modes */}
-            {(selectorData.rows.length > 0 ? selectorData.rows : []).map((row, rIdx) => (
-              <div key={`row-${rIdx}`} style={{ display: 'grid', gridTemplateColumns: `repeat(${row.length}, ${SELECTOR_COL_WIDTH}px)`, columnGap: SELECTOR_COL_GAP, rowGap: 2, justifyContent: 'start', marginBottom: 1 }}>
-                {row.map((btn) => (
-                  <button key={btn.id} onClick={() => { if (btn.exists) { setSelectedRoomId(btn.id); setSelectedIndex(0); } }} disabled={!btn.exists} style={{ width: '100%', height: 18, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', padding: 0, fontSize: 9.5, borderRadius: 3, border: btn.exists ? 'none' : '1px dashed rgba(0,0,0,0.18)', background: btn.exists ? (selectedRoomId === btn.id ? '#111' : 'transparent') : 'rgba(0,0,0,0.03)', color: btn.exists ? (selectedRoomId === btn.id ? '#fff' : '#222') : 'rgba(0,0,0,0.38)', opacity: btn.exists ? 1 : 0.75, cursor: btn.exists ? 'pointer' : 'default', boxSizing: 'border-box' }}>
-                    {btn.label}
-                  </button>
-                ))}
+          <div style={{ position: 'absolute', left: selectorLeft, top: selectorTop, width: selectorWidth, zIndex: 110 }}>
+            {roomButtons.find(b => b.id === 'ALL') && (
+              <div style={{ marginBottom: 2, display: 'flex', alignItems: 'center', gap: 8 }}>
+                <button onClick={() => { setSelectedRoomId('ALL'); setSelectedIndex(0); }} style={{ padding: '2px 6px', fontSize: 9.5, borderRadius: 3, border: 'none', background: selectedRoomId === 'ALL' ? '#111' : 'transparent', color: selectedRoomId === 'ALL' ? '#fff' : '#222', cursor: 'pointer' }}>ALL</button>
+                <span style={{ fontSize: 10, color: '#666' }}>({filteredArtworks.length})</span>
               </div>
-            ))}
-          </div>
-
-          {/* Year filtering buttons - moved below room buttons */}
-          <div style={{ marginTop: 8, padding: '6px 0' }}>
-            {dateLevel === 'century' ? (
-              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
-                {availableCenturies.map((c) => (
-                  <button
-                    key={`c-${c}`}
-                    onClick={() => { setSelectedCentury(c); setSelectedYearRange('ALL'); setDateLevel('decade'); setSelectedIndex(0); }}
-                    style={{
-                      padding: '2px 8px',
-                      fontSize: 11,
-                      borderRadius: 4,
-                      border: '1px solid #ddd',
-                      background: '#f8f8f8',
-                      color: '#222',
-                      cursor: 'pointer'
-                    }}
-                  >
-                    {`${c}c`}
-                  </button>
-                ))}
-              </div>
-            ) : (
-              <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
-                <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
-                  <button
-                    onClick={() => { setDateLevel('century'); setSelectedCentury(null); setSelectedYearRange('ALL'); }}
-                    style={{ padding: '2px 8px', fontSize: 11, borderRadius: 4, border: '1px solid #ddd', background: '#fafafa', color: '#222', cursor: 'pointer' }}
-                  >
-                    Back
-                  </button>
-                  <span style={{ fontSize: 11, color: '#666' }}>{selectedCentury ? `${selectedCentury}c` : ''}</span>
+            )}
+            <div style={{ width: '100%' }}>
+              {/* Unified gallery-style room selector for all modes */}
+              {(selectorData.rows.length > 0 ? selectorData.rows : []).map((row, rIdx) => (
+                <div key={`row-${rIdx}`} style={{ display: 'grid', gridTemplateColumns: `repeat(${row.length}, ${SELECTOR_COL_WIDTH}px)`, columnGap: SELECTOR_COL_GAP, rowGap: 2, justifyContent: 'start', marginBottom: 1 }}>
+                  {row.map((btn) => (
+                    <button key={btn.id} onClick={() => { if (btn.exists) { setSelectedRoomId(btn.id); setSelectedIndex(0); } }} disabled={!btn.exists} style={{ width: '100%', height: 18, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', padding: 0, fontSize: 9.5, borderRadius: 3, border: btn.exists ? 'none' : '1px dashed rgba(0,0,0,0.18)', background: btn.exists ? (selectedRoomId === btn.id ? '#111' : 'transparent') : 'rgba(0,0,0,0.03)', color: btn.exists ? (selectedRoomId === btn.id ? '#fff' : '#222') : 'rgba(0,0,0,0.38)', opacity: btn.exists ? 1 : 0.75, cursor: btn.exists ? 'pointer' : 'default', boxSizing: 'border-box' }}>
+                      {btn.label}
+                    </button>
+                  ))}
                 </div>
+              ))}
+            </div>
+
+            {/* Year filtering buttons - moved below room buttons */}
+            <div style={{ marginTop: 8, padding: '6px 0' }}>
+              {dateLevel === 'century' ? (
                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
-                  {availableDecades.map((d) => (
+                  {availableCenturies.map((c) => (
                     <button
-                      key={`d-${d}`}
-                      onClick={() => { setSelectedYearRange(String(d)); setSelectedIndex(0); }}
+                      key={`c-${c}`}
+                      onClick={() => { setSelectedCentury(c); setSelectedYearRange('ALL'); setDateLevel('decade'); setSelectedIndex(0); }}
                       style={{
                         padding: '2px 8px',
                         fontSize: 11,
                         borderRadius: 4,
-                        border: '1px solid ' + (selectedYearRange === String(d) ? '#111' : '#ddd'),
-                        background: selectedYearRange === String(d) ? '#111' : '#f8f8f8',
-                        color: selectedYearRange === String(d) ? '#fff' : '#222',
+                        border: '1px solid #ddd',
+                        background: '#f8f8f8',
+                        color: '#222',
                         cursor: 'pointer'
                       }}
                     >
-                      {d}
+                      {`${c}c`}
                     </button>
                   ))}
                 </div>
-                {selectedYearRange !== 'ALL' && (
-                  <div>
+              ) : (
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
                     <button
-                      onClick={() => { setSelectedYearRange('ALL'); setSelectedIndex(0); }}
+                      onClick={() => { setDateLevel('century'); setSelectedCentury(null); setSelectedYearRange('ALL'); }}
                       style={{ padding: '2px 8px', fontSize: 11, borderRadius: 4, border: '1px solid #ddd', background: '#fafafa', color: '#222', cursor: 'pointer' }}
                     >
-                      Clear
+                      Back
                     </button>
+                    <span style={{ fontSize: 11, color: '#666' }}>{selectedCentury ? `${selectedCentury}c` : ''}</span>
                   </div>
-                )}
-              </div>
-            )}
-            {/* 2D/3D type filter + ARTWORKS ONLY - shown when relevant */}
-            {(hasTypedArtworks || hasArchivalArtworks) && (
-              <div style={{ marginTop: 8, display: 'flex', flexWrap: 'wrap', gap: 6 }}>
-                {hasTypedArtworks && (['2D', '3D'] as const).map(t => (
-                  <button
-                    key={t}
-                    onClick={() => {
-                      setSelectedTypes(prev => {
-                        const next = new Set(prev);
-                        if (next.has(t)) next.delete(t);
-                        else next.add(t);
-                        return next;
-                      });
-                      setSelectedIndex(0);
-                    }}
-                    style={{
-                      padding: '2px 8px',
-                      fontSize: 11,
-                      borderRadius: 4,
-                      border: selectedTypes.has(t) ? '1px solid #111' : '1px solid #ddd',
-                      background: selectedTypes.has(t) ? '#111' : '#f8f8f8',
-                      color: selectedTypes.has(t) ? '#fff' : '#222',
-                      cursor: 'pointer',
-                    }}
-                  >
-                    {t}
-                  </button>
-                ))}
-                {hasArchivalArtworks && (
-                  <button
-                    onClick={() => { setShowArtworksOnly(!showArtworksOnly); setSelectedIndex(0); }}
-                    style={{
-                      padding: '2px 8px',
-                      fontSize: 11,
-                      borderRadius: 4,
-                      border: showArtworksOnly ? '1px solid #111' : '1px solid #ddd',
-                      background: showArtworksOnly ? '#111' : '#f8f8f8',
-                      color: showArtworksOnly ? '#fff' : '#222',
-                      cursor: 'pointer',
-                    }}
-                  >
-                    ARTWORKS ONLY
-                  </button>
-                )}
-              </div>
-            )}
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
+                    {availableDecades.map((d) => (
+                      <button
+                        key={`d-${d}`}
+                        onClick={() => { setSelectedYearRange(String(d)); setSelectedIndex(0); }}
+                        style={{
+                          padding: '2px 8px',
+                          fontSize: 11,
+                          borderRadius: 4,
+                          border: '1px solid ' + (selectedYearRange === String(d) ? '#111' : '#ddd'),
+                          background: selectedYearRange === String(d) ? '#111' : '#f8f8f8',
+                          color: selectedYearRange === String(d) ? '#fff' : '#222',
+                          cursor: 'pointer'
+                        }}
+                      >
+                        {d}
+                      </button>
+                    ))}
+                  </div>
+                  {selectedYearRange !== 'ALL' && (
+                    <div>
+                      <button
+                        onClick={() => { setSelectedYearRange('ALL'); setSelectedIndex(0); }}
+                        style={{ padding: '2px 8px', fontSize: 11, borderRadius: 4, border: '1px solid #ddd', background: '#fafafa', color: '#222', cursor: 'pointer' }}
+                      >
+                        Clear
+                      </button>
+                    </div>
+                  )}
+                </div>
+              )}
+              {/* 2D/3D type filter + ARTWORKS ONLY - shown when relevant */}
+              {(hasTypedArtworks || hasArchivalArtworks) && (
+                <div style={{ marginTop: 8, display: 'flex', flexWrap: 'wrap', gap: 6 }}>
+                  {hasTypedArtworks && (['2D', '3D'] as const).map(t => (
+                    <button
+                      key={t}
+                      onClick={() => {
+                        setSelectedTypes(prev => {
+                          const next = new Set(prev);
+                          if (next.has(t)) next.delete(t);
+                          else next.add(t);
+                          return next;
+                        });
+                        setSelectedIndex(0);
+                      }}
+                      style={{
+                        padding: '2px 8px',
+                        fontSize: 11,
+                        borderRadius: 4,
+                        border: selectedTypes.has(t) ? '1px solid #111' : '1px solid #ddd',
+                        background: selectedTypes.has(t) ? '#111' : '#f8f8f8',
+                        color: selectedTypes.has(t) ? '#fff' : '#222',
+                        cursor: 'pointer',
+                      }}
+                    >
+                      {t}
+                    </button>
+                  ))}
+                  {hasArchivalArtworks && (
+                    <button
+                      onClick={() => { setShowArtworksOnly(!showArtworksOnly); setSelectedIndex(0); }}
+                      style={{
+                        padding: '2px 8px',
+                        fontSize: 11,
+                        borderRadius: 4,
+                        border: showArtworksOnly ? '1px solid #111' : '1px solid #ddd',
+                        background: showArtworksOnly ? '#111' : '#f8f8f8',
+                        color: showArtworksOnly ? '#fff' : '#222',
+                        cursor: 'pointer',
+                      }}
+                    >
+                      ARTWORKS ONLY
+                    </button>
+                  )}
+                </div>
+              )}
+            </div>
           </div>
-        </div>
         )}
 
         {/* Artwork meta info (below the top bar, aligned to Gallery/Archive; dynamic per selected artwork) */}
         {/* Hide on narrow screens - included in the 3-column layout above */}
+        {/* When zoomed, inner content animates up to top position (replace mode tabs), but container stays in place */}
         {!isNarrow && (viewMode === 'archive' || viewMode === 'gallery' || viewMode === 'panorama') && (
-          <div ref={metaRowRef} style={{ position: "relative", padding: "12px 12px 0 0", marginLeft: LAYOUT_LEFT_BASE + META_SHIFT, marginTop: metaMarginTop, marginRight: LAYOUT_RIGHT_PAD, minHeight: FIXED_META_HEIGHT + META_VERTICAL_PAD, ...(DEBUG_LAYOUT ? { outline: "1px solid #f00" } : {}) }}>
+          <div ref={metaRowRef} style={{
+            position: "relative",
+            padding: "12px 12px 0 0",
+            marginLeft: LAYOUT_LEFT_BASE + META_SHIFT,
+            marginTop: metaMarginTop,
+            marginRight: LAYOUT_RIGHT_PAD,
+            minHeight: FIXED_META_HEIGHT + META_VERTICAL_PAD,
+            overflow: 'visible',
+            ...(DEBUG_LAYOUT ? { outline: "1px solid #f00" } : {})
+          }}>
             {(() => {
-              const titleText = displayArtwork?.name || "—";
-              const creatorText = displayArtwork?.artist || "—";
-              const dateText = displayArtwork?.date || (displayArtwork?.year ? String(displayArtwork.year) : "—");
-              const dimensionText = displayArtwork?.dimension || "—";
-              const durationText = displayArtwork?.duration || null;  // Video/film duration
+              // When zoom is active, show the zoomed artwork's info
+              const activeArtwork = hoverZoom ? hoverZoom.artwork : displayArtwork;
+              const titleText = activeArtwork?.name || "—";
+              const creatorText = cleanArtistName(activeArtwork?.artist) || "—";
+              const rawDate = activeArtwork?.date || (activeArtwork?.year ? String(activeArtwork.year) : "");
+              const dateText = cleanDateText(rawDate) || "—";
+              const dimensionText = activeArtwork?.dimension || "—";
+              const durationText = activeArtwork?.duration || null;  // Video/film duration
               const gap = Math.max(160, Math.min(360, metaPos.date - metaPos.creator - 12));
               // shrink horizontal allocation to avoid cramped columns; allow content to wrap vertically
               const shrunk = Math.max(80, Math.floor(gap * META_HOR_SCALE));
               const titleW = shrunk;
               const creatorW = shrunk;
               const dateW = shrunk;
+              // Calculate the Y offset for zoom animation
+              const zoomYOffset = hoverZoom ? -(topBarHeight + metaMarginTop + 16) : 0;
               // Wide screens: use absolute positioning
               return (
                 <>
                   {/* TITLE */}
-                  <div ref={titleRef} style={{ position: "absolute", left: metaPos.title, top: 12, maxWidth: titleW, ...(DEBUG_LAYOUT ? { outline: "1px dashed #f66" } : {}) }}>
+                  <div ref={titleRef} style={{ position: "absolute", left: metaPos.title, top: 12, maxWidth: titleW, transform: `translateY(${zoomYOffset}px)`, transition: 'transform 300ms ease', zIndex: hoverZoom ? 200 : undefined, ...(DEBUG_LAYOUT ? { outline: "1px dashed #f66" } : {}) }}>
                     <div style={{ fontSize: 10, letterSpacing: 1.2, color: "#888", marginBottom: 4 }}>TITLE</div>
                     <div ref={metaTitleValueRef} style={{ fontSize: 12, color: "#222", fontWeight: 700, lineHeight: 1.3, whiteSpace: "normal", wordBreak: "break-word", overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', maxHeight: 36 }}>{titleText}</div>
                   </div>
                   {/* CREATOR */}
-                  <div ref={creatorRef} style={{ position: "absolute", left: metaPos.creator, top: 12, maxWidth: creatorW, ...(DEBUG_LAYOUT ? { outline: "1px dashed #6f6" } : {}) }}>
+                  <div ref={creatorRef} style={{ position: "absolute", left: metaPos.creator, top: 12, maxWidth: creatorW, transform: `translateY(${zoomYOffset}px)`, transition: 'transform 300ms ease', zIndex: hoverZoom ? 200 : undefined, ...(DEBUG_LAYOUT ? { outline: "1px dashed #6f6" } : {}) }}>
                     <div style={{ fontSize: 10, letterSpacing: 1.2, color: "#888", marginBottom: 4 }}>CREATOR</div>
                     <div style={{ fontSize: 12, color: "#222", lineHeight: 1.3, whiteSpace: "normal", wordBreak: "break-word", overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', maxHeight: 36 }}>{creatorText}</div>
                   </div>
                   {/* DATE */}
-                  <div ref={dateRef} style={{ position: "absolute", left: metaPos.date, top: 12, maxWidth: dateW, ...(DEBUG_LAYOUT ? { outline: "1px dashed #66f" } : {}) }}>
+                  <div ref={dateRef} style={{ position: "absolute", left: metaPos.date, top: 12, maxWidth: dateW, transform: `translateY(${zoomYOffset}px)`, transition: 'transform 300ms ease', zIndex: hoverZoom ? 200 : undefined, ...(DEBUG_LAYOUT ? { outline: "1px dashed #66f" } : {}) }}>
                     <div style={{ fontSize: 10, letterSpacing: 1.2, color: "#888", marginBottom: 4 }}>DATE</div>
                     <div style={{ fontSize: 12, color: "#222", lineHeight: 1.3, whiteSpace: "normal", wordBreak: "break-word", overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', maxHeight: 36 }}>{dateText}</div>
                   </div>
                   {/* DIMENSION or DURATION */}
-                  <div ref={dimensionRef} style={{ position: "absolute", left: metaPos.dimension, right: 0, top: 12, ...(DEBUG_LAYOUT ? { outline: "1px dashed #f6f" } : {}) }}>
+                  <div ref={dimensionRef} style={{ position: "absolute", left: metaPos.dimension, right: 0, top: 12, transform: `translateY(${zoomYOffset}px)`, transition: 'transform 300ms ease', zIndex: hoverZoom ? 200 : undefined, ...(DEBUG_LAYOUT ? { outline: "1px dashed #f6f" } : {}) }}>
                     <div style={{ fontSize: 10, letterSpacing: 1.2, color: "#888", marginBottom: 4 }}>{durationText ? 'DURATION' : 'DIMENSION'}</div>
                     <div style={{ fontSize: 12, color: "#222", lineHeight: 1.3, whiteSpace: "normal", wordBreak: "break-word", overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', maxHeight: 36 }}>{durationText || dimensionText}</div>
                   </div>
@@ -3409,7 +4141,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
         )}
 
         {/* Top Right Controls Group: Heart, Login, Close - aligned with mode tabs */}
-        <div style={{ position: "absolute", top: 8, right: 0, display: "flex", alignItems: "center", gap: 8, paddingRight: 16, zIndex: 200 }}>
+        <div style={{ position: "absolute", top: isMobile ? 0 : 8, right: 0, display: "flex", alignItems: "center", gap: 8, paddingRight: 16, zIndex: 200 }}>
           {/* Heart button to navigate to MyPage */}
           <button
             onClick={() => navigate('/mypage')}
@@ -3462,13 +4194,13 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
         </div>
 
         {/* Content area */}
-        <div style={{ 
-          flex: 1, 
-          display: "flex", 
-          flexDirection: viewMode === 'gallery' ? 'column' : 'row', 
-          minHeight: 0, 
+        <div style={{
+          flex: 1,
+          display: "flex",
+          flexDirection: viewMode === 'gallery' ? 'column' : 'row',
+          minHeight: 0,
           maxHeight: '100%',
-          paddingLeft: viewMode === 'archive' ? 150 : 0, 
+          paddingLeft: viewMode === 'archive' ? 150 : 0,
           position: 'relative',
           overflow: viewMode === 'gallery' ? 'hidden' : undefined
         }}>
@@ -3480,7 +4212,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
                 {current ? (
                   <div style={{ position: "fixed", top: "50%", left: infoTextLeft, width: 240, transform: "translateY(-50%)", color: "#222", lineHeight: 1.5, zIndex: 10 }}>
                     <div style={{ fontSize: 13, fontWeight: 700, marginBottom: 4, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }} title={current.name}>{current.name}</div>
-                    <div style={{ fontSize: 11.5, color: "#666" }}>{current.artist}{current.year ? ` (${current.year})` : ""}</div>
+                    <div style={{ fontSize: 11.5, color: "#666" }}>{cleanArtistName(current.artist)}{current.year ? ` (${cleanDateText(String(current.year))})` : ""}</div>
                   </div>
                 ) : (initialized && filteredArtworks.length === 0 ? (
                   <div style={{ position: 'fixed', top: "50%", left: infoTextLeft, width: 240, transform: 'translateY(-50%)', color: '#999', fontSize: 12, fontWeight: 700, zIndex: 10 }}>
@@ -3498,8 +4230,8 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
                   {(current ? (
                     current.youtubeId ? (
                       // YouTube 영상인 경우 - iframe 아래, 썸네일 위에서 디졸브
-                      <div style={{ 
-                        width: '100%', 
+                      <div style={{
+                        width: '100%',
                         maxWidth: 'calc(100vh - 260px) * 16 / 9',
                         aspectRatio: '16/9',
                         background: '#000',
@@ -3512,12 +4244,12 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
                             src={`https://www.youtube.com/embed/${current.youtubeId}?autoplay=1&mute=1&controls=0&showinfo=0&loop=1&playlist=${current.youtubeId}&modestbranding=1&rel=0&iv_load_policy=3&disablekb=1&fs=0&playsinline=1&cc_load_policy=0&origin=${window.location.origin}`}
                             title={current.name}
                             allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                            style={{ 
+                            style={{
                               position: 'absolute',
                               top: '-60px',
                               left: 0,
-                              width: '100%', 
-                              height: 'calc(100% + 120px)', 
+                              width: '100%',
+                              height: 'calc(100% + 120px)',
                               border: 'none',
                               pointerEvents: 'none',
                               zIndex: 1
@@ -3570,12 +4302,18 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
                       const avif = buildVariantSourceSet(current, 'avif', widths, 70);
                       const webp = buildVariantSourceSet(current, 'webp', widths, 75);
                       const sizes = '(max-width: 640px) 100vw, (max-width: 1024px) 82vw, 75vw';
-                      const lowSrc = pickLowPlaceholder(current);
+                      // Use originalImage if available (National Gallery high-res)
+                      const lowSrc = (current as any).originalImage || pickLowPlaceholder(current);
                       const isR2 = isR2Image(current.image);
+                      // National Gallery 이미지는 scale 처리 제외
+                      const isNG = exhibition?.id === 'ng-1';
+                      const needsScale = isR2 && !isNG;
+                      // National Gallery with originalImage - don't use R2 variants
+                      const useVariants = useProxy && !((current as any).originalImage);
                       return (
                         <picture>
-                          {useProxy && avif && <source type="image/avif" srcSet={avif || undefined} sizes={sizes} />}
-                          {useProxy && webp && <source type="image/webp" srcSet={webp || undefined} sizes={sizes} />}
+                          {useVariants && avif && <source type="image/avif" srcSet={avif || undefined} sizes={sizes} />}
+                          {useVariants && webp && <source type="image/webp" srcSet={webp || undefined} sizes={sizes} />}
                           <img
                             ref={mainImgRef}
                             src={lowSrc}
@@ -3586,7 +4324,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
                             data-hi={lowSrc === current.image ? '1' : '0'}
                             style={{
                               width: "auto",
-                              maxWidth: isR2 ? "117.65%" : "100%",
+                              maxWidth: needsScale ? "117.65%" : "100%",
                               maxHeight: "calc(100vh - 260px)",
                               objectFit: "contain",
                               cursor: "zoom-in",
@@ -3595,7 +4333,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
                               transition: 'filter 420ms ease, opacity 420ms ease',
                               opacity: mainLoaded ? 1 : 0.88,
                               background: '#f5f5f5',
-                              transform: isR2 ? 'scale(0.85)' : 'none',
+                              transform: needsScale ? 'scale(0.85)' : 'none',
                               transformOrigin: 'center center'
                             }}
                             onClick={(e) => openLightbox(e, current)}
@@ -3619,11 +4357,11 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
                         const desc = (exhibition as any).detailedDescription || exhibition.description || '';
                         const youtubeId = extractYouTubeId(desc);
                         const cleanDesc = removeYouTubeUrls(desc);
-                        
+
                         return (
-                          <div style={{ 
-                            width: '100%', 
-                            maxWidth: 700, 
+                          <div style={{
+                            width: '100%',
+                            maxWidth: 700,
                             padding: '40px 32px',
                             display: 'flex',
                             flexDirection: 'column',
@@ -3632,8 +4370,8 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
                           }}>
                             {/* YouTube embed if found */}
                             {youtubeId && (
-                              <div style={{ 
-                                width: '100%', 
+                              <div style={{
+                                width: '100%',
                                 maxWidth: 640,
                                 aspectRatio: '16/9',
                                 borderRadius: 8,
@@ -3654,9 +4392,9 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
                             )}
                             {/* Description text */}
                             {cleanDesc ? (
-                              <div style={{ 
-                                fontSize: 14, 
-                                lineHeight: 1.8, 
+                              <div style={{
+                                fontSize: 14,
+                                lineHeight: 1.8,
                                 color: '#333',
                                 textAlign: 'left',
                                 maxWidth: 580,
@@ -3700,7 +4438,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
             </>
           ) : viewMode === 'gallery' ? (
             // Gallery grid mode - use absolute positioning with explicit dimensions for reliable scroll
-            <div className="no-scrollbar gallery-scroll-container" style={{ 
+            <div className="no-scrollbar gallery-scroll-container" style={{
               flex: 1,
               minHeight: 0,
               width: '100%',
@@ -3716,7 +4454,8 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
                 const gridGap = isMobile ? 8 : 64;
                 // Narrow screens need more top padding to avoid overlapping with room/century selectors
                 // Symmetric padding on narrow screens, left padding on wide to clear left panel
-                const gridPadding = isMobile ? '100px 8px 60px 8px' : (isVeryNarrow ? '200px 16px 96px 16px' : (isNarrow ? '200px 24px 96px 24px' : '192px 48px 96px 160px'));
+                // Mobile: increased top padding for header+filters, minimal bottom for transparent tabs
+                const gridPadding = isMobile ? '160px 8px 32px 8px' : (isVeryNarrow ? '200px 16px 96px 16px' : (isNarrow ? '200px 24px 96px 24px' : '192px 48px 96px 160px'));
                 return (
                   <div style={{ display: 'grid', gridTemplateColumns: gridColumns, gap: gridGap, padding: gridPadding }}>
                     {items.map((a, idx) => {
@@ -3725,136 +4464,170 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
                       const isCurrentlyHovered = hoveredIndex === idx;
                       // 컨포넌트 레벨에서 관리하는 딜레이 상태 사용
                       const showIframe = isCurrentlyHovered && isVideo && galleryVideoReadyIdx === idx;
-                      
+
                       return (
-                      <div
-                        key={a.id ?? `${idx}`}
-                        className="group"
-                        style={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}
-                      >
                         <div
-                          style={{ width: isMobile ? '100%' : '60%', background: '#eee', borderRadius: 0, position: 'relative', aspectRatio: isVideo ? '16/9' : undefined }}
-                          onMouseEnter={() => setHoveredIndex(idx)}
-                          onMouseLeave={() => setHoveredIndex(null)}
+                          key={a.id ?? `${idx}`}
+                          className="group"
+                          style={{ display: "flex", flexDirection: "column", alignItems: "flex-start" }}
                         >
-                          {/* YouTube 영상인 경우 - iframe 아래, 썸네일 위에서 디졸브 */}
-                          {isVideo && a.youtubeId ? (
-                            <div style={{ width: '100%', height: '100%', position: 'relative', overflow: 'hidden' }}>
-                              {/* iframe - 아래 레이어 (호버 시 바로 마운트) */}
-                              {showIframe && (
-                                <iframe
-                                  src={`https://www.youtube.com/embed/${a.youtubeId}?autoplay=1&mute=1&controls=0&showinfo=0&loop=1&playlist=${a.youtubeId}&modestbranding=1&rel=0&iv_load_policy=3&disablekb=1&fs=0&playsinline=1&cc_load_policy=0`}
-                                  title={a.name}
-                                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                                  style={{ 
-                                    position: 'absolute',
-                                    top: '-60px',
-                                    left: '-10%',
-                                    width: '120%', 
-                                    height: 'calc(100% + 120px)', 
-                                    border: 'none',
-                                    pointerEvents: 'none',
-                                    zIndex: 1
-                                  }}
-                                />
-                              )}
-                              {/* 썸네일 - 위 레이어, 1초 후 디졸브로 사라짐 */}
-                              {showIframe ? (
-                                <img
-                                  src={`https://img.youtube.com/vi/${a.youtubeId}/mqdefault.jpg`}
-                                  alt={a.name}
-                                  loading="lazy"
-                                  referrerPolicy="no-referrer"
-                                  style={{ 
-                                    position: 'absolute',
-                                    top: 0,
-                                    left: 0,
-                                    width: '100%', 
-                                    height: '100%', 
-                                    objectFit: 'cover',
-                                    zIndex: 2,
-                                    opacity: galleryThumbnailHiddenIdx === idx ? 0 : 1,
-                                    transition: 'opacity 0.5s ease-out',
-                                    pointerEvents: 'none'
-                                  }}
-                                  onError={(e) => { e.currentTarget.src = a.image; }}
-                                />
-                              ) : (
-                                <img
-                                  src={`https://img.youtube.com/vi/${a.youtubeId}/mqdefault.jpg`}
-                                  alt={a.name}
-                                  loading="lazy"
-                                  referrerPolicy="no-referrer"
-                                  style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
-                                  onError={(e) => { e.currentTarget.src = a.image; }}
-                                />
-                              )}
-                            </div>
-                          ) : (
-                            /* 일반 이미지 */
-                            a.image && (() => {
-                            const widths = window.innerWidth < 900 ? [320, 480, 640] : [360, 540, 720, 900];
-                            const avif = buildVariantSourceSet(a, 'avif', widths, 65);
-                            const webp = buildVariantSourceSet(a, 'webp', widths, 70);
-                            const sizes = '(max-width: 640px) 90vw, (max-width: 1024px) 55vw, 40vw';
-                            const preview = pickLowPlaceholder(a);
-                            const isR2 = isR2Image(a.image);
-                            return (
-                              <picture>
-                                {useProxy && avif && <source type="image/avif" srcSet={avif || undefined} sizes={sizes} />}
-                                {useProxy && webp && <source type="image/webp" srcSet={webp || undefined} sizes={sizes} />}
-                                <img
-                                  src={preview}
-                                  data-full={a.image}
-                                  alt={a.name}
-                                  loading="lazy"
-                                  decoding="async"
-                                  fetchPriority="low"
-                                  referrerPolicy="no-referrer"
-                                  style={{ 
-                                    width: isR2 ? '117.65%' : '100%', // 1/0.85 = 117.65% to fill container when scaled
-                                    height: 'auto', 
-                                    display: 'block', 
-                                    cursor: 'zoom-in',
-                                    transform: isR2 ? 'scale(0.85)' : 'none',
-                                    transformOrigin: 'top left'
-                                  }}
-                                  onClick={(e) => openLightbox(e, a)}
-                                  onError={(e) => applyFallbackImage(e.currentTarget)}
-                                />
-                              </picture>
-                            );
-                          })()
-                          )}
-                        </div>
-                        <div style={{ marginTop: 10, display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
-                          <div>
-                            <div style={{ fontSize: isMobile ? 10 : 12, fontWeight: 400, color: '#222', display: 'flex', alignItems: 'center', gap: 6 }}>
-                              {String(idx + 1).padStart(2, '0')}
-                              {/* 영상에는 재생 아이콘 표시 */}
-                              {isVideo && (
-                                <span style={{ fontSize: 10, color: '#e11d48' }}>▶</span>
-                              )}
-                              <div style={{ opacity: isMobile ? 1 : 0 }} className="gallery-heart-trigger">
-                                <HeartOverlay
-                                  isLiked={likedArtworks.has(a.id)}
-                                  onToggle={(e) => toggleLike(e, a)}
-                                  style={{ padding: 0, background: 'none' }}
-                                  size={isMobile ? 12 : 14}
-                                  color="#e11d48"
-                                  emptyColor="#888"
-                                />
+                          <div
+                            style={{ width: isMobile ? '100%' : '60%', background: 'transparent', borderRadius: 0, position: 'relative', aspectRatio: isVideo ? '16/9' : undefined, overflow: 'hidden' }}
+                            onMouseEnter={() => setHoveredIndex(idx)}
+                            onMouseLeave={() => setHoveredIndex(null)}
+                          >
+                            {/* YouTube 영상인 경우 - iframe 아래, 썸네일 위에서 디졸브 */}
+                            {isVideo && a.youtubeId ? (
+                              <div style={{ width: '100%', height: '100%', position: 'relative', overflow: 'hidden' }}>
+                                {/* iframe - 아래 레이어 (호버 시 바로 마운트) */}
+                                {showIframe && (
+                                  <iframe
+                                    src={`https://www.youtube.com/embed/${a.youtubeId}?autoplay=1&mute=1&controls=0&showinfo=0&loop=1&playlist=${a.youtubeId}&modestbranding=1&rel=0&iv_load_policy=3&disablekb=1&fs=0&playsinline=1&cc_load_policy=0`}
+                                    title={a.name}
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                    style={{
+                                      position: 'absolute',
+                                      top: '-60px',
+                                      left: '-10%',
+                                      width: '120%',
+                                      height: 'calc(100% + 120px)',
+                                      border: 'none',
+                                      pointerEvents: 'none',
+                                      zIndex: 1
+                                    }}
+                                  />
+                                )}
+                                {/* 썸네일 - 위 레이어, 1초 후 디졸브로 사라짐 */}
+                                {showIframe ? (
+                                  <img
+                                    src={`https://img.youtube.com/vi/${a.youtubeId}/mqdefault.jpg`}
+                                    alt={a.name}
+                                    loading="lazy"
+                                    referrerPolicy="no-referrer"
+                                    style={{
+                                      position: 'absolute',
+                                      top: 0,
+                                      left: 0,
+                                      width: '100%',
+                                      height: '100%',
+                                      objectFit: 'cover',
+                                      zIndex: 2,
+                                      opacity: galleryThumbnailHiddenIdx === idx ? 0 : 1,
+                                      transition: 'opacity 0.5s ease-out',
+                                      pointerEvents: 'none'
+                                    }}
+                                    onError={(e) => { e.currentTarget.src = a.image; }}
+                                  />
+                                ) : (
+                                  <img
+                                    src={`https://img.youtube.com/vi/${a.youtubeId}/mqdefault.jpg`}
+                                    alt={a.name}
+                                    loading="lazy"
+                                    referrerPolicy="no-referrer"
+                                    style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+                                    onError={(e) => { e.currentTarget.src = a.image; }}
+                                  />
+                                )}
                               </div>
-                            </div>
-                            <div style={{ fontSize: isMobile ? 10 : 12, fontWeight: 700, color: '#222', marginTop: 2 }}>{a.name}{a.year ? ` (${a.year})` : ''}</div>
-                            <div style={{ fontSize: isMobile ? 9 : 11, color: '#777', marginTop: 2 }}>{a.artist}</div>
+                            ) : (
+                              /* 일반 이미지 */
+                              a.image && (() => {
+                                const widths = window.innerWidth < 900 ? [320, 480, 640] : [360, 540, 720, 900];
+                                const avif = buildVariantSourceSet(a, 'avif', widths, 65);
+                                const webp = buildVariantSourceSet(a, 'webp', widths, 70);
+                                const sizes = '(max-width: 640px) 90vw, (max-width: 1024px) 55vw, 40vw';
+                                // Use originalImage if available (National Gallery high-res)
+                                const imageUrl = (a as any).originalImage || a.image;
+                                const preview = (a as any).originalImage || pickLowPlaceholder(a);
+                                const isR2 = isR2Image(a.image);
+                                const isFLV = exhibition?.id === 'flv-collection';
+                                // National Gallery 이미지는 scale 처리 제외 (하단 잘림 방지)
+                                const isNG = exhibition?.id === 'ng-1';
+                                const needsScale = isR2 && !isNG;
+                                // National Gallery with originalImage - don't use R2 variants
+                                const useVariants = useProxy && !((a as any).originalImage);
+                                return (
+                                  <div style={{ position: 'relative', overflow: 'hidden' }}>
+                                    <picture>
+                                      {useVariants && avif && <source type="image/avif" srcSet={avif || undefined} sizes={sizes} />}
+                                      {useVariants && webp && <source type="image/webp" srcSet={webp || undefined} sizes={sizes} />}
+                                      <img
+                                        src={preview}
+                                        data-full={imageUrl}
+                                        alt={a.name}
+                                        loading="lazy"
+                                        decoding="async"
+                                        fetchPriority="low"
+                                        referrerPolicy="no-referrer"
+                                        style={{
+                                          width: needsScale ? '117.65%' : '100%',
+                                          height: 'auto',
+                                          display: 'block',
+                                          cursor: hoverZoom ? 'zoom-out' : 'zoom-in',
+                                          transform: needsScale ? 'scale(0.85)' : 'none',
+                                          transformOrigin: 'top left'
+                                        }}
+                                        onClick={() => {
+                                          if (hoverZoom) {
+                                            closeHoverZoomFromOverlay();
+                                          } else {
+                                            // 바로 열기 (딜레이 없이)
+                                            setHoverZoom({ artwork: a, imageUrl: a.image, animate: false });
+                                            requestAnimationFrame(() => {
+                                              requestAnimationFrame(() => {
+                                                setHoverZoom((s) => (s ? { ...s, animate: true } : s));
+                                              });
+                                            });
+                                          }
+                                        }}
+                                        onError={(e) => applyFallbackImage(e.currentTarget)}
+                                      />
+                                    </picture>
+                                    {/* FLV 전시 전용: 이미지 하단 회색 영역 흰색으로 덮기 */}
+                                    {isFLV && (
+                                      <div style={{
+                                        position: 'absolute',
+                                        bottom: 0,
+                                        left: 0,
+                                        right: 0,
+                                        height: '15%',
+                                        background: 'linear-gradient(to top, #fff 0%, #fff 60%, transparent 100%)',
+                                        pointerEvents: 'none'
+                                      }} />
+                                    )}
+                                  </div>
+                                );
+                              })()
+                            )}
                           </div>
-                        </div>
-                        <style>{`
+                          <div style={{ marginTop: 10, display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
+                            <div>
+                              <div style={{ fontSize: isMobile ? 10 : 12, fontWeight: 400, color: '#222', display: 'flex', alignItems: 'center', gap: 6 }}>
+                                {String(idx + 1).padStart(2, '0')}
+                                {/* 영상에는 재생 아이콘 표시 */}
+                                {isVideo && (
+                                  <span style={{ fontSize: 10, color: '#e11d48' }}>▶</span>
+                                )}
+                                <div style={{ opacity: isMobile ? 1 : 0 }} className="gallery-heart-trigger">
+                                  <HeartOverlay
+                                    isLiked={likedArtworks.has(a.id)}
+                                    onToggle={(e) => toggleLike(e, a)}
+                                    style={{ padding: 0, background: 'none' }}
+                                    size={isMobile ? 12 : 14}
+                                    color="#e11d48"
+                                    emptyColor="#888"
+                                  />
+                                </div>
+                              </div>
+                              <div style={{ fontSize: isMobile ? 10 : 12, fontWeight: 700, color: '#222', marginTop: 2 }}>{a.name}{a.year ? ` (${a.year})` : ''}</div>
+                              <div style={{ fontSize: isMobile ? 9 : 11, color: '#777', marginTop: 2 }}>{cleanArtistName(a.artist)}</div>
+                            </div>
+                          </div>
+                          <style>{`
                           .group:hover .gallery-heart-trigger { opacity: 1 !important; }
                         `}</style>
-                      </div>
-                    );
+                        </div>
+                      );
                     })}
                   </div>
                 );
@@ -3927,10 +4700,11 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
                           data-hi={lowSrc === current.image ? '1' : '0'}
                           style={{
                             width: 'auto',
-                            maxWidth: '92%',
+                            maxWidth: 'calc(100vw - 40px)',
                             maxHeight: 'calc(100vh - 200px)',
                             objectFit: 'contain',
                             display: 'block',
+                            margin: '0 auto',
                             filter: mainLoaded ? 'none' : 'blur(14px)',
                             transition: 'filter 420ms ease, opacity 420ms ease',
                             opacity: mainLoaded ? 1 : 0.88,
@@ -4030,6 +4804,89 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
         )
       }
 
+      {/* Click-based zoom overlay with white background */}
+      {(hoverZoom || closingHoverZoom) && (
+        <>
+          {/* White backdrop - starts below metadata area */}
+          <div
+            onClick={closeHoverZoomFromOverlay}
+            style={{
+              position: 'fixed',
+              top: '100px',
+              left: 0,
+              right: 0,
+              bottom: 0,
+              zIndex: 10500,
+              cursor: 'zoom-out',
+              background: hoverZoom?.animate ? 'rgba(255, 255, 255, 0.8)' : 'rgba(255, 255, 255, 0)',
+              transition: 'background 300ms ease',
+            }}
+          />
+          {/* Container for the zoomed image */}
+          <div
+            style={{
+              position: 'fixed',
+              top: '100px',
+              left: 0,
+              right: 0,
+              bottom: '40px',
+              zIndex: 10501,
+              pointerEvents: 'none',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+            }}
+          >
+            {/* Large zoomed image - click to close */}
+            <div
+              onClick={closeHoverZoomFromOverlay}
+              style={{
+                position: 'relative',
+                maxWidth: '85vw',
+                maxHeight: '100%',
+                pointerEvents: 'auto',
+                cursor: 'zoom-out',
+                opacity: hoverZoom?.animate ? 1 : 0,
+                transform: hoverZoom?.animate ? 'scale(1) translateY(0)' : 'scale(0.95) translateY(-10px)',
+                transition: 'opacity 300ms ease, transform 300ms ease',
+              }}
+            >
+              {(() => {
+                const zoomData = hoverZoom || closingHoverZoom;
+                if (!zoomData) return null;
+                const a = zoomData.artwork;
+                const best = getBestFullUrl(a);
+                const widths = window.innerWidth < 900 ? [960, 1280] : [1280, 1600, 1920, 2560];
+                const avif = useProxy ? buildSourceSet(best.url, widths, 'avif', 75) : null;
+                const webp = useProxy ? buildSourceSet(best.url, widths, 'webp', 80) : null;
+                const sizes = '(max-width: 640px) 100vw, (max-width: 1024px) 90vw, 85vw';
+                return (
+                  <picture>
+                    {useProxy && avif && <source type="image/avif" srcSet={avif || undefined} sizes={sizes} />}
+                    {useProxy && webp && <source type="image/webp" srcSet={webp || undefined} sizes={sizes} />}
+                    <img
+                      src={best.url}
+                      alt={a.name}
+                      style={{
+                        maxWidth: '85vw',
+                        maxHeight: 'calc(100vh - 180px)',
+                        objectFit: 'contain',
+                        display: 'block',
+                        borderRadius: 4,
+                        boxShadow: '0 8px 40px rgba(0,0,0,0.3)',
+                      }}
+                      draggable={false}
+                      referrerPolicy="no-referrer"
+                      onError={(e) => applyFallbackImage(e.currentTarget)}
+                    />
+                  </picture>
+                );
+              })()}
+            </div>
+          </div>
+        </>
+      )}
+
       {/* Upload overlay removed in viewer mode */}
       {/* Hide scrollbars for filmstrip + ensure gallery scroll works */}
       <style>
@@ -4119,7 +4976,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
                 const exhibitionImage = (exhibition as any).image;
                 const fallbackImage = artworks.length > 0 ? artworks[0].image : null;
                 const imageToShow = coverImage || exhibitionImage || fallbackImage;
-                
+
                 if (!imageToShow) return null;
                 return (
                   <div style={{ width: '100%', background: '#f5f5f5' }}>

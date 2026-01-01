@@ -1,0 +1,560 @@
+{
+  "museum": "Musée Carnavalet - Histoire de Paris",
+  "museumId": "carnavalet",
+  "location": "Paris, France",
+  "collectionName": "The Essential Artworks",
+  "scrapedAt": "2025-12-27T04:30:40.993Z",
+  "totalObjects": 55,
+  "objects": [
+    {
+      "id": "carnavalet-1",
+      "title": "PIROGUE MONOXYLE P03",
+      "artist": "Unknown",
+      "year": null,
+      "date": "",
+      "image": "https://www.carnavalet.paris.fr/sites/default/files/collectioncar23644-19_1.jpg?itok=tNlBvpy_",
+      "medium": "",
+      "sourceUrl": "https://www.carnavalet.paris.fr/en/collections/pirogue-monoxyle-p03"
+    },
+    {
+      "id": "carnavalet-2",
+      "title": "STATÈRE DES PARISII DE LA CLASSE II.",
+      "artist": "Unknown",
+      "year": null,
+      "date": "",
+      "image": "https://www.carnavalet.paris.fr/sites/default/files/collection45633-7.jpg?itok=5ZAETr05",
+      "medium": "",
+      "sourceUrl": "https://www.carnavalet.paris.fr/en/collections/statere-des-parisii-de-la-classe-ii"
+    },
+    {
+      "id": "carnavalet-3",
+      "title": "STATUE HEAD FROM THE ANCIENT AMPITHEATRE",
+      "artist": "Unknown",
+      "year": null,
+      "date": "",
+      "image": "https://www.carnavalet.paris.fr/sites/default/files/collectioncar32930-2_1.jpg?itok=Etsunjhq",
+      "medium": "",
+      "sourceUrl": "https://www.carnavalet.paris.fr/en/collections/statue-head-ancient-ampitheatre"
+    },
+    {
+      "id": "carnavalet-4",
+      "title": "MERCURE",
+      "artist": "Unknown",
+      "year": null,
+      "date": "",
+      "image": "https://www.carnavalet.paris.fr/sites/default/files/collection45657-4.jpg?itok=qjO9LqLF",
+      "medium": "",
+      "sourceUrl": "https://www.carnavalet.paris.fr/collections/mercure"
+    },
+    {
+      "id": "carnavalet-5",
+      "title": "BOUTEILLE",
+      "artist": "Unknown",
+      "year": null,
+      "date": "",
+      "image": "https://www.carnavalet.paris.fr/sites/default/files/collection47007-11.jpg?itok=AjK71tOk",
+      "medium": "",
+      "sourceUrl": "https://www.carnavalet.paris.fr/en/collections/bouteille"
+    },
+    {
+      "id": "carnavalet-6",
+      "title": "FIBULE CRUCIFORME",
+      "artist": "Unknown",
+      "year": null,
+      "date": "",
+      "image": "https://www.carnavalet.paris.fr/sites/default/files/collectionlpdp_51771-1.jpg?itok=TQCUTDWY",
+      "medium": "",
+      "sourceUrl": "https://www.carnavalet.paris.fr/collections/fibule-cruciforme"
+    },
+    {
+      "id": "carnavalet-7",
+      "title": "SCEAU DE LA CONFRÉRIE DE SAINT-JACQUES DE L'HOSPITAL, 1319-1324",
+      "artist": "Unknown",
+      "year": null,
+      "date": "",
+      "image": "https://www.carnavalet.paris.fr/sites/default/files/collectionaze_carns00004_001.jpg?itok=v8C4BT7x",
+      "medium": "",
+      "sourceUrl": "https://www.carnavalet.paris.fr/en/collections/sceau-de-la-confrerie-de-saint-jacques-de-lhospital-1319-1324"
+    },
+    {
+      "id": "carnavalet-8",
+      "title": "STAINED-GLASS WINDOWS FROM THE CHAPEL OF THE COLLÈGE DE DORMANS-BEAUVAIS: SAINT JAMES THE MINOR",
+      "artist": "Unknown",
+      "year": null,
+      "date": "",
+      "image": "https://www.carnavalet.paris.fr/sites/default/files/2021-01/8._vitrail.jpg?itok=92So8Tr7",
+      "medium": "",
+      "sourceUrl": "https://www.carnavalet.paris.fr/en/collections/stained-glass-windows-chapel-college-de-dormans-beauvais-saint-james-minor"
+    },
+    {
+      "id": "carnavalet-9",
+      "title": "MASCARON DU PONT NEUF",
+      "artist": "Unknown",
+      "year": null,
+      "date": "",
+      "image": "https://www.carnavalet.paris.fr/sites/default/files/collectionaze_cars3054_001.jpg?itok=6tNhxphc",
+      "medium": "",
+      "sourceUrl": "https://www.carnavalet.paris.fr/en/collections/mascaron-du-pont-neuf"
+    },
+    {
+      "id": "carnavalet-10",
+      "title": "WOODWORK FROM THE CABINET OF THE HÔTEL COLBERT DE VILLACERF [PRIVATE MANSION], NO. 23 RUE DE TURENNE",
+      "artist": "Unknown",
+      "year": null,
+      "date": "",
+      "image": "https://www.carnavalet.paris.fr/sites/default/files/2021-01/11._villacerf.jpg?itok=hoDLNc2-",
+      "medium": "",
+      "sourceUrl": "https://www.carnavalet.paris.fr/en/collections/woodwork-cabinet-hotel-colbert-de-villacerf-private-mansion-no-23-rue-de-turenne"
+    },
+    {
+      "id": "carnavalet-11",
+      "title": "Salons La Rivière : décors peints pour la grande chambre et le cabinet doré de l’hôtel La Rivière, 14, place Royale (actuelle place des Vosges)",
+      "artist": "Charles Le Brun",
+      "year": null,
+      "date": "",
+      "image": "https://www.carnavalet.paris.fr/sites/default/files/2021-01/carnavalet_boiseries_6728_bd.jpg?itok=teW3eztz",
+      "medium": "",
+      "sourceUrl": "https://www.carnavalet.paris.fr/collections/salons-la-riviere-decors-peints-pour-la-grande-chambre-et-le-cabinet-dore-de-lhotel-la"
+    },
+    {
+      "id": "carnavalet-12",
+      "title": "FIGURE DE BALLET : LA GUERRE",
+      "artist": "Unknown",
+      "year": null,
+      "date": "",
+      "image": "https://www.carnavalet.paris.fr/sites/default/files/collectionlpdp_24104-12.jpg?itok=Qzw854Dt",
+      "medium": "",
+      "sourceUrl": "https://www.carnavalet.paris.fr/collections/figure-de-ballet-la-guerre"
+    },
+    {
+      "id": "carnavalet-13",
+      "title": "MARIE DE RABUTIN-CHANTAL, MARQUISE DE SÉVIGNÉ (1626-1696)",
+      "artist": "Unknown",
+      "year": null,
+      "date": "",
+      "image": "https://www.carnavalet.paris.fr/sites/default/files/collectionmeero_carp1978_001.jpg?itok=uDliMtTS",
+      "medium": "",
+      "sourceUrl": "https://www.carnavalet.paris.fr/en/collections/marie-de-rabutin-chantal-marquise-de-sevigne-1626-1696"
+    },
+    {
+      "id": "carnavalet-14",
+      "title": "Letter from Madame de Sévigné to Madame de Grignan, her daughter",
+      "artist": "Marquise de Sévigné",
+      "year": null,
+      "date": "",
+      "image": "https://www.carnavalet.paris.fr/sites/default/files/collectionaze_cara198_001.jpg?itok=-ougOepx",
+      "medium": "",
+      "sourceUrl": "https://www.carnavalet.paris.fr/en/collections/letter-madame-de-sevigne-madame-de-grignan-her-daughter"
+    },
+    {
+      "id": "carnavalet-15",
+      "title": "MADAME DE SÉVIGNÉ’S DESK",
+      "artist": "Unknown",
+      "year": null,
+      "date": "",
+      "image": "https://www.carnavalet.paris.fr/sites/default/files/collectionaze_carmb0224_001.jpg?itok=4qNlOZON",
+      "medium": "",
+      "sourceUrl": "https://www.carnavalet.paris.fr/en/collections/madame-de-sevignes-desk"
+    },
+    {
+      "id": "carnavalet-16",
+      "title": "Vue du Pont-Neuf, du palais du Louvre et du collège des Quatre-Nations",
+      "artist": "Attribué à Johann Wolfgang Baumgartner",
+      "year": null,
+      "date": "",
+      "image": "https://www.carnavalet.paris.fr/sites/default/files/2021-01/16._vue_du_pont_neuf.jpg?itok=m4xPRzst",
+      "medium": "",
+      "sourceUrl": "https://www.carnavalet.paris.fr/collections/vue-du-pont-neuf-du-palais-du-louvre-et-du-college-des-quatre-nations"
+    },
+    {
+      "id": "carnavalet-17",
+      "title": "Portrait of Louis XIV (1643-1715)",
+      "artist": "Antoine Coysevox",
+      "year": null,
+      "date": "",
+      "image": "https://www.carnavalet.paris.fr/sites/default/files/collectionlpdp_23614-2.jpg?itok=oOMGOIqu",
+      "medium": "",
+      "sourceUrl": "https://www.carnavalet.paris.fr/en/collections/portrait-louis-xiv-1643-1715"
+    },
+    {
+      "id": "carnavalet-18",
+      "title": "ALMANACH POUR L’ANNÉE 1697 / BUREAU D’ADRESSES POUR LES CURIEUX OÙ ILS TROUVERONT LES PRINCIPAUX ÉVÈNEMENTS DE L’ANNÉE 1696",
+      "artist": "Unknown",
+      "year": null,
+      "date": "",
+      "image": "https://www.carnavalet.paris.fr/sites/default/files/2021-01/1.png?itok=MjjbPw23",
+      "medium": "",
+      "sourceUrl": "https://www.carnavalet.paris.fr/collections/almanach-pour-lannee-1697-bureau-dadresses-pour-les-curieux-ou-ils-trouveront-les"
+    },
+    {
+      "id": "carnavalet-19",
+      "title": "Wood panelling from the Café militaire (rue Saint-Honoré)",
+      "artist": "Claude-Nicolas Ledoux",
+      "year": null,
+      "date": "",
+      "image": "https://www.carnavalet.paris.fr/sites/default/files/2021-01/panneau_a_de.jpg?itok=QeFbb6Eh",
+      "medium": "",
+      "sourceUrl": "https://www.carnavalet.paris.fr/en/collections/wood-panelling-cafe-militaire-rue-saint-honore"
+    },
+    {
+      "id": "carnavalet-20",
+      "title": "Panneaux décoratifs pour le salon de Gilles Demarteau",
+      "artist": "François Boucher et atelier",
+      "year": null,
+      "date": "",
+      "image": "https://www.carnavalet.paris.fr/sites/default/files/2021-02/demarteau_3.jpg?itok=3pFgarYN",
+      "medium": "",
+      "sourceUrl": "https://www.carnavalet.paris.fr/collections/panneaux-decoratifs-pour-le-salon-de-gilles-demarteau"
+    },
+    {
+      "id": "carnavalet-21",
+      "title": "VOLTAIRE’S ARMCHAIR",
+      "artist": "Unknown",
+      "year": null,
+      "date": "",
+      "image": "https://www.carnavalet.paris.fr/sites/default/files/collectionlpdp_45920-1.jpg?itok=qUVnH0XF",
+      "medium": "",
+      "sourceUrl": "https://www.carnavalet.paris.fr/en/collections/voltaires-armchair"
+    },
+    {
+      "id": "carnavalet-22",
+      "title": "HARPE À PÉDALES",
+      "artist": "Unknown",
+      "year": null,
+      "date": "",
+      "image": "https://www.carnavalet.paris.fr/sites/default/files/collectionlpdp_26648-1.jpg?itok=QQ_j781z",
+      "medium": "",
+      "sourceUrl": "https://www.carnavalet.paris.fr/collections/harpe-pedales"
+    },
+    {
+      "id": "carnavalet-23",
+      "title": "L'EXHUMATION DES OSSEMENTS DU CIMETIÈRE DES INNOCENTS, VERS 1787.",
+      "artist": "Unknown",
+      "year": null,
+      "date": "",
+      "image": "https://www.carnavalet.paris.fr/sites/default/files/2021-01/image_sobre_jean-nicolas_lexhumation_des_ossements_du_cimetiere_des_innocents_vers_1787._d.4653_343618.jpg?itok=PSkBhdh_",
+      "medium": "",
+      "sourceUrl": "https://www.carnavalet.paris.fr/collections/lexhumation-des-ossements-du-cimetiere-des-innocents-vers-1787"
+    },
+    {
+      "id": "carnavalet-24",
+      "title": "\"ONE HOPES THAT THIS GAME WILL END SOON\"",
+      "artist": "Unknown",
+      "year": null,
+      "date": "",
+      "image": "https://www.carnavalet.paris.fr/sites/default/files/collectionaze_carg023830_001.jpg?itok=QoRtwCRU",
+      "medium": "",
+      "sourceUrl": "https://www.carnavalet.paris.fr/en/collections/one-hopes-game-will-end-soon"
+    },
+    {
+      "id": "carnavalet-25",
+      "title": "TRÉSOR DE LA VILLE DE PARIS SAUVÉ ET CONSERVÉ, 5 OCTOBRE 1789.",
+      "artist": "Unknown",
+      "year": null,
+      "date": "",
+      "image": "https://www.carnavalet.paris.fr/sites/default/files/collection44584-1.jpg?itok=2IBjFMBE",
+      "medium": "",
+      "sourceUrl": "https://www.carnavalet.paris.fr/en/collections/tresor-de-la-ville-de-paris-sauve-et-conserve-5-octobre-1789"
+    },
+    {
+      "id": "carnavalet-26",
+      "title": "The Bastille, in the early days of its demolition",
+      "artist": "Hubert Robert",
+      "year": null,
+      "date": "",
+      "image": "https://www.carnavalet.paris.fr/sites/default/files/collectionlpdp_157115-23.jpg?itok=VnX54btL",
+      "medium": "",
+      "sourceUrl": "https://www.carnavalet.paris.fr/en/collections/bastille-early-days-its-demolition"
+    },
+    {
+      "id": "carnavalet-27",
+      "title": "Scale model of the Bastille , Anonymous",
+      "artist": "under the direction of Pierre-François Palloy",
+      "year": null,
+      "date": "",
+      "image": "https://www.carnavalet.paris.fr/sites/default/files/collectionaze_cars0503_001.jpg?itok=vj1y3eDa",
+      "medium": "",
+      "sourceUrl": "https://www.carnavalet.paris.fr/en/collections/scale-model-bastille"
+    },
+    {
+      "id": "carnavalet-28",
+      "title": "DÉCLARATION DES DROITS DE L'HOMME ET DU CITOYEN.",
+      "artist": "Unknown",
+      "year": null,
+      "date": "",
+      "image": "https://www.carnavalet.paris.fr/sites/default/files/collectionlpdp_54431-5.jpg?itok=z1_WpZEj",
+      "medium": "",
+      "sourceUrl": "https://www.carnavalet.paris.fr/en/collections/declaration-des-droits-de-lhomme-et-du-citoyen"
+    },
+    {
+      "id": "carnavalet-29",
+      "title": "SERMENT DES ENFANS.",
+      "artist": "Unknown",
+      "year": null,
+      "date": "",
+      "image": "https://www.carnavalet.paris.fr/sites/default/files/collectionaze_card09062_001.jpg?itok=lclNB5IG",
+      "medium": "",
+      "sourceUrl": "https://www.carnavalet.paris.fr/collections/serment-des-enfans"
+    },
+    {
+      "id": "carnavalet-30",
+      "title": "THE TENNIS COURT OATH, JUNE 20, 1789. SKETCH",
+      "artist": "Unknown",
+      "year": null,
+      "date": "",
+      "image": "https://www.carnavalet.paris.fr/sites/default/files/collectionlpdp_35984-17.jpg?itok=d6K3CUL1",
+      "medium": "",
+      "sourceUrl": "https://www.carnavalet.paris.fr/en/collections/tennis-court-oath-june-20-1789-sketch"
+    },
+    {
+      "id": "carnavalet-31",
+      "title": "DERNIER ORDRE DONNÉ PAR LOUIS XVI AU COLONEL DÜRLER, COMMANDANT DES GARDES SUISSES, 10 AOÛT 1792",
+      "artist": "Unknown",
+      "year": null,
+      "date": "",
+      "image": "https://www.carnavalet.paris.fr/sites/default/files/collectionaze_caraut0225_001.jpg?itok=Chv3mutr",
+      "medium": "",
+      "sourceUrl": "https://www.carnavalet.paris.fr/collections/dernier-ordre-donne-par-louis-xvi-au-colonel-durler-commandant-des-gardes-suisses-10"
+    },
+    {
+      "id": "carnavalet-32",
+      "title": "SHOE BELIEVED TO HAVE BELONGED TO MARIE-ANTOINETTE",
+      "artist": "Unknown",
+      "year": null,
+      "date": "",
+      "image": "https://www.carnavalet.paris.fr/sites/default/files/2021-01/33._soulier_marie-antoinette.jpg?itok=cZtWoPPw",
+      "medium": "",
+      "sourceUrl": "https://www.carnavalet.paris.fr/en/collections/shoe-believed-have-belonged-marie-antoinette"
+    },
+    {
+      "id": "carnavalet-33",
+      "title": "VIEW OF THE ARTIFICIAL “MOUNTAIN” ERECTED FOR THE FEAST OF THE SUPREME BEING AT THE CHAMP-DE-MARS, JUNE 8, 1794 (20 PRAIRIAL YEAR 2)",
+      "artist": "Unknown",
+      "year": null,
+      "date": "",
+      "image": "https://www.carnavalet.paris.fr/sites/default/files/collectionlpdp_40250-10.jpg?itok=KqT-1Wlq",
+      "medium": "",
+      "sourceUrl": "https://www.carnavalet.paris.fr/en/collections/view-artificial-mountain-erected-feast-supreme-being-champ-de-mars-june-8-1794-20"
+    },
+    {
+      "id": "carnavalet-34",
+      "title": "PORTRAIT OF MAXIMILIEN DE ROBESPIERRE (1758-1794)",
+      "artist": "Unknown",
+      "year": null,
+      "date": "",
+      "image": "https://www.carnavalet.paris.fr/sites/default/files/collectionmeero_carp0729_001.jpg?itok=D0fzbfoD",
+      "medium": "",
+      "sourceUrl": "https://www.carnavalet.paris.fr/en/collections/portrait-maximilien-de-robespierre-1758-1794"
+    },
+    {
+      "id": "carnavalet-35",
+      "title": "APPEL À LA SECTION DES PIQUES RÉDIGÉ À L’HÔTEL DE VILLE DANS LA NUIT DU 9 THERMIDOR (27 JUILLET), LA SIGNATURE DE ROBESPIERRE EST INTERROMPUE",
+      "artist": "Unknown",
+      "year": null,
+      "date": "",
+      "image": "https://www.carnavalet.paris.fr/sites/default/files/collectionaze_caraut0328_001.jpg?itok=ZnJeShlD",
+      "medium": "",
+      "sourceUrl": "https://www.carnavalet.paris.fr/collections/appel-la-section-des-piques-redige-lhotel-de-ville-dans-la-nuit-du-9-thermidor-27"
+    },
+    {
+      "id": "carnavalet-36",
+      "title": "Portrait de Juliette Récamier",
+      "artist": "née Bernard.",
+      "year": null,
+      "date": "",
+      "image": "https://www.carnavalet.paris.fr/sites/default/files/collectionlpdp_24733-1.jpg?itok=CTuKDBur",
+      "medium": "",
+      "sourceUrl": "https://www.carnavalet.paris.fr/en/collections/portrait-de-juliette-recamier-nee-bernard-1777-1849"
+    },
+    {
+      "id": "carnavalet-37",
+      "title": "Field kit belonging to Napoleon I. Work instruments.",
+      "artist": "Martin-Guillaume Biennais",
+      "year": null,
+      "date": "",
+      "image": "https://www.carnavalet.paris.fr/sites/default/files/collectioncarom0608_1.jpg?itok=qzVpjgQC",
+      "medium": "",
+      "sourceUrl": "https://www.carnavalet.paris.fr/en/collections/field-kit-belonging-napoleon-i-work-instruments"
+    },
+    {
+      "id": "carnavalet-38",
+      "title": "TABLEAU DE PARIS. CABINET D'AISANCE, PALAIS ROYAL, THÉÂTRE FRANÇAIS, LE BUREAU, MADAME, DIFFÉRENTS CHARACTEURS",
+      "artist": "Unknown",
+      "year": null,
+      "date": "",
+      "image": "https://www.carnavalet.paris.fr/sites/default/files/collectionlpdp_40115-7.jpg?itok=RfgSOZZ9",
+      "medium": "",
+      "sourceUrl": "https://www.carnavalet.paris.fr/collections/tableau-de-paris-cabinet-daisance-palais-royal-theatre-francais-le-bureau-madame"
+    },
+    {
+      "id": "carnavalet-39",
+      "title": "PORTRAIT-CHARGE DE LOUIS-HECTOR BERLIOZ (1803-1869), COMPOSITEUR",
+      "artist": "Unknown",
+      "year": null,
+      "date": "",
+      "image": "https://www.carnavalet.paris.fr/sites/default/files/collectionlpdp_49099-16.jpg?itok=XhSrdsM-",
+      "medium": "",
+      "sourceUrl": "https://www.carnavalet.paris.fr/en/collections/portrait-charge-de-louis-hector-berlioz-1803-1869-compositeur"
+    },
+    {
+      "id": "carnavalet-40",
+      "title": "THE PLACE DE L’HÔTEL-DE-VILLE, ON 31 JULY 1830, WITH THE ARRIVAL OF LOUIS-PHILIPPE, DUC D’ORLÉANS",
+      "artist": "Unknown",
+      "year": null,
+      "date": "",
+      "image": "https://www.carnavalet.paris.fr/sites/default/files/2020-07/lpdp_59378-3.jpg?itok=wvOjOGUH",
+      "medium": "",
+      "sourceUrl": "https://www.carnavalet.paris.fr/en/collections/place-de-lhotel-de-ville-31-july-1830-arrival-louis-philippe-duc-dorleans"
+    },
+    {
+      "id": "carnavalet-41",
+      "title": "BARRICADES DANS LE FAUB.G DU TEMPLE LE 25 JUIN 1848, À 7H1/2 DU MATIN",
+      "artist": "Unknown",
+      "year": null,
+      "date": "",
+      "image": "https://www.carnavalet.paris.fr/sites/default/files/collectionlpdp_24102-3.jpg?itok=jZps9vkm",
+      "medium": "",
+      "sourceUrl": "https://www.carnavalet.paris.fr/collections/barricades-dans-le-faubg-du-temple-le-25-juin-1848-7h12-du-matin"
+    },
+    {
+      "id": "carnavalet-42",
+      "title": "CRIB OF THE IMPERIAL PRINCE LOUIS-NAPOLÉON (1856-1879)",
+      "artist": "Unknown",
+      "year": null,
+      "date": "",
+      "image": "https://www.carnavalet.paris.fr/sites/default/files/collectionaze_carmb0249_001.jpg?itok=9oZFIKMP",
+      "medium": "",
+      "sourceUrl": "https://www.carnavalet.paris.fr/en/collections/crib-imperial-prince-louis-napoleon-1856-1879"
+    },
+    {
+      "id": "carnavalet-43",
+      "title": "NEW-LOOK PARIS GAME WITH MOVEABLE MONUMENTS AND SURPRISE, MADE FOR THE UNIVERSAL EXPOSITION IN PARIS",
+      "artist": "Unknown",
+      "year": null,
+      "date": "",
+      "image": "https://www.carnavalet.paris.fr/sites/default/files/2021-01/m1104_carom5568_082.jpg?itok=3iNJakfn",
+      "medium": "",
+      "sourceUrl": "https://www.carnavalet.paris.fr/en/collections/new-look-paris-game-moveable-monuments-and-surprise-made-universal-exposition-paris"
+    },
+    {
+      "id": "carnavalet-44",
+      "title": "MEDALLION OF A PAVILION IN THE CENTRAL MARKET BEARING THE COAT OF ARMS OF THE CITY OF PARIS AND THE MOTTO FLUCTUAT NEC MERGITUR",
+      "artist": "Unknown",
+      "year": null,
+      "date": "",
+      "image": "https://www.carnavalet.paris.fr/sites/default/files/collectionjbw-caren196_2.jpg?itok=p_lI-eFt",
+      "medium": "",
+      "sourceUrl": "https://www.carnavalet.paris.fr/en/collections/medallion-pavilion-central-market-bearing-coat-arms-city-paris-and-motto-fluctuat-nec"
+    },
+    {
+      "id": "carnavalet-45",
+      "title": "PERCEMENT DE L'AVENUE DE L'OPÉRA : CHANTIER DE LA RUE D'ARGENTEUIL PRÈS DE LA RUE SAINT-HONORÉ, 1ER ARRONDISSEMENT, PARIS",
+      "artist": "Unknown",
+      "year": null,
+      "date": "",
+      "image": "https://www.carnavalet.paris.fr/sites/default/files/collectionlpdp_26261-1.jpg?itok=OoC5SxFM",
+      "medium": "",
+      "sourceUrl": "https://www.carnavalet.paris.fr/en/collections/percement-de-lavenue-de-lopera-chantier-de-la-rue-dargenteuil-pres-de-la-rue-saint"
+    },
+    {
+      "id": "carnavalet-46",
+      "title": "HAUSSMANN / LE CASTOR (ACTIVITÉ-LUCRE). / N°8",
+      "artist": "Unknown",
+      "year": null,
+      "date": "",
+      "image": "https://www.carnavalet.paris.fr/sites/default/files/collectionaze_carqb1808-09_001.jpg?itok=aUWHf8fd",
+      "medium": "",
+      "sourceUrl": "https://www.carnavalet.paris.fr/collections/haussmann-le-castor-activite-lucre-ndeg8"
+    },
+    {
+      "id": "carnavalet-47",
+      "title": "PENDANTS D’OREILLES À LA GUILLOTINE",
+      "artist": "Unknown",
+      "year": null,
+      "date": "",
+      "image": "https://www.carnavalet.paris.fr/sites/default/files/2021-01/51._boucles_oreilles.jpg?itok=Yu2vgPns",
+      "medium": "",
+      "sourceUrl": "https://www.carnavalet.paris.fr/collections/pendants-doreilles-la-guillotine"
+    },
+    {
+      "id": "carnavalet-48",
+      "title": "\"Chat noir\".Sign of a cabaret.",
+      "artist": "Adolphe Willette",
+      "year": null,
+      "date": "",
+      "image": "https://www.carnavalet.paris.fr/sites/default/files/collectionlpdp_52314-1.jpg?itok=oMYXeEaR",
+      "medium": "",
+      "sourceUrl": "https://www.carnavalet.paris.fr/en/collections/chat-noirsign-cabaret"
+    },
+    {
+      "id": "carnavalet-49",
+      "title": "Au café, dit l'Absinthe",
+      "artist": "Jean Béraud",
+      "year": null,
+      "date": "",
+      "image": "https://www.carnavalet.paris.fr/sites/default/files/collectionlpdp_36489-5.jpg?itok=VXA7j9Pa",
+      "medium": "",
+      "sourceUrl": "https://www.carnavalet.paris.fr/en/collections/au-cafe-dit-labsinthe"
+    },
+    {
+      "id": "carnavalet-50",
+      "title": "PELISSE DE MARCEL PROUST",
+      "artist": "Unknown",
+      "year": null,
+      "date": "",
+      "image": "https://www.carnavalet.paris.fr/sites/default/files/2021-01/55._manteau_proust_pelisse.jpg?itok=Bd763Rs1",
+      "medium": "",
+      "sourceUrl": "https://www.carnavalet.paris.fr/collections/pelisse-de-marcel-proust"
+    },
+    {
+      "id": "carnavalet-51",
+      "title": "A LA COURONNE D'OR (II). ENSEIGNE D'AUBERGISTE. PARIS",
+      "artist": "Unknown",
+      "year": null,
+      "date": "",
+      "image": "https://www.carnavalet.paris.fr/sites/default/files/collectionlpdp_101431-4.jpg?itok=XMVPUdup",
+      "medium": "",
+      "sourceUrl": "https://www.carnavalet.paris.fr/en/collections/la-couronne-dor-ii-enseigne-daubergiste-paris"
+    },
+    {
+      "id": "carnavalet-52",
+      "title": "PORTE D’ASNIÈRES (GATE), CITÉ VALMY (17TH ARR.), RAG-AND-BONE MEN",
+      "artist": "Unknown",
+      "year": null,
+      "date": "",
+      "image": "https://www.carnavalet.paris.fr/sites/default/files/collectionlpdp_53122-3.jpg?itok=91JZ1cJA",
+      "medium": "",
+      "sourceUrl": "https://www.carnavalet.paris.fr/en/collections/porte-dasnieres-gate-cite-valmy-17th-arr-rag-and-bone-men"
+    },
+    {
+      "id": "carnavalet-53",
+      "title": "Decor from the ballroom of the Hôtel de Wendel (mansion)",
+      "artist": "José-Maria Sert y Badia",
+      "year": null,
+      "date": "",
+      "image": "https://www.carnavalet.paris.fr/sites/default/files/collectioncarp2175_1.jpg?itok=b4r9A6_f",
+      "medium": "",
+      "sourceUrl": "https://www.carnavalet.paris.fr/en/collections/decor-ballroom-hotel-de-wendel-mansion"
+    },
+    {
+      "id": "carnavalet-54",
+      "title": "PARIS/ 1937/ MAI. NOVEMBRE/ EXPOSITION INTERNATIONALE, Colin, Paul, né en 1892 à Nancy, décédé en 1985 à Nogent-sur-Marne",
+      "artist": "Imprimerie Jules Simon S. A.",
+      "year": null,
+      "date": "",
+      "image": "https://www.carnavalet.paris.fr/sites/default/files/2021-01/269a7776_cantoine_mercusot_-_chatillon_architectes.jpg?itok=XDzqyBrm",
+      "medium": "",
+      "sourceUrl": "https://www.carnavalet.paris.fr/en/collections/paris-1937-mai-novembre-exposition-internationale"
+    },
+    {
+      "id": "carnavalet-55",
+      "title": "“THE COMBAT CONTINUES”",
+      "artist": "Unknown",
+      "year": null,
+      "date": "",
+      "image": "https://www.carnavalet.paris.fr/sites/default/files/collectionlpdp_34718-2.jpg?itok=2ifzeSuv",
+      "medium": "",
+      "sourceUrl": "https://www.carnavalet.paris.fr/en/collections/combat-continues"
+    }
+  ]
+}

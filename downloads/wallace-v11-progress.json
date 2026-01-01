@@ -1,0 +1,73 @@
+{
+  "rooms": [
+    {
+      "id": "room-2",
+      "name": "Room 2",
+      "originalName": "West Gallery I",
+      "artworks": [
+        {
+          "id": "wallace-2-1767093991276-0",
+          "title": "Venice: the Grand Canal with San Simeone Piccolo",
+          "artist": "",
+          "year": null,
+          "medium": "",
+          "dimensions": "",
+          "description": "",
+          "image": "",
+          "accessionNumber": "",
+          "sourceUrl": "https://wallacelive.wallacecollection.org/eMP/eMuseumPlus?service=direct/1/ResultDetailView/result.inline.list.t1.collection_list.$TspTitleLink$1.link&sp=13&sp=Sroom&sp=SfilterDefinition&sp=0&sp=1&sp=3&sp=SdetailView&sp=0&sp=Sdetail&sp=0&sp=T&sp=0&sp=SdetailList&sp=0&sp=F&sp=Scollection&sp=l65432"
+        },
+        {
+          "id": "wallace-2-1767093999175-1",
+          "title": "Bacchus",
+          "artist": "Doccia, Italy",
+          "year": null,
+          "medium": "",
+          "dimensions": "",
+          "description": "",
+          "image": "",
+          "accessionNumber": "",
+          "sourceUrl": "https://wallacelive.wallacecollection.org/eMP/eMuseumPlus?service=direct/1/ResultDetailView/result.inline.list.t1.collection_list.$TspTitleLink$1.link&sp=13&sp=Sroom&sp=SfilterDefinition&sp=0&sp=1&sp=3&sp=SdetailView&sp=0&sp=Sdetail&sp=0&sp=T&sp=0&sp=SdetailList&sp=0&sp=F&sp=Scollection&sp=l64624"
+        },
+        {
+          "id": "wallace-2-1767094007366-2",
+          "title": "Executioner with the Head of Saint John the Baptist",
+          "artist": "Doccia, Italy",
+          "year": null,
+          "medium": "",
+          "dimensions": "",
+          "description": "",
+          "image": "",
+          "accessionNumber": "",
+          "sourceUrl": "https://wallacelive.wallacecollection.org/eMP/eMuseumPlus?service=direct/1/ResultDetailView/result.inline.list.t1.collection_list.$TspTitleLink$1.link&sp=13&sp=Sroom&sp=SfilterDefinition&sp=0&sp=1&sp=3&sp=SdetailView&sp=0&sp=Sdetail&sp=0&sp=T&sp=0&sp=SdetailList&sp=0&sp=F&sp=Scollection&sp=l64625"
+        },
+        {
+          "id": "wallace-2-1767094015066-3",
+          "title": "Pedestal",
+          "artist": "France",
+          "year": null,
+          "medium": "",
+          "dimensions": "",
+          "description": "",
+          "image": "",
+          "accessionNumber": "",
+          "sourceUrl": "https://wallacelive.wallacecollection.org/eMP/eMuseumPlus?service=direct/1/ResultDetailView/result.inline.list.t1.collection_list.$TspTitleLink$0.link&sp=13&sp=Sroom&sp=SfilterDefinition&sp=0&sp=1&sp=3&sp=SdetailView&sp=0&sp=Sdetail&sp=0&sp=T&sp=0&sp=SdetailList&sp=0&sp=F&sp=Scollection&sp=l63900"
+        },
+        {
+          "id": "wallace-2-1767094022622-4",
+          "title": "Pedestal",
+          "artist": "France",
+          "year": null,
+          "medium": "",
+          "dimensions": "",
+          "description": "",
+          "image": "",
+          "accessionNumber": "",
+          "sourceUrl": "https://wallacelive.wallacecollection.org/eMP/eMuseumPlus?service=direct/1/ResultDetailView/result.inline.list.t1.collection_list.$TspTitleLink$0.link&sp=13&sp=Sroom&sp=SfilterDefinition&sp=0&sp=1&sp=3&sp=SdetailView&sp=0&sp=Sdetail&sp=0&sp=T&sp=0&sp=SdetailList&sp=0&sp=F&sp=Scollection&sp=l63901"
+        }
+      ]
+    }
+  ],
+  "lastRoom": 2,
+  "lastRoomName": "West Gallery I"
+}

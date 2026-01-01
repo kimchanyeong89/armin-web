@@ -17,9 +17,9 @@ export const exhibitions = [
       { id: "tm-perm-3", name: "Tate Collection", title: "Tate Collection", description: "Complete collection of artworks from Tate galleries.", startDate: "Permanent", endDate: "Permanent" }
     ],
     temporaryExhibitions: [
-      ],
+    ],
     pastExhibitions: [
-      ],
+    ],
   },
   // Tate Britain
   {
@@ -41,9 +41,9 @@ export const exhibitions = [
       { id: "tm-perm-3", name: "Tate Collection", title: "Tate Collection", description: "Complete collection of artworks from Tate galleries.", startDate: "Permanent", endDate: "Permanent" }
     ],
     temporaryExhibitions: [
-      ],
+    ],
     pastExhibitions: [
-      ],
+    ],
   },
   // London major museums
   {
@@ -60,9 +60,9 @@ export const exhibitions = [
       { id: "ng-1", name: "European Paintings", title: "European Paintings", description: "Masterworks by Botticelli, Van Gogh, Turner and more.", startDate: "Permanent", endDate: "Permanent" }
     ],
     temporaryExhibitions: [
-      ],
+    ],
     pastExhibitions: [
-      ],
+    ],
     representativeImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/national-gallery/building.jpg",
     floorPlan: "",
     rooms: {
@@ -88,9 +88,9 @@ export const exhibitions = [
       { id: "npg-floor3-rooms", name: "National Portrait Gallery Collection", title: "National Portrait Gallery Collection", description: "Room-based archive of artworks on Floor 3.", startDate: "Permanent", endDate: "Permanent" }
     ],
     temporaryExhibitions: [
-      ],
+    ],
     pastExhibitions: [
-      ],
+    ],
   },
   {
     id: "vam",
@@ -114,9 +114,9 @@ export const exhibitions = [
       { id: "vam-t3", name: "David Bowie Centre", title: "David Bowie Centre", description: "A new permanent home for David Bowie's archive at V&A East Storehouse. A single room featuring guest-curated displays, including spaces where you can book time one-to-one with items from the archive.", startDate: "2025-01-01", endDate: "Ongoing", admission: "Free (timed ticket required, sold out)", image: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/galleries/vam/exhibitions/david-bowie.webp" },
       { id: "vam-t5", name: "Inside Aardman: Wallace & Gromit and Friends", title: "Inside Aardman", description: "Go behind the scenes of stop-motion animation and explore how Aardman's iconic characters and worlds are brought to life. In Aardman's 50th anniversary year, peek behind the scenes of your favourite stop-motion animations. Visit Wallace & Gromit, Shaun the Sheep and Morph.", startDate: "2026-02-12", endDate: "2026-12-31", admission: "£11.00", venue: "Young V&A", image: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/galleries/vam/exhibitions/aardman.webp" },
       { id: "vam-t6", name: "Schiaparelli: Fashion Becomes Art", title: "Schiaparelli", description: "The UK's first exhibition on Elsa Schiaparelli spans the 1920s to today, celebrating the innovative designer's influence. It traces the fashion house's groundbreaking origins and its evolution under current creative director Daniel Roseberry. 'In difficult times fashion is always outrageous.' – Elsa Schiaparelli", startDate: "2026-03-28", endDate: "2026-09-30", admission: "Weekday £28.00 / Weekend £30.00", image: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/galleries/vam/exhibitions/schiaparelli.webp" }
-      ],
+    ],
     pastExhibitions: [
-      ],
+    ],
     representativeImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/galleries/vam/building.webp",
     floorPlan: "",
     rooms: {
@@ -358,7 +358,7 @@ export const exhibitions = [
       { id: "tl-t9", name: "Branching Out", title: "Branching Out", description: "Easter family activities at Tate Liverpool + RIBA North.", startDate: "2026-04-04", endDate: "2026-04-20", admission: "Free", image: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/galleries/tate-liverpool/exhibitions/branching-out.webp" }
     ],
     pastExhibitions: [
-      ]
+    ]
   },
   {
     id: "tate-st-ives",
@@ -383,7 +383,7 @@ export const exhibitions = [
       { id: "tsi-t5", name: "Wilhelmina Barns-Graham", title: "Wilhelmina Barns-Graham", description: "Celebrating the vibrant abstract paintings and works of Wilhelmina Barns-Graham, a key member of the St Ives School who captured the energy and light of the Cornish landscape.", detailedDescription: "This major retrospective exhibition is the first to chart the full length of Wilhelmina Barns-Graham's incredible career, covering eight decades. One of the most innovative British artists of the 20th century, Barns-Graham played a central role in the development of abstraction in the UK.\n\nBorn in St Andrews, Scotland in 1912, she studied at Edinburgh College of Art before moving to St Ives in 1940, where she became a key member of the modernist artistic community. Her work was profoundly influenced by the Cornish landscape, particularly the light and atmosphere of the coastline.\n\nFeaturing over 170 paintings, drawings, prints and archive materials, this exhibition traces her artistic development from early figurative works to her later bold abstractions. Her famous Glacier paintings, inspired by a transformative visit to the Grindelwald Glacier in Switzerland in 1949, marked a turning point in her career.\n\nThe exhibition culminates with her vibrant Scorpio Series, created in the final years of her life when she worked with renewed energy and freedom, producing some of her most celebrated paintings.", url: "https://www.tate.org.uk/whats-on/tate-st-ives/wilhelmina-barns-graham", startDate: "2026-10-24", endDate: "2027-04-11", image: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/galleries/tate-st-ives/exhibitions/wilhelmina-barns-graham.webp" }
     ],
     pastExhibitions: [
-      ]
+    ]
   },
   // Additional UK Art Galleries (10 more for total 20)
   {
@@ -401,7 +401,7 @@ export const exhibitions = [
       { id: "sng-collection", name: "SNG Collection", title: "Scottish National Gallery Collection", description: "Masterpieces from the Renaissance to Post-Impressionism, including works by Botticelli, Raphael, Titian, Vermeer, Rembrandt, Monet, Degas, Cézanne, and Van Gogh.", startDate: "Permanent", endDate: "Permanent", collectionFile: "scottish-national-gallery-collection.json" }
     ],
     temporaryExhibitions: [
-      ],
+    ],
     pastExhibitions: []
   },
   {
@@ -417,14 +417,14 @@ export const exhibitions = [
     representativeImage: "https://lh3.googleusercontent.com/ci/AL18g_RBwci_hGJRaX-iMX12Daw4mv4naX9hOtVzxoWErSXR98S00mYN-TWt1n9HRdMbIefLR3avCK0=w1200",
     permanentExhibitions: [
       { id: "ra-1", name: "RA Collection", title: "RA Collection", description: "Works acquired since the Academy's founding in 1768, including works by Reynolds, Constable, Turner, and contemporary Royal Academicians.", startDate: "Permanent", endDate: "Permanent", collectionFile: "royal-academy-collection.json" }
-      ],
+    ],
     temporaryExhibitions: [
-      ],
+    ],
     upcomingExhibitions: [
       { id: "ra-u1", name: "Rose Wylie", title: "Rose Wylie", description: "Major exhibition of works by the celebrated British painter.", startDate: "2026-02-28", endDate: "2026-04-19" }
     ],
     pastExhibitions: [
-      ]
+    ]
   },
   {
     id: "serpentine-gallery",
@@ -441,14 +441,14 @@ export const exhibitions = [
       { id: "serp-collection", name: "The Serpentine Archive", title: "The Serpentine Archive", description: "Archives from Serpentine's history of cutting-edge contemporary art exhibitions and the iconic annual Pavilion commissions since 2000.", startDate: "Permanent", endDate: "Permanent", collectionFile: "serpentine-gallery-collection.json" }
     ],
     temporaryExhibitions: [
-      ],
+    ],
     upcomingExhibitions: [
       { id: "serp-u1", name: "David Hockney", title: "David Hockney", description: "Serpentine presents an exhibition with David Hockney.", startDate: "2026-03-12", endDate: "2026-08-23" },
       { id: "serp-u2", name: "Cecily Brown: Picture Making", title: "Cecily Brown: Picture Making", description: "Known for vigorous brushwork, vivid colour and dynamic compositions, Cecily Brown presents paintings inspired by Serpentine's unique location in Kensington Gardens.", startDate: "2026-03-27", endDate: "2026-09-06" },
       { id: "serp-u3", name: "Amar Kanwar", title: "Amar Kanwar", description: "New Delhi-based artist and filmmaker Amar Kanwar presents lyrical films moving between documentary, travelogue and visual essay.", startDate: "2026-09-01", endDate: "2027-01-31" }
     ],
     pastExhibitions: [
-      ]
+    ]
   },
   {
     id: "dulwich-picture-gallery",
@@ -462,24 +462,24 @@ export const exhibitions = [
     region: "London",
     representativeImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/galleries/dulwich/building.webp",
     permanentExhibitions: [
-      { 
-        id: "dpg-1", 
-        name: "The Collection", 
-        title: "The Collection", 
-        description: "As well as our ground-breaking temporary exhibitions, Dulwich Picture Gallery boasts a stunning collection of historic paintings featuring works by Rembrandt, Poussin, Rubens and many others.", 
-        startDate: "Permanent", 
+      {
+        id: "dpg-1",
+        name: "The Collection",
+        title: "The Collection",
+        description: "As well as our ground-breaking temporary exhibitions, Dulwich Picture Gallery boasts a stunning collection of historic paintings featuring works by Rembrandt, Poussin, Rubens and many others.",
+        startDate: "Permanent",
         endDate: "Permanent",
         image: "https://assets.dulwich-gallery.substrakt.net/images/collezione.2e16d0ba.fill-2000x800.jpg"
       }
     ],
     temporaryExhibitions: [
-      { 
-        id: "dpg-anna-ancher", 
-        name: "Anna Ancher: Painting Light", 
-        title: "Anna Ancher: Painting Light", 
-        description: "Known for her luminous paintings, bold use of colour, and ability to capture light like no other, Ancher offers a fresh and powerful perspective on the art of the late nineteenth and early twentieth century.", 
+      {
+        id: "dpg-anna-ancher",
+        name: "Anna Ancher: Painting Light",
+        title: "Anna Ancher: Painting Light",
+        description: "Known for her luminous paintings, bold use of colour, and ability to capture light like no other, Ancher offers a fresh and powerful perspective on the art of the late nineteenth and early twentieth century.",
         fullDescription: "Discover the luminous paintings of Anna Ancher (1859–1935), one of Denmark's most celebrated and pioneering artists, in her first-ever UK exhibition.\n\n**An artist ahead of her time**\nThough a household name in Denmark, Ancher is little known in the UK. This landmark exhibition brings her work to British audiences for the first time, showcasing over 40 paintings from across her career — including masterpieces on loan from The Hirschsprung Collection and Skagens Museum.\n\n**Life in Skagen**\nA central figure among the Skagen Painters, Ancher grew up in the fishing village she so often depicted. Her intimate connection to the town and its people shines through in her work.\n\n**Breaking boundaries**\nAncher's success was remarkable at a time when women faced significant barriers in the art world. Defying social expectations, she built an acclaimed international career and became one of Denmark's most celebrated female artists.",
-        startDate: "2025-11-04", 
+        startDate: "2025-11-04",
         endDate: "2026-03-08",
         image: "https://assets.dulwich-gallery.substrakt.net/images/Anna_Ancher_Sunlight_in_the_blue_.2e16d0ba.fill-2000x800.jpg",
         artworks: [
@@ -496,13 +496,13 @@ export const exhibitions = [
         ],
         url: "https://www.dulwichpicturegallery.org.uk/whats-on/anna-ancher-painting-light/"
       },
-      { 
-        id: "dpg-konrad-magi", 
-        name: "Konrad Mägi", 
-        title: "Konrad Mägi", 
-        description: "In spring 2026, we will present a major UK debut of the Estonian artist Konrad Mägi (1878–1925).", 
+      {
+        id: "dpg-konrad-magi",
+        name: "Konrad Mägi",
+        title: "Konrad Mägi",
+        description: "In spring 2026, we will present a major UK debut of the Estonian artist Konrad Mägi (1878–1925).",
         fullDescription: "In spring 2026, we will present a major UK debut of the Estonian artist Konrad Mägi (1878–1925).\n\nA pioneer of modern painting, this show offers UK audiences the opportunity to encounter Mägi's dazzling, spiritually charged paintings for the first time.\n\nThe exhibition will bring together a survey of his enigmatic landscapes and captivating portraits that highlight his intensive, productive and varied career as an artist that lasted just 20 years.\n\nShown alongside Mägi's works will be a specially commissioned sculptural work by Estonian artist Kristina Õllek. Created in response to Mägi's paintings, while on a residency in the Saaremaa islands, the new commission will take inspiration from his works.",
-        startDate: "2026-03-24", 
+        startDate: "2026-03-24",
         endDate: "2026-07-12",
         image: "https://assets.dulwich-gallery.substrakt.net/images/1909-Norra-maastik-III-2000x1805_McMCt9V.019893ba.fill-2000x800.jpg",
         artworks: [
@@ -513,12 +513,12 @@ export const exhibitions = [
         ],
         url: "https://www.dulwichpicturegallery.org.uk/whats-on/konrad-magi/"
       },
-      { 
-        id: "dpg-portrait-city", 
-        name: "Portrait of a City: A Century of American Photography", 
-        title: "Portrait of a City", 
-        description: "Step into a century of American city life through photographs that capture the people who built, inhabited, and transformed urban spaces into living, breathing communities.", 
-        startDate: "2026-07-28", 
+      {
+        id: "dpg-portrait-city",
+        name: "Portrait of a City: A Century of American Photography",
+        title: "Portrait of a City",
+        description: "Step into a century of American city life through photographs that capture the people who built, inhabited, and transformed urban spaces into living, breathing communities.",
+        startDate: "2026-07-28",
         endDate: "2026-10-04",
         image: "https://assets.dulwich-gallery.substrakt.net/images/Lewis_Hine_Riding_the_Ball_High_u.135c7a32.fill-2000x800.jpg",
         fullDescription: "Step into a century of American city life through photographs that capture the people who built, inhabited, and transformed urban spaces into living, breathing communities.\n\nThe exhibition explores one hundred years of American urban life through the people who lived, worked, and moved through its streets. Featuring works by 34 influential photographers from 1907 to 2012, the exhibition traces how photography evolved alongside the modern city, capturing individuals and communities shaped by and shaping their environments.\n\n**Photography and the American City**\nSet in New York, Los Angeles, Chicago, and San Francisco, the photographs reveal cities as dynamic stages for social change. From mass immigration and industrial growth to moments of counterculture and protest, photographers used urban spaces to examine identity, labour, and belonging.\n\n**Artists and Highlights**\nHighlights include works by Alfred Stieglitz, Helen Levitt, Dorothea Lange, Lewis Hine, Berenice Abbott, Walker Evans, Diane Arbus, Garry Winogrand, and Bruce Davidson.",
@@ -527,13 +527,13 @@ export const exhibitions = [
         ],
         url: "https://www.dulwichpicturegallery.org.uk/whats-on/portrait-of-a-city-a-century-of-american-photography/"
       },
-      { 
-        id: "dpg-hokusai", 
-        name: "Hokusai: Thirty-six views of Mt. Fuji from the Iuchi Collection", 
-        title: "Hokusai: Thirty-six views of Mt. Fuji", 
-        description: "See the complete series of one of the most celebrated image cycles in art history, inviting visitors to experience Mount Fuji as Hokusai saw it nearly two centuries ago.", 
+      {
+        id: "dpg-hokusai",
+        name: "Hokusai: Thirty-six views of Mt. Fuji from the Iuchi Collection",
+        title: "Hokusai: Thirty-six views of Mt. Fuji",
+        description: "See the complete series of one of the most celebrated image cycles in art history, inviting visitors to experience Mount Fuji as Hokusai saw it nearly two centuries ago.",
         fullDescription: "See the complete series of one of the most celebrated image cycles in art history, inviting visitors to experience Mount Fuji as Hokusai saw it nearly two centuries ago.\n\nThe exhibition brings one of the world's most iconic print series to London. Created between 1830 and 1833, the exhibition presents, for the first time in the UK, the complete set of Thirty-six Views of Mount Fuji by Katsushika Hokusai, Japan's most celebrated printmaker.\n\n**Hokusai and Mount Fuji**\nAcross the series, Hokusai depicts Mount Fuji from shifting viewpoints, seasons, and moments of everyday life, transforming Japan's most sacred mountain into a powerful presence within both landscape and human activity. These works demonstrate Hokusai's innovative approach to composition, perspective, and colour, including his pioneering use of the newly introduced Prussian blue pigment.\n\n**Highlights from the series**\nHighlights include a rare variant of Clear Day with a Southern Breeze (also known as Blue Fuji), never before seen in the UK, alongside a beautifully preserved impression of Under the Wave off Kanagawa, commonly known as The Great Wave.",
-        startDate: "2026-10-20", 
+        startDate: "2026-10-20",
         endDate: "2027-01-17",
         image: "https://assets.dulwich-gallery.substrakt.net/images/hokusai_mt_fuji.ed39732b.fill-2000x800.png",
         artworks: [
@@ -543,7 +543,7 @@ export const exhibitions = [
       }
     ],
     pastExhibitions: [
-      ]
+    ]
   },
   {
     id: "courtauld-gallery",
@@ -560,13 +560,13 @@ export const exhibitions = [
       { id: "cg-1", name: "The Courtauld Collection", title: "The Courtauld Collection", description: "Manet's Bar at the Folies-Bergère, Van Gogh's Self-Portrait, Cézanne's Card Players, and many more masterpieces from the world-renowned collection of Impressionist and Post-Impressionist art.", startDate: "Permanent", endDate: "Permanent", collectionFile: "courtauld-gallery-collection.json" }
     ],
     temporaryExhibitions: [
-      ],
+    ],
     upcomingExhibitions: [
       { id: "cg-u1", name: "A View of One's Own: Landscapes by British Women Artists, 1760-1860", title: "A View of One's Own", description: "Showcasing early landscape watercolours by British women artists, representing a growing area of The Courtauld's Collection.", startDate: "2026-01-28", endDate: "2026-05-20" },
       { id: "cg-u2", name: "Seurat and the Sea", title: "Seurat and the Sea", description: "The first ever exhibition dedicated to the seascapes of the French artist Georges Seurat (1859-1891).", startDate: "2026-02-13", endDate: "2026-05-17" }
     ],
     pastExhibitions: [
-      ]
+    ]
   },
   {
     id: "manchester-art-gallery",
@@ -580,11 +580,11 @@ export const exhibitions = [
     region: "Manchester",
     representativeImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/galleries/manchester/building.webp?v=2",
     permanentExhibitions: [
-      ],
+    ],
     temporaryExhibitions: [
-      ],
+    ],
     pastExhibitions: [
-      ]
+    ]
   },
   {
     id: "walker-art-gallery",
@@ -601,9 +601,9 @@ export const exhibitions = [
       { id: "wag-collection", name: "Walker Collection", title: "Walker Art Gallery Collection", description: "Outstanding collection of European art from the 13th to 21st century, with renowned Pre-Raphaelite and Victorian paintings.", startDate: "Permanent", endDate: "Permanent", collectionFile: "walker-art-gallery-collection.json" }
     ],
     temporaryExhibitions: [
-      ],
+    ],
     pastExhibitions: [
-      ]
+    ]
   },
   {
     id: "scottish-national-portrait-gallery",
@@ -1436,17 +1436,6 @@ export const exhibitions = [
     exhibitions: []
   },
   {
-    id: "fondation-louis-vuitton",
-    name: "Fondation Louis Vuitton",
-    city: "Paris",
-    country: "France",
-    latitude: 48.8808,
-    longitude: 2.2647,
-    description: "막강한 자본력을 바탕으로 한 현대 회화 기획전의 절대 강자.",
-    representativeImage: "",
-    exhibitions: []
-  },
-  {
     id: "musee-de-lorangerie",
     slug: "musee-de-lorangerie",
     name: "Musée de l'Orangerie",
@@ -1476,7 +1465,8 @@ export const exhibitions = [
     description: "파리 시립 미술관. 중세부터 20세기까지의 방대한 유화 및 판화 컬렉션.",
     representativeImage: "https://www.petitpalais.paris.fr/sites/default/files/17536-12.jpg",
     permanentExhibitions: [
-      { id: "petit-palais-collection", name: "Collection", title: "Petit Palais - Musée des Beaux-Arts de la Ville de Paris", description: "고대부터 아르누보까지, 쿠르베, 르누아르, 들라크루아 등 프랑스 미술의 정수를 담은 74점의 대표 소장품.", startDate: "Permanent", endDate: "Permanent" }
+      { id: "petit-palais-collection", name: "Collection", title: "Petit Palais - Musée des Beaux-Arts de la Ville de Paris", description: "고대부터 아르누보까지, 쿠르베, 르누아르, 들라크루아 등 프랑스 미술의 정수를 담은 74점의 대표 소장품.", startDate: "Permanent", endDate: "Permanent" },
+      { id: "petit-palais-drawings", name: "Drawings Collection", title: "Petit Palais - Dessins", description: "드로잉 및 판화 컬렉션 157점.", startDate: "Permanent", endDate: "Permanent", collectionFile: "petit-palais-drawings.json" }
     ],
     temporaryExhibitions: [],
     pastExhibitions: [],
@@ -1658,6 +1648,11 @@ export const exhibitions = [
     longitude: 4.8335,
     description: "'작은 루브르'라 불릴 만큼 시대별 회화의 밀도가 높은 갤러리.",
     representativeImage: "",
+    permanentExhibitions: [
+      { id: "lyon-collection", name: "Painting & Graphic Design Collection", title: "Musée des Beaux-Arts de Lyon Collection", description: "15세기부터 현대까지의 회화와 그래픽 디자인 컬렉션 538점.", startDate: "Permanent", endDate: "Permanent" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
     exhibitions: []
   },
   {
@@ -1668,18 +1663,13 @@ export const exhibitions = [
     latitude: 49.1941,
     longitude: 2.4867,
     description: "라파엘로 등 루브르에 견줄만한 올드 마스터들의 유화가 즐비한 곳.",
-    representativeImage: "",
-    exhibitions: []
-  },
-  {
-    id: "musee-fabre",
-    name: "Musée Fabre",
-    city: "Montpellier",
-    country: "France",
-    latitude: 43.6115,
-    longitude: 3.8801,
-    description: "프랑스 남부 최고의 갤러리. 고전부터 추상 회화까지 폭넓은 스펙트럼.",
-    representativeImage: "",
+    representativeImage: "https://images.grandpalaisrmn.fr/thumb.php/01763236.jpg",
+    permanentExhibitions: [
+      { id: "conde-paintings", name: "Paintings Collection", title: "Musée Condé - Paintings Collection", description: "프랑스에서 루브르 다음으로 중요한 고전 회화 컬렉션 792점. 라파엘로, 푸생, 앵그르 등 걸작 소장.", startDate: "Permanent", endDate: "Permanent", collectionFile: "musee-conde-paintings.json" },
+      { id: "conde-drawings", name: "Drawings Collection", title: "Musée Condé - Drawings Collection", description: "15세기부터 19세기까지의 드로잉 및 판화 컬렉션.", startDate: "Permanent", endDate: "Permanent", collectionFile: "musee-conde-drawings.json" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
     exhibitions: []
   },
   {
@@ -1691,6 +1681,11 @@ export const exhibitions = [
     longitude: 2.1441,
     description: "로트레크의 독창적인 포스터와 유화를 세계에서 가장 많이 보유.",
     representativeImage: "",
+    permanentExhibitions: [
+      { id: "toulouse-lautrec-collection", name: "Collection", title: "Musée Toulouse-Lautrec Collection", description: "앙리 드 툴루즈-로트레크의 회화, 드로잉, 포스터 212점.", startDate: "Permanent", endDate: "Permanent" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
     exhibitions: []
   },
   {
@@ -1702,6 +1697,13 @@ export const exhibitions = [
     longitude: 5.7317,
     description: "프랑스 최초로 현대 미술을 수집한 곳으로, 2D 현대 예술의 보고.",
     representativeImage: "",
+    permanentExhibitions: [
+      { id: "grenoble-paintings", name: "Paintings", title: "Musée de Grenoble - Paintings Collection", description: "프랑스, 이탈리아, 북유럽 등 다양한 시대의 회화 761점.", startDate: "Permanent", endDate: "Permanent" },
+      { id: "grenoble-drawings", name: "Drawings", title: "Musée de Grenoble - Drawings Collection", description: "고전부터 현대까지의 드로잉 컬렉션 954점.", startDate: "Permanent", endDate: "Permanent" },
+      { id: "grenoble-photography", name: "Photography", title: "Musée de Grenoble - Photography Collection", description: "19세기부터 21세기까지의 사진 컬렉션 27점.", startDate: "Permanent", endDate: "Permanent" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
     exhibitions: []
   },
   {
@@ -1713,6 +1715,11 @@ export const exhibitions = [
     longitude: 5.4481,
     description: "세잔의 고향에서 만나는 인상주의 및 피카소, 자코메티의 평면 작품들.",
     representativeImage: "",
+    permanentExhibitions: [
+      { id: "granet-collection", name: "Collection", title: "Musée Granet Collection", description: "세잔부터 자코메티까지, 14세기-20세기 회화와 조각 30점.", startDate: "Permanent", endDate: "Permanent" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
     exhibitions: []
   },
   {
@@ -1743,17 +1750,399 @@ export const exhibitions = [
     longitude: -0.5801,
     description: "15세기부터 현대까지, 남서부 프랑스를 대표하는 고전 회화 갤러리.",
     representativeImage: "",
+    permanentExhibitions: [
+      { id: "bordeaux-paintings", name: "Paintings", title: "Musée des Beaux-Arts de Bordeaux - Paintings Collection", description: "르네상스부터 현대까지의 회화 컬렉션 2,296점.", startDate: "Permanent", endDate: "Permanent" },
+      { id: "bordeaux-drawings", name: "Drawings", title: "Musée des Beaux-Arts de Bordeaux - Drawings Collection", description: "그래픽 아트 캐비닛의 드로잉 컬렉션 3,302점.", startDate: "Permanent", endDate: "Permanent" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
     exhibitions: []
   },
   {
-    id: "musee-de-lannonciade",
-    name: "Musée de l'Annonciade",
-    city: "Saint-Tropez",
+    id: "musee-rodin",
+    name: "Musée Rodin",
+    city: "Paris",
     country: "France",
-    latitude: 43.2732,
-    longitude: 6.6386,
-    description: "작지만 강하다. 야수파(Fauvism) 회화의 발상지로서 독보적인 위치.",
+    latitude: 48.8554,
+    longitude: 2.3160,
+    description: "오귀스트 로댕의 조각과 드로잉을 소장한 세계적인 조각 박물관. 생각하는 사람, 키스 등 명작 소장.",
     representativeImage: "",
+    permanentExhibitions: [
+      { id: "rodin-peintures", name: "Peintures", title: "Musée Rodin - Peintures", description: "로댕 미술관 소장 회화 컬렉션 224점.", startDate: "Permanent", endDate: "Permanent" },
+      { id: "rodin-sculptures", name: "Sculptures", title: "Musée Rodin - Sculptures", description: "로댕과 동시대 작가들의 조각 컬렉션.", startDate: "Permanent", endDate: "Permanent" },
+      { id: "rodin-gravures", name: "Gravures", title: "Musée Rodin - Gravures", description: "판화 및 그래픽 아트 컬렉션 1,188점.", startDate: "Permanent", endDate: "Permanent" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    exhibitions: []
+  },
+  {
+    id: "fondation-louis-vuitton",
+    name: "Fondation Louis Vuitton",
+    city: "Paris",
+    country: "France",
+    latitude: 48.8766,
+    longitude: 2.2644,
+    description: "프랑크 게리가 설계한 현대건축의 걸작. 현대미술 컬렉션과 기획전시의 명소.",
+    representativeImage: "",
+    permanentExhibitions: [
+      { id: "flv-collection", name: "Collection", title: "Fondation Louis Vuitton Collection", description: "현대미술 컬렉션 213점.", startDate: "Permanent", endDate: "Permanent" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    exhibitions: []
+  },
+  // MAD Paris (Musée des Arts Décoratifs)
+  {
+    id: "mad-paris",
+    slug: "mad-paris",
+    name: "Musée des Arts Décoratifs",
+    city: "Paris",
+    country: "France",
+    location: "107 Rue de Rivoli, 75001 Paris, France",
+    latitude: 48.8627,
+    longitude: 2.3330,
+    description: "세계 최대의 장식예술 컬렉션을 소장한 파리의 명소. 15세기부터 현대까지의 가구, 도자기, 보석, 패션, 그래픽 디자인 등 다양한 분야의 작품을 전시.",
+    representativeImage: "https://collections.madparis.fr/media/cache/mosaic/sw-media/624a97b0980f7c60b45575a2.jpg",
+    permanentExhibitions: [
+      { id: "mad-collection", name: "Les collections", title: "Arts décoratifs et design", description: "15세기부터 21세기까지의 장식예술과 디자인 컬렉션 10,863점.", startDate: "Permanent", endDate: "Permanent", collectionFile: "mad-paris-collection.json" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    exhibitions: []
+  },
+  // Musée Carnavalet - Histoire de Paris
+  {
+    id: "carnavalet",
+    slug: "carnavalet",
+    name: "Musée Carnavalet - Histoire de Paris",
+    city: "Paris",
+    country: "France",
+    location: "16 Rue des Francs Bourgeois, 75003 Paris, France",
+    latitude: 48.8576,
+    longitude: 2.3622,
+    description: "파리의 역사를 담은 미술관. 고대부터 현대까지 파리의 변천사를 조각, 회화, 사진, 가구 등 60만 점 이상의 소장품으로 전시.",
+    representativeImage: "https://www.carnavalet.paris.fr/sites/default/files/collectioncar23644-19_1.jpg",
+    permanentExhibitions: [
+      { id: "carnavalet-collection", name: "The Essential Artworks", title: "Les œuvres incontournables", description: "파리 역사를 대표하는 필수 작품 55점의 컬렉션.", startDate: "Permanent", endDate: "Permanent", collectionFile: "carnavalet-collection.json" },
+      { id: "carnavalet-paintings", name: "Paintings Collection", title: "Carnavalet - Peintures", description: "파리 역사를 담은 회화 컬렉션 481점.", startDate: "Permanent", endDate: "Permanent", collectionFile: "carnavalet-paintings.json" },
+      { id: "carnavalet-prints", name: "Prints Collection", title: "Carnavalet - Estampes et Affiches", description: "파리 역사를 담은 판화 및 포스터 컬렉션 1,266점.", startDate: "Permanent", endDate: "Permanent", collectionFile: "carnavalet-prints.json" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    exhibitions: []
+  },
+  // Musée de l'Armée - Invalides
+  {
+    id: "musee-armee",
+    slug: "musee-armee",
+    name: "Musée de l'Armée - Invalides",
+    city: "Paris",
+    country: "France",
+    location: "129 Rue de Grenelle, 75007 Paris, France",
+    latitude: 48.8551,
+    longitude: 2.3120,
+    description: "프랑스 군사 역사 박물관. 앵발리드(Hôtel des Invalides) 내에 위치하며, 고대부터 현대까지의 무기, 갑옷, 회화, 사진, 드로잉 등 50만 점 이상의 소장품을 보유.",
+    representativeImage: "https://www.musee-armee.fr/fileadmin/_processed_/2/d/csm_hotel_invalides_a4b9eae5e7.jpg",
+    permanentExhibitions: [
+      { id: "musee-armee-peinture", name: "Peinture", title: "회화 컬렉션", description: "역사적 전투와 군사 인물을 묘사한 회화 77점.", startDate: "Permanent", endDate: "Permanent", collectionFile: "musee-armee-peinture.json" },
+      { id: "musee-armee-photographie", name: "Photographie", title: "사진 컬렉션", description: "전쟁과 군사 역사를 기록한 역사적 사진 332점.", startDate: "Permanent", endDate: "Permanent", collectionFile: "musee-armee-photographie.json" },
+      { id: "musee-armee-dessin", name: "Dessin", title: "드로잉 컬렉션", description: "군사 주제의 드로잉과 스케치 1,068점.", startDate: "Permanent", endDate: "Permanent", collectionFile: "musee-armee-dessin.json" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    exhibitions: []
+  },
+  // Château de Versailles
+  {
+    id: "chateau-de-versailles",
+    name: "Château de Versailles",
+    city: "Versailles",
+    country: "France",
+    latitude: 48.8049,
+    longitude: 2.1204,
+    description: "프랑스 절대왕정의 상징인 베르사유 궁전. 17세기 루이 14세가 건설한 화려한 궁전으로, 바로크와 고전주의 양식의 회화, 조각, 장식 예술품을 소장.",
+    representativeImage: "https://images.grandpalaisrmn.fr/thumb.php/02456789.jpg",
+    permanentExhibitions: [
+      { id: "versailles-collection", name: "Paintings & Drawings", title: "베르사유 회화 및 드로잉 컬렉션", description: "루이 14세부터 나폴레옹 시대까지의 왕실 회화 및 드로잉 컬렉션.", startDate: "Permanent", endDate: "Permanent", collectionFile: "versailles-collection.json" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    exhibitions: []
+  },
+  // Musée Guimet (Musée national des arts asiatiques)
+  {
+    id: "musee-guimet",
+    name: "Musée Guimet",
+    city: "Paris",
+    country: "France",
+    latitude: 48.8649,
+    longitude: 2.2933,
+    description: "아시아 예술 전문 국립 박물관. 중국, 일본, 한국, 인도, 동남아시아 등 아시아 전역의 고대부터 현대까지 예술품 6만여 점을 소장.",
+    representativeImage: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Musee_Guimet_Jardin.jpg/1280px-Musee_Guimet_Jardin.jpg",
+    permanentExhibitions: [
+      { id: "guimet-collection", name: "Asian Art Collection", title: "귀메 아시아 예술 컬렉션", description: "중국, 일본, 한국, 인도 등 아시아 전역의 회화 및 드로잉 컬렉션.", startDate: "Permanent", endDate: "Permanent", collectionFile: "musee-guimet-collection.json" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    exhibitions: []
+  },
+  // Médiathèque du Patrimoine et de la Photographie (MPP)
+  {
+    id: "macval",
+    name: "Médiathèque du Patrimoine et de la Photographie",
+    city: "Charenton-le-Pont",
+    country: "France",
+    latitude: 48.8211,
+    longitude: 2.4133,
+    description: "프랑스 문화부 산하 문화유산 및 사진 미디어테크. 프랑스 국가 사진 아카이브와 문화유산 자료를 보관하는 기관.",
+    representativeImage: "https://www.culture.gouv.fr/var/culture/storage/images/_aliases/reference/6/1/0/9/4899016-1-fre-FR/facade-mpp.jpg",
+    permanentExhibitions: [
+      { id: "macval-collection", name: "Photography Collection", title: "MPP 사진 컬렉션", description: "프랑스 국가 사진 아카이브 컬렉션.", startDate: "Permanent", endDate: "Permanent", collectionFile: "macval-collection.json" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    exhibitions: []
+  },
+  // Mucem - Musée des civilisations de l'Europe et de la Méditerranée
+  {
+    id: "mucem",
+    name: "Mucem",
+    city: "Marseille",
+    country: "France",
+    latitude: 43.2965,
+    longitude: 5.3610,
+    description: "유럽과 지중해 문명 박물관. 마르세유의 랜드마크로, 지중해 문화권의 역사와 문명을 전시하는 국립 박물관.",
+    representativeImage: "https://www.mucem.org/sites/default/files/styles/image_full/public/2019-03/mucem-j4-fort-saint-jean.jpg",
+    permanentExhibitions: [
+      { id: "mucem-collection", name: "Full Collection", title: "Mucem - 전체 컬렉션", description: "회화, 판화, 드로잉을 포함한 전체 컬렉션 3,943점.", startDate: "Permanent", endDate: "Permanent", collectionFile: "mucem-collection.json" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    exhibitions: []
+  },
+  // Musée Fabre - Montpellier
+  {
+    id: "musee-fabre",
+    name: "Musée Fabre",
+    city: "Montpellier",
+    country: "France",
+    latitude: 43.6114,
+    longitude: 3.8801,
+    description: "몽펠리에 파브르 미술관. 17세기부터 현대까지의 유럽 회화와 조각 컬렉션을 소장한 프랑스 주요 미술관.",
+    representativeImage: "https://museefabre.montpellier3m.fr/content/download/2185/21185/file/facade-musee-fabre.jpg",
+    permanentExhibitions: [
+      { id: "fabre-collection", name: "Collection", title: "Musée Fabre 컬렉션", description: "17세기부터 현대까지의 유럽 회화 컬렉션 136점.", startDate: "Permanent", endDate: "Permanent", collectionFile: "musee-fabre-collection.json" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    exhibitions: []
+  },
+  // Musée national Marc Chagall - Nice
+  {
+    id: "musee-chagall",
+    name: "Musée national Marc Chagall",
+    city: "Nice",
+    country: "France",
+    latitude: 43.7102,
+    longitude: 7.2620,
+    description: "니스의 마르크 샤갈 국립미술관. 샤갈의 성경 연작을 중심으로 한 세계 최대 샤갈 컬렉션을 소장.",
+    representativeImage: "https://musees-nationaux-alpesmaritimes.fr/sites/default/files/styles/slideshow_full/public/2019-04/musee-chagall-facade.jpg",
+    permanentExhibitions: [
+      { id: "chagall-collection", name: "Collection", title: "Musée Chagall 컬렉션", description: "마르크 샤갈의 회화, 드로잉, 판화 컬렉션 3,302점.", startDate: "Permanent", endDate: "Permanent", collectionFile: "musee-chagall-collection.json" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    exhibitions: []
+  },
+  // La Piscine - Roubaix
+  {
+    id: "la-piscine",
+    name: "La Piscine - Musée d'Art et d'Industrie André Diligent",
+    city: "Roubaix",
+    country: "France",
+    latitude: 50.6920,
+    longitude: 3.1722,
+    description: "루베의 옛 수영장을 개조한 독특한 미술관. 19-20세기 프랑스 회화, 조각, 장식미술 컬렉션.",
+    representativeImage: "https://www.roubaix-lapiscine.com/fileadmin/_processed_/f/b/csm_facade_lapiscine_59c9b8e6c7.jpg",
+    permanentExhibitions: [
+      { id: "piscine-collection", name: "Collection", title: "La Piscine 회화 컬렉션", description: "19-20세기 프랑스 회화 컬렉션.", startDate: "Permanent", endDate: "Permanent", collectionFile: "la-piscine-collection.json" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    exhibitions: []
+  },
+  // The Wallace Collection - London
+  {
+    id: "wallace-collection",
+    name: "The Wallace Collection",
+    city: "London",
+    country: "United Kingdom",
+    latitude: 51.5173,
+    longitude: -0.1528,
+    description: "One of the finest collections of fine and decorative arts in the world, displayed at Hertford House. Highlights include paintings by Titian, Velázquez, Rubens, Hals, and Fragonard.",
+    representativeImage: "https://www.wallacecollection.org/wp-content/uploads/2019/03/Wallace-Collection-Exterior-1024x683.jpg",
+    permanentExhibitions: [
+      { id: "wallace-permanent", name: "Permanent Collection", title: "Wallace Collection Permanent Display", description: "Paintings, sculpture, arms and armour, and decorative arts displayed in period room settings.", startDate: "Permanent", endDate: "Permanent", collectionFile: "wallace-collection.json" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    exhibitions: []
+  },
+  // Sir John Soane's Museum - London
+  {
+    id: "soane-museum",
+    name: "Sir John Soane's Museum",
+    city: "London",
+    country: "United Kingdom",
+    latitude: 51.5175,
+    longitude: -0.1177,
+    description: "One of the world's most extraordinary house museums, preserved exactly as architect Sir John Soane left it in 1837, featuring paintings by Hogarth, Turner, and Canaletto.",
+    representativeImage: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/John_Soane%27s_Museum%2C_Lincoln%27s_Inn_Fields.jpg/1280px-John_Soane%27s_Museum%2C_Lincoln%27s_Inn_Fields.jpg",
+    permanentExhibitions: [
+      { id: "soane-paintings", name: "Paintings Collection", title: "Paintings and Framed Works", description: "Over 400 paintings, watercolours and prints including Hogarth's A Rake's Progress and The Election series.", startDate: "Permanent", endDate: "Permanent", collectionFile: "soane-paintings.json" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    exhibitions: []
+  },
+  // Vatican Museums - Vatican City
+  {
+    id: "vatican-museums",
+    name: "Vatican Museums",
+    city: "Vatican City",
+    country: "Vatican City",
+    latitude: 41.9065,
+    longitude: 12.4536,
+    description: "One of the world's greatest art collections, including the Sistine Chapel, Raphael Rooms, and masterpieces of classical antiquity.",
+    representativeImage: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Musei_vaticani%2C_braccio_nuovo%2C_01.JPG/1280px-Musei_vaticani%2C_braccio_nuovo%2C_01.JPG",
+    permanentExhibitions: [
+      { id: "vatican-collection", name: "Permanent Collection", title: "Vatican Museums Collection", description: "Masterpieces from the Vatican's extensive art collection including classical sculpture, Renaissance paintings, and more.", startDate: "Permanent", endDate: "Permanent", collectionFile: "vatican-collection.json" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    exhibitions: []
+  },
+  // National Museum Wales - Cardiff
+  {
+    id: "museum-wales",
+    name: "National Museum Wales",
+    city: "Cardiff",
+    country: "United Kingdom",
+    region: "Wales",
+    latitude: 51.4816,
+    longitude: -3.1791,
+    description: "The national museum of Wales featuring world-class art collections including Impressionist works, Welsh art, and extensive industrial heritage collections.",
+    representativeImage: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/National_Museum_Cardiff_2018.jpg/1280px-National_Museum_Cardiff_2018.jpg",
+    permanentExhibitions: [
+      { id: "wales-art", name: "Art Collection", title: "National Museum Wales Art Collection", description: "Paintings, sculptures, and works on paper from Wales and around the world, including an outstanding collection of Impressionist works.", startDate: "Permanent", endDate: "Permanent", collectionFile: "museum-wales-art.json" },
+      { id: "wales-industry", name: "Industry Collection", title: "National Museum Wales Industry Collection", description: "Objects documenting Wales's rich industrial heritage, from coal mining to manufacturing.", startDate: "Permanent", endDate: "Permanent", collectionFile: "museum-wales-industry.json" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    exhibitions: []
+  },
+  // Uffizi Galleries - Florence
+  {
+    id: "uffizi",
+    name: "Uffizi Galleries",
+    city: "Florence",
+    country: "Italy",
+    latitude: 43.7687,
+    longitude: 11.2551,
+    description: "One of the most famous art museums in the world, home to masterpieces by Botticelli, Michelangelo, Leonardo, Raphael, Caravaggio and more.",
+    representativeImage: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Galleria_degli_Uffizi_court.jpg/1280px-Galleria_degli_Uffizi_court.jpg",
+    permanentExhibitions: [
+      { id: "uffizi-gallery-collection", name: "Uffizi Collection", title: "Uffizi Gallery Collection", description: "731 masterpieces including works by Botticelli, Michelangelo, Raphael, Leonardo, and Caravaggio.", startDate: "Permanent", endDate: "Permanent", collectionFile: "uffizi-gallery-collection.json" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    exhibitions: []
+  },
+  // Pitti Palace - Florence
+  {
+    id: "pitti-palace",
+    name: "Pitti Palace",
+    city: "Florence",
+    country: "Italy",
+    latitude: 43.7651,
+    longitude: 11.2500,
+    description: "Renaissance palace housing multiple museums including the Palatine Gallery with works by Raphael, Titian, Rubens, and the Gallery of Modern Art.",
+    representativeImage: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Palazzo_Pitti_Facade.jpg/1280px-Palazzo_Pitti_Facade.jpg",
+    permanentExhibitions: [
+      { id: "pitti-collection", name: "Pitti Collection", title: "Pitti Palace Collection", description: "196 artworks from the Palatine Gallery, Gallery of Modern Art, and Royal Apartments including works by Raphael, Titian, and Rubens.", startDate: "Permanent", endDate: "Permanent", collectionFile: "pitti-palace-collection.json" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    exhibitions: []
+  },
+  // Galleria dell'Accademia - Florence
+  {
+    id: "accademia-firenze",
+    name: "Galleria dell'Accademia",
+    city: "Florence",
+    country: "Italy",
+    latitude: 43.7769,
+    longitude: 11.2588,
+    description: "Home to Michelangelo's David and an important collection of paintings, sculptures, and historical musical instruments.",
+    representativeImage: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/63/%27David%27_by_Michelangelo_Fir_JBU002.jpg/800px-%27David%27_by_Michelangelo_Fir_JBU002.jpg",
+    permanentExhibitions: [
+      { id: "accademia-collection", name: "Accademia Collection", title: "Galleria dell'Accademia Collection", description: "Michelangelo's David, paintings, sculptures, and the Museum of Musical Instruments.", startDate: "Permanent", endDate: "Permanent", collectionFile: "accademia-collection.json" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    exhibitions: []
+  },
+  // Palazzo Ducale - Venice
+  {
+    id: "palazzo-ducale",
+    name: "Palazzo Ducale",
+    city: "Venice",
+    country: "Italy",
+    latitude: 45.4337,
+    longitude: 12.3401,
+    description: "The Doge's Palace is a palace built in Venetian Gothic style and one of the main landmarks of Venice. It housed the Doge and was the seat of Venetian government.",
+    representativeImage: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/Wenecja_-_Palazzo_Ducale.jpg/1280px-Wenecja_-_Palazzo_Ducale.jpg",
+    permanentExhibitions: [
+      { id: "palazzo-ducale-collection", name: "Palazzo Ducale Collection", title: "Doge's Palace Collection", description: "Art and artifacts from the seat of Venetian power, including paintings, sculptures, and decorative arts.", startDate: "Permanent", endDate: "Permanent", collectionFile: "palazzo-ducale-collection.json" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    exhibitions: []
+  },
+  // Galleria Borghese - Rome
+  {
+    id: "galleria-borghese",
+    name: "Galleria Borghese",
+    city: "Rome",
+    country: "Italy",
+    latitude: 41.9145,
+    longitude: 12.4921,
+    description: "One of Rome's finest art collections housed in the magnificent Villa Borghese. Features masterpieces by Bernini, Caravaggio, Raphael, and Titian.",
+    representativeImage: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Galleria_Borghese_facade.jpg/1280px-Galleria_Borghese_facade.jpg",
+    permanentExhibitions: [
+      { id: "borghese-paintings", name: "Paintings Collection", title: "Galleria Borghese Paintings", description: "562 paintings including masterpieces by Caravaggio, Raphael, Titian, and more.", startDate: "Permanent", endDate: "Permanent", collectionFile: "galleria-borghese-collection.json" },
+      { id: "borghese-arte-antica", name: "Ancient Art Collection", title: "Galleria Borghese Arte Antica", description: "291 ancient Roman sculptures, mosaics, and reliefs.", startDate: "Permanent", endDate: "Permanent", collectionFile: "borghese-arte-antica-collection.json" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    exhibitions: []
+  },
+  // Peggy Guggenheim Collection - Venice
+  {
+    id: "guggenheim-venice",
+    name: "Peggy Guggenheim Collection",
+    city: "Venice",
+    country: "Italy",
+    latitude: 45.4311,
+    longitude: 12.3316,
+    description: "One of the most important museums in Italy for European and American art of the first half of the 20th century, housed in the Palazzo Venier dei Leoni on the Grand Canal.",
+    representativeImage: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/Peggy_Guggenheim_Collection%2C_Venice.jpg/1280px-Peggy_Guggenheim_Collection%2C_Venice.jpg",
+    permanentExhibitions: [
+      { id: "guggenheim-collection", name: "Peggy Guggenheim Collection", title: "Modern Art Collection", description: "613 works of modern art including pieces by Picasso, Pollock, Dalí, Ernst, and Magritte.", startDate: "Permanent", endDate: "Permanent", collectionFile: "guggenheim-venice-collection.json" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
     exhibitions: []
   }
 ];

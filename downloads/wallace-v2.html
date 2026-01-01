@@ -1,0 +1,2335 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html xml:lang="en" xmlns="http://www.w3.org/1999/xhtml"><head>
+<meta name="generator" content="Tapestry Application Framework, version 3.0.2">
+<meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+<title>Wallace Collection Online - The Collection | Advanced Search</title>
+<!-- Version: 5.5.1.47 -->
+<!-- $EMP$MODULE name="collection" -->
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate, max-age=0">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
+<meta name="gwt:property" content="locale=en_US">
+<link rel="stylesheet" type="text/css" href="/eMP/css/jscalendar/skins/aqua/theme.css">
+<link rel="stylesheet" type="text/css" href="/eMP/css/jscalendar/skins/aqua/theme.css">
+<link rel="stylesheet" type="text/css" href="/eMP/eMuseumPlus?service=DynamicAsset&amp;sp=SU5mxm4Yx%2FVbhp94nksEmWhUPPCPARCxmLhZFs2eu1kWTI7PZ7jbbqdMDGNEcANDvJo6XWJomycpz%0AD4leSZ7DzQ%3D%3D&amp;sp=Stext%2Fcss">
+<link rel="stylesheet" type="text/css" href="/eMP/eMuseumPlus?service=DynamicAsset&amp;sp=SU5mxm4Yx%2FVbhp94nksEmWhUPPCPARCxmLhZFs2eu1kWTI7PZ7jbbqdMDGNEcANDvk477%2Fm9rnSWT%0A2Xh2WUoAZUrkNDD4uHnr&amp;sp=Stext%2Fcss" media="print">
+<link rel="icon" href="?service=WebAsset&amp;url=/favicon.ico&amp;contentType=image/x-icon">
+<link rel="shortcut icon" href="?service=WebAsset&amp;url=/favicon.ico&amp;contentType=image/x-icon">
+<meta content="width=device-width" name="viewport">
+<link rel="stylesheet" type="text/css" href="?service=WebAsset&amp;url=css/fluid.css&amp;contentType=text/css">
+<!--<link rel="stylesheet" type="text/css" href="?service=WebAsset&url=css/london.css&contentType=text/css" />-->
+<!-- <link rel="stylesheet" type="text/css" href="?service=WebAsset&url=/css/floorplan.css&contentType=text/css" media="screen" /> -->
+<!--[if IE]>
+<link rel="stylesheet" type="text/css" href="?service=WebAsset&url=css/eMuseumPlus_ie.css&contentType=text/css" />
+<![endif]-->
+<!--[if lte IE 6]>
+<link rel="stylesheet" type="text/css" href="?service=WebAsset&url=css/eMuseumPlus_ie6.css&contentType=text/css" />
+<![endif]-->
+<script type="text/javascript" async="" src="https://www.google-analytics.com/analytics.js"></script><script type="text/javascript" src="?service=WebAsset&amp;url=css/gotopage.js&amp;contentType=text/javascript"></script>
+<script type="text/javascript" src="?service=WebAsset&amp;url=css/start.js&amp;contentType=text/javascript"></script>
+<meta name="google-site-verification" content="deT_PzqAeubwgAdHEZnIrpNYY7_mG8uvg6QnN7q6UIk">
+<!--<link rel="stylesheet" type="text/css" href="?service=WebAsset&url=/css/london.css&contentType=text/css" />-->
+<!--<script type="text/javascript" src="?service=WebAsset&url=/svg/snap.svg-min.js&contentType=application/javascript"></script>-->
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cloud.typography.com/7903836/7196192/css/fonts.css">
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-49621938-1"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag() {
+dataLayer.push(arguments);
+}
+gtag('js', new Date());
+gtag('config', 'UA-49621938-1');
+</script>
+<script type="text/javascript">
+var id = 0;
+function makeHttpObject() {
+try {
+return new XMLHttpRequest();
+} catch (error) {}
+try {
+return new ActiveXObject("Msxml2.XMLHTTP");
+} catch (error) {}
+try {
+return new ActiveXObject("Microsoft.XMLHTTP");
+} catch (error) {}
+throw new Error("Could not create HTTP request object.");
+}
+$(document).ready(function() {
+$('<svg><use xlink:href="#icon-arrow-down"></use></svg>').insertAfter($('.formItem select'));
+$('<svg><use xlink:href="#icon-arrow-down"></use></svg>').insertAfter($('.dropdownMenuFromTo ul'));
+$('<svg><use xlink:href="#icon-search"></use></svg>').insertAfter($('#fullTextField'));
+$('<svg><use xlink:href="#icon-arrow-left"></use></svg>').appendTo($('.contextMenu .elementNavigatorBack a .arrowButton'));
+$('<svg><use xlink:href="#icon-arrow-right"></use></svg>').appendTo($('.contextMenu .elementNavigatorNext a .arrowButton'));
+$('body').prepend($('<div class="page-background"><div class="page-background__fade"></div></div>'));
+$('#formItem_field_10612').prepend('<form><input type="checkbox" name="imageYes" value="imageYes" onchange="imageSelected(this)">Images results only</form>');
+$('.collectionContainerDetailList #searchForm .formButton .startButton').clone().insertAfter('.collectionContainerDetailList #searchForm .searchFulltext');
+if ($('.roomContainerDetailView').length) {
+$('<svg><use xlink:href="#icon-plus"></use></svg>').insertAfter($('#webFilterGroupdId_10033 ul .filterItem:first-child a'));
+$('<svg><use xlink:href="#icon-plus"></use></svg>').insertAfter($('#webFilterGroupdId_10034 ul .filterItem:first-child a'));
+$('<svg><use xlink:href="#icon-plus"></use></svg>').insertAfter($('#webFilterGroupdId_10035 ul .filterItem:first-child a'));
+$.each($('#webFilterGroupdId_10033 ul .filterItem a'), function() {
+var groundIsSelected = false;
+if ($(this).hasClass('active')) {
+$('#webFilterGroupdId_10033 ul .filterItem:first-child a').attr('style', 'background-color: #006E88;');
+groundIsSelected = true;
+} else {
+}
+if (groundIsSelected) {
+$('#webFilterGroupdId_10033 ul .filterItem').attr('style', 'display: block;');
+$('#webFilterGroupdId_10033 ul .filterItem:first-child svg').replaceWith($('<svg><use xlink:href="#icon-minus"></use></svg>'));
+}
+});
+$.each($('#webFilterGroupdId_10034 ul .filterItem a'), function() {
+var groundIsSelected = false;
+if ($(this).hasClass('active')) {
+$('#webFilterGroupdId_10034 ul .filterItem:first-child a').attr('style', 'background-color: #006E88;');
+groundIsSelected = true;
+} else {}
+if (groundIsSelected) {
+$('#webFilterGroupdId_10034 ul .filterItem').attr('style', 'display: block;')
+$('#webFilterGroupdId_10034 ul .filterItem:first-child svg').replaceWith($('<svg><use xlink:href="#icon-minus"></use></svg>'));
+}
+});
+$.each($('#webFilterGroupdId_10035 ul .filterItem a'), function() {
+var groundIsSelected = false;
+if ($(this).hasClass('active')) {
+$('#webFilterGroupdId_10035 ul .filterItem:first-child a').attr('style', 'background-color: #006E88;');
+groundIsSelected = true;
+}
+if (groundIsSelected) {
+$('#webFilterGroupdId_10035 ul .filterItem').attr('style', 'display: block;');
+$('#webFilterGroupdId_10035 ul .filterItem:first-child svg').replaceWith($('<svg><use xlink:href="#icon-minus"></use></svg>'));
+}
+});
+if ($('.roomContainerDetailView .detailList').length) {
+$('.backLink').attr('style', 'display:none;')
+}
+var linkInlineImageList = $("#viewTypes-inline-detailList a").attr("href");
+$(".backLink a").attr("href", linkInlineImageList);
+viewTypes - detailList
+}
+var linkImageList = $("#viewTypes-detailList a").attr("href");
+var linkSimpleList = $("#viewTypes-simpleList a").attr("href");
+$(".collectionContainer .backLink a").attr("href", linkImageList);
+$(".artistContainer .backLink a").attr("href", linkSimpleList);
+$(".contextMenu #pageSetEntries-nextSet").insertAfter(".contextMenu .elementNavigatorBack");
+$("<span>PREVIOUS</span>").insertAfter(".bottomContextMenuContainer .elementNavigatorBack svg");
+$("<span>NEXT</span>").insertAfter(".bottomContextMenuContainer .elementNavigatorNext svg");
+});
+function imageSelected(checkboxElem) {
+$('#formItem_field_10612 #field_10612 option').removeAttr('selected');
+if (checkboxElem.checked) {
+$("#formItem_field_10612 #field_10612 option[value='2'").attr("selected", 'selected');
+} else {
+$("#formItem_field_10612 #field_10612 option[value='0'").attr("selected", 'selected');
+}
+};
+</script>
+<script type="text/javascript">
+(function backgroundFade() {
+$(window).on('scroll', function() {
+var $body = $('body');
+var $main = $('#container');
+var eTop = $main.offset().top;
+var $backgroundFade = $('.page-background__fade');
+var fadeSpeed = 500;
+var offset = (eTop - $(window).scrollTop()) * -1;
+var opacity = offset / fadeSpeed;
+if (opacity >= 1) {
+opacity = 1;
+}
+$backgroundFade.css({
+'opacity': opacity
+})
+})
+})();
+</script>
+</head>
+<body><div class="page-background"><div class="page-background__fade"></div></div>
+<div id="container" class="collectionContainer collectionContainerDetailList">
+<!--
+***********************************************************
+Include Code Container
+Date: 2009-12-18
+Author: ks
+************************************************************
+-->
+<div class="c-overlay | js-overlay js-overlay-search" role="dialog" aria-labelledby="search-title" style="opacity: 1; display: none;">
+<button class="c-overlay__btn | js-overlay-close-btn">
+<span class="c-overlay__btn-label">Press ESC or click here to close</span>
+<svg class="c-icon c-icon--cross"><title>Close overlay</title><use xlink:href="#icon-cross"></use></svg>
+</button>
+<div class="c-overlay__content | js-overlay-content" style="opacity: 1; transform: matrix(1, 0, 0, 1, 0, 0);">
+<div class="c-search">
+<h2 class="c-search__title" id="search-title">Search the website</h2>
+<form class="form" action="https://www.wallacecollection.org/search/?query=anything" method="get">
+<div class="form-item">
+<label for="site-search" class="form-label | u-visually-hidden">Site search</label>
+<input class="form-input | js-site-search-input" name="query" id="site-search" type="text" style="">
+<button class="form-submit-icon form-submit-icon--overlay" type="submit"><span class="u-visually-hidden">Search</span><svg class="c-icon c-icon--fill-white"><use xlink:href="#icon-search"></use></svg></button>
+</div>
+</form>
+<p class="c-search__description">This is a site-wide search. To search for specific collection objects, please return to the <a style="text-decoration: underline !important;" href="https://wallacelive.wallacecollection.org/eMP/eMuseumPlus">Collection Search</a> page.</p>
+</div>
+</div>
+</div>
+<header class="c-header">
+<div class="c-header__group | js-fixed-header">
+<!-- <div class='c-header__logo'> -->
+<a href="http://www.wallacecollection.org" class="c-logo-link c-logo-link--header">
+<h1 class="u-visually-hidden">Collection Highlights</h1>
+<svg class="c-logo" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 114.9 48.2" style="enable-background:new 0 0 114.9 48.2;" xml:space="preserve" role="img" aria-labelledby="site-logo-header">
+<title id="site-logo-header">The Wallace Collection</title>
+<g>
+<path class="st0" d="M113.5,21.5L113.5,21.5L113.5,21.5 M107.3,21.7"></path>
+<path class="st0" d="M8,47c-1.1-0.9-1.4-2.2-1.4-3.3c0-0.8,0.2-2.1,1.3-3c0.8-0.7,1.8-1.2,3.5-1.2c0.7,0,1.1,0,1.6,0.1
+c0.4,0.1,0.8,0.2,1.1,0.2c0.1,0,0.2,0.1,0.2,0.1c0,0.1,0,0.2-0.1,0.6c0,0.4,0,1,0,1.2c0,0.2,0,0.3-0.1,0.3C14,42.1,14,42,14,41.8
+c0-0.3-0.2-0.7-0.4-1c-0.4-0.4-1.2-0.7-2.2-0.7c-1,0-1.6,0.2-2.1,0.7c-0.8,0.7-1,1.8-1,2.9c0,2.6,2,3.9,3.5,3.9c1,0,1.6-0.1,2-0.6
+c0.2-0.2,0.3-0.5,0.4-0.7c0-0.2,0.1-0.2,0.1-0.2c0.1,0,0.1,0.1,0.1,0.2c0,0.1-0.1,1.1-0.2,1.5C14,47.9,14,47.9,13.8,48
+c-0.4,0.2-1.3,0.3-2,0.3C10.3,48.2,9,47.9,8,47"></path>
+<path class="st0" d="M18.6,43.9c0-1.9,1.2-4.3,4.6-4.3c2.8,0,4.5,1.6,4.5,4.1c0,2.5-1.8,4.5-4.6,4.5C19.9,48.2,18.6,45.9,18.6,43.9
+M26.1,44.1c0-2.5-1.4-4-3.2-4c-1.3,0-2.7,0.7-2.7,3.5c0,2.3,1.3,4.1,3.4,4.1C24.3,47.7,26.1,47.3,26.1,44.1z"></path>
+<path class="st0" d="M34.2,44.9c0,1.4,0,2.2,0.2,2.4c0.2,0.2,0.5,0.2,1.3,0.2c0.6,0,1,0,1.3-0.3c0.1-0.1,0.3-0.5,0.3-0.7
+c0-0.1,0-0.2,0.1-0.2c0.1,0,0.1,0.1,0.1,0.2c0,0.1-0.1,0.9-0.2,1.3c-0.1,0.2-0.1,0.3-0.7,0.3c-1.6,0-2.3-0.1-3.2-0.1
+c-0.3,0-1,0-1.4,0c-0.1,0-0.2,0-0.2-0.1c0-0.1,0-0.1,0.2-0.1c0.2,0,0.3,0,0.4,0c0.2,0,0.3-0.3,0.3-0.6c0.1-0.5,0.1-1.3,0.1-2.4
+v-1.9c0-1.7,0-2,0-2.3c0-0.4-0.1-0.6-0.5-0.6c-0.1,0-0.2,0-0.4,0c-0.1,0-0.2,0-0.2-0.1c0-0.1,0.1-0.1,0.2-0.1c0.5,0,1.2,0,1.5,0
+c0.3,0,1.1,0,1.5,0c0.2,0,0.2,0,0.2,0.1c0,0.1-0.1,0.1-0.2,0.1c-0.1,0-0.3,0-0.4,0c-0.3,0.1-0.4,0.2-0.4,0.6c0,0.4,0,0.7,0,2.3
+V44.9"></path>
+<path class="st0" d="M44.1,44.9c0,1.4,0,2.2,0.2,2.4c0.2,0.2,0.5,0.2,1.3,0.2c0.6,0,1,0,1.3-0.3c0.1-0.1,0.3-0.5,0.3-0.7
+c0-0.1,0-0.2,0.1-0.2c0.1,0,0.1,0.1,0.1,0.2c0,0.1-0.1,0.9-0.2,1.3c-0.1,0.2-0.1,0.3-0.7,0.3c-1.6,0-2.3-0.1-3.2-0.1
+c-0.3,0-1,0-1.4,0c-0.1,0-0.2,0-0.2-0.1c0-0.1,0-0.1,0.2-0.1c0.2,0,0.3,0,0.4,0c0.2,0,0.3-0.3,0.3-0.6c0.1-0.5,0.1-1.3,0.1-2.4
+v-1.9c0-1.7,0-2,0-2.3c0-0.4-0.1-0.6-0.5-0.6c-0.1,0-0.2,0-0.4,0c-0.1,0-0.2,0-0.2-0.1c0-0.1,0.1-0.1,0.2-0.1c0.5,0,1.2,0,1.5,0
+c0.3,0,1.1,0,1.5,0c0.2,0,0.2,0,0.2,0.1c0,0.1-0.1,0.1-0.2,0.1c-0.1,0-0.3,0-0.4,0c-0.3,0.1-0.4,0.2-0.4,0.6c0,0.4,0,0.7,0,2.3
+V44.9"></path>
+<path class="st0" d="M52.6,42.9c0-1.7,0-2,0-2.3c0-0.4-0.1-0.6-0.5-0.6c-0.1,0-0.3,0-0.4,0c-0.1,0-0.2,0-0.2-0.1
+c0-0.1,0.1-0.1,0.2-0.1c0.6,0,1.3,0,1.6,0c0.4,0,2.6,0,2.8,0c0.2,0,0.4,0,0.5-0.1c0.1,0,0.1,0,0.2,0c0.1,0,0.1,0,0.1,0.1
+c0,0.1-0.1,0.2-0.1,0.7c0,0.1,0,0.6-0.1,0.7c0,0.1,0,0.1-0.1,0.1c-0.1,0-0.1-0.1-0.1-0.2c0-0.1,0-0.3-0.1-0.4
+c-0.1-0.2-0.2-0.3-0.7-0.4c-0.2,0-1.3,0-1.6,0c-0.1,0-0.1,0-0.1,0.1v2.8c0,0.1,0,0.1,0.1,0.1c0.2,0,1.5,0,1.8,0
+c0.3,0,0.4-0.1,0.5-0.2c0.1-0.1,0.1-0.1,0.2-0.1c0,0,0.1,0,0.1,0.1c0,0.1-0.1,0.2-0.1,0.8c0,0.2,0,0.7,0,0.7c0,0.1,0,0.2-0.1,0.2
+c-0.1,0-0.1,0-0.1-0.1c0-0.1,0-0.3,0-0.4c-0.1-0.2-0.2-0.4-0.6-0.4c-0.2,0-1.3,0-1.6,0c-0.1,0-0.1,0-0.1,0.1v0.9c0,0.4,0,1.4,0,1.7
+c0,0.8,0.2,0.9,1.3,0.9c0.3,0,0.8,0,1-0.1c0.3-0.1,0.4-0.4,0.5-0.8c0-0.1,0-0.2,0.1-0.2c0.1,0,0.1,0.1,0.1,0.2c0,0.3-0.1,1-0.1,1.2
+c-0.1,0.3-0.2,0.3-0.6,0.3c-1.7,0-2.4-0.1-3.1-0.1c-0.3,0-1,0-1.4,0c-0.1,0-0.2,0-0.2-0.1c0-0.1,0-0.1,0.2-0.1c0.2,0,0.3,0,0.4,0
+c0.2,0,0.3-0.3,0.3-0.6c0.1-0.5,0.1-1.3,0.1-2.4V42.9"></path>
+<path class="st0" d="M62.8,47c-1.1-0.9-1.4-2.2-1.4-3.3c0-0.8,0.2-2.1,1.3-3c0.8-0.7,1.8-1.2,3.5-1.2c0.7,0,1.1,0,1.6,0.1
+c0.4,0.1,0.8,0.2,1.1,0.2c0.1,0,0.2,0.1,0.2,0.1c0,0.1,0,0.2-0.1,0.6c0,0.4,0,1,0,1.2c0,0.2,0,0.3-0.1,0.3c-0.1,0-0.1-0.1-0.1-0.2
+c0-0.3-0.2-0.7-0.4-1c-0.4-0.4-1.2-0.7-2.2-0.7c-1,0-1.6,0.2-2.1,0.7c-0.8,0.7-1,1.8-1,2.9c0,2.6,2,3.9,3.5,3.9c1,0,1.6-0.1,2-0.6
+c0.2-0.2,0.3-0.5,0.4-0.7c0-0.2,0.1-0.2,0.1-0.2c0.1,0,0.1,0.1,0.1,0.2c0,0.1-0.1,1.1-0.2,1.5c-0.1,0.2-0.1,0.2-0.3,0.3
+c-0.4,0.2-1.3,0.3-2,0.3C65.1,48.2,63.8,47.9,62.8,47"></path>
+<path class="st0" d="M76.4,40.4l-1.6,0c-0.6,0-0.9,0.1-1.1,0.3c-0.1,0.2-0.2,0.3-0.2,0.4c0,0.1-0.1,0.1-0.1,0.1
+c-0.1,0-0.1-0.1-0.1-0.2c0-0.2,0.2-1.2,0.2-1.3c0-0.1,0.1-0.2,0.1-0.2c0.1,0,0.2,0.1,0.5,0.1c0.3,0,0.7,0.1,1.1,0.1h4.4
+c0.7,0,1-0.1,1.1-0.1c0.1,0,0.1,0.1,0.1,0.2c0,0.2,0,1,0,1.3c0,0.1,0,0.2-0.1,0.2c-0.1,0-0.1-0.1-0.1-0.2l0-0.1
+c0-0.3-0.3-0.6-1.3-0.6l-1.4,0v4.5c0,1,0,1.9,0.1,2.4c0,0.3,0.1,0.6,0.4,0.6c0.2,0,0.4,0,0.6,0c0.1,0,0.2,0,0.2,0.1
+c0,0.1-0.1,0.1-0.2,0.1c-0.7,0-1.4,0-1.7,0c-0.3,0-1,0-1.4,0c-0.1,0-0.2,0-0.2-0.1c0-0.1,0-0.1,0.2-0.1c0.2,0,0.3,0,0.4,0
+c0.2,0,0.3-0.3,0.3-0.6c0.1-0.5,0.1-1.3,0.1-2.4V40.4"></path>
+<path class="st0" d="M86,42.9c0-1.7,0-2,0-2.3c0-0.4-0.1-0.6-0.4-0.6c-0.1,0-0.3,0-0.4,0c-0.1,0-0.2,0-0.2-0.1
+c0-0.1,0.1-0.1,0.3-0.1c0.4,0,1.1,0,1.4,0c0.3,0,0.9,0,1.3,0c0.1,0,0.2,0,0.2,0.1c0,0.1-0.1,0.1-0.2,0.1c-0.1,0-0.2,0-0.3,0
+c-0.3,0.1-0.4,0.2-0.4,0.6c0,0.4,0,0.7,0,2.3v1.9c0,1.1,0,1.9,0,2.4c0,0.3,0.1,0.5,0.4,0.5c0.2,0,0.4,0,0.6,0c0.1,0,0.2,0,0.2,0.1
+c0,0.1-0.1,0.1-0.2,0.1c-0.7,0-1.4,0-1.7,0c-0.3,0-1,0-1.4,0c-0.1,0-0.2,0-0.2-0.1c0-0.1,0-0.1,0.2-0.1c0.2,0,0.3,0,0.4,0
+c0.2,0,0.3-0.2,0.3-0.6C86,46.8,86,46,86,44.9V42.9"></path>
+<path class="st0" d="M92.6,43.9c0-1.9,1.2-4.3,4.6-4.3c2.8,0,4.5,1.6,4.5,4.1c0,2.5-1.8,4.5-4.6,4.5C93.9,48.2,92.6,45.9,92.6,43.9
+M100.1,44.1c0-2.5-1.4-4-3.2-4c-1.3,0-2.7,0.7-2.7,3.5c0,2.3,1.3,4.1,3.4,4.1C98.3,47.7,100.1,47.3,100.1,44.1z"></path>
+<path class="st0" d="M107.5,46.6c0,0.9,0.2,1.2,0.4,1.2c0.2,0.1,0.4,0.1,0.6,0.1c0.1,0,0.2,0,0.2,0.1c0,0.1-0.1,0.1-0.3,0.1
+c-0.7,0-1.2,0-1.4,0c-0.1,0-0.6,0-1.2,0c-0.1,0-0.2,0-0.2-0.1c0-0.1,0.1-0.1,0.2-0.1c0.1,0,0.3,0,0.5-0.1c0.3-0.1,0.3-0.4,0.3-1.4
+l0.1-6.5c0-0.2,0-0.4,0.1-0.4c0.1,0,0.2,0.1,0.4,0.3c0.1,0.1,1.8,1.9,3.4,3.5c0.8,0.8,2.2,2.3,2.4,2.5h0.1l-0.1-5
+c0-0.7-0.1-0.9-0.4-1c-0.2-0.1-0.4-0.1-0.6-0.1c-0.1,0-0.2,0-0.2-0.1c0-0.1,0.1-0.1,0.3-0.1c0.6,0,1.1,0,1.3,0c0.1,0,0.5,0,1.1,0
+c0.1,0,0.3,0,0.3,0.1c0,0.1-0.1,0.1-0.2,0.1c-0.1,0-0.2,0-0.3,0c-0.3,0.1-0.4,0.3-0.4,0.9l-0.1,7c0,0.2,0,0.3-0.1,0.3
+c-0.1,0-0.3-0.1-0.4-0.2c-0.7-0.7-2.1-2.1-3.3-3.2c-1.2-1.2-2.4-2.6-2.6-2.8h0L107.5,46.6"></path>
+<path class="st0" d="M113.5,21.7L113.5,21.7L113.5,21.7 M107.3,21.9"></path>
+<path class="st0" d="M49.3,4.8c0.4-0.2,0.6-0.4,0.9-0.7c0.2-0.3,0.4-0.6,0.6-1c0.1-0.2,0.1-0.4,0.2-0.6c0-0.2,0.1-0.4,0.2-0.6
+c0.1-0.2,0.2-0.3,0.3-0.5c0.1-0.1,0.3-0.2,0.3-0.3c-0.1-0.3-0.5-0.2-0.7-0.2c-0.4,0-0.8,0.1-1.2,0.4c-0.2,0.1-0.5,0.4-0.3,0.7
+C49.7,2,50,2,50.1,2.1c0.2,0.1,0.3,0.3,0.3,0.5c0.1,0.6-0.4,1.2-0.8,1.5c-0.1,0.1-0.5,0.4-0.6,0.4c0-0.1,0-0.2,0-0.3
+c-0.1-0.5-0.4-1-0.9-1.2C48,3,47.8,3,47.7,3c-0.6,0.1-1.1,0.6-0.9,1.3c0.2,0.6,0.9,0.8,1.5,0.8c0.1,0,0.3-0.1,0.4,0
+c0.1,0.1-0.1,0.5-0.2,0.6c-0.3,0.6-1,1.1-1.6,1.4c-0.2,0.1-0.4,0.2-0.6,0.2c-0.2,0-0.3,0-0.5,0.1c0,0-0.1,0-0.1,0.1
+c-0.1,0-0.3,0-0.4,0c-0.1,0-0.1-0.2-0.2-0.3c-0.2-0.2-0.6-0.1-0.8-0.1c-0.1,0-0.2,0.1-0.3,0.1c0,0-0.1,0.1-0.1,0.1
+c-0.1,0-0.2-0.1-0.3-0.1c0,0-0.1,0.1-0.1,0.1c0,0,0,0.1,0,0.1c0,0,0,0,0.1,0c0.1,0,0.1,0.1,0.2,0.1c0.1,0.1,0,0.3,0.1,0.4
+c0,0,0.1,0.1,0.1,0.1c0,0,0,0,0,0c0,0,0,0.1-0.1,0.2c-0.1,0.2-0.2,0.4-0.3,0.5c-0.1,0.1-0.1,0.3-0.2,0.3c-0.1,0-0.2,0-0.3,0
+c-0.1,0-0.1-0.1-0.2-0.2c-0.1-0.1-0.2-0.3-0.3-0.4c-0.1-0.1-0.2-0.2-0.2-0.2c0-0.1,0-0.1-0.1-0.1c-0.1-0.1,0-0.2,0.1-0.3
+c0.1-0.1,0.1-0.3,0.3-0.2c0.1,0,0.2,0.1,0.3,0c0.2,0,0.2-0.2,0.3-0.3c0,0,0.1,0,0.1-0.1c0.1-0.1,0.1-0.1,0-0.2c0,0,0-0.1,0-0.1
+c0-0.1,0-0.1,0.1-0.1c0.1,0,0.2,0,0.3-0.1c0-0.1,0-0.2,0-0.3c0.1,0,0.1-0.1,0.2-0.1c0.1,0,0.2,0,0.1-0.1c0-0.1-0.1-0.1-0.2-0.1
+c-0.2-0.1-0.3-0.4-0.3-0.6c0-0.1,0-0.1,0-0.2c0-0.1,0.1-0.1,0.1-0.2c0,0,0,0,0,0C43.6,5,43.5,5,43.4,5c-0.1,0-0.3,0-0.4,0
+c-0.1,0-0.2-0.2-0.3-0.1c0,0.1-0.1,0.2-0.1,0.2c-0.1,0.1-0.2-0.1-0.3,0c-0.1,0-0.1,0.2-0.2,0.3c-0.1,0.1-0.3,0.1-0.4,0.1
+c-0.1,0-0.1-0.1-0.1-0.2c0-0.1,0.1-0.2,0.2-0.3c0.1,0,0.2,0,0.2-0.1c0-0.1,0-0.1,0.1-0.2c0.1-0.1,0.2,0,0.4,0
+c0.1,0,0.1-0.1,0.2-0.2c0.1-0.1,0.3-0.1,0.4,0c0.2,0,0.2,0.1,0.4,0.3c0.1,0.1,0.2,0.1,0.3,0.2c0.1,0,0.2,0,0.3,0
+c0.1,0,0.1-0.2,0.1-0.2c0-0.2-0.1-0.3-0.3-0.3c-0.1,0-0.2,0-0.2,0c0,0-0.1-0.1-0.1-0.1c-0.1-0.1-0.2-0.2-0.4-0.2
+c-0.1,0-0.3,0-0.4,0c0,0-0.1,0.1-0.1,0c0,0,0-0.1,0-0.1c0-0.2,0-0.3,0-0.5c0-0.1,0-0.2,0-0.2c0-0.1,0.1-0.1,0.1-0.2
+c0.2-0.3,0.4-0.6,0.8-0.7c0.2,0,0.3-0.1,0.5,0c0.1,0,0.3,0.1,0.3,0c0-0.1-0.1-0.1-0.1-0.1c-0.4-0.2-1-0.2-1.3,0.2
+c-0.1,0.1-0.2,0.2-0.3,0.4c0,0.1-0.1,0.3-0.2,0.2c0,0,0-0.1,0-0.1c0-0.2,0-0.3-0.1-0.5c-0.1-0.2-0.2-0.4-0.4-0.6
+c-0.2-0.2-0.4-0.4-0.6-0.6C41,1,40.8,0.8,40.7,0.7c-0.1-0.1-0.3-0.3-0.3-0.4c0-0.1,0-0.2,0-0.2C40.3,0,40.2,0,40.2,0
+c-0.1,0.1-0.1,0.2,0,0.3c0,0.2,0.2,0.4,0.3,0.6c0.2,0.3,0.5,0.6,0.7,0.9c0.1,0.1,0.1,0.2,0.2,0.3c0,0-0.1,0-0.1,0
+C41.1,2,41.1,1.9,41,1.8c-0.3-0.3-0.8-0.6-1.3-0.6c-0.2,0-0.8,0.1-0.7,0.4c0,0.1,0.2,0,0.3,0c0.4-0.2,0.8-0.1,1.2,0.1
+c0.4,0.2,0.6,0.6,0.9,0.9c0,0,0.2,0.3,0.2,0.3c0,0-0.2-0.1-0.3-0.1c-0.2-0.1-0.4-0.2-0.6-0.2c-0.4,0-0.9,0.3-0.9,0.8
+c0,0.2,0.1,0.5,0.4,0.5c0,0,0,0,0-0.1c0-0.1-0.1-0.2-0.1-0.3c-0.1-0.4,0.4-0.6,0.7-0.5c0.1,0,0.2,0.1,0.3,0.1
+c0.3,0.2,0.5,0.6,0.5,1c0,0.1,0,0.2,0,0.3c0,0,0,0,0,0c-0.1,0-0.2,0-0.4,0c-0.3,0.1-0.5,0.5-0.3,0.7c0,0,0,0,0,0.1c0,0,0,0.1,0,0.1
+c-0.1,0.2-0.1,0.4-0.1,0.5c0,0.1,0,0.2,0.1,0.3c0,0.1,0.1,0.2,0.2,0.2c0.1,0,0.2,0,0.3,0.1c0.1,0.1,0,0.5-0.1,0.6
+c-0.1,0.1-0.2,0.2-0.3,0.2c0,0-0.1,0-0.2,0c-0.1,0-0.1,0-0.2,0c-0.7,0.1-1,0.9-1.1,1.5c0,0.7,0.2,1.3,0.4,2c0,0.2,0.1,0.4,0.1,0.7
+c0,0.2-0.1,0.3-0.1,0.4c0,0.1,0,0.2-0.1,0.3c0,0.1-0.1,0.3-0.2,0.5c-0.1,0.1-0.3,0.2-0.4,0.2c-0.2,0.1-0.3,0.2-0.5,0.3
+c-0.1,0.1-0.4,0.2-0.3,0.3c0,0.1,0.1,0.2,0.2,0.3c0.1,0.1,0.3,0.3,0.4,0.3c0.1,0,0.2,0.1,0.3,0.2c0.1,0.1,0,0.2,0,0.3
+c0,0.1-0.2,0.5,0,0.6c0.1,0.1,0.3,0,0.4,0c0.2,0,0.3,0,0.5,0c0.1,0,0.5,0,0.4,0.1c0,0-0.2,0-0.2,0c-0.2,0-0.4,0-0.6,0
+c-0.6,0.1-1.1,0.2-1.7,0.5c-0.4,0.2-0.8,0.5-1.2,0.8c-0.4,0.3-0.7,0.6-0.9,0.9c-0.2,0.2-0.3,0.4-0.4,0.6c-0.1,0.2-0.2,0.4-0.3,0.6
+c-0.2,0.4-0.2,0.8-0.3,1.2c0,0-0.1,0.1-0.1,0.2c0,0.1,0,0.1,0,0.2c0,0.2,0.2,0.5,0.4,0.4c0.1,0,0.1,0,0.2-0.1
+c0.1-0.1,0.1-0.3,0.1-0.4c0-0.1-0.1-0.2-0.1-0.2c-0.1-0.1,0-0.3,0-0.4c0-0.1,0.1-0.3,0.1-0.4c0.1-0.3,0.2-0.6,0.4-0.8
+c0.2-0.3,0.4-0.5,0.6-0.7c0.4-0.4,0.9-0.8,1.4-1.1c0.4-0.2,0.7-0.3,1.1-0.4c1-0.3,2.1-0.2,3.1-0.1c0.8,0.2,1.6,0.5,2.2,1
+c0.8,0.6,1.3,1.3,1.8,2.2c0.1,0.3,0.3,0.6,0.4,0.8c0,0.1,0.1,0.5,0.2,0.5c0.3,0.1,0.7,0,1,0c0.5,0,1.1,0,1.7,0c0.2,0,0.4,0,0.6,0
+c0.2,0,0.3-0.1,0.5-0.2c0.1,0,0.3-0.1,0.4-0.2c0.1-0.1,0.1-0.2,0.2-0.2c0.1,0,0.3,0,0.5-0.1c0.4,0,0.8-0.2,1-0.5
+c0.1-0.1,0.2-0.2,0.3-0.4c0.1-0.1,0.1-0.2,0.2-0.3c0.1-0.2-0.2-0.1-0.3-0.1c0.1-0.1,0.2-0.3,0.2-0.4c0.1-0.2,0.1-0.4,0.2-0.6
+c0-0.2,0.1-0.4,0.1-0.6c0-0.1,0.1-0.3-0.1-0.4c-0.2-0.1-0.3,0.1-0.5,0c0-0.1-0.1-0.1-0.1-0.2c-0.2-0.3-0.4-0.6-0.7-0.7
+c-0.3-0.1-0.7-0.1-1,0.1c-0.3,0.2-0.3,0.8,0.1,0.9c0.3,0.1,0.5,0,0.6-0.3c0-0.1,0.2,0,0.3,0c0.4,0.1,0.7,0.6,0.7,1
+c0.1,0.5-0.1,1.5-0.8,1.4c-0.2,0-0.3-0.3-0.3-0.5c-0.1-0.2-0.1-0.4-0.4-0.5c-0.2-0.1-0.5-0.1-0.7,0.1c-0.2,0.2-0.2,0.5,0,0.7
+c0.1,0.1,0.2,0.1,0.4,0c0.2-0.1,0.3-0.1,0.5,0c0.2,0.2,0,0.6-0.2,0.7c-0.3,0.2-0.7,0.3-1,0.2c-0.7-0.2-1.3-0.8-1.6-1.4
+c-0.2-0.4-0.3-0.7-0.3-1.1c-0.1-0.5-0.2-0.9-0.3-1.3c-0.1-0.3-0.2-0.5-0.3-0.7c-0.1-0.2-0.2-0.4-0.3-0.5c-0.4-0.5-1-1-1.6-1.3
+c-0.2-0.1-0.5-0.2-0.8-0.2c-0.1,0-0.2-0.1-0.3,0c-0.1,0.1-0.2,0.2-0.3,0.3c-0.1,0.1-0.2,0.1-0.4,0.2c0,0-0.2,0-0.2,0
+c0.1-0.1,0.3-0.3,0.4-0.4c0.1-0.1,0.2-0.2,0.3-0.3c0.1-0.1,0.2-0.2,0.1-0.3c-0.1-0.1-0.2-0.1-0.3-0.1c-0.3-0.1-0.6-0.2-0.9-0.4
+c-0.1,0-0.1-0.1-0.2-0.1c0,0-0.1-0.1-0.1-0.1c-0.1,0,0.1,0.2,0.1,0.3c0.1,0.1,0.2,0.2,0.3,0.3c0.1,0.1,0.2,0.2,0.3,0.3
+c-0.1,0-0.1,0-0.2-0.1c-0.2-0.1-0.4-0.3-0.5-0.4c-0.1-0.1-0.1-0.2-0.2-0.2c-0.1,0-0.3,0-0.4,0c-0.1,0.1,0,0.1,0,0.2
+c0,0.1,0.1,0.1,0.1,0.2c0.1,0.2,0.1,0.4,0.1,0.6c0,0,0,0.3,0,0.3c-0.1,0-0.1-0.1-0.1-0.2c-0.1-0.3-0.2-0.6-0.3-0.9
+c0-0.1-0.1-0.1-0.1-0.2c-0.1-0.1-0.2,0-0.3,0c-0.1,0-0.1,0.2-0.1,0.3c0,0.1,0,0.3,0,0.4c0,0.1-0.1,0.3-0.1,0.4c0,0.1,0,0.1,0,0.2
+c0,0,0-0.1,0-0.1c-0.1-0.2,0-0.3,0-0.5c0-0.2-0.1-0.4-0.1-0.5c0-0.1,0-0.2-0.1-0.2c-0.1-0.1-0.2,0-0.3,0c0,0-0.3,0-0.3,0
+c0,0,0-0.1,0.1-0.2c0.1-0.1,0.3-0.1,0.5-0.1c0.3,0,0.6,0,0.8-0.1c0.2,0,0.4-0.1,0.6-0.1c0.1,0,0.3,0,0.4-0.1c0.1-0.1,0-0.4,0-0.5
+c0-0.1,0-0.1,0-0.1c0-0.1,0.1-0.2,0.1-0.3c0,0,0,0,0,0c-0.1-0.1-0.2-0.1-0.2-0.1c-0.3,0-0.6-0.1-0.8-0.2c-0.2-0.2-0.4-0.4-0.6-0.6
+c-0.3-0.2-0.6-0.4-1-0.6v0h0v0c0.1,0,0.2,0,0.3,0c0.5,0.2,0.9,0.5,1.3,0.8c0.1,0.1,0.3,0.1,0.4,0.2c0.4,0.1,0.7,0.2,1.1,0.2
+c0.3-0.1,0.7-0.2,1.1-0.1c0.4,0.1,0.4,0.6,0.6,0.8c0.1,0.1,0.1,0.2,0.3,0.2c0-0.2,0.1-0.3,0.2-0.4c0.1-0.3,0.1-0.6,0.1-0.9
+c0-0.1,0-0.3,0-0.4c0-0.1,0.1-0.3,0.1-0.4c0.1-0.1,0.2-0.2,0.3-0.3C46,9,46.3,8.8,46.4,8.6c0.1-0.1,0.1-0.3,0.1-0.4
+C46.6,8,46.8,7.8,47,7.7c0.1-0.1,0.1-0.1,0.2-0.2c0.1-0.1,0.2-0.1,0.2-0.2c0-0.1,0.1-0.1,0.1-0.2c0,0,0.1-0.1,0.2-0.1
+c0.5-0.5,1-0.9,1.3-1.5c0-0.1,0.1-0.2,0.1-0.3C49,5.2,49,5,49,4.9 M50.4,1.8c-0.1,0-0.3,0-0.4-0.1c-0.1-0.1,0.2-0.3,0.3-0.4
+c0.2-0.1,0.6-0.3,0.8-0.3c0.1,0,0.2,0,0.2,0c0.1,0.1-0.1,0.2-0.2,0.3c-0.2,0.1-0.4,0.3-0.6,0.4C50.5,1.7,50.5,1.8,50.4,1.8z
+M48.8,4.6c0,0.1-0.1,0.1-0.2,0.2c-0.3,0.1-0.6,0.2-0.9,0C47.3,4.7,47,4.3,47,4c0-0.3,0.2-0.5,0.4-0.6c0.3-0.1,0.6-0.1,0.8,0.1
+c0.2,0.2,0.4,0.4,0.5,0.6C48.7,4.2,48.8,4.4,48.8,4.6z M44.7,8.3C44.7,8.3,44.7,8.3,44.7,8.3c0.1-0.1,0.1-0.1,0.1-0.1
+c0,0,0.1-0.1,0.1-0.1c0,0,0.1,0,0.1-0.1c0,0,0.1-0.1,0.1-0.1c0.1,0,0.1,0,0.2-0.1c0.1,0,0.3,0,0.4,0c0,0,0,0.1,0,0.1
+c0,0.2-0.1,0.3-0.2,0.4c-0.1,0-0.2-0.1-0.3-0.1c-0.1,0-0.4,0.2-0.4,0.3c-0.1,0-0.2,0.2-0.3,0.1C44.5,8.6,44.6,8.4,44.7,8.3z
+M43.2,5.8C43.2,5.7,43.2,5.7,43.2,5.8c0.1,0.1,0.1,0.1,0.1,0.2c0,0-0.2,0.1-0.2,0.1c0,0,0-0.1,0-0.1C43,5.8,43.1,5.8,43.2,5.8
+C43.1,5.8,43.1,5.8,43.2,5.8z M48.2,20.3c-0.2,0-0.4,0-0.5,0c-0.2,0-0.4,0-0.6,0c-0.2,0-0.2-0.2-0.2-0.3c-0.2-0.5-0.5-1-0.8-1.5
+c-0.3-0.4-0.6-0.9-0.9-1.2c-0.2-0.2-0.4-0.4-0.7-0.6c-0.1-0.1-0.3-0.2-0.4-0.2c-0.1-0.1-0.3-0.1-0.3-0.3c0.1-0.1,0.4-0.2,0.5-0.3
+c0.1,0,0.2,0,0.2-0.1c0.1-0.1,0-0.4-0.1-0.5c-0.1-0.1-0.2-0.3-0.2-0.5c0-0.3,0.3,0,0.3,0.1c0.1,0.1,0.2,0.2,0.3,0.4
+c0.2,0.3,0.3,0.7,0.2,1.1c0,0.1-0.1,0.2-0.1,0.3c0,0.2,0,0.2,0.2,0.2c0.1,0,0.1-0.1,0.2,0c0.1,0.1,0.2,0.2,0.3,0.3
+c0.1,0.1,0.1,0.2,0.2,0.3c0,0,0.1,0.1,0.2,0.1c0.2,0.1,0.1-0.3,0.1-0.4c0-0.8-0.2-1.7-0.6-2.4c-0.2-0.2-0.3-0.4-0.6-0.6
+c0,0-0.1,0-0.1-0.1c0,0,0.5,0.2,0.5,0.2c0.3,0.2,0.5,0.4,0.7,0.7c0.1,0.2,0.5,0.7,0.3,1c-0.1,0.2-0.1,0.4,0,0.6
+c0,0.1,0.1,0.1,0.2,0.2c0,0.1,0,0.2,0,0.3c0,0.1,0,0.2,0.1,0.3c0,0.1,0.1,0.1,0.2,0.2c0.1,0.1,0.1,0.1,0,0.2c-0.2,0.3-0.1,0.7,0,1
+c0.1,0.3,0.2,0.9,0.6,0.9c0.2,0,0.1-0.3,0.2-0.2c0.1,0,0.2,0.1,0.2,0.2c0.1,0.1,0.2,0.2,0.3,0.3C48.1,20.2,48.3,20.3,48.2,20.3z"></path>
+<path class="st0" d="M61.9,11.3l-1.2,0c-0.5,0-0.6,0.1-0.8,0.2c-0.1,0.1-0.1,0.2-0.1,0.3c0,0.1,0,0.1-0.1,0.1c-0.1,0-0.1,0-0.1-0.1
+c0-0.1,0.2-0.8,0.2-0.9c0-0.1,0-0.2,0.1-0.2c0.1,0,0.1,0.1,0.3,0.1c0.2,0,0.5,0,0.8,0h3.1c0.5,0,0.7-0.1,0.8-0.1
+c0.1,0,0.1,0,0.1,0.2c0,0.2,0,0.7,0,0.9c0,0.1,0,0.1-0.1,0.1c-0.1,0-0.1,0-0.1-0.2l0-0.1c0-0.2-0.2-0.4-0.9-0.4l-1,0v3.2
+c0,0.7,0,1.4,0,1.7c0,0.2,0.1,0.4,0.3,0.4c0.1,0,0.3,0,0.4,0c0.1,0,0.1,0,0.1,0.1c0,0.1-0.1,0.1-0.2,0.1c-0.5,0-1,0-1.2,0
+c-0.2,0-0.7,0-1,0c-0.1,0-0.2,0-0.2-0.1c0,0,0-0.1,0.1-0.1c0.1,0,0.2,0,0.3,0c0.2,0,0.2-0.2,0.2-0.4c0-0.3,0-1,0-1.7V11.3"></path>
+<path class="st0" d="M88.8,13.4C88.8,13.4,88.8,13.4,88.8,13.4l0-0.2c0-1.2,0-1.4,0-1.7c0-0.3-0.1-0.4-0.3-0.5c-0.1,0-0.2,0-0.3,0
+C88.1,11,88,11,88,11c0-0.1,0.1-0.1,0.2-0.1c0.4,0,0.9,0,1.1,0c0.2,0,0.7,0,1,0c0.1,0,0.2,0,0.2,0.1c0,0.1,0,0.1-0.1,0.1
+c-0.1,0-0.1,0-0.2,0c-0.2,0-0.3,0.2-0.3,0.5c0,0.3,0,0.5,0,1.7v1.4c0,0.7,0,1.4,0,1.7c0,0.2,0.1,0.4,0.3,0.4c0.1,0,0.3,0,0.4,0
+c0.1,0,0.1,0,0.1,0.1c0,0.1-0.1,0.1-0.2,0.1c-0.5,0-1,0-1.2,0c-0.2,0-0.7,0-1,0c-0.1,0-0.2,0-0.2-0.1c0,0,0-0.1,0.1-0.1
+c0.1,0,0.2,0,0.3,0c0.2,0,0.2-0.2,0.2-0.4c0-0.3,0-1,0-1.7v-0.7c0,0,0,0,0,0h-3c0,0,0,0,0,0v0.7c0,0.7,0,1.4,0,1.7
+c0,0.2,0.1,0.4,0.3,0.4c0.1,0,0.3,0,0.4,0c0.1,0,0.1,0,0.1,0.1c0,0.1-0.1,0.1-0.2,0.1c-0.5,0-1,0-1.2,0c-0.2,0-0.7,0-1,0
+c-0.1,0-0.2,0-0.2-0.1c0,0,0-0.1,0.1-0.1c0.1,0,0.2,0,0.3,0c0.2,0,0.2-0.2,0.2-0.4c0-0.3,0-1,0-1.7v-1.4c0-1.2,0-1.4,0-1.7
+c0-0.3-0.1-0.4-0.3-0.5c-0.1,0-0.2,0-0.3,0c-0.1,0-0.1,0-0.1-0.1c0-0.1,0.1-0.1,0.2-0.1c0.4,0,0.9,0,1.1,0c0.2,0,0.7,0,1,0
+c0.1,0,0.2,0,0.2,0.1c0,0.1,0,0.1-0.1,0.1c-0.1,0-0.1,0-0.2,0c-0.2,0-0.3,0.2-0.3,0.5c0,0.3,0,0.5,0,1.7v0.2c0,0,0,0.1,0,0.1H88.8"></path>
+<path class="st0" d="M110.4,13.2c0-1.2,0-1.4,0-1.7c0-0.3-0.1-0.4-0.3-0.5c-0.1,0-0.2,0-0.3,0c-0.1,0-0.1,0-0.1-0.1
+c0-0.1,0.1-0.1,0.2-0.1c0.4,0,0.9,0,1.1,0c0.3,0,1.8,0,2,0c0.2,0,0.3,0,0.3,0c0,0,0.1,0,0.1,0c0,0,0,0,0,0.1c0,0.1,0,0.2-0.1,0.5
+c0,0.1,0,0.4,0,0.5c0,0,0,0.1-0.1,0.1c-0.1,0-0.1,0-0.1-0.1c0-0.1,0-0.2,0-0.3c-0.1-0.1-0.1-0.2-0.5-0.3c-0.1,0-1,0-1.1,0
+c0,0-0.1,0-0.1,0.1v2c0,0.1,0,0.1,0.1,0.1c0.2,0,1.1,0,1.3,0c0.2,0,0.3,0,0.4-0.1c0.1-0.1,0.1-0.1,0.1-0.1c0,0,0.1,0,0.1,0.1
+c0,0,0,0.2-0.1,0.6c0,0.2,0,0.5,0,0.5c0,0.1,0,0.2-0.1,0.2c-0.1,0-0.1,0-0.1-0.1c0-0.1,0-0.2,0-0.3c0-0.2-0.1-0.3-0.4-0.3
+c-0.2,0-0.9,0-1.1,0c0,0,0,0,0,0.1v0.6c0,0.3,0,1,0,1.2c0,0.5,0.1,0.7,0.9,0.7c0.2,0,0.5,0,0.7-0.1c0.2-0.1,0.3-0.3,0.4-0.6
+c0-0.1,0-0.1,0.1-0.1c0.1,0,0.1,0.1,0.1,0.1c0,0.2-0.1,0.7-0.1,0.9c-0.1,0.2-0.1,0.2-0.4,0.2c-1.2,0-1.7,0-2.2,0c-0.2,0-0.7,0-1,0
+c-0.1,0-0.2,0-0.2-0.1c0,0,0-0.1,0.1-0.1c0.1,0,0.2,0,0.3,0c0.2,0,0.2-0.2,0.2-0.4c0-0.3,0-1,0-1.7V13.2"></path>
+<path class="st0" d="M102.5,31.2c-0.3,0-0.3,0.3-0.4,0.4c0,0.3-0.3,1-0.6,1.4c-0.7,0.7-1.8,0.8-2.9,0.8c-3.8,0-6-3.1-6-6.1
+c0-1.5,0.2-3.1,1.5-4.4c0.8-0.8,2.1-1.2,3.8-1.2c1.5,0,2.8,0.5,3.3,0.9c0.4,0.3,0.7,1,0.7,1.6c0,0.2,0,0.6,0.3,0.6
+c0.3,0,0.3-0.4,0.4-0.6c0,0,0.1-1.8,0.1-1.8c0,0,0.1-1,0.1-1c0-0.2-0.1-0.4-0.4-0.4c0,0-1.7-0.2-1.7-0.2C99.6,21,98.5,21,98.1,21
+c-2.4,0-4.1,0.6-5.4,1.9c-1.5,1.5-2,3.5-2,4.9c0,2.2,0.7,4,2.2,5.3c1.5,1.3,3.3,1.9,5.8,1.9c1,0,2.4-0.1,3.2-0.4
+c0.4-0.2,0.4-0.2,0.6-0.6c0.2-0.6,0.4-2.1,0.4-2.3C102.8,31.2,102.6,31.2,102.5,31.2"></path>
+<path class="st0" d="M114.1,32c-0.2,0-0.2,0.2-0.3,0.4c-0.1,0.7-0.3,1-0.7,1.2c-0.4,0.2-1.2,0.2-1.6,0.2c-1.7,0-1.8-0.2-1.9-1.3
+l0-2.2l0-0.8V28c0,0,2.4,0.1,2.4,0.1c0.6,0.1,0.7,0.3,0.8,0.5l0.1,0.5c0,0.2,0.1,0.3,0.2,0.3c0.2,0,0.2-0.3,0.2-0.4l0.1-1.1l0.1-1
+c0-0.2-0.2-0.3-0.2-0.3l-0.3,0.2c-0.2,0.2-0.4,0.2-0.8,0.2l-2.7,0l0-4.8c0-0.1,2.3,0,2.3,0c0.9,0.1,1,0.3,1.1,0.5
+c0,0,0.1,0.6,0.1,0.6c0,0.3,0.2,0.3,0.2,0.3c0.1,0,0.2,0,0.2-0.3l0.1-0.8l0-0.3c0,0,0.1-0.8,0.1-0.8c0-0.3-0.1-0.3-0.2-0.3
+l-0.2,0.1c-0.1,0-0.8,0.1-0.8,0.1l-3.9,0l-0.2,0l-1.7,0c-0.1,0-0.4,0-0.4,0.3c0,0.1,0.1,0.2,0.3,0.2c0,0,0.2,0,0.2,0l0.4,0
+c0.5,0.1,0.6,0.3,0.7,0.9l0,3.7v3c0,1.7,0,3-0.1,3.7c-0.1,0.5-0.2,0.8-0.4,0.8l-0.5,0.1c-0.2,0-0.3,0.1-0.3,0.2
+c0,0.3,0.3,0.3,0.4,0.3l1,0c0,0,0.6,0,0.6,0l0.1,0l0.4,0l3.8,0.1c0.7,0,0.9,0,1-0.5c0,0,0.2-1.7,0.2-1.7
+C114.3,32.3,114.3,32,114.1,32 M108,26.4C108,26.4,108.1,26.3,108,26.4L108,26.4C108.1,26.3,108,26.4,108,26.4z"></path>
+<path class="st0" d="M88.1,34l-0.6-0.1c-0.4-0.1-0.8-0.4-1.4-1.8L83,24.1l-0.9-2.4c-0.2-0.5-0.3-0.7-0.6-0.7
+c-0.3,0-0.4,0.2-0.6,0.8l-3.9,10.7c-0.3,0.9-0.6,1.4-1.3,1.5c0,0-0.5,0-0.5,0c-0.2,0-0.4,0.1-0.4,0.3c0,0.3,0.4,0.3,0.5,0.3
+c0,0,1.6,0,1.6,0c0,0,0.4,0,0.4,0c0,0,0.4,0,0.4,0l0.9,0c0.4,0,0.5-0.2,0.5-0.3c0-0.1-0.1-0.3-0.4-0.3h-0.2c-0.1,0-0.5-0.1-0.5-0.3
+c0-0.3,0.1-0.7,0.2-1.1c0,0,0.1-0.2,1-3.1c0,0,3.7,0,3.7,0c0,0,0.2,0.6,1.6,4.2l0,0.1c-0.2,0.1-0.3,0.2-0.3,0.4
+c0,0.3,0.3,0.3,0.6,0.3c0.1,0,2.8,0,2.8,0c0.5,0,0.5-0.2,0.5-0.3C88.5,34.2,88.4,34,88.1,34 M79.8,28.5c0.1-0.3,1.3-4,1.4-4.3
+c0.1,0.3,0.5,1.4,1.5,4.3C82.5,28.5,80.1,28.5,79.8,28.5z"></path>
+<path class="st0" d="M71.8,31.9c-0.2,0-0.3,0.1-0.3,0.4c0,0.3-0.2,0.7-0.4,0.9c-0.3,0.4-1,0.4-1.9,0.4c-1.3,0-1.7-0.1-1.9-0.3
+c-0.3-0.3-0.3-2-0.3-3.8c0-0.1,0-3,0-3l0-3.7c0-0.6,0.2-0.7,0.5-0.8c0,0,0.5,0,0.5,0c0.2,0,0.3-0.1,0.3-0.3c0-0.2-0.1-0.3-0.5-0.3
+c0,0-1.5,0-1.5,0c0,0-0.3,0-0.3,0l-0.2,0c0,0-1.7,0-1.7,0c-0.4,0-0.5,0.2-0.5,0.3c0,0.2,0.1,0.3,0.3,0.3l0.5,0
+c0.5,0.1,0.5,0.3,0.6,0.8l0,3.7v3c0,1.6,0,3-0.1,3.7c-0.1,0.5-0.2,0.7-0.3,0.8c0,0-0.5,0.1-0.5,0.1c-0.2,0-0.3,0.2-0.3,0.3
+c0,0.2,0.1,0.4,0.5,0.4c0,0,1,0,1,0c0,0,0.7,0,0.7,0l1.1,0c0,0,3.5,0.1,3.5,0.1c0.9,0,1.1-0.1,1.3-0.6c0.1-0.5,0.3-1.6,0.3-1.8
+C72.1,32.2,72.1,31.9,71.8,31.9"></path>
+<path class="st0" d="M59.4,31.9c-0.1,0-0.3,0.1-0.3,0.4c0,0.3-0.2,0.7-0.4,0.9c-0.3,0.4-1,0.4-1.9,0.4c-1.3,0-1.7-0.1-1.9-0.3
+c-0.3-0.3-0.3-2-0.3-3.8c0-0.1,0-3,0-3l0-3.7c0-0.6,0.2-0.7,0.5-0.8c0,0,0.5,0,0.5,0c0.2,0,0.3-0.1,0.3-0.3c0-0.2-0.2-0.3-0.5-0.3
+c0,0-1.5,0-1.5,0c0,0-0.3,0-0.3,0l-0.2,0c0,0-1.7,0-1.7,0c-0.4,0-0.5,0.2-0.5,0.3c0,0.2,0.1,0.3,0.3,0.3l0.5,0
+c0.5,0.1,0.5,0.3,0.6,0.8l0,3.7v3c0,1.6,0,3-0.1,3.7c-0.1,0.5-0.2,0.7-0.3,0.8c0,0-0.5,0.1-0.5,0.1c-0.2,0-0.3,0.2-0.3,0.3
+c0,0.2,0.1,0.4,0.5,0.4c0,0,1,0,1,0c0,0,0.7,0,0.7,0l1.1,0c0,0,3.5,0.1,3.5,0.1c0.9,0,1.1-0.1,1.3-0.6c0.1-0.5,0.3-1.6,0.3-1.8
+C59.7,32.2,59.7,31.9,59.4,31.9"></path>
+<path class="st0" d="M47.1,34l-0.6-0.1c-0.4-0.1-0.8-0.4-1.4-1.8l-3.3-8.6l-0.7-1.8c-0.2-0.5-0.3-0.7-0.6-0.7
+c-0.3,0-0.4,0.2-0.6,0.8l-3.9,10.7c-0.3,0.9-0.6,1.4-1.3,1.5c0,0-0.5,0-0.5,0c-0.2,0-0.3,0.1-0.3,0.3c0,0.3,0.4,0.3,0.5,0.3
+c0,0,1.6,0,1.6,0c0,0,0.4,0,0.4,0l0.4,0l0.9,0c0.4,0,0.5-0.2,0.5-0.3c0-0.1-0.1-0.3-0.4-0.3h-0.2c-0.1,0-0.5-0.1-0.5-0.3
+c0-0.3,0.1-0.7,0.2-1.1c0,0,1-3.1,1-3.1s3.7,0,3.7,0c0,0,0.2,0.6,1.6,4.2l0,0.1c-0.2,0.1-0.3,0.3-0.3,0.4c0,0.3,0.3,0.3,0.6,0.3
+c0.1,0,2.8,0,2.8,0c0.5,0,0.5-0.2,0.5-0.3C47.5,34.2,47.5,34,47.1,34 M38.9,28.5c0.1-0.3,1.3-4,1.4-4.3c0.1,0.3,0.5,1.3,1.5,4.3
+C41.5,28.5,39.2,28.5,38.9,28.5z"></path>
+<path class="st0" d="M35.4,10.4l-2.1,0.1l-0.5,0l-0.5,0l-2.7-0.1c-0.2,0-0.7,0-0.7,0.3c0,0.2,0.2,0.3,0.4,0.3
+c1.5,0,1.7,0.4,1.7,0.8c0,0.4,0,0.8-0.3,2l-3.4,11.2c0,0-1.4,4.6-1.5,4.9c-0.1-0.3-6.3-18-6.3-18c-0.4-1.2-0.6-1.6-0.9-1.6
+c-0.3,0-0.4,0.2-0.9,1.5c0,0-5.9,15.8-6.6,17.9C10.6,28.1,7.4,16.7,7,14.7l-0.2-0.7c-0.2-1-0.4-1.9-0.4-2.2c0-0.4,0.2-0.6,0.3-0.7
+C7.1,11,7.6,11,7.9,11c0.4,0,0.4-0.2,0.4-0.3c0-0.3-0.5-0.3-0.7-0.3l-2.7,0.1l-0.5,0l-0.7,0l-3-0.1c-0.4,0-0.6,0.1-0.6,0.3
+C0,10.9,0.1,11,0.4,11c0.2,0,1,0,1.4,0.2c0.8,0.3,1.2,0.7,1.7,2.4l5.6,18.9c0.7,2.3,0.8,2.6,1.2,2.6c0.5,0,0.6-0.4,1.2-1.8
+l6.1-16.2c0,0,0.4-1,0.5-1.3c0.1,0.4,6.1,17.5,6.1,17.5c0.4,1.3,0.7,1.7,1.1,1.7c0.4,0,0.6-0.4,1.4-2.8l5.8-17.7
+c0.6-1.8,1.1-3,2-3.4l1-0.2c0.2,0,0.4-0.1,0.4-0.4C36,10.5,35.9,10.4,35.4,10.4 M25.9,30.1L25.9,30.1C25.9,30,25.9,30,25.9,30.1
+C25.9,30,25.9,30,25.9,30.1z"></path>
+</g>
+</svg>
+</a>
+<!-- </div> -->
+<nav class="c-nav-primary custom-top-menu">
+<ul class="u-list-reset | c-nav-primary__list menu-top">
+<li class="c-nav-primary__item ">
+<a class="c-nav-primary__link " href="https://wallacecollection.digitickets.co.uk/tickets"><span class="link-underline"> <img src="?service=WebAsset&amp;url=/images/Ticket.png&amp;contentType=image/png"> Tickets</span></a>
+</li>
+<li class="c-nav-primary__item ">
+<a class="c-nav-primary__link " href="https://wallacecollectionshop.org/"><span class="link-underline"> <img src="?service=WebAsset&amp;url=/images/Shop.png&amp;contentType=image/png"> Shop</span></a>
+</li>
+<li class="c-nav-primary__item " style="margin-top: ">
+<button class="c-nav-primary__link | c-button-icon | c-header__search-btn | js-search-btn" style="padding: 2px 4px !important; margin: 0px !important"><span class="link-underline"> <img src="?service=WebAsset&amp;url=/images/Search.png&amp;contentType=image/png"> Search</span></button>
+</li>
+</ul>
+<ul class="u-list-reset | c-nav-primary__list">
+<li class="c-nav-primary__item ">
+<a class="c-nav-primary__link " href="https://www.wallacecollection.org/visit/"><span class="link-underline">Visit</span></a>
+</li>
+<li class="c-nav-primary__item ">
+<a class="c-nav-primary__link " href="https://www.wallacecollection.org/whats-on/"><span class="link-underline">What's On</span></a>
+</li>
+<li class="c-nav-primary__item ">
+<a class="c-nav-primary__link active" href="https://www.wallacecollection.org/explore/"><span class="link-underline">Explore</span></a>
+</li>
+<li class="c-nav-primary__item ">
+<a class="c-nav-primary__link " href="https://www.wallacecollection.org/learn/"><span class="link-underline">Learn</span></a>
+</li>
+<li class="c-nav-primary__item ">
+<a class="c-nav-primary__link " href="https://www.wallacecollection.org/join-and-support/"><span class="link-underline">Join and Support</span></a>
+</li>
+</ul>
+</nav>
+<div class="c-header__button-group">
+<button class="c-button-icon | c-header__menu-btn | js-hamburger-btn">
+<svg class="c-icon c-icon--hamburger"><title>Menu</title><use xlink:href="#icon-hamburger"></use></svg>
+</button>
+<button class="c-button-icon | c-header__search-btn | js-search-btn">
+<svg class="c-icon c-icon--search"><title>Search</title><use xlink:href="#icon-search"></use></svg>
+</button>
+</div>
+<!-- Mobile menu overlay -->
+<div class="c-overlay | js-overlay js-overlay-menu" role="dialog" aria-labelledby="overlay-menu-title">
+<h2 class="u-visually-hidden" id="overlay-menu-title">Mobile main menu</h2>
+<div class="c-overlay__content | js-overlay-content ">
+<!-- Mobile menu -->
+<nav class="c-mobile-nav | js-mobile-nav">
+<ul class="u-list-reset | c-mobile-nav__list">
+<li class="c-nav-primary__item ">
+<a class="c-nav-primary__link " href="https://www.wallacecollection.org/visit/"><span class="link-underline">Visit</span></a>
+</li>
+<li class="c-nav-primary__item ">
+<a class="c-nav-primary__link " href="https://www.wallacecollection.org/whats-on/"><span class="link-underline">What's On</span></a>
+</li>
+<li class="c-nav-primary__item ">
+<a class="c-nav-primary__link active" href="https://www.wallacecollection.org/explore/"><span class="link-underline">Explore</span></a>
+</li>
+<li class="c-nav-primary__item ">
+<a class="c-nav-primary__link " href="https://www.wallacecollection.org/learn/"><span class="link-underline">Learn</span></a>
+</li>
+<li class="c-nav-primary__item ">
+<a class="c-nav-primary__link " href="https://www.wallacecollection.org/join-and-support/"><span class="link-underline">Join and Support</span></a>
+</li>
+<li class="c-nav-primary__item ">
+<a class="c-nav-primary__link " href="https://wallacecollection.digitickets.co.uk/tickets"><span class="link-underline">Tickets</span></a>
+</li>
+<li class="c-nav-primary__item ">
+<a class="c-nav-primary__link " href="https://wallacecollectionshop.org/"><span class="link-underline">Shop</span></a>
+</li>
+<li class="c-nav-primary__item ">
+<a href="javascript:void(0);" class="c-nav-primary__link | c-button-icon | c-header__search-btn | js-search-btn" style="padding: 2px 4px !important; display: block !important; margin: 0px !important"><span class="link-underline"> Search</span></a>
+</li>
+</ul>
+</nav>
+</div>
+<button class="c-overlay__btn | js-overlay-close-btn">
+<span class="c-overlay__btn-label link-underline">Press ESC or click here to close</span>
+<svg class="c-icon c-icon--cross"><title>Close overlay</title><use xlink:href="#icon-cross"></use></svg>
+</button>
+</div>
+</div>
+</header>
+<div id="pageTitle">Search the Collection</div>
+<nav id="secNav" role="navigation">
+<ul>
+<li>
+<a href="https://www.wallacecollection.org/collection/">Collection Highlights</a>
+</li>
+<li>
+<a class="active" href="?service=ExternalInterface&amp;module=collection&amp;moduleFunction=search">Search the collection</a>
+</li>
+<li>
+<a href="https://www.wallacecollection.org/collection/history-collection/">History of the collection</a>
+</li>
+</ul>
+</nav>
+<div id="terNav">
+<ul>
+<li id="quickFindWallace">
+<form name="quickFindForm" action="" method="post">
+<select language="javascript" class="dropDown" id="quickFindDd" onchange="javascript:gotoPageQuick()" name="quickFind">
+<option value="" selected="selected">Quick find</option>
+<option value="?service=ExternalSearch&amp;module=collection&amp;fieldValue=[Obj_Ownership_S|Arms%20and%20Armour]">Arms and Armour</option>
+<option value="?service=ExternalSearch&amp;module=collection&amp;fieldValue=[Obj_Ownership_S|Porcelain]&amp;fieldValue=[Obj_Ownership_S|Earthenware]">Ceramics</option>
+<option value="?service=ExternalSearch&amp;module=collection&amp;fieldValue=[Obj_Ownership_S|Furniture]">Furniture</option>
+<option value="?service=ExternalSearch&amp;module=collection&amp;fieldValue=[Obj_Ownership_S|Pictures and Miniatures]">Paintings</option>
+<option value="?service=ExternalSearch&amp;module=collection&amp;fieldValue=[Obj_Ownership_S|Sculpture]">Sculpture</option>
+<option value="?service=ExternalSearch&amp;module=collection&amp;fieldValue=[Obj_Ownership_S|Limoges Enamels]">Limoges Enamels</option>
+<option value="?service=ExternalSearch&amp;module=collection&amp;fieldValue=[Obj_Ownership_S|Glass]">Glass</option>
+<option value="?service=ExternalSearch&amp;module=collection&amp;fieldValue=[Obj_Ownership_S|Works%20of%20Art]&amp;fieldValue=[Obj_Ownership_S|Asian and African Art]">Works of Art</option>
+</select>
+</form>
+<svg><use xlink:href="#icon-arrow-down"></use></svg>
+<!-- end Quick Find Wallace -->
+</li>
+<li>
+<a class="active" href="?service=ExternalInterface&amp;module=collection&amp;moduleFunction=search">Collection Search</a>
+</li>
+<li>
+<a href="?service=ExternalInterface&amp;module=artist&amp;viewType=simpleList&amp;filterName=filter.artist.all">Artist A-Z</a>
+</li>
+<li>
+<a href="?service=ExternalInterface&amp;module=room&amp;viewType=detailList">Explore by Gallery</a>
+</li>
+</ul>
+</div>
+<!--
+***********************************************************
+End Include Code Container
+************************************************************
+-->
+<div id="siteFunctions">
+<ul id="siteFunctionsContainer">
+<li id="siteSearchContainer">
+<form method="post" name="Form0" action="/eMP/eMuseumPlus;jsessionid=1A2AAFF9FEE6169C05D8E79F66BAFE23" id="siteSearch" enctype="multipart/form-data">
+<input type="hidden" name="service" value="direct/1/SearchPage/border.siteFunctionBar.$Form" style="">
+<input type="hidden" name="sp" value="S0" style="">
+<input type="hidden" name="Form0" value="siteSearchInput" style="">
+<fieldset id="siteSearchItems">
+<label for="siteSearchInput" class="siteSearchLabel">
+Advanced Search	</label>
+<input type="text" name="siteSearchInput" id="siteSearchInput" class="text" accesskey="7" style="">
+<input value="Search" tabindex="2" id="siteSearchButton" class="submitButton" type="submit" style="">	</fieldset>
+</form>	</li>
+</ul>
+<!-- <div class="cleaner"></div> -->
+</div>
+<div id="navigation">
+<ul id="mainNav">
+<li id="mainNavItem-collection" class="mainNavItem">
+<a href="/eMP/eMuseumPlus;jsessionid=1A2AAFF9FEE6169C05D8E79F66BAFE23?service=direct/1/SearchPage/border.moduleSelectionBar.module.link&amp;sp=10&amp;sp=Scollection&amp;sp=SfieldValue&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailList&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=F&amp;sp=Scollection" id="moduleLink-collection" class="active">
+The Collection
+</a>
+</li>
+<li id="mainNavItem-artist" class="mainNavItem">
+<a href="/eMP/eMuseumPlus;jsessionid=1A2AAFF9FEE6169C05D8E79F66BAFE23?service=direct/1/SearchPage/border.moduleSelectionBar.module.link&amp;sp=10&amp;sp=Scollection&amp;sp=SfieldValue&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailList&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=F&amp;sp=Sartist" id="moduleLink-artist" class="a">
+Artist/Maker
+</a>
+</li>
+<li id="mainNavItem-room" class="mainNavItem">
+<a href="/eMP/eMuseumPlus;jsessionid=1A2AAFF9FEE6169C05D8E79F66BAFE23?service=direct/1/SearchPage/border.moduleSelectionBar.module.link&amp;sp=10&amp;sp=Scollection&amp;sp=SfieldValue&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailList&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=F&amp;sp=Sroom" id="moduleLink-room" class="a">
+Gallery by Gallery
+</a>
+</li>
+<li id="mainNavItem-multimedia" class="mainNavItem">
+<a href="/eMP/eMuseumPlus;jsessionid=1A2AAFF9FEE6169C05D8E79F66BAFE23?service=direct/1/SearchPage/border.moduleSelectionBar.module.link&amp;sp=10&amp;sp=Scollection&amp;sp=SfieldValue&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailList&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=F&amp;sp=Smultimedia" id="moduleLink-multimedia" class="a">
+Multimedia
+</a>
+</li>
+</ul>
+<ul id="externalNav">
+<li id="externalNavItem-5" class="externalNavItem">
+<a href="http://www.wallacecollection.org/wallacelive/helpwithsearching" target="_self" id="externalReference-5">
+Help with Searching
+</a>
+</li>
+<li id="externalNavItem-100000" class="externalNavItem">
+<a href="http://www.wallacecollection.org/wallacelive/feedbackform" target="_self" id="externalReference-100000">
+Feedback Form
+</a>
+</li>
+</ul>
+</div>
+<div id="header">
+<h1 id="title">
+The Collection	</h1>
+<ul id="moduleFunctions">
+<li id="moduleFunctionPortfolio" class="moduleFunctionItem">
+<a href="/eMP/eMuseumPlus;jsessionid=1A2AAFF9FEE6169C05D8E79F66BAFE23?service=direct/1/SearchPage/border.moduleFunctionBar.moduleFunctionLink.link&amp;sp=10&amp;sp=Scollection&amp;sp=SfieldValue&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailList&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=F&amp;sp=1" id="portfolio-1" class="">
+Portfolio
+</a>
+</li>
+<li id="moduleFunctionResult" class="moduleFunctionItem">
+<a href="/eMP/eMuseumPlus;jsessionid=1A2AAFF9FEE6169C05D8E79F66BAFE23?service=direct/1/SearchPage/border.moduleFunctionBar.moduleFunctionLink.link&amp;sp=10&amp;sp=Scollection&amp;sp=SfieldValue&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailList&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=F&amp;sp=2" id="result-2" class="">
+Result
+</a>
+</li>
+<li id="moduleFunctionSearch" class="moduleFunctionItem">
+<a href="/eMP/eMuseumPlus;jsessionid=1A2AAFF9FEE6169C05D8E79F66BAFE23?service=direct/1/SearchPage/border.moduleFunctionBar.moduleFunctionLink.link&amp;sp=10&amp;sp=Scollection&amp;sp=SfieldValue&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailList&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=F&amp;sp=3" id="search-3" class="active">
+Advanced Search
+</a>
+</li>
+<li id="moduleFunctionReference" class="moduleFunctionItem">
+<a href="/eMP/eMuseumPlus;jsessionid=1A2AAFF9FEE6169C05D8E79F66BAFE23?service=direct/1/SearchPage/border.moduleFunctionBar.moduleFunctionLink.link&amp;sp=10&amp;sp=Scollection&amp;sp=SfieldValue&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailList&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=F&amp;sp=999" id="reference-999" class="">
+Result
+</a>
+</li>
+</ul>
+<div class="cleaner"></div>
+</div> <!-- id=header -->
+<!--
+***********************************************************
+Include Code Container 2
+Date: 2009-12-18
+Author: ks
+************************************************************
+-->
+<div class="cleaner"></div>
+<!-- id=headerBox -->
+<div id="contentBox">
+<!--
+***********************************************************
+End Include Code Container2
+************************************************************
+-->
+<div id="content" class="contentContainer">
+<div class="backLink"><a href="">Back to list</a></div>
+<form method="post" name="Form1" action="/eMP/eMuseumPlus;jsessionid=1A2AAFF9FEE6169C05D8E79F66BAFE23" id="searchForm" class="searchForm" enctype="multipart/form-data">
+<input type="hidden" name="service" value="direct/1/SearchPage/search.searchForm" style="">
+<input type="hidden" name="sp" value="S1" style="">
+<input type="hidden" name="Form1" value="fullTextField,$PropertySelection,$PropertySelection$0,textfield,textfield$0,$PropertySelection$1,$ValidField,$ValidField$0,$PropertySelection$2,$PropertySelection$3,textfield$1,$PropertySelection$4,$PropertySelection$5" style="">
+<fieldset class="searchFulltext">
+<p class="fulltextSearch">
+<label for="fullTextField">Search all fields within the collection</label>
+<input type="text" name="fullTextField" tabindex="3" id="fullTextField" class="text" style=""><svg><use xlink:href="#icon-search"></use></svg>	</p>
+</fieldset><span class="startButton">
+<a href="javascript:document.getElementById(&quot;searchForm&quot;).submit();" tabindex="8">
+Search </a>
+</span>
+<fieldset class="searchItems">
+<ul class="formItemsContainer">
+<li id="formItem_field_10303" class="formItem">
+<!-- Def-Field-Name(s): Obj_Ownership_S -->
+<label for="field_10303">
+Collection
+</label>
+<select name="$PropertySelection" id="field_10303" class="select">
+<option value="0" selected="selected"></option>
+<option value="1">Archives Accession Register</option>
+<option value="2">Arms and Armour - European</option>
+<option value="3">Arms and Armour - Oriental</option>
+<option value="4">Asian and African Art</option>
+<option value="5">Earthenware</option>
+<option value="6">Furniture post-1660</option>
+<option value="7">Furniture pre-1660</option>
+<option value="8">Glass</option>
+<option value="9">Gold Boxes</option>
+<option value="10">Hertford House Historic Collection</option>
+<option value="11">Limoges Enamels</option>
+<option value="12">Manuscript Cuttings</option>
+<option value="13">Pictures and Miniatures</option>
+<option value="14">Porcelain</option>
+<option value="15">Sculpture</option>
+<option value="16">Wallace Collection</option>
+<option value="17">Works of Art</option>
+</select><svg><use xlink:href="#icon-arrow-down"></use></svg>
+</li>
+<li id="formItem_field_10402" class="formItem">
+<!-- Def-Field-Name(s): Art_SortName_S -->
+<label for="field_10402">
+Artist/Maker
+</label>
+<select name="$PropertySelection$0" id="field_10402" class="select">
+<option value="0" selected="selected"></option>
+<option value="1">'Louis'</option>
+<option value="2">"Spy" (Ward, Sir Leslie)</option>
+<option value="3">A Blois, Lemaine</option>
+<option value="4">Abeele, Pieter van</option>
+<option value="5">Abondio, Antonio</option>
+<option value="6">Achenbach, Andreas</option>
+<option value="7">Adam, Jacques</option>
+<option value="8">Adnet, Henry-Guillaume</option>
+<option value="9">Ahmad Sahib Ismail</option>
+<option value="10">Akbar, Ali</option>
+<option value="11">Albani, Franceso</option>
+<option value="12">Alberghetti foundry</option>
+<option value="13">Algardi, Alessandro</option>
+<option value="14">Aloncle, François-Joseph</option>
+<option value="15">Alphonse</option>
+<option value="16">Altenstetter, David</option>
+<option value="17">Andreoli, Maestro Giorgio</option>
+<option value="18">Andrieu, Bertrand</option>
+<option value="19">Angeli, Heinrich von</option>
+<option value="20">Anghiari, Guiseppe Guardiani</option>
+<option value="21">Anguier, François</option>
+<option value="22">Arlaud-Jurine, Louis-Ami</option>
+<option value="23">Arlaud, Antoine</option>
+<option value="24">Arlaud, Benjamin</option>
+<option value="25">Arlaud, Jacques-Antoine</option>
+<option value="26">Armand</option>
+<option value="27">Armand The Elder, Louis-Denis</option>
+<option value="28">Asselin, Charles-Eloi</option>
+<option value="29">Associate of Nicola da Urbino</option>
+<option value="30">Aubert, François</option>
+<option value="31">Aubry, Louis-François</option>
+<option value="32">Auguste, Robert-Joseph</option>
+<option value="33">Augustin, Jean-Baptiste-Jacques</option>
+<option value="34">Ausin</option>
+<option value="35">Aveline, Pierre</option>
+<option value="36">Ayala, Tomás de</option>
+<option value="37">Bachelier, Jean-Jacques</option>
+<option value="38">Backer, Jacob Adriaensz</option>
+<option value="39">Bakhuizen, Ludolf</option>
+<option value="40">Baldock</option>
+<option value="41">Ballin, Claude II</option>
+<option value="42">Barat, Nicolas</option>
+<option value="43">Barbetti Angiolo</option>
+<option value="44">Barbezat, Elie</option>
+<option value="45">Barrière, Jean-Joseph</option>
+<option value="46">Bassano, Leandro</option>
+<option value="47">Bastianini, Giovanni</option>
+<option value="48">Bastin, Jean-Nicolas</option>
+<option value="49">Baumhauer, Joseph</option>
+<option value="50">Beaulieu, Pierre François Mathias de</option>
+<option value="51">Beccafumi, Domenico</option>
+<option value="52">Beckert, Johann V.</option>
+<option value="53">Belanger François-Joseph</option>
+<option value="54">Bellangé, Hippolyte</option>
+<option value="55">Bellanger, Pierre-Jean</option>
+<option value="56">Belli, Luca</option>
+<option value="57">Bellotto, Bernardo</option>
+<option value="58">Belt, Richard Claude</option>
+<option value="59">Bencini, Antonio</option>
+<option value="60">Benzi, Massimiliano Soldani</option>
+<option value="61">Berain, Jean</option>
+<option value="62">Berchem, Nicolaes</option>
+<option value="63">Bernard, Thomas</option>
+<option value="64">Berny fils</option>
+<option value="65">Berthoud, Ferdinand</option>
+<option value="66">Bertinet, François</option>
+<option value="67">Bertrand</option>
+<option value="68">Bertrand, Philippe</option>
+<option value="69">Beurdeley, Louis-Auguste-Alfred</option>
+<option value="70">Bezelle Pierre</option>
+<option value="71">Bianco Simone</option>
+<option value="72">Biennais, Martin-Guillaume</option>
+<option value="73">Bilfeldt, John Joseph</option>
+<option value="74">Binet, François</option>
+<option value="75">Birckholzer, Gregor</option>
+<option value="76">Blaize, Candide</option>
+<option value="77">Blakey Guillaume</option>
+<option value="78">Blarenberghe, Henri-Joseph van</option>
+<option value="79">Blarenberghen, Louis-Nicolas van</option>
+<option value="80">Blerzy, Joseph Etienne</option>
+<option value="81">Bocciardi, Augustin</option>
+<option value="82">Bodson, Henri</option>
+<option value="83">Bogaert, called Desjardins, Martin van den</option>
+<option value="84">Boilly, Louis-Léopold</option>
+<option value="85">Boizot, Louis-Simon</option>
+<option value="86">Bol, Ferdinand</option>
+<option value="87">Boldù, Giovanni</option>
+<option value="88">Bolvry, Charles-François</option>
+<option value="89">Bone Senior, William</option>
+<option value="90">Bone, Henry</option>
+<option value="91">Bone, Henry Pierce</option>
+<option value="92">Bonfadino, Bartolommeo</option>
+<option value="93">Bonheur, Auguste François</option>
+<option value="94">Bonheur, Rosa</option>
+<option value="95">Bonington, Richard Parkes</option>
+<option value="96">Bono, Etienne-Henry</option>
+<option value="97">Borch, Gerard ter</option>
+<option value="98">Borstorffer, Hieronymus</option>
+<option value="99">Bossuit, Francis</option>
+<option value="100">Botarelli, Carlo</option>
+<option value="101">Both, Andries</option>
+<option value="102">Both, Jan</option>
+<option value="103">Bouchardon Edmé</option>
+<option value="104">Boucher, François</option>
+<option value="105">Bougnon aîné</option>
+<option value="106">Bouilliat, Edme-François</option>
+<option value="107">Boulanger, Jean-Pierre</option>
+<option value="108">Boulard, Jean-Baptiste</option>
+<option value="109">Boulle, André-Charles</option>
+<option value="110">Bourdin, L.</option>
+<option value="111">Bourgeois, Jean le</option>
+<option value="112">Boursse, Esaias</option>
+<option value="113">Boutet, Nicolas Noël</option>
+<option value="114">Brascassat, Jacques-Raymond</option>
+<option value="115">Brenet, Nicolas Guy Antoine</option>
+<option value="116">Breton, Jean-François</option>
+<option value="117">Briceau, Pierre-Jean</option>
+<option value="118">Briosco, Andrea di Ambrogio</option>
+<option value="119">Briot, François</option>
+<option value="120">Briot, Nicolas</option>
+<option value="121">Briquet, Jean-François</option>
+<option value="122">Broche, Jean-Baptiste-Ignache</option>
+<option value="123">Broche, Joseph</option>
+<option value="124">Bronzino, Agnolo</option>
+<option value="125">Brouwer, Adriaen</option>
+<option value="126">Brush, James</option>
+<option value="127">Bruyninx, Daniel</option>
+<option value="128">Bry de</option>
+<option value="129">Buglioni Santi</option>
+<option value="130">Buglioni, Benedetto</option>
+<option value="131">Bulidon, Nicolas</option>
+<option value="132">Buteux, Charles</option>
+<option value="133">Buteux, Charles-Nicolas</option>
+<option value="134">Buteux, Claude-Gilles-Guillaume</option>
+<option value="135">Butterfield, Michael</option>
+<option value="136">C.Mellier &amp; Co.</option>
+<option value="137">Caffiéri, Jacques</option>
+<option value="138">Caffiéri, Jean-Jacques</option>
+<option value="139">Caffiéri, Philippe</option>
+<option value="140">Caino</option>
+<option value="141">Calame, Alexandre</option>
+<option value="142">Callow, William</option>
+<option value="143">Calraet, Abraham van</option>
+<option value="144">Calzetta da Ravenna, Severo</option>
+<option value="145">Camphuysen, Govert Dircksz.</option>
+<option value="146">Canaletto</option>
+<option value="147">Candida, Giovanni</option>
+<option value="148">Cano, Alonso</option>
+<option value="149">Canonica, Pietro</option>
+<option value="150">Canova, Antonio</option>
+<option value="151">Capin, Claude-François</option>
+<option value="152">Caravaggio, Polidoro da</option>
+<option value="153">Carbone, Giovanni Bernardo</option>
+<option value="154">Carlin, Martin</option>
+<option value="155">Caron, Christophe-Ferdinand</option>
+<option value="156">Carriera, Rosalba</option>
+<option value="157">Carwardine, Penelope</option>
+<option value="158">Casanova, Francesco</option>
+<option value="159">Cassé, André-Louis</option>
+<option value="160">Castel, Philippe</option>
+<option value="161">Castro, Antonio de</option>
+<option value="162">Caton, Antoine</option>
+<option value="163">Cavino, Giovanni da</option>
+<option value="164">Cerneau, Pierre</option>
+<option value="165">Cesura, Pompeo</option>
+<option value="166">Chabry, Etienne-Jean</option>
+<option value="167">Champaigne, Philippe de</option>
+<option value="168">Chaplin, Charles</option>
+<option value="169">Charlier, Jacques</option>
+<option value="170">Charny, Louis</option>
+<option value="171">Chasselat, Pierre</option>
+<option value="172">Chasteau, Claude</option>
+<option value="173">Chatard, Louis</option>
+<option value="174">Chauvaux, Jean</option>
+<option value="175">Chauvaux, Michel-Barnabé</option>
+<option value="176">Cheval de St Hubert, Hubert-Louis</option>
+<option value="177">Cheval, Hubert</option>
+<option value="178">Chollet Aymé-Antoine</option>
+<option value="179">Chulot, Louis-Gabriel</option>
+<option value="180">Ciani Giuseppe</option>
+<option value="181">Cicognara, Antonio</option>
+<option value="182">Cima da Conegliano, Giovanni Battista</option>
+<option value="183">Cisteron, P.</option>
+<option value="184">Claude</option>
+<option value="185">Clève, Corneille van</option>
+<option value="186">Cleve, Joos van</option>
+<option value="187">Clodion</option>
+<option value="188">Clouet, François</option>
+<option value="189">Cochin, Charles-Nicolas</option>
+<option value="190">Cogniet, Léon</option>
+<option value="191">Coiny, Mathieu</option>
+<option value="192">Collen, Henry</option>
+<option value="193">Cominazzo, Lazarino</option>
+<option value="194">Commelin, Michel-Gabriel</option>
+<option value="195">Confesseur, Jacques</option>
+<option value="196">Cooke, John</option>
+<option value="197">Cooper, Samuel</option>
+<option value="198">Cooper, Thomas Sydney</option>
+<option value="199">Coques, Gonzales</option>
+<option value="200">Cordier, Charles-Henri-Joseph</option>
+<option value="201">Cordier, Isaac</option>
+<option value="202">Cornailles, Antoine-Toussaint</option>
+<option value="203">Corneille de Lyon</option>
+<option value="204">Corneo, Julie</option>
+<option value="205">Corot, Jean-Baptiste Camille</option>
+<option value="206">Cosson, Jacques-Laurent</option>
+<option value="207">Cosway, Richard</option>
+<option value="208">Coteau, Jean</option>
+<option value="209">Coteau, Joseph</option>
+<option value="210">Coudray, Etienne-Hippolyte-Nicolas</option>
+<option value="211">Coudray, Pierre Denis</option>
+<option value="212">Couët, Charles</option>
+<option value="213">Coullier, Victoire</option>
+<option value="214">Cournerie, Louis</option>
+<option value="215">Court, Jean de</option>
+<option value="216">Courteys, Martial</option>
+<option value="217">Courtois, Jacques-Charles</option>
+<option value="218">Coustou, Guillaume I</option>
+<option value="219">Couture, Thomas</option>
+<option value="220">Couturier, Claude</option>
+<option value="221">Coypel, Charles-Antoine</option>
+<option value="222">Coysevox, Antoine</option>
+<option value="223">Cozette, Pierre-François</option>
+<option value="224">Cressent, Charles</option>
+<option value="225">Crivelli, Carlo</option>
+<option value="226">Croissant, Pierre</option>
+<option value="227">Cronier, Jean-Baptiste-François</option>
+<option value="228">Crosse, Peter</option>
+<option value="229">Croze, Georges-Antoine</option>
+<option value="230">Cuenca, Diego de</option>
+<option value="231">Curiger, Joseph Anton</option>
+<option value="232">Cuvillier, Charles-Antoine</option>
+<option value="233">Cuyp, Aelbert</option>
+<option value="234">da Castello, Pietro</option>
+<option value="235">Daddi, Bernardo</option>
+<option value="236">Daguerre, Dominique</option>
+<option value="237">Daillé, Pierre</option>
+<option value="238">Damerat, François-Aimé</option>
+<option value="239">Daner, Peter</option>
+<option value="240">Daniel Saint</option>
+<option value="241">Danti</option>
+<option value="242">Dardel, Robert Guillaume</option>
+<option value="243">Dassier, Jean</option>
+<option value="244">Daullé Jean</option>
+<option value="245">De Barbarey</option>
+<option value="246">de la Rue, Louis-Félix</option>
+<option value="247">de Sainson Louis-Auguste</option>
+<option value="248">Decamps, Alexandre-Gabriel</option>
+<option value="249">Delacroix, Eugène</option>
+<option value="250">Delaroche, Hippolyte (Paul)</option>
+<option value="251">Delatour, Alexandre</option>
+<option value="252">della Cesa, Pompeo</option>
+<option value="253">della Robbia Girolamo</option>
+<option value="254">Delorme, Jean-Louis Faizelot</option>
+<option value="255">Delunésy, Nicolas-Pierre Guichon</option>
+<option value="256">Demarne, Jean-Louis</option>
+<option value="257">Demay, Louis-Philippe</option>
+<option value="258">Denning, Stephen Poyntz</option>
+<option value="259">Denon, Baron Vivant</option>
+<option value="260">Deranton, Joseph</option>
+<option value="261">Derby, William</option>
+<option value="262">Deroches, François</option>
+<option value="263">Deschler, Joachim</option>
+<option value="264">Desgodets, Claude-Joseph</option>
+<option value="265">Desportes the Younger, Nicolas</option>
+<option value="266">Desportes, Alexandre-François</option>
+<option value="267">Deutsch, Matthes</option>
+<option value="268">Dewez, Michel-Paul-Joseph</option>
+<option value="269">Dezarot, Pierre Robert</option>
+<option value="270">di Filippo de Floribus (il Prestino) Vittorio</option>
+<option value="271">Diaz, Narcisse-Vergilio</option>
+<option value="272">Didier, Charles-Antoine</option>
+<option value="273">Diefstetter, Melchior</option>
+<option value="274">Diefstetter, Ulrich</option>
+<option value="275">Dietrich, Christian Wilhelm Ernst</option>
+<option value="276">Dighton the Elder, Robert</option>
+<option value="277">Dircksz Adam</option>
+<option value="278">Dobson, William</option>
+<option value="279">Dodin, Charles-Nicolas</option>
+<option value="280">Domenichino</option>
+<option value="281">Donatello</option>
+<option value="282">Dongen, Dionys van</option>
+<option value="283">Dou, Gerrit</option>
+<option value="284">Downman, John</option>
+<option value="285">Drais, Pierre-François</option>
+<option value="286">Drentwett, Christian II</option>
+<option value="287">Dreschler</option>
+<option value="288">Drost, Willem</option>
+<option value="289">Droz, Pierre-Jaquez</option>
+<option value="290">Dubois, Germain</option>
+<option value="291">Dubois, Jacques</option>
+<option value="292">Dubois, Réné</option>
+<option value="293">Dubos, Jean Charles Simphorien</option>
+<option value="294">Duboule, Jean-Baptiste</option>
+<option value="295">Ducrollay, Jean</option>
+<option value="296">Dughet, Gaspard</option>
+<option value="297">Dugourc, Jean-Démosthène</option>
+<option value="298">Dumarest, Rambert</option>
+<option value="299">Dumont, François</option>
+<option value="300">Dumont, le Romain, Jaques</option>
+<option value="301">Dun, Nicolas Françis</option>
+<option value="302">Duplessis, Jean-Claude Chambellan, the Elder</option>
+<option value="303">Duplessis, Jean-Claude-Thomas Chambellan</option>
+<option value="304">Duponois Catherine-Adelaide</option>
+<option value="305">Dupré, Guillaume</option>
+<option value="306">Dupré, Jules</option>
+<option value="307">Duquesnoy, François</option>
+<option value="308">Durantino, Guido</option>
+<option value="309">Dürer, Albrecht</option>
+<option value="310">Duyfhuysen, Pieter</option>
+<option value="311">Dyck, Anthony van</option>
+<option value="312">Eckstein, Johann</option>
+<option value="313">Edridge, Henry</option>
+<option value="314">Egen, Geert van</option>
+<option value="315">Ehkirch, David</option>
+<option value="316">Elhafen, Ignaz</option>
+<option value="317">Emam Bakhsh</option>
+<option value="318">Emilian School</option>
+<option value="319">Encinas, Juan de</option>
+<option value="320">Enderlein, Caspar</option>
+<option value="321">Engleheart, George</option>
+<option value="322">English (?)</option>
+<option value="323">Erstet, Jean-Ulric</option>
+<option value="324">Erttel</option>
+<option value="325">Étienne Jeaurat
+[French Painter,</option>
+<option value="326">Everdingen, Allart van</option>
+<option value="327">Eworth, Hans</option>
+<option value="328">F.R.</option>
+<option value="329">Falconet, Etienne-Maurice</option>
+<option value="330">Fallot, Jean-Armand</option>
+<option value="331">Fanelli, Francesco</option>
+<option value="332">Fano, Nicolò da</option>
+<option value="333">Fauveau, Félicie de</option>
+<option value="334">Fauvelet, Jean-Baptiste</option>
+<option value="335">Fayd'herbe, Lucas</option>
+<option value="336">Fazullah</option>
+<option value="337">Feloix, Louis-Gabriel</option>
+<option value="338">Ferara, Andrea</option>
+<option value="339">Fernandez, Ignacio</option>
+<option value="340">Ferrarese School</option>
+<option value="341">Fetti, Domenico</option>
+<option value="342">Feuchère, Pierre-François</option>
+<option value="343">Ficherelli, Felice</option>
+<option value="344">Fiedler, Johann Gottlob</option>
+<option value="345">Fiéffé, Jean-Jacques</option>
+<option value="346">Fielding, Copley</option>
+<option value="347">Finiguerra, Tommaso</option>
+<option value="348">Fiocchi, Alexandre</option>
+<option value="349">Fiorentino, Adriano (Adriano di Giovanni de'Maestri)</option>
+<option value="350">Fiorentino, Niccolo</option>
+<option value="351">Firenze, Desiderio da</option>
+<option value="352">Flamen, Anselme</option>
+<option value="353">Flemish School</option>
+<option value="354">Flinck, Govaert</option>
+<option value="355">Florentine School</option>
+<option value="356">Foggini, Giovanni Battista</option>
+<option value="357">Fondrini, Carlo</option>
+<option value="358">Fonduli da Crema, Giovanni</option>
+<option value="359">Fontaine, A.-Victor</option>
+<option value="360">Fontaine, Jacques</option>
+<option value="361">Fontana</option>
+<option value="362">Fontana Annibale</option>
+<option value="363">Fontana, Flaminio</option>
+<option value="364">Foppa, Vincenzo</option>
+<option value="365">Fortier, Alexandre</option>
+<option value="366">Foucou, Jean-Joseph</option>
+<option value="367">Foullet, Antoine</option>
+<option value="368">Foullet, Pierre-Antoine</option>
+<option value="369">Fragonard, Jean-Honoré</option>
+<option value="370">Fragonard, Marie-Anne</option>
+<option value="371">Francino, Giovanni Battista</option>
+<option value="372">François Rémond</option>
+<option value="373">Frauenpreiss I, Matthäus</option>
+<option value="374">Frémin, Jean</option>
+<option value="375">French School</option>
+<option value="376">Frères, Susse</option>
+<option value="377">Füger, Friedrich Heinrich</option>
+<option value="378">Fujiwara</option>
+<option value="379">Furet Jacques</option>
+<option value="380">Fyt, Joannes</option>
+<option value="381">Gabé, Nicolas-Edward</option>
+<option value="382">Gabicce, Girolamo di Lanfranco dalle</option>
+<option value="383">Gaillard, Jean</option>
+<option value="384">Gainsborough, Thomas</option>
+<option value="385">Gallait, Louis (-Joseph)</option>
+<option value="386">Galle Claude</option>
+<option value="387">Ganet the Elder</option>
+<option value="388">Garaudol A Verdun, E</option>
+<option value="389">Garnier, Pierre</option>
+<option value="390">Gatti, Camillo</option>
+<option value="391">Gaudreaus, Antoine-Robert</option>
+<option value="392">Gaudron, Pierre</option>
+<option value="393">Gault, J. de</option>
+<option value="394">Gaye, Joseph</option>
+<option value="395">Gebel, Matthes</option>
+<option value="396">Geefs, Fanny</option>
+<option value="397">Gelder, Aert de</option>
+<option value="398">Gemlich, Ambrosius</option>
+<option value="399">Génard, François-Nicolas</option>
+<option value="400">Genest, Jean-Baptiste-Etienne</option>
+<option value="401">Georges, Jean</option>
+<option value="402">Gérard, François,</option>
+<option value="403">Geremia, Cristoforo di</option>
+<option value="404">Géricault, Théodore</option>
+<option value="405">Gérôme, (Jean-) Léon</option>
+<option value="406">Gessner, Abraham</option>
+<option value="407">Gholam-Ali of Isphahan</option>
+<option value="408">Giambologna</option>
+<option value="409">Gibson,  Richard</option>
+<option value="410">Gillet, Nicolas François</option>
+<option value="411">Ginori Factory</option>
+<option value="412">Giovanni, Benvenuto di</option>
+<option value="413">Girard, Ernest-Joseph-Angelon</option>
+<option value="414">Girardon, François</option>
+<option value="415">Giuseppe Macpherson Giuseppe</option>
+<option value="416">Gomez, Francisco</option>
+<option value="417">Göstl, Johann Baptist</option>
+<option value="418">Gouchon, Jacques</option>
+<option value="419">Gourdin, Michel</option>
+<option value="420">Gouthière, Pierre</option>
+<option value="421">Grandi Vincenzo</option>
+<option value="422">Grassi, Josef</option>
+<option value="423">Grecke, Johan Adolf</option>
+<option value="424">Greuze, Jean-Baptiste</option>
+<option value="425">Grimaldi, William</option>
+<option value="426">Gros, Antoine-Jean</option>
+<option value="427">Grosschedel, Franz</option>
+<option value="428">Grosschedel, Wolfgang</option>
+<option value="429">Grue, Francesco Antonio</option>
+<option value="430">Guardi, Francesco</option>
+<option value="431">Gudin, Jean-Antoine-Théodore</option>
+<option value="432">Guiard, Laurent</option>
+<option value="433">Guiot</option>
+<option value="434">Gutiérrez, Juan Simón</option>
+<option value="435">Haas, Ernst Johann Conrad</option>
+<option value="436">Hackaert, Jan</option>
+<option value="437">Hagemair, Johann</option>
+<option value="438">Halder, Jacob</option>
+<option value="439">Hall, Peter Adolf</option>
+<option value="440">Hals, Frans</option>
+<option value="441">Hamad Haji</option>
+<option value="442">Hamelin</option>
+<option value="443">Hannaux, Emmanuel</option>
+<option value="444">Harding, James Duffield</option>
+<option value="445">Harding, Silvester</option>
+<option value="446">Hardivilliers, Noël</option>
+<option value="447">Hardy, Bernard Caspar</option>
+<option value="448">Harlow, George Henry</option>
+<option value="449">Harper, Henry Andrew</option>
+<option value="450">Hartvigsen, Christopher</option>
+<option value="451">Hassan, Ustad</option>
+<option value="452">Hayter, Sir George</option>
+<option value="453">Hazlitt, John</option>
+<option value="454">Heckenauer, Johann Philipp</option>
+<option value="455">Heem, Jan Davidsz. de</option>
+<option value="456">Heem, Jan Jansz. de</option>
+<option value="457">Heilbuth, Ferdinand</option>
+<option value="458">Helmschmid, Kolman</option>
+<option value="459">Helst, Bartolomeus van der</option>
+<option value="460">Hénard, Charles</option>
+<option value="461">Hennin the elder, Peter</option>
+<option value="462">Henry, Nicolas</option>
+<option value="463">Herkomer, Herman G.</option>
+<option value="464">Herl, Lorenz</option>
+<option value="465">Hermand, Jean-François</option>
+<option value="466">Hernandes, Juan</option>
+<option value="467">Hernandez, Pedro</option>
+<option value="468">Hernandez, Sebastian</option>
+<option value="469">Heusch, Willem de</option>
+<option value="470">Heyden, Jan van der</option>
+<option value="471">Hilliard, Laurence</option>
+<option value="472">Hilton, William</option>
+<option value="473">Hobbema, Meindert</option>
+<option value="474">Hohenauer, Michael</option>
+<option value="475">Holbein the Younger, Hans</option>
+<option value="476">Holdermann, Georg</option>
+<option value="477">Hondecoeter, Melchior de</option>
+<option value="478">Hondius the Elder, Hendrik</option>
+<option value="479">Hooch, Pieter de</option>
+<option value="480">Hopfer, Daniel</option>
+<option value="481">Hoppe, Johannes</option>
+<option value="482">Hoppner, John</option>
+<option value="483">Horn, Clement</option>
+<option value="484">Hoskins, John, the elder</option>
+<option value="485">Houdon, Jean-Antoine</option>
+<option value="486">Hove, Hubertus van</option>
+<option value="487">Hueber, J.</option>
+<option value="488">Huguet Nicolas</option>
+<option value="489">Huguet, Jean-Vincent</option>
+<option value="490">Huquier, Gabriel</option>
+<option value="491">Huré, François-Joseph</option>
+<option value="492">Husain Qualfa</option>
+<option value="493">Huysum, Jan van</option>
+<option value="494">I. D. C.</option>
+<option value="495">Ingres, Jean-Auguste-Dominique</option>
+<option value="496">IO.F.F</option>
+<option value="497">Isabey, Louis-Eugène-Gabriel</option>
+<option value="498">Isfahani Asadullah</option>
+<option value="499">Ismail, Ustad</option>
+<option value="500">Italian School</option>
+<option value="501">Jackson, John</option>
+<option value="502">Jacob, Georges</option>
+<option value="503">Jacometto Pietro Paolo</option>
+<option value="504">Jacopo</option>
+<option value="505">Jacquand, Claudius</option>
+<option value="506">Jacquotot, Marie-Victoire</option>
+<option value="507">Jardin, Karel du</option>
+<option value="508">Jean-Baptiste Isabey</option>
+<option value="509">Jean-Urbain Guérin</option>
+<option value="510">Jeanselme</option>
+<option value="511">Joaguet</option>
+<option value="512">Joffroy, Dominique</option>
+<option value="513">Johannot, Antoine</option>
+<option value="514">Joitteau, Pierre-Lucien</option>
+<option value="515">Jollain, Nicolas-René</option>
+<option value="516">Jolly, Jean</option>
+<option value="517">Jordaens, Jacob</option>
+<option value="518">Joubert, Gilles</option>
+<option value="519">K, Thomas</option>
+<option value="520">Kajikawa</option>
+<option value="521">Kalb-Ali</option>
+<option value="522">Kalb'ali</option>
+<option value="523">Kaliwoda, Pawel</option>
+<option value="524">Kels, Hans</option>
+<option value="525">Kent, William</option>
+<option value="526">Kinman, William</option>
+<option value="527">Kisling, Franz Joseph</option>
+<option value="528">Klingstedt, Karl Gustav</option>
+<option value="529">Knecht, Peter</option>
+<option value="530">Kolb, Jakob Wilhelm</option>
+<option value="531">Koller Lambert (Lamprecht)</option>
+<option value="532">Koller, Clemens</option>
+<option value="533">Kornblum, Marx</option>
+<option value="534">Krafft the Elder, Hans</option>
+<option value="535">Krafft, Ignatius Peter</option>
+<option value="536">Kreutzinger, Josef</option>
+<option value="537">Krüger, John Guillaume George</option>
+<option value="538">Kuchenreuter, Johann Andreas</option>
+<option value="539">Kuchenreuter, Johann Christoph</option>
+<option value="540">La Fonteyne</option>
+<option value="541">La France</option>
+<option value="542">La Roche, Jean Baptiste</option>
+<option value="543">Lacour</option>
+<option value="544">Ladoireau, Pierre</option>
+<option value="545">Lafeuillade, Jean</option>
+<option value="546">Lafrensen, Niclas</option>
+<option value="547">Lami, Eugène</option>
+<option value="548">Lancret, Nicolas</option>
+<option value="549">Landelle, Charles</option>
+<option value="550">Landi, L.</option>
+<option value="551">Landseer, Edwin (Henry)</option>
+<option value="552">Laroche, Jacques-François-Louis de</option>
+<option value="553">Larue, André-Léon</option>
+<option value="554">Latz, Jean-Pierre</option>
+<option value="555">Laudin, Jacques I</option>
+<option value="556">Launay, Nicolas de</option>
+<option value="557">Laune, Etienne de</option>
+<option value="558">Laurent, E(tienne)</option>
+<option value="559">Lawrence, Thomas</option>
+<option value="560">Lazarino Cominazzo, Jacomo</option>
+<option value="561">Le Bel, Jean-Nicolas</option>
+<option value="562">Le Bourgeois, Pierre</option>
+<option value="563">Le Brun, Charles</option>
+<option value="564">Le Carpentier, Antoine-Mathieu</option>
+<option value="565">Le Clerc Sébastien</option>
+<option value="566">Le Clerc, Jean Baptiste</option>
+<option value="567">Le Gaigneur, Louis Constantin</option>
+<option value="568">Le Gros, Jacques-Maire</option>
+<option value="569">Le Guay, The Elder, Etienne-Henry</option>
+<option value="570">Le Lorrain, Robert</option>
+<option value="571">Le Riche, Josse-François-Joseph</option>
+<option value="572">Le Sueur</option>
+<option value="573">Leblond F.</option>
+<option value="574">Lebourg, Charles Auguste</option>
+<option value="575">Lebrun, Antoine-François</option>
+<option value="576">Leclerc, Nicolas</option>
+<option value="577">Lécot, Louis-François</option>
+<option value="578">Ledoux, Jean-Pierre</option>
+<option value="579">Lee, Joseph</option>
+<option value="580">Leferre Jean-Louis</option>
+<option value="581">Leferre, Alexandre</option>
+<option value="582">Lefèvre d'Orgeval, André-Claude-Martin</option>
+<option value="583">Legros, Pierre</option>
+<option value="584">Leguillier</option>
+<option value="585">Lelarge, Jean-Baptiste III</option>
+<option value="586">Leleu, Jean-François</option>
+<option value="587">Lely, Peter</option>
+<option value="588">Lemoyne, François</option>
+<option value="589">Lemoyne, René-Jean</option>
+<option value="590">Lens III, Bernard</option>
+<option value="591">Leoni, Leone</option>
+<option value="592">Lepaute, Jacques-Joseph</option>
+<option value="593">Lepaute, Jean-André</option>
+<option value="594">Lepaute, Jean-Baptiste</option>
+<option value="595">Lepère, Jean</option>
+<option value="596">Lépicié, Nicholas-Bernard</option>
+<option value="597">Lépine, J.-A.</option>
+<option value="598">Leroy, Louis</option>
+<option value="599">Les Freres Toussaint</option>
+<option value="600">Lespinasse, Jean-Jacques de</option>
+<option value="601">Levasseur, Etienne</option>
+<option value="602">Leys, Hendrik</option>
+<option value="603">Lieutaud, Balthazar</option>
+<option value="604">Limosin,  Léonard</option>
+<option value="605">Limosin, François</option>
+<option value="606">Limosin, Jean II</option>
+<option value="607">Lindemaÿr, Caspar</option>
+<option value="608">Lo Spagna</option>
+<option value="609">Lochner, Kunz (or Konrad)</option>
+<option value="610">Loft 'Ali</option>
+<option value="611">Lombardo, Antonio</option>
+<option value="612">Lombardy</option>
+<option value="613">Lopez, Francisco</option>
+<option value="614">Lorme, Emilie de</option>
+<option value="615">Löwenfinck, Adam Friedrich von</option>
+<option value="616">Lu Ur</option>
+<option value="617">Luicksen, Lucas</option>
+<option value="618">Luini, Bernardino</option>
+<option value="619">Lutzenberger, Hanns</option>
+<option value="620">Madame Noualhier</option>
+<option value="621">Maes, Nicolas</option>
+<option value="622">Mailly, Auguste Barnabé de</option>
+<option value="623">Maître de Coëtivy</option>
+<option value="624">Manceaux a Paris, François</option>
+<option value="625">Mancini, Giacomo</option>
+<option value="626">Maratta, Carlo</option>
+<option value="627">Marcantonio, Sforza di</option>
+<option value="628">Marchand, Nicolas-Jean</option>
+<option value="629">Mare, Pieter de</option>
+<option value="630">Marende, Jean</option>
+<option value="631">Marilhat, Prosper</option>
+<option value="632">Marin, Joseph-Charles</option>
+<option value="633">Marinari, Onorio</option>
+<option value="634">Marliani (Piccinino), Federico</option>
+<option value="635">Marliani, Lucio</option>
+<option value="636">Marsy, Gaspard</option>
+<option value="637">Martin, Gilles-François</option>
+<option value="638">Martincourt, Etienne</option>
+<option value="639">Martinière, Antoine-Nicolas</option>
+<option value="640">Martinot, Claude III</option>
+<option value="641">Masson Pierre</option>
+<option value="642">Massou Benoît</option>
+<option value="643">Master of Halle</option>
+<option value="644">Master of Mège Diptych</option>
+<option value="645">Master of Santo Spirito</option>
+<option value="646">Master of the Apollo Basin</option>
+<option value="647">Master of the Apollo Basin or Milan Marsyas Painter</option>
+<option value="648">Master of the Castles</option>
+<option value="649">Master of the Dresden Prayer Book</option>
+<option value="650">Master of the Louis XII Triptych</option>
+<option value="651">Master of the Magdalen Legend</option>
+<option value="652">Master of the Orléans Triptych</option>
+<option value="653">Master P.R.</option>
+<option value="654">Mauger, Jean</option>
+<option value="655">Mayer, Marie-Françoise-Constance</option>
+<option value="656">Mazzaroli, Giovanni</option>
+<option value="657">Mee, Anne</option>
+<option value="658">Mehmet</option>
+<option value="659">Meier, Felix</option>
+<option value="660">Meissen Manufactory</option>
+<option value="661">Meissonier, (Jean-Louis-) Ernest</option>
+<option value="662">Meissonnier, Juste Aurèle</option>
+<option value="663">Meister der Tierkopfranke</option>
+<option value="664">Memling, Hans</option>
+<option value="665">Meneses Osorio, Francisco</option>
+<option value="666">Mennicken, Jan Baldems</option>
+<option value="667">Mennicken, Jan Emens</option>
+<option value="668">Menuisier, Jean-Pierre</option>
+<option value="669">Méreaud the Elder, Pierre-Antoine</option>
+<option value="670">Méreaud the Younger, Charles-Louis</option>
+<option value="671">Merle, Hugues</option>
+<option value="672">Merlet, G.</option>
+<option value="673">Merlin, John Joseph</option>
+<option value="674">Merlino, Guido di</option>
+<option value="675">Metsu, Gabriel</option>
+<option value="676">Metsys, Quentin</option>
+<option value="677">Meulen, Steven van der</option>
+<option value="678">Meuret, François</option>
+<option value="679">Meurl, Leonard</option>
+<option value="680">Micaud, Jacques-François</option>
+<option value="681">Michael, Jeremias</option>
+<option value="682">Michel, Hans</option>
+<option value="683">Michel, Sigisbert-François</option>
+<option value="684">Michelozzo</option>
+<option value="685">Mierevelt, Michiel Jansz. van</option>
+<option value="686">Mieris the Elder, Frans van</option>
+<option value="687">Mieris, Jan van</option>
+<option value="688">Mieris, Willem van</option>
+<option value="689">Milanese School</option>
+<option value="690">Miles, Edward</option>
+<option value="691">Mirbel, Lizinka-Aimée-Zoé de</option>
+<option value="692">Miseroni, Giovanni Ambrogio</option>
+<option value="693">Missaglia, Antonio</option>
+<option value="694">Moderno (Galeazzo Mondella)</option>
+<option value="695">Modrone, Caremolo</option>
+<option value="696">Moisy, Jean</option>
+<option value="697">Molitor, Bernard</option>
+<option value="698">Mondon, François</option>
+<option value="699">Mönert, Gottfried</option>
+<option value="700">Monogrammist Co.</option>
+<option value="701">Monogrammist CPD</option>
+<option value="702">Montandon
+Montandon frères
+Montandon frères</option>
+<option value="703">Montañés, Juan Martínez</option>
+<option value="704">Monti, Raffaele</option>
+<option value="705">Montigny, Philippe-Claude</option>
+<option value="706">Montjoye, Louis (or Jean-Louis)</option>
+<option value="707">Morel, Gabriel Raoul</option>
+<option value="708">Morin, Jean-Louis</option>
+<option value="709">Morland, George</option>
+<option value="710">Morlay, François-René</option>
+<option value="711">Morton, Andrew</option>
+<option value="712">Moyes, John</option>
+<option value="713">Moynat Jean</option>
+<option value="714">Müller, Charles (-Louise-Lucien)</option>
+<option value="715">Muneret</option>
+<option value="716">Munich, Friedrich</option>
+<option value="717">Murillo, Bartolomé Esteban</option>
+<option value="718">Mutto, Gironimo</option>
+<option value="719">Mynuël, Louis</option>
+<option value="720">Nagsh Mohammed Ali Mimsh</option>
+<option value="721">Naldini, Giovan Battista</option>
+<option value="722">Nattier, Jean-Marc</option>
+<option value="723">Neeffs the Elder, Pieter</option>
+<option value="724">Neer, Aert van der</option>
+<option value="725">Neer, Eglon Hendrick van der</option>
+<option value="726">Negroli, Filippo</option>
+<option value="727">Negroli, Francesco</option>
+<option value="728">Negroponte, A. da</option>
+<option value="729">Nesfield, William Andrews</option>
+<option value="730">Netscher, Caspar</option>
+<option value="731">Neuber, Johann Christian</option>
+<option value="732">Neuberger, Daniel</option>
+<option value="733">Newton, Gilbert Stuart</option>
+<option value="734">Newton, William John</option>
+<option value="735">Nicolini Sebastiano</option>
+<option value="736">Niderviller</option>
+<option value="737">Noël, Guillaume</option>
+<option value="738">Noordt, Joan van</option>
+<option value="739">Northam, J.</option>
+<option value="740">Nouailher, Colin</option>
+<option value="741">Nuyen, Wijnand (Us Johannes Josephus)</option>
+<option value="742">Oeben, Jean-François</option>
+<option value="743">Oliver, Isaac</option>
+<option value="744">Olivier, Alexandre</option>
+<option value="745">Oppenord, Gilles-Marie</option>
+<option value="746">Oppenordt, Alexandre-Jean</option>
+<option value="747">Opstal, Gerard van</option>
+<option value="748">Ostade, Adriaen van</option>
+<option value="749">Ostade, Isack van</option>
+<option value="750">Oudry, Jacques-Charles</option>
+<option value="751">Oudry, Jean-Baptiste</option>
+<option value="752">Ouizille, Louis</option>
+<option value="753">Paetther, Heinrich</option>
+<option value="754">Pagliari, Francesco</option>
+<option value="755">Painter 'A.B.'</option>
+<option value="756">Painter of the Judgement of Paris</option>
+<option value="757">Painter of the Orpheus Basin</option>
+<option value="758">Pajou, Augustin</option>
+<option value="759">Palissy, Bernard</option>
+<option value="760">Pantanazzi</option>
+<option value="761">Papety, Dominique (-Louis-Féréol)</option>
+<option value="762">Paris (or Deparis), Jaques-François</option>
+<option value="763">Parpette, Philippe</option>
+<option value="764">Parrocel, C.</option>
+<option value="765">Pasti, Matteo de'</option>
+<option value="766">Pater, Jean-Baptiste</option>
+<option value="767">Peffenhauser, Anton</option>
+<option value="768">Pellerin</option>
+<option value="769">Pénicaud, Jean I</option>
+<option value="770">Pénicaud, Jean II</option>
+<option value="771">Pénicaud, Pierre</option>
+<option value="772">Pépin, Alexis</option>
+<option value="773">Père, Colin le</option>
+<option value="774">Père, Jean le</option>
+<option value="775">Perlan, Henri</option>
+<option value="776">Perrot, Bernanrd</option>
+<option value="777">Pesaro, Maestro Jacomo da</option>
+<option value="778">Petit, Nicolas</option>
+<option value="779">Petit, Nicolas-Laurent</option>
+<option value="780">Petitot, Jean</option>
+<option value="781">Pettenkofen, August (Xaver Karl)</option>
+<option value="782">Phillips, Charles</option>
+<option value="783">Piccinino, Antonio</option>
+<option value="784">Pieri, Giovanni Francesco</option>
+<option value="785">Pierre Jean-Baptiste Marie</option>
+<option value="786">Pierre, Jean-Jacques</option>
+<option value="787">Pierre, Pierre-Nicolas</option>
+<option value="788">Pilon, Germain</option>
+<option value="789">Pils, Isidore (Alexandre-Augustin)</option>
+<option value="790">Pisano of Verona, Antonio</option>
+<option value="791">Pisano, Niccolò</option>
+<option value="792">Pithou, Nicolas-Pierre</option>
+<option value="793">Pitoin, Claude-Jean</option>
+<option value="794">Platzer, Johann Georg</option>
+<option value="795">Poggini, Gianpaolo</option>
+<option value="796">Pollaiuolo, Antonio del</option>
+<option value="797">Polycles</option>
+<option value="798">Pompei family</option>
+<option value="799">Ponsin</option>
+<option value="800">Pot, Hendrick Gerritsz.</option>
+<option value="801">Potter, Paulus</option>
+<option value="802">Pottin, Louis</option>
+<option value="803">Pourbus the Elder, Frans</option>
+<option value="804">Pourbus, Pieter</option>
+<option value="805">Poussin, Nicolas</option>
+<option value="806">Pozzi, Giovanni Battista</option>
+<option value="807">Preda, Christophoro da</option>
+<option value="808">Prieur, Barthélemy</option>
+<option value="809">Prieur, Jean-Louis</option>
+<option value="810">Prud'hon, Pierre-Paul</option>
+<option value="811">Pull Georges</option>
+<option value="812">Pynacker, Adam</option>
+<option value="813">Quaglia, Fedinand Paul J. Louis</option>
+<option value="814">Quellinus, Erasmus II</option>
+<option value="815">Raffaelli, Giacomo</option>
+<option value="816">Raffet, Auguste</option>
+<option value="817">Raimondi, Marcantonio</option>
+<option value="818">Rämbs, Ulrich</option>
+<option value="819">Ramsay, Allan</option>
+<option value="820">Raoux, Jean</option>
+<option value="821">Raphael</option>
+<option value="822">Rappusch (Rappost) the Elder Heinrich</option>
+<option value="823">Raux</option>
+<option value="824">Ravrio, André-Antoine</option>
+<option value="825">Rawlins, Thomas</option>
+<option value="826">Reboul, Louis</option>
+<option value="827">Regnard, Louis</option>
+<option value="828">Regnault, Jean-Baptiste</option>
+<option value="829">Regnault, Nicolas-François</option>
+<option value="830">Regnier, Pierre</option>
+<option value="831">Reich, Christian</option>
+<option value="832">Reinhart the Elder, Hans</option>
+<option value="833">Rembrandt</option>
+<option value="834">Rémond, François</option>
+<option value="835">Renette, A</option>
+<option value="836">Reni, Guido</option>
+<option value="837">Reymond, Pierre</option>
+<option value="838">Reynolds, Joshua</option>
+<option value="839">Richard, Claude</option>
+<option value="840">Richter, Christian</option>
+<option value="841">Richter, Conrad</option>
+<option value="842">Rieder, Kaspar</option>
+<option value="843">Riesener Jean-Henri</option>
+<option value="844">Rigaud, Hyacinthe</option>
+<option value="845">Righetti Luigi</option>
+<option value="846">Righetti, Francesco</option>
+<option value="847">Ring, Pieter de</option>
+<option value="848">Ringler, Hans</option>
+<option value="849">Robbia, della</option>
+<option value="850">Robert-Fleury, Joseph-Nicolas</option>
+<option value="851">Robert, Léopold</option>
+<option value="852">Robert, Paul</option>
+<option value="853">Roberts, David</option>
+<option value="854">Robin, Robert</option>
+<option value="855">Robinet, Pierre</option>
+<option value="856">Roccatagliata, Niccolo</option>
+<option value="857">Rochard, Simon-Jacques</option>
+<option value="858">Romano Pietro Paolo</option>
+<option value="859">Rombouts, Salomon</option>
+<option value="860">Romero Antonio</option>
+<option value="861">Romney, George</option>
+<option value="862">Rondoni Alessandro</option>
+<option value="863">Roqueplan, Camille (Joseph-Étienne)</option>
+<option value="864">Rosa, Salvator</option>
+<option value="865">Roslin, Alexander</option>
+<option value="866">Ross, William Charles</option>
+<option value="867">Rossellino, Antonio</option>
+<option value="868">Rosset, Pierre-Joseph</option>
+<option value="869">Rossi, Giovanni battista dei</option>
+<option value="870">Rossi, Pietro de</option>
+<option value="871">Roth, Hanns</option>
+<option value="872">Roubiliac, Louis François</option>
+<option value="873">Roucel, Louis</option>
+<option value="874">Rousseau, Gabriel</option>
+<option value="875">Rousseau, Théodore</option>
+<option value="876">Roussel, Jérôme</option>
+<option value="877">Roy, Edme</option>
+<option value="878">Royal Workshop, Greenwich</option>
+<option value="879">Rubens, Peter Paul</option>
+<option value="880">Ruisdael, Jacob van</option>
+<option value="881">Rusch Johann</option>
+<option value="882">Ruspagiari Alfonso</option>
+<option value="883">Rustici Gian Francesco</option>
+<option value="884">Rysbrack, John Michael</option>
+<option value="885">S</option>
+<option value="886">Sadeler, Daniel</option>
+<option value="887">Sageot, Nicolas</option>
+<option value="888">Sahagun, Alonso de</option>
+<option value="889">Saint-Aubin, Gabriel-Jacques de</option>
+<option value="890">Saint-Germaine, Jean-Joseph</option>
+<option value="891">Saint-Jean, Simon</option>
+<option value="892">Saint-Priest, Jean de</option>
+<option value="893">Saleb Saheb</option>
+<option value="894">Sambat, Jean-Baptiste</option>
+<option value="895">Sansovino (Jacopo Tatti, called) Jacopo</option>
+<option value="896">Sant, James</option>
+<option value="897">Sant' Agata, Francesco da</option>
+<option value="898">Sant'Uliana Giovanni</option>
+<option value="899">Saphin, Peter</option>
+<option value="900">Sarao</option>
+<option value="901">Sarto, Andrea del</option>
+<option value="902">Sassoferrato</option>
+<option value="903">Satzger, Gottlieb</option>
+<option value="904">Satzger, Johann Martin I</option>
+<option value="905">Savelli, Sperandio</option>
+<option value="906">Sazikov</option>
+<option value="907">Scacchi, Alessandro</option>
+<option value="908">Scanegatty</option>
+<option value="909">Schabol, Roger</option>
+<option value="910">Schalcken, Godfried</option>
+<option value="911">Scheffer, Ary</option>
+<option value="912">Schelfhout, Andreas</option>
+<option value="913">Schenck, Christoph Daniel</option>
+<option value="914">Schindler, Philip Ernst</option>
+<option value="915">Schissler, Christoph</option>
+<option value="916">Schmaltz, Hans</option>
+<option value="917">Schmid, Friedrich</option>
+<option value="918">Schnepf, Adam</option>
+<option value="919">Schomann, Hans</option>
+<option value="920">Schopin, Henri-Frédéric</option>
+<option value="921">Schott, Philipp Jakob</option>
+<option value="922">Schumann, André</option>
+<option value="923">Schwarz, Hans</option>
+<option value="924">Scioli, Stephano</option>
+<option value="925">Seeman, Enoch</option>
+<option value="926">Serravalle, Daniele da</option>
+<option value="927">Seusenhofer, Hans</option>
+<option value="928">Seusenhofer, Jörg</option>
+<option value="929">Seusenhofer, Konrad</option>
+<option value="930">Sèvres Manufactory</option>
+<option value="931">Seymour-Conway, 2nd Marquess of Hertford, Francis Ingram</option>
+<option value="932">Seymour-Conway, 3rd Marquess of Hertford Francis Charles</option>
+<option value="933">Seymour-Conway, 4th Marquess of Hertford, Richard</option>
+<option value="934">Sezenius, Valentin</option>
+<option value="935">Shaw, Ralph</option>
+<option value="936">Shelley, Samuel</option>
+<option value="937">Shirazi, Muhamed Kazim</option>
+<option value="938">Sibilio, Francesco</option>
+<option value="939">Sicardi, Louis-Marie</option>
+<option value="940">Siebenburger Valentin</option>
+<option value="941">Sigman, Jörg</option>
+<option value="942">Silvestre, Louis</option>
+<option value="943">Simón, Gonzalo</option>
+<option value="944">Singry, Jean-Baptiste</option>
+<option value="945">Sinsson, Nicolas</option>
+<option value="946">Slingelandt, Pieter Cornelisz van</option>
+<option value="947">Smart, John</option>
+<option value="948">Snyders, Frans</option>
+<option value="949">Soiron, François</option>
+<option value="950">Soldani-Benzi Massimiliano</option>
+<option value="951">Sommevert Pierre Louis</option>
+<option value="952">Sorg II, Jörg</option>
+<option value="953">South, Robert</option>
+<option value="954">Spacinus, Hieronymus</option>
+<option value="955">Spät, Caspar</option>
+<option value="956">Stainhart, Dominikus</option>
+<option value="957">Stamm, Abraham</option>
+<option value="958">Stanfield, Clarkson (Frederick)</option>
+<option value="959">Stantler Christoph I</option>
+<option value="960">Stantler, Wolfgang</option>
+<option value="961">Steen, Jan</option>
+<option value="962">Stockmar, Johann Christoph</option>
+<option value="963">Stollewerck, Michel</option>
+<option value="964">Storck, Jacob</option>
+<option value="965">Storr, Paul</option>
+<option value="966">Strachan, A. J.</option>
+<option value="967">Stump, Samuel John</option>
+<option value="968">Subleyras, Pierre</option>
+<option value="969">Sully, Thomas</option>
+<option value="970">Sumersperger, Hans</option>
+<option value="971">Sunqur, Haji</option>
+<option value="972">Susini, Antonio</option>
+<option value="973">Sweerts, Michael</option>
+<option value="974">Symonds, William Robert</option>
+<option value="975">Tabary</option>
+<option value="976">Tacca, Ferdinando</option>
+<option value="977">Tacca, Pietro</option>
+<option value="978">Taillandier, Geneviève</option>
+<option value="979">Taillandier, Vincent</option>
+<option value="980">Tandart, Jean-Baptiste</option>
+<option value="981">Tanguay</option>
+<option value="982">Taraval, Hughes</option>
+<option value="983">Tarquinio</option>
+<option value="984">Tassaert, Jean-Pierre-Antoine</option>
+<option value="985">Teniers the Younger, David</option>
+<option value="986">Tesche, Johannes</option>
+<option value="987">Tesche, Wilhem</option>
+<option value="988">Tetrode,  Willem van</option>
+<option value="989">The Decollation Painter</option>
+<option value="990">Thévenet, Louis-Jean</option>
+<option value="991">Thomire, Pierre-Philippe</option>
+<option value="992">Thouron, Jaques</option>
+<option value="993">Thumysen, Itelhans</option>
+<option value="994">Thuret Jacques III</option>
+<option value="995">Tiron, Jean-Marie</option>
+<option value="996">Titian</option>
+<option value="997">Tolledo, Juanes de</option>
+<option value="998">Tornier, Jean Conrad</option>
+<option value="999">Torrigiano, Pietro</option>
+<option value="1000">Toupriant</option>
+<option value="1001">Toutin, Henri</option>
+<option value="1002">Trechsler, Christoph</option>
+<option value="1003">Trezzo, Jacopo da</option>
+<option value="1004">Troivaux, Jean-Baptiste-Désiré</option>
+<option value="1005">Trouard, Louis-François</option>
+<option value="1006">Troy, Jean-François de</option>
+<option value="1007">Troyon, Constant</option>
+<option value="1008">Turner, Joseph Mallord William</option>
+<option value="1009">Tuscan School</option>
+<option value="1010">Umbrian School</option>
+<option value="1011">Unknown</option>
+<option value="1012">Urbini, Francesco</option>
+<option value="1013">Urbino, Giulio da</option>
+<option value="1014">Urbino, Nicola da</option>
+<option value="1015">Ustad Ahmed</option>
+<option value="1016">Vachette, Adrien-Jean Maximilien</option>
+<option value="1017">Valadier, Luigi</option>
+<option value="1018">Valle, Filippo della</option>
+<option value="1019">Vallois, Nicolas-François</option>
+<option value="1020">van Loo, Jacob</option>
+<option value="1021">van Meytens, Martin</option>
+<option value="1022">van Risenburgh, Bernard I</option>
+<option value="1023">van Risenburgh, Bernard II</option>
+<option value="1024">van Royen Willem Hendrik Wilhelmus</option>
+<option value="1025">Vandé, Jean-Baptiste-Emmanuel</option>
+<option value="1026">Vandercruse, Roger</option>
+<option value="1027">Vanloo, Carle</option>
+<option value="1028">Vanloo, Louis-Michel</option>
+<option value="1029">Vannuccio, Francesco di</option>
+<option value="1030">Vavasseur, François le</option>
+<option value="1031">Velázquez, Diego</option>
+<option value="1032">Velde the Younger, Willem van de</option>
+<option value="1033">Velde, Adriaen van de</option>
+<option value="1034">Velthuysen, Simon</option>
+<option value="1035">Venazolo, Antonio</option>
+<option value="1036">Venetian School</option>
+<option value="1037">Verberckt, Jacques</option>
+<option value="1038">Verboeckhoven, Eugène (-Joseph)</option>
+<option value="1039">Verelst, Maria</option>
+<option value="1040">Vernault, Joseph</option>
+<option value="1041">Vernet, Claude-Joseph</option>
+<option value="1042">Vernet, Horace</option>
+<option value="1043">Vidal, Father of Jacques-Augustin</option>
+<option value="1044">Vielliard, André-Vincent</option>
+<option value="1045">Vigée Le Brun, Élisabeth-Louise</option>
+<option value="1046">Viger, François</option>
+<option value="1047">Vincennes Manufactory</option>
+<option value="1048">Vincent, Henry-François</option>
+<option value="1049">Visentini Antonio</option>
+<option value="1050">Vitel</option>
+<option value="1051">Vos, Cornelis de</option>
+<option value="1052">Wailly, Charles de</option>
+<option value="1053">Walker, Robert</option>
+<option value="1054">Wallace Lady Amelie-Julie-Charlotte</option>
+<option value="1055">Wallace, Sir Richard</option>
+<option value="1056">Wallbaum, Matthias</option>
+<option value="1057">Warin, Jean</option>
+<option value="1058">Warnberger, Abraham IV</option>
+<option value="1059">Watteau, Antoine</option>
+<option value="1060">Webb, John</option>
+<option value="1061">Weber, Godtfried</option>
+<option value="1062">Weenix, Jan</option>
+<option value="1063">Weenix, Jan Baptist</option>
+<option value="1064">Weisweiler, Adam</option>
+<option value="1065">Weitbrett, Johann Jakob</option>
+<option value="1066">Welper, Jean Daniel</option>
+<option value="1067">Werff, Adriaen van der</option>
+<option value="1068">Westall, Richard</option>
+<option value="1069">White Allom &amp; Co.</option>
+<option value="1070">Wijnants, Jan</option>
+<option value="1071">Wilkie, David</option>
+<option value="1072">Wimmer, Benjamin Liebrecht</option>
+<option value="1073">Winkler, Johan Jakob</option>
+<option value="1074">Winterhalter, Franz Xaver</option>
+<option value="1075">Winterhalter, Hermann</option>
+<option value="1076">Wirsberg, Peter</option>
+<option value="1077">Wirsberger, Johann</option>
+<option value="1078">Wirsburg</option>
+<option value="1079">Witte, Emanuel de</option>
+<option value="1080">Witz, Michel</option>
+<option value="1081">Wood, William</option>
+<option value="1082">Workshop of Ludovico and Angelo Picchi</option>
+<option value="1083">Workshop of Patanazzi</option>
+<option value="1084">Workshop of Patanazzi, Probably</option>
+<option value="1085">Wouwermans, Philips</option>
+<option value="1086">Wright, John</option>
+<option value="1087">Xanto Avelli da Rovigo, Francesco</option>
+<option value="1088">Xhrouet, Philippe</option>
+<option value="1089">Ydeux, Martial</option>
+<option value="1090">Ziem, Félix (-François-Georges-Philibert)</option>
+<option value="1091">Ziman, Mahomed</option>
+<option value="1092">Zincke, Christian Friedrich</option>
+<option value="1093">Zöffel, Benjamin</option>
+<option value="1094">Zorer, Elias</option>
+</select><svg><use xlink:href="#icon-arrow-down"></use></svg>
+</li>
+<li id="formItem_field_10392" class="formItem">
+<!-- Def-Field-Name(s): Obj_Signature_S -->
+<label for="field_10392">
+Title
+</label>
+<input type="text" name="textfield" id="field_10392" class="text" style="">
+</li>
+<li id="formItem_field_10593" class="formItem">
+<!-- Def-Field-Name(s): Obj_AccSource_S -->
+<label for="field_10593">
+Object Name
+</label>
+<input type="text" name="textfield$0" id="field_10593" class="text" style="">
+</li>
+<li id="formItem_field_10492" class="formItem">
+<!-- Def-Field-Name(s): Obj_Crate_S -->
+<label for="field_10492">
+Place
+</label>
+<select name="$PropertySelection$1" id="field_10492" class="select">
+<option value="0" selected="selected"></option>
+<option value="1">Afghanistan</option>
+<option value="2">Africa</option>
+<option value="3">Albania</option>
+<option value="4">Algeria</option>
+<option value="5">Asia</option>
+<option value="6">Austria</option>
+<option value="7">Belgium</option>
+<option value="8">Bulgaria</option>
+<option value="9">Burma</option>
+<option value="10">China</option>
+<option value="11">Czech Republic</option>
+<option value="12">Democratic Socialist Republic of Sri Lanka</option>
+<option value="13">Denmark</option>
+<option value="14">Egypt</option>
+<option value="15">England</option>
+<option value="16">Ethiopia</option>
+<option value="17">Europe</option>
+<option value="18">France</option>
+<option value="19">Germany</option>
+<option value="20">Greece</option>
+<option value="21">Hungary</option>
+<option value="22">India</option>
+<option value="23">Indonesia</option>
+<option value="24">Iran</option>
+<option value="25">Ireland</option>
+<option value="26">Italy</option>
+<option value="27">Japan</option>
+<option value="28">Malta</option>
+<option value="29">Mexico</option>
+<option value="30">Nepal</option>
+<option value="31">Netherlands</option>
+<option value="32">Norway</option>
+<option value="33">Poland</option>
+<option value="34">Portugal</option>
+<option value="35">Republic of Montenegro</option>
+<option value="36">Republic of Yemen</option>
+<option value="37">Russia</option>
+<option value="38">Scotland</option>
+<option value="39">Spain</option>
+<option value="40">Sweden</option>
+<option value="41">Switzerland</option>
+<option value="42">Syria</option>
+<option value="43">Thailand</option>
+<option value="44">Tunisia</option>
+<option value="45">Turkey</option>
+</select><svg><use xlink:href="#icon-arrow-down"></use></svg>
+</li>
+<li id="formItem_field_4" class="formItem">
+<!-- Def-Field-Name(s): Obj_YearFrom_N -->
+<span class="inlineFieldsetLegend">Year from</span>
+<fieldset class="inlineFieldset">
+<legend>Year from</legend>
+<label class="inlineLabelFrom" for="from_field_4">
+between
+</label>
+<input type="text" name="$ValidField" id="from_field_4" class="textSmall" style="">
+<label class="inlineLabelTo" for="to_field_4">
+to
+</label>
+<input type="text" name="$ValidField$0" id="to_field_4" class="textSmall" style="">
+</fieldset>
+</li>
+<li id="formItem_field_10307" class="formItem">
+<!-- Def-Field-Name(s): Obj_Style_S -->
+<label for="field_10307">
+Period
+</label>
+<select name="$PropertySelection$2" id="field_10307" class="select">
+<option value="0" selected="selected"></option>
+<option value="1">1450 - 1599</option>
+<option value="2">1500 - 1599</option>
+<option value="3">1600 - 1699</option>
+<option value="4">1700 - 1799</option>
+<option value="5">1800 - 1899</option>
+<option value="6">1900 - 1999</option>
+<option value="7">pre 1450</option>
+</select><svg><use xlink:href="#icon-arrow-down"></use></svg>
+</li>
+<li id="formItem_field_3" class="formItem">
+<!-- Def-Field-Name(s): Obj_Material_S -->
+<label for="field_3">
+Materials
+</label>
+<select name="$PropertySelection$3" id="field_3" class="select">
+<option value="0" selected="selected"></option>
+<option value="1">Agate</option>
+<option value="2">Alabaster</option>
+<option value="3">Amethyst</option>
+<option value="4">Bone</option>
+<option value="5">Brass</option>
+<option value="6">Bronze</option>
+<option value="7">Copper</option>
+<option value="8">Coral</option>
+<option value="9">Crystal</option>
+<option value="10">Diamond</option>
+<option value="11">Earthenware</option>
+<option value="12">Emerald</option>
+<option value="13">Enamel</option>
+<option value="14">Garnet</option>
+<option value="15">Gilt</option>
+<option value="16">Glass</option>
+<option value="17">Gold</option>
+<option value="18">Horn</option>
+<option value="19">Horsehair</option>
+<option value="20">Iron</option>
+<option value="21">Ivory</option>
+<option value="22">Jade</option>
+<option value="23">Jasper</option>
+<option value="24">Laquer</option>
+<option value="25">Lead</option>
+<option value="26">Leather</option>
+<option value="27">Mahogany</option>
+<option value="28">Marble</option>
+<option value="29">Oak</option>
+<option value="30">Oil on canvas</option>
+<option value="31">Onyx</option>
+<option value="32">Panel</option>
+<option value="33">Pearl</option>
+<option value="34">Pewter</option>
+<option value="35">Pine</option>
+<option value="36">Porcelain</option>
+<option value="37">Ruby</option>
+<option value="38">Sapphire</option>
+<option value="39">Silk</option>
+<option value="40">Silver</option>
+<option value="41">Steel</option>
+<option value="42">Terracotta</option>
+<option value="43">Tin</option>
+<option value="44">Tortoiseshell</option>
+<option value="45">Velvet</option>
+<option value="46">Walnut</option>
+<option value="47">Watercolour</option>
+<option value="48">Wax</option>
+<option value="49">Wood</option>
+</select><svg><use xlink:href="#icon-arrow-down"></use></svg>
+</li>
+<li id="formItem_field_10602" class="formItem">
+<!-- Def-Field-Name(s): Obj_PartDescription_S -->
+<label for="field_10602">
+Museum Number
+</label>
+<input type="text" name="textfield$1" id="field_10602" class="text" style="">
+</li>
+<li id="formItem_field_10365" class="formItem">
+<!-- Def-Field-Name(s): Obj_SpareSField05_S -->
+<label for="field_10365">
+Location
+</label>
+<select name="$PropertySelection$4" id="field_10365" class="select">
+<option value="0" selected="selected"></option>
+<option value="1">Armouries Corridor</option>
+<option value="2">Arms and Armour I</option>
+<option value="3">Arms and Armour II</option>
+<option value="4">Arms and Armour III</option>
+<option value="5">Arms and Armour IV</option>
+<option value="6">Back State Room</option>
+<option value="7">Billiard Room</option>
+<option value="8">Boudoir</option>
+<option value="9">Boudoir Cabinet</option>
+<option value="10">Cloakroom</option>
+<option value="11">Dining Room</option>
+<option value="12">East Drawing Room</option>
+<option value="13">East Galleries I</option>
+<option value="14">East Galleries II</option>
+<option value="15">East Galleries III</option>
+<option value="16">East Galleries III Staircase</option>
+<option value="17">Exhibition Gallery 2</option>
+<option value="18">Fernery</option>
+<option value="19">Front State Room</option>
+<option value="20">Grand Staircase</option>
+<option value="21">Great Gallery</option>
+<option value="22">Hall</option>
+<option value="23">Housekeeper's Room</option>
+<option value="24">Landing</option>
+<option value="25">Large Drawing Room</option>
+<option value="26">Lecture Theatre Corridor</option>
+<option value="27">Not on display</option>
+<option value="28">not on display</option>
+<option value="29">Oval Drawing Room</option>
+<option value="30">Porphyry Court</option>
+<option value="31">Sixteenth Century Gallery</option>
+<option value="32">Small Drawing Room</option>
+<option value="33">Smoking Room</option>
+<option value="34">Smoking Room Corridor</option>
+<option value="35">Study</option>
+<option value="36">This Object is currently on short term loan</option>
+<option value="37">West Gallery I</option>
+<option value="38">West Gallery II</option>
+<option value="39">West Gallery III</option>
+<option value="40">West Gallery III Staircase</option>
+<option value="41">West Room</option>
+</select><svg><use xlink:href="#icon-arrow-down"></use></svg>
+</li>
+<li id="formItem_field_10612" class="formItem"><form><input type="checkbox" name="imageYes" value="imageYes" onchange="imageSelected(this)" style="">Images results only</form>
+<!-- Def-Field-Name(s): Obj_PartQuantity_S -->
+<label for="field_10612">
+Images results only
+</label>
+<select name="$PropertySelection$5" id="field_10612" class="select">
+<option value="0" selected="selected"></option>
+<option value="1">no</option>
+<option value="2">yes</option>
+</select><svg><use xlink:href="#icon-arrow-down"></use></svg>
+</li>
+</ul>
+</fieldset>
+<p class="formButton">
+<span class="resetButton">
+<a href="/eMP/eMuseumPlus;jsessionid=1A2AAFF9FEE6169C05D8E79F66BAFE23?service=direct/1/SearchPage/search.$MpDirectLink$0&amp;sp=10&amp;sp=Scollection&amp;sp=SfieldValue&amp;sp=0&amp;sp=0&amp;sp=3&amp;sp=SdetailList&amp;sp=0&amp;sp=Sdetail&amp;sp=0&amp;sp=F" tabindex="9">
+Clear fields
+</a> </span>
+<span class="startButton">
+<a href="javascript:document.getElementById(&quot;searchForm&quot;).submit();" tabindex="8">
+Search </a>
+</span>
+<button type="submit" class="hidden" value=""></button>
+</p>
+</form>
+</div> <!-- id=content -->
+<!--
+***********************************************************
+Include Code Container 3
+Date: 2010-01-05
+Author: ks
+************************************************************
+-->
+<div class="cleaner"></div>
+</div><!-- id=contentBox -->
+<!--
+***********************************************************
+End Include Code Container3
+************************************************************
+-->
+</div> <!-- id=container -->
+<div id="footer"> <div class="c-footer__group">
+<section class="c-footer__block c-footer__block--communication">
+<h3 class="c-footer__heading">Connect with us</h3>
+<ul class="u-list-reset | c-social-pages">
+<li class="c-social-pages__item">
+<a class="c-social-pages__link" href="https://en-gb.facebook.com/wallacecollection/"><svg class="c-icon"><title>Find us on Facebook</title><use xlink:href="#icon-facebook"></use></svg></a>
+</li>
+<li class="c-social-pages__item">
+<a class="c-social-pages__link" href="https://twitter.com/WallaceMuseum"><svg class="c-icon"><title>Find us on Twitter</title><use xlink:href="#icon-twitter"></use></svg></a>
+</li>
+<li class="c-social-pages__item">
+<a class="c-social-pages__link" href="https://www.youtube.com/user/TheWallacecollection"><svg class="c-icon"><title>Find us on Youtube</title><use xlink:href="#icon-youtube"></use></svg></a>
+</li>
+<li class="c-social-pages__item">
+<a class="c-social-pages__link" href="https://www.instagram.com/wallacemuseum"><svg class="c-icon"><title>Find us on Instagram</title><use xlink:href="#icon-instagram"></use></svg></a>
+</li>
+</ul>
+</section>
+<!--     <section class="c-footer__block c-footer__block--communication">
+<h3 class="c-footer__heading">Sign up to our newsletter</h3>
+<!-- Begin MailChimp Signup Form
+<form action="https://wallacecollection.us7.list-manage.com/subscribe/post?u=ee2d62f4a8315dfe633378745&amp;id=8df992a153" method="post" id="footer-newsletter-form" name="footer-newsletter-form" class="form" target="_blank" data-parsley-validate="" novalidate="">
+<div class="form-group">
+<div class="form-item form-item--flex">
+<input value="" name="EMAIL" class="form-input form-input--email-newsletter" id="mce-EMAIL-FOOTER" placeholder="Please enter your email address" data-parsley-required="" data-parsley-errors-container="#footer-newsletter-form" data-parsley-required-message="Please enter your email address"
+data-parsley-type-message="Please enter a valid email address" type="email">
+</div>
+<div class="form-item">
+<input value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="form-submit | c-button c-button--slim" type="submit">
+</div>
+</div>
+<div id="mce-responses">
+<div class="response" id="mce-error-response" style="display:none"></div>
+<div class="response" id="mce-success-response" style="display:none"></div>
+</div>
+<!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups
+<div style="position: absolute; left: -5000px;" aria-hidden="true">
+<input name="b_ee2d62f4a8315dfe633378745_8df992a153" tabindex="-1" value="" type="text">
+</div>
+</form>
+<!-- End mc_embed_signup
+</section> -->
+<section class="c-footer__block c-footer__block--communication">
+<h3 class="c-footer__heading">Sign up to our email newsletter</h3>
+<a href="https://www.wallacecollection.org/newsletter/" class="c-button">Sign up <span class="u-visually-hidden">to our newsletter</span></a>
+</section>
+</div>
+<div class="c-footer__group c-footer__group--menus">
+<div class="c-footer__block">
+<a class="c-logo-link c-logo-link--footer">
+<svg class="c-logo" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 114.9 48.2" style="enable-background:new 0 0 114.9 48.2;" xml:space="preserve" role="img" aria-labelledby="site-logo">
+<title id="site-logo">The Wallace Collection</title>
+<g>
+<path class="st0" d="M113.5,21.5L113.5,21.5L113.5,21.5 M107.3,21.7"></path>
+<path class="st0" d="M8,47c-1.1-0.9-1.4-2.2-1.4-3.3c0-0.8,0.2-2.1,1.3-3c0.8-0.7,1.8-1.2,3.5-1.2c0.7,0,1.1,0,1.6,0.1
+c0.4,0.1,0.8,0.2,1.1,0.2c0.1,0,0.2,0.1,0.2,0.1c0,0.1,0,0.2-0.1,0.6c0,0.4,0,1,0,1.2c0,0.2,0,0.3-0.1,0.3C14,42.1,14,42,14,41.8
+c0-0.3-0.2-0.7-0.4-1c-0.4-0.4-1.2-0.7-2.2-0.7c-1,0-1.6,0.2-2.1,0.7c-0.8,0.7-1,1.8-1,2.9c0,2.6,2,3.9,3.5,3.9c1,0,1.6-0.1,2-0.6
+c0.2-0.2,0.3-0.5,0.4-0.7c0-0.2,0.1-0.2,0.1-0.2c0.1,0,0.1,0.1,0.1,0.2c0,0.1-0.1,1.1-0.2,1.5C14,47.9,14,47.9,13.8,48
+c-0.4,0.2-1.3,0.3-2,0.3C10.3,48.2,9,47.9,8,47"></path>
+<path class="st0" d="M18.6,43.9c0-1.9,1.2-4.3,4.6-4.3c2.8,0,4.5,1.6,4.5,4.1c0,2.5-1.8,4.5-4.6,4.5C19.9,48.2,18.6,45.9,18.6,43.9
+M26.1,44.1c0-2.5-1.4-4-3.2-4c-1.3,0-2.7,0.7-2.7,3.5c0,2.3,1.3,4.1,3.4,4.1C24.3,47.7,26.1,47.3,26.1,44.1z"></path>
+<path class="st0" d="M34.2,44.9c0,1.4,0,2.2,0.2,2.4c0.2,0.2,0.5,0.2,1.3,0.2c0.6,0,1,0,1.3-0.3c0.1-0.1,0.3-0.5,0.3-0.7
+c0-0.1,0-0.2,0.1-0.2c0.1,0,0.1,0.1,0.1,0.2c0,0.1-0.1,0.9-0.2,1.3c-0.1,0.2-0.1,0.3-0.7,0.3c-1.6,0-2.3-0.1-3.2-0.1
+c-0.3,0-1,0-1.4,0c-0.1,0-0.2,0-0.2-0.1c0-0.1,0-0.1,0.2-0.1c0.2,0,0.3,0,0.4,0c0.2,0,0.3-0.3,0.3-0.6c0.1-0.5,0.1-1.3,0.1-2.4
+v-1.9c0-1.7,0-2,0-2.3c0-0.4-0.1-0.6-0.5-0.6c-0.1,0-0.2,0-0.4,0c-0.1,0-0.2,0-0.2-0.1c0-0.1,0.1-0.1,0.2-0.1c0.5,0,1.2,0,1.5,0
+c0.3,0,1.1,0,1.5,0c0.2,0,0.2,0,0.2,0.1c0,0.1-0.1,0.1-0.2,0.1c-0.1,0-0.3,0-0.4,0c-0.3,0.1-0.4,0.2-0.4,0.6c0,0.4,0,0.7,0,2.3
+V44.9"></path>
+<path class="st0" d="M44.1,44.9c0,1.4,0,2.2,0.2,2.4c0.2,0.2,0.5,0.2,1.3,0.2c0.6,0,1,0,1.3-0.3c0.1-0.1,0.3-0.5,0.3-0.7
+c0-0.1,0-0.2,0.1-0.2c0.1,0,0.1,0.1,0.1,0.2c0,0.1-0.1,0.9-0.2,1.3c-0.1,0.2-0.1,0.3-0.7,0.3c-1.6,0-2.3-0.1-3.2-0.1
+c-0.3,0-1,0-1.4,0c-0.1,0-0.2,0-0.2-0.1c0-0.1,0-0.1,0.2-0.1c0.2,0,0.3,0,0.4,0c0.2,0,0.3-0.3,0.3-0.6c0.1-0.5,0.1-1.3,0.1-2.4
+v-1.9c0-1.7,0-2,0-2.3c0-0.4-0.1-0.6-0.5-0.6c-0.1,0-0.2,0-0.4,0c-0.1,0-0.2,0-0.2-0.1c0-0.1,0.1-0.1,0.2-0.1c0.5,0,1.2,0,1.5,0
+c0.3,0,1.1,0,1.5,0c0.2,0,0.2,0,0.2,0.1c0,0.1-0.1,0.1-0.2,0.1c-0.1,0-0.3,0-0.4,0c-0.3,0.1-0.4,0.2-0.4,0.6c0,0.4,0,0.7,0,2.3
+V44.9"></path>
+<path class="st0" d="M52.6,42.9c0-1.7,0-2,0-2.3c0-0.4-0.1-0.6-0.5-0.6c-0.1,0-0.3,0-0.4,0c-0.1,0-0.2,0-0.2-0.1
+c0-0.1,0.1-0.1,0.2-0.1c0.6,0,1.3,0,1.6,0c0.4,0,2.6,0,2.8,0c0.2,0,0.4,0,0.5-0.1c0.1,0,0.1,0,0.2,0c0.1,0,0.1,0,0.1,0.1
+c0,0.1-0.1,0.2-0.1,0.7c0,0.1,0,0.6-0.1,0.7c0,0.1,0,0.1-0.1,0.1c-0.1,0-0.1-0.1-0.1-0.2c0-0.1,0-0.3-0.1-0.4
+c-0.1-0.2-0.2-0.3-0.7-0.4c-0.2,0-1.3,0-1.6,0c-0.1,0-0.1,0-0.1,0.1v2.8c0,0.1,0,0.1,0.1,0.1c0.2,0,1.5,0,1.8,0
+c0.3,0,0.4-0.1,0.5-0.2c0.1-0.1,0.1-0.1,0.2-0.1c0,0,0.1,0,0.1,0.1c0,0.1-0.1,0.2-0.1,0.8c0,0.2,0,0.7,0,0.7c0,0.1,0,0.2-0.1,0.2
+c-0.1,0-0.1,0-0.1-0.1c0-0.1,0-0.3,0-0.4c-0.1-0.2-0.2-0.4-0.6-0.4c-0.2,0-1.3,0-1.6,0c-0.1,0-0.1,0-0.1,0.1v0.9c0,0.4,0,1.4,0,1.7
+c0,0.8,0.2,0.9,1.3,0.9c0.3,0,0.8,0,1-0.1c0.3-0.1,0.4-0.4,0.5-0.8c0-0.1,0-0.2,0.1-0.2c0.1,0,0.1,0.1,0.1,0.2c0,0.3-0.1,1-0.1,1.2
+c-0.1,0.3-0.2,0.3-0.6,0.3c-1.7,0-2.4-0.1-3.1-0.1c-0.3,0-1,0-1.4,0c-0.1,0-0.2,0-0.2-0.1c0-0.1,0-0.1,0.2-0.1c0.2,0,0.3,0,0.4,0
+c0.2,0,0.3-0.3,0.3-0.6c0.1-0.5,0.1-1.3,0.1-2.4V42.9"></path>
+<path class="st0" d="M62.8,47c-1.1-0.9-1.4-2.2-1.4-3.3c0-0.8,0.2-2.1,1.3-3c0.8-0.7,1.8-1.2,3.5-1.2c0.7,0,1.1,0,1.6,0.1
+c0.4,0.1,0.8,0.2,1.1,0.2c0.1,0,0.2,0.1,0.2,0.1c0,0.1,0,0.2-0.1,0.6c0,0.4,0,1,0,1.2c0,0.2,0,0.3-0.1,0.3c-0.1,0-0.1-0.1-0.1-0.2
+c0-0.3-0.2-0.7-0.4-1c-0.4-0.4-1.2-0.7-2.2-0.7c-1,0-1.6,0.2-2.1,0.7c-0.8,0.7-1,1.8-1,2.9c0,2.6,2,3.9,3.5,3.9c1,0,1.6-0.1,2-0.6
+c0.2-0.2,0.3-0.5,0.4-0.7c0-0.2,0.1-0.2,0.1-0.2c0.1,0,0.1,0.1,0.1,0.2c0,0.1-0.1,1.1-0.2,1.5c-0.1,0.2-0.1,0.2-0.3,0.3
+c-0.4,0.2-1.3,0.3-2,0.3C65.1,48.2,63.8,47.9,62.8,47"></path>
+<path class="st0" d="M76.4,40.4l-1.6,0c-0.6,0-0.9,0.1-1.1,0.3c-0.1,0.2-0.2,0.3-0.2,0.4c0,0.1-0.1,0.1-0.1,0.1
+c-0.1,0-0.1-0.1-0.1-0.2c0-0.2,0.2-1.2,0.2-1.3c0-0.1,0.1-0.2,0.1-0.2c0.1,0,0.2,0.1,0.5,0.1c0.3,0,0.7,0.1,1.1,0.1h4.4
+c0.7,0,1-0.1,1.1-0.1c0.1,0,0.1,0.1,0.1,0.2c0,0.2,0,1,0,1.3c0,0.1,0,0.2-0.1,0.2c-0.1,0-0.1-0.1-0.1-0.2l0-0.1
+c0-0.3-0.3-0.6-1.3-0.6l-1.4,0v4.5c0,1,0,1.9,0.1,2.4c0,0.3,0.1,0.6,0.4,0.6c0.2,0,0.4,0,0.6,0c0.1,0,0.2,0,0.2,0.1
+c0,0.1-0.1,0.1-0.2,0.1c-0.7,0-1.4,0-1.7,0c-0.3,0-1,0-1.4,0c-0.1,0-0.2,0-0.2-0.1c0-0.1,0-0.1,0.2-0.1c0.2,0,0.3,0,0.4,0
+c0.2,0,0.3-0.3,0.3-0.6c0.1-0.5,0.1-1.3,0.1-2.4V40.4"></path>
+<path class="st0" d="M86,42.9c0-1.7,0-2,0-2.3c0-0.4-0.1-0.6-0.4-0.6c-0.1,0-0.3,0-0.4,0c-0.1,0-0.2,0-0.2-0.1
+c0-0.1,0.1-0.1,0.3-0.1c0.4,0,1.1,0,1.4,0c0.3,0,0.9,0,1.3,0c0.1,0,0.2,0,0.2,0.1c0,0.1-0.1,0.1-0.2,0.1c-0.1,0-0.2,0-0.3,0
+c-0.3,0.1-0.4,0.2-0.4,0.6c0,0.4,0,0.7,0,2.3v1.9c0,1.1,0,1.9,0,2.4c0,0.3,0.1,0.5,0.4,0.5c0.2,0,0.4,0,0.6,0c0.1,0,0.2,0,0.2,0.1
+c0,0.1-0.1,0.1-0.2,0.1c-0.7,0-1.4,0-1.7,0c-0.3,0-1,0-1.4,0c-0.1,0-0.2,0-0.2-0.1c0-0.1,0-0.1,0.2-0.1c0.2,0,0.3,0,0.4,0
+c0.2,0,0.3-0.2,0.3-0.6C86,46.8,86,46,86,44.9V42.9"></path>
+<path class="st0" d="M92.6,43.9c0-1.9,1.2-4.3,4.6-4.3c2.8,0,4.5,1.6,4.5,4.1c0,2.5-1.8,4.5-4.6,4.5C93.9,48.2,92.6,45.9,92.6,43.9
+M100.1,44.1c0-2.5-1.4-4-3.2-4c-1.3,0-2.7,0.7-2.7,3.5c0,2.3,1.3,4.1,3.4,4.1C98.3,47.7,100.1,47.3,100.1,44.1z"></path>
+<path class="st0" d="M107.5,46.6c0,0.9,0.2,1.2,0.4,1.2c0.2,0.1,0.4,0.1,0.6,0.1c0.1,0,0.2,0,0.2,0.1c0,0.1-0.1,0.1-0.3,0.1
+c-0.7,0-1.2,0-1.4,0c-0.1,0-0.6,0-1.2,0c-0.1,0-0.2,0-0.2-0.1c0-0.1,0.1-0.1,0.2-0.1c0.1,0,0.3,0,0.5-0.1c0.3-0.1,0.3-0.4,0.3-1.4
+l0.1-6.5c0-0.2,0-0.4,0.1-0.4c0.1,0,0.2,0.1,0.4,0.3c0.1,0.1,1.8,1.9,3.4,3.5c0.8,0.8,2.2,2.3,2.4,2.5h0.1l-0.1-5
+c0-0.7-0.1-0.9-0.4-1c-0.2-0.1-0.4-0.1-0.6-0.1c-0.1,0-0.2,0-0.2-0.1c0-0.1,0.1-0.1,0.3-0.1c0.6,0,1.1,0,1.3,0c0.1,0,0.5,0,1.1,0
+c0.1,0,0.3,0,0.3,0.1c0,0.1-0.1,0.1-0.2,0.1c-0.1,0-0.2,0-0.3,0c-0.3,0.1-0.4,0.3-0.4,0.9l-0.1,7c0,0.2,0,0.3-0.1,0.3
+c-0.1,0-0.3-0.1-0.4-0.2c-0.7-0.7-2.1-2.1-3.3-3.2c-1.2-1.2-2.4-2.6-2.6-2.8h0L107.5,46.6"></path>
+<path class="st0" d="M113.5,21.7L113.5,21.7L113.5,21.7 M107.3,21.9"></path>
+<path class="st0" d="M49.3,4.8c0.4-0.2,0.6-0.4,0.9-0.7c0.2-0.3,0.4-0.6,0.6-1c0.1-0.2,0.1-0.4,0.2-0.6c0-0.2,0.1-0.4,0.2-0.6
+c0.1-0.2,0.2-0.3,0.3-0.5c0.1-0.1,0.3-0.2,0.3-0.3c-0.1-0.3-0.5-0.2-0.7-0.2c-0.4,0-0.8,0.1-1.2,0.4c-0.2,0.1-0.5,0.4-0.3,0.7
+C49.7,2,50,2,50.1,2.1c0.2,0.1,0.3,0.3,0.3,0.5c0.1,0.6-0.4,1.2-0.8,1.5c-0.1,0.1-0.5,0.4-0.6,0.4c0-0.1,0-0.2,0-0.3
+c-0.1-0.5-0.4-1-0.9-1.2C48,3,47.8,3,47.7,3c-0.6,0.1-1.1,0.6-0.9,1.3c0.2,0.6,0.9,0.8,1.5,0.8c0.1,0,0.3-0.1,0.4,0
+c0.1,0.1-0.1,0.5-0.2,0.6c-0.3,0.6-1,1.1-1.6,1.4c-0.2,0.1-0.4,0.2-0.6,0.2c-0.2,0-0.3,0-0.5,0.1c0,0-0.1,0-0.1,0.1
+c-0.1,0-0.3,0-0.4,0c-0.1,0-0.1-0.2-0.2-0.3c-0.2-0.2-0.6-0.1-0.8-0.1c-0.1,0-0.2,0.1-0.3,0.1c0,0-0.1,0.1-0.1,0.1
+c-0.1,0-0.2-0.1-0.3-0.1c0,0-0.1,0.1-0.1,0.1c0,0,0,0.1,0,0.1c0,0,0,0,0.1,0c0.1,0,0.1,0.1,0.2,0.1c0.1,0.1,0,0.3,0.1,0.4
+c0,0,0.1,0.1,0.1,0.1c0,0,0,0,0,0c0,0,0,0.1-0.1,0.2c-0.1,0.2-0.2,0.4-0.3,0.5c-0.1,0.1-0.1,0.3-0.2,0.3c-0.1,0-0.2,0-0.3,0
+c-0.1,0-0.1-0.1-0.2-0.2c-0.1-0.1-0.2-0.3-0.3-0.4c-0.1-0.1-0.2-0.2-0.2-0.2c0-0.1,0-0.1-0.1-0.1c-0.1-0.1,0-0.2,0.1-0.3
+c0.1-0.1,0.1-0.3,0.3-0.2c0.1,0,0.2,0.1,0.3,0c0.2,0,0.2-0.2,0.3-0.3c0,0,0.1,0,0.1-0.1c0.1-0.1,0.1-0.1,0-0.2c0,0,0-0.1,0-0.1
+c0-0.1,0-0.1,0.1-0.1c0.1,0,0.2,0,0.3-0.1c0-0.1,0-0.2,0-0.3c0.1,0,0.1-0.1,0.2-0.1c0.1,0,0.2,0,0.1-0.1c0-0.1-0.1-0.1-0.2-0.1
+c-0.2-0.1-0.3-0.4-0.3-0.6c0-0.1,0-0.1,0-0.2c0-0.1,0.1-0.1,0.1-0.2c0,0,0,0,0,0C43.6,5,43.5,5,43.4,5c-0.1,0-0.3,0-0.4,0
+c-0.1,0-0.2-0.2-0.3-0.1c0,0.1-0.1,0.2-0.1,0.2c-0.1,0.1-0.2-0.1-0.3,0c-0.1,0-0.1,0.2-0.2,0.3c-0.1,0.1-0.3,0.1-0.4,0.1
+c-0.1,0-0.1-0.1-0.1-0.2c0-0.1,0.1-0.2,0.2-0.3c0.1,0,0.2,0,0.2-0.1c0-0.1,0-0.1,0.1-0.2c0.1-0.1,0.2,0,0.4,0
+c0.1,0,0.1-0.1,0.2-0.2c0.1-0.1,0.3-0.1,0.4,0c0.2,0,0.2,0.1,0.4,0.3c0.1,0.1,0.2,0.1,0.3,0.2c0.1,0,0.2,0,0.3,0
+c0.1,0,0.1-0.2,0.1-0.2c0-0.2-0.1-0.3-0.3-0.3c-0.1,0-0.2,0-0.2,0c0,0-0.1-0.1-0.1-0.1c-0.1-0.1-0.2-0.2-0.4-0.2
+c-0.1,0-0.3,0-0.4,0c0,0-0.1,0.1-0.1,0c0,0,0-0.1,0-0.1c0-0.2,0-0.3,0-0.5c0-0.1,0-0.2,0-0.2c0-0.1,0.1-0.1,0.1-0.2
+c0.2-0.3,0.4-0.6,0.8-0.7c0.2,0,0.3-0.1,0.5,0c0.1,0,0.3,0.1,0.3,0c0-0.1-0.1-0.1-0.1-0.1c-0.4-0.2-1-0.2-1.3,0.2
+c-0.1,0.1-0.2,0.2-0.3,0.4c0,0.1-0.1,0.3-0.2,0.2c0,0,0-0.1,0-0.1c0-0.2,0-0.3-0.1-0.5c-0.1-0.2-0.2-0.4-0.4-0.6
+c-0.2-0.2-0.4-0.4-0.6-0.6C41,1,40.8,0.8,40.7,0.7c-0.1-0.1-0.3-0.3-0.3-0.4c0-0.1,0-0.2,0-0.2C40.3,0,40.2,0,40.2,0
+c-0.1,0.1-0.1,0.2,0,0.3c0,0.2,0.2,0.4,0.3,0.6c0.2,0.3,0.5,0.6,0.7,0.9c0.1,0.1,0.1,0.2,0.2,0.3c0,0-0.1,0-0.1,0
+C41.1,2,41.1,1.9,41,1.8c-0.3-0.3-0.8-0.6-1.3-0.6c-0.2,0-0.8,0.1-0.7,0.4c0,0.1,0.2,0,0.3,0c0.4-0.2,0.8-0.1,1.2,0.1
+c0.4,0.2,0.6,0.6,0.9,0.9c0,0,0.2,0.3,0.2,0.3c0,0-0.2-0.1-0.3-0.1c-0.2-0.1-0.4-0.2-0.6-0.2c-0.4,0-0.9,0.3-0.9,0.8
+c0,0.2,0.1,0.5,0.4,0.5c0,0,0,0,0-0.1c0-0.1-0.1-0.2-0.1-0.3c-0.1-0.4,0.4-0.6,0.7-0.5c0.1,0,0.2,0.1,0.3,0.1
+c0.3,0.2,0.5,0.6,0.5,1c0,0.1,0,0.2,0,0.3c0,0,0,0,0,0c-0.1,0-0.2,0-0.4,0c-0.3,0.1-0.5,0.5-0.3,0.7c0,0,0,0,0,0.1c0,0,0,0.1,0,0.1
+c-0.1,0.2-0.1,0.4-0.1,0.5c0,0.1,0,0.2,0.1,0.3c0,0.1,0.1,0.2,0.2,0.2c0.1,0,0.2,0,0.3,0.1c0.1,0.1,0,0.5-0.1,0.6
+c-0.1,0.1-0.2,0.2-0.3,0.2c0,0-0.1,0-0.2,0c-0.1,0-0.1,0-0.2,0c-0.7,0.1-1,0.9-1.1,1.5c0,0.7,0.2,1.3,0.4,2c0,0.2,0.1,0.4,0.1,0.7
+c0,0.2-0.1,0.3-0.1,0.4c0,0.1,0,0.2-0.1,0.3c0,0.1-0.1,0.3-0.2,0.5c-0.1,0.1-0.3,0.2-0.4,0.2c-0.2,0.1-0.3,0.2-0.5,0.3
+c-0.1,0.1-0.4,0.2-0.3,0.3c0,0.1,0.1,0.2,0.2,0.3c0.1,0.1,0.3,0.3,0.4,0.3c0.1,0,0.2,0.1,0.3,0.2c0.1,0.1,0,0.2,0,0.3
+c0,0.1-0.2,0.5,0,0.6c0.1,0.1,0.3,0,0.4,0c0.2,0,0.3,0,0.5,0c0.1,0,0.5,0,0.4,0.1c0,0-0.2,0-0.2,0c-0.2,0-0.4,0-0.6,0
+c-0.6,0.1-1.1,0.2-1.7,0.5c-0.4,0.2-0.8,0.5-1.2,0.8c-0.4,0.3-0.7,0.6-0.9,0.9c-0.2,0.2-0.3,0.4-0.4,0.6c-0.1,0.2-0.2,0.4-0.3,0.6
+c-0.2,0.4-0.2,0.8-0.3,1.2c0,0-0.1,0.1-0.1,0.2c0,0.1,0,0.1,0,0.2c0,0.2,0.2,0.5,0.4,0.4c0.1,0,0.1,0,0.2-0.1
+c0.1-0.1,0.1-0.3,0.1-0.4c0-0.1-0.1-0.2-0.1-0.2c-0.1-0.1,0-0.3,0-0.4c0-0.1,0.1-0.3,0.1-0.4c0.1-0.3,0.2-0.6,0.4-0.8
+c0.2-0.3,0.4-0.5,0.6-0.7c0.4-0.4,0.9-0.8,1.4-1.1c0.4-0.2,0.7-0.3,1.1-0.4c1-0.3,2.1-0.2,3.1-0.1c0.8,0.2,1.6,0.5,2.2,1
+c0.8,0.6,1.3,1.3,1.8,2.2c0.1,0.3,0.3,0.6,0.4,0.8c0,0.1,0.1,0.5,0.2,0.5c0.3,0.1,0.7,0,1,0c0.5,0,1.1,0,1.7,0c0.2,0,0.4,0,0.6,0
+c0.2,0,0.3-0.1,0.5-0.2c0.1,0,0.3-0.1,0.4-0.2c0.1-0.1,0.1-0.2,0.2-0.2c0.1,0,0.3,0,0.5-0.1c0.4,0,0.8-0.2,1-0.5
+c0.1-0.1,0.2-0.2,0.3-0.4c0.1-0.1,0.1-0.2,0.2-0.3c0.1-0.2-0.2-0.1-0.3-0.1c0.1-0.1,0.2-0.3,0.2-0.4c0.1-0.2,0.1-0.4,0.2-0.6
+c0-0.2,0.1-0.4,0.1-0.6c0-0.1,0.1-0.3-0.1-0.4c-0.2-0.1-0.3,0.1-0.5,0c0-0.1-0.1-0.1-0.1-0.2c-0.2-0.3-0.4-0.6-0.7-0.7
+c-0.3-0.1-0.7-0.1-1,0.1c-0.3,0.2-0.3,0.8,0.1,0.9c0.3,0.1,0.5,0,0.6-0.3c0-0.1,0.2,0,0.3,0c0.4,0.1,0.7,0.6,0.7,1
+c0.1,0.5-0.1,1.5-0.8,1.4c-0.2,0-0.3-0.3-0.3-0.5c-0.1-0.2-0.1-0.4-0.4-0.5c-0.2-0.1-0.5-0.1-0.7,0.1c-0.2,0.2-0.2,0.5,0,0.7
+c0.1,0.1,0.2,0.1,0.4,0c0.2-0.1,0.3-0.1,0.5,0c0.2,0.2,0,0.6-0.2,0.7c-0.3,0.2-0.7,0.3-1,0.2c-0.7-0.2-1.3-0.8-1.6-1.4
+c-0.2-0.4-0.3-0.7-0.3-1.1c-0.1-0.5-0.2-0.9-0.3-1.3c-0.1-0.3-0.2-0.5-0.3-0.7c-0.1-0.2-0.2-0.4-0.3-0.5c-0.4-0.5-1-1-1.6-1.3
+c-0.2-0.1-0.5-0.2-0.8-0.2c-0.1,0-0.2-0.1-0.3,0c-0.1,0.1-0.2,0.2-0.3,0.3c-0.1,0.1-0.2,0.1-0.4,0.2c0,0-0.2,0-0.2,0
+c0.1-0.1,0.3-0.3,0.4-0.4c0.1-0.1,0.2-0.2,0.3-0.3c0.1-0.1,0.2-0.2,0.1-0.3c-0.1-0.1-0.2-0.1-0.3-0.1c-0.3-0.1-0.6-0.2-0.9-0.4
+c-0.1,0-0.1-0.1-0.2-0.1c0,0-0.1-0.1-0.1-0.1c-0.1,0,0.1,0.2,0.1,0.3c0.1,0.1,0.2,0.2,0.3,0.3c0.1,0.1,0.2,0.2,0.3,0.3
+c-0.1,0-0.1,0-0.2-0.1c-0.2-0.1-0.4-0.3-0.5-0.4c-0.1-0.1-0.1-0.2-0.2-0.2c-0.1,0-0.3,0-0.4,0c-0.1,0.1,0,0.1,0,0.2
+c0,0.1,0.1,0.1,0.1,0.2c0.1,0.2,0.1,0.4,0.1,0.6c0,0,0,0.3,0,0.3c-0.1,0-0.1-0.1-0.1-0.2c-0.1-0.3-0.2-0.6-0.3-0.9
+c0-0.1-0.1-0.1-0.1-0.2c-0.1-0.1-0.2,0-0.3,0c-0.1,0-0.1,0.2-0.1,0.3c0,0.1,0,0.3,0,0.4c0,0.1-0.1,0.3-0.1,0.4c0,0.1,0,0.1,0,0.2
+c0,0,0-0.1,0-0.1c-0.1-0.2,0-0.3,0-0.5c0-0.2-0.1-0.4-0.1-0.5c0-0.1,0-0.2-0.1-0.2c-0.1-0.1-0.2,0-0.3,0c0,0-0.3,0-0.3,0
+c0,0,0-0.1,0.1-0.2c0.1-0.1,0.3-0.1,0.5-0.1c0.3,0,0.6,0,0.8-0.1c0.2,0,0.4-0.1,0.6-0.1c0.1,0,0.3,0,0.4-0.1c0.1-0.1,0-0.4,0-0.5
+c0-0.1,0-0.1,0-0.1c0-0.1,0.1-0.2,0.1-0.3c0,0,0,0,0,0c-0.1-0.1-0.2-0.1-0.2-0.1c-0.3,0-0.6-0.1-0.8-0.2c-0.2-0.2-0.4-0.4-0.6-0.6
+c-0.3-0.2-0.6-0.4-1-0.6v0h0v0c0.1,0,0.2,0,0.3,0c0.5,0.2,0.9,0.5,1.3,0.8c0.1,0.1,0.3,0.1,0.4,0.2c0.4,0.1,0.7,0.2,1.1,0.2
+c0.3-0.1,0.7-0.2,1.1-0.1c0.4,0.1,0.4,0.6,0.6,0.8c0.1,0.1,0.1,0.2,0.3,0.2c0-0.2,0.1-0.3,0.2-0.4c0.1-0.3,0.1-0.6,0.1-0.9
+c0-0.1,0-0.3,0-0.4c0-0.1,0.1-0.3,0.1-0.4c0.1-0.1,0.2-0.2,0.3-0.3C46,9,46.3,8.8,46.4,8.6c0.1-0.1,0.1-0.3,0.1-0.4
+C46.6,8,46.8,7.8,47,7.7c0.1-0.1,0.1-0.1,0.2-0.2c0.1-0.1,0.2-0.1,0.2-0.2c0-0.1,0.1-0.1,0.1-0.2c0,0,0.1-0.1,0.2-0.1
+c0.5-0.5,1-0.9,1.3-1.5c0-0.1,0.1-0.2,0.1-0.3C49,5.2,49,5,49,4.9 M50.4,1.8c-0.1,0-0.3,0-0.4-0.1c-0.1-0.1,0.2-0.3,0.3-0.4
+c0.2-0.1,0.6-0.3,0.8-0.3c0.1,0,0.2,0,0.2,0c0.1,0.1-0.1,0.2-0.2,0.3c-0.2,0.1-0.4,0.3-0.6,0.4C50.5,1.7,50.5,1.8,50.4,1.8z
+M48.8,4.6c0,0.1-0.1,0.1-0.2,0.2c-0.3,0.1-0.6,0.2-0.9,0C47.3,4.7,47,4.3,47,4c0-0.3,0.2-0.5,0.4-0.6c0.3-0.1,0.6-0.1,0.8,0.1
+c0.2,0.2,0.4,0.4,0.5,0.6C48.7,4.2,48.8,4.4,48.8,4.6z M44.7,8.3C44.7,8.3,44.7,8.3,44.7,8.3c0.1-0.1,0.1-0.1,0.1-0.1
+c0,0,0.1-0.1,0.1-0.1c0,0,0.1,0,0.1-0.1c0,0,0.1-0.1,0.1-0.1c0.1,0,0.1,0,0.2-0.1c0.1,0,0.3,0,0.4,0c0,0,0,0.1,0,0.1
+c0,0.2-0.1,0.3-0.2,0.4c-0.1,0-0.2-0.1-0.3-0.1c-0.1,0-0.4,0.2-0.4,0.3c-0.1,0-0.2,0.2-0.3,0.1C44.5,8.6,44.6,8.4,44.7,8.3z
+M43.2,5.8C43.2,5.7,43.2,5.7,43.2,5.8c0.1,0.1,0.1,0.1,0.1,0.2c0,0-0.2,0.1-0.2,0.1c0,0,0-0.1,0-0.1C43,5.8,43.1,5.8,43.2,5.8
+C43.1,5.8,43.1,5.8,43.2,5.8z M48.2,20.3c-0.2,0-0.4,0-0.5,0c-0.2,0-0.4,0-0.6,0c-0.2,0-0.2-0.2-0.2-0.3c-0.2-0.5-0.5-1-0.8-1.5
+c-0.3-0.4-0.6-0.9-0.9-1.2c-0.2-0.2-0.4-0.4-0.7-0.6c-0.1-0.1-0.3-0.2-0.4-0.2c-0.1-0.1-0.3-0.1-0.3-0.3c0.1-0.1,0.4-0.2,0.5-0.3
+c0.1,0,0.2,0,0.2-0.1c0.1-0.1,0-0.4-0.1-0.5c-0.1-0.1-0.2-0.3-0.2-0.5c0-0.3,0.3,0,0.3,0.1c0.1,0.1,0.2,0.2,0.3,0.4
+c0.2,0.3,0.3,0.7,0.2,1.1c0,0.1-0.1,0.2-0.1,0.3c0,0.2,0,0.2,0.2,0.2c0.1,0,0.1-0.1,0.2,0c0.1,0.1,0.2,0.2,0.3,0.3
+c0.1,0.1,0.1,0.2,0.2,0.3c0,0,0.1,0.1,0.2,0.1c0.2,0.1,0.1-0.3,0.1-0.4c0-0.8-0.2-1.7-0.6-2.4c-0.2-0.2-0.3-0.4-0.6-0.6
+c0,0-0.1,0-0.1-0.1c0,0,0.5,0.2,0.5,0.2c0.3,0.2,0.5,0.4,0.7,0.7c0.1,0.2,0.5,0.7,0.3,1c-0.1,0.2-0.1,0.4,0,0.6
+c0,0.1,0.1,0.1,0.2,0.2c0,0.1,0,0.2,0,0.3c0,0.1,0,0.2,0.1,0.3c0,0.1,0.1,0.1,0.2,0.2c0.1,0.1,0.1,0.1,0,0.2c-0.2,0.3-0.1,0.7,0,1
+c0.1,0.3,0.2,0.9,0.6,0.9c0.2,0,0.1-0.3,0.2-0.2c0.1,0,0.2,0.1,0.2,0.2c0.1,0.1,0.2,0.2,0.3,0.3C48.1,20.2,48.3,20.3,48.2,20.3z"></path>
+<path class="st0" d="M61.9,11.3l-1.2,0c-0.5,0-0.6,0.1-0.8,0.2c-0.1,0.1-0.1,0.2-0.1,0.3c0,0.1,0,0.1-0.1,0.1c-0.1,0-0.1,0-0.1-0.1
+c0-0.1,0.2-0.8,0.2-0.9c0-0.1,0-0.2,0.1-0.2c0.1,0,0.1,0.1,0.3,0.1c0.2,0,0.5,0,0.8,0h3.1c0.5,0,0.7-0.1,0.8-0.1
+c0.1,0,0.1,0,0.1,0.2c0,0.2,0,0.7,0,0.9c0,0.1,0,0.1-0.1,0.1c-0.1,0-0.1,0-0.1-0.2l0-0.1c0-0.2-0.2-0.4-0.9-0.4l-1,0v3.2
+c0,0.7,0,1.4,0,1.7c0,0.2,0.1,0.4,0.3,0.4c0.1,0,0.3,0,0.4,0c0.1,0,0.1,0,0.1,0.1c0,0.1-0.1,0.1-0.2,0.1c-0.5,0-1,0-1.2,0
+c-0.2,0-0.7,0-1,0c-0.1,0-0.2,0-0.2-0.1c0,0,0-0.1,0.1-0.1c0.1,0,0.2,0,0.3,0c0.2,0,0.2-0.2,0.2-0.4c0-0.3,0-1,0-1.7V11.3"></path>
+<path class="st0" d="M88.8,13.4C88.8,13.4,88.8,13.4,88.8,13.4l0-0.2c0-1.2,0-1.4,0-1.7c0-0.3-0.1-0.4-0.3-0.5c-0.1,0-0.2,0-0.3,0
+C88.1,11,88,11,88,11c0-0.1,0.1-0.1,0.2-0.1c0.4,0,0.9,0,1.1,0c0.2,0,0.7,0,1,0c0.1,0,0.2,0,0.2,0.1c0,0.1,0,0.1-0.1,0.1
+c-0.1,0-0.1,0-0.2,0c-0.2,0-0.3,0.2-0.3,0.5c0,0.3,0,0.5,0,1.7v1.4c0,0.7,0,1.4,0,1.7c0,0.2,0.1,0.4,0.3,0.4c0.1,0,0.3,0,0.4,0
+c0.1,0,0.1,0,0.1,0.1c0,0.1-0.1,0.1-0.2,0.1c-0.5,0-1,0-1.2,0c-0.2,0-0.7,0-1,0c-0.1,0-0.2,0-0.2-0.1c0,0,0-0.1,0.1-0.1
+c0.1,0,0.2,0,0.3,0c0.2,0,0.2-0.2,0.2-0.4c0-0.3,0-1,0-1.7v-0.7c0,0,0,0,0,0h-3c0,0,0,0,0,0v0.7c0,0.7,0,1.4,0,1.7
+c0,0.2,0.1,0.4,0.3,0.4c0.1,0,0.3,0,0.4,0c0.1,0,0.1,0,0.1,0.1c0,0.1-0.1,0.1-0.2,0.1c-0.5,0-1,0-1.2,0c-0.2,0-0.7,0-1,0
+c-0.1,0-0.2,0-0.2-0.1c0,0,0-0.1,0.1-0.1c0.1,0,0.2,0,0.3,0c0.2,0,0.2-0.2,0.2-0.4c0-0.3,0-1,0-1.7v-1.4c0-1.2,0-1.4,0-1.7
+c0-0.3-0.1-0.4-0.3-0.5c-0.1,0-0.2,0-0.3,0c-0.1,0-0.1,0-0.1-0.1c0-0.1,0.1-0.1,0.2-0.1c0.4,0,0.9,0,1.1,0c0.2,0,0.7,0,1,0
+c0.1,0,0.2,0,0.2,0.1c0,0.1,0,0.1-0.1,0.1c-0.1,0-0.1,0-0.2,0c-0.2,0-0.3,0.2-0.3,0.5c0,0.3,0,0.5,0,1.7v0.2c0,0,0,0.1,0,0.1H88.8"></path>
+<path class="st0" d="M110.4,13.2c0-1.2,0-1.4,0-1.7c0-0.3-0.1-0.4-0.3-0.5c-0.1,0-0.2,0-0.3,0c-0.1,0-0.1,0-0.1-0.1
+c0-0.1,0.1-0.1,0.2-0.1c0.4,0,0.9,0,1.1,0c0.3,0,1.8,0,2,0c0.2,0,0.3,0,0.3,0c0,0,0.1,0,0.1,0c0,0,0,0,0,0.1c0,0.1,0,0.2-0.1,0.5
+c0,0.1,0,0.4,0,0.5c0,0,0,0.1-0.1,0.1c-0.1,0-0.1,0-0.1-0.1c0-0.1,0-0.2,0-0.3c-0.1-0.1-0.1-0.2-0.5-0.3c-0.1,0-1,0-1.1,0
+c0,0-0.1,0-0.1,0.1v2c0,0.1,0,0.1,0.1,0.1c0.2,0,1.1,0,1.3,0c0.2,0,0.3,0,0.4-0.1c0.1-0.1,0.1-0.1,0.1-0.1c0,0,0.1,0,0.1,0.1
+c0,0,0,0.2-0.1,0.6c0,0.2,0,0.5,0,0.5c0,0.1,0,0.2-0.1,0.2c-0.1,0-0.1,0-0.1-0.1c0-0.1,0-0.2,0-0.3c0-0.2-0.1-0.3-0.4-0.3
+c-0.2,0-0.9,0-1.1,0c0,0,0,0,0,0.1v0.6c0,0.3,0,1,0,1.2c0,0.5,0.1,0.7,0.9,0.7c0.2,0,0.5,0,0.7-0.1c0.2-0.1,0.3-0.3,0.4-0.6
+c0-0.1,0-0.1,0.1-0.1c0.1,0,0.1,0.1,0.1,0.1c0,0.2-0.1,0.7-0.1,0.9c-0.1,0.2-0.1,0.2-0.4,0.2c-1.2,0-1.7,0-2.2,0c-0.2,0-0.7,0-1,0
+c-0.1,0-0.2,0-0.2-0.1c0,0,0-0.1,0.1-0.1c0.1,0,0.2,0,0.3,0c0.2,0,0.2-0.2,0.2-0.4c0-0.3,0-1,0-1.7V13.2"></path>
+<path class="st0" d="M102.5,31.2c-0.3,0-0.3,0.3-0.4,0.4c0,0.3-0.3,1-0.6,1.4c-0.7,0.7-1.8,0.8-2.9,0.8c-3.8,0-6-3.1-6-6.1
+c0-1.5,0.2-3.1,1.5-4.4c0.8-0.8,2.1-1.2,3.8-1.2c1.5,0,2.8,0.5,3.3,0.9c0.4,0.3,0.7,1,0.7,1.6c0,0.2,0,0.6,0.3,0.6
+c0.3,0,0.3-0.4,0.4-0.6c0,0,0.1-1.8,0.1-1.8c0,0,0.1-1,0.1-1c0-0.2-0.1-0.4-0.4-0.4c0,0-1.7-0.2-1.7-0.2C99.6,21,98.5,21,98.1,21
+c-2.4,0-4.1,0.6-5.4,1.9c-1.5,1.5-2,3.5-2,4.9c0,2.2,0.7,4,2.2,5.3c1.5,1.3,3.3,1.9,5.8,1.9c1,0,2.4-0.1,3.2-0.4
+c0.4-0.2,0.4-0.2,0.6-0.6c0.2-0.6,0.4-2.1,0.4-2.3C102.8,31.2,102.6,31.2,102.5,31.2"></path>
+<path class="st0" d="M114.1,32c-0.2,0-0.2,0.2-0.3,0.4c-0.1,0.7-0.3,1-0.7,1.2c-0.4,0.2-1.2,0.2-1.6,0.2c-1.7,0-1.8-0.2-1.9-1.3
+l0-2.2l0-0.8V28c0,0,2.4,0.1,2.4,0.1c0.6,0.1,0.7,0.3,0.8,0.5l0.1,0.5c0,0.2,0.1,0.3,0.2,0.3c0.2,0,0.2-0.3,0.2-0.4l0.1-1.1l0.1-1
+c0-0.2-0.2-0.3-0.2-0.3l-0.3,0.2c-0.2,0.2-0.4,0.2-0.8,0.2l-2.7,0l0-4.8c0-0.1,2.3,0,2.3,0c0.9,0.1,1,0.3,1.1,0.5
+c0,0,0.1,0.6,0.1,0.6c0,0.3,0.2,0.3,0.2,0.3c0.1,0,0.2,0,0.2-0.3l0.1-0.8l0-0.3c0,0,0.1-0.8,0.1-0.8c0-0.3-0.1-0.3-0.2-0.3
+l-0.2,0.1c-0.1,0-0.8,0.1-0.8,0.1l-3.9,0l-0.2,0l-1.7,0c-0.1,0-0.4,0-0.4,0.3c0,0.1,0.1,0.2,0.3,0.2c0,0,0.2,0,0.2,0l0.4,0
+c0.5,0.1,0.6,0.3,0.7,0.9l0,3.7v3c0,1.7,0,3-0.1,3.7c-0.1,0.5-0.2,0.8-0.4,0.8l-0.5,0.1c-0.2,0-0.3,0.1-0.3,0.2
+c0,0.3,0.3,0.3,0.4,0.3l1,0c0,0,0.6,0,0.6,0l0.1,0l0.4,0l3.8,0.1c0.7,0,0.9,0,1-0.5c0,0,0.2-1.7,0.2-1.7
+C114.3,32.3,114.3,32,114.1,32 M108,26.4C108,26.4,108.1,26.3,108,26.4L108,26.4C108.1,26.3,108,26.4,108,26.4z"></path>
+<path class="st0" d="M88.1,34l-0.6-0.1c-0.4-0.1-0.8-0.4-1.4-1.8L83,24.1l-0.9-2.4c-0.2-0.5-0.3-0.7-0.6-0.7
+c-0.3,0-0.4,0.2-0.6,0.8l-3.9,10.7c-0.3,0.9-0.6,1.4-1.3,1.5c0,0-0.5,0-0.5,0c-0.2,0-0.4,0.1-0.4,0.3c0,0.3,0.4,0.3,0.5,0.3
+c0,0,1.6,0,1.6,0c0,0,0.4,0,0.4,0c0,0,0.4,0,0.4,0l0.9,0c0.4,0,0.5-0.2,0.5-0.3c0-0.1-0.1-0.3-0.4-0.3h-0.2c-0.1,0-0.5-0.1-0.5-0.3
+c0-0.3,0.1-0.7,0.2-1.1c0,0,0.1-0.2,1-3.1c0,0,3.7,0,3.7,0c0,0,0.2,0.6,1.6,4.2l0,0.1c-0.2,0.1-0.3,0.2-0.3,0.4
+c0,0.3,0.3,0.3,0.6,0.3c0.1,0,2.8,0,2.8,0c0.5,0,0.5-0.2,0.5-0.3C88.5,34.2,88.4,34,88.1,34 M79.8,28.5c0.1-0.3,1.3-4,1.4-4.3
+c0.1,0.3,0.5,1.4,1.5,4.3C82.5,28.5,80.1,28.5,79.8,28.5z"></path>
+<path class="st0" d="M71.8,31.9c-0.2,0-0.3,0.1-0.3,0.4c0,0.3-0.2,0.7-0.4,0.9c-0.3,0.4-1,0.4-1.9,0.4c-1.3,0-1.7-0.1-1.9-0.3
+c-0.3-0.3-0.3-2-0.3-3.8c0-0.1,0-3,0-3l0-3.7c0-0.6,0.2-0.7,0.5-0.8c0,0,0.5,0,0.5,0c0.2,0,0.3-0.1,0.3-0.3c0-0.2-0.1-0.3-0.5-0.3
+c0,0-1.5,0-1.5,0c0,0-0.3,0-0.3,0l-0.2,0c0,0-1.7,0-1.7,0c-0.4,0-0.5,0.2-0.5,0.3c0,0.2,0.1,0.3,0.3,0.3l0.5,0
+c0.5,0.1,0.5,0.3,0.6,0.8l0,3.7v3c0,1.6,0,3-0.1,3.7c-0.1,0.5-0.2,0.7-0.3,0.8c0,0-0.5,0.1-0.5,0.1c-0.2,0-0.3,0.2-0.3,0.3
+c0,0.2,0.1,0.4,0.5,0.4c0,0,1,0,1,0c0,0,0.7,0,0.7,0l1.1,0c0,0,3.5,0.1,3.5,0.1c0.9,0,1.1-0.1,1.3-0.6c0.1-0.5,0.3-1.6,0.3-1.8
+C72.1,32.2,72.1,31.9,71.8,31.9"></path>
+<path class="st0" d="M59.4,31.9c-0.1,0-0.3,0.1-0.3,0.4c0,0.3-0.2,0.7-0.4,0.9c-0.3,0.4-1,0.4-1.9,0.4c-1.3,0-1.7-0.1-1.9-0.3
+c-0.3-0.3-0.3-2-0.3-3.8c0-0.1,0-3,0-3l0-3.7c0-0.6,0.2-0.7,0.5-0.8c0,0,0.5,0,0.5,0c0.2,0,0.3-0.1,0.3-0.3c0-0.2-0.2-0.3-0.5-0.3
+c0,0-1.5,0-1.5,0c0,0-0.3,0-0.3,0l-0.2,0c0,0-1.7,0-1.7,0c-0.4,0-0.5,0.2-0.5,0.3c0,0.2,0.1,0.3,0.3,0.3l0.5,0
+c0.5,0.1,0.5,0.3,0.6,0.8l0,3.7v3c0,1.6,0,3-0.1,3.7c-0.1,0.5-0.2,0.7-0.3,0.8c0,0-0.5,0.1-0.5,0.1c-0.2,0-0.3,0.2-0.3,0.3
+c0,0.2,0.1,0.4,0.5,0.4c0,0,1,0,1,0c0,0,0.7,0,0.7,0l1.1,0c0,0,3.5,0.1,3.5,0.1c0.9,0,1.1-0.1,1.3-0.6c0.1-0.5,0.3-1.6,0.3-1.8
+C59.7,32.2,59.7,31.9,59.4,31.9"></path>
+<path class="st0" d="M47.1,34l-0.6-0.1c-0.4-0.1-0.8-0.4-1.4-1.8l-3.3-8.6l-0.7-1.8c-0.2-0.5-0.3-0.7-0.6-0.7
+c-0.3,0-0.4,0.2-0.6,0.8l-3.9,10.7c-0.3,0.9-0.6,1.4-1.3,1.5c0,0-0.5,0-0.5,0c-0.2,0-0.3,0.1-0.3,0.3c0,0.3,0.4,0.3,0.5,0.3
+c0,0,1.6,0,1.6,0c0,0,0.4,0,0.4,0l0.4,0l0.9,0c0.4,0,0.5-0.2,0.5-0.3c0-0.1-0.1-0.3-0.4-0.3h-0.2c-0.1,0-0.5-0.1-0.5-0.3
+c0-0.3,0.1-0.7,0.2-1.1c0,0,1-3.1,1-3.1s3.7,0,3.7,0c0,0,0.2,0.6,1.6,4.2l0,0.1c-0.2,0.1-0.3,0.3-0.3,0.4c0,0.3,0.3,0.3,0.6,0.3
+c0.1,0,2.8,0,2.8,0c0.5,0,0.5-0.2,0.5-0.3C47.5,34.2,47.5,34,47.1,34 M38.9,28.5c0.1-0.3,1.3-4,1.4-4.3c0.1,0.3,0.5,1.3,1.5,4.3
+C41.5,28.5,39.2,28.5,38.9,28.5z"></path>
+<path class="st0" d="M35.4,10.4l-2.1,0.1l-0.5,0l-0.5,0l-2.7-0.1c-0.2,0-0.7,0-0.7,0.3c0,0.2,0.2,0.3,0.4,0.3
+c1.5,0,1.7,0.4,1.7,0.8c0,0.4,0,0.8-0.3,2l-3.4,11.2c0,0-1.4,4.6-1.5,4.9c-0.1-0.3-6.3-18-6.3-18c-0.4-1.2-0.6-1.6-0.9-1.6
+c-0.3,0-0.4,0.2-0.9,1.5c0,0-5.9,15.8-6.6,17.9C10.6,28.1,7.4,16.7,7,14.7l-0.2-0.7c-0.2-1-0.4-1.9-0.4-2.2c0-0.4,0.2-0.6,0.3-0.7
+C7.1,11,7.6,11,7.9,11c0.4,0,0.4-0.2,0.4-0.3c0-0.3-0.5-0.3-0.7-0.3l-2.7,0.1l-0.5,0l-0.7,0l-3-0.1c-0.4,0-0.6,0.1-0.6,0.3
+C0,10.9,0.1,11,0.4,11c0.2,0,1,0,1.4,0.2c0.8,0.3,1.2,0.7,1.7,2.4l5.6,18.9c0.7,2.3,0.8,2.6,1.2,2.6c0.5,0,0.6-0.4,1.2-1.8
+l6.1-16.2c0,0,0.4-1,0.5-1.3c0.1,0.4,6.1,17.5,6.1,17.5c0.4,1.3,0.7,1.7,1.1,1.7c0.4,0,0.6-0.4,1.4-2.8l5.8-17.7
+c0.6-1.8,1.1-3,2-3.4l1-0.2c0.2,0,0.4-0.1,0.4-0.4C36,10.5,35.9,10.4,35.4,10.4 M25.9,30.1L25.9,30.1C25.9,30,25.9,30,25.9,30.1
+C25.9,30,25.9,30,25.9,30.1z"></path>
+</g>
+</svg>
+</a>
+</div>
+<div class="c-footer__block">
+<address>
+<strong>The Wallace Collection</strong><br>
+Hertford House, <br>
+Manchester Square, <br>
+London W1U 3BN
+</address>
+</div>
+<div class="c-footer__block c-footer__block--menus">
+<nav class="c-footer-menu footer_menu_column_one no_heading">
+<ul class="u-list-reset | c-footer-menu__list">
+<li class="c-footer-menu__item ">
+<a class="c-footer-menu__link" href="http://www.wallacecollection.org/about-us">About Us</a>
+</li>
+<li class="c-footer-menu__item ">
+<a class="c-footer-menu__link" href="https://www.wallacecollection.org/contact-us/">Contact Us</a>
+</li>
+<li class="c-footer-menu__item ">
+<a class="c-footer-menu__link" href="https://www.wallacecollection.org/venue-hire/">Venue Hire</a>
+</li>
+<li class="c-footer-menu__item ">
+<a class="c-footer-menu__link" href="https://www.wallacecollection.org/about-us/join-team/">Join The Team</a>
+</li>
+<li class="c-footer-menu__item ">
+<a class="c-footer-menu__link" href="http://www.wallacecollection.org/about-us/press/">Press</a>
+</li>
+</ul>
+</nav>
+<nav class="c-footer-menu footer_menu_column_two no_heading">
+<ul class="u-list-reset | c-footer-menu__list">
+<li class="c-footer-menu__item ">
+<a class="c-footer-menu__link" href="https://www.wallacecollection.org/about-us/governance/">Governance</a>
+</li>
+<li class="c-footer-menu__item ">
+<a class="c-footer-menu__link" href="https://www.wallacecollection.org/privacy-and-cookies/">Privacy and Cookies</a>
+</li>
+<li class="c-footer-menu__item ">
+<a class="c-footer-menu__link" href="javascript:void(0);">Cookie Settings</a>
+</li>
+<li class="c-footer-menu__item ">
+<a class="c-footer-menu__link" href="https://www.wallacecollection.org/copyright-and-images/">Copyright and Images</a>
+</li>
+<li class="c-footer-menu__item ">
+<a class="c-footer-menu__link" href="https://www.wallacecollection.org/accessibility-statement/">Accessibility Statement</a>
+</li>
+</ul>
+</nav>
+</div>
+</div>
+<svg id="footerSVG" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+<symbol viewBox="0 0 26 26" id="icon-arrow-down" xmlns="http://www.w3.org/2000/svg"><path d="M6.9 7.6h12.2L13 18.4z"></path></symbol>
+<symbol viewBox="0 0 26 26" id="icon-arrow-left" xmlns="http://www.w3.org/2000/svg"><path fill="#fff" d="M17.9 6.9v12.2L7.1 13z"></path></symbol>
+<symbol viewBox="0 0 26 26" id="icon-arrow-right" xmlns="http://www.w3.org/2000/svg"><path d="M8.2 19.1V6.9L19 13z"></path></symbol>
+<symbol viewBox="0 0 26 26" id="icon-arrow-up" xmlns="http://www.w3.org/2000/svg"><path d="M19.1 17.9H6.9L13 7.1z"></path></symbol>
+<symbol viewBox="0 0 26 26" id="icon-calendar" xmlns="http://www.w3.org/2000/svg"><path d="M2 24.1h22v-22H2v22zm6.7-2H4v-4.7h4.7v4.7zm0-6.7H4v-4.7h4.7v4.7zm6.6 6.7h-4.7v-4.7h4.7v4.7zm0-6.7h-4.7v-4.7h4.7v4.7zm6.7 6.7h-4.7v-4.7H22v4.7zm0-6.7h-4.7v-4.7H22v4.7zM4 8.7V4.1h18v4.7H4z"></path></symbol>
+<symbol viewBox="0 0 26 26" id="icon-chevron" xmlns="http://www.w3.org/2000/svg"><path d="M20.4 8.4c.6-.6 1.5-.6 2.1 0 .6.6.6 1.5 0 2L14 18.5c-.6.6-1.5.6-2.1 0l-8.5-8c-.6-.6-.6-1.5 0-2 .6-.6 1.6-.6 2.2-.1l7.4 6.7 7.4-6.7z"></path></symbol>
+<symbol viewBox="0 0 26 26" id="icon-cross" xmlns="http://www.w3.org/2000/svg"><path d="M20 7.4L18.6 6 13 11.5 7.4 6 6 7.4l5.6 5.6L6 18.5 7.4 20l5.6-5.6 5.6 5.6 1.4-1.5-5.6-5.5z"></path></symbol>
+<symbol viewBox="0 0 26 26" id="icon-download" xmlns="http://www.w3.org/2000/svg"><path d="M21 13.5v5H5v-5H3v7h20v-7z"></path><path d="M12 5.5v6.6L9.7 9.8l-1.4 1.4 4.7 4.7 4.7-4.7-1.4-1.4-2.3 2.3V5.5z"></path></symbol>
+<symbol viewBox="0 0 26 26" id="icon-facebook" xmlns="http://www.w3.org/2000/svg"><path d="M10.1 23h3.8v-9.5h2.9l.4-3.8h-3V8.2c0-.8.5-1 .9-1h2.1V4h-2.9c-3.2 0-4 2.5-4 4v1.7H8.2v3.8h1.9V23z"></path></symbol>
+<symbol viewBox="0 0 26 26" id="icon-hamburger" xmlns="http://www.w3.org/2000/svg"><path d="M2 4h22v2H2zM2 12.1h22v2H2zM2 20.1h22v2H2z"></path></symbol>
+<symbol viewBox="0 0 26 26" id="icon-instagram" xmlns="http://www.w3.org/2000/svg"><path d="M13 3c-2.7 0-3.1 0-4.1.1-1.1 0-1.8.2-2.4.5-.7.2-1.3.5-1.8 1.1-.6.5-.9 1.1-1.2 1.7-.2.7-.4 1.4-.4 2.5C3 9.9 3 10.3 3 13c0 2.7 0 3.1.1 4.1 0 1.1.2 1.8.5 2.4.3.7.6 1.2 1.2 1.8.6.6 1.1.9 1.8 1.2.6.2 1.4.4 2.4.5h4c2.7 0 3.1 0 4.1-.1 1.1 0 1.8-.2 2.4-.5.7-.3 1.2-.6 1.8-1.2.6-.6.9-1.1 1.2-1.8.2-.6.4-1.4.5-2.4 0-1.1.1-1.4.1-4.1 0-2.7 0-3.1-.1-4.1 0-1.1-.2-1.8-.5-2.4-.3-.7-.6-1.2-1.2-1.8-.6-.6-1.1-.9-1.8-1.2-.6-.2-1.4-.4-2.4-.5-1 .1-1.4.1-4.1.1zm0 1.8c2.7 0 3 0 4 .1 1 0 1.5.2 1.9.3.5.2.8.4 1.1.8.3.3.6.7.7 1.1.2.4.4.9.4 1.9 0 1.1.1 1.4.1 4 0 2.7 0 3-.1 4 0 1-.2 1.5-.3 1.9-.2.5-.4.8-.7 1.1-.3.3-.7.6-1.1.7-.4.1-.9.3-1.9.3-1.1 0-1.4.1-4 .1-2.7 0-3 0-4-.1-1 0-1.5-.2-1.9-.3-.6-.1-.9-.3-1.2-.7-.3-.3-.6-.7-.7-1.1-.2-.4-.4-.9-.4-1.9 0-1.1-.1-1.4-.1-4 0-2.7 0-3 .1-4 0-1 .2-1.5.3-1.9.2-.5.4-.8.8-1.1.3-.3.7-.6 1.1-.7.4-.2.9-.4 1.9-.4 1-.1 1.3-.1 4-.1zm0 3.1c-2.8 0-5.1 2.3-5.1 5.1s2.3 5.1 5.1 5.1 5.1-2.3 5.1-5.1-2.3-5.1-5.1-5.1zm0 8.4c-1.8 0-3.3-1.5-3.3-3.3 0-1.8 1.5-3.3 3.3-3.3 1.8 0 3.3 1.5 3.3 3.3 0 1.8-1.5 3.3-3.3 3.3zm6.5-8.6c0 .7-.5 1.2-1.2 1.2s-1.2-.5-1.2-1.2.5-1.2 1.2-1.2 1.2.5 1.2 1.2z"></path></symbol>
+<symbol viewBox="0 0 26 26" id="icon-minus" xmlns="http://www.w3.org/2000/svg"><path d="M4.4 14.1h18v-2h-18"></path></symbol>
+<symbol viewBox="0 0 26 26" id="icon-plus" xmlns="http://www.w3.org/2000/svg"><path d="M14.4 12.1v-8h-2v8h-8v2h8V22h2v-7.9h8v-2z"></path></symbol>
+<symbol viewBox="0 0 26 26" id="icon-scroll" xmlns="http://www.w3.org/2000/svg"><path d="M12.9 2.7c-3 0-5.5 2.5-5.5 5.5v7c0 1.8.9 3.6 2.5 4.6l.6-.9c-1.2-.8-2-2.2-2-3.7v-7c0-2.4 2-4.4 4.4-4.4s4.4 2 4.4 4.4v7c0 1.5-.7 2.8-2 3.7l.6.9c1.5-1 2.5-2.7 2.5-4.6v-7c-.1-3.1-2.5-5.5-5.5-5.5z"></path><path d="M13.4 8.3V6.2c0-.3-.2-.5-.5-.5s-.5.2-.5.5v2.1c0 .3.2.5.5.5s.5-.2.5-.5zM13.4 22.6v-7.3h-1.1v7.3l-1.1-1.1-.7.7 2.4 2.5 2.4-2.5-.8-.7z"></path></symbol>
+<symbol viewBox="0 0 26 26" id="icon-search" xmlns="http://www.w3.org/2000/svg"><path d="M18.5 17.2c1.1-1.4 1.8-3.1 1.8-5.1 0-4.4-3.6-8.1-8.1-8.1s-8.1 3.6-8.1 8.1 3.6 8.1 8.1 8.1c1.8 0 3.5-.6 4.8-1.6l3.4 3.4 1.4-1.4-3.3-3.4zm-6.3 1c-3.3 0-6.1-2.7-6.1-6.1C6.1 8.8 8.8 6 12.2 6s6.1 2.7 6.1 6.1c-.1 3.4-2.8 6.1-6.1 6.1z"></path></symbol>
+<symbol viewBox="0 0 26 26" id="icon-twitter" xmlns="http://www.w3.org/2000/svg"><path d="M9.3 22C7 22 4.8 21.3 3 20.1c.3 0 .6.1 1 .1 1.9 0 3.7-.7 5.1-1.8-1.8 0-3.3-1.3-3.8-3 .3 0 .5.1.8.1.4 0 .7-.1 1.1-.2-2-.5-3.4-2.2-3.4-4.3v-.1c.6.4 1.2.6 1.9.6-1.1-.8-1.9-2.1-1.9-3.6 0-.8.2-1.5.6-2.2 2 2.6 5 4.3 8.5 4.5-.1-.2-.2-.6-.2-.9 0-2.4 1.8-4.3 4.1-4.3 1.2 0 2.2.5 3 1.4.9-.2 1.8-.5 2.6-1-.3 1-1 1.8-1.8 2.4.9-.2 1.7-.4 2.4-.8-.6.9-1.2 1.6-2 2.2v.6C21 15.5 16.8 22 9.3 22"></path></symbol>
+<symbol viewBox="0 0 26 26" id="icon-youtube" xmlns="http://www.w3.org/2000/svg"><path d="M10.6 16.5V10l6.2 3.3-6.2 3.2zm13.7-7.7s-.2-1.6-.9-2.3c-.9-.9-1.9-.9-2.3-1-3.2-.2-8-.2-8-.2s-4.8 0-8 .2c-.4.1-1.4.1-2.3 1-.8.7-1.1 2.3-1.1 2.3s-.2 1.9-.2 3.7v1.8c0 1.9.2 3.7.2 3.7s.2 1.6.9 2.3c.9.9 2 .9 2.5 1 1.9.3 7.9.3 7.9.3s4.8 0 8.1-.2c.4-.1 1.4-.1 2.3-1 .7-.7.9-2.3.9-2.3s.2-1.9.2-3.7v-1.8c0-1.9-.2-3.8-.2-3.8z"></path></symbol>
+<symbol viewBox="0 0 114.9 48.2" id="wallace-logo" xmlns="http://www.w3.org/2000/svg"><path class="sst0" d="M8 47c-1.1-.9-1.4-2.2-1.4-3.3 0-.8.2-2.1 1.3-3 .8-.7 1.8-1.2 3.5-1.2.7 0 1.1 0 1.6.1.4.1.8.2 1.1.2.1 0 .2.1.2.1 0 .1 0 .2-.1.6v1.2c0 .2 0 .3-.1.3-.1.1-.1 0-.1-.2 0-.3-.2-.7-.4-1-.4-.4-1.2-.7-2.2-.7-1 0-1.6.2-2.1.7-.8.7-1 1.8-1 2.9 0 2.6 2 3.9 3.5 3.9 1 0 1.6-.1 2-.6.2-.2.3-.5.4-.7 0-.2.1-.2.1-.2.1 0 .1.1.1.2s-.1 1.1-.2 1.5l-.4.2c-.4.2-1.3.3-2 .3-1.5-.1-2.8-.4-3.8-1.3M18.6 43.9c0-1.9 1.2-4.3 4.6-4.3 2.8 0 4.5 1.6 4.5 4.1 0 2.5-1.8 4.5-4.6 4.5-3.2 0-4.5-2.3-4.5-4.3m7.5.2c0-2.5-1.4-4-3.2-4-1.3 0-2.7.7-2.7 3.5 0 2.3 1.3 4.1 3.4 4.1.7 0 2.5-.4 2.5-3.6zM34.2 44.9c0 1.4 0 2.2.2 2.4.2.2.5.2 1.3.2.6 0 1 0 1.3-.3.1-.1.3-.5.3-.7 0-.1 0-.2.1-.2s.1.1.1.2-.1.9-.2 1.3c-.1.2-.1.3-.7.3-1.6 0-2.3-.1-3.2-.1H32c-.1 0-.2 0-.2-.1s0-.1.2-.1h.4c.2 0 .3-.3.3-.6.1-.5.1-1.3.1-2.4v-1.9-2.3c0-.4-.1-.6-.5-.6h-.4c-.1 0-.2 0-.2-.1s.1-.1.2-.1h3c.2 0 .2 0 .2.1s-.1.1-.2.1h-.4c-.3.1-.4.2-.4.6v4.3M44.1 44.9c0 1.4 0 2.2.2 2.4.2.2.5.2 1.3.2.6 0 1 0 1.3-.3.1-.1.3-.5.3-.7 0-.1 0-.2.1-.2s.1.1.1.2-.1.9-.2 1.3c-.1.2-.1.3-.7.3-1.6 0-2.3-.1-3.2-.1h-1.4c-.1 0-.2 0-.2-.1s0-.1.2-.1h.4c.2 0 .3-.3.3-.6.1-.5.1-1.3.1-2.4v-1.9-2.3c0-.4-.1-.6-.5-.6h-.4c-.1 0-.2 0-.2-.1s.1-.1.2-.1h3c.2 0 .2 0 .2.1s-.1.1-.2.1h-.4c-.3.1-.4.2-.4.6v4.3M52.6 42.9v-2.3c0-.4-.1-.6-.5-.6h-.4c-.1 0-.2 0-.2-.1s.1-.1.2-.1h4.4c.2 0 .4 0 .5-.1h.2c.1 0 .1 0 .1.1s-.1.2-.1.7c0 .1 0 .6-.1.7 0 .1 0 .1-.1.1s-.1-.1-.1-.2 0-.3-.1-.4c-.1-.2-.2-.3-.7-.4h-1.6c-.1 0-.1 0-.1.1v2.8c0 .1 0 .1.1.1h1.8c.3 0 .4-.1.5-.2.1-.1.1-.1.2-.1 0 0 .1 0 .1.1s-.1.2-.1.8v.7c0 .1 0 .2-.1.2s-.1 0-.1-.1v-.4c-.1-.2-.2-.4-.6-.4h-1.6c-.1 0-.1 0-.1.1v2.6c0 .8.2.9 1.3.9.3 0 .8 0 1-.1.3-.1.4-.4.5-.8 0-.1 0-.2.1-.2s.1.1.1.2c0 .3-.1 1-.1 1.2-.1.3-.2.3-.6.3-1.7 0-2.4-.1-3.1-.1h-1.4c-.1 0-.2 0-.2-.1s0-.1.2-.1h.4c.2 0 .3-.3.3-.6.1-.5.1-1.3.1-2.4v-1.9M62.8 47c-1.1-.9-1.4-2.2-1.4-3.3 0-.8.2-2.1 1.3-3 .8-.7 1.8-1.2 3.5-1.2.7 0 1.1 0 1.6.1.4.1.8.2 1.1.2.1 0 .2.1.2.1 0 .1 0 .2-.1.6v1.2c0 .2 0 .3-.1.3s-.1-.1-.1-.2c0-.3-.2-.7-.4-1-.4-.4-1.2-.7-2.2-.7-1 0-1.6.2-2.1.7-.8.7-1 1.8-1 2.9 0 2.6 2 3.9 3.5 3.9 1 0 1.6-.1 2-.6.2-.2.3-.5.4-.7 0-.2.1-.2.1-.2.1 0 .1.1.1.2s-.1 1.1-.2 1.5c-.1.2-.1.2-.3.3-.4.2-1.3.3-2 .3-1.6-.2-2.9-.5-3.9-1.4M76.4 40.4h-1.6c-.6 0-.9.1-1.1.3-.1.2-.2.3-.2.4 0 .1-.1.1-.1.1-.1 0-.1-.1-.1-.2 0-.2.2-1.2.2-1.3 0-.1.1-.2.1-.2.1 0 .2.1.5.1s.7.1 1.1.1h4.4c.7 0 1-.1 1.1-.1.1 0 .1.1.1.2v1.3c0 .1 0 .2-.1.2s-.1-.1-.1-.2V41c0-.3-.3-.6-1.3-.6h-1.4v4.5c0 1 0 1.9.1 2.4 0 .3.1.6.4.6h.6c.1 0 .2 0 .2.1s-.1.1-.2.1H75.9c-.1 0-.2 0-.2-.1s0-.1.2-.1h.4c.2 0 .3-.3.3-.6.1-.5.1-1.3.1-2.4v-4.5M86 42.9v-2.3c0-.4-.1-.6-.4-.6h-.4c-.1 0-.2 0-.2-.1s.1-.1.3-.1H88c.1 0 .2 0 .2.1s-.1.1-.2.1h-.3c-.3.1-.4.2-.4.6v6.6c0 .3.1.5.4.5h.6c.1 0 .2 0 .2.1s-.1.1-.2.1H85.2c-.1 0-.2 0-.2-.1s0-.1.2-.1h.4c.2 0 .3-.2.3-.6.1-.3.1-1.1.1-2.2v-2M92.6 43.9c0-1.9 1.2-4.3 4.6-4.3 2.8 0 4.5 1.6 4.5 4.1 0 2.5-1.8 4.5-4.6 4.5-3.2 0-4.5-2.3-4.5-4.3m7.5.2c0-2.5-1.4-4-3.2-4-1.3 0-2.7.7-2.7 3.5 0 2.3 1.3 4.1 3.4 4.1.7 0 2.5-.4 2.5-3.6zM107.5 46.6c0 .9.2 1.2.4 1.2.2.1.4.1.6.1.1 0 .2 0 .2.1s-.1.1-.3.1H105.8c-.1 0-.2 0-.2-.1s.1-.1.2-.1.3 0 .5-.1c.3-.1.3-.4.3-1.4l.1-6.5c0-.2 0-.4.1-.4s.2.1.4.3c.1.1 1.8 1.9 3.4 3.5.8.8 2.2 2.3 2.4 2.5h.1l-.1-5c0-.7-.1-.9-.4-1-.2-.1-.4-.1-.6-.1-.1 0-.2 0-.2-.1s.1-.1.3-.1H114.5c.1 0 .3 0 .3.1s-.1.1-.2.1h-.3c-.3.1-.4.3-.4.9l-.1 7c0 .2 0 .3-.1.3s-.3-.1-.4-.2c-.7-.7-2.1-2.1-3.3-3.2-1.2-1.2-2.4-2.6-2.6-2.8l.1 4.9M49.3 4.8c.4-.2.6-.4.9-.7.2-.3.4-.6.6-1 .1-.2.1-.4.2-.6 0-.2.1-.4.2-.6.1-.2.2-.3.3-.5.1-.1.3-.2.3-.3-.1-.3-.5-.2-.7-.2-.4 0-.8.1-1.2.4-.2.1-.5.4-.3.7.1 0 .4 0 .5.1.2.1.3.3.3.5.1.6-.4 1.2-.8 1.5-.1.1-.5.4-.6.4v-.3c-.1-.5-.4-1-.9-1.2h-.4c-.6.1-1.1.6-.9 1.3.2.6.9.8 1.5.8.1 0 .3-.1.4 0 .1.1-.1.5-.2.6-.3.6-1 1.1-1.6 1.4-.2.1-.4.2-.6.2-.2 0-.3 0-.5.1 0 0-.1 0-.1.1h-.4c-.1 0-.1-.2-.2-.3-.2-.2-.6-.1-.8-.1-.1 0-.2.1-.3.1l-.1.1c-.1 0-.2-.1-.3-.1l-.1.1v.1h.1c.1 0 .1.1.2.1.1.1 0 .3.1.4l.1.1s0 .1-.1.2c-.1.2-.2.4-.3.5-.1.1-.1.3-.2.3h-.3c-.1 0-.1-.1-.2-.2s-.2-.3-.3-.4l-.2-.2c0-.1 0-.1-.1-.1-.1-.1 0-.2.1-.3.1-.1.1-.3.3-.2.1 0 .2.1.3 0 .2 0 .2-.2.3-.3 0 0 .1 0 .1-.1.1-.1.1-.1 0-.2v-.1c0-.1 0-.1.1-.1s.2 0 .3-.1v-.3c.1 0 .1-.1.2-.1s.2 0 .1-.1c0-.1-.1-.1-.2-.1-.2-.1-.3-.4-.3-.6v-.2c0-.1.1-.1.1-.2-.1-.1-.2-.1-.3-.1H43c-.1 0-.2-.2-.3-.1 0 .1-.1.2-.1.2-.1.1-.2-.1-.3 0-.1 0-.1.2-.2.3-.1.1-.3.1-.4.1-.1 0-.1-.1-.1-.2s.1-.2.2-.3c.1 0 .2 0 .2-.1s0-.1.1-.2.2 0 .4 0c.1 0 .1-.1.2-.2s.3-.1.4 0c.2 0 .2.1.4.3.1.1.2.1.3.2h.3c.1 0 .1-.2.1-.2 0-.2-.1-.3-.3-.3h-.2l-.1-.1c-.1-.1-.2-.2-.4-.2h-.4s-.1.1-.1 0v-.1-.5-.2c0-.1.1-.1.1-.2.2-.3.4-.6.8-.7.2 0 .3-.1.5 0 .1 0 .3.1.3 0s-.1-.1-.1-.1c-.4-.2-1-.2-1.3.2-.1.1-.2.2-.3.4 0 .1-.1.3-.2.2v-.1c0-.2 0-.3-.1-.5s-.2-.4-.4-.6l-.6-.6-.7-.7c-.1-.1-.3-.3-.3-.4V.1c-.1-.1-.2-.1-.2-.1-.1.1-.1.2 0 .3 0 .2.2.4.3.6.2.3.5.6.7.9.1.1.1.2.2.3h-.1c-.2-.1-.2-.2-.3-.3-.3-.3-.8-.6-1.3-.6-.2 0-.8.1-.7.4 0 .1.2 0 .3 0 .4-.2.8-.1 1.2.1.4.2.6.6.9.9l.2.3s-.2-.1-.3-.1c-.2-.1-.4-.2-.6-.2-.4 0-.9.3-.9.8 0 .2.1.5.4.5v-.1c0-.1-.1-.2-.1-.3-.1-.4.4-.6.7-.5.1 0 .2.1.3.1.3.2.5.6.5 1v.3h-.4c-.3.1-.5.5-.3.7v.2c-.1.2-.1.4-.1.5 0 .1 0 .2.1.3 0 .1.1.2.2.2s.2 0 .3.1c.1.1 0 .5-.1.6-.1.1-.2.2-.3.2h-.4c-.7.1-1 .9-1.1 1.5 0 .7.2 1.3.4 2 0 .2.1.4.1.7 0 .2-.1.3-.1.4 0 .1 0 .2-.1.3 0 .1-.1.3-.2.5-.1.1-.3.2-.4.2-.2.1-.3.2-.5.3-.1.1-.4.2-.3.3 0 .1.1.2.2.3.1.1.3.3.4.3.1 0 .2.1.3.2.1.1 0 .2 0 .3 0 .1-.2.5 0 .6.1.1.3 0 .4 0h.5c.1 0 .5 0 .4.1h-.8c-.6.1-1.1.2-1.7.5-.4.2-.8.5-1.2.8-.4.3-.7.6-.9.9-.2.2-.3.4-.4.6l-.3.6c-.2.4-.2.8-.3 1.2 0 0-.1.1-.1.2v.2c0 .2.2.5.4.4.1 0 .1 0 .2-.1s.1-.3.1-.4c0-.1-.1-.2-.1-.2-.1-.1 0-.3 0-.4 0-.1.1-.3.1-.4.1-.3.2-.6.4-.8.2-.3.4-.5.6-.7.4-.4.9-.8 1.4-1.1.4-.2.7-.3 1.1-.4 1-.3 2.1-.2 3.1-.1.8.2 1.6.5 2.2 1 .8.6 1.3 1.3 1.8 2.2.1.3.3.6.4.8 0 .1.1.5.2.5.3.1.7 0 1 0h2.3c.2 0 .3-.1.5-.2.1 0 .3-.1.4-.2.1-.1.1-.2.2-.2s.3 0 .5-.1c.4 0 .8-.2 1-.5.1-.1.2-.2.3-.4.1-.1.1-.2.2-.3.1-.2-.2-.1-.3-.1.1-.1.2-.3.2-.4.1-.2.1-.4.2-.6 0-.2.1-.4.1-.6 0-.1.1-.3-.1-.4-.2-.1-.3.1-.5 0 0-.1-.1-.1-.1-.2-.2-.3-.4-.6-.7-.7-.3-.1-.7-.1-1 .1-.3.2-.3.8.1.9.3.1.5 0 .6-.3 0-.1.2 0 .3 0 .4.1.7.6.7 1 .1.5-.1 1.5-.8 1.4-.2 0-.3-.3-.3-.5-.1-.2-.1-.4-.4-.5-.2-.1-.5-.1-.7.1-.2.2-.2.5 0 .7.1.1.2.1.4 0s.3-.1.5 0c.2.2 0 .6-.2.7-.3.2-.7.3-1 .2-.7-.2-1.3-.8-1.6-1.4-.2-.4-.3-.7-.3-1.1-.1-.5-.2-.9-.3-1.3-.1-.3-.2-.5-.3-.7-.1-.2-.2-.4-.3-.5-.4-.5-1-1-1.6-1.3-.2-.1-.5-.2-.8-.2-.1 0-.2-.1-.3 0l-.3.3c-.1.1-.2.1-.4.2h-.2l.4-.4.3-.3c.1-.1.2-.2.1-.3-.1-.1-.2-.1-.3-.1-.3-.1-.6-.2-.9-.4-.1 0-.1-.1-.2-.1l-.1-.1c-.1 0 .1.2.1.3l.3.3.3.3c-.1 0-.1 0-.2-.1-.2-.1-.4-.3-.5-.4-.1-.1-.1-.2-.2-.2h-.4c-.1.1 0 .1 0 .2s.1.1.1.2c.1.2.1.4.1.6v.3c-.1 0-.1-.1-.1-.2l-.3-.9c0-.1-.1-.1-.1-.2-.1-.1-.2 0-.3 0-.1 0-.1.2-.1.3v.4c0 .1-.1.3-.1.4v.1c-.1-.2 0-.3 0-.5s-.1-.4-.1-.5c0-.1 0-.2-.1-.2-.1-.1-.2 0-.3 0h-.3s0-.1.1-.2.3-.1.5-.1c.3 0 .6 0 .8-.1.2 0 .4-.1.6-.1.1 0 .3 0 .4-.1.1-.1 0-.4 0-.5v-.1c0-.1.1-.2.1-.3-.1-.1-.2-.1-.2-.1-.3 0-.6-.1-.8-.2l-.6-.6c-.3-.2-.6-.4-1-.6h.3c.5.2.9.5 1.3.8.1.1.3.1.4.2.4.1.7.2 1.1.2.3-.1.7-.2 1.1-.1.4.1.4.6.6.8.1.1.1.2.3.2 0-.2.1-.3.2-.4.1-.3.1-.6.1-.9v-.4c0-.1.1-.3.1-.4l.3-.3c-.6.4-.3.2-.2 0 .1-.1.1-.3.1-.4.1-.2.3-.4.5-.5l.2-.2c.1-.1.2-.1.2-.2s.1-.1.1-.2c0 0 .1-.1.2-.1.5-.5 1-.9 1.3-1.5 0-.1.1-.2.1-.3-.1 0-.1-.2-.1-.3m1.4-3.1c-.1 0-.3 0-.4-.1-.1-.1.2-.3.3-.4.2-.1.6-.3.8-.3h.2c.1.1-.1.2-.2.3-.2.1-.4.3-.6.4 0 0 0 .1-.1.1zm-1.6 2.8c0 .1-.1.1-.2.2-.3.1-.6.2-.9 0-.4-.1-.7-.5-.7-.8 0-.3.2-.5.4-.6.3-.1.6-.1.8.1.2.2.4.4.5.6 0 .1.1.3.1.5zm-4.1 3.7l.1-.1.1-.1s.1 0 .1-.1l.1-.1c.1 0 .1 0 .2-.1h.4v.1c0 .2-.1.3-.2.4-.1 0-.2-.1-.3-.1-.1 0-.4.2-.4.3-.1 0-.2.2-.3.1 0 0 .1-.2.2-.3zm-1.5-2.5c0-.1 0-.1 0 0 .1.1.1.1.1.2l-.2.1V6c-.1-.2 0-.2.1-.2-.1 0-.1 0 0 0zm5 14.5h-1.1c-.2 0-.2-.2-.2-.3-.2-.5-.5-1-.8-1.5-.3-.4-.6-.9-.9-1.2-.2-.2-.4-.4-.7-.6-.1-.1-.3-.2-.4-.2-.1-.1-.3-.1-.3-.3.1-.1.4-.2.5-.3.1 0 .2 0 .2-.1.1-.1 0-.4-.1-.5-.1-.1-.2-.3-.2-.5 0-.3.3 0 .3.1.1.1.2.2.3.4.2.3.3.7.2 1.1 0 .1-.1.2-.1.3 0 .2 0 .2.2.2.1 0 .1-.1.2 0l.3.3c.1.1.1.2.2.3 0 0 .1.1.2.1.2.1.1-.3.1-.4 0-.8-.2-1.7-.6-2.4-.2-.2-.3-.4-.6-.6 0 0-.1 0-.1-.1l.5.2c.3.2.5.4.7.7.1.2.5.7.3 1-.1.2-.1.4 0 .6 0 .1.1.1.2.2v.3c0 .1 0 .2.1.3 0 .1.1.1.2.2s.1.1 0 .2c-.2.3-.1.7 0 1 .1.3.2.9.6.9.2 0 .1-.3.2-.2.1 0 .2.1.2.2l.3.3c0 .2.2.3.1.3zM61.9 11.3h-1.2c-.5 0-.6.1-.8.2-.1.1-.1.2-.1.3 0 .1 0 .1-.1.1s-.1 0-.1-.1.2-.8.2-.9c0-.1 0-.2.1-.2s.1.1.3.1H64.1c.5 0 .7-.1.8-.1.1 0 .1 0 .1.2v.9c0 .1 0 .1-.1.1s-.1 0-.1-.2v-.1c0-.2-.2-.4-.9-.4h-1v4.9c0 .2.1.4.3.4h.4c.1 0 .1 0 .1.1s-.1.1-.2.1h-2.2c-.1 0-.2 0-.2-.1 0 0 0-.1.1-.1h.3c.2 0 .2-.2.2-.4v-4.8M88.8 13.4v-.2-1.7c0-.3-.1-.4-.3-.5H88c0-.1.1-.1.2-.1h2.1c.1 0 .2 0 .2.1s0 .1-.1.1h-.2c-.2 0-.3.2-.3.5v4.8c0 .2.1.4.3.4h.4c.1 0 .1 0 .1.1s-.1.1-.2.1h-2.2c-.1 0-.2 0-.2-.1 0 0 0-.1.1-.1h.3c.2 0 .2-.2.2-.4V14h-3v2.4c0 .2.1.4.3.4h.4c.1 0 .1 0 .1.1s-.1.1-.2.1h-2.2c-.1 0-.2 0-.2-.1 0 0 0-.1.1-.1h.3c.2 0 .2-.2.2-.4V13.3v-1.7c0-.3-.1-.4-.3-.5h-.3c-.1 0-.1 0-.1-.1s.1-.1.2-.1h2.1c.1 0 .2 0 .2.1s0 .1-.1.1H86c-.2 0-.3.2-.3.5v2h3.1M110.4 13.2v-1.7c0-.3-.1-.4-.3-.5h-.3c-.1 0-.1 0-.1-.1s.1-.1.2-.1h3.5v.1c0 .1 0 .2-.1.5v.5s0 .1-.1.1-.1 0-.1-.1v-.3c-.1-.1-.1-.2-.5-.3h-1.1s-.1 0-.1.1v2c0 .1 0 .1.1.1h1.3c.2 0 .3 0 .4-.1l.1-.1s.1 0 .1.1c0 0 0 .2-.1.6v.5c0 .1 0 .2-.1.2s-.1 0-.1-.1v-.3c0-.2-.1-.3-.4-.3h-1.1v1.9c0 .5.1.7.9.7.2 0 .5 0 .7-.1.2-.1.3-.3.4-.6 0-.1 0-.1.1-.1s.1.1.1.1c0 .2-.1.7-.1.9-.1.2-.1.2-.4.2h-3.2c-.1 0-.2 0-.2-.1 0 0 0-.1.1-.1h.3c.2 0 .2-.2.2-.4v-3.2M102.5 31.2c-.3 0-.3.3-.4.4 0 .3-.3 1-.6 1.4-.7.7-1.8.8-2.9.8-3.8 0-6-3.1-6-6.1 0-1.5.2-3.1 1.5-4.4.8-.8 2.1-1.2 3.8-1.2 1.5 0 2.8.5 3.3.9.4.3.7 1 .7 1.6 0 .2 0 .6.3.6s.3-.4.4-.6l.1-1.8.1-1c0-.2-.1-.4-.4-.4l-1.7-.2c-1.1-.2-2.2-.2-2.6-.2-2.4 0-4.1.6-5.4 1.9-1.5 1.5-2 3.5-2 4.9 0 2.2.7 4 2.2 5.3 1.5 1.3 3.3 1.9 5.8 1.9 1 0 2.4-.1 3.2-.4.4-.2.4-.2.6-.6.2-.6.4-2.1.4-2.3-.1-.5-.3-.5-.4-.5M114.1 32c-.2 0-.2.2-.3.4-.1.7-.3 1-.7 1.2-.4.2-1.2.2-1.6.2-1.7 0-1.8-.2-1.9-1.3V28l2.4.1c.6.1.7.3.8.5l.1.5c0 .2.1.3.2.3.2 0 .2-.3.2-.4l.1-1.1.1-1c0-.2-.2-.3-.2-.3l-.3.2c-.2.2-.4.2-.8.2h-2.7v-4.8c0-.1 2.3 0 2.3 0 .9.1 1 .3 1.1.5l.1.6c0 .3.2.3.2.3.1 0 .2 0 .2-.3l.1-.8v-.3l.1-.8c0-.3-.1-.3-.2-.3l-.2.1c-.1 0-.8.1-.8.1h-5.8c-.1 0-.4 0-.4.3 0 .1.1.2.3.2H107.1c.5.1.6.3.7.9v6.7c0 1.7 0 3-.1 3.7-.1.5-.2.8-.4.8l-.5.1c-.2 0-.3.1-.3.2 0 .3.3.3.4.3h2.1l3.8.1c.7 0 .9 0 1-.5l.2-1.7c.3-.1.3-.4.1-.4m-6.1-5.6s.1-.1 0 0c.1-.1 0 0 0 0zM88.1 34l-.6-.1c-.4-.1-.8-.4-1.4-1.8l-3.1-8-.9-2.4c-.2-.5-.3-.7-.6-.7s-.4.2-.6.8L77 32.5c-.3.9-.6 1.4-1.3 1.5h-.5c-.2 0-.4.1-.4.3 0 .3.4.3.5.3h3.3c.4 0 .5-.2.5-.3 0-.1-.1-.3-.4-.3h-.2c-.1 0-.5-.1-.5-.3 0-.3.1-.7.2-1.1 0 0 .1-.2 1-3.1h3.7s.2.6 1.6 4.2v.1c-.2.1-.3.2-.3.4 0 .3.3.3.6.3h2.8c.5 0 .5-.2.5-.3.4 0 .3-.2 0-.2m-8.3-5.5c.1-.3 1.3-4 1.4-4.3.1.3.5 1.4 1.5 4.3h-2.9zM71.8 31.9c-.2 0-.3.1-.3.4 0 .3-.2.7-.4.9-.3.4-1 .4-1.9.4-1.3 0-1.7-.1-1.9-.3-.3-.3-.3-2-.3-3.8v-6.7c0-.6.2-.7.5-.8h.5c.2 0 .3-.1.3-.3 0-.2-.1-.3-.5-.3h-1.5-.5-1.7c-.4 0-.5.2-.5.3 0 .2.1.3.3.3h.5c.5.1.5.3.6.8v6.7c0 1.6 0 3-.1 3.7-.1.5-.2.7-.3.8l-.5.1c-.2 0-.3.2-.3.3 0 .2.1.4.5.4h2.8l3.5.1c.9 0 1.1-.1 1.3-.6.1-.5.3-1.6.3-1.8-.1-.3-.1-.6-.4-.6M59.4 31.9c-.1 0-.3.1-.3.4 0 .3-.2.7-.4.9-.3.4-1 .4-1.9.4-1.3 0-1.7-.1-1.9-.3-.3-.3-.3-2-.3-3.8v-6.7c0-.6.2-.7.5-.8h.5c.2 0 .3-.1.3-.3 0-.2-.2-.3-.5-.3h-1.5-.5-1.7c-.4 0-.5.2-.5.3 0 .2.1.3.3.3h.5c.5.1.5.3.6.8v6.7c0 1.6 0 3-.1 3.7-.1.5-.2.7-.3.8l-.5.1c-.2 0-.3.2-.3.3 0 .2.1.4.5.4h2.8l3.5.1c.9 0 1.1-.1 1.3-.6.1-.5.3-1.6.3-1.8-.1-.3-.1-.6-.4-.6M47.1 34l-.6-.1c-.4-.1-.8-.4-1.4-1.8l-3.3-8.6-.7-1.8c-.2-.5-.3-.7-.6-.7s-.4.2-.6.8L36 32.5c-.3.9-.6 1.4-1.3 1.5h-.5c-.2 0-.3.1-.3.3 0 .3.4.3.5.3h3.3c.4 0 .5-.2.5-.3 0-.1-.1-.3-.4-.3h-.2c-.1 0-.5-.1-.5-.3 0-.3.1-.7.2-1.1l1-3.1H42s.2.6 1.6 4.2v.1c-.2.1-.3.3-.3.4 0 .3.3.3.6.3h2.8c.5 0 .5-.2.5-.3.3 0 .3-.2-.1-.2m-8.2-5.5c.1-.3 1.3-4 1.4-4.3.1.3.5 1.3 1.5 4.3h-2.9zM35.4 10.4l-2.1.1h-1l-2.7-.1c-.2 0-.7 0-.7.3 0 .2.2.3.4.3 1.5 0 1.7.4 1.7.8s0 .8-.3 2L27.3 25s-1.4 4.6-1.5 4.9c-.1-.3-6.3-18-6.3-18-.4-1.2-.6-1.6-.9-1.6-.3 0-.4.2-.9 1.5 0 0-5.9 15.8-6.6 17.9-.5-1.6-3.7-13-4.1-15l-.2-.7c-.2-1-.4-1.9-.4-2.2 0-.4.2-.6.3-.7.4-.1.9-.1 1.2-.1.4 0 .4-.2.4-.3 0-.3-.5-.3-.7-.3l-2.7.1H3.7l-3-.1c-.4 0-.6.1-.6.3-.1.2 0 .3.3.3.2 0 1 0 1.4.2.8.3 1.2.7 1.7 2.4l5.6 18.9c.7 2.3.8 2.6 1.2 2.6.5 0 .6-.4 1.2-1.8l6.1-16.2s.4-1 .5-1.3c.1.4 6.1 17.5 6.1 17.5.4 1.3.7 1.7 1.1 1.7.4 0 .6-.4 1.4-2.8l5.8-17.7c.6-1.8 1.1-3 2-3.4l1-.2c.2 0 .4-.1.4-.4.1 0 0-.1-.5-.1m-9.5 19.7c0-.1 0-.1 0 0 0-.1 0-.1 0 0z"></path></symbol></svg>
+<script type="text/javascript" src="?service=WebAsset&amp;url=js/bundle.js&amp;contentType=text/javascript"></script>
+<!-- Include jQuery Popup Overlay -->
+<script src="https://cdn.rawgit.com/vast-engineering/jquery-popup-overlay/1.7.13/jquery.popupoverlay.js"></script>
+<script>
+$(document).ready(function() {
+// Initialize the popup plugin
+$('#my_popup').popup();
+});
+</script>
+</div>
+
+
+
+
+</body></html>
