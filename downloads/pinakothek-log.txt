@@ -1,0 +1,119 @@
+[23시 16분 39초] [PINAKOTHEK] 🏛️ Bavarian State Painting Collections Scraper
+[23시 16분 39초] [PINAKOTHEK]    Munich, Germany
+[23시 16분 39초] [PINAKOTHEK]    Mode: FULL
+[23시 16분 39초] [PINAKOTHEK] 
+🎨 Scraping Alte Pinakothek (AP)...
+[23시 16분 41초] [PINAKOTHEK]    📊 Total: 5262 items across 53 pages
+[23시 16분 41초] [PINAKOTHEK]    📄 Scraping 53 page(s)...
+[23시 16분 41초] [PINAKOTHEK]    ✅ Page 1/53 - 100 items
+[23시 16분 41초] [PINAKOTHEK]    ✅ Page 2/53 - 200 items total
+[23시 16분 42초] [PINAKOTHEK]    ✅ Page 3/53 - 300 items total
+[23시 16분 43초] [PINAKOTHEK]    ✅ Page 4/53 - 400 items total
+[23시 16분 43초] [PINAKOTHEK]    ✅ Page 5/53 - 500 items total
+[23시 16분 44초] [PINAKOTHEK]    ✅ Page 6/53 - 600 items total
+[23시 16분 44초] [PINAKOTHEK]    ✅ Page 7/53 - 700 items total
+[23시 16분 45초] [PINAKOTHEK]    ✅ Page 8/53 - 800 items total
+[23시 16분 45초] [PINAKOTHEK]    ✅ Page 9/53 - 900 items total
+[23시 16분 46초] [PINAKOTHEK]    ✅ Page 10/53 - 1000 items total
+[23시 16분 47초] [PINAKOTHEK]    ✅ Page 11/53 - 1100 items total
+[23시 16분 47초] [PINAKOTHEK]    ✅ Page 12/53 - 1200 items total
+[23시 16분 48초] [PINAKOTHEK]    ✅ Page 13/53 - 1300 items total
+[23시 16분 48초] [PINAKOTHEK]    ✅ Page 14/53 - 1400 items total
+[23시 16분 49초] [PINAKOTHEK]    ✅ Page 15/53 - 1500 items total
+[23시 16분 49초] [PINAKOTHEK]    ✅ Page 16/53 - 1600 items total
+[23시 16분 50초] [PINAKOTHEK]    ✅ Page 17/53 - 1700 items total
+[23시 16분 50초] [PINAKOTHEK]    ✅ Page 18/53 - 1800 items total
+[23시 16분 51초] [PINAKOTHEK]    ✅ Page 19/53 - 1900 items total
+[23시 16분 52초] [PINAKOTHEK]    ✅ Page 20/53 - 2000 items total
+[23시 16분 52초] [PINAKOTHEK]    ✅ Page 21/53 - 2100 items total
+[23시 16분 53초] [PINAKOTHEK]    ✅ Page 22/53 - 2200 items total
+[23시 16분 53초] [PINAKOTHEK]    ✅ Page 23/53 - 2300 items total
+[23시 16분 54초] [PINAKOTHEK]    ✅ Page 24/53 - 2400 items total
+[23시 16분 54초] [PINAKOTHEK]    ✅ Page 25/53 - 2500 items total
+[23시 16분 56초] [PINAKOTHEK]    ✅ Page 26/53 - 2600 items total
+[23시 16분 57초] [PINAKOTHEK]    ✅ Page 27/53 - 2700 items total
+[23시 16분 57초] [PINAKOTHEK]    ✅ Page 28/53 - 2800 items total
+[23시 16분 58초] [PINAKOTHEK]    ✅ Page 29/53 - 2900 items total
+[23시 16분 58초] [PINAKOTHEK]    ✅ Page 30/53 - 3000 items total
+[23시 16분 59초] [PINAKOTHEK]    ✅ Page 31/53 - 3100 items total
+[23시 17분 0초] [PINAKOTHEK]    ✅ Page 32/53 - 3200 items total
+[23시 17분 0초] [PINAKOTHEK]    ✅ Page 33/53 - 3300 items total
+[23시 17분 1초] [PINAKOTHEK]    ✅ Page 34/53 - 3400 items total
+[23시 17분 1초] [PINAKOTHEK]    ✅ Page 35/53 - 3500 items total
+[23시 17분 3초] [PINAKOTHEK]    ✅ Page 36/53 - 3600 items total
+[23시 17분 3초] [PINAKOTHEK]    ✅ Page 37/53 - 3700 items total
+[23시 17분 4초] [PINAKOTHEK]    ✅ Page 38/53 - 3800 items total
+[23시 17분 4초] [PINAKOTHEK]    ✅ Page 39/53 - 3900 items total
+[23시 17분 5초] [PINAKOTHEK]    ✅ Page 40/53 - 4000 items total
+[23시 17분 6초] [PINAKOTHEK]    ✅ Page 41/53 - 4100 items total
+[23시 17분 6초] [PINAKOTHEK]    ✅ Page 42/53 - 4200 items total
+[23시 17분 7초] [PINAKOTHEK]    ✅ Page 43/53 - 4300 items total
+[23시 17분 8초] [PINAKOTHEK]    ✅ Page 44/53 - 4400 items total
+[23시 17분 8초] [PINAKOTHEK]    ✅ Page 45/53 - 4500 items total
+[23시 17분 9초] [PINAKOTHEK]    ✅ Page 46/53 - 4600 items total
+[23시 17분 9초] [PINAKOTHEK]    ✅ Page 47/53 - 4700 items total
+[23시 17분 10초] [PINAKOTHEK]    ✅ Page 48/53 - 4800 items total
+[23시 17분 10초] [PINAKOTHEK]    ✅ Page 49/53 - 4900 items total
+[23시 17분 11초] [PINAKOTHEK]    ✅ Page 50/53 - 5000 items total
+[23시 17분 11초] [PINAKOTHEK]    ✅ Page 51/53 - 5100 items total
+[23시 17분 12초] [PINAKOTHEK]    ✅ Page 52/53 - 5200 items total
+[23시 17분 12초] [PINAKOTHEK]    ✅ Page 53/53 - 5262 items total
+[23시 17분 13초] [PINAKOTHEK]    🎉 Alte Pinakothek: 5262 artworks collected
+[23시 17분 13초] [PINAKOTHEK]    💾 Saved 5262 items to alte-pinakothek-collection.json
+[23시 17분 14초] [PINAKOTHEK] 
+🎨 Scraping Neue Pinakothek (NP)...
+[23시 17분 14초] [PINAKOTHEK]    📊 Total: 136 items across 2 pages
+[23시 17분 14초] [PINAKOTHEK]    📄 Scraping 2 page(s)...
+[23시 17분 14초] [PINAKOTHEK]    ✅ Page 1/2 - 100 items
+[23시 17분 14초] [PINAKOTHEK]    ✅ Page 2/2 - 136 items total
+[23시 17분 15초] [PINAKOTHEK]    🎉 Neue Pinakothek: 136 artworks collected
+[23시 17분 15초] [PINAKOTHEK]    💾 Saved 136 items to neue-pinakothek-collection.json
+[23시 17분 16초] [PINAKOTHEK] 
+🎨 Scraping Pinakothek der Moderne (PdM)...
+[23시 17분 16초] [PINAKOTHEK]    📊 Total: 467 items across 5 pages
+[23시 17분 16초] [PINAKOTHEK]    📄 Scraping 5 page(s)...
+[23시 17분 16초] [PINAKOTHEK]    ✅ Page 1/5 - 100 items
+[23시 17분 17초] [PINAKOTHEK]    ✅ Page 2/5 - 200 items total
+[23시 17분 17초] [PINAKOTHEK]    ✅ Page 3/5 - 300 items total
+[23시 17분 18초] [PINAKOTHEK]    ✅ Page 4/5 - 400 items total
+[23시 17분 18초] [PINAKOTHEK]    ✅ Page 5/5 - 467 items total
+[23시 17분 19초] [PINAKOTHEK]    🎉 Pinakothek der Moderne: 467 artworks collected
+[23시 17분 19초] [PINAKOTHEK]    💾 Saved 467 items to pinakothek-moderne-collection.json
+[23시 17분 20초] [PINAKOTHEK] 
+🎨 Scraping Sammlung Schack (SS)...
+[23시 17분 20초] [PINAKOTHEK]    📊 Total: 173 items across 2 pages
+[23시 17분 20초] [PINAKOTHEK]    📄 Scraping 2 page(s)...
+[23시 17분 20초] [PINAKOTHEK]    ✅ Page 1/2 - 100 items
+[23시 17분 20초] [PINAKOTHEK]    ✅ Page 2/2 - 173 items total
+[23시 17분 21초] [PINAKOTHEK]    🎉 Sammlung Schack: 173 artworks collected
+[23시 17분 21초] [PINAKOTHEK]    💾 Saved 173 items to sammlung-schack-collection.json
+[23시 17분 22초] [PINAKOTHEK] 
+🎨 Scraping Staatsgalerien (SG)...
+[23시 17분 22초] [PINAKOTHEK]    📊 Total: 1200 items across 12 pages
+[23시 17분 22초] [PINAKOTHEK]    📄 Scraping 12 page(s)...
+[23시 17분 22초] [PINAKOTHEK]    ✅ Page 1/12 - 100 items
+[23시 17분 22초] [PINAKOTHEK]    ✅ Page 2/12 - 200 items total
+[23시 17분 23초] [PINAKOTHEK]    ✅ Page 3/12 - 300 items total
+[23시 17분 23초] [PINAKOTHEK]    ✅ Page 4/12 - 400 items total
+[23시 17분 24초] [PINAKOTHEK]    ✅ Page 5/12 - 500 items total
+[23시 17분 25초] [PINAKOTHEK]    ✅ Page 6/12 - 600 items total
+[23시 17분 25초] [PINAKOTHEK]    ✅ Page 7/12 - 700 items total
+[23시 17분 26초] [PINAKOTHEK]    ✅ Page 8/12 - 800 items total
+[23시 17분 26초] [PINAKOTHEK]    ✅ Page 9/12 - 900 items total
+[23시 17분 27초] [PINAKOTHEK]    ✅ Page 10/12 - 1000 items total
+[23시 17분 27초] [PINAKOTHEK]    ✅ Page 11/12 - 1100 items total
+[23시 17분 28초] [PINAKOTHEK]    ✅ Page 12/12 - 1200 items total
+[23시 17분 28초] [PINAKOTHEK]    🎉 Staatsgalerien: 1200 artworks collected
+[23시 17분 28초] [PINAKOTHEK]    💾 Saved 1200 items to staatsgalerien-collection.json
+[23시 17분 29초] [PINAKOTHEK] 
+==================================================
+[23시 17분 29초] [PINAKOTHEK] 📊 SCRAPING COMPLETE
+[23시 17분 29초] [PINAKOTHEK] ==================================================
+[23시 17분 29초] [PINAKOTHEK]    Alte Pinakothek: 5262 items
+[23시 17분 29초] [PINAKOTHEK]    Neue Pinakothek: 136 items
+[23시 17분 29초] [PINAKOTHEK]    Pinakothek der Moderne: 467 items
+[23시 17분 29초] [PINAKOTHEK]    Sammlung Schack: 173 items
+[23시 17분 29초] [PINAKOTHEK]    Staatsgalerien: 1200 items
+[23시 17분 29초] [PINAKOTHEK]    ──────────────────────────────
+[23시 17분 29초] [PINAKOTHEK]    TOTAL: 7238 artworks
+[23시 17분 29초] [PINAKOTHEK] 

@@ -1,0 +1,635 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SMB Museums Test Preview - Staatliche Museen zu Berlin</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: #1a1a2e;
+      color: #eee;
+      min-height: 100vh;
+    }
+    
+    header {
+      background: linear-gradient(135deg, #16213e 0%, #1a1a2e 100%);
+      padding: 2rem;
+      border-bottom: 1px solid #333;
+    }
+    
+    h1 {
+      font-size: 1.8rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    .subtitle {
+      color: #888;
+      font-size: 0.95rem;
+    }
+    
+    .stats-bar {
+      display: flex;
+      gap: 2rem;
+      margin-top: 1rem;
+      flex-wrap: wrap;
+    }
+    
+    .stat {
+      background: rgba(255,255,255,0.05);
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      font-size: 0.9rem;
+    }
+    
+    .stat-label {
+      color: #888;
+    }
+    
+    .stat-value {
+      color: #4ade80;
+      font-weight: 600;
+    }
+    
+    .tabs {
+      display: flex;
+      gap: 0;
+      padding: 1rem 2rem 0;
+      border-bottom: 1px solid #333;
+    }
+    
+    .tab {
+      padding: 0.75rem 1.5rem;
+      cursor: pointer;
+      border: none;
+      background: transparent;
+      color: #888;
+      font-size: 0.95rem;
+      border-bottom: 2px solid transparent;
+      transition: all 0.2s;
+    }
+    
+    .tab:hover {
+      color: #fff;
+    }
+    
+    .tab.active {
+      color: #fff;
+      border-bottom-color: #4ade80;
+    }
+    
+    .tab-count {
+      background: rgba(255,255,255,0.1);
+      padding: 0.15rem 0.5rem;
+      border-radius: 10px;
+      font-size: 0.8rem;
+      margin-left: 0.5rem;
+    }
+    
+    main {
+      padding: 2rem;
+    }
+    
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+    }
+    
+    .card {
+      background: #16213e;
+      border-radius: 12px;
+      overflow: hidden;
+      transition: transform 0.2s, box-shadow 0.2s;
+      cursor: pointer;
+    }
+    
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 8px 30px rgba(0,0,0,0.4);
+    }
+    
+    .card-image {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+      background: #0f0f1a;
+    }
+    
+    .card-content {
+      padding: 1rem;
+    }
+    
+    .card-title {
+      font-size: 1rem;
+      margin-bottom: 0.5rem;
+      line-height: 1.4;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+    
+    .card-meta {
+      font-size: 0.85rem;
+      color: #888;
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+    
+    .card-meta span {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    
+    .card-meta .label {
+      color: #666;
+      min-width: 60px;
+    }
+    
+    .card-meta .value {
+      color: #aaa;
+    }
+    
+    .badge {
+      display: inline-block;
+      background: rgba(74, 222, 128, 0.2);
+      color: #4ade80;
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      font-size: 0.75rem;
+      margin-top: 0.5rem;
+    }
+    
+    .badge.cc0 {
+      background: rgba(59, 130, 246, 0.2);
+      color: #3b82f6;
+    }
+    
+    /* Modal */
+    .modal-overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.85);
+      z-index: 1000;
+      overflow-y: auto;
+      padding: 2rem;
+    }
+    
+    .modal-overlay.active {
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+    }
+    
+    .modal {
+      background: #16213e;
+      border-radius: 16px;
+      max-width: 900px;
+      width: 100%;
+      margin: 2rem auto;
+      overflow: hidden;
+    }
+    
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.5rem;
+      border-bottom: 1px solid #333;
+    }
+    
+    .modal-close {
+      background: none;
+      border: none;
+      color: #888;
+      font-size: 1.5rem;
+      cursor: pointer;
+      padding: 0.5rem;
+    }
+    
+    .modal-close:hover {
+      color: #fff;
+    }
+    
+    .modal-body {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+      padding: 1.5rem;
+    }
+    
+    @media (max-width: 768px) {
+      .modal-body {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    .modal-image {
+      width: 100%;
+      border-radius: 8px;
+      background: #0f0f1a;
+    }
+    
+    .modal-details {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    
+    .modal-title {
+      font-size: 1.4rem;
+      line-height: 1.3;
+    }
+    
+    .detail-row {
+      display: flex;
+      gap: 1rem;
+      font-size: 0.9rem;
+    }
+    
+    .detail-label {
+      color: #666;
+      min-width: 100px;
+      flex-shrink: 0;
+    }
+    
+    .detail-value {
+      color: #ddd;
+    }
+    
+    .detail-section {
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid #333;
+    }
+    
+    .detail-section h4 {
+      color: #888;
+      font-size: 0.85rem;
+      margin-bottom: 0.5rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    
+    .detail-section p {
+      color: #aaa;
+      font-size: 0.9rem;
+      line-height: 1.6;
+    }
+    
+    .source-link {
+      display: inline-block;
+      margin-top: 1rem;
+      color: #4ade80;
+      text-decoration: none;
+    }
+    
+    .source-link:hover {
+      text-decoration: underline;
+    }
+    
+    /* Collection summary */
+    .summary {
+      background: #16213e;
+      border-radius: 12px;
+      padding: 1.5rem;
+      margin-bottom: 2rem;
+    }
+    
+    .summary h3 {
+      margin-bottom: 1rem;
+    }
+    
+    .summary-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1rem;
+    }
+    
+    .summary-item {
+      text-align: center;
+    }
+    
+    .summary-item .number {
+      font-size: 1.8rem;
+      font-weight: 600;
+      color: #4ade80;
+    }
+    
+    .summary-item .label {
+      color: #888;
+      font-size: 0.85rem;
+    }
+    
+    .no-image {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      height: 200px;
+      background: #0f0f1a;
+      color: #666;
+      font-size: 0.9rem;
+    }
+    
+    .loading {
+      text-align: center;
+      padding: 4rem;
+      color: #888;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🏛️ SMB Museums Test Preview</h1>
+    <p class="subtitle">Staatliche Museen zu Berlin - GraphQL API Test Collection (135 artworks)</p>
+    <div class="stats-bar" id="statsBar">
+      <div class="stat">
+        <span class="stat-label">Total:</span>
+        <span class="stat-value" id="totalCount">-</span>
+      </div>
+      <div class="stat">
+        <span class="stat-label">With Image:</span>
+        <span class="stat-value" id="imageCount">-</span>
+      </div>
+      <div class="stat">
+        <span class="stat-label">With Artist:</span>
+        <span class="stat-value" id="artistCount">-</span>
+      </div>
+      <div class="stat">
+        <span class="stat-label">With Date:</span>
+        <span class="stat-value" id="dateCount">-</span>
+      </div>
+    </div>
+  </header>
+  
+  <div class="tabs">
+    <button class="tab active" data-museum="all">All<span class="tab-count" id="countAll">-</span></button>
+    <button class="tab" data-museum="smb-humboldt-forum">Humboldt Forum<span class="tab-count" id="countHumboldt">-</span></button>
+    <button class="tab" data-museum="smb-altes-museum">Altes Museum<span class="tab-count" id="countAltes">-</span></button>
+    <button class="tab" data-museum="smb-neues-museum">Neues Museum<span class="tab-count" id="countNeues">-</span></button>
+  </div>
+  
+  <main>
+    <div class="summary" id="summary">
+      <h3>📊 Collection Statistics</h3>
+      <div class="summary-grid" id="summaryGrid"></div>
+    </div>
+    
+    <div class="grid" id="artworkGrid">
+      <div class="loading">Loading artworks...</div>
+    </div>
+  </main>
+  
+  <!-- Modal -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal" id="modal">
+      <div class="modal-header">
+        <h2 id="modalTitle">Artwork Details</h2>
+        <button class="modal-close" id="modalClose">&times;</button>
+      </div>
+      <div class="modal-body" id="modalBody"></div>
+    </div>
+  </div>
+  
+  <script>
+    let artworks = [];
+    let currentMuseum = 'all';
+    
+    async function loadData() {
+      try {
+        const response = await fetch('./data/smb-test-collection.json');
+        artworks = await response.json();
+        
+        updateStats();
+        updateTabs();
+        renderGrid();
+        renderSummary();
+      } catch (e) {
+        document.getElementById('artworkGrid').innerHTML = 
+          `<div class="loading">Error loading data: ${e.message}<br>Make sure to run the test scraper first.</div>`;
+      }
+    }
+    
+    function updateStats() {
+      const filtered = filterArtworks();
+      document.getElementById('totalCount').textContent = filtered.length;
+      document.getElementById('imageCount').textContent = filtered.filter(a => a.imageUrl).length;
+      document.getElementById('artistCount').textContent = filtered.filter(a => a.artist).length;
+      document.getElementById('dateCount').textContent = filtered.filter(a => a.date).length;
+    }
+    
+    function updateTabs() {
+      document.getElementById('countAll').textContent = artworks.length;
+      document.getElementById('countHumboldt').textContent = 
+        artworks.filter(a => a.museumId === 'smb-humboldt-forum').length;
+      document.getElementById('countAltes').textContent = 
+        artworks.filter(a => a.museumId === 'smb-altes-museum').length;
+      document.getElementById('countNeues').textContent = 
+        artworks.filter(a => a.museumId === 'smb-neues-museum').length;
+    }
+    
+    function filterArtworks() {
+      if (currentMuseum === 'all') return artworks;
+      return artworks.filter(a => a.museumId === currentMuseum);
+    }
+    
+    function renderGrid() {
+      const filtered = filterArtworks();
+      const grid = document.getElementById('artworkGrid');
+      
+      if (filtered.length === 0) {
+        grid.innerHTML = '<div class="loading">No artworks found</div>';
+        return;
+      }
+      
+      grid.innerHTML = filtered.map(artwork => `
+        <div class="card" onclick="openModal('${artwork.id}')">
+          ${artwork.imageUrl 
+            ? `<img class="card-image" src="${artwork.imageUrl}" alt="${escapeHtml(artwork.title)}" loading="lazy" onerror="this.parentElement.querySelector('.card-image').outerHTML='<div class=no-image>No Image Available</div>'">` 
+            : '<div class="no-image">No Image Available</div>'}
+          <div class="card-content">
+            <h3 class="card-title">${escapeHtml(artwork.title)}</h3>
+            <div class="card-meta">
+              ${artwork.artist ? `<span><span class="label">Artist:</span><span class="value">${escapeHtml(artwork.artist)}</span></span>` : ''}
+              ${artwork.date ? `<span><span class="label">Date:</span><span class="value">${escapeHtml(artwork.date)}</span></span>` : ''}
+              ${artwork.type ? `<span><span class="label">Type:</span><span class="value">${escapeHtml(artwork.type)}</span></span>` : ''}
+            </div>
+            <span class="badge ${artwork.license.includes('CC0') || artwork.license.includes('Public Domain') ? 'cc0' : ''}">${artwork.license || 'Unknown'}</span>
+          </div>
+        </div>
+      `).join('');
+    }
+    
+    function renderSummary() {
+      const filtered = filterArtworks();
+      const stats = {
+        total: filtered.length,
+        withImage: filtered.filter(a => a.imageUrl).length,
+        withArtist: filtered.filter(a => a.artist).length,
+        withDate: filtered.filter(a => a.date).length,
+        withMedium: filtered.filter(a => a.medium).length,
+        withDimensions: filtered.filter(a => a.dimensions).length,
+        withDescription: filtered.filter(a => a.description).length
+      };
+      
+      const summaryGrid = document.getElementById('summaryGrid');
+      summaryGrid.innerHTML = `
+        <div class="summary-item">
+          <div class="number">${stats.total}</div>
+          <div class="label">Total Artworks</div>
+        </div>
+        <div class="summary-item">
+          <div class="number">${((stats.withImage/stats.total)*100).toFixed(0)}%</div>
+          <div class="label">With Images</div>
+        </div>
+        <div class="summary-item">
+          <div class="number">${((stats.withArtist/stats.total)*100).toFixed(0)}%</div>
+          <div class="label">With Artist</div>
+        </div>
+        <div class="summary-item">
+          <div class="number">${((stats.withDate/stats.total)*100).toFixed(0)}%</div>
+          <div class="label">With Date</div>
+        </div>
+        <div class="summary-item">
+          <div class="number">${((stats.withMedium/stats.total)*100).toFixed(0)}%</div>
+          <div class="label">With Medium</div>
+        </div>
+        <div class="summary-item">
+          <div class="number">${((stats.withDescription/stats.total)*100).toFixed(0)}%</div>
+          <div class="label">With Description</div>
+        </div>
+      `;
+    }
+    
+    function openModal(id) {
+      const artwork = artworks.find(a => a.id === id);
+      if (!artwork) return;
+      
+      document.getElementById('modalTitle').textContent = artwork.title;
+      
+      const body = document.getElementById('modalBody');
+      body.innerHTML = `
+        <div>
+          ${artwork.imageUrl 
+            ? `<img class="modal-image" src="${artwork.imageUrl}" alt="${escapeHtml(artwork.title)}">`
+            : '<div class="no-image" style="height:300px">No Image Available</div>'}
+          ${artwork.credits ? `<p style="color:#666;font-size:0.8rem;margin-top:0.5rem">${escapeHtml(artwork.credits)}</p>` : ''}
+        </div>
+        <div class="modal-details">
+          <h3 class="modal-title">${escapeHtml(artwork.title)}</h3>
+          
+          <div class="detail-row">
+            <span class="detail-label">Artist:</span>
+            <span class="detail-value">${escapeHtml(artwork.artist || 'Unknown')}</span>
+          </div>
+          
+          <div class="detail-row">
+            <span class="detail-label">Date:</span>
+            <span class="detail-value">${escapeHtml(artwork.date || 'Unknown')}</span>
+          </div>
+          
+          <div class="detail-row">
+            <span class="detail-label">Medium:</span>
+            <span class="detail-value">${escapeHtml(artwork.medium || 'Unknown')}</span>
+          </div>
+          
+          <div class="detail-row">
+            <span class="detail-label">Type:</span>
+            <span class="detail-value">${escapeHtml(artwork.type || 'Unknown')}</span>
+          </div>
+          
+          <div class="detail-row">
+            <span class="detail-label">Dimensions:</span>
+            <span class="detail-value">${escapeHtml(artwork.dimensions || 'Unknown')}</span>
+          </div>
+          
+          <div class="detail-row">
+            <span class="detail-label">Inventory:</span>
+            <span class="detail-value">${escapeHtml(artwork.inventoryNumber || 'N/A')}</span>
+          </div>
+          
+          <div class="detail-row">
+            <span class="detail-label">Collection:</span>
+            <span class="detail-value">${escapeHtml(artwork.collection || 'N/A')}</span>
+          </div>
+          
+          <div class="detail-row">
+            <span class="detail-label">Museum:</span>
+            <span class="detail-value">${escapeHtml(artwork.museum)}</span>
+          </div>
+          
+          <div class="detail-row">
+            <span class="detail-label">License:</span>
+            <span class="detail-value">${escapeHtml(artwork.license || 'Unknown')}</span>
+          </div>
+          
+          ${artwork.description ? `
+            <div class="detail-section">
+              <h4>Description</h4>
+              <p>${escapeHtml(artwork.description)}</p>
+            </div>
+          ` : ''}
+          
+          ${artwork.geographicalReferences && artwork.geographicalReferences.length > 0 ? `
+            <div class="detail-section">
+              <h4>Geographical References</h4>
+              <p>${artwork.geographicalReferences.map(g => `${g.place}${g.type ? ` (${g.type})` : ''}`).join(', ')}</p>
+            </div>
+          ` : ''}
+          
+          <a class="source-link" href="${artwork.sourceUrl}" target="_blank">View on SMB →</a>
+        </div>
+      `;
+      
+      document.getElementById('modalOverlay').classList.add('active');
+      document.body.style.overflow = 'hidden';
+    }
+    
+    function closeModal() {
+      document.getElementById('modalOverlay').classList.remove('active');
+      document.body.style.overflow = '';
+    }
+    
+    function escapeHtml(text) {
+      if (!text) return '';
+      const div = document.createElement('div');
+      div.textContent = text;
+      return div.innerHTML;
+    }
+    
+    // Event listeners
+    document.querySelectorAll('.tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        tab.classList.add('active');
+        currentMuseum = tab.dataset.museum;
+        updateStats();
+        renderGrid();
+        renderSummary();
+      });
+    });
+    
+    document.getElementById('modalClose').addEventListener('click', closeModal);
+    document.getElementById('modalOverlay').addEventListener('click', (e) => {
+      if (e.target === document.getElementById('modalOverlay')) closeModal();
+    });
+    
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') closeModal();
+    });
+    
+    // Load data on page load
+    loadData();
+  </script>
+</body>
+</html>

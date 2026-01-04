@@ -373,8 +373,8 @@ const LineGlobe: React.FC<LineGlobeProps> = ({ exhibitions = [], onSelectExhibit
                 ctx.fillText(name.substring(0, 15).toUpperCase(), cluster.x + 10, cluster.y);
             } else {
                 // Cluster - dark rounded rectangle with count
-                const size = Math.max(22, 14 + Math.log2(cluster.items.length) * 4);
-                const radius = 6;
+                const size = Math.max(18, 12 + Math.log2(cluster.items.length) * 3);
+                const radius = 5;
 
                 // Rounded rectangle
                 ctx.beginPath();
@@ -382,12 +382,12 @@ const LineGlobe: React.FC<LineGlobeProps> = ({ exhibitions = [], onSelectExhibit
                 ctx.fillStyle = '#111827';
                 ctx.fill();
                 ctx.strokeStyle = '#E5E7EB';
-                ctx.lineWidth = 1.2;
+                ctx.lineWidth = 1;
                 ctx.stroke();
 
                 // Count text
                 ctx.fillStyle = '#ffffff';
-                ctx.font = `bold ${Math.max(10, 9 + Math.log2(cluster.items.length) * 1.1)}px sans-serif`;
+                ctx.font = `bold ${Math.max(9, 8 + Math.log2(cluster.items.length) * 1)}px sans-serif`;
                 ctx.textAlign = 'center';
                 ctx.textBaseline = 'middle';
                 ctx.fillText(String(cluster.items.length), cluster.x, cluster.y);

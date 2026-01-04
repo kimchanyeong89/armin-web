@@ -50,21 +50,38 @@ const cleanArtistName = (artist: string | undefined | null): string => {
 // Examples: "15th century, 199398" → "15th century"
 //           "16th century, modern age, 199633" → "16th century, modern age"
 //           "1765" → "1765"
-const cleanDateText = (dateStr: string | undefined | null): string => {
-  if (!dateStr) return '';
+//           -664 → "664 BC" (negative years = BC)
+const cleanDateText = (dateStr: string | number | undefined | null): string => {
+  if (dateStr === undefined || dateStr === null) return '';
+
+  // Handle negative years (BC years stored as negative numbers)
+  if (typeof dateStr === 'number') {
+    if (dateStr < 0) {
+      return `${Math.abs(dateStr)} BC`;
+    }
+    return String(dateStr);
+  }
+
+  // Ensure it's a string
+  const str = String(dateStr);
+
+  // Check if it's a negative number string
+  if (/^-\d+$/.test(str.trim())) {
+    return `${str.trim().slice(1)} BC`;
+  }
 
   // If it's a simple 4-digit year, return as is
-  if (/^\d{4}$/.test(dateStr.trim())) {
-    return dateStr.trim();
+  if (/^\d{4}$/.test(str.trim())) {
+    return str.trim();
   }
 
   // Remove trailing garbage numbers (6+ digits that look like IDs)
-  let cleaned = dateStr.replace(/,?\s*\d{6,}$/g, '').trim();
+  let cleaned = str.replace(/,?\s*\d{6,}$/g, '').trim();
 
   // Remove trailing comma if any
   cleaned = cleaned.replace(/,\s*$/, '').trim();
 
-  return cleaned || dateStr;
+  return cleaned || str;
 };
 
 const pickLowPlaceholder = (artwork: Artwork) => {
@@ -194,6 +211,8 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
   const [showArtworksOnly, setShowArtworksOnly] = useState(false);
   // 2D/3D artwork type filter (multi-select)
   const [selectedTypes, setSelectedTypes] = useState<Set<'2D' | '3D'>>(new Set());
+  // Search query for filtering artworks
+  const [searchQuery, setSearchQuery] = useState('');
 
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, (user) => {
@@ -435,8 +454,10 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
     });
 
     const hasC = discovered.some(id => id.toUpperCase() === 'C');
-    // Check for both 'n' and 'Not on display' as Archive
+    // Check for both 'n' and 'Not on display' as Archive, OR artworks with no room assignment (default)
     const hasArchive = discovered.some(id => id === 'Not on display' || id === 'n');
+    // Check if there are artworks without room assignment (roomId is empty, null, or 'default')
+    const hasUnassigned = artworks.some(a => !a.roomId || a.roomId === 'default' || a.roomId.trim() === '');
 
     const buttons: { label: string; id: string }[] = [{ label: 'ALL', id: 'ALL' }];
 
@@ -462,13 +483,19 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
       if (id.toUpperCase() !== 'C') buttons.push({ label: id.toUpperCase(), id }); // add letter rooms except C (handled separately)
     }
     if (hasC) buttons.push({ label: 'C', id: 'C' }); // append Central Hall
-    if (hasArchive) buttons.push({ label: 'n', id: 'n' }); // append Archive (n) at the end
+    if (hasArchive || hasUnassigned) buttons.push({ label: 'n', id: 'n' }); // append Not assigned (n) at the end
+    // Only return buttons if there are actual rooms (more than just ALL)
+    if (buttons.length <= 1) return [];
     return buttons;
   }, [artworks, roomMetas, exhibition.id]);
 
   // Room-only filtered (for deriving century/decade availability)
   const roomFiltered = useMemo(() => {
     if (selectedRoomId === 'ALL') return artworks;
+    // 'n' means not assigned - filter artworks with no room or default roomId
+    if (selectedRoomId === 'n') {
+      return artworks.filter(a => !a.roomId || a.roomId === 'default' || a.roomId.trim() === '' || a.roomId === 'Not on display' || a.roomId === 'n');
+    }
     return artworks.filter(a => (a.roomId || 'default') === selectedRoomId);
   }, [artworks, selectedRoomId]);
 
@@ -488,9 +515,9 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
 
     // If in decade view and a century is chosen, limit to that century
     if (dateLevel === 'decade' && selectedCentury) {
-      if (selectedCentury === '~17') {
-        // Pre-1700
-        filtered = filtered.filter(a => (a.year || 0) > 0 && (a.year || 0) < 1700);
+      if (selectedCentury === '~15') {
+        // Pre-1500
+        filtered = filtered.filter(a => (a.year || 0) > 0 && (a.year || 0) < 1500);
       } else {
         const cNum = parseInt(selectedCentury);
         const cStart = (cNum - 1) * 100;
@@ -507,8 +534,8 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
       const startYear = parseInt(selectedYearRange);
       if (Number.isFinite(startYear)) {
         const dStart = startYear;
-        // For ~17c selections, use 100-year range; otherwise 10-year
-        const dEnd = (selectedCentury === '~17') ? dStart + 100 : dStart + 10;
+        // For ~15c selections, use 100-year range; otherwise 10-year
+        const dEnd = (selectedCentury === '~15') ? dStart + 100 : dStart + 10;
         filtered = filtered.filter(a => {
           const y = a.year || 0;
           return y >= dStart && y < dEnd;
@@ -516,8 +543,26 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
       }
     }
 
+    // Apply search filter
+    if (searchQuery.trim()) {
+      const q = searchQuery.toLowerCase().trim();
+      filtered = filtered.filter(a => {
+        const name = String(a.name || '').toLowerCase();
+        const artist = String(a.artist || '').toLowerCase();
+        const year = String(a.year || '');
+        const date = String(a.date || '').toLowerCase();
+        const medium = String((a as Record<string, unknown>).medium || '').toLowerCase();
+        const technique = String((a as Record<string, unknown>).technique || '').toLowerCase();
+        const materials = String((a as Record<string, unknown>).materials || '').toLowerCase();
+        const category = String((a as Record<string, unknown>).category || '').toLowerCase();
+        const artworkType = String((a as Record<string, unknown>).artworkType || '').toLowerCase();
+        const dimension = String(a.dimension || '').toLowerCase();
+        return name.includes(q) || artist.includes(q) || year.includes(q) || date.includes(q) || medium.includes(q) || technique.includes(q) || materials.includes(q) || category.includes(q) || artworkType.includes(q) || dimension.includes(q);
+      });
+    }
+
     return filtered;
-  }, [roomFiltered, dateLevel, selectedCentury, selectedYearRange, likedArtworks, showArtworksOnly, selectedTypes]);
+  }, [roomFiltered, dateLevel, selectedCentury, selectedYearRange, likedArtworks, showArtworksOnly, selectedTypes, searchQuery]);
 
   // Check if any artwork has type field (2D/3D) for showing filter buttons
   const hasTypedArtworks = useMemo(() => {
@@ -535,16 +580,18 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
     for (const a of roomFiltered) {
       const y = a.year || 0;
       if (!y) continue;
-      if (y < 1700) set.add('~17');      // 17c and earlier
+      if (y < 1500) set.add('~15');      // Before 15c
+      else if (y < 1600) set.add('16');  // 16c (1500-1599)
+      else if (y < 1700) set.add('17');  // 17c (1600-1699)
       else if (y < 1800) set.add('18');  // 18c (1700-1799)
       else if (y < 1900) set.add('19');  // 19c (1800-1899)
       else if (y < 2000) set.add('20');  // 20c (1900-1999)
       else set.add('21');                 // 21c (2000+)
     }
-    // Sort: ~17 first, then numeric ascending
+    // Sort: ~15 first, then numeric ascending
     return Array.from(set).sort((a, b) => {
-      if (a === '~17') return -1;
-      if (b === '~17') return 1;
+      if (a === '~15') return -1;
+      if (b === '~15') return 1;
       return Number(a) - Number(b);
     });
   }, [roomFiltered]);
@@ -552,11 +599,11 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
   const availableDecades = useMemo(() => {
     if (!selectedCentury) return [] as number[];
     const present = new Set<number>();
-    if (selectedCentury === '~17') {
-      // Pre-1700: group by centuries (100-year intervals) instead of decades
+    if (selectedCentury === '~15') {
+      // Pre-1500: group by centuries (100-year intervals) instead of decades
       for (const a of roomFiltered) {
         const y = a.year || 0;
-        if (y > 0 && y < 1700) {
+        if (y > 0 && y < 1500) {
           // Group by century: 1200-1299 -> 1200, 1300-1399 -> 1300, etc.
           const c = Math.floor(y / 100) * 100;
           present.add(c);
@@ -601,7 +648,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
   const META_CREATOR_X = 250; // px
   const META_DATE_X = 500; // px
   const META_GAP = META_DATE_X - META_CREATOR_X; // 250px by default
-  const FIXED_META_HEIGHT = 56; // px, lock meta row height to prevent layout shift
+  const FIXED_META_HEIGHT = 110; // px, lock meta row height to prevent layout shift (2 rows now)
   // Narrow screens: center metadata area by computing offset based on windowWidth
   const narrowMetaOffset = isMobile ? 12 : (isVeryNarrow ? Math.max(160, (windowWidth - 400) / 2) : (isNarrow ? Math.max(180, (windowWidth - 500) / 2) : 0));
   const metaPos = isVeryNarrow ? {
@@ -1745,8 +1792,8 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
       })();
       return () => { };
     }
-    // Centre Pompidou & MAM Paris & Louvre & Jacquemart-André & Marmottan & Picasso & Palais de Tokyo & Petit Palais & Rouen & Lille & MAMCS & Lyon & Grenoble & Bordeaux & Rodin & FLV & MAD Paris & Carnavalet & Condé & Versailles & Guimet & MAC/VAL & Mucem & Fabre & Chagall & La Piscine & Wallace & Soane & Vatican & Wales & Uffizi & Accademia & Palazzo Ducale Collections: load from local scraped JSON
-    if (exhibition.id === 'pompidou-cinema' || exhibition.id === 'pompidou-painting' || exhibition.id === 'pompidou-drawing' || exhibition.id === 'pompidou-newmedia' || exhibition.id === 'pompidou-design' || exhibition.id === 'mam-perm-painting' || exhibition.id === 'mam-perm-photography' || exhibition.id === 'louvre-painting' || exhibition.id === 'jacquemart-collection' || exhibition.id === 'marmottan-collection' || exhibition.id === 'picasso-drawings' || exhibition.id === 'picasso-paintings' || exhibition.id === 'picasso-sculptures' || exhibition.id === 'picasso-prints' || exhibition.id === 'palais-de-tokyo-collection' || exhibition.id === 'petit-palais-collection' || exhibition.id === 'petit-palais-drawings' || exhibition.id === 'rouen-mba-collection' || exhibition.id === 'lille-pba-collection' || exhibition.id === 'mamcs-drawings' || exhibition.id === 'mamcs-paintings' || exhibition.id === 'mamcs-photography' || exhibition.id === 'mamcs-graphic-design' || exhibition.id === 'lyon-collection' || exhibition.id === 'grenoble-paintings' || exhibition.id === 'grenoble-drawings' || exhibition.id === 'grenoble-photography' || exhibition.id === 'bordeaux-paintings' || exhibition.id === 'bordeaux-drawings' || exhibition.id === 'toulouse-lautrec-collection' || exhibition.id === 'granet-collection' || exhibition.id === 'rodin-peintures' || exhibition.id === 'rodin-sculptures' || exhibition.id === 'rodin-gravures' || exhibition.id === 'flv-collection' || exhibition.id === 'mad-collection' || exhibition.id === 'carnavalet-collection' || exhibition.id === 'carnavalet-paintings' || exhibition.id === 'carnavalet-prints' || exhibition.id === 'musee-armee-peinture' || exhibition.id === 'musee-armee-photographie' || exhibition.id === 'musee-armee-dessin' || exhibition.id === 'conde-paintings' || exhibition.id === 'conde-drawings' || exhibition.id === 'versailles-collection' || exhibition.id === 'guimet-collection' || exhibition.id === 'macval-collection' || exhibition.id === 'mucem-prints' || exhibition.id === 'mucem-drawings' || exhibition.id === 'mucem-collection' || exhibition.id === 'fabre-collection' || exhibition.id === 'chagall-collection' || exhibition.id === 'piscine-collection' || exhibition.id === 'wallace-permanent' || exhibition.id === 'soane-paintings' || exhibition.id === 'vatican-collection' || exhibition.id === 'wales-art' || exhibition.id === 'wales-industry' || exhibition.id === 'uffizi-collection' || exhibition.id === 'uffizi-gallery-collection' || exhibition.id === 'pitti-collection' || exhibition.id === 'accademia-collection' || exhibition.id === 'palazzo-ducale-collection' || exhibition.id === 'borghese-paintings' || exhibition.id === 'borghese-arte-antica' || exhibition.id === 'guggenheim-collection') {
+    // Centre Pompidou & MAM Paris & Louvre & Jacquemart-André & Marmottan & Picasso & Palais de Tokyo & Petit Palais & Rouen & Lille & MAMCS & Lyon & Grenoble & Bordeaux & Rodin & FLV & MAD Paris & Carnavalet & Condé & Versailles & Guimet & MAC/VAL & Mucem & Fabre & Chagall & La Piscine & Wallace & Soane & Vatican & Wales & Uffizi & Accademia & Palazzo Ducale & Doria Pamphilj Collections: load from local scraped JSON
+    if (exhibition.id === 'pompidou-cinema' || exhibition.id === 'pompidou-painting' || exhibition.id === 'pompidou-drawing' || exhibition.id === 'pompidou-newmedia' || exhibition.id === 'pompidou-design' || exhibition.id === 'mam-perm-painting' || exhibition.id === 'mam-perm-photography' || exhibition.id === 'louvre-painting' || exhibition.id === 'jacquemart-collection' || exhibition.id === 'marmottan-collection' || exhibition.id === 'picasso-drawings' || exhibition.id === 'picasso-paintings' || exhibition.id === 'picasso-sculptures' || exhibition.id === 'picasso-prints' || exhibition.id === 'palais-de-tokyo-collection' || exhibition.id === 'petit-palais-collection' || exhibition.id === 'petit-palais-drawings' || exhibition.id === 'rouen-mba-collection' || exhibition.id === 'lille-pba-collection' || exhibition.id === 'mamcs-drawings' || exhibition.id === 'mamcs-paintings' || exhibition.id === 'mamcs-photography' || exhibition.id === 'mamcs-graphic-design' || exhibition.id === 'lyon-collection' || exhibition.id === 'grenoble-paintings' || exhibition.id === 'grenoble-drawings' || exhibition.id === 'grenoble-photography' || exhibition.id === 'bordeaux-paintings' || exhibition.id === 'bordeaux-drawings' || exhibition.id === 'toulouse-lautrec-collection' || exhibition.id === 'granet-collection' || exhibition.id === 'rodin-peintures' || exhibition.id === 'rodin-sculptures' || exhibition.id === 'rodin-gravures' || exhibition.id === 'flv-collection' || exhibition.id === 'mad-collection' || exhibition.id === 'carnavalet-collection' || exhibition.id === 'carnavalet-paintings' || exhibition.id === 'carnavalet-prints' || exhibition.id === 'musee-armee-peinture' || exhibition.id === 'musee-armee-photographie' || exhibition.id === 'musee-armee-dessin' || exhibition.id === 'conde-paintings' || exhibition.id === 'conde-drawings' || exhibition.id === 'versailles-collection' || exhibition.id === 'guimet-collection' || exhibition.id === 'macval-collection' || exhibition.id === 'mucem-prints' || exhibition.id === 'mucem-drawings' || exhibition.id === 'mucem-collection' || exhibition.id === 'fabre-collection' || exhibition.id === 'chagall-collection' || exhibition.id === 'piscine-collection' || exhibition.id === 'wallace-permanent' || exhibition.id === 'soane-paintings' || exhibition.id === 'vatican-collection' || exhibition.id === 'wales-art' || exhibition.id === 'wales-industry' || exhibition.id === 'uffizi-collection' || exhibition.id === 'uffizi-gallery-collection' || exhibition.id === 'pitti-collection' || exhibition.id === 'accademia-collection' || exhibition.id === 'palazzo-ducale-collection' || exhibition.id === 'borghese-paintings' || exhibition.id === 'borghese-arte-antica' || exhibition.id === 'guggenheim-collection' || exhibition.id === 'brera-collection' || exhibition.id === 'accademia-venice-collection' || exhibition.id === 'doria-pamphilj-collection' || exhibition.id === 'museo-egizio-collection' || exhibition.id === 'musei-capitolini-collection' || exhibition.id === 'novecento-della-ragione-collection' || exhibition.id === 'novecento-rosai-collection' || exhibition.id === 'ambrosiana-collection' || exhibition.id === 'museo-novecento-milan-collection' || exhibition.id === 'rivoli-collection' || exhibition.id === 'napoli-collection' || exhibition.id === 'humboldt-collection' || exhibition.id === 'altes-collection' || exhibition.id === 'neues-collection' || exhibition.id === 'gemaeldegalerie-collection' || exhibition.id === 'alte-nationalgalerie-collection' || exhibition.id === 'neue-nationalgalerie-collection' || exhibition.id === 'bode-collection' || exhibition.id === 'staedel-collection' || exhibition.id === 'bruecke-collection' || exhibition.id === 'alte-pinakothek-collection' || exhibition.id === 'neue-pinakothek-collection' || exhibition.id === 'pinakothek-moderne-collection' || exhibition.id === 'sammlung-schack-collection' || exhibition.id === 'staatsgalerien-collection') {
       const jsonFiles: Record<string, string> = {
         'pompidou-cinema': '/data/pompidou-cinema-collection.json',
         'pompidou-painting': '/data/pompidou-painting-collection.json',
@@ -1813,7 +1860,36 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
         'palazzo-ducale-collection': '/data/palazzo-ducale-collection.json',
         'borghese-paintings': '/data/galleria-borghese-collection.json',
         'borghese-arte-antica': '/data/borghese-arte-antica-collection.json',
-        'guggenheim-collection': '/data/guggenheim-venice-collection.json'
+        'guggenheim-collection': '/data/guggenheim-venice-collection.json',
+        'brera-collection': '/data/pinacoteca-brera-collection.json',
+        'accademia-venice-collection': '/data/gallerie-accademia-venice-collection.json',
+        'doria-pamphilj-collection': '/data/doria-pamphilj-collection.json',
+        'museo-egizio-collection': '/data/museo-egizio-collection.json',
+        'musei-capitolini-collection': '/data/musei-capitolini-collection.json',
+        'novecento-della-ragione-collection': '/data/novecento-della-ragione-collection.json',
+        'novecento-rosai-collection': '/data/novecento-rosai-collection.json',
+        'ambrosiana-collection': '/data/ambrosiana-collection.json',
+        'museo-novecento-milan-collection': '/data/museo-del-novecento-milan-collection.json',
+        'rivoli-collection': '/data/castello-di-rivoli-collection.json',
+        'napoli-collection': '/data/museo-archeologico-napoli-collection.json',
+        // Berlin - SMB Museums
+        'humboldt-collection': '/data/smb-humboldt-forum-collection.json',
+        'altes-collection': '/data/smb-altes-museum-collection.json',
+        'neues-collection': '/data/smb-neues-museum-collection.json',
+        'gemaeldegalerie-collection': '/data/smb-gemaeldegalerie-collection.json',
+        'alte-nationalgalerie-collection': '/data/smb-alte-nationalgalerie-collection.json',
+        'neue-nationalgalerie-collection': '/data/smb-neue-nationalgalerie-collection.json',
+        'bode-collection': '/data/smb-bode-museum-collection.json',
+        // Frankfurt - Städel Museum
+        'staedel-collection': '/data/staedel-museum-collection.json',
+        // Berlin - Brücke-Museum
+        'bruecke-collection': '/data/bruecke-museum-collection.json',
+        // Munich - Pinakothek Collections
+        'alte-pinakothek-collection': '/data/alte-pinakothek-collection.json',
+        'neue-pinakothek-collection': '/data/neue-pinakothek-collection.json',
+        'pinakothek-moderne-collection': '/data/pinakothek-moderne-collection.json',
+        'sammlung-schack-collection': '/data/sammlung-schack-collection.json',
+        'staatsgalerien-collection': '/data/staatsgalerien-collection.json'
       };
       const jsonFile = jsonFiles[exhibition.id];
       (async () => {
@@ -1821,10 +1897,18 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
           const res = await fetch(jsonFile, { cache: 'no-store' });
           if (!res.ok) throw new Error('Failed to load artworks');
           const data = await res.json();
+          // Convert year text to number, handling BC years as negative
           const toYear = (yearText: string | number | undefined) => {
             if (!yearText) return 0;
-            const match = String(yearText).match(/(\d{4})/);
-            return match ? parseInt(match[1], 10) : 0;
+            const str = String(yearText);
+            // Check for BC indicator (BC, B.C., BCE)
+            const isBC = /\bBC\b|B\.C\.|BCE/i.test(str);
+            // Extract first 4-digit year (or 3-digit for ancient artifacts)
+            const match = str.match(/(\d{3,4})/);
+            if (!match) return 0;
+            const year = parseInt(match[1], 10);
+            // Return negative for BC years
+            return isBC ? -year : year;
           };
 
           // Handle different JSON structures: array (Rouen/Lille/MAMCS) vs object with artworks/objects vs rooms structure (Wallace)
@@ -1846,11 +1930,12 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
           } else if (Array.isArray(data.objects)) {
             allObjects = data.objects;
           }
-          const is2D = exhibition.id === 'pompidou-painting' || exhibition.id === 'pompidou-drawing' || exhibition.id === 'pompidou-design' || exhibition.id === 'mam-perm-painting' || exhibition.id === 'mam-perm-photography' || exhibition.id === 'louvre-painting' || exhibition.id === 'jacquemart-collection' || exhibition.id === 'marmottan-collection' || exhibition.id === 'picasso-drawings' || exhibition.id === 'picasso-paintings' || exhibition.id === 'picasso-prints' || exhibition.id === 'palais-de-tokyo-collection' || exhibition.id === 'petit-palais-collection' || exhibition.id === 'rouen-mba-collection' || exhibition.id === 'lille-pba-collection' || exhibition.id.startsWith('mamcs-') || exhibition.id === 'lyon-collection' || exhibition.id.startsWith('grenoble-') || exhibition.id.startsWith('bordeaux-') || exhibition.id === 'toulouse-lautrec-collection' || exhibition.id === 'granet-collection' || exhibition.id === 'rodin-peintures' || exhibition.id === 'rodin-gravures' || exhibition.id === 'flv-collection' || exhibition.id.startsWith('musee-armee-') || exhibition.id.startsWith('conde-') || exhibition.id === 'versailles-collection' || exhibition.id === 'guimet-collection' || exhibition.id === 'macval-collection' || exhibition.id === 'wallace-permanent';
+          const is2D = exhibition.id === 'pompidou-painting' || exhibition.id === 'pompidou-drawing' || exhibition.id === 'pompidou-design' || exhibition.id === 'mam-perm-painting' || exhibition.id === 'mam-perm-photography' || exhibition.id === 'louvre-painting' || exhibition.id === 'jacquemart-collection' || exhibition.id === 'marmottan-collection' || exhibition.id === 'picasso-drawings' || exhibition.id === 'picasso-paintings' || exhibition.id === 'picasso-prints' || exhibition.id === 'palais-de-tokyo-collection' || exhibition.id === 'petit-palais-collection' || exhibition.id === 'rouen-mba-collection' || exhibition.id === 'lille-pba-collection' || exhibition.id.startsWith('mamcs-') || exhibition.id === 'lyon-collection' || exhibition.id.startsWith('grenoble-') || exhibition.id.startsWith('bordeaux-') || exhibition.id === 'toulouse-lautrec-collection' || exhibition.id === 'granet-collection' || exhibition.id === 'rodin-peintures' || exhibition.id === 'rodin-gravures' || exhibition.id === 'flv-collection' || exhibition.id.startsWith('musee-armee-') || exhibition.id.startsWith('conde-') || exhibition.id === 'versailles-collection' || exhibition.id === 'guimet-collection' || exhibition.id === 'macval-collection' || exhibition.id === 'wallace-permanent' || exhibition.id === 'brera-collection';
           const is3D = exhibition.id === 'picasso-sculptures' || exhibition.id === 'rodin-sculptures' || exhibition.id === 'borghese-arte-antica';
           const isMAD = exhibition.id === 'mad-collection';
           const isCarnavalet = exhibition.id === 'carnavalet-collection';
           const isBorghese = exhibition.id === 'borghese-paintings' || exhibition.id === 'borghese-arte-antica';
+          const isBrera = exhibition.id === 'brera-collection';
 
           // Borghese: clean up artist names - invalid entries like "art Roman" should show as Unknown
           const cleanBorgheseArtist = (artist: string) => {
@@ -1863,11 +1948,29 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
             return artist.trim();
           };
 
-          // Borghese: format century years - "3rd-4th century A.D." -> "4c", "2nd century B.C." -> "2c BC"
+          // Borghese/Brera: format century years - "3rd-4th century A.D." -> "4c", "2nd century B.C." -> "2c BC", "xviii secolo d c" -> "18c"
           const formatCenturyYear = (yearStr: string) => {
             if (!yearStr) return '';
             // If it's a regular year (4 digits), return as is
             if (/^\d{4}$/.test(yearStr.trim())) return yearStr.trim();
+
+            // Brera format: "xviii secolo d c" (Roman numerals) -> convert to century
+            const romanNumeralMatch = yearStr.toLowerCase().match(/^([ivxlcdm]+)\s*secolo/i);
+            if (romanNumeralMatch) {
+              const romanToArabic = (roman: string): number => {
+                const romanMap: Record<string, number> = { i: 1, v: 5, x: 10, l: 50, c: 100, d: 500, m: 1000 };
+                let result = 0;
+                for (let i = 0; i < roman.length; i++) {
+                  const current = romanMap[roman[i].toLowerCase()] || 0;
+                  const next = romanMap[roman[i + 1]?.toLowerCase()] || 0;
+                  result += current < next ? -current : current;
+                }
+                return result;
+              };
+              const century = romanToArabic(romanNumeralMatch[1]);
+              const hasBC = /a\.?\s*c\.?|b\.?\s*c\.?/i.test(yearStr) && !/d\.?\s*c\.?/i.test(yearStr);
+              return hasBC ? `${century}c BC` : `${century}c`;
+            }
 
             // Match century patterns like "3rd-4th century", "2nd century", "1st-2nd century A.D."
             const centuryMatch = yearStr.match(/(\d+)(?:st|nd|rd|th)(?:-(\d+)(?:st|nd|rd|th))?\s*century/i);
@@ -1921,28 +2024,60 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
             return cleaned || 'Unknown';
           };
 
+          // Napoli Archaeological Museum: format BC dates and handle dynasty entries
+          const isNapoli = exhibition.id === 'napoli-collection';
+          const formatNapoliDate = (dateStr: string, title: string) => {
+            // If no date but title contains dynasty info, extract from title
+            if (!dateStr && title) {
+              // Pattern: "19th Dynasty, (1295-1186 BC) inv. 2322"
+              const dynastyMatch = title.match(/(\d+(?:st|nd|rd|th)\s+Dynasty.*?(?:\d{3,4}(?:-\d{3,4})?\s*BC)?)/i);
+              if (dynastyMatch) {
+                return dynastyMatch[1].replace(/\s*inv\.\s*\d+.*$/i, '').trim();
+              }
+            }
+            return dateStr;
+          };
+          const cleanNapoliTitle = (title: string) => {
+            // If title contains dynasty + inv number (date mistakenly used as title), return generic title
+            if (/^\d+(?:st|nd|rd|th)\s+Dynasty.*inv\./i.test(title)) {
+              return 'Egyptian Artifact';
+            }
+            return title;
+          };
+
           const list: Artwork[] = allObjects.map((item: any, idx: number) => {
-            const rawTitle = item.title || item.name || 'Untitled';
+            let rawTitle = item.title || item.name || 'Untitled';
             const rawArtist = item.artist || item.artistName || 'Unknown';
-            // Support both 'year' and 'date' field names (Uffizi/Accademia use 'date')
-            const yearOrDate = item.year || item.date || '';
+            // Support both 'year' and 'date' field names (Uffizi/Accademia use 'date'), Brera uses 'dateStr'
+            let yearOrDate = item.year || item.date || item.dateStr || '';
             // Support both 'medium' and 'technique' field names (Uffizi/Accademia use 'technique')
-            const mediumOrTechnique = item.medium || item.technique || '';
+            const mediumOrTechnique = item.medium || item.technique || item.materials || '';
             // Support both 'dimensions' and 'size' field names (Uffizi uses 'size')
             const dimensionsOrSize = item.dimensions || item.size || '';
+            // Category: support various field names (objectType for Städel, type for SMB Berlin, category for Borghese)
+            const categoryValue = item.category || item.objectType || (typeof item.type === 'string' && !['2D', '3D', 'video', 'unknown'].includes(item.type) ? item.type : '') || '';
+
+            // Napoli special handling: fix titles that are actually dates
+            if (isNapoli) {
+              yearOrDate = formatNapoliDate(yearOrDate, rawTitle);
+              rawTitle = cleanNapoliTitle(rawTitle);
+            }
 
             return {
               id: item.id || `${exhibition.id}-${idx}`,
               name: isMAD ? cleanMADTitle(rawTitle) : rawTitle,
               artist: isMAD ? cleanMADArtist(rawArtist) : (isBorghese ? cleanBorgheseArtist(rawArtist) : rawArtist),
               year: toYear(yearOrDate),
-              date: isBorghese ? formatCenturyYear(yearOrDate) : yearOrDate,
+              date: (isBorghese || isBrera) ? formatCenturyYear(yearOrDate) : yearOrDate,
               image: item.image || item.imageUrl,  // Support both image and imageUrl fields
               dimension: dimensionsOrSize,
               duration: item.duration,  // Video/film duration
               medium: mediumOrTechnique,
+              technique: item.technique || '',
+              materials: item.materials || '',
               type: isMAD ? '3D' : (isCarnavalet ? 'unknown' : (is2D ? (item.type || '2D') : (is3D ? (item.type || '3D') : (item.type || 'video')))),
-              roomId: item.roomId || 'default',  // Use roomId from item (Wallace rooms) or default
+              roomId: item.room || item.roomId || item.exhibitionSpace || 'default',  // Brera uses 'room', Wallace uses 'roomId', SMB uses 'exhibitionSpace'
+              category: categoryValue,
               exhibitionName: exhibition.name,
               exhibitionTitle: exhibition.title,
             };
@@ -3146,25 +3281,35 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
         {/* Old handle removed; the corner is now curled by default and interactive via the invisible zone above */}
         {/* Mobile: full-width top header bar - hide in archive mode */}
         {isMobile && viewMode !== 'archive' && (
-          <div style={{ position: 'absolute', top: 0, left: 0, right: 0, background: '#fff', zIndex: 199, padding: '6px 12px 8px 12px' }}>
-            {/* Row 1: Title + Filter buttons + Controls */}
-            <div style={{ display: 'flex', alignItems: 'flex-start', gap: 8 }}>
-              {/* Title (left) */}
-              <div style={{ fontSize: 12, fontWeight: 700, color: '#111827', flex: '0 0 auto', maxWidth: 120 }}>{exhibition.title || exhibition.name}</div>
-              {/* Filter buttons (center, flexible) - century only, no decade drill-down on mobile */}
-              <div style={{ flex: 1, display: 'flex', flexWrap: 'wrap', gap: 3, alignItems: 'center' }}>
-                {/* ALL button */}
+          <div style={{ position: 'absolute', top: 0, left: 0, right: 0, background: '#fff', zIndex: 199, display: 'flex' }}>
+            {/* Zone 1: Title + Description - exactly 1/3 of screen */}
+            <div style={{ width: 'calc(100% / 3)', padding: '5px 8px', minWidth: 0, boxSizing: 'border-box' }}>
+              <div style={{ fontSize: 12, fontWeight: 700, color: '#111827', lineHeight: 1.2, marginBottom: 2 }}>
+                {exhibition.title || exhibition.name}
+              </div>
+              <div style={{ fontSize: 10, color: '#888', lineHeight: 1.3 }}>
+                {exhibition.description}
+              </div>
+            </div>
+            {/* Zone 2: Filters - exactly 1/3 of screen */}
+            <div style={{ width: 'calc(100% / 3)', padding: '5px 8px', minWidth: 0, boxSizing: 'border-box' }}>
+              {/* Row 1: ALL button with count outside */}
+              <div style={{ marginBottom: 4, display: 'flex', alignItems: 'center', gap: 6 }}>
                 <button
                   onClick={() => { setDateLevel('century'); setSelectedCentury(null); setSelectedYearRange('ALL'); setSelectedIndex(0); }}
-                  style={{ padding: '2px 6px', fontSize: 9, borderRadius: 3, border: 'none', background: !selectedCentury ? '#111' : '#f0f0f0', color: !selectedCentury ? '#fff' : '#222', cursor: 'pointer' }}
+                  style={{ padding: '2px 8px', fontSize: 11, borderRadius: 4, border: '1px solid #ddd', background: !selectedCentury ? '#111' : '#f8f8f8', color: !selectedCentury ? '#fff' : '#222', cursor: 'pointer' }}
                 >
                   ALL
                 </button>
+                <span style={{ fontSize: 10, color: '#666' }}>({filteredArtworks.length})</span>
+              </div>
+              {/* Row 2: Century + 2D/3D filter buttons */}
+              <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, alignItems: 'center' }}>
                 {availableCenturies.length > 0 && availableCenturies.map((c) => (
                   <button
                     key={`mobile-c-${c}`}
                     onClick={() => { setDateLevel('decade'); setSelectedCentury(c); setSelectedYearRange('ALL'); setSelectedIndex(0); }}
-                    style={{ padding: '2px 6px', fontSize: 9, borderRadius: 3, border: 'none', background: selectedCentury === c ? '#111' : '#f0f0f0', color: selectedCentury === c ? '#fff' : '#222', cursor: 'pointer' }}
+                    style={{ padding: '2px 8px', fontSize: 11, borderRadius: 4, border: '1px solid #ddd', background: selectedCentury === c ? '#111' : '#f8f8f8', color: selectedCentury === c ? '#fff' : '#222', cursor: 'pointer' }}
                   >
                     {`${c}c`}
                   </button>
@@ -3173,15 +3318,15 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
                   <button
                     key={`mobile-${t}`}
                     onClick={() => { setSelectedTypes(prev => { const next = new Set(prev); if (next.has(t)) next.delete(t); else next.add(t); return next; }); setSelectedIndex(0); }}
-                    style={{ padding: '2px 6px', fontSize: 9, borderRadius: 3, border: 'none', background: selectedTypes.has(t) ? '#111' : '#f0f0f0', color: selectedTypes.has(t) ? '#fff' : '#222', cursor: 'pointer' }}
+                    style={{ padding: '2px 8px', fontSize: 11, borderRadius: 4, border: '1px solid ' + (selectedTypes.has(t) ? '#111' : '#ddd'), background: selectedTypes.has(t) ? '#111' : '#f8f8f8', color: selectedTypes.has(t) ? '#fff' : '#222', cursor: 'pointer' }}
                   >
                     {t}
                   </button>
                 ))}
               </div>
             </div>
-            {/* Row 2: Description (optional, smaller) */}
-            <div style={{ fontSize: 9, color: '#888', lineHeight: 1.3, marginTop: 4, maxHeight: 26, overflow: 'hidden' }}>{exhibition.description}</div>
+            {/* Zone 3: Profile/heart/close buttons - exactly 1/3 of screen */}
+            <div style={{ width: 'calc(100% / 3)', minWidth: 0, boxSizing: 'border-box' }} />
           </div>
         )}
         {/* Mobile Archive Mode: full-screen layout with horizontal scrolling thumbnails (same as PC but horizontal) */}
@@ -3304,9 +3449,9 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
                 })}
               </div>
 
-              {/* Center: main image - wheel scrolls thumbnails, touch is native on thumbnail strip */}
+              {/* Center: main image - touch swipe (up/down) scrolls thumbnails with momentum */}
               <div
-                style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '8px 16px', minHeight: 0, overflow: 'hidden' }}
+                style={{ flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '8px 16px', minHeight: 0, overflow: 'hidden', touchAction: 'none' }}
                 onWheel={(e) => {
                   e.preventDefault();
                   // Just scroll the thumbnails - let onScroll handle selectedIndex (like PC)
@@ -3314,6 +3459,64 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
                   if (el) {
                     el.scrollBy({ left: e.deltaY * 0.5, behavior: 'auto' });
                   }
+                }}
+                onTouchStart={(e) => {
+                  const touch = e.touches[0];
+                  const target = e.currentTarget as any;
+                  target._touchStartY = touch.clientY;
+                  target._touchLastY = touch.clientY;
+                  target._touchStartTime = Date.now();
+                  target._touchLastTime = Date.now();
+                  target._velocityY = 0;
+                }}
+                onTouchMove={(e) => {
+                  e.preventDefault();
+                  const touch = e.touches[0];
+                  const target = e.currentTarget as any;
+                  const lastY = target._touchLastY;
+                  if (lastY === undefined) return;
+
+                  const deltaY = lastY - touch.clientY; // positive = swiping up
+                  const now = Date.now();
+                  const dt = now - (target._touchLastTime || now);
+
+                  // Calculate velocity for momentum
+                  if (dt > 0) {
+                    target._velocityY = deltaY / dt * 16; // pixels per frame (~60fps)
+                  }
+
+                  target._touchLastY = touch.clientY;
+                  target._touchLastTime = now;
+
+                  // Scroll thumbnails in real-time (vertical swipe -> horizontal scroll)
+                  const el = mobileArchiveScrollRef.current;
+                  if (el) {
+                    el.scrollBy({ left: deltaY, behavior: 'auto' });
+                  }
+                }}
+                onTouchEnd={(e) => {
+                  const target = e.currentTarget as any;
+                  const velocity = target._velocityY || 0;
+
+                  // Apply momentum scrolling
+                  const el = mobileArchiveScrollRef.current;
+                  if (el && Math.abs(velocity) > 1) {
+                    let currentVelocity = velocity;
+                    const friction = 0.95;
+
+                    const animate = () => {
+                      if (Math.abs(currentVelocity) < 0.5) return;
+                      el.scrollBy({ left: currentVelocity, behavior: 'auto' });
+                      currentVelocity *= friction;
+                      requestAnimationFrame(animate);
+                    };
+                    requestAnimationFrame(animate);
+                  }
+
+                  // Cleanup
+                  target._touchStartY = undefined;
+                  target._touchLastY = undefined;
+                  target._velocityY = undefined;
                 }}
               >
                 {current && (
@@ -3343,7 +3546,17 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
                     </div>
                     <div style={{ marginTop: 10, textAlign: 'center', padding: '0 16px' }}>
                       <div style={{ fontSize: 13, fontWeight: 700, color: '#222' }}>{current.name}</div>
+                      {/* Medium/Technique/Materials */}
+                      {(() => {
+                        const med = (current as Record<string, unknown>).medium || (current as Record<string, unknown>).technique || (current as Record<string, unknown>).materials;
+                        return med ? <div style={{ fontSize: 10, color: '#888', marginTop: 2 }}>{String(med)}</div> : null;
+                      })()}
                       <div style={{ fontSize: 11, color: '#666', marginTop: 3 }}>{cleanArtistName(current.artist)}{current.year ? ` (${cleanDateText(String(current.year))})` : ''}</div>
+                      {/* Category/ArtworkType */}
+                      {(() => {
+                        const cat = (current as Record<string, unknown>).category || (current as Record<string, unknown>).artworkType;
+                        return cat ? <div style={{ fontSize: 10, color: '#888', marginTop: 2 }}>{String(cat)}</div> : null;
+                      })()}
                     </div>
                   </div>
                 )}
@@ -3767,11 +3980,100 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
           const dateText = cleanDateText(rawDate) || "—";
           const dimensionText = displayArtwork?.dimension || "—";
           const durationText = displayArtwork?.duration || null;  // Video/film duration
+          const mediumText = displayArtwork?.medium || displayArtwork?.technique || displayArtwork?.materials || "—";
+          const rawCategory = displayArtwork?.category || displayArtwork?.artworkType || (displayArtwork as Record<string, unknown>)?.objectType;
+          const categoryText = rawCategory && typeof rawCategory !== 'object' ? String(rawCategory) : "—";
 
           // Mobile: mode tabs at bottom, fixed position
           if (isMobile) {
             return (
               <>
+                {/* Filter buttons - top left area (same style as full screen) */}
+                <div ref={topBarRef} style={{ position: "relative", padding: "8px 12px", zIndex: 100 }}>
+                  {/* ALL button with count outside - exactly like PC mode */}
+                  <div style={{ marginBottom: 6, display: 'flex', alignItems: 'center', gap: 8 }}>
+                    <button
+                      onClick={() => { setSelectedRoomId('ALL'); setSelectedIndex(0); }}
+                      style={{
+                        padding: '2px 8px',
+                        fontSize: 11,
+                        borderRadius: 4,
+                        border: '1px solid #ddd',
+                        background: selectedRoomId === 'ALL' ? '#111' : '#f8f8f8',
+                        color: selectedRoomId === 'ALL' ? '#fff' : '#222',
+                        cursor: 'pointer'
+                      }}
+                    >
+                      ALL
+                    </button>
+                    <span style={{ fontSize: 10, color: '#666' }}>({filteredArtworks.length})</span>
+                  </div>
+                  {/* Year/Century buttons - same style as full screen */}
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6, marginBottom: 6 }}>
+                    {dateLevel === 'century' ? (
+                      availableCenturies.map((c) => (
+                        <button
+                          key={`c-${c}`}
+                          onClick={() => { setSelectedCentury(c); setSelectedYearRange('ALL'); setDateLevel('decade'); setSelectedIndex(0); }}
+                          style={{
+                            padding: '2px 8px',
+                            fontSize: 11,
+                            borderRadius: 4,
+                            border: '1px solid #ddd',
+                            background: '#f8f8f8',
+                            color: '#222',
+                            cursor: 'pointer'
+                          }}
+                        >
+                          {`${c}c`}
+                        </button>
+                      ))
+                    ) : null}
+                  </div>
+                  {/* 2D/3D buttons */}
+                  {hasTypedArtworks && (
+                    <div style={{ display: 'flex', gap: 6, marginBottom: 6 }}>
+                      {(['2D', '3D'] as const).map(t => (
+                        <button
+                          key={t}
+                          onClick={() => setSelectedTypes(prev => { const next = new Set(prev); if (next.has(t)) next.delete(t); else next.add(t); return next; })}
+                          style={{
+                            padding: '2px 8px',
+                            fontSize: 11,
+                            borderRadius: 4,
+                            border: '1px solid ' + (selectedTypes.has(t) ? '#111' : '#ddd'),
+                            background: selectedTypes.has(t) ? '#111' : '#f8f8f8',
+                            color: selectedTypes.has(t) ? '#fff' : '#222',
+                            cursor: 'pointer'
+                          }}
+                        >
+                          {t}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
+                {/* SEARCH - positioned below top right buttons */}
+                <div style={{ position: 'absolute', top: 35, right: 19, zIndex: 200 }}>
+                  <div style={{ fontSize: 10, letterSpacing: 1.2, color: "#888", marginBottom: -10 }}>SEARCH</div>
+                  <input
+                    type="text"
+                    value={searchQuery}
+                    onChange={(e) => { setSearchQuery(e.target.value); setSelectedIndex(0); }}
+                    placeholder=""
+                    style={{
+                      width: 100,
+                      fontSize: 11,
+                      color: '#222',
+                      border: 'none',
+                      borderBottom: '1px solid #ccc',
+                      outline: 'none',
+                      background: 'transparent',
+                      padding: 0,
+                      lineHeight: 1.3,
+                    }}
+                  />
+                </div>
                 {/* Mode tabs - fixed at bottom, transparent */}
                 <div style={{
                   position: 'fixed',
@@ -3869,13 +4171,13 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
 
               {/* Row 2: Content under each tab - 3 columns */}
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 8, alignItems: "start" }}>
-                {/* Column 1: Room selector + Year filter (under PANORAMA) */}
+                {/* Column 1: Room selector + Year filter + SEARCH (under PANORAMA) */}
                 <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
                   {/* ALL button */}
                   {roomButtons.find(b => b.id === 'ALL') && (
                     <div style={{ display: 'flex', alignItems: 'center', gap: 4, flexWrap: 'wrap' }}>
                       <button onClick={() => { setSelectedRoomId('ALL'); setSelectedIndex(0); }} style={{ padding: '2px 6px', fontSize: 9.5, borderRadius: 3, border: 'none', background: selectedRoomId === 'ALL' ? '#111' : 'transparent', color: selectedRoomId === 'ALL' ? '#fff' : '#222', cursor: 'pointer' }}>ALL</button>
-                      <span style={{ fontSize: 9, color: '#666' }}>({filteredArtworks.length})</span>
+                      <span style={{ fontSize: 10, color: '#666' }}>({filteredArtworks.length})</span>
                     </div>
                   )}
                   {/* Year/Century buttons */}
@@ -3899,16 +4201,38 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
                         <button
                           key={t}
                           onClick={() => setSelectedTypes(prev => { const next = new Set(prev); if (next.has(t)) next.delete(t); else next.add(t); return next; })}
-                          style={{ padding: '2px 6px', fontSize: 9.5, borderRadius: 3, border: selectedTypes.has(t) ? '1px solid #111' : '1px solid #ddd', background: selectedTypes.has(t) ? '#111' : '#f8f8f8', color: selectedTypes.has(t) ? '#fff' : '#222', cursor: 'pointer' }}
+                          style={{ padding: '2px 6px', fontSize: 9.5, borderRadius: 3, border: 'none', background: selectedTypes.has(t) ? '#111' : '#f0f0f0', color: selectedTypes.has(t) ? '#fff' : '#222', cursor: 'pointer' }}
                         >
                           {t}
                         </button>
                       ))}
                     </div>
                   )}
+                  {/* SEARCH */}
+                  <div style={{ marginTop: 45 }}>
+                    <div style={{ fontSize: 10, letterSpacing: 1.2, color: "#888", marginBottom: -10 }}>SEARCH</div>
+                    <input
+                      type="text"
+                      value={searchQuery}
+                      onChange={(e) => { setSearchQuery(e.target.value); setSelectedIndex(0); }}
+                      placeholder=""
+                      style={{
+                        width: '100%',
+                        maxWidth: 100,
+                        fontSize: 11,
+                        color: '#222',
+                        border: 'none',
+                        borderBottom: '1px solid #ccc',
+                        outline: 'none',
+                        background: 'transparent',
+                        padding: 0,
+                        lineHeight: 1.3,
+                      }}
+                    />
+                  </div>
                 </div>
 
-                {/* Column 2: TITLE + CREATOR (under ARCHIVE) */}
+                {/* Column 2: TITLE + CREATOR + MEDIUM (under ARCHIVE) */}
                 <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
                   <div>
                     <div style={{ fontSize: 10, letterSpacing: 1.2, color: "#888", marginBottom: 2 }}>TITLE</div>
@@ -3918,9 +4242,13 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
                     <div style={{ fontSize: 10, letterSpacing: 1.2, color: "#888", marginBottom: 2 }}>CREATOR</div>
                     <div style={{ fontSize: 11, color: "#222", lineHeight: 1.3, overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' }}>{creatorText}</div>
                   </div>
+                  <div>
+                    <div style={{ fontSize: 10, letterSpacing: 1.2, color: "#888", marginBottom: 2 }}>MEDIUM</div>
+                    <div style={{ fontSize: 11, color: "#222", lineHeight: 1.3, overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' }}>{mediumText}</div>
+                  </div>
                 </div>
 
-                {/* Column 3: DATE + DIMENSION/DURATION (under GALLERY) */}
+                {/* Column 3: DATE + DIMENSION/DURATION + CATEGORY + SEARCH (under GALLERY) */}
                 <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
                   <div>
                     <div style={{ fontSize: 10, letterSpacing: 1.2, color: "#888", marginBottom: 2 }}>DATE</div>
@@ -3937,6 +4265,10 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
                       <div style={{ fontSize: 11, color: "#222", lineHeight: 1.3, overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' }}>{dimensionText}</div>
                     </div>
                   )}
+                  <div>
+                    <div style={{ fontSize: 10, letterSpacing: 1.2, color: "#888", marginBottom: 2 }}>CATEGORY</div>
+                    <div style={{ fontSize: 11, color: "#222", lineHeight: 1.3, overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical' }}>{categoryText}</div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -3969,17 +4301,17 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
             {/* Year filtering buttons - moved below room buttons */}
             <div style={{ marginTop: 8, padding: '6px 0' }}>
               {dateLevel === 'century' ? (
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 6 }}>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4 }}>
                   {availableCenturies.map((c) => (
                     <button
                       key={`c-${c}`}
                       onClick={() => { setSelectedCentury(c); setSelectedYearRange('ALL'); setDateLevel('decade'); setSelectedIndex(0); }}
                       style={{
-                        padding: '2px 8px',
-                        fontSize: 11,
-                        borderRadius: 4,
-                        border: '1px solid #ddd',
-                        background: '#f8f8f8',
+                        padding: '2px 6px',
+                        fontSize: 9.5,
+                        borderRadius: 3,
+                        border: 'none',
+                        background: '#f0f0f0',
                         color: '#222',
                         cursor: 'pointer'
                       }}
@@ -4103,6 +4435,10 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
               const dateText = cleanDateText(rawDate) || "—";
               const dimensionText = activeArtwork?.dimension || "—";
               const durationText = activeArtwork?.duration || null;  // Video/film duration
+              // Medium/Technique/Materials
+              const mediumText = (activeArtwork as Record<string, unknown>)?.medium || (activeArtwork as Record<string, unknown>)?.technique || (activeArtwork as Record<string, unknown>)?.materials || null;
+              // Category/ArtworkType
+              const categoryText = (activeArtwork as Record<string, unknown>)?.category || (activeArtwork as Record<string, unknown>)?.artworkType || (activeArtwork as Record<string, unknown>)?.objectType || null;
               const gap = Math.max(160, Math.min(360, metaPos.date - metaPos.creator - 12));
               // shrink horizontal allocation to avoid cramped columns; allow content to wrap vertically
               const shrunk = Math.max(80, Math.floor(gap * META_HOR_SCALE));
@@ -4119,10 +4455,42 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
                     <div style={{ fontSize: 10, letterSpacing: 1.2, color: "#888", marginBottom: 4 }}>TITLE</div>
                     <div ref={metaTitleValueRef} style={{ fontSize: 12, color: "#222", fontWeight: 700, lineHeight: 1.3, whiteSpace: "normal", wordBreak: "break-word", overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', maxHeight: 36 }}>{titleText}</div>
                   </div>
+                  {/* MEDIUM (below TITLE) */}
+                  <div style={{ position: "absolute", left: metaPos.title, top: 70, maxWidth: titleW, transform: `translateY(${zoomYOffset}px)`, transition: 'transform 300ms ease', zIndex: hoverZoom ? 200 : undefined }}>
+                    <div style={{ fontSize: 10, letterSpacing: 1.2, color: "#888", marginBottom: 4 }}>MEDIUM</div>
+                    <div style={{ fontSize: 12, color: "#222", lineHeight: 1.3, whiteSpace: "normal", wordBreak: "break-word", overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', maxHeight: 36 }}>{mediumText ? String(mediumText) : "—"}</div>
+                  </div>
                   {/* CREATOR */}
                   <div ref={creatorRef} style={{ position: "absolute", left: metaPos.creator, top: 12, maxWidth: creatorW, transform: `translateY(${zoomYOffset}px)`, transition: 'transform 300ms ease', zIndex: hoverZoom ? 200 : undefined, ...(DEBUG_LAYOUT ? { outline: "1px dashed #6f6" } : {}) }}>
                     <div style={{ fontSize: 10, letterSpacing: 1.2, color: "#888", marginBottom: 4 }}>CREATOR</div>
                     <div style={{ fontSize: 12, color: "#222", lineHeight: 1.3, whiteSpace: "normal", wordBreak: "break-word", overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', maxHeight: 36 }}>{creatorText}</div>
+                  </div>
+                  {/* CATEGORY (below CREATOR) */}
+                  <div style={{ position: "absolute", left: metaPos.creator, top: 70, maxWidth: creatorW, transform: `translateY(${zoomYOffset}px)`, transition: 'transform 300ms ease', zIndex: hoverZoom ? 200 : undefined }}>
+                    <div style={{ fontSize: 10, letterSpacing: 1.2, color: "#888", marginBottom: 4 }}>CATEGORY</div>
+                    <div style={{ fontSize: 12, color: "#222", lineHeight: 1.3, whiteSpace: "normal", wordBreak: "break-word", overflow: 'hidden', display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical', maxHeight: 36 }}>{categoryText ? String(categoryText) : "—"}</div>
+                  </div>
+                  {/* SEARCH (next to CATEGORY) */}
+                  <div style={{ position: "absolute", left: metaPos.date, top: 70, width: 140, transform: `translateY(${zoomYOffset}px)`, transition: 'transform 300ms ease', zIndex: hoverZoom ? 200 : undefined }}>
+                    <div style={{ fontSize: 10, letterSpacing: 1.2, color: "#888", marginBottom: -4 }}>SEARCH</div>
+                    <input
+                      type="text"
+                      value={searchQuery}
+                      onChange={(e) => setSearchQuery(e.target.value)}
+                      placeholder=""
+                      style={{
+                        width: '100%',
+                        fontSize: 12,
+                        color: '#222',
+                        border: 'none',
+                        borderBottom: '1px solid #ccc',
+                        outline: 'none',
+                        background: 'transparent',
+                        padding: '0',
+                        lineHeight: 1,
+                        marginTop: -2,
+                      }}
+                    />
                   </div>
                   {/* DATE */}
                   <div ref={dateRef} style={{ position: "absolute", left: metaPos.date, top: 12, maxWidth: dateW, transform: `translateY(${zoomYOffset}px)`, transition: 'transform 300ms ease', zIndex: hoverZoom ? 200 : undefined, ...(DEBUG_LAYOUT ? { outline: "1px dashed #66f" } : {}) }}>
@@ -4141,14 +4509,14 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
         )}
 
         {/* Top Right Controls Group: Heart, Login, Close - aligned with mode tabs */}
-        <div style={{ position: "absolute", top: isMobile ? 0 : 8, right: 0, display: "flex", alignItems: "center", gap: 8, paddingRight: 16, zIndex: 200 }}>
+        <div style={{ position: "absolute", top: 7, right: 0, display: "flex", alignItems: "center", gap: 20, paddingRight: 16, zIndex: 200 }}>
           {/* Heart button to navigate to MyPage */}
           <button
             onClick={() => navigate('/mypage')}
             aria-label="Go to My Page"
             title="Go to My Page"
             style={{
-              padding: 6,
+              padding: 0,
               border: "none",
               background: "transparent",
               cursor: "pointer",
@@ -4156,7 +4524,8 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
               alignItems: "center",
               justifyContent: "center",
               color: "#000",
-              fontSize: 16,
+              fontSize: 14,
+              lineHeight: 1,
             }}
           >
             ♡
@@ -4175,7 +4544,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
             }}
             aria-label="Close"
             style={{
-              padding: "0 8px",
+              padding: 0,
               border: "none",
               background: "transparent",
               cursor: "pointer",
@@ -4187,6 +4556,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
               fontWeight: 700,
               letterSpacing: 0.4,
               textTransform: "lowercase",
+              lineHeight: 1,
             }}
           >
             close
@@ -4212,7 +4582,17 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
                 {current ? (
                   <div style={{ position: "fixed", top: "50%", left: infoTextLeft, width: 240, transform: "translateY(-50%)", color: "#222", lineHeight: 1.5, zIndex: 10 }}>
                     <div style={{ fontSize: 13, fontWeight: 700, marginBottom: 4, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }} title={current.name}>{current.name}</div>
+                    {/* Medium/Technique/Materials */}
+                    {(() => {
+                      const med = (current as Record<string, unknown>).medium || (current as Record<string, unknown>).technique || (current as Record<string, unknown>).materials;
+                      return med ? <div style={{ fontSize: 10.5, color: '#888', marginBottom: 2 }}>{String(med)}</div> : null;
+                    })()}
                     <div style={{ fontSize: 11.5, color: "#666" }}>{cleanArtistName(current.artist)}{current.year ? ` (${cleanDateText(String(current.year))})` : ""}</div>
+                    {/* Category/ArtworkType */}
+                    {(() => {
+                      const cat = (current as Record<string, unknown>).category || (current as Record<string, unknown>).artworkType;
+                      return cat ? <div style={{ fontSize: 10.5, color: '#888', marginTop: 2 }}>{String(cat)}</div> : null;
+                    })()}
                   </div>
                 ) : (initialized && filteredArtworks.length === 0 ? (
                   <div style={{ position: 'fixed', top: "50%", left: infoTextLeft, width: 240, transform: 'translateY(-50%)', color: '#999', fontSize: 12, fontWeight: 700, zIndex: 10 }}>
@@ -4619,7 +4999,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
                                   />
                                 </div>
                               </div>
-                              <div style={{ fontSize: isMobile ? 10 : 12, fontWeight: 700, color: '#222', marginTop: 2 }}>{a.name}{a.year ? ` (${a.year})` : ''}</div>
+                              <div style={{ fontSize: isMobile ? 10 : 12, fontWeight: 700, color: '#222', marginTop: 2 }}>{a.name}{a.year ? ` (${cleanDateText(a.year)})` : (a.date && /^\d+c/.test(a.date) ? ` (${a.date})` : '')}</div>
                               <div style={{ fontSize: isMobile ? 9 : 11, color: '#777', marginTop: 2 }}>{cleanArtistName(a.artist)}</div>
                             </div>
                           </div>
@@ -4749,25 +5129,26 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
             style={{
               position: 'fixed',
               inset: 0,
-              background: lightbox.animate ? 'rgba(0,0,0,0.9)' : 'rgba(0,0,0,0)',
+              background: lightbox.animate ? 'rgba(0,0,0,0.95)' : 'rgba(0,0,0,0)',
               transition: 'background 300ms ease',
               zIndex: 11000,
+              display: 'flex',
+              flexDirection: 'column',
+              alignItems: 'center',
+              justifyContent: 'center',
             }}
           >
+            {/* Image container - takes up most of screen but leaves room for metadata */}
             <div
               style={{
-                position: 'fixed',
-                left: 0,
-                top: 0,
-                width: lightbox.target.width,
-                height: lightbox.target.height,
-                transformOrigin: 'top left',
-                transform: lightbox.animate
-                  ? `translate(${lightbox.target.left}px, ${lightbox.target.top}px) scale(1, 1)`
-                  : `translate(${lightbox.start.left}px, ${lightbox.start.top}px) scale(${Math.max(0.01, lightbox.start.width / Math.max(1, lightbox.target.width))}, ${Math.max(0.01, lightbox.start.height / Math.max(1, lightbox.target.height))})`,
-                transition: 'transform 300ms cubic-bezier(0.22, 0.61, 0.36, 1)',
-                overflow: 'hidden',
-                background: '#000',
+                maxWidth: '90vw',
+                maxHeight: 'calc(100vh - 120px)',
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                transform: lightbox.animate ? 'scale(1)' : 'scale(0.8)',
+                opacity: lightbox.animate ? 1 : 0,
+                transition: 'transform 300ms cubic-bezier(0.22, 0.61, 0.36, 1), opacity 300ms ease',
               }}
             >
               {(() => {
@@ -4791,7 +5172,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
                     <img
                       src={full}
                       alt={a.name}
-                      style={{ width: '100%', height: '100%', objectFit: 'contain', display: 'block', background: '#000' }}
+                      style={{ maxWidth: '90vw', maxHeight: 'calc(100vh - 120px)', objectFit: 'contain', display: 'block' }}
                       draggable={false}
                       referrerPolicy="no-referrer"
                       onError={(e) => applyFallbackImage(e.currentTarget)}
@@ -4799,6 +5180,31 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
                   </picture>
                 );
               })()}
+            </div>
+            {/* Metadata below image - gallery mode style */}
+            <div
+              onClick={(e) => e.stopPropagation()}
+              style={{
+                marginTop: 20,
+                padding: '12px 24px',
+                color: '#fff',
+                textAlign: 'center',
+                opacity: lightbox.animate ? 1 : 0,
+                transition: 'opacity 300ms ease',
+                background: 'rgba(0,0,0,0.6)',
+                borderRadius: 8,
+              }}
+            >
+              <div style={{ fontSize: 14, fontWeight: 700, marginBottom: 6 }}>
+                {lightbox.artwork.name}
+                {(() => {
+                  const yr = String(lightbox.artwork.year || (lightbox.artwork as Record<string, unknown>)?.dateStr || '');
+                  return yr ? ` (${yr})` : (lightbox.artwork.date && /^\d+c/.test(lightbox.artwork.date) ? ` (${lightbox.artwork.date})` : '');
+                })()}
+              </div>
+              <div style={{ fontSize: 12, color: '#ddd' }}>
+                {cleanArtistName(lightbox.artwork.artist)}
+              </div>
             </div>
           </div>
         )
@@ -4880,6 +5286,31 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
                       onError={(e) => applyFallbackImage(e.currentTarget)}
                     />
                   </picture>
+                );
+              })()}
+              {/* Metadata below zoomed image - mobile only */}
+              {isMobile && (() => {
+                const zoomData = hoverZoom || closingHoverZoom;
+                if (!zoomData) return null;
+                const a = zoomData.artwork;
+                const yr = String(a.year || (a as Record<string, unknown>)?.dateStr || '');
+                const dateDisplay = yr ? ` (${yr})` : (a.date && /^\d+c/.test(a.date) ? ` (${a.date})` : '');
+                return (
+                  <div
+                    style={{
+                      marginTop: 12,
+                      textAlign: 'center',
+                      opacity: hoverZoom?.animate ? 1 : 0,
+                      transition: 'opacity 300ms ease',
+                    }}
+                  >
+                    <div style={{ fontSize: 13, fontWeight: 600, color: '#333', marginBottom: 2 }}>
+                      {a.name}{dateDisplay}
+                    </div>
+                    <div style={{ fontSize: 11, color: '#666' }}>
+                      {cleanArtistName(a.artist)}
+                    </div>
+                  </div>
                 );
               })()}
             </div>

@@ -673,6 +673,31 @@ export default function ExhibitionDetails({
           datasetEmptyRef.current[exhibitionItemId] = !(items && items.some((it: any) => it && it.imageUrl));
           return put(img);
         }
+      } else if (exhibitionItemId === 'humboldt-collection' || exhibitionItemId === 'altes-collection' || exhibitionItemId === 'neues-collection' || exhibitionItemId === 'gemaeldegalerie-collection' || exhibitionItemId === 'alte-nationalgalerie-collection' || exhibitionItemId === 'neue-nationalgalerie-collection' || exhibitionItemId === 'bode-collection' || exhibitionItemId === 'staedel-collection' || exhibitionItemId === 'bruecke-collection') {
+        // SMB Berlin Museums + Städel Museum Frankfurt + Brücke-Museum Berlin
+        const jsonMap: Record<string, string> = {
+          'humboldt-collection': '/data/smb-humboldt-forum-collection.json',
+          'altes-collection': '/data/smb-altes-museum-collection.json',
+          'neues-collection': '/data/smb-neues-museum-collection.json',
+          'gemaeldegalerie-collection': '/data/smb-gemaeldegalerie-collection.json',
+          'alte-nationalgalerie-collection': '/data/smb-alte-nationalgalerie-collection.json',
+          'neue-nationalgalerie-collection': '/data/smb-neue-nationalgalerie-collection.json',
+          'bode-collection': '/data/smb-bode-museum-collection.json',
+          'staedel-collection': '/data/staedel-museum-collection.json',
+          'bruecke-collection': '/data/bruecke-museum-collection.json'
+        };
+        const jsonFile = jsonMap[exhibitionItemId];
+        if (jsonFile) {
+          const res = await fetch(jsonFile, { cache: 'no-store' });
+          if (res.ok) {
+            const data = await res.json();
+            // SMB data is array format with imageUrl field
+            const items = Array.isArray(data) ? data : (Array.isArray(data.objects) ? data.objects : []);
+            const img = items.find((it: any) => it && (it.imageUrl || it.image))?.imageUrl || items.find((it: any) => it && it.image)?.image || null;
+            datasetEmptyRef.current[exhibitionItemId] = !(items && items.some((it: any) => it && (it.imageUrl || it.image)));
+            return put(img);
+          }
+        }
       }
       // Generic: try local cache populated by ExhibitionModal snapshots
       try {

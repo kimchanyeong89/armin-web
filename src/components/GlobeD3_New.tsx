@@ -149,14 +149,14 @@ export default function GlobeD3({
       
       const clusterPins = pinGroups.filter((d: any) => d._cluster);
       clusterPins.append('circle')
-        .attr('r', (d: any) => Math.max(14, 10 + Math.log2(d.count) * 4))
+        .attr('r', (d: any) => Math.max(10, 7 + Math.log2(d.count) * 3))
         .attr('fill', '#dc2626')
         .attr('stroke', '#fff')
-        .attr('stroke-width', 2);
+        .attr('stroke-width', 1.5);
       clusterPins.append('text')
         .attr('text-anchor', 'middle')
         .attr('dy', '0.35em')
-        .attr('font-size', 11)
+        .attr('font-size', 9)
         .attr('font-weight', 'bold')
         .attr('fill', '#fff')
         .text((d: any) => d.count);

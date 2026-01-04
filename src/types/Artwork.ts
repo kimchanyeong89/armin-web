@@ -29,6 +29,10 @@ export type Artwork = {
   // 영상 컨텐츠 지원
   duration?: string;     // 영상 작품 재생 시간 (예: "4 minutes 29 secondes")
   medium?: string;       // 기법/매체 (예: "Film 16 mm couleur, sonore")
+  technique?: string;    // 기법 (alternative to medium)
+  materials?: string;    // 재료 (alternative to medium)
+  category?: string;     // 작품 분류 (예: "Painting", "Sculpture")
+  artworkType?: string;  // 작품 유형 (alternative to category)
   youtubeId?: string;    // YouTube 영상 ID (11자)
   mediaType?: 'image' | 'video';  // 미디어 타입
 };

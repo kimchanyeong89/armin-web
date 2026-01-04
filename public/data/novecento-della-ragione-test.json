@@ -1,0 +1,121 @@
+{
+  "museum": "Museo del Novecento",
+  "museumId": "novecento-della-ragione",
+  "collection": "Alberto Della Ragione",
+  "location": "Florence, Italy",
+  "type": "permanent",
+  "totalArtworks": 10,
+  "totalAvailable": 67,
+  "objects": [
+    {
+      "sourceUrl": "https://www.museonovecento.it/en/collezioni/la-cava-sotto-il-monte-birolli/",
+      "title": "La cava sotto il monte",
+      "artist": "",
+      "year": "2440",
+      "medium": "-oil-on-canvas annoopera-1941-en\">",
+      "dimension": "32x32",
+      "image": "https://www.museonovecento.it/wp-content/uploads/2022/01/Schermata-2022-01-25-alle-16.57.01.png",
+      "category": "Alberto Della Ragione Collection",
+      "room": "Alberto Della Ragione"
+    },
+    {
+      "sourceUrl": "https://www.museonovecento.it/en/collezioni/rape-e-uova-nel-cestino-casorati/",
+      "title": "Rape e uova nel cestino",
+      "artist": "",
+      "year": "2440",
+      "medium": "-oil-on-canvas annoopera-1942-ca-en\">",
+      "dimension": "32x32",
+      "image": "https://www.museonovecento.it/wp-content/uploads/2022/01/Schermata-2022-01-25-alle-16.52.11.png",
+      "category": "Alberto Della Ragione Collection",
+      "room": "Alberto Della Ragione"
+    },
+    {
+      "sourceUrl": "https://www.museonovecento.it/en/collezioni/aeropittura-fillia-2/",
+      "title": "Aeropittura",
+      "artist": "",
+      "year": "2440",
+      "medium": "-tempera-on-cardboard annoopera-1932-en\">",
+      "dimension": "32x32",
+      "image": "https://www.museonovecento.it/wp-content/uploads/2022/01/Schermata-2022-01-25-alle-16.48.40.png",
+      "category": "Alberto Della Ragione Collection",
+      "room": "Alberto Della Ragione"
+    },
+    {
+      "sourceUrl": "https://www.museonovecento.it/en/collezioni/fiori-dalie-donghi/",
+      "title": "Fiori (Dalie)",
+      "artist": "",
+      "year": "2440",
+      "medium": "-oil-on-canvas annoopera-1923-ca-en\">",
+      "dimension": "32x32",
+      "image": "https://www.museonovecento.it/wp-content/uploads/2022/01/Schermata-2022-01-25-alle-16.45.13.png",
+      "category": "Alberto Della Ragione Collection",
+      "room": "Alberto Della Ragione"
+    },
+    {
+      "sourceUrl": "https://www.museonovecento.it/en/collezioni/piazzale-alberato-donghi/",
+      "title": "Piazzale alberato",
+      "artist": "",
+      "year": "2440",
+      "medium": "-oil-on-canvas annoopera-1925-en\">",
+      "dimension": "32x32",
+      "image": "https://www.museonovecento.it/wp-content/uploads/2022/01/Schermata-2022-01-25-alle-16.42.19.png",
+      "category": "Alberto Della Ragione Collection",
+      "room": "Alberto Della Ragione"
+    },
+    {
+      "sourceUrl": "https://www.museonovecento.it/en/collezioni/cavalli-marini-fontana/",
+      "title": "Cavalli marini",
+      "artist": "",
+      "year": "2440",
+      "medium": "-colored-pottery annoopera-1938-en\">",
+      "dimension": "32x32",
+      "image": "https://www.museonovecento.it/wp-content/uploads/2022/01/Schermata-2022-01-25-alle-16.39.06.png",
+      "category": "Alberto Della Ragione Collection",
+      "room": "Alberto Della Ragione"
+    },
+    {
+      "sourceUrl": "https://www.museonovecento.it/en/collezioni/donna-sdraiata-fontana/",
+      "title": "Donna sdraiata",
+      "artist": "",
+      "year": "2440",
+      "medium": "-colored-pottery annoopera-1938-en\">",
+      "dimension": "32x32",
+      "image": "https://www.museonovecento.it/wp-content/uploads/2022/01/Schermata-2022-01-25-alle-16.28.05.png",
+      "category": "Alberto Della Ragione Collection",
+      "room": "Alberto Della Ragione"
+    },
+    {
+      "sourceUrl": "https://www.museonovecento.it/en/collezioni/paulette-fontana/",
+      "title": "Paulette",
+      "artist": "",
+      "year": "2440",
+      "medium": "-colored-pottery annoopera-1938-en\">",
+      "dimension": "32x32",
+      "image": "https://www.museonovecento.it/wp-content/uploads/2022/01/Schermata-2022-01-25-alle-16.24.38.png",
+      "category": "Alberto Della Ragione Collection",
+      "room": "Alberto Della Ragione"
+    },
+    {
+      "sourceUrl": "https://www.museonovecento.it/en/collezioni/giovane-donna-levi/",
+      "title": "Giovane donna",
+      "artist": "",
+      "year": "2440",
+      "medium": "-oil-on-canvas annoopera-1934-en\">",
+      "dimension": "32x32",
+      "image": "https://www.museonovecento.it/wp-content/uploads/2022/01/Schermata-2022-01-25-alle-16.21.55.png",
+      "category": "Alberto Della Ragione Collection",
+      "room": "Alberto Della Ragione"
+    },
+    {
+      "sourceUrl": "https://www.museonovecento.it/en/collezioni/paesaggio-di-alassio-levi/",
+      "title": "Paesaggio di Alassio",
+      "artist": "",
+      "year": "2440",
+      "medium": "-oil-on-canvas annoopera-1933-en\">",
+      "dimension": "32x32",
+      "image": "https://www.museonovecento.it/wp-content/uploads/2022/01/Schermata-2022-01-25-alle-16.19.04.png",
+      "category": "Alberto Della Ragione Collection",
+      "room": "Alberto Della Ragione"
+    }
+  ]
+}

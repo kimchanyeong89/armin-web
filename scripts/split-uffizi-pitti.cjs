@@ -57,6 +57,7 @@ const PITTI_PATTERNS = [
     /palatine/i,   // Palatine Gallery, Palatine Chapel
     /pitti palace/i,
     /pitti,/i,     // Pitti, courtyard
+    /pitti$/i,     // Ends with Pitti
     /hall of jupiter/i,
     /hall of saturn/i,
     /^room \d+$/i,  // Room 1, Room 2, etc. (numbered rooms in Pitti)
@@ -72,8 +73,28 @@ const PITTI_PATTERNS = [
     /tapestry apartments/i,
     /meridiana/i,
     /porcelain museum/i,
+    /porcelain  museum/i,  // Double space in data
     /museum of porcelain/i,
     /^sala \d+$/i,   // Sala 11, etc.
+    /upper botanical garden/i,
+    /upper botany garden/i,
+    /giardino del cavaliere/i,
+    /bona room/i,
+    /red salon/i,
+    /king's study/i,
+    /king's bedroom/i,
+    /queen's salon/i,
+    /queen's bedroom/i,
+    /throne room/i,
+    /round room/i,
+    /oval room/i,
+    /chapel$/i,     // Chapel (ends with)
+    /summer apartments/i,
+    /silver museum/i,
+    /costume gallery/i,
+    /galleria del costume/i,
+    /stucco hall/i,
+    /gallery of statues/i,
 ];
 
 // Uffizi patterns (rooms starting with A, B, C, D + number)

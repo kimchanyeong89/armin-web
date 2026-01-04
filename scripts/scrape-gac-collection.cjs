@@ -27,16 +27,20 @@ const RETRY_CONCURRENCY = 10;
 
 const galleries = [
   {
-    id: 'scottish-national-gallery-of-modern-art',
-    name: 'Scottish National Gallery of Modern Art',
-    slug: 'scottish-national-gallery-of-modern-art-modern-one',
-    url: 'https://artsandculture.google.com/explore/collections/scottish-national-gallery-of-modern-art-modern-one?c=assets',
-    maxItems: 3000,
+    id: 'museo-del-novecento-milan',
+    name: 'Museo del Novecento',
+    slug: 'museo-del-novecento',
+    url: 'https://artsandculture.google.com/partner/museo-del-novecento?tab=collection',
+    maxItems: 500,
     excludePatterns: [
       /gallery view/i,
       /installation view/i,
       /exhibition view/i,
       /building exterior/i,
+      /museum view/i,
+      /permanent collection/i,
+      /^room\s+/i,
+      /^diario\s+-/i,
     ]
   }
 ];

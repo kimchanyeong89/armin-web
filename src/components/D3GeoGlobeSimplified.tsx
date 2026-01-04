@@ -1153,17 +1153,17 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
         
         // Add cluster visuals to new elements
         newEnter.each(function(d: any) {
-          const baseW = Math.max(20, 14 + Math.log2(Math.max(1, d.count)) * 3);
+          const baseW = Math.max(16, 11 + Math.log2(Math.max(1, d.count)) * 2.5);
           const baseH = baseW;
           d._collapsedW = baseW;
           d._collapsedH = baseH;
-          d._expandedW = d.cityName ? Math.max(baseW, Math.min(70, d.cityName.length * 6 + 14)) : baseW;
-          d._expandedH = d.cityName ? baseH + 12 : baseH;
+          d._expandedW = d.cityName ? Math.max(baseW, Math.min(60, d.cityName.length * 5 + 12)) : baseW;
+          d._expandedH = d.cityName ? baseH + 10 : baseH;
           
           const el = d3.select(this);
           el.append('rect')
             .attr('class', 'cluster-bg')
-            .attr('rx', 6).attr('ry', 6)
+            .attr('rx', 5).attr('ry', 5)
             .attr('fill', '#111827').attr('stroke', '#E5E7EB').attr('stroke-width', 1)
             .attr('x', -baseW / 2)
             .attr('y', -baseH / 2)
@@ -1173,7 +1173,7 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
             .attr('class', 'cluster-count')
             .attr('text-anchor', 'middle')
             .attr('dy', '0.35em')
-            .attr('font-size', Math.max(10, 9 + Math.log2(Math.max(1, d.count)) * 0.8))
+            .attr('font-size', Math.max(9, 8 + Math.log2(Math.max(1, d.count)) * 0.7))
             .attr('font-weight', 'bold')
             .attr('fill', '#ffffff')
             .text(d.count);
@@ -1181,8 +1181,8 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
             el.append('text')
               .attr('class', 'cluster-city')
               .attr('text-anchor', 'middle')
-              .attr('dy', '1.1em')
-              .attr('font-size', 7)
+              .attr('dy', '1em')
+              .attr('font-size', 6)
               .attr('fill', '#ffffff')
               .attr('opacity', 0)
               .text(d.cityName.toUpperCase());
@@ -1428,12 +1428,12 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
     
     // Pre-calculate and store sizes in data to avoid recalculation issues
     enterCluster.each(function(d: any) {
-      const baseW = Math.max(20, 14 + Math.log2(Math.max(1, d.count)) * 3);
+      const baseW = Math.max(16, 11 + Math.log2(Math.max(1, d.count)) * 2.5);
       const baseH = baseW;
       d._collapsedW = baseW;
       d._collapsedH = baseH;
-      d._expandedW = d.cityName ? Math.max(baseW, Math.min(70, d.cityName.length * 6 + 14)) : baseW;
-      d._expandedH = d.cityName ? baseH + 12 : baseH;
+      d._expandedW = d.cityName ? Math.max(baseW, Math.min(60, d.cityName.length * 5 + 12)) : baseW;
+      d._expandedH = d.cityName ? baseH + 10 : baseH;
       // Check if this cluster is frozen (being zoomed) - should render expanded
       d._frozen = frozenClusterKeyRef.current === d.key;
     });
@@ -1442,7 +1442,7 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
     // If frozen, render in expanded state
     enterCluster.append('rect')
       .attr('class', 'cluster-bg')
-      .attr('rx', 6).attr('ry', 6)
+      .attr('rx', 5).attr('ry', 5)
       .attr('fill', '#111827').attr('stroke', '#E5E7EB').attr('stroke-width', 1)
       .attr('x', (d: any) => d._frozen ? -d._expandedW / 2 : -d._collapsedW / 2)
       .attr('y', (d: any) => d._frozen ? -d._expandedH / 2 : -d._collapsedH / 2)
@@ -1453,7 +1453,7 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
       .attr('class', 'cluster-count')
       .attr('text-anchor', 'middle')
       .attr('dy', (d: any) => d._frozen && d.cityName ? '-0.1em' : '0.35em')
-      .attr('font-size', (d: any) => Math.max(10, 9 + Math.log2(Math.max(1, d.count)) * 0.8))
+      .attr('font-size', (d: any) => Math.max(9, 8 + Math.log2(Math.max(1, d.count)) * 0.7))
       .attr('font-weight', 'bold')
       .attr('fill', '#ffffff')
       .text((d: any) => d.count);
@@ -1462,8 +1462,8 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
     enterCluster.append('text')
       .attr('class', 'cluster-city')
       .attr('text-anchor', 'middle')
-      .attr('dy', '1.1em')
-      .attr('font-size', 7)
+      .attr('dy', '1em')
+      .attr('font-size', 6)
       .attr('fill', '#ffffff')
       .attr('opacity', (d: any) => d._frozen && d.cityName ? 0.9 : 0)
       .text((d: any) => d.cityName ? d.cityName.toUpperCase() : '');

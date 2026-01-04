@@ -59,28 +59,32 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
       try {
         setLoading(true);
         
-        // 모든 지리 데이터를 병렬로 로드 (더 상세한 국가 경계 사용)
+        // 국가 데이터 로드 (필수)
         const countriesUrl = resolveStaticUrl('geodata/countries-50m.json');
-        const statesUrl = resolveStaticUrl('geodata/admin1-states-10m.json');
-        const [countriesResponse, statesResponse] = await Promise.all([
-          fetch(countriesUrl), // 50m 해상도로 변경
-          fetch(statesUrl)
-        ]);
-
+        const countriesResponse = await fetch(countriesUrl);
         if (!countriesResponse.ok) throw new Error('Countries data failed to load');
-        if (!statesResponse.ok) throw new Error('States data failed to load');
-
-        const [countriesData, statesData] = await Promise.all([
-          countriesResponse.json(),
-          statesResponse.json()
-        ]);
-
+        const countriesData = await countriesResponse.json();
         setCountries(countriesData.features || []);
-        setStates(statesData.features || []);
+        
+        // admin1-states 로드 시도 (선택적 - 실패해도 맵은 작동)
+        try {
+          const statesUrl = resolveStaticUrl('geodata/admin1-states-10m.json');
+          const statesResponse = await fetch(statesUrl);
+          if (statesResponse.ok) {
+            const statesData = await statesResponse.json();
+            setStates(statesData.features || []);
+            console.log('- 주/도:', statesData.features?.length || 0);
+          } else {
+            console.warn('States data not available, continuing without it');
+            setStates([]);
+          }
+        } catch (statesErr) {
+          console.warn('States data load failed, continuing without it:', statesErr);
+          setStates([]);
+        }
 
         console.log('지리 데이터 로드 완료:');
         console.log('- 국가:', countriesData.features?.length || 0);
-        console.log('- 주/도:', statesData.features?.length || 0);
         
       } catch (err) {
         setError(err instanceof Error ? err.message : 'Unknown error');
@@ -115,7 +119,7 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
     if (zoomK < 60) return 0.2;       // 더 가까이
     return 0.05;                       // 아주 가까이 - 개별 표시
   };
-  type ClusterInfo = { key: string; items: Exhibition[]; centerLon: number; centerLat: number; sortedByName: Exhibition[] };
+    type ClusterInfo = { key: string; items: Exhibition[]; centerLon: number; centerLat: number; sortedByName: Exhibition[] };
   const clustersListRef = useRef<ClusterInfo[] | null>(null);
   const currentZoomKRef = useRef<number>(1);
   
@@ -406,6 +410,11 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
         .translate(width * 0.05, -height * 0.25);
       svgSelection.call(zoom.transform as any, initialTransform);
       zoomTransformRef.current = initialTransform;
+      
+      // 초기 줌 레벨로 클러스터 재계산
+      currentZoomKRef.current = baseMinZoom;
+      rebuildClusters(baseMinZoom);
+      renderPins();
 
   // 초기 표시 상태도 배율 기준으로 맞춤
   stateGroup.attr('display', baseMinZoom >= STATE_VISIBLE_K ? null : 'none');
@@ -579,17 +588,17 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
   const enterCluster = enter.filter((d: any) => d._cluster).attr('pointer-events','all');
     enterCluster.append('rect')
       .attr('class','cluster-bg')
-      .attr('rx', 8).attr('ry', 8)
-      .attr('fill', '#111827').attr('stroke', '#E5E7EB').attr('stroke-width', 1.2)
-      .attr('x', (d:any) => -Math.max(22, 14 + Math.log2(d.count) * 4) / 2)
-      .attr('y', (d:any) => -Math.max(22, 14 + Math.log2(d.count) * 4) / 2)
-      .attr('width', (d:any) => Math.max(22, 14 + Math.log2(d.count) * 4))
-      .attr('height',(d:any) => Math.max(22, 14 + Math.log2(d.count) * 4));
+      .attr('rx', 5).attr('ry', 5)
+      .attr('fill', '#111827').attr('stroke', '#E5E7EB').attr('stroke-width', 1)
+      .attr('x', (d:any) => -Math.max(16, 11 + Math.log2(d.count) * 2.5) / 2)
+      .attr('y', (d:any) => -Math.max(16, 11 + Math.log2(d.count) * 2.5) / 2)
+      .attr('width', (d:any) => Math.max(16, 11 + Math.log2(d.count) * 2.5))
+      .attr('height',(d:any) => Math.max(16, 11 + Math.log2(d.count) * 2.5));
     enterCluster.append('text')
       .attr('class','cluster-count')
       .attr('text-anchor','middle')
       .attr('dy','0.35em')
-      .attr('font-size', (d:any) => Math.max(10, 9 + Math.log2(d.count) * 1.1))
+      .attr('font-size', (d:any) => Math.max(9, 8 + Math.log2(d.count) * 0.7))
       .attr('font-weight','bold')
       .attr('fill','#ffffff')
       .text((d:any) => d.count);
@@ -727,7 +736,7 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
     // Cluster hover weight
     merged.filter((d:any) => d._cluster)
       .on('mouseover', function(){ d3.select(this as any).select('.cluster-bg').transition().duration(120).attr('stroke-width', 2); })
-      .on('mouseout', function(){ d3.select(this as any).select('.cluster-bg').transition().duration(120).attr('stroke-width', 1.2); });
+      .on('mouseout', function(){ d3.select(this as any).select('.cluster-bg').transition().duration(120).attr('stroke-width', 1); });
   }
 
   // 선택된 국가의 주/도 경계선 렌더링

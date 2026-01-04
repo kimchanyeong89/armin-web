@@ -2011,7 +2011,7 @@ export const exhibitions = [
     id: "vatican-museums",
     name: "Vatican Museums",
     city: "Vatican City",
-    country: "Vatican City",
+    country: "Italy",
     latitude: 41.9065,
     longitude: 12.4536,
     description: "One of the world's greatest art collections, including the Sistine Chapel, Raphael Rooms, and masterpieces of classical antiquity.",
@@ -2053,7 +2053,7 @@ export const exhibitions = [
     description: "One of the most famous art museums in the world, home to masterpieces by Botticelli, Michelangelo, Leonardo, Raphael, Caravaggio and more.",
     representativeImage: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Galleria_degli_Uffizi_court.jpg/1280px-Galleria_degli_Uffizi_court.jpg",
     permanentExhibitions: [
-      { id: "uffizi-gallery-collection", name: "Uffizi Collection", title: "Uffizi Gallery Collection", description: "731 masterpieces including works by Botticelli, Michelangelo, Raphael, Leonardo, and Caravaggio.", startDate: "Permanent", endDate: "Permanent", collectionFile: "uffizi-gallery-collection.json" }
+      { id: "uffizi-gallery-collection", name: "Uffizi Collection", title: "Uffizi Gallery Collection", description: "508 masterpieces including works by Botticelli, Michelangelo, Raphael, Leonardo, and Caravaggio.", startDate: "Permanent", endDate: "Permanent", collectionFile: "uffizi-gallery-collection.json" }
     ],
     temporaryExhibitions: [],
     pastExhibitions: [],
@@ -2070,7 +2070,7 @@ export const exhibitions = [
     description: "Renaissance palace housing multiple museums including the Palatine Gallery with works by Raphael, Titian, Rubens, and the Gallery of Modern Art.",
     representativeImage: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Palazzo_Pitti_Facade.jpg/1280px-Palazzo_Pitti_Facade.jpg",
     permanentExhibitions: [
-      { id: "pitti-collection", name: "Pitti Collection", title: "Pitti Palace Collection", description: "196 artworks from the Palatine Gallery, Gallery of Modern Art, and Royal Apartments including works by Raphael, Titian, and Rubens.", startDate: "Permanent", endDate: "Permanent", collectionFile: "pitti-palace-collection.json" }
+      { id: "pitti-collection", name: "Pitti Collection", title: "Pitti Palace Collection", description: "428 artworks from the Palatine Gallery, Gallery of Modern Art, and Royal Apartments including works by Raphael, Titian, and Rubens.", startDate: "Permanent", endDate: "Permanent", collectionFile: "pitti-palace-collection.json" }
     ],
     temporaryExhibitions: [],
     pastExhibitions: [],
@@ -2087,7 +2087,7 @@ export const exhibitions = [
     description: "Home to Michelangelo's David and an important collection of paintings, sculptures, and historical musical instruments.",
     representativeImage: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/63/%27David%27_by_Michelangelo_Fir_JBU002.jpg/800px-%27David%27_by_Michelangelo_Fir_JBU002.jpg",
     permanentExhibitions: [
-      { id: "accademia-collection", name: "Accademia Collection", title: "Galleria dell'Accademia Collection", description: "Michelangelo's David, paintings, sculptures, and the Museum of Musical Instruments.", startDate: "Permanent", endDate: "Permanent", collectionFile: "accademia-collection.json" }
+      { id: "accademia-collection", name: "Florence Collection", title: "Galleria dell'Accademia di Firenze", description: "Michelangelo's David, paintings, sculptures, and the Museum of Musical Instruments.", startDate: "Permanent", endDate: "Permanent", collectionFile: "accademia-collection.json" }
     ],
     temporaryExhibitions: [],
     pastExhibitions: [],
@@ -2128,6 +2128,23 @@ export const exhibitions = [
     pastExhibitions: [],
     exhibitions: []
   },
+  // Gallerie dell'Accademia di Venezia - Venice
+  {
+    id: "accademia-venice",
+    name: "Gallerie dell'Accademia di Venezia",
+    city: "Venice",
+    country: "Italy",
+    latitude: 45.4314,
+    longitude: 12.3282,
+    description: "The largest collection of Venetian paintings in the world, housed in the Santa Maria della Carità complex with 37 halls of masterpieces from the 14th to 18th century.",
+    representativeImage: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Accademia_%28Venice%29.jpg/1280px-Accademia_%28Venice%29.jpg",
+    permanentExhibitions: [
+      { id: "accademia-venice-collection", name: "Venice Collection", title: "Gallerie dell'Accademia di Venezia", description: "Masterpieces by Giorgione, Bellini, Titian, Veronese, Tintoretto, Carpaccio, and drawings by Leonardo da Vinci.", startDate: "Permanent", endDate: "Permanent", collectionFile: "gallerie-accademia-venice-collection.json" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    exhibitions: []
+  },
   // Peggy Guggenheim Collection - Venice
   {
     id: "guggenheim-venice",
@@ -2140,6 +2157,396 @@ export const exhibitions = [
     representativeImage: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/Peggy_Guggenheim_Collection%2C_Venice.jpg/1280px-Peggy_Guggenheim_Collection%2C_Venice.jpg",
     permanentExhibitions: [
       { id: "guggenheim-collection", name: "Peggy Guggenheim Collection", title: "Modern Art Collection", description: "613 works of modern art including pieces by Picasso, Pollock, Dalí, Ernst, and Magritte.", startDate: "Permanent", endDate: "Permanent", collectionFile: "guggenheim-venice-collection.json" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    exhibitions: []
+  },
+  // Pinacoteca di Brera - Milan
+  {
+    id: "pinacoteca-brera",
+    name: "Pinacoteca di Brera",
+    city: "Milan",
+    country: "Italy",
+    latitude: 45.4719,
+    longitude: 9.1876,
+    description: "One of Italy's most important art galleries, housing an exceptional collection of Italian Renaissance paintings including works by Raphael, Mantegna, Bellini, and Caravaggio.",
+    representativeImage: "https://pinacotecabrera.org/wp-content/uploads/2024/11/Adler-Autoritratto.jpg",
+    permanentExhibitions: [
+      { id: "brera-collection", name: "Brera Collection", title: "Pinacoteca di Brera Collection", description: "619 masterpieces of Italian art from the 14th to 20th century, including works by Raphael, Mantegna, Caravaggio, and Bellini.", startDate: "Permanent", endDate: "Permanent", collectionFile: "pinacoteca-brera-collection.json" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    exhibitions: []
+  },
+  // Galleria Doria Pamphilj - Rome
+  {
+    id: "doria-pamphilj",
+    name: "Galleria Doria Pamphilj",
+    city: "Rome",
+    country: "Italy",
+    latitude: 41.8979,
+    longitude: 12.4823,
+    description: "One of the largest private collections in Rome, housed in Palazzo Doria Pamphilj with masterpieces by Caravaggio, Velázquez, Raphael, Titian, and Bernini.",
+    representativeImage: "https://www.doriapamphilj.it/wp-content/uploads/2019/01/palazzo-doria-pamphilj-velazquez-ritratto-innocenzo-x-big.jpg",
+    permanentExhibitions: [
+      { id: "doria-pamphilj-collection", name: "Masterpieces Collection", title: "Galleria Doria Pamphilj Masterpieces", description: "The finest works from the Doria Pamphilj private collection including Velázquez's Portrait of Pope Innocent X and Caravaggio's masterpieces.", startDate: "Permanent", endDate: "Permanent", collectionFile: "doria-pamphilj-collection.json" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    exhibitions: []
+  },
+  // Museo Egizio - Turin
+  {
+    id: "museo-egizio",
+    name: "Museo Egizio",
+    city: "Turin",
+    country: "Italy",
+    latitude: 45.0687,
+    longitude: 7.6842,
+    description: "The oldest museum in the world dedicated to Egyptian civilization and the second largest Egyptian collection after Cairo. Features the world's most important collection of Egyptian antiquities outside Egypt.",
+    representativeImage: "https://collezioni.museoegizio.it/public/objects/images/001R6V_C08CFA3B11D84B1970CCE7E0FCEA52AE_big.jpg",
+    permanentExhibitions: [
+      { id: "museo-egizio-collection", name: "Egyptian Collection", title: "Museo Egizio Collection", description: "Over 40,000 artifacts spanning 4,000 years of Egyptian history including statues, papyri, mummies, and sarcophagi.", startDate: "Permanent", endDate: "Permanent", collectionFile: "museo-egizio-collection.json" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    exhibitions: []
+  },
+  {
+    id: "musei-capitolini",
+    name: "Musei Capitolini",
+    city: "Rome",
+    country: "Italy",
+    latitude: 41.8931,
+    longitude: 12.4828,
+    description: "The world's oldest public museum, founded in 1471 on Capitoline Hill. Houses an extraordinary collection of ancient Roman sculptures, Renaissance art, and archaeological treasures including Bernini's Medusa and the iconic Capitoline Wolf.",
+    representativeImage: "https://www.museicapitolini.org/sites/default/files/storage/images/musei/musei_capitolini/percorsi/percorsi_per_sale/appartamento_dei_conservatori/sala_delle_oche/busto_di_medusa/11527-12-ita-IT/busto_di_medusa.jpg",
+    permanentExhibitions: [
+      { id: "musei-capitolini-collection", name: "Capitoline Collection", title: "Musei Capitolini Collection", description: "Ancient Roman sculptures, Renaissance masterpieces, and archaeological treasures spanning over 2,500 years of history.", startDate: "Permanent", endDate: "Permanent", collectionFile: "musei-capitolini-collection.json" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    exhibitions: []
+  },
+  {
+    id: "museo-novecento",
+    name: "Museo Novecento",
+    city: "Florence",
+    country: "Italy",
+    latitude: 43.7696,
+    longitude: 11.2494,
+    description: "Museum dedicated to Italian art of the 20th century, housed in the former Leopoldine complex of Santa Maria Novella. Features works by major Italian modern artists.",
+    representativeImage: "https://www.museonovecento.it/wp-content/uploads/2022/01/Schermata-2022-01-25-alle-16.57.01.png",
+    permanentExhibitions: [
+      { id: "novecento-della-ragione-collection", name: "Alberto Della Ragione Collection", title: "Della Ragione Collection", description: "Collection of 20th century Italian art donated by Alberto Della Ragione.", startDate: "Permanent", endDate: "Permanent", collectionFile: "novecento-della-ragione-collection.json" },
+      { id: "novecento-rosai-collection", name: "Ottone Rosai Collection", title: "Rosai Collection", description: "Works by Florentine artist Ottone Rosai (1895-1957).", startDate: "Permanent", endDate: "Permanent", collectionFile: "novecento-rosai-collection.json" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    exhibitions: []
+  },
+  {
+    id: "pinacoteca-ambrosiana",
+    name: "Pinacoteca Ambrosiana",
+    city: "Milan",
+    country: "Italy",
+    latitude: 45.4632,
+    longitude: 9.1867,
+    description: "One of Italy's most important art galleries, housing masterpieces from Leonardo da Vinci's Codex Atlanticus to Caravaggio's Basket of Fruit, along with works by Raphael, Titian, and Botticelli.",
+    representativeImage: "https://museum.comwork.eu/api/v1/files/743276?t=6bf1436f-fb73-496f-8790-bbe8fcbcdfd3",
+    permanentExhibitions: [
+      { id: "ambrosiana-collection", name: "Pinacoteca Ambrosiana Collection", title: "Ambrosiana Collection", description: "Renaissance masterpieces including works by Leonardo, Caravaggio, Raphael, and Botticelli.", startDate: "Permanent", endDate: "Permanent", collectionFile: "ambrosiana-collection.json" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    exhibitions: []
+  },
+  // Museo del Novecento Milan
+  {
+    id: "museo-del-novecento-milan",
+    name: "Museo del Novecento",
+    city: "Milan",
+    country: "Italy",
+    latitude: 45.4636,
+    longitude: 9.1891,
+    description: "Museum dedicated to 20th-century Italian art, housing masterpieces by Boccioni, Modigliani, De Chirico, Fontana, and other modern masters.",
+    representativeImage: "https://lh3.googleusercontent.com/ci/AL18g_RpDQ9yqLqD0G0Z0K8k7Q8X0Q8X0Q8X0Q8X0Q",
+    permanentExhibitions: [
+      { id: "museo-novecento-milan-collection", name: "Museo del Novecento Collection", title: "20th Century Italian Art", description: "Masterpieces of Italian modernism including works by Boccioni, Modigliani, and Fontana.", startDate: "Permanent", endDate: "Permanent", collectionFile: "museo-del-novecento-milan-collection.json" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    exhibitions: []
+  },
+  // Castello di Rivoli - Turin
+  {
+    id: "castello-di-rivoli",
+    name: "Castello di Rivoli",
+    city: "Turin",
+    country: "Italy",
+    latitude: 45.0714,
+    longitude: 7.5150,
+    description: "Italy's first museum dedicated to contemporary art, housed in a Baroque castle designed by Juvarra. Features works by Arte Povera masters, international contemporary artists, and site-specific installations.",
+    representativeImage: "https://www.castellodirivoli.org/wp-content/uploads/2017/02/Senza-nome-1.jpg",
+    permanentExhibitions: [
+      { id: "rivoli-collection", name: "Contemporary Art Collection", title: "Castello di Rivoli Collection", description: "900+ contemporary artworks including video art, installations, paintings, and sculptures by international artists.", startDate: "Permanent", endDate: "Permanent", collectionFile: "castello-di-rivoli-collection.json" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    exhibitions: []
+  },
+  // Museo Archeologico Nazionale di Napoli (MANN)
+  {
+    id: "museo-archeologico-napoli",
+    name: "Museo Archeologico Nazionale di Napoli",
+    city: "Naples",
+    country: "Italy",
+    latitude: 40.8536,
+    longitude: 14.2505,
+    description: "One of the world's most important archaeological museums, housing treasures from Pompeii, Herculaneum, the Farnese collection, and Egyptian antiquities.",
+    representativeImage: "https://www.museoarcheologiconapoli.it/mann/uploads/2025/06/anteprimacollezioneegizia.jpg",
+    permanentExhibitions: [
+      { id: "napoli-collection", name: "Archaeological Collection", title: "MANN Collection", description: "690 artifacts from Egyptian, Farnese, Mosaic, Fresco, and other collections spanning ancient civilizations.", startDate: "Permanent", endDate: "Permanent", collectionFile: "museo-archeologico-napoli-collection.json" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    exhibitions: []
+  },
+  // === GERMANY ===
+  // Humboldt Forum - Berlin
+  {
+    id: "humboldt-forum",
+    name: "Humboldt Forum",
+    city: "Berlin",
+    country: "Germany",
+    latitude: 52.5185,
+    longitude: 13.4018,
+    description: "Germany's largest cultural project, housed in the reconstructed Berlin Palace. Features the Ethnological Museum and Museum of Asian Art collections with over 20,000 objects from around the world.",
+    representativeImage: "https://recherche.smb.museum/images/5699144_1400x1400.jpg",
+    permanentExhibitions: [
+      { id: "humboldt-collection", name: "World Cultures Collection", title: "Humboldt Forum Collection", description: "Ethnological and Asian art collections from the Staatliche Museen zu Berlin.", startDate: "Permanent", endDate: "Permanent", collectionFile: "smb-humboldt-forum-collection.json" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    exhibitions: []
+  },
+  // Altes Museum - Berlin
+  {
+    id: "altes-museum",
+    name: "Altes Museum",
+    city: "Berlin",
+    country: "Germany",
+    latitude: 52.5194,
+    longitude: 13.3988,
+    description: "One of the world's most important museums of Classical antiquity, featuring Greek, Etruscan, and Roman art and artifacts from the Antikensammlung collection.",
+    representativeImage: "https://recherche.smb.museum/images/2991205_1400x1400.jpg",
+    permanentExhibitions: [
+      { id: "altes-collection", name: "Classical Antiquity Collection", title: "Altes Museum Collection", description: "Greek, Roman, and Etruscan masterpieces including sculptures, vases, jewelry, and architectural elements.", startDate: "Permanent", endDate: "Permanent", collectionFile: "smb-altes-museum-collection.json" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    exhibitions: []
+  },
+  // Neues Museum - Berlin
+  {
+    id: "neues-museum",
+    name: "Neues Museum",
+    city: "Berlin",
+    country: "Germany",
+    latitude: 52.5200,
+    longitude: 13.3978,
+    description: "Home to the Egyptian Museum with the famous bust of Nefertiti, the Museum of Prehistory and Early History, and part of the Collection of Classical Antiquities.",
+    representativeImage: "https://recherche.smb.museum/images/6000074_1400x1400.jpg",
+    permanentExhibitions: [
+      { id: "neues-collection", name: "Egyptian & Prehistoric Collection", title: "Neues Museum Collection", description: "Ancient Egyptian artifacts including the bust of Nefertiti, plus prehistoric and early history objects.", startDate: "Permanent", endDate: "Permanent", collectionFile: "smb-neues-museum-collection.json" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    exhibitions: []
+  },
+  // Gemäldegalerie - Berlin
+  {
+    id: "gemaeldegalerie",
+    name: "Gemäldegalerie",
+    city: "Berlin",
+    country: "Germany",
+    latitude: 52.5082,
+    longitude: 13.3650,
+    description: "One of the world's leading collections of European paintings from the 13th to 18th centuries, featuring masterpieces by Rembrandt, Vermeer, Dürer, Raphael, Botticelli, and Caravaggio.",
+    representativeImage: "https://recherche.smb.museum/images/4229858_2500x2500.jpg",
+    permanentExhibitions: [
+      { id: "gemaeldegalerie-collection", name: "European Old Masters", title: "Gemäldegalerie Collection", description: "782 masterpieces of European painting spanning 500 years, from medieval altarpieces to Baroque masterworks.", startDate: "Permanent", endDate: "Permanent", collectionFile: "smb-gemaeldegalerie-collection.json" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    exhibitions: []
+  },
+  // Alte Nationalgalerie - Berlin (Museum Island)
+  {
+    id: "alte-nationalgalerie",
+    name: "Alte Nationalgalerie",
+    city: "Berlin",
+    country: "Germany",
+    latitude: 52.5209,
+    longitude: 13.3988,
+    description: "A gallery of 19th-century paintings and sculptures on Berlin's Museum Island, featuring German Romanticism, French Impressionism, and early Modernism.",
+    representativeImage: "https://recherche.smb.museum/images/5669755_2500x2500.jpg",
+    permanentExhibitions: [
+      { id: "alte-nationalgalerie-collection", name: "19th Century Art", title: "Alte Nationalgalerie Collection", description: "2,258 paintings and sculptures from Romanticism to early Modernism, including works by Caspar David Friedrich, Monet, Renoir, and Menzel.", startDate: "Permanent", endDate: "Permanent", collectionFile: "smb-alte-nationalgalerie-collection.json" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    exhibitions: []
+  },
+  // Neue Nationalgalerie - Berlin (Kulturforum)
+  {
+    id: "neue-nationalgalerie",
+    name: "Neue Nationalgalerie",
+    city: "Berlin",
+    country: "Germany",
+    latitude: 52.5074,
+    longitude: 13.3653,
+    description: "Mies van der Rohe's iconic modernist building housing 20th-century art, featuring Expressionism, Cubism, Bauhaus, and contemporary works.",
+    representativeImage: "https://recherche.smb.museum/images/5640125_2500x2500.jpg",
+    permanentExhibitions: [
+      { id: "neue-nationalgalerie-collection", name: "20th Century Art", title: "Neue Nationalgalerie Collection", description: "2,275 works of modern and contemporary art including masterpieces by Kirchner, Klee, Picasso, Dalí, and Warhol.", startDate: "Permanent", endDate: "Permanent", collectionFile: "smb-neue-nationalgalerie-collection.json" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    exhibitions: []
+  },
+  // Bode-Museum - Berlin (Museum Island)
+  {
+    id: "bode-museum",
+    name: "Bode-Museum",
+    city: "Berlin",
+    country: "Germany",
+    latitude: 52.5225,
+    longitude: 13.3945,
+    description: "A stunning neo-Baroque museum on Museum Island housing Byzantine art, sculptures from the Middle Ages to the 18th century, and the Numismatic Collection.",
+    representativeImage: "https://recherche.smb.museum/images/2539176_1400x1400.jpg",
+    permanentExhibitions: [
+      { id: "bode-collection", name: "Sculptures & Byzantine Art", title: "Bode-Museum Collection", description: "2,263 works including Byzantine art, medieval sculptures, and Renaissance masterpieces by Donatello, Riemenschneider, and Giacometti.", startDate: "Permanent", endDate: "Permanent", collectionFile: "smb-bode-museum-collection.json" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    exhibitions: []
+  },
+  // Städel Museum - Frankfurt
+  {
+    id: "staedel-museum",
+    name: "Städel Museum",
+    city: "Frankfurt",
+    country: "Germany",
+    latitude: 50.1056,
+    longitude: 8.6724,
+    description: "One of Germany's most prestigious art museums with 700 years of European art history. Features Old Masters, modern art, and contemporary works including paintings, sculptures, drawings, and photographs.",
+    representativeImage: "https://sammlung.staedelmuseum.de/images/1839/alexej-von-jawlensky-abstract-head-symphony-pink-1855--thumb-xl.jpg",
+    permanentExhibitions: [
+      { id: "staedel-collection", name: "Städel Collection", title: "Städel Museum Collection", description: "1,712 masterpieces spanning 700 years: Old Masters (1300-1800), Modern Art (1800-1945), Contemporary Art (1945-present), plus drawings, prints, and photographs.", startDate: "Permanent", endDate: "Permanent", collectionFile: "staedel-museum-collection.json" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    exhibitions: []
+  },
+  // Brücke-Museum - Berlin
+  {
+    id: "bruecke-museum",
+    name: "Brücke-Museum",
+    city: "Berlin",
+    country: "Germany",
+    latitude: 52.4575,
+    longitude: 13.2619,
+    description: "World's largest collection of German Expressionist art from Die Brücke movement. Features works by Ernst Ludwig Kirchner, Erich Heckel, Karl Schmidt-Rottluff, Max Pechstein, and Emil Nolde.",
+    representativeImage: "https://iiif.deutsche-digitale-bibliothek.de/image/2/8e3dd712-d189-4bd3-b67c-4af6ca4fe7eb/full/!800,800/0/default.jpg",
+    permanentExhibitions: [
+      { id: "bruecke-collection", name: "Brücke Collection", title: "Die Brücke Collection", description: "1,152 works of German Expressionism: paintings (Gemälde), drawings (Zeichnung), prints (Druckgrafik), watercolors (Aquarell), and pastels by the founding artists of Die Brücke movement.", startDate: "Permanent", endDate: "Permanent", collectionFile: "bruecke-museum-collection.json" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    exhibitions: []
+  },
+  // Alte Pinakothek - Munich
+  {
+    id: "alte-pinakothek",
+    name: "Alte Pinakothek",
+    city: "Munich",
+    country: "Germany",
+    latitude: 48.1482,
+    longitude: 11.5699,
+    description: "One of the world's oldest art galleries, housing an exceptional collection of Old Master paintings from the 14th to 18th centuries including works by Dürer, Rubens, and Rembrandt.",
+    representativeImage: "https://res.cloudinary.com/tne/image/authenticated/s--ThA-PqKg--/q_60/w_400/artworks/DEUTSCH_BILDNIS-EINES-RITTERS_CC-BY-SA_BSTGS_11897.jpg",
+    permanentExhibitions: [
+      { id: "alte-pinakothek-collection", name: "Old Masters Collection", title: "Alte Pinakothek Collection", description: "5,262 masterpieces from the 14th-18th centuries including German, Dutch, Flemish, Italian, and Spanish painting.", startDate: "Permanent", endDate: "Permanent", collectionFile: "alte-pinakothek-collection.json" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    exhibitions: []
+  },
+  // Neue Pinakothek - Munich
+  {
+    id: "neue-pinakothek",
+    name: "Neue Pinakothek",
+    city: "Munich",
+    country: "Germany",
+    latitude: 48.1495,
+    longitude: 11.5700,
+    description: "Home to 19th-century European art, featuring masterpieces of Romanticism, Impressionism, and Art Nouveau by artists like Monet, Van Gogh, and Klimt.",
+    representativeImage: "https://res.cloudinary.com/tne/image/authenticated/s--ThA-PqKg--/q_60/w_400/artworks/DEUTSCH_BILDNIS-EINES-RITTERS_CC-BY-SA_BSTGS_11897.jpg",
+    permanentExhibitions: [
+      { id: "neue-pinakothek-collection", name: "19th Century Art", title: "Neue Pinakothek Collection", description: "136 works of 19th-century European painting and sculpture from Romanticism to Art Nouveau.", startDate: "Permanent", endDate: "Permanent", collectionFile: "neue-pinakothek-collection.json" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    exhibitions: []
+  },
+  // Pinakothek der Moderne - Munich
+  {
+    id: "pinakothek-der-moderne",
+    name: "Pinakothek der Moderne",
+    city: "Munich",
+    country: "Germany",
+    latitude: 48.1472,
+    longitude: 11.5720,
+    description: "One of the largest modern art museums in Europe, bringing together four independent museums under one roof: art, graphic arts, architecture, and design.",
+    representativeImage: "https://res.cloudinary.com/tne/image/authenticated/s--ThA-PqKg--/q_60/w_400/artworks/DEUTSCH_BILDNIS-EINES-RITTERS_CC-BY-SA_BSTGS_11897.jpg",
+    permanentExhibitions: [
+      { id: "pinakothek-moderne-collection", name: "Modern & Contemporary Art", title: "Pinakothek der Moderne Collection", description: "467 works of 20th and 21st-century art including expressionism, cubism, abstract art, and contemporary installations.", startDate: "Permanent", endDate: "Permanent", collectionFile: "pinakothek-moderne-collection.json" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    exhibitions: []
+  },
+  // Sammlung Schack - Munich
+  {
+    id: "sammlung-schack",
+    name: "Sammlung Schack",
+    city: "Munich",
+    country: "Germany",
+    latitude: 48.1432,
+    longitude: 11.5942,
+    description: "The collection of Count Adolf Friedrich von Schack, featuring 19th-century German painting with works by Böcklin, Feuerbach, Lenbach, and Schwind.",
+    representativeImage: "https://res.cloudinary.com/tne/image/authenticated/s--ThA-PqKg--/q_60/w_400/artworks/DEUTSCH_BILDNIS-EINES-RITTERS_CC-BY-SA_BSTGS_11897.jpg",
+    permanentExhibitions: [
+      { id: "sammlung-schack-collection", name: "German Romanticism", title: "Sammlung Schack Collection", description: "173 works of 19th-century German Romanticism and Late Romanticism painting.", startDate: "Permanent", endDate: "Permanent", collectionFile: "sammlung-schack-collection.json" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    exhibitions: []
+  },
+  // Staatsgalerien - Munich (Bavarian State Galleries)
+  {
+    id: "staatsgalerien",
+    name: "Staatsgalerien",
+    city: "Munich",
+    country: "Germany",
+    latitude: 48.1400,
+    longitude: 11.5800,
+    description: "The Bavarian State Paintings Collections branch galleries spread across Bavaria, showcasing regional collections of European art.",
+    representativeImage: "https://res.cloudinary.com/tne/image/authenticated/s--ThA-PqKg--/q_60/w_400/artworks/DEUTSCH_BILDNIS-EINES-RITTERS_CC-BY-SA_BSTGS_11897.jpg",
+    permanentExhibitions: [
+      { id: "staatsgalerien-collection", name: "Bavarian Collection", title: "Staatsgalerien Collection", description: "1,200 works from Bavarian State branch galleries across the region.", startDate: "Permanent", endDate: "Permanent", collectionFile: "staatsgalerien-collection.json" }
     ],
     temporaryExhibitions: [],
     pastExhibitions: [],

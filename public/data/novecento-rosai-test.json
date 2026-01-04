@@ -1,0 +1,121 @@
+{
+  "museum": "Museo del Novecento",
+  "museumId": "novecento-rosai",
+  "collection": "Ottone Rosai",
+  "location": "Florence, Italy",
+  "type": "permanent",
+  "totalArtworks": 10,
+  "totalAvailable": 56,
+  "objects": [
+    {
+      "sourceUrl": "https://www.museonovecento.it/en/collezioni/ritratto-del-marchese-di-villanova-rosai/",
+      "title": "Ritratto del Marchese di Villanova",
+      "artist": "Ottone Rosai",
+      "year": "2440",
+      "medium": "",
+      "dimension": "1008x1024",
+      "image": "https://www.museonovecento.it/wp-content/uploads/2022/02/31_Ritratto-del-Marchese-di-Villanova-1008x1024.jpg",
+      "category": "Ottone Rosai Collection",
+      "room": "Ottone Rosai"
+    },
+    {
+      "sourceUrl": "https://www.museonovecento.it/en/collezioni/autoritratto-rosai/",
+      "title": "Autoritratto",
+      "artist": "Ottone Rosai",
+      "year": "2440",
+      "medium": "",
+      "dimension": "1024x1004",
+      "image": "https://www.museonovecento.it/wp-content/uploads/2022/02/15_Autoritratto-1024x1004.jpg",
+      "category": "Ottone Rosai Collection",
+      "room": "Ottone Rosai"
+    },
+    {
+      "sourceUrl": "https://www.museonovecento.it/en/collezioni/ritratto-di-alessandro-parronchi-rosai/",
+      "title": "Ritratto di Alessandro Parronchi",
+      "artist": "Ottone Rosai",
+      "year": "2440",
+      "medium": "",
+      "dimension": "1024x1021",
+      "image": "https://www.museonovecento.it/wp-content/uploads/2022/02/29_Ritratto-di-Alessandro-Parronchi-1024x1021.jpg",
+      "category": "Ottone Rosai Collection",
+      "room": "Ottone Rosai"
+    },
+    {
+      "sourceUrl": "https://www.museonovecento.it/en/collezioni/ritratto-di-antonio-delfini-rosai/",
+      "title": "Ritratto di Antonio Delfini",
+      "artist": "Ottone Rosai",
+      "year": "2440",
+      "medium": "",
+      "dimension": "1008x1024",
+      "image": "https://www.museonovecento.it/wp-content/uploads/2022/02/21_Ritratto-di-Antonio-Delfini-1008x1024.jpg",
+      "category": "Ottone Rosai Collection",
+      "room": "Ottone Rosai"
+    },
+    {
+      "sourceUrl": "https://www.museonovecento.it/en/collezioni/ritratto-di-augusto-hermet-rosai/",
+      "title": "Ritratto di Augusto Hermet",
+      "artist": "Ottone Rosai",
+      "year": "2440",
+      "medium": "",
+      "dimension": "1024x1021",
+      "image": "https://www.museonovecento.it/wp-content/uploads/2022/02/23_Ritratto-di-Augusto-Hermet-1024x1021.jpg",
+      "category": "Ottone Rosai Collection",
+      "room": "Ottone Rosai"
+    },
+    {
+      "sourceUrl": "https://www.museonovecento.it/en/collezioni/ritratto-di-domenico-giuliotti-rosai/",
+      "title": "Ritratto di Domenico Giuliotti",
+      "artist": "Ottone Rosai",
+      "year": "2440",
+      "medium": "",
+      "dimension": "1017x1024",
+      "image": "https://www.museonovecento.it/wp-content/uploads/2022/02/14_Ritratto-di-Domenico-Giuliotti-1017x1024.jpg",
+      "category": "Ottone Rosai Collection",
+      "room": "Ottone Rosai"
+    },
+    {
+      "sourceUrl": "https://www.museonovecento.it/en/collezioni/ritratto-di-eugenio-montale-rosai/",
+      "title": "Ritratto di Eugenio Montale",
+      "artist": "Ottone Rosai",
+      "year": "2440",
+      "medium": "",
+      "dimension": "1012x1024",
+      "image": "https://www.museonovecento.it/wp-content/uploads/2022/02/18_Ritratto-di-Eugenio-Montale-1012x1024.jpg",
+      "category": "Ottone Rosai Collection",
+      "room": "Ottone Rosai"
+    },
+    {
+      "sourceUrl": "https://www.museonovecento.it/en/collezioni/ritratto-di-elio-vittorini/",
+      "title": "Ritratto di Elio Vittorini",
+      "artist": "Ottone Rosai",
+      "year": "2440",
+      "medium": "",
+      "dimension": "1014x1024",
+      "image": "https://www.museonovecento.it/wp-content/uploads/2022/02/16_Ritratto-di-Elio-Vittorini-1014x1024.jpg",
+      "category": "Ottone Rosai Collection",
+      "room": "Ottone Rosai"
+    },
+    {
+      "sourceUrl": "https://www.museonovecento.it/en/collezioni/ritratto-di-gianfranco-contini-rosai/",
+      "title": "Ritratto di Gianfranco Contini",
+      "artist": "Ottone Rosai",
+      "year": "2440",
+      "medium": "",
+      "dimension": "1011x1024",
+      "image": "https://www.museonovecento.it/wp-content/uploads/2022/02/17_Ritratto-di-Gianfranco-Contini-1011x1024.jpg",
+      "category": "Ottone Rosai Collection",
+      "room": "Ottone Rosai"
+    },
+    {
+      "sourceUrl": "https://www.museonovecento.it/en/collezioni/ritratto-di-giorgio-de-chirico-rosai/",
+      "title": "Ritratto di Giorgio de Chirico",
+      "artist": "Ottone Rosai",
+      "year": "2440",
+      "medium": "",
+      "dimension": "1024x1018",
+      "image": "https://www.museonovecento.it/wp-content/uploads/2022/02/26_Ritratto-di-Giorgio-de-Chirico-1024x1018.jpg",
+      "category": "Ottone Rosai Collection",
+      "room": "Ottone Rosai"
+    }
+  ]
+}
