@@ -4,6 +4,7 @@ import OpenStreetMapComponent from '../components/OpenStreetMapComponent';
 import D3GeoGlobeSimplified from "../components/D3GeoGlobeSimplified";
 
 import ExhibitionDetails from "../components/ExhibitionDetails";
+import GlobalSearchBar from "../components/GlobalSearchBar";
 // Filled Globe temporarily hidden
 // Removed react-globe.gl Outline mode
 // Heavy globe modes removed for performance on homepage
@@ -152,7 +153,7 @@ export default function HomePage({ exhibitions }: HomePageProps) {
     const exhibitionId = searchParams.get('exhibition');
     if (exhibitionId) {
       const decodedId = decodeURIComponent(exhibitionId);
-      
+
       // Find the exhibition item and its parent museum
       for (const ex of exhibitions) {
         // Check permanent exhibitions
@@ -186,7 +187,7 @@ export default function HomePage({ exhibitions }: HomePageProps) {
           return;
         }
       }
-      
+
       // If not found in exhibitions, try to use data from sessionStorage
       const pendingData = sessionStorage.getItem('pendingExhibition');
       if (pendingData) {
@@ -203,7 +204,7 @@ export default function HomePage({ exhibitions }: HomePageProps) {
             endDate: '',
           };
           // Find the parent museum by name if available
-          const parentMuseum = exhibitions.find((ex: any) => 
+          const parentMuseum = exhibitions.find((ex: any) =>
             ex.name === exhibitionData.museumName
           );
           if (parentMuseum) {
@@ -369,6 +370,7 @@ export default function HomePage({ exhibitions }: HomePageProps) {
           <D3GeoGlobeSimplified
             exhibitions={exhibitions}
             onSelectExhibition={setSelectedExhibition}
+            focusExhibition={selectedExhibition}
             panOffset={selectedExhibition ? 200 : 0}
           />
         ) : mapMode === 'line-globe' ? (
@@ -388,8 +390,8 @@ export default function HomePage({ exhibitions }: HomePageProps) {
         )}
         {/* 'My location' button moved to bottom-center controls to align with Globe/2D toggle */}
       </div>
-      {/* Bottom center controls: Flow + Globe toggle + map modes */}
-      <div style={{ position: "fixed", bottom: 16, left: '50%', transform: 'translateX(-50%)', zIndex: 4000, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 12 }}>
+      {/* Bottom center controls: Flow + Globe toggle + map modes - HIDDEN per user request */}
+      <div style={{ position: "fixed", bottom: 16, left: '50%', transform: 'translateX(-50%)', zIndex: 4000, display: 'none', flexDirection: 'column', alignItems: 'center', gap: 12 }}>
         {/* Flow button - moved first */}
         <button
           onClick={() => {
@@ -515,6 +517,75 @@ export default function HomePage({ exhibitions }: HomePageProps) {
           />
         </Suspense>
       )}
+      {/* Global Search Bar */}
+      <GlobalSearchBar
+        onOpenLightbox={(artwork) => {
+          // Find the exhibition item and open the modal
+          for (const ex of exhibitions) {
+            const permItems = (ex as any).permanentExhibitions || [];
+            const hit = permItems.find((it: any) => it && it.id === artwork.exhibitionId);
+            if (hit) {
+              setSelectedExhibition(ex);
+              // Pass initialArtwork to the exhibition item
+              const hitWithArtwork = { ...hit, initialArtwork: artwork };
+              setSelectedModalExhibition(hitWithArtwork);
+              return;
+            }
+          }
+
+          // Try to find by museum name (some exhibitions use museumName as key)
+          const museumEx = exhibitions.find(ex =>
+            ex.name === artwork.museumName ||
+            ex.id === artwork.exhibitionId
+          );
+          if (museumEx) {
+            const permItems = (museumEx as any).permanentExhibitions || [];
+            if (permItems.length > 0) {
+              setSelectedExhibition(museumEx);
+              // Open first permanent exhibition with initialArtwork
+              const hitWithArtwork = { ...permItems[0], initialArtwork: artwork };
+              setSelectedModalExhibition(hitWithArtwork);
+              return;
+            }
+          }
+
+          // Create a minimal exhibition to open the modal (fallback)
+          const minimalExhibition = {
+            id: artwork.exhibitionId,
+            name: artwork.museumName,
+            title: artwork.museumName,
+            image: artwork.image,
+            description: '',
+            startDate: '',
+            endDate: '',
+            // Pass the specific artwork to focus on
+            initialArtwork: artwork,
+          };
+          setSelectedModalExhibition(minimalExhibition as any);
+        }}
+        museums={exhibitions.map(ex => ({
+          id: ex.id,
+          name: ex.name,
+          country: (ex as any).country || '',
+          region: (ex as any).region,
+          latitude: (ex as any).latitude || 0,
+          longitude: (ex as any).longitude || 0,
+          representativeImage: (ex as any).representativeImage,
+        }))}
+        onNavigateToMuseum={(museum) => {
+          // Find the exhibition and select it
+          const ex = exhibitions.find(e => e.id === museum.id);
+          if (ex) {
+            setSelectedExhibition(ex);
+            // Also open the first permanent exhibition modal if available
+            const permItems = (ex as any).permanentExhibitions || [];
+            if (permItems.length > 0) {
+              setSelectedModalExhibition(permItems[0]);
+            }
+          }
+        }}
+        isModalOpen={!!selectedModalExhibition}
+      />
     </div>
   );
   // Removed leftover Flow effect: single-click behavior only

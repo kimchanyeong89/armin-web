@@ -584,6 +584,17 @@ export default function ExhibitionDetails({
           datasetEmptyRef.current[exhibitionItemId] = !(items && items.some((it: any) => it && it.image));
           return put(img);
         }
+      } else if (exhibitionItemId === 'guggenheim-bilbao-collection') {
+        // Guggenheim Bilbao Collection
+        const res = await fetch('/data/guggenheim-bilbao-collection.json', { cache: 'no-store' });
+        if (res.ok) {
+          const data = await res.json();
+          const items = Array.isArray(data.artworks) ? data.artworks : [];
+          // Find first item with images
+          const img = items.find((it: any) => it && it.images && it.images.length > 0 && it.images[0]?.url)?.images[0].url || null;
+          datasetEmptyRef.current[exhibitionItemId] = !(items && items.some((it: any) => it && it.images && it.images.length > 0));
+          return put(img);
+        }
       } else if (exhibitionItemId === 'rouen-mba-collection') {
         // Musée des Beaux-Arts de Rouen Collection
         const res = await fetch('/data/rouen-mba.json', { cache: 'no-store' });

@@ -7,14 +7,16 @@ import * as topojson from 'topojson-client';
 type D3GeoGlobeSimplifiedProps = {
   exhibitions?: Exhibition[];
   onSelectExhibition?: (ex: Exhibition) => void;
+  focusExhibition?: Exhibition | null; // When set, animate to this exhibition's location
   panOffset?: number; // horizontal offset in pixels when detail panel is open
 };
 
-const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions, onSelectExhibition, panOffset = 0 }) => {
+const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions, onSelectExhibition, focusExhibition, panOffset = 0 }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const perfOverlayRef = useRef<HTMLDivElement | null>(null);
   const perfStatsRef = useRef({ fps: 0, frameTime: 0, lastFrame: 0, frameCount: 0 });
   const [rotation, setRotation] = useState({ x: 0, y: 0 });
+  const [isMobile, setIsMobile] = useState(false);
   // Removed UI status panel
   // Legacy holder removed; we render directly from datasets
   const MIN_ZOOM = 0.95; // 가장 줌아웃 (요청에 따라 0.95로 제한)
@@ -27,6 +29,44 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
   const panOffsetRef = useRef(panOffset);
   useEffect(() => { panOffsetRef.current = panOffset; }, [panOffset]);
 
+  // Track last focused exhibition to prevent re-triggering
+  const lastFocusedRef = useRef<string | null>(null);
+
+  // Focus on exhibition when focusExhibition prop changes
+  useEffect(() => {
+    if (!focusExhibition) return;
+    if (lastFocusedRef.current === focusExhibition.id) return;
+
+    const lat = (focusExhibition as any).latitude;
+    const lon = (focusExhibition as any).longitude;
+    if (typeof lat !== 'number' || typeof lon !== 'number') return;
+
+    lastFocusedRef.current = focusExhibition.id;
+
+    // Animate to the exhibition location (same formula as cluster click)
+    const targetRot = { x: -lon, y: lat };
+    const targetScale = 15; // Zoom in high enough to split clusters to individual museums
+
+    // Use a small delay to ensure animateTo is available
+    setTimeout(() => {
+      animateTo(targetRot, targetScale, 1200, () => {
+        // Find and expand the cluster containing this exhibition
+        const clusters = clustersListRef.current;
+        if (clusters) {
+          const matchingCluster = clusters.find(c =>
+            c.items.some(item => item.id === focusExhibition.id)
+          );
+          if (matchingCluster) {
+            expandedClustersRef.current.clear();
+            expandedClustersRef.current.add(matchingCluster.key);
+            animateExpandKeyRef.current = matchingCluster.key;
+          }
+        }
+        // Trigger renderPins to update clusters after animation
+        renderPins(false);
+      });
+    }, 100);
+  }, [focusExhibition]);
   // Always-available datasets for interactions
   const [countries, setCountries] = useState<any[]>([]);
   const [admin1Topo, setAdmin1Topo] = useState<any | null>(null);
@@ -77,6 +117,7 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
   const countriesRef = useRef(countries);
   const admin1TopoRef = useRef(admin1Topo);
   const translateRef = useRef<[number, number] | null>(null);
+  const isMobileRef = useRef(isMobile);
 
   useEffect(() => { rotationRef.current = rotation; }, [rotation]);
   useEffect(() => { scaleRef.current = scale; }, [scale]);
@@ -84,6 +125,7 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
   useEffect(() => { admin1TopoRef.current = admin1Topo; }, [admin1Topo]);
   useEffect(() => { translateRef.current = projTranslate; }, [projTranslate]);
   useEffect(() => { admin1OverlayMeshRef.current = admin1OverlayMesh; }, [admin1OverlayMesh]);
+  useEffect(() => { isMobileRef.current = isMobile; }, [isMobile]);
 
   // 자동 LOD 전환은 사용하지 않습니다. (클릭 시 디테일 표시)
 
@@ -325,6 +367,14 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
     loadCountries();
   }, []);
 
+  // Detect mobile
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
   // 성능 오버레이 생성 (line 맵과 동일하게 하단 좌측 고정)
   useEffect(() => {
     const div = document.createElement('div');
@@ -339,6 +389,7 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
     div.style.fontSize = '14px';
     div.style.zIndex = '9999';
     div.style.pointerEvents = 'none';
+    div.style.display = 'none'; // Hidden per user request
     div.innerHTML = '<div>FPS: --</div><div>Frame: --ms</div>';
     document.body.appendChild(div);
     perfOverlayRef.current = div;
@@ -398,11 +449,11 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
     if (d.country && typeof d.country === 'string') {
       return d.country;
     }
-    
+
     const s = d.location;
     if (typeof s !== 'string') return '';
     const raw = s.toLowerCase();
-    
+
     // Known country patterns
     if (raw.includes('uk') || raw.includes('united kingdom') || raw.includes('england') || raw.includes('scotland') || raw.includes('wales')) return 'United Kingdom';
     if (raw.includes('서울') || raw.includes('korea') || raw.includes('한국')) return 'South Korea';
@@ -414,7 +465,7 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
     if (raw.includes('japan') || raw.includes('日本')) return 'Japan';
     if (raw.includes('china') || raw.includes('中国')) return 'China';
     if (raw.includes('netherlands') || raw.includes('holland')) return 'Netherlands';
-    
+
     return '';
   };
 
@@ -545,7 +596,7 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
     // Include scale in key but force re-render for zoom-based city name visibility
     const showCityNames = scaleRef.current > 3;
     const key = `${rot[0].toFixed(1)},${rot[1].toFixed(1)},${scaleRef.current.toFixed(2)},${(translateRef.current || []).join(',')},${clusterMode},${showCityNames}`;
-    
+
     // Helper: spread expanded items progressively as zoom increases
     const getExpandedSpread = (s: number) => {
       // 0 at ~1.15x, 1 at ~3.45x, clamped
@@ -555,13 +606,13 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
 
     // During fast update (animation), only update transforms, don't rebuild
     const g = d3.select(gPinsRef.current);
-    
+
     if (fastUpdate) {
       // Fast path: just update existing pin positions without remove/re-add
       const existingPins = g.selectAll<SVGGElement, any>('g.pin');
       if (existingPins.size() > 0) {
         const spread = getExpandedSpread(scaleRef.current);
-        existingPins.each(function(d: any) {
+        existingPins.each(function (d: any) {
           if (!d) return;
 
           // Skip pins that are currently animating (have _originX set from expand animation)
@@ -605,7 +656,7 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
         return; // Skip full re-render
       }
     }
-    
+
     if (lastPinsKeyRef.current === key) return;
     lastPinsKeyRef.current = key;
 
@@ -699,7 +750,7 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
           // 국가가 다르면 머지하지 않음
           const c2Country = c2.cluster.key.split('::')[0];
           if (c1Country !== c2Country) continue;
-          
+
           const dist = Math.hypot(c1.px - c2.px, c1.py - c2.py);
 
           // Merge if close enough on screen AND same country
@@ -740,10 +791,10 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
         if (isExpanded) {
           // Find which key is expanded
           const expandedKey = mc.keys.find(k => expandedClustersRef.current.has(k)) || key;
-          
+
           // Check if we have pre-stored merged items for this expansion
           const mergedItems = mergedItemsForExpansionRef.current.get(expandedKey);
-          
+
           // For merged clusters with pre-stored items, use those
           // For single-city clusters, find the original cluster from clustersListRef
           // For dynamically merged clusters (mc._level > 0), use mc
@@ -814,7 +865,7 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
             const py = curCenter[1] + item.dy * scaleFactor;
             // Skip items with invalid positions
             if (!Number.isFinite(px) || !Number.isFinite(py)) continue;
-            
+
             const originalPos = proj([item.data.longitude, item.data.latitude]) as [number, number] | null;
             const ax = originalPos ? originalPos[0] : curCenter[0];
             const ay = originalPos ? originalPos[1] : curCenter[1];
@@ -839,12 +890,12 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
           // Show as cluster (even for count=1)
           // Use fixed position (no collision displacement)
           let displayName = '';
-          
+
           // Determine if this is a multi-city merged cluster
           // Use _level to check if clusters were dynamically merged at current zoom
           // mc._level > 0 means multiple city clusters were merged due to screen proximity
           const isMultiCity = mc._level > 0;
-          
+
           if (isMultiCity) {
             // Try to get country name from the first item
             for (const item of items) {
@@ -876,7 +927,7 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
           }
           // Skip clusters with invalid positions
           if (!Number.isFinite(mc.px) || !Number.isFinite(mc.py)) continue;
-          
+
           nodes.push({
             _cluster: true,
             key,
@@ -937,25 +988,25 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
     // Remove all pins and re-add (simpler than D3 update pattern for complex pins)
     // Detect if cluster composition changed - animate transitions for any cluster change
     const currentScaleVal = scaleRef.current;
-    
+
     // Check if cluster keys changed (not just threshold crossing)
     const existingClusters = g.selectAll<SVGGElement, any>('g.pin').filter((d: any) => d && d._cluster);
     const existingClusterKeys = new Set<string>();
-    existingClusters.each(function(d: any) {
+    existingClusters.each(function (d: any) {
       if (d && d.key) existingClusterKeys.add(d.key);
     });
     const newClusterKeys = new Set(nodes.filter((n: any) => n._cluster).map((n: any) => n.key));
-    
+
     // Detect if clusters actually changed (not just position updates)
-    const clustersChanged = existingClusterKeys.size !== newClusterKeys.size || 
+    const clustersChanged = existingClusterKeys.size !== newClusterKeys.size ||
       [...existingClusterKeys].some(k => !newClusterKeys.has(k)) ||
       [...newClusterKeys].some(k => !existingClusterKeys.has(k));
-    
+
     // Only update prevScale if not in transition to avoid re-triggering
     if (!clusterTransitionInProgressRef.current) {
       prevScaleForMergeRef.current = currentScaleVal;
     }
-    
+
     // If transition already in progress, check if we need to force a full re-render
     // (e.g., user clicked on a sub-cluster to expand museums)
     if (clusterTransitionInProgressRef.current) {
@@ -968,7 +1019,7 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
         // Continue to full re-render below
       } else {
         // Normal transition update: just update cluster positions
-        g.selectAll<SVGGElement, any>('g.pin').each(function(d: any) {
+        g.selectAll<SVGGElement, any>('g.pin').each(function (d: any) {
           if (!d || !d._cluster) return;
           const p = proj([d.longitude, d.latitude]) as [number, number] | null;
           if (p && Number.isFinite(p[0]) && Number.isFinite(p[1])) {
@@ -988,20 +1039,20 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
         return;
       }
     }
-    
+
     // Animate when clusters change (split or merge)
     // BUT skip animation if we have expanded clusters (user clicked to see museums)
     if (clustersChanged && existingClusters.size() > 0 && expandedClustersRef.current.size === 0 && !animateExpandKeyRef.current) {
       // Mark transition as in progress
       clusterTransitionInProgressRef.current = true;
-      
+
       // Store the nodes data for later use (will recalculate positions)
       const clusterNodes = nodes.filter((n: any) => n._cluster);
-      
+
       // Build a mapping: for each old cluster key, find which new cluster it belongs to
       // This allows nearby clusters to merge toward THEIR new cluster center, not a global center
       const oldKeyToNewCluster = new Map<string, any>();
-      existingClusters.each(function(d: any) {
+      existingClusters.each(function (d: any) {
         const oldKey = d.key;
         // Find which new cluster contains this old key
         for (const newNode of clusterNodes) {
@@ -1011,9 +1062,9 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
           }
         }
       });
-      
+
       // Calculate collision offset for existing clusters before they shrink
-      existingClusters.each(function(d: any) {
+      existingClusters.each(function (d: any) {
         const currentTransform = d3.select(this).attr('transform') || '';
         const translateMatch = currentTransform.match(/translate\(([^,]+),\s*([^)]+)\)/);
         if (translateMatch) {
@@ -1025,53 +1076,53 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
             d._shrinkOffsetY = renderedY - p[1];
           }
         }
-        
+
         // Store target merge center (the new cluster this old cluster will merge into)
         const targetNewCluster = oldKeyToNewCluster.get(d.key);
         if (targetNewCluster) {
-          const targetP = proj([targetNewCluster.longitude ?? targetNewCluster.centerLon, 
-                               targetNewCluster.latitude ?? targetNewCluster.centerLat]) as [number, number] | null;
+          const targetP = proj([targetNewCluster.longitude ?? targetNewCluster.centerLon,
+          targetNewCluster.latitude ?? targetNewCluster.centerLat]) as [number, number] | null;
           if (targetP && Number.isFinite(targetP[0]) && Number.isFinite(targetP[1])) {
             d._mergeCenterX = targetP[0];
             d._mergeCenterY = targetP[1];
           }
         }
       });
-      
+
       // Animate shrinking of old clusters with a SINGLE shared animation loop
       const shrinkStartTime = performance.now();
       const shrinkDuration = 250;
       let shrinkAnimationId: number | null = null;
       void shrinkAnimationId; // Mark as intentionally unused (stored for potential cancellation)
-      
+
       // Pre-calculate start positions for all clusters
-      existingClusters.each(function(d: any) {
+      existingClusters.each(function (d: any) {
         const startP = proj([d.longitude, d.latitude]) as [number, number] | null;
         d._animStartX = startP ? startP[0] + (d._shrinkOffsetX ?? 0) : 0;
         d._animStartY = startP ? startP[1] + (d._shrinkOffsetY ?? 0) : 0;
         d._animTargetX = d._mergeCenterX ?? d._animStartX;
         d._animTargetY = d._mergeCenterY ?? d._animStartY;
       });
-      
+
       const animateShrinkAll = () => {
         const elapsed = performance.now() - shrinkStartTime;
         const t = Math.min(1, elapsed / shrinkDuration);
-        
-        const eased = t < 0.5 
+
+        const eased = t < 0.5
           ? 2 * t * t
           : 1 - Math.pow(-2 * t + 2, 2) / 2;
-        
-        existingClusters.each(function(d: any) {
+
+        existingClusters.each(function (d: any) {
           const el = d3.select(this);
           const currentX = d._animStartX + (d._animTargetX - d._animStartX) * eased;
           const currentY = d._animStartY + (d._animTargetY - d._animStartY) * eased;
           const currentScale = 1 - eased * 0.7;
-          
+
           el.attr('transform', `translate(${currentX}, ${currentY}) scale(${currentScale})`);
           d.px = currentX;
           d.py = currentY;
         });
-        
+
         if (t < 1) {
           shrinkAnimationId = requestAnimationFrame(animateShrinkAll);
         } else {
@@ -1080,20 +1131,20 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
           existingClusters.remove();
         }
       };
-      
+
       if (existingClusters.size() > 0) {
         shrinkAnimationId = requestAnimationFrame(animateShrinkAll);
       }
-      
+
       // Create and animate new clusters after a delay
       setTimeout(() => {
         // Recalculate positions with current projection before creating elements
         const currentProj = getProjection();
-        
+
         // Build reverse mapping: find which old cluster each new cluster came from
         // by checking if the new cluster's key was part of any old cluster's _allKeys
         const oldClustersData: any[] = [];
-        existingClusters.each(function(d: any) {
+        existingClusters.each(function (d: any) {
           const p = currentProj([d.longitude, d.latitude]) as [number, number] | null;
           if (p && Number.isFinite(p[0]) && Number.isFinite(p[1])) {
             oldClustersData.push({
@@ -1104,7 +1155,7 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
             });
           }
         });
-        
+
         clusterNodes.forEach((n: any) => {
           const p = currentProj([n.longitude ?? n.centerLon, n.latitude ?? n.centerLat]) as [number, number] | null;
           if (p && Number.isFinite(p[0]) && Number.isFinite(p[1])) {
@@ -1113,7 +1164,7 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
             n._geoPx = p[0];
             n._geoPy = p[1];
           }
-          
+
           // Find which old cluster this new cluster came from
           // Check if any of this new cluster's keys were in an old cluster
           let parentFound = false;
@@ -1130,17 +1181,17 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
             }
             if (parentFound) break;
           }
-          
+
           // Fallback: if no parent found, start from own position
           if (!parentFound) {
             n._parentCenterX = n.px;
             n._parentCenterY = n.py;
           }
-          
+
           n._collisionOffsetX = 0;
           n._collisionOffsetY = 0;
         });
-        
+
         const newEnter = g.selectAll<SVGGElement, any>('g.pin-new')
           .data(clusterNodes, (d: any) => d.key)
           .enter()
@@ -1150,16 +1201,16 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
           .style('pointer-events', 'auto')
           // Start at PARENT center position (water drop effect - split from parent)
           .attr('transform', (d: any) => `translate(${d._parentCenterX ?? d.px ?? 0}, ${d._parentCenterY ?? d.py ?? 0}) scale(0.3)`);
-        
+
         // Add cluster visuals to new elements
-        newEnter.each(function(d: any) {
+        newEnter.each(function (d: any) {
           const baseW = Math.max(16, 11 + Math.log2(Math.max(1, d.count)) * 2.5);
           const baseH = baseW;
           d._collapsedW = baseW;
           d._collapsedH = baseH;
           d._expandedW = d.cityName ? Math.max(baseW, Math.min(60, d.cityName.length * 5 + 12)) : baseW;
           d._expandedH = d.cityName ? baseH + 10 : baseH;
-          
+
           const el = d3.select(this);
           el.append('rect')
             .attr('class', 'cluster-bg')
@@ -1189,7 +1240,7 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
           }
           el.append('title').text(`${d.cityName || 'Cluster'}: ${d.count}개의 전시관`);
         });
-        
+
         // Add hover handlers immediately after creation (don't wait for animation)
         newEnter
           .on('mouseenter', function (_event: any, d: any) {
@@ -1258,33 +1309,33 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
                 if (isMergedCluster) {
                   // Don't freeze merged clusters - allow them to split during zoom
                   frozenClusterKeyRef.current = null;
-                  
+
                   // If already zoomed in enough (scale >= 6), clusters won't split further
                   // In this case, expand the merged cluster showing ALL items
                   if (currentScale >= 6) {
                     console.log('[newEnter click] merged cluster at high zoom, expanding ALL items:', d._items?.length);
-                    
+
                     // Use the first key as the expansion key
                     const expandKey = k;
                     const allItems = d._items || [];
-                    
+
                     // Store merged items for use in renderPins (layout will be created there with correct projection)
                     if (allItems.length > 0) {
                       mergedItemsForExpansionRef.current.set(expandKey, allItems);
                     }
-                    
+
                     // Clear any stale layout cache for this key
                     expandedLayoutCacheRef.current.delete(expandKey);
-                    
+
                     // Freeze the current cluster to prevent flashing during transition
                     frozenClusterKeyRef.current = expandKey;
-                    
+
                     // Expand using the primary key (don't clear first to avoid flash)
                     expandedClustersRef.current.clear();
                     expandedClustersRef.current.add(expandKey);
                     animateExpandKeyRef.current = expandKey;
                     // Don't reset lastPinsKeyRef to avoid full re-render flash
-                    
+
                     // Zoom enough to split the merged cluster (so user sees both clusters)
                     const splitZoomScale = Math.min(15, Math.max(currentScale * 1.8, 10));
                     animateTo(targetRot, splitZoomScale, duration * 0.8, () => {
@@ -1293,7 +1344,7 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
                     });
                     return;
                   }
-                  
+
                   // Just zoom to split the merged cluster - user clicks individual cluster to expand
                   animateTo(targetRot, targetScale, duration, () => { frozenClusterKeyRef.current = null; });
                   return;
@@ -1336,46 +1387,46 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
               try { onSelectExhibitionRef.current && onSelectExhibitionRef.current(d as Exhibition); } catch { }
             }
           });
-        
+
         // Animate all new clusters with a SINGLE shared animation loop
         // This prevents multiple renderPins calls and infinite loops
         const animationStartTime = performance.now();
         const animationDuration = 300;
         let animationFrameId: number | null = null;
         void animationFrameId; // Mark as intentionally unused (stored for potential cancellation)
-        
+
         const animateAllNewClusters = () => {
           const elapsed = performance.now() - animationStartTime;
           const t = Math.min(1, elapsed / animationDuration);
-          
+
           // Custom easing: slow start, smooth middle, gentle end
-          const eased = t < 0.5 
+          const eased = t < 0.5
             ? (1 - Math.cos(t * Math.PI)) / 2
             : (1 + Math.sin((t - 0.5) * Math.PI)) / 2;
-          
+
           const currentProj = getProjection();
-          
-          newEnter.each(function(d: any) {
+
+          newEnter.each(function (d: any) {
             const el = d3.select(this);
             const startX = d._parentCenterX ?? d._geoPx ?? 0;
             const startY = d._parentCenterY ?? d._geoPy ?? 0;
             const startScale = 0.3;
-            
+
             const p = currentProj([d.longitude ?? d.centerLon, d.latitude ?? d.centerLat]) as [number, number] | null;
-            
+
             if (p && Number.isFinite(p[0]) && Number.isFinite(p[1])) {
               const targetX = p[0];
               const targetY = p[1];
               const currentX = startX + (targetX - startX) * eased;
               const currentY = startY + (targetY - startY) * eased;
               const currentScale = startScale + (1 - startScale) * eased;
-              
+
               el.attr('transform', `translate(${currentX}, ${currentY}) scale(${currentScale})`);
               d.px = currentX;
               d.py = currentY;
             }
           });
-          
+
           if (t < 1) {
             animationFrameId = requestAnimationFrame(animateAllNewClusters);
           } else {
@@ -1388,11 +1439,11 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
             // Handlers were already attached immediately after newEnter creation
           }
         };
-        
+
         if (newEnter.size() > 0) {
           animationFrameId = requestAnimationFrame(animateAllNewClusters);
         }
-        
+
         // If no new clusters, just end the transition
         if (clusterNodes.length === 0) {
           clusterTransitionInProgressRef.current = false;
@@ -1400,7 +1451,7 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
           lastPinsKeyRef.current = '';
         }
       }, 100); // Start expanding after old clusters begin shrinking
-      
+
       return; // Don't continue with normal rendering
     } else {
       g.selectAll('g.pin').remove();
@@ -1423,11 +1474,11 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
         const y = d.py ?? 0;
         return `translate(${x}, ${y})`;
       });
-    
+
     const enterCluster = enter.filter((d: any) => d._cluster);
-    
+
     // Pre-calculate and store sizes in data to avoid recalculation issues
-    enterCluster.each(function(d: any) {
+    enterCluster.each(function (d: any) {
       const baseW = Math.max(16, 11 + Math.log2(Math.max(1, d.count)) * 2.5);
       const baseH = baseW;
       d._collapsedW = baseW;
@@ -1437,7 +1488,7 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
       // Check if this cluster is frozen (being zoomed) - should render expanded
       d._frozen = frozenClusterKeyRef.current === d.key;
     });
-    
+
     // 배경 (기본: 숫자만 표시할 크기) - use pre-calculated sizes
     // If frozen, render in expanded state
     enterCluster.append('rect')
@@ -1468,68 +1519,68 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
       .attr('opacity', (d: any) => d._frozen && d.cityName ? 0.9 : 0)
       .text((d: any) => d.cityName ? d.cityName.toUpperCase() : '');
     enterCluster.append('title').text((d: any) => `${d.cityName || 'Cluster'}: ${d.count}개의 전시관`);
-    
+
     // 클러스터 호버 효과
     enterCluster.on('mouseenter', function (_event: any, d: any) {
       // If this cluster is frozen (clicked and zooming), keep it expanded
       if (frozenClusterKeyRef.current === d.key) return;
-      
+
       const el = d3.select(this);
       const bg = el.select('.cluster-bg');
       const count = el.select('.cluster-count');
       const city = el.select('.cluster-city');
-      
+
       // Stop any running transitions first
       bg.interrupt('hover');
       count.interrupt('hover');
       city.interrupt('hover');
-      
+
       // Animate to expanded size using pre-calculated values
       bg.transition('hover').duration(200).ease(d3.easeCubicOut)
         .attr('x', -d._expandedW / 2)
         .attr('y', -d._expandedH / 2)
         .attr('width', d._expandedW)
         .attr('height', d._expandedH);
-      
+
       // 숫자 위로 이동 (도시명이 있을 때만)
       count.transition('hover').duration(150).ease(d3.easeCubicOut)
         .attr('dy', d.cityName ? '-0.1em' : '0.35em');
-      
+
       // 도시명 페이드인 (있을 때만)
       if (d.cityName) {
         city.transition('hover').delay(50).duration(150).ease(d3.easeCubicOut)
           .attr('opacity', 0.9);
       }
     })
-    .on('mouseleave', function (_event: any, d: any) {
-      // If this cluster is frozen (clicked and zooming), keep it expanded
-      if (frozenClusterKeyRef.current === d.key) return;
-      
-      const el = d3.select(this);
-      const bg = el.select('.cluster-bg');
-      const count = el.select('.cluster-count');
-      const city = el.select('.cluster-city');
-      
-      // Stop any running transitions first
-      bg.interrupt('hover');
-      count.interrupt('hover');
-      city.interrupt('hover');
-      
-      // Animate back to collapsed size using pre-calculated values
-      bg.transition('hover').duration(200).ease(d3.easeCubicOut)
-        .attr('x', -d._collapsedW / 2)
-        .attr('y', -d._collapsedH / 2)
-        .attr('width', d._collapsedW)
-        .attr('height', d._collapsedH);
-      
-      // 숫자 중앙으로 복원
-      count.transition('hover').duration(150).ease(d3.easeCubicOut)
-        .attr('dy', '0.35em');
-      
-      // 도시명 페이드아웃
-      city.transition('hover').duration(100)
-        .attr('opacity', 0);
-    });
+      .on('mouseleave', function (_event: any, d: any) {
+        // If this cluster is frozen (clicked and zooming), keep it expanded
+        if (frozenClusterKeyRef.current === d.key) return;
+
+        const el = d3.select(this);
+        const bg = el.select('.cluster-bg');
+        const count = el.select('.cluster-count');
+        const city = el.select('.cluster-city');
+
+        // Stop any running transitions first
+        bg.interrupt('hover');
+        count.interrupt('hover');
+        city.interrupt('hover');
+
+        // Animate back to collapsed size using pre-calculated values
+        bg.transition('hover').duration(200).ease(d3.easeCubicOut)
+          .attr('x', -d._collapsedW / 2)
+          .attr('y', -d._collapsedH / 2)
+          .attr('width', d._collapsedW)
+          .attr('height', d._collapsedH);
+
+        // 숫자 중앙으로 복원
+        count.transition('hover').duration(150).ease(d3.easeCubicOut)
+          .attr('dy', '0.35em');
+
+        // 도시명 페이드아웃
+        city.transition('hover').duration(100)
+          .attr('opacity', 0);
+      });
 
     const enterPin = enter.filter((d: any) => !d._cluster);
     // For expanded cluster items: draw line from pin to original museum location, and a dot at original location
@@ -1632,7 +1683,7 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
           const originY = Number.isFinite((d as any)._originY) ? (d as any)._originY : 0;
           const targetPx = Number.isFinite(d.px) ? d.px : 0;
           const targetPy = Number.isFinite(d.py) ? d.py : 0;
-          
+
           gEl.attr('transform', `translate(${originX},${originY})`)
             .style('opacity', 0)
             .transition().delay(stagger).duration(expandDur).ease(easeExpand)
@@ -1790,33 +1841,33 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
             if (isMergedCluster) {
               // Don't freeze merged clusters - allow them to split during zoom
               frozenClusterKeyRef.current = null;
-              
+
               // If already zoomed in enough (scale >= 6), clusters won't split further
               // In this case, expand the merged cluster showing ALL items
               if (scaleRef.current >= 6) {
                 console.log('[enter click] merged cluster at high zoom, expanding ALL items:', d._items?.length);
-                
+
                 // Use the first key as the expansion key
                 const expandKey = k;
                 const allItems = d._items || [];
-                
+
                 // Store merged items for use in renderPins (layout will be created there with correct projection)
                 if (allItems.length > 0) {
                   mergedItemsForExpansionRef.current.set(expandKey, allItems);
                 }
-                
+
                 // Clear any stale layout cache for this key
                 expandedLayoutCacheRef.current.delete(expandKey);
-                
+
                 // Freeze the current cluster to prevent flashing during transition
                 frozenClusterKeyRef.current = expandKey;
-                
+
                 // Expand using the primary key (don't clear first to avoid flash)
                 expandedClustersRef.current.clear();
                 expandedClustersRef.current.add(expandKey);
                 animateExpandKeyRef.current = expandKey;
                 // Don't reset lastPinsKeyRef to avoid full re-render flash
-                
+
                 // Zoom enough to split the merged cluster (so user sees both clusters)
                 const splitZoomScale = Math.min(15, Math.max(scaleRef.current * 1.8, 10));
                 animateTo(targetRot, splitZoomScale, duration * 0.8, () => {
@@ -1825,7 +1876,7 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
                 });
                 return;
               }
-              
+
               // Just zoom to split the merged cluster - user clicks individual cluster to expand
               animateTo(targetRot, targetScale, duration, () => {
                 frozenClusterKeyRef.current = null;
@@ -1864,7 +1915,7 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
                 lastPinsKeyRef.current = '';
                 renderPins(false); // This will trigger the line expansion animation
               }, expandDelay);
-              
+
               animateTo(targetRot, targetScale, duration, () => {
                 frozenClusterKeyRef.current = null; // Clear frozen state after zoom completes
                 return true; // Signal that we handled rendering (expand already started)
@@ -1883,63 +1934,63 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
           // Show admin-1 overlay for the country containing this cluster
           // Delay to prevent white flash during zoom animation (use fixed delay matching max animation time)
           setTimeout(() => {
-          (async () => {
-            try {
-              const lon = Number(d.longitude);
-              const lat = Number(d.latitude);
-              if (!Number.isFinite(lon) || !Number.isFinite(lat)) return;
-              let countryFeature: any | null = null;
-              const list = countriesRef.current || [];
-              for (let i = 0; i < list.length; i++) {
-                const f: any = list[i];
-                const bb = f._bbox as [[number, number], [number, number]] | undefined;
-                if (bb) {
-                  const lonMin = bb[0][0], latMin = bb[0][1];
-                  const lonMax = bb[1][0], latMax = bb[1][1];
-                  const lonIn = lonMin <= lonMax ? (lon >= lonMin && lon <= lonMax) : (lon >= lonMin || lon <= lonMax);
-                  if (!(lonIn && lat >= latMin && lat <= latMax)) continue;
+            (async () => {
+              try {
+                const lon = Number(d.longitude);
+                const lat = Number(d.latitude);
+                if (!Number.isFinite(lon) || !Number.isFinite(lat)) return;
+                let countryFeature: any | null = null;
+                const list = countriesRef.current || [];
+                for (let i = 0; i < list.length; i++) {
+                  const f: any = list[i];
+                  const bb = f._bbox as [[number, number], [number, number]] | undefined;
+                  if (bb) {
+                    const lonMin = bb[0][0], latMin = bb[0][1];
+                    const lonMax = bb[1][0], latMax = bb[1][1];
+                    const lonIn = lonMin <= lonMax ? (lon >= lonMin && lon <= lonMax) : (lon >= lonMin || lon <= lonMax);
+                    if (!(lonIn && lat >= latMin && lat <= latMax)) continue;
+                  }
+                  if (d3.geoContains(f, [lon, lat])) { countryFeature = f; break; }
                 }
-                if (d3.geoContains(f, [lon, lat])) { countryFeature = f; break; }
-              }
-              if (!countryFeature) return;
-              const countryName = (countryFeature.properties && (countryFeature.properties.name || countryFeature.properties.ADMIN || countryFeature.properties.admin)) || 'Unknown';
-              const cachedMesh = admin1OverlayCacheRef.current.get(countryName);
-              const cachedFeats = admin1SubsetCacheRef.current.get(countryName);
-              if (cachedMesh) {
-                setAdmin1OverlayMesh(cachedMesh);
-                if (cachedFeats) admin1SubsetFeaturesRef.current = cachedFeats;
-                return;
-              }
-              let topology = admin1TopoRef.current;
-              if (!topology) {
-                topology = await loadAdmin1();
-                if (!topology) return;
-              }
-              const objectKey = topology.objects.ne_10m_admin_1_states_provinces ? 'ne_10m_admin_1_states_provinces' : Object.keys(topology.objects)[0];
-              const topoObj = topology.objects[objectKey];
-              const geoms: any[] = topoObj.geometries || [];
-              const subsetGeoms: any[] = [];
-              for (let i = 0; i < geoms.length; i++) {
-                const g = geoms[i];
-                try {
-                  const fc = topojson.feature(topology, { type: 'GeometryCollection', geometries: [g] } as any) as any;
-                  const feat = fc.type === 'FeatureCollection' ? fc.features[0] : fc;
-                  const c = d3.geoCentroid(feat as any);
-                  if (c && d3.geoContains(countryFeature, c)) subsetGeoms.push(g);
-                } catch { /* ignore */ }
-              }
-              if (!subsetGeoms.length) return;
-              const subsetObj = { type: 'GeometryCollection', geometries: subsetGeoms } as any;
-              const mesh = topojson.mesh(topology, subsetObj, (a: any, b: any) => a !== b);
-              const fc = topojson.feature(topology, subsetObj) as any;
-              const feats: any[] = fc && fc.type === 'FeatureCollection' ? (fc.features || []) : [];
-              feats.forEach((f: any) => { try { (f as any)._bbox = d3.geoBounds(f); } catch { } });
-              admin1SubsetFeaturesRef.current = feats;
-              admin1SubsetCacheRef.current.set(countryName, feats);
-              admin1OverlayCacheRef.current.set(countryName, mesh as any);
-              setAdmin1OverlayMesh(mesh as any);
-            } catch { /* ignore */ }
-          })();
+                if (!countryFeature) return;
+                const countryName = (countryFeature.properties && (countryFeature.properties.name || countryFeature.properties.ADMIN || countryFeature.properties.admin)) || 'Unknown';
+                const cachedMesh = admin1OverlayCacheRef.current.get(countryName);
+                const cachedFeats = admin1SubsetCacheRef.current.get(countryName);
+                if (cachedMesh) {
+                  setAdmin1OverlayMesh(cachedMesh);
+                  if (cachedFeats) admin1SubsetFeaturesRef.current = cachedFeats;
+                  return;
+                }
+                let topology = admin1TopoRef.current;
+                if (!topology) {
+                  topology = await loadAdmin1();
+                  if (!topology) return;
+                }
+                const objectKey = topology.objects.ne_10m_admin_1_states_provinces ? 'ne_10m_admin_1_states_provinces' : Object.keys(topology.objects)[0];
+                const topoObj = topology.objects[objectKey];
+                const geoms: any[] = topoObj.geometries || [];
+                const subsetGeoms: any[] = [];
+                for (let i = 0; i < geoms.length; i++) {
+                  const g = geoms[i];
+                  try {
+                    const fc = topojson.feature(topology, { type: 'GeometryCollection', geometries: [g] } as any) as any;
+                    const feat = fc.type === 'FeatureCollection' ? fc.features[0] : fc;
+                    const c = d3.geoCentroid(feat as any);
+                    if (c && d3.geoContains(countryFeature, c)) subsetGeoms.push(g);
+                  } catch { /* ignore */ }
+                }
+                if (!subsetGeoms.length) return;
+                const subsetObj = { type: 'GeometryCollection', geometries: subsetGeoms } as any;
+                const mesh = topojson.mesh(topology, subsetObj, (a: any, b: any) => a !== b);
+                const fc = topojson.feature(topology, subsetObj) as any;
+                const feats: any[] = fc && fc.type === 'FeatureCollection' ? (fc.features || []) : [];
+                feats.forEach((f: any) => { try { (f as any)._bbox = d3.geoBounds(f); } catch { } });
+                admin1SubsetFeaturesRef.current = feats;
+                admin1SubsetCacheRef.current.set(countryName, feats);
+                admin1OverlayCacheRef.current.set(countryName, mesh as any);
+                setAdmin1OverlayMesh(mesh as any);
+              } catch { /* ignore */ }
+            })();
           }, 2600); // Delay until zoom animation completes (max 2500ms + buffer)
         } else {
           // Open side detail panel
@@ -1963,12 +2014,12 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
       }, 400); // After expand animation completes (300ms + stagger + buffer)
     }
   };
-  useEffect(() => { 
+  useEffect(() => {
     // Skip during animation - animation loop handles renderPins directly
     if (animatingRef.current) return;
     // Skip if expand animation is in progress
     if (animateExpandKeyRef.current) return;
-    renderPins(); 
+    renderPins();
   }, [rotation, scale, projTranslate, clusterMode, panOffset]);
 
   // Helpers for click-to-center zoom
@@ -2032,11 +2083,11 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
 
       // During animation, directly render without React state updates to avoid flicker
       renderGlobe();
-      
+
       // Check if scale crossed the merge threshold (2) - if so, trigger cluster transition animation
       const prevAnimScale = startScale + (targetScale - startScale) * zoomEasing(Math.max(0, (elapsed - 16) / duration));
       const animCrossedThreshold = (prevAnimScale < 2 && scaleRef.current >= 2) || (prevAnimScale >= 2 && scaleRef.current < 2);
-      
+
       if (animCrossedThreshold && !clusterTransitionInProgressRef.current) {
         // Update prevScaleForMergeRef BEFORE calling renderPins so it triggers the animation
         // The animation logic in renderPins will handle the smooth transition
@@ -2318,7 +2369,7 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
       // Check if this country has any clusters - if so, ignore background click
       // User should click on the cluster directly
       const clustersList = clustersListRef.current || [];
-      
+
       // Helper to normalize country name for matching
       // Maps UK constituent countries to 'united kingdom'
       const normalizeCountryForMatch = (name: string): string => {
@@ -2327,9 +2378,9 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
         if (ukNames.includes(n) || n.includes('united kingdom')) return 'united kingdom';
         return n;
       };
-      
+
       const normalizedClickedCountry = normalizeCountryForMatch(countryName);
-      
+
       const hasClusterInCountry = clustersList.some((c: any) => {
         if (!c.items || c.items.length === 0) return false;
         // Check if any item in this cluster belongs to this country
@@ -2339,11 +2390,11 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
           const normalizedItemCountry = normalizeCountryForMatch(itemCountry);
           // Exact match after normalization, or partial match for other countries
           return normalizedClickedCountry === normalizedItemCountry ||
-                 normalizedClickedCountry.includes(normalizedItemCountry) ||
-                 normalizedItemCountry.includes(normalizedClickedCountry);
+            normalizedClickedCountry.includes(normalizedItemCountry) ||
+            normalizedItemCountry.includes(normalizedClickedCountry);
         });
       });
-      
+
       if (hasClusterInCountry) {
         // Don't respond to background click - user should click on cluster
         return;
@@ -2492,6 +2543,7 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
         return;
       }
       if (event.touches.length !== 1) return;
+      // Mobile: allow rotation but prevent translation (keep globe centered)
       event.preventDefault();
       const t = event.target as Element | null;
       if (t && (t.closest('.pins-overlay') || t.closest('.pin'))) return;
@@ -2653,8 +2705,8 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
         />
       </div>
 
-      {/* Tooltip */}
-      {hoverInfo && (
+      {/* Tooltip - 모바일에서는 비활성화 */}
+      {!isMobile && hoverInfo && (
         <div
           style={{
             position: 'fixed',

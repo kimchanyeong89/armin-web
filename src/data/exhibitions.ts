@@ -1,14 +1,7 @@
 import { exhibitions as exhibitionsData } from "./exhibitions.js";
-import { seoulExhibitions } from "./seoulExhibitions";
 import type { Exhibition, ExhibitionItem } from "../types/Exhibition";
 // Note: Do not resolve public asset URLs here. Keep plain paths like "/images/..."
 // and let UI components call publicUrl() at render time to respect base href/BASE_URL.
-
-// 기존 JS 데이터에 포함된 서울 더미(seoul-1..5)는 대표 이미지가 없으므로 제외하고,
-// TS의 seoulExhibitions 데이터(로컬 representativeImage 포함)만 사용합니다.
-const filteredBase = (exhibitionsData as unknown as Exhibition[]).filter(
-	(e) => !/^seoul-\d+$/.test(e.id)
-);
 
 // lightweight slugify for names
 function slugify(input: string) {
@@ -52,8 +45,7 @@ function normalize(obj: any): Exhibition {
 	};
 }
 
-export const exhibitions: Exhibition[] = filteredBase
-	.concat(seoulExhibitions as unknown as Exhibition[])
+export const exhibitions: Exhibition[] = (exhibitionsData as unknown as Exhibition[])
 	.map(normalize);
 
 export type { Exhibition } from "../types/Exhibition";

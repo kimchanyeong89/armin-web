@@ -126,211 +126,6 @@ export const exhibitions = [
     }
   },
 
-  // Seoul major museums/exhibition venues
-  {
-    id: "seoul-1",
-    name: "National Museum of Modern and Contemporary Art, Seoul (MMCA Seoul)",
-    description: "A leading institution for Korean contemporary art, offering diverse exhibitions and public programs.",
-    latitude: 37.579617,
-    longitude: 126.981805,
-    permanentExhibitions: [
-      { id: "s1-1", name: "Korean Contemporary Art Collection", title: "Korean Contemporary Art Collection" },
-      { id: "s1-2", name: "Asian Contemporary Art", title: "Asian Contemporary Art" }
-    ],
-    temporaryExhibitions: [
-      {
-        id: "s1-3",
-        name: "Media Art Special Exhibition",
-        title: "Media Art Special Exhibition",
-        description: "A special exhibition highlighting contemporary media art works.",
-        startDate: "2025.08.01",
-        endDate: "2025.10.31"
-      }
-    ],
-    pastExhibitions: [
-      {
-        id: "s1-4",
-        name: "100 Years of Korean Sculpture",
-        title: "100 Years of Korean Sculpture",
-        description: "A large-scale retrospective surveying the development of Korean sculpture.",
-        startDate: "2024.03.01",
-        endDate: "2024.08.31"
-      }
-    ],
-    rooms: {
-      "room-1": [
-        {
-          id: "art-1",
-          title: "Example Artwork 1",
-          image: "/images/exhibition1.png"
-        },
-        {
-          id: "art-2",
-          title: "Example Artwork 2",
-          image: "/images/exhibition2.png"
-        }
-      ],
-      "room-2": [
-        {
-          id: "art-3",
-          title: "Example Artwork 3",
-          image: "/images/exhibition3.png"
-        }
-      ]
-    }
-  },
-  {
-    id: "seoul-2",
-    name: "Leeum Museum of Art",
-    description: "A world-class museum operated by the Samsung Foundation, showcasing traditional Korean and contemporary art.",
-    latitude: 37.539307,
-    longitude: 126.994715,
-    permanentExhibitions: [
-      { id: "s2-1", name: "Korean Classical Art Collection", title: "Korean Classical Art Collection" },
-      { id: "s2-2", name: "Modern Art Collection", title: "Modern Art Collection" }
-    ],
-    temporaryExhibitions: [
-      {
-        id: "s2-3",
-        name: "International Contemporary Art Exhibition",
-        title: "International Contemporary Art Exhibition",
-        description: "A large exhibition featuring contemporary artists from around the world.",
-        startDate: "2025.09.10",
-        endDate: "2025.12.20"
-      }
-    ],
-    pastExhibitions: [
-      {
-        id: "s2-4",
-        name: "Korean Ceramics Special Exhibition",
-        title: "Korean Ceramics Special Exhibition",
-        description: "An exhibition highlighting the beauty of Korean ceramics.",
-        startDate: "2024.05.01",
-        endDate: "2024.09.30"
-      }
-    ],
-    rooms: {
-      "main-hall": [
-        {
-          id: "art-4",
-          title: "Leeum Featured Work",
-          image: "/images/exhibition4.png"
-        }
-      ],
-      // 현대미술 컬렉션에 대응하는 room 추가
-      "hyundae-art-room": [
-        {
-          id: "art-7",
-          title: "Modern Art Museum Featured Work 1",
-          image: "/images/exhibition1.png"
-        },
-        {
-          id: "art-8",
-          title: "Modern Art Museum Featured Work 2",
-          image: "/images/exhibition2.png"
-        }
-      ]
-    }
-  },
-  {
-    id: "seoul-3",
-    name: "Seoul Museum of Art (SeMA)",
-    description: "A public museum for the city, presenting a wide range of contemporary art exhibitions.",
-    latitude: 37.564362,
-    longitude: 126.975221,
-    permanentExhibitions: [
-      { id: "s3-1", name: "서울미술관 소장품전", title: "서울미술관 소장품전" }
-    ],
-    temporaryExhibitions: [
-      {
-        id: "s3-2",
-        name: "Young Artists Exhibition",
-        title: "Young Artists Exhibition",
-        description: "An exhibition showcasing experimental works by emerging artists.",
-        startDate: "2025.07.15",
-        endDate: "2025.09.15"
-      }
-    ],
-    pastExhibitions: [
-      {
-        id: "s3-3",
-        name: "Landscapes of Seoul",
-        title: "Landscapes of Seoul",
-        description: "A painting exhibition themed around the diverse landscapes of Seoul.",
-        startDate: "2024.10.01",
-        endDate: "2025.02.28"
-      }
-    ],
-    rooms: {
-      "gallery-1": [
-        {
-          id: "art-5",
-          title: "Seoul Morning",
-          image: "/images/exhibition2.png"
-        }
-      ]
-    }
-  },
-  {
-    id: "seoul-4",
-    name: "Dongdaemun Design Plaza (DDP)",
-    description: "Located within Dongdaemun Design Plaza, a hub for design and creativity.",
-    latitude: 37.566541,
-    longitude: 127.009387,
-    permanentExhibitions: [
-      { id: "s4-1", name: "한국 디자인 100년", title: "한국 디자인 100년" }
-    ],
-    temporaryExhibitions: [
-      {
-        id: "s4-2",
-        name: "Designing Future Cities",
-        title: "Designing Future Cities",
-        description: "A design exhibition focused on future cities and architecture.",
-        startDate: "2025.10.01",
-        endDate: "2026.01.31"
-      }
-    ],
-    pastExhibitions: [
-      {
-        id: "s4-3",
-        name: "Fashion and Art",
-        title: "Fashion and Art",
-        description: "A special exhibition exploring the intersection of fashion and art.",
-        startDate: "2024.06.01",
-        endDate: "2024.09.30"
-      }
-    ]
-  },
-  {
-    id: "seoul-5",
-    name: "Savina Museum",
-    description: "A private museum presenting a variety of contemporary art trends.",
-    latitude: 37.601601,
-    longitude: 126.957273,
-    permanentExhibitions: [
-      { id: "s5-1", name: "사비나 소장품전", title: "사비나 소장품전" }
-    ],
-    temporaryExhibitions: [
-      {
-        id: "s5-2",
-        name: "Women Artists Special Exhibition",
-        title: "Women Artists Special Exhibition",
-        description: "A special exhibition highlighting the works of women artists.",
-        startDate: "2025.09.01",
-        endDate: "2025.11.30"
-      }
-    ],
-    pastExhibitions: [
-      {
-        id: "s5-3",
-        name: "현대미술의 흐름전",
-        title: "현대미술의 흐름전",
-        description: "현대미술의 다양한 경향을 소개하는 전시.",
-        startDate: "2024.04.01",
-        endDate: "2024.08.31"
-      }
-    ]
-  },
   // Additional UK Art Galleries
   {
     id: "tate-liverpool",
@@ -2547,6 +2342,365 @@ export const exhibitions = [
     representativeImage: "https://res.cloudinary.com/tne/image/authenticated/s--ThA-PqKg--/q_60/w_400/artworks/DEUTSCH_BILDNIS-EINES-RITTERS_CC-BY-SA_BSTGS_11897.jpg",
     permanentExhibitions: [
       { id: "staatsgalerien-collection", name: "Bavarian Collection", title: "Staatsgalerien Collection", description: "1,200 works from Bavarian State branch galleries across the region.", startDate: "Permanent", endDate: "Permanent", collectionFile: "staatsgalerien-collection.json" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    exhibitions: []
+  },
+  // Hamburger Kunsthalle - Hamburg
+  {
+    id: "hamburger-kunsthalle",
+    name: "Hamburger Kunsthalle",
+    city: "Hamburg",
+    country: "Germany",
+    latitude: 53.5533,
+    longitude: 10.0033,
+    description: "One of the largest art museums in Germany, housing an extensive collection of European paintings from medieval to contemporary art, including masterworks by Caspar David Friedrich, Max Liebermann, and Ernst Ludwig Kirchner.",
+    representativeImage: "https://online-sammlung.hamburger-kunsthalle.de/sites/default/files/multimedia-files/61328.jpg",
+    permanentExhibitions: [
+      { id: "hamburger-kunsthalle-paintings", name: "Paintings Collection", title: "Malerei Collection", description: "2,286 paintings spanning seven centuries of European art history, from Old Masters to German Expressionism and contemporary works.", startDate: "Permanent", endDate: "Permanent", collectionFile: "hamburger-kunsthalle-paintings.json" },
+      { id: "hamburger-kunsthalle-drawings", name: "Drawings Collection", title: "Zeichnung Collection", description: "13,397 drawings from the 15th century to present day, including works by Dürer, Rembrandt, Kirchner, and contemporary artists.", startDate: "Permanent", endDate: "Permanent", collectionFile: "hamburger-kunsthalle-drawings.json" },
+      { id: "hamburger-kunsthalle-video", name: "Video Art Collection", title: "Video Art", description: "289 video artworks and media installations by international contemporary artists.", startDate: "Permanent", endDate: "Permanent", collectionFile: "hamburger-kunsthalle-video.json" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    exhibitions: []
+  },
+  // Rijksmuseum - Amsterdam
+  {
+    id: "rijksmuseum",
+    name: "Rijksmuseum",
+    city: "Amsterdam",
+    country: "Netherlands",
+    latitude: 52.3600,
+    longitude: 4.8852,
+    description: "The national museum of the Netherlands, housing an extensive collection of Dutch art and history from the Middle Ages to the present day, including masterpieces by Rembrandt, Vermeer, and Van Gogh.",
+    representativeImage: "https://www.rijksmuseum.nl/images/rijksmuseum-building.jpg",
+    permanentExhibitions: [
+      { id: "rijksmuseum-paintings", name: "Paintings Collection", title: "Paintings Collection", description: "Collection of paintings from the Rijksmuseum, including Dutch Golden Age masterpieces and works from the 15th to 20th centuries.", startDate: "Permanent", endDate: "Permanent", collectionFile: "rijksmuseum-paintings-collection.json" },
+      { id: "rijksmuseum-photography", name: "Photography Collection", title: "Photography Collection", description: "Collection of photographs from the Rijksmuseum, featuring works from the 19th century to the present day.", startDate: "Permanent", endDate: "Permanent", collectionFile: "rijksmuseum-photography-collection.json" },
+      { id: "rijksmuseum-drawings", name: "Drawings Collection", title: "Drawings Collection", description: "Collection of drawings from the Rijksmuseum, featuring works from various periods.", startDate: "Permanent", endDate: "Permanent", collectionFile: "rijksmuseum-drawings-collection.json" },
+      { id: "rijksmuseum-prints", name: "Prints Collection", title: "Prints Collection", description: "Collection of prints from the Rijksmuseum.", startDate: "Permanent", endDate: "Permanent", collectionFile: "rijksmuseum-prints-collection.json" },
+      { id: "rijksmuseum-prints2", name: "Prints Collection 2", title: "Prints Collection 2", description: "Additional collection of prints from the Rijksmuseum.", startDate: "Permanent", endDate: "Permanent", collectionFile: "rijksmuseum-prints2-collection.json" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    exhibitions: []
+  },
+  // Van Gogh Museum - Amsterdam
+  {
+    id: "vangogh-museum",
+    name: "Van Gogh Museum",
+    city: "Amsterdam",
+    country: "Netherlands",
+    latitude: 52.3584,
+    longitude: 4.8811,
+    description: "A museum dedicated to the works of Vincent van Gogh and his contemporaries in Amsterdam. Houses the largest collection of Van Gogh's paintings and drawings in the world.",
+    representativeImage: "https://www.vangoghmuseum.nl/images/museum-building.jpg",
+    permanentExhibitions: [
+      { id: "vangogh-museum-collection", name: "Van Gogh Museum Collection", title: "Van Gogh Museum Collection", description: "Collection of artworks from the Van Gogh Museum, featuring works by Vincent van Gogh and his contemporaries.", startDate: "Permanent", endDate: "Permanent", collectionFile: "vangogh-museum-collection.json" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    exhibitions: []
+  },
+  // Mauritshuis - The Hague
+  {
+    id: "mauritshuis",
+    name: "Mauritshuis",
+    city: "The Hague",
+    country: "Netherlands",
+    latitude: 52.0806,
+    longitude: 4.3144,
+    description: "A museum in The Hague housing a world-renowned collection of Dutch Golden Age paintings, including Vermeer's 'Girl with a Pearl Earring' and Rembrandt's 'The Anatomy Lesson of Dr. Nicolaes Tulp'.",
+    representativeImage: "https://www.mauritshuis.nl/images/museum-building.jpg",
+    permanentExhibitions: [
+      { id: "mauritshuis-collection", name: "Mauritshuis Collection", title: "Mauritshuis Collection", description: "Collection of Dutch Golden Age paintings from the Mauritshuis, including masterpieces by Vermeer, Rembrandt, and other Dutch masters.", startDate: "Permanent", endDate: "Permanent", collectionFile: "mauritshuis-collection.json" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    exhibitions: []
+  },
+  // Stedelijk Museum Amsterdam
+  {
+    id: "stedelijk-museum",
+    name: "Stedelijk Museum Amsterdam",
+    city: "Amsterdam",
+    country: "Netherlands",
+    latitude: 52.3579,
+    longitude: 4.8792,
+    description: "A museum of modern and contemporary art and design in Amsterdam. Features works from the early 20th century to the present day, including pieces by Mondrian, De Kooning, and Warhol.",
+    representativeImage: "https://www.stedelijk.nl/images/museum-building.jpg",
+    permanentExhibitions: [
+      { id: "stedelijk-collection", name: "Stedelijk Museum Collection", title: "Stedelijk Museum Collection", description: "Collection of modern and contemporary art and design from the Stedelijk Museum Amsterdam, featuring works from the 20th and 21st centuries.", startDate: "Permanent", endDate: "Permanent", collectionFile: "stedelijk-collection.json" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    exhibitions: []
+  },
+  // Netherlands - Kröller-Müller Museum
+  {
+    id: "kroller-muller-museum",
+    name: "Kröller-Müller Museum",
+    city: "Otterlo",
+    country: "Netherlands",
+    latitude: 52.0956,
+    longitude: 5.8167,
+    description: "One of the largest Van Gogh collections in the world, housed in a stunning museum within De Hoge Veluwe National Park. Features over 90 Van Gogh paintings and 180 drawings, plus works by Picasso, Mondrian, and Seurat.",
+    representativeImage: "https://krollermuller.nl/images/museum-exterior.jpg",
+    permanentExhibitions: [
+      { id: "kroller-muller-paintings", name: "Kröller-Müller Paintings", title: "Kröller-Müller Paintings", description: "World-renowned collection of paintings featuring masterpieces by Van Gogh, Mondrian, Seurat, Picasso, and other modern masters, housed in a modernist building designed by Henry van de Velde.", startDate: "Permanent", endDate: "Permanent", collectionFile: "kroller-muller-paintings.json" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    exhibitions: []
+  },
+  // South Korea - MMCA
+  {
+    id: "mmca-seoul",
+    slug: "mmca-seoul",
+    name: "National Museum of Modern and Contemporary Art, Seoul (MMCA)",
+    location: "서울특별시 종로구 삼청로 30",
+    description: "A national museum leading contemporary art in Korea and abroad, with diverse exhibitions, education, interdisciplinary arts, and film/video programs. 112 artworks from the permanent collection.",
+    latitude: 37.579617,
+    longitude: 126.981805,
+    country: "South Korea",
+    region: "Seoul",
+    representativeImage: "/images/mmca-seoul.jpg",
+    floorPlan: "",
+    permanentExhibitions: [
+      { id: "mmca-collection", name: "MMCA 소장작품", title: "MMCA Collection", description: "국립현대미술관 소장작품 컬렉션 (112점)", startDate: "Permanent", endDate: "Permanent", collectionFile: "mmca-collection.json" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    rooms: {}
+  },
+  // South Korea - National Museum of Korea
+  {
+    id: "national-museum-korea",
+    slug: "national-museum-korea",
+    name: "국립중앙박물관",
+    name_en: "National Museum of Korea",
+    location: "서울특별시 용산구 서빙고로 137",
+    location_en: "137 Seobinggo-ro, Yongsan-gu, Seoul",
+    description: "한국의 역사와 문화를 대표하는 국립박물관. 선사시대부터 근대까지의 유물 97,000여 점 소장.",
+    description_en: "The largest museum in Korea, housing 97,000+ artifacts spanning from prehistoric times to the modern era.",
+    latitude: 37.5238,
+    longitude: 126.9804,
+    country: "South Korea",
+    region: "Seoul",
+    representativeImage: "/images/national-museum-korea.jpg",
+    floorPlan: "",
+    permanentExhibitions: [
+      { id: "nmk-collection", name: "국립중앙박물관 소장품", name_en: "National Museum of Korea Collection", title: "국립중앙박물관 소장품", title_en: "National Museum of Korea Collection", description: "국립중앙박물관 소장 유물 컬렉션 (205,419점)", description_en: "National Museum of Korea artifact collection (205,419 items)", startDate: "Permanent", endDate: "Permanent", collectionFile: "national-museum-korea.json" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    rooms: {}
+  },
+  // South Korea - Gyeongju National Museum
+  {
+    id: "gyeongju-national-museum",
+    slug: "gyeongju-national-museum",
+    name: "국립경주박물관",
+    name_en: "Gyeongju National Museum",
+    location: "경상북도 경주시 일정로 186",
+    location_en: "186 Iljeongseo-ro, Gyeongju-si, Gyeongsangbuk-do",
+    description: "신라 천년의 역사와 문화를 간직한 박물관. 경주 지역에서 출토된 유물 203,909점 소장.",
+    description_en: "Museum preserving a thousand years of Silla history and culture. Collection of 203,909 artifacts excavated from the Gyeongju region.",
+    latitude: 35.8316,
+    longitude: 129.2192,
+    country: "South Korea",
+    region: "Gyeongju",
+    representativeImage: "/images/gyeongju-museum.jpg",
+    floorPlan: "",
+    permanentExhibitions: [
+      { id: "gyeongju-museum", name: "국립경주박물관 소장품", name_en: "Gyeongju National Museum Collection", title: "국립경주박물관 소장품", title_en: "Gyeongju National Museum Collection", description: "국립경주박물관 소장 유물 컬렉션 (203,909점)", description_en: "Gyeongju National Museum artifact collection (203,909 items)", startDate: "Permanent", endDate: "Permanent", collectionFile: "gyeongju-museum.json" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    rooms: {}
+  },
+  // South Korea - Buyeo National Museum
+  {
+    id: "buyeo-national-museum",
+    slug: "buyeo-national-museum",
+    name: "국립부여박물관",
+    name_en: "Buyeo National Museum",
+    location: "충청남도 부여군 부여읍 금성로 5",
+    location_en: "5 Geumseong-ro, Buyeo-eup, Buyeo-gun, Chungcheongnam-do",
+    description: "백제 문화의 정수를 간직한 박물관. 백제 금동대향로를 비롯한 68,000여 점의 유물 소장.",
+    description_en: "Museum preserving the essence of Baekje culture. Housing over 68,000 artifacts including the Gilt-bronze Incense Burner of Baekje.",
+    latitude: 36.2797,
+    longitude: 126.9142,
+    country: "South Korea",
+    region: "Buyeo",
+    representativeImage: "/images/buyeo-museum.jpg",
+    floorPlan: "",
+    permanentExhibitions: [
+      { id: "buyeo-museum", name: "국립부여박물관 소장품", name_en: "Buyeo National Museum Collection", title: "국립부여박물관 소장품", title_en: "Buyeo National Museum Collection", description: "국립부여박물관 소장 유물 컬렉션 (68,091점)", description_en: "Buyeo National Museum artifact collection (68,091 items)", startDate: "Permanent", endDate: "Permanent", collectionFile: "buyeo-museum.json" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    rooms: {}
+  },
+  // South Korea - Seoul Museum of Art (SeMA)
+  {
+    id: "seoul-museum-of-art",
+    slug: "sema",
+    name: "서울시립미술관",
+    name_en: "Seoul Museum of Art",
+    location: "서울특별시 중구 덕수궁길 61",
+    location_en: "61 Deoksugung-gil, Jung-gu, Seoul",
+    description: "서울시립미술관은 서울의 대표 미술관으로, 한국 근현대 미술과 동시대 미술을 폭넓게 소장하고 있습니다. 회화, 사진, 한국화, 드로잉&판화, 조각, 뉴미디어, 설치, 공예, 서예, 디자인 등 다양한 장르의 6,167점 소장.",
+    description_en: "Seoul Museum of Art (SeMA) showcases Korean modern and contemporary art across diverse media including painting, photography, sculpture, new media, and more. Collection of 6,167 works.",
+    latitude: 37.565284,
+    longitude: 126.975361,
+    country: "South Korea",
+    region: "Seoul",
+    representativeImage: "https://collections.eseoul.go.kr/common/file/getImage.do?size=700&fileSeq=FILE_0000083583-1",
+    floorPlan: "",
+    permanentExhibitions: [
+      { id: "sema-collection", name: "서울시립미술관 소장품", name_en: "Seoul Museum of Art Collection", title: "서울시립미술관 소장품", title_en: "Seoul Museum of Art Collection", description: "서울시립미술관 소장 미술작품 컬렉션 (회화, 사진, 한국화, 드로잉&판화, 조각, 뉴미디어, 설치, 공예, 서예, 디자인 등 6,167점)", description_en: "Seoul Museum of Art collection featuring painting, photography, Korean painting, drawing & print, sculpture, new media, installation, craft, calligraphy, design (6,167 works)", startDate: "Permanent", endDate: "Permanent", collectionFile: "seoul-museum-of-art-collection.json" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    rooms: {}
+  },
+  // Spain - Museo Nacional Centro de Arte Reina Sofía
+  {
+    id: "museo-reina-sofia",
+    slug: "reina-sofia",
+    name: "Museo Reina Sofía",
+    name_en: "Museo Reina Sofía",
+    location: "Calle Santa Isabel 52, 28012 Madrid, Spain",
+    location_en: "Calle Santa Isabel 52, 28012 Madrid, Spain",
+    description: "스페인 국립 현대미술관. 피카소의 게르니카를 비롯하여 달리, 미로 등 20세기 스페인 현대미술의 걸작 14,700여 점을 소장하고 있습니다.",
+    description_en: "Spain's national museum of 20th-century art. Home to Picasso's Guernica and masterpieces by Dalí, Miró, and other modern Spanish artists. Collection of over 14,700 works.",
+    latitude: 40.4088,
+    longitude: -3.6945,
+    country: "Spain",
+    region: "Madrid",
+    representativeImage: "https://recursos.museoreinasofia.es/styles/small_landscape/public/Obra/DE00050_1.jpg.webp",
+    floorPlan: "",
+    permanentExhibitions: [
+      { id: "reina-sofia-collection", name: "Reina Sofía Collection", name_en: "Reina Sofía Collection", title: "Museo Reina Sofía Collection", title_en: "Museo Reina Sofía Collection", description: "Museo Nacional Centro de Arte Reina Sofía 소장품 컬렉션 (14,712점)", description_en: "Museo Nacional Centro de Arte Reina Sofía collection (14,712 works)", startDate: "Permanent", endDate: "Permanent", collectionFile: "reina-sofia-collection.json" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    rooms: {}
+  },
+  // Spain - Museo Nacional Thyssen-Bornemisza
+  {
+    id: "museo-thyssen-bornemisza",
+    slug: "thyssen-bornemisza",
+    name: "Museo Thyssen-Bornemisza",
+    name_en: "Museo Nacional Thyssen-Bornemisza",
+    location: "P.º del Prado, 8, 28014 Madrid, Spain",
+    location_en: "P.º del Prado, 8, 28014 Madrid, Spain",
+    description: "마드리드의 주요 미술관 중 하나로, 중세부터 현대까지의 서양 회화 컬렉션을 소장하고 있습니다.",
+    description_en: "One of Madrid's major museums, featuring a renowned collection of Western painting from the Middle Ages to the modern era.",
+    latitude: 40.4160,
+    longitude: -3.6945,
+    country: "Spain",
+    region: "Madrid",
+    representativeImage: "https://www.museothyssen.org/sites/default/files/styles/16x9_social_share/public/imagen/2015-09/museo-thyssen-bornemisza.jpg",
+    floorPlan: "",
+    permanentExhibitions: [
+      {
+        id: "thyssen-collection-41",
+        name: "Thyssen Collection 41",
+        name_en: "Thyssen Collection 41",
+        title: "Museo Thyssen-Bornemisza Collection (41)",
+        title_en: "Museo Thyssen-Bornemisza Collection (41)",
+        description: "Thyssen-Bornemisza 소장품 컬렉션 (Collection 41 테스트 데이터)",
+        description_en: "Thyssen-Bornemisza collection (Collection 41 test dataset)",
+        startDate: "Permanent",
+        endDate: "Permanent",
+        collectionFile: "museothyssen-collection-41.full.json"
+      }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    rooms: {}
+  },
+  // Spain - Guggenheim Bilbao
+  {
+    id: "guggenheim-bilbao",
+    slug: "guggenheim-bilbao",
+    name: "Guggenheim Bilbao",
+    name_en: "Guggenheim Bilbao",
+    location: "Abandoibarra Etorb., 2, 48009 Bilbo, Bizkaia, Spain",
+    location_en: "Abandoibarra Etorb., 2, 48009 Bilbo, Bizkaia, Spain",
+    description: "프랭크 게리가 설계한 구겐하임 빌바오는 20세기 건축의 가장 중요한 예 중 하나로 꼽힙니다. 현대 및 동시대 미술 작품을 주로 전시합니다.",
+    description_en: "Designed by Frank Gehry, the Guggenheim Museum Bilbao is considered one of the most important examples of 20th-century architecture. It primarily exhibits modern and contemporary art.",
+    latitude: 43.2686,
+    longitude: -2.9340,
+    country: "Spain",
+    region: "Bilbao",
+    representativeImage: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Guggenheim_Museum_Bilbao_July_2010.jpg/1200px-Guggenheim_Museum_Bilbao_July_2010.jpg",
+    floorPlan: "",
+    permanentExhibitions: [
+      {
+        id: "guggenheim-bilbao-collection",
+        name: "Guggenheim Bilbao Collection",
+        name_en: "Guggenheim Bilbao Collection",
+        title: "Guggenheim Bilbao Permanent Collection",
+        title_en: "Guggenheim Bilbao Permanent Collection",
+        description: "구겐하임 빌바오 미술관의 영구 소장품 컬렉션입니다.",
+        description_en: "Permanent collection of the Guggenheim Museum Bilbao.",
+        startDate: "Permanent",
+        endDate: "Permanent",
+        collectionFile: "guggenheim-bilbao-collection.json"
+      }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    rooms: {}
+  },
+  {
+    id: "museu-picasso-barcelona",
+    name: "Museu Picasso Barcelona",
+    city: "Barcelona",
+    country: "Spain",
+    latitude: 41.3851,
+    longitude: 2.1819,
+    description: "피카소의 초기 작품과 바르셀로나 시절 작품들을 대규모로 소장한 미술관.",
+    representativeImage: "",
+    permanentExhibitions: [
+      { id: "picasso-bcn-collection", name: "Collection", name_en: "Collection", title: "Museu Picasso Barcelona - Collection", title_en: "Museu Picasso Barcelona - Collection", description: "바르셀로나 피카소 미술관의 작품 컬렉션입니다.", description_en: "Artworks from the Museu Picasso Barcelona collection.", startDate: "Permanent", endDate: "Permanent", collectionFile: "picasso-bcn-collection.json" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    exhibitions: []
+  },
+  {
+    id: "dali-foundation",
+    name: "Fundació Gala-Salvador Dalí",
+    city: "Figueres",
+    country: "Spain",
+    latitude: 42.2679,
+    longitude: 2.9600,
+    description: "살바도르 달리의 작품을 소장한 달리 재단 미술관.",
+    representativeImage: "",
+    permanentExhibitions: [
+      { id: "dali-foundation-collection", name: "Collection", name_en: "Collection", title: "Fundació Gala-Salvador Dalí - Collection", title_en: "Fundació Gala-Salvador Dalí - Collection", description: "달리 재단의 작품 컬렉션입니다.", description_en: "Artworks from the Fundació Gala-Salvador Dalí collection.", startDate: "Permanent", endDate: "Permanent", collectionFile: "dali-foundation-collection.json" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    exhibitions: []
+  },
+  {
+    id: "caixaforum",
+    name: "Fundación la Caixa",
+    city: "Barcelona",
+    country: "Spain",
+    latitude: 41.3851,
+    longitude: 2.1700,
+    description: "라 카이샤 재단의 현대 미술 컬렉션.",
+    representativeImage: "",
+    permanentExhibitions: [
+      { id: "caixaforum-collection", name: "Collection", name_en: "Collection", title: "Fundación la Caixa - Collection", title_en: "Fundación la Caixa - Collection", description: "라 카이샤 재단의 작품 컬렉션입니다.", description_en: "Artworks from the Fundación la Caixa collection.", startDate: "Permanent", endDate: "Permanent", collectionFile: "caixaforum-collection.json" }
     ],
     temporaryExhibitions: [],
     pastExhibitions: [],

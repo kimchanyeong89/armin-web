@@ -33,6 +33,10 @@ export type Artwork = {
   materials?: string;    // 재료 (alternative to medium)
   category?: string;     // 작품 분류 (예: "Painting", "Sculpture")
   artworkType?: string;  // 작품 유형 (alternative to category)
+  description?: string;  // 설명/텍스트
+  categories?: string[]; // 사이트 내 카테고리/태그 (예: On view, Site-specific)
+  metadata?: Record<string, string>; // 라벨 기반 추가 메타데이터
+  location?: string;     // 전시 위치/갤러리 등
   youtubeId?: string;    // YouTube 영상 ID (11자)
   mediaType?: 'image' | 'video';  // 미디어 타입
 };
