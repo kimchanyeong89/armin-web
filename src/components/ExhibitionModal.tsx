@@ -5966,7 +5966,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
                     ARTWORKS ONLY
                   </button>
                 )}
-                {(exhibition.id === 'guggenheim-bilbao-collection' || exhibition.id === 'khm-collection') && (
+                {(exhibition.id === 'guggenheim-bilbao-collection' || exhibition.id === 'kunsthaus-collection' || exhibition.id === 'khm-collection') && (
                   <button
                     onClick={() => { setShowOnViewOnly(!showOnViewOnly); setSelectedIndex(0); }}
                     style={{ padding: '0 6px', height: 20, fontSize: 10.5, fontWeight: showOnViewOnly ? 500 : 400, borderRadius: 4, border: 'none', background: showOnViewOnly ? '#111' : '#f2f2f2', color: showOnViewOnly ? '#fff' : '#666', cursor: 'pointer', transition: 'all 0.1s ease' }}
@@ -7054,7 +7054,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
                           ARTWORKS ONLY
                         </button>
                       )}
-                      {exhibition.id === 'guggenheim-bilbao-collection' && (
+                      {(exhibition.id === 'guggenheim-bilbao-collection' || exhibition.id === 'kunsthaus-collection' || exhibition.id === 'khm-collection') && (
                         <button
                           onClick={() => { setShowOnViewOnly(!showOnViewOnly); setSelectedIndex(0); }}
                           style={{ padding: '0 6px', height: 20, fontSize: 10.5, fontWeight: showOnViewOnly ? 500 : 400, borderRadius: 4, border: 'none', background: showOnViewOnly ? '#111' : '#f2f2f2', color: showOnViewOnly ? '#fff' : '#666', cursor: 'pointer', transition: 'all 0.1s ease' }}
@@ -7353,7 +7353,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
                       ARTWORKS ONLY
                     </button>
                   )}
-                  {(exhibition.id === 'guggenheim-bilbao-collection' || exhibition.id === 'khm-collection') && (
+                  {(exhibition.id === 'guggenheim-bilbao-collection' || exhibition.id === 'kunsthaus-collection' || exhibition.id === 'khm-collection') && (
                     <button
                       onClick={() => { setShowOnViewOnly(!showOnViewOnly); setSelectedIndex(0); }}
                       style={{
