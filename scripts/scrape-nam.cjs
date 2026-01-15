@@ -6,7 +6,7 @@ const path = require('path');
 
 const START_URL = 'https://www.namuseum.gr/en/collections/';
 const OUTPUT_FILE = path.join(__dirname, '../public/data/nam-collection.json');
-const TARGET_COUNT = 100;
+const TARGET_COUNT = 1000; // Increased to cover all ~308 items
 
 async function scrape() {
   console.log(`Starting scrape of ${START_URL}...`);
