@@ -4,7 +4,7 @@ const fs = require('fs');
 const path = require('path');
 
 const OUTPUT_FILE = path.join(__dirname, '../public/data/kunsthaus-collection.json');
-const TARGET_COUNT = 100; // User asked for 100 initially
+const TARGET_COUNT = 10000; // Fetch all (expected ~2600)
 
 const API_URL = 'https://collection.kunsthaus.ch/solr/published/select';
 const BASE_IMG_URL = 'https://collection.kunsthaus.ch/';
