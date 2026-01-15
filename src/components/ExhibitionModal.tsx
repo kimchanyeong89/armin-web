@@ -1472,9 +1472,10 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
       filtered = filtered.filter(a => !a.isArchival);
     }
 
-    // Guggenheim Bilbao + KHM: filter "On view" artworks only
-    if ((exhibition.id === 'guggenheim-bilbao-collection' || exhibition.id === 'khm-collection') && showOnViewOnly) {
+    // Guggenheim Bilbao + KHM + Kunsthaus: filter "On view" artworks only
+    if ((exhibition.id === 'guggenheim-bilbao-collection' || exhibition.id === 'khm-collection' || exhibition.id === 'kunsthaus-collection') && showOnViewOnly) {
       filtered = filtered.filter(a => {
+        if (exhibition.id === 'kunsthaus-collection') return (a as any).onView === true;
         const categories = (a as any).categories || [];
         return categories.some((cat: string) => cat && cat.toLowerCase().includes('on view'));
       });
@@ -2477,6 +2478,40 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
         }
       })();
       return () => { };
+    }
+
+    // Kunsthaus Zürich
+    if (exhibition.id === 'kunsthaus-collection') {
+       (async () => {
+        try {
+          const res = await fetch('/data/kunsthaus-collection.json', { cache: 'no-store' });
+          if (!res.ok) throw new Error('Failed to load Kunsthaus artworks');
+          const data = await res.json();
+          const list: Artwork[] = Array.isArray(data) ? data.map((item: any) => ({
+             id: item.id || `kh-${Math.random()}`,
+             name: item.title,
+             artist: item.artist,
+             year: parseInt((item.date || '').match(/\d{4}/)?.[0] || '0'),
+             date: item.date,
+             image: item.image,
+             sourceUrl: item.url,
+             medium: item.medium,
+             dimension: item.dimensions,
+             roomId: 'default',
+             exhibitionName: exhibition.name,
+             exhibitionTitle: 'Collection Highlights',
+             category: item.category || 'Artwork',
+             type: '2D',
+             onView: item.onView
+          })) : [];
+          setArtworks(list.filter(a => !!a.image));
+          setInitialized(true);
+        } catch (err) {
+            console.error('Failed to load Kunsthaus artworks:', err);
+            setInitialized(true);
+        }
+       })();
+       return () => {};
     }
 
     // Tate St Ives Collection: load from local scraped JSON
@@ -6740,7 +6775,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
                           ARTWORKS ONLY
                         </button>
                       )}
-                      {exhibition.id === 'guggenheim-bilbao-collection' && (
+                      {(exhibition.id === 'guggenheim-bilbao-collection' || exhibition.id === 'kunsthaus-collection') && (
                         <button
                           onClick={() => { setShowOnViewOnly(!showOnViewOnly); setSelectedIndex(0); }}
                           style={{ padding: '0 6px', height: 20, fontSize: 10.5, fontWeight: showOnViewOnly ? 500 : 400, borderRadius: 4, border: 'none', background: showOnViewOnly ? '#111' : '#f2f2f2', color: showOnViewOnly ? '#fff' : '#666', cursor: 'pointer', transition: 'all 0.1s ease' }}

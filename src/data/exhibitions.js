@@ -2879,12 +2879,12 @@ export const exhibitions = [
     representativeImage: "https://www.mfab.hu/app/uploads/2019/02/szepmuveszeti_epulet_2.jpg",
     floorPlan: "",
     permanentExhibitions: [
-      { 
-        id: "mfab-collection", 
-        name: "MFAB Collection", 
-        title: "Museum of Fine Arts Collection", 
-        description: "Highlights from the Museum of Fine Arts, Budapest, spanning from antiquity to the present day.", 
-        startDate: "Permanent", 
+      {
+        id: "mfab-collection",
+        name: "MFAB Collection",
+        title: "Museum of Fine Arts Collection",
+        description: "Highlights from the Museum of Fine Arts, Budapest, spanning from antiquity to the present day.",
+        startDate: "Permanent",
         endDate: "Permanent",
         collectionFile: "mfab-collection.json"
       }
@@ -2905,14 +2905,14 @@ export const exhibitions = [
     region: "Lisbon",
     representativeImage: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Museu_Calouste_Gulbenkian_exterior.jpg/1200px-Museu_Calouste_Gulbenkian_exterior.jpg",
     permanentExhibitions: [
-      { 
-        id: "gulbenkian-collection", 
-        name: "Founder's Collection", 
-        title: "Founder's Collection", 
-        description: "Highlights from the Calouste Gulbenkian collection, ranging from Islamic art to René Lalique.", 
-        startDate: "Permanent", 
-        endDate: "Permanent", 
-        collectionFile: "gulbenkian-collection.json" 
+      {
+        id: "gulbenkian-collection",
+        name: "Founder's Collection",
+        title: "Founder's Collection",
+        description: "Highlights from the Calouste Gulbenkian collection, ranging from Islamic art to René Lalique.",
+        startDate: "Permanent",
+        endDate: "Permanent",
+        collectionFile: "gulbenkian-collection.json"
       }
     ],
     temporaryExhibitions: [],
@@ -2957,14 +2957,65 @@ export const exhibitions = [
     region: "Athens",
     representativeImage: "https://www.namuseum.gr/wp-content/themes/nam/assets/images/logo_en.png",
     permanentExhibitions: [
-      { 
-        id: "nam-collection", 
-        name: "Collection Highlights", 
-        title: "Collection Highlights", 
-        description: "A selection of major artifacts from the National Archaeological Museum, Athens.", 
-        startDate: "Permanent", 
-        endDate: "Permanent", 
-        collectionFile: "nam-collection.json" 
+      {
+        id: "nam-collection",
+        name: "Collection Highlights",
+        title: "Collection Highlights",
+        description: "A selection of major artifacts from the National Archaeological Museum, Athens.",
+        startDate: "Permanent",
+        endDate: "Permanent",
+        collectionFile: "nam-collection.json"
+      }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: []
+  },
+  {
+    id: "kunsthaus-zurich",
+    slug: "kunsthaus-zurich",
+    name: "Kunsthaus Zürich",
+    location: "Heimplatz 1, 8001 Zürich, Switzerland",
+    description: "The Kunsthaus Zürich houses one of the most important art collections in Switzerland.",
+    latitude: 47.3702,
+    longitude: 8.5482,
+    country: "Switzerland",
+    region: "Zurich",
+    representativeImage: "https://www.kunsthaus.ch/typo3conf/ext/kunsthaus_site/Resources/Public/Assets/logo.svg",
+    permanentExhibitions: [
+      {
+        id: "kunsthaus-collection",
+        name: "Collection Highlights",
+        title: "Collection Highlights",
+        description: "Artworks from the Kunsthaus Zürich collection.",
+        startDate: "Permanent",
+        endDate: "Permanent",
+        collectionFile: "kunsthaus-collection.json"
+      }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: []
+  },
+  // International Museums
+  {
+    id: "acropolis-museum",
+    slug: "acropolis-museum",
+    name: "Acropolis Museum",
+    location: "Dionysiou Areopagitou 15, Athens 117 42, Greece",
+    description: "An archaeological museum focused on the findings of the archaeological site of the Acropolis of Athens.",
+    latitude: 37.9684,
+    longitude: 23.7285,
+    country: "Greece",
+    region: "Athens",
+    representativeImage: "https://www.theacropolismuseum.gr/sites/default/files/styles/carousel_large/public/2020-09/exterior-view-of-the-museum_0.jpg",
+    permanentExhibitions: [
+      {
+        id: "acropolis-highlights",
+        name: "Acropolis Museum Highlights",
+        title: "Museum Highlights",
+        description: "Key exhibits from the Acropolis Museum collection, featuring masterpieces of ancient Greek art.",
+        startDate: "Permanent",
+        endDate: "Permanent",
+        collectionFile: "acropolis-museum-collection.json"
       }
     ],
     temporaryExhibitions: [],
