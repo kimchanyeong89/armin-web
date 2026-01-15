@@ -6709,11 +6709,11 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
                       ))}
                     </div>
                   )}
-                  {/* 2D/3D buttons */}
-                  {/* 2D/3D buttons */}
-                  {hasCategorizedArtworks && (
+                  {/* 2D/3D buttons and Special Filters */}
+                  {(hasCategorizedArtworks || hasArchivalArtworks || exhibition.id === 'guggenheim-bilbao-collection' || exhibition.id === 'kunsthaus-collection' || exhibition.id === 'picasso-bcn-collection') && (
                     <div style={{ display: 'flex', gap: 6, marginBottom: 6 }}>
-                      {(['2D', '3D'] as const).map(t => (
+                      {/* 2D/3D Type Buttons */}
+                      {hasCategorizedArtworks && (['2D', '3D'] as const).map(t => (
                         <button
                           key={t}
                           onClick={() => {
@@ -6740,7 +6740,9 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
                           {t}
                         </button>
                       ))}
-                      {hasUncategorizedArtworks && (
+                      
+                      {/* N Button (Uncategorized) */}
+                      {hasCategorizedArtworks && hasUncategorizedArtworks && (
                         <button
                           key="N"
                           onClick={() => {
@@ -6767,6 +6769,8 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
                           N
                         </button>
                       )}
+
+                      {/* Special Filters */}
                       {hasArchivalArtworks && (
                         <button
                           onClick={() => { setShowArtworksOnly(!showArtworksOnly); setSelectedIndex(0); }}
@@ -6775,7 +6779,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
                           ARTWORKS ONLY
                         </button>
                       )}
-                      {(exhibition.id === 'guggenheim-bilbao-collection' || exhibition.id === 'kunsthaus-collection') && (
+                      {(exhibition.id === 'guggenheim-bilbao-collection' || exhibition.id === 'kunsthaus-collection' || exhibition.id === 'khm-collection') && (
                         <button
                           onClick={() => { setShowOnViewOnly(!showOnViewOnly); setSelectedIndex(0); }}
                           style={{ padding: '0 6px', height: 20, fontSize: 10.5, fontWeight: showOnViewOnly ? 500 : 400, borderRadius: 4, border: 'none', background: showOnViewOnly ? '#111' : '#f2f2f2', color: showOnViewOnly ? '#fff' : '#666', cursor: 'pointer', transition: 'all 0.1s ease' }}
