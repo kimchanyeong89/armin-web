@@ -1184,7 +1184,7 @@ export const exhibitions = [
     description: "세계 최대의 회화관. '모나리자'를 포함한 서양 고전 회화의 절대 성지.",
     representativeImage: "https://collections.louvre.fr/media/cache/large/0000000021/0000048442/0000040685_OG.JPG",
     permanentExhibitions: [
-      { id: "louvre-painting", name: "Painting Collection", title: "Musée du Louvre Painting Collection", description: "Over 10,000 paintings from the world's largest art museum, featuring masterpieces from the Renaissance to the 19th century including the Mona Lisa, Winged Victory, and Venus de Milo.", startDate: "Permanent", endDate: "Permanent" }
+      { id: "louvre-painting-collection", name: "Painting Collection", title: "Musée du Louvre Painting Collection", description: "Over 10,000 paintings from the world's largest art museum, featuring masterpieces from the Renaissance to the 19th century including the Mona Lisa, Winged Victory, and Venus de Milo.", startDate: "Permanent", endDate: "Permanent" }
     ],
     temporaryExhibitions: [],
     pastExhibitions: [],
@@ -1220,11 +1220,11 @@ export const exhibitions = [
     description: "유럽 최대 현대 미술 갤러리. 20세기 평면 예술의 흐름을 주도하는 영향력.",
     representativeImage: "",
     permanentExhibitions: [
-      { id: "pompidou-cinema", name: "Cinema Collection", title: "Centre Pompidou Cinema Collection", description: "Experimental cinema, video art, and film installations from the Centre Pompidou collection.", startDate: "Permanent", endDate: "Permanent" },
-      { id: "pompidou-painting", name: "Painting Collection", title: "Centre Pompidou Painting Collection", description: "Modern and contemporary paintings from the Centre Pompidou collection, featuring masterworks from Picasso, Matisse, Kandinsky, and more.", startDate: "Permanent", endDate: "Permanent" },
-      { id: "pompidou-drawing", name: "Drawing Collection", title: "Centre Pompidou Drawing Collection", description: "Works on paper from the Cabinet d'art graphique, featuring drawings, sketches, and graphic works.", startDate: "Permanent", endDate: "Permanent" },
-      { id: "pompidou-newmedia", name: "New Media Collection", title: "Centre Pompidou New Media Collection", description: "Digital art, interactive installations, and new media works from the collection.", startDate: "Permanent", endDate: "Permanent" },
-      { id: "pompidou-design", name: "Design Collection", title: "Centre Pompidou Design Collection", description: "Graphic design, posters, typography and industrial design from the Centre Pompidou collection.", startDate: "Permanent", endDate: "Permanent" }
+      { id: "pompidou-cinema-collection", name: "Cinema Collection", title: "Centre Pompidou Cinema Collection", description: "Experimental cinema, video art, and film installations from the Centre Pompidou collection.", startDate: "Permanent", endDate: "Permanent" },
+      { id: "pompidou-painting-collection", name: "Painting Collection", title: "Centre Pompidou Painting Collection", description: "Modern and contemporary paintings from the Centre Pompidou collection, featuring masterworks from Picasso, Matisse, Kandinsky, and more.", startDate: "Permanent", endDate: "Permanent" },
+      { id: "pompidou-drawing-collection", name: "Drawing Collection", title: "Centre Pompidou Drawing Collection", description: "Works on paper from the Cabinet d'art graphique, featuring drawings, sketches, and graphic works.", startDate: "Permanent", endDate: "Permanent" },
+      { id: "pompidou-newmedia-collection", name: "New Media Collection", title: "Centre Pompidou New Media Collection", description: "Digital art, interactive installations, and new media works from the collection.", startDate: "Permanent", endDate: "Permanent" },
+      { id: "pompidou-design-collection", name: "Design Collection", title: "Centre Pompidou Design Collection", description: "Graphic design, posters, typography and industrial design from the Centre Pompidou collection.", startDate: "Permanent", endDate: "Permanent" }
     ],
     temporaryExhibitions: [],
     pastExhibitions: [],
@@ -1527,10 +1527,10 @@ export const exhibitions = [
     description: "라인강 유역 현대 예술의 중심. 그래픽 디자인과 회화 전시가 강점.",
     representativeImage: "",
     permanentExhibitions: [
-      { id: "mamcs-drawings", name: "Drawings", title: "MAMCS Drawings Collection", description: "스트라스부르 현대미술관의 드로잉 컬렉션.", startDate: "Permanent", endDate: "Permanent" },
-      { id: "mamcs-paintings", name: "Paintings", title: "MAMCS Paintings Collection", description: "스트라스부르 현대미술관의 회화 컬렉션.", startDate: "Permanent", endDate: "Permanent" },
-      { id: "mamcs-photography", name: "Photography", title: "MAMCS Photography Collection", description: "스트라스부르 현대미술관의 사진 컬렉션.", startDate: "Permanent", endDate: "Permanent" },
-      { id: "mamcs-graphic-design", name: "Graphic Design", title: "MAMCS Graphic Design Collection", description: "스트라스부르 현대미술관의 그래픽 디자인 컬렉션.", startDate: "Permanent", endDate: "Permanent" }
+      { id: "mamcs-strasbourg-drawings-collection", name: "Drawings", title: "MAMCS Drawings Collection", description: "스트라스부르 현대미술관의 드로잉 컬렉션.", startDate: "Permanent", endDate: "Permanent" },
+      { id: "mamcs-strasbourg-paintings-collection", name: "Paintings", title: "MAMCS Paintings Collection", description: "스트라스부르 현대미술관의 회화 컬렉션.", startDate: "Permanent", endDate: "Permanent" },
+      { id: "mamcs-strasbourg-photography-collection", name: "Photography", title: "MAMCS Photography Collection", description: "스트라스부르 현대미술관의 사진 컬렉션.", startDate: "Permanent", endDate: "Permanent" },
+      { id: "mamcs-strasbourg-graphic-design-collection", name: "Graphic Design", title: "MAMCS Graphic Design Collection", description: "스트라스부르 현대미술관의 그래픽 디자인 컬렉션.", startDate: "Permanent", endDate: "Permanent" }
     ],
     temporaryExhibitions: [],
     pastExhibitions: [],
@@ -2380,8 +2380,8 @@ export const exhibitions = [
       { id: "rijksmuseum-paintings", name: "Paintings Collection", title: "Paintings Collection", description: "Collection of paintings from the Rijksmuseum, including Dutch Golden Age masterpieces and works from the 15th to 20th centuries.", startDate: "Permanent", endDate: "Permanent", collectionFile: "rijksmuseum-paintings-collection.json" },
       { id: "rijksmuseum-photography", name: "Photography Collection", title: "Photography Collection", description: "Collection of photographs from the Rijksmuseum, featuring works from the 19th century to the present day.", startDate: "Permanent", endDate: "Permanent", collectionFile: "rijksmuseum-photography-collection.json" },
       { id: "rijksmuseum-drawings", name: "Drawings Collection", title: "Drawings Collection", description: "Collection of drawings from the Rijksmuseum, featuring works from various periods.", startDate: "Permanent", endDate: "Permanent", collectionFile: "rijksmuseum-drawings-collection.json" },
-      { id: "rijksmuseum-prints", name: "Prints Collection", title: "Prints Collection", description: "Collection of prints from the Rijksmuseum.", startDate: "Permanent", endDate: "Permanent", collectionFile: "rijksmuseum-prints-collection.json" },
-      { id: "rijksmuseum-prints2", name: "Prints Collection 2", title: "Prints Collection 2", description: "Additional collection of prints from the Rijksmuseum.", startDate: "Permanent", endDate: "Permanent", collectionFile: "rijksmuseum-prints2-collection.json" }
+      { id: "rijksmuseum-prints", name: "Book Illustrations", title: "Book Illustrations", description: "Collection of book illustrations from the Rijksmuseum.", startDate: "Permanent", endDate: "Permanent", collectionFile: "rijksmuseum-prints-collection.json" },
+      { id: "rijksmuseum-prints2", name: "Prints Collection", title: "Prints Collection", description: "Collection of prints from the Rijksmuseum.", startDate: "Permanent", endDate: "Permanent", collectionFile: "rijksmuseum-prints2-collection.json" }
     ],
     temporaryExhibitions: [],
     pastExhibitions: [],
@@ -2449,7 +2449,9 @@ export const exhibitions = [
     description: "One of the largest Van Gogh collections in the world, housed in a stunning museum within De Hoge Veluwe National Park. Features over 90 Van Gogh paintings and 180 drawings, plus works by Picasso, Mondrian, and Seurat.",
     representativeImage: "https://krollermuller.nl/images/museum-exterior.jpg",
     permanentExhibitions: [
-      { id: "kroller-muller-paintings", name: "Kröller-Müller Paintings", title: "Kröller-Müller Paintings", description: "World-renowned collection of paintings featuring masterpieces by Van Gogh, Mondrian, Seurat, Picasso, and other modern masters, housed in a modernist building designed by Henry van de Velde.", startDate: "Permanent", endDate: "Permanent", collectionFile: "kroller-muller-paintings.json" }
+      { id: "kroller-muller-paintings", name: "Kröller-Müller Paintings", title: "Kröller-Müller Paintings", description: "World-renowned collection of paintings featuring masterpieces by Van Gogh, Mondrian, Seurat, Picasso, and other modern masters, housed in a modernist building designed by Henry van de Velde.", startDate: "Permanent", endDate: "Permanent", collectionFile: "kroller-muller-paintings.json" },
+      { id: "kroller-muller-film-video", name: "Kröller-Müller Film and Video", title: "Kröller-Müller Film and Video", description: "Collection of film and video works from the museum's contemporary art holdings.", startDate: "Permanent", endDate: "Permanent", collectionFile: "kroller-muller-film-video.json" },
+      { id: "kroller-muller-photography", name: "Kröller-Müller Photography", title: "Kröller-Müller Photography", description: "Photography collection featuring works from the museum's modern and contemporary holdings.", startDate: "Permanent", endDate: "Permanent", collectionFile: "kroller-muller-photography.json" }
     ],
     temporaryExhibitions: [],
     pastExhibitions: [],
@@ -2705,5 +2707,267 @@ export const exhibitions = [
     temporaryExhibitions: [],
     pastExhibitions: [],
     exhibitions: []
+  },
+  {
+    id: "albertina-museum",
+    slug: "albertina",
+    name: "ALBERTINA Museum Vienna",
+    location: "Albertinaplatz 1, 1010 Vienna, Austria",
+    description: "A palace housing one of the most important print rooms in the world, with collections ranging from late Gothic to contemporary art.",
+    latitude: 48.2047,
+    longitude: 16.3682,
+    country: "Austria",
+    region: "Vienna",
+    representativeImage: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Albertina_Wien_2008.jpg/1200px-Albertina_Wien_2008.jpg",
+    floorPlan: "",
+    permanentExhibitions: [
+      { id: "albertina-paintings-100", name: "Paintings", title: "Paintings", description: "Sample dataset (100 items)", startDate: "Sample", endDate: "Sample" },
+      { id: "albertina-sculptures-100", name: "Sculptures", title: "Sculptures", description: "Sample dataset (100 items)", startDate: "Sample", endDate: "Sample" },
+      { id: "albertina-drawings-prints-100", name: "Drawings & Prints", title: "Drawings & Prints", description: "Sample dataset (100 items)", startDate: "Sample", endDate: "Sample" },
+      { id: "albertina-photography-100", name: "Photography", title: "Photography", description: "Sample dataset (100 items)", startDate: "Sample", endDate: "Sample" },
+      { id: "albertina-objects-installations-media-art-100", name: "Objects & Media Art", title: "Objects & Media Art", description: "Sample dataset (100 items)", startDate: "Sample", endDate: "Sample" },
+      { id: "albertina-poster-100", name: "Posters", title: "Posters", description: "Sample dataset (100 items)", startDate: "Sample", endDate: "Sample" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    rooms: {}
+  },
+  {
+    id: "leopold-museum",
+    slug: "leopold-museum",
+    name: "Leopold Museum",
+    location: "Museumsplatz 1, 1070 Vienna, Austria",
+    description: "Home to the world's largest Egon Schiele collection and masterpieces of the Vienna Secession and Art Nouveau.",
+    latitude: 48.2030,
+    longitude: 16.3590,
+    country: "Austria",
+    region: "Vienna",
+    representativeImage: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Wien_-_Leopold_Museum.JPG/1200px-Wien_-_Leopold_Museum.JPG",
+    floorPlan: "",
+    permanentExhibitions: [
+      {
+        id: "leopold-museum-collection",
+        name: "Collection",
+        title: "Leopold Museum Collection",
+        description: "Highlights from the Leopold Museum's collection of Austrian modern art.",
+        startDate: "Permanent",
+        endDate: "Permanent",
+        collectionFile: "leopold-museum-collection.json"
+      }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    rooms: {}
+  },
+  {
+    id: "kunsthistorisches-museum-vienna",
+    slug: "khm",
+    name: "Kunsthistorisches Museum Vienna",
+    location: "Maria-Theresien-Platz, 1010 Vienna, Austria",
+    description: "One of the world's foremost museums, housing an extensive collection of art and artifacts spanning several millennia, from ancient Egypt to the late 18th century.",
+    latitude: 48.2037,
+    longitude: 16.3612,
+    country: "Austria",
+    region: "Vienna",
+    representativeImage: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4d/Kunsthistorisches_Museum_Vienna_June_2006_002.jpg/1200px-Kunsthistorisches_Museum_Vienna_June_2006_002.jpg",
+    floorPlan: "",
+    permanentExhibitions: [
+      {
+        id: "khm-collection",
+        name: "KHM Collection",
+        title: "Kunsthistorisches Museum Collection",
+        description: "Masterpieces from the museum's vast collection including paintings, sculptures, decorative arts, and antiquities.",
+        startDate: "Permanent",
+        endDate: "Permanent",
+        collectionFile: "khm-collection.json"
+      }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    rooms: {}
+  },
+  {
+    id: "belvedere-museum",
+    slug: "belvedere",
+    name: "Belvedere Museum",
+    location: "Prinz-Eugen-Straße 27, 1030 Vienna, Austria",
+    description: "One of Austria's most important art museums, housing the largest collection of Austrian art from the Middle Ages to the present day, including the world's largest collection of Gustav Klimt paintings.",
+    latitude: 48.1919,
+    longitude: 16.3807,
+    country: "Austria",
+    region: "Vienna",
+    representativeImage: "https://www.belvedere.at/sites/default/files/styles/large/public/2024-11/belvedere-building.jpg",
+    floorPlan: "",
+    permanentExhibitions: [
+      {
+        id: "belvedere-collection",
+        name: "Belvedere Collection",
+        title: "Belvedere Collection",
+        description: "Collection of artworks from the Belvedere Museum.",
+        startDate: "Permanent",
+        endDate: "Permanent",
+        collectionFile: "belvedere-collection.json"
+      }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    rooms: {}
+  },
+  {
+    id: "wawel-royal-castle",
+    slug: "wawel",
+    name: "Wawel Royal Castle",
+    location: "Wawel 5, 31-001 Kraków, Poland",
+    description: "The Wawel Royal Castle is a castle residency located in central Kraków, Poland. Built at the behest of King Casimir III the Great, it consists of a number of structures from different periods situated around the Italian-styled main courtyard.",
+    latitude: 50.0540,
+    longitude: 19.9354,
+    country: "Poland",
+    region: "Krakow",
+    representativeImage: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Wawel_Castle_from_Vistula_River.jpg/1200px-Wawel_Castle_from_Vistula_River.jpg",
+    floorPlan: "",
+    permanentExhibitions: [
+      {
+        id: "wawel-collection",
+        name: "Wawel Collection",
+        title: "Wawel Royal Castle Collection",
+        description: "The digital collection of the Wawel Royal Castle.",
+        startDate: "Permanent",
+        endDate: "Permanent"
+      }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    rooms: {}
+  },
+  {
+    id: "mnk-krakow",
+    slug: "mnk",
+    name: "National Museum in Krakow",
+    location: "al. 3 Maja 1, 30-062 Kraków, Poland",
+    description: "The National Museum in Krakow (MNK), established in 1879, is the main branch of Poland's National Museum, which has several independent branches with permanent collections around the country.",
+    latitude: 50.0604,
+    longitude: 19.9236,
+    country: "Poland",
+    region: "Krakow",
+    representativeImage: "https://cdn-zbiory.mnk.pl/upload/multimedia/70/cf/70cf455ae3a01688ee35b91049110d73.jpg",
+    floorPlan: "",
+    permanentExhibitions: [
+      {
+        id: "mnk-collection",
+        name: "MNK Collection",
+        title: "National Museum in Krakow Collection",
+        description: "Paintings, drawings, posters and photography from the National Museum in Krakow.",
+        startDate: "Permanent",
+        endDate: "Permanent",
+        collectionFile: "mnk-collection.json"
+      }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    rooms: {}
+  },
+  {
+    id: "mfab",
+    slug: "mfab",
+    name: "Museum of Fine Arts, Budapest",
+    location: "Budapest, Dózsa György út 41, 1146 Hungary",
+    description: "The Museum of Fine Arts is a museum in Heroes' Square, Budapest, Hungary, built in the eclectic-neoclassical style between 1900 and 1906, housing a significant international art collection.",
+    latitude: 47.5163,
+    longitude: 19.0763,
+    country: "Hungary",
+    region: "Budapest",
+    representativeImage: "https://www.mfab.hu/app/uploads/2019/02/szepmuveszeti_epulet_2.jpg",
+    floorPlan: "",
+    permanentExhibitions: [
+      { 
+        id: "mfab-collection", 
+        name: "MFAB Collection", 
+        title: "Museum of Fine Arts Collection", 
+        description: "Highlights from the Museum of Fine Arts, Budapest, spanning from antiquity to the present day.", 
+        startDate: "Permanent", 
+        endDate: "Permanent",
+        collectionFile: "mfab-collection.json"
+      }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    rooms: {}
+  },
+  {
+    id: "gulbenkian-museum",
+    slug: "gulbenkian",
+    name: "Gulbenkian Museum",
+    location: "Av. de Berna 45A, 1067-001 Lisboa, Portugal",
+    description: "The Calouste Gulbenkian Museum houses one of the world's most important private art collections, spanning from Ancient Egypt to the early 20th century.",
+    latitude: 38.7375,
+    longitude: -9.1547,
+    country: "Portugal",
+    region: "Lisbon",
+    representativeImage: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6e/Museu_Calouste_Gulbenkian_exterior.jpg/1200px-Museu_Calouste_Gulbenkian_exterior.jpg",
+    permanentExhibitions: [
+      { 
+        id: "gulbenkian-collection", 
+        name: "Founder's Collection", 
+        title: "Founder's Collection", 
+        description: "Highlights from the Calouste Gulbenkian collection, ranging from Islamic art to René Lalique.", 
+        startDate: "Permanent", 
+        endDate: "Permanent", 
+        collectionFile: "gulbenkian-collection.json" 
+      }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: []
+  },
+  {
+    id: "fine-arts-be",
+    slug: "fine-arts-be",
+    name: "Musées royaux des Beaux-Arts de Belgique",
+    location: "Rue de la Régence 3, 1000 Bruxelles, Belgium",
+    description: "The Royal Museums of Fine Arts of Belgium are a group of art museums in Brussels.",
+    latitude: 50.8411,
+    longitude: 4.3596,
+    country: "Belgium",
+    region: "Brussels",
+    representativeImage: "https://fine-arts-museum.be/assets/img/logo-fr.png",
+    floorPlan: "",
+    permanentExhibitions: [
+      {
+        id: "fine-arts-be-collection",
+        name: "Collection Highlights",
+        title: "Painting Collection Highlights",
+        description: "A selection of 100 paintings from the collection.",
+        startDate: "Permanent",
+        endDate: "Permanent",
+        collectionFile: "fine-arts-be-100.json"
+      }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    rooms: {}
+  },
+  {
+    id: "nam-athens",
+    slug: "nam-athens",
+    name: "National Archaeological Museum",
+    location: "44 Patission Street, Athens 10682, Greece",
+    description: "The largest archaeological museum in Greece and one of the most important museums in the world devoted to ancient Greek art.",
+    latitude: 37.9891,
+    longitude: 23.7326,
+    country: "Greece",
+    region: "Athens",
+    representativeImage: "https://www.namuseum.gr/wp-content/themes/nam/assets/images/logo_en.png",
+    permanentExhibitions: [
+      { 
+        id: "nam-collection", 
+        name: "Collection Highlights", 
+        title: "Collection Highlights", 
+        description: "A selection of major artifacts from the National Archaeological Museum, Athens.", 
+        startDate: "Permanent", 
+        endDate: "Permanent", 
+        collectionFile: "nam-collection.json" 
+      }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: []
   }
 ];
