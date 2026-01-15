@@ -6710,7 +6710,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
                     </div>
                   )}
                   {/* 2D/3D buttons and Special Filters */}
-                  {(hasCategorizedArtworks || hasArchivalArtworks || exhibition.id === 'guggenheim-bilbao-collection' || exhibition.id === 'kunsthaus-collection' || exhibition.id === 'picasso-bcn-collection') && (
+                  {(hasCategorizedArtworks || hasArchivalArtworks || exhibition.id === 'guggenheim-bilbao-collection' || exhibition.id === 'kunsthaus-collection' || exhibition.id === 'khm-collection' || exhibition.id === 'picasso-bcn-collection') && (
                     <div style={{ display: 'flex', gap: 6, marginBottom: 6 }}>
                       {/* 2D/3D Type Buttons */}
                       {hasCategorizedArtworks && (['2D', '3D'] as const).map(t => (
