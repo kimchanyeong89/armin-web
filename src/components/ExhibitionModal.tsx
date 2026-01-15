@@ -17,42 +17,42 @@ const RE_YEAR_4 = /\b(\d{4})\b/g;
 const RE_YEAR_3 = /\b(\d{3})\b/;
 
 const CATEGORY_MAP: Record<string, string> = {
-    "drawing": "Drawing",
-    "drawings": "Drawing",
-    "draw": "Drawing",
-    "dibujo": "Drawing",
-    "dibujos": "Drawing",
-    "disegno": "Drawing",
-    "engravings (prints)": "Graphic artwork",
-    "engravings": "Graphic artwork",
-    "engraving": "Graphic artwork",
-    "prints": "Graphic artwork",
-    "print": "Graphic artwork",
-    "graphic artwork": "Graphic artwork",
-    "graphic artworks": "Graphic artwork",
-    "lithographs": "Graphic artwork",
-    "lithograph": "Graphic artwork",
-    "oil painting": "Painting",
-    "paintings": "Painting",
-    "painting": "Painting",
-    "pintura": "Painting",
-    "pinturas": "Painting",
-    "pottery (visual works)": "Ceramics",
-    "pottery": "Ceramics",
-    "ceramic": "Ceramics",
-    "ceramics": "Ceramics",
-    "sculpture (visual work)": "Sculpture",
-    "sculptures": "Sculpture",
-    "sculpture": "Sculpture",
-    "escultura": "Sculpture",
-    "esculturas": "Sculpture",
-    "sketchbooks": "Sketchbooks",
-    "sketchbook": "Sketchbooks",
-    "photography": "Photography",
-    "photograph": "Photography",
-    "photos": "Photography",
-    "posters": "Posters",
-    "poster": "Posters",
+  "drawing": "Drawing",
+  "drawings": "Drawing",
+  "draw": "Drawing",
+  "dibujo": "Drawing",
+  "dibujos": "Drawing",
+  "disegno": "Drawing",
+  "engravings (prints)": "Graphic artwork",
+  "engravings": "Graphic artwork",
+  "engraving": "Graphic artwork",
+  "prints": "Graphic artwork",
+  "print": "Graphic artwork",
+  "graphic artwork": "Graphic artwork",
+  "graphic artworks": "Graphic artwork",
+  "lithographs": "Graphic artwork",
+  "lithograph": "Graphic artwork",
+  "oil painting": "Painting",
+  "paintings": "Painting",
+  "painting": "Painting",
+  "pintura": "Painting",
+  "pinturas": "Painting",
+  "pottery (visual works)": "Ceramics",
+  "pottery": "Ceramics",
+  "ceramic": "Ceramics",
+  "ceramics": "Ceramics",
+  "sculpture (visual work)": "Sculpture",
+  "sculptures": "Sculpture",
+  "sculpture": "Sculpture",
+  "escultura": "Sculpture",
+  "esculturas": "Sculpture",
+  "sketchbooks": "Sketchbooks",
+  "sketchbook": "Sketchbooks",
+  "photography": "Photography",
+  "photograph": "Photography",
+  "photos": "Photography",
+  "posters": "Posters",
+  "poster": "Posters",
 };
 const CATEGORY_ENTRIES = Object.entries(CATEGORY_MAP);
 
@@ -1705,35 +1705,35 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
     const normCache = new Map<string, string>();
 
     const getNormalized = (c: string) => {
-       if (normCache.has(c)) return normCache.get(c)!;
-       const res = normalizeCategory(c);
-       normCache.set(c, res);
-       return res;
+      if (normCache.has(c)) return normCache.get(c)!;
+      const res = normalizeCategory(c);
+      normCache.set(c, res);
+      return res;
     };
-    
+
     // We can reuse the loop logic or simpler: iterate all items and count valid ones
     for (const item of dataSource) {
-        const cat = useRawMaterial
-            ? (item.material || '')
-            : ((item as Record<string, unknown>).category as string);
-            
-        if (cat && cat.trim() && !cat.includes('\uFFFD')) {
-             if (hasCategorizedArtworks) {
-                  const itemType = useRawMaterial
-                    ? (MATERIAL_TO_TYPE[item.material] || '3D')
-                    : inferArtworkType(item);
-                  if (itemType !== targetType) continue; // Skip if not matching type
-             }
-             
-             const normalized = getNormalized(cat);
-             if (normalized) {
-                 countsMap.set(normalized, (countsMap.get(normalized) || 0) + 1);
-             }
+      const cat = useRawMaterial
+        ? (item.material || '')
+        : ((item as Record<string, unknown>).category as string);
+
+      if (cat && cat.trim() && !cat.includes('\uFFFD')) {
+        if (hasCategorizedArtworks) {
+          const itemType = useRawMaterial
+            ? (MATERIAL_TO_TYPE[item.material] || '3D')
+            : inferArtworkType(item);
+          if (itemType !== targetType) continue; // Skip if not matching type
         }
+
+        const normalized = getNormalized(cat);
+        if (normalized) {
+          countsMap.set(normalized, (countsMap.get(normalized) || 0) + 1);
+        }
+      }
     }
 
     const counts = Array.from(countsMap.entries()).map(([cat, count]) => ({ cat, count }));
-    
+
     counts.sort((a, b) => b.count - a.count);
     // Filter out categories with 3 or fewer items, and limit to top 15 for UI space
     return counts.filter(c => c.count > 3).slice(0, 15).map(c => c.cat);
@@ -2231,7 +2231,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
           const res = await fetch('/data/mnk-collection.json', { cache: 'no-store' });
           if (!res.ok) throw new Error('Failed to load MNK artworks');
           const data = await res.json();
-          
+
           const toYear = (yearText: string | number | undefined) => {
             if (!yearText) return 0;
             const match = String(yearText).match(/(\d{4})/);
@@ -2251,11 +2251,11 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
           };
 
           const getMNKCategory = (typeId: number) => {
-             if (typeId === 100489 || typeId === 113913) return "Painting";
-             if (typeId === 100566) return "Drawing";
-             if (typeId === 99988) return "Posters"; // Use 'Posters' to match CATEGORY_MAP
-             if (typeId === 100453) return "Photography";
-             return "Artwork";
+            if (typeId === 100489 || typeId === 113913) return "Painting";
+            if (typeId === 100566) return "Drawing";
+            if (typeId === 99988) return "Posters"; // Use 'Posters' to match CATEGORY_MAP
+            if (typeId === 100453) return "Photography";
+            return "Artwork";
           };
 
           const list: Artwork[] = Array.isArray(data)
@@ -2277,7 +2277,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
               type: '2D', // Mostly 2D collection
             }))
             : [];
-          
+
           const withImages = list.filter((a) => !!a.image);
           setArtworks(withImages);
           setInitialized(true);
@@ -2297,30 +2297,30 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
           if (!res.ok) throw new Error('Failed to load MFAB artworks');
           const data = await res.json();
           const items = data.artworks || [];
-          
+
           const list: Artwork[] = items.map((item: any) => ({
-             id: item.id,
-             name: item.title,
-             artist: item.artist,
-             year: item.year || 0,
-             date: item.dateStr || '',
-             image: item.image,
-             sourceUrl: item.url,
-             roomId: 'default',
-             exhibitionName: exhibition.name,
-             exhibitionTitle: 'Museum of Fine Arts Collection',
-             description: `Medium: ${item.medium}. Dimensions: ${item.dimensions}`,
-             medium: item.medium,
-             dimension: item.dimensions,
-             category: item.classification || 'Artwork',
-             type: '2D'
+            id: item.id,
+            name: item.title,
+            artist: item.artist,
+            year: item.year || 0,
+            date: item.dateStr || '',
+            image: item.image,
+            sourceUrl: item.url,
+            roomId: 'default',
+            exhibitionName: exhibition.name,
+            exhibitionTitle: 'Museum of Fine Arts Collection',
+            description: `Medium: ${item.medium}. Dimensions: ${item.dimensions}`,
+            medium: item.medium,
+            dimension: item.dimensions,
+            category: item.classification || 'Artwork',
+            type: '2D'
           }));
-          
+
           setArtworks(list);
           setInitialized(true);
         } catch (err) {
-            console.error('Failed to load MFAB artworks:', err);
-            setInitialized(true);
+          console.error('Failed to load MFAB artworks:', err);
+          setInitialized(true);
         }
       })();
       return () => { };
@@ -2334,30 +2334,30 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
           if (!res.ok) throw new Error('Failed to load Fine Arts BE artworks');
           const data = await res.json();
           const items = data.items || [];
-          
+
           const list: Artwork[] = items.map((item: any) => ({
-             id: item.url,
-             name: item.title,
-             artist: item.artist,
-             year: 0,
-             date: item.meta?.['Date'] || '',
-             image: item.image,
-             sourceUrl: item.url,
-             roomId: 'default',
-             exhibitionName: exhibition.name,
-             exhibitionTitle: 'Painting Collection Highlights',
-             description: item.description,
-             medium: item.meta?.['Technique'] || '',
-             dimension: item.meta?.['Dimensions'] || '',
-             category: item.objectType || 'Painting',
-             type: '2D'
+            id: item.url,
+            name: item.title,
+            artist: item.artist,
+            year: 0,
+            date: item.meta?.['Date'] || '',
+            image: item.image,
+            sourceUrl: item.url,
+            roomId: 'default',
+            exhibitionName: exhibition.name,
+            exhibitionTitle: 'Painting Collection Highlights',
+            description: item.description,
+            medium: item.meta?.['Technique'] || '',
+            dimension: item.meta?.['Dimensions'] || '',
+            category: item.objectType || 'Painting',
+            type: '2D'
           }));
-          
+
           setArtworks(list);
           setInitialized(true);
         } catch (err) {
-            console.error('Failed to load Fine Arts BE artworks:', err);
-            setInitialized(true);
+          console.error('Failed to load Fine Arts BE artworks:', err);
+          setInitialized(true);
         }
       })();
       return () => { };
@@ -2374,27 +2374,27 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
           const list: Artwork[] = Array.isArray(data) ? data.map((item: any) => {
             // Use scraped category or fallback to '2D' logic if still vague
             let category = item.category || 'Artwork';
-            
+
             // Clean up some scraped values if they are too generic or wrong
             if (category === 'Purchased' || category === 'Gift' || category === 'Donation' || category === 'Unknown') {
-                 // Re-run inference if the scraped "category" was actually Provenance/Credit Line (which seems to happen)
-                 // The scraper picked up 'Purchased' likely from a wrong DL field or similar.
-                 // Let's rely on our strong inference logic again here as a safety net.
-                const t = (item.title || '').toLowerCase();
-                const m = ((item.medium || '') + ' ' + (item.materials || '')).toLowerCase();
+              // Re-run inference if the scraped "category" was actually Provenance/Credit Line (which seems to happen)
+              // The scraper picked up 'Purchased' likely from a wrong DL field or similar.
+              // Let's rely on our strong inference logic again here as a safety net.
+              const t = (item.title || '').toLowerCase();
+              const m = ((item.medium || '') + ' ' + (item.materials || '')).toLowerCase();
 
-                if (m.includes('oil') || m.includes('canvas') || m.includes('tempera') || m.includes('painting') || t.includes('portrait')) category = 'Painting';
-                else if (m.includes('sculpture') || m.includes('bronze') || m.includes('marble') || m.includes('statue') || m.includes('bust')) category = 'Sculpture';
-                else if (m.includes('porcelain') || m.includes('ceramic') || m.includes('tile') || m.includes('glaze') || m.includes('stonepaste') || m.includes('faience')) category = 'Ceramics';
-                else if (m.includes('textile') || m.includes('wool') || m.includes('silk') || m.includes('carpet') || m.includes('velvet') || m.includes('tapestry')) category = 'Textile';
-                else if (m.includes('parchment') || m.includes('manuscript') || m.includes('vellum') || m.includes('book') || t.includes('quran') || t.includes('bible')) category = 'Manuscript';
-                else if (m.includes('coin') || m.includes('medal') || m.includes('decadrachm') || m.includes('tetradrachm')) category = 'Numismatics';
-                else if (m.includes('furniture') || m.includes('wood') || m.includes('chair') || m.includes('cabinet') || m.includes('commode') || m.includes('desk')) category = 'Furniture';
-                else if (m.includes('glass') && !m.includes('enamel')) category = 'Glass';
-                else if (m.includes('gold') || m.includes('silver') || m.includes('enamel') || m.includes('jewelry') || m.includes('gem')) category = 'Metalwork/Jewelry';
-                else if (m.includes('drawing') || m.includes('pencil') || m.includes('chalk') || m.includes('pastel') || m.includes('watercolour')) category = 'Drawing';
-                else if (m.includes('print') || m.includes('engraving') || m.includes('etching') || m.includes('lithograph')) category = 'Print';
-                else category = 'Artwork';
+              if (m.includes('oil') || m.includes('canvas') || m.includes('tempera') || m.includes('painting') || t.includes('portrait')) category = 'Painting';
+              else if (m.includes('sculpture') || m.includes('bronze') || m.includes('marble') || m.includes('statue') || m.includes('bust')) category = 'Sculpture';
+              else if (m.includes('porcelain') || m.includes('ceramic') || m.includes('tile') || m.includes('glaze') || m.includes('stonepaste') || m.includes('faience')) category = 'Ceramics';
+              else if (m.includes('textile') || m.includes('wool') || m.includes('silk') || m.includes('carpet') || m.includes('velvet') || m.includes('tapestry')) category = 'Textile';
+              else if (m.includes('parchment') || m.includes('manuscript') || m.includes('vellum') || m.includes('book') || t.includes('quran') || t.includes('bible')) category = 'Manuscript';
+              else if (m.includes('coin') || m.includes('medal') || m.includes('decadrachm') || m.includes('tetradrachm')) category = 'Numismatics';
+              else if (m.includes('furniture') || m.includes('wood') || m.includes('chair') || m.includes('cabinet') || m.includes('commode') || m.includes('desk')) category = 'Furniture';
+              else if (m.includes('glass') && !m.includes('enamel')) category = 'Glass';
+              else if (m.includes('gold') || m.includes('silver') || m.includes('enamel') || m.includes('jewelry') || m.includes('gem')) category = 'Metalwork/Jewelry';
+              else if (m.includes('drawing') || m.includes('pencil') || m.includes('chalk') || m.includes('pastel') || m.includes('watercolour')) category = 'Drawing';
+              else if (m.includes('print') || m.includes('engraving') || m.includes('etching') || m.includes('lithograph')) category = 'Print';
+              else category = 'Artwork';
             }
 
             return {
@@ -2419,8 +2419,8 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
           setArtworks(withImages);
           setInitialized(true);
         } catch (err) {
-            console.error('Failed to load Gulbenkian artworks:', err);
-            setInitialized(true);
+          console.error('Failed to load Gulbenkian artworks:', err);
+          setInitialized(true);
         }
       })();
       return () => { };
@@ -2445,10 +2445,10 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
             else if (m.includes('ceramic') || m.includes('pottery') || m.includes('vase') || m.includes('amphora') || m.includes('krater') || m.includes('kylix') || m.includes('lekythos') || m.includes('clay') || m.includes('terracotta')) visualCategory = 'Ceramics';
             else if (m.includes('fresco') || m.includes('wall painting')) visualCategory = 'Fresco';
             else if (m.includes('figurine')) visualCategory = 'Figurine';
-            
+
             // If we couldn't resolve a specific visual category, fallback to the scraped collection name
             if (visualCategory === 'Artifact') {
-               visualCategory = item.category || 'Artifact';
+              visualCategory = item.category || 'Artifact';
             }
 
             return {
@@ -2473,8 +2473,8 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
           setArtworks(withImages);
           setInitialized(true);
         } catch (err) {
-            console.error('Failed to load NAM artworks:', err);
-            setInitialized(true);
+          console.error('Failed to load NAM artworks:', err);
+          setInitialized(true);
         }
       })();
       return () => { };
@@ -2482,36 +2482,36 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
 
     // Kunsthaus Zürich
     if (exhibition.id === 'kunsthaus-collection') {
-       (async () => {
+      (async () => {
         try {
           const res = await fetch('/data/kunsthaus-collection.json', { cache: 'no-store' });
           if (!res.ok) throw new Error('Failed to load Kunsthaus artworks');
           const data = await res.json();
           const list: Artwork[] = Array.isArray(data) ? data.map((item: any) => ({
-             id: item.id || `kh-${Math.random()}`,
-             name: item.title,
-             artist: item.artist,
-             year: parseInt((item.date || '').match(/\d{4}/)?.[0] || '0'),
-             date: item.date,
-             image: item.image,
-             sourceUrl: item.url,
-             medium: item.medium,
-             dimension: item.dimensions,
-             roomId: 'default',
-             exhibitionName: exhibition.name,
-             exhibitionTitle: 'Collection Highlights',
-             category: item.category || 'Artwork',
-             type: '2D',
-             onView: item.onView
+            id: item.id || `kh-${Math.random()}`,
+            name: item.title,
+            artist: item.artist,
+            year: parseInt(String(item.date || '').match(/\d{4}/)?.[0] || '0'),
+            date: item.date,
+            image: item.image,
+            sourceUrl: item.url,
+            medium: item.medium,
+            dimension: item.dimensions,
+            roomId: 'default',
+            exhibitionName: exhibition.name,
+            exhibitionTitle: 'Collection Highlights',
+            category: item.category || 'Artwork',
+            type: '2D',
+            onView: item.onView
           })) : [];
           setArtworks(list.filter(a => !!a.image));
           setInitialized(true);
         } catch (err) {
-            console.error('Failed to load Kunsthaus artworks:', err);
-            setInitialized(true);
+          console.error('Failed to load Kunsthaus artworks:', err);
+          setInitialized(true);
         }
-       })();
-       return () => {};
+      })();
+      return () => { };
     }
 
     // Tate St Ives Collection: load from local scraped JSON
@@ -3894,6 +3894,49 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
       })();
       return () => { };
     }
+
+    // Acropolis Museum Collection
+    if (exhibition.id === 'acropolis-museum') {
+      (async () => {
+        try {
+          const res = await fetch('/data/acropolis-museum-collection.json', { cache: 'no-store' });
+          if (!res.ok) throw new Error('Failed to load Acropolis Museum artworks');
+          const data = await res.json();
+
+          // Current scraper saves array directly
+          const allObjects = Array.isArray(data) ? data : (data.objects || []);
+
+          const toYear = (yearText: string | number | undefined) => {
+            if (!yearText) return 0;
+            const match = String(yearText).match(/(\d{4})/);
+            return match ? parseInt(match[1], 10) : 0;
+          };
+
+          const list: Artwork[] = allObjects.map((item: any, idx: number) => ({
+            id: item.id || `acropolis-${idx}`,
+            name: item.title || 'Untitled',
+            artist: item.artist || 'Unknown',
+            year: toYear(item.year),
+            date: item.year ? String(item.year) : (item.metadata?.Date || ''),
+            image: item.image,
+            description: item.description,
+            roomId: 'default',
+            exhibitionName: exhibition.name,
+            exhibitionTitle: exhibition.title,
+            type: '3D', // Acropolis is mostly sculptures/artifacts
+            // Optionally pass metadata if needed elsewhere
+            // metadata: item.metadata 
+          }));
+          const withImages = list.filter((a) => !!a.image);
+          setArtworks(withImages);
+          setInitialized(true);
+        } catch (error) {
+          console.error('Failed to load Acropolis Museum artworks:', error);
+          setInitialized(true);
+        }
+      })();
+      return () => { };
+    }
     // Musée de l'Orangerie Collection: load from local scraped JSON
     if (exhibition.id === 'orangerie-collection') {
       (async () => {
@@ -4344,7 +4387,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
               const musnetParts = [];
               if (item.materialMUSNET) musnetParts.push(item.materialMUSNET);
               if (item.technikaMUSNET) musnetParts.push(item.technikaMUSNET);
-              
+
               let mats = musnetParts.join(', ');
 
               // If MUSNET is empty, try the array fields (safely to avoid [object Object])
@@ -4356,7 +4399,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
 
               // Update the variable used in return
               mediumOrTechnique = mats;
-              
+
               // Map image
               item.image = item.generated_image_url;
 
@@ -6740,7 +6783,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
                           {t}
                         </button>
                       ))}
-                      
+
                       {/* N Button (Uncategorized) */}
                       {hasCategorizedArtworks && hasUncategorizedArtworks && (
                         <button
