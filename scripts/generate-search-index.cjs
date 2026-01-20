@@ -110,6 +110,84 @@ const MUSEUM_MAPPINGS = {
     'national-museum-korea': { museumName: '국립중앙박물관', exhibitionId: 'national-museum-korea' },
     'gyeongju-museum': { museumName: '국립경주박물관', exhibitionId: 'gyeongju-museum' },
     'buyeo-museum': { museumName: '국립부여박물관', exhibitionId: 'buyeo-museum' },
+
+    // Netherlands
+    'vangogh-museum': { museumName: 'Van Gogh Museum', exhibitionId: 'vangogh-museum-collection' },
+    'rijksmuseum': { museumName: 'Rijksmuseum' },
+    'mauritshuis': { museumName: 'Mauritshuis' },
+    'kroller-muller': { museumName: 'Kröller-Müller Museum' },
+
+    // Denmark
+    'smk': { museumName: 'SMK (Statens Museum for Kunst)' },
+    'glyptoteket': { museumName: 'Ny Carlsberg Glyptotek' },
+    'louisiana': { museumName: 'Louisiana Museum of Modern Art' },
+    'aros': { museumName: 'ARoS Aarhus Art Museum' },
+    'skagens': { museumName: 'Skagens Museum' },
+
+    // Norway
+    'munch': { museumName: 'MUNCH Museum' },
+    'nasjonal': { museumName: 'Nasjonalmuseet' },
+    'nam-': { museumName: 'Nasjonalmuseet' },
+
+    // Sweden
+    'sweden-collection': { museumName: 'Nationalmuseum Sweden' },
+
+    // Finland
+    'ateneum': { museumName: 'Ateneum Art Museum' },
+    'kiasma': { museumName: 'Kiasma Museum of Contemporary Art' },
+    'sinebrychoff': { museumName: 'Sinebrychoff Art Museum' },
+
+    // Austria
+    'khm': { museumName: 'Kunsthistorisches Museum Vienna' },
+    'belvedere': { museumName: 'Belvedere' },
+    'leopold': { museumName: 'Leopold Museum' },
+    'mumok': { museumName: 'mumok' },
+    'albertina': { museumName: 'Albertina' },
+
+    // Switzerland
+    'kunsthaus': { museumName: 'Kunsthaus Zürich' },
+    'beyeler': { museumName: 'Fondation Beyeler' },
+    'basel': { museumName: 'Kunstmuseum Basel' },
+    'mah-': { museumName: 'Musée d\'Art et d\'Histoire Geneva' },
+
+    // Czech Republic
+    'ngprague': { museumName: 'National Gallery Prague' },
+
+    // Portugal
+    'gulbenkian': { museumName: 'Calouste Gulbenkian Museum' },
+
+    // Poland
+    'mnk': { museumName: 'National Museum in Krakow' },
+    'wawel': { museumName: 'Wawel Castle' },
+
+    // Hungary
+    'mfab': { museumName: 'Museum of Fine Arts Budapest' },
+
+    // Russia
+    'rusmuseum': { museumName: 'State Russian Museum' },
+
+    // Greece
+    'acropolis-museum': { museumName: 'Acropolis Museum' },
+    'museo-archeologico-napoli': { museumName: 'Museo Archeologico Nazionale di Napoli' },
+
+    // Spain Additional
+    'caixaforum': { museumName: 'CaixaForum' },
+    'dali': { museumName: 'Dalí Foundation' },
+
+    // The British Museum (GAC version)
+    'the-british-museum': { museumName: 'British Museum' },
+
+    // Museum Wales
+    'museum-wales': { museumName: 'National Museum Wales' },
+
+    // Toulouse-Lautrec (special)
+    'toulouse-lautrec': { museumName: 'Musée Toulouse-Lautrec' },
+
+    // Matisse Nice
+    'matisse-nice': { museumName: 'Musée Matisse Nice' },
+
+    // Rouen MBA
+    'rouen': { museumName: 'Musée des Beaux-Arts de Rouen' },
 };
 
 // Files to skip
@@ -192,9 +270,10 @@ function loadCollection(filePath) {
     try {
         const data = JSON.parse(fs.readFileSync(filePath, 'utf-8'));
         if (Array.isArray(data)) return data;
+        if (data.items) return data.items;
         if (data.objects) return data.objects;
         if (data.artworks) return data.artworks;
-        if (data.rooms) return data.rooms.flatMap(room => room.artworks || []);
+        if (data.rooms) return data.rooms.flatMap(room => room.artworks || room.items || []);
         return [];
     } catch (e) {
         return [];
