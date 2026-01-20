@@ -5,7 +5,7 @@ import React, { useState, useEffect, useRef, useMemo, useCallback } from "react"
 import { collection, query, where, onSnapshot, getDocs, deleteDoc, doc, setDoc, serverTimestamp, addDoc } from "firebase/firestore";
 import { onAuthStateChanged, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { db, auth } from "../firebase";
-import { buildSourceSet, useProxy } from "../utils/imageProxy";
+import { buildSourceSet, useProxy, getOptimizedImageUrl } from "../utils/imageProxy";
 import { usePrefetchNeighbors } from "../hooks/usePrefetchNeighbors";
 import { LoginButton } from "./LoginButton";
 import { HeartOverlay } from "./HeartOverlay";
@@ -2138,7 +2138,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
               type: item.is3D ? '3D' : '2D'
             };
           }) : [];
-          
+
           const filtered = list.filter(a => !!a.image);
           setArtworks(filtered);
           console.log('[ExhibitionModal] Set artworks state done. Count:', filtered.length);
@@ -3727,7 +3727,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
             artist: item.artist === 'Additional Items' ? 'Unknown' : (item.artist || 'Unknown'),
             year: toYear(item.year),
             date: item.year,
-            image: item.image,
+            image: getOptimizedImageUrl(item.image),
             sourceUrl: item.url,
             roomId: 'default',
             exhibitionName: exhibition.name,
@@ -3805,7 +3805,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
             artist: item.artist || 'Unknown',
             year: toYear(item.year),
             date: item.year,
-            image: item.image,
+            image: getOptimizedImageUrl(item.image),
             sourceUrl: item.sourceUrl,
             roomId: 'default',
             exhibitionName: exhibition.name,
@@ -3952,7 +3952,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
             artist: item.artist || 'Unknown',
             year: toYear(item.year),
             date: item.year,
-            image: item.image,
+            image: getOptimizedImageUrl(item.image),
             sourceUrl: item.sourceUrl,
             roomId: 'default',
             exhibitionName: exhibition.name,
@@ -5707,8 +5707,8 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
     // Subscribe to Firestore artworks for this exhibition
     // EXCLUSION: If we are using a static file for this exhibition, do NOT subscribe to Firestore
     if (exhibition.id.includes('skagens')) {
-        console.log('[ExhibitionModal] Skipping Firestore subscription for Skagens (handled above).');
-        return () => { };
+      console.log('[ExhibitionModal] Skipping Firestore subscription for Skagens (handled above).');
+      return () => { };
     }
 
     const q = query(
