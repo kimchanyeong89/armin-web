@@ -114,9 +114,9 @@ const MUSEUM_MAPPINGS = {
 
 // Files to skip
 const SKIP_PATTERNS = [
-    'search-index',
+    'search-index-part', // Skip search index chunks (more specific than '-part')
+    'search-index.json', // Skip main search index
     '.backup',
-    '-part',
     'test',
     '-sample',
     '-new.json',
