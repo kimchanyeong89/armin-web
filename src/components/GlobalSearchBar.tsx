@@ -92,11 +92,14 @@ export default function GlobalSearchBar({ onOpenLightbox, onNavigateToMuseum, mu
     const queryRef = useRef(query);
 
     // AI Semantic Search
-    const [isAIMode, setIsAIMode] = useState(false);
+    const [isAIMode, setIsAIMode] = useState(false);    // AI Search state
     const [aiResults, setAiResults] = useState<SearchableArtwork[]>([]);
     const [isAILoading, setIsAILoading] = useState(false);
+    const [isClipLoading, setIsClipLoading] = useState(false);
 
-    // Mobile Drag State
+    useEffect(() => {
+        console.log('GlobalSearchBar v2.1 loaded - Semantic Search fixed');
+    }, []);
     const [dragY, setDragY] = useState(0);
     const dragStartY = useRef(0);
 
@@ -354,10 +357,11 @@ export default function GlobalSearchBar({ onOpenLightbox, onNavigateToMuseum, mu
 
 
     // AI 모델 로딩 상태
-    const [isClipLoading, setIsClipLoading] = useState(false);
+
 
     // Semantic search function - 브라우저에서 CLIP 텍스트 임베딩 생성
     const performSemanticSearch = useCallback(async (searchQuery: string) => {
+        console.log('Performing semantic search with query:', searchQuery);
         if (searchQuery.length < 3) {
             setAiResults([]);
             return;
