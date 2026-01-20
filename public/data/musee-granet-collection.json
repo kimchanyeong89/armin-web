@@ -93,7 +93,7 @@
   {
     "id": "granet-7",
     "title": "François-Marius Granet, peintre et dessinateur",
-    "artist": "Jean Auguste Dominique Ingres",
+    "artist": "Ingres Jean-Auguste-Dominique",
     "year": "1780",
     "medium": "Huile sur toile",
     "dimensions": "75 x 53 cm",
@@ -106,7 +106,7 @@
   {
     "id": "granet-8",
     "title": "Jeune Grec endormi",
-    "artist": "Théodore Géricault",
+    "artist": "Géricault Théodore",
     "year": "1791",
     "medium": "Huile sur toile",
     "dimensions": "37,4 x 45,6 cm",
@@ -158,7 +158,7 @@
   {
     "id": "granet-12",
     "title": "La Montagne Sainte-Victoire",
-    "artist": "Paul Cezanne",
+    "artist": "Paul Cézanne",
     "year": "1897",
     "medium": "huile sur toile",
     "dimensions": "73 x 91,5 cm",
@@ -171,7 +171,7 @@
   {
     "id": "granet-13",
     "title": "Vue du Jas de Bouffan",
-    "artist": "Paul Cezanne",
+    "artist": "Paul Cézanne",
     "year": "1839",
     "medium": "Huile sur toile",
     "dimensions": "44,5 x 59 cm",
@@ -184,7 +184,7 @@
   {
     "id": "granet-14",
     "title": "Les Baigneuses devant la montagne Sainte-Victoire",
-    "artist": "Paul Cezanne",
+    "artist": "Paul Cézanne",
     "year": "1870",
     "medium": "huile sur toile",
     "dimensions": "33 x 40 cm",
@@ -210,7 +210,7 @@
   {
     "id": "granet-16",
     "title": "Baigneuses",
-    "artist": "Paul Cezanne",
+    "artist": "Paul Cézanne",
     "year": "1839",
     "medium": "huile sur toile",
     "dimensions": "29 x 45 cm",
@@ -223,7 +223,7 @@
   {
     "id": "granet-17",
     "title": "Nature morte, sucrier, poires et tasse bleue",
-    "artist": "Paul Cezanne",
+    "artist": "Paul Cézanne",
     "year": "1839",
     "medium": "Huile sur toile",
     "dimensions": "25,8 x 20,8 cm",
@@ -249,7 +249,7 @@
   {
     "id": "granet-19",
     "title": "Footballeurs",
-    "artist": "Nicolas de Staël",
+    "artist": "Nicolas de STAËL",
     "year": "1914",
     "medium": "Huile sur toile",
     "dimensions": "81 x 65 cm",

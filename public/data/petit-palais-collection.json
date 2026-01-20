@@ -17,7 +17,7 @@
   "objects": [
     {
       "title": "Three Bathers",
-      "artist": "Paul Cézanne Aix-en-Provence",
+      "artist": "Paul Cézanne",
       "year": 1879,
       "date": "1879 - 1882",
       "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/petit-palais/petit-palais-1.webp",
@@ -47,7 +47,7 @@
     },
     {
       "title": "Self-portrait in Oriental Attire",
-      "artist": "Rembrandt",
+      "artist": "Rembrandt van Rijn",
       "year": 1631,
       "date": "1631",
       "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/petit-palais/petit-palais-4.webp",
@@ -147,7 +147,7 @@
     },
     {
       "title": "Marietta, or Roman Odalisque",
-      "artist": "Jean-Baptiste-Camille Corot",
+      "artist": "Jean-Baptiste Camille Corot",
       "year": 1843,
       "date": "Rome, 1843",
       "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/petit-palais/petit-palais-14.webp",
@@ -167,7 +167,7 @@
     },
     {
       "title": "Portrait of Ambroise Vollard",
-      "artist": "Paul Cézanne Aix-en-Provence",
+      "artist": "Paul Cézanne",
       "year": 1899,
       "date": "1899",
       "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/petit-palais/petit-palais-16.webp",
@@ -327,7 +327,7 @@
     },
     {
       "title": "In You rejoices",
-      "artist": "Franghias Kavertsas Crete, working between",
+      "artist": "working between Franghias Kavertsas Crete",
       "year": 0,
       "date": "1st half of the 17th century",
       "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/petit-palais/petit-palais-32.webp",
@@ -357,7 +357,7 @@
     },
     {
       "title": "Saint Charalambos and the Devil",
-      "artist": "Anonymous (Ionian Islands)",
+      "artist": "Anonymous",
       "year": 0,
       "date": "18th century",
       "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/petit-palais/petit-palais-35.webp",
@@ -367,7 +367,7 @@
     },
     {
       "title": "Saint George",
-      "artist": "Anonymous (Novgorod School, Russia)",
+      "artist": "Russia) Anonymous (Novgorod School",
       "year": 0,
       "date": "16th century",
       "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/petit-palais/petit-palais-36.webp",
@@ -377,7 +377,7 @@
     },
     {
       "title": "Saint Simeon Stylites",
-      "artist": "Anonymous (Greece)",
+      "artist": "Anonymous",
       "year": 1807,
       "date": "June 20th 1807",
       "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/petit-palais/petit-palais-37.webp",
@@ -417,7 +417,7 @@
     },
     {
       "title": "The Communion of St Mary of Egypt",
-      "artist": "Anonymous (Macedonia or Serbia)",
+      "artist": "Anonymous",
       "year": 0,
       "date": "17th century",
       "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/petit-palais/petit-palais-41.webp",
@@ -467,7 +467,7 @@
     },
     {
       "title": "The Lamentation over the Dead Christ",
-      "artist": "Anonymous (Crete)",
+      "artist": "Anonymous",
       "year": 0,
       "date": "17th century",
       "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/petit-palais/petit-palais-46.webp",
@@ -497,7 +497,7 @@
     },
     {
       "title": "The Prophet Elijah",
-      "artist": "Anonymous (Bulgaria)",
+      "artist": "Anonymous",
       "year": 1700,
       "date": "Circa 1700",
       "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/petit-palais/petit-palais-49.webp",
@@ -687,7 +687,7 @@
     },
     {
       "title": "The Carcass or On the Sabbath Road (Bartsch 426)",
-      "artist": "Marc Antoine Raimondi Environs de Bologne, vers",
+      "artist": "vers Marc Antoine Raimondi Environs de Bologne",
       "year": 0,
       "date": "",
       "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/petit-palais/petit-palais-68.webp",
@@ -727,7 +727,7 @@
     },
     {
       "title": "A scene of gallantry in a palace",
-      "artist": "Dirck Van Delen",
+      "artist": "Dirck Delen",
       "year": 1636,
       "date": "Circa 1636",
       "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/petit-palais/petit-palais-72.webp",
@@ -737,7 +737,7 @@
     },
     {
       "title": "Cavalry Clash",
-      "artist": "Adam Frans Van der Meulen",
+      "artist": "Van der Meulen Adam Frans",
       "year": 1660,
       "date": "circa 1660",
       "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/petit-palais/petit-palais-73.webp",
@@ -757,7 +757,7 @@
     },
     {
       "title": "Diana Discovering that Callisto is Pregnant",
-      "artist": "Michel Dorigny",
+      "artist": "Michel DORIGNY",
       "year": 0,
       "date": "",
       "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/petit-palais/petit-palais-75.webp",
@@ -777,7 +777,7 @@
     },
     {
       "title": "Landscape of dunes with a windmill",
-      "artist": "Jan Van Goyen",
+      "artist": "Jan van Goyen",
       "year": 1652,
       "date": "1652 or 1655 (?)",
       "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/petit-palais/petit-palais-77.webp",
@@ -797,7 +797,7 @@
     },
     {
       "title": "Landscape with the Port of Santa Marinella",
-      "artist": "Claude Gellée, known as Claude Lorrain",
+      "artist": "known as Claude Lorrain Claude Gellée",
       "year": 1637,
       "date": "Circa 1637/1638",
       "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/petit-palais/petit-palais-79.webp",
@@ -807,7 +807,7 @@
     },
     {
       "title": "Large Landscape with Tower (Bartsch 223)",
-      "artist": "Rembrandt Harmensz Van Rijn",
+      "artist": "Rembrandt van Rijn",
       "year": 1651,
       "date": "circa 1651",
       "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/petit-palais/petit-palais-80.webp",
@@ -827,7 +827,7 @@
     },
     {
       "title": "Rest of the Holy Family on the Flight into Egypt",
-      "artist": "After Hans Rottenhammer",
+      "artist": "Hans Rottenhammer d. Ä.",
       "year": 1600,
       "date": "between 1600 and 1620",
       "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/petit-palais/petit-palais-82.webp",
@@ -837,7 +837,7 @@
     },
     {
       "title": "Smokers and drinkers at a table underneath a trellised vine",
-      "artist": "Adriaen Van Ostade Haarlem (Netherlands)",
+      "artist": "Adriaen Van Ostade Haarlem",
       "year": 1676,
       "date": "1676",
       "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/petit-palais/petit-palais-83.webp",
@@ -867,7 +867,7 @@
     },
     {
       "title": "The interrupted song",
-      "artist": "Frans Van Mieris, known as Mieris the Elder",
+      "artist": "known as Mieris the Elder Frans Van Mieris",
       "year": 1671,
       "date": "1671",
       "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/petit-palais/petit-palais-86.webp",
@@ -907,7 +907,7 @@
     },
     {
       "title": "The Three Trees (Bartsch 212)",
-      "artist": "Rembrandt Harmensz Van Rijn",
+      "artist": "Rembrandt van Rijn",
       "year": 1643,
       "date": "1643",
       "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/petit-palais/petit-palais-90.webp",
@@ -917,7 +917,7 @@
     },
     {
       "title": "The Water Mills",
-      "artist": "Meindert Hobbema Amsterdam",
+      "artist": "Meindert Hobbema",
       "year": 1664,
       "date": "Circa 1664-1668",
       "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/petit-palais/petit-palais-91.webp",
@@ -927,7 +927,7 @@
     },
     {
       "title": "The Wedding Procession",
-      "artist": "Pieter Brueghel the Younger",
+      "artist": "the Younger Brueghel Pieter",
       "year": 1623,
       "date": "1623",
       "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/petit-palais/petit-palais-92.webp",
@@ -977,7 +977,7 @@
     },
     {
       "title": "Sketch for the ceiling of the Banque Royale: Unloading goods from Louisiana on the banks of the Seine",
-      "artist": "Giovanni Antonio (dit Gianantonio) Pellegrini",
+      "artist": "Giovanni Antonio Pellegrini",
       "year": 1720,
       "date": "1720",
       "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/petit-palais/petit-palais-97.webp",
@@ -987,7 +987,7 @@
     },
     {
       "title": "Tapestry : Psyche Led by the West Wind into the Palace of Love and Psyche Showing Her Wealth to Her Sisters",
-      "artist": "Beauvais Manufactory. After design by François Boucher",
+      "artist": "Beauvais Manufactory. After design by François Boucher",
       "year": 1741,
       "date": "After 1741",
       "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/petit-palais/petit-palais-98.webp",
@@ -997,7 +997,7 @@
     },
     {
       "title": "The death of Seneca",
-      "artist": "Jacques Louis David",
+      "artist": "David Jacques Louis",
       "year": 1773,
       "date": "1773",
       "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/petit-palais/petit-palais-99.webp",
@@ -1027,7 +1027,7 @@
     },
     {
       "title": "The Tivoli Cascades",
-      "artist": "Claude Joseph Vernet",
+      "artist": "Claude-Joseph Vernet",
       "year": 1740,
       "date": "Between 1740 and 1748",
       "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/petit-palais/petit-palais-102.webp",
@@ -1067,7 +1067,7 @@
     },
     {
       "title": "A Corner of the Painter's Salon",
-      "artist": "Jean-François Gigoux",
+      "artist": "GIGOUX Jean-François",
       "year": 1852,
       "date": "After 1852",
       "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/petit-palais/petit-palais-106.webp",
@@ -1107,7 +1107,7 @@
     },
     {
       "title": "Coast of Belleville",
-      "artist": "Octave Penguilly L’Haridon",
+      "artist": "Octave Penguilly L'Haridon",
       "year": 1868,
       "date": "1868",
       "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/petit-palais/petit-palais-110.webp",
@@ -1127,7 +1127,7 @@
     },
     {
       "title": "Dante",
-      "artist": "Jean-Paul Aubé",
+      "artist": "Aubé Jean-Paul",
       "year": 1879,
       "date": "1879",
       "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/petit-palais/petit-palais-112.webp",
@@ -1157,7 +1157,7 @@
     },
     {
       "title": "Eagle holding a heron",
-      "artist": "Antoine Louis Barye",
+      "artist": "Antoine-Louis Barye",
       "year": 1857,
       "date": "Between 1857 and 1875",
       "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/petit-palais/petit-palais-115.webp",
@@ -1207,7 +1207,7 @@
     },
     {
       "title": "Fountain with Triton",
-      "artist": "Félicie de Fauveau Livorno (Italy)",
+      "artist": "Félicie de Fauveau Livorno (Italy)",
       "year": 1855,
       "date": "circa 1855",
       "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/petit-palais/petit-palais-120.webp",
@@ -1267,7 +1267,7 @@
     },
     {
       "title": "Italian landscape",
-      "artist": "Achille Bénouville",
+      "artist": "Achille Benouville",
       "year": 1852,
       "date": "1852",
       "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/petit-palais/petit-palais-126.webp",
@@ -1307,7 +1307,7 @@
     },
     {
       "title": "Landscape in the vicinity of Rome",
-      "artist": "Henri Joseph Harpignies",
+      "artist": "Harpignies Henri Joseph",
       "year": 1851,
       "date": "1851",
       "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/petit-palais/petit-palais-130.webp",
@@ -1327,7 +1327,7 @@
     },
     {
       "title": "Lazare Hoche",
-      "artist": "Aimé-Jules Dalou",
+      "artist": "Aimé Jules Dalou",
       "year": 1906,
       "date": "After 1906",
       "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/petit-palais/petit-palais-132.webp",
@@ -1367,7 +1367,7 @@
     },
     {
       "title": "Mask of Silenus",
-      "artist": "Sèvres factory, model from Dalou",
+      "artist": "model from Dalou Sèvres factory",
       "year": 1930,
       "date": "1930 or 1934, based on a model made before 1885",
       "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/petit-palais/petit-palais-136.webp",
@@ -1387,7 +1387,7 @@
     },
     {
       "title": "Pair of chairs from the Gothic study of the Comtesse d’Osmond",
-      "artist": "François-Honoré-Georges Jacob, know as Jacob-Desmalter",
+      "artist": "know as Jacob-Desmalter François-Honoré-Georges Jacob",
       "year": 1817,
       "date": "circa 1817-1820",
       "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/petit-palais/petit-palais-138.webp",
@@ -1417,7 +1417,7 @@
     },
     {
       "title": "Plate",
-      "artist": "François-Emile Ehrmann",
+      "artist": "François Emile EHRMANN",
       "year": 1869,
       "date": "1869",
       "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/petit-palais/petit-palais-141.webp",
@@ -1427,7 +1427,7 @@
     },
     {
       "title": "Pont Royal and the Pavillon de Flore",
-      "artist": "Camille Pissarro Saint-Tomas, Antilles danoises",
+      "artist": "Antilles danoises Camille Pissarro Saint-Tomas",
       "year": 1903,
       "date": "1903",
       "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/petit-palais/petit-palais-142.webp",
@@ -1447,7 +1447,7 @@
     },
     {
       "title": "Portrait of Jeanne et Mrs Albert Dammouse",
-      "artist": "Jean-Désiré Ringel d'Illzach Illzach",
+      "artist": "Jean-Désiré RINGEL D'ILLZACH",
       "year": 1885,
       "date": "1885",
       "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/petit-palais/petit-palais-144.webp",
@@ -1507,7 +1507,7 @@
     },
     {
       "title": "Recumbent Bacchante",
-      "artist": "Jean-Baptiste Clesinger, known as Auguste Clesinger",
+      "artist": "known as Auguste Clesinger Jean-Baptiste Clesinger",
       "year": 1848,
       "date": "1848",
       "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/petit-palais/petit-palais-150.webp",
@@ -1537,7 +1537,7 @@
     },
     {
       "title": "Study for the Republic",
-      "artist": "Aimé-Jules Dalou",
+      "artist": "Aimé Jules Dalou",
       "year": 1879,
       "date": "1879",
       "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/petit-palais/petit-palais-153.webp",
@@ -1617,7 +1617,7 @@
     },
     {
       "title": "The Funeral Day, a scene from Morocco (Death of the Emir)",
-      "artist": "Benjamin-Constant, Jean-Joseph Benjamin Constant dit",
+      "artist": "BENJAMIN-CONSTANT Jean Joseph Benjamin CONSTANT dit",
       "year": 1889,
       "date": "1889",
       "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/petit-palais/petit-palais-161.webp",
@@ -1707,7 +1707,7 @@
     },
     {
       "title": "Study for the pianist in the White Ball",
-      "artist": "Joseph-Marius Avy",
+      "artist": "Avy Joseph Marius",
       "year": 1903,
       "date": "1903",
       "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/petit-palais/petit-palais-170.webp",
@@ -1747,7 +1747,7 @@
     },
     {
       "title": "Arion",
-      "artist": "Gustave Moreau",
+      "artist": "Gustave Moreau | 931.16.1",
       "year": 1891,
       "date": "1891",
       "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/petit-palais/petit-palais-174.webp",
@@ -1757,7 +1757,7 @@
     },
     {
       "title": "Ball on the 14th of July",
-      "artist": "Théophile Alexandre Steinlen",
+      "artist": "Théophile Alexandre STEINLEN",
       "year": 1889,
       "date": "1889",
       "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/petit-palais/petit-palais-175.webp",
@@ -1767,7 +1767,7 @@
     },
     {
       "title": "Bastille Day 1880, inauguration of the monument to the Republic",
-      "artist": "Alfred-Philippe Roll",
+      "artist": "Alfred Philippe ROLL",
       "year": 1882,
       "date": "Circa 1882",
       "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/petit-palais/petit-palais-176.webp",
@@ -1817,7 +1817,7 @@
     },
     {
       "title": "Commode, The Blood of Armenia or The Field of Blood",
-      "artist": "Emile Gallé",
+      "artist": "Emile (04/05/-23/09/ Gallé",
       "year": 1900,
       "date": "1900",
       "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/petit-palais/petit-palais-181.webp",
@@ -1917,7 +1917,7 @@
     },
     {
       "title": "The four seasons : Spring, Summer, Autumn, Winter",
-      "artist": "Paul Cézanne Aix-en-Provence",
+      "artist": "Paul Cézanne",
       "year": 1860,
       "date": "Circa 1860",
       "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/petit-palais/petit-palais-191.webp",
@@ -2217,7 +2217,7 @@
     },
     {
       "title": "Portrait of Jane Hading",
-      "artist": "Alfred Roll",
+      "artist": "Roll Alfred",
       "year": 1890,
       "date": "1890",
       "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/petit-palais/petit-palais-221.webp",
@@ -2317,7 +2317,7 @@
     },
     {
       "title": "Study IV for the wedding vase of the Princess Marguerite of Chartres",
-      "artist": "Emile Gallé",
+      "artist": "Emile (04/05/-23/09/ Gallé",
       "year": 1896,
       "date": "1896",
       "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/petit-palais/petit-palais-231.webp",
@@ -2387,7 +2387,7 @@
     },
     {
       "title": "Venus victrix",
-      "artist": "Pierre Auguste Renoir",
+      "artist": "Pierre-Auguste Renoir",
       "year": 1916,
       "date": "1916 ?",
       "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/petit-palais/petit-palais-238.webp",
@@ -2407,7 +2407,7 @@
     },
     {
       "title": "The White Ball",
-      "artist": "Joseph-Marius Avy",
+      "artist": "Avy Joseph Marius",
       "year": 1903,
       "date": "1903",
       "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/petit-palais/petit-palais-240.webp",

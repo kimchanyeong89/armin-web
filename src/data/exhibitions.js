@@ -2995,6 +2995,81 @@ export const exhibitions = [
     temporaryExhibitions: [],
     pastExhibitions: []
   },
+  {
+    id: "kunstmuseum-basel",
+    slug: "kunstmuseum-basel",
+    name: "Kunstmuseum Basel",
+    location: "St. Alban-Graben 16, 4051 Basel, Switzerland",
+    description: "The Kunstmuseum Basel houses the oldest public art collection in the world and is generally considered to be the most important museum of art in Switzerland.",
+    latitude: 47.5540,
+    longitude: 7.5944,
+    country: "Switzerland",
+    region: "Basel",
+    representativeImage: "https://sammlungonline.kunstmuseumbasel.ch/eMP/eMuseumPlus?service=WebAsset&url=/images/siteTitle.png&contentType=image/png",
+    permanentExhibitions: [
+      {
+        id: "basel-collection",
+        name: "Painting Collection",
+        title: "Painting Collection",
+        description: "Highlights from the painting collection of Kunstmuseum Basel.",
+        startDate: "Permanent",
+        endDate: "Permanent",
+        collectionFile: "basel-collection.json"
+      }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: []
+  },
+  {
+    id: "fondation-beyeler",
+    slug: "fondation-beyeler",
+    name: "Fondation Beyeler",
+    location: "Baselstrasse 101, 4125 Riehen/Basel, Switzerland",
+    description: "The most visited art museum in Switzerland, founded by collectors Ernst and Hildy Beyeler. The collection comprises over 400 works of classic modernism and contemporary art.",
+    latitude: 47.5878,
+    longitude: 7.6515,
+    country: "Switzerland",
+    region: "Basel",
+    representativeImage: "https://www.fondationbeyeler.ch/fileadmin/_processed_/3/5/csm_FOBE_Aussen_01_a939f603c7.jpg",
+    permanentExhibitions: [
+      {
+        id: "beyeler-collection",
+        name: "Beyeler Collection",
+        title: "Fondation Beyeler Collection",
+        description: "The complete collection of classic modernism and contemporary art.",
+        startDate: "Permanent",
+        endDate: "Permanent",
+        collectionFile: "beyeler-collection.json"
+      }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: []
+  },
+  {
+    id: "mah-geneva",
+    slug: "mah-geneva",
+    name: "Musée d'Art et d'Histoire",
+    location: "Rue Charles-Galland 2, 1206 Genève, Switzerland",
+    description: "One of the largest museums in Switzerland, dating back to 1910, housing collections of fine art, archaeology, and applied arts.",
+    latitude: 46.1993,
+    longitude: 6.1559,
+    country: "Switzerland",
+    region: "Geneva",
+    representativeImage: "",
+    permanentExhibitions: [
+      {
+        id: "mah-collection",
+        name: "Collection Highlights",
+        title: "MAH Collection Highlights",
+        description: "Artworks from the Musée d'Art et d'Histoire Geneva.",
+        startDate: "Permanent",
+        endDate: "Permanent",
+        collectionFile: "mah-collection.json"
+      }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: []
+  },
   // International Museums
   {
     id: "acropolis-museum",
@@ -3016,6 +3091,360 @@ export const exhibitions = [
         startDate: "Permanent",
         endDate: "Permanent",
         collectionFile: "acropolis-museum-collection.json"
+      }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: []
+  },
+  {
+    id: "national-gallery-prague",
+    slug: "national-gallery-prague",
+    name: "National Gallery Prague",
+    location: "Staroměstské náměstí 12, 110 15 Praha 1, Czech Republic",
+    description: "The National Gallery Prague manages the largest collection of art in the Czech Republic.",
+    latitude: 50.0875,
+    longitude: 14.4213,
+    country: "Czech Republic",
+    region: "Prague",
+    representativeImage: "https://sbirky.ngprague.cz/images/logo_en.svg",
+    permanentExhibitions: [
+      {
+        id: "ngprague-collection",
+        name: "Collection Highlights",
+        title: "Collection Highlights",
+        description: "A selection of masterpieces from the National Gallery Prague.",
+        startDate: "Permanent",
+        endDate: "Permanent",
+        collectionFile: "ngprague-collection.json"
+      }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: []
+  },
+  {
+    id: "nasjonalmuseet",
+    slug: "nasjonalmuseet",
+    name: "Nasjonalmuseet",
+    location: "Pb. 7014 St. Olavs plass, 0130 Oslo, Norway",
+    description: "The National Museum of Art, Architecture and Design in Oslo is the largest art museum in the Nordic countries.",
+    latitude: 59.9119,
+    longitude: 10.7275,
+    country: "Norway",
+    region: "Oslo",
+    representativeImage: "https://upload.wikimedia.org/wikipedia/commons/e/e5/Nasjonalmuseet_Oslo_2022.jpg",
+    permanentExhibitions: [
+      {
+        id: "nasjonal-collection",
+        name: "Collection Highlights",
+        title: "Collection Highlights",
+        description: "Highlights from the National Museum's painting collection.",
+        startDate: "Permanent",
+        endDate: "Permanent",
+        collectionFile: "nasjonal-collection.json"
+      }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: []
+  },
+  {
+    id: "musee-matisse-nice",
+    slug: "musee-matisse-nice",
+    name: "Musée Matisse",
+    location: "164 Av. des Arènes de Cimiez, 06000 Nice, France",
+    description: "Located in Nice, the museum is dedicated to the work of French painter Henri Matisse.",
+    latitude: 43.7196,
+    longitude: 7.2762,
+    country: "France",
+    region: "Nice",
+    representativeImage: "https://musee-matisse.opacweb.io/img/logo.svg",
+    permanentExhibitions: [
+      {
+        id: "matisse-nice-collection",
+        name: "Collection Highlights",
+        title: "Collection Highlights",
+        description: "A selection of works by Henri Matisse from the museum's collection.",
+        startDate: "Permanent",
+        endDate: "Permanent",
+        collectionFile: "matisse-nice-collection.json"
+      }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: []
+  },
+  {
+    id: "munchmuseet",
+    slug: "munchmuseet",
+    name: "Munchmuseet",
+    location: "Edvard Munchs Plass 1, 0194 Oslo, Norway",
+    description: "Munchmuseet houses the world's largest collection of art by Edvard Munch.",
+    latitude: 59.9075,
+    longitude: 10.7533,
+    country: "Norway",
+    region: "Oslo",
+    representativeImage: "https://www.munch.no/android-chrome-512x512.png",
+    permanentExhibitions: [
+      {
+        id: "munch-collection",
+        name: "Collection Highlights",
+        title: "Collection Highlights",
+        description: "A selection of works by Edvard Munch from the museum's collection.",
+        startDate: "Permanent",
+        endDate: "Permanent",
+        collectionFile: "munch-collection.json"
+      }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: []
+  },
+  {
+    id: "louisiana-modern",
+    slug: "louisiana-modern",
+    name: "Louisiana Museum of Modern Art",
+    location: "Gl. Strandvej 13, 3050 Humlebæk, Denmark",
+    description: "An international museum of modern art located on the coast of the Øresund Sound in Humlebæk, north of Copenhagen.",
+    latitude: 55.9691,
+    longitude: 12.5434,
+    country: "Denmark",
+    region: "Humlebæk",
+    representativeImage: "",
+    floorPlan: "",
+    permanentExhibitions: [
+      {
+        id: "louisiana-collection",
+        name: "Louisiana Collection",
+        title: "Louisiana Collection",
+        description: "Scraped collection test (100 items).",
+        startDate: "Permanent",
+        endDate: "Permanent",
+        collectionFile: "louisiana-test.json"
+      }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: []
+  },
+  {
+    id: "nationalmuseum-sweden",
+    slug: "nationalmuseum-sweden",
+    name: "Nationalmuseum Sweden",
+    location: "Södra Blasieholmshamnen 2, 111 48 Stockholm, Sweden",
+    description: "Sweden's premier museum of art and design.",
+    latitude: 59.3283,
+    longitude: 18.0772,
+    country: "Sweden",
+    region: "Stockholm",
+    representativeImage: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Nationalmuseum_Stockholm_2009.jpg/1200px-Nationalmuseum_Stockholm_2009.jpg",
+    permanentExhibitions: [
+      {
+        id: "nationalmuseum-sweden-collection",
+        name: "Collection Highlights",
+        title: "Nationalmuseum Collection",
+        description: "Artworks from the Nationalmuseum Sweden collection.",
+        startDate: "Permanent",
+        endDate: "Permanent",
+        collectionFile: "sweden-collection.json"
+      }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: []
+  },
+  {
+    id: "smk-collection",
+    slug: "smk",
+    name: "SMK – Statens Museum for Kunst",
+    location: "Sølvgade 48-50, 1307 Copenhagen, Denmark",
+    description: "Denmark's National Gallery, housing the largest collection of Danish and international art spanning 700 years. Collection of 6,653 paintings.",
+    latitude: 55.6880,
+    longitude: 12.5765,
+    country: "Denmark",
+    region: "Copenhagen",
+    representativeImage: "https://open.smk.dk/static/media/smk-logo.svg",
+    permanentExhibitions: [
+      {
+        id: "smk-collection",
+        name: "Painting Collection",
+        title: "SMK Painting Collection",
+        description: "6,653 paintings from Denmark's National Gallery, featuring Danish and international masters.",
+        startDate: "Permanent",
+        endDate: "Permanent",
+        collectionFile: "smk-collection.json"
+      }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: []
+  },
+  {
+    id: "glyptoteket",
+    slug: "glyptoteket",
+    name: "Ny Carlsberg Glyptotek",
+    location: "Dantes Plads 7, 1556 København, Denmark",
+    description: "An art museum of international standing in the heart of Copenhagen, featuring ancient and modern art.",
+    latitude: 55.6722,
+    longitude: 12.5714,
+    country: "Denmark",
+    region: "Copenhagen",
+    representativeImage: "https://glyptoteket.com/media/s12m5e10/fransk-kunst-1800-1870_0028_glyptoteket-2022-ana-cecilia-gonzález.jpg",
+    floorPlan: "",
+    permanentExhibitions: [
+      {
+        id: "glyptoteket-collection",
+        name: "Collection Highlights",
+        title: "Collection Highlights",
+        description: "Selected 2D works from the diverse collection of Ny Carlsberg Glyptotek.",
+        startDate: "Permanent",
+        endDate: "Permanent",
+        collectionFile: "glyptoteket-collection.json"
+      }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: []
+  },
+  {
+    id: "aros-aarhus",
+    slug: "aros",
+    name: "ARoS Aarhus Kunstmuseum",
+    location: "Aros Allé 2, 8000 Aarhus, Denmark",
+    description: "One of the largest art museums in Northern Europe, known for Olafur Eliasson's 'Your rainbow panorama'.",
+    latitude: 56.1528,
+    longitude: 10.1997,
+    country: "Denmark",
+    region: "Aarhus",
+    representativeImage: "https://www.aros.dk/media/1001/aros-by-night-foto-adam-moerk_.jpg",
+    floorPlan: "",
+    permanentExhibitions: [
+      {
+        id: "aros-collection",
+        name: "Collection Highlights",
+        title: "ARoS Collection",
+        description: "A comprehensive collection of Danish and international art from the ARoS Aarhus Kunstmuseum.",
+        startDate: "Permanent",
+        endDate: "Permanent",
+        collectionFile: "aros-collection.json"
+      }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: []
+  },
+  {
+    id: "skagens-museum",
+    slug: "skagens",
+    name: "Skagens Museum",
+    location: "Brøndumsvej 4, 9990 Skagen, Denmark",
+    description: "An art museum in Skagen, Denmark, exhibiting an extensive collection of works by members of the colony of Skagen Painters.",
+    latitude: 57.7250,
+    longitude: 10.5980,
+    country: "Denmark",
+    region: "North Jutland",
+    representativeImage: "https://samlinger.slks.dk/upload/127/000/030/6/36e162c1-cb6a-4fa7-a61d-adafd6016870.jpg",
+    floorPlan: "",
+    permanentExhibitions: [
+      {
+        id: "skagens-collection",
+        name: "Collection Highlights",
+        title: "Skagens Museum Collection",
+        description: "Works by the Skagen Painters, including Anna Ancher, Michael Ancher, and P.S. Krøyer.",
+        startDate: "Permanent",
+        endDate: "Permanent",
+        collectionFile: "skagens-collection.json"
+      }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: []
+  },
+  {
+    id: "ateneum-collection",
+    slug: "ateneum",
+    name: "Ateneum Art Museum",
+    location: "Kaivokatu 2, 00100 Helsinki, Finland",
+    description: "The home of Finnish art and part of the Finnish National Gallery. It houses the largest collection of paintings, sculptures and graphics in Finland.",
+    latitude: 60.1700,
+    longitude: 24.9441,
+    country: "Finland",
+    region: "Helsinki",
+    representativeImage: "https://www.kansallisgalleria.fi/assets/static/media/ateneum-logo-en.334a17.svg", // Using generic or we can use a known image
+    permanentExhibitions: [
+      {
+        id: "ateneum-collection",
+        name: "Collection Highlights",
+        title: "Ateneum Collection",
+        description: "Comprehensive collection of 5,367 artworks from the Ateneum Art Museum (Finnish National Gallery).",
+        startDate: "Permanent",
+        endDate: "Permanent",
+        collectionFile: "ateneum-collection.json"
+      }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: []
+  },
+  {
+    id: "kiasma-collection",
+    slug: "kiasma",
+    name: "Kiasma Museum of Contemporary Art",
+    location: "Mannerheiminaukio 2, 00100 Helsinki, Finland",
+    description: "A museum of contemporary art under the Finnish National Gallery, displaying the art of our time.",
+    latitude: 60.1719,
+    longitude: 24.9372,
+    country: "Finland",
+    region: "Helsinki",
+    representativeImage: "https://www.kansallisgalleria.fi/assets/static/media/kiasma-logo-en.2a8738.svg",
+    permanentExhibitions: [
+      {
+        id: "kiasma-collection",
+        name: "Collection Highlights",
+        title: "Kiasma Collection",
+        description: "Comprehensive collection of 3,067 contemporary artworks from Kiasma (Finnish National Gallery).",
+        startDate: "Permanent",
+        endDate: "Permanent",
+        collectionFile: "kiasma-collection.json"
+      }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: []
+  },
+  {
+    id: "sinebrychoff-collection",
+    slug: "sinebrychoff",
+    name: "Sinebrychoff Art Museum",
+    location: "Bulevardi 40, 00120 Helsinki, Finland",
+    description: "The only museum in Finland specializing in old European art, presenting collections from the 14th to the 19th century.",
+    latitude: 60.1630,
+    longitude: 24.9338,
+    country: "Finland",
+    region: "Helsinki",
+    representativeImage: "https://www.kansallisgalleria.fi/assets/static/media/sinebrychoff-logo-en.525850.svg",
+    permanentExhibitions: [
+      {
+        id: "sinebrychoff-collection",
+        name: "Collection Highlights",
+        title: "Sinebrychoff Collection",
+        description: "Comprehensive collection of 1,295 Old Masters and European artworks from Sinebrychoff Art Museum (Finnish National Gallery).",
+        startDate: "Permanent",
+        endDate: "Permanent",
+        collectionFile: "sinebrychoff-collection.json"
+      }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: []
+  },
+  {
+    id: "state-russian-museum",
+    slug: "state-russian-museum",
+    name: "The State Russian Museum",
+    location: "Inzhenernaya St, 4, St Petersburg, Russia",
+    description: "The world's largest collection of Russian art.",
+    latitude: 59.9386,
+    longitude: 30.3323,
+    country: "Russia",
+    region: "St. Petersburg",
+    representativeImage: "",
+    permanentExhibitions: [
+      {
+        id: "rusmuseum-collection",
+        name: "Iconography Collection",
+        title: "Russian Museum Iconography",
+        description: "Ancient Russian art and icons.",
+        startDate: "Permanent",
+        endDate: "Permanent",
+        collectionFile: "rusmuseum-collection.json"
       }
     ],
     temporaryExhibitions: [],

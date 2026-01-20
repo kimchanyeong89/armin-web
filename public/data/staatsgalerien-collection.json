@@ -64,7 +64,7 @@
     {
       "id": "pinakothek-sg-2244",
       "title": "Sultan Iriscelebei",
-      "artist": "Paolo Veronese (Paolo Caliari)",
+      "artist": "Manner of Paolo Veronese",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -82,7 +82,7 @@
     {
       "id": "pinakothek-sg-2246",
       "title": "Sultan Bajozeth II.",
-      "artist": "Paolo Veronese (Paolo Caliari)",
+      "artist": "Manner of Paolo Veronese",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -226,7 +226,7 @@
     {
       "id": "pinakothek-sg-10388",
       "title": "Die Sanftmut",
-      "artist": "Deutsch, 2. Hälfte 18. Jahrhundert (Kopie nach Raffael)",
+      "artist": "1. Hälfte 18. Jahrhundert Deutsch",
       "year": "2. H. 18. Jh.",
       "dateStr": "2. H. 18. Jh.",
       "medium": "Leinwand",
@@ -496,7 +496,7 @@
     {
       "id": "pinakothek-sg-2236",
       "title": "Sultan Orchard II.",
-      "artist": "Paolo Veronese (Paolo Caliari)",
+      "artist": "Manner of Paolo Veronese",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -514,7 +514,7 @@
     {
       "id": "pinakothek-sg-2241",
       "title": "Sultan Mahomed I.",
-      "artist": "Paolo Veronese (Paolo Caliari)",
+      "artist": "Manner of Paolo Veronese",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -532,7 +532,7 @@
     {
       "id": "pinakothek-sg-2243",
       "title": "Sultan Bajozeth I.",
-      "artist": "Paolo Veronese (Paolo Caliari)",
+      "artist": "Manner of Paolo Veronese",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -730,7 +730,7 @@
     {
       "id": "pinakothek-sg-1998",
       "title": "Erde und Wasser",
-      "artist": "Jan Brueghel d. J.",
+      "artist": "Jan Brueghel d. Ä.",
       "year": "um 1640",
       "dateStr": "um 1640",
       "medium": "Eichenholz",
@@ -910,7 +910,7 @@
     {
       "id": "pinakothek-sg-5342",
       "title": "Basilika San Lorenzo und Basilika San Sebastiano, Mitteltafel: Gefangennahme Christi",
-      "artist": "Monogrammist L.F.",
+      "artist": "Monogrammist S",
       "year": "1502",
       "dateStr": "1502",
       "medium": "Fichtenholz (Picea sp.)",
@@ -1000,7 +1000,7 @@
     {
       "id": "pinakothek-sg-9861",
       "title": "Magnuslegende: Vier Darstellungen aus der Legende des hl. Magnus (Tafel 3)",
-      "artist": "Allgäuer Meister um 1570 (Stephan Mair?)",
+      "artist": "Allgäuer Meister um (Stephan Mair?)",
       "year": "um 1570",
       "dateStr": "um 1570",
       "medium": "Nadelholz",
@@ -1162,7 +1162,7 @@
     {
       "id": "pinakothek-sg-L-1548",
       "title": "Bildnis eines schwarz gekleideten jungen Mannes",
-      "artist": "Augsburgisch um 1520",
+      "artist": "Augsburgisch um",
       "year": "um 1520",
       "dateStr": "um 1520",
       "medium": "Holz",
@@ -1198,7 +1198,7 @@
     {
       "id": "pinakothek-sg-L-1561",
       "title": "Epitaph der Barbara Volckamer mit Beweinung Christi",
-      "artist": "Bambergisch um 1521",
+      "artist": "Bambergisch um",
       "year": "um 1521",
       "dateStr": "um 1521",
       "medium": "Holz",
@@ -1864,7 +1864,7 @@
     {
       "id": "pinakothek-sg-3229",
       "title": "Bildnis des Louis XIV., König von Frankreich",
-      "artist": "Hyacinthe Rigaud",
+      "artist": "Rigaud Hyacinthe",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -2026,7 +2026,7 @@
     {
       "id": "pinakothek-sg-1259",
       "title": "Verkündigung",
-      "artist": "Nicolas Poussin",
+      "artist": "Poussin Nicolas",
       "year": "um 1657",
       "dateStr": "um 1657",
       "medium": "Walnussholz (Juglans regia L.)",
@@ -2044,7 +2044,7 @@
     {
       "id": "pinakothek-sg-1260",
       "title": "Geburt Christi",
-      "artist": "Nicolas Poussin",
+      "artist": "Poussin Nicolas",
       "year": "um 1657",
       "dateStr": "um 1657",
       "medium": "Walnussholz",
@@ -2170,7 +2170,7 @@
     {
       "id": "pinakothek-sg-2100",
       "title": "Blumenstillleben",
-      "artist": "Jean-Michel Picart",
+      "artist": "Picart Jean-Michel",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -2188,7 +2188,7 @@
     {
       "id": "pinakothek-sg-2178",
       "title": "Waldlandschaft mit hl. Hubertus",
-      "artist": "Jan Brueghel d. J.",
+      "artist": "Jan Brueghel d. Ä.",
       "year": "1621",
       "dateStr": "1621",
       "medium": "Kupfer",
@@ -2206,7 +2206,7 @@
     {
       "id": "pinakothek-sg-2197",
       "title": "Flussmündung mit Anlegestelle und Turm",
-      "artist": "Theobald Michau",
+      "artist": "Théobald Michau",
       "year": null,
       "dateStr": null,
       "medium": "Kupfer",
@@ -2368,7 +2368,7 @@
     {
       "id": "pinakothek-sg-2238",
       "title": "Sultan Moise",
-      "artist": "Paolo Veronese (Paolo Caliari)",
+      "artist": "Manner of Paolo Veronese",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -2620,7 +2620,7 @@
     {
       "id": "pinakothek-sg-5222",
       "title": "Blumenstück",
-      "artist": "Jan van Os",
+      "artist": "Os Jan van",
       "year": null,
       "dateStr": null,
       "medium": "Holz",
@@ -2656,7 +2656,7 @@
     {
       "id": "pinakothek-sg-5646",
       "title": "Landschaft mit Bucht",
-      "artist": "Theobald Michau",
+      "artist": "Théobald Michau",
       "year": null,
       "dateStr": null,
       "medium": "Kupfer",
@@ -2782,7 +2782,7 @@
     {
       "id": "pinakothek-sg-L-1575",
       "title": "Holländische Flotte an der Küste",
-      "artist": "Ludolf Backhuysen",
+      "artist": "Ludolf Backhuysen (I)",
       "year": "2. H. 17. Jh.",
       "dateStr": "2. H. 17. Jh.",
       "medium": "Leinwand auf Holz",
@@ -3160,7 +3160,7 @@
     {
       "id": "pinakothek-sg-1373",
       "title": "Hl. Augustinus",
-      "artist": "Bayerisch um 1480",
+      "artist": "Bayerisch um",
       "year": "um 1480",
       "dateStr": "um 1480",
       "medium": "Nadelholz",
@@ -3682,7 +3682,7 @@
     {
       "id": "pinakothek-sg-WAF-628",
       "title": "Apostelaltar: Die hll. Jakobus d. J., Matthias, Andreas\r\nRückseite: Verkündigung an Maria",
-      "artist": "Meister des Marienlebens (Nachfolger um 1485)",
+      "artist": "Meister des Marienlebens (Nachfolger um",
       "year": "um 1485",
       "dateStr": "um 1485",
       "medium": "Eichenholz",
@@ -3700,7 +3700,7 @@
     {
       "id": "pinakothek-sg-WAF-633",
       "title": "Flügelaltar: Maria mit Kind und Stifter mit drei Söhnen\r\nAußenseite: Hl. Bernhard von Clairvaux mit dem Gekreuzigten",
-      "artist": "Meister des Marienlebens (Nachfolger um 1480)",
+      "artist": "Meister des Marienlebens (Nachfolger um",
       "year": "um 1480",
       "dateStr": "um 1480",
       "medium": "Eichenholz",
@@ -3880,7 +3880,7 @@
     {
       "id": "pinakothek-sg-2621",
       "title": "Il Ridotto",
-      "artist": "Joseph Heintz d. J.",
+      "artist": "Joseph Heintz d. Ä.",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -3898,7 +3898,7 @@
     {
       "id": "pinakothek-sg-2174",
       "title": "Der Evangelist Johannes",
-      "artist": "Rembrandt (Harmensz. van Rijn)",
+      "artist": "Rembrandt van Rijn",
       "year": "1661",
       "dateStr": "1661",
       "medium": "Leinwand",
@@ -3934,7 +3934,7 @@
     {
       "id": "pinakothek-sg-2424",
       "title": "Die Schlacht in der Bukowina 1686",
-      "artist": "Pierre-Denis Martin",
+      "artist": "Martin Pierre Denis",
       "year": "1705",
       "dateStr": "1705",
       "medium": "Leinwand",
@@ -3952,7 +3952,7 @@
     {
       "id": "pinakothek-sg-2432",
       "title": "Reiterbildnis des Königs Jan III. Sobieski von Polen",
-      "artist": "Pierre-Denis Martin",
+      "artist": "Martin Pierre Denis",
       "year": "1698 oder später",
       "dateStr": "1698 oder später",
       "medium": "Leinwand",
@@ -3970,7 +3970,7 @@
     {
       "id": "pinakothek-sg-9866",
       "title": "Die hll. Aegidius, Erasmus und Blasius",
-      "artist": "Süddeutsch, 1. Viertel 16. Jh.",
+      "artist": "1. Viertel 16. Jh. Süddeutsch",
       "year": "1. V. 16. Jh.",
       "dateStr": "1. V. 16. Jh.",
       "medium": "Nadelholz",
@@ -3988,7 +3988,7 @@
     {
       "id": "pinakothek-sg-2189",
       "title": "Der Judaskuss und die Gefangennahme Christi",
-      "artist": "Deutsch, Ende 17. oder 1. Hälfte 18. Jahrhundert",
+      "artist": "Ende 17. oder 1. Hälfte 18. Jahrhundert Deutsch",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -4006,7 +4006,7 @@
     {
       "id": "pinakothek-sg-2775",
       "title": "Bildnis einer Dame",
-      "artist": "Deutsch um 1700",
+      "artist": "Deutsch um",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -4024,7 +4024,7 @@
     {
       "id": "pinakothek-sg-4559",
       "title": "Altarflügel: Die hll. Eligius und Genovefa",
-      "artist": "Ulmer Meister (Zeitblom-Werkstatt)",
+      "artist": "Ulmer Meister von",
       "year": "1496 oder später",
       "dateStr": "1496 oder später",
       "medium": "Tannenholz (Abies alba)",
@@ -4042,7 +4042,7 @@
     {
       "id": "pinakothek-sg-4561",
       "title": "Rechter Altarflügel, Außenseite: Die hll. Eventius und Theodolus von Rom",
-      "artist": "Ulmer Meister von 1504",
+      "artist": "Ulmer Meister von",
       "year": "1504 datiert",
       "dateStr": "1504 datiert",
       "medium": "Tannenholz (Abies alba)",
@@ -4096,7 +4096,7 @@
     {
       "id": "pinakothek-sg-13177",
       "title": "Bildnis Herzog Johanns von Sachsen",
-      "artist": "Lucas Cranach d. J.",
+      "artist": "Lucas Cranach d. Ä.",
       "year": null,
       "dateStr": null,
       "medium": "Lindenholz (Tilia sp.)",
@@ -4114,7 +4114,7 @@
     {
       "id": "pinakothek-sg-13195",
       "title": "Hll. Margarethe und Dorothea",
-      "artist": "Oberdeutsch um 1490",
+      "artist": "Oberdeutsch um",
       "year": "um 1490",
       "dateStr": "um 1490",
       "medium": "Holz",
@@ -4240,7 +4240,7 @@
     {
       "id": "pinakothek-sg-2607",
       "title": "Herzog Sigismund der Münzreiche von Tirol",
-      "artist": "Tirol, um 1480/96",
+      "artist": "Tirol um",
       "year": "um 1480/96",
       "dateStr": "um 1480/96",
       "medium": "Holz",
@@ -4294,7 +4294,7 @@
     {
       "id": "pinakothek-sg-9118",
       "title": "Fragment einer Altartafel: Die hll. Georg (?), Antonius Eremita (?), Jakobus d. Ä., Gereon und Laurentius",
-      "artist": "Westfälisch um 1410",
+      "artist": "Westfälisch um",
       "year": "um 1410",
       "dateStr": "um 1410",
       "medium": "Weißtannenholz",
@@ -4510,7 +4510,7 @@
     {
       "id": "pinakothek-sg-6575",
       "title": "Flusslandschaft",
-      "artist": "Claude Lorrain (Claude Gellée)",
+      "artist": "Claude Lorrain",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -4870,7 +4870,7 @@
     {
       "id": "pinakothek-sg-447",
       "title": "Justitia und Prudentia",
-      "artist": "Paolo Veronese (Paolo Caliari)",
+      "artist": "Manner of Paolo Veronese",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -5068,7 +5068,7 @@
     {
       "id": "pinakothek-sg-1153",
       "title": "Martyrium des hl. Dymphna und des hl. Gerbert",
-      "artist": "Gerard Seghers",
+      "artist": "SEGHERS Gerard",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -5320,7 +5320,7 @@
     {
       "id": "pinakothek-sg-WAF-1099",
       "title": "Tafel vom Hochaltar aus St. Mang in Füssen: Krönung Mariae\r\nRückseite: Christus vor Kaiphas",
-      "artist": "Ulmer Meister um 1460/65",
+      "artist": "Ulmer Meister um",
       "year": "um 1460/65",
       "dateStr": "um 1460/65",
       "medium": "Holz",
@@ -5356,7 +5356,7 @@
     {
       "id": "pinakothek-sg-2007",
       "title": "Die Reede von Plymouth",
-      "artist": "Ludolf Backhuysen",
+      "artist": "Ludolf Backhuysen (I)",
       "year": "1680",
       "dateStr": "1680",
       "medium": "Leinwand",
@@ -5392,7 +5392,7 @@
     {
       "id": "pinakothek-sg-7272",
       "title": "Ideallandschaft italienischen Charakters",
-      "artist": "Jan van der Meer d. J. (Vermeer)",
+      "artist": "Jan van der Meer (III)",
       "year": "1676",
       "dateStr": "1676",
       "medium": "Leinwand",
@@ -5500,7 +5500,7 @@
     {
       "id": "pinakothek-sg-4967",
       "title": "Flusslandschaft",
-      "artist": "Theobald Michau",
+      "artist": "Théobald Michau",
       "year": null,
       "dateStr": null,
       "medium": "Kupfer",
@@ -5572,7 +5572,7 @@
     {
       "id": "pinakothek-sg-5343",
       "title": "Basilika San Lorenzo und Basilika San Sebastiano, linke Tafel: Szenen aus Kreuzlegende",
-      "artist": "Monogrammist L.F.",
+      "artist": "Monogrammist S",
       "year": "1502",
       "dateStr": "1502",
       "medium": "Fichtenholz (Picea sp.)",
@@ -5590,7 +5590,7 @@
     {
       "id": "pinakothek-sg-5344",
       "title": "Basilika San Lorenzo und Basilika San Sebastiano, rechte Tafel: Szenen aus der Kreuzlegende",
-      "artist": "Monogrammist L.F.",
+      "artist": "Monogrammist S",
       "year": "1502",
       "dateStr": "1502",
       "medium": "Fichtenholz (Picea sp.)",
@@ -5662,7 +5662,7 @@
     {
       "id": "pinakothek-sg-WAF-739",
       "title": "Die Pest",
-      "artist": "Oberschwäbisch um 1510",
+      "artist": "Oberschwäbisch um",
       "year": "um 1510",
       "dateStr": "um 1510",
       "medium": "Nadelholz",
@@ -5680,7 +5680,7 @@
     {
       "id": "pinakothek-sg-WAF-740",
       "title": "Der Krieg",
-      "artist": "Oberschwäbisch um 1510",
+      "artist": "Oberschwäbisch um",
       "year": "um 1510",
       "dateStr": "um 1510",
       "medium": "Nadelholz",
@@ -5734,7 +5734,7 @@
     {
       "id": "pinakothek-sg-L-1574",
       "title": "15 Szenen aus dem Alten Testament und dem Leben Christi",
-      "artist": "Bambergisch um 1470/75",
+      "artist": "Bambergisch um",
       "year": "1470/75",
       "dateStr": "1470/75",
       "medium": "Holz",
@@ -5824,7 +5824,7 @@
     {
       "id": "pinakothek-sg-WAF-1008",
       "title": "Gefangennahme der hl. Barbara (?)\r\nRückseite: Muttergottes mit Kind und hl. Katharina",
-      "artist": "Schwäbisch um 1480",
+      "artist": "Schwäbisch um",
       "year": "um 1480",
       "dateStr": "um 1480",
       "medium": "Nadelholz",
@@ -5914,7 +5914,7 @@
     {
       "id": "pinakothek-sg-1322",
       "title": "Stillleben mit Hund",
-      "artist": "Alexandre François Desportes",
+      "artist": "Desportes Alexandre-François",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -5932,7 +5932,7 @@
     {
       "id": "pinakothek-sg-1323",
       "title": "Stillleben mit Katze",
-      "artist": "Alexandre François Desportes",
+      "artist": "Desportes Alexandre-François",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -5968,7 +5968,7 @@
     {
       "id": "pinakothek-sg-118",
       "title": "Die Eroberung von Dôle, 1668",
-      "artist": "Adam Frans van der Meulen",
+      "artist": "Van der Meulen Adam Frans",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -6094,7 +6094,7 @@
     {
       "id": "pinakothek-sg-2426",
       "title": "Die Belagerung von Jaslowiec 1684",
-      "artist": "Pierre-Denis Martin",
+      "artist": "Martin Pierre Denis",
       "year": "1705",
       "dateStr": "1705",
       "medium": "Leinwand",
@@ -6148,7 +6148,7 @@
     {
       "id": "pinakothek-sg-2001",
       "title": "Anbetung der Könige",
-      "artist": "Jan Brueghel d. J.",
+      "artist": "Jan Brueghel d. Ä.",
       "year": "um 1620",
       "dateStr": "um 1620",
       "medium": "Kupfer",
@@ -6274,7 +6274,7 @@
     {
       "id": "pinakothek-sg-4868",
       "title": "Lautenspieler",
-      "artist": "Caravaggio (Michelangelo Merisi)",
+      "artist": "Caravaggio",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -6310,7 +6310,7 @@
     {
       "id": "pinakothek-sg-4993",
       "title": "Bucht vor einer kleinen Küstenstadt",
-      "artist": "Theobald Michau",
+      "artist": "Théobald Michau",
       "year": null,
       "dateStr": null,
       "medium": "Kupfer",
@@ -6616,7 +6616,7 @@
     {
       "id": "pinakothek-sg-L-11",
       "title": "Kreuzigung Christi",
-      "artist": "Meister von 1477",
+      "artist": "Meister von",
       "year": "1477",
       "dateStr": "1477",
       "medium": "Nadelholz",
@@ -6688,7 +6688,7 @@
     {
       "id": "pinakothek-sg-10001",
       "title": "Anbetung der Könige",
-      "artist": "Münchner Meister um 1425",
+      "artist": "Münchner Meister um",
       "year": "um 1425",
       "dateStr": "um 1425",
       "medium": "Nadelholz",
@@ -6724,7 +6724,7 @@
     {
       "id": "pinakothek-sg-2596",
       "title": "Maria mit dem Kinde und den hll. Johannes Ev., Georg, Ulrich und Jakobus d. Ä.",
-      "artist": "Tirol um 1500",
+      "artist": "Tirol um",
       "year": "um 1500",
       "dateStr": "um 1500",
       "medium": "Nadelholz",
@@ -7246,7 +7246,7 @@
     {
       "id": "pinakothek-sg-L-2131",
       "title": "Rechter Flügel einer Verkündigung: Maria",
-      "artist": "Schweiz(?), um 1470",
+      "artist": "um Schweiz(?)",
       "year": "um 1470",
       "dateStr": "um 1470",
       "medium": "Fichtenholz (Picea sp.)",
@@ -7300,7 +7300,7 @@
     {
       "id": "pinakothek-sg-1392",
       "title": "Rechter Altarflügel, Innenseite: Bischof Cyprianus von Karthago",
-      "artist": "Ulmer Meister von 1504",
+      "artist": "Ulmer Meister von",
       "year": "1504 datiert",
       "dateStr": "1504 datiert",
       "medium": "Tannenholz (Abies sp.)",
@@ -7318,7 +7318,7 @@
     {
       "id": "pinakothek-sg-1462",
       "title": "Salome bringt Herodias das Haupt Johannes des Täufers\r\nRückseite: Predigt Johannes des Täufers und Taufe im Jordan",
-      "artist": "Ulmer Schule um 1450",
+      "artist": "Ulmer Schule um",
       "year": "um 1450",
       "dateStr": "um 1450",
       "medium": "Tannen- (Abies alba) und Fichtenholz (Picea sp.)",
@@ -7336,7 +7336,7 @@
     {
       "id": "pinakothek-sg-7566",
       "title": "Die hl. Ursula auf Wolken sitzend",
-      "artist": "Deutsch, 18. Jahrhundert",
+      "artist": "Deutsch 19. Jahrhundert",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -7624,7 +7624,7 @@
     {
       "id": "pinakothek-sg-10222",
       "title": "Bildnis eines Mannes",
-      "artist": "Fränkisch von 1494",
+      "artist": "Fränkisch",
       "year": "1494",
       "dateStr": "1494",
       "medium": "Holz",
@@ -8038,7 +8038,7 @@
     {
       "id": "pinakothek-sg-985",
       "title": "Königin Constanze von Polen",
-      "artist": "Flämisch, 1. Hälfte 17. Jahrhundert",
+      "artist": "1. Hälfte 17. Jahrhundert Flämisch",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -8110,7 +8110,7 @@
     {
       "id": "pinakothek-sg-1468",
       "title": "Rottenbucher Altar: Christus am Ölberg\r\n(Rückseite: Grablegung Christi)",
-      "artist": "Bayerisch um 1480/90",
+      "artist": "Bayerisch um",
       "year": "um 1480/1490",
       "dateStr": "um 1480/1490",
       "medium": "Nadelholz",
@@ -8128,7 +8128,7 @@
     {
       "id": "pinakothek-sg-2242",
       "title": "Sultan Osman I.",
-      "artist": "Paolo Veronese (Paolo Caliari)",
+      "artist": "Manner of Paolo Veronese",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -8146,7 +8146,7 @@
     {
       "id": "pinakothek-sg-2425",
       "title": "Der Entsatz von Wien, 1683",
-      "artist": "Pierre-Denis Martin",
+      "artist": "Martin Pierre Denis",
       "year": "1698 oder später",
       "dateStr": "1698 oder später",
       "medium": "Leinwand",
@@ -8272,7 +8272,7 @@
     {
       "id": "pinakothek-sg-WAF-614",
       "title": "Christus am Kreuz, eine hl. Jungfrau, Maria, Johannes Ev., die hl. Helena und ein Stifter",
-      "artist": "Nordwestdeutsch gegen 1480 (unter Einfluss des Meisters der Lyversberger Passion)",
+      "artist": "Nordwestdeutsch gegen (unter Einfluss des Meisters der Lyversberger Passion)",
       "year": "gegen 1480",
       "dateStr": "gegen 1480",
       "medium": "Eichenholz",
@@ -8416,7 +8416,7 @@
     {
       "id": "pinakothek-sg-1377",
       "title": "Hl. Martin",
-      "artist": "Bayerisch um 1480",
+      "artist": "Bayerisch um",
       "year": "um 1480",
       "dateStr": "um 1480",
       "medium": "Nadelholz",
@@ -8452,7 +8452,7 @@
     {
       "id": "pinakothek-sg-6241",
       "title": "Rottenbucher Altar: Christus vor Pilatus\r\n(Rückseite: ehemals Relief)",
-      "artist": "Bayerisch um 1480/90",
+      "artist": "Bayerisch um",
       "year": "um 1480/90",
       "dateStr": "um 1480/90",
       "medium": "Nadelholz",
@@ -8632,7 +8632,7 @@
     {
       "id": "pinakothek-sg-6360",
       "title": "Heilige Familie mit dem Johannisknaben und einem Engel",
-      "artist": "Jaspar Jacobus van Opstal  d. J.",
+      "artist": "Jaspar Jacobus van Opstal d. J.",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -8866,7 +8866,7 @@
     {
       "id": "pinakothek-sg-3657",
       "title": "Wettstreit beim Ponte dei Pugni",
-      "artist": "Joseph Heintz d. J.",
+      "artist": "Joseph Heintz d. Ä.",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -8938,7 +8938,7 @@
     {
       "id": "pinakothek-sg-10387",
       "title": "Die Gerechtigkeit",
-      "artist": "Deutsch, 2. Hälfte 18. Jahrhundert (Kopie nach Raffael)",
+      "artist": "1. Hälfte 18. Jahrhundert Deutsch",
       "year": "2. H. 18. Jh.",
       "dateStr": "2. H. 18. Jh.",
       "medium": "Leinwand",
@@ -8992,7 +8992,7 @@
     {
       "id": "pinakothek-sg-6492",
       "title": "Der Judaskuss",
-      "artist": "Karel von Mander",
+      "artist": "Karel van Mander (III.)",
       "year": null,
       "dateStr": null,
       "medium": "Eichenholz",
@@ -9244,7 +9244,7 @@
     {
       "id": "pinakothek-sg-1006",
       "title": "Die Eroberung von Lille, August 1667",
-      "artist": "Adam Frans van der Meulen",
+      "artist": "Van der Meulen Adam Frans",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -9550,7 +9550,7 @@
     {
       "id": "pinakothek-sg-1609",
       "title": "Tafelnde Gesellschaft",
-      "artist": "Franz Christoph Janneck",
+      "artist": "JANNECK Franz Christoph",
       "year": null,
       "dateStr": null,
       "medium": "Kupfer",
@@ -9694,7 +9694,7 @@
     {
       "id": "pinakothek-sg-2237",
       "title": "Sultan Murad II.",
-      "artist": "Paolo Veronese (Paolo Caliari)",
+      "artist": "Manner of Paolo Veronese",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -9766,7 +9766,7 @@
     {
       "id": "pinakothek-sg-WAF-1096",
       "title": "Tafel vom Hochaltar aus St. Mang in Füssen: Vermählung Mariens\r\nRückseite: Auferstehung Christi",
-      "artist": "Ulmer Meister um 1460/65",
+      "artist": "Ulmer Meister um",
       "year": "um 1460/65",
       "dateStr": "um 1460/65",
       "medium": "Holz",
@@ -9928,7 +9928,7 @@
     {
       "id": "pinakothek-sg-9860",
       "title": "Magnuslegende: Vier Darstellungen aus der Legende des hl. Magnus (Tafel 2)",
-      "artist": "Allgäuer Meister um 1570 (Stephan Mair?)",
+      "artist": "Allgäuer Meister um (Stephan Mair?)",
       "year": "um 1570",
       "dateStr": "um 1570",
       "medium": "Nadelholz",
@@ -9946,7 +9946,7 @@
     {
       "id": "pinakothek-sg-9862",
       "title": "Magnuslegende: Vier Darstellungen aus der Legende des hl. Magnus (Tafel 4)",
-      "artist": "Allgäuer Meister um 1570 (Stephan Mair?)",
+      "artist": "Allgäuer Meister um (Stephan Mair?)",
       "year": "um 1570",
       "dateStr": "um 1570",
       "medium": "Nadelholz",
@@ -9964,7 +9964,7 @@
     {
       "id": "pinakothek-sg-9864",
       "title": "Die hll. Apostel Andreas, Petrus und Matthäus",
-      "artist": "Süddeutsch, 1. Viertel 16. Jh.",
+      "artist": "1. Viertel 16. Jh. Süddeutsch",
       "year": "1. V. 16. Jh.",
       "dateStr": "1. V. 16. Jh.",
       "medium": "Nadelholz",
@@ -10000,7 +10000,7 @@
     {
       "id": "pinakothek-sg-4966",
       "title": "Flusslandschaft",
-      "artist": "Theobald Michau",
+      "artist": "Théobald Michau",
       "year": null,
       "dateStr": null,
       "medium": "Kupfer",
@@ -10162,7 +10162,7 @@
     {
       "id": "pinakothek-sg-9867",
       "title": "Ein unbekannter hl. Bischof, die hll. Dionysius und Georg",
-      "artist": "Süddeutsch, 1. Viertel 16. Jh.",
+      "artist": "1. Viertel 16. Jh. Süddeutsch",
       "year": "1. V. 16. Jh.",
       "dateStr": "1. V. 16. Jh.",
       "medium": "Nadelholz",
@@ -10468,7 +10468,7 @@
     {
       "id": "pinakothek-sg-2343",
       "title": "Bildnis einer reichgekleideten Frau",
-      "artist": "Nicolas de Largillière",
+      "artist": "Largillière Nicolas de",
       "year": "um 1710",
       "dateStr": "um 1710",
       "medium": "Leinwand",
@@ -10540,7 +10540,7 @@
     {
       "id": "pinakothek-sg-1747",
       "title": "Der Aufmarsch vor Dinant, 1675",
-      "artist": "Adam Frans van der Meulen",
+      "artist": "Van der Meulen Adam Frans",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -10810,7 +10810,7 @@
     {
       "id": "pinakothek-sg-5175",
       "title": "Hl. Magdalena als Büßerin",
-      "artist": "Tiziano Vecellio, gen. Tizian",
+      "artist": "gen. Tizian Tiziano Vecellio",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -10882,7 +10882,7 @@
     {
       "id": "pinakothek-sg-780",
       "title": "Das Lager vor Tournai, 1667",
-      "artist": "Adam Frans van der Meulen",
+      "artist": "Van der Meulen Adam Frans",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -10900,7 +10900,7 @@
     {
       "id": "pinakothek-sg-783",
       "title": "Die Beschießung von Maastricht, 1673",
-      "artist": "Adam Frans van der Meulen",
+      "artist": "Van der Meulen Adam Frans",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -11242,7 +11242,7 @@
     {
       "id": "pinakothek-sg-527",
       "title": "Fortitudo",
-      "artist": "Paolo Veronese (Paolo Caliari)",
+      "artist": "Manner of Paolo Veronese",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -11350,7 +11350,7 @@
     {
       "id": "pinakothek-sg-WAF-627",
       "title": "Apostelaltar: Hll. Paulus, Simon, Philippus\r\nRückseite: Geburt Christi",
-      "artist": "Meister des Marienlebens (Nachfolger um 1485)",
+      "artist": "Meister des Marienlebens (Nachfolger um",
       "year": "um 1485",
       "dateStr": "um 1485",
       "medium": "Eichenholz",
@@ -11386,7 +11386,7 @@
     {
       "id": "pinakothek-sg-WAF-646",
       "title": "Flügelaltar: Messe des hl. Gregor",
-      "artist": "Meister des Marienlebens (Nachfolger um 1480)",
+      "artist": "Meister des Marienlebens (Nachfolger um",
       "year": "um 1480",
       "dateStr": "um 1480",
       "medium": "Eichenholz",
@@ -11566,7 +11566,7 @@
     {
       "id": "pinakothek-sg-2427",
       "title": "Die Schlacht von Chotin, 1673",
-      "artist": "Pierre-Denis Martin",
+      "artist": "Martin Pierre Denis",
       "year": "1698 oder später",
       "dateStr": "1698 oder später",
       "medium": "Leinwand",
@@ -11656,7 +11656,7 @@
     {
       "id": "pinakothek-sg-984",
       "title": "König Sigismund III. von Polen",
-      "artist": "Flämisch, 1. Hälfte 17. Jahrhundert",
+      "artist": "1. Hälfte 17. Jahrhundert Flämisch",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -11782,7 +11782,7 @@
     {
       "id": "pinakothek-sg-13194",
       "title": "Geburt Christi",
-      "artist": "Oberdeutsch um 1490",
+      "artist": "Oberdeutsch um",
       "year": "um 1490",
       "dateStr": "um 1490",
       "medium": "Holz",
@@ -11800,7 +11800,7 @@
     {
       "id": "pinakothek-sg-13196",
       "title": "Anbetung der Könige",
-      "artist": "Oberdeutsch um 1490",
+      "artist": "Oberdeutsch um",
       "year": "um 1490",
       "dateStr": "um 1490",
       "medium": "Holz",
@@ -12358,7 +12358,7 @@
     {
       "id": "pinakothek-sg-12422",
       "title": "Hans Hofer (Hoffer)\r\nRückseite: Wappen",
-      "artist": "Bayerisch(?) um 1485",
+      "artist": "Bayerisch um",
       "year": "um 1485",
       "dateStr": "um 1485",
       "medium": "Nadelholz",
@@ -12484,7 +12484,7 @@
     {
       "id": "pinakothek-sg-6309",
       "title": "Griechischer Priester",
-      "artist": "François-André Vincent",
+      "artist": "VINCENT François André",
       "year": "1782",
       "dateStr": "1782",
       "medium": "Leinwand",
@@ -12610,7 +12610,7 @@
     {
       "id": "pinakothek-sg-6367",
       "title": "Arkadische Landschaft mit Stadt",
-      "artist": "Jean François Millet (gen. Francisque)",
+      "artist": "Jean-François Millet",
       "year": "um 1700",
       "dateStr": "um 1700",
       "medium": "Leinwand",
@@ -12772,7 +12772,7 @@
     {
       "id": "pinakothek-sg-4693",
       "title": "Pfalzgraf Wolfgang Georg von der Pfalz",
-      "artist": "Nicolas de Largillière",
+      "artist": "Largillière Nicolas de",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -12826,7 +12826,7 @@
     {
       "id": "pinakothek-sg-1394",
       "title": "Linker Altarflügel, Innenseite: Papst Cornelius",
-      "artist": "Ulmer Meister von 1504",
+      "artist": "Ulmer Meister von",
       "year": "1504 datiert",
       "dateStr": "1504 datiert",
       "medium": "Tannenholz (Abies sp.)",
@@ -12844,7 +12844,7 @@
     {
       "id": "pinakothek-sg-3670",
       "title": "Hl. Bruno",
-      "artist": "Deutsch, 2. Hälfte 18. Jahrhundert",
+      "artist": "1. Hälfte 18. Jahrhundert Deutsch",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -12862,7 +12862,7 @@
     {
       "id": "pinakothek-sg-4560",
       "title": "Altarflügel: Die hll. Barbara und Katharina",
-      "artist": "Ulmer Meister (Zeitblom-Werkstatt)",
+      "artist": "Ulmer Meister von",
       "year": "1496 oder später",
       "dateStr": "1496 oder später",
       "medium": "Tannenholz (Abies alba)",
@@ -12880,7 +12880,7 @@
     {
       "id": "pinakothek-sg-4562",
       "title": "Linker Altarflügel, Außenseite: Der hl. Papst Alexander",
-      "artist": "Ulmer Meister von 1504",
+      "artist": "Ulmer Meister von",
       "year": "1504 datiert",
       "dateStr": "1504 datiert",
       "medium": "Tannenholz (Abies alba)",
@@ -12934,7 +12934,7 @@
     {
       "id": "pinakothek-sg-7341",
       "title": "Allerheiligenbild",
-      "artist": "Deutsch, 1. Viertel 17. Jahrhundert",
+      "artist": "1. Viertel 17. Jahrhundert Deutsch",
       "year": null,
       "dateStr": null,
       "medium": "Holz",
@@ -12952,7 +12952,7 @@
     {
       "id": "pinakothek-sg-7377",
       "title": "Der Leichnam Christi im Schoße Mariens",
-      "artist": "Deutsch, 18. Jahrhundert",
+      "artist": "Deutsch 19. Jahrhundert",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -12988,7 +12988,7 @@
     {
       "id": "pinakothek-sg-7580",
       "title": "Ecce homo",
-      "artist": "Süddeutsch, 17. Jahrhundert",
+      "artist": "17. Jahrhundert Süddeutsch",
       "year": "17. Jh.",
       "dateStr": "17. Jh.",
       "medium": "Leinwand",
@@ -13006,7 +13006,7 @@
     {
       "id": "pinakothek-sg-9863",
       "title": "Christus als Salvator Mundi",
-      "artist": "Augsburgisch von 1494",
+      "artist": "Augsburgisch von",
       "year": "1494",
       "dateStr": "1494",
       "medium": "Nadelholz",
@@ -13042,7 +13042,7 @@
     {
       "id": "pinakothek-sg-8071",
       "title": "Bildnis des Derick Berck aus Köln",
-      "artist": "Hans Holbein d. J.",
+      "artist": "Hans Holbein d. Ä.",
       "year": "wohl 19. Jh.",
       "dateStr": "wohl 19. Jh.",
       "medium": "Eichenholz",
@@ -13096,7 +13096,7 @@
     {
       "id": "pinakothek-sg-L-1560",
       "title": "Epitaph der Margarethe Volckamer mit Krönung Mariens",
-      "artist": "Bambergisch um 1494",
+      "artist": "Bambergisch um",
       "year": "um 1494",
       "dateStr": "um 1494",
       "medium": "Holz",
@@ -13114,7 +13114,7 @@
     {
       "id": "pinakothek-sg-L-1573",
       "title": "Die Predigt des Johannes Capistran",
-      "artist": "Bambergisch um 1470/75",
+      "artist": "Bambergisch um",
       "year": "1470/75",
       "dateStr": "1470/75",
       "medium": "Holz",
@@ -13186,7 +13186,7 @@
     {
       "id": "pinakothek-sg-WAF-697",
       "title": "Inneres einer gotischen Kirche",
-      "artist": "Pieter Neeffs  d. J.",
+      "artist": "Pieter Neeffs d. Ä.",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -13258,7 +13258,7 @@
     {
       "id": "pinakothek-sg-2245",
       "title": "Sultan Murad I. (1359-1389)",
-      "artist": "Paolo Veronese (Paolo Caliari)",
+      "artist": "Manner of Paolo Veronese",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -13348,7 +13348,7 @@
     {
       "id": "pinakothek-sg-2196",
       "title": "Landschaft an einem Fluss",
-      "artist": "Theobald Michau",
+      "artist": "Théobald Michau",
       "year": null,
       "dateStr": null,
       "medium": "Kupfer",
@@ -13744,7 +13744,7 @@
     {
       "id": "pinakothek-sg-1603",
       "title": "Musikalische Unterhaltung",
-      "artist": "Franz Christoph Janneck",
+      "artist": "JANNECK Franz Christoph",
       "year": null,
       "dateStr": null,
       "medium": "Kupfer",
@@ -13870,7 +13870,7 @@
     {
       "id": "pinakothek-sg-1469",
       "title": "Jüngstes Gericht mit Maria und Johannes d. T.",
-      "artist": "Ulmer Meister (Zeitblom-Werkstatt)",
+      "artist": "Ulmer Meister von",
       "year": "1496 oder später",
       "dateStr": "1496 oder später",
       "medium": "Tannenholz (Abies alba)",
@@ -13924,7 +13924,7 @@
     {
       "id": "pinakothek-sg-2190",
       "title": "Christus in Emmaus",
-      "artist": "Deutsch, Ende 17. oder 1. Hälfte 18. Jahrhundert",
+      "artist": "Ende 17. oder 1. Hälfte 18. Jahrhundert Deutsch",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -14248,7 +14248,7 @@
     {
       "id": "pinakothek-sg-WAF-1094",
       "title": "Tafel vom Hochaltar aus St. Mang in Füssen: Geburt Mariens\r\nRückseite: Gefangennahme Christi",
-      "artist": "Ulmer Meister um 1460/65",
+      "artist": "Ulmer Meister um",
       "year": "um 1460/65",
       "dateStr": "um 1460/65",
       "medium": "Holz",
@@ -14266,7 +14266,7 @@
     {
       "id": "pinakothek-sg-WAF-1095",
       "title": "Tafel vom Hochaltar aus St. Mang in Füssen: Tempelgang Mariens\r\nRückseite: Christus vor Pilatus",
-      "artist": "Ulmer Meister um 1460/65",
+      "artist": "Ulmer Meister um",
       "year": "um 1460/65",
       "dateStr": "um 1460/65",
       "medium": "Holz",
@@ -14302,7 +14302,7 @@
     {
       "id": "pinakothek-sg-9858",
       "title": "Magnuslegende: Stifterbild zur Folge mit Darstellungen zur Magnuslegende",
-      "artist": "Allgäuer Meister um 1570 (Stephan Mair?)",
+      "artist": "Allgäuer Meister um (Stephan Mair?)",
       "year": "um 1570",
       "dateStr": "um 1570",
       "medium": "Nadelholz",
@@ -14392,7 +14392,7 @@
     {
       "id": "pinakothek-sg-1341",
       "title": "Bildnis einer jungen Frau",
-      "artist": "Justus van Egmont",
+      "artist": "Van Egmont Justus",
       "year": null,
       "dateStr": null,
       "medium": "Holz",
@@ -14446,7 +14446,7 @@
     {
       "id": "pinakothek-sg-2248",
       "title": "Sultan Selim II.",
-      "artist": "Paolo Veronese (Paolo Caliari)",
+      "artist": "Manner of Paolo Veronese",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -14500,7 +14500,7 @@
     {
       "id": "pinakothek-sg-10316",
       "title": "Hll. Petrus, Paulus und Matthäus\r\n(Rückseite: Enthauptung des hl. Norus)",
-      "artist": "Tirol um 1480",
+      "artist": "Tirol um",
       "year": "um 1480",
       "dateStr": "um 1480",
       "medium": "Originalrahmen Nadelholz",
@@ -14860,7 +14860,7 @@
     {
       "id": "pinakothek-sg-617",
       "title": "Anbetung der Hirten",
-      "artist": "Nicolas Poussin",
+      "artist": "Poussin Nicolas",
       "year": "um 1650-1657",
       "dateStr": "um 1650-1657",
       "medium": "Leinwand",
@@ -14932,7 +14932,7 @@
     {
       "id": "pinakothek-sg-10748",
       "title": "Der hl. Martin und der Bettler\r\n(Abgespaltene Innenseite: Inv.-Nr. 10747)",
-      "artist": "Ulmer Meister um 1450",
+      "artist": "Ulmer Meister um",
       "year": "um 1465",
       "dateStr": "um 1465",
       "medium": "Nadelholz",
@@ -15202,7 +15202,7 @@
     {
       "id": "pinakothek-sg-909",
       "title": "Hl. Petrus von Alcantara in Meditation",
-      "artist": "Jusepe de Ribera",
+      "artist": "Jusepe de (Giuseppe, José) Ribera (Rivera), Umkreis",
       "year": "1625 - 1649",
       "dateStr": "1625 - 1649",
       "medium": "Leinwand",
@@ -15310,7 +15310,7 @@
     {
       "id": "pinakothek-sg-9859",
       "title": "Magnuslegende: Vier Darstellungen aus der Legende des hl. Magnus (Tafel 1)",
-      "artist": "Allgäuer Meister um 1570 (Stephan Mair?)",
+      "artist": "Allgäuer Meister um (Stephan Mair?)",
       "year": "um 1570",
       "dateStr": "um 1570",
       "medium": "Nadelholz",
@@ -15616,7 +15616,7 @@
     {
       "id": "pinakothek-sg-2239",
       "title": "Sultan Murad III.",
-      "artist": "Paolo Veronese (Paolo Caliari)",
+      "artist": "Manner of Paolo Veronese",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -15634,7 +15634,7 @@
     {
       "id": "pinakothek-sg-2249",
       "title": "Sultan Soliman II.",
-      "artist": "Paolo Veronese (Paolo Caliari)",
+      "artist": "Manner of Paolo Veronese",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -15652,7 +15652,7 @@
     {
       "id": "pinakothek-sg-2361",
       "title": "Allegorie des Glücks",
-      "artist": "Jacob van Loo",
+      "artist": "Van Loo Jacob",
       "year": "1655",
       "dateStr": "1655",
       "medium": "Leinwand",
@@ -15670,7 +15670,7 @@
     {
       "id": "pinakothek-sg-2430",
       "title": "Die Schlacht bei Leopol (Lemberg, Lwow), 1675",
-      "artist": "Pierre-Denis Martin",
+      "artist": "Martin Pierre Denis",
       "year": "1698 oder später",
       "dateStr": "1698 oder später",
       "medium": "Leinwand",
@@ -15688,7 +15688,7 @@
     {
       "id": "pinakothek-sg-2431",
       "title": "Die Schlacht von Parcany, 1683",
-      "artist": "Pierre-Denis Martin",
+      "artist": "Martin Pierre Denis",
       "year": "1698 oder später",
       "dateStr": "1698 oder später",
       "medium": "Leinwand",
@@ -15706,7 +15706,7 @@
     {
       "id": "pinakothek-sg-13197",
       "title": "Hll. Klara und Elisabeth",
-      "artist": "Oberdeutsch um 1490",
+      "artist": "Oberdeutsch um",
       "year": "um 1490",
       "dateStr": "um 1490",
       "medium": "Holz",
@@ -15850,7 +15850,7 @@
     {
       "id": "pinakothek-sg-6240",
       "title": "Rottenbucher Altar: Kreuztragung Christi\r\n(Rückseite: ehemals Relief)",
-      "artist": "Bayerisch um 1480/90",
+      "artist": "Bayerisch um",
       "year": "um 1480/90",
       "dateStr": "um 1480/90",
       "medium": "Nadelholz",
@@ -15868,7 +15868,7 @@
     {
       "id": "pinakothek-sg-6243",
       "title": "Rottenbucher Altar: Gefangennahme Christi\r\n(Rückseite: ehemals Relief)",
-      "artist": "Bayerisch um 1480/90",
+      "artist": "Bayerisch um",
       "year": "um 1480/90",
       "dateStr": "um 1480/90",
       "medium": "Nadelholz",
@@ -16174,7 +16174,7 @@
     {
       "id": "pinakothek-sg-6484",
       "title": "Beweinung Christi am Grabe",
-      "artist": "Sébastien Bourdon",
+      "artist": "Bourdon Sébastien",
       "year": "um 1650",
       "dateStr": "um 1650",
       "medium": "Leinwand",
@@ -16462,7 +16462,7 @@
     {
       "id": "pinakothek-sg-445",
       "title": "Caritas",
-      "artist": "Paolo Veronese (Paolo Caliari)",
+      "artist": "Manner of Paolo Veronese",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -16480,7 +16480,7 @@
     {
       "id": "pinakothek-sg-455",
       "title": "Fides",
-      "artist": "Paolo Veronese (Paolo Caliari)",
+      "artist": "Manner of Paolo Veronese",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -16660,7 +16660,7 @@
     {
       "id": "pinakothek-sg-WAF-993",
       "title": "Das Messwunder des hl. Martin",
-      "artist": "Schwäbisch, Ende 15. Jh.",
+      "artist": "Ende 15. Jh. Schwäbisch",
       "year": "Ende 15. Jh.",
       "dateStr": "Ende 15. Jh.",
       "medium": "Nadelholz",
@@ -17002,7 +17002,7 @@
     {
       "id": "pinakothek-sg-5356",
       "title": "Rechter Altarflügel, Innenseite: Vermählung Mariens\r\nRückseite: Rosenkranz",
-      "artist": "Schwäbisch, 1520",
+      "artist": "Schwäbisch",
       "year": "1520",
       "dateStr": "1520",
       "medium": "Tannenholz (Abies alba)",
@@ -17038,7 +17038,7 @@
     {
       "id": "pinakothek-sg-2064",
       "title": "Schmiede des Vulkan",
-      "artist": "Cornelis Schut",
+      "artist": "Cornelis Schut (III)",
       "year": null,
       "dateStr": null,
       "medium": "Eichenholz",
@@ -17596,7 +17596,7 @@
     {
       "id": "pinakothek-sg-4944",
       "title": "Das Lager vor Cambrai, 1677",
-      "artist": "Adam Frans van der Meulen",
+      "artist": "Van der Meulen Adam Frans",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -18316,7 +18316,7 @@
     {
       "id": "pinakothek-sg-4633",
       "title": "Die Messe des hl. Gregor",
-      "artist": "Augsburger Meister, um 1480",
+      "artist": "um Augsburger Meister",
       "year": "um 1480",
       "dateStr": "um 1480",
       "medium": "Nadelholz",
@@ -18334,7 +18334,7 @@
     {
       "id": "pinakothek-sg-4653",
       "title": "Letzte Rast oder Vorbereitung zur Kreuzannagelung Christi (Epitaph für die Stifter des Klosters Steingaden)",
-      "artist": "Allgäuer Meister, 2. H. 16. Jh.",
+      "artist": "2. H. 16. Jh. Allgäuer Meister",
       "year": "um 1570",
       "dateStr": "um 1570",
       "medium": "Nadelholz",
@@ -18532,7 +18532,7 @@
     {
       "id": "pinakothek-sg-15531",
       "title": "Perseus mit dem Haupt der Medusa",
-      "artist": "Baldassare Franceschini (gen. Il Volterrano)",
+      "artist": "Circle of Baldassare Franceschini",
       "year": "17. Jhdt.",
       "dateStr": "17. Jhdt.",
       "medium": "Leinwand",
@@ -18640,7 +18640,7 @@
     {
       "id": "pinakothek-sg-1997",
       "title": "Feuer und Luft",
-      "artist": "Jan Brueghel d. J.",
+      "artist": "Jan Brueghel d. Ä.",
       "year": "um 1640",
       "dateStr": "um 1640",
       "medium": "Eichenholz",
@@ -18658,7 +18658,7 @@
     {
       "id": "pinakothek-sg-2240",
       "title": "Sultan Selim I.",
-      "artist": "Paolo Veronese (Paolo Caliari)",
+      "artist": "Manner of Paolo Veronese",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -18766,7 +18766,7 @@
     {
       "id": "pinakothek-sg-WAF-1097",
       "title": "Tafel vom Hochaltar aus St. Mang in Füssen: Der Bethlehemitische Kindermord\r\nRückseite: Christi Himmelfahrt",
-      "artist": "Ulmer Meister um 1460/65",
+      "artist": "Ulmer Meister um",
       "year": "um 1460/65",
       "dateStr": "um 1460/65",
       "medium": "Holz",
@@ -18784,7 +18784,7 @@
     {
       "id": "pinakothek-sg-WAF-1098",
       "title": "Tafel vom Hochaltar aus St. Mang in Füssen: Tod Mariens\r\nRückseite: Kreuztragung Christi",
-      "artist": "Ulmer Meister um 1460/65",
+      "artist": "Ulmer Meister um",
       "year": "um 1460/65",
       "dateStr": "um 1460/65",
       "medium": "Holz",
@@ -18856,7 +18856,7 @@
     {
       "id": "pinakothek-sg-WAF-42",
       "title": "Christus am Kreuz mit Heiligen (Epitaph der Familie Ridler)",
-      "artist": "Ulmer Meister um 1500",
+      "artist": "Ulmer Meister um",
       "year": "um 1500",
       "dateStr": "um 1500",
       "medium": "Nadelholz",
@@ -18964,7 +18964,7 @@
     {
       "id": "pinakothek-sg-L-1559",
       "title": "Epitaph der Apollonia Volckamer mit Kreuzigung Christi",
-      "artist": "Bambergisch um 1483",
+      "artist": "Bambergisch um",
       "year": "um 1483",
       "dateStr": "um 1483",
       "medium": "Holz",
@@ -19000,7 +19000,7 @@
     {
       "id": "pinakothek-sg-L-1612",
       "title": "Die Heilige Familie",
-      "artist": "Süddeutsch um 1510",
+      "artist": "Süddeutsch um",
       "year": "um 1510",
       "dateStr": "um 1510",
       "medium": "Holz",
@@ -19108,7 +19108,7 @@
     {
       "id": "pinakothek-sg-9865",
       "title": "Die hll. Apostel Jakobus d. Ä., Johannes Ev. und Jakobus d. J.",
-      "artist": "Süddeutsch, 1. Viertel 16. Jh.",
+      "artist": "1. Viertel 16. Jh. Süddeutsch",
       "year": "1. V. 16. Jh.",
       "dateStr": "1. V. 16. Jh.",
       "medium": "Nadelholz",
@@ -19414,7 +19414,7 @@
     {
       "id": "pinakothek-sg-9692",
       "title": "Altar der Hl. Sippe mit den hll. Agatha und Dorothea und dem Martyrium der hl. Ursula\r\nRückseite: Mannalese",
-      "artist": "Allgäuer Meister um 1520",
+      "artist": "Allgäuer Meister um (Stephan Mair?)",
       "year": "um 1520",
       "dateStr": "um 1520",
       "medium": "Nadelholz",
@@ -19684,7 +19684,7 @@
     {
       "id": "pinakothek-sg-11963",
       "title": "Die hl. Veronika mit dem Schweißtuch",
-      "artist": "El Greco (Doménikos Theotokópoulos)",
+      "artist": "El Greco",
       "year": "1602/07",
       "dateStr": "1602/07",
       "medium": "Leinwand",
@@ -19810,7 +19810,7 @@
     {
       "id": "pinakothek-sg-11142",
       "title": "Christus und die Ehebrecherin",
-      "artist": "Lucas Cranach d. J.",
+      "artist": "Lucas Cranach d. Ä.",
       "year": "1545",
       "dateStr": "1545",
       "medium": "Lindenholz (Tilia sp.)",
@@ -19828,7 +19828,7 @@
     {
       "id": "pinakothek-sg-L-1556",
       "title": "Grablegung Christi",
-      "artist": "Bambergisch um 1480 (Hans Schüchlin?)",
+      "artist": "Bambergisch um",
       "year": "um  1480",
       "dateStr": "um  1480",
       "medium": "Holz",
@@ -19900,7 +19900,7 @@
     {
       "id": "pinakothek-sg-L-1570",
       "title": "Christus am Kreuz mit Magdalena, Maria, Johannes, Johannes der Täufer und hl. Andreas",
-      "artist": "Bambergisch um 1480/90",
+      "artist": "Bambergisch um",
       "year": "um 1480/90",
       "dateStr": "um 1480/90",
       "medium": "Holz",
@@ -20044,7 +20044,7 @@
     {
       "id": "pinakothek-sg-WAF-634",
       "title": "Flügelaltar: Hl. Agatha mit Stifterin und sieben Töchtern\r\nAußenseite: Hl. Benedikt",
-      "artist": "Meister des Marienlebens (Nachfolger um 1480)",
+      "artist": "Meister des Marienlebens (Nachfolger um",
       "year": "um 1480",
       "dateStr": "um 1480",
       "medium": "Eichenholz",
@@ -20134,7 +20134,7 @@
     {
       "id": "pinakothek-sg-2618",
       "title": "Flucht nach Ägypten\r\n(Rückseite: ehemals Relief)",
-      "artist": "Bayerisch um 1490/1500",
+      "artist": "Bayerisch um",
       "year": "um 1500",
       "dateStr": "um 1500",
       "medium": "Nadelholz",
@@ -20530,7 +20530,7 @@
     {
       "id": "pinakothek-sg-6296",
       "title": "Landschaft mit kämpfenden Tieren",
-      "artist": "Flämisch um 1620",
+      "artist": "Flämisch um",
       "year": "um 1620",
       "dateStr": "um 1620",
       "medium": "Eichenholz",
@@ -20620,7 +20620,7 @@
     {
       "id": "pinakothek-sg-2247",
       "title": "Sultan Mohammed II. (1451 - 1481)",
-      "artist": "Paolo Veronese (Paolo Caliari)",
+      "artist": "Manner of Paolo Veronese",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -20638,7 +20638,7 @@
     {
       "id": "pinakothek-sg-2428",
       "title": "Die Befreiung von Gran, 1683",
-      "artist": "Pierre-Denis Martin",
+      "artist": "Martin Pierre Denis",
       "year": "1698 oder später",
       "dateStr": "1698 oder später",
       "medium": "Leinwand",
@@ -20656,7 +20656,7 @@
     {
       "id": "pinakothek-sg-2429",
       "title": "Die Schlacht bei Zurawno, 1676",
-      "artist": "Pierre-Denis Martin",
+      "artist": "Martin Pierre Denis",
       "year": "1698 oder später",
       "dateStr": "1698 oder später",
       "medium": "Leinwand",
@@ -21088,7 +21088,7 @@
     {
       "id": "pinakothek-sg-8781",
       "title": "Christus am Ölberg",
-      "artist": "Ostbayerisch um 1470",
+      "artist": "Ostbayerisch um",
       "year": "um 1470",
       "dateStr": "um 1470",
       "medium": "Nadelholz",
@@ -21106,7 +21106,7 @@
     {
       "id": "pinakothek-sg-9457",
       "title": "Hll. Achatius und Pantaleon",
-      "artist": "Bayerisch um 1480",
+      "artist": "Bayerisch um",
       "year": "um 1480",
       "dateStr": "um 1480",
       "medium": "Nadelholz",
@@ -21502,7 +21502,7 @@
     {
       "id": "pinakothek-sg-L-2132",
       "title": "Linker Flügel einer Verkündigung: Engel",
-      "artist": "Schweiz(?), um 1470",
+      "artist": "um Schweiz(?)",
       "year": "um 1470",
       "dateStr": "um 1470",
       "medium": "Fichtenholz (Picea sp.)",
@@ -21520,7 +21520,7 @@
     {
       "id": "pinakothek-sg-5357",
       "title": "Linker Altarflügel, Innenseite: Tempelgang Mariens\r\nRückseite: Rosenkranz",
-      "artist": "Schwäbisch, 1520",
+      "artist": "Schwäbisch",
       "year": "1520",
       "dateStr": "1520",
       "medium": "Tannenholz (Abies alba)",
@@ -21538,7 +21538,7 @@
     {
       "id": "pinakothek-sg-6242",
       "title": "Anbetung der Könige\r\nRückseite: Verkündigung an Maria",
-      "artist": "Oberrheinisch(?) um 1480/90",
+      "artist": "Oberrheinisch um",
       "year": "1482/90",
       "dateStr": "1482/90",
       "medium": "Tannenholz (Abies alba)",

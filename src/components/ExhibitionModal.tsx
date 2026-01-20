@@ -623,6 +623,8 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
   const [showOnDisplayOnly, setShowOnDisplayOnly] = useState(false);
   // Picasso Barcelona: toggle to show only "Highlight" artworks
   const [showHighlightOnly, setShowHighlightOnly] = useState(false);
+  // Ateneum / Public Domain: toggle to show only "Public Domain" artworks
+  const [showPublicDomainOnly, setShowPublicDomainOnly] = useState(false);
   // 2D/3D/N artwork type filter (N = no medium info)
   const [selectedTypes, setSelectedTypes] = useState<Set<'2D' | '3D' | 'N'>>(new Set());
   // Reina Sofía: 2D/3D sub-facet filter (Canvas/Paper/Photo/etc.)
@@ -1150,6 +1152,8 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
       const s = new Set<string>();
       snap.forEach(doc => s.add(doc.id));
       setLikedArtworks(s);
+    }, (error) => {
+      console.warn("Failed to subscribe to liked artworks:", error);
     });
     return () => unsub();
   }, [currentUser]);
@@ -1472,13 +1476,18 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
       filtered = filtered.filter(a => !a.isArchival);
     }
 
-    // Guggenheim Bilbao + KHM + Kunsthaus: filter "On view" artworks only
-    if ((exhibition.id === 'guggenheim-bilbao-collection' || exhibition.id === 'khm-collection' || exhibition.id === 'kunsthaus-collection') && showOnViewOnly) {
+    // Guggenheim Bilbao + KHM + Kunsthaus + Ateneum: filter "On view" artworks only
+    if ((exhibition.id === 'guggenheim-bilbao-collection' || exhibition.id === 'khm-collection' || exhibition.id === 'kunsthaus-collection' || exhibition.id === 'ateneum-collection' || exhibition.id === 'kiasma-collection' || exhibition.id === 'sinebrychoff-collection') && showOnViewOnly) {
       filtered = filtered.filter(a => {
-        if (exhibition.id === 'kunsthaus-collection') return (a as any).onView === true;
+        if (exhibition.id === 'kunsthaus-collection' || exhibition.id === 'ateneum-collection' || exhibition.id === 'kiasma-collection' || exhibition.id === 'sinebrychoff-collection') return (a as any).onView === true;
         const categories = (a as any).categories || [];
         return categories.some((cat: string) => cat && cat.toLowerCase().includes('on view'));
       });
+    }
+
+    // Public Domain filter
+    if ((exhibition.id === 'ateneum-collection' || exhibition.id === 'kiasma-collection' || exhibition.id === 'sinebrychoff-collection') && showPublicDomainOnly) {
+      filtered = filtered.filter(a => (a as any).publicDomain === true);
     }
 
     // Rijksmuseum: filter "On display" artworks only
@@ -1582,7 +1591,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
     }
 
     return filtered;
-  }, [roomFiltered, selectedCentury, selectedYearRange, showArtworksOnly, showOnViewOnly, showOnDisplayOnly, showHighlightOnly, selectedTypes, searchQuery, selectedCategories, exhibition.id, selectedMediumFacets]);
+  }, [roomFiltered, selectedCentury, selectedYearRange, showArtworksOnly, showOnViewOnly, showOnDisplayOnly, showHighlightOnly, showPublicDomainOnly, selectedTypes, searchQuery, selectedCategories, exhibition.id, selectedMediumFacets]);
 
   // Check if any artwork has categorizable data for showing 2D/3D buttons
   const hasCategorizedArtworks = useMemo(() => {
@@ -2514,34 +2523,403 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
       return () => { };
     }
 
-    // Tate St Ives Collection: load from local scraped JSON
-    if (exhibition.id === 'tsi-perm-1') {
+    // Kunstmuseum Basel
+    if (exhibition.id === 'basel-collection') {
+      (async () => {
+        try {
+          const res = await fetch('/data/basel-collection.json', { cache: 'no-store' });
+          if (!res.ok) throw new Error('Failed to load Basel artworks');
+          const data = await res.json();
+          const list: Artwork[] = Array.isArray(data) ? data.map((item: any) => ({
+            id: item.id || `basel-${Math.random()}`,
+            name: item.title,
+            artist: item.artist,
+            year: parseInt(String(item.date || '').match(/\d{4}/)?.[0] || '0'),
+            date: item.date,
+            image: item.image,
+            sourceUrl: item.url, // eMuseumPlus deep link is valid? Yes, based on scraper.
+            medium: item.medium,
+            dimension: item.dimensions,
+            roomId: 'default',
+            exhibitionName: exhibition.name,
+            exhibitionTitle: 'Painting Collection',
+            category: 'Painting',
+            type: '2D'
+          })) : [];
+          setArtworks(list.filter(a => !!a.image));
+          setInitialized(true);
+        } catch (err) {
+          console.error('Failed to load Basel artworks:', err);
+          setInitialized(true);
+        }
+      })();
+      return () => { };
+    }
+
+    // Fondation Beyeler
+    if (exhibition.id === 'beyeler-collection') {
+      (async () => {
+        try {
+          const res = await fetch('/data/beyeler-collection.json', { cache: 'no-store' });
+          if (!res.ok) throw new Error('Failed to load Beyeler artworks');
+          const data = await res.json();
+          const list: Artwork[] = Array.isArray(data) ? data.map((item: any) => {
+            // Parse description for Metadata
+            const descLines = (item.description || '').split('\n').map((s: string) => s.trim()).filter(Boolean);
+            let medium = '';
+            let dimensions = '';
+
+            for (const line of descLines) {
+              if (/cm/i.test(line) && /\d/.test(line)) {
+                dimensions = line;
+              } else if (/(oil|canvas|wood|paper|bronze|gouache|pencil|ink|pastel|sculpture|marble|acrylic|aquarel|tempera)/i.test(line)) {
+                if (!medium) medium = line;
+              }
+            }
+            if (!medium && descLines.length > 0 && descLines[0].length < 100) medium = descLines[0];
+
+            let type: '2D' | '3D' = '2D';
+            if (/sculpture|bronze|marble|wood|installation|plastik/i.test(medium) || /sculpture/i.test(item.description)) type = '3D';
+
+            return {
+              id: item.id,
+              name: item.title || 'Untitled',
+              artist: item.artist || 'Unknown',
+              year: parseInt(String(item.date || '').match(/\d{4}/)?.[0] || '0'),
+              date: item.date,
+              image: item.image,
+              sourceUrl: item.url,
+              medium: medium,
+              dimension: dimensions,
+              roomId: 'default',
+              exhibitionName: exhibition.name,
+              exhibitionTitle: exhibition.title,
+              category: 'Modern & Contemporary',
+              type: type
+            };
+          }) : [];
+          setArtworks(list.filter(a => !!a.image));
+          setInitialized(true);
+        } catch (err) {
+          console.error('Failed to load Beyeler artworks:', err);
+          setInitialized(true);
+        }
+      })();
+      return () => { };
+    }
+
+    // Nasjonalmuseet
+    if (exhibition.id === 'nasjonal-collection') {
+      (async () => {
+        try {
+          const res = await fetch('/data/nasjonal-collection.json', { cache: 'no-store' });
+          if (!res.ok) throw new Error('Failed to load Nasjonalmuseet artworks');
+          const data = await res.json();
+          const list: Artwork[] = Array.isArray(data) ? data.map((item: any, idx: number) => ({
+            id: item.id ? `nasjonal-${item.id}` : `nasjonal-${idx}`,
+            name: item.title || 'Untitled',
+            artist: item.artist || 'Unknown',
+            year: parseInt(String(item.date || '').match(/\d{4}/)?.[0] || '0'),
+            date: item.date,
+            image: item.image,
+            sourceUrl: item.url,
+            medium: item.medium || item.material || '',
+            dimension: item.dimensions || item.dimension || '',
+            roomId: 'default',
+            exhibitionName: exhibition.name,
+            exhibitionTitle: exhibition.title,
+            category: item.category || 'Painting',
+            type: item.type || '2D'
+          })) : [];
+          setArtworks(list.filter(a => !!a.image));
+          setInitialized(true);
+        } catch (err) {
+          console.error('Failed to load Nasjonalmuseet artworks:', err);
+          setInitialized(true);
+        }
+      })();
+      return () => { };
+    }
+
+    // Nationalmuseum Sweden
+    if (exhibition.id === 'nationalmuseum-sweden-collection') {
+      (async () => {
+        try {
+          const res = await fetch('/data/sweden-collection.json', { cache: 'no-store' });
+          if (!res.ok) throw new Error('Failed to load Nationalmuseum Sweden artworks');
+          const data = await res.json();
+          const list: Artwork[] = Array.isArray(data) ? data.map((item: any) => {
+            let artType: '2D' | '3D' = '2D';
+            const t = (item.type || '').toLowerCase();
+            const m = (item.medium || '').toLowerCase();
+            // Enhance detection with technique and materials if available
+            const technique = item._raw?.technique || '';
+
+            if (
+              t.includes('sculpture') ||
+              t.includes('ceramic') ||
+              t.includes('furniture') ||
+              t.includes('applied art') ||
+              t.includes('craft') ||
+              m.includes('sculpture') ||
+              m.includes('ceramic') ||
+              m.includes('porcelain') ||
+              m.includes('bronze') ||
+              m.includes('marble') ||
+              technique.includes('Sculpture')
+            ) {
+              artType = '3D';
+            }
+
+            // Normalize category (prefer collection field, fallback to type or Artwork)
+            const rawCat = item.collection || item.type || 'Artwork';
+            const category = rawCat.charAt(0).toUpperCase() + rawCat.slice(1);
+
+            // Proxy image through wsrv.nl to bypass hotlinking protection (Reference: https://wsrv.nl/)
+            // Note: Nationalmuseum blocks requests with 'Referer' other than their own, even on wsrv.nl if we pass full URL with https:// because wsrv forwards everything?
+            // Actually, wsrv.nl works best if we strip the protocol or let it handle it.
+            // Manual test: curl "https://wsrv.nl/?url=collection.nationalmuseum.se/..." works, but "https://wsrv.nl/?url=https://..." failed with 404.
+            const rawImage = item.image || '';
+            const cleanUrl = rawImage.replace(/^https?:\/\//, '');
+            const imageUrl = cleanUrl ? `https://wsrv.nl/?url=${cleanUrl}` : '';
+
+            return {
+              id: item.id || `nms-${Math.random()}`,
+              name: item.title || 'Untitled',
+              artist: item.artist || 'Unknown',
+              year: parseInt(String(item.date || '').match(/\d{4}/)?.[0] || '0'),
+              date: item.date || '',
+              image: imageUrl,
+              sourceUrl: item.url,
+              medium: item.medium || '',
+              dimension: item.dimensions || '',
+              roomId: 'default',
+              exhibitionName: exhibition.name,
+              exhibitionTitle: exhibition.title,
+              category: category,
+              type: artType
+            };
+          }) : [];
+          setArtworks(list.filter((a: any) => !!a.image));
+          setInitialized(true);
+        } catch (err) {
+          console.error('Failed to load Nationalmuseum Sweden artworks:', err);
+          setInitialized(true);
+        }
+      })();
+      return () => { };
+    }
+
+    // State Russian Museum
+    if (exhibition.id === 'rusmuseum-collection') {
+      (async () => {
+        try {
+          const res = await fetch('/data/rusmuseum-collection.json', { cache: 'no-store' });
+          if (!res.ok) throw new Error('Failed to load Russian Museum artworks');
+          const data = await res.json();
+          const list: Artwork[] = Array.isArray(data) ? data.map((item: any) => {
+            const rawImage = item.image || '';
+            // Use wsrv.nl for consistency/speed/cors safety
+            const cleanUrl = rawImage.replace(/^https?:\/\//, '');
+            const imageUrl = cleanUrl ? `https://wsrv.nl/?url=${cleanUrl}` : '';
+
+            return {
+              id: item.id,
+              name: item.title || 'Untitled',
+              artist: item.artist || 'Unknown',
+              year: parseInt(String(item.date || '').match(/\d{4}/)?.[0] || '0'),
+              date: item.date || '',
+              image: imageUrl,
+              sourceUrl: item.url,
+              medium: item.medium || '',
+              dimension: item.dimensions || '',
+              roomId: 'default',
+              exhibitionName: exhibition.name,
+              exhibitionTitle: exhibition.title,
+              category: 'Iconography',
+              type: '2D'
+            };
+          }) : [];
+          setArtworks(list.filter((a: any) => !!a.image));
+          setInitialized(true);
+        } catch (err) {
+          console.error('Failed to load Russian Museum artworks:', err);
+          setInitialized(true);
+        }
+      })();
+      return () => { };
+    }
+
+    // MAH Geneva
+    if (exhibition.id === 'mah-collection') {
+      (async () => {
+        try {
+          const res = await fetch('/data/mah-collection.json', { cache: 'no-store' });
+          if (!res.ok) throw new Error('Failed to load MAH artworks');
+          const data = await res.json();
+          const list: Artwork[] = Array.isArray(data) ? data.map((item: any, idx: number) => {
+            // Inferred type
+            let type: '2D' | '3D' = '2D';
+            const combinedText = (item.medium || '') + ' ' + (item.objectType || '');
+            if (/sculpture|bronze|marbre|bois|installation|plâtre|céramique|statue/i.test(combinedText)) {
+              type = '3D';
+            }
+
+            return {
+              id: `mah-${idx}`,
+              name: item.title || 'Untitled',
+              artist: item.artist || 'Unknown',
+              year: parseInt(String(item.date || '').match(/\d{4}/)?.[0] || '0'),
+              date: item.date,
+              image: item.image,
+              sourceUrl: item.source,
+              medium: item.medium || '',
+              dimension: item.dimensions || '',
+              roomId: 'default',
+              exhibitionName: exhibition.name,
+              exhibitionTitle: exhibition.title,
+              category: item.objectType || 'Fine Arts',
+              type: type
+            };
+          }) : [];
+          setArtworks(list.filter(a => !!a.image));
+          setInitialized(true);
+        } catch (err) {
+          console.error('Failed to load MAH artworks:', err);
+          setInitialized(true);
+        }
+      })();
+      return () => { };
+    }
+
+    // Ny Carlsberg Glyptotek
+    if (exhibition.id === 'glyptoteket-collection') {
+      (async () => {
+        try {
+          const res = await fetch('/data/glyptoteket-collection.json', { cache: 'no-store' });
+          if (!res.ok) throw new Error('Failed to load Glyptoteket artworks');
+          const data = await res.json();
+          const list: Artwork[] = Array.isArray(data) ? data.map((item: any) => {
+            return {
+              id: item.id,
+              name: item.title || 'Untitled',
+              artist: item.artist || 'Unknown',
+              year: parseInt(String(item.date || '').match(/\d{4}/)?.[0] || '0'),
+              date: item.date,
+              image: item.image,
+              sourceUrl: item.sourceUrl,
+              medium: item.medium || '',
+              dimension: item.dimensions || '',
+              roomId: 'default',
+              exhibitionName: exhibition.name,
+              exhibitionTitle: exhibition.title,
+              category: item.type || 'Fine Arts',
+              type: '2D'
+            };
+          }) : [];
+          setArtworks(list.filter(a => !!a.image));
+          setInitialized(true);
+        } catch (err) {
+          console.error('Failed to load Glyptoteket artworks:', err);
+          setInitialized(true);
+        }
+      })();
+      return () => { };
+    }
+
+    // ARoS Aarhus Kunstmuseum
+    if (exhibition.id === 'aros-collection') {
+      (async () => {
+        try {
+          const res = await fetch('/data/aros-collection.json', { cache: 'no-store' });
+          if (!res.ok) throw new Error('Failed to load ARoS artworks');
+          const data = await res.json();
+          const list: Artwork[] = Array.isArray(data) ? data.map((item: any) => {
+            return {
+              id: item.id,
+              name: item.title || 'Untitled',
+              artist: item.artist || 'Unknown',
+              year: parseInt(String(item.date || '').match(/\d{4}/)?.[0] || '0'),
+              date: item.date,
+              image: item.image,
+              sourceUrl: item.sourceUrl,
+              medium: item.medium || '',
+              dimension: item.dimensions || '',
+              roomId: 'default',
+              exhibitionName: exhibition.name,
+              exhibitionTitle: exhibition.title,
+              category: item.category || 'Fine Arts',
+              type: item.is3D ? '3D' : '2D'
+            };
+          }) : [];
+          setArtworks(list.filter(a => !!a.image));
+          setInitialized(true);
+        } catch (err) {
+          console.error('Failed to load ARoS artworks:', err);
+          setInitialized(true);
+        }
+      })();
+      return () => { };
+    }
+    // Louisiana Museum of Modern Art
+    if (exhibition.id === 'louisiana-collection') {
+      (async () => {
+        try {
+          const res = await fetch('/data/louisiana-test.json', { cache: 'no-store' });
+          if (!res.ok) throw new Error('Failed to load Louisiana artworks');
+          const data = await res.json();
+          const list: Artwork[] = Array.isArray(data) ? data.map((item: any, idx: number) => {
+            const parts = (item.title || '').split(' - ');
+            const artist = parts.length > 1 ? parts[0].trim() : 'Unknown';
+            const title = parts.length > 1 ? parts.slice(1).join(' - ').trim() : item.title || 'Untitled';
+            return {
+              id: `louisiana-${item.id || idx}`,
+              name: title,
+              artist: artist,
+              year: 0,
+              date: '',
+              image: item.image,
+              sourceUrl: item.image,
+              medium: '',
+              dimension: '',
+              roomId: 'default',
+              exhibitionName: exhibition.name,
+              exhibitionTitle: exhibition.title,
+              category: 'Modern Art',
+              type: '2D'
+            };
+          }) : [];
+          setArtworks(list.filter(a => !!a.image));
+          setInitialized(true);
+        } catch (err) {
+          console.error('Failed to load Louisiana artworks:', err);
+          setInitialized(true);
+        }
+      })();
+      return () => { };
+    }
+    // Tate St Ives
+    if (exhibition.id === 'tate-st-ives-artworks') {
       (async () => {
         try {
           const res = await fetch('/data/tate-st-ives-artworks.json', { cache: 'no-store' });
           if (!res.ok) throw new Error('Failed to load Tate St Ives artworks');
           const data = await res.json();
-          const toYear = (yearText: string | undefined) => {
-            if (!yearText) return 0;
-            const match = String(yearText).match(/(\d{4})/);
-            return match ? parseInt(match[1], 10) : 0;
-          };
-          const list: Artwork[] = Array.isArray(data)
-            ? data.map((item: any, idx: number) => ({
-              id: item.id || `tsi-${idx}`,
-              name: item.title || item.name || 'Untitled',
-              artist: item.artist || 'Unknown',
-              year: toYear(item.year),
-              date: item.year,
-              image: item.image,
-              sourceUrl: item.url,
-              roomId: 'default',
-              exhibitionName: exhibition.name,
-              exhibitionTitle: exhibition.title,
-            }))
-            : [];
-          const withImages = list.filter((a) => !!a.image);
-          setArtworks(withImages);
+          const list: Artwork[] = Array.isArray(data) ? data.map((item: any) => ({
+            id: item.id || `ts - ${Math.random()} `,
+            name: item.title,
+            artist: item.artist,
+            year: parseInt(String(item.date || '').match(/\d{4}/)?.[0] || '0'),
+            date: item.date,
+            image: item.image,
+            sourceUrl: item.url,
+            roomId: 'default',
+            exhibitionName: exhibition.name,
+            exhibitionTitle: exhibition.title,
+            category: 'Artwork',
+            type: '2D'
+          })) : [];
+          setArtworks(list.filter(a => !!a.image));
           setInitialized(true);
         } catch (error) {
           console.error('Failed to load Tate St Ives artworks:', error);
@@ -2564,7 +2942,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
           };
           const list: Artwork[] = Array.isArray(data)
             ? data.map((item: any, idx: number) => ({
-              id: item.id || `tbc-${idx}`,
+              id: item.id || `tbc - ${idx} `,
               name: item.title || item.name || 'Untitled',
               artist: item.artist || 'Unknown',
               year: toYear(item.year),
@@ -2610,7 +2988,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
 
           const list: Artwork[] = Array.isArray(data.objects)
             ? data.objects.map((item: any, idx: number) => ({
-              id: item.id || `khm-${idx}`,
+              id: item.id || `khm - ${idx} `,
               name: item.title || 'Untitled',
               artist: cleanKHMArtist(item.artist),
               year: item.year || 0,
@@ -2650,7 +3028,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
 
           const list: Artwork[] = Array.isArray(data.artworks)
             ? data.artworks.map((item: any, idx: number) => ({
-              id: item.id || `belvedere-${idx}`,
+              id: item.id || `belvedere - ${idx} `,
               name: item.name || 'Untitled',
               artist: item.artist || 'Unknown',
               year: item.year || 0,
@@ -2703,7 +3081,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
           if (!jsonFile) throw new Error('Unknown Albertina dataset id');
 
           const res = await fetch(jsonFile, { cache: 'no-store' });
-          if (!res.ok) throw new Error(`Failed to load ${jsonFile}`);
+          if (!res.ok) throw new Error(`Failed to load ${jsonFile} `);
           const data = await res.json();
 
           const toYear = (yearText: string | number | undefined) => {
@@ -2730,7 +3108,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
             else if (exhibition.id.includes('poster')) category = 'Poster';
 
             return {
-              id: item.sourceId || item.id || `${exhibition.id}-${idx}`,
+              id: item.sourceId || item.id || `${exhibition.id} -${idx} `,
               name: item.title || item.name || 'Untitled',
               artist: cleanArtistName(item.artist || item.creator || ''),
               year: toYear(rawDate),
@@ -2752,7 +3130,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
           setArtworks(withImages);
           setInitialized(true);
           try {
-            localStorage.setItem(`artworks_${exhibition.id}`, JSON.stringify(withImages));
+            localStorage.setItem(`artworks_${exhibition.id} `, JSON.stringify(withImages));
           } catch { }
         } catch (error) {
           console.error('Failed to load Albertina artworks:', error);
@@ -2782,7 +3160,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
 
           const items = Array.isArray(data.artworks) ? data.artworks : [];
           const list: Artwork[] = items.map((item: any, idx: number) => ({
-            id: item.id || `leopold-${idx}`,
+            id: item.id || `leopold - ${idx} `,
             name: item.name || 'Untitled',
             artist: cleanArtistName(item.artist || ''),
             year: toYear(item.year || item.date),
@@ -2825,7 +3203,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
 
           const list: Artwork[] = Array.isArray(data.objects)
             ? data.objects.map((item: any, idx: number) => ({
-              id: item.id || `mmca-${idx}`,
+              id: item.id || `mmca - ${idx} `,
               name: item.title || item.name || 'Untitled',
               artist: item.artist || 'Unknown',
               year: toYear(item.year || item.date),
@@ -2877,7 +3255,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
 
           const list: Artwork[] = Array.isArray(data)
             ? data.map((item: any, idx: number) => ({
-              id: item.id || `sema-${idx}`,
+              id: item.id || `sema - ${idx} `,
               name: item.title || item.titleKorean || item.titleEnglish || 'Untitled',
               artist: item.artistName || 'Unknown',
               year: toYear(item.year),
@@ -2912,8 +3290,8 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
           // Load split parts (18 parts ~15MB each, 205,419 items total)
           const partCount = 18;
           const fetchPromises = Array.from({ length: partCount }, (_, i) =>
-            fetch(`/data/national-museum-korea-part${i + 1}.json`, { cache: 'no-store' }).then(r => {
-              if (!r.ok) throw new Error(`Failed to load part ${i + 1}`);
+            fetch(`/ data / national - museum - korea - part${i + 1}.json`, { cache: 'no-store' }).then(r => {
+              if (!r.ok) throw new Error(`Failed to load part ${i + 1} `);
               return r.json();
             })
           );
@@ -2943,7 +3321,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
           // Only load first batch for initial display
           const initialBatch = data.slice(0, ITEMS_PER_PAGE);
           const list: Artwork[] = initialBatch.map((item: any, idx: number) => ({
-            id: item.id || `nmk-${idx}`,
+            id: item.id || `nmk - ${idx} `,
             name: item.title || item.name || 'Untitled',
             artist: item.artist || 'Unknown',
             year: toYear(item.year || item.date, item.period),
@@ -2979,8 +3357,8 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
           // Load split parts (17 parts ~13MB each, 203,909 items total)
           const partCount = 17;
           const fetchPromises = Array.from({ length: partCount }, (_, i) =>
-            fetch(`/data/gyeongju-museum-part${i + 1}.json`, { cache: 'no-store' }).then(r => {
-              if (!r.ok) throw new Error(`Failed to load part ${i + 1}`);
+            fetch(`/ data / gyeongju - museum - part${i + 1}.json`, { cache: 'no-store' }).then(r => {
+              if (!r.ok) throw new Error(`Failed to load part ${i + 1} `);
               return r.json();
             })
           );
@@ -3018,7 +3396,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
           };
 
           const list: Artwork[] = initialBatch.map((item: any, idx: number) => ({
-            id: item.id || `gyeongju-${idx}`,
+            id: item.id || `gyeongju - ${idx} `,
             name: getKoreanTitle(item),
             artist: item.artist || 'Unknown',
             year: toYear(item.year || item.date, item.period),
@@ -3053,8 +3431,8 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
           // Load split parts (14 parts ~5MB each, 68,091 items total)
           const partCount = 14;
           const fetchPromises = Array.from({ length: partCount }, (_, i) =>
-            fetch(`/data/buyeo-museum-part${i + 1}.json`, { cache: 'no-store' }).then(r => {
-              if (!r.ok) throw new Error(`Failed to load part ${i + 1}`);
+            fetch(`/ data / buyeo - museum - part${i + 1}.json`, { cache: 'no-store' }).then(r => {
+              if (!r.ok) throw new Error(`Failed to load part ${i + 1} `);
               return r.json();
             })
           );
@@ -3103,7 +3481,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
           // Only load first batch for initial display
           const initialBatch = data.slice(0, ITEMS_PER_PAGE);
           const list: Artwork[] = initialBatch.map((item: any, idx: number) => ({
-            id: item.id || `buyeo-${idx}`,
+            id: item.id || `buyeo - ${idx} `,
             name: getKoreanTitle(item),
             artist: item.artist || 'Unknown',
             year: toYear(item.year || item.date, item.period),
@@ -3139,8 +3517,8 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
           // Load split parts (8 parts, 14,712 items total)
           const partCount = 8;
           const fetchPromises = Array.from({ length: partCount }, (_, i) =>
-            fetch(`/data/reina-sofia-collection-part${i + 1}.json`, { cache: 'no-store' }).then(r => {
-              if (!r.ok) throw new Error(`Failed to load part ${i + 1}`);
+            fetch(`/ data / reina - sofia - collection - part${i + 1}.json`, { cache: 'no-store' }).then(r => {
+              if (!r.ok) throw new Error(`Failed to load part ${i + 1} `);
               return r.json();
             })
           );
@@ -3172,7 +3550,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
           // Only load first batch for initial display
           const initialBatch = data.slice(0, ITEMS_PER_PAGE);
           const list: Artwork[] = initialBatch.map((item: any, idx: number) => ({
-            id: item.id || `reina-sofia-${idx}`,
+            id: item.id || `reina - sofia - ${idx} `,
             name: item.title || 'Untitled',
             artist: item.artist || 'Unknown',
             year: toYear(item.date),
@@ -3235,9 +3613,9 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
             ? data.map((item: any, idx: number) => {
               const dateText = String(item?.dateCreated || item?.list?.dateText || '').trim();
               const roomName = String(item?.roomName || '').trim();
-              const roomId = roomName || (item?.roomNumber != null ? `Sala ${item.roomNumber}` : 'default');
+              const roomId = roomName || (item?.roomNumber != null ? `Sala ${item.roomNumber} ` : 'default');
               return {
-                id: String(item?.id || item?.detailUrl || `thyssen-${idx}`),
+                id: String(item?.id || item?.detailUrl || `thyssen - ${idx} `),
                 name: String(item?.title || 'Untitled'),
                 artist: String(item?.list?.artist || item?.artist || 'Unknown'),
                 year: toYear(dateText),
@@ -3289,7 +3667,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
 
           const list: Artwork[] = Array.isArray(data.objects)
             ? data.objects.map((item: any, idx: number) => ({
-              id: item.id || `dpg-${idx}`,
+              id: item.id || `dpg - ${idx} `,
               name: item.title || item.name || 'Untitled',
               artist: item.artist || 'Unknown',
               year: toYear(item.year),
@@ -3375,7 +3753,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
           const allObjects = Array.isArray(data.objects) ? data.objects : [];
 
           const list: Artwork[] = allObjects.map((item: any, idx: number) => ({
-            id: item.id || `hayward-gac-${idx}`,
+            id: item.id || `hayward - gac - ${idx} `,
             name: item.title || item.name || 'Untitled',
             artist: item.artist === 'Additional Items' ? 'Unknown' : (item.artist || 'Unknown'),
             year: toYear(item.year),
@@ -3453,7 +3831,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
           const allObjects = Array.isArray(data.objects) ? data.objects : [];
 
           const list: Artwork[] = allObjects.map((item: any, idx: number) => ({
-            id: item.id || `ra-gac-${idx}`,
+            id: item.id || `ra - gac - ${idx} `,
             name: item.title || item.name || 'Untitled',
             artist: item.artist || 'Unknown',
             year: toYear(item.year),
@@ -3600,7 +3978,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
           const allObjects = Array.isArray(data.objects) ? data.objects : [];
 
           const list: Artwork[] = allObjects.map((item: any, idx: number) => ({
-            id: item.id || `serp-gac-${idx}`,
+            id: item.id || `serp - gac - ${idx} `,
             name: item.title || item.name || 'Untitled',
             artist: item.artist || 'Unknown',
             year: toYear(item.year),
@@ -3651,7 +4029,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
           const allObjects = Array.isArray(data.objects) ? data.objects : [];
 
           const list: Artwork[] = allObjects.map((item: any, idx: number) => ({
-            id: item.id || `cg-gac-${idx}`,
+            id: item.id || `cg - gac - ${idx} `,
             name: item.title || item.name || 'Untitled',
             artist: item.artist || 'Unknown',
             year: toYear(item.year),
@@ -3689,7 +4067,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
           };
           const allObjects = Array.isArray(data.objects) ? data.objects : [];
           const list: Artwork[] = allObjects.map((item: any, idx: number) => ({
-            id: item.id || `wag-gac-${idx}`,
+            id: item.id || `wag - gac - ${idx} `,
             name: item.title || item.name || 'Untitled',
             artist: item.artist || 'Unknown',
             year: toYear(item.year),
@@ -3725,7 +4103,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
           };
           const allObjects = Array.isArray(data.objects) ? data.objects : [];
           const list: Artwork[] = allObjects.map((item: any, idx: number) => ({
-            id: item.id || `sng-gac-${idx}`,
+            id: item.id || `sng - gac - ${idx} `,
             name: item.title || item.name || 'Untitled',
             artist: item.artist || 'Unknown',
             year: toYear(item.year),
@@ -3761,7 +4139,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
           };
           const allObjects = Array.isArray(data.objects) ? data.objects : [];
           const list: Artwork[] = allObjects.map((item: any, idx: number) => ({
-            id: item.id || `snpg-gac-${idx}`,
+            id: item.id || `snpg - gac - ${idx} `,
             name: item.title || item.name || 'Untitled',
             artist: item.artist || 'Unknown',
             year: toYear(item.year),
@@ -3797,7 +4175,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
           };
           const allObjects = Array.isArray(data.objects) ? data.objects : [];
           const list: Artwork[] = allObjects.map((item: any, idx: number) => ({
-            id: item.id || `sngma-gac-${idx}`,
+            id: item.id || `sngma - gac - ${idx} `,
             name: item.title || item.name || 'Untitled',
             artist: item.artist || 'Unknown',
             year: toYear(item.year),
@@ -3835,7 +4213,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
           const allObjects = Array.isArray(data.objects) ? data.objects : [];
 
           const list: Artwork[] = allObjects.map((item: any, idx: number) => ({
-            id: item.id || `bm-gac-${idx}`,
+            id: item.id || `bm - gac - ${idx} `,
             name: item.title || item.name || 'Untitled',
             artist: item.artist === 'Additional Items' ? 'Unknown' : (item.artist || 'Unknown'),
             year: toYear(item.year),
@@ -3873,7 +4251,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
           const allObjects = Array.isArray(data.objects) ? data.objects : [];
 
           const list: Artwork[] = allObjects.map((item: any, idx: number) => ({
-            id: item.id || `orsay-${idx}`,
+            id: item.id || `orsay - ${idx} `,
             name: item.title || item.name || 'Untitled',
             artist: item.artist || 'Unknown',
             year: toYear(item.year),
@@ -3896,7 +4274,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
     }
 
     // Acropolis Museum Collection
-    if (exhibition.id === 'acropolis-museum') {
+    if (exhibition.id === 'acropolis-highlights' || exhibition.id === 'acropolis-museum') {
       (async () => {
         try {
           const res = await fetch('/data/acropolis-museum-collection.json', { cache: 'no-store' });
@@ -3913,19 +4291,20 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
           };
 
           const list: Artwork[] = allObjects.map((item: any, idx: number) => ({
-            id: item.id || `acropolis-${idx}`,
+            id: item.id || `acropolis - ${idx} `,
             name: item.title || 'Untitled',
             artist: item.artist || 'Unknown',
-            year: toYear(item.year),
+            year: toYear(item.year || item.metadata?.Date),
             date: item.year ? String(item.year) : (item.metadata?.Date || ''),
             image: item.image,
             description: item.description,
+            medium: item.metadata?.Material,
+            dimension: item.metadata?.Dimensions,
+            category: item.metadata?.Category || 'Artifact',
             roomId: 'default',
             exhibitionName: exhibition.name,
             exhibitionTitle: exhibition.title,
             type: '3D', // Acropolis is mostly sculptures/artifacts
-            // Optionally pass metadata if needed elsewhere
-            // metadata: item.metadata 
           }));
           const withImages = list.filter((a) => !!a.image);
           setArtworks(withImages);
@@ -3937,6 +4316,322 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
       })();
       return () => { };
     }
+
+    // National Gallery Prague
+    if (exhibition.id === 'ngprague-collection') {
+      (async () => {
+        try {
+          const res = await fetch('/data/ngprague-collection.json', { cache: 'no-store' });
+          if (!res.ok) throw new Error('Failed to load NG Prague artworks');
+          const data = await res.json();
+
+          const list: Artwork[] = Array.isArray(data) ? data.map((item: any, idx: number) => ({
+            id: item.id || `ngprague - ${idx} `,
+            name: item.title,
+            artist: item.artist,
+            year: parseInt(String(item.year || '').match(/\d{4}/)?.[0] || '0'),
+            date: item.year || item.metadata?.date || '',
+            image: item.image,
+            medium: item.medium, // Now correctly populated with technique
+            dimension: item.dimensions,
+            description: item.metadata?.description || '',
+            roomId: 'default',
+            exhibitionName: exhibition.name,
+            exhibitionTitle: exhibition.title,
+            category: 'Artwork',
+            type: '2D'
+          })) : [];
+
+          setArtworks(list.filter(a => !!a.image));
+          setInitialized(true);
+        } catch (error) {
+          console.error('Failed to load NG Prague artworks:', error);
+          setInitialized(true);
+        }
+      })();
+      return () => { };
+    }
+
+    // Musée Matisse Nice
+    if (exhibition.id === 'matisse-nice-collection') {
+      (async () => {
+        try {
+          const res = await fetch('/data/matisse-nice-collection.json', { cache: 'no-store' });
+          if (!res.ok) throw new Error('Failed to load Matisse artworks');
+          const data = await res.json();
+
+          const list: Artwork[] = Array.isArray(data) ? data.map((item: any, idx: number) => ({
+            id: item.id || `matisse - ${idx} `,
+            name: item.title,
+            artist: item.artist,
+            year: parseInt(String(item.year || '').match(/\d{4}/)?.[0] || '0'),
+            date: item.year || '',
+            image: item.image,
+            medium: item.medium,
+            dimension: item.dimensions,
+            description: '', // Could use item.metadata?.notes if I scraped it separately
+            roomId: 'default',
+            exhibitionName: exhibition.name,
+            exhibitionTitle: exhibition.title,
+            category: item.category || 'Artwork',
+            type: (item.category && item.category.toLowerCase().includes('sculpture')) ? '3D' : '2D'
+          })) : [];
+
+          setArtworks(list.filter(a => !!a.image));
+          setInitialized(true);
+        } catch (error) {
+          console.error('Failed to load Matisse artworks:', error);
+          setInitialized(true);
+        }
+      })();
+      return () => { };
+    }
+
+    // Munchmuseet
+    if (exhibition.id === 'munch-collection') {
+      (async () => {
+        try {
+          const res = await fetch('/data/munch-collection.json', { cache: 'no-store' });
+          if (!res.ok) throw new Error('Failed to load Munch artworks');
+          const data = await res.json();
+
+          const list: Artwork[] = Array.isArray(data) ? data.map((item: any, idx: number) => ({
+            id: item.id || `munch - ${idx} `,
+            name: item.title,
+            artist: item.artist,
+            year: parseInt(String(item.year || '').match(/\d{4}/)?.[0] || '0'),
+            date: item.year || '',
+            image: item.image,
+            medium: item.medium,
+            dimension: item.dimensions,
+            description: '',
+            roomId: 'default',
+            exhibitionName: exhibition.name,
+            exhibitionTitle: exhibition.title,
+            category: item.category || 'Painting',
+            type: item.type || '2D'
+          })) : [];
+
+          setArtworks(list.filter(a => !!a.image));
+          setInitialized(true);
+        } catch (error) {
+          console.error('Failed to load Munch artworks:', error);
+          setInitialized(true);
+        }
+      })();
+      return () => { };
+    }
+
+    // SMK – Statens Museum for Kunst (Denmark's National Gallery)
+    if (exhibition.id === 'smk-collection') {
+      (async () => {
+        try {
+          const res = await fetch('/data/smk-collection.json', { cache: 'no-store' });
+          if (!res.ok) throw new Error('Failed to load SMK artworks');
+          const data = await res.json();
+
+          const list: Artwork[] = Array.isArray(data) ? data.map((item: any, idx: number) => ({
+            id: item.id || `smk-${idx}`,
+            name: item.title || 'Untitled',
+            artist: item.artist || 'Unknown',
+            year: item.year || 0,
+            date: item.date || '',
+            image: item.image,
+            sourceUrl: item.url,
+            medium: item.medium || '',
+            dimension: item.dimensions || '',
+            description: '',
+            roomId: 'default',
+            exhibitionName: exhibition.name,
+            exhibitionTitle: exhibition.title,
+            category: item.category || 'Painting',
+            type: item.type || '2D',
+            onView: item.onDisplay || false,
+            publicDomain: item.publicDomain || false,
+            rights: item.rights || ''
+          })) : [];
+
+          setArtworks(list.filter(a => !!a.image));
+          setInitialized(true);
+        } catch (error) {
+          console.error('Failed to load SMK artworks:', error);
+          setInitialized(true);
+        }
+      })();
+      return () => { };
+    }
+
+    // Ateneum Art Museum (Finland)
+    if (exhibition.id === 'ateneum-collection') {
+      (async () => {
+        try {
+          const res = await fetch('/data/ateneum-collection.json', { cache: 'no-store' });
+          if (!res.ok) throw new Error('Failed to load Ateneum artworks');
+          const data = await res.json();
+
+          const list: Artwork[] = Array.isArray(data) ? data.map((item: any, idx: number) => ({
+            id: item.id || `ateneum-${idx}`,
+            name: item.title || 'Untitled',
+            artist: item.artist || 'Unknown',
+            year: item.year || 0,
+            date: item.date || '',
+            image: item.image,
+            sourceUrl: item.url,
+            medium: item.medium || 'Painting',
+            dimension: item.dimensions || '',
+            description: '',
+            roomId: 'default',
+            exhibitionName: exhibition.name,
+            exhibitionTitle: exhibition.title,
+            category: item.category || 'Painting',
+            type: item.type || '2D',
+            onView: item.onDisplay || false,
+            publicDomain: item.publicDomain || false,
+            rights: item.rights || ''
+          })) : [];
+
+          setArtworks(list.filter(a => !!a.image));
+          setInitialized(true);
+        } catch (error) {
+          console.error('Failed to load Ateneum artworks:', error);
+          setInitialized(true);
+        }
+      })();
+      return () => { };
+    }
+
+    // Kiasma (FNG)
+    if (exhibition.id === 'kiasma-collection') {
+      (async () => {
+        try {
+          const res = await fetch('/data/kiasma-collection.json', { cache: 'no-store' });
+          if (!res.ok) throw new Error('Failed to load Kiasma artworks');
+          const data = await res.json();
+
+          const list: Artwork[] = Array.isArray(data) ? data.map((item: any, idx: number) => ({
+            id: item.id || `kiasma-${idx}`,
+            name: item.title || 'Untitled',
+            artist: item.artist || 'Unknown',
+            year: item.year || 0,
+            date: item.date || '',
+            image: item.image,
+            sourceUrl: item.url,
+            medium: item.medium || 'Painting',
+            dimension: item.dimensions || '',
+            description: '',
+            roomId: 'default',
+            exhibitionName: exhibition.name,
+            exhibitionTitle: exhibition.title,
+            category: item.category || 'Painting',
+            type: item.type || '2D',
+            onView: item.onDisplay || false,
+            publicDomain: item.publicDomain || false,
+            rights: item.rights || ''
+          })) : [];
+
+          setArtworks(list.filter(a => !!a.image));
+          setInitialized(true);
+        } catch (error) {
+          console.error('Failed to load Kiasma artworks:', error);
+          setInitialized(true);
+        }
+      })();
+      return () => { };
+    }
+
+    // Sinebrychoff (FNG)
+    if (exhibition.id === 'sinebrychoff-collection') {
+      (async () => {
+        try {
+          const res = await fetch('/data/sinebrychoff-collection.json', { cache: 'no-store' });
+          if (!res.ok) throw new Error('Failed to load Sinebrychoff artworks');
+          const data = await res.json();
+
+          const list: Artwork[] = Array.isArray(data) ? data.map((item: any, idx: number) => ({
+            id: item.id || `sinebrychoff-${idx}`,
+            name: item.title || 'Untitled',
+            artist: item.artist || 'Unknown',
+            year: item.year || 0,
+            date: item.date || '',
+            image: item.image,
+            sourceUrl: item.url,
+            medium: item.medium || 'Painting',
+            dimension: item.dimensions || '',
+            description: '',
+            roomId: 'default',
+            exhibitionName: exhibition.name,
+            exhibitionTitle: exhibition.title,
+            category: item.category || 'Painting',
+            type: item.type || '2D',
+            onView: item.onDisplay || false,
+            publicDomain: item.publicDomain || false,
+            rights: item.rights || ''
+          })) : [];
+
+          setArtworks(list.filter(a => !!a.image));
+          setInitialized(true);
+        } catch (error) {
+          console.error('Failed to load Sinebrychoff artworks:', error);
+          setInitialized(true);
+        }
+      })();
+      return () => { };
+    }
+
+    // Brücke-Museum (Berlin)
+    if (exhibition.id === 'bruecke-collection') {
+      (async () => {
+        try {
+          const res = await fetch('/data/bruecke-museum-collection.json', { cache: 'no-store' });
+          if (!res.ok) throw new Error('Failed to load Brücke artworks');
+          const data = await res.json();
+
+          const list: Artwork[] = Array.isArray(data) ? data.map((item: any, idx: number) => {
+            // Parse Year
+            let year = 0;
+            if (item.date) {
+              const m = String(item.date).match(/(\d{4})/);
+              if (m) year = parseInt(m[1], 10);
+            }
+
+            const cat = (item.category || '').toLowerCase();
+            const med = (item.medium || '').toLowerCase();
+            let type: '2D' | '3D' = '2D';
+            // Simple heuristics for 3D in German context
+            if (cat.includes('skulptur') || cat.includes('plastik') || cat.includes('objekt') ||
+              med.includes('skulptur') || med.includes('plastik')) {
+              type = '3D';
+            }
+
+            return {
+              id: item.id || `bruecke-${idx}`,
+              name: item.title || 'Untitled',
+              artist: item.artist || 'Unknown',
+              year,
+              date: item.date || '',
+              image: item.imageUrl || item.thumbnailUrl || '',
+              medium: item.medium,
+              dimension: item.dimensions,
+              description: item.description || '',
+              roomId: 'default',
+              exhibitionName: exhibition.name,
+              exhibitionTitle: exhibition.title,
+              category: item.category || 'Artwork',
+              type,
+              sourceUrl: `https://www.bruecke-museum.de/en/sammlung` // Generic fallback as direct URL is hard to guess from ID
+            };
+          }) : [];
+
+          setArtworks(list.filter(a => !!a.image));
+          setInitialized(true);
+        } catch (error) {
+          console.error('Failed to load Brücke artworks:', error);
+          setInitialized(true);
+        }
+      })();
+      return () => { };
+    }
+
     // Musée de l'Orangerie Collection: load from local scraped JSON
     if (exhibition.id === 'orangerie-collection') {
       (async () => {
@@ -3953,7 +4648,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
           const allObjects = Array.isArray(data.objects) ? data.objects : [];
 
           const list: Artwork[] = allObjects.map((item: any, idx: number) => ({
-            id: item.id || `orangerie-${idx}`,
+            id: item.id || `orangerie - ${idx} `,
             name: item.title || item.name || 'Untitled',
             artist: item.artist || 'Unknown',
             year: toYear(item.year),
@@ -3992,7 +4687,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
           const allObjects = Array.isArray(data.objects) ? data.objects : [];
 
           const list: Artwork[] = allObjects.map((item: any, idx: number) => ({
-            id: item.id || `pinault-${idx}`,
+            id: item.id || `pinault - ${idx} `,
             name: item.title || item.name || 'Untitled',
             artist: item.artist || 'Unknown',
             year: toYear(item.year),
@@ -4145,8 +4840,8 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
           if (!res.ok) throw new Error('Failed to load artworks');
           const data = await res.json();
           if (exhibition.id.startsWith('kroller-muller-')) {
-            console.log(`[Kröller-Müller ${exhibition.id}] Data loaded:`, data);
-            console.log(`[Kröller-Müller ${exhibition.id}] Items count:`, data.items?.length);
+            console.log(`[Kröller - Müller ${exhibition.id}] Data loaded: `, data);
+            console.log(`[Kröller - Müller ${exhibition.id}] Items count: `, data.items?.length);
           }
           if (exhibition.id === 'wawel-collection') {
             console.log('[Wawel] Loaded data. Is array?', Array.isArray(data));
@@ -4214,8 +4909,8 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
             allObjects = data.objects;
           }
           if (exhibition.id.startsWith('kroller-muller-')) {
-            console.log(`[Kröller-Müller ${exhibition.id}] allObjects count:`, allObjects.length);
-            console.log(`[Kröller-Müller ${exhibition.id}] Sample item:`, allObjects[0]);
+            console.log(`[Kröller - Müller ${exhibition.id}] allObjects count: `, allObjects.length);
+            console.log(`[Kröller - Müller ${exhibition.id}] Sample item: `, allObjects[0]);
           }
           const is2D = exhibition.id === 'pompidou-painting' || exhibition.id === 'pompidou-drawing' || exhibition.id === 'pompidou-design' || exhibition.id === 'mam-perm-painting' || exhibition.id === 'mam-perm-photography' || exhibition.id === 'louvre-painting' || exhibition.id === 'jacquemart-collection' || exhibition.id === 'marmottan-collection' || exhibition.id === 'picasso-drawings' || exhibition.id === 'picasso-paintings' || exhibition.id === 'picasso-prints' || exhibition.id === 'palais-de-tokyo-collection' || exhibition.id === 'petit-palais-collection' || exhibition.id === 'rouen-mba-collection' || exhibition.id === 'lille-pba-collection' || exhibition.id.startsWith('mamcs-') || exhibition.id === 'lyon-collection' || exhibition.id.startsWith('grenoble-') || exhibition.id.startsWith('bordeaux-') || exhibition.id === 'toulouse-lautrec-collection' || exhibition.id === 'granet-collection' || exhibition.id === 'rodin-peintures' || exhibition.id === 'rodin-gravures' || exhibition.id === 'flv-collection' || exhibition.id.startsWith('musee-armee-') || exhibition.id.startsWith('conde-') || exhibition.id === 'versailles-collection' || exhibition.id === 'guimet-collection' || exhibition.id === 'macval-collection' || exhibition.id === 'wallace-permanent' || exhibition.id === 'brera-collection' || exhibition.id === 'hamburger-kunsthalle-paintings' || exhibition.id === 'hamburger-kunsthalle-drawings' || exhibition.id === 'rijksmuseum-paintings' || exhibition.id === 'rijksmuseum-photography' || exhibition.id === 'rijksmuseum-drawings' || exhibition.id === 'rijksmuseum-prints' || exhibition.id === 'rijksmuseum-prints2' || exhibition.id === 'vangogh-museum-collection' || exhibition.id === 'mauritshuis-collection' || exhibition.id === 'stedelijk-collection' || exhibition.id === 'kroller-muller-paintings' || exhibition.id === 'kroller-muller-photography' || exhibition.id === 'wawel-collection';
           const is3D = exhibition.id === 'picasso-sculptures' || exhibition.id === 'rodin-sculptures' || exhibition.id === 'borghese-arte-antica';
@@ -4257,7 +4952,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
               };
               const century = romanToArabic(romanNumeralMatch[1]);
               const hasBC = /a\.?\s*c\.?|b\.?\s*c\.?/i.test(yearStr) && !/d\.?\s*c\.?/i.test(yearStr);
-              return hasBC ? `${century}c BC` : `${century}c`;
+              return hasBC ? `${century}c BC` : `${century} c`;
             }
 
             // Match century patterns like "3rd-4th century", "2nd century", "1st-2nd century A.D."
@@ -4266,7 +4961,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
               // Use the later century if range, otherwise the single century
               const century = centuryMatch[2] || centuryMatch[1];
               const hasBC = /B\.?C\.?/i.test(yearStr);
-              return hasBC ? `${century}c BC` : `${century}c`;
+              return hasBC ? `${century}c BC` : `${century} c`;
             }
 
             // Return original if no century pattern found
@@ -4302,7 +4997,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
               const parts = cleaned.split(', ');
               if (parts.length === 2 && !parts[0].includes(' ')) {
                 // Only convert if last name is a single word (avoid "Company Name, Inc")
-                cleaned = `${parts[1].trim()} ${parts[0].trim()}`;
+                cleaned = `${parts[1].trim()} ${parts[0].trim()} `;
               }
             }
 
@@ -4424,7 +5119,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
             }
 
             return {
-              id: item.id || `${exhibition.id}-${idx}`,
+              id: item.id || `${exhibition.id} -${idx} `,
               name: isMAD ? cleanMADTitle(rawTitle) : rawTitle,
               artist: isMAD ? cleanMADArtist(rawArtist) : (isBorghese ? cleanBorgheseArtist(rawArtist) : rawArtist),
               year: toYear(yearOrDate),
@@ -4459,10 +5154,10 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
             console.log('[Wallace] withImages:', withImages.length);
           }
           if (exhibition.id.startsWith('kroller-muller-')) {
-            console.log(`[Kröller-Müller ${exhibition.id}] list count:`, list.length);
-            console.log(`[Kröller-Müller ${exhibition.id}] withImages count:`, withImages.length);
-            console.log(`[Kröller-Müller ${exhibition.id}] Sample list item:`, list[0]);
-            console.log(`[Kröller-Müller ${exhibition.id}] Sample withImages item:`, withImages[0]);
+            console.log(`[Kröller - Müller ${exhibition.id}] list count: `, list.length);
+            console.log(`[Kröller - Müller ${exhibition.id}] withImages count: `, withImages.length);
+            console.log(`[Kröller - Müller ${exhibition.id}] Sample list item: `, list[0]);
+            console.log(`[Kröller - Müller ${exhibition.id}] Sample withImages item: `, withImages[0]);
           }
           setArtworks(withImages);
           setInitialized(true);
@@ -4489,7 +5184,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
               yearStr = parts[parts.length - 1];
             }
             return {
-              id: item.id || `mep-${idx}`,
+              id: item.id || `mep - ${idx} `,
               name: item.title || item.name || 'Untitled',
               artist: item.artist || 'Unknown',
               year: yearStr,
@@ -4646,7 +5341,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
             const roomId = artworkType || 'default';
 
             return {
-              id: `gb-${idx}`,
+              id: `gb - ${idx} `,
               name: item.title,
               artist: item.artist,
               year,
@@ -4718,7 +5413,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
             const roomId = objectType || 'default';
 
             return {
-              id: `picasso-bcn-${idx}`,
+              id: `picasso - bcn - ${idx} `,
               name: item.title,
               artist: item.artist,
               year,
@@ -4781,7 +5476,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
             const roomId = objectType || 'default';
 
             return {
-              id: `dali-foundation-${idx}`,
+              id: `dali - foundation - ${idx} `,
               name: item.title,
               artist: item.artist,
               year,
@@ -4832,7 +5527,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
             const objectType = item.objectType || item.category || '';
 
             return {
-              id: `caixaforum-${idx}`,
+              id: `caixaforum - ${idx} `,
               name: item.title,
               artist: item.artist,
               year,
@@ -4913,7 +5608,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
               // Store room metadata (including rooms without artworks)
               metas.push({
                 id: roomId,
-                name: room.name || `Room ${roomId}`,
+                name: room.name || `Room ${roomId} `,
                 coverImage: room.coverImage,
                 description: room.description,
                 location: room.location,
@@ -4934,9 +5629,9 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
               // Add coverImage as the first artwork of each room (room intro/cover)
               // Only add if it's not a duplicate of an existing artwork
               if (room.coverImage && !isDuplicateCover) {
-                const coverId = `room-cover-${roomId}-${list.length}`;
+                const coverId = `room - cover - ${roomId} -${list.length} `;
                 // Use coverArtist/coverTitle/coverYear if available, otherwise fallback to room info
-                const coverTitleFinal = room.coverTitle || room.name || `Room ${roomId}`;
+                const coverTitleFinal = room.coverTitle || room.name || `Room ${roomId} `;
                 const coverArtist = room.coverArtist || room.location || 'Tate Britain';
                 const coverYear = room.coverYear || 0;
                 list.push({
@@ -6009,12 +6704,20 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
                     ARTWORKS ONLY
                   </button>
                 )}
-                {(exhibition.id === 'guggenheim-bilbao-collection' || exhibition.id === 'kunsthaus-collection' || exhibition.id === 'khm-collection') && (
+                {(exhibition.id === 'guggenheim-bilbao-collection' || exhibition.id === 'kunsthaus-collection' || exhibition.id === 'khm-collection' || exhibition.id === 'ateneum-collection') && (
                   <button
                     onClick={() => { setShowOnViewOnly(!showOnViewOnly); setSelectedIndex(0); }}
                     style={{ padding: '0 6px', height: 20, fontSize: 10.5, fontWeight: showOnViewOnly ? 500 : 400, borderRadius: 4, border: 'none', background: showOnViewOnly ? '#111' : '#f2f2f2', color: showOnViewOnly ? '#fff' : '#666', cursor: 'pointer', transition: 'all 0.1s ease' }}
                   >
                     ON VIEW
+                  </button>
+                )}
+                {(exhibition.id === 'ateneum-collection' || exhibition.id === 'kiasma-collection' || exhibition.id === 'sinebrychoff-collection') && (
+                  <button
+                    onClick={() => { setShowPublicDomainOnly(!showPublicDomainOnly); setSelectedIndex(0); }}
+                    style={{ padding: '0 6px', height: 20, fontSize: 10.5, fontWeight: showPublicDomainOnly ? 500 : 400, borderRadius: 4, border: 'none', background: showPublicDomainOnly ? '#111' : '#f2f2f2', color: showPublicDomainOnly ? '#fff' : '#666', cursor: 'pointer', transition: 'all 0.1s ease' }}
+                  >
+                    PUBLIC DOMAIN
                   </button>
                 )}
                 {exhibition.id === 'picasso-bcn-collection' && (
@@ -6753,7 +7456,8 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
                     </div>
                   )}
                   {/* 2D/3D buttons and Special Filters */}
-                  {(hasCategorizedArtworks || hasArchivalArtworks || exhibition.id === 'guggenheim-bilbao-collection' || exhibition.id === 'kunsthaus-collection' || exhibition.id === 'khm-collection' || exhibition.id === 'picasso-bcn-collection') && (
+                  {/* 2D/3D buttons and Special Filters */}
+                  {(hasCategorizedArtworks || hasArchivalArtworks || exhibition.id === 'guggenheim-bilbao-collection' || exhibition.id === 'kunsthaus-collection' || exhibition.id === 'khm-collection' || exhibition.id === 'picasso-bcn-collection' || exhibition.id === 'ateneum-collection') && (
                     <div style={{ display: 'flex', gap: 6, marginBottom: 6 }}>
                       {/* 2D/3D Type Buttons */}
                       {hasCategorizedArtworks && (['2D', '3D'] as const).map(t => (
@@ -6822,13 +7526,21 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
                           ARTWORKS ONLY
                         </button>
                       )}
-                      {(exhibition.id === 'guggenheim-bilbao-collection' || exhibition.id === 'kunsthaus-collection' || exhibition.id === 'khm-collection') && (
+                      {(exhibition.id === 'guggenheim-bilbao-collection' || exhibition.id === 'kunsthaus-collection' || exhibition.id === 'khm-collection' || exhibition.id === 'ateneum-collection') && (
                         <button
                           key="on-view-btn"
                           onClick={() => { setShowOnViewOnly(!showOnViewOnly); setSelectedIndex(0); }}
                           style={{ padding: '0 6px', height: 20, fontSize: 10.5, fontWeight: showOnViewOnly ? 500 : 400, borderRadius: 4, border: 'none', background: showOnViewOnly ? '#111' : '#f2f2f2', color: showOnViewOnly ? '#fff' : '#666', cursor: 'pointer', transition: 'all 0.1s ease', display: 'inline-block' }}
                         >
                           ON VIEW
+                        </button>
+                      )}
+                      {(exhibition.id === 'ateneum-collection' || exhibition.id === 'kiasma-collection' || exhibition.id === 'sinebrychoff-collection') && (
+                        <button
+                          onClick={() => { setShowPublicDomainOnly(!showPublicDomainOnly); setSelectedIndex(0); }}
+                          style={{ padding: '0 6px', height: 20, fontSize: 10.5, fontWeight: showPublicDomainOnly ? 500 : 400, borderRadius: 4, border: 'none', background: showPublicDomainOnly ? '#111' : '#f2f2f2', color: showPublicDomainOnly ? '#fff' : '#666', cursor: 'pointer', transition: 'all 0.1s ease', display: 'inline-block' }}
+                        >
+                          PUBLIC DOMAIN
                         </button>
                       )}
                       {exhibition.id === 'picasso-bcn-collection' && (
@@ -7097,12 +7809,20 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
                           ARTWORKS ONLY
                         </button>
                       )}
-                      {(exhibition.id === 'guggenheim-bilbao-collection' || exhibition.id === 'kunsthaus-collection' || exhibition.id === 'khm-collection') && (
+                      {(exhibition.id === 'guggenheim-bilbao-collection' || exhibition.id === 'kunsthaus-collection' || exhibition.id === 'khm-collection' || exhibition.id === 'ateneum-collection') && (
                         <button
                           onClick={() => { setShowOnViewOnly(!showOnViewOnly); setSelectedIndex(0); }}
                           style={{ padding: '0 6px', height: 20, fontSize: 10.5, fontWeight: showOnViewOnly ? 500 : 400, borderRadius: 4, border: 'none', background: showOnViewOnly ? '#111' : '#f2f2f2', color: showOnViewOnly ? '#fff' : '#666', cursor: 'pointer', transition: 'all 0.1s ease' }}
                         >
                           ON VIEW
+                        </button>
+                      )}
+                      {(exhibition.id === 'ateneum-collection' || exhibition.id === 'kiasma-collection' || exhibition.id === 'sinebrychoff-collection') && (
+                        <button
+                          onClick={() => { setShowPublicDomainOnly(!showPublicDomainOnly); setSelectedIndex(0); }}
+                          style={{ padding: '0 6px', height: 20, fontSize: 10.5, fontWeight: showPublicDomainOnly ? 500 : 400, borderRadius: 4, border: 'none', background: showPublicDomainOnly ? '#111' : '#f2f2f2', color: showPublicDomainOnly ? '#fff' : '#666', cursor: 'pointer', transition: 'all 0.1s ease' }}
+                        >
+                          PUBLIC DOMAIN
                         </button>
                       )}
                       {(exhibition.id === 'rijksmuseum-paintings' || exhibition.id === 'rijksmuseum-photography') && (
@@ -7396,7 +8116,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
                       ARTWORKS ONLY
                     </button>
                   )}
-                  {(exhibition.id === 'guggenheim-bilbao-collection' || exhibition.id === 'kunsthaus-collection' || exhibition.id === 'khm-collection') && (
+                  {(exhibition.id === 'guggenheim-bilbao-collection' || exhibition.id === 'kunsthaus-collection' || exhibition.id === 'khm-collection' || exhibition.id === 'ateneum-collection') && (
                     <button
                       onClick={() => { setShowOnViewOnly(!showOnViewOnly); setSelectedIndex(0); }}
                       style={{
@@ -7413,6 +8133,25 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
                       }}
                     >
                       ON VIEW
+                    </button>
+                  )}
+                  {(exhibition.id === 'ateneum-collection' || exhibition.id === 'kiasma-collection' || exhibition.id === 'sinebrychoff-collection') && (
+                    <button
+                      onClick={() => { setShowPublicDomainOnly(!showPublicDomainOnly); setSelectedIndex(0); }}
+                      style={{
+                        padding: '0 6px',
+                        height: 20,
+                        fontSize: 10.5,
+                        fontWeight: showPublicDomainOnly ? 500 : 400,
+                        borderRadius: 4,
+                        border: 'none',
+                        background: showPublicDomainOnly ? '#111' : '#f2f2f2',
+                        color: showPublicDomainOnly ? '#fff' : '#666',
+                        cursor: 'pointer',
+                        transition: 'all 0.1s ease'
+                      }}
+                    >
+                      PUBLIC DOMAIN
                     </button>
                   )}
                   {(exhibition.id === 'rijksmuseum-paintings' || exhibition.id === 'rijksmuseum-photography') && (
@@ -8180,7 +8919,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, onClose, 
                         closeHoverZoomFromOverlay={closeHoverZoomFromOverlay}
                         exhibitionId={exhibition.id}
                         applyFallbackImage={applyFallbackImage}
-                        useProxyVal={exhibition.id === 'mnk-collection' ? true : useProxy}
+                        useProxyVal={exhibition.id === 'mnk-collection' || exhibition.id === 'louisiana-collection' ? true : useProxy}
                       />
                     ))}
                   </div>

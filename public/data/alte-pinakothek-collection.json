@@ -28,7 +28,7 @@
     {
       "id": "pinakothek-ap-12469",
       "title": "Landschaft mit Bauernhäusern",
-      "artist": "Peter  von Bemmel",
+      "artist": "Peter von Bemmel",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -280,7 +280,7 @@
     {
       "id": "pinakothek-ap-1041",
       "title": "Der Seehafen von Amsterdam",
-      "artist": "Ludolf Backhuysen",
+      "artist": "Ludolf Backhuysen (I)",
       "year": "1697",
       "dateStr": "1697",
       "medium": "Leinwand",
@@ -316,7 +316,7 @@
     {
       "id": "pinakothek-ap-1172",
       "title": "Gefechtsstück",
-      "artist": "Jacques Courtois, gen. Le Bourguignon",
+      "artist": "gen. Le Bourguignon Jacques Courtois",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -460,7 +460,7 @@
     {
       "id": "pinakothek-ap-4220",
       "title": "Flucht nach Ägypten",
-      "artist": "Guido Reni (Kopie nach)",
+      "artist": "Guido Reni",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -532,7 +532,7 @@
     {
       "id": "pinakothek-ap-4814",
       "title": "Halteplatz",
-      "artist": "Georg Philipp Rugendas d. Ä.",
+      "artist": "Georg Philipp Rugendas",
       "year": "um 1695",
       "dateStr": "um 1695",
       "medium": "Leinwand",
@@ -658,7 +658,7 @@
     {
       "id": "pinakothek-ap-2890",
       "title": "Das Paradies mit den vier Elementen",
-      "artist": "Hendrick de Clerck",
+      "artist": "Hendrick Clerck",
       "year": "um 1608",
       "dateStr": "um 1608",
       "medium": "Kupfer",
@@ -820,7 +820,7 @@
     {
       "id": "pinakothek-ap-1785",
       "title": "Schild haltender Genius",
-      "artist": "Charles Le Brun",
+      "artist": "Le Brun Charles",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -1018,7 +1018,7 @@
     {
       "id": "pinakothek-ap-5442",
       "title": "Italienische Landschaft",
-      "artist": "Jean François Millet (gen. Francisque)",
+      "artist": "Jean-François Millet",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -1522,7 +1522,7 @@
     {
       "id": "pinakothek-ap-13112",
       "title": "Bildnis einer Dame (Markgräfin Elisabeth von Ansbach-Bayreuth?)",
-      "artist": "Lucas Cranach d. J.",
+      "artist": "Lucas Cranach d. Ä.",
       "year": "um 1565",
       "dateStr": "um 1565",
       "medium": "Lindenholz (Tilia sp.)",
@@ -2512,7 +2512,7 @@
     {
       "id": "pinakothek-ap-11157",
       "title": "Hl. Cäcilia am Spinett",
-      "artist": "Caravaggio (Michelangelo Merisi)",
+      "artist": "Caravaggio",
       "year": "um 1670",
       "dateStr": "um 1670",
       "medium": "Leinwand",
@@ -2656,7 +2656,7 @@
     {
       "id": "pinakothek-ap-1480",
       "title": "Triptychon, Mitteltafel: Anbetung der Könige",
-      "artist": "Meister von 1518",
+      "artist": "Meister von",
       "year": "um oder nach 1530",
       "dateStr": "um oder nach 1530",
       "medium": "Eichenholz",
@@ -2674,7 +2674,7 @@
     {
       "id": "pinakothek-ap-1480-A",
       "title": "Triptychon, linker Flügel: Verkündigung an Maria",
-      "artist": "Meister von 1518",
+      "artist": "Meister von",
       "year": "um 1530",
       "dateStr": "um 1530",
       "medium": "Eichenholz",
@@ -3070,7 +3070,7 @@
     {
       "id": "pinakothek-ap-1470",
       "title": "Bildnis der Anna Schellenberger",
-      "artist": "Hans Schöpfer d. J.",
+      "artist": "Hans Schöpfer d. Ä.",
       "year": "1571",
       "dateStr": "1571",
       "medium": "Holz",
@@ -3178,7 +3178,7 @@
     {
       "id": "pinakothek-ap-9070",
       "title": "Bestattung der hl. Katharina",
-      "artist": "Alpenländisch um 1470/80",
+      "artist": "Alpenländisch um/80",
       "year": "um 1470/80",
       "dateStr": "um 1470/80",
       "medium": "Nadelholz, Tafel gespalten",
@@ -3304,7 +3304,7 @@
     {
       "id": "pinakothek-ap-9339",
       "title": "Szene aus der Legende des hl. Rochus",
-      "artist": "Mittelrheinischer Meister um 1520",
+      "artist": "Mittelrheinischer Meister um",
       "year": "um 1520",
       "dateStr": "um 1520",
       "medium": "Lindenholz (Tilia sp.)",
@@ -3376,7 +3376,7 @@
     {
       "id": "pinakothek-ap-8128",
       "title": "Bildnis eines Herrn",
-      "artist": "Gerard ter Borch d. J.",
+      "artist": "Gerard ter Borch",
       "year": "um 1660",
       "dateStr": "um 1660",
       "medium": "Leinwand",
@@ -4510,7 +4510,7 @@
     {
       "id": "pinakothek-ap-6661",
       "title": "Hl. Hieronymus in der Einöde",
-      "artist": "Jusepe de Ribera",
+      "artist": "Jusepe de (Giuseppe, José) Ribera (Rivera), Umkreis",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -4798,7 +4798,7 @@
     {
       "id": "pinakothek-ap-7437",
       "title": "Gefechtsstück",
-      "artist": "Georg Philipp Rugendas d. Ä.",
+      "artist": "Georg Philipp Rugendas",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -5104,7 +5104,7 @@
     {
       "id": "pinakothek-ap-6762",
       "title": "Maria de' Medici (1573-1642)",
-      "artist": "Unbekannt (nach Frans Pourbus d. J.)",
+      "artist": "Unbekannt",
       "year": "Anfang 17. Jhdt.",
       "dateStr": "Anfang 17. Jhdt.",
       "medium": "Leinwand",
@@ -5572,7 +5572,7 @@
     {
       "id": "pinakothek-ap-7039",
       "title": "Apoll schindet Marsyas",
-      "artist": "Guido Reni (Kopie nach)",
+      "artist": "Guido Reni",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -5752,7 +5752,7 @@
     {
       "id": "pinakothek-ap-7604",
       "title": "Hl. Bartholomäus",
-      "artist": "Jusepe de Ribera",
+      "artist": "Jusepe de (Giuseppe, José) Ribera (Rivera), Umkreis",
       "year": "1633",
       "dateStr": "1633",
       "medium": "Leinwand",
@@ -6004,7 +6004,7 @@
     {
       "id": "pinakothek-ap-14490",
       "title": "Jüngstes Gericht",
-      "artist": "Antwerpener Meister um 1540",
+      "artist": "Antwerpener Meister um",
       "year": "um 1540",
       "dateStr": "um 1540",
       "medium": "Eichenholz",
@@ -6076,7 +6076,7 @@
     {
       "id": "pinakothek-ap-15273",
       "title": "Bildnis Pfalzgräfin Susanna, Herzogin zu Neuburg",
-      "artist": "Süddeutsch um 1530",
+      "artist": "Süddeutsch um",
       "year": "um 1530",
       "dateStr": "um 1530",
       "medium": "Tannenholz (Abies sp.)",
@@ -6400,7 +6400,7 @@
     {
       "id": "pinakothek-ap-10688",
       "title": "Reitergefecht",
-      "artist": "Jacques Courtois, gen. Le Bourguignon",
+      "artist": "gen. Le Bourguignon Jacques Courtois",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -6724,7 +6724,7 @@
     {
       "id": "pinakothek-ap-382",
       "title": "Idyllische Landschaft bei untergehender Sonne",
-      "artist": "Claude Lorrain (Claude Gellée)",
+      "artist": "Claude Lorrain",
       "year": "1670",
       "dateStr": "1670",
       "medium": "Leinwand",
@@ -6760,7 +6760,7 @@
     {
       "id": "pinakothek-ap-3831",
       "title": "Darbringung im Tempel",
-      "artist": "Schwäbisch um 1480",
+      "artist": "Schwäbisch um",
       "year": "um 1480",
       "dateStr": "um 1480",
       "medium": "Tannenholz",
@@ -6778,7 +6778,7 @@
     {
       "id": "pinakothek-ap-3833",
       "title": "Der zwölfjährige Jesus im Tempel",
-      "artist": "Schwäbisch um 1480",
+      "artist": "Schwäbisch um",
       "year": "um 1480",
       "dateStr": "um 1480",
       "medium": "Tannenholz",
@@ -9172,7 +9172,7 @@
     {
       "id": "pinakothek-ap-9892",
       "title": "Christus am Kreuz",
-      "artist": "Niederländisch um 1530",
+      "artist": "Niederländisch um",
       "year": "um 1530",
       "dateStr": "um 1530",
       "medium": "Eichenholz",
@@ -9388,7 +9388,7 @@
     {
       "id": "pinakothek-ap-WAF-380",
       "title": "Das Weib und der Tod (Kopie nach Hans Baldung)",
-      "artist": "Holländisch um 1470 (1520?)",
+      "artist": "Holländisch um?)",
       "year": "15./16. Jh.(?)",
       "dateStr": "15./16. Jh.(?)",
       "medium": "Eichenholz",
@@ -9478,7 +9478,7 @@
     {
       "id": "pinakothek-ap-WAF-500",
       "title": "Thronende Maria mit Kind, den hll. Jungfrauen Katharina, Agnes, Apollonia und Barbara und musizierenden Engeln",
-      "artist": "Kölnisch um 1440",
+      "artist": "Kölnisch um",
       "year": "1440",
       "dateStr": "1440",
       "medium": "Eichenholz",
@@ -9748,7 +9748,7 @@
     {
       "id": "pinakothek-ap-WAF-122",
       "title": "Christus am Ölberg",
-      "artist": "Nordwestdeutsch um 1540/50",
+      "artist": "Nordwestdeutsch um/50",
       "year": "um 1540/50",
       "dateStr": "um 1540/50",
       "medium": "Eichenholz",
@@ -9964,7 +9964,7 @@
     {
       "id": "pinakothek-ap-WAF-680-A",
       "title": "Bildnis des Petrus Canisius",
-      "artist": "Monogrammist AE von 1546",
+      "artist": "Monogrammist AE von",
       "year": "1546",
       "dateStr": "1546",
       "medium": "Lindenholz (Tilia sp.)",
@@ -10018,7 +10018,7 @@
     {
       "id": "pinakothek-ap-WAF-729",
       "title": "Drachenkampf des hl. Georg",
-      "artist": "Oberrheinisch um 1460",
+      "artist": "Oberrheinisch um",
       "year": "um 1460",
       "dateStr": "um 1460",
       "medium": "Lindenholz (Tilia sp.)",
@@ -10036,7 +10036,7 @@
     {
       "id": "pinakothek-ap-WAF-733",
       "title": "Bildnis eines Mannes",
-      "artist": "Kölnisch von 1492 (Umkreis des Meisters des Bartholomäusaltares)",
+      "artist": "Kölnisch von (Umkreis des Meisters des Bartholomäusaltares)",
       "year": "1492",
       "dateStr": "1492",
       "medium": "Eichenholz",
@@ -10144,7 +10144,7 @@
     {
       "id": "pinakothek-ap-WAF-835",
       "title": "Elisabeth Charlotte von der Pfalz",
-      "artist": "Hyacinthe Rigaud",
+      "artist": "Rigaud Hyacinthe",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -10270,7 +10270,7 @@
     {
       "id": "pinakothek-ap-958",
       "title": "Der reuige Petrus",
-      "artist": "Guido Reni (Kopie nach)",
+      "artist": "Guido Reni",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -10378,7 +10378,7 @@
     {
       "id": "pinakothek-ap-969",
       "title": "Der Henker mit dem Haupte Johannes des Täufers",
-      "artist": "Jusepe de Ribera",
+      "artist": "Jusepe de (Giuseppe, José) Ribera (Rivera), Umkreis",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -10486,7 +10486,7 @@
     {
       "id": "pinakothek-ap-L-34",
       "title": "Männliches Bildnis",
-      "artist": "Frans Pourbus d. J.",
+      "artist": "Frans Pourbus d. Ä.",
       "year": "1614",
       "dateStr": "1614",
       "medium": "Holz",
@@ -10540,7 +10540,7 @@
     {
       "id": "pinakothek-ap-1225",
       "title": "Waldlandschaft mit Überfall",
-      "artist": "Jan van der Meer d. J. (Vermeer)",
+      "artist": "Jan van der Meer (III)",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -10684,7 +10684,7 @@
     {
       "id": "pinakothek-ap-1262",
       "title": "Bildnis eines alten Mannes",
-      "artist": "Rembrandt (Harmensz. van Rijn)",
+      "artist": "Rembrandt van Rijn",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -10846,7 +10846,7 @@
     {
       "id": "pinakothek-ap-2606",
       "title": "Die hll. Laurentius und Sixtus",
-      "artist": "Oberdeutsch um 1490",
+      "artist": "Oberdeutsch um",
       "year": "Ende 15. Jhdt.",
       "dateStr": "Ende 15. Jhdt.",
       "medium": "Tannenholz (Abies sp.)",
@@ -10972,7 +10972,7 @@
     {
       "id": "pinakothek-ap-2685",
       "title": "Parforcejagd",
-      "artist": "Jacques Callot",
+      "artist": "Callot Jacques",
       "year": null,
       "dateStr": null,
       "medium": "Holz",
@@ -10990,7 +10990,7 @@
     {
       "id": "pinakothek-ap-2721",
       "title": "Medusenhaupt",
-      "artist": "Caravaggio (Michelangelo Merisi)",
+      "artist": "Caravaggio",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -11242,7 +11242,7 @@
     {
       "id": "pinakothek-ap-2360",
       "title": "Maria mit Kind und zwei Heiligen",
-      "artist": "Paolo Veronese (Paolo Caliari)",
+      "artist": "Manner of Paolo Veronese",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -11566,7 +11566,7 @@
     {
       "id": "pinakothek-ap-165",
       "title": "Bildnis eines Feldherrn",
-      "artist": "Französisch um 1650/70",
+      "artist": "Französisch um/70",
       "year": "um 1650/70",
       "dateStr": "um 1650/70",
       "medium": "Eichenholz",
@@ -12322,7 +12322,7 @@
     {
       "id": "pinakothek-ap-230",
       "title": "Die Madonna erscheint zwei Pilgern",
-      "artist": "Caravaggio (Michelangelo Merisi)",
+      "artist": "Caravaggio",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -12502,7 +12502,7 @@
     {
       "id": "pinakothek-ap-2354",
       "title": "Brustbild einer bejahrten Frau",
-      "artist": "Charles Le Brun",
+      "artist": "Le Brun Charles",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -12916,7 +12916,7 @@
     {
       "id": "pinakothek-ap-2789",
       "title": "Vermählung der hl. Katharina",
-      "artist": "Paolo Veronese (Paolo Caliari)",
+      "artist": "Manner of Paolo Veronese",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -13150,7 +13150,7 @@
     {
       "id": "pinakothek-ap-528",
       "title": "Midas und Bacchus",
-      "artist": "Nicolas Poussin",
+      "artist": "Poussin Nicolas",
       "year": "um 1624",
       "dateStr": "um 1624",
       "medium": "Leinwand",
@@ -13276,7 +13276,7 @@
     {
       "id": "pinakothek-ap-5317",
       "title": "Der hl. Hieronymus mit den hll. Frauen Paula und Eustochium und einem Stifter",
-      "artist": "Kölnisch um 1440/50",
+      "artist": "Kölnisch um",
       "year": "um 1440/50",
       "dateStr": "um 1440/50",
       "medium": "Eichenholz",
@@ -13618,7 +13618,7 @@
     {
       "id": "pinakothek-ap-517",
       "title": "Bildnis eines Mannes",
-      "artist": "Tiziano Vecellio, gen. Tizian",
+      "artist": "gen. Tizian Tiziano Vecellio",
       "year": "um 1520",
       "dateStr": "um 1520",
       "medium": "Leinwand, auf Eichenholz aufgezogen",
@@ -13708,7 +13708,7 @@
     {
       "id": "pinakothek-ap-5189",
       "title": "Ecce homo",
-      "artist": "Tiziano Vecellio, gen. Tizian",
+      "artist": "gen. Tizian Tiziano Vecellio",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -13816,7 +13816,7 @@
     {
       "id": "pinakothek-ap-5211",
       "title": "König Sigismund III. von Polen als Sieger über die Ketzerei",
-      "artist": "Deutsch um 1600",
+      "artist": "Deutsch um",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -13906,7 +13906,7 @@
     {
       "id": "pinakothek-ap-5234",
       "title": "Die Verlobung der hl. Katharina",
-      "artist": "Tiziano Vecellio, gen. Tizian",
+      "artist": "gen. Tizian Tiziano Vecellio",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -14752,7 +14752,7 @@
     {
       "id": "pinakothek-ap-604",
       "title": "Die Verstoßung der Hagar",
-      "artist": "Claude Lorrain (Claude Gellée)",
+      "artist": "Claude Lorrain",
       "year": "1668",
       "dateStr": "1668",
       "medium": "Leinwand",
@@ -15076,7 +15076,7 @@
     {
       "id": "pinakothek-ap-5038",
       "title": "Versuchung des hl. Antonius",
-      "artist": "Joseph Werner d. J.",
+      "artist": "Joseph Werner",
       "year": null,
       "dateStr": null,
       "medium": "Holz",
@@ -15256,7 +15256,7 @@
     {
       "id": "pinakothek-ap-511",
       "title": "Apostel Johannes",
-      "artist": "Simone Cantarini (gen. Il Pesarese)",
+      "artist": "Simone Cantarini (Umkreis)",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -15346,7 +15346,7 @@
     {
       "id": "pinakothek-ap-5134",
       "title": "Hl. Sebastian",
-      "artist": "Caravaggio (Michelangelo Merisi)",
+      "artist": "Caravaggio",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -15904,7 +15904,7 @@
     {
       "id": "pinakothek-ap-5519",
       "title": "Venus mit dem schlafenden Adonis",
-      "artist": "Paolo Veronese (Paolo Caliari)",
+      "artist": "Manner of Paolo Veronese",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -15958,7 +15958,7 @@
     {
       "id": "pinakothek-ap-5545",
       "title": "Offizier und Trompeter",
-      "artist": "Gerard ter Borch d. J.",
+      "artist": "Gerard ter Borch",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -16426,7 +16426,7 @@
     {
       "id": "pinakothek-ap-1261",
       "title": "Bildnis einer alten Frau",
-      "artist": "Rembrandt (Harmensz. van Rijn)",
+      "artist": "Rembrandt van Rijn",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -16930,7 +16930,7 @@
     {
       "id": "pinakothek-ap-1756",
       "title": "Bildnis einer jungen Dame",
-      "artist": "Justus van Egmont",
+      "artist": "Van Egmont Justus",
       "year": "um 1660",
       "dateStr": "um 1660",
       "medium": "Leinwand",
@@ -16984,7 +16984,7 @@
     {
       "id": "pinakothek-ap-1701",
       "title": "Rheinlandschaft",
-      "artist": "Christian Georg Schütz d. J.",
+      "artist": "Christian Georg Schütz d. Ä.",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -17056,7 +17056,7 @@
     {
       "id": "pinakothek-ap-3628",
       "title": "Beatrice Cenci",
-      "artist": "Guido Reni (Kopie nach)",
+      "artist": "Guido Reni",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -17416,7 +17416,7 @@
     {
       "id": "pinakothek-ap-12935",
       "title": "Reitergefecht",
-      "artist": "Adam Frans van der Meulen",
+      "artist": "Van der Meulen Adam Frans",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -17560,7 +17560,7 @@
     {
       "id": "pinakothek-ap-3230",
       "title": "Grand Dauphin",
-      "artist": "Hyacinthe Rigaud",
+      "artist": "Rigaud Hyacinthe",
       "year": null,
       "dateStr": null,
       "medium": "Öl auf Leinwand",
@@ -17740,7 +17740,7 @@
     {
       "id": "pinakothek-ap-9806",
       "title": "Die Gründonnerstag-Fußwaschung in Mainz unter Kurfürst Friedrich Karl von Erthal",
-      "artist": "Franz Joseph  Kauffmann",
+      "artist": "Franz Joseph Kauffmann",
       "year": "1779",
       "dateStr": "1779",
       "medium": "Leinwand",
@@ -17920,7 +17920,7 @@
     {
       "id": "pinakothek-ap-6664",
       "title": "Die Heilige Familie",
-      "artist": "Deutsch um 1700",
+      "artist": "Deutsch um",
       "year": "um 1700",
       "dateStr": "um 1700",
       "medium": "Leinwand",
@@ -17974,7 +17974,7 @@
     {
       "id": "pinakothek-ap-5518",
       "title": "Raub der Proserpina",
-      "artist": "Carracci-Schule (Bolognesisch um 1600)",
+      "artist": "Carracci-Schule (Bolognesisch um",
       "year": "um 1600",
       "dateStr": "um 1600",
       "medium": "Öl auf Leinwand",
@@ -18082,7 +18082,7 @@
     {
       "id": "pinakothek-ap-12134",
       "title": "Grablegung Christi",
-      "artist": "Rembrandt (Harmensz. van Rijn)",
+      "artist": "Rembrandt van Rijn",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -18154,7 +18154,7 @@
     {
       "id": "pinakothek-ap-5288",
       "title": "Hl. Franziskus in Ekstase",
-      "artist": "Caravaggio (Michelangelo Merisi)",
+      "artist": "Caravaggio",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -18172,7 +18172,7 @@
     {
       "id": "pinakothek-ap-1709",
       "title": "Rheinlandschaft",
-      "artist": "Christian Georg Schütz d. J.",
+      "artist": "Christian Georg Schütz d. Ä.",
       "year": null,
       "dateStr": null,
       "medium": "Holz",
@@ -18334,7 +18334,7 @@
     {
       "id": "pinakothek-ap-B-1025",
       "title": "Büste eines schlafenden Kindes (\"Bébé endormie\")",
-      "artist": "Aimé-Jules Dalou",
+      "artist": "Aimé Jules Dalou",
       "year": "Modell um 1876/78 ",
       "dateStr": "Modell um 1876/78 ",
       "medium": "Bronze braun patiniert, Sockel graugrüner Marmor",
@@ -18676,7 +18676,7 @@
     {
       "id": "pinakothek-ap-7413",
       "title": "Triptychon mit Franziskuslegende (126 Szenen)\r\nFlügelaußenseiten: Hll. Franziskus und Klara",
-      "artist": "Ulmer Meister um 1500",
+      "artist": "Ulmer Meister um",
       "year": "um 1500",
       "dateStr": "um 1500",
       "medium": "Nadelholz, mit aufgeklebten Papierstreifen",
@@ -19000,7 +19000,7 @@
     {
       "id": "pinakothek-ap-15373",
       "title": "Stigmatisierung des hl. Franziskus",
-      "artist": "17.Jahrhundert (sign. Leonh.Franckh Jäger, 1663) Deutsch",
+      "artist": "Deutsch 17.Jahrhundert (sign. Leonh.Franckh Jäger",
       "year": "um 1663",
       "dateStr": "um 1663",
       "medium": "Leinwand",
@@ -19144,7 +19144,7 @@
     {
       "id": "pinakothek-ap-2623",
       "title": "Legende des Heiligen Quirin",
-      "artist": "Oberbayern um 1500/1510",
+      "artist": "Oberbayern um/",
       "year": "um 1500/1510",
       "dateStr": "um 1500/1510",
       "medium": "Nadelholz",
@@ -19684,7 +19684,7 @@
     {
       "id": "pinakothek-ap-6595",
       "title": "Reitergefecht",
-      "artist": "Jacques Courtois, gen. Le Bourguignon",
+      "artist": "gen. Le Bourguignon Jacques Courtois",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -20098,7 +20098,7 @@
     {
       "id": "pinakothek-ap-WAF-554",
       "title": "Die Sintflut",
-      "artist": "Karel von Mander",
+      "artist": "Karel van Mander (III.)",
       "year": "1575/1600",
       "dateStr": "1575/1600",
       "medium": "Eichenholz",
@@ -20404,7 +20404,7 @@
     {
       "id": "pinakothek-ap-10683",
       "title": "Kreuztragung Christi",
-      "artist": "Deutsch um 1600",
+      "artist": "Deutsch um",
       "year": null,
       "dateStr": null,
       "medium": "Metall",
@@ -20728,7 +20728,7 @@
     {
       "id": "pinakothek-ap-10417",
       "title": "Die hll. Florian und Sebastian",
-      "artist": "Fränkischer Meister um 1470/80",
+      "artist": "Fränkischer Meister um/80",
       "year": "um 1470/80",
       "dateStr": "um 1470/80",
       "medium": "Fichtenholz (Picea sp.)",
@@ -21394,7 +21394,7 @@
     {
       "id": "pinakothek-ap-12489",
       "title": "Waldlandschaft",
-      "artist": "Jan van der Meer d. J. (Vermeer)",
+      "artist": "Jan van der Meer (III)",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -21628,7 +21628,7 @@
     {
       "id": "pinakothek-ap-1290",
       "title": "Die Befreiung der Andromeda",
-      "artist": "Sébastien Bourdon",
+      "artist": "Bourdon Sébastien",
       "year": "um 1650",
       "dateStr": "um 1650",
       "medium": "Leinwand",
@@ -22258,7 +22258,7 @@
     {
       "id": "pinakothek-ap-1351",
       "title": "Altärchen mit Ikone und Darstellung der Sieben Freuden und Schmerzen Mariens",
-      "artist": "Oberbayern um 1500/1510",
+      "artist": "Oberbayern um/",
       "year": "um 1510",
       "dateStr": "um 1510",
       "medium": "Pappelholz (Populus sp.)",
@@ -22330,7 +22330,7 @@
     {
       "id": "pinakothek-ap-11158",
       "title": "Tod des hl. Franziskus",
-      "artist": "Caravaggio (Michelangelo Merisi)",
+      "artist": "Caravaggio",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -22546,7 +22546,7 @@
     {
       "id": "pinakothek-ap-1178",
       "title": "Johannes der Täufer als Kind",
-      "artist": "Paolo Veronese (Paolo Caliari)",
+      "artist": "Manner of Paolo Veronese",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -22672,7 +22672,7 @@
     {
       "id": "pinakothek-ap-12235",
       "title": "Enthauptung Johannes des Täufers",
-      "artist": "Niederländisch um 1520",
+      "artist": "Niederländisch um",
       "year": "1510/20",
       "dateStr": "1510/20",
       "medium": "Eichenholz",
@@ -22798,7 +22798,7 @@
     {
       "id": "pinakothek-ap-1837",
       "title": "Bauer mit Stange",
-      "artist": "David Teniers d. Ä.",
+      "artist": "David Teniers d. J.",
       "year": null,
       "dateStr": null,
       "medium": "Holz",
@@ -23932,7 +23932,7 @@
     {
       "id": "pinakothek-ap-2716",
       "title": "Venus",
-      "artist": "Tiziano Vecellio, gen. Tizian",
+      "artist": "gen. Tizian Tiziano Vecellio",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -24724,7 +24724,7 @@
     {
       "id": "pinakothek-ap-4802",
       "title": "Ein junger Mann",
-      "artist": "Rembrandt (Harmensz. van Rijn)",
+      "artist": "Rembrandt van Rijn",
       "year": null,
       "dateStr": null,
       "medium": "Holz",
@@ -24796,7 +24796,7 @@
     {
       "id": "pinakothek-ap-483",
       "title": "Die Eitelkeit der Welt",
-      "artist": "Tiziano Vecellio, gen. Tizian",
+      "artist": "gen. Tizian Tiziano Vecellio",
       "year": "um 1515",
       "dateStr": "um 1515",
       "medium": "Leinwand",
@@ -24868,7 +24868,7 @@
     {
       "id": "pinakothek-ap-4912",
       "title": "Die Versuchung des hl. Antonius",
-      "artist": "Flämisch (Nachfolger von Hieronymus Bosch)",
+      "artist": "Flämisch",
       "year": null,
       "dateStr": null,
       "medium": "Eichenholz",
@@ -25678,7 +25678,7 @@
     {
       "id": "pinakothek-ap-5405",
       "title": "Bildnis einer Frau",
-      "artist": "Niederländisch um 1540",
+      "artist": "Niederländisch um",
       "year": "um 1540",
       "dateStr": "um 1540",
       "medium": "Eichenholz",
@@ -26110,7 +26110,7 @@
     {
       "id": "pinakothek-ap-4534",
       "title": "Adam und Eva",
-      "artist": "Hendrick de Clerck",
+      "artist": "Hendrick Clerck",
       "year": "um 1608/11",
       "dateStr": "um 1608/11",
       "medium": "Kupfer",
@@ -26236,7 +26236,7 @@
     {
       "id": "pinakothek-ap-5048",
       "title": "Lot und seine Töchter",
-      "artist": "Flämisch um 1580",
+      "artist": "Flämisch um",
       "year": null,
       "dateStr": null,
       "medium": "Holz",
@@ -26506,7 +26506,7 @@
     {
       "id": "pinakothek-ap-5143",
       "title": "Szene aus dem Leben der hl. Klara (?)",
-      "artist": "Paolo Veronese (Paolo Caliari)",
+      "artist": "Manner of Paolo Veronese",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -26632,7 +26632,7 @@
     {
       "id": "pinakothek-ap-5987",
       "title": "Maria mit Kind",
-      "artist": "Pieter Claeissens  d. Ä.",
+      "artist": "Pieter Claeissens d. Ä.",
       "year": "um 1550 oder um 1600(?)",
       "dateStr": "um 1550 oder um 1600(?)",
       "medium": "Kupfer",
@@ -26992,7 +26992,7 @@
     {
       "id": "pinakothek-ap-5597",
       "title": "Klassische Landschaft",
-      "artist": "Jean François Millet (gen. Francisque)",
+      "artist": "Jean-François Millet",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -27442,7 +27442,7 @@
     {
       "id": "pinakothek-ap-5640",
       "title": "Szene aus dem Bauernkrieg",
-      "artist": "Unbekannt (nach David Vinckboons)",
+      "artist": "Unbekannt",
       "year": null,
       "dateStr": null,
       "medium": "Eichenholz",
@@ -27568,7 +27568,7 @@
     {
       "id": "pinakothek-ap-574",
       "title": "Bildnis eines jungen Mannes",
-      "artist": "Rembrandt (Harmensz. van Rijn)",
+      "artist": "Rembrandt van Rijn",
       "year": "1633",
       "dateStr": "1633",
       "medium": "Leinwand",
@@ -28108,7 +28108,7 @@
     {
       "id": "pinakothek-ap-11181",
       "title": "Wanderfahrt nach dem Süden",
-      "artist": "Deutsch um 1670",
+      "artist": "Deutsch um",
       "year": "um 1670",
       "dateStr": "um 1670",
       "medium": "Leinwand",
@@ -28144,7 +28144,7 @@
     {
       "id": "pinakothek-ap-1031",
       "title": "Der Engel verlässt die Familie des Tobias",
-      "artist": "Jan Victors",
+      "artist": "Victors Jan",
       "year": "1651",
       "dateStr": "1651",
       "medium": "Leinwand",
@@ -28198,7 +28198,7 @@
     {
       "id": "pinakothek-ap-942",
       "title": "Abzug der Reiterei",
-      "artist": "Jacques Courtois, gen. Le Bourguignon",
+      "artist": "gen. Le Bourguignon Jacques Courtois",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -28558,7 +28558,7 @@
     {
       "id": "pinakothek-ap-3987",
       "title": "Maria Theresia",
-      "artist": "Deutsch 17. Jahrhundert",
+      "artist": "Deutsch 19. Jahrhundert",
       "year": "3. Dr. 17. Jh.",
       "dateStr": "3. Dr. 17. Jh.",
       "medium": "Leinwand",
@@ -28972,7 +28972,7 @@
     {
       "id": "pinakothek-ap-8583",
       "title": "Auffahrende Artillerie",
-      "artist": "Théodore Géricault",
+      "artist": "Géricault Théodore",
       "year": "gegen 1814",
       "dateStr": "gegen 1814",
       "medium": "Öl auf Leinwand",
@@ -29044,7 +29044,7 @@
     {
       "id": "pinakothek-ap-8657",
       "title": "Kap Layet",
-      "artist": "Henri Edmond Cross",
+      "artist": "Henri-Edmond Cross",
       "year": "wohl 1904",
       "dateStr": "wohl 1904",
       "medium": "Öl auf Leinwand",
@@ -29188,7 +29188,7 @@
     {
       "id": "pinakothek-ap-799",
       "title": "Hl. Magdalena",
-      "artist": "Jacopo Negretti, gen. Palma il Vecchio",
+      "artist": "gen. Palma il Vecchio Jacopo Negretti",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -29548,7 +29548,7 @@
     {
       "id": "pinakothek-ap-524",
       "title": "Bildnis eines jungen Mannes",
-      "artist": "Giorgio da Castelfranco, gen. Giorgione",
+      "artist": "gen. Giorgione Giorgio da Castelfranco",
       "year": "um 1505/10",
       "dateStr": "um 1505/10",
       "medium": "Pappelholz",
@@ -30052,7 +30052,7 @@
     {
       "id": "pinakothek-ap-632",
       "title": "Bildnis Kaiser Karls V. im Lehnstuhl",
-      "artist": "Tiziano Vecellio, gen. Tizian",
+      "artist": "gen. Tizian Tiziano Vecellio",
       "year": "1548",
       "dateStr": "1548",
       "medium": "Leinwand",
@@ -30304,7 +30304,7 @@
     {
       "id": "pinakothek-ap-7452",
       "title": "Bildnis des Giovanni Borgherini und des Trifone Gabriele",
-      "artist": "Giorgio da Castelfranco, gen. Giorgione",
+      "artist": "gen. Giorgione Giorgio da Castelfranco",
       "year": "1509/10",
       "dateStr": "1509/10",
       "medium": "Leinwand",
@@ -30592,7 +30592,7 @@
     {
       "id": "pinakothek-ap-6803",
       "title": "Anbetung der Hirten\r\nRückseite: Engel der Verkündigung",
-      "artist": "Oberdeutsch von 1543",
+      "artist": "Oberdeutsch",
       "year": "1543",
       "dateStr": "1543",
       "medium": "Fichtenholz (Picea sp.)",
@@ -30862,7 +30862,7 @@
     {
       "id": "pinakothek-ap-6471",
       "title": "Der auferstandene Christus",
-      "artist": "Rembrandt (Harmensz. van Rijn)",
+      "artist": "Rembrandt van Rijn",
       "year": "1661",
       "dateStr": "1661",
       "medium": "Leinwand",
@@ -31114,7 +31114,7 @@
     {
       "id": "pinakothek-ap-7697",
       "title": "Hl. Barbara\r\n(Rückseite: Hl. Ottilie)",
-      "artist": "Schwäbisch um 1490/1500",
+      "artist": "Schwäbisch um",
       "year": "um 1500",
       "dateStr": "um 1500",
       "medium": "Holz",
@@ -31222,7 +31222,7 @@
     {
       "id": "pinakothek-ap-6920",
       "title": "Elisabeth von Bourbon (1602-1644)",
-      "artist": "Frans Pourbus d. J.",
+      "artist": "Frans Pourbus d. Ä.",
       "year": "um 1615",
       "dateStr": "um 1615",
       "medium": "Leinwand",
@@ -32122,7 +32122,7 @@
     {
       "id": "pinakothek-ap-14985",
       "title": "Christus und die Sünderin",
-      "artist": "Fränkisch von 1523",
+      "artist": "Fränkisch",
       "year": "1523",
       "dateStr": "1523",
       "medium": "Fichtenholz (Picea sp.)",
@@ -32194,7 +32194,7 @@
     {
       "id": "pinakothek-ap-L-2136",
       "title": "Bauer",
-      "artist": "Aimé-Jules Dalou",
+      "artist": "Aimé Jules Dalou",
       "year": "um 1902",
       "dateStr": "um 1902",
       "medium": "Bronze",
@@ -32986,7 +32986,7 @@
     {
       "id": "pinakothek-ap-464",
       "title": "Maria mit Kind in einer Abendlandschaft",
-      "artist": "Tiziano Vecellio, gen. Tizian",
+      "artist": "gen. Tizian Tiziano Vecellio",
       "year": "um 1560",
       "dateStr": "um 1560",
       "medium": "Leinwand",
@@ -33328,7 +33328,7 @@
     {
       "id": "pinakothek-ap-2350",
       "title": "Abendlandschaft mit dichter Baumgruppe",
-      "artist": "Claude Lorrain (Claude Gellée)",
+      "artist": "Claude Lorrain",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -33382,7 +33382,7 @@
     {
       "id": "pinakothek-ap-295",
       "title": "Dame mit Rechnungsführer",
-      "artist": "Thomas de Keyser",
+      "artist": "Thomas Keyser",
       "year": null,
       "dateStr": null,
       "medium": "Kupfer",
@@ -33580,7 +33580,7 @@
     {
       "id": "pinakothek-ap-400",
       "title": "Italienische Küstenlandschaft",
-      "artist": "Jean François Millet (gen. Francisque)",
+      "artist": "Jean-François Millet",
       "year": "um 1670",
       "dateStr": "um 1670",
       "medium": "Leinwand",
@@ -34210,7 +34210,7 @@
     {
       "id": "pinakothek-ap-394",
       "title": "Die Kreuzaufrichtung",
-      "artist": "Rembrandt (Harmensz. van Rijn)",
+      "artist": "Rembrandt van Rijn",
       "year": "um 1633",
       "dateStr": "um 1633",
       "medium": "Leinwand",
@@ -34408,7 +34408,7 @@
     {
       "id": "pinakothek-ap-2896",
       "title": "Knabenbildnis des Ludwig XV. als Dauphin",
-      "artist": "Hyacinthe Rigaud",
+      "artist": "Rigaud Hyacinthe",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -34426,7 +34426,7 @@
     {
       "id": "pinakothek-ap-29",
       "title": "Amor mit zwei Hunden",
-      "artist": "Paolo Veronese (Paolo Caliari)",
+      "artist": "Manner of Paolo Veronese",
       "year": "1575/80",
       "dateStr": "1575/80",
       "medium": "Leinwand",
@@ -34534,7 +34534,7 @@
     {
       "id": "pinakothek-ap-421",
       "title": "Brustbild eines Mannes in orientalischem Kostüm",
-      "artist": "Rembrandt (Harmensz. van Rijn)",
+      "artist": "Rembrandt van Rijn",
       "year": "1633",
       "dateStr": "1633",
       "medium": "Eichenholz",
@@ -35038,7 +35038,7 @@
     {
       "id": "pinakothek-ap-WAF-137",
       "title": "Piazzetta und Bacino di San Marco",
-      "artist": "Giovanni Antonio Canal (gen. Canaletto)",
+      "artist": "Giovanni Antonio Canal",
       "year": "um 1736/38",
       "dateStr": "um 1736/38",
       "medium": "Leinwand",
@@ -35074,7 +35074,7 @@
     {
       "id": "pinakothek-ap-WAF-157",
       "title": "Bildnis eines Mannes",
-      "artist": "Jean Clouet",
+      "artist": "Clouet Jean/",
       "year": "um 1510/20",
       "dateStr": "um 1510/20",
       "medium": "Eichenholz",
@@ -35110,7 +35110,7 @@
     {
       "id": "pinakothek-ap-WAF-162",
       "title": "Engelskopf",
-      "artist": "Correggio (Antonio Allegri)",
+      "artist": "After Correggio",
       "year": null,
       "dateStr": null,
       "medium": "Fresko auf Putz",
@@ -35416,7 +35416,7 @@
     {
       "id": "pinakothek-ap-941",
       "title": "Hl. Onuphrius",
-      "artist": "Jusepe de Ribera",
+      "artist": "Jusepe de (Giuseppe, José) Ribera (Rivera), Umkreis",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -35704,7 +35704,7 @@
     {
       "id": "pinakothek-ap-WAF-397",
       "title": "Maria mit Kind und den hll. Katharina von Siena, Sebastian, Franziskus, Petronius, Klara und Stifter",
-      "artist": "Innocenzo Francucci",
+      "artist": "Francucci Innocenzo-/",
       "year": null,
       "dateStr": null,
       "medium": "Holz",
@@ -35776,7 +35776,7 @@
     {
       "id": "pinakothek-ap-WAF-508",
       "title": "Tafel eines Flügelaltares: Christus am Ölberg\r\nAußenseite: behobelt",
-      "artist": "Kölnisch um 1450",
+      "artist": "Kölnisch um",
       "year": "um 1450",
       "dateStr": "um 1450",
       "medium": "Eichenholz",
@@ -35938,7 +35938,7 @@
     {
       "id": "pinakothek-ap-WAF-656",
       "title": "Verklärung Christi\r\nRückseite: Fragment eines segnenden Christus [?] und Teile einer Menschengruppe",
-      "artist": "Kölnisch um 1480/90",
+      "artist": "Kölnisch um",
       "year": "um 1480/90",
       "dateStr": "um 1480/90",
       "medium": "Eichenholz",
@@ -35974,7 +35974,7 @@
     {
       "id": "pinakothek-ap-WAF-716",
       "title": "Venus und Amor",
-      "artist": "Niederländisch um 1550",
+      "artist": "Niederländisch um",
       "year": "um 1550",
       "dateStr": "um 1550",
       "medium": "Eichenholz",
@@ -35992,7 +35992,7 @@
     {
       "id": "pinakothek-ap-WAF-719",
       "title": "Flucht nach Ägypten",
-      "artist": "Niederrheinisch um 1510/1520",
+      "artist": "Niederrheinisch um/",
       "year": "um 1510/20",
       "dateStr": "um 1510/20",
       "medium": "Eichenholz",
@@ -36028,7 +36028,7 @@
     {
       "id": "pinakothek-ap-WAF-735",
       "title": "Bildnis der Anna von Wehingen\r\nRückseite: Wappen",
-      "artist": "Oberdeutsch um 1550",
+      "artist": "Oberdeutsch um",
       "year": "um 1550",
       "dateStr": "um 1550",
       "medium": "Fichtenholz (Picea sp.)",
@@ -36406,7 +36406,7 @@
     {
       "id": "pinakothek-ap-WAF-108",
       "title": "Hl. Katharina\r\nAußenseite: Fragment einer Verkündigung",
-      "artist": "Niederländisch(?) um 1520",
+      "artist": "Niederländisch um",
       "year": "um 1520/30",
       "dateStr": "um 1520/30",
       "medium": "Eichenholz",
@@ -36478,7 +36478,7 @@
     {
       "id": "pinakothek-ap-906",
       "title": "Christus und der Hauptmann von Kapernaum",
-      "artist": "Paolo Veronese (Paolo Caliari)",
+      "artist": "Manner of Paolo Veronese",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -36550,7 +36550,7 @@
     {
       "id": "pinakothek-ap-926",
       "title": "Hl. Hieronymus",
-      "artist": "Guido Reni (Kopie nach)",
+      "artist": "Guido Reni",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -36784,7 +36784,7 @@
     {
       "id": "pinakothek-ap-2081",
       "title": "Bildnis eines Herrn",
-      "artist": "Deutsch 17. Jahrhundert",
+      "artist": "Deutsch 19. Jahrhundert",
       "year": "17. Jh.",
       "dateStr": "17. Jh.",
       "medium": "Leinwand",
@@ -36820,7 +36820,7 @@
     {
       "id": "pinakothek-ap-2319",
       "title": "Reiter im Angriff",
-      "artist": "Jacques Courtois, gen. Le Bourguignon",
+      "artist": "gen. Le Bourguignon Jacques Courtois",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -36964,7 +36964,7 @@
     {
       "id": "pinakothek-ap-5559",
       "title": "Landschaft mit Vieh",
-      "artist": "Johann Heinrich Tischbein d. J.",
+      "artist": "Johann Heinrich Tischbein d. Ä.",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -37180,7 +37180,7 @@
     {
       "id": "pinakothek-ap-3557",
       "title": "Bildnis der Judith Höchenkirchen",
-      "artist": "Hans Schöpfer d. J.",
+      "artist": "Hans Schöpfer d. Ä.",
       "year": "1580",
       "dateStr": "1580",
       "medium": "Holz",
@@ -37342,7 +37342,7 @@
     {
       "id": "pinakothek-ap-14088",
       "title": "Die Kaskaden von Tivoli",
-      "artist": "Claude-Louis Châtelet",
+      "artist": "Chatelet Claude-Louis",
       "year": "Ende 18. Jhdt.",
       "dateStr": "Ende 18. Jhdt.",
       "medium": "Leinwand",
@@ -37684,7 +37684,7 @@
     {
       "id": "pinakothek-ap-1390-A",
       "title": "Apostelaltar: Hl. Petrus",
-      "artist": "Nürnbergisch um 1490",
+      "artist": "Nürnbergisch um",
       "year": "um 1490",
       "dateStr": "um 1490",
       "medium": "Lindenholz (Tilia sp.)",
@@ -38116,7 +38116,7 @@
     {
       "id": "pinakothek-ap-10474",
       "title": "Toter Krieger: Lünette",
-      "artist": "Italienisch, 17. Jh.",
+      "artist": "17. Jh. Italienisch",
       "year": "Ende 17. Jhdt.",
       "dateStr": "Ende 17. Jhdt.",
       "medium": "Leinwand",
@@ -38350,7 +38350,7 @@
     {
       "id": "pinakothek-ap-10557",
       "title": "Bildnis der Königin Maria von Ungarn",
-      "artist": "Deutsch von 1549",
+      "artist": "Deutsch",
       "year": "1549",
       "dateStr": "1549",
       "medium": "Leinwand",
@@ -38386,7 +38386,7 @@
     {
       "id": "pinakothek-ap-10577",
       "title": "Bildnis der Elisabeth Amalie Magdalena von Hessen-Darmstadt (1635-1709), Gemahlin des Kurfürsten Philipp Wilhelm von der Pfalz-Neuburg (?)",
-      "artist": "Deutsch 17. Jahrhundert",
+      "artist": "Deutsch 19. Jahrhundert",
       "year": "17. Jh.",
       "dateStr": "17. Jh.",
       "medium": "Leinwand",
@@ -38692,7 +38692,7 @@
     {
       "id": "pinakothek-ap-3830",
       "title": "Christus am Kreuz",
-      "artist": "Schwäbisch um 1480",
+      "artist": "Schwäbisch um",
       "year": "um 1480",
       "dateStr": "um 1480",
       "medium": "Tannenholz (Abies sp.)",
@@ -38782,7 +38782,7 @@
     {
       "id": "pinakothek-ap-3856",
       "title": "Bildnisminiatur eines Mannes",
-      "artist": "Deutsch, 1. Hälfte 18. Jahrhundert",
+      "artist": "1. Hälfte 18. Jahrhundert Deutsch",
       "year": "1. Hälfte 18. Jahrhundert",
       "dateStr": "1. Hälfte 18. Jahrhundert",
       "medium": "Deckfarben auf Pergament",
@@ -38890,7 +38890,7 @@
     {
       "id": "pinakothek-ap-396",
       "title": "Grablegung Christi",
-      "artist": "Rembrandt (Harmensz. van Rijn)",
+      "artist": "Rembrandt van Rijn",
       "year": "1635/39",
       "dateStr": "1635/39",
       "medium": "Leinwand",
@@ -38944,7 +38944,7 @@
     {
       "id": "pinakothek-ap-3565",
       "title": "Bildnis der Sofia von Raindorf",
-      "artist": "Hans Schöpfer d. J.",
+      "artist": "Hans Schöpfer d. Ä.",
       "year": "1580",
       "dateStr": "1580",
       "medium": "Holz",
@@ -41896,7 +41896,7 @@
     {
       "id": "pinakothek-ap-3533",
       "title": "Kreuzigung",
-      "artist": "Deutsch 17. Jahrhundert",
+      "artist": "Deutsch 19. Jahrhundert",
       "year": "17. Jh.",
       "dateStr": "17. Jh.",
       "medium": "Leinwand",
@@ -42166,7 +42166,7 @@
     {
       "id": "pinakothek-ap-1318",
       "title": "Die Heilige Familie",
-      "artist": "Rembrandt (Harmensz. van Rijn)",
+      "artist": "Rembrandt van Rijn",
       "year": "1633/1635",
       "dateStr": "1633/1635",
       "medium": "Leinwand",
@@ -42202,7 +42202,7 @@
     {
       "id": "pinakothek-ap-13214",
       "title": "Hl. Magdalena\r\n(Rückseite: Rest eines Strahlenkranzes)",
-      "artist": "Fränkisch um 1510",
+      "artist": "Fränkisch um",
       "year": "um 1510",
       "dateStr": "um 1510",
       "medium": "Tannenholz",
@@ -42670,7 +42670,7 @@
     {
       "id": "pinakothek-ap-11146",
       "title": "Seeschlacht",
-      "artist": "Flämisch, 1556",
+      "artist": "Flämisch",
       "year": "1556",
       "dateStr": "1556",
       "medium": "Eichenholz",
@@ -42940,7 +42940,7 @@
     {
       "id": "pinakothek-ap-12474",
       "title": "Reiterschlacht",
-      "artist": "Jacques Courtois, gen. Le Bourguignon",
+      "artist": "gen. Le Bourguignon Jacques Courtois",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -43048,7 +43048,7 @@
     {
       "id": "pinakothek-ap-127",
       "title": "Maria mit Kind und einem Stifter",
-      "artist": "Paolo Veronese (Paolo Caliari)",
+      "artist": "Manner of Paolo Veronese",
       "year": "um 1550/55",
       "dateStr": "um 1550/55",
       "medium": "Leinwand",
@@ -43210,7 +43210,7 @@
     {
       "id": "pinakothek-ap-1168",
       "title": "Herkules und Omphale",
-      "artist": "Charles Antoine Coypel",
+      "artist": "Coypel Charles Antoine",
       "year": "1731",
       "dateStr": "1731",
       "medium": "Leinwand",
@@ -43966,7 +43966,7 @@
     {
       "id": "pinakothek-ap-9238",
       "title": "Ballpause",
-      "artist": "Adolph von Menzel",
+      "artist": "Adolph Menzel",
       "year": "1870",
       "dateStr": "1870",
       "medium": "Öl auf Leinwand",
@@ -44506,7 +44506,7 @@
     {
       "id": "pinakothek-ap-2790",
       "title": "Landschaft",
-      "artist": "Sébastien Bourdon",
+      "artist": "Bourdon Sébastien",
       "year": null,
       "dateStr": null,
       "medium": "Holz",
@@ -44542,7 +44542,7 @@
     {
       "id": "pinakothek-ap-284",
       "title": "Lesende Frau",
-      "artist": "Pieter Janssens (gen. Elinga)",
+      "artist": "Pieter Janssens",
       "year": "um 1665/70",
       "dateStr": "um 1665/70",
       "medium": "Leinwand",
@@ -44578,7 +44578,7 @@
     {
       "id": "pinakothek-ap-2866",
       "title": "Hl. Magdalena",
-      "artist": "Kurfürstin von Sachsen, Tochter Kaiser Karls VII Maria Antonia Walpurgis",
+      "artist": "Tochter Kaiser Karls VII Maria Antonia Walpurgis Kurfürstin von Sachsen",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -44848,7 +44848,7 @@
     {
       "id": "pinakothek-ap-1480-B",
       "title": "Triptychon, rechter Flügel: Flucht nach Ägypten",
-      "artist": "Meister von 1518",
+      "artist": "Meister von",
       "year": "um 1530",
       "dateStr": "um 1530",
       "medium": "Eichenholz",
@@ -44884,7 +44884,7 @@
     {
       "id": "pinakothek-ap-1491-A",
       "title": "Hl. Quirinius",
-      "artist": "Ulmer Meister von 1504",
+      "artist": "Ulmer Meister von",
       "year": "1504 datiert",
       "dateStr": "1504 datiert",
       "medium": "Tannenholz (Abies alba)",
@@ -45280,7 +45280,7 @@
     {
       "id": "pinakothek-ap-206",
       "title": "Der verweigerte Brief",
-      "artist": "Gerard ter Borch d. J.",
+      "artist": "Gerard ter Borch",
       "year": "um 1655/58",
       "dateStr": "um 1655/58",
       "medium": "Eichenholz",
@@ -45874,7 +45874,7 @@
     {
       "id": "pinakothek-ap-2228",
       "title": "Maria mit Kind und dem schlafenden Johannesknaben",
-      "artist": "Jacopino del Conte",
+      "artist": "Del Conte Jacopino",
       "year": "um 1530/35",
       "dateStr": "um 1530/35",
       "medium": "von Holz auf Leinwand übertragen",
@@ -46072,7 +46072,7 @@
     {
       "id": "pinakothek-ap-2295",
       "title": "Lukretia",
-      "artist": "Simone Cantarini (gen. Il Pesarese)",
+      "artist": "Simone Cantarini (Umkreis)",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -46684,7 +46684,7 @@
     {
       "id": "pinakothek-ap-2498",
       "title": "Pfalzgraf Friedrich Michael von Zweibrücken-Birkenfeld",
-      "artist": "Louis Tocqué",
+      "artist": "Tocque Louis",
       "year": "um 1745",
       "dateStr": "um 1745",
       "medium": "Leinwand",
@@ -47728,7 +47728,7 @@
     {
       "id": "pinakothek-ap-5284",
       "title": "Männlicher Studienkopf",
-      "artist": "Caravaggio (Michelangelo Merisi)",
+      "artist": "Caravaggio",
       "year": null,
       "dateStr": null,
       "medium": "Holz",
@@ -47818,7 +47818,7 @@
     {
       "id": "pinakothek-ap-5310",
       "title": "Die Vermählung der hl. Katharina",
-      "artist": "Schwäbisch um 1480",
+      "artist": "Schwäbisch um",
       "year": "um 1480",
       "dateStr": "um 1480",
       "medium": "Pergament auf Fichtenholz (Picea sp.)",
@@ -48358,7 +48358,7 @@
     {
       "id": "pinakothek-ap-4859",
       "title": "Bildnis der Königin Maria Anna von Spanien (?)",
-      "artist": "Justus van Egmont",
+      "artist": "Van Egmont Justus",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -48376,7 +48376,7 @@
     {
       "id": "pinakothek-ap-4861",
       "title": "Bildnis eines alten Mannes",
-      "artist": "Rembrandt (Harmensz. van Rijn)",
+      "artist": "Rembrandt van Rijn",
       "year": null,
       "dateStr": null,
       "medium": "Holz",
@@ -48610,7 +48610,7 @@
     {
       "id": "pinakothek-ap-5130",
       "title": "Bildnis eines jungen Mannes in halber Figur",
-      "artist": "Tiziano Vecellio, gen. Tizian",
+      "artist": "gen. Tizian Tiziano Vecellio",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -49492,7 +49492,7 @@
     {
       "id": "pinakothek-ap-5156",
       "title": "Soldaten ziehen durch ein Dorf",
-      "artist": "Adam Frans van der Meulen",
+      "artist": "Van der Meulen Adam Frans",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -49564,7 +49564,7 @@
     {
       "id": "pinakothek-ap-5181",
       "title": "Reitergefecht",
-      "artist": "Jacques Courtois, gen. Le Bourguignon",
+      "artist": "gen. Le Bourguignon Jacques Courtois",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -49672,7 +49672,7 @@
     {
       "id": "pinakothek-ap-5232",
       "title": "Schmückung der Venus",
-      "artist": "Guido Reni (Kopie nach)",
+      "artist": "Guido Reni",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -50392,7 +50392,7 @@
     {
       "id": "pinakothek-ap-625",
       "title": "Beweinung Christi",
-      "artist": "Nicolas Poussin",
+      "artist": "Poussin Nicolas",
       "year": "um 1628",
       "dateStr": "um 1628",
       "medium": "Leinwand",
@@ -50482,7 +50482,7 @@
     {
       "id": "pinakothek-ap-8176",
       "title": "Bildnis des Pfalzgrafen Christian III. von Birkenfeld-Bischweiler-Rappoltstein",
-      "artist": "Hyacinthe Rigaud",
+      "artist": "Rigaud Hyacinthe",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -50662,7 +50662,7 @@
     {
       "id": "pinakothek-ap-5988",
       "title": "Hl. Hieronymus im Gehäus",
-      "artist": "Hendrick van Steenwyck d. J.",
+      "artist": "Hendrick van Steenwyck d. Ä.",
       "year": null,
       "dateStr": null,
       "medium": "Holz",
@@ -51130,7 +51130,7 @@
     {
       "id": "pinakothek-ap-5707",
       "title": "Gefecht an einer Schanze",
-      "artist": "Georg Philipp Rugendas d. Ä.",
+      "artist": "Georg Philipp Rugendas",
       "year": "um 1710/15",
       "dateStr": "um 1710/15",
       "medium": "Leinwand",
@@ -51418,7 +51418,7 @@
     {
       "id": "pinakothek-ap-7540",
       "title": "Maria Anna Christina, Dauphine von Frankreich (1660-1690)",
-      "artist": "Pierre Mignard",
+      "artist": "Mignard Pierre",
       "year": "Ende 17. Jhdt.",
       "dateStr": "Ende 17. Jhdt.",
       "medium": "Leinwand",
@@ -51562,7 +51562,7 @@
     {
       "id": "pinakothek-ap-6761",
       "title": "König Heinrich IV. von Frankreich (1553-1610)",
-      "artist": "Unbekannt (nach Frans Pourbus d. J.)",
+      "artist": "Unbekannt",
       "year": "Anfang 17. Jhdt.",
       "dateStr": "Anfang 17. Jhdt.",
       "medium": "Leinwand",
@@ -52444,7 +52444,7 @@
     {
       "id": "pinakothek-ap-6252",
       "title": "Ecce Homo",
-      "artist": "Tiziano Vecellio, gen. Tizian",
+      "artist": "gen. Tizian Tiziano Vecellio",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -52714,7 +52714,7 @@
     {
       "id": "pinakothek-ap-2310",
       "title": "Erstürmung eines Schlosses",
-      "artist": "Jacques Courtois, gen. Le Bourguignon",
+      "artist": "gen. Le Bourguignon Jacques Courtois",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -53470,7 +53470,7 @@
     {
       "id": "pinakothek-ap-979",
       "title": "Italienische Landschaft",
-      "artist": "Jean François Millet (gen. Francisque)",
+      "artist": "Jean-François Millet",
       "year": "1660 - 1670",
       "dateStr": "1660 - 1670",
       "medium": "Leinwand",
@@ -53614,7 +53614,7 @@
     {
       "id": "pinakothek-ap-918",
       "title": "Die Anbetung durch die Könige",
-      "artist": "Paolo Veronese (Paolo Caliari)",
+      "artist": "Manner of Paolo Veronese",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -53704,7 +53704,7 @@
     {
       "id": "pinakothek-ap-934",
       "title": "Maria mit Kind und Heiligen",
-      "artist": "Correggio (Antonio Allegri)",
+      "artist": "After Correggio",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -53740,7 +53740,7 @@
     {
       "id": "pinakothek-ap-WAF-109",
       "title": "Hl. Barbara\r\nAußenseite: Fragment einer Verkündigung",
-      "artist": "Niederländisch(?) um 1520",
+      "artist": "Niederländisch um",
       "year": "um 1520/30",
       "dateStr": "um 1520/30",
       "medium": "Eichenholz",
@@ -54046,7 +54046,7 @@
     {
       "id": "pinakothek-ap-WAF-683",
       "title": "Bildnis eines Geistlichen",
-      "artist": "Moretto da Brescia (Alessandro Bonvicino)",
+      "artist": "Moretto da Brescia",
       "year": "um 1545/50",
       "dateStr": "um 1545/50",
       "medium": "Leinwand",
@@ -54064,7 +54064,7 @@
     {
       "id": "pinakothek-ap-WAF-714",
       "title": "Maria mit Kind",
-      "artist": "Niederländisch vor 1500",
+      "artist": "Niederländisch vor",
       "year": "um 1480/90",
       "dateStr": "um 1480/90",
       "medium": "Eichenholz",
@@ -54316,7 +54316,7 @@
     {
       "id": "pinakothek-ap-8573",
       "title": "Die Entkleidung Christi",
-      "artist": "El Greco (Doménikos Theotokópoulos)",
+      "artist": "El Greco",
       "year": "Zwischen 1580 und 1595",
       "dateStr": "Zwischen 1580 und 1595",
       "medium": "Leinwand",
@@ -54622,7 +54622,7 @@
     {
       "id": "pinakothek-ap-L-1030",
       "title": "Christus als Schmerzensmann",
-      "artist": "Niederländisch um 1500",
+      "artist": "Niederländisch um",
       "year": "um 1500",
       "dateStr": "um 1500",
       "medium": "Eichenholz",
@@ -54640,7 +54640,7 @@
     {
       "id": "pinakothek-ap-WAF-1004",
       "title": "Krönung Mariae\r\nRückseite: Ornament mit Wappen",
-      "artist": "Schwäbisch von 1524",
+      "artist": "Schwäbisch",
       "year": "1524",
       "dateStr": "1524",
       "medium": "Lindenholz (Tilia sp.)",
@@ -54676,7 +54676,7 @@
     {
       "id": "pinakothek-ap-14668",
       "title": "Bildnis einer Dame",
-      "artist": "Peter Sir Lely",
+      "artist": "Sir Peter Lely",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -54820,7 +54820,7 @@
     {
       "id": "pinakothek-ap-14974",
       "title": "Interieur mit Mutter und Kind",
-      "artist": "Louis-Léopold Boilly",
+      "artist": "Boilly Louis Léopold",
       "year": "um 1815",
       "dateStr": "um 1815",
       "medium": "Öl auf Leinwand",
@@ -55126,7 +55126,7 @@
     {
       "id": "pinakothek-ap-3164",
       "title": "Mechthilde von Bayern (Kopie nach dem Bildnis Hans Schöpfers d. Ä.)",
-      "artist": "Hans Schöpfer d. J.",
+      "artist": "Hans Schöpfer d. Ä.",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -55954,7 +55954,7 @@
     {
       "id": "pinakothek-ap-7448",
       "title": "Entführung des Ganymed",
-      "artist": "Correggio (Antonio Allegri)",
+      "artist": "After Correggio",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -56368,7 +56368,7 @@
     {
       "id": "pinakothek-ap-10552",
       "title": "Königin Semiramis erhält die Nachricht vom Aufstand in Babylon",
-      "artist": "Deutsch, 2. Hälfte 18. Jahrhundert",
+      "artist": "1. Hälfte 18. Jahrhundert Deutsch",
       "year": null,
       "dateStr": null,
       "medium": "Papier",
@@ -56440,7 +56440,7 @@
     {
       "id": "pinakothek-ap-8502",
       "title": "Blick vom Balkon des Berliner Schlosses",
-      "artist": "Adolph von Menzel",
+      "artist": "Adolph Menzel",
       "year": "1863",
       "dateStr": "1863",
       "medium": "Öl auf Leinwand",
@@ -56980,7 +56980,7 @@
     {
       "id": "pinakothek-ap-2272",
       "title": "Dornenkrönung Christi",
-      "artist": "Tiziano Vecellio, gen. Tizian",
+      "artist": "gen. Tizian Tiziano Vecellio",
       "year": "um 1570",
       "dateStr": "um 1570",
       "medium": "Leinwand",
@@ -57070,7 +57070,7 @@
     {
       "id": "pinakothek-ap-2284",
       "title": "Die Krönung Mariae",
-      "artist": "Paolo Veronese (Paolo Caliari)",
+      "artist": "Manner of Paolo Veronese",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -57124,7 +57124,7 @@
     {
       "id": "pinakothek-ap-2316",
       "title": "Reiterkampf gegen Orientalen vor einer Pyramide",
-      "artist": "Jacques Courtois, gen. Le Bourguignon",
+      "artist": "gen. Le Bourguignon Jacques Courtois",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -57178,7 +57178,7 @@
     {
       "id": "pinakothek-ap-2334",
       "title": "Apoll und Daphne",
-      "artist": "Nicolas Poussin",
+      "artist": "Poussin Nicolas",
       "year": "um 1627",
       "dateStr": "um 1627",
       "medium": "Leinwand",
@@ -57646,7 +57646,7 @@
     {
       "id": "pinakothek-ap-3265",
       "title": "Bildnis der Elisabeth Auguste, Gemahlin des Karl Theodor von Sulzbach",
-      "artist": "Deutsch, 2. Hälfte 18. Jahrhundert",
+      "artist": "1. Hälfte 18. Jahrhundert Deutsch",
       "year": "Ende 18. Jh.",
       "dateStr": "Ende 18. Jh.",
       "medium": "Leinwand",
@@ -57808,7 +57808,7 @@
     {
       "id": "pinakothek-ap-2117",
       "title": "Anbetung der Hirten",
-      "artist": "Rembrandt (Harmensz. van Rijn)",
+      "artist": "Rembrandt van Rijn",
       "year": null,
       "dateStr": null,
       "medium": "Kupfer",
@@ -58096,7 +58096,7 @@
     {
       "id": "pinakothek-ap-2205",
       "title": "Abendlandschaft mit Schafen, Ziegen und Hirtin",
-      "artist": "Jacob van der Does d. Ä.",
+      "artist": "Jacob van der Does (der Ältere)",
       "year": "1656",
       "dateStr": "1656",
       "medium": "Holz",
@@ -58150,7 +58150,7 @@
     {
       "id": "pinakothek-ap-2375",
       "title": "Bildnis des Paters Louis Bourdaloue",
-      "artist": "Jean Jouvenet",
+      "artist": "Jouvenet Jean",
       "year": "um 1704",
       "dateStr": "um 1704",
       "medium": "Leinwand",
@@ -58348,7 +58348,7 @@
     {
       "id": "pinakothek-ap-2524",
       "title": "König Franz I. von Frankreich",
-      "artist": "Tiziano Vecellio, gen. Tizian",
+      "artist": "gen. Tizian Tiziano Vecellio",
       "year": null,
       "dateStr": null,
       "medium": "Holz",
@@ -58708,7 +58708,7 @@
     {
       "id": "pinakothek-ap-3555",
       "title": "Bildnis der Johanna von Sulz",
-      "artist": "Hans Schöpfer d. J.",
+      "artist": "Hans Schöpfer d. Ä.",
       "year": "1580",
       "dateStr": "1580",
       "medium": "Holz",
@@ -58816,7 +58816,7 @@
     {
       "id": "pinakothek-ap-3653",
       "title": "Merkur, Herse und Aglauros",
-      "artist": "Paolo Veronese (Paolo Caliari)",
+      "artist": "Manner of Paolo Veronese",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -59410,7 +59410,7 @@
     {
       "id": "pinakothek-ap-28",
       "title": "Venus und Amor",
-      "artist": "Hans Bocksberger d. Ä.",
+      "artist": "Hans Bocksberger d. J.",
       "year": "wohl 16. Jh.",
       "dateStr": "wohl 16. Jh.",
       "medium": "Holz",
@@ -59986,7 +59986,7 @@
     {
       "id": "pinakothek-ap-1786",
       "title": "Schild haltender Genius",
-      "artist": "Charles Le Brun",
+      "artist": "Le Brun Charles",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -60220,7 +60220,7 @@
     {
       "id": "pinakothek-ap-2364",
       "title": "Maria mit dem Kinde",
-      "artist": "Pierre Mignard",
+      "artist": "Mignard Pierre",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -60364,7 +60364,7 @@
     {
       "id": "pinakothek-ap-1180",
       "title": "Felsenschlucht",
-      "artist": "David Teniers d. Ä.",
+      "artist": "David Teniers d. J.",
       "year": null,
       "dateStr": null,
       "medium": "Holz",
@@ -60454,7 +60454,7 @@
     {
       "id": "pinakothek-ap-12018",
       "title": "\"Kasseler Landschaft\"",
-      "artist": "Rembrandt (Harmensz. van Rijn)",
+      "artist": "Rembrandt van Rijn",
       "year": null,
       "dateStr": null,
       "medium": "Holz",
@@ -60976,7 +60976,7 @@
     {
       "id": "pinakothek-ap-13173",
       "title": "Judith und Holofernes",
-      "artist": "Donauländisch um 1530",
+      "artist": "Donauländisch um",
       "year": "um 1530",
       "dateStr": "um 1530",
       "medium": "Lindenholz(), auf parkettiertes Nadelholz übertragen",
@@ -61012,7 +61012,7 @@
     {
       "id": "pinakothek-ap-13212",
       "title": "Hl. Anna selbdritt\r\n(Rückseite: Rest eines Strahlenkranzes)",
-      "artist": "Fränkisch um 1510",
+      "artist": "Fränkisch um",
       "year": "um 1510",
       "dateStr": "um 1510",
       "medium": "Tannenholz (Abies sp.)",
@@ -61030,7 +61030,7 @@
     {
       "id": "pinakothek-ap-13213",
       "title": "Hl. Laurentius\r\n(Rückseite: Rest eines Strahlenkranzes)",
-      "artist": "Fränkisch um 1510",
+      "artist": "Fränkisch um",
       "year": "um 1510",
       "dateStr": "um 1510",
       "medium": "Tannenholz",
@@ -61048,7 +61048,7 @@
     {
       "id": "pinakothek-ap-13215",
       "title": "Hl. Katharina\r\n(Rückseite: Rest eines Strahlenkranzes)",
-      "artist": "Fränkisch um 1510",
+      "artist": "Fränkisch um",
       "year": "um 1510",
       "dateStr": "um 1510",
       "medium": "Tannenholz",
@@ -61210,7 +61210,7 @@
     {
       "id": "pinakothek-ap-1374",
       "title": "Bildnis der Anna von Frauenberg",
-      "artist": "Hans Schöpfer d. J.",
+      "artist": "Hans Schöpfer d. Ä.",
       "year": "1580",
       "dateStr": "1580",
       "medium": "Holz",
@@ -61282,7 +61282,7 @@
     {
       "id": "pinakothek-ap-1421",
       "title": "Selbstmord der Lucretia",
-      "artist": "Hans Bocksberger d. Ä.",
+      "artist": "Hans Bocksberger d. J.",
       "year": "wohl 16. Jh.",
       "dateStr": "wohl 16. Jh.",
       "medium": "Holz",
@@ -61552,7 +61552,7 @@
     {
       "id": "pinakothek-ap-167",
       "title": "Familienbild",
-      "artist": "Flämisch(?) um 1630",
+      "artist": "Flämisch um",
       "year": "um 1630",
       "dateStr": "um 1630",
       "medium": "Leinwand",
@@ -61606,7 +61606,7 @@
     {
       "id": "pinakothek-ap-174",
       "title": "Hl. Magdalena",
-      "artist": "Charles Le Brun",
+      "artist": "Le Brun Charles",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -61732,7 +61732,7 @@
     {
       "id": "pinakothek-ap-1498",
       "title": "Ecce homo",
-      "artist": "Jacopo Ligozzi",
+      "artist": "Jacopo Ligozzi ( Verona ca. Florence )",
       "year": null,
       "dateStr": null,
       "medium": "Holz",
@@ -61840,7 +61840,7 @@
     {
       "id": "pinakothek-ap-155",
       "title": "Ein römischer Kalkofen",
-      "artist": "Sébastien Bourdon",
+      "artist": "Bourdon Sébastien",
       "year": "um 1637",
       "dateStr": "um 1637",
       "medium": "Leinwand",
@@ -62038,7 +62038,7 @@
     {
       "id": "pinakothek-ap-1241",
       "title": "Bildnis eines alten Mannes",
-      "artist": "Rembrandt (Harmensz. van Rijn)",
+      "artist": "Rembrandt van Rijn",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -62830,7 +62830,7 @@
     {
       "id": "pinakothek-ap-1083",
       "title": "Derich Born",
-      "artist": "Hans Holbein d. J.",
+      "artist": "Hans Holbein d. Ä.",
       "year": "um 1533",
       "dateStr": "um 1533",
       "medium": "Rotbuchenholz",
@@ -63082,7 +63082,7 @@
     {
       "id": "pinakothek-ap-1011",
       "title": "Der Selbstmord der Kleopatra",
-      "artist": "Paolo Veronese (Paolo Caliari)",
+      "artist": "Manner of Paolo Veronese",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -63118,7 +63118,7 @@
     {
       "id": "pinakothek-ap-1018",
       "title": "Klassische Landschaft",
-      "artist": "Jean François Millet (gen. Francisque)",
+      "artist": "Jean-François Millet",
       "year": "um 1665",
       "dateStr": "um 1665",
       "medium": "Leinwand",
@@ -63496,7 +63496,7 @@
     {
       "id": "pinakothek-ap-10475",
       "title": "Venus",
-      "artist": "Italienisch, 17. Jh.",
+      "artist": "17. Jh. Italienisch",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -63640,7 +63640,7 @@
     {
       "id": "pinakothek-ap-11186",
       "title": "Speisung der Fünftausend",
-      "artist": "Deutsch 17. Jahrhundert",
+      "artist": "Deutsch 19. Jahrhundert",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -63712,7 +63712,7 @@
     {
       "id": "pinakothek-ap-1137",
       "title": "Judith mit dem Haupt des Holofernes",
-      "artist": "Niederländisch um 1550",
+      "artist": "Niederländisch um",
       "year": "um 1540/50",
       "dateStr": "um 1540/50",
       "medium": "Eichenholz",
@@ -63730,7 +63730,7 @@
     {
       "id": "pinakothek-ap-11427",
       "title": "Jugendliches Selbstbildnis",
-      "artist": "Rembrandt (Harmensz. van Rijn)",
+      "artist": "Rembrandt van Rijn",
       "year": "1629",
       "dateStr": "1629",
       "medium": "Eichenholz",
@@ -63874,7 +63874,7 @@
     {
       "id": "pinakothek-ap-1059",
       "title": "Bildnis eines jungen Mannes",
-      "artist": "Umbrisch um 1505",
+      "artist": "Umbrisch um",
       "year": "um 1505",
       "dateStr": "um 1505",
       "medium": "Pappelholz",
@@ -64216,7 +64216,7 @@
     {
       "id": "pinakothek-ap-4204",
       "title": "Wolfgang Wilhelm von Pfalz-Neuburg",
-      "artist": "Unbekannt, (nach Anthonis van Dyck und Johann Spilberg d. J.)",
+      "artist": "Unbekannt",
       "year": "nach 1648",
       "dateStr": "nach 1648",
       "medium": "Leinwand",
@@ -64252,7 +64252,7 @@
     {
       "id": "pinakothek-ap-4210",
       "title": "Königin Christina von Schweden",
-      "artist": "Sébastien Bourdon",
+      "artist": "Bourdon Sébastien",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -64540,7 +64540,7 @@
     {
       "id": "pinakothek-ap-438",
       "title": "Die Opferung Isaaks",
-      "artist": "Rembrandt (Harmensz. van Rijn)",
+      "artist": "Rembrandt van Rijn",
       "year": "1636",
       "dateStr": "1636",
       "medium": "Leinwand",
@@ -64666,7 +64666,7 @@
     {
       "id": "pinakothek-ap-3794",
       "title": "Bildnis des Grand Dauphin",
-      "artist": "Nicolas de Largillière",
+      "artist": "Largillière Nicolas de",
       "year": "Anfang 18. Jhdt.",
       "dateStr": "Anfang 18. Jhdt.",
       "medium": "Leinwand",
@@ -64774,7 +64774,7 @@
     {
       "id": "pinakothek-ap-3857",
       "title": "Bildnis eines Mannes",
-      "artist": "Deutsch, 1. Hälfte 18. Jahrhundert",
+      "artist": "1. Hälfte 18. Jahrhundert Deutsch",
       "year": "1. Hälfte 18. Jahrhundert",
       "dateStr": "1. Hälfte 18. Jahrhundert",
       "medium": "Deckfarben auf Pergament",
@@ -64828,7 +64828,7 @@
     {
       "id": "pinakothek-ap-393",
       "title": "Die Anbetung der Hirten",
-      "artist": "Rembrandt (Harmensz. van Rijn)",
+      "artist": "Rembrandt van Rijn",
       "year": "1646",
       "dateStr": "1646",
       "medium": "Leinwand",
@@ -64846,7 +64846,7 @@
     {
       "id": "pinakothek-ap-395",
       "title": "Kreuzabnahme Christi",
-      "artist": "Rembrandt (Harmensz. van Rijn)",
+      "artist": "Rembrandt van Rijn",
       "year": "1632/33",
       "dateStr": "1632/33",
       "medium": "Zedrelenholz (Cedrela odorata)",
@@ -64918,7 +64918,7 @@
     {
       "id": "pinakothek-ap-398",
       "title": "Himmelfahrt Christi",
-      "artist": "Rembrandt (Harmensz. van Rijn)",
+      "artist": "Rembrandt van Rijn",
       "year": "1636",
       "dateStr": "1636",
       "medium": "Leinwand",
@@ -65278,7 +65278,7 @@
     {
       "id": "pinakothek-ap-475",
       "title": "Jupiter und Antiope",
-      "artist": "Paolo Veronese (Paolo Caliari)",
+      "artist": "Manner of Paolo Veronese",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -65386,7 +65386,7 @@
     {
       "id": "pinakothek-ap-4791",
       "title": "Hl. Magdalena",
-      "artist": "Guido Reni (Kopie nach)",
+      "artist": "Guido Reni",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -65674,7 +65674,7 @@
     {
       "id": "pinakothek-ap-459",
       "title": "Lesender Amor",
-      "artist": "Correggio (Antonio Allegri)",
+      "artist": "After Correggio",
       "year": "um 1520",
       "dateStr": "um 1520",
       "medium": "Papier",
@@ -66088,7 +66088,7 @@
     {
       "id": "pinakothek-ap-505",
       "title": "Maria mit Kind und den hll. Rochus und Lucia",
-      "artist": "Jacopo Negretti, gen. Palma il Vecchio",
+      "artist": "gen. Palma il Vecchio Jacopo Negretti",
       "year": "um 1513/15",
       "dateStr": "um 1513/15",
       "medium": "Holz",
@@ -66142,7 +66142,7 @@
     {
       "id": "pinakothek-ap-5059",
       "title": "Himmelfahrt der Maria",
-      "artist": "Tiziano Vecellio, gen. Tizian",
+      "artist": "gen. Tizian Tiziano Vecellio",
       "year": null,
       "dateStr": null,
       "medium": "Metall",
@@ -66196,7 +66196,7 @@
     {
       "id": "pinakothek-ap-5082",
       "title": "Mater dolorosa",
-      "artist": "Vara, seit 1587 König von Polen Sigismund III.",
+      "artist": "seit König von Polen Sigismund III. Vara",
       "year": null,
       "dateStr": null,
       "medium": "Kupfer",
@@ -66664,7 +66664,7 @@
     {
       "id": "pinakothek-ap-598",
       "title": "Hagar und Ismael in der Wüste",
-      "artist": "Claude Lorrain (Claude Gellée)",
+      "artist": "Claude Lorrain",
       "year": "1668",
       "dateStr": "1668",
       "medium": "Leinwand",
@@ -66790,7 +66790,7 @@
     {
       "id": "pinakothek-ap-6023",
       "title": "Der Hufschmied",
-      "artist": "Georg Philipp Rugendas d. J.",
+      "artist": "Georg Philipp Rugendas",
       "year": "vor 1722",
       "dateStr": "vor 1722",
       "medium": "Leinwand",
@@ -67078,7 +67078,7 @@
     {
       "id": "pinakothek-ap-5552",
       "title": "Nähende Frau mit Magd",
-      "artist": "Gerard ter Borch d. J.",
+      "artist": "Gerard ter Borch",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -67294,7 +67294,7 @@
     {
       "id": "pinakothek-ap-5285",
       "title": "Bildnis einer alten Frau",
-      "artist": "Jusepe de Ribera",
+      "artist": "Jusepe de (Giuseppe, José) Ribera (Rivera), Umkreis",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -67312,7 +67312,7 @@
     {
       "id": "pinakothek-ap-5289",
       "title": "Maria mit Kind und einem Mönch",
-      "artist": "Parmigianino (Girolamo Francesco Maria Mazzola)",
+      "artist": "Parmigianino",
       "year": "um 1530",
       "dateStr": "um 1530",
       "medium": "Pappelholz (Populus sp.)",
@@ -67888,7 +67888,7 @@
     {
       "id": "pinakothek-ap-6743",
       "title": "Bildnis einer unbekannten Dame",
-      "artist": "Hans Schöpfer d. J.",
+      "artist": "Hans Schöpfer d. Ä.",
       "year": null,
       "dateStr": null,
       "medium": "Holz",
@@ -67996,7 +67996,7 @@
     {
       "id": "pinakothek-ap-6805",
       "title": "Auferstehung Christi\r\nRückseite: Maria der Verkündigung",
-      "artist": "Oberdeutsch von 1543",
+      "artist": "Oberdeutsch",
       "year": "1543",
       "dateStr": "1543",
       "medium": "Fichtenholz",
@@ -68266,7 +68266,7 @@
     {
       "id": "pinakothek-ap-5666",
       "title": "Männliche Bildnisstudie",
-      "artist": "Rembrandt (Harmensz. van Rijn)",
+      "artist": "Rembrandt van Rijn",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -68356,7 +68356,7 @@
     {
       "id": "pinakothek-ap-5708",
       "title": "Gefecht an einem Verhau",
-      "artist": "Georg Philipp Rugendas d. Ä.",
+      "artist": "Georg Philipp Rugendas",
       "year": "um 1710/15",
       "dateStr": "um 1710/15",
       "medium": "Leinwand",
@@ -68860,7 +68860,7 @@
     {
       "id": "pinakothek-ap-708",
       "title": "Anbetung der Könige",
-      "artist": "Antwerpener Meister um 1520 (Pseudo-Blesius)",
+      "artist": "Antwerpener Meister um",
       "year": "um 1520",
       "dateStr": "um 1520",
       "medium": "Eichenholz",
@@ -69292,7 +69292,7 @@
     {
       "id": "pinakothek-ap-5200",
       "title": "Kind mit Stieglitz",
-      "artist": "Guido Reni (Kopie nach)",
+      "artist": "Guido Reni",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -69580,7 +69580,7 @@
     {
       "id": "pinakothek-ap-10747",
       "title": "Geburt Christi\r\n(Abgespaltene Außenseite: Inv.-Nr. 10748)",
-      "artist": "Ulmer Meister um 1450",
+      "artist": "Ulmer Meister um",
       "year": "um 1470",
       "dateStr": "um 1470",
       "medium": "Nadelholz, mit Leinwand überzogen, auf Eichenholz doubliert",
@@ -69742,7 +69742,7 @@
     {
       "id": "pinakothek-ap-WAF-736",
       "title": "Hl. Nikolaus",
-      "artist": "Oberdeutsch um 1500",
+      "artist": "Oberdeutsch um",
       "year": "um 1500",
       "dateStr": "um 1500",
       "medium": "Tannenholz (Abies sp.)",
@@ -69760,7 +69760,7 @@
     {
       "id": "pinakothek-ap-WAF-738",
       "title": "Geißelung Christi",
-      "artist": "Niederrheinisch um 1520",
+      "artist": "Niederrheinisch um/",
       "year": "um 1520",
       "dateStr": "um 1520",
       "medium": "Eichenholz",
@@ -70462,7 +70462,7 @@
     {
       "id": "pinakothek-ap-WAF-121",
       "title": "Kreuztragung Christi",
-      "artist": "Nordwestdeutsch um 1540/50",
+      "artist": "Nordwestdeutsch um/50",
       "year": "um 1540/50",
       "dateStr": "um 1540/50",
       "medium": "Eichenholz",
@@ -70480,7 +70480,7 @@
     {
       "id": "pinakothek-ap-WAF-138",
       "title": "Santa Maria della Salute und die Riva degli Schiavoni in Venedig",
-      "artist": "Giovanni Antonio Canal (gen. Canaletto)",
+      "artist": "Giovanni Antonio Canal",
       "year": "um 1736/38",
       "dateStr": "um 1736/38",
       "medium": "Leinwand",
@@ -70858,7 +70858,7 @@
     {
       "id": "pinakothek-ap-L-1300",
       "title": "Die Frierende",
-      "artist": "Jean Baptiste Carpeaux",
+      "artist": "Jean-Baptiste Carpeaux",
       "year": "um 1871",
       "dateStr": "um 1871",
       "medium": "Bronze, goldbraun patiniert",
@@ -70966,7 +70966,7 @@
     {
       "id": "pinakothek-ap-911",
       "title": "Christus und die Ehebrecherin",
-      "artist": "Paolo Veronese (Paolo Caliari)",
+      "artist": "Manner of Paolo Veronese",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -70984,7 +70984,7 @@
     {
       "id": "pinakothek-ap-9210",
       "title": "Maria mit Kind, dem hl. Antonius Abbas und dem Johannesknaben",
-      "artist": "Giovanni Cariani (Giovanni de' Busi)",
+      "artist": "Giovanni Cariani",
       "year": "um 1540",
       "dateStr": "um 1540",
       "medium": "Leinwand",
@@ -71056,7 +71056,7 @@
     {
       "id": "pinakothek-ap-76",
       "title": "Daphnis",
-      "artist": "Jacopo Negretti, gen. Palma il Vecchio",
+      "artist": "gen. Palma il Vecchio Jacopo Negretti",
       "year": "um 1513/15",
       "dateStr": "um 1513/15",
       "medium": "Pappelholz",
@@ -71452,7 +71452,7 @@
     {
       "id": "pinakothek-ap-657",
       "title": "Bildnis des Franziskus Braccius",
-      "artist": "Südtirolisch-Trientinisch um 1490",
+      "artist": "Südtirolisch-Trientinisch um",
       "year": "um 1490",
       "dateStr": "um 1490",
       "medium": "Pappelholz (Populus sp.)",
@@ -71938,7 +71938,7 @@
     {
       "id": "pinakothek-ap-WAF-1085",
       "title": "Bildnis des Don Pedro Álvarez de Toledo",
-      "artist": "Tiziano Vecellio, gen. Tizian",
+      "artist": "gen. Tizian Tiziano Vecellio",
       "year": "um 1540/45",
       "dateStr": "um 1540/45",
       "medium": "Leinwand",
@@ -71992,7 +71992,7 @@
     {
       "id": "pinakothek-ap-9953",
       "title": "Disput über das Altarsakrament",
-      "artist": "Schwäbisch um 1490/1500",
+      "artist": "Schwäbisch um",
       "year": "um 1500",
       "dateStr": "um 1500",
       "medium": "Tannenholz (Abies sp.)",
@@ -72100,7 +72100,7 @@
     {
       "id": "pinakothek-ap-8129",
       "title": "Bildnis einer Dame",
-      "artist": "Gerard ter Borch d. J.",
+      "artist": "Gerard ter Borch",
       "year": "um 1660",
       "dateStr": "um 1660",
       "medium": "Leinwand",
@@ -72352,7 +72352,7 @@
     {
       "id": "pinakothek-ap-8709",
       "title": "Familienbildnis",
-      "artist": "Ferraresischer Meister (Antonio da Crevalcore?)",
+      "artist": "Ferraresischer Meister",
       "year": "um 1480",
       "dateStr": "um 1480",
       "medium": "Leinwand",
@@ -72514,7 +72514,7 @@
     {
       "id": "pinakothek-ap-737",
       "title": "Bildnis des Sir Brian Tuke",
-      "artist": "Hans Holbein d. J.",
+      "artist": "Hans Holbein d. Ä.",
       "year": "nach 1537",
       "dateStr": "nach 1537",
       "medium": "Eichenholz",
@@ -73108,7 +73108,7 @@
     {
       "id": "pinakothek-ap-15284",
       "title": "Maria mit Kind",
-      "artist": "Andrea Previtali (Andrea Cordeliaghi)",
+      "artist": "Andrea Previtali",
       "year": "um 1502",
       "dateStr": "um 1502",
       "medium": "Holz",
@@ -73288,7 +73288,7 @@
     {
       "id": "pinakothek-ap-HUW-19",
       "title": "Die Marquise de Baglion als Flora",
-      "artist": "Jean-Marc Nattier",
+      "artist": "Nattier Jean-Marc",
       "year": "1746",
       "dateStr": "1746",
       "medium": "Leinwand",
@@ -73468,7 +73468,7 @@
     {
       "id": "pinakothek-ap-1494",
       "title": "Apostelaltar: Abschied der Apostel",
-      "artist": "Nürnbergisch um 1490",
+      "artist": "Nürnbergisch um",
       "year": "um 1490",
       "dateStr": "um 1490",
       "medium": "Lindenholz",
@@ -73486,7 +73486,7 @@
     {
       "id": "pinakothek-ap-1584",
       "title": "Belagerung einer Stadt (Augsburg 1703)",
-      "artist": "Georg Philipp Rugendas d. Ä.",
+      "artist": "Georg Philipp Rugendas",
       "year": "um 1705/06",
       "dateStr": "um 1705/06",
       "medium": "Leinwand",
@@ -73522,7 +73522,7 @@
     {
       "id": "pinakothek-ap-1443",
       "title": "Martyrium des hl. Florian\r\n(Rückseite: Unterer Teil eines Schmerzensmannes)",
-      "artist": "Donauschule um 1525",
+      "artist": "Donauschule um",
       "year": "um 1525",
       "dateStr": "um 1525",
       "medium": "Tannenholz (Abies alba)",
@@ -73558,7 +73558,7 @@
     {
       "id": "pinakothek-ap-1700",
       "title": "Reitergefecht",
-      "artist": "Jacques Courtois, gen. Le Bourguignon",
+      "artist": "gen. Le Bourguignon Jacques Courtois",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -73576,7 +73576,7 @@
     {
       "id": "pinakothek-ap-1706",
       "title": "Reitergefecht",
-      "artist": "Jacques Courtois, gen. Le Bourguignon",
+      "artist": "gen. Le Bourguignon Jacques Courtois",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -73612,7 +73612,7 @@
     {
       "id": "pinakothek-ap-1926",
       "title": "Waldweg",
-      "artist": "Jan van der Meer d. J. (Vermeer)",
+      "artist": "Jan van der Meer (III)",
       "year": null,
       "dateStr": null,
       "medium": "Holz",
@@ -73648,7 +73648,7 @@
     {
       "id": "pinakothek-ap-2320",
       "title": "Reiter im Angriff",
-      "artist": "Jacques Courtois, gen. Le Bourguignon",
+      "artist": "gen. Le Bourguignon Jacques Courtois",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -73666,7 +73666,7 @@
     {
       "id": "pinakothek-ap-2763",
       "title": "Musikalische Gesellschaft",
-      "artist": "Dirck Barendsz",
+      "artist": "Barendsz Dirck",
       "year": "1605",
       "dateStr": "1605",
       "medium": "Leinwand",
@@ -74188,7 +74188,7 @@
     {
       "id": "pinakothek-ap-16082",
       "title": "Gebirgige Flusslandschaft mit Anglern",
-      "artist": "Johann Sebastian Bach d. J.",
+      "artist": "Johann Sebastian Bach",
       "year": "1760/80",
       "dateStr": "1760/80",
       "medium": "Leinwand",
@@ -74962,7 +74962,7 @@
     {
       "id": "pinakothek-ap-1161",
       "title": "Gesellschaft im Park",
-      "artist": "Antoine Watteau",
+      "artist": "Watteau Antoine",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -75196,7 +75196,7 @@
     {
       "id": "pinakothek-ap-1964",
       "title": "Bildnisstudie eines Mannes",
-      "artist": "Rembrandt (Harmensz. van Rijn)",
+      "artist": "Rembrandt van Rijn",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -75916,7 +75916,7 @@
     {
       "id": "pinakothek-ap-2389",
       "title": "Judith enthauptet Holofernes",
-      "artist": "Guido Reni (Kopie nach)",
+      "artist": "Guido Reni",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -76150,7 +76150,7 @@
     {
       "id": "pinakothek-ap-2767",
       "title": "Historienzyklus(?): Königin Artemisia erobert Rhodos",
-      "artist": "Jörg Breu d. J.",
+      "artist": "Jörg Breu d. Ä.",
       "year": "2. Viertel 16. Jh.",
       "dateStr": "2. Viertel 16. Jh.",
       "medium": "Lindenholz (Tilia spec.)",
@@ -76492,7 +76492,7 @@
     {
       "id": "pinakothek-ap-3127",
       "title": "Anna von Österreich (1601-1666)",
-      "artist": "Charles Beaubrun und Henri Beaubrun",
+      "artist": "Beaubrun Henri Beaubrun Charles",
       "year": "17. Jahrhundert",
       "dateStr": "17. Jahrhundert",
       "medium": "Leinwand",
@@ -77734,7 +77734,7 @@
     {
       "id": "pinakothek-ap-1276",
       "title": "Landschaft",
-      "artist": "Jean François Millet (gen. Francisque)",
+      "artist": "Jean-François Millet",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -77896,7 +77896,7 @@
     {
       "id": "pinakothek-ap-2286",
       "title": "Bildnis eines jungen Geistlichen (Claude-François Poullart des Places (1679-1709)?)",
-      "artist": "Jean Jouvenet",
+      "artist": "Jouvenet Jean",
       "year": "um 1700",
       "dateStr": "um 1700",
       "medium": "Leinwand",
@@ -77932,7 +77932,7 @@
     {
       "id": "pinakothek-ap-2317",
       "title": "Reiterkampf",
-      "artist": "Jacques Courtois, gen. Le Bourguignon",
+      "artist": "gen. Le Bourguignon Jacques Courtois",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -78112,7 +78112,7 @@
     {
       "id": "pinakothek-ap-4007",
       "title": "Papst Benedikt XIV. (Prospero Lambertini, 1675-1758)",
-      "artist": "Werkstatt des Pierre Subleyras (1699 - 1749)",
+      "artist": "Werkstatt des Pierre Subleyras",
       "year": "nach 1746",
       "dateStr": "nach 1746",
       "medium": "Pastell",
@@ -78652,7 +78652,7 @@
     {
       "id": "pinakothek-ap-4894",
       "title": "Auferstehung Christi",
-      "artist": "Rembrandt (Harmensz. van Rijn)",
+      "artist": "Rembrandt van Rijn",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -78706,7 +78706,7 @@
     {
       "id": "pinakothek-ap-4949",
       "title": "Martyrium des hl. Bartholomäus",
-      "artist": "Jusepe de Ribera",
+      "artist": "Jusepe de (Giuseppe, José) Ribera (Rivera), Umkreis",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -79300,7 +79300,7 @@
     {
       "id": "pinakothek-ap-429",
       "title": "Selbstbildnis",
-      "artist": "Rembrandt (Harmensz. van Rijn)",
+      "artist": "Rembrandt van Rijn",
       "year": "vor 1712",
       "dateStr": "vor 1712",
       "medium": "Holz",
@@ -79516,7 +79516,7 @@
     {
       "id": "pinakothek-ap-3806",
       "title": "Louis de France, Duc de Bourgogne",
-      "artist": "Hyacinthe Rigaud",
+      "artist": "Rigaud Hyacinthe",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -79552,7 +79552,7 @@
     {
       "id": "pinakothek-ap-3832",
       "title": "Beweinung Christi",
-      "artist": "Schwäbisch um 1480",
+      "artist": "Schwäbisch um",
       "year": "um 1480",
       "dateStr": "um 1480",
       "medium": "Tannenholz",
@@ -79570,7 +79570,7 @@
     {
       "id": "pinakothek-ap-3834",
       "title": "Ecce homo",
-      "artist": "Schwäbisch um 1480",
+      "artist": "Schwäbisch um",
       "year": "um 1480",
       "dateStr": "um 1480",
       "medium": "Tannenholz",
@@ -79858,7 +79858,7 @@
     {
       "id": "pinakothek-ap-397",
       "title": "Auferstehung Christi",
-      "artist": "Rembrandt (Harmensz. van Rijn)",
+      "artist": "Rembrandt van Rijn",
       "year": "1635/39",
       "dateStr": "1635/39",
       "medium": "Leinwand, auf Eichenholz übertragen",
@@ -80920,7 +80920,7 @@
     {
       "id": "pinakothek-ap-4854",
       "title": "Johannes der Täufer",
-      "artist": "Paolo Veronese (Paolo Caliari)",
+      "artist": "Manner of Paolo Veronese",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -81064,7 +81064,7 @@
     {
       "id": "pinakothek-ap-5686",
       "title": "Ländliche Szene (Artischockenputzerinnen)",
-      "artist": "Georg Philipp Rugendas d. Ä.",
+      "artist": "Georg Philipp Rugendas",
       "year": "um 1710/15",
       "dateStr": "um 1710/15",
       "medium": "Leinwand",
@@ -81154,7 +81154,7 @@
     {
       "id": "pinakothek-ap-571",
       "title": "Damenbildnis",
-      "artist": "Rembrandt (Harmensz. van Rijn)",
+      "artist": "Rembrandt van Rijn",
       "year": "1633",
       "dateStr": "1633",
       "medium": "Leinwand",
@@ -81280,7 +81280,7 @@
     {
       "id": "pinakothek-ap-576",
       "title": "Ein alter Mann",
-      "artist": "Rembrandt (Harmensz. van Rijn)",
+      "artist": "Rembrandt van Rijn",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -81316,7 +81316,7 @@
     {
       "id": "pinakothek-ap-5773",
       "title": "Versöhnung Jacobs",
-      "artist": "Caravaggio (Michelangelo Merisi)",
+      "artist": "Caravaggio",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -81730,7 +81730,7 @@
     {
       "id": "pinakothek-ap-594",
       "title": "Bildnis einer Dame",
-      "artist": "Paolo Veronese (Paolo Caliari)",
+      "artist": "Manner of Paolo Veronese",
       "year": "um 1570",
       "dateStr": "um 1570",
       "medium": "Leinwand",
@@ -81748,7 +81748,7 @@
     {
       "id": "pinakothek-ap-5945",
       "title": "Versuchung des hl. Antonius",
-      "artist": "David Teniers d. Ä.",
+      "artist": "David Teniers d. J.",
       "year": null,
       "dateStr": null,
       "medium": "Holz",
@@ -82306,7 +82306,7 @@
     {
       "id": "pinakothek-ap-5475",
       "title": "Lucretia",
-      "artist": "Niederländisch um 1540",
+      "artist": "Niederländisch um",
       "year": "um 1540",
       "dateStr": "um 1540",
       "medium": "Eichenholz",
@@ -82342,7 +82342,7 @@
     {
       "id": "pinakothek-ap-5508",
       "title": "Bethlehemitischer Kindermord",
-      "artist": "Guido Reni (Kopie nach)",
+      "artist": "Guido Reni",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -83458,7 +83458,7 @@
     {
       "id": "pinakothek-ap-5403",
       "title": "Bildnis des Bonifazius Amerbach",
-      "artist": "Hans Holbein d. J.",
+      "artist": "Hans Holbein d. Ä.",
       "year": "wohl 16. Jh.",
       "dateStr": "wohl 16. Jh.",
       "medium": "Lindenholz (Tilia sp.)",
@@ -83710,7 +83710,7 @@
     {
       "id": "pinakothek-ap-5220",
       "title": "Schlafendes Jesuskind (oval)",
-      "artist": "Guido Reni (Kopie nach)",
+      "artist": "Guido Reni",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -83764,7 +83764,7 @@
     {
       "id": "pinakothek-ap-5238",
       "title": "Venus und Cupido mit Spiegel",
-      "artist": "Tiziano Vecellio, gen. Tizian",
+      "artist": "gen. Tizian Tiziano Vecellio",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -83944,7 +83944,7 @@
     {
       "id": "pinakothek-ap-9562",
       "title": "Ansicht von Haarlem",
-      "artist": "Jan van der Meer d. Ä. (Vermeer)",
+      "artist": "Jan van der Meer (III)",
       "year": null,
       "dateStr": null,
       "medium": "Holz",
@@ -84052,7 +84052,7 @@
     {
       "id": "pinakothek-ap-977",
       "title": "Maria mit Kind, Johannes dem Täufer und einem Stifter",
-      "artist": "Tiziano Vecellio, gen. Tizian",
+      "artist": "gen. Tizian Tiziano Vecellio",
       "year": "um 1520",
       "dateStr": "um 1520",
       "medium": "Leinwand",
@@ -84340,7 +84340,7 @@
     {
       "id": "pinakothek-ap-7094",
       "title": "Adam und Eva",
-      "artist": "Niederländisch um 1530",
+      "artist": "Niederländisch um",
       "year": "um 1520/30",
       "dateStr": "um 1520/30",
       "medium": "Eichenholz",
@@ -84736,7 +84736,7 @@
     {
       "id": "pinakothek-ap-913",
       "title": "Johannes auf Patmos",
-      "artist": "Charles Le Brun",
+      "artist": "Le Brun Charles",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -84862,7 +84862,7 @@
     {
       "id": "pinakothek-ap-7702",
       "title": "Heilige Familie",
-      "artist": "Paolo Veronese (Paolo Caliari)",
+      "artist": "Manner of Paolo Veronese",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -85600,7 +85600,7 @@
     {
       "id": "pinakothek-ap-7516",
       "title": "Hl. Hieronymus",
-      "artist": "Guido Reni (Kopie nach)",
+      "artist": "Guido Reni",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -85924,7 +85924,7 @@
     {
       "id": "pinakothek-ap-6946",
       "title": "Bildnis eines Fürsten (König Ludwig II. von Ungarn?)",
-      "artist": "Oberdeutsch von 1526",
+      "artist": "Oberdeutsch",
       "year": "1526",
       "dateStr": "1526",
       "medium": "Leinwand",
@@ -86338,7 +86338,7 @@
     {
       "id": "pinakothek-ap-1366",
       "title": "Gideon",
-      "artist": "Monogrammist HS (Deutsch um 1540)",
+      "artist": "Monogrammist HS (Deutsch um",
       "year": "um 1540",
       "dateStr": "um 1540",
       "medium": "Holz",
@@ -86500,7 +86500,7 @@
     {
       "id": "pinakothek-ap-3805",
       "title": "Enthauptung des hl. Jakobus",
-      "artist": "Cornelis Schut",
+      "artist": "Cornelis Schut (III)",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -87022,7 +87022,7 @@
     {
       "id": "pinakothek-ap-2322",
       "title": "Landschaft",
-      "artist": "Oberitalienisch um 1700",
+      "artist": "Oberitalienisch um",
       "year": "um 1700",
       "dateStr": "um 1700",
       "medium": "Leinwand",
@@ -87364,7 +87364,7 @@
     {
       "id": "pinakothek-ap-10239",
       "title": "Maria mit Kind",
-      "artist": "Salzburger Meister um 1450/60",
+      "artist": "Salzburger Meister um/60",
       "year": "um 1450/60",
       "dateStr": "um 1450/60",
       "medium": "Lindenholz, mit originaler Rahmung",
@@ -88102,7 +88102,7 @@
     {
       "id": "pinakothek-ap-1144",
       "title": "Beweinung Christi",
-      "artist": "Holländisch um 1520",
+      "artist": "Holländisch um?)",
       "year": "um 1520/30",
       "dateStr": "um 1520/30",
       "medium": "Eichenholz",
@@ -88192,7 +88192,7 @@
     {
       "id": "pinakothek-ap-10390",
       "title": "Venus, Bacchus und Ceres",
-      "artist": "Tiziano Vecellio, gen. Tizian",
+      "artist": "gen. Tizian Tiziano Vecellio",
       "year": null,
       "dateStr": null,
       "medium": "Holz",
@@ -88210,7 +88210,7 @@
     {
       "id": "pinakothek-ap-10445",
       "title": "Bildnis eines jungen Mannes",
-      "artist": "Holländisch um 1470 (1520?)",
+      "artist": "Holländisch um?)",
       "year": "um 1470",
       "dateStr": "um 1470",
       "medium": "Eichenholz",
@@ -88426,7 +88426,7 @@
     {
       "id": "pinakothek-ap-9880",
       "title": "Im Eisenbahncoupé",
-      "artist": "Adolph von Menzel",
+      "artist": "Adolph Menzel",
       "year": "um 1848",
       "dateStr": "um 1848",
       "medium": "Öl auf Leinwand",
@@ -88552,7 +88552,7 @@
     {
       "id": "pinakothek-ap-WAF-715",
       "title": "Thronende Maria mit Kind",
-      "artist": "Niederländisch um 1520",
+      "artist": "Niederländisch um",
       "year": "um oder nach 1520",
       "dateStr": "um oder nach 1520",
       "medium": "Eichenholz",
@@ -88660,7 +88660,7 @@
     {
       "id": "pinakothek-ap-WAF-762",
       "title": "Landschaft mit dem hl. Hubertus",
-      "artist": "Flämisch um 1530",
+      "artist": "Flämisch um",
       "year": "um 1530",
       "dateStr": "um 1530",
       "medium": "Eichenholz",
@@ -88984,7 +88984,7 @@
     {
       "id": "pinakothek-ap-WAF-1186",
       "title": "Heimsuchung Mariens\r\nAußenseite: Krönung Mariens",
-      "artist": "Nordwestdeutsch um 1470/80",
+      "artist": "Nordwestdeutsch um/50",
       "year": "um 1500",
       "dateStr": "um 1500",
       "medium": "Eichenholz",
@@ -89236,7 +89236,7 @@
     {
       "id": "pinakothek-ap-WAF-451",
       "title": "Die Verkündigung an Maria \r\nRückseite: Teil einer Anbetung der Könige",
-      "artist": "Kölnisch um 1400",
+      "artist": "Kölnisch um",
       "year": "um 1400",
       "dateStr": "um 1400",
       "medium": "Holz, vermutlich Nussbaumholz",
@@ -89290,7 +89290,7 @@
     {
       "id": "pinakothek-ap-WAF-507",
       "title": "Tafel eines Flügelaltares: Geburt Jesu\r\nAußenseite: Teil einer Kreuzigung Petri und eines weiteren Martyriums",
-      "artist": "Kölnisch um 1450",
+      "artist": "Kölnisch um",
       "year": "um 1450",
       "dateStr": "um 1450",
       "medium": "Eichenholz",
@@ -89308,7 +89308,7 @@
     {
       "id": "pinakothek-ap-WAF-537",
       "title": "Landschaft italienischen Charakters",
-      "artist": "Claude Lorrain (Claude Gellée)",
+      "artist": "Claude Lorrain",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -89380,7 +89380,7 @@
     {
       "id": "pinakothek-ap-WAF-626",
       "title": "Apostelaltar: Hll. Bartholomäus, Thomas, Johannes d. T., Johannes d. Ev., Matthäus, Petrus",
-      "artist": "Meister des Marienlebens (Nachfolger um 1485)",
+      "artist": "Meister des Marienlebens (Nachfolger um",
       "year": "um 1485",
       "dateStr": "um 1485",
       "medium": "Eichenholz",
@@ -89434,7 +89434,7 @@
     {
       "id": "pinakothek-ap-L-817",
       "title": "Prozession in Hofgastein",
-      "artist": "Adolph von Menzel",
+      "artist": "Adolph Menzel",
       "year": "1880",
       "dateStr": "1880",
       "medium": "Öl auf Leinwand",
@@ -89452,7 +89452,7 @@
     {
       "id": "pinakothek-ap-9893",
       "title": "Landschaft",
-      "artist": "Niederländisch um 1530",
+      "artist": "Niederländisch um",
       "year": "um 1520/30",
       "dateStr": "um 1520/30",
       "medium": "Eichenholz",
@@ -89830,7 +89830,7 @@
     {
       "id": "pinakothek-ap-8499",
       "title": "Wohnzimmer mit Menzels Schwester",
-      "artist": "Adolph von Menzel",
+      "artist": "Adolph Menzel",
       "year": "1847",
       "dateStr": "1847",
       "medium": "Öl auf Papier, aufgezogen auf Pappe",
@@ -89848,7 +89848,7 @@
     {
       "id": "pinakothek-ap-8507",
       "title": "Pelz des Künstlers",
-      "artist": "Adolph von Menzel",
+      "artist": "Adolph Menzel",
       "year": "um 1840/50",
       "dateStr": "um 1840/50",
       "medium": "Öl auf Papier, auf Pappe geklebt",
@@ -90010,7 +90010,7 @@
     {
       "id": "pinakothek-ap-6677",
       "title": "Heilige Familie mit dem Johannesknaben",
-      "artist": "Cornelis Schut",
+      "artist": "Cornelis Schut (III)",
       "year": null,
       "dateStr": null,
       "medium": "Holz",
@@ -90532,7 +90532,7 @@
     {
       "id": "pinakothek-ap-1389-A",
       "title": "Apostelaltar: Hl. Paulus",
-      "artist": "Nürnbergisch um 1490",
+      "artist": "Nürnbergisch um",
       "year": "um 1490",
       "dateStr": "um 1490",
       "medium": "Lindenholz (Tilia sp.)",
@@ -90604,7 +90604,7 @@
     {
       "id": "pinakothek-ap-2663",
       "title": "Taufe Christi",
-      "artist": "Deutsch, 1. Hälfte 18. Jahrhundert",
+      "artist": "1. Hälfte 18. Jahrhundert Deutsch",
       "year": "1. H. 18. Jh.",
       "dateStr": "1. H. 18. Jh.",
       "medium": "Leinwand",
@@ -90874,7 +90874,7 @@
     {
       "id": "pinakothek-ap-1378",
       "title": "Bildnis der Benigna von Lamberg",
-      "artist": "Hans Schöpfer d. J.",
+      "artist": "Hans Schöpfer d. Ä.",
       "year": "1569",
       "dateStr": "1569",
       "medium": "Holz",
@@ -91252,7 +91252,7 @@
     {
       "id": "pinakothek-ap-13321",
       "title": "Anbetung der Könige",
-      "artist": "Antwerpener Meister um 1540",
+      "artist": "Antwerpener Meister um",
       "year": "2. Viertel 16. Jh.",
       "dateStr": "2. Viertel 16. Jh.",
       "medium": "Eichenholz",
@@ -91306,7 +91306,7 @@
     {
       "id": "pinakothek-ap-1343",
       "title": "Bildnis eines jungen Mannes",
-      "artist": "Justus van Egmont",
+      "artist": "Van Egmont Justus",
       "year": null,
       "dateStr": null,
       "medium": "Holz",
@@ -91486,7 +91486,7 @@
     {
       "id": "pinakothek-ap-164",
       "title": "Selbstbildnis",
-      "artist": "Nicolas Poussin",
+      "artist": "Poussin Nicolas",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -91918,7 +91918,7 @@
     {
       "id": "pinakothek-ap-1491-B",
       "title": "Hl. Barbara (Balbina?)",
-      "artist": "Ulmer Meister von 1504",
+      "artist": "Ulmer Meister von",
       "year": "um 1500",
       "dateStr": "um 1500",
       "medium": "Tannenholz (Abies alba)",
@@ -92152,7 +92152,7 @@
     {
       "id": "pinakothek-ap-L-2301",
       "title": "Eva nach dem Sündenfall",
-      "artist": "Jean Baptiste Carpeaux",
+      "artist": "Jean-Baptiste Carpeaux",
       "year": "1871",
       "dateStr": "1871",
       "medium": "Gips, braun gefasst",
@@ -92170,7 +92170,7 @@
     {
       "id": "pinakothek-ap-11147",
       "title": "Kopf des Archimedes",
-      "artist": "Deutsch um 1700",
+      "artist": "Deutsch um",
       "year": "um 1690",
       "dateStr": "um 1690",
       "medium": "Leinwand",
@@ -92296,7 +92296,7 @@
     {
       "id": "pinakothek-ap-HUW-14",
       "title": "Die Liebenden",
-      "artist": "Jean-Marc Nattier",
+      "artist": "Nattier Jean-Marc",
       "year": "1744",
       "dateStr": "1744",
       "medium": "Leinwand",
@@ -93016,7 +93016,7 @@
     {
       "id": "pinakothek-ap-381",
       "title": "Ein Seehafen bei aufgehender Sonne",
-      "artist": "Claude Lorrain (Claude Gellée)",
+      "artist": "Claude Lorrain",
       "year": "1674",
       "dateStr": "1674",
       "medium": "Leinwand",
@@ -93088,7 +93088,7 @@
     {
       "id": "pinakothek-ap-6804",
       "title": "Vermählung der hl. Katharina",
-      "artist": "Correggio (Antonio Allegri)",
+      "artist": "After Correggio",
       "year": null,
       "dateStr": null,
       "medium": "Leinwand",
@@ -93646,7 +93646,7 @@
     {
       "id": "pinakothek-ap-11180",
       "title": "Italienisches Gehöft",
-      "artist": "Deutsch um 1670",
+      "artist": "Deutsch um",
       "year": "um 1670",
       "dateStr": "um 1670",
       "medium": "Leinwand",
@@ -93664,7 +93664,7 @@
     {
       "id": "pinakothek-ap-9881",
       "title": "Kircheninneres",
-      "artist": "Adolph von Menzel",
+      "artist": "Adolph Menzel",
       "year": "um 1852/55",
       "dateStr": "um 1852/55",
       "medium": "Öl auf Pappe",
@@ -93808,7 +93808,7 @@
     {
       "id": "pinakothek-ap-L-2546",
       "title": "Maximilien-Emmanuel, Chevalier de Bavière",
-      "artist": "Louis de Silvestre",
+      "artist": "Silvestre Louis",
       "year": "1707",
       "dateStr": "1707",
       "medium": "Leinwand",
@@ -94222,7 +94222,7 @@
     {
       "id": "pinakothek-ap-15637",
       "title": "Drei Gelehrte",
-      "artist": "Deutsch, 2. Hälfte 18. Jahrhundert",
+      "artist": "1. Hälfte 18. Jahrhundert Deutsch",
       "year": "1777",
       "dateStr": "1777",
       "medium": "Leinwand",
@@ -94600,7 +94600,7 @@
     {
       "id": "pinakothek-ap-1177",
       "title": "Rebecca am Brunnen",
-      "artist": "David Teniers d. Ä.",
+      "artist": "David Teniers d. J.",
       "year": null,
       "dateStr": null,
       "medium": "Öl auf Leinwand",
@@ -94618,7 +94618,7 @@
     {
       "id": "pinakothek-ap-5642",
       "title": "Bauernkneipe",
-      "artist": "David Teniers d. Ä.",
+      "artist": "David Teniers d. J.",
       "year": null,
       "dateStr": null,
       "medium": "Öl auf Holz",

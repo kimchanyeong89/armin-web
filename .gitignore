@@ -25,3 +25,10 @@ dist-ssr
 .vercel
 firebase-service-account.json
 .env
+
+# Large files (exceeding GitHub's 100MB limit)
+public/data/search-index.json
+public/data/national-museum-korea.json
+public/data/gyeongju-museum.json
+downloads/mnk-ids.json
+.wrangler/

@@ -345,7 +345,7 @@
     {
       "id": "brera-st-roch-visits-the-plague-stricken",
       "title": "St. Roch Visits the Plague-Stricken",
-      "artist": "Jacopo Bassano Jacopo Da Ponte",
+      "artist": "Jacopo Bassano (Jacopo da Ponte)",
       "year": null,
       "dateStr": "xvi secolo d c",
       "medium": "oil on canvas",
@@ -621,7 +621,7 @@
     {
       "id": "brera-the-men-are-in-the-field-memory-of-venice",
       "title": "The Men are in the Field! Memory of Venice",
-      "artist": "Mose Bianchi",
+      "artist": "Bianchi Mosè",
       "year": null,
       "dateStr": "xix secolo d c",
       "medium": "oil on canvas",
@@ -1053,7 +1053,7 @@
     {
       "id": "brera-death-of-cleopatra",
       "title": "Death of Cleopatra",
-      "artist": "Guido Cagnacci",
+      "artist": "Cagnacci Guido",
       "year": null,
       "dateStr": "xvii secolo d c",
       "medium": "oil on canvas",
@@ -1125,7 +1125,7 @@
     {
       "id": "brera-portrait-of-bartolomeo-arese",
       "title": "Portrait of Bartolomeo Arese",
-      "artist": "Antonio Campi",
+      "artist": "Antonio CAMPI",
       "year": null,
       "dateStr": "xvi secolo d c",
       "medium": "oil on panel",
@@ -1197,7 +1197,7 @@
     {
       "id": "brera-madonna-and-child-with-st-joseph-st-catherine-and-st-agnes",
       "title": "Madonna and Child with St. Joseph, St. Catherine and St. Agnes",
-      "artist": "Antonio Campi",
+      "artist": "Antonio CAMPI",
       "year": null,
       "dateStr": "xvi secolo d c",
       "medium": "oil on canvas",
@@ -1221,7 +1221,7 @@
     {
       "id": "brera-view-of-the-basin-of-san-marco-from-the-punta-della-dogana",
       "title": "View of the Basin of San Marco from the Punta della Dogana",
-      "artist": "Canaletto Giovanni Antonio Canal",
+      "artist": "Canaletto",
       "year": null,
       "dateStr": "xviii secolo d c",
       "medium": "oil on canvas",
@@ -1233,7 +1233,7 @@
     {
       "id": "brera-view-of-the-grand-canal-towards-the-punta-della-dogana-from-campo-san-vio",
       "title": "View of the Grand Canal towards the Punta della Dogana from Campo San Vio",
-      "artist": "Canaletto Giovanni Antonio Canal",
+      "artist": "Canaletto",
       "year": null,
       "dateStr": "xviii secolo d c",
       "medium": "oil on canvas",
@@ -1509,7 +1509,7 @@
     {
       "id": "brera-supper-at-emmaus",
       "title": "Supper at Emmaus",
-      "artist": "Caravaggio Michelangelo Merisi",
+      "artist": "Caravaggio",
       "year": null,
       "dateStr": "xvii secolo d c",
       "medium": "oil on canvas",
@@ -2217,7 +2217,7 @@
     {
       "id": "brera-st-luke-the-virgin-st-john-the-baptist-and-st-mark",
       "title": "St. Luke, the Virgin, St. John the Baptist and St. Mark",
-      "artist": "Cima Da Conegliano Giovanni Battista Cima",
+      "artist": "Cima da Conegliano (Giovanni Battista Cima)",
       "year": null,
       "dateStr": "xvi secolo d c",
       "medium": "tempera on panel",
@@ -2241,7 +2241,7 @@
     {
       "id": "brera-adoration-of-the-magi",
       "title": "Adoration of the Magi",
-      "artist": "Correggio Antonio Allegri",
+      "artist": "After Correggio",
       "year": null,
       "dateStr": "xvi secolo d c",
       "medium": "oil on canvas",
@@ -2253,7 +2253,7 @@
     {
       "id": "brera-nativity-of-jesus-with-st-elisabeth-and-the-young-st-john-the-baptist",
       "title": "Nativity of Jesus with St. Elisabeth and the Young St. John the Baptist",
-      "artist": "Correggio Antonio Allegri",
+      "artist": "After Correggio",
       "year": null,
       "dateStr": "xvi secolo d c",
       "medium": "oil on panel",
@@ -2361,7 +2361,7 @@
     {
       "id": "brera-studio-per-lelemosina-di-san-gregorio-recto-studi-di-figure-e-di-teste-verso",
       "title": "Studio per l’Elemosina di san Gregorio (recto) – Studi di figure e di teste (verso)",
-      "artist": "Donato Creti Cremona 1671 Bologna 1749",
+      "artist": "Donato Creti Cremona Bologna",
       "year": null,
       "dateStr": "xvii secolo d c",
       "medium": "",
@@ -2373,7 +2373,7 @@
     {
       "id": "brera-teste-di-vecchio-di-giovane-e-di-cavallo",
       "title": "Teste di vecchio, di giovane e di cavallo",
-      "artist": "Donato Creti Cremona 1671 Bologna 1749",
+      "artist": "Donato Creti Cremona Bologna",
       "year": null,
       "dateStr": "xvii secolo d c",
       "medium": "",
@@ -2469,7 +2469,7 @@
     {
       "id": "brera-the-three-archangels",
       "title": "The Three Archangels",
-      "artist": "Marco Doggiono",
+      "artist": "Marco d'Oggiono",
       "year": null,
       "dateStr": "xvi secolo d c",
       "medium": "oil on panel",
@@ -2505,7 +2505,7 @@
     {
       "id": "brera-madonna-and-child-7",
       "title": "Madonna and Child",
-      "artist": "Marco Doggiono",
+      "artist": "Marco d'Oggiono",
       "year": null,
       "dateStr": "xvi secolo d c",
       "medium": "oil on panel",
@@ -2517,7 +2517,7 @@
     {
       "id": "brera-saint-paul",
       "title": "Saint Paul",
-      "artist": "Marco Doggiono",
+      "artist": "Marco d'Oggiono",
       "year": null,
       "dateStr": "xvi secolo d c",
       "medium": "oil on panel",
@@ -2529,7 +2529,7 @@
     {
       "id": "brera-the-elevation-of-st-mary-magdalene",
       "title": "The Elevation of St. Mary Magdalene",
-      "artist": "Marco Doggiono",
+      "artist": "Marco d'Oggiono",
       "year": null,
       "dateStr": "xvi secolo d c",
       "medium": "tempera and oil on panel",
@@ -2541,7 +2541,7 @@
     {
       "id": "brera-madonna-and-child-with-angels",
       "title": "Madonna and Child with Angels",
-      "artist": "Giovanni Da Bologna",
+      "artist": "Giovanni da Bologna",
       "year": null,
       "dateStr": "xiv secolo d c",
       "medium": "tempera on panel",
@@ -2553,7 +2553,7 @@
     {
       "id": "brera-saint-peter-martyr-with-saints-nicholas-and-benedict",
       "title": "Saint Peter Martyr with Saints Nicholas and Benedict",
-      "artist": "Cima Da Conegliano Giovanni Battista Cima",
+      "artist": "Cima da Conegliano (Giovanni Battista Cima)",
       "year": null,
       "dateStr": "xvi secolo d c",
       "medium": "oil on panel",
@@ -2565,7 +2565,7 @@
     {
       "id": "brera-madonna-and-child-enthroned-with-st-sebastian-st-john-the-baptist-st-mary-magdalen-st-roch-and-members-of-the-confraternity-of-san-giovanni-evangelista",
       "title": "Madonna and Child Enthroned with St. Sebastian, St. John the Baptist, St. Mary Magdalen, St. Roch and Members of the Confraternity of San Giovanni Evangelista",
-      "artist": "Cima Da Conegliano Giovanni Battista Cima",
+      "artist": "Cima da Conegliano (Giovanni Battista Cima)",
       "year": null,
       "dateStr": "xv secolo d c",
       "medium": "mixed media on canvas",
@@ -2577,7 +2577,7 @@
     {
       "id": "brera-st-peter-enthroned-with-st-john-the-baptist-and-st-paul",
       "title": "St. Peter Enthroned with St. John the Baptist and St. Paul",
-      "artist": "Cima Da Conegliano Giovanni Battista Cima",
+      "artist": "Cima da Conegliano (Giovanni Battista Cima)",
       "year": null,
       "dateStr": "xvi secolo d c",
       "medium": "oil on panel",
@@ -2589,7 +2589,7 @@
     {
       "id": "brera-st-justina",
       "title": "St. Justina",
-      "artist": "Cima Da Conegliano Giovanni Battista Cima",
+      "artist": "Cima da Conegliano (Giovanni Battista Cima)",
       "year": null,
       "dateStr": "xvi secolo d c",
       "medium": "tempera on panel",
@@ -2601,7 +2601,7 @@
     {
       "id": "brera-saint-gregory",
       "title": "Saint Gregory",
-      "artist": "Cima Da Conegliano Giovanni Battista Cima",
+      "artist": "Cima da Conegliano (Giovanni Battista Cima)",
       "year": null,
       "dateStr": "xvi secolo d c",
       "medium": "tempera on panel",
@@ -2613,7 +2613,7 @@
     {
       "id": "brera-st-augustine",
       "title": "St. Augustine",
-      "artist": "Cima Da Conegliano Giovanni Battista Cima",
+      "artist": "Cima da Conegliano (Giovanni Battista Cima)",
       "year": null,
       "dateStr": "xvi secolo d c",
       "medium": "tempera on panel",
@@ -2625,7 +2625,7 @@
     {
       "id": "brera-st-clare-st-jerome-st-nicholas-and-st-ursula",
       "title": "St. Clare, St. Jerome, St. Nicholas and St. Ursula",
-      "artist": "Cima Da Conegliano Giovanni Battista Cima",
+      "artist": "Cima da Conegliano (Giovanni Battista Cima)",
       "year": null,
       "dateStr": "xvi secolo d c",
       "medium": "tempera on panel",
@@ -2637,7 +2637,7 @@
     {
       "id": "brera-st-jerome-in-the-desert-2",
       "title": "St. Jerome in the Desert",
-      "artist": "Cima Da Conegliano Giovanni Battista Cima",
+      "artist": "Cima da Conegliano (Giovanni Battista Cima)",
       "year": null,
       "dateStr": "xv secolo d c",
       "medium": "oil on panel",
@@ -2697,7 +2697,7 @@
     {
       "id": "brera-dual-portrait",
       "title": "Dual Portrait",
-      "artist": "Giovanni Agostino Da Lodi",
+      "artist": "Giovanni Agostino da Lodi",
       "year": null,
       "dateStr": "xvi secolo d c",
       "medium": "oil on panel",
@@ -2709,7 +2709,7 @@
     {
       "id": "brera-christ-enthroned-with-angels-in-adoration",
       "title": "Christ Enthroned with Angels in Adoration",
-      "artist": "Giovanni Da Milano",
+      "artist": "Giovanni da Milano",
       "year": null,
       "dateStr": "xiv secolo d c",
       "medium": "tempera on panel",
@@ -2745,7 +2745,7 @@
     {
       "id": "brera-madonna-con-il-bambino-madonna-dellalbero",
       "title": "Madonna con il Bambino (Madonna dell’Albero)",
-      "artist": "Cesare Da Sesto",
+      "artist": "Cesare da Sesto",
       "year": null,
       "dateStr": "xvi secolo d c",
       "medium": "oil on panel",
@@ -2793,7 +2793,7 @@
     {
       "id": "brera-st-sebastian",
       "title": "St. Sebastian",
-      "artist": "Liberale Da Verona",
+      "artist": "Liberale da Verona",
       "year": null,
       "dateStr": "xv secolo d c",
       "medium": "oil on panel",
@@ -2829,7 +2829,7 @@
     {
       "id": "brera-studi-tecnici-progetto-di-un-contatore-dacqua-per-bernardo-rucellai-verso",
       "title": "Studi tecnici, progetto di un contatore d’acqua per Bernardo Rucellai (verso)",
-      "artist": "Leonardo Da Vinci",
+      "artist": "Leonardo da Vinci",
       "year": null,
       "dateStr": "xvi secolo d c",
       "medium": "pencil on paper",
@@ -2841,7 +2841,7 @@
     {
       "id": "brera-testa-di-vecchio-di-profilo-verso-destra",
       "title": "Testa di vecchio di profilo verso destra",
-      "artist": "Leonardo Da Vinci",
+      "artist": "Leonardo da Vinci",
       "year": null,
       "dateStr": "xvi secolo d c",
       "medium": "matita su carta",
@@ -2877,7 +2877,7 @@
     {
       "id": "brera-the-tryptich-of-the-adoration-of-the-magi",
       "title": "The Tryptich of the Adoration of the Magi",
-      "artist": "Jan De Beer",
+      "artist": "Jan de Beer",
       "year": null,
       "dateStr": "xvi secolo d c",
       "medium": "oil on panel",
@@ -2889,7 +2889,7 @@
     {
       "id": "brera-saint-luke-painting-the-virgin-with-the-child",
       "title": "Saint Luke Painting the Virgin with the Child",
-      "artist": "Jan De Beer",
+      "artist": "Jan de Beer",
       "year": null,
       "dateStr": "xvi secolo d c",
       "medium": "oil on panel",
@@ -3021,7 +3021,7 @@
     {
       "id": "brera-madonna-and-child-with-saints-angels-and-federico-da-montefeltro-san-bernardino-altarpiece",
       "title": "Madonna and Child with Saints, Angels and Federico da Montefeltro (San Bernardino Altarpiece)",
-      "artist": "Piero Della Francesca",
+      "artist": "Piero della Francesca",
       "year": null,
       "dateStr": "xv secolo d c",
       "medium": "tempera on panel",
@@ -3417,7 +3417,7 @@
     {
       "id": "brera-st-peter",
       "title": "St. Peter",
-      "artist": "Fra Carnevale Bartolomeo Di Giovanni Corradini",
+      "artist": "Fra Carnevale (Bartolomeo di Giovanni Corradini)",
       "year": null,
       "dateStr": "xv secolo d c",
       "medium": "tempera and oil on panel",
@@ -3633,7 +3633,7 @@
     {
       "id": "brera-lamentation-over-the-dead-christ-3",
       "title": "Lamentation over the Dead Christ",
-      "artist": "Garofalo Benvenuto Tisi",
+      "artist": "Garofalo (Benvenuto Tisi)",
       "year": null,
       "dateStr": "xvi secolo d c",
       "medium": "oil on panel",
@@ -3645,7 +3645,7 @@
     {
       "id": "brera-disputation-over-the-immaculate-conception",
       "title": "Disputation over the Immaculate Conception",
-      "artist": "Girolamo Genga",
+      "artist": "Genga Girolamo",
       "year": null,
       "dateStr": "xvi secolo d c",
       "medium": "oil on panel",
@@ -4269,7 +4269,7 @@
     {
       "id": "brera-portrait-of-wenzel-anton-prince-of-kaunitz-rietberg",
       "title": "Portrait of Wenzel Anton, Prince of Kaunitz-Rietberg",
-      "artist": "Giovanni Battista Lampi",
+      "artist": "Lampi Giovanni Battista I",
       "year": null,
       "dateStr": "xix secolo d c",
       "medium": "oil on canvas",
@@ -4437,7 +4437,7 @@
     {
       "id": "brera-snow-in-high-mountains",
       "title": "Snow in High Mountains",
-      "artist": "Emilio Longoni",
+      "artist": "Longoni Emilio",
       "year": null,
       "dateStr": "xix secolo d c",
       "medium": "oil on canvas",
@@ -5757,7 +5757,7 @@
     {
       "id": "brera-the-victory-of-the-carnutes-over-the-normans",
       "title": "The Victory of the Carnutes over the Normans",
-      "artist": "Padovanino Alessandro Varotari",
+      "artist": "Varotari Alessandro Padovanino (called)",
       "year": null,
       "dateStr": "xvii secolo d c",
       "medium": "oil on canvas",
@@ -6225,7 +6225,7 @@
     {
       "id": "brera-portrait-of-giovanni-battista-sommariva",
       "title": "Portrait of Giovanni Battista Sommariva",
-      "artist": "Pierre Paul Prudhon",
+      "artist": "Prud'hon Pierre-Paul",
       "year": null,
       "dateStr": "xix secolo d c",
       "medium": "oil on canvas",
@@ -6237,7 +6237,7 @@
     {
       "id": "brera-portrait-of-a-young-woman",
       "title": "Portrait of a Young Woman",
-      "artist": "Rembrandt Harmenszoon Van Rijn",
+      "artist": "Rembrandt van Rijn",
       "year": null,
       "dateStr": "xvii secolo d c",
       "medium": "oil on panel",
@@ -6441,7 +6441,7 @@
     {
       "id": "brera-last-supper",
       "title": "Last Supper",
-      "artist": "Pieter Paul Rubens",
+      "artist": "Rubens Pieter Paul",
       "year": null,
       "dateStr": "xvii secolo d c",
       "medium": "oil on panel",
@@ -6501,7 +6501,7 @@
     {
       "id": "brera-the-good-samaritan",
       "title": "The Good Samaritan",
-      "artist": "Joachim Von Sandrart",
+      "artist": "Joachim von Sandrart",
       "year": null,
       "dateStr": "xvii secolo d c",
       "medium": "oil on canvas",
@@ -6537,7 +6537,7 @@
     {
       "id": "brera-the-marriage-of-the-virgin",
       "title": "The Marriage of the Virgin",
-      "artist": "Raffaello Sanzio",
+      "artist": "Raphael",
       "year": null,
       "dateStr": "xvi secolo d c",
       "medium": "oil on panel",
@@ -6885,7 +6885,7 @@
     {
       "id": "brera-saints-faustinus-and-jovita-appear-in-defense-of-brescia-under-attack-from-niccolo-piccinino-in-1438",
       "title": "Saints Faustinus and Jovita Appear in Defense of Brescia under Attack from Niccolò Piccinino in 1438",
-      "artist": "Gian Domenico Tiepolo",
+      "artist": "Tiepolo Gian Domenico",
       "year": null,
       "dateStr": "xviii secolo d c",
       "medium": "oil on canvas",
@@ -6909,7 +6909,7 @@
     {
       "id": "brera-saint-aloysius-gonzaga",
       "title": "Saint Aloysius Gonzaga",
-      "artist": "Gian Domenico Tiepolo",
+      "artist": "Tiepolo Gian Domenico",
       "year": null,
       "dateStr": "xviii secolo d c",
       "medium": "oil on canvas",
@@ -6993,7 +6993,7 @@
     {
       "id": "brera-the-crucifixion-with-the-virgin-st-mary-magdalene-st-john-the-evangelist-and-st-vitus",
       "title": "The Crucifixion with the Virgin, St. Mary Magdalene, St. John the Evangelist and St. Vitus",
-      "artist": "Garofalo Benvenuto Tisi",
+      "artist": "Garofalo (Benvenuto Tisi)",
       "year": null,
       "dateStr": "xvi secolo d c",
       "medium": "oil on canvas",
@@ -7005,7 +7005,7 @@
     {
       "id": "brera-penitent-st-jerome",
       "title": "Penitent St. Jerome",
-      "artist": "Tiziano Vecellio",
+      "artist": "Titian",
       "year": null,
       "dateStr": "xvi secolo d c",
       "medium": "oil on canvas",
@@ -7017,7 +7017,7 @@
     {
       "id": "brera-portrait-of-count-antonio-porcia-and-brugnera",
       "title": "Portrait of Count Antonio Porcia and Brugnera",
-      "artist": "Tiziano Vecellio",
+      "artist": "Titian",
       "year": null,
       "dateStr": "xvi secolo d c",
       "medium": "oil on canvas",
@@ -7065,7 +7065,7 @@
     {
       "id": "brera-christ-crucified",
       "title": "Christ Crucified",
-      "artist": "Cosme Tura",
+      "artist": "Cosmè Tura",
       "year": null,
       "dateStr": "xv secolo d c",
       "medium": "tempera on panel",
@@ -7089,7 +7089,7 @@
     {
       "id": "brera-portrait-of-a-lady-2",
       "title": "Portrait of a Lady",
-      "artist": "Antoon Van Dyck",
+      "artist": "Dyck Antoon van",
       "year": null,
       "dateStr": "xvii secolo d c",
       "medium": "oil on canvas",
@@ -7101,7 +7101,7 @@
     {
       "id": "brera-madonna-and-child-with-st-athony-of-padua",
       "title": "Madonna and Child with St. Athony of Padua",
-      "artist": "Antoon Van Dyck",
+      "artist": "Dyck Antoon van",
       "year": null,
       "dateStr": "xvii secolo d c",
       "medium": "oil on canvas",
@@ -7125,7 +7125,7 @@
     {
       "id": "brera-vertumnus-and-pomona-in-a-garland-of-flowers",
       "title": "Vertumnus and Pomona in a Garland of Flowers",
-      "artist": "Jan Philips Van Thielen",
+      "artist": "Jan Philips van Thielen",
       "year": null,
       "dateStr": "xvii secolo d c",
       "medium": "oil on canvas",
@@ -7185,7 +7185,7 @@
     {
       "id": "brera-the-agony-in-the-garden",
       "title": "The Agony in the Garden",
-      "artist": "Veronese Paolo Caliari",
+      "artist": "Caliari Paolo Véronèse",
       "year": null,
       "dateStr": "xvi secolo d c",
       "medium": "oil on canvas",
@@ -7197,7 +7197,7 @@
     {
       "id": "brera-saint-anthony-the-abbot-with-st-cornelius-and-st-cyprian",
       "title": "Saint Anthony the Abbot with St. Cornelius and St. Cyprian",
-      "artist": "Veronese Paolo Caliari",
+      "artist": "Caliari Paolo Véronèse",
       "year": null,
       "dateStr": "xvi secolo d c",
       "medium": "oil on canvas",
@@ -7209,7 +7209,7 @@
     {
       "id": "brera-supper-in-the-house-of-simon",
       "title": "Supper in the House of Simon",
-      "artist": "Veronese Paolo Caliari",
+      "artist": "Caliari Paolo Véronèse",
       "year": null,
       "dateStr": "xvi secolo d c",
       "medium": "oil on canvas",
@@ -7221,7 +7221,7 @@
     {
       "id": "brera-baptism-and-temptations-of-christ",
       "title": "Baptism and Temptations of Christ",
-      "artist": "Veronese Paolo Caliari",
+      "artist": "Caliari Paolo Véronèse",
       "year": null,
       "dateStr": "xvi secolo d c",
       "medium": "oil on canvas",
@@ -7233,7 +7233,7 @@
     {
       "id": "brera-last-supper-2",
       "title": "Last Supper",
-      "artist": "Veronese Paolo Caliari",
+      "artist": "Caliari Paolo Véronèse",
       "year": null,
       "dateStr": "xvi secolo d c",
       "medium": "oil on canvas",

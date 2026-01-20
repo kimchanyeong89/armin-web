@@ -94,7 +94,7 @@
     {
       "id": "the-pleasures-of-the-ball",
       "title": "The Pleasures of the Ball",
-      "artist": "Antoine Watteau",
+      "artist": "Watteau Antoine",
       "year": 1715,
       "dateStr": "c.1715-17",
       "room": "Room 11",
@@ -108,7 +108,7 @@
     {
       "id": "the-triumph-of-david",
       "title": "The Triumph of David",
-      "artist": "Nicolas Poussin",
+      "artist": "Poussin Nicolas",
       "year": 1631,
       "dateStr": "c.1631-3",
       "room": "Room 11",
@@ -136,7 +136,7 @@
     {
       "id": "judith",
       "title": "Judith",
-      "artist": "After Cristofano Allori",
+      "artist": "Cristofano Allori",
       "year": 1650,
       "dateStr": "17c",
       "room": "Room 2",
@@ -150,7 +150,7 @@
     {
       "id": "bucintoro-at-the-molo-on-ascension-day",
       "title": "Bucintoro at the Molo on Ascension Day",
-      "artist": "Canaletto (Giovanni Antonio Canal)",
+      "artist": "Canaletto",
       "year": 1760,
       "dateStr": "1760",
       "room": "Room 2",
@@ -178,7 +178,7 @@
     {
       "id": "james-vi-and-i",
       "title": "James VI and I",
-      "artist": "Attributed to John de Critz the Elder",
+      "artist": "After John de Critz the elder",
       "year": 1606,
       "dateStr": "c.1606",
       "room": "Room 10",
@@ -262,7 +262,7 @@
     {
       "id": "saint-jerome-with-girolamo-petrobelli",
       "title": "Saint Jerome with Girolamo Petrobelli",
-      "artist": "Paolo Veronese",
+      "artist": "Manner of Paolo Veronese",
       "year": 1563,
       "dateStr": "c.1563",
       "room": "Room 2",
@@ -374,7 +374,7 @@
     {
       "id": "a-view-of-walton-bridge",
       "title": "A View of Walton Bridge",
-      "artist": "Canaletto (Giovanni Antonio Canal)",
+      "artist": "Canaletto",
       "year": 1754,
       "dateStr": "1754",
       "room": "Room 3",
@@ -402,7 +402,7 @@
     {
       "id": "three-boys",
       "title": "Three Boys",
-      "artist": "Bartolomé Estéban Murillo",
+      "artist": "Bartolomé Esteban Murillo",
       "year": 1670,
       "dateStr": "c.1670",
       "room": "Room 1",
@@ -514,7 +514,7 @@
     {
       "id": "head-of-an-old-man",
       "title": "Head of an Old Man",
-      "artist": "Attributed to Annibale Carracci",
+      "artist": "Annibale Carracci",
       "year": 1590,
       "dateStr": "c.1590-2",
       "room": null,
@@ -542,7 +542,7 @@
     {
       "id": "philip-iv-king-of-spain",
       "title": "Philip IV, King of Spain",
-      "artist": "Workshop of Diego Velázquez",
+      "artist": "Diego Velázquez",
       "year": 1644,
       "dateStr": "1644-60",
       "room": "Room 1",
@@ -598,7 +598,7 @@
     {
       "id": "walking-the-dog-i-ii-iii",
       "title": "Walking the Dog I, II & III",
-      "artist": "Peter Randall-Page, Peter",
+      "artist": "Peter Peter Randall-Page",
       "year": null,
       "dateStr": "",
       "room": null,
@@ -668,7 +668,7 @@
     {
       "id": "holy-family-4",
       "title": "Holy Family",
-      "artist": "Giorgio Vasari, after Andrea del Sarto",
+      "artist": "after Andrea del Sarto Giorgio Vasari",
       "year": 1550,
       "dateStr": "16c",
       "room": "Room 2",
@@ -724,7 +724,7 @@
     {
       "id": "musicians",
       "title": "Musicians",
-      "artist": "Attributed to Mathieu Le Nain",
+      "artist": "Mathieu Le Nain",
       "year": 1650,
       "dateStr": "c.1650",
       "room": "Room 11",
@@ -752,7 +752,7 @@
     {
       "id": "mrs-siddons-as-the-tragic-muse",
       "title": "Mrs Siddons as the Tragic Muse",
-      "artist": "Studio of Sir Joshua Reynolds",
+      "artist": "Sir Joshua Reynolds",
       "year": 1789,
       "dateStr": "1789",
       "room": "Room 10",
@@ -766,7 +766,7 @@
     {
       "id": "rinaldo-and-armida",
       "title": "Rinaldo and Armida",
-      "artist": "Nicolas Poussin",
+      "artist": "Poussin Nicolas",
       "year": 1628,
       "dateStr": "c.1628-30",
       "room": "Room 11",
@@ -934,7 +934,7 @@
     {
       "id": "a-brawl-in-a-guard-room",
       "title": "A Brawl in a Guard-room",
-      "artist": "Sébastien Bourdon",
+      "artist": "Bourdon Sébastien",
       "year": 1640,
       "dateStr": "c.1640s",
       "room": "Room 4",
@@ -990,7 +990,7 @@
     {
       "id": "a-boy-lighting-a-candle-from-one-held-by-an-old-woman",
       "title": "A Boy lighting a Candle from one held by an Old Woman",
-      "artist": "After Sir Peter Paul Rubens",
+      "artist": "Sir Peter Paul Rubens",
       "year": 1850,
       "dateStr": "19c",
       "room": null,
@@ -1004,7 +1004,7 @@
     {
       "id": "a-boy-called-the-rev-ozias-thurston-linley",
       "title": "A boy, called the Rev. Ozias Thurston Linley",
-      "artist": "Attributed to Sir Thomas Lawrence",
+      "artist": "Sir Thomas Lawrence",
       "year": 1780,
       "dateStr": "c.1780",
       "room": null,
@@ -1032,7 +1032,7 @@
     {
       "id": "a-calm",
       "title": "A Calm",
-      "artist": "After Willem van de Velde the Younger",
+      "artist": "Willem van de Velde the Younger",
       "year": 1750,
       "dateStr": "18c",
       "room": null,
@@ -1074,7 +1074,7 @@
     {
       "id": "a-calm-3",
       "title": "A Calm",
-      "artist": "Studio of Peter Monamy",
+      "artist": "Peter Monamy",
       "year": 1720,
       "dateStr": "c.1720",
       "room": null,
@@ -1116,7 +1116,7 @@
     {
       "id": "a-castle-in-a-wood",
       "title": "A Castle in a Wood",
-      "artist": "Follower of Gaspard Dughet",
+      "artist": "Gaspard Dughet",
       "year": 1650,
       "dateStr": "17c",
       "room": null,
@@ -1200,7 +1200,7 @@
     {
       "id": "a-cow",
       "title": "A Cow",
-      "artist": "Manner of Paulus Potter",
+      "artist": "Paulus Potter",
       "year": 1650,
       "dateStr": "17c",
       "room": null,
@@ -1270,7 +1270,7 @@
     {
       "id": "a-grey-horse",
       "title": "A Grey Horse",
-      "artist": "Attributed to Sir Anthony van Dyck",
+      "artist": "Sir Anthony van Dyck",
       "year": 1621,
       "dateStr": "c.1621",
       "room": null,
@@ -1312,7 +1312,7 @@
     {
       "id": "poultry",
       "title": "A Hen and her Chicks",
-      "artist": "Attributed to Francis Barlow",
+      "artist": "Francis Barlow",
       "year": 1600,
       "dateStr": "c.1600-86",
       "room": null,
@@ -1368,7 +1368,7 @@
     {
       "id": "a-man-called-michel-baron",
       "title": "A Man, called Michel Baron",
-      "artist": "Attributed to Claude Lefebvre",
+      "artist": "Lefebvre Claude",
       "year": 1670,
       "dateStr": "c.1670s",
       "room": null,
@@ -1424,7 +1424,7 @@
     {
       "id": "a-man-called-noel-desenfans-on-horseback",
       "title": "A man, called Noel Desenfans on Horseback",
-      "artist": "Attributed to Sir Peter Francis Bourgeois",
+      "artist": "Sir Peter Francis Bourgeois",
       "year": 1773,
       "dateStr": "c. 1773-5",
       "room": null,
@@ -1592,7 +1592,7 @@
     {
       "id": "roman-blackmiths-shop",
       "title": "A Roman Blacksmith's Shop",
-      "artist": "Manner of Johannes Lingelbach",
+      "artist": "Johannes Lingelbach",
       "year": 1640,
       "dateStr": "1640s",
       "room": null,
@@ -1634,7 +1634,7 @@
     {
       "id": "a-shipwreck",
       "title": "A Shipwreck",
-      "artist": "Follower of Claude Joseph Vernet",
+      "artist": "Claude-Joseph Vernet",
       "year": 1750,
       "dateStr": "18c",
       "room": null,
@@ -1746,7 +1746,7 @@
     {
       "id": "a-woman-with-cows-on-a-road",
       "title": "A Woman with Cows on a Road",
-      "artist": "Follower of Karel Dujardin",
+      "artist": "Karel Dujardin",
       "year": 1650,
       "dateStr": "17c",
       "room": null,
@@ -1872,7 +1872,7 @@
     {
       "id": "an-italianate-harbour-scene",
       "title": "An Italianate Harbour Scene",
-      "artist": "Claude Joseph Vernet",
+      "artist": "Claude-Joseph Vernet",
       "year": 1749,
       "dateStr": "1749",
       "room": null,
@@ -1928,7 +1928,7 @@
     {
       "id": "anna-of-saxony",
       "title": "Anna of Saxony",
-      "artist": "Flemish School",
+      "artist": "school flemish",
       "year": 1550,
       "dateStr": "16c",
       "room": null,
@@ -1998,7 +1998,7 @@
     {
       "id": "archbishop-laud",
       "title": "Archbishop Laud",
-      "artist": "After Sir Anthony van Dyck",
+      "artist": "Sir Anthony van Dyck",
       "year": 1638,
       "dateStr": "1638-86",
       "room": null,
@@ -2026,7 +2026,7 @@
     {
       "id": "autumn",
       "title": "Autumn",
-      "artist": "Studio of David Teniers the Younger",
+      "artist": "David Teniers the Younger",
       "year": 1635,
       "dateStr": "c.1635-90",
       "room": null,
@@ -2040,7 +2040,7 @@
     {
       "id": "autumn-2",
       "title": "Autumn",
-      "artist": "After Francesco Bassano",
+      "artist": "Francesco Bassano d. J.",
       "year": 1577,
       "dateStr": "c.1577-1686",
       "room": null,
@@ -2054,7 +2054,7 @@
     {
       "id": "bacchanal",
       "title": "Bacchanal",
-      "artist": "Attributed to Francesco Zuccarelli",
+      "artist": "Francesco Zuccarelli",
       "year": 1730,
       "dateStr": "c.1730s-88",
       "room": null,
@@ -2096,7 +2096,7 @@
     {
       "id": "banks-of-a-brook",
       "title": "Banks of a Brook",
-      "artist": "Attributed to Jan Both",
+      "artist": "Jan Both",
       "year": 1641,
       "dateStr": "c.1641-5",
       "room": null,
@@ -2138,7 +2138,7 @@
     {
       "id": "boy-with-a-candle-and-girl-with-a-mousetrap",
       "title": "Boy with a Candle and Girl with a Mousetrap",
-      "artist": "British  School after Cornelis Visscher II",
+      "artist": "British School after Cornelis Visscher II",
       "year": 1650,
       "dateStr": "17c",
       "room": null,
@@ -2250,7 +2250,7 @@
     {
       "id": "cattle",
       "title": "Cattle",
-      "artist": "Manner of Paulus Potter",
+      "artist": "Paulus Potter",
       "year": 1650,
       "dateStr": "17c",
       "room": null,
@@ -2264,7 +2264,7 @@
     {
       "id": "cattle-and-sheep",
       "title": "Cattle and Sheep",
-      "artist": "After Paulus Potter",
+      "artist": "Paulus Potter",
       "year": 1650,
       "dateStr": "17c",
       "room": null,
@@ -2292,7 +2292,7 @@
     {
       "id": "cattle-near-a-river-2",
       "title": "Cattle near a River",
-      "artist": "Manner of Aelbert Cuyp",
+      "artist": "Aelbert Cuyp",
       "year": 1650,
       "dateStr": "17c",
       "room": null,
@@ -2306,7 +2306,7 @@
     {
       "id": "cattle-near-the-maas-with-dordrecht-in-the-distance",
       "title": "Cattle near the Maas, with Dordrecht in the distance",
-      "artist": "After Aelbert Cuyp",
+      "artist": "Aelbert Cuyp",
       "year": 1650,
       "dateStr": "17c",
       "room": null,
@@ -2376,7 +2376,7 @@
     {
       "id": "charity",
       "title": "Charity",
-      "artist": "Studio of Sir Anthony van Dyck",
+      "artist": "Sir Anthony van Dyck",
       "year": 1627,
       "dateStr": "c.1627–1630",
       "room": null,
@@ -2404,7 +2404,7 @@
     {
       "id": "charles-i",
       "title": "Charles I",
-      "artist": "After Sir Anthony van Dyck",
+      "artist": "Sir Anthony van Dyck",
       "year": 1632,
       "dateStr": "1632-86",
       "room": null,
@@ -2418,7 +2418,7 @@
     {
       "id": "charles-ii",
       "title": "Charles II",
-      "artist": "After John Michael Wright",
+      "artist": "John Michael Wright",
       "year": 1665,
       "dateStr": "c.1665-86",
       "room": null,
@@ -2530,7 +2530,7 @@
     {
       "id": "cleopatra",
       "title": "Cleopatra",
-      "artist": "Manner of Guido Cagnacci",
+      "artist": "Cagnacci Guido",
       "year": 1650,
       "dateStr": "17c",
       "room": null,
@@ -2558,7 +2558,7 @@
     {
       "id": "coastal-view",
       "title": "Coastal View",
-      "artist": "After Claude Joseph Vernet",
+      "artist": "Claude-Joseph Vernet",
       "year": 1750,
       "dateStr": "18c",
       "room": null,
@@ -2642,7 +2642,7 @@
     {
       "id": "creation-of-eve",
       "title": "Creation of Eve",
-      "artist": "Carlo Francesco Nuvolone",
+      "artist": "Nuvolone Carlo Francesco",
       "year": 1636,
       "dateStr": "c.1636-62",
       "room": null,
@@ -2698,7 +2698,7 @@
     {
       "id": "cupids-harvesting",
       "title": "Cupids Harvesting",
-      "artist": "Manner of Sir Peter Paul Rubens",
+      "artist": "Sir Peter Paul Rubens",
       "year": 1650,
       "dateStr": "17c",
       "room": null,
@@ -2824,7 +2824,7 @@
     {
       "id": "edward-alleyn-2",
       "title": "Edward Alleyn",
-      "artist": "After William Bright Morris",
+      "artist": "William Bright Morris",
       "year": 1900,
       "dateStr": "c.1900",
       "room": null,
@@ -2880,7 +2880,7 @@
     {
       "id": "evening-landscape",
       "title": "Evening Landscape",
-      "artist": "After Sir Peter Paul Rubens",
+      "artist": "Sir Peter Paul Rubens",
       "year": 1650,
       "dateStr": "17c",
       "room": null,
@@ -2936,7 +2936,7 @@
     {
       "id": "embarkation-of-saint-paula",
       "title": "Embarkation of Saint Paula",
-      "artist": "After Claude",
+      "artist": "Claude",
       "year": 1650,
       "dateStr": "17c",
       "room": null,
@@ -2964,7 +2964,7 @@
     {
       "id": "europa-and-the-bull",
       "title": "Europa and the Bull",
-      "artist": "Workshop of Guido Reni",
+      "artist": "Guido Reni",
       "year": 1640,
       "dateStr": "c.1640",
       "room": null,
@@ -3006,7 +3006,7 @@
     {
       "id": "female-pilgrim",
       "title": "Female Pilgrim",
-      "artist": "Studio of David Teniers the Younger",
+      "artist": "David Teniers the Younger",
       "year": 1650,
       "dateStr": "17c",
       "room": null,
@@ -3020,7 +3020,7 @@
     {
       "id": "ferry-boat",
       "title": "Ferry Boat",
-      "artist": "Francesco G. Casanova",
+      "artist": "Francesco Casanova",
       "year": 1765,
       "dateStr": "1765-9",
       "room": null,
@@ -3104,7 +3104,7 @@
     {
       "id": "fishermen-near-a-rocky-gateway",
       "title": "Fishermen near a Rocky Gateway",
-      "artist": "Follower of Gaspard Dughet",
+      "artist": "Gaspard Dughet",
       "year": 1650,
       "dateStr": "17c",
       "room": null,
@@ -3230,7 +3230,7 @@
     {
       "id": "girls-sewing",
       "title": "Girls Sewing",
-      "artist": "Follower of Pietro Longhi",
+      "artist": "Pietro Longhi",
       "year": 1750,
       "dateStr": "18c",
       "room": null,
@@ -3258,7 +3258,7 @@
     {
       "id": "hagar-and-ishmael",
       "title": "Hagar and Ishmael",
-      "artist": "Follower of Pier Francesco Mola",
+      "artist": "Pier Francesco Mola (Umkreis)",
       "year": 1650,
       "dateStr": "17c",
       "room": null,
@@ -3328,7 +3328,7 @@
     {
       "id": "head-of-a-woman-2",
       "title": "Head of a Woman",
-      "artist": "Flemish School, after Francesco Salviati",
+      "artist": "after Francesco Salviati Flemish School",
       "year": 1650,
       "dateStr": "17c",
       "room": null,
@@ -3356,7 +3356,7 @@
     {
       "id": "hay-harvest",
       "title": "Hay Harvest",
-      "artist": "After Philips Wouwerman",
+      "artist": "Philips Wouwerman",
       "year": 1750,
       "dateStr": "18c",
       "room": null,
@@ -3580,7 +3580,7 @@
     {
       "id": "henry-prince-of-wales",
       "title": "Henry, Prince of Wales",
-      "artist": "After Isaac Oliver",
+      "artist": "Isaac Oliver",
       "year": 1612,
       "dateStr": "c.1612-26",
       "room": null,
@@ -3608,7 +3608,7 @@
     {
       "id": "holy-family",
       "title": "Holy Family",
-      "artist": "Studio of Francesco Albani",
+      "artist": "Francesco Albani",
       "year": 1610,
       "dateStr": "1610-60",
       "room": null,
@@ -3622,7 +3622,7 @@
     {
       "id": "holy-family-2",
       "title": "Holy Family",
-      "artist": "Studio of Bartolomeo Schedoni",
+      "artist": "Bartolomeo Schedoni",
       "year": 1650,
       "dateStr": "17c",
       "room": null,
@@ -3636,7 +3636,7 @@
     {
       "id": "holy-family-3",
       "title": "Holy Family",
-      "artist": "After Nicolas Poussin",
+      "artist": "Poussin Nicolas",
       "year": 1650,
       "dateStr": "17c",
       "room": null,
@@ -3650,7 +3650,7 @@
     {
       "id": "holy-family-5",
       "title": "Holy Family",
-      "artist": "After Federico Barocci",
+      "artist": "Federico Barocci",
       "year": 1577,
       "dateStr": "c.1577-1686",
       "room": null,
@@ -3678,7 +3678,7 @@
     {
       "id": "holy-family-with-saint-john",
       "title": "Holy Family with Saint John",
-      "artist": "Follower of Fra Bartolomeo",
+      "artist": "Fra Bartolomeo",
       "year": 1515,
       "dateStr": "c.1515-20",
       "room": null,
@@ -3692,7 +3692,7 @@
     {
       "id": "horatius-cocles-defending-the-bridge",
       "title": "Horatius Cocles defending the Bridge",
-      "artist": "Charles Le Brun",
+      "artist": "Le Brun Charles",
       "year": 1642,
       "dateStr": "c.1642/43",
       "room": null,
@@ -3706,7 +3706,7 @@
     {
       "id": "inspiration-of-anacreon",
       "title": "Inspiration of Anacreon",
-      "artist": "After Nicolas Poussin",
+      "artist": "Poussin Nicolas",
       "year": 1650,
       "dateStr": "17c",
       "room": null,
@@ -3804,7 +3804,7 @@
     {
       "id": "italian-landscape-2",
       "title": "Italian Landscape",
-      "artist": "Claude Joseph Vernet",
+      "artist": "Claude-Joseph Vernet",
       "year": 1738,
       "dateStr": "1738",
       "room": "Room 2",
@@ -3818,7 +3818,7 @@
     {
       "id": "italian-landscape-with-an-ox-cart",
       "title": "Italian Landscape with an Ox-cart",
-      "artist": "After Jan Both",
+      "artist": "Jan Both",
       "year": 1650,
       "dateStr": "c.1650",
       "room": null,
@@ -3846,7 +3846,7 @@
     {
       "id": "jacob-and-rachel-at-the-well",
       "title": "Jacob and Rachel at the Well",
-      "artist": "Circle of Bartolomé Estéban Murillo",
+      "artist": "Bartolomé Esteban Murillo",
       "year": 1680,
       "dateStr": "c.1680",
       "room": null,
@@ -3930,7 +3930,7 @@
     {
       "id": "john-allen",
       "title": "John Allen",
-      "artist": "After Sir Edwin Landseer",
+      "artist": "Sir Edwin Landseer",
       "year": 1835,
       "dateStr": "1835-43",
       "room": null,
@@ -4056,7 +4056,7 @@
     {
       "id": "judgement-of-paris",
       "title": "Judgement of Paris",
-      "artist": "After Sir Peter Paul Rubens",
+      "artist": "Sir Peter Paul Rubens",
       "year": 1850,
       "dateStr": "19c",
       "room": null,
@@ -4140,7 +4140,7 @@
     {
       "id": "landscape-2",
       "title": "Landscape",
-      "artist": "Follower of Francesco Zuccarelli",
+      "artist": "Francesco Zuccarelli",
       "year": 1750,
       "dateStr": "18c",
       "room": null,
@@ -4224,7 +4224,7 @@
     {
       "id": "landscape-in-the-roman-campagna",
       "title": "Landscape in the Roman Campagna",
-      "artist": "After Gaspard Dughet",
+      "artist": "Gaspard Dughet",
       "year": 1670,
       "dateStr": "After 1670",
       "room": null,
@@ -4252,7 +4252,7 @@
     {
       "id": "landscape-with-a-column-and-figures",
       "title": "Landscape with a Column and Figures",
-      "artist": "Follower of Claude",
+      "artist": "Claude",
       "year": 1650,
       "dateStr": "17c",
       "room": null,
@@ -4476,7 +4476,7 @@
     {
       "id": "landscape-with-shepherds",
       "title": "Landscape with Shepherds",
-      "artist": "After Aelbert Cuyp",
+      "artist": "Aelbert Cuyp",
       "year": 1650,
       "dateStr": "17c",
       "room": null,
@@ -4504,7 +4504,7 @@
     {
       "id": "landscape-with-travellers-resting-known-as-a-roman-road",
       "title": "Landscape with Travellers Resting, known as A Roman Road",
-      "artist": "Nicolas Poussin",
+      "artist": "Poussin Nicolas",
       "year": 1648,
       "dateStr": "1648",
       "room": null,
@@ -4574,7 +4574,7 @@
     {
       "id": "louis-xiv",
       "title": "Louis XIV",
-      "artist": "After Hyacinthe Rigaud",
+      "artist": "Rigaud Hyacinthe",
       "year": 1750,
       "dateStr": "18c",
       "room": null,
@@ -4588,7 +4588,7 @@
     {
       "id": "lucretia",
       "title": "Lucretia",
-      "artist": "After Guido Reni",
+      "artist": "Guido Reni",
       "year": 1650,
       "dateStr": "17c",
       "room": null,
@@ -4630,7 +4630,7 @@
     {
       "id": "madonna",
       "title": "Madonna",
-      "artist": "Follower of Francesco Albani",
+      "artist": "Francesco Albani",
       "year": 1650,
       "dateStr": "17c",
       "room": null,
@@ -4672,7 +4672,7 @@
     {
       "id": "madonna-and-child-with-saint-john",
       "title": "Madonna and Child with Saint John",
-      "artist": "After Annibale Carracci",
+      "artist": "Annibale Carracci",
       "year": 1650,
       "dateStr": "17c",
       "room": null,
@@ -4686,7 +4686,7 @@
     {
       "id": "madonna-and-child-with-saint-john-2",
       "title": "Madonna and Child with Saint John",
-      "artist": "After Andrea del Sarto",
+      "artist": "Andrea del Sarto",
       "year": 1550,
       "dateStr": "16c",
       "room": null,
@@ -4714,7 +4714,7 @@
     {
       "id": "magdalen",
       "title": "Magdalene",
-      "artist": "After Annibale Carracci",
+      "artist": "Annibale Carracci",
       "year": 1599,
       "dateStr": "1599-c.1625",
       "room": null,
@@ -4742,7 +4742,7 @@
     {
       "id": "man-frowning",
       "title": "Man Frowning",
-      "artist": "Flemish School",
+      "artist": "school flemish",
       "year": 1650,
       "dateStr": "17c",
       "room": null,
@@ -4826,7 +4826,7 @@
     {
       "id": "mater-dolorosa",
       "title": "Mater Dolorosa",
-      "artist": "After Guido Reni",
+      "artist": "Guido Reni",
       "year": 1650,
       "dateStr": "17c",
       "room": null,
@@ -4840,7 +4840,7 @@
     {
       "id": "mater-dolorosa-2",
       "title": "Mater Dolorosa",
-      "artist": "After Carlo Dolci",
+      "artist": "Carlo Dolci",
       "year": 1650,
       "dateStr": "17c",
       "room": null,
@@ -4952,7 +4952,7 @@
     {
       "id": "monks-fishing",
       "title": "Monks Fishing",
-      "artist": "Follower of Salvator Rosa",
+      "artist": "Salvator Rosa",
       "year": 1650,
       "dateStr": "17c",
       "room": null,
@@ -4966,7 +4966,7 @@
     {
       "id": "mountainous-landscape",
       "title": "Mountainous Landscape",
-      "artist": "Follower of Gaspard Dughet",
+      "artist": "Gaspard Dughet",
       "year": 1650,
       "dateStr": "17c",
       "room": null,
@@ -5176,7 +5176,7 @@
     {
       "id": "nymph-and-satyr",
       "title": "Nymph and Satyr",
-      "artist": "Manner of Nicolas Poussin",
+      "artist": "Poussin Nicolas",
       "year": 1650,
       "dateStr": "17c",
       "room": null,
@@ -5218,7 +5218,7 @@
     {
       "id": "old-woman-eating",
       "title": "Old Woman Eating",
-      "artist": "Attributed to Quiringh van Brekelenkam",
+      "artist": "Quiringh van Brekelenkam",
       "year": 1650,
       "dateStr": "c.1650",
       "room": "Room 10",
@@ -5302,7 +5302,7 @@
     {
       "id": "peasants-and-cattle",
       "title": "Peasants and Cattle",
-      "artist": "Dirck van (den) Bergen",
+      "artist": "Dirck van Bergen",
       "year": 1650,
       "dateStr": "17c",
       "room": null,
@@ -5344,7 +5344,7 @@
     {
       "id": "peasants-drinking",
       "title": "Peasants Drinking",
-      "artist": "After Adriaen van Ostade",
+      "artist": "Adriaen van Ostade",
       "year": 1750,
       "dateStr": "18c",
       "room": null,
@@ -5400,7 +5400,7 @@
     {
       "id": "piet%C3%A0",
       "title": "Pietà",
-      "artist": "After Annibale Carracci",
+      "artist": "Annibale Carracci",
       "year": 1650,
       "dateStr": "17c",
       "room": null,
@@ -5428,7 +5428,7 @@
     {
       "id": "pilgrim",
       "title": "Pilgrim",
-      "artist": "Studio of David Teniers the Younger",
+      "artist": "David Teniers the Younger",
       "year": 1650,
       "dateStr": "17c",
       "room": null,
@@ -5512,7 +5512,7 @@
     {
       "id": "portrait-of-a-lady-3",
       "title": "Portrait of a Lady",
-      "artist": "Manner of Sir Anthony van Dyck",
+      "artist": "Sir Anthony van Dyck",
       "year": 1640,
       "dateStr": "c.1640s",
       "room": null,
@@ -5680,7 +5680,7 @@
     {
       "id": "portrait-of-a-man",
       "title": "Portrait of a Man",
-      "artist": "Studio of Hyacinthe Rigaud",
+      "artist": "Rigaud Hyacinthe",
       "year": 1750,
       "dateStr": "18c",
       "room": null,
@@ -5736,7 +5736,7 @@
     {
       "id": "portrait-of-a-man-5",
       "title": "Portrait of a Man",
-      "artist": "Attributed to George Knapton",
+      "artist": "George Knapton",
       "year": 1740,
       "dateStr": "c.1740-5",
       "room": "Room 10",
@@ -5834,7 +5834,7 @@
     {
       "id": "portrait-of-a-man-12",
       "title": "Portrait of a Man",
-      "artist": "Attributed to Isaac Fuller",
+      "artist": "Isaac Fuller",
       "year": 1645,
       "dateStr": "1645-50",
       "room": "Room 10",
@@ -5876,7 +5876,7 @@
     {
       "id": "portrait-of-a-physician",
       "title": "Portrait of a Physician",
-      "artist": "Attributed to Mary Beale",
+      "artist": "Mary Beale",
       "year": 1650,
       "dateStr": "17c",
       "room": "Room 10",
@@ -5946,7 +5946,7 @@
     {
       "id": "portrait-of-an-unknown-lady",
       "title": "Portrait of an Unknown Lady",
-      "artist": "Circle of Annibale Carracci",
+      "artist": "Annibale Carracci",
       "year": 1550,
       "dateStr": "16c",
       "room": null,
@@ -5960,7 +5960,7 @@
     {
       "id": "putti-in-a-landscape",
       "title": "Putti in a Landscape",
-      "artist": "Follower of Nicolas Poussin",
+      "artist": "Poussin Nicolas",
       "year": 1650,
       "dateStr": "17c",
       "room": null,
@@ -5974,7 +5974,7 @@
     {
       "id": "putti-a-ceiling-decoration",
       "title": "Putti: a ceiling decoration",
-      "artist": "Manner of Sir Peter Paul Rubens",
+      "artist": "Sir Peter Paul Rubens",
       "year": 1660,
       "dateStr": "c. 1660s",
       "room": null,
@@ -6002,7 +6002,7 @@
     {
       "id": "queen-henrietta-maria",
       "title": "Queen Henrietta Maria",
-      "artist": "After Sir Anthony van Dyck",
+      "artist": "Sir Anthony van Dyck",
       "year": 1636,
       "dateStr": "c.1636-86",
       "room": null,
@@ -6016,7 +6016,7 @@
     {
       "id": "queen-henrietta-maria-2",
       "title": "Queen Henrietta Maria",
-      "artist": "After Sir Anthony van Dyck",
+      "artist": "Sir Anthony van Dyck",
       "year": 1632,
       "dateStr": "c.1632-86",
       "room": null,
@@ -6044,7 +6044,7 @@
     {
       "id": "rape-of-europa",
       "title": "Europa and the Bull",
-      "artist": "After Titian",
+      "artist": "Titian",
       "year": 1650,
       "dateStr": "17c",
       "room": null,
@@ -6086,7 +6086,7 @@
     {
       "id": "rest-on-the-flight",
       "title": "Rest on the Flight",
-      "artist": "Follower of Pietro Francesco Mola",
+      "artist": "Circle of Pietro Francesco Mola",
       "year": 1650,
       "dateStr": "17c",
       "room": null,
@@ -6100,7 +6100,7 @@
     {
       "id": "rest-on-the-flight-into-egypt",
       "title": "Rest on the Flight into Egypt",
-      "artist": "After Claude",
+      "artist": "Claude",
       "year": 1676,
       "dateStr": "After 1676",
       "room": null,
@@ -6198,7 +6198,7 @@
     {
       "id": "river-scene-by-moonlight",
       "title": "River Scene by Moonlight",
-      "artist": "After Aert van der Neer",
+      "artist": "Aert van der Neer",
       "year": 1650,
       "dateStr": "17c",
       "room": null,
@@ -6268,7 +6268,7 @@
     {
       "id": "ruins-with-cattle-and-figures",
       "title": "Ruins, with Cattle and Figures",
-      "artist": "Follower of Nicolaes Berchem",
+      "artist": "Nicolaes Berchem",
       "year": 1650,
       "dateStr": "17c",
       "room": null,
@@ -6310,7 +6310,7 @@
     {
       "id": "saint-barbara",
       "title": "Saint Barbara",
-      "artist": "After Titian",
+      "artist": "Titian",
       "year": 1650,
       "dateStr": "17c",
       "room": null,
@@ -6352,7 +6352,7 @@
     {
       "id": "saint-cecilia",
       "title": "Saint Cecilia",
-      "artist": "Attributed to Carlo Bononi",
+      "artist": "Carlo Bononi",
       "year": 1630,
       "dateStr": "c. 1630",
       "room": null,
@@ -6394,7 +6394,7 @@
     {
       "id": "saint-francis-in-meditation",
       "title": "Saint Francis in Meditation",
-      "artist": "Attributed to Lodovico Carracci",
+      "artist": "Lodovico Carracci",
       "year": 1580,
       "dateStr": "Early 1580s",
       "room": null,
@@ -6422,7 +6422,7 @@
     {
       "id": "saint-jerome",
       "title": "Saint Jerome",
-      "artist": "After Flaminio Torre",
+      "artist": "Flaminio Torre",
       "year": 1650,
       "dateStr": "17c",
       "room": null,
@@ -6464,7 +6464,7 @@
     {
       "id": "saint-lawrence",
       "title": "Saint Lawrence",
-      "artist": "Roman School",
+      "artist": "school roman",
       "year": 1650,
       "dateStr": "17c",
       "room": null,
@@ -6478,7 +6478,7 @@
     {
       "id": "saint-martina-calling-down-lightning-on-the-idols",
       "title": "Saint Martina calling down Lightning on the Idols",
-      "artist": "After Pietro da Cortona",
+      "artist": "Pietro da Cortona",
       "year": 1640,
       "dateStr": "1640s",
       "room": null,
@@ -6562,7 +6562,7 @@
     {
       "id": "saints-peter-and-francis-of-assisi",
       "title": "Saints Peter and Francis of Assisi",
-      "artist": "Circle of Lodovico Carracci",
+      "artist": "Lodovico Carracci",
       "year": 1600,
       "dateStr": "c.1600",
       "room": null,
@@ -6576,7 +6576,7 @@
     {
       "id": "salmacis-and-hermaphrodite",
       "title": "Salmacis and Hermaphrodite",
-      "artist": "Studio of Francesco Albani",
+      "artist": "Francesco Albani",
       "year": 1650,
       "dateStr": "17c",
       "room": null,
@@ -6590,7 +6590,7 @@
     {
       "id": "salvator-mundi",
       "title": "Salvator Mundi",
-      "artist": "Italian School (Bolognese or Florentine)",
+      "artist": "Italian School",
       "year": 1650,
       "dateStr": "17c",
       "room": null,
@@ -6758,7 +6758,7 @@
     {
       "id": "seaport-at-sunrise-morning",
       "title": "Seaport at Sunrise (Morning)",
-      "artist": "Studio of Claude Joseph Vernet",
+      "artist": "Claude-Joseph Vernet",
       "year": 1760,
       "dateStr": "c.1760-1800",
       "room": null,
@@ -6772,7 +6772,7 @@
     {
       "id": "seaport-at-sunset-evening",
       "title": "Seaport at Sunset (Evening)",
-      "artist": "Studio of Claude Joseph Vernet",
+      "artist": "Claude-Joseph Vernet",
       "year": 1760,
       "dateStr": "c.1760-1800",
       "room": null,
@@ -6800,7 +6800,7 @@
     {
       "id": "self-portrait-2",
       "title": "Self-portrait",
-      "artist": "Studio of Sir Joshua Reynolds",
+      "artist": "Sir Joshua Reynolds",
       "year": 1788,
       "dateStr": "c.1788",
       "room": null,
@@ -7038,7 +7038,7 @@
     {
       "id": "sleeping-venus",
       "title": "Sleeping Venus",
-      "artist": "After Titian",
+      "artist": "Titian",
       "year": 1650,
       "dateStr": "17c",
       "room": null,
@@ -7080,7 +7080,7 @@
     {
       "id": "soldiers-on-the-march",
       "title": "Soldiers on the March",
-      "artist": "After Antoine Watteau",
+      "artist": "Watteau Antoine",
       "year": 1750,
       "dateStr": "18c",
       "room": null,
@@ -7094,7 +7094,7 @@
     {
       "id": "south-aisle-of-the-church-of-st-bavo-haarlem",
       "title": "South Aisle of the Church of St Bavo, Haarlem",
-      "artist": "After Pieter Saenredam",
+      "artist": "Pieter Saenredam",
       "year": 1650,
       "dateStr": "17c",
       "room": null,
@@ -7108,7 +7108,7 @@
     {
       "id": "spring",
       "title": "Spring",
-      "artist": "After Francesco Bassano",
+      "artist": "Francesco Bassano d. J.",
       "year": 1577,
       "dateStr": "c.1577-1686",
       "room": null,
@@ -7136,7 +7136,7 @@
     {
       "id": "st-jerome",
       "title": "St Jerome",
-      "artist": "Monogrammist I.C.",
+      "artist": "Monogrammist S",
       "year": 1550,
       "dateStr": "16c",
       "room": null,
@@ -7150,7 +7150,7 @@
     {
       "id": "saint-sebastian-3",
       "title": "Saint Sebastian",
-      "artist": "Italian School (Roman)",
+      "artist": "Italian School",
       "year": 1650,
       "dateStr": "17c",
       "room": null,
@@ -7220,7 +7220,7 @@
     {
       "id": "still-life-with-fruit-and-a-bird",
       "title": "Still Life with Fruit and a Bird",
-      "artist": "Follower of Jan Pauwel Gillemans the Elder",
+      "artist": "the Elder Gillemans Jan Pauwel I",
       "year": 1670,
       "dateStr": "c.1670s",
       "room": null,
@@ -7234,7 +7234,7 @@
     {
       "id": "still-life-with-fruit-and-a-squirrel",
       "title": "Still Life with Fruit and a Squirrel",
-      "artist": "Follower of Jan Pauwel Gillemans the Elder",
+      "artist": "the Elder Gillemans Jan Pauwel I",
       "year": 1670,
       "dateStr": "Possibly 1670s",
       "room": null,
@@ -7248,7 +7248,7 @@
     {
       "id": "still-life-with-fruit-flowers-and-crayfish",
       "title": "Still Life with Fruit, Flowers and Crayfish",
-      "artist": "Follower of Jan Pauwel Gillemans the Elder",
+      "artist": "the Elder Gillemans Jan Pauwel I",
       "year": 1686,
       "dateStr": "Before 1686",
       "room": null,
@@ -7262,7 +7262,7 @@
     {
       "id": "summer",
       "title": "Summer",
-      "artist": "After Francesco Bassano",
+      "artist": "Francesco Bassano d. J.",
       "year": 1577,
       "dateStr": "c.1577-1686",
       "room": null,
@@ -7276,7 +7276,7 @@
     {
       "id": "sunset-landscape-with-a-shepherd-and-his-flock",
       "title": "Sunset Landscape with a Shepherd and his Flock",
-      "artist": "Follower of Sir Peter Paul Rubens (and Anthony van Dyck?)",
+      "artist": "Sir Peter Paul Rubens",
       "year": 1650,
       "dateStr": "17c",
       "room": null,
@@ -7332,7 +7332,7 @@
     {
       "id": "susanna-and-the-elders-2",
       "title": "Susanna and the Elders",
-      "artist": "After Sir Peter Lely",
+      "artist": "Sir Peter Lely",
       "year": 1650,
       "dateStr": "c.1650",
       "room": null,
@@ -7346,7 +7346,7 @@
     {
       "id": "the-adoration-of-the-magi",
       "title": "The Adoration of the Magi",
-      "artist": "After Nicolas Poussin",
+      "artist": "Poussin Nicolas",
       "year": 1650,
       "dateStr": "17c",
       "room": null,
@@ -7360,7 +7360,7 @@
     {
       "id": "the-adoration-of-the-magi-2",
       "title": "The Adoration of the Magi",
-      "artist": "Bartolomé Estéban Murillo",
+      "artist": "Bartolomé Esteban Murillo",
       "year": 1660,
       "dateStr": "1660-5",
       "room": "Room 1",
@@ -7374,7 +7374,7 @@
     {
       "id": "the-age-of-bronze",
       "title": "The Age of Bronze",
-      "artist": "After Pietro da Cortona",
+      "artist": "Pietro da Cortona",
       "year": 1640,
       "dateStr": "Probably c.1640",
       "room": null,
@@ -7416,7 +7416,7 @@
     {
       "id": "the-campo-vaccino-rome",
       "title": "The Campo Vaccino, Rome",
-      "artist": "Dutch Artist after Claude Lorrain, with figures by Andries Both",
+      "artist": "with figures by Andries Both Dutch Artist after Claude Lorrain",
       "year": 1635,
       "dateStr": "c.1635-41",
       "room": null,
@@ -7444,7 +7444,7 @@
     {
       "id": "the-chimney-sweeper",
       "title": "The Chimney Sweeper",
-      "artist": "Studio of David Teniers the Younger",
+      "artist": "David Teniers the Younger",
       "year": 1650,
       "dateStr": "c.1650-80",
       "room": null,
@@ -7500,7 +7500,7 @@
     {
       "id": "the-entombment-of-christ",
       "title": "The Entombment of Christ",
-      "artist": "Attributed to Alessandro Magnasco",
+      "artist": "Alessandro Magnasco",
       "year": 1725,
       "dateStr": "c.1725-7",
       "room": null,
@@ -7514,7 +7514,7 @@
     {
       "id": "the-entrance-to-a-palace",
       "title": "The Entrance to a Palace",
-      "artist": "Dirck van Delen",
+      "artist": "Dirck Delen",
       "year": 1654,
       "dateStr": "1654",
       "room": null,
@@ -7528,7 +7528,7 @@
     {
       "id": "the-fall-of-man",
       "title": "The Fall of Man",
-      "artist": "Workshop of Jan (Sanders) van Hemessen",
+      "artist": "Jan van Hemessen",
       "year": 1520,
       "dateStr": "1520-30",
       "room": null,
@@ -7584,7 +7584,7 @@
     {
       "id": "the-holy-family",
       "title": "The Holy Family",
-      "artist": "After Sir Peter Paul Rubens",
+      "artist": "Sir Peter Paul Rubens",
       "year": 1650,
       "dateStr": "17c",
       "room": null,
@@ -7598,7 +7598,7 @@
     {
       "id": "the-immaculate-conception-of-the-virgin",
       "title": "The Immaculate Conception of the Virgin",
-      "artist": "Attributed to the Workshop of Bartolomé Estéban Murillo",
+      "artist": "Bartolomé Esteban Murillo",
       "year": 1660,
       "dateStr": "1660-70",
       "room": "Room 1",
@@ -7612,7 +7612,7 @@
     {
       "id": "the-infant-christ-as-the-good-shepherd",
       "title": "The Infant Christ as the Good Shepherd",
-      "artist": "After Bartolomé Estéban Murillo",
+      "artist": "Bartolomé Esteban Murillo",
       "year": 1750,
       "dateStr": "18c",
       "room": null,
@@ -7626,7 +7626,7 @@
     {
       "id": "the-infant-christ-asleep",
       "title": "The Infant Christ Asleep",
-      "artist": "Circle of Bartolomé Estéban Murillo",
+      "artist": "Bartolomé Esteban Murillo",
       "year": 1700,
       "dateStr": "c.1700",
       "room": null,
@@ -7640,7 +7640,7 @@
     {
       "id": "the-infant-christ-bearing-the-instruments-of-the-passion",
       "title": "The Infant Christ Bearing the Instruments of the Passion",
-      "artist": "Possibly Mexican School, after Hieronymous Wierix",
+      "artist": "after Hieronymous Wierix Possibly Mexican School",
       "year": 1650,
       "dateStr": "17c",
       "room": "Room 1",
@@ -7654,7 +7654,7 @@
     {
       "id": "the-infant-saint-john",
       "title": "The Infant Saint John",
-      "artist": "Follower of Bartolomé Estéban Murillo",
+      "artist": "Bartolomé Esteban Murillo",
       "year": 1680,
       "dateStr": "1680-1700",
       "room": null,
@@ -7682,7 +7682,7 @@
     {
       "id": "prince-baltasar-carlos-on-horseback",
       "title": "Prince Baltasar Carlos on Horseback",
-      "artist": "Workshop of Diego Velázquez",
+      "artist": "Diego Velázquez",
       "year": 1635,
       "dateStr": "c.1635",
       "room": null,
@@ -7696,7 +7696,7 @@
     {
       "id": "the-infants-christ-and-saint-john-the-baptist",
       "title": "The Infants Christ and Saint John the Baptist",
-      "artist": "After Sir Anthony van Dyck",
+      "artist": "Sir Anthony van Dyck",
       "year": 1638,
       "dateStr": "After 1638/40-86",
       "room": null,
@@ -7794,7 +7794,7 @@
     {
       "id": "the-massacre-of-the-innocents",
       "title": "The Massacre of the Innocents",
-      "artist": "Charles Le Brun",
+      "artist": "Le Brun Charles",
       "year": 1660,
       "dateStr": "mid-1660s",
       "room": null,
@@ -7836,7 +7836,7 @@
     {
       "id": "the-mystic-marriage-of-saint-catherine",
       "title": "The Mystic Marriage of Saint Catherine",
-      "artist": "Follower of Paolo Veronese",
+      "artist": "Manner of Paolo Veronese",
       "year": 1650,
       "dateStr": "17c",
       "room": null,
@@ -7850,7 +7850,7 @@
     {
       "id": "the-nurture-of-bacchus",
       "title": "The Nurture of Bacchus",
-      "artist": "After Nicolas Poussin",
+      "artist": "Poussin Nicolas",
       "year": 1650,
       "dateStr": "17c",
       "room": "Room 12",
@@ -7864,7 +7864,7 @@
     {
       "id": "the-nurture-of-jupiter",
       "title": "The Nurture of Jupiter",
-      "artist": "Nicolas Poussin",
+      "artist": "Poussin Nicolas",
       "year": 1636,
       "dateStr": "c.1636-7",
       "room": null,
@@ -7934,7 +7934,7 @@
     {
       "id": "the-return-of-the-holy-family-from-egypt",
       "title": "The Return of the Holy Family from Egypt",
-      "artist": "Nicolas Poussin",
+      "artist": "Poussin Nicolas",
       "year": 1628,
       "dateStr": "c.1628-38",
       "room": "Room 11",
@@ -8046,7 +8046,7 @@
     {
       "id": "the-seven-corporal-works-of-mercy",
       "title": "The Seven Corporal Works of Mercy",
-      "artist": "Studio of David Teniers the younger",
+      "artist": "David Teniers the Younger",
       "year": 1642,
       "dateStr": "c.1642-3",
       "room": null,
@@ -8088,7 +8088,7 @@
     {
       "id": "the-transfiguration",
       "title": "The Transfiguration",
-      "artist": "After Raphael",
+      "artist": "Raphael",
       "year": 1520,
       "dateStr": "c.1520-99",
       "room": null,
@@ -8102,7 +8102,7 @@
     {
       "id": "the-translation-of-saint-rita-of-cascia",
       "title": "The Translation of Saint Rita of Cascia",
-      "artist": "Nicolas Poussin",
+      "artist": "Poussin Nicolas",
       "year": 1630,
       "dateStr": "Mid-1630s",
       "room": "Room 11",
@@ -8340,7 +8340,7 @@
     {
       "id": "two-child-angels-contemplating-the-crown-of-thorns",
       "title": "Two Child Angels Contemplating the Crown of Thorns",
-      "artist": "Follower of Bartolomé Estéban Murillo",
+      "artist": "Bartolomé Esteban Murillo",
       "year": 1680,
       "dateStr": "1680-1700",
       "room": null,
@@ -8396,7 +8396,7 @@
     {
       "id": "time-truth-and-other-emblematical-figures",
       "title": "Unidentified allegorical scene",
-      "artist": "British or Flemish School (Tobias Verhaecht?)",
+      "artist": "Flemish or British School",
       "year": 1550,
       "dateStr": "16c",
       "room": null,
@@ -8424,7 +8424,7 @@
     {
       "id": "vase-with-flowers-2",
       "title": "Vase with Flowers",
-      "artist": "Follower of Jan van Huysum",
+      "artist": "Jan van Huysum",
       "year": 1750,
       "dateStr": "18c",
       "room": null,
@@ -8438,7 +8438,7 @@
     {
       "id": "venus-and-adonis",
       "title": "Venus and Adonis",
-      "artist": "Workshop of Titian",
+      "artist": "Titian",
       "year": 1554,
       "dateStr": "c.1554-76",
       "room": null,
@@ -8480,7 +8480,7 @@
     {
       "id": "venus-and-cupid-warming-themselves-venus-frigida",
       "title": "Venus and Cupid warming themselves (Venus frigida)",
-      "artist": "Follower of Sir Peter Paul Rubens",
+      "artist": "Sir Peter Paul Rubens",
       "year": 1610,
       "dateStr": "c.1610-20",
       "room": null,
@@ -8494,7 +8494,7 @@
     {
       "id": "venus-and-mercury",
       "title": "Venus and Mercury",
-      "artist": "Nicolas Poussin",
+      "artist": "Poussin Nicolas",
       "year": 1626,
       "dateStr": "c.1626-7",
       "room": "Room 11",
@@ -8508,7 +8508,7 @@
     {
       "id": "venus-gathering-apples",
       "title": "Venus Gathering Apples",
-      "artist": "Roman School",
+      "artist": "school roman",
       "year": 1650,
       "dateStr": "17c",
       "room": null,
@@ -8564,7 +8564,7 @@
     {
       "id": "view-on-the-maas",
       "title": "View on the Maas",
-      "artist": "Manner of Aelbert Cuyp",
+      "artist": "Aelbert Cuyp",
       "year": 1750,
       "dateStr": "18c",
       "room": null,
@@ -8620,7 +8620,7 @@
     {
       "id": "village-near-a-lake",
       "title": "Village near a Lake",
-      "artist": "Follower of Gaspard Dughet",
+      "artist": "Gaspard Dughet",
       "year": 1650,
       "dateStr": "17c",
       "room": null,
@@ -8634,7 +8634,7 @@
     {
       "id": "virgin-and-child",
       "title": "Virgin and Child",
-      "artist": "After Sir Peter Paul Rubens",
+      "artist": "Sir Peter Paul Rubens",
       "year": 1750,
       "dateStr": "18c",
       "room": null,
@@ -8802,7 +8802,7 @@
     {
       "id": "winter",
       "title": "Winter",
-      "artist": "After Francesco Bassano",
+      "artist": "Francesco Bassano d. J.",
       "year": 1577,
       "dateStr": "c.1577-1686",
       "room": null,
@@ -8872,7 +8872,7 @@
     {
       "id": "salvator-mundi-2",
       "title": "Salvator Mundi",
-      "artist": "Workshop of Joos van Cleve",
+      "artist": "Joos van Cleve",
       "year": 1512,
       "dateStr": "c. 1512 - c. 1550",
       "room": "Room 5",

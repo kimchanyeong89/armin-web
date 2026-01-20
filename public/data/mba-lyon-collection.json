@@ -54,7 +54,7 @@
     {
       "id": "lyon-3",
       "title": "Portrait d'un maréchal de France",
-      "artist": "Mignard Nicolas",
+      "artist": "Nicolas Mignard",
       "year": null,
       "imageUrl": "https://d2lkryo36aywim.cloudfront.net/eyJidWNrZXQiOiJvcGFjLXByb2QtbWVkaWEiLCJrZXkiOiJtYmFseW9uXC9seW9uYmFvcGFjd2ViXC9mNjlmMDg2OC1hNzBlLTRmODUtOGViMy00NGY5ZDYzN2JkMjUuanBnIiwiZWRpdHMiOnsicmVzaXplIjp7IndpZHRoIjo3MjAsImhlaWdodCI6NzIwLCJmaXQiOiJpbnNpZGUifX19",
       "medium": "Painting",
@@ -82,7 +82,7 @@
     {
       "id": "lyon-5",
       "title": "Paysage avec Agar et l'ange",
-      "artist": "Dughet Gaspard",
+      "artist": "Gaspard Dughet",
       "year": null,
       "imageUrl": "https://d2lkryo36aywim.cloudfront.net/eyJidWNrZXQiOiJvcGFjLXByb2QtbWVkaWEiLCJrZXkiOiJtYmFseW9uXC9seW9uYmFvcGFjd2ViXC8wMWJjOWM1Zi1mZjFjLTQwMGItYjBiNi0yNjcyZTIzMmMyYmYuanBnIiwiZWRpdHMiOnsicmVzaXplIjp7IndpZHRoIjo3MjAsImhlaWdodCI6NzIwLCJmaXQiOiJpbnNpZGUifX19",
       "medium": "Painting",
@@ -110,7 +110,7 @@
     {
       "id": "lyon-7",
       "title": "Le Philosophe",
-      "artist": "Gillet Roger-Edgar",
+      "artist": "Roger Edgar GILLET",
       "year": null,
       "imageUrl": "https://d2lkryo36aywim.cloudfront.net/eyJidWNrZXQiOiJvcGFjLXByb2QtbWVkaWEiLCJrZXkiOiJtYmFseW9uXC9seW9uYmFvcGFjd2ViXC82MTFiZDA1ZC0xMjcyLTRiMjEtODkzZi04YzdjM2FmNjExY2IuanBnIiwiZWRpdHMiOnsicmVzaXplIjp7IndpZHRoIjo3MjAsImhlaWdodCI6NzIwLCJmaXQiOiJpbnNpZGUifX19",
       "medium": "Painting",
@@ -180,7 +180,7 @@
     {
       "id": "lyon-12",
       "title": "L'Entrée de la Grande Rue à Argenteuil, l'hiver",
-      "artist": "Monet Claude",
+      "artist": "Claude Monet",
       "year": "1997",
       "imageUrl": "https://d2lkryo36aywim.cloudfront.net/eyJidWNrZXQiOiJvcGFjLXByb2QtbWVkaWEiLCJrZXkiOiJtYmFseW9uXC9seW9uYmFvcGFjd2ViXC81MTQ0ZjgwYy0zYjQ2LTQ4M2YtODUxNi0wMTU1NmI4YWQ5ZTYuanBnIiwiZWRpdHMiOnsicmVzaXplIjp7IndpZHRoIjo3MjAsImhlaWdodCI6NzIwLCJmaXQiOiJpbnNpZGUifX19",
       "medium": "Painting",
@@ -278,7 +278,7 @@
     {
       "id": "lyon-19",
       "title": "La Crucifixion",
-      "artist": "Vouet Simon",
+      "artist": "Simon Vouet",
       "year": "1617",
       "imageUrl": "https://d2lkryo36aywim.cloudfront.net/eyJidWNrZXQiOiJvcGFjLXByb2QtbWVkaWEiLCJrZXkiOiJtYmFseW9uXC9seW9uYmFvcGFjd2ViXC8zNGMyODM0NS01MTE2LTQ2YTUtOWMyNi0yOTViM2Q0YjFkODAuanBnIiwiZWRpdHMiOnsicmVzaXplIjp7IndpZHRoIjo3MjAsImhlaWdodCI6NzIwLCJmaXQiOiJpbnNpZGUifX19",
       "medium": "Painting",
@@ -306,7 +306,7 @@
     {
       "id": "lyon-21",
       "title": "L'Arbre foudroyé",
-      "artist": "Giroux André",
+      "artist": "André GIROUX",
       "year": "1975",
       "imageUrl": "https://d2lkryo36aywim.cloudfront.net/eyJidWNrZXQiOiJvcGFjLXByb2QtbWVkaWEiLCJrZXkiOiJtYmFseW9uXC9seW9uYmFvcGFjd2ViXC84MWQ4ZGEzOS03NTFiLTQ1YTYtODdjZi01Zjg0M2Q1ZTllMjcuanBnIiwiZWRpdHMiOnsicmVzaXplIjp7IndpZHRoIjo3MjAsImhlaWdodCI6NzIwLCJmaXQiOiJpbnNpZGUifX19",
       "medium": "Painting",
@@ -390,7 +390,7 @@
     {
       "id": "lyon-27",
       "title": "L'Embarquement de sainte Paule à Ostie",
-      "artist": "Lorrain Claude",
+      "artist": "Claude Lorrain",
       "year": null,
       "imageUrl": "https://d2lkryo36aywim.cloudfront.net/eyJidWNrZXQiOiJvcGFjLXByb2QtbWVkaWEiLCJrZXkiOiJtYmFseW9uXC9seW9uYmFvcGFjd2ViXC84NTk0MWIyMi1kZmM5LTQwOTItODVkOS1jNzdlMmE1MGIzYWIuanBnIiwiZWRpdHMiOnsicmVzaXplIjp7IndpZHRoIjo3MjAsImhlaWdodCI6NzIwLCJmaXQiOiJpbnNpZGUifX19",
       "medium": "Painting",
@@ -404,7 +404,7 @@
     {
       "id": "lyon-28",
       "title": "Paysage avec bergers",
-      "artist": "Dughet Gaspard",
+      "artist": "Gaspard Dughet",
       "year": "1981",
       "imageUrl": "https://d2lkryo36aywim.cloudfront.net/eyJidWNrZXQiOiJvcGFjLXByb2QtbWVkaWEiLCJrZXkiOiJtYmFseW9uXC9seW9uYmFvcGFjd2ViXC8yNTgyYjIwNC0zMjRlLTRlOWEtOGYwNS02ZGMyMDhjMmQyOTIuanBnIiwiZWRpdHMiOnsicmVzaXplIjp7IndpZHRoIjo3MjAsImhlaWdodCI6NzIwLCJmaXQiOiJpbnNpZGUifX19",
       "medium": "Painting",
@@ -418,7 +418,7 @@
     {
       "id": "lyon-29",
       "title": "Jeune femme à sa toilette - Vanité",
-      "artist": "Régnier Nicolas",
+      "artist": "Nicolas Régnier | 853.6",
       "year": "1976",
       "imageUrl": "https://d2lkryo36aywim.cloudfront.net/eyJidWNrZXQiOiJvcGFjLXByb2QtbWVkaWEiLCJrZXkiOiJtYmFseW9uXC9seW9uYmFvcGFjd2ViXC8yNGVlZWMyZC1jZWMzLTQ4OGEtYTA0Mi00YzBhZjY5YzNkMmYuanBnIiwiZWRpdHMiOnsicmVzaXplIjp7IndpZHRoIjo3MjAsImhlaWdodCI6NzIwLCJmaXQiOiJpbnNpZGUifX19",
       "medium": "Painting",
@@ -502,7 +502,7 @@
     {
       "id": "lyon-35",
       "title": "Cavalier arabe - Esquisse",
-      "artist": "Bonnat Léon",
+      "artist": "Léon BONNAT",
       "year": "1833",
       "imageUrl": "https://d2lkryo36aywim.cloudfront.net/eyJidWNrZXQiOiJvcGFjLXByb2QtbWVkaWEiLCJrZXkiOiJtYmFseW9uXC9seW9uYmFvcGFjd2ViXC9iZTgyODEyOC05MzAxLTRlYjQtOTM4Yi05YjZhNGYwZGE4MjMuanBnIiwiZWRpdHMiOnsicmVzaXplIjp7IndpZHRoIjo3MjAsImhlaWdodCI6NzIwLCJmaXQiOiJpbnNpZGUifX19",
       "medium": "Painting",
@@ -558,7 +558,7 @@
     {
       "id": "lyon-39",
       "title": "Composition abstraite",
-      "artist": "Gillet Roger-Edgar",
+      "artist": "Roger Edgar GILLET",
       "year": "2021",
       "imageUrl": "https://d2lkryo36aywim.cloudfront.net/eyJidWNrZXQiOiJvcGFjLXByb2QtbWVkaWEiLCJrZXkiOiJtYmFseW9uXC9seW9uYmFvcGFjd2ViXC9lMmNkYjAwZi00YjcyLTRkYzktYjA4My04ODA5NmMyYjk3M2QuanBnIiwiZWRpdHMiOnsicmVzaXplIjp7IndpZHRoIjo3MjAsImhlaWdodCI6NzIwLCJmaXQiOiJpbnNpZGUifX19",
       "medium": "Painting",
@@ -614,7 +614,7 @@
     {
       "id": "lyon-43",
       "title": "N°18-1963 Feu",
-      "artist": "Bergman Anna-Eva",
+      "artist": "Anna-Eva BERGMAN",
       "year": null,
       "imageUrl": "https://d2lkryo36aywim.cloudfront.net/eyJidWNrZXQiOiJvcGFjLXByb2QtbWVkaWEiLCJrZXkiOiJtYmFseW9uXC9seW9uYmFvcGFjd2ViXC85Y2Q3MDk4OC01OWI4LTRkMzItYWJkMC00NzM2MzliY2YwZWYuanBnIiwiZWRpdHMiOnsicmVzaXplIjp7IndpZHRoIjo3MjAsImhlaWdodCI6NzIwLCJmaXQiOiJpbnNpZGUifX19",
       "medium": "Painting",
@@ -670,7 +670,7 @@
     {
       "id": "lyon-47",
       "title": "Paysage - Paysage forestier avec vue sur une ville lointaine",
-      "artist": "Cabel Adriaen van der",
+      "artist": "Adriaen van der Cabel",
       "year": "1631",
       "imageUrl": "https://d2lkryo36aywim.cloudfront.net/eyJidWNrZXQiOiJvcGFjLXByb2QtbWVkaWEiLCJrZXkiOiJtYmFseW9uXC9seW9uYmFvcGFjd2ViXC9mNzMxYmQ1MS1lMDM1LTQ2ODYtOTA1OC1hZjE3NjBmZGQyMjAuanBnIiwiZWRpdHMiOnsicmVzaXplIjp7IndpZHRoIjo3MjAsImhlaWdodCI6NzIwLCJmaXQiOiJpbnNpZGUifX19",
       "medium": "Painting",
@@ -698,7 +698,7 @@
     {
       "id": "lyon-49",
       "title": "Paysage",
-      "artist": "Demarne Jean-Louis",
+      "artist": "DEMARNE Jean Louis",
       "year": "1995",
       "imageUrl": "https://d2lkryo36aywim.cloudfront.net/eyJidWNrZXQiOiJvcGFjLXByb2QtbWVkaWEiLCJrZXkiOiJtYmFseW9uXC9seW9uYmFvcGFjd2ViXC9lYjBlNTA0Mi0xODQ5LTQ4MDAtYWQyYi1iYzYzM2ExNGY3OWIuanBnIiwiZWRpdHMiOnsicmVzaXplIjp7IndpZHRoIjo3MjAsImhlaWdodCI6NzIwLCJmaXQiOiJpbnNpZGUifX19",
       "medium": "Painting",
@@ -754,7 +754,7 @@
     {
       "id": "lyon-53",
       "title": "Peinture 181 x 243 cm, 25 février 2009",
-      "artist": "Soulages Pierre",
+      "artist": "Pierre Soulages",
       "year": "2009",
       "imageUrl": "https://d2lkryo36aywim.cloudfront.net/eyJidWNrZXQiOiJvcGFjLXByb2QtbWVkaWEiLCJrZXkiOiJtYmFseW9uXC9seW9uYmFvcGFjd2ViXC85YmI1ZjUyOC1hMzkwLTRlOTItYjhlZi0wNDRjNzVjNmI0ODUuanBnIiwiZWRpdHMiOnsicmVzaXplIjp7IndpZHRoIjo3MjAsImhlaWdodCI6NzIwLCJmaXQiOiJpbnNpZGUifX19",
       "medium": "Painting",
@@ -768,7 +768,7 @@
     {
       "id": "lyon-54",
       "title": "Voiliers au port, Deauville",
-      "artist": "Boudin Eugène",
+      "artist": "Eugène Boudin",
       "year": "1955",
       "imageUrl": "https://d2lkryo36aywim.cloudfront.net/eyJidWNrZXQiOiJvcGFjLXByb2QtbWVkaWEiLCJrZXkiOiJtYmFseW9uXC9seW9uYmFvcGFjd2ViXC83ZGQ3MmRiYS1kN2M4LTQxYTQtOGU1Yi02YjE0ZDZmZjRkYzguanBnIiwiZWRpdHMiOnsicmVzaXplIjp7IndpZHRoIjo3MjAsImhlaWdodCI6NzIwLCJmaXQiOiJpbnNpZGUifX19",
       "medium": "Painting",
@@ -824,7 +824,7 @@
     {
       "id": "lyon-58",
       "title": "Vue de Pierre Scize",
-      "artist": "Dunouy Alexandre Hyacinthe",
+      "artist": "Alexandre Hyacinthe Dunouy",
       "year": "1500",
       "imageUrl": "https://d2lkryo36aywim.cloudfront.net/eyJidWNrZXQiOiJvcGFjLXByb2QtbWVkaWEiLCJrZXkiOiJtYmFseW9uXC9seW9uYmFvcGFjd2ViXC80YjRjMzUwNy0xNmM2LTRiZGMtODZkYy0zNmZkZjcyZTk0ZjAuanBnIiwiZWRpdHMiOnsicmVzaXplIjp7IndpZHRoIjo3MjAsImhlaWdodCI6NzIwLCJmaXQiOiJpbnNpZGUifX19",
       "medium": "Painting",
@@ -838,7 +838,7 @@
     {
       "id": "lyon-59",
       "title": "Arc de triomphe en ruines, les joueurs de cartes",
-      "artist": "Robert Hubert",
+      "artist": "Hubert Robert",
       "year": "2000",
       "imageUrl": "https://d2lkryo36aywim.cloudfront.net/eyJidWNrZXQiOiJvcGFjLXByb2QtbWVkaWEiLCJrZXkiOiJtYmFseW9uXC9seW9uYmFvcGFjd2ViXC8wMzVlNWM4Mi05NWEyLTRjYzYtOTY4My1iMTM0NmE1NTI4N2MuanBnIiwiZWRpdHMiOnsicmVzaXplIjp7IndpZHRoIjo3MjAsImhlaWdodCI6NzIwLCJmaXQiOiJpbnNpZGUifX19",
       "medium": "Painting",
@@ -852,7 +852,7 @@
     {
       "id": "lyon-60",
       "title": "L'Adoration des bergers",
-      "artist": "Champaigne Philippe de",
+      "artist": "Philippe de Champaigne",
       "year": "1630",
       "imageUrl": "https://d2lkryo36aywim.cloudfront.net/eyJidWNrZXQiOiJvcGFjLXByb2QtbWVkaWEiLCJrZXkiOiJtYmFseW9uXC9seW9uYmFvcGFjd2ViXC83ZDVjMzZiMy0wY2U4LTRjZTQtYTdkZi1iNTkwYzcxMTUxYjguanBnIiwiZWRpdHMiOnsicmVzaXplIjp7IndpZHRoIjo3MjAsImhlaWdodCI6NzIwLCJmaXQiOiJpbnNpZGUifX19",
       "medium": "Painting",
@@ -866,7 +866,7 @@
     {
       "id": "lyon-61",
       "title": "Montée au calvaire",
-      "artist": "Mellan Claude",
+      "artist": "Claude Mellan",
       "year": null,
       "imageUrl": "https://d2lkryo36aywim.cloudfront.net/eyJidWNrZXQiOiJvcGFjLXByb2QtbWVkaWEiLCJrZXkiOiJtYmFseW9uXC9seW9uYmFvcGFjd2ViXC9kZDNjYTUzYi02ZjdiLTQ3ZTEtYjA4ZS03NTQyZmZjOGE3NzIuanBnIiwiZWRpdHMiOnsicmVzaXplIjp7IndpZHRoIjo3MjAsImhlaWdodCI6NzIwLCJmaXQiOiJpbnNpZGUifX19",
       "medium": "Painting",
@@ -880,7 +880,7 @@
     {
       "id": "lyon-62",
       "title": "La Famille du peintre",
-      "artist": "Severini Gino",
+      "artist": "Gino Severini",
       "year": "1939",
       "imageUrl": "https://d2lkryo36aywim.cloudfront.net/eyJidWNrZXQiOiJvcGFjLXByb2QtbWVkaWEiLCJrZXkiOiJtYmFseW9uXC9seW9uYmFvcGFjd2ViXC9hOTk5YmU5My04OTcxLTRiODYtYmIyZi03MDJhNzRjNGY2OWMuanBnIiwiZWRpdHMiOnsicmVzaXplIjp7IndpZHRoIjo3MjAsImhlaWdodCI6NzIwLCJmaXQiOiJpbnNpZGUifX19",
       "medium": "Painting",
@@ -936,7 +936,7 @@
     {
       "id": "lyon-66",
       "title": "Le Grand Martyr : La Belle Rose",
-      "artist": "Dmitrienko Pierre",
+      "artist": "Pierre DMITRIENKO",
       "year": null,
       "imageUrl": "https://d2lkryo36aywim.cloudfront.net/eyJidWNrZXQiOiJvcGFjLXByb2QtbWVkaWEiLCJrZXkiOiJtYmFseW9uXC9seW9uYmFvcGFjd2ViXC82Y2Y3YWZkYS0yMzk3LTQwNzItYjBjNC1jZmRjYjQxZmIzNDcuanBnIiwiZWRpdHMiOnsicmVzaXplIjp7IndpZHRoIjo3MjAsImhlaWdodCI6NzIwLCJmaXQiOiJpbnNpZGUifX19",
       "medium": "Painting",
@@ -1062,7 +1062,7 @@
     {
       "id": "lyon-75",
       "title": "Paysage avec figures",
-      "artist": "Dughet Gaspard",
+      "artist": "Gaspard Dughet",
       "year": "1615",
       "imageUrl": "https://d2lkryo36aywim.cloudfront.net/eyJidWNrZXQiOiJvcGFjLXByb2QtbWVkaWEiLCJrZXkiOiJtYmFseW9uXC9seW9uYmFvcGFjd2ViXC80MzVlYjk3Yi01ODc2LTRlOGQtOTgxYS02NjQ4MTNhZWU5OTguanBnIiwiZWRpdHMiOnsicmVzaXplIjp7IndpZHRoIjo3MjAsImhlaWdodCI6NzIwLCJmaXQiOiJpbnNpZGUifX19",
       "medium": "Painting",
@@ -1132,7 +1132,7 @@
     {
       "id": "lyon-80",
       "title": "La Messe de saint Grégoire - Esquisse",
-      "artist": "Van Loo Carle",
+      "artist": "Carle van Loo",
       "year": "1759",
       "imageUrl": "https://d2lkryo36aywim.cloudfront.net/eyJidWNrZXQiOiJvcGFjLXByb2QtbWVkaWEiLCJrZXkiOiJtYmFseW9uXC9seW9uYmFvcGFjd2ViXC85Njg0ZWExNS00ZDNmLTRlOTQtYTQ3Zi0wZDhlNWQ4ODczNWEuanBnIiwiZWRpdHMiOnsicmVzaXplIjp7IndpZHRoIjo3MjAsImhlaWdodCI6NzIwLCJmaXQiOiJpbnNpZGUifX19",
       "medium": "Painting",
@@ -1160,7 +1160,7 @@
     {
       "id": "lyon-82",
       "title": "Marthe dans la salle à manger au Cannet",
-      "artist": "Bonnard Pierre",
+      "artist": "Pierre Bonnard",
       "year": "1967",
       "imageUrl": "https://d2lkryo36aywim.cloudfront.net/eyJidWNrZXQiOiJvcGFjLXByb2QtbWVkaWEiLCJrZXkiOiJtYmFseW9uXC9seW9uYmFvcGFjd2ViXC9kZTM2NTVjYS1kZTJjLTRkYmMtYjk4Yi03ZTc2YmYzNGUxMGQuanBnIiwiZWRpdHMiOnsicmVzaXplIjp7IndpZHRoIjo3MjAsImhlaWdodCI6NzIwLCJmaXQiOiJpbnNpZGUifX19",
       "medium": "Painting",
@@ -1174,7 +1174,7 @@
     {
       "id": "lyon-83",
       "title": "Portrait d'homme",
-      "artist": "Champaigne Philippe de",
+      "artist": "Philippe de Champaigne",
       "year": "1602",
       "imageUrl": "https://d2lkryo36aywim.cloudfront.net/eyJidWNrZXQiOiJvcGFjLXByb2QtbWVkaWEiLCJrZXkiOiJtYmFseW9uXC9seW9uYmFvcGFjd2ViXC9mZWViMzQyMS1mMDFiLTQ4NTctYTNlMC0wYTg4NWJjZjdmZjQuanBnIiwiZWRpdHMiOnsicmVzaXplIjp7IndpZHRoIjo3MjAsImhlaWdodCI6NzIwLCJmaXQiOiJpbnNpZGUifX19",
       "medium": "Painting",
@@ -1272,7 +1272,7 @@
     {
       "id": "lyon-90",
       "title": "La Cathédrale",
-      "artist": "Staël Nicolas de",
+      "artist": "Nicolas de STAËL",
       "year": "1984",
       "imageUrl": "https://d2lkryo36aywim.cloudfront.net/eyJidWNrZXQiOiJvcGFjLXByb2QtbWVkaWEiLCJrZXkiOiJtYmFseW9uXC9seW9uYmFvcGFjd2ViXC8wMmM4YWQxYi03MzUxLTQ5ZDItYTEwNC05YzExNTgxZjg2YWYuanBnIiwiZWRpdHMiOnsicmVzaXplIjp7IndpZHRoIjo3MjAsImhlaWdodCI6NzIwLCJmaXQiOiJpbnNpZGUifX19",
       "medium": "Painting",
@@ -1286,7 +1286,7 @@
     {
       "id": "lyon-91",
       "title": "Autoportrait",
-      "artist": "Greuze Jean-Baptiste",
+      "artist": "Jean-Baptiste Greuze",
       "year": null,
       "imageUrl": "https://d2lkryo36aywim.cloudfront.net/eyJidWNrZXQiOiJvcGFjLXByb2QtbWVkaWEiLCJrZXkiOiJtYmFseW9uXC9seW9uYmFvcGFjd2ViXC9lNjhmODYwZi05MjQwLTRiNmUtYTc3OC0wNmIzZGU5OGU4MTAuanBnIiwiZWRpdHMiOnsicmVzaXplIjp7IndpZHRoIjo3MjAsImhlaWdodCI6NzIwLCJmaXQiOiJpbnNpZGUifX19",
       "medium": "Painting",
@@ -1356,7 +1356,7 @@
     {
       "id": "lyon-96",
       "title": "Portrait de femme",
-      "artist": "Derain André",
+      "artist": "André Derain",
       "year": "1936",
       "imageUrl": "https://d2lkryo36aywim.cloudfront.net/eyJidWNrZXQiOiJvcGFjLXByb2QtbWVkaWEiLCJrZXkiOiJtYmFseW9uXC9seW9uYmFvcGFjd2ViXC9jMWFjNzA1Yy0zZDY2LTQ0ZjAtYWU2ZC0xODM2ODdjMmM4ZmEuanBnIiwiZWRpdHMiOnsicmVzaXplIjp7IndpZHRoIjo3MjAsImhlaWdodCI6NzIwLCJmaXQiOiJpbnNpZGUifX19",
       "medium": "Painting",
@@ -1384,7 +1384,7 @@
     {
       "id": "lyon-98",
       "title": "Le Cheval majeur",
-      "artist": "Velde Bram van",
+      "artist": "Bram van Velde",
       "year": "2008",
       "imageUrl": "https://d2lkryo36aywim.cloudfront.net/eyJidWNrZXQiOiJvcGFjLXByb2QtbWVkaWEiLCJrZXkiOiJtYmFseW9uXC9seW9uYmFvcGFjd2ViXC9iNDdkMmE2Yy03YTg2LTQ5MDgtYjI0YS05ZDkwZGZjOTkwYzAuanBnIiwiZWRpdHMiOnsicmVzaXplIjp7IndpZHRoIjo3MjAsImhlaWdodCI6NzIwLCJmaXQiOiJpbnNpZGUifX19",
       "medium": "Painting",
@@ -1412,7 +1412,7 @@
     {
       "id": "lyon-100",
       "title": "Nu",
-      "artist": "Leroy Eugène",
+      "artist": "Eugène LEROY",
       "year": "2021",
       "imageUrl": "https://d2lkryo36aywim.cloudfront.net/eyJidWNrZXQiOiJvcGFjLXByb2QtbWVkaWEiLCJrZXkiOiJtYmFseW9uXC9seW9uYmFvcGFjd2ViXC83ZjgyYTA2Ny0zZjNiLTQwZjEtOGNiMS1iNTBhZDhlYzI1YjQuanBnIiwiZWRpdHMiOnsicmVzaXplIjp7IndpZHRoIjo3MjAsImhlaWdodCI6NzIwLCJmaXQiOiJpbnNpZGUifX19",
       "medium": "Painting",
@@ -1496,7 +1496,7 @@
     {
       "id": "lyon-106",
       "title": "La Lumière du monde",
-      "artist": "Boucher François",
+      "artist": "François Boucher",
       "year": "1955",
       "imageUrl": "https://d2lkryo36aywim.cloudfront.net/eyJidWNrZXQiOiJvcGFjLXByb2QtbWVkaWEiLCJrZXkiOiJtYmFseW9uXC9seW9uYmFvcGFjd2ViXC81Y2JlOGQ5OC1lOGE5LTRiM2UtOWI0MS0wODZhZWJjMjMwYTEuanBnIiwiZWRpdHMiOnsicmVzaXplIjp7IndpZHRoIjo3MjAsImhlaWdodCI6NzIwLCJmaXQiOiJpbnNpZGUifX19",
       "medium": "Painting",
@@ -1552,7 +1552,7 @@
     {
       "id": "lyon-110",
       "title": "M.M. 44",
-      "artist": "Hantaï Simon",
+      "artist": "Simon Hantaï",
       "year": "1922",
       "imageUrl": "https://d2lkryo36aywim.cloudfront.net/eyJidWNrZXQiOiJvcGFjLXByb2QtbWVkaWEiLCJrZXkiOiJtYmFseW9uXC9seW9uYmFvcGFjd2ViXC80NDA4YTdkNy1iYmJhLTQ3NWEtYTQwOC03ZjVlMmQyZjk3NjcuanBnIiwiZWRpdHMiOnsicmVzaXplIjp7IndpZHRoIjo3MjAsImhlaWdodCI6NzIwLCJmaXQiOiJpbnNpZGUifX19",
       "medium": "Painting",
@@ -1594,7 +1594,7 @@
     {
       "id": "lyon-113",
       "title": "Tête de femme \"Méduse\" - Ombre et lumière",
-      "artist": "Jawlensky Alexej von",
+      "artist": "Alexej von Jawlensky",
       "year": "1956",
       "imageUrl": "https://d2lkryo36aywim.cloudfront.net/eyJidWNrZXQiOiJvcGFjLXByb2QtbWVkaWEiLCJrZXkiOiJtYmFseW9uXC9seW9uYmFvcGFjd2ViXC80MmUxMjJkMy0wZjQ0LTRhM2UtOTk5Mi1mZTNhMWI0ZDNhZTMuanBnIiwiZWRpdHMiOnsicmVzaXplIjp7IndpZHRoIjo3MjAsImhlaWdodCI6NzIwLCJmaXQiOiJpbnNpZGUifX19",
       "medium": "Painting",
@@ -1650,7 +1650,7 @@
     {
       "id": "lyon-117",
       "title": "Tête de mouton écorchée",
-      "artist": "Picasso Pablo",
+      "artist": "Pablo Picasso",
       "year": "1991",
       "imageUrl": "https://d2lkryo36aywim.cloudfront.net/eyJidWNrZXQiOiJvcGFjLXByb2QtbWVkaWEiLCJrZXkiOiJtYmFseW9uXC9seW9uYmFvcGFjd2ViXC9kNjNmMzJhNy0yNGE2LTQ2MmYtYTgwNy03YjRlOTAxN2Q2NjIuanBnIiwiZWRpdHMiOnsicmVzaXplIjp7IndpZHRoIjo3MjAsImhlaWdodCI6NzIwLCJmaXQiOiJpbnNpZGUifX19",
       "medium": "Painting",
@@ -1706,7 +1706,7 @@
     {
       "id": "lyon-121",
       "title": "My Fair Lady",
-      "artist": "Fautrier Jean",
+      "artist": "Jean FAUTRIER",
       "year": "1997",
       "imageUrl": "https://d2lkryo36aywim.cloudfront.net/eyJidWNrZXQiOiJvcGFjLXByb2QtbWVkaWEiLCJrZXkiOiJtYmFseW9uXC9seW9uYmFvcGFjd2ViXC8yZTY3NmM1MS0xYTMyLTQ2NTQtYTNhOC04ZTcxODBiOWE1YjQuanBnIiwiZWRpdHMiOnsicmVzaXplIjp7IndpZHRoIjo3MjAsImhlaWdodCI6NzIwLCJmaXQiOiJpbnNpZGUifX19",
       "medium": "Painting",
@@ -1720,7 +1720,7 @@
     {
       "id": "lyon-122",
       "title": "Paysage",
-      "artist": "Cabel Adriaen van der",
+      "artist": "Adriaen van der Cabel",
       "year": "1631",
       "imageUrl": "https://d2lkryo36aywim.cloudfront.net/eyJidWNrZXQiOiJvcGFjLXByb2QtbWVkaWEiLCJrZXkiOiJtYmFseW9uXC9seW9uYmFvcGFjd2ViXC8xYTI0NTY5ZS0yYmI4LTQ4NDgtYWNiMS0wNjU0ZmZmNzQ0YmIuanBnIiwiZWRpdHMiOnsicmVzaXplIjp7IndpZHRoIjo3MjAsImhlaWdodCI6NzIwLCJmaXQiOiJpbnNpZGUifX19",
       "medium": "Painting",
@@ -1762,7 +1762,7 @@
     {
       "id": "lyon-125",
       "title": "Passe porte 7",
-      "artist": "Duvillier René",
+      "artist": "René DUVILLIER",
       "year": "2021",
       "imageUrl": "https://d2lkryo36aywim.cloudfront.net/eyJidWNrZXQiOiJvcGFjLXByb2QtbWVkaWEiLCJrZXkiOiJtYmFseW9uXC9seW9uYmFvcGFjd2ViXC8wOGMyNTRmMy0xOTM3LTQ5N2EtYWUzMC1hZjc3NjExM2ViN2IuanBnIiwiZWRpdHMiOnsicmVzaXplIjp7IndpZHRoIjo3MjAsImhlaWdodCI6NzIwLCJmaXQiOiJpbnNpZGUifX19",
       "medium": "Painting",
@@ -1874,7 +1874,7 @@
     {
       "id": "lyon-133",
       "title": "La Femme au couteau",
-      "artist": "Lam Wifredo",
+      "artist": "Wifredo Lam",
       "year": "1997",
       "imageUrl": "https://d2lkryo36aywim.cloudfront.net/eyJidWNrZXQiOiJvcGFjLXByb2QtbWVkaWEiLCJrZXkiOiJtYmFseW9uXC9seW9uYmFvcGFjd2ViXC9lMjk4NzY0Ny1hZTAzLTQ5Y2UtYmViZS04NDYxZTRkNzcyNDIuanBnIiwiZWRpdHMiOnsicmVzaXplIjp7IndpZHRoIjo3MjAsImhlaWdodCI6NzIwLCJmaXQiOiJpbnNpZGUifX19",
       "medium": "Painting",
@@ -1972,7 +1972,7 @@
     {
       "id": "lyon-140",
       "title": "Portrait de l'artiste",
-      "artist": "Cabel Adriaen van der",
+      "artist": "Adriaen van der Cabel",
       "year": "1705",
       "imageUrl": "https://d2lkryo36aywim.cloudfront.net/eyJidWNrZXQiOiJvcGFjLXByb2QtbWVkaWEiLCJrZXkiOiJtYmFseW9uXC9seW9uYmFvcGFjd2ViXC9mZTgzYTVkZi00ZWI4LTQ1ZDktOTgyYi05M2E1NWI0ZTJmOGYuanBnIiwiZWRpdHMiOnsicmVzaXplIjp7IndpZHRoIjo3MjAsImhlaWdodCI6NzIwLCJmaXQiOiJpbnNpZGUifX19",
       "medium": "Painting",
@@ -1986,7 +1986,7 @@
     {
       "id": "lyon-141",
       "title": "Masquage",
-      "artist": "Buraglio Pierre",
+      "artist": "Pierre BURAGLIO",
       "year": null,
       "imageUrl": "https://d2lkryo36aywim.cloudfront.net/eyJidWNrZXQiOiJvcGFjLXByb2QtbWVkaWEiLCJrZXkiOiJtYmFseW9uXC9seW9uYmFvcGFjd2ViXC9iMjYzNDRhYy1hNTNjLTQ1ODctYmNhOC04ODdlODA5NjVlOGYuanBnIiwiZWRpdHMiOnsicmVzaXplIjp7IndpZHRoIjo3MjAsImhlaWdodCI6NzIwLCJmaXQiOiJpbnNpZGUifX19",
       "medium": "Painting",
@@ -2014,7 +2014,7 @@
     {
       "id": "lyon-143",
       "title": "Nu assis",
-      "artist": "Modigliani Amedeo",
+      "artist": "Amedeo Modigliani",
       "year": "1997",
       "imageUrl": "https://d2lkryo36aywim.cloudfront.net/eyJidWNrZXQiOiJvcGFjLXByb2QtbWVkaWEiLCJrZXkiOiJtYmFseW9uXC9seW9uYmFvcGFjd2ViXC8yNTFhNzQxNS01YjJhLTQyNGEtOTk3ZS1kNWE1ZjFkMDUzZGYuanBnIiwiZWRpdHMiOnsicmVzaXplIjp7IndpZHRoIjo3MjAsImhlaWdodCI6NzIwLCJmaXQiOiJpbnNpZGUifX19",
       "medium": "Painting",
@@ -2056,7 +2056,7 @@
     {
       "id": "lyon-146",
       "title": "L'Invention des reliques de saint Gervais et saint Protais",
-      "artist": "Champaigne Philippe de",
+      "artist": "Philippe de Champaigne",
       "year": "1793",
       "imageUrl": "https://d2lkryo36aywim.cloudfront.net/eyJidWNrZXQiOiJvcGFjLXByb2QtbWVkaWEiLCJrZXkiOiJtYmFseW9uXC9seW9uYmFvcGFjd2ViXC82YjQyOTM5NS0yN2IwLTRlNGQtOTNjOC00OGVjOTMyNTAxNDAuanBnIiwiZWRpdHMiOnsicmVzaXplIjp7IndpZHRoIjo3MjAsImhlaWdodCI6NzIwLCJmaXQiOiJpbnNpZGUifX19",
       "medium": "Painting",
@@ -2140,7 +2140,7 @@
     {
       "id": "lyon-152",
       "title": "Le Rocher",
-      "artist": "Fragonard Jean-Honoré",
+      "artist": "Jean-Honoré Fragonard",
       "year": null,
       "imageUrl": "https://d2lkryo36aywim.cloudfront.net/eyJidWNrZXQiOiJvcGFjLXByb2QtbWVkaWEiLCJrZXkiOiJtYmFseW9uXC9seW9uYmFvcGFjd2ViXC82YzU1NGNjYi0wYmZhLTRmN2YtYWZhOS0zZDliOTg5NWFjYTkuanBnIiwiZWRpdHMiOnsicmVzaXplIjp7IndpZHRoIjo3MjAsImhlaWdodCI6NzIwLCJmaXQiOiJpbnNpZGUifX19",
       "medium": "Painting",
@@ -2154,7 +2154,7 @@
     {
       "id": "lyon-153",
       "title": "Autoportrait",
-      "artist": "Vouet Simon",
+      "artist": "Simon Vouet",
       "year": "1951",
       "imageUrl": "https://d2lkryo36aywim.cloudfront.net/eyJidWNrZXQiOiJvcGFjLXByb2QtbWVkaWEiLCJrZXkiOiJtYmFseW9uXC9seW9uYmFvcGFjd2ViXC8zNjVlZTMzNS1lOGRlLTRkNTgtODkzZS01N2UyNTY4NWExNjUuanBnIiwiZWRpdHMiOnsicmVzaXplIjp7IndpZHRoIjo3MjAsImhlaWdodCI6NzIwLCJmaXQiOiJpbnNpZGUifX19",
       "medium": "Painting",
@@ -2252,7 +2252,7 @@
     {
       "id": "lyon-160",
       "title": "Saint Sébastien",
-      "artist": "Corot Camille",
+      "artist": "Camille Corot",
       "year": "1997",
       "imageUrl": "https://d2lkryo36aywim.cloudfront.net/eyJidWNrZXQiOiJvcGFjLXByb2QtbWVkaWEiLCJrZXkiOiJtYmFseW9uXC9seW9uYmFvcGFjd2ViXC8yMWVhYzVjOC02ZTNlLTQ0ZWEtYjgxZi05MmY0MGViMGFmNjYuanBnIiwiZWRpdHMiOnsicmVzaXplIjp7IndpZHRoIjo3MjAsImhlaWdodCI6NzIwLCJmaXQiOiJpbnNpZGUifX19",
       "medium": "Painting",
@@ -2350,7 +2350,7 @@
     {
       "id": "lyon-167",
       "title": "L'Arétin et l'envoyé de Charles Quint",
-      "artist": "Ingres Jean Auguste Dominique",
+      "artist": "Ingres Jean-Auguste-Dominique",
       "year": "1800",
       "imageUrl": "https://d2lkryo36aywim.cloudfront.net/eyJidWNrZXQiOiJvcGFjLXByb2QtbWVkaWEiLCJrZXkiOiJtYmFseW9uXC9seW9uYmFvcGFjd2ViXC9kZjU5MjA0My0wZDViLTQ5YzUtOGI1OC0xN2Q0MTRkMGJlODMuanBnIiwiZWRpdHMiOnsicmVzaXplIjp7IndpZHRoIjo3MjAsImhlaWdodCI6NzIwLCJmaXQiOiJpbnNpZGUifX19",
       "medium": "Painting",
@@ -2462,7 +2462,7 @@
     {
       "id": "lyon-175",
       "title": "Nu couché",
-      "artist": "Derain André",
+      "artist": "André Derain",
       "year": "1926",
       "imageUrl": "https://d2lkryo36aywim.cloudfront.net/eyJidWNrZXQiOiJvcGFjLXByb2QtbWVkaWEiLCJrZXkiOiJtYmFseW9uXC9seW9uYmFvcGFjd2ViXC82OTk5YzM3MC0xMzUwLTQwNjQtODkxMS1iNmQ3ZjRiN2JhZjMuanBnIiwiZWRpdHMiOnsicmVzaXplIjp7IndpZHRoIjo3MjAsImhlaWdodCI6NzIwLCJmaXQiOiJpbnNpZGUifX19",
       "medium": "Painting",
@@ -2504,7 +2504,7 @@
     {
       "id": "lyon-178",
       "title": "Tabula",
-      "artist": "Hantaï Simon",
+      "artist": "Simon Hantaï",
       "year": null,
       "imageUrl": "https://d2lkryo36aywim.cloudfront.net/eyJidWNrZXQiOiJvcGFjLXByb2QtbWVkaWEiLCJrZXkiOiJtYmFseW9uXC9seW9uYmFvcGFjd2ViXC9hMzE0NzNjMC00ZGVkLTQ1ZTItYjllMi1mNmIwYzI0ZmRlMWIuanBnIiwiZWRpdHMiOnsicmVzaXplIjp7IndpZHRoIjo3MjAsImhlaWdodCI6NzIwLCJmaXQiOiJpbnNpZGUifX19",
       "medium": "Painting",
@@ -2532,7 +2532,7 @@
     {
       "id": "lyon-180",
       "title": "Marine",
-      "artist": "Manglard Adrien",
+      "artist": "Adrien Manglard",
       "year": "1965",
       "imageUrl": "https://d2lkryo36aywim.cloudfront.net/eyJidWNrZXQiOiJvcGFjLXByb2QtbWVkaWEiLCJrZXkiOiJtYmFseW9uXC9seW9uYmFvcGFjd2ViXC83ZGUxYTUxNC1kNzdjLTQ3YTAtYWZjMi1hMGJhN2E5MjY0MDQuanBnIiwiZWRpdHMiOnsicmVzaXplIjp7IndpZHRoIjo3MjAsImhlaWdodCI6NzIwLCJmaXQiOiJpbnNpZGUifX19",
       "medium": "Painting",
@@ -2602,7 +2602,7 @@
     {
       "id": "lyon-185",
       "title": "Attaque d'une ville la nuit",
-      "artist": "Parrocel Charles",
+      "artist": "Charles Parrocel",
       "year": "1971",
       "imageUrl": "https://d2lkryo36aywim.cloudfront.net/eyJidWNrZXQiOiJvcGFjLXByb2QtbWVkaWEiLCJrZXkiOiJtYmFseW9uXC9seW9uYmFvcGFjd2ViXC9kN2FkN2MxZC05OGVmLTRjOGItOTg3ZC00YjliODhjZDk5MzIuanBnIiwiZWRpdHMiOnsicmVzaXplIjp7IndpZHRoIjo3MjAsImhlaWdodCI6NzIwLCJmaXQiOiJpbnNpZGUifX19",
       "medium": "Painting",
@@ -2616,7 +2616,7 @@
     {
       "id": "lyon-186",
       "title": "L'Incrédulité de saint Thomas",
-      "artist": "Vouet Simon",
+      "artist": "Simon Vouet",
       "year": "1998",
       "imageUrl": "https://d2lkryo36aywim.cloudfront.net/eyJidWNrZXQiOiJvcGFjLXByb2QtbWVkaWEiLCJrZXkiOiJtYmFseW9uXC9seW9uYmFvcGFjd2ViXC8xOTEyYzQ1Yi01MzA5LTQwZWItODI1Ny0wNzM5MTcwODlhY2UuanBnIiwiZWRpdHMiOnsicmVzaXplIjp7IndpZHRoIjo3MjAsImhlaWdodCI6NzIwLCJmaXQiOiJpbnNpZGUifX19",
       "medium": "Painting",
@@ -2644,7 +2644,7 @@
     {
       "id": "lyon-188",
       "title": "Un soldat soigné par une religieuse dans un cloître - Vue du cloître du palais Saint-Pierre",
-      "artist": "Jacquand Claudius",
+      "artist": "Claudius Jacquand",
       "year": "2015",
       "imageUrl": "https://d2lkryo36aywim.cloudfront.net/eyJidWNrZXQiOiJvcGFjLXByb2QtbWVkaWEiLCJrZXkiOiJtYmFseW9uXC9seW9uYmFvcGFjd2ViXC83YWFiMTZhMS0yMTIxLTQwYWYtYTZlYS03ZDVlMGFiZWI3N2MuanBnIiwiZWRpdHMiOnsicmVzaXplIjp7IndpZHRoIjo3MjAsImhlaWdodCI6NzIwLCJmaXQiOiJpbnNpZGUifX19",
       "medium": "Painting",
@@ -2756,7 +2756,7 @@
     {
       "id": "lyon-196",
       "title": "Composition abstraite",
-      "artist": "Poliakoff Serge",
+      "artist": "Serge Poliakoff",
       "year": "1997",
       "imageUrl": "https://d2lkryo36aywim.cloudfront.net/eyJidWNrZXQiOiJvcGFjLXByb2QtbWVkaWEiLCJrZXkiOiJtYmFseW9uXC9seW9uYmFvcGFjd2ViXC8xZTdkZDU4ZS0yNGM2LTQ5MWItODM0OS1jYTM5MTBjMzA5MzcuanBnIiwiZWRpdHMiOnsicmVzaXplIjp7IndpZHRoIjo3MjAsImhlaWdodCI6NzIwLCJmaXQiOiJpbnNpZGUifX19",
       "medium": "Painting",
@@ -2770,7 +2770,7 @@
     {
       "id": "lyon-197",
       "title": "La Cène",
-      "artist": "Vouet Simon",
+      "artist": "Simon Vouet",
       "year": "1996",
       "imageUrl": "https://d2lkryo36aywim.cloudfront.net/eyJidWNrZXQiOiJvcGFjLXByb2QtbWVkaWEiLCJrZXkiOiJtYmFseW9uXC9seW9uYmFvcGFjd2ViXC84Y2M2ZTY2NC04YTY3LTRhM2MtYjc4Ny1hZDQ5NGQxMTMxNTIuanBnIiwiZWRpdHMiOnsicmVzaXplIjp7IndpZHRoIjo3MjAsImhlaWdodCI6NzIwLCJmaXQiOiJpbnNpZGUifX19",
       "medium": "Painting",
@@ -2952,7 +2952,7 @@
     {
       "id": "lyon-210",
       "title": "Cherche-Midi",
-      "artist": "Bertholle Jean",
+      "artist": "Jean BERTHOLLE",
       "year": null,
       "imageUrl": "https://d2lkryo36aywim.cloudfront.net/eyJidWNrZXQiOiJvcGFjLXByb2QtbWVkaWEiLCJrZXkiOiJtYmFseW9uXC9seW9uYmFvcGFjd2ViXC84OTZlMTY5Yi00OGYxLTRjYjQtYmQxMC1lY2JmNDYyN2ZjZTQuanBnIiwiZWRpdHMiOnsicmVzaXplIjp7IndpZHRoIjo3MjAsImhlaWdodCI6NzIwLCJmaXQiOiJpbnNpZGUifX19",
       "medium": "Painting",
@@ -3022,7 +3022,7 @@
     {
       "id": "lyon-215",
       "title": "Portrait de Nicolas Mignard",
-      "artist": "Mignard Paul",
+      "artist": "Paul Mignard",
       "year": "1882",
       "imageUrl": "https://d2lkryo36aywim.cloudfront.net/eyJidWNrZXQiOiJvcGFjLXByb2QtbWVkaWEiLCJrZXkiOiJtYmFseW9uXC9seW9uYmFvcGFjd2ViXC9jZDRkYzIyNS1iOGE0LTQwMTUtYTU3ZS01MDRiY2RmOTk0NDcuanBnIiwiZWRpdHMiOnsicmVzaXplIjp7IndpZHRoIjo3MjAsImhlaWdodCI6NzIwLCJmaXQiOiJpbnNpZGUifX19",
       "medium": "Painting",
@@ -3064,7 +3064,7 @@
     {
       "id": "lyon-218",
       "title": "Feu n° 1 ou La Vision déportée",
-      "artist": "Duvillier René",
+      "artist": "René DUVILLIER",
       "year": "1919",
       "imageUrl": "https://d2lkryo36aywim.cloudfront.net/eyJidWNrZXQiOiJvcGFjLXByb2QtbWVkaWEiLCJrZXkiOiJtYmFseW9uXC9seW9uYmFvcGFjd2ViXC9mODhiZWI5OS01MzM1LTQ2ZWQtODllYS00ZjE2ZGY4ZWJmYjcuanBnIiwiZWRpdHMiOnsicmVzaXplIjp7IndpZHRoIjo3MjAsImhlaWdodCI6NzIwLCJmaXQiOiJpbnNpZGUifX19",
       "medium": "Painting",
@@ -3106,7 +3106,7 @@
     {
       "id": "lyon-221",
       "title": "Étude de tête de femme",
-      "artist": "Gandolfi Ubaldo",
+      "artist": "Ubaldo Gandolfi",
       "year": "1958",
       "imageUrl": "https://d2lkryo36aywim.cloudfront.net/eyJidWNrZXQiOiJvcGFjLXByb2QtbWVkaWEiLCJrZXkiOiJtYmFseW9uXC9seW9uYmFvcGFjd2ViXC9mY2VmYzM2YS1jZjRhLTQzMWUtOTE1OC0wNzYwYmE5ZTE4MzUuanBnIiwiZWRpdHMiOnsicmVzaXplIjp7IndpZHRoIjo3MjAsImhlaWdodCI6NzIwLCJmaXQiOiJpbnNpZGUifX19",
       "medium": "Painting",
@@ -3218,7 +3218,7 @@
     {
       "id": "lyon-229",
       "title": "Sans titre",
-      "artist": "Bissier Julius",
+      "artist": "Julius Bissier",
       "year": null,
       "imageUrl": "https://d2lkryo36aywim.cloudfront.net/eyJidWNrZXQiOiJvcGFjLXByb2QtbWVkaWEiLCJrZXkiOiJtYmFseW9uXC9seW9uYmFvcGFjd2ViXC85NWM3YzEzNC0xMTI4LTQwM2QtYWE5Ni1mNDhmY2VmZWMzYzMuanBnIiwiZWRpdHMiOnsicmVzaXplIjp7IndpZHRoIjo3MjAsImhlaWdodCI6NzIwLCJmaXQiOiJpbnNpZGUifX19",
       "medium": "Painting",
@@ -3484,7 +3484,7 @@
     {
       "id": "lyon-248",
       "title": "Paysage - Paysage forestier",
-      "artist": "Cabel Adriaen van der",
+      "artist": "Adriaen van der Cabel",
       "year": "1631",
       "imageUrl": "https://d2lkryo36aywim.cloudfront.net/eyJidWNrZXQiOiJvcGFjLXByb2QtbWVkaWEiLCJrZXkiOiJtYmFseW9uXC9seW9uYmFvcGFjd2ViXC8wZDc0M2FhMi1hYjMyLTQ3NGItYTkwOS0zMjlhZGEzYzM3ZjEuanBnIiwiZWRpdHMiOnsicmVzaXplIjp7IndpZHRoIjo3MjAsImhlaWdodCI6NzIwLCJmaXQiOiJpbnNpZGUifX19",
       "medium": "Painting",
@@ -3722,7 +3722,7 @@
     {
       "id": "lyon-265",
       "title": "Rythme",
-      "artist": "Delaunay Robert",
+      "artist": "Robert Delaunay",
       "year": "1959",
       "imageUrl": "https://d2lkryo36aywim.cloudfront.net/eyJidWNrZXQiOiJvcGFjLXByb2QtbWVkaWEiLCJrZXkiOiJtYmFseW9uXC9seW9uYmFvcGFjd2ViXC9iNTRmZjc3NS0zNjZhLTRkYTctODU3Yi0wZGIwNTgzNzgxMDMuanBnIiwiZWRpdHMiOnsicmVzaXplIjp7IndpZHRoIjo3MjAsImhlaWdodCI6NzIwLCJmaXQiOiJpbnNpZGUifX19",
       "medium": "Painting",
@@ -3834,7 +3834,7 @@
     {
       "id": "lyon-273",
       "title": "Vierge à l'Enfant - La Lactation de saint Bernard",
-      "artist": "Tassel Jean",
+      "artist": "Jean Tassel",
       "year": "1956",
       "imageUrl": "https://d2lkryo36aywim.cloudfront.net/eyJidWNrZXQiOiJvcGFjLXByb2QtbWVkaWEiLCJrZXkiOiJtYmFseW9uXC9seW9uYmFvcGFjd2ViXC82ZGFhOGYzMi1kNWFmLTQwMmEtODlhNy1jNDc1ZDRkODA2ZGYuanBnIiwiZWRpdHMiOnsicmVzaXplIjp7IndpZHRoIjo3MjAsImhlaWdodCI6NzIwLCJmaXQiOiJpbnNpZGUifX19",
       "medium": "Painting",
@@ -3876,7 +3876,7 @@
     {
       "id": "lyon-276",
       "title": "Sans titre",
-      "artist": "Asse Geneviève",
+      "artist": "Geneviève Asse",
       "year": "1942",
       "imageUrl": "https://d2lkryo36aywim.cloudfront.net/eyJidWNrZXQiOiJvcGFjLXByb2QtbWVkaWEiLCJrZXkiOiJtYmFseW9uXC9seW9uYmFvcGFjd2ViXC9mMjE5NmNiZS0zMmJlLTQxNTQtODY4Yy03YTU5NzYxZTZhOTUuanBnIiwiZWRpdHMiOnsicmVzaXplIjp7IndpZHRoIjo3MjAsImhlaWdodCI6NzIwLCJmaXQiOiJpbnNpZGUifX19",
       "medium": "Painting",
@@ -4030,7 +4030,7 @@
     {
       "id": "lyon-287",
       "title": "Les Deux Femmes au bouquet",
-      "artist": "Léger Fernand",
+      "artist": "Fernand Léger",
       "year": "1921",
       "imageUrl": "https://d2lkryo36aywim.cloudfront.net/eyJidWNrZXQiOiJvcGFjLXByb2QtbWVkaWEiLCJrZXkiOiJtYmFseW9uXC9seW9uYmFvcGFjd2ViXC83Y2ZlZmIzNS03ZWRjLTQzYWMtODNmMS1lOWQxYzJmZTUyNGEuanBnIiwiZWRpdHMiOnsicmVzaXplIjp7IndpZHRoIjo3MjAsImhlaWdodCI6NzIwLCJmaXQiOiJpbnNpZGUifX19",
       "medium": "Painting",
@@ -4072,7 +4072,7 @@
     {
       "id": "lyon-290",
       "title": "Le Yacht anglais",
-      "artist": "Dufy Raoul",
+      "artist": "Raoul DUFY",
       "year": "1905",
       "imageUrl": "https://d2lkryo36aywim.cloudfront.net/eyJidWNrZXQiOiJvcGFjLXByb2QtbWVkaWEiLCJrZXkiOiJtYmFseW9uXC9seW9uYmFvcGFjd2ViXC8zYmI3NTUzMi1lMjFjLTQwNWMtOTI2MC0zZjMyM2U1Y2Q3YWYuanBnIiwiZWRpdHMiOnsicmVzaXplIjp7IndpZHRoIjo3MjAsImhlaWdodCI6NzIwLCJmaXQiOiJpbnNpZGUifX19",
       "medium": "Painting",
@@ -4128,7 +4128,7 @@
     {
       "id": "lyon-294",
       "title": "Poisson sur une assiette",
-      "artist": "Bonnard Pierre",
+      "artist": "Pierre Bonnard",
       "year": "1995",
       "imageUrl": "https://d2lkryo36aywim.cloudfront.net/eyJidWNrZXQiOiJvcGFjLXByb2QtbWVkaWEiLCJrZXkiOiJtYmFseW9uXC9seW9uYmFvcGFjd2ViXC9iMjg1MmZlMi1kOTJiLTRkMDUtYWVlOS01N2M4ZDA4YWM2ZGIuanBnIiwiZWRpdHMiOnsicmVzaXplIjp7IndpZHRoIjo3MjAsImhlaWdodCI6NzIwLCJmaXQiOiJpbnNpZGUifX19",
       "medium": "Painting",
@@ -4184,7 +4184,7 @@
     {
       "id": "lyon-298",
       "title": "Jeune Femme en blanc, fond rouge",
-      "artist": "Matisse Henri",
+      "artist": "Henri Matisse",
       "year": "1993",
       "imageUrl": "https://d2lkryo36aywim.cloudfront.net/eyJidWNrZXQiOiJvcGFjLXByb2QtbWVkaWEiLCJrZXkiOiJtYmFseW9uXC9seW9uYmFvcGFjd2ViXC9iOTZmMjM4NC00OWRkLTRlYzUtYTdhZC0wZTgzYWJhYzlhN2IuanBnIiwiZWRpdHMiOnsicmVzaXplIjp7IndpZHRoIjo3MjAsImhlaWdodCI6NzIwLCJmaXQiOiJpbnNpZGUifX19",
       "medium": "Painting",

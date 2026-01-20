@@ -9,7 +9,7 @@
     {
       "id": "capitolini-busto_di_medusa",
       "title": "Bust of Medusa",
-      "artist": "Gian Lorenzo Bernini (1598-1680)",
+      "artist": "Gian Lorenzo Bernini",
       "year": 1644,
       "dateStr": "1644-1648",
       "medium": "Marble",
@@ -261,7 +261,7 @@
     {
       "id": "capitolini-numa_pompilio_istituisce_il_culto_delle_vestali",
       "title": "Numa Pompilius instituting the cult of the Vestals",
-      "artist": "Cavalier d'Arpino (Giuseppe Cesari 1568-1640)",
+      "artist": "Cavalier d'Arpino (Giuseppe Cesari",
       "year": 1636,
       "dateStr": "1636-1638",
       "medium": "Fresco",
@@ -275,7 +275,7 @@
     {
       "id": "capitolini-ritrovamento_della_lupa",
       "title": "Finding of the She-wolf",
-      "artist": "Cavalier d'Arpino (Giuseppe Cesari 1568-1640)",
+      "artist": "Cavalier d'Arpino (Giuseppe Cesari",
       "year": 1596,
       "dateStr": "1596",
       "medium": "Fresco",
@@ -303,7 +303,7 @@
     {
       "id": "capitolini-san_giovanni_battista",
       "title": "San Giovanni Battista",
-      "artist": "Caravaggio (Michelangelo Merisi, Milan 1571 - Porto Ercole 1610)",
+      "artist": "Milan - Porto Ercole Caravaggio (Michelangelo Merisi",
       "year": 1602,
       "dateStr": "1602",
       "medium": "oil on canvas",
@@ -317,7 +317,7 @@
     {
       "id": "capitolini-combattimento_degli_orazi_e_curiazi",
       "title": "Battle between Horatii and Curiatii",
-      "artist": "Cavalier d'Arpino (Giuseppe Cesari 1568-1640)",
+      "artist": "Cavalier d'Arpino (Giuseppe Cesari",
       "year": 1612,
       "dateStr": "1612-1613",
       "medium": "Fresco",
@@ -331,7 +331,7 @@
     {
       "id": "capitolini-ratto_delle_sabine",
       "title": "Rape of the Sabine women",
-      "artist": "Cavalier d'Arpino (Giuseppe Cesari 1568-1640)",
+      "artist": "Cavalier d'Arpino (Giuseppe Cesari",
       "year": 1630,
       "dateStr": "1630",
       "medium": "oil on canvas",
@@ -345,7 +345,7 @@
     {
       "id": "capitolini-statua_di_papa_urbano_viii_1635_1640",
       "title": "Statue of Pope Urban VIII",
-      "artist": "Gian Lorenzo Bernini (1598-1680) ed aiuti",
+      "artist": "Gian Lorenzo Bernini ed aiuti",
       "year": 1635,
       "dateStr": "1635-1640",
       "medium": "Marble",
@@ -359,7 +359,7 @@
     {
       "id": "capitolini-statua_di_papa_innocenzo_x",
       "title": "Statue of Pope Innocent X",
-      "artist": "Alessandro Algardi (1595-1654)",
+      "artist": "Alessandro Algardi",
       "year": 1645,
       "dateStr": "1645-1650",
       "medium": "Bronze",
@@ -387,7 +387,7 @@
     {
       "id": "capitolini-orazio_coclite_difende_il_ponte_sublicio",
       "title": "Horatius Cocles defending the Pons Sublicius",
-      "artist": "Tommaso Laureti (1530-1602)",
+      "artist": "Tommaso Laureti",
       "year": 1587,
       "dateStr": "1587-1594",
       "medium": "Fresco",
@@ -401,7 +401,7 @@
     {
       "id": "capitolini-giustizia_di_bruto",
       "title": "Brutus' Justice",
-      "artist": "Tommaso Laureti (1530-1602)",
+      "artist": "Tommaso Laureti",
       "year": 1587,
       "dateStr": "1587-1594",
       "medium": "Fresco",
@@ -415,7 +415,7 @@
     {
       "id": "capitolini-vittoria_del_lago_regillo",
       "title": "Victory at Lake Regillus",
-      "artist": "Tommaso Laureti (1530-1602)",
+      "artist": "Tommaso Laureti",
       "year": 1587,
       "dateStr": "1587-1594",
       "medium": "Fresco",
@@ -429,7 +429,7 @@
     {
       "id": "capitolini-muzio_scevola_e_porsenna",
       "title": "Mucius Scaevola before Porsena",
-      "artist": "Tommaso Laureti (1530-1602)",
+      "artist": "Tommaso Laureti",
       "year": null,
       "dateStr": null,
       "medium": "",
@@ -554,7 +554,7 @@
     {
       "id": "capitolini-s_eustachio",
       "title": "Saint Eustace",
-      "artist": "Pittore italiano, XVII secolo",
+      "artist": "XVII secolo Pittore italiano",
       "year": null,
       "dateStr": "17th century",
       "medium": "Oil on canvas",
@@ -1626,7 +1626,7 @@
     {
       "id": "capitolini-monumento_onorario_a_carlo_i_d_angio_statua_di_car",
       "title": "Monument in honour of Charles I of Anjou: Statue of Charles I of Anjou",
-      "artist": "Arnolfo di Cambio (1240/1245 - 1302/1310)",
+      "artist": "Arnolfo di Cambio//",
       "year": null,
       "dateStr": null,
       "medium": "",
@@ -1639,7 +1639,7 @@
     {
       "id": "capitolini-monumento_onorario_a_carlo_i_d_angio_elemento_arch",
       "title": "Monument in honour of Charles I of Anjou: architectural fragment with angular relief representing a Trumpeter",
-      "artist": "Arnolfo di Cambio (1240/1245 - 1302/1310)",
+      "artist": "Arnolfo di Cambio//",
       "year": 1277,
       "dateStr": "1277",
       "medium": "Marble",
@@ -1723,7 +1723,7 @@
     {
       "id": "capitolini-madonna_con_il_bambino_e_angeli",
       "title": "Madonna and Child with Angels",
-      "artist": "Giovanni Antonio Sogliani (Florence 1492 - 1544)",
+      "artist": "Giovanni Antonio Sogliani (Florence",
       "year": 1510,
       "dateStr": "1510 ca.",
       "medium": "oil on panel",
@@ -1737,7 +1737,7 @@
     {
       "id": "capitolini-sacra_conversazione",
       "title": "Holy Conversation",
-      "artist": "Macrino d'Alba (Gian Giacomo Alladio, Alba 1465/70 ca - 1520/28)",
+      "artist": "Alba/70 ca -/28) Macrino d'Alba (Gian Giacomo Alladio",
       "year": 1495,
       "dateStr": "1495-1496",
       "medium": "tempera on panel",
@@ -1751,7 +1751,7 @@
     {
       "id": "capitolini-ascensione",
       "title": "Ascension",
-      "artist": "Barnaba da Modena (Modena 1328/30 - post 1386)",
+      "artist": "Barnaba da Modena (Modena/30 - post",
       "year": 1372,
       "dateStr": "1372 - 1374",
       "medium": "tempera on panel",
@@ -1765,7 +1765,7 @@
     {
       "id": "capitolini-presentazione_al_tempio",
       "title": "Presentazione al tempio",
-      "artist": "Francesco Francia (Francesco Raibolini, Bologna 1447 ca - 1517) e Bartolomeo Passerotti (Bologna 1529 - 1592)",
+      "artist": "Bologna ca - e Bartolomeo Passerotti (Bologna Francesco Francia (Francesco Raibolini",
       "year": 1514,
       "dateStr": "1514 (circa)",
       "medium": "oil on canvas",
@@ -1779,7 +1779,7 @@
     {
       "id": "capitolini-annunciazione",
       "title": "Annunciazione",
-      "artist": "Garofalo (Benvenuto Tisi, Ferrara 1481 ca. - 1559)",
+      "artist": "Ferrara ca. - Garofalo (Benvenuto Tisi",
       "year": 1528,
       "dateStr": "1528",
       "medium": "oil on canvas",
@@ -1793,7 +1793,7 @@
     {
       "id": "capitolini-sacra_famiglia",
       "title": "Sacra Famiglia",
-      "artist": "Dosso Dossi (Giovanni Luteri, Ferrara 1489 ca. - 1542)",
+      "artist": "Ferrara ca. - Dosso Dossi (Giovanni Luteri",
       "year": 1528,
       "dateStr": "1528 (circa)",
       "medium": "oil on canvas",
@@ -1807,7 +1807,7 @@
     {
       "id": "capitolini-adorazione_dei_magi",
       "title": "Adoration of the Magi",
-      "artist": "Scarsellino (Ippolito Scarsella, Ferrara 1550 ca. - 1620)",
+      "artist": "Ferrara ca. - Scarsellino (Ippolito Scarsella",
       "year": 1580,
       "dateStr": "1580 ca.",
       "medium": "oil on canvas",
@@ -1821,7 +1821,7 @@
     {
       "id": "capitolini-fuga_in_egitto",
       "title": "Flight into Egypt",
-      "artist": "Scarsellino (Ippolito Scarsella, Ferrara 1550 ca. - 1620)",
+      "artist": "Ferrara ca. - Scarsellino (Ippolito Scarsella",
       "year": 1590,
       "dateStr": "1590-95",
       "medium": "oil on canvas",
@@ -1835,7 +1835,7 @@
     {
       "id": "capitolini-madonna_con_il_bambino",
       "title": "Madonna with Child",
-      "artist": "Garofalo (Benvenuto Tisi, Ferrara 1481 ca. - 1559)",
+      "artist": "Ferrara ca. - Garofalo (Benvenuto Tisi",
       "year": 1512,
       "dateStr": "1512-13",
       "medium": "oil on panel",
@@ -1849,7 +1849,7 @@
     {
       "id": "capitolini-ritratto_di_balestriere_mastro_battista_di_rocca_c",
       "title": "Portrait of Crossbowman",
-      "artist": "Lorenzo Lotto (Venice 1480 ca. - Loreto 1556)",
+      "artist": "Lorenzo Lotto (Venice ca. - Loreto",
       "year": 1551,
       "dateStr": "1551 ca.",
       "medium": "",
@@ -1863,7 +1863,7 @@
     {
       "id": "capitolini-battesimo_di_cristo",
       "title": "Battesimo di Cristo",
-      "artist": "Tiziano Vecellio (1480/85-1576)",
+      "artist": "Titian",
       "year": 1511,
       "dateStr": "1511 (post) - 1512 (ante)",
       "medium": "oil on canvas",
@@ -1877,7 +1877,7 @@
     {
       "id": "capitolini-ritratto_di_donna",
       "title": "Portrait of a woman",
-      "artist": "Giovanni Girolamo Savoldo (Brescia 1480 circa – after 1548)",
+      "artist": "Giovanni Girolamo Savoldo (Brescia circa – after",
       "year": 1525,
       "dateStr": "1525 ca.",
       "medium": "",
@@ -1891,7 +1891,7 @@
     {
       "id": "capitolini-ratto_d_europa",
       "title": "Rape of Europa",
-      "artist": "Veronese (Paolo Caliari, Verona 1528 - 1588)",
+      "artist": "Verona Veronese (Paolo Caliari",
       "year": 1580,
       "dateStr": "1580-85",
       "medium": "",
@@ -1905,7 +1905,7 @@
     {
       "id": "capitolini-maddalena_penitente",
       "title": "The Penitent Magdalene",
-      "artist": "Domenico Tintoretto (Domenico Robusti, Venice 1560 - 1635)",
+      "artist": "Venice Domenico Tintoretto (Domenico Robusti",
       "year": 1598,
       "dateStr": "1598-1602",
       "medium": "",
@@ -1919,7 +1919,7 @@
     {
       "id": "capitolini-erminia_tra_i_pastori",
       "title": "Erminia among the Shepherds",
-      "artist": "Giovanni Lanfranco (Parma 1582 - Rome 1647)",
+      "artist": "Giovanni Lanfranco (Parma - Rome",
       "year": 1633,
       "dateStr": "1633-1637",
       "medium": "oil on canvas",
@@ -1933,7 +1933,7 @@
     {
       "id": "capitolini-adorazione_del_vitello_d_oro",
       "title": "Adoration of the Golden calf",
-      "artist": "François Perrier (Pontarlier 1594 - Paris 1649)",
+      "artist": "François Perrier (Pontarlier - Paris",
       "year": 1642,
       "dateStr": "1642",
       "medium": "oil on canvas",
@@ -1947,7 +1947,7 @@
     {
       "id": "capitolini-santa_cecilia",
       "title": "Saint Cecilia",
-      "artist": "Giovanni Francesco Romanelli (Viterbo 1610 - 1662)",
+      "artist": "Giovanni Francesco Romanelli (Viterbo",
       "year": 1640,
       "dateStr": "1640",
       "medium": "oil on canvas",
@@ -1961,7 +1961,7 @@
     {
       "id": "capitolini-paesaggio_con_greggi",
       "title": "Landscape with Shepherds and Sheep",
-      "artist": "Pietro Paolo Bonzi (Cortona 1576 circa - Rome 1636)",
+      "artist": "Pietro Paolo Bonzi (Cortona circa - Rome",
       "year": 1621,
       "dateStr": "1621-22",
       "medium": "oil on canvas",
@@ -1975,7 +1975,7 @@
     {
       "id": "capitolini-disputa_di_santa_caterina",
       "title": "Dispute of St. Catherine",
-      "artist": "Prospero Fontana (Bologna 1512 - 1597)",
+      "artist": "Prospero Fontana (Bologna",
       "year": 1551,
       "dateStr": "1551",
       "medium": "oil on wood panel",
@@ -1989,7 +1989,7 @@
     {
       "id": "capitolini-matrimonio_mistico_di_santa_caterina",
       "title": "Mystical marriage of Saint Catherine",
-      "artist": "Pietro Faccini (Bologna 1575/76 - 1602)",
+      "artist": "Pietro Faccini (Bologna/76 -",
       "year": 1598,
       "dateStr": "1598-1599",
       "medium": "oil on canvas",
@@ -2003,7 +2003,7 @@
     {
       "id": "capitolini-diana_cacciatrice",
       "title": "Diane the Huntress",
-      "artist": "Cavalier d'Arpino (Giuseppe Cesari, Arpino 1568 - Rome 1640)",
+      "artist": "Arpino - Rome Cavalier d'Arpino (Giuseppe Cesari",
       "year": 1602,
       "dateStr": "1602-1603",
       "medium": "oil on wood panel",
@@ -2017,7 +2017,7 @@
     {
       "id": "capitolini-san_francesco_penitente",
       "title": "Saint Francis Adores the Crucifix",
-      "artist": "Annibale Carracci (Bologna 1560 - Rome 1609)",
+      "artist": "Annibale Carracci (Bologna - Rome",
       "year": 1585,
       "dateStr": "1585",
       "medium": "oil on canvas",
@@ -2031,7 +2031,7 @@
     {
       "id": "capitolini-allegoria_della_provvidenza",
       "title": "Allegory of Divine Providence",
-      "artist": "Ludovico Carracci (Bologna 1555 - Bologna 1619)",
+      "artist": "Ludovico Carracci (Bologna - Bologna",
       "year": 1604,
       "dateStr": "1604-1605",
       "medium": "oil on copper",
@@ -2045,7 +2045,7 @@
     {
       "id": "capitolini-san_sebastiano",
       "title": "Saint Sebastian",
-      "artist": "Guido Reni (Bologna 1575 - 1642)",
+      "artist": "Guido Reni (Bologna",
       "year": 1615,
       "dateStr": "1615-1616",
       "medium": "oil on canvas",
@@ -2059,7 +2059,7 @@
     {
       "id": "capitolini-anima_beata",
       "title": "Blessed Soul",
-      "artist": "Guido Reni (Bologna 1575 - 1642)",
+      "artist": "Guido Reni (Bologna",
       "year": 1640,
       "dateStr": "1640-1642",
       "medium": "oil on canvas",
@@ -2073,7 +2073,7 @@
     {
       "id": "capitolini-la_buona_ventura",
       "title": "Good Luck",
-      "artist": "Caravaggio (Michelangelo Merisi, Milan 1571 - Porto Ercole 1610)",
+      "artist": "Milan - Porto Ercole Caravaggio (Michelangelo Merisi",
       "year": 1596,
       "dateStr": "1596-1597",
       "medium": "oil on canvas",
@@ -2087,7 +2087,7 @@
     {
       "id": "capitolini-romolo_e_remo_1",
       "title": "Romulus and Remus",
-      "artist": "Peter Paul Rubens (Siegen, Westphalia 1577 - Antwerp 1640)",
+      "artist": "Westphalia - Antwerp Peter Paul Rubens (Siegen",
       "year": null,
       "dateStr": null,
       "medium": "",
@@ -2100,7 +2100,7 @@
     {
       "id": "capitolini-seppellimento_di_santa_petronilla",
       "title": "Burial of Saint Petronilla",
-      "artist": "Guercino (Giovanni Francesco Barbieri, Cento 1591 - Bologna 1666)",
+      "artist": "Cento - Bologna Guercino (Giovanni Francesco Barbieri",
       "year": 1621,
       "dateStr": "1621 - 1623",
       "medium": "oil on canvas",
@@ -2114,7 +2114,7 @@
     {
       "id": "capitolini-sibilla_cumana",
       "title": "The Sybil",
-      "artist": "Domenichino (Domenico Zampieri, Bologna 1581 - Naples 1641)",
+      "artist": "Bologna - Naples Domenichino (Domenico Zampieri",
       "year": 1622,
       "dateStr": "1622",
       "medium": "oil on canvas",
@@ -2128,7 +2128,7 @@
     {
       "id": "capitolini-ritratto_di_urbano_viii",
       "title": "Portrait of Urban VIII",
-      "artist": "Pietro da Cortona (Pietro Berrettini, Cortona 1597 - Rome 1669)",
+      "artist": "Cortona - Rome Pietro da Cortona (Pietro Berrettini",
       "year": 1627,
       "dateStr": "1627",
       "medium": "oil on canvas",
@@ -2142,7 +2142,7 @@
     {
       "id": "capitolini-ratto_delle_sabine_1",
       "title": "Rape of the Sabines",
-      "artist": "Pietro da Cortona (Pietro Berrettini, Cortona 1597 - Rome 1669)",
+      "artist": "Cortona - Rome Pietro da Cortona (Pietro Berrettini",
       "year": null,
       "dateStr": null,
       "medium": "",
@@ -2155,7 +2155,7 @@
     {
       "id": "capitolini-le_allumiere_di_tolfa",
       "title": "The Allumiere of Tolfa",
-      "artist": "Pietro da Cortona (Pietro Berrettini, Cortona 1597 - Rome 1669)",
+      "artist": "Cortona - Rome Pietro da Cortona (Pietro Berrettini",
       "year": 1630,
       "dateStr": "1630",
       "medium": "oil on canvas",
@@ -2169,7 +2169,7 @@
     {
       "id": "capitolini-david",
       "title": "David",
-      "artist": "Giovanni Francesco Romanelli (Viterbo 1610 - 1662)",
+      "artist": "Giovanni Francesco Romanelli (Viterbo",
       "year": 1638,
       "dateStr": "1638",
       "medium": "olio su tela",
@@ -2183,7 +2183,7 @@
     {
       "id": "capitolini-i_pittori_lucas_e_cornelis_de_wael",
       "title": "Portraits of the Painters Lucas and Cornelis De Wael",
-      "artist": "Anton Van Dyck (Antwerp 1599 - London 1641)",
+      "artist": "Anton Van Dyck (Antwerp - London",
       "year": 1627,
       "dateStr": "1627",
       "medium": "oil on canvas",
@@ -2197,7 +2197,7 @@
     {
       "id": "capitolini-veduta_di_montecavallo",
       "title": "View of Montecavallo",
-      "artist": "Gaspar Van Wittel (Amersfoort 1653 - Rome 1736)",
+      "artist": "Gaspar Van Wittel (Amersfoort - Rome",
       "year": 1682,
       "dateStr": "1682",
       "medium": "tempera on parchment",
@@ -2211,7 +2211,7 @@
     {
       "id": "capitolini-il_concerto",
       "title": "The Concert",
-      "artist": "Meissen production, 1737-1740 ca",
+      "artist": "ca Meissen production",
       "year": 1737,
       "dateStr": "1737-1740",
       "medium": "by Johann Joachim Kandler and Johann Gottlieb Ehder, 1737,  hard paste polychrome porcelain",
