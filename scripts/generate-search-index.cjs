@@ -14,94 +14,94 @@ const CHUNK_SIZE_LIMIT = 15 * 1024 * 1024; // 15MB chunks (safe limit for Pages 
 // Mapping from filename patterns to museum info
 const MUSEUM_MAPPINGS = {
     // Spanish
-    'reina-sofia': { museumName: 'Museo Reina Sofía', exhibitionId: 'reina-sofia-collection' },
-    'thyssen': { museumName: 'Museo Thyssen-Bornemisza', exhibitionId: 'thyssen-collection' },
-    'prado': { museumName: 'Museo del Prado', exhibitionId: 'prado-collection' },
-    'guggenheim-bilbao': { museumName: 'Guggenheim Bilbao', exhibitionId: 'guggenheim-bilbao-collection' },
-    'picasso-bcn': { museumName: 'Museu Picasso Barcelona', exhibitionId: 'picasso-bcn-collection' },
+    'reina-sofia': { museumName: 'Museo Reina Sofía' },
+    'thyssen': { museumName: 'Museo Thyssen-Bornemisza' },
+    'prado': { museumName: 'Museo del Prado' },
+    'guggenheim-bilbao': { museumName: 'Guggenheim Bilbao' },
+    'picasso-bcn': { museumName: 'Museu Picasso Barcelona' },
 
     // Italian
-    'uffizi': { museumName: 'Uffizi Gallery', exhibitionId: 'uffizi-gallery-collection' },
-    'pitti': { museumName: 'Palazzo Pitti', exhibitionId: 'pitti-collection' },
-    'accademia-collection': { museumName: 'Galleria dell\'Accademia', exhibitionId: 'accademia-collection' },
-    'galleria-borghese': { museumName: 'Galleria Borghese', exhibitionId: 'borghese-paintings' },
-    'borghese-arte-antica': { museumName: 'Galleria Borghese', exhibitionId: 'borghese-arte-antica' },
-    'vatican': { museumName: 'Vatican Museums', exhibitionId: 'vatican-collection' },
-    'pinacoteca-brera': { museumName: 'Pinacoteca di Brera', exhibitionId: 'brera-collection' },
-    'gallerie-accademia-venice': { museumName: 'Gallerie dell\'Accademia Venice', exhibitionId: 'accademia-venice-collection' },
-    'guggenheim-venice': { museumName: 'Peggy Guggenheim Collection', exhibitionId: 'guggenheim-collection' },
-    'doria-pamphilj': { museumName: 'Galleria Doria Pamphilj', exhibitionId: 'doria-pamphilj-collection' },
-    'museo-egizio': { museumName: 'Museo Egizio', exhibitionId: 'museo-egizio-collection' },
-    'ambrosiana': { museumName: 'Pinacoteca Ambrosiana', exhibitionId: 'ambrosiana-collection' },
-    'castello-di-rivoli': { museumName: 'Castello di Rivoli', exhibitionId: 'rivoli-collection' },
-    'museo-del-novecento': { museumName: 'Museo del Novecento', exhibitionId: 'novecento-collection' },
-    'musei-capitolini': { museumName: 'Musei Capitolini', exhibitionId: 'capitolini-collection' },
-    'palazzo-ducale': { museumName: 'Palazzo Ducale', exhibitionId: 'palazzo-ducale-collection' },
+    'uffizi': { museumName: 'Uffizi Gallery' },
+    'pitti': { museumName: 'Palazzo Pitti' },
+    'accademia-collection': { museumName: 'Galleria dell\'Accademia' },
+    'galleria-borghese': { museumName: 'Galleria Borghese' },
+    'borghese-arte-antica': { museumName: 'Galleria Borghese' },
+    'vatican': { museumName: 'Vatican Museums' },
+    'pinacoteca-brera': { museumName: 'Pinacoteca di Brera' },
+    'gallerie-accademia-venice': { museumName: 'Gallerie dell\'Accademia Venice' },
+    'guggenheim-venice': { museumName: 'Peggy Guggenheim Collection' },
+    'doria-pamphilj': { museumName: 'Galleria Doria Pamphilj' },
+    'museo-egizio': { museumName: 'Museo Egizio' },
+    'ambrosiana': { museumName: 'Pinacoteca Ambrosiana' },
+    'castello-di-rivoli': { museumName: 'Castello di Rivoli' },
+    'museo-del-novecento': { museumName: 'Museo del Novecento' },
+    'musei-capitolini': { museumName: 'Musei Capitolini' },
+    'palazzo-ducale': { museumName: 'Palazzo Ducale' },
 
     // French
-    'louvre': { museumName: 'Musée du Louvre', exhibitionId: 'louvre-painting' },
-    'pompidou': { museumName: 'Centre Pompidou', exhibitionId: 'pompidou' },
-    'orsay': { museumName: 'Musée d\'Orsay', exhibitionId: 'orsay-collection' },
-    'orangerie': { museumName: 'Musée de l\'Orangerie', exhibitionId: 'orangerie-collection' },
-    'marmottan': { museumName: 'Musée Marmottan Monet', exhibitionId: 'marmottan-collection' },
-    'picasso-paintings': { museumName: 'Musée Picasso Paris', exhibitionId: 'picasso-paintings' },
-    'picasso-drawings': { museumName: 'Musée Picasso Paris', exhibitionId: 'picasso-drawings' },
-    'petit-palais': { museumName: 'Petit Palais', exhibitionId: 'petit-palais-collection' },
-    'versailles': { museumName: 'Château de Versailles', exhibitionId: 'versailles-collection' },
+    'louvre': { museumName: 'Musée du Louvre' },
+    'pompidou': { museumName: 'Centre Pompidou' },
+    'orsay': { museumName: 'Musée d\'Orsay' },
+    'orangerie': { museumName: 'Musée de l\'Orangerie' },
+    'marmottan': { museumName: 'Musée Marmottan Monet' },
+    'picasso-paintings': { museumName: 'Musée Picasso Paris' },
+    'picasso-drawings': { museumName: 'Musée Picasso Paris' },
+    'petit-palais': { museumName: 'Petit Palais' },
+    'versailles': { museumName: 'Château de Versailles' },
     'guimet': { museumName: 'Musée Guimet', exhibitionId: 'guimet-collection' },
-    'carnavalet': { museumName: 'Musée Carnavalet', exhibitionId: 'carnavalet' },
-    'rodin': { museumName: 'Musée Rodin', exhibitionId: 'rodin' },
-    'flv': { museumName: 'Fondation Louis Vuitton', exhibitionId: 'flv-collection' },
-    'musee-conde': { museumName: 'Musée Condé', exhibitionId: 'musee-conde' },
-    'musee-fabre': { museumName: 'Musée Fabre', exhibitionId: 'musee-fabre-collection' },
-    'musee-grenoble': { museumName: 'Musée de Grenoble', exhibitionId: 'musee-grenoble' },
-    'musee-chagall': { museumName: 'Musée Chagall', exhibitionId: 'musee-chagall-collection' },
-    'musee-granet': { museumName: 'Musée Granet', exhibitionId: 'musee-granet-collection' },
-    'musee-armee': { museumName: 'Musée de l\'Armée', exhibitionId: 'musee-armee' },
-    'musee-beaux-arts-rouen': { museumName: 'Musée des Beaux-Arts de Rouen', exhibitionId: 'rouen-mba' },
-    'mucem': { museumName: 'Mucem', exhibitionId: 'mucem-collection' },
-    'mam-': { museumName: 'Musée d\'Art Moderne', exhibitionId: 'mam-collection' },
-    'mep-': { museumName: 'Maison Européenne de la Photographie', exhibitionId: 'mep-collection' },
-    'macval': { museumName: 'MAC VAL', exhibitionId: 'macval-collection' },
-    'mad-paris': { museumName: 'Musée des Arts Décoratifs', exhibitionId: 'mad-paris-collection' },
-    'la-piscine': { museumName: 'La Piscine', exhibitionId: 'la-piscine-collection' },
-    'palais-de-tokyo': { museumName: 'Palais de Tokyo', exhibitionId: 'palais-de-tokyo-collection' },
-    'musba-bordeaux': { museumName: 'Musée des Beaux-Arts de Bordeaux', exhibitionId: 'musba-bordeaux' },
-    'mba-lyon': { museumName: 'Musée des Beaux-Arts de Lyon', exhibitionId: 'mba-lyon-collection' },
-    'jacquemart-andre': { museumName: 'Musée Jacquemart-André', exhibitionId: 'jacquemart-andre-collection' },
-    'lille': { museumName: 'Palais des Beaux-Arts de Lille', exhibitionId: 'lille-pba' },
-    'mamcs-strasbourg': { museumName: 'MAMCS Strasbourg', exhibitionId: 'mamcs-strasbourg' },
-    'pinault': { museumName: 'Pinault Collection', exhibitionId: 'pinault-collection' },
+    'carnavalet': { museumName: 'Musée Carnavalet' },
+    'rodin': { museumName: 'Musée Rodin' },
+    'flv': { museumName: 'Fondation Louis Vuitton' },
+    'musee-conde': { museumName: 'Musée Condé' },
+    'musee-fabre': { museumName: 'Musée Fabre', exhibitionId: 'fabre-collection' },
+    'musee-grenoble': { museumName: 'Musée de Grenoble' },
+    'musee-chagall': { museumName: 'Musée Chagall', exhibitionId: 'chagall-collection' },
+    'musee-granet': { museumName: 'Musée Granet', exhibitionId: 'granet-collection' },
+    'musee-armee': { museumName: 'Musée de l\'Armée' },
+    'musee-beaux-arts-rouen': { museumName: 'Musée des Beaux-Arts de Rouen' },
+    'mucem': { museumName: 'Mucem' },
+    'mam-': { museumName: 'Musée d\'Art Moderne' },
+    'mep-': { museumName: 'Maison Européenne de la Photographie' },
+    'macval': { museumName: 'MAC VAL' },
+    'mad-paris': { museumName: 'Musée des Arts Décoratifs' },
+    'la-piscine': { museumName: 'La Piscine', exhibitionId: 'piscine-collection' },
+    'palais-de-tokyo': { museumName: 'Palais de Tokyo' },
+    'musba-bordeaux': { museumName: 'Musée des Beaux-Arts de Bordeaux' },
+    'mba-lyon': { museumName: 'Musée des Beaux-Arts de Lyon', exhibitionId: 'lyon-collection' },
+    'jacquemart-andre': { museumName: 'Musée Jacquemart-André' },
+    'lille': { museumName: 'Palais des Beaux-Arts de Lille' },
+    'mamcs-strasbourg': { museumName: 'Musée d\'Art Moderne et Contemporain de Strasbourg' },
+    'pinault': { museumName: 'Bourse de Commerce - Pinault Collection' },
 
     // German
-    'smb-alte-nationalgalerie': { museumName: 'Alte Nationalgalerie', exhibitionId: 'alte-nationalgalerie-collection' },
-    'smb-neue-nationalgalerie': { museumName: 'Neue Nationalgalerie', exhibitionId: 'neue-nationalgalerie-collection' },
-    'smb-gemaeldegalerie': { museumName: 'Gemäldegalerie Berlin', exhibitionId: 'gemaeldegalerie-collection' },
-    'smb-bode-museum': { museumName: 'Bode-Museum', exhibitionId: 'bode-collection' },
-    'smb-altes-museum': { museumName: 'Altes Museum', exhibitionId: 'altes-collection' },
-    'smb-neues-museum': { museumName: 'Neues Museum', exhibitionId: 'neues-collection' },
-    'smb-humboldt': { museumName: 'Humboldt Forum', exhibitionId: 'humboldt-collection' },
-    'alte-pinakothek': { museumName: 'Alte Pinakothek', exhibitionId: 'alte-pinakothek-collection' },
-    'neue-pinakothek': { museumName: 'Neue Pinakothek', exhibitionId: 'neue-pinakothek-collection' },
-    'pinakothek-moderne': { museumName: 'Pinakothek der Moderne', exhibitionId: 'pinakothek-moderne-collection' },
-    'staatsgalerien': { museumName: 'Staatsgalerien', exhibitionId: 'staatsgalerien-collection' },
-    'staedel': { museumName: 'Städel Museum', exhibitionId: 'staedel-collection' },
-    'bruecke-museum': { museumName: 'Brücke-Museum', exhibitionId: 'bruecke-collection' },
-    'hamburger-kunsthalle': { museumName: 'Hamburger Kunsthalle', exhibitionId: 'hamburger-kunsthalle' },
+    'smb-alte-nationalgalerie': { museumName: 'Alte Nationalgalerie' },
+    'smb-neue-nationalgalerie': { museumName: 'Neue Nationalgalerie' },
+    'smb-gemaeldegalerie': { museumName: 'Gemäldegalerie Berlin' },
+    'smb-bode-museum': { museumName: 'Bode-Museum' },
+    'smb-altes-museum': { museumName: 'Altes Museum' },
+    'smb-neues-museum': { museumName: 'Neues Museum' },
+    'smb-humboldt': { museumName: 'Humboldt Forum' },
+    'alte-pinakothek': { museumName: 'Alte Pinakothek' },
+    'neue-pinakothek': { museumName: 'Neue Pinakothek' },
+    'pinakothek-moderne': { museumName: 'Pinakothek der Moderne' },
+    'staatsgalerien': { museumName: 'Staatsgalerien' },
+    'staedel': { museumName: 'Städel Museum' },
+    'bruecke-museum': { museumName: 'Brücke-Museum' },
+    'hamburger-kunsthalle': { museumName: 'Hamburger Kunsthalle' },
 
     // UK
-    'courtauld': { museumName: 'Courtauld Gallery', exhibitionId: 'courtauld-collection' },
-    'dulwich': { museumName: 'Dulwich Picture Gallery', exhibitionId: 'dulwich-collection' },
-    'scottish-national-gallery': { museumName: 'Scottish National Gallery', exhibitionId: 'scottish-national-gallery' },
-    'royal-academy': { museumName: 'Royal Academy of Arts', exhibitionId: 'royal-academy-collection' },
-    'tate-britain': { museumName: 'Tate Britain', exhibitionId: 'tate-britain' },
-    'tate-st-ives': { museumName: 'Tate St Ives', exhibitionId: 'tate-st-ives' },
-    'british-museum': { museumName: 'British Museum', exhibitionId: 'british-museum' },
-    'soane': { museumName: 'Sir John Soane\'s Museum', exhibitionId: 'soane-museum' },
-    'wallace': { museumName: 'Wallace Collection', exhibitionId: 'wallace-collection' },
-    'hayward': { museumName: 'Hayward Gallery', exhibitionId: 'hayward-gallery-collection' },
-    'serpentine': { museumName: 'Serpentine Gallery', exhibitionId: 'serpentine-gallery-collection' },
-    'walker-art-gallery': { museumName: 'Walker Art Gallery', exhibitionId: 'walker-art-gallery-collection' },
+    'courtauld': { museumName: 'Courtauld Gallery' },
+    'dulwich': { museumName: 'Dulwich Picture Gallery' },
+    'scottish-national-gallery': { museumName: 'Scottish National Gallery' },
+    'royal-academy': { museumName: 'Royal Academy of Arts' },
+    'tate-britain': { museumName: 'Tate Britain' },
+    'tate-st-ives': { museumName: 'Tate St Ives' },
+    'british-museum': { museumName: 'British Museum' },
+    'soane': { museumName: 'Sir John Soane\'s Museum' },
+    'wallace': { museumName: 'Wallace Collection', exhibitionId: 'wallace-permanent' },
+    'hayward': { museumName: 'Hayward Gallery' },
+    'serpentine': { museumName: 'Serpentine Gallery' },
+    'walker-art-gallery': { museumName: 'Walker Art Gallery' },
     'jmw-turner': { museumName: 'Turner Collection', exhibitionId: 'jmw-turner' },
 
     // Korea
@@ -120,10 +120,42 @@ const SKIP_PATTERNS = [
     'test',
     '-sample',
     '-new.json',
+    'museum-ludwig', // Explicitly excluded by user request
+    'british-museum-gac', // Uses the-british-museum-collection.json instead
+    'british-museum-collection.json', // Empty file, uses the-british-museum-collection.json
+    'british-museum-galleries.json', // Empty galleries list
+    'british-museum.json', // Empty metadata file
+];
+
+// Blocked image URLs that are placeholders or broken
+const BLOCKED_IMAGES = [
+    'https://www.centrepompidou.fr/fileadmin/_processed_/f/6/csm_banniere_39261a8a7c.jpg', // Pompidou generic placeholder
+    'no-image',
+    'defaut',
+    'placeholder',
+    'missing',
+    'search-index',
 ];
 
 function getMuseumInfo(filename) {
     const baseFilename = filename.replace('.json', '');
+
+    // Manual overrides for Condé, Grenoble, Bordeaux split collections to match short IDs
+    if (baseFilename === 'musee-conde-paintings') return { museumName: 'Musée Condé', exhibitionId: 'conde-paintings' };
+    if (baseFilename === 'musee-conde-drawings') return { museumName: 'Musée Condé', exhibitionId: 'conde-drawings' };
+
+    if (baseFilename === 'musee-grenoble-paintings-collection') return { museumName: 'Musée de Grenoble', exhibitionId: 'grenoble-paintings' };
+    if (baseFilename === 'musee-grenoble-drawings-collection') return { museumName: 'Musée de Grenoble', exhibitionId: 'grenoble-drawings' };
+    if (baseFilename === 'musee-grenoble-photography-collection') return { museumName: 'Musée de Grenoble', exhibitionId: 'grenoble-photography' };
+
+    if (baseFilename === 'musba-bordeaux-paintings-collection') return { museumName: 'Musée des Beaux-Arts de Bordeaux', exhibitionId: 'bordeaux-paintings' };
+    if (baseFilename === 'musba-bordeaux-drawings-collection') return { museumName: 'Musée des Beaux-Arts de Bordeaux', exhibitionId: 'bordeaux-drawings' };
+
+    if (baseFilename === 'mam-painting-collection') return { museumName: 'Musée d\'Art Moderne', exhibitionId: 'mam-perm-painting' };
+    if (baseFilename === 'mam-photography-collection') return { museumName: 'Musée d\'Art Moderne', exhibitionId: 'mam-perm-photography' };
+
+    if (baseFilename === 'museum-wales-art') return { museumName: 'National Museum Wales', exhibitionId: 'wales-art' };
+    if (baseFilename === 'museum-wales-industry') return { museumName: 'National Museum Wales', exhibitionId: 'wales-industry' };
     for (const [pattern, info] of Object.entries(MUSEUM_MAPPINGS)) {
         if (baseFilename.includes(pattern)) {
             return { ...info, exhibitionId: info.exhibitionId || baseFilename };
@@ -135,6 +167,24 @@ function getMuseumInfo(filename) {
         .split(' ')
         .map(w => w.charAt(0).toUpperCase() + w.slice(1))
         .join(' ');
+
+    // Manual overrides for Condé, Grenoble, Bordeaux split collections to match short IDs
+    if (baseFilename === 'musee-conde-paintings') return { museumName: 'Musée Condé', exhibitionId: 'conde-paintings' };
+    if (baseFilename === 'musee-conde-drawings') return { museumName: 'Musée Condé', exhibitionId: 'conde-drawings' };
+
+    if (baseFilename === 'musee-grenoble-paintings-collection') return { museumName: 'Musée de Grenoble', exhibitionId: 'grenoble-paintings' };
+    if (baseFilename === 'musee-grenoble-drawings-collection') return { museumName: 'Musée de Grenoble', exhibitionId: 'grenoble-drawings' };
+    if (baseFilename === 'musee-grenoble-photography-collection') return { museumName: 'Musée de Grenoble', exhibitionId: 'grenoble-photography' };
+
+    if (baseFilename === 'musba-bordeaux-paintings-collection') return { museumName: 'Musée des Beaux-Arts de Bordeaux', exhibitionId: 'bordeaux-paintings' };
+    if (baseFilename === 'musba-bordeaux-drawings-collection') return { museumName: 'Musée des Beaux-Arts de Bordeaux', exhibitionId: 'bordeaux-drawings' };
+
+    if (baseFilename === 'mam-painting-collection') return { museumName: 'Musée d\'Art Moderne', exhibitionId: 'mam-perm-painting' };
+    if (baseFilename === 'mam-photography-collection') return { museumName: 'Musée d\'Art Moderne', exhibitionId: 'mam-perm-photography' };
+
+    if (baseFilename === 'museum-wales-art') return { museumName: 'National Museum Wales', exhibitionId: 'wales-art' };
+    if (baseFilename === 'museum-wales-industry') return { museumName: 'National Museum Wales', exhibitionId: 'wales-industry' };
+
     return { museumName: name, exhibitionId: baseFilename };
 }
 
@@ -153,7 +203,10 @@ function loadCollection(filePath) {
 
 function getThumbnailUrl(item) {
     let url = item.thumb || item.thumbnailUrl || item.lq || item.image || item.imageUrl || '';
-    if (!url || url.includes('no-image') || url.length < 10) return '';
+    if (!url || url.length < 10) return '';
+
+    // Check blocked images
+    if (BLOCKED_IMAGES.some(bad => url.includes(bad))) return '';
 
     // Convert HTTP to HTTPS (iOS Safari blocks mixed content)
     if (url.startsWith('http://')) {
@@ -173,6 +226,8 @@ function extractArtworkData(item, museumName, exhibitionId, idx) {
     const date = item.date || item.year || '';
     const id = item.id || `${exhibitionId}-${idx}`;
 
+    const url = item.sourceUrl || item.detailUrl || item.url || '';
+
     if (!image) return null;
 
     return {
@@ -183,6 +238,7 @@ function extractArtworkData(item, museumName, exhibitionId, idx) {
         d: String(date).substring(0, 15),
         m: museumName,
         e: exhibitionId,
+        u: url.substring(0, 300),
     };
 }
 
