@@ -60,7 +60,7 @@ export default {
                 // WARNING: DEBUG MODE - Testing connection
                 const results = await env.VECTORIZE.query(vector, {
                     topK: Math.min(limit, 100),
-                    returnMetadata: true, // Include all metadata (name, artist, image, museum, etc.)
+                    returnMetadata: true, // Enable metadata to return name, artist, museum, url
                 });
 
                 // 만약 결과가 없으면 강제로 디버그용 더미 데이터 반환
