@@ -5,7 +5,7 @@ import { getFirestore, doc, setDoc, getDoc } from "firebase/firestore";
 import { updateProfile } from "firebase/auth";
 import { exhibitions } from "../data/exhibitions";
 import { getCanonicalName } from "../utils/canonicalArtist";
-import DrawingLoader, { TransitionBadge } from "../components/DrawingLoader";
+import { TransitionBadge } from "../components/DrawingLoader";
 
 // ── Design Tokens ──────────────────────────────────────────────────
 const BG = '#111111';
@@ -444,10 +444,10 @@ const OnboardingPage: React.FC = () => {
     if (!selectedArtist) return;
     if (initialUserPref.current?.artistName === selectedArtist.name) {
       const pref = initialUserPref.current;
-      if (pref.photoURL) setSelectedImage(pref.photoURL);
+      if (pref?.photoURL) setSelectedImage(pref.photoURL);
       else if (selectedArtist.artworks?.[0]) setSelectedImage(selectedArtist.artworks[0]);
       else setSelectedImage(selectedArtist.image);
-      if (pref.crop) setCrop(pref.crop);
+      if (pref?.crop) setCrop(pref.crop);
     } else {
       if (selectedArtist.artworks?.[0]) setSelectedImage(selectedArtist.artworks[0]);
       else setSelectedImage(selectedArtist.image);

@@ -181,9 +181,6 @@ export const computeClusterLayout = (clusterCity: string, clusterLat: number, cl
        })
    ];
 
-   const n = venues.length;
-   const LR = Math.max(160, 110 + n * 8); // Pushed outwards so labels clear satellite city shapes
-
    // distribute venues around their respected layout cities
    let allDots: any[] = [];
    const venuesByCity = new Map<string, any[]>();

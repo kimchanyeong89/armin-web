@@ -95,8 +95,6 @@ const normalizeKnownBrokenImageUrl = (value?: string): string => {
   return raw;
 };
 
-const getSafeArtworkImage = (art: any): string => normalizeKnownBrokenImageUrl(resolveArtworkImage(art)) || FALLBACK_IMG;
-
 const normalizeLookupText = (value?: string) =>
   String(value || '')
     .toLowerCase()
@@ -483,7 +481,7 @@ export default function ArtistPage() {
           ) : (
             visibleArtistArtworks.map((artwork, idx) => (
               <article
-                  key={`${artwork.id || artwork.name || artwork.museumName || 'art'}-${idx}`}
+                  key={`${artwork.id || artwork.name || (artwork as any).museumName || 'art'}-${idx}`}
                 className="artist-gallery__card"
                 onClick={() => setSelectedArtwork(artwork)}
                 draggable

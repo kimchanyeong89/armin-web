@@ -227,6 +227,42 @@ export default DrawingLoader;
 // Handles its own mount/unmount lifecycle so the badge can fade
 // in AND fade out smoothly (unlike a simple conditional render).
 // Usage in App.tsx:  <TransitionBadge show={transitioning} />
+// ── Ghost Globe — all-white strokes, used with mix-blend-mode: difference
+// On dark bg: white stays white (visible). On light bg: white inverts to dark (visible).
+const GhostGlobeSVG = ({ size, dur = '2.2s' }: { size: number; dur?: string }) => {
+  const cx = size / 2, cy = size / 2, R = size * 0.43;
+  const cMain = 2 * Math.PI * R;
+  const cLat1 = cMain * 0.35;
+  const cLat2 = cMain * 0.60;
+  const cLine = R * 2;
+  return (
+    <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} style={{ overflow: 'visible' }}>
+      <circle cx={cx} cy={cy} r={R} fill="none" stroke="#ffffff" strokeWidth="1.4"
+        strokeDasharray={`${cMain} ${cMain}`}
+        style={{ animation: `dl-draw-globe ${dur} ease-in-out infinite`, transformOrigin: `${cx}px ${cy}px` }} />
+      <ellipse cx={cx} cy={cy} rx={R} ry={R * 0.28}
+        fill="none" stroke="rgba(255,255,255,0.6)" strokeWidth="0.9"
+        strokeDasharray={`${cLat1} ${cLat1}`}
+        style={{ animation: `dl-draw-lat1 ${dur} ease-in-out infinite` }} />
+      <ellipse cx={cx} cy={cy} rx={R} ry={R * 0.65}
+        fill="none" stroke="rgba(255,255,255,0.4)" strokeWidth="0.9"
+        strokeDasharray={`${cLat2} ${cLat2}`}
+        style={{ animation: `dl-draw-lat2 ${dur} ease-in-out infinite` }} />
+      <line x1={cx} y1={cy - R} x2={cx} y2={cy + R}
+        stroke="rgba(255,255,255,0.5)" strokeWidth="0.9"
+        strokeDasharray={`${cLine} ${cLine}`}
+        style={{ animation: `dl-draw-vline ${dur} ease-in-out infinite` }} />
+      <line x1={cx - R} y1={cy} x2={cx + R} y2={cy}
+        stroke="rgba(255,255,255,0.5)" strokeWidth="0.9"
+        strokeDasharray={`${cLine} ${cLine}`}
+        style={{ animation: `dl-draw-hline ${dur} ease-in-out infinite` }} />
+      {/* Center dot: white for difference blend */}
+      <circle cx={cx} cy={cy} r={size * 0.028} fill="#ffffff"
+        style={{ animation: `dl-dot-pulse ${dur} ease-in-out infinite` }} />
+    </svg>
+  );
+};
+
 export const TransitionBadge: React.FC<{ show: boolean }> = ({ show }) => {
   injectStyles();
   const [mounted, setMounted] = React.useState(show);
@@ -257,7 +293,12 @@ export const TransitionBadge: React.FC<{ show: boolean }> = ({ show }) => {
       pointerEvents: 'none',
       fontFamily: MONO,
     }}>
-      {/* Ghost badge — no background, dual-shadow for visibility on any bg color */}
+      {/*
+        mix-blend-mode: difference makes white elements appear:
+          • on dark bg (#111) → stays near-white (visible)
+          • on light bg (#fff / cream) → inverts to near-black (visible)
+        This gives automatic contrast on any page background.
+      */}
       <div style={{
         display: 'flex', flexDirection: 'column',
         alignItems: 'center', justifyContent: 'center',
@@ -265,15 +306,14 @@ export const TransitionBadge: React.FC<{ show: boolean }> = ({ show }) => {
         opacity: visible ? 1 : 0,
         transform: visible ? 'scale(1)' : 'scale(0.80)',
         transition: 'opacity 0.22s ease, transform 0.28s cubic-bezier(0.34,1.2,0.64,1)',
-        // Drop-shadow combo: dark halo visible on light, light glow visible on dark
-        filter: 'drop-shadow(0 0 6px rgba(0,0,0,0.55)) drop-shadow(0 0 14px rgba(0,0,0,0.25)) drop-shadow(0 0 4px rgba(204,255,0,0.3))',
+        mixBlendMode: 'difference',
       }}>
-        <GlobeSVG size={56} dur="2.2s" />
+        <GhostGlobeSVG size={56} dur="2.2s" />
         <div style={{ display: 'flex', gap: 5, alignItems: 'center' }}>
           {[0, 1, 2].map(i => (
             <div key={i} style={{
               width: 4, height: 4, borderRadius: '50%',
-              background: ACCENT,
+              background: '#ffffff', // white + difference = inverts to dark on light bg
               animation: `dl-dot-blink 1.2s ease-in-out ${i * 0.22}s infinite`,
             }} />
           ))}
