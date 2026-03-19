@@ -225,8 +225,7 @@ const ArtistDistributionMap: React.FC<Props> = ({ artworks, isDark = true, hideL
             centerY: am5.p50,
             fontSize,
             fontWeight: '700',
-            fill: am5.color(dotTextColor),
-            pointerEvents: 'none',
+            fill: am5.color(dotTextColor)
           })
         );
 

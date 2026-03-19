@@ -1,6 +1,5 @@
 import type { ExhibitionItem } from "../types/Exhibition";
 import type { Artwork } from "../types/Artwork";
-import { useNavigate } from 'react-router-dom';
 import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react';
 import { ArtworkRecommendations } from './ArtworkRecommendations';
 import { SearchInputWithSuggestions } from "./SearchInputWithSuggestions";
@@ -10,7 +9,6 @@ import { db, auth } from "../firebase";
 import { buildSourceSet, useProxy, getOptimizedImageUrl, getWeservUrl, tuneWeservUrl } from "../utils/imageProxy";
 import { normalizeSearchText } from "../utils/textNormalize";
 import { usePrefetchNeighbors } from "../hooks/usePrefetchNeighbors";
-import { LoginButton } from "./LoginButton";
 import { HeartOverlay } from "./HeartOverlay";
 import { SubmissionForm } from "./SubmissionForm";
 import { ProductModal } from "./ProductModal";
@@ -807,7 +805,6 @@ interface RoomMeta {
 }
 
 const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumName, onClose, initialSelectedIndex = 0, inline = false, variant = 'default' }) => {
-  const navigate = useNavigate();
   const [artworks, setArtworks] = useState<Artwork[]>([]);
   const [initialized, setInitialized] = useState<boolean>(false);
   // National Museum of Korea pagination state
