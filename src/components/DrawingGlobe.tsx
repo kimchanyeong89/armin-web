@@ -547,6 +547,44 @@ export default function DrawingGlobe({ exhibitions, onClose, onSelectExhibition,
       const d = pathFn(bordersRef.current);
       if (d) bordersPathRef.current.setAttribute('d', d);
     }
+
+    // ── Update marker positions imperatively ──────────────────────────────
+    const lv = levelRef.current;
+    for (const info of markerRegistry.current.values()) {
+      const { el, isBlob } = info;
+      let x: number, y: number;
+
+      if (info.cityCoords) {
+        // City marker: position interpolated based on zoom level
+        const mPos = proj(info.cityCoords);
+        const cPos = info.contCoords ? proj(info.contCoords) : mPos;
+        const ccPos = info.countryCoords ? proj(info.countryCoords) : mPos;
+        if (!mPos || !cPos || !ccPos) { el.style.display = 'none'; continue; }
+        if (lv <= 1) {
+          x = (cPos[0] as number) + ((ccPos[0] as number) - (cPos[0] as number)) * lv;
+          y = (cPos[1] as number) + ((ccPos[1] as number) - (cPos[1] as number)) * lv;
+        } else {
+          const t = Math.min(lv - 1, 1);
+          x = (ccPos[0] as number) + ((mPos[0] as number) - (ccPos[0] as number)) * t;
+          y = (ccPos[1] as number) + ((mPos[1] as number) - (ccPos[1] as number)) * t;
+        }
+      } else if (info.coords) {
+        // Simple continent or country marker
+        const pos = proj(info.coords);
+        if (!pos) { el.style.display = 'none'; continue; }
+        x = pos[0] as number;
+        y = pos[1] as number;
+      } else {
+        continue;
+      }
+
+      el.style.display = '';
+      if (isBlob) {
+        el.setAttribute('transform', `translate(${x},${y})`);
+      } else {
+        el.style.transform = `translate(${x}px,${y}px)`;
+      }
+    }
   }, [size]);
 
   // level: 0=continent, 1=country, 2=city-cluster (mini-map on click)
@@ -739,6 +777,15 @@ export default function DrawingGlobe({ exhibitions, onClose, onSelectExhibition,
   const landPathRef = useRef<SVGPathElement>(null);
   const bordersPathRef = useRef<SVGPathElement>(null);
   const clipPathRef = useRef<SVGPathElement>(null);
+
+  const markerRegistry = useRef<Map<string, {
+    el: SVGGElement;
+    isBlob: boolean;         // true → SVG transform attr, false → CSS style.transform
+    coords?: [number, number];           // continent / country center
+    cityCoords?: [number, number];       // city's own coords
+    contCoords?: [number, number];       // parent continent coords
+    countryCoords?: [number, number];    // parent country coords
+  }>>(new Map());
 
   const handleSvgMouseDown = useCallback((e: React.MouseEvent<SVGSVGElement>) => {
     // Only start drag on the globe background, not on marker elements
@@ -1202,7 +1249,9 @@ export default function DrawingGlobe({ exhibitions, onClose, onSelectExhibition,
               const txt = cluster.continentName.toUpperCase();
               const bw = txt.length * 8 + 20;
               return (
-                <g key={`blob-cont-${cluster.id}`} transform={`translate(${pos[0]},${pos[1]})`}
+                <g key={`blob-cont-${cluster.id}`}
+                  ref={(el: SVGGElement | null) => { if (el) markerRegistry.current.set(`bc-${cluster.id}`, { el, isBlob: true, coords: cluster.coords }); else markerRegistry.current.delete(`bc-${cluster.id}`); }}
+                  transform={`translate(${pos[0]},${pos[1]})`}
                   style={{ opacity: targetLevel === 0 ? 1 : 0, transition: 'opacity 0.4s ease' }}>
                   <path d="M 0 0 L -6 -10 L 6 -10 Z" fill="black" />
                   <rect x={-(bw / 2)} y="-34" width={bw} height="28" rx="14" fill="black" />
@@ -1218,7 +1267,9 @@ export default function DrawingGlobe({ exhibitions, onClose, onSelectExhibition,
               const isHov = hoveredMarker === cluster.id;
               const bw = isHov ? cluster.countryName.toUpperCase().length * 8 + 20 : 28;
               return (
-                <g key={`blob-country-${cluster.id}`} transform={`translate(${pos[0]},${pos[1]})`}
+                <g key={`blob-country-${cluster.id}`}
+                  ref={(el: SVGGElement | null) => { if (el) markerRegistry.current.set(`bcc-${cluster.id}`, { el, isBlob: true, coords: cluster.coords }); else markerRegistry.current.delete(`bcc-${cluster.id}`); }}
+                  transform={`translate(${pos[0]},${pos[1]})`}
                   style={{ opacity: targetLevel === 1 ? 1 : 0, transition: 'opacity 0.4s ease' }}>
                   <path d="M 0 0 L -6 -10 L 6 -10 Z" fill="black" />
                   <rect x={-(bw / 2)} y="-34" width={bw} height="28" rx="14" fill="black"
@@ -1259,7 +1310,9 @@ export default function DrawingGlobe({ exhibitions, onClose, onSelectExhibition,
               const bw = isHov && targetLevel === 2 ? city.cityName.toUpperCase().length * 8 + 20 : 28;
 
               return (
-                <g key={`blob-city-${city.id}`} transform={`translate(${tx},${ty})`}>
+                <g key={`blob-city-${city.id}`}
+                  ref={(el: SVGGElement | null) => { if (el) markerRegistry.current.set(`bci-${city.id}`, { el, isBlob: true, cityCoords: city.coords, contCoords: cont?.coords, countryCoords: countryCluster?.coords }); else markerRegistry.current.delete(`bci-${city.id}`); }}
+                  transform={`translate(${tx},${ty})`}>
                   <g style={{ opacity: targetLevel >= 3 ? 0 : 1, transition: 'opacity 0.4s ease' }}>
                     <path d="M 0 0 L -6 -10 L 6 -10 Z" fill="black" />
                     <rect x={-(bw / 2)} y="-34" width={bw} height="28" rx={isSel ? 5 : 14} fill="black"
@@ -1291,6 +1344,7 @@ export default function DrawingGlobe({ exhibitions, onClose, onSelectExhibition,
           const rectX = -(rectWidth / 2);
           return (
             <g key={`cont-${cluster.id}`} data-marker="true"
+              ref={(el: SVGGElement | null) => { if (el) markerRegistry.current.set(`tc-${cluster.id}`, { el, isBlob: false, coords: cluster.coords }); else markerRegistry.current.delete(`tc-${cluster.id}`); }}
               style={{
                 transform: `translate(${pos[0]}px, ${pos[1]}px)`,
                 opacity: targetLevel === 0 ? 1 : 0,
@@ -1325,6 +1379,7 @@ export default function DrawingGlobe({ exhibitions, onClose, onSelectExhibition,
           
           return (
             <g key={`country-${cluster.id}`} data-marker="true"
+              ref={(el: SVGGElement | null) => { if (el) markerRegistry.current.set(`tcc-${cluster.id}`, { el, isBlob: false, coords: cluster.coords }); else markerRegistry.current.delete(`tcc-${cluster.id}`); }}
               style={{
                 transform: `translate(${pos[0]}px, ${pos[1]}px)`,
                 opacity: targetLevel === 1 ? 1 : 0,
@@ -1380,6 +1435,7 @@ export default function DrawingGlobe({ exhibitions, onClose, onSelectExhibition,
 
           return (
             <g key={`city-text-${city.id}`} data-marker="true"
+              ref={(el: SVGGElement | null) => { if (el) markerRegistry.current.set(`tci-${city.id}`, { el, isBlob: false, cityCoords: city.coords, contCoords: cont?.coords, countryCoords: countryCluster?.coords }); else markerRegistry.current.delete(`tci-${city.id}`); }}
               style={{
                 transform: `translate(${tx}px, ${ty}px)`,
                 opacity: isSel ? 1 : (targetLevel === 2 ? 1 : 0),
