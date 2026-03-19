@@ -16,12 +16,9 @@ const LARGE_FILES = [
   'geodata/populated-places-10m.json',
   'data/national-museum-korea.json',
   'data/gyeongju-museum.json',
-<<<<<<< HEAD
-=======
   'data/nga-collection.json',
   'data/aic-collection.json',
   'data/mca-collection.json', // 45MB - too large for Pages
->>>>>>> 06dab5b1 (chore: add 30+ new museum collections, scripts, UI components, and gitignore cleanup)
   // 'data/nasjonal-collection.json', // Now 3.7 MB after removing _raw - small enough for Pages
   'data/search-index.json', // 221 MB - too large for Pages
 ];
