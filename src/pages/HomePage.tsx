@@ -95,11 +95,10 @@ export default function HomePage({ exhibitions, isOverlayOpen = false }: HomePag
     try { return !!(window.history.state?.usr?.fromInteractiveMap); } catch { return false; }
   });
   const [showDrawingGlobe, setShowDrawingGlobe] = useState(() => {
-    // Show drawing globe by default unless user has explicitly dismissed it or is returning from interactive map
-    const dismissed = sessionStorage.getItem('drawingGlobeDismissed') === 'true';
+    // Always show drawing globe by default unless returning from interactive map
     const fromInteractive = !!(window.history.state?.usr?.fromInteractiveMap);
     const fromDrawingParam = new URLSearchParams(window.location.search).get('drawingMap') === 'true';
-    return fromDrawingParam || (!dismissed && !fromInteractive);
+    return fromDrawingParam || !fromInteractive;
   });
 
   // Dark / light mode for home globe (persisted in localStorage)
@@ -749,7 +748,7 @@ export default function HomePage({ exhibitions, isOverlayOpen = false }: HomePag
           <div style={{ position: "fixed", top: 0, left: 0, right: 0, bottom: 0, zIndex: 2000 }}>
             <DrawingGlobe
               exhibitions={exhibitions}
-              onClose={() => { sessionStorage.setItem('drawingGlobeDismissed', 'true'); setShowDrawingGlobe(false); }}
+              onClose={() => { setShowDrawingGlobe(false); }}
               onSelectExhibition={(ex) => {
                 navigate(`/exhibition/${ex.id}?mode=drawing`);
               }}

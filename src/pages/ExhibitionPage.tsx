@@ -621,7 +621,12 @@ const CSS = `
 @media (max-width: 640px) {
   .ep-hero { padding: 16px 14px 14px; }
   .ep-grid { padding: 12px 14px 20px; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 10px; }
-  .ep-header { padding: 0 12px; }
+  .ep-header { padding: 0 12px; height: 42px; }
+  .ep-header-meta { display: none; }
+  .ep-hero-name { font-size: clamp(20px, 6vw, 36px); margin-bottom: 8px; }
+  .ep-hero-desc { font-size: 10px; max-width: 100%; }
+  .ep-card-title { font-size: 11px; }
+  .ep-switcher-panel { width: calc(100vw - 28px); max-width: 320px; }
 }
 `;
 

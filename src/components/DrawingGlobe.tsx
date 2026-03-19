@@ -451,7 +451,7 @@ const S = {
   logoWrap: { position: 'absolute' as const, top: 32, left: 32, zIndex: 10, pointerEvents: 'auto' as const, cursor: 'pointer' },
   globeSvg: { position: 'absolute' as const, top: 0, left: 0, width: '100%', height: '100%', cursor: 'grab' },
   brLabel: { position: 'absolute' as const, bottom: 32, right: 32, textAlign: 'right' as const, pointerEvents: 'none' as const, zIndex: 10 },
-  instructions: { position: 'absolute' as const, bottom: 32, left: 32, textAlign: 'left' as const, pointerEvents: 'none' as const, zIndex: 10, opacity: 0.5 },
+  instructions: { position: 'absolute' as const, bottom: 92, left: 32, textAlign: 'left' as const, pointerEvents: 'none' as const, zIndex: 10, opacity: 0.5 },
   instructionText: { fontSize: 11, fontFamily: 'sans-serif', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase' as const, margin: '2px 0' },
   panel: (show: boolean) => ({
     position: 'absolute' as const, top: '50%', left: 32, transform: show ? 'translateY(-50%) translateX(0)' : 'translateY(-50%) translateX(-120%)',
@@ -497,6 +497,7 @@ export default function DrawingGlobe({ exhibitions, onClose, onSelectExhibition,
   const [countries, setCountries] = useState<any[]>([]);
   const [hoveredCountry, setHoveredCountry] = useState<string | null>(null);
   const [hoveredMarker, setHoveredMarker] = useState<string | null>(null);
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 640;
   const [isHomeHovered, setIsHomeHovered] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -698,6 +699,7 @@ export default function DrawingGlobe({ exhibitions, onClose, onSelectExhibition,
   const svgRef = useRef<SVGSVGElement>(null);
   const isDragging = useRef(false);
   const lastDragPos = useRef<{ x: number; y: number } | null>(null);
+  const rafId = useRef<number | null>(null);
 
   const handleSvgMouseDown = useCallback((e: React.MouseEvent<SVGSVGElement>) => {
     // Only start drag on the globe background, not on marker elements
@@ -748,9 +750,15 @@ export default function DrawingGlobe({ exhibitions, onClose, onSelectExhibition,
       const dx = e.touches[0].clientX - lastDragPos.current.x;
       const dy = e.touches[0].clientY - lastDragPos.current.y;
       lastDragPos.current = { x: e.touches[0].clientX, y: e.touches[0].clientY };
-      setRotation(r => {
-        const sens = 0.4 * (initialScale / scaleRef.current);
-        return [r[0] + dx * sens, r[1] - dy * sens, r[2]];
+      if (rafId.current !== null) return;
+      const capturedDx = dx;
+      const capturedDy = dy;
+      rafId.current = requestAnimationFrame(() => {
+        setRotation(r => {
+          const sens = 0.4 * (initialScale / scaleRef.current);
+          return [r[0] + capturedDx * sens, r[1] - capturedDy * sens, r[2]];
+        });
+        rafId.current = null;
       });
     } else if (e.touches.length === 2 && touchDistRef.current !== null) {
       const dx = e.touches[0].clientX - e.touches[1].clientX;
@@ -1045,7 +1053,7 @@ export default function DrawingGlobe({ exhibitions, onClose, onSelectExhibition,
         height={size.h}
         viewBox={`0 0 ${size.w} ${size.h}`}
         preserveAspectRatio="xMidYMid meet"
-        style={{ ...S.globeSvg, cursor: 'grab', shapeRendering: 'geometricPrecision', textRendering: 'optimizeLegibility', touchAction: 'none' }}
+        style={{ ...S.globeSvg, cursor: 'grab', shapeRendering: isMobile ? 'auto' : 'geometricPrecision', textRendering: 'optimizeLegibility', touchAction: 'none', willChange: 'transform' }}
         onMouseDown={handleSvgMouseDown}
         onMouseMove={handleSvgMouseMove}
         onMouseUp={handleSvgMouseUp}
@@ -1081,10 +1089,10 @@ export default function DrawingGlobe({ exhibitions, onClose, onSelectExhibition,
 
         {/* Globe body */}
         <g style={{ opacity: selectedCluster ? 0.3 : 1, filter: selectedCluster ? 'blur(4px)' : 'none', transition: 'all 0.7s' }}>
-          <g filter="url(#dg-sketch-globe)">
+          <g {...(isMobile ? {} : { filter: "url(#dg-sketch-globe)" })}>
             <path d={getDentedCirclePath(size.w / 2, size.h / 2, scale)} fill="#FFFFFF" stroke="none" />
           </g>
-          <g filter="url(#dg-sketch-globe)" clipPath="url(#dg-globe-clip)">
+          <g {...(isMobile ? { clipPath: "url(#dg-globe-clip)" } : { filter: "url(#dg-sketch-globe)", clipPath: "url(#dg-globe-clip)" })}>
             {land && <path d={pathGenerator(land) || ''} fill="#FFFFFF" stroke="#111111" strokeWidth="2.5" strokeLinejoin="round" pointerEvents="none" />}
             {countries.map((country, i) => (
               <path key={i} d={pathGenerator(country) || ''}
@@ -1098,7 +1106,7 @@ export default function DrawingGlobe({ exhibitions, onClose, onSelectExhibition,
             ))}
             {borders && <path d={pathGenerator(borders) || ''} fill="none" stroke="#111111" strokeWidth="2.5" strokeLinejoin="round" pointerEvents="none" />}
           </g>
-          <g filter="url(#dg-sketch-globe)">
+          <g {...(isMobile ? {} : { filter: "url(#dg-sketch-globe)" })}>
             <path d={getDentedCirclePath(size.w / 2, size.h / 2, scale)} fill="none" stroke="#111111" strokeWidth="2.5" strokeLinejoin="round" pointerEvents="none" />
           </g>
         </g>
@@ -1111,7 +1119,7 @@ export default function DrawingGlobe({ exhibitions, onClose, onSelectExhibition,
             blob center and text position → text flies outside the pill. */}
 
         {/* BLOBS ONLY inside sketch-globe — each blob sized to match its text label */}
-        <g filter="url(#dg-sketch-globe)">
+        <g {...(isMobile ? {} : { filter: "url(#dg-sketch-globe)" })}>
           <g filter="url(#dg-gooey)">
 
             {/* Continent blobs (level 0) */}
@@ -1369,19 +1377,19 @@ export default function DrawingGlobe({ exhibitions, onClose, onSelectExhibition,
         <button
           onClick={onSwitchToInteractive}
           style={{
-            position: 'fixed', bottom: 28, right: 28, zIndex: 200,
+            position: 'fixed', bottom: 28, left: 32, zIndex: 200,
             display: 'flex', alignItems: 'center', gap: 9,
             background: '#111111', color: '#ffffff',
             border: '2.5px solid #111111',
             padding: '11px 20px', fontSize: 9, fontWeight: 700,
             letterSpacing: '0.22em', fontFamily: "'Space Mono', 'Courier New', monospace",
             cursor: 'pointer', textTransform: 'uppercase',
-            boxShadow: '3px 3px 0 #111111',
-            filter: 'url(#dg-sketch-globe)',
+            boxShadow: '3px 3px 0 rgba(17,17,17,0.4)',
+            filter: 'url(#dg-sketch-ui)',
             transition: 'box-shadow 0.1s, transform 0.1s',
           }}
-          onMouseEnter={e => { e.currentTarget.style.boxShadow = '1px 1px 0 #111111'; e.currentTarget.style.transform = 'translate(2px,2px)'; }}
-          onMouseLeave={e => { e.currentTarget.style.boxShadow = '3px 3px 0 #111111'; e.currentTarget.style.transform = 'none'; }}
+          onMouseEnter={e => { e.currentTarget.style.boxShadow = '1px 1px 0 rgba(17,17,17,0.4)'; e.currentTarget.style.transform = 'translate(2px,2px)'; }}
+          onMouseLeave={e => { e.currentTarget.style.boxShadow = '3px 3px 0 rgba(17,17,17,0.4)'; e.currentTarget.style.transform = 'none'; }}
         >
           {/* Globe icon — hand-drawn circle style */}
           <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
