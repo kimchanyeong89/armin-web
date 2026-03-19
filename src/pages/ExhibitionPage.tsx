@@ -710,7 +710,6 @@ export default function ExhibitionPage({ exhibitions }: { exhibitions: Exhibitio
 
   const totalArtworks = allExhibitions.reduce((s, ex) => s + (ex.artworks?.length || 0), 0);
 
-  const backPath = isDrawingMode ? '/?drawingMap=true' : '/';
 
   return (
     <div className="ep-shell" data-mode={mode}>
@@ -743,7 +742,7 @@ export default function ExhibitionPage({ exhibitions }: { exhibitions: Exhibitio
 
       {/* ── Header ─────────────────────────────────────────────── */}
       <header className="ep-header">
-        <button className="ep-nav-btn" onClick={() => navigate(backPath)}>← MAP</button>
+        <button className="ep-nav-btn" onClick={() => isDrawingMode ? navigate('/?drawingMap=true') : navigate('/', { state: { fromInteractiveMap: true } })}>← MAP</button>
         {activeItem && (
           <button className="ep-nav-btn" onClick={() => { setActiveItem(null); setIsSwitcherOpen(false); }}>
             ← EXHIBITIONS

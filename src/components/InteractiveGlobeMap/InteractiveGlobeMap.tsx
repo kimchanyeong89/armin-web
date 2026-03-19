@@ -424,7 +424,7 @@ export default function InteractiveGlobeMap({ exhibitions, onSelectExhibition, o
             onClose={() => setSelectedCity(null)}
             onSelectVenue={(venue) => {
               if (onExit) onExit();
-              navigate(`/exhibition/${venue.id}`);
+              navigate(`/exhibition/${venue.id}`, { state: { fromInteractiveMap: true } });
             }}
           />
         )}
