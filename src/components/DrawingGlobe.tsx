@@ -519,11 +519,35 @@ export default function DrawingGlobe({ exhibitions, onClose, onSelectExhibition,
     setScaleState(val);
   };
 
-  // Sync data refs for imperative canvas access
+  // Sync data refs for imperative access
   useEffect(() => { landRef.current = land; }, [land]);
   useEffect(() => { bordersRef.current = borders; }, [borders]);
   // Sync rotationRef when rotation changes from non-drag sources
   useEffect(() => { rotationRef.current = rotation; }, [rotation]);
+
+  // Imperative SVG draw — updates path `d` attributes directly without React re-render
+  // Preserves ALL SVG filters and visual aesthetics
+  const imperativeDraw = useCallback(() => {
+    if (!landRef.current) return;
+    const proj = geoOrthographic()
+      .scale(scaleRef.current)
+      .translate([size.w / 2, size.h / 2])
+      .rotate(rotationRef.current)
+      .clipAngle(90);
+    const pathFn = geoPath(proj);
+    const dentedPath = getDentedCirclePath(size.w / 2, size.h / 2, scaleRef.current);
+    if (clipPathRef.current) clipPathRef.current.setAttribute('d', dentedPath);
+    if (spherePathRef.current) spherePathRef.current.setAttribute('d', dentedPath);
+    if (sphereOutlineRef.current) sphereOutlineRef.current.setAttribute('d', dentedPath);
+    if (landPathRef.current) {
+      const d = pathFn(landRef.current);
+      if (d) landPathRef.current.setAttribute('d', d);
+    }
+    if (bordersPathRef.current && bordersRef.current) {
+      const d = pathFn(bordersRef.current);
+      if (d) bordersPathRef.current.setAttribute('d', d);
+    }
+  }, [size]);
 
   // level: 0=continent, 1=country, 2=city-cluster (mini-map on click)
   const targetLevel: 0 | 1 | 2 = (scale < initialScale * 1.5 && !selectedCluster) ? 0
@@ -701,80 +725,20 @@ export default function DrawingGlobe({ exhibitions, onClose, onSelectExhibition,
     tryFetch(['/geodata/countries-110m.json', 'https://unpkg.com/world-atlas@2.0.2/countries-110m.json'], 0);
   }, []);
 
-  // ── Canvas rendering (mobile only) ────────────────────────────────────────
-  const redrawCanvas = useCallback(() => {
-    if (!isMobile) return;
-    const canvas = canvasRef.current;
-    if (!canvas || !landRef.current) return;
-    const ctx = canvas.getContext('2d');
-    if (!ctx) return;
-    const dpr = window.devicePixelRatio || 1;
-    const proj = geoOrthographic()
-      .scale(scaleRef.current)
-      .translate([size.w / 2, size.h / 2])
-      .rotate(rotationRef.current)
-      .clipAngle(90);
-    const pathFn = geoPath(proj as any, ctx as any);
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.save();
-    ctx.scale(dpr, dpr);
-    // Sphere background
-    ctx.beginPath();
-    (pathFn as any)({ type: 'Sphere' });
-    ctx.fillStyle = '#FFFFFF';
-    ctx.fill();
-    // Land
-    ctx.beginPath();
-    pathFn(landRef.current);
-    ctx.fillStyle = '#FFFFFF';
-    ctx.strokeStyle = '#111111';
-    ctx.lineWidth = 1.5;
-    ctx.fill();
-    ctx.stroke();
-    // Borders
-    if (bordersRef.current) {
-      ctx.beginPath();
-      pathFn(bordersRef.current);
-      ctx.strokeStyle = '#111111';
-      ctx.lineWidth = 0.8;
-      ctx.stroke();
-    }
-    // Globe outline
-    ctx.beginPath();
-    (pathFn as any)({ type: 'Sphere' });
-    ctx.strokeStyle = '#111111';
-    ctx.lineWidth = 2.5;
-    ctx.stroke();
-    ctx.restore();
-  }, [isMobile, size]);
-
-  // Setup canvas physical size for HiDPI
-  useEffect(() => {
-    if (!isMobile) return;
-    const canvas = canvasRef.current;
-    if (!canvas) return;
-    const dpr = window.devicePixelRatio || 1;
-    canvas.width = size.w * dpr;
-    canvas.height = size.h * dpr;
-    canvas.style.width = `${size.w}px`;
-    canvas.style.height = `${size.h}px`;
-  }, [size, isMobile]);
-
-  // Redraw canvas when data or scale changes
-  useEffect(() => {
-    if (!isMobile) return;
-    redrawCanvas();
-  }, [land, borders, scale, isMobile, redrawCanvas]);
-
   // ── Drag + scroll ─────────────────────────────────────────────────────────
   const svgRef = useRef<SVGSVGElement>(null);
   const isDragging = useRef(false);
   const lastDragPos = useRef<{ x: number; y: number } | null>(null);
   const rafId = useRef<number | null>(null);
-  const canvasRef = useRef<HTMLCanvasElement>(null);
   const rotationRef = useRef<[number, number, number]>([20, -20, 0]);
   const landRef = useRef<any>(null);
   const bordersRef = useRef<any>(null);
+  // SVG path refs for imperative mobile drawing (avoids React re-renders during drag)
+  const spherePathRef = useRef<SVGPathElement>(null);
+  const sphereOutlineRef = useRef<SVGPathElement>(null);
+  const landPathRef = useRef<SVGPathElement>(null);
+  const bordersPathRef = useRef<SVGPathElement>(null);
+  const clipPathRef = useRef<SVGPathElement>(null);
 
   const handleSvgMouseDown = useCallback((e: React.MouseEvent<SVGSVGElement>) => {
     // Only start drag on the globe background, not on marker elements
@@ -827,7 +791,7 @@ export default function DrawingGlobe({ exhibitions, onClose, onSelectExhibition,
       lastDragPos.current = { x: e.touches[0].clientX, y: e.touches[0].clientY };
       const sens = 0.4 * (initialScale / scaleRef.current);
       if (isMobile) {
-        // Mobile: update ref + canvas directly — zero React re-renders during drag
+        // Mobile: mutate ref + update SVG DOM directly — zero React re-renders during drag
         rotationRef.current = [
           rotationRef.current[0] + dx * sens,
           rotationRef.current[1] - dy * sens,
@@ -835,12 +799,12 @@ export default function DrawingGlobe({ exhibitions, onClose, onSelectExhibition,
         ];
         if (rafId.current === null) {
           rafId.current = requestAnimationFrame(() => {
-            redrawCanvas();
+            imperativeDraw();
             rafId.current = null;
           });
         }
       } else {
-        // Desktop: use React state (existing behavior)
+        // Desktop: React state (existing behavior)
         if (rafId.current !== null) return;
         const capturedDx = dx;
         const capturedDy = dy;
@@ -861,7 +825,7 @@ export default function DrawingGlobe({ exhibitions, onClose, onSelectExhibition,
         scaleRef.current = Math.max(minSc, Math.min(scaleRef.current * ratio, maxSc));
         if (rafId.current === null) {
           rafId.current = requestAnimationFrame(() => {
-            redrawCanvas();
+            imperativeDraw();
             rafId.current = null;
           });
         }
@@ -869,7 +833,7 @@ export default function DrawingGlobe({ exhibitions, onClose, onSelectExhibition,
         setScale(s => Math.max(minSc, Math.min(s * ratio, maxSc)));
       }
     }
-  }, [initialScale, isMobile, redrawCanvas]);
+  }, [initialScale, isMobile, imperativeDraw]);
 
   const handleSvgTouchEnd = useCallback(() => {
     isDragging.current = false;
@@ -880,7 +844,7 @@ export default function DrawingGlobe({ exhibitions, onClose, onSelectExhibition,
       rafId.current = null;
     }
     if (isMobile) {
-      // Sync React state once on drag end so markers reposition
+      // Sync React state once on lift — markers reposition, React recalculates paths
       setRotation([...rotationRef.current] as [number, number, number]);
       setScaleState(scaleRef.current);
     }
@@ -1154,14 +1118,6 @@ export default function DrawingGlobe({ exhibitions, onClose, onSelectExhibition,
         </svg>
       </div>
 
-      {/* ── Canvas globe (mobile only) ── */}
-      {isMobile && (
-        <canvas
-          ref={canvasRef}
-          style={{ position: 'absolute', top: 0, left: 0, pointerEvents: 'none', zIndex: 1 }}
-        />
-      )}
-
       {/* ── Globe SVG ── */}
       <svg
         ref={svgRef}
@@ -1169,7 +1125,7 @@ export default function DrawingGlobe({ exhibitions, onClose, onSelectExhibition,
         height={size.h}
         viewBox={`0 0 ${size.w} ${size.h}`}
         preserveAspectRatio="xMidYMid meet"
-        style={{ ...S.globeSvg, cursor: 'grab', shapeRendering: isMobile ? 'auto' : 'geometricPrecision', textRendering: 'optimizeLegibility', touchAction: 'none', willChange: 'transform', background: isMobile ? 'transparent' : undefined, zIndex: 2 }}
+        style={{ ...S.globeSvg, cursor: 'grab', shapeRendering: isMobile ? 'auto' : 'geometricPrecision', textRendering: 'optimizeLegibility', touchAction: 'none', willChange: 'transform' }}
         onMouseDown={handleSvgMouseDown}
         onMouseMove={handleSvgMouseMove}
         onMouseUp={handleSvgMouseUp}
@@ -1194,7 +1150,7 @@ export default function DrawingGlobe({ exhibitions, onClose, onSelectExhibition,
             <feDisplacementMap in="SourceGraphic" in2="noise" scale="3" xChannelSelector="R" yChannelSelector="G" />
           </filter>
           <clipPath id="dg-globe-clip">
-            <path d={getDentedCirclePath(size.w / 2, size.h / 2, scale)} />
+            <path ref={clipPathRef} d={getDentedCirclePath(size.w / 2, size.h / 2, scale)} />
           </clipPath>
           {/* Lightweight text flow filter — subtle turbulence gives text a hand-drawn feel */}
           <filter id="dg-text-flow" x="-20%" y="-50%" width="140%" height="200%">
@@ -1203,41 +1159,29 @@ export default function DrawingGlobe({ exhibitions, onClose, onSelectExhibition,
           </filter>
         </defs>
 
-        {/* Globe body — desktop SVG paths; mobile uses canvas layer instead */}
-        {!isMobile && (
-          <g style={{ opacity: selectedCluster ? 0.3 : 1, filter: selectedCluster ? 'blur(4px)' : 'none', transition: 'all 0.7s' }}>
-            <g filter="url(#dg-sketch-globe)">
-              <path d={getDentedCirclePath(size.w / 2, size.h / 2, scale)} fill="#FFFFFF" stroke="none" />
-            </g>
-            <g filter="url(#dg-sketch-globe)" clipPath="url(#dg-globe-clip)">
-              {land && <path d={pathGenerator(land) || ''} fill="#FFFFFF" stroke="#111111" strokeWidth="2.5" strokeLinejoin="round" pointerEvents="none" />}
-              {countries.map((country, i) => (
-                <path key={i} d={pathGenerator(country) || ''}
-                  fill={hoveredCountry === country.properties.name ? '#111111' : 'transparent'}
-                  stroke="none"
-                  onMouseEnter={() => setHoveredCountry(country.properties.name)}
-                  onMouseLeave={() => setHoveredCountry(null)}
-                  onClick={e => { e.stopPropagation(); const c = d3.geoCentroid(country); zoomToCoords(c as [number, number], Math.max(scaleRef.current * 1.5, initialScale * 6.0)); }}
-                  style={{ cursor: 'pointer', pointerEvents: 'auto', transition: 'fill 0.2s' }}
-                />
-              ))}
-              {borders && <path d={pathGenerator(borders) || ''} fill="none" stroke="#111111" strokeWidth="2.5" strokeLinejoin="round" pointerEvents="none" />}
-            </g>
-            <g filter="url(#dg-sketch-globe)">
-              <path d={getDentedCirclePath(size.w / 2, size.h / 2, scale)} fill="none" stroke="#111111" strokeWidth="2.5" strokeLinejoin="round" pointerEvents="none" />
-            </g>
+        {/* Globe body */}
+        <g style={{ opacity: selectedCluster ? 0.3 : 1, filter: selectedCluster ? 'blur(4px)' : 'none', transition: 'all 0.7s' }}>
+          <g {...(isMobile ? {} : { filter: "url(#dg-sketch-globe)" })}>
+            <path ref={spherePathRef} d={getDentedCirclePath(size.w / 2, size.h / 2, scale)} fill="#FFFFFF" stroke="none" />
           </g>
-        )}
-        {/* Mobile: transparent clip zone for interaction */}
-        {isMobile && (
-          <g>
-            <circle
-              cx={size.w / 2} cy={size.h / 2} r={scale}
-              fill="rgba(0,0,0,0.001)"
-              style={{ cursor: 'grab' }}
-            />
+          <g {...(isMobile ? { clipPath: "url(#dg-globe-clip)" } : { filter: "url(#dg-sketch-globe)", clipPath: "url(#dg-globe-clip)" })}>
+            {land && <path ref={landPathRef} d={pathGenerator(land) || ''} fill="#FFFFFF" stroke="#111111" strokeWidth="2.5" strokeLinejoin="round" pointerEvents="none" />}
+            {countries.map((country, i) => (
+              <path key={i} d={pathGenerator(country) || ''}
+                fill={hoveredCountry === country.properties.name ? '#111111' : 'transparent'}
+                stroke="none"
+                onMouseEnter={() => setHoveredCountry(country.properties.name)}
+                onMouseLeave={() => setHoveredCountry(null)}
+                onClick={e => { e.stopPropagation(); const c = d3.geoCentroid(country); zoomToCoords(c as [number, number], Math.max(scaleRef.current * 1.5, initialScale * 6.0)); }}
+                style={{ cursor: 'pointer', pointerEvents: 'auto', transition: 'fill 0.2s' }}
+              />
+            ))}
+            {borders && <path ref={bordersPathRef} d={pathGenerator(borders) || ''} fill="none" stroke="#111111" strokeWidth="2.5" strokeLinejoin="round" pointerEvents="none" />}
           </g>
-        )}
+          <g {...(isMobile ? {} : { filter: "url(#dg-sketch-globe)" })}>
+            <path ref={sphereOutlineRef} d={getDentedCirclePath(size.w / 2, size.h / 2, scale)} fill="none" stroke="#111111" strokeWidth="2.5" strokeLinejoin="round" pointerEvents="none" />
+          </g>
+        </g>
 
         {/* ── Cluster Markers ──
             Architecture (FIX):
