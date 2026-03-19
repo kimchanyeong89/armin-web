@@ -808,7 +808,7 @@ export function Globe({
   }, []);
 
   const handleClick = useCallback((e: React.MouseEvent) => {
-    if (dragDistRef.current > 5) return;
+    if (dragDistRef.current > 12) return;
     const canvas = canvasRef.current;
     if (!canvas) return;
 

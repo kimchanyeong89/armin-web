@@ -789,6 +789,7 @@ interface ExhibitionModalProps {
   initialSelectedIndex?: number;
   inline?: boolean;
   variant?: 'sketch' | 'default';
+  theme?: 'dark' | 'light';
 }
 
 
@@ -804,9 +805,21 @@ interface RoomMeta {
   hasArtworks: boolean;
 }
 
-const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumName, onClose, initialSelectedIndex = 0, inline = false, variant = 'default' }) => {
+const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumName, onClose, initialSelectedIndex = 0, inline = false, variant = 'default', theme = 'light' }) => {
   const [artworks, setArtworks] = useState<Artwork[]>([]);
   const [initialized, setInitialized] = useState<boolean>(false);
+
+  // Dark theme color tokens
+  const isDark = theme === 'dark';
+  const EM_BG = isDark ? '#111111' : '#ffffff';
+  const _EM_BG2 = isDark ? '#1c1c1c' : '#f2f2f2'; void _EM_BG2;
+  const EM_TEXT = isDark ? 'rgba(255,255,255,0.88)' : '#222222';
+  const EM_SUB = isDark ? 'rgba(255,255,255,0.50)' : '#666666';
+  const EM_BORDER = isDark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.06)';
+  const EM_BTN_ACTIVE_BG = isDark ? '#ffffff' : '#111111';
+  const EM_BTN_ACTIVE_FG = isDark ? '#111111' : '#ffffff';
+  const EM_BTN_INACTIVE_BG = isDark ? 'rgba(255,255,255,0.08)' : '#f2f2f2';
+  const EM_BTN_INACTIVE_FG = isDark ? 'rgba(255,255,255,0.5)' : '#666666';
   // National Museum of Korea pagination state
   const [nmkTotalCount, setNmkTotalCount] = useState<number>(0);
   const [nmkCurrentChunk, setNmkCurrentChunk] = useState<number>(1);
@@ -2724,7 +2737,8 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
             }));
           });
           // Keep only those with images to avoid empty tiles
-          const withImages = list.filter((a) => !!a.image);
+          const isTateFeed = exhibition.id.startsWith('tm-') || exhibition.id.startsWith('tbc-') || exhibition.id.startsWith('tsi-');
+          const withImages = isTateFeed ? list : list.filter((a) => !!a.image);
           setArtworks(withImages);
           setInitialized(true);
         } catch (e) {
@@ -2880,7 +2894,8 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
                 exhibitionTitle: exhibition.title,
               };
             });
-          const withImages = list.filter((a) => !!a.image);
+          const isTateFeed = exhibition.id.startsWith('tm-') || exhibition.id.startsWith('tbc-') || exhibition.id.startsWith('tsi-');
+          const withImages = isTateFeed ? list : list.filter((a) => !!a.image);
           setArtworks(withImages);
           setInitialized(true);
           try {
@@ -2956,7 +2971,8 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
             }))
             : [];
 
-          const withImages = list.filter((a) => !!a.image);
+          const isTateFeed = exhibition.id.startsWith('tm-') || exhibition.id.startsWith('tbc-') || exhibition.id.startsWith('tsi-');
+          const withImages = isTateFeed ? list : list.filter((a) => !!a.image);
           setArtworks(withImages);
           setInitialized(true);
         } catch (error) {
@@ -3094,7 +3110,8 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
             };
           });
 
-          const withImages = list.filter((a) => !!a.image);
+          const isTateFeed = exhibition.id.startsWith('tm-') || exhibition.id.startsWith('tbc-') || exhibition.id.startsWith('tsi-');
+          const withImages = isTateFeed ? list : list.filter((a) => !!a.image);
           setArtworks(withImages);
           setInitialized(true);
         } catch (err) {
@@ -3149,7 +3166,8 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
             };
           });
 
-          const withImages = list.filter((a) => !!a.image);
+          const isTateFeed = exhibition.id.startsWith('tm-') || exhibition.id.startsWith('tbc-') || exhibition.id.startsWith('tsi-');
+          const withImages = isTateFeed ? list : list.filter((a) => !!a.image);
           setArtworks(withImages);
           setInitialized(true);
         } catch (err) {
@@ -4738,7 +4756,8 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
               exhibitionTitle: exhibition.title,
             }))
             : [];
-          const withImages = list.filter((a) => !!a.image);
+          const isTateFeed = exhibition.id.startsWith('tm-') || exhibition.id.startsWith('tbc-') || exhibition.id.startsWith('tsi-');
+          const withImages = isTateFeed ? list : list.filter((a) => !!a.image);
           setArtworks(withImages);
           setInitialized(true);
         } catch (error) {
@@ -4791,7 +4810,8 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
             }))
             : [];
 
-          const withImages = list.filter((a) => !!a.image);
+          const isTateFeed = exhibition.id.startsWith('tm-') || exhibition.id.startsWith('tbc-') || exhibition.id.startsWith('tsi-');
+          const withImages = isTateFeed ? list : list.filter((a) => !!a.image);
           setArtworks(withImages);
           setInitialized(true);
         } catch (error) {
@@ -4830,7 +4850,8 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
               type: item.type || '3D' as const,
             }));
 
-          const withImages = list.filter((a) => !!a.image);
+          const isTateFeed = exhibition.id.startsWith('tm-') || exhibition.id.startsWith('tbc-') || exhibition.id.startsWith('tsi-');
+          const withImages = isTateFeed ? list : list.filter((a) => !!a.image);
           setArtworks(withImages);
           setInitialized(true);
         } catch (error) {
@@ -4910,7 +4931,8 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
             };
           });
 
-          const withImages = list.filter((a) => !!a.image);
+          const isTateFeed = exhibition.id.startsWith('tm-') || exhibition.id.startsWith('tbc-') || exhibition.id.startsWith('tsi-');
+          const withImages = isTateFeed ? list : list.filter((a) => !!a.image);
           setArtworks(withImages);
           setInitialized(true);
           try {
@@ -4961,7 +4983,8 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
             type: (item.type as Artwork['type']) || '2D',
           }));
 
-          const withImages = list.filter((a) => !!a.image);
+          const isTateFeed = exhibition.id.startsWith('tm-') || exhibition.id.startsWith('tbc-') || exhibition.id.startsWith('tsi-');
+          const withImages = isTateFeed ? list : list.filter((a) => !!a.image);
           setArtworks(withImages);
           setInitialized(true);
         } catch (error) {
@@ -5068,7 +5091,8 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
               type: getSeMAType(item.category || ''),
             }))
             : [];
-          const withImages = list.filter((a) => !!a.image);
+          const isTateFeed = exhibition.id.startsWith('tm-') || exhibition.id.startsWith('tbc-') || exhibition.id.startsWith('tsi-');
+          const withImages = isTateFeed ? list : list.filter((a) => !!a.image);
           setArtworks(withImages);
           setInitialized(true);
         } catch (error) {
@@ -5318,7 +5342,8 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
             })
             : [];
 
-          const withImages = list.filter((a) => !!a.image);
+          const isTateFeed = exhibition.id.startsWith('tm-') || exhibition.id.startsWith('tbc-') || exhibition.id.startsWith('tsi-');
+          const withImages = isTateFeed ? list : list.filter((a) => !!a.image);
           setArtworks(withImages);
           setInitialized(true);
         } catch (error) {
@@ -5368,7 +5393,8 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
               onView: item.ondisplay !== undefined ? item.ondisplay : !!item.room,
             }))
             : [];
-          const withImages = list.filter((a) => !!a.image);
+          const isTateFeed = exhibition.id.startsWith('tm-') || exhibition.id.startsWith('tbc-') || exhibition.id.startsWith('tsi-');
+          const withImages = isTateFeed ? list : list.filter((a) => !!a.image);
           setArtworks(withImages);
           setInitialized(true);
         } catch (error) {
@@ -5454,7 +5480,8 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
             isArchival: isArchival(item.title || ''),
             type: detectType(item.title || ''),
           }));
-          const withImages = list.filter((a) => !!a.image);
+          const isTateFeed = exhibition.id.startsWith('tm-') || exhibition.id.startsWith('tbc-') || exhibition.id.startsWith('tsi-');
+          const withImages = isTateFeed ? list : list.filter((a) => !!a.image);
           setArtworks(withImages);
           setInitialized(true);
         } catch (error) {
@@ -5534,7 +5561,8 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
             youtubeId: item.youtubeId,
             mediaType: item.mediaType,
           }));
-          const withImages = list.filter((a) => !!a.image);
+          const isTateFeed = exhibition.id.startsWith('tm-') || exhibition.id.startsWith('tbc-') || exhibition.id.startsWith('tsi-');
+          const withImages = isTateFeed ? list : list.filter((a) => !!a.image);
           setArtworks(withImages);
           setInitialized(true);
         } catch (error) {
@@ -5681,7 +5709,8 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
             youtubeId: item.youtubeId,
             mediaType: item.mediaType,
           }));
-          const withImages = list.filter((a) => !!a.image);
+          const isTateFeed = exhibition.id.startsWith('tm-') || exhibition.id.startsWith('tbc-') || exhibition.id.startsWith('tsi-');
+          const withImages = isTateFeed ? list : list.filter((a) => !!a.image);
           setArtworks(withImages);
           setInitialized(true);
         } catch (error) {
@@ -5731,7 +5760,8 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
             youtubeId: item.youtubeId,
             mediaType: item.mediaType,
           }));
-          const withImages = list.filter((a) => !!a.image);
+          const isTateFeed = exhibition.id.startsWith('tm-') || exhibition.id.startsWith('tbc-') || exhibition.id.startsWith('tsi-');
+          const withImages = isTateFeed ? list : list.filter((a) => !!a.image);
           setArtworks(withImages);
           setInitialized(true);
         } catch (error) {
@@ -5767,7 +5797,8 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
             exhibitionTitle: exhibition.title,
             type: '2D',
           }));
-          const withImages = list.filter((a) => !!a.image);
+          const isTateFeed = exhibition.id.startsWith('tm-') || exhibition.id.startsWith('tbc-') || exhibition.id.startsWith('tsi-');
+          const withImages = isTateFeed ? list : list.filter((a) => !!a.image);
           setArtworks(withImages);
           setInitialized(true);
         } catch (error) {
@@ -5806,7 +5837,8 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
             exhibitionTitle: exhibition.title,
             type: '2D',
           }));
-          const withImages = list.filter((a) => !!a.image);
+          const isTateFeed = exhibition.id.startsWith('tm-') || exhibition.id.startsWith('tbc-') || exhibition.id.startsWith('tsi-');
+          const withImages = isTateFeed ? list : list.filter((a) => !!a.image);
           setArtworks(withImages);
           setInitialized(true);
         } catch (error) {
@@ -5845,7 +5877,8 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
             exhibitionTitle: exhibition.title,
             type: '2D',
           }));
-          const withImages = list.filter((a) => !!a.image);
+          const isTateFeed = exhibition.id.startsWith('tm-') || exhibition.id.startsWith('tbc-') || exhibition.id.startsWith('tsi-');
+          const withImages = isTateFeed ? list : list.filter((a) => !!a.image);
           setArtworks(withImages);
           setInitialized(true);
         } catch (error) {
@@ -5884,7 +5917,8 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
             exhibitionTitle: exhibition.title,
             type: '2D',
           }));
-          const withImages = list.filter((a) => !!a.image);
+          const isTateFeed = exhibition.id.startsWith('tm-') || exhibition.id.startsWith('tbc-') || exhibition.id.startsWith('tsi-');
+          const withImages = isTateFeed ? list : list.filter((a) => !!a.image);
           setArtworks(withImages);
           setInitialized(true);
         } catch (error) {
@@ -5923,7 +5957,8 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
             exhibitionTitle: exhibition.title,
             type: '2D',
           }));
-          const withImages = list.filter((a) => !!a.image);
+          const isTateFeed = exhibition.id.startsWith('tm-') || exhibition.id.startsWith('tbc-') || exhibition.id.startsWith('tsi-');
+          const withImages = isTateFeed ? list : list.filter((a) => !!a.image);
           setArtworks(withImages);
           setInitialized(true);
         } catch (error) {
@@ -6016,7 +6051,8 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
             exhibitionTitle: exhibition.title,
             type: item.type || 'unknown',  // 2D, 3D, or unknown
           }));
-          const withImages = list.filter((a) => !!a.image);
+          const isTateFeed = exhibition.id.startsWith('tm-') || exhibition.id.startsWith('tbc-') || exhibition.id.startsWith('tsi-');
+          const withImages = isTateFeed ? list : list.filter((a) => !!a.image);
           setArtworks(withImages);
           setInitialized(true);
         } catch (error) {
@@ -6053,7 +6089,8 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
             exhibitionName: exhibition.name,
             exhibitionTitle: exhibition.title,
           }));
-          const withImages = list.filter((a) => !!a.image);
+          const isTateFeed = exhibition.id.startsWith('tm-') || exhibition.id.startsWith('tbc-') || exhibition.id.startsWith('tsi-');
+          const withImages = isTateFeed ? list : list.filter((a) => !!a.image);
           setArtworks(withImages);
           setInitialized(true);
         } catch (error) {
@@ -6097,7 +6134,8 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
             exhibitionTitle: exhibition.title,
             type: '3D', // Acropolis is mostly sculptures/artifacts
           }));
-          const withImages = list.filter((a) => !!a.image);
+          const isTateFeed = exhibition.id.startsWith('tm-') || exhibition.id.startsWith('tbc-') || exhibition.id.startsWith('tsi-');
+          const withImages = isTateFeed ? list : list.filter((a) => !!a.image);
           setArtworks(withImages);
           setInitialized(true);
         } catch (error) {
@@ -6459,7 +6497,8 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
             exhibitionName: exhibition.name,
             exhibitionTitle: exhibition.title,
           }));
-          const withImages = list.filter((a) => !!a.image);
+          const isTateFeed = exhibition.id.startsWith('tm-') || exhibition.id.startsWith('tbc-') || exhibition.id.startsWith('tsi-');
+          const withImages = isTateFeed ? list : list.filter((a) => !!a.image);
           setArtworks(withImages);
           setInitialized(true);
         } catch (error) {
@@ -6497,7 +6536,8 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
             exhibitionName: exhibition.name,
             exhibitionTitle: exhibition.title,
           }));
-          const withImages = list.filter((a) => !!a.image);
+          const isTateFeed = exhibition.id.startsWith('tm-') || exhibition.id.startsWith('tbc-') || exhibition.id.startsWith('tsi-');
+          const withImages = isTateFeed ? list : list.filter((a) => !!a.image);
           setArtworks(withImages);
           setInitialized(true);
         } catch (error) {
@@ -7193,7 +7233,8 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
               exhibitionTitle: exhibition.title,
             };
           });
-          const withImages = list.filter((a) => !!a.image);
+          const isTateFeed = exhibition.id.startsWith('tm-') || exhibition.id.startsWith('tbc-') || exhibition.id.startsWith('tsi-');
+          const withImages = isTateFeed ? list : list.filter((a) => !!a.image);
           setArtworks(withImages);
           setInitialized(true);
         } catch (error) {
@@ -8570,12 +8611,12 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
   // Shared layout values for room selector + info text
   // Wide screen: center between thumbnails (~150px) and metadata (~500px) = ~325px
   // Narrow screen: same left margin as grid for alignment
-  const selectorLeft = isMobile ? 12 : (isVeryNarrow ? 16 : (isNarrow ? 24 : 250));
+  const selectorLeft = isMobile ? 12 : (isVeryNarrow ? 16 : (isNarrow || variant === 'sketch' ? 24 : 250));
   // Wide screen: same top margin as mode tabs (8px)
   // Narrow screen: align with metadata row Y position (after mode tabs)
   const selectorTop = isMobile ? 140 : (isVeryNarrow ? 50 : (isNarrow ? 50 : 8));
   // Info text position (same center as room selector on wide screen)
-  const infoTextLeft = isMobile ? 12 : (isVeryNarrow ? 160 : (isNarrow ? 180 : 300));
+  const infoTextLeft = isMobile ? 12 : (isVeryNarrow ? 160 : (isNarrow || variant === 'sketch' ? 180 : 300));
   // Selector sizing constants: narrower on narrow screens
   const SELECTOR_COL_WIDTH = isVeryNarrow ? 12 : (isNarrow ? 14 : 18); // px
   const SELECTOR_COL_GAP = 0; // px (no gap between buttons)
@@ -8676,7 +8717,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
 
   return (
     <div
-      className={variant === 'sketch' ? 'sketch-modal-theme' : ''}
+      className={`${variant === 'sketch' ? 'sketch-modal-theme' : ''} ${isDark ? 'em-dark-panel' : ''}`}
       style={{
         position: inline ? "absolute" : "fixed",
         top: 0,
@@ -8693,11 +8734,60 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
         contain: 'layout style',
       }}
     >
+      {isDark && (
+        <style>{`
+          /* ── Root & broad inheritance ── */
+          .em-dark-panel { color: rgba(255,255,255,0.88) !important; }
+
+          /* ── Force all non-button text elements to use light colors ── */
+          .em-dark-panel div:not([class*="sketch"]),
+          .em-dark-panel span,
+          .em-dark-panel p,
+          .em-dark-panel label,
+          .em-dark-panel td,
+          .em-dark-panel th,
+          .em-dark-panel li,
+          .em-dark-panel h1, .em-dark-panel h2, .em-dark-panel h3 {
+            color: rgba(255,255,255,0.88) !important;
+          }
+
+          /* ── Dim text: elements that use secondary/hint colors ── */
+          .em-dark-panel [style*="color: rgb(102, 102, 102)"],
+          .em-dark-panel [style*="color: rgb(119, 119, 119)"],
+          .em-dark-panel [style*="color: rgb(128, 128, 128)"] { color: rgba(255,255,255,0.55) !important; }
+          .em-dark-panel [style*="color: rgb(136, 136, 136)"],
+          .em-dark-panel [style*="color: rgb(153, 153, 153)"],
+          .em-dark-panel [style*="color: rgb(170, 170, 170)"],
+          .em-dark-panel [style*="color: rgb(187, 187, 187)"] { color: rgba(255,255,255,0.38) !important; }
+
+          /* ── Backgrounds ── */
+          .em-dark-panel [style*="background: rgb(255, 255, 255)"],
+          .em-dark-panel [style*="background-color: rgb(255, 255, 255)"] { background: #111111 !important; background-color: #111111 !important; }
+          .em-dark-panel [style*="background: rgb(242, 242, 242)"],
+          .em-dark-panel [style*="background-color: rgb(242, 242, 242)"],
+          .em-dark-panel [style*="background: rgb(245, 245, 245)"],
+          .em-dark-panel [style*="background: rgb(250, 250, 250)"],
+          .em-dark-panel [style*="background: rgb(240, 240, 240)"] { background: rgba(255,255,255,0.08) !important; background-color: rgba(255,255,255,0.08) !important; }
+
+          /* ── Borders ── */
+          .em-dark-panel [style*="border-bottom: 1px solid rgb("],
+          .em-dark-panel [style*="border: 1px solid rgb(2"],
+          .em-dark-panel [style*="border: 1px solid rgb(0"] { border-color: rgba(255,255,255,0.12) !important; }
+
+          /* ── Keep active button text dark (white bg button in dark mode) ── */
+          .em-dark-panel button[style*="color: rgb(17, 17, 17)"],
+          .em-dark-panel button[style*="color: rgb(0, 0, 0)"] { color: #111111 !important; }
+
+          /* ── Images stay normal ── */
+          .em-dark-panel img { filter: none !important; }
+        `}</style>
+      )}
       <div
         ref={panelRef}
         style={{
           position: "relative",
-          backgroundColor: "#fff",
+          backgroundColor: EM_BG,
+          color: EM_TEXT,
           width: "100%",
           height: "100%",
           padding: 0,
@@ -8714,7 +8804,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
         {/* Old handle removed; the corner is now curled by default and interactive via the invisible zone above */}
         {/* Mobile: full-width top header bar - hide in archive mode */}
         {isMobile && viewMode !== 'archive' && (
-          <div ref={headerRef} style={{ position: 'absolute', top: 0, left: 0, right: 0, background: '#fff', zIndex: 199, display: 'flex' }}>
+          <div ref={headerRef} style={{ position: 'absolute', top: 0, left: 0, right: 0, background: EM_BG, zIndex: 199, display: 'flex' }}>
             {/* Zone 1: Title + Description - exactly 1/3 of screen */}
             <div style={{ width: 'calc(100% / 3)', padding: '5px 8px', minWidth: 0, boxSizing: 'border-box' }}>
               <div style={{ fontSize: 12, fontWeight: 700, color: '#111827', lineHeight: 1.2, marginBottom: 2 }}>
@@ -8730,7 +8820,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
               <div style={{ marginBottom: 4, display: 'flex', alignItems: 'center', gap: 6 }}>
                 <button
                   onClick={() => { setSelectedCentury(null); setSelectedYearRange('ALL'); setSelectedTypes(new Set()); setSelectedCategories(new Set()); setSelectedIndex(0); }}
-                  style={{ padding: '0 6px', height: 20, fontSize: 10.5, fontWeight: 400, borderRadius: 4, border: 'none', background: (selectedRoomId === 'ALL' && !selectedCentury && selectedTypes.size === 0 && selectedCategories.size === 0) ? '#111' : '#f2f2f2', color: (selectedRoomId === 'ALL' && !selectedCentury && selectedTypes.size === 0 && selectedCategories.size === 0) ? '#fff' : '#666', cursor: 'pointer', transition: 'all 0.1s ease' }}
+                  style={{ padding: '0 6px', height: 20, fontSize: 10.5, fontWeight: 400, borderRadius: 4, border: 'none', background: (selectedRoomId === 'ALL' && !selectedCentury && selectedTypes.size === 0 && selectedCategories.size === 0) ? EM_BTN_ACTIVE_BG : EM_BTN_INACTIVE_BG, color: (selectedRoomId === 'ALL' && !selectedCentury && selectedTypes.size === 0 && selectedCategories.size === 0) ? EM_BTN_ACTIVE_FG : EM_BTN_INACTIVE_FG, cursor: 'pointer', transition: 'all 0.1s ease' }}
                 >
                   ALL
                 </button>
@@ -8757,7 +8847,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
                       }
                       setSelectedIndex(0);
                     }}
-                    style={{ padding: '0 6px', height: 20, fontSize: 10.5, fontWeight: selectedCentury === c ? 500 : 400, borderRadius: 4, border: 'none', background: selectedCentury === c ? '#111' : '#f2f2f2', color: selectedCentury === c ? '#fff' : '#666', cursor: 'pointer', transition: 'all 0.1s ease' }}
+                    style={{ padding: '0 6px', height: 20, fontSize: 10.5, fontWeight: selectedCentury === c ? 500 : 400, borderRadius: 4, border: 'none', background: selectedCentury === c ? EM_BTN_ACTIVE_BG : EM_BTN_INACTIVE_BG, color: selectedCentury === c ? EM_BTN_ACTIVE_FG : EM_BTN_INACTIVE_FG, cursor: 'pointer', transition: 'all 0.1s ease' }}
                   >
                     {`${c}c`}
                   </button>
@@ -8773,7 +8863,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
                       setSelectedMediumFacets(new Set());
                       setSelectedIndex(0);
                     }}
-                    style={{ padding: '0 6px', height: 20, fontSize: 10.5, fontWeight: selectedTypes.has('2D') ? 500 : 400, borderRadius: 4, border: 'none', background: selectedTypes.has('2D') ? '#111' : '#f2f2f2', color: selectedTypes.has('2D') ? '#fff' : '#666', cursor: 'pointer', transition: 'all 0.1s ease' }}
+                    style={{ padding: '0 6px', height: 20, fontSize: 10.5, fontWeight: selectedTypes.has('2D') ? 500 : 400, borderRadius: 4, border: 'none', background: selectedTypes.has('2D') ? EM_BTN_ACTIVE_BG : EM_BTN_INACTIVE_BG, color: selectedTypes.has('2D') ? EM_BTN_ACTIVE_FG : EM_BTN_INACTIVE_FG, cursor: 'pointer', transition: 'all 0.1s ease' }}
                   >
                     2D
                   </button>
@@ -8789,7 +8879,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
                       setSelectedMediumFacets(new Set());
                       setSelectedIndex(0);
                     }}
-                    style={{ padding: '0 6px', height: 20, fontSize: 10.5, fontWeight: selectedTypes.has('3D') ? 500 : 400, borderRadius: 4, border: 'none', background: selectedTypes.has('3D') ? '#111' : '#f2f2f2', color: selectedTypes.has('3D') ? '#fff' : '#666', cursor: 'pointer', transition: 'all 0.1s ease' }}
+                    style={{ padding: '0 6px', height: 20, fontSize: 10.5, fontWeight: selectedTypes.has('3D') ? 500 : 400, borderRadius: 4, border: 'none', background: selectedTypes.has('3D') ? EM_BTN_ACTIVE_BG : EM_BTN_INACTIVE_BG, color: selectedTypes.has('3D') ? EM_BTN_ACTIVE_FG : EM_BTN_INACTIVE_FG, cursor: 'pointer', transition: 'all 0.1s ease' }}
                   >
                     3D
                   </button>
@@ -8805,7 +8895,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
                       setSelectedMediumFacets(new Set());
                       setSelectedIndex(0);
                     }}
-                    style={{ padding: '0 6px', height: 20, fontSize: 10.5, fontWeight: selectedTypes.has('N') ? 500 : 400, borderRadius: 4, border: 'none', background: selectedTypes.has('N') ? '#111' : '#f2f2f2', color: selectedTypes.has('N') ? '#fff' : '#666', cursor: 'pointer', transition: 'all 0.1s ease' }}
+                    style={{ padding: '0 6px', height: 20, fontSize: 10.5, fontWeight: selectedTypes.has('N') ? 500 : 400, borderRadius: 4, border: 'none', background: selectedTypes.has('N') ? EM_BTN_ACTIVE_BG : EM_BTN_INACTIVE_BG, color: selectedTypes.has('N') ? EM_BTN_ACTIVE_FG : EM_BTN_INACTIVE_FG, cursor: 'pointer', transition: 'all 0.1s ease' }}
                   >
                     N
                   </button>
@@ -8813,7 +8903,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
                 {hasArchivalArtworks && (
                   <button
                     onClick={() => { setShowArtworksOnly(!showArtworksOnly); setSelectedIndex(0); }}
-                    style={{ padding: '0 6px', height: 20, fontSize: 10.5, fontWeight: showArtworksOnly ? 500 : 400, borderRadius: 4, border: 'none', background: showArtworksOnly ? '#111' : '#f2f2f2', color: showArtworksOnly ? '#fff' : '#666', cursor: 'pointer', transition: 'all 0.1s ease' }}
+                    style={{ padding: '0 6px', height: 20, fontSize: 10.5, fontWeight: showArtworksOnly ? 500 : 400, borderRadius: 4, border: 'none', background: showArtworksOnly ? EM_BTN_ACTIVE_BG : EM_BTN_INACTIVE_BG, color: showArtworksOnly ? EM_BTN_ACTIVE_FG : EM_BTN_INACTIVE_FG, cursor: 'pointer', transition: 'all 0.1s ease' }}
                   >
                     ARTWORKS ONLY
                   </button>
@@ -8821,7 +8911,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
                 {(hasOnViewArtworks || exhibition.id === 'guggenheim-bilbao-collection' || exhibition.id === 'kunsthaus-collection' || exhibition.id === 'khm-collection' || exhibition.id === 'ateneum-collection' || exhibition.id === 'mplus-collection-mplus' || exhibition.id === 'mplus-collection-sigg' || exhibition.id === 'mplus' || exhibition.id === 'met-ny-collection' || exhibition.id === 'moma-highlights' || exhibition.id === 'aic-highlights' || exhibition.id === 'getty-collection' || exhibition.id === 'getty' || exhibition.id === 'sfmoma-collection' || exhibition.id === 'cma-collection' || exhibition.id.includes('agnsw') || exhibition.id.includes('qagoma') || exhibition.id.includes('mca-australia') || exhibition.id.includes('mca-collection')) && (
                   <button
                     onClick={() => { setShowOnViewOnly(!showOnViewOnly); setSelectedIndex(0); }}
-                    style={{ padding: '0 6px', height: 20, fontSize: 10.5, fontWeight: showOnViewOnly ? 500 : 400, borderRadius: 4, border: 'none', background: showOnViewOnly ? '#111' : '#f2f2f2', color: showOnViewOnly ? '#fff' : '#666', cursor: 'pointer', transition: 'all 0.1s ease' }}
+                    style={{ padding: '0 6px', height: 20, fontSize: 10.5, fontWeight: showOnViewOnly ? 500 : 400, borderRadius: 4, border: 'none', background: showOnViewOnly ? EM_BTN_ACTIVE_BG : EM_BTN_INACTIVE_BG, color: showOnViewOnly ? EM_BTN_ACTIVE_FG : EM_BTN_INACTIVE_FG, cursor: 'pointer', transition: 'all 0.1s ease' }}
                   >
                     ON VIEW
                   </button>
@@ -8829,7 +8919,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
                 {exhibition.id === 'pushkin-collection' && hasMasterpieceArtworks && (
                   <button
                     onClick={() => { setShowMasterpieceOnly(!showMasterpieceOnly); setSelectedIndex(0); }}
-                    style={{ padding: '0 6px', height: 20, fontSize: 10.5, fontWeight: showMasterpieceOnly ? 500 : 400, borderRadius: 4, border: 'none', background: showMasterpieceOnly ? '#111' : '#f2f2f2', color: showMasterpieceOnly ? '#fff' : '#666', cursor: 'pointer', transition: 'all 0.1s ease' }}
+                    style={{ padding: '0 6px', height: 20, fontSize: 10.5, fontWeight: showMasterpieceOnly ? 500 : 400, borderRadius: 4, border: 'none', background: showMasterpieceOnly ? EM_BTN_ACTIVE_BG : EM_BTN_INACTIVE_BG, color: showMasterpieceOnly ? EM_BTN_ACTIVE_FG : EM_BTN_INACTIVE_FG, cursor: 'pointer', transition: 'all 0.1s ease' }}
                   >
                     MASTERPIECE
                   </button>
@@ -8837,7 +8927,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
                 {(exhibition.id === 'ateneum-collection' || exhibition.id === 'met-ny-collection' || exhibition.id === 'aic-highlights') && hasPublicDomainArtworks && (
                   <button
                     onClick={() => { setShowPublicDomainOnly(!showPublicDomainOnly); setSelectedIndex(0); }}
-                    style={{ padding: '0 6px', height: 20, fontSize: 10.5, fontWeight: showPublicDomainOnly ? 500 : 400, borderRadius: 4, border: 'none', background: showPublicDomainOnly ? '#111' : '#f2f2f2', color: showPublicDomainOnly ? '#fff' : '#666', cursor: 'pointer', transition: 'all 0.1s ease' }}
+                    style={{ padding: '0 6px', height: 20, fontSize: 10.5, fontWeight: showPublicDomainOnly ? 500 : 400, borderRadius: 4, border: 'none', background: showPublicDomainOnly ? EM_BTN_ACTIVE_BG : EM_BTN_INACTIVE_BG, color: showPublicDomainOnly ? EM_BTN_ACTIVE_FG : EM_BTN_INACTIVE_FG, cursor: 'pointer', transition: 'all 0.1s ease' }}
                   >
                     PUBLIC DOMAIN
                   </button>
@@ -8846,13 +8936,13 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
                   <>
                     <button
                       onClick={() => { setShowOnViewOnly(!showOnViewOnly); setShowOpenAccessOnly(false); setSelectedIndex(0); }}
-                      style={{ padding: '0 6px', height: 20, fontSize: 10.5, fontWeight: showOnViewOnly ? 500 : 400, borderRadius: 4, border: 'none', background: showOnViewOnly ? '#111' : '#f2f2f2', color: showOnViewOnly ? '#fff' : '#666', cursor: 'pointer', transition: 'all 0.1s ease' }}
+                      style={{ padding: '0 6px', height: 20, fontSize: 10.5, fontWeight: showOnViewOnly ? 500 : 400, borderRadius: 4, border: 'none', background: showOnViewOnly ? EM_BTN_ACTIVE_BG : EM_BTN_INACTIVE_BG, color: showOnViewOnly ? EM_BTN_ACTIVE_FG : EM_BTN_INACTIVE_FG, cursor: 'pointer', transition: 'all 0.1s ease' }}
                     >
                       ON VIEW
                     </button>
                     <button
                       onClick={() => { setShowOpenAccessOnly(!showOpenAccessOnly); setShowOnViewOnly(false); setSelectedIndex(0); }}
-                      style={{ padding: '0 6px', height: 20, fontSize: 10.5, fontWeight: showOpenAccessOnly ? 500 : 400, borderRadius: 4, border: 'none', background: showOpenAccessOnly ? '#111' : '#f2f2f2', color: showOpenAccessOnly ? '#fff' : '#666', cursor: 'pointer', transition: 'all 0.1s ease' }}
+                      style={{ padding: '0 6px', height: 20, fontSize: 10.5, fontWeight: showOpenAccessOnly ? 500 : 400, borderRadius: 4, border: 'none', background: showOpenAccessOnly ? EM_BTN_ACTIVE_BG : EM_BTN_INACTIVE_BG, color: showOpenAccessOnly ? EM_BTN_ACTIVE_FG : EM_BTN_INACTIVE_FG, cursor: 'pointer', transition: 'all 0.1s ease' }}
                     >
                       OPEN ACCESS
                     </button>
@@ -8861,7 +8951,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
                 {(exhibition.id === 'getty-collection' || exhibition.id === 'getty') && hasOpenContentArtworks && (
                   <button
                     onClick={() => { setShowOpenContentOnly(!showOpenContentOnly); setSelectedIndex(0); }}
-                    style={{ padding: '0 6px', height: 20, fontSize: 10.5, fontWeight: showOpenContentOnly ? 500 : 400, borderRadius: 4, border: 'none', background: showOpenContentOnly ? '#111' : '#f2f2f2', color: showOpenContentOnly ? '#fff' : '#666', cursor: 'pointer', transition: 'all 0.1s ease' }}
+                    style={{ padding: '0 6px', height: 20, fontSize: 10.5, fontWeight: showOpenContentOnly ? 500 : 400, borderRadius: 4, border: 'none', background: showOpenContentOnly ? EM_BTN_ACTIVE_BG : EM_BTN_INACTIVE_BG, color: showOpenContentOnly ? EM_BTN_ACTIVE_FG : EM_BTN_INACTIVE_FG, cursor: 'pointer', transition: 'all 0.1s ease' }}
                   >
                     OPEN CONTENT
                   </button>
@@ -8869,7 +8959,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
                 {(hasHighlightArtworks || exhibition.id === 'adachi-collection') && (
                   <button
                     onClick={() => { setShowHighlightOnly(!showHighlightOnly); setSelectedIndex(0); }}
-                    style={{ padding: '0 6px', height: 20, fontSize: 10.5, fontWeight: showHighlightOnly ? 500 : 400, borderRadius: 4, border: 'none', background: showHighlightOnly ? '#111' : '#f2f2f2', color: showHighlightOnly ? '#fff' : '#666', cursor: 'pointer', transition: 'all 0.1s ease' }}
+                    style={{ padding: '0 6px', height: 20, fontSize: 10.5, fontWeight: showHighlightOnly ? 500 : 400, borderRadius: 4, border: 'none', background: showHighlightOnly ? EM_BTN_ACTIVE_BG : EM_BTN_INACTIVE_BG, color: showHighlightOnly ? EM_BTN_ACTIVE_FG : EM_BTN_INACTIVE_FG, cursor: 'pointer', transition: 'all 0.1s ease' }}
                   >
                     HIGHLIGHT
                   </button>
@@ -8885,7 +8975,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
                         <button
                           key={`mobile-cat-${cat}`}
                           onClick={() => { setSelectedCategories(prev => { const next = new Set(prev); if (next.has(cat)) next.delete(cat); else next.add(cat); return next; }); setSelectedIndex(0); }}
-                          style={{ padding: '0 6px', height: 20, fontSize: 10.5, fontWeight: selectedCategories.has(cat) ? 500 : 400, borderRadius: 4, border: 'none', background: selectedCategories.has(cat) ? '#111' : '#f2f2f2', color: selectedCategories.has(cat) ? '#fff' : '#666', cursor: 'pointer', transition: 'all 0.1s ease' }}
+                          style={{ padding: '0 6px', height: 20, fontSize: 10.5, fontWeight: selectedCategories.has(cat) ? 500 : 400, borderRadius: 4, border: 'none', background: selectedCategories.has(cat) ? EM_BTN_ACTIVE_BG : EM_BTN_INACTIVE_BG, color: selectedCategories.has(cat) ? EM_BTN_ACTIVE_FG : EM_BTN_INACTIVE_FG, cursor: 'pointer', transition: 'all 0.1s ease' }}
                         >
                           {CATEGORY_LABEL_MAP[cat] || cat}
                         </button>
@@ -8906,7 +8996,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
                               });
                               setSelectedIndex(0);
                             }}
-                            style={{ padding: '0 6px', height: 20, fontSize: 10.5, fontWeight: selectedMediumFacets.has(f.id) ? 500 : 400, borderRadius: 4, border: 'none', background: selectedMediumFacets.has(f.id) ? '#111' : '#f2f2f2', color: selectedMediumFacets.has(f.id) ? '#fff' : '#666', cursor: 'pointer', transition: 'all 0.1s ease' }}
+                            style={{ padding: '0 6px', height: 20, fontSize: 10.5, fontWeight: selectedMediumFacets.has(f.id) ? 500 : 400, borderRadius: 4, border: 'none', background: selectedMediumFacets.has(f.id) ? EM_BTN_ACTIVE_BG : EM_BTN_INACTIVE_BG, color: selectedMediumFacets.has(f.id) ? EM_BTN_ACTIVE_FG : EM_BTN_INACTIVE_FG, cursor: 'pointer', transition: 'all 0.1s ease' }}
                             title={`${f.label} (${f.count.toLocaleString()})`}
                           >
                             {f.label}
@@ -8928,12 +9018,12 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
                 }}
                 style={{
                   appearance: 'none',
-                  background: '#f2f2f2',
+                  background: EM_BTN_INACTIVE_BG,
                   border: 'none',
                   borderRadius: 4,
                   padding: '0 16px 0 6px',
                   fontSize: 10.5,
-                  color: '#666',
+                  color: EM_BTN_INACTIVE_FG,
                   height: 20,
                   outline: 'none',
                   backgroundImage: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='8' height='8' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E")`,
@@ -8982,7 +9072,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
           };
 
           return (
-            <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, display: 'flex', flexDirection: 'column', background: '#fff', zIndex: 198 }}>
+            <div style={{ position: 'absolute', top: 0, left: 0, right: 0, bottom: 0, display: 'flex', flexDirection: 'column', background: EM_BG, zIndex: 198 }}>
               {/* Top row: horizontal scrolling thumbnails with 3x infinite loop */}
               <div
                 ref={mobileArchiveScrollRef}
@@ -9255,9 +9345,9 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
           );
         })()}
         {/* Absolute full-height exhibition info panel at far left (all modes) - hidden on mobile */}
-        <div style={{ position: "absolute", top: 0, bottom: 0, left: 0, width: 150, background: "transparent", zIndex: 200, display: isMobile ? 'none' : 'flex', flexDirection: 'column', pointerEvents: 'none', ...(DEBUG_LAYOUT ? { outline: "1px solid #964B00" } : {}) }}>
+        <div style={{ position: "absolute", top: 0, bottom: 0, left: 0, width: 150, background: EM_BG, zIndex: 200, display: (isMobile || variant === 'sketch') ? 'none' : 'flex', flexDirection: 'column', pointerEvents: 'none', ...(DEBUG_LAYOUT ? { outline: "1px solid #964B00" } : {}) }}>
           {/* Left header: title + description + room selector */}
-          <div style={{ padding: '8px 8px', borderBottom: '0px solid transparent', pointerEvents: 'auto', background: '#fff' }}>
+          <div style={{ padding: '8px 8px', borderBottom: '0px solid transparent', pointerEvents: 'auto', background: EM_BG }}>
             {repImage && (
               <div style={{ width: '100%', marginBottom: 8, background: '#ddd', borderRadius: 4, overflow: 'hidden' }}>
                 <img
@@ -9508,14 +9598,14 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
           // Wide screen: use absolute positioning
           // Narrow screen: use flex centering
           // Hide mode tabs when hover zoom is active
-          if (!isNarrow) {
+          if (!isNarrow && variant !== 'sketch') {
             return (
               <div ref={(el) => { (topBarRef as any).current = el; (headerRef as any).current = el; }} style={{ position: "relative", padding: "8px 0", minHeight: topBarHeight, marginLeft: LAYOUT_LEFT_BASE + META_SHIFT, marginRight: 80, zIndex: 100, opacity: hoverZoom ? 0 : 1, transition: 'opacity 200ms ease', pointerEvents: hoverZoom ? 'none' : 'auto', ...(DEBUG_LAYOUT ? { outline: "1px dashed #00f" } : {}) }}>
                 <span
                   onClick={() => { setViewMode('panorama'); setSelectedIndex(0); }}
                   style={{
                     fontSize: 12, lineHeight: 1, fontWeight: 700,
-                    color: viewMode === 'panorama' ? "#000" : "#666",
+                    color: viewMode === 'panorama' ? EM_TEXT : EM_SUB,
                     cursor: "pointer", userSelect: "none", whiteSpace: "nowrap",
                     textDecoration: viewMode === 'panorama' ? 'underline' : 'none',
                     position: 'absolute',
@@ -9529,7 +9619,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
                   onClick={() => { setViewMode('archive'); setSelectedIndex(0); }}
                   style={{
                     fontSize: 12, lineHeight: 1, fontWeight: 700,
-                    color: viewMode === 'archive' ? "#000" : "#666",
+                    color: viewMode === 'archive' ? EM_TEXT : EM_SUB,
                     cursor: "pointer", userSelect: "none", whiteSpace: "nowrap",
                     textDecoration: viewMode === 'archive' ? 'underline' : 'none',
                     position: 'absolute',
@@ -9543,7 +9633,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
                   onClick={() => { setViewMode('gallery'); setSelectedIndex(0); }}
                   style={{
                     fontSize: 12, lineHeight: 1, fontWeight: 700,
-                    color: viewMode === 'gallery' ? "#000" : "#666",
+                    color: viewMode === 'gallery' ? EM_TEXT : EM_SUB,
                     cursor: "pointer", userSelect: "none", whiteSpace: "nowrap",
                     textDecoration: viewMode === 'gallery' ? 'underline' : 'none',
                     position: 'absolute',
@@ -9593,7 +9683,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
           // Column 2 (ARCHIVE): TITLE + CREATOR
           // Column 3 (GALLERY): DATE + DIMENSION
           // Left margin must clear the left panel (150px) + some padding
-          const narrowMarginLeft = isMobile ? 12 : 160;
+          const narrowMarginLeft = isMobile ? 12 : (variant === 'sketch' ? 0 : 160);
           const narrowMarginRight = isVeryNarrow ? 16 : 24;
           const titleText = displayArtwork?.name || "—";
           const creatorText = cleanArtistName(displayArtwork?.artist) || "—";
@@ -9622,15 +9712,15 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
                         fontWeight: 400,
                         borderRadius: 4,
                         border: 'none',
-                        background: selectedRoomId === 'ALL' ? '#111' : '#f2f2f2',
-                        color: selectedRoomId === 'ALL' ? '#fff' : '#666',
+                        background: selectedRoomId === 'ALL' ? EM_BTN_ACTIVE_BG : EM_BTN_INACTIVE_BG,
+                        color: selectedRoomId === 'ALL' ? EM_BTN_ACTIVE_FG : EM_BTN_INACTIVE_FG,
                         cursor: 'pointer',
                         transition: 'all 0.1s ease'
                       }}
                     >
                       ALL
                     </button>
-                    <span style={{ fontSize: 10, color: '#666' }}>
+                    <span style={{ fontSize: 10, color: EM_SUB }}>
                       ({nmkTotalCount > 0 ? `${filteredArtworks.length.toLocaleString()} / ${nmkTotalCount.toLocaleString()}` : filteredArtworks.length.toLocaleString()})
                     </span>
                   </div>
@@ -9656,8 +9746,8 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
                           fontWeight: selectedCentury === c ? 500 : 400,
                           borderRadius: 4,
                           border: 'none',
-                          background: selectedCentury === c ? '#111' : '#f2f2f2',
-                          color: selectedCentury === c ? '#fff' : '#666',
+                          background: selectedCentury === c ? EM_BTN_ACTIVE_BG : EM_BTN_INACTIVE_BG,
+                          color: selectedCentury === c ? EM_BTN_ACTIVE_FG : EM_BTN_INACTIVE_FG,
                           cursor: 'pointer',
                           transition: 'all 0.1s ease'
                         }}
@@ -9687,8 +9777,8 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
                             fontWeight: selectedYearRange === String(d) ? 500 : 400,
                             borderRadius: 4,
                             border: 'none',
-                            background: selectedYearRange === String(d) ? '#111' : '#f2f2f2',
-                            color: selectedYearRange === String(d) ? '#fff' : '#666',
+                            background: selectedYearRange === String(d) ? EM_BTN_ACTIVE_BG : EM_BTN_INACTIVE_BG,
+                            color: selectedYearRange === String(d) ? EM_BTN_ACTIVE_FG : EM_BTN_INACTIVE_FG,
                             cursor: 'pointer',
                             transition: 'all 0.1s ease'
                           }}
@@ -9721,8 +9811,8 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
                             fontWeight: selectedTypes.has(t) ? 500 : 400,
                             borderRadius: 4,
                             border: 'none',
-                            background: selectedTypes.has(t) ? '#111' : '#f2f2f2',
-                            color: selectedTypes.has(t) ? '#fff' : '#666',
+                            background: selectedTypes.has(t) ? EM_BTN_ACTIVE_BG : EM_BTN_INACTIVE_BG,
+                            color: selectedTypes.has(t) ? EM_BTN_ACTIVE_FG : EM_BTN_INACTIVE_FG,
                             cursor: 'pointer',
                             transition: 'all 0.1s ease'
                           }}
@@ -9750,8 +9840,8 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
                             fontWeight: selectedTypes.has('N') ? 500 : 400,
                             borderRadius: 4,
                             border: 'none',
-                            background: selectedTypes.has('N') ? '#111' : '#f2f2f2',
-                            color: selectedTypes.has('N') ? '#fff' : '#666',
+                            background: selectedTypes.has('N') ? EM_BTN_ACTIVE_BG : EM_BTN_INACTIVE_BG,
+                            color: selectedTypes.has('N') ? EM_BTN_ACTIVE_FG : EM_BTN_INACTIVE_FG,
                             cursor: 'pointer',
                             transition: 'all 0.1s ease'
                           }}
@@ -9764,7 +9854,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
                       {hasArchivalArtworks && (
                         <button
                           onClick={() => { setShowArtworksOnly(!showArtworksOnly); setSelectedIndex(0); }}
-                          style={{ padding: '0 6px', height: 20, fontSize: 10.5, fontWeight: showArtworksOnly ? 500 : 400, borderRadius: 4, border: 'none', background: showArtworksOnly ? '#111' : '#f2f2f2', color: showArtworksOnly ? '#fff' : '#666', cursor: 'pointer', transition: 'all 0.1s ease' }}
+                          style={{ padding: '0 6px', height: 20, fontSize: 10.5, fontWeight: showArtworksOnly ? 500 : 400, borderRadius: 4, border: 'none', background: showArtworksOnly ? EM_BTN_ACTIVE_BG : EM_BTN_INACTIVE_BG, color: showArtworksOnly ? EM_BTN_ACTIVE_FG : EM_BTN_INACTIVE_FG, cursor: 'pointer', transition: 'all 0.1s ease' }}
                         >
                           ARTWORKS ONLY
                         </button>
@@ -9773,7 +9863,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
                         <button
                           key="on-view-btn"
                           onClick={() => { setShowOnViewOnly(!showOnViewOnly); if (exhibition.id === 'nga-collection') setShowOpenAccessOnly(false); setSelectedIndex(0); }}
-                          style={{ padding: '0 6px', height: 20, fontSize: 10.5, fontWeight: showOnViewOnly ? 500 : 400, borderRadius: 4, border: 'none', background: showOnViewOnly ? '#111' : '#f2f2f2', color: showOnViewOnly ? '#fff' : '#666', cursor: 'pointer', transition: 'all 0.1s ease', display: 'inline-block' }}
+                          style={{ padding: '0 6px', height: 20, fontSize: 10.5, fontWeight: showOnViewOnly ? 500 : 400, borderRadius: 4, border: 'none', background: showOnViewOnly ? EM_BTN_ACTIVE_BG : EM_BTN_INACTIVE_BG, color: showOnViewOnly ? EM_BTN_ACTIVE_FG : EM_BTN_INACTIVE_FG, cursor: 'pointer', transition: 'all 0.1s ease', display: 'inline-block' }}
                         >
                           ON VIEW
                         </button>
@@ -9782,7 +9872,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
                         <button
                           key="masterpiece-btn"
                           onClick={() => { setShowMasterpieceOnly(!showMasterpieceOnly); setSelectedIndex(0); }}
-                          style={{ padding: '0 6px', height: 20, fontSize: 10.5, fontWeight: showMasterpieceOnly ? 500 : 400, borderRadius: 4, border: 'none', background: showMasterpieceOnly ? '#111' : '#f2f2f2', color: showMasterpieceOnly ? '#fff' : '#666', cursor: 'pointer', transition: 'all 0.1s ease', display: 'inline-block' }}
+                          style={{ padding: '0 6px', height: 20, fontSize: 10.5, fontWeight: showMasterpieceOnly ? 500 : 400, borderRadius: 4, border: 'none', background: showMasterpieceOnly ? EM_BTN_ACTIVE_BG : EM_BTN_INACTIVE_BG, color: showMasterpieceOnly ? EM_BTN_ACTIVE_FG : EM_BTN_INACTIVE_FG, cursor: 'pointer', transition: 'all 0.1s ease', display: 'inline-block' }}
                         >
                           MASTERPIECE
                         </button>
@@ -9790,7 +9880,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
                       {(exhibition.id === 'ateneum-collection' || exhibition.id === 'met-ny-collection' || exhibition.id === 'aic-highlights') && (
                         <button
                           onClick={() => { setShowPublicDomainOnly(!showPublicDomainOnly); setSelectedIndex(0); }}
-                          style={{ padding: '0 6px', height: 20, fontSize: 10.5, fontWeight: showPublicDomainOnly ? 500 : 400, borderRadius: 4, border: 'none', background: showPublicDomainOnly ? '#111' : '#f2f2f2', color: showPublicDomainOnly ? '#fff' : '#666', cursor: 'pointer', transition: 'all 0.1s ease', display: 'inline-block' }}
+                          style={{ padding: '0 6px', height: 20, fontSize: 10.5, fontWeight: showPublicDomainOnly ? 500 : 400, borderRadius: 4, border: 'none', background: showPublicDomainOnly ? EM_BTN_ACTIVE_BG : EM_BTN_INACTIVE_BG, color: showPublicDomainOnly ? EM_BTN_ACTIVE_FG : EM_BTN_INACTIVE_FG, cursor: 'pointer', transition: 'all 0.1s ease', display: 'inline-block' }}
                         >
                           PUBLIC DOMAIN
                         </button>
@@ -9798,7 +9888,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
                       {exhibition.id === 'nga-collection' && (
                         <button
                           onClick={() => { setShowOpenAccessOnly(!showOpenAccessOnly); setShowOnViewOnly(false); setSelectedIndex(0); }}
-                          style={{ padding: '0 6px', height: 20, fontSize: 10.5, fontWeight: showOpenAccessOnly ? 500 : 400, borderRadius: 4, border: 'none', background: showOpenAccessOnly ? '#111' : '#f2f2f2', color: showOpenAccessOnly ? '#fff' : '#666', cursor: 'pointer', transition: 'all 0.1s ease', display: 'inline-block' }}
+                          style={{ padding: '0 6px', height: 20, fontSize: 10.5, fontWeight: showOpenAccessOnly ? 500 : 400, borderRadius: 4, border: 'none', background: showOpenAccessOnly ? EM_BTN_ACTIVE_BG : EM_BTN_INACTIVE_BG, color: showOpenAccessOnly ? EM_BTN_ACTIVE_FG : EM_BTN_INACTIVE_FG, cursor: 'pointer', transition: 'all 0.1s ease', display: 'inline-block' }}
                         >
                           OPEN ACCESS
                         </button>
@@ -9806,7 +9896,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
                       {(exhibition.id === 'getty-collection' || exhibition.id === 'getty') && hasOpenContentArtworks && (
                         <button
                           onClick={() => { setShowOpenContentOnly(!showOpenContentOnly); setSelectedIndex(0); }}
-                          style={{ padding: '0 6px', height: 20, fontSize: 10.5, fontWeight: showOpenContentOnly ? 500 : 400, borderRadius: 4, border: 'none', background: showOpenContentOnly ? '#111' : '#f2f2f2', color: showOpenContentOnly ? '#fff' : '#666', cursor: 'pointer', transition: 'all 0.1s ease', display: 'inline-block' }}
+                          style={{ padding: '0 6px', height: 20, fontSize: 10.5, fontWeight: showOpenContentOnly ? 500 : 400, borderRadius: 4, border: 'none', background: showOpenContentOnly ? EM_BTN_ACTIVE_BG : EM_BTN_INACTIVE_BG, color: showOpenContentOnly ? EM_BTN_ACTIVE_FG : EM_BTN_INACTIVE_FG, cursor: 'pointer', transition: 'all 0.1s ease', display: 'inline-block' }}
                         >
                           OPEN CONTENT
                         </button>
@@ -9814,7 +9904,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
                       {(hasHighlightArtworks || exhibition.id === 'adachi-collection') && (
                         <button
                           onClick={() => { setShowHighlightOnly(!showHighlightOnly); setSelectedIndex(0); }}
-                          style={{ padding: '0 6px', height: 20, fontSize: 10.5, fontWeight: showHighlightOnly ? 500 : 400, borderRadius: 4, border: 'none', background: showHighlightOnly ? '#111' : '#f2f2f2', color: showHighlightOnly ? '#fff' : '#666', cursor: 'pointer', transition: 'all 0.1s ease' }}
+                          style={{ padding: '0 6px', height: 20, fontSize: 10.5, fontWeight: showHighlightOnly ? 500 : 400, borderRadius: 4, border: 'none', background: showHighlightOnly ? EM_BTN_ACTIVE_BG : EM_BTN_INACTIVE_BG, color: showHighlightOnly ? EM_BTN_ACTIVE_FG : EM_BTN_INACTIVE_FG, cursor: 'pointer', transition: 'all 0.1s ease' }}
                         >
                           HIGHLIGHT
                         </button>
@@ -9837,8 +9927,8 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
                                 fontWeight: selectedCategories.has(cat) ? 500 : 400,
                                 borderRadius: 4,
                                 border: 'none',
-                                background: selectedCategories.has(cat) ? '#111' : '#f2f2f2',
-                                color: selectedCategories.has(cat) ? '#fff' : '#666',
+                                background: selectedCategories.has(cat) ? EM_BTN_ACTIVE_BG : EM_BTN_INACTIVE_BG,
+                                color: selectedCategories.has(cat) ? EM_BTN_ACTIVE_FG : EM_BTN_INACTIVE_FG,
                                 cursor: 'pointer',
                                 transition: 'all 0.1s ease'
                               }}
@@ -9854,7 +9944,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
                               <button
                                 key={`pc-facet-${f.id}`}
                                 onClick={() => { setSelectedMediumFacets(prev => { const next = new Set(prev); if (next.has(f.id)) next.delete(f.id); else next.add(f.id); return next; }); setSelectedIndex(0); }}
-                                style={{ padding: '0 6px', height: 20, fontSize: 10.5, fontWeight: selectedMediumFacets.has(f.id) ? 500 : 400, borderRadius: 4, border: 'none', background: selectedMediumFacets.has(f.id) ? '#111' : '#f2f2f2', color: selectedMediumFacets.has(f.id) ? '#fff' : '#666', cursor: 'pointer', transition: 'all 0.1s ease' }}
+                                style={{ padding: '0 6px', height: 20, fontSize: 10.5, fontWeight: selectedMediumFacets.has(f.id) ? 500 : 400, borderRadius: 4, border: 'none', background: selectedMediumFacets.has(f.id) ? EM_BTN_ACTIVE_BG : EM_BTN_INACTIVE_BG, color: selectedMediumFacets.has(f.id) ? EM_BTN_ACTIVE_FG : EM_BTN_INACTIVE_FG, cursor: 'pointer', transition: 'all 0.1s ease' }}
                                 title={`${f.label} (${f.count.toLocaleString()})`}
                               >
                                 {f.label}
@@ -9880,9 +9970,9 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
                       }}
                       inputStyle={{
                         fontSize: 11,
-                        color: '#222',
+                        color: EM_TEXT,
                         border: 'none',
-                        borderBottom: '1px solid #ccc',
+                        borderBottom: `1px solid ${EM_BORDER}`,
                         outline: 'none',
                         background: 'transparent',
                         padding: 0,
@@ -9908,7 +9998,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
                     onClick={() => { setViewMode('panorama'); setSelectedIndex(0); }}
                     style={{
                       fontSize: 10, fontWeight: 700,
-                      color: viewMode === 'panorama' ? '#000' : '#888',
+                      color: viewMode === 'panorama' ? EM_TEXT : EM_SUB,
                       cursor: 'pointer', userSelect: 'none',
                       textDecoration: viewMode === 'panorama' ? 'underline' : 'none',
                       textShadow: '0 0 4px rgba(255,255,255,0.9)'
@@ -9920,7 +10010,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
                     onClick={() => { setViewMode('archive'); setSelectedIndex(0); }}
                     style={{
                       fontSize: 10, fontWeight: 700,
-                      color: viewMode === 'archive' ? '#000' : '#888',
+                      color: viewMode === 'archive' ? EM_TEXT : EM_SUB,
                       cursor: 'pointer', userSelect: 'none',
                       textDecoration: viewMode === 'archive' ? 'underline' : 'none',
                       textShadow: '0 0 4px rgba(255,255,255,0.9)'
@@ -9932,7 +10022,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
                     onClick={() => { setViewMode('gallery'); setSelectedIndex(0); }}
                     style={{
                       fontSize: 10, fontWeight: 700,
-                      color: viewMode === 'gallery' ? '#000' : '#888',
+                      color: viewMode === 'gallery' ? EM_TEXT : EM_SUB,
                       cursor: 'pointer', userSelect: 'none',
                       textDecoration: viewMode === 'gallery' ? 'underline' : 'none',
                       textShadow: '0 0 4px rgba(255,255,255,0.9)'
@@ -9953,7 +10043,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
                   onClick={() => { setViewMode('panorama'); setSelectedIndex(0); }}
                   style={{
                     fontSize: 12, lineHeight: 1, fontWeight: 700,
-                    color: viewMode === 'panorama' ? "#000" : "#666",
+                    color: viewMode === 'panorama' ? EM_TEXT : EM_SUB,
                     cursor: "pointer", userSelect: "none", whiteSpace: "nowrap",
                     textDecoration: viewMode === 'panorama' ? 'underline' : 'none',
                   }}
@@ -9965,7 +10055,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
                   onClick={() => { setViewMode('archive'); setSelectedIndex(0); }}
                   style={{
                     fontSize: 12, lineHeight: 1, fontWeight: 700,
-                    color: viewMode === 'archive' ? "#000" : "#666",
+                    color: viewMode === 'archive' ? EM_TEXT : EM_SUB,
                     cursor: "pointer", userSelect: "none", whiteSpace: "nowrap",
                     textDecoration: viewMode === 'archive' ? 'underline' : 'none',
                   }}
@@ -9977,7 +10067,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
                   onClick={() => { setViewMode('gallery'); setSelectedIndex(0); }}
                   style={{
                     fontSize: 12, lineHeight: 1, fontWeight: 700,
-                    color: viewMode === 'gallery' ? "#000" : "#666",
+                    color: viewMode === 'gallery' ? EM_TEXT : EM_SUB,
                     cursor: "pointer", userSelect: "none", whiteSpace: "nowrap",
                     textDecoration: viewMode === 'gallery' ? 'underline' : 'none',
                   }}
@@ -9994,7 +10084,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
                   <div style={{ display: 'flex', alignItems: 'center', gap: 6, flexWrap: 'wrap' }}>
                     <button
                       onClick={() => { setSelectedRoomId('ALL'); setSelectedCentury(null); setSelectedYearRange('ALL'); setSelectedTypes(new Set()); setSelectedCategories(new Set()); setSelectedIndex(0); }}
-                      style={{ padding: '0 6px', height: 20, fontSize: 10.5, fontWeight: 400, borderRadius: 4, border: 'none', background: (selectedRoomId === 'ALL' && !selectedCentury && selectedTypes.size === 0 && selectedCategories.size === 0) ? '#111' : '#f2f2f2', color: (selectedRoomId === 'ALL' && !selectedCentury && selectedTypes.size === 0 && selectedCategories.size === 0) ? '#fff' : '#666', cursor: 'pointer', transition: 'all 0.1s ease' }}
+                      style={{ padding: '0 6px', height: 20, fontSize: 10.5, fontWeight: 400, borderRadius: 4, border: 'none', background: (selectedRoomId === 'ALL' && !selectedCentury && selectedTypes.size === 0 && selectedCategories.size === 0) ? EM_BTN_ACTIVE_BG : EM_BTN_INACTIVE_BG, color: (selectedRoomId === 'ALL' && !selectedCentury && selectedTypes.size === 0 && selectedCategories.size === 0) ? EM_BTN_ACTIVE_FG : EM_BTN_INACTIVE_FG, cursor: 'pointer', transition: 'all 0.1s ease' }}
                     >ALL</button>
                     <span style={{ fontSize: 10, color: '#666' }}>({nmkTotalCount > 0 ? `${filteredArtworks.length.toLocaleString()} / ${nmkTotalCount.toLocaleString()}` : filteredArtworks.length.toLocaleString()})</span>
                   </div>
@@ -10013,7 +10103,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
                           }
                           setSelectedIndex(0);
                         }}
-                        style={{ padding: '0 6px', height: 20, fontSize: 10.5, fontWeight: selectedCentury === c ? 500 : 400, borderRadius: 4, border: 'none', background: selectedCentury === c ? '#111' : '#f2f2f2', color: selectedCentury === c ? '#fff' : '#666', cursor: 'pointer', transition: 'all 0.1s ease' }}
+                        style={{ padding: '0 6px', height: 20, fontSize: 10.5, fontWeight: selectedCentury === c ? 500 : 400, borderRadius: 4, border: 'none', background: selectedCentury === c ? EM_BTN_ACTIVE_BG : EM_BTN_INACTIVE_BG, color: selectedCentury === c ? EM_BTN_ACTIVE_FG : EM_BTN_INACTIVE_FG, cursor: 'pointer', transition: 'all 0.1s ease' }}
                       >
                         {`${c}c`}
                       </button>
@@ -10033,7 +10123,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
                             }
                             setSelectedIndex(0);
                           }}
-                          style={{ padding: '0 6px', height: 20, fontSize: 10.5, fontWeight: selectedYearRange === String(d) ? 500 : 400, borderRadius: 4, border: 'none', background: selectedYearRange === String(d) ? '#111' : '#f2f2f2', color: selectedYearRange === String(d) ? '#fff' : '#666', cursor: 'pointer', transition: 'all 0.1s ease' }}
+                          style={{ padding: '0 6px', height: 20, fontSize: 10.5, fontWeight: selectedYearRange === String(d) ? 500 : 400, borderRadius: 4, border: 'none', background: selectedYearRange === String(d) ? EM_BTN_ACTIVE_BG : EM_BTN_INACTIVE_BG, color: selectedYearRange === String(d) ? EM_BTN_ACTIVE_FG : EM_BTN_INACTIVE_FG, cursor: 'pointer', transition: 'all 0.1s ease' }}
                         >
                           {d}
                         </button>
@@ -10055,7 +10145,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
                             setSelectedMediumFacets(new Set());
                             setSelectedIndex(0);
                           }}
-                          style={{ padding: '0 6px', height: 20, fontSize: 10.5, fontWeight: selectedTypes.has(t) ? 500 : 400, borderRadius: 4, border: 'none', background: selectedTypes.has(t) ? '#111' : '#f2f2f2', color: selectedTypes.has(t) ? '#fff' : '#666', cursor: 'pointer', transition: 'all 0.1s ease' }}
+                          style={{ padding: '0 6px', height: 20, fontSize: 10.5, fontWeight: selectedTypes.has(t) ? 500 : 400, borderRadius: 4, border: 'none', background: selectedTypes.has(t) ? EM_BTN_ACTIVE_BG : EM_BTN_INACTIVE_BG, color: selectedTypes.has(t) ? EM_BTN_ACTIVE_FG : EM_BTN_INACTIVE_FG, cursor: 'pointer', transition: 'all 0.1s ease' }}
                         >
                           {t}
                         </button>
@@ -10071,7 +10161,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
                             setSelectedMediumFacets(new Set());
                             setSelectedIndex(0);
                           }}
-                          style={{ padding: '0 6px', height: 20, fontSize: 10.5, fontWeight: selectedTypes.has('N') ? 500 : 400, borderRadius: 4, border: 'none', background: selectedTypes.has('N') ? '#111' : '#f2f2f2', color: selectedTypes.has('N') ? '#fff' : '#666', cursor: 'pointer', transition: 'all 0.1s ease' }}
+                          style={{ padding: '0 6px', height: 20, fontSize: 10.5, fontWeight: selectedTypes.has('N') ? 500 : 400, borderRadius: 4, border: 'none', background: selectedTypes.has('N') ? EM_BTN_ACTIVE_BG : EM_BTN_INACTIVE_BG, color: selectedTypes.has('N') ? EM_BTN_ACTIVE_FG : EM_BTN_INACTIVE_FG, cursor: 'pointer', transition: 'all 0.1s ease' }}
                         >
                           N
                         </button>
@@ -10079,7 +10169,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
                       {hasArchivalArtworks && (
                         <button
                           onClick={() => { setShowArtworksOnly(!showArtworksOnly); setSelectedIndex(0); }}
-                          style={{ padding: '0 6px', height: 20, fontSize: 10.5, fontWeight: showArtworksOnly ? 500 : 400, borderRadius: 4, border: 'none', background: showArtworksOnly ? '#111' : '#f2f2f2', color: showArtworksOnly ? '#fff' : '#666', cursor: 'pointer', transition: 'all 0.1s ease' }}
+                          style={{ padding: '0 6px', height: 20, fontSize: 10.5, fontWeight: showArtworksOnly ? 500 : 400, borderRadius: 4, border: 'none', background: showArtworksOnly ? EM_BTN_ACTIVE_BG : EM_BTN_INACTIVE_BG, color: showArtworksOnly ? EM_BTN_ACTIVE_FG : EM_BTN_INACTIVE_FG, cursor: 'pointer', transition: 'all 0.1s ease' }}
                         >
                           ARTWORKS ONLY
                         </button>
@@ -10087,7 +10177,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
                       {(hasOnViewArtworks || exhibition.id === 'guggenheim-bilbao-collection' || exhibition.id === 'kunsthaus-collection' || exhibition.id === 'khm-collection' || exhibition.id === 'ateneum-collection' || exhibition.id === 'mplus-collection-mplus' || exhibition.id === 'mplus-collection-sigg' || exhibition.id === 'mplus' || exhibition.id === 'met-ny-collection' || exhibition.id === 'nga-collection' || exhibition.id === 'getty-collection' || exhibition.id === 'getty' || exhibition.id === 'sfmoma-collection' || exhibition.id === 'cma-collection' || exhibition.id.includes('agnsw') || exhibition.id.includes('qagoma') || exhibition.id.includes('mca-australia') || exhibition.id.includes('mca-collection')) && (
                         <button
                           onClick={() => { setShowOnViewOnly(!showOnViewOnly); if (exhibition.id === 'nga-collection') setShowOpenAccessOnly(false); setSelectedIndex(0); }}
-                          style={{ padding: '0 6px', height: 20, fontSize: 10.5, fontWeight: showOnViewOnly ? 500 : 400, borderRadius: 4, border: 'none', background: showOnViewOnly ? '#111' : '#f2f2f2', color: showOnViewOnly ? '#fff' : '#666', cursor: 'pointer', transition: 'all 0.1s ease' }}
+                          style={{ padding: '0 6px', height: 20, fontSize: 10.5, fontWeight: showOnViewOnly ? 500 : 400, borderRadius: 4, border: 'none', background: showOnViewOnly ? EM_BTN_ACTIVE_BG : EM_BTN_INACTIVE_BG, color: showOnViewOnly ? EM_BTN_ACTIVE_FG : EM_BTN_INACTIVE_FG, cursor: 'pointer', transition: 'all 0.1s ease' }}
                         >
                           ON VIEW
                         </button>
@@ -10095,7 +10185,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
                       {exhibition.id === 'nga-collection' && (
                         <button
                           onClick={() => { setShowOpenAccessOnly(!showOpenAccessOnly); setShowOnViewOnly(false); setSelectedIndex(0); }}
-                          style={{ padding: '0 6px', height: 20, fontSize: 10.5, fontWeight: showOpenAccessOnly ? 500 : 400, borderRadius: 4, border: 'none', background: showOpenAccessOnly ? '#111' : '#f2f2f2', color: showOpenAccessOnly ? '#fff' : '#666', cursor: 'pointer', transition: 'all 0.1s ease' }}
+                          style={{ padding: '0 6px', height: 20, fontSize: 10.5, fontWeight: showOpenAccessOnly ? 500 : 400, borderRadius: 4, border: 'none', background: showOpenAccessOnly ? EM_BTN_ACTIVE_BG : EM_BTN_INACTIVE_BG, color: showOpenAccessOnly ? EM_BTN_ACTIVE_FG : EM_BTN_INACTIVE_FG, cursor: 'pointer', transition: 'all 0.1s ease' }}
                         >
                           OPEN ACCESS
                         </button>
@@ -10103,7 +10193,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
                       {(exhibition.id === 'getty-collection' || exhibition.id === 'getty') && hasOpenContentArtworks && (
                         <button
                           onClick={() => { setShowOpenContentOnly(!showOpenContentOnly); setSelectedIndex(0); }}
-                          style={{ padding: '0 6px', height: 20, fontSize: 10.5, fontWeight: showOpenContentOnly ? 500 : 400, borderRadius: 4, border: 'none', background: showOpenContentOnly ? '#111' : '#f2f2f2', color: showOpenContentOnly ? '#fff' : '#666', cursor: 'pointer', transition: 'all 0.1s ease' }}
+                          style={{ padding: '0 6px', height: 20, fontSize: 10.5, fontWeight: showOpenContentOnly ? 500 : 400, borderRadius: 4, border: 'none', background: showOpenContentOnly ? EM_BTN_ACTIVE_BG : EM_BTN_INACTIVE_BG, color: showOpenContentOnly ? EM_BTN_ACTIVE_FG : EM_BTN_INACTIVE_FG, cursor: 'pointer', transition: 'all 0.1s ease' }}
                         >
                           OPEN CONTENT
                         </button>
@@ -10111,7 +10201,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
                       {hasMasterpieceArtworks && (
                         <button
                           onClick={() => { setShowMasterpieceOnly(!showMasterpieceOnly); setSelectedIndex(0); }}
-                          style={{ padding: '0 6px', height: 20, fontSize: 10.5, fontWeight: showMasterpieceOnly ? 500 : 400, borderRadius: 4, border: 'none', background: showMasterpieceOnly ? '#111' : '#f2f2f2', color: showMasterpieceOnly ? '#fff' : '#666', cursor: 'pointer', transition: 'all 0.1s ease' }}
+                          style={{ padding: '0 6px', height: 20, fontSize: 10.5, fontWeight: showMasterpieceOnly ? 500 : 400, borderRadius: 4, border: 'none', background: showMasterpieceOnly ? EM_BTN_ACTIVE_BG : EM_BTN_INACTIVE_BG, color: showMasterpieceOnly ? EM_BTN_ACTIVE_FG : EM_BTN_INACTIVE_FG, cursor: 'pointer', transition: 'all 0.1s ease' }}
                         >
                           MASTERPIECE
                         </button>
@@ -10119,7 +10209,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
                       {(hasPublicDomainArtworks || exhibition.id === 'ateneum-collection') && exhibition.id !== 'getty-collection' && exhibition.id !== 'getty' && (
                         <button
                           onClick={() => { setShowPublicDomainOnly(!showPublicDomainOnly); setSelectedIndex(0); }}
-                          style={{ padding: '0 6px', height: 20, fontSize: 10.5, fontWeight: showPublicDomainOnly ? 500 : 400, borderRadius: 4, border: 'none', background: showPublicDomainOnly ? '#111' : '#f2f2f2', color: showPublicDomainOnly ? '#fff' : '#666', cursor: 'pointer', transition: 'all 0.1s ease' }}
+                          style={{ padding: '0 6px', height: 20, fontSize: 10.5, fontWeight: showPublicDomainOnly ? 500 : 400, borderRadius: 4, border: 'none', background: showPublicDomainOnly ? EM_BTN_ACTIVE_BG : EM_BTN_INACTIVE_BG, color: showPublicDomainOnly ? EM_BTN_ACTIVE_FG : EM_BTN_INACTIVE_FG, cursor: 'pointer', transition: 'all 0.1s ease' }}
                         >
                           PUBLIC DOMAIN
                         </button>
@@ -10127,7 +10217,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
                       {(exhibition.id === 'dpg-1' || exhibition.id === 'mmca-collection' || exhibition.id === 'rijksmuseum-paintings' || exhibition.id === 'rijksmuseum-photography' || exhibition.id === 'rijksmuseum-drawings' || exhibition.id === 'rijksmuseum-prints' || exhibition.id === 'rijksmuseum-prints2') && (
                         <button
                           onClick={() => { setShowOnDisplayOnly(!showOnDisplayOnly); setSelectedIndex(0); }}
-                          style={{ padding: '0 6px', height: 20, fontSize: 10.5, fontWeight: showOnDisplayOnly ? 500 : 400, borderRadius: 4, border: 'none', background: showOnDisplayOnly ? '#111' : '#f2f2f2', color: showOnDisplayOnly ? '#fff' : '#666', cursor: 'pointer', transition: 'all 0.1s ease' }}
+                          style={{ padding: '0 6px', height: 20, fontSize: 10.5, fontWeight: showOnDisplayOnly ? 500 : 400, borderRadius: 4, border: 'none', background: showOnDisplayOnly ? EM_BTN_ACTIVE_BG : EM_BTN_INACTIVE_BG, color: showOnDisplayOnly ? EM_BTN_ACTIVE_FG : EM_BTN_INACTIVE_FG, cursor: 'pointer', transition: 'all 0.1s ease' }}
                         >
                           ON DISPLAY
                         </button>
@@ -10135,7 +10225,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
                       {(hasHighlightArtworks || exhibition.id === 'adachi-collection') && (
                         <button
                           onClick={() => { setShowHighlightOnly(!showHighlightOnly); setSelectedIndex(0); }}
-                          style={{ padding: '0 6px', height: 20, fontSize: 10.5, fontWeight: showHighlightOnly ? 500 : 400, borderRadius: 4, border: 'none', background: showHighlightOnly ? '#111' : '#f2f2f2', color: showHighlightOnly ? '#fff' : '#666', cursor: 'pointer', transition: 'all 0.1s ease' }}
+                          style={{ padding: '0 6px', height: 20, fontSize: 10.5, fontWeight: showHighlightOnly ? 500 : 400, borderRadius: 4, border: 'none', background: showHighlightOnly ? EM_BTN_ACTIVE_BG : EM_BTN_INACTIVE_BG, color: showHighlightOnly ? EM_BTN_ACTIVE_FG : EM_BTN_INACTIVE_FG, cursor: 'pointer', transition: 'all 0.1s ease' }}
                         >
                           HIGHLIGHT
                         </button>
@@ -10150,7 +10240,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
                             <button
                               key={`narrow-cat-${cat}`}
                               onClick={() => { setSelectedCategories(prev => { const next = new Set(prev); if (next.has(cat)) next.delete(cat); else next.add(cat); return next; }); setSelectedIndex(0); }}
-                              style={{ padding: '0 6px', height: 20, fontSize: 10.5, fontWeight: selectedCategories.has(cat) ? 500 : 400, borderRadius: 4, border: 'none', background: selectedCategories.has(cat) ? '#111' : '#f2f2f2', color: selectedCategories.has(cat) ? '#fff' : '#666', cursor: 'pointer', transition: 'all 0.1s ease' }}
+                              style={{ padding: '0 6px', height: 20, fontSize: 10.5, fontWeight: selectedCategories.has(cat) ? 500 : 400, borderRadius: 4, border: 'none', background: selectedCategories.has(cat) ? EM_BTN_ACTIVE_BG : EM_BTN_INACTIVE_BG, color: selectedCategories.has(cat) ? EM_BTN_ACTIVE_FG : EM_BTN_INACTIVE_FG, cursor: 'pointer', transition: 'all 0.1s ease' }}
                             >
                               {CATEGORY_LABEL_MAP[cat] || cat}
                             </button>
@@ -10163,7 +10253,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
                               <button
                                 key={`narrow-facet-${f.id}`}
                                 onClick={() => { setSelectedMediumFacets(prev => { const next = new Set(prev); if (next.has(f.id)) next.delete(f.id); else next.add(f.id); return next; }); setSelectedIndex(0); }}
-                                style={{ padding: '0 6px', height: 20, fontSize: 10.5, fontWeight: selectedMediumFacets.has(f.id) ? 500 : 400, borderRadius: 4, border: 'none', background: selectedMediumFacets.has(f.id) ? '#111' : '#f2f2f2', color: selectedMediumFacets.has(f.id) ? '#fff' : '#666', cursor: 'pointer', transition: 'all 0.1s ease' }}
+                                style={{ padding: '0 6px', height: 20, fontSize: 10.5, fontWeight: selectedMediumFacets.has(f.id) ? 500 : 400, borderRadius: 4, border: 'none', background: selectedMediumFacets.has(f.id) ? EM_BTN_ACTIVE_BG : EM_BTN_INACTIVE_BG, color: selectedMediumFacets.has(f.id) ? EM_BTN_ACTIVE_FG : EM_BTN_INACTIVE_FG, cursor: 'pointer', transition: 'all 0.1s ease' }}
                                 title={`${f.label} (${f.count.toLocaleString()})`}
                               >
                                 {f.label}
@@ -10188,9 +10278,9 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
                       }}
                       inputStyle={{
                         fontSize: 11,
-                        color: '#222',
+                        color: EM_TEXT,
                         border: 'none',
-                        borderBottom: '1px solid #ccc',
+                        borderBottom: `1px solid ${EM_BORDER}`,
                         outline: 'none',
                         background: 'transparent',
                         padding: 0,
@@ -10262,7 +10352,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
             <div style={{ marginBottom: 4, display: 'flex', alignItems: 'center', gap: 6 }}>
               <button
                 onClick={() => { setSelectedRoomId('ALL'); setSelectedCentury(null); setSelectedYearRange('ALL'); setSelectedTypes(new Set()); setSelectedCategories(new Set()); setSelectedIndex(0); }}
-                style={{ padding: '0 6px', height: 20, fontSize: 10.5, fontWeight: 400, borderRadius: 4, border: 'none', background: (selectedRoomId === 'ALL' && !selectedCentury && selectedTypes.size === 0 && selectedCategories.size === 0) ? '#111' : '#f2f2f2', color: (selectedRoomId === 'ALL' && !selectedCentury && selectedTypes.size === 0 && selectedCategories.size === 0) ? '#fff' : '#666', cursor: 'pointer', transition: 'all 0.1s ease' }}
+                style={{ padding: '0 6px', height: 20, fontSize: 10.5, fontWeight: 400, borderRadius: 4, border: 'none', background: (selectedRoomId === 'ALL' && !selectedCentury && selectedTypes.size === 0 && selectedCategories.size === 0) ? EM_BTN_ACTIVE_BG : EM_BTN_INACTIVE_BG, color: (selectedRoomId === 'ALL' && !selectedCentury && selectedTypes.size === 0 && selectedCategories.size === 0) ? EM_BTN_ACTIVE_FG : EM_BTN_INACTIVE_FG, cursor: 'pointer', transition: 'all 0.1s ease' }}
               >ALL</button>
               <span style={{ fontSize: 10, color: '#666' }}>({nmkTotalCount > 0 ? `${filteredArtworks.length.toLocaleString()} / ${nmkTotalCount.toLocaleString()}` : filteredArtworks.length.toLocaleString()})</span>
             </div>
@@ -10273,7 +10363,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
                 {(selectorData.rows.length > 0 ? selectorData.rows : []).map((row, rIdx) => (
                   <div key={`row-${rIdx}`} style={{ display: 'grid', gridTemplateColumns: `repeat(${row.length}, ${SELECTOR_COL_WIDTH}px)`, columnGap: SELECTOR_COL_GAP, rowGap: 2, justifyContent: 'start', marginBottom: 1 }}>
                     {row.map((btn) => (
-                      <button key={btn.id} onClick={() => { if (btn.exists) { setSelectedRoomId(prev => (prev === btn.id ? 'ALL' : btn.id)); setSelectedIndex(0); } }} disabled={!btn.exists} style={{ width: '100%', height: 18, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', padding: 0, fontSize: 9.5, fontWeight: selectedRoomId === btn.id ? 500 : 400, borderRadius: 4, border: btn.exists ? 'none' : '1px dashed rgba(0,0,0,0.18)', background: btn.exists ? (selectedRoomId === btn.id ? '#111' : '#f2f2f2') : 'rgba(0,0,0,0.03)', color: btn.exists ? (selectedRoomId === btn.id ? '#fff' : '#666') : 'rgba(0,0,0,0.38)', opacity: btn.exists ? 1 : 0.75, cursor: btn.exists ? 'pointer' : 'default', boxSizing: 'border-box', transition: 'all 0.1s ease' }}>
+                      <button key={btn.id} onClick={() => { if (btn.exists) { setSelectedRoomId(prev => (prev === btn.id ? 'ALL' : btn.id)); setSelectedIndex(0); } }} disabled={!btn.exists} style={{ width: '100%', height: 18, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', padding: 0, fontSize: 9.5, fontWeight: selectedRoomId === btn.id ? 500 : 400, borderRadius: 4, border: btn.exists ? 'none' : `1px dashed ${EM_BORDER}`, background: btn.exists ? (selectedRoomId === btn.id ? EM_BTN_ACTIVE_BG : EM_BTN_INACTIVE_BG) : (isDark ? 'rgba(255,255,255,0.03)' : 'rgba(0,0,0,0.03)'), color: btn.exists ? (selectedRoomId === btn.id ? EM_BTN_ACTIVE_FG : EM_BTN_INACTIVE_FG) : (isDark ? 'rgba(255,255,255,0.38)' : 'rgba(0,0,0,0.38)'), opacity: btn.exists ? 1 : 0.75, cursor: btn.exists ? 'pointer' : 'default', boxSizing: 'border-box', transition: 'all 0.1s ease' }}>
                         {btn.label}
                       </button>
                     ))}
@@ -10308,8 +10398,8 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
                       fontWeight: selectedCentury === c ? 500 : 400,
                       borderRadius: 4,
                       border: 'none',
-                      background: selectedCentury === c ? '#111' : '#f2f2f2',
-                      color: selectedCentury === c ? '#fff' : '#666',
+                      background: selectedCentury === c ? EM_BTN_ACTIVE_BG : EM_BTN_INACTIVE_BG,
+                      color: selectedCentury === c ? EM_BTN_ACTIVE_FG : EM_BTN_INACTIVE_FG,
                       cursor: 'pointer',
                       transition: 'all 0.1s ease'
                     }}
@@ -10340,8 +10430,8 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
                         fontWeight: selectedYearRange === String(d) ? 500 : 400,
                         borderRadius: 4,
                         border: 'none',
-                        background: selectedYearRange === String(d) ? '#111' : '#f2f2f2',
-                        color: selectedYearRange === String(d) ? '#fff' : '#666',
+                        background: selectedYearRange === String(d) ? EM_BTN_ACTIVE_BG : EM_BTN_INACTIVE_BG,
+                        color: selectedYearRange === String(d) ? EM_BTN_ACTIVE_FG : EM_BTN_INACTIVE_FG,
                         cursor: 'pointer',
                         transition: 'all 0.1s ease'
                       }}
@@ -10366,7 +10456,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
                       setSelectedMediumFacets(new Set());
                       setSelectedIndex(0);
                     }}
-                    style={{ padding: '0 6px', height: 20, fontSize: 10.5, fontWeight: selectedTypes.has(t) ? 500 : 400, borderRadius: 4, border: 'none', background: selectedTypes.has(t) ? '#111' : '#f2f2f2', color: selectedTypes.has(t) ? '#fff' : '#666', cursor: 'pointer', transition: 'all 0.1s ease' }}
+                    style={{ padding: '0 6px', height: 20, fontSize: 10.5, fontWeight: selectedTypes.has(t) ? 500 : 400, borderRadius: 4, border: 'none', background: selectedTypes.has(t) ? EM_BTN_ACTIVE_BG : EM_BTN_INACTIVE_BG, color: selectedTypes.has(t) ? EM_BTN_ACTIVE_FG : EM_BTN_INACTIVE_FG, cursor: 'pointer', transition: 'all 0.1s ease' }}
                   >
                     {t}
                   </button>
@@ -10382,7 +10472,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
                       setSelectedMediumFacets(new Set());
                       setSelectedIndex(0);
                     }}
-                    style={{ padding: '0 6px', height: 20, fontSize: 10.5, fontWeight: selectedTypes.has('N') ? 500 : 400, borderRadius: 4, border: 'none', background: selectedTypes.has('N') ? '#111' : '#f2f2f2', color: selectedTypes.has('N') ? '#fff' : '#666', cursor: 'pointer', transition: 'all 0.1s ease' }}
+                    style={{ padding: '0 6px', height: 20, fontSize: 10.5, fontWeight: selectedTypes.has('N') ? 500 : 400, borderRadius: 4, border: 'none', background: selectedTypes.has('N') ? EM_BTN_ACTIVE_BG : EM_BTN_INACTIVE_BG, color: selectedTypes.has('N') ? EM_BTN_ACTIVE_FG : EM_BTN_INACTIVE_FG, cursor: 'pointer', transition: 'all 0.1s ease' }}
                   >
                     N
                   </button>
@@ -10390,7 +10480,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
                 {hasArchivalArtworks && (
                   <button
                     onClick={() => { setShowArtworksOnly(!showArtworksOnly); setSelectedIndex(0); }}
-                    style={{ padding: '0 6px', height: 20, fontSize: 10.5, fontWeight: showArtworksOnly ? 500 : 400, borderRadius: 4, border: 'none', background: showArtworksOnly ? '#111' : '#f2f2f2', color: showArtworksOnly ? '#fff' : '#666', cursor: 'pointer', transition: 'all 0.1s ease' }}
+                    style={{ padding: '0 6px', height: 20, fontSize: 10.5, fontWeight: showArtworksOnly ? 500 : 400, borderRadius: 4, border: 'none', background: showArtworksOnly ? EM_BTN_ACTIVE_BG : EM_BTN_INACTIVE_BG, color: showArtworksOnly ? EM_BTN_ACTIVE_FG : EM_BTN_INACTIVE_FG, cursor: 'pointer', transition: 'all 0.1s ease' }}
                   >
                     ARTWORKS ONLY
                   </button>
@@ -10398,7 +10488,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
                 {(hasOnViewArtworks || exhibition.id === 'guggenheim-bilbao-collection' || exhibition.id === 'kunsthaus-collection' || exhibition.id === 'khm-collection' || exhibition.id === 'ateneum-collection' || exhibition.id === 'ng-1' || exhibition.id.includes('agnsw') || exhibition.id.includes('qagoma') || exhibition.id.includes('mca-australia') || exhibition.id.includes('mca-collection')) && (
                   <button
                     onClick={() => { setShowOnViewOnly(!showOnViewOnly); setSelectedIndex(0); }}
-                    style={{ padding: '0 6px', height: 20, fontSize: 10.5, fontWeight: showOnViewOnly ? 500 : 400, borderRadius: 4, border: 'none', background: showOnViewOnly ? '#111' : '#f2f2f2', color: showOnViewOnly ? '#fff' : '#666', cursor: 'pointer', transition: 'all 0.1s ease' }}
+                    style={{ padding: '0 6px', height: 20, fontSize: 10.5, fontWeight: showOnViewOnly ? 500 : 400, borderRadius: 4, border: 'none', background: showOnViewOnly ? EM_BTN_ACTIVE_BG : EM_BTN_INACTIVE_BG, color: showOnViewOnly ? EM_BTN_ACTIVE_FG : EM_BTN_INACTIVE_FG, cursor: 'pointer', transition: 'all 0.1s ease' }}
                   >
                     ON VIEW
                   </button>
@@ -10406,7 +10496,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
                 {hasMasterpieceArtworks && (
                   <button
                     onClick={() => { setShowMasterpieceOnly(!showMasterpieceOnly); setSelectedIndex(0); }}
-                    style={{ padding: '0 6px', height: 20, fontSize: 10.5, fontWeight: showMasterpieceOnly ? 500 : 400, borderRadius: 4, border: 'none', background: showMasterpieceOnly ? '#111' : '#f2f2f2', color: showMasterpieceOnly ? '#fff' : '#666', cursor: 'pointer', transition: 'all 0.1s ease' }}
+                    style={{ padding: '0 6px', height: 20, fontSize: 10.5, fontWeight: showMasterpieceOnly ? 500 : 400, borderRadius: 4, border: 'none', background: showMasterpieceOnly ? EM_BTN_ACTIVE_BG : EM_BTN_INACTIVE_BG, color: showMasterpieceOnly ? EM_BTN_ACTIVE_FG : EM_BTN_INACTIVE_FG, cursor: 'pointer', transition: 'all 0.1s ease' }}
                   >
                     MASTERPIECE
                   </button>
@@ -10414,7 +10504,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
                 {(hasPublicDomainArtworks || exhibition.id === 'ateneum-collection') && (
                   <button
                     onClick={() => { setShowPublicDomainOnly(!showPublicDomainOnly); setSelectedIndex(0); }}
-                    style={{ padding: '0 6px', height: 20, fontSize: 10.5, fontWeight: showPublicDomainOnly ? 500 : 400, borderRadius: 4, border: 'none', background: showPublicDomainOnly ? '#111' : '#f2f2f2', color: showPublicDomainOnly ? '#fff' : '#666', cursor: 'pointer', transition: 'all 0.1s ease' }}
+                    style={{ padding: '0 6px', height: 20, fontSize: 10.5, fontWeight: showPublicDomainOnly ? 500 : 400, borderRadius: 4, border: 'none', background: showPublicDomainOnly ? EM_BTN_ACTIVE_BG : EM_BTN_INACTIVE_BG, color: showPublicDomainOnly ? EM_BTN_ACTIVE_FG : EM_BTN_INACTIVE_FG, cursor: 'pointer', transition: 'all 0.1s ease' }}
                   >
                     PUBLIC DOMAIN
                   </button>
@@ -10422,7 +10512,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
                 {(exhibition.id === 'dpg-1' || exhibition.id === 'mmca-collection' || exhibition.id === 'rijksmuseum-paintings' || exhibition.id === 'rijksmuseum-photography') && (
                   <button
                     onClick={() => { setShowOnDisplayOnly(!showOnDisplayOnly); setSelectedIndex(0); }}
-                    style={{ padding: '0 6px', height: 20, fontSize: 10.5, fontWeight: showOnDisplayOnly ? 500 : 400, borderRadius: 4, border: 'none', background: showOnDisplayOnly ? '#111' : '#f2f2f2', color: showOnDisplayOnly ? '#fff' : '#666', cursor: 'pointer', transition: 'all 0.1s ease' }}
+                    style={{ padding: '0 6px', height: 20, fontSize: 10.5, fontWeight: showOnDisplayOnly ? 500 : 400, borderRadius: 4, border: 'none', background: showOnDisplayOnly ? EM_BTN_ACTIVE_BG : EM_BTN_INACTIVE_BG, color: showOnDisplayOnly ? EM_BTN_ACTIVE_FG : EM_BTN_INACTIVE_FG, cursor: 'pointer', transition: 'all 0.1s ease' }}
                   >
                     ON DISPLAY
                   </button>
@@ -10430,7 +10520,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
                 {(hasHighlightArtworks || exhibition.id === 'adachi-collection') && (
                   <button
                     onClick={() => { setShowHighlightOnly(!showHighlightOnly); setSelectedIndex(0); }}
-                    style={{ padding: '0 6px', height: 20, fontSize: 10.5, fontWeight: showHighlightOnly ? 500 : 400, borderRadius: 4, border: 'none', background: showHighlightOnly ? '#111' : '#f2f2f2', color: showHighlightOnly ? '#fff' : '#666', cursor: 'pointer', transition: 'all 0.1s ease' }}
+                    style={{ padding: '0 6px', height: 20, fontSize: 10.5, fontWeight: showHighlightOnly ? 500 : 400, borderRadius: 4, border: 'none', background: showHighlightOnly ? EM_BTN_ACTIVE_BG : EM_BTN_INACTIVE_BG, color: showHighlightOnly ? EM_BTN_ACTIVE_FG : EM_BTN_INACTIVE_FG, cursor: 'pointer', transition: 'all 0.1s ease' }}
                   >
                     HIGHLIGHT
                   </button>
@@ -10446,7 +10536,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
                         <button
                           key={`cat-${cat}`}
                           onClick={() => { setSelectedCategories(prev => { const next = new Set(prev); if (next.has(cat)) next.delete(cat); else next.add(cat); return next; }); setSelectedIndex(0); }}
-                          style={{ padding: '0 6px', height: 20, fontSize: 10.5, fontWeight: selectedCategories.has(cat) ? 500 : 400, borderRadius: 4, border: 'none', background: selectedCategories.has(cat) ? '#111' : '#f2f2f2', color: selectedCategories.has(cat) ? '#fff' : '#666', cursor: 'pointer', transition: 'all 0.1s ease' }}
+                          style={{ padding: '0 6px', height: 20, fontSize: 10.5, fontWeight: selectedCategories.has(cat) ? 500 : 400, borderRadius: 4, border: 'none', background: selectedCategories.has(cat) ? EM_BTN_ACTIVE_BG : EM_BTN_INACTIVE_BG, color: selectedCategories.has(cat) ? EM_BTN_ACTIVE_FG : EM_BTN_INACTIVE_FG, cursor: 'pointer', transition: 'all 0.1s ease' }}
                         >
                           {CATEGORY_LABEL_MAP[cat] || cat}
                         </button>
@@ -10459,7 +10549,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
                           <button
                             key={`facet-${f.id}`}
                             onClick={() => { setSelectedMediumFacets(prev => { const next = new Set(prev); if (next.has(f.id)) next.delete(f.id); else next.add(f.id); return next; }); setSelectedIndex(0); }}
-                            style={{ padding: '0 6px', height: 20, fontSize: 10.5, fontWeight: selectedMediumFacets.has(f.id) ? 500 : 400, borderRadius: 4, border: 'none', background: selectedMediumFacets.has(f.id) ? '#111' : '#f2f2f2', color: selectedMediumFacets.has(f.id) ? '#fff' : '#666', cursor: 'pointer', transition: 'all 0.1s ease' }}
+                            style={{ padding: '0 6px', height: 20, fontSize: 10.5, fontWeight: selectedMediumFacets.has(f.id) ? 500 : 400, borderRadius: 4, border: 'none', background: selectedMediumFacets.has(f.id) ? EM_BTN_ACTIVE_BG : EM_BTN_INACTIVE_BG, color: selectedMediumFacets.has(f.id) ? EM_BTN_ACTIVE_FG : EM_BTN_INACTIVE_FG, cursor: 'pointer', transition: 'all 0.1s ease' }}
                             title={`${f.label} (${f.count.toLocaleString()})`}
                           >
                             {f.label}
@@ -10477,7 +10567,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
         {/* Artwork meta info (below the top bar, aligned to Gallery/Archive; dynamic per selected artwork) */}
         {/* Hide on narrow screens - included in the 3-column layout above */}
         {/* When zoomed, inner content animates up to top position (replace mode tabs), but container stays in place */}
-        {!isNarrow && (viewMode === 'archive' || viewMode === 'gallery' || viewMode === 'panorama') && (
+        {!isNarrow && variant !== 'sketch' && (viewMode === 'archive' || viewMode === 'gallery' || viewMode === 'panorama') && (
           <div ref={metaRowRef} style={{
             position: "relative",
             padding: "12px 12px 0 0",
@@ -10646,7 +10736,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
           flexDirection: viewMode === 'gallery' ? 'column' : 'row',
           minHeight: 0,
           maxHeight: '100%',
-          paddingLeft: viewMode === 'archive' ? 150 : 0,
+          paddingLeft: viewMode === 'archive' && variant !== 'sketch' ? 150 : 0,
           position: 'relative',
           overflow: viewMode === 'gallery' ? 'hidden' : undefined
         }}>
@@ -12195,7 +12285,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
           >
             <div
               style={{
-                background: '#fff',
+                background: EM_BG,
                 width: '90%',
                 maxWidth: 600,
                 maxHeight: '85vh',

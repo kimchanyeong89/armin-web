@@ -1,5 +1,6 @@
 import { useState, useMemo, useEffect } from "react";
 import { AnimatePresence, motion } from "motion/react";
+import { useNavigate } from "react-router-dom";
 import { Globe } from "./Globe";
 import { VenuePanel } from "./VenuePanel";
 import { GlobeExhibitionPanel } from "./GlobeExhibitionPanel";
@@ -75,9 +76,11 @@ interface InteractiveGlobeMapProps {
   onSelectExhibition?: (ex: Exhibition) => void;
   onSelectExhibitionItem?: (collectionId: string) => void;
   onExit?: () => void;
+  onSwitchToDrawing?: () => void;
 }
 
-export default function InteractiveGlobeMap({ exhibitions, onSelectExhibition, onSelectExhibitionItem, onExit }: InteractiveGlobeMapProps) {
+export default function InteractiveGlobeMap({ exhibitions, onSelectExhibition, onSelectExhibitionItem, onExit, onSwitchToDrawing }: InteractiveGlobeMapProps) {
+  const navigate = useNavigate();
   const [theme, setTheme] = useState<Theme>("dark");
   const [selectedCity, setSelectedCity] = useState<CityMarker | null>(null);
   const [drilledCountry, setDrilledCountry] = useState<string | null>(null);
@@ -332,6 +335,44 @@ export default function InteractiveGlobeMap({ exhibitions, onSelectExhibition, o
         </button>
       )}
 
+      {/* ── Drawing Map switch — dark digital style matching InteractiveGlobeMap aesthetic ── */}
+      {onSwitchToDrawing && (
+        <button
+          onClick={onSwitchToDrawing}
+          style={{
+            position: "absolute", bottom: 28, left: 28, zIndex: 30,
+            display: "flex", alignItems: "center", gap: 8,
+            padding: "9px 16px", cursor: "pointer",
+            background: "rgba(8,8,8,0.75)",
+            border: "1px solid rgba(255,255,255,0.12)",
+            color: "rgba(255,255,255,0.55)",
+            fontFamily: "'Space Grotesk', sans-serif",
+            fontSize: 10, fontWeight: 600, letterSpacing: "0.12em",
+            textTransform: "uppercase",
+            backdropFilter: "blur(12px)",
+            WebkitBackdropFilter: "blur(12px)",
+            borderRadius: 2,
+            transition: "all 0.2s",
+          }}
+          onMouseEnter={e => {
+            e.currentTarget.style.color = "rgba(255,255,255,0.9)";
+            e.currentTarget.style.border = "1px solid rgba(255,255,255,0.3)";
+            e.currentTarget.style.background = "rgba(255,255,255,0.06)";
+          }}
+          onMouseLeave={e => {
+            e.currentTarget.style.color = "rgba(255,255,255,0.55)";
+            e.currentTarget.style.border = "1px solid rgba(255,255,255,0.12)";
+            e.currentTarget.style.background = "rgba(8,8,8,0.75)";
+          }}
+        >
+          {/* Pencil icon — sketch feel */}
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z" />
+          </svg>
+          Drawing Map
+        </button>
+      )}
+
       {/* ── Back button ── */}
       <AnimatePresence>
         {drilledCountry && (
@@ -404,6 +445,10 @@ export default function InteractiveGlobeMap({ exhibitions, onSelectExhibition, o
             city={selectedCity}
             theme={theme}
             onClose={() => setSelectedCity(null)}
+            onSelectVenue={(venue) => {
+              if (onExit) onExit();
+              navigate(`/exhibition/${venue.id}`);
+            }}
           />
         )}
       </AnimatePresence>

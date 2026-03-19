@@ -227,64 +227,94 @@ export default DrawingLoader;
 // Handles its own mount/unmount lifecycle so the badge can fade
 // in AND fade out smoothly (unlike a simple conditional render).
 // Usage in App.tsx:  <TransitionBadge show={transitioning} />
-// ── Ghost Globe — all-white strokes, used with mix-blend-mode: difference
-// On dark bg: white stays white (visible). On light bg: white inverts to dark (visible).
-const GhostGlobeSVG = ({ size, dur = '2.2s' }: { size: number; dur?: string }) => {
+// ── Ghost Globe — adaptive color based on page background ─────────
+// Detects the page's background luminance and uses opposite-contrast color:
+//   • light background → black strokes (dark mode)
+//   • dark background → white strokes (light mode)
+const GhostGlobeSVG = ({ size, dur = '2.2s', color = '#ffffff' }: { size: number; dur?: string; color?: string }) => {
   const cx = size / 2, cy = size / 2, R = size * 0.43;
   const cMain = 2 * Math.PI * R;
   const cLat1 = cMain * 0.35;
   const cLat2 = cMain * 0.60;
   const cLine = R * 2;
+  const dim = (hex: string, alpha: number) => {
+    // Converts '#rrggbb' to rgba with alpha; handles both '#000'/'#fff' shorthand
+    if (hex === '#ffffff') return `rgba(255,255,255,${alpha})`;
+    return `rgba(0,0,0,${alpha})`;
+  };
   return (
     <svg width={size} height={size} viewBox={`0 0 ${size} ${size}`} style={{ overflow: 'visible' }}>
-      <circle cx={cx} cy={cy} r={R} fill="none" stroke="#ffffff" strokeWidth="1.4"
+      <circle cx={cx} cy={cy} r={R} fill="none" stroke={color} strokeWidth="1.5"
         strokeDasharray={`${cMain} ${cMain}`}
         style={{ animation: `dl-draw-globe ${dur} ease-in-out infinite`, transformOrigin: `${cx}px ${cy}px` }} />
       <ellipse cx={cx} cy={cy} rx={R} ry={R * 0.28}
-        fill="none" stroke="rgba(255,255,255,0.6)" strokeWidth="0.9"
+        fill="none" stroke={dim(color, 0.6)} strokeWidth="1"
         strokeDasharray={`${cLat1} ${cLat1}`}
         style={{ animation: `dl-draw-lat1 ${dur} ease-in-out infinite` }} />
       <ellipse cx={cx} cy={cy} rx={R} ry={R * 0.65}
-        fill="none" stroke="rgba(255,255,255,0.4)" strokeWidth="0.9"
+        fill="none" stroke={dim(color, 0.4)} strokeWidth="1"
         strokeDasharray={`${cLat2} ${cLat2}`}
         style={{ animation: `dl-draw-lat2 ${dur} ease-in-out infinite` }} />
       <line x1={cx} y1={cy - R} x2={cx} y2={cy + R}
-        stroke="rgba(255,255,255,0.5)" strokeWidth="0.9"
+        stroke={dim(color, 0.45)} strokeWidth="1"
         strokeDasharray={`${cLine} ${cLine}`}
         style={{ animation: `dl-draw-vline ${dur} ease-in-out infinite` }} />
       <line x1={cx - R} y1={cy} x2={cx + R} y2={cy}
-        stroke="rgba(255,255,255,0.5)" strokeWidth="0.9"
+        stroke={dim(color, 0.45)} strokeWidth="1"
         strokeDasharray={`${cLine} ${cLine}`}
         style={{ animation: `dl-draw-hline ${dur} ease-in-out infinite` }} />
-      {/* Center dot: white for difference blend */}
-      <circle cx={cx} cy={cy} r={size * 0.028} fill="#ffffff"
+      <circle cx={cx} cy={cy} r={size * 0.028} fill={color}
         style={{ animation: `dl-dot-pulse ${dur} ease-in-out infinite` }} />
     </svg>
   );
 };
 
+// Sample the center-most non-transparent background color and return 'light' | 'dark'
+function detectPageBrightness(): 'light' | 'dark' {
+  try {
+    const cx = window.innerWidth / 2, cy = window.innerHeight / 2;
+    const els = document.elementsFromPoint(cx, cy) as HTMLElement[];
+    for (const el of els) {
+      const bg = window.getComputedStyle(el).backgroundColor;
+      if (!bg || bg === 'rgba(0, 0, 0, 0)' || bg === 'transparent') continue;
+      const m = bg.match(/rgba?\((\d+),\s*(\d+),\s*(\d+)/);
+      if (m) {
+        const lum = (0.299 * +m[1] + 0.587 * +m[2] + 0.114 * +m[3]) / 255;
+        return lum > 0.5 ? 'light' : 'dark';
+      }
+    }
+  } catch (_) {}
+  return 'dark'; // default: assume dark
+}
+
 export const TransitionBadge: React.FC<{ show: boolean }> = ({ show }) => {
   injectStyles();
   const [mounted, setMounted] = React.useState(show);
   const [visible, setVisible] = React.useState(false);
+  const [isLight, setIsLight] = React.useState(false);
 
   React.useEffect(() => {
     if (show) {
+      // Detect before mounting so we have the right color from the first frame
+      setIsLight(detectPageBrightness() === 'light');
       setMounted(true);
-      // Two rAF frames to ensure DOM is painted before opacity transitions
       const raf = requestAnimationFrame(() =>
         requestAnimationFrame(() => setVisible(true))
       );
       return () => cancelAnimationFrame(raf);
     } else {
       setVisible(false);
-      // Unmount after the CSS transition completes
       const t = setTimeout(() => setMounted(false), 260);
       return () => clearTimeout(t);
     }
   }, [show]);
 
   if (!mounted) return null;
+
+  // light page → use black strokes so globe is visible against white
+  // dark page → use white strokes so globe is visible against black
+  const strokeColor = isLight ? '#000000' : '#ffffff';
+  const dotColor = isLight ? 'rgba(0,0,0,0.7)' : 'rgba(255,255,255,0.9)';
 
   return (
     <div style={{
@@ -293,12 +323,6 @@ export const TransitionBadge: React.FC<{ show: boolean }> = ({ show }) => {
       pointerEvents: 'none',
       fontFamily: MONO,
     }}>
-      {/*
-        mix-blend-mode: difference makes white elements appear:
-          • on dark bg (#111) → stays near-white (visible)
-          • on light bg (#fff / cream) → inverts to near-black (visible)
-        This gives automatic contrast on any page background.
-      */}
       <div style={{
         display: 'flex', flexDirection: 'column',
         alignItems: 'center', justifyContent: 'center',
@@ -306,14 +330,13 @@ export const TransitionBadge: React.FC<{ show: boolean }> = ({ show }) => {
         opacity: visible ? 1 : 0,
         transform: visible ? 'scale(1)' : 'scale(0.80)',
         transition: 'opacity 0.22s ease, transform 0.28s cubic-bezier(0.34,1.2,0.64,1)',
-        mixBlendMode: 'difference',
       }}>
-        <GhostGlobeSVG size={56} dur="2.2s" />
+        <GhostGlobeSVG size={56} dur="2.2s" color={strokeColor} />
         <div style={{ display: 'flex', gap: 5, alignItems: 'center' }}>
           {[0, 1, 2].map(i => (
             <div key={i} style={{
               width: 4, height: 4, borderRadius: '50%',
-              background: '#ffffff', // white + difference = inverts to dark on light bg
+              background: dotColor,
               animation: `dl-dot-blink 1.2s ease-in-out ${i * 0.22}s infinite`,
             }} />
           ))}

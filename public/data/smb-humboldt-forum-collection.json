@@ -37554,53 +37554,6 @@
     "original_imageUrl": "https://recherche.smb.museum/images/4238825_1400x1400.jpg"
   },
   {
-    "id": "smb-humboldt-forum-2644470",
-    "smbId": 2644470,
-    "title": "Teil einer Schlitztrommel",
-    "artist": "Hans Glauning",
-    "date": "",
-    "medium": "Holz (beschnitzt)",
-    "type": "Teil einer Schlitztrommel",
-    "dimensions": "Objektmaß: ca. 95 x 215 x 120 cm (Körper); Höhe x Breite x Tiefe: ca. 100 x 310 x 120 cm (Gesamt, ohne Büffelkopf); Gewicht: beide Körperhälften zusammen 346,5 kg ohne Kopf, mit Verbindungsbeschlägen aus Edelstahl",
-    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/smb-humboldt-forum-collection/smb-humboldt-forum-2644470-20f12b89-imageUrl.webp",
-    "thumbnailUrl": "https://recherche.smb.museum/images/4238825_800x800.jpg",
-    "images": [
-      {
-        "url": "https://recherche.smb.museum/images/4238825_1400x1400.jpg",
-        "thumbnail": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/smb-humboldt-forum-collection/img-a39e35ee-thumbnail.webp",
-        "assetId": "4238825",
-        "original_thumbnail": "https://recherche.smb.museum/images/4238825_800x800.jpg"
-      },
-      {
-        "url": "https://recherche.smb.museum/images/4878838_1400x1400.jpg",
-        "thumbnail": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/smb-humboldt-forum-collection/img-88d23ecf-thumbnail.webp",
-        "assetId": "4878838",
-        "original_thumbnail": "https://recherche.smb.museum/images/4878838_800x800.jpg"
-      },
-      {
-        "url": "https://recherche.smb.museum/images/5036534_1400x1400.jpg",
-        "thumbnail": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/smb-humboldt-forum-collection/img-5e856c3d-thumbnail.webp",
-        "assetId": "5036534",
-        "original_thumbnail": "https://recherche.smb.museum/images/5036534_800x800.jpg"
-      }
-    ],
-    "collection": "Ethnologisches Museum",
-    "collectionKey": "EMAfrika1",
-    "exhibitionSpace": "Humboldt Forum, 2. Obergeschoss, Raum 216",
-    "location": "Humboldt Forum",
-    "description": "Sprechtrommeln. Große, aus einem Stück Holz ausgehöhlte Trommeln mit einem Längenschlitz sind hier S. 5 bereits kurz erwähnt. Sie würden eine ausführliche Monographie verdienen, die sich freilich nicht auf die äußere Form beschränken dürfte, sondern vor allem auch die Art der Zeichengebung mit sorgfältigstem Eingehen auf sprachliche und auf musikalische Einzelheiten berücksichtigen müßte. In meinem Benin-Buche habe ich angedeutet, daß mehrfach in einer anderen als in der gewöhnlichen Umgangssprache getrommelt wird, und habe versucht, das mit den oft sehr eigenartigen Texten zu vergleichen, die den in allen europäischen Heeren üblichen Signalen von den Soldaten unterlegt werden. Hier kann ich nur auf die weite Verbreitung der Sprechtrommeln hinweisen und einige besonders hervorragende Stücke abbilden. Das Berliner Museum besitzt als Geschenk von Hauptmann Glauning eine der größten überhaupt bekannten Trommeln dieser Art, von den Bamenda in Kamerun, 3'60/rz lang und fast 3 m im Durchmesser. Das Stück hat die Form eines vierfüßigen Tieres, das auf der einen Seite einen Büffelkopf, auf der anderen den eines mythischen, wohl elefantenähnlichen Tieres hat. Auf der hier Abb. 56 sichtbaren Längsseite sind drei nackte männliche Figuren dargestellt, von denen die beiden seitlichen einen abgeschnittenen menschlichen Kopf halten; nach außen von dieser Gruppe anscheinend tanzender Männer ist auf jeder Seite eine regenwurmartig gegliederte Schlange mit menschlichem Kopf dargestellt. Die andere Längsseite ist von zwei großen Panthern eingenommen, deren Schweife wurmähnlich gebildet sind und in Menschenköpfe enden. Die Trommel ist schon ihrer Erhaltung nach auf ein Alter von einigen Jahrhunderten zu schätzen und wurde dem Sammler auch von den Eingebornen als sehr viele Generationen alt bezeichnet\r\n\r\n\"Grosse Holztrommel. An einem Ende ein Elefantenkopf, am anderen ein Büffelkopf. An der einen Seite in Reliefschnitzerei mehrere menschliche Figuren, auf der anderen 2 Krokodile, deren Schwänze in Köpfen endigen.\"\r\nForm: Zerlegbar in drei Teile. Der Büffelkopf fehlt!\r\nFarbe: Graubraun\r\nErhaltungszustand: Unvollständig aus Leipzig zurück. [SM8HF]",
-    "geographicalReferences": [
-      "Kamerun (Land/Region)",
-      "Bansa (Ethnie)"
-    ],
-    "identNumber": "III C 21170 b",
-    "permalink": "https://id.smb.museum/object/2644470/teil-einer-schlitztrommel",
-    "sourceUrl": "https://id.smb.museum/object/2644470/teil-einer-schlitztrommel",
-    "museum": "Humboldt Forum",
-    "museumId": "smb-humboldt-forum",
-    "original_imageUrl": "https://recherche.smb.museum/images/4238825_1400x1400.jpg"
-  },
-  {
     "id": "smb-humboldt-forum-2644469",
     "smbId": 2644469,
     "title": "Teil einer Schlitztrommel",

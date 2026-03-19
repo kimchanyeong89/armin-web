@@ -35,21 +35,48 @@ const KNOWN_ARTIST_KEYS: Record<string, string> = {
     'fantin': 'fantin-latour', 'latour': 'fantin-latour',
     // German Expressionists - explicit merges
     'heckel': 'heckel', 'pechstein': 'pechstein',
+    // Examples and fixes
+    'soutine': 'soutine',
+    'simonet': 'simonet',
+    'desportes': 'desportes',
+    'rottluff': 'schmidt-rottluff',
+    'ofrembrandt': 'rembrandt',
+    'manetti': 'manetti',
+    'paik': 'paik',
 };
 
 // Normalize artist name to a canonical key for grouping
 function getArtistKey(name: string): string {
     if (!name) return '';
 
-    // Remove parentheses content and special prefixes before normalization
-    const stripped = name
-        .replace(/\([^)]*\)/g, ' ')
-        .replace(/^dit\)\s*/i, ' ');
+    let stripped = name.replace(/(?:^|\s)dit\)\s*/i, ' ');
+
+    // Drop parentheses if they seem to contain biographical data (years, countries, etc.)
+    const bioRegex = /\([^)]*(\d+|active|born|died|century|france|italy|germany|spain|dutch|flemish|british|lithuania|american|english)[^)]*(\)|$)/ig;
+    stripped = stripped.replace(bioRegex, ' ');
+
+    // For any remaining parentheses (e.g. pseudonyms, real names), just remove the brackets to preserve the text
+    stripped = stripped.replace(/[()]/g, ' ');
+
+    // Inverted names: "Lastname, Firstname" -> "Firstname Lastname"
+    if (stripped.includes(',') && !stripped.includes(' and ') && !stripped.includes('&')) {
+        const parts = stripped.split(',');
+        if (parts.length >= 2) {
+            stripped = parts[1] + ' ' + parts[0];
+        }
+    }
 
     let normalized = normalizeSearchText(stripped);
 
+    // Remove attribution text in English/French/Norwegian
+    normalized = normalized
+        .replace(/\b(attributed to|workshop of|circle of|follower of|manner of|style of|pupil of|school of|after)\b/g, '')
+        .replace(/\b(attribue a|atelier de|entourage de|d apres|ecole de|skole|verksted|tilskrevet|nach)\b/g, '')
+        .replace(/\b(workshop ofrembrandt)\b/g, 'rembrandt')
+        .replace(/\brembrandts\b/g, 'rembrandt');
+
     // Tokenize
-    const tokens = normalized.split(/[\s-]+/).filter(t => t.length > 2);
+    const tokens = normalized.split(/[\s-]+/).filter(t => t.length > 2 && !['the', 'van', 'der', 'von', 'and', 'und', 'la', 'le'].includes(t));
 
     // Check each token against known artist keys
     for (const token of tokens) {
@@ -63,6 +90,7 @@ function getArtistKey(name: string): string {
 }
 
 let allArtworks: any[] = [];
+let globalArtistCounts = new Map<string, number>(); // Store total artworks per artist
 let idMap = new Map<string, any>(); // Optimize ID lookups
 
 type WorkerMode = {
@@ -169,6 +197,11 @@ function processChunk(items: any[]) {
         }
         allArtworks.push(p);
         if (p.id) idMap.set(p.id, p);
+
+        const artistKey = getArtistKey(p.artist);
+        if (artistKey && p.artist !== 'Unknown') {
+            globalArtistCounts.set(artistKey, (globalArtistCounts.get(artistKey) || 0) + 1);
+        }
     }
 }
 
@@ -238,10 +271,11 @@ async function loadData() {
             if (!res.ok) throw new Error(`HTTP ${res.status}`);
             const items = await res.json();
             processChunk(items);
-            self.postMessage({ type: 'LOAD_COMPLETE', count: allArtworks.length });
+            self.postMessage({ type: 'LOAD_PROGRESS', count: allArtworks.length });
         }).catch(e => console.error(`Chunk failed: ${file}`, e)));
 
         await Promise.allSettled(tasks);
+        self.postMessage({ type: 'LOAD_COMPLETE', count: allArtworks.length });
 
     } catch (e) {
         console.error('Worker load error:', e);
@@ -370,10 +404,14 @@ function search(query: string) {
                     bestName = name;
                 }
             }
-            return { artist: bestName, count: group.totalCount, key };
+            // Use the global count for the artist, not just the search hits
+            const totalGlobalCount = globalArtistCounts.get(key) || group.totalCount;
+            // We use group.totalCount for sorting priority (most relevant to search), 
+            // but return the totalGlobalCount for display
+            return { artist: bestName, count: totalGlobalCount, sortScore: group.totalCount, key };
         })
         .filter(a => a.artist)
-        .sort((a, b) => b.count - a.count)
+        .sort((a, b) => b.sortScore - a.sortScore)
         .slice(0, 5)
         .map(({ artist, count }) => ({ artist, count }));
 

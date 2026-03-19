@@ -436,7 +436,7 @@ interface CityMarker {
 interface CountryCluster { id: string; isCountry: boolean; countryName: string; coords: [number, number]; count: number; cities: CityMarker[]; }
 interface ContinentCluster { id: string; isContinent: boolean; continentName: string; coords: [number, number]; count: number; countries: CountryCluster[]; }
 
-interface Props { exhibitions: Exhibition[]; onClose?: () => void; onSelectExhibition?: (ex: Exhibition) => void; }
+interface Props { exhibitions: Exhibition[]; onClose?: () => void; onSelectExhibition?: (ex: Exhibition) => void; onSwitchToInteractive?: () => void; }
 
 // ── Inline style constants ────────────────────────────────────────────────────
 const S = {
@@ -490,7 +490,7 @@ const S = {
   artDate: { fontFamily: 'monospace', fontSize: 9, opacity: 0.5, marginTop: 1 },
 };
 
-export default function DrawingGlobe({ exhibitions, onClose, onSelectExhibition }: Props) {
+export default function DrawingGlobe({ exhibitions, onClose, onSelectExhibition, onSwitchToInteractive }: Props) {
   const navigate = useNavigate();
   const [land, setLand] = useState<any>(null);
   const [borders, setBorders] = useState<any>(null);
@@ -723,6 +723,51 @@ export default function DrawingGlobe({ exhibitions, onClose, onSelectExhibition 
     isDragging.current = false;
     lastDragPos.current = null;
     e.currentTarget.style.cursor = 'grab';
+  }, []);
+
+  // Touch support for mobile
+  const touchDistRef = useRef<number | null>(null);
+
+  const handleSvgTouchStart = useCallback((e: React.TouchEvent<SVGSVGElement>) => {
+    if (e.touches.length === 1) {
+      const target = e.target as SVGElement;
+      if (target.closest?.('[data-marker]')) return;
+      isDragging.current = true;
+      lastDragPos.current = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+    } else if (e.touches.length === 2) {
+      isDragging.current = false;
+      const dx = e.touches[0].clientX - e.touches[1].clientX;
+      const dy = e.touches[0].clientY - e.touches[1].clientY;
+      touchDistRef.current = Math.hypot(dx, dy);
+    }
+  }, []);
+
+  const handleSvgTouchMove = useCallback((e: React.TouchEvent<SVGSVGElement>) => {
+    e.preventDefault();
+    if (e.touches.length === 1 && isDragging.current && lastDragPos.current) {
+      const dx = e.touches[0].clientX - lastDragPos.current.x;
+      const dy = e.touches[0].clientY - lastDragPos.current.y;
+      lastDragPos.current = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+      setRotation(r => {
+        const sens = 0.4 * (initialScale / scaleRef.current);
+        return [r[0] + dx * sens, r[1] - dy * sens, r[2]];
+      });
+    } else if (e.touches.length === 2 && touchDistRef.current !== null) {
+      const dx = e.touches[0].clientX - e.touches[1].clientX;
+      const dy = e.touches[0].clientY - e.touches[1].clientY;
+      const newDist = Math.hypot(dx, dy);
+      const ratio = newDist / touchDistRef.current;
+      touchDistRef.current = newDist;
+      const minSc = initialScale * 0.45;
+      const maxSc = initialScale * 9;
+      setScale(s => Math.max(minSc, Math.min(s * ratio, maxSc)));
+    }
+  }, [initialScale]);
+
+  const handleSvgTouchEnd = useCallback(() => {
+    isDragging.current = false;
+    lastDragPos.current = null;
+    touchDistRef.current = null;
   }, []);
 
   useEffect(() => {
@@ -1004,11 +1049,14 @@ export default function DrawingGlobe({ exhibitions, onClose, onSelectExhibition 
         height={size.h}
         viewBox={`0 0 ${size.w} ${size.h}`}
         preserveAspectRatio="xMidYMid meet"
-        style={{ ...S.globeSvg, cursor: 'grab', shapeRendering: 'geometricPrecision', textRendering: 'optimizeLegibility' }}
+        style={{ ...S.globeSvg, cursor: 'grab', shapeRendering: 'geometricPrecision', textRendering: 'optimizeLegibility', touchAction: 'none' }}
         onMouseDown={handleSvgMouseDown}
         onMouseMove={handleSvgMouseMove}
         onMouseUp={handleSvgMouseUp}
         onMouseLeave={handleSvgMouseUp}
+        onTouchStart={handleSvgTouchStart}
+        onTouchMove={handleSvgTouchMove}
+        onTouchEnd={handleSvgTouchEnd}
       >
 
         <defs>
@@ -1318,6 +1366,38 @@ export default function DrawingGlobe({ exhibitions, onClose, onSelectExhibition 
         <p style={S.instructionText}>Scroll to Zoom</p>
         <p style={S.instructionText}>Drag to Rotate</p>
       </div>
+
+      {/* Interactive Map switch button */}
+      {/* Interactive Map switch — brutalist sketch style matching DrawingGlobe aesthetic */}
+      {onSwitchToInteractive && (
+        <button
+          onClick={onSwitchToInteractive}
+          style={{
+            position: 'fixed', bottom: 28, right: 28, zIndex: 200,
+            display: 'flex', alignItems: 'center', gap: 9,
+            background: '#111111', color: '#ffffff',
+            border: '2.5px solid #111111',
+            padding: '11px 20px', fontSize: 9, fontWeight: 700,
+            letterSpacing: '0.22em', fontFamily: "'Space Mono', 'Courier New', monospace",
+            cursor: 'pointer', textTransform: 'uppercase',
+            boxShadow: '3px 3px 0 #111111',
+            filter: 'url(#dg-sketch-globe)',
+            transition: 'box-shadow 0.1s, transform 0.1s',
+          }}
+          onMouseEnter={e => { e.currentTarget.style.boxShadow = '1px 1px 0 #111111'; e.currentTarget.style.transform = 'translate(2px,2px)'; }}
+          onMouseLeave={e => { e.currentTarget.style.boxShadow = '3px 3px 0 #111111'; e.currentTarget.style.transform = 'none'; }}
+        >
+          {/* Globe icon — hand-drawn circle style */}
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
+            <circle cx="7" cy="7" r="5.5" />
+            <ellipse cx="7" cy="7" rx="2.5" ry="5.5" />
+            <line x1="1.5" y1="7" x2="12.5" y2="7" />
+            <line x1="2.5" y1="4" x2="11.5" y2="4" />
+            <line x1="2.5" y1="10" x2="11.5" y2="10" />
+          </svg>
+          INTERACTIVE MAP
+        </button>
+      )}
 
       {/* ── City Panel ─────────────────────────────────────────────────── */}
       {(() => {

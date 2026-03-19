@@ -7534,46 +7534,6 @@
     "original_imageUrl": "https://recherche.smb.museum/images/2680219_1400x1400.jpg"
   },
   {
-    "id": "smb-neues-museum-1427997",
-    "smbId": 1427997,
-    "title": "Demotischer Papyrus mit dem \"Streit zwischen Horus und Seth\" (Pap. Berlin P 15549 + 15551 + 23727)",
-    "artist": "Otto Rubensohn",
-    "date": "1. Jh. v. Chr. (Ptolemäerzeit -> Griechisch–Römische Zeit -> Ägypten)",
-    "medium": "Papyrus (Material); beidseitig, beschriftet (Technik)",
-    "type": "Schriftträger ( )",
-    "dimensions": "Höhe x Breite x Tiefe: 22,7 x 16 x 0,03 cm",
-    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/smb-neues-museum-collection/smb-neues-museum-1427997-84ba5527-imageUrl.webp",
-    "thumbnailUrl": "https://recherche.smb.museum/images/2680219_800x800.jpg",
-    "images": [
-      {
-        "url": "https://recherche.smb.museum/images/2680219_1400x1400.jpg",
-        "thumbnail": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/smb-neues-museum-collection/img-90a19ccb-thumbnail.webp",
-        "assetId": "2680219",
-        "original_thumbnail": "https://recherche.smb.museum/images/2680219_800x800.jpg"
-      },
-      {
-        "url": "https://recherche.smb.museum/images/7823275_1400x1400.jpg",
-        "thumbnail": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/smb-neues-museum-collection/img-f4ff7003-thumbnail.webp",
-        "assetId": "7823275",
-        "original_thumbnail": "https://recherche.smb.museum/images/7823275_800x800.jpg"
-      }
-    ],
-    "collection": "Ägyptisches Museum und Papyrussammlung",
-    "collectionKey": "AMPPapyrussammlung",
-    "exhibitionSpace": "Neues Museum, Ebene 2, Raum 211",
-    "location": "Neues Museum",
-    "description": "Dieser stark fragmentierte Papyrus enthält eine demotisch geschriebene Version des Mythos um die Thronfolge des Osiris, in der Ägyptologie bekannt als \"Streit zwischen Horus und seinem Bruder Seth\". J. Moje",
-    "geographicalReferences": [
-      "Abusir el-Meleq (Ägypten / Mittelägypten)"
-    ],
-    "identNumber": "P 15551",
-    "permalink": "https://id.smb.museum/object/1427997/demotischer-papyrus-mit-dem-streit-zwischen-horus-und-seth-pap--berlin-p-15549--",
-    "sourceUrl": "https://id.smb.museum/object/1427997/demotischer-papyrus-mit-dem-streit-zwischen-horus-und-seth-pap--berlin-p-15549--",
-    "museum": "Neues Museum",
-    "museumId": "smb-neues-museum",
-    "original_imageUrl": "https://recherche.smb.museum/images/2680219_1400x1400.jpg"
-  },
-  {
     "id": "smb-neues-museum-1427586",
     "smbId": 1427586,
     "title": "Arabisches Ostrakon mit einem Brief",
@@ -8669,46 +8629,6 @@
     "museum": "Neues Museum",
     "museumId": "smb-neues-museum",
     "original_imageUrl": "https://recherche.smb.museum/images/2647482_1400x1400.jpg"
-  },
-  {
-    "id": "smb-neues-museum-833688",
-    "smbId": 833688,
-    "title": "Hieratischer Papyrus mit einem Tempeltagebuch",
-    "artist": "Heinrich Schäfer",
-    "date": "Sesostris III. (12. Dynastie -> Mittleres Reich -> Ägypten)",
-    "medium": "Papyrus (Material); beidseitig, beschriftet (Technik)",
-    "type": "Schriftträger ( )",
-    "dimensions": "Höhe x Breite x Tiefe: 32,8 x 22 x 0,01 cm",
-    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/smb-neues-museum-collection/smb-neues-museum-833688-894b1549-imageUrl.webp",
-    "thumbnailUrl": "https://recherche.smb.museum/images/5282274_800x800.jpg",
-    "images": [
-      {
-        "url": "https://recherche.smb.museum/images/5282274_1400x1400.jpg",
-        "thumbnail": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/smb-neues-museum-collection/img-e483a095-thumbnail.webp",
-        "assetId": "5282274",
-        "original_thumbnail": "https://recherche.smb.museum/images/5282274_800x800.jpg"
-      },
-      {
-        "url": "https://recherche.smb.museum/images/5282275_1400x1400.jpg",
-        "thumbnail": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/smb-neues-museum-collection/img-ddee0b74-thumbnail.webp",
-        "assetId": "5282275",
-        "original_thumbnail": "https://recherche.smb.museum/images/5282275_800x800.jpg"
-      }
-    ],
-    "collection": "Ägyptisches Museum und Papyrussammlung",
-    "collectionKey": "AMPPapyrussammlung",
-    "exhibitionSpace": "Neues Museum, Ebene 2, Raum 211",
-    "location": "Neues Museum",
-    "description": "Dieser fragmentarisch erhaltene Papyrus stammt aus dem Tempelarchiv von Illahun und enthält Teile des in hieratischer Schrift abgefassten Tempeltagebuches.  Auf dem Recto ist erhalten ist ein Auszug einer Zeitspanne innerhalb eines Monats bis zum 25. Tag aus dem 7. Regierungsjahr Sesostris‘ III. Neben einer Namensliste der in dieser Zeit diensthabenden Priester findet sich auch die Abschrift eines Briefes vom 25. Tag des dritten Frühjahrsmonats mit der Feststellung, der Frühaufgang des Sothis-Sterns sei für den 16. Tag des vierten Frühjahrsmonats zu erwarten. Vom 17. Tag des vierten Frühjahrsmonats ist ein Vermerk über die Festivitäten zum Aufgang des Sterns eingefügt. Auf dem Verso ist sind Auszüge des Tempeltagebuches vom 13. Jahr Sesostris‘ III. erhalten. Hier finden sich Angaben über das täglich diensthabende Tempelpersonal. Die Angaben über den Frühaufgang von Sothis ist für die absolute Chronologie des Mittleren Reiches von besonderer Relevanz. J. Moje",
-    "geographicalReferences": [
-      "Illahun (Ägypten / Fayum)"
-    ],
-    "identNumber": "P 10012/A",
-    "permalink": "https://id.smb.museum/object/833688/hieratischer-papyrus-mit-einem-tempeltagebuch",
-    "sourceUrl": "https://id.smb.museum/object/833688/hieratischer-papyrus-mit-einem-tempeltagebuch",
-    "museum": "Neues Museum",
-    "museumId": "smb-neues-museum",
-    "original_imageUrl": "https://recherche.smb.museum/images/5282274_1400x1400.jpg"
   },
   {
     "id": "smb-neues-museum-823550",
@@ -10853,41 +10773,6 @@
     "original_imageUrl": "https://recherche.smb.museum/images/2764607_1400x1400.jpg"
   },
   {
-    "id": "smb-neues-museum-3338475",
-    "smbId": 3338475,
-    "title": "Grabpfeiler mit der Darstellung König Sethos I. vor dem Gott Osiris",
-    "artist": "Carl Richard Lepsius",
-    "date": "Sethos I. (19. Dynastie -> Neues Reich -> Ägypten)",
-    "medium": "Kalkstein (Material / Stein); verputzt, bemalt",
-    "type": "Pfeiler (Architektur)",
-    "dimensions": "Höhe x Breite x Tiefe: 261 x 88 x 47 cm",
-    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/smb-neues-museum-collection/smb-neues-museum-3338475-f94caad6-imageUrl.webp",
-    "thumbnailUrl": "https://recherche.smb.museum/images/2764607_800x800.jpg",
-    "images": [
-      {
-        "url": "https://recherche.smb.museum/images/2764607_1400x1400.jpg",
-        "thumbnail": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/smb-neues-museum-collection/img-ddc9d51d-thumbnail.webp",
-        "assetId": "2764607",
-        "original_thumbnail": "https://recherche.smb.museum/images/2764607_800x800.jpg"
-      }
-    ],
-    "collection": "Ägyptisches Museum und Papyrussammlung",
-    "collectionKey": "AMPAgyptischesMuseum",
-    "exhibitionSpace": "Neues Museum, Ebene 1, Raum 110",
-    "location": "Neues Museum",
-    "description": "Der verstorbene Erdenkönig Sethos I. steht in Amtstracht mit Königskopftuch und Diadem vor Osiris, dem in weißen Mumienbinden gehüllten Herrscher der Unterwelt. Osiris trägt Krummstab und Geißel als Insignien seiner Macht in den Händen. Ein Kopftuch, wie es von den Pharaonen getragen wird, legitimiert ihn als König. Die Verbindung zur Unterwelt stellt die auf dem Kopftuch befindliche charakteristische Osiris-Krone her.\r\nIn der Inschrift über der Szene wird bestätigt, dass der gerechtfertigte und zu Osiris gewordenen König, der Sohn des Re mit Namen Sethos I., vor Osiris, dem Herrn der Unterwelt (Nekropole), eingetroffen ist. Osiris verleiht ihm nun \"die Mächtigkeit des Re\".",
-    "geographicalReferences": [
-      "Tal der Könige (Ägypten / Oberägypten / Theben-West)",
-      "Sethos I. (KV 17), Halle J, Pfeiler B, Seite a (Grab)"
-    ],
-    "identNumber": "ÄM 2058",
-    "permalink": "https://id.smb.museum/object/3338475/grabpfeiler-mit-der-darstellung-konig-sethos-i--vor-dem-gott-osiris",
-    "sourceUrl": "https://id.smb.museum/object/3338475/grabpfeiler-mit-der-darstellung-konig-sethos-i--vor-dem-gott-osiris",
-    "museum": "Neues Museum",
-    "museumId": "smb-neues-museum",
-    "original_imageUrl": "https://recherche.smb.museum/images/2764607_1400x1400.jpg"
-  },
-  {
     "id": "smb-neues-museum-2337943",
     "smbId": 2337943,
     "title": "P. 11529 R + P. 16015: Liste der Bodenflächen verschiedener οὐσίαι im Arsinoites und Abrechnung über Weizenlieferungen / P. 11529 V: Mathematische Aufgaben, Schultext",
@@ -11190,40 +11075,6 @@
     "original_imageUrl": "https://recherche.smb.museum/images/5045470_1400x1400.jpg"
   },
   {
-    "id": "smb-neues-museum-2049054",
-    "smbId": 2049054,
-    "title": "Hieroglyphischer Papyrus mit Auszügen aus Amduat und Totenbuch für den Priester Hor-em-chemmis",
-    "artist": "",
-    "date": "21. Dynastie (3. Zwischenzeit -> Ägypten)",
-    "medium": "Papyrus (Material); einseitig (?), beschriftet und bemalt (Technik)",
-    "type": "Rolle (Schriftträger)",
-    "dimensions": "Höhe x Breite: 33,5 x 45,3 cm",
-    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/smb-neues-museum-collection/smb-neues-museum-2049054-8133f380-imageUrl.webp",
-    "thumbnailUrl": "https://recherche.smb.museum/images/5045470_800x800.jpg",
-    "images": [
-      {
-        "url": "https://recherche.smb.museum/images/5045470_1400x1400.jpg",
-        "thumbnail": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/smb-neues-museum-collection/img-149f1306-thumbnail.webp",
-        "assetId": "5045470",
-        "original_thumbnail": "https://recherche.smb.museum/images/5045470_800x800.jpg"
-      }
-    ],
-    "collection": "Ägyptisches Museum und Papyrussammlung",
-    "collectionKey": "AMPPapyrussammlung",
-    "exhibitionSpace": "Neues Museum, Ebene 0, Raum 012",
-    "location": "Neues Museum",
-    "description": "Dieser hieroglyphische Papyrus enthält eine Version des Unterweltsbuches, das die Ägypter „Amduat“ genannt haben, „Buch von dem, was in der Unterwelt ist“, sowie einen Auszug aus dem Totenbuch, dem „Buch vom Herausgehen am Tage“.Das „Amduat“ entstand im Neuen Reich und war anfangs nur für die Dekoration in den königlichen Gräbern vorgesehen, sowie in denjenigen von ranghohen Staatsbeamten. Erst ab der Dritten Zwischenzeit tauchen Belege auf Papyrus auf, die als Grabbeigabe dienten. Nun konnten auch Privatpersonen diesen Text für sich verwenden. Überwiegend wird nicht mehr der ganze Text notiert, sondern nur Auszüge mit einzelnen Nachtstunden. Das Buch ist in zwölf Abschnitten eingeteilt, die jeweils eine der zwölf Stunden der Nacht symbolisieren. Darin wird die Barkenfahrt des Sonnengottes Re durch die Unterwelt während der Nacht thematisiert. Dabei begegnen Re diverse Probleme und Hindernisse, die er, unterstützt von Helfern, überwinden muss, um seine Fahrt vollenden und am Morgen wieder aufgehen zu können. Der Hauptgegner ist der schlangengestaltige Apophis. Für die Verstorbenen, denen der Text als Grabbeigabe mitgegeben wurde, diente er als eine Art „Reiseführer“ durch die Unterwelt.Das „Totenbuch“ ist eine Spruchsammlung, die dem Verstorbenen bei dem Übergang ins Jenseits behilflich ist. Besonders bekannt ist die Gerichtsszene, bei der am Ende das Herz der Verstorbenen gegenüber der Wahrheit gewogen wird.Der hier vorliegende, ausführliche Papyrus gehört einem thebanischen Priester namens Hor-em-Chemmis. Aus dem Amduat sind vorhanden die 9. bis 12. Nachstunde, aus dem Totenbuch die Vignette zu Spruch 125.J. Moje",
-    "geographicalReferences": [
-      "Theben (Ägypten / Oberägypten)"
-    ],
-    "identNumber": "P 3001/L",
-    "permalink": "https://id.smb.museum/object/2049054/hieroglyphischer-papyrus-mit-auszugen-aus-amduat-und-totenbuch-fur-den-priester",
-    "sourceUrl": "https://id.smb.museum/object/2049054/hieroglyphischer-papyrus-mit-auszugen-aus-amduat-und-totenbuch-fur-den-priester",
-    "museum": "Neues Museum",
-    "museumId": "smb-neues-museum",
-    "original_imageUrl": "https://recherche.smb.museum/images/5045470_1400x1400.jpg"
-  },
-  {
     "id": "smb-neues-museum-2049052",
     "smbId": 2049052,
     "title": "Hieroglyphischer Papyrus mit Auszügen aus Amduat und Totenbuch für den Priester Hor-em-chemmis",
@@ -11253,40 +11104,6 @@
     "identNumber": "P 3001/K",
     "permalink": "https://id.smb.museum/object/2049052/hieroglyphischer-papyrus-mit-auszugen-aus-amduat-und-totenbuch-fur-den-priester",
     "sourceUrl": "https://id.smb.museum/object/2049052/hieroglyphischer-papyrus-mit-auszugen-aus-amduat-und-totenbuch-fur-den-priester",
-    "museum": "Neues Museum",
-    "museumId": "smb-neues-museum",
-    "original_imageUrl": "https://recherche.smb.museum/images/5045467_1400x1400.jpg"
-  },
-  {
-    "id": "smb-neues-museum-2049050",
-    "smbId": 2049050,
-    "title": "Hieroglyphischer Papyrus mit Auszügen aus Amduat und Totenbuch für den Priester Hor-em-chemmis",
-    "artist": "",
-    "date": "21. Dynastie (3. Zwischenzeit -> Ägypten)",
-    "medium": "Papyrus (Material); einseitig (?), beschriftet und bemalt (Technik)",
-    "type": "Rolle (Schriftträger)",
-    "dimensions": "Höhe x Breite: 34 x 57,5 cm",
-    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/smb-neues-museum-collection/smb-neues-museum-2049050-d4706a54-imageUrl.webp",
-    "thumbnailUrl": "https://recherche.smb.museum/images/5045467_800x800.jpg",
-    "images": [
-      {
-        "url": "https://recherche.smb.museum/images/5045467_1400x1400.jpg",
-        "thumbnail": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/smb-neues-museum-collection/img-cdf24d47-thumbnail.webp",
-        "assetId": "5045467",
-        "original_thumbnail": "https://recherche.smb.museum/images/5045467_800x800.jpg"
-      }
-    ],
-    "collection": "Ägyptisches Museum und Papyrussammlung",
-    "collectionKey": "AMPPapyrussammlung",
-    "exhibitionSpace": "Neues Museum, Ebene 0, Raum 012",
-    "location": "Neues Museum",
-    "description": "Dieser hieroglyphische Papyrus enthält eine Version des Unterweltsbuches, das die Ägypter „Amduat“ genannt haben, „Buch von dem, was in der Unterwelt ist“, sowie einen Auszug aus dem Totenbuch, dem „Buch vom Herausgehen am Tage“.Das „Amduat“ entstand im Neuen Reich und war anfangs nur für die Dekoration in den königlichen Gräbern vorgesehen, sowie in denjenigen von ranghohen Staatsbeamten. Erst ab der Dritten Zwischenzeit tauchen Belege auf Papyrus auf, die als Grabbeigabe dienten. Nun konnten auch Privatpersonen diesen Text für sich verwenden. Überwiegend wird nicht mehr der ganze Text notiert, sondern nur Auszüge mit einzelnen Nachtstunden. Das Buch ist in zwölf Abschnitten eingeteilt, die jeweils eine der zwölf Stunden der Nacht symbolisieren. Darin wird die Barkenfahrt des Sonnengottes Re durch die Unterwelt während der Nacht thematisiert. Dabei begegnen Re diverse Probleme und Hindernisse, die er, unterstützt von Helfern, überwinden muss, um seine Fahrt vollenden und am Morgen wieder aufgehen zu können. Der Hauptgegner ist der schlangengestaltige Apophis. Für die Verstorbenen, denen der Text als Grabbeigabe mitgegeben wurde, diente er als eine Art „Reiseführer“ durch die Unterwelt.Das „Totenbuch“ ist eine Spruchsammlung, die dem Verstorbenen bei dem Übergang ins Jenseits behilflich ist. Besonders bekannt ist die Gerichtsszene, bei der am Ende das Herz der Verstorbenen gegenüber der Wahrheit gewogen wird.Der hier vorliegende, ausführliche Papyrus gehört einem thebanischen Priester namens Hor-em-Chemmis. Aus dem Amduat sind vorhanden die 9. bis 12. Nachstunde, aus dem Totenbuch die Vignette zu Spruch 125.J. Moje",
-    "geographicalReferences": [
-      "Theben (Ägypten / Oberägypten)"
-    ],
-    "identNumber": "P 3001/I",
-    "permalink": "https://id.smb.museum/object/2049050/hieroglyphischer-papyrus-mit-auszugen-aus-amduat-und-totenbuch-fur-den-priester",
-    "sourceUrl": "https://id.smb.museum/object/2049050/hieroglyphischer-papyrus-mit-auszugen-aus-amduat-und-totenbuch-fur-den-priester",
     "museum": "Neues Museum",
     "museumId": "smb-neues-museum",
     "original_imageUrl": "https://recherche.smb.museum/images/5045467_1400x1400.jpg"
@@ -11326,40 +11143,6 @@
     "original_imageUrl": "https://recherche.smb.museum/images/5045465_1400x1400.jpg"
   },
   {
-    "id": "smb-neues-museum-2049047",
-    "smbId": 2049047,
-    "title": "Hieroglyphischer Papyrus mit Auszügen aus Amduat und Totenbuch für den Priester Hor-em-chemmis",
-    "artist": "",
-    "date": "21. Dynastie (3. Zwischenzeit -> Ägypten)",
-    "medium": "Papyrus (Material); einseitig (?), beschriftet und bemalt (Technik)",
-    "type": "Rolle (Schriftträger)",
-    "dimensions": "Höhe x Breite: 33,5 x 75 cm",
-    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/smb-neues-museum-collection/smb-neues-museum-2049047-8f0997ae-imageUrl.webp",
-    "thumbnailUrl": "https://recherche.smb.museum/images/5045465_800x800.jpg",
-    "images": [
-      {
-        "url": "https://recherche.smb.museum/images/5045465_1400x1400.jpg",
-        "thumbnail": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/smb-neues-museum-collection/img-92fdbb07-thumbnail.webp",
-        "assetId": "5045465",
-        "original_thumbnail": "https://recherche.smb.museum/images/5045465_800x800.jpg"
-      }
-    ],
-    "collection": "Ägyptisches Museum und Papyrussammlung",
-    "collectionKey": "AMPPapyrussammlung",
-    "exhibitionSpace": "Neues Museum, Ebene 0, Raum 012",
-    "location": "Neues Museum",
-    "description": "Dieser hieroglyphische Papyrus enthält eine Version des Unterweltsbuches, das die Ägypter „Amduat“ genannt haben, „Buch von dem, was in der Unterwelt ist“, sowie einen Auszug aus dem Totenbuch, dem „Buch vom Herausgehen am Tage“.Das „Amduat“ entstand im Neuen Reich und war anfangs nur für die Dekoration in den königlichen Gräbern vorgesehen, sowie in denjenigen von ranghohen Staatsbeamten. Erst ab der Dritten Zwischenzeit tauchen Belege auf Papyrus auf, die als Grabbeigabe dienten. Nun konnten auch Privatpersonen diesen Text für sich verwenden. Überwiegend wird nicht mehr der ganze Text notiert, sondern nur Auszüge mit einzelnen Nachtstunden. Das Buch ist in zwölf Abschnitten eingeteilt, die jeweils eine der zwölf Stunden der Nacht symbolisieren. Darin wird die Barkenfahrt des Sonnengottes Re durch die Unterwelt während der Nacht thematisiert. Dabei begegnen Re diverse Probleme und Hindernisse, die er, unterstützt von Helfern, überwinden muss, um seine Fahrt vollenden und am Morgen wieder aufgehen zu können. Der Hauptgegner ist der schlangengestaltige Apophis. Für die Verstorbenen, denen der Text als Grabbeigabe mitgegeben wurde, diente er als eine Art „Reiseführer“ durch die Unterwelt.Das „Totenbuch“ ist eine Spruchsammlung, die dem Verstorbenen bei dem Übergang ins Jenseits behilflich ist. Besonders bekannt ist die Gerichtsszene, bei der am Ende das Herz der Verstorbenen gegenüber der Wahrheit gewogen wird.Der hier vorliegende, ausführliche Papyrus gehört einem thebanischen Priester namens Hor-em-Chemmis. Aus dem Amduat sind vorhanden die 9. bis 12. Nachstunde, aus dem Totenbuch die Vignette zu Spruch 125.J. Moje",
-    "geographicalReferences": [
-      "Theben (Ägypten / Oberägypten)"
-    ],
-    "identNumber": "P 3001/G",
-    "permalink": "https://id.smb.museum/object/2049047/hieroglyphischer-papyrus-mit-auszugen-aus-amduat-und-totenbuch-fur-den-priester",
-    "sourceUrl": "https://id.smb.museum/object/2049047/hieroglyphischer-papyrus-mit-auszugen-aus-amduat-und-totenbuch-fur-den-priester",
-    "museum": "Neues Museum",
-    "museumId": "smb-neues-museum",
-    "original_imageUrl": "https://recherche.smb.museum/images/5045465_1400x1400.jpg"
-  },
-  {
     "id": "smb-neues-museum-2049043",
     "smbId": 2049043,
     "title": "Hieroglyphischer Papyrus mit Auszügen aus Amduat und Totenbuch für den Priester Hor-em-chemmis",
@@ -11394,40 +11177,6 @@
     "original_imageUrl": "https://recherche.smb.museum/images/5045445_1400x1400.jpg"
   },
   {
-    "id": "smb-neues-museum-2049042",
-    "smbId": 2049042,
-    "title": "Hieroglyphischer Papyrus mit Auszügen aus Amduat und Totenbuch für den Priester Hor-em-chemmis",
-    "artist": "",
-    "date": "21. Dynastie (3. Zwischenzeit -> Ägypten)",
-    "medium": "Papyrus (Material); einseitig (?), beschriftet und bemalt (Technik)",
-    "type": "Rolle (Schriftträger)",
-    "dimensions": "Höhe x Breite: 33,5 x 65,3 cm",
-    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/smb-neues-museum-collection/smb-neues-museum-2049042-52be0aa9-imageUrl.webp",
-    "thumbnailUrl": "https://recherche.smb.museum/images/5045445_800x800.jpg",
-    "images": [
-      {
-        "url": "https://recherche.smb.museum/images/5045445_1400x1400.jpg",
-        "thumbnail": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/smb-neues-museum-collection/img-ec4da2ba-thumbnail.webp",
-        "assetId": "5045445",
-        "original_thumbnail": "https://recherche.smb.museum/images/5045445_800x800.jpg"
-      }
-    ],
-    "collection": "Ägyptisches Museum und Papyrussammlung",
-    "collectionKey": "AMPPapyrussammlung",
-    "exhibitionSpace": "Neues Museum, Ebene 0, Raum 012",
-    "location": "Neues Museum",
-    "description": "Dieser hieroglyphische Papyrus enthält eine Version des Unterweltsbuches, das die Ägypter „Amduat“ genannt haben, „Buch von dem, was in der Unterwelt ist“, sowie einen Auszug aus dem Totenbuch, dem „Buch vom Herausgehen am Tage“.Das „Amduat“ entstand im Neuen Reich und war anfangs nur für die Dekoration in den königlichen Gräbern vorgesehen, sowie in denjenigen von ranghohen Staatsbeamten. Erst ab der Dritten Zwischenzeit tauchen Belege auf Papyrus auf, die als Grabbeigabe dienten. Nun konnten auch Privatpersonen diesen Text für sich verwenden. Überwiegend wird nicht mehr der ganze Text notiert, sondern nur Auszüge mit einzelnen Nachtstunden. Das Buch ist in zwölf Abschnitten eingeteilt, die jeweils eine der zwölf Stunden der Nacht symbolisieren. Darin wird die Barkenfahrt des Sonnengottes Re durch die Unterwelt während der Nacht thematisiert. Dabei begegnen Re diverse Probleme und Hindernisse, die er, unterstützt von Helfern, überwinden muss, um seine Fahrt vollenden und am Morgen wieder aufgehen zu können. Der Hauptgegner ist der schlangengestaltige Apophis. Für die Verstorbenen, denen der Text als Grabbeigabe mitgegeben wurde, diente er als eine Art „Reiseführer“ durch die Unterwelt.Das „Totenbuch“ ist eine Spruchsammlung, die dem Verstorbenen bei dem Übergang ins Jenseits behilflich ist. Besonders bekannt ist die Gerichtsszene, bei der am Ende das Herz der Verstorbenen gegenüber der Wahrheit gewogen wird.Der hier vorliegende, ausführliche Papyrus gehört einem thebanischen Priester namens Hor-em-Chemmis. Aus dem Amduat sind vorhanden die 9. bis 12. Nachstunde, aus dem Totenbuch die Vignette zu Spruch 125.J. Moje",
-    "geographicalReferences": [
-      "Theben (Ägypten / Oberägypten)"
-    ],
-    "identNumber": "P 3001/E",
-    "permalink": "https://id.smb.museum/object/2049042/hieroglyphischer-papyrus-mit-auszugen-aus-amduat-und-totenbuch-fur-den-priester",
-    "sourceUrl": "https://id.smb.museum/object/2049042/hieroglyphischer-papyrus-mit-auszugen-aus-amduat-und-totenbuch-fur-den-priester",
-    "museum": "Neues Museum",
-    "museumId": "smb-neues-museum",
-    "original_imageUrl": "https://recherche.smb.museum/images/5045445_1400x1400.jpg"
-  },
-  {
     "id": "smb-neues-museum-2049041",
     "smbId": 2049041,
     "title": "Hieroglyphischer Papyrus mit Auszügen aus Amduat und Totenbuch für den Priester Hor-em-chemmis",
@@ -11457,40 +11206,6 @@
     "identNumber": "P 3001/D",
     "permalink": "https://id.smb.museum/object/2049041/hieroglyphischer-papyrus-mit-auszugen-aus-amduat-und-totenbuch-fur-den-priester",
     "sourceUrl": "https://id.smb.museum/object/2049041/hieroglyphischer-papyrus-mit-auszugen-aus-amduat-und-totenbuch-fur-den-priester",
-    "museum": "Neues Museum",
-    "museumId": "smb-neues-museum",
-    "original_imageUrl": "https://recherche.smb.museum/images/5045441_1400x1400.jpg"
-  },
-  {
-    "id": "smb-neues-museum-2049039",
-    "smbId": 2049039,
-    "title": "Hieroglyphischer Papyrus mit Auszügen aus Amduat und Totenbuch für den Priester Hor-em-chemmis",
-    "artist": "",
-    "date": "21. Dynastie (3. Zwischenzeit -> Ägypten)",
-    "medium": "Papyrus (Material), einseitig (?), beschriftet und bemalt (Technik)",
-    "type": "Rolle (Schriftträger)",
-    "dimensions": "Höhe x Breite: 34 x 57,5 cm",
-    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/smb-neues-museum-collection/smb-neues-museum-2049039-b262b2d6-imageUrl.webp",
-    "thumbnailUrl": "https://recherche.smb.museum/images/5045441_800x800.jpg",
-    "images": [
-      {
-        "url": "https://recherche.smb.museum/images/5045441_1400x1400.jpg",
-        "thumbnail": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/smb-neues-museum-collection/img-5fa6ca7d-thumbnail.webp",
-        "assetId": "5045441",
-        "original_thumbnail": "https://recherche.smb.museum/images/5045441_800x800.jpg"
-      }
-    ],
-    "collection": "Ägyptisches Museum und Papyrussammlung",
-    "collectionKey": "AMPPapyrussammlung",
-    "exhibitionSpace": "Neues Museum, Ebene 0, Raum 012",
-    "location": "Neues Museum",
-    "description": "Dieser hieroglyphische Papyrus enthält eine Version des Unterweltsbuches, das die Ägypter „Amduat“ genannt haben, „Buch von dem, was in der Unterwelt ist“, sowie einen Auszug aus dem Totenbuch, dem „Buch vom Herausgehen am Tage“.Das „Amduat“ entstand im Neuen Reich und war anfangs nur für die Dekoration in den königlichen Gräbern vorgesehen, sowie in denjenigen von ranghohen Staatsbeamten. Erst ab der Dritten Zwischenzeit tauchen Belege auf Papyrus auf, die als Grabbeigabe dienten. Nun konnten auch Privatpersonen diesen Text für sich verwenden. Überwiegend wird nicht mehr der ganze Text notiert, sondern nur Auszüge mit einzelnen Nachtstunden. Das Buch ist in zwölf Abschnitten eingeteilt, die jeweils eine der zwölf Stunden der Nacht symbolisieren. Darin wird die Barkenfahrt des Sonnengottes Re durch die Unterwelt während der Nacht thematisiert. Dabei begegnen Re diverse Probleme und Hindernisse, die er, unterstützt von Helfern, überwinden muss, um seine Fahrt vollenden und am Morgen wieder aufgehen zu können. Der Hauptgegner ist der schlangengestaltige Apophis. Für die Verstorbenen, denen der Text als Grabbeigabe mitgegeben wurde, diente er als eine Art „Reiseführer“ durch die Unterwelt.Das „Totenbuch“ ist eine Spruchsammlung, die dem Verstorbenen bei dem Übergang ins Jenseits behilflich ist. Besonders bekannt ist die Gerichtsszene, bei der am Ende das Herz der Verstorbenen gegenüber der Wahrheit gewogen wird.Der hier vorliegende, ausführliche Papyrus gehört einem thebanischen Priester namens Hor-em-Chemmis. Aus dem Amduat sind vorhanden die 9. bis 12. Nachstunde, aus dem Totenbuch die Vignette zu Spruch 125.J. Moje",
-    "geographicalReferences": [
-      "Theben (Ägypten / Oberägypten)"
-    ],
-    "identNumber": "P 3001/C",
-    "permalink": "https://id.smb.museum/object/2049039/hieroglyphischer-papyrus-mit-auszugen-aus-amduat-und-totenbuch-fur-den-priester",
-    "sourceUrl": "https://id.smb.museum/object/2049039/hieroglyphischer-papyrus-mit-auszugen-aus-amduat-und-totenbuch-fur-den-priester",
     "museum": "Neues Museum",
     "museumId": "smb-neues-museum",
     "original_imageUrl": "https://recherche.smb.museum/images/5045441_1400x1400.jpg"
@@ -14439,38 +14154,6 @@
     "museumId": "smb-neues-museum"
   },
   {
-    "id": "smb-neues-museum-828031",
-    "smbId": 828031,
-    "title": "Hieroglyphischer Papyrus mit Auszügen aus Amduat und Totenbuch für den Priester Hor-em-chemmis",
-    "artist": "",
-    "date": "21. Dynastie (3. Zwischenzeit -> Ägypten)",
-    "medium": "Papyrus (Material); einseitig (?), beschriftet und bemalt (Technik)",
-    "type": "Rolle (Schriftträger)",
-    "dimensions": "Höhe x Breite: 34 x 73,5 cm",
-    "imageUrl": "https://recherche.smb.museum/images/4882650_1400x1400.jpg",
-    "thumbnailUrl": "https://recherche.smb.museum/images/4882650_800x800.jpg",
-    "images": [
-      {
-        "url": "https://recherche.smb.museum/images/4882650_1400x1400.jpg",
-        "thumbnail": "https://recherche.smb.museum/images/4882650_800x800.jpg",
-        "assetId": "4882650"
-      }
-    ],
-    "collection": "Ägyptisches Museum und Papyrussammlung",
-    "collectionKey": "AMPPapyrussammlung",
-    "exhibitionSpace": "Neues Museum, Ebene 0, Raum 012",
-    "location": "Neues Museum",
-    "description": "Dieser hieroglyphische Papyrus enthält eine Version des Unterweltsbuches, das die Ägypter „Amduat“ genannt haben, „Buch von dem, was in der Unterwelt ist“, sowie einen Auszug aus dem Totenbuch, dem „Buch vom Herausgehen am Tage“.Das „Amduat“ entstand im Neuen Reich und war anfangs nur für die Dekoration in den königlichen Gräbern vorgesehen, sowie in denjenigen von ranghohen Staatsbeamten. Erst ab der Dritten Zwischenzeit tauchen Belege auf Papyrus auf, die als Grabbeigabe dienten. Nun konnten auch Privatpersonen diesen Text für sich verwenden. Überwiegend wird nicht mehr der ganze Text notiert, sondern nur Auszüge mit einzelnen Nachtstunden. Das Buch ist in zwölf Abschnitten eingeteilt, die jeweils eine der zwölf Stunden der Nacht symbolisieren. Darin wird die Barkenfahrt des Sonnengottes Re durch die Unterwelt während der Nacht thematisiert. Dabei begegnen Re diverse Probleme und Hindernisse, die er, unterstützt von Helfern, überwinden muss, um seine Fahrt vollenden und am Morgen wieder aufgehen zu können. Der Hauptgegner ist der schlangengestaltige Apophis. Für die Verstorbenen, denen der Text als Grabbeigabe mitgegeben wurde, diente er als eine Art „Reiseführer“ durch die Unterwelt.Das „Totenbuch“ ist eine Spruchsammlung, die dem Verstorbenen bei dem Übergang ins Jenseits behilflich ist. Besonders bekannt ist die Gerichtsszene, bei der am Ende das Herz der Verstorbenen gegenüber der Wahrheit gewogen wird.Der hier vorliegende, ausführliche Papyrus gehört einem thebanischen Priester namens Hor-em-Chemmis. Aus dem Amduat sind vorhanden die 9. bis 12. Nachstunde, aus dem Totenbuch die Vignette zu Spruch 125.J. Moje",
-    "geographicalReferences": [
-      "Theben (Ägypten / Oberägypten)"
-    ],
-    "identNumber": "P 3001/A",
-    "permalink": "https://id.smb.museum/object/828031/hieroglyphischer-papyrus-mit-auszugen-aus-amduat-und-totenbuch-fur-den-priester",
-    "sourceUrl": "https://id.smb.museum/object/828031/hieroglyphischer-papyrus-mit-auszugen-aus-amduat-und-totenbuch-fur-den-priester",
-    "museum": "Neues Museum",
-    "museumId": "smb-neues-museum"
-  },
-  {
     "id": "smb-neues-museum-826344",
     "smbId": 826344,
     "title": "Arabisches Papier (Doppelblatt) mit Psalm 12-14",
@@ -17223,41 +16906,6 @@
     "museum": "Neues Museum",
     "museumId": "smb-neues-museum",
     "original_imageUrl": "https://recherche.smb.museum/images/5217295_1400x1400.jpg"
-  },
-  {
-    "id": "smb-neues-museum-757102",
-    "smbId": 757102,
-    "title": "Grabpfeiler mit der Darstellung König Sethos I. vor dem Gott Osiris",
-    "artist": "Carl Richard Lepsius",
-    "date": "Sethos I. (19. Dynastie -> Neues Reich -> Ägypten)",
-    "medium": "Kalkstein (Material / Stein); verputzt, bemalt",
-    "type": "Pfeiler (Architektur)",
-    "dimensions": "Höhe x Breite x Tiefe: 261 x 88 x 47 cm",
-    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/smb-neues-museum-collection/smb-neues-museum-757102-f94caad6-imageUrl.webp",
-    "thumbnailUrl": "https://recherche.smb.museum/images/2764607_800x800.jpg",
-    "images": [
-      {
-        "url": "https://recherche.smb.museum/images/2764607_1400x1400.jpg",
-        "thumbnail": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/smb-neues-museum-collection/img-ddc9d51d-thumbnail.webp",
-        "assetId": "2764607",
-        "original_thumbnail": "https://recherche.smb.museum/images/2764607_800x800.jpg"
-      }
-    ],
-    "collection": "Ägyptisches Museum und Papyrussammlung",
-    "collectionKey": "AMPAgyptischesMuseum",
-    "exhibitionSpace": "Neues Museum, Ebene 1, Raum 110",
-    "location": "Neues Museum",
-    "description": "Der verstorbene Erdenkönig Sethos I. steht in Amtstracht mit Königskopftuch und Diadem vor Osiris, dem in weißen Mumienbinden gehüllten Herrscher der Unterwelt. Osiris trägt Krummstab und Geißel als Insignien seiner Macht in den Händen. Ein Kopftuch, wie es von den Pharaonen getragen wird, legitimiert ihn als König. Die Verbindung zur Unterwelt stellt die auf dem Kopftuch befindliche charakteristische Osiris-Krone her.\r\nIn der Inschrift über der Szene wird bestätigt, dass der gerechtfertigte und zu Osiris gewordenen König, der Sohn des Re mit Namen Sethos I., vor Osiris, dem Herrn der Unterwelt (Nekropole), eingetroffen ist. Osiris verleiht ihm nun \"die Mächtigkeit des Re\".",
-    "geographicalReferences": [
-      "Tal der Könige (Ägypten / Oberägypten / Theben-West)",
-      "Sethos I. (KV 17), Halle J, Pfeiler B, Seite a (Grab)"
-    ],
-    "identNumber": "ÄM 2058",
-    "permalink": "https://id.smb.museum/object/757102/grabpfeiler-mit-der-darstellung-konig-sethos-i--vor-dem-gott-osiris",
-    "sourceUrl": "https://id.smb.museum/object/757102/grabpfeiler-mit-der-darstellung-konig-sethos-i--vor-dem-gott-osiris",
-    "museum": "Neues Museum",
-    "museumId": "smb-neues-museum",
-    "original_imageUrl": "https://recherche.smb.museum/images/2764607_1400x1400.jpg"
   },
   {
     "id": "smb-neues-museum-756544",
@@ -24229,46 +23877,6 @@
     "original_imageUrl": "https://recherche.smb.museum/images/8109539_1400x1400.jpg"
   },
   {
-    "id": "smb-neues-museum-2988549",
-    "smbId": 2988549,
-    "title": "Krug",
-    "artist": "",
-    "date": "Periode: 3. Zwischenzeit - ägyptische Spätzeit",
-    "medium": "Keramik (Nilton)",
-    "type": "Krug",
-    "dimensions": "Höhe: 33,1 cm; Durchmesser: 11,2 cm; Durchmesser: 6 cm (Boden)",
-    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/smb-neues-museum-collection/smb-neues-museum-2988549-5a42d3ef-imageUrl.webp",
-    "thumbnailUrl": "https://recherche.smb.museum/images/8109539_800x800.jpg",
-    "images": [
-      {
-        "url": "https://recherche.smb.museum/images/8109539_1400x1400.jpg",
-        "thumbnail": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/smb-neues-museum-collection/img-99fe6c9f-thumbnail.webp",
-        "assetId": "8109539",
-        "original_thumbnail": "https://recherche.smb.museum/images/8109539_800x800.jpg"
-      },
-      {
-        "url": "https://recherche.smb.museum/images/8132353_1400x1400.jpg",
-        "thumbnail": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/smb-neues-museum-collection/img-e4c5a10a-thumbnail.webp",
-        "assetId": "8132353",
-        "original_thumbnail": "https://recherche.smb.museum/images/8132353_800x800.jpg"
-      }
-    ],
-    "collection": "Museum für Vor- und Frühgeschichte",
-    "collectionKey": "MVFMusSSchliemann",
-    "exhibitionSpace": "Neues Museum, Ebene 3, Raum 311",
-    "location": "Neues Museum",
-    "description": "",
-    "geographicalReferences": [
-      "Fundort: Scheich Abd el-Qurna, Ägypten"
-    ],
-    "identNumber": "Sch 11546",
-    "permalink": "https://id.smb.museum/object/2988549/krug",
-    "sourceUrl": "https://id.smb.museum/object/2988549/krug",
-    "museum": "Neues Museum",
-    "museumId": "smb-neues-museum",
-    "original_imageUrl": "https://recherche.smb.museum/images/8109539_1400x1400.jpg"
-  },
-  {
     "id": "smb-neues-museum-2988548",
     "smbId": 2988548,
     "title": "Krug",
@@ -24669,46 +24277,6 @@
     "original_imageUrl": "https://recherche.smb.museum/images/8109475_1400x1400.jpg"
   },
   {
-    "id": "smb-neues-museum-2988533",
-    "smbId": 2988533,
-    "title": "Flasche",
-    "artist": "",
-    "date": "12. Dynastie",
-    "medium": "Keramik",
-    "type": "Flasche",
-    "dimensions": "Höhe: 8,3 cm; Durchmesser: 5,1 cm",
-    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/smb-neues-museum-collection/smb-neues-museum-2988533-340e7919-imageUrl.webp",
-    "thumbnailUrl": "https://recherche.smb.museum/images/8109475_800x800.jpg",
-    "images": [
-      {
-        "url": "https://recherche.smb.museum/images/8109475_1400x1400.jpg",
-        "thumbnail": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/smb-neues-museum-collection/img-1fe26517-thumbnail.webp",
-        "assetId": "8109475",
-        "original_thumbnail": "https://recherche.smb.museum/images/8109475_800x800.jpg"
-      },
-      {
-        "url": "https://recherche.smb.museum/images/8132239_1400x1400.jpg",
-        "thumbnail": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/smb-neues-museum-collection/img-51399221-thumbnail.webp",
-        "assetId": "8132239",
-        "original_thumbnail": "https://recherche.smb.museum/images/8132239_800x800.jpg"
-      }
-    ],
-    "collection": "Museum für Vor- und Frühgeschichte",
-    "collectionKey": "MVFMusSSchliemann",
-    "exhibitionSpace": "Neues Museum, Ebene 3, Raum 311",
-    "location": "Neues Museum",
-    "description": "",
-    "geographicalReferences": [
-      "Fundort: Scheich Abd el-Qurna, Ägypten"
-    ],
-    "identNumber": "Sch 11423",
-    "permalink": "https://id.smb.museum/object/2988533/flasche",
-    "sourceUrl": "https://id.smb.museum/object/2988533/flasche",
-    "museum": "Neues Museum",
-    "museumId": "smb-neues-museum",
-    "original_imageUrl": "https://recherche.smb.museum/images/8109475_1400x1400.jpg"
-  },
-  {
     "id": "smb-neues-museum-2988527",
     "smbId": 2988527,
     "title": "Krug / Vase (?)",
@@ -24744,46 +24312,6 @@
     "identNumber": "Sch 11379",
     "permalink": "https://id.smb.museum/object/2988527/krug---vase",
     "sourceUrl": "https://id.smb.museum/object/2988527/krug---vase",
-    "museum": "Neues Museum",
-    "museumId": "smb-neues-museum",
-    "original_imageUrl": "https://recherche.smb.museum/images/8108437_1400x1400.jpg"
-  },
-  {
-    "id": "smb-neues-museum-2988524",
-    "smbId": 2988524,
-    "title": "Miniaturtopf",
-    "artist": "",
-    "date": "Periode: Mittleres Reich",
-    "medium": "Keramik",
-    "type": "Gefäß | Miniaturgefäß",
-    "dimensions": "Höhe: 3,1 cm; Durchmesser: 4 cm; Durchmesser: 2,2 cm (Boden)",
-    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/smb-neues-museum-collection/smb-neues-museum-2988524-fef7908e-imageUrl.webp",
-    "thumbnailUrl": "https://recherche.smb.museum/images/8108437_800x800.jpg",
-    "images": [
-      {
-        "url": "https://recherche.smb.museum/images/8108437_1400x1400.jpg",
-        "thumbnail": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/smb-neues-museum-collection/img-a03ab9ba-thumbnail.webp",
-        "assetId": "8108437",
-        "original_thumbnail": "https://recherche.smb.museum/images/8108437_800x800.jpg"
-      },
-      {
-        "url": "https://recherche.smb.museum/images/8131467_1400x1400.jpg",
-        "thumbnail": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/smb-neues-museum-collection/img-9aed888c-thumbnail.webp",
-        "assetId": "8131467",
-        "original_thumbnail": "https://recherche.smb.museum/images/8131467_800x800.jpg"
-      }
-    ],
-    "collection": "Museum für Vor- und Frühgeschichte",
-    "collectionKey": "MVFMusSSchliemann",
-    "exhibitionSpace": "Neues Museum, Ebene 3, Raum 311",
-    "location": "Neues Museum",
-    "description": "",
-    "geographicalReferences": [
-      "Fundort: Scheich Abd el-Qurna, Ägypten"
-    ],
-    "identNumber": "Sch 11369",
-    "permalink": "https://id.smb.museum/object/2988524/miniaturtopf",
-    "sourceUrl": "https://id.smb.museum/object/2988524/miniaturtopf",
     "museum": "Neues Museum",
     "museumId": "smb-neues-museum",
     "original_imageUrl": "https://recherche.smb.museum/images/8108437_1400x1400.jpg"
@@ -24864,46 +24392,6 @@
     "identNumber": "Sch 11326",
     "permalink": "https://id.smb.museum/object/2988521/schale",
     "sourceUrl": "https://id.smb.museum/object/2988521/schale",
-    "museum": "Neues Museum",
-    "museumId": "smb-neues-museum",
-    "original_imageUrl": "https://recherche.smb.museum/images/8108516_1400x1400.jpg"
-  },
-  {
-    "id": "smb-neues-museum-2988520",
-    "smbId": 2988520,
-    "title": "Schale",
-    "artist": "",
-    "date": "Periode: Mittleres Reich",
-    "medium": "Keramik",
-    "type": "Schale",
-    "dimensions": "Höhe: 6,1 cm; Durchmesser: 21,1 cm (rekonstruiert)",
-    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/smb-neues-museum-collection/smb-neues-museum-2988520-d703c79d-imageUrl.webp",
-    "thumbnailUrl": "https://recherche.smb.museum/images/8108516_800x800.jpg",
-    "images": [
-      {
-        "url": "https://recherche.smb.museum/images/8108516_1400x1400.jpg",
-        "thumbnail": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/smb-neues-museum-collection/img-7f5892f5-thumbnail.webp",
-        "assetId": "8108516",
-        "original_thumbnail": "https://recherche.smb.museum/images/8108516_800x800.jpg"
-      },
-      {
-        "url": "https://recherche.smb.museum/images/8131229_1400x1400.jpg",
-        "thumbnail": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/smb-neues-museum-collection/img-70c3be85-thumbnail.webp",
-        "assetId": "8131229",
-        "original_thumbnail": "https://recherche.smb.museum/images/8131229_800x800.jpg"
-      }
-    ],
-    "collection": "Museum für Vor- und Frühgeschichte",
-    "collectionKey": "MVFMusSSchliemann",
-    "exhibitionSpace": "Neues Museum, Ebene 3, Raum 311",
-    "location": "Neues Museum",
-    "description": "",
-    "geographicalReferences": [
-      "Fundort: Scheich Abd el-Qurna, Ägypten"
-    ],
-    "identNumber": "Sch 11325",
-    "permalink": "https://id.smb.museum/object/2988520/schale",
-    "sourceUrl": "https://id.smb.museum/object/2988520/schale",
     "museum": "Neues Museum",
     "museumId": "smb-neues-museum",
     "original_imageUrl": "https://recherche.smb.museum/images/8108516_1400x1400.jpg"
@@ -25144,46 +24632,6 @@
     "identNumber": "Sch 11278",
     "permalink": "https://id.smb.museum/object/2954402/amphore-mit-szenischer-bemalung",
     "sourceUrl": "https://id.smb.museum/object/2954402/amphore-mit-szenischer-bemalung",
-    "museum": "Neues Museum",
-    "museumId": "smb-neues-museum",
-    "original_imageUrl": "https://recherche.smb.museum/images/8108474_1400x1400.jpg"
-  },
-  {
-    "id": "smb-neues-museum-2954401",
-    "smbId": 2954401,
-    "title": "Amphore | Spitzamphore",
-    "artist": "",
-    "date": "Periode: Naqada I-II",
-    "medium": "Keramik, rot",
-    "type": "Amphore | Spitzamphore",
-    "dimensions": "Höhe: 12,5 cm; Durchmesser: 4,5 cm",
-    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/smb-neues-museum-collection/smb-neues-museum-2954401-88830364-imageUrl.webp",
-    "thumbnailUrl": "https://recherche.smb.museum/images/8108474_800x800.jpg",
-    "images": [
-      {
-        "url": "https://recherche.smb.museum/images/8108474_1400x1400.jpg",
-        "thumbnail": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/smb-neues-museum-collection/img-142cc246-thumbnail.webp",
-        "assetId": "8108474",
-        "original_thumbnail": "https://recherche.smb.museum/images/8108474_800x800.jpg"
-      },
-      {
-        "url": "https://recherche.smb.museum/images/8121396_1400x1400.jpg",
-        "thumbnail": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/smb-neues-museum-collection/img-104e3249-thumbnail.webp",
-        "assetId": "8121396",
-        "original_thumbnail": "https://recherche.smb.museum/images/8121396_800x800.jpg"
-      }
-    ],
-    "collection": "Museum für Vor- und Frühgeschichte",
-    "collectionKey": "MVFMusSSchliemann",
-    "exhibitionSpace": "Neues Museum, Ebene 3, Raum 311",
-    "location": "Neues Museum",
-    "description": "",
-    "geographicalReferences": [
-      "Fundort: Scheich Abd el-Qurna, Ägypten"
-    ],
-    "identNumber": "Sch 11277",
-    "permalink": "https://id.smb.museum/object/2954401/amphore-%7C-spitzamphore",
-    "sourceUrl": "https://id.smb.museum/object/2954401/amphore-%7C-spitzamphore",
     "museum": "Neues Museum",
     "museumId": "smb-neues-museum",
     "original_imageUrl": "https://recherche.smb.museum/images/8108474_1400x1400.jpg"

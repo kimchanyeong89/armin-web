@@ -818,20 +818,27 @@ export default function GlobalSearchBar({ onOpenLightbox, onNavigateToMuseum, mu
         };
     }, [ensureWorker, isNetworkConstrained]);
 
+    const loadedRouteNameRef = useRef<string | null>(null);
+
     useEffect(() => {
         const routeName = getRouteArtistName();
         if (!routeName) {
             pendingRouteArtistRef.current = null;
-            if (artistGallery) {
-                setArtistGallery(null);
-                setLightboxArtwork(null);
-
-            }
+            loadedRouteNameRef.current = null;
+            setArtistGallery(prev => {
+                if (prev) {
+                    setLightboxArtwork(null);
+                    return null;
+                }
+                return prev;
+            });
             return;
         }
 
         pendingRouteArtistRef.current = routeName;
-        if (artistGallery?.artist === routeName) return;
+        if (loadedRouteNameRef.current === routeName) return;
+        loadedRouteNameRef.current = routeName;
+
         setIsExpanded(false);
         setLightboxArtwork(null);
         setArtistGallery(null);
@@ -842,7 +849,7 @@ export default function GlobalSearchBar({ onOpenLightbox, onNavigateToMuseum, mu
         }
         ensureWorker();
         workerRef.current?.postMessage({ type: 'GET_ARTIST_WORKS', query: routeName });
-    }, [artistGallery, artistGallery?.artist, getRouteArtistName, ensureWorker]);
+    }, [getRouteArtistName, ensureWorker]);
 
     useEffect(() => {
         fetch('/data/video-embed-ids.json')

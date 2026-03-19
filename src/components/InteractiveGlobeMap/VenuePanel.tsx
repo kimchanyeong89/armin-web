@@ -48,6 +48,7 @@ export function VenuePanel({ city, theme, onClose, onSelectVenue }: VenuePanelPr
   const navigate = useNavigate();
   const location = useLocation();
   const t = theme === "light";
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 640;
 
   const { layoutCities, minimapDots } = computeClusterLayout(city.city, city.coordinates[1], city.coordinates[0], city.venues);
 
@@ -63,21 +64,23 @@ export function VenuePanel({ city, theme, onClose, onSelectVenue }: VenuePanelPr
   const divider = t ? "rgba(0,0,0,0.06)" : "rgba(255,255,255,0.04)";
   const limeAccent = t ? "#5A7800" : "#BFFF0A";
 
-  const handleSelectVenue = (v: Venue) => {
+  const _handleSelectVenue = (v: Venue) => {
     setSelectedVenue(v);
     if (onSelectVenue) onSelectVenue(v);
   };
+  void _handleSelectVenue;
 
   return (
     <motion.div
-      initial={{ opacity: 0, scale: 0.95, x: 0, y: "-50%" }}
-      animate={{ opacity: 1, scale: 1, x: 0, y: "-50%" }}
-      exit={{ opacity: 0, scale: 0.95, x: 0, y: "-50%" }}
+      initial={isMobile ? { opacity: 0, y: "100%" } : { opacity: 0, scale: 0.95, x: 0, y: "-50%" }}
+      animate={isMobile ? { opacity: 1, y: 0 } : { opacity: 1, scale: 1, x: 0, y: "-50%" }}
+      exit={isMobile ? { opacity: 0, y: "100%" } : { opacity: 0, scale: 0.95, x: 0, y: "-50%" }}
       transition={{ duration: 0.25, ease: "easeOut" }}
       className={`ig-venue-panel`}
       style={{
         backgroundColor: t ? "rgba(255,255,255,0.92)" : "rgba(12,12,12,0.92)",
-        borderColor: borderColor
+        borderColor: borderColor,
+        ...(isMobile ? { right: 0, bottom: 0, left: 0, width: '100%', maxHeight: '70vh', top: 'auto', borderRadius: '12px 12px 0 0' } : {})
       }}
     >
       <AnimatePresence mode="wait">
@@ -324,9 +327,9 @@ export function VenuePanel({ city, theme, onClose, onSelectVenue }: VenuePanelPr
 
                         // 단일 도시 클러스터이거나, 도시가 선택(zoom)된 경우 인터랙티브
                         const isSingleCity = layoutCities.length === 1;
-                        const isInteractive = !!zoomedCity || isSingleCity;
-                        // 레이블은 zoomedCity 됐거나 단일 도시일 때 표시
-                        const showLabels = isInteractive;
+                        const isInteractive = true; // 항상 클릭 가능
+                        // 레이블은 zoomedCity 됐거나 단일 도시일 때만 표시
+                        const showLabels = !!zoomedCity || isSingleCity;
 
                         const lAngle = dot.labelAngle ?? 0;
                         let anchor: "start"|"middle"|"end" = "middle";
@@ -337,13 +340,22 @@ export function VenuePanel({ city, theme, onClose, onSelectVenue }: VenuePanelPr
                         const isDimmed = isInteractive && hoveredVenueId !== null && !isHovered;
                         
                         return (
-                          <motion.g 
-                            key={`dot-${idx}`} 
+                          <motion.g
+                            key={`dot-${idx}`}
                             initial={{ opacity: 0 }}
                             animate={{ opacity: isDimmed ? 0.25 : 1 }}
                             exit={{ opacity: 0 }}
                             transition={{ duration: 0.3 }}
-                            onClick={() => { if(isInteractive && dot.venue) handleSelectVenue(dot.venue); }}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              if (isInteractive && dot.venue) {
+                                if (onSelectVenue) {
+                                  onSelectVenue(dot.venue);
+                                } else {
+                                  navigate(`/exhibition/${dot.venue.id}`);
+                                }
+                              }
+                            }}
                             onMouseEnter={() => isInteractive && setHoveredVenueId(dot.venue?.id || null)}
                             onMouseLeave={() => isInteractive && setHoveredVenueId(null)}
                             style={{ cursor: isInteractive ? 'pointer' : 'default', pointerEvents: isInteractive ? 'auto' : 'none' }}
@@ -527,12 +539,11 @@ export function VenuePanel({ city, theme, onClose, onSelectVenue }: VenuePanelPr
 
                   <div style={{ display: 'flex', flexDirection: 'column', gap: '4px' }}>
                     {exhibitions.map((ex, i) => (
-                      <div 
-                        key={ex.title + i} 
-                        className="ig-exhibition-card" 
+                      <div
+                        key={ex.title + i}
+                        className="ig-exhibition-card"
                         onClick={() => {
-                          // 직접 collection 페이지로 라우팅. 뒤로가기시 인터랙티브맵 복귀
-                          navigate(`/collection/${encodeURIComponent(ex.id)}`, {
+                          navigate(`/exhibition/${selectedVenue!.id}`, {
                             state: { fromInteractiveMap: true, returnPath: location.pathname + location.search }
                           });
                         }}

@@ -2361,7 +2361,9 @@ export const exhibitions = [
     description: "프랑스 최초로 현대 미술을 수집한 곳으로, 2D 현대 예술의 보고.",
     representativeImage: "images/musee-de-grenoble-logo.svg",
     permanentExhibitions: [
-      { id: "grenoble-collection", name: "The Collection", title: "Musée de Grenoble - The Collection", description: "회화 1,152점, 드로잉 954점, 사진 27점 등 총 2,133점의 컬렉션.", startDate: "Permanent", endDate: "Permanent" }
+      { id: "grenoble-paintings", name: "Paintings", title: "Musée de Grenoble - Paintings", description: "회화 컬렉션", startDate: "Permanent", endDate: "Permanent", collectionFile: "musee-grenoble-paintings-collection.json" },
+      { id: "grenoble-drawings", name: "Drawings", title: "Musée de Grenoble - Drawings", description: "드로잉 컬렉션", startDate: "Permanent", endDate: "Permanent", collectionFile: "musee-grenoble-drawings-collection.json" },
+      { id: "grenoble-photography", name: "Photography", title: "Musée de Grenoble - Photography", description: "사진 컬렉션", startDate: "Permanent", endDate: "Permanent", collectionFile: "musee-grenoble-photography-collection.json" }
     ],
     temporaryExhibitions: [],
     pastExhibitions: [],

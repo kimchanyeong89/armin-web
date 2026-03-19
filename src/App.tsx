@@ -115,9 +115,11 @@ function AppContent() {
       }}>
         <Suspense fallback={<PageLoader />}>
           <Routes location={isOverlayOpen ? frozenBaseLoc : location}>
-            <Route path="/" element={<HomePage exhibitions={exhibitions} isOverlayOpen={isOverlayOpen} />} />
-            <Route path="/collection/:collectionId" element={<HomePage exhibitions={exhibitions} isOverlayOpen={isOverlayOpen} />} />
-            <Route path="/artist-gallery/:artistName" element={<HomePage exhibitions={exhibitions} isOverlayOpen={isOverlayOpen} />} />
+            <Route element={<HomePage exhibitions={exhibitions} isOverlayOpen={isOverlayOpen} />}>
+              <Route path="/" element={null} />
+              <Route path="/collection/:collectionId" element={null} />
+              <Route path="/artist-gallery/:artistName" element={null} />
+            </Route>
             <Route path="/artist/:id" element={<ArtistPage />} />
             <Route path="/work/:id" element={<WorkPage />} />
             <Route path="/exhibition/:id" element={<ExhibitionPage exhibitions={exhibitions} />} />

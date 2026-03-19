@@ -1,7 +1,8 @@
-import { useEffect, useRef, useState, Suspense, lazy, useMemo, useCallback } from "react";
+import React, { useEffect, useRef, useState, Suspense, lazy, useMemo, useCallback } from "react";
 import { useSearchParams, useNavigate, useLocation, useParams } from "react-router-dom";
 
-import D3GeoGlobeSimplified from "../components/D3GeoGlobeSimplified";
+// D3GeoGlobeSimplified disabled — Drawing Map is the default entry point
+// const D3GeoGlobeSimplified = React.lazy(() => import("../components/D3GeoGlobeSimplified"));
 import DrawingGlobe from "../components/DrawingGlobe";
 
 import ExhibitionDetails from "../components/ExhibitionDetails";
@@ -12,7 +13,7 @@ import type { SearchableArtwork } from "../components/GlobalSearchBar";
 // Heavy globe modes removed for performance on homepage
 // Removed LeafletInteractiveMap import
 import type { Exhibition, ExhibitionItem } from "../types/Exhibition";
-import InteractiveGlobeMap from "../components/InteractiveGlobeMap/InteractiveGlobeMap";
+const InteractiveGlobeMap = React.lazy(() => import("../components/InteractiveGlobeMap/InteractiveGlobeMap"));
 
 const ExhibitionModal = lazy(() => import("../components/ExhibitionModal"));
 
@@ -94,7 +95,11 @@ export default function HomePage({ exhibitions, isOverlayOpen = false }: HomePag
     try { return !!(window.history.state?.usr?.fromInteractiveMap); } catch { return false; }
   });
   const [showDrawingGlobe, setShowDrawingGlobe] = useState(() => {
-    return new URLSearchParams(window.location.search).get('drawingMap') === 'true';
+    // Show drawing globe by default unless user has explicitly dismissed it or is returning from interactive map
+    const dismissed = sessionStorage.getItem('drawingGlobeDismissed') === 'true';
+    const fromInteractive = !!(window.history.state?.usr?.fromInteractiveMap);
+    const fromDrawingParam = new URLSearchParams(window.location.search).get('drawingMap') === 'true';
+    return fromDrawingParam || (!dismissed && !fromInteractive);
   });
 
   // Dark / light mode for home globe (persisted in localStorage)
@@ -579,14 +584,7 @@ export default function HomePage({ exhibitions, isOverlayOpen = false }: HomePag
             overflow: 'hidden'
           }}
         >
-          <D3GeoGlobeSimplified
-            exhibitions={exhibitions}
-            onSelectExhibition={setSelectedExhibition}
-            focusExhibition={selectedExhibition}
-            panOffset={selectedExhibition ? 200 : 0}
-            isModalOpen={!!selectedModalExhibition && !lightboxArtwork}
-            isDark={homeIsDark}
-          />
+          {/* D3GeoGlobeSimplified intentionally disabled — Drawing Map is the default entry */}
           {/* 'My location' button moved to bottom-center controls to align with Globe/2D toggle */}
         </div>
         {/* Bottom center controls: Flow + Globe toggle + map modes - HIDDEN per user request */}
@@ -731,6 +729,7 @@ export default function HomePage({ exhibitions, isOverlayOpen = false }: HomePag
         {/* Interactive Globe Modal layer */}
         {showInteractiveGlobe && (
           <div style={{ position: "fixed", top: 0, left: 0, right: 0, bottom: 0, zIndex: 12500 }}>
+            <React.Suspense fallback={<div style={{ width: '100%', height: '100%', background: '#0a0a0a', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'rgba(255,255,255,0.4)', fontFamily: 'monospace', fontSize: 12, letterSpacing: '0.2em' }}>LOADING MAP…</div>}>
             <InteractiveGlobeMap
               exhibitions={exhibitions}
               onSelectExhibition={(ex) => {
@@ -739,7 +738,9 @@ export default function HomePage({ exhibitions, isOverlayOpen = false }: HomePag
               }}
               onSelectExhibitionItem={(ex) => { openCollectionModal(ex, null); }}
               onExit={() => setShowInteractiveGlobe(false)}
+              onSwitchToDrawing={() => { setShowInteractiveGlobe(false); setShowDrawingGlobe(true); }}
             />
+            </React.Suspense>
           </div>
         )}
 
@@ -748,9 +749,13 @@ export default function HomePage({ exhibitions, isOverlayOpen = false }: HomePag
           <div style={{ position: "fixed", top: 0, left: 0, right: 0, bottom: 0, zIndex: 2000 }}>
             <DrawingGlobe
               exhibitions={exhibitions}
-              onClose={() => setShowDrawingGlobe(false)}
+              onClose={() => { sessionStorage.setItem('drawingGlobeDismissed', 'true'); setShowDrawingGlobe(false); }}
               onSelectExhibition={(ex) => {
                 navigate(`/exhibition/${ex.id}?mode=drawing`);
+              }}
+              onSwitchToInteractive={() => {
+                setShowDrawingGlobe(false);
+                setShowInteractiveGlobe(true);
               }}
             />
           </div>
