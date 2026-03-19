@@ -23,7 +23,6 @@ export const GlobalNav: React.FC<GlobalNavProps> = ({ isAdmin, isModalOpen, sear
     const [isBugReportOpen, setIsBugReportOpen] = useState(false);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isSearchExpanded, setIsSearchExpanded] = useState(false);
-    const [searchQuery, setSearchQuery] = useState("");
 
     // Dynamic light/dark mode for the Liquid Glass
     const [isDark, setIsDark] = useState(() => {

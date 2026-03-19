@@ -48,13 +48,14 @@ export type Museum = {
 };
 
 type GlobalSearchBarProps = {
-    onOpenLightbox: (artwork: SearchableArtwork, openLightbox?: boolean) => void;
-    onNavigateToMuseum: (museum: { id: string, name: string }, collectionId?: string, artwork?: SearchableArtwork) => void;
+    onOpenLightbox?: (artwork: SearchableArtwork, openLightbox?: boolean) => void;
+    onNavigateToMuseum?: (museum: { id: string, name: string }, collectionId?: string, artwork?: SearchableArtwork) => void;
     museums?: Museum[];
     isModalOpen?: boolean;
     initialQuery?: string;
     isMobile?: boolean;
     inlineMode?: boolean;
+    isDark?: boolean;
 };
 
 const normalizeToken = (value?: string) => (value || '')
@@ -1311,8 +1312,8 @@ export default function GlobalSearchBar({ onOpenLightbox, onNavigateToMuseum, mu
             ? resolveCollectionIdForMuseum(artwork, museumMatch)
             : artwork.exhibitionId;
 
-        onNavigateToMuseum(targetMuseum, targetCollectionId || undefined, artwork);
-    }, [findMuseumForArtwork, onNavigateToMuseum, resolveCollectionIdForMuseum]);
+        onNavigateToMuseum?.(targetMuseum, targetCollectionId || undefined, artwork);
+    }, [findMuseumForArtwork, resolveCollectionIdForMuseum, onNavigateToMuseum]);
 
     const handleSelectArtwork = useCallback((artwork: SearchableArtwork) => {
         setLightboxArtwork(artwork);
@@ -1344,7 +1345,7 @@ export default function GlobalSearchBar({ onOpenLightbox, onNavigateToMuseum, mu
         } catch {
             // ignore
         }
-        onNavigateToMuseum({ id: museum.id, name: museum.name }, museum.permanentExhibitions?.[0]?.id);
+        onNavigateToMuseum?.({ id: museum.id, name: museum.name }, museum.permanentExhibitions?.[0]?.id);
     }, [onNavigateToMuseum]);
 
     const closeArtistGallery = useCallback(() => {
