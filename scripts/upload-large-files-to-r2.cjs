@@ -25,6 +25,8 @@ const LARGE_FILES = [
   'atlas/ne_10m_urban_areas.geojson',
   'geodata/admin1-states-10m.json',
   'geodata/populated-places-10m.json',
+  'data/nga-collection.json',
+  'data/aic-collection.json',
 ];
 
 async function existsInR2(key) {
@@ -39,12 +41,12 @@ async function existsInR2(key) {
 async function uploadToR2(localPath, r2Key) {
   const buffer = fs.readFileSync(localPath);
   const ext = path.extname(localPath).toLowerCase();
-  
+
   const contentTypes = {
     '.json': 'application/json',
     '.geojson': 'application/geo+json',
   };
-  
+
   await R2.send(new PutObjectCommand({
     Bucket: BUCKET,
     Key: r2Key,
@@ -52,40 +54,40 @@ async function uploadToR2(localPath, r2Key) {
     ContentType: contentTypes[ext] || 'application/octet-stream',
     CacheControl: 'public, max-age=31536000, immutable',
   }));
-  
+
   return `${PUBLIC_URL}/${r2Key}`;
 }
 
 async function main() {
   console.log('📤 Uploading large files to R2...\n');
-  
+
   const publicDir = path.join(__dirname, '..', 'public');
   const uploaded = [];
-  
+
   for (const file of LARGE_FILES) {
     const localPath = path.join(publicDir, file);
     const r2Key = `armin-web/static/${file}`;
-    
+
     if (!fs.existsSync(localPath)) {
       console.log(`⏭️  Skipped (not found): ${file}`);
       continue;
     }
-    
+
     const stats = fs.statSync(localPath);
     const sizeMB = (stats.size / 1024 / 1024).toFixed(1);
-    
+
     if (await existsInR2(r2Key)) {
       console.log(`✅ Already exists: ${file} (${sizeMB} MB)`);
       uploaded.push({ file, r2Key, url: `${PUBLIC_URL}/${r2Key}` });
       continue;
     }
-    
+
     console.log(`📤 Uploading: ${file} (${sizeMB} MB)...`);
     const url = await uploadToR2(localPath, r2Key);
     console.log(`   ✅ Done: ${url}`);
     uploaded.push({ file, r2Key, url });
   }
-  
+
   console.log('\n═══════════════════════════════════════════');
   console.log('📋 R2 URLs for large files:');
   console.log('═══════════════════════════════════════════');
@@ -93,13 +95,13 @@ async function main() {
     console.log(`${file}:`);
     console.log(`  ${url}\n`);
   });
-  
+
   // Save URL mapping
   const mapping = {};
   uploaded.forEach(({ file, url }) => {
     mapping[`/${file}`] = url;
   });
-  
+
   fs.writeFileSync(
     path.join(__dirname, '..', 'src', 'config', 'r2-assets.json'),
     JSON.stringify(mapping, null, 2)

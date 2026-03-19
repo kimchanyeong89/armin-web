@@ -1,30 +1,66 @@
-import { useEffect, useRef, useState, Suspense, lazy } from "react";
-import { useSearchParams } from "react-router-dom";
-import OpenStreetMapComponent from '../components/OpenStreetMapComponent';
+import { useEffect, useRef, useState, Suspense, lazy, useMemo, useCallback } from "react";
+import { useSearchParams, useNavigate, useLocation, useParams } from "react-router-dom";
+
 import D3GeoGlobeSimplified from "../components/D3GeoGlobeSimplified";
+import DrawingGlobe from "../components/DrawingGlobe";
 
 import ExhibitionDetails from "../components/ExhibitionDetails";
-import GlobalSearchBar from "../components/GlobalSearchBar";
+
+import type { SearchableArtwork } from "../components/GlobalSearchBar";
 // Filled Globe temporarily hidden
 // Removed react-globe.gl Outline mode
 // Heavy globe modes removed for performance on homepage
 // Removed LeafletInteractiveMap import
 import type { Exhibition, ExhibitionItem } from "../types/Exhibition";
+import InteractiveGlobeMap from "../components/InteractiveGlobeMap/InteractiveGlobeMap";
 
 const ExhibitionModal = lazy(() => import("../components/ExhibitionModal"));
-const LineGlobe = lazy(() => import("../components/LineGlobe"));
-import { LoginButton } from "../components/LoginButton";
-import { auth } from "../firebase";
+
+
+import { auth, db } from "../firebase";
 import { onAuthStateChanged } from "firebase/auth";
+import { collection, doc, setDoc, deleteDoc, onSnapshot, serverTimestamp, getDocs } from "firebase/firestore";
+import { shouldLimitNetwork } from "../utils/network";
+import { ArtworkLightbox } from "../components/ArtworkLightbox";
+import { GlobalNav } from "../components/GlobalNav";
+
 
 // Admin email whitelist
 const ADMIN_EMAILS = ['kietzland@gmail.com'];
 
 type HomePageProps = {
   exhibitions: Exhibition[];
+  isOverlayOpen?: boolean;
 };
 
-export default function HomePage({ exhibitions }: HomePageProps) {
+const normalizeToken = (value?: string) => (value || "")
+  .toLowerCase()
+  .normalize("NFD")
+  .replace(/[^a-z0-9]+/g, "");
+
+const collectExhibitionTokens = (entry?: ExhibitionItem | null) => {
+  const tokens = new Set<string>();
+  const addToken = (value?: string | null) => {
+    const token = normalizeToken(value || "");
+    if (token) tokens.add(token);
+  };
+  if (!entry) return tokens;
+  addToken(entry.id as string);
+  addToken((entry as any)?.slug);
+  addToken((entry as any)?.collectionId);
+  addToken(entry.name as string);
+  addToken(entry.title as string);
+  const file = (entry as any)?.collectionFile;
+  if (typeof file === 'string') addToken(file.replace(/\.json$/i, ''));
+  const aliases = (entry as any)?.aliases;
+  if (Array.isArray(aliases)) aliases.forEach(alias => addToken(alias));
+  return tokens;
+};
+
+export default function HomePage({ exhibitions, isOverlayOpen = false }: HomePageProps) {
+  const navigate = useNavigate();
+  const location = useLocation();
+  const { collectionId } = useParams<{ collectionId?: string }>();
   // Compute initial modal/detail state from history synchronously to avoid first-paint flicker
   const initialFromHistory = (() => {
     if (typeof window === 'undefined') return { item: null as ExhibitionItem | null, parent: null as Exhibition | null };
@@ -53,21 +89,34 @@ export default function HomePage({ exhibitions }: HomePageProps) {
   });
   const [selectedExhibition, setSelectedExhibition] = useState<Exhibition | null>(initialFromHistory.parent);
   const [selectedModalExhibition, setSelectedModalExhibition] = useState<ExhibitionItem | null>(initialFromHistory.item);
-  const [mapMode, setMapMode] = useState<'d3geo' | 'd3geo-globe-simplified' | 'line-globe'>(() => {
-    try {
-      const saved = localStorage.getItem('mapMode');
-      return (saved === 'd3geo' || saved === 'd3geo-globe-simplified' || saved === 'line-globe') ? (saved as any) : 'd3geo-globe-simplified';
-    } catch { return 'd3geo-globe-simplified'; }
+  const [showInteractiveGlobe, setShowInteractiveGlobe] = useState(() => {
+    // /collection/:id로 이동할 때 fromInteractiveMap state가 있으면 인터랙티브맵 자동 열기
+    try { return !!(window.history.state?.usr?.fromInteractiveMap); } catch { return false; }
   });
-  useEffect(() => {
-    try { localStorage.setItem('mapMode', mapMode); } catch { }
-  }, [mapMode]);
+  const [showDrawingGlobe, setShowDrawingGlobe] = useState(() => {
+    return new URLSearchParams(window.location.search).get('drawingMap') === 'true';
+  });
+
+  // Dark / light mode for home globe (persisted in localStorage)
+  const [homeIsDark, setHomeIsDark] = useState<boolean>(() => {
+    try { return localStorage.getItem('homeTheme') !== 'light'; } catch { return true; }
+  });
+  const toggleHomeTheme = () => {
+    setHomeIsDark(v => {
+      const next = !v;
+      try { localStorage.setItem('homeTheme', next ? 'dark' : 'light'); } catch { }
+      // Notify GlobalNav and other components that listen for theme changes
+      window.dispatchEvent(new CustomEvent('theme-changed'));
+      return next;
+    });
+  };
+
+
   // Removed Outline Globe toggle
   // D3 globe is the only globe mode when Globe is ON
   // Globe view uses react-globe.gl only (Cesium removed)
   // Hide the banner on a user's very first visit; remember preference afterwards
 
-  const [focusTarget, setFocusTarget] = useState<Exhibition | null>(null);
   // userLocation and resetZoomKey removed - My location button was removed
   const lastFlowIdRef = useRef<string | null>(null);
   // URL param handling for exhibition navigation from MyPage
@@ -78,12 +127,45 @@ export default function HomePage({ exhibitions }: HomePageProps) {
   const [dragPos, setDragPos] = useState(0); // 0..MAX range
   // Admin check
   const [isAdmin, setIsAdmin] = useState(false);
+  const [user, setUser] = useState<any>(null);
+  // Separate Lightbox State for Fallback
+  const [lightboxArtwork, setLightboxArtwork] = useState<any>(null);
+  const [likedArtworks, setLikedArtworks] = useState<any[]>([]);
+  const isNetworkConstrained = shouldLimitNetwork();
+
   useEffect(() => {
-    const unsub = onAuthStateChanged(auth, (user) => {
-      setIsAdmin(!!(user && ADMIN_EMAILS.includes(user.email || '')));
+    let unsubLikes: (() => void) | null = null;
+    const unsub = onAuthStateChanged(auth, (u) => {
+      setUser(u);
+      setIsAdmin(!!(u && ADMIN_EMAILS.includes(u.email || '')));
+      if (unsubLikes) {
+        unsubLikes();
+        unsubLikes = null;
+      }
+      if (u) {
+        if (isNetworkConstrained) {
+          getDocs(collection(db, `users/${u.uid}/liked_artworks`)).then((snap) => {
+            const list = snap.docs.map(d => ({ ...d.data(), id: d.id }));
+            setLikedArtworks(list);
+          }).catch(() => {
+            setLikedArtworks([]);
+          });
+          return;
+        }
+        // Listen to likes
+        unsubLikes = onSnapshot(collection(db, `users/${u.uid}/liked_artworks`), (snap) => {
+          const list = snap.docs.map(d => ({ ...d.data(), id: d.id }));
+          setLikedArtworks(list);
+        });
+      } else {
+        setLikedArtworks([]);
+      }
     });
-    return () => unsub();
-  }, []);
+    return () => {
+      if (unsubLikes) unsubLikes();
+      unsub();
+    };
+  }, [isNetworkConstrained]);
   // removed pulse to keep a single, smooth grow animation
   const trackRef = useRef<HTMLDivElement | null>(null);
   const KNOB_SIZE = 24; // px
@@ -148,6 +230,93 @@ export default function HomePage({ exhibitions }: HomePageProps) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dragActive]);
 
+  const collectionIndex = useMemo(() => {
+    const map = new Map<string, { museum: Exhibition; exhibition: ExhibitionItem }>();
+    const register = (museum: Exhibition, entry?: ExhibitionItem) => {
+      if (!entry) return;
+      const tokens = collectExhibitionTokens(entry);
+      if (tokens.size === 0) return;
+      tokens.forEach((token) => {
+        if (!map.has(token)) {
+          map.set(token, { museum, exhibition: entry });
+        }
+      });
+    };
+    exhibitions.forEach((ex) => {
+      ((ex as any).permanentExhibitions || []).forEach((entry: ExhibitionItem) => register(ex, entry));
+      ((ex as any).temporaryExhibitions || []).forEach((entry: ExhibitionItem) => register(ex, entry));
+      ((ex as any).pastExhibitions || []).forEach((entry: ExhibitionItem) => register(ex, entry));
+    });
+    return map;
+  }, [exhibitions]);
+
+  const getCollectionEntry = useCallback((collectionId?: string | null) => {
+    if (!collectionId) return null;
+    const token = normalizeToken(collectionId);
+    if (!token) return null;
+    const cached = collectionIndex.get(token);
+    if (cached) return cached;
+
+    for (const museum of exhibitions) {
+      const buckets = [
+        ...((museum as any).permanentExhibitions || []),
+        ...((museum as any).temporaryExhibitions || []),
+        ...((museum as any).pastExhibitions || []),
+      ];
+      for (const entry of buckets) {
+        const tokens = collectExhibitionTokens(entry);
+        if (tokens.has(token)) {
+          console.warn('[collection-index] late-resolved entry', collectionId);
+          return { museum, exhibition: entry as ExhibitionItem };
+        }
+      }
+    }
+
+    console.warn('[collection-index] missing entry', collectionId);
+    return null;
+  }, [collectionIndex, exhibitions]);
+
+  const guessCollectionFromArtwork = useCallback((artwork?: SearchableArtwork | null) => {
+    if (!artwork) return null;
+    const candidates = new Set<string>();
+    if (artwork.exhibitionId) candidates.add(artwork.exhibitionId);
+    if (artwork.id) {
+      const parts = artwork.id.split(/[-_]/);
+      for (let len = parts.length; len > 1; len--) {
+        candidates.add(parts.slice(0, len).join("-"));
+      }
+    }
+    for (const candidate of candidates) {
+      const entry = getCollectionEntry(candidate);
+      if (entry) return entry;
+    }
+    return null;
+  }, [getCollectionEntry]);
+
+  const openCollectionModal = useCallback((collectionId?: string | null, artwork?: SearchableArtwork | null, opts?: { skipNavigate?: boolean; replace?: boolean }) => {
+    const entry = getCollectionEntry(collectionId || undefined);
+    if (!entry) return false;
+    setSelectedExhibition(entry.museum);
+    setSelectedModalExhibition({
+      ...entry.exhibition,
+      initialArtwork: artwork || undefined,
+    } as ExhibitionItem & { initialArtwork?: SearchableArtwork });
+    if (!opts?.skipNavigate) {
+      const target = `/collection/${encodeURIComponent(entry.exhibition.id)}`;
+      if (location.pathname !== target) {
+        navigate(target, { replace: !!opts?.replace });
+      }
+    }
+    return true;
+  }, [getCollectionEntry, location.pathname, navigate]);
+
+  const closeCollectionModal = useCallback(() => {
+    setSelectedModalExhibition(null);
+    if (location.pathname.startsWith('/collection/')) {
+      navigate('/', { replace: true });
+    }
+  }, [location.pathname, navigate]);
+
   // Handle exhibition URL params from MyPage navigation
   useEffect(() => {
     const exhibitionId = searchParams.get('exhibition');
@@ -160,8 +329,7 @@ export default function HomePage({ exhibitions }: HomePageProps) {
         const permItems = (ex as any).permanentExhibitions || [];
         const permHit = permItems.find((it: any) => it && it.id === decodedId);
         if (permHit) {
-          setSelectedExhibition(ex);
-          setSelectedModalExhibition(permHit);
+          openCollectionModal(permHit.id, null);
           setSearchParams({}); // Clear param after handling
           sessionStorage.removeItem('pendingExhibition');
           return;
@@ -170,8 +338,7 @@ export default function HomePage({ exhibitions }: HomePageProps) {
         const tempItems = (ex as any).temporaryExhibitions || [];
         const tempHit = tempItems.find((it: any) => it && it.id === decodedId);
         if (tempHit) {
-          setSelectedExhibition(ex);
-          setSelectedModalExhibition(tempHit);
+          openCollectionModal(tempHit.id, null);
           setSearchParams({});
           sessionStorage.removeItem('pendingExhibition');
           return;
@@ -180,8 +347,7 @@ export default function HomePage({ exhibitions }: HomePageProps) {
         const pastItems = (ex as any).pastExhibitions || [];
         const pastHit = pastItems.find((it: any) => it && it.id === decodedId);
         if (pastHit) {
-          setSelectedExhibition(ex);
-          setSelectedModalExhibition(pastHit);
+          openCollectionModal(pastHit.id, null);
           setSearchParams({});
           sessionStorage.removeItem('pendingExhibition');
           return;
@@ -222,7 +388,33 @@ export default function HomePage({ exhibitions }: HomePageProps) {
         setSearchParams({});
       }
     }
+  }, [searchParams, exhibitions, setSearchParams, openCollectionModal]);
+
+  // Handle ?selectMuseum=ID for direct navigation to museum pin
+  useEffect(() => {
+    const museumId = searchParams.get('selectMuseum');
+    if (museumId) {
+      const museum = exhibitions.find(e => e.id === museumId);
+      if (museum) {
+        setSelectedExhibition(museum);
+        setSelectedModalExhibition(null);
+      }
+      // Remove the param without removing other potential params (though usually this navigation is exclusive)
+      const newParams = new URLSearchParams(searchParams);
+      newParams.delete('selectMuseum');
+      setSearchParams(newParams, { replace: true });
+    }
   }, [searchParams, exhibitions, setSearchParams]);
+
+  // Open/close collection modal based on route
+  useEffect(() => {
+    if (!collectionId) {
+      setSelectedModalExhibition(null);
+      return;
+    }
+    const decodedId = decodeURIComponent(collectionId);
+    openCollectionModal(decodedId, null, { skipNavigate: true, replace: true });
+  }, [collectionId, openCollectionModal]);
   // One-shot Flow is handled directly in the Flow button onClick
 
   // Control Navbar visibility via CSS var
@@ -288,305 +480,381 @@ export default function HomePage({ exhibitions }: HomePageProps) {
     };
   }, [exhibitions, selectedModalExhibition]);
 
+  const handleToggleLike = async (_e: any, art: any) => {
+    if (!user) {
+      // Silent fail or prompt
+      return;
+    }
+    const id = art.artworkId || art.id;
+    const isLiked = likedArtworks.some(a => (a.artworkId || a.id) === id);
+    const ref = doc(db, `users/${user.uid}/liked_artworks/${id}`);
+
+    if (isLiked) {
+      await deleteDoc(ref);
+    } else {
+      await setDoc(ref, {
+        ...art,
+        likedAt: serverTimestamp(),
+        artist: art.artist || 'Unknown'
+      });
+    }
+  };
+
   return (
-    <div style={{ position: "relative", width: "100vw", height: "100vh", overflow: "hidden" }}>
-      {/* Toggle hidden per user request */}
-      <div style={{ position: "fixed", top: 12, left: 12, zIndex: 4500, display: 'none' }}>
+    <>
+      <div style={{ position: "relative", width: "100vw", height: "100vh", overflow: "hidden" }}>
+        {/* Toggle hidden per user request */}
+        <div style={{ position: "fixed", top: 12, left: 12, zIndex: 4500, display: 'none' }}>
+          <div
+            ref={trackRef}
+            onClick={() => !dragActive && setHeaderOn(v => !v)}
+            onContextMenu={async (e) => {
+              e.preventDefault();
+              try {
+                const EyeDropperCtor = (window as any).EyeDropper;
+                if (!EyeDropperCtor) {
+                  alert('This browser does not support EyeDropper. Please use a recent Chromium-based browser.');
+                  return;
+                }
+                const eyeDropper = new EyeDropperCtor();
+                const res = await eyeDropper.open();
+                if (res && res.sRGBHex) {
+                  setToggleOnColor(res.sRGBHex);
+                  try { localStorage.setItem('toggleOnColor', res.sRGBHex); } catch { }
+                }
+              } catch (err) {
+                // silently ignore cancellation
+                console.warn('EyeDropper cancelled or failed', err);
+              }
+            }}
+            style={{
+              width: TRACK_W,
+              height: TRACK_H,
+              borderRadius: TRACK_H / 2,
+              background: headerOn || dragPos > MAX_POS / 2 ? toggleOnColor : "#d1d5db",
+              position: "relative",
+              boxShadow: "inset 0 0 0 1px rgba(0,0,0,0.08)",
+              cursor: "pointer",
+              // single smooth grow/shrink (starts after knob slide completes)
+              transition: dragActive ? "none" : "background-color 220ms ease, transform 1200ms ease-in-out",
+              transform: scaleActive ? 'scale(3.2)' : 'scale(1)',
+              transformOrigin: 'left top',
+              willChange: 'transform',
+              userSelect: "none",
+            }}
+          >
+            <div
+              role="button"
+              aria-label="Reveal header"
+              onMouseDown={(e) => { e.preventDefault(); setDragActive(true); }}
+              onTouchStart={(e) => { e.preventDefault(); setDragActive(true); }}
+              style={{
+                position: "absolute",
+                top: TRACK_PAD,
+                left: TRACK_PAD + dragPos,
+                width: KNOB_SIZE,
+                height: KNOB_SIZE,
+                borderRadius: "50%",
+                background: "#fff",
+                boxShadow: "0 1px 2px rgba(0,0,0,0.25)",
+                // fast slide first
+                transition: dragActive ? "none" : `left ${KNOB_SLIDE_MS}ms ease-out`,
+                transform: 'scale(1)',
+                transformOrigin: 'left top',
+                touchAction: "none",
+              }}
+            />
+          </div>
+        </div>
+        {/* Fullscreen map */}
         <div
-          ref={trackRef}
-          onClick={() => !dragActive && setHeaderOn(v => !v)}
-          onContextMenu={async (e) => {
-            e.preventDefault();
-            try {
-              const EyeDropperCtor = (window as any).EyeDropper;
-              if (!EyeDropperCtor) {
-                alert('This browser does not support EyeDropper. Please use a recent Chromium-based browser.');
-                return;
-              }
-              const eyeDropper = new EyeDropperCtor();
-              const res = await eyeDropper.open();
-              if (res && res.sRGBHex) {
-                setToggleOnColor(res.sRGBHex);
-                try { localStorage.setItem('toggleOnColor', res.sRGBHex); } catch { }
-              }
-            } catch (err) {
-              // silently ignore cancellation
-              console.warn('EyeDropper cancelled or failed', err);
-            }
-          }}
           style={{
-            width: TRACK_W,
-            height: TRACK_H,
-            borderRadius: TRACK_H / 2,
-            background: headerOn || dragPos > MAX_POS / 2 ? toggleOnColor : "#d1d5db",
-            position: "relative",
-            boxShadow: "inset 0 0 0 1px rgba(0,0,0,0.08)",
-            cursor: "pointer",
-            // single smooth grow/shrink (starts after knob slide completes)
-            transition: dragActive ? "none" : "background-color 220ms ease, transform 1200ms ease-in-out",
-            transform: scaleActive ? 'scale(3.2)' : 'scale(1)',
-            transformOrigin: 'left top',
-            willChange: 'transform',
-            userSelect: "none",
+            position: "absolute",
+            top: 0,
+            left: 0,
+            width: "100vw",
+            height: "100vh",
+            zIndex: 1,
+            touchAction: 'none',
+            overflow: 'hidden'
           }}
         >
-          <div
-            role="button"
-            aria-label="Reveal header"
-            onMouseDown={(e) => { e.preventDefault(); setDragActive(true); }}
-            onTouchStart={(e) => { e.preventDefault(); setDragActive(true); }}
-            style={{
-              position: "absolute",
-              top: TRACK_PAD,
-              left: TRACK_PAD + dragPos,
-              width: KNOB_SIZE,
-              height: KNOB_SIZE,
-              borderRadius: "50%",
-              background: "#fff",
-              boxShadow: "0 1px 2px rgba(0,0,0,0.25)",
-              // fast slide first
-              transition: dragActive ? "none" : `left ${KNOB_SLIDE_MS}ms ease-out`,
-              transform: 'scale(1)',
-              transformOrigin: 'left top',
-              touchAction: "none",
-            }}
-          />
-        </div>
-      </div>
-      {/* Fullscreen map */}
-      <div
-        style={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          width: "100vw",
-          height: "100vh",
-          zIndex: 1,
-          touchAction: 'none',
-          overflow: 'hidden'
-        }}
-      >
-        {mapMode === 'd3geo-globe-simplified' ? (
           <D3GeoGlobeSimplified
             exhibitions={exhibitions}
             onSelectExhibition={setSelectedExhibition}
             focusExhibition={selectedExhibition}
             panOffset={selectedExhibition ? 200 : 0}
+            isModalOpen={!!selectedModalExhibition && !lightboxArtwork}
+            isDark={homeIsDark}
           />
-        ) : mapMode === 'line-globe' ? (
-          <Suspense fallback={<div style={{ width: '100vw', height: '100vh', background: '#fff' }} />}>
-            <LineGlobe
-              exhibitions={exhibitions}
-              onSelectExhibition={setSelectedExhibition}
-              panOffset={selectedExhibition ? 200 : 0}
-            />
-          </Suspense>
-        ) : (
-          <OpenStreetMapComponent
-            focusLatLng={focusTarget ? { lat: focusTarget.latitude, lng: focusTarget.longitude } : undefined}
-            exhibitions={exhibitions}
-            onSelectExhibition={setSelectedExhibition}
-          />
-        )}
-        {/* 'My location' button moved to bottom-center controls to align with Globe/2D toggle */}
-      </div>
-      {/* Bottom center controls: Flow + Globe toggle + map modes - HIDDEN per user request */}
-      <div style={{ position: "fixed", bottom: 16, left: '50%', transform: 'translateX(-50%)', zIndex: 4000, display: 'none', flexDirection: 'column', alignItems: 'center', gap: 12 }}>
-        {/* Flow button - moved first */}
-        <button
-          onClick={() => {
-            if (!exhibitions.length) return;
-            let candidate: Exhibition | null = null;
-            for (let i = 0; i < 5; i++) {
-              const idx = Math.floor(Math.random() * exhibitions.length);
-              const ex = exhibitions[idx];
-              if (ex.id !== lastFlowIdRef.current) { candidate = ex; break; }
-            }
-            candidate = candidate || exhibitions[Math.floor(Math.random() * exhibitions.length)];
-            lastFlowIdRef.current = candidate.id;
-            setFocusTarget(candidate);
-          }}
-          style={{
-            padding: "8px 12px",
-            borderRadius: 8,
-            border: '1px solid #374151',
-            background: '#fff',
-            color: '#374151',
-            cursor: "pointer",
-            boxShadow: "0 2px 6px rgba(0,0,0,0.15)",
-            minWidth: 96,
-            fontWeight: 700,
-          }}
-        >
-          Flow
-        </button>
-        <div style={{ display: 'flex', gap: 8 }}>
+          {/* 'My location' button moved to bottom-center controls to align with Globe/2D toggle */}
+        </div>
+        {/* Bottom center controls: Flow + Globe toggle + map modes - HIDDEN per user request */}
+        <div style={{ position: "fixed", bottom: 16, left: '50%', transform: 'translateX(-50%)', zIndex: 4000, display: 'none', flexDirection: 'column', alignItems: 'center', gap: 12 }}>
+          {/* Flow button - moved first */}
           <button
-            onClick={() => setMapMode('d3geo-globe-simplified')}
+            onClick={() => {
+              if (!exhibitions.length) return;
+              let candidate: Exhibition | null = null;
+              for (let i = 0; i < 5; i++) {
+                const idx = Math.floor(Math.random() * exhibitions.length);
+                const ex = exhibitions[idx];
+                if (ex.id !== lastFlowIdRef.current) { candidate = ex; break; }
+              }
+              candidate = candidate || exhibitions[Math.floor(Math.random() * exhibitions.length)];
+              lastFlowIdRef.current = candidate.id;
+              setSelectedExhibition(candidate);
+            }}
             style={{
-              padding: "8px 12px",
+              padding: "8px 16px",
               borderRadius: 8,
-              border: mapMode === 'd3geo-globe-simplified' ? "1px solid #111827" : "1px solid #374151",
-              background: mapMode === 'd3geo-globe-simplified' ? "#111827" : "#fff",
-              color: mapMode === 'd3geo-globe-simplified' ? "#fff" : "#374151",
+              border: '1px solid rgba(201, 165, 90, 0.3)',
+              background: 'rgba(8, 8, 7, 0.82)',
+              color: '#f0ede6',
               cursor: "pointer",
-              boxShadow: "0 2px 6px rgba(0,0,0,0.15)",
+              boxShadow: "0 2px 12px rgba(0,0,0,0.3)",
               minWidth: 96,
               fontWeight: 700,
+              backdropFilter: 'blur(12px)',
+              WebkitBackdropFilter: 'blur(12px)',
+              letterSpacing: '0.04em',
             }}
           >
-            globe
-          </button>
-          <button
-            onClick={() => setMapMode('d3geo')}
-            style={{
-              padding: "8px 12px",
-              borderRadius: 8,
-              border: mapMode === 'd3geo' ? "1px solid #111827" : "1px solid #374151",
-              background: mapMode === 'd3geo' ? "#111827" : "#fff",
-              color: mapMode === 'd3geo' ? "#fff" : "#374151",
-              cursor: "pointer",
-              boxShadow: "0 2px 6px rgba(0,0,0,0.15)",
-              minWidth: 96,
-              fontWeight: 700,
-            }}
-          >
-            flat
-          </button>
-          <button
-            onClick={() => setMapMode('line-globe')}
-            style={{
-              padding: "8px 12px",
-              borderRadius: 8,
-              border: mapMode === 'line-globe' ? "1px solid #111827" : "1px solid #374151",
-              background: mapMode === 'line-globe' ? "#111827" : "#fff",
-              color: mapMode === 'line-globe' ? "#fff" : "#374151",
-              cursor: "pointer",
-              boxShadow: "0 2px 6px rgba(0,0,0,0.15)",
-              minWidth: 96,
-              fontWeight: 700,
-            }}
-          >
-            테스트
+            Flow
           </button>
         </div>
-      </div>
-      {/* Liked count & Login on top right - hide when modal is open */}
-      {!selectedModalExhibition && (
-        <div style={{ position: "fixed", top: 16, right: 16, zIndex: 10001, display: "flex", alignItems: "center", gap: 12 }}>
-          {/* Admin button - only visible to admins */}
-          {isAdmin && (
-            <div
-              onClick={() => window.location.href = '/admin'}
-              style={{ background: '#fef3c7', padding: '8px 12px', borderRadius: 20, boxShadow: '0 2px 8px rgba(0,0,0,0.1)', display: 'flex', alignItems: 'center', gap: 6, fontSize: 12, fontWeight: 700, color: '#92400e', cursor: 'pointer' }}
-              title="Admin Dashboard"
-            >
-              <span>⚙️</span> Admin
-            </div>
-          )}
-          <div style={{ background: 'rgba(255, 255, 255, 0.9)', padding: '6px 16px', borderRadius: 20, boxShadow: '0 2px 8px rgba(0,0,0,0.1)' }}>
-            <LoginButton />
-          </div>
-          <div
-            onClick={() => window.location.href = '/mypage'}
-            style={{ background: 'rgba(255, 255, 255, 0.9)', padding: '8px 12px', borderRadius: 20, boxShadow: '0 2px 8px rgba(0,0,0,0.1)', display: 'flex', alignItems: 'center', gap: 6, fontSize: 14, fontWeight: 700, color: '#e11d48', cursor: 'pointer' }}
-            title="Liked Artworks"
-          >
-            <span>♡</span>
-          </div>
-        </div>
-      )}
-
-      {/* Selected museum details slide */}
-      <div style={{ position: "fixed", top: 0, right: 0, width: "400px", height: "100%", backgroundColor: "#fff", boxShadow: "-2px 0 8px rgba(0,0,0,0.2)", overflowY: "auto", zIndex: 1000, transform: selectedExhibition ? "translateX(0)" : "translateX(100%)", transition: "transform 0.3s ease" }}>
-        {selectedExhibition && (
+        {/* Selected museum details */}
+        {selectedExhibition && !showDrawingGlobe && (
           <ExhibitionDetails
             exhibition={selectedExhibition}
             onClose={() => setSelectedExhibition(null)}
-            isOpen={!!selectedExhibition}
-            onSelectExhibition={item => setSelectedModalExhibition(item)}
+            isOpen={!!selectedExhibition && !selectedModalExhibition && !lightboxArtwork && !isOverlayOpen}
+            onSelectExhibition={item => openCollectionModal(item?.id, null)}
           />
         )}
+        {/* Exhibition modal */}
+        {
+          selectedModalExhibition && (
+            <Suspense fallback={null}>
+              <ExhibitionModal
+                exhibition={selectedModalExhibition}
+                museumName={selectedExhibition?.name}
+                onClose={closeCollectionModal}
+              />
+            </Suspense>
+          )
+        }
+
+        {/* Unified Artwork Lightbox for Search Results */}
+        {
+          lightboxArtwork && (
+            <ArtworkLightbox
+              artwork={lightboxArtwork}
+              onClose={() => setLightboxArtwork(null)}
+              isLiked={likedArtworks.some(a => (a.artworkId || a.id) === (lightboxArtwork.artworkId || lightboxArtwork.id))}
+              onToggleLike={handleToggleLike}
+              likedArtworksList={likedArtworks}
+              onChangeArtwork={setLightboxArtwork}
+            />
+          )
+        }
+
+
+
+        {/* 3D Map Trigger */}
+        {!selectedModalExhibition && !lightboxArtwork && !isOverlayOpen && (
+          <button
+            onClick={() => setShowInteractiveGlobe(true)}
+            style={{
+              position: "fixed",
+              bottom: 24,
+              left: 24,
+              zIndex: 1000,
+              padding: "10px 18px",
+              borderRadius: 24,
+              background: "rgba(8, 8, 7, 0.82)",
+              color: "#f0ede6",
+              border: "1px solid rgba(201, 165, 90, 0.3)",
+              boxShadow: "0 4px 20px rgba(0,0,0,0.4)",
+              fontWeight: 600,
+              fontSize: "13px",
+              cursor: "pointer",
+              display: "flex",
+              alignItems: "center",
+              gap: 8,
+              backdropFilter: "blur(12px)",
+              WebkitBackdropFilter: "blur(12px)",
+              letterSpacing: "0.04em",
+            }}
+          >
+            <svg fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" width="16" height="16">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064" />
+            </svg>
+            Interactive Globe
+          </button>
+        )}
+
+        {/* Drawing Map Trigger */}
+        {!selectedModalExhibition && !lightboxArtwork && !isOverlayOpen && (
+          <button
+            onClick={() => setShowDrawingGlobe(true)}
+            style={{
+              position: "fixed",
+              bottom: 24,
+              left: 180,
+              zIndex: 1000,
+              padding: "10px 18px",
+              borderRadius: 24,
+              background: "rgba(8, 8, 7, 0.82)",
+              color: "#f0ede6",
+              border: "1px solid rgba(201, 165, 90, 0.3)",
+              boxShadow: "0 4px 20px rgba(0,0,0,0.4)",
+              fontWeight: 600,
+              fontSize: "13px",
+              cursor: "pointer",
+              display: "flex",
+              alignItems: "center",
+              gap: 8,
+              backdropFilter: "blur(12px)",
+              WebkitBackdropFilter: "blur(12px)",
+              letterSpacing: "0.04em",
+            }}
+          >
+            <svg fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" width="16" height="16">
+              <path strokeLinecap="round" strokeLinejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
+            </svg>
+            Drawing Map
+          </button>
+        )}
+
+
+        {/* Interactive Globe Modal layer */}
+        {showInteractiveGlobe && (
+          <div style={{ position: "fixed", top: 0, left: 0, right: 0, bottom: 0, zIndex: 12500 }}>
+            <InteractiveGlobeMap
+              exhibitions={exhibitions}
+              onSelectExhibition={(ex) => {
+                setSelectedExhibition(ex);
+                setShowInteractiveGlobe(false); // Exit globe to show details
+              }}
+              onSelectExhibitionItem={(ex) => { openCollectionModal(ex, null); }}
+              onExit={() => setShowInteractiveGlobe(false)}
+            />
+          </div>
+        )}
+
+        {/* Drawing Globe Modal layer */}
+        {showDrawingGlobe && (
+          <div style={{ position: "fixed", top: 0, left: 0, right: 0, bottom: 0, zIndex: 2000 }}>
+            <DrawingGlobe
+              exhibitions={exhibitions}
+              onClose={() => setShowDrawingGlobe(false)}
+              onSelectExhibition={(ex) => {
+                navigate(`/exhibition/${ex.id}?mode=drawing`);
+              }}
+            />
+          </div>
+        )}
+
       </div>
-      {/* Exhibition modal */}
-      {selectedModalExhibition && (
-        <Suspense fallback={null}>
-          <ExhibitionModal
-            exhibition={selectedModalExhibition}
-            onClose={() => setSelectedModalExhibition(null)}
-          />
-        </Suspense>
-      )}
-      {/* Global Search Bar */}
-      <GlobalSearchBar
-        onOpenLightbox={(artwork) => {
-          // Find the exhibition item and open the modal
-          for (const ex of exhibitions) {
-            const permItems = (ex as any).permanentExhibitions || [];
-            const hit = permItems.find((it: any) => it && it.id === artwork.exhibitionId);
-            if (hit) {
-              setSelectedExhibition(ex);
-              // Pass initialArtwork to the exhibition item
-              const hitWithArtwork = { ...hit, initialArtwork: artwork };
-              setSelectedModalExhibition(hitWithArtwork);
-              return;
-            }
-          }
 
-          // Try to find by museum name (some exhibitions use museumName as key)
-          const museumEx = exhibitions.find(ex =>
-            ex.name === artwork.museumName ||
-            ex.id === artwork.exhibitionId
-          );
-          if (museumEx) {
-            const permItems = (museumEx as any).permanentExhibitions || [];
-            if (permItems.length > 0) {
-              setSelectedExhibition(museumEx);
-              // Open first permanent exhibition with initialArtwork
-              const hitWithArtwork = { ...permItems[0], initialArtwork: artwork };
-              setSelectedModalExhibition(hitWithArtwork);
-              return;
-            }
-          }
+      {/* ── GlobalNav — OUTSIDE overflow:hidden so it's always visible ── */}
+      <div style={{
+          position: 'fixed',
+          bottom: 32,
+          left: '50%',
+          transform: 'translateX(-50%)',
+          zIndex: 200000, // Must be above ExhibitionModal (13000) and all overlays
+          pointerEvents: 'auto',
+        }}>
+        <GlobalNav
+          isAdmin={isAdmin}
+          isModalOpen={!!selectedModalExhibition}
+          searchProps={{
+            onOpenLightbox: (artwork, openLightbox = true) => {
+              if (!openLightbox) return;
+              if (artwork.exhibitionId && openCollectionModal(artwork.exhibitionId, artwork)) return;
+              const guessed = guessCollectionFromArtwork(artwork);
+              if (guessed && openCollectionModal(guessed.exhibition.id, artwork)) return;
+              setLightboxArtwork(artwork);
+            },
+            museums: exhibitions.map(ex => ({
+              id: ex.id,
+              name: ex.name,
+              country: (ex as any).country || '',
+              region: (ex as any).region,
+              latitude: (ex as any).latitude || 0,
+              longitude: (ex as any).longitude || 0,
+              representativeImage: (ex as any).representativeImage,
+              permanentExhibitions: (ex as any).permanentExhibitions || [],
+            })),
+            onNavigateToMuseum: (museum, collectionId, artwork) => {
+              if (openCollectionModal(collectionId, artwork)) return;
+              if (artwork && openCollectionModal(artwork.exhibitionId, artwork)) return;
+              const guessedEntry = guessCollectionFromArtwork(artwork);
+              if (guessedEntry && openCollectionModal(guessedEntry.exhibition.id, artwork)) return;
+              const fallbackMuseum = exhibitions.find(e => e.id === museum.id) || guessedEntry?.museum;
+              if (fallbackMuseum) {
+                setSelectedExhibition(fallbackMuseum);
+                const firstPermanent = ((fallbackMuseum as any).permanentExhibitions || [])[0];
+                if (collectionId && firstPermanent && firstPermanent.id === collectionId) {
+                  setSelectedModalExhibition({ ...firstPermanent, initialArtwork: artwork });
+                  return;
+                }
+                setSelectedModalExhibition(null);
+                return;
+              }
+              setSelectedModalExhibition({
+                id: artwork?.id || museum.id,
+                name: museum.name,
+                title: museum.name,
+                image: artwork?.image,
+                description: artwork?.name || '',
+                startDate: '',
+                endDate: '',
+                initialArtwork: artwork,
+              } as any);
+            },
+          }}
+        />
+      </div>
 
-          // Create a minimal exhibition to open the modal (fallback)
-          const minimalExhibition = {
-            id: artwork.exhibitionId,
-            name: artwork.museumName,
-            title: artwork.museumName,
-            image: artwork.image,
-            description: '',
-            startDate: '',
-            endDate: '',
-            // Pass the specific artwork to focus on
-            initialArtwork: artwork,
-          };
-          setSelectedModalExhibition(minimalExhibition as any);
+      {/* ── Dark / Light mode toggle — bottom-right, above community btn ── */}
+      <button
+        onClick={toggleHomeTheme}
+        title={homeIsDark ? 'Switch to light mode' : 'Switch to dark mode'}
+        style={{
+          position: 'fixed',
+          bottom: 84,
+          right: 28,
+          zIndex: 5500,
+          width: 44,
+          height: 44,
+          borderRadius: '50%',
+          border: homeIsDark
+            ? '1px solid rgba(201,165,90,0.45)'
+            : '1px solid rgba(140,110,40,0.55)',
+          background: homeIsDark
+            ? 'rgba(8,8,7,0.88)'
+            : 'rgba(245,240,228,0.92)',
+          color: homeIsDark ? '#c9a55a' : '#7a5a18',
+          fontSize: 17,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          cursor: 'pointer',
+          backdropFilter: 'blur(20px)',
+          WebkitBackdropFilter: 'blur(20px)',
+          boxShadow: homeIsDark
+            ? '0 0 0 1px rgba(201,165,90,0.12), 0 4px 20px rgba(0,0,0,0.55)'
+            : '0 0 0 1px rgba(140,110,40,0.15), 0 4px 16px rgba(0,0,0,0.18)',
+          transition: 'all 0.25s ease',
         }}
-        museums={exhibitions.map(ex => ({
-          id: ex.id,
-          name: ex.name,
-          country: (ex as any).country || '',
-          region: (ex as any).region,
-          latitude: (ex as any).latitude || 0,
-          longitude: (ex as any).longitude || 0,
-          representativeImage: (ex as any).representativeImage,
-        }))}
-        onNavigateToMuseum={(museum) => {
-          // Find the exhibition and select it
-          const ex = exhibitions.find(e => e.id === museum.id);
-          if (ex) {
-            setSelectedExhibition(ex);
-            // Also open the first permanent exhibition modal if available
-            const permItems = (ex as any).permanentExhibitions || [];
-            if (permItems.length > 0) {
-              setSelectedModalExhibition(permItems[0]);
-            }
-          }
-        }}
-        isModalOpen={!!selectedModalExhibition}
-      />
-    </div>
+      >
+        {homeIsDark ? '☾' : '☀'}
+      </button>
+
+    </>
   );
   // Removed leftover Flow effect: single-click behavior only
 }

@@ -8,8 +8,17 @@ service cloud.firestore {
       allow write: if request.auth != null && (request.auth.token.admin == true);
     }
 
+    // Allow authenticated users to read/write their own user document
+    match /users/{userId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
     // Allow authenticated users to read/write their own liked_artworks subcollection
     match /users/{userId}/liked_artworks/{artworkId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+
+    // Allow authenticated users to read/write their own liked_artists subcollection
+    match /users/{userId}/liked_artists/{artistId} {
       allow read, write: if request.auth != null && request.auth.uid == userId;
     }
 
@@ -33,6 +42,11 @@ service cloud.firestore {
       allow read, write: if request.auth != null && request.auth.uid == userId;
     }
 
+    // Allow authenticated users to read/write their own playlists subcollection and items
+    match /users/{userId}/playlists/{document=**} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+
     // Allow authenticated users to create pending submissions
     match /pending_submissions/{submissionId} {
       // Anyone authenticated can create a submission
@@ -41,12 +55,90 @@ service cloud.firestore {
       allow read, update, delete: if request.auth != null;
     }
 
+<<<<<<< HEAD
+=======
+    match /bug_reports/{reportId} {
+      allow create: if true;
+      allow read, update, delete: if request.auth != null;
+    }
+
+    match /mail/{mailId} {
+      allow create: if true;
+      allow read, update, delete: if false;
+    }
+
+    // Allow public read of comments, auth create
+    match /comments/{commentId} {
+      allow read: if true;
+      allow create: if request.auth != null;
+      allow delete: if request.auth != null && request.auth.uid == resource.data.userId;
+      // Allow owner to update everything (e.g. text)
+      // Allow others to only update 'likes' (for liking/unliking)
+      allow update: if request.auth != null && (
+        request.auth.uid == resource.data.userId || 
+        request.resource.data.diff(resource.data).affectedKeys().hasOnly(['likes'])
+      );
+    }
+
+    // Allow public read of artwork_stats, auth update (for counters)
+    match /artwork_stats/{artworkId} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+
+
+>>>>>>> 06dab5b1 (chore: add 30+ new museum collections, scripts, UI components, and gitignore cleanup)
     // Allow read of exhibition_artworks (approved submissions), admin write
     match /exhibition_artworks/{docId} {
       allow read: if true;
       allow write: if request.auth != null;
     }
 
+    // Allow anyone to create an order (payment success recording)
+    // Read/Update/Delete is restricted to admins
+    match /orders/{orderId} {
+      allow create: if true;
+      allow read, update, delete: if false; // Only via Console for now, or auth admin
+    }
+
+<<<<<<< HEAD
+=======
+    // Community Posts
+    match /community/{postId} {
+      allow read: if true;
+      allow create: if request.auth != null;
+      allow update: if request.auth != null && (
+        resource.data.authorId == request.auth.uid ||
+        request.resource.data.diff(resource.data).affectedKeys().hasOnly(['likes', 'commentCount', 'viewCount'])
+      );
+      allow delete: if request.auth != null && resource.data.authorId == request.auth.uid;
+    }
+
+    match /community_posts/{postId} {
+      allow read: if true;
+      allow create: if request.auth != null;
+      // Allow update if author OR only updating likes/commentCount (anyone authenticated)
+      allow update: if request.auth != null && (
+        resource.data.authorId == request.auth.uid ||
+        request.resource.data.diff(resource.data).affectedKeys().hasOnly(['likes', 'commentCount'])
+      );
+      allow delete: if request.auth != null && resource.data.authorId == request.auth.uid;
+
+      match /comments/{commentId} {
+        allow read: if true;
+        allow create: if request.auth != null;
+        allow delete: if request.auth != null && resource.data.authorId == request.auth.uid;
+        allow update: if request.auth != null && resource.data.authorId == request.auth.uid;
+      }
+      
+      // Allow users to manage their own like status
+      match /likes/{userId} {
+        allow read: if true;
+        allow write: if request.auth != null && request.auth.uid == userId;
+      }
+    }
+
+>>>>>>> 06dab5b1 (chore: add 30+ new museum collections, scripts, UI components, and gitignore cleanup)
     // Other collections default: no public access
     match /{document=**} {
       allow read, write: if false;

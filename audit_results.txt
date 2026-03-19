@@ -1,0 +1,16 @@
+Starting audit script...
+Read exhibitions.js: 446991 bytes
+Found 87 matches via regex.
+
+=== AUDIT REPORT ===
+Total Permanent Exhibitions Checked: 87
+
+--- Missing JSON Files ---
+MISSING: rijksmuseum-photography -> rijksmuseum-photography-collection.json
+MISSING: buyeo-museum -> buyeo-museum.json
+
+--- IDs Not Found in ExhibitionModal.tsx (Logic Missing) ---
+UNMATCHED: pitti-collection
+UNMATCHED: accademia-venice-collection
+UNMATCHED: guggenheim-collection
+UNMATCHED: rivoli-collection

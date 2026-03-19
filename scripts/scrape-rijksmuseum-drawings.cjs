@@ -246,19 +246,15 @@ async function main() {
     let allSearchResults = progress.allSearchResults || [];
     const existingSearchResultsCount = allSearchResults.length;
     
-    // 검색 결과가 이미 충분히 많으면 (1만개 이상) 검색 결과 수집 단계 건너뛰기
-    if (existingSearchResultsCount >= 10000) {
-      log(`📋 기존 검색 결과 ${existingSearchResultsCount}개 충분함, 검색 결과 수집 단계 건너뛰고 상세 정보 수집 시작`);
-    } else {
-      log('📋 작품 목록 수집 시작...');
-      let currentPage = progress.lastPage || 1;
-      let hasMore = true;
-      
-      if (existingSearchResultsCount > 0) {
-        log(`📋 기존 검색 결과 ${existingSearchResultsCount}개 로드됨, 페이지 ${currentPage}부터 계속 수집`);
-      }
+    log('📋 작품 목록 수집 시작...');
+    let currentPage = progress.lastPage || 1;
+    let hasMore = true;
+    
+    if (existingSearchResultsCount > 0) {
+      log(`📋 기존 검색 결과 ${existingSearchResultsCount}개 로드됨, 페이지 ${currentPage}부터 계속 수집`);
+    }
 
-      while (hasMore) {
+    while (hasMore) {
         let retryCount = 0;
         const MAX_RETRIES = 3;
         let pageSuccess = false;
@@ -296,6 +292,9 @@ async function main() {
             } else {
               log(`⚠️ 페이지 ${currentPage} 오류 (최대 재시도 횟수 초과): ${error.message}`);
               log(`⚠️ 페이지 ${currentPage} 건너뛰고 계속 진행...`);
+              // 오류 발생 시에도 lastPage 업데이트하여 진행 상태 저장
+              progress.lastPage = currentPage;
+              saveProgress(progress);
               currentPage++;
               await sleep(DELAY_BETWEEN_PAGES);
               pageSuccess = true;
@@ -303,9 +302,8 @@ async function main() {
           }
         }
       }
-      
-      log(`✅ 총 ${allSearchResults.length}개 작품 목록 수집 완료`);
-    }
+
+    log(`✅ 총 ${allSearchResults.length}개 작품 목록 수집 완료`);
 
     log(`\n📊 상세 정보 수집 시작...`);
     const startIndex = artworks.length;

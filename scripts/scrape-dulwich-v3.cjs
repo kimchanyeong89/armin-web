@@ -98,15 +98,15 @@ function extractImage(html) {
   // Look for high-res image first (width-1800)
   const highRes = html.match(/src="(https:\/\/assets\.dulwich-gallery\.substrakt\.net\/images\/[^"]+\.width-1800\.[^"]+)"/);
   if (highRes) return highRes[1];
-  
+
   // Fallback to width-800
   const medRes = html.match(/src="(https:\/\/assets\.dulwich-gallery\.substrakt\.net\/images\/[^"]+\.width-800\.[^"]+)"/);
   if (medRes) return medRes[1];
-  
+
   // Any image from assets
   const anyImg = html.match(/src="(https:\/\/assets\.dulwich-gallery\.substrakt\.net\/images\/[^"]+\.(jpg|jpeg|png|webp))"/i);
   if (anyImg) return anyImg[1];
-  
+
   return null;
 }
 
@@ -149,13 +149,13 @@ function parseYear(dateStr) {
     /(\d{1,2})(?:st|nd|rd|th)\s*(?:century|c\.?)/i,
     // 단어로 된 세기 (예: "seventeenth century")
   ];
-  
+
   const centuryWords = {
     'twelfth': 12, 'thirteenth': 13, 'fourteenth': 14, 'fifteenth': 15,
     'sixteenth': 16, 'seventeenth': 17, 'eighteenth': 18, 'nineteenth': 19,
     'twentieth': 20, 'twenty-first': 21
   };
-  
+
   // 숫자 세기 매칭
   for (const pattern of centuryPatterns) {
     const match = dateStr.match(pattern);
@@ -168,7 +168,7 @@ function parseYear(dateStr) {
       }
     }
   }
-  
+
   // 단어 세기 매칭
   for (const [word, century] of Object.entries(centuryWords)) {
     if (dateStr.toLowerCase().includes(word)) {
@@ -196,16 +196,16 @@ async function scrapeArtwork(slug) {
   const url = `${BASE_URL}${slug}`;
   try {
     const html = await httpsGet(url);
-    
+
     // Extract all fields from detail page
     const title = extractTitle(html);
-    
+
     // 작가: "Artist" 또는 "Artist description" 필드 둘 다 체크
     let artist = extractAttribute(html, 'Artist');
     if (!artist) {
       artist = extractAttribute(html, 'Artist description');
     }
-    
+
     const rawDate = extractAttribute(html, 'Date');
     const { year, displayDate } = parseYear(rawDate);
     const room = extractRoom(html);
@@ -213,17 +213,24 @@ async function scrapeArtwork(slug) {
     const description = extractDescription(html);
     const dimensions = extractAttribute(html, 'Dimensions');
     const materials = extractAttribute(html, 'Materials');
+    const category = extractAttribute(html, 'Category') || extractAttribute(html, 'Object type');
     const accessionNumber = extractAttribute(html, 'Accession number');
-    
+
+    // Check display status
+    // If "room" is present, it's usually on display. 
+    // We can also check specifically for "Not on display" text in the callout or attributes.
+    const isOnDisplay = !!room && !html.includes('Not on display');
+    const displayStatus = isOnDisplay ? (room || 'On display') : 'Not on display';
+
     // Rule 2: Skip if no image
     if (!image) {
       console.log(`  ⚠️ No image: ${title}`);
       return null;
     }
-    
+
     // Generate ID from slug
     const id = slug.replace('/explore/explore-the-collection/', '').replace(/\/$/, '');
-    
+
     return {
       id,
       title,
@@ -235,6 +242,9 @@ async function scrapeArtwork(slug) {
       description,
       dimensions,
       materials,
+      category,
+      ondisplay: isOnDisplay,
+      displayStatus,
       accessionNumber,
       url
     };
@@ -250,15 +260,15 @@ async function main() {
   console.log('   - HTML 엔티티 디코딩 (&#x27; → \')');
   console.log('   - 작가 파싱 개선');
   console.log('   - 세기 표기 지원 (17th century → 1650, 표기: 17c)\n');
-  
+
   const allLinks = new Set();
-  
+
   // Step 1: Collect all artwork links from all pages
   console.log('📄 Collecting artwork links from all pages...');
   for (let page = 1; page <= TOTAL_PAGES; page++) {
     const pageUrl = `${BASE_URL}${COLLECTION_URL}?search=&artist=&subject=&period=&country=&display_status=all&page=${page}`;
     console.log(`  Page ${page}/${TOTAL_PAGES}...`);
-    
+
     try {
       const html = await httpsGet(pageUrl);
       const links = extractArtworkLinks(html);
@@ -268,29 +278,29 @@ async function main() {
       console.error(`  ❌ Error on page ${page}: ${err.message}`);
     }
   }
-  
+
   console.log(`\n📊 Found ${allLinks.size} unique artwork links\n`);
-  
+
   // Step 2: Scrape each artwork page
   const artworks = [];
   const linksArray = Array.from(allLinks);
-  
+
   // Rule 5: ID-based duplicate detection
   const seenIds = new Set();
-  
+
   for (let i = 0; i < linksArray.length; i++) {
     const slug = linksArray[i];
     const id = slug.replace('/explore/explore-the-collection/', '').replace(/\/$/, '');
-    
+
     // Skip duplicates by ID
     if (seenIds.has(id)) {
       console.log(`[${i + 1}/${linksArray.length}] ⏭️ Duplicate: ${id}`);
       continue;
     }
     seenIds.add(id);
-    
+
     console.log(`[${i + 1}/${linksArray.length}] Scraping: ${id}`);
-    
+
     const artwork = await scrapeArtwork(slug);
     if (artwork) {
       artworks.push(artwork);
@@ -298,22 +308,22 @@ async function main() {
       console.log(`  ✅ ${artwork.title}`);
       console.log(`     Artist: ${artwork.artist || 'Unknown'} | Year: ${artwork.dateStr || 'N/A'} | Room: ${artwork.room || 'N/A'}`);
     }
-    
+
     // Be polite to the server
     await delay(200);
   }
-  
+
   // Stats
   const withArtist = artworks.filter(a => a.artist && a.artist !== 'Unknown').length;
   const withYear = artworks.filter(a => a.year).length;
   const withRoom = artworks.filter(a => a.room).length;
-  
+
   console.log('\n📊 Scraping Complete:');
   console.log(`  Total artworks: ${artworks.length}`);
-  console.log(`  With artist: ${withArtist} (${Math.round(withArtist/artworks.length*100)}%)`);
-  console.log(`  With year: ${withYear} (${Math.round(withYear/artworks.length*100)}%)`);
-  console.log(`  With room: ${withRoom} (${Math.round(withRoom/artworks.length*100)}%)`);
-  
+  console.log(`  With artist: ${withArtist} (${Math.round(withArtist / artworks.length * 100)}%)`);
+  console.log(`  With year: ${withYear} (${Math.round(withYear / artworks.length * 100)}%)`);
+  console.log(`  With room: ${withRoom} (${Math.round(withRoom / artworks.length * 100)}%)`);
+
   // Save to file
   const output = {
     museum: 'Dulwich Picture Gallery',
@@ -325,7 +335,7 @@ async function main() {
     coverImage: artworks[0]?.image || null,
     objects: artworks
   };
-  
+
   fs.writeFileSync(OUTPUT_FILE, JSON.stringify(output, null, 2));
   console.log(`\n💾 Saved to: ${OUTPUT_FILE}`);
 }

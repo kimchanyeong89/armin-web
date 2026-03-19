@@ -1,0 +1,117 @@
+{
+  "id": 6090472,
+  "children": null,
+  "parents": null,
+  "currentLocation": null,
+  "dimensionUnit": null,
+  "inventoryNumber": "A-2025-313",
+  "owner": "Suomen valtio",
+  "places": null,
+  "responsibleOrganisation": "Kansallisgalleria / Ateneumin taidemuseo",
+  "updated": "2026-01-13T10:47:34.998Z",
+  "yearFrom": 1927,
+  "yearTo": null,
+  "multimedia_processed": false,
+  "acquisitionYear": null,
+  "dimensionsOld": null,
+  "collection_id": 159434,
+  "acquisitionDate": null,
+  "dateFrom": null,
+  "dimensions": [
+    {
+      "unit": "cm",
+      "sortLnu": 1,
+      "measureType": {
+        "en": "artwork dimensions",
+        "fi": "teosmitat",
+        "id": 886212,
+        "sv": "verkets mått",
+        "type": "measure-type",
+        "updated": null
+      },
+      "measurements": [
+        67,
+        49
+      ]
+    }
+  ],
+  "preferred_title": null,
+  "preferred_author": "Wendelin",
+  "online_artwork_url_fi": null,
+  "online_artwork_url_en": null,
+  "category": {
+    "id": 92283,
+    "fi": "taideteos",
+    "sv": "konstverk",
+    "en": "artwork",
+    "type": "category"
+  },
+  "multimedia": [
+    {
+      "id": 4013984,
+      "license": "Copyright © Kuvasto / Finnish National Gallery OKM licence",
+      "updated_timestamp": "2026-01-05T15:24:10.294+00:00",
+      "filename_extension": ".jpg",
+      "width": 2979,
+      "height": 4000,
+      "size": 9358266,
+      "image_version": 1,
+      "isRiaDisplayImage": true,
+      "ordinal": 7,
+      "photographer_name": "Hannu Pakarinen",
+      "address": null
+    }
+  ],
+  "people": [
+    {
+      "id": 3173,
+      "firstName": "Martta",
+      "familyName": "Wendelin",
+      "birthDate": "1893-11-23",
+      "deathDate": "1986-03-01",
+      "birthYear": 1893,
+      "deathYear": 1986,
+      "role": {
+        "id": 98595,
+        "fi": "taiteilija",
+        "sv": "konstnär",
+        "en": "Artist",
+        "type": "role"
+      },
+      "birthPlace2": {
+        "id": 310883,
+        "en": "Kymi",
+        "fi": "Kymi",
+        "sv": "Kymmene",
+        "type": "place-yso",
+        "updated": null
+      },
+      "birthPlace3": {
+        "id": 641280,
+        "en": null,
+        "fi": "Karhula",
+        "sv": null,
+        "type": "place-internal",
+        "updated": null
+      },
+      "deathPlace2": {
+        "id": 217487,
+        "en": "Tuusula",
+        "fi": "Tuusula",
+        "sv": "Tusby",
+        "type": "place-yso",
+        "updated": null
+      }
+    }
+  ],
+  "title": {
+    "id": 6151299,
+    "artworkId": 6090472,
+    "en": "At the Well (Taormina)",
+    "fi": "Kaivolla (Taorminasta)",
+    "sv": "Vid brunnen (Taormina)",
+    "type": "title"
+  },
+  "isPortrait": true,
+  "sizeClass": 3
+}

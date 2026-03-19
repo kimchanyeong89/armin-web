@@ -13,6 +13,7 @@
 
 export interface Env {
     R2_BUCKET: R2Bucket;
+    R2_PUBLIC_URL: string;
 }
 
 const corsHeaders = {
@@ -34,7 +35,7 @@ export default {
         if (request.method === 'POST' && url.pathname === '/upload') {
             try {
                 const formData = await request.formData();
-                const file = formData.get('file') as File;
+                const file = formData.get('file') as unknown as File;
                 const exhibitionId = formData.get('exhibitionId') as string;
                 const submissionId = formData.get('submissionId') as string;
 
@@ -75,8 +76,9 @@ export default {
                     },
                 });
 
-                // Return public URL (adjust based on your R2 public access settings)
-                const publicUrl = `https://pub-YOUR-R2-PUBLIC-ID.r2.dev/${filename}`;
+                // Return public URL via this worker (proxy) to ensuring access without public bucket setting
+                const workerOrigin = new URL(request.url).origin;
+                const publicUrl = `${workerOrigin}/image/${filename}`;
 
                 return new Response(JSON.stringify({
                     success: true,

@@ -1,0 +1,2046 @@
+[2026-01-13T12:52:11.710Z] 🎨 Belvedere Museum Collection Scraper - Test (100 items)
+[2026-01-13T12:52:11.882Z] ============================================================
+[2026-01-13T12:52:15.395Z] 📄 페이지 로드: https://sammlung.belvedere.at/objects/images?
+[2026-01-13T12:53:15.408Z] ❌ 오류 발생: page.goto: Timeout 60000ms exceeded.
+Call log:
+  - navigating to "https://sammlung.belvedere.at/objects/images?", waiting until "networkidle"
+
+[2026-01-13T12:53:47.587Z] 🎨 Belvedere Museum Collection Scraper - Test (100 items)
+[2026-01-13T12:53:47.591Z] ============================================================
+[2026-01-13T12:53:48.840Z] 📄 페이지 로드: https://sammlung.belvedere.at/objects/images?
+[2026-01-13T12:53:59.436Z] 🔍 작품 링크 수집 시작...
+[2026-01-13T12:53:59.455Z] 페이지 정보: 총 234개 링크, 객체 링크 샘플: https://sammlung.belvedere.at/objects/images?#support-popup, https://sammlung.belvedere.at/objects/images?#main-content, https://sammlung.belvedere.at/objects/images?#support-popup
+[2026-01-13T12:53:59.483Z] 페이지에서 16개 새 링크 발견 (총 16/100개)
+[2026-01-13T12:54:01.525Z] 페이지에서 0개 새 링크 발견 (총 16/100개)
+[2026-01-13T12:54:03.536Z] 더 이상 새 항목이 로드되지 않음
+[2026-01-13T12:54:03.537Z] ✅ 총 16개 작품 링크 수집 완료
+[2026-01-13T12:54:03.537Z] 
+📊 상세 정보 수집 시작 (16개)...
+[2026-01-13T12:54:03.537Z] 
+[1/16] https://sammlung.belvedere.at/objects/images;jsessionid=1B6A38F5E3CAAA7A4BBC2301872D8273?filter=peopleFilter%3A2583#filters
+[2026-01-13T12:54:33.552Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/images;jsessionid=1B6A38F5E3CAAA7A4BBC2301872D8273?filter=peopleFilter%3A2583#filters): page.goto: Timeout 30000ms exceeded.
+Call log:
+  - navigating to "https://sammlung.belvedere.at/objects/images;jsessionid=1B6A38F5E3CAAA7A4BBC2301872D8273?filter=peopleFilter%3A2583#filters", waiting until "networkidle"
+
+[2026-01-13T12:54:33.553Z] ⚠️ 메타데이터 수집 실패: https://sammlung.belvedere.at/objects/images;jsessionid=1B6A38F5E3CAAA7A4BBC2301872D8273?filter=peopleFilter%3A2583#filters
+[2026-01-13T12:54:34.554Z] 
+[2/16] https://sammlung.belvedere.at/objects/index.filterpanel.filtermorepeoplebutton/currentFilter/peopleFilter;jsessionid=1B6A38F5E3CAAA7A4BBC2301872D8273?t:ac=images
+[2026-01-13T12:55:04.569Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/index.filterpanel.filtermorepeoplebutton/currentFilter/peopleFilter;jsessionid=1B6A38F5E3CAAA7A4BBC2301872D8273?t:ac=images): page.goto: Timeout 30000ms exceeded.
+Call log:
+  - navigating to "https://sammlung.belvedere.at/objects/index.filterpanel.filtermorepeoplebutton/currentFilter/peopleFilter;jsessionid=1B6A38F5E3CAAA7A4BBC2301872D8273?t:ac=images", waiting until "networkidle"
+
+[2026-01-13T12:55:04.570Z] ⚠️ 메타데이터 수집 실패: https://sammlung.belvedere.at/objects/index.filterpanel.filtermorepeoplebutton/currentFilter/peopleFilter;jsessionid=1B6A38F5E3CAAA7A4BBC2301872D8273?t:ac=images
+[2026-01-13T12:55:05.570Z] 
+[3/16] https://sammlung.belvedere.at/objects/index.filterpanel.filtermorebutton/currentFilter/classifications;jsessionid=1B6A38F5E3CAAA7A4BBC2301872D8273?t:ac=images
+[2026-01-13T12:55:35.593Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/index.filterpanel.filtermorebutton/currentFilter/classifications;jsessionid=1B6A38F5E3CAAA7A4BBC2301872D8273?t:ac=images): page.goto: Timeout 30000ms exceeded.
+Call log:
+  - navigating to "https://sammlung.belvedere.at/objects/index.filterpanel.filtermorebutton/currentFilter/classifications;jsessionid=1B6A38F5E3CAAA7A4BBC2301872D8273?t:ac=images", waiting until "networkidle"
+
+[2026-01-13T12:55:35.594Z] ⚠️ 메타데이터 수집 실패: https://sammlung.belvedere.at/objects/index.filterpanel.filtermorebutton/currentFilter/classifications;jsessionid=1B6A38F5E3CAAA7A4BBC2301872D8273?t:ac=images
+[2026-01-13T12:55:36.595Z] 
+[4/16] https://sammlung.belvedere.at/objects/index.filterpanel.filtermorethesmotivebutton/currentFilter/thesfilterMotive;jsessionid=1B6A38F5E3CAAA7A4BBC2301872D8273?t:ac=images
+[2026-01-13T12:55:45.984Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/index.filterpanel.filtermorethesmotivebutton/currentFilter/thesfilterMotive;jsessionid=1B6A38F5E3CAAA7A4BBC2301872D8273?t:ac=images): page.goto: Target page, context or browser has been closed
+Call log:
+  - navigating to "https://sammlung.belvedere.at/objects/index.filterpanel.filtermorethesmotivebutton/currentFilter/thesfilterMotive;jsessionid=1B6A38F5E3CAAA7A4BBC2301872D8273?t:ac=images", waiting until "networkidle"
+
+[2026-01-13T12:55:45.990Z] ⚠️ 메타데이터 수집 실패: https://sammlung.belvedere.at/objects/index.filterpanel.filtermorethesmotivebutton/currentFilter/thesfilterMotive;jsessionid=1B6A38F5E3CAAA7A4BBC2301872D8273?t:ac=images
+[2026-01-13T12:55:46.991Z] 
+[5/16] https://sammlung.belvedere.at/objects/6/frauenkopf;jsessionid=1B6A38F5E3CAAA7A4BBC2301872D8273?ctx=e0067078871eb1d3a66d02d04ead45d63eca6b13&idx=0
+[2026-01-13T12:55:46.993Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/6/frauenkopf;jsessionid=1B6A38F5E3CAAA7A4BBC2301872D8273?ctx=e0067078871eb1d3a66d02d04ead45d63eca6b13&idx=0): page.goto: Target page, context or browser has been closed
+[2026-01-13T12:55:46.993Z] ⚠️ 메타데이터 수집 실패: https://sammlung.belvedere.at/objects/6/frauenkopf;jsessionid=1B6A38F5E3CAAA7A4BBC2301872D8273?ctx=e0067078871eb1d3a66d02d04ead45d63eca6b13&idx=0
+[2026-01-13T12:55:47.996Z] 
+[6/16] https://sammlung.belvedere.at/objects/8/kaiser-ferdinand-i-von-osterreich;jsessionid=1B6A38F5E3CAAA7A4BBC2301872D8273?ctx=e0067078871eb1d3a66d02d04ead45d63eca6b13&idx=1
+[2026-01-13T12:55:47.998Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/8/kaiser-ferdinand-i-von-osterreich;jsessionid=1B6A38F5E3CAAA7A4BBC2301872D8273?ctx=e0067078871eb1d3a66d02d04ead45d63eca6b13&idx=1): page.goto: Target page, context or browser has been closed
+[2026-01-13T12:55:47.998Z] ⚠️ 메타데이터 수집 실패: https://sammlung.belvedere.at/objects/8/kaiser-ferdinand-i-von-osterreich;jsessionid=1B6A38F5E3CAAA7A4BBC2301872D8273?ctx=e0067078871eb1d3a66d02d04ead45d63eca6b13&idx=1
+[2026-01-13T12:55:49.000Z] 
+[7/16] https://sammlung.belvedere.at/objects/9/die-ebene-von-auvers;jsessionid=1B6A38F5E3CAAA7A4BBC2301872D8273?ctx=e0067078871eb1d3a66d02d04ead45d63eca6b13&idx=2
+[2026-01-13T12:55:49.001Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/9/die-ebene-von-auvers;jsessionid=1B6A38F5E3CAAA7A4BBC2301872D8273?ctx=e0067078871eb1d3a66d02d04ead45d63eca6b13&idx=2): page.goto: Target page, context or browser has been closed
+[2026-01-13T12:55:49.001Z] ⚠️ 메타데이터 수집 실패: https://sammlung.belvedere.at/objects/9/die-ebene-von-auvers;jsessionid=1B6A38F5E3CAAA7A4BBC2301872D8273?ctx=e0067078871eb1d3a66d02d04ead45d63eca6b13&idx=2
+[2026-01-13T12:55:50.003Z] 
+[8/16] https://sammlung.belvedere.at/objects/20/vor-den-feiertagen;jsessionid=1B6A38F5E3CAAA7A4BBC2301872D8273?ctx=e0067078871eb1d3a66d02d04ead45d63eca6b13&idx=3
+[2026-01-13T12:55:50.004Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/20/vor-den-feiertagen;jsessionid=1B6A38F5E3CAAA7A4BBC2301872D8273?ctx=e0067078871eb1d3a66d02d04ead45d63eca6b13&idx=3): page.goto: Target page, context or browser has been closed
+[2026-01-13T12:55:50.004Z] ⚠️ 메타데이터 수집 실패: https://sammlung.belvedere.at/objects/20/vor-den-feiertagen;jsessionid=1B6A38F5E3CAAA7A4BBC2301872D8273?ctx=e0067078871eb1d3a66d02d04ead45d63eca6b13&idx=3
+[2026-01-13T12:55:51.005Z] 
+[9/16] https://sammlung.belvedere.at/objects/25/wolkenschatten;jsessionid=1B6A38F5E3CAAA7A4BBC2301872D8273?ctx=e0067078871eb1d3a66d02d04ead45d63eca6b13&idx=4
+[2026-01-13T12:55:51.008Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/25/wolkenschatten;jsessionid=1B6A38F5E3CAAA7A4BBC2301872D8273?ctx=e0067078871eb1d3a66d02d04ead45d63eca6b13&idx=4): page.goto: Target page, context or browser has been closed
+[2026-01-13T12:55:51.008Z] ⚠️ 메타데이터 수집 실패: https://sammlung.belvedere.at/objects/25/wolkenschatten;jsessionid=1B6A38F5E3CAAA7A4BBC2301872D8273?ctx=e0067078871eb1d3a66d02d04ead45d63eca6b13&idx=4
+[2026-01-13T12:55:52.014Z] 
+[10/16] https://sammlung.belvedere.at/objects/33/arthur-graf-von-enzenberg;jsessionid=1B6A38F5E3CAAA7A4BBC2301872D8273?ctx=e0067078871eb1d3a66d02d04ead45d63eca6b13&idx=5
+[2026-01-13T12:55:52.034Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/33/arthur-graf-von-enzenberg;jsessionid=1B6A38F5E3CAAA7A4BBC2301872D8273?ctx=e0067078871eb1d3a66d02d04ead45d63eca6b13&idx=5): page.goto: Target page, context or browser has been closed
+[2026-01-13T12:55:52.034Z] ⚠️ 메타데이터 수집 실패: https://sammlung.belvedere.at/objects/33/arthur-graf-von-enzenberg;jsessionid=1B6A38F5E3CAAA7A4BBC2301872D8273?ctx=e0067078871eb1d3a66d02d04ead45d63eca6b13&idx=5
+[2026-01-13T12:55:52.035Z] 💾 진행 상황 저장: 0개 작품 수집됨
+[2026-01-13T12:55:53.043Z] 
+[11/16] https://sammlung.belvedere.at/objects/39/der-michel;jsessionid=1B6A38F5E3CAAA7A4BBC2301872D8273?ctx=e0067078871eb1d3a66d02d04ead45d63eca6b13&idx=6
+[2026-01-13T12:55:53.076Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/39/der-michel;jsessionid=1B6A38F5E3CAAA7A4BBC2301872D8273?ctx=e0067078871eb1d3a66d02d04ead45d63eca6b13&idx=6): page.goto: Target page, context or browser has been closed
+[2026-01-13T12:55:53.077Z] ⚠️ 메타데이터 수집 실패: https://sammlung.belvedere.at/objects/39/der-michel;jsessionid=1B6A38F5E3CAAA7A4BBC2301872D8273?ctx=e0067078871eb1d3a66d02d04ead45d63eca6b13&idx=6
+[2026-01-13T12:55:54.080Z] 
+[12/16] https://sammlung.belvedere.at/objects/40/der-bildhauer-alfonso-canciani;jsessionid=1B6A38F5E3CAAA7A4BBC2301872D8273?ctx=e0067078871eb1d3a66d02d04ead45d63eca6b13&idx=7
+[2026-01-13T12:55:54.086Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/40/der-bildhauer-alfonso-canciani;jsessionid=1B6A38F5E3CAAA7A4BBC2301872D8273?ctx=e0067078871eb1d3a66d02d04ead45d63eca6b13&idx=7): page.goto: Target page, context or browser has been closed
+[2026-01-13T12:55:54.087Z] ⚠️ 메타데이터 수집 실패: https://sammlung.belvedere.at/objects/40/der-bildhauer-alfonso-canciani;jsessionid=1B6A38F5E3CAAA7A4BBC2301872D8273?ctx=e0067078871eb1d3a66d02d04ead45d63eca6b13&idx=7
+[2026-01-13T12:55:55.090Z] 
+[13/16] https://sammlung.belvedere.at/objects/41/blick-aus-meinem-fenster;jsessionid=1B6A38F5E3CAAA7A4BBC2301872D8273?ctx=e0067078871eb1d3a66d02d04ead45d63eca6b13&idx=8
+[2026-01-13T12:55:55.095Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/41/blick-aus-meinem-fenster;jsessionid=1B6A38F5E3CAAA7A4BBC2301872D8273?ctx=e0067078871eb1d3a66d02d04ead45d63eca6b13&idx=8): page.goto: Target page, context or browser has been closed
+[2026-01-13T12:55:55.096Z] ⚠️ 메타데이터 수집 실패: https://sammlung.belvedere.at/objects/41/blick-aus-meinem-fenster;jsessionid=1B6A38F5E3CAAA7A4BBC2301872D8273?ctx=e0067078871eb1d3a66d02d04ead45d63eca6b13&idx=8
+[2026-01-13T12:55:56.101Z] 
+[14/16] https://sammlung.belvedere.at/objects/44/winter;jsessionid=1B6A38F5E3CAAA7A4BBC2301872D8273?ctx=e0067078871eb1d3a66d02d04ead45d63eca6b13&idx=9
+[2026-01-13T12:55:56.113Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/44/winter;jsessionid=1B6A38F5E3CAAA7A4BBC2301872D8273?ctx=e0067078871eb1d3a66d02d04ead45d63eca6b13&idx=9): page.goto: Target page, context or browser has been closed
+[2026-01-13T12:55:56.113Z] ⚠️ 메타데이터 수집 실패: https://sammlung.belvedere.at/objects/44/winter;jsessionid=1B6A38F5E3CAAA7A4BBC2301872D8273?ctx=e0067078871eb1d3a66d02d04ead45d63eca6b13&idx=9
+[2026-01-13T12:55:57.114Z] 
+[15/16] https://sammlung.belvedere.at/objects/47/gebirgsweg-in-den-beskiden;jsessionid=1B6A38F5E3CAAA7A4BBC2301872D8273?ctx=e0067078871eb1d3a66d02d04ead45d63eca6b13&idx=10
+[2026-01-13T12:55:57.116Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/47/gebirgsweg-in-den-beskiden;jsessionid=1B6A38F5E3CAAA7A4BBC2301872D8273?ctx=e0067078871eb1d3a66d02d04ead45d63eca6b13&idx=10): page.goto: Target page, context or browser has been closed
+[2026-01-13T12:55:57.116Z] ⚠️ 메타데이터 수집 실패: https://sammlung.belvedere.at/objects/47/gebirgsweg-in-den-beskiden;jsessionid=1B6A38F5E3CAAA7A4BBC2301872D8273?ctx=e0067078871eb1d3a66d02d04ead45d63eca6b13&idx=10
+[2026-01-13T12:55:58.121Z] 
+[16/16] https://sammlung.belvedere.at/objects/50/madchen-in-weiem-kleid;jsessionid=1B6A38F5E3CAAA7A4BBC2301872D8273?ctx=e0067078871eb1d3a66d02d04ead45d63eca6b13&idx=11
+[2026-01-13T12:55:58.123Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/50/madchen-in-weiem-kleid;jsessionid=1B6A38F5E3CAAA7A4BBC2301872D8273?ctx=e0067078871eb1d3a66d02d04ead45d63eca6b13&idx=11): page.goto: Target page, context or browser has been closed
+[2026-01-13T12:55:58.123Z] ⚠️ 메타데이터 수집 실패: https://sammlung.belvedere.at/objects/50/madchen-in-weiem-kleid;jsessionid=1B6A38F5E3CAAA7A4BBC2301872D8273?ctx=e0067078871eb1d3a66d02d04ead45d63eca6b13&idx=11
+[2026-01-13T12:55:59.132Z] 
+✅ 완료! 0개 작품 저장됨: /Users/kietzsche/armin-web-main/public/data/belvedere-collection-test.json
+[2026-01-13T12:57:07.175Z] 🎨 Belvedere Museum Collection Scraper - Test (100 items)
+[2026-01-13T12:57:07.203Z] ============================================================
+[2026-01-13T12:57:07.886Z] 📄 페이지 로드: https://sammlung.belvedere.at/objects/images?
+[2026-01-13T12:57:16.669Z] 🔍 작품 링크 수집 시작...
+[2026-01-13T12:57:16.685Z] 스크롤 1: 12개 새 링크 발견 (총 12/100개)
+[2026-01-13T12:57:18.729Z] 스크롤 2: 0개 새 링크 발견 (총 12/100개)
+[2026-01-13T12:57:20.748Z] 더 이상 새 항목이 로드되지 않음
+[2026-01-13T12:57:20.749Z] ✅ 총 12개 작품 링크 수집 완료
+[2026-01-13T12:57:20.749Z] 
+📊 상세 정보 수집 시작 (12개)...
+[2026-01-13T12:57:20.749Z] 
+[1/12] https://sammlung.belvedere.at/objects/6/frauenkopf;jsessionid=D04FAA764DFB44F19BDF9F705A7BAF98?ctx=e0067078871eb1d3a66d02d04ead45d63eca6b13&idx=0
+[2026-01-13T12:57:24.104Z] ✅ 수집 완료: Frauenkopf by Unknown | 
+[2026-01-13T12:57:25.105Z] 
+[2/12] https://sammlung.belvedere.at/objects/8/kaiser-ferdinand-i-von-osterreich;jsessionid=D04FAA764DFB44F19BDF9F705A7BAF98?ctx=e0067078871eb1d3a66d02d04ead45d63eca6b13&idx=1
+[2026-01-13T12:57:27.942Z] ✅ 수집 완료: Kaiser Ferdinand I. von Österreich by Unknown | 
+[2026-01-13T12:57:28.950Z] 
+[3/12] https://sammlung.belvedere.at/objects/9/die-ebene-von-auvers;jsessionid=D04FAA764DFB44F19BDF9F705A7BAF98?ctx=e0067078871eb1d3a66d02d04ead45d63eca6b13&idx=2
+[2026-01-13T12:57:31.665Z] ✅ 수집 완료: Die Ebene von Auvers by Unknown | 
+[2026-01-13T12:57:32.668Z] 
+[4/12] https://sammlung.belvedere.at/objects/20/vor-den-feiertagen;jsessionid=D04FAA764DFB44F19BDF9F705A7BAF98?ctx=e0067078871eb1d3a66d02d04ead45d63eca6b13&idx=3
+[2026-01-13T12:57:35.503Z] ✅ 수집 완료: Vor den Feiertagen by Unknown | 
+[2026-01-13T12:57:36.504Z] 
+[5/12] https://sammlung.belvedere.at/objects/25/wolkenschatten;jsessionid=D04FAA764DFB44F19BDF9F705A7BAF98?ctx=e0067078871eb1d3a66d02d04ead45d63eca6b13&idx=4
+[2026-01-13T12:57:39.315Z] ✅ 수집 완료: Wolkenschatten by Unknown | 
+[2026-01-13T12:57:40.319Z] 
+[6/12] https://sammlung.belvedere.at/objects/33/arthur-graf-von-enzenberg;jsessionid=D04FAA764DFB44F19BDF9F705A7BAF98?ctx=e0067078871eb1d3a66d02d04ead45d63eca6b13&idx=5
+[2026-01-13T12:57:43.172Z] ✅ 수집 완료: Arthur Graf von Enzenberg by Unknown | 
+[2026-01-13T12:57:44.173Z] 
+[7/12] https://sammlung.belvedere.at/objects/39/der-michel;jsessionid=D04FAA764DFB44F19BDF9F705A7BAF98?ctx=e0067078871eb1d3a66d02d04ead45d63eca6b13&idx=6
+[2026-01-13T12:57:47.161Z] ✅ 수집 완료: Der Michel by Unknown | 
+[2026-01-13T12:57:48.162Z] 
+[8/12] https://sammlung.belvedere.at/objects/40/der-bildhauer-alfonso-canciani;jsessionid=D04FAA764DFB44F19BDF9F705A7BAF98?ctx=e0067078871eb1d3a66d02d04ead45d63eca6b13&idx=7
+[2026-01-13T12:57:51.175Z] ✅ 수집 완료: Der Bildhauer Alfonso Canciani by Unknown | 
+[2026-01-13T12:57:52.177Z] 
+[9/12] https://sammlung.belvedere.at/objects/41/blick-aus-meinem-fenster;jsessionid=D04FAA764DFB44F19BDF9F705A7BAF98?ctx=e0067078871eb1d3a66d02d04ead45d63eca6b13&idx=8
+[2026-01-13T12:57:55.223Z] ✅ 수집 완료: Blick aus meinem Fenster by Unknown | 
+[2026-01-13T12:57:56.224Z] 
+[10/12] https://sammlung.belvedere.at/objects/44/winter;jsessionid=D04FAA764DFB44F19BDF9F705A7BAF98?ctx=e0067078871eb1d3a66d02d04ead45d63eca6b13&idx=9
+[2026-01-13T12:57:59.019Z] ✅ 수집 완료: Winter by Unknown | 
+[2026-01-13T12:57:59.020Z] 💾 진행 상황 저장: 10개 작품 수집됨
+[2026-01-13T12:58:00.024Z] 
+[11/12] https://sammlung.belvedere.at/objects/47/gebirgsweg-in-den-beskiden;jsessionid=D04FAA764DFB44F19BDF9F705A7BAF98?ctx=e0067078871eb1d3a66d02d04ead45d63eca6b13&idx=10
+[2026-01-13T12:58:03.076Z] ✅ 수집 완료: Gebirgsweg in den Beskiden by Unknown | 
+[2026-01-13T12:58:04.078Z] 
+[12/12] https://sammlung.belvedere.at/objects/50/madchen-in-weiem-kleid;jsessionid=D04FAA764DFB44F19BDF9F705A7BAF98?ctx=e0067078871eb1d3a66d02d04ead45d63eca6b13&idx=11
+[2026-01-13T12:58:07.053Z] ✅ 수집 완료: Mädchen in weißem Kleid by Unknown | 
+[2026-01-13T12:58:08.054Z] 
+✅ 완료! 12개 작품 저장됨: /Users/kietzsche/armin-web-main/public/data/belvedere-collection-test.json
+[2026-01-13T13:00:59.803Z] 🎨 Belvedere Museum Collection Scraper - Test V2 (100 items)
+[2026-01-13T13:00:59.829Z] ============================================================
+[2026-01-13T13:01:02.087Z] 📄 페이지 로드: https://sammlung.belvedere.at/objects/images?
+[2026-01-13T13:01:11.072Z] 🔍 작품 링크 수집 시작 (그리드 아이템에서)...
+[2026-01-13T13:01:11.085Z] 스크롤 1: 12개 새 항목 발견 (총 12/100개)
+[2026-01-13T13:01:13.097Z] 스크롤 2: 0개 새 항목 발견 (총 12/100개)
+[2026-01-13T13:01:15.105Z] 더 이상 새 항목이 로드되지 않음
+[2026-01-13T13:01:15.106Z] ✅ 총 12개 작품 링크 수집 완료
+[2026-01-13T13:01:15.106Z] 
+📊 상세 정보 수집 시작 (12개)...
+[2026-01-13T13:01:15.106Z] 
+[1/12] https://sammlung.belvedere.at/objects/6/frauenkopf
+[2026-01-13T13:01:18.257Z] ✅ 수집 완료: Frauenkopf by G | Büst
+[2026-01-13T13:01:19.259Z] 
+[2/12] https://sammlung.belvedere.at/objects/8/kaiser-ferdinand-i-von-osterreich
+[2026-01-13T13:01:22.302Z] ✅ 수집 완료: Kaiser Ferdinand I. von Österreich by F | G
+[2026-01-13T13:01:23.306Z] 
+[3/12] https://sammlung.belvedere.at/objects/9/die-ebene-von-auvers
+[2026-01-13T13:01:26.258Z] ✅ 수집 완료: Die Ebene von Auvers by Vin | G
+[2026-01-13T13:01:27.260Z] 
+[4/12] https://sammlung.belvedere.at/objects/20/vor-den-feiertagen
+[2026-01-13T13:01:30.158Z] ✅ 수집 완료: Vor den Feiertagen by Emil Strecker | G
+[2026-01-13T13:01:31.159Z] 
+[5/12] https://sammlung.belvedere.at/objects/25/wolkenschatten
+[2026-01-13T13:01:33.938Z] ✅ 수집 완료: Wolkenschatten by Oskar Frenzel | G
+[2026-01-13T13:01:34.940Z] 
+[6/12] https://sammlung.belvedere.at/objects/33/arthur-graf-von-enzenberg
+[2026-01-13T13:01:37.811Z] ✅ 수집 완료: Arthur Graf von Enzenberg by Josef Schretter | Z
+[2026-01-13T13:01:38.813Z] 
+[7/12] https://sammlung.belvedere.at/objects/39/der-michel
+[2026-01-13T13:01:41.716Z] ✅ 수집 완료: Der Michel by Josef Engelhart | G
+[2026-01-13T13:01:42.718Z] 
+[8/12] https://sammlung.belvedere.at/objects/40/der-bildhauer-alfonso-canciani
+[2026-01-13T13:01:45.551Z] ✅ 수집 완료: Der Bildhauer Alfonso Canciani by Josef Engelhart | Büst
+[2026-01-13T13:01:46.554Z] 
+[9/12] https://sammlung.belvedere.at/objects/41/blick-aus-meinem-fenster
+[2026-01-13T13:01:49.639Z] ✅ 수집 완료: Blick aus meinem Fenster by Josef Engelhart | G
+[2026-01-13T13:01:50.641Z] 
+[10/12] https://sammlung.belvedere.at/objects/44/winter
+[2026-01-13T13:01:53.549Z] ✅ 수집 완료: Winter by Eduard Ameseder | G
+[2026-01-13T13:01:53.551Z] 💾 진행 상황 저장: 10개 작품 수집됨
+[2026-01-13T13:01:54.551Z] 
+[11/12] https://sammlung.belvedere.at/objects/47/gebirgsweg-in-den-beskiden
+[2026-01-13T13:01:57.439Z] ✅ 수집 완료: Gebirgsweg in den Beskiden by Hug | Z
+[2026-01-13T13:01:58.441Z] 
+[12/12] https://sammlung.belvedere.at/objects/50/madchen-in-weiem-kleid
+[2026-01-13T13:02:01.303Z] ✅ 수집 완료: Mädchen in weißem Kleid by Franz | G
+[2026-01-13T13:02:02.307Z] 
+✅ 완료! 12개 작품 저장됨: /Users/kietzsche/armin-web-main/public/data/belvedere-collection-test.json
+[2026-01-13T13:04:01.116Z] 🎨 Belvedere Museum Collection Scraper - Test V2 (100 items)
+[2026-01-13T13:04:01.123Z] ============================================================
+[2026-01-13T13:04:01.534Z] 📄 페이지 로드: https://sammlung.belvedere.at/objects/images?
+[2026-01-13T13:04:10.535Z] 🔍 작품 링크 수집 시작 (그리드 아이템에서)...
+[2026-01-13T13:04:10.555Z] 스크롤 1: 12개 새 항목 발견 (총 12/100개)
+[2026-01-13T13:04:12.574Z] 스크롤 2: 0개 새 항목 발견 (총 12/100개)
+[2026-01-13T13:04:14.594Z] 더 이상 새 항목이 로드되지 않음
+[2026-01-13T13:04:14.596Z] ✅ 총 12개 작품 링크 수집 완료
+[2026-01-13T13:04:14.596Z] 
+📊 상세 정보 수집 시작 (12개)...
+[2026-01-13T13:04:14.598Z] 
+[1/12] https://sammlung.belvedere.at/objects/6/frauenkopf
+[2026-01-13T13:04:17.880Z] ✅ 수집 완료: Frauenkopf by George Minne | Büst
+[2026-01-13T13:04:18.882Z] 
+[2/12] https://sammlung.belvedere.at/objects/8/kaiser-ferdinand-i-von-osterreich
+[2026-01-13T13:04:21.560Z] ✅ 수집 완료: Kaiser Ferdinand I. von Österreich by Ferdinand Georg Waldmüller | G
+[2026-01-13T13:04:22.562Z] 
+[3/12] https://sammlung.belvedere.at/objects/9/die-ebene-von-auvers
+[2026-01-13T13:04:25.360Z] ✅ 수집 완료: Die Ebene von Auvers by Vincent van Gogh | G
+[2026-01-13T13:04:26.363Z] 
+[4/12] https://sammlung.belvedere.at/objects/20/vor-den-feiertagen
+[2026-01-13T13:04:29.239Z] ✅ 수집 완료: Vor den Feiertagen by Emil Strecker | G
+[2026-01-13T13:04:30.239Z] 
+[5/12] https://sammlung.belvedere.at/objects/25/wolkenschatten
+[2026-01-13T13:04:33.141Z] ✅ 수집 완료: Wolkenschatten by Oskar Frenzel | G
+[2026-01-13T13:04:34.144Z] 
+[6/12] https://sammlung.belvedere.at/objects/33/arthur-graf-von-enzenberg
+[2026-01-13T13:04:36.936Z] ✅ 수집 완료: Arthur Graf von Enzenberg by Josef Schretter | Z
+[2026-01-13T13:04:37.938Z] 
+[7/12] https://sammlung.belvedere.at/objects/39/der-michel
+[2026-01-13T13:04:40.998Z] ✅ 수집 완료: Der Michel by Josef Engelhart | G
+[2026-01-13T13:04:42.001Z] 
+[8/12] https://sammlung.belvedere.at/objects/40/der-bildhauer-alfonso-canciani
+[2026-01-13T13:04:44.793Z] ✅ 수집 완료: Der Bildhauer Alfonso Canciani by Josef Engelhart | Büst
+[2026-01-13T13:04:45.795Z] 
+[9/12] https://sammlung.belvedere.at/objects/41/blick-aus-meinem-fenster
+[2026-01-13T13:04:48.862Z] ✅ 수집 완료: Blick aus meinem Fenster by Josef Engelhart | G
+[2026-01-13T13:04:49.865Z] 
+[10/12] https://sammlung.belvedere.at/objects/44/winter
+[2026-01-13T13:04:52.641Z] ✅ 수집 완료: Winter by Eduard Ameseder | G
+[2026-01-13T13:04:52.641Z] 💾 진행 상황 저장: 10개 작품 수집됨
+[2026-01-13T13:04:53.644Z] 
+[11/12] https://sammlung.belvedere.at/objects/47/gebirgsweg-in-den-beskiden
+[2026-01-13T13:04:56.509Z] ✅ 수집 완료: Gebirgsweg in den Beskiden by Hugo Baar | Z
+[2026-01-13T13:04:57.517Z] 
+[12/12] https://sammlung.belvedere.at/objects/50/madchen-in-weiem-kleid
+[2026-01-13T13:05:00.397Z] ✅ 수집 완료: Mädchen in weißem Kleid by Franz Jaschke | G
+[2026-01-13T13:05:01.399Z] 
+✅ 완료! 12개 작품 저장됨: /Users/kietzsche/armin-web-main/public/data/belvedere-collection-test.json
+[2026-01-13T13:13:07.341Z] 🎨 Belvedere Museum Collection Scraper - Test V2 (100 items)
+[2026-01-13T13:13:07.355Z] ============================================================
+[2026-01-13T13:13:08.676Z] 📄 페이지 로드: https://sammlung.belvedere.at/objects/images?
+[2026-01-13T13:13:18.572Z] 🔍 작품 링크 수집 시작 (페이지네이션)...
+[2026-01-13T13:13:18.574Z] 📄 페이지 1 로드: https://sammlung.belvedere.at/objects/images
+[2026-01-13T13:13:22.508Z] 페이지 1: 12개 새 항목 발견 (총 12/100개)
+[2026-01-13T13:13:22.514Z] 📄 페이지 2 로드: https://sammlung.belvedere.at/objects/images?page=2
+[2026-01-13T13:13:26.480Z] 페이지 2: 12개 새 항목 발견 (총 24/100개)
+[2026-01-13T13:13:26.487Z] 📄 페이지 3 로드: https://sammlung.belvedere.at/objects/images?page=3
+[2026-01-13T13:13:30.213Z] 페이지 3: 12개 새 항목 발견 (총 36/100개)
+[2026-01-13T13:13:30.229Z] 📄 페이지 4 로드: https://sammlung.belvedere.at/objects/images?page=4
+[2026-01-13T13:13:34.220Z] 페이지 4: 12개 새 항목 발견 (총 48/100개)
+[2026-01-13T13:13:34.228Z] 📄 페이지 5 로드: https://sammlung.belvedere.at/objects/images?page=5
+[2026-01-13T13:13:38.025Z] 페이지 5: 12개 새 항목 발견 (총 60/100개)
+[2026-01-13T13:13:38.029Z] 📄 페이지 6 로드: https://sammlung.belvedere.at/objects/images?page=6
+[2026-01-13T13:13:41.693Z] 페이지 6: 12개 새 항목 발견 (총 72/100개)
+[2026-01-13T13:13:41.704Z] 📄 페이지 7 로드: https://sammlung.belvedere.at/objects/images?page=7
+[2026-01-13T13:13:45.626Z] 페이지 7: 12개 새 항목 발견 (총 84/100개)
+[2026-01-13T13:13:45.630Z] 📄 페이지 8 로드: https://sammlung.belvedere.at/objects/images?page=8
+[2026-01-13T13:13:49.536Z] 페이지 8: 12개 새 항목 발견 (총 96/100개)
+[2026-01-13T13:13:49.540Z] 📄 페이지 9 로드: https://sammlung.belvedere.at/objects/images?page=9
+[2026-01-13T13:13:53.400Z] 페이지 9: 4개 새 항목 발견 (총 100/100개)
+[2026-01-13T13:13:53.401Z] ✅ 총 100개 작품 링크 수집 완료
+[2026-01-13T13:13:53.401Z] 
+📊 상세 정보 수집 시작 (100개)...
+[2026-01-13T13:13:53.402Z] 
+[1/100] https://sammlung.belvedere.at/objects/6/frauenkopf
+[2026-01-13T13:13:56.488Z] ✅ 수집 완료: Frauenkopf by George Minne | Büst
+[2026-01-13T13:13:57.489Z] 
+[2/100] https://sammlung.belvedere.at/objects/8/kaiser-ferdinand-i-von-osterreich
+[2026-01-13T13:14:00.945Z] ✅ 수집 완료: Kaiser Ferdinand I. von Österreich by Ferdinand Georg Waldmüller | G
+[2026-01-13T13:14:01.950Z] 
+[3/100] https://sammlung.belvedere.at/objects/9/die-ebene-von-auvers
+[2026-01-13T13:14:05.047Z] ✅ 수집 완료: Die Ebene von Auvers by Vincent van Gogh | G
+[2026-01-13T13:14:06.074Z] 
+[4/100] https://sammlung.belvedere.at/objects/20/vor-den-feiertagen
+[2026-01-13T13:14:09.491Z] ✅ 수집 완료: Vor den Feiertagen by Emil Strecker | G
+[2026-01-13T13:14:10.496Z] 
+[5/100] https://sammlung.belvedere.at/objects/25/wolkenschatten
+[2026-01-13T13:14:13.453Z] ✅ 수집 완료: Wolkenschatten by Oskar Frenzel | G
+[2026-01-13T13:14:14.458Z] 
+[6/100] https://sammlung.belvedere.at/objects/33/arthur-graf-von-enzenberg
+[2026-01-13T13:14:17.214Z] ✅ 수집 완료: Arthur Graf von Enzenberg by Josef Schretter | Z
+[2026-01-13T13:14:18.216Z] 
+[7/100] https://sammlung.belvedere.at/objects/39/der-michel
+[2026-01-13T13:14:21.325Z] ✅ 수집 완료: Der Michel by Josef Engelhart | G
+[2026-01-13T13:14:22.330Z] 
+[8/100] https://sammlung.belvedere.at/objects/40/der-bildhauer-alfonso-canciani
+[2026-01-13T13:14:25.321Z] ✅ 수집 완료: Der Bildhauer Alfonso Canciani by Josef Engelhart | Büst
+[2026-01-13T13:14:26.323Z] 
+[9/100] https://sammlung.belvedere.at/objects/41/blick-aus-meinem-fenster
+[2026-01-13T13:14:30.037Z] ✅ 수집 완료: Blick aus meinem Fenster by Josef Engelhart | G
+[2026-01-13T13:14:31.042Z] 
+[10/100] https://sammlung.belvedere.at/objects/44/winter
+[2026-01-13T13:14:34.016Z] ✅ 수집 완료: Winter by Eduard Ameseder | G
+[2026-01-13T13:14:34.480Z] 💾 진행 상황 저장: 10개 작품 수집됨
+[2026-01-13T13:14:35.524Z] 
+[11/100] https://sammlung.belvedere.at/objects/47/gebirgsweg-in-den-beskiden
+[2026-01-13T13:14:39.106Z] ✅ 수집 완료: Gebirgsweg in den Beskiden by Hugo Baar | Z
+[2026-01-13T13:14:40.109Z] 
+[12/100] https://sammlung.belvedere.at/objects/50/madchen-in-weiem-kleid
+[2026-01-13T13:14:42.977Z] ✅ 수집 완료: Mädchen in weißem Kleid by Franz Jaschke | G
+[2026-01-13T13:14:43.979Z] 
+[13/100] https://sammlung.belvedere.at/objects/51/weihnachtsmarkt-am-hof-in-wien
+[2026-01-13T13:14:47.106Z] ✅ 수집 완료: Weihnachtsmarkt am Hof in Wien by Ernst Juch | G
+[2026-01-13T13:14:48.108Z] 
+[14/100] https://sammlung.belvedere.at/objects/53/die-tischrede
+[2026-01-13T13:14:51.117Z] ✅ 수집 완료: Die Tischrede by Ernst Juch | G
+[2026-01-13T13:14:52.118Z] 
+[15/100] https://sammlung.belvedere.at/objects/54/der-architekt-joze-plecnik
+[2026-01-13T13:14:55.031Z] ✅ 수집 완료: Der Architekt Jože Plečnik by Josef Engelhart | Kopfbüst
+[2026-01-13T13:14:56.034Z] 
+[16/100] https://sammlung.belvedere.at/objects/55/traubengehange
+[2026-01-13T13:14:59.007Z] ✅ 수집 완료: Traubengehänge by Ferdinand Georg Waldmüller | G
+[2026-01-13T13:15:00.010Z] 
+[17/100] https://sammlung.belvedere.at/objects/56/pferdemarkt-in-szolnok-i
+[2026-01-13T13:15:02.909Z] ✅ 수집 완료: Pferdemarkt in Szolnok I by August von Pettenkofen | G
+[2026-01-13T13:15:03.916Z] 
+[18/100] https://sammlung.belvedere.at/objects/57/nach-dem-bade
+[2026-01-13T13:15:07.200Z] ✅ 수집 완료: Nach dem Bade by Pierre Auguste Renoir | G
+[2026-01-13T13:15:08.208Z] 
+[19/100] https://sammlung.belvedere.at/objects/58/sancho-pansa-unter-einem-baum-ausruhend
+[2026-01-13T13:15:11.278Z] ✅ 수집 완료: Sancho Pansa, unter einem Baum ausruhend by Honoré Daumier | G
+[2026-01-13T13:15:12.280Z] 
+[20/100] https://sammlung.belvedere.at/objects/59/das-ursulinenkloster-in-graz
+[2026-01-13T13:15:15.325Z] ✅ 수집 완료: Das Ursulinenkloster in Graz by Leo Diet | Z
+[2026-01-13T13:15:15.327Z] 💾 진행 상황 저장: 20개 작품 수집됨
+[2026-01-13T13:15:16.329Z] 
+[21/100] https://sammlung.belvedere.at/objects/60/der-wiener-burgermeister-dr-richard-weiskirchner
+[2026-01-13T13:15:19.224Z] ✅ 수집 완료: Der Wiener Bürgermeister Dr. Richard Weiskirchner by Hans Temple | G
+[2026-01-13T13:15:20.227Z] 
+[22/100] https://sammlung.belvedere.at/objects/65/winternacht
+[2026-01-13T13:15:23.104Z] ✅ 수집 완료: Winternacht by Karl Sterrer | G
+[2026-01-13T13:15:24.106Z] 
+[23/100] https://sammlung.belvedere.at/objects/66/landliches-interieur
+[2026-01-13T13:15:26.867Z] ✅ 수집 완료: Ländliches Interieur by Ludwig Ferdinand Graf | G
+[2026-01-13T13:15:27.873Z] 
+[24/100] https://sammlung.belvedere.at/objects/67/zirkusstudie-an-der-longe
+[2026-01-13T13:15:30.777Z] ✅ 수집 완료: Zirkusstudie (An der Longe) by Otto Friedrich | G
+[2026-01-13T13:15:31.779Z] 
+[25/100] https://sammlung.belvedere.at/objects/70/hollandische-landschaft
+[2026-01-13T13:15:34.954Z] ✅ 수집 완료: Holländische Landschaft by Hans Tichy | G
+[2026-01-13T13:15:35.997Z] 
+[26/100] https://sammlung.belvedere.at/objects/73/dordrecht
+[2026-01-13T13:47:08.322Z] 🎨 Belvedere Museum Collection Scraper - Test V2 (100 items)
+[2026-01-13T13:47:08.336Z] ============================================================
+[2026-01-13T13:47:10.675Z] 📄 페이지 로드: https://sammlung.belvedere.at/objects/images?
+[2026-01-13T13:47:32.282Z] 🔍 작품 링크 수집 시작 (페이지네이션)...
+[2026-01-13T13:47:32.293Z] 📄 페이지 1 로드: https://sammlung.belvedere.at/objects/images
+[2026-01-13T13:47:40.558Z] 페이지 1: 12개 새 항목 발견 (총 12/100개)
+[2026-01-13T13:47:41.053Z] 📄 페이지 2 로드: https://sammlung.belvedere.at/objects/images?page=2
+[2026-01-13T13:47:45.306Z] 페이지 2: 12개 새 항목 발견 (총 24/100개)
+[2026-01-13T13:47:45.315Z] 📄 페이지 3 로드: https://sammlung.belvedere.at/objects/images?page=3
+[2026-01-13T13:47:49.750Z] 페이지 3: 12개 새 항목 발견 (총 36/100개)
+[2026-01-13T13:47:49.792Z] 📄 페이지 4 로드: https://sammlung.belvedere.at/objects/images?page=4
+[2026-01-13T13:47:53.643Z] 페이지 4: 12개 새 항목 발견 (총 48/100개)
+[2026-01-13T13:47:53.646Z] 📄 페이지 5 로드: https://sammlung.belvedere.at/objects/images?page=5
+[2026-01-13T13:47:57.480Z] 페이지 5: 12개 새 항목 발견 (총 60/100개)
+[2026-01-13T13:47:57.485Z] 📄 페이지 6 로드: https://sammlung.belvedere.at/objects/images?page=6
+[2026-01-13T13:48:01.366Z] 페이지 6: 12개 새 항목 발견 (총 72/100개)
+[2026-01-13T13:48:01.371Z] 📄 페이지 7 로드: https://sammlung.belvedere.at/objects/images?page=7
+[2026-01-13T13:48:05.166Z] 페이지 7: 12개 새 항목 발견 (총 84/100개)
+[2026-01-13T13:48:05.171Z] 📄 페이지 8 로드: https://sammlung.belvedere.at/objects/images?page=8
+[2026-01-13T13:48:08.995Z] 페이지 8: 12개 새 항목 발견 (총 96/100개)
+[2026-01-13T13:48:09.074Z] 📄 페이지 9 로드: https://sammlung.belvedere.at/objects/images?page=9
+[2026-01-13T13:48:12.974Z] 페이지 9: 4개 새 항목 발견 (총 100/100개)
+[2026-01-13T13:48:12.976Z] ✅ 총 100개 작품 링크 수집 완료
+[2026-01-13T13:48:12.976Z] 
+📊 상세 정보 수집 시작 (100개)...
+[2026-01-13T13:48:12.976Z] 
+[1/100] https://sammlung.belvedere.at/objects/6/frauenkopf
+[2026-01-13T13:48:16.462Z] ✅ 수집 완료: Frauenkopf by George Minne | Büst
+[2026-01-13T13:48:17.464Z] 
+[2/100] https://sammlung.belvedere.at/objects/8/kaiser-ferdinand-i-von-osterreich
+[2026-01-13T13:48:20.361Z] ✅ 수집 완료: Kaiser Ferdinand I. von Österreich by Ferdinand Georg Waldmüller | G
+[2026-01-13T13:48:21.366Z] 
+[3/100] https://sammlung.belvedere.at/objects/9/die-ebene-von-auvers
+[2026-01-13T13:48:24.534Z] ✅ 수집 완료: Die Ebene von Auvers by Vincent van Gogh | G
+[2026-01-13T13:48:25.548Z] 
+[4/100] https://sammlung.belvedere.at/objects/20/vor-den-feiertagen
+[2026-01-13T13:48:28.719Z] ✅ 수집 완료: Vor den Feiertagen by Emil Strecker | G
+[2026-01-13T13:48:29.724Z] 
+[5/100] https://sammlung.belvedere.at/objects/25/wolkenschatten
+[2026-01-13T13:48:32.600Z] ✅ 수집 완료: Wolkenschatten by Oskar Frenzel | G
+[2026-01-13T13:48:33.603Z] 
+[6/100] https://sammlung.belvedere.at/objects/33/arthur-graf-von-enzenberg
+[2026-01-13T13:48:36.441Z] ✅ 수집 완료: Arthur Graf von Enzenberg by Josef Schretter | Z
+[2026-01-13T13:48:37.467Z] 
+[7/100] https://sammlung.belvedere.at/objects/39/der-michel
+[2026-01-13T13:48:40.659Z] ✅ 수집 완료: Der Michel by Josef Engelhart | G
+[2026-01-13T13:48:41.669Z] 
+[8/100] https://sammlung.belvedere.at/objects/40/der-bildhauer-alfonso-canciani
+[2026-01-13T13:48:44.774Z] ✅ 수집 완료: Der Bildhauer Alfonso Canciani by Josef Engelhart | Büst
+[2026-01-13T13:48:45.775Z] 
+[9/100] https://sammlung.belvedere.at/objects/41/blick-aus-meinem-fenster
+[2026-01-13T13:48:48.651Z] ✅ 수집 완료: Blick aus meinem Fenster by Josef Engelhart | G
+[2026-01-13T13:48:49.652Z] 
+[10/100] https://sammlung.belvedere.at/objects/44/winter
+[2026-01-13T13:48:52.731Z] ✅ 수집 완료: Winter by Eduard Ameseder | G
+[2026-01-13T13:48:52.733Z] 💾 진행 상황 저장: 10개 작품 수집됨
+[2026-01-13T13:48:53.734Z] 
+[11/100] https://sammlung.belvedere.at/objects/47/gebirgsweg-in-den-beskiden
+[2026-01-13T13:48:56.749Z] ✅ 수집 완료: Gebirgsweg in den Beskiden by Hugo Baar | Z
+[2026-01-13T13:48:57.752Z] 
+[12/100] https://sammlung.belvedere.at/objects/50/madchen-in-weiem-kleid
+[2026-01-13T13:49:00.626Z] ✅ 수집 완료: Mädchen in weißem Kleid by Franz Jaschke | G
+[2026-01-13T13:49:01.628Z] 
+[13/100] https://sammlung.belvedere.at/objects/51/weihnachtsmarkt-am-hof-in-wien
+[2026-01-13T13:49:04.826Z] ✅ 수집 완료: Weihnachtsmarkt am Hof in Wien by Ernst Juch | G
+[2026-01-13T13:49:05.828Z] 
+[14/100] https://sammlung.belvedere.at/objects/53/die-tischrede
+[2026-01-13T13:49:08.784Z] ✅ 수집 완료: Die Tischrede by Ernst Juch | G
+[2026-01-13T13:49:09.787Z] 
+[15/100] https://sammlung.belvedere.at/objects/54/der-architekt-joze-plecnik
+[2026-01-13T13:49:12.756Z] ✅ 수집 완료: Der Architekt Jože Plečnik by Josef Engelhart | Kopfbüst
+[2026-01-13T13:49:13.763Z] 
+[16/100] https://sammlung.belvedere.at/objects/55/traubengehange
+[2026-01-13T13:49:16.948Z] ✅ 수집 완료: Traubengehänge by Ferdinand Georg Waldmüller | G
+[2026-01-13T13:49:17.950Z] 
+[17/100] https://sammlung.belvedere.at/objects/56/pferdemarkt-in-szolnok-i
+[2026-01-13T13:49:20.850Z] ✅ 수집 완료: Pferdemarkt in Szolnok I by August von Pettenkofen | G
+[2026-01-13T13:49:21.852Z] 
+[18/100] https://sammlung.belvedere.at/objects/57/nach-dem-bade
+[2026-01-13T13:49:24.683Z] ✅ 수집 완료: Nach dem Bade by Pierre Auguste Renoir | G
+[2026-01-13T13:49:25.684Z] 
+[19/100] https://sammlung.belvedere.at/objects/58/sancho-pansa-unter-einem-baum-ausruhend
+[2026-01-13T13:49:28.385Z] ✅ 수집 완료: Sancho Pansa, unter einem Baum ausruhend by Honoré Daumier | G
+[2026-01-13T13:49:29.387Z] 
+[20/100] https://sammlung.belvedere.at/objects/59/das-ursulinenkloster-in-graz
+[2026-01-13T13:49:32.064Z] ✅ 수집 완료: Das Ursulinenkloster in Graz by Leo Diet | Z
+[2026-01-13T13:49:32.066Z] 💾 진행 상황 저장: 20개 작품 수집됨
+[2026-01-13T13:49:33.067Z] 
+[21/100] https://sammlung.belvedere.at/objects/60/der-wiener-burgermeister-dr-richard-weiskirchner
+[2026-01-13T13:49:36.018Z] ✅ 수집 완료: Der Wiener Bürgermeister Dr. Richard Weiskirchner by Hans Temple | G
+[2026-01-13T13:49:37.020Z] 
+[22/100] https://sammlung.belvedere.at/objects/65/winternacht
+[2026-01-13T13:49:40.444Z] ✅ 수집 완료: Winternacht by Karl Sterrer | G
+[2026-01-13T13:49:41.445Z] 
+[23/100] https://sammlung.belvedere.at/objects/66/landliches-interieur
+[2026-01-13T13:49:44.391Z] ✅ 수집 완료: Ländliches Interieur by Ludwig Ferdinand Graf | G
+[2026-01-13T13:49:45.393Z] 
+[24/100] https://sammlung.belvedere.at/objects/67/zirkusstudie-an-der-longe
+[2026-01-13T13:49:50.191Z] ✅ 수집 완료: Zirkusstudie (An der Longe) by Otto Friedrich | G
+[2026-01-13T13:49:51.199Z] 
+[25/100] https://sammlung.belvedere.at/objects/70/hollandische-landschaft
+[2026-01-13T13:49:54.303Z] ✅ 수집 완료: Holländische Landschaft by Hans Tichy | G
+[2026-01-13T13:49:55.305Z] 
+[26/100] https://sammlung.belvedere.at/objects/73/dordrecht
+[2026-01-13T13:49:58.319Z] ✅ 수집 완료: Dordrecht by Gilbert von Canal | G
+[2026-01-13T13:49:59.320Z] 
+[27/100] https://sammlung.belvedere.at/objects/83/bora-bei-brioni
+[2026-01-13T13:50:02.197Z] ✅ 수집 완료: Bora bei Brioni by Paul Ress | G
+[2026-01-13T13:50:03.199Z] 
+[28/100] https://sammlung.belvedere.at/objects/87/der-heimatdichter-peter-rosegger-18431918
+[2026-01-13T13:50:07.032Z] ✅ 수집 완료: Der Heimatdichter Peter Rosegger (1843-1918) by Ferdinand Pamberger | G
+[2026-01-13T13:50:08.034Z] 
+[29/100] https://sammlung.belvedere.at/objects/93/herabkunft-des-heiligen-geistes-pfingstfest
+[2026-01-13T13:50:18.607Z] ✅ 수집 완료: Herabkunft des Heiligen Geistes (Pfingstfest) by Meister von Irrsdorf | R
+[2026-01-13T13:50:19.609Z] 
+[30/100] https://sammlung.belvedere.at/objects/97/16-ansichten-tschechischer-landschaften-ceska-krajina
+[2026-01-13T13:50:33.190Z] ✅ 수집 완료: 16 Ansichten tschechischer Landschaften "Česká krajina" by Ferdinand Engelmüller | B
+[2026-01-13T13:50:33.192Z] 💾 진행 상황 저장: 30개 작품 수집됨
+[2026-01-13T13:50:34.193Z] 
+[31/100] https://sammlung.belvedere.at/objects/98/der-holzschlag
+[2026-01-13T13:50:43.718Z] ✅ 수집 완료: Der Holzschlag by Ferdinand Andri | G
+[2026-01-13T13:50:44.720Z] 
+[32/100] https://sammlung.belvedere.at/objects/99/groes-kuchenstillleben
+[2026-01-13T13:50:55.103Z] ✅ 수집 완료: Großes Küchenstillleben by Carl Schuch | G
+[2026-01-13T13:50:56.107Z] 
+[33/100] https://sammlung.belvedere.at/objects/100/waldinneres-bei-saut-du-doubs
+[2026-01-13T13:51:00.541Z] ✅ 수집 완료: Waldinneres bei Saut du Doubs by Carl Schuch | G
+[2026-01-13T13:51:01.555Z] 
+[34/100] https://sammlung.belvedere.at/objects/105/portrat-einer-bauerin
+[2026-01-13T13:51:04.655Z] ✅ 수집 완료: Porträt einer Bäuerin by Franz Gasser | G
+[2026-01-13T13:51:05.656Z] 
+[35/100] https://sammlung.belvedere.at/objects/106/schwimmbad
+[2026-01-13T13:51:08.489Z] ✅ 수집 완료: Schwimmbad by Ludwig Ferdinand Graf | G
+[2026-01-13T13:51:09.491Z] 
+[36/100] https://sammlung.belvedere.at/objects/107/madchenbildnis
+[2026-01-13T13:51:12.604Z] ✅ 수집 완료: Mädchenbildnis by Franz Jaschke | G
+[2026-01-13T13:51:13.606Z] 
+[37/100] https://sammlung.belvedere.at/objects/121/landschaft-im-sabinergebirge
+[2026-01-13T13:51:16.707Z] ✅ 수집 완료: Landschaft im Sabinergebirge by Carl Schuch | G
+[2026-01-13T13:51:17.708Z] 
+[38/100] https://sammlung.belvedere.at/objects/122/felsenlandschaft-bei-olevano
+[2026-01-13T13:51:22.383Z] ✅ 수집 완료: Felsenlandschaft bei Olevano by Carl Schuch | G
+[2026-01-13T13:51:23.386Z] 
+[39/100] https://sammlung.belvedere.at/objects/123/pferdeschwemme
+[2026-01-13T13:51:26.265Z] ✅ 수집 완료: Pferdeschwemme by Teutwart Schmitson | G
+[2026-01-13T13:51:27.266Z] 
+[40/100] https://sammlung.belvedere.at/objects/124/seine-excellenz-moritz-graf-vetter-von-der-lilie-19011907
+[2026-01-13T13:51:32.008Z] ✅ 수집 완료: Seine Excellenz Moritz Graf Vetter von der Lilie, 1901-1907 Präsident des Abgeordnetenhauses by Ludwig Wieden | G
+[2026-01-13T13:51:32.015Z] 💾 진행 상황 저장: 40개 작품 수집됨
+[2026-01-13T13:51:33.016Z] 
+[41/100] https://sammlung.belvedere.at/objects/125/neugefallener-schnee
+[2026-01-13T13:51:37.022Z] ✅ 수집 완료: Neugefallener Schnee by Gustaf Fjæstad | G
+[2026-01-13T13:51:38.024Z] 
+[42/100] https://sammlung.belvedere.at/objects/126/niederosterreichische-bauernhochzeit
+[2026-01-13T13:52:08.048Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/126/niederosterreichische-bauernhochzeit): page.goto: Timeout 30000ms exceeded.
+Call log:
+  - navigating to "https://sammlung.belvedere.at/objects/126/niederosterreichische-bauernhochzeit", waiting until "domcontentloaded"
+
+[2026-01-13T13:52:08.054Z] ✅ 수집 완료: Niederösterreichische Bauernhochzeit by Ferdinand Georg Waldmüller | N/A
+[2026-01-13T13:52:09.055Z] 
+[43/100] https://sammlung.belvedere.at/objects/128/frachtenbahnhof
+[2026-01-13T13:57:19.299Z] 🎨 Belvedere Museum Collection Scraper - Test V2 (100 items)
+[2026-01-13T13:57:19.302Z] ============================================================
+[2026-01-13T13:57:19.975Z] 📄 페이지 로드: https://sammlung.belvedere.at/objects/images?
+[2026-01-13T13:57:41.395Z] 🔍 작품 링크 수집 시작 (페이지네이션)...
+[2026-01-13T13:57:41.402Z] 📄 페이지 1 로드: https://sammlung.belvedere.at/objects/images
+[2026-01-13T13:57:48.369Z] 페이지 1: 12개 새 항목 발견 (총 12/100개)
+[2026-01-13T13:57:48.373Z] 📄 페이지 2 로드: https://sammlung.belvedere.at/objects/images?page=2
+[2026-01-13T13:57:59.206Z] 페이지 2: 12개 새 항목 발견 (총 24/100개)
+[2026-01-13T13:57:59.211Z] 📄 페이지 3 로드: https://sammlung.belvedere.at/objects/images?page=3
+[2026-01-13T13:58:07.316Z] 페이지 3: 12개 새 항목 발견 (총 36/100개)
+[2026-01-13T13:58:07.325Z] 📄 페이지 4 로드: https://sammlung.belvedere.at/objects/images?page=4
+[2026-01-13T13:58:11.496Z] 페이지 4: 12개 새 항목 발견 (총 48/100개)
+[2026-01-13T13:58:11.520Z] 📄 페이지 5 로드: https://sammlung.belvedere.at/objects/images?page=5
+[2026-01-13T13:58:19.887Z] 페이지 5: 12개 새 항목 발견 (총 60/100개)
+[2026-01-13T13:58:19.891Z] 📄 페이지 6 로드: https://sammlung.belvedere.at/objects/images?page=6
+[2026-01-13T13:58:28.114Z] 페이지 6: 12개 새 항목 발견 (총 72/100개)
+[2026-01-13T13:58:28.118Z] 📄 페이지 7 로드: https://sammlung.belvedere.at/objects/images?page=7
+[2026-01-13T13:58:34.115Z] 페이지 7: 12개 새 항목 발견 (총 84/100개)
+[2026-01-13T13:58:34.124Z] 📄 페이지 8 로드: https://sammlung.belvedere.at/objects/images?page=8
+[2026-01-13T13:58:39.092Z] 페이지 8: 12개 새 항목 발견 (총 96/100개)
+[2026-01-13T13:58:39.157Z] 📄 페이지 9 로드: https://sammlung.belvedere.at/objects/images?page=9
+[2026-01-13T13:58:47.955Z] 페이지 9: 4개 새 항목 발견 (총 100/100개)
+[2026-01-13T13:58:47.956Z] ✅ 총 100개 작품 링크 수집 완료
+[2026-01-13T13:58:47.956Z] 
+📊 상세 정보 수집 시작 (100개)...
+[2026-01-13T13:58:47.956Z] 
+[1/100] https://sammlung.belvedere.at/objects/6/frauenkopf
+[2026-01-13T13:58:55.439Z] ✅ 수집 완료: Frauenkopf by George Minne | Büste
+[2026-01-13T13:58:56.441Z] 
+[2/100] https://sammlung.belvedere.at/objects/8/kaiser-ferdinand-i-von-osterreich
+[2026-01-13T13:58:59.978Z] ✅ 수집 완료: Kaiser Ferdinand I. von Österreich by Ferdinand Georg Waldmüller | N/A
+[2026-01-13T13:59:01.269Z] 
+[3/100] https://sammlung.belvedere.at/objects/9/die-ebene-von-auvers
+[2026-01-13T13:59:01.416Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/9/die-ebene-von-auvers): page.goto: Target page, context or browser has been closed
+[2026-01-13T13:59:01.417Z] ✅ 수집 완료: Die Ebene von Auvers by Vincent van Gogh | N/A
+[2026-01-13T13:59:02.424Z] 
+[4/100] https://sammlung.belvedere.at/objects/20/vor-den-feiertagen
+[2026-01-13T13:59:02.480Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/20/vor-den-feiertagen): page.goto: Target page, context or browser has been closed
+[2026-01-13T13:59:02.480Z] ✅ 수집 완료: Vor den Feiertagen by Emil Strecker | N/A
+[2026-01-13T13:59:03.485Z] 
+[5/100] https://sammlung.belvedere.at/objects/25/wolkenschatten
+[2026-01-13T13:59:03.490Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/25/wolkenschatten): page.goto: Target page, context or browser has been closed
+[2026-01-13T13:59:03.491Z] ✅ 수집 완료: Wolkenschatten by Oskar Frenzel | N/A
+[2026-01-13T13:59:04.547Z] 
+[6/100] https://sammlung.belvedere.at/objects/33/arthur-graf-von-enzenberg
+[2026-01-13T13:59:04.560Z] 🎨 Belvedere Museum Collection Scraper - Test V2 (100 items)
+[2026-01-13T13:59:04.714Z] ============================================================
+[2026-01-13T13:59:04.714Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/33/arthur-graf-von-enzenberg): page.goto: Target page, context or browser has been closed
+[2026-01-13T13:59:04.715Z] ✅ 수집 완료: Arthur Graf von Enzenberg by Josef Schretter | N/A
+[2026-01-13T13:59:05.716Z] 
+[7/100] https://sammlung.belvedere.at/objects/39/der-michel
+[2026-01-13T13:59:05.722Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/39/der-michel): page.goto: Target page, context or browser has been closed
+[2026-01-13T13:59:05.722Z] ✅ 수집 완료: Der Michel by Josef Engelhart | N/A
+[2026-01-13T13:59:06.572Z] 📄 페이지 로드: https://sammlung.belvedere.at/objects/images?
+[2026-01-13T13:59:06.723Z] 
+[8/100] https://sammlung.belvedere.at/objects/40/der-bildhauer-alfonso-canciani
+[2026-01-13T13:59:06.726Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/40/der-bildhauer-alfonso-canciani): page.goto: Target page, context or browser has been closed
+[2026-01-13T13:59:06.726Z] ✅ 수집 완료: Der Bildhauer Alfonso Canciani by Josef Engelhart | N/A
+[2026-01-13T13:59:07.728Z] 
+[9/100] https://sammlung.belvedere.at/objects/41/blick-aus-meinem-fenster
+[2026-01-13T13:59:07.729Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/41/blick-aus-meinem-fenster): page.goto: Target page, context or browser has been closed
+[2026-01-13T13:59:07.729Z] ✅ 수집 완료: Blick aus meinem Fenster by Josef Engelhart | N/A
+[2026-01-13T13:59:08.731Z] 
+[10/100] https://sammlung.belvedere.at/objects/44/winter
+[2026-01-13T13:59:08.735Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/44/winter): page.goto: Target page, context or browser has been closed
+[2026-01-13T13:59:08.736Z] ✅ 수집 완료: Winter by Eduard Ameseder | N/A
+[2026-01-13T13:59:08.737Z] 💾 진행 상황 저장: 10개 작품 수집됨
+[2026-01-13T13:59:09.739Z] 
+[11/100] https://sammlung.belvedere.at/objects/47/gebirgsweg-in-den-beskiden
+[2026-01-13T13:59:09.740Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/47/gebirgsweg-in-den-beskiden): page.goto: Target page, context or browser has been closed
+[2026-01-13T13:59:09.740Z] ✅ 수집 완료: Gebirgsweg in den Beskiden by Hugo Baar | N/A
+[2026-01-13T13:59:10.741Z] 
+[12/100] https://sammlung.belvedere.at/objects/50/madchen-in-weiem-kleid
+[2026-01-13T13:59:10.742Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/50/madchen-in-weiem-kleid): page.goto: Target page, context or browser has been closed
+[2026-01-13T13:59:10.742Z] ✅ 수집 완료: Mädchen in weißem Kleid by Franz Jaschke | N/A
+[2026-01-13T13:59:11.743Z] 
+[13/100] https://sammlung.belvedere.at/objects/51/weihnachtsmarkt-am-hof-in-wien
+[2026-01-13T13:59:11.745Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/51/weihnachtsmarkt-am-hof-in-wien): page.goto: Target page, context or browser has been closed
+[2026-01-13T13:59:11.745Z] ✅ 수집 완료: Weihnachtsmarkt am Hof in Wien by Ernst Juch | N/A
+[2026-01-13T13:59:12.750Z] 
+[14/100] https://sammlung.belvedere.at/objects/53/die-tischrede
+[2026-01-13T13:59:12.757Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/53/die-tischrede): page.goto: Target page, context or browser has been closed
+[2026-01-13T13:59:12.764Z] ✅ 수집 완료: Die Tischrede by Ernst Juch | N/A
+[2026-01-13T13:59:13.766Z] 
+[15/100] https://sammlung.belvedere.at/objects/54/der-architekt-joze-plecnik
+[2026-01-13T13:59:13.770Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/54/der-architekt-joze-plecnik): page.goto: Target page, context or browser has been closed
+[2026-01-13T13:59:13.770Z] ✅ 수집 완료: Der Architekt Jože Plečnik by Josef Engelhart | N/A
+[2026-01-13T13:59:14.896Z] 
+[16/100] https://sammlung.belvedere.at/objects/55/traubengehange
+[2026-01-13T13:59:14.915Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/55/traubengehange): page.goto: Target page, context or browser has been closed
+[2026-01-13T13:59:14.916Z] ✅ 수집 완료: Traubengehänge by Ferdinand Georg Waldmüller | N/A
+[2026-01-13T13:59:15.917Z] 
+[17/100] https://sammlung.belvedere.at/objects/56/pferdemarkt-in-szolnok-i
+[2026-01-13T13:59:15.921Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/56/pferdemarkt-in-szolnok-i): page.goto: Target page, context or browser has been closed
+[2026-01-13T13:59:15.922Z] ✅ 수집 완료: Pferdemarkt in Szolnok I by August von Pettenkofen | N/A
+[2026-01-13T13:59:16.203Z] 🔍 작품 링크 수집 시작 (페이지네이션)...
+[2026-01-13T13:59:16.204Z] 📄 페이지 1 로드: https://sammlung.belvedere.at/objects/images
+[2026-01-13T13:59:16.923Z] 
+[18/100] https://sammlung.belvedere.at/objects/57/nach-dem-bade
+[2026-01-13T13:59:16.924Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/57/nach-dem-bade): page.goto: Target page, context or browser has been closed
+[2026-01-13T13:59:16.925Z] ✅ 수집 완료: Nach dem Bade by Pierre Auguste Renoir | N/A
+[2026-01-13T13:59:17.930Z] 
+[19/100] https://sammlung.belvedere.at/objects/58/sancho-pansa-unter-einem-baum-ausruhend
+[2026-01-13T13:59:17.939Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/58/sancho-pansa-unter-einem-baum-ausruhend): page.goto: Target page, context or browser has been closed
+[2026-01-13T13:59:17.939Z] ✅ 수집 완료: Sancho Pansa, unter einem Baum ausruhend by Honoré Daumier | N/A
+[2026-01-13T13:59:18.941Z] 
+[20/100] https://sammlung.belvedere.at/objects/59/das-ursulinenkloster-in-graz
+[2026-01-13T13:59:18.942Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/59/das-ursulinenkloster-in-graz): page.goto: Target page, context or browser has been closed
+[2026-01-13T13:59:18.942Z] ✅ 수집 완료: Das Ursulinenkloster in Graz by Leo Diet | N/A
+[2026-01-13T13:59:18.943Z] 💾 진행 상황 저장: 20개 작품 수집됨
+[2026-01-13T13:59:19.945Z] 
+[21/100] https://sammlung.belvedere.at/objects/60/der-wiener-burgermeister-dr-richard-weiskirchner
+[2026-01-13T13:59:19.949Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/60/der-wiener-burgermeister-dr-richard-weiskirchner): page.goto: Target page, context or browser has been closed
+[2026-01-13T13:59:19.949Z] ✅ 수집 완료: Der Wiener Bürgermeister Dr. Richard Weiskirchner by Hans Temple | N/A
+[2026-01-13T13:59:20.197Z] 페이지 1: 12개 새 항목 발견 (총 12/100개)
+[2026-01-13T13:59:20.203Z] 📄 페이지 2 로드: https://sammlung.belvedere.at/objects/images?page=2
+[2026-01-13T13:59:20.959Z] 
+[22/100] https://sammlung.belvedere.at/objects/65/winternacht
+[2026-01-13T13:59:20.969Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/65/winternacht): page.goto: Target page, context or browser has been closed
+[2026-01-13T13:59:20.970Z] ✅ 수집 완료: Winternacht by Karl Sterrer | N/A
+[2026-01-13T13:59:21.971Z] 
+[23/100] https://sammlung.belvedere.at/objects/66/landliches-interieur
+[2026-01-13T13:59:21.973Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/66/landliches-interieur): page.goto: Target page, context or browser has been closed
+[2026-01-13T13:59:21.973Z] ✅ 수집 완료: Ländliches Interieur by Ludwig Ferdinand Graf | N/A
+[2026-01-13T13:59:22.974Z] 
+[24/100] https://sammlung.belvedere.at/objects/67/zirkusstudie-an-der-longe
+[2026-01-13T13:59:22.975Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/67/zirkusstudie-an-der-longe): page.goto: Target page, context or browser has been closed
+[2026-01-13T13:59:22.975Z] ✅ 수집 완료: Zirkusstudie (An der Longe) by Otto Friedrich | N/A
+[2026-01-13T13:59:23.978Z] 
+[25/100] https://sammlung.belvedere.at/objects/70/hollandische-landschaft
+[2026-01-13T13:59:23.988Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/70/hollandische-landschaft): page.goto: Target page, context or browser has been closed
+[2026-01-13T13:59:23.988Z] ✅ 수집 완료: Holländische Landschaft by Hans Tichy | N/A
+[2026-01-13T13:59:24.062Z] 페이지 2: 12개 새 항목 발견 (총 24/100개)
+[2026-01-13T13:59:24.067Z] 📄 페이지 3 로드: https://sammlung.belvedere.at/objects/images?page=3
+[2026-01-13T13:59:24.994Z] 
+[26/100] https://sammlung.belvedere.at/objects/73/dordrecht
+[2026-01-13T13:59:24.995Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/73/dordrecht): page.goto: Target page, context or browser has been closed
+[2026-01-13T13:59:24.995Z] ✅ 수집 완료: Dordrecht by Gilbert von Canal | N/A
+[2026-01-13T13:59:25.996Z] 
+[27/100] https://sammlung.belvedere.at/objects/83/bora-bei-brioni
+[2026-01-13T13:59:25.997Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/83/bora-bei-brioni): page.goto: Target page, context or browser has been closed
+[2026-01-13T13:59:25.997Z] ✅ 수집 완료: Bora bei Brioni by Paul Ress | N/A
+[2026-01-13T13:59:26.999Z] 
+[28/100] https://sammlung.belvedere.at/objects/87/der-heimatdichter-peter-rosegger-18431918
+[2026-01-13T13:59:27.001Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/87/der-heimatdichter-peter-rosegger-18431918): page.goto: Target page, context or browser has been closed
+[2026-01-13T13:59:27.001Z] ✅ 수집 완료: Der Heimatdichter Peter Rosegger (1843-1918) by Ferdinand Pamberger | N/A
+[2026-01-13T13:59:27.867Z] 페이지 3: 12개 새 항목 발견 (총 36/100개)
+[2026-01-13T13:59:27.884Z] 📄 페이지 4 로드: https://sammlung.belvedere.at/objects/images?page=4
+[2026-01-13T13:59:28.002Z] 
+[29/100] https://sammlung.belvedere.at/objects/93/herabkunft-des-heiligen-geistes-pfingstfest
+[2026-01-13T13:59:28.003Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/93/herabkunft-des-heiligen-geistes-pfingstfest): page.goto: Target page, context or browser has been closed
+[2026-01-13T13:59:28.003Z] ✅ 수집 완료: Herabkunft des Heiligen Geistes (Pfingstfest) by Meister von Irrsdorf | N/A
+[2026-01-13T13:59:29.509Z] 
+[30/100] https://sammlung.belvedere.at/objects/97/16-ansichten-tschechischer-landschaften-ceska-krajina
+[2026-01-13T13:59:29.850Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/97/16-ansichten-tschechischer-landschaften-ceska-krajina): page.goto: Target page, context or browser has been closed
+[2026-01-13T13:59:29.850Z] ✅ 수집 완료: 16 Ansichten tschechischer Landschaften "Česká krajina" by Ferdinand Engelmüller | N/A
+[2026-01-13T13:59:29.869Z] 💾 진행 상황 저장: 30개 작품 수집됨
+[2026-01-13T13:59:30.898Z] 
+[31/100] https://sammlung.belvedere.at/objects/98/der-holzschlag
+[2026-01-13T13:59:30.904Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/98/der-holzschlag): page.goto: Target page, context or browser has been closed
+[2026-01-13T13:59:30.904Z] ✅ 수집 완료: Der Holzschlag by Ferdinand Andri | N/A
+[2026-01-13T13:59:31.921Z] 
+[32/100] https://sammlung.belvedere.at/objects/99/groes-kuchenstillleben
+[2026-01-13T13:59:32.098Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/99/groes-kuchenstillleben): page.goto: Target page, context or browser has been closed
+[2026-01-13T13:59:32.099Z] ✅ 수집 완료: Großes Küchenstillleben by Carl Schuch | N/A
+[2026-01-13T13:59:32.875Z] 페이지 4: 12개 새 항목 발견 (총 48/100개)
+[2026-01-13T13:59:32.885Z] 📄 페이지 5 로드: https://sammlung.belvedere.at/objects/images?page=5
+[2026-01-13T13:59:33.101Z] 
+[33/100] https://sammlung.belvedere.at/objects/100/waldinneres-bei-saut-du-doubs
+[2026-01-13T13:59:33.122Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/100/waldinneres-bei-saut-du-doubs): page.goto: Target page, context or browser has been closed
+[2026-01-13T13:59:33.123Z] ✅ 수집 완료: Waldinneres bei Saut du Doubs by Carl Schuch | N/A
+[2026-01-13T13:59:34.137Z] 
+[34/100] https://sammlung.belvedere.at/objects/105/portrat-einer-bauerin
+[2026-01-13T13:59:34.154Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/105/portrat-einer-bauerin): page.goto: Target page, context or browser has been closed
+[2026-01-13T13:59:34.155Z] ✅ 수집 완료: Porträt einer Bäuerin by Franz Gasser | N/A
+[2026-01-13T13:59:35.157Z] 
+[35/100] https://sammlung.belvedere.at/objects/106/schwimmbad
+[2026-01-13T13:59:35.159Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/106/schwimmbad): page.goto: Target page, context or browser has been closed
+[2026-01-13T13:59:35.159Z] ✅ 수집 완료: Schwimmbad by Ludwig Ferdinand Graf | N/A
+[2026-01-13T13:59:36.161Z] 
+[36/100] https://sammlung.belvedere.at/objects/107/madchenbildnis
+[2026-01-13T13:59:36.162Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/107/madchenbildnis): page.goto: Target page, context or browser has been closed
+[2026-01-13T13:59:36.162Z] ✅ 수집 완료: Mädchenbildnis by Franz Jaschke | N/A
+[2026-01-13T13:59:37.053Z] 페이지 5: 12개 새 항목 발견 (총 60/100개)
+[2026-01-13T13:59:37.060Z] 📄 페이지 6 로드: https://sammlung.belvedere.at/objects/images?page=6
+[2026-01-13T13:59:37.167Z] 
+[37/100] https://sammlung.belvedere.at/objects/121/landschaft-im-sabinergebirge
+[2026-01-13T13:59:37.175Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/121/landschaft-im-sabinergebirge): page.goto: Target page, context or browser has been closed
+[2026-01-13T13:59:37.175Z] ✅ 수집 완료: Landschaft im Sabinergebirge by Carl Schuch | N/A
+[2026-01-13T13:59:38.177Z] 
+[38/100] https://sammlung.belvedere.at/objects/122/felsenlandschaft-bei-olevano
+[2026-01-13T13:59:38.181Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/122/felsenlandschaft-bei-olevano): page.goto: Target page, context or browser has been closed
+[2026-01-13T13:59:38.182Z] ✅ 수집 완료: Felsenlandschaft bei Olevano by Carl Schuch | N/A
+[2026-01-13T13:59:39.183Z] 
+[39/100] https://sammlung.belvedere.at/objects/123/pferdeschwemme
+[2026-01-13T13:59:39.201Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/123/pferdeschwemme): page.goto: Target page, context or browser has been closed
+[2026-01-13T13:59:39.201Z] ✅ 수집 완료: Pferdeschwemme by Teutwart Schmitson | N/A
+[2026-01-13T13:59:40.202Z] 
+[40/100] https://sammlung.belvedere.at/objects/124/seine-excellenz-moritz-graf-vetter-von-der-lilie-19011907
+[2026-01-13T13:59:40.204Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/124/seine-excellenz-moritz-graf-vetter-von-der-lilie-19011907): page.goto: Target page, context or browser has been closed
+[2026-01-13T13:59:40.204Z] ✅ 수집 완료: Seine Excellenz Moritz Graf Vetter von der Lilie, 1901-1907 Präsident des Abgeordnetenhauses by Ludwig Wieden | N/A
+[2026-01-13T13:59:40.210Z] 💾 진행 상황 저장: 40개 작품 수집됨
+[2026-01-13T13:59:40.963Z] 페이지 6: 12개 새 항목 발견 (총 72/100개)
+[2026-01-13T13:59:40.969Z] 📄 페이지 7 로드: https://sammlung.belvedere.at/objects/images?page=7
+[2026-01-13T13:59:41.212Z] 
+[41/100] https://sammlung.belvedere.at/objects/125/neugefallener-schnee
+[2026-01-13T13:59:41.213Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/125/neugefallener-schnee): page.goto: Target page, context or browser has been closed
+[2026-01-13T13:59:41.214Z] ✅ 수집 완료: Neugefallener Schnee by Gustaf Fjæstad | N/A
+[2026-01-13T13:59:42.216Z] 
+[42/100] https://sammlung.belvedere.at/objects/126/niederosterreichische-bauernhochzeit
+[2026-01-13T13:59:42.228Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/126/niederosterreichische-bauernhochzeit): page.goto: Target page, context or browser has been closed
+[2026-01-13T13:59:42.229Z] ✅ 수집 완료: Niederösterreichische Bauernhochzeit by Ferdinand Georg Waldmüller | N/A
+[2026-01-13T13:59:43.230Z] 
+[43/100] https://sammlung.belvedere.at/objects/128/frachtenbahnhof
+[2026-01-13T13:59:43.231Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/128/frachtenbahnhof): page.goto: Target page, context or browser has been closed
+[2026-01-13T13:59:43.231Z] ✅ 수집 완료: Frachtenbahnhof by Rudolf Quittner | N/A
+[2026-01-13T13:59:44.231Z] 
+[44/100] https://sammlung.belvedere.at/objects/131/gotische-grabkirche-st-michael-turmfassade
+[2026-01-13T13:59:44.232Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/131/gotische-grabkirche-st-michael-turmfassade): page.goto: Target page, context or browser has been closed
+[2026-01-13T13:59:44.233Z] ✅ 수집 완료: Gotische Grabkirche St. Michael, Turmfassade by Hans Makart | N/A
+[2026-01-13T13:59:44.728Z] 페이지 7: 12개 새 항목 발견 (총 84/100개)
+[2026-01-13T13:59:44.732Z] 📄 페이지 8 로드: https://sammlung.belvedere.at/objects/images?page=8
+[2026-01-13T13:59:45.241Z] 
+[45/100] https://sammlung.belvedere.at/objects/132/gotische-grabkirche-st-michael-seitenansicht
+[2026-01-13T13:59:45.248Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/132/gotische-grabkirche-st-michael-seitenansicht): page.goto: Target page, context or browser has been closed
+[2026-01-13T13:59:45.248Z] ✅ 수집 완료: Gotische Grabkirche St. Michael, Seitenansicht by Hans Makart | N/A
+[2026-01-13T13:59:46.249Z] 
+[46/100] https://sammlung.belvedere.at/objects/133/feldmarschall-gideon-ernst-freiherr-von-loudon
+[2026-01-13T13:59:46.250Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/133/feldmarschall-gideon-ernst-freiherr-von-loudon): page.goto: Target page, context or browser has been closed
+[2026-01-13T13:59:46.251Z] ✅ 수집 완료: Feldmarschall Gideon Ernst Freiherr von Loudon by Sigmund L'Allemand | N/A
+[2026-01-13T13:59:47.253Z] 
+[47/100] https://sammlung.belvedere.at/objects/134/landschaftsstudie
+[2026-01-13T13:59:47.266Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/134/landschaftsstudie): page.goto: Target page, context or browser has been closed
+[2026-01-13T13:59:47.266Z] ✅ 수집 완료: Landschaftsstudie by Sigmund L'Allemand | N/A
+[2026-01-13T13:59:48.267Z] 
+[48/100] https://sammlung.belvedere.at/objects/135/blick-uber-den-aerransee
+[2026-01-13T13:59:48.268Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/135/blick-uber-den-aerransee): page.goto: Target page, context or browser has been closed
+[2026-01-13T13:59:48.268Z] ✅ 수집 완료: Blick über den Aerransee by Otto Hesselbom | N/A
+[2026-01-13T13:59:48.623Z] 페이지 8: 12개 새 항목 발견 (총 96/100개)
+[2026-01-13T13:59:48.625Z] 📄 페이지 9 로드: https://sammlung.belvedere.at/objects/images?page=9
+[2026-01-13T13:59:49.271Z] 
+[49/100] https://sammlung.belvedere.at/objects/167/das-gasteinertal-i
+[2026-01-13T13:59:49.275Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/167/das-gasteinertal-i): page.goto: Target page, context or browser has been closed
+[2026-01-13T13:59:49.275Z] ✅ 수집 완료: Das Gasteinertal I by Anton Romako | N/A
+[2026-01-13T13:59:50.277Z] 
+[50/100] https://sammlung.belvedere.at/objects/169/picknick
+[2026-01-13T13:59:50.279Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/169/picknick): page.goto: Target page, context or browser has been closed
+[2026-01-13T13:59:50.279Z] ✅ 수집 완료: Picknick by Otto Hettner | N/A
+[2026-01-13T13:59:50.282Z] 💾 진행 상황 저장: 50개 작품 수집됨
+[2026-01-13T13:59:51.282Z] 
+[51/100] https://sammlung.belvedere.at/objects/170/mahnenziege
+[2026-01-13T13:59:51.286Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/170/mahnenziege): page.goto: Target page, context or browser has been closed
+[2026-01-13T13:59:51.289Z] ✅ 수집 완료: Mähnenziege by Franz Barwig der Ältere | N/A
+[2026-01-13T13:59:52.293Z] 
+[52/100] https://sammlung.belvedere.at/objects/171/rehbock
+[2026-01-13T13:59:52.313Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/171/rehbock): page.goto: Target page, context or browser has been closed
+[2026-01-13T13:59:52.313Z] ✅ 수집 완료: Rehbock by Franz Barwig der Ältere | N/A
+[2026-01-13T13:59:52.570Z] 페이지 9: 4개 새 항목 발견 (총 100/100개)
+[2026-01-13T13:59:52.571Z] ✅ 총 100개 작품 링크 수집 완료
+[2026-01-13T13:59:52.573Z] 
+📊 상세 정보 수집 시작 (100개)...
+[2026-01-13T13:59:52.573Z] 
+[1/100] https://sammlung.belvedere.at/objects/6/frauenkopf
+[2026-01-13T13:59:53.375Z] 
+[53/100] https://sammlung.belvedere.at/objects/174/am-wasser
+[2026-01-13T13:59:53.428Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/174/am-wasser): page.goto: Target page, context or browser has been closed
+[2026-01-13T13:59:53.428Z] ✅ 수집 완료: Am Wasser by Eva Gonzalès | N/A
+[2026-01-13T13:59:54.431Z] 
+[54/100] https://sammlung.belvedere.at/objects/176/wasserer
+[2026-01-13T13:59:54.433Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/176/wasserer): page.goto: Target page, context or browser has been closed
+[2026-01-13T13:59:54.434Z] ✅ 수집 완료: Wasserer by Franz Seifert | N/A
+[2026-01-13T13:59:55.434Z] 
+[55/100] https://sammlung.belvedere.at/objects/178/im-nebel
+[2026-01-13T13:59:55.437Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/178/im-nebel): page.goto: Target page, context or browser has been closed
+[2026-01-13T13:59:55.437Z] ✅ 수집 완료: Im Nebel by Marie Bashkirtseff | N/A
+[2026-01-13T13:59:56.078Z] ✅ 수집 완료: Frauenkopf by George Minne | Büste
+[2026-01-13T13:59:56.441Z] 
+[56/100] https://sammlung.belvedere.at/objects/179/sardellen
+[2026-01-13T13:59:56.450Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/179/sardellen): page.goto: Target page, context or browser has been closed
+[2026-01-13T13:59:56.450Z] ✅ 수집 완료: Sardellen by Josef Navrátil | N/A
+[2026-01-13T13:59:57.082Z] 
+[2/100] https://sammlung.belvedere.at/objects/8/kaiser-ferdinand-i-von-osterreich
+[2026-01-13T13:59:57.458Z] 
+[57/100] https://sammlung.belvedere.at/objects/190/drosendorf
+[2026-01-13T13:59:57.503Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/190/drosendorf): page.goto: Target page, context or browser has been closed
+[2026-01-13T13:59:57.503Z] ✅ 수집 완료: Drosendorf by Oskar Laske | N/A
+[2026-01-13T13:59:58.525Z] 
+[58/100] https://sammlung.belvedere.at/objects/191/marquis-de-llano-spanischer-gesandter-in-wien
+[2026-01-13T13:59:58.621Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/191/marquis-de-llano-spanischer-gesandter-in-wien): page.goto: Target page, context or browser has been closed
+[2026-01-13T13:59:58.624Z] ✅ 수집 완료: Marquis de Llano, spanischer Gesandter in Wien by Josef Mathias Grassi | N/A
+[2026-01-13T13:59:59.630Z] 
+[59/100] https://sammlung.belvedere.at/objects/192/der-maler-johann-nepomuk-schodlberger-17791853
+[2026-01-13T13:59:59.633Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/192/der-maler-johann-nepomuk-schodlberger-17791853): page.goto: Target page, context or browser has been closed
+[2026-01-13T13:59:59.634Z] ✅ 수집 완료: Der Maler Johann Nepomuk Schödlberger (1779–1853) by Friedrich von Amerling | N/A
+[2026-01-13T14:00:00.475Z] ✅ 수집 완료: Kaiser Ferdinand I. von Österreich by Ferdinand Georg Waldmüller | N/A
+[2026-01-13T14:00:00.638Z] 
+[60/100] https://sammlung.belvedere.at/objects/193/entwurf-zum-gemalde-kaiser-franz-i-von-osterreich-176818
+[2026-01-13T14:00:00.645Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/193/entwurf-zum-gemalde-kaiser-franz-i-von-osterreich-176818): page.goto: Target page, context or browser has been closed
+[2026-01-13T14:00:00.646Z] ✅ 수집 완료: Entwurf zum Gemälde "Kaiser Franz I. von Österreich (1768–1835) in preußischer Generalsuniform" by Friedrich von Amerling | N/A
+[2026-01-13T14:00:00.652Z] 💾 진행 상황 저장: 60개 작품 수집됨
+[2026-01-13T14:00:01.478Z] 
+[3/100] https://sammlung.belvedere.at/objects/9/die-ebene-von-auvers
+[2026-01-13T14:00:01.653Z] 
+[61/100] https://sammlung.belvedere.at/objects/200/die-eltern-des-kunstlers
+[2026-01-13T14:00:01.654Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/200/die-eltern-des-kunstlers): page.goto: Target page, context or browser has been closed
+[2026-01-13T14:00:01.655Z] ✅ 수집 완료: Die Eltern des Künstlers by Johann Victor Krämer | N/A
+[2026-01-13T14:00:02.660Z] 
+[62/100] https://sammlung.belvedere.at/objects/201/gustav-mahler
+[2026-01-13T14:00:02.661Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/201/gustav-mahler): page.goto: Target page, context or browser has been closed
+[2026-01-13T14:00:02.661Z] ✅ 수집 완료: Gustav Mahler by Auguste Rodin | N/A
+[2026-01-13T14:00:03.662Z] 
+[63/100] https://sammlung.belvedere.at/objects/204/landwehroffizier
+[2026-01-13T14:00:03.675Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/204/landwehroffizier): page.goto: Target page, context or browser has been closed
+[2026-01-13T14:00:03.676Z] ✅ 수집 완료: Landwehroffizier by Wilhelm Trübner | N/A
+[2026-01-13T14:00:04.679Z] 
+[64/100] https://sammlung.belvedere.at/objects/206/die-frau-des-kunstlers
+[2026-01-13T14:00:04.680Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/206/die-frau-des-kunstlers): page.goto: Target page, context or browser has been closed
+[2026-01-13T14:00:04.680Z] ✅ 수집 완료: Die Frau des Künstlers by Jacek Hyacinth Malczewski | N/A
+[2026-01-13T14:00:04.913Z] ✅ 수집 완료: Die Ebene von Auvers by Vincent van Gogh | N/A
+[2026-01-13T14:00:05.681Z] 
+[65/100] https://sammlung.belvedere.at/objects/207/esparsettenfeld-bei-znaim-ii
+[2026-01-13T14:00:05.682Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/207/esparsettenfeld-bei-znaim-ii): page.goto: Target page, context or browser has been closed
+[2026-01-13T14:00:05.682Z] ✅ 수집 완료: Esparsettenfeld bei Znaim II by Theodor von Hörmann | N/A
+[2026-01-13T14:00:05.915Z] 
+[4/100] https://sammlung.belvedere.at/objects/20/vor-den-feiertagen
+[2026-01-13T14:00:06.684Z] 
+[66/100] https://sammlung.belvedere.at/objects/209/pieta
+[2026-01-13T14:00:06.694Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/209/pieta): page.goto: Target page, context or browser has been closed
+[2026-01-13T14:00:06.694Z] ✅ 수집 완료: Pietà by Virgil Rainer | N/A
+[2026-01-13T14:00:07.711Z] 
+[67/100] https://sammlung.belvedere.at/objects/210/am-sarmingbach
+[2026-01-13T14:00:07.766Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/210/am-sarmingbach): page.goto: Target page, context or browser has been closed
+[2026-01-13T14:00:07.767Z] ✅ 수집 완료: Am Sarmingbach by Jindřich Tomec | N/A
+[2026-01-13T14:00:08.742Z] ✅ 수집 완료: Vor den Feiertagen by Emil Strecker | N/A
+[2026-01-13T14:00:08.768Z] 
+[68/100] https://sammlung.belvedere.at/objects/212/die-hofbibliothek
+[2026-01-13T14:00:08.770Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/212/die-hofbibliothek): page.goto: Target page, context or browser has been closed
+[2026-01-13T14:00:08.770Z] ✅ 수집 완료: Die Hofbibliothek by Luigi Kasimir | N/A
+[2026-01-13T14:00:09.743Z] 
+[5/100] https://sammlung.belvedere.at/objects/25/wolkenschatten
+[2026-01-13T14:00:09.771Z] 
+[69/100] https://sammlung.belvedere.at/objects/214/johanaan
+[2026-01-13T14:00:09.773Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/214/johanaan): page.goto: Target page, context or browser has been closed
+[2026-01-13T14:00:09.773Z] ✅ 수집 완료: Johanaan by Josef Unterholzer | N/A
+[2026-01-13T14:00:10.783Z] 
+[70/100] https://sammlung.belvedere.at/objects/215/das-seebachtal-bei-franzensbad
+[2026-01-13T14:00:10.816Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/215/das-seebachtal-bei-franzensbad): page.goto: Target page, context or browser has been closed
+[2026-01-13T14:00:10.817Z] ✅ 수집 완료: Das Seebachtal bei Franzensbad by Fritz Pontini | N/A
+[2026-01-13T14:00:10.823Z] 💾 진행 상황 저장: 70개 작품 수집됨
+[2026-01-13T14:00:11.827Z] 
+[71/100] https://sammlung.belvedere.at/objects/217/dorf-in-der-sonne
+[2026-01-13T14:00:11.850Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/217/dorf-in-der-sonne): page.goto: Target page, context or browser has been closed
+[2026-01-13T14:00:11.851Z] ✅ 수집 완료: Dorf in der Sonne by Emanuel Baschny | N/A
+[2026-01-13T14:00:12.734Z] ✅ 수집 완료: Wolkenschatten by Oskar Frenzel | N/A
+[2026-01-13T14:00:12.854Z] 
+[72/100] https://sammlung.belvedere.at/objects/226/die-heiligen-drei-konige
+[2026-01-13T14:00:12.857Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/226/die-heiligen-drei-konige): page.goto: Target page, context or browser has been closed
+[2026-01-13T14:00:12.858Z] ✅ 수집 완료: Die Heiligen Drei Könige by Max von Poosch-Gablenz | N/A
+[2026-01-13T14:00:13.738Z] 
+[6/100] https://sammlung.belvedere.at/objects/33/arthur-graf-von-enzenberg
+[2026-01-13T14:00:13.867Z] 
+[73/100] https://sammlung.belvedere.at/objects/228/unterrichtsminister-dr-gustav-marchet
+[2026-01-13T14:00:13.884Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/228/unterrichtsminister-dr-gustav-marchet): page.goto: Target page, context or browser has been closed
+[2026-01-13T14:00:13.884Z] ✅ 수집 완료: Unterrichtsminister Dr. Gustav Marchet by Viktor Stauffer | N/A
+[2026-01-13T14:00:14.885Z] 
+[74/100] https://sammlung.belvedere.at/objects/232/der-junge-kaiser-franz-joseph-i
+[2026-01-13T14:00:14.887Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/232/der-junge-kaiser-franz-joseph-i): page.goto: Target page, context or browser has been closed
+[2026-01-13T14:00:14.887Z] ✅ 수집 완료: Der junge Kaiser Franz Joseph I. by Michael Moritz Daffinger | N/A
+[2026-01-13T14:00:15.888Z] 
+[75/100] https://sammlung.belvedere.at/objects/234/heimkehr-von-der-arbeit-die-liebenden-am-scheideweg
+[2026-01-13T14:00:15.892Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/234/heimkehr-von-der-arbeit-die-liebenden-am-scheideweg): page.goto: Target page, context or browser has been closed
+[2026-01-13T14:00:15.892Z] ✅ 수집 완료: Heimkehr von der Arbeit (Die Liebenden am Scheideweg) by Ferdinand Georg Waldmüller | N/A
+[2026-01-13T14:00:16.775Z] ✅ 수집 완료: Arthur Graf von Enzenberg by Josef Schretter | Zeichnung
+[2026-01-13T14:00:16.893Z] 
+[76/100] https://sammlung.belvedere.at/objects/235/marchfeld-vom-bisamberg
+[2026-01-13T14:00:16.895Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/235/marchfeld-vom-bisamberg): page.goto: Target page, context or browser has been closed
+[2026-01-13T14:00:16.895Z] ✅ 수집 완료: Marchfeld vom Bisamberg by Ernst Eck | N/A
+[2026-01-13T14:00:17.784Z] 
+[7/100] https://sammlung.belvedere.at/objects/39/der-michel
+[2026-01-13T14:00:17.897Z] 
+[77/100] https://sammlung.belvedere.at/objects/236/gang-mariens-uber-das-gebirge
+[2026-01-13T14:00:17.912Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/236/gang-mariens-uber-das-gebirge): page.goto: Target page, context or browser has been closed
+[2026-01-13T14:00:17.927Z] ✅ 수집 완료: Gang Mariens über das Gebirge by Maximilian Liebenwein | N/A
+[2026-01-13T14:00:18.937Z] 
+[78/100] https://sammlung.belvedere.at/objects/238/pappeln
+[2026-01-13T14:00:18.982Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/238/pappeln): page.goto: Target page, context or browser has been closed
+[2026-01-13T14:00:18.983Z] ✅ 수집 완료: Pappeln by August Roth | N/A
+[2026-01-13T14:00:19.984Z] 
+[79/100] https://sammlung.belvedere.at/objects/240/feldarbeiter
+[2026-01-13T14:00:19.987Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/240/feldarbeiter): page.goto: Target page, context or browser has been closed
+[2026-01-13T14:00:19.987Z] ✅ 수집 완료: Feldarbeiter by Arthur Oskar Alexander | N/A
+[2026-01-13T14:00:20.806Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/39/der-michel): page.evaluate: Target page, context or browser has been closed
+[2026-01-13T14:00:20.808Z] ✅ 수집 완료: Der Michel by Josef Engelhart | N/A
+[2026-01-13T14:00:21.812Z] 
+[8/100] https://sammlung.belvedere.at/objects/40/der-bildhauer-alfonso-canciani
+[2026-01-13T14:00:21.821Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/40/der-bildhauer-alfonso-canciani): page.goto: Target page, context or browser has been closed
+[2026-01-13T14:00:21.821Z] ✅ 수집 완료: Der Bildhauer Alfonso Canciani by Josef Engelhart | N/A
+[2026-01-13T14:00:22.773Z] 🎨 Belvedere Museum Collection Scraper - Test V2 (100 items)
+[2026-01-13T14:00:22.775Z] ============================================================
+[2026-01-13T14:00:22.823Z] 
+[9/100] https://sammlung.belvedere.at/objects/41/blick-aus-meinem-fenster
+[2026-01-13T14:00:22.828Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/41/blick-aus-meinem-fenster): page.goto: Target page, context or browser has been closed
+[2026-01-13T14:00:22.828Z] ✅ 수집 완료: Blick aus meinem Fenster by Josef Engelhart | N/A
+[2026-01-13T14:00:23.396Z] 📄 페이지 로드: https://sammlung.belvedere.at/objects/images?
+[2026-01-13T14:00:23.830Z] 
+[10/100] https://sammlung.belvedere.at/objects/44/winter
+[2026-01-13T14:00:23.835Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/44/winter): page.goto: Target page, context or browser has been closed
+[2026-01-13T14:00:23.836Z] ✅ 수집 완료: Winter by Eduard Ameseder | N/A
+[2026-01-13T14:00:23.836Z] 💾 진행 상황 저장: 10개 작품 수집됨
+[2026-01-13T14:00:24.838Z] 
+[11/100] https://sammlung.belvedere.at/objects/47/gebirgsweg-in-den-beskiden
+[2026-01-13T14:00:24.838Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/47/gebirgsweg-in-den-beskiden): page.goto: Target page, context or browser has been closed
+[2026-01-13T14:00:24.838Z] ✅ 수집 완료: Gebirgsweg in den Beskiden by Hugo Baar | N/A
+[2026-01-13T14:00:25.838Z] 
+[12/100] https://sammlung.belvedere.at/objects/50/madchen-in-weiem-kleid
+[2026-01-13T14:00:25.842Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/50/madchen-in-weiem-kleid): page.goto: Target page, context or browser has been closed
+[2026-01-13T14:00:25.843Z] ✅ 수집 완료: Mädchen in weißem Kleid by Franz Jaschke | N/A
+[2026-01-13T14:00:26.887Z] 
+[13/100] https://sammlung.belvedere.at/objects/51/weihnachtsmarkt-am-hof-in-wien
+[2026-01-13T14:00:26.946Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/51/weihnachtsmarkt-am-hof-in-wien): page.goto: Target page, context or browser has been closed
+[2026-01-13T14:00:26.950Z] ✅ 수집 완료: Weihnachtsmarkt am Hof in Wien by Ernst Juch | N/A
+[2026-01-13T14:00:27.953Z] 
+[14/100] https://sammlung.belvedere.at/objects/53/die-tischrede
+[2026-01-13T14:00:27.959Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/53/die-tischrede): page.goto: Target page, context or browser has been closed
+[2026-01-13T14:00:27.959Z] ✅ 수집 완료: Die Tischrede by Ernst Juch | N/A
+[2026-01-13T14:00:28.962Z] 
+[15/100] https://sammlung.belvedere.at/objects/54/der-architekt-joze-plecnik
+[2026-01-13T14:00:28.972Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/54/der-architekt-joze-plecnik): page.goto: Target page, context or browser has been closed
+[2026-01-13T14:00:28.972Z] ✅ 수집 완료: Der Architekt Jože Plečnik by Josef Engelhart | N/A
+[2026-01-13T14:00:29.976Z] 
+[16/100] https://sammlung.belvedere.at/objects/55/traubengehange
+[2026-01-13T14:00:29.984Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/55/traubengehange): page.goto: Target page, context or browser has been closed
+[2026-01-13T14:00:29.984Z] ✅ 수집 완료: Traubengehänge by Ferdinand Georg Waldmüller | N/A
+[2026-01-13T14:00:30.986Z] 
+[17/100] https://sammlung.belvedere.at/objects/56/pferdemarkt-in-szolnok-i
+[2026-01-13T14:00:30.989Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/56/pferdemarkt-in-szolnok-i): page.goto: Target page, context or browser has been closed
+[2026-01-13T14:00:30.990Z] ✅ 수집 완료: Pferdemarkt in Szolnok I by August von Pettenkofen | N/A
+[2026-01-13T14:00:31.991Z] 
+[18/100] https://sammlung.belvedere.at/objects/57/nach-dem-bade
+[2026-01-13T14:00:31.994Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/57/nach-dem-bade): page.goto: Target page, context or browser has been closed
+[2026-01-13T14:00:31.995Z] ✅ 수집 완료: Nach dem Bade by Pierre Auguste Renoir | N/A
+[2026-01-13T14:00:32.997Z] 
+[19/100] https://sammlung.belvedere.at/objects/58/sancho-pansa-unter-einem-baum-ausruhend
+[2026-01-13T14:00:32.998Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/58/sancho-pansa-unter-einem-baum-ausruhend): page.goto: Target page, context or browser has been closed
+[2026-01-13T14:00:32.999Z] ✅ 수집 완료: Sancho Pansa, unter einem Baum ausruhend by Honoré Daumier | N/A
+[2026-01-13T14:00:33.999Z] 
+[20/100] https://sammlung.belvedere.at/objects/59/das-ursulinenkloster-in-graz
+[2026-01-13T14:00:34.001Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/59/das-ursulinenkloster-in-graz): page.goto: Target page, context or browser has been closed
+[2026-01-13T14:00:34.001Z] ✅ 수집 완료: Das Ursulinenkloster in Graz by Leo Diet | N/A
+[2026-01-13T14:00:34.001Z] 💾 진행 상황 저장: 20개 작품 수집됨
+[2026-01-13T14:00:34.570Z] 🔍 작품 링크 수집 시작 (페이지네이션)...
+[2026-01-13T14:00:34.573Z] 📄 페이지 1 로드: https://sammlung.belvedere.at/objects/images
+[2026-01-13T14:00:35.006Z] 
+[21/100] https://sammlung.belvedere.at/objects/60/der-wiener-burgermeister-dr-richard-weiskirchner
+[2026-01-13T14:00:35.015Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/60/der-wiener-burgermeister-dr-richard-weiskirchner): page.goto: Target page, context or browser has been closed
+[2026-01-13T14:00:35.015Z] ✅ 수집 완료: Der Wiener Bürgermeister Dr. Richard Weiskirchner by Hans Temple | N/A
+[2026-01-13T14:00:36.016Z] 
+[22/100] https://sammlung.belvedere.at/objects/65/winternacht
+[2026-01-13T14:00:36.017Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/65/winternacht): page.goto: Target page, context or browser has been closed
+[2026-01-13T14:00:36.017Z] ✅ 수집 완료: Winternacht by Karl Sterrer | N/A
+[2026-01-13T14:00:37.027Z] 
+[23/100] https://sammlung.belvedere.at/objects/66/landliches-interieur
+[2026-01-13T14:00:37.065Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/66/landliches-interieur): page.goto: Target page, context or browser has been closed
+[2026-01-13T14:00:37.065Z] ✅ 수집 완료: Ländliches Interieur by Ludwig Ferdinand Graf | N/A
+[2026-01-13T14:00:38.069Z] 
+[24/100] https://sammlung.belvedere.at/objects/67/zirkusstudie-an-der-longe
+[2026-01-13T14:00:38.072Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/67/zirkusstudie-an-der-longe): page.goto: Target page, context or browser has been closed
+[2026-01-13T14:00:38.072Z] ✅ 수집 완료: Zirkusstudie (An der Longe) by Otto Friedrich | N/A
+[2026-01-13T14:00:39.080Z] 
+[25/100] https://sammlung.belvedere.at/objects/70/hollandische-landschaft
+[2026-01-13T14:00:39.086Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/70/hollandische-landschaft): page.goto: Target page, context or browser has been closed
+[2026-01-13T14:00:39.086Z] ✅ 수집 완료: Holländische Landschaft by Hans Tichy | N/A
+[2026-01-13T14:00:40.087Z] 
+[26/100] https://sammlung.belvedere.at/objects/73/dordrecht
+[2026-01-13T14:00:40.089Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/73/dordrecht): page.goto: Target page, context or browser has been closed
+[2026-01-13T14:00:40.089Z] ✅ 수집 완료: Dordrecht by Gilbert von Canal | N/A
+[2026-01-13T14:00:41.090Z] 
+[27/100] https://sammlung.belvedere.at/objects/83/bora-bei-brioni
+[2026-01-13T14:00:41.092Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/83/bora-bei-brioni): page.goto: Target page, context or browser has been closed
+[2026-01-13T14:00:41.092Z] ✅ 수집 완료: Bora bei Brioni by Paul Ress | N/A
+[2026-01-13T14:00:41.334Z] 페이지 1: 12개 새 항목 발견 (총 12/100개)
+[2026-01-13T14:00:41.339Z] 📄 페이지 2 로드: https://sammlung.belvedere.at/objects/images?page=2
+[2026-01-13T14:00:42.101Z] 
+[28/100] https://sammlung.belvedere.at/objects/87/der-heimatdichter-peter-rosegger-18431918
+[2026-01-13T14:00:42.139Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/87/der-heimatdichter-peter-rosegger-18431918): page.goto: Target page, context or browser has been closed
+[2026-01-13T14:00:42.139Z] ✅ 수집 완료: Der Heimatdichter Peter Rosegger (1843-1918) by Ferdinand Pamberger | N/A
+[2026-01-13T14:00:43.139Z] 
+[29/100] https://sammlung.belvedere.at/objects/93/herabkunft-des-heiligen-geistes-pfingstfest
+[2026-01-13T14:00:43.140Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/93/herabkunft-des-heiligen-geistes-pfingstfest): page.goto: Target page, context or browser has been closed
+[2026-01-13T14:00:43.140Z] ✅ 수집 완료: Herabkunft des Heiligen Geistes (Pfingstfest) by Meister von Irrsdorf | N/A
+[2026-01-13T14:00:44.144Z] 
+[30/100] https://sammlung.belvedere.at/objects/97/16-ansichten-tschechischer-landschaften-ceska-krajina
+[2026-01-13T14:00:44.154Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/97/16-ansichten-tschechischer-landschaften-ceska-krajina): page.goto: Target page, context or browser has been closed
+[2026-01-13T14:00:44.154Z] ✅ 수집 완료: 16 Ansichten tschechischer Landschaften "Česká krajina" by Ferdinand Engelmüller | N/A
+[2026-01-13T14:00:44.156Z] 💾 진행 상황 저장: 30개 작품 수집됨
+[2026-01-13T14:00:45.158Z] 
+[31/100] https://sammlung.belvedere.at/objects/98/der-holzschlag
+[2026-01-13T14:00:45.166Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/98/der-holzschlag): page.goto: Target page, context or browser has been closed
+[2026-01-13T14:00:45.167Z] ✅ 수집 완료: Der Holzschlag by Ferdinand Andri | N/A
+[2026-01-13T14:00:46.168Z] 
+[32/100] https://sammlung.belvedere.at/objects/99/groes-kuchenstillleben
+[2026-01-13T14:00:46.173Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/99/groes-kuchenstillleben): page.goto: Target page, context or browser has been closed
+[2026-01-13T14:00:46.180Z] ✅ 수집 완료: Großes Küchenstillleben by Carl Schuch | N/A
+[2026-01-13T14:00:47.183Z] 
+[33/100] https://sammlung.belvedere.at/objects/100/waldinneres-bei-saut-du-doubs
+[2026-01-13T14:00:47.191Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/100/waldinneres-bei-saut-du-doubs): page.goto: Target page, context or browser has been closed
+[2026-01-13T14:00:47.192Z] ✅ 수집 완료: Waldinneres bei Saut du Doubs by Carl Schuch | N/A
+[2026-01-13T14:00:47.217Z] 페이지 2: 12개 새 항목 발견 (총 24/100개)
+[2026-01-13T14:00:47.223Z] 📄 페이지 3 로드: https://sammlung.belvedere.at/objects/images?page=3
+[2026-01-13T14:00:48.193Z] 
+[34/100] https://sammlung.belvedere.at/objects/105/portrat-einer-bauerin
+[2026-01-13T14:00:48.194Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/105/portrat-einer-bauerin): page.goto: Target page, context or browser has been closed
+[2026-01-13T14:00:48.194Z] ✅ 수집 완료: Porträt einer Bäuerin by Franz Gasser | N/A
+[2026-01-13T14:00:49.202Z] 
+[35/100] https://sammlung.belvedere.at/objects/106/schwimmbad
+[2026-01-13T14:00:49.228Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/106/schwimmbad): page.goto: Target page, context or browser has been closed
+[2026-01-13T14:00:49.229Z] ✅ 수집 완료: Schwimmbad by Ludwig Ferdinand Graf | N/A
+[2026-01-13T14:00:50.230Z] 
+[36/100] https://sammlung.belvedere.at/objects/107/madchenbildnis
+[2026-01-13T14:00:50.233Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/107/madchenbildnis): page.goto: Target page, context or browser has been closed
+[2026-01-13T14:00:50.234Z] ✅ 수집 완료: Mädchenbildnis by Franz Jaschke | N/A
+[2026-01-13T14:00:51.235Z] 
+[37/100] https://sammlung.belvedere.at/objects/121/landschaft-im-sabinergebirge
+[2026-01-13T14:00:51.236Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/121/landschaft-im-sabinergebirge): page.goto: Target page, context or browser has been closed
+[2026-01-13T14:00:51.236Z] ✅ 수집 완료: Landschaft im Sabinergebirge by Carl Schuch | N/A
+[2026-01-13T14:00:52.237Z] 
+[38/100] https://sammlung.belvedere.at/objects/122/felsenlandschaft-bei-olevano
+[2026-01-13T14:00:52.238Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/122/felsenlandschaft-bei-olevano): page.goto: Target page, context or browser has been closed
+[2026-01-13T14:00:52.238Z] ✅ 수집 완료: Felsenlandschaft bei Olevano by Carl Schuch | N/A
+[2026-01-13T14:00:53.239Z] 
+[39/100] https://sammlung.belvedere.at/objects/123/pferdeschwemme
+[2026-01-13T14:00:53.241Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/123/pferdeschwemme): page.goto: Target page, context or browser has been closed
+[2026-01-13T14:00:53.241Z] ✅ 수집 완료: Pferdeschwemme by Teutwart Schmitson | N/A
+[2026-01-13T14:00:54.247Z] 
+[40/100] https://sammlung.belvedere.at/objects/124/seine-excellenz-moritz-graf-vetter-von-der-lilie-19011907
+[2026-01-13T14:00:54.257Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/124/seine-excellenz-moritz-graf-vetter-von-der-lilie-19011907): page.goto: Target page, context or browser has been closed
+[2026-01-13T14:00:54.258Z] ✅ 수집 완료: Seine Excellenz Moritz Graf Vetter von der Lilie, 1901-1907 Präsident des Abgeordnetenhauses by Ludwig Wieden | N/A
+[2026-01-13T14:00:54.263Z] 💾 진행 상황 저장: 40개 작품 수집됨
+[2026-01-13T14:00:55.265Z] 
+[41/100] https://sammlung.belvedere.at/objects/125/neugefallener-schnee
+[2026-01-13T14:00:55.267Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/125/neugefallener-schnee): page.goto: Target page, context or browser has been closed
+[2026-01-13T14:00:55.267Z] ✅ 수집 완료: Neugefallener Schnee by Gustaf Fjæstad | N/A
+[2026-01-13T14:00:56.271Z] 페이지 3: 12개 새 항목 발견 (총 36/100개)
+[2026-01-13T14:00:56.271Z] 
+[42/100] https://sammlung.belvedere.at/objects/126/niederosterreichische-bauernhochzeit
+[2026-01-13T14:00:56.277Z] 📄 페이지 4 로드: https://sammlung.belvedere.at/objects/images?page=4
+[2026-01-13T14:00:56.285Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/126/niederosterreichische-bauernhochzeit): page.goto: Target page, context or browser has been closed
+[2026-01-13T14:00:56.286Z] ✅ 수집 완료: Niederösterreichische Bauernhochzeit by Ferdinand Georg Waldmüller | N/A
+[2026-01-13T14:00:57.287Z] 
+[43/100] https://sammlung.belvedere.at/objects/128/frachtenbahnhof
+[2026-01-13T14:00:57.288Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/128/frachtenbahnhof): page.goto: Target page, context or browser has been closed
+[2026-01-13T14:00:57.288Z] ✅ 수집 완료: Frachtenbahnhof by Rudolf Quittner | N/A
+[2026-01-13T14:00:58.293Z] 
+[44/100] https://sammlung.belvedere.at/objects/131/gotische-grabkirche-st-michael-turmfassade
+[2026-01-13T14:00:58.295Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/131/gotische-grabkirche-st-michael-turmfassade): page.goto: Target page, context or browser has been closed
+[2026-01-13T14:00:58.295Z] ✅ 수집 완료: Gotische Grabkirche St. Michael, Turmfassade by Hans Makart | N/A
+[2026-01-13T14:00:59.296Z] 
+[45/100] https://sammlung.belvedere.at/objects/132/gotische-grabkirche-st-michael-seitenansicht
+[2026-01-13T14:00:59.298Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/132/gotische-grabkirche-st-michael-seitenansicht): page.goto: Target page, context or browser has been closed
+[2026-01-13T14:00:59.298Z] ✅ 수집 완료: Gotische Grabkirche St. Michael, Seitenansicht by Hans Makart | N/A
+[2026-01-13T14:01:00.298Z] 
+[46/100] https://sammlung.belvedere.at/objects/133/feldmarschall-gideon-ernst-freiherr-von-loudon
+[2026-01-13T14:01:00.301Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/133/feldmarschall-gideon-ernst-freiherr-von-loudon): page.goto: Target page, context or browser has been closed
+[2026-01-13T14:01:00.301Z] ✅ 수집 완료: Feldmarschall Gideon Ernst Freiherr von Loudon by Sigmund L'Allemand | N/A
+[2026-01-13T14:01:00.896Z] 페이지 4: 12개 새 항목 발견 (총 48/100개)
+[2026-01-13T14:01:00.900Z] 📄 페이지 5 로드: https://sammlung.belvedere.at/objects/images?page=5
+[2026-01-13T14:01:01.306Z] 
+[47/100] https://sammlung.belvedere.at/objects/134/landschaftsstudie
+[2026-01-13T14:01:01.313Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/134/landschaftsstudie): page.goto: Target page, context or browser has been closed
+[2026-01-13T14:01:01.314Z] ✅ 수집 완료: Landschaftsstudie by Sigmund L'Allemand | N/A
+[2026-01-13T14:01:02.316Z] 
+[48/100] https://sammlung.belvedere.at/objects/135/blick-uber-den-aerransee
+[2026-01-13T14:01:02.317Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/135/blick-uber-den-aerransee): page.goto: Target page, context or browser has been closed
+[2026-01-13T14:01:02.317Z] ✅ 수집 완료: Blick über den Aerransee by Otto Hesselbom | N/A
+[2026-01-13T14:01:03.330Z] 
+[49/100] https://sammlung.belvedere.at/objects/167/das-gasteinertal-i
+[2026-01-13T14:01:03.354Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/167/das-gasteinertal-i): page.goto: Target page, context or browser has been closed
+[2026-01-13T14:01:03.360Z] ✅ 수집 완료: Das Gasteinertal I by Anton Romako | N/A
+[2026-01-13T14:01:04.363Z] 
+[50/100] https://sammlung.belvedere.at/objects/169/picknick
+[2026-01-13T14:01:04.364Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/169/picknick): page.goto: Target page, context or browser has been closed
+[2026-01-13T14:01:04.364Z] ✅ 수집 완료: Picknick by Otto Hettner | N/A
+[2026-01-13T14:01:04.367Z] 💾 진행 상황 저장: 50개 작품 수집됨
+[2026-01-13T14:01:04.984Z] 페이지 5: 12개 새 항목 발견 (총 60/100개)
+[2026-01-13T14:01:04.992Z] 📄 페이지 6 로드: https://sammlung.belvedere.at/objects/images?page=6
+[2026-01-13T14:01:05.367Z] 
+[51/100] https://sammlung.belvedere.at/objects/170/mahnenziege
+[2026-01-13T14:01:05.368Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/170/mahnenziege): page.goto: Target page, context or browser has been closed
+[2026-01-13T14:01:05.369Z] ✅ 수집 완료: Mähnenziege by Franz Barwig der Ältere | N/A
+[2026-01-13T14:01:06.374Z] 
+[52/100] https://sammlung.belvedere.at/objects/171/rehbock
+[2026-01-13T14:01:06.398Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/171/rehbock): page.goto: Target page, context or browser has been closed
+[2026-01-13T14:01:06.400Z] ✅ 수집 완료: Rehbock by Franz Barwig der Ältere | N/A
+[2026-01-13T14:01:07.409Z] 
+[53/100] https://sammlung.belvedere.at/objects/174/am-wasser
+[2026-01-13T14:01:07.413Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/174/am-wasser): page.goto: Target page, context or browser has been closed
+[2026-01-13T14:01:07.414Z] ✅ 수집 완료: Am Wasser by Eva Gonzalès | N/A
+[2026-01-13T14:01:08.416Z] 
+[54/100] https://sammlung.belvedere.at/objects/176/wasserer
+[2026-01-13T14:01:08.423Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/176/wasserer): page.goto: Target page, context or browser has been closed
+[2026-01-13T14:01:08.424Z] ✅ 수집 완료: Wasserer by Franz Seifert | N/A
+[2026-01-13T14:01:08.888Z] 페이지 6: 12개 새 항목 발견 (총 72/100개)
+[2026-01-13T14:01:08.894Z] 📄 페이지 7 로드: https://sammlung.belvedere.at/objects/images?page=7
+[2026-01-13T14:01:09.425Z] 
+[55/100] https://sammlung.belvedere.at/objects/178/im-nebel
+[2026-01-13T14:01:09.428Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/178/im-nebel): page.goto: Target page, context or browser has been closed
+[2026-01-13T14:01:09.428Z] ✅ 수집 완료: Im Nebel by Marie Bashkirtseff | N/A
+[2026-01-13T14:01:10.431Z] 
+[56/100] https://sammlung.belvedere.at/objects/179/sardellen
+[2026-01-13T14:01:10.445Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/179/sardellen): page.goto: Target page, context or browser has been closed
+[2026-01-13T14:01:10.446Z] ✅ 수집 완료: Sardellen by Josef Navrátil | N/A
+[2026-01-13T14:01:11.447Z] 
+[57/100] https://sammlung.belvedere.at/objects/190/drosendorf
+[2026-01-13T14:01:11.448Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/190/drosendorf): page.goto: Target page, context or browser has been closed
+[2026-01-13T14:01:11.451Z] ✅ 수집 완료: Drosendorf by Oskar Laske | N/A
+[2026-01-13T14:01:12.457Z] 
+[58/100] https://sammlung.belvedere.at/objects/191/marquis-de-llano-spanischer-gesandter-in-wien
+[2026-01-13T14:01:12.471Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/191/marquis-de-llano-spanischer-gesandter-in-wien): page.goto: Target page, context or browser has been closed
+[2026-01-13T14:01:12.471Z] ✅ 수집 완료: Marquis de Llano, spanischer Gesandter in Wien by Josef Mathias Grassi | N/A
+[2026-01-13T14:01:12.846Z] 페이지 7: 12개 새 항목 발견 (총 84/100개)
+[2026-01-13T14:01:12.892Z] 📄 페이지 8 로드: https://sammlung.belvedere.at/objects/images?page=8
+[2026-01-13T14:01:13.473Z] 
+[59/100] https://sammlung.belvedere.at/objects/192/der-maler-johann-nepomuk-schodlberger-17791853
+[2026-01-13T14:01:13.479Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/192/der-maler-johann-nepomuk-schodlberger-17791853): page.goto: Target page, context or browser has been closed
+[2026-01-13T14:01:13.479Z] ✅ 수집 완료: Der Maler Johann Nepomuk Schödlberger (1779–1853) by Friedrich von Amerling | N/A
+[2026-01-13T14:01:14.481Z] 
+[60/100] https://sammlung.belvedere.at/objects/193/entwurf-zum-gemalde-kaiser-franz-i-von-osterreich-176818
+[2026-01-13T14:01:14.483Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/193/entwurf-zum-gemalde-kaiser-franz-i-von-osterreich-176818): page.goto: Target page, context or browser has been closed
+[2026-01-13T14:01:14.484Z] ✅ 수집 완료: Entwurf zum Gemälde "Kaiser Franz I. von Österreich (1768–1835) in preußischer Generalsuniform" by Friedrich von Amerling | N/A
+[2026-01-13T14:01:14.488Z] 💾 진행 상황 저장: 60개 작품 수집됨
+[2026-01-13T14:01:15.491Z] 
+[61/100] https://sammlung.belvedere.at/objects/200/die-eltern-des-kunstlers
+[2026-01-13T14:01:15.495Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/200/die-eltern-des-kunstlers): page.goto: Target page, context or browser has been closed
+[2026-01-13T14:01:15.496Z] ✅ 수집 완료: Die Eltern des Künstlers by Johann Victor Krämer | N/A
+[2026-01-13T14:01:16.496Z] 
+[62/100] https://sammlung.belvedere.at/objects/201/gustav-mahler
+[2026-01-13T14:01:16.501Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/201/gustav-mahler): page.goto: Target page, context or browser has been closed
+[2026-01-13T14:01:16.501Z] ✅ 수집 완료: Gustav Mahler by Auguste Rodin | N/A
+[2026-01-13T14:01:16.609Z] 페이지 8: 12개 새 항목 발견 (총 96/100개)
+[2026-01-13T14:01:16.612Z] 📄 페이지 9 로드: https://sammlung.belvedere.at/objects/images?page=9
+[2026-01-13T14:01:17.504Z] 
+[63/100] https://sammlung.belvedere.at/objects/204/landwehroffizier
+[2026-01-13T14:01:17.506Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/204/landwehroffizier): page.goto: Target page, context or browser has been closed
+[2026-01-13T14:01:17.506Z] ✅ 수집 완료: Landwehroffizier by Wilhelm Trübner | N/A
+[2026-01-13T14:01:18.508Z] 
+[64/100] https://sammlung.belvedere.at/objects/206/die-frau-des-kunstlers
+[2026-01-13T14:01:18.510Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/206/die-frau-des-kunstlers): page.goto: Target page, context or browser has been closed
+[2026-01-13T14:01:18.510Z] ✅ 수집 완료: Die Frau des Künstlers by Jacek Hyacinth Malczewski | N/A
+[2026-01-13T14:01:19.512Z] 
+[65/100] https://sammlung.belvedere.at/objects/207/esparsettenfeld-bei-znaim-ii
+[2026-01-13T14:01:19.513Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/207/esparsettenfeld-bei-znaim-ii): page.goto: Target page, context or browser has been closed
+[2026-01-13T14:01:19.513Z] ✅ 수집 완료: Esparsettenfeld bei Znaim II by Theodor von Hörmann | N/A
+[2026-01-13T14:01:20.387Z] 페이지 9: 4개 새 항목 발견 (총 100/100개)
+[2026-01-13T14:01:20.388Z] ✅ 총 100개 작품 링크 수집 완료
+[2026-01-13T14:01:20.388Z] 
+📊 상세 정보 수집 시작 (100개)...
+[2026-01-13T14:01:20.388Z] 
+[1/100] https://sammlung.belvedere.at/objects/6/frauenkopf
+[2026-01-13T14:01:20.514Z] 
+[66/100] https://sammlung.belvedere.at/objects/209/pieta
+[2026-01-13T14:01:20.515Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/209/pieta): page.goto: Target page, context or browser has been closed
+[2026-01-13T14:01:20.515Z] ✅ 수집 완료: Pietà by Virgil Rainer | N/A
+[2026-01-13T14:01:21.517Z] 
+[67/100] https://sammlung.belvedere.at/objects/210/am-sarmingbach
+[2026-01-13T14:01:21.596Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/210/am-sarmingbach): page.goto: Target page, context or browser has been closed
+[2026-01-13T14:01:21.603Z] ✅ 수집 완료: Am Sarmingbach by Jindřich Tomec | N/A
+[2026-01-13T14:01:22.608Z] 
+[68/100] https://sammlung.belvedere.at/objects/212/die-hofbibliothek
+[2026-01-13T14:01:22.615Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/212/die-hofbibliothek): page.goto: Target page, context or browser has been closed
+[2026-01-13T14:01:22.616Z] ✅ 수집 완료: Die Hofbibliothek by Luigi Kasimir | N/A
+[2026-01-13T14:01:23.617Z] 
+[69/100] https://sammlung.belvedere.at/objects/214/johanaan
+[2026-01-13T14:01:23.625Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/214/johanaan): page.goto: Target page, context or browser has been closed
+[2026-01-13T14:01:23.625Z] ✅ 수집 완료: Johanaan by Josef Unterholzer | N/A
+[2026-01-13T14:01:24.634Z] 
+[70/100] https://sammlung.belvedere.at/objects/215/das-seebachtal-bei-franzensbad
+[2026-01-13T14:01:24.666Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/215/das-seebachtal-bei-franzensbad): page.goto: Target page, context or browser has been closed
+[2026-01-13T14:01:24.666Z] ✅ 수집 완료: Das Seebachtal bei Franzensbad by Fritz Pontini | N/A
+[2026-01-13T14:01:24.692Z] 💾 진행 상황 저장: 70개 작품 수집됨
+[2026-01-13T14:01:25.135Z] ✅ 수집 완료: Frauenkopf by George Minne | Büste
+[2026-01-13T14:01:25.692Z] 
+[71/100] https://sammlung.belvedere.at/objects/217/dorf-in-der-sonne
+[2026-01-13T14:01:25.694Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/217/dorf-in-der-sonne): page.goto: Target page, context or browser has been closed
+[2026-01-13T14:01:25.694Z] ✅ 수집 완료: Dorf in der Sonne by Emanuel Baschny | N/A
+[2026-01-13T14:01:26.136Z] 
+[2/100] https://sammlung.belvedere.at/objects/8/kaiser-ferdinand-i-von-osterreich
+[2026-01-13T14:01:26.697Z] 
+[72/100] https://sammlung.belvedere.at/objects/226/die-heiligen-drei-konige
+[2026-01-13T14:01:26.700Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/226/die-heiligen-drei-konige): page.goto: Target page, context or browser has been closed
+[2026-01-13T14:01:26.700Z] ✅ 수집 완료: Die Heiligen Drei Könige by Max von Poosch-Gablenz | N/A
+[2026-01-13T14:01:27.706Z] 
+[73/100] https://sammlung.belvedere.at/objects/228/unterrichtsminister-dr-gustav-marchet
+[2026-01-13T14:01:27.713Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/228/unterrichtsminister-dr-gustav-marchet): page.goto: Target page, context or browser has been closed
+[2026-01-13T14:01:27.713Z] ✅ 수집 완료: Unterrichtsminister Dr. Gustav Marchet by Viktor Stauffer | N/A
+[2026-01-13T14:01:28.716Z] 
+[74/100] https://sammlung.belvedere.at/objects/232/der-junge-kaiser-franz-joseph-i
+[2026-01-13T14:01:28.720Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/232/der-junge-kaiser-franz-joseph-i): page.goto: Target page, context or browser has been closed
+[2026-01-13T14:01:28.721Z] ✅ 수집 완료: Der junge Kaiser Franz Joseph I. by Michael Moritz Daffinger | N/A
+[2026-01-13T14:01:29.141Z] ✅ 수집 완료: Kaiser Ferdinand I. von Österreich by Ferdinand Georg Waldmüller | Gemälde
+[2026-01-13T14:01:29.722Z] 
+[75/100] https://sammlung.belvedere.at/objects/234/heimkehr-von-der-arbeit-die-liebenden-am-scheideweg
+[2026-01-13T14:01:29.728Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/234/heimkehr-von-der-arbeit-die-liebenden-am-scheideweg): page.goto: Target page, context or browser has been closed
+[2026-01-13T14:01:29.730Z] ✅ 수집 완료: Heimkehr von der Arbeit (Die Liebenden am Scheideweg) by Ferdinand Georg Waldmüller | N/A
+[2026-01-13T14:01:30.142Z] 
+[3/100] https://sammlung.belvedere.at/objects/9/die-ebene-von-auvers
+[2026-01-13T14:01:30.732Z] 
+[76/100] https://sammlung.belvedere.at/objects/235/marchfeld-vom-bisamberg
+[2026-01-13T14:01:30.734Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/235/marchfeld-vom-bisamberg): page.goto: Target page, context or browser has been closed
+[2026-01-13T14:01:30.734Z] ✅ 수집 완료: Marchfeld vom Bisamberg by Ernst Eck | N/A
+[2026-01-13T14:01:31.736Z] 
+[77/100] https://sammlung.belvedere.at/objects/236/gang-mariens-uber-das-gebirge
+[2026-01-13T14:01:31.737Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/236/gang-mariens-uber-das-gebirge): page.goto: Target page, context or browser has been closed
+[2026-01-13T14:01:31.737Z] ✅ 수집 완료: Gang Mariens über das Gebirge by Maximilian Liebenwein | N/A
+[2026-01-13T14:01:32.738Z] 
+[78/100] https://sammlung.belvedere.at/objects/238/pappeln
+[2026-01-13T14:01:32.743Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/238/pappeln): page.goto: Target page, context or browser has been closed
+[2026-01-13T14:01:32.746Z] ✅ 수집 완료: Pappeln by August Roth | N/A
+[2026-01-13T14:01:32.967Z] ✅ 수집 완료: Die Ebene von Auvers by Vincent van Gogh | Gemälde
+[2026-01-13T14:01:33.749Z] 
+[79/100] https://sammlung.belvedere.at/objects/240/feldarbeiter
+[2026-01-13T14:01:33.754Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/240/feldarbeiter): page.goto: Target page, context or browser has been closed
+[2026-01-13T14:01:33.755Z] ✅ 수집 완료: Feldarbeiter by Arthur Oskar Alexander | N/A
+[2026-01-13T14:01:33.972Z] 
+[4/100] https://sammlung.belvedere.at/objects/20/vor-den-feiertagen
+[2026-01-13T14:01:34.757Z] 
+[80/100] https://sammlung.belvedere.at/objects/241/der-schiffsbauingenieur-josef-von-romako-als-oberleutnant
+[2026-01-13T14:01:34.758Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/241/der-schiffsbauingenieur-josef-von-romako-als-oberleutnant): page.goto: Target page, context or browser has been closed
+[2026-01-13T14:01:34.758Z] ✅ 수집 완료: Der Schiffsbau-Ingenieur Josef von Romako als Oberleutnant by Anton Romako | N/A
+[2026-01-13T14:01:34.771Z] 💾 진행 상황 저장: 80개 작품 수집됨
+[2026-01-13T14:01:35.777Z] 
+[81/100] https://sammlung.belvedere.at/objects/242/dame-in-zinnobergrunem-kleid
+[2026-01-13T14:01:35.786Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/242/dame-in-zinnobergrunem-kleid): page.goto: Target page, context or browser has been closed
+[2026-01-13T14:01:35.794Z] ✅ 수집 완료: Dame in zinnobergrünem Kleid by Ferdinand Georg Waldmüller | N/A
+[2026-01-13T14:01:36.796Z] 
+[82/100] https://sammlung.belvedere.at/objects/254/furstliche-lichtensteinsche-patronatskirche-in-seebenstein
+[2026-01-13T14:01:36.799Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/254/furstliche-lichtensteinsche-patronatskirche-in-seebenstein): page.goto: Target page, context or browser has been closed
+[2026-01-13T14:01:36.802Z] ✅ 수집 완료: Fürstliche Lichtenstein´sche Patronatskirche in Seebenstein by Gabriele Murad-Michalowski | N/A
+[2026-01-13T14:01:37.710Z] ✅ 수집 완료: Vor den Feiertagen by Emil Strecker | Gemälde
+[2026-01-13T14:01:37.807Z] 
+[83/100] https://sammlung.belvedere.at/objects/256/waldlichtung-bei-purkersdorf
+[2026-01-13T14:01:37.813Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/256/waldlichtung-bei-purkersdorf): page.goto: Target page, context or browser has been closed
+[2026-01-13T14:01:37.814Z] ✅ 수집 완료: Waldlichtung bei Purkersdorf by Carl Schuch | N/A
+[2026-01-13T14:01:38.714Z] 
+[5/100] https://sammlung.belvedere.at/objects/25/wolkenschatten
+[2026-01-13T14:01:38.825Z] 
+[84/100] https://sammlung.belvedere.at/objects/259/abendlandschaft
+[2026-01-13T14:01:38.856Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/259/abendlandschaft): page.goto: Target page, context or browser has been closed
+[2026-01-13T14:01:38.861Z] ✅ 수집 완료: Abendlandschaft by Carl Freiherr von Pidoll zu Quintenbach | N/A
+[2026-01-13T14:01:39.864Z] 
+[85/100] https://sammlung.belvedere.at/objects/260/groe-praterlandschaft
+[2026-01-13T14:01:39.872Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/260/groe-praterlandschaft): page.goto: Target page, context or browser has been closed
+[2026-01-13T14:01:39.872Z] ✅ 수집 완료: Große Praterlandschaft by Ferdinand Georg Waldmüller | N/A
+[2026-01-13T14:01:40.873Z] 
+[86/100] https://sammlung.belvedere.at/objects/261/elisabeth-imredy-edle-von-omorovicze
+[2026-01-13T14:01:40.897Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/261/elisabeth-imredy-edle-von-omorovicze): page.goto: Target page, context or browser has been closed
+[2026-01-13T14:01:40.899Z] ✅ 수집 완료: Elisabeth Imrédy, Edle von Omorovicze by August von Pettenkofen | N/A
+[2026-01-13T14:01:41.900Z] 
+[87/100] https://sammlung.belvedere.at/objects/262/franz-imredy-edler-von-omorovicze
+[2026-01-13T14:01:41.909Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/262/franz-imredy-edler-von-omorovicze): page.goto: Target page, context or browser has been closed
+[2026-01-13T14:01:41.910Z] ✅ 수집 완료: Franz Imrédy, Edler von Omorovicze by August von Pettenkofen | N/A
+[2026-01-13T14:01:42.614Z] ✅ 수집 완료: Wolkenschatten by Oskar Frenzel | Gemälde
+[2026-01-13T14:01:42.922Z] 
+[88/100] https://sammlung.belvedere.at/objects/263/der-apotheker-dr-hofmann
+[2026-01-13T14:01:43.391Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/263/der-apotheker-dr-hofmann): page.goto: Target page, context or browser has been closed
+[2026-01-13T14:01:43.391Z] ✅ 수집 완료: Der Apotheker Dr. Hofmann by Erasmus von Engert | N/A
+[2026-01-13T14:01:43.619Z] 
+[6/100] https://sammlung.belvedere.at/objects/33/arthur-graf-von-enzenberg
+[2026-01-13T14:01:44.471Z] 
+[89/100] https://sammlung.belvedere.at/objects/264/magdalena-plach
+[2026-01-13T14:01:44.568Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/264/magdalena-plach): page.goto: Target page, context or browser has been closed
+[2026-01-13T14:01:44.569Z] ✅ 수집 완료: Magdalena Plach by Hans Makart | N/A
+[2026-01-13T14:01:45.579Z] 
+[90/100] https://sammlung.belvedere.at/objects/266/spaziergang-am-krottenbach
+[2026-01-13T14:01:45.603Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/266/spaziergang-am-krottenbach): page.goto: Target page, context or browser has been closed
+[2026-01-13T14:01:45.606Z] ✅ 수집 완료: Spaziergang am Krottenbach by Anton Hlávacek | N/A
+[2026-01-13T14:01:45.665Z] 💾 진행 상황 저장: 90개 작품 수집됨
+[2026-01-13T14:01:46.667Z] 
+[91/100] https://sammlung.belvedere.at/objects/276/die-heiligen-drei-konige
+[2026-01-13T14:01:46.670Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/276/die-heiligen-drei-konige): page.goto: Target page, context or browser has been closed
+[2026-01-13T14:01:46.670Z] ✅ 수집 완료: Die heiligen drei Könige by Maximilian Liebenwein | N/A
+[2026-01-13T14:01:47.671Z] 
+[92/100] https://sammlung.belvedere.at/objects/277/richard-strauss
+[2026-01-13T14:01:47.676Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/277/richard-strauss): page.goto: Target page, context or browser has been closed
+[2026-01-13T14:01:47.676Z] ✅ 수집 완료: Richard Strauss by Hugo Lederer | N/A
+[2026-01-13T14:01:48.687Z] 
+[93/100] https://sammlung.belvedere.at/objects/279/stigmatisation-des-hl-franziskus
+[2026-01-13T14:01:48.706Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/279/stigmatisation-des-hl-franziskus): page.goto: Target page, context or browser has been closed
+[2026-01-13T14:01:48.706Z] ✅ 수집 완료: Stigmatisation des hl. Franziskus by Lukas Cranach der Ältere | N/A
+[2026-01-13T14:01:48.709Z] ✅ 수집 완료: Arthur Graf von Enzenberg by Josef Schretter | Zeichnung
+[2026-01-13T14:01:49.707Z] 
+[94/100] https://sammlung.belvedere.at/objects/281/dame-mit-goldhaube
+[2026-01-13T14:01:49.715Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/281/dame-mit-goldhaube): page.goto: Target page, context or browser has been closed
+[2026-01-13T14:01:49.715Z] ✅ 수집 완료: Dame mit Goldhaube by Unbekannter Künstler | N/A
+[2026-01-13T14:01:49.736Z] 
+[7/100] https://sammlung.belvedere.at/objects/39/der-michel
+[2026-01-13T14:01:50.720Z] 
+[95/100] https://sammlung.belvedere.at/objects/282/herrenbildnis
+[2026-01-13T14:01:50.738Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/282/herrenbildnis): page.goto: Target page, context or browser has been closed
+[2026-01-13T14:01:50.738Z] ✅ 수집 완료: Herrenbildnis by Unbekannter Künstler | N/A
+[2026-01-13T14:01:51.739Z] 
+[96/100] https://sammlung.belvedere.at/objects/286/apfelpfluckendes-madchen
+[2026-01-13T14:01:51.742Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/286/apfelpfluckendes-madchen): page.goto: Target page, context or browser has been closed
+[2026-01-13T14:01:51.743Z] ✅ 수집 완료: Apfelpflückendes Mädchen by Anton Romako | N/A
+[2026-01-13T14:01:52.749Z] 
+[97/100] https://sammlung.belvedere.at/objects/287/strae-in-pontoise-rue-de-gisors
+[2026-01-13T14:01:52.751Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/287/strae-in-pontoise-rue-de-gisors): page.goto: Target page, context or browser has been closed
+[2026-01-13T14:01:52.751Z] ✅ 수집 완료: Straße in Pontoise (Rue de Gisors) by Camille Jacob Pissarro | N/A
+[2026-01-13T14:01:52.839Z] ✅ 수집 완료: Der Michel by Josef Engelhart | Gemälde
+[2026-01-13T14:01:53.751Z] 
+[98/100] https://sammlung.belvedere.at/objects/289/der-junge-elefant
+[2026-01-13T14:01:53.757Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/289/der-junge-elefant): page.goto: Target page, context or browser has been closed
+[2026-01-13T14:01:53.757Z] ✅ 수집 완료: Der junge Elefant by Carl Wollek | N/A
+[2026-01-13T14:01:53.844Z] 
+[8/100] https://sammlung.belvedere.at/objects/40/der-bildhauer-alfonso-canciani
+[2026-01-13T14:01:54.766Z] 
+[99/100] https://sammlung.belvedere.at/objects/290/blick-uber-wiener-vorstadthauser-beatrixgasse
+[2026-01-13T14:01:54.787Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/290/blick-uber-wiener-vorstadthauser-beatrixgasse): page.goto: Target page, context or browser has been closed
+[2026-01-13T14:01:54.787Z] ✅ 수집 완료: Blick über Wiener Vorstadthäuser (Beatrixgasse) by Adalbert Stifter | N/A
+[2026-01-13T14:01:55.788Z] 
+[100/100] https://sammlung.belvedere.at/objects/291/das-leben-entflieht
+[2026-01-13T14:01:55.789Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/291/das-leben-entflieht): page.goto: Target page, context or browser has been closed
+[2026-01-13T14:01:55.789Z] ✅ 수집 완료: Das Leben entflieht by Jan Štursa | N/A
+[2026-01-13T14:01:55.825Z] 💾 진행 상황 저장: 100개 작품 수집됨
+[2026-01-13T14:01:56.842Z] 
+✅ 완료! 100개 작품 저장됨: /Users/kietzsche/armin-web-main/public/data/belvedere-collection-test.json
+[2026-01-13T14:01:57.867Z] ✅ 수집 완료: Der Bildhauer Alfonso Canciani by Josef Engelhart | Büste
+[2026-01-13T14:01:58.888Z] 
+[9/100] https://sammlung.belvedere.at/objects/41/blick-aus-meinem-fenster
+[2026-01-13T14:02:02.937Z] ✅ 수집 완료: Blick aus meinem Fenster by Josef Engelhart | Gemälde
+[2026-01-13T14:02:03.940Z] 
+[10/100] https://sammlung.belvedere.at/objects/44/winter
+[2026-01-13T14:02:08.458Z] ✅ 수집 완료: Winter by Eduard Ameseder | Gemälde
+[2026-01-13T14:02:08.461Z] 💾 진행 상황 저장: 10개 작품 수집됨
+[2026-01-13T14:02:09.462Z] 
+[11/100] https://sammlung.belvedere.at/objects/47/gebirgsweg-in-den-beskiden
+[2026-01-13T14:02:17.458Z] ✅ 수집 완료: Gebirgsweg in den Beskiden by Hugo Baar | Zeichnung
+[2026-01-13T14:02:18.461Z] 
+[12/100] https://sammlung.belvedere.at/objects/50/madchen-in-weiem-kleid
+[2026-01-13T14:02:22.962Z] ✅ 수집 완료: Mädchen in weißem Kleid by Franz Jaschke | Gemälde
+[2026-01-13T14:02:23.965Z] 
+[13/100] https://sammlung.belvedere.at/objects/51/weihnachtsmarkt-am-hof-in-wien
+[2026-01-13T14:02:27.186Z] ✅ 수집 완료: Weihnachtsmarkt am Hof in Wien by Ernst Juch | Gemälde
+[2026-01-13T14:02:28.188Z] 
+[14/100] https://sammlung.belvedere.at/objects/53/die-tischrede
+[2026-01-13T14:02:34.076Z] ✅ 수집 완료: Die Tischrede by Ernst Juch | Gemälde
+[2026-01-13T14:02:35.078Z] 
+[15/100] https://sammlung.belvedere.at/objects/54/der-architekt-joze-plecnik
+[2026-01-13T14:02:41.002Z] ✅ 수집 완료: Der Architekt Jože Plečnik by Josef Engelhart | Kopfbüste
+[2026-01-13T14:02:42.005Z] 
+[16/100] https://sammlung.belvedere.at/objects/55/traubengehange
+[2026-01-13T14:02:44.986Z] ✅ 수집 완료: Traubengehänge by Ferdinand Georg Waldmüller | Gemälde
+[2026-01-13T14:02:45.988Z] 
+[17/100] https://sammlung.belvedere.at/objects/56/pferdemarkt-in-szolnok-i
+[2026-01-13T14:02:49.936Z] ✅ 수집 완료: Pferdemarkt in Szolnok I by August von Pettenkofen | Gemälde
+[2026-01-13T14:02:50.938Z] 
+[18/100] https://sammlung.belvedere.at/objects/57/nach-dem-bade
+[2026-01-13T14:02:54.636Z] ✅ 수집 완료: Nach dem Bade by Pierre Auguste Renoir | Gemälde
+[2026-01-13T14:02:55.638Z] 
+[19/100] https://sammlung.belvedere.at/objects/58/sancho-pansa-unter-einem-baum-ausruhend
+[2026-01-13T14:02:58.418Z] ✅ 수집 완료: Sancho Pansa, unter einem Baum ausruhend by Honoré Daumier | Gemälde
+[2026-01-13T14:02:59.425Z] 
+[20/100] https://sammlung.belvedere.at/objects/59/das-ursulinenkloster-in-graz
+[2026-01-13T14:03:03.027Z] ✅ 수집 완료: Das Ursulinenkloster in Graz by Leo Diet | Zeichnung
+[2026-01-13T14:03:03.029Z] 💾 진행 상황 저장: 20개 작품 수집됨
+[2026-01-13T14:03:04.031Z] 
+[21/100] https://sammlung.belvedere.at/objects/60/der-wiener-burgermeister-dr-richard-weiskirchner
+[2026-01-13T14:03:07.528Z] ✅ 수집 완료: Der Wiener Bürgermeister Dr. Richard Weiskirchner by Hans Temple | Gemälde
+[2026-01-13T14:03:08.532Z] 
+[22/100] https://sammlung.belvedere.at/objects/65/winternacht
+[2026-01-13T14:03:12.478Z] ✅ 수집 완료: Winternacht by Karl Sterrer | Gemälde
+[2026-01-13T14:03:13.487Z] 
+[23/100] https://sammlung.belvedere.at/objects/66/landliches-interieur
+[2026-01-13T14:03:18.097Z] ✅ 수집 완료: Ländliches Interieur by Ludwig Ferdinand Graf | Gemälde
+[2026-01-13T14:03:19.107Z] 
+[24/100] https://sammlung.belvedere.at/objects/67/zirkusstudie-an-der-longe
+[2026-01-13T14:03:23.247Z] ✅ 수집 완료: Zirkusstudie (An der Longe) by Otto Friedrich | Gemälde
+[2026-01-13T14:03:24.248Z] 
+[25/100] https://sammlung.belvedere.at/objects/70/hollandische-landschaft
+[2026-01-13T14:03:27.233Z] ✅ 수집 완료: Holländische Landschaft by Hans Tichy | Gemälde
+[2026-01-13T14:03:28.234Z] 
+[26/100] https://sammlung.belvedere.at/objects/73/dordrecht
+[2026-01-13T14:03:31.126Z] ✅ 수집 완료: Dordrecht by Gilbert von Canal | Gemälde
+[2026-01-13T14:03:32.130Z] 
+[27/100] https://sammlung.belvedere.at/objects/83/bora-bei-brioni
+[2026-01-13T14:03:35.112Z] ✅ 수집 완료: Bora bei Brioni by Paul Ress | Gemälde
+[2026-01-13T14:03:36.113Z] 
+[28/100] https://sammlung.belvedere.at/objects/87/der-heimatdichter-peter-rosegger-18431918
+[2026-01-13T14:03:39.088Z] ✅ 수집 완료: Der Heimatdichter Peter Rosegger (1843-1918) by Ferdinand Pamberger | Gemälde
+[2026-01-13T14:03:40.089Z] 
+[29/100] https://sammlung.belvedere.at/objects/93/herabkunft-des-heiligen-geistes-pfingstfest
+[2026-01-13T14:03:43.682Z] ✅ 수집 완료: Herabkunft des Heiligen Geistes (Pfingstfest) by Meister von Irrsdorf | Relief
+[2026-01-13T14:03:44.693Z] 
+[30/100] https://sammlung.belvedere.at/objects/97/16-ansichten-tschechischer-landschaften-ceska-krajina
+[2026-01-13T14:03:49.730Z] ✅ 수집 완료: 16 Ansichten tschechischer Landschaften "Česká krajina" by Ferdinand Engelmüller | Mappenwerk
+[2026-01-13T14:03:49.756Z] 💾 진행 상황 저장: 30개 작품 수집됨
+[2026-01-13T14:03:50.757Z] 
+[31/100] https://sammlung.belvedere.at/objects/98/der-holzschlag
+[2026-01-13T14:03:53.897Z] ✅ 수집 완료: Der Holzschlag by Ferdinand Andri | Gemälde
+[2026-01-13T14:03:54.900Z] 
+[32/100] https://sammlung.belvedere.at/objects/99/groes-kuchenstillleben
+[2026-01-13T14:04:03.623Z] ✅ 수집 완료: Großes Küchenstillleben by Carl Schuch | Gemälde
+[2026-01-13T14:04:04.626Z] 
+[33/100] https://sammlung.belvedere.at/objects/100/waldinneres-bei-saut-du-doubs
+[2026-01-13T14:04:09.090Z] ✅ 수집 완료: Waldinneres bei Saut du Doubs by Carl Schuch | Gemälde
+[2026-01-13T14:04:10.091Z] 
+[34/100] https://sammlung.belvedere.at/objects/105/portrat-einer-bauerin
+[2026-01-13T14:04:13.307Z] ✅ 수집 완료: Porträt einer Bäuerin by Franz Gasser | Gemälde
+[2026-01-13T14:04:14.312Z] 
+[35/100] https://sammlung.belvedere.at/objects/106/schwimmbad
+[2026-01-13T14:04:17.781Z] ✅ 수집 완료: Schwimmbad by Ludwig Ferdinand Graf | Gemälde
+[2026-01-13T14:04:18.784Z] 
+[36/100] https://sammlung.belvedere.at/objects/107/madchenbildnis
+[2026-01-13T14:04:22.225Z] ✅ 수집 완료: Mädchenbildnis by Franz Jaschke | Gemälde
+[2026-01-13T14:04:23.226Z] 
+[37/100] https://sammlung.belvedere.at/objects/121/landschaft-im-sabinergebirge
+[2026-01-13T14:04:25.945Z] ✅ 수집 완료: Landschaft im Sabinergebirge by Carl Schuch | Gemälde
+[2026-01-13T14:04:26.947Z] 
+[38/100] https://sammlung.belvedere.at/objects/122/felsenlandschaft-bei-olevano
+[2026-01-13T14:04:30.359Z] ✅ 수집 완료: Felsenlandschaft bei Olevano by Carl Schuch | Gemälde
+[2026-01-13T14:04:31.361Z] 
+[39/100] https://sammlung.belvedere.at/objects/123/pferdeschwemme
+[2026-01-13T14:04:34.424Z] ✅ 수집 완료: Pferdeschwemme by Teutwart Schmitson | Gemälde
+[2026-01-13T14:04:35.425Z] 
+[40/100] https://sammlung.belvedere.at/objects/124/seine-excellenz-moritz-graf-vetter-von-der-lilie-19011907
+[2026-01-13T14:04:39.053Z] ✅ 수집 완료: Seine Excellenz Moritz Graf Vetter von der Lilie, 1901-1907 Präsident des Abgeordnetenhauses by Ludwig Wieden | Gemälde
+[2026-01-13T14:04:39.055Z] 💾 진행 상황 저장: 40개 작품 수집됨
+[2026-01-13T14:04:40.056Z] 
+[41/100] https://sammlung.belvedere.at/objects/125/neugefallener-schnee
+[2026-01-13T14:04:43.185Z] ✅ 수집 완료: Neugefallener Schnee by Gustaf Fjæstad | Gemälde
+[2026-01-13T14:04:44.187Z] 
+[42/100] https://sammlung.belvedere.at/objects/126/niederosterreichische-bauernhochzeit
+[2026-01-13T14:05:07.350Z] ✅ 수집 완료: Niederösterreichische Bauernhochzeit by Ferdinand Georg Waldmüller | Gemälde
+[2026-01-13T14:05:08.352Z] 
+[43/100] https://sammlung.belvedere.at/objects/128/frachtenbahnhof
+[2026-01-13T14:05:24.572Z] ✅ 수집 완료: Frachtenbahnhof by Rudolf Quittner | Gemälde
+[2026-01-13T14:05:25.576Z] 
+[44/100] https://sammlung.belvedere.at/objects/131/gotische-grabkirche-st-michael-turmfassade
+[2026-01-13T14:05:28.607Z] ✅ 수집 완료: Gotische Grabkirche St. Michael, Turmfassade by Hans Makart | Gemälde
+[2026-01-13T14:05:29.609Z] 
+[45/100] https://sammlung.belvedere.at/objects/132/gotische-grabkirche-st-michael-seitenansicht
+[2026-01-13T14:05:32.595Z] ✅ 수집 완료: Gotische Grabkirche St. Michael, Seitenansicht by Hans Makart | Gemälde
+[2026-01-13T14:05:33.598Z] 
+[46/100] https://sammlung.belvedere.at/objects/133/feldmarschall-gideon-ernst-freiherr-von-loudon
+[2026-01-13T14:05:36.550Z] ✅ 수집 완료: Feldmarschall Gideon Ernst Freiherr von Loudon by Sigmund L'Allemand | Gemälde
+[2026-01-13T14:05:37.552Z] 
+[47/100] https://sammlung.belvedere.at/objects/134/landschaftsstudie
+[2026-01-13T14:05:40.315Z] ✅ 수집 완료: Landschaftsstudie by Sigmund L'Allemand | Gemälde
+[2026-01-13T14:05:41.316Z] 
+[48/100] https://sammlung.belvedere.at/objects/135/blick-uber-den-aerransee
+[2026-01-13T14:05:45.946Z] ✅ 수집 완료: Blick über den Aerransee by Otto Hesselbom | Gemälde
+[2026-01-13T14:05:46.949Z] 
+[49/100] https://sammlung.belvedere.at/objects/167/das-gasteinertal-i
+[2026-01-13T14:05:49.899Z] ✅ 수집 완료: Das Gasteinertal I by Anton Romako | Gemälde
+[2026-01-13T14:05:50.903Z] 
+[50/100] https://sammlung.belvedere.at/objects/169/picknick
+[2026-01-13T14:05:53.819Z] ✅ 수집 완료: Picknick by Otto Hettner | Gemälde
+[2026-01-13T14:05:53.824Z] 💾 진행 상황 저장: 50개 작품 수집됨
+[2026-01-13T14:05:54.825Z] 
+[51/100] https://sammlung.belvedere.at/objects/170/mahnenziege
+[2026-01-13T14:06:00.145Z] ✅ 수집 완료: Mähnenziege by Franz Barwig der Ältere | Tierstatuette
+[2026-01-13T14:06:01.168Z] 
+[52/100] https://sammlung.belvedere.at/objects/171/rehbock
+[2026-01-13T14:06:06.433Z] ✅ 수집 완료: Rehbock by Franz Barwig der Ältere | Tierstatuette
+[2026-01-13T14:06:07.470Z] 
+[53/100] https://sammlung.belvedere.at/objects/174/am-wasser
+[2026-01-13T14:06:11.019Z] ✅ 수집 완료: Am Wasser by Eva Gonzalès | Gemälde
+[2026-01-13T14:06:12.023Z] 
+[54/100] https://sammlung.belvedere.at/objects/176/wasserer
+[2026-01-13T14:06:15.069Z] ✅ 수집 완료: Wasserer by Franz Seifert | Statuette
+[2026-01-13T14:06:16.073Z] 
+[55/100] https://sammlung.belvedere.at/objects/178/im-nebel
+[2026-01-13T14:06:19.172Z] ✅ 수집 완료: Im Nebel by Marie Bashkirtseff | Gemälde
+[2026-01-13T14:06:20.175Z] 
+[56/100] https://sammlung.belvedere.at/objects/179/sardellen
+[2026-01-13T14:06:31.237Z] ✅ 수집 완료: Sardellen by Josef Navrátil | Gemälde
+[2026-01-13T14:06:32.242Z] 
+[57/100] https://sammlung.belvedere.at/objects/190/drosendorf
+[2026-01-13T14:06:43.838Z] ✅ 수집 완료: Drosendorf by Oskar Laske | Zeichnung
+[2026-01-13T14:06:44.842Z] 
+[58/100] https://sammlung.belvedere.at/objects/191/marquis-de-llano-spanischer-gesandter-in-wien
+[2026-01-13T14:06:47.780Z] ✅ 수집 완료: Marquis de Llano, spanischer Gesandter in Wien by Josef Mathias Grassi | Gemälde
+[2026-01-13T14:06:48.781Z] 
+[59/100] https://sammlung.belvedere.at/objects/192/der-maler-johann-nepomuk-schodlberger-17791853
+[2026-01-13T14:06:51.633Z] ✅ 수집 완료: Der Maler Johann Nepomuk Schödlberger (1779–1853) by Friedrich von Amerling | Gemälde
+[2026-01-13T14:06:52.636Z] 
+[60/100] https://sammlung.belvedere.at/objects/193/entwurf-zum-gemalde-kaiser-franz-i-von-osterreich-176818
+[2026-01-13T14:06:55.623Z] ✅ 수집 완료: Entwurf zum Gemälde "Kaiser Franz I. von Österreich (1768–1835) in preußischer Generalsuniform" by Friedrich von Amerling | Gemälde
+[2026-01-13T14:06:55.625Z] 💾 진행 상황 저장: 60개 작품 수집됨
+[2026-01-13T14:06:56.626Z] 
+[61/100] https://sammlung.belvedere.at/objects/200/die-eltern-des-kunstlers
+[2026-01-13T14:06:59.573Z] ✅ 수집 완료: Die Eltern des Künstlers by Johann Victor Krämer | Gemälde
+[2026-01-13T14:07:00.575Z] 
+[62/100] https://sammlung.belvedere.at/objects/201/gustav-mahler
+[2026-01-13T14:07:03.610Z] ✅ 수집 완료: Gustav Mahler by Auguste Rodin | Kopfbüste
+[2026-01-13T14:07:04.613Z] 
+[63/100] https://sammlung.belvedere.at/objects/204/landwehroffizier
+[2026-01-13T14:07:07.422Z] ✅ 수집 완료: Landwehroffizier by Wilhelm Trübner | Gemälde
+[2026-01-13T14:07:08.425Z] 
+[64/100] https://sammlung.belvedere.at/objects/206/die-frau-des-kunstlers
+[2026-01-13T14:07:11.328Z] ✅ 수집 완료: Die Frau des Künstlers by Jacek Hyacinth Malczewski | Gemälde
+[2026-01-13T14:07:12.340Z] 
+[65/100] https://sammlung.belvedere.at/objects/207/esparsettenfeld-bei-znaim-ii
+[2026-01-13T14:07:15.773Z] ✅ 수집 완료: Esparsettenfeld bei Znaim II by Theodor von Hörmann | Gemälde
+[2026-01-13T14:07:16.775Z] 
+[66/100] https://sammlung.belvedere.at/objects/209/pieta
+[2026-01-13T14:07:19.510Z] ✅ 수집 완료: Pietà by Virgil Rainer | Skulpturengruppe (2-figurig)
+[2026-01-13T14:07:20.512Z] 
+[67/100] https://sammlung.belvedere.at/objects/210/am-sarmingbach
+[2026-01-13T14:07:23.260Z] ✅ 수집 완료: Am Sarmingbach by Jindřich Tomec | Gemälde
+[2026-01-13T14:07:24.263Z] 
+[68/100] https://sammlung.belvedere.at/objects/212/die-hofbibliothek
+[2026-01-13T14:07:27.259Z] ✅ 수집 완료: Die Hofbibliothek by Luigi Kasimir | Druck
+[2026-01-13T14:07:28.260Z] 
+[69/100] https://sammlung.belvedere.at/objects/214/johanaan
+[2026-01-13T14:07:31.081Z] ✅ 수집 완료: Johanaan by Josef Unterholzer | Plakette
+[2026-01-13T14:07:32.082Z] 
+[70/100] https://sammlung.belvedere.at/objects/215/das-seebachtal-bei-franzensbad
+[2026-01-13T14:07:34.973Z] ✅ 수집 완료: Das Seebachtal bei Franzensbad by Fritz Pontini | Gemälde
+[2026-01-13T14:07:34.976Z] 💾 진행 상황 저장: 70개 작품 수집됨
+[2026-01-13T14:07:35.978Z] 
+[71/100] https://sammlung.belvedere.at/objects/217/dorf-in-der-sonne
+[2026-01-13T14:07:38.934Z] ✅ 수집 완료: Dorf in der Sonne by Emanuel Baschny | Gemälde
+[2026-01-13T14:07:39.938Z] 
+[72/100] https://sammlung.belvedere.at/objects/226/die-heiligen-drei-konige
+[2026-01-13T14:07:43.095Z] ✅ 수집 완료: Die Heiligen Drei Könige by Max von Poosch-Gablenz | Gemälde
+[2026-01-13T14:07:44.098Z] 
+[73/100] https://sammlung.belvedere.at/objects/228/unterrichtsminister-dr-gustav-marchet
+[2026-01-13T14:07:46.750Z] ✅ 수집 완료: Unterrichtsminister Dr. Gustav Marchet by Viktor Stauffer | Gemälde
+[2026-01-13T14:07:47.757Z] 
+[74/100] https://sammlung.belvedere.at/objects/232/der-junge-kaiser-franz-joseph-i
+[2026-01-13T14:07:50.775Z] ✅ 수집 완료: Der junge Kaiser Franz Joseph I. by Michael Moritz Daffinger | Gemälde
+[2026-01-13T14:07:51.780Z] 
+[75/100] https://sammlung.belvedere.at/objects/234/heimkehr-von-der-arbeit-die-liebenden-am-scheideweg
+[2026-01-13T14:07:54.733Z] ✅ 수집 완료: Heimkehr von der Arbeit (Die Liebenden am Scheideweg) by Ferdinand Georg Waldmüller | Gemälde
+[2026-01-13T14:07:55.785Z] 
+[76/100] https://sammlung.belvedere.at/objects/235/marchfeld-vom-bisamberg
+[2026-01-13T14:07:58.849Z] ✅ 수집 완료: Marchfeld vom Bisamberg by Ernst Eck | Gemälde
+[2026-01-13T14:07:59.853Z] 
+[77/100] https://sammlung.belvedere.at/objects/236/gang-mariens-uber-das-gebirge
+[2026-01-13T14:08:02.794Z] ✅ 수집 완료: Gang Mariens über das Gebirge by Maximilian Liebenwein | Gemälde
+[2026-01-13T14:08:03.797Z] 
+[78/100] https://sammlung.belvedere.at/objects/238/pappeln
+[2026-01-13T14:08:06.570Z] ✅ 수집 완료: Pappeln by August Roth | Gemälde
+[2026-01-13T14:08:07.574Z] 
+[79/100] https://sammlung.belvedere.at/objects/240/feldarbeiter
+[2026-01-13T14:08:11.159Z] ✅ 수집 완료: Feldarbeiter by Arthur Oskar Alexander | Gemälde
+[2026-01-13T14:08:12.159Z] 
+[80/100] https://sammlung.belvedere.at/objects/241/der-schiffsbauingenieur-josef-von-romako-als-oberleutnant
+[2026-01-13T14:08:15.607Z] ✅ 수집 완료: Der Schiffsbau-Ingenieur Josef von Romako als Oberleutnant by Anton Romako | Gemälde
+[2026-01-13T14:08:15.613Z] 💾 진행 상황 저장: 80개 작품 수집됨
+[2026-01-13T14:08:16.614Z] 
+[81/100] https://sammlung.belvedere.at/objects/242/dame-in-zinnobergrunem-kleid
+[2026-01-13T14:08:19.525Z] ✅ 수집 완료: Dame in zinnobergrünem Kleid by Ferdinand Georg Waldmüller | Gemälde
+[2026-01-13T14:08:20.530Z] 
+[82/100] https://sammlung.belvedere.at/objects/254/furstliche-lichtensteinsche-patronatskirche-in-seebenstein
+[2026-01-13T14:08:23.400Z] ✅ 수집 완료: Fürstliche Lichtenstein´sche Patronatskirche in Seebenstein by Gabriele Murad-Michalowski | Zeichnung
+[2026-01-13T14:08:24.402Z] 
+[83/100] https://sammlung.belvedere.at/objects/256/waldlichtung-bei-purkersdorf
+[2026-01-13T14:08:27.166Z] ✅ 수집 완료: Waldlichtung bei Purkersdorf by Carl Schuch | Gemälde
+[2026-01-13T14:08:28.167Z] 
+[84/100] https://sammlung.belvedere.at/objects/259/abendlandschaft
+[2026-01-13T14:08:30.992Z] ✅ 수집 완료: Abendlandschaft by Carl Freiherr von Pidoll zu Quintenbach | Gemälde
+[2026-01-13T14:08:31.993Z] 
+[85/100] https://sammlung.belvedere.at/objects/260/groe-praterlandschaft
+[2026-01-13T14:08:35.447Z] ✅ 수집 완료: Große Praterlandschaft by Ferdinand Georg Waldmüller | Gemälde
+[2026-01-13T14:08:36.449Z] 
+[86/100] https://sammlung.belvedere.at/objects/261/elisabeth-imredy-edle-von-omorovicze
+[2026-01-13T14:08:39.459Z] ✅ 수집 완료: Elisabeth Imrédy, Edle von Omorovicze by August von Pettenkofen | Gemälde
+[2026-01-13T14:08:40.460Z] 
+[87/100] https://sammlung.belvedere.at/objects/262/franz-imredy-edler-von-omorovicze
+[2026-01-13T14:08:43.394Z] ✅ 수집 완료: Franz Imrédy, Edler von Omorovicze by August von Pettenkofen | Gemälde
+[2026-01-13T14:08:44.397Z] 
+[88/100] https://sammlung.belvedere.at/objects/263/der-apotheker-dr-hofmann
+[2026-01-13T14:08:47.529Z] ✅ 수집 완료: Der Apotheker Dr. Hofmann by Erasmus von Engert | Gemälde
+[2026-01-13T14:08:48.531Z] 
+[89/100] https://sammlung.belvedere.at/objects/264/magdalena-plach
+[2026-01-13T14:08:51.295Z] ✅ 수집 완료: Magdalena Plach by Hans Makart | Gemälde
+[2026-01-13T14:08:52.298Z] 
+[90/100] https://sammlung.belvedere.at/objects/266/spaziergang-am-krottenbach
+[2026-01-13T14:08:57.035Z] ✅ 수집 완료: Spaziergang am Krottenbach by Anton Hlávacek | Zeichnung
+[2026-01-13T14:08:57.038Z] 💾 진행 상황 저장: 90개 작품 수집됨
+[2026-01-13T14:08:58.039Z] 
+[91/100] https://sammlung.belvedere.at/objects/276/die-heiligen-drei-konige
+[2026-01-13T14:09:01.478Z] ✅ 수집 완료: Die heiligen drei Könige by Maximilian Liebenwein | Gemälde
+[2026-01-13T14:09:02.480Z] 
+[92/100] https://sammlung.belvedere.at/objects/277/richard-strauss
+[2026-01-13T14:09:08.000Z] ✅ 수집 완료: Richard Strauss by Hugo Lederer | Kopfbüste
+[2026-01-13T14:09:09.003Z] 
+[93/100] https://sammlung.belvedere.at/objects/279/stigmatisation-des-hl-franziskus
+[2026-01-13T14:09:12.453Z] ✅ 수집 완료: Stigmatisation des hl. Franziskus by Lukas Cranach der Ältere | Tafelbild
+[2026-01-13T14:09:13.458Z] 
+[94/100] https://sammlung.belvedere.at/objects/281/dame-mit-goldhaube
+[2026-01-13T14:09:23.559Z] ✅ 수집 완료: Dame mit Goldhaube by Unbekannter Künstler | Gemälde
+[2026-01-13T14:09:24.564Z] 
+[95/100] https://sammlung.belvedere.at/objects/282/herrenbildnis
+[2026-01-13T14:09:27.673Z] ✅ 수집 완료: Herrenbildnis by Unbekannter Künstler | Gemälde
+[2026-01-13T14:09:28.676Z] 
+[96/100] https://sammlung.belvedere.at/objects/286/apfelpfluckendes-madchen
+[2026-01-13T14:09:31.815Z] ✅ 수집 완료: Apfelpflückendes Mädchen by Anton Romako | Gemälde
+[2026-01-13T14:09:32.818Z] 
+[97/100] https://sammlung.belvedere.at/objects/287/strae-in-pontoise-rue-de-gisors
+[2026-01-13T14:09:36.541Z] ✅ 수집 완료: Straße in Pontoise (Rue de Gisors) by Camille Jacob Pissarro | Gemälde
+[2026-01-13T14:09:37.542Z] 
+[98/100] https://sammlung.belvedere.at/objects/289/der-junge-elefant
+[2026-01-13T14:09:42.676Z] ✅ 수집 완료: Der junge Elefant by Carl Wollek | Tierstatuette
+[2026-01-13T14:09:43.701Z] 
+[99/100] https://sammlung.belvedere.at/objects/290/blick-uber-wiener-vorstadthauser-beatrixgasse
+[2026-01-13T14:09:46.742Z] ✅ 수집 완료: Blick über Wiener Vorstadthäuser (Beatrixgasse) by Adalbert Stifter | Gemälde
+[2026-01-13T14:09:47.748Z] 
+[100/100] https://sammlung.belvedere.at/objects/291/das-leben-entflieht
+[2026-01-13T14:09:53.612Z] ✅ 수집 완료: Das Leben entflieht by Jan Štursa | Büste
+[2026-01-13T14:09:53.660Z] 💾 진행 상황 저장: 100개 작품 수집됨
+[2026-01-13T14:09:54.709Z] 
+✅ 완료! 100개 작품 저장됨: /Users/kietzsche/armin-web-main/public/data/belvedere-collection-test.json
+[2026-01-13T15:21:08.551Z] 🎨 Belvedere Museum Collection Scraper - Test V2 (100 items)
+[2026-01-13T15:21:08.559Z] ============================================================
+[2026-01-13T15:21:08.976Z] 📄 페이지 로드: https://sammlung.belvedere.at/objects/images?filter=classifications%3AMalerei (Malerei 카테고리)
+[2026-01-13T15:21:19.896Z] 🔍 작품 링크 수집 시작 (페이지네이션)...
+[2026-01-13T15:21:19.901Z] 📄 페이지 1 로드: https://sammlung.belvedere.at/objects/images
+[2026-01-13T15:21:24.422Z] 페이지 1: 12개 새 항목 발견 (총 12/100개)
+[2026-01-13T15:21:24.427Z] 📄 페이지 2 로드: https://sammlung.belvedere.at/objects/images?page=2
+[2026-01-13T15:21:27.935Z] 페이지 2: 12개 새 항목 발견 (총 24/100개)
+[2026-01-13T15:21:27.939Z] 📄 페이지 3 로드: https://sammlung.belvedere.at/objects/images?page=3
+[2026-01-13T15:21:31.809Z] 페이지 3: 12개 새 항목 발견 (총 36/100개)
+[2026-01-13T15:21:31.815Z] 📄 페이지 4 로드: https://sammlung.belvedere.at/objects/images?page=4
+[2026-01-13T15:21:35.695Z] 페이지 4: 12개 새 항목 발견 (총 48/100개)
+[2026-01-13T15:21:35.712Z] 📄 페이지 5 로드: https://sammlung.belvedere.at/objects/images?page=5
+[2026-01-13T15:21:39.458Z] ❌ 오류 발생: page.evaluate: Target page, context or browser has been closed
+[2026-01-13T15:21:40.167Z] 🎨 Belvedere Museum Collection Scraper - Test V2 (100 items)
+[2026-01-13T15:21:40.170Z] ============================================================
+[2026-01-13T15:21:40.725Z] 📄 페이지 로드: https://sammlung.belvedere.at/objects/images?filter=classifications%3AMalerei (Malerei 카테고리)
+[2026-01-13T15:21:49.614Z] 🔍 작품 링크 수집 시작 (페이지네이션) - Malerei (회화) 카테고리...
+[2026-01-13T15:21:49.617Z] 📄 페이지 1 로드: https://sammlung.belvedere.at/objects/images?filter=classifications%3AMalerei
+[2026-01-13T15:21:53.533Z] 페이지 1: 12개 새 항목 발견 (총 12/100개)
+[2026-01-13T15:21:53.535Z] 📄 페이지 2 로드: https://sammlung.belvedere.at/objects/images?filter=classifications%3AMalerei&page=2
+[2026-01-13T15:21:57.285Z] 페이지 2: 12개 새 항목 발견 (총 24/100개)
+[2026-01-13T15:21:57.289Z] 📄 페이지 3 로드: https://sammlung.belvedere.at/objects/images?filter=classifications%3AMalerei&page=3
+[2026-01-13T15:22:01.193Z] 페이지 3: 12개 새 항목 발견 (총 36/100개)
+[2026-01-13T15:22:01.197Z] 📄 페이지 4 로드: https://sammlung.belvedere.at/objects/images?filter=classifications%3AMalerei&page=4
+[2026-01-13T15:22:05.029Z] 페이지 4: 12개 새 항목 발견 (총 48/100개)
+[2026-01-13T15:22:05.032Z] 📄 페이지 5 로드: https://sammlung.belvedere.at/objects/images?filter=classifications%3AMalerei&page=5
+[2026-01-13T15:22:08.892Z] 페이지 5: 12개 새 항목 발견 (총 60/100개)
+[2026-01-13T15:22:08.896Z] 📄 페이지 6 로드: https://sammlung.belvedere.at/objects/images?filter=classifications%3AMalerei&page=6
+[2026-01-13T15:22:12.723Z] 페이지 6: 12개 새 항목 발견 (총 72/100개)
+[2026-01-13T15:22:12.727Z] 📄 페이지 7 로드: https://sammlung.belvedere.at/objects/images?filter=classifications%3AMalerei&page=7
+[2026-01-13T15:22:16.690Z] 페이지 7: 12개 새 항목 발견 (총 84/100개)
+[2026-01-13T15:22:16.693Z] 📄 페이지 8 로드: https://sammlung.belvedere.at/objects/images?filter=classifications%3AMalerei&page=8
+[2026-01-13T15:22:20.687Z] 페이지 8: 12개 새 항목 발견 (총 96/100개)
+[2026-01-13T15:22:20.689Z] 📄 페이지 9 로드: https://sammlung.belvedere.at/objects/images?filter=classifications%3AMalerei&page=9
+[2026-01-13T15:22:24.571Z] 페이지 9: 4개 새 항목 발견 (총 100/100개)
+[2026-01-13T15:22:24.572Z] ✅ 총 100개 작품 링크 수집 완료
+[2026-01-13T15:22:24.572Z] 
+📊 상세 정보 수집 시작 (100개)...
+[2026-01-13T15:22:24.573Z] 
+[1/100] https://sammlung.belvedere.at/objects/8/kaiser-ferdinand-i-von-osterreich
+[2026-01-13T15:22:27.925Z] ✅ 수집 완료: Kaiser Ferdinand I. von Österreich by Ferdinand Georg Waldmüller | Gemälde
+[2026-01-13T15:22:28.927Z] 
+[2/100] https://sammlung.belvedere.at/objects/9/die-ebene-von-auvers
+[2026-01-13T15:22:31.968Z] ✅ 수집 완료: Die Ebene von Auvers by Vincent van Gogh | Gemälde
+[2026-01-13T15:22:32.970Z] 
+[3/100] https://sammlung.belvedere.at/objects/20/vor-den-feiertagen
+[2026-01-13T15:22:35.924Z] ✅ 수집 완료: Vor den Feiertagen by Emil Strecker | Gemälde
+[2026-01-13T15:22:36.925Z] 
+[4/100] https://sammlung.belvedere.at/objects/25/wolkenschatten
+[2026-01-13T15:22:39.727Z] ✅ 수집 완료: Wolkenschatten by Oskar Frenzel | Gemälde
+[2026-01-13T15:22:40.731Z] 
+[5/100] https://sammlung.belvedere.at/objects/39/der-michel
+[2026-01-13T15:22:43.806Z] ✅ 수집 완료: Der Michel by Josef Engelhart | Gemälde
+[2026-01-13T15:22:44.808Z] 
+[6/100] https://sammlung.belvedere.at/objects/41/blick-aus-meinem-fenster
+[2026-01-13T15:22:47.610Z] ✅ 수집 완료: Blick aus meinem Fenster by Josef Engelhart | Gemälde
+[2026-01-13T15:22:48.611Z] 
+[7/100] https://sammlung.belvedere.at/objects/44/winter
+[2026-01-13T15:22:51.436Z] ✅ 수집 완료: Winter by Eduard Ameseder | Gemälde
+[2026-01-13T15:22:52.437Z] 
+[8/100] https://sammlung.belvedere.at/objects/50/madchen-in-weiem-kleid
+[2026-01-13T15:22:55.413Z] ✅ 수집 완료: Mädchen in weißem Kleid by Franz Jaschke | Gemälde
+[2026-01-13T15:22:56.415Z] 
+[9/100] https://sammlung.belvedere.at/objects/51/weihnachtsmarkt-am-hof-in-wien
+[2026-01-13T15:22:59.459Z] ✅ 수집 완료: Weihnachtsmarkt am Hof in Wien by Ernst Juch | Gemälde
+[2026-01-13T15:23:00.462Z] 
+[10/100] https://sammlung.belvedere.at/objects/53/die-tischrede
+[2026-01-13T15:23:03.258Z] ✅ 수집 완료: Die Tischrede by Ernst Juch | Gemälde
+[2026-01-13T15:23:03.262Z] 💾 진행 상황 저장: 10개 작품 수집됨
+[2026-01-13T15:23:04.263Z] 
+[11/100] https://sammlung.belvedere.at/objects/55/traubengehange
+[2026-01-13T15:23:07.263Z] ✅ 수집 완료: Traubengehänge by Ferdinand Georg Waldmüller | Gemälde
+[2026-01-13T15:23:08.264Z] 
+[12/100] https://sammlung.belvedere.at/objects/56/pferdemarkt-in-szolnok-i
+[2026-01-13T15:23:11.133Z] ✅ 수집 완료: Pferdemarkt in Szolnok I by August von Pettenkofen | Gemälde
+[2026-01-13T15:23:12.136Z] 
+[13/100] https://sammlung.belvedere.at/objects/57/nach-dem-bade
+[2026-01-13T15:23:14.930Z] ✅ 수집 완료: Nach dem Bade by Pierre Auguste Renoir | Gemälde
+[2026-01-13T15:23:15.936Z] 
+[14/100] https://sammlung.belvedere.at/objects/58/sancho-pansa-unter-einem-baum-ausruhend
+[2026-01-13T15:23:19.037Z] ✅ 수집 완료: Sancho Pansa, unter einem Baum ausruhend by Honoré Daumier | Gemälde
+[2026-01-13T15:23:20.057Z] 
+[15/100] https://sammlung.belvedere.at/objects/60/der-wiener-burgermeister-dr-richard-weiskirchner
+[2026-01-13T15:23:23.412Z] ✅ 수집 완료: Der Wiener Bürgermeister Dr. Richard Weiskirchner by Hans Temple | Gemälde
+[2026-01-13T15:23:24.415Z] 
+[16/100] https://sammlung.belvedere.at/objects/65/winternacht
+[2026-01-13T15:23:27.434Z] ✅ 수집 완료: Winternacht by Karl Sterrer | Gemälde
+[2026-01-13T15:23:28.437Z] 
+[17/100] https://sammlung.belvedere.at/objects/66/landliches-interieur
+[2026-01-13T15:23:31.300Z] ✅ 수집 완료: Ländliches Interieur by Ludwig Ferdinand Graf | Gemälde
+[2026-01-13T15:23:32.303Z] 
+[18/100] https://sammlung.belvedere.at/objects/67/zirkusstudie-an-der-longe
+[2026-01-13T15:23:35.273Z] ✅ 수집 완료: Zirkusstudie (An der Longe) by Otto Friedrich | Gemälde
+[2026-01-13T15:23:36.274Z] 
+[19/100] https://sammlung.belvedere.at/objects/70/hollandische-landschaft
+[2026-01-13T15:23:39.129Z] ✅ 수집 완료: Holländische Landschaft by Hans Tichy | Gemälde
+[2026-01-13T15:23:40.131Z] 
+[20/100] https://sammlung.belvedere.at/objects/73/dordrecht
+[2026-01-13T15:23:43.488Z] ✅ 수집 완료: Dordrecht by Gilbert von Canal | Gemälde
+[2026-01-13T15:23:43.500Z] 💾 진행 상황 저장: 20개 작품 수집됨
+[2026-01-13T15:23:44.502Z] 
+[21/100] https://sammlung.belvedere.at/objects/83/bora-bei-brioni
+[2026-01-13T15:23:47.333Z] ✅ 수집 완료: Bora bei Brioni by Paul Ress | Gemälde
+[2026-01-13T15:23:48.335Z] 
+[22/100] https://sammlung.belvedere.at/objects/87/der-heimatdichter-peter-rosegger-18431918
+[2026-01-13T15:23:51.281Z] ✅ 수집 완료: Der Heimatdichter Peter Rosegger (1843-1918) by Ferdinand Pamberger | Gemälde
+[2026-01-13T15:23:52.282Z] 
+[23/100] https://sammlung.belvedere.at/objects/97/16-ansichten-tschechischer-landschaften-ceska-krajina
+[2026-01-13T15:23:55.393Z] ✅ 수집 완료: 16 Ansichten tschechischer Landschaften "Česká krajina" by Ferdinand Engelmüller | Mappenwerk
+[2026-01-13T15:23:56.399Z] 
+[24/100] https://sammlung.belvedere.at/objects/98/der-holzschlag
+[2026-01-13T15:23:59.623Z] ✅ 수집 완료: Der Holzschlag by Ferdinand Andri | Gemälde
+[2026-01-13T15:24:00.624Z] 
+[25/100] https://sammlung.belvedere.at/objects/99/groes-kuchenstillleben
+[2026-01-13T15:24:03.483Z] ✅ 수집 완료: Großes Küchenstillleben by Carl Schuch | Gemälde
+[2026-01-13T15:24:04.486Z] 
+[26/100] https://sammlung.belvedere.at/objects/100/waldinneres-bei-saut-du-doubs
+[2026-01-13T15:24:07.358Z] ✅ 수집 완료: Waldinneres bei Saut du Doubs by Carl Schuch | Gemälde
+[2026-01-13T15:24:08.359Z] 
+[27/100] https://sammlung.belvedere.at/objects/105/portrat-einer-bauerin
+[2026-01-13T15:24:11.474Z] ✅ 수집 완료: Porträt einer Bäuerin by Franz Gasser | Gemälde
+[2026-01-13T15:24:12.476Z] 
+[28/100] https://sammlung.belvedere.at/objects/106/schwimmbad
+[2026-01-13T15:24:15.462Z] ✅ 수집 완료: Schwimmbad by Ludwig Ferdinand Graf | Gemälde
+[2026-01-13T15:24:16.465Z] 
+[29/100] https://sammlung.belvedere.at/objects/107/madchenbildnis
+[2026-01-13T15:24:19.378Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/107/madchenbildnis): page.evaluate: Target page, context or browser has been closed
+[2026-01-13T15:24:19.379Z] ✅ 수집 완료: Mädchenbildnis by Franz Jaschke | N/A
+[2026-01-13T15:24:20.380Z] 
+[30/100] https://sammlung.belvedere.at/objects/121/landschaft-im-sabinergebirge
+[2026-01-13T15:24:20.384Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/121/landschaft-im-sabinergebirge): page.goto: Target page, context or browser has been closed
+[2026-01-13T15:24:20.385Z] ✅ 수집 완료: Landschaft im Sabinergebirge by Carl Schuch | N/A
+[2026-01-13T15:24:20.386Z] 💾 진행 상황 저장: 30개 작품 수집됨
+[2026-01-13T15:24:21.387Z] 
+[31/100] https://sammlung.belvedere.at/objects/122/felsenlandschaft-bei-olevano
+[2026-01-13T15:24:21.389Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/122/felsenlandschaft-bei-olevano): page.goto: Target page, context or browser has been closed
+[2026-01-13T15:24:21.389Z] ✅ 수집 완료: Felsenlandschaft bei Olevano by Carl Schuch | N/A
+[2026-01-13T15:24:22.393Z] 
+[32/100] https://sammlung.belvedere.at/objects/123/pferdeschwemme
+[2026-01-13T15:24:22.406Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/123/pferdeschwemme): page.goto: Target page, context or browser has been closed
+[2026-01-13T15:24:22.406Z] ✅ 수집 완료: Pferdeschwemme by Teutwart Schmitson | N/A
+[2026-01-13T15:24:23.410Z] 
+[33/100] https://sammlung.belvedere.at/objects/124/seine-excellenz-moritz-graf-vetter-von-der-lilie-19011907
+[2026-01-13T15:24:23.419Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/124/seine-excellenz-moritz-graf-vetter-von-der-lilie-19011907): page.goto: Target page, context or browser has been closed
+[2026-01-13T15:24:23.419Z] ✅ 수집 완료: Seine Excellenz Moritz Graf Vetter von der Lilie, 1901-1907 Präsident des Abgeordnetenhauses by Ludwig Wieden | N/A
+[2026-01-13T15:24:24.421Z] 
+[34/100] https://sammlung.belvedere.at/objects/125/neugefallener-schnee
+[2026-01-13T15:24:24.422Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/125/neugefallener-schnee): page.goto: Target page, context or browser has been closed
+[2026-01-13T15:24:24.422Z] ✅ 수집 완료: Neugefallener Schnee by Gustaf Fjæstad | N/A
+[2026-01-13T15:24:25.423Z] 
+[35/100] https://sammlung.belvedere.at/objects/126/niederosterreichische-bauernhochzeit
+[2026-01-13T15:24:25.425Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/126/niederosterreichische-bauernhochzeit): page.goto: Target page, context or browser has been closed
+[2026-01-13T15:24:25.425Z] ✅ 수집 완료: Niederösterreichische Bauernhochzeit by Ferdinand Georg Waldmüller | N/A
+[2026-01-13T15:24:26.427Z] 
+[36/100] https://sammlung.belvedere.at/objects/128/frachtenbahnhof
+[2026-01-13T15:24:26.429Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/128/frachtenbahnhof): page.goto: Target page, context or browser has been closed
+[2026-01-13T15:24:26.430Z] ✅ 수집 완료: Frachtenbahnhof by Rudolf Quittner | N/A
+[2026-01-13T15:24:27.432Z] 
+[37/100] https://sammlung.belvedere.at/objects/131/gotische-grabkirche-st-michael-turmfassade
+[2026-01-13T15:24:27.440Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/131/gotische-grabkirche-st-michael-turmfassade): page.goto: Target page, context or browser has been closed
+[2026-01-13T15:24:27.440Z] ✅ 수집 완료: Gotische Grabkirche St. Michael, Turmfassade by Hans Makart | N/A
+[2026-01-13T15:24:28.446Z] 
+[38/100] https://sammlung.belvedere.at/objects/132/gotische-grabkirche-st-michael-seitenansicht
+[2026-01-13T15:24:28.461Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/132/gotische-grabkirche-st-michael-seitenansicht): page.goto: Target page, context or browser has been closed
+[2026-01-13T15:24:28.461Z] ✅ 수집 완료: Gotische Grabkirche St. Michael, Seitenansicht by Hans Makart | N/A
+[2026-01-13T15:24:29.478Z] 
+[39/100] https://sammlung.belvedere.at/objects/133/feldmarschall-gideon-ernst-freiherr-von-loudon
+[2026-01-13T15:24:29.534Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/133/feldmarschall-gideon-ernst-freiherr-von-loudon): page.goto: Target page, context or browser has been closed
+[2026-01-13T15:24:29.536Z] ✅ 수집 완료: Feldmarschall Gideon Ernst Freiherr von Loudon by Sigmund L'Allemand | N/A
+[2026-01-13T15:24:30.558Z] 
+[40/100] https://sammlung.belvedere.at/objects/134/landschaftsstudie
+[2026-01-13T15:24:30.592Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/134/landschaftsstudie): page.goto: Target page, context or browser has been closed
+[2026-01-13T15:24:30.593Z] ✅ 수집 완료: Landschaftsstudie by Sigmund L'Allemand | N/A
+[2026-01-13T15:24:30.595Z] 💾 진행 상황 저장: 40개 작품 수집됨
+[2026-01-13T15:24:31.596Z] 
+[41/100] https://sammlung.belvedere.at/objects/135/blick-uber-den-aerransee
+[2026-01-13T15:24:31.597Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/135/blick-uber-den-aerransee): page.goto: Target page, context or browser has been closed
+[2026-01-13T15:24:31.598Z] ✅ 수집 완료: Blick über den Aerransee by Otto Hesselbom | N/A
+[2026-01-13T15:24:32.600Z] 
+[42/100] https://sammlung.belvedere.at/objects/167/das-gasteinertal-i
+[2026-01-13T15:24:32.602Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/167/das-gasteinertal-i): page.goto: Target page, context or browser has been closed
+[2026-01-13T15:24:32.602Z] ✅ 수집 완료: Das Gasteinertal I by Anton Romako | N/A
+[2026-01-13T15:24:33.603Z] 
+[43/100] https://sammlung.belvedere.at/objects/169/picknick
+[2026-01-13T15:24:33.607Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/169/picknick): page.goto: Target page, context or browser has been closed
+[2026-01-13T15:24:33.607Z] ✅ 수집 완료: Picknick by Otto Hettner | N/A
+[2026-01-13T15:24:34.610Z] 
+[44/100] https://sammlung.belvedere.at/objects/174/am-wasser
+[2026-01-13T15:24:34.622Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/174/am-wasser): page.goto: Target page, context or browser has been closed
+[2026-01-13T15:24:34.622Z] ✅ 수집 완료: Am Wasser by Eva Gonzalès | N/A
+[2026-01-13T15:24:35.624Z] 
+[45/100] https://sammlung.belvedere.at/objects/178/im-nebel
+[2026-01-13T15:24:35.626Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/178/im-nebel): page.goto: Target page, context or browser has been closed
+[2026-01-13T15:24:35.627Z] ✅ 수집 완료: Im Nebel by Marie Bashkirtseff | N/A
+[2026-01-13T15:24:36.628Z] 
+[46/100] https://sammlung.belvedere.at/objects/179/sardellen
+[2026-01-13T15:24:36.640Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/179/sardellen): page.goto: Target page, context or browser has been closed
+[2026-01-13T15:24:36.640Z] ✅ 수집 완료: Sardellen by Josef Navrátil | N/A
+[2026-01-13T15:24:37.641Z] 
+[47/100] https://sammlung.belvedere.at/objects/191/marquis-de-llano-spanischer-gesandter-in-wien
+[2026-01-13T15:24:37.642Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/191/marquis-de-llano-spanischer-gesandter-in-wien): page.goto: Target page, context or browser has been closed
+[2026-01-13T15:24:37.643Z] ✅ 수집 완료: Marquis de Llano, spanischer Gesandter in Wien by Josef Mathias Grassi | N/A
+[2026-01-13T15:24:38.644Z] 
+[48/100] https://sammlung.belvedere.at/objects/192/der-maler-johann-nepomuk-schodlberger-17791853
+[2026-01-13T15:24:38.645Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/192/der-maler-johann-nepomuk-schodlberger-17791853): page.goto: Target page, context or browser has been closed
+[2026-01-13T15:24:38.647Z] ✅ 수집 완료: Der Maler Johann Nepomuk Schödlberger (1779–1853) by Friedrich von Amerling | N/A
+[2026-01-13T15:24:39.680Z] 
+[49/100] https://sammlung.belvedere.at/objects/193/entwurf-zum-gemalde-kaiser-franz-i-von-osterreich-176818
+[2026-01-13T15:24:39.697Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/193/entwurf-zum-gemalde-kaiser-franz-i-von-osterreich-176818): page.goto: Target page, context or browser has been closed
+[2026-01-13T15:24:39.698Z] ✅ 수집 완료: Entwurf zum Gemälde "Kaiser Franz I. von Österreich (1768–1835) in preußischer Generalsuniform" by Friedrich von Amerling | N/A
+[2026-01-13T15:24:40.773Z] 
+[50/100] https://sammlung.belvedere.at/objects/200/die-eltern-des-kunstlers
+[2026-01-13T15:24:40.857Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/200/die-eltern-des-kunstlers): page.goto: Target page, context or browser has been closed
+[2026-01-13T15:24:40.861Z] ✅ 수집 완료: Die Eltern des Künstlers by Johann Victor Krämer | N/A
+[2026-01-13T15:24:40.862Z] 💾 진행 상황 저장: 50개 작품 수집됨
+[2026-01-13T15:24:41.881Z] 
+[51/100] https://sammlung.belvedere.at/objects/204/landwehroffizier
+[2026-01-13T15:24:41.941Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/204/landwehroffizier): page.goto: Target page, context or browser has been closed
+[2026-01-13T15:24:41.950Z] ✅ 수집 완료: Landwehroffizier by Wilhelm Trübner | N/A
+[2026-01-13T15:24:42.951Z] 
+[52/100] https://sammlung.belvedere.at/objects/206/die-frau-des-kunstlers
+[2026-01-13T15:24:42.954Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/206/die-frau-des-kunstlers): page.goto: Target page, context or browser has been closed
+[2026-01-13T15:24:42.955Z] ✅ 수집 완료: Die Frau des Künstlers by Jacek Hyacinth Malczewski | N/A
+[2026-01-13T15:24:43.958Z] 
+[53/100] https://sammlung.belvedere.at/objects/207/esparsettenfeld-bei-znaim-ii
+[2026-01-13T15:24:43.969Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/207/esparsettenfeld-bei-znaim-ii): page.goto: Target page, context or browser has been closed
+[2026-01-13T15:24:43.969Z] ✅ 수집 완료: Esparsettenfeld bei Znaim II by Theodor von Hörmann | N/A
+[2026-01-13T15:24:44.970Z] 
+[54/100] https://sammlung.belvedere.at/objects/210/am-sarmingbach
+[2026-01-13T15:24:44.972Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/210/am-sarmingbach): page.goto: Target page, context or browser has been closed
+[2026-01-13T15:24:44.972Z] ✅ 수집 완료: Am Sarmingbach by Jindřich Tomec | N/A
+[2026-01-13T15:24:45.974Z] 
+[55/100] https://sammlung.belvedere.at/objects/215/das-seebachtal-bei-franzensbad
+[2026-01-13T15:24:45.975Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/215/das-seebachtal-bei-franzensbad): page.goto: Target page, context or browser has been closed
+[2026-01-13T15:24:45.976Z] ✅ 수집 완료: Das Seebachtal bei Franzensbad by Fritz Pontini | N/A
+[2026-01-13T15:24:46.982Z] 
+[56/100] https://sammlung.belvedere.at/objects/217/dorf-in-der-sonne
+[2026-01-13T15:24:46.987Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/217/dorf-in-der-sonne): page.goto: Target page, context or browser has been closed
+[2026-01-13T15:24:46.987Z] ✅ 수집 완료: Dorf in der Sonne by Emanuel Baschny | N/A
+[2026-01-13T15:24:47.989Z] 
+[57/100] https://sammlung.belvedere.at/objects/226/die-heiligen-drei-konige
+[2026-01-13T15:24:47.990Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/226/die-heiligen-drei-konige): page.goto: Target page, context or browser has been closed
+[2026-01-13T15:24:47.991Z] ✅ 수집 완료: Die Heiligen Drei Könige by Max von Poosch-Gablenz | N/A
+[2026-01-13T15:24:48.992Z] 
+[58/100] https://sammlung.belvedere.at/objects/228/unterrichtsminister-dr-gustav-marchet
+[2026-01-13T15:24:49.008Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/228/unterrichtsminister-dr-gustav-marchet): page.goto: Target page, context or browser has been closed
+[2026-01-13T15:24:49.011Z] ✅ 수집 완료: Unterrichtsminister Dr. Gustav Marchet by Viktor Stauffer | N/A
+[2026-01-13T15:24:50.013Z] 
+[59/100] https://sammlung.belvedere.at/objects/232/der-junge-kaiser-franz-joseph-i
+[2026-01-13T15:24:50.016Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/232/der-junge-kaiser-franz-joseph-i): page.goto: Target page, context or browser has been closed
+[2026-01-13T15:24:50.017Z] ✅ 수집 완료: Der junge Kaiser Franz Joseph I. by Michael Moritz Daffinger | N/A
+[2026-01-13T15:24:51.018Z] 
+[60/100] https://sammlung.belvedere.at/objects/234/heimkehr-von-der-arbeit-die-liebenden-am-scheideweg
+[2026-01-13T15:24:51.019Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/234/heimkehr-von-der-arbeit-die-liebenden-am-scheideweg): page.goto: Target page, context or browser has been closed
+[2026-01-13T15:24:51.021Z] ✅ 수집 완료: Heimkehr von der Arbeit (Die Liebenden am Scheideweg) by Ferdinand Georg Waldmüller | N/A
+[2026-01-13T15:24:51.025Z] 💾 진행 상황 저장: 60개 작품 수집됨
+[2026-01-13T15:24:52.034Z] 
+[61/100] https://sammlung.belvedere.at/objects/235/marchfeld-vom-bisamberg
+[2026-01-13T15:24:52.040Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/235/marchfeld-vom-bisamberg): page.goto: Target page, context or browser has been closed
+[2026-01-13T15:24:52.041Z] ✅ 수집 완료: Marchfeld vom Bisamberg by Ernst Eck | N/A
+[2026-01-13T15:24:53.043Z] 
+[62/100] https://sammlung.belvedere.at/objects/236/gang-mariens-uber-das-gebirge
+[2026-01-13T15:24:53.045Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/236/gang-mariens-uber-das-gebirge): page.goto: Target page, context or browser has been closed
+[2026-01-13T15:24:53.045Z] ✅ 수집 완료: Gang Mariens über das Gebirge by Maximilian Liebenwein | N/A
+[2026-01-13T15:24:54.052Z] 
+[63/100] https://sammlung.belvedere.at/objects/238/pappeln
+[2026-01-13T15:24:54.060Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/238/pappeln): page.goto: Target page, context or browser has been closed
+[2026-01-13T15:24:54.061Z] ✅ 수집 완료: Pappeln by August Roth | N/A
+[2026-01-13T15:24:55.063Z] 
+[64/100] https://sammlung.belvedere.at/objects/240/feldarbeiter
+[2026-01-13T15:24:55.065Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/240/feldarbeiter): page.goto: Target page, context or browser has been closed
+[2026-01-13T15:24:55.065Z] ✅ 수집 완료: Feldarbeiter by Arthur Oskar Alexander | N/A
+[2026-01-13T15:24:56.067Z] 
+[65/100] https://sammlung.belvedere.at/objects/241/der-schiffsbauingenieur-josef-von-romako-als-oberleutnant
+[2026-01-13T15:24:56.069Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/241/der-schiffsbauingenieur-josef-von-romako-als-oberleutnant): page.goto: Target page, context or browser has been closed
+[2026-01-13T15:24:56.070Z] ✅ 수집 완료: Der Schiffsbau-Ingenieur Josef von Romako als Oberleutnant by Anton Romako | N/A
+[2026-01-13T15:24:57.071Z] 
+[66/100] https://sammlung.belvedere.at/objects/242/dame-in-zinnobergrunem-kleid
+[2026-01-13T15:24:57.073Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/242/dame-in-zinnobergrunem-kleid): page.goto: Target page, context or browser has been closed
+[2026-01-13T15:24:57.074Z] ✅ 수집 완료: Dame in zinnobergrünem Kleid by Ferdinand Georg Waldmüller | N/A
+[2026-01-13T15:24:58.084Z] 
+[67/100] https://sammlung.belvedere.at/objects/256/waldlichtung-bei-purkersdorf
+[2026-01-13T15:24:58.102Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/256/waldlichtung-bei-purkersdorf): page.goto: Target page, context or browser has been closed
+[2026-01-13T15:24:58.103Z] ✅ 수집 완료: Waldlichtung bei Purkersdorf by Carl Schuch | N/A
+[2026-01-13T15:24:59.104Z] 
+[68/100] https://sammlung.belvedere.at/objects/259/abendlandschaft
+[2026-01-13T15:24:59.107Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/259/abendlandschaft): page.goto: Target page, context or browser has been closed
+[2026-01-13T15:24:59.108Z] ✅ 수집 완료: Abendlandschaft by Carl Freiherr von Pidoll zu Quintenbach | N/A
+[2026-01-13T15:25:00.109Z] 
+[69/100] https://sammlung.belvedere.at/objects/260/groe-praterlandschaft
+[2026-01-13T15:25:00.115Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/260/groe-praterlandschaft): page.goto: Target page, context or browser has been closed
+[2026-01-13T15:25:00.115Z] ✅ 수집 완료: Große Praterlandschaft by Ferdinand Georg Waldmüller | N/A
+[2026-01-13T15:25:01.121Z] 
+[70/100] https://sammlung.belvedere.at/objects/261/elisabeth-imredy-edle-von-omorovicze
+[2026-01-13T15:25:01.126Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/261/elisabeth-imredy-edle-von-omorovicze): page.goto: Target page, context or browser has been closed
+[2026-01-13T15:25:01.126Z] ✅ 수집 완료: Elisabeth Imrédy, Edle von Omorovicze by August von Pettenkofen | N/A
+[2026-01-13T15:25:01.129Z] 💾 진행 상황 저장: 70개 작품 수집됨
+[2026-01-13T15:25:02.130Z] 
+[71/100] https://sammlung.belvedere.at/objects/262/franz-imredy-edler-von-omorovicze
+[2026-01-13T15:25:02.131Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/262/franz-imredy-edler-von-omorovicze): page.goto: Target page, context or browser has been closed
+[2026-01-13T15:25:02.132Z] ✅ 수집 완료: Franz Imrédy, Edler von Omorovicze by August von Pettenkofen | N/A
+[2026-01-13T15:25:03.133Z] 
+[72/100] https://sammlung.belvedere.at/objects/263/der-apotheker-dr-hofmann
+[2026-01-13T15:25:03.134Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/263/der-apotheker-dr-hofmann): page.goto: Target page, context or browser has been closed
+[2026-01-13T15:25:03.134Z] ✅ 수집 완료: Der Apotheker Dr. Hofmann by Erasmus von Engert | N/A
+[2026-01-13T15:25:04.138Z] 
+[73/100] https://sammlung.belvedere.at/objects/264/magdalena-plach
+[2026-01-13T15:25:04.142Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/264/magdalena-plach): page.goto: Target page, context or browser has been closed
+[2026-01-13T15:25:04.142Z] ✅ 수집 완료: Magdalena Plach by Hans Makart | N/A
+[2026-01-13T15:25:05.143Z] 
+[74/100] https://sammlung.belvedere.at/objects/276/die-heiligen-drei-konige
+[2026-01-13T15:25:05.144Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/276/die-heiligen-drei-konige): page.goto: Target page, context or browser has been closed
+[2026-01-13T15:25:05.144Z] ✅ 수집 완료: Die heiligen drei Könige by Maximilian Liebenwein | N/A
+[2026-01-13T15:25:06.146Z] 
+[75/100] https://sammlung.belvedere.at/objects/279/stigmatisation-des-hl-franziskus
+[2026-01-13T15:25:06.148Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/279/stigmatisation-des-hl-franziskus): page.goto: Target page, context or browser has been closed
+[2026-01-13T15:25:06.148Z] ✅ 수집 완료: Stigmatisation des hl. Franziskus by Lukas Cranach der Ältere | N/A
+[2026-01-13T15:25:07.152Z] 
+[76/100] https://sammlung.belvedere.at/objects/281/dame-mit-goldhaube
+[2026-01-13T15:25:07.163Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/281/dame-mit-goldhaube): page.goto: Target page, context or browser has been closed
+[2026-01-13T15:25:07.167Z] ✅ 수집 완료: Dame mit Goldhaube by Unbekannter Künstler | N/A
+[2026-01-13T15:25:08.170Z] 
+[77/100] https://sammlung.belvedere.at/objects/282/herrenbildnis
+[2026-01-13T15:25:08.171Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/282/herrenbildnis): page.goto: Target page, context or browser has been closed
+[2026-01-13T15:25:08.172Z] ✅ 수집 완료: Herrenbildnis by Unbekannter Künstler | N/A
+[2026-01-13T15:25:09.182Z] 
+[78/100] https://sammlung.belvedere.at/objects/286/apfelpfluckendes-madchen
+[2026-01-13T15:25:09.200Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/286/apfelpfluckendes-madchen): page.goto: Target page, context or browser has been closed
+[2026-01-13T15:25:09.200Z] ✅ 수집 완료: Apfelpflückendes Mädchen by Anton Romako | N/A
+[2026-01-13T15:25:10.202Z] 
+[79/100] https://sammlung.belvedere.at/objects/287/strae-in-pontoise-rue-de-gisors
+[2026-01-13T15:25:10.203Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/287/strae-in-pontoise-rue-de-gisors): page.goto: Target page, context or browser has been closed
+[2026-01-13T15:25:10.203Z] ✅ 수집 완료: Straße in Pontoise (Rue de Gisors) by Camille Jacob Pissarro | N/A
+[2026-01-13T15:25:11.204Z] 
+[80/100] https://sammlung.belvedere.at/objects/290/blick-uber-wiener-vorstadthauser-beatrixgasse
+[2026-01-13T15:25:11.206Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/290/blick-uber-wiener-vorstadthauser-beatrixgasse): page.goto: Target page, context or browser has been closed
+[2026-01-13T15:25:11.206Z] ✅ 수집 완료: Blick über Wiener Vorstadthäuser (Beatrixgasse) by Adalbert Stifter | N/A
+[2026-01-13T15:25:11.207Z] 💾 진행 상황 저장: 80개 작품 수집됨
+[2026-01-13T15:25:12.209Z] 
+[81/100] https://sammlung.belvedere.at/objects/293/beim-lebzelter
+[2026-01-13T15:25:12.229Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/293/beim-lebzelter): page.goto: Target page, context or browser has been closed
+[2026-01-13T15:25:12.230Z] ✅ 수집 완료: Beim Lebzelter by Othmar Ružička | N/A
+[2026-01-13T15:25:13.231Z] 
+[82/100] https://sammlung.belvedere.at/objects/294/angler-auf-der-seine-bei-poissy
+[2026-01-13T15:25:13.234Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/294/angler-auf-der-seine-bei-poissy): page.goto: Target page, context or browser has been closed
+[2026-01-13T15:25:13.234Z] ✅ 수집 완료: Angler auf der Seine bei Poissy by Claude Monet | N/A
+[2026-01-13T15:25:14.239Z] 
+[83/100] https://sammlung.belvedere.at/objects/305/der-tod-des-heiligen-joseph
+[2026-01-13T15:25:14.241Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/305/der-tod-des-heiligen-joseph): page.goto: Target page, context or browser has been closed
+[2026-01-13T15:25:14.242Z] ✅ 수집 완료: Der Tod des heiligen Joseph by Caspar Franz Sambach | N/A
+[2026-01-13T15:25:15.243Z] 
+[84/100] https://sammlung.belvedere.at/objects/367/hollandische-landschaft
+[2026-01-13T15:25:15.243Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/367/hollandische-landschaft): page.goto: Target page, context or browser has been closed
+[2026-01-13T15:25:15.243Z] ✅ 수집 완료: Holländische Landschaft by Rudolf Ribarz | N/A
+[2026-01-13T15:25:16.245Z] 
+[85/100] https://sammlung.belvedere.at/objects/368/stillleben-mit-kurbis-pfirsich-und-weintrauben
+[2026-01-13T15:25:16.249Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/368/stillleben-mit-kurbis-pfirsich-und-weintrauben): page.goto: Target page, context or browser has been closed
+[2026-01-13T15:25:16.249Z] ✅ 수집 완료: Stillleben mit Kürbis, Pfirsich und Weintrauben by Carl Schuch | N/A
+[2026-01-13T15:25:17.252Z] 
+[86/100] https://sammlung.belvedere.at/objects/369/pferdestudie
+[2026-01-13T15:25:17.256Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/369/pferdestudie): page.goto: Target page, context or browser has been closed
+[2026-01-13T15:25:17.256Z] ✅ 수집 완료: Pferdestudie by Carl Schuch | N/A
+[2026-01-13T15:25:18.258Z] 
+[87/100] https://sammlung.belvedere.at/objects/370/selbstportrat
+[2026-01-13T15:25:18.259Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/370/selbstportrat): page.goto: Target page, context or browser has been closed
+[2026-01-13T15:25:18.259Z] ✅ 수집 완료: Selbstporträt by Carl Schuch | N/A
+[2026-01-13T15:25:19.260Z] 
+[88/100] https://sammlung.belvedere.at/objects/375/die-huzulische-madonna
+[2026-01-13T15:25:19.263Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/375/die-huzulische-madonna): page.goto: Target page, context or browser has been closed
+[2026-01-13T15:25:19.263Z] ✅ 수집 완료: Die Huzulische Madonna by Kazimierz Sichulski | N/A
+[2026-01-13T15:25:20.264Z] 
+[89/100] https://sammlung.belvedere.at/objects/376/der-bildhauer-rudolf-weyr
+[2026-01-13T15:25:20.266Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/376/der-bildhauer-rudolf-weyr): page.goto: Target page, context or browser has been closed
+[2026-01-13T15:25:20.266Z] ✅ 수집 완료: Der Bildhauer Rudolf Weyr by Heinrich von Angeli | N/A
+[2026-01-13T15:25:21.270Z] 
+[90/100] https://sammlung.belvedere.at/objects/377/spatnachmittag-am-palatin
+[2026-01-13T15:25:21.273Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/377/spatnachmittag-am-palatin): page.goto: Target page, context or browser has been closed
+[2026-01-13T15:25:21.273Z] ✅ 수집 완료: Spätnachmittag am Palatin by Tina Blau | N/A
+[2026-01-13T15:25:21.274Z] 💾 진행 상황 저장: 90개 작품 수집됨
+[2026-01-13T15:25:22.275Z] 
+[91/100] https://sammlung.belvedere.at/objects/379/weihnachten
+[2026-01-13T15:25:22.276Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/379/weihnachten): page.goto: Target page, context or browser has been closed
+[2026-01-13T15:25:22.276Z] ✅ 수집 완료: Weihnachten by Wojciech Stanislaw Weiss | N/A
+[2026-01-13T15:25:23.278Z] 
+[92/100] https://sammlung.belvedere.at/objects/380/oberosterreichisches-bauernhaus
+[2026-01-13T15:25:23.285Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/380/oberosterreichisches-bauernhaus): page.goto: Target page, context or browser has been closed
+[2026-01-13T15:25:23.286Z] ✅ 수집 완료: Oberösterreichisches Bauernhaus by Gustav Klimt | N/A
+[2026-01-13T15:25:24.287Z] 
+[93/100] https://sammlung.belvedere.at/objects/381/festtag
+[2026-01-13T15:25:24.291Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/381/festtag): page.goto: Target page, context or browser has been closed
+[2026-01-13T15:25:24.291Z] ✅ 수집 완료: Festtag by Otakar Nejedlý | N/A
+[2026-01-13T15:25:25.293Z] 
+[94/100] https://sammlung.belvedere.at/objects/382/strand-in-ceylon
+[2026-01-13T15:25:25.293Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/382/strand-in-ceylon): page.goto: Target page, context or browser has been closed
+[2026-01-13T15:25:25.293Z] ✅ 수집 완료: Strand in Ceylon by Otakar Nejedlý | N/A
+[2026-01-13T15:25:26.294Z] 
+[95/100] https://sammlung.belvedere.at/objects/384/das-gewitter
+[2026-01-13T15:25:26.295Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/384/das-gewitter): page.goto: Target page, context or browser has been closed
+[2026-01-13T15:25:26.295Z] ✅ 수집 완료: Das Gewitter by Peter Fendi | N/A
+[2026-01-13T15:25:27.313Z] 
+[96/100] https://sammlung.belvedere.at/objects/385/die-ruine-liechtenstein-bei-modling
+[2026-01-13T15:25:27.329Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/385/die-ruine-liechtenstein-bei-modling): page.goto: Target page, context or browser has been closed
+[2026-01-13T15:25:27.330Z] ✅ 수집 완료: Die Ruine Liechtenstein bei Mödling by Ferdinand Georg Waldmüller | N/A
+[2026-01-13T15:25:28.331Z] 
+[97/100] https://sammlung.belvedere.at/objects/386/franzosische-kavallerie-in-der-pferdeschwemme
+[2026-01-13T15:25:28.334Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/386/franzosische-kavallerie-in-der-pferdeschwemme): page.goto: Target page, context or browser has been closed
+[2026-01-13T15:25:28.335Z] ✅ 수집 완료: Französische Kavallerie in der Pferdeschwemme by Joseph Anton Strassgschwandtner | N/A
+[2026-01-13T15:25:29.336Z] 
+[98/100] https://sammlung.belvedere.at/objects/390/huhnerhof
+[2026-01-13T15:25:29.337Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/390/huhnerhof): page.goto: Target page, context or browser has been closed
+[2026-01-13T15:25:29.337Z] ✅ 수집 완료: Hühnerhof by Charles Émile Jacque | N/A
+[2026-01-13T15:25:30.337Z] 
+[99/100] https://sammlung.belvedere.at/objects/391/marktplatz-in-szolnok
+[2026-01-13T15:25:30.339Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/391/marktplatz-in-szolnok): page.goto: Target page, context or browser has been closed
+[2026-01-13T15:25:30.339Z] ✅ 수집 완료: Marktplatz in Szolnok by Johann Gualbert Raffalt | N/A
+[2026-01-13T15:25:31.340Z] 
+[100/100] https://sammlung.belvedere.at/objects/394/ungarische-pferdetranke
+[2026-01-13T15:25:31.343Z] ⚠️ 상세 페이지 스크래핑 오류 (https://sammlung.belvedere.at/objects/394/ungarische-pferdetranke): page.goto: Target page, context or browser has been closed
+[2026-01-13T15:25:31.344Z] ✅ 수집 완료: Ungarische Pferdetränke by August von Pettenkofen | N/A
+[2026-01-13T15:25:31.378Z] 💾 진행 상황 저장: 100개 작품 수집됨
+[2026-01-13T15:25:32.383Z] 
+✅ 완료! 100개 작품 저장됨: /Users/kietzsche/armin-web-main/public/data/belvedere-collection-test.json

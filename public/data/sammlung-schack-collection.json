@@ -20,10 +20,11 @@
       "department": "19. Jahrhundert",
       "origin": "1960 als Schenkung aus Privatbesitz erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--bsVLrz11--/q_60/w_400/artworks/LEO-VON-KLENZE_DER-CAMPOSANTO-IN-PISA_CC-BY-SA_BSTGS_13078.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-13078-40d8d5fe-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/13078",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/XR4MJV1xQ1/leo-von-klenze-1784/der-camposanto-in-pisa-13078",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--bsVLrz11--/q_60/w_400/artworks/LEO-VON-KLENZE_DER-CAMPOSANTO-IN-PISA_CC-BY-SA_BSTGS_13078.jpg"
     },
     {
       "id": "pinakothek-ss-11684",
@@ -38,10 +39,11 @@
       "department": "19. Jahrhundert",
       "origin": "1878 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--6_zSQA3l--/q_60/w_400/artworks/AUGUST-WOLF_DER-TEMPELGANG-MARIENS-NACH-TIZIAN_CC-BY-SA_BSTGS_11684.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11684-f264b973-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11684",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/2mxqDjY48b/august-wolf-1842/der-tempelgang-mariens-nach-tizian-11684",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--6_zSQA3l--/q_60/w_400/artworks/AUGUST-WOLF_DER-TEMPELGANG-MARIENS-NACH-TIZIAN_CC-BY-SA_BSTGS_11684.jpg"
     },
     {
       "id": "pinakothek-ss-11686",
@@ -56,10 +58,11 @@
       "department": "19. Jahrhundert",
       "origin": "1868 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--jWsQSiRO--/q_60/w_400/artworks/FRANZ-VON-LENBACH_KAISER-KARL-V-NACH-DER-SCHLACHT-BEI-MUEHLBERG-NACH-TIZIAN_CC-BY-SA_BSTGS_11686.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11686-5dab0d25-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11686",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/wq4jEzBGWo/franz-von-lenbach-1836/kaiser-karl-v-nach-der-schlacht-bei-muehlberg-nach-tizian-11686",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--jWsQSiRO--/q_60/w_400/artworks/FRANZ-VON-LENBACH_KAISER-KARL-V-NACH-DER-SCHLACHT-BEI-MUEHLBERG-NACH-TIZIAN_CC-BY-SA_BSTGS_11686.jpg"
     },
     {
       "id": "pinakothek-ss-11688",
@@ -74,10 +77,11 @@
       "department": "19. Jahrhundert",
       "origin": "1879 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--54AnvlYU--/q_60/w_400/artworks/AUGUST-WOLF_FLORA-NACH-TIZIAN_CC-BY-SA_BSTGS_11688.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11688-c6290350-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11688",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/M0xy6paLpl/august-wolf-1842/flora-nach-tizian-11688",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--54AnvlYU--/q_60/w_400/artworks/AUGUST-WOLF_FLORA-NACH-TIZIAN_CC-BY-SA_BSTGS_11688.jpg"
     },
     {
       "id": "pinakothek-ss-11451",
@@ -92,10 +96,11 @@
       "department": "19. Jahrhundert",
       "origin": "1867 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--oPMy6OfN--/q_60/w_400/artworks/FRANZ-VON-LENBACH_ANNA-SCHUBART_CC-BY-SA_BSTGS_11451.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11451-edd352ce-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11451",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/5RGQ1ApGz3/franz-von-lenbach-1836/anna-schubart-11451",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--oPMy6OfN--/q_60/w_400/artworks/FRANZ-VON-LENBACH_ANNA-SCHUBART_CC-BY-SA_BSTGS_11451.jpg"
     },
     {
       "id": "pinakothek-ss-11464",
@@ -110,10 +115,11 @@
       "department": "19. Jahrhundert",
       "origin": "Vor 1866 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--78fEO4vN--/q_60/w_400/artworks/JOSEPH-ANTON-KOCH_ZIEGELHUETTE-BEI-OLEVANO_CC-BY-SA_BSTGS_11464.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11464-e385af45-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11464",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/2mxqDN748b/joseph-anton-koch-1768/ziegelhuette-bei-olevano-11464",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--78fEO4vN--/q_60/w_400/artworks/JOSEPH-ANTON-KOCH_ZIEGELHUETTE-BEI-OLEVANO_CC-BY-SA_BSTGS_11464.jpg"
     },
     {
       "id": "pinakothek-ss-11469",
@@ -128,10 +134,11 @@
       "department": "19. Jahrhundert",
       "origin": "1869 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--R_f2iwFk--/q_60/w_400/artworks/JOHANN-GEORG-VON-DILLIS_BLICK-VON-DER-VILLA-MALTA-AUF-DEN-QUIRINAL_CC-BY-SA_BSTGS_11469.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11469-a75addf0-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11469",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/JzG6WyD4WO/johann-georg-von-dillis-1759/blick-von-der-villa-malta-auf-den-quirinal-11469",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--R_f2iwFk--/q_60/w_400/artworks/JOHANN-GEORG-VON-DILLIS_BLICK-VON-DER-VILLA-MALTA-AUF-DEN-QUIRINAL_CC-BY-SA_BSTGS_11469.jpg"
     },
     {
       "id": "pinakothek-ss-11470",
@@ -146,10 +153,11 @@
       "department": "19. Jahrhundert",
       "origin": "1869 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--GyODQdFl--/q_60/w_400/artworks/JOHANN-GEORG-VON-DILLIS_BLICK-VON-DER-VILLA-MALTA-AUF-DAS-KAPITOL_CC-BY-SA_BSTGS_11470.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11470-43977e40-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11470",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/Qm45M394No/johann-georg-von-dillis-1759/blick-von-der-villa-malta-auf-das-kapitol-11470",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--GyODQdFl--/q_60/w_400/artworks/JOHANN-GEORG-VON-DILLIS_BLICK-VON-DER-VILLA-MALTA-AUF-DAS-KAPITOL_CC-BY-SA_BSTGS_11470.jpg"
     },
     {
       "id": "pinakothek-ss-11478",
@@ -164,10 +172,11 @@
       "department": "19. Jahrhundert",
       "origin": "1864 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--7q0swdOT--/q_60/w_400/artworks/EUGEN-NAPOLEON-NEUREUTHER_AUS-GOETHES-HERMANN-UND-DOROTHEA_CC-BY-SA_BSTGS_11478.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11478-bf78f96e-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11478",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/wq4jEeQGWo/eugen-napoleon-neureuther-1806/aus-goethes-hermann-und-dorothea-11478",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--7q0swdOT--/q_60/w_400/artworks/EUGEN-NAPOLEON-NEUREUTHER_AUS-GOETHES-HERMANN-UND-DOROTHEA_CC-BY-SA_BSTGS_11478.jpg"
     },
     {
       "id": "pinakothek-ss-11516",
@@ -182,10 +191,11 @@
       "department": "19. Jahrhundert",
       "origin": "1868 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--KRVpgxZo--/q_60/w_400/artworks/ANSELM-FEUERBACH_RICORDO-DI-TIVOLI_CC-BY-SA_BSTGS_11516.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11516-9dc86ed9-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11516",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/ZKGPQwd4gA/anselm-feuerbach-1829/ricordo-di-tivoli-11516",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--KRVpgxZo--/q_60/w_400/artworks/ANSELM-FEUERBACH_RICORDO-DI-TIVOLI_CC-BY-SA_BSTGS_11516.jpg"
     },
     {
       "id": "pinakothek-ss-11524",
@@ -200,10 +210,11 @@
       "department": "19. Jahrhundert",
       "origin": "1863 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--pIKPpH3F--/q_60/w_400/artworks/ANSELM-FEUERBACH_MADONNA_CC-BY-SA_BSTGS_11524.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11524-3d20f5b8-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11524",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/2mxqDrW48b/anselm-feuerbach-1829/madonna-11524",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--pIKPpH3F--/q_60/w_400/artworks/ANSELM-FEUERBACH_MADONNA_CC-BY-SA_BSTGS_11524.jpg"
     },
     {
       "id": "pinakothek-ss-11525",
@@ -218,10 +229,11 @@
       "department": "19. Jahrhundert",
       "origin": "Vor 1866 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--ycwykw7p--/q_60/w_400/artworks/ARNOLD-BOECKLIN_DER-EINSIEDLER_CC-BY-SA_BSTGS_11525.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11525-3c67fb07-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11525",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/8eGVnwBGWQ/arnold-boecklin-1827/der-einsiedler-11525",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--ycwykw7p--/q_60/w_400/artworks/ARNOLD-BOECKLIN_DER-EINSIEDLER_CC-BY-SA_BSTGS_11525.jpg"
     },
     {
       "id": "pinakothek-ss-11528",
@@ -236,10 +248,11 @@
       "department": "19. Jahrhundert",
       "origin": "1864 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--ec83zhQg--/q_60/w_400/artworks/ARNOLD-BOECKLIN_VILLA-AM-MEER-I_CC-BY-SA_BSTGS_11528.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11528-c355022a-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11528",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/M0xy6JWLpl/arnold-boecklin-1827/villa-am-meer-i-11528",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--ec83zhQg--/q_60/w_400/artworks/ARNOLD-BOECKLIN_VILLA-AM-MEER-I_CC-BY-SA_BSTGS_11528.jpg"
     },
     {
       "id": "pinakothek-ss-11529",
@@ -254,10 +267,11 @@
       "department": "19. Jahrhundert",
       "origin": "Vor 1866 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--F8-cosU_--/q_60/w_400/artworks/ARNOLD-BOECKLIN_EINE-HIRTIN_CC-BY-SA_BSTGS_11529.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11529-919addc0-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11529",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/JzG6WDj4WO/arnold-boecklin-1827/eine-hirtin-11529",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--F8-cosU_--/q_60/w_400/artworks/ARNOLD-BOECKLIN_EINE-HIRTIN_CC-BY-SA_BSTGS_11529.jpg"
     },
     {
       "id": "pinakothek-ss-11536",
@@ -272,10 +286,11 @@
       "department": "19. Jahrhundert",
       "origin": "1865 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--0uAFngct--/q_60/w_400/artworks/ARNOLD-BOECKLIN_VILLA-AM-MEER-II_CC-BY-SA_BSTGS_11536.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11536-e4ad39cb-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11536",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/k2xnZJgxPd/arnold-boecklin-1827/villa-am-meer-ii-11536",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--0uAFngct--/q_60/w_400/artworks/ARNOLD-BOECKLIN_VILLA-AM-MEER-II_CC-BY-SA_BSTGS_11536.jpg"
     },
     {
       "id": "pinakothek-ss-11563",
@@ -290,10 +305,11 @@
       "department": "19. Jahrhundert",
       "origin": "1866 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--RfdCtJyf--/q_60/w_400/artworks/CARL-SPITZWEG_EIN-HYPOCHONDER_CC-BY-SA_BSTGS_11563.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11563-d81126be-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11563",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/Dn4ZRZZ4aK/carl-spitzweg-1808/ein-hypochonder-11563",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--RfdCtJyf--/q_60/w_400/artworks/CARL-SPITZWEG_EIN-HYPOCHONDER_CC-BY-SA_BSTGS_11563.jpg"
     },
     {
       "id": "pinakothek-ss-11566",
@@ -308,10 +324,11 @@
       "department": "19. Jahrhundert",
       "origin": "1869 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--Wx89Jo99--/q_60/w_400/artworks/MORITZ-VON-SCHWIND_DIE-VIER-TAGESZEITEN-DIE-NACHT_CC-BY-SA_BSTGS_11566.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11566-488e7e41-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11566",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/bwx0BvqGm8/moritz-von-schwind-1804/die-vier-tageszeiten-die-nacht-11566",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--Wx89Jo99--/q_60/w_400/artworks/MORITZ-VON-SCHWIND_DIE-VIER-TAGESZEITEN-DIE-NACHT_CC-BY-SA_BSTGS_11566.jpg"
     },
     {
       "id": "pinakothek-ss-11571",
@@ -326,10 +343,11 @@
       "department": "19. Jahrhundert",
       "origin": "1869 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--ZaJzzQ3B--/q_60/w_400/artworks/MORITZ-VON-SCHWIND_KOENIG-KROKUS-UND-DIE-WALDNYMPHE_CC-BY-SA_BSTGS_11571.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11571-20b7cea9-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11571",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/wq4jEDQGWo/moritz-von-schwind-1804/koenig-krokus-und-die-waldnymphe-11571",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--ZaJzzQ3B--/q_60/w_400/artworks/MORITZ-VON-SCHWIND_KOENIG-KROKUS-UND-DIE-WALDNYMPHE_CC-BY-SA_BSTGS_11571.jpg"
     },
     {
       "id": "pinakothek-ss-11582",
@@ -344,10 +362,11 @@
       "department": "19. Jahrhundert",
       "origin": "1863 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--MllTJPdv--/q_60/w_400/artworks/MORITZ-VON-SCHWIND_DIE-GEFANGENE-PRINZESSIN_CC-BY-SA_BSTGS_11582.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11582-ebc82e34-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11582",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/8eGVnMYGWQ/moritz-von-schwind-1804/die-gefangene-prinzessin-11582",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--MllTJPdv--/q_60/w_400/artworks/MORITZ-VON-SCHWIND_DIE-GEFANGENE-PRINZESSIN_CC-BY-SA_BSTGS_11582.jpg"
     },
     {
       "id": "pinakothek-ss-11583",
@@ -362,10 +381,11 @@
       "department": "19. Jahrhundert",
       "origin": "1869 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--YeAS1ZXo--/q_60/w_400/artworks/MORITZ-VON-SCHWIND_RUEBEZAHL_CC-BY-SA_BSTGS_11583.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11583-479bb845-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11583",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/wq4jED6GWo/moritz-von-schwind-1804/ruebezahl-11583",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--YeAS1ZXo--/q_60/w_400/artworks/MORITZ-VON-SCHWIND_RUEBEZAHL_CC-BY-SA_BSTGS_11583.jpg"
     },
     {
       "id": "pinakothek-ss-11589",
@@ -380,10 +400,11 @@
       "department": "19. Jahrhundert",
       "origin": "1861 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--WBf2UCOM--/q_60/w_400/artworks/GEORG-KOEBEL_DIE-QUELLE-DER-NYMPHE-EGERIA-BEI-ROM_CC-BY-SA_BSTGS_11589.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11589-ff7e8798-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11589",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/jpxeg6BGJ7/georg-koebel-1807/die-quelle-der-nymphe-egeria-bei-rom-11589",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--WBf2UCOM--/q_60/w_400/artworks/GEORG-KOEBEL_DIE-QUELLE-DER-NYMPHE-EGERIA-BEI-ROM_CC-BY-SA_BSTGS_11589.jpg"
     },
     {
       "id": "pinakothek-ss-11610",
@@ -398,10 +419,11 @@
       "department": "19. Jahrhundert",
       "origin": "1863 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--tZujjZTO--/q_60/w_400/artworks/FRITZ-BAMBERGER_ANSICHT-VON-GIBRALTAR_CC-BY-SA_BSTGS_11610.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11610-06a4ae4a-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11610",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/5RGQ10ZGz3/fritz-bamberger-1814/ansicht-von-gibraltar-11610",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--tZujjZTO--/q_60/w_400/artworks/FRITZ-BAMBERGER_ANSICHT-VON-GIBRALTAR_CC-BY-SA_BSTGS_11610.jpg"
     },
     {
       "id": "pinakothek-ss-11620",
@@ -416,10 +438,11 @@
       "department": "19. Jahrhundert",
       "origin": "Zwischen 1869 und 1874 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--DHYMaiyy--/q_60/w_400/artworks/FRITZ-BAMBERGER_GEGEND-BEI-GRANADA_CC-BY-SA_BSTGS_11620.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11620-204ebba6-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11620",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/o5xrd8bG7X/fritz-bamberger-1814/gegend-bei-granada-11620",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--DHYMaiyy--/q_60/w_400/artworks/FRITZ-BAMBERGER_GEGEND-BEI-GRANADA_CC-BY-SA_BSTGS_11620.jpg"
     },
     {
       "id": "pinakothek-ss-11645",
@@ -434,10 +457,11 @@
       "department": "19. Jahrhundert",
       "origin": "1874 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--3LdgSekq--/q_60/w_400/artworks/ERNST-WILLERS_HAIN-BEI-ARICCIA-IM-ABENDLICHT_CC-BY-SA_BSTGS_11645.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11645-2c3b4d7b-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11645",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/ApL8goJxN2/ernst-willers-1803/hain-bei-ariccia-im-abendlicht-11645",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--3LdgSekq--/q_60/w_400/artworks/ERNST-WILLERS_HAIN-BEI-ARICCIA-IM-ABENDLICHT_CC-BY-SA_BSTGS_11645.jpg"
     },
     {
       "id": "pinakothek-ss-11679",
@@ -452,10 +476,11 @@
       "department": "19. Jahrhundert",
       "origin": "Vor 1874 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--v2mZWooC--/q_60/w_400/artworks/AUGUST-WOLF_DER-PROKURATOR-ANTONIO-CAPPELLO-NACH-TINTORETTO_CC-BY-SA_BSTGS_11679.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11679-324318d3-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11679",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/y7GE1RvGPV/august-wolf-1842/der-prokurator-antonio-cappello-nach-tintoretto-11679",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--v2mZWooC--/q_60/w_400/artworks/AUGUST-WOLF_DER-PROKURATOR-ANTONIO-CAPPELLO-NACH-TINTORETTO_CC-BY-SA_BSTGS_11679.jpg"
     },
     {
       "id": "pinakothek-ss-11681",
@@ -470,10 +495,11 @@
       "department": "19. Jahrhundert",
       "origin": "1872 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--VQrBpVk8--/q_60/w_400/artworks/AUGUST-WOLF_DIE-MADONNA-DES-HAUSES-PESARO-NACH-TIZIAN_CC-BY-SA_BSTGS_11681.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11681-1bac056e-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11681",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/A9xlyzeLWv/august-wolf-1842/die-madonna-des-hauses-pesaro-nach-tizian-11681",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--VQrBpVk8--/q_60/w_400/artworks/AUGUST-WOLF_DIE-MADONNA-DES-HAUSES-PESARO-NACH-TIZIAN_CC-BY-SA_BSTGS_11681.jpg"
     },
     {
       "id": "pinakothek-ss-9106",
@@ -488,10 +514,11 @@
       "department": "19. Jahrhundert",
       "origin": "1922 aus Privatbesitz erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--XV6gJ-uF--/q_60/w_400/artworks/JOHANN-GEORG-VON-DILLIS_BLICK-VON-DER-VILLA-MALTA-AUF-DEN-QUIRINAL_CC-BY-SA_BSTGS_9106.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-9106-65096037-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/9106",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/anxg3qMxEq/johann-georg-von-dillis-1759/blick-von-der-villa-malta-auf-den-quirinal-9106",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--XV6gJ-uF--/q_60/w_400/artworks/JOHANN-GEORG-VON-DILLIS_BLICK-VON-DER-VILLA-MALTA-AUF-DEN-QUIRINAL_CC-BY-SA_BSTGS_9106.jpg"
     },
     {
       "id": "pinakothek-ss-WAF-1017",
@@ -506,10 +533,11 @@
       "department": "19. Jahrhundert",
       "origin": "1878 aus dem Nachlass König Ottos von Griechenland erworben – seit 1923 Wittelsbacher Ausgleichsfonds",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--dn25vWSV--/q_60/w_400/artworks/MORITZ-VON-SCHWIND_EINE-SYMPHONIE_CC-BY-SA_BSTGS_WAF1017.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-WAF-1017-043e202c-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/WAF 1017",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/y7GEJ5v4PV/moritz-von-schwind-1804/eine-symphonie-waf-1017",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--dn25vWSV--/q_60/w_400/artworks/MORITZ-VON-SCHWIND_EINE-SYMPHONIE_CC-BY-SA_BSTGS_WAF1017.jpg"
     },
     {
       "id": "pinakothek-ss-WAF-67",
@@ -524,10 +552,11 @@
       "department": "19. Jahrhundert",
       "origin": "1859 durch König Ludwig I. vom Künstler erworben – seit 1923 Wittelsbacher Ausgleichsfonds",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--Gs1plZ3c--/q_60/w_400/artworks/ARNOLD-BOECKLIN_PAN-IM-SCHILF_CC-BY-SA_BSTGS_WAF67.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-WAF-67-bd6d7f6b-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/WAF 67",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/8eGVjNgGWQ/arnold-boecklin-1827/pan-im-schilf-waf-67",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--Gs1plZ3c--/q_60/w_400/artworks/ARNOLD-BOECKLIN_PAN-IM-SCHILF_CC-BY-SA_BSTGS_WAF67.jpg"
     },
     {
       "id": "pinakothek-ss-WAF-804",
@@ -542,10 +571,11 @@
       "department": "19. Jahrhundert",
       "origin": "1841 durch König Ludwig I. aus der Sammlung Klenze erworben – seit 1923 Wittelsbacher Ausgleichsfonds",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--HRslDUmr--/q_60/w_400/artworks/JOSEPH-REBELL_DIE-MOLE-VON-PORTICI_CC-BY-SA_BSTGS_WAF804.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-WAF-804-ccb79dbc-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/WAF 804",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/rqxNX2nGvW/joseph-rebell-1787/die-mole-von-portici-waf-804",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--HRslDUmr--/q_60/w_400/artworks/JOSEPH-REBELL_DIE-MOLE-VON-PORTICI_CC-BY-SA_BSTGS_WAF804.jpg"
     },
     {
       "id": "pinakothek-ss-9779",
@@ -560,10 +590,11 @@
       "department": "19. Jahrhundert",
       "origin": "1932 aus dem Kunsthandel erworben (vormals: L 524)",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--EO_uL1P---/q_60/w_400/artworks/JOHANN-MARTIN-VON-ROHDEN_WALDINNERES-STUDIE_CC-BY-SA_BSTGS_9779.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-9779-4eda43c6-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/9779",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/k2xnBbExPd/johann-martin-von-rohden-1778/waldinneres-studie-9779",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--EO_uL1P---/q_60/w_400/artworks/JOHANN-MARTIN-VON-ROHDEN_WALDINNERES-STUDIE_CC-BY-SA_BSTGS_9779.jpg"
     },
     {
       "id": "pinakothek-ss-WAF-407",
@@ -578,10 +609,11 @@
       "department": "19. Jahrhundert",
       "origin": "Vor 1853 durch König Ludwig I. vom Künstler erworben – seit 1923 Wittelsbacher Ausgleichsfonds",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--8smvpMw7--/q_60/w_400/artworks/WILHELM-VON-KAULBACH_DAS-STUDIUM-DER-DEUTSCHEN-KUENSTLER-NEUERER-ZEIT-IN-ROM_CC-BY-SA_BSTGS_WAF407.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-WAF-407-b4dd77aa-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/WAF 407",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/02LAQjaLyk/wilhelm-von-kaulbach-1804/das-studium-der-deutschen-kuenstler-neuerer-zeit-in-rom-waf-407",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--8smvpMw7--/q_60/w_400/artworks/WILHELM-VON-KAULBACH_DAS-STUDIUM-DER-DEUTSCHEN-KUENSTLER-NEUERER-ZEIT-IN-ROM_CC-BY-SA_BSTGS_WAF407.jpg"
     },
     {
       "id": "pinakothek-ss-WAF-843",
@@ -596,10 +628,11 @@
       "department": "19. Jahrhundert",
       "origin": "1841 durch König Ludwig I. aus der Sammlung Klenze erworben – seit 1923 Wittelsbacher Ausgleichsfonds",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--XbUD61lh--/q_60/w_400/artworks/CARL-ROTTMANN_SIKYON-MIT-KORINTH_CC-BY-SA_BSTGS_WAF843.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-WAF-843-41716f54-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/WAF 843",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/Y0GRYVMLRX/carl-rottmann-1797/sikyon-mit-korinth-waf-843",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--XbUD61lh--/q_60/w_400/artworks/CARL-ROTTMANN_SIKYON-MIT-KORINTH_CC-BY-SA_BSTGS_WAF843.jpg"
     },
     {
       "id": "pinakothek-ss-11586",
@@ -614,10 +647,11 @@
       "department": "19. Jahrhundert",
       "origin": "1869 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--tvQ96aHI--/q_60/w_400/artworks/MORITZ-VON-SCHWIND_NIXEN-AN-DER-WALDQUELLE_CC-BY-SA_BSTGS_11586.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11586-e9512f5d-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11586",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/JzG6Wv84WO/moritz-von-schwind-1804/nixen-an-der-waldquelle-11586",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--tvQ96aHI--/q_60/w_400/artworks/MORITZ-VON-SCHWIND_NIXEN-AN-DER-WALDQUELLE_CC-BY-SA_BSTGS_11586.jpg"
     },
     {
       "id": "pinakothek-ss-11591",
@@ -632,10 +666,11 @@
       "department": "19. Jahrhundert",
       "origin": "1976 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--5NsBE5Pe--/q_60/w_400/artworks/LEOPOLD-BODE_DIE-SAGE-VON-PIPPIN-UND-BERTHA-TRIPTYCHON-MITTELTEIL_CC-BY-SA_BSTGS_11591.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11591-b3c08b54-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11591",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/k2xnZ9ExPd/leopold-bode-1831/die-sage-von-pippin-und-bertha-triptychon-mittelteil-11591",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--5NsBE5Pe--/q_60/w_400/artworks/LEOPOLD-BODE_DIE-SAGE-VON-PIPPIN-UND-BERTHA-TRIPTYCHON-MITTELTEIL_CC-BY-SA_BSTGS_11591.jpg"
     },
     {
       "id": "pinakothek-ss-11600",
@@ -650,10 +685,11 @@
       "department": "19. Jahrhundert",
       "origin": "1863 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--Dz_5tKbx--/q_60/w_400/artworks/FRITZ-BAMBERGER_DER-ALBUFERASEE-BEI-VALENCIA_CC-BY-SA_BSTGS_11600.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11600-2d135e44-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11600",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/RQ4XJ06L10/fritz-bamberger-1814/der-albuferasee-bei-valencia-11600",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--Dz_5tKbx--/q_60/w_400/artworks/FRITZ-BAMBERGER_DER-ALBUFERASEE-BEI-VALENCIA_CC-BY-SA_BSTGS_11600.jpg"
     },
     {
       "id": "pinakothek-ss-11617",
@@ -668,10 +704,11 @@
       "department": "19. Jahrhundert",
       "origin": "Vor 1874 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--CX1z9cVG--/q_60/w_400/artworks/EDUARD-GERHARDT_ANSICHT-DES-COMARES-TURMES-AUF-DER-ALHAMBRA-BEI-MONDSCHEIN_CC-BY-SA_BSTGS_11617.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11617-e7efd705-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11617",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/OrLbdjy41V/eduard-gerhardt-1813/ansicht-des-comares-turmes-auf-der-alhambra-bei-mondschein-11617",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--CX1z9cVG--/q_60/w_400/artworks/EDUARD-GERHARDT_ANSICHT-DES-COMARES-TURMES-AUF-DER-ALHAMBRA-BEI-MONDSCHEIN_CC-BY-SA_BSTGS_11617.jpg"
     },
     {
       "id": "pinakothek-ss-11624",
@@ -686,10 +723,11 @@
       "department": "19. Jahrhundert",
       "origin": "Vor 1868 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--Q5JNkcIw--/q_60/w_400/artworks/ALBERT-EMIL-KIRCHNER_ANSICHT-VON-VERONA-VOM-GIARDINO-GIUSTI-AUS-GESEHEN_CC-BY-SA_BSTGS_11624.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11624-48f755be-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11624",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/QrLWz0wxNO/albert-emil-kirchner-1813/ansicht-von-verona-vom-giardino-giusti-aus-gesehen-11624",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--Q5JNkcIw--/q_60/w_400/artworks/ALBERT-EMIL-KIRCHNER_ANSICHT-VON-VERONA-VOM-GIARDINO-GIUSTI-AUS-GESEHEN_CC-BY-SA_BSTGS_11624.jpg"
     },
     {
       "id": "pinakothek-ss-11627",
@@ -704,10 +742,11 @@
       "department": "19. Jahrhundert",
       "origin": "Zwischen 1869 und 1874 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--TJKB1sqH--/q_60/w_400/artworks/FRITZ-BAMBERGER_ANSICHT-DER-SIERRA-NEVADA_CC-BY-SA_BSTGS_11627.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11627-d468b301-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11627",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/wq4jEp6GWo/fritz-bamberger-1814/ansicht-der-sierra-nevada-11627",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--TJKB1sqH--/q_60/w_400/artworks/FRITZ-BAMBERGER_ANSICHT-DER-SIERRA-NEVADA_CC-BY-SA_BSTGS_11627.jpg"
     },
     {
       "id": "pinakothek-ss-11630",
@@ -722,10 +761,11 @@
       "department": "19. Jahrhundert",
       "origin": "Vor 1866 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--lHnw4KQB--/q_60/w_400/artworks/EDUARD-GERHARDT_DER-LOEWENHOF-DER-ALHAMBRA_CC-BY-SA_BSTGS_11630.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11630-e96b3429-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11630",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/JzG6WN84WO/eduard-gerhardt-1813/der-loewenhof-der-alhambra-11630",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--lHnw4KQB--/q_60/w_400/artworks/EDUARD-GERHARDT_DER-LOEWENHOF-DER-ALHAMBRA_CC-BY-SA_BSTGS_11630.jpg"
     },
     {
       "id": "pinakothek-ss-11644",
@@ -740,10 +780,11 @@
       "department": "19. Jahrhundert",
       "origin": "Vor 1879 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--7Av2be63--/q_60/w_400/artworks/CARL-FRIEDRICH-HEINRICH-WERNER_DAS-INNERE-EINER-KIRCHE-IN-DEN-PONTINISCHEN-SUEMPFEN-SANT-ANTONIO-ABATE-IN-PRIVERNO_CC-BY-SA_BSTGS_11644.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11644-e0f31469-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11644",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/6kLake748V/carl-friedrich-heinrich-werner-1808/das-innere-einer-kirche-in-den-pontinischen-suempfen-sant-antonio-abate-in-priverno-11644",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--7Av2be63--/q_60/w_400/artworks/CARL-FRIEDRICH-HEINRICH-WERNER_DAS-INNERE-EINER-KIRCHE-IN-DEN-PONTINISCHEN-SUEMPFEN-SANT-ANTONIO-ABATE-IN-PRIVERNO_CC-BY-SA_BSTGS_11644.jpg"
     },
     {
       "id": "pinakothek-ss-11662",
@@ -758,10 +799,11 @@
       "department": "19. Jahrhundert",
       "origin": "1868 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--jdHngB6r--/q_60/w_400/artworks/FRANZ-VON-LENBACH_SALOME-NACH-TIZIAN_CC-BY-SA_BSTGS_11662.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11662-06fe5f87-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11662",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/ZKGPQWy4gA/franz-von-lenbach-1836/salome-nach-tizian-11662",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--jdHngB6r--/q_60/w_400/artworks/FRANZ-VON-LENBACH_SALOME-NACH-TIZIAN_CC-BY-SA_BSTGS_11662.jpg"
     },
     {
       "id": "pinakothek-ss-11477",
@@ -776,10 +818,11 @@
       "department": "19. Jahrhundert",
       "origin": "Vor 1866 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--6jQ5C-AL--/q_60/w_400/artworks/CARL-ROTTMANN_KLIPPE-IM-AEGAEISCHEN-MEER_CC-BY-SA_BSTGS_11477.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11477-d4bdba93-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11477",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/8eGVnyBGWQ/carl-rottmann-1797/klippe-im-aegaeischen-meer-11477",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--6jQ5C-AL--/q_60/w_400/artworks/CARL-ROTTMANN_KLIPPE-IM-AEGAEISCHEN-MEER_CC-BY-SA_BSTGS_11477.jpg"
     },
     {
       "id": "pinakothek-ss-11480",
@@ -794,10 +837,11 @@
       "department": "19. Jahrhundert",
       "origin": "1865 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--mhhE3Wwh--/q_60/w_400/artworks/EUGEN-NAPOLEON-NEUREUTHER_MADONNA_CC-BY-SA_BSTGS_11480.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11480-9944a8f7-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11480",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/M0xy65WLpl/eugen-napoleon-neureuther-1806/madonna-11480",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--mhhE3Wwh--/q_60/w_400/artworks/EUGEN-NAPOLEON-NEUREUTHER_MADONNA_CC-BY-SA_BSTGS_11480.jpg"
     },
     {
       "id": "pinakothek-ss-11481",
@@ -812,10 +856,11 @@
       "department": "19. Jahrhundert",
       "origin": "1862 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--BJ63wkzS--/q_60/w_400/artworks/EUGEN-NAPOLEON-NEUREUTHER_BLUETE-DER-KUNST-IN-MUENCHEN_CC-BY-SA_BSTGS_11481.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11481-6e197cfc-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11481",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/JzG6Wyj4WO/eugen-napoleon-neureuther-1806/bluete-der-kunst-in-muenchen-11481",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--BJ63wkzS--/q_60/w_400/artworks/EUGEN-NAPOLEON-NEUREUTHER_BLUETE-DER-KUNST-IN-MUENCHEN_CC-BY-SA_BSTGS_11481.jpg"
     },
     {
       "id": "pinakothek-ss-11482",
@@ -830,10 +875,11 @@
       "department": "19. Jahrhundert",
       "origin": "wohl 1864 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--irX4bFsd--/q_60/w_400/artworks/EUGEN-NAPOLEON-NEUREUTHER_DER-TRAUM-DER-REZIA_CC-BY-SA_BSTGS_11482.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11482-9af609ec-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11482",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/y7GE1DOGPV/eugen-napoleon-neureuther-1806/der-traum-der-rezia-11482",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--irX4bFsd--/q_60/w_400/artworks/EUGEN-NAPOLEON-NEUREUTHER_DER-TRAUM-DER-REZIA_CC-BY-SA_BSTGS_11482.jpg"
     },
     {
       "id": "pinakothek-ss-11483",
@@ -848,10 +894,11 @@
       "department": "19. Jahrhundert",
       "origin": "1863 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s---TejFIHh--/q_60/w_400/artworks/EUGEN-NAPOLEON-NEUREUTHER_ERINNERUNG-AN-DIE-VILLA-MILLS_CC-BY-SA_BSTGS_11483.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11483-d28aca31-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11483",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/Qm45M3K4No/eugen-napoleon-neureuther-1806/erinnerung-an-die-villa-mills-11483",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s---TejFIHh--/q_60/w_400/artworks/EUGEN-NAPOLEON-NEUREUTHER_ERINNERUNG-AN-DIE-VILLA-MILLS_CC-BY-SA_BSTGS_11483.jpg"
     },
     {
       "id": "pinakothek-ss-11543",
@@ -866,10 +913,11 @@
       "department": "19. Jahrhundert",
       "origin": "1863 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s---F_XsLeS--/q_60/w_400/artworks/FRIEDRICH-PRELLER-D-AE_LEUKOTHEA-ERSCHEINT-ODYSSEUS-IM-STURM_CC-BY-SA_BSTGS_11543.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11543-979b44bc-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11543",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/Dj4mo03L5A/friedrich-preller-d-ae-1804/leukothea-erscheint-odysseus-im-sturm-11543",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s---F_XsLeS--/q_60/w_400/artworks/FRIEDRICH-PRELLER-D-AE_LEUKOTHEA-ERSCHEINT-ODYSSEUS-IM-STURM_CC-BY-SA_BSTGS_11543.jpg"
     },
     {
       "id": "pinakothek-ss-11545",
@@ -884,10 +932,11 @@
       "department": "19. Jahrhundert",
       "origin": "1864 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--2ZPWMFwW--/q_60/w_400/artworks/FRIEDRICH-PRELLER-D-AE_ODYSSEUS-NIMMT-ABSCHIED-VON-KALYPSO_CC-BY-SA_BSTGS_11545.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11545-6ba10ec1-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11545",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/Y0GRl2YxRX/friedrich-preller-d-ae-1804/odysseus-nimmt-abschied-von-kalypso-11545",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--2ZPWMFwW--/q_60/w_400/artworks/FRIEDRICH-PRELLER-D-AE_ODYSSEUS-NIMMT-ABSCHIED-VON-KALYPSO_CC-BY-SA_BSTGS_11545.jpg"
     },
     {
       "id": "pinakothek-ss-11552",
@@ -902,10 +951,11 @@
       "department": "19. Jahrhundert",
       "origin": "1863 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--giAudLfl--/q_60/w_400/artworks/CARL-SPITZWEG_TUERKEN-IN-EINEM-KAFFEEHAUS_CC-BY-SA_BSTGS_11552.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11552-6c35887a-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11552",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/Qr4DwR3GpE/carl-spitzweg-1808/tuerken-in-einem-kaffeehaus-11552",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--giAudLfl--/q_60/w_400/artworks/CARL-SPITZWEG_TUERKEN-IN-EINEM-KAFFEEHAUS_CC-BY-SA_BSTGS_11552.jpg"
     },
     {
       "id": "pinakothek-ss-11554",
@@ -920,10 +970,11 @@
       "department": "19. Jahrhundert",
       "origin": "1865 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--k7AgHTJ0--/q_60/w_400/artworks/MORITZ-VON-SCHWIND_DER-ERLKOENIG_CC-BY-SA_BSTGS_11554.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11554-67cb7fed-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11554",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/5RGQ1baGz3/moritz-von-schwind-1804/der-erlkoenig-11554",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--k7AgHTJ0--/q_60/w_400/artworks/MORITZ-VON-SCHWIND_DER-ERLKOENIG_CC-BY-SA_BSTGS_11554.jpg"
     },
     {
       "id": "pinakothek-ss-11556",
@@ -938,10 +989,11 @@
       "department": "19. Jahrhundert",
       "origin": "1863 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--SvTeare7--/q_60/w_400/artworks/CARL-SPITZWEG_EIN-EINSIEDLER-VIOLINE-SPIELEND_CC-BY-SA_BSTGS_11556.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11556-1c723ac5-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11556",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/XR4MJ2jxQ1/carl-spitzweg-1808/ein-einsiedler-violine-spielend-11556",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--SvTeare7--/q_60/w_400/artworks/CARL-SPITZWEG_EIN-EINSIEDLER-VIOLINE-SPIELEND_CC-BY-SA_BSTGS_11556.jpg"
     },
     {
       "id": "pinakothek-ss-11557",
@@ -956,10 +1008,11 @@
       "department": "19. Jahrhundert",
       "origin": "1869 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--y7bGwaDy--/q_60/w_400/artworks/MORITZ-VON-SCHWIND_DIE-VIER-TAGESZEITEN-DER-ABEND_CC-BY-SA_BSTGS_11557.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11557-d0e4546e-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11557",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/ZMLJrWoLJv/moritz-von-schwind-1804/die-vier-tageszeiten-der-abend-11557",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--y7bGwaDy--/q_60/w_400/artworks/MORITZ-VON-SCHWIND_DIE-VIER-TAGESZEITEN-DER-ABEND_CC-BY-SA_BSTGS_11557.jpg"
     },
     {
       "id": "pinakothek-ss-11558",
@@ -974,10 +1027,11 @@
       "department": "19. Jahrhundert",
       "origin": "1869 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--J_-htjQt--/q_60/w_400/artworks/MORITZ-VON-SCHWIND_DER-TRAUM-DES-ERWIN-VON-STEINBACH_CC-BY-SA_BSTGS_11558.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11558-89f39822-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11558",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/gR4kZDgGEe/moritz-von-schwind-1804/der-traum-des-erwin-von-steinbach-11558",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--J_-htjQt--/q_60/w_400/artworks/MORITZ-VON-SCHWIND_DER-TRAUM-DES-ERWIN-VON-STEINBACH_CC-BY-SA_BSTGS_11558.jpg"
     },
     {
       "id": "pinakothek-ss-11567",
@@ -992,10 +1046,11 @@
       "department": "19. Jahrhundert",
       "origin": "1869 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--yzlCuF6a--/q_60/w_400/artworks/MORITZ-VON-SCHWIND_DIE-VIER-TAGESZEITEN-DER-MORGEN_CC-BY-SA_BSTGS_11567.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11567-b6332cf1-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11567",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/0vxoWDyx2V/moritz-von-schwind-1804/die-vier-tageszeiten-der-morgen-11567",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--yzlCuF6a--/q_60/w_400/artworks/MORITZ-VON-SCHWIND_DIE-VIER-TAGESZEITEN-DER-MORGEN_CC-BY-SA_BSTGS_11567.jpg"
     },
     {
       "id": "pinakothek-ss-11576",
@@ -1010,10 +1065,11 @@
       "department": "19. Jahrhundert",
       "origin": "1869 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--zFqxICUt--/q_60/w_400/artworks/MORITZ-VON-SCHWIND_IM-WALDE-DES-KNABEN-WUNDERHORN_CC-BY-SA_BSTGS_11576.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11576-3db285bc-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11576",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/Qm45MvK4No/moritz-von-schwind-1804/im-walde-des-knaben-wunderhorn-11576",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--zFqxICUt--/q_60/w_400/artworks/MORITZ-VON-SCHWIND_IM-WALDE-DES-KNABEN-WUNDERHORN_CC-BY-SA_BSTGS_11576.jpg"
     },
     {
       "id": "pinakothek-ss-11577",
@@ -1028,10 +1084,11 @@
       "department": "19. Jahrhundert",
       "origin": "1869 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--TwBKhTpQ--/q_60/w_400/artworks/MORITZ-VON-SCHWIND_DIE-HOCHZEITSREISE_CC-BY-SA_BSTGS_11577.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11577-90d86e3f-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11577",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/jpxegD2GJ7/moritz-von-schwind-1804/die-hochzeitsreise-11577",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--TwBKhTpQ--/q_60/w_400/artworks/MORITZ-VON-SCHWIND_DIE-HOCHZEITSREISE_CC-BY-SA_BSTGS_11577.jpg"
     },
     {
       "id": "pinakothek-ss-11428",
@@ -1046,10 +1103,11 @@
       "department": "19. Jahrhundert",
       "origin": "1866 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--JmMdGCBY--/q_60/w_400/artworks/FRANZ-VON-LENBACH_VENUS-VON-URBINO-NACH-TIZIAN_CC-BY-SA_BSTGS_11428.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11428-cab21ed8-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11428",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/Qm45Mj94No/franz-von-lenbach-1836/venus-von-urbino-nach-tizian-11428",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--JmMdGCBY--/q_60/w_400/artworks/FRANZ-VON-LENBACH_VENUS-VON-URBINO-NACH-TIZIAN_CC-BY-SA_BSTGS_11428.jpg"
     },
     {
       "id": "pinakothek-ss-11429",
@@ -1064,10 +1122,11 @@
       "department": "19. Jahrhundert",
       "origin": "1864 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--qBEhSwjU--/q_60/w_400/artworks/FRANZ-VON-LENBACH_HIMMLISCHE-UND-IRDISCHE-LIEBE-NACH-TIZIAN_CC-BY-SA_BSTGS_11429.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11429-26ef00fd-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11429",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/jpxegmOGJ7/franz-von-lenbach-1836/himmlische-und-irdische-liebe-nach-tizian-11429",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--qBEhSwjU--/q_60/w_400/artworks/FRANZ-VON-LENBACH_HIMMLISCHE-UND-IRDISCHE-LIEBE-NACH-TIZIAN_CC-BY-SA_BSTGS_11429.jpg"
     },
     {
       "id": "pinakothek-ss-11437",
@@ -1082,10 +1141,11 @@
       "department": "19. Jahrhundert",
       "origin": "1864 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--rxkbnBvT--/q_60/w_400/artworks/FRANZ-VON-LENBACH_SALOME-NACH-TIZIAN_CC-BY-SA_BSTGS_11437.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11437-db4e8d5c-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11437",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/ma4dPoE4rO/franz-von-lenbach-1836/salome-nach-tizian-11437",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--rxkbnBvT--/q_60/w_400/artworks/FRANZ-VON-LENBACH_SALOME-NACH-TIZIAN_CC-BY-SA_BSTGS_11437.jpg"
     },
     {
       "id": "pinakothek-ss-11462",
@@ -1100,10 +1160,11 @@
       "department": "19. Jahrhundert",
       "origin": "1874 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--rluzdbgX--/q_60/w_400/artworks/LUDWIG-FERDINAND-SCHNORR-VON-CAROLSFELD_DER-ERLKOENIG_CC-BY-SA_BSTGS_11462.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11462-e9a9b853-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11462",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/0vxoW7Kx2V/ludwig-ferdinand-schnorr-von-carolsfeld-1788/der-erlkoenig-11462",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--rluzdbgX--/q_60/w_400/artworks/LUDWIG-FERDINAND-SCHNORR-VON-CAROLSFELD_DER-ERLKOENIG_CC-BY-SA_BSTGS_11462.jpg"
     },
     {
       "id": "pinakothek-ss-11471",
@@ -1118,10 +1179,11 @@
       "department": "19. Jahrhundert",
       "origin": "1868 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--P0InhBuZ--/q_60/w_400/artworks/EDUARD-SCHLEICH-D-AE_VENEDIG-BEI-MONDSCHEIN_CC-BY-SA_BSTGS_11471.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11471-d911a83e-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11471",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/jpxeg3OGJ7/eduard-schleich-d-ae-1812/venedig-bei-mondschein-11471",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--P0InhBuZ--/q_60/w_400/artworks/EDUARD-SCHLEICH-D-AE_VENEDIG-BEI-MONDSCHEIN_CC-BY-SA_BSTGS_11471.jpg"
     },
     {
       "id": "pinakothek-ss-11687",
@@ -1136,10 +1198,11 @@
       "department": "19. Jahrhundert",
       "origin": "1866 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--tVll7Llg--/q_60/w_400/artworks/FRANZ-VON-LENBACH_PIETRO-ARETINO-NACH-TIZIAN_CC-BY-SA_BSTGS_11687.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11687-8359d1e4-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11687",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/9pL3B3mxeb/franz-von-lenbach-1836/pietro-aretino-nach-tizian-11687",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--tVll7Llg--/q_60/w_400/artworks/FRANZ-VON-LENBACH_PIETRO-ARETINO-NACH-TIZIAN_CC-BY-SA_BSTGS_11687.jpg"
     },
     {
       "id": "pinakothek-ss-9321",
@@ -1154,10 +1217,11 @@
       "department": "19. Jahrhundert",
       "origin": "1925 aus dem Kunsthandel erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--0rXojlnS--/q_60/w_400/artworks/JOHANN-GEORG-VON-DILLIS_TIVOLI_CC-BY-SA_BSTGS_9321.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-9321-b7c45030-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/9321",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/A9xlKRl4Wv/johann-georg-von-dillis-1759/tivoli-9321",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--0rXojlnS--/q_60/w_400/artworks/JOHANN-GEORG-VON-DILLIS_TIVOLI_CC-BY-SA_BSTGS_9321.jpg"
     },
     {
       "id": "pinakothek-ss-11591-b",
@@ -1172,10 +1236,11 @@
       "department": "19. Jahrhundert",
       "origin": "1876 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--SBuHPQV2--/q_60/w_400/artworks/LEOPOLD-BODE_PIPPIN-WAESCHT-BERTA-DIE-FUESSE-TRIPTYCHON-RECHTER-FLUEGEL_CC-BY-SA_BSTGS_11591B.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11591-b-7985083c-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11591 b",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/Y0GRW8r4RX/leopold-bode-1831/pippin-waescht-berta-die-fuesse-triptychon-rechter-fluegel-11591-b",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--SBuHPQV2--/q_60/w_400/artworks/LEOPOLD-BODE_PIPPIN-WAESCHT-BERTA-DIE-FUESSE-TRIPTYCHON-RECHTER-FLUEGEL_CC-BY-SA_BSTGS_11591B.jpg"
     },
     {
       "id": "pinakothek-ss-8610",
@@ -1190,10 +1255,11 @@
       "department": "19. Jahrhundert",
       "origin": "1911 aus dem Kunsthandel erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--xMv5i-Bl--/q_60/w_400/artworks/HEINRICH-BUERKEL_TRATTORIA-BEI-DER-PORTA-SAN-SEBASTIANO-VOR-ROM_CC-BY-SA_BSTGS_8610.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-8610-836745b5-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/8610",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/o5xrQOk47X/heinrich-buerkel-1802/trattoria-bei-der-porta-san-sebastiano-vor-rom-8610",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--xMv5i-Bl--/q_60/w_400/artworks/HEINRICH-BUERKEL_TRATTORIA-BEI-DER-PORTA-SAN-SEBASTIANO-VOR-ROM_CC-BY-SA_BSTGS_8610.jpg"
     },
     {
       "id": "pinakothek-ss-7874",
@@ -1208,10 +1274,11 @@
       "department": "19. Jahrhundert",
       "origin": "1892 als Schenkung aus Privatbesitz erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--jFIzx_WM--/q_60/w_400/artworks/HANS-VON-MAREES_DOPPELBILDNIS-MAREES-UND-LENBACH_CC-BY-SA_BSTGS_7874.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-7874-0999989b-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/7874",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/JzG6REZGWO/hans-von-marees-1837/doppelbildnis-marees-und-lenbach-7874",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--jFIzx_WM--/q_60/w_400/artworks/HANS-VON-MAREES_DOPPELBILDNIS-MAREES-UND-LENBACH_CC-BY-SA_BSTGS_7874.jpg"
     },
     {
       "id": "pinakothek-ss-WAF-142",
@@ -1226,10 +1293,11 @@
       "department": "19. Jahrhundert",
       "origin": "1824 durch Kronprinz Ludwig vom Künstler erworben – seit 1923 Wittelsbacher Ausgleichsfonds",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--V8RF-6vJ--/q_60/w_400/artworks/FRANZ-LUDWIG-CATEL_KRONPRINZ-LUDWIG-IN-DER-SPANISCHEN-WEINSCHAENKE-ZU-ROM_CC-BY-SA_BSTGS_WAF142.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-WAF-142-0c1ba290-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/WAF 142",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/gR4k3EJ4Ee/franz-ludwig-catel-1778/kronprinz-ludwig-in-der-spanischen-weinschaenke-zu-rom-waf-142",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--V8RF-6vJ--/q_60/w_400/artworks/FRANZ-LUDWIG-CATEL_KRONPRINZ-LUDWIG-IN-DER-SPANISCHEN-WEINSCHAENKE-ZU-ROM_CC-BY-SA_BSTGS_WAF142.jpg"
     },
     {
       "id": "pinakothek-ss-9463",
@@ -1244,10 +1312,11 @@
       "department": "19. Jahrhundert",
       "origin": "1852 durch König Ludwig I. vom Künstler erworben - 1925 an den Wittelsbacher Ausgleichsfonds abgegeben - 1927 von diesem erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--iPkC-ILw--/q_60/w_400/artworks/LEO-VON-KLENZE_IDEALE-ANSICHT-DER-AKROPOLIS-UND-DES-AREOPAG-IN-ATHEN_CC-BY-SA_BSTGS_9463.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-9463-798e41e0-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/9463",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/2mxqY3Wx8b/leo-von-klenze-1784/ideale-ansicht-der-akropolis-und-des-areopag-in-athen-9463",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--iPkC-ILw--/q_60/w_400/artworks/LEO-VON-KLENZE_IDEALE-ANSICHT-DER-AKROPOLIS-UND-DES-AREOPAG-IN-ATHEN_CC-BY-SA_BSTGS_9463.jpg"
     },
     {
       "id": "pinakothek-ss-9610",
@@ -1262,10 +1331,11 @@
       "department": "19. Jahrhundert",
       "origin": "1930 aus dem Kunsthandel erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--c-5tAgqQ--/q_60/w_400/artworks/ANSELM-FEUERBACH_NANNA_CC-BY-SA_BSTGS_9610.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-9610-60e19efe-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/9610",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/Znxw3jnxXg/anselm-feuerbach-1829/nanna-9610",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--c-5tAgqQ--/q_60/w_400/artworks/ANSELM-FEUERBACH_NANNA_CC-BY-SA_BSTGS_9610.jpg"
     },
     {
       "id": "pinakothek-ss-WAF-357",
@@ -1280,10 +1350,11 @@
       "department": "19. Jahrhundert",
       "origin": "1839 durch König Ludwig I. aus dem Münchner Kunstverein erworben – seit 1923 Wittelsbacher Ausgleichsfonds",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--e61K9DW---/q_60/w_400/artworks/PETER-VON-HESS_GRIECHISCHE-LANDLEUTE-AM-MEERESSTRAND_CC-BY-SA_BSTGS_WAF357.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-WAF-357-8484e647-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/WAF 357",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/53470Nox9e/peter-von-hess-1792/griechische-landleute-am-meeresstrand-waf-357",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--e61K9DW---/q_60/w_400/artworks/PETER-VON-HESS_GRIECHISCHE-LANDLEUTE-AM-MEERESSTRAND_CC-BY-SA_BSTGS_WAF357.jpg"
     },
     {
       "id": "pinakothek-ss-WAF-817",
@@ -1298,10 +1369,11 @@
       "department": "19. Jahrhundert",
       "origin": "1841 durch König Ludwig I. aus der Sammlung Klenze erworben – seit 1923 Wittelsbacher Ausgleichsfonds",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--ZYsMD0Dd--/q_60/w_400/artworks/JOHANN-CHRISTIAN-REINHART_LANDSCHAFT-MIT-HIRT-UND-ZIEGEN_CC-BY-SA_BSTGS_WAF817.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-WAF-817-f4b82b1a-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/WAF 817",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/Y0GR9PrLRX/johann-christian-reinhart-1761/landschaft-mit-hirt-und-ziegen-waf-817",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--ZYsMD0Dd--/q_60/w_400/artworks/JOHANN-CHRISTIAN-REINHART_LANDSCHAFT-MIT-HIRT-UND-ZIEGEN_CC-BY-SA_BSTGS_WAF817.jpg"
     },
     {
       "id": "pinakothek-ss-WAF-836",
@@ -1316,10 +1388,11 @@
       "department": "19. Jahrhundert",
       "origin": "1841 durch König Ludwig I. aus der Sammlung Klenze erworben – seit 1923 Wittelsbacher Ausgleichsfonds",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--JKBflWzs--/q_60/w_400/artworks/LOUIS-LEOPOLD-ROBERT_PROCIDANERIN-MIT-IHREM-KIND_CC-BY-SA_BSTGS_WAF836.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-WAF-836-7d537249-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/WAF 836",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/01G1POnLkE/louis-leopold-robert-1794/procidanerin-mit-ihrem-kind-waf-836",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--JKBflWzs--/q_60/w_400/artworks/LOUIS-LEOPOLD-ROBERT_PROCIDANERIN-MIT-IHREM-KIND_CC-BY-SA_BSTGS_WAF836.jpg"
     },
     {
       "id": "pinakothek-ss-WAF-842",
@@ -1334,10 +1407,11 @@
       "department": "19. Jahrhundert",
       "origin": "1841 durch König Ludwig I. aus der Sammlung Klenze erworben – seit 1923 Wittelsbacher Ausgleichsfonds",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--WfyhpbXN--/q_60/w_400/artworks/CARL-ROTTMANN_PALERMO-MIT-DEM-MONTE-PELLEGRINO_CC-BY-SA_BSTGS_WAF842.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-WAF-842-3f2c79f7-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/WAF 842",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/RQ4XX56410/carl-rottmann-1797/palermo-mit-dem-monte-pellegrino-waf-842",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--WfyhpbXN--/q_60/w_400/artworks/CARL-ROTTMANN_PALERMO-MIT-DEM-MONTE-PELLEGRINO_CC-BY-SA_BSTGS_WAF842.jpg"
     },
     {
       "id": "pinakothek-ss-WAF-845",
@@ -1352,10 +1426,11 @@
       "department": "19. Jahrhundert",
       "origin": "1841 durch König Ludwig I. aus der Sammlung Klenze erworben – seit 1923 Wittelsbacher Ausgleichsfonds",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--Q1C23nJ7--/q_60/w_400/artworks/CARL-ROTTMANN_TAORMINA-MIT-DEM-AETNA_CC-BY-SA_BSTGS_WAF845.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-WAF-845-da3cb8f4-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/WAF 845",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/anxgBgo4Eq/carl-rottmann-1797/taormina-mit-dem-aetna-waf-845",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--Q1C23nJ7--/q_60/w_400/artworks/CARL-ROTTMANN_TAORMINA-MIT-DEM-AETNA_CC-BY-SA_BSTGS_WAF845.jpg"
     },
     {
       "id": "pinakothek-ss-B-540",
@@ -1370,10 +1445,11 @@
       "department": "19. Jahrhundert",
       "origin": "1969 als Schenkung aus dem Nachlass des Künstlers erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--C1BRv7az--/q_60/w_400/artworks/ADOLF-VON-HILDEBRAND_KAISER-WILHELM-II-VON-PREUSSEN-1859-1941_CC-BY-SA_BSTGS_B540.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-B-540-024e6622-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/B 540",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/qZMLJnYLJv/adolf-von-hildebrand-1847/kaiser-wilhelm-ii-von-preussen-1859-1941-b-540",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--C1BRv7az--/q_60/w_400/artworks/ADOLF-VON-HILDEBRAND_KAISER-WILHELM-II-VON-PREUSSEN-1859-1941_CC-BY-SA_BSTGS_B540.jpg"
     },
     {
       "id": "pinakothek-ss-11450",
@@ -1388,10 +1464,11 @@
       "department": "19. Jahrhundert",
       "origin": "Zwischen 1863 und 1868 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--wSgTH02H--/q_60/w_400/artworks/FRANZ-VON-LENBACH_HIRTENKNABE_CC-BY-SA_BSTGS_11450.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11450-0eee8588-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11450",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/02LAk9A4yk/franz-von-lenbach-1836/hirtenknabe-11450",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--wSgTH02H--/q_60/w_400/artworks/FRANZ-VON-LENBACH_HIRTENKNABE_CC-BY-SA_BSTGS_11450.jpg"
     },
     {
       "id": "pinakothek-ss-11454",
@@ -1406,10 +1483,11 @@
       "department": "19. Jahrhundert",
       "origin": "1867 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--BT3i4Nt3--/q_60/w_400/artworks/FRANZ-VON-LENBACH_SELBSTBILDNIS_CC-BY-SA_BSTGS_11454.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11454-9b91d6b4-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11454",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/gR4kZlNGEe/franz-von-lenbach-1836/selbstbildnis-11454",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--BT3i4Nt3--/q_60/w_400/artworks/FRANZ-VON-LENBACH_SELBSTBILDNIS_CC-BY-SA_BSTGS_11454.jpg"
     },
     {
       "id": "pinakothek-ss-11457",
@@ -1424,10 +1502,11 @@
       "department": "19. Jahrhundert",
       "origin": "Vor 1874 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--pmkJxHhS--/q_60/w_400/artworks/FRANZ-VON-LENBACH_DIE-ALHAMBRA-IN-GRANADA_CC-BY-SA_BSTGS_11457.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11457-7872c14f-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11457",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/OrLbdq541V/franz-von-lenbach-1836/die-alhambra-in-granada-11457",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--pmkJxHhS--/q_60/w_400/artworks/FRANZ-VON-LENBACH_DIE-ALHAMBRA-IN-GRANADA_CC-BY-SA_BSTGS_11457.jpg"
     },
     {
       "id": "pinakothek-ss-11466",
@@ -1442,10 +1521,11 @@
       "department": "19. Jahrhundert",
       "origin": "wohl 1869 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--6RD4aGyX--/q_60/w_400/artworks/FRANZ-LUDWIG-CATEL_DAS-THEATER-VON-TAORMINA_CC-BY-SA_BSTGS_11466.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11466-1f91caf2-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11466",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/wq4jEeoGWo/franz-ludwig-catel-1778/das-theater-von-taormina-11466",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--6RD4aGyX--/q_60/w_400/artworks/FRANZ-LUDWIG-CATEL_DAS-THEATER-VON-TAORMINA_CC-BY-SA_BSTGS_11466.jpg"
     },
     {
       "id": "pinakothek-ss-11468",
@@ -1460,10 +1540,11 @@
       "department": "19. Jahrhundert",
       "origin": "1869 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--BFnx8103--/q_60/w_400/artworks/JOHANN-GEORG-VON-DILLIS_BLICK-VON-DER-VILLA-MALTA-AUF-SANKT-PETER_CC-BY-SA_BSTGS_11468.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11468-ca4ad9b6-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11468",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/M0xy655Lpl/johann-georg-von-dillis-1759/blick-von-der-villa-malta-auf-sankt-peter-11468",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--BFnx8103--/q_60/w_400/artworks/JOHANN-GEORG-VON-DILLIS_BLICK-VON-DER-VILLA-MALTA-AUF-SANKT-PETER_CC-BY-SA_BSTGS_11468.jpg"
     },
     {
       "id": "pinakothek-ss-11473",
@@ -1478,10 +1559,11 @@
       "department": "19. Jahrhundert",
       "origin": "wohl 1862 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--bEf_MNxl--/q_60/w_400/artworks/JOSEPH-REBELL_KUESTE-VON-CAPRI-BEI-SONNENUNTERGANG_CC-BY-SA_BSTGS_11473.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11473-3c2b9c61-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11473",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/jWLpa96GKY/joseph-rebell-1787/kueste-von-capri-bei-sonnenuntergang-11473",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--bEf_MNxl--/q_60/w_400/artworks/JOSEPH-REBELL_KUESTE-VON-CAPRI-BEI-SONNENUNTERGANG_CC-BY-SA_BSTGS_11473.jpg"
     },
     {
       "id": "pinakothek-ss-11484",
@@ -1496,10 +1578,11 @@
       "department": "19. Jahrhundert",
       "origin": "1862 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--OeeBXyWY--/q_60/w_400/artworks/EUGEN-NAPOLEON-NEUREUTHER_AUSSICHT-VON-DER-VILLA-MALTA-IN-ROM_CC-BY-SA_BSTGS_11484.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11484-ab272556-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11484",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/jpxeg32GJ7/eugen-napoleon-neureuther-1806/aussicht-von-der-villa-malta-in-rom-11484",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--OeeBXyWY--/q_60/w_400/artworks/EUGEN-NAPOLEON-NEUREUTHER_AUSSICHT-VON-DER-VILLA-MALTA-IN-ROM_CC-BY-SA_BSTGS_11484.jpg"
     },
     {
       "id": "pinakothek-ss-11512",
@@ -1514,10 +1597,11 @@
       "department": "19. Jahrhundert",
       "origin": "1863 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--JxrPdjnd--/q_60/w_400/artworks/ANSELM-FEUERBACH_BILDNIS-EINER-ROEMERIN-NANNA_CC-BY-SA_BSTGS_11512.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11512-280682e5-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11512",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/XR4MJwjxQ1/anselm-feuerbach-1829/bildnis-einer-roemerin-nanna-11512",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--JxrPdjnd--/q_60/w_400/artworks/ANSELM-FEUERBACH_BILDNIS-EINER-ROEMERIN-NANNA_CC-BY-SA_BSTGS_11512.jpg"
     },
     {
       "id": "pinakothek-ss-11513",
@@ -1532,10 +1616,11 @@
       "department": "19. Jahrhundert",
       "origin": "1864 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--PRICXSzz--/q_60/w_400/artworks/ANSELM-FEUERBACH_BADENDE-KINDER_CC-BY-SA_BSTGS_11513.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11513-ea05ba1a-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11513",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/ZMLJrvoLJv/anselm-feuerbach-1829/badende-kinder-11513",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--PRICXSzz--/q_60/w_400/artworks/ANSELM-FEUERBACH_BADENDE-KINDER_CC-BY-SA_BSTGS_11513.jpg"
     },
     {
       "id": "pinakothek-ss-11515",
@@ -1550,10 +1635,11 @@
       "department": "19. Jahrhundert",
       "origin": "1864 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--YL87q0PH--/q_60/w_400/artworks/HANS-VON-MAREES_DIE-SCHWEMME_CC-BY-SA_BSTGS_11515.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11515-b6b4c78d-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11515",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/ZnxwNJn4Xg/hans-von-marees-1837/die-schwemme-11515",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--YL87q0PH--/q_60/w_400/artworks/HANS-VON-MAREES_DIE-SCHWEMME_CC-BY-SA_BSTGS_11515.jpg"
     },
     {
       "id": "pinakothek-ss-11520",
@@ -1568,10 +1654,11 @@
       "department": "19. Jahrhundert",
       "origin": "1864 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--3M69MwRU--/q_60/w_400/artworks/ANSELM-FEUERBACH_MUSIZIERENDE-KINDER-VON-EINER-NYMPHE-BELAUSCHT_CC-BY-SA_BSTGS_11520.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11520-921a102d-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11520",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/8MLvXJl4z3/anselm-feuerbach-1829/musizierende-kinder-von-einer-nymphe-belauscht-11520",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--3M69MwRU--/q_60/w_400/artworks/ANSELM-FEUERBACH_MUSIZIERENDE-KINDER-VON-EINER-NYMPHE-BELAUSCHT_CC-BY-SA_BSTGS_11520.jpg"
     },
     {
       "id": "pinakothek-ss-11535",
@@ -1586,10 +1673,11 @@
       "department": "19. Jahrhundert",
       "origin": "1866 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--05ztrreK--/q_60/w_400/artworks/ARNOLD-BOECKLIN_DIE-KLAGE-DES-HIRTEN-AMARYLLIS_CC-BY-SA_BSTGS_11535.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11535-27eb7f9b-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11535",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/jWLpavEGKY/arnold-boecklin-1827/die-klage-des-hirten-amaryllis-11535",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--05ztrreK--/q_60/w_400/artworks/ARNOLD-BOECKLIN_DIE-KLAGE-DES-HIRTEN-AMARYLLIS_CC-BY-SA_BSTGS_11535.jpg"
     },
     {
       "id": "pinakothek-ss-11553",
@@ -1604,10 +1692,11 @@
       "department": "19. Jahrhundert",
       "origin": "1869 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--yHb3gumC--/q_60/w_400/artworks/MORITZ-VON-SCHWIND_DIE-VIER-TAGESZEITEN-DER-MITTAG_CC-BY-SA_BSTGS_11553.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11553-ee44de85-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11553",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/02LAkm84yk/moritz-von-schwind-1804/die-vier-tageszeiten-der-mittag-11553",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--yHb3gumC--/q_60/w_400/artworks/MORITZ-VON-SCHWIND_DIE-VIER-TAGESZEITEN-DER-MITTAG_CC-BY-SA_BSTGS_11553.jpg"
     },
     {
       "id": "pinakothek-ss-11559",
@@ -1622,10 +1711,11 @@
       "department": "19. Jahrhundert",
       "origin": "1869 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--ZR-_Nn6G--/q_60/w_400/artworks/MORITZ-VON-SCHWIND_DIE-MORGENSTUNDE_CC-BY-SA_BSTGS_11559.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11559-2a36bac8-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11559",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/ZnxwNDn4Xg/moritz-von-schwind-1804/die-morgenstunde-11559",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--ZR-_Nn6G--/q_60/w_400/artworks/MORITZ-VON-SCHWIND_DIE-MORGENSTUNDE_CC-BY-SA_BSTGS_11559.jpg"
     },
     {
       "id": "pinakothek-ss-11561",
@@ -1640,10 +1730,11 @@
       "department": "19. Jahrhundert",
       "origin": "1864 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--9l69Hgno--/q_60/w_400/artworks/CARL-SPITZWEG_DER-ABSCHIED_CC-BY-SA_BSTGS_11561.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11561-402d16e5-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11561",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/OrLbdDq41V/carl-spitzweg-1808/der-abschied-11561",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--9l69Hgno--/q_60/w_400/artworks/CARL-SPITZWEG_DER-ABSCHIED_CC-BY-SA_BSTGS_11561.jpg"
     },
     {
       "id": "pinakothek-ss-11569",
@@ -1658,10 +1749,11 @@
       "department": "19. Jahrhundert",
       "origin": "1869 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--hX2DMo_v--/q_60/w_400/artworks/MORITZ-VON-SCHWIND_DIE-WALDKAPELLE_CC-BY-SA_BSTGS_11569.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11569-4e36134b-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11569",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/2mxqDPW48b/moritz-von-schwind-1804/die-waldkapelle-11569",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--hX2DMo_v--/q_60/w_400/artworks/MORITZ-VON-SCHWIND_DIE-WALDKAPELLE_CC-BY-SA_BSTGS_11569.jpg"
     },
     {
       "id": "pinakothek-ss-11570",
@@ -1676,10 +1768,11 @@
       "department": "19. Jahrhundert",
       "origin": "1869 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--K_vkRm_7--/q_60/w_400/artworks/MORITZ-VON-SCHWIND_ELFENTANZ-IM-ERLENHAIN_CC-BY-SA_BSTGS_11570.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11570-a25e0545-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11570",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/8eGVnMBGWQ/moritz-von-schwind-1804/elfentanz-im-erlenhain-11570",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--K_vkRm_7--/q_60/w_400/artworks/MORITZ-VON-SCHWIND_ELFENTANZ-IM-ERLENHAIN_CC-BY-SA_BSTGS_11570.jpg"
     },
     {
       "id": "pinakothek-ss-11572",
@@ -1694,10 +1787,11 @@
       "department": "19. Jahrhundert",
       "origin": "1863 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--B2RBde5D--/q_60/w_400/artworks/MORITZ-VON-SCHWIND_DIE-JUNGFRAU_CC-BY-SA_BSTGS_11572.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11572-86c13580-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11572",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/9pL3Bvjxeb/moritz-von-schwind-1804/die-jungfrau-11572",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--B2RBde5D--/q_60/w_400/artworks/MORITZ-VON-SCHWIND_DIE-JUNGFRAU_CC-BY-SA_BSTGS_11572.jpg"
     },
     {
       "id": "pinakothek-ss-11575",
@@ -1712,10 +1806,11 @@
       "department": "19. Jahrhundert",
       "origin": "1863 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--c76CQg8Y--/q_60/w_400/artworks/MORITZ-VON-SCHWIND_HERO-UND-LEANDER_CC-BY-SA_BSTGS_11575.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11575-584dc41f-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11575",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/y7GE1mOGPV/moritz-von-schwind-1804/hero-und-leander-11575",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--c76CQg8Y--/q_60/w_400/artworks/MORITZ-VON-SCHWIND_HERO-UND-LEANDER_CC-BY-SA_BSTGS_11575.jpg"
     },
     {
       "id": "pinakothek-ss-11609",
@@ -1730,10 +1825,11 @@
       "department": "19. Jahrhundert",
       "origin": "Vor 1866 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--X3_-uWPi--/q_60/w_400/artworks/EDUARD-GERHARDT_DER-EHEMALIGE-PALAZZO-MORO-IN-VENEDIG_CC-BY-SA_BSTGS_11609.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11609-57040ac1-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11609",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/02LAk5a4yk/eduard-gerhardt-1813/der-ehemalige-palazzo-moro-in-venedig-11609",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--X3_-uWPi--/q_60/w_400/artworks/EDUARD-GERHARDT_DER-EHEMALIGE-PALAZZO-MORO-IN-VENEDIG_CC-BY-SA_BSTGS_11609.jpg"
     },
     {
       "id": "pinakothek-ss-11616",
@@ -1748,10 +1844,11 @@
       "department": "19. Jahrhundert",
       "origin": "1863 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--4HTldpq_--/q_60/w_400/artworks/FRITZ-BAMBERGER_ABENDGLUEHEN-IN-DER-SIERRA-NEVADA_CC-BY-SA_BSTGS_11616.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11616-3801ae4d-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11616",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/ZKGPQ0y4gA/fritz-bamberger-1814/abendgluehen-in-der-sierra-nevada-11616",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--4HTldpq_--/q_60/w_400/artworks/FRITZ-BAMBERGER_ABENDGLUEHEN-IN-DER-SIERRA-NEVADA_CC-BY-SA_BSTGS_11616.jpg"
     },
     {
       "id": "pinakothek-ss-11618",
@@ -1766,10 +1863,11 @@
       "department": "19. Jahrhundert",
       "origin": "Zwischen 1869 und 1874 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--OJ7VxLXX--/q_60/w_400/artworks/FRITZ-BAMBERGER_DIE-BRUECKE-VON-SAN-MARTIN-BEI-TOLEDO_CC-BY-SA_BSTGS_11618.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11618-cc5a7bec-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11618",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/QKGBAe9LBb/fritz-bamberger-1814/die-bruecke-von-san-martin-bei-toledo-11618",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--OJ7VxLXX--/q_60/w_400/artworks/FRITZ-BAMBERGER_DIE-BRUECKE-VON-SAN-MARTIN-BEI-TOLEDO_CC-BY-SA_BSTGS_11618.jpg"
     },
     {
       "id": "pinakothek-ss-11621",
@@ -1784,10 +1882,11 @@
       "department": "19. Jahrhundert",
       "origin": "Vor 1866 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--1B-SH9zg--/q_60/w_400/artworks/EDUARD-GERHARDT_DER-PALAZZO-VENDRAMIN-IN-VENEDIG-BEI-NACHT_CC-BY-SA_BSTGS_11621.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11621-7b1d0d6c-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11621",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/8MLvX3w4z3/eduard-gerhardt-1813/der-palazzo-vendramin-in-venedig-bei-nacht-11621",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--1B-SH9zg--/q_60/w_400/artworks/EDUARD-GERHARDT_DER-PALAZZO-VENDRAMIN-IN-VENEDIG-BEI-NACHT_CC-BY-SA_BSTGS_11621.jpg"
     },
     {
       "id": "pinakothek-ss-11643",
@@ -1802,10 +1901,11 @@
       "department": "19. Jahrhundert",
       "origin": "Vor 1866 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--t2DuB-CB--/q_60/w_400/artworks/BERNHARD-STANGE_PLATZ-IN-VENEDIG-BEI-MONDSCHEIN_CC-BY-SA_BSTGS_11643.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11643-3a799dfb-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11643",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/ma4dPna4rO/bernhard-stange-1807/platz-in-venedig-bei-mondschein-11643",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--t2DuB-CB--/q_60/w_400/artworks/BERNHARD-STANGE_PLATZ-IN-VENEDIG-BEI-MONDSCHEIN_CC-BY-SA_BSTGS_11643.jpg"
     },
     {
       "id": "pinakothek-ss-8942",
@@ -1820,10 +1920,11 @@
       "department": "19. Jahrhundert",
       "origin": "1917 aus Privatbesitz erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--mDdsmhqY--/q_60/w_400/artworks/CARL-SPITZWEG_NAECHTLICHE-RUNDE_CC-BY-SA_BSTGS_8942.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-8942-702ffb23-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/8942",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/Qr4DYB9xpE/carl-spitzweg-1808/naechtliche-runde-8942",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--mDdsmhqY--/q_60/w_400/artworks/CARL-SPITZWEG_NAECHTLICHE-RUNDE_CC-BY-SA_BSTGS_8942.jpg"
     },
     {
       "id": "pinakothek-ss-WAF-134",
@@ -1838,10 +1939,11 @@
       "department": "19. Jahrhundert",
       "origin": "1837 durch König Ludwig I. erworben – seit 1923 Wittelsbacher Ausgleichsfonds",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--4iRwCROn--/q_60/w_400/artworks/HEINRICH-BUERKEL_SCHAEFER-IN-DER-ROEMISCHEN-CAMPAGNA_CC-BY-SA_BSTGS_WAF134.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-WAF-134-3cdf0e9b-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/WAF 134",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/5RGQz8v4z3/heinrich-buerkel-1802/schaefer-in-der-roemischen-campagna-waf-134",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--4iRwCROn--/q_60/w_400/artworks/HEINRICH-BUERKEL_SCHAEFER-IN-DER-ROEMISCHEN-CAMPAGNA_CC-BY-SA_BSTGS_WAF134.jpg"
     },
     {
       "id": "pinakothek-ss-WAF-211",
@@ -1856,10 +1958,11 @@
       "department": "19. Jahrhundert",
       "origin": "1841 durch König Ludwig I. aus der Sammlung Klenze erworben – seit 1923 Wittelsbacher Ausgleichsfonds",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--L6F7Mkyi--/q_60/w_400/artworks/JOHANN-GEORG-VON-DILLIS_GROTTAFERRATA-BEI-ROM_CC-BY-SA_BSTGS_WAF211.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-WAF-211-74912a1f-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/WAF 211",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/ApL8q9gGN2/johann-georg-von-dillis-1759/grottaferrata-bei-rom-waf-211",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--L6F7Mkyi--/q_60/w_400/artworks/JOHANN-GEORG-VON-DILLIS_GROTTAFERRATA-BEI-ROM_CC-BY-SA_BSTGS_WAF211.jpg"
     },
     {
       "id": "pinakothek-ss-WAF-815",
@@ -1874,10 +1977,11 @@
       "department": "19. Jahrhundert",
       "origin": "1846 durch König Ludwig I. vom Künstler erworben – seit 1923 Wittelsbacher Ausgleichsfonds",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--3-ByQdEF--/q_60/w_400/artworks/JOHANN-CHRISTIAN-REINHART_DIE-ERFINDUNG-DES-KORINTHISCHEN-KAPITELLS-DURCH-KALLIMACHOS_CC-BY-SA_BSTGS_WAF815.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-WAF-815-97d28a08-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/WAF 815",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/Dj4mk3EL5A/johann-christian-reinhart-1761/die-erfindung-des-korinthischen-kapitells-durch-kallimachos-waf-815",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--3-ByQdEF--/q_60/w_400/artworks/JOHANN-CHRISTIAN-REINHART_DIE-ERFINDUNG-DES-KORINTHISCHEN-KAPITELLS-DURCH-KALLIMACHOS_CC-BY-SA_BSTGS_WAF815.jpg"
     },
     {
       "id": "pinakothek-ss-WAF-818",
@@ -1892,10 +1996,11 @@
       "department": "19. Jahrhundert",
       "origin": "1838 durch König Ludwig I. vom Künstler erworben – seit 1923 Wittelsbacher Ausgleichsfonds",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--yHHU_Jpt--/q_60/w_400/artworks/JOHANN-CHRISTIAN-REINHART_BAUMGRUPPE-MIT-KUEHEN-AN-DER-TRAENKE_CC-BY-SA_BSTGS_WAF818.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-WAF-818-7193d6e7-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/WAF 818",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/anxg3wdxEq/johann-christian-reinhart-1761/baumgruppe-mit-kuehen-an-der-traenke-waf-818",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--yHHU_Jpt--/q_60/w_400/artworks/JOHANN-CHRISTIAN-REINHART_BAUMGRUPPE-MIT-KUEHEN-AN-DER-TRAENKE_CC-BY-SA_BSTGS_WAF818.jpg"
     },
     {
       "id": "pinakothek-ss-WAF-819",
@@ -1910,10 +2015,11 @@
       "department": "19. Jahrhundert",
       "origin": "1841 durch König Ludwig I. aus der Sammlung Klenze erworben – seit 1923 Wittelsbacher Ausgleichsfonds",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--uLJv8NaS--/q_60/w_400/artworks/HEINRICH-REINHOLD_TERRASSE-DES-KAPUZINERKLOSTERS-IN-SORRENT_CC-BY-SA_BSTGS_WAF819.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-WAF-819-f3544b9b-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/WAF 819",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/PdxzYAV4w5/heinrich-reinhold-1788/terrasse-des-kapuzinerklosters-in-sorrent-waf-819",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--uLJv8NaS--/q_60/w_400/artworks/HEINRICH-REINHOLD_TERRASSE-DES-KAPUZINERKLOSTERS-IN-SORRENT_CC-BY-SA_BSTGS_WAF819.jpg"
     },
     {
       "id": "pinakothek-ss-8120",
@@ -1928,10 +2034,11 @@
       "department": "19. Jahrhundert",
       "origin": "1900 aus dem Nachlass des Künstlers erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--MTLJ6Wm0--/q_60/w_400/artworks/MORITZ-VON-SCHWIND_DER-BESUCH_CC-BY-SA_BSTGS_8120.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-8120-a5413a12-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/8120",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/Qm45QO54No/moritz-von-schwind-1804/der-besuch-8120",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--MTLJ6Wm0--/q_60/w_400/artworks/MORITZ-VON-SCHWIND_DER-BESUCH_CC-BY-SA_BSTGS_8120.jpg"
     },
     {
       "id": "pinakothek-ss-11431",
@@ -1946,10 +2053,11 @@
       "department": "19. Jahrhundert",
       "origin": "1865 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--8xFJJtRp--/q_60/w_400/artworks/FRANZ-VON-LENBACH_MADONNA-NACH-MURILLO_CC-BY-SA_BSTGS_11431.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11431-4c706659-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11431",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/k2xnZmMxPd/franz-von-lenbach-1836/madonna-nach-murillo-11431",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--8xFJJtRp--/q_60/w_400/artworks/FRANZ-VON-LENBACH_MADONNA-NACH-MURILLO_CC-BY-SA_BSTGS_11431.jpg"
     },
     {
       "id": "pinakothek-ss-11435",
@@ -1964,10 +2072,11 @@
       "department": "19. Jahrhundert",
       "origin": "1868 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--FTcGQ3rL--/q_60/w_400/artworks/FRANZ-VON-LENBACH_KOENIG-PHILIPP-IV-VON-SPANIEN-IM-JAGDKOSTUEM-NACH-VELAZQUEZ_CC-BY-SA_BSTGS_11435.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11435-6e3bb7bf-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11435",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/apG9nEg4Zn/franz-von-lenbach-1836/koenig-philipp-iv-von-spanien-im-jagdkostuem-nach-velazquez-11435",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--FTcGQ3rL--/q_60/w_400/artworks/FRANZ-VON-LENBACH_KOENIG-PHILIPP-IV-VON-SPANIEN-IM-JAGDKOSTUEM-NACH-VELAZQUEZ_CC-BY-SA_BSTGS_11435.jpg"
     },
     {
       "id": "pinakothek-ss-11458",
@@ -1982,10 +2091,11 @@
       "department": "19. Jahrhundert",
       "origin": "Vor 1874 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--MTRWoGab--/q_60/w_400/artworks/FRANZ-VON-LENBACH_DIE-VEGA-VON-GRANADA_CC-BY-SA_BSTGS_11458.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11458-0f725532-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11458",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/QKGBAwpLBb/franz-von-lenbach-1836/die-vega-von-granada-11458",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--MTRWoGab--/q_60/w_400/artworks/FRANZ-VON-LENBACH_DIE-VEGA-VON-GRANADA_CC-BY-SA_BSTGS_11458.jpg"
     },
     {
       "id": "pinakothek-ss-11467",
@@ -2000,10 +2110,11 @@
       "department": "19. Jahrhundert",
       "origin": "Vor 1866 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--ZJGSXzKG--/q_60/w_400/artworks/JOSEPH-REBELL_ANSICHT-VON-CASAMICCIOLA-AUF-DER-INSEL-ISCHIA_CC-BY-SA_BSTGS_11467.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11467-65796439-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11467",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/9pL3BVqxeb/joseph-rebell-1787/ansicht-von-casamicciola-auf-der-insel-ischia-11467",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--ZJGSXzKG--/q_60/w_400/artworks/JOSEPH-REBELL_ANSICHT-VON-CASAMICCIOLA-AUF-DER-INSEL-ISCHIA_CC-BY-SA_BSTGS_11467.jpg"
     },
     {
       "id": "pinakothek-ss-11474",
@@ -2018,10 +2129,11 @@
       "department": "19. Jahrhundert",
       "origin": "Vor 1866 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--x-JLqHjY--/q_60/w_400/artworks/LEO-VON-KLENZE_DER-PALAZZO-RUFOLO-IN-RAVELLO_CC-BY-SA_BSTGS_11474.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11474-fd96dbb2-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11474",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/k2xnZOMxPd/leo-von-klenze-1784/der-palazzo-rufolo-in-ravello-11474",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--x-JLqHjY--/q_60/w_400/artworks/LEO-VON-KLENZE_DER-PALAZZO-RUFOLO-IN-RAVELLO_CC-BY-SA_BSTGS_11474.jpg"
     },
     {
       "id": "pinakothek-ss-11487",
@@ -2036,10 +2148,11 @@
       "department": "19. Jahrhundert",
       "origin": "nach 1870 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--ZFOjYQW---/q_60/w_400/artworks/AUGUST-WOLF_DAS-GEWITTER-NACH-GIORGIONE_CC-BY-SA_BSTGS_11487.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11487-410ea467-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11487",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/k2xnZOgxPd/august-wolf-1842/das-gewitter-nach-giorgione-11487",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--ZFOjYQW---/q_60/w_400/artworks/AUGUST-WOLF_DAS-GEWITTER-NACH-GIORGIONE_CC-BY-SA_BSTGS_11487.jpg"
     },
     {
       "id": "pinakothek-ss-11504",
@@ -2054,10 +2167,11 @@
       "department": "19. Jahrhundert",
       "origin": "1870/71 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--s3Gq1YmP--/q_60/w_400/artworks/AUGUST-WOLF_THRONENDE-MADONNA-MIT-ENGELN-UND-HEILIGEN-NACH-GIOVANNI-BELLINI-FRARI-TRIPTYCHON_CC-BY-SA_BSTGS_11504.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11504-5e14844b-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11504",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/7yxYYRbxYm/august-wolf-1842/thronende-madonna-mit-engeln-und-heiligen-nach-giovanni-bellini-frari-triptychon-11504",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--s3Gq1YmP--/q_60/w_400/artworks/AUGUST-WOLF_THRONENDE-MADONNA-MIT-ENGELN-UND-HEILIGEN-NACH-GIOVANNI-BELLINI-FRARI-TRIPTYCHON_CC-BY-SA_BSTGS_11504.jpg"
     },
     {
       "id": "pinakothek-ss-11506",
@@ -2072,10 +2186,11 @@
       "department": "19. Jahrhundert",
       "origin": "1876 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--pThMTh-0--/q_60/w_400/artworks/AUGUST-WOLF_THRONENDE-MADONNA-MIT-DEN-HEILIGEN-LIBERALE-UND-FRANZISKUS-NACH-GIORGIONE-PALA-DI-CASTELFRANCO_CC-BY-SA_BSTGS_11506.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11506-7ab096f5-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11506",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/01G1yDQGkE/august-wolf-1842/thronende-madonna-mit-den-heiligen-liberale-und-franziskus-nach-giorgione-pala-di-castelfranco-11506",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--pThMTh-0--/q_60/w_400/artworks/AUGUST-WOLF_THRONENDE-MADONNA-MIT-DEN-HEILIGEN-LIBERALE-UND-FRANZISKUS-NACH-GIORGIONE-PALA-DI-CASTELFRANCO_CC-BY-SA_BSTGS_11506.jpg"
     },
     {
       "id": "pinakothek-ss-11511",
@@ -2090,10 +2205,11 @@
       "department": "19. Jahrhundert",
       "origin": "1866 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--rgutptNq--/q_60/w_400/artworks/ANSELM-FEUERBACH_HAFIS-AM-BRUNNEN_CC-BY-SA_BSTGS_11511.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11511-dd9071cf-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11511",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/5RGQ1waGz3/anselm-feuerbach-1829/hafis-am-brunnen-11511",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--rgutptNq--/q_60/w_400/artworks/ANSELM-FEUERBACH_HAFIS-AM-BRUNNEN_CC-BY-SA_BSTGS_11511.jpg"
     },
     {
       "id": "pinakothek-ss-11517",
@@ -2108,10 +2224,11 @@
       "department": "19. Jahrhundert",
       "origin": "1870 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--JN4fRBc---/q_60/w_400/artworks/ARNOLD-BOECKLIN_DER-GANG-NACH-EMMAUS_CC-BY-SA_BSTGS_11517.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11517-98af3504-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11517",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/OrLbdJq41V/arnold-boecklin-1827/der-gang-nach-emmaus-11517",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--JN4fRBc---/q_60/w_400/artworks/ARNOLD-BOECKLIN_DER-GANG-NACH-EMMAUS_CC-BY-SA_BSTGS_11517.jpg"
     },
     {
       "id": "pinakothek-ss-11534",
@@ -2126,10 +2243,11 @@
       "department": "19. Jahrhundert",
       "origin": "1874 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--FSdEJPcO--/q_60/w_400/artworks/ARNOLD-BOECKLIN_TRITON-UND-NEREIDE_CC-BY-SA_BSTGS_11534.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11534-805a1034-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11534",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/A9xlyJNLWv/arnold-boecklin-1827/triton-und-nereide-11534",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--FSdEJPcO--/q_60/w_400/artworks/ARNOLD-BOECKLIN_TRITON-UND-NEREIDE_CC-BY-SA_BSTGS_11534.jpg"
     },
     {
       "id": "pinakothek-ss-11560",
@@ -2144,10 +2262,11 @@
       "department": "19. Jahrhundert",
       "origin": "1864 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--2ymRiaBn--/q_60/w_400/artworks/CARL-SPITZWEG_SPANISCHES-STAENDCHEN_CC-BY-SA_BSTGS_11560.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11560-1dde16f3-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11560",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/ZKGPQPd4gA/carl-spitzweg-1808/spanisches-staendchen-11560",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--2ymRiaBn--/q_60/w_400/artworks/CARL-SPITZWEG_SPANISCHES-STAENDCHEN_CC-BY-SA_BSTGS_11560.jpg"
     },
     {
       "id": "pinakothek-ss-11562",
@@ -2162,10 +2281,11 @@
       "department": "19. Jahrhundert",
       "origin": "1869 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--Cdm_Iga4--/q_60/w_400/artworks/MORITZ-VON-SCHWIND_HEIMKEHRENDER-RITTER_CC-BY-SA_BSTGS_11562.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11562-cee83884-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11562",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/QKGBAmnLBb/moritz-von-schwind-1804/heimkehrender-ritter-11562",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--Cdm_Iga4--/q_60/w_400/artworks/MORITZ-VON-SCHWIND_HEIMKEHRENDER-RITTER_CC-BY-SA_BSTGS_11562.jpg"
     },
     {
       "id": "pinakothek-ss-11565",
@@ -2180,10 +2300,11 @@
       "department": "19. Jahrhundert",
       "origin": "Vor 1866 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--5PDJRugQ--/q_60/w_400/artworks/MORITZ-VON-SCHWIND_DER-TRAUM-DES-GEFANGENEN_CC-BY-SA_BSTGS_11565.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11565-c25ff286-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11565",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/8MLvXkl4z3/moritz-von-schwind-1804/der-traum-des-gefangenen-11565",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--5PDJRugQ--/q_60/w_400/artworks/MORITZ-VON-SCHWIND_DER-TRAUM-DES-GEFANGENEN_CC-BY-SA_BSTGS_11565.jpg"
     },
     {
       "id": "pinakothek-ss-11573",
@@ -2198,10 +2319,11 @@
       "department": "19. Jahrhundert",
       "origin": "1869 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--iub-ftiU--/q_60/w_400/artworks/MORITZ-VON-SCHWIND_NAECHTLICHER-ZWEIKAMPF_CC-BY-SA_BSTGS_11573.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11573-cc204dfb-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11573",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/M0xy6KWLpl/moritz-von-schwind-1804/naechtlicher-zweikampf-11573",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--iub-ftiU--/q_60/w_400/artworks/MORITZ-VON-SCHWIND_NAECHTLICHER-ZWEIKAMPF_CC-BY-SA_BSTGS_11573.jpg"
     },
     {
       "id": "pinakothek-ss-11579",
@@ -2216,10 +2338,11 @@
       "department": "19. Jahrhundert",
       "origin": "1863 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--E6lt5kEt--/q_60/w_400/artworks/MORITZ-VON-SCHWIND_EINSIEDLER-IN-EINER-FELSENGROTTE_CC-BY-SA_BSTGS_11579.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11579-fd4c61a4-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11579",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/jWLpa1EGKY/moritz-von-schwind-1804/einsiedler-in-einer-felsengrotte-11579",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--E6lt5kEt--/q_60/w_400/artworks/MORITZ-VON-SCHWIND_EINSIEDLER-IN-EINER-FELSENGROTTE_CC-BY-SA_BSTGS_11579.jpg"
     },
     {
       "id": "pinakothek-ss-11580",
@@ -2234,10 +2357,11 @@
       "department": "19. Jahrhundert",
       "origin": "1863 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--Y-YEpXAx--/q_60/w_400/artworks/MORITZ-VON-SCHWIND_WIELAND-DER-SCHMIED_CC-BY-SA_BSTGS_11580.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11580-ab28e09c-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11580",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/k2xnZDgxPd/moritz-von-schwind-1804/wieland-der-schmied-11580",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--Y-YEpXAx--/q_60/w_400/artworks/MORITZ-VON-SCHWIND_WIELAND-DER-SCHMIED_CC-BY-SA_BSTGS_11580.jpg"
     },
     {
       "id": "pinakothek-ss-11614",
@@ -2252,10 +2376,11 @@
       "department": "19. Jahrhundert",
       "origin": "Vor 1866 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--agL0owjK--/q_60/w_400/artworks/EDUARD-GERHARDT_DAS-GENERALIFE-BEI-GRANADA_CC-BY-SA_BSTGS_11614.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11614-3fc0210d-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11614",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/gR4kZnAGEe/eduard-gerhardt-1813/das-generalife-bei-granada-11614",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--agL0owjK--/q_60/w_400/artworks/EDUARD-GERHARDT_DAS-GENERALIFE-BEI-GRANADA_CC-BY-SA_BSTGS_11614.jpg"
     },
     {
       "id": "pinakothek-ss-11657",
@@ -2270,10 +2395,11 @@
       "department": "19. Jahrhundert",
       "origin": "1874 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--AEQofuqc--/q_60/w_400/artworks/AUGUST-WOLF_THRONENDE-MADONNA-MIT-MUSIZIERENDEM-ENGEL-UND-HEILIGEN-NACH-GIOVANNI-BELLINI_CC-BY-SA_BSTGS_11657.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11657-b6cb4737-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11657",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/02LAkDa4yk/august-wolf-1842/thronende-madonna-mit-musizierendem-engel-und-heiligen-nach-giovanni-bellini-11657",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--AEQofuqc--/q_60/w_400/artworks/AUGUST-WOLF_THRONENDE-MADONNA-MIT-MUSIZIERENDEM-ENGEL-UND-HEILIGEN-NACH-GIOVANNI-BELLINI_CC-BY-SA_BSTGS_11657.jpg"
     },
     {
       "id": "pinakothek-ss-11475",
@@ -2288,10 +2414,11 @@
       "department": "19. Jahrhundert",
       "origin": "Vor 1866 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--kby9ft3b--/q_60/w_400/artworks/CARL-ROTTMANN_DIE-QUELLE-KALLIRRHOE-BEI-ATHEN_CC-BY-SA_BSTGS_11475.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11475-686bbfab-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11475",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/02LAXPpxyk/carl-rottmann-1797/die-quelle-kallirrhoe-bei-athen-11475",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--kby9ft3b--/q_60/w_400/artworks/CARL-ROTTMANN_DIE-QUELLE-KALLIRRHOE-BEI-ATHEN_CC-BY-SA_BSTGS_11475.jpg"
     },
     {
       "id": "pinakothek-ss-WAF-784",
@@ -2306,10 +2433,11 @@
       "department": "19. Jahrhundert",
       "origin": "1830 durch König Ludwig I. vom Künstler erworben – seit 1923 Wittelsbacher Ausgleichsfonds",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--Wg8jbdEj--/q_60/w_400/artworks/DOMENICO-QUAGLIO_BLICK-AUF-DIE-VILLA-MALTA-IN-ROM_CC-BY-SA_BSTGS_WAF784.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-WAF-784-b2016615-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/WAF 784",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/jpxeVQ3LJ7/domenico-quaglio-1787/blick-auf-die-villa-malta-in-rom-waf-784",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--Wg8jbdEj--/q_60/w_400/artworks/DOMENICO-QUAGLIO_BLICK-AUF-DIE-VILLA-MALTA-IN-ROM_CC-BY-SA_BSTGS_WAF784.jpg"
     },
     {
       "id": "pinakothek-ss-WAF-279",
@@ -2324,10 +2452,11 @@
       "department": "19. Jahrhundert",
       "origin": "1841 durch König Ludwig I. aus der Sammlung Klenze erworben – seit 1923 Wittelsbacher Ausgleichsfonds",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--Zs1V592f--/q_60/w_400/artworks/ERNST-FRIES_WASSERFAELLE-DES-LIRIS-BEI-ISOLA-DEL-LIRI_CC-BY-SA_BSTGS_WAF279.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-WAF-279-47c7e398-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/WAF 279",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/o5xrQkP47X/ernst-fries-1801/wasserfaelle-des-liris-bei-isola-del-liri-waf-279",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--Zs1V592f--/q_60/w_400/artworks/ERNST-FRIES_WASSERFAELLE-DES-LIRIS-BEI-ISOLA-DEL-LIRI_CC-BY-SA_BSTGS_WAF279.jpg"
     },
     {
       "id": "pinakothek-ss-L-1858",
@@ -2342,10 +2471,11 @@
       "department": "19. Jahrhundert",
       "origin": "1928 als Leihgabe der Bayerischen Verwaltung der staatlichen Schlösser, Gärten und Seen, München, erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--u1wo3jNi--/q_60/w_400/artworks/JOSEPH-KARL-STIELER_FRIEDRICH-WILHELM-JOSEPH-VON-SCHELLING_CC-BY-SA_BSTGS_L1858.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-L-1858-6bd283a2-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/L 1858",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/A9xlZW1GWv/joseph-karl-stieler-1781/friedrich-wilhelm-joseph-von-schelling-l-1858",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--u1wo3jNi--/q_60/w_400/artworks/JOSEPH-KARL-STIELER_FRIEDRICH-WILHELM-JOSEPH-VON-SCHELLING_CC-BY-SA_BSTGS_L1858.jpg"
     },
     {
       "id": "pinakothek-ss-9335",
@@ -2360,10 +2490,11 @@
       "department": "19. Jahrhundert",
       "origin": "1926 aus Privatbesitz erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--bvwfYxII--/q_60/w_400/artworks/ARNOLD-BOECKLIN_ROEMISCHES-MAIFEST_CC-BY-SA_BSTGS_9335.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-9335-a330872f-image.webp",
       "source": "Sammlung Schack",
       "url": "https://www.sammlung.pinakothek.de/en/artwork/9335",
-      "locationCode": "SS"
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--bvwfYxII--/q_60/w_400/artworks/ARNOLD-BOECKLIN_ROEMISCHES-MAIFEST_CC-BY-SA_BSTGS_9335.jpg"
     },
     {
       "id": "pinakothek-ss-9558",
@@ -2378,10 +2509,11 @@
       "department": "19. Jahrhundert",
       "origin": "1929 aus dem Kunsthandel erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--pMfx6t0Y--/q_60/w_400/artworks/ANSELM-FEUERBACH_PFINGSTROSEN-PAEONIEN_CC-BY-SA_BSTGS_9558.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-9558-abe0d471-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/9558",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/anxg3dKxEq/anselm-feuerbach-1829/pfingstrosen-paeonien-9558",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--pMfx6t0Y--/q_60/w_400/artworks/ANSELM-FEUERBACH_PFINGSTROSEN-PAEONIEN_CC-BY-SA_BSTGS_9558.jpg"
     },
     {
       "id": "pinakothek-ss-WAF-1048",
@@ -2396,10 +2528,11 @@
       "department": "19. Jahrhundert",
       "origin": "1828 durch König Ludwig I. vom Künstler erworben – seit 1923 Wittelsbacher Ausgleichsfonds",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--ZPPAWrfC--/q_60/w_400/artworks/JOSEPH-KARL-STIELER_JOHANN-WOLFGANG-VON-GOETHE_CC-BY-SA_BSTGS_WAF1048.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-WAF-1048-95aa2535-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/WAF 1048",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/02LAY3QLyk/joseph-karl-stieler-1781/johann-wolfgang-von-goethe-waf-1048",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--ZPPAWrfC--/q_60/w_400/artworks/JOSEPH-KARL-STIELER_JOHANN-WOLFGANG-VON-GOETHE_CC-BY-SA_BSTGS_WAF1048.jpg"
     },
     {
       "id": "pinakothek-ss-15259",
@@ -2414,10 +2547,11 @@
       "department": "19. Jahrhundert",
       "origin": "1992 als Schenkung von Orla von Delbrück, der Ururenkelin des Bruders Klenzes, erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--Ura1J0V5--/q_60/w_400/artworks/LEO-VON-KLENZE_PORTO-VENERE-AM-GOLF-VON-LA-SPEZIA_CC-BY-SA_BSTGS_15259.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-15259-06624d98-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/15259",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/OrLb0dW41V/leo-von-klenze-1784/porto-venere-am-golf-von-la-spezia-15259",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--Ura1J0V5--/q_60/w_400/artworks/LEO-VON-KLENZE_PORTO-VENERE-AM-GOLF-VON-LA-SPEZIA_CC-BY-SA_BSTGS_15259.jpg"
     },
     {
       "id": "pinakothek-ss-7751",
@@ -2432,10 +2566,11 @@
       "department": "19. Jahrhundert",
       "origin": "1887 als Schenkung von Eugen Spitzweg, dem Neffen des Künstlers, erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--_I3scnfd--/q_60/w_400/artworks/CARL-SPITZWEG_DER-ARME-POET_CC-BY-SA_BSTGS_7751.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-7751-3f2c3a59-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/7751",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/9pL3KbKLeb/carl-spitzweg-1808/der-arme-poet-7751",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--_I3scnfd--/q_60/w_400/artworks/CARL-SPITZWEG_DER-ARME-POET_CC-BY-SA_BSTGS_7751.jpg"
     },
     {
       "id": "pinakothek-ss-11591-a",
@@ -2450,10 +2585,11 @@
       "department": "19. Jahrhundert",
       "origin": "1876 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--K77FJOi4--/q_60/w_400/artworks/LEOPOLD-BODE_BERTA-SCHLAEFT-IM-WALDE-TRIPTYCHON-LINKER-FLUEGEL_CC-BY-SA_BSTGS_11591A.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11591-a-59b18806-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11591 a",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/2mxq62dL8b/leopold-bode-1831/berta-schlaeft-im-walde-triptychon-linker-fluegel-11591-a",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--K77FJOi4--/q_60/w_400/artworks/LEOPOLD-BODE_BERTA-SCHLAEFT-IM-WALDE-TRIPTYCHON-LINKER-FLUEGEL_CC-BY-SA_BSTGS_11591A.jpg"
     },
     {
       "id": "pinakothek-ss-9496",
@@ -2468,10 +2604,11 @@
       "department": "19. Jahrhundert",
       "origin": "1928 aus dem Kunsthandel erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--qRTqcNTj--/q_60/w_400/artworks/ANSELM-FEUERBACH_JULIUS-ALLGEYER_CC-BY-SA_BSTGS_9496.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-9496-0c90c737-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/9496",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/A0GOl2K4dp/anselm-feuerbach-1829/julius-allgeyer-9496",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--qRTqcNTj--/q_60/w_400/artworks/ANSELM-FEUERBACH_JULIUS-ALLGEYER_CC-BY-SA_BSTGS_9496.jpg"
     },
     {
       "id": "pinakothek-ss-9826",
@@ -2486,10 +2623,11 @@
       "department": "19. Jahrhundert",
       "origin": "1879 durch König Ludwig II. auf der internationalen Kunstaustellung im Münchner Glaspalast vom Künstler erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--OvF7evFm--/q_60/w_400/artworks/ANSELM-FEUERBACH_MEDEA_CC-BY-SA_BSTGS_9826.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-9826-fcf245a3-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/9826",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/ApL8qDJGN2/anselm-feuerbach-1829/medea-9826",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--OvF7evFm--/q_60/w_400/artworks/ANSELM-FEUERBACH_MEDEA_CC-BY-SA_BSTGS_9826.jpg"
     },
     {
       "id": "pinakothek-ss-7866",
@@ -2504,10 +2642,11 @@
       "department": "19. Jahrhundert",
       "origin": "1891 als Schenkung von Conrad Fiedler erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--QvJkmvFS--/q_60/w_400/artworks/HANS-VON-MAREES_RAST-DER-DIANA_CC-BY-SA_BSTGS_7866.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-7866-0b4b6b0b-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/7866",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/2mxqYjwx8b/hans-von-marees-1837/rast-der-diana-7866",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--QvJkmvFS--/q_60/w_400/artworks/HANS-VON-MAREES_RAST-DER-DIANA_CC-BY-SA_BSTGS_7866.jpg"
     },
     {
       "id": "pinakothek-ss-7873",
@@ -2522,10 +2661,11 @@
       "department": "19. Jahrhundert",
       "origin": "1891 als Schenkung von Hermann Levi erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--CvoxPfyp--/q_60/w_400/artworks/HANS-VON-MAREES_ROEMISCHE-LANDSCHAFT-I_CC-BY-SA_BSTGS_7873.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-7873-d2544602-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/7873",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/M0xyBpMLpl/hans-von-marees-1837/roemische-landschaft-i-7873",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--CvoxPfyp--/q_60/w_400/artworks/HANS-VON-MAREES_ROEMISCHE-LANDSCHAFT-I_CC-BY-SA_BSTGS_7873.jpg"
     },
     {
       "id": "pinakothek-ss-11438",
@@ -2540,10 +2680,11 @@
       "department": "19. Jahrhundert",
       "origin": "1865 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--CI_BlAOu--/q_60/w_400/artworks/FRANZ-VON-LENBACH_BILDNIS-EINES-JUNGEN-MANNES-DER-JUNGE-ENGLAENDER-NACH-TIZIAN_CC-BY-SA_BSTGS_11438.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11438-cca693c7-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11438",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/6kLakYr48V/franz-von-lenbach-1836/bildnis-eines-jungen-mannes-der-junge-englaender-nach-tizian-11438",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--CI_BlAOu--/q_60/w_400/artworks/FRANZ-VON-LENBACH_BILDNIS-EINES-JUNGEN-MANNES-DER-JUNGE-ENGLAENDER-NACH-TIZIAN_CC-BY-SA_BSTGS_11438.jpg"
     },
     {
       "id": "pinakothek-ss-11444",
@@ -2558,10 +2699,11 @@
       "department": "19. Jahrhundert",
       "origin": "Vor 1864 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--0Y9-ssxH--/q_60/w_400/artworks/MORITZ-VON-SCHWIND_DIE-RUECKKEHR-DES-GRAFEN-VON-GLEICHEN_CC-BY-SA_BSTGS_11444.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11444-7411e54f-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11444",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/anxgKmMxEq/moritz-von-schwind-1804/die-rueckkehr-des-grafen-von-gleichen-11444",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--0Y9-ssxH--/q_60/w_400/artworks/MORITZ-VON-SCHWIND_DIE-RUECKKEHR-DES-GRAFEN-VON-GLEICHEN_CC-BY-SA_BSTGS_11444.jpg"
     },
     {
       "id": "pinakothek-ss-11453",
@@ -2576,10 +2718,11 @@
       "department": "19. Jahrhundert",
       "origin": "1875 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--vOGnKB8k--/q_60/w_400/artworks/FRANZ-VON-LENBACH_ADOLF-FRIEDRICH-VON-SCHACK_CC-BY-SA_BSTGS_11453.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11453-8fca7041-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11453",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/ZMLJrD2LJv/franz-von-lenbach-1836/adolf-friedrich-von-schack-11453",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--vOGnKB8k--/q_60/w_400/artworks/FRANZ-VON-LENBACH_ADOLF-FRIEDRICH-VON-SCHACK_CC-BY-SA_BSTGS_11453.jpg"
     },
     {
       "id": "pinakothek-ss-11456",
@@ -2594,10 +2737,11 @@
       "department": "19. Jahrhundert",
       "origin": "Vor 1874 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--QwM9pM25--/q_60/w_400/artworks/FRANZ-VON-LENBACH_DER-TOCADOR-DE-LA-REINA-AUF-DER-ALHAMBRA-IN-GRANADA_CC-BY-SA_BSTGS_11456.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11456-0c462804-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11456",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/ZKGPQAJ4gA/franz-von-lenbach-1836/der-tocador-de-la-reina-auf-der-alhambra-in-granada-11456",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--QwM9pM25--/q_60/w_400/artworks/FRANZ-VON-LENBACH_DER-TOCADOR-DE-LA-REINA-AUF-DER-ALHAMBRA-IN-GRANADA_CC-BY-SA_BSTGS_11456.jpg"
     },
     {
       "id": "pinakothek-ss-11459",
@@ -2612,10 +2756,11 @@
       "department": "19. Jahrhundert",
       "origin": "gegen 1868 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--xp-0Z6r_--/q_60/w_400/artworks/BERNHARD-FRIES_DIE-MAMELLEN-BEI-CIVITELLA_CC-BY-SA_BSTGS_11459.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11459-535e812f-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11459",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/Dn4ZRWo4aK/bernhard-fries-1820/die-mamellen-bei-civitella-11459",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--xp-0Z6r_--/q_60/w_400/artworks/BERNHARD-FRIES_DIE-MAMELLEN-BEI-CIVITELLA_CC-BY-SA_BSTGS_11459.jpg"
     },
     {
       "id": "pinakothek-ss-11463",
@@ -2630,10 +2775,11 @@
       "department": "19. Jahrhundert",
       "origin": "gegen 1868 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--LcDLy1Zx--/q_60/w_400/artworks/BERNHARD-FRIES_DAS-TAL-DES-ORETO-BEI-PALERMO_CC-BY-SA_BSTGS_11463.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11463-cf660086-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11463",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/QrLWz6VxNO/bernhard-fries-1820/das-tal-des-oreto-bei-palermo-11463",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--LcDLy1Zx--/q_60/w_400/artworks/BERNHARD-FRIES_DAS-TAL-DES-ORETO-BEI-PALERMO_CC-BY-SA_BSTGS_11463.jpg"
     },
     {
       "id": "pinakothek-ss-11531",
@@ -2648,10 +2794,11 @@
       "department": "19. Jahrhundert",
       "origin": "1871 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--0vpES4en--/q_60/w_400/artworks/ARNOLD-BOECKLIN_DRACHEN-IN-EINER-FELSENSCHLUCHT_CC-BY-SA_BSTGS_11531.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11531-03c7d80e-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11531",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/5RGQKJbxz3/arnold-boecklin-1827/drachen-in-einer-felsenschlucht-11531",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--0vpES4en--/q_60/w_400/artworks/ARNOLD-BOECKLIN_DRACHEN-IN-EINER-FELSENSCHLUCHT_CC-BY-SA_BSTGS_11531.jpg"
     },
     {
       "id": "pinakothek-ss-WAF-348",
@@ -2666,10 +2813,11 @@
       "department": "19. Jahrhundert",
       "origin": "1864 als Vermächtnis aus dem Nachlass von König Maximilian II. erworben – seit 1923 Wittelsbacher Ausgleichsfonds",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--aAaMtODs--/q_60/w_400/artworks/HEINRICH-MARIA-VON-HESS_BERTEL-THORVALDSEN_CC-BY-SA_BSTGS_WAF348.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-WAF-348-5b9d63a8-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/WAF 348",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/Qm45R75xNo/heinrich-maria-von-hess-1798/bertel-thorvaldsen-waf-348",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--aAaMtODs--/q_60/w_400/artworks/HEINRICH-MARIA-VON-HESS_BERTEL-THORVALDSEN_CC-BY-SA_BSTGS_WAF348.jpg"
     },
     {
       "id": "pinakothek-ss-15166-ESK-4",
@@ -2684,10 +2832,11 @@
       "department": "19. Jahrhundert",
       "origin": "1989 gemeinsam mit der Ernst von Siemens Kunststiftung aus Privatbesitz erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--eJxuzYLv--/q_60/w_400/artworks/LUDWIG-RICHTER_WALD-BEI-OLEVANO-SERPENTARA_CC-BY-SA_BSTGS_15166ESK4.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-15166-ESK-4-92d1cfbb-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/15166/ESK 4",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/jWLpXNnLKY/ludwig-richter-1803/wald-bei-olevano-serpentara-15166-esk-4",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--eJxuzYLv--/q_60/w_400/artworks/LUDWIG-RICHTER_WALD-BEI-OLEVANO-SERPENTARA_CC-BY-SA_BSTGS_15166ESK4.jpg"
     },
     {
       "id": "pinakothek-ss-11479",
@@ -2702,10 +2851,11 @@
       "department": "19. Jahrhundert",
       "origin": "1863 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--jfPDcTl2--/q_60/w_400/artworks/EUGEN-NAPOLEON-NEUREUTHER_DIE-NONNE_CC-BY-SA_BSTGS_11479.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11479-b4e93367-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11479",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/9pL3BVjxeb/eugen-napoleon-neureuther-1806/die-nonne-11479",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--jfPDcTl2--/q_60/w_400/artworks/EUGEN-NAPOLEON-NEUREUTHER_DIE-NONNE_CC-BY-SA_BSTGS_11479.jpg"
     },
     {
       "id": "pinakothek-ss-11486",
@@ -2720,10 +2870,11 @@
       "department": "19. Jahrhundert",
       "origin": "1865 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--DjRy46TW--/q_60/w_400/artworks/FRANZ-VON-LENBACH_DAS-KONZERT-NACH-GIORGIONE_CC-BY-SA_BSTGS_11486.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11486-29a6feae-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11486",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/jWLpa9EGKY/franz-von-lenbach-1836/das-konzert-nach-giorgione-11486",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--DjRy46TW--/q_60/w_400/artworks/FRANZ-VON-LENBACH_DAS-KONZERT-NACH-GIORGIONE_CC-BY-SA_BSTGS_11486.jpg"
     },
     {
       "id": "pinakothek-ss-11514",
@@ -2738,10 +2889,11 @@
       "department": "19. Jahrhundert",
       "origin": "1866 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--is_VXkFT--/q_60/w_400/artworks/ANSELM-FEUERBACH_FAMILIENBILD-EINE-MUTTER-MIT-SPIELENDEN-KINDERN-AN-EINEM-SPRINGBRUNNEN_CC-BY-SA_BSTGS_11514.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11514-c54083f2-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11514",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/gR4kZJgGEe/anselm-feuerbach-1829/familienbild-eine-mutter-mit-spielenden-kindern-an-einem-springbrunnen-11514",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--is_VXkFT--/q_60/w_400/artworks/ANSELM-FEUERBACH_FAMILIENBILD-EINE-MUTTER-MIT-SPIELENDEN-KINDERN-AN-EINEM-SPRINGBRUNNEN_CC-BY-SA_BSTGS_11514.jpg"
     },
     {
       "id": "pinakothek-ss-11519",
@@ -2756,10 +2908,11 @@
       "department": "19. Jahrhundert",
       "origin": "Vor 1869 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--wL5b00dK--/q_60/w_400/artworks/CARL-ROTTMANN_GRIECHISCHE-KUESTE-BEI-STURM_CC-BY-SA_BSTGS_11519.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11519-5bd5ccbc-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11519",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/Dn4ZRXZ4aK/carl-rottmann-1797/griechische-kueste-bei-sturm-11519",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--wL5b00dK--/q_60/w_400/artworks/CARL-ROTTMANN_GRIECHISCHE-KUESTE-BEI-STURM_CC-BY-SA_BSTGS_11519.jpg"
     },
     {
       "id": "pinakothek-ss-11521",
@@ -2774,10 +2927,11 @@
       "department": "19. Jahrhundert",
       "origin": "1864 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--HqsFQ5CV--/q_60/w_400/artworks/ANSELM-FEUERBACH_PAOLO-UND-FRANCESCA_CC-BY-SA_BSTGS_11521.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11521-cd88efae-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11521",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/bwx0BDqGm8/anselm-feuerbach-1829/paolo-und-francesca-11521",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--HqsFQ5CV--/q_60/w_400/artworks/ANSELM-FEUERBACH_PAOLO-UND-FRANCESCA_CC-BY-SA_BSTGS_11521.jpg"
     },
     {
       "id": "pinakothek-ss-11527",
@@ -2792,10 +2946,11 @@
       "department": "19. Jahrhundert",
       "origin": "1871 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--gvCHLAlC--/q_60/w_400/artworks/ARNOLD-BOECKLIN_IDEALE-FRUEHLINGSLANDSCHAFT_CC-BY-SA_BSTGS_11527.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11527-54525d67-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11527",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/9pL3BAjxeb/arnold-boecklin-1827/ideale-fruehlingslandschaft-11527",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--gvCHLAlC--/q_60/w_400/artworks/ARNOLD-BOECKLIN_IDEALE-FRUEHLINGSLANDSCHAFT_CC-BY-SA_BSTGS_11527.jpg"
     },
     {
       "id": "pinakothek-ss-11532",
@@ -2810,10 +2965,11 @@
       "department": "19. Jahrhundert",
       "origin": "Um 1870 durch Adolf Friedrich von Schack vom Künstler erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--DijSn6p7--/q_60/w_400/artworks/ARNOLD-BOECKLIN_ITALIENISCHE-VILLA-IM-FRUEHLING_CC-BY-SA_BSTGS_11532.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11532-ed33ea2d-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11532",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/Qm45MBK4No/arnold-boecklin-1827/italienische-villa-im-fruehling-11532",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--DijSn6p7--/q_60/w_400/artworks/ARNOLD-BOECKLIN_ITALIENISCHE-VILLA-IM-FRUEHLING_CC-BY-SA_BSTGS_11532.jpg"
     },
     {
       "id": "pinakothek-ss-11533",
@@ -2828,10 +2984,11 @@
       "department": "19. Jahrhundert",
       "origin": "Vor 1866 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--w9xIdXXk--/q_60/w_400/artworks/ARNOLD-BOECKLIN_PAN-ERSCHRECKT-EINEN-HIRTEN_CC-BY-SA_BSTGS_11533.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11533-6262c2a1-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11533",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/jpxegw2GJ7/arnold-boecklin-1827/pan-erschreckt-einen-hirten-11533",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--w9xIdXXk--/q_60/w_400/artworks/ARNOLD-BOECKLIN_PAN-ERSCHRECKT-EINEN-HIRTEN_CC-BY-SA_BSTGS_11533.jpg"
     },
     {
       "id": "pinakothek-ss-11537",
@@ -2846,10 +3003,11 @@
       "department": "19. Jahrhundert",
       "origin": "1871 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--QVAdTc4Y--/q_60/w_400/artworks/ARNOLD-BOECKLIN_EIN-MOERDER-VON-FURIEN-VERFOLGT_CC-BY-SA_BSTGS_11537.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11537-d8a24383-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11537",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/A0GOYwKxdp/arnold-boecklin-1827/ein-moerder-von-furien-verfolgt-11537",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--QVAdTc4Y--/q_60/w_400/artworks/ARNOLD-BOECKLIN_EIN-MOERDER-VON-FURIEN-VERFOLGT_CC-BY-SA_BSTGS_11537.jpg"
     },
     {
       "id": "pinakothek-ss-11539",
@@ -2864,10 +3022,11 @@
       "department": "19. Jahrhundert",
       "origin": "1871 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--NnySjE3F--/q_60/w_400/artworks/ARNOLD-BOECKLIN_DER-RITT-DES-TODES-HERBST-UND-TOD_CC-BY-SA_BSTGS_11539.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11539-b43db3b8-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11539",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/apG9njJ4Zn/arnold-boecklin-1827/der-ritt-des-todes-herbst-und-tod-11539",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--NnySjE3F--/q_60/w_400/artworks/ARNOLD-BOECKLIN_DER-RITT-DES-TODES-HERBST-UND-TOD_CC-BY-SA_BSTGS_11539.jpg"
     },
     {
       "id": "pinakothek-ss-11542",
@@ -2882,10 +3041,11 @@
       "department": "19. Jahrhundert",
       "origin": "1864 durch Adolf Friedrich Graf von Schack vom Künstler erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--CUMMQU7p--/q_60/w_400/artworks/EDWARD-JAKOB-VON-STEINLE_DIE-LORELEY_CC-BY-SA_BSTGS_11542.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11542-8e59a242-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11542",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/ApL8gV2xN2/edward-jakob-von-steinle-1810/die-loreley-11542",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--CUMMQU7p--/q_60/w_400/artworks/EDWARD-JAKOB-VON-STEINLE_DIE-LORELEY_CC-BY-SA_BSTGS_11542.jpg"
     },
     {
       "id": "pinakothek-ss-11549",
@@ -2900,10 +3060,11 @@
       "department": "19. Jahrhundert",
       "origin": "1863 durch Adolf Friedrich Graf von Schack vom Künstler erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--rfDE4uCp--/q_60/w_400/artworks/EDWARD-JAKOB-VON-STEINLE_DER-VIOLINSPIELER_CC-BY-SA_BSTGS_11549.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11549-a36f6eb1-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11549",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/wE4KJmpGZ5/edward-jakob-von-steinle-1810/der-violinspieler-11549",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--rfDE4uCp--/q_60/w_400/artworks/EDWARD-JAKOB-VON-STEINLE_DER-VIOLINSPIELER_CC-BY-SA_BSTGS_11549.jpg"
     },
     {
       "id": "pinakothek-ss-11551",
@@ -2918,10 +3079,11 @@
       "department": "19. Jahrhundert",
       "origin": "1863 durch Adolf Friedrich Graf von Schack vom Künstler erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--JARqjXfu--/q_60/w_400/artworks/EDWARD-JAKOB-VON-STEINLE_DER-TUERMER_CC-BY-SA_BSTGS_11551.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11551-428c1fae-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11551",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/Qlx2dv1GXq/edward-jakob-von-steinle-1810/der-tuermer-11551",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--JARqjXfu--/q_60/w_400/artworks/EDWARD-JAKOB-VON-STEINLE_DER-TUERMER_CC-BY-SA_BSTGS_11551.jpg"
     },
     {
       "id": "pinakothek-ss-11568",
@@ -2936,10 +3098,11 @@
       "department": "19. Jahrhundert",
       "origin": "1869 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--mkzyyuPZ--/q_60/w_400/artworks/MORITZ-VON-SCHWIND_LEGENDE-VOM-BISCHOF-UND-DEM-TEUFEL_CC-BY-SA_BSTGS_11568.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11568-b371a192-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11568",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/QrLWzbXxNO/moritz-von-schwind-1804/legende-vom-bischof-und-dem-teufel-11568",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--mkzyyuPZ--/q_60/w_400/artworks/MORITZ-VON-SCHWIND_LEGENDE-VOM-BISCHOF-UND-DEM-TEUFEL_CC-BY-SA_BSTGS_11568.jpg"
     },
     {
       "id": "pinakothek-ss-11574",
@@ -2954,10 +3117,11 @@
       "department": "19. Jahrhundert",
       "origin": "1869 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s---DgKCMXc--/q_60/w_400/artworks/MORITZ-VON-SCHWIND_DIE-DONAU-MIT-IHREN-NEBENFLUESSEN_CC-BY-SA_BSTGS_11574.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11574-4ac28885-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11574",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/JzG6Wvj4WO/moritz-von-schwind-1804/die-donau-mit-ihren-nebenfluessen-11574",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s---DgKCMXc--/q_60/w_400/artworks/MORITZ-VON-SCHWIND_DIE-DONAU-MIT-IHREN-NEBENFLUESSEN_CC-BY-SA_BSTGS_11574.jpg"
     },
     {
       "id": "pinakothek-ss-11578",
@@ -2972,10 +3136,11 @@
       "department": "19. Jahrhundert",
       "origin": "1869 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--o5GF97w6--/q_60/w_400/artworks/MORITZ-VON-SCHWIND_EIN-EINSIEDLER-FUEHRT-ROSSE-ZUR-TRAENKE_CC-BY-SA_BSTGS_11578.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11578-0192c11d-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11578",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/A9xlyvNLWv/moritz-von-schwind-1804/ein-einsiedler-fuehrt-rosse-zur-traenke-11578",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--o5GF97w6--/q_60/w_400/artworks/MORITZ-VON-SCHWIND_EIN-EINSIEDLER-FUEHRT-ROSSE-ZUR-TRAENKE_CC-BY-SA_BSTGS_11578.jpg"
     },
     {
       "id": "pinakothek-ss-11685",
@@ -2990,10 +3155,11 @@
       "department": "19. Jahrhundert",
       "origin": "1877 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--yWGwIdWL--/q_60/w_400/artworks/ERNST-FRIEDRICH-VON-LIPHART_ALLEGORIE-DES-ALFONSO-DAVALOS-MARQUES-DEL-VASTO-NACH-TIZIAN_CC-BY-SA_BSTGS_11685.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11685-80c01a2d-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11685",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/8eGVna5GWQ/ernst-friedrich-von-liphart-1847/allegorie-des-alfonso-davalos-marques-del-vasto-nach-tizian-11685",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--yWGwIdWL--/q_60/w_400/artworks/ERNST-FRIEDRICH-VON-LIPHART_ALLEGORIE-DES-ALFONSO-DAVALOS-MARQUES-DEL-VASTO-NACH-TIZIAN_CC-BY-SA_BSTGS_11685.jpg"
     },
     {
       "id": "pinakothek-ss-11581",
@@ -3008,10 +3174,11 @@
       "department": "19. Jahrhundert",
       "origin": "1869 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--gmnt-MOn--/q_60/w_400/artworks/MORITZ-VON-SCHWIND_DER-VATER-RHEIN-DIE-FIDEL-VOLKERS-SPIELEND_CC-BY-SA_BSTGS_11581.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11581-13e026ab-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11581",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/2mxqDPz48b/moritz-von-schwind-1804/der-vater-rhein-die-fidel-volkers-spielend-11581",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--gmnt-MOn--/q_60/w_400/artworks/MORITZ-VON-SCHWIND_DER-VATER-RHEIN-DIE-FIDEL-VOLKERS-SPIELEND_CC-BY-SA_BSTGS_11581.jpg"
     },
     {
       "id": "pinakothek-ss-11585",
@@ -3026,10 +3193,11 @@
       "department": "19. Jahrhundert",
       "origin": "1869 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--bII3B7TJ--/q_60/w_400/artworks/MORITZ-VON-SCHWIND_ABSCHIED-VOM-TAL_CC-BY-SA_BSTGS_11585.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11585-2c4956d0-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11585",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/M0xy6KVLpl/moritz-von-schwind-1804/abschied-vom-tal-11585",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--bII3B7TJ--/q_60/w_400/artworks/MORITZ-VON-SCHWIND_ABSCHIED-VOM-TAL_CC-BY-SA_BSTGS_11585.jpg"
     },
     {
       "id": "pinakothek-ss-11622",
@@ -3044,10 +3212,11 @@
       "department": "19. Jahrhundert",
       "origin": "Vor 1866 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--jZaznrmq--/q_60/w_400/artworks/ALBERT-ZIMMERMANN_DER-COMER-SEE-BEI-BELLAGIO_CC-BY-SA_BSTGS_11622.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11622-c50ba782-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11622",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/bwx0BlRGm8/albert-zimmermann-1808/der-comer-see-bei-bellagio-11622",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--jZaznrmq--/q_60/w_400/artworks/ALBERT-ZIMMERMANN_DER-COMER-SEE-BEI-BELLAGIO_CC-BY-SA_BSTGS_11622.jpg"
     },
     {
       "id": "pinakothek-ss-11663",
@@ -3062,10 +3231,11 @@
       "department": "19. Jahrhundert",
       "origin": "wohl 1877 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--T4RTnhrI--/q_60/w_400/artworks/ERNST-FRIEDRICH-VON-LIPHART_LAENDLICHES-KONZERT-NACH-GIORGIONE_CC-BY-SA_BSTGS_11663.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11663-4c9b24f7-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11663",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/OrLbdly41V/ernst-friedrich-von-liphart-1847/laendliches-konzert-nach-giorgione-11663",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--T4RTnhrI--/q_60/w_400/artworks/ERNST-FRIEDRICH-VON-LIPHART_LAENDLICHES-KONZERT-NACH-GIORGIONE_CC-BY-SA_BSTGS_11663.jpg"
     },
     {
       "id": "pinakothek-ss-11682",
@@ -3080,10 +3250,11 @@
       "department": "19. Jahrhundert",
       "origin": "1873 (?) durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--Ux_oLD2w--/q_60/w_400/artworks/AUGUST-WOLF_DER-PROKURATOR-JACOPO-SORANZO-NACH-TINTORETTO_CC-BY-SA_BSTGS_11682.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11682-17792694-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11682",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/jWLpaVaGKY/august-wolf-1842/der-prokurator-jacopo-soranzo-nach-tintoretto-11682",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--Ux_oLD2w--/q_60/w_400/artworks/AUGUST-WOLF_DER-PROKURATOR-JACOPO-SORANZO-NACH-TINTORETTO_CC-BY-SA_BSTGS_11682.jpg"
     },
     {
       "id": "pinakothek-ss-GST-18",
@@ -3098,10 +3269,11 @@
       "department": "19. Jahrhundert",
       "origin": "2014 als Leihgabe der Museumsstiftung zur Förderung der Staatlichen Bayerischen Museen",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--5oaNaHYB--/q_60/w_400/artworks/JOHANN-CHRISTIAN-ZIEGLER_BELLINZONA_CC-BY-SA_BSTGS_GST18.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-GST-18-8411f141-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/GST 18",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/jpxeoDzGJ7/johann-christian-ziegler-1803/bellinzona-gst-18",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--5oaNaHYB--/q_60/w_400/artworks/JOHANN-CHRISTIAN-ZIEGLER_BELLINZONA_CC-BY-SA_BSTGS_GST18.jpg"
     },
     {
       "id": "pinakothek-ss-11698",
@@ -3116,10 +3288,11 @@
       "department": "19. Jahrhundert",
       "origin": "Um 1864 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--dF5x2Acc--/q_60/w_400/artworks/EDWARD-JAKOB-VON-STEINLE_DIE-LORELEY-ENTWURF_CC-BY-SA_BSTGS_11698.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sammlung-schack-collection/pinakothek-ss-11698-bdd04b29-image.webp",
       "source": "Sammlung Schack",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11698",
-      "locationCode": "SS"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/6kLa8pPx8V/edward-jakob-von-steinle-1810/die-loreley-entwurf-11698",
+      "locationCode": "SS",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--dF5x2Acc--/q_60/w_400/artworks/EDWARD-JAKOB-VON-STEINLE_DIE-LORELEY-ENTWURF_CC-BY-SA_BSTGS_11698.jpg"
     }
   ]
 }

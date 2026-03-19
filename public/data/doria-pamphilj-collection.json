@@ -19,9 +19,10 @@
       "category": "Painting",
       "dimensions": "",
       "roomId": "",
-      "image": "https://www.doriapamphilj.it/wp-content/uploads/2018/05/palazzo-doria-pamphilj-algardi-busto-big-1.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/doria-pamphilj-collection/alessandro-algardi-portrait-of-84b96632-image.webp",
       "inventory": "",
-      "sourceUrl": "https://www.doriapamphilj.it/en/portfolio/alessandro-algardi/"
+      "sourceUrl": "https://www.doriapamphilj.it/en/portfolio/alessandro-algardi/",
+      "original_image": "https://www.doriapamphilj.it/wp-content/uploads/2018/05/palazzo-doria-pamphilj-algardi-busto-big-1.jpg"
     },
     {
       "id": "bassano-the-earthly-paradise",
@@ -33,9 +34,10 @@
       "category": "Painting",
       "dimensions": "77 x 109 cm",
       "roomId": "",
-      "image": "https://www.doriapamphilj.it/wp-content/uploads/2019/01/palazzo-doria-pamphilj-bassano-paradiso-terrestre-big.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/doria-pamphilj-collection/bassano-the-earthly-paradise-3ac24347-image.webp",
       "inventory": "FC 585",
-      "sourceUrl": "https://www.doriapamphilj.it/en/portfolio/bassano/"
+      "sourceUrl": "https://www.doriapamphilj.it/en/portfolio/bassano/",
+      "original_image": "https://www.doriapamphilj.it/wp-content/uploads/2019/01/palazzo-doria-pamphilj-bassano-paradiso-terrestre-big.jpg"
     },
     {
       "id": "beccafumi-domenico-mystic-marriage-of-st-catherine-with-the-young-bap",
@@ -47,9 +49,10 @@
       "category": "Painting",
       "dimensions": "Ø 94 cm",
       "roomId": "",
-      "image": "https://www.doriapamphilj.it/wp-content/uploads/2019/01/ADP-Fc-672-Ph-Alessandro-Vasari.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/doria-pamphilj-collection/beccafumi-domenico-mystic-marr-246baddb-image.webp",
       "inventory": "FC 672",
-      "sourceUrl": "https://www.doriapamphilj.it/en/portfolio/beccafumi-domenico/"
+      "sourceUrl": "https://www.doriapamphilj.it/en/portfolio/beccafumi-domenico/",
+      "original_image": "https://www.doriapamphilj.it/wp-content/uploads/2019/01/ADP-Fc-672-Ph-Alessandro-Vasari.jpg"
     },
     {
       "id": "gian-lorenzo-bernini-portrait-of-pope-innocent-x-pamphilj",
@@ -61,9 +64,10 @@
       "category": "Painting",
       "dimensions": "",
       "roomId": "",
-      "image": "https://www.doriapamphilj.it/wp-content/uploads/2019/01/palazzo-doria-pamphilj-bernini-ritratto-innocenzo-x-big.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/doria-pamphilj-collection/gian-lorenzo-bernini-portrait--8b749ddb-image.webp",
       "inventory": "",
-      "sourceUrl": "https://www.doriapamphilj.it/en/portfolio/gian-lorenzo-bernini/"
+      "sourceUrl": "https://www.doriapamphilj.it/en/portfolio/gian-lorenzo-bernini/",
+      "original_image": "https://www.doriapamphilj.it/wp-content/uploads/2019/01/palazzo-doria-pamphilj-bernini-ritratto-innocenzo-x-big.jpg"
     },
     {
       "id": "paris-bordone-venus-mars-and-cupid",
@@ -75,9 +79,10 @@
       "category": "Painting",
       "dimensions": "118 x 151 cm",
       "roomId": "",
-      "image": "https://www.doriapamphilj.it/wp-content/uploads/2019/01/palazzo-doria-pamphilj-venere-marte-cupido-big.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/doria-pamphilj-collection/paris-bordone-venus-mars-and-c-d0f48a41-image.webp",
       "inventory": "FC 321",
-      "sourceUrl": "https://www.doriapamphilj.it/en/portfolio/paris-bordone/"
+      "sourceUrl": "https://www.doriapamphilj.it/en/portfolio/paris-bordone/",
+      "original_image": "https://www.doriapamphilj.it/wp-content/uploads/2019/01/palazzo-doria-pamphilj-venere-marte-cupido-big.jpg"
     },
     {
       "id": "jan-brueghel-the-elder-earthly-paradise-with-original-sin",
@@ -89,9 +94,10 @@
       "category": "Painting",
       "dimensions": "50.3 x 80.1 cm",
       "roomId": "",
-      "image": "https://www.doriapamphilj.it/wp-content/uploads/2019/01/palazzo-doria-pamphilj-brueghel-il-vecchio-paradi-big.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/doria-pamphilj-collection/jan-brueghel-the-elder-earthly-2ecd1ddc-image.webp",
       "inventory": "FC 341",
-      "sourceUrl": "https://www.doriapamphilj.it/en/portfolio/jan-brueghel-the-elder/"
+      "sourceUrl": "https://www.doriapamphilj.it/en/portfolio/jan-brueghel-the-elder/",
+      "original_image": "https://www.doriapamphilj.it/wp-content/uploads/2019/01/palazzo-doria-pamphilj-brueghel-il-vecchio-paradi-big.jpg"
     },
     {
       "id": "pieter-bruegel-the-elder-a-battle-in-the-bay-of-naples",
@@ -103,9 +109,10 @@
       "category": "Painting",
       "dimensions": "42.2 x 71.2 cm",
       "roomId": "",
-      "image": "https://www.doriapamphilj.it/wp-content/uploads/2019/01/ADP-Fc-546-post-restauro.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/doria-pamphilj-collection/pieter-bruegel-the-elder-a-bat-81616cb7-image.webp",
       "inventory": "FC 546",
-      "sourceUrl": "https://www.doriapamphilj.it/en/portfolio/pieter-bruegel-the-elder/"
+      "sourceUrl": "https://www.doriapamphilj.it/en/portfolio/pieter-bruegel-the-elder/",
+      "original_image": "https://www.doriapamphilj.it/wp-content/uploads/2019/01/ADP-Fc-546-post-restauro.jpg"
     },
     {
       "id": "caravaggio-penitent-mary-magdalene",
@@ -117,9 +124,10 @@
       "category": "Painting",
       "dimensions": "122.5 x 98.5 cm",
       "roomId": "",
-      "image": "https://www.doriapamphilj.it/wp-content/uploads/2019/01/palazzo-doria-pamphilj-caravaggio-maddalena-penitente-big.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/doria-pamphilj-collection/caravaggio-penitent-mary-magda-eed85b96-image.webp",
       "inventory": "FC 357",
-      "sourceUrl": "https://www.doriapamphilj.it/en/portfolio/caravaggio/"
+      "sourceUrl": "https://www.doriapamphilj.it/en/portfolio/caravaggio/",
+      "original_image": "https://www.doriapamphilj.it/wp-content/uploads/2019/01/palazzo-doria-pamphilj-caravaggio-maddalena-penitente-big.jpg"
     },
     {
       "id": "caravaggio-rest-on-the-flight-into-egypt",
@@ -131,9 +139,10 @@
       "category": "Painting",
       "dimensions": "135.5 x 166.5 cm",
       "roomId": "",
-      "image": "https://www.doriapamphilj.it/wp-content/uploads/2019/01/palazzo-doria-pamphilj-caravaggio-riposo-fuga-in-egitto-big.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/doria-pamphilj-collection/caravaggio-rest-on-the-flight--e40baa0d-image.webp",
       "inventory": "FC 241",
-      "sourceUrl": "https://www.doriapamphilj.it/en/portfolio/caravaggio/"
+      "sourceUrl": "https://www.doriapamphilj.it/en/portfolio/caravaggio/",
+      "original_image": "https://www.doriapamphilj.it/wp-content/uploads/2019/01/palazzo-doria-pamphilj-caravaggio-riposo-fuga-in-egitto-big.jpg"
     },
     {
       "id": "annibale-carracci-landscape-with-flight-into-egypt",
@@ -145,9 +154,10 @@
       "category": "Painting",
       "dimensions": "122 x 230 cm",
       "roomId": "",
-      "image": "https://www.doriapamphilj.it/wp-content/uploads/2019/01/palazzo-doria-pamphilj-carracci-paesaggio-con-la-fuga-in-egitto-big.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/doria-pamphilj-collection/annibale-carracci-landscape-wi-4ca43532-image.webp",
       "inventory": "FC 236",
-      "sourceUrl": "https://www.doriapamphilj.it/en/portfolio/annibale-carracci/"
+      "sourceUrl": "https://www.doriapamphilj.it/en/portfolio/annibale-carracci/",
+      "original_image": "https://www.doriapamphilj.it/wp-content/uploads/2019/01/palazzo-doria-pamphilj-carracci-paesaggio-con-la-fuga-in-egitto-big.jpg"
     },
     {
       "id": "annibale-carracci-susanna-and-the-elders",
@@ -159,9 +169,10 @@
       "category": "Painting",
       "dimensions": "56.8 x 86.1 cm",
       "roomId": "",
-      "image": "https://www.doriapamphilj.it/wp-content/uploads/2019/01/palazzo-doria-pamphilj-annibale-carracci-susanna-e-i-vecchioni-big.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/doria-pamphilj-collection/annibale-carracci-susanna-and--5a82686e-image.webp",
       "inventory": "FC 326",
-      "sourceUrl": "https://www.doriapamphilj.it/en/portfolio/annibale-carracci/"
+      "sourceUrl": "https://www.doriapamphilj.it/en/portfolio/annibale-carracci/",
+      "original_image": "https://www.doriapamphilj.it/wp-content/uploads/2019/01/palazzo-doria-pamphilj-annibale-carracci-susanna-e-i-vecchioni-big.jpg"
     },
     {
       "id": "correggio-allegory-of-virtue",
@@ -173,9 +184,10 @@
       "category": "Painting",
       "dimensions": "149.5 x 85.5 cm",
       "roomId": "",
-      "image": "https://www.doriapamphilj.it/wp-content/uploads/2019/01/palazzo-doria-pamphilj-correggio-allegoria-della-virtu-big.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/doria-pamphilj-collection/correggio-allegory-of-virtue-3db667d6-image.webp",
       "inventory": "FC 265",
-      "sourceUrl": "https://www.doriapamphilj.it/en/portfolio/correggio/"
+      "sourceUrl": "https://www.doriapamphilj.it/en/portfolio/correggio/",
+      "original_image": "https://www.doriapamphilj.it/wp-content/uploads/2019/01/palazzo-doria-pamphilj-correggio-allegoria-della-virtu-big.jpg"
     },
     {
       "id": "domenichino-landscape-with-ford",
@@ -187,9 +199,10 @@
       "category": "Painting",
       "dimensions": "47 x 59.5 cm",
       "roomId": "",
-      "image": "https://www.doriapamphilj.it/wp-content/uploads/2019/01/palazzo-doria-pamphilj-domenichino-paesaggio-con-guado-big.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/doria-pamphilj-collection/domenichino-landscape-with-for-244b6fb5-image.webp",
       "inventory": "FC 227",
-      "sourceUrl": "https://www.doriapamphilj.it/en/portfolio/domenichino/"
+      "sourceUrl": "https://www.doriapamphilj.it/en/portfolio/domenichino/",
+      "original_image": "https://www.doriapamphilj.it/wp-content/uploads/2019/01/palazzo-doria-pamphilj-domenichino-paesaggio-con-guado-big.jpg"
     },
     {
       "id": "dosso-dossi-dido",
@@ -201,9 +214,10 @@
       "category": "Painting",
       "dimensions": "95.5 x 75 cm",
       "roomId": "",
-      "image": "https://www.doriapamphilj.it/wp-content/uploads/2019/01/palazzo-doria-pamphilj-didone-big.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/doria-pamphilj-collection/dosso-dossi-dido-1bec8925-image.webp",
       "inventory": "FC 549",
-      "sourceUrl": "https://www.doriapamphilj.it/en/portfolio/dosso-dossi/"
+      "sourceUrl": "https://www.doriapamphilj.it/en/portfolio/dosso-dossi/",
+      "original_image": "https://www.doriapamphilj.it/wp-content/uploads/2019/01/palazzo-doria-pamphilj-didone-big.jpg"
     },
     {
       "id": "giovanni-di-paolo-di-grazia-the-birth-of-the-virgin",
@@ -215,9 +229,10 @@
       "category": "Painting",
       "dimensions": "20.6 x 33.5 cm",
       "roomId": "",
-      "image": "https://www.doriapamphilj.it/wp-content/uploads/2019/01/palazzo-doria-pamphilj-nascita-della-vergine-big.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/doria-pamphilj-collection/giovanni-di-paolo-di-grazia-th-545ad9f8-image.webp",
       "inventory": "FC 514",
-      "sourceUrl": "https://www.doriapamphilj.it/en/portfolio/giovanni-di-paolo-di-grazia/"
+      "sourceUrl": "https://www.doriapamphilj.it/en/portfolio/giovanni-di-paolo-di-grazia/",
+      "original_image": "https://www.doriapamphilj.it/wp-content/uploads/2019/01/palazzo-doria-pamphilj-nascita-della-vergine-big.jpg"
     },
     {
       "id": "guercino-guercino-erminia-discovers-the-wounded-tancred",
@@ -229,9 +244,10 @@
       "category": "Painting",
       "dimensions": "145 x 185 cm",
       "roomId": "",
-      "image": "https://www.doriapamphilj.it/wp-content/uploads/2019/01/palazzo-doria-pamphilj-erminia-ritrova-tancredi-ferito-big.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/doria-pamphilj-collection/guercino-guercino-erminia-disc-be2020c7-image.webp",
       "inventory": "FC 259",
-      "sourceUrl": "https://www.doriapamphilj.it/en/portfolio/guercino/"
+      "sourceUrl": "https://www.doriapamphilj.it/en/portfolio/guercino/",
+      "original_image": "https://www.doriapamphilj.it/wp-content/uploads/2019/01/palazzo-doria-pamphilj-erminia-ritrova-tancredi-ferito-big.jpg"
     },
     {
       "id": "filippo-lippi-the-annunciation",
@@ -243,9 +259,10 @@
       "category": "Painting",
       "dimensions": "117 x 173 cm",
       "roomId": "",
-      "image": "https://www.doriapamphilj.it/wp-content/uploads/2019/01/ADP-Fc-668-Lippi-Annunciazone.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/doria-pamphilj-collection/filippo-lippi-the-annunciation-28efbe1f-image.webp",
       "inventory": "FC 668",
-      "sourceUrl": "https://www.doriapamphilj.it/en/portfolio/filippo-lippi/"
+      "sourceUrl": "https://www.doriapamphilj.it/en/portfolio/filippo-lippi/",
+      "original_image": "https://www.doriapamphilj.it/wp-content/uploads/2019/01/ADP-Fc-668-Lippi-Annunciazone.jpg"
     },
     {
       "id": "claude-lorrain-landscape-with-dancing-figure-the-marriage-of-isaa",
@@ -257,9 +274,10 @@
       "category": "Painting",
       "dimensions": "150.5 x 198 cm",
       "roomId": "",
-      "image": "https://www.doriapamphilj.it/wp-content/uploads/2019/01/palazzo-doria-pamphilj-paesaggio-figure-danzanti-big.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/doria-pamphilj-collection/claude-lorrain-landscape-with--a0bbd1c6-image.webp",
       "inventory": "FC 237",
-      "sourceUrl": "https://www.doriapamphilj.it/en/portfolio/claude-lorrain/"
+      "sourceUrl": "https://www.doriapamphilj.it/en/portfolio/claude-lorrain/",
+      "original_image": "https://www.doriapamphilj.it/wp-content/uploads/2019/01/palazzo-doria-pamphilj-paesaggio-figure-danzanti-big.jpg"
     },
     {
       "id": "lorenzo-lotto-self-portrait",
@@ -271,9 +289,10 @@
       "category": "Painting",
       "dimensions": "96.5 x 81 cm",
       "roomId": "",
-      "image": "https://www.doriapamphilj.it/wp-content/uploads/2019/01/palazzo-doria-pamphilj-lotto-lorenzo-autoritratto-big2.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/doria-pamphilj-collection/lorenzo-lotto-self-portrait-ebb88c17-image.webp",
       "inventory": "FC 673",
-      "sourceUrl": "https://www.doriapamphilj.it/en/portfolio/lorenzo-lotto/"
+      "sourceUrl": "https://www.doriapamphilj.it/en/portfolio/lorenzo-lotto/",
+      "original_image": "https://www.doriapamphilj.it/wp-content/uploads/2019/01/palazzo-doria-pamphilj-lotto-lorenzo-autoritratto-big2.jpg"
     },
     {
       "id": "hans-memling-lamentation-over-the-dead-christ-with-a-donor",
@@ -285,9 +304,10 @@
       "category": "Painting",
       "dimensions": "68.5 x 52.5 cm",
       "roomId": "",
-      "image": "https://www.doriapamphilj.it/wp-content/uploads/2019/01/Hans-Memling.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/doria-pamphilj-collection/hans-memling-lamentation-over--17df38e7-image.webp",
       "inventory": "FC 592",
-      "sourceUrl": "https://www.doriapamphilj.it/en/portfolio/hans-memling/"
+      "sourceUrl": "https://www.doriapamphilj.it/en/portfolio/hans-memling/",
+      "original_image": "https://www.doriapamphilj.it/wp-content/uploads/2019/01/Hans-Memling.jpg"
     },
     {
       "id": "bernardo-parentino-the-temptations-of-saint-anthony-abbot",
@@ -299,9 +319,10 @@
       "category": "Painting",
       "dimensions": "46.4 x 58.2 cm",
       "roomId": "",
-      "image": "https://www.doriapamphilj.it/wp-content/uploads/2019/01/palazzo-doria-pamphilj-parentino-tentazioni-di-sant-antonio-abate-big.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/doria-pamphilj-collection/bernardo-parentino-the-temptat-f845ef66-image.webp",
       "inventory": "FC 419",
-      "sourceUrl": "https://www.doriapamphilj.it/en/portfolio/bernardo-parentino/"
+      "sourceUrl": "https://www.doriapamphilj.it/en/portfolio/bernardo-parentino/",
+      "original_image": "https://www.doriapamphilj.it/wp-content/uploads/2019/01/palazzo-doria-pamphilj-parentino-tentazioni-di-sant-antonio-abate-big.jpg"
     },
     {
       "id": "parmigianino-the-nativity",
@@ -313,9 +334,10 @@
       "category": "Painting",
       "dimensions": "58.3 x 34.5 cm",
       "roomId": "",
-      "image": "https://www.doriapamphilj.it/wp-content/uploads/2019/01/palazzo-doria-pamphilj-parmigianino-nativita-big.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/doria-pamphilj-collection/parmigianino-the-nativity-6285e531-image.webp",
       "inventory": "FC 292",
-      "sourceUrl": "https://www.doriapamphilj.it/en/portfolio/parmigianino/"
+      "sourceUrl": "https://www.doriapamphilj.it/en/portfolio/parmigianino/",
+      "original_image": "https://www.doriapamphilj.it/wp-content/uploads/2019/01/palazzo-doria-pamphilj-parmigianino-nativita-big.jpg"
     },
     {
       "id": "guido-reni-putti-fighting",
@@ -327,9 +349,10 @@
       "category": "Painting",
       "dimensions": "120 x 152 cm",
       "roomId": "",
-      "image": "https://www.doriapamphilj.it/wp-content/uploads/2019/01/palazzo-doria-pamphilj-lotta-di-putti-big.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/doria-pamphilj-collection/guido-reni-putti-fighting-081f75ed-image.webp",
       "inventory": "FC 257",
-      "sourceUrl": "https://www.doriapamphilj.it/en/portfolio/guido-reni/"
+      "sourceUrl": "https://www.doriapamphilj.it/en/portfolio/guido-reni/",
+      "original_image": "https://www.doriapamphilj.it/wp-content/uploads/2019/01/palazzo-doria-pamphilj-lotta-di-putti-big.jpg"
     },
     {
       "id": "raphael-double-portrait",
@@ -341,9 +364,10 @@
       "category": "Painting",
       "dimensions": "77 x 111 cm",
       "roomId": "",
-      "image": "https://www.doriapamphilj.it/wp-content/uploads/2019/01/palazzo-doria-pamphilj-raffaello-doppio-ritratto-big.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/doria-pamphilj-collection/raphael-double-portrait-c0a7ff87-image.webp",
       "inventory": "FC 130",
-      "sourceUrl": "https://www.doriapamphilj.it/en/portfolio/raphael/"
+      "sourceUrl": "https://www.doriapamphilj.it/en/portfolio/raphael/",
+      "original_image": "https://www.doriapamphilj.it/wp-content/uploads/2019/01/palazzo-doria-pamphilj-raffaello-doppio-ritratto-big.jpg"
     },
     {
       "id": "jan-van-scorel-portrait-of-agatha-van-schoonhoven",
@@ -355,9 +379,10 @@
       "category": "Painting",
       "dimensions": "38.3 x 27.1 cm",
       "roomId": "",
-      "image": "https://www.doriapamphilj.it/wp-content/uploads/2019/01/palazzo-doria-pamphilj-ritratto-agatha-van-schoohoven-big.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/doria-pamphilj-collection/jan-van-scorel-portrait-of-aga-b13d1657-image.webp",
       "inventory": "FC 216",
-      "sourceUrl": "https://www.doriapamphilj.it/en/portfolio/jan-van-scorel/"
+      "sourceUrl": "https://www.doriapamphilj.it/en/portfolio/jan-van-scorel/",
+      "original_image": "https://www.doriapamphilj.it/wp-content/uploads/2019/01/palazzo-doria-pamphilj-ritratto-agatha-van-schoohoven-big.jpg"
     },
     {
       "id": "titian-salome-with-the-head-of-john-the-baptist",
@@ -369,9 +394,10 @@
       "category": "Painting",
       "dimensions": "89.5 x 73 cm",
       "roomId": "",
-      "image": "https://www.doriapamphilj.it/wp-content/uploads/2019/01/palazzo-doria-pamphilj-tiziano-salome-con-testa-del-battista-big.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/doria-pamphilj-collection/titian-salome-with-the-head-of-9e5d6d48-image.webp",
       "inventory": "FC 517",
-      "sourceUrl": "https://www.doriapamphilj.it/en/portfolio/titian/"
+      "sourceUrl": "https://www.doriapamphilj.it/en/portfolio/titian/",
+      "original_image": "https://www.doriapamphilj.it/wp-content/uploads/2019/01/palazzo-doria-pamphilj-tiziano-salome-con-testa-del-battista-big.jpg"
     },
     {
       "id": "vasari-giorgio-deposition-from-the-cross",
@@ -383,9 +409,10 @@
       "category": "Painting",
       "dimensions": "297 x 188 cm",
       "roomId": "",
-      "image": "https://www.doriapamphilj.it/wp-content/uploads/2019/01/giorgio-vasari-deposizione-dalla-croce-big.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/doria-pamphilj-collection/vasari-giorgio-deposition-from-534bd61c-image.webp",
       "inventory": "FC 133",
-      "sourceUrl": "https://www.doriapamphilj.it/en/portfolio/vasari-giorgio/"
+      "sourceUrl": "https://www.doriapamphilj.it/en/portfolio/vasari-giorgio/",
+      "original_image": "https://www.doriapamphilj.it/wp-content/uploads/2019/01/giorgio-vasari-deposizione-dalla-croce-big.jpg"
     },
     {
       "id": "velazquez-portrait-of-pope-innocent-x-pamphilj",
@@ -397,9 +424,10 @@
       "category": "Painting",
       "dimensions": "141 x 119 cm",
       "roomId": "",
-      "image": "https://www.doriapamphilj.it/wp-content/uploads/2019/01/palazzo-doria-pamphilj-brueghel-il-vecchio-paradi-big-500x375.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/doria-pamphilj-collection/velazquez-portrait-of-pope-inn-e7ba20ec-image.webp",
       "inventory": "FC 289",
-      "sourceUrl": "https://www.doriapamphilj.it/en/portfolio/velazquez/"
+      "sourceUrl": "https://www.doriapamphilj.it/en/portfolio/velazquez/",
+      "original_image": "https://www.doriapamphilj.it/wp-content/uploads/2019/01/palazzo-doria-pamphilj-brueghel-il-vecchio-paradi-big-500x375.jpg"
     },
     {
       "id": "centaur-in-polychrome-marbles-centaur-in-polychrome-marbles",
@@ -411,9 +439,10 @@
       "category": "Painting",
       "dimensions": "",
       "roomId": "",
-      "image": "https://www.doriapamphilj.it/wp-content/uploads/2019/01/palazzo-doria-pamphilj-centauro-furietti-vecchio-big.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/doria-pamphilj-collection/centaur-in-polychrome-marbles--ec6a1087-image.webp",
       "inventory": "",
-      "sourceUrl": "https://www.doriapamphilj.it/en/portfolio/centaur-in-polychrome-marbles/"
+      "sourceUrl": "https://www.doriapamphilj.it/en/portfolio/centaur-in-polychrome-marbles/",
+      "original_image": "https://www.doriapamphilj.it/wp-content/uploads/2019/01/palazzo-doria-pamphilj-centauro-furietti-vecchio-big.jpg"
     }
   ],
   "artworksWithYear": 29

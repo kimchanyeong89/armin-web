@@ -1,0 +1,44 @@
+[
+  {
+    "url": "https://musee-matisse.opacweb.io/api/v2/notices/most-viewed?order[views]=desc",
+    "method": "GET",
+    "postData": null,
+    "headers": {
+      "sec-ch-ua-platform": "\"macOS\"",
+      "referer": "https://musee-matisse.opacweb.io/fr/search?onlyHasImage=true&o=1140127",
+      "accept-language": "fr",
+      "accept": "application/json, text/plain, */*",
+      "sec-ch-ua": "\"HeadlessChrome\";v=\"143\", \"Chromium\";v=\"143\", \"Not A(Brand\";v=\"24\"",
+      "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/143.0.7499.4 Safari/537.36",
+      "sec-ch-ua-mobile": "?0"
+    }
+  },
+  {
+    "url": "https://musee-matisse.opacweb.io/api/v2/facets/tree?onlineFilter=online&onlyEnabled=true&query=&onlyHasImage=true&o[]=1140127&randomize=true",
+    "method": "GET",
+    "postData": null,
+    "headers": {
+      "sec-ch-ua-platform": "\"macOS\"",
+      "referer": "https://musee-matisse.opacweb.io/fr/search?onlyHasImage=true&o=1140127",
+      "accept-language": "fr",
+      "accept": "application/json, text/plain, */*",
+      "sec-ch-ua": "\"HeadlessChrome\";v=\"143\", \"Chromium\";v=\"143\", \"Not A(Brand\";v=\"24\"",
+      "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/143.0.7499.4 Safari/537.36",
+      "sec-ch-ua-mobile": "?0"
+    }
+  },
+  {
+    "url": "https://musee-matisse.opacweb.io/api/v2/notices/search?onlineFilter=online&items_per_page=30&page=1&query=&onlyHasImage=true&randomize=true",
+    "method": "GET",
+    "postData": null,
+    "headers": {
+      "sec-ch-ua-platform": "\"macOS\"",
+      "referer": "https://musee-matisse.opacweb.io/fr/search?onlyHasImage=true&o=1140127",
+      "accept-language": "fr",
+      "accept": "application/json, text/plain, */*",
+      "sec-ch-ua": "\"HeadlessChrome\";v=\"143\", \"Chromium\";v=\"143\", \"Not A(Brand\";v=\"24\"",
+      "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/143.0.7499.4 Safari/537.36",
+      "sec-ch-ua-mobile": "?0"
+    }
+  }
+]

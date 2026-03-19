@@ -127,6 +127,9 @@ async function collectArtworkLinks(page, collectionUrl, logFile) {
   await page.goto(collectionUrl, { waitUntil: 'networkidle', timeout: 60000 });
   await sleep(3000);
   
+  let noNewLinksCount = 0;
+  const maxNoNewLinksCount = 10; // 연속 10번 새 링크 없으면 종료
+  
   while (hasMorePages && artworkLinks.length < TEST_LIMIT) {
     log(`페이지 ${currentPage} 처리 중... (현재 ${artworkLinks.length}개 링크)`, logFile);
     
@@ -153,11 +156,25 @@ async function collectArtworkLinks(page, collectionUrl, logFile) {
       
       // 새로운 링크 추가
       const previousCount = artworkLinks.length;
+      let newLinksAdded = 0;
       for (const link of links) {
         if (!processedUrls.has(link) && artworkLinks.length < TEST_LIMIT) {
           artworkLinks.push(link);
           processedUrls.add(link);
+          newLinksAdded++;
         }
+      }
+      
+      // 새 링크가 추가되었는지 확인
+      if (newLinksAdded === 0 && previousCount > 0) {
+        noNewLinksCount++;
+        if (noNewLinksCount >= maxNoNewLinksCount) {
+          log(`페이지 ${currentPage}: ${maxNoNewLinksCount}번 연속 새 링크 없음, 수집 종료 (총 ${artworkLinks.length}개)`, logFile);
+          hasMorePages = false;
+          break;
+        }
+      } else {
+        noNewLinksCount = 0; // 새 링크가 추가되면 카운터 리셋
       }
       
       // 현재 페이지에서 링크가 0개면 한 번 더 시도 (페이지 로딩 문제일 수 있음)
@@ -188,14 +205,9 @@ async function collectArtworkLinks(page, collectionUrl, logFile) {
         }
       }
       
-      // 새로운 링크가 없으면 다음 페이지 시도 (한 번 더 시도)
-      if (artworkLinks.length === previousCount && previousCount > 0 && links.length > 0) {
-        // 링크는 발견했지만 이미 처리된 경우 - 다음 페이지로 계속
-      } else if (artworkLinks.length === previousCount && previousCount > 0 && links.length === 0 && currentPage > 3) {
-        // 여러 페이지에서 계속 0개면 종료 (단, 초기 몇 페이지는 제외)
-        log(`페이지 ${currentPage}: 연속으로 링크 없음, 수집 종료`, logFile);
-        hasMorePages = false;
-        break;
+      // 100개 링크마다 중간 저장
+      if (artworkLinks.length > 0 && artworkLinks.length % 100 === 0) {
+        log(`💾 중간 저장: ${artworkLinks.length}개 링크`, logFile);
       }
       
       // 다음 페이지 확인
@@ -447,7 +459,7 @@ async function scrapeCollection(collectionKey) {
         }
       }
       
-      // 매 작품마다 progress 저장 (오류 발생해도 저장됨)
+      // 매 작품마다 progress 저장 및 output 파일 업데이트 (오류 발생해도 저장됨)
       const currentProgress = {
         artworkLinks: artworkLinks,
         artworks: allArtworks,
@@ -455,6 +467,12 @@ async function scrapeCollection(collectionKey) {
         errors: errors.length
       };
       saveProgress(currentProgress, progressFile);
+      
+      // 10개마다 output 파일도 업데이트 (실시간 반영)
+      if (allArtworks.length % 10 === 0) {
+        fs.writeFileSync(outputFile, JSON.stringify({ items: allArtworks }, null, 2));
+        log(`💾 Output 파일 업데이트: ${allArtworks.length}개 작품`, logFile);
+      }
       
       await sleep(DELAY_BETWEEN_ARTWORKS);
     }

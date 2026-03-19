@@ -26,7 +26,9 @@ export const SubmissionForm: React.FC<SubmissionFormProps> = ({
     const [width, setWidth] = useState('');
     const [height, setHeight] = useState('');
     const [materials, setMaterials] = useState('');
+    const [category, setCategory] = useState('');
     const [submitting, setSubmitting] = useState(false);
+    const [uploadProgress, setUploadProgress] = useState(0);
     const [error, setError] = useState<string | null>(null);
     const [success, setSuccess] = useState(false);
 
@@ -81,7 +83,7 @@ export const SubmissionForm: React.FC<SubmissionFormProps> = ({
             const R2_WORKER_URL = import.meta.env.VITE_R2_WORKER_URL || '';
 
             // Compress and convert image to WebP (max 1600px longest dimension, max 500KB target)
-            const compressImage = (file: File): Promise<Blob> => {
+            const compressImage = (file: File, onProgress?: (progress: number) => void): Promise<Blob> => {
                 return new Promise((resolve, reject) => {
                     const canvas = document.createElement('canvas');
                     const ctx = canvas.getContext('2d');
@@ -103,6 +105,9 @@ export const SubmissionForm: React.FC<SubmissionFormProps> = ({
                             ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
                         }
 
+                        // Simulate progress for compression
+                        if (onProgress) onProgress(50);
+
                         // Convert to WebP with quality adjustment for file size
                         let quality = 0.85;
                         const tryCompress = () => {
@@ -116,6 +121,7 @@ export const SubmissionForm: React.FC<SubmissionFormProps> = ({
                                     quality -= 0.1;
                                     tryCompress();
                                 } else {
+                                    if (onProgress) onProgress(100);
                                     resolve(blob);
                                 }
                             }, 'image/webp', quality);
@@ -126,7 +132,10 @@ export const SubmissionForm: React.FC<SubmissionFormProps> = ({
                 });
             };
 
-            const compressedImage = await compressImage(imageFile);
+            const compressedImage = await compressImage(imageFile, () => {
+                // Compression is fast, so we just use it to bump progress slightly
+                // Real progress comes from upload
+            });
             console.log(`Image compressed: ${(compressedImage.size / 1024).toFixed(1)}KB`);
 
             // Try R2 upload first, fallback to base64 if worker not deployed
@@ -138,16 +147,29 @@ export const SubmissionForm: React.FC<SubmissionFormProps> = ({
                     formData.append('exhibitionId', exhibitionId);
                     formData.append('submissionId', submissionId);
 
-                    const uploadRes = await fetch(`${R2_WORKER_URL}/upload`, {
-                        method: 'POST',
-                        body: formData,
+                    const xhr = new XMLHttpRequest();
+                    const uploadPromise = new Promise<any>((resolve, reject) => {
+                        xhr.upload.addEventListener('progress', (event) => {
+                            if (event.lengthComputable) {
+                                const percentComplete = (event.loaded / event.total) * 100;
+                                setUploadProgress(percentComplete);
+                            }
+                        });
+                        xhr.addEventListener('load', () => {
+                            if (xhr.status >= 200 && xhr.status < 300) {
+                                resolve(JSON.parse(xhr.responseText));
+                            } else {
+                                reject(new Error('Upload failed'));
+                            }
+                        });
+                        xhr.addEventListener('error', () => reject(new Error('Upload error')));
+                        xhr.open('POST', `${R2_WORKER_URL}/upload`);
+                        xhr.send(formData);
                     });
 
-                    if (uploadRes.ok) {
-                        const result = await uploadRes.json();
-                        imageUrl = result.url;
-                        console.log('Image uploaded to R2:', imageUrl);
-                    }
+                    const result = await uploadPromise;
+                    imageUrl = result.url;
+                    console.log('Image uploaded to R2:', imageUrl);
                 } catch (uploadError) {
                     console.warn('R2 upload failed, using base64 fallback:', uploadError);
                 }
@@ -173,6 +195,7 @@ export const SubmissionForm: React.FC<SubmissionFormProps> = ({
                 year: year.trim() ? parseInt(year, 10) : null,
                 dimensions: (width.trim() && height.trim()) ? `${width.trim()} x ${height.trim()} cm` : '',
                 materials: materials.trim(),
+                category: category.trim(),
                 imageUrl, // R2 URL if uploaded
                 imageBase64: imageUrl ? '' : imageBase64, // Base64 fallback only if R2 failed
                 imageName: imageFile.name,
@@ -224,7 +247,7 @@ export const SubmissionForm: React.FC<SubmissionFormProps> = ({
             >
                 <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
                     <h2 style={{ margin: 0, fontSize: 18 }}>Submit Artwork</h2>
-                    <button onClick={onClose} style={{ background: 'none', border: 'none', fontSize: 20, cursor: 'pointer' }}>×</button>
+                    <button type="button" onClick={onClose} style={{ background: 'none', border: 'none', fontSize: 20, cursor: 'pointer' }}>×</button>
                 </div>
 
                 <p style={{ fontSize: 12, color: '#666', marginBottom: 16 }}>
@@ -249,11 +272,36 @@ export const SubmissionForm: React.FC<SubmissionFormProps> = ({
                                 style={{ width: '100%' }}
                             />
                             {imagePreview && (
-                                <img
-                                    src={imagePreview}
-                                    alt="Preview"
-                                    style={{ width: '100%', maxHeight: 200, objectFit: 'contain', marginTop: 8, borderRadius: 4 }}
-                                />
+                                <div style={{ position: 'relative', marginTop: 8 }}>
+                                    <img
+                                        src={imagePreview}
+                                        alt="Preview"
+                                        style={{ width: '100%', maxHeight: 200, objectFit: 'contain', borderRadius: 4 }}
+                                    />
+                                    {submitting && (
+                                        <div style={{
+                                            position: 'absolute',
+                                            top: 0,
+                                            left: 0,
+                                            right: 0,
+                                            bottom: 0,
+                                            background: 'rgba(0,0,0,0.5)',
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                            borderRadius: 4
+                                        }}>
+                                            <div style={{ width: '80%', background: '#fff', height: 4, borderRadius: 2, overflow: 'hidden' }}>
+                                                <div style={{
+                                                    width: `${uploadProgress}%`,
+                                                    height: '100%',
+                                                    background: '#16a34a',
+                                                    transition: 'width 0.2s ease'
+                                                }} />
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
                             )}
                         </div>
 
@@ -318,12 +366,24 @@ export const SubmissionForm: React.FC<SubmissionFormProps> = ({
 
                         {/* Materials */}
                         <div style={{ marginBottom: 16 }}>
-                            <label style={{ display: 'block', fontSize: 12, fontWeight: 600, marginBottom: 4 }}>Materials</label>
+                            <label style={{ display: 'block', fontSize: 12, fontWeight: 600, marginBottom: 4 }}>Material or Medium</label>
                             <input
                                 type="text"
                                 value={materials}
                                 onChange={(e) => setMaterials(e.target.value)}
                                 placeholder="e.g. Oil on canvas"
+                                style={{ width: '100%', padding: '8px 12px', border: '1px solid #ddd', borderRadius: 6, fontSize: 14 }}
+                            />
+                        </div>
+
+                        {/* Category */}
+                        <div style={{ marginBottom: 16 }}>
+                            <label style={{ display: 'block', fontSize: 12, fontWeight: 600, marginBottom: 4 }}>Category or Object Type</label>
+                            <input
+                                type="text"
+                                value={category}
+                                onChange={(e) => setCategory(e.target.value)}
+                                placeholder="e.g. Painting, Sculpture"
                                 style={{ width: '100%', padding: '8px 12px', border: '1px solid #ddd', borderRadius: 6, fontSize: 14 }}
                             />
                         </div>

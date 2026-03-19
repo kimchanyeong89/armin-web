@@ -10,14 +10,14 @@ const https = require('https');
 
 const BASE_URL = 'https://www.vangoghmuseum.nl';
 
-// 타입별 목표 개수
+// 타입별 목표 개수 및 URL
 const TYPES = [
-  { name: 'painting', url: 'Type=painting', expected: 518 },
-  { name: 'drawing', url: 'Type=drawing', expected: 1021 },
-  { name: 'sketch', url: 'Type=sketch', expected: 281 },
-  { name: 'advertisement', url: 'Type=advertisement', expected: 83 },
-  { name: 'illustration', url: 'Type=illustration', expected: 153 },
-  { name: 'poster', url: 'Type=poster', expected: 43 }
+  { name: 'painting', url: 'Type=painting', pageUrl: `${BASE_URL}/en/collection?q=&Type=painting`, expected: 518 },
+  { name: 'drawing', url: 'Type=drawing', pageUrl: `${BASE_URL}/en/collection?q=&Type=drawing`, expected: 1021 },
+  { name: 'sketch', url: 'Type=sketch', pageUrl: `${BASE_URL}/en/collection?q=&Type=sketch`, expected: 281 },
+  { name: 'advertisement', url: 'Type=advertisement', pageUrl: `${BASE_URL}/en/collection?q=&Type=advertisement`, expected: 83 },
+  { name: 'illustration', url: 'Type=illustration', pageUrl: `${BASE_URL}/en/collection?q=&Type=illustration`, expected: 153 },
+  { name: 'poster', url: 'Type=poster', pageUrl: `${BASE_URL}/en/collection?q=&Type=poster`, expected: 43 }
 ];
 
 const OUTPUT_FILE = path.join(__dirname, '../public/data/vangogh-museum-collection.json');
@@ -159,8 +159,131 @@ async function collectLinksByType(typeConfig) {
     }
   }
   
-  log(`✅ [${typeConfig.name}] ${allLinks.size}개 링크 수집 완료`);
+  log(`✅ [${typeConfig.name}] API로 ${allLinks.size}개 링크 수집 완료`);
   return Array.from(allLinks);
+}
+
+// 타입별 웹페이지 무한 스크롤로 링크 수집
+async function collectLinksByTypeScroll(page, typeConfig, existingLinksSet) {
+  log(`📋 [${typeConfig.name}] 웹페이지 스크롤로 링크 수집 시작...`);
+  
+  try {
+    await page.goto(typeConfig.pageUrl, { waitUntil: 'domcontentloaded', timeout: 120000 });
+    await sleep(5000);
+    
+    await page.waitForSelector('a[href*="/en/collection/"]', { timeout: 30000 });
+    
+    let previousCount = existingLinksSet.size;
+    let noChangeCount = 0;
+    let scrollCount = 0;
+    const maxScrolls = 300;
+    const maxNoChange = 30;
+    
+    while (scrollCount < maxScrolls && existingLinksSet.size < typeConfig.expected * 1.2) {
+      scrollCount++;
+      
+      const links = await page.evaluate(() => {
+        const links = [];
+        const cards = document.querySelectorAll('a[href*="/en/collection/"]');
+        cards.forEach(card => {
+          const href = card.getAttribute('href');
+          if (href && href.includes('/en/collection/') && 
+              !href.includes('/search') && !href.includes('?') && 
+              !href.includes('/highlights') && href.length > 20) {
+            const fullUrl = href.startsWith('http') ? href : `https://www.vangoghmuseum.nl${href}`;
+            links.push(fullUrl);
+          }
+        });
+        return [...new Set(links)];
+      });
+      
+      links.forEach(link => existingLinksSet.add(link));
+      
+      if (existingLinksSet.size === previousCount) {
+        noChangeCount++;
+        if (noChangeCount >= maxNoChange) {
+          log(`  [${typeConfig.name}] ${noChangeCount}번 연속 변화 없음, 종료`);
+          break;
+        }
+      } else {
+        noChangeCount = 0;
+      }
+      
+      previousCount = existingLinksSet.size;
+      
+      if (scrollCount % 20 === 0) {
+        log(`  [${typeConfig.name}] 스크롤 ${scrollCount}: ${existingLinksSet.size}개 링크`);
+      }
+      
+      await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+      await sleep(2000 + Math.random() * 1000);
+    }
+    
+  } catch (error) {
+    log(`❌ [${typeConfig.name}] 스크롤 오류: ${error.message}`);
+  }
+  
+  const beforeScroll = existingLinksSet.size;
+  const scrollStartCount = beforeScroll;
+  
+  try {
+    await page.goto(typeConfig.pageUrl, { waitUntil: 'domcontentloaded', timeout: 120000 });
+    await sleep(5000);
+    
+    await page.waitForSelector('a[href*="/en/collection/"]', { timeout: 30000 });
+    
+    let previousCount = existingLinksSet.size;
+    let noChangeCount = 0;
+    let scrollCount = 0;
+    const maxScrolls = 300;
+    const maxNoChange = 30;
+    
+    while (scrollCount < maxScrolls && existingLinksSet.size < typeConfig.expected * 1.2) {
+      scrollCount++;
+      
+      const links = await page.evaluate(() => {
+        const links = [];
+        const cards = document.querySelectorAll('a[href*="/en/collection/"]');
+        cards.forEach(card => {
+          const href = card.getAttribute('href');
+          if (href && href.includes('/en/collection/') && 
+              !href.includes('/search') && !href.includes('?') && 
+              !href.includes('/highlights') && href.length > 20) {
+            const fullUrl = href.startsWith('http') ? href : `https://www.vangoghmuseum.nl${href}`;
+            links.push(fullUrl);
+          }
+        });
+        return [...new Set(links)];
+      });
+      
+      links.forEach(link => existingLinksSet.add(link));
+      
+      if (existingLinksSet.size === previousCount) {
+        noChangeCount++;
+        if (noChangeCount >= maxNoChange) {
+          log(`  [${typeConfig.name}] ${noChangeCount}번 연속 변화 없음, 종료`);
+          break;
+        }
+      } else {
+        noChangeCount = 0;
+      }
+      
+      previousCount = existingLinksSet.size;
+      
+      if (scrollCount % 20 === 0) {
+        log(`  [${typeConfig.name}] 스크롤 ${scrollCount}: ${existingLinksSet.size}개 링크 (추가 ${existingLinksSet.size - scrollStartCount}개)`);
+      }
+      
+      await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
+      await sleep(2000 + Math.random() * 1000);
+    }
+    
+  } catch (error) {
+    log(`❌ [${typeConfig.name}] 스크롤 오류: ${error.message}`);
+  }
+  
+  const scrollAdded = existingLinksSet.size - scrollStartCount;
+  log(`✅ [${typeConfig.name}] 스크롤로 추가 ${scrollAdded}개 링크 수집 (총 ${existingLinksSet.size}개)`);
 }
 
 // 작품 상세 페이지 스크래핑
@@ -321,8 +444,18 @@ async function main() {
   log(`📥 기존 링크: ${allLinksSet.size}개`);
   log(`📥 완료된 타입: ${completedTypes.join(', ') || '없음'}\n`);
   
-  // 1단계: 타입별로 링크 수집
-  log('📋 1단계: 타입별 링크 수집\n');
+  // 1단계: 타입별로 링크 수집 (API + 웹페이지 스크롤)
+  log('📋 1단계: 타입별 링크 수집 (API + 웹페이지 스크롤)\n');
+  
+  let browser = await chromium.launch({ 
+    headless: true,
+    args: ['--no-sandbox', '--disable-setuid-sandbox']
+  });
+  let context = await browser.newContext({
+    userAgent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
+    viewport: { width: 1920, height: 1080 }
+  });
+  let page = await context.newPage();
   
   for (const typeConfig of TYPES) {
     if (completedTypes.includes(typeConfig.name)) {
@@ -330,10 +463,13 @@ async function main() {
       continue;
     }
     
+    // 방법 1: API로 링크 수집
     const typeLinks = await collectLinksByType(typeConfig);
-    
-    // 중복 제거하고 추가
     typeLinks.forEach(link => allLinksSet.add(link));
+    
+    // 방법 2: 웹페이지 스크롤로 추가 수집
+    await collectLinksByTypeScroll(page, typeConfig, allLinksSet);
+    
     completedTypes.push(typeConfig.name);
     
     // 중간 저장
@@ -349,6 +485,8 @@ async function main() {
     await sleep(2000);
   }
   
+  await browser.close();
+  
   const allLinksArray = Array.from(allLinksSet);
   log(`✅ 모든 타입 링크 수집 완료: 총 ${allLinksArray.length}개 링크\n`);
   
@@ -356,15 +494,15 @@ async function main() {
   log(`📦 2단계: 작품 상세 정보 수집\n`);
   log(`목표: ${allLinksArray.length}개, 완료: ${allArtworks.length}개\n`);
   
-  let browser = await chromium.launch({ 
+  browser = await chromium.launch({ 
     headless: true,
     args: ['--no-sandbox', '--disable-setuid-sandbox']
   });
-  let context = await browser.newContext({
+  context = await browser.newContext({
     userAgent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
     viewport: { width: 1920, height: 1080 }
   });
-  let page = await context.newPage();
+  page = await context.newPage();
   
   try {
     const errors = [];

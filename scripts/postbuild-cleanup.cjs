@@ -16,26 +16,37 @@ const LARGE_FILES = [
   'geodata/populated-places-10m.json',
   'data/national-museum-korea.json',
   'data/gyeongju-museum.json',
+<<<<<<< HEAD
+=======
+  'data/nga-collection.json',
+  'data/aic-collection.json',
+  'data/mca-collection.json', // 45MB - too large for Pages
+>>>>>>> 06dab5b1 (chore: add 30+ new museum collections, scripts, UI components, and gitignore cleanup)
+  // 'data/nasjonal-collection.json', // Now 3.7 MB after removing _raw - small enough for Pages
   'data/search-index.json', // 221 MB - too large for Pages
 ];
 
-console.log('🧹 Cleaning large files from dist (served from R2)...\n');
-
 let totalSaved = 0;
 
-for (const file of LARGE_FILES) {
-  const filePath = path.join(DIST_DIR, file);
+function scanAndRemoveLargeFiles(dir) {
+  const files = fs.readdirSync(dir);
 
-  if (fs.existsSync(filePath)) {
+  for (const file of files) {
+    const filePath = path.join(dir, file);
     const stats = fs.statSync(filePath);
-    const sizeMB = (stats.size / 1024 / 1024).toFixed(1);
 
-    fs.unlinkSync(filePath);
-    console.log(`   ✅ Removed: ${file} (${sizeMB} MB)`);
-    totalSaved += stats.size;
-  } else {
-    console.log(`   ⏭️  Not found: ${file}`);
+    if (stats.isDirectory()) {
+      scanAndRemoveLargeFiles(filePath);
+    } else if (stats.size > 24 * 1024 * 1024) { // 24MB limit (safe for 25MB max)
+      const sizeMB = (stats.size / 1024 / 1024).toFixed(1);
+      fs.unlinkSync(filePath);
+      console.log(`   ✅ Removed large file: ${path.relative(DIST_DIR, filePath)} (${sizeMB} MB)`);
+      totalSaved += stats.size;
+    }
   }
 }
+
+console.log('🧹 Automatically cleaning large files (>24MB) from dist...\n');
+scanAndRemoveLargeFiles(DIST_DIR);
 
 console.log(`\n📊 Total space saved: ${(totalSaved / 1024 / 1024).toFixed(1)} MB`);

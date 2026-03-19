@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import * as d3 from 'd3';
 import { feature as topojsonFeature } from 'topojson-client';
 import type { Exhibition } from '../types/Exhibition';
+import { getDataFetchOptions } from '../utils/network';
 
 // Globe with Cities: D3 orthographic globe with stroke-only borders and city boundaries
 // Props allow focusing a lat/lng and optional auto-rotation
@@ -278,7 +279,7 @@ export default function GlobeWithCities({ focusLatLng = null, autorotate = false
         for (const url of urls) {
           try {
             console.log('[GlobeWithCities] loading atlas', url);
-            const res = await fetch(url, { cache: 'no-store' });
+            const res = await fetch(url, getDataFetchOptions());
             if (!res.ok) continue;
             json = await res.json();
             if (json) break;
@@ -312,14 +313,14 @@ export default function GlobeWithCities({ focusLatLng = null, autorotate = false
       if (hasAtlasStates) return;
       try {
         // Load US states only when a manifest exists under /us; avoids 404s in production
-        const idx = await fetch('/us/states-index.json', { cache: 'no-store' });
+        const idx = await fetch('/us/states-index.json', getDataFetchOptions());
         if (!idx.ok) return;
         const codes: string[] = await idx.json();
         const features: any[] = [];
         for (const code of codes) {
           try {
             const url = `/us/${code}.geo.json`;
-            const res = await fetch(url, { cache: 'no-store' });
+            const res = await fetch(url, getDataFetchOptions());
             if (!res.ok) continue;
             const geo = await res.json();
             if (geo?.type === 'FeatureCollection' && Array.isArray(geo.features)) {
@@ -359,7 +360,7 @@ export default function GlobeWithCities({ focusLatLng = null, autorotate = false
         let isTopo = false;
         for (const url of tryUrls) {
           try {
-            const res = await fetch(url, { cache: 'no-store' });
+            const res = await fetch(url, getDataFetchOptions());
             if (!res.ok) continue;
             const ct = (res.headers.get('content-type') || '').toLowerCase();
             if (!/json/.test(ct)) continue;
@@ -406,7 +407,7 @@ export default function GlobeWithCities({ focusLatLng = null, autorotate = false
       if (hasCityGeo) return;
       try {
         console.log('[GlobeWithCities] trying local /geo/cities.geo.json');
-        const res = await fetch('/geo/cities.geo.json', { cache: 'no-store' });
+        const res = await fetch('/geo/cities.geo.json', getDataFetchOptions());
         if (!res.ok) return; // silent if missing
         const ct = (res.headers.get('content-type') || '').toLowerCase();
         if (!/json/.test(ct)) return;
@@ -443,7 +444,7 @@ export default function GlobeWithCities({ focusLatLng = null, autorotate = false
         for (const url of urls) {
           try {
             console.log(`[GlobeWithCities] Trying to fetch ${url}...`);
-            const res = await fetch(url, { cache: 'no-store' });
+            const res = await fetch(url, getDataFetchOptions());
             if (!res.ok) {
               console.log(`[GlobeWithCities] Fetch failed for ${url}: ${res.status}`);
               continue;
@@ -531,62 +532,39 @@ export default function GlobeWithCities({ focusLatLng = null, autorotate = false
       // 클러스터링: 도시 기준 우선 그룹화, 없으면 0.8° 그리드로 그룹화(더 넓게)
       const CLUSTER_GRID_SIZE = 0.8;
       const roundToGrid = (v: number) => Math.round(v / CLUSTER_GRID_SIZE) * CLUSTER_GRID_SIZE;
-      const normalizeCity = (s: unknown) => {
+      const normalizeCity = (d: any) => {
+        const s = d.city || d.location || d.region || '';
         if (typeof s !== 'string') return '';
-        // 쉼표 등으로 분리하고 소문자 정규화
-        const raw = s
-          .toLowerCase()
-          .replace(/[()]/g, '')
-          .split(/[,:]/)
-          .map(t => t.trim())
-          .filter(Boolean);
+        const raw = s.toLowerCase();
 
-        if (!raw.length) return '';
+        // Known major cities override
+        if (raw.includes('london')) return 'london';
+        if (raw.includes('seoul') || raw.includes('서울')) return 'seoul';
+        if (raw.includes('manchester')) return 'manchester';
+        if (raw.includes('liverpool')) return 'liverpool';
+        if (raw.includes('edinburgh')) return 'edinburgh';
+        if (raw.includes('cambridge')) return 'cambridge';
+        if (raw.includes('oxford')) return 'oxford';
+        if (raw.includes('paris')) return 'paris';
+        if (raw.includes('new york')) return 'new york';
 
-        const removeTail = new Set([
-          // 영국/국가/광역 단위들
-          'uk', 'u.k.', 'united kingdom', 'great britain', 'gb', 'england', 'scotland', 'wales', 'northern ireland',
-          // 대한민국/국가들 (최소한만)
-          'south korea', 'korea', 'republic of korea', '대한민국',
-          'united states', 'united states of america', 'usa', 'us', 'u.s.',
-          'canada', 'japan', 'france', 'germany', 'italy', 'spain', 'china', 'australia', 'ireland'
-        ]);
+        // Generic parse: take last significant word block that isn't a country
+        const parts = raw.split(/[,:]/).map((p: string) => p.trim()).filter((p: string) => p && !/\d/.test(p)); // Filter out parts with numbers (postcodes)
+        const stopWords = new Set(['uk', 'united kingdom', 'england', 'scotland', 'wales', 'gb', 'usa', 'united states', 'korea']);
 
-        // 뒤쪽에서부터 국가/지역 토큰 제거
-        const tokens: string[] = [...raw];
-        while (tokens.length && removeTail.has(tokens[tokens.length - 1])) {
-          tokens.pop();
+        while (parts.length && stopWords.has(parts[parts.length - 1])) {
+          parts.pop();
         }
-        if (!tokens.length) return '';
-
-        // 1) 런던 케이스: 토큰 중에 'london'이 있으면 'london'으로 강제
-        const hasLondon = tokens.some(t => /\blondon\b/.test(t));
-        if (hasLondon) return 'london';
-
-        // 2) 서울/기타 몇몇 케이스 보정 (선택적; 이미 서울은 잘 동작하지만 안전망)
-        const seoulIdx = tokens.findIndex(t => /\bseoul\b|서울|서울특별시/.test(t));
-        if (seoulIdx >= 0) return 'seoul';
-
-        // 3) 숫자(우편번호 등) 포함 토큰은 도시 후보에서 제외하고, 남은 것 중 마지막을 사용
-        const noDigits = tokens.filter(t => !/[0-9]/.test(t));
-        let candidate = (noDigits.length ? noDigits : tokens)[(noDigits.length ? noDigits : tokens).length - 1];
-
-        // 4) 접두어 제거 및 우편번호/코드 꼬리 제거
-        candidate = candidate.replace(/^(city of|greater|metropolitan|metropolitan city)\s+/, '');
-        candidate = candidate.replace(/\s+\d.*$/, ''); // 뒤쪽 숫자 시작 부분 제거 (예: "london se1 9tg")
-        candidate = candidate.replace(/\s+/g, ' ').trim();
-        return candidate;
+        if (parts.length) return parts[parts.length - 1];
+        return '';
       };
 
       const clusters: { [key: string]: any[] } = {};
       for (const d of pinData) {
         // region 필드를 우선 사용, 없으면 기존 location 파싱
-        const regionKey = (d as any).region;
-        const cityKey = regionKey || normalizeCity((d as any).city || (d as any).location);
+        const cityKey = normalizeCity(d);
         let key: string;
-        if (regionKey) {
-          key = `region:${regionKey}`;
-        } else if (cityKey) {
+        if (cityKey) {
           key = `city:${cityKey}`;
         } else {
           const gridLon = roundToGrid(d.longitude);
@@ -729,7 +707,7 @@ export default function GlobeWithCities({ focusLatLng = null, autorotate = false
         const countText = String(d.count);
         return Math.max(28, countText.length * 8 + 16);
       };
-      
+
       // 확장 크기 (지역명 + 숫자) 계산 함수
       const getExpandedWidth = (d: any) => {
         const text = d.regionName ? `${d.regionName} ${d.count}` : String(d.count);
@@ -926,12 +904,12 @@ export default function GlobeWithCities({ focusLatLng = null, autorotate = false
         // 클러스터 hover 효과: 확장/축소 애니메이션
         if (d._cluster) {
           console.log(`클러스터 ${d.key} 위치: (${d.px}, ${d.py}), 표시: ${Math.abs(((d.longitude + rotate[0] + 180) % 360) - 180) <= 90}`);
-          
+
           // 크기 계산 함수
           const collapsedW = Math.max(28, String(d.count).length * 8 + 16);
           const expandedText = d.regionName || '';
           const expandedW = Math.max(40, Math.max(expandedText.length, String(d.count).length) * 8 + 20);
-          
+
           // 클러스터 초기 상태 강제 설정 (숫자만 표시, 축소된 크기)
           g.select('.cluster-bg')
             .attr('x', -collapsedW / 2)
@@ -944,10 +922,10 @@ export default function GlobeWithCities({ focusLatLng = null, autorotate = false
           g.select('.cluster-region')
             .style('opacity', 0)
             .text(d.regionName || '');
-          
+
           g.on('mouseover', function () {
             const el = d3.select(this as SVGGElement);
-            
+
             // 배경 확장 애니메이션 (세로로도 확장)
             el.select('.cluster-bg')
               .transition().duration(200).ease(d3.easeCubicOut)
@@ -956,12 +934,12 @@ export default function GlobeWithCities({ focusLatLng = null, autorotate = false
               .attr('height', 36)
               .attr('y', -14)
               .style('filter', 'drop-shadow(0 5px 10px rgba(0,0,0,0.55))');
-            
+
             // 숫자 위로 이동
             el.select('.cluster-count')
               .transition().duration(150).ease(d3.easeCubicOut)
               .attr('dy', '-0.15em');
-            
+
             // 지역명 페이드인
             el.select('.cluster-region')
               .transition().delay(80).duration(150).ease(d3.easeCubicOut)
@@ -969,7 +947,7 @@ export default function GlobeWithCities({ focusLatLng = null, autorotate = false
           })
             .on('mouseout', function () {
               const el = d3.select(this as SVGGElement);
-              
+
               // 배경 축소 애니메이션
               el.select('.cluster-bg')
                 .transition().duration(200).ease(d3.easeCubicOut)
@@ -978,12 +956,12 @@ export default function GlobeWithCities({ focusLatLng = null, autorotate = false
                 .attr('height', 24)
                 .attr('y', -12)
                 .style('filter', 'drop-shadow(0 3px 6px rgba(0,0,0,0.45))');
-              
+
               // 숫자 중앙으로 복원
               el.select('.cluster-count')
                 .transition().duration(150).ease(d3.easeCubicOut)
                 .attr('dy', '0.35em');
-              
+
               // 지역명 페이드아웃
               el.select('.cluster-region')
                 .transition().duration(100)

@@ -1,7 +1,9 @@
 // Simple global concurrency limiter for image loading
+import { shouldLimitNetwork } from './network';
+
 let inflight = 0;
 const waiters: Array<() => void> = [];
-const MAX_CONCURRENT = 4; // tuneable per host
+const MAX_CONCURRENT = shouldLimitNetwork() ? 2 : 4; // tuneable per host
 
 export function acquireSlot(): Promise<void> {
   if (inflight < MAX_CONCURRENT) {

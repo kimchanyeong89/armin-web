@@ -3,6 +3,7 @@ import * as d3 from 'd3';
 import { mesh as topojsonMesh } from 'topojson-client';
 import type { Exhibition } from '../types/Exhibition';
 import { resolveStaticUrl } from '../utils/staticAssets';
+import { getDataFetchOptions } from '../utils/network';
 
 // Minimal D3 orthographic globe with stroke-only borders on white background
 // Props allow focusing a lat/lng and optional auto-rotation
@@ -32,37 +33,37 @@ export default function GlobeD3({ focusLatLng = null, autorotate = false, stroke
   const collapseFinalizedRef = useRef<boolean>(false);
 
   useEffect(() => {
-  const buildTag = 'GlobeD3-no-external-2025-09-05-01';
-  // Clear identifier to verify correct build is loaded in the browser
-  // console.log(`[GlobeD3] build tag: ${buildTag}`);
-  try { (window as any).__GlobeD3BuildTag = buildTag; } catch {}
-  // Debug logging trimmed for performance
-    
-  const container = containerRef.current;
+    const buildTag = 'GlobeD3-no-external-2025-09-05-01';
+    // Clear identifier to verify correct build is loaded in the browser
+    // console.log(`[GlobeD3] build tag: ${buildTag}`);
+    try { (window as any).__GlobeD3BuildTag = buildTag; } catch { }
+    // Debug logging trimmed for performance
+
+    const container = containerRef.current;
     if (!container) return;
 
     // Setup
-  // Interaction sensitivity knobs (tweak to taste)
-  const WHEEL_ZOOM_SENSITIVITY = 0.006; // higher = faster zoom
-  const ROTATE_TO_CURSOR_ALPHA = 0.12; // softer re-centering while zooming (0..1)
-  const ROTATE_MAX_STEP_LON = 4; // deg per event
-  const ROTATE_MAX_STEP_LAT = 2; // deg per event
-  const DRAG_PX_SENS = 0.24; // deg per pixel for drag
-  const PIN_MOVE_DURATION = 260; // ms
-  const LABEL_SLIDE_DURATION = 220; // ms
-  const COLLAPSE_STAGGER = 40; // ms per step (reverse order)
-  // Cluster/grid constants
-  const CLUSTER_GRID_SIZE = 0.8;
-  const roundToGrid = (v: number) => Math.round(v / CLUSTER_GRID_SIZE) * CLUSTER_GRID_SIZE;
-  let width = container.clientWidth || window.innerWidth;
-  let height = container.clientHeight || window.innerHeight;
-  let baseRadius = Math.min(width, height) * 0.38; // matches the screenshot scale
-  let zoomK = 1;
+    // Interaction sensitivity knobs (tweak to taste)
+    const WHEEL_ZOOM_SENSITIVITY = 0.006; // higher = faster zoom
+    const ROTATE_TO_CURSOR_ALPHA = 0.12; // softer re-centering while zooming (0..1)
+    const ROTATE_MAX_STEP_LON = 4; // deg per event
+    const ROTATE_MAX_STEP_LAT = 2; // deg per event
+    const DRAG_PX_SENS = 0.24; // deg per pixel for drag
+    const PIN_MOVE_DURATION = 260; // ms
+    const LABEL_SLIDE_DURATION = 220; // ms
+    const COLLAPSE_STAGGER = 40; // ms per step (reverse order)
+    // Cluster/grid constants
+    const CLUSTER_GRID_SIZE = 0.8;
+    const roundToGrid = (v: number) => Math.round(v / CLUSTER_GRID_SIZE) * CLUSTER_GRID_SIZE;
+    let width = container.clientWidth || window.innerWidth;
+    let height = container.clientHeight || window.innerHeight;
+    let baseRadius = Math.min(width, height) * 0.38; // matches the screenshot scale
+    let zoomK = 1;
 
     // Clear container
     container.innerHTML = '';
 
-  const svg = d3
+    const svg = d3
       .select(container)
       .append('svg')
       .attr('width', width)
@@ -70,19 +71,19 @@ export default function GlobeD3({ focusLatLng = null, autorotate = false, stroke
       .style('display', 'block')
       .style('background', '#fff');
 
-  // Viewport group (kept simple; no transform for center-anchored zoom)
-  const gViewport = svg.append('g').attr('class', 'viewport');
-  // 빈 공간 클릭 시 펼친 클러스터를 역순 애니메이션으로 닫기
-  svg.on('click', () => {
-    const expanded = Array.from(expandedClustersRef.current);
-    if (!expanded.length) return;
-    const key = expanded[0];
-    // 시작: 닫힘 애니메이션 상태로 전환
-    collapseAnimKeyRef.current = key;
-    collapseFinalizedRef.current = false;
-    // 렌더하여 각 핀이 중앙으로 수렴하도록 트리거
-    renderPins();
-  });
+    // Viewport group (kept simple; no transform for center-anchored zoom)
+    const gViewport = svg.append('g').attr('class', 'viewport');
+    // 빈 공간 클릭 시 펼친 클러스터를 역순 애니메이션으로 닫기
+    svg.on('click', () => {
+      const expanded = Array.from(expandedClustersRef.current);
+      if (!expanded.length) return;
+      const key = expanded[0];
+      // 시작: 닫힘 애니메이션 상태로 전환
+      collapseAnimKeyRef.current = key;
+      collapseFinalizedRef.current = false;
+      // 렌더하여 각 핀이 중앙으로 수렴하도록 트리거
+      renderPins();
+    });
 
     const projection = d3.geoOrthographic()
       .translate([width / 2, height / 2])
@@ -90,12 +91,12 @@ export default function GlobeD3({ focusLatLng = null, autorotate = false, stroke
       // 성능 최적화: 정밀도를 대폭 낮춤 (더 적은 segments = 훨씬 빠름)
       .precision(2.0);
 
-  const path = d3.geoPath(projection);
+    const path = d3.geoPath(projection);
 
     // Initialize last rotation after projection is created
     lastRotateRef.current = projection.rotate() as [number, number, number];
 
-  // (removed versor helpers; reverted to simpler drag)
+    // (removed versor helpers; reverted to simpler drag)
 
     const unwrapAngle = (prev: number, next: number) => prev + (((next - prev + 540) % 360) - 180);
     const setRotationContinuous = (next: [number, number, number]) => {
@@ -132,179 +133,179 @@ export default function GlobeD3({ focusLatLng = null, autorotate = false, stroke
       rafRef.current = requestAnimationFrame(step);
     };
 
-  const gCountries = gViewport.append('g').style('pointer-events', 'none');
-  // Interactive country hits (transparent paths for hover/click)
-  const gCountriesHit = gViewport.append('g').attr('class', 'countries-hit').style('pointer-events', 'all');
-  // Selected country highlight
-  const gCountryHighlight = gViewport.append('g').attr('class', 'country-highlight').style('pointer-events', 'none');
-  // Urban/city boundaries layer (restored)
-  const gUrban = gViewport.append('g').style('pointer-events', 'none').style('display', 'none');
-  const gAdmin = gViewport.append('g').style('display', 'none'); // admin (states/provinces) boundaries
-  // Higher-detail atlas layers (TopoJSON)
-  const gAtlasCountries = gViewport.append('g').style('display', 'none').style('pointer-events', 'none');
-  const gAtlasStates = gViewport.append('g').style('display', 'none').style('pointer-events', 'none');
-  // admin/state layers
-  let hasAdminStates = false;
-  let adminStatesLoadAttempted = false;
-  let adminAllFeatures: any[] = [];
-  let hasAtlasCountries = false;
-  let atlasCountriesLoadAttempted = false;
-  // urban/city boundaries state
-  let hasUrbanAreas = false;
-  let urbanAllFeatures: any[] = [];
-  // country interaction state
-  let selectedCountry: any | null = null;
-  
-  // 극한 성능 최적화: path 업데이트 공통 함수
-  let lightPathMode = false;
-  const updateAllPaths = () => {
-    // In light mode, update only essential paths for interaction responsiveness
-    if (lightPathMode) {
+    const gCountries = gViewport.append('g').style('pointer-events', 'none');
+    // Interactive country hits (transparent paths for hover/click)
+    const gCountriesHit = gViewport.append('g').attr('class', 'countries-hit').style('pointer-events', 'all');
+    // Selected country highlight
+    const gCountryHighlight = gViewport.append('g').attr('class', 'country-highlight').style('pointer-events', 'none');
+    // Urban/city boundaries layer (restored)
+    const gUrban = gViewport.append('g').style('pointer-events', 'none').style('display', 'none');
+    const gAdmin = gViewport.append('g').style('display', 'none'); // admin (states/provinces) boundaries
+    // Higher-detail atlas layers (TopoJSON)
+    const gAtlasCountries = gViewport.append('g').style('display', 'none').style('pointer-events', 'none');
+    const gAtlasStates = gViewport.append('g').style('display', 'none').style('pointer-events', 'none');
+    // admin/state layers
+    let hasAdminStates = false;
+    let adminStatesLoadAttempted = false;
+    let adminAllFeatures: any[] = [];
+    let hasAtlasCountries = false;
+    let atlasCountriesLoadAttempted = false;
+    // urban/city boundaries state
+    let hasUrbanAreas = false;
+    let urbanAllFeatures: any[] = [];
+    // country interaction state
+    let selectedCountry: any | null = null;
+
+    // 극한 성능 최적화: path 업데이트 공통 함수
+    let lightPathMode = false;
+    const updateAllPaths = () => {
+      // In light mode, update only essential paths for interaction responsiveness
+      if (lightPathMode) {
+        gCountries.selectAll('path').attr('d', path as any);
+        gCountryHighlight.selectAll('path').attr('d', path as any);
+        gAtlasCountries.selectAll('path').attr('d', path as any);
+        // Skip heavy layers (hits/admin/urban) during continuous interactions
+        return;
+      }
       gCountries.selectAll('path').attr('d', path as any);
+      gCountriesHit.selectAll('path').attr('d', path as any);
       gCountryHighlight.selectAll('path').attr('d', path as any);
+      gUrban.selectAll('path').attr('d', path as any);
+      gAdmin.selectAll('path').attr('d', path as any);
       gAtlasCountries.selectAll('path').attr('d', path as any);
-      // Skip heavy layers (hits/admin/urban) during continuous interactions
-      return;
-    }
-    gCountries.selectAll('path').attr('d', path as any);
-    gCountriesHit.selectAll('path').attr('d', path as any);
-    gCountryHighlight.selectAll('path').attr('d', path as any);
-    gUrban.selectAll('path').attr('d', path as any);
-    gAdmin.selectAll('path').attr('d', path as any);
-    gAtlasCountries.selectAll('path').attr('d', path as any);
-    gAtlasStates.selectAll('path').attr('d', path as any);
-  };
+      gAtlasStates.selectAll('path').attr('d', path as any);
+    };
 
-  // 극한 성능 최적화: requestAnimationFrame 기반 렌더링
-  let animationFrameId: number | null = null;
-  let needsPathUpdate = false;
-  let needsPinUpdate = false;
-  let isUpdatingPaths = false;
-  let isRenderingPins = false;
-  // Throttle pin rendering to limit work during continuous interactions
-  const PIN_UPDATE_MIN_INTERVAL = 50; // ms
-  let lastPinUpdateTs = 0;
-  
-  const scheduleRender = () => {
-    if (animationFrameId) return; // 이미 스케줄됨
-    
-    animationFrameId = requestAnimationFrame(() => {
-      if (needsPathUpdate && !isUpdatingPaths) {
-        isUpdatingPaths = true;
-        updateAllPaths();
-        needsPathUpdate = false;
-        isUpdatingPaths = false;
-      }
-      
-      if (needsPinUpdate && !isRenderingPins) {
-        const now = performance.now();
-        if (now - lastPinUpdateTs >= PIN_UPDATE_MIN_INTERVAL) {
-          isRenderingPins = true;
-          renderPins();
-          needsPinUpdate = false;
-          isRenderingPins = false;
-          lastPinUpdateTs = now;
+    // 극한 성능 최적화: requestAnimationFrame 기반 렌더링
+    let animationFrameId: number | null = null;
+    let needsPathUpdate = false;
+    let needsPinUpdate = false;
+    let isUpdatingPaths = false;
+    let isRenderingPins = false;
+    // Throttle pin rendering to limit work during continuous interactions
+    const PIN_UPDATE_MIN_INTERVAL = 50; // ms
+    let lastPinUpdateTs = 0;
+
+    const scheduleRender = () => {
+      if (animationFrameId) return; // 이미 스케줄됨
+
+      animationFrameId = requestAnimationFrame(() => {
+        if (needsPathUpdate && !isUpdatingPaths) {
+          isUpdatingPaths = true;
+          updateAllPaths();
+          needsPathUpdate = false;
+          isUpdatingPaths = false;
         }
-      }
-      
-      animationFrameId = null;
-      // If work remains (e.g., throttled), schedule next frame
-      if (needsPathUpdate || needsPinUpdate) {
-        scheduleRender();
-      }
-    });
-  };
-  
-  const requestPathUpdate = () => {
-    needsPathUpdate = true;
-    scheduleRender();
-  };
-  
-  const requestPinUpdate = () => {
-    needsPinUpdate = true;
-    scheduleRender();
-  };
 
-  // --- Precompute clusters once per exhibitions set for faster renders ---
-  const normalizeCity = (s: unknown) => {
-    if (typeof s !== 'string') return '';
-    const raw = s
-      .toLowerCase()
-      .replace(/[()]/g, '')
-      .split(/[,:]/)
-      .map(t => t.trim())
-      .filter(Boolean);
-    if (!raw.length) return '';
-    const removeTail = new Set([
-      'uk', 'u.k.', 'united kingdom', 'great britain', 'gb', 'england', 'scotland', 'wales', 'northern ireland',
-      'south korea', 'korea', 'republic of korea', '대한민국',
-      'united states', 'united states of america', 'usa', 'us', 'u.s.',
-      'canada', 'japan', 'france', 'germany', 'italy', 'spain', 'china', 'australia', 'ireland'
-    ]);
-    const tokens: string[] = [...raw];
-    while (tokens.length && removeTail.has(tokens[tokens.length - 1])) tokens.pop();
-    if (!tokens.length) return '';
-    if (tokens.some(t => /\blondon\b/.test(t))) return 'london';
-    const seoulIdx = tokens.findIndex(t => /\bseoul\b|서울|서울특별시/.test(t));
-    if (seoulIdx >= 0) return 'seoul';
-    const noDigits = tokens.filter(t => !/[0-9]/.test(t));
-    let candidate = (noDigits.length ? noDigits : tokens)[(noDigits.length ? noDigits : tokens).length - 1];
-    candidate = candidate.replace(/^(city of|greater|metropolitan|metropolitan city)\s+/, '');
-    candidate = candidate.replace(/\s+\d.*$/, '');
-    candidate = candidate.replace(/\s+/g, ' ').trim();
-    return candidate;
-  };
+        if (needsPinUpdate && !isRenderingPins) {
+          const now = performance.now();
+          if (now - lastPinUpdateTs >= PIN_UPDATE_MIN_INTERVAL) {
+            isRenderingPins = true;
+            renderPins();
+            needsPinUpdate = false;
+            isRenderingPins = false;
+            lastPinUpdateTs = now;
+          }
+        }
 
-  type ClusterInfo = {
-    key: string;
-    items: Exhibition[];
-    centerLon: number;
-    centerLat: number;
-    sortedByName: Exhibition[];
-  };
-  const clustersList: ClusterInfo[] = (() => {
-    const map: Record<string, Exhibition[]> = {};
-    for (const d of exhibitions) {
-      const cityKey = normalizeCity((d as any).city || (d as any).location);
-      let key: string;
-      if (cityKey) key = `city:${cityKey}`;
-      else {
-        const gridLon = roundToGrid(d.longitude);
-        const gridLat = roundToGrid(d.latitude);
-        key = `grid:${gridLon},${gridLat}`;
+        animationFrameId = null;
+        // If work remains (e.g., throttled), schedule next frame
+        if (needsPathUpdate || needsPinUpdate) {
+          scheduleRender();
+        }
+      });
+    };
+
+    const requestPathUpdate = () => {
+      needsPathUpdate = true;
+      scheduleRender();
+    };
+
+    const requestPinUpdate = () => {
+      needsPinUpdate = true;
+      scheduleRender();
+    };
+
+    // --- Precompute clusters once per exhibitions set for faster renders ---
+    const normalizeCity = (s: unknown) => {
+      if (typeof s !== 'string') return '';
+      const raw = s
+        .toLowerCase()
+        .replace(/[()]/g, '')
+        .split(/[,:]/)
+        .map(t => t.trim())
+        .filter(Boolean);
+      if (!raw.length) return '';
+      const removeTail = new Set([
+        'uk', 'u.k.', 'united kingdom', 'great britain', 'gb', 'england', 'scotland', 'wales', 'northern ireland',
+        'south korea', 'korea', 'republic of korea', '대한민국',
+        'united states', 'united states of america', 'usa', 'us', 'u.s.',
+        'canada', 'japan', 'france', 'germany', 'italy', 'spain', 'china', 'australia', 'ireland'
+      ]);
+      const tokens: string[] = [...raw];
+      while (tokens.length && removeTail.has(tokens[tokens.length - 1])) tokens.pop();
+      if (!tokens.length) return '';
+      if (tokens.some(t => /\blondon\b/.test(t))) return 'london';
+      const seoulIdx = tokens.findIndex(t => /\bseoul\b|서울|서울특별시/.test(t));
+      if (seoulIdx >= 0) return 'seoul';
+      const noDigits = tokens.filter(t => !/[0-9]/.test(t));
+      let candidate = (noDigits.length ? noDigits : tokens)[(noDigits.length ? noDigits : tokens).length - 1];
+      candidate = candidate.replace(/^(city of|greater|metropolitan|metropolitan city)\s+/, '');
+      candidate = candidate.replace(/\s+\d.*$/, '');
+      candidate = candidate.replace(/\s+/g, ' ').trim();
+      return candidate;
+    };
+
+    type ClusterInfo = {
+      key: string;
+      items: Exhibition[];
+      centerLon: number;
+      centerLat: number;
+      sortedByName: Exhibition[];
+    };
+    const clustersList: ClusterInfo[] = (() => {
+      const map: Record<string, Exhibition[]> = {};
+      for (const d of exhibitions) {
+        const cityKey = normalizeCity((d as any).city || (d as any).location);
+        let key: string;
+        if (cityKey) key = `city:${cityKey}`;
+        else {
+          const gridLon = roundToGrid(d.longitude);
+          const gridLat = roundToGrid(d.latitude);
+          key = `grid:${gridLon},${gridLat}`;
+        }
+        (map[key] ||= []).push(d);
       }
-      (map[key] ||= []).push(d);
-    }
-    return Object.entries(map).map(([key, items]) => ({
-      key,
-      items,
-      centerLon: d3.mean(items as any, (d: any) => d.longitude) as number,
-      centerLat: d3.mean(items as any, (d: any) => d.latitude) as number,
-      sortedByName: [...items].sort((a: any, b: any) => String(a.name || a.title).localeCompare(String(b.name || b.title)))
-    }));
-  })();
+      return Object.entries(map).map(([key, items]) => ({
+        key,
+        items,
+        centerLon: d3.mean(items as any, (d: any) => d.longitude) as number,
+        centerLat: d3.mean(items as any, (d: any) => d.latitude) as number,
+        sortedByName: [...items].sort((a: any, b: any) => String(a.name || a.title).localeCompare(String(b.name || b.title)))
+      }));
+    })();
 
-  // Below this zoom, city-level markers are shown; separate threshold not used anymore
-  // 핀 그룹을 가장 먼저 생성하여 다른 요소들 위에 표시되도록 함
-  const gPins = gViewport.append('g').style('pointer-events', 'all');
+    // Below this zoom, city-level markers are shown; separate threshold not used anymore
+    // 핀 그룹을 가장 먼저 생성하여 다른 요소들 위에 표시되도록 함
+    const gPins = gViewport.append('g').style('pointer-events', 'all');
 
     // Centralized layer visibility (always prefer most detailed layers available, independent of zoom)
-  const updateLayerVisibility = () => {
+    const updateLayerVisibility = () => {
       // prefer higher-res atlas data when available
 
       // Always prefer high-resolution countries data
-  if (hasAtlasCountries) {
+      if (hasAtlasCountries) {
         gAtlasCountries.style('display', 'block');
         gCountries.style('display', 'none');
       } else {
         gAtlasCountries.style('display', 'none');
         gCountries.style('display', 'block');
       }
-  // Show urban boundaries only when a country is selected and data is available
-  gUrban.style('display', (hasUrbanAreas && selectedCountry) ? 'block' : 'none');
-  // Show admin1 states/provinces only when a country is selected and data is available
-  gAdmin.style('display', (hasAdminStates && selectedCountry) ? 'block' : 'none');
-  gAtlasStates.style('display', 'none');
+      // Show urban boundaries only when a country is selected and data is available
+      gUrban.style('display', (hasUrbanAreas && selectedCountry) ? 'block' : 'none');
+      // Show admin1 states/provinces only when a country is selected and data is available
+      gAdmin.style('display', (hasAdminStates && selectedCountry) ? 'block' : 'none');
+      gAtlasStates.style('display', 'none');
 
       // 도시 관련 레이어들은 모두 제거됨 (도시 경계 표시 기능 제거)
     };
@@ -320,26 +321,26 @@ export default function GlobeD3({ focusLatLng = null, autorotate = false, stroke
         }
         return origFetch(input as any, init);
       };
-    } catch {}
+    } catch { }
 
 
-  // Load countries from local static GeoJSON to draw borders
-  // Helper: try multiple URLs until one succeeds (kept for potential future use)
-  // const fetchJsonWithFallback = async (urls: string[]) => {
-  //   for (const url of urls) {
-  //     try {
-  //       const res = await fetch(url);
-  //       if (!res.ok) continue;
-  //       return await res.json();
-  //     } catch {
-  //       // try next
-  //     }
-  //   }
-  //   throw new Error(`All sources failed: ${urls.join(' | ')}`);
-  // };
+    // Load countries from local static GeoJSON to draw borders
+    // Helper: try multiple URLs until one succeeds (kept for potential future use)
+    // const fetchJsonWithFallback = async (urls: string[]) => {
+    //   for (const url of urls) {
+    //     try {
+    //       const res = await fetch(url);
+    //       if (!res.ok) continue;
+    //       return await res.json();
+    //     } catch {
+    //       // try next
+    //     }
+    //   }
+    //   throw new Error(`All sources failed: ${urls.join(' | ')}`);
+    // };
 
-  // Load high-resolution countries data (same as OpenStreetMapComponent)
-  (async () => {
+    // Load high-resolution countries data (same as OpenStreetMapComponent)
+    (async () => {
       try {
         const res = await fetch('/geodata/countries-50m.json');
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
@@ -369,17 +370,17 @@ export default function GlobeD3({ focusLatLng = null, autorotate = false, stroke
           .style('fill', 'rgba(0,0,0,0)')
           .style('stroke', 'none')
           .style('pointer-events', 'all')
-          .each(function(d: any){
+          .each(function (d: any) {
             const sel = d3.select(this as SVGPathElement);
             sel.selectAll('title').remove();
             sel.append('title').text(d.properties?.name || d.properties?.ADMIN || '');
           })
-          .on('mouseover', function(){
+          .on('mouseover', function () {
             d3.select(this as SVGPathElement)
               .style('stroke', '#111')
               .style('stroke-width', '0.6px');
           })
-          .on('mouseout', function(){
+          .on('mouseout', function () {
             d3.select(this as SVGPathElement)
               .style('stroke', 'none')
               .style('stroke-width', null);
@@ -430,8 +431,8 @@ export default function GlobeD3({ focusLatLng = null, autorotate = false, stroke
       }
     })();
 
-  // Lazy loaders: only fetch when threshold is crossed
-  // helper removed (unused)
+    // Lazy loaders: only fetch when threshold is crossed
+    // helper removed (unused)
 
     // Urban areas: adopt data published by D3GeoGlobeMap (no direct fetch here)
     const adoptUrbanAreasFromGlobal = () => {
@@ -514,7 +515,7 @@ export default function GlobeD3({ focusLatLng = null, autorotate = false, stroke
       requestPathUpdate();
     };
 
-  const loadAtlasCountriesIfNeeded = async () => {
+    const loadAtlasCountriesIfNeeded = async () => {
       if (atlasCountriesLoadAttempted || hasAtlasCountries) return;
       atlasCountriesLoadAttempted = true;
       try {
@@ -522,11 +523,11 @@ export default function GlobeD3({ focusLatLng = null, autorotate = false, stroke
         let json: any | null = null;
         for (const url of urls) {
           try {
-            const res = await fetch(url, { cache: 'no-store' });
+            const res = await fetch(url, getDataFetchOptions());
             if (!res.ok) continue;
             json = await res.json();
             if (json) break;
-          } catch {}
+          } catch { }
         }
         if (!json) return;
         // Consolidate using mesh: coastline + borders as 1-2 paths
@@ -557,9 +558,9 @@ export default function GlobeD3({ focusLatLng = null, autorotate = false, stroke
           .style('stroke-width', '0.3px')
           .style('vector-effect', 'non-scaling-stroke');
         hasAtlasCountries = true;
-    // refresh visibility and paths
-  updateLayerVisibility();
-  requestPathUpdate();
+        // refresh visibility and paths
+        updateLayerVisibility();
+        requestPathUpdate();
       } catch {
         // ignore
       }
@@ -570,7 +571,7 @@ export default function GlobeD3({ focusLatLng = null, autorotate = false, stroke
       if (adminStatesLoadAttempted || hasAdminStates) return;
       adminStatesLoadAttempted = true;
       try {
-        const res = await fetch(resolveStaticUrl('geodata/admin1-states-10m.json'), { cache: 'no-store' });
+        const res = await fetch(resolveStaticUrl('geodata/admin1-states-10m.json'), getDataFetchOptions());
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const fc = await res.json();
         adminAllFeatures = (fc.features || []);
@@ -582,7 +583,7 @@ export default function GlobeD3({ focusLatLng = null, autorotate = false, stroke
       }
     };
 
-  // heavy optional loaders (admin/states) removed for performance
+    // heavy optional loaders (admin/states) removed for performance
 
     // 도시 경계 로딩 기능 제거됨
 
@@ -600,18 +601,18 @@ export default function GlobeD3({ focusLatLng = null, autorotate = false, stroke
 
     // 성능 최적화: 간단한 렌더링 스킵 조건
     let lastRotation = '';
-    
+
     // Pins: geographic-grid clustering with stable centroid spiderfy (precomputed clusters)
     const renderPins = () => {
-  const rotate = projection.rotate();
+      const rotate = projection.rotate();
       const rotationKey = `${rotate[0].toFixed(1)},${rotate[1].toFixed(1)},${zoomK.toFixed(2)}`;
       if (lastRotation === rotationKey) return;
       lastRotation = rotationKey;
 
       // Build nodes from precomputed clusters
       const nodes: any[] = [];
-  const MAX_EXPANDED_ITEMS = 40; // cap expanded pins per cluster
-  for (const c of clustersList) {
+      const MAX_EXPANDED_ITEMS = 40; // cap expanded pins per cluster
+      for (const c of clustersList) {
         const key = c.key;
         const items = c.items as any[];
         if (items.length === 1) {
@@ -672,13 +673,13 @@ export default function GlobeD3({ focusLatLng = null, autorotate = false, stroke
 
       const sel = gPins.selectAll('g.pin').data(nodes, (d: any) => (d._cluster ? d.key : d.id));
       sel.exit().remove();
-  const enter = sel.enter().append('g').attr('class', 'pin').style('cursor', 'pointer');
+      const enter = sel.enter().append('g').attr('class', 'pin').style('cursor', 'pointer');
 
       // 클러스터 버튼 렌더링 (검정 네모 + 흰색 숫자)
-  const enterCluster = enter.filter((d: any) => d._cluster);
+      const enterCluster = enter.filter((d: any) => d._cluster);
 
       // 검정 네모(둥근 모서리) 배경 (크기 더 소형화)
-  enterCluster.append('rect')
+      enterCluster.append('rect')
         .attr('class', 'cluster-bg')
         .attr('x', (d: any) => {
           const size = Math.max(26, 18 + Math.log2(d.count) * 5);
@@ -694,7 +695,7 @@ export default function GlobeD3({ focusLatLng = null, autorotate = false, stroke
         .attr('ry', 10)
         .attr('fill', '#111827')
         .attr('stroke', '#E5E7EB')
-  .attr('stroke-width', 1.5)
+        .attr('stroke-width', 1.5)
         .style('cursor', 'pointer');
 
       // 클러스터 개수 텍스트 (흰색, 굵게)
@@ -702,7 +703,7 @@ export default function GlobeD3({ focusLatLng = null, autorotate = false, stroke
         .attr('class', 'cluster-count')
         .attr('text-anchor', 'middle')
         .attr('dy', '0.35em')
-  .attr('font-size', (d: any) => Math.max(11, 10 + Math.log2(d.count) * 1.4))
+        .attr('font-size', (d: any) => Math.max(11, 10 + Math.log2(d.count) * 1.4))
         .attr('font-weight', 'bold')
         .attr('fill', '#ffffff')
         .style('text-shadow', '1px 1px 2px rgba(0,0,0,0.6)')
@@ -712,7 +713,7 @@ export default function GlobeD3({ focusLatLng = null, autorotate = false, stroke
       // 클릭 히트영역 확장 (투명 원)
       enterCluster.append('circle')
         .attr('class', 'hit')
-  .attr('r', (d: any) => Math.max(16, 12 + Math.log2(d.count) * 4))
+        .attr('r', (d: any) => Math.max(16, 12 + Math.log2(d.count) * 4))
         .attr('fill', 'transparent')
         .attr('stroke', 'none')
         .style('pointer-events', 'all');
@@ -745,14 +746,14 @@ export default function GlobeD3({ focusLatLng = null, autorotate = false, stroke
         .style('font-weight', 'bold')
         .style('fill', '#333')
         .style('stroke', '#fff')
-  .style('stroke-width', 2)
+        .style('stroke-width', 2)
         .style('paint-order', 'stroke')
         .text((d: any) => {
           const t = (d.title ?? d.name ?? '').toString();
           return t.toUpperCase();
         });
 
-  // 클릭 이벤트
+      // 클릭 이벤트
       const merged = enter.merge(sel as any);
       merged.on('click', (evt: any, d: any) => {
         evt?.stopPropagation?.();
@@ -790,11 +791,11 @@ export default function GlobeD3({ focusLatLng = null, autorotate = false, stroke
 
         const isCollapsing = (d as any)._collapsing;
         const collapseOrder = (d as any)._collapseOrder ?? 0;
-  const ease = d3.easeCubicOut;
-  // scale durations by node count to reduce workload when many pins visible
-  const visiblePins = nodes.length;
-  const PIN_DUR = visiblePins > 200 ? 120 : visiblePins > 100 ? 180 : PIN_MOVE_DURATION;
-  const LABEL_DUR = visiblePins > 200 ? 100 : visiblePins > 100 ? 160 : LABEL_SLIDE_DURATION;
+        const ease = d3.easeCubicOut;
+        // scale durations by node count to reduce workload when many pins visible
+        const visiblePins = nodes.length;
+        const PIN_DUR = visiblePins > 200 ? 120 : visiblePins > 100 ? 180 : PIN_MOVE_DURATION;
+        const LABEL_DUR = visiblePins > 200 ? 100 : visiblePins > 100 ? 160 : LABEL_SLIDE_DURATION;
         // 엔터 애니메이션(펼침): 핀은 중앙에서 목표 위치로 이동
         if ((d as any)._originX != null && (d as any)._originY != null) {
           g.attr('transform', `translate(${(d as any)._originX},${(d as any)._originY})`);
@@ -867,9 +868,9 @@ export default function GlobeD3({ focusLatLng = null, autorotate = false, stroke
             });
         }
       });
-      
-  // 애니메이션 키는 한 번 사용 후 초기화 (줌/드래그에서 재애니메이션 방지)
-  animateExpandKeyRef.current = null;
+
+      // 애니메이션 키는 한 번 사용 후 초기화 (줌/드래그에서 재애니메이션 방지)
+      animateExpandKeyRef.current = null;
     };
 
 
@@ -890,11 +891,11 @@ export default function GlobeD3({ focusLatLng = null, autorotate = false, stroke
       const animate = (ts: number) => {
         const t = Math.min(1, (ts - t0) / duration);
         const e = ease(t);
-  const lambda = startRot[0] + dLambda * e;
-  const phi = startRot[1] + dPhi * e;
-  setRotationContinuous([lambda, phi, 0]);
-  requestPathUpdate();
-  requestPinUpdate();
+        const lambda = startRot[0] + dLambda * e;
+        const phi = startRot[1] + dPhi * e;
+        setRotationContinuous([lambda, phi, 0]);
+        requestPathUpdate();
+        requestPinUpdate();
         if (t < 1) {
           focusAnimRef.current = requestAnimationFrame(animate);
         } else {
@@ -907,28 +908,28 @@ export default function GlobeD3({ focusLatLng = null, autorotate = false, stroke
     };
 
     // Autorotate loop
-  function step(_ts: number) {
+    function step(_ts: number) {
       if (!spinningRef.current) return;
       const cur = projection.rotate() as [number, number, number];
       const speedDegPerSec = 6; // gentle spin
       // Use ts to derive delta; requestAnimationFrame ~60fps -> ~16ms per frame
       // We can't get previous ts cleanly here without a ref; approximate fixed-step
-  const lambda = cur[0] + (speedDegPerSec / 60);
-  setRotationContinuous([lambda, cur[1], 0]);
-  requestPathUpdate();
-  requestPinUpdate();
+      const lambda = cur[0] + (speedDegPerSec / 60);
+      setRotationContinuous([lambda, cur[1], 0]);
+      requestPathUpdate();
+      requestPinUpdate();
       rafRef.current = requestAnimationFrame(step);
     }
 
-  // Drag to rotate (pixel-delta with continuous angles)
-  let dragPrevPos: [number, number] | null = null;
-  let dragStartPos: [number, number] | null = null;
-  let dragActive = false; // becomes true after threshold is exceeded
+    // Drag to rotate (pixel-delta with continuous angles)
+    let dragPrevPos: [number, number] | null = null;
+    let dragStartPos: [number, number] | null = null;
+    let dragActive = false; // becomes true after threshold is exceeded
     const onDragStart = (event: any) => {
       dragPrevPos = [event.x, event.y];
       dragStartPos = [event.x, event.y];
       dragActive = false;
-  // Do not stop spin yet; wait until user actually drags
+      // Do not stop spin yet; wait until user actually drags
     };
     const onDragged = (event: any) => {
       if (!dragPrevPos) return;
@@ -946,35 +947,35 @@ export default function GlobeD3({ focusLatLng = null, autorotate = false, stroke
         lightPathMode = true; // enable lightweight path updates while dragging
       }
       if (!dragActive) return;
-  // Pixel delta rotation with per-step clamp and pole folding via setRotationContinuous
-  const dx = (event.x - dragPrevPos[0]);
-  const dy = (event.y - dragPrevPos[1]);
-  const STEP_MAX_LON = 24; // deg per event
-  const STEP_MAX_LAT = 16; // deg per event
-  const dLon = Math.max(-STEP_MAX_LON, Math.min(STEP_MAX_LON, dx * DRAG_PX_SENS));
-  const dLat = Math.max(-STEP_MAX_LAT, Math.min(STEP_MAX_LAT, -dy * DRAG_PX_SENS));
-  const prev = lastRotateRef.current;
-  const nextLambda = prev[0] + dLon;
-  const nextPhi = prev[1] + dLat; // folding handled in setRotationContinuous
-  setRotationContinuous([nextLambda, nextPhi, 0]);
-  dragPrevPos = [event.x, event.y];
-  requestPathUpdate();
-  requestPinUpdate();
+      // Pixel delta rotation with per-step clamp and pole folding via setRotationContinuous
+      const dx = (event.x - dragPrevPos[0]);
+      const dy = (event.y - dragPrevPos[1]);
+      const STEP_MAX_LON = 24; // deg per event
+      const STEP_MAX_LAT = 16; // deg per event
+      const dLon = Math.max(-STEP_MAX_LON, Math.min(STEP_MAX_LON, dx * DRAG_PX_SENS));
+      const dLat = Math.max(-STEP_MAX_LAT, Math.min(STEP_MAX_LAT, -dy * DRAG_PX_SENS));
+      const prev = lastRotateRef.current;
+      const nextLambda = prev[0] + dLon;
+      const nextPhi = prev[1] + dLat; // folding handled in setRotationContinuous
+      setRotationContinuous([nextLambda, nextPhi, 0]);
+      dragPrevPos = [event.x, event.y];
+      requestPathUpdate();
+      requestPinUpdate();
     };
     const onDragEnd = () => {
-  const wasActive = dragActive;
-  dragPrevPos = null;
-  dragStartPos = null;
-  dragActive = false;
-  // restore full path updates and refresh once
-  if (lightPathMode) {
-    lightPathMode = false;
-    requestPathUpdate();
-  }
-  if (wasActive) {
-    // resume spin if enabled
-    startSpin();
-  }
+      const wasActive = dragActive;
+      dragPrevPos = null;
+      dragStartPos = null;
+      dragActive = false;
+      // restore full path updates and refresh once
+      if (lightPathMode) {
+        lightPathMode = false;
+        requestPathUpdate();
+      }
+      if (wasActive) {
+        // resume spin if enabled
+        startSpin();
+      }
       renderPins();
     };
     svg.call(d3.drag<SVGSVGElement, unknown>()
@@ -999,8 +1000,8 @@ export default function GlobeD3({ focusLatLng = null, autorotate = false, stroke
       .on('end', onDragEnd) as any);
 
     // Zoom (wheel/pinch): scale the projection, keep center fixed (axis stable)
-  // thresholds declared above near group creation
-  // no additional zoom gesture state needed for center-anchored zoom
+    // thresholds declared above near group creation
+    // no additional zoom gesture state needed for center-anchored zoom
 
     // Track the geographic point under the cursor at the start of a zoom gesture
     let zoomAnchorLonLat: [number, number] | null = null;
@@ -1027,7 +1028,7 @@ export default function GlobeD3({ focusLatLng = null, autorotate = false, stroke
 
     const onZoom = (event: any) => {
       const k = event.transform.k;
-  // 확대 제스처 중에는 시작 시점 기준의 앵커 지점을 사용 (지나친 회전 방지)
+      // 확대 제스처 중에는 시작 시점 기준의 앵커 지점을 사용 (지나친 회전 방지)
 
       // 스케일 업데이트
       zoomK = k;
@@ -1046,7 +1047,7 @@ export default function GlobeD3({ focusLatLng = null, autorotate = false, stroke
         dPhi = Math.max(-ROTATE_MAX_STEP_LAT, Math.min(ROTATE_MAX_STEP_LAT, dPhi * ROTATE_TO_CURSOR_ALPHA));
         const newLambda = cur[0] + dLambda;
         const newPhi = Math.max(-80, Math.min(80, cur[1] + dPhi)); // 과도한 극 회전 방지
-    setRotationContinuous([newLambda, newPhi, 0]);
+        setRotationContinuous([newLambda, newPhi, 0]);
       }
 
       // Viewport는 고정(중심 기준), 극한 성능 최적화된 렌더링
@@ -1076,9 +1077,9 @@ export default function GlobeD3({ focusLatLng = null, autorotate = false, stroke
         const dy = event.deltaMode === 1 ? event.deltaY * 16 : event.deltaMode ? event.deltaY * 120 : event.deltaY;
         return -WHEEL_ZOOM_SENSITIVITY * dy; // moderated zoom per wheel step
       })
-  .on('start', onZoomStart)
-  .on('zoom', onZoom)
-  .on('end', onZoomEnd);
+      .on('start', onZoomStart)
+      .on('zoom', onZoom)
+      .on('end', onZoomEnd);
 
     // Compute dynamic min/max zoom and apply; min zoom fits the globe within the viewport
     const applyZoomExtents = () => {
@@ -1089,29 +1090,29 @@ export default function GlobeD3({ focusLatLng = null, autorotate = false, stroke
       const clamped = Math.max(minK, Math.min(maxK, zoomK));
       if (clamped !== zoomK) {
         zoomK = clamped;
-  projection.scale(baseRadius * zoomK);
-  requestPathUpdate();
+        projection.scale(baseRadius * zoomK);
+        requestPathUpdate();
       }
-    // Sync zoom's internal k without applying pan (identity translate)
-  (svg as any).call((zoom as any).transform, d3.zoomIdentity.scale(zoomK));
-  // Visibility doesn't depend on zoom anymore
-  updateLayerVisibility();
+      // Sync zoom's internal k without applying pan (identity translate)
+      (svg as any).call((zoom as any).transform, d3.zoomIdentity.scale(zoomK));
+      // Visibility doesn't depend on zoom anymore
+      updateLayerVisibility();
     };
 
     svg.call(zoom as any);
     applyZoomExtents();
 
-  // Eagerly load optional layers; update visibility as they arrive
-  loadAtlasCountriesIfNeeded();
-  loadAdmin1StatesIfNeeded();
-  adoptUrbanAreasFromGlobal();
-  const onUrbanLoaded = () => { adoptUrbanAreasFromGlobal(); };
-  window.addEventListener('urban-areas:loaded', onUrbanLoaded as any);
+    // Eagerly load optional layers; update visibility as they arrive
+    loadAtlasCountriesIfNeeded();
+    loadAdmin1StatesIfNeeded();
+    adoptUrbanAreasFromGlobal();
+    const onUrbanLoaded = () => { adoptUrbanAreasFromGlobal(); };
+    window.addEventListener('urban-areas:loaded', onUrbanLoaded as any);
 
-  updateLayerVisibility();
+    updateLayerVisibility();
 
-  // Initial pin render and focus/autospin
-  requestPinUpdate();
+    // Initial pin render and focus/autospin
+    requestPinUpdate();
     if (focusLatLng) {
       rotateTo(focusLatLng.lng, focusLatLng.lat);
     }
@@ -1127,11 +1128,11 @@ export default function GlobeD3({ focusLatLng = null, autorotate = false, stroke
       svg.attr('width', width).attr('height', height);
       // keep projection centered and scaled by zoomK
       projection.translate([width / 2, height / 2]).scale(baseRadius * zoomK);
-  requestPathUpdate(); // 배치 업데이트
-  requestPinUpdate();
+      requestPathUpdate(); // 배치 업데이트
+      requestPinUpdate();
       applyZoomExtents();
     };
-  window.addEventListener('resize', onResize);
+    window.addEventListener('resize', onResize);
 
     return () => {
       window.removeEventListener('resize', onResize);

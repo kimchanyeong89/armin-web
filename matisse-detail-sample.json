@@ -1,0 +1,1668 @@
+{
+  "@context": "/api/v2/contexts/Notice",
+  "@id": "/api/v2/notices/696505b2dcda770c5709adc8",
+  "@type": "Notice",
+  "id": "696505b2dcda770c5709adc8",
+  "nativeId": "6b429423-104a-4240-9066-01c66540d83e",
+  "profile": "matisse_opac2026",
+  "client": "nice01",
+  "slug": "63-4-28-la-persane-6b429423-104a-4240-9066-01c66540d83e",
+  "views": 0,
+  "facets": [
+    {
+      "id": 1140116,
+      "parentId": 1140115,
+      "rootId": 1140115,
+      "content": "MATISSE Henri"
+    },
+    {
+      "id": 1140115,
+      "parentId": null,
+      "rootId": 1140115,
+      "content": "Auteur"
+    },
+    {
+      "id": 1140129,
+      "parentId": 1140117,
+      "rootId": 1140117,
+      "content": "1929"
+    },
+    {
+      "id": 1140117,
+      "parentId": null,
+      "rootId": 1140117,
+      "content": "Epoque, datation"
+    },
+    {
+      "id": 1140130,
+      "parentId": 1140127,
+      "rootId": 1140127,
+      "content": "Arts graphiques"
+    },
+    {
+      "id": 1140127,
+      "parentId": null,
+      "rootId": 1140127,
+      "content": "Domaine"
+    }
+  ],
+  "noticeCollections": [],
+  "isEnabled": true,
+  "isArchived": true,
+  "createdAt": "2026-01-12T14:31:14+00:00",
+  "updatedAt": "2026-01-12T15:38:26+00:00",
+  "zones": [
+    {
+      "@type": "Zone",
+      "code": "ZoneNumerosIdentification",
+      "label": "Identification",
+      "translations": [
+        {
+          "@type": "ZoneTranslation",
+          "label": "Identification",
+          "locale": "fr"
+        }
+      ],
+      "occurZones": [
+        {
+          "@type": "OccurZone",
+          "position": 1,
+          "fields": [
+            {
+              "@type": "Field",
+              "code": "NumeroInventaire",
+              "label": "Numéro d'inventaire",
+              "content": "63.4.28",
+              "precision": "",
+              "isDisplay": true,
+              "translations": [
+                {
+                  "@type": "FieldTranslation",
+                  "label": "Numéro d'inventaire",
+                  "content": "63.4.28",
+                  "precision": "",
+                  "locale": "fr"
+                }
+              ],
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "@type": "Zone",
+      "code": "ZoneDesignation",
+      "label": "Désignation",
+      "translations": [
+        {
+          "@type": "ZoneTranslation",
+          "label": "Désignation",
+          "locale": "fr"
+        }
+      ],
+      "occurZones": [
+        {
+          "@type": "OccurZone",
+          "position": 1,
+          "fields": [
+            {
+              "@type": "Field",
+              "code": "Notes",
+              "label": "Notes",
+              "content": "La Persane",
+              "precision": "",
+              "isDisplay": true,
+              "translations": [
+                {
+                  "@type": "FieldTranslation",
+                  "label": "Notes",
+                  "content": "La Persane",
+                  "precision": "",
+                  "locale": "fr"
+                }
+              ],
+              "children": []
+            },
+            {
+              "@type": "Field",
+              "code": "DesignationDuBien",
+              "label": "Désignation du bien",
+              "content": "La Persane",
+              "precision": "",
+              "isDisplay": true,
+              "translations": [
+                {
+                  "@type": "FieldTranslation",
+                  "label": "Désignation du bien",
+                  "content": "La Persane",
+                  "precision": "",
+                  "locale": "fr"
+                }
+              ],
+              "children": []
+            }
+          ]
+        },
+        {
+          "@type": "OccurZone",
+          "position": 2,
+          "fields": [
+            {
+              "@type": "Field",
+              "code": "DesignationDuBien",
+              "label": "Désignation du bien",
+              "content": "Gravure",
+              "precision": "",
+              "isDisplay": true,
+              "translations": [
+                {
+                  "@type": "FieldTranslation",
+                  "label": "Désignation du bien",
+                  "content": "Gravure",
+                  "precision": "",
+                  "locale": "fr"
+                }
+              ],
+              "children": []
+            }
+          ]
+        },
+        {
+          "@type": "OccurZone",
+          "position": 3,
+          "fields": [
+            {
+              "@type": "Field",
+              "code": "DesignationDuBien",
+              "label": "Désignation du bien",
+              "content": "Lithographie",
+              "precision": "",
+              "isDisplay": true,
+              "translations": [
+                {
+                  "@type": "FieldTranslation",
+                  "label": "Désignation du bien",
+                  "content": "Lithographie",
+                  "precision": "",
+                  "locale": "fr"
+                }
+              ],
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "@type": "Zone",
+      "code": "ZoneCreation",
+      "label": "Création/Exécution",
+      "translations": [
+        {
+          "@type": "ZoneTranslation",
+          "label": "Création/Exécution",
+          "locale": "fr"
+        }
+      ],
+      "occurZones": [
+        {
+          "@type": "OccurZone",
+          "position": 1,
+          "fields": [
+            {
+              "@type": "Field",
+              "code": "PersonneChamp",
+              "label": "Auteur",
+              "content": "MATISSE Henri",
+              "precision": "",
+              "isDisplay": true,
+              "translations": [
+                {
+                  "@type": "FieldTranslation",
+                  "label": "Auteur",
+                  "content": "MATISSE Henri",
+                  "precision": "",
+                  "locale": "fr"
+                }
+              ],
+              "children": [
+                {
+                  "@type": "Field",
+                  "code": "NoticeBiographique",
+                  "label": "Notice biographique",
+                  "content": "Henri Matisse (1869, Le Cateau-Cambrésis - 1954, Nice)",
+                  "precision": "",
+                  "isDisplay": true,
+                  "translations": [
+                    {
+                      "@type": "FieldTranslation",
+                      "label": "Notice biographique",
+                      "content": "Henri Matisse (1869, Le Cateau-Cambrésis - 1954, Nice)",
+                      "precision": "",
+                      "locale": "fr"
+                    }
+                  ],
+                  "children": []
+                },
+                {
+                  "@type": "Field",
+                  "code": "Prenom",
+                  "label": "Prénom",
+                  "content": "Henri",
+                  "precision": "",
+                  "isDisplay": true,
+                  "translations": [
+                    {
+                      "@type": "FieldTranslation",
+                      "label": "Prénom",
+                      "content": "Henri",
+                      "precision": "",
+                      "locale": "fr"
+                    }
+                  ],
+                  "children": []
+                },
+                {
+                  "@type": "Field",
+                  "code": "Nom",
+                  "label": "Nom",
+                  "content": "MATISSE",
+                  "precision": "",
+                  "isDisplay": true,
+                  "translations": [
+                    {
+                      "@type": "FieldTranslation",
+                      "label": "Nom",
+                      "content": "MATISSE",
+                      "precision": "",
+                      "locale": "fr"
+                    }
+                  ],
+                  "children": []
+                }
+              ]
+            },
+            {
+              "@type": "Field",
+              "code": "NoticeBiographique",
+              "label": "Notice biographique",
+              "content": "Henri Matisse (1869, Le Cateau-Cambrésis - 1954, Nice)",
+              "precision": "",
+              "isDisplay": true,
+              "translations": [
+                {
+                  "@type": "FieldTranslation",
+                  "label": "Notice biographique",
+                  "content": "Henri Matisse (1869, Le Cateau-Cambrésis - 1954, Nice)",
+                  "precision": "",
+                  "locale": "fr"
+                }
+              ],
+              "children": []
+            },
+            {
+              "@type": "Field",
+              "code": "Prenom",
+              "label": "Prénom",
+              "content": "Henri",
+              "precision": "",
+              "isDisplay": true,
+              "translations": [
+                {
+                  "@type": "FieldTranslation",
+                  "label": "Prénom",
+                  "content": "Henri",
+                  "precision": "",
+                  "locale": "fr"
+                }
+              ],
+              "children": []
+            },
+            {
+              "@type": "Field",
+              "code": "Nom",
+              "label": "Nom",
+              "content": "MATISSE",
+              "precision": "",
+              "isDisplay": true,
+              "translations": [
+                {
+                  "@type": "FieldTranslation",
+                  "label": "Nom",
+                  "content": "MATISSE",
+                  "precision": "",
+                  "locale": "fr"
+                }
+              ],
+              "children": []
+            },
+            {
+              "@type": "Field",
+              "code": "EpoqueDatation",
+              "label": "Epoque, datation",
+              "content": "1929",
+              "precision": "",
+              "isDisplay": true,
+              "translations": [
+                {
+                  "@type": "FieldTranslation",
+                  "label": "Epoque, datation",
+                  "content": "1929",
+                  "precision": "",
+                  "locale": "fr"
+                }
+              ],
+              "children": []
+            },
+            {
+              "@type": "Field",
+              "code": "Notes",
+              "label": "Notes",
+              "content": "1929",
+              "precision": "",
+              "isDisplay": true,
+              "translations": [
+                {
+                  "@type": "FieldTranslation",
+                  "label": "Notes",
+                  "content": "1929",
+                  "precision": "",
+                  "locale": "fr"
+                }
+              ],
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "@type": "Zone",
+      "code": "ZoneDomaine",
+      "label": "Domaine",
+      "translations": [
+        {
+          "@type": "ZoneTranslation",
+          "label": "Domaine",
+          "locale": "fr"
+        }
+      ],
+      "occurZones": [
+        {
+          "@type": "OccurZone",
+          "position": 1,
+          "fields": [
+            {
+              "@type": "Field",
+              "code": "Domaine",
+              "label": "Domaine",
+              "content": "Arts graphiques",
+              "precision": "",
+              "isDisplay": true,
+              "translations": [
+                {
+                  "@type": "FieldTranslation",
+                  "label": "Domaine",
+                  "content": "Arts graphiques",
+                  "precision": "",
+                  "locale": "fr"
+                }
+              ],
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "@type": "Zone",
+      "code": "ZoneMatiereTechnique",
+      "label": "Matière et technique",
+      "translations": [
+        {
+          "@type": "ZoneTranslation",
+          "label": "Matière et technique",
+          "locale": "fr"
+        }
+      ],
+      "occurZones": [
+        {
+          "@type": "OccurZone",
+          "position": 1,
+          "fields": [
+            {
+              "@type": "Field",
+              "code": "NotesLibelle",
+              "label": "Matière et technique",
+              "content": "Lithographie sur papier vélin Arches",
+              "precision": "",
+              "isDisplay": true,
+              "translations": [
+                {
+                  "@type": "FieldTranslation",
+                  "label": "Matière et technique",
+                  "content": "Lithographie sur papier vélin Arches",
+                  "precision": "",
+                  "locale": "fr"
+                }
+              ],
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "@type": "Zone",
+      "code": "ZoneMesures",
+      "label": "Mesures",
+      "translations": [
+        {
+          "@type": "ZoneTranslation",
+          "label": "Mesures",
+          "locale": "fr"
+        }
+      ],
+      "occurZones": [
+        {
+          "@type": "OccurZone",
+          "position": 1,
+          "fields": [
+            {
+              "@type": "Field",
+              "code": "Notes",
+              "label": "Mesures",
+              "content": "58,9 x 44,8 cm",
+              "precision": "",
+              "isDisplay": true,
+              "translations": [
+                {
+                  "@type": "FieldTranslation",
+                  "label": "Mesures",
+                  "content": "58,9 x 44,8 cm",
+                  "precision": "",
+                  "locale": "fr"
+                }
+              ],
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "@type": "Zone",
+      "code": "ZoneCollectionAnterieure",
+      "label": "Collection antérieure",
+      "translations": [
+        {
+          "@type": "ZoneTranslation",
+          "label": "Collection antérieure",
+          "locale": "fr"
+        }
+      ],
+      "occurZones": [
+        {
+          "@type": "OccurZone",
+          "position": 1,
+          "fields": [
+            {
+              "@type": "Field",
+              "code": "TypeCollectionAnterieure",
+              "label": "Type de collection",
+              "content": "Collection de l'artiste",
+              "precision": "",
+              "isDisplay": true,
+              "translations": [
+                {
+                  "@type": "FieldTranslation",
+                  "label": "Type de collection",
+                  "content": "Collection de l'artiste",
+                  "precision": "",
+                  "locale": "fr"
+                }
+              ],
+              "children": []
+            },
+            {
+              "@type": "Field",
+              "code": "CollectionAnterieure",
+              "label": "Collection antérieure",
+              "content": "MATISSE Henri",
+              "precision": "",
+              "isDisplay": true,
+              "translations": [
+                {
+                  "@type": "FieldTranslation",
+                  "label": "Collection antérieure",
+                  "content": "MATISSE Henri",
+                  "precision": "",
+                  "locale": "fr"
+                }
+              ],
+              "children": []
+            },
+            {
+              "@type": "Field",
+              "code": "Notes",
+              "label": "Notes",
+              "content": "Don des héritiers de l'artiste, 1963",
+              "precision": "",
+              "isDisplay": true,
+              "translations": [
+                {
+                  "@type": "FieldTranslation",
+                  "label": "Notes",
+                  "content": "Don des héritiers de l'artiste, 1963",
+                  "precision": "",
+                  "locale": "fr"
+                }
+              ],
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "@type": "Zone",
+      "code": "ZoneBibliographie",
+      "label": "Bibliographie",
+      "translations": [
+        {
+          "@type": "ZoneTranslation",
+          "label": "Bibliographie",
+          "locale": "fr"
+        }
+      ],
+      "occurZones": [
+        {
+          "@type": "OccurZone",
+          "position": 1,
+          "fields": [
+            {
+              "@type": "Field",
+              "code": "ReferenceBibliographique",
+              "label": "Référence bibliographique",
+              "content": "Henri Matisse : catalogue raisonné de l'oeuvre gravé 2.",
+              "precision": "",
+              "isDisplay": true,
+              "translations": [
+                {
+                  "@type": "FieldTranslation",
+                  "label": "Référence bibliographique",
+                  "content": "Henri Matisse : catalogue raisonné de l'oeuvre gravé 2.",
+                  "precision": "",
+                  "locale": "fr"
+                }
+              ],
+              "children": [
+                {
+                  "@type": "Field",
+                  "code": "Notes",
+                  "label": "Bibliographie",
+                  "content": "Marguerite Duthuit-Matisse, Claude Duthuit, Henri Matisse : catalogue de l'œuvre gravé : tome II, Paris,1983. ",
+                  "precision": "",
+                  "isDisplay": true,
+                  "translations": [
+                    {
+                      "@type": "FieldTranslation",
+                      "label": "Bibliographie",
+                      "content": "Marguerite Duthuit-Matisse, Claude Duthuit, Henri Matisse : catalogue de l'œuvre gravé : tome II, Paris,1983. ",
+                      "precision": "",
+                      "locale": "fr"
+                    }
+                  ],
+                  "children": []
+                }
+              ]
+            },
+            {
+              "@type": "Field",
+              "code": "Notes",
+              "label": "Bibliographie",
+              "content": "Marguerite Duthuit-Matisse, Claude Duthuit, Henri Matisse : catalogue de l'œuvre gravé : tome II, Paris,1983. ",
+              "precision": "",
+              "isDisplay": true,
+              "translations": [
+                {
+                  "@type": "FieldTranslation",
+                  "label": "Bibliographie",
+                  "content": "Marguerite Duthuit-Matisse, Claude Duthuit, Henri Matisse : catalogue de l'œuvre gravé : tome II, Paris,1983. ",
+                  "precision": "",
+                  "locale": "fr"
+                }
+              ],
+              "children": []
+            },
+            {
+              "@type": "Field",
+              "code": "Notes",
+              "label": "Notes",
+              "content": "N° 507, pl. 100",
+              "precision": "",
+              "isDisplay": true,
+              "translations": [
+                {
+                  "@type": "FieldTranslation",
+                  "label": "Notes",
+                  "content": "N° 507, pl. 100",
+                  "precision": "",
+                  "locale": "fr"
+                }
+              ],
+              "children": []
+            }
+          ]
+        },
+        {
+          "@type": "OccurZone",
+          "position": 2,
+          "fields": [
+            {
+              "@type": "Field",
+              "code": "ReferenceBibliographique",
+              "label": "Référence bibliographique",
+              "content": "Henri Matisse : obra grafica y esculturas, 1998",
+              "precision": "",
+              "isDisplay": true,
+              "translations": [
+                {
+                  "@type": "FieldTranslation",
+                  "label": "Référence bibliographique",
+                  "content": "Henri Matisse : obra grafica y esculturas, 1998",
+                  "precision": "",
+                  "locale": "fr"
+                }
+              ],
+              "children": [
+                {
+                  "@type": "Field",
+                  "code": "Notes",
+                  "label": "Bibliographie",
+                  "content": "Henri Matisse : obra gráfica y esculturas, cat. exp. [Bilbao, Fondation Bilboa Bizkaia Kutxa, 8 janvier - 8 février 1998], Bilbao, Fundación Bilbao Bizkaia Kutxa, 1998. ",
+                  "precision": "",
+                  "isDisplay": true,
+                  "translations": [
+                    {
+                      "@type": "FieldTranslation",
+                      "label": "Bibliographie",
+                      "content": "Henri Matisse : obra gráfica y esculturas, cat. exp. [Bilbao, Fondation Bilboa Bizkaia Kutxa, 8 janvier - 8 février 1998], Bilbao, Fundación Bilbao Bizkaia Kutxa, 1998. ",
+                      "precision": "",
+                      "locale": "fr"
+                    }
+                  ],
+                  "children": []
+                }
+              ]
+            },
+            {
+              "@type": "Field",
+              "code": "Notes",
+              "label": "Bibliographie",
+              "content": "Henri Matisse : obra gráfica y esculturas, cat. exp. [Bilbao, Fondation Bilboa Bizkaia Kutxa, 8 janvier - 8 février 1998], Bilbao, Fundación Bilbao Bizkaia Kutxa, 1998. ",
+              "precision": "",
+              "isDisplay": true,
+              "translations": [
+                {
+                  "@type": "FieldTranslation",
+                  "label": "Bibliographie",
+                  "content": "Henri Matisse : obra gráfica y esculturas, cat. exp. [Bilbao, Fondation Bilboa Bizkaia Kutxa, 8 janvier - 8 février 1998], Bilbao, Fundación Bilbao Bizkaia Kutxa, 1998. ",
+                  "precision": "",
+                  "locale": "fr"
+                }
+              ],
+              "children": []
+            },
+            {
+              "@type": "Field",
+              "code": "Notes",
+              "label": "Notes",
+              "content": "Cat. p. 65, repr.",
+              "precision": "",
+              "isDisplay": true,
+              "translations": [
+                {
+                  "@type": "FieldTranslation",
+                  "label": "Notes",
+                  "content": "Cat. p. 65, repr.",
+                  "precision": "",
+                  "locale": "fr"
+                }
+              ],
+              "children": []
+            }
+          ]
+        },
+        {
+          "@type": "OccurZone",
+          "position": 3,
+          "fields": [
+            {
+              "@type": "Field",
+              "code": "ReferenceBibliographique",
+              "label": "Référence bibliographique",
+              "content": "Matisse and the Fauves : Color of the Century, 2005",
+              "precision": "",
+              "isDisplay": true,
+              "translations": [
+                {
+                  "@type": "FieldTranslation",
+                  "label": "Référence bibliographique",
+                  "content": "Matisse and the Fauves : Color of the Century, 2005",
+                  "precision": "",
+                  "locale": "fr"
+                }
+              ],
+              "children": [
+                {
+                  "@type": "Field",
+                  "code": "Notes",
+                  "label": "Bibliographie",
+                  "content": "Matisse and the Fauves : Color of the Century, cat. exp. [Séoul, Seoul Museum of Art, 3 décembre 2005 - 5 mars 2006], Séoul, 2005.",
+                  "precision": "",
+                  "isDisplay": true,
+                  "translations": [
+                    {
+                      "@type": "FieldTranslation",
+                      "label": "Bibliographie",
+                      "content": "Matisse and the Fauves : Color of the Century, cat. exp. [Séoul, Seoul Museum of Art, 3 décembre 2005 - 5 mars 2006], Séoul, 2005.",
+                      "precision": "",
+                      "locale": "fr"
+                    }
+                  ],
+                  "children": []
+                }
+              ]
+            },
+            {
+              "@type": "Field",
+              "code": "Notes",
+              "label": "Bibliographie",
+              "content": "Matisse and the Fauves : Color of the Century, cat. exp. [Séoul, Seoul Museum of Art, 3 décembre 2005 - 5 mars 2006], Séoul, 2005.",
+              "precision": "",
+              "isDisplay": true,
+              "translations": [
+                {
+                  "@type": "FieldTranslation",
+                  "label": "Bibliographie",
+                  "content": "Matisse and the Fauves : Color of the Century, cat. exp. [Séoul, Seoul Museum of Art, 3 décembre 2005 - 5 mars 2006], Séoul, 2005.",
+                  "precision": "",
+                  "locale": "fr"
+                }
+              ],
+              "children": []
+            },
+            {
+              "@type": "Field",
+              "code": "Notes",
+              "label": "Notes",
+              "content": "Repr. p. 97",
+              "precision": "",
+              "isDisplay": true,
+              "translations": [
+                {
+                  "@type": "FieldTranslation",
+                  "label": "Notes",
+                  "content": "Repr. p. 97",
+                  "precision": "",
+                  "locale": "fr"
+                }
+              ],
+              "children": []
+            }
+          ]
+        },
+        {
+          "@type": "OccurZone",
+          "position": 4,
+          "fields": [
+            {
+              "@type": "Field",
+              "code": "ReferenceBibliographique",
+              "label": "Référence bibliographique",
+              "content": "Henri Matisse, l'œuvre gravé, Liège, 1987 ",
+              "precision": "",
+              "isDisplay": true,
+              "translations": [
+                {
+                  "@type": "FieldTranslation",
+                  "label": "Référence bibliographique",
+                  "content": "Henri Matisse, l'œuvre gravé, Liège, 1987 ",
+                  "precision": "",
+                  "locale": "fr"
+                }
+              ],
+              "children": [
+                {
+                  "@type": "Field",
+                  "code": "Notes",
+                  "label": "Bibliographie",
+                  "content": "Henri Matisse, l'œuvre gravé, cat. exp. [Liège, musée d'art moderne, 20 novembre 1987 - 3 janvier 1988], Françoise Dumont (dir), Crédit Communal, Liège, 1987.",
+                  "precision": "",
+                  "isDisplay": true,
+                  "translations": [
+                    {
+                      "@type": "FieldTranslation",
+                      "label": "Bibliographie",
+                      "content": "Henri Matisse, l'œuvre gravé, cat. exp. [Liège, musée d'art moderne, 20 novembre 1987 - 3 janvier 1988], Françoise Dumont (dir), Crédit Communal, Liège, 1987.",
+                      "precision": "",
+                      "locale": "fr"
+                    }
+                  ],
+                  "children": []
+                }
+              ]
+            },
+            {
+              "@type": "Field",
+              "code": "Notes",
+              "label": "Bibliographie",
+              "content": "Henri Matisse, l'œuvre gravé, cat. exp. [Liège, musée d'art moderne, 20 novembre 1987 - 3 janvier 1988], Françoise Dumont (dir), Crédit Communal, Liège, 1987.",
+              "precision": "",
+              "isDisplay": true,
+              "translations": [
+                {
+                  "@type": "FieldTranslation",
+                  "label": "Bibliographie",
+                  "content": "Henri Matisse, l'œuvre gravé, cat. exp. [Liège, musée d'art moderne, 20 novembre 1987 - 3 janvier 1988], Françoise Dumont (dir), Crédit Communal, Liège, 1987.",
+                  "precision": "",
+                  "locale": "fr"
+                }
+              ],
+              "children": []
+            },
+            {
+              "@type": "Field",
+              "code": "Notes",
+              "label": "Notes",
+              "content": "Cat. n° 86, p. 77, repr.",
+              "precision": "",
+              "isDisplay": true,
+              "translations": [
+                {
+                  "@type": "FieldTranslation",
+                  "label": "Notes",
+                  "content": "Cat. n° 86, p. 77, repr.",
+                  "precision": "",
+                  "locale": "fr"
+                }
+              ],
+              "children": []
+            }
+          ]
+        },
+        {
+          "@type": "OccurZone",
+          "position": 5,
+          "fields": [
+            {
+              "@type": "Field",
+              "code": "ReferenceBibliographique",
+              "label": "Référence bibliographique",
+              "content": "Collections des musées de Nice et de la Côte d'Azur, 1975",
+              "precision": "",
+              "isDisplay": true,
+              "translations": [
+                {
+                  "@type": "FieldTranslation",
+                  "label": "Référence bibliographique",
+                  "content": "Collections des musées de Nice et de la Côte d'Azur, 1975",
+                  "precision": "",
+                  "locale": "fr"
+                }
+              ],
+              "children": [
+                {
+                  "@type": "Field",
+                  "code": "Notes",
+                  "label": "Bibliographie",
+                  "content": "Collections des musées de Nice et de la Côte d'Azur : Renoir. Matisse. Dufy, cat. exp. itinérante [Japon, musée d'art moderne de Hyôgo,12 avril - 11 mai 1975 ; Utsnunomiya, musée des beaux-arts de Tochigi ; Sapporo, musée Tokyu, Nagoya, Oriental Nakamura ; Takamatsu, centre culturel de la préfecture de Kagawa ; Nara, musée des beaux-arts], Marcel Batier et Jean Forneris, Nice, Direction des musées de Nice, 1976.",
+                  "precision": "",
+                  "isDisplay": true,
+                  "translations": [
+                    {
+                      "@type": "FieldTranslation",
+                      "label": "Bibliographie",
+                      "content": "Collections des musées de Nice et de la Côte d'Azur : Renoir. Matisse. Dufy, cat. exp. itinérante [Japon, musée d'art moderne de Hyôgo,12 avril - 11 mai 1975 ; Utsnunomiya, musée des beaux-arts de Tochigi ; Sapporo, musée Tokyu, Nagoya, Oriental Nakamura ; Takamatsu, centre culturel de la préfecture de Kagawa ; Nara, musée des beaux-arts], Marcel Batier et Jean Forneris, Nice, Direction des musées de Nice, 1976.",
+                      "precision": "",
+                      "locale": "fr"
+                    }
+                  ],
+                  "children": []
+                }
+              ]
+            },
+            {
+              "@type": "Field",
+              "code": "Notes",
+              "label": "Bibliographie",
+              "content": "Collections des musées de Nice et de la Côte d'Azur : Renoir. Matisse. Dufy, cat. exp. itinérante [Japon, musée d'art moderne de Hyôgo,12 avril - 11 mai 1975 ; Utsnunomiya, musée des beaux-arts de Tochigi ; Sapporo, musée Tokyu, Nagoya, Oriental Nakamura ; Takamatsu, centre culturel de la préfecture de Kagawa ; Nara, musée des beaux-arts], Marcel Batier et Jean Forneris, Nice, Direction des musées de Nice, 1976.",
+              "precision": "",
+              "isDisplay": true,
+              "translations": [
+                {
+                  "@type": "FieldTranslation",
+                  "label": "Bibliographie",
+                  "content": "Collections des musées de Nice et de la Côte d'Azur : Renoir. Matisse. Dufy, cat. exp. itinérante [Japon, musée d'art moderne de Hyôgo,12 avril - 11 mai 1975 ; Utsnunomiya, musée des beaux-arts de Tochigi ; Sapporo, musée Tokyu, Nagoya, Oriental Nakamura ; Takamatsu, centre culturel de la préfecture de Kagawa ; Nara, musée des beaux-arts], Marcel Batier et Jean Forneris, Nice, Direction des musées de Nice, 1976.",
+                  "precision": "",
+                  "locale": "fr"
+                }
+              ],
+              "children": []
+            },
+            {
+              "@type": "Field",
+              "code": "Notes",
+              "label": "Notes",
+              "content": "Cat. n° 37, p. 145, repr.",
+              "precision": "",
+              "isDisplay": true,
+              "translations": [
+                {
+                  "@type": "FieldTranslation",
+                  "label": "Notes",
+                  "content": "Cat. n° 37, p. 145, repr.",
+                  "precision": "",
+                  "locale": "fr"
+                }
+              ],
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "@type": "Zone",
+      "code": "ZoneExposition",
+      "label": "Exposition",
+      "translations": [
+        {
+          "@type": "ZoneTranslation",
+          "label": "Exposition",
+          "locale": "fr"
+        }
+      ],
+      "occurZones": [
+        {
+          "@type": "OccurZone",
+          "position": 1,
+          "fields": [
+            {
+              "@type": "Field",
+              "code": "ReferenceExposition",
+              "label": "Exposition",
+              "content": "Matisse Années 1930. A travers Cahiers d'Art Nice, musée Matisse 23/06/2023 24/09/2023",
+              "precision": "",
+              "isDisplay": true,
+              "translations": [
+                {
+                  "@type": "FieldTranslation",
+                  "label": "Exposition",
+                  "content": "Matisse Années 1930. A travers Cahiers d'Art Nice, musée Matisse 23/06/2023 24/09/2023",
+                  "precision": "",
+                  "locale": "fr"
+                }
+              ],
+              "children": [
+                {
+                  "@type": "Field",
+                  "code": "Description",
+                  "label": "Exposition",
+                  "content": "Matisse Années 1930. A travers Cahiers d'Art, Nice, musée Matisse, 23 juin - 24 septembre 2023.",
+                  "precision": "",
+                  "isDisplay": true,
+                  "translations": [
+                    {
+                      "@type": "FieldTranslation",
+                      "label": "Exposition",
+                      "content": "Matisse Années 1930. A travers Cahiers d'Art, Nice, musée Matisse, 23 juin - 24 septembre 2023.",
+                      "precision": "",
+                      "locale": "fr"
+                    }
+                  ],
+                  "children": []
+                }
+              ]
+            },
+            {
+              "@type": "Field",
+              "code": "Description",
+              "label": "Exposition",
+              "content": "Matisse Années 1930. A travers Cahiers d'Art, Nice, musée Matisse, 23 juin - 24 septembre 2023.",
+              "precision": "",
+              "isDisplay": true,
+              "translations": [
+                {
+                  "@type": "FieldTranslation",
+                  "label": "Exposition",
+                  "content": "Matisse Années 1930. A travers Cahiers d'Art, Nice, musée Matisse, 23 juin - 24 septembre 2023.",
+                  "precision": "",
+                  "locale": "fr"
+                }
+              ],
+              "children": []
+            }
+          ]
+        },
+        {
+          "@type": "OccurZone",
+          "position": 2,
+          "fields": [
+            {
+              "@type": "Field",
+              "code": "ReferenceExposition",
+              "label": "Exposition",
+              "content": "Tom Wesselmann. After Matisse Nice, musée Matisse 22/02/2023 30/05/2023",
+              "precision": "",
+              "isDisplay": true,
+              "translations": [
+                {
+                  "@type": "FieldTranslation",
+                  "label": "Exposition",
+                  "content": "Tom Wesselmann. After Matisse Nice, musée Matisse 22/02/2023 30/05/2023",
+                  "precision": "",
+                  "locale": "fr"
+                }
+              ],
+              "children": [
+                {
+                  "@type": "Field",
+                  "code": "Description",
+                  "label": "Exposition",
+                  "content": "Tom Wesselmann. After Matisse, Nice, musée Matisse, 22 février - 30 mai 2023",
+                  "precision": "",
+                  "isDisplay": true,
+                  "translations": [
+                    {
+                      "@type": "FieldTranslation",
+                      "label": "Exposition",
+                      "content": "Tom Wesselmann. After Matisse, Nice, musée Matisse, 22 février - 30 mai 2023",
+                      "precision": "",
+                      "locale": "fr"
+                    }
+                  ],
+                  "children": []
+                }
+              ]
+            },
+            {
+              "@type": "Field",
+              "code": "Description",
+              "label": "Exposition",
+              "content": "Tom Wesselmann. After Matisse, Nice, musée Matisse, 22 février - 30 mai 2023",
+              "precision": "",
+              "isDisplay": true,
+              "translations": [
+                {
+                  "@type": "FieldTranslation",
+                  "label": "Exposition",
+                  "content": "Tom Wesselmann. After Matisse, Nice, musée Matisse, 22 février - 30 mai 2023",
+                  "precision": "",
+                  "locale": "fr"
+                }
+              ],
+              "children": []
+            }
+          ]
+        },
+        {
+          "@type": "OccurZone",
+          "position": 3,
+          "fields": [
+            {
+              "@type": "Field",
+              "code": "ReferenceExposition",
+              "label": "Exposition",
+              "content": "Matisse : le rêve des odalisques Nice, musée Matisse 20/06/2014 29/09/2014",
+              "precision": "",
+              "isDisplay": true,
+              "translations": [
+                {
+                  "@type": "FieldTranslation",
+                  "label": "Exposition",
+                  "content": "Matisse : le rêve des odalisques Nice, musée Matisse 20/06/2014 29/09/2014",
+                  "precision": "",
+                  "locale": "fr"
+                }
+              ],
+              "children": [
+                {
+                  "@type": "Field",
+                  "code": "Description",
+                  "label": "Exposition",
+                  "content": "Matisse : le rêve des odalisques, Nice, musée Matisse, 20 juin - 29 septembre 2014.",
+                  "precision": "",
+                  "isDisplay": true,
+                  "translations": [
+                    {
+                      "@type": "FieldTranslation",
+                      "label": "Exposition",
+                      "content": "Matisse : le rêve des odalisques, Nice, musée Matisse, 20 juin - 29 septembre 2014.",
+                      "precision": "",
+                      "locale": "fr"
+                    }
+                  ],
+                  "children": []
+                }
+              ]
+            },
+            {
+              "@type": "Field",
+              "code": "Description",
+              "label": "Exposition",
+              "content": "Matisse : le rêve des odalisques, Nice, musée Matisse, 20 juin - 29 septembre 2014.",
+              "precision": "",
+              "isDisplay": true,
+              "translations": [
+                {
+                  "@type": "FieldTranslation",
+                  "label": "Exposition",
+                  "content": "Matisse : le rêve des odalisques, Nice, musée Matisse, 20 juin - 29 septembre 2014.",
+                  "precision": "",
+                  "locale": "fr"
+                }
+              ],
+              "children": []
+            }
+          ]
+        },
+        {
+          "@type": "OccurZone",
+          "position": 4,
+          "fields": [
+            {
+              "@type": "Field",
+              "code": "ReferenceExposition",
+              "label": "Exposition",
+              "content": "Matisse and the Fauves, Color of the Century Séoul, Seoul Museum of Art 03/12/2005 05/03/2006",
+              "precision": "",
+              "isDisplay": true,
+              "translations": [
+                {
+                  "@type": "FieldTranslation",
+                  "label": "Exposition",
+                  "content": "Matisse and the Fauves, Color of the Century Séoul, Seoul Museum of Art 03/12/2005 05/03/2006",
+                  "precision": "",
+                  "locale": "fr"
+                }
+              ],
+              "children": [
+                {
+                  "@type": "Field",
+                  "code": "Description",
+                  "label": "Exposition",
+                  "content": "Matisse and the Fauves, Color of the Century, Séoul, Seoul Museum of Art, 3 décembre 2005 - 5 mars 2006.",
+                  "precision": "",
+                  "isDisplay": true,
+                  "translations": [
+                    {
+                      "@type": "FieldTranslation",
+                      "label": "Exposition",
+                      "content": "Matisse and the Fauves, Color of the Century, Séoul, Seoul Museum of Art, 3 décembre 2005 - 5 mars 2006.",
+                      "precision": "",
+                      "locale": "fr"
+                    }
+                  ],
+                  "children": []
+                }
+              ]
+            },
+            {
+              "@type": "Field",
+              "code": "Description",
+              "label": "Exposition",
+              "content": "Matisse and the Fauves, Color of the Century, Séoul, Seoul Museum of Art, 3 décembre 2005 - 5 mars 2006.",
+              "precision": "",
+              "isDisplay": true,
+              "translations": [
+                {
+                  "@type": "FieldTranslation",
+                  "label": "Exposition",
+                  "content": "Matisse and the Fauves, Color of the Century, Séoul, Seoul Museum of Art, 3 décembre 2005 - 5 mars 2006.",
+                  "precision": "",
+                  "locale": "fr"
+                }
+              ],
+              "children": []
+            }
+          ]
+        },
+        {
+          "@type": "OccurZone",
+          "position": 5,
+          "fields": [
+            {
+              "@type": "Field",
+              "code": "ReferenceExposition",
+              "label": "Exposition",
+              "content": "50 ans de la Chapelle de Vence, Nice Nice, musée Matisse 20/04/2001 10/09/2001",
+              "precision": "",
+              "isDisplay": true,
+              "translations": [
+                {
+                  "@type": "FieldTranslation",
+                  "label": "Exposition",
+                  "content": "50 ans de la Chapelle de Vence, Nice Nice, musée Matisse 20/04/2001 10/09/2001",
+                  "precision": "",
+                  "locale": "fr"
+                }
+              ],
+              "children": [
+                {
+                  "@type": "Field",
+                  "code": "Description",
+                  "label": "Exposition",
+                  "content": "50 ans de la Chapelle de Vence - De la Passion à la Résurrection, Nice, musée Matisse, 20 avril -10 septembre 2001",
+                  "precision": "",
+                  "isDisplay": true,
+                  "translations": [
+                    {
+                      "@type": "FieldTranslation",
+                      "label": "Exposition",
+                      "content": "50 ans de la Chapelle de Vence - De la Passion à la Résurrection, Nice, musée Matisse, 20 avril -10 septembre 2001",
+                      "precision": "",
+                      "locale": "fr"
+                    }
+                  ],
+                  "children": []
+                }
+              ]
+            },
+            {
+              "@type": "Field",
+              "code": "Description",
+              "label": "Exposition",
+              "content": "50 ans de la Chapelle de Vence - De la Passion à la Résurrection, Nice, musée Matisse, 20 avril -10 septembre 2001",
+              "precision": "",
+              "isDisplay": true,
+              "translations": [
+                {
+                  "@type": "FieldTranslation",
+                  "label": "Exposition",
+                  "content": "50 ans de la Chapelle de Vence - De la Passion à la Résurrection, Nice, musée Matisse, 20 avril -10 septembre 2001",
+                  "precision": "",
+                  "locale": "fr"
+                }
+              ],
+              "children": []
+            }
+          ]
+        },
+        {
+          "@type": "OccurZone",
+          "position": 6,
+          "fields": [
+            {
+              "@type": "Field",
+              "code": "ReferenceExposition",
+              "label": "Exposition",
+              "content": "Henri Matisse, obra grafica y esculturas Bilbao, Fundacion Bilbao Bizkaia Kutxa 08/01/1998 08/02/1998",
+              "precision": "",
+              "isDisplay": true,
+              "translations": [
+                {
+                  "@type": "FieldTranslation",
+                  "label": "Exposition",
+                  "content": "Henri Matisse, obra grafica y esculturas Bilbao, Fundacion Bilbao Bizkaia Kutxa 08/01/1998 08/02/1998",
+                  "precision": "",
+                  "locale": "fr"
+                }
+              ],
+              "children": [
+                {
+                  "@type": "Field",
+                  "code": "Description",
+                  "label": "Exposition",
+                  "content": "Henri Matisse, obra grafica y esculturas, Bilbao, Fundacion Bilbao Bizkaia Kutxa, 8 janvier - 8 février 1998.",
+                  "precision": "",
+                  "isDisplay": true,
+                  "translations": [
+                    {
+                      "@type": "FieldTranslation",
+                      "label": "Exposition",
+                      "content": "Henri Matisse, obra grafica y esculturas, Bilbao, Fundacion Bilbao Bizkaia Kutxa, 8 janvier - 8 février 1998.",
+                      "precision": "",
+                      "locale": "fr"
+                    }
+                  ],
+                  "children": []
+                }
+              ]
+            },
+            {
+              "@type": "Field",
+              "code": "Description",
+              "label": "Exposition",
+              "content": "Henri Matisse, obra grafica y esculturas, Bilbao, Fundacion Bilbao Bizkaia Kutxa, 8 janvier - 8 février 1998.",
+              "precision": "",
+              "isDisplay": true,
+              "translations": [
+                {
+                  "@type": "FieldTranslation",
+                  "label": "Exposition",
+                  "content": "Henri Matisse, obra grafica y esculturas, Bilbao, Fundacion Bilbao Bizkaia Kutxa, 8 janvier - 8 février 1998.",
+                  "precision": "",
+                  "locale": "fr"
+                }
+              ],
+              "children": []
+            }
+          ]
+        },
+        {
+          "@type": "OccurZone",
+          "position": 7,
+          "fields": [
+            {
+              "@type": "Field",
+              "code": "ReferenceExposition",
+              "label": "Exposition",
+              "content": "Henri Matisse, l'oeuvre gravé, Liège, 1987 Liège, musée d'art moderne 20/11/1987 03/01/1988",
+              "precision": "",
+              "isDisplay": true,
+              "translations": [
+                {
+                  "@type": "FieldTranslation",
+                  "label": "Exposition",
+                  "content": "Henri Matisse, l'oeuvre gravé, Liège, 1987 Liège, musée d'art moderne 20/11/1987 03/01/1988",
+                  "precision": "",
+                  "locale": "fr"
+                }
+              ],
+              "children": [
+                {
+                  "@type": "Field",
+                  "code": "Description",
+                  "label": "Exposition",
+                  "content": "Henri Matisse, l'œuvre gravé, Liège, musée d'art moderne, 20 novembre 1987 - 3 janvier 1988",
+                  "precision": "",
+                  "isDisplay": true,
+                  "translations": [
+                    {
+                      "@type": "FieldTranslation",
+                      "label": "Exposition",
+                      "content": "Henri Matisse, l'œuvre gravé, Liège, musée d'art moderne, 20 novembre 1987 - 3 janvier 1988",
+                      "precision": "",
+                      "locale": "fr"
+                    }
+                  ],
+                  "children": []
+                }
+              ]
+            },
+            {
+              "@type": "Field",
+              "code": "Description",
+              "label": "Exposition",
+              "content": "Henri Matisse, l'œuvre gravé, Liège, musée d'art moderne, 20 novembre 1987 - 3 janvier 1988",
+              "precision": "",
+              "isDisplay": true,
+              "translations": [
+                {
+                  "@type": "FieldTranslation",
+                  "label": "Exposition",
+                  "content": "Henri Matisse, l'œuvre gravé, Liège, musée d'art moderne, 20 novembre 1987 - 3 janvier 1988",
+                  "precision": "",
+                  "locale": "fr"
+                }
+              ],
+              "children": []
+            }
+          ]
+        },
+        {
+          "@type": "OccurZone",
+          "position": 8,
+          "fields": [
+            {
+              "@type": "Field",
+              "code": "ReferenceExposition",
+              "label": "Exposition",
+              "content": "Collections des musées de Nice et de la Côte d'Azur : Renoir. Matisse. Dufy Japon 19/10/1975 04/12/1975",
+              "precision": "",
+              "isDisplay": true,
+              "translations": [
+                {
+                  "@type": "FieldTranslation",
+                  "label": "Exposition",
+                  "content": "Collections des musées de Nice et de la Côte d'Azur : Renoir. Matisse. Dufy Japon 19/10/1975 04/12/1975",
+                  "precision": "",
+                  "locale": "fr"
+                }
+              ],
+              "children": [
+                {
+                  "@type": "Field",
+                  "code": "Description",
+                  "label": "Exposition",
+                  "content": "Collections des musées de Nice et de la Côte d'Azur : Renoir. Matisse. Dufy, Kobe, musée d'art moderne de Hyôgo ,12 avril - 11 mai 1975 ; Utsnunomiya, musée des beaux-arts de Tochigi ; Sapporo, musée Tokyu, Nagoya, Oriental Nakamura ; Takamatsu, centre culturel de la préfecture de Kagawa ; Nara, musée des beaux-arts, 1976.",
+                  "precision": "",
+                  "isDisplay": true,
+                  "translations": [
+                    {
+                      "@type": "FieldTranslation",
+                      "label": "Exposition",
+                      "content": "Collections des musées de Nice et de la Côte d'Azur : Renoir. Matisse. Dufy, Kobe, musée d'art moderne de Hyôgo ,12 avril - 11 mai 1975 ; Utsnunomiya, musée des beaux-arts de Tochigi ; Sapporo, musée Tokyu, Nagoya, Oriental Nakamura ; Takamatsu, centre culturel de la préfecture de Kagawa ; Nara, musée des beaux-arts, 1976.",
+                      "precision": "",
+                      "locale": "fr"
+                    }
+                  ],
+                  "children": []
+                }
+              ]
+            },
+            {
+              "@type": "Field",
+              "code": "Description",
+              "label": "Exposition",
+              "content": "Collections des musées de Nice et de la Côte d'Azur : Renoir. Matisse. Dufy, Kobe, musée d'art moderne de Hyôgo ,12 avril - 11 mai 1975 ; Utsnunomiya, musée des beaux-arts de Tochigi ; Sapporo, musée Tokyu, Nagoya, Oriental Nakamura ; Takamatsu, centre culturel de la préfecture de Kagawa ; Nara, musée des beaux-arts, 1976.",
+              "precision": "",
+              "isDisplay": true,
+              "translations": [
+                {
+                  "@type": "FieldTranslation",
+                  "label": "Exposition",
+                  "content": "Collections des musées de Nice et de la Côte d'Azur : Renoir. Matisse. Dufy, Kobe, musée d'art moderne de Hyôgo ,12 avril - 11 mai 1975 ; Utsnunomiya, musée des beaux-arts de Tochigi ; Sapporo, musée Tokyu, Nagoya, Oriental Nakamura ; Takamatsu, centre culturel de la préfecture de Kagawa ; Nara, musée des beaux-arts, 1976.",
+                  "precision": "",
+                  "locale": "fr"
+                }
+              ],
+              "children": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "@type": "Zone",
+      "code": "ZoneInformationsSysteme",
+      "label": "Informations système",
+      "translations": [
+        {
+          "@type": "ZoneTranslation",
+          "label": "Informations système",
+          "locale": "fr"
+        }
+      ],
+      "occurZones": [
+        {
+          "@type": "OccurZone",
+          "position": 1,
+          "fields": []
+        }
+      ]
+    },
+    {
+      "@type": "Zone",
+      "code": "ZoneMultimedias",
+      "label": "Zone multimédias",
+      "translations": [
+        {
+          "@type": "ZoneTranslation",
+          "label": "Zone multimédias",
+          "locale": "fr"
+        }
+      ],
+      "occurZones": [
+        {
+          "@type": "OccurZone",
+          "position": 1,
+          "fields": []
+        }
+      ]
+    }
+  ],
+  "mediaFiles": [
+    {
+      "@type": "MediaFile",
+      "type": "image",
+      "name": "63_4_28.jpg",
+      "fileName": "ca339817-f1cd-4f6c-881f-63584df3ba9f.jpg",
+      "position": 1
+    }
+  ],
+  "translations": [
+    {
+      "@type": "NoticeTranslation",
+      "title": "63.4.28 La Persane",
+      "locale": "fr"
+    }
+  ],
+  "facetsEntities": [],
+  "locale": "fr",
+  "mainImageLazyUrl": "https://d2lkryo36aywim.cloudfront.net/eyJidWNrZXQiOiJvcGFjLXByb2QtbWVkaWEiLCJrZXkiOiJuaWNlMDFcL21hdGlzc2Vfb3BhYzIwMjZcL2NhMzM5ODE3LWYxY2QtNGY2Yy04ODFmLTYzNTg0ZGYzYmE5Zi5qcGciLCJlZGl0cyI6eyJyZXNpemUiOnsid2lkdGgiOjIwLCJoZWlnaHQiOjIwLCJmaXQiOiJpbnNpZGUifX19",
+  "mainImageSmallUrl": "https://d2lkryo36aywim.cloudfront.net/eyJidWNrZXQiOiJvcGFjLXByb2QtbWVkaWEiLCJrZXkiOiJuaWNlMDFcL21hdGlzc2Vfb3BhYzIwMjZcL2NhMzM5ODE3LWYxY2QtNGY2Yy04ODFmLTYzNTg0ZGYzYmE5Zi5qcGciLCJlZGl0cyI6eyJyZXNpemUiOnsid2lkdGgiOjE5MCwiaGVpZ2h0IjoxOTAsImZpdCI6Imluc2lkZSJ9fX0=",
+  "mainImageMediumUrl": "https://d2lkryo36aywim.cloudfront.net/eyJidWNrZXQiOiJvcGFjLXByb2QtbWVkaWEiLCJrZXkiOiJuaWNlMDFcL21hdGlzc2Vfb3BhYzIwMjZcL2NhMzM5ODE3LWYxY2QtNGY2Yy04ODFmLTYzNTg0ZGYzYmE5Zi5qcGciLCJlZGl0cyI6eyJyZXNpemUiOnsid2lkdGgiOjM2MCwiaGVpZ2h0IjozNjAsImZpdCI6Imluc2lkZSJ9fX0=",
+  "mainImageLargeUrl": "https://d2lkryo36aywim.cloudfront.net/eyJidWNrZXQiOiJvcGFjLXByb2QtbWVkaWEiLCJrZXkiOiJuaWNlMDFcL21hdGlzc2Vfb3BhYzIwMjZcL2NhMzM5ODE3LWYxY2QtNGY2Yy04ODFmLTYzNTg0ZGYzYmE5Zi5qcGciLCJlZGl0cyI6eyJyZXNpemUiOnsid2lkdGgiOjcyMCwiaGVpZ2h0Ijo3MjAsImZpdCI6Imluc2lkZSJ9fX0=",
+  "titles": [],
+  "title": "63.4.28 La Persane",
+  "mainImage": {
+    "@type": "MediaFile",
+    "type": "image",
+    "name": "63_4_28.jpg",
+    "fileName": "ca339817-f1cd-4f6c-881f-63584df3ba9f.jpg",
+    "position": 1
+  },
+  "locales": [
+    "fr"
+  ],
+  "indexedTranslation": {
+    "lang_fr": {
+      "title": "63.4.28 La Persane",
+      "priority_fields": [
+        "63.4.28",
+        "la persane",
+        "gravure",
+        "lithographie",
+        "matisse henri",
+        "arts graphiques"
+      ],
+      "all": [
+        "63.4.28",
+        "la persane",
+        "la persane",
+        "gravure",
+        "lithographie",
+        "matisse henri",
+        "henri matisse (1869, le cateau-cambrésis - 1954, nice)",
+        "henri",
+        "matisse",
+        "1929",
+        "1929",
+        "arts graphiques",
+        "lithographie sur papier vélin arches",
+        "58,9 x 44,8 cm",
+        "collection de l'artiste",
+        "matisse henri",
+        "don des héritiers de l'artiste, 1963",
+        "henri matisse : catalogue raisonné de l'oeuvre gravé 2.",
+        "marguerite duthuit-matisse, claude duthuit, henri matisse : catalogue de l'œuvre gravé : tome ii, paris,1983. ",
+        "n° 507, pl. 100",
+        "henri matisse : obra grafica y esculturas, 1998",
+        "henri matisse : obra gráfica y esculturas, cat. exp. [bilbao, fondation bilboa bizkaia kutxa, 8 janvier - 8 février 1998], bilbao, fundación bilbao bizkaia kutxa, 1998. ",
+        "cat. p. 65, repr.",
+        "matisse and the fauves : color of the century, 2005",
+        "matisse and the fauves : color of the century, cat. exp. [séoul, seoul museum of art, 3 décembre 2005 - 5 mars 2006], séoul, 2005.",
+        "repr. p. 97",
+        "henri matisse, l'œuvre gravé, liège, 1987 ",
+        "henri matisse, l'œuvre gravé, cat. exp. [liège, musée d'art moderne, 20 novembre 1987 - 3 janvier 1988], françoise dumont (dir), crédit communal, liège, 1987.",
+        "cat. n° 86, p. 77, repr.",
+        "collections des musées de nice et de la côte d'azur, 1975",
+        "collections des musées de nice et de la côte d'azur : renoir. matisse. dufy, cat. exp. itinérante [japon, musée d'art moderne de hyôgo,12 avril - 11 mai 1975 ; utsnunomiya, musée des beaux-arts de tochigi ; sapporo, musée tokyu, nagoya, oriental nakamura ; takamatsu, centre culturel de la préfecture de kagawa ; nara, musée des beaux-arts], marcel batier et jean forneris, nice, direction des musées de nice, 1976.",
+        "cat. n° 37, p. 145, repr.",
+        "matisse années 1930. a travers cahiers d'art nice, musée matisse 23/06/2023 24/09/2023",
+        "matisse années 1930. a travers cahiers d'art, nice, musée matisse, 23 juin - 24 septembre 2023.",
+        "tom wesselmann. after matisse nice, musée matisse 22/02/2023 30/05/2023",
+        "tom wesselmann. after matisse, nice, musée matisse, 22 février - 30 mai 2023",
+        "matisse : le rêve des odalisques nice, musée matisse 20/06/2014 29/09/2014",
+        "matisse : le rêve des odalisques, nice, musée matisse, 20 juin - 29 septembre 2014.",
+        "matisse and the fauves, color of the century séoul, seoul museum of art 03/12/2005 05/03/2006",
+        "matisse and the fauves, color of the century, séoul, seoul museum of art, 3 décembre 2005 - 5 mars 2006.",
+        "50 ans de la chapelle de vence, nice nice, musée matisse 20/04/2001 10/09/2001",
+        "50 ans de la chapelle de vence - de la passion à la résurrection, nice, musée matisse, 20 avril -10 septembre 2001",
+        "henri matisse, obra grafica y esculturas bilbao, fundacion bilbao bizkaia kutxa 08/01/1998 08/02/1998",
+        "henri matisse, obra grafica y esculturas, bilbao, fundacion bilbao bizkaia kutxa, 8 janvier - 8 février 1998.",
+        "henri matisse, l'oeuvre gravé, liège, 1987 liège, musée d'art moderne 20/11/1987 03/01/1988",
+        "henri matisse, l'œuvre gravé, liège, musée d'art moderne, 20 novembre 1987 - 3 janvier 1988",
+        "collections des musées de nice et de la côte d'azur : renoir. matisse. dufy japon 19/10/1975 04/12/1975",
+        "collections des musées de nice et de la côte d'azur : renoir. matisse. dufy, kobe, musée d'art moderne de hyôgo ,12 avril - 11 mai 1975 ; utsnunomiya, musée des beaux-arts de tochigi ; sapporo, musée tokyu, nagoya, oriental nakamura ; takamatsu, centre culturel de la préfecture de kagawa ; nara, musée des beaux-arts, 1976."
+      ],
+      "fields": [
+        "la persane",
+        "henri matisse (1869, le cateau-cambrésis - 1954, nice)",
+        "henri",
+        "matisse",
+        "1929",
+        "1929",
+        "lithographie sur papier vélin arches",
+        "58,9 x 44,8 cm",
+        "collection de l'artiste",
+        "matisse henri",
+        "don des héritiers de l'artiste, 1963",
+        "henri matisse : catalogue raisonné de l'oeuvre gravé 2.",
+        "marguerite duthuit-matisse, claude duthuit, henri matisse : catalogue de l'œuvre gravé : tome ii, paris,1983. ",
+        "n° 507, pl. 100",
+        "henri matisse : obra grafica y esculturas, 1998",
+        "henri matisse : obra gráfica y esculturas, cat. exp. [bilbao, fondation bilboa bizkaia kutxa, 8 janvier - 8 février 1998], bilbao, fundación bilbao bizkaia kutxa, 1998. ",
+        "cat. p. 65, repr.",
+        "matisse and the fauves : color of the century, 2005",
+        "matisse and the fauves : color of the century, cat. exp. [séoul, seoul museum of art, 3 décembre 2005 - 5 mars 2006], séoul, 2005.",
+        "repr. p. 97",
+        "henri matisse, l'œuvre gravé, liège, 1987 ",
+        "henri matisse, l'œuvre gravé, cat. exp. [liège, musée d'art moderne, 20 novembre 1987 - 3 janvier 1988], françoise dumont (dir), crédit communal, liège, 1987.",
+        "cat. n° 86, p. 77, repr.",
+        "collections des musées de nice et de la côte d'azur, 1975",
+        "collections des musées de nice et de la côte d'azur : renoir. matisse. dufy, cat. exp. itinérante [japon, musée d'art moderne de hyôgo,12 avril - 11 mai 1975 ; utsnunomiya, musée des beaux-arts de tochigi ; sapporo, musée tokyu, nagoya, oriental nakamura ; takamatsu, centre culturel de la préfecture de kagawa ; nara, musée des beaux-arts], marcel batier et jean forneris, nice, direction des musées de nice, 1976.",
+        "cat. n° 37, p. 145, repr.",
+        "matisse années 1930. a travers cahiers d'art nice, musée matisse 23/06/2023 24/09/2023",
+        "matisse années 1930. a travers cahiers d'art, nice, musée matisse, 23 juin - 24 septembre 2023.",
+        "tom wesselmann. after matisse nice, musée matisse 22/02/2023 30/05/2023",
+        "tom wesselmann. after matisse, nice, musée matisse, 22 février - 30 mai 2023",
+        "matisse : le rêve des odalisques nice, musée matisse 20/06/2014 29/09/2014",
+        "matisse : le rêve des odalisques, nice, musée matisse, 20 juin - 29 septembre 2014.",
+        "matisse and the fauves, color of the century séoul, seoul museum of art 03/12/2005 05/03/2006",
+        "matisse and the fauves, color of the century, séoul, seoul museum of art, 3 décembre 2005 - 5 mars 2006.",
+        "50 ans de la chapelle de vence, nice nice, musée matisse 20/04/2001 10/09/2001",
+        "50 ans de la chapelle de vence - de la passion à la résurrection, nice, musée matisse, 20 avril -10 septembre 2001",
+        "henri matisse, obra grafica y esculturas bilbao, fundacion bilbao bizkaia kutxa 08/01/1998 08/02/1998",
+        "henri matisse, obra grafica y esculturas, bilbao, fundacion bilbao bizkaia kutxa, 8 janvier - 8 février 1998.",
+        "henri matisse, l'oeuvre gravé, liège, 1987 liège, musée d'art moderne 20/11/1987 03/01/1988",
+        "henri matisse, l'œuvre gravé, liège, musée d'art moderne, 20 novembre 1987 - 3 janvier 1988",
+        "collections des musées de nice et de la côte d'azur : renoir. matisse. dufy japon 19/10/1975 04/12/1975",
+        "collections des musées de nice et de la côte d'azur : renoir. matisse. dufy, kobe, musée d'art moderne de hyôgo ,12 avril - 11 mai 1975 ; utsnunomiya, musée des beaux-arts de tochigi ; sapporo, musée tokyu, nagoya, oriental nakamura ; takamatsu, centre culturel de la préfecture de kagawa ; nara, musée des beaux-arts, 1976."
+      ]
+    }
+  },
+  "hasImage": true,
+  "images": {
+    "lazy": "https://d2lkryo36aywim.cloudfront.net/eyJidWNrZXQiOiJvcGFjLXByb2QtbWVkaWEiLCJrZXkiOiJuaWNlMDFcL21hdGlzc2Vfb3BhYzIwMjZcL2NhMzM5ODE3LWYxY2QtNGY2Yy04ODFmLTYzNTg0ZGYzYmE5Zi5qcGciLCJlZGl0cyI6eyJyZXNpemUiOnsid2lkdGgiOjIwLCJoZWlnaHQiOjIwLCJmaXQiOiJpbnNpZGUifX19",
+    "small": "https://d2lkryo36aywim.cloudfront.net/eyJidWNrZXQiOiJvcGFjLXByb2QtbWVkaWEiLCJrZXkiOiJuaWNlMDFcL21hdGlzc2Vfb3BhYzIwMjZcL2NhMzM5ODE3LWYxY2QtNGY2Yy04ODFmLTYzNTg0ZGYzYmE5Zi5qcGciLCJlZGl0cyI6eyJyZXNpemUiOnsid2lkdGgiOjE5MCwiaGVpZ2h0IjoxOTAsImZpdCI6Imluc2lkZSJ9fX0=",
+    "medium": "https://d2lkryo36aywim.cloudfront.net/eyJidWNrZXQiOiJvcGFjLXByb2QtbWVkaWEiLCJrZXkiOiJuaWNlMDFcL21hdGlzc2Vfb3BhYzIwMjZcL2NhMzM5ODE3LWYxY2QtNGY2Yy04ODFmLTYzNTg0ZGYzYmE5Zi5qcGciLCJlZGl0cyI6eyJyZXNpemUiOnsid2lkdGgiOjM2MCwiaGVpZ2h0IjozNjAsImZpdCI6Imluc2lkZSJ9fX0=",
+    "large": "https://d2lkryo36aywim.cloudfront.net/eyJidWNrZXQiOiJvcGFjLXByb2QtbWVkaWEiLCJrZXkiOiJuaWNlMDFcL21hdGlzc2Vfb3BhYzIwMjZcL2NhMzM5ODE3LWYxY2QtNGY2Yy04ODFmLTYzNTg0ZGYzYmE5Zi5qcGciLCJlZGl0cyI6eyJyZXNpemUiOnsid2lkdGgiOjcyMCwiaGVpZ2h0Ijo3MjAsImZpdCI6Imluc2lkZSJ9fX0="
+  },
+  "urls": [],
+  "documents": []
+}

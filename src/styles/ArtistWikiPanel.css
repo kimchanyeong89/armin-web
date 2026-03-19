@@ -1,0 +1,118 @@
+@import url("https://fonts.googleapis.com/css2?family=Kosugi&display=swap");
+
+.infinite-wiki {
+  width: 100%;
+  max-width: 100%;
+  margin: 0;
+  /* font-family: inherited from body */
+}
+
+.infinite-wiki__content {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  align-items: flex-start;
+  width: 100%;
+}
+
+@media (min-width: 820px) {
+  .infinite-wiki__content {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .infinite-wiki__text {
+    align-self: stretch;
+  }
+
+  .infinite-wiki__ascii {
+    align-self: center;
+  }
+}
+
+
+.infinite-wiki__text {
+  flex: 1;
+  max-width: 520px;
+}
+
+.infinite-wiki__header-slot {
+  margin-bottom: 12px;
+}
+
+.infinite-wiki__ascii {
+  margin: 0;
+  font-family: "IBM Plex Mono", "DM Mono", SFMono-Regular, Menlo, Consolas, monospace;
+  font-size: 0.65rem;
+  color: #6b6f80;
+  border: 1px solid #d8d8d8;
+  padding: 10px 14px;
+  min-width: 150px;
+  max-width: 190px;
+  background: #fafafa;
+  white-space: pre;
+  line-height: 1.05;
+  flex-shrink: 0;
+  border-radius: 8px;
+  align-self: flex-start;
+}
+
+.infinite-wiki__text h1 {
+  margin: 0 0 10px;
+  font-size: clamp(1.6rem, 4vw, 2.3rem);
+  font-weight: 400;
+}
+
+.infinite-wiki__meta {
+  margin: 0 0 18px;
+  color: #7c7f88;
+  letter-spacing: 0.04em;
+  font-size: 0.95rem;
+}
+
+.infinite-wiki__body {
+  margin: 0 0 14px;
+  line-height: 1.5;
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.infinite-wiki__link {
+  color: #1111ff;
+  text-decoration: none;
+  font-size: 0.95rem;
+}
+
+.infinite-wiki__link:hover {
+  text-decoration: underline;
+}
+
+.infinite-wiki__error {
+  margin-top: 8px;
+  color: #c44;
+  font-size: 0.95rem;
+}
+
+@keyframes infinite-wiki-blink {
+  from,
+  to {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+}
+
+.infinite-wiki__cursor {
+  animation: infinite-wiki-blink 1s step-end infinite;
+}
+
+@media (max-width: 600px) {
+  .infinite-wiki__ascii {
+    font-size: 0.55rem;
+    min-width: 120px;
+    max-width: 150px;
+    padding: 8px 12px;
+  }
+}

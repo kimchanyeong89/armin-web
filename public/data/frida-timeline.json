@@ -1,0 +1,1132 @@
+[
+  {
+    "id": "frida-timeline-0",
+    "title": "Guillermo Kahlo, autorretrato",
+    "artist": "Frida Kahlo",
+    "date": "1871",
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/frida-timeline/frida-timeline-0-3a9a078a-image.webp",
+    "source": "Museo Frida Kahlo",
+    "description": "Nace Wilhelm (Guillermo) Kahlo, padre de Frida.",
+    "original_image": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/05/Guillermo-Kahlo012.jpg"
+  },
+  {
+    "id": "frida-timeline-1",
+    "title": "Matilde Calderón y González",
+    "artist": "Frida Kahlo",
+    "date": "1874",
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/frida-timeline/frida-timeline-1-df91bc64-image.webp",
+    "source": "Museo Frida Kahlo",
+    "description": "Nace Matilde Calderón, madre de Frida.",
+    "original_image": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/05/Matilde-Calderon032FG.jpg"
+  },
+  {
+    "id": "frida-timeline-2",
+    "title": "Diego Rivera y su hermano gemelo Carlos María",
+    "artist": "Frida Kahlo",
+    "date": "1886",
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/frida-timeline/frida-timeline-2-06b98e09-image.webp",
+    "source": "Museo Frida Kahlo",
+    "description": "Nacen Diego Rivera y su hermano gemelo.",
+    "original_image": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/05/De-Diego063a.jpg"
+  },
+  {
+    "id": "frida-timeline-3",
+    "title": "Coyoacán, Ciudad de México",
+    "artist": "Frida Kahlo",
+    "date": "1890",
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/frida-timeline/frida-timeline-3-6e834396-image.webp",
+    "source": "Museo Frida Kahlo",
+    "description": "Se inaugura la colonia Del Carmen, barrio donde vivirá Frida.",
+    "original_image": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/05/BANXICO_ADRFK_1.jpg"
+  },
+  {
+    "id": "frida-timeline-4",
+    "title": "Guillermo Kahlo",
+    "artist": "Frida Kahlo",
+    "date": "1890",
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/frida-timeline/frida-timeline-4-907970ee-image.webp",
+    "source": "Museo Frida Kahlo",
+    "description": "Wilhelm Kahlo llega a México y cambia su nombre a Guillermo.",
+    "original_image": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/05/Guillermo-Kahlo008a.jpg"
+  },
+  {
+    "id": "frida-timeline-5",
+    "title": "Guillermo Kahlo con su hija María Luisa Kahlo Cardeña",
+    "artist": "Frida Kahlo",
+    "date": "1893",
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/frida-timeline/frida-timeline-5-ae43a383-image.webp",
+    "source": "Museo Frida Kahlo",
+    "description": "Guillermo Kahlo se casa por primera vez, pero queda viudo a los pocos años.",
+    "original_image": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/05/Guillermo-Kahlo007a.jpg"
+  },
+  {
+    "id": "frida-timeline-6",
+    "title": "Retrato de bodas de Matilde Calderón y Guillermo Kahlo",
+    "artist": "Frida Kahlo",
+    "date": "1898",
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/frida-timeline/frida-timeline-6-bf37b66f-image.webp",
+    "source": "Museo Frida Kahlo",
+    "description": "Guillermo Kahlo se casa con Matilde Calderón.",
+    "original_image": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/05/Padres004.jpg"
+  },
+  {
+    "id": "frida-timeline-7",
+    "title": "Matilde Kahlo Calderón",
+    "artist": "Frida Kahlo",
+    "date": "1899",
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/frida-timeline/frida-timeline-7-063dac6d-image.webp",
+    "source": "Museo Frida Kahlo",
+    "description": "Nace Matilde, la primera hija del matrimonio Kahlo Calderón.",
+    "original_image": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/05/Matilde-Kahlo_Boda-scaled.jpg"
+  },
+  {
+    "id": "frida-timeline-8",
+    "title": "Adriana Kahlo Calderón",
+    "artist": "Frida Kahlo",
+    "date": "1902",
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/frida-timeline/frida-timeline-8-96da59e6-image.webp",
+    "source": "Museo Frida Kahlo",
+    "description": "Nace Adriana, hermana de Frida.",
+    "original_image": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/05/Matilde-y-Adriana003a.jpg"
+  },
+  {
+    "id": "frida-timeline-9",
+    "title": "Fachada original de la Casa Azul",
+    "artist": "Frida Kahlo",
+    "date": "1904",
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/frida-timeline/frida-timeline-9-ded26139-image.webp",
+    "source": "Museo Frida Kahlo",
+    "description": "Guillermo construye en Coyoacán un hogar para su familia, que más tarde será la Casa Azul.",
+    "original_image": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/05/Casa-Azul-031.jpg"
+  },
+  {
+    "id": "frida-timeline-10",
+    "title": "Catedral Metropolitana, Ciudad de México,",
+    "artist": "Frida Kahlo",
+    "date": "1904",
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/frida-timeline/frida-timeline-10-0299245b-image.webp",
+    "source": "Museo Frida Kahlo",
+    "description": "Guillermo Kahlo es nombrado fotógrafo oficial de monumentos.",
+    "original_image": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/05/Guill_Catedral.png"
+  },
+  {
+    "id": "frida-timeline-11",
+    "title": "Frida Kahlo a los cuatro años",
+    "artist": "Frida Kahlo",
+    "date": "1907",
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/frida-timeline/frida-timeline-11-cf61ac84-image.webp",
+    "source": "Museo Frida Kahlo",
+    "description": "Nace Frida Kahlo.",
+    "original_image": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/05/Infancia007a.jpg"
+  },
+  {
+    "id": "frida-timeline-12",
+    "title": "Cristina Kahlo",
+    "artist": "Frida Kahlo",
+    "date": "1908",
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/frida-timeline/frida-timeline-12-10a9d487-image.webp",
+    "source": "Museo Frida Kahlo",
+    "description": "Nace Cristina, hermana menor de Frida.",
+    "original_image": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/05/Cristina-y-Familia041.jpg"
+  },
+  {
+    "id": "frida-timeline-13",
+    "title": "La canción revolucionaria mexicana",
+    "artist": "Frida Kahlo",
+    "date": "1910",
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/frida-timeline/frida-timeline-13-b605cf31-image.webp",
+    "source": "Museo Frida Kahlo",
+    "description": "Estalla la Revolución mexicana.",
+    "original_image": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/05/Informativas040a.jpg"
+  },
+  {
+    "id": "frida-timeline-14",
+    "title": "Frida Kahlo a los cinco años,",
+    "artist": "Frida Kahlo",
+    "date": "1913",
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/frida-timeline/frida-timeline-14-2c0df3a9-image.webp",
+    "source": "Museo Frida Kahlo",
+    "description": "Frida contrae poliomielitis.",
+    "original_image": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/05/Infancia024aFG.jpg"
+  },
+  {
+    "id": "frida-timeline-15",
+    "title": "Boleta de Frida Kahlo en la Escuela Nacional Preparatoria",
+    "artist": "Frida Kahlo",
+    "date": "1922",
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/frida-timeline/frida-timeline-15-bf9a285b-image.webp",
+    "source": "Museo Frida Kahlo",
+    "description": "Frida ingresa a la Escuela Nacional Preparatoria.",
+    "original_image": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/05/Frida_1922_ENP.jpg"
+  },
+  {
+    "id": "frida-timeline-16",
+    "title": "Tabla con diferentes firmas",
+    "artist": "Frida Kahlo",
+    "date": "1923",
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/frida-timeline/frida-timeline-16-5de5b74d-image.webp",
+    "source": "Museo Frida Kahlo",
+    "description": "Frida se une a “Los Cachuchas”.",
+    "original_image": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/05/17.jpg"
+  },
+  {
+    "id": "frida-timeline-17",
+    "title": "Frida Kahlo Calderón, retrato",
+    "artist": "Frida Kahlo",
+    "date": "1924",
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/frida-timeline/frida-timeline-17-9989a6cc-image.webp",
+    "source": "Museo Frida Kahlo",
+    "description": "Frida deja la escuela por un tiempo.",
+    "original_image": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/05/18.jpg"
+  },
+  {
+    "id": "frida-timeline-18",
+    "title": "Juguetes populares",
+    "artist": "Frida Kahlo",
+    "date": "1925",
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/frida-timeline/frida-timeline-18-296f7854-image.webp",
+    "source": "Museo Frida Kahlo",
+    "description": "Frida sufre el grave accidente que marcará su vida.",
+    "original_image": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/05/Informativas037a.jpg"
+  },
+  {
+    "id": "frida-timeline-19",
+    "title": "Fotografía intervenida de Autorretrato (con traje de terciopelo)",
+    "artist": "Frida Kahlo",
+    "date": "1926",
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/frida-timeline/frida-timeline-19-28773558-image.webp",
+    "source": "Museo Frida Kahlo",
+    "description": "Frida pinta su primer autorretrato.",
+    "original_image": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/05/2.jpg"
+  },
+  {
+    "id": "frida-timeline-20",
+    "title": "Retrato de Miguel N. Lira",
+    "artist": "Frida Kahlo",
+    "date": "1927",
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/frida-timeline/frida-timeline-20-38dae0d0-image.webp",
+    "source": "Museo Frida Kahlo",
+    "description": "Frida pinta para ayudar con sus gastos médicos.",
+    "original_image": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/05/21.jpg"
+  },
+  {
+    "id": "frida-timeline-21",
+    "title": "Diego Rivera, Frida Kahlo y otros intelectuales marchan el Día del Trabajo",
+    "artist": "Frida Kahlo",
+    "date": "1928",
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/frida-timeline/frida-timeline-21-f310d060-image.webp",
+    "source": "Museo Frida Kahlo",
+    "description": "Frida comienza una relación cercana con Diego Rivera.",
+    "original_image": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/05/22.jpg"
+  },
+  {
+    "id": "frida-timeline-22",
+    "title": "Frida Kahlo y Diego Rivera el día de su boda",
+    "artist": "Frida Kahlo",
+    "date": "1929",
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/frida-timeline/frida-timeline-22-6a46d5d4-image.webp",
+    "source": "Museo Frida Kahlo",
+    "description": "Frida y Diego se casan.",
+    "original_image": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/05/28.jpg"
+  },
+  {
+    "id": "frida-timeline-23",
+    "title": "El camión",
+    "artist": "Frida Kahlo",
+    "date": "1929",
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/frida-timeline/frida-timeline-23-f93ee002-image.webp",
+    "source": "Museo Frida Kahlo",
+    "description": "Frida pinta El camión, obra que hace referencia a su accidente.",
+    "original_image": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/05/24.jpg"
+  },
+  {
+    "id": "frida-timeline-24",
+    "title": "Frida Kahlo en la Casa Azul",
+    "artist": "Frida Kahlo",
+    "date": "1929",
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/frida-timeline/frida-timeline-24-9910c824-image.webp",
+    "source": "Museo Frida Kahlo",
+    "description": "Frida se embaraza por primera vez.",
+    "original_image": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/05/de-Frida015a.jpg"
+  },
+  {
+    "id": "frida-timeline-25",
+    "title": "Estudio de Diego Rivera en la Casa Azul",
+    "artist": "Frida Kahlo",
+    "date": "1930",
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/frida-timeline/frida-timeline-25-e7e4ebb5-image.webp",
+    "source": "Museo Frida Kahlo",
+    "description": "Diego paga la deuda que pesa sobre la casa de los Kahlo.",
+    "original_image": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/05/Casa-Azul-022a.jpg"
+  },
+  {
+    "id": "frida-timeline-26",
+    "title": "Frida Kahlo y Diego Rivera",
+    "artist": "Frida Kahlo",
+    "date": "1930",
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/frida-timeline/frida-timeline-26-5f72844a-image.webp",
+    "source": "Museo Frida Kahlo",
+    "description": "Frida y Diego viven una temporada en San Francisco, California.",
+    "original_image": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/05/Solos008a.jpg"
+  },
+  {
+    "id": "frida-timeline-27",
+    "title": "Frida Kahlo en San Francisco, California",
+    "artist": "Frida Kahlo",
+    "date": "1930",
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/frida-timeline/frida-timeline-27-38dcb1f7-image.webp",
+    "source": "Museo Frida Kahlo",
+    "description": "Frida posa para los primeros retratos que inmortalizarán su vestimenta mexicana.",
+    "original_image": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/05/de-Frida026a.jpg"
+  },
+  {
+    "id": "frida-timeline-28",
+    "title": "Nickolas Muray y Frida Kahlo en la Casa Azul, Coyoacán, Ciudad de México,",
+    "artist": "Frida Kahlo",
+    "date": "1931",
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/frida-timeline/frida-timeline-28-cc1f8583-image.webp",
+    "source": "Museo Frida Kahlo",
+    "description": "Frida viaja a la Ciudad de México, donde conoce al fotógrafo Nickolas Muray.",
+    "original_image": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/05/con-amigos023.jpg"
+  },
+  {
+    "id": "frida-timeline-29",
+    "title": "Frieda y Diego River",
+    "artist": "Frida Kahlo",
+    "date": "1931",
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/frida-timeline/frida-timeline-29-2c4ebf4e-image.webp",
+    "source": "Museo Frida Kahlo",
+    "description": "Frida pinta su cuadro Frieda y Diego Rivera.",
+    "original_image": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/05/30.jpg"
+  },
+  {
+    "id": "frida-timeline-30",
+    "title": "Diego Rivera, Frida Kahlo y amigos, c",
+    "artist": "Frida Kahlo",
+    "date": "1931",
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/frida-timeline/frida-timeline-30-1309e5d0-image.webp",
+    "source": "Museo Frida Kahlo",
+    "description": "Frida y Diego regresan por una temporada a México, donde conocen al cineasta Sergei Eisenstein.",
+    "original_image": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/05/31.jpg"
+  },
+  {
+    "id": "frida-timeline-31",
+    "title": "Lucienne Bloch en Nueva York, EE. UU.",
+    "artist": "Frida Kahlo",
+    "date": "1931",
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/frida-timeline/frida-timeline-31-000032e4-image.webp",
+    "source": "Museo Frida Kahlo",
+    "description": "Frida y Diego viven una temporada en Nueva York.",
+    "original_image": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/05/sin-dedicatoria040.jpg"
+  },
+  {
+    "id": "frida-timeline-32",
+    "title": "Frida Kahlo en el Instituto de Arte de Detroit, Michigan,",
+    "artist": "Frida Kahlo",
+    "date": "1932",
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/frida-timeline/frida-timeline-32-641c2426-image.webp",
+    "source": "Museo Frida Kahlo",
+    "description": "Diego y Frida se mudan a Detroit, Michigan.",
+    "original_image": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/05/de-Frida030a.jpg"
+  },
+  {
+    "id": "frida-timeline-33",
+    "title": "Autorretrato (en la frontera entre México y Estados Unidos)",
+    "artist": "Frida Kahlo",
+    "date": "1932",
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/frida-timeline/frida-timeline-33-d549f4b3-image.webp",
+    "source": "Museo Frida Kahlo",
+    "description": "Frida pinta su cuadro Autorretrato (en la frontera entre México y Estados Unidos).",
+    "original_image": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/05/36.jpg"
+  },
+  {
+    "id": "frida-timeline-34",
+    "title": "Frida y la cesárea,",
+    "artist": "Frida Kahlo",
+    "date": "1932",
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/frida-timeline/frida-timeline-34-ba185937-image.webp",
+    "source": "Museo Frida Kahlo",
+    "description": "Frida pinta su cuadro Frida y la cesárea (inconcluso).",
+    "original_image": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/05/Frida_y_la_Cesarea.jpg"
+  },
+  {
+    "id": "frida-timeline-35",
+    "title": "Hospital Henry Ford",
+    "artist": "Frida Kahlo",
+    "date": "1932",
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/frida-timeline/frida-timeline-35-e8b577c6-image.webp",
+    "source": "Museo Frida Kahlo",
+    "description": "En el mes de julio, Frida pinta su cuadro Hospital Henry Ford (La cama volando).",
+    "original_image": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/05/34.jpg"
+  },
+  {
+    "id": "frida-timeline-36",
+    "title": "Frida Kahlo de regreso de Detroit",
+    "artist": "Frida Kahlo",
+    "date": "1932",
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/frida-timeline/frida-timeline-36-bce0c7d8-image.webp",
+    "source": "Museo Frida Kahlo",
+    "description": "Frida viaja a México para ver a su madre enferma.",
+    "original_image": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/05/de-Frida005-1.jpg"
+  },
+  {
+    "id": "frida-timeline-37",
+    "title": "Matilde Calderón",
+    "artist": "Frida Kahlo",
+    "date": "1932",
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/frida-timeline/frida-timeline-37-2a502fa2-image.webp",
+    "source": "Museo Frida Kahlo",
+    "description": "Muere la madre de Frida.",
+    "original_image": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/05/Matilde-Calderon002.jpg"
+  },
+  {
+    "id": "frida-timeline-38",
+    "title": "Diego y Frida con los ayudantes del mural del Centro Rockefeller",
+    "artist": "Frida Kahlo",
+    "date": "1933",
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/frida-timeline/frida-timeline-38-4bcad080-image.webp",
+    "source": "Museo Frida Kahlo",
+    "description": "Frida y Diego se mudan a Nueva York, donde Rivera pinta el polémico mural del Centro Rockefeller.",
+    "original_image": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/05/Periodico.png"
+  },
+  {
+    "id": "frida-timeline-39",
+    "title": "Nueva York (inconcluso)",
+    "artist": "Frida Kahlo",
+    "date": "1933",
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/frida-timeline/frida-timeline-39-170a203d-image.webp",
+    "source": "Museo Frida Kahlo",
+    "description": "Frida pinta su obra inconclusa Nueva York.",
+    "original_image": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/05/Paisaje_de_NY.jpg"
+  },
+  {
+    "id": "frida-timeline-40",
+    "title": "Mi vestido cuelga aquí",
+    "artist": "Frida Kahlo",
+    "date": "1933",
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/frida-timeline/frida-timeline-40-aace2779-image.webp",
+    "source": "Museo Frida Kahlo",
+    "description": "Frida pinta su cuadro Mi vestido cuelga aquí (Allá cuelga mi vestido).",
+    "original_image": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/05/41.jpg"
+  },
+  {
+    "id": "frida-timeline-41",
+    "title": "Frida Kahlo en la casa de San Ángel",
+    "artist": "Frida Kahlo",
+    "date": "1934",
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/frida-timeline/frida-timeline-41-197cfa5f-image.webp",
+    "source": "Museo Frida Kahlo",
+    "description": "Frida y Diego se mudan a su casa en San Ángel.",
+    "original_image": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/05/de-Frida020.jpg"
+  },
+  {
+    "id": "frida-timeline-42",
+    "title": "Frida Kahlo",
+    "artist": "Frida Kahlo",
+    "date": "1934",
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/frida-timeline/frida-timeline-42-0a5f9551-image.webp",
+    "source": "Museo Frida Kahlo",
+    "description": "Frida sufre tres hospitalizaciones.",
+    "original_image": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/05/43.jpg"
+  },
+  {
+    "id": "frida-timeline-43",
+    "title": "El escultor Isamu Noguchi",
+    "artist": "Frida Kahlo",
+    "date": "1935",
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/frida-timeline/frida-timeline-43-652281b5-image.webp",
+    "source": "Museo Frida Kahlo",
+    "description": "Frida conoce al escultor Isamu Noguchi.",
+    "original_image": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/05/con-dedicatoria062aFG.jpg"
+  },
+  {
+    "id": "frida-timeline-44",
+    "title": "Autorretrato (con pelo rizado)",
+    "artist": "Frida Kahlo",
+    "date": "1935",
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/frida-timeline/frida-timeline-44-3adaee89-image.webp",
+    "source": "Museo Frida Kahlo",
+    "description": "Frida pinta su Autorretrato (con pelo rizado).",
+    "original_image": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/05/45.jpg"
+  },
+  {
+    "id": "frida-timeline-45",
+    "title": "Unos cuantos piquetitos,",
+    "artist": "Frida Kahlo",
+    "date": "1935",
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/frida-timeline/frida-timeline-45-0cdf7da4-image.webp",
+    "source": "Museo Frida Kahlo",
+    "description": "Frida pinta su cuadro Unos cuantos piquetitos.",
+    "original_image": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/05/46.jpg"
+  },
+  {
+    "id": "frida-timeline-46",
+    "title": "Frida Kahlo y Diego Rivera en la casa de Luther Burbank, California,",
+    "artist": "Frida Kahlo",
+    "date": "1936",
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/frida-timeline/frida-timeline-46-57185c19-image.webp",
+    "source": "Museo Frida Kahlo",
+    "description": "Al estallar la Guerra Civil española, Frida y Diego buscan ayuda para los republicanos.",
+    "original_image": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/05/Solos001a.jpg"
+  },
+  {
+    "id": "frida-timeline-47",
+    "title": "Frida Kahlo en la Casa Azul",
+    "artist": "Frida Kahlo",
+    "date": "1936",
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/frida-timeline/frida-timeline-47-527f5854-image.webp",
+    "source": "Museo Frida Kahlo",
+    "description": "Frida se opera el pie derecho nuevamente.",
+    "original_image": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/05/de-Frida007.jpg"
+  },
+  {
+    "id": "frida-timeline-48",
+    "title": "Mis abuelos, mis padres y yo (Árbol genealógico)",
+    "artist": "Frida Kahlo",
+    "date": "1936",
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/frida-timeline/frida-timeline-48-03248054-image.webp",
+    "source": "Museo Frida Kahlo",
+    "description": "Frida expone en la Galería del Departamento de Acción Social de la Universidad Autónoma de México.",
+    "original_image": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/05/52.jpg"
+  },
+  {
+    "id": "frida-timeline-49",
+    "title": "Retrato de Alberto Misrachi,",
+    "artist": "Frida Kahlo",
+    "date": "1937",
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/frida-timeline/frida-timeline-49-5ba5624f-image.webp",
+    "source": "Museo Frida Kahlo",
+    "description": "Frida pinta el cuadro Retrato de Alberto Misrachi.",
+    "original_image": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/05/49.jpg"
+  },
+  {
+    "id": "frida-timeline-50",
+    "title": "Frida Kahlo y León Trotsky, acompañados por el Lic. Antonio Villalobos, el Coronel José Escudero y Jean Van Heijenoort,",
+    "artist": "Frida Kahlo",
+    "date": "1937",
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/frida-timeline/frida-timeline-50-0707feb2-image.webp",
+    "source": "Museo Frida Kahlo",
+    "description": "Frida y Diego reciben en su casa al líder ruso León Trotsky.",
+    "original_image": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/05/con-amigos045FG.jpg"
+  },
+  {
+    "id": "frida-timeline-51",
+    "title": "Frida Kahlo Senora Diego Rivera standing next to an agave plant, during a photo shoot for Vogue magazine, “Senoras of Mexico”,",
+    "artist": "Frida Kahlo",
+    "date": "1937",
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/frida-timeline/frida-timeline-51-3610d0f3-image.webp",
+    "source": "Museo Frida Kahlo",
+    "description": "Frida aparece en el ejemplar de octubre de la revista Vogue.",
+    "original_image": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/05/51.jpg"
+  },
+  {
+    "id": "frida-timeline-52",
+    "title": "Fulang-Chang y yo",
+    "artist": "Frida Kahlo",
+    "date": "1937",
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/frida-timeline/frida-timeline-52-11480952-image.webp",
+    "source": "Museo Frida Kahlo",
+    "description": "Frida pinta el cuadro Fulang-Chang y yo.",
+    "original_image": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/05/53.jpg"
+  },
+  {
+    "id": "frida-timeline-53",
+    "title": "André Bretón",
+    "artist": "Frida Kahlo",
+    "date": "1938",
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/frida-timeline/frida-timeline-53-b189e2e3-image.webp",
+    "source": "Museo Frida Kahlo",
+    "description": "El escritor francés André Breton viaja a México y queda impresionado con el arte de Frida.",
+    "original_image": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/05/con-dedicatoria063FG-COLLAGE.jpg"
+  },
+  {
+    "id": "frida-timeline-54",
+    "title": "Frida Kahlo, Diego Rivera, Natalia Sedova, León Trotsky, Jacqueline Lamba y André Bretón,",
+    "artist": "Frida Kahlo",
+    "date": "1938",
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/frida-timeline/frida-timeline-54-34ab7ef2-image.webp",
+    "source": "Museo Frida Kahlo",
+    "description": "Frida y Diego viajan con los matrimonios Bretón-Lamba y Trotsky-Sedova por ciudades de México.",
+    "original_image": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/05/55.jpg"
+  },
+  {
+    "id": "frida-timeline-55",
+    "title": "Invitación a la exposición de Frida Kahlo en la galería Julien Levy de Nueva York",
+    "artist": "Frida Kahlo",
+    "date": "1938",
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/frida-timeline/frida-timeline-55-1db6a154-image.webp",
+    "source": "Museo Frida Kahlo",
+    "description": "Frida expone en Nueva York su primera exhibición individual.",
+    "original_image": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/05/img030-1.jpg"
+  },
+  {
+    "id": "frida-timeline-56",
+    "title": "Los cuatro habitantes de la Ciudad de México (El zócalo es suyo)",
+    "artist": "Frida Kahlo",
+    "date": "1938",
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/frida-timeline/frida-timeline-56-5dd4a957-image.webp",
+    "source": "Museo Frida Kahlo",
+    "description": "Frida pinta su obra Los cuatro habitantes de la Ciudad de México (El zócalo es suyo).",
+    "original_image": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/05/58.jpg"
+  },
+  {
+    "id": "frida-timeline-57",
+    "title": "Perro ixcuhintli [sic] conmigo",
+    "artist": "Frida Kahlo",
+    "date": "1938",
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/frida-timeline/frida-timeline-57-87eb418e-image.webp",
+    "source": "Museo Frida Kahlo",
+    "description": "Frida pinta su cuadro Perro ixcuhintli [sic] conmigo.",
+    "original_image": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/05/57.jpg"
+  },
+  {
+    "id": "frida-timeline-58",
+    "title": "El suicidio de Dorothy Hale",
+    "artist": "Frida Kahlo",
+    "date": "1938",
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/frida-timeline/frida-timeline-58-b5823452-image.webp",
+    "source": "Museo Frida Kahlo",
+    "description": "Frida pinta su obra El suicidio de Dorothy Hale.",
+    "original_image": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/05/59.jpg"
+  },
+  {
+    "id": "frida-timeline-59",
+    "title": "Frida Kahlo con rebozo magenta,",
+    "artist": "Frida Kahlo",
+    "date": "1938",
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/frida-timeline/frida-timeline-59-2af15ef8-image.webp",
+    "source": "Museo Frida Kahlo",
+    "description": "Frida es fotografiada por sus amigos Julien Levy y Nickolas Muray.",
+    "original_image": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/05/60.jpg"
+  },
+  {
+    "id": "frida-timeline-60",
+    "title": "Pasaporte de Frida Kahlo",
+    "artist": "Frida Kahlo",
+    "date": "1939",
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/frida-timeline/frida-timeline-60-c84c8c48-image.webp",
+    "source": "Museo Frida Kahlo",
+    "description": "Frida viaja a París para exponer varios de sus cuadros.",
+    "original_image": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/05/30-1.jpg"
+  },
+  {
+    "id": "frida-timeline-61",
+    "title": "Invitación a la exposición Mexique en París, Francia",
+    "artist": "Frida Kahlo",
+    "date": "1939",
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/frida-timeline/frida-timeline-61-d268878e-image.webp",
+    "source": "Museo Frida Kahlo",
+    "description": "Marcel Duchamp ayuda a Frida a exponer en París.",
+    "original_image": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/05/img932.jpg"
+  },
+  {
+    "id": "frida-timeline-62",
+    "title": "Mexique.",
+    "artist": "Frida Kahlo",
+    "date": "1939",
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/frida-timeline/frida-timeline-62-e21812ce-image.webp",
+    "source": "Museo Frida Kahlo",
+    "description": "Tras la exposición Mexique, el Museo de Louvre compra una obra de Frida.",
+    "original_image": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/05/63.jpg"
+  },
+  {
+    "id": "frida-timeline-63",
+    "title": "Carta de Peggy Guggenheim a Frida Kahlo",
+    "artist": "Frida Kahlo",
+    "date": "1939",
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/frida-timeline/frida-timeline-63-8535b4e4-image.webp",
+    "source": "Museo Frida Kahlo",
+    "description": "Frida es invitada a exponer en Londres, pero rechaza la oferta ante la inminencia de la guerra.",
+    "original_image": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/05/img902.jpg"
+  },
+  {
+    "id": "frida-timeline-64",
+    "title": "Lo que el agua me ha dado,",
+    "artist": "Frida Kahlo",
+    "date": "1939",
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/frida-timeline/frida-timeline-64-49c59a76-image.webp",
+    "source": "Museo Frida Kahlo",
+    "description": "Frida pinta Lo que el agua me ha dado.",
+    "original_image": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/05/65.png"
+  },
+  {
+    "id": "frida-timeline-65",
+    "title": "Par de relojes intervenidos por Frida Kahlo",
+    "artist": "Frida Kahlo",
+    "date": "1939",
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/frida-timeline/frida-timeline-65-5aaa2774-image.webp",
+    "source": "Museo Frida Kahlo",
+    "description": "Frida y Diego se divorcian.",
+    "original_image": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/05/DSC_1128-1-scaled.jpg"
+  },
+  {
+    "id": "frida-timeline-66",
+    "title": "Las dos Fridas",
+    "artist": "Frida Kahlo",
+    "date": "1939",
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/frida-timeline/frida-timeline-66-c17813e2-image.webp",
+    "source": "Museo Frida Kahlo",
+    "description": "Kahlo pinta uno de sus cuadros más famosos: Las dos Fridas.",
+    "original_image": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/05/67.jpg"
+  },
+  {
+    "id": "frida-timeline-67",
+    "title": "La mesa herida",
+    "artist": "Frida Kahlo",
+    "date": "1940",
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/frida-timeline/frida-timeline-67-2f9bb67a-image.webp",
+    "source": "Museo Frida Kahlo",
+    "description": "Frida participa en varias exposiciones internacionales.",
+    "original_image": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/05/68.jpg"
+  },
+  {
+    "id": "frida-timeline-68",
+    "title": "León Trotsky",
+    "artist": "Frida Kahlo",
+    "date": "1940",
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/frida-timeline/frida-timeline-68-185df3a8-image.webp",
+    "source": "Museo Frida Kahlo",
+    "description": "León Trotsky es asesinado.",
+    "original_image": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/05/Trotsky-006a.jpg"
+  },
+  {
+    "id": "frida-timeline-69",
+    "title": "Autorretrato con mono y listón sobre el cuello,",
+    "artist": "Frida Kahlo",
+    "date": "1940",
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/frida-timeline/frida-timeline-69-57a95af4-image.webp",
+    "source": "Museo Frida Kahlo",
+    "description": "Frida pinta Autorretrato con mono y listón sobre el cuello.",
+    "original_image": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/05/70.jpg"
+  },
+  {
+    "id": "frida-timeline-70",
+    "title": "Autorretrato (dedicado al Dr. Leo Eloesser)",
+    "artist": "Frida Kahlo",
+    "date": "1940",
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/frida-timeline/frida-timeline-70-34cc4f7b-image.webp",
+    "source": "Museo Frida Kahlo",
+    "description": "Frida pinta su obra Autorretrato (dedicado al Dr. Leo Eloesser).",
+    "original_image": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/05/71.jpg"
+  },
+  {
+    "id": "frida-timeline-71",
+    "title": "Autorretrato con collar de espinas y colibrí",
+    "artist": "Frida Kahlo",
+    "date": "1940",
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/frida-timeline/frida-timeline-71-8ce8bdd7-image.webp",
+    "source": "Museo Frida Kahlo",
+    "description": "Autorretrato con collar de espinas y colibrí, 1940 Frida Kahlo, (1907-1954)",
+    "original_image": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/05/72.jpg"
+  },
+  {
+    "id": "frida-timeline-72",
+    "title": "Autorretrato con pelo cortado",
+    "artist": "Frida Kahlo",
+    "date": "1940",
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/frida-timeline/frida-timeline-72-ac84360e-image.webp",
+    "source": "Museo Frida Kahlo",
+    "description": "Frida pinta Autorretrato con pelo cortado.",
+    "original_image": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/05/73.jpg"
+  },
+  {
+    "id": "frida-timeline-73",
+    "title": "Mi casa azul",
+    "artist": "Frida Kahlo",
+    "date": "1940",
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/frida-timeline/frida-timeline-73-640ae53d-image.webp",
+    "source": "Museo Frida Kahlo",
+    "description": "Frida realizó un dibujo detallado de cómo era su casa.",
+    "original_image": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/07/Plano-del-Museo-dibujado-por-Frida-Kahlo_1.jpg"
+  },
+  {
+    "id": "frida-timeline-74",
+    "title": "Frida Kahlo y Diego Rivera en la Casa Azul, c.",
+    "artist": "Frida Kahlo",
+    "date": "1940",
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/frida-timeline/frida-timeline-74-58e7c77c-image.webp",
+    "source": "Museo Frida Kahlo",
+    "description": "Frida y Diego se casan de nuevo.",
+    "original_image": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/05/Solos003.jpg"
+  },
+  {
+    "id": "frida-timeline-75",
+    "title": "Frida y Emmy Lou Packard en la Casa Azul,",
+    "artist": "Frida Kahlo",
+    "date": "1941",
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/frida-timeline/frida-timeline-75-628f1b90-image.webp",
+    "source": "Museo Frida Kahlo",
+    "description": "Frida y la muralista Emmy Lou Packard entablan amistad.",
+    "original_image": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/05/En-la-casa-azul006.jpg"
+  },
+  {
+    "id": "frida-timeline-76",
+    "title": "Autorretrato (Yo y mis pericos)",
+    "artist": "Frida Kahlo",
+    "date": "1941",
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/frida-timeline/frida-timeline-76-302628d3-image.webp",
+    "source": "Museo Frida Kahlo",
+    "description": "Frida pinta Autorretrato (Yo y mis pericos).",
+    "original_image": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/05/76.jpg"
+  },
+  {
+    "id": "frida-timeline-77",
+    "title": "Guillermo Kahlo, autorretrato,",
+    "artist": "Frida Kahlo",
+    "date": "1941",
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/frida-timeline/frida-timeline-77-6e380c64-image.webp",
+    "source": "Museo Frida Kahlo",
+    "description": "Muere Guillermo Kahlo.",
+    "original_image": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/05/Guillermo-Kahlo004.jpg"
+  },
+  {
+    "id": "frida-timeline-78",
+    "title": "Frida Kahlo en su estudio, c.",
+    "artist": "Frida Kahlo",
+    "date": "1941",
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/frida-timeline/frida-timeline-78-aaa39b8f-image.webp",
+    "source": "Museo Frida Kahlo",
+    "description": "Frida expone en el Instituto Contemporáneo de Arte en Boston.",
+    "original_image": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/05/de-Frida013.jpg"
+  },
+  {
+    "id": "frida-timeline-79",
+    "title": "Diego Rivera en la construcción del Anahuacalli, c.",
+    "artist": "Frida Kahlo",
+    "date": "1941",
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/frida-timeline/frida-timeline-79-4c91510a-image.webp",
+    "source": "Museo Frida Kahlo",
+    "description": "Comienza la construcción del Anahuacalli.",
+    "original_image": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/07/Museo-022a-scaled.jpg"
+  },
+  {
+    "id": "frida-timeline-80",
+    "title": "Naturaleza muerta",
+    "artist": "Frida Kahlo",
+    "date": "1942",
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/frida-timeline/frida-timeline-80-8253f3b2-image.webp",
+    "source": "Museo Frida Kahlo",
+    "description": "Frida pinta su obra Naturaleza muerta.",
+    "original_image": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/05/80.jpg"
+  },
+  {
+    "id": "frida-timeline-81",
+    "title": "Autorretrato con pelo cortad",
+    "artist": "Frida Kahlo",
+    "date": "1942",
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/frida-timeline/frida-timeline-81-70651876-image.webp",
+    "source": "Museo Frida Kahlo",
+    "description": "Frida exhibe su obra nuevamente en el Museo de Arte Moderno de Nueva York.",
+    "original_image": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/05/con-obra-pictorica005.jpg"
+  },
+  {
+    "id": "frida-timeline-82",
+    "title": "Autorretrato como tehuana o Diego en mi pensamiento,",
+    "artist": "Frida Kahlo",
+    "date": "1943",
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/frida-timeline/frida-timeline-82-c5b440de-image.webp",
+    "source": "Museo Frida Kahlo",
+    "description": "Frida pinta Autorretrato como tehuana o Diego en mi pensamiento.",
+    "original_image": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/05/82.jpg"
+  },
+  {
+    "id": "frida-timeline-83",
+    "title": "Autorretrato (con monos),",
+    "artist": "Frida Kahlo",
+    "date": "1943",
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/frida-timeline/frida-timeline-83-2cb632f9-image.webp",
+    "source": "Museo Frida Kahlo",
+    "description": "Frida pinta su cuadro Autorretrato (con monos).",
+    "original_image": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/05/83.png"
+  },
+  {
+    "id": "frida-timeline-84",
+    "title": "Frida Kahlo",
+    "artist": "Frida Kahlo",
+    "date": "1943",
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/frida-timeline/frida-timeline-84-0ca4d0ed-image.webp",
+    "source": "Museo Frida Kahlo",
+    "description": "Frida da clases al grupo de Los Fridos.",
+    "original_image": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/05/31-1.jpg"
+  },
+  {
+    "id": "frida-timeline-85",
+    "title": "31 Women Artists Show their Work (recorte de periódico intervenido)",
+    "artist": "Frida Kahlo",
+    "date": "1943",
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/frida-timeline/frida-timeline-85-f7ae339a-image.webp",
+    "source": "Museo Frida Kahlo",
+    "description": "Frida expone su obra en Filadelfia y Nueva York.",
+    "original_image": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/05/85-scaled.jpg"
+  },
+  {
+    "id": "frida-timeline-86",
+    "title": "Frida Kahlo y Diego Rivera con changuito",
+    "artist": "Frida Kahlo",
+    "date": "1943",
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/frida-timeline/frida-timeline-86-1dd60a29-image.webp",
+    "source": "Museo Frida Kahlo",
+    "description": "Diego publica el texto “Frida Kahlo y el arte mexicano”.",
+    "original_image": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/05/Solos002.jpg"
+  },
+  {
+    "id": "frida-timeline-87",
+    "title": "La columna rota,",
+    "artist": "Frida Kahlo",
+    "date": "1944",
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/frida-timeline/frida-timeline-87-9f9cb3a4-image.webp",
+    "source": "Museo Frida Kahlo",
+    "description": "Frida pinta su cuadro La columna rota.",
+    "original_image": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/05/87.jpg"
+  },
+  {
+    "id": "frida-timeline-88",
+    "title": "Diario de Frida Kahlo,",
+    "artist": "Frida Kahlo",
+    "date": "1944",
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/frida-timeline/frida-timeline-88-59553920-image.webp",
+    "source": "Museo Frida Kahlo",
+    "description": "Frida comienza a escribir su diario.",
+    "original_image": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/05/IMG_9273.jpg"
+  },
+  {
+    "id": "frida-timeline-89",
+    "title": "Diego y Frida (1929-1944)",
+    "artist": "Frida Kahlo",
+    "date": "1944",
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/frida-timeline/frida-timeline-89-f6d1f8b5-image.webp",
+    "source": "Museo Frida Kahlo",
+    "description": "Frida le regala a Diego su cuadro Diego y Frida (1929-1944).",
+    "original_image": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/05/89.jpg"
+  },
+  {
+    "id": "frida-timeline-90",
+    "title": "Moisés o Núcleo solar,",
+    "artist": "Frida Kahlo",
+    "date": "1945",
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/frida-timeline/frida-timeline-90-93dd01c8-image.webp",
+    "source": "Museo Frida Kahlo",
+    "description": "Frida pinta su obra Moisés o Núcleo solar.",
+    "original_image": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/05/90.jpg"
+  },
+  {
+    "id": "frida-timeline-91",
+    "title": "Frida Kahlo y Diego Rivera en la Casa Azul, c.",
+    "artist": "Frida Kahlo",
+    "date": "1946",
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/frida-timeline/frida-timeline-91-414d3a2c-image.webp",
+    "source": "Museo Frida Kahlo",
+    "description": "Juan O´Gorman hace una ampliación en la Casa Azul.",
+    "original_image": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/05/91.jpg"
+  },
+  {
+    "id": "frida-timeline-92",
+    "title": "Frida Kahlo en Nueva York,",
+    "artist": "Frida Kahlo",
+    "date": "1946",
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/frida-timeline/frida-timeline-92-eb1f5309-image.webp",
+    "source": "Museo Frida Kahlo",
+    "description": "Frida se somete a una cirugía de columna.",
+    "original_image": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/05/en-el-hospital021.jpg"
+  },
+  {
+    "id": "frida-timeline-93",
+    "title": "La venadita",
+    "artist": "Frida Kahlo",
+    "date": "1946",
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/frida-timeline/frida-timeline-93-0d844a5b-image.webp",
+    "source": "Museo Frida Kahlo",
+    "description": "Frida pinta su cuadro La venadita o El venado herido o Carma.",
+    "original_image": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/05/93.jpg"
+  },
+  {
+    "id": "frida-timeline-94",
+    "title": "Árbol de la esperanza mantente firme",
+    "artist": "Frida Kahlo",
+    "date": "1946",
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/frida-timeline/frida-timeline-94-e23baf8b-image.webp",
+    "source": "Museo Frida Kahlo",
+    "description": "Frida pinta su obra Árbol de la esperanza mantente firme.",
+    "original_image": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/05/94.jpg"
+  },
+  {
+    "id": "frida-timeline-95",
+    "title": "(De izquierda a derecha): Frida Kahlo, José Clemente Orozco, Manuel Sandoval Vallarta, Enrique de la Mora y personas no identificadas en el Premio Nacional de Ciencias y Artes,",
+    "artist": "Frida Kahlo",
+    "date": "1946",
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/frida-timeline/frida-timeline-95-496f36ba-image.webp",
+    "source": "Museo Frida Kahlo",
+    "description": "Frida gana mención honorífica con su obra Moisés.",
+    "original_image": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/05/con-amigos032a.jpg"
+  },
+  {
+    "id": "frida-timeline-96",
+    "title": "Mi familia",
+    "artist": "Frida Kahlo",
+    "date": "1949",
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/frida-timeline/frida-timeline-96-721194f9-image.webp",
+    "source": "Museo Frida Kahlo",
+    "description": "Frida pinta su cuadro Mi familia (inconcluso).",
+    "original_image": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/05/96.jpg"
+  },
+  {
+    "id": "frida-timeline-97",
+    "title": "El abrazo de amor de El universo, la tierra (México), yo, Diego y el señor Xólotl,",
+    "artist": "Frida Kahlo",
+    "date": "1949",
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/frida-timeline/frida-timeline-97-cee43c70-image.webp",
+    "source": "Museo Frida Kahlo",
+    "description": "Frida pinta El abrazo de amor de El universo, la tierra (México), yo, Diego y el señor Xólotl.",
+    "original_image": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/05/97.jpg"
+  },
+  {
+    "id": "frida-timeline-98",
+    "title": "Corsé de yeso intervenido,",
+    "artist": "Frida Kahlo",
+    "date": "1950",
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/frida-timeline/frida-timeline-98-d37402c2-image.webp",
+    "source": "Museo Frida Kahlo",
+    "description": "La salud de Frida decae y es hospitalizada repetidamente.",
+    "original_image": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/05/98.jpg"
+  },
+  {
+    "id": "frida-timeline-99",
+    "title": "La actriz Dolores del Río",
+    "artist": "Frida Kahlo",
+    "date": "1951",
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/frida-timeline/frida-timeline-99-1dd524e8-image.webp",
+    "source": "Museo Frida Kahlo",
+    "description": "Frida recibe con frecuencia la visita de sus amigos.",
+    "original_image": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/05/Dolores-del-Rio002a.jpg"
+  },
+  {
+    "id": "frida-timeline-100",
+    "title": "Naturaleza muerta",
+    "artist": "Frida Kahlo",
+    "date": "1951",
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/frida-timeline/frida-timeline-100-94ea4523-image.webp",
+    "source": "Museo Frida Kahlo",
+    "description": "Frida pinta su cuadro Naturaleza muerta (“Soy de Samuel Fastlicht”).",
+    "original_image": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/05/100.jpg"
+  },
+  {
+    "id": "frida-timeline-101",
+    "title": "Antonio Rodríguez, periodista, entrevista a Frida Kahlo, c.",
+    "artist": "Frida Kahlo",
+    "date": "1952",
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/frida-timeline/frida-timeline-101-612c3f98-image.webp",
+    "source": "Museo Frida Kahlo",
+    "description": "A pesar de su deteriorada salud, Frida sigue pintando.",
+    "original_image": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/05/101.jpg"
+  },
+  {
+    "id": "frida-timeline-102",
+    "title": "Retrato de mi padre, Guillermo Kahlo",
+    "artist": "Frida Kahlo",
+    "date": "1952",
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/frida-timeline/frida-timeline-102-e25881c5-image.webp",
+    "source": "Museo Frida Kahlo",
+    "description": "Frida pinta Retrato de mi padre, Guillermo Kahlo.",
+    "original_image": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/05/4.jpg"
+  },
+  {
+    "id": "frida-timeline-103",
+    "title": "Frida Kahlo en la Casa Azul, c.",
+    "artist": "Frida Kahlo",
+    "date": "1952",
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/frida-timeline/frida-timeline-103-71331a4e-image.webp",
+    "source": "Museo Frida Kahlo",
+    "description": "Por su delicada salud, Frida requiere enfermeras de tiempo completo.",
+    "original_image": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/05/de-Frida032.jpg"
+  },
+  {
+    "id": "frida-timeline-104",
+    "title": "Catálogo de la exposición “Art Mexicain. Du precolombien a nous jours. Tome II”",
+    "artist": "Frida Kahlo",
+    "date": "1952",
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/frida-timeline/frida-timeline-104-5c5c4f2f-image.webp",
+    "source": "Museo Frida Kahlo",
+    "description": "La obra de Frida participa en la exposición \"Arte mexicano: desde el período precolombino hasta nuestros días\".",
+    "original_image": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/05/DSC_1891.jpg"
+  },
+  {
+    "id": "frida-timeline-105",
+    "title": "Frida Kahlo en la inauguración de una pulquería, c.",
+    "artist": "Frida Kahlo",
+    "date": "1952",
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/frida-timeline/frida-timeline-105-19788c97-image.webp",
+    "source": "Museo Frida Kahlo",
+    "description": "Frida y algunos de Los Fridos pintan los murales de La Rosita.",
+    "original_image": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/05/105.jpg"
+  },
+  {
+    "id": "frida-timeline-106",
+    "title": "Frida Kahlo en su exposición individual con Concha Michel, el Dr. Atl y Antonio Peláez, entre otros",
+    "artist": "Frida Kahlo",
+    "date": "1953",
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/frida-timeline/frida-timeline-106-f5b766d3-image.webp",
+    "source": "Museo Frida Kahlo",
+    "description": "La fotógrafa Lola Álvarez Bravo organiza una exhibición de la obra de Frida.",
+    "original_image": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/05/DSC_1927-copia.jpg"
+  },
+  {
+    "id": "frida-timeline-107",
+    "title": "Prótesis metálica de pierna derecha, bota con motivos chinos, pieza intervenida",
+    "artist": "Frida Kahlo",
+    "date": "1953",
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/frida-timeline/frida-timeline-107-3caed93e-image.webp",
+    "source": "Museo Frida Kahlo",
+    "description": "Frida sufre la amputación de la mitad de su pierna derecha.",
+    "original_image": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/05/107.jpg"
+  },
+  {
+    "id": "frida-timeline-108",
+    "title": "El marxismo",
+    "artist": "Frida Kahlo",
+    "date": "1954",
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/frida-timeline/frida-timeline-108-1f29f89d-image.webp",
+    "source": "Museo Frida Kahlo",
+    "description": "Frida pinta el cuadro El marxismo dará salud a los enfermos (inconcluso).",
+    "original_image": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/05/El_Marxismo_Dara_Salud_a_los_Enfermos_M.jpg"
+  },
+  {
+    "id": "frida-timeline-109",
+    "title": "Frida Kahlo, Juan O’ Gorman y Diego Rivera, en la última fotografía de Frida en vida, durante una manifestación contra la intervención estadounidense en Guatemala,",
+    "artist": "Frida Kahlo",
+    "date": "1954",
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/frida-timeline/frida-timeline-109-f4e484e9-image.webp",
+    "source": "Museo Frida Kahlo",
+    "description": "Frida asiste a una protesta contra la intervención de los Estados Unidos en Guatemala",
+    "original_image": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/05/108.jpg"
+  },
+  {
+    "id": "frida-timeline-110",
+    "title": "Viva la vida",
+    "artist": "Frida Kahlo",
+    "date": "1954",
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/frida-timeline/frida-timeline-110-50b0d9d9-image.webp",
+    "source": "Museo Frida Kahlo",
+    "description": "Frida muere a los 47 años de edad.",
+    "original_image": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/05/1.jpg"
+  },
+  {
+    "id": "frida-timeline-119",
+    "title": "Frida Kahlo. Una vida, una obra.",
+    "artist": "Frida Kahlo",
+    "date": "1992",
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/frida-timeline/frida-timeline-119-4160af03-image.webp",
+    "source": "Museo Frida Kahlo",
+    "description": "Frida Kahlo. Una vida, una obra.",
+    "original_image": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/07/9.-Frida-Kahlo.-Una-vida-una-obra.jpg"
+  },
+  {
+    "id": "frida-timeline-142",
+    "title": "Diego Rivera, Obra Mural Completa.",
+    "artist": "Frida Kahlo",
+    "date": "2008",
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/frida-timeline/frida-timeline-142-d90edf8c-image.webp",
+    "source": "Museo Frida Kahlo",
+    "description": "Diego Rivera, Obra Mural Completa.",
+    "original_image": "https://www.museofridakahlo.org.mx/wp/wp-content/uploads/2022/07/32.-DR-Obra-Mural-Completa.jpeg"
+  }
+]

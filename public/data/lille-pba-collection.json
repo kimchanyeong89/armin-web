@@ -5,19 +5,21 @@
     "artist": "Gustave Courbet",
     "year": "1849",
     "medium": "Oil on canvas",
-    "imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/peintures-xvi-sup-e-sup-xxi-sup-e-sup-siecles/l-apres-dinee-a-ornans/2867-6-fre-FR/L-Apres-dinee-a-Ornans_artwork_illustration.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/lille-pba-collection/lille-1-ccb5d050-imageUrl.webp",
     "sourceUrl": "https://pba.lille.fr/en/Collections/Highlights/16th-20th-century-Paintings/After-dinner-in-Ornans",
-    "museum": "Palais des Beaux-Arts de Lille"
+    "museum": "Palais des Beaux-Arts de Lille",
+    "original_imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/peintures-xvi-sup-e-sup-xxi-sup-e-sup-siecles/l-apres-dinee-a-ornans/2867-6-fre-FR/L-Apres-dinee-a-Ornans_artwork_illustration.jpg"
   },
   {
     "id": "lille-2",
-    "title": "Les autres chefs-d’oeuvres",
+    "title": "Albarello",
     "artist": "Unknown",
-    "year": "",
-    "medium": "ceramics production in the Renaissance. It specialised in the creation of clay-based terracotta objects, covered with a coating known as a glaze or enamel. This is the Faience earthenware technique, which takes its name from the town of Faenza.",
-    "imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/ceramiques-et-objets-d-art/albarello/84779-11-eng-GB/Albarello_artwork_illustration.jpg",
+    "year": "c. 1550",
+    "medium": "Earthenware",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/lille-pba-collection/lille-2-66b68678-imageUrl.webp",
     "sourceUrl": "https://pba.lille.fr/en/Collections/Highlights/Ceramics-and-Decorative-Arts/Albarello",
-    "museum": "Palais des Beaux-Arts de Lille"
+    "museum": "Palais des Beaux-Arts de Lille",
+    "original_imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/ceramiques-et-objets-d-art/albarello/84779-11-eng-GB/Albarello_artwork_illustration.jpg"
   },
   {
     "id": "lille-3",
@@ -25,19 +27,21 @@
     "artist": "Pieter Boel",
     "year": "1663",
     "medium": "Oil on canvas",
-    "imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/peintures-xvi-sup-e-sup-xxi-sup-e-sup-siecles/allegorie-des-vanites-du-monde/2762-16-fre-FR/Allegorie-des-vanites-du-monde_artwork_illustration.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/lille-pba-collection/lille-3-0ce6c921-imageUrl.webp",
     "sourceUrl": "https://pba.lille.fr/en/Collections/Highlights/16th-20th-century-Paintings/Allegory-of-the-vanity-s-of-the-world",
-    "museum": "Palais des Beaux-Arts de Lille"
+    "museum": "Palais des Beaux-Arts de Lille",
+    "original_imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/peintures-xvi-sup-e-sup-xxi-sup-e-sup-siecles/allegorie-des-vanites-du-monde/2762-16-fre-FR/Allegorie-des-vanites-du-monde_artwork_illustration.jpg"
   },
   {
     "id": "lille-4",
-    "title": "Les autres chefs-d’oeuvres",
+    "title": "Altarpiece of Saint George",
     "artist": "Unknown",
-    "year": "",
-    "medium": "",
-    "imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/moyen-age-et-renaissance/retable-de-saint-georges/8745-1-fre-FR/Retable-de-saint-Georges_artwork_illustration.jpg",
+    "year": "c. 1480-1490",
+    "medium": "Polychrome pine",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/lille-pba-collection/lille-4-cb60bb4a-imageUrl.webp",
     "sourceUrl": "https://pba.lille.fr/en/Collections/Highlights/Middle-Ages-Renaissance/Altarpiece-of-Saint-George",
-    "museum": "Palais des Beaux-Arts de Lille"
+    "museum": "Palais des Beaux-Arts de Lille",
+    "original_imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/moyen-age-et-renaissance/retable-de-saint-georges/8745-1-fre-FR/Retable-de-saint-Georges_artwork_illustration.jpg"
   },
   {
     "id": "lille-5",
@@ -45,9 +49,10 @@
     "artist": "Hieronymus Janssens",
     "year": "",
     "medium": "",
-    "imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/moyen-age-et-renaissance/antependium/8136-6-fre-FR/Antependium_artwork_illustration.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/lille-pba-collection/lille-5-95ea79f9-imageUrl.webp",
     "sourceUrl": "https://pba.lille.fr/en/Collections/Highlights/Middle-Ages-Renaissance/Antependium",
-    "museum": "Palais des Beaux-Arts de Lille"
+    "museum": "Palais des Beaux-Arts de Lille",
+    "original_imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/moyen-age-et-renaissance/antependium/8136-6-fre-FR/Antependium_artwork_illustration.jpg"
   },
   {
     "id": "lille-6",
@@ -55,9 +60,10 @@
     "artist": "Hieronymus Janssens",
     "year": "",
     "medium": "",
-    "imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/moyen-age-et-renaissance/aquamanile-en-forme-de-lion/8155-2-fre-FR/Aquamanile-en-forme-de-lion_artwork_illustration.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/lille-pba-collection/lille-6-caa3a852-imageUrl.webp",
     "sourceUrl": "https://pba.lille.fr/en/Collections/Highlights/Middle-Ages-Renaissance/Aquamanile-in-the-shape-of-a-lion",
-    "museum": "Palais des Beaux-Arts de Lille"
+    "museum": "Palais des Beaux-Arts de Lille",
+    "original_imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/moyen-age-et-renaissance/aquamanile-en-forme-de-lion/8155-2-fre-FR/Aquamanile-en-forme-de-lion_artwork_illustration.jpg"
   },
   {
     "id": "lille-7",
@@ -65,9 +71,10 @@
     "artist": "Hieronymus Janssens",
     "year": "",
     "medium": "Ceramic with black figures",
-    "imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/prehistoire-et-antiquite/coupe-attique-a-yeux/22301-3-fre-FR/Coupe-attique-a-yeux_artwork_illustration.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/lille-pba-collection/lille-7-49d32d20-imageUrl.webp",
     "sourceUrl": "https://pba.lille.fr/en/Collections/Highlights/Antiquities/Attic-cup-with-eyes",
-    "museum": "Palais des Beaux-Arts de Lille"
+    "museum": "Palais des Beaux-Arts de Lille",
+    "original_imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/prehistoire-et-antiquite/coupe-attique-a-yeux/22301-3-fre-FR/Coupe-attique-a-yeux_artwork_illustration.jpg"
   },
   {
     "id": "lille-8",
@@ -75,9 +82,10 @@
     "artist": "Hieronymus Janssens",
     "year": "1658",
     "medium": "Oil on canvas",
-    "imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/peintures-xvi-sup-e-sup-xxi-sup-e-sup-siecles/bal-sur-la-terrasse-d-un-palais/10613-4-fre-FR/Bal-sur-la-terrasse-d-un-palais_artwork_illustration.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/lille-pba-collection/lille-8-193ed252-imageUrl.webp",
     "sourceUrl": "https://pba.lille.fr/en/Collections/Highlights/16th-20th-century-Paintings/Ball-on-a-palace-terrace",
-    "museum": "Palais des Beaux-Arts de Lille"
+    "museum": "Palais des Beaux-Arts de Lille",
+    "original_imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/peintures-xvi-sup-e-sup-xxi-sup-e-sup-siecles/bal-sur-la-terrasse-d-un-palais/10613-4-fre-FR/Bal-sur-la-terrasse-d-un-palais_artwork_illustration.jpg"
   },
   {
     "id": "lille-9",
@@ -85,9 +93,10 @@
     "artist": "David Jacques Louis",
     "year": "1781",
     "medium": "Oil on canvas",
-    "imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/peintures-xvi-sup-e-sup-xxi-sup-e-sup-siecles/belisaire-demandant-l-aumone/2822-3-fre-FR/Belisaire-demandant-l-aumone_artwork_illustration.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/lille-pba-collection/lille-9-6d59369a-imageUrl.webp",
     "sourceUrl": "https://pba.lille.fr/en/Collections/Highlights/16th-20th-century-Paintings/Belisarius-begging-for-alms",
-    "museum": "Palais des Beaux-Arts de Lille"
+    "museum": "Palais des Beaux-Arts de Lille",
+    "original_imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/peintures-xvi-sup-e-sup-xxi-sup-e-sup-siecles/belisaire-demandant-l-aumone/2822-3-fre-FR/Belisaire-demandant-l-aumone_artwork_illustration.jpg"
   },
   {
     "id": "lille-10",
@@ -95,9 +104,10 @@
     "artist": "Édouard Manet",
     "year": "1874",
     "medium": "Oil on canvas",
-    "imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/peintures-xvi-sup-e-sup-xxi-sup-e-sup-siecles/berthe-morisot-a-l-eventail/2897-16-fre-FR/Berthe-Morisot-a-l-eventail_artwork_illustration.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/lille-pba-collection/lille-10-474ab576-imageUrl.webp",
     "sourceUrl": "https://pba.lille.fr/en/Collections/Highlights/16th-20th-century-Paintings/Berthe-Morisot-with-a-Fan",
-    "museum": "Palais des Beaux-Arts de Lille"
+    "museum": "Palais des Beaux-Arts de Lille",
+    "original_imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/peintures-xvi-sup-e-sup-xxi-sup-e-sup-siecles/berthe-morisot-a-l-eventail/2897-16-fre-FR/Berthe-Morisot-a-l-eventail_artwork_illustration.jpg"
   },
   {
     "id": "lille-11",
@@ -105,9 +115,10 @@
     "artist": "Amaury-Duval",
     "year": "1862",
     "medium": "Oil on canvas",
-    "imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/peintures-xvi-sup-e-sup-xxi-sup-e-sup-siecles/naissance-de-venus/2543-9-fre-FR/Naissance-de-Venus_artwork_illustration.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/lille-pba-collection/lille-11-41ef8a41-imageUrl.webp",
     "sourceUrl": "https://pba.lille.fr/en/Collections/Highlights/16th-20th-century-Paintings/Birth-of-Venus",
-    "museum": "Palais des Beaux-Arts de Lille"
+    "museum": "Palais des Beaux-Arts de Lille",
+    "original_imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/peintures-xvi-sup-e-sup-xxi-sup-e-sup-siecles/naissance-de-venus/2543-9-fre-FR/Naissance-de-Venus_artwork_illustration.jpg"
   },
   {
     "id": "lille-12",
@@ -115,9 +126,10 @@
     "artist": "Roelandt Savery",
     "year": "",
     "medium": "Oil on wood",
-    "imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/peintures-xvi-sup-e-sup-xxi-sup-e-sup-siecles/bouquet-de-fleurs/8174-18-fre-FR/Bouquet-de-fleurs_artwork_illustration.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/lille-pba-collection/lille-12-b95c3ee3-imageUrl.webp",
     "sourceUrl": "https://pba.lille.fr/en/Collections/Highlights/16th-20th-century-Paintings/Bouquet-of-flowers",
-    "museum": "Palais des Beaux-Arts de Lille"
+    "museum": "Palais des Beaux-Arts de Lille",
+    "original_imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/peintures-xvi-sup-e-sup-xxi-sup-e-sup-siecles/bouquet-de-fleurs/8174-18-fre-FR/Bouquet-de-fleurs_artwork_illustration.jpg"
   },
   {
     "id": "lille-13",
@@ -125,9 +137,10 @@
     "artist": "Denis Foyatier",
     "year": "",
     "medium": "",
-    "imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/prehistoire-et-antiquite/vases-canopes/83998-13-eng-GB/CANOPIC-JARS_artwork_illustration.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/lille-pba-collection/lille-13-4218f8ff-imageUrl.webp",
     "sourceUrl": "https://pba.lille.fr/en/Collections/Highlights/Antiquities/Canopic-jars",
-    "museum": "Palais des Beaux-Arts de Lille"
+    "museum": "Palais des Beaux-Arts de Lille",
+    "original_imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/prehistoire-et-antiquite/vases-canopes/83998-13-eng-GB/CANOPIC-JARS_artwork_illustration.jpg"
   },
   {
     "id": "lille-14",
@@ -135,9 +148,10 @@
     "artist": "Denis Foyatier",
     "year": "",
     "medium": "",
-    "imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/prehistoire-et-antiquite/sarcophage-et-momie-de-chat/84046-10-eng-GB/CAT-SARCOPHAGUS-AND-MUMMY_artwork_illustration.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/lille-pba-collection/lille-14-f6095a63-imageUrl.webp",
     "sourceUrl": "https://pba.lille.fr/en/Collections/Highlights/Antiquities/Cat-sarcophagus-and-mummy",
-    "museum": "Palais des Beaux-Arts de Lille"
+    "museum": "Palais des Beaux-Arts de Lille",
+    "original_imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/prehistoire-et-antiquite/sarcophage-et-momie-de-chat/84046-10-eng-GB/CAT-SARCOPHAGUS-AND-MUMMY_artwork_illustration.jpg"
   },
   {
     "id": "lille-15",
@@ -145,9 +159,10 @@
     "artist": "Middle Ages",
     "year": "",
     "medium": "",
-    "imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/moyen-age-et-renaissance/encensoir-aux-hebreux-dans-la-fournaise/8443-1-fre-FR/Encensoir-aux-Hebreux-dans-la-fournaise_artwork_illustration.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/lille-pba-collection/lille-15-d2e54ee4-imageUrl.webp",
     "sourceUrl": "https://pba.lille.fr/en/Collections/Highlights/Middle-Ages-Renaissance/Censer-depicting-the-Hebrews-in-the-Fiery-Furnace",
-    "museum": "Palais des Beaux-Arts de Lille"
+    "museum": "Palais des Beaux-Arts de Lille",
+    "original_imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/moyen-age-et-renaissance/encensoir-aux-hebreux-dans-la-fournaise/8443-1-fre-FR/Encensoir-aux-Hebreux-dans-la-fournaise_artwork_illustration.jpg"
   },
   {
     "id": "lille-16",
@@ -155,9 +170,10 @@
     "artist": "Modern Period",
     "year": "",
     "medium": "",
-    "imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/ceramiques-et-objets-d-art/plat-chinois/84836-16-eng-GB/Chinese-plate_artwork_illustration.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/lille-pba-collection/lille-16-5da85fe7-imageUrl.webp",
     "sourceUrl": "https://pba.lille.fr/en/Collections/Highlights/Ceramics-and-Decorative-Arts/Chinese-plate",
-    "museum": "Palais des Beaux-Arts de Lille"
+    "museum": "Palais des Beaux-Arts de Lille",
+    "original_imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/ceramiques-et-objets-d-art/plat-chinois/84836-16-eng-GB/Chinese-plate_artwork_illustration.jpg"
   },
   {
     "id": "lille-17",
@@ -165,9 +181,10 @@
     "artist": "Dyck Antoon van",
     "year": "",
     "medium": "Oil on wood",
-    "imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/peintures-xvi-sup-e-sup-xxi-sup-e-sup-siecles/le-christ-en-croix/85040-17-eng-GB/Christ-on-the-cross_artwork_illustration.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/lille-pba-collection/lille-17-b956d7d2-imageUrl.webp",
     "sourceUrl": "https://pba.lille.fr/en/Collections/Highlights/16th-20th-century-Paintings/Christ-on-the-cross",
-    "museum": "Palais des Beaux-Arts de Lille"
+    "museum": "Palais des Beaux-Arts de Lille",
+    "original_imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/peintures-xvi-sup-e-sup-xxi-sup-e-sup-siecles/le-christ-en-croix/85040-17-eng-GB/Christ-on-the-cross_artwork_illustration.jpg"
   },
   {
     "id": "lille-18",
@@ -175,9 +192,10 @@
     "artist": "Denis Foyatier",
     "year": "1834",
     "medium": "",
-    "imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/sculptures-xixe-xxe-siecles/cincinnatus/23551-1-fre-FR/Cincinnatus_artwork_illustration.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/lille-pba-collection/lille-18-c1184b71-imageUrl.webp",
     "sourceUrl": "https://pba.lille.fr/en/Collections/Highlights/19th-century-sculptures/Cincinnatus",
-    "museum": "Palais des Beaux-Arts de Lille"
+    "museum": "Palais des Beaux-Arts de Lille",
+    "original_imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/sculptures-xixe-xxe-siecles/cincinnatus/23551-1-fre-FR/Cincinnatus_artwork_illustration.jpg"
   },
   {
     "id": "lille-19",
@@ -185,19 +203,21 @@
     "artist": "Serge Poliakoff",
     "year": "1954",
     "medium": "Oil on canvas",
-    "imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/peintures-xvi-sup-e-sup-xxi-sup-e-sup-siecles/composition/12802-1-fre-FR/Composition_artwork_illustration.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/lille-pba-collection/lille-19-75d33f03-imageUrl.webp",
     "sourceUrl": "https://pba.lille.fr/en/Collections/Highlights/16th-20th-century-Paintings/Composition",
-    "museum": "Palais des Beaux-Arts de Lille"
+    "museum": "Palais des Beaux-Arts de Lille",
+    "original_imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/peintures-xvi-sup-e-sup-xxi-sup-e-sup-siecles/composition/12802-1-fre-FR/Composition_artwork_illustration.jpg"
   },
   {
     "id": "lille-20",
-    "title": "Les autres chefs-d’oeuvres",
-    "artist": "Unknown",
+    "title": "Cows",
+    "artist": "Vincent Van Gogh",
     "year": "1890",
     "medium": "Oil on canvas",
-    "imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/peintures-xvi-sup-e-sup-xxi-sup-e-sup-siecles/les-vaches/21919-4-fre-FR/Les-Vaches_artwork_illustration.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/lille-pba-collection/lille-20-c83d79a3-imageUrl.webp",
     "sourceUrl": "https://pba.lille.fr/en/Collections/Highlights/16th-20th-century-Paintings/Cows",
-    "museum": "Palais des Beaux-Arts de Lille"
+    "museum": "Palais des Beaux-Arts de Lille",
+    "original_imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/peintures-xvi-sup-e-sup-xxi-sup-e-sup-siecles/les-vaches/21919-4-fre-FR/Les-Vaches_artwork_illustration.jpg"
   },
   {
     "id": "lille-21",
@@ -205,9 +225,10 @@
     "artist": "Contemporary Period",
     "year": "1876",
     "medium": "Bronze",
-    "imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/sculptures-xixe-xxe-siecles/l-amour-pique/84587-6-eng-GB/Cupid-stung_artwork_illustration.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/lille-pba-collection/lille-21-4f427189-imageUrl.webp",
     "sourceUrl": "https://pba.lille.fr/en/Collections/Highlights/19th-century-sculptures/Cupid-stung",
-    "museum": "Palais des Beaux-Arts de Lille"
+    "museum": "Palais des Beaux-Arts de Lille",
+    "original_imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/sculptures-xixe-xxe-siecles/l-amour-pique/84587-6-eng-GB/Cupid-stung_artwork_illustration.jpg"
   },
   {
     "id": "lille-22",
@@ -215,9 +236,10 @@
     "artist": "Middle Ages",
     "year": "",
     "medium": "sculptures, which came to the museum separately, have been brought together as all three represent characters from the scene of the Deposition from the Cross. This is a very rare theme in 11th-century sculpture, presenting the moment when Christ is removed from the cross on which he was tortured. Today, the association of these objects has been reconsidered.",
-    "imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/moyen-age-et-renaissance/deposition-de-croix/84154-13-eng-GB/Deposition-from-the-Cross_artwork_illustration.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/lille-pba-collection/lille-22-e9ee3bf0-imageUrl.webp",
     "sourceUrl": "https://pba.lille.fr/en/Collections/Highlights/Middle-Ages-Renaissance/Deposition-from-the-Cross",
-    "museum": "Palais des Beaux-Arts de Lille"
+    "museum": "Palais des Beaux-Arts de Lille",
+    "original_imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/moyen-age-et-renaissance/deposition-de-croix/84154-13-eng-GB/Deposition-from-the-Cross_artwork_illustration.jpg"
   },
   {
     "id": "lille-23",
@@ -225,9 +247,10 @@
     "artist": "God Amun",
     "year": "",
     "medium": "",
-    "imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/moyen-age-et-renaissance/diptyque-vie-du-christ-et-de-la-vierge/8346-1-fre-FR/Diptyque-vie-du-Christ-et-de-la-Vierge_artwork_illustration.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/lille-pba-collection/lille-23-79c8ecbb-imageUrl.webp",
     "sourceUrl": "https://pba.lille.fr/en/Collections/Highlights/Middle-Ages-Renaissance/Diptych-life-of-Christ-and-the-Virgin",
-    "museum": "Palais des Beaux-Arts de Lille"
+    "museum": "Palais des Beaux-Arts de Lille",
+    "original_imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/moyen-age-et-renaissance/diptyque-vie-du-christ-et-de-la-vierge/8346-1-fre-FR/Diptyque-vie-du-Christ-et-de-la-Vierge_artwork_illustration.jpg"
   },
   {
     "id": "lille-24",
@@ -235,9 +258,10 @@
     "artist": "God Amun",
     "year": "",
     "medium": "",
-    "imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/medailles-et-medaillons/double-heaume-d-or-de-philippe-le-hardi/13271-1-fre-FR/Double-Heaume-d-or-de-Philippe-le-Hardi_artwork_illustration.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/lille-pba-collection/lille-24-f01b8fc9-imageUrl.webp",
     "sourceUrl": "https://pba.lille.fr/en/Collections/Highlights/Medals-and-medallions/Double-Golden-Helmet-of-Philip-the-Bold",
-    "museum": "Palais des Beaux-Arts de Lille"
+    "museum": "Palais des Beaux-Arts de Lille",
+    "original_imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/medailles-et-medaillons/double-heaume-d-or-de-philippe-le-hardi/13271-1-fre-FR/Double-Heaume-d-or-de-Philippe-le-Hardi_artwork_illustration.jpg"
   },
   {
     "id": "lille-25",
@@ -245,9 +269,10 @@
     "artist": "God Amun",
     "year": "",
     "medium": "Ceramic with black figures",
-    "imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/prehistoire-et-antiquite/exaleiptron/2687-1-fre-FR/Exaleiptron_artwork_illustration.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/lille-pba-collection/lille-25-7880a447-imageUrl.webp",
     "sourceUrl": "https://pba.lille.fr/en/Collections/Highlights/Antiquities/Exaleiptron",
-    "museum": "Palais des Beaux-Arts de Lille"
+    "museum": "Palais des Beaux-Arts de Lille",
+    "original_imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/prehistoire-et-antiquite/exaleiptron/2687-1-fre-FR/Exaleiptron_artwork_illustration.jpg"
   },
   {
     "id": "lille-26",
@@ -255,9 +280,10 @@
     "artist": "Donatello (école de)",
     "year": "",
     "medium": "Marble",
-    "imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/moyen-age-et-renaissance/le-festin-d-herode/16841-28-eng-GB/Feast-of-Herod_artwork_illustration.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/lille-pba-collection/lille-26-ab49b539-imageUrl.webp",
     "sourceUrl": "https://pba.lille.fr/en/Collections/Highlights/Middle-Ages-Renaissance/Feast-of-Herod2",
-    "museum": "Palais des Beaux-Arts de Lille"
+    "museum": "Palais des Beaux-Arts de Lille",
+    "original_imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/moyen-age-et-renaissance/le-festin-d-herode/16841-28-eng-GB/Feast-of-Herod_artwork_illustration.jpg"
   },
   {
     "id": "lille-27",
@@ -265,9 +291,10 @@
     "artist": "Balthasar van der Ast",
     "year": "1623",
     "medium": "Oil on wood",
-    "imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/peintures-xvi-sup-e-sup-xxi-sup-e-sup-siecles/fruits-coquillages-et-insectes/8500-13-fre-FR/Fruits-coquillages-et-insectes_artwork_illustration.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/lille-pba-collection/lille-27-e56b0b59-imageUrl.webp",
     "sourceUrl": "https://pba.lille.fr/en/Collections/Highlights/16th-20th-century-Paintings/Fruit-shells-and-insects",
-    "museum": "Palais des Beaux-Arts de Lille"
+    "museum": "Palais des Beaux-Arts de Lille",
+    "original_imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/peintures-xvi-sup-e-sup-xxi-sup-e-sup-siecles/fruits-coquillages-et-insectes/8500-13-fre-FR/Fruits-coquillages-et-insectes_artwork_illustration.jpg"
   },
   {
     "id": "lille-28",
@@ -275,9 +302,10 @@
     "artist": "El Greco",
     "year": "",
     "medium": "bronze",
-    "imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/prehistoire-et-antiquite/dieu-amon/12433-1-fre-FR/Dieu-Amon_artwork_illustration.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/lille-pba-collection/lille-28-2ff9fea9-imageUrl.webp",
     "sourceUrl": "https://pba.lille.fr/en/Collections/Highlights/Antiquities/God-Amun",
-    "museum": "Palais des Beaux-Arts de Lille"
+    "museum": "Palais des Beaux-Arts de Lille",
+    "original_imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/prehistoire-et-antiquite/dieu-amon/12433-1-fre-FR/Dieu-Amon_artwork_illustration.jpg"
   },
   {
     "id": "lille-29",
@@ -285,9 +313,10 @@
     "artist": "Eugène Dodeigne",
     "year": "1974",
     "medium": "",
-    "imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/sculptures-xixe-xxe-siecles/groupe-des-cinq/23420-2-fre-FR/Groupe-des-cinq_artwork_illustration.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/lille-pba-collection/lille-29-28e0d4c4-imageUrl.webp",
     "sourceUrl": "https://pba.lille.fr/en/Collections/Highlights/19th-century-sculptures/Groupe-des-cinq",
-    "museum": "Palais des Beaux-Arts de Lille"
+    "museum": "Palais des Beaux-Arts de Lille",
+    "original_imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/sculptures-xixe-xxe-siecles/groupe-des-cinq/23420-2-fre-FR/Groupe-des-cinq_artwork_illustration.jpg"
   },
   {
     "id": "lille-30",
@@ -295,9 +324,10 @@
     "artist": "Contemporary Period",
     "year": "1808",
     "medium": "Marble",
-    "imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/sculptures-xixe-xxe-siecles/hermaphrodite/84522-6-eng-GB/Hermaphroditus_artwork_illustration.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/lille-pba-collection/lille-30-01232ee6-imageUrl.webp",
     "sourceUrl": "https://pba.lille.fr/en/Collections/Highlights/19th-century-sculptures/Hermaphroditus",
-    "museum": "Palais des Beaux-Arts de Lille"
+    "museum": "Palais des Beaux-Arts de Lille",
+    "original_imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/sculptures-xixe-xxe-siecles/hermaphrodite/84522-6-eng-GB/Hermaphroditus_artwork_illustration.jpg"
   },
   {
     "id": "lille-31",
@@ -305,9 +335,10 @@
     "artist": "Claude Monet",
     "year": "1904",
     "medium": "Oil on canvas",
-    "imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/peintures-xvi-sup-e-sup-xxi-sup-e-sup-siecles/le-parlement-de-londres/16879-12-eng-GB/Houses-of-Parliament-London_artwork_illustration.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/lille-pba-collection/lille-31-39b25b0c-imageUrl.webp",
     "sourceUrl": "https://pba.lille.fr/en/Collections/Highlights/16th-20th-century-Paintings/Houses-of-Parliament-London",
-    "museum": "Palais des Beaux-Arts de Lille"
+    "museum": "Palais des Beaux-Arts de Lille",
+    "original_imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/peintures-xvi-sup-e-sup-xxi-sup-e-sup-siecles/le-parlement-de-londres/16879-12-eng-GB/Houses-of-Parliament-London_artwork_illustration.jpg"
   },
   {
     "id": "lille-32",
@@ -315,9 +346,10 @@
     "artist": "Jean-Baptiste Camille Corot",
     "year": "1859",
     "medium": "Oil on canvas",
-    "imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/peintures-xvi-sup-e-sup-xxi-sup-e-sup-siecles/idylle-ou-cache-cache/5752-1-fre-FR/Idylle-ou-Cache-cache_artwork_illustration.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/lille-pba-collection/lille-32-04c2d82f-imageUrl.webp",
     "sourceUrl": "https://pba.lille.fr/en/Collections/Highlights/16th-20th-century-Paintings/Idyll-or-hide-and-seek",
-    "museum": "Palais des Beaux-Arts de Lille"
+    "museum": "Palais des Beaux-Arts de Lille",
+    "original_imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/peintures-xvi-sup-e-sup-xxi-sup-e-sup-siecles/idylle-ou-cache-cache/5752-1-fre-FR/Idylle-ou-Cache-cache_artwork_illustration.jpg"
   },
   {
     "id": "lille-33",
@@ -325,9 +357,10 @@
     "artist": "Benjamin-Constant",
     "year": "1878",
     "medium": "Oil on canvas",
-    "imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/peintures-xvi-sup-e-sup-xxi-sup-e-sup-siecles/interieur-de-harem-au-maroc/5816-7-fre-FR/Interieur-de-harem-au-Maroc_artwork_illustration.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/lille-pba-collection/lille-33-296e6fb7-imageUrl.webp",
     "sourceUrl": "https://pba.lille.fr/en/Collections/Highlights/16th-20th-century-Paintings/Interior-of-a-harem-in-Morocco",
-    "museum": "Palais des Beaux-Arts de Lille"
+    "museum": "Palais des Beaux-Arts de Lille",
+    "original_imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/peintures-xvi-sup-e-sup-xxi-sup-e-sup-siecles/interieur-de-harem-au-maroc/5816-7-fre-FR/Interieur-de-harem-au-Maroc_artwork_illustration.jpg"
   },
   {
     "id": "lille-34",
@@ -335,9 +368,10 @@
     "artist": "Modern Period",
     "year": "1656",
     "medium": "Oil on canvas",
-    "imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/peintures-xvi-sup-e-sup-xxi-sup-e-sup-siecles/interieur-de-la-nieuwe-kerk-de-delft/13030-10-fre-FR/Interieur-de-la-Nieuwe-Kerk-de-Delft_artwork_illustration.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/lille-pba-collection/lille-34-21cb9059-imageUrl.webp",
     "sourceUrl": "https://pba.lille.fr/en/Collections/Highlights/16th-20th-century-Paintings/Interior-of-the-Nieuwe-Kerk-in-Delft",
-    "museum": "Palais des Beaux-Arts de Lille"
+    "museum": "Palais des Beaux-Arts de Lille",
+    "original_imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/peintures-xvi-sup-e-sup-xxi-sup-e-sup-siecles/interieur-de-la-nieuwe-kerk-de-delft/13030-10-fre-FR/Interieur-de-la-Nieuwe-Kerk-de-Delft_artwork_illustration.jpg"
   },
   {
     "id": "lille-35",
@@ -345,9 +379,10 @@
     "artist": "El Greco",
     "year": "",
     "medium": "Oil on canvas",
-    "imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/peintures-xvi-sup-e-sup-xxi-sup-e-sup-siecles/jesus-au-jardin-des-oliviers/10921-3-fre-FR/Jesus-au-jardin-des-oliviers_artwork_illustration.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/lille-pba-collection/lille-35-282ac926-imageUrl.webp",
     "sourceUrl": "https://pba.lille.fr/en/Collections/Highlights/16th-20th-century-Paintings/Jesus-in-the-Garden-of-Olives",
-    "museum": "Palais des Beaux-Arts de Lille"
+    "museum": "Palais des Beaux-Arts de Lille",
+    "original_imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/peintures-xvi-sup-e-sup-xxi-sup-e-sup-siecles/jesus-au-jardin-des-oliviers/10921-3-fre-FR/Jesus-au-jardin-des-oliviers_artwork_illustration.jpg"
   },
   {
     "id": "lille-36",
@@ -355,9 +390,10 @@
     "artist": "Georges Seurat",
     "year": "1885",
     "medium": "Oil on canvas",
-    "imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/peintures-xvi-sup-e-sup-xxi-sup-e-sup-siecles/paysage-a-grandcamp/5928-1-fre-FR/Paysage-a-Grandcamp_artwork_illustration.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/lille-pba-collection/lille-36-872d4906-imageUrl.webp",
     "sourceUrl": "https://pba.lille.fr/en/Collections/Highlights/16th-20th-century-Paintings/Landscape-at-Grandcamp",
-    "museum": "Palais des Beaux-Arts de Lille"
+    "museum": "Palais des Beaux-Arts de Lille",
+    "original_imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/peintures-xvi-sup-e-sup-xxi-sup-e-sup-siecles/paysage-a-grandcamp/5928-1-fre-FR/Paysage-a-Grandcamp_artwork_illustration.jpg"
   },
   {
     "id": "lille-37",
@@ -365,9 +401,10 @@
     "artist": "Laurent Hyre",
     "year": "",
     "medium": "Oil on canvas",
-    "imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/peintures-xvi-sup-e-sup-xxi-sup-e-sup-siecles/paysage-au-joueur-de-flute/10537-4-fre-FR/Paysage-au-joueur-de-flute_artwork_illustration.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/lille-pba-collection/lille-37-e9d71ae2-imageUrl.webp",
     "sourceUrl": "https://pba.lille.fr/en/Collections/Highlights/16th-20th-century-Paintings/Landscape-with-a-flute-player",
-    "museum": "Palais des Beaux-Arts de Lille"
+    "museum": "Palais des Beaux-Arts de Lille",
+    "original_imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/peintures-xvi-sup-e-sup-xxi-sup-e-sup-siecles/paysage-au-joueur-de-flute/10537-4-fre-FR/Paysage-au-joueur-de-flute_artwork_illustration.jpg"
   },
   {
     "id": "lille-38",
@@ -375,9 +412,10 @@
     "artist": "Auguste Rodin",
     "year": "1898",
     "medium": "Bronze",
-    "imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/sculptures-du-xixe-siecle/grande-ombre/5800-1-fre-FR/Large-shade_artwork_illustration.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/lille-pba-collection/lille-38-6642f39b-imageUrl.webp",
     "sourceUrl": "https://pba.lille.fr/en/Collections/Highlights/19th-century-sculptures/Large-shade",
-    "museum": "Palais des Beaux-Arts de Lille"
+    "museum": "Palais des Beaux-Arts de Lille",
+    "original_imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/sculptures-du-xixe-siecle/grande-ombre/5800-1-fre-FR/Large-shade_artwork_illustration.jpg"
   },
   {
     "id": "lille-39",
@@ -385,9 +423,10 @@
     "artist": "Pierre Puvis de Chavannes",
     "year": "1867",
     "medium": "Oil on canvas",
-    "imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/peintures-xvi-sup-e-sup-xxi-sup-e-sup-siecles/le-sommeil/5880-1-fre-FR/Le-Sommeil_artwork_illustration.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/lille-pba-collection/lille-39-a4ff968e-imageUrl.webp",
     "sourceUrl": "https://pba.lille.fr/en/Collections/Highlights/16th-20th-century-Paintings/Le-Sommeil",
-    "museum": "Palais des Beaux-Arts de Lille"
+    "museum": "Palais des Beaux-Arts de Lille",
+    "original_imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/peintures-xvi-sup-e-sup-xxi-sup-e-sup-siecles/le-sommeil/5880-1-fre-FR/Le-Sommeil_artwork_illustration.jpg"
   },
   {
     "id": "lille-40",
@@ -395,9 +434,10 @@
     "artist": "Camille Claudel",
     "year": "1885",
     "medium": "",
-    "imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/sculptures-du-xixe-siecle/madame-de-massary-giganti/18191-11-eng-GB/Madame-de-Massary-Giganti_artwork_illustration.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/lille-pba-collection/lille-40-709ffcab-imageUrl.webp",
     "sourceUrl": "https://pba.lille.fr/en/Collections/Highlights/19th-century-sculptures/Madame-de-Massary-Giganti",
-    "museum": "Palais des Beaux-Arts de Lille"
+    "museum": "Palais des Beaux-Arts de Lille",
+    "original_imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/sculptures-du-xixe-siecle/madame-de-massary-giganti/18191-11-eng-GB/Madame-de-Massary-Giganti_artwork_illustration.jpg"
   },
   {
     "id": "lille-41",
@@ -405,9 +445,10 @@
     "artist": "Eugène Delacroix",
     "year": "1838",
     "medium": "Oil on canvas",
-    "imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/peintures-xvi-sup-e-sup-xxi-sup-e-sup-siecles/medee/18247-13-eng-GB/Medea_artwork_illustration.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/lille-pba-collection/lille-41-134d0dbb-imageUrl.webp",
     "sourceUrl": "https://pba.lille.fr/en/Collections/Highlights/16th-20th-century-Paintings/Medea",
-    "museum": "Palais des Beaux-Arts de Lille"
+    "museum": "Palais des Beaux-Arts de Lille",
+    "original_imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/peintures-xvi-sup-e-sup-xxi-sup-e-sup-siecles/medee/18247-13-eng-GB/Medea_artwork_illustration.jpg"
   },
   {
     "id": "lille-42",
@@ -415,9 +456,10 @@
     "artist": "Boilly Louis Léopold",
     "year": "",
     "medium": "Oil on canvas",
-    "imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/peintures-xvi-sup-e-sup-xxi-sup-e-sup-siecles/monsieur-et-madame-d-aucourt-de-saint-just/5912-1-fre-FR/Monsieur-et-Madame-d-Aucourt-de-Saint-Just_artwork_illustration.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/lille-pba-collection/lille-42-9a2599c6-imageUrl.webp",
     "sourceUrl": "https://pba.lille.fr/en/Collections/Highlights/16th-20th-century-Paintings/Mr-and-Mrs-D-aucourt-de-Saint-Just",
-    "museum": "Palais des Beaux-Arts de Lille"
+    "museum": "Palais des Beaux-Arts de Lille",
+    "original_imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/peintures-xvi-sup-e-sup-xxi-sup-e-sup-siecles/monsieur-et-madame-d-aucourt-de-saint-just/5912-1-fre-FR/Monsieur-et-Madame-d-Aucourt-de-Saint-Just_artwork_illustration.jpg"
   },
   {
     "id": "lille-43",
@@ -425,9 +467,10 @@
     "artist": "Pair of Tulipières",
     "year": "1854",
     "medium": "Bronze",
-    "imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/sculptures-xixe-xxe-siecles/napoleon-1er/84663-7-eng-GB/Napoleon-I_artwork_illustration.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/lille-pba-collection/lille-43-422dfb6e-imageUrl.webp",
     "sourceUrl": "https://pba.lille.fr/en/Collections/Highlights/19th-century-sculptures/Napoleon-I",
-    "museum": "Palais des Beaux-Arts de Lille"
+    "museum": "Palais des Beaux-Arts de Lille",
+    "original_imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/sculptures-xixe-xxe-siecles/napoleon-1er/84663-7-eng-GB/Napoleon-I_artwork_illustration.jpg"
   },
   {
     "id": "lille-44",
@@ -435,9 +478,10 @@
     "artist": "Pair of Tulipières",
     "year": "1868",
     "medium": "",
-    "imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/sculptures-xixe-xxe-siecles/narcisse/84711-6-eng-GB/Narcissus_artwork_illustration.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/lille-pba-collection/lille-44-1ad147e4-imageUrl.webp",
     "sourceUrl": "https://pba.lille.fr/en/Collections/Highlights/19th-century-sculptures/Narcissus",
-    "museum": "Palais des Beaux-Arts de Lille"
+    "museum": "Palais des Beaux-Arts de Lille",
+    "original_imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/sculptures-xixe-xxe-siecles/narcisse/84711-6-eng-GB/Narcissus_artwork_illustration.jpg"
   },
   {
     "id": "lille-45",
@@ -445,9 +489,10 @@
     "artist": "Pair of Tulipières",
     "year": "1414",
     "medium": "Oil on canvas",
-    "imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/peintures-xvi-sup-e-sup-xxi-sup-e-sup-siecles/noli-me-tangere/9681-6-fre-FR/Noli-me-tangere_artwork_illustration.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/lille-pba-collection/lille-45-28526e56-imageUrl.webp",
     "sourceUrl": "https://pba.lille.fr/en/Collections/Highlights/16th-20th-century-Paintings/Noli-me-tangere",
-    "museum": "Palais des Beaux-Arts de Lille"
+    "museum": "Palais des Beaux-Arts de Lille",
+    "original_imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/peintures-xvi-sup-e-sup-xxi-sup-e-sup-siecles/noli-me-tangere/9681-6-fre-FR/Noli-me-tangere_artwork_illustration.jpg"
   },
   {
     "id": "lille-46",
@@ -455,9 +500,10 @@
     "artist": "Francisco de Goya y Lucientes",
     "year": "",
     "medium": "Oil on canvas",
-    "imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/peintures-xvi-sup-e-sup-xxi-sup-e-sup-siecles/les-vieilles-le-temps/16917-16-eng-GB/Old-Women-Time_artwork_illustration.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/lille-pba-collection/lille-46-345dac5b-imageUrl.webp",
     "sourceUrl": "https://pba.lille.fr/en/Collections/Highlights/16th-20th-century-Paintings/Old-Women-Time",
-    "museum": "Palais des Beaux-Arts de Lille"
+    "museum": "Palais des Beaux-Arts de Lille",
+    "original_imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/peintures-xvi-sup-e-sup-xxi-sup-e-sup-siecles/les-vieilles-le-temps/16917-16-eng-GB/Old-Women-Time_artwork_illustration.jpg"
   },
   {
     "id": "lille-47",
@@ -465,9 +511,10 @@
     "artist": "Pablo Picasso",
     "year": "1923",
     "medium": "Oil on canvas",
-    "imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/peintures-xvi-sup-e-sup-xxi-sup-e-sup-siecles/olga-au-col-de-fourrure/2942-1-fre-FR/Olga-in-Fur-Collar_artwork_illustration.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/lille-pba-collection/lille-47-d3c57a21-imageUrl.webp",
     "sourceUrl": "https://pba.lille.fr/en/Collections/Highlights/16th-20th-century-Paintings/Olga-in-Fur-Collar",
-    "museum": "Palais des Beaux-Arts de Lille"
+    "museum": "Palais des Beaux-Arts de Lille",
+    "original_imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/peintures-xvi-sup-e-sup-xxi-sup-e-sup-siecles/olga-au-col-de-fourrure/2942-1-fre-FR/Olga-in-Fur-Collar_artwork_illustration.jpg"
   },
   {
     "id": "lille-48",
@@ -475,9 +522,10 @@
     "artist": "Modern Period",
     "year": "1414",
     "medium": "",
-    "imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/ceramiques-et-objets-d-art/paire-de-tulipieres/84890-11-eng-GB/Pair-of-Tulipieres_artwork_illustration.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/lille-pba-collection/lille-48-c889f1a1-imageUrl.webp",
     "sourceUrl": "https://pba.lille.fr/en/Collections/Highlights/Ceramics-and-Decorative-Arts/Pair-of-Tulipieres",
-    "museum": "Palais des Beaux-Arts de Lille"
+    "museum": "Palais des Beaux-Arts de Lille",
+    "original_imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/ceramiques-et-objets-d-art/paire-de-tulipieres/84890-11-eng-GB/Pair-of-Tulipieres_artwork_illustration.jpg"
   },
   {
     "id": "lille-49",
@@ -485,9 +533,10 @@
     "artist": "Cornelis Boumeester",
     "year": "1414",
     "medium": "",
-    "imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/ceramiques-et-objets-d-art/panneau-de-30-carreaux/18134-11-eng-GB/Panel-of-30-Tiles_artwork_illustration.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/lille-pba-collection/lille-49-e5fdf0e4-imageUrl.webp",
     "sourceUrl": "https://pba.lille.fr/en/Collections/Highlights/Ceramics-and-Decorative-Arts/Panel-of-30-Tiles",
-    "museum": "Palais des Beaux-Arts de Lille"
+    "museum": "Palais des Beaux-Arts de Lille",
+    "original_imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/ceramiques-et-objets-d-art/panneau-de-30-carreaux/18134-11-eng-GB/Panel-of-30-Tiles_artwork_illustration.jpg"
   },
   {
     "id": "lille-50",
@@ -495,9 +544,10 @@
     "artist": "Rectangular Plaque",
     "year": "1909",
     "medium": "Bronze",
-    "imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/sculptures-xixe-xxe-siecles/penelope/84460-14-eng-GB/Penelope_artwork_illustration.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/lille-pba-collection/lille-50-939951ce-imageUrl.webp",
     "sourceUrl": "https://pba.lille.fr/en/Collections/Highlights/19th-century-sculptures/Penelope",
-    "museum": "Palais des Beaux-Arts de Lille"
+    "museum": "Palais des Beaux-Arts de Lille",
+    "original_imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/sculptures-xixe-xxe-siecles/penelope/84460-14-eng-GB/Penelope_artwork_illustration.jpg"
   },
   {
     "id": "lille-51",
@@ -505,9 +555,10 @@
     "artist": "Rectangular Plaque",
     "year": "1414",
     "medium": "",
-    "imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/ceramiques-et-objets-d-art/assiette-aux-cartes-a-jouer/84938-33-eng-GB/Playing-cards-plate_artwork_illustration.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/lille-pba-collection/lille-51-90c62d89-imageUrl.webp",
     "sourceUrl": "https://pba.lille.fr/en/Collections/Highlights/Ceramics-and-Decorative-Arts/Playing-cards-plate",
-    "museum": "Palais des Beaux-Arts de Lille"
+    "museum": "Palais des Beaux-Arts de Lille",
+    "original_imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/ceramiques-et-objets-d-art/assiette-aux-cartes-a-jouer/84938-33-eng-GB/Playing-cards-plate_artwork_illustration.jpg"
   },
   {
     "id": "lille-52",
@@ -515,9 +566,10 @@
     "artist": "Rectangular Plaque",
     "year": "1414",
     "medium": "",
-    "imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/moyen-age-et-renaissance/reliquaire-portatif/8802-1-fre-FR/Reliquaire-portatif_artwork_illustration.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/lille-pba-collection/lille-52-106d889a-imageUrl.webp",
     "sourceUrl": "https://pba.lille.fr/en/Collections/Highlights/Middle-Ages-Renaissance/Portable-reliquary",
-    "museum": "Palais des Beaux-Arts de Lille"
+    "museum": "Palais des Beaux-Arts de Lille",
+    "original_imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/moyen-age-et-renaissance/reliquaire-portatif/8802-1-fre-FR/Reliquaire-portatif_artwork_illustration.jpg"
   },
   {
     "id": "lille-53",
@@ -525,9 +577,10 @@
     "artist": "Alfred Sisley",
     "year": "1872",
     "medium": "Oil on canvas",
-    "imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/peintures-xvi-sup-e-sup-xxi-sup-e-sup-siecles/port-marly-gelee-blanche/5944-1-fre-FR/Port-Marly-gelee-blanche_artwork_illustration.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/lille-pba-collection/lille-53-b2a3505b-imageUrl.webp",
     "sourceUrl": "https://pba.lille.fr/en/Collections/Highlights/16th-20th-century-Paintings/Port-Marly-hoarfrost",
-    "museum": "Palais des Beaux-Arts de Lille"
+    "museum": "Palais des Beaux-Arts de Lille",
+    "original_imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/peintures-xvi-sup-e-sup-xxi-sup-e-sup-siecles/port-marly-gelee-blanche/5944-1-fre-FR/Port-Marly-gelee-blanche_artwork_illustration.jpg"
   },
   {
     "id": "lille-54",
@@ -535,9 +588,10 @@
     "artist": "Jan Verspronck",
     "year": "1634",
     "medium": "Oil on wood",
-    "imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/peintures-xvi-sup-e-sup-xxi-sup-e-sup-siecles/portrait-d-un-garcon-de-15-ans/10556-3-fre-FR/Portrait-d-un-garcon-de-15-ans_artwork_illustration.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/lille-pba-collection/lille-54-4cc0bf97-imageUrl.webp",
     "sourceUrl": "https://pba.lille.fr/en/Collections/Highlights/16th-20th-century-Paintings/Portrait-of-a-fifteen-year-old-boy",
-    "museum": "Palais des Beaux-Arts de Lille"
+    "museum": "Palais des Beaux-Arts de Lille",
+    "original_imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/peintures-xvi-sup-e-sup-xxi-sup-e-sup-siecles/portrait-d-un-garcon-de-15-ans/10556-3-fre-FR/Portrait-d-un-garcon-de-15-ans_artwork_illustration.jpg"
   },
   {
     "id": "lille-55",
@@ -545,9 +599,10 @@
     "artist": "Relief Map of Lille",
     "year": "",
     "medium": "ceramic does not bear any signature, it is difficult to say exactly where it comes from. But it is sometimes possible to make a comparison of style with other signed works. In the case of this plaque, a problem arises: it reminds us as much the faience of Lille as it does of that of Rouen. How do you decide between them?",
-    "imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/ceramiques-et-objets-d-art/plaque-rectangulaire/10940-10-fre-FR/Plaque-rectangulaire_artwork_illustration.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/lille-pba-collection/lille-55-dd16b6d9-imageUrl.webp",
     "sourceUrl": "https://pba.lille.fr/en/Collections/Highlights/Ceramics-and-Decorative-Arts/Rectangular-Plaque",
-    "museum": "Palais des Beaux-Arts de Lille"
+    "museum": "Palais des Beaux-Arts de Lille",
+    "original_imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/ceramiques-et-objets-d-art/plaque-rectangulaire/10940-10-fre-FR/Plaque-rectangulaire_artwork_illustration.jpg"
   },
   {
     "id": "lille-56",
@@ -555,9 +610,10 @@
     "artist": "Modern Period",
     "year": "",
     "medium": "",
-    "imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/plans-reliefs/plan-relief-de-lille/14107-38-eng-GB/Relief-Map-of-Lille_artwork_illustration.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/lille-pba-collection/lille-56-7f036865-imageUrl.webp",
     "sourceUrl": "https://pba.lille.fr/en/Collections/Highlights/Relief-maps/Relief-Map-of-Lille",
-    "museum": "Palais des Beaux-Arts de Lille"
+    "museum": "Palais des Beaux-Arts de Lille",
+    "original_imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/plans-reliefs/plan-relief-de-lille/14107-38-eng-GB/Relief-Map-of-Lille_artwork_illustration.jpg"
   },
   {
     "id": "lille-57",
@@ -565,9 +621,10 @@
     "artist": "Middle Ages",
     "year": "",
     "medium": "",
-    "imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/moyen-age-et-renaissance/croix-reliquaire/84208-11-eng-GB/RELIQUARY-CROSS_artwork_illustration.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/lille-pba-collection/lille-57-fb975110-imageUrl.webp",
     "sourceUrl": "https://pba.lille.fr/en/Collections/Highlights/Middle-Ages-Renaissance/Reliquary-cross",
-    "museum": "Palais des Beaux-Arts de Lille"
+    "museum": "Palais des Beaux-Arts de Lille",
+    "original_imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/moyen-age-et-renaissance/croix-reliquaire/84208-11-eng-GB/RELIQUARY-CROSS_artwork_illustration.jpg"
   },
   {
     "id": "lille-58",
@@ -575,9 +632,10 @@
     "artist": "Sonia Delaunay",
     "year": "1939",
     "medium": "Oil on canvas",
-    "imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/peintures-xvi-sup-e-sup-xxi-sup-e-sup-siecles/rythme-couleur-1076/13125-1-fre-FR/Rythme-couleur-1076_artwork_illustration.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/lille-pba-collection/lille-58-13162cf9-imageUrl.webp",
     "sourceUrl": "https://pba.lille.fr/en/Collections/Highlights/16th-20th-century-Paintings/Rhythm-Colour-No.-1076",
-    "museum": "Palais des Beaux-Arts de Lille"
+    "museum": "Palais des Beaux-Arts de Lille",
+    "original_imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/peintures-xvi-sup-e-sup-xxi-sup-e-sup-siecles/rythme-couleur-1076/13125-1-fre-FR/Rythme-couleur-1076_artwork_illustration.jpg"
   },
   {
     "id": "lille-59",
@@ -585,9 +643,10 @@
     "artist": "Saint Jerome",
     "year": "",
     "medium": "",
-    "imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/ceramiques-et-objets-d-art/epi-de-faitage/11054-1-fre-FR/Epi-de-faitage_artwork_illustration.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/lille-pba-collection/lille-59-b2f402c5-imageUrl.webp",
     "sourceUrl": "https://pba.lille.fr/en/Collections/Highlights/Ceramics-and-Decorative-Arts/Roof-ridge",
-    "museum": "Palais des Beaux-Arts de Lille"
+    "museum": "Palais des Beaux-Arts de Lille",
+    "original_imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/ceramiques-et-objets-d-art/epi-de-faitage/11054-1-fre-FR/Epi-de-faitage_artwork_illustration.jpg"
   },
   {
     "id": "lille-60",
@@ -595,9 +654,10 @@
     "artist": "Jusepe de (Giuseppe, José) Ribera (Rivera), Umkreis",
     "year": "1643",
     "medium": "Oil on canvas",
-    "imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/peintures-xvi-sup-e-sup-xxi-sup-e-sup-siecles/saint-jerome/8637-4-fre-FR/Saint-Jerome_artwork_illustration.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/lille-pba-collection/lille-60-98fbc8c0-imageUrl.webp",
     "sourceUrl": "https://pba.lille.fr/en/Collections/Highlights/16th-20th-century-Paintings/Saint-Jerome",
-    "museum": "Palais des Beaux-Arts de Lille"
+    "museum": "Palais des Beaux-Arts de Lille",
+    "original_imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/peintures-xvi-sup-e-sup-xxi-sup-e-sup-siecles/saint-jerome/8637-4-fre-FR/Saint-Jerome_artwork_illustration.jpg"
   },
   {
     "id": "lille-61",
@@ -605,9 +665,10 @@
     "artist": "James Pradier",
     "year": "",
     "medium": "Oil on wood",
-    "imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/moyen-age-et-renaissance/saint-sebastien/22347-10-fre-FR/Saint-Sebastien_artwork_illustration.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/lille-pba-collection/lille-61-abe00317-imageUrl.webp",
     "sourceUrl": "https://pba.lille.fr/en/Collections/Highlights/Middle-Ages-Renaissance/Saint-Sebastian",
-    "museum": "Palais des Beaux-Arts de Lille"
+    "museum": "Palais des Beaux-Arts de Lille",
+    "original_imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/moyen-age-et-renaissance/saint-sebastien/22347-10-fre-FR/Saint-Sebastien_artwork_illustration.jpg"
   },
   {
     "id": "lille-62",
@@ -615,9 +676,10 @@
     "artist": "James Pradier",
     "year": "",
     "medium": "",
-    "imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/prehistoire-et-antiquite/sarcophage-de-la-dame-ibet/12414-1-fre-FR/Sarcophage-de-la-dame-Ibet_artwork_illustration.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/lille-pba-collection/lille-62-28fc73fb-imageUrl.webp",
     "sourceUrl": "https://pba.lille.fr/en/Collections/Highlights/Antiquities/Sarcophagus-of-the-Lady-Ibet",
-    "museum": "Palais des Beaux-Arts de Lille"
+    "museum": "Palais des Beaux-Arts de Lille",
+    "original_imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/prehistoire-et-antiquite/sarcophage-de-la-dame-ibet/12414-1-fre-FR/Sarcophage-de-la-dame-Ibet_artwork_illustration.jpg"
   },
   {
     "id": "lille-63",
@@ -625,9 +687,10 @@
     "artist": "James Pradier",
     "year": "",
     "medium": "",
-    "imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/sculptures-du-xixe-siecle/satyre-et-bacchante/18153-11-eng-GB/Satyr-and-Bacchante_artwork_illustration.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/lille-pba-collection/lille-63-8999099a-imageUrl.webp",
     "sourceUrl": "https://pba.lille.fr/en/Collections/Highlights/19th-century-sculptures/Satyr-and-Bacchante",
-    "museum": "Palais des Beaux-Arts de Lille"
+    "museum": "Palais des Beaux-Arts de Lille",
+    "original_imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/sculptures-du-xixe-siecle/satyre-et-bacchante/18153-11-eng-GB/Satyr-and-Bacchante_artwork_illustration.jpg"
   },
   {
     "id": "lille-64",
@@ -635,9 +698,10 @@
     "artist": "Véronèse",
     "year": "1578",
     "medium": "Oil on canvas",
-    "imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/peintures-xvi-sup-e-sup-xxi-sup-e-sup-siecles/esquisse-pour-le-paradis/10108-3-fre-FR/Esquisse-pour-le-Paradis_artwork_illustration.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/lille-pba-collection/lille-64-93931ef5-imageUrl.webp",
     "sourceUrl": "https://pba.lille.fr/en/Collections/Highlights/16th-20th-century-Paintings/Sketch-for-Paradise",
-    "museum": "Palais des Beaux-Arts de Lille"
+    "museum": "Palais des Beaux-Arts de Lille",
+    "original_imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/peintures-xvi-sup-e-sup-xxi-sup-e-sup-siecles/esquisse-pour-le-paradis/10108-3-fre-FR/Esquisse-pour-le-Paradis_artwork_illustration.jpg"
   },
   {
     "id": "lille-65",
@@ -645,9 +709,10 @@
     "artist": "Denis Foyatier",
     "year": "",
     "medium": "",
-    "imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/antiquites/skyphos/18266-9-eng-GB/Skyphos_artwork_illustration.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/lille-pba-collection/lille-65-aee2c87a-imageUrl.webp",
     "sourceUrl": "https://pba.lille.fr/en/Collections/Highlights/Antiquities/Skyphos",
-    "museum": "Palais des Beaux-Arts de Lille"
+    "museum": "Palais des Beaux-Arts de Lille",
+    "original_imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/antiquites/skyphos/18266-9-eng-GB/Skyphos_artwork_illustration.jpg"
   },
   {
     "id": "lille-66",
@@ -655,9 +720,10 @@
     "artist": "Pieter Cornelisz. van Slingelandt",
     "year": "",
     "medium": "Oil on wood",
-    "imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/peintures-xvi-sup-e-sup-xxi-sup-e-sup-siecles/les-bulles-de-savon/5322-4-fre-FR/Les-Bulles-de-savon_artwork_illustration.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/lille-pba-collection/lille-66-a16fb145-imageUrl.webp",
     "sourceUrl": "https://pba.lille.fr/en/Collections/Highlights/16th-20th-century-Paintings/Soap-bubbles",
-    "museum": "Palais des Beaux-Arts de Lille"
+    "museum": "Palais des Beaux-Arts de Lille",
+    "original_imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/peintures-xvi-sup-e-sup-xxi-sup-e-sup-siecles/les-bulles-de-savon/5322-4-fre-FR/Les-Bulles-de-savon_artwork_illustration.jpg"
   },
   {
     "id": "lille-67",
@@ -665,9 +731,10 @@
     "artist": "Denis Foyatier",
     "year": "1847",
     "medium": "Bronze",
-    "imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/sculptures-xixe-xxe-siecles/spartacus-brisant-ses-liens/2050-6-fre-FR/Spartacus-brisant-ses-liens_artwork_illustration.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/lille-pba-collection/lille-67-7d2010c9-imageUrl.webp",
     "sourceUrl": "https://pba.lille.fr/en/Collections/Highlights/19th-century-sculptures/Spartacus-Breaking-his-Chains",
-    "museum": "Palais des Beaux-Arts de Lille"
+    "museum": "Palais des Beaux-Arts de Lille",
+    "original_imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/sculptures-xixe-xxe-siecles/spartacus-brisant-ses-liens/2050-6-fre-FR/Spartacus-brisant-ses-liens_artwork_illustration.jpg"
   },
   {
     "id": "lille-68",
@@ -675,9 +742,10 @@
     "artist": "Chagall Marc",
     "year": "",
     "medium": "bronzes of Thiennes",
-    "imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/ceramiques-et-objets-d-art/saupoudreuse/11035-1-fre-FR/Saupoudreuse_artwork_illustration.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/lille-pba-collection/lille-68-ca72d9cb-imageUrl.webp",
     "sourceUrl": "https://pba.lille.fr/en/Collections/Highlights/Ceramics-and-Decorative-Arts/Sprinkler",
-    "museum": "Palais des Beaux-Arts de Lille"
+    "museum": "Palais des Beaux-Arts de Lille",
+    "original_imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/ceramiques-et-objets-d-art/saupoudreuse/11035-1-fre-FR/Saupoudreuse_artwork_illustration.jpg"
   },
   {
     "id": "lille-69",
@@ -685,9 +753,10 @@
     "artist": "Chagall Marc",
     "year": "",
     "medium": "bronzes of Thiennes",
-    "imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/prehistoire-et-antiquite/stele-du-soldat-teti-et-de-sa-mere/12395-1-fre-FR/Stele-du-soldat-Teti-et-de-sa-mere_artwork_illustration.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/lille-pba-collection/lille-69-1547f0c1-imageUrl.webp",
     "sourceUrl": "https://pba.lille.fr/en/Collections/Highlights/Antiquities/Stele-of-the-soldier-Teti-and-his-mother",
-    "museum": "Palais des Beaux-Arts de Lille"
+    "museum": "Palais des Beaux-Arts de Lille",
+    "original_imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/prehistoire-et-antiquite/stele-du-soldat-teti-et-de-sa-mere/12395-1-fre-FR/Stele-du-soldat-Teti-et-de-sa-mere_artwork_illustration.jpg"
   },
   {
     "id": "lille-70",
@@ -695,9 +764,10 @@
     "artist": "Raphael",
     "year": "",
     "medium": "bronzes of Thiennes",
-    "imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/dessins-et-photo-graphies/etude-pour-la-madone-d-albe/5482-16-fre-FR/Etude-pour-la-Madone-d-Albe_artwork_illustration.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/lille-pba-collection/lille-70-a7551f31-imageUrl.webp",
     "sourceUrl": "https://pba.lille.fr/en/Collections/Highlights/Drawings-and-photographies/Study-for-The-Alba-Madonna",
-    "museum": "Palais des Beaux-Arts de Lille"
+    "museum": "Palais des Beaux-Arts de Lille",
+    "original_imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/dessins-et-photo-graphies/etude-pour-la-madone-d-albe/5482-16-fre-FR/Etude-pour-la-Madone-d-Albe_artwork_illustration.jpg"
   },
   {
     "id": "lille-71",
@@ -705,9 +775,10 @@
     "artist": "Chagall Marc",
     "year": "",
     "medium": "Oil on canvas",
-    "imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/peintures-xvi-sup-e-sup-xxi-sup-e-sup-siecles/l-apparition-de-la-famille-de-l-artiste/12764-1-fre-FR/L-Apparition-de-la-famille-de-l-artiste_artwork_illustration.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/lille-pba-collection/lille-71-6efe3e8c-imageUrl.webp",
     "sourceUrl": "https://pba.lille.fr/en/Collections/Highlights/16th-20th-century-Paintings/The-appearance-of-the-artist-s-family",
-    "museum": "Palais des Beaux-Arts de Lille"
+    "museum": "Palais des Beaux-Arts de Lille",
+    "original_imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/peintures-xvi-sup-e-sup-xxi-sup-e-sup-siecles/l-apparition-de-la-famille-de-l-artiste/12764-1-fre-FR/L-Apparition-de-la-famille-de-l-artiste_artwork_illustration.jpg"
   },
   {
     "id": "lille-72",
@@ -715,9 +786,10 @@
     "artist": "Dieric Bouts d. Ä.",
     "year": "",
     "medium": "Oil on wood",
-    "imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/moyen-age-et-renaissance/l-ascension-des-elus-dit-aussi-le-paradis/84256-17-eng-GB/The-Ascent-of-the-elect-also-known-as-Heaven_artwork_illustration.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/lille-pba-collection/lille-72-e9609183-imageUrl.webp",
     "sourceUrl": "https://pba.lille.fr/en/Collections/Highlights/Middle-Ages-Renaissance/The-Ascent-of-the-elect-also-known-as-Heaven",
-    "museum": "Palais des Beaux-Arts de Lille"
+    "museum": "Palais des Beaux-Arts de Lille",
+    "original_imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/moyen-age-et-renaissance/l-ascension-des-elus-dit-aussi-le-paradis/84256-17-eng-GB/The-Ascent-of-the-elect-also-known-as-Heaven_artwork_illustration.jpg"
   },
   {
     "id": "lille-73",
@@ -725,9 +797,10 @@
     "artist": "Jean-François Millet",
     "year": "",
     "medium": "Oil on canvas",
-    "imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/peintures-xvi-sup-e-sup-xxi-sup-e-sup-siecles/la-becquee/2882-16-fre-FR/La-Becquee_artwork_illustration.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/lille-pba-collection/lille-73-725eba60-imageUrl.webp",
     "sourceUrl": "https://pba.lille.fr/en/Collections/Highlights/16th-20th-century-Paintings/The-beakful",
-    "museum": "Palais des Beaux-Arts de Lille"
+    "museum": "Palais des Beaux-Arts de Lille",
+    "original_imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/peintures-xvi-sup-e-sup-xxi-sup-e-sup-siecles/la-becquee/2882-16-fre-FR/La-Becquee_artwork_illustration.jpg"
   },
   {
     "id": "lille-74",
@@ -735,9 +808,10 @@
     "artist": "The Kiss",
     "year": "",
     "medium": "BRONZES OF THIENNES",
-    "imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/prehistoire-et-antiquite/les-bronzes-de-thiennes/12146-1-fre-FR/Les-bronzes-de-Thiennes_artwork_illustration.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/lille-pba-collection/lille-74-283df31a-imageUrl.webp",
     "sourceUrl": "https://pba.lille.fr/en/Collections/Highlights/Antiquities/The-bronzes-of-Thiennes",
-    "museum": "Palais des Beaux-Arts de Lille"
+    "museum": "Palais des Beaux-Arts de Lille",
+    "original_imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/prehistoire-et-antiquite/les-bronzes-de-thiennes/12146-1-fre-FR/Les-bronzes-de-Thiennes_artwork_illustration.jpg"
   },
   {
     "id": "lille-75",
@@ -745,9 +819,10 @@
     "artist": "Pieter Bruegel the Younger",
     "year": "",
     "medium": "Oil on canvas",
-    "imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/peintures-xvi-sup-e-sup-xxi-sup-e-sup-siecles/le-denombrement-de-bethleem/9643-3-fre-FR/Le-denombrement-de-Bethleem_artwork_illustration.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/lille-pba-collection/lille-75-f74b872e-imageUrl.webp",
     "sourceUrl": "https://pba.lille.fr/en/Collections/Highlights/16th-20th-century-Paintings/The-Census-at-Bethlehem",
-    "museum": "Palais des Beaux-Arts de Lille"
+    "museum": "Palais des Beaux-Arts de Lille",
+    "original_imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/peintures-xvi-sup-e-sup-xxi-sup-e-sup-siecles/le-denombrement-de-bethleem/9643-3-fre-FR/Le-denombrement-de-Bethleem_artwork_illustration.jpg"
   },
   {
     "id": "lille-76",
@@ -755,9 +830,10 @@
     "artist": "The Plan-Relief of Namur",
     "year": "",
     "medium": "Oil on canvas",
-    "imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/peintures-xvi-sup-e-sup-xxi-sup-e-sup-siecles/le-concert-dans-l-oeuf/10256-5-fre-FR/Le-Concert-dans-l-oeuf_artwork_illustration.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/lille-pba-collection/lille-76-bc9ec994-imageUrl.webp",
     "sourceUrl": "https://pba.lille.fr/en/Collections/Highlights/16th-20th-century-Paintings/The-Concert-in-the-Egg",
-    "museum": "Palais des Beaux-Arts de Lille"
+    "museum": "Palais des Beaux-Arts de Lille",
+    "original_imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/peintures-xvi-sup-e-sup-xxi-sup-e-sup-siecles/le-concert-dans-l-oeuf/10256-5-fre-FR/Le-Concert-dans-l-oeuf_artwork_illustration.jpg"
   },
   {
     "id": "lille-77",
@@ -765,9 +841,10 @@
     "artist": "Peter Paul Rubens",
     "year": "",
     "medium": "Oil on canvas",
-    "imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/peintures-xvi-sup-e-sup-xxi-sup-e-sup-siecles/la-descente-de-croix/8821-1-fre-FR/The-Descent-from-the-Cross_artwork_illustration.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/lille-pba-collection/lille-77-6ee6ebed-imageUrl.webp",
     "sourceUrl": "https://pba.lille.fr/en/Collections/Highlights/16th-20th-century-Paintings/The-Descent-from-the-Cross",
-    "museum": "Palais des Beaux-Arts de Lille"
+    "museum": "Palais des Beaux-Arts de Lille",
+    "original_imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/peintures-xvi-sup-e-sup-xxi-sup-e-sup-siecles/la-descente-de-croix/8821-1-fre-FR/The-Descent-from-the-Cross_artwork_illustration.jpg"
   },
   {
     "id": "lille-78",
@@ -775,9 +852,10 @@
     "artist": "Middle Ages",
     "year": "",
     "medium": "Oil on wood",
-    "imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/moyen-age-et-renaissance/la-chute-des-damnes/16803-34-eng-GB/The-Fall-of-the-Damned_artwork_illustration.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/lille-pba-collection/lille-78-46cea5c2-imageUrl.webp",
     "sourceUrl": "https://pba.lille.fr/en/Collections/Highlights/Middle-Ages-Renaissance/The-Fall-of-the-Damned",
-    "museum": "Palais des Beaux-Arts de Lille"
+    "museum": "Palais des Beaux-Arts de Lille",
+    "original_imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/moyen-age-et-renaissance/la-chute-des-damnes/16803-34-eng-GB/The-Fall-of-the-Damned_artwork_illustration.jpg"
   },
   {
     "id": "lille-79",
@@ -785,9 +863,10 @@
     "artist": "Carolus-Duran",
     "year": "1868",
     "medium": "Oil on canvas",
-    "imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/peintures-xvi-sup-e-sup-xxi-sup-e-sup-siecles/le-baiser/10050-5-fre-FR/Le-Baiser_artwork_illustration.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/lille-pba-collection/lille-79-f1daa29b-imageUrl.webp",
     "sourceUrl": "https://pba.lille.fr/en/Collections/Highlights/16th-20th-century-Paintings/The-Kiss",
-    "museum": "Palais des Beaux-Arts de Lille"
+    "museum": "Palais des Beaux-Arts de Lille",
+    "original_imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/peintures-xvi-sup-e-sup-xxi-sup-e-sup-siecles/le-baiser/10050-5-fre-FR/Le-Baiser_artwork_illustration.jpg"
   },
   {
     "id": "lille-80",
@@ -795,9 +874,10 @@
     "artist": "Emmanuel Frémiet",
     "year": "1878",
     "medium": "sculpture hall.",
-    "imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/sculptures-du-xixe-siecle/le-chevalier-errant/18172-10-eng-GB/The-Knight-Errant_artwork_illustration.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/lille-pba-collection/lille-80-1fafeeaa-imageUrl.webp",
     "sourceUrl": "https://pba.lille.fr/en/Collections/Highlights/19th-century-sculptures/The-Knight-Errant",
-    "museum": "Palais des Beaux-Arts de Lille"
+    "museum": "Palais des Beaux-Arts de Lille",
+    "original_imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/sculptures-du-xixe-siecle/le-chevalier-errant/18172-10-eng-GB/The-Knight-Errant_artwork_illustration.jpg"
   },
   {
     "id": "lille-81",
@@ -805,9 +885,10 @@
     "artist": "The Plan-Relief of Namur",
     "year": "",
     "medium": "Oil on wood",
-    "imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/peintures-xvi-sup-e-sup-xxi-sup-e-sup-siecles/la-deploration-du-christ/9930-6-fre-FR/La-Deploration-du-Christ_artwork_illustration.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/lille-pba-collection/lille-81-43db317e-imageUrl.webp",
     "sourceUrl": "https://pba.lille.fr/en/Collections/Highlights/16th-20th-century-Paintings/The-Lamentation-of-Christ",
-    "museum": "Palais des Beaux-Arts de Lille"
+    "museum": "Palais des Beaux-Arts de Lille",
+    "original_imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/peintures-xvi-sup-e-sup-xxi-sup-e-sup-siecles/la-deploration-du-christ/9930-6-fre-FR/La-Deploration-du-Christ_artwork_illustration.jpg"
   },
   {
     "id": "lille-82",
@@ -815,9 +896,10 @@
     "artist": "Philippe de Champaigne",
     "year": "",
     "medium": "Oil on canvas",
-    "imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/peintures-xvi-sup-e-sup-xxi-sup-e-sup-siecles/la-nativite/10575-4-fre-FR/La-Nativite_artwork_illustration.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/lille-pba-collection/lille-82-006db9d9-imageUrl.webp",
     "sourceUrl": "https://pba.lille.fr/en/Collections/Highlights/16th-20th-century-Paintings/The-Nativity",
-    "museum": "Palais des Beaux-Arts de Lille"
+    "museum": "Palais des Beaux-Arts de Lille",
+    "original_imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/peintures-xvi-sup-e-sup-xxi-sup-e-sup-siecles/la-nativite/10575-4-fre-FR/La-Nativite_artwork_illustration.jpg"
   },
   {
     "id": "lille-83",
@@ -825,9 +907,10 @@
     "artist": "Modern Period",
     "year": "",
     "medium": "",
-    "imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/plans-reliefs/plan-relief-de-namur/84400-18-eng-GB/The-Plan-Relief-of-Namur_artwork_illustration.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/lille-pba-collection/lille-83-dbe9971a-imageUrl.webp",
     "sourceUrl": "https://pba.lille.fr/en/Collections/Highlights/Relief-maps/The-Plan-Relief-of-Namur",
-    "museum": "Palais des Beaux-Arts de Lille"
+    "museum": "Palais des Beaux-Arts de Lille",
+    "original_imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/plans-reliefs/plan-relief-de-namur/84400-18-eng-GB/The-Plan-Relief-of-Namur_artwork_illustration.jpg"
   },
   {
     "id": "lille-84",
@@ -835,9 +918,10 @@
     "artist": "Modern Period",
     "year": "",
     "medium": "",
-    "imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/plans-reliefs/salle-des-plans-reliefs/84352-47-eng-GB/The-plan-relief-room_artwork_illustration.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/lille-pba-collection/lille-84-682192a0-imageUrl.webp",
     "sourceUrl": "https://pba.lille.fr/en/Collections/Highlights/Relief-maps/The-plan-relief-room",
-    "museum": "Palais des Beaux-Arts de Lille"
+    "museum": "Palais des Beaux-Arts de Lille",
+    "original_imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/plans-reliefs/salle-des-plans-reliefs/84352-47-eng-GB/The-plan-relief-room_artwork_illustration.jpg"
   },
   {
     "id": "lille-85",
@@ -845,9 +929,10 @@
     "artist": "Jacob Jordaens",
     "year": "1873",
     "medium": "Oil on canvas",
-    "imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/peintures-xvi-sup-e-sup-xxi-sup-e-sup-siecles/le-port-de-camaret-par-ciel-d-orage/21945-5-fre-FR/Le-Port-de-Camaret-par-ciel-d-orage_artwork_illustration.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/lille-pba-collection/lille-85-8cda83e7-imageUrl.webp",
     "sourceUrl": "https://pba.lille.fr/en/Collections/Highlights/16th-20th-century-Paintings/The-Port-of-Camaret-under-stormy-skies",
-    "museum": "Palais des Beaux-Arts de Lille"
+    "museum": "Palais des Beaux-Arts de Lille",
+    "original_imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/peintures-xvi-sup-e-sup-xxi-sup-e-sup-siecles/le-port-de-camaret-par-ciel-d-orage/21945-5-fre-FR/Le-Port-de-Camaret-par-ciel-d-orage_artwork_illustration.jpg"
   },
   {
     "id": "lille-86",
@@ -855,9 +940,10 @@
     "artist": "Jean-Baptiste Siméon Chardin",
     "year": "",
     "medium": "Oil on canvas",
-    "imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/peintures-xvi-sup-e-sup-xxi-sup-e-sup-siecles/le-gobelet-d-argent/16955-13-eng-GB/The-Silver-goblet_artwork_illustration.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/lille-pba-collection/lille-86-c271d1a4-imageUrl.webp",
     "sourceUrl": "https://pba.lille.fr/en/Collections/Highlights/16th-20th-century-Paintings/The-Silver-Goblet",
-    "museum": "Palais des Beaux-Arts de Lille"
+    "museum": "Palais des Beaux-Arts de Lille",
+    "original_imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/peintures-xvi-sup-e-sup-xxi-sup-e-sup-siecles/le-gobelet-d-argent/16955-13-eng-GB/The-Silver-goblet_artwork_illustration.jpg"
   },
   {
     "id": "lille-87",
@@ -865,9 +951,10 @@
     "artist": "Jacob Jordaens",
     "year": "",
     "medium": "Oil on wood",
-    "imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/peintures-xvi-sup-e-sup-xxi-sup-e-sup-siecles/la-tentation-de-sainte-madeleine/85102-15-eng-GB/The-temptation-of-Saint-Magdalene_artwork_illustration.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/lille-pba-collection/lille-87-72baddc6-imageUrl.webp",
     "sourceUrl": "https://pba.lille.fr/en/Collections/Highlights/16th-20th-century-Paintings/The-temptation-of-Saint-Magdalene",
-    "museum": "Palais des Beaux-Arts de Lille"
+    "museum": "Palais des Beaux-Arts de Lille",
+    "original_imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/peintures-xvi-sup-e-sup-xxi-sup-e-sup-siecles/la-tentation-de-sainte-madeleine/85102-15-eng-GB/The-temptation-of-Saint-Magdalene_artwork_illustration.jpg"
   },
   {
     "id": "lille-88",
@@ -875,9 +962,10 @@
     "artist": "Modern Period",
     "year": "",
     "medium": "drawings to the Société des Sciences, de l’Agriculture et des Arts de Lille – the forerunner of the Palais des Beaux-Arts. The collection was over 1,300 strong, and mostly came from Italy. In addition, there was a \"Wax Head from the Time of Raphael\". But who is hiding behind this pretty face?",
-    "imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/ceramiques-et-objets-d-art/la-tete-de-cire/18228-10-eng-GB/The-Wax-Head_artwork_illustration.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/lille-pba-collection/lille-88-74c92e68-imageUrl.webp",
     "sourceUrl": "https://pba.lille.fr/en/Collections/Highlights/Ceramics-and-Decorative-Arts/The-Wax-Head",
-    "museum": "Palais des Beaux-Arts de Lille"
+    "museum": "Palais des Beaux-Arts de Lille",
+    "original_imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/ceramiques-et-objets-d-art/la-tete-de-cire/18228-10-eng-GB/The-Wax-Head_artwork_illustration.jpg"
   },
   {
     "id": "lille-89",
@@ -885,9 +973,10 @@
     "artist": "Merson Luc Olivier",
     "year": "1877",
     "medium": "Oil on canvas",
-    "imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/peintures-xvi-sup-e-sup-xxi-sup-e-sup-siecles/le-loup-d-agubbio/5864-1-fre-FR/Le-Loup-d-Agubbio_artwork_illustration.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/lille-pba-collection/lille-89-d90690b3-imageUrl.webp",
     "sourceUrl": "https://pba.lille.fr/en/Collections/Highlights/16th-20th-century-Paintings/The-Wolf-of-Agubbio",
-    "museum": "Palais des Beaux-Arts de Lille"
+    "museum": "Palais des Beaux-Arts de Lille",
+    "original_imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/peintures-xvi-sup-e-sup-xxi-sup-e-sup-siecles/le-loup-d-agubbio/5864-1-fre-FR/Le-Loup-d-Agubbio_artwork_illustration.jpg"
   },
   {
     "id": "lille-90",
@@ -895,9 +984,10 @@
     "artist": "Francisco de Goya y Lucientes",
     "year": "",
     "medium": "Oil on canvas",
-    "imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/peintures-xvi-sup-e-sup-xxi-sup-e-sup-siecles/les-jeunes-la-lettre/10190-3-fre-FR/Les-Jeunes-La-Lettre_artwork_illustration.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/lille-pba-collection/lille-90-785f209d-imageUrl.webp",
     "sourceUrl": "https://pba.lille.fr/en/Collections/Highlights/16th-20th-century-Paintings/The-Young-The-Letter",
-    "museum": "Palais des Beaux-Arts de Lille"
+    "museum": "Palais des Beaux-Arts de Lille",
+    "original_imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/peintures-xvi-sup-e-sup-xxi-sup-e-sup-siecles/les-jeunes-la-lettre/10190-3-fre-FR/Les-Jeunes-La-Lettre_artwork_illustration.jpg"
   },
   {
     "id": "lille-91",
@@ -905,9 +995,10 @@
     "artist": "Bellegambe Jean-",
     "year": "",
     "medium": "Oil on wood",
-    "imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/moyen-age-et-renaissance/triptyque-du-bain-mystique/84304-9-eng-GB/Triptych-of-the-mystical-bath_artwork_illustration.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/lille-pba-collection/lille-91-6bb6e912-imageUrl.webp",
     "sourceUrl": "https://pba.lille.fr/en/Collections/Highlights/Middle-Ages-Renaissance/Triptych-of-the-mystical-bath",
-    "museum": "Palais des Beaux-Arts de Lille"
+    "museum": "Palais des Beaux-Arts de Lille",
+    "original_imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/moyen-age-et-renaissance/triptyque-du-bain-mystique/84304-9-eng-GB/Triptych-of-the-mystical-bath_artwork_illustration.jpg"
   },
   {
     "id": "lille-92",
@@ -915,9 +1006,10 @@
     "artist": "Mikhail Vroubel",
     "year": "",
     "medium": "Oil on canvas",
-    "imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/moyen-age-et-renaissance/triptyque-de-la-vierge-a-l-enfant/18285-21-eng-GB/Triptych-of-the-Virgin-with-Child-surrounded-by-musician-angels_artwork_illustration.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/lille-pba-collection/lille-92-85b53e4c-imageUrl.webp",
     "sourceUrl": "https://pba.lille.fr/en/Collections/Highlights/Middle-Ages-Renaissance/Triptych-of-the-Virgin-with-Child-surrounded-by-musician-angels",
-    "museum": "Palais des Beaux-Arts de Lille"
+    "museum": "Palais des Beaux-Arts de Lille",
+    "original_imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/moyen-age-et-renaissance/triptyque-de-la-vierge-a-l-enfant/18285-21-eng-GB/Triptych-of-the-Virgin-with-Child-surrounded-by-musician-angels_artwork_illustration.jpg"
   },
   {
     "id": "lille-93",
@@ -925,9 +1017,10 @@
     "artist": "Mikhail Vroubel",
     "year": "",
     "medium": "",
-    "imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/prehistoire-et-antiquite/partie-superieure-d-un-chaouabti-de-femme/84100-7-eng-GB/UPPER-PART-OF-A-WOMAN-S-SHABTI_artwork_illustration.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/lille-pba-collection/lille-93-b86f7b4c-imageUrl.webp",
     "sourceUrl": "https://pba.lille.fr/en/Collections/Highlights/Antiquities/Upper-part-of-a-woman-s-shabt",
-    "museum": "Palais des Beaux-Arts de Lille"
+    "museum": "Palais des Beaux-Arts de Lille",
+    "original_imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/prehistoire-et-antiquite/partie-superieure-d-un-chaouabti-de-femme/84100-7-eng-GB/UPPER-PART-OF-A-WOMAN-S-SHABTI_artwork_illustration.jpg"
   },
   {
     "id": "lille-94",
@@ -935,9 +1028,10 @@
     "artist": "Jan van Hemessen",
     "year": "",
     "medium": "Oil on wood",
-    "imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/peintures-xvi-sup-e-sup-xxi-sup-e-sup-siecles/vanite/9262-6-fre-FR/Vanite_artwork_illustration.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/lille-pba-collection/lille-94-4455ba19-imageUrl.webp",
     "sourceUrl": "https://pba.lille.fr/en/Collections/Highlights/16th-20th-century-Paintings/Vanity",
-    "museum": "Palais des Beaux-Arts de Lille"
+    "museum": "Palais des Beaux-Arts de Lille",
+    "original_imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/peintures-xvi-sup-e-sup-xxi-sup-e-sup-siecles/vanite/9262-6-fre-FR/Vanite_artwork_illustration.jpg"
   },
   {
     "id": "lille-95",
@@ -945,9 +1039,10 @@
     "artist": "Mikhail Vroubel",
     "year": "",
     "medium": "sculpture of the Virgin and Child surprises us with its compact format. This is no faux pas on the part of the sculptor, but simply a material history punctuated by a variety of different types of damage...",
-    "imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/moyen-age-et-renaissance/vierge-a-l-enfant2/8327-1-fre-FR/Vierge-a-l-Enfant_artwork_illustration.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/lille-pba-collection/lille-95-3f5acb51-imageUrl.webp",
     "sourceUrl": "https://pba.lille.fr/en/Collections/Highlights/Middle-Ages-Renaissance/Virgin-and-Child",
-    "museum": "Palais des Beaux-Arts de Lille"
+    "museum": "Palais des Beaux-Arts de Lille",
+    "original_imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/moyen-age-et-renaissance/vierge-a-l-enfant2/8327-1-fre-FR/Vierge-a-l-Enfant_artwork_illustration.jpg"
   },
   {
     "id": "lille-96",
@@ -955,9 +1050,10 @@
     "artist": "Contemporary Period",
     "year": "1900",
     "medium": "ceramic",
-    "imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/ceramiques-et-objets-d-art/cheminee-de-volga-et-mikoula/84986-7-eng-GB/Volga-and-Mikoula-mantel_artwork_illustration.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/lille-pba-collection/lille-96-0267ad52-imageUrl.webp",
     "sourceUrl": "https://pba.lille.fr/en/Collections/Highlights/Ceramics-and-Decorative-Arts/Volga-and-Mikoula-mantel",
-    "museum": "Palais des Beaux-Arts de Lille"
+    "museum": "Palais des Beaux-Arts de Lille",
+    "original_imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/ceramiques-et-objets-d-art/cheminee-de-volga-et-mikoula/84986-7-eng-GB/Volga-and-Mikoula-mantel_artwork_illustration.jpg"
   },
   {
     "id": "lille-97",
@@ -965,9 +1061,10 @@
     "artist": "Modern Period",
     "year": "",
     "medium": "Oil on canvas",
-    "imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/peintures-xvi-sup-e-sup-xxi-sup-e-sup-siecles/champ-de-ble/5306-1-fre-FR/Champ-de-ble_artwork_illustration.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/lille-pba-collection/lille-97-5e890623-imageUrl.webp",
     "sourceUrl": "https://pba.lille.fr/en/Collections/Highlights/16th-20th-century-Paintings/Wheat-fields",
-    "museum": "Palais des Beaux-Arts de Lille"
+    "museum": "Palais des Beaux-Arts de Lille",
+    "original_imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/peintures-xvi-sup-e-sup-xxi-sup-e-sup-siecles/champ-de-ble/5306-1-fre-FR/Champ-de-ble_artwork_illustration.jpg"
   },
   {
     "id": "lille-98",
@@ -975,9 +1072,10 @@
     "artist": "Fernand Léger",
     "year": "1935",
     "medium": "Oil on canvas",
-    "imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/peintures-xvi-sup-e-sup-xxi-sup-e-sup-siecles/femmes-au-vase-bleu/2283-20-fre-FR/Femmes-au-vase-bleu_artwork_illustration.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/lille-pba-collection/lille-98-e2fe366b-imageUrl.webp",
     "sourceUrl": "https://pba.lille.fr/en/Collections/Highlights/16th-20th-century-Paintings/Women-with-a-Blue-Vase",
-    "museum": "Palais des Beaux-Arts de Lille"
+    "museum": "Palais des Beaux-Arts de Lille",
+    "original_imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/peintures-xvi-sup-e-sup-xxi-sup-e-sup-siecles/femmes-au-vase-bleu/2283-20-fre-FR/Femmes-au-vase-bleu_artwork_illustration.jpg"
   },
   {
     "id": "lille-99",
@@ -985,8 +1083,9 @@
     "artist": "Pieter Boel",
     "year": "",
     "medium": "Oil on wood",
-    "imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/peintures-xvi-sup-e-sup-xxi-sup-e-sup-siecles/jeune-fumeur-de-pipe-delaissant-l-etude-ou-la-melancolie/2747-15-fre-FR/Jeune-fumeur-de-pipe-delaissant-l-etude-ou-La-Melancolie_artwork_illustration.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/lille-pba-collection/lille-99-01628aa5-imageUrl.webp",
     "sourceUrl": "https://pba.lille.fr/en/Collections/Highlights/16th-20th-century-Paintings/Young-pipe-smoker-abandoning-his-study-or-Melancholy",
-    "museum": "Palais des Beaux-Arts de Lille"
+    "museum": "Palais des Beaux-Arts de Lille",
+    "original_imageUrl": "https://pba.lille.fr/var/www/storage/images/palais-des-beaux-arts-de-lille/collections/chefs-d-oeuvre/peintures-xvi-sup-e-sup-xxi-sup-e-sup-siecles/jeune-fumeur-de-pipe-delaissant-l-etude-ou-la-melancolie/2747-15-fre-FR/Jeune-fumeur-de-pipe-delaissant-l-etude-ou-La-Melancolie_artwork_illustration.jpg"
   }
 ]

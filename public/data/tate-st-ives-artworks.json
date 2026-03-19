@@ -442,7 +442,7 @@
   {
     "id": "tate-t03154",
     "title": "‘The Artist’s Hand‘, Dame Barbara Hepworth",
-    "artist": "1943–4",
+    "artist": "|",
     "year": "cast 1967",
     "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/galleries/tate-st-ives/artworks/t03154.jpg",
     "url": "https://www.tate.org.uk/art/artworks/hepworth-the-artists-hand-t03154",
@@ -475,7 +475,7 @@
   {
     "id": "tate-t03151",
     "title": "‘Makutu‘, Dame Barbara Hepworth",
-    "artist": "1969",
+    "artist": "|",
     "year": "cast 1970",
     "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/galleries/tate-st-ives/artworks/t03151.jpg",
     "url": "https://www.tate.org.uk/art/artworks/hepworth-makutu-t03151",
@@ -530,7 +530,7 @@
   {
     "id": "tate-t03145",
     "title": "‘Bronze Form (Patmos)‘, Dame Barbara Hepworth",
-    "artist": "1962–3",
+    "artist": "|",
     "year": "cast 1963",
     "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/galleries/tate-st-ives/artworks/t03145.jpg",
     "url": "https://www.tate.org.uk/art/artworks/hepworth-bronze-form-patmos-t03145",
@@ -607,7 +607,7 @@
   {
     "id": "tate-t03137",
     "title": "‘Stringed Figure (Curlew), Version II‘, Dame Barbara Hepworth",
-    "artist": "1956",
+    "artist": "|",
     "year": "edition 1959",
     "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/galleries/tate-st-ives/artworks/t03137.jpg",
     "url": "https://www.tate.org.uk/art/artworks/hepworth-stringed-figure-curlew-version-ii-t03137",
@@ -618,7 +618,7 @@
   {
     "id": "tate-t03136",
     "title": "‘Forms in Movement (Pavan)‘, Dame Barbara Hepworth",
-    "artist": "1956–9",
+    "artist": "|",
     "year": "cast 1967",
     "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/galleries/tate-st-ives/artworks/t03136.jpg",
     "url": "https://www.tate.org.uk/art/artworks/hepworth-forms-in-movement-pavan-t03136",
@@ -629,7 +629,7 @@
   {
     "id": "tate-t03135",
     "title": "‘Coré‘, Dame Barbara Hepworth",
-    "artist": "1955–6",
+    "artist": "|",
     "year": "cast 1960",
     "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/galleries/tate-st-ives/artworks/t03135.jpg",
     "url": "https://www.tate.org.uk/art/artworks/hepworth-core-t03135",
@@ -640,7 +640,7 @@
   {
     "id": "tate-t03134",
     "title": "‘Poised Form‘, Dame Barbara Hepworth",
-    "artist": "1951–2",
+    "artist": "|",
     "year": "reworked 1957",
     "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/galleries/tate-st-ives/artworks/t03134.jpg",
     "url": "https://www.tate.org.uk/art/artworks/hepworth-poised-form-t03134",
@@ -1003,7 +1003,7 @@
   {
     "id": "tate-n05804",
     "title": "‘Bouquet with Flying Lovers‘",
-    "artist": "Marc Chagall",
+    "artist": "Chagall Marc",
     "year": "c.1934–47",
     "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/galleries/tate-st-ives/artworks/n05804.jpg",
     "url": "https://www.tate.org.uk/art/artworks/chagall-bouquet-with-flying-lovers-n05804",
@@ -1311,7 +1311,7 @@
   {
     "id": "tate-t00649",
     "title": "‘Horizontal Movement‘",
-    "artist": "Jesus Rafael Soto",
+    "artist": "Jesús Rafael Soto",
     "year": "1963",
     "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/galleries/tate-st-ives/artworks/t00649.jpg",
     "url": "https://www.tate.org.uk/art/artworks/soto-horizontal-movement-t00649",

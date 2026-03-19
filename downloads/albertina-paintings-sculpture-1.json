@@ -1,0 +1,39 @@
+{
+  "museum": "ALBERTINA Museum Vienna",
+  "museumId": "albertina",
+  "groupName": "Paintings & Sculpture",
+  "groupSlug": "paintings---sculpture",
+  "filter": "mediaExistence:true",
+  "limit": 1,
+  "scrapedAt": "2026-01-14T07:24:26.339Z",
+  "totalOnPage": 100,
+  "objects": [
+    {
+      "id": "429098",
+      "sourceId": "albertina-429098",
+      "title": "Science Fiction",
+      "creator": "Maria Lassnig",
+      "artist": "Maria Lassnig",
+      "date": "1988",
+      "medium": "Öl auf Leinwand",
+      "dimensions": "203 × 284 cm (2-teilig)",
+      "inventory": "EDLDB4092/1 - EDLDB4092/2",
+      "objectNumber": "EDLDB4092/1 - EDLDB4092/2",
+      "imageUrl": "https://sammlungenonline.albertina.at/apis/iiif/image/v2/299090/full/full/0/default.jpg",
+      "description": "null",
+      "url": "https://sammlungenonline.albertina.at/objects/429098/science-fiction",
+      "iiifManifest": "https://sammlungenonline.albertina.at/apis/iiif/presentation/v2/1-objects-429098/manifest",
+      "isHighlight": false,
+      "metadata": {
+        "Date": "1988",
+        "Primary Maker": "Maria Lassnig",
+        "Copyright": "© Maria Lassnig Stiftung / Bildrecht, Wien 2025",
+        "Dimensions": "203 × 284 cm (2-teilig)",
+        "Object number": "EDLDB4092/1 - EDLDB4092/2",
+        "Medium": "Öl auf Leinwand"
+      },
+      "source": "ALBERTINA Museum Vienna",
+      "sourceUrl": "https://sammlungenonline.albertina.at"
+    }
+  ]
+}

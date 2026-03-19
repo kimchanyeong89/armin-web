@@ -1,0 +1,677 @@
+<div class="result-list">
+	<div class="htmx-indicator mt-5" id="indicator-object-list" hx-swap-oob="true">
+		<div class="row masonry-grid g-5">
+			<div class="col-md-4 grid-item">
+				<div class="placeholder object"></div>
+			</div>
+			<div class="col-md-4 grid-item">
+				<div class="placeholder object h-small"></div>
+			</div>
+			<div class="col-md-4 grid-item">
+				<div class="placeholder object"></div>
+			</div>
+			<div class="col-md-4 grid-item">
+				<div class="placeholder object h-large"></div>
+			</div>
+			<div class="col-md-4 grid-item">
+				<div class="placeholder object"></div>
+			</div>
+			<div class="col-md-4 grid-item">
+				<div class="placeholder object h-small"></div>
+			</div>
+			<div class="col-md-4 grid-item">
+				<div class="placeholder object h-large"></div>
+			</div>
+			<div class="col-md-4 grid-item">
+				<div class="placeholder object"></div>
+			</div>
+			<div class="col-md-4 grid-item">
+				<div class="placeholder object h-large"></div>
+			</div>
+			<div class="col-md-4 grid-item">
+				<div class="placeholder object h-small"></div>
+			</div>
+			<div class="col-md-4 grid-item">
+				<div class="placeholder object"></div>
+			</div>
+			<div class="col-md-4 grid-item">
+				<div class="placeholder object"></div>
+			</div>
+			 </div>
+		 </div>
+	 <span id="filter-info" hx-swap-oob="true"> 2.767 of 46.403 art objects </span>
+	<section id="objects">
+		<form id="objectdb-form"> <input type="hidden" name="rand" value="">
+			<div class="filter-calender__search mb-3" id="object-list-search" hx-swap-oob="true">
+				<div class="filter-calender__search__field"> <input autocomplete="off" placeholder="Search" minlength="2" aria-label="" aria-describedby="" class="form-control tx-solr-suggest" id="search-field" type="text" name="query"> <label for="search-field" class="visually-hidden">Search in collection</label>
+					<button type="submit"> <span class="icon material-symbols-outlined flex-shrink-0 notranslate" aria-hidden="true" style="font-size:20px">search</span> </button>
+					<button class="tx-solr-reset"> <span class="icon material-symbols-outlined flex-shrink-0 notranslate" aria-hidden="true" style="font-size:20px">close</span> <span class="visually-hidden">Search</span> </button>
+					 </div>
+				 </div>
+			<div id="inline-filter" hx-swap-oob="true">
+				<div class="filter-calender__dropdowns__outer">
+					<div class="filter-calender__dropdowns">
+						<div class="events-filter__dropdown">
+							<div class="dropdown">
+								<button class="button button-tertiary dropdown-toggle" type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false"> Time <span class="icon material-symbols-outlined flex-shrink-0 notranslate" aria-hidden="true" style="font-size:20px">keyboard_arrow_down</span> </button>
+								<div class="dropdown-menu">
+									<div class="dropdown-menu-inner overflow-visible">
+										<div class="time-range-filter">
+											<div class="time-range-filter__inputs">
+												<div class="form-control-row">
+													<div class="form-floating"> <input type="number" name="facet_date_begin" pattern="[1-9][0-9]?" min="-5000" max="2024" value="-5000" class="form-control" id="timeRangeFrom" placeholder="von" required> <label for="timeRangeFrom" class="form-label">from</label> </div>
+													<div class="form-control-separator">-</div>
+													<div class="form-floating"> <input type="number" name="facet_date_end" pattern="[1-9][0-9]?" min="-5000" max="2024" value="2024" class="form-control" id="timeRangeTo" placeholder="bis" required> <label for="timeRangeTo" class="form-label">to</label> </div>
+													 </div>
+												 </div>
+											<div class="time-range-filter__range">
+												<div id="drbar-container" class="drbar-container" data-min="-5000" data-max="2024" data-current-lower="-5000" data-current-upper="2024"></div>
+												<div class="drbar-labels"> <label class="drbar-labels-from">-5000</label> <label class="drbar-labels-zero">0</label> <label class="drbar-labels-to">2024</label> </div>
+												 </div>
+											 </div>
+										 </div>
+									 </div>
+								 </div>
+							 </div>
+						<div class="events-filter__dropdown">
+							<div class="dropdown">
+								<button class="button button-tertiary dropdown-toggle value-selected" type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false"> Classification <span class="icon material-symbols-outlined flex-shrink-0 notranslate" aria-hidden="true" style="font-size:20px">keyboard_arrow_down</span> </button>
+								<div class="dropdown-menu">
+									<div class="dropdown-menu-inner">
+										<div class="form-check"> <input type="radio" value="" name="fq[facet_classification]" class="form-check-input" id="facet-3-all" > <label class="form-check-label" for="facet-3-all">All</label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-3-1" type="radio" name="fq[facet_classification]" value="Gemälde" checked="checked"> <label for="facet-3-1" class="form-check-label"> Gemälde&nbsp;(2.767) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-3-2" type="radio" name="fq[facet_classification]" value=""> <label for="facet-3-2" class="form-check-label"> &nbsp;(10) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-3-3" type="radio" name="fq[facet_classification]" value="Organisches"> <label for="facet-3-3" class="form-check-label"> Organisches&nbsp;(3) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-3-4" type="radio" name="fq[facet_classification]" value="Textil"> <label for="facet-3-4" class="form-check-label"> Textil&nbsp;(2) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-3-5" type="radio" name="fq[facet_classification]" value="Varia"> <label for="facet-3-5" class="form-check-label"> Varia&nbsp;(2) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-3-6" type="radio" name="fq[facet_classification]" value="Andachtsbild"> <label for="facet-3-6" class="form-check-label"> Andachtsbild&nbsp;(1) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-3-7" type="radio" name="fq[facet_classification]" value="Insigne"> <label for="facet-3-7" class="form-check-label"> Insigne&nbsp;(1) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-3-8" type="radio" name="fq[facet_classification]" value="Mosaik"> <label for="facet-3-8" class="form-check-label"> Mosaik&nbsp;(1) </label> </div>
+										 </div>
+									 </div>
+								 </div>
+							 </div>
+						<div class="events-filter__dropdown">
+							<div class="dropdown">
+								<button class="button button-tertiary dropdown-toggle" type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false"> Culture <span class="icon material-symbols-outlined flex-shrink-0 notranslate" aria-hidden="true" style="font-size:20px">keyboard_arrow_down</span> </button>
+								<div class="dropdown-menu">
+									<div class="dropdown-menu-inner">
+										<div class="form-check"> <input type="radio" value="" name="fq[facet_culture]" class="form-check-input" id="facet-4-all" checked > <label class="form-check-label" for="facet-4-all">All</label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-1" type="radio" name="fq[facet_culture]" value="Flämisch"> <label for="facet-4-1" class="form-check-label"> Flämisch&nbsp;(453) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-2" type="radio" name="fq[facet_culture]" value="Deutsch"> <label for="facet-4-2" class="form-check-label"> Deutsch&nbsp;(390) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-3" type="radio" name="fq[facet_culture]" value="Italienisch, Venezianisch"> <label for="facet-4-3" class="form-check-label"> Italienisch, Venezianisch&nbsp;(367) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-4" type="radio" name="fq[facet_culture]" value="Niederländisch"> <label for="facet-4-4" class="form-check-label"> Niederländisch&nbsp;(309) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-5" type="radio" name="fq[facet_culture]" value="Holländisch"> <label for="facet-4-5" class="form-check-label"> Holländisch&nbsp;(218) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-6" type="radio" name="fq[facet_culture]" value="Österreichisch"> <label for="facet-4-6" class="form-check-label"> Österreichisch&nbsp;(126) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-7" type="radio" name="fq[facet_culture]" value="Italienisch, Emilianisch"> <label for="facet-4-7" class="form-check-label"> Italienisch, Emilianisch&nbsp;(99) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-8" type="radio" name="fq[facet_culture]" value="Italienisch, Neapolitanisch"> <label for="facet-4-8" class="form-check-label"> Italienisch, Neapolitanisch&nbsp;(78) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-9" type="radio" name="fq[facet_culture]" value="Niederländisch, Flämisch"> <label for="facet-4-9" class="form-check-label"> Niederländisch, Flämisch&nbsp;(73) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-10" type="radio" name="fq[facet_culture]" value="Italienisch"> <label for="facet-4-10" class="form-check-label"> Italienisch&nbsp;(65) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-11" type="radio" name="fq[facet_culture]" value="Italienisch, Lombardisch"> <label for="facet-4-11" class="form-check-label"> Italienisch, Lombardisch&nbsp;(57) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-12" type="radio" name="fq[facet_culture]" value="Italienisch, Mittelitalienisch"> <label for="facet-4-12" class="form-check-label"> Italienisch, Mittelitalienisch&nbsp;(56) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-13" type="radio" name="fq[facet_culture]" value="Französisch"> <label for="facet-4-13" class="form-check-label"> Französisch&nbsp;(53) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-14" type="radio" name="fq[facet_culture]" value="Italienisch, Römisch"> <label for="facet-4-14" class="form-check-label"> Italienisch, Römisch&nbsp;(50) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-15" type="radio" name="fq[facet_culture]" value="Spanisch"> <label for="facet-4-15" class="form-check-label"> Spanisch&nbsp;(50) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-16" type="radio" name="fq[facet_culture]" value="Altniederländisch"> <label for="facet-4-16" class="form-check-label"> Altniederländisch&nbsp;(42) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-17" type="radio" name="fq[facet_culture]" value="Italienisch, Florentinisch"> <label for="facet-4-17" class="form-check-label"> Italienisch, Florentinisch&nbsp;(42) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-18" type="radio" name="fq[facet_culture]" value="nicht vergeben"> <label for="facet-4-18" class="form-check-label"> nicht vergeben&nbsp;(34) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-19" type="radio" name="fq[facet_culture]" value="Caravaggio und caravaggeske Malerei"> <label for="facet-4-19" class="form-check-label"> Caravaggio und caravaggeske Malerei&nbsp;(32) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-20" type="radio" name="fq[facet_culture]" value="Italienisch, Oberitalienisch"> <label for="facet-4-20" class="form-check-label"> Italienisch, Oberitalienisch&nbsp;(11) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-21" type="radio" name="fq[facet_culture]" value="Englisch"> <label for="facet-4-21" class="form-check-label"> Englisch&nbsp;(10) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-22" type="radio" name="fq[facet_culture]" value="Italienisch, Genuesisch"> <label for="facet-4-22" class="form-check-label"> Italienisch, Genuesisch&nbsp;(10) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-23" type="radio" name="fq[facet_culture]" value="Deutsch, Süddeutsch"> <label for="facet-4-23" class="form-check-label"> Deutsch, Süddeutsch&nbsp;(7) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-24" type="radio" name="fq[facet_culture]" value="Italienisch, Veronesisch"> <label for="facet-4-24" class="form-check-label"> Italienisch, Veronesisch&nbsp;(7) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-25" type="radio" name="fq[facet_culture]" value="Italienisch, Toskanisch"> <label for="facet-4-25" class="form-check-label"> Italienisch, Toskanisch&nbsp;(6) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-26" type="radio" name="fq[facet_culture]" value="Deutsch (?)"> <label for="facet-4-26" class="form-check-label"> Deutsch (?)&nbsp;(5) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-27" type="radio" name="fq[facet_culture]" value="Böhmen, Böhmisch, Deutsch"> <label for="facet-4-27" class="form-check-label"> Böhmen, Böhmisch, Deutsch&nbsp;(4) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-28" type="radio" name="fq[facet_culture]" value="Böhmisch"> <label for="facet-4-28" class="form-check-label"> Böhmisch&nbsp;(4) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-29" type="radio" name="fq[facet_culture]" value="Deutsch, Oberrheinisch"> <label for="facet-4-29" class="form-check-label"> Deutsch, Oberrheinisch&nbsp;(4) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-30" type="radio" name="fq[facet_culture]" value="Deutsch, Österreichisch"> <label for="facet-4-30" class="form-check-label"> Deutsch, Österreichisch&nbsp;(4) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-31" type="radio" name="fq[facet_culture]" value="Dänisch"> <label for="facet-4-31" class="form-check-label"> Dänisch&nbsp;(4) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-32" type="radio" name="fq[facet_culture]" value="Italienisch, Österreichisch"> <label for="facet-4-32" class="form-check-label"> Italienisch, Österreichisch&nbsp;(4) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-33" type="radio" name="fq[facet_culture]" value="Italienisch, Bolognesisch"> <label for="facet-4-33" class="form-check-label"> Italienisch, Bolognesisch&nbsp;(3) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-34" type="radio" name="fq[facet_culture]" value="Wien"> <label for="facet-4-34" class="form-check-label"> Wien&nbsp;(3) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-35" type="radio" name="fq[facet_culture]" value="Deutsch, München (?)"> <label for="facet-4-35" class="form-check-label"> Deutsch, München (?)&nbsp;(2) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-36" type="radio" name="fq[facet_culture]" value="Deutsch, Österreichisch (?)"> <label for="facet-4-36" class="form-check-label"> Deutsch, Österreichisch (?)&nbsp;(2) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-37" type="radio" name="fq[facet_culture]" value="Deutsch?"> <label for="facet-4-37" class="form-check-label"> Deutsch?&nbsp;(2) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-38" type="radio" name="fq[facet_culture]" value="Holländisch, Deutsch"> <label for="facet-4-38" class="form-check-label"> Holländisch, Deutsch&nbsp;(2) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-39" type="radio" name="fq[facet_culture]" value="Italienisch (?)"> <label for="facet-4-39" class="form-check-label"> Italienisch (?)&nbsp;(2) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-40" type="radio" name="fq[facet_culture]" value="Niederländisch (?)"> <label for="facet-4-40" class="form-check-label"> Niederländisch (?)&nbsp;(2) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-41" type="radio" name="fq[facet_culture]" value="Paris"> <label for="facet-4-41" class="form-check-label"> Paris&nbsp;(2) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-42" type="radio" name="fq[facet_culture]" value="Polnisch"> <label for="facet-4-42" class="form-check-label"> Polnisch&nbsp;(2) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-43" type="radio" name="fq[facet_culture]" value="Rom"> <label for="facet-4-43" class="form-check-label"> Rom&nbsp;(2) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-44" type="radio" name="fq[facet_culture]" value="Süddeutsch oder Österreichisch"> <label for="facet-4-44" class="form-check-label"> Süddeutsch oder Österreichisch&nbsp;(2) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-45" type="radio" name="fq[facet_culture]" value="Österreichisch (?)"> <label for="facet-4-45" class="form-check-label"> Österreichisch (?)&nbsp;(2) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-46" type="radio" name="fq[facet_culture]" value="Augsburg"> <label for="facet-4-46" class="form-check-label"> Augsburg&nbsp;(1) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-47" type="radio" name="fq[facet_culture]" value="Byzantinisch, Konstantinopel; Rumänisch (Rahmen)"> <label for="facet-4-47" class="form-check-label"> Byzantinisch, Konstantinopel; Rumänisch (Rahmen)&nbsp;(1) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-48" type="radio" name="fq[facet_culture]" value="Böhmen, Böhmisch, Italienisch"> <label for="facet-4-48" class="form-check-label"> Böhmen, Böhmisch, Italienisch&nbsp;(1) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-49" type="radio" name="fq[facet_culture]" value="Ceylonesisch"> <label for="facet-4-49" class="form-check-label"> Ceylonesisch&nbsp;(1) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-50" type="radio" name="fq[facet_culture]" value="China, Ming-Dynanstie"> <label for="facet-4-50" class="form-check-label"> China, Ming-Dynanstie&nbsp;(1) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-51" type="radio" name="fq[facet_culture]" value="Deutsch (Braunschweig?)"> <label for="facet-4-51" class="form-check-label"> Deutsch (Braunschweig?)&nbsp;(1) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-52" type="radio" name="fq[facet_culture]" value="Deutsch (München)"> <label for="facet-4-52" class="form-check-label"> Deutsch (München)&nbsp;(1) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-53" type="radio" name="fq[facet_culture]" value="Deutsch ?"> <label for="facet-4-53" class="form-check-label"> Deutsch ?&nbsp;(1) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-54" type="radio" name="fq[facet_culture]" value="Deutsch, Oberbayrisch ?"> <label for="facet-4-54" class="form-check-label"> Deutsch, Oberbayrisch ?&nbsp;(1) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-55" type="radio" name="fq[facet_culture]" value="Deutsch, Salzburgisch"> <label for="facet-4-55" class="form-check-label"> Deutsch, Salzburgisch&nbsp;(1) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-56" type="radio" name="fq[facet_culture]" value="Deutsch, Schwäbisch, Schwaben"> <label for="facet-4-56" class="form-check-label"> Deutsch, Schwäbisch, Schwaben&nbsp;(1) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-57" type="radio" name="fq[facet_culture]" value="Deutsch, Süddeutsch, Augsburg (?)"> <label for="facet-4-57" class="form-check-label"> Deutsch, Süddeutsch, Augsburg (?)&nbsp;(1) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-58" type="radio" name="fq[facet_culture]" value="Deutsch, polnisch (?)"> <label for="facet-4-58" class="form-check-label"> Deutsch, polnisch (?)&nbsp;(1) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-59" type="radio" name="fq[facet_culture]" value="Deutsch, Österreichisch (?) Böhmisch"> <label for="facet-4-59" class="form-check-label"> Deutsch, Österreichisch (?) Böhmisch&nbsp;(1) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-60" type="radio" name="fq[facet_culture]" value="Flämisch (?)"> <label for="facet-4-60" class="form-check-label"> Flämisch (?)&nbsp;(1) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-61" type="radio" name="fq[facet_culture]" value="Flämisch, Italienisch"> <label for="facet-4-61" class="form-check-label"> Flämisch, Italienisch&nbsp;(1) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-62" type="radio" name="fq[facet_culture]" value="Flämisch; Holländisch"> <label for="facet-4-62" class="form-check-label"> Flämisch; Holländisch&nbsp;(1) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-63" type="radio" name="fq[facet_culture]" value="Flämisch?"> <label for="facet-4-63" class="form-check-label"> Flämisch?&nbsp;(1) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-64" type="radio" name="fq[facet_culture]" value="Französisch (?)"> <label for="facet-4-64" class="form-check-label"> Französisch (?)&nbsp;(1) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-65" type="radio" name="fq[facet_culture]" value="Holländisch, Flämisch"> <label for="facet-4-65" class="form-check-label"> Holländisch, Flämisch&nbsp;(1) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-66" type="radio" name="fq[facet_culture]" value="Italien, Florentinisch"> <label for="facet-4-66" class="form-check-label"> Italien, Florentinisch&nbsp;(1) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-67" type="radio" name="fq[facet_culture]" value="Italienisch (?), Deutsch (Wien?)"> <label for="facet-4-67" class="form-check-label"> Italienisch (?), Deutsch (Wien?)&nbsp;(1) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-68" type="radio" name="fq[facet_culture]" value="Italienisch (?), Toskana"> <label for="facet-4-68" class="form-check-label"> Italienisch (?), Toskana&nbsp;(1) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-69" type="radio" name="fq[facet_culture]" value="Italienisch, Caravaggio und caravaggeske Malerei"> <label for="facet-4-69" class="form-check-label"> Italienisch, Caravaggio und caravaggeske Malerei&nbsp;(1) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-70" type="radio" name="fq[facet_culture]" value="Italienisch, Florentinisch (?)"> <label for="facet-4-70" class="form-check-label"> Italienisch, Florentinisch (?)&nbsp;(1) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-71" type="radio" name="fq[facet_culture]" value="Italienisch, Lombardisch, Genuesisch"> <label for="facet-4-71" class="form-check-label"> Italienisch, Lombardisch, Genuesisch&nbsp;(1) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-72" type="radio" name="fq[facet_culture]" value="Niederländisch oder Süddeutsch"> <label for="facet-4-72" class="form-check-label"> Niederländisch oder Süddeutsch&nbsp;(1) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-73" type="radio" name="fq[facet_culture]" value="Niederländisch, Deutsch, Alpenländisch"> <label for="facet-4-73" class="form-check-label"> Niederländisch, Deutsch, Alpenländisch&nbsp;(1) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-74" type="radio" name="fq[facet_culture]" value="Niederländisch, Flämisch, Holländisch"> <label for="facet-4-74" class="form-check-label"> Niederländisch, Flämisch, Holländisch&nbsp;(1) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-75" type="radio" name="fq[facet_culture]" value="Norddeutsch"> <label for="facet-4-75" class="form-check-label"> Norddeutsch&nbsp;(1) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-76" type="radio" name="fq[facet_culture]" value="Oberitalienisch"> <label for="facet-4-76" class="form-check-label"> Oberitalienisch&nbsp;(1) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-77" type="radio" name="fq[facet_culture]" value="Prag"> <label for="facet-4-77" class="form-check-label"> Prag&nbsp;(1) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-78" type="radio" name="fq[facet_culture]" value="Prag (?)"> <label for="facet-4-78" class="form-check-label"> Prag (?)&nbsp;(1) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-79" type="radio" name="fq[facet_culture]" value="Römisch"> <label for="facet-4-79" class="form-check-label"> Römisch&nbsp;(1) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-80" type="radio" name="fq[facet_culture]" value="Schwedisch"> <label for="facet-4-80" class="form-check-label"> Schwedisch&nbsp;(1) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-81" type="radio" name="fq[facet_culture]" value="Schweizerisch"> <label for="facet-4-81" class="form-check-label"> Schweizerisch&nbsp;(1) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-82" type="radio" name="fq[facet_culture]" value="Spanisch (?)"> <label for="facet-4-82" class="form-check-label"> Spanisch (?)&nbsp;(1) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-83" type="radio" name="fq[facet_culture]" value="Tirol (?)"> <label for="facet-4-83" class="form-check-label"> Tirol (?)&nbsp;(1) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-84" type="radio" name="fq[facet_culture]" value="Tirol ?"> <label for="facet-4-84" class="form-check-label"> Tirol ?&nbsp;(1) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-85" type="radio" name="fq[facet_culture]" value="Venedig oder Wien"> <label for="facet-4-85" class="form-check-label"> Venedig oder Wien&nbsp;(1) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-86" type="radio" name="fq[facet_culture]" value="Zürich"> <label for="facet-4-86" class="form-check-label"> Zürich&nbsp;(1) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-87" type="radio" name="fq[facet_culture]" value="Zürich (?)"> <label for="facet-4-87" class="form-check-label"> Zürich (?)&nbsp;(1) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-88" type="radio" name="fq[facet_culture]" value="Österreich"> <label for="facet-4-88" class="form-check-label"> Österreich&nbsp;(1) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-89" type="radio" name="fq[facet_culture]" value="Österreich (?)"> <label for="facet-4-89" class="form-check-label"> Österreich (?)&nbsp;(1) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-90" type="radio" name="fq[facet_culture]" value="Österreich, Wien"> <label for="facet-4-90" class="form-check-label"> Österreich, Wien&nbsp;(1) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-91" type="radio" name="fq[facet_culture]" value="Österreichisch, Steirisch"> <label for="facet-4-91" class="form-check-label"> Österreichisch, Steirisch&nbsp;(1) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-92" type="radio" name="fq[facet_culture]" value="Österreichisch, Ungarisch"> <label for="facet-4-92" class="form-check-label"> Österreichisch, Ungarisch&nbsp;(1) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-93" type="radio" name="fq[facet_culture]" value="Österreichisch, Wien (?)"> <label for="facet-4-93" class="form-check-label"> Österreichisch, Wien (?)&nbsp;(1) </label> </div>
+										 </div>
+									 </div>
+								 </div>
+							 </div>
+						<div class="events-filter__dropdown">
+							<div class="dropdown">
+								<button class="button button-tertiary dropdown-toggle" type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false"> Person <span class="icon material-symbols-outlined flex-shrink-0 notranslate" aria-hidden="true" style="font-size:20px">keyboard_arrow_down</span> </button>
+								<div class="dropdown-menu">
+									<div class="dropdown-menu-inner">
+										<div class="form-check"> <input type="radio" value="" name="fq[facet_allpersons]" class="form-check-input" id="facet-5-all" checked > <label class="form-check-label" for="facet-5-all">All</label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-1" type="radio" name="fq[facet_allpersons]" value="anonym"> <label for="facet-5-1" class="form-check-label"> anonym&nbsp;(289) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-2" type="radio" name="fq[facet_allpersons]" value="Peter Paul Rubens"> <label for="facet-5-2" class="form-check-label"> Peter Paul Rubens&nbsp;(56) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-3" type="radio" name="fq[facet_allpersons]" value="Niederländisch"> <label for="facet-5-3" class="form-check-label"> Niederländisch&nbsp;(54) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-4" type="radio" name="fq[facet_allpersons]" value="Ferdinand van Kessel"> <label for="facet-5-4" class="form-check-label"> Ferdinand van Kessel&nbsp;(49) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-5" type="radio" name="fq[facet_allpersons]" value="Deutsch"> <label for="facet-5-5" class="form-check-label"> Deutsch&nbsp;(48) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-6" type="radio" name="fq[facet_allpersons]" value="Jacopo Robusti, gen. Tintoretto"> <label for="facet-5-6" class="form-check-label"> Jacopo Robusti, gen. Tintoretto&nbsp;(34) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-7" type="radio" name="fq[facet_allpersons]" value="Anthonis van Dyck"> <label for="facet-5-7" class="form-check-label"> Anthonis van Dyck&nbsp;(32) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-8" type="radio" name="fq[facet_allpersons]" value="Tiziano Vecellio, gen. Tizian"> <label for="facet-5-8" class="form-check-label"> Tiziano Vecellio, gen. Tizian&nbsp;(29) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-9" type="radio" name="fq[facet_allpersons]" value="Venezianisch"> <label for="facet-5-9" class="form-check-label"> Venezianisch&nbsp;(29) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-10" type="radio" name="fq[facet_allpersons]" value="Leandro da Ponte gen. Leandro Bassano"> <label for="facet-5-10" class="form-check-label"> Leandro da Ponte gen. Leandro Bassano&nbsp;(28) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-11" type="radio" name="fq[facet_allpersons]" value="David Teniers d. J."> <label for="facet-5-11" class="form-check-label"> David Teniers d. J.&nbsp;(26) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-12" type="radio" name="fq[facet_allpersons]" value="Lucas Cranach d. Ä."> <label for="facet-5-12" class="form-check-label"> Lucas Cranach d. Ä.&nbsp;(26) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-13" type="radio" name="fq[facet_allpersons]" value="Jan van den Hoecke"> <label for="facet-5-13" class="form-check-label"> Jan van den Hoecke&nbsp;(25) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-14" type="radio" name="fq[facet_allpersons]" value="Hans von Aachen"> <label for="facet-5-14" class="form-check-label"> Hans von Aachen&nbsp;(24) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-15" type="radio" name="fq[facet_allpersons]" value="Jan Brueghel d. Ä."> <label for="facet-5-15" class="form-check-label"> Jan Brueghel d. Ä.&nbsp;(23) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-16" type="radio" name="fq[facet_allpersons]" value="Martin van Meytens d. J."> <label for="facet-5-16" class="form-check-label"> Martin van Meytens d. J.&nbsp;(23) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-17" type="radio" name="fq[facet_allpersons]" value="Albrecht Dürer"> <label for="facet-5-17" class="form-check-label"> Albrecht Dürer&nbsp;(21) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-18" type="radio" name="fq[facet_allpersons]" value="Francesco da Ponte, gen. Francesco Bassano"> <label for="facet-5-18" class="form-check-label"> Francesco da Ponte, gen. Francesco Bassano&nbsp;(20) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-19" type="radio" name="fq[facet_allpersons]" value="Peeter Snayers"> <label for="facet-5-19" class="form-check-label"> Peeter Snayers&nbsp;(20) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-20" type="radio" name="fq[facet_allpersons]" value="Österreichisch"> <label for="facet-5-20" class="form-check-label"> Österreichisch&nbsp;(20) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-21" type="radio" name="fq[facet_allpersons]" value="Bartholomäus Spranger"> <label for="facet-5-21" class="form-check-label"> Bartholomäus Spranger&nbsp;(19) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-22" type="radio" name="fq[facet_allpersons]" value="Erzherzog Leopold Wilhelm Sohn des Ferdinand II. von Habsburg Österreich"> <label for="facet-5-22" class="form-check-label"> Erzherzog Leopold Wilhelm Sohn des Ferdinand II. von Habsburg Österreich&nbsp;(19) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-23" type="radio" name="fq[facet_allpersons]" value="Kaiser Joseph II. Sohn des Franz I. Stephan von Habsburg Österreich"> <label for="facet-5-23" class="form-check-label"> Kaiser Joseph II. Sohn des Franz I. Stephan von Habsburg Österreich&nbsp;(18) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-24" type="radio" name="fq[facet_allpersons]" value="Luca Giordano"> <label for="facet-5-24" class="form-check-label"> Luca Giordano&nbsp;(18) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-25" type="radio" name="fq[facet_allpersons]" value="Pieter Bruegel d. Ä."> <label for="facet-5-25" class="form-check-label"> Pieter Bruegel d. Ä.&nbsp;(18) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-26" type="radio" name="fq[facet_allpersons]" value="Andrea Meldolla, gen. Schiavone"> <label for="facet-5-26" class="form-check-label"> Andrea Meldolla, gen. Schiavone&nbsp;(17) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-27" type="radio" name="fq[facet_allpersons]" value="Frans Luycx"> <label for="facet-5-27" class="form-check-label"> Frans Luycx&nbsp;(17) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-28" type="radio" name="fq[facet_allpersons]" value="Lucas I. van Valckenborch"> <label for="facet-5-28" class="form-check-label"> Lucas I. van Valckenborch&nbsp;(17) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-29" type="radio" name="fq[facet_allpersons]" value="Paolo Caliari, gen. Veronese"> <label for="facet-5-29" class="form-check-label"> Paolo Caliari, gen. Veronese&nbsp;(17) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-30" type="radio" name="fq[facet_allpersons]" value="Süddeutsch"> <label for="facet-5-30" class="form-check-label"> Süddeutsch&nbsp;(17) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-31" type="radio" name="fq[facet_allpersons]" value="Franz I. Stephan Sohn des Leopold I. von Lothringen"> <label for="facet-5-31" class="form-check-label"> Franz I. Stephan Sohn des Leopold I. von Lothringen&nbsp;(16) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-32" type="radio" name="fq[facet_allpersons]" value="Guido Reni"> <label for="facet-5-32" class="form-check-label"> Guido Reni&nbsp;(16) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-33" type="radio" name="fq[facet_allpersons]" value="Oberitalienisch"> <label for="facet-5-33" class="form-check-label"> Oberitalienisch&nbsp;(16) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-34" type="radio" name="fq[facet_allpersons]" value="Kaiserin Maria Theresia Tochter des Karl VI. von Habsburg Österreich"> <label for="facet-5-34" class="form-check-label"> Kaiserin Maria Theresia Tochter des Karl VI. von Habsburg Österreich&nbsp;(15) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-35" type="radio" name="fq[facet_allpersons]" value="Bernardo Bellotto, gen. Canaletto"> <label for="facet-5-35" class="form-check-label"> Bernardo Bellotto, gen. Canaletto&nbsp;(14) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-36" type="radio" name="fq[facet_allpersons]" value="Domenico Fetti"> <label for="facet-5-36" class="form-check-label"> Domenico Fetti&nbsp;(14) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-37" type="radio" name="fq[facet_allpersons]" value="Französisch"> <label for="facet-5-37" class="form-check-label"> Französisch&nbsp;(14) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-38" type="radio" name="fq[facet_allpersons]" value="Kaiser Maximilian I. Sohn d. Friedrich III. von Habsburg"> <label for="facet-5-38" class="form-check-label"> Kaiser Maximilian I. Sohn d. Friedrich III. von Habsburg&nbsp;(14) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-39" type="radio" name="fq[facet_allpersons]" value="Angelo degli Erri"> <label for="facet-5-39" class="form-check-label"> Angelo degli Erri&nbsp;(12) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-40" type="radio" name="fq[facet_allpersons]" value="Bartolomeo degli Erri"> <label for="facet-5-40" class="form-check-label"> Bartolomeo degli Erri&nbsp;(12) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-41" type="radio" name="fq[facet_allpersons]" value="Diego Rodríguez de Silva y Velázquez"> <label for="facet-5-41" class="form-check-label"> Diego Rodríguez de Silva y Velázquez&nbsp;(12) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-42" type="radio" name="fq[facet_allpersons]" value="Erzherzog Ferdinand II. Sohn des Ferdinand I. von Habsburg Österreich, Landesherr von Tirol"> <label for="facet-5-42" class="form-check-label"> Erzherzog Ferdinand II. Sohn des Ferdinand I. von Habsburg Österreich, Landesherr von Tirol&nbsp;(12) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-43" type="radio" name="fq[facet_allpersons]" value="Kaiser Karl V. Sohn des Philipp von Habsburg"> <label for="facet-5-43" class="form-check-label"> Kaiser Karl V. Sohn des Philipp von Habsburg&nbsp;(12) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-44" type="radio" name="fq[facet_allpersons]" value="Roelant Savery"> <label for="facet-5-44" class="form-check-label"> Roelant Savery&nbsp;(12) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-45" type="radio" name="fq[facet_allpersons]" value="Andrea Mantegna"> <label for="facet-5-45" class="form-check-label"> Andrea Mantegna&nbsp;(11) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-46" type="radio" name="fq[facet_allpersons]" value="Jacopo Negretti, gen. Palma il Giovane"> <label for="facet-5-46" class="form-check-label"> Jacopo Negretti, gen. Palma il Giovane&nbsp;(11) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-47" type="radio" name="fq[facet_allpersons]" value="Johann Heinrich Schönfeld"> <label for="facet-5-47" class="form-check-label"> Johann Heinrich Schönfeld&nbsp;(11) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-48" type="radio" name="fq[facet_allpersons]" value="Joseph Heintz d. Ä."> <label for="facet-5-48" class="form-check-label"> Joseph Heintz d. Ä.&nbsp;(11) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-49" type="radio" name="fq[facet_allpersons]" value="Kaiser Franz I. (II.) Sohn des Leopold II. von Habsburg Lothringen"> <label for="facet-5-49" class="form-check-label"> Kaiser Franz I. (II.) Sohn des Leopold II. von Habsburg Lothringen&nbsp;(11) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-50" type="radio" name="fq[facet_allpersons]" value="Marten I. van Valckenborch"> <label for="facet-5-50" class="form-check-label"> Marten I. van Valckenborch&nbsp;(11) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-51" type="radio" name="fq[facet_allpersons]" value="Philipp Ferdinand de Hamilton"> <label for="facet-5-51" class="form-check-label"> Philipp Ferdinand de Hamilton&nbsp;(11) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-52" type="radio" name="fq[facet_allpersons]" value="Alonso Sánchez Coello"> <label for="facet-5-52" class="form-check-label"> Alonso Sánchez Coello&nbsp;(10) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-53" type="radio" name="fq[facet_allpersons]" value="Bernhard Strigel"> <label for="facet-5-53" class="form-check-label"> Bernhard Strigel&nbsp;(10) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-54" type="radio" name="fq[facet_allpersons]" value="Jan Cornelisz Vermeyen"> <label for="facet-5-54" class="form-check-label"> Jan Cornelisz Vermeyen&nbsp;(10) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-55" type="radio" name="fq[facet_allpersons]" value="Kaiser Karl VI. Sohn des Leopold I. von Habsburg Österreich"> <label for="facet-5-55" class="form-check-label"> Kaiser Karl VI. Sohn des Leopold I. von Habsburg Österreich&nbsp;(10) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-56" type="radio" name="fq[facet_allpersons]" value="Michelangelo Merisi, gen. Caravaggio"> <label for="facet-5-56" class="form-check-label"> Michelangelo Merisi, gen. Caravaggio&nbsp;(10) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-57" type="radio" name="fq[facet_allpersons]" value="Paolo Caliari, gen. Veronese und Werkstatt"> <label for="facet-5-57" class="form-check-label"> Paolo Caliari, gen. Veronese und Werkstatt&nbsp;(10) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-58" type="radio" name="fq[facet_allpersons]" value="Christoph Amberger"> <label for="facet-5-58" class="form-check-label"> Christoph Amberger&nbsp;(9) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-59" type="radio" name="fq[facet_allpersons]" value="Florentinisch"> <label for="facet-5-59" class="form-check-label"> Florentinisch&nbsp;(9) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-60" type="radio" name="fq[facet_allpersons]" value="Frederik I. van Valckenborch"> <label for="facet-5-60" class="form-check-label"> Frederik I. van Valckenborch&nbsp;(9) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-61" type="radio" name="fq[facet_allpersons]" value="Jacopo Negretti, gen. Palma il Vecchio"> <label for="facet-5-61" class="form-check-label"> Jacopo Negretti, gen. Palma il Vecchio&nbsp;(9) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-62" type="radio" name="fq[facet_allpersons]" value="Jacopo da Ponte, gen. Jacopo Bassano"> <label for="facet-5-62" class="form-check-label"> Jacopo da Ponte, gen. Jacopo Bassano&nbsp;(9) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-63" type="radio" name="fq[facet_allpersons]" value="Kaiser Matthias Sohn des Maximilian II. von Habsburg Österreich"> <label for="facet-5-63" class="form-check-label"> Kaiser Matthias Sohn des Maximilian II. von Habsburg Österreich&nbsp;(9) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-64" type="radio" name="fq[facet_allpersons]" value="Lorenzo Lippi"> <label for="facet-5-64" class="form-check-label"> Lorenzo Lippi&nbsp;(9) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-65" type="radio" name="fq[facet_allpersons]" value="Peter Strudel"> <label for="facet-5-65" class="form-check-label"> Peter Strudel&nbsp;(9) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-66" type="radio" name="fq[facet_allpersons]" value="Robert van den Hoecke"> <label for="facet-5-66" class="form-check-label"> Robert van den Hoecke&nbsp;(9) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-67" type="radio" name="fq[facet_allpersons]" value="Albrecht Altdorfer"> <label for="facet-5-67" class="form-check-label"> Albrecht Altdorfer&nbsp;(8) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-68" type="radio" name="fq[facet_allpersons]" value="Antonio Joli"> <label for="facet-5-68" class="form-check-label"> Antonio Joli&nbsp;(8) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-69" type="radio" name="fq[facet_allpersons]" value="Antonio Vivarini"> <label for="facet-5-69" class="form-check-label"> Antonio Vivarini&nbsp;(8) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-70" type="radio" name="fq[facet_allpersons]" value="Carlo Maratta"> <label for="facet-5-70" class="form-check-label"> Carlo Maratta&nbsp;(8) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-71" type="radio" name="fq[facet_allpersons]" value="Flämisch"> <label for="facet-5-71" class="form-check-label"> Flämisch&nbsp;(8) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-72" type="radio" name="fq[facet_allpersons]" value="Frans II. Francken"> <label for="facet-5-72" class="form-check-label"> Frans II. Francken&nbsp;(8) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-73" type="radio" name="fq[facet_allpersons]" value="Italienisch, Florenz (?)"> <label for="facet-5-73" class="form-check-label"> Italienisch, Florenz (?)&nbsp;(8) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-74" type="radio" name="fq[facet_allpersons]" value="Jakob Seisenegger"> <label for="facet-5-74" class="form-check-label"> Jakob Seisenegger&nbsp;(8) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-75" type="radio" name="fq[facet_allpersons]" value="Jan Sanders van Hemessen"> <label for="facet-5-75" class="form-check-label"> Jan Sanders van Hemessen&nbsp;(8) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-76" type="radio" name="fq[facet_allpersons]" value="Johann Georg de Hamilton"> <label for="facet-5-76" class="form-check-label"> Johann Georg de Hamilton&nbsp;(8) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-77" type="radio" name="fq[facet_allpersons]" value="Kaiser Leopold I."> <label for="facet-5-77" class="form-check-label"> Kaiser Leopold I.&nbsp;(8) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-78" type="radio" name="fq[facet_allpersons]" value="Kaiser Leopold II. Sohn des Franz I. Stephan Habsburg Österreich"> <label for="facet-5-78" class="form-check-label"> Kaiser Leopold II. Sohn des Franz I. Stephan Habsburg Österreich&nbsp;(8) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-79" type="radio" name="fq[facet_allpersons]" value="Kaiser Rudolf II., Sohn Kaiser Maximilians II. von Habsburg"> <label for="facet-5-79" class="form-check-label"> Kaiser Rudolf II., Sohn Kaiser Maximilians II. von Habsburg&nbsp;(8) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-80" type="radio" name="fq[facet_allpersons]" value="Kaiserin Margarita Tochter des Philipp IV. von Habsburg Spanien"> <label for="facet-5-80" class="form-check-label"> Kaiserin Margarita Tochter des Philipp IV. von Habsburg Spanien&nbsp;(8) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-81" type="radio" name="fq[facet_allpersons]" value="Lucas Cranach d. J."> <label for="facet-5-81" class="form-check-label"> Lucas Cranach d. J.&nbsp;(8) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-82" type="radio" name="fq[facet_allpersons]" value="Pietro Paltronieri (?)"> <label for="facet-5-82" class="form-check-label"> Pietro Paltronieri (?)&nbsp;(8) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-83" type="radio" name="fq[facet_allpersons]" value="Francesco Mazzola gen. Parmigianino"> <label for="facet-5-83" class="form-check-label"> Francesco Mazzola gen. Parmigianino&nbsp;(7) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-84" type="radio" name="fq[facet_allpersons]" value="Frans Pourbus d. J."> <label for="facet-5-84" class="form-check-label"> Frans Pourbus d. J.&nbsp;(7) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-85" type="radio" name="fq[facet_allpersons]" value="Frans de Vriendt, gen. Floris"> <label for="facet-5-85" class="form-check-label"> Frans de Vriendt, gen. Floris&nbsp;(7) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-86" type="radio" name="fq[facet_allpersons]" value="Gerolamo da Ponte, gen. Gerolamo Bassano"> <label for="facet-5-86" class="form-check-label"> Gerolamo da Ponte, gen. Gerolamo Bassano&nbsp;(7) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-87" type="radio" name="fq[facet_allpersons]" value="Giuseppe Arcimboldo"> <label for="facet-5-87" class="form-check-label"> Giuseppe Arcimboldo&nbsp;(7) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-88" type="radio" name="fq[facet_allpersons]" value="Hans Holbein d. J."> <label for="facet-5-88" class="form-check-label"> Hans Holbein d. J.&nbsp;(7) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-89" type="radio" name="fq[facet_allpersons]" value="Joachim von Sandrart"> <label for="facet-5-89" class="form-check-label"> Joachim von Sandrart&nbsp;(7) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-90" type="radio" name="fq[facet_allpersons]" value="Joos van Cleve"> <label for="facet-5-90" class="form-check-label"> Joos van Cleve&nbsp;(7) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-91" type="radio" name="fq[facet_allpersons]" value="Juan Pantoja de la Cruz"> <label for="facet-5-91" class="form-check-label"> Juan Pantoja de la Cruz&nbsp;(7) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-92" type="radio" name="fq[facet_allpersons]" value="Justus Sustermans"> <label for="facet-5-92" class="form-check-label"> Justus Sustermans&nbsp;(7) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-93" type="radio" name="fq[facet_allpersons]" value="Lorenzo Lotto"> <label for="facet-5-93" class="form-check-label"> Lorenzo Lotto&nbsp;(7) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-94" type="radio" name="fq[facet_allpersons]" value="Rembrandt Harmensz van Rijn"> <label for="facet-5-94" class="form-check-label"> Rembrandt Harmensz van Rijn&nbsp;(7) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-95" type="radio" name="fq[facet_allpersons]" value="Rogier van der Weyden"> <label for="facet-5-95" class="form-check-label"> Rogier van der Weyden&nbsp;(7) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-96" type="radio" name="fq[facet_allpersons]" value="Adriaen Thomas Key"> <label for="facet-5-96" class="form-check-label"> Adriaen Thomas Key&nbsp;(6) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-97" type="radio" name="fq[facet_allpersons]" value="Anton Raphael Mengs"> <label for="facet-5-97" class="form-check-label"> Anton Raphael Mengs&nbsp;(6) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-98" type="radio" name="fq[facet_allpersons]" value="Benedetto Caliari gen. Veronese (Mitarbeit)"> <label for="facet-5-98" class="form-check-label"> Benedetto Caliari gen. Veronese (Mitarbeit)&nbsp;(6) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-99" type="radio" name="fq[facet_allpersons]" value="Carlo Caliari gen. Carletto Veronese (Mitarbeit)"> <label for="facet-5-99" class="form-check-label"> Carlo Caliari gen. Carletto Veronese (Mitarbeit)&nbsp;(6) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-100" type="radio" name="fq[facet_allpersons]" value="Christoph Paudiß"> <label for="facet-5-100" class="form-check-label"> Christoph Paudiß&nbsp;(6) </label> </div>
+										 </div>
+									 </div>
+								 </div>
+							 </div>
+						 </div>
+					 </div>
+				<div class="filter-calender__checkboxes__outer">
+					<div class="filter-calender__checkboxes mt-3">
+						<div class="filter-calender__check">
+							<div class="form-check"> <input type="hidden" name="fq[facet_has_image]" value=""><input class="form-check-input" id="facet-has-image" type="checkbox" name="fq[facet_has_image][]" value="1" checked="checked"> <label class="form-check-label" data-text="with image (2.767)" for="facet-has-image">with image (2.767)</label> </div>
+							 </div>
+						<div class="filter-calender__check">
+							<div class="form-check"> <input type="hidden" name="fq[facet_is_currently_shown]" value=""><input class="form-check-input" id="facet-is-currently-shown" type="checkbox" name="fq[facet_is_currently_shown][]" value="1"> <label class="form-check-label" data-text="currently shown (846)" for="facet-is-currently-shown">currently shown (846)</label> </div>
+							 </div>
+						 </div>
+					 </div>
+				<button type="button" data-loading-indicator="#indicator-object-list-top" hx-target="#collection-grid" hx-swap="innerHTML" hx-select="#object-list" hx-get="/en/artworks/search?tx_theme_objectlistloaded%5Bcontroller%5D=Object&amp;type=686&amp;cHash=4f0d690d44aa0cd131d4af98c89fa548" class="button button-link button-small reset"></button>
+				 </div>
+			<div id="object-list-layout" class="object-list-layout" hx-swap-oob="true">
+				<div class="form-control-row">
+					<div class="form-floating me-2"> <select class="form-select" id="object-layout-toggle" name="view"><option value="0" selected="selected">Text &amp; images</option> <option value="1">Thumbnails</option> </select> <label for="object-layout-toggle" class="form-label">View</label> </div>
+					<div class="form-floating"> <select class="form-select" id="object-sort-toggle" name="sort"><option value="score:desc">Relevancy</option> <option value="date_begin:desc">Dating new-old</option> <option value="date_begin:asc">Dating old-new</option> <option value="sort_person:desc">Producer/artist Z-A</option> <option value="sort_person:asc">Producer/artist A-Z</option> <option value="sort_classification:desc">Object type Z-A</option> <option value="sort_classification:asc">Object type Z-A</option> </select> <label for="object-sort-toggle" class="form-label">Sorted by</label> </div>
+					 </div>
+				 </div>
+			<div class="row object-gallery-isotope g-5" id="object-list">
+				<div class="col-md-4 grid-item">
+					<div class="object-gallery-item"> <a data-id="2312" class="stretched-link detail flex-column" target="_top" href="https://www.khm.at/en/artworks/infantin-anna-1601-1666-koenigin-von-frankreich-bildnis-in-ganzer-figur-mit-einem-loewenaeffchen-2312-1">
+							<div class="figure position-relative mb-2 mb-lg-0">
+								<picture> <source srcset="/pics/2312/GG_3421_2.jpg 2x,/typo3temp/assets/_processed_/b/2/csm_GG_3421_2_20c7fef28a.jpg 1x" width="775" height="980" type="image/jpeg"> <source srcset="/typo3temp/assets/_processed_/b/2/csm_GG_3421_2_0993722faa.webp 2x,/typo3temp/assets/_processed_/b/2/csm_GG_3421_2_2bfce54865.webp 1x" width="775" height="980" type="image/webp"> <img src="/typo3temp/assets/_processed_/b/2/csm_GG_3421_2_2bfce54865.webp" width="775" height="980" class="figure-img img-fluid object-fit format-portrait" alt="Infantin Anna (1601-1666), Königin von Frankreich, Bildnis in ganzer Figur mit einem Löwenäffchen" loading="lazy"></picture>
+								 </div>
+							 <span class="visually-hidden">to detail page</span> </a>
+						<div class="d-flex justify-content-between align-items-start">
+							<div class="object-caption">
+								<p> <span> Infantin Anna (1601-1666), Königin von Frankreich, Bildnis in ganzer Figur mit einem Löwenäffchen</span> <span><small>Juan Pantoja de la Cruz</small></span> <span><small>1604 datiert</small></span> </p>
+								 </div>
+							<button type="button" class="btn btn-link btn-my-list-add p-0 remember-object-link" data-id="2312" title="Add to my list" hx-get="/en/?command=toggle&amp;objectID=2312&amp;type=687&amp;cHash=cddbb522e7cc014c26fd151d15136f27" hx-trigger="click" hx-target="this" hx-swap="none" data-objectTitle="Infantin Anna (1601-1666), Königin von Frankreich, Bildnis in ganzer Figur mit einem Löwenäffchen" data-target-url=""> <span class="icon material-symbols-outlined star flex-shrink-0 notranslate" aria-hidden="true" style="font-size:23px">star</span> <span class="icon material-symbols-outlined check flex-shrink-0 notranslate" aria-hidden="true" style="font-size:23px">check</span> <span class="add">Add to my list</span> <span class="remove">Remove from my list</span> </button>
+							 </div>
+						 </div>
+					 </div>
+				<div class="col-md-4 grid-item">
+					<div class="object-gallery-item"> <a data-id="2324" class="stretched-link detail flex-column" target="_top" href="https://www.khm.at/en/artworks/infantin-margarita-1651-1673-kaiserin-im-theaterkostuem-2324-1">
+							<div class="figure position-relative mb-2 mb-lg-0">
+								<picture> <source srcset="/pics/2324/GG_9136x.jpg 2x,/typo3temp/assets/_processed_/4/0/csm_GG_9136x_dd83fee68d.jpg 1x" width="775" height="1071" type="image/jpeg"> <source srcset="/typo3temp/assets/_processed_/4/0/csm_GG_9136x_f1b8f24939.webp 2x,/typo3temp/assets/_processed_/4/0/csm_GG_9136x_4a9d3b4dbf.webp 1x" width="775" height="1071" type="image/webp"> <img src="/typo3temp/assets/_processed_/4/0/csm_GG_9136x_4a9d3b4dbf.webp" width="775" height="1071" class="figure-img img-fluid object-fit format-portrait" alt="Infantin Margarita (1651-1673), Kaiserin, im Theaterkostüm" loading="lazy"></picture>
+								 </div>
+							 <span class="visually-hidden">to detail page</span> </a>
+						<div class="d-flex justify-content-between align-items-start">
+							<div class="object-caption">
+								<p> <span> Infantin Margarita (1651-1673), Kaiserin, im Theaterkostüm</span> <span><small>Jan Thomas</small></span> <span><small>1667</small></span> </p>
+								 </div>
+							<button type="button" class="btn btn-link btn-my-list-add p-0 remember-object-link" data-id="2324" title="Add to my list" hx-get="/en/?command=toggle&amp;objectID=2324&amp;type=687&amp;cHash=bc51f30d496b1dc76a80cd6f8734bd21" hx-trigger="click" hx-target="this" hx-swap="none" data-objectTitle="Infantin Margarita (1651-1673), Kaiserin, im Theaterkostüm" data-target-url=""> <span class="icon material-symbols-outlined star flex-shrink-0 notranslate" aria-hidden="true" style="font-size:23px">star</span> <span class="icon material-symbols-outlined check flex-shrink-0 notranslate" aria-hidden="true" style="font-size:23px">check</span> <span class="add">Add to my list</span> <span class="remove">Remove from my list</span> </button>
+							 </div>
+						 </div>
+					 </div>
+				<div class="col-md-4 grid-item">
+					<div class="object-gallery-item"> <a data-id="2327" class="stretched-link detail flex-column" target="_top" href="https://www.khm.at/en/artworks/maximilian-ii-1527-1576-und-seine-gemahlin-maria-von-spanien-1528-1603-und-seine-kinder-anna-1549-1580-rudolf-1552-1612-und-ernst-1553-1595-2327-1">
+							<div class="figure position-relative mb-2 mb-lg-0">
+								<picture> <source srcset="/pics/2327/GG_3448_neu.jpg 2x,/typo3temp/assets/_processed_/9/d/csm_GG_3448_neu_d8ccb4e2bd.jpg 1x" width="775" height="974" type="image/jpeg"> <source srcset="/typo3temp/assets/_processed_/9/d/csm_GG_3448_neu_77132ba7fd.webp 2x,/typo3temp/assets/_processed_/9/d/csm_GG_3448_neu_3ab83d0116.webp 1x" width="775" height="974" type="image/webp"> <img src="/typo3temp/assets/_processed_/9/d/csm_GG_3448_neu_3ab83d0116.webp" width="775" height="974" class="figure-img img-fluid object-fit format-portrait" alt="Maximilian II. (1527-1576) und seine Gemahlin Maria von Spanien (1528-1603) und seine Kinder Anna (1549-1580), Rudolf (1552-1612) und Ernst (1553-1595)" loading="lazy"></picture>
+								 </div>
+							 <span class="visually-hidden">to detail page</span> </a>
+						<div class="d-flex justify-content-between align-items-start">
+							<div class="object-caption">
+								<p> <span> Maximilian II. (1527-1576) und seine Gemahlin Maria von Spanien (1528-1603) und seine Kinder Anna (1549-1580), Rudolf (1552-1612) und Ernst (1553-1595)</span> <span><small>Attributed to: Giuseppe Arcimboldo</small></span> <span><small>um 1563 nach einer Vorlage von 1553/54</small></span> </p>
+								 </div>
+							<button type="button" class="btn btn-link btn-my-list-add p-0 remember-object-link" data-id="2327" title="Add to my list" hx-get="/en/?command=toggle&amp;objectID=2327&amp;type=687&amp;cHash=ddab82ae65c413118ff4a1b04d6e26d5" hx-trigger="click" hx-target="this" hx-swap="none" data-objectTitle="Maximilian II. (1527-1576) und seine Gemahlin Maria von Spanien (1528-1603) und seine Kinder Anna (1549-1580), Rudolf (1552-1612) und Ernst (1553-1595)" data-target-url=""> <span class="icon material-symbols-outlined star flex-shrink-0 notranslate" aria-hidden="true" style="font-size:23px">star</span> <span class="icon material-symbols-outlined check flex-shrink-0 notranslate" aria-hidden="true" style="font-size:23px">check</span> <span class="add">Add to my list</span> <span class="remove">Remove from my list</span> </button>
+							 </div>
+						 </div>
+					 </div>
+				<div class="col-md-4 grid-item">
+					<div class="object-gallery-item"> <a data-id="2329" class="stretched-link detail flex-column" target="_top" href="https://www.khm.at/en/artworks/erzherzogin-anna-1528-1590-anna-von-oesterreich-anna-herzogin-von-bayern-tochter-kaiser-ferdinands-i-2329-1">
+							<div class="figure position-relative mb-2 mb-lg-0">
+								<picture> <source srcset="/pics/2329/GG_3236_1.jpg 2x,/typo3temp/assets/_processed_/f/e/csm_GG_3236_1_cb223067b8.jpg 1x" width="775" height="1579" type="image/jpeg"> <source srcset="/typo3temp/assets/_processed_/f/e/csm_GG_3236_1_3073637c7a.webp 2x,/typo3temp/assets/_processed_/f/e/csm_GG_3236_1_f8b1544fbe.webp 1x" width="775" height="1579" type="image/webp"> <img src="/typo3temp/assets/_processed_/f/e/csm_GG_3236_1_f8b1544fbe.webp" width="775" height="1579" class="figure-img img-fluid object-fit format-portrait" alt="Erzherzogin Anna (1528-1590), Anna von Österreich, Anna, Herzogin von Bayern, Tochter Kaiser Ferdinands I." loading="lazy"></picture>
+								 </div>
+							 <span class="visually-hidden">to detail page</span> </a>
+						<div class="d-flex justify-content-between align-items-start">
+							<div class="object-caption">
+								<p> <span> Erzherzogin Anna (1528-1590), Anna von Österreich, Anna, Herzogin von Bayern, Tochter Kaiser Ferdinands I.</span> <span><small>Jakob Seisenegger</small></span> <span><small>um 1545</small></span> </p>
+								 </div>
+							<button type="button" class="btn btn-link btn-my-list-add p-0 remember-object-link" data-id="2329" title="Add to my list" hx-get="/en/?command=toggle&amp;objectID=2329&amp;type=687&amp;cHash=7c662e6fe1f578de26168674be2e542e" hx-trigger="click" hx-target="this" hx-swap="none" data-objectTitle="Erzherzogin Anna (1528-1590), Anna von Österreich, Anna, Herzogin von Bayern, Tochter Kaiser Ferdinands I." data-target-url=""> <span class="icon material-symbols-outlined star flex-shrink-0 notranslate" aria-hidden="true" style="font-size:23px">star</span> <span class="icon material-symbols-outlined check flex-shrink-0 notranslate" aria-hidden="true" style="font-size:23px">check</span> <span class="add">Add to my list</span> <span class="remove">Remove from my list</span> </button>
+							 </div>
+						 </div>
+					 </div>
+				<div class="col-md-4 grid-item">
+					<div class="object-gallery-item"> <a data-id="2333" class="stretched-link detail flex-column" target="_top" href="https://www.khm.at/en/artworks/erzherzog-ferdinand-ii-1529-1595-kniestueck-in-adlerruestung-2333-1">
+							<div class="figure position-relative mb-2 mb-lg-0">
+								<picture> <source srcset="/pics/2333/GG_8063_ret.jpg 2x,/typo3temp/assets/_processed_/9/0/csm_GG_8063_ret_25b1f001df.jpg 1x" width="775" height="902" type="image/jpeg"> <source srcset="/typo3temp/assets/_processed_/9/0/csm_GG_8063_ret_2db0fdeadd.webp 2x,/typo3temp/assets/_processed_/9/0/csm_GG_8063_ret_c72d7771c8.webp 1x" width="775" height="902" type="image/webp"> <img src="/typo3temp/assets/_processed_/9/0/csm_GG_8063_ret_c72d7771c8.webp" width="775" height="902" class="figure-img img-fluid object-fit format-portrait" alt="Erzherzog Ferdinand II. (1529-1595), Kniestück in Adlerrüstung" loading="lazy"></picture>
+								 </div>
+							 <span class="visually-hidden">to detail page</span> </a>
+						<div class="d-flex justify-content-between align-items-start">
+							<div class="object-caption">
+								<p> <span> Erzherzog Ferdinand II. (1529-1595), Kniestück in Adlerrüstung</span> <span><small>Francesco Terzio (?)</small></span> <span><small>um 1550</small></span> </p>
+								 </div>
+							<button type="button" class="btn btn-link btn-my-list-add p-0 remember-object-link" data-id="2333" title="Add to my list" hx-get="/en/?command=toggle&amp;objectID=2333&amp;type=687&amp;cHash=f3ce16c9a8e8e776a00749ba98b6ae56" hx-trigger="click" hx-target="this" hx-swap="none" data-objectTitle="Erzherzog Ferdinand II. (1529-1595), Kniestück in Adlerrüstung" data-target-url=""> <span class="icon material-symbols-outlined star flex-shrink-0 notranslate" aria-hidden="true" style="font-size:23px">star</span> <span class="icon material-symbols-outlined check flex-shrink-0 notranslate" aria-hidden="true" style="font-size:23px">check</span> <span class="add">Add to my list</span> <span class="remove">Remove from my list</span> </button>
+							 </div>
+						 </div>
+					 </div>
+				<div class="col-md-4 grid-item">
+					<div class="object-gallery-item"> <a data-id="2356" class="stretched-link detail flex-column" target="_top" href="https://www.khm.at/en/artworks/erzherzog-wenzel-1561-1578-als-dreizehnjaehriger-mit-einem-falken-ganze-figur-2356-1">
+							<div class="figure position-relative mb-2 mb-lg-0">
+								<picture> <source srcset="/pics/2356/GG_3186x.jpg 2x,/typo3temp/assets/_processed_/4/7/csm_GG_3186x_9071d06115.jpg 1x" width="775" height="1202" type="image/jpeg"> <source srcset="/typo3temp/assets/_processed_/4/7/csm_GG_3186x_3c54633daa.webp 2x,/typo3temp/assets/_processed_/4/7/csm_GG_3186x_6b587d7809.webp 1x" width="775" height="1202" type="image/webp"> <img src="/typo3temp/assets/_processed_/4/7/csm_GG_3186x_6b587d7809.webp" width="775" height="1202" class="figure-img img-fluid object-fit format-portrait" alt="Erzherzog Wenzel (1561-1578) als Dreizehnjähriger mit einem Falken, ganze Figur" loading="lazy"></picture>
+								 </div>
+							 <span class="visually-hidden">to detail page</span> </a>
+						<div class="d-flex justify-content-between align-items-start">
+							<div class="object-caption">
+								<p> <span> Erzherzog Wenzel (1561-1578) als Dreizehnjähriger mit einem Falken, ganze Figur</span> <span><small>Alonso Sánchez Coello</small></span> <span><small>1574 datiert</small></span> </p>
+								 </div>
+							<button type="button" class="btn btn-link btn-my-list-add p-0 remember-object-link" data-id="2356" title="Add to my list" hx-get="/en/?command=toggle&amp;objectID=2356&amp;type=687&amp;cHash=d39e51ecf89abfe0d7a81511427a2c84" hx-trigger="click" hx-target="this" hx-swap="none" data-objectTitle="Erzherzog Wenzel (1561-1578) als Dreizehnjähriger mit einem Falken, ganze Figur" data-target-url=""> <span class="icon material-symbols-outlined star flex-shrink-0 notranslate" aria-hidden="true" style="font-size:23px">star</span> <span class="icon material-symbols-outlined check flex-shrink-0 notranslate" aria-hidden="true" style="font-size:23px">check</span> <span class="add">Add to my list</span> <span class="remove">Remove from my list</span> </button>
+							 </div>
+						 </div>
+					 </div>
+				<div class="col-md-4 grid-item">
+					<div class="object-gallery-item"> <a data-id="2371" class="stretched-link detail flex-column" target="_top" href="https://www.khm.at/en/artworks/erzherzogin-eleonore-1582-1620-kniestueck-2371-1">
+							<div class="figure position-relative mb-2 mb-lg-0">
+								<picture> <source srcset="/pics/2371/GG_3070x.jpg 2x,/typo3temp/assets/_processed_/9/8/csm_GG_3070x_95ec5ffc4e.jpg 1x" width="775" height="946" type="image/jpeg"> <source srcset="/typo3temp/assets/_processed_/9/8/csm_GG_3070x_41f219c9e9.webp 2x,/typo3temp/assets/_processed_/9/8/csm_GG_3070x_b6017da9bd.webp 1x" width="775" height="946" type="image/webp"> <img src="/typo3temp/assets/_processed_/9/8/csm_GG_3070x_b6017da9bd.webp" width="775" height="946" class="figure-img img-fluid object-fit format-portrait" alt="Erzherzogin Eleonore (1582-1620), Kniestück" loading="lazy"></picture>
+								 </div>
+							 <span class="visually-hidden">to detail page</span> </a>
+						<div class="d-flex justify-content-between align-items-start">
+							<div class="object-caption">
+								<p> <span> Erzherzogin Eleonore (1582-1620), Kniestück</span> <span><small>Frans Pourbus d. J.</small></span> <span><small>um 1603</small></span> </p>
+								 </div>
+							<button type="button" class="btn btn-link btn-my-list-add p-0 remember-object-link" data-id="2371" title="Add to my list" hx-get="/en/?command=toggle&amp;objectID=2371&amp;type=687&amp;cHash=0ed33e2ebaf4b36fa1da9c7aeda1a7d1" hx-trigger="click" hx-target="this" hx-swap="none" data-objectTitle="Erzherzogin Eleonore (1582-1620), Kniestück" data-target-url=""> <span class="icon material-symbols-outlined star flex-shrink-0 notranslate" aria-hidden="true" style="font-size:23px">star</span> <span class="icon material-symbols-outlined check flex-shrink-0 notranslate" aria-hidden="true" style="font-size:23px">check</span> <span class="add">Add to my list</span> <span class="remove">Remove from my list</span> </button>
+							 </div>
+						 </div>
+					 </div>
+				<div class="col-md-4 grid-item">
+					<div class="object-gallery-item"> <a data-id="2398" class="stretched-link detail flex-column" target="_top" href="https://www.khm.at/en/artworks/kaiser-leopold-i-1640-1705-im-kroenungsharnisch-2398-1">
+							<div class="figure position-relative mb-2 mb-lg-0">
+								<picture> <source srcset="/pics/2398/GG_3117x.jpg 2x,/typo3temp/assets/_processed_/d/c/csm_GG_3117x_ec45f07493.jpg 1x" width="775" height="1218" type="image/jpeg"> <source srcset="/typo3temp/assets/_processed_/d/c/csm_GG_3117x_3553c36811.webp 2x,/typo3temp/assets/_processed_/d/c/csm_GG_3117x_4631a7f7b7.webp 1x" width="775" height="1218" type="image/webp"> <img src="/typo3temp/assets/_processed_/d/c/csm_GG_3117x_4631a7f7b7.webp" width="775" height="1218" class="figure-img img-fluid object-fit format-portrait" alt="Kaiser Leopold I. (1640-1705) im Krönungsharnisch" loading="lazy"></picture>
+								 </div>
+							 <span class="visually-hidden">to detail page</span> </a>
+						<div class="d-flex justify-content-between align-items-start">
+							<div class="object-caption">
+								<p> <span> Kaiser Leopold I. (1640-1705) im Krönungsharnisch</span> <span><small>Guido Cagnacci</small></span> <span><small>um 1657/1658</small></span> </p>
+								 </div>
+							<button type="button" class="btn btn-link btn-my-list-add p-0 remember-object-link" data-id="2398" title="Add to my list" hx-get="/en/?command=toggle&amp;objectID=2398&amp;type=687&amp;cHash=77e608cc89553aa3fa202d40e77d4d6b" hx-trigger="click" hx-target="this" hx-swap="none" data-objectTitle="Kaiser Leopold I. (1640-1705) im Krönungsharnisch" data-target-url=""> <span class="icon material-symbols-outlined star flex-shrink-0 notranslate" aria-hidden="true" style="font-size:23px">star</span> <span class="icon material-symbols-outlined check flex-shrink-0 notranslate" aria-hidden="true" style="font-size:23px">check</span> <span class="add">Add to my list</span> <span class="remove">Remove from my list</span> </button>
+							 </div>
+						 </div>
+					 </div>
+				<div class="col-md-4 grid-item">
+					<div class="object-gallery-item"> <a data-id="2399" class="stretched-link detail flex-column" target="_top" href="https://www.khm.at/en/artworks/kaiser-leopold-i-1640-1705-im-theaterkostuem-in-ganzer-figur-2399-1">
+							<div class="figure position-relative mb-2 mb-lg-0">
+								<picture> <source srcset="/pics/2399/GG_9135x.jpg 2x,/typo3temp/assets/_processed_/7/0/csm_GG_9135x_359278c754.jpg 1x" width="775" height="1089" type="image/jpeg"> <source srcset="/typo3temp/assets/_processed_/7/0/csm_GG_9135x_2b3babf391.webp 2x,/typo3temp/assets/_processed_/7/0/csm_GG_9135x_1892e3e1b7.webp 1x" width="775" height="1089" type="image/webp"> <img src="/typo3temp/assets/_processed_/7/0/csm_GG_9135x_1892e3e1b7.webp" width="775" height="1089" class="figure-img img-fluid object-fit format-portrait" alt="Kaiser Leopold I. (1640-1705) im Theaterkostüm, in ganzer Figur" loading="lazy"></picture>
+								 </div>
+							 <span class="visually-hidden">to detail page</span> </a>
+						<div class="d-flex justify-content-between align-items-start">
+							<div class="object-caption">
+								<p> <span> Kaiser Leopold I. (1640-1705) im Theaterkostüm, in ganzer Figur</span> <span><small>Jan Thomas</small></span> <span><small>1667</small></span> </p>
+								 </div>
+							<button type="button" class="btn btn-link btn-my-list-add p-0 remember-object-link" data-id="2399" title="Add to my list" hx-get="/en/?command=toggle&amp;objectID=2399&amp;type=687&amp;cHash=99236ebe961edf44fcf6def3e637c9d2" hx-trigger="click" hx-target="this" hx-swap="none" data-objectTitle="Kaiser Leopold I. (1640-1705) im Theaterkostüm, in ganzer Figur" data-target-url=""> <span class="icon material-symbols-outlined star flex-shrink-0 notranslate" aria-hidden="true" style="font-size:23px">star</span> <span class="icon material-symbols-outlined check flex-shrink-0 notranslate" aria-hidden="true" style="font-size:23px">check</span> <span class="add">Add to my list</span> <span class="remove">Remove from my list</span> </button>
+							 </div>
+						 </div>
+					 </div>
+				<div class="col-md-4 grid-item">
+					<div class="object-gallery-item"> <a data-id="2404" class="stretched-link detail flex-column" target="_top" href="https://www.khm.at/en/artworks/erzherzog-karl-joseph-1649-1664-mit-eichhoernchen-im-alter-von-vier-bis-fuenf-jahren-2404-1">
+							<div class="figure position-relative mb-2 mb-lg-0">
+								<picture> <source srcset="/pics/2404/GG_3188.jpg 2x,/typo3temp/assets/_processed_/8/7/csm_GG_3188_3081eeb456.jpg 1x" width="775" height="1095" type="image/jpeg"> <source srcset="/typo3temp/assets/_processed_/8/7/csm_GG_3188_688f470525.webp 2x,/typo3temp/assets/_processed_/8/7/csm_GG_3188_bcf3e01ea6.webp 1x" width="775" height="1095" type="image/webp"> <img src="/typo3temp/assets/_processed_/8/7/csm_GG_3188_bcf3e01ea6.webp" width="775" height="1095" class="figure-img img-fluid object-fit format-portrait" alt="Erzherzog Karl Joseph (1649-1664) mit Eichhörnchen, im Alter von vier bis fünf Jahren" loading="lazy"></picture>
+								 </div>
+							 <span class="visually-hidden">to detail page</span> </a>
+						<div class="d-flex justify-content-between align-items-start">
+							<div class="object-caption">
+								<p> <span> Erzherzog Karl Joseph (1649-1664) mit Eichhörnchen, im Alter von vier bis fünf Jahren</span> <span><small>Cornelis Sustermans</small></span> <span><small>um 1653/1654</small></span> </p>
+								 </div>
+							<button type="button" class="btn btn-link btn-my-list-add p-0 remember-object-link" data-id="2404" title="Add to my list" hx-get="/en/?command=toggle&amp;objectID=2404&amp;type=687&amp;cHash=7d1cfc8926348f1c22a1ca8bd64947b8" hx-trigger="click" hx-target="this" hx-swap="none" data-objectTitle="Erzherzog Karl Joseph (1649-1664) mit Eichhörnchen, im Alter von vier bis fünf Jahren" data-target-url=""> <span class="icon material-symbols-outlined star flex-shrink-0 notranslate" aria-hidden="true" style="font-size:23px">star</span> <span class="icon material-symbols-outlined check flex-shrink-0 notranslate" aria-hidden="true" style="font-size:23px">check</span> <span class="add">Add to my list</span> <span class="remove">Remove from my list</span> </button>
+							 </div>
+						 </div>
+					 </div>
+				<div class="col-md-4 grid-item">
+					<div class="object-gallery-item"> <a data-id="2406" class="stretched-link detail flex-column" target="_top" href="https://www.khm.at/en/artworks/erzherzogin-claudia-felicitas-1653-1676-als-diana-2406-1">
+							<div class="figure position-relative mb-2 mb-lg-0">
+								<picture> <source srcset="/pics/2406/GG_3096x.jpg 2x,/typo3temp/assets/_processed_/d/3/csm_GG_3096x_b52de49d52.jpg 1x" width="775" height="1253" type="image/jpeg"> <source srcset="/typo3temp/assets/_processed_/d/3/csm_GG_3096x_b6ff9a4992.webp 2x,/typo3temp/assets/_processed_/d/3/csm_GG_3096x_59de30670a.webp 1x" width="775" height="1253" type="image/webp"> <img src="/typo3temp/assets/_processed_/d/3/csm_GG_3096x_59de30670a.webp" width="775" height="1253" class="figure-img img-fluid object-fit format-portrait" alt="Erzherzogin Claudia Felicitas (1653-1676) als Diana" loading="lazy"></picture>
+								 </div>
+							 <span class="visually-hidden">to detail page</span> </a>
+						<div class="d-flex justify-content-between align-items-start">
+							<div class="object-caption">
+								<p> <span> Erzherzogin Claudia Felicitas (1653-1676) als Diana</span> <span><small>Giovanni Maria Morandi</small></span> <span><small>1666 (?)</small></span> </p>
+								 </div>
+							<button type="button" class="btn btn-link btn-my-list-add p-0 remember-object-link" data-id="2406" title="Add to my list" hx-get="/en/?command=toggle&amp;objectID=2406&amp;type=687&amp;cHash=466abe9ca0bba5ac3cdc8bc577bc3d36" hx-trigger="click" hx-target="this" hx-swap="none" data-objectTitle="Erzherzogin Claudia Felicitas (1653-1676) als Diana" data-target-url=""> <span class="icon material-symbols-outlined star flex-shrink-0 notranslate" aria-hidden="true" style="font-size:23px">star</span> <span class="icon material-symbols-outlined check flex-shrink-0 notranslate" aria-hidden="true" style="font-size:23px">check</span> <span class="add">Add to my list</span> <span class="remove">Remove from my list</span> </button>
+							 </div>
+						 </div>
+					 </div>
+				<div class="col-md-4 grid-item">
+					<div class="object-gallery-item"> <a data-id="2413" class="stretched-link detail flex-column" target="_top" href="https://www.khm.at/en/artworks/kaiserin-maria-theresia-1717-1780-im-alter-von-elf-jahren-kniestueck-2413-1">
+							<div class="figure position-relative mb-2 mb-lg-0">
+								<picture> <source srcset="/pics/2413/GG_2115x.jpg 2x,/typo3temp/assets/_processed_/5/7/csm_GG_2115x_1403c10e60.jpg 1x" width="775" height="963" type="image/jpeg"> <source srcset="/typo3temp/assets/_processed_/5/7/csm_GG_2115x_fcfcd34795.webp 2x,/typo3temp/assets/_processed_/5/7/csm_GG_2115x_63e9cff07f.webp 1x" width="775" height="963" type="image/webp"> <img src="/typo3temp/assets/_processed_/5/7/csm_GG_2115x_63e9cff07f.webp" width="775" height="963" class="figure-img img-fluid object-fit format-portrait" alt="Kaiserin Maria Theresia (1717-1780) im Alter von elf Jahren, Kniestück" loading="lazy"></picture>
+								 </div>
+							 <span class="visually-hidden">to detail page</span> </a>
+						<div class="d-flex justify-content-between align-items-start">
+							<div class="object-caption">
+								<p> <span> Kaiserin Maria Theresia (1717-1780) im Alter von elf Jahren, Kniestück</span> <span><small>Andreas Möller</small></span> <span><small>um 1727</small></span> </p>
+								 </div>
+							<button type="button" class="btn btn-link btn-my-list-add p-0 remember-object-link" data-id="2413" title="Add to my list" hx-get="/en/?command=toggle&amp;objectID=2413&amp;type=687&amp;cHash=70491e1f7ef80c2ddc3d42c64b2235aa" hx-trigger="click" hx-target="this" hx-swap="none" data-objectTitle="Kaiserin Maria Theresia (1717-1780) im Alter von elf Jahren, Kniestück" data-target-url=""> <span class="icon material-symbols-outlined star flex-shrink-0 notranslate" aria-hidden="true" style="font-size:23px">star</span> <span class="icon material-symbols-outlined check flex-shrink-0 notranslate" aria-hidden="true" style="font-size:23px">check</span> <span class="add">Add to my list</span> <span class="remove">Remove from my list</span> </button>
+							 </div>
+						 </div>
+					 </div>
+				<div class="col-md-4 grid-item">
+					<div class="object-gallery-item"> <a data-id="2415" class="stretched-link detail flex-column" target="_top" href="https://www.khm.at/en/artworks/maria-theresa-as-a-widow-2415-1">
+							<div class="figure position-relative mb-2 mb-lg-0">
+								<picture> <source srcset="/pics/2415/GG_6201.jpg 2x,/typo3temp/assets/_processed_/d/f/csm_GG_6201_806786a81e.jpg 1x" width="775" height="1746" type="image/jpeg"> <source srcset="/typo3temp/assets/_processed_/d/f/csm_GG_6201_9ec9d7dfb4.webp 2x,/typo3temp/assets/_processed_/d/f/csm_GG_6201_d7ad27299d.webp 1x" width="775" height="1746" type="image/webp"> <img src="/typo3temp/assets/_processed_/d/f/csm_GG_6201_d7ad27299d.webp" width="775" height="1746" class="figure-img img-fluid object-fit format-portrait" alt="Kaiserin Maria Theresia (1717-1780) mit der Statue des Friedens" loading="lazy"></picture>
+								 </div>
+							 <span class="visually-hidden">to detail page</span> </a>
+						<div class="d-flex justify-content-between align-items-start">
+							<div class="object-caption">
+								<p> <span> Kaiserin Maria Theresia (1717-1780) mit der Statue des Friedens</span> <span><small>Anton von Maron</small></span> <span><small>1773 datiert</small></span> </p>
+								 </div>
+							<button type="button" class="btn btn-link btn-my-list-add p-0 remember-object-link" data-id="2415" title="Add to my list" hx-get="/en/?command=toggle&amp;objectID=2415&amp;type=687&amp;cHash=c6d21a8afc94363dfaa2a25f74d50630" hx-trigger="click" hx-target="this" hx-swap="none" data-objectTitle="Kaiserin Maria Theresia (1717-1780) mit der Statue des Friedens" data-target-url=""> <span class="icon material-symbols-outlined star flex-shrink-0 notranslate" aria-hidden="true" style="font-size:23px">star</span> <span class="icon material-symbols-outlined check flex-shrink-0 notranslate" aria-hidden="true" style="font-size:23px">check</span> <span class="add">Add to my list</span> <span class="remove">Remove from my list</span> </button>
+							 </div>
+						 </div>
+					 </div>
+				<div class="col-md-4 grid-item">
+					<div class="object-gallery-item"> <a data-id="2418" class="stretched-link detail flex-column" target="_top" href="https://www.khm.at/en/artworks/kaiser-joseph-ii-1741-1790-mit-der-statue-des-mars-2418-1">
+							<div class="figure position-relative mb-2 mb-lg-0">
+								<picture> <source srcset="/pics/2418/GG_6200_ret.jpg 2x,/typo3temp/assets/_processed_/7/2/csm_GG_6200_ret_b35d49fd6c.jpg 1x" width="775" height="1096" type="image/jpeg"> <source srcset="/typo3temp/assets/_processed_/7/2/csm_GG_6200_ret_104ae3b1cd.webp 2x,/typo3temp/assets/_processed_/7/2/csm_GG_6200_ret_fd98a42aa4.webp 1x" width="775" height="1096" type="image/webp"> <img src="/typo3temp/assets/_processed_/7/2/csm_GG_6200_ret_fd98a42aa4.webp" width="775" height="1096" class="figure-img img-fluid object-fit format-portrait" alt="Kaiser Joseph II. (1741-1790) mit der Statue des Mars" loading="lazy"></picture>
+								 </div>
+							 <span class="visually-hidden">to detail page</span> </a>
+						<div class="d-flex justify-content-between align-items-start">
+							<div class="object-caption">
+								<p> <span> Kaiser Joseph II. (1741-1790) mit der Statue des Mars</span> <span><small>Anton von Maron</small></span> <span><small>1775 dat.</small></span> </p>
+								 </div>
+							<button type="button" class="btn btn-link btn-my-list-add p-0 remember-object-link" data-id="2418" title="Add to my list" hx-get="/en/?command=toggle&amp;objectID=2418&amp;type=687&amp;cHash=ca1cfff495ba1e3b55b891eca30cc468" hx-trigger="click" hx-target="this" hx-swap="none" data-objectTitle="Kaiser Joseph II. (1741-1790) mit der Statue des Mars" data-target-url=""> <span class="icon material-symbols-outlined star flex-shrink-0 notranslate" aria-hidden="true" style="font-size:23px">star</span> <span class="icon material-symbols-outlined check flex-shrink-0 notranslate" aria-hidden="true" style="font-size:23px">check</span> <span class="add">Add to my list</span> <span class="remove">Remove from my list</span> </button>
+							 </div>
+						 </div>
+					 </div>
+				<div class="col-md-4 grid-item">
+					<div class="object-gallery-item"> <a data-id="2419" class="stretched-link detail flex-column" target="_top" href="https://www.khm.at/en/artworks/erzherzogin-maria-christine-1742-1798-herzogin-von-sachsen-teschen-in-gestreiftem-seidenkleid-halbfigur-2419-1">
+							<div class="figure position-relative mb-2 mb-lg-0">
+								<picture> <source srcset="/pics/2419/GG_2059x.jpg 2x,/typo3temp/assets/_processed_/8/a/csm_GG_2059x_d1d9b92aa8.jpg 1x" width="775" height="1035" type="image/jpeg"> <source srcset="/typo3temp/assets/_processed_/8/a/csm_GG_2059x_fdb153f950.webp 2x,/typo3temp/assets/_processed_/8/a/csm_GG_2059x_94a0a593e8.webp 1x" width="775" height="1035" type="image/webp"> <img src="/typo3temp/assets/_processed_/8/a/csm_GG_2059x_94a0a593e8.webp" width="775" height="1035" class="figure-img img-fluid object-fit format-portrait" alt="Erzherzogin Maria Christine (1742-1798), Herzogin von Sachsen - Teschen, in gestreiftem Seidenkleid, Halbfigur" loading="lazy"></picture>
+								 </div>
+							 <span class="visually-hidden">to detail page</span> </a>
+						<div class="d-flex justify-content-between align-items-start">
+							<div class="object-caption">
+								<p> <span> Erzherzogin Maria Christine (1742-1798), Herzogin von Sachsen - Teschen, in gestreiftem Seidenkleid, Halbfigur</span> <span><small>Attributed to: Deutsch</small></span> <span><small>um 1766/1770</small></span> </p>
+								 </div>
+							<button type="button" class="btn btn-link btn-my-list-add p-0 remember-object-link" data-id="2419" title="Add to my list" hx-get="/en/?command=toggle&amp;objectID=2419&amp;type=687&amp;cHash=81bbe67f45a797f6961cd746fb946d4f" hx-trigger="click" hx-target="this" hx-swap="none" data-objectTitle="Erzherzogin Maria Christine (1742-1798), Herzogin von Sachsen - Teschen, in gestreiftem Seidenkleid, Halbfigur" data-target-url=""> <span class="icon material-symbols-outlined star flex-shrink-0 notranslate" aria-hidden="true" style="font-size:23px">star</span> <span class="icon material-symbols-outlined check flex-shrink-0 notranslate" aria-hidden="true" style="font-size:23px">check</span> <span class="add">Add to my list</span> <span class="remove">Remove from my list</span> </button>
+							 </div>
+						 </div>
+					 </div>
+				<div class="col-md-4 grid-item">
+					<div class="object-gallery-item"> <a data-id="2423" class="stretched-link detail flex-column" target="_top" href="https://www.khm.at/en/artworks/archduchess-marie-antoinette-1755-1793-queen-of-france-2423-1">
+							<div class="figure position-relative mb-2 mb-lg-0">
+								<picture> <source srcset="/pics/2423/GG_2772x.jpg 2x,/typo3temp/assets/_processed_/4/6/csm_GG_2772x_36fb304a2b.jpg 1x" width="775" height="1106" type="image/jpeg"> <source srcset="/typo3temp/assets/_processed_/4/6/csm_GG_2772x_e998f4e607.webp 2x,/typo3temp/assets/_processed_/4/6/csm_GG_2772x_3cd62b44b0.webp 1x" width="775" height="1106" type="image/webp"> <img src="/typo3temp/assets/_processed_/4/6/csm_GG_2772x_3cd62b44b0.webp" width="775" height="1106" class="figure-img img-fluid object-fit format-portrait" alt="Erzherzogin Marie Antoinette (1755-1793), Königin von Frankreich" loading="lazy"></picture>
+								 </div>
+							 <span class="visually-hidden">to detail page</span> </a>
+						<div class="d-flex justify-content-between align-items-start">
+							<div class="object-caption">
+								<p> <span> Erzherzogin Marie Antoinette (1755-1793), Königin von Frankreich</span> <span><small>Marie Louise Elisabeth Vigée-Lebrun</small></span> <span><small>1778</small></span> </p>
+								 </div>
+							<button type="button" class="btn btn-link btn-my-list-add p-0 remember-object-link" data-id="2423" title="Add to my list" hx-get="/en/?command=toggle&amp;objectID=2423&amp;type=687&amp;cHash=63cc7933ba4bdd3adcb0b566e4c70f19" hx-trigger="click" hx-target="this" hx-swap="none" data-objectTitle="Erzherzogin Marie Antoinette (1755-1793), Königin von Frankreich" data-target-url=""> <span class="icon material-symbols-outlined star flex-shrink-0 notranslate" aria-hidden="true" style="font-size:23px">star</span> <span class="icon material-symbols-outlined check flex-shrink-0 notranslate" aria-hidden="true" style="font-size:23px">check</span> <span class="add">Add to my list</span> <span class="remove">Remove from my list</span> </button>
+							 </div>
+						 </div>
+					 </div>
+				<div class="col-md-4 grid-item">
+					<div class="object-gallery-item"> <a data-id="2424" class="stretched-link detail flex-column" target="_top" href="https://www.khm.at/en/artworks/archduke-francis-joseph-charles-the-later-emperor-francis-ii-1768-1835-at-the-age-of-seven-2424-1">
+							<div class="figure position-relative mb-2 mb-lg-0">
+								<picture> <source srcset="/pics/2424/GG_6390x.jpg 2x,/typo3temp/assets/_processed_/a/d/csm_GG_6390x_aa1c941174.jpg 1x" width="775" height="1064" type="image/jpeg"> <source srcset="/typo3temp/assets/_processed_/a/d/csm_GG_6390x_e76680759f.webp 2x,/typo3temp/assets/_processed_/a/d/csm_GG_6390x_3640d12748.webp 1x" width="775" height="1064" type="image/webp"> <img src="/typo3temp/assets/_processed_/a/d/csm_GG_6390x_3640d12748.webp" width="775" height="1064" class="figure-img img-fluid object-fit format-portrait" alt="Kaiser Franz I. (II.) (1768-1835) im Alter von sieben Jahren" loading="lazy"></picture>
+								 </div>
+							 <span class="visually-hidden">to detail page</span> </a>
+						<div class="d-flex justify-content-between align-items-start">
+							<div class="object-caption">
+								<p> <span> Kaiser Franz I. (II.) (1768-1835) im Alter von sieben Jahren</span> <span><small>Johann Zoffani</small></span> <span><small>1775</small></span> </p>
+								 </div>
+							<button type="button" class="btn btn-link btn-my-list-add p-0 remember-object-link" data-id="2424" title="Add to my list" hx-get="/en/?command=toggle&amp;objectID=2424&amp;type=687&amp;cHash=77b6fc2a718243058d40bcfebdc99ca6" hx-trigger="click" hx-target="this" hx-swap="none" data-objectTitle="Kaiser Franz I. (II.) (1768-1835) im Alter von sieben Jahren" data-target-url=""> <span class="icon material-symbols-outlined star flex-shrink-0 notranslate" aria-hidden="true" style="font-size:23px">star</span> <span class="icon material-symbols-outlined check flex-shrink-0 notranslate" aria-hidden="true" style="font-size:23px">check</span> <span class="add">Add to my list</span> <span class="remove">Remove from my list</span> </button>
+							 </div>
+						 </div>
+					 </div>
+				<div class="col-md-4 grid-item">
+					<div class="object-gallery-item"> <a data-id="2435" class="stretched-link detail flex-column" target="_top" href="https://www.khm.at/en/artworks/napoleon-i-bonaparte-als-koenig-von-italien-halbfigur-2435-1">
+							<div class="figure position-relative mb-2 mb-lg-0">
+								<picture> <source srcset="/pics/2435/GG_2347_Neu.jpg 2x,/typo3temp/assets/_processed_/f/9/csm_GG_2347_Neu_5f3ae0a2c5.jpg 1x" width="775" height="1016" type="image/jpeg"> <source srcset="/typo3temp/assets/_processed_/f/9/csm_GG_2347_Neu_d049e8f608.webp 2x,/typo3temp/assets/_processed_/f/9/csm_GG_2347_Neu_b12d7f4d73.webp 1x" width="775" height="1016" type="image/webp"> <img src="/typo3temp/assets/_processed_/f/9/csm_GG_2347_Neu_b12d7f4d73.webp" width="775" height="1016" class="figure-img img-fluid object-fit format-portrait" alt="Napoleon I. Bonaparte, als König von Italien, Halbfigur" loading="lazy"></picture>
+								 </div>
+							 <span class="visually-hidden">to detail page</span> </a>
+						<div class="d-flex justify-content-between align-items-start">
+							<div class="object-caption">
+								<p> <span> Napoleon I. Bonaparte, als König von Italien, Halbfigur</span> <span><small>Workshop: Andrea Appiani</small></span> <span><small>nach 1805</small></span> </p>
+								 </div>
+							<button type="button" class="btn btn-link btn-my-list-add p-0 remember-object-link" data-id="2435" title="Add to my list" hx-get="/en/?command=toggle&amp;objectID=2435&amp;type=687&amp;cHash=011e3180cb5257b625aa38be5622dac7" hx-trigger="click" hx-target="this" hx-swap="none" data-objectTitle="Napoleon I. Bonaparte, als König von Italien, Halbfigur" data-target-url=""> <span class="icon material-symbols-outlined star flex-shrink-0 notranslate" aria-hidden="true" style="font-size:23px">star</span> <span class="icon material-symbols-outlined check flex-shrink-0 notranslate" aria-hidden="true" style="font-size:23px">check</span> <span class="add">Add to my list</span> <span class="remove">Remove from my list</span> </button>
+							 </div>
+						 </div>
+					 </div>
+				<div class="col-md-4 grid-item">
+					<div class="object-gallery-item"> <a data-id="2481" class="stretched-link detail flex-column" target="_top" href="https://www.khm.at/en/artworks/kurfuerst-august-von-sachsen-1526-1586-2481-1">
+							<div class="figure position-relative mb-2 mb-lg-0">
+								<picture> <source srcset="/pics/2481/GG_3252x.jpg 2x,/pics/2481/GG_3252x.jpg 1x" width="742" height="1604" type="image/jpeg"> <source srcset="/typo3temp/assets/_processed_/7/c/csm_GG_3252x_1153a75d9b.webp 2x,/typo3temp/assets/_processed_/7/c/csm_GG_3252x_7e4ccdccf6.webp 1x" width="742" height="1604" type="image/webp"> <img src="/typo3temp/assets/_processed_/7/c/csm_GG_3252x_7e4ccdccf6.webp" width="742" height="1604" class="figure-img img-fluid object-fit format-portrait" alt="Kurfürst August von Sachsen (1526-1586)" loading="lazy"></picture>
+								 </div>
+							 <span class="visually-hidden">to detail page</span> </a>
+						<div class="d-flex justify-content-between align-items-start">
+							<div class="object-caption">
+								<p> <span> Kurfürst August von Sachsen (1526-1586)</span> <span><small>Lucas Cranach d. J.</small></span> <span><small>nach 1565</small></span> </p>
+								 </div>
+							<button type="button" class="btn btn-link btn-my-list-add p-0 remember-object-link" data-id="2481" title="Add to my list" hx-get="/en/?command=toggle&amp;objectID=2481&amp;type=687&amp;cHash=402d3c739cd0b75d3dadefcb4e3441da" hx-trigger="click" hx-target="this" hx-swap="none" data-objectTitle="Kurfürst August von Sachsen (1526-1586)" data-target-url=""> <span class="icon material-symbols-outlined star flex-shrink-0 notranslate" aria-hidden="true" style="font-size:23px">star</span> <span class="icon material-symbols-outlined check flex-shrink-0 notranslate" aria-hidden="true" style="font-size:23px">check</span> <span class="add">Add to my list</span> <span class="remove">Remove from my list</span> </button>
+							 </div>
+						 </div>
+					 </div>
+				<div class="col-md-4 grid-item">
+					<div class="object-gallery-item"> <a data-id="2483" class="stretched-link detail flex-column" target="_top" href="https://www.khm.at/en/artworks/elisabeth-wilhelmine-von-wuerttemberg-1767-1790-1-gemahlin-von-franz-ii-i-an-einem-tisch-sitzend-kniestueck-2483-1">
+							<div class="figure position-relative mb-2 mb-lg-0">
+								<picture> <source srcset="/pics/2483/GG_8781x.jpg 2x,/typo3temp/assets/_processed_/0/3/csm_GG_8781x_2844944112.jpg 1x" width="775" height="1038" type="image/jpeg"> <source srcset="/typo3temp/assets/_processed_/0/3/csm_GG_8781x_0242a89f01.webp 2x,/typo3temp/assets/_processed_/0/3/csm_GG_8781x_7083912336.webp 1x" width="775" height="1038" type="image/webp"> <img src="/typo3temp/assets/_processed_/0/3/csm_GG_8781x_7083912336.webp" width="775" height="1038" class="figure-img img-fluid object-fit format-portrait" alt="Elisabeth Wilhelmine von Württemberg (1767-1790), 1. Gemahlin von Franz II. (I.), an einem Tisch sitzend, Kniestück" loading="lazy"></picture>
+								 </div>
+							 <span class="visually-hidden">to detail page</span> </a>
+						<div class="d-flex justify-content-between align-items-start">
+							<div class="object-caption">
+								<p> <span> Elisabeth Wilhelmine von Württemberg (1767-1790), 1. Gemahlin von Franz II. (I.), an einem Tisch sitzend, Kniestück</span> <span><small>Johann Baptist Edler von Lampi d. Ä.</small></span> <span><small>1785 datiert</small></span> </p>
+								 </div>
+							<button type="button" class="btn btn-link btn-my-list-add p-0 remember-object-link" data-id="2483" title="Add to my list" hx-get="/en/?command=toggle&amp;objectID=2483&amp;type=687&amp;cHash=d92431ac6cdde4c61ef23bd6669d9311" hx-trigger="click" hx-target="this" hx-swap="none" data-objectTitle="Elisabeth Wilhelmine von Württemberg (1767-1790), 1. Gemahlin von Franz II. (I.), an einem Tisch sitzend, Kniestück" data-target-url=""> <span class="icon material-symbols-outlined star flex-shrink-0 notranslate" aria-hidden="true" style="font-size:23px">star</span> <span class="icon material-symbols-outlined check flex-shrink-0 notranslate" aria-hidden="true" style="font-size:23px">check</span> <span class="add">Add to my list</span> <span class="remove">Remove from my list</span> </button>
+							 </div>
+						 </div>
+					 </div>
+				<div class="col-md-4 grid-item">
+					<div class="object-gallery-item"> <a data-id="2499" class="stretched-link detail flex-column" target="_top" href="https://www.khm.at/en/artworks/papst-pius-vii-1740-1823-2499-1">
+							<div class="figure position-relative mb-2 mb-lg-0">
+								<picture> <source srcset="/pics/2499/GG_1261x.jpg 2x,/typo3temp/assets/_processed_/4/4/csm_GG_1261x_db34007b83.jpg 1x" width="775" height="936" type="image/jpeg"> <source srcset="/typo3temp/assets/_processed_/4/4/csm_GG_1261x_0dd949b2e6.webp 2x,/typo3temp/assets/_processed_/4/4/csm_GG_1261x_ef2f49b733.webp 1x" width="775" height="936" type="image/webp"> <img src="/typo3temp/assets/_processed_/4/4/csm_GG_1261x_ef2f49b733.webp" width="775" height="936" class="figure-img img-fluid object-fit format-portrait" alt="Papst Pius VII. (1740-1823)" loading="lazy"></picture>
+								 </div>
+							 <span class="visually-hidden">to detail page</span> </a>
+						<div class="d-flex justify-content-between align-items-start">
+							<div class="object-caption">
+								<p> <span> Papst Pius VII. (1740-1823)</span> <span><small>Vincenzo Camuccini</small></span> <span><small>1814-1815</small></span> </p>
+								 </div>
+							<button type="button" class="btn btn-link btn-my-list-add p-0 remember-object-link" data-id="2499" title="Add to my list" hx-get="/en/?command=toggle&amp;objectID=2499&amp;type=687&amp;cHash=bdf8e1260a19a89325ced67df70a43ea" hx-trigger="click" hx-target="this" hx-swap="none" data-objectTitle="Papst Pius VII. (1740-1823)" data-target-url=""> <span class="icon material-symbols-outlined star flex-shrink-0 notranslate" aria-hidden="true" style="font-size:23px">star</span> <span class="icon material-symbols-outlined check flex-shrink-0 notranslate" aria-hidden="true" style="font-size:23px">check</span> <span class="add">Add to my list</span> <span class="remove">Remove from my list</span> </button>
+							 </div>
+						 </div>
+					 </div>
+				<div class="col-md-4 grid-item">
+					<div class="object-gallery-item"> <a data-id="2506" class="stretched-link detail flex-column" target="_top" href="https://www.khm.at/en/artworks/eleonore-von-gonzaga-1598-1655-kaiserin-im-alter-von-zwei-jahren-kniestueck-2506-1">
+							<div class="figure position-relative mb-2 mb-lg-0">
+								<picture> <source srcset="/pics/2506/GG_3339_neu_x.jpg 2x,/typo3temp/assets/_processed_/a/c/csm_GG_3339_neu_x_7c9fef2b85.jpg 1x" width="775" height="1150" type="image/jpeg"> <source srcset="/typo3temp/assets/_processed_/a/c/csm_GG_3339_neu_x_4f4418ad92.webp 2x,/typo3temp/assets/_processed_/a/c/csm_GG_3339_neu_x_ad9f6c2d7c.webp 1x" width="775" height="1150" type="image/webp"> <img src="/typo3temp/assets/_processed_/a/c/csm_GG_3339_neu_x_ad9f6c2d7c.webp" width="775" height="1150" class="figure-img img-fluid object-fit format-portrait" alt="Eleonore von Gonzaga (1598-1655), Kaiserin, im Alter von zwei Jahren, Kniestück" loading="lazy"></picture>
+								 </div>
+							 <span class="visually-hidden">to detail page</span> </a>
+						<div class="d-flex justify-content-between align-items-start">
+							<div class="object-caption">
+								<p> <span> Eleonore von Gonzaga (1598-1655), Kaiserin, im Alter von zwei Jahren, Kniestück</span> <span><small>Workshop: Peter Paul Rubens</small></span> <span><small>um 1600/1601</small></span> </p>
+								 </div>
+							<button type="button" class="btn btn-link btn-my-list-add p-0 remember-object-link" data-id="2506" title="Add to my list" hx-get="/en/?command=toggle&amp;objectID=2506&amp;type=687&amp;cHash=b8478efffba9c64cdf898bba8486471f" hx-trigger="click" hx-target="this" hx-swap="none" data-objectTitle="Eleonore von Gonzaga (1598-1655), Kaiserin, im Alter von zwei Jahren, Kniestück" data-target-url=""> <span class="icon material-symbols-outlined star flex-shrink-0 notranslate" aria-hidden="true" style="font-size:23px">star</span> <span class="icon material-symbols-outlined check flex-shrink-0 notranslate" aria-hidden="true" style="font-size:23px">check</span> <span class="add">Add to my list</span> <span class="remove">Remove from my list</span> </button>
+							 </div>
+						 </div>
+					 </div>
+				<div class="col-md-4 grid-item">
+					<div class="object-gallery-item"> <a data-id="2526" class="stretched-link detail flex-column" target="_top" href="https://www.khm.at/en/artworks/anna-de-medici-1616-1676-erzherzogin-mit-einem-schosshuendchen-dreiviertelportraet-2526-1">
+							<div class="figure position-relative mb-2 mb-lg-0">
+								<picture> <source srcset="/pics/2526/GG_803_ret.jpg 2x,/typo3temp/assets/_processed_/7/7/csm_GG_803_ret_80b354a4a3.jpg 1x" width="775" height="1019" type="image/jpeg"> <source srcset="/typo3temp/assets/_processed_/7/7/csm_GG_803_ret_3867972e22.webp 2x,/typo3temp/assets/_processed_/7/7/csm_GG_803_ret_4552d3607d.webp 1x" width="775" height="1019" type="image/webp"> <img src="/typo3temp/assets/_processed_/7/7/csm_GG_803_ret_4552d3607d.webp" width="775" height="1019" class="figure-img img-fluid object-fit format-portrait" alt="Anna de' Medici (1616-1676), Erzherzogin, mit einem Schoßhündchen, Dreiviertelporträt" loading="lazy"></picture>
+								 </div>
+							 <span class="visually-hidden">to detail page</span> </a>
+						<div class="d-flex justify-content-between align-items-start">
+							<div class="object-caption">
+								<p> <span> Anna de&#039; Medici (1616-1676), Erzherzogin, mit einem Schoßhündchen, Dreiviertelporträt</span> <span><small>Justus Sustermans</small></span> <span><small>um 1630</small></span> </p>
+								 </div>
+							<button type="button" class="btn btn-link btn-my-list-add p-0 remember-object-link" data-id="2526" title="Add to my list" hx-get="/en/?command=toggle&amp;objectID=2526&amp;type=687&amp;cHash=a3533d3b842a35c88b3d7ae747db5d97" hx-trigger="click" hx-target="this" hx-swap="none" data-objectTitle="Anna de&#039; Medici (1616-1676), Erzherzogin, mit einem Schoßhündchen, Dreiviertelporträt" data-target-url=""> <span class="icon material-symbols-outlined star flex-shrink-0 notranslate" aria-hidden="true" style="font-size:23px">star</span> <span class="icon material-symbols-outlined check flex-shrink-0 notranslate" aria-hidden="true" style="font-size:23px">check</span> <span class="add">Add to my list</span> <span class="remove">Remove from my list</span> </button>
+							 </div>
+						 </div>
+					 </div>
+				<div class="col-md-4 grid-item">
+					<div class="object-gallery-item"> <a data-id="2529" class="stretched-link detail flex-column" target="_top" href="https://www.khm.at/en/artworks/vittoria-della-rovere-1622-1694-im-alter-von-vier-bis-fuenf-jahren-2529-1">
+							<div class="figure position-relative mb-2 mb-lg-0">
+								<picture> <source srcset="/pics/2529/GG_4518.jpg 2x,/typo3temp/assets/_processed_/d/4/csm_GG_4518_88e105d1a1.jpg 1x" width="775" height="1099" type="image/jpeg"> <source srcset="/typo3temp/assets/_processed_/d/4/csm_GG_4518_7db1f7021a.webp 2x,/typo3temp/assets/_processed_/d/4/csm_GG_4518_199d96f733.webp 1x" width="775" height="1099" type="image/webp"> <img src="/typo3temp/assets/_processed_/d/4/csm_GG_4518_199d96f733.webp" width="775" height="1099" class="figure-img img-fluid object-fit format-portrait" alt="Vittoria della Rovere (1622-1694) im Alter von vier bis fünf Jahren" loading="lazy"></picture>
+								 </div>
+							 <span class="visually-hidden">to detail page</span> </a>
+						<div class="d-flex justify-content-between align-items-start">
+							<div class="object-caption">
+								<p> <span> Vittoria della Rovere (1622-1694) im Alter von vier bis fünf Jahren</span> <span><small>Lorenzo Lippi</small></span> <span><small>um 1626/1628</small></span> </p>
+								 </div>
+							<button type="button" class="btn btn-link btn-my-list-add p-0 remember-object-link" data-id="2529" title="Add to my list" hx-get="/en/?command=toggle&amp;objectID=2529&amp;type=687&amp;cHash=1e46045a82194c73034397bd22c174dc" hx-trigger="click" hx-target="this" hx-swap="none" data-objectTitle="Vittoria della Rovere (1622-1694) im Alter von vier bis fünf Jahren" data-target-url=""> <span class="icon material-symbols-outlined star flex-shrink-0 notranslate" aria-hidden="true" style="font-size:23px">star</span> <span class="icon material-symbols-outlined check flex-shrink-0 notranslate" aria-hidden="true" style="font-size:23px">check</span> <span class="add">Add to my list</span> <span class="remove">Remove from my list</span> </button>
+							 </div>
+						 </div>
+					 </div>
+				 </div>
+			<div class="h-line mt-5"></div>
+			<div class="events-pagination load-more-container" id="list-pagebrowser" hx-swap-oob="true">
+				<div class="events-pagination-inner">
+					<div class="title">24 of 2767 are shown</div>
+					<div class="indicator">
+						<div class="progressbar" style="width: 0.86736537766534%;"></div>
+						 </div>
+					 </div>
+				<button class="button button-primary" hx-get="/en/artworks/search?facet_date_begin=-5000&amp;facet_date_end=2024&amp;fq%5Bfacet_classification%5D=Gem%C3%A4lde&amp;fq%5Bfacet_has_image%5D%5B0%5D=1&amp;listOnly=1&amp;page=2&amp;show=24&amp;tx_theme_objectlist%5Bcontroller%5D=Object&amp;type=686&amp;view=0&amp;cHash=dca8b039b0b676255d4afcd40a0f5c6f" hx-trigger="click" hx-target="#object-list" hx-select="#object-list .grid-item" hx-swap="beforeend" data-loading-indicator="#indicator-object-list" hx-disabled-elt="this"> Load more <span class="icon material-symbols-outlined flex-shrink-0 notranslate" aria-hidden="true" style="font-size:20px">arrow_downward</span> </button>
+				 </div>
+			 </form>
+		 </section>
+	 </div>

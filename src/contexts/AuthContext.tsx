@@ -19,7 +19,6 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
-      console.log("AuthContext.tsx: currentUser ->", currentUser);
       setUser(currentUser);
       if (!currentUser && enableAnonAuth && !attemptedAnon) {
         try {

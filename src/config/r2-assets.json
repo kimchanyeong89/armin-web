@@ -2,5 +2,7 @@
   "/atlas/ne_10m_admin_1_states_provinces.geojson": "https://pub-6ce5ae60b244951ac36ffd277fd6ef76.r2.dev/armin-web/static/atlas/ne_10m_admin_1_states_provinces.geojson",
   "/atlas/ne_10m_urban_areas.geojson": "https://pub-6ce5ae60b244951ac36ffd277fd6ef76.r2.dev/armin-web/static/atlas/ne_10m_urban_areas.geojson",
   "/geodata/admin1-states-10m.json": "https://pub-6ce5ae60b244951ac36ffd277fd6ef76.r2.dev/armin-web/static/geodata/admin1-states-10m.json",
-  "/geodata/populated-places-10m.json": "https://pub-6ce5ae60b244951ac36ffd277fd6ef76.r2.dev/armin-web/static/geodata/populated-places-10m.json"
+  "/geodata/populated-places-10m.json": "https://pub-6ce5ae60b244951ac36ffd277fd6ef76.r2.dev/armin-web/static/geodata/populated-places-10m.json",
+  "/data/nga-collection.json": "https://pub-6ce5ae60b244951ac36ffd277fd6ef76.r2.dev/armin-web/static/data/nga-collection.json",
+  "/data/aic-collection.json": "https://pub-6ce5ae60b244951ac36ffd277fd6ef76.r2.dev/armin-web/static/data/aic-collection.json"
 }

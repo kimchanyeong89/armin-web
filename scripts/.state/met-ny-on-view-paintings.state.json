@@ -1,0 +1,10 @@
+{
+  "finishedAt": "2026-02-07T09:39:38.284Z",
+  "q": "painting",
+  "limit": 500,
+  "totalFromSearch": 8251,
+  "idsFromSearch": 8251,
+  "included": 67,
+  "outputJson": "public/data/met-ny-on-view-paintings.json",
+  "outputJsonl": "public/data/met-ny-on-view-paintings.jsonl"
+}

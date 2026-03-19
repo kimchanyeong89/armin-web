@@ -1,3 +1,4 @@
+import type { Artwork } from "./Artwork";
 
 // ExhibitionItem 타입 정의
 export interface ExhibitionItem {
@@ -9,6 +10,7 @@ export interface ExhibitionItem {
   endDate: string;
   image?: string;
   url?: string;
+  artworks?: Artwork[];
   rooms?: {
     id: string;
     name: string;
@@ -20,8 +22,6 @@ export interface ExhibitionItem {
 }
 
 // (중복 ExhibitionItem 타입 제거)
-
-import type { Artwork } from "./Artwork";
 
 export interface Exhibition {
   id: string;

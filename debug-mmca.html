@@ -1,0 +1,941 @@
+<!DOCTYPE html><html lang="ko" class="OL pc mdBrowser JS"><head>
+	<meta charset="UTF-8">
+	<title>국립현대미술관</title>
+	<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+	<meta http-equiv="Expires" content="Mon, 06 Jan 1990 00:00:01 GMT">
+	<meta http-equiv="Expires" content="-1">
+	<meta http-equiv="Pragma" content="no-cache">
+	<meta http-equiv="Cache-Control" content="no-cache">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="format-detection" content="telephone=no">
+	<meta name="viewport" content="width=device-width, viewport-fit=cover">
+	<meta name="author" content="국립현대미술관">
+	<meta name="keyword" content="국립현대미술관">
+	<meta name="description" content="국립현대미술관 홈페이지">
+	<meta name="format-detection" content="telephone=no">
+	<meta property="og:image" content="/asset/images/common/preview_logo.png">
+	<link rel="shortcut icon" href="/asset/images/common/favicon.ico" type="image/x-icon">
+
+	
+
+
+
+	
+	
+	
+	<link rel="stylesheet" type="text/css" href="/asset/css/common/package.css?dt=Thu+Jan+22+13%3A15%3A46+KST+2026">
+	<!-- jquery -->
+	<script src="/asset/js/jquery.min.js"></script>
+	<script src="/asset/js/jquery-ui.min.js"></script>
+
+	<script src="/asset/js/jquery.ui.touch-punch.min.js"></script>
+
+	<script src="/asset/js/scrollbar.js"></script>
+	<!-- swiper -->
+	<script src="/asset/js/swiper.js"></script>
+	<!--slick -->
+	<link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.css">
+	<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/slick-carousel@1.8.1/slick/slick.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/1.6.0/clipboard.min.js"></script> <!-- 210114 URL 복사를 위해 추가 -->
+	<!-- webfont js -->
+	<script src="/asset/js/webfont.min.js"></script>
+	<!-- common js -->
+	<script defer="" src="/asset/js/common.js?ver240521"></script>
+	<!--[if lt IE 9]>
+	<script src="/asset/js/html5shiv.min.js"></script>
+	<![endif]-->
+	<script src="/js/util/util.js" type="text/javascript"></script>
+
+
+    <style>
+        .popup_window_wrap {display: block;overflow: auto; position: fixed; top: 0; right: 0; bottom: 0; left: 0; z-index: 1000; background-color: rgba(0, 0, 0, .5);}
+        .popup_window {width:650px; background-color:#fff; overflow:hidden; border-radius:10px; position:absolute; top:50%; left:50%; transform:translate(-50%, -50%); padding:0 30px;}
+        .popup_window .close {position: absolute;top: 9px;right: 20px;width: 50px;height: 50px;background: url('/asset/images/common/icon_dialog_closeL.png') no-repeat center center;cursor: pointer;}
+        .popup_window .title {width:100%; height:70px; display:flex; align-items:center; font-size:20px; color:#000; font-weight:700; border-bottom:1px solid #000; margin:0 auto; text-align:left;}
+        .popup_window .content {width:100%; padding:30px 0; text-align:center;}
+        .popup_window .content .formList { display: flex; flex-direction: column;}
+        .popup_window .content .formList li {}
+        .popup_window .content .formList li label {}
+        .popup_window .content .formList li label input {}
+        .popup_window .content .formList li label i {}
+        .popup_window .content .formList li label span {font-size:20px;}
+        .popup_window .content .bot_btn {margin-top:30px;}
+        .popup_window .content .mem_inform {margin-top:15px;}
+
+        @media screen and (max-width:700px) {
+            .popup_window {width:100%;}
+        }
+
+    </style>
+
+
+	<script type="text/javascript">
+
+		var curWidth = $(window).width();
+
+		var mobileKey = 'PC';
+
+
+		//document.oncontextmenu = function (e) {return false;}	//우클릭 방지
+		$(document).ready(function(){
+			//history.replaceState({}, null, location.pathname);
+			//window.histry.pushState(null, null, "/");
+
+			setTimeout(function(){
+				if($(document).find('.editorSlide').length > 0){
+					//console.log($(document).find('.editorSlide').length)
+					$('.editorSlide').css({
+						'width':'auto',
+						'height':'auto',
+						'visibility':'visible'
+					});
+					$('.editorSlide').slick({
+						slidesToShow:1,
+						dots:false,
+						arrow:true
+					});
+				}else{
+					console.log('noSlide')
+				}
+			},500);
+
+			 $(function(){
+			        $('.gnbList li > a').focusin(function(e) {
+			            $(this).keydown(function(e){
+			                if(event.keyCode == 39){//오른쪽
+
+			                    $(this).parent().next().children('a').focus();
+
+			                } else if(event.keyCode == 37){//왼쪽
+
+			                    $(this).parent().prev().children('a').focus();
+
+			                }
+			            });
+			        });
+             });
+
+
+            //회원가입일자와 오늘 날짜를 확인하여 차이를 계산
+            function chkMemberJoinDate() {
+                let today = new Date();
+                let memCreateTime = new Date($('#createTime').val());
+
+                let diff = Math.abs(today.getTime() - memCreateTime.getTime());
+                diff = Math.ceil(diff / (1000 * 60 * 60 * 24));
+
+                return diff;
+            }
+
+            // 서버에 저장되어있는 쿠키 확인
+            function chkCooke(name) {
+               let myCookie = document.cookie.match("(^|;) ?"  + name + "=([^;]*)(;|$)" );
+               return myCookie ? myCookie[2] : null;
+            }
+
+            //회원 가입 일자 계산
+            let memberJoinDate = chkMemberJoinDate();
+
+             // 회원 가입 일자가 30일 이내일 경우
+             if(memberJoinDate < 31) {
+                 let checkCookie = chkCooke("memPop");
+                 let checkSession = sessionStorage.getItem("memPop");
+
+                 // 세션에 값이 없으며, 쿠키가 close인 경우
+                 if(checkSession == null && checkCookie != "close") {
+                         $('.popup_window_wrap').show( );//팝업 노출
+                         sessionStorage.setItem("memPop","openMemPop"); // 세션에 값 추가
+                 }
+             }
+		});
+
+        // 팝업닫기
+        function closePop() {
+
+            let chkoneDayHide = $("input[name='oneDayHide']").is(":checked");
+
+            // 하루동안 보지 않기 설정
+            if(chkoneDayHide){
+                setCooke("memPop", "close", 1);
+                $('.popup_window_wrap').hide();
+            } else {
+                $('.popup_window_wrap').hide();
+            }
+        }
+
+        // 가입하기 버튼 클릭 시 이동
+        function joinDoing() {
+            const cate = $('input[name=ckWhenHead]:checked').val();
+            enterMember(cate);
+            closePop();
+        }
+
+        //멤버십 가입 타입 별 링크 연결
+        function enterMember(type) {
+             if(type == 'family') {
+                window.open("https://booking.mmca.go.kr/member/payment/PopPay?productId=18383");
+            }else {
+                window.open("https://booking.mmca.go.kr/member/payment/PopPay?productId=18384");
+            }
+        }
+
+        // 하루동안 보지 않기 선택 시 cookie 설정
+        function setCooke( name, value, expireDate) {
+
+            let today = new Date();
+            today = today.setTime(today.getTime() + expireDate * 24 * 60 * 60 * 1000);
+            let transToday = new Date(today);
+
+            document.cookie = name + "=" + value + ";expires=" + transToday.toUTCString() + ";" ;
+        }
+
+        //010A00000000000(언어01,1뎁스01,2뎁스001,3뎁스001,4뎁스001, 5뎁스01)
+		/*
+		 * @param 이동URL
+		 * @param 메뉴ID
+		 * @param 메뉴DEPTH
+		*/
+		function fn_menuChange(url, menuId, depth){
+
+			if(menuId == '0030002150'){
+				alert('코로나 19 상황으로 멤버십 신규 가입이 일시 중단되었습니다.');
+				return;
+			}
+
+			if(menuId == '0030002130'){
+				alert('코로나 19 상황으로 멤버십 선물하기가 불가합니다.');
+				return;
+			}
+
+			$.ajax({
+				url:  '/log/ajaxInsMenuLog.do',
+				data: 'menuId='+menuId+'&depth='+depth,
+				type : "POST",
+				dataType: 'json',
+				success: function(data) {
+
+					document.headForm.menuId.value = menuId;
+					document.headForm.action = url;
+					document.headForm.target = "_self";
+					document.headForm.submit();
+				},
+				error: function(request,status,error){
+					alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+				}
+			});
+		}
+
+		function alertReady(){
+			alert("해당 페이지는 아직 준비 중입니다.");
+		}
+
+		/*즐겨찾기 좋아요 담기 설정*/
+		//즐겨찾기 및 좋아요
+		function fn_commonInsAjaxFavorNGood(v, key){
+
+			if("" == null || "" == "" || "" == undefined){
+				alert('로그인 후 이용 해주세요.');
+				return;
+			}
+
+			var copyUrl = $("#urlCopy").data("clipboard-text");
+			var memgUrl = "";
+			if(typeof copyUrl != "undefined" || copyUrl != null || copyUrl != "") {
+				var tmpUrl = copyUrl.split("/");
+
+				for(var i=3; i<tmpUrl.length; i++) {
+					memgUrl += "/";
+					memgUrl += tmpUrl[i];
+				}
+			}
+
+			var form = {
+				"memgId" : key	//상세화면 key
+				, "memgOriginCd" : v//01:즐겨찾기, 02:좋아요
+				, "memgMenuId" : $("#menuId").val()
+				, "memgCd" :$("#memgCd").val()
+				, "memgUrl" : memgUrl
+				, "langCd" : $('#langCd').val()
+			};
+
+			$.ajax({
+				url:  "/common/ajaxInsFavorNGood.do",
+				dataType: 'json',
+				data: form,
+				contentType: "application/x-www-form-urlencoded;charset=utf-8",
+				success: function(data) {
+
+					if(data.rtnCode == '0'){
+						if(v == '01'){
+							$("#btnFavor").addClass('active').find("i").text("스크랩 완료");
+						}else{
+							$("#btnGood").addClass('active').find("i").text("좋아요 추가 완료");
+							//웹접근성 좋아요 선택 상태
+							$("#btnGood").attr('aria-checked', 'true').attr('aria-label', '좋아요 추가된 상태');
+						}
+						alert('추가 하였습니다.');
+					}else if(data.rtnCode == '1'){
+						if(v == '01'){
+							$("#btnFavor").removeClass('active').find("i").text("스크랩 하기");
+						}else{
+							$("#btnGood").removeClass('active').find("i").text("좋아요 추가");
+							//웹접근성 좋아요 선택 안한 상태
+							$("#btnGood").attr('aria-checked', 'false').attr('aria-label', '좋아요 추가되지 않은 상태');
+						}
+						alert('제외 하였습니다.');
+					}else if(data.rtnCode == '10'){
+						if(v == "01"){
+							$("#btnFavor").attr('class','btn btnIcon btnFavor');
+						}else{
+							$("#btnGood").attr('class','btn btnIcon btnGood');
+						}
+						alert('로그인 후 이용 해주세요.');
+						return;
+					}
+				}
+			})
+		}
+
+		//즐겨찾기 및 좋아요 초기 셋팅
+		function fn_commonSelectAjaxFavorNGood(key){
+
+			var form = {
+				"memgId" : key	//상세화면 key
+				,"memgMenuId" : $("#menuId").val()
+				,"memgCd" :$("#memgCd").val()
+			};
+
+			$.ajax({
+				url:  "/common/ajaxSelectMemGoodMemberInfo.do",
+				dataType: 'json',
+				data: form,
+				contentType: "application/x-www-form-urlencoded;charset=utf-8",
+				success: function(data) {
+
+					if(data.rtnCode == '0'){
+						var favorNGoodMap = data.favorNGoodMap;
+
+						if((favorNGoodMap.memgFavor*1) > 0){
+							$("#btnFavor").addClass('active');
+						}else{
+							$("#btnFavor").removeClass('active');
+						}
+
+						if((favorNGoodMap.memgGood*1) > 0){
+							$("#btnGood").addClass('active');
+						}else{
+							$("#btnGood").removeClass('active');
+						}
+
+					}
+				}
+			})
+		}
+
+		//담기처리
+		function fn_commonInsAjaxDigitalCura(v, key, title, url){
+
+			if("" == null || "" == "" || "" == undefined){
+				$("#btnBookmark").attr('class','btn btnIcon btnBookmark');
+				alert('로그인 후 이용 해주세요.');
+				fn_menuChange('/member/loginForm.do','0010000000');
+				return;
+			}
+			var form = {
+				"commonId" : key	//상세화면 key
+				,"dcmLangCd" : "01"
+				,"dcmUserCd" : "01"
+				,"dcmTp" : "99"
+				,"dcmTitle" : title
+				,"dcdUrl" : url
+				,"dcmDelYn" : "N"
+				,"memgCd" :$("#memgCd").val()
+				,"dcdCd" :v	//소장품:01, 동영상:02
+				,"dcdId" :$("#dcdIdKey").val()
+				,"menuId" : $("#menuId").val()
+			};
+
+			$.ajax({
+				url:  "/common/ajaxInsDigitalCura.do",
+				dataType: 'json',
+				data: form,
+				contentType: "application/x-www-form-urlencoded;charset=utf-8",
+				success: function(data) {
+
+					if(data.rtnCode == '0'){
+						alert('추가 하였습니다.');
+						$("#btnBookmark").addClass('active');
+						$("#dcdIdKey").val(data.dcdId);
+					}else if(data.rtnCode == '1'){
+						alert('제거 하였습니다.');
+						$("#btnBookmark").removeClass('active');
+						$("#dcdIdKey").val("");
+					}else if(data.rtnCode == '10'){
+						alert('로그인 후 이용 해주세요.');
+						return;
+					}
+				}
+			})
+		}
+
+		//담기 초기 셋팅
+		function fn_commonSelectAjaxDigitalCura(v, key){
+
+			var form = {
+				"commonId" : key	//상세화면 key
+				,"memgCd" :$("#memgCd").val()
+				,"dcdCd" :v	//소장품:01, 동영상:02
+				,"menuId" : $("#menuId").val()//menuId가 없어서 임의로 처리
+			};
+
+			$.ajax({
+				url:  "/common/ajaxSelectDigitalCuraInfo.do",
+				dataType: 'json',
+				data: form,
+				contentType: "application/x-www-form-urlencoded;charset=utf-8",
+				success: function(data) {
+
+					if(data.rtnCode == '0'){
+						var dtlDcdId = data.dtlDcdId;
+
+						if(dtlDcdId != ""){
+							$("#btnBookmark").addClass('active');
+							$("#dcdIdKey").val(dtlDcdId);
+						}else{
+							$("#btnFavor").removeClass('active');
+							$("#dcdIdKey").val("");
+						}
+					}
+				}
+			})
+		}
+		/*즐겨찾기 좋아요 담기 설정*/
+
+		function snsShare(gubunNum, detailUrl) {
+			var href = "";
+			var msg = "";
+			var url = encodeURIComponent("http://" + "www.mmca.go.kr" + detailUrl);
+
+			if (gubunNum == 'twitter') {
+				href = "http://twitter.com/share?url=" + url + "&text="
+					+ encodeURI(msg);
+			} else if (gubunNum == 'facebook') {
+				href = "http://www.facebook.com/sharer.php?u=" + url + "&t="
+					+ encodeURI(msg) + "&src=sp";
+			} else if (gubunNum == 'me2day') {
+				href = "http://me2day.net/posts/new?new_post[body]=%22"
+					+ encodeURI(msg) + "%22:" + url + "&new_post[tags]="
+					+ encodeURI("국립현대미술관");
+			} else if(gubunNum == 'kakao'){
+				href = "https://story.kakao.com/share?url=" + url;
+			} else if(gubunNum == 'naver'){
+				href = "https://share.naver.com/web/shareView?url=" + url+ "&title=" + encodeURI("국립현대미술관");
+			}
+			window.open(href, gubunNum);
+		}
+
+		//브라우저 체크(IE 버전, 엣지, 스윙 브라우저)
+		function CheckBrowsers(){
+			/*if(navigator.userAgent.toLowerCase().match(/windows/i)){
+			}else */
+
+			if(navigator.userAgent.toLowerCase().match(/android/i)){
+				return 503;
+			}else if(navigator.userAgent.toLowerCase().match(/iphone|ipad|ipod/i)){
+				return 504;
+			}else if(navigator.userAgent.toLowerCase().match(/mac/i)){
+				return 505;
+			}
+			if(navigator.userAgent.toLowerCase().indexOf("swing") > -1 ){
+				return 501;
+			}else if(navigator.userAgent.toLowerCase().indexOf("edge") > -1){
+				return 502;
+			}else if(navigator.userAgent.toLowerCase().indexOf("trident") > -1 ){
+				var trident = navigator.userAgent.match(/Trident\/(\d.\d)/i);
+				switch (trident[1]) {
+					case "8.0" :
+						return 11;
+					case "7.0" :
+						return 11;
+					case "6.0" :
+						return 10;
+					case "5.0" :
+						return 9;
+					case "4.0" :
+						return 8;
+					default :
+						return 11;
+				}
+			}else if(navigator.appVersion.toLowerCase().indexOf("msie 6") > -1){
+				return 6;
+			}else if(navigator.appVersion.toLowerCase().indexOf("msie 7") > -1){
+				return 7;
+			}else if(navigator.appVersion.toLowerCase().indexOf("w-browser") > -1){
+				return "W-Browser";
+			}else if(navigator.userAgent.toLowerCase().indexOf("chrome") > -1 && navigator.vendor.toLowerCase().indexOf("google") > -1
+				&& navigator.userAgent.toLowerCase().indexOf("opr") <= -1 && navigator.userAgent.toLowerCase().indexOf("x64") > -1){
+				return "Chrome64";
+			}else if(navigator.userAgent.toLowerCase().indexOf("chrome") > -1 && navigator.vendor.toLowerCase().indexOf("google") > -1
+				&& navigator.userAgent.toLowerCase().indexOf("opr") <= -1){
+				return "Chrome";
+			}else if(navigator.userAgent.toLowerCase().indexOf("mozilla") > -1 && navigator.userAgent.toLowerCase().indexOf("firefox") > -1
+				&& navigator.userAgent.toLowerCase().indexOf("opr") <= -1){
+				return "Firefox";
+			}else if(navigator.userAgent.toLowerCase().indexOf("mozilla") > -1 && navigator.userAgent.toLowerCase().indexOf("safari") > -1
+				&& navigator.userAgent.toLowerCase().indexOf("opr") <= -1){
+				return "Safari";
+			}else if(navigator.userAgent.toLowerCase().indexOf("mozilla") > -1 && navigator.userAgent.toLowerCase().indexOf("opr") > -1){
+				return "Opera";
+			}else{
+				return 100;
+			}
+		}
+
+		function fn_logout(){
+
+			if(confirm("로그아웃 하시겠습니까?")){
+                //세션에 담은 팝업 띄운 이력 삭제
+                sessionStorage.removeItem("memPop");
+				location.href = "/member/logout.do";
+			}
+		}
+
+		// 모바일버전 메뉴 선택 시 팝업 숨김처리
+		function fn_btnMobOpen(){
+			$('.bottom_pop_wrap').hide();
+		}
+
+		function winOpen(){
+			window.open($("#selectLangCd").val(),'_self')
+		}
+
+		$(document).ready(function(){
+			setTimeout(function(){
+				$("#btnFavor.active i").text("스크랩 완료");
+				$("#btnGood.active i").text("좋아요 추가 완료");
+			},200);
+
+		})
+	</script><link rel="stylesheet" href="../../asset/css/font/spoqa.css" media="all">
+</head>
+<body>
+<form name="headForm" method="post">
+	<input type="hidden" name="menuId">
+	<input type="hidden" name="langCd" id="langCd" value="01">
+</form>
+
+<input type="hidden" name="createTime" id="createTime" value="">
+
+<a href="#gnb" class="skipToContent">주메뉴 바로가기</a>
+<a href="#content" class="skipToContent">본문 바로가기</a>
+
+    <div class="popup_window_wrap" style="display:none;">
+        <div class="popup_window">
+            <form id="memberJoinForm" name="memberJoinForm">
+                <div class="title">멤버십 선택</div>
+                <button type="button" class="close" onclick="closePop();"></button>
+                <div class="content">
+                    <ul class="formList">
+                        <li>
+                            <label class="radio" for="ckWhen02">
+                                <input type="radio" name="ckWhenHead" id="ckWhen02" value="family" checked="checked">
+                                <i></i>
+                                <span><strong>MMCA 가족(유료)</strong></span>
+                            </label>
+                        </li>
+                        <li>
+                            <label class="radio" for="chWhen03">
+                                <input type="radio" name="ckWhenHead" id="chWhen03" value="familyPlus">
+                                <i></i>
+                                <span><strong>MMCA 가족+(유료)</strong></span>
+                            </label>
+                        </li>
+                    </ul>
+                    <div class="mem_inform">
+                        <span> * 유료회원 재가입은 멤버십 종료 1개월 전부터 가능합니다. </span> <br>
+                        <span> 재가입 혜택: 연회비 10% 할인 </span>
+                    </div>
+                    <div class="bot_btn">
+                        <button type="button" class="btn" onclick="closePop();">취소</button>
+                        <button type="button" class="btn bg01" onclick="joinDoing();">가입</button>
+                    </div>
+                    <div class="mem_chkbox" style="text-align: right">
+                        <label for="oneDayHide" class="checkbox">
+                            <input type="checkbox" id="oneDayHide" name="oneDayHide">
+                            <i></i>
+                            <span>하루동안 보지않기</span>
+                        </label>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+<!-- wrap -->
+<div id="wrap" class="wrap" style="padding-top: 203px;">
+	<!-- noticeBannerWrap -->
+	
+	<!-- //noticeBannerWrap -->
+	<!-- header -->
+	<div id="header" class="header">
+		<div class="inner">
+			<!-- logo -->
+			<h1 class="logo">
+				<a href="/">
+					<span class="he">MMCA 국립현대미술관 National Museum of Modern and Contemporary Art, Korea</span>
+				</a>
+			</h1>
+			<!-- //logo -->
+			<!-- gnb -->
+			<nav class="gnb" aria-label="메인 메뉴">
+				<!-- mobGnbHead -->
+				<!-- <div class="mobGnbHead">
+					<div class="logoImg"><img src="/asset/images/common/bg_logo_full.svg" alt="국립현대미술관"></div>
+					<div class="mobHeadUtil">
+						<button type="button" class="btnSearchOpen" aria-haspopup="dialog" aria-label="검색열기"><i class="icon"></i></button>
+						<button type="button" class="btnMobClose" aria-label="메뉴닫기"><i class="icon"></i></button>
+					</div>
+				</div> -->
+				
+<div class="mobGnbHead">
+	<div class="logoImg">
+		<a href="/">
+			<img src="/asset/images/common/bg_logo_full.svg" alt="MMCA 국립현대미술관 National Museum of Modern and Contemporary Art, Korea">
+		</a>
+	</div>
+	<div class="mobHeadUtil">
+		<button type="button" class="btnSearchOpen" aria-haspopup="dialog" aria-label="검색열기"><i class="icon"></i></button>
+		<button type="button" class="btnMobClose" aria-label="메뉴닫기"><i class="icon"></i></button>
+	</div>
+</div>
+
+				<!-- //mobGnbHead -->
+				<h2 class="he">메인 메뉴</h2>
+				<!-- gnbList -->
+				<ul class="gnbList" tabindex="-1">
+					<li>
+						<a href="javascript:fn_menuChange('/visitingInfo/seoulInfo.do', '01A000100000000', '1');" id="gnb">관람·참여<i class="icon togglePlus"></i></a>
+						<div class="sub a11y-hidden">
+							<ul>
+								<li><a href="javascript:fn_menuChange('/accessibility.do', '01A000120000000', '2');">접근성 안내</a></li>
+								<li><a href="javascript:fn_menuChange('/visitingInfo/seoulInfo.do', '01A000101000000', '2');">서울</a></li>
+								<li><a href="javascript:fn_menuChange('/visitingInfo/gwacheonInfo.do', '01A000102000000', '2');">과천</a></li>
+								<li><a href="javascript:fn_menuChange('/visitingInfo/deoksugungInfo.do', '01A000103000000', '2');">덕수궁</a></li>
+								<li><a href="javascript:fn_menuChange('/visitingInfo/cheongjuInfo.do', '01A000104000000', '2');">청주</a></li>
+								<li><a href="javascript:fn_menuChange('/visitingInfo/childArtMuseumInfo.do', '01A000107000000', '2');">어린이미술관</a></li>
+								<li><a href="javascript:fn_menuChange('/events/eventsList.do', '01A000110000000', '2');">이벤트</a></li>
+								<li><a href="javascript:fn_menuChange('/visitingInfo/eduReserve.do', '01A000108000000', '2');">통합예약</a></li>
+
+								<li><a href="javascript:fn_menuChange('/visitingInfo/guideTimeTableList.do', '01A000109000000', '2');" class="ft400">전시해설</a></li>
+								<li><a href="javascript:fn_menuChange('/artStudio/artStudioMain.do', '01A000105000000', '2');" class="ft400">레지던시</a></li>
+								<li><a href="javascript:fn_menuChange('/about/governmentArtBank.do', '01A000106000000', '2');" class="ft400">미술은행</a></li>
+								<!-- <li><a href="javascript:alertReady();">통합예약</a></li> -->
+							</ul>
+						</div>
+					</li>
+					<li>
+						<a href="javascript:fn_menuChange('/exhibitions/progressList.do', '01B000200000000', '1');">전시<i class="icon togglePlus"></i></a>
+						<div class="sub a11y-hidden">
+							<ul>
+								<li><a href="javascript:fn_menuChange('/exhibitions/progressList.do', '01B000201000000', '2');">현재전시</a></li>
+								<li><a href="javascript:fn_menuChange('/exhibitions/futureProgressList.do', '01B000202000000', '2');">예정전시</a></li>
+								<li><a href="javascript:fn_menuChange('/exhibitions/pastProgressList.do', '01B000203000000', '2');">과거전시</a></li>
+							</ul>
+						</div>
+					</li>
+					<li>
+						<a href="javascript:fn_menuChange('/educations/eduIntro.do', '01C000300000000', '1');">교육<i class="icon togglePlus"></i></a>
+						<div class="sub a11y-hidden">
+							<ul>
+								<li><a href="javascript:fn_menuChange('/educations/eduIntro.do', '01C000301000000', '2');">미술관교육소개</a></li>
+								<li><a href="javascript:fn_menuChange('/educations/eduChildList.do', '01C000302000000', '2');">어린이</a></li>
+								<li><a href="javascript:fn_menuChange('/educations/eduYouthList.do', '01C000303000000', '2');">청소년</a></li>
+								<li><a href="javascript:fn_menuChange('/educations/eduTeacherList.do', '01C000307000000', '2');">교사</a></li>
+								<li><a href="javascript:fn_menuChange('/educations/eduAdultList.do', '01C000304000000', '2');">성인</a></li>
+								<li><a href="javascript:fn_menuChange('/educations/eduDataList.do', '01C000305000000', '2');">교육자료실</a></li>
+								<li><a href="javascript:fn_menuChange('/educations/eduParticipation.do', '01C000306000000', '2');">참여신청</a></li>
+							</ul>
+						</div>
+					</li>
+					<li>
+						<a href="javascript:fn_menuChange('/collections/collectionsList.do', '01D000400000000', '1');">소장품<i class="icon togglePlus"></i></a>
+						<div class="sub a11y-hidden">
+							<ul>
+								<li><a href="javascript:fn_menuChange('/collections/collectionsList.do', '01D000401000000', '2');">소장품 검색</a></li>
+								<li><a href="javascript:fn_menuChange('/collections/curationList.do', '01D000402000000', '2');">소장품 탐색</a></li>
+								<li><a href="javascript:fn_menuChange('/collections/collectionsRent.do', '01D000404000000', '2');">소장품 대여</a></li>
+								<li><a href="javascript:fn_menuChange('/collections/conservation.do', '01D000403000000', '2');">보존과학</a></li>
+							</ul>
+						</div>
+					</li>
+					<li>
+						<a href="javascript:fn_menuChange('/bookArchive/bookArchiveMain.do', '01E000500000000', '1');">미술연구<i class="icon togglePlus"></i></a>
+						<div class="sub a11y-hidden">
+							<ul>
+								<li><a href="javascript:fn_menuChange('/bookArchive/bookArchiveMain.do', '01E000501000000', '2');">도서와 아카이브</a></li>
+								<li><a href="javascript:fn_menuChange('/artResearch/researchProList.do', '01E000503000000', '2');">연구</a></li>
+								<li><a href="javascript:fn_menuChange('/artResearch/publicationList.do?pubFlag=1', '01E000502000000', '2');">발간자료</a></li>
+								<li><a href="https://www.mmcaresearch.kr" target="_blank" title="새창">MMCA 리서치랩</a></li>
+							</ul>
+						</div>
+					</li>
+					<li>
+						<a href="javascript:fn_menuChange('/digitals/digitalMain.do', '01F000600000000', '1');">디지털미술관<i class="icon togglePlus"></i></a>
+						<div class="sub a11y-hidden">
+							<ul>
+								<li><a href="javascript:fn_menuChange('/digitals/digitalMain.do', '01F000601000000', '2');">메인</a></li>
+								<li><a href="javascript:fn_menuChange('/digitals/digitalMovList.do', '01F000602000000', '2');">맞춤검색</a></li>
+								<li><a href="javascript:fn_menuChange('/digitals/digitalExhGuideList.do', '01F000603000000', '2')">오디오가이드</a></li>
+								<li><a href="javascript:fn_menuChange('/digitals/digitalCuraList.do', '01F000604000000', '2');">이용자갤러리</a></li>
+								<!--  									<li><a href="javascript:fn_menuChange('/digitals/digitalEventMovList.do', '01F000604000000', '2');">설연휴 집으로 온 미술관</a></li> -->
+							</ul>
+						</div>
+					</li>
+					<!-- <li>
+						<a href="javascript:fn_menuChange('/digitals/seoul10thAnniversary.do', '1600000000', '1');">서울관 10 축제<i class="icon togglePlus"></i></a>
+						<div class="sub">
+							<ul>
+								<li><a href="javascript:fn_menuChange('/digitals/seoul10thAnniversary.do', '1600000000', '1');">행사 소개</a></li>
+							</ul>
+						</div>
+					</li> -->
+					<!-- <li>
+						<a href="javascript:fn_menuChange('/contents.do', '01G000000000000', '1');">국립현대미술관<i class="icon togglePlus"></i></a>
+						<div class="sub">
+							<ul>
+								<li><a href="javascript:fn_menuChange('/contents.do', '01G000100000000', '2');">인사말</a></li>
+								<li><a href="javascript:fn_menuChange('/contents.do', '01G000200000000', '2');">연혁</a></li>
+								<li><a href="javascript:fn_menuChange('/contents.do', '01G000300000000', '2');">조직과 미션</a></li>
+								<li><a href="javascript:fn_menuChange('/contents.do', '01G000400000000', '2');">4관 및 하부관리기구</a></li>
+								<li><a href="javascript:fn_menuChange('/contents.do', '01G000500000000', '2');">MI</a></li>
+							</ul>
+						</div>
+					</li>
+					<li>
+						<a href="javascript:fn_menuChange('/contents.do', '01H000000000000', '1');">알림·참여<i class="icon togglePlus"></i></a>
+						<div class="sub">
+							<ul>
+								<li><a href="javascript:fn_menuChange('/contents.do', '01H000100000000', '2');">새소식</a></li>
+								<li><a href="javascript:fn_menuChange('/contents.do', '01H000200000000', '2');">채용</a></li>
+								<li><a href="javascript:fn_menuChange('/contents.do', '01H000300000000', '2');">보도자료</a></li>
+								<li><a href="javascript:fn_menuChange('/contents.do', '01H000400000000', '2');">기증안내</a></li>
+								<li><a href="javascript:fn_menuChange('/contents.do', '01H000500000000', '2');">시설대관·복제신청</a></li>
+								<li><a href="javascript:fn_menuChange('/contents.do', '01H000600000000', '2');">자원봉사</a></li>
+								<li><a href="javascript:fn_menuChange('/contents.do', '01H000700000000', '2');">후원</a></li>
+							</ul>
+						</div>
+					</li>
+					<li>
+						<a href="javascript:fn_menuChange('/contents.do', '01I000000000000', '1');">협력망<i class="icon togglePlus"></i></a>
+						<div class="sub">
+							<ul>
+								<li><a href="javascript:fn_menuChange('/contents.do', '01I000100000000', '2');">미술관소개</a></li>
+								<li><a href="javascript:fn_menuChange('/contents.do', '01I000200000000', '2');">소통공간</a></li>
+								<li><a href="javascript:fn_menuChange('/contents.do', '01I000300000000', '2');">전시</a></li>
+							</ul>
+						</div>
+					</li>
+					<li>
+						<a href="javascript:fn_menuChange('/contents.do', '01J000000000000', '1');">멤버십<i class="icon togglePlus"></i></a>
+						<div class="sub">
+							<ul>
+								<li><a href="javascript:fn_menuChange('/contents.do', '01J000100000000', '2');">혜택</a></li>
+								<li><a href="javascript:fn_menuChange('/contents.do', '01J000200000000', '2');">프로그램</a></li>
+								<li><a href="javascript:fn_menuChange('/contents.do', '01J000300000000', '2');">라운지</a></li>
+								<li><a href="javascript:fn_menuChange('/contents.do', '01J000400000000', '2');">제휴할인</a></li>
+								<li><a href="javascript:fn_menuChange('/contents.do', '01J000500000000', '2');">MMCA프렌즈</a></li>
+								<li><a href="javascript:fn_menuChange('/contents.do', '01J000600000000', '2');">회원가입</a></li>
+								<li><a href="javascript:fn_menuChange('/contents.do', '01J000700000000', '2');">아이디찾기</a></li>
+								<li><a href="javascript:fn_menuChange('/contents.do', '01J000700000000', '2');">비밀번호찾기</a></li>
+								<li><a href="javascript:fn_menuChange('/contents.do', '01J000700000000', '2');">로그인</a></li>
+							</ul>
+						</div>
+					</li>
+					<li>
+						<a href="javascript:fn_menuChange('/contents.do', '01K000000000000', '1');">민원<i class="icon togglePlus"></i></a>
+						<div class="sub">
+							<ul>
+								<li><a href="javascript:fn_menuChange('/contents.do', '01K000100000000', '2');">국민신문고</a></li>
+								<li><a href="javascript:fn_menuChange('/contents.do', '01K000200000000', '2');">정보공개</a></li>
+								<li><a href="javascript:fn_menuChange('/contents.do', '01K000300000000', '2');">이용약관</a></li>
+								<li><a href="javascript:fn_menuChange('/contents.do', '01K000400000000', '2');">개인정보처리방침</a></li>
+								<li><a href="javascript:fn_menuChange('/contents.do', '01K000500000000', '2');">저작권정책</a></li>
+								<li><a href="javascript:fn_menuChange('/contents.do', '01K000600000000', '2');">불편부조리신고</a></li>
+								<li><a href="javascript:fn_menuChange('/contents.do', '01K000700000000', '2');">사이트맵</a></li>
+							</ul>
+						</div>
+					</li> -->
+				</ul>
+				<!-- //gnbList -->
+
+				<!-- utilWrap -->
+				<div class="utilWrap moVer">
+					<ul>
+						<li><a href="/accessibility.do">접근성 안내</a></li>
+						<li><a href="/artResearch/newsLetterList.do">뉴스레터</a></li>
+						<!-- <li><a href="/artResearch/publicationList.do">소식지</a></li> -->
+						<!-- <li><a href="/pr/newsList.do">새소식</a></li> -->
+						<li><a href="https://www.mmcaresearch.kr/" target="_blank" title="새창">MMCA 리서치랩</a></li>
+						<li><a href="/membership/membershipIntroduction.do">멤버십</a></li>
+						<li><a href="https://www.mmcashop.co.kr/" target="_blank" title="새창">온라인숍</a></li>
+					</ul>
+				</div>
+				<!-- //utilWrap -->
+
+				<!-- utilWrap -->
+				<div class="utilWrap">
+					<ul>
+
+						
+							<li class="joinWrap">
+								<a href="/member/memberFourteenOverForm.do" role="button">
+									MMCA
+									<br>회원가입
+								</a>
+							</li>
+							<li class="login_btn"><a href="/member/loginForm.do">로그인</a></li>
+						
+
+
+						
+
+
+						<li class="selectWrap">
+							<!-- <span class="ctg">LANGUAGE </span> -->
+							<select class="selectBox" title="언어선택" id="selectLangCd" onchange="winOpen()"><!-- 2022-04-13 -->
+								<option value="/">KO: 한국어</option>
+								<option value="/eng">EN: English</option>
+								<option value="/chn">ZH: 中文</option>
+                                <option value="/jpn">JA: 日本語</option>
+							</select>
+							
+							<!-- <button type="button" class="btn" title="선택된 언어로 화면 전환" onclick="winOpen()">Go</button> -->
+						</li>
+
+
+					</ul>
+				</div>
+				<!-- //utilWrap -->
+			<div class="gnbBg"></div></nav>
+			<!-- //gnb -->
+			<!-- btnUtil -->
+			<div class="btnUtil">
+				<button type="button" class="btnSearchOpen" aria-haspopup="dialog" aria-label="검색열기">
+					<i class="icon"></i>
+				</button>
+				<button type="button" class="btnMobOpen" onclick="fn_btnMobOpen()" aria-label="메뉴열기">
+					<i class="icon"></i>
+				</button>
+			</div>
+			<!-- //btnUtil -->
+			<!-- totalSearchWrap -->
+			<div class="totalSearchWrap">
+				<form id="totalSearchForm" name="totalSearchForm" method="post">
+					<input type="hidden" id="selectSection" value="TOTAL">
+					<input type="hidden" id="section" name="section" value="">
+					<div class="inner">
+						<div class="searchLayer">
+							<input type="text" class="input" placeholder="검색어를 입력하세요." id="q" name="q" onkeypress="if(event.keyCode == 13)totalSearch();return;" autocomplete="off" style="ime-mode:active" title="검색어 입력">
+							<button type="submit" class="btn border01" onclick="javascript:totalSearch();">검색</button>
+							<button type="button" class="btnSearchClose" aria-label="검색닫기"><i class="icon"></i></button>
+						</div>
+					</div>
+				</form>
+				<script>
+					//통합검색실행
+					function totalSearch(){
+						mbChk = "PC";
+
+						var form = document.totalSearchForm;
+						var q = form.q.value;
+
+						if(($.trim(q) == "*" || $.trim(q).length < 1)){
+							alert("검색어를 입력해 주십시오.");
+							return;
+						}
+						form.action = "/search/totalSearch.do";
+						form.submit();
+					}
+
+					//자동완성 키워드선택
+					function autoSearch(autoId){
+						$("#q").val($("#"+autoId).val());
+
+						if(mbChk == "PC"){
+							totalSearch();
+						}else{
+							mbTotalSearch();
+						}
+					}
+				</script>
+			</div>
+			<!-- //totalSearchWrap -->
+		</div>
+	</div>
+	<!-- //header -->
+
+<!-- header end -->
+<script type="text/javaScript" defer="defer">
+</script>
+		<!-- container -->
+		<div class="container">
+			 <!-- breadcrumb start -->	
+			
+
+
+
+
+
+
+<!-- breadcrumb -->
+<nav class="breadcrumb" aria-label="Breadcrumb" aria-hidden="true"><h2 class="he">breadcrumb</h2>
+	<ol>
+		<li><a href="#" title=""></a></li>
+		
+		
+		
+		
+	</ol>
+</nav>
+<!-- //breadcrumb -->
+
+			<!-- breadcrumb end -->
+			
+			<!-- content -->
+			<main id="content" class="content">
+				<div class="inner">
+					<div class="errorSection">
+						<div class="item">
+							<p class="title">서비스 이용에 불편을 드려 죄송합니다.</p>
+							<div class="subTitle">
+								<p>요청하신 페이지를 찾을 수 없습니다.</p>
+								<p>Error - Not Found</p>
+							</div>
+						</div>
+						<div class="item">
+							<div>
+								<p>방문하시려는 페이지의 주소가 잘못되었거나, <br>페이지의 주소가 변경 혹은 삭제되어 요청하신 페이지를 찾을 수 없습니다.</p>
+								<p>입력하신 주소가 정확한지 다시 한번 확인해 주시기 바랍니다.</p>
+								
+							</div>
+						</div>
+						<div class="item">
+							<div>
+								<p>The server has not found anything matching the Request-URL. </p>
+								<p>No indication is given of whether the condition is temporary or permanent.</p>
+							</div>
+						</div>
+					</div>
+
+				</div>
+			</main>
+			<!-- //content -->
+			
+		</div>
+		<!-- //container -->
+
+		<!-- footer start -->	
+		
+		<!-- footer end -->
+<div class="dimmedLayer" style="display: none;"></div></div></body></html>

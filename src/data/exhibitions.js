@@ -1,6 +1,873 @@
 // src/data/exhibitions.js
 export const exhibitions = [
   {
+    id: "mfa-boston",
+    slug: "mfa-boston",
+    name: "Museum of Fine Arts, Boston",
+    location: "Boston, USA",
+    description: "The Museum of Fine Arts, Boston, is one of the most comprehensive art museums in the world.",
+    latitude: 42.3394,
+    longitude: -71.0940,
+    country: "USA",
+    region: "Massachusetts",
+    representativeImage: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Museum_of_Fine_Arts_Boston.jpg/640px-Museum_of_Fine_Arts_Boston.jpg",
+    permanentExhibitions: [],
+    temporaryExhibitions: [],
+    pastExhibitions: []
+  },
+  {
+    id: "mfah",
+    slug: "mfah",
+    name: "Museum of Fine Arts, Houston",
+    location: "Houston, USA",
+    description: "The Museum of Fine Arts, Houston, is one of the largest museums in the United States. Its collection spans more than 6,000 years of history.",
+    latitude: 29.7256,
+    longitude: -95.3905,
+    country: "USA",
+    region: "Texas",
+    representativeImage: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Museum_of_Fine_Arts_Houston_audrey_jones_beck_building.jpg/640px-Museum_of_Fine_Arts_Houston_audrey_jones_beck_building.jpg",
+    permanentExhibitions: [],
+    temporaryExhibitions: [],
+    pastExhibitions: []
+  },
+  {
+    id: "thebroad",
+    slug: "thebroad",
+    name: "The Broad",
+    location: "Los Angeles, USA",
+    description: "The Broad is a contemporary art museum founded by Eli and Edythe Broad. It houses a prominent collection of postwar and contemporary art.",
+    latitude: 34.0545,
+    longitude: -118.2506,
+    country: "USA",
+    region: "California",
+    representativeImage: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/69/The_Broad_Museum_Los_Angeles.jpg/640px-The_Broad_Museum_Los_Angeles.jpg",
+    permanentExhibitions: [
+      {
+        id: "thebroad-collection",
+        name: "Collection",
+        title: "Collection",
+        description: "A selection of postwar and contemporary artworks from The Broad collection.",
+        startDate: "Permanent",
+        endDate: "Permanent",
+        collectionFile: "thebroad-collection.json"
+      }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: []
+  },
+  {
+    id: "crystalbridges",
+    slug: "crystalbridges",
+    name: "Crystal Bridges Museum of American Art",
+    location: "Bentonville, USA",
+    description: "Crystal Bridges Museum of American Art offers a unique blend of art, nature, and architecture, housing a world-class collection of American art.",
+    latitude: 36.3840,
+    longitude: -94.2045,
+    country: "USA",
+    region: "Arkansas",
+    representativeImage: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/14/Crystal_Bridges_Museum_of_American_Art%2C_Bentonville%2C_Arkansas_-_20121008.jpg/640px-Crystal_Bridges_Museum_of_American_Art%2C_Bentonville%2C_Arkansas_-_20121008.jpg",
+    permanentExhibitions: [
+      {
+        id: "crystalbridges-collection",
+        name: "Collection Highlights",
+        title: "Collection Highlights",
+        description: "Highlights from the Crystal Bridges collection featuring American masterworks.",
+        startDate: "Permanent",
+        endDate: "Permanent",
+        collectionFile: "crystal-bridges-gac.json"
+      }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: []
+  },
+  {
+    id: "lacma",
+    slug: "lacma",
+    name: "Los Angeles County Museum of Art (LACMA)",
+    location: "Los Angeles, USA",
+    description: "LACMA is the largest art museum in the western United States, with a collection of nearly 150,000 objects reflecting 6,000 years of art history.",
+    latitude: 34.0629,
+    longitude: -118.3591,
+    country: "USA",
+    region: "California",
+    representativeImage: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e4/LACMA_Urban_Light_2022.jpg/640px-LACMA_Urban_Light_2022.jpg",
+    permanentExhibitions: [
+      {
+        id: "lacma-paintings",
+        name: "Collection (Paintings, Drawings & Japanese Prints)",
+        title: "Collection: Paintings, Drawings, and Prints",
+        description: "A selection of paintings (Classification 22), drawings (Curatorial 51), and Japanese prints (Curatorial 46) from LACMA.",
+        startDate: "Permanent",
+        endDate: "Permanent",
+        collectionFile: "lacma-classification-22.json"
+      }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: []
+  },
+  {
+    id: "sfmoma",
+    slug: "sfmoma",
+    name: "San Francisco Museum of Modern Art (SFMOMA)",
+    location: "San Francisco, USA",
+    description: "SFMOMA is a modern and contemporary art museum in San Francisco, widely regarded as one of the largest and most significant museums of modern art in the United States.",
+    latitude: 37.7857,
+    longitude: -122.4011,
+    country: "USA",
+    region: "California",
+    representativeImage: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/59/San_Francisco_Museum_of_Modern_Art_%28SFMOMA%29.jpg/640px-San_Francisco_Museum_of_Modern_Art_%28SFMOMA%29.jpg",
+    permanentExhibitions: [
+      {
+        id: "sfmoma-collection",
+        name: "Collection Highlights",
+        title: "Collection Highlights",
+        description: "Highlights from the SFMOMA collection, including paintings and sculptures from modern and contemporary masters.",
+        startDate: "Permanent",
+        endDate: "Permanent",
+        collectionFile: "sfmoma-collection.json"
+      }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: []
+  },
+  {
+    id: "cma",
+    slug: "cma",
+    name: "Cleveland Museum of Art",
+    location: "Cleveland, OH, USA",
+    description: "The Cleveland Museum of Art is an art museum in Cleveland, Ohio, known for its quality and breadth of its collection, which includes more than 61,000 works of art.",
+    latitude: 41.5089,
+    longitude: -81.6116,
+    country: "USA",
+    region: "Ohio",
+    representativeImage: "https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Cleveland_Museum_of_Art_2016.jpg/640px-Cleveland_Museum_of_Art_2016.jpg",
+    permanentExhibitions: [
+      {
+        id: "cma-collection",
+        name: "Collection Highlights",
+        title: "Collection Highlights",
+        description: "Paintings and Drawings from the CMA collection, featuring works from around the world.",
+        startDate: "Permanent",
+        endDate: "Permanent",
+        collectionFile: "cma-collection.json"
+      }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: []
+  },
+  {
+    id: "philadelphia",
+    slug: "philadelphia",
+    name: "Philadelphia Museum of Art",
+    location: "Philadelphia, USA",
+    description: "The Philadelphia Museum of Art contains over 240,000 objects including major holdings of European, American and Asian origin.",
+    latitude: 39.9656,
+    longitude: -75.1810,
+    country: "USA",
+    region: "Pennsylvania",
+    representativeImage: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Philadelphia_Museum_of_Art.jpg/640px-Philadelphia_Museum_of_Art.jpg",
+    permanentExhibitions: [
+      {
+        id: "philadelphia-collection",
+        name: "Collection Highlights",
+        title: "Collection Highlights",
+        description: "Highlights from the Philadelphia Museum of Art collection, including paintings and drawings.",
+        startDate: "Permanent",
+        endDate: "Permanent",
+        collectionFile: "philadelphia-collection.json"
+      }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: []
+  },
+  {
+    id: "high-museum",
+    slug: "high-museum",
+    name: "High Museum of Art",
+    location: "Atlanta, USA",
+    description: "The High Museum of Art in Atlanta acts as the leading art museum in the southeastern United States.",
+    latitude: 33.7901,
+    longitude: -84.3860,
+    country: "USA",
+    region: "Georgia",
+    representativeImage: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/62/High_Museum_of_Art_2011.jpg/640px-High_Museum_of_Art_2011.jpg",
+    permanentExhibitions: [
+      {
+        id: "high-museum-collection",
+        name: "Collection Highlights",
+        title: "Collection Highlights",
+        description: "A selection of works from the High Museum of Art collection.",
+        startDate: "Permanent",
+        endDate: "Permanent",
+        collectionFile: "high-collection.json"
+      }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: []
+  },
+  {
+    id: "dia",
+    slug: "dia",
+    name: "Detroit Institute of Arts",
+    location: "Detroit, USA",
+    description: "The Detroit Institute of Arts has one of the largest and most significant art collections in the United States.",
+    latitude: 42.3594,
+    longitude: -83.0645,
+    country: "USA",
+    region: "Michigan",
+    representativeImage: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/13/Detroit_Institute_of_Arts_South_Wing.jpg/640px-Detroit_Institute_of_Arts_South_Wing.jpg",
+    permanentExhibitions: [
+      {
+        id: "dia-collection",
+        name: "Collection Highlights (Paintings)",
+        title: "Collection Highlights: Paintings",
+        description: "A selection of paintings from the Detroit Institute of Arts.",
+        startDate: "Permanent",
+        endDate: "Permanent",
+        collectionFile: "dia-collection.json"
+      }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: []
+  },
+  {
+    id: "masp",
+    slug: "masp",
+    name: "Museu de Arte de São Paulo",
+    location: "São Paulo, Brazil",
+    description: "The Museu de Arte de São Paulo is a private nonprofit museum founded by Assis Chateaubriand in 1947.",
+    latitude: -23.5615,
+    longitude: -46.6559,
+    country: "Brazil",
+    region: "São Paulo",
+    representativeImage: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/MASP_Brazil.jpg/640px-MASP_Brazil.jpg",
+    permanentExhibitions: [
+      {
+        id: "masp-collection",
+        name: "Collection Highlights",
+        title: "Collection Highlights",
+        description: "Paintings and Drawings from the MASP collection.",
+        startDate: "Permanent",
+        endDate: "Permanent",
+        collectionFile: "masp-collection.json"
+      }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: []
+  },
+  {
+    id: "mbam",
+    slug: "mbam",
+    name: "Montreal Museum of Fine Arts",
+    location: "Montreal, Canada",
+    description: "The Montreal Museum of Fine Arts is Montreal's largest museum and is amongst the most prominent in Canada.",
+    latitude: 45.4987,
+    longitude: -73.5793,
+    country: "Canada",
+    region: "Quebec",
+    representativeImage: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Montreal_Museum_of_Fine_Arts.jpg/640px-Montreal_Museum_of_Fine_Arts.jpg",
+    permanentExhibitions: [
+      {
+        id: "mbam-collection",
+        name: "Collection Highlights",
+        title: "Collection Highlights",
+        description: "Works including Painting, Drawing, Photography, and more from MMFA.",
+        startDate: "Permanent",
+        endDate: "Permanent",
+        collectionFile: "mbam-collection.json"
+      }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: []
+  },
+  {
+    id: "today-art-museum",
+    slug: "today-art-museum",
+    name: "Today Art Museum",
+    location: "Beijing, China",
+    description: "The first non-profit, non-governmental art museum in China, dedicated to contemporary art.",
+    latitude: 39.9056,
+    longitude: 116.4633,
+    country: "China",
+    region: "Beijing",
+    representativeImage: "https://upload.wikimedia.org/wikipedia/commons/2/23/Today_Art_Museum2.JPG",
+    permanentExhibitions: [
+      {
+        id: "today-art-museum-collection",
+        name: "Collection Highlights",
+        title: "Collection Highlights",
+        description: "Highlights from the Today Art Museum collection, featuring contemporary Chinese art such as works by Fang Lijun, Yue Minjun, and Zhang Xiaogang.",
+        startDate: "Permanent",
+        endDate: "Permanent",
+        collectionFile: "today-art-museum.json"
+      }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: []
+  },
+  {
+    id: "zhejiang-art-museum",
+    slug: "zhejiang-art-museum",
+    name: "Zhejiang Art Museum",
+    location: "Hangzhou, China",
+    description: "A major art museum in Hangzhou, Zhejiang, featuring Chinese painting, oil painting, prints, and watercolors.",
+    latitude: 30.2458,
+    longitude: 120.1550,
+    country: "China",
+    region: "Hangzhou",
+    representativeImage: "https://www.zjam.org.cn/images/logo_2.jpg",
+    permanentExhibitions: [
+      {
+        id: "zjam-collection",
+        name: "Collection Highlights",
+        title: "Collection Highlights",
+        description: "Selected 2D works (Paintings, Sketches, Prints) from the Zhejiang Art Museum.",
+        startDate: "Permanent",
+        endDate: "Permanent",
+        collectionFile: "zjam-collection.json"
+      }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: []
+  },
+  {
+    id: "long-museum",
+    slug: "long-museum",
+    name: "Long Museum",
+    location: "Shanghai, China",
+    description: "Private art museum in Shanghai founded by Liu Yiqian and Wang Wei.",
+    latitude: 31.1578,
+    longitude: 121.4646,
+    country: "China",
+    region: "Shanghai",
+    representativeImage: "https://wsrv.nl/?url=http%3A%2F%2Fwww.thelongmuseum.org%2FUpload%2F2020123095913.jpg&w=400&q=80",
+    permanentExhibitions: [
+      {
+        id: "long-museum-collection",
+        name: "Collection Highlights",
+        title: "Long Museum Collection",
+        description: "Selected works from the Long Museum collection, including Revolutionary Art, Traditional Chinese Art, and Contemporary works.",
+        startDate: "Permanent",
+        endDate: "Permanent",
+        collectionFile: "long-museum-collection.json"
+      }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: []
+  },
+  {
+    id: "guangdong-museum-of-art",
+    slug: "guangdong-museum-of-art",
+    name: "Guangdong Museum of Art (GDMOA)",
+    location: "Guangzhou, China",
+    description: "Online Collection from Guangdong Museum of Art.",
+    latitude: 23.1291,
+    longitude: 113.2644,
+    country: "China",
+    region: "Guangzhou",
+    representativeImage: "https://www.gdmoa.org/favicon.ico",
+    permanentExhibitions: [
+      {
+        id: "gdmoa-online-collection",
+        name: "Online Collection",
+        title: "Online Collection (All)",
+        description: "All items from https://www.gdmoa.org/Collection/Online_Collection/ via the site's published JSON pages /Collection/Online_Collection/index_N.json.",
+        startDate: "Permanent",
+        endDate: "Permanent",
+        collectionFile: "gdmoa-online-collection-all.json"
+      }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: []
+  },
+  {
+    id: "power-station-of-art",
+    slug: "power-station-of-art",
+    name: "Power Station of Art",
+    location: "Shanghai, China",
+    description: "Contemporary art collection from the Power Station of Art (PSA), Shanghai.",
+    latitude: 31.2005,
+    longitude: 121.4930,
+    country: "China",
+    region: "Shanghai",
+    representativeImage: "https://www.powerstationofart.com/favicon.svg",
+    permanentExhibitions: [
+      {
+        id: "psa-collection-all",
+        name: "Collection (All)",
+        title: "PSA Collection (All)",
+        description: "Full collection from Power Station of Art (PSA), Shanghai, including Paintings, Installations, Videos, and more.",
+        startDate: "Permanent",
+        endDate: "Permanent",
+        collectionFile: "psa-collection-all.json"
+      }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: []
+  },
+  {
+    id: "shanghai-museum",
+    slug: "shanghai-museum",
+    name: "Shanghai Museum",
+    location: "Shanghai, China",
+    description: "Paintings from the Shanghai Museum collection highlights database.",
+    latitude: 31.2304,
+    longitude: 121.4737,
+    country: "China",
+    region: "Shanghai",
+    representativeImage: "https://www.shanghaimuseum.net/mu/site/img/favicon.ico",
+    permanentExhibitions: [
+      {
+        id: "shanghaimuseum-paintings-all",
+        name: "Collection Highlights",
+        title: "Paintings (All)",
+        description: "All PAINTINGS items from https://www.shanghaimuseum.net/mu/frontend/pg/en/collection/antique via official internal endpoint /mu/frontend/pg/collection/search-antique.",
+        startDate: "Permanent",
+        endDate: "Permanent",
+        collectionFile: "shanghaimuseum-paintings-all.json"
+      }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: []
+  },
+  {
+    id: "nanjing-museum",
+    slug: "nanjing-museum",
+    name: "Nanjing Museum",
+    location: "Nanjing, China",
+    description: "Paintings & Calligraphy and Embroidery from Nanjing Museum online collection list.",
+    latitude: 32.0603,
+    longitude: 118.7969,
+    country: "China",
+    region: "Nanjing",
+    representativeImage: "https://www.njmuseum.org.cn/favicon.ico",
+    permanentExhibitions: [
+      {
+        id: "njmuseum-collection-all",
+        name: "Online Collection",
+        title: "Paintings & Calligraphy + Embroidery",
+        description: "Filtered items from https://www.njmuseum.org.cn/en/collectionList (categories: Paintings and Calligraphy, Embroidery) via official /api/collection/select.",
+        startDate: "Permanent",
+        endDate: "Permanent",
+        collectionFile: "njmuseum-collection-all.json"
+      }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: []
+  },
+  {
+    id: "national-museum-of-china",
+    slug: "national-museum-of-china",
+    name: "National Museum of China",
+    location: "Beijing, China",
+    description: "Selection from the National Museum of China collection catalogue.",
+    latitude: 39.9042,
+    longitude: 116.4074,
+    country: "China",
+    region: "Beijing",
+    representativeImage: "https://www.chnmuseum.cn/favicon.ico",
+    permanentExhibitions: [
+      {
+        id: "nmc-highlights-all",
+        name: "Collection Highlights",
+        title: "Collection Highlights (All)",
+        description: "Highlights pages from the National Museum of China English site (all discovered items).",
+        startDate: "Permanent",
+        endDate: "Permanent",
+        collectionFile: "nmc-highlights-all.json"
+      }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: []
+  },
+  {
+    id: "shenzhen-museum",
+    slug: "shenzhen-museum",
+    name: "Shenzhen Museum",
+    location: "Shenzhen, China",
+    description: "Collections from Shenzhen Museum.",
+    latitude: 22.5431,
+    longitude: 114.0579,
+    country: "China",
+    region: "Shenzhen",
+    representativeImage: "https://www.shenzhenmuseum.com/favicon.ico",
+    permanentExhibitions: [
+      {
+        id: "shenzhenmuseum-l0303-all",
+        name: "Ancient Art Collections",
+        title: "Ancient Art Collections (All)",
+        description: "All items from Shenzhen Museum collections page (lmType=L0303).",
+        startDate: "Permanent",
+        endDate: "Permanent",
+        collectionFile: "shenzhenmuseum-l0303-all.json"
+      }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: []
+  },
+  {
+    id: "palace-museum-intl",
+    slug: "palace-museum-intl",
+    name: "The Palace Museum (International)",
+    location: "Beijing, China",
+    description: "Selection from The Palace Museum international digital collection.",
+    latitude: 39.9163,
+    longitude: 116.3972,
+    country: "China",
+    region: "Beijing",
+    representativeImage: "https://intl.dpm.org.cn/Public/static/themes/logo.png",
+    permanentExhibitions: [
+      {
+        id: "dpm-intl-paintings",
+        name: "Paintings",
+        title: "Paintings (First 100)",
+        description: "Paintings from the Palace Museum international collection (first 100 items).",
+        startDate: "Permanent",
+        endDate: "Permanent",
+        collectionFile: "dpm-intl-paintings-all.json"
+      }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: []
+  },
+  {
+    id: "hkmoa",
+    slug: "hkmoa",
+    name: "Hong Kong Museum of Art",
+    location: "Hong Kong",
+    description: "The Hong Kong Museum of Art is the first public art museum in the city, with a collection of over 17,000 items.",
+    latitude: 22.2936,
+    longitude: 114.1725,
+    country: "Hong Kong",
+    region: "Hong Kong",
+    representativeImage: "https://hk.art.museum/hkmoa-theme/images/logo/logo-desktop-en.png",
+    permanentExhibitions: [
+      {
+        id: "hkmoa-collection",
+        name: "Collection Highlights",
+        title: "Collection Highlights",
+        description: "Selected works from Chinese Painting, Antiquities, China Trade Art, and Modern Hong Kong Art.",
+        startDate: "Permanent",
+        endDate: "Permanent",
+        collectionFile: "hkmoa-collection.json"
+      }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: []
+  },
+  {
+    id: "nich-tnm",
+    slug: "nich-tnm",
+    name: "Tokyo National Museum (ColBase)",
+    location: "Tokyo, Japan",
+    description: "The Tokyo National Museum collects, houses, and displays a comprehensive collection of art works and antiquities from Japan.",
+    latitude: 35.7188,
+    longitude: 139.7757,
+    country: "Japan",
+    region: "Tokyo",
+    representativeImage: "https://www.tnm.jp/img/common/h_logo_en.gif",
+    permanentExhibitions: [
+      {
+        id: "tnm-painting-collection",
+        name: "Paintings & Oriental Paintings",
+        title: "Paintings & Oriental Paintings",
+        description: "Comprehensive collection of paintings and oriental paintings from the Tokyo National Museum (via ColBase).",
+        startDate: "Permanent",
+        endDate: "Permanent",
+        collectionFile: "nich-collection.json"
+      }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: []
+  },
+  {
+    id: "mori-collection",
+    slug: "mori-collection",
+    name: "Mori Art Museum",
+    location: "Tokyo, Japan",
+    description: "Contemporary art museum located in the Roppongi Hills Mori Tower.",
+    latitude: 35.6604,
+    longitude: 139.7292,
+    country: "Japan",
+    region: "Tokyo",
+    representativeImage: "https://www.mori.art.museum/assets_c/2019/05/286_aiweiwei_brainscan1-thumb-1280x853-5068.jpg",
+    permanentExhibitions: [
+      {
+        id: "mori-collection",
+        name: "Collection",
+        title: "Mori Art Museum Collection",
+        description: "Contemporary artworks from the Mori Art Museum collection.",
+        startDate: "Permanent",
+        endDate: "Permanent",
+        collectionFile: "mori-collection.json"
+      }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: []
+  },
+  {
+    id: "nmwa-collection",
+    slug: "nmwa-collection",
+    name: "National Museum of Western Art",
+    location: "Tokyo, Japan",
+    description: "The National Museum of Western Art is the premier public art gallery in Japan specializing in art from the Western tradition.",
+    latitude: 35.7153,
+    longitude: 139.7758,
+    country: "Japan",
+    region: "Tokyo",
+    representativeImage: "https://collection.nmwa.go.jp/image_files/l/41-L.jpg",
+    permanentExhibitions: [
+      {
+        id: "nmwa-collection",
+        name: "Collection",
+        title: "NMWA Collection",
+        description: "Paintings and Drawings from the National Museum of Western Art.",
+        startDate: "Permanent",
+        endDate: "Permanent",
+        collectionFile: "nmwa-collection.json"
+      }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: []
+  },
+  {
+    id: "adachi-museum",
+    slug: "adachi-museum",
+    name: "Adachi Museum of Art",
+    location: "Yasugi, Shimane, Japan",
+    description: "Famous for its award-winning gardens and collection of modern Japanese paintings, especially by Yokoyama Taikan.",
+    latitude: 35.3970,
+    longitude: 133.1950,
+    country: "Japan",
+    region: "Yasugi",
+    representativeImage: "https://www.adachi-museum.or.jp/admin/wp-content/themes/adachi_museum/assets/img/common/ogp.png",
+    permanentExhibitions: [
+      {
+        id: "adachi-collection",
+        name: "Collection",
+        title: "Adachi Collection",
+        description: "Masterpieces of Modern Japanese Painting, Ceramics, and Wood Carvings.",
+        startDate: "Permanent",
+        endDate: "Permanent",
+        collectionFile: "adachi-collection.json"
+      }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: []
+  },
+  {
+    id: "kanazawa-21",
+    slug: "kanazawa-21",
+    name: "21st Century Museum of Contemporary Art, Kanazawa",
+    location: "Kanazawa, Ishikawa, Japan",
+    description: "A museum of contemporary art with a circular building design, famous for Leandro Erlich's 'The Swimming Pool'.",
+    latitude: 36.5609,
+    longitude: 136.6582,
+    country: "Japan",
+    region: "Kanazawa",
+    representativeImage: "https://www.kanazawa21.jp/exhibit_lists/images/1384_l.jpg",
+    permanentExhibitions: [
+      {
+        id: "kanazawa-collection",
+        name: "Collection",
+        title: "Kanazawa Collection",
+        description: "Contemporary art collection from 1980 to the present.",
+        startDate: "Permanent",
+        endDate: "Permanent",
+        collectionFile: "kanazawa-all.json"
+      }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: []
+  },
+  {
+    id: "tobikan-collection",
+
+    slug: "tobikan-collection",
+    name: "Tokyo Metropolitan Art Museum",
+    location: "Tokyo, Japan",
+    description: "The Tokyo Metropolitan Art Museum (Tobikan) features a specialized collection of sculpture and calligraphy.",
+    latitude: 35.7170,
+    longitude: 139.7730,
+    country: "Japan",
+    region: "Tokyo",
+    representativeImage: "https://www.tobikan.jp/common/img/v3.logo_en_b.svg", // Reusing official logo path or similar
+    permanentExhibitions: [
+      {
+        id: "tobikan-collection",
+        name: "Collection",
+        title: "Collection Highlights",
+        description: "Sculptures and Calligraphic works from the Tokyo Metropolitan Art Museum's collection.",
+        startDate: "Permanent",
+        endDate: "Permanent",
+        collectionFile: "tobikan-collection.json"
+      }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: []
+  },
+  {
+    id: "mplus",
+    slug: "mplus",
+    name: "M+",
+    location: "Hong Kong",
+    description: "Collection highlights from M+ (Hong Kong), including on-view status.",
+    latitude: 22.2999,
+    longitude: 114.1591,
+    country: "Hong Kong",
+    region: "Hong Kong",
+    representativeImage: "https://www.mplus.org.hk/favicon.ico",
+    permanentExhibitions: [
+      {
+        id: "mplus-collection-mplus",
+        name: "M+ Collection (Objects with Images)",
+        title: "M+ Collection (Objects with Images)",
+        description: "Full M+ Collection objects that currently have images, including on-view status and classification.",
+        startDate: "Permanent",
+        endDate: "Permanent",
+        collectionFile: "mplus-collection-mplus.json"
+      },
+      {
+        id: "mplus-collection-sigg",
+        name: "M+ Sigg Collection (Objects with Images)",
+        title: "M+ Sigg Collection (Objects with Images)",
+        description: "M+ Sigg Collection objects that currently have images, including on-view status and classification.",
+        startDate: "Permanent",
+        endDate: "Permanent",
+        collectionFile: "mplus-collection-sigg.json"
+      }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: []
+  },
+  {
+    id: "national-palace-museum-taipei",
+    slug: "national-palace-museum-taipei",
+    name: "National Palace Museum (Taipei)",
+    location: "Taipei, Taiwan",
+    description: "Home to one of the world's largest collections of Chinese art treasures, spanning 8,000 years of history.",
+    latitude: 25.1024,
+    longitude: 121.5485,
+    country: "Taiwan",
+    region: "Taipei",
+    representativeImage: "https://theme.npm.edu.tw/selection/att/collection/04009118/17010406.jpg",
+    permanentExhibitions: [
+      {
+        id: "npm-selection-painting",
+        name: "Painting Selections",
+        title: "Masterpieces of Painting",
+        description: "A curated selection of 105 painting masterpieces from the National Palace Museum collection, featuring works from Tang, Song, Yuan, Ming, and Qing dynasties.",
+        startDate: "Permanent",
+        endDate: "Permanent",
+        collectionFile: "npm-selection-painting.json"
+      }
+    ],
+    currentExhibitions: [],
+    temporaryExhibitions: [],
+    pastExhibitions: []
+  },
+  {
+    id: "tfam",
+    slug: "tfam",
+    name: "Taipei Fine Arts Museum",
+    location: "Taipei, Taiwan",
+    description: "Taipei Fine Arts Museum (TFAM) collection dataset.",
+    latitude: 25.0723,
+    longitude: 121.5241,
+    country: "Taiwan",
+    region: "Taipei",
+    representativeImage: "https://www.tfam.museum/favicon.ico",
+    permanentExhibitions: [
+      {
+        id: "tfam-collection-all",
+        name: "Collection (All)",
+        title: "TFAM Collection (All)",
+        description: "Full TFAM collection dataset (all works), enriched with detail-page metadata and highlight flag.",
+        startDate: "Permanent",
+        endDate: "Permanent",
+        collectionFile: "tfam-collection-all.json"
+      }
+    ],
+    currentExhibitions: [],
+    temporaryExhibitions: [],
+    pastExhibitions: []
+  },
+  {
+    id: "ntmofa",
+    slug: "ntmofa",
+    name: "National Taiwan Museum of Fine Arts",
+    location: "Taichung, Taiwan",
+    description: "National art museum with modern and contemporary Taiwanese and international collections.",
+    latitude: 24.1477,
+    longitude: 120.6736,
+    country: "Taiwan",
+    region: "Taichung",
+    representativeImage: "https://ntmofa-collections.ntmofa.gov.tw/images/ntmofa-logo.png",
+    permanentExhibitions: [
+      {
+        id: "ntmofa-collection",
+        name: "Collection",
+        title: "Collection",
+        description: "Selection from the NTMoFA collection (Oil Painting, Watercolor, Ink Painting, Photography, Sculpture, and more).",
+        startDate: "Permanent",
+        endDate: "Permanent",
+        collectionFile: "ntmofa-collection.json"
+      }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: []
+  },
+  {
+    id: "namoc",
+    slug: "namoc",
+    name: "National Art Museum of China",
+    location: "Beijing, China",
+    description: "The National Art Museum of China (NAMOC) is the only national art museum of plastic arts in China, housing over 100,000 works.",
+    latitude: 39.9242,
+    longitude: 116.4093,
+    country: "China",
+    region: "Beijing",
+    representativeImage: "https://www.namoc.cn/namoc/xhtml/images/logo.png",
+    permanentExhibitions: [
+      {
+        id: "namoc-collection",
+        name: "Collection",
+        title: "NAMOC Collection",
+        description: "Artworks from the National Art Museum of China collection.",
+        startDate: "Permanent",
+        endDate: "Permanent",
+        collectionFile: "namoc-collection.json"
+      }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: []
+  },
+  {
+    id: "china-art-museum",
+    slug: "china-art-museum",
+    name: "China Art Museum, Shanghai",
+    location: "Shanghai, China",
+    description: "The China Art Museum, also known as the China Art Palace, is a museum of modern Chinese art located in Pudong, Shanghai.",
+    latitude: 31.1850,
+    longitude: 121.4910,
+    country: "China",
+    region: "Shanghai",
+    representativeImage: "https://upload.wikimedia.org/wikipedia/commons/4/45/China_Art_Museum.jpg",
+    permanentExhibitions: [
+      {
+        id: "china-art-museum-collection",
+        name: "Collection Highlights",
+        title: "Collection Highlights",
+        description: "Highlights from the collection of the China Art Museum, Shanghai.",
+        startDate: "Permanent",
+        endDate: "Permanent",
+        collectionFile: "china-art-museum-collection.json"
+      }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: []
+  },
+  {
     id: "tate-modern",
     slug: "tate-modern",
     name: "Tate Modern",
@@ -10,11 +877,19 @@ export const exhibitions = [
     longitude: -0.0994,
     country: "United Kingdom",
     region: "London",
-    representativeImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/galleries/tate-modern/building-v2.webp",
+    representativeImage: "images/tate-modern-logo.svg",
     floorPlan: "",
     permanentExhibitions: [
-      { id: "tm-perm-1", name: "Tate Collection Highlights", title: "Tate Collection Highlights", description: "Key works from the international modern collection.", startDate: "Permanent", endDate: "Permanent" },
-      { id: "tm-perm-3", name: "Tate Collection", title: "Tate Collection", description: "Complete collection of artworks from Tate galleries.", startDate: "Permanent", endDate: "Permanent" }
+      {
+        id: "tm-perm-1",
+        name: "Tate Modern Collection",
+        title: "Tate Modern Collection",
+        description: "Key works from the international modern collection on display.",
+        startDate: "Permanent",
+        endDate: "Permanent",
+        collectionFile: "tate-modern-collection.json"
+      },
+      { id: "tm-perm-3", name: "Tate Collection", title: "Tate Collection", collectionFile: "tate-artworks.json", description: "Complete collection of artworks from Tate galleries.", startDate: "Permanent", endDate: "Permanent" }
     ],
     temporaryExhibitions: [
     ],
@@ -32,13 +907,12 @@ export const exhibitions = [
     longitude: -0.1275,
     country: "United Kingdom",
     region: "London",
-    representativeImage: "/images/tate-britain-building.jpg",
+    representativeImage: "images/tate-britain-logo.svg",
     floorPlan: "",
     permanentExhibitions: [
       // Tate Britain Collection - 853 artworks from Tate Britain
-      { id: "tbc-perm-1", name: "Tate Britain Collection", title: "Tate Britain Collection", description: "Complete collection of artworks on display at Tate Britain, featuring British art from 1500 to the present day.", startDate: "Permanent", endDate: "Permanent" },
-      // Mirror Tate Modern's "Tate Collection" so the modal loads the same local artworks feed
-      { id: "tm-perm-3", name: "Tate Collection", title: "Tate Collection", description: "Complete collection of artworks from Tate galleries.", startDate: "Permanent", endDate: "Permanent" }
+      { id: "tbc-perm-1", name: "Tate Britain Collection", title: "Tate Britain Collection", description: "Complete collection of artworks on display at Tate Britain, featuring British art from 1500 to the present day.", startDate: "Permanent", endDate: "Permanent", collectionFile: "tate-britain-artworks.json" },
+      { id: "tm-perm-3", name: "Tate Collection", title: "Tate Collection", collectionFile: "tate-artworks.json", description: "Complete collection of artworks from Tate galleries.", startDate: "Permanent", endDate: "Permanent" }
     ],
     temporaryExhibitions: [
     ],
@@ -56,14 +930,14 @@ export const exhibitions = [
     longitude: -0.128299,
     country: "United Kingdom",
     region: "London",
+    representativeImage: "images/national-gallery-logo.svg",
     permanentExhibitions: [
-      { id: "ng-1", name: "European Paintings", title: "European Paintings", description: "Masterworks by Botticelli, Van Gogh, Turner and more.", startDate: "Permanent", endDate: "Permanent" }
+      { id: "ng-1", name: "European Paintings", title: "European Paintings", collectionFile: "national-gallery-permanent.json", collectionFile: "national-gallery-permanent.json", collectionFile: "national-gallery-permanent.json", description: "Masterworks by Botticelli, Van Gogh, Turner and more.", startDate: "Permanent", endDate: "Permanent" }
     ],
     temporaryExhibitions: [
     ],
     pastExhibitions: [
     ],
-    representativeImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/national-gallery/building.jpg",
     floorPlan: "",
     rooms: {
       "room-1": [
@@ -82,10 +956,10 @@ export const exhibitions = [
     longitude: -0.1281,
     country: "United Kingdom",
     region: "London",
-    representativeImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/galleries/npg/building.webp",
+    representativeImage: "images/npg-logo.svg",
     floorPlan: "https://www.npg.org.uk/visit/floor-plans/floor-3/",
     permanentExhibitions: [
-      { id: "npg-floor3-rooms", name: "National Portrait Gallery Collection", title: "National Portrait Gallery Collection", description: "Room-based archive of artworks on Floor 3.", startDate: "Permanent", endDate: "Permanent" }
+      { id: "npg-london-collection", name: "NPG Collection", title: "National Portrait Gallery Collection", description: "The world's largest collection of portraits, featuring paintings of famous British figures from the Middle Ages to the present day.", startDate: "Permanent", endDate: "Permanent", collectionFile: "national-portrait-gallery-london-collection.json" }
     ],
     temporaryExhibitions: [
     ],
@@ -103,10 +977,24 @@ export const exhibitions = [
     country: "United Kingdom",
     region: "London",
     permanentExhibitions: [
-      { id: "vam-painting", name: "Paintings", title: "Paintings", description: "Collection of paintings from V&A.", startDate: "Permanent", endDate: "Permanent" },
-      { id: "vam-portraits", name: "Portraits", title: "Portraits", description: "Portraits from the V&A collection.", startDate: "Permanent", endDate: "Permanent" },
-      { id: "vam-posters", name: "Posters", title: "Posters", description: "Posters from the V&A collection.", startDate: "Permanent", endDate: "Permanent" },
-      { id: "vam-photographs", name: "Photographs", title: "Photographs", description: "Photographs from the V&A collection.", startDate: "Permanent", endDate: "Permanent" },
+      {
+        id: "vam-permanent",
+        name: "Collection (Permanent)",
+        title: "Permanent Collection",
+        description: "Oil paintings, paintings, posters, and watercolours from the V&A permanent collection currently on display.",
+        startDate: "Permanent",
+        endDate: "Permanent",
+        collectionFile: "vam-permanent-exhibitions.json"
+      },
+      {
+        id: "vam-posters",
+        name: "Poster Collection",
+        title: "V&A Poster Collection",
+        description: "Posters from the V&A permanent collection currently on display.",
+        startDate: "Permanent",
+        endDate: "Permanent",
+        collectionFile: "vam-posters-display.json"
+      },
     ],
     temporaryExhibitions: [
       { id: "vam-t1", name: "Design and Disability", title: "Design and Disability", description: "Both a celebration and a call to action, showcasing the radical contributions of Disabled, Deaf, and neurodivergent people and communities to design history and contemporary culture, from the 1940s to now. Free tickets available for Disabled people and a companion.", startDate: "2025-01-01", endDate: "2026-02-15", admission: "£16.00", image: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/galleries/vam/exhibitions/design-and-disability.webp" },
@@ -117,7 +1005,7 @@ export const exhibitions = [
     ],
     pastExhibitions: [
     ],
-    representativeImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/galleries/vam/building.webp",
+    representativeImage: "images/vam-logo.svg",
     floorPlan: "",
     rooms: {
       "room-1": [
@@ -137,9 +1025,9 @@ export const exhibitions = [
     longitude: -2.9943,
     country: "United Kingdom",
     region: "Liverpool",
-    representativeImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/galleries/tate-liverpool/building.webp",
+    representativeImage: "images/tate-liverpool-logo.svg",
     permanentExhibitions: [
-      { id: "tm-perm-3", name: "Tate Collection", title: "Tate Collection", description: "Complete collection of artworks from Tate galleries.", startDate: "Permanent", endDate: "Permanent" }
+      { id: "tm-perm-3", name: "Tate Collection", title: "Tate Collection", collectionFile: "tate-artworks.json", description: "Complete collection of artworks from Tate galleries.", startDate: "Permanent", endDate: "Permanent" }
     ],
     temporaryExhibitions: [
       { id: "tl-t1", name: "Home Ground: The Architecture of Football", title: "Home Ground", description: "Discover how football stadiums have evolved in style, scale, and design throughout the years. Curated by the Royal Institute of British Architects (RIBA), exploring the evolution of football stadium designs through photographs, archive material and architectural models.", startDate: "2025-01-01", endDate: "2026-01-25", admission: "Free", image: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/galleries/tate-liverpool/exhibitions/home-ground.webp" },
@@ -165,10 +1053,10 @@ export const exhibitions = [
     longitude: -5.4796,
     country: "United Kingdom",
     region: "Cornwall",
-    representativeImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/galleries/tate-st-ives/building.webp",
+    representativeImage: "images/tate-st-ives-logo.svg",
     permanentExhibitions: [
-      { id: "tm-perm-3", name: "Tate Collection", title: "Tate Collection", description: "Complete collection of artworks from Tate galleries.", startDate: "Permanent", endDate: "Permanent" },
-      { id: "tsi-perm-1", name: "Tate St Ives Collection", title: "Tate St Ives Collection", description: "Artworks from the Tate collection displayed at Tate St Ives, featuring modernist and contemporary works connected to St Ives and Cornwall.", startDate: "Permanent", endDate: "Permanent" }
+      { id: "tsi-perm-1", name: "Tate St Ives Collection", title: "Tate St Ives Collection", description: "Complete collection of artworks from Tate galleries.", startDate: "Permanent", endDate: "Permanent", collectionFile: "tate-st-ives-artworks.json" },
+      { id: "tm-perm-3", name: "Tate Collection", title: "Tate Collection", collectionFile: "tate-artworks.json", description: "Complete collection of artworks from Tate galleries.", startDate: "Permanent", endDate: "Permanent" }
     ],
     temporaryExhibitions: [
       { id: "tsi-t1", name: "Emilija Škarnulytė", title: "Emilija Škarnulytė", description: "Take a journey across space and time in the immersive films of Emilija Škarnulytė.", detailedDescription: "Working between documentary and the imaginary, artist Emilija Škarnulytė creates films and immersive installations that explore deep time and invisible systems, as well as power structures possibly hidden within the cosmic and geological order. In her practice, Cold War military bases, neutrino observatories, decommissioned nuclear power plants, and deep-sea data storage units become relics of a lost human culture.\n\nFrom the perspective of a 'future archaeologist', Škarnulytė positions these artifacts in ways that prompt a different way of seeing and sensing the world. By exploring human-made architectures and invasive processes, she opens an altered perspective from which to question our role in society and nature, driven by processes of evolution and extinction.\n\nAs part of her filmic explorations, which often delve into ocean and river habitats, the artist assumes the shape of a hybrid figure, half-human and half-fish, swimming through abandoned submarine tunnels, hydroelectric plants, and the waters of the Amazon. For Škarnulytė, this hybrid creature embodies not only a fictive future archaeologist but also draws connections between ancient legends and prophecies to create new mythologies for our currently endangered planet.\n\nShe seamlessly blurs the boundaries between the human, the nonhuman, and the transcendental, melding scientific and mythological elements into a singular hybrid and vibrant force.", url: "https://www.tate.org.uk/whats-on/tate-st-ives/emilija-skarnulyte", startDate: "2025-12-06", endDate: "2026-04-12", pricing: "£14 | Free for Members", image: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/galleries/tate-st-ives/exhibitions/emilija-skarnulyte.webp" },
@@ -191,7 +1079,7 @@ export const exhibitions = [
     longitude: -3.1958,
     country: "United Kingdom",
     region: "Edinburgh",
-    representativeImage: "https://lh3.googleusercontent.com/ci/AL18g_QvkV8t79l9-ApFdWi0v7CU-cvjvuKboSCtQWL1OVwdIiNF7nk3xmM0oYDS09gE_ARPzDlp9IY=w1200",
+    representativeImage: "images/sng-logo.svg",
     permanentExhibitions: [
       { id: "sng-collection", name: "SNG Collection", title: "Scottish National Gallery Collection", description: "Masterpieces from the Renaissance to Post-Impressionism, including works by Botticelli, Raphael, Titian, Vermeer, Rembrandt, Monet, Degas, Cézanne, and Van Gogh.", startDate: "Permanent", endDate: "Permanent", collectionFile: "scottish-national-gallery-collection.json" }
     ],
@@ -209,7 +1097,7 @@ export const exhibitions = [
     longitude: -0.1397,
     country: "United Kingdom",
     region: "London",
-    representativeImage: "https://lh3.googleusercontent.com/ci/AL18g_RBwci_hGJRaX-iMX12Daw4mv4naX9hOtVzxoWErSXR98S00mYN-TWt1n9HRdMbIefLR3avCK0=w1200",
+    representativeImage: "images/royal-academy-logo.svg",
     permanentExhibitions: [
       { id: "ra-1", name: "RA Collection", title: "RA Collection", description: "Works acquired since the Academy's founding in 1768, including works by Reynolds, Constable, Turner, and contemporary Royal Academicians.", startDate: "Permanent", endDate: "Permanent", collectionFile: "royal-academy-collection.json" }
     ],
@@ -231,10 +1119,8 @@ export const exhibitions = [
     longitude: -0.1750,
     country: "United Kingdom",
     region: "London",
-    representativeImage: "https://lh3.googleusercontent.com/ci/AL18g_QkEHohu0-XdIikIIvHJaJ2kuENDnn7k9MVt0zZvSoX6bRSOqst5wfvcJx75ODw3QQwHM_k0A=w1200",
-    permanentExhibitions: [
-      { id: "serp-collection", name: "The Serpentine Archive", title: "The Serpentine Archive", description: "Archives from Serpentine's history of cutting-edge contemporary art exhibitions and the iconic annual Pavilion commissions since 2000.", startDate: "Permanent", endDate: "Permanent", collectionFile: "serpentine-gallery-collection.json" }
-    ],
+    representativeImage: "images/serpentine-logo.svg",
+    permanentExhibitions: [],
     temporaryExhibitions: [
     ],
     upcomingExhibitions: [
@@ -255,7 +1141,7 @@ export const exhibitions = [
     longitude: -0.0857,
     country: "United Kingdom",
     region: "London",
-    representativeImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/galleries/dulwich/building.webp",
+    representativeImage: "images/dulwich-logo.svg",
     permanentExhibitions: [
       {
         id: "dpg-1",
@@ -265,7 +1151,7 @@ export const exhibitions = [
         startDate: "Permanent",
         endDate: "Permanent",
         image: "https://assets.dulwich-gallery.substrakt.net/images/collezione.2e16d0ba.fill-2000x800.jpg"
-      }
+      , collectionFile: "dulwich-collection.json" }
     ],
     temporaryExhibitions: [
       {
@@ -350,7 +1236,7 @@ export const exhibitions = [
     longitude: -0.1178,
     country: "United Kingdom",
     region: "London",
-    representativeImage: "https://lh3.googleusercontent.com/ci/AL18g_Q_jPxh9wb8SBzaSTdQm99rUaaNrNmZpNQOEB6aOKcAE0phknJYHZ7fMn68gyAdWqdm4Ymn=w1200",
+    representativeImage: "images/courtauld-logo.svg",
     permanentExhibitions: [
       { id: "cg-1", name: "The Courtauld Collection", title: "The Courtauld Collection", description: "Manet's Bar at the Folies-Bergère, Van Gogh's Self-Portrait, Cézanne's Card Players, and many more masterpieces from the world-renowned collection of Impressionist and Post-Impressionist art.", startDate: "Permanent", endDate: "Permanent", collectionFile: "courtauld-gallery-collection.json" }
     ],
@@ -373,7 +1259,7 @@ export const exhibitions = [
     longitude: -2.2419,
     country: "United Kingdom",
     region: "Manchester",
-    representativeImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/galleries/manchester/building.webp?v=2",
+    representativeImage: "images/manchester-gallery-logo.svg",
     permanentExhibitions: [
     ],
     temporaryExhibitions: [
@@ -391,7 +1277,7 @@ export const exhibitions = [
     longitude: -2.9799,
     country: "United Kingdom",
     region: "Liverpool",
-    representativeImage: "https://lh3.googleusercontent.com/ci/AL18g_RUa6Oubw6QnXJUVCEK3fWMZi5Mg0RoBTEGGCR7gMVT28W1uOfvYgV7IkcqYpmcPiOKlCB8CpB-=w1200",
+    representativeImage: "images/walker-logo.svg",
     permanentExhibitions: [
       { id: "wag-collection", name: "Walker Collection", title: "Walker Art Gallery Collection", description: "Outstanding collection of European art from the 13th to 21st century, with renowned Pre-Raphaelite and Victorian paintings.", startDate: "Permanent", endDate: "Permanent", collectionFile: "walker-art-gallery-collection.json" }
     ],
@@ -410,7 +1296,7 @@ export const exhibitions = [
     longitude: -3.1938,
     country: "United Kingdom",
     region: "Edinburgh",
-    representativeImage: "https://lh3.googleusercontent.com/ci/AL18g_Qg0XLHRFOrRsMCDPXeMOCUXMf4b_WQKro70Esk5onBNR15YJd7_c9IgSKji8ZYpOPTPctwVc4-=w1200",
+    representativeImage: "images/snpg-logo.svg",
     permanentExhibitions: [
       { id: "snpg-collection", name: "SNPG Collection", title: "Scottish National Portrait Gallery Collection", description: "Portraits of famous Scots from monarchs and poets to scientists and sports heroes, housed in the world's first purpose-built portrait gallery.", startDate: "Permanent", endDate: "Permanent", collectionFile: "scottish-national-portrait-gallery-collection.json" }
     ],
@@ -428,7 +1314,7 @@ export const exhibitions = [
     longitude: -3.2322,
     country: "United Kingdom",
     region: "Edinburgh",
-    representativeImage: "https://lh3.googleusercontent.com/ci/AL18g_QkIe4x8UAYQKgP8bD5Mx7sKk_iVeTL2LeNuHt0hEVNdpy4E9RnIkOhcVbXUpIa9P4O7qd16Q=w2000",
+    representativeImage: "images/scottish-national-gallery-of-modern-art-modern-one-logo.svg",
     permanentExhibitions: [
       { id: "sngma-collection", name: "Modern Art Collection", title: "Scottish National Gallery of Modern Art Collection", description: "Contemporary artworks from some of the most influential artists of the 20th and 21st centuries.", startDate: "Permanent", endDate: "Permanent", collectionFile: "scottish-national-gallery-of-modern-art-collection.json" }
     ],
@@ -446,18 +1332,8 @@ export const exhibitions = [
     longitude: -0.1270,
     country: "United Kingdom",
     region: "London",
-    representativeImage: "https://lh3.googleusercontent.com/ci/AL18g_QpZqEJPzN_PYkYIirsuLY5y26gbXSeHTg-5ojyWlSbImFCVUbXVdh87rVXgva6rKnhbAmKsg=w2000",
-    permanentExhibitions: [
-      {
-        id: "bm-collection",
-        name: "The Collection",
-        title: "The Collection",
-        description: "Explore the British Museum's vast collection of paintings including works spanning over two million years of human history and culture.",
-        startDate: "Permanent",
-        endDate: "Permanent",
-        collectionFile: "the-british-museum-collection.json"
-      }
-    ],
+    representativeImage: "images/british-museum-logo.svg",
+    permanentExhibitions: [],
     temporaryExhibitions: [],
     pastExhibitions: []
   },
@@ -471,7 +1347,7 @@ export const exhibitions = [
     longitude: -0.1163,
     country: "United Kingdom",
     region: "London",
-    representativeImage: "https://lh3.googleusercontent.com/ci/AL18g_RgKllBYJI9Wz3-spHw9pifMP6PNP6CEB9MjAOvgECBKw19bf9-fTGEY5By_arzpwlQJcg6BA=w800",
+    representativeImage: "/images/Hayward_Gallery_logo.svg",
     permanentExhibitions: [
       {
         id: "hayward-gallery-collection",
@@ -1182,7 +2058,7 @@ export const exhibitions = [
     latitude: 48.8606,
     longitude: 2.3376,
     description: "세계 최대의 회화관. '모나리자'를 포함한 서양 고전 회화의 절대 성지.",
-    representativeImage: "https://collections.louvre.fr/media/cache/large/0000000021/0000048442/0000040685_OG.JPG",
+    representativeImage: "images/louvre-logo.svg",
     permanentExhibitions: [
       { id: "louvre-painting-collection", name: "Painting Collection", title: "Musée du Louvre Painting Collection", description: "Over 10,000 paintings from the world's largest art museum, featuring masterpieces from the Renaissance to the 19th century including the Mona Lisa, Winged Victory, and Venus de Milo.", startDate: "Permanent", endDate: "Permanent" }
     ],
@@ -1201,7 +2077,7 @@ export const exhibitions = [
     latitude: 48.8600,
     longitude: 2.3266,
     description: "19세기 인상주의 회화의 중심. 고흐, 모네, 르누아르의 마스터피스 집결지.",
-    representativeImage: "https://cdn.mediatheque.epmoo.fr/link/3c9igq/ztl19e6a7dgqq00.jpg",
+    representativeImage: "images/musee-dorsay-logo.svg",
     floorPlan: "",
     permanentExhibitions: [
       { id: "orsay-collection", name: "Orsay Collection", title: "Musée d'Orsay Permanent Collection", description: "Masterpieces of Impressionism and Post-Impressionism including works by Monet, Van Gogh, Renoir, Degas, Cézanne, and more.", startDate: "Permanent", endDate: "Permanent" }
@@ -1218,13 +2094,13 @@ export const exhibitions = [
     latitude: 48.8607,
     longitude: 2.3522,
     description: "유럽 최대 현대 미술 갤러리. 20세기 평면 예술의 흐름을 주도하는 영향력.",
-    representativeImage: "",
+    representativeImage: "images/centre-pompidou-logo.svg",
     permanentExhibitions: [
-      { id: "pompidou-cinema-collection", name: "Cinema Collection", title: "Centre Pompidou Cinema Collection", description: "Experimental cinema, video art, and film installations from the Centre Pompidou collection.", startDate: "Permanent", endDate: "Permanent" },
-      { id: "pompidou-painting-collection", name: "Painting Collection", title: "Centre Pompidou Painting Collection", description: "Modern and contemporary paintings from the Centre Pompidou collection, featuring masterworks from Picasso, Matisse, Kandinsky, and more.", startDate: "Permanent", endDate: "Permanent" },
-      { id: "pompidou-drawing-collection", name: "Drawing Collection", title: "Centre Pompidou Drawing Collection", description: "Works on paper from the Cabinet d'art graphique, featuring drawings, sketches, and graphic works.", startDate: "Permanent", endDate: "Permanent" },
-      { id: "pompidou-newmedia-collection", name: "New Media Collection", title: "Centre Pompidou New Media Collection", description: "Digital art, interactive installations, and new media works from the collection.", startDate: "Permanent", endDate: "Permanent" },
-      { id: "pompidou-design-collection", name: "Design Collection", title: "Centre Pompidou Design Collection", description: "Graphic design, posters, typography and industrial design from the Centre Pompidou collection.", startDate: "Permanent", endDate: "Permanent" }
+      { id: "pompidou-cinema-collection", name: "Cinema Collection", title: "Centre Pompidou Cinema Collection", description: "Experimental cinema, video art, and film installations from the Centre Pompidou collection.", startDate: "Permanent", endDate: "Permanent", collectionFile: "pompidou-cinema-collection.json" },
+      { id: "pompidou-painting-collection", name: "Painting Collection", title: "Centre Pompidou Painting Collection", description: "Modern and contemporary paintings from the Centre Pompidou collection, featuring masterworks from Picasso, Matisse, Kandinsky, and more.", startDate: "Permanent", endDate: "Permanent", collectionFile: "pompidou-painting-collection.json" },
+      { id: "pompidou-drawing-collection", name: "Drawing Collection", title: "Centre Pompidou Drawing Collection", description: "Works on paper from the Cabinet d'art graphique, featuring drawings, sketches, and graphic works.", startDate: "Permanent", endDate: "Permanent", collectionFile: "pompidou-drawing-collection.json" },
+      { id: "pompidou-newmedia-collection", name: "New Media Collection", title: "Centre Pompidou New Media Collection", description: "Digital art, interactive installations, and new media works from the collection.", startDate: "Permanent", endDate: "Permanent", collectionFile: "pompidou-newmedia-collection.json" },
+      { id: "pompidou-design-collection", name: "Design Collection", title: "Centre Pompidou Design Collection", description: "Graphic design, posters, typography and industrial design from the Centre Pompidou collection.", startDate: "Permanent", endDate: "Permanent", collectionFile: "pompidou-design-collection.json" }
     ],
     temporaryExhibitions: [],
     pastExhibitions: [],
@@ -1241,7 +2117,7 @@ export const exhibitions = [
     latitude: 48.8638,
     longitude: 2.3225,
     description: "모네의 '수련' 연작을 위해 설계된, 가장 '갤러리다운' 미학적 공간.",
-    representativeImage: "",
+    representativeImage: "images/musee-de-lorangerie-logo.svg",
     floorPlan: "",
     permanentExhibitions: [
       { id: "orangerie-collection", name: "Orangerie Collection", title: "Musée de l'Orangerie Permanent Collection", description: "Monet's Water Lilies and the Jean Walter and Paul Guillaume collection of Impressionist and Post-Impressionist masterpieces.", startDate: "Permanent", endDate: "Permanent" }
@@ -1258,10 +2134,9 @@ export const exhibitions = [
     latitude: 48.8660,
     longitude: 2.3140,
     description: "파리 시립 미술관. 중세부터 20세기까지의 방대한 유화 및 판화 컬렉션.",
-    representativeImage: "https://www.petitpalais.paris.fr/sites/default/files/17536-12.jpg",
+    representativeImage: "images/petit-palais-logo.png",
     permanentExhibitions: [
-      { id: "petit-palais-collection", name: "Collection", title: "Petit Palais - Musée des Beaux-Arts de la Ville de Paris", description: "고대부터 아르누보까지, 쿠르베, 르누아르, 들라크루아 등 프랑스 미술의 정수를 담은 74점의 대표 소장품.", startDate: "Permanent", endDate: "Permanent" },
-      { id: "petit-palais-drawings", name: "Drawings Collection", title: "Petit Palais - Dessins", description: "드로잉 및 판화 컬렉션 157점.", startDate: "Permanent", endDate: "Permanent", collectionFile: "petit-palais-drawings.json" }
+      { id: "petit-palais-collection", name: "Permanent Collection", title: "Petit Palais - Musée des Beaux-Arts de la Ville de Paris", description: "고대부터 아르누보까지, 회화·드로잉·판화 컬렉션 400점. 쿠르베, 르누아르, 들라크루아 등 프랑스 미술의 정수.", startDate: "Permanent", endDate: "Permanent" }
     ],
     temporaryExhibitions: [],
     pastExhibitions: [],
@@ -1275,12 +2150,9 @@ export const exhibitions = [
     latitude: 48.8598,
     longitude: 2.3623,
     description: "피카소의 회화, 드로잉, 판화를 세계에서 가장 체계적으로 소장한 곳.",
-    representativeImage: "https://cep.museepicassoparis.fr/sites/default/files/styles/image_liste_visionneuse_desktop/public/medias/image/import/navigart/4C23074.jpg",
+    representativeImage: "images/musee-picasso-paris-logo.png",
     permanentExhibitions: [
-      { id: "picasso-drawings", name: "Drawings Collection", title: "Musée Picasso Paris - Drawings Collection (Dessins)", description: "1,492 drawings from Pablo Picasso's extensive collection at Musée Picasso Paris.", startDate: "Permanent", endDate: "Permanent" },
-      { id: "picasso-paintings", name: "Paintings Collection", title: "Musée Picasso Paris - Paintings Collection (Peintures)", description: "306 paintings from Pablo Picasso's collection at Musée Picasso Paris.", startDate: "Permanent", endDate: "Permanent" },
-      { id: "picasso-sculptures", name: "Sculptures & Objects", title: "Musée Picasso Paris - Sculptures & Objects Collection", description: "340 sculptures and 3D objects from Pablo Picasso's collection at Musée Picasso Paris.", startDate: "Permanent", endDate: "Permanent" },
-      { id: "picasso-prints", name: "Prints Collection", title: "Musée Picasso Paris - Prints Collection (Estampes)", description: "1,349 prints (estampes) from Pablo Picasso's extensive collection at Musée Picasso Paris.", startDate: "Permanent", endDate: "Permanent" }
+      { id: "picasso-paris-collection", name: "The Collection", title: "Musée Picasso Paris - The Collection", description: "드로잉 1,492점, 회화 306점, 조각 340점, 판화 1,349점을 포함한 피카소 미술관 전체 컬렉션.", startDate: "Permanent", endDate: "Permanent", collectionFile: "picasso-paris-collection.json" }
     ],
     temporaryExhibitions: [],
     pastExhibitions: [],
@@ -1294,7 +2166,7 @@ export const exhibitions = [
     latitude: 48.8626,
     longitude: 2.3429,
     description: "케링 그룹 회장의 개인 컬렉션. 동시대 평면 예술의 가장 힙한 트렌드.",
-    representativeImage: "",
+    representativeImage: "images/bourse-de-commerce-pinault-collection-logo.svg",
     floorPlan: "",
     permanentExhibitions: [
       { id: "pinault-collection", name: "Pinault Collection", title: "Pinault Collection Artworks", description: "François Pinault's world-renowned contemporary art collection featuring works by leading artists of our time.", startDate: "Permanent", endDate: "Permanent" }
@@ -1311,10 +2183,9 @@ export const exhibitions = [
     latitude: 48.8647,
     longitude: 2.2972,
     description: "듀피의 '전기의 요정' 등 거대 벽화와 20세기 주요 현대 회화 소장.",
-    representativeImage: "",
+    representativeImage: "images/musee-dart-moderne-de-paris-logo.svg",
     permanentExhibitions: [
-      { id: "mam-perm-painting", name: "Painting Collection", title: "MAM Paris Painting Collection", description: "Modern and contemporary paintings from the Musée d'Art Moderne de Paris collection.", startDate: "Permanent", endDate: "Permanent" },
-      { id: "mam-perm-photography", name: "Photography Collection", title: "MAM Paris Photography Collection", description: "Contemporary photography from the Musée d'Art Moderne de Paris collection.", startDate: "Permanent", endDate: "Permanent" }
+      { id: "mam-collection", name: "La Collection", title: "MAM Paris — La Collection", description: "Paintings, photography, and contemporary works from the Musée d'Art Moderne de Paris collection.", startDate: "Permanent", endDate: "Permanent", collectionFile: "mam-collection.json" }
     ],
     temporaryExhibitions: [],
     pastExhibitions: [],
@@ -1328,7 +2199,7 @@ export const exhibitions = [
     latitude: 48.8587,
     longitude: 2.2666,
     description: "모네의 '인상, 일출' 소장처. 인상주의 연구의 핵심적인 갤러리.",
-    representativeImage: "",
+    representativeImage: "images/musee-marmottan-monet-logo.svg",
     permanentExhibitions: [
       { id: "marmottan-collection", name: "Collection", title: "Musée Marmottan Monet Collection", description: "Home to Monet's 'Impression, Sunrise' and masterpieces by Berthe Morisot and other Impressionists.", startDate: "Permanent", endDate: "Permanent" }
     ],
@@ -1345,9 +2216,9 @@ export const exhibitions = [
     latitude: 48.8753,
     longitude: 2.3109,
     description: "개인 저택형 갤러리. 이탈리아 르네상스 및 프랑스 고전 회화의 정수.",
-    representativeImage: "",
+    representativeImage: "images/jacquemart-andre-logo.svg",
     permanentExhibitions: [
-      { id: "jacquemart-collection", name: "Must-See Works", title: "Musée Jacquemart-André Must-See Works", description: "Masterpieces by Botticelli, Rembrandt, Fragonard, and other masters in an elegant 19th-century mansion.", startDate: "Permanent", endDate: "Permanent" }
+      { id: "jacquemart-collection", name: "Must-See Works", title: "Musée Jacquemart-André Must-See Works", description: "Masterpieces by Botticelli, Rembrandt, Fragonard, and other masters in an elegant 19th-century mansion.", startDate: "Permanent", endDate: "Permanent" , collectionFile: "jacquemart-andre-collection.json" }
     ],
     temporaryExhibitions: [],
     pastExhibitions: [],
@@ -1361,7 +2232,7 @@ export const exhibitions = [
     latitude: 48.8658,
     longitude: 2.3234,
     description: "프랑스 사진 갤러리의 상징. 현대 사진과 영상 예술의 최고 권위.",
-    representativeImage: "",
+    representativeImage: "images/jeu-de-paume-logo.svg",
     exhibitions: []
   },
   {
@@ -1375,10 +2246,10 @@ export const exhibitions = [
     latitude: 48.8541,
     longitude: 2.3590,
     description: "현대 사진 예술에 집중된 세계적인 수준의 전문 갤러리.",
-    representativeImage: "",
+    representativeImage: "images/maison-europeenne-de-la-photographie-logo.svg",
     floorPlan: "",
     permanentExhibitions: [
-      { id: "mep-photography", name: "The Collection", title: "MEP: The Collection", description: "Photography and video works from legendary artists including Brassaï, Robert Frank, Nan Goldin, Irving Penn, William Klein, Erwin Wurm, and contemporary artists.", startDate: "Permanent", endDate: "Permanent" }
+      { id: "mep-photography", name: "The Collection", title: "MEP: The Collection", description: "Photography and video works from legendary artists including Brassaï, Robert Frank, Nan Goldin, Irving Penn, William Klein, Erwin Wurm, and contemporary artists.", startDate: "Permanent", endDate: "Permanent", collectionFile: "mep-photography-collection.json" }
     ],
     temporaryExhibitions: [],
     pastExhibitions: [],
@@ -1392,10 +2263,8 @@ export const exhibitions = [
     latitude: 48.8640,
     longitude: 2.2970,
     description: "파리의 전위적인 현대 미술 공간. 실험적인 기획전과 설치 예술의 중심지.",
-    representativeImage: "https://lh3.googleusercontent.com/ci/AL18g_STKOuuuHEvwz7M7LKRr8gGC21mtAxcu8MgqgXfT_nD862Rl0mRjDn_wSWrfbB2xMPWVhrk6g=w1200",
-    permanentExhibitions: [
-      { id: "palais-de-tokyo-collection", name: "Permanent Collection", title: "Underground Doesn't Exist Anymore", description: "파리 현대미술의 실험적 공간 팔레 드 도쿄의 컬렉션. Lek & Sowat, Mode 2, Futura 2000 등 스트리트 아트와 현대 미술의 경계를 탐구합니다.", startDate: "Permanent", endDate: "Permanent" }
-    ],
+    representativeImage: "images/palais-de-tokyo-logo.svg",
+    permanentExhibitions: [],
     temporaryExhibitions: [],
     pastExhibitions: [],
     exhibitions: []
@@ -1410,9 +2279,9 @@ export const exhibitions = [
     latitude: 50.6305,
     longitude: 3.0614,
     description: "루브르 다음으로 큰 회화 컬렉션을 보유한 프랑스 북부의 자존심.",
-    representativeImage: "",
+    representativeImage: "images/palais-des-beaux-arts-de-lille-logo.svg",
     permanentExhibitions: [
-      { id: "lille-pba-collection", name: "Collection", title: "Palais des Beaux-Arts de Lille Collection", description: "16세기부터 20세기까지의 회화, 조각, 도자기, 드로잉을 아우르는 종합 컬렉션.", startDate: "Permanent", endDate: "Permanent" }
+      { id: "lille-pba-collection", name: "Collection", title: "Palais des Beaux-Arts de Lille Collection", description: "16세기부터 20세기까지의 회화, 조각, 도자기, 드로잉을 아우르는 종합 컬렉션.", startDate: "Permanent", endDate: "Permanent", collectionFile: "lille-pba-collection.json" }
     ],
     temporaryExhibitions: [],
     pastExhibitions: [],
@@ -1426,9 +2295,9 @@ export const exhibitions = [
     latitude: 49.4434,
     longitude: 1.0960,
     description: "'인상주의의 수도' 루앙의 핵심 갤러리. 모네의 '루앙 대성당' 시리즈 보유.",
-    representativeImage: "",
+    representativeImage: "images/musee-des-beaux-arts-de-rouen-logo.svg",
     permanentExhibitions: [
-      { id: "rouen-mba-collection", name: "Collection", title: "Musée des Beaux-Arts de Rouen Collection", description: "인상주의, 풍경화, 바로크, 초상화 등 르네상스부터 20세기까지의 유럽 미술 컬렉션.", startDate: "Permanent", endDate: "Permanent" }
+      { id: "rouen-mba-collection", name: "Collection", title: "Musée des Beaux-Arts de Rouen Collection", description: "인상주의, 풍경화, 바로크, 초상화 등 르네상스부터 20세기까지의 유럽 미술 컬렉션.", startDate: "Permanent", endDate: "Permanent", collectionFile: "rouen-mba-collection.json" }
     ],
     temporaryExhibitions: [],
     pastExhibitions: [],
@@ -1442,9 +2311,9 @@ export const exhibitions = [
     latitude: 45.7672,
     longitude: 4.8335,
     description: "'작은 루브르'라 불릴 만큼 시대별 회화의 밀도가 높은 갤러리.",
-    representativeImage: "",
+    representativeImage: "images/musee-des-beaux-arts-de-lyon-logo.svg",
     permanentExhibitions: [
-      { id: "lyon-collection", name: "Painting & Graphic Design Collection", title: "Musée des Beaux-Arts de Lyon Collection", description: "15세기부터 현대까지의 회화와 그래픽 디자인 컬렉션 538점.", startDate: "Permanent", endDate: "Permanent" }
+      { id: "lyon-collection", name: "Painting & Graphic Design Collection", title: "Musée des Beaux-Arts de Lyon Collection", description: "15세기부터 현대까지의 회화와 그래픽 디자인 컬렉션 538점.", startDate: "Permanent", endDate: "Permanent" , collectionFile: "mba-lyon-collection.json" }
     ],
     temporaryExhibitions: [],
     pastExhibitions: [],
@@ -1458,10 +2327,9 @@ export const exhibitions = [
     latitude: 49.1941,
     longitude: 2.4867,
     description: "라파엘로 등 루브르에 견줄만한 올드 마스터들의 유화가 즐비한 곳.",
-    representativeImage: "https://images.grandpalaisrmn.fr/thumb.php/01763236.jpg",
+    representativeImage: "images/musee-conde-logo.svg",
     permanentExhibitions: [
-      { id: "conde-paintings", name: "Paintings Collection", title: "Musée Condé - Paintings Collection", description: "프랑스에서 루브르 다음으로 중요한 고전 회화 컬렉션 792점. 라파엘로, 푸생, 앵그르 등 걸작 소장.", startDate: "Permanent", endDate: "Permanent", collectionFile: "musee-conde-paintings.json" },
-      { id: "conde-drawings", name: "Drawings Collection", title: "Musée Condé - Drawings Collection", description: "15세기부터 19세기까지의 드로잉 및 판화 컬렉션.", startDate: "Permanent", endDate: "Permanent", collectionFile: "musee-conde-drawings.json" }
+      { id: "conde-paintings", name: "The Collection", title: "Musée Condé - The Collection", description: "프랑스에서 루브르 다음으로 중요한 올드 마스터 회화 및 드로잉 컬렉션. 라파엘로, 푸생, 앵그르 등 걸작 소장.", startDate: "Permanent", endDate: "Permanent", collectionFile: "musee-conde-paintings.json" }
     ],
     temporaryExhibitions: [],
     pastExhibitions: [],
@@ -1475,9 +2343,9 @@ export const exhibitions = [
     latitude: 43.9286,
     longitude: 2.1441,
     description: "로트레크의 독창적인 포스터와 유화를 세계에서 가장 많이 보유.",
-    representativeImage: "",
+    representativeImage: "images/musee-toulouse-lautrec-logo.svg",
     permanentExhibitions: [
-      { id: "toulouse-lautrec-collection", name: "Collection", title: "Musée Toulouse-Lautrec Collection", description: "앙리 드 툴루즈-로트레크의 회화, 드로잉, 포스터 212점.", startDate: "Permanent", endDate: "Permanent" }
+      { id: "toulouse-lautrec-collection", name: "Collection", title: "Musée Toulouse-Lautrec Collection", description: "앙리 드 툴루즈-로트레크의 회화, 드로잉, 포스터 212점.", startDate: "Permanent", endDate: "Permanent", collectionFile: "toulouse-lautrec-collection.json" }
     ],
     temporaryExhibitions: [],
     pastExhibitions: [],
@@ -1491,11 +2359,9 @@ export const exhibitions = [
     latitude: 45.1949,
     longitude: 5.7317,
     description: "프랑스 최초로 현대 미술을 수집한 곳으로, 2D 현대 예술의 보고.",
-    representativeImage: "",
+    representativeImage: "images/musee-de-grenoble-logo.svg",
     permanentExhibitions: [
-      { id: "grenoble-paintings", name: "Paintings", title: "Musée de Grenoble - Paintings Collection", description: "프랑스, 이탈리아, 북유럽 등 다양한 시대의 회화 761점.", startDate: "Permanent", endDate: "Permanent" },
-      { id: "grenoble-drawings", name: "Drawings", title: "Musée de Grenoble - Drawings Collection", description: "고전부터 현대까지의 드로잉 컬렉션 954점.", startDate: "Permanent", endDate: "Permanent" },
-      { id: "grenoble-photography", name: "Photography", title: "Musée de Grenoble - Photography Collection", description: "19세기부터 21세기까지의 사진 컬렉션 27점.", startDate: "Permanent", endDate: "Permanent" }
+      { id: "grenoble-collection", name: "The Collection", title: "Musée de Grenoble - The Collection", description: "회화 1,152점, 드로잉 954점, 사진 27점 등 총 2,133점의 컬렉션.", startDate: "Permanent", endDate: "Permanent" }
     ],
     temporaryExhibitions: [],
     pastExhibitions: [],
@@ -1509,9 +2375,9 @@ export const exhibitions = [
     latitude: 43.5265,
     longitude: 5.4481,
     description: "세잔의 고향에서 만나는 인상주의 및 피카소, 자코메티의 평면 작품들.",
-    representativeImage: "",
+    representativeImage: "images/musee-granet-logo.svg",
     permanentExhibitions: [
-      { id: "granet-collection", name: "Collection", title: "Musée Granet Collection", description: "세잔부터 자코메티까지, 14세기-20세기 회화와 조각 30점.", startDate: "Permanent", endDate: "Permanent" }
+      { id: "granet-collection", name: "Collection", title: "Musée Granet Collection", description: "세잔부터 자코메티까지, 14세기-20세기 회화와 조각 30점.", startDate: "Permanent", endDate: "Permanent" , collectionFile: "musee-granet-collection.json" }
     ],
     temporaryExhibitions: [],
     pastExhibitions: [],
@@ -1525,12 +2391,9 @@ export const exhibitions = [
     latitude: 48.5836,
     longitude: 7.7542,
     description: "라인강 유역 현대 예술의 중심. 그래픽 디자인과 회화 전시가 강점.",
-    representativeImage: "",
+    representativeImage: "images/mamcs-strasbourg-logo.svg",
     permanentExhibitions: [
-      { id: "mamcs-strasbourg-drawings-collection", name: "Drawings", title: "MAMCS Drawings Collection", description: "스트라스부르 현대미술관의 드로잉 컬렉션.", startDate: "Permanent", endDate: "Permanent" },
-      { id: "mamcs-strasbourg-paintings-collection", name: "Paintings", title: "MAMCS Paintings Collection", description: "스트라스부르 현대미술관의 회화 컬렉션.", startDate: "Permanent", endDate: "Permanent" },
-      { id: "mamcs-strasbourg-photography-collection", name: "Photography", title: "MAMCS Photography Collection", description: "스트라스부르 현대미술관의 사진 컬렉션.", startDate: "Permanent", endDate: "Permanent" },
-      { id: "mamcs-strasbourg-graphic-design-collection", name: "Graphic Design", title: "MAMCS Graphic Design Collection", description: "스트라스부르 현대미술관의 그래픽 디자인 컬렉션.", startDate: "Permanent", endDate: "Permanent" }
+      { id: "mamcs-strasbourg-collection", name: "전체 컬렉션", title: "MAMCS 스트라스부르 전체 컬렉션", description: "드로잉·회화·그래픽 디자인을 포함한 전체 컬렉션 6,097점.", startDate: "Permanent", endDate: "Permanent", collectionFile: "mamcs-strasbourg-collection.json" }
     ],
     temporaryExhibitions: [],
     pastExhibitions: [],
@@ -1544,10 +2407,9 @@ export const exhibitions = [
     latitude: 44.8372,
     longitude: -0.5801,
     description: "15세기부터 현대까지, 남서부 프랑스를 대표하는 고전 회화 갤러리.",
-    representativeImage: "",
+    representativeImage: "images/bordeaux-mba-logo.svg",
     permanentExhibitions: [
-      { id: "bordeaux-paintings", name: "Paintings", title: "Musée des Beaux-Arts de Bordeaux - Paintings Collection", description: "르네상스부터 현대까지의 회화 컬렉션 2,296점.", startDate: "Permanent", endDate: "Permanent" },
-      { id: "bordeaux-drawings", name: "Drawings", title: "Musée des Beaux-Arts de Bordeaux - Drawings Collection", description: "그래픽 아트 캐비닛의 드로잉 컬렉션 3,302점.", startDate: "Permanent", endDate: "Permanent" }
+      { id: "bordeaux-collection", name: "The Collection", title: "Musée des Beaux-Arts de Bordeaux - The Collection", description: "르네상스부터 현대까지의 회화 2,296점 및 드로잉 3,302점 전체 컬렉션.", startDate: "Permanent", endDate: "Permanent", collectionFile: "bordeaux-collection.json" }
     ],
     temporaryExhibitions: [],
     pastExhibitions: [],
@@ -1561,11 +2423,9 @@ export const exhibitions = [
     latitude: 48.8554,
     longitude: 2.3160,
     description: "오귀스트 로댕의 조각과 드로잉을 소장한 세계적인 조각 박물관. 생각하는 사람, 키스 등 명작 소장.",
-    representativeImage: "",
+    representativeImage: "images/musee-rodin-logo.svg",
     permanentExhibitions: [
-      { id: "rodin-peintures", name: "Peintures", title: "Musée Rodin - Peintures", description: "로댕 미술관 소장 회화 컬렉션 224점.", startDate: "Permanent", endDate: "Permanent" },
-      { id: "rodin-sculptures", name: "Sculptures", title: "Musée Rodin - Sculptures", description: "로댕과 동시대 작가들의 조각 컬렉션.", startDate: "Permanent", endDate: "Permanent" },
-      { id: "rodin-gravures", name: "Gravures", title: "Musée Rodin - Gravures", description: "판화 및 그래픽 아트 컬렉션 1,188점.", startDate: "Permanent", endDate: "Permanent" }
+      { id: "rodin-collection", name: "The Collection", title: "Musée Rodin - The Collection", description: "회화 224점, 조각, 판화 1,188점을 포함한 로댕 미술관 전체 컬렉션.", startDate: "Permanent", endDate: "Permanent", collectionFile: "rodin-collection.json" }
     ],
     temporaryExhibitions: [],
     pastExhibitions: [],
@@ -1579,9 +2439,9 @@ export const exhibitions = [
     latitude: 48.8766,
     longitude: 2.2644,
     description: "프랑크 게리가 설계한 현대건축의 걸작. 현대미술 컬렉션과 기획전시의 명소.",
-    representativeImage: "",
+    representativeImage: "images/fondation-louis-vuitton-logo.svg",
     permanentExhibitions: [
-      { id: "flv-collection", name: "Collection", title: "Fondation Louis Vuitton Collection", description: "현대미술 컬렉션 213점.", startDate: "Permanent", endDate: "Permanent" }
+      { id: "flv-collection", name: "Collection", title: "Fondation Louis Vuitton Collection", description: "현대미술 컬렉션 213점.", startDate: "Permanent", endDate: "Permanent", collectionFile: "flv-collection.json" }
     ],
     temporaryExhibitions: [],
     pastExhibitions: [],
@@ -1598,7 +2458,7 @@ export const exhibitions = [
     latitude: 48.8627,
     longitude: 2.3330,
     description: "세계 최대의 장식예술 컬렉션을 소장한 파리의 명소. 15세기부터 현대까지의 가구, 도자기, 보석, 패션, 그래픽 디자인 등 다양한 분야의 작품을 전시.",
-    representativeImage: "https://collections.madparis.fr/media/cache/mosaic/sw-media/624a97b0980f7c60b45575a2.jpg",
+    representativeImage: "images/mad-paris-logo.svg",
     permanentExhibitions: [
       { id: "mad-collection", name: "Les collections", title: "Arts décoratifs et design", description: "15세기부터 21세기까지의 장식예술과 디자인 컬렉션 10,863점.", startDate: "Permanent", endDate: "Permanent", collectionFile: "mad-paris-collection.json" }
     ],
@@ -1617,11 +2477,9 @@ export const exhibitions = [
     latitude: 48.8576,
     longitude: 2.3622,
     description: "파리의 역사를 담은 미술관. 고대부터 현대까지 파리의 변천사를 조각, 회화, 사진, 가구 등 60만 점 이상의 소장품으로 전시.",
-    representativeImage: "https://www.carnavalet.paris.fr/sites/default/files/collectioncar23644-19_1.jpg",
+    representativeImage: "images/carnavalet-logo.svg",
     permanentExhibitions: [
-      { id: "carnavalet-collection", name: "The Essential Artworks", title: "Les œuvres incontournables", description: "파리 역사를 대표하는 필수 작품 55점의 컬렉션.", startDate: "Permanent", endDate: "Permanent", collectionFile: "carnavalet-collection.json" },
-      { id: "carnavalet-paintings", name: "Paintings Collection", title: "Carnavalet - Peintures", description: "파리 역사를 담은 회화 컬렉션 481점.", startDate: "Permanent", endDate: "Permanent", collectionFile: "carnavalet-paintings.json" },
-      { id: "carnavalet-prints", name: "Prints Collection", title: "Carnavalet - Estampes et Affiches", description: "파리 역사를 담은 판화 및 포스터 컬렉션 1,266점.", startDate: "Permanent", endDate: "Permanent", collectionFile: "carnavalet-prints.json" }
+      { id: "carnavalet-the-collection", name: "The Collection", title: "Carnavalet - La Collection", description: "파리 역사를 담은 회화 및 판화 컬렉션 1,747점. 필수 작품 55점 포함.", startDate: "Permanent", endDate: "Permanent", collectionFile: "carnavalet-paintings.json" }
     ],
     temporaryExhibitions: [],
     pastExhibitions: [],
@@ -1638,11 +2496,9 @@ export const exhibitions = [
     latitude: 48.8551,
     longitude: 2.3120,
     description: "프랑스 군사 역사 박물관. 앵발리드(Hôtel des Invalides) 내에 위치하며, 고대부터 현대까지의 무기, 갑옷, 회화, 사진, 드로잉 등 50만 점 이상의 소장품을 보유.",
-    representativeImage: "https://www.musee-armee.fr/fileadmin/_processed_/2/d/csm_hotel_invalides_a4b9eae5e7.jpg",
+    representativeImage: "images/musee-armee-logo.svg",
     permanentExhibitions: [
-      { id: "musee-armee-peinture", name: "Peinture", title: "회화 컬렉션", description: "역사적 전투와 군사 인물을 묘사한 회화 77점.", startDate: "Permanent", endDate: "Permanent", collectionFile: "musee-armee-peinture.json" },
-      { id: "musee-armee-photographie", name: "Photographie", title: "사진 컬렉션", description: "전쟁과 군사 역사를 기록한 역사적 사진 332점.", startDate: "Permanent", endDate: "Permanent", collectionFile: "musee-armee-photographie.json" },
-      { id: "musee-armee-dessin", name: "Dessin", title: "드로잉 컬렉션", description: "군사 주제의 드로잉과 스케치 1,068점.", startDate: "Permanent", endDate: "Permanent", collectionFile: "musee-armee-dessin.json" }
+      { id: "musee-armee-collection", name: "The Collection", title: "Musée de l'Armée Collection", description: "회화, 사진, 드로잉 등 1,476점의 군사 역사 소장품.", startDate: "Permanent", endDate: "Permanent", collectionFile: "musee-armee-collection.json" }
     ],
     temporaryExhibitions: [],
     pastExhibitions: [],
@@ -1657,7 +2513,7 @@ export const exhibitions = [
     latitude: 48.8049,
     longitude: 2.1204,
     description: "프랑스 절대왕정의 상징인 베르사유 궁전. 17세기 루이 14세가 건설한 화려한 궁전으로, 바로크와 고전주의 양식의 회화, 조각, 장식 예술품을 소장.",
-    representativeImage: "https://images.grandpalaisrmn.fr/thumb.php/02456789.jpg",
+    representativeImage: "images/versailles-logo.svg",
     permanentExhibitions: [
       { id: "versailles-collection", name: "Paintings & Drawings", title: "베르사유 회화 및 드로잉 컬렉션", description: "루이 14세부터 나폴레옹 시대까지의 왕실 회화 및 드로잉 컬렉션.", startDate: "Permanent", endDate: "Permanent", collectionFile: "versailles-collection.json" }
     ],
@@ -1674,7 +2530,7 @@ export const exhibitions = [
     latitude: 48.8649,
     longitude: 2.2933,
     description: "아시아 예술 전문 국립 박물관. 중국, 일본, 한국, 인도, 동남아시아 등 아시아 전역의 고대부터 현대까지 예술품 6만여 점을 소장.",
-    representativeImage: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/83/Musee_Guimet_Jardin.jpg/1280px-Musee_Guimet_Jardin.jpg",
+    representativeImage: "images/musee-guimet-logo.svg",
     permanentExhibitions: [
       { id: "guimet-collection", name: "Asian Art Collection", title: "귀메 아시아 예술 컬렉션", description: "중국, 일본, 한국, 인도 등 아시아 전역의 회화 및 드로잉 컬렉션.", startDate: "Permanent", endDate: "Permanent", collectionFile: "musee-guimet-collection.json" }
     ],
@@ -1691,7 +2547,7 @@ export const exhibitions = [
     latitude: 48.8211,
     longitude: 2.4133,
     description: "프랑스 문화부 산하 문화유산 및 사진 미디어테크. 프랑스 국가 사진 아카이브와 문화유산 자료를 보관하는 기관.",
-    representativeImage: "https://www.culture.gouv.fr/var/culture/storage/images/_aliases/reference/6/1/0/9/4899016-1-fre-FR/facade-mpp.jpg",
+    representativeImage: "images/macval-logo.svg",
     permanentExhibitions: [
       { id: "macval-collection", name: "Photography Collection", title: "MPP 사진 컬렉션", description: "프랑스 국가 사진 아카이브 컬렉션.", startDate: "Permanent", endDate: "Permanent", collectionFile: "macval-collection.json" }
     ],
@@ -1708,10 +2564,9 @@ export const exhibitions = [
     latitude: 43.2965,
     longitude: 5.3610,
     description: "유럽과 지중해 문명 박물관. 마르세유의 랜드마크로, 지중해 문화권의 역사와 문명을 전시하는 국립 박물관.",
-    representativeImage: "https://www.mucem.org/sites/default/files/styles/image_full/public/2019-03/mucem-j4-fort-saint-jean.jpg",
+    representativeImage: "images/mucem-logo.svg",
     permanentExhibitions: [
-      { id: "mucem-collection", name: "Full Collection", title: "Mucem - 전체 컬렉션", description: "회화, 판화, 드로잉을 포함한 전체 컬렉션 3,943점.", startDate: "Permanent", endDate: "Permanent", collectionFile: "mucem-collection.json" }
-    ],
+      { id: "mucem-collection", name: "The Collection", title: "Mucem - The Collection", description: "회화, 판화, 드로잉을 포함한 전체 컬렉션 3,943점.", startDate: "Permanent", endDate: "Permanent", collectionFile: "mucem-collection.json" },    ],
     temporaryExhibitions: [],
     pastExhibitions: [],
     exhibitions: []
@@ -1725,10 +2580,8 @@ export const exhibitions = [
     latitude: 43.6114,
     longitude: 3.8801,
     description: "몽펠리에 파브르 미술관. 17세기부터 현대까지의 유럽 회화와 조각 컬렉션을 소장한 프랑스 주요 미술관.",
-    representativeImage: "https://museefabre.montpellier3m.fr/content/download/2185/21185/file/facade-musee-fabre.jpg",
-    permanentExhibitions: [
-      { id: "fabre-collection", name: "Collection", title: "Musée Fabre 컬렉션", description: "17세기부터 현대까지의 유럽 회화 컬렉션 136점.", startDate: "Permanent", endDate: "Permanent", collectionFile: "musee-fabre-collection.json" }
-    ],
+    representativeImage: "images/musee-fabre-logo.svg",
+    permanentExhibitions: [],
     temporaryExhibitions: [],
     pastExhibitions: [],
     exhibitions: []
@@ -1742,7 +2595,7 @@ export const exhibitions = [
     latitude: 43.7102,
     longitude: 7.2620,
     description: "니스의 마르크 샤갈 국립미술관. 샤갈의 성경 연작을 중심으로 한 세계 최대 샤갈 컬렉션을 소장.",
-    representativeImage: "https://musees-nationaux-alpesmaritimes.fr/sites/default/files/styles/slideshow_full/public/2019-04/musee-chagall-facade.jpg",
+    representativeImage: "images/musee-chagall-logo.svg",
     permanentExhibitions: [
       { id: "chagall-collection", name: "Collection", title: "Musée Chagall 컬렉션", description: "마르크 샤갈의 회화, 드로잉, 판화 컬렉션 3,302점.", startDate: "Permanent", endDate: "Permanent", collectionFile: "musee-chagall-collection.json" }
     ],
@@ -1759,7 +2612,7 @@ export const exhibitions = [
     latitude: 50.6920,
     longitude: 3.1722,
     description: "루베의 옛 수영장을 개조한 독특한 미술관. 19-20세기 프랑스 회화, 조각, 장식미술 컬렉션.",
-    representativeImage: "https://www.roubaix-lapiscine.com/fileadmin/_processed_/f/b/csm_facade_lapiscine_59c9b8e6c7.jpg",
+    representativeImage: "images/la-piscine-logo.svg",
     permanentExhibitions: [
       { id: "piscine-collection", name: "Collection", title: "La Piscine 회화 컬렉션", description: "19-20세기 프랑스 회화 컬렉션.", startDate: "Permanent", endDate: "Permanent", collectionFile: "la-piscine-collection.json" }
     ],
@@ -1776,7 +2629,7 @@ export const exhibitions = [
     latitude: 51.5173,
     longitude: -0.1528,
     description: "One of the finest collections of fine and decorative arts in the world, displayed at Hertford House. Highlights include paintings by Titian, Velázquez, Rubens, Hals, and Fragonard.",
-    representativeImage: "https://www.wallacecollection.org/wp-content/uploads/2019/03/Wallace-Collection-Exterior-1024x683.jpg",
+    representativeImage: "images/wallace-collection-logo.svg",
     permanentExhibitions: [
       { id: "wallace-permanent", name: "Permanent Collection", title: "Wallace Collection Permanent Display", description: "Paintings, sculpture, arms and armour, and decorative arts displayed in period room settings.", startDate: "Permanent", endDate: "Permanent", collectionFile: "wallace-collection.json" }
     ],
@@ -1793,7 +2646,7 @@ export const exhibitions = [
     latitude: 51.5175,
     longitude: -0.1177,
     description: "One of the world's most extraordinary house museums, preserved exactly as architect Sir John Soane left it in 1837, featuring paintings by Hogarth, Turner, and Canaletto.",
-    representativeImage: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/John_Soane%27s_Museum%2C_Lincoln%27s_Inn_Fields.jpg/1280px-John_Soane%27s_Museum%2C_Lincoln%27s_Inn_Fields.jpg",
+    representativeImage: "images/soane-museum-logo.svg",
     permanentExhibitions: [
       { id: "soane-paintings", name: "Paintings Collection", title: "Paintings and Framed Works", description: "Over 400 paintings, watercolours and prints including Hogarth's A Rake's Progress and The Election series.", startDate: "Permanent", endDate: "Permanent", collectionFile: "soane-paintings.json" }
     ],
@@ -1828,10 +2681,9 @@ export const exhibitions = [
     latitude: 51.4816,
     longitude: -3.1791,
     description: "The national museum of Wales featuring world-class art collections including Impressionist works, Welsh art, and extensive industrial heritage collections.",
-    representativeImage: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0c/National_Museum_Cardiff_2018.jpg/1280px-National_Museum_Cardiff_2018.jpg",
+    representativeImage: "images/museum-wales-logo.svg",
     permanentExhibitions: [
-      { id: "wales-art", name: "Art Collection", title: "National Museum Wales Art Collection", description: "Paintings, sculptures, and works on paper from Wales and around the world, including an outstanding collection of Impressionist works.", startDate: "Permanent", endDate: "Permanent", collectionFile: "museum-wales-art.json" },
-      { id: "wales-industry", name: "Industry Collection", title: "National Museum Wales Industry Collection", description: "Objects documenting Wales's rich industrial heritage, from coal mining to manufacturing.", startDate: "Permanent", endDate: "Permanent", collectionFile: "museum-wales-industry.json" }
+      { id: "museum-wales-paintings", name: "The collection", title: "National Museum Wales – Paintings, Drawings & Watercolours", description: "Selected paintings, drawings, and watercolours from the National Museum Wales art collection, covering Welsh and international artists.", startDate: "Permanent", endDate: "Permanent", collectionFile: "museum-wales-paintings.json" }
     ],
     temporaryExhibitions: [],
     pastExhibitions: [],
@@ -1865,7 +2717,7 @@ export const exhibitions = [
     description: "Renaissance palace housing multiple museums including the Palatine Gallery with works by Raphael, Titian, Rubens, and the Gallery of Modern Art.",
     representativeImage: "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b9/Palazzo_Pitti_Facade.jpg/1280px-Palazzo_Pitti_Facade.jpg",
     permanentExhibitions: [
-      { id: "pitti-collection", name: "Pitti Collection", title: "Pitti Palace Collection", description: "428 artworks from the Palatine Gallery, Gallery of Modern Art, and Royal Apartments including works by Raphael, Titian, and Rubens.", startDate: "Permanent", endDate: "Permanent", collectionFile: "pitti-palace-collection.json" }
+      { id: "pitti-palace-collection", name: "Pitti Collection", title: "Pitti Palace Collection", description: "428 artworks from the Palatine Gallery, Gallery of Modern Art, and Royal Apartments including works by Raphael, Titian, and Rubens.", startDate: "Permanent", endDate: "Permanent", collectionFile: "pitti-palace-collection.json" }
     ],
     temporaryExhibitions: [],
     pastExhibitions: [],
@@ -1883,23 +2735,6 @@ export const exhibitions = [
     representativeImage: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/63/%27David%27_by_Michelangelo_Fir_JBU002.jpg/800px-%27David%27_by_Michelangelo_Fir_JBU002.jpg",
     permanentExhibitions: [
       { id: "accademia-collection", name: "Florence Collection", title: "Galleria dell'Accademia di Firenze", description: "Michelangelo's David, paintings, sculptures, and the Museum of Musical Instruments.", startDate: "Permanent", endDate: "Permanent", collectionFile: "accademia-collection.json" }
-    ],
-    temporaryExhibitions: [],
-    pastExhibitions: [],
-    exhibitions: []
-  },
-  // Palazzo Ducale - Venice
-  {
-    id: "palazzo-ducale",
-    name: "Palazzo Ducale",
-    city: "Venice",
-    country: "Italy",
-    latitude: 45.4337,
-    longitude: 12.3401,
-    description: "The Doge's Palace is a palace built in Venetian Gothic style and one of the main landmarks of Venice. It housed the Doge and was the seat of Venetian government.",
-    representativeImage: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/Wenecja_-_Palazzo_Ducale.jpg/1280px-Wenecja_-_Palazzo_Ducale.jpg",
-    permanentExhibitions: [
-      { id: "palazzo-ducale-collection", name: "Palazzo Ducale Collection", title: "Doge's Palace Collection", description: "Art and artifacts from the seat of Venetian power, including paintings, sculptures, and decorative arts.", startDate: "Permanent", endDate: "Permanent", collectionFile: "palazzo-ducale-collection.json" }
     ],
     temporaryExhibitions: [],
     pastExhibitions: [],
@@ -1934,7 +2769,7 @@ export const exhibitions = [
     description: "The largest collection of Venetian paintings in the world, housed in the Santa Maria della Carità complex with 37 halls of masterpieces from the 14th to 18th century.",
     representativeImage: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Accademia_%28Venice%29.jpg/1280px-Accademia_%28Venice%29.jpg",
     permanentExhibitions: [
-      { id: "accademia-venice-collection", name: "Venice Collection", title: "Gallerie dell'Accademia di Venezia", description: "Masterpieces by Giorgione, Bellini, Titian, Veronese, Tintoretto, Carpaccio, and drawings by Leonardo da Vinci.", startDate: "Permanent", endDate: "Permanent", collectionFile: "gallerie-accademia-venice-collection.json" }
+      { id: "gallerie-accademia-venice-collection", name: "Venice Collection", title: "Gallerie dell'Accademia di Venezia", description: "Masterpieces by Giorgione, Bellini, Titian, Veronese, Tintoretto, Carpaccio, and drawings by Leonardo da Vinci.", startDate: "Permanent", endDate: "Permanent", collectionFile: "gallerie-accademia-venice-collection.json" }
     ],
     temporaryExhibitions: [],
     pastExhibitions: [],
@@ -1951,7 +2786,7 @@ export const exhibitions = [
     description: "One of the most important museums in Italy for European and American art of the first half of the 20th century, housed in the Palazzo Venier dei Leoni on the Grand Canal.",
     representativeImage: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/Peggy_Guggenheim_Collection%2C_Venice.jpg/1280px-Peggy_Guggenheim_Collection%2C_Venice.jpg",
     permanentExhibitions: [
-      { id: "guggenheim-collection", name: "Peggy Guggenheim Collection", title: "Modern Art Collection", description: "613 works of modern art including pieces by Picasso, Pollock, Dalí, Ernst, and Magritte.", startDate: "Permanent", endDate: "Permanent", collectionFile: "guggenheim-venice-collection.json" }
+      { id: "guggenheim-venice-collection", name: "Peggy Guggenheim Collection", title: "Modern Art Collection", description: "613 works of modern art including pieces by Picasso, Pollock, Dalí, Ernst, and Magritte.", startDate: "Permanent", endDate: "Permanent", collectionFile: "guggenheim-venice-collection.json" }
     ],
     temporaryExhibitions: [],
     pastExhibitions: [],
@@ -2085,7 +2920,7 @@ export const exhibitions = [
     description: "Italy's first museum dedicated to contemporary art, housed in a Baroque castle designed by Juvarra. Features works by Arte Povera masters, international contemporary artists, and site-specific installations.",
     representativeImage: "https://www.castellodirivoli.org/wp-content/uploads/2017/02/Senza-nome-1.jpg",
     permanentExhibitions: [
-      { id: "rivoli-collection", name: "Contemporary Art Collection", title: "Castello di Rivoli Collection", description: "900+ contemporary artworks including video art, installations, paintings, and sculptures by international artists.", startDate: "Permanent", endDate: "Permanent", collectionFile: "castello-di-rivoli-collection.json" }
+      { id: "castello-di-rivoli-collection", name: "Contemporary Art Collection", title: "Castello di Rivoli Collection", description: "900+ contemporary artworks including video art, installations, paintings, and sculptures by international artists.", startDate: "Permanent", endDate: "Permanent", collectionFile: "castello-di-rivoli-collection.json" }
     ],
     temporaryExhibitions: [],
     pastExhibitions: [],
@@ -2120,7 +2955,7 @@ export const exhibitions = [
     description: "Germany's largest cultural project, housed in the reconstructed Berlin Palace. Features the Ethnological Museum and Museum of Asian Art collections with over 20,000 objects from around the world.",
     representativeImage: "https://recherche.smb.museum/images/5699144_1400x1400.jpg",
     permanentExhibitions: [
-      { id: "humboldt-collection", name: "World Cultures Collection", title: "Humboldt Forum Collection", description: "Ethnological and Asian art collections from the Staatliche Museen zu Berlin.", startDate: "Permanent", endDate: "Permanent", collectionFile: "smb-humboldt-forum-collection.json" }
+      { id: "smb-humboldt-forum-collection", name: "World Cultures Collection", title: "Humboldt Forum Collection", description: "Ethnological and Asian art collections from the Staatliche Museen zu Berlin.", startDate: "Permanent", endDate: "Permanent", collectionFile: "smb-humboldt-forum-collection.json" }
     ],
     temporaryExhibitions: [],
     pastExhibitions: [],
@@ -2137,7 +2972,7 @@ export const exhibitions = [
     description: "One of the world's most important museums of Classical antiquity, featuring Greek, Etruscan, and Roman art and artifacts from the Antikensammlung collection.",
     representativeImage: "https://recherche.smb.museum/images/2991205_1400x1400.jpg",
     permanentExhibitions: [
-      { id: "altes-collection", name: "Classical Antiquity Collection", title: "Altes Museum Collection", description: "Greek, Roman, and Etruscan masterpieces including sculptures, vases, jewelry, and architectural elements.", startDate: "Permanent", endDate: "Permanent", collectionFile: "smb-altes-museum-collection.json" }
+      { id: "smb-altes-museum-collection", name: "Classical Antiquity Collection", title: "Altes Museum Collection", description: "Greek, Roman, and Etruscan masterpieces including sculptures, vases, jewelry, and architectural elements.", startDate: "Permanent", endDate: "Permanent", collectionFile: "smb-altes-museum-collection.json" }
     ],
     temporaryExhibitions: [],
     pastExhibitions: [],
@@ -2154,7 +2989,7 @@ export const exhibitions = [
     description: "Home to the Egyptian Museum with the famous bust of Nefertiti, the Museum of Prehistory and Early History, and part of the Collection of Classical Antiquities.",
     representativeImage: "https://recherche.smb.museum/images/6000074_1400x1400.jpg",
     permanentExhibitions: [
-      { id: "neues-collection", name: "Egyptian & Prehistoric Collection", title: "Neues Museum Collection", description: "Ancient Egyptian artifacts including the bust of Nefertiti, plus prehistoric and early history objects.", startDate: "Permanent", endDate: "Permanent", collectionFile: "smb-neues-museum-collection.json" }
+      { id: "smb-neues-museum-collection", name: "Egyptian & Prehistoric Collection", title: "Neues Museum Collection", description: "Ancient Egyptian artifacts including the bust of Nefertiti, plus prehistoric and early history objects.", startDate: "Permanent", endDate: "Permanent", collectionFile: "smb-neues-museum-collection.json" }
     ],
     temporaryExhibitions: [],
     pastExhibitions: [],
@@ -2171,7 +3006,7 @@ export const exhibitions = [
     description: "One of the world's leading collections of European paintings from the 13th to 18th centuries, featuring masterpieces by Rembrandt, Vermeer, Dürer, Raphael, Botticelli, and Caravaggio.",
     representativeImage: "https://recherche.smb.museum/images/4229858_2500x2500.jpg",
     permanentExhibitions: [
-      { id: "gemaeldegalerie-collection", name: "European Old Masters", title: "Gemäldegalerie Collection", description: "782 masterpieces of European painting spanning 500 years, from medieval altarpieces to Baroque masterworks.", startDate: "Permanent", endDate: "Permanent", collectionFile: "smb-gemaeldegalerie-collection.json" }
+      { id: "smb-gemaeldegalerie-collection", name: "European Old Masters", title: "Gemäldegalerie Collection", description: "782 masterpieces of European painting spanning 500 years, from medieval altarpieces to Baroque masterworks.", startDate: "Permanent", endDate: "Permanent", collectionFile: "smb-gemaeldegalerie-collection.json" }
     ],
     temporaryExhibitions: [],
     pastExhibitions: [],
@@ -2188,7 +3023,7 @@ export const exhibitions = [
     description: "A gallery of 19th-century paintings and sculptures on Berlin's Museum Island, featuring German Romanticism, French Impressionism, and early Modernism.",
     representativeImage: "https://recherche.smb.museum/images/5669755_2500x2500.jpg",
     permanentExhibitions: [
-      { id: "alte-nationalgalerie-collection", name: "19th Century Art", title: "Alte Nationalgalerie Collection", description: "2,258 paintings and sculptures from Romanticism to early Modernism, including works by Caspar David Friedrich, Monet, Renoir, and Menzel.", startDate: "Permanent", endDate: "Permanent", collectionFile: "smb-alte-nationalgalerie-collection.json" }
+      { id: "smb-alte-nationalgalerie-collection", name: "19th Century Art", title: "Alte Nationalgalerie Collection", description: "2,258 paintings and sculptures from Romanticism to early Modernism, including works by Caspar David Friedrich, Monet, Renoir, and Menzel.", startDate: "Permanent", endDate: "Permanent", collectionFile: "smb-alte-nationalgalerie-collection.json" }
     ],
     temporaryExhibitions: [],
     pastExhibitions: [],
@@ -2205,7 +3040,7 @@ export const exhibitions = [
     description: "Mies van der Rohe's iconic modernist building housing 20th-century art, featuring Expressionism, Cubism, Bauhaus, and contemporary works.",
     representativeImage: "https://recherche.smb.museum/images/5640125_2500x2500.jpg",
     permanentExhibitions: [
-      { id: "neue-nationalgalerie-collection", name: "20th Century Art", title: "Neue Nationalgalerie Collection", description: "2,275 works of modern and contemporary art including masterpieces by Kirchner, Klee, Picasso, Dalí, and Warhol.", startDate: "Permanent", endDate: "Permanent", collectionFile: "smb-neue-nationalgalerie-collection.json" }
+      { id: "smb-neue-nationalgalerie-collection", name: "20th Century Art", title: "Neue Nationalgalerie Collection", description: "2,275 works of modern and contemporary art including masterpieces by Kirchner, Klee, Picasso, Dalí, and Warhol.", startDate: "Permanent", endDate: "Permanent", collectionFile: "smb-neue-nationalgalerie-collection.json" }
     ],
     temporaryExhibitions: [],
     pastExhibitions: [],
@@ -2222,7 +3057,7 @@ export const exhibitions = [
     description: "A stunning neo-Baroque museum on Museum Island housing Byzantine art, sculptures from the Middle Ages to the 18th century, and the Numismatic Collection.",
     representativeImage: "https://recherche.smb.museum/images/2539176_1400x1400.jpg",
     permanentExhibitions: [
-      { id: "bode-collection", name: "Sculptures & Byzantine Art", title: "Bode-Museum Collection", description: "2,263 works including Byzantine art, medieval sculptures, and Renaissance masterpieces by Donatello, Riemenschneider, and Giacometti.", startDate: "Permanent", endDate: "Permanent", collectionFile: "smb-bode-museum-collection.json" }
+      { id: "smb-bode-museum-collection", name: "Sculptures & Byzantine Art", title: "Bode-Museum Collection", description: "2,263 works including Byzantine art, medieval sculptures, and Renaissance masterpieces by Donatello, Riemenschneider, and Giacometti.", startDate: "Permanent", endDate: "Permanent", collectionFile: "smb-bode-museum-collection.json" }
     ],
     temporaryExhibitions: [],
     pastExhibitions: [],
@@ -2239,7 +3074,7 @@ export const exhibitions = [
     description: "One of Germany's most prestigious art museums with 700 years of European art history. Features Old Masters, modern art, and contemporary works including paintings, sculptures, drawings, and photographs.",
     representativeImage: "https://sammlung.staedelmuseum.de/images/1839/alexej-von-jawlensky-abstract-head-symphony-pink-1855--thumb-xl.jpg",
     permanentExhibitions: [
-      { id: "staedel-collection", name: "Städel Collection", title: "Städel Museum Collection", description: "1,712 masterpieces spanning 700 years: Old Masters (1300-1800), Modern Art (1800-1945), Contemporary Art (1945-present), plus drawings, prints, and photographs.", startDate: "Permanent", endDate: "Permanent", collectionFile: "staedel-museum-collection.json" }
+      { id: "staedel-museum-collection", name: "Städel Collection", title: "Städel Museum Collection", description: "1,712 masterpieces spanning 700 years: Old Masters (1300-1800), Modern Art (1800-1945), Contemporary Art (1945-present), plus drawings, prints, and photographs.", startDate: "Permanent", endDate: "Permanent", collectionFile: "staedel-museum-collection.json" }
     ],
     temporaryExhibitions: [],
     pastExhibitions: [],
@@ -2256,7 +3091,7 @@ export const exhibitions = [
     description: "World's largest collection of German Expressionist art from Die Brücke movement. Features works by Ernst Ludwig Kirchner, Erich Heckel, Karl Schmidt-Rottluff, Max Pechstein, and Emil Nolde.",
     representativeImage: "https://iiif.deutsche-digitale-bibliothek.de/image/2/8e3dd712-d189-4bd3-b67c-4af6ca4fe7eb/full/!800,800/0/default.jpg",
     permanentExhibitions: [
-      { id: "bruecke-collection", name: "Brücke Collection", title: "Die Brücke Collection", description: "1,152 works of German Expressionism: paintings (Gemälde), drawings (Zeichnung), prints (Druckgrafik), watercolors (Aquarell), and pastels by the founding artists of Die Brücke movement.", startDate: "Permanent", endDate: "Permanent", collectionFile: "bruecke-museum-collection.json" }
+      { id: "bruecke-museum-collection", name: "Brücke Collection", title: "Die Brücke Collection", description: "1,152 works of German Expressionism: paintings (Gemälde), drawings (Zeichnung), prints (Druckgrafik), watercolors (Aquarell), and pastels by the founding artists of Die Brücke movement.", startDate: "Permanent", endDate: "Permanent", collectionFile: "bruecke-museum-collection.json" }
     ],
     temporaryExhibitions: [],
     pastExhibitions: [],
@@ -2377,11 +3212,15 @@ export const exhibitions = [
     description: "The national museum of the Netherlands, housing an extensive collection of Dutch art and history from the Middle Ages to the present day, including masterpieces by Rembrandt, Vermeer, and Van Gogh.",
     representativeImage: "https://www.rijksmuseum.nl/images/rijksmuseum-building.jpg",
     permanentExhibitions: [
-      { id: "rijksmuseum-paintings", name: "Paintings Collection", title: "Paintings Collection", description: "Collection of paintings from the Rijksmuseum, including Dutch Golden Age masterpieces and works from the 15th to 20th centuries.", startDate: "Permanent", endDate: "Permanent", collectionFile: "rijksmuseum-paintings-collection.json" },
+      { id: "rijksmuseum-paintings", name: "The collection", title: "The collection", description: "Collection of artworks from the Rijksmuseum, including Dutch Golden Age masterpieces and works currently on display.", startDate: "Permanent", endDate: "Permanent", collectionFile: "rijksmuseum-paintings-collection.json" },
       { id: "rijksmuseum-photography", name: "Photography Collection", title: "Photography Collection", description: "Collection of photographs from the Rijksmuseum, featuring works from the 19th century to the present day.", startDate: "Permanent", endDate: "Permanent", collectionFile: "rijksmuseum-photography-collection.json" },
       { id: "rijksmuseum-drawings", name: "Drawings Collection", title: "Drawings Collection", description: "Collection of drawings from the Rijksmuseum, featuring works from various periods.", startDate: "Permanent", endDate: "Permanent", collectionFile: "rijksmuseum-drawings-collection.json" },
       { id: "rijksmuseum-prints", name: "Book Illustrations", title: "Book Illustrations", description: "Collection of book illustrations from the Rijksmuseum.", startDate: "Permanent", endDate: "Permanent", collectionFile: "rijksmuseum-prints-collection.json" },
-      { id: "rijksmuseum-prints2", name: "Prints Collection", title: "Prints Collection", description: "Collection of prints from the Rijksmuseum.", startDate: "Permanent", endDate: "Permanent", collectionFile: "rijksmuseum-prints2-collection.json" }
+      { id: "rijksmuseum-prints2-collection", name: "Prints Collection", title: "Prints Collection", description: "Collection of prints from the Rijksmuseum.", startDate: "Permanent", endDate: "Permanent", collectionFile: "rijksmuseum-prints2-collection.json" },
+      { id: "rijksmuseum-cartoon", name: "Cartoons & Caricatures", title: "Cartoons & Caricatures", description: "Collection of cartoons and caricatures from the Rijksmuseum archives.", startDate: "Permanent", endDate: "Permanent", collectionFile: "rijksmuseum-cartoon-collection.json" },
+      { id: "rijksmuseum-design", name: "Design Collection", title: "Design Collection", description: "Collection of design objects from the Rijksmuseum, spanning industrial and applied arts.", startDate: "Permanent", endDate: "Permanent", collectionFile: "rijksmuseum-design-collection.json" },
+      { id: "rijksmuseum-poster", name: "Posters Collection", title: "Posters Collection", description: "Collection of posters from the Rijksmuseum archives, featuring graphic design across the centuries.", startDate: "Permanent", endDate: "Permanent", collectionFile: "rijksmuseum-poster-collection.json" },
+      { id: "rijksmuseum-docphotos", name: "Documentary Photographs", title: "Documentary Photographs", description: "Collection of documentary photographs from the Rijksmuseum archives.", startDate: "Permanent", endDate: "Permanent", collectionFile: "rijksmuseum-docphotos-collection.json" }
     ],
     temporaryExhibitions: [],
     pastExhibitions: [],
@@ -2449,9 +3288,7 @@ export const exhibitions = [
     description: "One of the largest Van Gogh collections in the world, housed in a stunning museum within De Hoge Veluwe National Park. Features over 90 Van Gogh paintings and 180 drawings, plus works by Picasso, Mondrian, and Seurat.",
     representativeImage: "https://krollermuller.nl/images/museum-exterior.jpg",
     permanentExhibitions: [
-      { id: "kroller-muller-paintings", name: "Kröller-Müller Paintings", title: "Kröller-Müller Paintings", description: "World-renowned collection of paintings featuring masterpieces by Van Gogh, Mondrian, Seurat, Picasso, and other modern masters, housed in a modernist building designed by Henry van de Velde.", startDate: "Permanent", endDate: "Permanent", collectionFile: "kroller-muller-paintings.json" },
-      { id: "kroller-muller-film-video", name: "Kröller-Müller Film and Video", title: "Kröller-Müller Film and Video", description: "Collection of film and video works from the museum's contemporary art holdings.", startDate: "Permanent", endDate: "Permanent", collectionFile: "kroller-muller-film-video.json" },
-      { id: "kroller-muller-photography", name: "Kröller-Müller Photography", title: "Kröller-Müller Photography", description: "Photography collection featuring works from the museum's modern and contemporary holdings.", startDate: "Permanent", endDate: "Permanent", collectionFile: "kroller-muller-photography.json" }
+      { id: "kroller-muller-collection", name: "Kröller-Müller Collection", title: "Kröller-Müller Permanent Collection", description: "The complete permanent collection of the Kröller-Müller Museum — one of the largest Van Gogh collections in the world, alongside paintings, drawings, and sculptures by Mondrian, Seurat, Picasso, Redon, and other modern masters, plus an extensive photography collection and pioneering film and video art works.", startDate: "Permanent", endDate: "Permanent", collectionFile: "kroller-muller-paintings.json" }
     ],
     temporaryExhibitions: [],
     pastExhibitions: [],
@@ -2461,9 +3298,12 @@ export const exhibitions = [
   {
     id: "mmca-seoul",
     slug: "mmca-seoul",
-    name: "National Museum of Modern and Contemporary Art, Seoul (MMCA)",
+    name: "국립현대미술관",
+    name_en: "National Museum of Modern and Contemporary Art",
     location: "서울특별시 종로구 삼청로 30",
-    description: "A national museum leading contemporary art in Korea and abroad, with diverse exhibitions, education, interdisciplinary arts, and film/video programs. 112 artworks from the permanent collection.",
+    location_en: "30 Samcheong-ro, Jongno-gu, Seoul",
+    description: "한국과 세계의 현대미술을 선도하는 국립미술관. 다양한 전시, 교육, 융복합 예술, 영화/영상 프로그램 운영. 소장작품 112점.",
+    description_en: "A national museum leading contemporary art in Korea and abroad, with diverse exhibitions, education, interdisciplinary arts, and film/video programs. 112 artworks from the permanent collection.",
     latitude: 37.579617,
     longitude: 126.981805,
     country: "South Korea",
@@ -2471,7 +3311,7 @@ export const exhibitions = [
     representativeImage: "/images/mmca-seoul.jpg",
     floorPlan: "",
     permanentExhibitions: [
-      { id: "mmca-collection", name: "MMCA 소장작품", title: "MMCA Collection", description: "국립현대미술관 소장작품 컬렉션 (112점)", startDate: "Permanent", endDate: "Permanent", collectionFile: "mmca-collection.json" }
+      { id: "mmca-collection", name: "국립현대미술관 소장작품", name_en: "MMCA Collection", title: "국립현대미술관 소장작품", title_en: "MMCA Collection", description: "국립현대미술관 소장작품 컬렉션 (112점)", description_en: "MMCA permanent collection (112 items)", startDate: "Permanent", endDate: "Permanent", collectionFile: "mmca-collection.json" }
     ],
     temporaryExhibitions: [],
     pastExhibitions: [],
@@ -2494,53 +3334,99 @@ export const exhibitions = [
     representativeImage: "/images/national-museum-korea.jpg",
     floorPlan: "",
     permanentExhibitions: [
-      { id: "nmk-collection", name: "국립중앙박물관 소장품", name_en: "National Museum of Korea Collection", title: "국립중앙박물관 소장품", title_en: "National Museum of Korea Collection", description: "국립중앙박물관 소장 유물 컬렉션 (205,419점)", description_en: "National Museum of Korea artifact collection (205,419 items)", startDate: "Permanent", endDate: "Permanent", collectionFile: "national-museum-korea.json" }
+      { id: "nmk-collection", name: "국립중앙박물관 회화 컬렉션", name_en: "National Museum of Korea Paintings", title: "국립중앙박물관 회화 컬렉션", title_en: "National Museum of Korea Paintings Collection", description: "국립중앙박물관 소장 회화 컬렉션 (4,309점)", description_en: "National Museum of Korea paintings collection (4,309 items)", startDate: "Permanent", endDate: "Permanent", collectionFile: "national-museum-korea.json" }
     ],
     temporaryExhibitions: [],
     pastExhibitions: [],
     rooms: {}
   },
-  // South Korea - Gyeongju National Museum
+  // South Korea - Jeonju National Museum
   {
-    id: "gyeongju-national-museum",
-    slug: "gyeongju-national-museum",
-    name: "국립경주박물관",
-    name_en: "Gyeongju National Museum",
-    location: "경상북도 경주시 일정로 186",
-    location_en: "186 Iljeongseo-ro, Gyeongju-si, Gyeongsangbuk-do",
-    description: "신라 천년의 역사와 문화를 간직한 박물관. 경주 지역에서 출토된 유물 203,909점 소장.",
-    description_en: "Museum preserving a thousand years of Silla history and culture. Collection of 203,909 artifacts excavated from the Gyeongju region.",
-    latitude: 35.8316,
-    longitude: 129.2192,
+    id: "jeonju-national-museum",
+    slug: "jeonju-national-museum",
+    name: "국립전주박물관",
+    name_en: "Jeonju National Museum",
+    location: "전라북도 전주시 완산구 쑥고개로 249",
+    location_en: "249 Ssukgogae-ro, Wansan-gu, Jeonju-si, Jeollabuk-do",
+    description: "전라북도 지역의 역사와 문화를 간직한 국립박물관. 전북 지역에서 출토된 유물과 회화 컬렉션 소장.",
+    description_en: "National museum preserving the history and culture of the Jeonbuk region with a collection of artifacts and paintings.",
+    latitude: 35.8219,
+    longitude: 127.1480,
     country: "South Korea",
-    region: "Gyeongju",
-    representativeImage: "/images/gyeongju-museum.jpg",
+    region: "Jeonju",
+    representativeImage: "/images/jeonju-museum.jpg",
     floorPlan: "",
     permanentExhibitions: [
-      { id: "gyeongju-museum", name: "국립경주박물관 소장품", name_en: "Gyeongju National Museum Collection", title: "국립경주박물관 소장품", title_en: "Gyeongju National Museum Collection", description: "국립경주박물관 소장 유물 컬렉션 (203,909점)", description_en: "Gyeongju National Museum artifact collection (203,909 items)", startDate: "Permanent", endDate: "Permanent", collectionFile: "gyeongju-museum.json" }
+      { id: "jeonju-collection", name: "국립전주박물관 회화 컬렉션", name_en: "Jeonju National Museum Paintings", title: "국립전주박물관 회화 컬렉션", title_en: "Jeonju National Museum Paintings Collection", description: "국립전주박물관 소장 회화 컬렉션 (382점)", description_en: "Jeonju National Museum paintings collection (382 items)", startDate: "Permanent", endDate: "Permanent", collectionFile: "jeonju-museum.json" }
     ],
     temporaryExhibitions: [],
     pastExhibitions: [],
     rooms: {}
   },
-  // South Korea - Buyeo National Museum
+  // South Korea - Gwangju National Museum
   {
-    id: "buyeo-national-museum",
-    slug: "buyeo-national-museum",
-    name: "국립부여박물관",
-    name_en: "Buyeo National Museum",
-    location: "충청남도 부여군 부여읍 금성로 5",
-    location_en: "5 Geumseong-ro, Buyeo-eup, Buyeo-gun, Chungcheongnam-do",
-    description: "백제 문화의 정수를 간직한 박물관. 백제 금동대향로를 비롯한 68,000여 점의 유물 소장.",
-    description_en: "Museum preserving the essence of Baekje culture. Housing over 68,000 artifacts including the Gilt-bronze Incense Burner of Baekje.",
-    latitude: 36.2797,
-    longitude: 126.9142,
+    id: "gwangju-national-museum",
+    slug: "gwangju-national-museum",
+    name: "국립광주박물관",
+    name_en: "Gwangju National Museum",
+    location: "광주광역시 북구 하서로 110",
+    location_en: "110 Haseo-ro, Buk-gu, Gwangju",
+    description: "전라남도와 광주 지역의 역사와 문화를 대표하는 국립박물관. 다양한 시대의 유물과 회화 컬렉션 소장.",
+    description_en: "National museum representing the history and culture of the Gwangju and Jeonnam region with diverse artifact and painting collections.",
+    latitude: 35.1774,
+    longitude: 126.8947,
     country: "South Korea",
-    region: "Buyeo",
-    representativeImage: "/images/buyeo-museum.jpg",
+    region: "Gwangju",
+    representativeImage: "/images/gwangju-museum.jpg",
     floorPlan: "",
     permanentExhibitions: [
-      { id: "buyeo-museum", name: "국립부여박물관 소장품", name_en: "Buyeo National Museum Collection", title: "국립부여박물관 소장품", title_en: "Buyeo National Museum Collection", description: "국립부여박물관 소장 유물 컬렉션 (68,091점)", description_en: "Buyeo National Museum artifact collection (68,091 items)", startDate: "Permanent", endDate: "Permanent", collectionFile: "buyeo-museum.json" }
+      { id: "gwangju-collection", name: "국립광주박물관 회화 컬렉션", name_en: "Gwangju National Museum Paintings", title: "국립광주박물관 회화 컬렉션", title_en: "Gwangju National Museum Paintings Collection", description: "국립광주박물관 소장 회화 컬렉션 (331점)", description_en: "Gwangju National Museum paintings collection (331 items)", startDate: "Permanent", endDate: "Permanent", collectionFile: "gwangju-museum.json" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    rooms: {}
+  },
+  // South Korea - National Folk Museum of Korea
+  {
+    id: "folk-museum",
+    slug: "folk-museum",
+    name: "국립민속박물관",
+    name_en: "National Folk Museum of Korea",
+    location: "서울특별시 종로구 삼청로 37",
+    location_en: "37 Samcheong-ro, Jongno-gu, Seoul",
+    description: "한국의 전통 생활문화를 보존하고 전시하는 국립박물관. 민속자료와 회화 컬렉션 소장.",
+    description_en: "National museum preserving and exhibiting traditional Korean folk culture with a collection of folk materials and paintings.",
+    latitude: 37.5817,
+    longitude: 126.9787,
+    country: "South Korea",
+    region: "Seoul",
+    representativeImage: "/images/folk-museum.jpg",
+    floorPlan: "",
+    permanentExhibitions: [
+      { id: "folk-collection", name: "국립민속박물관 회화 컬렉션", name_en: "National Folk Museum Paintings", title: "국립민속박물관 회화 컬렉션", title_en: "National Folk Museum Paintings Collection", description: "국립민속박물관 소장 회화 컬렉션 (927점)", description_en: "National Folk Museum paintings collection (927 items)", startDate: "Permanent", endDate: "Permanent", collectionFile: "folk-museum.json" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    rooms: {}
+  },
+  // South Korea - Busan Museum
+  {
+    id: "busan-museum",
+    slug: "busan-museum",
+    name: "부산광역시립박물관",
+    name_en: "Busan Museum",
+    location: "부산광역시 남구 유엔평화로 63",
+    location_en: "63 UN Pyeonghwa-ro, Nam-gu, Busan",
+    description: "부산의 역사와 문화를 간직한 시립박물관. 부산 지역의 유물과 회화 컬렉션 소장.",
+    description_en: "Municipal museum preserving the history and culture of Busan with a collection of artifacts and paintings.",
+    latitude: 35.1380,
+    longitude: 129.0654,
+    country: "South Korea",
+    region: "Busan",
+    representativeImage: "/images/busan-museum.jpg",
+    floorPlan: "",
+    permanentExhibitions: [
+      { id: "busan-collection", name: "부산박물관 회화 컬렉션", name_en: "Busan Museum Paintings", title: "부산박물관 회화 컬렉션", title_en: "Busan Museum Paintings Collection", description: "부산박물관 소장 회화 컬렉션 (198점)", description_en: "Busan Museum paintings collection (198 items)", startDate: "Permanent", endDate: "Permanent", collectionFile: "busan-museum.json" }
     ],
     temporaryExhibitions: [],
     pastExhibitions: [],
@@ -2661,6 +3547,69 @@ export const exhibitions = [
     rooms: {}
   },
   {
+    id: "huntington-library",
+    name: "Huntington Library",
+    name_en: "The Huntington Library, Art Museum, and Botanical Gardens",
+    location: "San Marino, USA",
+    description: "헌팅턴 도서관, 예술관, 식물원은 헨리 E. 헌팅턴이 설립한 교육 및 연구 기관입니다. 유럽 및 미국 예술 컬렉션과 희귀 서적으로 유명합니다.",
+    description_en: "The Huntington Library, Art Museum, and Botanical Gardens is a collections-based educational and research institution. It is known for its extensive collection of European and American art and rare books.",
+    latitude: 34.1274,
+    longitude: -118.1132,
+    country: "USA",
+    region: "San Marino, California",
+    representativeImage: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1e/Huntington_Art_Gallery_LOGGIA.jpg/1200px-Huntington_Art_Gallery_LOGGIA.jpg",
+    floorPlan: "",
+    permanentExhibitions: [
+      {
+        id: "huntington-collection",
+        name: "Huntington Museum Collection",
+        name_en: "Huntington Museum Collection",
+        title: "Huntington Museum Permanent Collection",
+        title_en: "Huntington Museum Permanent Collection",
+        description: "헌팅턴 예술관의 영구 소장품 컬렉션입니다.",
+        description_en: "Permanent collection of the Huntington Art Museum.",
+        startDate: "Permanent",
+        endDate: "Permanent",
+        collectionFile: "huntington-collection.json"
+      }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    rooms: {}
+  },
+  {
+    id: "famsf-museum",
+    name: "Fine Arts Museums of San Francisco",
+    name_en: "Fine Arts Museums of San Francisco",
+    location: "San Francisco, USA",
+    description: "샌프란시스코 미술관(FAMSF)은 드 영(de Young) 미술관과 레지옹 도뇌르(Legion of Honor) 미술관을 통합한 샌프란시스코 최대의 공공 예술 기관입니다.",
+    description_en: "The Fine Arts Museums of San Francisco (FAMSF), comprising the de Young Museum and the Legion of Honor, is the largest public arts institution in San Francisco.",
+    latitude: 37.7715,
+    longitude: -122.4687,
+    country: "USA",
+    region: "San Francisco, California",
+    representativeImage: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/De_Young_Museum_view.jpg/1200px-De_Young_Museum_view.jpg",
+    floorPlan: "",
+    permanentExhibitions: [
+      {
+        id: "famsf-collections",
+        name: "FAMSF Collection",
+        name_en: "FAMSF Collection",
+        title: "FAMSF Permanent Collection",
+        title_en: "FAMSF Permanent Collection",
+        description: "샌프란시스코 미술관의 소장품 컬렉션입니다.",
+        description_en: "Collection of the Fine Arts Museums of San Francisco.",
+        startDate: "Permanent",
+        endDate: "Permanent",
+        collectionFile: "famsf-collections.json"
+      }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    rooms: {}
+  },
+  
+  {
     id: "museu-picasso-barcelona",
     name: "Museu Picasso Barcelona",
     city: "Barcelona",
@@ -2702,7 +3651,7 @@ export const exhibitions = [
     description: "라 카이샤 재단의 현대 미술 컬렉션.",
     representativeImage: "",
     permanentExhibitions: [
-      { id: "caixaforum-collection", name: "Collection", name_en: "Collection", title: "Fundación la Caixa - Collection", title_en: "Fundación la Caixa - Collection", description: "라 카이샤 재단의 작품 컬렉션입니다.", description_en: "Artworks from the Fundación la Caixa collection.", startDate: "Permanent", endDate: "Permanent", collectionFile: "caixaforum-collection.json" }
+      { id: "caixaforum-collection", name: "Collection", name_en: "Collection", title: "Fundación la Caixa - Collection", title_en: "Fundación la Caixa - Collection", description: "라 카이샤 재단의 현대 미술 컬렉션 723점. 회화, 드로잉, 판화, 비디오, 사진 등 다양한 매체.", description_en: "723 works from the Fundación la Caixa collection: paintings, drawings, prints, video, and photography.", startDate: "Permanent", endDate: "Permanent", collectionFile: "caixaforum-collection.json" }
     ],
     temporaryExhibitions: [],
     pastExhibitions: [],
@@ -2721,12 +3670,9 @@ export const exhibitions = [
     representativeImage: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Albertina_Wien_2008.jpg/1200px-Albertina_Wien_2008.jpg",
     floorPlan: "",
     permanentExhibitions: [
-      { id: "albertina-paintings-100", name: "Paintings", title: "Paintings", description: "Sample dataset (100 items)", startDate: "Sample", endDate: "Sample" },
-      { id: "albertina-sculptures-100", name: "Sculptures", title: "Sculptures", description: "Sample dataset (100 items)", startDate: "Sample", endDate: "Sample" },
-      { id: "albertina-drawings-prints-100", name: "Drawings & Prints", title: "Drawings & Prints", description: "Sample dataset (100 items)", startDate: "Sample", endDate: "Sample" },
-      { id: "albertina-photography-100", name: "Photography", title: "Photography", description: "Sample dataset (100 items)", startDate: "Sample", endDate: "Sample" },
-      { id: "albertina-objects-installations-media-art-100", name: "Objects & Media Art", title: "Objects & Media Art", description: "Sample dataset (100 items)", startDate: "Sample", endDate: "Sample" },
-      { id: "albertina-poster-100", name: "Posters", title: "Posters", description: "Sample dataset (100 items)", startDate: "Sample", endDate: "Sample" }
+      { id: "albertina-permanent-collection", name: "Permanent Collection", title: "ALBERTINA — Permanent Collection", description: "Highlights from the ALBERTINA's permanent collection spanning paintings, sculptures, drawings, prints, and objects & media art.", startDate: "Permanent", endDate: "Permanent" , collectionFile: "albertina-permanent-collection.json" },
+      { id: "albertina-photography-100", name: "Photography", title: "Photography", description: "Photography collection from the ALBERTINA Museum.", startDate: "Permanent", endDate: "Permanent" , collectionFile: "albertina-photography-100.json" },
+      { id: "albertina-poster-100", name: "Posters", title: "Posters", description: "Poster collection from the ALBERTINA Museum.", startDate: "Permanent", endDate: "Permanent" , collectionFile: "albertina-poster-100.json" }
     ],
     temporaryExhibitions: [],
     pastExhibitions: [],
@@ -2832,8 +3778,7 @@ export const exhibitions = [
         title: "Wawel Royal Castle Collection",
         description: "The digital collection of the Wawel Royal Castle.",
         startDate: "Permanent",
-        endDate: "Permanent"
-      }
+        endDate: "Permanent", collectionFile: "wawel-collection.json" }
     ],
     temporaryExhibitions: [],
     pastExhibitions: [],
@@ -3156,7 +4101,7 @@ export const exhibitions = [
     longitude: 7.2762,
     country: "France",
     region: "Nice",
-    representativeImage: "https://musee-matisse.opacweb.io/img/logo.svg",
+    representativeImage: "images/musee-matisse-logo.svg",
     permanentExhibitions: [
       {
         id: "matisse-nice-collection",
@@ -3191,32 +4136,6 @@ export const exhibitions = [
         startDate: "Permanent",
         endDate: "Permanent",
         collectionFile: "munch-collection.json"
-      }
-    ],
-    temporaryExhibitions: [],
-    pastExhibitions: []
-  },
-  {
-    id: "louisiana-modern",
-    slug: "louisiana-modern",
-    name: "Louisiana Museum of Modern Art",
-    location: "Gl. Strandvej 13, 3050 Humlebæk, Denmark",
-    description: "An international museum of modern art located on the coast of the Øresund Sound in Humlebæk, north of Copenhagen.",
-    latitude: 55.9691,
-    longitude: 12.5434,
-    country: "Denmark",
-    region: "Humlebæk",
-    representativeImage: "",
-    floorPlan: "",
-    permanentExhibitions: [
-      {
-        id: "louisiana-collection",
-        name: "Louisiana Collection",
-        title: "Louisiana Collection",
-        description: "Scraped collection test (100 items).",
-        startDate: "Permanent",
-        endDate: "Permanent",
-        collectionFile: "louisiana-test.json"
       }
     ],
     temporaryExhibitions: [],
@@ -3445,6 +4364,787 @@ export const exhibitions = [
         startDate: "Permanent",
         endDate: "Permanent",
         collectionFile: "rusmuseum-collection.json"
+      }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: []
+  },
+  {
+    id: "tretyakov-gallery",
+    name: "State Tretyakov Gallery",
+    city: "Moscow",
+    country: "Russia",
+    latitude: 55.7415,
+    longitude: 37.6208,
+    description: "The foremost depository of Russian fine art in the world.",
+    representativeImage: "",
+    permanentExhibitions: [
+      {
+        id: "tretyakov-collection",
+        name: "Collection",
+        title: "Tretyakov Gallery Collection",
+        description: "A comprehensive collection of Russian art from the 11th to the early 20th century.",
+        startDate: "Permanent",
+        endDate: "Permanent",
+        collectionFile: "tretyakov-wikidata.json"
+      }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: []
+  },
+  {
+    id: "hermitage-museum",
+    name: "State Hermitage Museum",
+    city: "Saint Petersburg",
+    country: "Russia",
+    latitude: 59.9398,
+    longitude: 30.3146,
+    description: "One of the largest and oldest museums in the world, holding over 3 million items.",
+    representativeImage: "",
+    permanentExhibitions: [
+      {
+        id: "hermitage-collection",
+        name: "Highlights",
+        title: "Hermitage Highlights",
+        description: "A selection of masterpieces from the State Hermitage Museum.",
+        startDate: "Permanent",
+        endDate: "Permanent",
+        collectionFile: "hermitage-highlights.json"
+      }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    exhibitions: []
+  },
+  {
+    id: "pushkin-museum",
+    name: "The Pushkin State Museum of Fine Arts",
+    city: "Moscow",
+    country: "Russia",
+    latitude: 55.7472,
+    longitude: 37.6053,
+    description: "The largest museum of European art in Moscow.",
+    representativeImage: "",
+    permanentExhibitions: [
+      {
+        id: "pushkin-collection",
+        name: "Collection",
+        title: "Pushkin Museum Collection",
+        description: "A selection of paintings from the Pushkin Museum.",
+        startDate: "Permanent",
+        endDate: "Permanent",
+        collectionFile: "pushkin-paintings.json"
+      }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: []
+  },
+  {
+    id: "kremlin-museum",
+    name: "Moscow Kremlin Museums",
+    city: "Moscow",
+    country: "Russia",
+    latitude: 55.7520,
+    longitude: 37.6175,
+    description: "A major state-run museum in the Moscow Kremlin, housing unique collections of Russian state regalia, gold and silver ware, arms and armour, and carriages.",
+    representativeImage: "",
+    permanentExhibitions: [
+      {
+        id: "kremlin-collection",
+        name: "Collection",
+        title: "Moscow Kremlin Collection",
+        description: "A selection of artifacts from the Moscow Kremlin Museums.",
+        startDate: "Permanent",
+        endDate: "Permanent",
+        collectionFile: "kremlin-collection.json"
+      }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: []
+  },
+  {
+    id: "topkapi-palace",
+    name: "Topkapi Palace Museum",
+    city: "Istanbul",
+    country: "Turkey",
+    latitude: 41.0115,
+    longitude: 28.9833,
+    description: "The primary residence of the Ottoman sultans for nearly 400 years, now a museum housing Imperial collections of crystal, silver, manuscripts, and the Holy Relics.",
+    representativeImage: "",
+    permanentExhibitions: [
+      {
+        id: "topkapi-collection",
+        name: "Imperial Treasury",
+        title: "Treasures of Topkapi Palace",
+        description: "A collection including the Imperial Treasury, Arms and Armour, Manuscripts, and Sacred Relics.",
+        startDate: "Permanent",
+        endDate: "Permanent",
+        collectionFile: "topkapi-collection.json"
+      }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: []
+  },
+  {
+    id: "hirschsprung-collection",
+    slug: "hirschsprung",
+    name: "Den Hirschsprungske Samling",
+    location: "Stockholmsgade 20, 2100 København Ø, Denmark",
+    description: "The Hirschsprung Collection is an art museum in Copenhagen, Denmark, located in a parkland setting in Østre Anlæg. It houses a large collection of Danish art from the 19th and early 20th centuries.",
+    latitude: 55.6908,
+    longitude: 12.5786,
+    country: "Denmark",
+    region: "Copenhagen",
+    representativeImage: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Den_Hirschsprungske_Samling_seen_from_Stockholmsgade.jpg/1200px-Den_Hirschsprungske_Samling_seen_from_Stockholmsgade.jpg",
+    permanentExhibitions: [
+      {
+        id: "hirschsprung-perm",
+        name: "Collection",
+        title: "The Collection",
+        description: "A large collection of Danish art from the 19th and early 20th centuries, including works by P.S. Krøyer, Anna Ancher, and Vilhelm Hammershøi.",
+        startDate: "Permanent",
+        endDate: "Permanent",
+        collectionFile: "hirschsprung-collection.json"
+      }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: []
+  },
+  {
+    id: "louisiana-museum",
+    slug: "louisiana",
+    name: "Louisiana Museum of Modern Art",
+    location: "Humlebæk, Denmark",
+    description: "One of Scandinavia's most visited art museums, combining stunning architecture, landscaped gardens, and an exceptional collection of modern and contemporary art.",
+    latitude: 55.9641,
+    longitude: 12.5452,
+    country: "Denmark",
+    region: "Copenhagen",
+    representativeImage: "https://archive.louisiana.dk/I/?v=%7B506ffea7-e574-4c3d-8ccb-fbafce360b70%7D&i=88348&b=2000&f=asset&bm=1",
+    permanentExhibitions: [],
+    temporaryExhibitions: [],
+    pastExhibitions: []
+  },
+  // Seogwipo Museums
+  {
+    id: "lee-jung-seop-museum",
+    name: "Lee Jung-seop Art Museum",
+    slug: "lee-jung-seop",
+    location: "27-3, Leejungseop-ro, Seogwipo-si, Jeju-do",
+    description: "Located in Seogwipo, the museum honors Lee Jung-seop, a genius painter of Korea, exhibiting his works and personal history.",
+    latitude: 33.2458,
+    longitude: 126.5649,
+    country: "South Korea",
+    region: "Jeju",
+    representativeImage: "",
+    permanentExhibitions: [
+      { id: "ljs-collection", name: "Permanent Collection", title: "Lee Jung-seop Collection", description: "Permanent exhibition of Lee Jung-seop's works and related archives.", startDate: "Permanent", endDate: "Permanent", collectionFile: "lee-jung-seop-collection.json" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: []
+  },
+  {
+    id: "gidang-art-museum",
+    name: "Gidang Art Museum",
+    slug: "gidang",
+    location: "15, Namseongjung-ro 153beon-gil, Seogwipo-si, Jeju-do",
+    description: "The first public general art museum in Korea, established by Gidang Kang Gu-beom. It houses diverse modern and contemporary artworks.",
+    latitude: 33.2435,
+    longitude: 126.5583,
+    country: "South Korea",
+    region: "Jeju",
+    representativeImage: "",
+    permanentExhibitions: [
+      { id: "gidang-collection", name: "Permanent Collection", title: "Gidang Collection", description: "Permanent exhibition featuring modern calligraphy, paintings, and contemporary art.", startDate: "Permanent", endDate: "Permanent", collectionFile: "gidang-collection.json" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: []
+  },
+  {
+    id: "soam-memorial-hall",
+    name: "Soam Memorial Hall",
+    slug: "soam",
+    location: "15, Soam-ro, Seogwipo-si, Jeju-do",
+    description: "A memorial hall dedicated to Soam Hyun Joong-hwa, a master of modern calligraphy, exhibiting his calligraphic works.",
+    latitude: 33.2405,
+    longitude: 126.5802,
+    country: "South Korea",
+    region: "Jeju",
+    representativeImage: "",
+    permanentExhibitions: [
+      { id: "soam-collection", name: "Permanent Collection", title: "Soam Collection", description: "Exhibition of Soam Hyun Joong-hwa's calligraphy masterpieces.", startDate: "Permanent", endDate: "Permanent", collectionFile: "soam-memorial-collection.json" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: []
+  },
+  {
+    id: "house-of-refuge",
+    name: "House of Refuge",
+    slug: "house-of-refuge",
+    location: "735 Haso-ro, Aewol-eup, Jeju-si, Jeju-do",
+    description: "A cultural complex in Jeju housed in a revitalized abandoned structure, featuring art, music, fashion, and dining.",
+    latitude: 33.4352,
+    longitude: 126.4166,
+    country: "South Korea",
+    region: "Jeju",
+    representativeImage: "https://live.staticflickr.com/65535/51243914271_16e7e2578b.jpg",
+    permanentExhibitions: [],
+    temporaryExhibitions: [
+      {
+        id: "erick-oh-retrospective",
+        name: "O: An Erick Oh Retrospective",
+        title: "O: An Erick Oh Retrospective",
+        description: "A large-scale media exhibition based on Erick Oh's animated work 'Opera' and other masterpieces.",
+        startDate: "2024-04-25",
+        endDate: "2024-12-31",
+        collectionFile: "house-of-refuge-collection.json"
+      }
+    ],
+    pastExhibitions: []
+  },
+  {
+    id: "jeju-museum-of-art",
+    name: "Jeju Museum of Art",
+    slug: "jmoa",
+    location: "1100-ro 2894-78, Jeju-si, Jeju-do",
+    description: "Online digital collection from Jeju Museum of Art (JMOA).",
+    latitude: 33.4892,
+    longitude: 126.4899,
+    country: "South Korea",
+    region: "Jeju",
+    representativeImage: "",
+    permanentExhibitions: [
+      {
+        id: "jmoa-collection",
+        name: "Digital Collection",
+        title: "디지털 소장품",
+        description: "Digital collection imported from onlinejmoa.or.kr.",
+        startDate: "Permanent",
+        endDate: "Permanent",
+        collectionFile: "jmoa-collection-all.json"
+      }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: []
+  }
+  ,
+  {
+    id: "kim-tschang-yeul-art-museum",
+    name: "Kim Tschang-Yeul Art Museum Jeju",
+    slug: "kimtschang-yeul",
+    location: "Jeju, South Korea",
+    description: "Online collection imported from kimtschang-yeul.jeju.go.kr.",
+    latitude: 33.285,
+    longitude: 126.257,
+    country: "South Korea",
+    region: "Jeju",
+    representativeImage: "",
+    permanentExhibitions: [
+      {
+        id: "kimtschang-yeul-collection",
+        name: "Collection",
+        title: "소장품",
+        description: "Digital collection imported from kimtschang-yeul.jeju.go.kr.",
+        startDate: "Permanent",
+        endDate: "Permanent",
+        collectionFile: "kimtschang-yeul-collection-all.json"
+      }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: []
+  }
+  ,
+  {
+    id: "dumoak",
+    name: "Dumoak",
+    slug: "dumoak",
+    location: "Jeju, South Korea",
+    description: "Online works imported from dumoak.co.kr (Kim Young-gap).",
+    latitude: 33.385,
+    longitude: 126.635,
+    country: "South Korea",
+    region: "Jeju",
+    representativeImage: "",
+    permanentExhibitions: [
+      {
+        id: "dumoak-collection",
+        name: "Works",
+        title: "작품",
+        description: "Works imported from dumoak.co.kr.",
+        startDate: "Permanent",
+        endDate: "Permanent",
+        collectionFile: "dumoak-kim-work-all.json"
+      }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: []
+  },
+  {
+    id: "national-gallery-singapore",
+    slug: "national-gallery-singapore",
+    name: "National Gallery Singapore",
+    location: "Singapore",
+    description: "The world's largest public collection of Singapore and Southeast Asian modern art.",
+    latitude: 1.2905,
+    longitude: 103.8519,
+    country: "Singapore",
+    region: "Singapore",
+    representativeImage: "",
+    permanentExhibitions: [
+      {
+        id: "ngs-collection-all",
+        name: "Collection",
+        title: "National Collection",
+        description: "Complete digitized collection of the National Gallery Singapore.",
+        startDate: "Permanent",
+        endDate: "Permanent",
+        collectionFile: "ngs-all.json"
+      }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: []
+  },
+  {
+    id: "met-ny",
+    slug: "met-ny",
+    name: "The Metropolitan Museum of Art",
+    location: "New York, USA",
+    description: "The Met presents over 5,000 years of art from around the world for everyone to experience and enjoy.",
+    latitude: 40.7794,
+    longitude: -73.9632,
+    country: "USA",
+    region: "New York",
+    representativeImage: "https://images.metmuseum.org/CRDImages/rl/web-large/LC-1975_1_065a-001.jpg",
+    permanentExhibitions: [
+      {
+        id: "met-ny-collection",
+        name: "Collection Highlights",
+        title: "Collection Highlights",
+        description: "A selection of paintings and masterpieces from The Met's vast collection.",
+        startDate: "Permanent",
+        endDate: "Permanent",
+        collectionFile: "met-ny-collection.json"
+      }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: []
+  },
+  {
+    id: "nga",
+    slug: "nga",
+    name: "National Gallery of Art",
+    location: "Washington, D.C., USA",
+    description: "The National Gallery of Art in Washington, D.C. with an open dataset (CC0) of collection metadata and published images.",
+    latitude: 38.8913,
+    longitude: -77.0199,
+    country: "USA",
+    region: "Washington, D.C.",
+    representativeImage: "https://api.nga.gov/iiif/7b170a4c-9d44-475c-b294-cee6f43d88af/full/full/0/default.jpg",
+    permanentExhibitions: [
+      {
+        id: "nga-collection",
+        name: "The Collection",
+        title: "The Collection",
+        description: "A merged collection of paintings and downloadable drawings from the National Gallery of Art.",
+        startDate: "Permanent",
+        endDate: "Permanent",
+        collectionFile: "nga-collection.json"
+      }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: []
+  },
+  {
+    id: "smithsonian-american-art-museum",
+    slug: "smithsonian-american-art-museum",
+    name: "Smithsonian American Art Museum",
+    location: "Washington, D.C.",
+    description: "The Smithsonian American Art Museum (SAAM) is home to one of the largest and most inclusive collections of American art in the world.",
+    latitude: 38.8979,
+    longitude: -77.0232,
+    country: "USA",
+    region: "Washington D.C.",
+    representativeImage: "https://ids.si.edu/ids/deliveryService?id=SAAM-2002.23_1&max=640",
+    permanentExhibitions: [
+      {
+        id: "saam-paintings",
+        name: "American Paintings & Drawings",
+        title: "Paintings & Drawings (Full Collection)",
+        description: "Comprehensive collection of paintings and drawings from the Smithsonian American Art Museum (SAAM) via Open Access Bulk Data.",
+        startDate: "Permanent",
+        endDate: "Permanent",
+        collectionFile: "saam-paintings-full.json"
+      }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: []
+  },
+  {
+    id: "smithsonian-asian-art",
+    slug: "smithsonian-asian-art",
+    name: "National Museum of Asian Art",
+    location: "Washington, D.C.",
+    description: "The National Museum of Asian Art preserves, exhibits, and interprets Asian art in ways that deepen our understanding of Asia, America, and the world.",
+    latitude: 38.8882,
+    longitude: -77.0274,
+    country: "USA",
+    region: "Washington D.C.",
+    representativeImage: "https://ids.si.edu/ids/deliveryService?id=FS-7539_06&max=640",
+    permanentExhibitions: [
+      {
+        id: "si-asian-art-collection",
+        name: "Asian Art Collection",
+        title: "Asian Art (Paintings & Drawings)",
+        description: "Selected paintings and drawings from the National Museum of Asian Art (Freer Gallery of Art and Arthur M. Sackler Gallery).",
+        startDate: "Permanent",
+        endDate: "Permanent",
+        collectionFile: "si-asian-art.json"
+      }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: []
+  },
+  {
+    id: "smithsonian-national-portrait-gallery",
+    slug: "smithsonian-national-portrait-gallery",
+    name: "National Portrait Gallery",
+    location: "Washington, D.C.",
+    description: "The National Portrait Gallery tells the history of America through individuals who have shaped its culture.",
+    latitude: 38.8979,
+    longitude: -77.0232,
+    country: "USA",
+    region: "Washington D.C.",
+    representativeImage: "https://ids.si.edu/ids/deliveryService?id=NPG-NPG_2011_16&max=640",
+    permanentExhibitions: [
+      {
+        id: "si-npg-collection",
+        name: "Portrait Collection",
+        title: "Portraits (Paintings, Drawings & Photographs)",
+        description: "Selected portraits from the National Portrait Gallery collection.",
+        startDate: "Permanent",
+        endDate: "Permanent",
+        collectionFile: "si-npg.json"
+      }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: []
+  },
+  {
+    id: "moma-collection",
+    slug: "museum-of-modern-art",
+    cityCluster: "New York",
+    name: "The Museum of Modern Art",
+    location: "New York, USA",
+    description: "The Museum of Modern Art (MoMA) plays a leading role in defining contemporary art culture.",
+    latitude: 40.7614,
+    longitude: -73.9776,
+    country: "USA",
+    region: "New York",
+    representativeImage: "https://www.moma.org/media/W1siZiIsIjUyNzk1OSJdLFsicCIsImNvbnZlcnQiLCItcmVzaXplIDEwMjR4MTAyNFx1MDAzZSJdXQ.jpg?sha=5e9dcd73303fc973",
+    permanentExhibitions: [
+      {
+        id: "moma-highlights",
+        name: "Collection Highlights",
+        title: "Collection Highlights (Pre-1850 to 2026)",
+        description: "Paintings, Drawings & Sculptures from the MoMA collection.",
+        startDate: "Permanent",
+        endDate: "Permanent",
+        collectionFile: "moma-collection.json"
+      }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: []
+  },
+  {
+    id: "art-institute-of-chicago",
+    slug: "art-institute-of-chicago",
+    name: "The Art Institute of Chicago",
+    location: "Chicago, USA",
+    description: "One of the oldest and largest art museums in the United States, founded in 1879.",
+    latitude: 41.8796,
+    longitude: -87.6237,
+    country: "USA",
+    region: "Chicago",
+    representativeImage: "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/Art_Institute_of_Chicago_%2851838662998%29.jpg/1200px-Art_Institute_of_Chicago_%2851838662998%29.jpg",
+    permanentExhibitions: [
+      {
+        id: "aic-highlights",
+        name: "Collection Highlights",
+        title: "Collection Highlights (Paintings, Drawings, Photos)",
+        description: "Highlights from the Art Institute of Chicago, featuring paintings, drawings, watercolors, and photography.",
+        startDate: "Permanent",
+        endDate: "Permanent",
+        collectionFile: "aic-collection.json"
+      }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: []
+  },
+  {
+    id: "getty",
+    slug: "getty",
+    name: "Getty Museum",
+    location: "Los Angeles, USA",
+    description: "Paintings from the Getty Museum collection (via getty.edu public collection API).",
+    latitude: 34.0780,
+    longitude: -118.4741,
+    country: "USA",
+    region: "Los Angeles",
+    representativeImage: "https://www.getty.edu/favicon.ico",
+    permanentExhibitions: [
+      {
+        id: "getty-collection",
+        name: "Paintings (With Images)",
+        title: "Getty Collection (Paintings)",
+        description: "Paintings with images from the Getty Museum collection, including flags for On View and Open Content.",
+        startDate: "Permanent",
+        endDate: "Permanent",
+        collectionFile: "getty-collection.json"
+      }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: []
+  },
+  {
+    id: "whitney-museum",
+    slug: "whitney",
+    cityCluster: "New York",
+    name: "Whitney Museum of American Art",
+    location: "New York, USA",
+    description: "The Whitney Museum of American Art, known informally as the 'Whitney', houses a renowned collection of 20th- and 21st-century American art.",
+    latitude: 40.7396,
+    longitude: -74.0089,
+    country: "USA",
+    region: "New York",
+    representativeImage: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c2/Whitney_Museum_of_American_Art_2015.jpg/1280px-Whitney_Museum_of_American_Art_2015.jpg",
+    permanentExhibitions: [
+      {
+        id: "whitney-collection",
+        name: "Whitney Collection",
+        title: "Full Collection",
+        description: "Comprehensive collection of American art from the 20th and 21st centuries. Includes Paintings, Drawings, Photographs, Video, Digital Art, and Film. Shows on-view status.",
+        startDate: "Permanent",
+        collectionFile: "whitney-collection.json"
+      }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: []
+  },
+  {
+    id: "museo-frida-kahlo",
+    slug: "museo-frida-kahlo",
+    name: "Museo Frida Kahlo",
+    location: "Mexico City, Mexico",
+    description: "The Blue House (La Casa Azul) is the historic house museum and art museum dedicated to the life and work of Mexican artist Frida Kahlo. It is located in the Coyoacán borough of Mexico City.",
+    latitude: 19.3551,
+    longitude: -99.1624,
+    country: "Mexico",
+    region: "Mexico City",
+    representativeImage: "https://upload.wikimedia.org/wikipedia/commons/2/29/Museo_Frida_Kahlo.jpg",
+    permanentExhibitions: [
+      {
+        id: "frida-timeline",
+        name: "Life and Work",
+        title: "Frida Kahlo: Life and Work",
+        description: "A comprehensive timeline and collection of works by Frida Kahlo, displayed in her lifelong home.",
+        startDate: "Permanent",
+        endDate: "Permanent",
+        collectionFile: "frida-timeline.json"
+      }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: []
+  },
+  {
+    id: "agnsw",
+    slug: "agnsw",
+    name: "Art Gallery of New South Wales",
+    location: "Sydney, Australia",
+    description: "The Art Gallery of New South Wales (AGNSW) is located in The Domain in Sydney, New South Wales, Australia. It is the most important public gallery in Sydney and one of the largest in Australia.",
+    latitude: -33.8688,
+    longitude: 151.2172,
+    country: "Australia",
+    region: "New South Wales",
+    representativeImage: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/46/Art_Gallery_of_NSW_exterior_2021.jpg/640px-Art_Gallery_of_NSW_exterior_2021.jpg",
+    permanentExhibitions: [
+      {
+        id: "agnsw-collection",
+        name: "Collection",
+        title: "Collection Highlights",
+        description: "A selection of works currently on display at the Art Gallery of NSW, spanning Australian, Asian, and European art.",
+        startDate: "Permanent",
+        endDate: "Permanent",
+        collectionFile: "agnsw-collection.json"
+      }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: []
+  },
+  {
+    id: "ngv",
+    slug: "ngv",
+    name: "National Gallery of Victoria",
+    location: "Melbourne, Australia",
+    description: "The National Gallery of Victoria (NGV) is the oldest and most visited gallery in Australia. Founded in 1861, it holds the most significant collection of art in the region.",
+    latitude: -37.8226,
+    longitude: 144.9689,
+    country: "Australia",
+    region: "Victoria",
+    representativeImage: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/NGV_International_front.jpg/640px-NGV_International_front.jpg",
+    permanentExhibitions: [
+      {
+        id: "ngv-collection",
+        name: "Collection Highlights",
+        title: "Collection Highlights (NGV)",
+        description: "A comprehensive selection of artworks from the National Gallery of Victoria.",
+        startDate: "Permanent",
+        endDate: "Permanent",
+        collectionFile: "ngv-collection.json"
+      }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: []
+  },
+  {
+    id: "mca-australia",
+    slug: "mca-australia",
+    name: "Museum of Contemporary Art Australia",
+    location: "Sydney, Australia",
+    description: "The Museum of Contemporary Art Australia (MCA) houses one of Australia's leading collections of contemporary art, with works by Australian artists and key international figures.",
+    latitude: -33.8599,
+    longitude: 151.2091,
+    country: "Australia",
+    region: "New South Wales",
+    representativeImage: "https://www.mca.com.au/files/images/250218_MCA_001_WEB.width-800.jpegquality-70.jpg",
+    permanentExhibitions: [
+      {
+        id: "mca-collection",
+        name: "Collection Artworks",
+        title: "MCA Collection Artworks",
+        description: "Complete artworks dataset from MCA collection index, including detail metadata, medium-derived category, and on-display status.",
+        startDate: "Permanent",
+        endDate: "Permanent",
+        collectionFile: "mca-collection.json"
+      }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: []
+  },
+  {
+    id: "qagoma",
+    slug: "qagoma",
+    name: "Queensland Art Gallery | Gallery of Modern Art",
+    location: "Brisbane, Australia",
+    description: "QAGOMA is one of Australia's leading public art institutions, presenting historical, modern, and contemporary art from Australia, Asia, and the Pacific.",
+    latitude: -27.4728,
+    longitude: 153.0170,
+    country: "Australia",
+    region: "Queensland",
+    representativeImage: "https://collection.qagoma.qld.gov.au/sites/default/files/styles/wide/filesqagoma/assets/qagoma-building.jpg",
+    permanentExhibitions: [
+      {
+        id: "qagoma-collection",
+        name: "Collection (Assemblage, Painting, Print, Drawing)",
+        title: "QAGOMA Collection",
+        description: "Artworks with images from selected categories (Assemblage, Painting, Print, Drawing), including detailed metadata and on-display status.",
+        startDate: "Permanent",
+        endDate: "Permanent",
+        collectionFile: "qagoma-collection.json"
+      }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: []
+  },
+  {
+    id: "egyptian-museum-cairo",
+    slug: "egyptian-museum-cairo",
+    name: "The Egyptian Museum in Cairo",
+    location: "Cairo, Egypt",
+    description: "The Egyptian Museum in Cairo holds one of the world's most important collections of ancient Egyptian antiquities, with major artefacts spanning multiple dynasties.",
+    latitude: 30.0478,
+    longitude: 31.2336,
+    country: "Egypt",
+    region: "Cairo Governorate",
+    representativeImage: "https://egyptianmuseumcairo.eg/wp-content/uploads/2023/01/egyptian-museum-cairo.jpg",
+    permanentExhibitions: [],
+    temporaryExhibitions: [],
+    pastExhibitions: []
+  },
+  {
+    id: "nmec",
+    slug: "nmec",
+    name: "National Museum of Egyptian Civilization",
+    location: "Cairo, Egypt",
+    description: "NMEC presents key objects from Egyptian civilization in a permanent collection spanning prehistory to modern periods.",
+    latitude: 30.0060,
+    longitude: 31.2488,
+    country: "Egypt",
+    region: "Cairo Governorate",
+    representativeImage: "https://nmec.gov.eg/wp-content/uploads/2021/03/nmec.jpg",
+    permanentExhibitions: [],
+    temporaryExhibitions: [],
+    pastExhibitions: []
+  },
+  {
+    id: "gem",
+    slug: "gem",
+    name: "Grand Egyptian Museum",
+    location: "Giza, Egypt",
+    description: "The Grand Egyptian Museum presents major artefacts from ancient Egyptian civilization, including curated collection records from the official artefacts portal.",
+    latitude: 29.9884,
+    longitude: 31.1342,
+    country: "Egypt",
+    region: "Giza Governorate",
+    representativeImage: "https://cdn.gem.eg/media/4129/gem9208-1.jpeg?center=0.43609022556391,0.473469387755102&mode=crop&width=1200&height=900",
+    permanentExhibitions: [
+      {
+        id: "gem-collection",
+        name: "Artefacts Collection",
+        title: "GEM Artefacts Collection",
+        description: "Artefact records from GEM collection API, including period/dynasty metadata and image assets.",
+        startDate: "Permanent",
+        endDate: "Permanent",
+        collectionFile: "gem-collection.json"
+      }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: []
+  },
+  {
+    id: "zeitz-mocaa",
+    slug: "zeitz-mocaa",
+    name: "Zeitz Museum of Contemporary Art Africa",
+    location: "Cape Town, South Africa",
+    description: "Zeitz MOCAA is a leading museum for contemporary art from Africa and its diaspora, with a permanent collection presented through rotating collection-based exhibitions.",
+    latitude: -33.9077,
+    longitude: 18.4206,
+    country: "South Africa",
+    region: "Western Cape",
+    representativeImage: "https://zeitzmocaa.museum/wp-content/uploads/2024/03/APP_140401_27-scaled.jpg",
+    permanentExhibitions: [],
+    temporaryExhibitions: [],
+    pastExhibitions: []
+  },
+  {
+    id: "tepapa-collection",
+    slug: "tepapa",
+    name: "Te Papa Tongarewa",
+    location: "Wellington, New Zealand",
+    description: "The Museum of New Zealand Te Papa Tongarewa is New Zealand's national museum, located in Wellington.",
+    latitude: -41.2905,
+    longitude: 174.7819,
+    country: "New Zealand",
+    region: "Wellington",
+    representativeImage: "https://tepapa.govt.nz/assets/76067/1658185372-our-building_tile.jpeg",
+    permanentExhibitions: [
+      {
+        id: "tepapa-paintings",
+        name: "Collection Highlights",
+        title: "Collection Highlights",
+        description: "A comprehensive collection of paintings and drawings from the National Museum of New Zealand.",
+        startDate: "Permanent",
+        endDate: "Permanent",
+        collectionFile: "tepapa-collection.json"
       }
     ],
     temporaryExhibitions: [],

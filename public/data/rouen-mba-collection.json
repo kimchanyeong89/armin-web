@@ -5,10 +5,11 @@
     "artist": "Alfred Sisley",
     "year": "1876",
     "medium": "OIL ON CANVAS",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/8_impressionnisme/1909_1_44.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-0-b77f2842-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/flood-at-port-marly-0",
     "artworkType": "impressionism",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/8_impressionnisme/1909_1_44.jpg"
   },
   {
     "id": "rouen-1",
@@ -16,10 +17,11 @@
     "artist": "Alfred Sisley",
     "year": "1893",
     "medium": "OIL ON CANVAS",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/8_impressionnisme/1909_1_47.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-1-1edcd65b-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/the-church-at-moret-in-the-morning-sun",
     "artworkType": "impressionism",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/8_impressionnisme/1909_1_47.jpg"
   },
   {
     "id": "rouen-2",
@@ -27,10 +29,11 @@
     "artist": "Pierre-Auguste Renoir",
     "year": "",
     "medium": "OIL ON CANVAS",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/8_impressionnisme/1909_1_42.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-2-80cd5711-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/bouquet-of-chrysanthemums",
     "artworkType": "impressionism",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/8_impressionnisme/1909_1_42.jpg"
   },
   {
     "id": "rouen-3",
@@ -38,10 +41,11 @@
     "artist": "Gustave Caillebotte",
     "year": "1880",
     "medium": "OIL ON CANVAS",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/8_impressionnisme/D_1946_1.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-3-d669b389-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/in-a-cafe",
     "artworkType": "impressionism",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/8_impressionnisme/D_1946_1.jpg"
   },
   {
     "id": "rouen-4",
@@ -49,10 +53,11 @@
     "artist": "Alfred Sisley",
     "year": "1893",
     "medium": "OIL ON CANVAS",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/8_impressionnisme/1909_1_46.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-4-e37f5c23-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/uphill-road-in-sunshine",
     "artworkType": "impressionism",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/8_impressionnisme/1909_1_46.jpg"
   },
   {
     "id": "rouen-5",
@@ -60,10 +65,11 @@
     "artist": "Claude Monet",
     "year": "1894",
     "medium": "OIL ON CANVAS",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/8_impressionnisme/1909_1_33.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-5-1dab5ae0-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/the-seine-at-port-villez",
     "artworkType": "impressionism",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/8_impressionnisme/1909_1_33.jpg"
   },
   {
     "id": "rouen-6",
@@ -71,10 +77,11 @@
     "artist": "Claude Monet",
     "year": "1894",
     "medium": "OIL ON CANVAS",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/8_impressionnisme/1909_1_32.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-6-d92a2d49-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/rouen-cathedral-facade-and-tour-d-albane-grey-weather",
     "artworkType": "impressionism",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/8_impressionnisme/1909_1_32.jpg"
   },
   {
     "id": "rouen-7",
@@ -82,10 +89,11 @@
     "artist": "Camille Pissarro",
     "year": "1896",
     "medium": "OIL ON CANVAS",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/8_impressionnisme/D_2000_1_1.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-7-72c02c5e-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/pont-boieldieu-rouen-sunset-misty-weather",
     "artworkType": "impressionism",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/8_impressionnisme/D_2000_1_1.jpg"
   },
   {
     "id": "rouen-8",
@@ -93,10 +101,11 @@
     "artist": "Claude Monet",
     "year": "",
     "medium": "OIL ON CANVAS",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/8_impressionnisme/1909_1_34.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-8-6e3e0f73-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/rue-saint-denis-celebration-of-30th-june-1878",
     "artworkType": "impressionism",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/8_impressionnisme/1909_1_34.jpg"
   },
   {
     "id": "rouen-9",
@@ -104,10 +113,11 @@
     "artist": "Alfred Sisley",
     "year": "1897",
     "medium": "OIL ON CANVAS",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/8_impressionnisme/1909_1_48.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-9-9563f436-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/lady-s-cove-wales",
     "artworkType": "impressionism",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/8_impressionnisme/1909_1_48.jpg"
   },
   {
     "id": "rouen-10",
@@ -115,10 +125,11 @@
     "artist": "Hendrick van Minderhout | 818.1.16",
     "year": "",
     "medium": "OIL ON CANVAS",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/6_paysage/1818_1_16_cadre.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-10-86c89a68-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/landscape-with-the-abduction-of-europa",
     "artworkType": "landscapes",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/6_paysage/1818_1_16_cadre.jpg"
   },
   {
     "id": "rouen-11",
@@ -126,10 +137,11 @@
     "artist": "George Morland | 923.9",
     "year": "",
     "medium": "OIL ON CANVAS",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/6_paysage/1923_9.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-11-836f6b72-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/the-storm-0",
     "artworkType": "landscapes",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/6_paysage/1923_9.jpg"
   },
   {
     "id": "rouen-12",
@@ -137,10 +149,11 @@
     "artist": "Jean-Baptiste Camille Corot",
     "year": "1872",
     "medium": "OIL ON CANVAS",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/6_paysage/1874_1.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-12-2f9e2b8a-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/ville-d-avray-pond-with-birch-tree-in-front-of-houses",
     "artworkType": "landscapes",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/6_paysage/1874_1.jpg"
   },
   {
     "id": "rouen-13",
@@ -148,10 +161,11 @@
     "artist": "Hubert Robert",
     "year": "1773",
     "medium": "OIL ON CANVAS",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/6_paysage/SR_62.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-13-870d430d-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/monuments-and-ruins-with-column",
     "artworkType": "landscapes",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/6_paysage/SR_62.jpg"
   },
   {
     "id": "rouen-14",
@@ -159,10 +173,11 @@
     "artist": "Gaspar van Wittel | 821.1.20",
     "year": "1683",
     "medium": "OIL ON CANVAS",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/6_paysage/1822_1_20.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-14-2c63c6d2-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/view-of-the-castel-sant-angelo-in-rome",
     "artworkType": "landscapes",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/6_paysage/1822_1_20.jpg"
   },
   {
     "id": "rouen-15",
@@ -170,10 +185,11 @@
     "artist": "Sébastien Vranckx | 890.1.1",
     "year": "",
     "medium": "OIL ON CANVAS",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/6_paysage/1890_1_1.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-15-ac8a7c4f-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/feast-in-the-park-of-the-duke-of-mantua",
     "artworkType": "landscapes",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/6_paysage/1890_1_1.jpg"
   },
   {
     "id": "rouen-16",
@@ -181,10 +197,11 @@
     "artist": "Poussin Nicolas",
     "year": "",
     "medium": "OIL ON CANVAS",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/6_paysage/1975_1.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-16-8e2fa280-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/the-storm",
     "artworkType": "landscapes",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/6_paysage/1975_1.jpg"
   },
   {
     "id": "rouen-17",
@@ -192,10 +209,11 @@
     "artist": "Jules Laurens",
     "year": "1872",
     "medium": "OIL ON CANVAS",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/6_paysage/D_1874_13.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-17-bed0c457-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/the-abandoned-gardens-of-aschref-persia",
     "artworkType": "landscapes",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/6_paysage/D_1874_13.jpg"
   },
   {
     "id": "rouen-18",
@@ -203,10 +221,11 @@
     "artist": "Hippolyte-Victor-Valentin Sebron | 880.2.2",
     "year": "1857",
     "medium": "OIL ON CANVAS",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/6_paysage/1880_2_2.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-18-b9e0c42f-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/the-niagara-falls-in-winter",
     "artworkType": "landscapes",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/6_paysage/1880_2_2.jpg"
   },
   {
     "id": "rouen-19",
@@ -214,10 +233,11 @@
     "artist": "Hubert Robert",
     "year": "",
     "medium": "OIL ON CANVAS",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/6_paysage/1907_1_69.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-19-c65f4c85-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/the-temple-of-filial-piety-viewed-from-a-rustic-bridge-in-the-park-of-mereville",
     "artworkType": "landscapes",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/6_paysage/1907_1_69.jpg"
   },
   {
     "id": "rouen-20",
@@ -225,10 +245,11 @@
     "artist": "Gerard David",
     "year": "",
     "medium": "OIL ON WOOD",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/1_renaissance/1803_4_Restaure_PIX.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-20-66cd35f7-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/the-virgin-among-the-virgins",
     "artworkType": "the-renaissance",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/1_renaissance/1803_4_Restaure_PIX.jpg"
   },
   {
     "id": "rouen-21",
@@ -236,10 +257,11 @@
     "artist": "François Clouet",
     "year": "",
     "medium": "OIL ON WOOD",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/1_renaissance/1846_1.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-21-9d3cc92c-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/the-bath-of-diana",
     "artworkType": "the-renaissance",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/1_renaissance/1846_1.jpg"
   },
   {
     "id": "rouen-22",
@@ -247,10 +269,11 @@
     "artist": "Lavinia Fontana",
     "year": "1592",
     "medium": "OIL ON CANVAS",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/1_renaissance/D_1874_15.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-22-7c4e9d4f-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/venus-and-cupid",
     "artworkType": "the-renaissance",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/1_renaissance/D_1874_15.jpg"
   },
   {
     "id": "rouen-23",
@@ -258,10 +281,11 @@
     "artist": "Paolo Caliari | 803.17",
     "year": "",
     "medium": "OIL ON CANVAS",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/1_renaissance/1803_17.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-23-b509a089-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/st-barnabas-healing-the-sick",
     "artworkType": "the-renaissance",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/1_renaissance/1803_17.jpg"
   },
   {
     "id": "rouen-24",
@@ -269,10 +293,11 @@
     "artist": "Martin de Vos | 856.2.",
     "year": "1562",
     "medium": "OIL ON CANVAS (TRANSPOSED)",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/1_renaissance/1856_2.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-24-44eddb06-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/eliezer-and-rebecca-at-the-well",
     "artworkType": "the-renaissance",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/1_renaissance/1856_2.jpg"
   },
   {
     "id": "rouen-25",
@@ -280,10 +305,11 @@
     "artist": "XVIe siècle | 932.6.21 Anonyme",
     "year": "1523",
     "medium": "OIL ON WOOD",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/1_renaissance/1932_6_21.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-25-762f48d0-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/the-flagellation-of-christ-0",
     "artworkType": "the-renaissance",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/1_renaissance/1932_6_21.jpg"
   },
   {
     "id": "rouen-26",
@@ -291,10 +317,11 @@
     "artist": "Pietro Vanucci",
     "year": "",
     "medium": "OIL ON WOOD",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/1_renaissance/1803_34.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-26-3f333b8a-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/adoration-of-the-magi",
     "artworkType": "the-renaissance",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/1_renaissance/1803_34.jpg"
   },
   {
     "id": "rouen-27",
@@ -302,10 +329,11 @@
     "artist": "Pieter Aertsen",
     "year": "",
     "medium": "OIL ON WOOD",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/1_renaissance/1907_1_84.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-27-50b9767b-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/the-adoration-of-the-shepherds",
     "artworkType": "the-renaissance",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/1_renaissance/1907_1_84.jpg"
   },
   {
     "id": "rouen-28",
@@ -313,10 +341,11 @@
     "artist": "XVIe siècle | 932.6.21 Anonyme",
     "year": "",
     "medium": "WOOD (PARTIALLY GILDED) AND IRON ATTACHMENTS",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/1_renaissance/89-oa_1993_3_1_france_xvi-moy.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-28-25ab9b19-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/baptismal-font-cover",
     "artworkType": "the-renaissance",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/1_renaissance/89-oa_1993_3_1_france_xvi-moy.jpg"
   },
   {
     "id": "rouen-29",
@@ -324,10 +353,11 @@
     "artist": "Giovanni di Lorenzo Larciani | 975.4.30",
     "year": "1523",
     "medium": "OIL ON WOOD",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/1_renaissance/1975_4_30.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-29-ff7758ac-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/crucifixion",
     "artworkType": "the-renaissance",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/1_renaissance/1975_4_30.jpg"
   },
   {
     "id": "rouen-30",
@@ -335,10 +365,11 @@
     "artist": "Caravaggio",
     "year": "",
     "medium": "OIL ON CANVAS",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/2_europe_baroque/1955_8_1.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-30-814a05e2-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/the-flagellation-of-christ",
     "artworkType": "baroque-europe",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/2_europe_baroque/1955_8_1.jpg"
   },
   {
     "id": "rouen-31",
@@ -346,10 +377,11 @@
     "artist": "XVe siècle | 975.4. Anonyme",
     "year": "",
     "medium": "SCULPTURE IN WOOD WITH PLASTER FINISHING",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/1_renaissance/91-s_1975_4_5683_f2_crucifix-moy.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-31-5df8ff80-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/crucifix",
     "artworkType": "the-renaissance",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/1_renaissance/91-s_1975_4_5683_f2_crucifix-moy.jpg"
   },
   {
     "id": "rouen-32",
@@ -357,10 +389,11 @@
     "artist": "Nicolas Régnier | 853.6",
     "year": "",
     "medium": "OIL ON CANVAS",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/2_europe_baroque/1853_6.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-32-a7d2ca7e-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/saint-sebastian-tended-by-irene",
     "artworkType": "baroque-europe",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/2_europe_baroque/1853_6.jpg"
   },
   {
     "id": "rouen-33",
@@ -368,10 +401,11 @@
     "artist": "École flamande | 936.6 Anonyme",
     "year": "",
     "medium": "OIL ON CANVAS",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/2_europe_baroque/1936_6.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-33-2e82dbae-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/young-woman-on-her-death-bed",
     "artworkType": "baroque-europe",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/2_europe_baroque/1936_6.jpg"
   },
   {
     "id": "rouen-34",
@@ -379,10 +413,11 @@
     "artist": "Anton van Dyck | 818.1.42",
     "year": "1631",
     "medium": "OIL ON CANVAS",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/2_europe_baroque/1818_1_42.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-34-0c7811c8-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/portrait-of-a-lady-of-quality",
     "artworkType": "baroque-europe",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/2_europe_baroque/1818_1_42.jpg"
   },
   {
     "id": "rouen-35",
@@ -390,10 +425,11 @@
     "artist": "Nicolaes Berchem",
     "year": "",
     "medium": "OIL ON CANVAS",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/2_europe_baroque/1847_1.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-35-1c7dea7e-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/a-concert-in-a-public-square",
     "artworkType": "baroque-europe",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/2_europe_baroque/1847_1.jpg"
   },
   {
     "id": "rouen-36",
@@ -401,10 +437,11 @@
     "artist": "Francesco Barbieri | 803.16",
     "year": "1632",
     "medium": "OIL ON CANVAS",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/2_europe_baroque/7-guerchin-ht-moy.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-36-8f500ef6-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/the-visitation",
     "artworkType": "baroque-europe",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/2_europe_baroque/7-guerchin-ht-moy.jpg"
   },
   {
     "id": "rouen-37",
@@ -412,10 +449,11 @@
     "artist": "Giovanni Benedetto Castiglione",
     "year": "",
     "medium": "OIL ON CANVAS",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/2_europe_baroque/1837_1.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-37-b5278fd7-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/the-caravan",
     "artworkType": "baroque-europe",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/2_europe_baroque/1837_1.jpg"
   },
   {
     "id": "rouen-38",
@@ -423,10 +461,11 @@
     "artist": "Luca Giordano",
     "year": "",
     "medium": "OIL ON CANVAS",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/2_europe_baroque/1839_2.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-38-550832fa-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/the-good-samaritan",
     "artworkType": "baroque-europe",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/2_europe_baroque/1839_2.jpg"
   },
   {
     "id": "rouen-39",
@@ -434,10 +473,11 @@
     "artist": "Diego Velázquez",
     "year": "",
     "medium": "OIL ON CANVAS",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/2_europe_baroque/1822_1_16.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-39-683f0595-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/democritus",
     "artworkType": "baroque-europe",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/2_europe_baroque/1822_1_16.jpg"
   },
   {
     "id": "rouen-40",
@@ -445,10 +485,11 @@
     "artist": "Eustache Le Sueur",
     "year": "1636",
     "medium": "OIL ON CANVAS",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/3_grand_siecle_francais/1867_3.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-40-35a5e0f9-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/poliphile-devant-la-reine-eleutherilide",
     "artworkType": "the-french-grand-siecle",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/3_grand_siecle_francais/1867_3.jpg"
   },
   {
     "id": "rouen-41",
@@ -456,10 +497,11 @@
     "artist": "Simon Vouet",
     "year": "1642",
     "medium": "OIL ON CANVAS",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/3_grand_siecle_francais/1803_21.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-41-faf87b34-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/saint-louis-enleve-au-ciel",
     "artworkType": "the-french-grand-siecle",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/3_grand_siecle_francais/1803_21.jpg"
   },
   {
     "id": "rouen-42",
@@ -467,10 +509,11 @@
     "artist": "François de Troy",
     "year": "1714",
     "medium": "OIL ON CANVAS",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/3_grand_siecle_francais/1803_28.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-42-a60f6173-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/duchess-of-la-force",
     "artworkType": "the-french-grand-siecle",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/3_grand_siecle_francais/1803_28.jpg"
   },
   {
     "id": "rouen-43",
@@ -478,10 +521,11 @@
     "artist": "Jouvenet Jean",
     "year": "1692",
     "medium": "OIL ON CANVAS",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/3_grand_siecle_francais/SR_26.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-43-e059dfa8-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/presentation-of-jesus-at-the-temple",
     "artworkType": "the-french-grand-siecle",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/3_grand_siecle_francais/SR_26.jpg"
   },
   {
     "id": "rouen-44",
@@ -489,10 +533,11 @@
     "artist": "Philippe de Champaigne",
     "year": "",
     "medium": "OIL ON CANVAS",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/3_grand_siecle_francais/21-1803_9_champaigne-moy.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-44-924e51e5-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/dieu-le-pere-creant-l-univers-materiel",
     "artworkType": "the-french-grand-siecle",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/3_grand_siecle_francais/21-1803_9_champaigne-moy.jpg"
   },
   {
     "id": "rouen-45",
@@ -500,10 +545,11 @@
     "artist": "Stella Jacques",
     "year": "1640",
     "medium": "OIL ON CANVAS",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/3_grand_siecle_francais/1803_27.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-45-47d5c817-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/saint-anne-leading-the-virgin-to-the-temple",
     "artworkType": "the-french-grand-siecle",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/3_grand_siecle_francais/1803_27.jpg"
   },
   {
     "id": "rouen-46",
@@ -511,10 +557,11 @@
     "artist": "Poussin Nicolas",
     "year": "1639",
     "medium": "",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/3_grand_siecle_francais/1866_1.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-46-24ef92a6-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/venus-presenting-arms-to-aeneas",
     "artworkType": "the-french-grand-siecle",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/3_grand_siecle_francais/1866_1.jpg"
   },
   {
     "id": "rouen-47",
@@ -522,10 +569,11 @@
     "artist": "Charles de La Fosse",
     "year": "",
     "medium": "OIL ON CANVAS",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/3_grand_siecle_francais/1822_1_2.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-47-cc5f22ad-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/sunrise-with-the-chariot-of-apollo",
     "artworkType": "the-french-grand-siecle",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/3_grand_siecle_francais/1822_1_2.jpg"
   },
   {
     "id": "rouen-48",
@@ -533,10 +581,11 @@
     "artist": "Laurent Hyre",
     "year": "1635",
     "medium": "OIL ON CANVAS",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/3_grand_siecle_francais/1803_15.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-48-e778ac83-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/l-adoration-des-bergers-0",
     "artworkType": "the-french-grand-siecle",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/3_grand_siecle_francais/1803_15.jpg"
   },
   {
     "id": "rouen-49",
@@ -544,10 +593,11 @@
     "artist": "Louis de Boullogne",
     "year": "",
     "medium": "OIL ON CANVAS",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/3_grand_siecle_francais/D%20_1819_4.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-49-bda057fc-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/ceres-allegorie-du-mois-d-aout",
     "artworkType": "the-french-grand-siecle",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/3_grand_siecle_francais/D%20_1819_4.jpg"
   },
   {
     "id": "rouen-50",
@@ -555,10 +605,11 @@
     "artist": "Scheffer Ary",
     "year": "",
     "medium": "OIL ON CANVAS",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/9_romantisme/100-1975_4_207_scheffer-moy.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-50-4ee3d7ed-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/scene-of-an-exodus",
     "artworkType": "romanticism",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/9_romantisme/100-1975_4_207_scheffer-moy.jpg"
   },
   {
     "id": "rouen-51",
@@ -566,10 +617,11 @@
     "artist": "Boulanger Louis",
     "year": "1827",
     "medium": "OIL ON CANVAS",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/9_romantisme/1835_3.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-51-dbf9b1af-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/the-ordeal-of-mazeppa",
     "artworkType": "romanticism",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/9_romantisme/1835_3.jpg"
   },
   {
     "id": "rouen-52",
@@ -577,10 +629,11 @@
     "artist": "Géricault Théodore",
     "year": "",
     "medium": "OIL ON CANVAS",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/9_romantisme/1850_3.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-52-4676dfe8-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/study-of-a-dapple-grey",
     "artworkType": "romanticism",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/9_romantisme/1850_3.jpg"
   },
   {
     "id": "rouen-53",
@@ -588,10 +641,11 @@
     "artist": "Eugène Delacroix",
     "year": "",
     "medium": "OIL ON CANVAS",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/9_romantisme/1893_3.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-53-4e36a675-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/self-portrait",
     "artworkType": "romanticism",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/9_romantisme/1893_3.jpg"
   },
   {
     "id": "rouen-54",
@@ -599,10 +653,11 @@
     "artist": "Géricault Théodore",
     "year": "",
     "medium": "OIL ON CANVAS",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/9_romantisme/1901_3.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-54-4fd95a3a-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/carabinier-with-his-horse",
     "artworkType": "romanticism",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/9_romantisme/1901_3.jpg"
   },
   {
     "id": "rouen-55",
@@ -610,10 +665,11 @@
     "artist": "Hippolyte Bellangé | 902.2",
     "year": "1838",
     "medium": "OIL ON CANVAS",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/9_romantisme/1902_2.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-55-7664ff15-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/portrait-of-mr-gustave-de-maupassant-father-of-the-novelist",
     "artworkType": "romanticism",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/9_romantisme/1902_2.jpg"
   },
   {
     "id": "rouen-56",
@@ -621,10 +677,11 @@
     "artist": "Daguerre Louis-Jacques-Mandé",
     "year": "1824",
     "medium": "OIL ON CANVAS",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/9_romantisme/2004_3_1.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-56-a131360f-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/interior-of-rosslyn-chapel",
     "artworkType": "romanticism",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/9_romantisme/2004_3_1.jpg"
   },
   {
     "id": "rouen-57",
@@ -632,10 +689,11 @@
     "artist": "Paul Delaroche",
     "year": "1824",
     "medium": "OIL ON CANVAS",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/9_romantisme/1982_6_1.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-57-69eb38ff-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/joan-of-arc-sick-interrogated-in-prison-by-the-cardinal-of-winchester",
     "artworkType": "romanticism",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/9_romantisme/1982_6_1.jpg"
   },
   {
     "id": "rouen-58",
@@ -643,10 +701,11 @@
     "artist": "Géricault Théodore",
     "year": "",
     "medium": "OIL ON CANVAS-BACKED PAPER",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/9_romantisme/1866_3_1_.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-58-0270abfe-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/slaves-stopping-a-horse",
     "artworkType": "romanticism",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/9_romantisme/1866_3_1_.jpg"
   },
   {
     "id": "rouen-59",
@@ -654,10 +713,11 @@
     "artist": "Eugène Delacroix",
     "year": "1840",
     "medium": "OIL ON CANVAS",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/justice_de_trajan.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-59-d77ed8d8-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/the-justice-of-trajan",
     "artworkType": "romanticism",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/justice_de_trajan.jpg"
   },
   {
     "id": "rouen-60",
@@ -665,10 +725,11 @@
     "artist": "Georges Clairin",
     "year": "1874",
     "medium": "OIL ON CANVAS",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/109-d_1875_1_clairin-moy.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-60-a0279187-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/the-massacre-of-the-abencerrages",
     "artworkType": "the-salon",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/109-d_1875_1_clairin-moy.jpg"
   },
   {
     "id": "rouen-61",
@@ -676,10 +737,11 @@
     "artist": "Paul Alexandre Alfred LEROY",
     "year": "1882",
     "medium": "OIL ON CANVAS",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/10_salon/D_1884_3.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-61-a69984a0-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/jesus-with-martha-and-mary",
     "artworkType": "the-salon",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/10_salon/D_1884_3.jpg"
   },
   {
     "id": "rouen-62",
@@ -687,10 +749,11 @@
     "artist": "Alfred Agache",
     "year": "1888",
     "medium": "OIL ON CANVAS",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/10_salon/D_1889_2.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-62-21a39538-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/enigma",
     "artworkType": "the-salon",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/10_salon/D_1889_2.jpg"
   },
   {
     "id": "rouen-63",
@@ -698,10 +761,11 @@
     "artist": "Georges-Antoine Rochegrosse",
     "year": "",
     "medium": "OIL ON CANVAS",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/10_salon/D_1884_1.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-63-ccbf8c47-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/andromache",
     "artworkType": "the-salon",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/10_salon/D_1884_1.jpg"
   },
   {
     "id": "rouen-64",
@@ -709,10 +773,11 @@
     "artist": "Pierre-Henri Revoil | 931.16.3",
     "year": "1819",
     "medium": "OIL ON CANVAS",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/10_salon/108-1931_16_3_revoil-moy.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-64-bc2a7e9f-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/joan-of-arc-imprisoned-in-rouen",
     "artworkType": "the-salon",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/10_salon/108-1931_16_3_revoil-moy.jpg"
   },
   {
     "id": "rouen-65",
@@ -720,10 +785,11 @@
     "artist": "Jules-Alexandre GRÜN",
     "year": "1911",
     "medium": "OIL ON CANVAS",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/10_salon/D_1932_1.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-65-64f687d4-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/a-friday-at-the-salon-des-artistes-francais",
     "artworkType": "the-salon",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/10_salon/D_1932_1.jpg"
   },
   {
     "id": "rouen-66",
@@ -731,10 +797,11 @@
     "artist": "Albert Fourié",
     "year": "1886",
     "medium": "OIL ON CANVAS",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/10_salon/D_1889_1.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-66-2f21432c-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/un-repas-de-noces-a-yport",
     "artworkType": "the-salon",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/10_salon/D_1889_1.jpg"
   },
   {
     "id": "rouen-67",
@@ -742,10 +809,11 @@
     "artist": "LUMINAIS Evariste Vital",
     "year": "",
     "medium": "OIL ON CANVAS",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/10_salon/D_1912_1.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-67-7825e107-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/the-sons-of-clovis",
     "artworkType": "the-salon",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/10_salon/D_1912_1.jpg"
   },
   {
     "id": "rouen-68",
@@ -753,10 +821,11 @@
     "artist": "Gustave Moreau | 931.16.1",
     "year": "1865",
     "medium": "OIL ON CANVAS",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/10_salon/1931_16_1.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-68-6b288f19-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/diomedes-devoured-by-his-horses",
     "artworkType": "the-salon",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/10_salon/1931_16_1.jpg"
   },
   {
     "id": "rouen-69",
@@ -764,10 +833,11 @@
     "artist": "Boissard de Boisdenier Joseph Ferdinand",
     "year": "1835",
     "medium": "OIL ON CANVAS",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/10_salon/104-1853_3_boissard-moy.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-69-f2216476-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/episode-in-the-retreat-from-moscow",
     "artworkType": "the-salon",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/10_salon/104-1853_3_boissard-moy.jpg"
   },
   {
     "id": "rouen-70",
@@ -775,10 +845,11 @@
     "artist": "VINCENT François André",
     "year": "1772",
     "medium": "OIL ON CANVAS",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/11_portraits/1808_1_1.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-70-d895bdbc-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/portrait-of-the-painter-jean-pierre-houel-1735-1813",
     "artworkType": "portraits",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/11_portraits/1808_1_1.jpg"
   },
   {
     "id": "rouen-71",
@@ -786,10 +857,11 @@
     "artist": "Jean-François Millet",
     "year": "",
     "medium": "OIL ON CANVAS",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/11_portraits/1893_4.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-71-7324d359-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/portrait-of-a-naval-officer",
     "artworkType": "portraits",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/11_portraits/1893_4.jpg"
   },
   {
     "id": "rouen-72",
@@ -797,10 +869,11 @@
     "artist": "Claude-Marie Dubufe | 926.2",
     "year": "1837",
     "medium": "OIL ON CANVAS",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/11_portraits/1926_2.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-72-4e79a2d2-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/portrait-of-madame-francis-vaussard-born-elisabeth-adelaide-cavallier",
     "artworkType": "portraits",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/11_portraits/1926_2.jpg"
   },
   {
     "id": "rouen-73",
@@ -808,10 +881,11 @@
     "artist": "Amedeo Modigliani",
     "year": "1913",
     "medium": "OIL ON CANVAS",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/11_portraits/1988_11_2.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-73-ec8ec520-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/paul-alexandre-in-front-of-a-glass-panel",
     "artworkType": "portraits",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/11_portraits/1988_11_2.jpg"
   },
   {
     "id": "rouen-74",
@@ -819,10 +893,11 @@
     "artist": "Jean Restout | 851.7",
     "year": "1716",
     "medium": "OIL ON CANVAS",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/11_portraits/1851_7.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-74-7088f719-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/portrait-of-dom-louis-baudouin-du-basset-a-carthusian-monk-of-gaillon",
     "artworkType": "portraits",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/11_portraits/1851_7.jpg"
   },
   {
     "id": "rouen-75",
@@ -830,10 +905,11 @@
     "artist": "Ingres Jean-Auguste-Dominique",
     "year": "1806",
     "medium": "OIL ON CANVAS",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/11_portraits/1870_1.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-75-7a07184c-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/la-belle-zelie",
     "artworkType": "portraits",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/11_portraits/1870_1.jpg"
   },
   {
     "id": "rouen-76",
@@ -841,10 +917,11 @@
     "artist": "Joseph Ducreux | 842.2.2",
     "year": "",
     "medium": "OIL ON CANVAS",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/11_portraits/114-1975_4_115_ducreux-moy.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-76-ccb551cc-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/self-portrait-as-a-naval-officer",
     "artworkType": "portraits",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/11_portraits/114-1975_4_115_ducreux-moy.jpg"
   },
   {
     "id": "rouen-77",
@@ -852,10 +929,11 @@
     "artist": "David Jacques Louis",
     "year": "",
     "medium": "OIL ON CANVAS",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/11_portraits/1931_15.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-77-ce5d34ad-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/portrait-presumed-to-be-of-his-jailer",
     "artworkType": "portraits",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/11_portraits/1931_15.jpg"
   },
   {
     "id": "rouen-78",
@@ -863,10 +941,11 @@
     "artist": "Thomas Couture | 951.4.1",
     "year": "1842",
     "medium": "OIL ON CANVAS",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/11_portraits/1951_4_1.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-78-ef560198-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/portrait-of-madame-poullain-dumesnil",
     "artworkType": "portraits",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/11_portraits/1951_4_1.jpg"
   },
   {
     "id": "rouen-79",
@@ -874,10 +953,11 @@
     "artist": "Boilly Louis Léopold",
     "year": "",
     "medium": "OIL ON CANVAS",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/11_portraits/1905_1.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-79-1844064c-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/portrait-of-the-composer-francois-adrien-boieldieu",
     "artworkType": "portraits",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/11_portraits/1905_1.jpg"
   },
   {
     "id": "rouen-80",
@@ -885,10 +965,11 @@
     "artist": "Redouté Pierre Joseph",
     "year": "",
     "medium": "OIL ON CANVAS",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/12_natures_mortes/1953_1_4.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-80-2c9e1fe4-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/vase-of-flowers",
     "artworkType": "still-lifes",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/12_natures_mortes/1953_1_4.jpg"
   },
   {
     "id": "rouen-81",
@@ -896,10 +977,11 @@
     "artist": "Jan Davidsz. de Heem",
     "year": "",
     "medium": "OIL ON CANVAS",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/12_natures_mortes/1931_6_4.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-81-b5860d53-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/fruits-or-bunches-of-fruit",
     "artworkType": "still-lifes",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/12_natures_mortes/1931_6_4.jpg"
   },
   {
     "id": "rouen-82",
@@ -907,10 +989,11 @@
     "artist": "Otto Marseus van Schrieck",
     "year": "",
     "medium": "OIL ON CANVAS",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/12_natures_mortes/41-1811_48_2_schrieck-moy.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-82-5148883c-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/still-life-with-mushrooms-lizard-and-insects",
     "artworkType": "still-lifes",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/12_natures_mortes/41-1811_48_2_schrieck-moy.jpg"
   },
   {
     "id": "rouen-83",
@@ -918,10 +1001,11 @@
     "artist": "Nicolas Baudesson | 907.1.61",
     "year": "",
     "medium": "OIL ON CANVAS",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/12_natures_mortes/120-1907_1_61_baudesson-moy.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-83-0894d0b3-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/flowers-in-a-crystal-vase",
     "artworkType": "still-lifes",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/12_natures_mortes/120-1907_1_61_baudesson-moy.jpg"
   },
   {
     "id": "rouen-84",
@@ -929,10 +1013,11 @@
     "artist": "Simon Saint-Jean",
     "year": "1833",
     "medium": "OIL ON CANVAS",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/12_natures_mortes/D_1834_1.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-84-776a5047-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/straw-hat-with-flowers-and-fruit",
     "artworkType": "still-lifes",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/12_natures_mortes/D_1834_1.jpg"
   },
   {
     "id": "rouen-85",
@@ -940,10 +1025,11 @@
     "artist": "Michelangelo Cerquozzi",
     "year": "",
     "medium": "OIL ON CANVAS",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/12_natures_mortes/39-1822_1_42_cerquozzi-moy.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-85-6da0ee46-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/still-life-with-white-grapes",
     "artworkType": "still-lifes",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/12_natures_mortes/39-1822_1_42_cerquozzi-moy.jpg"
   },
   {
     "id": "rouen-86",
@@ -951,10 +1037,11 @@
     "artist": "Paul Liégeois | 818.1.11",
     "year": "",
     "medium": "OIL ON CANVAS",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/12_natures_mortes/1818_1_11.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-86-e40b5fa8-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/still-life",
     "artworkType": "still-lifes",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/12_natures_mortes/1818_1_11.jpg"
   },
   {
     "id": "rouen-87",
@@ -962,10 +1049,11 @@
     "artist": "Jean LASNE",
     "year": "1939",
     "medium": "OIL ON CANVAS",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/12_natures_mortes/1987_2_1.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-87-9c473a77-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/still-life-with-book",
     "artworkType": "still-lifes",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/12_natures_mortes/1987_2_1.jpg"
   },
   {
     "id": "rouen-88",
@@ -973,10 +1061,11 @@
     "artist": "Willem Kalf",
     "year": "",
     "medium": "OIL ON CANVAS",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/12_natures_mortes/1834_1.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-88-b12b66e6-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/still-life-with-upturned-flask",
     "artworkType": "still-lifes",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/12_natures_mortes/1834_1.jpg"
   },
   {
     "id": "rouen-89",
@@ -984,10 +1073,11 @@
     "artist": "Claude Monet",
     "year": "",
     "medium": "OIL ON CANVAS",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/12_natures_mortes/D_1954_5.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-89-e0a5709a-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/still-life-with-pheasant",
     "artworkType": "still-lifes",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/12_natures_mortes/D_1954_5.jpg"
   },
   {
     "id": "rouen-90",
@@ -995,10 +1085,11 @@
     "artist": "Paul Huet | 887.3",
     "year": "1831",
     "medium": "OIL ON CANVAS",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/13_rouen/1887_3.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-90-02fa0540-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/general-view-of-rouen-from-mont-aux-malades",
     "artworkType": "rouen",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/13_rouen/1887_3.jpg"
   },
   {
     "id": "rouen-91",
@@ -1006,10 +1097,11 @@
     "artist": "Jean-Baptiste Camille Corot",
     "year": "1834",
     "medium": "OIL ON CANVAS",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/13_rouen/D_1951_2_1.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-91-bcc5f97e-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/the-quay-at-rouen",
     "artworkType": "rouen",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/13_rouen/D_1951_2_1.jpg"
   },
   {
     "id": "rouen-92",
@@ -1017,10 +1109,11 @@
     "artist": "Léon Jules Lemaitre | 958.10",
     "year": "1891",
     "medium": "OIL ON CANVAS",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/13_rouen/1958_10.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-92-24396888-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/view-of-rouen",
     "artworkType": "rouen",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/13_rouen/1958_10.jpg"
   },
   {
     "id": "rouen-93",
@@ -1028,10 +1121,11 @@
     "artist": "William Callow |.5.1",
     "year": "1855",
     "medium": "WATERCOLOUR OVER PENCIL",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/13_rouen/84-ag_2000_5_1_callow-moy.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-93-9b4590cc-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/view-of-rouen-on-the-seine",
     "artworkType": "rouen",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/13_rouen/84-ag_2000_5_1_callow-moy.jpg"
   },
   {
     "id": "rouen-94",
@@ -1039,10 +1133,11 @@
     "artist": "Canella Giuseppe",
     "year": "1824",
     "medium": "OIL ON CANVAS",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/13_rouen/1953_4.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-94-cbbea739-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/place-de-la-haute-vieille-tour-rouen",
     "artworkType": "rouen",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/13_rouen/1953_4.jpg"
   },
   {
     "id": "rouen-95",
@@ -1050,10 +1145,11 @@
     "artist": "Claude de Jongh (? - | 955.7",
     "year": "",
     "medium": "OIL ON CANVAS",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/13_rouen/1955_7.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-95-b9e1dc1e-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/view-of-rouen-0",
     "artworkType": "rouen",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/13_rouen/1955_7.jpg"
   },
   {
     "id": "rouen-96",
@@ -1061,10 +1157,11 @@
     "artist": "Jean-Honoré Fragonard",
     "year": "",
     "medium": "OIL ON CANVAS",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/14_peinture_de_genre_en_france/1880_1.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-96-f9972cd5-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/the-washerwomen",
     "artworkType": "genre-painting-in-france-in-the-18th-century",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/14_peinture_de_genre_en_france/1880_1.jpg"
   },
   {
     "id": "rouen-97",
@@ -1072,10 +1169,11 @@
     "artist": "DESHAYS Jean-Baptiste",
     "year": "",
     "medium": "OIL ON CANVAS",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/14_peinture_de_genre_en_france/1974_4.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-97-468293d0-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/the-monkey-painter",
     "artworkType": "genre-painting-in-france-in-the-18th-century",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/14_peinture_de_genre_en_france/1974_4.jpg"
   },
   {
     "id": "rouen-98",
@@ -1083,10 +1181,11 @@
     "artist": "Nicolas Lancret",
     "year": "",
     "medium": "OIL ON CANVAS",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/14_peinture_de_genre_en_france/1811_42.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-98-53564c59-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/the-bathers",
     "artworkType": "genre-painting-in-france-in-the-18th-century",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/14_peinture_de_genre_en_france/1811_42.jpg"
   },
   {
     "id": "rouen-99",
@@ -1094,10 +1193,11 @@
     "artist": "Oudry Jean Baptiste",
     "year": "1725",
     "medium": "OIL ON CANVAS",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/14_peinture_de_genre_en_france/D_1820_1.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-99-618a24da-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/roe-hunt-or-roe-at-bay",
     "artworkType": "genre-painting-in-france-in-the-18th-century",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/14_peinture_de_genre_en_france/D_1820_1.jpg"
   },
   {
     "id": "rouen-100",
@@ -1105,10 +1205,11 @@
     "artist": "Jean-Baptiste-Marie Pierre",
     "year": "",
     "medium": "OIL ON CANVAS",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/14_peinture_de_genre_en_france/131-1975_4_126_pierre-moy.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-100-cc47215e-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/la-fuite-en-egypte",
     "artworkType": "genre-painting-in-france-in-the-18th-century",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/14_peinture_de_genre_en_france/131-1975_4_126_pierre-moy.jpg"
   },
   {
     "id": "rouen-101",
@@ -1116,10 +1217,11 @@
     "artist": "François de Troy",
     "year": "1727",
     "medium": "OIL ON CANVAS",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/14_peinture_de_genre_en_france/1891_3.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-101-16874bb3-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/susanna-and-the-elders",
     "artworkType": "genre-painting-in-france-in-the-18th-century",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/14_peinture_de_genre_en_france/1891_3.jpg"
   },
   {
     "id": "rouen-102",
@@ -1127,10 +1229,11 @@
     "artist": "Gaspare Traversi",
     "year": "",
     "medium": "OIL ON CANVAS",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/14_peinture_de_genre_en_france/1929_3_PIX.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-102-13517e91-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/the-concert",
     "artworkType": "genre-painting-in-france-in-the-18th-century",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/14_peinture_de_genre_en_france/1929_3_PIX.jpg"
   },
   {
     "id": "rouen-103",
@@ -1138,10 +1241,11 @@
     "artist": "Carle van Loo",
     "year": "1738",
     "medium": "OIL ON CANVAS",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/14_peinture_de_genre_en_france/135-sr_53-van-loo-moy.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-103-af6838a4-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/virgin-and-child",
     "artworkType": "genre-painting-in-france-in-the-18th-century",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/14_peinture_de_genre_en_france/135-sr_53-van-loo-moy.jpg"
   },
   {
     "id": "rouen-104",
@@ -1149,10 +1253,11 @@
     "artist": "Saint-Aubin Gabriel Jacques de",
     "year": "1752",
     "medium": "OIL ON CANVAS",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/14_peinture_de_genre_en_france/1975_4_154.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-104-326e4359-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/the-triumph-of-love-over-all-the-gods",
     "artworkType": "genre-painting-in-france-in-the-18th-century",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/14_peinture_de_genre_en_france/1975_4_154.jpg"
   },
   {
     "id": "rouen-105",
@@ -1160,10 +1265,11 @@
     "artist": "Watteau Antoine",
     "year": "",
     "medium": "SANGUINE AND CHARCOAL DRAWING WITH WHITE AND BROWN CHALK HIGHLIGHTS ON BEIGE PAPER",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/4_dessins/AG_1822_1_76_Watteau.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-105-e4fadf17-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/study-of-heads-and-hands",
     "artworkType": "the-drawing-collection",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/4_dessins/AG_1822_1_76_Watteau.jpg"
   },
   {
     "id": "rouen-106",
@@ -1171,10 +1277,11 @@
     "artist": "Amedeo Modigliani",
     "year": "1909",
     "medium": "DRAWING IN BLACK CRAYON",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/4_dessins/AG_2001_2_34.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-106-f847d8ea-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/paul-alexandre-in-profile-with-pipe-in-hand",
     "artworkType": "the-drawing-collection",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/4_dessins/AG_2001_2_34.jpg"
   },
   {
     "id": "rouen-107",
@@ -1182,10 +1289,11 @@
     "artist": "Prud'hon Pierre-Paul",
     "year": "",
     "medium": "BLACK CHARCOAL AND WHITE CHALK DRAWING WITH STUMP BLENDING ON BLUE PAPER",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/4_dessins/AG_1901_8_Prudhon.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-107-0b71d74f-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/nude-man",
     "artworkType": "the-drawing-collection",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/4_dessins/AG_1901_8_Prudhon.jpg"
   },
   {
     "id": "rouen-108",
@@ -1193,10 +1301,11 @@
     "artist": "Giovanni Segantini",
     "year": "",
     "medium": "CHARCOAL AND COLOURED PENCILS ON PREPARED PAPER",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/4_dessins/AG_1975_4_4549_Segantini.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-108-8a74620c-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/the-sheep-shearer",
     "artworkType": "the-drawing-collection",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/4_dessins/AG_1975_4_4549_Segantini.jpg"
   },
   {
     "id": "rouen-109",
@@ -1204,10 +1313,11 @@
     "artist": "Simon Vouet",
     "year": "",
     "medium": "CHARCOAL DRAWING WITH WHITE CHALK HIGHLIGHTS ON BROWN PAPER",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/4_dessins/AG_1868_5_80_Vouet.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-109-a39ba74e-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/study-for-a-figure-of-endymion",
     "artworkType": "the-drawing-collection",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/4_dessins/AG_1868_5_80_Vouet.jpg"
   },
   {
     "id": "rouen-110",
@@ -1226,10 +1336,11 @@
     "artist": "Géricault Théodore",
     "year": "",
     "medium": "QUILL AND BROWN INK DRAWING ON CREAM PAPER",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/4_dessins/AG_1890_50_1.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-111-d6f81475-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/study-for-the-raft-of-the-medusa",
     "artworkType": "the-drawing-collection",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/4_dessins/AG_1890_50_1.jpg"
   },
   {
     "id": "rouen-112",
@@ -1237,10 +1348,11 @@
     "artist": "François Lemoine",
     "year": "",
     "medium": "BLACK CHARCOAL AND PASTEL DRAWING ON GREEN PAPER",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/4_dessins/74-lemoine-ht-moy.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-112-a7f75042-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/head-of-bearded-old-man",
     "artworkType": "the-drawing-collection",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/4_dessins/74-lemoine-ht-moy.jpg"
   },
   {
     "id": "rouen-113",
@@ -1248,10 +1360,11 @@
     "artist": "Bellange Jacques",
     "year": "",
     "medium": "QUILL AND BROWN WASH DRAWING",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/4_dessins/AG_1975_4_556.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-113-b90b3861-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/cavalryman",
     "artworkType": "the-drawing-collection",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/4_dessins/AG_1975_4_556.jpg"
   },
   {
     "id": "rouen-114",
@@ -1259,10 +1372,11 @@
     "artist": "Géricault Théodore",
     "year": "",
     "medium": "STONE WITH BROWN PATINA",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/7_sculpture/58-gericault-ht-moy.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-114-6e3024a8-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/satyr-and-nymph",
     "artworkType": "sculpture",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/7_sculpture/58-gericault-ht-moy.jpg"
   },
   {
     "id": "rouen-115",
@@ -1270,10 +1384,11 @@
     "artist": "Bernadino Gatti - | 975.4.343",
     "year": "",
     "medium": "DRAWING IN QUILL AND BLACK INK AND QUILL AND BROWN INK WITH BROWN WASH AND HIGHLIGHTS IN WHITE GOUACHE",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/4_dessins/AG_1975_4_343.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-115-6c069b2f-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/study-of-a-man-kneeling",
     "artworkType": "the-drawing-collection",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/4_dessins/AG_1975_4_343.jpg"
   },
   {
     "id": "rouen-116",
@@ -1281,10 +1396,11 @@
     "artist": "Pierre Puget | 884.12.1",
     "year": "1659",
     "medium": "STONE",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/7_sculpture/63-s_1884_12_1_puget-moy.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-116-98a8fecb-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/hercules-slaying-the-hydra-of-lerna",
     "artworkType": "sculpture",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/7_sculpture/63-s_1884_12_1_puget-moy.jpg"
   },
   {
     "id": "rouen-117",
@@ -1292,10 +1408,11 @@
     "artist": "Jacques Lipchitz",
     "year": "1920",
     "medium": "BRONZE, ARTIST’S PROOF",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/7_sculpture/60-1988_9_1_lipchitz-moy.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-117-e3205810-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/raymond-radiguet",
     "artworkType": "sculpture",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/7_sculpture/60-1988_9_1_lipchitz-moy.jpg"
   },
   {
     "id": "rouen-118",
@@ -1314,10 +1431,11 @@
     "artist": "Jean-Jacques Pradier",
     "year": "1819",
     "medium": "MARBLE",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/7_sculpture/62-s_d_1819_1_pradier-moy.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-119-afc0e379-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/reclining-bacchante",
     "artworkType": "sculpture",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/7_sculpture/62-s_d_1819_1_pradier-moy.jpg"
   },
   {
     "id": "rouen-120",
@@ -1325,10 +1443,11 @@
     "artist": "Joseph-Michel Pollet",
     "year": "1862",
     "medium": "BRONZE",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/7_sculpture/61-d_1868_3_pollet-moy.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-120-c8d866fb-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/eloa-sister-of-the-angels",
     "artworkType": "sculpture",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/7_sculpture/61-d_1868_3_pollet-moy.jpg"
   },
   {
     "id": "rouen-121",
@@ -1336,10 +1455,11 @@
     "artist": "Félix Lecomte | 994.1.1",
     "year": "1769",
     "medium": "MARBLE",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/7_sculpture/59-1994_1_1_lecomte-moy.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-121-4266c0b9-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/slave-overcome-with-suffering",
     "artworkType": "sculpture",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/7_sculpture/59-1994_1_1_lecomte-moy.jpg"
   },
   {
     "id": "rouen-122",
@@ -1347,10 +1467,11 @@
     "artist": "Pierre-Jean David | 829.1",
     "year": "1822",
     "medium": "ORIGINAL PLASTER CAST FOR THE MONUMENT AT BONCHAMPS (CHURCH OF SAINT-FLORENT-LE-VIEIL)",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/7_sculpture/56-1829_1_david_d-angers-moy.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-122-e4512472-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/general-bonchamps",
     "artworkType": "sculpture",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/7_sculpture/56-1829_1_david_d-angers-moy.jpg"
   },
   {
     "id": "rouen-123",
@@ -1358,10 +1479,11 @@
     "artist": "Charles-Antoine Callamard | 988.5.1",
     "year": "",
     "medium": "TERRACOTTA",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/7_sculpture/55-s_1998_5_1_callamard_1-moy.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-123-dd425959-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/liberty-crushing-the-hydra-of-despotism",
     "artworkType": "sculpture",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/7_sculpture/55-s_1998_5_1_callamard_1-moy.jpg"
   },
   {
     "id": "rouen-124",
@@ -1369,10 +1491,11 @@
     "artist": "Jean-Jacques Caffieri",
     "year": "",
     "medium": "TERRACOTTA",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/7_sculpture/D.819.9.JPG",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-124-ca613cae-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/pierre-corneille",
     "artworkType": "sculpture",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/Collections%20permanentes/7_sculpture/D.819.9.JPG"
   },
   {
     "id": "rouen-125",
@@ -1380,10 +1503,11 @@
     "artist": "Géricault Théodore",
     "year": "",
     "medium": "OIL ON CANVAS, 63.5 X 80 CM",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/oeuvres/d_1963_2_1_lbv.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-125-a0dbec37-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/le-retour-de-la-course-or-char-antique-the-return-from-the-race-or-ancient-chariot",
     "artworkType": "who-owns-these-paintings",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/oeuvres/d_1963_2_1_lbv.jpg"
   },
   {
     "id": "rouen-126",
@@ -1391,10 +1515,11 @@
     "artist": "Claude Monet",
     "year": "1879",
     "medium": "OIL ON CANVAS, 81 X 60 CM",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/oeuvres/d_1954_6_1.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-126-8fea7bde-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/la-seine-a-vetheuil-the-seine-in-vetheuil",
     "artworkType": "who-owns-these-paintings",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/oeuvres/d_1954_6_1.jpg"
   },
   {
     "id": "rouen-127",
@@ -1402,10 +1527,11 @@
     "artist": "Jean-Baptiste Camille Corot",
     "year": "1834",
     "medium": "OIL ON CANVAS",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/oeuvres/d_1951_2_1.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-127-e11978ca-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/les-quais-marchands-de-rouen-or-l-avant-port-de-rouen-the-merchant-quays-of-rouen-or-the",
     "artworkType": "who-owns-these-paintings",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/oeuvres/d_1951_2_1.jpg"
   },
   {
     "id": "rouen-128",
@@ -1413,10 +1539,11 @@
     "artist": "Armand Guillaumin",
     "year": "1888",
     "medium": "PASTEL ON PAPER, 50 X 60 CM",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/oeuvres/ag_d_1954_8_guillaumin.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-128-b04694e2-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/madame-guillaumin-cousant-madame-guillaumin-sewing",
     "artworkType": "who-owns-these-paintings",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/oeuvres/ag_d_1954_8_guillaumin.jpg"
   },
   {
     "id": "rouen-129",
@@ -1424,10 +1551,11 @@
     "artist": "Stanislas Lépine",
     "year": "",
     "medium": "OIL ON PANEL, 26 X 43 CM",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/oeuvres/d_1954_9_alb.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-129-7a931558-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/neige-a-paris-or-faubourg-de-paris-sous-la-neige-snow-in-paris-or-snowy-neighbourhood-of",
     "artworkType": "who-owns-these-paintings",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/oeuvres/d_1954_9_alb.jpg"
   },
   {
     "id": "rouen-130",
@@ -1435,10 +1563,11 @@
     "artist": "Claude Monet",
     "year": "1885",
     "medium": "TECHNIQUE: OIL ON CANVAS, 66 X 81.5 CM",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/oeuvres/d_1954_7_1.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-130-08fc2d36-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/champ-de-coquelicots-environs-de-giverny-field-of-poppies-near-giverny",
     "artworkType": "who-owns-these-paintings",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/oeuvres/d_1954_7_1.jpg"
   },
   {
     "id": "rouen-131",
@@ -1446,10 +1575,11 @@
     "artist": "Claude Monet",
     "year": "",
     "medium": "OIL ON CANVAS, 76 X 62 CM",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/oeuvres/d_1954_5_lbv.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-131-056c1bd1-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/nature-morte-au-faisan-still-life-with-pheasant",
     "artworkType": "who-owns-these-paintings",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/oeuvres/d_1954_5_lbv.jpg"
   },
   {
     "id": "rouen-132",
@@ -1457,10 +1587,11 @@
     "artist": "Friesz Othon",
     "year": "",
     "medium": "TECHNIQUE: OIL ON CANVAS, 54 X 64.5 CM",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/oeuvres/d_1960_1_alb.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-132-22155d0b-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/femme-assise-dans-un-jardin-woman-sitting-in-a-garden",
     "artworkType": "who-owns-these-paintings",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/oeuvres/d_1960_1_alb.jpg"
   },
   {
     "id": "rouen-133",
@@ -1468,9 +1599,10 @@
     "artist": "Claude Monet",
     "year": "1869",
     "medium": "OIL ON CANVAS, 43 X 65 CM",
-    "imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/oeuvres/d_1995_2_1.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/rouen-mba-collection/rouen-133-3c5d3d97-imageUrl.webp",
     "sourceUrl": "https://mbarouen.fr/en/oeuvres/route-effet-de-neige-soleil-couchant-road-snow-effect-sunset",
     "artworkType": "who-owns-these-paintings",
-    "museum": "Musée des Beaux-Arts de Rouen"
+    "museum": "Musée des Beaux-Arts de Rouen",
+    "original_imageUrl": "https://mbarouen.fr/sites/default/files/styles/oeuvre/public/upload/oeuvres/d_1995_2_1.jpg"
   }
 ]

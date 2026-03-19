@@ -1,168 +1,79 @@
-const { chromium } = require('playwright');
+#!/usr/bin/env node
+/* Scrape V&A Poster collection (all posters with images)
+   Source: https://collections.vam.ac.uk/search/?id_category=THES49001&images_exist=true&kw_object_type=Poster
+   Output: public/data/vam-posters-display.json
+*/
 const fs = require('fs');
 const path = require('path');
 
-async function scrapeVAMPosters() {
-  const browser = await chromium.launch({ headless: true });
-  const page = await browser.newPage();
+let got;
 
-  // Posters-only category (user-provided URL), images present, V&A venue, 1901–2025
-  const baseUrl = 'https://collections.vam.ac.uk/search/?id_category=THES252963&images_exist=true&kw_resident_venue=VA&page_size=15&q=&year_made_from=1901&year_made_to=2025';
-  const startPage = Number(process.env.START_PAGE || 1);
-  const endPage = Number(process.env.END_PAGE || 999); // unknown max; stop when fewer than 15 results
-  let pageNum = startPage;
-  const allItems = [];
-  const startedAt = new Date().toISOString();
-  const seenIds = new Set();
+const OUT = path.join(__dirname, '../public/data/vam-posters-display.json');
+const API = 'https://api.vam.ac.uk/v2/objects/search';
+const IMG_BASE = 'https://framemark.vam.ac.uk/collections';
 
-  // Resume support
-  if (process.env.CLEAN !== '1') {
-    try {
-      const existingPath = path.join(__dirname, '..', 'public', 'data', 'vam-posters.json');
-      if (fs.existsSync(existingPath)) {
-        const existing = JSON.parse(fs.readFileSync(existingPath, 'utf8'));
-        const items = Array.isArray(existing.items) ? existing.items : [];
-        for (const it of items) {
-          const rid = String(it.id || '').replace(/^vam-poster-/, '');
-          if (rid) seenIds.add(rid);
-          allItems.push(it);
-        }
-        console.log(`Resumed with ${allItems.length} existing posters.`);
-      }
-    } catch (e) {
-      console.warn('Resume failed (ignored):', e.message);
-    }
-  } else {
-    console.log('CLEAN=1 → starting fresh (no resume).');
-  }
-
-  while (true) {
-    const url = `${baseUrl}&page=${pageNum}`;
-    console.log(`Scraping page ${pageNum}: ${url}`);
-
-    try {
-      await page.goto(url, { waitUntil: 'networkidle' });
-      await page.waitForSelector('#search-results-grid, #vam-search-results, .g-object-grid', { timeout: 30000 });
-
-      // Wait up to 10s for item cards to render
-      const start = Date.now();
-      while (Date.now() - start < 10000) {
-        const count = await page.evaluate(() => {
-          const c = document.querySelector('#search-results-grid') || document.querySelector('#vam-search-results') || document.querySelector('.g-object-grid');
-          if (!c) return 0;
-          return c.querySelectorAll('li, article, .collection-object, .b-search-results-row, .b-search-results-row--listing').length;
-        });
-        if (count > 0) break;
-        await page.waitForTimeout(500);
-      }
-
-      const noResults = await page.locator('text=No results found').count();
-      if (noResults > 0) {
-        console.log('No more results.');
-        break;
-      }
-
-      const res = await page.evaluate(() => {
-        const items = [];
-        let container = document.querySelector('#search-results-grid');
-        if (!container) container = document.querySelector('#vam-search-results');
-        if (!container) container = document.querySelector('.g-object-grid');
-        let cards = container ? container.querySelectorAll('li, article, .collection-object, .b-search-results-row, .b-search-results-row--listing') : document.querySelectorAll('li, article, .collection-object');
-
-        cards.forEach(card => {
-          const linkEl = card.querySelector('a[href*="/item/"]') || card.closest('a[href*="/item/"]') || card.querySelector('a');
-          const imgEl = card.querySelector('img');
-          const titleEl = card.querySelector('h3, h2, .c-card__title, figcaption, .title') || linkEl;
-          const metaEl = card.querySelector('figcaption, .c-card__meta, .b-search-results-row__subcaption') || card;
-
-          if (!linkEl) return;
-          let title = titleEl?.textContent?.trim() || '';
-          if (!title && imgEl) title = imgEl.alt || '';
-          const metaText = metaEl?.textContent?.trim() || '';
-          let artist = '';
-          let date = '';
-          const metaYearMatch = metaText.match(/\b\d{4}\b/);
-          if (metaYearMatch) date = metaYearMatch[0];
-          artist = metaText.split(/\b\d{4}\b|—|\||\,/)[0]?.trim() || '';
-          const image = imgEl?.src || '';
-          const url = linkEl?.href || '';
-
-          const dateYearMatch = date.match(/\b\d{4}\b/);
-          const year = dateYearMatch ? parseInt(dateYearMatch[0]) : null;
-
-          const rawIdMatch = url.match(/\/item\/([^/#?]+)/);
-          const rawId = rawIdMatch ? rawIdMatch[1] : null;
-
-          items.push({
-            rawId,
-            name: title,
-            title,
-            artist,
-            year,
-            date,
-            image,
-            url,
-            description: `${artist} - ${date}`.trim(),
-          });
-        });
-
-        return { items, cardCount: cards.length, htmlSnippet: (container?.innerHTML || '').slice(0, 2000) };
-      });
-
-      console.log(`Page ${pageNum} debug:`, res.cardCount, 'cards found');
-      console.log('HTML snippet:', res.htmlSnippet);
-
-      if (res.items.length === 0) {
-        console.log('No posters found on this page.');
-        break;
-      }
-
-      let addedThisPage = 0;
-      for (const item of res.items) {
-        const baseId = item.rawId || `page${pageNum}-${addedThisPage}`;
-        if (seenIds.has(baseId)) continue;
-        seenIds.add(baseId);
-        addedThisPage += 1;
-        const finalId = `vam-poster-${baseId}`;
-        allItems.push({
-          id: finalId,
-          name: item.name,
-          title: item.title,
-          artist: item.artist,
-          year: item.year,
-          date: item.date,
-          image: item.image,
-          url: item.url,
-          description: item.description,
-        });
-      }
-      console.log(`Found ${addedThisPage} unique posters on page ${pageNum}`);
-
-      pageNum++;
-      if (pageNum > endPage) {
-        console.log('Reached page limit.');
-        break;
-      }
-      if (res.items.length < 15) {
-        console.log('Fewer than 15 items, likely last page.');
-        break;
-      }
-      if (pageNum % 10 === 0) {
-        const outputPath = path.join(__dirname, '..', 'public', 'data', 'vam-posters.json');
-        fs.writeFileSync(outputPath, JSON.stringify({ scrapedAt: startedAt, source: baseUrl, total: allItems.length, items: allItems }, null, 2));
-        console.log(`Checkpoint saved at page ${pageNum}: ${allItems.length} posters`);
-      }
-    } catch (error) {
-      console.error(`Error on page ${pageNum}:`, error);
-      break;
-    }
-  }
-
-  await browser.close();
-
-  const outputPath = path.join(__dirname, '..', 'public', 'data', 'vam-posters.json');
-  fs.writeFileSync(outputPath, JSON.stringify({ scrapedAt: startedAt, source: baseUrl, total: allItems.length, items: allItems }, null, 2));
-  console.log(`Saved ${allItems.length} posters to ${outputPath}`);
+async function fetchJson(url) {
+  if (!got) got = (await import('got')).default;
+  const res = await got(url, {
+    headers: { 'User-Agent': 'Mozilla/5.0' },
+    timeout: { request: 30000 },
+    retry: { limit: 3 },
+  });
+  return JSON.parse(res.body);
 }
 
-scrapeVAMPosters().catch(console.error);
+function buildImageUrl(imageId) {
+  if (!imageId) return '';
+  return IMG_BASE + '/' + imageId + '/full/800,/0/default.jpg';
+}
+
+async function main() {
+  let page = 1;
+  let allItems = [];
+
+  while (true) {
+    const url = API + '?id_category=THES49001&images_exist=1&kw_object_type=Poster&page_size=100&page=' + page;
+    console.log('Fetching page', page);
+    let data;
+    try {
+      data = await fetchJson(url);
+    } catch (e) {
+      console.log('API error on page', page, '-', e.message.slice(0, 80));
+      console.log('Stopping pagination - API limit reached.');
+      break;
+    }
+    const total = (data.info && data.info.record_count) ? data.info.record_count : 0;
+    const records = data.records || [];
+    if (page === 1) console.log('Total posters:', total);
+    if (records.length === 0) break;
+
+    const items = records.map(function(r) {
+      const maker = r._primaryMaker;
+      const artist = (maker && maker.name) ? maker.name : (typeof maker === 'string' ? maker : '');
+      return {
+        id: r.systemNumber || r.objectNumber || '',
+        title: r._primaryTitle || r.objectType || 'Untitled',
+        artist: artist,
+        date: r._primaryDate || '',
+        medium: r.materialsAndTechniques || '',
+        dimensions: '',
+        image: buildImageUrl(r._primaryImageId),
+        url: 'https://collections.vam.ac.uk/item/' + (r.systemNumber || '') + '/',
+        category: 'Poster',
+        scrapedAt: new Date().toISOString(),
+      };
+    });
+
+    allItems = allItems.concat(items);
+    if (records.length < 100) break;
+    page++;
+  }
+
+  console.log('Items scraped:', allItems.length);
+  fs.writeFileSync(OUT, JSON.stringify(allItems, null, 2));
+  console.log('Written to', OUT);
+}
+
+main().catch(function(e) { console.error(e); process.exit(1); });
+
+

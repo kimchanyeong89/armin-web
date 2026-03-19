@@ -5,7 +5,7 @@
   "location": "Munich, Germany",
   "scrapedAt": "2026-01-04T14:17:15.151Z",
   "totalObjects": 136,
-  "coverImage": "https://res.cloudinary.com/tne/image/authenticated/s--eTTR1MBI--/q_60/w_400/artworks/ALEXANDER-KOESTER_ENTEN-KOHLESTUDIE-XXIII_CC-BY-SA_BSTGS_AK96.jpg",
+  "coverImage": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/img-ca2e2d73-coverImage.webp",
   "objects": [
     {
       "id": "pinakothek-np-AK-96",
@@ -20,10 +20,11 @@
       "department": "19. Jahrhundert",
       "origin": "1973 als Schenkung erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--eTTR1MBI--/q_60/w_400/artworks/ALEXANDER-KOESTER_ENTEN-KOHLESTUDIE-XXIII_CC-BY-SA_BSTGS_AK96.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-AK-96-ca2e2d73-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/AK 96",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/5RGQdpvLz3/alexander-koester-1864/enten-kohlestudie-xxiii-ak-96",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--eTTR1MBI--/q_60/w_400/artworks/ALEXANDER-KOESTER_ENTEN-KOHLESTUDIE-XXIII_CC-BY-SA_BSTGS_AK96.jpg"
     },
     {
       "id": "pinakothek-np-AK-343",
@@ -38,10 +39,11 @@
       "department": "19. Jahrhundert",
       "origin": "Nachlass Else Eckhard, Konstanz",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--spbEwc53--/q_60/w_400/artworks/ALEXANDER-KOESTER_ERNTEPAUSE_CC-BY-SA_BSTGS_AK343.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-AK-343-e69eca12-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/AK 343",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/7yxYJEwLYm/alexander-koester-1864/erntepause-ak-343",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--spbEwc53--/q_60/w_400/artworks/ALEXANDER-KOESTER_ERNTEPAUSE_CC-BY-SA_BSTGS_AK343.jpg"
     },
     {
       "id": "pinakothek-np-AK-367",
@@ -56,10 +58,11 @@
       "department": "19. Jahrhundert",
       "origin": "Nachlass Else Eckhard, Konstanz",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s---RNAMa6H--/q_60/w_400/artworks/ALEXANDER-KOESTER_VERSCHNEITE-HUEGELIGE-LANDSCHAFT-MIT-ZWEI-HAEUSERN_CC-BY-SA_BSTGS_AK367.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-AK-367-dab0027c-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/AK 367",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/02LAJVJGyk/alexander-koester-1864/verschneite-huegelige-landschaft-mit-zwei-haeusern-ak-367",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s---RNAMa6H--/q_60/w_400/artworks/ALEXANDER-KOESTER_VERSCHNEITE-HUEGELIGE-LANDSCHAFT-MIT-ZWEI-HAEUSERN_CC-BY-SA_BSTGS_AK367.jpg"
     },
     {
       "id": "pinakothek-np-AK-352",
@@ -74,10 +77,11 @@
       "department": "19. Jahrhundert",
       "origin": "Nachlass Else Eckhard, Konstanz",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--2DhWEDJJ--/q_60/w_400/artworks/ALEXANDER-KOESTER_ZUM-FRESSEN-HERBEISCHWIMMENDE-ENTEN_CC-BY-SA_BSTGS_AK352.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-AK-352-423760a0-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/AK 352",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/Y0GRv1XGRX/alexander-koester-1864/zum-fressen-herbeischwimmende-enten-ak-352",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--2DhWEDJJ--/q_60/w_400/artworks/ALEXANDER-KOESTER_ZUM-FRESSEN-HERBEISCHWIMMENDE-ENTEN_CC-BY-SA_BSTGS_AK352.jpg"
     },
     {
       "id": "pinakothek-np-AK-362",
@@ -92,10 +96,11 @@
       "department": "19. Jahrhundert",
       "origin": "Nachlass Else Eckhard, Konstanz",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--EzXggDHj--/q_60/w_400/artworks/ALEXANDER-KOESTER_SCHWIMMENDE-ENTEN_CC-BY-SA_BSTGS_AK362.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-AK-362-58c54e40-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/AK 362",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/02LA0aQxyk/alexander-koester-1864/schwimmende-enten-ak-362",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--EzXggDHj--/q_60/w_400/artworks/ALEXANDER-KOESTER_SCHWIMMENDE-ENTEN_CC-BY-SA_BSTGS_AK362.jpg"
     },
     {
       "id": "pinakothek-np-AK-364",
@@ -110,10 +115,11 @@
       "department": "19. Jahrhundert",
       "origin": "Nachlass Else Eckhard, Konstanz",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--ZLjr0A2y--/q_60/w_400/artworks/ALEXANDER-KOESTER_FUENF-ENTEN-ZWEI-DAVON-EINTAUCHEND_CC-BY-SA_BSTGS_AK364.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-AK-364-26b7b2f0-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/AK 364",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/XR4MAeO4Q1/alexander-koester-1864/fuenf-enten-zwei-davon-eintauchend-ak-364",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--ZLjr0A2y--/q_60/w_400/artworks/ALEXANDER-KOESTER_FUENF-ENTEN-ZWEI-DAVON-EINTAUCHEND_CC-BY-SA_BSTGS_AK364.jpg"
     },
     {
       "id": "pinakothek-np-AK-366",
@@ -128,10 +134,11 @@
       "department": "19. Jahrhundert",
       "origin": "Nachlass Else Eckhard, Konstanz",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--chINTDUZ--/q_60/w_400/artworks/ALEXANDER-KOESTER_DREI-MAEDCHEN-MIT-EINEM-WEINENDEN-KIND_CC-BY-SA_BSTGS_AK366.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-AK-366-e40d8fcf-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/AK 366",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/gR4kKzO4Ee/alexander-koester-1864/drei-maedchen-mit-einem-weinenden-kind-ak-366",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--chINTDUZ--/q_60/w_400/artworks/ALEXANDER-KOESTER_DREI-MAEDCHEN-MIT-EINEM-WEINENDEN-KIND_CC-BY-SA_BSTGS_AK366.jpg"
     },
     {
       "id": "pinakothek-np-AK-371",
@@ -146,10 +153,11 @@
       "department": "19. Jahrhundert",
       "origin": "Nachlass Else Eckhard, Konstanz",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--4f_N5h_A--/q_60/w_400/artworks/ALEXANDER-KOESTER_TEICH-MIT-SEEROSEN_CC-BY-SA_BSTGS_AK371.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-AK-371-8fe0ecc2-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/AK 371",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/QKGBN8RGBb/alexander-koester-1864/teich-mit-seerosen-ak-371",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--4f_N5h_A--/q_60/w_400/artworks/ALEXANDER-KOESTER_TEICH-MIT-SEEROSEN_CC-BY-SA_BSTGS_AK371.jpg"
     },
     {
       "id": "pinakothek-np-HST-306",
@@ -164,10 +172,11 @@
       "department": "20./21. Jahrhundert",
       "origin": "Hinterstellung unbekannter Herkunft; vor 1954 im Depot Arcisstraße 10",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--xu4XO0E2--/q_60/w_400/artworks/ARTHUR-VOLKMANN_PERSONEN-UND-VIEH-IN-LANDSCHAFT_CC-BY-SA_BSTGS_HST306.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-HST-306-441fe2e3-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/HST 306",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/Dn4ZXEkLaK/arthur-volkmann-1851/personen-und-vieh-in-landschaft-hst-306",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--xu4XO0E2--/q_60/w_400/artworks/ARTHUR-VOLKMANN_PERSONEN-UND-VIEH-IN-LANDSCHAFT_CC-BY-SA_BSTGS_HST306.jpg"
     },
     {
       "id": "pinakothek-np-HST-337",
@@ -182,10 +191,11 @@
       "department": "19. Jahrhundert",
       "origin": "Hinterstellung unbekannter Herkunft; vor 1954 im Depot Arcisstraße 10",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--W01yFAqN--/q_60/w_400/artworks/KARL-HOCHEDER_ENTWURF-ZUM-UMBAU-DES-ROTTMANN-SAALES-IN-DER-NEUEN-PINAKOTHEK_CC-BY-SA_BSTGS_HST337.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-HST-337-c672f513-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/HST 337",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/Y0GRwl74RX/karl-hocheder/entwurf-zum-umbau-des-rottmann-saales-in-der-neuen-pinakothek-hst-337",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--W01yFAqN--/q_60/w_400/artworks/KARL-HOCHEDER_ENTWURF-ZUM-UMBAU-DES-ROTTMANN-SAALES-IN-DER-NEUEN-PINAKOTHEK_CC-BY-SA_BSTGS_HST337.jpg"
     },
     {
       "id": "pinakothek-np-16088",
@@ -200,10 +210,11 @@
       "department": "20./21. Jahrhundert",
       "origin": "2010 erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--qVHKofk2--/q_60/w_400/artworks/KARL-BLOSSFELDT_CORNUS-NUTTALLII_CC-BY-SA_BSTGS_16088.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-16088-59568a81-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/16088",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/6kLaMAoL8V/karl-blossfeldt-1865/cornus-nuttallii-16088",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--qVHKofk2--/q_60/w_400/artworks/KARL-BLOSSFELDT_CORNUS-NUTTALLII_CC-BY-SA_BSTGS_16088.jpg"
     },
     {
       "id": "pinakothek-np-16089",
@@ -218,10 +229,11 @@
       "department": "20./21. Jahrhundert",
       "origin": "2010 erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--ZZV-kPS3--/q_60/w_400/artworks/KARL-BLOSSFELDT_BECKMANNIA-ERUCIFORMIS_CC-BY-SA_BSTGS_16089.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-16089-02d323d2-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/16089",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/ApL8OYRxN2/karl-blossfeldt-1865/beckmannia-eruciformis-16089",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--ZZV-kPS3--/q_60/w_400/artworks/KARL-BLOSSFELDT_BECKMANNIA-ERUCIFORMIS_CC-BY-SA_BSTGS_16089.jpg"
     },
     {
       "id": "pinakothek-np-16090",
@@ -236,10 +248,11 @@
       "department": "20./21. Jahrhundert",
       "origin": "2010 erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--3sQRhD_7--/q_60/w_400/artworks/KARL-BLOSSFELDT_CORNUS-NUTTALLII_CC-BY-SA_BSTGS_16090.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-16090-c1749f5a-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/16090",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/Dj4mMlE45A/karl-blossfeldt-1865/cornus-nuttallii-16090",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--3sQRhD_7--/q_60/w_400/artworks/KARL-BLOSSFELDT_CORNUS-NUTTALLII_CC-BY-SA_BSTGS_16090.jpg"
     },
     {
       "id": "pinakothek-np-16094",
@@ -254,10 +267,11 @@
       "department": "20./21. Jahrhundert",
       "origin": "2010 erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--B3E8tBGV--/q_60/w_400/artworks/KARL-BLOSSFELDT_CUCURBITA_CC-BY-SA_BSTGS_16094.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-16094-1eceb5da-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/16094",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/Pdxz1QV4w5/karl-blossfeldt-1865/cucurbita-16094",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--B3E8tBGV--/q_60/w_400/artworks/KARL-BLOSSFELDT_CUCURBITA_CC-BY-SA_BSTGS_16094.jpg"
     },
     {
       "id": "pinakothek-np-16095",
@@ -272,10 +286,11 @@
       "department": "20./21. Jahrhundert",
       "origin": "2010 erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--UnDzvWRa--/q_60/w_400/artworks/KARL-BLOSSFELDT_ERYNGIUM-BOURGATII_CC-BY-SA_BSTGS_16095.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-16095-8929a278-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/16095",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/7yxYgoNGYm/karl-blossfeldt-1865/eryngium-bourgatii-16095",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--UnDzvWRa--/q_60/w_400/artworks/KARL-BLOSSFELDT_ERYNGIUM-BOURGATII_CC-BY-SA_BSTGS_16095.jpg"
     },
     {
       "id": "pinakothek-np-16099",
@@ -290,10 +305,11 @@
       "department": "20./21. Jahrhundert",
       "origin": "2010 erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--tr2x0giy--/q_60/w_400/artworks/KARL-BLOSSFELDT_TROLLIUS-EUROPAEUS_CC-BY-SA_BSTGS_16099.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-16099-3dab911c-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/16099",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/Qr4DVa9LpE/karl-blossfeldt-1865/trollius-europaeus-16099",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--tr2x0giy--/q_60/w_400/artworks/KARL-BLOSSFELDT_TROLLIUS-EUROPAEUS_CC-BY-SA_BSTGS_16099.jpg"
     },
     {
       "id": "pinakothek-np-16102",
@@ -308,10 +324,11 @@
       "department": "20./21. Jahrhundert",
       "origin": "2010 erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--pbTvVdIX--/q_60/w_400/artworks/KARL-BLOSSFELDT_NICOTIANA-RUSTICA_CC-BY-SA_BSTGS_16102.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-16102-03977796-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/16102",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/XR4MpgPGQ1/karl-blossfeldt-1865/nicotiana-rustica-16102",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--pbTvVdIX--/q_60/w_400/artworks/KARL-BLOSSFELDT_NICOTIANA-RUSTICA_CC-BY-SA_BSTGS_16102.jpg"
     },
     {
       "id": "pinakothek-np-16104",
@@ -326,10 +343,11 @@
       "department": "20./21. Jahrhundert",
       "origin": "2010 erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--biMHmKg4--/q_60/w_400/artworks/KARL-BLOSSFELDT_N-N-BLUETENKNOSPE_CC-BY-SA_BSTGS_16104.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-16104-c3150762-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/16104",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/gR4kMdQLEe/karl-blossfeldt-1865/n-n-bluetenknospe-16104",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--biMHmKg4--/q_60/w_400/artworks/KARL-BLOSSFELDT_N-N-BLUETENKNOSPE_CC-BY-SA_BSTGS_16104.jpg"
     },
     {
       "id": "pinakothek-np-16107",
@@ -344,10 +362,11 @@
       "department": "20./21. Jahrhundert",
       "origin": "2010 erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--Lm5hnQ9Z--/q_60/w_400/artworks/KARL-BLOSSFELDT_SERRATULA-NUDICAULIS_CC-BY-SA_BSTGS_16107.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-16107-ba274411-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/16107",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/OrLbMKOx1V/karl-blossfeldt-1865/serratula-nudicaulis-16107",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--Lm5hnQ9Z--/q_60/w_400/artworks/KARL-BLOSSFELDT_SERRATULA-NUDICAULIS_CC-BY-SA_BSTGS_16107.jpg"
     },
     {
       "id": "pinakothek-np-16110",
@@ -362,10 +381,11 @@
       "department": "20./21. Jahrhundert",
       "origin": "2010 erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--PpL-qXxF--/q_60/w_400/artworks/KARL-BLOSSFELDT_ALLIUM-OSTROWSKIANUM_CC-BY-SA_BSTGS_16110.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-16110-35e56584-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/16110",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/o5xrPzMG7X/karl-blossfeldt-1865/allium-ostrowskianum-16110",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--PpL-qXxF--/q_60/w_400/artworks/KARL-BLOSSFELDT_ALLIUM-OSTROWSKIANUM_CC-BY-SA_BSTGS_16110.jpg"
     },
     {
       "id": "pinakothek-np-16116",
@@ -380,10 +400,11 @@
       "department": "20./21. Jahrhundert",
       "origin": "2010 erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--KCBjznT3--/q_60/w_400/artworks/KARL-BLOSSFELDT_HAMAMELIS-JAPONICA_CC-BY-SA_BSTGS_16116.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-16116-5b3fbd01-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/16116",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/8eGVm7gLWQ/karl-blossfeldt-1865/hamamelis-japonica-16116",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--KCBjznT3--/q_60/w_400/artworks/KARL-BLOSSFELDT_HAMAMELIS-JAPONICA_CC-BY-SA_BSTGS_16116.jpg"
     },
     {
       "id": "pinakothek-np-16119",
@@ -398,10 +419,11 @@
       "department": "20./21. Jahrhundert",
       "origin": "2010 erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--9QcNRjwv--/q_60/w_400/artworks/KARL-BLOSSFELDT_PHACELIA-CONGESTA_CC-BY-SA_BSTGS_16119.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-16119-e37442c2-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/16119",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/M0xy1ajxpl/karl-blossfeldt-1865/phacelia-congesta-16119",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--9QcNRjwv--/q_60/w_400/artworks/KARL-BLOSSFELDT_PHACELIA-CONGESTA_CC-BY-SA_BSTGS_16119.jpg"
     },
     {
       "id": "pinakothek-np-16126",
@@ -416,10 +438,11 @@
       "department": "20./21. Jahrhundert",
       "origin": "2010 erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--jkqx2E2l--/q_60/w_400/artworks/KARL-BLOSSFELDT_PYRUS-ALNIFOLIA_CC-BY-SA_BSTGS_16126.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-16126-d4e1bb22-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/16126",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/k2xnMW94Pd/karl-blossfeldt-1865/pyrus-alnifolia-16126",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--jkqx2E2l--/q_60/w_400/artworks/KARL-BLOSSFELDT_PYRUS-ALNIFOLIA_CC-BY-SA_BSTGS_16126.jpg"
     },
     {
       "id": "pinakothek-np-16143",
@@ -434,10 +457,11 @@
       "department": "20./21. Jahrhundert",
       "origin": "2010 erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--lgSWEGH0--/q_60/w_400/artworks/KARL-BLOSSFELDT_ASPARAGUS-OFFICINALIS_CC-BY-SA_BSTGS_16143.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-16143-d38ba946-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/16143",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/ApL8OzMxN2/karl-blossfeldt-1865/asparagus-officinalis-16143",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--lgSWEGH0--/q_60/w_400/artworks/KARL-BLOSSFELDT_ASPARAGUS-OFFICINALIS_CC-BY-SA_BSTGS_16143.jpg"
     },
     {
       "id": "pinakothek-np-16170",
@@ -452,10 +476,11 @@
       "department": "20./21. Jahrhundert",
       "origin": "2011 gemeinsam mit der Ernst von Siemens Kunststiftung und mit Unterstützung der Kulturstiftung der Länder durch Ankauf aus der Sammlung Ann und Jürgen Wilde erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--9M06vYbu--/q_60/w_400/artworks/KARL-BLOSSFELDT_ADIANTUM-PEDATUM_CC-BY-SA_BSTGS_16170.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-16170-d31669e1-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/16170",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/o5xrP78G7X/karl-blossfeldt-1865/adiantum-pedatum-16170",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--9M06vYbu--/q_60/w_400/artworks/KARL-BLOSSFELDT_ADIANTUM-PEDATUM_CC-BY-SA_BSTGS_16170.jpg"
     },
     {
       "id": "pinakothek-np-16177",
@@ -470,10 +495,11 @@
       "department": "20./21. Jahrhundert",
       "origin": "2011 gemeinsam mit der Ernst von Siemens Kunststiftung und mit Unterstützung der Kulturstiftung der Länder durch Ankauf aus der Sammlung Ann und Jürgen Wilde erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--anMBSgJh--/q_60/w_400/artworks/KARL-BLOSSFELDT_DELPHINIUM_CC-BY-SA_BSTGS_16177.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-16177-07e6b5c6-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/16177",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/wq4jMvQGWo/karl-blossfeldt-1865/delphinium-16177",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--anMBSgJh--/q_60/w_400/artworks/KARL-BLOSSFELDT_DELPHINIUM_CC-BY-SA_BSTGS_16177.jpg"
     },
     {
       "id": "pinakothek-np-16180",
@@ -488,10 +514,11 @@
       "department": "20./21. Jahrhundert",
       "origin": "2011 gemeinsam mit der Ernst von Siemens Kunststiftung und mit Unterstützung der Kulturstiftung der Länder durch Ankauf aus der Sammlung Ann und Jürgen Wilde erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--E48swVsP--/q_60/w_400/artworks/KARL-BLOSSFELDT_CENTAUREA-KOTSCHYANA_CC-BY-SA_BSTGS_16180.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-16180-c968c88c-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/16180",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/JzG6pgjxWO/karl-blossfeldt-1865/centaurea-kotschyana-16180",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--E48swVsP--/q_60/w_400/artworks/KARL-BLOSSFELDT_CENTAUREA-KOTSCHYANA_CC-BY-SA_BSTGS_16180.jpg"
     },
     {
       "id": "pinakothek-np-16181",
@@ -506,10 +533,11 @@
       "department": "20./21. Jahrhundert",
       "origin": "2011 gemeinsam mit der Ernst von Siemens Kunststiftung und mit Unterstützung der Kulturstiftung der Länder durch Ankauf aus der Sammlung Ann und Jürgen Wilde erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--7rAfRGA---/q_60/w_400/artworks/KARL-BLOSSFELDT_COTULA-TURBINATA_CC-BY-SA_BSTGS_16181.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-16181-d1a9a3e4-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/16181",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/y7GEjlO4PV/karl-blossfeldt-1865/cotula-turbinata-16181",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--7rAfRGA---/q_60/w_400/artworks/KARL-BLOSSFELDT_COTULA-TURBINATA_CC-BY-SA_BSTGS_16181.jpg"
     },
     {
       "id": "pinakothek-np-16506",
@@ -524,10 +552,11 @@
       "department": "19. Jahrhundert",
       "origin": "2018 als Schenkung von Natalie Reed Adams und Elizabeth B Reed erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--JpcNYJSj--/q_60/w_400/artworks/JOHN-WHITE-ALEXANDER_STUDY-FOR-PANDORA-STANDING_CC-BY-SA_BSTGS_16506.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-16506-784c1cac-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/16506",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/ma4dOJZGrO/john-white-alexander-1856/study-for-pandora-standing-16506",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--JpcNYJSj--/q_60/w_400/artworks/JOHN-WHITE-ALEXANDER_STUDY-FOR-PANDORA-STANDING_CC-BY-SA_BSTGS_16506.jpg"
     },
     {
       "id": "pinakothek-np-L-858",
@@ -542,10 +571,11 @@
       "department": "19. Jahrhundert",
       "origin": "1970 als Leihgabe der Bundesrepublik Deutschland erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--I8MJrW3D--/q_60/w_400/artworks/OESTERREICHISCH_BILDNIS-DER-ISABELLA-COLBRAN_CC-BY-SA_BSTGS_L858.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-L-858-39418d63-image.webp",
       "source": "Neue Pinakothek",
       "url": "https://www.sammlung.pinakothek.de/en/artwork/L 858",
-      "locationCode": "NP"
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--I8MJrW3D--/q_60/w_400/artworks/OESTERREICHISCH_BILDNIS-DER-ISABELLA-COLBRAN_CC-BY-SA_BSTGS_L858.jpg"
     },
     {
       "id": "pinakothek-np-HST-141",
@@ -560,10 +590,11 @@
       "department": "Flaemische Malerei",
       "origin": "Hinterstellung unbekannter Herkunft; vor 1954 im Depot Arcisstraße 10",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--7zCiADSr--/q_60/w_400/artworks/PETER-PAUL-RUBENS_HELENE-FOURMENT-MIT-IHREM-SOHN-FRANS_CC-BY-SA_BSTGS_HST141.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-HST-141-50e599d2-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/HST 141",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/QKGBXoXxBb/peter-paul-rubens-1577/helene-fourment-mit-ihrem-sohn-frans-hst-141",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--7zCiADSr--/q_60/w_400/artworks/PETER-PAUL-RUBENS_HELENE-FOURMENT-MIT-IHREM-SOHN-FRANS_CC-BY-SA_BSTGS_HST141.jpg"
     },
     {
       "id": "pinakothek-np-AK-314",
@@ -578,10 +609,11 @@
       "department": "19. Jahrhundert",
       "origin": "1973 als Schenkung erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--FJR8UGB2--/q_60/w_400/artworks/ALEXANDER-KOESTER_GANZ-KLEINE-ENTEN-AM-TEICH_CC-BY-SA_BSTGS_AK314.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-AK-314-d6090945-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/AK 314",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/A9xlqm1LWv/alexander-koester-1864/ganz-kleine-enten-am-teich-ak-314",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--FJR8UGB2--/q_60/w_400/artworks/ALEXANDER-KOESTER_GANZ-KLEINE-ENTEN-AM-TEICH_CC-BY-SA_BSTGS_AK314.jpg"
     },
     {
       "id": "pinakothek-np-AK-347",
@@ -596,10 +628,11 @@
       "department": "19. Jahrhundert",
       "origin": "Nachlass Else Eckhard, Konstanz",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--_Lm3oUvG--/q_60/w_400/artworks/ALEXANDER-KOESTER_WEISSE-ENTEN-AUF-DEM-WASSER-SCHILF-IM-HINTERGRUND_CC-BY-SA_BSTGS_AK347.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-AK-347-76d78596-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/AK 347",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/ApL8Qo8GN2/alexander-koester-1864/weisse-enten-auf-dem-wasser-schilf-im-hintergrund-ak-347",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--_Lm3oUvG--/q_60/w_400/artworks/ALEXANDER-KOESTER_WEISSE-ENTEN-AUF-DEM-WASSER-SCHILF-IM-HINTERGRUND_CC-BY-SA_BSTGS_AK347.jpg"
     },
     {
       "id": "pinakothek-np-AK-368",
@@ -614,10 +647,11 @@
       "department": "19. Jahrhundert",
       "origin": "Nachlass Else Eckhard, Konstanz",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--0bwCm_3T--/q_60/w_400/artworks/ALEXANDER-KOESTER_SICH-PUTZENDE-SCHWIMMENDE-ENTEN_CC-BY-SA_BSTGS_AK368.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-AK-368-a9ef1257-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/AK 368",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/Znxwnem4Xg/alexander-koester-1864/sich-putzende-schwimmende-enten-ak-368",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--0bwCm_3T--/q_60/w_400/artworks/ALEXANDER-KOESTER_SICH-PUTZENDE-SCHWIMMENDE-ENTEN_CC-BY-SA_BSTGS_AK368.jpg"
     },
     {
       "id": "pinakothek-np-AK-373",
@@ -632,10 +666,11 @@
       "department": "19. Jahrhundert",
       "origin": "Nachlass Else Eckhard, Konstanz",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--5B_XZlOu--/q_60/w_400/artworks/ALEXANDER-KOESTER_ENTEN-BEIM-EINSTIEG-INS-WASSER_CC-BY-SA_BSTGS_AK373.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-AK-373-11d5cece-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/AK 373",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/o5xrE3947X/alexander-koester-1864/enten-beim-einstieg-ins-wasser-ak-373",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--5B_XZlOu--/q_60/w_400/artworks/ALEXANDER-KOESTER_ENTEN-BEIM-EINSTIEG-INS-WASSER_CC-BY-SA_BSTGS_AK373.jpg"
     },
     {
       "id": "pinakothek-np-HST-21",
@@ -650,10 +685,11 @@
       "department": "19. Jahrhundert",
       "origin": "Hinterstellung unbekannter Herkunft; vor 1954 im Depot Arcisstraße 10",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--dQZk83Ba--/q_60/w_400/artworks/UNBEKANNT-19-JAHRHUNDERT_BLICK-VON-DER-NEUEN-BRUECKE-AUF-PARIS_CC-BY-SA_BSTGS_HST21.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-HST-21-bab387c9-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/HST 21",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/01G1DzaLkE/unbekannt-19-jahrhundert-1800/blick-von-der-neuen-bruecke-auf-paris-hst-21",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--dQZk83Ba--/q_60/w_400/artworks/UNBEKANNT-19-JAHRHUNDERT_BLICK-VON-DER-NEUEN-BRUECKE-AUF-PARIS_CC-BY-SA_BSTGS_HST21.jpg"
     },
     {
       "id": "pinakothek-np-HST-307",
@@ -668,10 +704,11 @@
       "department": "20./21. Jahrhundert",
       "origin": "Hinterstellung unbekannter Herkunft; vor 1954 im Depot Arcisstraße 10",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--hjrQOAkW--/q_60/w_400/artworks/ARTHUR-VOLKMANN_BACHANTIN-WEIBLICHER-AKT-MIT-HIRSCH_CC-BY-SA_BSTGS_HST307.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-HST-307-e4e5bbe6-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/HST 307",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/8MLvJMYLz3/arthur-volkmann-1851/bachantin-weiblicher-akt-mit-hirsch-hst-307",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--hjrQOAkW--/q_60/w_400/artworks/ARTHUR-VOLKMANN_BACHANTIN-WEIBLICHER-AKT-MIT-HIRSCH_CC-BY-SA_BSTGS_HST307.jpg"
     },
     {
       "id": "pinakothek-np-HST-318",
@@ -686,10 +723,11 @@
       "department": "19. Jahrhundert",
       "origin": "Hinterstellung unbekannter Herkunft; vor 1954 im Depot Arcisstraße 10",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--nyYySzZE--/q_60/w_400/artworks/ARTHUR-VOLKMANN_LIEBESPAAR-STUDIEN_CC-BY-SA_BSTGS_HST318.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-HST-318-253124d1-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/HST 318",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/k2xnJ06xPd/arthur-volkmann-1851/liebespaar-studien-hst-318",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--nyYySzZE--/q_60/w_400/artworks/ARTHUR-VOLKMANN_LIEBESPAAR-STUDIEN_CC-BY-SA_BSTGS_HST318.jpg"
     },
     {
       "id": "pinakothek-np-HST-332",
@@ -704,10 +742,11 @@
       "department": "20./21. Jahrhundert",
       "origin": "Hinterstellung unbekannter Herkunft; vor 1954 im Depot Arcisstraße 10",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--CiXFuQpI--/q_60/w_400/artworks/HEINRICH-LOEMPEL_ANSICHT-DES-EHEMALIGEN-TREPPENHAUSES-DER-ALTEN-PINAKOTHEK-MIT-DEN-STIFTERBILDERN_CC-BY-SA_BSTGS_HST332.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-HST-332-7b0eb454-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/HST 332",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/rqxNwrPLvW/heinrich-loempel-1877/ansicht-des-ehemaligen-treppenhauses-der-alten-pinakothek-mit-den-stifterbildern-hst-332",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--CiXFuQpI--/q_60/w_400/artworks/HEINRICH-LOEMPEL_ANSICHT-DES-EHEMALIGEN-TREPPENHAUSES-DER-ALTEN-PINAKOTHEK-MIT-DEN-STIFTERBILDERN_CC-BY-SA_BSTGS_HST332.jpg"
     },
     {
       "id": "pinakothek-np-16093",
@@ -722,10 +761,11 @@
       "department": "20./21. Jahrhundert",
       "origin": "2010 erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--NEysn0bA--/q_60/w_400/artworks/KARL-BLOSSFELDT_ARISTOLOCHIA-CLEMATITIS_CC-BY-SA_BSTGS_16093.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-16093-dfbf22c9-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/16093",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/anxgWRdxEq/karl-blossfeldt-1865/aristolochia-clematitis-16093",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--NEysn0bA--/q_60/w_400/artworks/KARL-BLOSSFELDT_ARISTOLOCHIA-CLEMATITIS_CC-BY-SA_BSTGS_16093.jpg"
     },
     {
       "id": "pinakothek-np-16113",
@@ -740,10 +780,11 @@
       "department": "20./21. Jahrhundert",
       "origin": "2010 erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--oXVYFY35--/q_60/w_400/artworks/KARL-BLOSSFELDT_ASTRANTIA-MAJOR_CC-BY-SA_BSTGS_16113.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-16113-4717a05b-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/16113",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/0vxooEXx2V/karl-blossfeldt-1865/astrantia-major-16113",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--oXVYFY35--/q_60/w_400/artworks/KARL-BLOSSFELDT_ASTRANTIA-MAJOR_CC-BY-SA_BSTGS_16113.jpg"
     },
     {
       "id": "pinakothek-np-16114",
@@ -758,10 +799,11 @@
       "department": "20./21. Jahrhundert",
       "origin": "2010 erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--u0_KwI7O--/q_60/w_400/artworks/KARL-BLOSSFELDT_HORDEUM-DISTICHUM_CC-BY-SA_BSTGS_16114.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-16114-6e6f4be6-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/16114",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/QrLWXJmGNO/karl-blossfeldt-1865/hordeum-distichum-16114",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--u0_KwI7O--/q_60/w_400/artworks/KARL-BLOSSFELDT_HORDEUM-DISTICHUM_CC-BY-SA_BSTGS_16114.jpg"
     },
     {
       "id": "pinakothek-np-16115",
@@ -776,10 +818,11 @@
       "department": "20./21. Jahrhundert",
       "origin": "2010 erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--hEdeuTki--/q_60/w_400/artworks/KARL-BLOSSFELDT_ECHINOPS-SPHAEROCEPHALUS_CC-BY-SA_BSTGS_16115.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-16115-fa0e02c6-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/16115",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/2mxqQMMx8b/karl-blossfeldt-1865/echinops-sphaerocephalus-16115",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--hEdeuTki--/q_60/w_400/artworks/KARL-BLOSSFELDT_ECHINOPS-SPHAEROCEPHALUS_CC-BY-SA_BSTGS_16115.jpg"
     },
     {
       "id": "pinakothek-np-16118",
@@ -794,10 +837,11 @@
       "department": "20./21. Jahrhundert",
       "origin": "2010 erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--fCtMeYTR--/q_60/w_400/artworks/KARL-BLOSSFELDT_HAMAMELIS-JAPONICA_CC-BY-SA_BSTGS_16118.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-16118-b8193619-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/16118",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/9pL35oK4eb/karl-blossfeldt-1865/hamamelis-japonica-16118",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--fCtMeYTR--/q_60/w_400/artworks/KARL-BLOSSFELDT_HAMAMELIS-JAPONICA_CC-BY-SA_BSTGS_16118.jpg"
     },
     {
       "id": "pinakothek-np-16122",
@@ -812,10 +856,11 @@
       "department": "20./21. Jahrhundert",
       "origin": "2010 erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--Ze47fThl--/q_60/w_400/artworks/KARL-BLOSSFELDT_PHACELIA-CONGESTA_CC-BY-SA_BSTGS_16122.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-16122-527059b7-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/16122",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/Qm45lojGNo/karl-blossfeldt-1865/phacelia-congesta-16122",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--Ze47fThl--/q_60/w_400/artworks/KARL-BLOSSFELDT_PHACELIA-CONGESTA_CC-BY-SA_BSTGS_16122.jpg"
     },
     {
       "id": "pinakothek-np-16123",
@@ -830,10 +875,11 @@
       "department": "20./21. Jahrhundert",
       "origin": "2010 erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--Bwgn-CgH--/q_60/w_400/artworks/KARL-BLOSSFELDT_EUPHORBIA-PITHYUSA_CC-BY-SA_BSTGS_16123.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-16123-da10ee68-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/16123",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/jpxeMv3xJ7/karl-blossfeldt-1865/euphorbia-pithyusa-16123",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--Bwgn-CgH--/q_60/w_400/artworks/KARL-BLOSSFELDT_EUPHORBIA-PITHYUSA_CC-BY-SA_BSTGS_16123.jpg"
     },
     {
       "id": "pinakothek-np-16124",
@@ -848,10 +894,11 @@
       "department": "20./21. Jahrhundert",
       "origin": "2010 erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--a34nTgAC--/q_60/w_400/artworks/KARL-BLOSSFELDT_TRITONIA-CROCOSMIFLORA_CC-BY-SA_BSTGS_16124.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-16124-4aa5c167-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/16124",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/A9xl03JxWv/karl-blossfeldt-1865/tritonia-crocosmiflora-16124",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--a34nTgAC--/q_60/w_400/artworks/KARL-BLOSSFELDT_TRITONIA-CROCOSMIFLORA_CC-BY-SA_BSTGS_16124.jpg"
     },
     {
       "id": "pinakothek-np-16134",
@@ -866,10 +913,11 @@
       "department": "20./21. Jahrhundert",
       "origin": "2010 erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--G7Ovf_TE--/q_60/w_400/artworks/KARL-BLOSSFELDT_CHRYSANTHEMUM-SEGETUM_CC-BY-SA_BSTGS_16134.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-16134-1f6fdde0-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/16134",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/jpxeMv5xJ7/karl-blossfeldt-1865/chrysanthemum-segetum-16134",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--G7Ovf_TE--/q_60/w_400/artworks/KARL-BLOSSFELDT_CHRYSANTHEMUM-SEGETUM_CC-BY-SA_BSTGS_16134.jpg"
     },
     {
       "id": "pinakothek-np-16135",
@@ -884,10 +932,11 @@
       "department": "20./21. Jahrhundert",
       "origin": "2010 erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--sVauuLG8--/q_60/w_400/artworks/KARL-BLOSSFELDT_IRIS_CC-BY-SA_BSTGS_16135.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-16135-9a4929d1-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/16135",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/A9xl03rxWv/karl-blossfeldt-1865/iris-16135",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--sVauuLG8--/q_60/w_400/artworks/KARL-BLOSSFELDT_IRIS_CC-BY-SA_BSTGS_16135.jpg"
     },
     {
       "id": "pinakothek-np-16137",
@@ -902,10 +951,11 @@
       "department": "20./21. Jahrhundert",
       "origin": "2010 erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--TP-Gpzxr--/q_60/w_400/artworks/KARL-BLOSSFELDT_BLUETENKNOSPE-N-N_CC-BY-SA_BSTGS_16137.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-16137-7aa06e46-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/16137",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/k2xnMWb4Pd/karl-blossfeldt-1865/bluetenknospe-n-n-16137",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--TP-Gpzxr--/q_60/w_400/artworks/KARL-BLOSSFELDT_BLUETENKNOSPE-N-N_CC-BY-SA_BSTGS_16137.jpg"
     },
     {
       "id": "pinakothek-np-16140",
@@ -920,10 +970,11 @@
       "department": "20./21. Jahrhundert",
       "origin": "2010 erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--Vh0mMulN--/q_60/w_400/artworks/KARL-BLOSSFELDT_EQUISETUM-HYEMALE_CC-BY-SA_BSTGS_16140.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-16140-530ac0dd-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/16140",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/rqxNn6KxvW/karl-blossfeldt-1865/equisetum-hyemale-16140",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--Vh0mMulN--/q_60/w_400/artworks/KARL-BLOSSFELDT_EQUISETUM-HYEMALE_CC-BY-SA_BSTGS_16140.jpg"
     },
     {
       "id": "pinakothek-np-16142",
@@ -938,10 +989,11 @@
       "department": "20./21. Jahrhundert",
       "origin": "2010 erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--baxW0uEo--/q_60/w_400/artworks/KARL-BLOSSFELDT_SILENE-MARITIMA_CC-BY-SA_BSTGS_16142.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-16142-64fe36ba-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/16142",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/6kLaMnPL8V/karl-blossfeldt-1865/silene-maritima-16142",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--baxW0uEo--/q_60/w_400/artworks/KARL-BLOSSFELDT_SILENE-MARITIMA_CC-BY-SA_BSTGS_16142.jpg"
     },
     {
       "id": "pinakothek-np-16173",
@@ -956,10 +1008,11 @@
       "department": "20./21. Jahrhundert",
       "origin": "2011 gemeinsam mit der Ernst von Siemens Kunststiftung und mit Unterstützung der Kulturstiftung der Länder durch Ankauf aus der Sammlung Ann und Jürgen Wilde erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--5jYD9FwB--/q_60/w_400/artworks/KARL-BLOSSFELDT_EQUISETUM-HYEMALE_CC-BY-SA_BSTGS_16173.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-16173-f066ba4c-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/16173",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/0vxoo5yx2V/karl-blossfeldt-1865/equisetum-hyemale-16173",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--5jYD9FwB--/q_60/w_400/artworks/KARL-BLOSSFELDT_EQUISETUM-HYEMALE_CC-BY-SA_BSTGS_16173.jpg"
     },
     {
       "id": "pinakothek-np-16182",
@@ -974,10 +1027,11 @@
       "department": "20./21. Jahrhundert",
       "origin": "2011 gemeinsam mit der Ernst von Siemens Kunststiftung und mit Unterstützung der Kulturstiftung der Länder durch Ankauf aus der Sammlung Ann und Jürgen Wilde erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--q55EpHJo--/q_60/w_400/artworks/KARL-BLOSSFELDT_HYDRANGEA-ARBORESCENS_CC-BY-SA_BSTGS_16182.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-16182-7ffd4ec5-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/16182",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/Qm45lXKGNo/karl-blossfeldt-1865/hydrangea-arborescens-16182",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--q55EpHJo--/q_60/w_400/artworks/KARL-BLOSSFELDT_HYDRANGEA-ARBORESCENS_CC-BY-SA_BSTGS_16182.jpg"
     },
     {
       "id": "pinakothek-np-L-2286",
@@ -992,10 +1046,11 @@
       "department": "Altdeutsche Malerei",
       "origin": "1992 als Leihgabe der Bundesrepublik Deutschland erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--zS_QXWhv--/q_60/w_400/artworks/SUEDDEUTSCH-UM-1520_GEFANGENNAHME-CHRISTI_CC-BY-SA_BSTGS_L2286.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-L-2286-cd8abbda-image.webp",
       "source": "Neue Pinakothek",
       "url": "https://www.sammlung.pinakothek.de/en/artwork/L 2286",
-      "locationCode": "NP"
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--zS_QXWhv--/q_60/w_400/artworks/SUEDDEUTSCH-UM-1520_GEFANGENNAHME-CHRISTI_CC-BY-SA_BSTGS_L2286.jpg"
     },
     {
       "id": "pinakothek-np-AK-315",
@@ -1010,10 +1065,11 @@
       "department": "19. Jahrhundert",
       "origin": "1973 als Schenkung erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--w27KFUlo--/q_60/w_400/artworks/ALEXANDER-KOESTER_ENTEN-FLIEGEND-GRUENE-STIMMUNG_CC-BY-SA_BSTGS_AK315.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-AK-315-b1a815c8-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/AK 315",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/jWLpy3QGKY/alexander-koester-1864/enten-fliegend-gruene-stimmung-ak-315",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--w27KFUlo--/q_60/w_400/artworks/ALEXANDER-KOESTER_ENTEN-FLIEGEND-GRUENE-STIMMUNG_CC-BY-SA_BSTGS_AK315.jpg"
     },
     {
       "id": "pinakothek-np-AK-361",
@@ -1028,10 +1084,11 @@
       "department": "19. Jahrhundert",
       "origin": "Nachlass Else Eckhard, Konstanz",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--MNA7iDDN--/q_60/w_400/artworks/ALEXANDER-KOESTER_SICH-AUFGEREGT-VERSAMMELNDE-ENTEN_CC-BY-SA_BSTGS_AK361.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-AK-361-f176c1d4-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/AK 361",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/Qr4DPXk4pE/alexander-koester-1864/sich-aufgeregt-versammelnde-enten-ak-361",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--MNA7iDDN--/q_60/w_400/artworks/ALEXANDER-KOESTER_SICH-AUFGEREGT-VERSAMMELNDE-ENTEN_CC-BY-SA_BSTGS_AK361.jpg"
     },
     {
       "id": "pinakothek-np-AK-369",
@@ -1046,10 +1103,11 @@
       "department": "19. Jahrhundert",
       "origin": "Nachlass Else Eckhard, Konstanz",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--9D2l-kxC--/q_60/w_400/artworks/ALEXANDER-KOESTER_ZEHN-WEISSE-ENTEN_CC-BY-SA_BSTGS_AK369.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-AK-369-f22faf8c-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/AK 369",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/ZKGPvnkxgA/alexander-koester-1864/zehn-weisse-enten-ak-369",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--9D2l-kxC--/q_60/w_400/artworks/ALEXANDER-KOESTER_ZEHN-WEISSE-ENTEN_CC-BY-SA_BSTGS_AK369.jpg"
     },
     {
       "id": "pinakothek-np-AK-372",
@@ -1064,10 +1122,11 @@
       "department": "19. Jahrhundert",
       "origin": "Nachlass Else Eckhard, Konstanz",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--fKdJYis1--/q_60/w_400/artworks/ALEXANDER-KOESTER_GROSSE-RUHENDE-ENTEN_CC-BY-SA_BSTGS_AK372.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-AK-372-05b6189b-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/AK 372",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/Dn4ZvzJ4aK/alexander-koester-1864/grosse-ruhende-enten-ak-372",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--fKdJYis1--/q_60/w_400/artworks/ALEXANDER-KOESTER_GROSSE-RUHENDE-ENTEN_CC-BY-SA_BSTGS_AK372.jpg"
     },
     {
       "id": "pinakothek-np-AK-374",
@@ -1082,10 +1141,11 @@
       "department": "19. Jahrhundert",
       "origin": "Nachlass Else Eckhard, Konstanz",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--93ci7MK5--/q_60/w_400/artworks/ALEXANDER-KOESTER_ENTEN-AUS-EINEM-RUNDEN-NAPF-FRESSEND_CC-BY-SA_BSTGS_AK374.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-AK-374-3a75cd4c-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/AK 374",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/8MLvp574z3/alexander-koester-1864/enten-aus-einem-runden-napf-fressend-ak-374",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--93ci7MK5--/q_60/w_400/artworks/ALEXANDER-KOESTER_ENTEN-AUS-EINEM-RUNDEN-NAPF-FRESSEND_CC-BY-SA_BSTGS_AK374.jpg"
     },
     {
       "id": "pinakothek-np-AK-375",
@@ -1100,10 +1160,11 @@
       "department": "19. Jahrhundert",
       "origin": "Nachlass Else Eckhard, Konstanz",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--j4QUgvaY--/q_60/w_400/artworks/ALEXANDER-KOESTER_SICH-AUSRUHENDE-ENTEN_CC-BY-SA_BSTGS_AK375.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-AK-375-ccd95497-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/AK 375",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/bwx0aqJLm8/alexander-koester-1864/sich-ausruhende-enten-ak-375",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--j4QUgvaY--/q_60/w_400/artworks/ALEXANDER-KOESTER_SICH-AUSRUHENDE-ENTEN_CC-BY-SA_BSTGS_AK375.jpg"
     },
     {
       "id": "pinakothek-np-11700",
@@ -1118,10 +1179,11 @@
       "department": "19. Jahrhundert",
       "origin": "Um 1863 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--XX14e9g5--/q_60/w_400/artworks/EDWARD-JAKOB-VON-STEINLE_DER-TUERMER-ENTWURF_CC-BY-SA_BSTGS_11700.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-11700-5e2538b1-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11700",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/RQ4XvVeL10/edward-jakob-von-steinle-1810/der-tuermer-entwurf-11700",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--XX14e9g5--/q_60/w_400/artworks/EDWARD-JAKOB-VON-STEINLE_DER-TUERMER-ENTWURF_CC-BY-SA_BSTGS_11700.jpg"
     },
     {
       "id": "pinakothek-np-AK-52",
@@ -1136,10 +1198,11 @@
       "department": "19. Jahrhundert",
       "origin": "1973 als Schenkung erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--RtpsbRde--/q_60/w_400/artworks/ALEXANDER-KOESTER_ENTENKOPFSTUDIE-II_CC-BY-SA_BSTGS_AK52.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-AK-52-5e24ee7c-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/AK 52",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/anxgaJPGEq/alexander-koester-1864/entenkopfstudie-ii-ak-52",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--RtpsbRde--/q_60/w_400/artworks/ALEXANDER-KOESTER_ENTENKOPFSTUDIE-II_CC-BY-SA_BSTGS_AK52.jpg"
     },
     {
       "id": "pinakothek-np-HST-333",
@@ -1156,7 +1219,7 @@
       "onDisplay": false,
       "image": "",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/HST 333",
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/ma4dvPjLrO/walther-gasch-1886/preussischer-ordensritter-hst-333",
       "locationCode": "NP"
     },
     {
@@ -1174,7 +1237,7 @@
       "onDisplay": false,
       "image": "",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/HST 309",
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/0vxoJmY42V/walther-gasch-1886/ministerpraesident-generalfeldmarschall-hermann-goering-hst-309",
       "locationCode": "NP"
     },
     {
@@ -1190,10 +1253,11 @@
       "department": "20./21. Jahrhundert",
       "origin": "2011 gemeinsam mit der Ernst von Siemens Kunststiftung und mit Unterstützung der Kulturstiftung der Länder durch Ankauf aus der Sammlung Ann und Jürgen Wilde erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--PFzZkJmn--/q_60/w_400/artworks/KARL-BLOSSFELDT_EQUISETUM-HYEMALE_CC-BY-SA_BSTGS_16168.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-16168-c34231bb-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/16168",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/8eGVVWBGWQ/karl-blossfeldt-1865/equisetum-hyemale-16168",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--PFzZkJmn--/q_60/w_400/artworks/KARL-BLOSSFELDT_EQUISETUM-HYEMALE_CC-BY-SA_BSTGS_16168.jpg"
     },
     {
       "id": "pinakothek-np-16092",
@@ -1208,10 +1272,11 @@
       "department": "20./21. Jahrhundert",
       "origin": "2010 erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--Lr5adlVZ--/q_60/w_400/artworks/KARL-BLOSSFELDT_CUCURBITA_CC-BY-SA_BSTGS_16092.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-16092-23512c27-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/16092",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/Y0GRNarGRX/karl-blossfeldt-1865/cucurbita-16092",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--Lr5adlVZ--/q_60/w_400/artworks/KARL-BLOSSFELDT_CUCURBITA_CC-BY-SA_BSTGS_16092.jpg"
     },
     {
       "id": "pinakothek-np-16096",
@@ -1226,10 +1291,11 @@
       "department": "20./21. Jahrhundert",
       "origin": "2010 erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--6piZYvD0--/q_60/w_400/artworks/KARL-BLOSSFELDT_PHYLLITIS-SCOLOPENDRIUM_CC-BY-SA_BSTGS_16096.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-16096-92d4a551-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/16096",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/wE4KenNLZ5/karl-blossfeldt-1865/phyllitis-scolopendrium-16096",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--6piZYvD0--/q_60/w_400/artworks/KARL-BLOSSFELDT_PHYLLITIS-SCOLOPENDRIUM_CC-BY-SA_BSTGS_16096.jpg"
     },
     {
       "id": "pinakothek-np-16100",
@@ -1244,10 +1310,11 @@
       "department": "20./21. Jahrhundert",
       "origin": "2010 erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--zQk5j65n--/q_60/w_400/artworks/KARL-BLOSSFELDT_TELLIMA-GRANDIFLORA_CC-BY-SA_BSTGS_16100.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-16100-427f2d21-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/16100",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/02LAR13Gyk/karl-blossfeldt-1865/tellima-grandiflora-16100",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--zQk5j65n--/q_60/w_400/artworks/KARL-BLOSSFELDT_TELLIMA-GRANDIFLORA_CC-BY-SA_BSTGS_16100.jpg"
     },
     {
       "id": "pinakothek-np-16106",
@@ -1262,10 +1329,11 @@
       "department": "20./21. Jahrhundert",
       "origin": "2010 erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--YBn5vDSW--/q_60/w_400/artworks/KARL-BLOSSFELDT_LIRIODENDRON-TULIPIFERA_CC-BY-SA_BSTGS_16106.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-16106-d8bb92e0-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/16106",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/ZKGP7kMLgA/karl-blossfeldt-1865/liriodendron-tulipifera-16106",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--YBn5vDSW--/q_60/w_400/artworks/KARL-BLOSSFELDT_LIRIODENDRON-TULIPIFERA_CC-BY-SA_BSTGS_16106.jpg"
     },
     {
       "id": "pinakothek-np-16108",
@@ -1280,10 +1348,11 @@
       "department": "20./21. Jahrhundert",
       "origin": "2010 erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--LQL5IYC4--/q_60/w_400/artworks/KARL-BLOSSFELDT_CARDUUS-SPEC_CC-BY-SA_BSTGS_16108.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-16108-0aa591fe-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/16108",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/QKGBgVz4Bb/karl-blossfeldt-1865/carduus-spec-16108",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--LQL5IYC4--/q_60/w_400/artworks/KARL-BLOSSFELDT_CARDUUS-SPEC_CC-BY-SA_BSTGS_16108.jpg"
     },
     {
       "id": "pinakothek-np-16128",
@@ -1298,10 +1367,11 @@
       "department": "20./21. Jahrhundert",
       "origin": "2010 erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--WGImNA__--/q_60/w_400/artworks/KARL-BLOSSFELDT_SILAUS-PRATENSIS_CC-BY-SA_BSTGS_16128.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-16128-57bd3224-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/16128",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/8eGVm7aLWQ/karl-blossfeldt-1865/silaus-pratensis-16128",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--WGImNA__--/q_60/w_400/artworks/KARL-BLOSSFELDT_SILAUS-PRATENSIS_CC-BY-SA_BSTGS_16128.jpg"
     },
     {
       "id": "pinakothek-np-16133",
@@ -1316,10 +1386,11 @@
       "department": "20./21. Jahrhundert",
       "origin": "2010 erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--TxgDmKxy--/q_60/w_400/artworks/KARL-BLOSSFELDT_DELPHINIUM_CC-BY-SA_BSTGS_16133.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-16133-5bb7b34e-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/16133",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/y7GEjye4PV/karl-blossfeldt-1865/delphinium-16133",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--TxgDmKxy--/q_60/w_400/artworks/KARL-BLOSSFELDT_DELPHINIUM_CC-BY-SA_BSTGS_16133.jpg"
     },
     {
       "id": "pinakothek-np-16136",
@@ -1334,10 +1405,11 @@
       "department": "20./21. Jahrhundert",
       "origin": "2010 erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--2iBj_zC0--/q_60/w_400/artworks/KARL-BLOSSFELDT_CERASTIUM-CHLORIFOLIUM_CC-BY-SA_BSTGS_16136.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-16136-26e10463-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/16136",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/jWLpr5K4KY/karl-blossfeldt-1865/cerastium-chlorifolium-16136",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--2iBj_zC0--/q_60/w_400/artworks/KARL-BLOSSFELDT_CERASTIUM-CHLORIFOLIUM_CC-BY-SA_BSTGS_16136.jpg"
     },
     {
       "id": "pinakothek-np-16138",
@@ -1352,10 +1424,11 @@
       "department": "20./21. Jahrhundert",
       "origin": "2010 erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--c1FItjgJ--/q_60/w_400/artworks/KARL-BLOSSFELDT_DATURA-SPEC_CC-BY-SA_BSTGS_16138.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-16138-78527ec8-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/16138",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/A0GOOE6Gdp/karl-blossfeldt-1865/datura-spec-16138",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--c1FItjgJ--/q_60/w_400/artworks/KARL-BLOSSFELDT_DATURA-SPEC_CC-BY-SA_BSTGS_16138.jpg"
     },
     {
       "id": "pinakothek-np-16144",
@@ -1370,10 +1443,11 @@
       "department": "20./21. Jahrhundert",
       "origin": "2010 erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--p0R4CWtU--/q_60/w_400/artworks/KARL-BLOSSFELDT_PAPAVER-ORIENTALE_CC-BY-SA_BSTGS_16144.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-16144-ad30f574-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/16144",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/Dj4mMyD45A/karl-blossfeldt-1865/papaver-orientale-16144",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--p0R4CWtU--/q_60/w_400/artworks/KARL-BLOSSFELDT_PAPAVER-ORIENTALE_CC-BY-SA_BSTGS_16144.jpg"
     },
     {
       "id": "pinakothek-np-16171",
@@ -1388,10 +1462,11 @@
       "department": "20./21. Jahrhundert",
       "origin": "2011 gemeinsam mit der Ernst von Siemens Kunststiftung und mit Unterstützung der Kulturstiftung der Länder durch Ankauf aus der Sammlung Ann und Jürgen Wilde erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--Y253g4D4--/q_60/w_400/artworks/KARL-BLOSSFELDT_ANEMONE-PULSATILLA_CC-BY-SA_BSTGS_16171.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-16171-80df2953-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/16171",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/8MLv1Rlxz3/karl-blossfeldt-1865/anemone-pulsatilla-16171",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--Y253g4D4--/q_60/w_400/artworks/KARL-BLOSSFELDT_ANEMONE-PULSATILLA_CC-BY-SA_BSTGS_16171.jpg"
     },
     {
       "id": "pinakothek-np-16172",
@@ -1406,10 +1481,11 @@
       "department": "20./21. Jahrhundert",
       "origin": "2011 gemeinsam mit der Ernst von Siemens Kunststiftung und mit Unterstützung der Kulturstiftung der Länder durch Ankauf aus der Sammlung Ann und Jürgen Wilde erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--f8fkZQgm--/q_60/w_400/artworks/KARL-BLOSSFELDT_CELOSIA-ARGENTEA-VAR-CRISTATA_CC-BY-SA_BSTGS_16172.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-16172-47146973-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/16172",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/bwx0ypqLm8/karl-blossfeldt-1865/celosia-argentea-var-cristata-16172",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--f8fkZQgm--/q_60/w_400/artworks/KARL-BLOSSFELDT_CELOSIA-ARGENTEA-VAR-CRISTATA_CC-BY-SA_BSTGS_16172.jpg"
     },
     {
       "id": "pinakothek-np-16169",
@@ -1424,10 +1500,11 @@
       "department": "20./21. Jahrhundert",
       "origin": "2011 gemeinsam mit der Ernst von Siemens Kunststiftung und mit Unterstützung der Kulturstiftung der Länder durch Ankauf aus der Sammlung Ann und Jürgen Wilde erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--WkZVXeYQ--/q_60/w_400/artworks/KARL-BLOSSFELDT_ACHILLEA-CLAVENNAE_CC-BY-SA_BSTGS_16169.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-16169-68e15e67-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/16169",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/Dn4ZMeZGaK/karl-blossfeldt-1865/achillea-clavennae-16169",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--WkZVXeYQ--/q_60/w_400/artworks/KARL-BLOSSFELDT_ACHILLEA-CLAVENNAE_CC-BY-SA_BSTGS_16169.jpg"
     },
     {
       "id": "pinakothek-np-16176",
@@ -1442,10 +1519,11 @@
       "department": "20./21. Jahrhundert",
       "origin": "2011 gemeinsam mit der Ernst von Siemens Kunststiftung und mit Unterstützung der Kulturstiftung der Länder durch Ankauf aus der Sammlung Ann und Jürgen Wilde erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--W6ubVgpH--/q_60/w_400/artworks/KARL-BLOSSFELDT_PTELEA-TRIFOLIATA_CC-BY-SA_BSTGS_16176.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-16176-a7bb720f-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/16176",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/8eGVmqBLWQ/karl-blossfeldt-1865/ptelea-trifoliata-16176",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--W6ubVgpH--/q_60/w_400/artworks/KARL-BLOSSFELDT_PTELEA-TRIFOLIATA_CC-BY-SA_BSTGS_16176.jpg"
     },
     {
       "id": "pinakothek-np-16178",
@@ -1460,10 +1538,11 @@
       "department": "20./21. Jahrhundert",
       "origin": "2011 gemeinsam mit der Ernst von Siemens Kunststiftung und mit Unterstützung der Kulturstiftung der Länder durch Ankauf aus der Sammlung Ann und Jürgen Wilde erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--A4idgpmV--/q_60/w_400/artworks/KARL-BLOSSFELDT_VINCETOXICUM-ALBUM_CC-BY-SA_BSTGS_16178.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-16178-0389790b-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/16178",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/9pL35dj4eb/karl-blossfeldt-1865/vincetoxicum-album-16178",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--A4idgpmV--/q_60/w_400/artworks/KARL-BLOSSFELDT_VINCETOXICUM-ALBUM_CC-BY-SA_BSTGS_16178.jpg"
     },
     {
       "id": "pinakothek-np-16179",
@@ -1478,10 +1557,11 @@
       "department": "20./21. Jahrhundert",
       "origin": "2011 gemeinsam mit der Ernst von Siemens Kunststiftung und mit Unterstützung der Kulturstiftung der Länder durch Ankauf aus der Sammlung Ann und Jürgen Wilde erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--tTE0O3SM--/q_60/w_400/artworks/KARL-BLOSSFELDT_BLUETENKNOSPE-AM-SEITENTRIEB_CC-BY-SA_BSTGS_16179.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-16179-46e35209-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/16179",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/M0xy12Wxpl/karl-blossfeldt-1865/bluetenknospe-am-seitentrieb-16179",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--tTE0O3SM--/q_60/w_400/artworks/KARL-BLOSSFELDT_BLUETENKNOSPE-AM-SEITENTRIEB_CC-BY-SA_BSTGS_16179.jpg"
     },
     {
       "id": "pinakothek-np-16086",
@@ -1496,10 +1576,11 @@
       "department": "20./21. Jahrhundert",
       "origin": "2010 erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--mIWYp42y--/q_60/w_400/artworks/KARL-BLOSSFELDT_EQUISETUM-HYEMALE_CC-BY-SA_BSTGS_16086.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-16086-b2760cb1-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/16086",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/y7GEj7Y4PV/karl-blossfeldt-1865/equisetum-hyemale-16086",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--mIWYp42y--/q_60/w_400/artworks/KARL-BLOSSFELDT_EQUISETUM-HYEMALE_CC-BY-SA_BSTGS_16086.jpg"
     },
     {
       "id": "pinakothek-np-16087",
@@ -1514,10 +1595,11 @@
       "department": "20./21. Jahrhundert",
       "origin": "2010 erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--ZGU_aV0c--/q_60/w_400/artworks/KARL-BLOSSFELDT_AESCULUS-PARVIFLORA_CC-BY-SA_BSTGS_16087.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-16087-4066cd6b-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/16087",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/ma4dM2gxrO/karl-blossfeldt-1865/aesculus-parviflora-16087",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--ZGU_aV0c--/q_60/w_400/artworks/KARL-BLOSSFELDT_AESCULUS-PARVIFLORA_CC-BY-SA_BSTGS_16087.jpg"
     },
     {
       "id": "pinakothek-np-16091",
@@ -1532,10 +1614,11 @@
       "department": "20./21. Jahrhundert",
       "origin": "2010 erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--0FUur10u--/q_60/w_400/artworks/KARL-BLOSSFELDT_PHYSOSTEGIA-VIRGINIANA_CC-BY-SA_BSTGS_16091.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-16091-abe0732d-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/16091",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/RQ4XRYgL10/karl-blossfeldt-1865/physostegia-virginiana-16091",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--0FUur10u--/q_60/w_400/artworks/KARL-BLOSSFELDT_PHYSOSTEGIA-VIRGINIANA_CC-BY-SA_BSTGS_16091.jpg"
     },
     {
       "id": "pinakothek-np-16101",
@@ -1550,10 +1633,11 @@
       "department": "20./21. Jahrhundert",
       "origin": "2010 erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--Dk9O_txw--/q_60/w_400/artworks/KARL-BLOSSFELDT_TILIA-AMERICANA_CC-BY-SA_BSTGS_16101.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-16101-5d909a9c-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/16101",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/5RGQ9n8Gz3/karl-blossfeldt-1865/tilia-americana-16101",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--Dk9O_txw--/q_60/w_400/artworks/KARL-BLOSSFELDT_TILIA-AMERICANA_CC-BY-SA_BSTGS_16101.jpg"
     },
     {
       "id": "pinakothek-np-16112",
@@ -1568,10 +1652,11 @@
       "department": "20./21. Jahrhundert",
       "origin": "2010 erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--MyLuniF0--/q_60/w_400/artworks/KARL-BLOSSFELDT_CORIANDRUM-SATIVUM_CC-BY-SA_BSTGS_16112.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-16112-aa1b4746-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/16112",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/bwx0ygMLm8/karl-blossfeldt-1865/coriandrum-sativum-16112",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--MyLuniF0--/q_60/w_400/artworks/KARL-BLOSSFELDT_CORIANDRUM-SATIVUM_CC-BY-SA_BSTGS_16112.jpg"
     },
     {
       "id": "pinakothek-np-16121",
@@ -1586,10 +1671,11 @@
       "department": "20./21. Jahrhundert",
       "origin": "2010 erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--pWPZvYM9--/q_60/w_400/artworks/KARL-BLOSSFELDT_TELLIMA-GRANDIFLORA_CC-BY-SA_BSTGS_16121.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-16121-58b918d9-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/16121",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/y7GEjyY4PV/karl-blossfeldt-1865/tellima-grandiflora-16121",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--pWPZvYM9--/q_60/w_400/artworks/KARL-BLOSSFELDT_TELLIMA-GRANDIFLORA_CC-BY-SA_BSTGS_16121.jpg"
     },
     {
       "id": "pinakothek-np-16125",
@@ -1604,10 +1690,11 @@
       "department": "20./21. Jahrhundert",
       "origin": "2010 erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--3GkbmPhM--/q_60/w_400/artworks/KARL-BLOSSFELDT_TRITONIA-CROCOSMIIFLORA_CC-BY-SA_BSTGS_16125.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-16125-9a8988d5-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/16125",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/jWLpr514KY/karl-blossfeldt-1865/tritonia-crocosmiiflora-16125",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--3GkbmPhM--/q_60/w_400/artworks/KARL-BLOSSFELDT_TRITONIA-CROCOSMIIFLORA_CC-BY-SA_BSTGS_16125.jpg"
     },
     {
       "id": "pinakothek-np-16130",
@@ -1622,10 +1709,11 @@
       "department": "20./21. Jahrhundert",
       "origin": "2010 erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--PQddxZ5t--/q_60/w_400/artworks/KARL-BLOSSFELDT_COTYLEDON-GIBBIFLORA_CC-BY-SA_BSTGS_16130.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-16130-f2738b2a-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/16130",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/9pL35o54eb/karl-blossfeldt-1865/cotyledon-gibbiflora-16130",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--PQddxZ5t--/q_60/w_400/artworks/KARL-BLOSSFELDT_COTYLEDON-GIBBIFLORA_CC-BY-SA_BSTGS_16130.jpg"
     },
     {
       "id": "pinakothek-np-16131",
@@ -1640,10 +1728,11 @@
       "department": "20./21. Jahrhundert",
       "origin": "2010 erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--u36NfTF9--/q_60/w_400/artworks/KARL-BLOSSFELDT_COTULA-CORONOPIFOLIA_CC-BY-SA_BSTGS_16131.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-16131-fd375d95-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/16131",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/M0xy1amxpl/karl-blossfeldt-1865/cotula-coronopifolia-16131",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--u36NfTF9--/q_60/w_400/artworks/KARL-BLOSSFELDT_COTULA-CORONOPIFOLIA_CC-BY-SA_BSTGS_16131.jpg"
     },
     {
       "id": "pinakothek-np-AK-344",
@@ -1658,10 +1747,11 @@
       "department": "19. Jahrhundert",
       "origin": "Nachlass Else Eckhard, Konstanz",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--Qd2jlPsx--/q_60/w_400/artworks/ALEXANDER-KOESTER_SPIELENDE-MAEDCHEN_CC-BY-SA_BSTGS_AK344.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-AK-344-5698a9d3-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/AK 344",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/wE4K5RALZ5/alexander-koester-1864/spielende-maedchen-ak-344",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--Qd2jlPsx--/q_60/w_400/artworks/ALEXANDER-KOESTER_SPIELENDE-MAEDCHEN_CC-BY-SA_BSTGS_AK344.jpg"
     },
     {
       "id": "pinakothek-np-L-2112",
@@ -1676,10 +1766,11 @@
       "department": "19. Jahrhundert",
       "origin": "1989 als Leihgabe der Bundesrepublik Deutschland erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--qNv5krvg--/q_60/w_400/artworks/WILHELM-TRUEBNER_SELBSTBILDNIS_CC-BY-SA_BSTGS_L2112.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-L-2112-5b54426d-image.webp",
       "source": "Neue Pinakothek",
       "url": "https://www.sammlung.pinakothek.de/en/artwork/L 2112",
-      "locationCode": "NP"
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--qNv5krvg--/q_60/w_400/artworks/WILHELM-TRUEBNER_SELBSTBILDNIS_CC-BY-SA_BSTGS_L2112.jpg"
     },
     {
       "id": "pinakothek-np-HST-304",
@@ -1694,10 +1785,11 @@
       "department": "19. Jahrhundert",
       "origin": "Hinterstellung unbekannter Herkunft; vor 1954 im Depot Arcisstraße 10",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--EfsgdGxI--/q_60/w_400/artworks/ARTHUR-VOLKMANN_MAENNLICHE-AKTE-MIT-PFERDEN-IN-LANDSCHAFT_CC-BY-SA_BSTGS_HST304.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-HST-304-54170893-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/HST 304",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/ZKGPwY7LgA/arthur-volkmann-1851/maennliche-akte-mit-pferden-in-landschaft-hst-304",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--EfsgdGxI--/q_60/w_400/artworks/ARTHUR-VOLKMANN_MAENNLICHE-AKTE-MIT-PFERDEN-IN-LANDSCHAFT_CC-BY-SA_BSTGS_HST304.jpg"
     },
     {
       "id": "pinakothek-np-HST-313",
@@ -1714,7 +1806,7 @@
       "onDisplay": false,
       "image": "",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/HST 313",
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/y7GE9JEGPV/walther-gasch-1886/baeuerin-in-oberbayerischer-wuermgautracht-hst-313",
       "locationCode": "NP"
     },
     {
@@ -1732,7 +1824,7 @@
       "onDisplay": false,
       "image": "",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/HST 314",
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/Qm45BQnxNo/walther-gasch-1886/hirsch-hst-314",
       "locationCode": "NP"
     },
     {
@@ -1748,10 +1840,11 @@
       "department": "19. Jahrhundert",
       "origin": "Hinterstellung unbekannter Herkunft; vor 1954 im Depot Arcisstraße 10",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--FkJl7fv7--/q_60/w_400/artworks/ARTHUR-VOLKMANN_ZWEI-MAENNLICHE-AKTE_CC-BY-SA_BSTGS_HST336.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-HST-336-03368bae-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/HST 336",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/RQ4XbJzL10/arthur-volkmann-1851/zwei-maennliche-akte-hst-336",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--FkJl7fv7--/q_60/w_400/artworks/ARTHUR-VOLKMANN_ZWEI-MAENNLICHE-AKTE_CC-BY-SA_BSTGS_HST336.jpg"
     },
     {
       "id": "pinakothek-np-AK-336",
@@ -1766,10 +1859,11 @@
       "department": "19. Jahrhundert",
       "origin": "Nachlass Else Eckhard, Konstanz",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--Bauw24jG--/q_60/w_400/artworks/ALEXANDER-KOESTER_BIRKEN-IN-HAIDE_CC-BY-SA_BSTGS_AK336.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-AK-336-eb2e6631-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/AK 336",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/ma4d8n14rO/alexander-koester-1864/birken-in-haide-ak-336",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--Bauw24jG--/q_60/w_400/artworks/ALEXANDER-KOESTER_BIRKEN-IN-HAIDE_CC-BY-SA_BSTGS_AK336.jpg"
     },
     {
       "id": "pinakothek-np-AK-351",
@@ -1784,10 +1878,11 @@
       "department": "19. Jahrhundert",
       "origin": "Nachlass Else Eckhard, Konstanz",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--ucn_rM_e--/q_60/w_400/artworks/ALEXANDER-KOESTER_ENTEN-AM-WASSER_CC-BY-SA_BSTGS_AK351.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-AK-351-2e8fba7f-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/AK 351",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/RQ4XvzwL10/alexander-koester-1864/enten-am-wasser-ak-351",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--ucn_rM_e--/q_60/w_400/artworks/ALEXANDER-KOESTER_ENTEN-AM-WASSER_CC-BY-SA_BSTGS_AK351.jpg"
     },
     {
       "id": "pinakothek-np-AK-358",
@@ -1802,10 +1897,11 @@
       "department": "19. Jahrhundert",
       "origin": "Nachlass Else Eckhard, Konstanz",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--fzvaC36t--/q_60/w_400/artworks/ALEXANDER-KOESTER_INS-WASSER-GEHENDE-ENTEN_CC-BY-SA_BSTGS_AK358.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-AK-358-2c303fcb-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/AK 358",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/01G1a2XGkE/alexander-koester-1864/ins-wasser-gehende-enten-ak-358",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--fzvaC36t--/q_60/w_400/artworks/ALEXANDER-KOESTER_INS-WASSER-GEHENDE-ENTEN_CC-BY-SA_BSTGS_AK358.jpg"
     },
     {
       "id": "pinakothek-np-AK-359",
@@ -1820,10 +1916,11 @@
       "department": "19. Jahrhundert",
       "origin": "Nachlass Else Eckhard, Konstanz",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--Ubxt7AHE--/q_60/w_400/artworks/ALEXANDER-KOESTER_ENTEN-AM-WASSER-UNTER-AUFGERISSENEM-WOLKENBEDECKTEM-HIMMEL_CC-BY-SA_BSTGS_AK359.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-AK-359-fb01f0f2-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/AK 359",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/Qlx2aA94Xq/alexander-koester-1864/enten-am-wasser-unter-aufgerissenem-wolkenbedecktem-himmel-ak-359",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--Ubxt7AHE--/q_60/w_400/artworks/ALEXANDER-KOESTER_ENTEN-AM-WASSER-UNTER-AUFGERISSENEM-WOLKENBEDECKTEM-HIMMEL_CC-BY-SA_BSTGS_AK359.jpg"
     },
     {
       "id": "pinakothek-np-10308",
@@ -1838,10 +1935,11 @@
       "department": "19. Jahrhundert",
       "origin": "1936 als Schenkung aus Privatbesitz erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--jji6hMRF--/q_60/w_400/artworks/REINHOLD-MAX-EICHLER_JUNGES-MAEDCHEN_CC-BY-SA_BSTGS_10308.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-10308-05fcdf9d-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/10308",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/jpxeal2xJ7/reinhold-max-eichler-1872/junges-maedchen-10308",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--jji6hMRF--/q_60/w_400/artworks/REINHOLD-MAX-EICHLER_JUNGES-MAEDCHEN_CC-BY-SA_BSTGS_10308.jpg"
     },
     {
       "id": "pinakothek-np-L-839",
@@ -1856,10 +1954,11 @@
       "department": "19. Jahrhundert",
       "origin": "1970 als Leihgabe der Bundesrepublik Deutschland erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--58wwNw2R--/q_60/w_400/artworks/MORITZ-VON-SCHWIND_SCHWAGER-KRONOS_CC-BY-SA_BSTGS_L839.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-L-839-81779a85-image.webp",
       "source": "Neue Pinakothek",
       "url": "https://www.sammlung.pinakothek.de/en/artwork/L 839",
-      "locationCode": "NP"
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--58wwNw2R--/q_60/w_400/artworks/MORITZ-VON-SCHWIND_SCHWAGER-KRONOS_CC-BY-SA_BSTGS_L839.jpg"
     },
     {
       "id": "pinakothek-np-16174",
@@ -1874,10 +1973,11 @@
       "department": "20./21. Jahrhundert",
       "origin": "2011 gemeinsam mit der Ernst von Siemens Kunststiftung und mit Unterstützung der Kulturstiftung der Länder durch Ankauf aus der Sammlung Ann und Jürgen Wilde erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--sgd90Nxv--/q_60/w_400/artworks/KARL-BLOSSFELDT_ERYNGIUM-MARITIMUM_CC-BY-SA_BSTGS_16174.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-16174-340e5471-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/16174",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/QrLWXjXGNO/karl-blossfeldt-1865/eryngium-maritimum-16174",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--sgd90Nxv--/q_60/w_400/artworks/KARL-BLOSSFELDT_ERYNGIUM-MARITIMUM_CC-BY-SA_BSTGS_16174.jpg"
     },
     {
       "id": "pinakothek-np-16175",
@@ -1892,10 +1992,11 @@
       "department": "20./21. Jahrhundert",
       "origin": "2011 gemeinsam mit der Ernst von Siemens Kunststiftung und mit Unterstützung der Kulturstiftung der Länder durch Ankauf aus der Sammlung Ann und Jürgen Wilde erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--sDr0f0jN--/q_60/w_400/artworks/KARL-BLOSSFELDT_EUPHORBIA-PITHYUSA_CC-BY-SA_BSTGS_16175.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-16175-3f23b3f6-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/16175",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/2mxqQnWx8b/karl-blossfeldt-1865/euphorbia-pithyusa-16175",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--sDr0f0jN--/q_60/w_400/artworks/KARL-BLOSSFELDT_EUPHORBIA-PITHYUSA_CC-BY-SA_BSTGS_16175.jpg"
     },
     {
       "id": "pinakothek-np-16097",
@@ -1910,10 +2011,11 @@
       "department": "20./21. Jahrhundert",
       "origin": "2010 erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--0NKKnDnr--/q_60/w_400/artworks/KARL-BLOSSFELDT_PICEA-ABIES_CC-BY-SA_BSTGS_16097.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-16097-475a4b33-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/16097",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/01G16Kn4kE/karl-blossfeldt-1865/picea-abies-16097",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--0NKKnDnr--/q_60/w_400/artworks/KARL-BLOSSFELDT_PICEA-ABIES_CC-BY-SA_BSTGS_16097.jpg"
     },
     {
       "id": "pinakothek-np-16098",
@@ -1928,10 +2030,11 @@
       "department": "20./21. Jahrhundert",
       "origin": "2010 erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--E3ZAj2kv--/q_60/w_400/artworks/KARL-BLOSSFELDT_ACHILLEA-UMBELLATA_CC-BY-SA_BSTGS_16098.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-16098-ca5f1590-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/16098",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/Qlx2E1b4Xq/karl-blossfeldt-1865/achillea-umbellata-16098",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--E3ZAj2kv--/q_60/w_400/artworks/KARL-BLOSSFELDT_ACHILLEA-UMBELLATA_CC-BY-SA_BSTGS_16098.jpg"
     },
     {
       "id": "pinakothek-np-16103",
@@ -1946,10 +2049,11 @@
       "department": "20./21. Jahrhundert",
       "origin": "2010 erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--maUPo0o7--/q_60/w_400/artworks/KARL-BLOSSFELDT_ADIANTUM-PEDATUM_CC-BY-SA_BSTGS_16103.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-16103-b717f3f4-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/16103",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/ZMLJ51wxJv/karl-blossfeldt-1865/adiantum-pedatum-16103",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--maUPo0o7--/q_60/w_400/artworks/KARL-BLOSSFELDT_ADIANTUM-PEDATUM_CC-BY-SA_BSTGS_16103.jpg"
     },
     {
       "id": "pinakothek-np-16105",
@@ -1964,10 +2068,11 @@
       "department": "20./21. Jahrhundert",
       "origin": "2010 erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--Gc6nXWTy--/q_60/w_400/artworks/KARL-BLOSSFELDT_SALVIA-ARGENTEA_CC-BY-SA_BSTGS_16105.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-16105-92295fe2-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/16105",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/ZnxwkQExXg/karl-blossfeldt-1865/salvia-argentea-16105",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--Gc6nXWTy--/q_60/w_400/artworks/KARL-BLOSSFELDT_SALVIA-ARGENTEA_CC-BY-SA_BSTGS_16105.jpg"
     },
     {
       "id": "pinakothek-np-16109",
@@ -1982,10 +2087,11 @@
       "department": "20./21. Jahrhundert",
       "origin": "2010 erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--dGbofHhn--/q_60/w_400/artworks/KARL-BLOSSFELDT_SYMPHYTUM-OFFICINALE_CC-BY-SA_BSTGS_16109.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-16109-ff684a5a-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/16109",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/Dn4ZMaRGaK/karl-blossfeldt-1865/symphytum-officinale-16109",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--dGbofHhn--/q_60/w_400/artworks/KARL-BLOSSFELDT_SYMPHYTUM-OFFICINALE_CC-BY-SA_BSTGS_16109.jpg"
     },
     {
       "id": "pinakothek-np-16111",
@@ -2000,10 +2106,11 @@
       "department": "20./21. Jahrhundert",
       "origin": "2010 erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--bEEYTWii--/q_60/w_400/artworks/KARL-BLOSSFELDT_ERICA-HERBACEA_CC-BY-SA_BSTGS_16111.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-16111-6daea236-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/16111",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/8MLv1zjxz3/karl-blossfeldt-1865/erica-herbacea-16111",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--bEEYTWii--/q_60/w_400/artworks/KARL-BLOSSFELDT_ERICA-HERBACEA_CC-BY-SA_BSTGS_16111.jpg"
     },
     {
       "id": "pinakothek-np-16117",
@@ -2018,10 +2125,11 @@
       "department": "20./21. Jahrhundert",
       "origin": "2010 erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--zJbtUn4C--/q_60/w_400/artworks/KARL-BLOSSFELDT_CAJOPHORA-LATERITIA_CC-BY-SA_BSTGS_16117.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-16117-28260b40-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/16117",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/wq4jMVYGWo/karl-blossfeldt-1865/cajophora-lateritia-16117",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--zJbtUn4C--/q_60/w_400/artworks/KARL-BLOSSFELDT_CAJOPHORA-LATERITIA_CC-BY-SA_BSTGS_16117.jpg"
     },
     {
       "id": "pinakothek-np-16120",
@@ -2036,10 +2144,11 @@
       "department": "20./21. Jahrhundert",
       "origin": "2010 erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s---fokPh-P--/q_60/w_400/artworks/KARL-BLOSSFELDT_KALMIA-ANGUSTIFOLIA_CC-BY-SA_BSTGS_16120.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-16120-e1f054c8-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/16120",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/JzG6plJxWO/karl-blossfeldt-1865/kalmia-angustifolia-16120",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s---fokPh-P--/q_60/w_400/artworks/KARL-BLOSSFELDT_KALMIA-ANGUSTIFOLIA_CC-BY-SA_BSTGS_16120.jpg"
     },
     {
       "id": "pinakothek-np-16127",
@@ -2054,10 +2163,11 @@
       "department": "20./21. Jahrhundert",
       "origin": "2010 erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--fXW5kKmt--/q_60/w_400/artworks/KARL-BLOSSFELDT_CYNOGLOSSUM-FURCATUM_CC-BY-SA_BSTGS_16127.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-16127-47591e5a-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/16127",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/2mxqQMyx8b/karl-blossfeldt-1865/cynoglossum-furcatum-16127",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--fXW5kKmt--/q_60/w_400/artworks/KARL-BLOSSFELDT_CYNOGLOSSUM-FURCATUM_CC-BY-SA_BSTGS_16127.jpg"
     },
     {
       "id": "pinakothek-np-16129",
@@ -2072,10 +2182,11 @@
       "department": "20./21. Jahrhundert",
       "origin": "2010 erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--34-tx6IW--/q_60/w_400/artworks/KARL-BLOSSFELDT_CUCUBALUS-BACCIFER_CC-BY-SA_BSTGS_16129.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-16129-b7519a30-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/16129",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/wq4jMVRGWo/karl-blossfeldt-1865/cucubalus-baccifer-16129",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--34-tx6IW--/q_60/w_400/artworks/KARL-BLOSSFELDT_CUCUBALUS-BACCIFER_CC-BY-SA_BSTGS_16129.jpg"
     },
     {
       "id": "pinakothek-np-16132",
@@ -2090,10 +2201,11 @@
       "department": "20./21. Jahrhundert",
       "origin": "2010 erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--Iu4kuuKL--/q_60/w_400/artworks/KARL-BLOSSFELDT_BLUMENBACHIA-HIERONYMI_CC-BY-SA_BSTGS_16132.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-16132-e620969e-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/16132",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/JzG6plaxWO/karl-blossfeldt-1865/blumenbachia-hieronymi-16132",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--Iu4kuuKL--/q_60/w_400/artworks/KARL-BLOSSFELDT_BLUMENBACHIA-HIERONYMI_CC-BY-SA_BSTGS_16132.jpg"
     },
     {
       "id": "pinakothek-np-16139",
@@ -2108,10 +2220,11 @@
       "department": "20./21. Jahrhundert",
       "origin": "2010 erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--D7ei8_x_--/q_60/w_400/artworks/KARL-BLOSSFELDT_AQUILEGIA-CHRYSANTHA_CC-BY-SA_BSTGS_16139.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-16139-3b80fb29-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/16139",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/5347nlDG9e/karl-blossfeldt-1865/aquilegia-chrysantha-16139",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--D7ei8_x_--/q_60/w_400/artworks/KARL-BLOSSFELDT_AQUILEGIA-CHRYSANTHA_CC-BY-SA_BSTGS_16139.jpg"
     },
     {
       "id": "pinakothek-np-16145",
@@ -2126,10 +2239,11 @@
       "department": "20./21. Jahrhundert",
       "origin": "2010 erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--C7kTrNhJ--/q_60/w_400/artworks/KARL-BLOSSFELDT_CLEMATIS-SPEC_CC-BY-SA_BSTGS_16145.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-16145-f59267b4-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/16145",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/RQ4XR7eL10/karl-blossfeldt-1865/clematis-spec-16145",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--C7kTrNhJ--/q_60/w_400/artworks/KARL-BLOSSFELDT_CLEMATIS-SPEC_CC-BY-SA_BSTGS_16145.jpg"
     },
     {
       "id": "pinakothek-np-AK-159",
@@ -2144,10 +2258,11 @@
       "department": "19. Jahrhundert",
       "origin": "Nachlass Else Eckhard, Konstanz",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--zQjdnaLa--/q_60/w_400/artworks/ALEXANDER-KOESTER_KOPFSTUDIE_CC-BY-SA_BSTGS_AK159.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-AK-159-62f802d1-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/AK 159",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/8MLvg6dGz3/alexander-koester-1864/kopfstudie-ak-159",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--zQjdnaLa--/q_60/w_400/artworks/ALEXANDER-KOESTER_KOPFSTUDIE_CC-BY-SA_BSTGS_AK159.jpg"
     },
     {
       "id": "pinakothek-np-AK-342",
@@ -2162,10 +2277,11 @@
       "department": "19. Jahrhundert",
       "origin": "Nachlass Else Eckhard, Konstanz",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--NEGxGjOk--/q_60/w_400/artworks/ALEXANDER-KOESTER_FUENF-FERKEL_CC-BY-SA_BSTGS_AK342.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-AK-342-f83de473-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/AK 342",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/PdxzrAQxw5/alexander-koester-1864/fuenf-ferkel-ak-342",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--NEGxGjOk--/q_60/w_400/artworks/ALEXANDER-KOESTER_FUENF-FERKEL_CC-BY-SA_BSTGS_AK342.jpg"
     },
     {
       "id": "pinakothek-np-AK-354",
@@ -2180,10 +2296,11 @@
       "department": "19. Jahrhundert",
       "origin": "Nachlass Else Eckhard, Konstanz",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--EalFHK-u--/q_60/w_400/artworks/ALEXANDER-KOESTER_FISCHERBOOT-IM-SCHILF_CC-BY-SA_BSTGS_AK354.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-AK-354-9db93b1f-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/AK 354",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/Qlx2P9BGXq/alexander-koester-1864/fischerboot-im-schilf-ak-354",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--EalFHK-u--/q_60/w_400/artworks/ALEXANDER-KOESTER_FISCHERBOOT-IM-SCHILF_CC-BY-SA_BSTGS_AK354.jpg"
     },
     {
       "id": "pinakothek-np-AK-360",
@@ -2198,10 +2315,11 @@
       "department": "19. Jahrhundert",
       "origin": "Nachlass Else Eckhard, Konstanz",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--ngqkiMjJ--/q_60/w_400/artworks/ALEXANDER-KOESTER_SEGELBOOT-MIT-DREI-PERSONEN_CC-BY-SA_BSTGS_AK360.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-AK-360-b64db046-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/AK 360",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/Qr4Dq5MxpE/alexander-koester-1864/segelboot-mit-drei-personen-ak-360",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--ngqkiMjJ--/q_60/w_400/artworks/ALEXANDER-KOESTER_SEGELBOOT-MIT-DREI-PERSONEN_CC-BY-SA_BSTGS_AK360.jpg"
     },
     {
       "id": "pinakothek-np-11699",
@@ -2216,10 +2334,11 @@
       "department": "19. Jahrhundert",
       "origin": "Um 1863 durch Adolf Friedrich Graf von Schack erworben",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--WItedlto--/q_60/w_400/artworks/EDWARD-JAKOB-VON-STEINLE_DER-VIOLINSPIELER-ENTWURF_CC-BY-SA_BSTGS_11699.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-11699-b319cea1-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/11699",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/ApL8QkMGN2/edward-jakob-von-steinle-1810/der-violinspieler-entwurf-11699",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--WItedlto--/q_60/w_400/artworks/EDWARD-JAKOB-VON-STEINLE_DER-VIOLINSPIELER-ENTWURF_CC-BY-SA_BSTGS_11699.jpg"
     },
     {
       "id": "pinakothek-np-AK-349",
@@ -2234,10 +2353,11 @@
       "department": "19. Jahrhundert",
       "origin": "Nachlass Else Eckhard, Konstanz",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--XpKfbiW0--/q_60/w_400/artworks/ALEXANDER-KOESTER_WEISSE-SICH-PUTZENDE-ENTEN-AM-WASSER_CC-BY-SA_BSTGS_AK349.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-AK-349-15f1f0ba-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/AK 349",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/Dj4mVqRx5A/alexander-koester-1864/weisse-sich-putzende-enten-am-wasser-ak-349",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--XpKfbiW0--/q_60/w_400/artworks/ALEXANDER-KOESTER_WEISSE-SICH-PUTZENDE-ENTEN-AM-WASSER_CC-BY-SA_BSTGS_AK349.jpg"
     },
     {
       "id": "pinakothek-np-AK-353",
@@ -2252,10 +2372,11 @@
       "department": "19. Jahrhundert",
       "origin": "Nachlass Else Eckhard, Konstanz",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--SfLgIu1d--/q_60/w_400/artworks/ALEXANDER-KOESTER_DREI-ENTENPAARE-MIT-NEUN-ENTENKUEKEN_CC-BY-SA_BSTGS_AK353.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-AK-353-49cf557a-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/AK 353",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/anxgo9jxEq/alexander-koester-1864/drei-entenpaare-mit-neun-entenkueken-ak-353",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--SfLgIu1d--/q_60/w_400/artworks/ALEXANDER-KOESTER_DREI-ENTENPAARE-MIT-NEUN-ENTENKUEKEN_CC-BY-SA_BSTGS_AK353.jpg"
     },
     {
       "id": "pinakothek-np-AK-355",
@@ -2270,10 +2391,11 @@
       "department": "19. Jahrhundert",
       "origin": "Nachlass Else Eckhard, Konstanz",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--zfGLrc5K--/q_60/w_400/artworks/ALEXANDER-KOESTER_ENTEN-VOR-GEBUESCH-AM-WASSER_CC-BY-SA_BSTGS_AK355.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-AK-355-3a68e09d-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/AK 355",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/PdxzD7vGw5/alexander-koester-1864/enten-vor-gebuesch-am-wasser-ak-355",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--zfGLrc5K--/q_60/w_400/artworks/ALEXANDER-KOESTER_ENTEN-VOR-GEBUESCH-AM-WASSER_CC-BY-SA_BSTGS_AK355.jpg"
     },
     {
       "id": "pinakothek-np-AK-356",
@@ -2288,10 +2410,11 @@
       "department": "19. Jahrhundert",
       "origin": "Nachlass Else Eckhard, Konstanz",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--Jg93NpHI--/q_60/w_400/artworks/ALEXANDER-KOESTER_ENTEN-AM-FRESSNAPF_CC-BY-SA_BSTGS_AK356.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-AK-356-223a0770-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/AK 356",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/7yxYvqlLYm/alexander-koester-1864/enten-am-fressnapf-ak-356",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--Jg93NpHI--/q_60/w_400/artworks/ALEXANDER-KOESTER_ENTEN-AM-FRESSNAPF_CC-BY-SA_BSTGS_AK356.jpg"
     },
     {
       "id": "pinakothek-np-AK-357",
@@ -2306,10 +2429,11 @@
       "department": "19. Jahrhundert",
       "origin": "Nachlass Else Eckhard, Konstanz",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--labDFRg3--/q_60/w_400/artworks/ALEXANDER-KOESTER_SICH-PUTZENDE-ENTEN_CC-BY-SA_BSTGS_AK357.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-AK-357-dbfbdfe6-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/AK 357",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/wE4K0YrxZ5/alexander-koester-1864/sich-putzende-enten-ak-357",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--labDFRg3--/q_60/w_400/artworks/ALEXANDER-KOESTER_SICH-PUTZENDE-ENTEN_CC-BY-SA_BSTGS_AK357.jpg"
     },
     {
       "id": "pinakothek-np-AK-363",
@@ -2324,10 +2448,11 @@
       "department": "19. Jahrhundert",
       "origin": "Nachlass Else Eckhard, Konstanz",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--lHpU4dCl--/q_60/w_400/artworks/ALEXANDER-KOESTER_ENTEN-SICH-VERSAMMELND_CC-BY-SA_BSTGS_AK363.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-AK-363-3b583079-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/AK 363",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/5RGQvO14z3/alexander-koester-1864/enten-sich-versammelnd-ak-363",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--lHpU4dCl--/q_60/w_400/artworks/ALEXANDER-KOESTER_ENTEN-SICH-VERSAMMELND_CC-BY-SA_BSTGS_AK363.jpg"
     },
     {
       "id": "pinakothek-np-AK-365",
@@ -2342,10 +2467,11 @@
       "department": "19. Jahrhundert",
       "origin": "Nachlass Else Eckhard, Konstanz",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--VpaUgwA1--/q_60/w_400/artworks/ALEXANDER-KOESTER_VIER-BIRKEN-UND-ANDERE-BAEUME-AUF-EINER-VON-BAECHEN-DURCHZOGENEN-WIESE_CC-BY-SA_BSTGS_AK365.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-AK-365-8bdc19c4-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/AK 365",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/ZMLJM6YxJv/alexander-koester-1864/vier-birken-und-andere-baeume-auf-einer-von-baechen-durchzogenen-wiese-ak-365",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--VpaUgwA1--/q_60/w_400/artworks/ALEXANDER-KOESTER_VIER-BIRKEN-UND-ANDERE-BAEUME-AUF-EINER-VON-BAECHEN-DURCHZOGENEN-WIESE_CC-BY-SA_BSTGS_AK365.jpg"
     },
     {
       "id": "pinakothek-np-AK-370",
@@ -2360,10 +2486,11 @@
       "department": "19. Jahrhundert",
       "origin": "Nachlass Else Eckhard, Konstanz",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--Wd672qEc--/q_60/w_400/artworks/ALEXANDER-KOESTER_VON-LINKS-HERANSCHWIMMENDE-ENTEN_CC-BY-SA_BSTGS_AK370.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-AK-370-795c1a0b-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/AK 370",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/OrLbvzKL1V/alexander-koester-1864/von-links-heranschwimmende-enten-ak-370",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--Wd672qEc--/q_60/w_400/artworks/ALEXANDER-KOESTER_VON-LINKS-HERANSCHWIMMENDE-ENTEN_CC-BY-SA_BSTGS_AK370.jpg"
     },
     {
       "id": "pinakothek-np-HST-1749",
@@ -2378,10 +2505,11 @@
       "department": "20./21. Jahrhundert",
       "origin": "1988 als Hinterstellung von Dagny Gulbransson inventarisiert",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--64Yq82k_--/q_60/w_400/artworks/EDUARD-THOENY_ZUKUNFTSBILD-AUS-DER-ZEITSCHRIFT-SIMPLICISSIMUS-TITELBLATT-3-JG-NR-19_CC-BY-SA_BSTGS_HST1749.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-HST-1749-c0bca93d-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/HST 1749",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/Y0GRwJ84RX/eduard-thoeny-1866/zukunftsbild-aus-der-zeitschrift-simplicissimus-titelblatt-3-jg-nr-19-hst-1749",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--64Yq82k_--/q_60/w_400/artworks/EDUARD-THOENY_ZUKUNFTSBILD-AUS-DER-ZEITSCHRIFT-SIMPLICISSIMUS-TITELBLATT-3-JG-NR-19_CC-BY-SA_BSTGS_HST1749.jpg"
     },
     {
       "id": "pinakothek-np-HST-303",
@@ -2396,10 +2524,11 @@
       "department": "19. Jahrhundert",
       "origin": "Hinterstellung unbekannter Herkunft; vor 1954 im Depot Arcisstraße 10",
       "onDisplay": false,
-      "image": "https://res.cloudinary.com/tne/image/authenticated/s--0FxmbPii--/q_60/w_400/artworks/ARTHUR-VOLKMANN_ZWEI-WEIBLICHE-AKTE-MIT-REHEN-IN-LANDSCHAFT-RUECKSEITE-GEMALTE-LANDSCHAFT_CC-BY-SA_BSTGS_HST303.jpg",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-pinakothek-collection/pinakothek-np-HST-303-07c7019f-image.webp",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/HST 303",
-      "locationCode": "NP"
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/ZnxwJ9O4Xg/arthur-volkmann-1851/zwei-weibliche-akte-mit-rehen-in-landschaft-rueckseite-gemalte-landschaft-hst-303",
+      "locationCode": "NP",
+      "original_image": "https://res.cloudinary.com/tne/image/authenticated/s--0FxmbPii--/q_60/w_400/artworks/ARTHUR-VOLKMANN_ZWEI-WEIBLICHE-AKTE-MIT-REHEN-IN-LANDSCHAFT-RUECKSEITE-GEMALTE-LANDSCHAFT_CC-BY-SA_BSTGS_HST303.jpg"
     },
     {
       "id": "pinakothek-np-HST-312",
@@ -2416,7 +2545,7 @@
       "onDisplay": false,
       "image": "",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/HST 312",
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/8eGVwP14WQ/walther-gasch-1886/oberbayerischer-holzfaeller-hst-312",
       "locationCode": "NP"
     },
     {
@@ -2434,7 +2563,7 @@
       "onDisplay": false,
       "image": "",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/HST 321",
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/9pL3ABE4eb/walther-gasch-1886/thueringer-handwerksmann-hst-321",
       "locationCode": "NP"
     },
     {
@@ -2452,8 +2581,9 @@
       "onDisplay": false,
       "image": "",
       "source": "Neue Pinakothek",
-      "url": "https://www.sammlung.pinakothek.de/en/artwork/HST 330",
+      "url": "https://www.sammlung.pinakothek.de/en/artwork/5347qRBL9e/walther-gasch-1886/michael-kohlhaas-hst-330",
       "locationCode": "NP"
     }
-  ]
+  ],
+  "original_coverImage": "https://res.cloudinary.com/tne/image/authenticated/s--eTTR1MBI--/q_60/w_400/artworks/ALEXANDER-KOESTER_ENTEN-KOHLESTUDIE-XXIII_CC-BY-SA_BSTGS_AK96.jpg"
 }

@@ -1,8 +1,0 @@
-=== BRITISH MUSEUM COLLECTION RESEARCH ===
-
-[1m[43m[30m
-  Degraded performance warning:[0m[33m
-  Launching Chrome on Mac Silicon (arm64) from an x64 Node installation results in
-  Rosetta translating the Chrome binary, even if Chrome is already arm64. This would
-  result in huge performance issues. To resolve this, you must run Puppeteer with
-  a version of Node built for arm64.

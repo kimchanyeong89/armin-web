@@ -1,0 +1,23 @@
+--- Phase 1: Scraping Lists ---
+Scraping Classification 22...
+  Fetching page 0: https://collections.lacma.org/search/site?page=0&f[0]=bm_field_has_image:true&f[1]=im_field_classification:22
+  Found 20 items. Total unique: 20
+  Fetching page 1: https://collections.lacma.org/search/site?page=1&f[0]=bm_field_has_image:true&f[1]=im_field_classification:22
+  Found 20 items. Total unique: 40
+  Fetching page 2: https://collections.lacma.org/search/site?page=2&f[0]=bm_field_has_image:true&f[1]=im_field_classification:22
+  Found 20 items. Total unique: 60
+  Fetching page 3: https://collections.lacma.org/search/site?page=3&f[0]=bm_field_has_image:true&f[1]=im_field_classification:22
+  Found 20 items. Total unique: 80
+  Fetching page 4: https://collections.lacma.org/search/site?page=4&f[0]=bm_field_has_image:true&f[1]=im_field_classification:22
+  Found 20 items. Total unique: 100
+  Fetching page 5: https://collections.lacma.org/search/site?page=5&f[0]=bm_field_has_image:true&f[1]=im_field_classification:22
+  Found 20 items. Total unique: 120
+  Fetching page 6: https://collections.lacma.org/search/site?page=6&f[0]=bm_field_has_image:true&f[1]=im_field_classification:22
+  Found 20 items. Total unique: 140
+  Fetching page 7: https://collections.lacma.org/search/site?page=7&f[0]=bm_field_has_image:true&f[1]=im_field_classification:22
+  Found 20 items. Total unique: 160
+  Fetching page 8: https://collections.lacma.org/search/site?page=8&f[0]=bm_field_has_image:true&f[1]=im_field_classification:22
+  Found 20 items. Total unique: 180
+  Fetching page 9: https://collections.lacma.org/search/site?page=9&f[0]=bm_field_has_image:true&f[1]=im_field_classification:22
+  Found 20 items. Total unique: 200
+  Fetching page 10: https://collections.lacma.org/search/site?page=10&f[0]=bm_field_has_image:true&f[1]=im_field_classification:22

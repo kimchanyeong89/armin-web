@@ -1,29 +1,0 @@
-🎨 MAM Paris - PARALLEL Scraper v2 (개선된 버전)
-==================================================
-테스트: 3페이지, 병렬: 5개씩
-개선사항: 컨텐츠 로딩 대기, UI텍스트 필터링, 재시도
-==================================================
-
-📋 Step 1: 리스트 수집...
-  페이지 1: 15개
-  페이지 2: 15개
-  페이지 3: 15개
-
-✅ 총 45개 항목 수집
-
-📝 Step 2: 병렬 스크래핑 (5개씩)...
-  배치 1/9: ✓✓✓✓✓  배치 2/9: ✓✓✓✓✓  배치 3/9: ✓✓✓✓✓  배치 4/9: ✓✓✓✓✓  배치 5/9: ✓✓✓✓✓  배치 6/9: ✓✓✓✓✓  배치 7/9: ✓✓✓✓✓  배치 8/9: ✓✓✓✓✓  배치 9/9: ✓✓✓✓✓
-
-==================================================
-✅ 완료!
-  - 총 수집: 45개
-  - 데이터 있음: 43개 (95.6%)
-  - 소요시간: 136.3초
-📁 저장: /Users/kietzsche/armin-web-main/public/data/mam-painting-collection.json
-
-=== 샘플 (데이터 있는 것) ===
-1. "Vue de Montmartre" - Léon Alphonse QUIZET (vers 1925)
-2. "Le mur aux oiseaux" - André BAUCHANT (1930)
-3. "Notice de l'artiste sur le site d'AWARE" - FAHR EL NISSA (Fahr-El-Nissa ZEID, dite) (연도 미상)
-4. "Vanité II" - Yves OPPENHEIM (1987)
-5. "Composition" - Charles PIERRE-HUMBERT (1956)

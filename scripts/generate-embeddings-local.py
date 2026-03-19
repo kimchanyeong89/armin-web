@@ -18,6 +18,8 @@ import json
 import time
 import hashlib
 import requests
+import urllib3
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 from io import BytesIO
 from pathlib import Path
 from tqdm import tqdm
@@ -77,7 +79,7 @@ def download_image(url, timeout=IMAGE_TIMEOUT, retries=MAX_RETRIES):
     """이미지 다운로드 (재시도 포함)"""
     for attempt in range(retries + 1):
         try:
-            response = requests.get(url, timeout=timeout, headers={
+            response = requests.get(url, timeout=timeout, verify=False, headers={
                 "User-Agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36"
             })
             if response.status_code == 200:
@@ -141,7 +143,7 @@ def load_search_index():
     data_dir = manifest_path.parent
     
     # 한국 박물관 키워드
-    KOREAN_MUSEUMS = ["국립중앙박물관", "국립경주박물관", "National Museum of Korea", "Gyeongju National Museum"]
+    KOREAN_MUSEUMS = ["국립중앙박물관", "국립경주박물관", "국립부여박물관", "National Museum of Korea", "Gyeongju National Museum", "Buyeo National Museum"]
     
     print("loading chunks...")
     for chunk_file in manifest['chunks']:
@@ -160,15 +162,8 @@ def load_search_index():
     
     print(f"🧹 한국 박물관 제외 후: {len(all_artworks):,}개")
     
-    # R2 이미지 우선 정렬 (r2.dev 도메인) -> 서양 미술관 데이터가 많음
-    r2_artworks = [a for a in all_artworks if 'r2.dev' in a.get('i', '')]
-    other_artworks = [a for a in all_artworks if 'r2.dev' not in a.get('i', '')]
-    
-    print(f"🚀 R2 이미지: {len(r2_artworks):,}개 (우선 처리)")
-    print(f"🌐 외부 이미지: {len(other_artworks):,}개")
-    
-    # R2 우선, 최대 MAX_IMAGES개 (이미 처리된 것 포함해서 넉넉하게 반환, main에서 필터링됨)
-    return r2_artworks + other_artworks
+    # R2 우선 처리 로직 제거 - 그냥 순서대로 반환
+    return all_artworks
 
 
 def main():
@@ -213,13 +208,22 @@ def main():
     batch_ids = []
     upload_count = 0
     
+    processed_count = 0  # 처리한 총 개수 (성공+실패)
+    
     with tqdm(total=len(remaining), desc="Embedding", unit="img") as pbar:
         for art_id, artwork in remaining:
             image_url = artwork.get("i")
             
             if not image_url:
                 progress["failed"] += 1
+                progress["processed_ids"].append(art_id)
+                processed_count += 1
                 pbar.update(1)
+                
+                # 100개마다 강제 저장
+                if processed_count % 100 == 0:
+                    save_progress(progress, progress_path)
+                    tqdm.write(f"💾 강제 저장: success={progress['success']}, failed={progress['failed']}")
                 continue
             
             # 이미지 다운로드
@@ -231,7 +235,19 @@ def main():
                     else:
                         fail_reasons["download_error"] += 1
                 progress["failed"] += 1
+                progress["processed_ids"].append(art_id)
+                processed_count += 1
+                
+                # 처음 10개 실패에 대해 상세 출력
+                if progress["failed"] <= 10:
+                    tqdm.write(f"⚠️ 다운로드 실패 #{progress['failed']}: {err} - URL: {image_url[:60]}...")
+                
                 pbar.update(1)
+                
+                # 100개마다 강제 저장
+                if processed_count % 100 == 0:
+                    save_progress(progress, progress_path)
+                    tqdm.write(f"💾 강제 저장: success={progress['success']}, failed={progress['failed']}")
                 continue
             
             # 임베딩 생성
@@ -240,7 +256,14 @@ def main():
                 with fail_lock:
                     fail_reasons["embedding_error"] += 1
                 progress["failed"] += 1
+                progress["processed_ids"].append(art_id)
+                processed_count += 1
                 pbar.update(1)
+                
+                # 100개마다 강제 저장
+                if processed_count % 100 == 0:
+                    save_progress(progress, progress_path)
+                    tqdm.write(f"💾 강제 저장: success={progress['success']}, failed={progress['failed']}")
                 continue
             
             # 배치에 추가
@@ -263,20 +286,25 @@ def main():
                     upload_count += count
                     progress["success"] += count
                     progress["processed_ids"].extend(batch_ids)
+                    tqdm.write(f"✅ 배치 업로드 성공: {count}개")
                 else:
                     with fail_lock:
                         fail_reasons["upload_error"] += len(vectors_batch)
                     progress["failed"] += len(vectors_batch)
-                    if err:
-                        tqdm.write(f"   Upload error: {err}")
+                    # 업로드 실패해도 ID는 기록 (중복 작업 방지)
+                    progress["processed_ids"].extend(batch_ids)
+                    tqdm.write(f"❌ 배치 업로드 실패: {err}")
                 
                 vectors_batch = []
                 batch_ids = []
+                
+                # 배치 처리 후 무조건 저장 (성공/실패 관계없이)
+                save_progress(progress, progress_path)
+                tqdm.write(f"💾 저장 완료: success={progress['success']}, failed={progress['failed']}")
+                
                 pbar.set_postfix({
-                    "✓": progress["success"], 
-                    "✗": progress["failed"],
-                    "dl": fail_reasons["download_error"],
-                    "to": fail_reasons["download_timeout"]
+                    "💾saved": progress["success"], 
+                    "❌fail": progress["failed"]
                 })
             
             # 진행 상황 저장

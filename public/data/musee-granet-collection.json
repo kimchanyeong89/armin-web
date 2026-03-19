@@ -6,11 +6,12 @@
     "year": "1858",
     "medium": "Huile sur toile",
     "dimensions": "91 x 133,8 cm",
-    "imageUrl": "https://www.museegranet-aixenprovence.fr/fileadmin/mediatheque/collections/14e-18e/858_2_2-001BD.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/musee-granet/granet-0-imageUrl.webp",
     "caption": "École de Fontainebleau, 16e  siècle – Huile sur toile, 91 cm x 133,8 cm - Donation Arbaud-Jouques, 1858 – Photo Claude Almodovar / Musée Granet, Aix-en-Provence",
     "category": "14th-18th Century Painting",
     "sourceUrl": "https://www.museegranet-aixenprovence.fr/en/collections/collections/french-northern-european-and-italian-painting-of-the-14th-18th-centuries",
-    "museum": "Musée Granet"
+    "museum": "Musée Granet",
+    "original_imageUrl": "https://www.museegranet-aixenprovence.fr/fileadmin/mediatheque/collections/14e-18e/858_2_2-001BD.jpg"
   },
   {
     "id": "granet-1",
@@ -19,11 +20,12 @@
     "year": "1653",
     "medium": "Huile sur toile",
     "dimensions": "56,5 x 109,7 cm",
-    "imageUrl": "https://www.museegranet-aixenprovence.fr/fileadmin/mediatheque/collections/14e-18e/van-wittel.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/musee-granet/granet-1-imageUrl.webp",
     "caption": "Caspar van Wittel (1653-1736) - Huile sur toile, 56,5 x 109,7 cm - Donation Bourguignon de Fabregoules, 1860 - Photo Claude Almodovar / Musée Granet, Aix-en-Provence",
     "category": "14th-18th Century Painting",
     "sourceUrl": "https://www.museegranet-aixenprovence.fr/en/collections/collections/french-northern-european-and-italian-painting-of-the-14th-18th-centuries",
-    "museum": "Musée Granet"
+    "museum": "Musée Granet",
+    "original_imageUrl": "https://www.museegranet-aixenprovence.fr/fileadmin/mediatheque/collections/14e-18e/van-wittel.jpg"
   },
   {
     "id": "granet-2",
@@ -32,11 +34,12 @@
     "year": "1860",
     "medium": "",
     "dimensions": "130,7 x 100,5 cm",
-    "imageUrl": "https://www.museegranet-aixenprovence.fr/fileadmin/mediatheque/collections/14e-18e/toilette-venus.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/musee-granet/granet-2-imageUrl.webp",
     "caption": "École de Fontainebleau - Huile sur bois, 130,7 x 100,5 cm - Donation Bourguignon de Fabregoules, 1860 – Photo musée Granet, Aix-en-Provence",
     "category": "14th-18th Century Painting",
     "sourceUrl": "https://www.museegranet-aixenprovence.fr/en/collections/collections/french-northern-european-and-italian-painting-of-the-14th-18th-centuries",
-    "museum": "Musée Granet"
+    "museum": "Musée Granet",
+    "original_imageUrl": "https://www.museegranet-aixenprovence.fr/fileadmin/mediatheque/collections/14e-18e/toilette-venus.jpg"
   },
   {
     "id": "granet-3",
@@ -45,11 +48,12 @@
     "year": "1860",
     "medium": "Huile sur toile",
     "dimensions": "206 x 230 cm",
-    "imageUrl": "https://www.museegranet-aixenprovence.fr/fileadmin/mediatheque/collections/14e-18e/achelous.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/musee-granet/granet-3-imageUrl.webp",
     "caption": "D'après Pierre Paul Rubens, 17e siècle – Huile sur toile, 115, 5 x 184,5 (hors cadre), 206 x 230 cm (avec cadre) – Donation Bourguignon de Fabregoules, 1860 - Photo Claude Almodovar / Musée Granet, Aix-en-Provence",
     "category": "14th-18th Century Painting",
     "sourceUrl": "https://www.museegranet-aixenprovence.fr/en/collections/collections/french-northern-european-and-italian-painting-of-the-14th-18th-centuries",
-    "museum": "Musée Granet"
+    "museum": "Musée Granet",
+    "original_imageUrl": "https://www.museegranet-aixenprovence.fr/fileadmin/mediatheque/collections/14e-18e/achelous.jpg"
   },
   {
     "id": "granet-4",
@@ -58,11 +62,12 @@
     "year": "1840",
     "medium": "Huile sur toile",
     "dimensions": "115 x 147 cm",
-    "imageUrl": "https://www.museegranet-aixenprovence.fr/fileadmin/mediatheque/collections/14e-18e/2014.8.1_Jean_Bernard.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/musee-granet/granet-4-imageUrl.webp",
     "caption": "Pierre Revoil– Huile sur toile, 115 x 147 cm (hors cadre), 155 x 182 cm (avec cadre) – Photo Jean Bernard / Musée Granet, Aix-en-Provence",
     "category": "14th-18th Century Painting",
     "sourceUrl": "https://www.museegranet-aixenprovence.fr/en/collections/collections/french-northern-european-and-italian-painting-of-the-14th-18th-centuries",
-    "museum": "Musée Granet"
+    "museum": "Musée Granet",
+    "original_imageUrl": "https://www.museegranet-aixenprovence.fr/fileadmin/mediatheque/collections/14e-18e/2014.8.1_Jean_Bernard.jpg"
   },
   {
     "id": "granet-5",
@@ -71,11 +76,12 @@
     "year": "1860",
     "medium": "",
     "dimensions": "47 x 20 cm",
-    "imageUrl": "https://www.museegranet-aixenprovence.fr/fileadmin/mediatheque/collections/14e-18e/860_1_947-001BD.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/musee-granet/granet-5-imageUrl.webp",
     "caption": "Terre cuite, cire et paille, 66 x 47 x 20 cm – Donation Bourguignon de Fabregoules, 1860 -  Photo Claude Almodovar / Musée Granet, Aix-en-Provence",
     "category": "14th-18th Century Painting",
     "sourceUrl": "https://www.museegranet-aixenprovence.fr/en/collections/collections/french-northern-european-and-italian-painting-of-the-14th-18th-centuries",
-    "museum": "Musée Granet"
+    "museum": "Musée Granet",
+    "original_imageUrl": "https://www.museegranet-aixenprovence.fr/fileadmin/mediatheque/collections/14e-18e/860_1_947-001BD.jpg"
   },
   {
     "id": "granet-6",
@@ -84,11 +90,12 @@
     "year": "1700",
     "medium": "Huile sur toile",
     "dimensions": "100 x 130 cm",
-    "imageUrl": "https://www.museegranet-aixenprovence.fr/fileadmin/mediatheque/collections/14e-18e/2014_3_1-001BD.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/musee-granet/granet-6-imageUrl.webp",
     "caption": "Meiffren Comte, vers 1700 – Huile sur toile, 100 x 130 cm - Photo Claude Almodovar / Musée Granet, Aix-en-Provence",
     "category": "14th-18th Century Painting",
     "sourceUrl": "https://www.museegranet-aixenprovence.fr/en/collections/collections/french-northern-european-and-italian-painting-of-the-14th-18th-centuries",
-    "museum": "Musée Granet"
+    "museum": "Musée Granet",
+    "original_imageUrl": "https://www.museegranet-aixenprovence.fr/fileadmin/mediatheque/collections/14e-18e/2014_3_1-001BD.jpg"
   },
   {
     "id": "granet-7",
@@ -97,11 +104,12 @@
     "year": "1780",
     "medium": "Huile sur toile",
     "dimensions": "75 x 53 cm",
-    "imageUrl": "https://www.museegranet-aixenprovence.fr/fileadmin/mediatheque/collections/19e/portrait-granet.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/musee-granet/granet-7-imageUrl.webp",
     "caption": "Jean Auguste Dominique Ingres (1780-1867) - Huile sur toile 75 x 53 cm - Photo musée Granet, Aix-en-Provence",
     "category": "19th Century French Painting",
     "sourceUrl": "https://www.museegranet-aixenprovence.fr/en/collections/collections/french-19th-century-painting-granet-ingres-provencal-painting",
-    "museum": "Musée Granet"
+    "museum": "Musée Granet",
+    "original_imageUrl": "https://www.museegranet-aixenprovence.fr/fileadmin/mediatheque/collections/19e/portrait-granet.jpg"
   },
   {
     "id": "granet-8",
@@ -110,11 +118,12 @@
     "year": "1791",
     "medium": "Huile sur toile",
     "dimensions": "37,4 x 45,6 cm",
-    "imageUrl": "https://www.museegranet-aixenprovence.fr/fileadmin/mediatheque/collections/19e/gericault-grec.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/musee-granet/granet-8-imageUrl.webp",
     "caption": "Théodore Géricault, 1791-1824 - Huile sur toile, 37,4 x 45,6 cm - Musée Granet, Aix-en-Provence",
     "category": "19th Century French Painting",
     "sourceUrl": "https://www.museegranet-aixenprovence.fr/en/collections/collections/french-19th-century-painting-granet-ingres-provencal-painting",
-    "museum": "Musée Granet"
+    "museum": "Musée Granet",
+    "original_imageUrl": "https://www.museegranet-aixenprovence.fr/fileadmin/mediatheque/collections/19e/gericault-grec.jpg"
   },
   {
     "id": "granet-9",
@@ -123,11 +132,12 @@
     "year": "1771",
     "medium": "Huile sur toile",
     "dimensions": "455 x 641 cm",
-    "imageUrl": "https://www.museegranet-aixenprovence.fr/fileadmin/mediatheque/collections/19e/845.1.1-duqueylard.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/musee-granet/granet-9-imageUrl.webp",
     "caption": "Hugues Jean François Paul Du Queylard dit Paul Duqueylar (1771-1845) - Huile sur toile, 455 x 641 cm - Musée Granet, Aix-en-Provence",
     "category": "19th Century French Painting",
     "sourceUrl": "https://www.museegranet-aixenprovence.fr/en/collections/collections/french-19th-century-painting-granet-ingres-provencal-painting",
-    "museum": "Musée Granet"
+    "museum": "Musée Granet",
+    "original_imageUrl": "https://www.museegranet-aixenprovence.fr/fileadmin/mediatheque/collections/19e/845.1.1-duqueylard.jpg"
   },
   {
     "id": "granet-10",
@@ -136,11 +146,12 @@
     "year": "1801",
     "medium": "Huile sur toile",
     "dimensions": "",
-    "imageUrl": "https://www.museegranet-aixenprovence.fr/fileadmin/_processed_/f/3/csm_22_ccce8468c3.png",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/musee-granet/granet-10-imageUrl.webp",
     "caption": "Prosper Grésy (1801-1847) - Huile sur toile, 49,5 x 82, 8 cm - Musée Granet, Aix-en-Provence",
     "category": "19th Century French Painting",
     "sourceUrl": "https://www.museegranet-aixenprovence.fr/en/collections/collections/french-19th-century-painting-granet-ingres-provencal-painting",
-    "museum": "Musée Granet"
+    "museum": "Musée Granet",
+    "original_imageUrl": "https://www.museegranet-aixenprovence.fr/fileadmin/_processed_/f/3/csm_22_ccce8468c3.png"
   },
   {
     "id": "granet-11",
@@ -149,11 +160,12 @@
     "year": "1775",
     "medium": "Huile sur toile",
     "dimensions": "198,8 x 271 cm",
-    "imageUrl": "https://www.museegranet-aixenprovence.fr/fileadmin/mediatheque/collections/19e/_53.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/musee-granet/granet-11-imageUrl.webp",
     "caption": "François-Marius Granet (1775-1849) - Huile sur toile, 198,8 x 271 cm - Legs F.M. Granet, 1849 - Photo H. Maertens - Musée Granet, Aix-en-Provence",
     "category": "19th Century French Painting",
     "sourceUrl": "https://www.museegranet-aixenprovence.fr/en/collections/collections/french-19th-century-painting-granet-ingres-provencal-painting",
-    "museum": "Musée Granet"
+    "museum": "Musée Granet",
+    "original_imageUrl": "https://www.museegranet-aixenprovence.fr/fileadmin/mediatheque/collections/19e/_53.jpg"
   },
   {
     "id": "granet-12",
@@ -162,11 +174,12 @@
     "year": "1897",
     "medium": "huile sur toile",
     "dimensions": "73 x 91,5 cm",
-    "imageUrl": "https://www.museegranet-aixenprovence.fr/fileadmin/user_upload/9_273_FWN_314.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/musee-granet/granet-12-imageUrl.webp",
     "caption": "Paul Cezanne, La Montagne Sainte-Victoire, 1897, huile sur toile, 73 x 91,5 cm, Bern, Kunstmuseum Bern, Legs Cornelius Gurlitt, 2014, photo@kunstmuseumbern.ch",
     "category": "Cézanne",
     "sourceUrl": "https://www.museegranet-aixenprovence.fr/en/collections/collections/cezanne-at-the-musee-granet",
-    "museum": "Musée Granet"
+    "museum": "Musée Granet",
+    "original_imageUrl": "https://www.museegranet-aixenprovence.fr/fileadmin/user_upload/9_273_FWN_314.jpg"
   },
   {
     "id": "granet-13",
@@ -175,11 +188,12 @@
     "year": "1839",
     "medium": "Huile sur toile",
     "dimensions": "44,5 x 59 cm",
-    "imageUrl": "https://www.museegranet-aixenprovence.fr/fileadmin/mediatheque/collections/cezanne/P.Cezanne__Vue_du_Jas.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/musee-granet/granet-13-imageUrl.webp",
     "caption": "Paul Cezanne (1839-1906) - Huile sur toile, 44,5 x 59 cm – Paris, musée d'Orsay, dépôt au musée Granet – Aix-en-Provence, donation de Philippe Meyer, 2000 © RMN-Grand Palais – Photo M. Rabeau",
     "category": "Cézanne",
     "sourceUrl": "https://www.museegranet-aixenprovence.fr/en/collections/collections/cezanne-at-the-musee-granet",
-    "museum": "Musée Granet"
+    "museum": "Musée Granet",
+    "original_imageUrl": "https://www.museegranet-aixenprovence.fr/fileadmin/mediatheque/collections/cezanne/P.Cezanne__Vue_du_Jas.jpg"
   },
   {
     "id": "granet-14",
@@ -188,11 +202,12 @@
     "year": "1870",
     "medium": "huile sur toile",
     "dimensions": "33 x 40 cm",
-    "imageUrl": "https://www.museegranet-aixenprovence.fr/fileadmin/user_upload/Cezanne-Baigneuses-ste-victoire_HD_LIGHT-.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/musee-granet/granet-14-imageUrl.webp",
     "caption": "Paul Cezanne, Les Baigneuses devant la montagne Sainte-Victoire, vers 1870, huile sur toile, 33 x 40 cm, collection D.G. Cazeau, dépôt au musée Granet, Aix-en-Provence, 2025",
     "category": "Cézanne",
     "sourceUrl": "https://www.museegranet-aixenprovence.fr/en/collections/collections/cezanne-at-the-musee-granet",
-    "museum": "Musée Granet"
+    "museum": "Musée Granet",
+    "original_imageUrl": "https://www.museegranet-aixenprovence.fr/fileadmin/user_upload/Cezanne-Baigneuses-ste-victoire_HD_LIGHT-.jpg"
   },
   {
     "id": "granet-15",
@@ -201,11 +216,12 @@
     "year": "1887",
     "medium": "Huile sur toile",
     "dimensions": "46 x 38 cm",
-    "imageUrl": "https://www.museegranet-aixenprovence.fr/fileadmin/mediatheque/collections/cezanne/Madame-Cezanne.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/musee-granet/granet-15-imageUrl.webp",
     "caption": "Paul Cézanne, entre 1887 et 1885 - Huile sur toile, 46 x 38 cm - Dépôt du musée d'Orsay au musée Granet, 1984",
     "category": "Cézanne",
     "sourceUrl": "https://www.museegranet-aixenprovence.fr/en/collections/collections/cezanne-at-the-musee-granet",
-    "museum": "Musée Granet"
+    "museum": "Musée Granet",
+    "original_imageUrl": "https://www.museegranet-aixenprovence.fr/fileadmin/mediatheque/collections/cezanne/Madame-Cezanne.jpg"
   },
   {
     "id": "granet-16",
@@ -214,11 +230,12 @@
     "year": "1839",
     "medium": "huile sur toile",
     "dimensions": "29 x 45 cm",
-    "imageUrl": "https://www.museegranet-aixenprovence.fr/fileadmin/mediatheque/collections/cezanne/baigneuses-cezanne.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/musee-granet/granet-16-imageUrl.webp",
     "caption": "Paul Cezanne (1839-1906), vers 1895, huile sur toile, 29 x 45 cm, dépôt du musée d'Orsay au musée Granet, 1984, photo H. Maertens",
     "category": "Cézanne",
     "sourceUrl": "https://www.museegranet-aixenprovence.fr/en/collections/collections/cezanne-at-the-musee-granet",
-    "museum": "Musée Granet"
+    "museum": "Musée Granet",
+    "original_imageUrl": "https://www.museegranet-aixenprovence.fr/fileadmin/mediatheque/collections/cezanne/baigneuses-cezanne.jpg"
   },
   {
     "id": "granet-17",
@@ -227,11 +244,12 @@
     "year": "1839",
     "medium": "Huile sur toile",
     "dimensions": "25,8 x 20,8 cm",
-    "imageUrl": "https://www.museegranet-aixenprovence.fr/fileadmin/mediatheque/collections/cezanne/tasse-bleue.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/musee-granet/granet-17-imageUrl.webp",
     "caption": "Paul Cezanne (1839-1906) - Huile sur toile, 25,8 x 20,8 cm - Musée Granet, Aix-en-Provence",
     "category": "Cézanne",
     "sourceUrl": "https://www.museegranet-aixenprovence.fr/en/collections/collections/cezanne-at-the-musee-granet",
-    "museum": "Musée Granet"
+    "museum": "Musée Granet",
+    "original_imageUrl": "https://www.museegranet-aixenprovence.fr/fileadmin/mediatheque/collections/cezanne/tasse-bleue.jpg"
   },
   {
     "id": "granet-18",
@@ -240,11 +258,12 @@
     "year": "1881",
     "medium": "Huile sur toile",
     "dimensions": "61 x 46 cm",
-    "imageUrl": "https://www.museegranet-aixenprovence.fr/fileadmin/mediatheque/collections/cezanne-giacometti/femme-picasso.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/musee-granet/granet-18-imageUrl.webp",
     "caption": "Pablo Picasso (1881-1973) - Huile sur toile, 61 x 46 cm - Paris, musée d'Orsay, dépôt au musée Granet-Aix-en-Provence, donation de Philippe Meyer, 2000 ©Rmn-Grand Palais, M. Rabeau © Succession Picasso",
     "category": "From Cézanne to Giacometti",
     "sourceUrl": "https://www.museegranet-aixenprovence.fr/en/collections/collections/from-cezanne-to-giacometti",
-    "museum": "Musée Granet"
+    "museum": "Musée Granet",
+    "original_imageUrl": "https://www.museegranet-aixenprovence.fr/fileadmin/mediatheque/collections/cezanne-giacometti/femme-picasso.jpg"
   },
   {
     "id": "granet-19",
@@ -253,11 +272,12 @@
     "year": "1914",
     "medium": "Huile sur toile",
     "dimensions": "81 x 65 cm",
-    "imageUrl": "https://www.museegranet-aixenprovence.fr/fileadmin/mediatheque/collections/cezanne-giacometti/101.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/musee-granet/granet-19-imageUrl.webp",
     "caption": "Nicolas de Staël (1914-1955) - Huile sur toile, 81 x 65 cm - Paris, musée d’Orsay, dépôt au musée Granet – Aix-en-Provence, donation de Philippe Meyer, 2000 © RMN-Grand Palais – Photos Mathieu Rabeau © Adagp, Paris",
     "category": "From Cézanne to Giacometti",
     "sourceUrl": "https://www.museegranet-aixenprovence.fr/en/collections/collections/from-cezanne-to-giacometti",
-    "museum": "Musée Granet"
+    "museum": "Musée Granet",
+    "original_imageUrl": "https://www.museegranet-aixenprovence.fr/fileadmin/mediatheque/collections/cezanne-giacometti/101.jpg"
   },
   {
     "id": "granet-20",
@@ -266,11 +286,12 @@
     "year": "1712",
     "medium": "Huile sur toile",
     "dimensions": "35 x 45 cm",
-    "imageUrl": "https://www.museegranet-aixenprovence.fr/fileadmin/mediatheque/collections/cezanne-giacometti/Francesco_Guardi__Place_Saint-Marc_1775-1785.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/musee-granet/granet-20-imageUrl.webp",
     "caption": "Francesco Guardi (1712-1793) - Huile sur toile, 35 x 45 cm - Paris, musée d’Orsay, dépôt au musée Granet – Aix-en-Provence, donation de Philippe Meyer, 2000 © RMN-Grand Palais – Photos Mathieu Rabeau",
     "category": "From Cézanne to Giacometti",
     "sourceUrl": "https://www.museegranet-aixenprovence.fr/en/collections/collections/from-cezanne-to-giacometti",
-    "museum": "Musée Granet"
+    "museum": "Musée Granet",
+    "original_imageUrl": "https://www.museegranet-aixenprovence.fr/fileadmin/mediatheque/collections/cezanne-giacometti/Francesco_Guardi__Place_Saint-Marc_1775-1785.jpg"
   },
   {
     "id": "granet-21",
@@ -279,11 +300,12 @@
     "year": "1901",
     "medium": "Bronze",
     "dimensions": "22 x 36 cm",
-    "imageUrl": "https://www.museegranet-aixenprovence.fr/fileadmin/mediatheque/collections/cezanne-giacometti/homme-meyer.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/musee-granet/granet-21-imageUrl.webp",
     "caption": "Alberto Giacometti (1901-1966) - Bronze, 60 x 22 x 36 cm - Paris, musée d'Orsay, dépôt au musée Granet-Aix-en-Provence, donation de Philippe Meyer, 2000 ©Rmn-Grand Palais, M. Rabeau © Succession Giacometti / ADAGP, Paris",
     "category": "From Cézanne to Giacometti",
     "sourceUrl": "https://www.museegranet-aixenprovence.fr/en/collections/collections/from-cezanne-to-giacometti",
-    "museum": "Musée Granet"
+    "museum": "Musée Granet",
+    "original_imageUrl": "https://www.museegranet-aixenprovence.fr/fileadmin/mediatheque/collections/cezanne-giacometti/homme-meyer.jpg"
   },
   {
     "id": "granet-22",
@@ -292,11 +314,12 @@
     "year": "1895",
     "medium": "Huile sur toile",
     "dimensions": "100 x 81 cm",
-    "imageUrl": "https://www.museegranet-aixenprovence.fr/fileadmin/mediatheque/collections/cezanne-giacometti/expression-composition.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/musee-granet/granet-22-imageUrl.webp",
     "caption": "Bram van Velde (1895-1981) - Huile sur toile, 100 x 81 cm - Paris, musée d'Orsay, dépôt au musée Granet-Aix-en-Provence, donation de Philippe Meyer, 2000 © Rmn-Grand Palais, M. Rabeau / ADAGP, Paris",
     "category": "From Cézanne to Giacometti",
     "sourceUrl": "https://www.museegranet-aixenprovence.fr/en/collections/collections/from-cezanne-to-giacometti",
-    "museum": "Musée Granet"
+    "museum": "Musée Granet",
+    "original_imageUrl": "https://www.museegranet-aixenprovence.fr/fileadmin/mediatheque/collections/cezanne-giacometti/expression-composition.jpg"
   },
   {
     "id": "granet-23",
@@ -305,11 +328,12 @@
     "year": "",
     "medium": "",
     "dimensions": "",
-    "imageUrl": "https://www.museegranet-aixenprovence.fr/fileadmin/_processed_/2/f/csm_homme-meyer_94e678778a.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/musee-granet/granet-23-imageUrl.webp",
     "caption": "",
     "category": "From Cézanne to Giacometti",
     "sourceUrl": "https://www.museegranet-aixenprovence.fr/en/collections/collections/from-cezanne-to-giacometti",
-    "museum": "Musée Granet"
+    "museum": "Musée Granet",
+    "original_imageUrl": "https://www.museegranet-aixenprovence.fr/fileadmin/_processed_/2/f/csm_homme-meyer_94e678778a.jpg"
   },
   {
     "id": "granet-24",
@@ -318,11 +342,12 @@
     "year": "",
     "medium": "",
     "dimensions": "",
-    "imageUrl": "https://www.museegranet-aixenprovence.fr/fileadmin/mediatheque/collections/sculptures/sculpture-gallerie.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/musee-granet/granet-24-imageUrl.webp",
     "caption": "Photo musée Granet, Aix-en-Provence",
     "category": "Sculpture",
     "sourceUrl": "https://www.museegranet-aixenprovence.fr/en/collections/collections/sculpture-gallery",
-    "museum": "Musée Granet"
+    "museum": "Musée Granet",
+    "original_imageUrl": "https://www.museegranet-aixenprovence.fr/fileadmin/mediatheque/collections/sculptures/sculpture-gallerie.jpg"
   },
   {
     "id": "granet-25",
@@ -331,11 +356,12 @@
     "year": "1726",
     "medium": "",
     "dimensions": "61 x 91 cm",
-    "imageUrl": "https://www.museegranet-aixenprovence.fr/fileadmin/mediatheque/collections/sculptures/sculpture-murale.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/musee-granet/granet-25-imageUrl.webp",
     "caption": "Jean-Pancrace Chastel (1726-1793) - Marbre, 61 x 91 cm - Photo H. Mærtens - Musée Granet, Aix-en-Provence",
     "category": "Sculpture",
     "sourceUrl": "https://www.museegranet-aixenprovence.fr/en/collections/collections/sculpture-gallery",
-    "museum": "Musée Granet"
+    "museum": "Musée Granet",
+    "original_imageUrl": "https://www.museegranet-aixenprovence.fr/fileadmin/mediatheque/collections/sculptures/sculpture-murale.jpg"
   },
   {
     "id": "granet-26",
@@ -344,11 +370,12 @@
     "year": "",
     "medium": "",
     "dimensions": "",
-    "imageUrl": "https://www.museegranet-aixenprovence.fr/fileadmin/mediatheque/collections/sculptures/galerie-sculptures.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/musee-granet/granet-26-imageUrl.webp",
     "caption": "",
     "category": "Sculpture",
     "sourceUrl": "https://www.museegranet-aixenprovence.fr/en/collections/collections/sculpture-gallery",
-    "museum": "Musée Granet"
+    "museum": "Musée Granet",
+    "original_imageUrl": "https://www.museegranet-aixenprovence.fr/fileadmin/mediatheque/collections/sculptures/galerie-sculptures.jpg"
   },
   {
     "id": "granet-27",
@@ -357,11 +384,12 @@
     "year": "",
     "medium": "",
     "dimensions": "",
-    "imageUrl": "https://www.museegranet-aixenprovence.fr/fileadmin/mediatheque/collections/archeologie/archeologie-guerriers.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/musee-granet/granet-27-imageUrl.webp",
     "caption": "Site d'Entremont, IIe s. av. J.-C - Photo H. Maertens - Musée Granet, Aix-en-Provence",
     "category": "Archaeology",
     "sourceUrl": "https://www.museegranet-aixenprovence.fr/en/collections/collections/archaeology",
-    "museum": "Musée Granet"
+    "museum": "Musée Granet",
+    "original_imageUrl": "https://www.museegranet-aixenprovence.fr/fileadmin/mediatheque/collections/archeologie/archeologie-guerriers.jpg"
   },
   {
     "id": "granet-28",
@@ -370,11 +398,12 @@
     "year": "",
     "medium": "",
     "dimensions": "",
-    "imageUrl": "https://www.museegranet-aixenprovence.fr/fileadmin/mediatheque/collections/archeologie/entremont_001.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/musee-granet/granet-28-imageUrl.webp",
     "caption": "Site d'Entremont, IIe siècle av. J.-C. - Musée Granet, Aix-en-Provence",
     "category": "Archaeology",
     "sourceUrl": "https://www.museegranet-aixenprovence.fr/en/collections/collections/archaeology",
-    "museum": "Musée Granet"
+    "museum": "Musée Granet",
+    "original_imageUrl": "https://www.museegranet-aixenprovence.fr/fileadmin/mediatheque/collections/archeologie/entremont_001.jpg"
   },
   {
     "id": "granet-29",
@@ -383,10 +412,11 @@
     "year": "",
     "medium": "",
     "dimensions": "",
-    "imageUrl": "https://www.museegranet-aixenprovence.fr/fileadmin/mediatheque/collections/archeologie/guerriers-archeologie.jpg",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/musee-granet/granet-29-imageUrl.webp",
     "caption": "Site d'Entremont, IIe s. av. J.-C - Photo H. Maertens - Musée Granet, Aix-en-Provence",
     "category": "Archaeology",
     "sourceUrl": "https://www.museegranet-aixenprovence.fr/en/collections/collections/archaeology",
-    "museum": "Musée Granet"
+    "museum": "Musée Granet",
+    "original_imageUrl": "https://www.museegranet-aixenprovence.fr/fileadmin/mediatheque/collections/archeologie/guerriers-archeologie.jpg"
   }
 ]

@@ -79,8 +79,16 @@ export async function getTextEmbedding(text: string): Promise<number[] | null> {
         norm = Math.sqrt(norm);
 
         const normalized: number[] = [];
+        let hasNaN = false;
         for (let i = 0; i < data.length; i++) {
-            normalized.push(data[i] / norm);
+            const val = data[i] / norm;
+            if (isNaN(val) || !isFinite(val)) hasNaN = true;
+            normalized.push(val);
+        }
+
+        if (hasNaN) {
+            console.error('Generated embedding contains NaN or Infinity');
+            return null;
         }
 
         console.log(`Generated embedding: ${normalized.length} dimensions`);

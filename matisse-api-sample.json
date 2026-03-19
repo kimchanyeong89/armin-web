@@ -1,0 +1,235 @@
+{
+  "@context": "/api/v2/contexts/Notice",
+  "@id": "/api/v2/notices",
+  "@type": "hydra:Collection",
+  "hydra:member": [
+    {
+      "@id": "/api/v2/notices/696505b1dcda770c5709ad67",
+      "@type": "Notice",
+      "id": "696505b1dcda770c5709ad67",
+      "nativeId": "e50c729e-fd74-43cc-9bdf-dcef896b44ca",
+      "profile": "matisse_opac2026",
+      "noticeCollections": [],
+      "isEnabled": true,
+      "url": "https://musee-matisse.opacweb.io/fr/notice/63-3-26-etude-pour-le-christ-devant-pilate-e50c729e-fd74-43cc-9bdf-dcef896b44ca",
+      "titles": {
+        "title": "Etude pour le Christ devant Pilate - Dessin",
+        "subTitle": "Arts graphiques",
+        "text": "",
+        "native_title": "63.3.26 Etude pour le Christ devant Pilate"
+      },
+      "images": {
+        "lazy": "https://d2lkryo36aywim.cloudfront.net/eyJidWNrZXQiOiJvcGFjLXByb2QtbWVkaWEiLCJrZXkiOiJuaWNlMDFcL21hdGlzc2Vfb3BhYzIwMjZcL2RlYmIyNTU2LWQwMzktNGE2NC04OTkwLTY2ZWVhODEzYjY2Zi5qcGciLCJlZGl0cyI6eyJyZXNpemUiOnsid2lkdGgiOjIwLCJoZWlnaHQiOjIwLCJmaXQiOiJpbnNpZGUifX19",
+        "small": "https://d2lkryo36aywim.cloudfront.net/eyJidWNrZXQiOiJvcGFjLXByb2QtbWVkaWEiLCJrZXkiOiJuaWNlMDFcL21hdGlzc2Vfb3BhYzIwMjZcL2RlYmIyNTU2LWQwMzktNGE2NC04OTkwLTY2ZWVhODEzYjY2Zi5qcGciLCJlZGl0cyI6eyJyZXNpemUiOnsid2lkdGgiOjE5MCwiaGVpZ2h0IjoxOTAsImZpdCI6Imluc2lkZSJ9fX0=",
+        "medium": "https://d2lkryo36aywim.cloudfront.net/eyJidWNrZXQiOiJvcGFjLXByb2QtbWVkaWEiLCJrZXkiOiJuaWNlMDFcL21hdGlzc2Vfb3BhYzIwMjZcL2RlYmIyNTU2LWQwMzktNGE2NC04OTkwLTY2ZWVhODEzYjY2Zi5qcGciLCJlZGl0cyI6eyJyZXNpemUiOnsid2lkdGgiOjM2MCwiaGVpZ2h0IjozNjAsImZpdCI6Imluc2lkZSJ9fX0=",
+        "large": "https://d2lkryo36aywim.cloudfront.net/eyJidWNrZXQiOiJvcGFjLXByb2QtbWVkaWEiLCJrZXkiOiJuaWNlMDFcL21hdGlzc2Vfb3BhYzIwMjZcL2RlYmIyNTU2LWQwMzktNGE2NC04OTkwLTY2ZWVhODEzYjY2Zi5qcGciLCJlZGl0cyI6eyJyZXNpemUiOnsid2lkdGgiOjcyMCwiaGVpZ2h0Ijo3MjAsImZpdCI6Imluc2lkZSJ9fX0="
+      }
+    },
+    {
+      "@id": "/api/v2/notices/696505b1dcda770c5709ad79",
+      "@type": "Notice",
+      "id": "696505b1dcda770c5709ad79",
+      "nativeId": "a007af02-1ea3-4a52-9f62-8cbf032a0496",
+      "profile": "matisse_opac2026",
+      "noticeCollections": [],
+      "isEnabled": true,
+      "url": "https://musee-matisse.opacweb.io/fr/notice/63-3-45-etudes-de-poissons-a007af02-1ea3-4a52-9f62-8cbf032a0496",
+      "titles": {
+        "title": "Etudes de poissons - Dessin",
+        "subTitle": "Arts graphiques",
+        "text": "",
+        "native_title": "63.3.45 Etudes de poissons"
+      },
+      "images": {
+        "lazy": "https://d2lkryo36aywim.cloudfront.net/eyJidWNrZXQiOiJvcGFjLXByb2QtbWVkaWEiLCJrZXkiOiJuaWNlMDFcL21hdGlzc2Vfb3BhYzIwMjZcLzcxZWNiYTA5LTdlOTctNDc1Yy1hZWE5LTYzMGU1ZmE2MzBmZS5qcGciLCJlZGl0cyI6eyJyZXNpemUiOnsid2lkdGgiOjIwLCJoZWlnaHQiOjIwLCJmaXQiOiJpbnNpZGUifX19",
+        "small": "https://d2lkryo36aywim.cloudfront.net/eyJidWNrZXQiOiJvcGFjLXByb2QtbWVkaWEiLCJrZXkiOiJuaWNlMDFcL21hdGlzc2Vfb3BhYzIwMjZcLzcxZWNiYTA5LTdlOTctNDc1Yy1hZWE5LTYzMGU1ZmE2MzBmZS5qcGciLCJlZGl0cyI6eyJyZXNpemUiOnsid2lkdGgiOjE5MCwiaGVpZ2h0IjoxOTAsImZpdCI6Imluc2lkZSJ9fX0=",
+        "medium": "https://d2lkryo36aywim.cloudfront.net/eyJidWNrZXQiOiJvcGFjLXByb2QtbWVkaWEiLCJrZXkiOiJuaWNlMDFcL21hdGlzc2Vfb3BhYzIwMjZcLzcxZWNiYTA5LTdlOTctNDc1Yy1hZWE5LTYzMGU1ZmE2MzBmZS5qcGciLCJlZGl0cyI6eyJyZXNpemUiOnsid2lkdGgiOjM2MCwiaGVpZ2h0IjozNjAsImZpdCI6Imluc2lkZSJ9fX0=",
+        "large": "https://d2lkryo36aywim.cloudfront.net/eyJidWNrZXQiOiJvcGFjLXByb2QtbWVkaWEiLCJrZXkiOiJuaWNlMDFcL21hdGlzc2Vfb3BhYzIwMjZcLzcxZWNiYTA5LTdlOTctNDc1Yy1hZWE5LTYzMGU1ZmE2MzBmZS5qcGciLCJlZGl0cyI6eyJyZXNpemUiOnsid2lkdGgiOjcyMCwiaGVpZ2h0Ijo3MjAsImZpdCI6Imluc2lkZSJ9fX0="
+      }
+    },
+    {
+      "@id": "/api/v2/notices/696505b1dcda770c5709ad84",
+      "@type": "Notice",
+      "id": "696505b1dcda770c5709ad84",
+      "nativeId": "95404efb-ea50-401d-b6f2-306e76711f99",
+      "profile": "matisse_opac2026",
+      "noticeCollections": [],
+      "isEnabled": true,
+      "url": "https://musee-matisse.opacweb.io/fr/notice/63-3-56-saint-dominique-etude-pour-vence-95404efb-ea50-401d-b6f2-306e76711f99",
+      "titles": {
+        "title": "Saint Dominique - Etude pour Vence - Dessin",
+        "subTitle": "Arts graphiques",
+        "text": "",
+        "native_title": "63.3.56 Saint Dominique - Etude pour Vence"
+      },
+      "images": {
+        "lazy": "https://d2lkryo36aywim.cloudfront.net/eyJidWNrZXQiOiJvcGFjLXByb2QtbWVkaWEiLCJrZXkiOiJuaWNlMDFcL21hdGlzc2Vfb3BhYzIwMjZcLzU0ZWU1YTkwLWE5N2QtNDVjNC1hNzY0LWU0MTBmMjkwOWYxNC5qcGciLCJlZGl0cyI6eyJyZXNpemUiOnsid2lkdGgiOjIwLCJoZWlnaHQiOjIwLCJmaXQiOiJpbnNpZGUifX19",
+        "small": "https://d2lkryo36aywim.cloudfront.net/eyJidWNrZXQiOiJvcGFjLXByb2QtbWVkaWEiLCJrZXkiOiJuaWNlMDFcL21hdGlzc2Vfb3BhYzIwMjZcLzU0ZWU1YTkwLWE5N2QtNDVjNC1hNzY0LWU0MTBmMjkwOWYxNC5qcGciLCJlZGl0cyI6eyJyZXNpemUiOnsid2lkdGgiOjE5MCwiaGVpZ2h0IjoxOTAsImZpdCI6Imluc2lkZSJ9fX0=",
+        "medium": "https://d2lkryo36aywim.cloudfront.net/eyJidWNrZXQiOiJvcGFjLXByb2QtbWVkaWEiLCJrZXkiOiJuaWNlMDFcL21hdGlzc2Vfb3BhYzIwMjZcLzU0ZWU1YTkwLWE5N2QtNDVjNC1hNzY0LWU0MTBmMjkwOWYxNC5qcGciLCJlZGl0cyI6eyJyZXNpemUiOnsid2lkdGgiOjM2MCwiaGVpZ2h0IjozNjAsImZpdCI6Imluc2lkZSJ9fX0=",
+        "large": "https://d2lkryo36aywim.cloudfront.net/eyJidWNrZXQiOiJvcGFjLXByb2QtbWVkaWEiLCJrZXkiOiJuaWNlMDFcL21hdGlzc2Vfb3BhYzIwMjZcLzU0ZWU1YTkwLWE5N2QtNDVjNC1hNzY0LWU0MTBmMjkwOWYxNC5qcGciLCJlZGl0cyI6eyJyZXNpemUiOnsid2lkdGgiOjcyMCwiaGVpZ2h0Ijo3MjAsImZpdCI6Imluc2lkZSJ9fX0="
+      }
+    },
+    {
+      "@id": "/api/v2/notices/696505b1dcda770c5709ad87",
+      "@type": "Notice",
+      "id": "696505b1dcda770c5709ad87",
+      "nativeId": "d38ca62b-7e72-4008-bb25-79ecffe78c5e",
+      "profile": "matisse_opac2026",
+      "noticeCollections": [],
+      "isEnabled": true,
+      "url": "https://musee-matisse.opacweb.io/fr/notice/63-3-59-saint-dominique-etude-pour-vence-d38ca62b-7e72-4008-bb25-79ecffe78c5e",
+      "titles": {
+        "title": "Saint Dominique - Etude pour Vence - Dessin",
+        "subTitle": "Arts graphiques",
+        "text": "",
+        "native_title": "63.3.59 Saint Dominique - Etude pour Vence"
+      },
+      "images": {
+        "lazy": "https://d2lkryo36aywim.cloudfront.net/eyJidWNrZXQiOiJvcGFjLXByb2QtbWVkaWEiLCJrZXkiOiJuaWNlMDFcL21hdGlzc2Vfb3BhYzIwMjZcL2M2NWM3OWYxLTE2M2QtNDllMC05ODNkLTQzODVmOTU4ZjI0Mi5qcGciLCJlZGl0cyI6eyJyZXNpemUiOnsid2lkdGgiOjIwLCJoZWlnaHQiOjIwLCJmaXQiOiJpbnNpZGUifX19",
+        "small": "https://d2lkryo36aywim.cloudfront.net/eyJidWNrZXQiOiJvcGFjLXByb2QtbWVkaWEiLCJrZXkiOiJuaWNlMDFcL21hdGlzc2Vfb3BhYzIwMjZcL2M2NWM3OWYxLTE2M2QtNDllMC05ODNkLTQzODVmOTU4ZjI0Mi5qcGciLCJlZGl0cyI6eyJyZXNpemUiOnsid2lkdGgiOjE5MCwiaGVpZ2h0IjoxOTAsImZpdCI6Imluc2lkZSJ9fX0=",
+        "medium": "https://d2lkryo36aywim.cloudfront.net/eyJidWNrZXQiOiJvcGFjLXByb2QtbWVkaWEiLCJrZXkiOiJuaWNlMDFcL21hdGlzc2Vfb3BhYzIwMjZcL2M2NWM3OWYxLTE2M2QtNDllMC05ODNkLTQzODVmOTU4ZjI0Mi5qcGciLCJlZGl0cyI6eyJyZXNpemUiOnsid2lkdGgiOjM2MCwiaGVpZ2h0IjozNjAsImZpdCI6Imluc2lkZSJ9fX0=",
+        "large": "https://d2lkryo36aywim.cloudfront.net/eyJidWNrZXQiOiJvcGFjLXByb2QtbWVkaWEiLCJrZXkiOiJuaWNlMDFcL21hdGlzc2Vfb3BhYzIwMjZcL2M2NWM3OWYxLTE2M2QtNDllMC05ODNkLTQzODVmOTU4ZjI0Mi5qcGciLCJlZGl0cyI6eyJyZXNpemUiOnsid2lkdGgiOjcyMCwiaGVpZ2h0Ijo3MjAsImZpdCI6Imluc2lkZSJ9fX0="
+      }
+    },
+    {
+      "@id": "/api/v2/notices/696505b2dcda770c5709ad91",
+      "@type": "Notice",
+      "id": "696505b2dcda770c5709ad91",
+      "nativeId": "10631ca7-05c9-47d6-93b9-5250742baf47",
+      "profile": "matisse_opac2026",
+      "noticeCollections": [],
+      "isEnabled": true,
+      "url": "https://musee-matisse.opacweb.io/fr/notice/63-3-99-la-danse-etude-pour-le-panneau-de-gauche-et-pour-le-panneau-central-10631ca7-05c9-47d6-93b9-5250742baf47",
+      "titles": {
+        "title": "La Danse, étude pour le panneau de gauche et pour le panneau central - Dessin",
+        "subTitle": "Arts graphiques",
+        "text": "",
+        "native_title": "63.3.99 La Danse, étude pour le panneau de gauche et pour le panneau central"
+      },
+      "images": {
+        "lazy": "https://d2lkryo36aywim.cloudfront.net/eyJidWNrZXQiOiJvcGFjLXByb2QtbWVkaWEiLCJrZXkiOiJuaWNlMDFcL21hdGlzc2Vfb3BhYzIwMjZcLzEyMTY3MWY1LTVlOTktNGU1ZC04MzhmLTdmZjJhOGZhNTNiZS5qcGciLCJlZGl0cyI6eyJyZXNpemUiOnsid2lkdGgiOjIwLCJoZWlnaHQiOjIwLCJmaXQiOiJpbnNpZGUifX19",
+        "small": "https://d2lkryo36aywim.cloudfront.net/eyJidWNrZXQiOiJvcGFjLXByb2QtbWVkaWEiLCJrZXkiOiJuaWNlMDFcL21hdGlzc2Vfb3BhYzIwMjZcLzEyMTY3MWY1LTVlOTktNGU1ZC04MzhmLTdmZjJhOGZhNTNiZS5qcGciLCJlZGl0cyI6eyJyZXNpemUiOnsid2lkdGgiOjE5MCwiaGVpZ2h0IjoxOTAsImZpdCI6Imluc2lkZSJ9fX0=",
+        "medium": "https://d2lkryo36aywim.cloudfront.net/eyJidWNrZXQiOiJvcGFjLXByb2QtbWVkaWEiLCJrZXkiOiJuaWNlMDFcL21hdGlzc2Vfb3BhYzIwMjZcLzEyMTY3MWY1LTVlOTktNGU1ZC04MzhmLTdmZjJhOGZhNTNiZS5qcGciLCJlZGl0cyI6eyJyZXNpemUiOnsid2lkdGgiOjM2MCwiaGVpZ2h0IjozNjAsImZpdCI6Imluc2lkZSJ9fX0=",
+        "large": "https://d2lkryo36aywim.cloudfront.net/eyJidWNrZXQiOiJvcGFjLXByb2QtbWVkaWEiLCJrZXkiOiJuaWNlMDFcL21hdGlzc2Vfb3BhYzIwMjZcLzEyMTY3MWY1LTVlOTktNGU1ZC04MzhmLTdmZjJhOGZhNTNiZS5qcGciLCJlZGl0cyI6eyJyZXNpemUiOnsid2lkdGgiOjcyMCwiaGVpZ2h0Ijo3MjAsImZpdCI6Imluc2lkZSJ9fX0="
+      }
+    },
+    {
+      "@id": "/api/v2/notices/696505b2dcda770c5709adbc",
+      "@type": "Notice",
+      "id": "696505b2dcda770c5709adbc",
+      "nativeId": "a5bc8712-3744-42c1-a340-2ccf171765c1",
+      "profile": "matisse_opac2026",
+      "noticeCollections": [],
+      "isEnabled": true,
+      "url": "https://musee-matisse.opacweb.io/fr/notice/63-4-16-la-robe-d-organdi-a5bc8712-3744-42c1-a340-2ccf171765c1",
+      "titles": {
+        "title": "La Robe d'organdi - Gravure - Lithographie",
+        "subTitle": "Arts graphiques",
+        "text": "",
+        "native_title": "63.4.16 La Robe d'organdi"
+      },
+      "images": {
+        "lazy": "https://d2lkryo36aywim.cloudfront.net/eyJidWNrZXQiOiJvcGFjLXByb2QtbWVkaWEiLCJrZXkiOiJuaWNlMDFcL21hdGlzc2Vfb3BhYzIwMjZcL2Q1NTUyMTk1LTU4NGQtNDI3YS1hY2Q3LTQ5YWUyYjVhYjkyMC5qcGciLCJlZGl0cyI6eyJyZXNpemUiOnsid2lkdGgiOjIwLCJoZWlnaHQiOjIwLCJmaXQiOiJpbnNpZGUifX19",
+        "small": "https://d2lkryo36aywim.cloudfront.net/eyJidWNrZXQiOiJvcGFjLXByb2QtbWVkaWEiLCJrZXkiOiJuaWNlMDFcL21hdGlzc2Vfb3BhYzIwMjZcL2Q1NTUyMTk1LTU4NGQtNDI3YS1hY2Q3LTQ5YWUyYjVhYjkyMC5qcGciLCJlZGl0cyI6eyJyZXNpemUiOnsid2lkdGgiOjE5MCwiaGVpZ2h0IjoxOTAsImZpdCI6Imluc2lkZSJ9fX0=",
+        "medium": "https://d2lkryo36aywim.cloudfront.net/eyJidWNrZXQiOiJvcGFjLXByb2QtbWVkaWEiLCJrZXkiOiJuaWNlMDFcL21hdGlzc2Vfb3BhYzIwMjZcL2Q1NTUyMTk1LTU4NGQtNDI3YS1hY2Q3LTQ5YWUyYjVhYjkyMC5qcGciLCJlZGl0cyI6eyJyZXNpemUiOnsid2lkdGgiOjM2MCwiaGVpZ2h0IjozNjAsImZpdCI6Imluc2lkZSJ9fX0=",
+        "large": "https://d2lkryo36aywim.cloudfront.net/eyJidWNrZXQiOiJvcGFjLXByb2QtbWVkaWEiLCJrZXkiOiJuaWNlMDFcL21hdGlzc2Vfb3BhYzIwMjZcL2Q1NTUyMTk1LTU4NGQtNDI3YS1hY2Q3LTQ5YWUyYjVhYjkyMC5qcGciLCJlZGl0cyI6eyJyZXNpemUiOnsid2lkdGgiOjcyMCwiaGVpZ2h0Ijo3MjAsImZpdCI6Imluc2lkZSJ9fX0="
+      }
+    },
+    {
+      "@id": "/api/v2/notices/696505b2dcda770c5709adc8",
+      "@type": "Notice",
+      "id": "696505b2dcda770c5709adc8",
+      "nativeId": "6b429423-104a-4240-9066-01c66540d83e",
+      "profile": "matisse_opac2026",
+      "noticeCollections": [],
+      "isEnabled": true,
+      "url": "https://musee-matisse.opacweb.io/fr/notice/63-4-28-la-persane-6b429423-104a-4240-9066-01c66540d83e",
+      "titles": {
+        "title": "La Persane - Gravure - Lithographie",
+        "subTitle": "Arts graphiques",
+        "text": "",
+        "native_title": "63.4.28 La Persane"
+      },
+      "images": {
+        "lazy": "https://d2lkryo36aywim.cloudfront.net/eyJidWNrZXQiOiJvcGFjLXByb2QtbWVkaWEiLCJrZXkiOiJuaWNlMDFcL21hdGlzc2Vfb3BhYzIwMjZcL2NhMzM5ODE3LWYxY2QtNGY2Yy04ODFmLTYzNTg0ZGYzYmE5Zi5qcGciLCJlZGl0cyI6eyJyZXNpemUiOnsid2lkdGgiOjIwLCJoZWlnaHQiOjIwLCJmaXQiOiJpbnNpZGUifX19",
+        "small": "https://d2lkryo36aywim.cloudfront.net/eyJidWNrZXQiOiJvcGFjLXByb2QtbWVkaWEiLCJrZXkiOiJuaWNlMDFcL21hdGlzc2Vfb3BhYzIwMjZcL2NhMzM5ODE3LWYxY2QtNGY2Yy04ODFmLTYzNTg0ZGYzYmE5Zi5qcGciLCJlZGl0cyI6eyJyZXNpemUiOnsid2lkdGgiOjE5MCwiaGVpZ2h0IjoxOTAsImZpdCI6Imluc2lkZSJ9fX0=",
+        "medium": "https://d2lkryo36aywim.cloudfront.net/eyJidWNrZXQiOiJvcGFjLXByb2QtbWVkaWEiLCJrZXkiOiJuaWNlMDFcL21hdGlzc2Vfb3BhYzIwMjZcL2NhMzM5ODE3LWYxY2QtNGY2Yy04ODFmLTYzNTg0ZGYzYmE5Zi5qcGciLCJlZGl0cyI6eyJyZXNpemUiOnsid2lkdGgiOjM2MCwiaGVpZ2h0IjozNjAsImZpdCI6Imluc2lkZSJ9fX0=",
+        "large": "https://d2lkryo36aywim.cloudfront.net/eyJidWNrZXQiOiJvcGFjLXByb2QtbWVkaWEiLCJrZXkiOiJuaWNlMDFcL21hdGlzc2Vfb3BhYzIwMjZcL2NhMzM5ODE3LWYxY2QtNGY2Yy04ODFmLTYzNTg0ZGYzYmE5Zi5qcGciLCJlZGl0cyI6eyJyZXNpemUiOnsid2lkdGgiOjcyMCwiaGVpZ2h0Ijo3MjAsImZpdCI6Imluc2lkZSJ9fX0="
+      }
+    },
+    {
+      "@id": "/api/v2/notices/696505b3dcda770c5709adca",
+      "@type": "Notice",
+      "id": "696505b3dcda770c5709adca",
+      "nativeId": "05543dc0-da0f-43b0-849b-5ad0446f7c94",
+      "profile": "matisse_opac2026",
+      "noticeCollections": [],
+      "isEnabled": true,
+      "url": "https://musee-matisse.opacweb.io/fr/notice/63-4-30-danseuse-au-miroir-05543dc0-da0f-43b0-849b-5ad0446f7c94",
+      "titles": {
+        "title": "Danseuse au miroir - Gravure - Lithographie",
+        "subTitle": "Arts graphiques",
+        "text": "",
+        "native_title": "63.4.30 Danseuse au miroir"
+      },
+      "images": {
+        "lazy": "https://d2lkryo36aywim.cloudfront.net/eyJidWNrZXQiOiJvcGFjLXByb2QtbWVkaWEiLCJrZXkiOiJuaWNlMDFcL21hdGlzc2Vfb3BhYzIwMjZcLzhlZTZhY2E3LWY4NzQtNDk2NC1hZTY0LTcyYjYzYTlkNzg0ZS5qcGciLCJlZGl0cyI6eyJyZXNpemUiOnsid2lkdGgiOjIwLCJoZWlnaHQiOjIwLCJmaXQiOiJpbnNpZGUifX19",
+        "small": "https://d2lkryo36aywim.cloudfront.net/eyJidWNrZXQiOiJvcGFjLXByb2QtbWVkaWEiLCJrZXkiOiJuaWNlMDFcL21hdGlzc2Vfb3BhYzIwMjZcLzhlZTZhY2E3LWY4NzQtNDk2NC1hZTY0LTcyYjYzYTlkNzg0ZS5qcGciLCJlZGl0cyI6eyJyZXNpemUiOnsid2lkdGgiOjE5MCwiaGVpZ2h0IjoxOTAsImZpdCI6Imluc2lkZSJ9fX0=",
+        "medium": "https://d2lkryo36aywim.cloudfront.net/eyJidWNrZXQiOiJvcGFjLXByb2QtbWVkaWEiLCJrZXkiOiJuaWNlMDFcL21hdGlzc2Vfb3BhYzIwMjZcLzhlZTZhY2E3LWY4NzQtNDk2NC1hZTY0LTcyYjYzYTlkNzg0ZS5qcGciLCJlZGl0cyI6eyJyZXNpemUiOnsid2lkdGgiOjM2MCwiaGVpZ2h0IjozNjAsImZpdCI6Imluc2lkZSJ9fX0=",
+        "large": "https://d2lkryo36aywim.cloudfront.net/eyJidWNrZXQiOiJvcGFjLXByb2QtbWVkaWEiLCJrZXkiOiJuaWNlMDFcL21hdGlzc2Vfb3BhYzIwMjZcLzhlZTZhY2E3LWY4NzQtNDk2NC1hZTY0LTcyYjYzYTlkNzg0ZS5qcGciLCJlZGl0cyI6eyJyZXNpemUiOnsid2lkdGgiOjcyMCwiaGVpZ2h0Ijo3MjAsImZpdCI6Imluc2lkZSJ9fX0="
+      }
+    },
+    {
+      "@id": "/api/v2/notices/696505b3dcda770c5709adcc",
+      "@type": "Notice",
+      "id": "696505b3dcda770c5709adcc",
+      "nativeId": "e830f5fb-3b6a-41df-9323-a5b1601ec3c1",
+      "profile": "matisse_opac2026",
+      "noticeCollections": [],
+      "isEnabled": true,
+      "url": "https://musee-matisse.opacweb.io/fr/notice/63-4-32-danseuse-cambree-au-visage-coupe-e830f5fb-3b6a-41df-9323-a5b1601ec3c1",
+      "titles": {
+        "title": "Danseuse cambrée au visage coupé - Gravure - Lithographie",
+        "subTitle": "Arts graphiques",
+        "text": "",
+        "native_title": "63.4.32 Danseuse cambrée au visage coupé"
+      },
+      "images": {
+        "lazy": "https://d2lkryo36aywim.cloudfront.net/eyJidWNrZXQiOiJvcGFjLXByb2QtbWVkaWEiLCJrZXkiOiJuaWNlMDFcL21hdGlzc2Vfb3BhYzIwMjZcLzA1NDBjMGY4LTU0MzMtNDMxMy05ZTc5LWE1OWNmYjYxMTQ4Ni5qcGciLCJlZGl0cyI6eyJyZXNpemUiOnsid2lkdGgiOjIwLCJoZWlnaHQiOjIwLCJmaXQiOiJpbnNpZGUifX19",
+        "small": "https://d2lkryo36aywim.cloudfront.net/eyJidWNrZXQiOiJvcGFjLXByb2QtbWVkaWEiLCJrZXkiOiJuaWNlMDFcL21hdGlzc2Vfb3BhYzIwMjZcLzA1NDBjMGY4LTU0MzMtNDMxMy05ZTc5LWE1OWNmYjYxMTQ4Ni5qcGciLCJlZGl0cyI6eyJyZXNpemUiOnsid2lkdGgiOjE5MCwiaGVpZ2h0IjoxOTAsImZpdCI6Imluc2lkZSJ9fX0=",
+        "medium": "https://d2lkryo36aywim.cloudfront.net/eyJidWNrZXQiOiJvcGFjLXByb2QtbWVkaWEiLCJrZXkiOiJuaWNlMDFcL21hdGlzc2Vfb3BhYzIwMjZcLzA1NDBjMGY4LTU0MzMtNDMxMy05ZTc5LWE1OWNmYjYxMTQ4Ni5qcGciLCJlZGl0cyI6eyJyZXNpemUiOnsid2lkdGgiOjM2MCwiaGVpZ2h0IjozNjAsImZpdCI6Imluc2lkZSJ9fX0=",
+        "large": "https://d2lkryo36aywim.cloudfront.net/eyJidWNrZXQiOiJvcGFjLXByb2QtbWVkaWEiLCJrZXkiOiJuaWNlMDFcL21hdGlzc2Vfb3BhYzIwMjZcLzA1NDBjMGY4LTU0MzMtNDMxMy05ZTc5LWE1OWNmYjYxMTQ4Ni5qcGciLCJlZGl0cyI6eyJyZXNpemUiOnsid2lkdGgiOjcyMCwiaGVpZ2h0Ijo3MjAsImZpdCI6Imluc2lkZSJ9fX0="
+      }
+    },
+    {
+      "@id": "/api/v2/notices/696505b3dcda770c5709add1",
+      "@type": "Notice",
+      "id": "696505b3dcda770c5709add1",
+      "nativeId": "7d5812a0-2748-4a3a-81ab-31dd03794f72",
+      "profile": "matisse_opac2026",
+      "noticeCollections": [],
+      "isEnabled": true,
+      "url": "https://musee-matisse.opacweb.io/fr/notice/63-4-37-arabesque-7d5812a0-2748-4a3a-81ab-31dd03794f72",
+      "titles": {
+        "title": "Arabesque - Gravure - Lithographie",
+        "subTitle": "Arts graphiques",
+        "text": "",
+        "native_title": "63.4.37 Arabesque"
+      },
+      "images": {
+        "lazy": "https://d2lkryo36aywim.cloudfront.net/eyJidWNrZXQiOiJvcGFjLXByb2QtbWVkaWEiLCJrZXkiOiJuaWNlMDFcL21hdGlzc2Vfb3BhYzIwMjZcLzAzODljYWM5LTdkMDEtNDgzMy1hNzdlLTUwNmU5ZGI0MzJkOC5qcGciLCJlZGl0cyI6eyJyZXNpemUiOnsid2lkdGgiOjIwLCJoZWlnaHQiOjIwLCJmaXQiOiJpbnNpZGUifX19",
+        "small": "https://d2lkryo36aywim.cloudfront.net/eyJidWNrZXQiOiJvcGFjLXByb2QtbWVkaWEiLCJrZXkiOiJuaWNlMDFcL21hdGlzc2Vfb3BhYzIwMjZcLzAzODljYWM5LTdkMDEtNDgzMy1hNzdlLTUwNmU5ZGI0MzJkOC5qcGciLCJlZGl0cyI6eyJyZXNpemUiOnsid2lkdGgiOjE5MCwiaGVpZ2h0IjoxOTAsImZpdCI6Imluc2lkZSJ9fX0=",
+        "medium": "https://d2lkryo36aywim.cloudfront.net/eyJidWNrZXQiOiJvcGFjLXByb2QtbWVkaWEiLCJrZXkiOiJuaWNlMDFcL21hdGlzc2Vfb3BhYzIwMjZcLzAzODljYWM5LTdkMDEtNDgzMy1hNzdlLTUwNmU5ZGI0MzJkOC5qcGciLCJlZGl0cyI6eyJyZXNpemUiOnsid2lkdGgiOjM2MCwiaGVpZ2h0IjozNjAsImZpdCI6Imluc2lkZSJ9fX0=",
+        "large": "https://d2lkryo36aywim.cloudfront.net/eyJidWNrZXQiOiJvcGFjLXByb2QtbWVkaWEiLCJrZXkiOiJuaWNlMDFcL21hdGlzc2Vfb3BhYzIwMjZcLzAzODljYWM5LTdkMDEtNDgzMy1hNzdlLTUwNmU5ZGI0MzJkOC5qcGciLCJlZGl0cyI6eyJyZXNpemUiOnsid2lkdGgiOjcyMCwiaGVpZ2h0Ijo3MjAsImZpdCI6Imluc2lkZSJ9fX0="
+      }
+    }
+  ],
+  "hydra:totalItems": 486,
+  "hydra:view": {
+    "@id": "/api/v2/notices/search?onlineFilter=online&items_per_page=10&query=&onlyHasImage=true&page=1",
+    "@type": "hydra:PartialCollectionView",
+    "hydra:first": "/api/v2/notices/search?onlineFilter=online&items_per_page=10&query=&onlyHasImage=true&page=1",
+    "hydra:last": "/api/v2/notices/search?onlineFilter=online&items_per_page=10&query=&onlyHasImage=true&page=49",
+    "hydra:next": "/api/v2/notices/search?onlineFilter=online&items_per_page=10&query=&onlyHasImage=true&page=2"
+  }
+}

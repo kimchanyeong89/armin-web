@@ -9,6 +9,7 @@ const path = require('path');
 
 const DATA_DIR = path.join(__dirname, '../public/data');
 const OUTPUT_FILE = path.join(DATA_DIR, 'search-index.json');
+const VIDEO_EMBED_IDS_FILE = path.join(DATA_DIR, 'video-embed-ids.json');
 const CHUNK_SIZE_LIMIT = 15 * 1024 * 1024; // 15MB chunks (safe limit for Pages 25MB)
 
 // Mapping from filename patterns to museum info
@@ -92,11 +93,14 @@ const MUSEUM_MAPPINGS = {
     // UK
     'courtauld': { museumName: 'Courtauld Gallery' },
     'dulwich': { museumName: 'Dulwich Picture Gallery' },
+    'scottish-national-gallery-of-modern-art': { museumName: 'Scottish National Gallery of Modern Art' },
     'scottish-national-gallery': { museumName: 'Scottish National Gallery' },
     'royal-academy': { museumName: 'Royal Academy of Arts' },
     'tate-britain': { museumName: 'Tate Britain' },
     'tate-st-ives': { museumName: 'Tate St Ives' },
-    'british-museum': { museumName: 'British Museum' },
+    'tate-collection-highlights': { museumName: 'Tate Modern' },
+    'vam-permanent-exhibitions': { museumName: 'Victoria and Albert Museum', exhibitionId: 'vam-permanent' },
+    'british-museum': { museumName: 'British Museum', exhibitionId: 'bm-collection' },
     'soane': { museumName: 'Sir John Soane\'s Museum' },
     'wallace': { museumName: 'Wallace Collection', exhibitionId: 'wallace-permanent' },
     'hayward': { museumName: 'Hayward Gallery' },
@@ -110,6 +114,7 @@ const MUSEUM_MAPPINGS = {
     'national-museum-korea': { museumName: '국립중앙박물관', exhibitionId: 'national-museum-korea' },
     'gyeongju-museum': { museumName: '국립경주박물관', exhibitionId: 'gyeongju-museum' },
     'buyeo-museum': { museumName: '국립부여박물관', exhibitionId: 'buyeo-museum' },
+    'jmoa': { museumName: 'Jeju Museum of Art', exhibitionId: 'jmoa-collection' },
 
     // Netherlands
     'vangogh-museum': { museumName: 'Van Gogh Museum', exhibitionId: 'vangogh-museum-collection' },
@@ -165,6 +170,12 @@ const MUSEUM_MAPPINGS = {
 
     // Russia
     'rusmuseum': { museumName: 'State Russian Museum' },
+    'hermitage': { museumName: 'State Hermitage Museum', exhibitionId: 'hermitage-collection' },
+    'tretyakov': { museumName: 'State Tretyakov Gallery', exhibitionId: 'tretyakov-collection' },
+    'pushkin': { museumName: 'The Pushkin State Museum of Fine Arts', exhibitionId: 'pushkin-collection' },
+    'kremlin': { museumName: 'Moscow Kremlin Museums', exhibitionId: 'kremlin-collection' },
+    'topkapi': { museumName: 'Topkapi Palace Museum', exhibitionId: 'topkapi-collection' },
+    'house-of-refuge': { museumName: 'House of Refuge', exhibitionId: 'erick-oh-retrospective' },
 
     // Greece
     'acropolis-museum': { museumName: 'Acropolis Museum' },
@@ -175,7 +186,7 @@ const MUSEUM_MAPPINGS = {
     'dali': { museumName: 'Dalí Foundation' },
 
     // The British Museum (GAC version)
-    'the-british-museum': { museumName: 'British Museum' },
+    'the-british-museum': { museumName: 'British Museum', exhibitionId: 'bm-collection' },
 
     // Museum Wales
     'museum-wales': { museumName: 'National Museum Wales' },
@@ -188,10 +199,17 @@ const MUSEUM_MAPPINGS = {
 
     // Rouen MBA
     'rouen': { museumName: 'Musée des Beaux-Arts de Rouen' },
+
+    // China
+    'njmuseum': { museumName: 'Nanjing Museum', exhibitionId: 'njmuseum-collection-all' },
+    'shenzhen': { museumName: 'Shenzhen Museum', exhibitionId: 'shenzhenmuseum-l0303-all' },
+    'palace-museum': { museumName: 'Palace Museum (Forbidden City)' },
+    'national-museum-of-china': { museumName: 'National Museum of China', exhibitionId: 'nmc-highlights-100' },
+    'today-art-museum': { museumName: 'Today Art Museum' },
 };
 
-// Files to skip
-const SKIP_PATTERNS = [
+// Files to skip (split between substring patterns and exact filenames)
+const SKIP_SUBSTRINGS = [
     'search-index-part', // Skip search index chunks (more specific than '-part')
     'search-index.json', // Skip main search index
     '.backup',
@@ -200,10 +218,17 @@ const SKIP_PATTERNS = [
     '-new.json',
     'museum-ludwig', // Explicitly excluded by user request
     'british-museum-gac', // Uses the-british-museum-collection.json instead
+    'british-museum', // Temporarily excluded
+    'the-british-museum', // Temporarily excluded
+    'serpentine-gallery', // Temporarily excluded
+];
+
+const SKIP_EXACT = new Set([
     'british-museum-collection.json', // Empty file, uses the-british-museum-collection.json
     'british-museum-galleries.json', // Empty galleries list
     'british-museum.json', // Empty metadata file
-];
+    'serpentine-gallery-collection.json', // Temporarily excluded
+]);
 
 // Blocked image URLs that are placeholders or broken
 const BLOCKED_IMAGES = [
@@ -215,8 +240,42 @@ const BLOCKED_IMAGES = [
     'search-index',
 ];
 
+const DYNAMIC_MAPPINGS = new Map();
+
+async function loadDynamicMappings() {
+    try {
+        const { exhibitions } = await import('../src/data/exhibitions.js');
+        console.log(`📚 Loaded ${exhibitions.length} exhibitions from config for dynamic mapping.`);
+
+        for (const museum of exhibitions) {
+            if (museum.permanentExhibitions && Array.isArray(museum.permanentExhibitions)) {
+                for (const perm of museum.permanentExhibitions) {
+                    if (perm.collectionFile) {
+                        // Key: collection filename (without .json is safer for getMuseumInfo logic, or full)
+                        // getMuseumInfo uses filename.replace('.json', '') usually.
+                        const key = perm.collectionFile.replace('.json', '');
+                        DYNAMIC_MAPPINGS.set(key, {
+                            museumName: museum.name,
+                            exhibitionId: perm.id,
+                            // Priority flag if needed, but existing logic can use this map first
+                        });
+                    }
+                }
+            }
+        }
+        console.log(`🔗 Generated ${DYNAMIC_MAPPINGS.size} dynamic file mappings.\n`);
+    } catch (e) {
+        console.warn('⚠️  Could not load src/data/exhibitions.js for dynamic mapping. Using static fallbacks.', e.message);
+    }
+}
+
 function getMuseumInfo(filename) {
     const baseFilename = filename.replace('.json', '');
+
+    // 1. Check Dynamic Mappings first (Source of Truth)
+    if (DYNAMIC_MAPPINGS.has(baseFilename)) {
+        return DYNAMIC_MAPPINGS.get(baseFilename);
+    }
 
     // Manual overrides for Condé, Grenoble, Bordeaux split collections to match short IDs
     if (baseFilename === 'musee-conde-paintings') return { museumName: 'Musée Condé', exhibitionId: 'conde-paintings' };
@@ -288,8 +347,9 @@ function getThumbnailUrl(item) {
     if (BLOCKED_IMAGES.some(bad => url.includes(bad))) return '';
 
     // Convert HTTP to HTTPS (iOS Safari blocks mixed content)
+    // Convert HTTP to HTTPS (iOS Safari blocks mixed content)
     if (url.startsWith('http://')) {
-        url = url.replace('http://', 'https://');
+        url = `https://wsrv.nl/?url=${encodeURIComponent(url)}`;
     }
 
     if (url.includes('/iiif/')) {
@@ -298,9 +358,37 @@ function getThumbnailUrl(item) {
     return url;
 }
 
+function normalizeArtistName(name) {
+    if (!name || name === 'Unknown') return 'Unknown';
+
+    // 1. If Korean characters exist, prioritize Korean representation
+    // Regex for Hangul: [\uAC00-\uD7A3] (Syllables) and [\u3131-\u3163] (Jamo)
+    // Simplify: if contains Hangul syllable
+    if (/[\uAC00-\uD7A3]/.test(name)) {
+        // Strategy: Remove ASCII letters (A-Z, a-z) entirely if Korean is present
+        // This handles "Kim Tai (김태)", "김태 KIM TAI", "Kim, Tai 김태"
+        let koreanOnly = name.replace(/[A-Za-z]/g, '');
+
+        // Remove parens, commas, semicolons left over
+        koreanOnly = koreanOnly.replace(/[(),;\-]/g, ' ');
+
+        // Collapse spaces
+        koreanOnly = koreanOnly.replace(/\s+/g, ' ').trim();
+
+        if (koreanOnly.length > 0) return koreanOnly;
+    }
+
+    // 2. Basic cleanup for non-Korean names
+    return name.trim();
+}
+
 function extractArtworkData(item, museumName, exhibitionId, idx) {
     const name = item.title || item.name || 'Untitled';
-    const artist = item.artist || item.artistName || item.creator || 'Unknown';
+    let artist = item.artist || item.artistName || item.creator || 'Unknown';
+
+    // Normalize artist name to merge duplicates (e.g. "Kim Tai (김태)" vs "김태")
+    artist = normalizeArtistName(artist);
+
     const image = getThumbnailUrl(item);
     const date = item.date || item.year || '';
     const id = item.id || `${exhibitionId}-${idx}`;
@@ -311,23 +399,41 @@ function extractArtworkData(item, museumName, exhibitionId, idx) {
 
     return {
         id,
-        n: name.substring(0, 80),
-        a: artist.substring(0, 50),
-        i: image.substring(0, 500), // Increased from 300 to 500 for emuseum API URLs (max 323 chars)
-        d: String(date).substring(0, 15),
+        n: String(name).substring(0, 70),
+        a: String(artist).substring(0, 40),
+        i: String(image).substring(0, 500),
+        d: String(date).substring(0, 4),
         m: museumName,
         e: exhibitionId,
-        u: url.substring(0, 300),
+        // u removed to save space
     };
+}
+
+function isEmbeddedVideoItem(item) {
+    if (!item) return false;
+    const youtubeId = item.youtubeId || item.youtubeID;
+    const vimeoId = item.vimeoId;
+    const videoId = item.videoId;
+    const videoUrl = item.videoUrl || item.video || item.mediaUrl || '';
+    const sourceUrl = item.sourceUrl || item.url || '';
+
+    if (youtubeId || vimeoId || videoId) return true;
+
+    const url = `${videoUrl} ${sourceUrl}`.toLowerCase();
+    return /youtube\.com|youtu\.be|vimeo\.com/.test(url);
 }
 
 async function generateSearchIndex() {
     console.log('🔍 Generating comprehensive search index...\n');
 
-    const allFiles = fs.readdirSync(DATA_DIR).filter(f => f.endsWith('.json'));
+    // Load dynamic mappings from source code
+    await loadDynamicMappings();
+
+    const allFiles = fs.readdirSync(DATA_DIR).filter(f => f.endsWith('.json')).sort();
     const collectionFiles = allFiles.filter(f => {
         const lower = f.toLowerCase();
-        return !SKIP_PATTERNS.some(pattern => lower.includes(pattern));
+        if (SKIP_EXACT.has(lower)) return false;
+        return !SKIP_SUBSTRINGS.some(pattern => lower.includes(pattern));
     });
 
     console.log(`Found ${collectionFiles.length} collection files\n`);
@@ -336,6 +442,7 @@ async function generateSearchIndex() {
     const artistCounts = new Map();
     const processedIds = new Set();
     const processedContent = new Set(); // content hash (title + artist + image)
+    const videoEmbedIds = new Set();
 
     for (const file of collectionFiles) {
         const filePath = path.join(DATA_DIR, file);
@@ -348,6 +455,9 @@ async function generateSearchIndex() {
         let duplicateCount = 0;
 
         items.forEach((item, idx) => {
+            if (isEmbeddedVideoItem(item) && item.id) {
+                videoEmbedIds.add(item.id);
+            }
             const artwork = extractArtworkData(item, museumName, exhibitionId, idx);
             if (artwork && artwork.n !== 'Untitled') {
                 // Generate a unique content hash to detect duplicates across files
@@ -360,8 +470,14 @@ async function generateSearchIndex() {
                         duplicateCount++;
                         return; // Skip exact duplicate
                     }
-                    // Different content but same ID -> modify ID to be unique
-                    artwork.id = `${artwork.id}-${Math.random().toString(36).substr(2, 5)}`;
+                    // Different content but same ID -> modify ID to be unique (Deterministic)
+                    // Use a short hash of the content instead of random
+                    let hash = 0;
+                    for (let i = 0; i < contentHash.length; i++) {
+                        hash = ((hash << 5) - hash) + contentHash.charCodeAt(i);
+                        hash |= 0; // Convert to 32bit integer
+                    }
+                    artwork.id = `${artwork.id}-${Math.abs(hash).toString(16)}`;
                 } else if (processedContent.has(contentHash)) {
                     duplicateCount++;
                     return; // Skip duplicate content with different ID
@@ -384,7 +500,14 @@ async function generateSearchIndex() {
         }
     }
 
+    // Sort strictly by ID to ensure deterministic chunking
+    allArtworks.sort((a, b) => (a.id > b.id ? 1 : -1));
+
     const timestamp = new Date().toISOString();
+
+    const videoEmbedIndex = { t: timestamp, c: videoEmbedIds.size, ids: Array.from(videoEmbedIds) };
+    fs.writeFileSync(VIDEO_EMBED_IDS_FILE, JSON.stringify(videoEmbedIndex));
+    console.log(`\n🎬 Saved video embed ID list: ${VIDEO_EMBED_IDS_FILE} (${videoEmbedIds.size.toLocaleString()} ids)`);
 
     // Save Full Index (for backup/R2)
     const fullIndex = { a: allArtworks, t: timestamp, c: allArtworks.length };

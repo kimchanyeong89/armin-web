@@ -1,0 +1,39 @@
+{
+  "museum": "ALBERTINA Museum Vienna",
+  "museumId": "albertina",
+  "groupName": "Drawings & Prints (Print)",
+  "groupSlug": "drawings---prints",
+  "filter": "namesOnlineenglisch:Print;mediaExistence:true",
+  "limit": 1,
+  "scrapedAt": "2026-01-14T07:24:34.484Z",
+  "totalOnPage": 100,
+  "objects": [
+    {
+      "id": "91411",
+      "sourceId": "albertina-91411",
+      "title": "Triptychon",
+      "creator": "Drago Prelog",
+      "artist": "Drago Prelog",
+      "date": "1985",
+      "medium": "Radierung",
+      "dimensions": "Rahmenaußenmaß: 120,5 x 130,5 x 4 cm",
+      "inventory": "DG1990/148/1 - DG1990/148/3",
+      "objectNumber": "DG1990/148/1 - DG1990/148/3",
+      "imageUrl": "https://sammlungenonline.albertina.at/apis/iiif/image/v2/484707/full/full/0/default.jpg",
+      "description": "null",
+      "url": "https://sammlungenonline.albertina.at/objects/91411/triptychon",
+      "iiifManifest": "https://sammlungenonline.albertina.at/apis/iiif/presentation/v2/1-objects-91411/manifest",
+      "isHighlight": false,
+      "metadata": {
+        "Date": "1985",
+        "Primary Maker": "Drago Prelog",
+        "Copyright": "© Drago Prelog",
+        "Dimensions": "Rahmenaußenmaß: 120,5 x 130,5 x 4 cm",
+        "Object number": "DG1990/148/1 - DG1990/148/3",
+        "Medium": "Radierung"
+      },
+      "source": "ALBERTINA Museum Vienna",
+      "sourceUrl": "https://sammlungenonline.albertina.at"
+    }
+  ]
+}

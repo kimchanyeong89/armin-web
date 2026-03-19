@@ -1,0 +1,570 @@
+{
+  "dimensions": [
+    "depth 6.8 cm",
+    "height 54.5 cm x width 36.5 cm"
+  ],
+  "preferredDescription": "De Utrechtenaar Jan Davidsz de Heem verhuisde in 1636 naar Antwerpen. Daar specialiseerde hij zich onder invloed van de Vlaamse meesters in het schilderen van pronkstillevens en festoenen. Hoewel de aandacht voor detail herinnert aan zijn Utrechtse leermeester Balthasar van der Ast, is de zwier en de rijkdom aan kleur eerder Vlaams.",
+  "hasObjectType": [
+    "painting"
+  ],
+  "usedMaterial": [
+    "metal",
+    "paint (coating)",
+    "inorganic material",
+    "copper (metal)",
+    "oil paint (paint)"
+  ],
+  "usedTechnique": [],
+  "dataTab": {
+    "components": [
+      {
+        "type": "PropertyComponent",
+        "title": "Identification",
+        "properties": [
+          {
+            "type": "TextValue",
+            "name": "Title(s)",
+            "values": [
+              "Still Life with Flowers in a Glass Vase"
+            ]
+          },
+          {
+            "type": "TextValue",
+            "name": "Series title(s)",
+            "values": []
+          },
+          {
+            "type": "NodesValue",
+            "name": null,
+            "renderNodesBelowText": false,
+            "nodesValueDisplay": "NodesNextToText",
+            "values": [
+              {
+                "id": "3159edbfc6b22de59dfb2522fecc2706",
+                "nodeRelationType": "HasObjectType",
+                "value": "painting",
+                "nodeRelationValue": "Is type of work",
+                "nodeType": "ObjectType",
+                "nodeTypeValue": "Object type"
+              }
+            ],
+            "title": "Object type"
+          },
+          {
+            "type": "TextValue",
+            "name": "Object number",
+            "values": [
+              "SK-C-214"
+            ]
+          },
+          {
+            "type": "TextValue",
+            "name": "Series number",
+            "values": []
+          },
+          {
+            "type": "TextValue",
+            "name": "Description",
+            "values": [
+              "Stilleven met bloemen in een glazen vaas op een stenen blad. Boeket met o.a. dagbloem, roos (wit, roze), tarwe, fluitenkruid, anjer (rood-wit), trosnarcis, slaapbol, tulp (rood-wit), pronkerwt, hondsroos, kamperfoelie, kievitsbloem, Gelderse roos, anemoon (rood) en op de plint een anemoon (rood); verder een atalantavlinder, een rups van psivlinder, een spanrups, kevertjes, mieren en andere insecten, spinnen en een tuinslak."
+            ]
+          },
+          {
+            "type": "TextValue",
+            "name": "Inscriptions / marks",
+            "values": [
+              "signature (false): ‘Rachel Ruysch’"
+            ]
+          },
+          {
+            "type": "NodesValue",
+            "name": null,
+            "renderNodesBelowText": false,
+            "nodesValueDisplay": "NodesNextToText",
+            "values": [],
+            "title": "Part of catalogue"
+          },
+          {
+            "type": "TextValue",
+            "name": "Catalogue reference",
+            "values": []
+          }
+        ]
+      },
+      {
+        "type": "PropertyComponent",
+        "title": "Creation",
+        "properties": [
+          {
+            "type": "TextValue",
+            "name": "Creation",
+            "values": [
+              "painter: Jan Davidsz. de Heem",
+              "painter: Rachel Ruysch [rejected attribution]"
+            ]
+          },
+          {
+            "type": "TextValue",
+            "name": "Dating",
+            "values": [
+              "1650 - 1683"
+            ]
+          },
+          {
+            "type": "NodesValue",
+            "name": null,
+            "renderNodesBelowText": true,
+            "nodesValueDisplay": "NodesBelowText",
+            "values": [
+              {
+                "id": "a13e231d622c491ede8cb65e7a25a392",
+                "nodeRelationType": "HasPrimaryMaker",
+                "value": "Jan Davidsz. de Heem",
+                "nodeRelationValue": "Made by",
+                "nodeType": "Artist",
+                "nodeTypeValue": "Maker"
+              },
+              {
+                "id": "3eaff215275e2ebd47d02cfba2044cc8",
+                "nodeRelationType": "HasInvolvedMaker",
+                "value": "Rachel Ruysch",
+                "nodeRelationValue": "Involved maker",
+                "nodeType": "Person",
+                "nodeTypeValue": "Person"
+              },
+              {
+                "id": "38fcf1675f8f51c79c0329383c94b442",
+                "nodeRelationType": "HasMakerRole",
+                "value": "painter",
+                "nodeRelationValue": "Has maker role",
+                "nodeType": "MakerRole",
+                "nodeTypeValue": "Maker role"
+              }
+            ],
+            "title": "Search further with"
+          },
+          {
+            "type": "NodesValue",
+            "name": null,
+            "renderNodesBelowText": false,
+            "nodesValueDisplay": "NodesNextToText",
+            "values": [],
+            "title": "School / Style"
+          }
+        ]
+      },
+      {
+        "type": "PropertyComponent",
+        "title": "Material and technique",
+        "properties": [
+          {
+            "type": "NodesValue",
+            "name": null,
+            "renderNodesBelowText": false,
+            "nodesValueDisplay": "NodesBelowText",
+            "values": [
+              {
+                "id": "e29f371b1247959417c389c16a974d1e",
+                "nodeRelationType": "UsedMaterial",
+                "value": "metal",
+                "nodeRelationValue": "Material",
+                "nodeType": "Material",
+                "nodeTypeValue": "Material"
+              },
+              {
+                "id": "867e44abca0e1cabe8bb8bd1730c2659",
+                "nodeRelationType": "UsedMaterial",
+                "value": "paint (coating)",
+                "nodeRelationValue": "Material",
+                "nodeType": "Material",
+                "nodeTypeValue": "Material"
+              },
+              {
+                "id": "33be15fb74f116929103f8898e881c25",
+                "nodeRelationType": "UsedMaterial",
+                "value": "inorganic material",
+                "nodeRelationValue": "Material",
+                "nodeType": "Material",
+                "nodeTypeValue": "Material"
+              },
+              {
+                "id": "117643a37607e30ded0f5d6a0e955d6b",
+                "nodeRelationType": "UsedMaterial",
+                "value": "copper (metal)",
+                "nodeRelationValue": "Material",
+                "nodeType": "Material",
+                "nodeTypeValue": "Material"
+              },
+              {
+                "id": "48f6bfd69aedcea9ffd094dc1c76dd90",
+                "nodeRelationType": "UsedMaterial",
+                "value": "oil paint (paint)",
+                "nodeRelationValue": "Material",
+                "nodeType": "Material",
+                "nodeTypeValue": "Material"
+              }
+            ],
+            "title": null
+          },
+          {
+            "type": "TextValue",
+            "name": "Physical description",
+            "values": [
+              "oil on copper"
+            ]
+          },
+          {
+            "type": "TextValue",
+            "name": "Dimensions",
+            "values": [
+              "depth 6.8 cm",
+              "height 54.5 cm x width 36.5 cm"
+            ]
+          }
+        ]
+      },
+      {
+        "type": "PropertyComponent",
+        "title": "This work is about",
+        "properties": [
+          {
+            "type": "NodesValue",
+            "name": null,
+            "renderNodesBelowText": false,
+            "nodesValueDisplay": "NodesNextToText",
+            "values": [],
+            "title": "Person"
+          },
+          {
+            "type": "NodesValue",
+            "name": null,
+            "renderNodesBelowText": false,
+            "nodesValueDisplay": "NodesNextToText",
+            "values": [
+              {
+                "id": "e70ff6bcfdab5663e9acaf79d11eb958",
+                "nodeRelationType": "DepictsIconclass",
+                "value": "flowers in a vase",
+                "nodeRelationValue": "As subject",
+                "nodeType": "IconclassDepiction",
+                "nodeTypeValue": "Subject"
+              },
+              {
+                "id": "b4ba94135aba2a875ae15862a5b0ea0b",
+                "nodeRelationType": "HasSubject",
+                "value": "flower piece",
+                "nodeRelationValue": "Has subject",
+                "nodeType": "Subject",
+                "nodeTypeValue": "Subject"
+              }
+            ],
+            "title": "Subject"
+          },
+          {
+            "type": "NodesValue",
+            "name": null,
+            "renderNodesBelowText": false,
+            "nodesValueDisplay": "NodesNextToText",
+            "values": [],
+            "title": "Place"
+          }
+        ]
+      },
+      {
+        "type": "PropertyComponent",
+        "title": "Acquisition and rights",
+        "properties": [
+          {
+            "type": "TextValue",
+            "name": "Credit line",
+            "values": [
+              "On loan from the City of Amsterdam (A. van der Hoop Bequest)"
+            ]
+          },
+          {
+            "type": "TextValue",
+            "name": "Acquisition",
+            "values": []
+          },
+          {
+            "type": "TextValue",
+            "name": "Copyright",
+            "values": [
+              "<a class='link' href='https://creativecommons.org/publicdomain/mark/1.0/deed.en'><span class='link-inner'>Public domain</span></a>"
+            ]
+          },
+          {
+            "type": "TextValue",
+            "name": "Provenance",
+            "values": []
+          },
+          {
+            "type": "TextValue",
+            "name": "Remarks",
+            "values": []
+          }
+        ]
+      },
+      {
+        "type": "PropertyComponent",
+        "title": "Documentation",
+        "properties": [
+          {
+            "type": "NodesValue",
+            "name": null,
+            "renderNodesBelowText": false,
+            "nodesValueDisplay": "NodesAsBulletedList",
+            "values": [
+              {
+                "id": "9f19f08f250ed12ccc3fcffc04204788",
+                "nodeRelationType": "HasLibraryDocumentation",
+                "value": "Vermeer, Rembrandt and the Golden Age of Dutch art: masterpieces from the Rijksmuseum",
+                "nodeRelationValue": "Related to book",
+                "nodeType": "LibraryObject",
+                "nodeTypeValue": "Library object"
+              },
+              {
+                "id": "05745ae7a635ae89cde417871996451f",
+                "nodeRelationType": "HasLibraryDocumentation",
+                "value": "L'âge d'or hollandais: de Rembrandt à Vermeer avec les trésors du Rijksmuseum",
+                "nodeRelationValue": "Related to book",
+                "nodeType": "LibraryObject",
+                "nodeTypeValue": "Library object"
+              },
+              {
+                "id": "1138e2a2b1788ecb6164e740e033623e",
+                "nodeRelationType": "HasLibraryDocumentation",
+                "value": "L'âge d'or hollandais: de Rembrandt à Vermeer avec les trésors du Rijksmuseum",
+                "nodeRelationValue": "Related to book",
+                "nodeType": "LibraryObject",
+                "nodeTypeValue": "Library object"
+              },
+              {
+                "id": "e54a6020d8dbb0fb41677ea440fdfb58",
+                "nodeRelationType": "HasLibraryDocumentation",
+                "value": "De oude meesters van de stad Amsterdam: schilderijen tot 1800",
+                "nodeRelationValue": "Related to book",
+                "nodeType": "LibraryObject",
+                "nodeTypeValue": "Library object"
+              },
+              {
+                "id": "f349dfa33ec30094c77f3c49128150f7",
+                "nodeRelationType": "HasLibraryDocumentation",
+                "value": "De Hollandse meesters van een Amsterdamse bankier: de verzameling van Adriaan van der Hoop (1778-1854)",
+                "nodeRelationValue": "Related to book",
+                "nodeType": "LibraryObject",
+                "nodeTypeValue": "Library object"
+              }
+            ],
+            "title": null
+          },
+          {
+            "type": "TextValue",
+            "name": null,
+            "values": []
+          }
+        ]
+      },
+      {
+        "type": "PropertyComponent",
+        "title": "Persistent URL",
+        "properties": [
+          {
+            "type": "TextValue",
+            "name": null,
+            "values": [
+              "To refer to this object, please use the following persistent URL:"
+            ]
+          },
+          {
+            "type": "TextValue",
+            "name": null,
+            "values": [
+              "<a class='link' href='https://id.rijksmuseum.nl/20029045'><span class='link-inner'>https://id.rijksmuseum.nl/20029045</span></a>"
+            ]
+          }
+        ]
+      }
+    ],
+    "footerComponent": {
+      "type": "PropertyComponent",
+      "title": "Questions?",
+      "properties": [
+        {
+          "type": "TextValue",
+          "name": null,
+          "values": [
+            "Do you spot a mistake? Or do you have information about the object? "
+          ]
+        },
+        {
+          "type": "TextValue",
+          "name": null,
+          "values": [
+            "<a class='link' href='mailto:collectieinfo@rijksmuseum.nl?subject=opmerking over object: SK-C-214'><span class='link-inner'>Let us know!</span></a>"
+          ]
+        }
+      ]
+    }
+  },
+  "perspectives": [],
+  "totalRelatedArtObjects": 0,
+  "nodeType": "HumanMadeObject",
+  "nodeTypeValue": "Object",
+  "blocks": [
+    {
+      "type": "CollectionStoriesBlockApiModel",
+      "title": "Stories",
+      "teasers": [
+        {
+          "type": "PipVideoTeaserApiModel",
+          "videoDuration": "0:59 min.",
+          "formatLabel": null,
+          "label": null,
+          "title": "A lively bouquet",
+          "subtitle": "This painting is teeming with life",
+          "isLocked": false,
+          "iconType": "Play",
+          "url": "https://www.rijksmuseum.nl/en/stories/themes/flowers/story/a-lively-bouquet",
+          "image": {
+            "type": "ImageApiModel",
+            "imageId": "817b2434-7f87-4ca4-bc36-3835b1aaa675",
+            "variantId": null,
+            "width": 3360,
+            "height": 2100,
+            "url": "https://rijks-prod-api-qcms.azurewebsites.net/api/headless/assets/817b2434-7f87-4ca4-bc36-3835b1aaa675",
+            "alt": null,
+            "offsetPercentageX": 50,
+            "offsetPercentageY": 50
+          }
+        }
+      ]
+    },
+    {
+      "type": "DiscoverBlockApiModel",
+      "title": "Discover more",
+      "blocks": [
+        {
+          "type": "PrimaryMakerBlockApiModel",
+          "title": "more by Jan Davidsz. de Heem",
+          "artObjects": [
+            {
+              "title": "Festoon of Fruit and Flowers",
+              "makerSubtitleLine": "Jan Davidsz. de Heem, 1660 - 1670",
+              "museumLocationFacet": null,
+              "micrioImage": {
+                "type": "MicrioImageApiModel",
+                "micrioId": "nPYmn",
+                "altText": "Festoon of Fruit and Flowers",
+                "width": 4470,
+                "height": 5577,
+                "crop": {
+                  "type": "CropApiModel",
+                  "cropX": 97,
+                  "cropY": 107,
+                  "cropWidth": 4299,
+                  "cropHeight": 5391,
+                  "focusPointX": 2245,
+                  "focusPointY": 2797
+                },
+                "isDownloadable": true
+              },
+              "periodCoding": "Seventeenth",
+              "physicalFeatures": "",
+              "objectNumber": "SK-A-138",
+              "hasProtectedRights": false,
+              "objectNodeId": "f14a4dc96f98d802b30142e8353dd198",
+              "objectNodeUri": "https://id.rijksmuseum.nl/200108431"
+            },
+            {
+              "title": "Still Life with Books",
+              "makerSubtitleLine": "Jan Davidsz. de Heem, c. 1628 - c. 1629",
+              "museumLocationFacet": null,
+              "micrioImage": {
+                "type": "MicrioImageApiModel",
+                "micrioId": "JpMwf",
+                "altText": "Still Life with Books",
+                "width": 5784,
+                "height": 3703,
+                "crop": null,
+                "isDownloadable": true
+              },
+              "periodCoding": "Seventeenth",
+              "physicalFeatures": "",
+              "objectNumber": "SK-A-2565",
+              "hasProtectedRights": false,
+              "objectNodeId": "e978c8b3f6751a7fa519c63da4c5fb6b",
+              "objectNodeUri": "https://id.rijksmuseum.nl/200109355"
+            },
+            {
+              "title": "Still Life with Fruit and a Lobster",
+              "makerSubtitleLine": "copy after Jan Davidsz. de Heem, 1640 - 1700",
+              "museumLocationFacet": null,
+              "micrioImage": {
+                "type": "MicrioImageApiModel",
+                "micrioId": "MSMQH",
+                "altText": "Still Life with Fruit and a Lobster",
+                "width": 4398,
+                "height": 5444,
+                "crop": {
+                  "type": "CropApiModel",
+                  "cropX": 51,
+                  "cropY": 103,
+                  "cropWidth": 4295,
+                  "cropHeight": 5219,
+                  "focusPointX": 2202,
+                  "focusPointY": 2710
+                },
+                "isDownloadable": true
+              },
+              "periodCoding": "Eighteenth",
+              "physicalFeatures": "",
+              "objectNumber": "SK-A-139",
+              "hasProtectedRights": false,
+              "objectNodeId": "325d5f70626278d462d31ecbcc8c2563",
+              "objectNodeUri": "https://id.rijksmuseum.nl/20027046"
+            }
+          ],
+          "groupByFacets": [
+            {
+              "id": "a13e231d622c491ede8cb65e7a25a392",
+              "nodeRelationType": "HasPrimaryMaker",
+              "value": "Jan Davidsz. de Heem",
+              "nodeRelationValue": "Made by",
+              "nodeType": "Artist",
+              "nodeTypeValue": "Maker"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "hasCatalog": false,
+  "catalogTab": null,
+  "title": "Still Life with Flowers in a Glass Vase",
+  "makerSubtitleLine": "Jan Davidsz. de Heem, 1650 - 1683",
+  "museumLocationFacet": null,
+  "micrioImage": {
+    "type": "MicrioImageApiModel",
+    "micrioId": "Gfuby",
+    "altText": "Still Life with Flowers in a Glass Vase",
+    "width": 5411,
+    "height": 7968,
+    "crop": {
+      "type": "CropApiModel",
+      "cropX": 153,
+      "cropY": 99,
+      "cropWidth": 5169,
+      "cropHeight": 7783,
+      "focusPointX": 2805,
+      "focusPointY": 3156
+    },
+    "isDownloadable": true
+  },
+  "periodCoding": "Seventeenth",
+  "physicalFeatures": "oil on copper",
+  "objectNumber": "SK-C-214",
+  "hasProtectedRights": false,
+  "objectNodeId": "9f1ca72cf761e1764fe22a5516b46ecc",
+  "objectNodeUri": "https://id.rijksmuseum.nl/20029045"
+}

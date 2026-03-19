@@ -3,13 +3,18 @@ import { acquireSlot, releaseSlot } from '../utils/imageQueue';
 
 interface LazyImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {
   src: string;
+  fallbackSrcs?: string[];
   placeholderColor?: string;
 }
 
-export default function LazyImage({ src, placeholderColor = '#eee', style, ...rest }: LazyImageProps) {
+export default function LazyImage({ src, fallbackSrcs = [], placeholderColor = '#eee', style, ...rest }: LazyImageProps) {
   const ref = useRef<HTMLImageElement | null>(null);
   const [visible, setVisible] = useState(false);
   const [loaded, setLoaded] = useState(false);
+  const [errorSrcs, setErrorSrcs] = useState<Set<string>>(new Set());
+
+  // Determine the current src to try: either the original src or one of the fallbacks
+  const currentSrc = !errorSrcs.has(src) ? src : fallbackSrcs.find(f => !errorSrcs.has(f));
 
   useEffect(() => {
     const el = ref.current;
@@ -28,7 +33,7 @@ export default function LazyImage({ src, placeholderColor = '#eee', style, ...re
   }, []);
 
   useEffect(() => {
-    if (!visible || loaded) return;
+    if (!visible || loaded || !currentSrc) return;
     let cancelled = false;
     (async () => {
       await acquireSlot();
@@ -41,25 +46,33 @@ export default function LazyImage({ src, placeholderColor = '#eee', style, ...re
         img.onload = () => {
           if (cancelled) return;
           setLoaded(true);
-          if (ref.current) ref.current.src = src;
+          if (ref.current) ref.current.src = currentSrc;
         };
         img.onerror = () => {
           if (cancelled) return;
-          setLoaded(true); // avoid endless retry; keeps placeholder
+          setErrorSrcs(prev => new Set(prev).add(currentSrc));
         };
-        img.src = src;
+        img.src = currentSrc;
       } finally {
         releaseSlot();
       }
     })();
     return () => { cancelled = true; };
-  }, [visible, loaded, src, rest]);
+  }, [visible, loaded, currentSrc, rest]);
+
+  // If we tried all sources and failed, just show empty
+  const hasFailedAll = !currentSrc;
+
+  // Do not expose empty wrapper if completely failed and no image loaded
+  if (hasFailedAll) {
+    return <div style={{ background: placeholderColor, ...style }} />;
+  }
 
   return (
     // eslint-disable-next-line jsx-a11y/alt-text
     <img
       ref={ref}
-      src={loaded ? src : undefined}
+      src={loaded ? currentSrc : undefined}
       style={{ background: loaded ? 'transparent' : placeholderColor, ...style }}
       loading={visible ? 'eager' : 'lazy'}
       decoding="async"

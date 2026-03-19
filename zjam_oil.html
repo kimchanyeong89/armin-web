@@ -1,0 +1,755 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=gb2312" />
+    <title>ZheJiang Art Museum</title>
+    <link href="/Css/webstyle.css" rel="stylesheet" type="text/css" />
+    <!-- Load fancybox-->
+
+    <script src="/javascript/jquery.js" type="text/javascript"></script>
+
+    <!-- Add fancyBox main JS and CSS files -->
+    <style type="text/css">
+        .fancybox-custom .fancybox-skin
+        {
+            box-shadow: 0 0 50px #222;
+        }
+        .holdcontent
+        {
+            height: auto;
+            border: solid 1px #e5e5e5;
+            width: 94%;
+            overflow: hidden;
+            background: #E6E6E6;
+        }
+        .img1
+        {
+            padding: 2px;
+            border: #CCCCCC 1px solid;
+        }
+        .holdimg
+        {
+            border: solid 1px #e5e5e5;
+        }
+                  .boxgrid
+        {
+            width: 200px;
+            height: 150px;
+            margin: 10px;
+            float: left;
+            background: #161613;
+           
+            overflow: hidden;
+            position: relative;
+        }
+        .boxgrid img
+        {
+            position: absolute;
+            top: 0;
+            left: 0;
+            border: 0;
+        }
+        .boxcaption
+        {
+            float: left;
+            position: absolute;
+            background: #3e3e3e;
+            height: 50px;
+            width: 100%;
+            opacity: .8; /* For IE 5-7 */
+            filter: progid:DXImageTransform.Microsoft.Alpha(Opacity=80); /* For IE 8 */
+            -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
+            
+            top: 110px;
+            left: 0;
+        }
+        h3
+        {
+            margin: 10px 10px 0 10px;
+            color: #FFF;
+            font: 14pt;
+            letter-spacing: -1px;
+            font-weight: bold;
+        }
+        .boxcaption a
+        {
+        	color:#ccc;
+        	text-decoration:none;
+        }
+        
+        .boxcaption a:hover
+        {
+        	color:#fff;
+        	text-decoration:none;
+        	}
+    </style>
+    <script type="text/javascript">
+        $(document).ready(function() {
+
+            //Caption Sliding (Partially Hidden to Visible)
+            $('.boxgrid.caption').hover(function() {
+                $(".cover", this).stop().animate({ top: '100px' }, { queue: false, duration: 160 });
+            }, function() {
+                $(".cover", this).stop().animate({ top: '110px' }, { queue: false, duration: 160 });
+            });
+        });
+		 
+    </script>
+</head>
+<body>
+    <form name="form1" method="post" action="./HoldDetail.aspx?classid=15" id="form1">
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="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" />
+
+<script language="Javascript"><!--
+function ANP_checkInput(bid,mv){var el=document.getElementById(bid);var r=new RegExp("^\\s*(\\d+)\\s*$");
+if(r.test(el.value)){if(RegExp.$1<1||RegExp.$1>mv){alert("页索引超出范围！");el.focus();el.select();return false;}
+return true;}alert("页索引不是有效的数值！");el.focus();el.select();return false;}
+function ANP_keydown(e,btnId){
+var kcode;
+if(window.event){kcode=e.keyCode;}
+else if(e.which){kcode=e.which;}
+var validKey=(kcode==8||kcode==46||kcode==37||kcode==39||(kcode>=48&&kcode<=57)||(kcode>=96&&kcode<=105));
+if(!validKey){
+if(kcode==13) document.getElementById(btnId).click();
+if(e.preventDefault) e.preventDefault();else{event.returnValue=false};
+}
+}
+--></script>
+<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="DBDE861A" />
+    <div class="main">
+        <!--导航分类-->
+<link rel="Stylesheet" type="text/css" href="/Css/index_slide.css">
+
+<script type="text/javascript" src="/javascript/index_slide.js"></script>
+
+<link rel="Stylesheet" type="text/css" href="/Site_En/css/Navigation.css">
+
+<script>
+
+    function chinese() {
+        var url = window.location.href;
+        window.location.href = "/Site/index.aspx";
+    }
+    
+
+    function english() {
+        var url = window.location.href;
+        top.window.location.href = "/Site_En/index.aspx";
+    }
+
+    //得到焦点时触发事件
+    function onFocusFun(element, elementValue) {
+        if (element.value == elementValue) {
+            element.style.color = "#CCC";
+            element.value = "";
+        }
+        else
+            element.style.color = "#000";
+    }
+
+    //离开输入框时触发事件
+    function onblurFun(element, elementValue) {
+        if (element.value == '') {
+            element.style.color = "#CCC";
+            element.value = elementValue;
+        }
+        else
+            element.style.color = "#000";
+
+    }
+
+</script>
+
+<div class="navigation">
+    <a class="logo" href="#">
+        <img src="/images/logo_2.jpg" width="134" height="85" /></a> <a class="home" href="/Site_En/index.aspx">
+            Home</a>
+    
+    <a class="exhibition" href="#">Exhibitions</a> <a class="education" href="#">Education</a>
+    <a class="collection" href="/Site_En/Holding/HoldList.aspx">Collection</a> <a class="academic"
+        href="/Site_En/Academic/PaperList.aspx">Research</a> <a class="service" href="/Site_En/Video/VideoList.aspx">
+            Online Service</a> <a class="media" href="#">Media Center</a> 
+          <a class="communicate"
+                href="/Site_En/Video/VideoList.aspx">Interaction</a> <a class="about" href="/Site_En/news/intro/amintro.shtml">
+                    About</a>
+    <ul class="language">
+        <li><a href="javascript:chinese()">中文</a> | <a href="javascript:void(0)">English</a></li>
+    </ul>
+    <ul class="old">
+        <li>
+            <img src="/images/sitesearch_en_new.png" usemap="#Map" />
+            <input type="text" id="searchtxt" value="Search" onfocus="onFocusFun(this,'Search')"
+                onblur="onblurFun(this,'Search')" class="searchtxt" /></li>
+    </ul>
+    <ul class="list_zero">
+        <li><a href="/Site_En/news/template/museumlist.shtml">Museum News</a></li>
+    </ul>
+    <ul class="list_one">
+        <li><a href="/Site_En/Exbition/ExbitionList.aspx?type=1">On-going Exhibitions</a></li>
+        <li><a href="/Site_En/Exbition/ExbitionList.aspx?type=2">Upcoming Exhibitions</a></li>
+        <li><a href="/Site_En/Exbition/ExbitionList.aspx?type=4">Past Exhibitions</a></li>
+       
+        <li><a href="/Site_En/Exbition/DigitalMuseum.aspx">Digital Museum</a></li>
+    </ul>
+    <ul class="list_two">
+        <li><a href="/Site_En/Academic/Seminar.aspx">Seminars</a></li>
+        <li><a href="/Site_En/Academic/PaperList.aspx">Research Papers</a></li>
+    </ul>
+    <ul class="list_three">
+        <li><a href="/Site_En/news/intro/amintro.shtml">Museum Introduction</a></li>
+        
+        <li><a href="/Site_En/news/intro/venue1.shtml">Museum Facilities</a></li>
+        <li><a href="/Site_En/news/intro/address.shtml">Museum Location</a></li>
+        <li><a href="/Site_En/news/intro/service.shtml">Service Guide</a></li>
+        <li><a href="/Site_En/news/intro/notice.shtml">Visiting Notice</a></li>
+        <li><a href="/Site_En/news/intro/contact.shtml">Contact Us</a></li>
+    </ul>
+
+    <ul class="list_five">
+        <li><a href="/Site_En/Exbition/guide.shtml">Exhibition Guide</a></li>
+        <li><a href="/Site_En/Exbition/ExbitionDown.aspx">NewsLetters</a></li>
+        <li><a href="/Site_En/PublicEducation/JionVolunteer.shtml"> Volunteers</a></li>
+        <li><a href="/Site_En/PublicEducation/QAList.aspx">Q & A </a></li>
+        <li><a href="/Site_En/MemberCenter/Default.aspx">Membership</a> </li>
+      
+    </ul>
+    <ul class="list_six">
+        <li><a href="/Site_En/Holding/holdlist.aspx">Collections</a></li>
+        <li><a href="/Site_En/news/template/holdinglist.shtml">Classics</a></li>
+        <li><a href="/Site_En/holding/collect.shtml">Acquisition</a></li>
+        <li><a href="/Site_En/holding/storage.shtml">Custody</a></li>
+    </ul>
+    <ul class="list_seven">
+        <li><a href="/Site_En/Video/VideoList.aspx">Videos</a></li>
+        <li><a href="/Site_En/Media/Download.aspx">Media Files</a></li>
+        <li><a href="/Site_En/Media/JoinMedia.aspx">Join Media Library</a></li>
+    </ul>
+    <ul class="list_eight">
+        <li><a href="/Site_En/Survey/agreement.shtml">Online Message</a></li>
+        <li><a href="/Site_En/Survey/Default.aspx">Online Survey</a></li>
+    </ul>
+    <ul class="list_nine">
+       
+        <li><a href="/Site_En/PublicEducation/ActivityReviewList.aspx">Activities Review</a></li>
+    </ul>
+    <dl class="dropdown_search">
+        <dt><a href="javascript:void(0)"><span>News</span></a></dt>
+        <dd>
+            <ul>
+                <li><a href="javascript:void(0)">News</a></li>
+                <li><a href="javascript:void(0)">Video</a></li>
+                <li><a href="javascript:void(0)">Exhibition</a></li>
+                <li><a href="javascript:void(0)">Activity</a></li>
+                <!--<li><a href="javascript:void(0)">Collection</a></li>-->
+            </ul>
+        </dd>
+    </dl>
+</div>
+
+<script type="text/javascript">
+    $(function() {
+
+        $(".dropdown_search dt a").click(function() {
+
+            $(".dropdown_search dd ul").show("slow");
+        });
+
+        $(".dropdown_search dd ul li a").click(function() {
+
+            $(".dropdown_search dt a span").html($(this).html());
+            $(".dropdown_search dd ul").hide('fast');
+        });
+
+
+        $(document).bind('click', function(e) {
+            var $clicked = $(e.target);
+            if (!$clicked.parents().hasClass("dropdown_search"))
+                $(".dropdown_search dd ul").hide('fast');
+        });
+
+    });
+
+    function search() {
+        if ($("#searchtxt").val() == "" || $("#searchtxt").val() == "Search") {
+
+            alert("Enter the search keyword!");
+            return;
+        }
+
+        var type = $(".dropdown_search dt a span").html();
+        switch (type) {
+
+            case "News":
+                window.location = "/Site_En/news/template/searchlist.shtml?searchval=" + encodeURI($("#searchtxt").val());
+                break;
+            case "Exhibition":
+                window.location = "/Site_En/news/template/exhibitionsearch.shtml?searchval=" + encodeURI($("#searchtxt").val());
+                break;
+            case "Activity":
+                window.location = "/Site_En/news/template/activitysearch.shtml?searchval=" + encodeURI($("#searchtxt").val());
+                break;
+            case "Video":
+                window.location = "/Site_En/news/template/videosearch.shtml?searchval=" + encodeURI($("#searchtxt").val());
+                break;
+
+        }
+
+    }
+    
+</script>
+
+<map name="Map">
+    <area shape="rect" coords="170,0,200,32" href="javascript:search();">
+</map>
+
+
+        <div class="page_two">
+            <table border="0" cellpadding="0" cellspacing="0">
+                <tr>
+                    <td class="navigation" valign="top">
+                        <span class="f">
+    <a class="left_collections"></a>
+    <ul class="le_nav">
+        <li id="href1"><a href="/Site_En/Holding/holdlist.aspx">Works</a></li>
+ <li id="href2"><a href="/Site_En/news/template/holdinglist.shtml">Classic</a></li>
+ <li id="href3"><a href="/Site_En/holding/collect.shtml">Collect</a></li>
+ <li id="href4"><a href="/Site_En/holding/storage.shtml">Custody</a></li>
+            </ul>
+</span>
+<script language="JavaScript" src="/javascript/jquery.js"></script>
+<script type="text/javascript">
+
+    var fileName = getFileName();
+    switch(fileName)
+    {
+
+        case "holdlist": jQuery("#href1").addClass("select"); break;
+        case "holdinglist": jQuery("#href2").addClass("select"); break;
+        case "collect": jQuery("#href3").addClass("select"); break;
+        case "storage": jQuery("#href4").addClass("select"); break;
+      
+    }
+
+ 
+    function getFileName()
+    {
+        var fileUrl =window.location.href;
+        var temp =fileUrl.split("/");
+        fileUrl =temp[temp.length-1];
+        var p =fileUrl.split(".");
+        return p[0];
+    }
+</script>
+
+
+                    </td>
+                    <td class="con" valign="top">
+                        <div id="newscontent">
+                            <div id="newsnav">
+                                Collection Works
+                            </div>
+                            <div id="newslist">
+                                <table width="98%" border="0" cellpadding="0" cellspacing="0">
+                                    <tr>
+                                        <td>
+                                            <table id="HoldList" cellspacing="0" border="0">
+	<tr>
+		<td>
+                                                    
+                                                     <div class="boxgrid caption">
+                                                         <a class="single_image" data-fancybox-group="gallery" href="/SiteAdmin/Holding/Logo/201072014305050397.jpg"
+                                                                                title="Title: Poinsettia  <br />Author:Tu Ke <br />Type:Oil-on-canvas Painting<br />Time: <br />Size:52&#215;68cm">
+                                                        <img src="/SiteAdmin/Holding/Logo/201072014305050397.jpg"  data-original="/SiteAdmin/Holding/Logo/201072014305050397.jpg" width="200px"  height="150px"/></a>
+                                                        <div class="cover boxcaption">
+                                                            <h3>
+                                                             Poinsettia </h3>
+                                                        </div>
+                                                    </div>
+                                                </td><td>
+                                                    
+                                                     <div class="boxgrid caption">
+                                                         <a class="single_image" data-fancybox-group="gallery" href="/SiteAdmin/Holding/Logo/20107201433411940.jpg"
+                                                                                title="Title: Portrait of old people <br />Author:Tu Ke <br />Type:Oil-on-canvas Painting<br />Time:1947 <br />Size:47&#215;60cm">
+                                                        <img src="/SiteAdmin/Holding/Logo/20107201433411940.jpg"  data-original="/SiteAdmin/Holding/Logo/20107201433411940.jpg" width="200px"  height="150px"/></a>
+                                                        <div class="cover boxcaption">
+                                                            <h3>
+                                                             Portrait of old people</h3>
+                                                        </div>
+                                                    </div>
+                                                </td><td>
+                                                    
+                                                     <div class="boxgrid caption">
+                                                         <a class="single_image" data-fancybox-group="gallery" href="/SiteAdmin/Holding/Logo/20107201435174684.jpg"
+                                                                                title="Title: The quiet Lijiang River <br />Author:Tu Ke <br />Type:Oil-on-pager Painting<br />Time: <br />Size:20×215;25.5cm">
+                                                        <img src="/SiteAdmin/Holding/Logo/20107201435174684.jpg"  data-original="/SiteAdmin/Holding/Logo/20107201435174684.jpg" width="200px"  height="150px"/></a>
+                                                        <div class="cover boxcaption">
+                                                            <h3>
+                                                             The quiet Lijiang River</h3>
+                                                        </div>
+                                                    </div>
+                                                </td>
+	</tr><tr>
+		<td>
+                                                    
+                                                     <div class="boxgrid caption">
+                                                         <a class="single_image" data-fancybox-group="gallery" href="/SiteAdmin/Holding/Logo/201072014313212183.jpg"
+                                                                                title="Title: World cross <br />Author:Tu Ke <br />Type:<br />Time: <br />Size:185&#215;145MM">
+                                                        <img src="/SiteAdmin/Holding/Logo/201072014313212183.jpg"  data-original="/SiteAdmin/Holding/Logo/201072014313212183.jpg" width="200px"  height="150px"/></a>
+                                                        <div class="cover boxcaption">
+                                                            <h3>
+                                                             World cross</h3>
+                                                        </div>
+                                                    </div>
+                                                </td><td>
+                                                    
+                                                     <div class="boxgrid caption">
+                                                         <a class="single_image" data-fancybox-group="gallery" href="/SiteAdmin/Holding/Logo/201072014333679275.jpg"
+                                                                                title="Title: Attachment  <br />Author:Tu Ke <br />Type:Oil-on-pager Painting<br />Time: <br />Size:23&#215;30cm">
+                                                        <img src="/SiteAdmin/Holding/Logo/201072014333679275.jpg"  data-original="/SiteAdmin/Holding/Logo/201072014333679275.jpg" width="200px"  height="150px"/></a>
+                                                        <div class="cover boxcaption">
+                                                            <h3>
+                                                             Attachment </h3>
+                                                        </div>
+                                                    </div>
+                                                </td><td>
+                                                    
+                                                     <div class="boxgrid caption">
+                                                         <a class="single_image" data-fancybox-group="gallery" href="/SiteAdmin/Holding/Logo/201072014353526218.jpg"
+                                                                                title="Title: The quiet Lijiang River <br />Author:Tu Ke <br />Type:Oil-on-pager Painting<br />Time: <br />Size:31.5&#215;15cm">
+                                                        <img src="/SiteAdmin/Holding/Logo/201072014353526218.jpg"  data-original="/SiteAdmin/Holding/Logo/201072014353526218.jpg" width="200px"  height="150px"/></a>
+                                                        <div class="cover boxcaption">
+                                                            <h3>
+                                                             The quiet Lijiang River</h3>
+                                                        </div>
+                                                    </div>
+                                                </td>
+	</tr><tr>
+		<td>
+                                                    
+                                                     <div class="boxgrid caption">
+                                                         <a class="single_image" data-fancybox-group="gallery" href="/SiteAdmin/Holding/Logo/20107201432079571.jpg"
+                                                                                title="Title: Scenery impression <br />Author:Tu Ke <br />Type:Oil-on-pager Painting<br />Time: <br />Size:18.5&#215;13.5cm">
+                                                        <img src="/SiteAdmin/Holding/Logo/20107201432079571.jpg"  data-original="/SiteAdmin/Holding/Logo/20107201432079571.jpg" width="200px"  height="150px"/></a>
+                                                        <div class="cover boxcaption">
+                                                            <h3>
+                                                             Scenery impression</h3>
+                                                        </div>
+                                                    </div>
+                                                </td><td>
+                                                    
+                                                     <div class="boxgrid caption">
+                                                         <a class="single_image" data-fancybox-group="gallery" href="/SiteAdmin/Holding/Logo/20107201434457917.jpg"
+                                                                                title="Title: Lake <br />Author:Tu Ke <br />Type:Oil-on-pager Painting<br />Time: <br />Size:20&#215;13.5cm">
+                                                        <img src="/SiteAdmin/Holding/Logo/20107201434457917.jpg"  data-original="/SiteAdmin/Holding/Logo/20107201434457917.jpg" width="200px"  height="150px"/></a>
+                                                        <div class="cover boxcaption">
+                                                            <h3>
+                                                             Lake</h3>
+                                                        </div>
+                                                    </div>
+                                                </td><td>
+                                                    
+                                                     <div class="boxgrid caption">
+                                                         <a class="single_image" data-fancybox-group="gallery" href="/SiteAdmin/Holding/Logo/201071910472574824.jpg"
+                                                                                title="Title: Lights of hope <br />Author:Zhu Dequn <br />Type:Oil Painting<br />Time:1993 <br />Size:65&#215;54.5cm">
+                                                        <img src="/SiteAdmin/Holding/Logo/201071910472574824.jpg"  data-original="/SiteAdmin/Holding/Logo/201071910472574824.jpg" width="200px"  height="150px"/></a>
+                                                        <div class="cover boxcaption">
+                                                            <h3>
+                                                             Lights of hope</h3>
+                                                        </div>
+                                                    </div>
+                                                </td>
+	</tr><tr>
+		<td>
+                                                    
+                                                     <div class="boxgrid caption">
+                                                         <a class="single_image" data-fancybox-group="gallery" href="/SiteAdmin/Holding/Logo/201072014322740070.jpg"
+                                                                                title="Title: Spring in the south river <br />Author:Tu Ke <br />Type:Oil-on-pager Painting<br />Time: <br />Size:27&#215;12.5cm">
+                                                        <img src="/SiteAdmin/Holding/Logo/201072014322740070.jpg"  data-original="/SiteAdmin/Holding/Logo/201072014322740070.jpg" width="200px"  height="150px"/></a>
+                                                        <div class="cover boxcaption">
+                                                            <h3>
+                                                             Spring in the south river</h3>
+                                                        </div>
+                                                    </div>
+                                                </td><td>
+                                                    
+                                                     <div class="boxgrid caption">
+                                                         <a class="single_image" data-fancybox-group="gallery" href="/SiteAdmin/Holding/Logo/201072014343513100.jpg"
+                                                                                title="Title: Sky and Clouds <br />Author:Tu Ke <br />Type:Oil-on-pager Painting<br />Time: <br />Size:25.5&#215;27.5cm">
+                                                        <img src="/SiteAdmin/Holding/Logo/201072014343513100.jpg"  data-original="/SiteAdmin/Holding/Logo/201072014343513100.jpg" width="200px"  height="150px"/></a>
+                                                        <div class="cover boxcaption">
+                                                            <h3>
+                                                             Sky and Clouds</h3>
+                                                        </div>
+                                                    </div>
+                                                </td><td>
+                                                    
+                                                     <div class="boxgrid caption">
+                                                         <a class="single_image" data-fancybox-group="gallery" href="/SiteAdmin/Holding/Logo/20107191052898567.jpg"
+                                                                                title="Title: Homesick <br />Author:Zhu Dequn <br />Type:Oil Painting<br />Time:1978 <br />Size:73&#215;60cm">
+                                                        <img src="/SiteAdmin/Holding/Logo/20107191052898567.jpg"  data-original="/SiteAdmin/Holding/Logo/20107191052898567.jpg" width="200px"  height="150px"/></a>
+                                                        <div class="cover boxcaption">
+                                                            <h3>
+                                                             Homesick</h3>
+                                                        </div>
+                                                    </div>
+                                                </td>
+	</tr>
+</table>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <table width="100%" border="0" cellspacing="0" cellpadding="0">
+                                                <tr>
+                                                    <td height="30" align="center">
+                                                        <div id="pager">
+                                                            
+<!-- AspNetPager V7.0.2 for VS2005 & VS2008  Copyright:2003-2007 Webdiyer (www.webdiyer.com) -->
+<div id="AspNetPager1" class="pages" align="left">
+<div class="pages" align="right">
+	<font color='#8f8f8d'>Page: <b>1</b>/3，Total: 30</font>
+</div><div align="left" class="pages">
+	<a disabled="disabled">First</a><a disabled="disabled">Previous</a><span class="cpb">1</span><span><a class="pages" href="javascript:__doPostBack(&#39;AspNetPager1&#39;,&#39;2&#39;)" title="转到第2页">...</a></span><a class="pages" title="转到第2页" href="javascript:__doPostBack(&#39;AspNetPager1&#39;,&#39;2&#39;)">Next</a><a class="pages" title="转到第3页" href="javascript:__doPostBack(&#39;AspNetPager1&#39;,&#39;3&#39;)">Last</a>&nbsp;&nbsp;<input type="text" value="1" name="AspNetPager1_input" id="AspNetPager1_input" onkeydown="ANP_keydown(event,&#39;AspNetPager1_btn&#39;);" /><input type="Submit" name="AspNetPager1" id="AspNetPager1_btn" value="go" class="go" onclick="return ANP_checkInput(&#39;AspNetPager1_input&#39;,3)" />
+</div>
+</div>
+<!-- AspNetPager V7.0.2 for VS2005 & VS2008 End -->
+
+
+                                                        </div>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            </div>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div class="page_two">
+            <script type="text/javascript">
+    $(document).ready(function() {
+
+        $(".dropdown dt a").click(function() {
+            $(".dropdown dd ul").show("slow");
+        });
+
+        $(".dropdown dd ul li a").click(function() {
+            $(".dropdown dd ul").hide('fast');
+        });
+
+
+        $(document).bind('click', function(e) {
+            var $clicked = $(e.target);
+            if (!$clicked.parents().hasClass("dropdown"))
+                $(".dropdown dd ul").hide('fast');
+        });
+
+        //媒体合作伙伴
+
+        $(".dropdown1 dt a").click(function() {
+            $(".dropdown1 dd ul").show("slow");
+        });
+
+        $(".dropdown1 dd ul li a").click(function() {
+            $(".dropdown1 dd ul").hide('fast');
+        });
+
+
+        $(document).bind('click', function(e) {
+            var $clicked = $(e.target);
+            if (!$clicked.parents().hasClass("dropdown1"))
+                $(".dropdown1 dd ul").hide('fast');
+        });
+
+        //合作机构
+
+        $(".dropdown2 dt a").click(function() {
+            $(".dropdown2 dd ul").show("slow");
+        });
+
+        $(".dropdown2 dd ul li a").click(function() {
+            $(".dropdown2 dd ul").hide('fast');
+        });
+
+
+        $(document).bind('click', function(e) {
+            var $clicked = $(e.target);
+            if (!$clicked.parents().hasClass("dropdown2"))
+                $(".dropdown2 dd ul").hide('fast');
+        });
+
+        $("#footer").width(document.body.clientWidth);
+        var left = (document.body.clientWidth - 1024) / 2;
+        $("#footer").css("margin-left", -left);
+    });
+</script>
+<style>
+#bottom_media div
+{
+	margin-top:10px;
+}
+#_ideConac img
+{
+    width:28px;
+    height:28px;
+    margin-top:-3px;
+}
+</style>
+<div class="bottom">
+    <div id="bottom_top">
+        <div id="bottom_friendlink"  style="width:580px">
+            <a class="fe">FriendLink</a>
+            <dl class="dropdown">
+                <dt><a href="javascript:void(0)"><span>Art Museum</span></a></dt>
+                <dd>
+                    <ul>
+                        <li><a href="http://www.namoc.org/en/" target="_blank">National Art Museum of China</a></li>
+                        <li><a href="http://www.todayartmuseum.com/enindex.aspx" target="_blank">Today Art Museum</a></li>
+                        <li><a href="http://www.gdmoa.org/home/en/" target="_blank">Guangdong Art Museum</a></li>
+                        <li><a href="http://www.sh-artmuseum.org.cn/" target="_blank">Shanghai Art Museum </a>
+                        </li>
+                        <li><a href="http://eng.nma.org.cn/" target="_blank">Ningbo Art Museum</a></li>
+                        <li><a href="http://en.hbmoa.com/" target="_blank">Hubei Art Museum</a></li>
+                    </ul>
+                </dd>
+            </dl>
+            <dl class="dropdown1">
+                <dt><a href="javascript:void(0)"><span>Partners</span></a></dt>
+                <dd>
+                    <ul>
+                        <li><a href="http://www.artron.net/" target="_blank">Artron.net</a></li>
+                        <li><a href="http://www.99ys.com" target="_blank">99 Art Network</a></li>
+                        <li><a href="http://www.zjart.com/" target="_blank">Zhejiang Art Net</a></li>
+                        <li><a href="http://artforum.com.cn/" target="_blank">Art Forum</a></li>
+                        <li><a href="http://www.flashartonline.com/" target="_blank">Flash Art</a></li>
+                        <li><a href="http://www.hangzhou.com.cn/" target="_blank">Hangzhou Net</a></li>
+                        <li><a href="http://www.zjol.com.cn/" target="_blank">Zhejiang Online</a></li>
+                    </ul>
+                </dd>
+            </dl>
+            <dl class="dropdown2">
+                <dt><a href="javascript:void(0)"><span>Organization</span></a></dt>
+                <dd>
+                    <ul>
+                        <li><a href="http://www.ambafrance-cn.org/accueil.html" target="_blank">La France en
+                            Chine</a></li>
+                        <li><a href="http://www.britishcouncil.cn" target="_blank">British Council</a></li>
+                        <li><a href="http://www.lqlib.cn/" target="_blank">Luqiao Library</a></li>
+                        <li><a href="http://czfysg.cixi.gov.cn/" target="_blank">Chenzhiifo Art Museum</a></li>
+                        <li><a href="http://www.prohelvetia.cn/2042.0.html" target="_blank">Swiss Cultural Foundation</a></li>
+                    </ul>
+                </dd>
+            </dl>
+            <p style="margin-top: 18px;">
+                <img src="/images/arrow.gif" />
+                Tel: 0571-87078700 | Site Service:0571-87078700</p>
+            <p style="margin-top: 5px;">
+                <img src="/images/arrow.gif" />
+                Address: NO.138 Nanshan Road Hangzhou Zhejiang</p>
+            <p style="margin-top: 5px; padding-bottom: 10px;">
+                <img src="/images/arrow.gif" />
+                <b style="color: #5d4617">Opening: Tuesday to Sunday 9:00am-5:00pm, Closed Mondays
+                   <br />&nbsp; (case of legal holidays as usual open)</b></p>
+        </div>
+<div id="bottom_media" style="width:420px">
+            <ul>
+            <li>
+                    <img src="/images/qrcode_member.jpg" width="80px" height="80px" /><div>
+                        Zjam Member</div>
+                </li>
+                <li>
+                    <img src="/images/qrcode.jpg" width="80px" height="80px" /><div>
+                        Wechat</div>
+                </li>
+                <li><a href="http://weibo.com/zjmsg" target="_blank">
+                    <img src="/images/sina.jpg" width="80px" height="80px" /></a><div>
+                        Sina Weibo</div>
+                </li>
+                <li><a href="javascript:void(0)" target="_blank">
+                    <img src="/images/mobiledcode.png" width="80px" height="80px" /></a><div>
+                        Mobile Site</div>
+                </li>
+            </ul>
+        </div>
+</div>
+<div id="footer">
+       
+        <div id="bottom_nav">
+            <a href="/Site_En/Auxiliary/sitestatement.shtml">Website Statement</a>&nbsp;|&nbsp;<a href="/Site_En/Auxiliary/disclaimer.shtml">Disclaimer</a>&nbsp;|&nbsp;<a
+                href="/Site_En/Auxiliary/copyright.shtml">Copyright Statement</a>&nbsp;|&nbsp;<a href="/Site_En/Auxiliary/private.shtml">Privacy Security Statement</a>&nbsp;|&nbsp;<a
+                    href="/Site_En/Auxiliary/help.shtml">FAQ</a>&nbsp;|&nbsp;<a href="/Site_En/Auxiliary/map.shtml">Website Map</a>
+        </div>
+        <div id="bottom_copyright">
+           CopyRight &copy;2009-2023 Zjam. All Rights Reserved.
+        </div>
+        <div id="servicephone">
+            <script src="https://s13.cnzz.com/z_stat.php?id=1266121087&web_id=1266121087&show=pic" language="JavaScript"></script>
+        </div>
+    </div>
+ </div>
+
+        </div>
+    </div>
+    <input type="hidden" id="categroyid" value="1" />
+
+    <script type="text/javascript" src="../../Site/Holding/template/fancybox/jquery.fancybox.js?v=2.0.6"></script>
+
+    <script type="text/javascript" src="../../Site/Holding/template/lazyload/jquery.lazyload.min.js"></script>
+
+    <link rel="stylesheet" type="text/css" href="../../Site/Holding/template/fancybox/jquery.fancybox.css?v=2.0.6"
+        media="screen" />
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+
+            $("img.img1").lazyload({ threshold: 200 });
+            $('a.single_image').hover(
+            function() {
+
+                $(this).stop().fadeTo('slow', 0.4);
+            },
+            function() {
+                $(this).stop().fadeTo('slow', 1);
+            });
+
+            //This is basic - uses default settings
+            $(" a.single_image").fancybox(
+                {
+                    wrapCSS: 'fancybox-custom',
+                    closeClick: true,
+                    helpers: {
+                        title: {
+                            type: 'inside'
+                        },
+                        overlay: {
+                            css: {
+                                'background-color': '#eee'
+                            }
+                        }
+                    }
+
+                });
+            //Using custom settings
+            $("a#inline").fancybox({
+                'hideOnContentClick': true
+
+            });
+            //Apply fancybox to multiple items
+            $("a.group").fancybox({
+                'transitionIn': 'elastic',
+                'transitionOut': 'elastic',
+                'speedIn': 600,
+                'speedOut': 200,
+                'overlayShow': false
+
+            });
+        });
+    </script>
+
+    </form>
+</body>
+</html>

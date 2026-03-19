@@ -1,218 +1,323 @@
 /**
- * Musée d'Orsay Collection Scraper
- * 
- * 1단계: 메타데이터 + 원본 이미지 URL 수집
- * 결과: JSON 파일 (나중에 R2 업로드용)
- * 
- * 구조:
- * - article.artwork-masonry → 각 작품
- * - a[href] → 상세 페이지 링크
- * - img src → CDN 이미지 URL
- * - h2 → 작가 + 제목 (<i> 태그)
- * - div.date → 연도
- * 
- * 페이지네이션: ?page=0, 1, 2, ... (최대 341)
+ * Musée d'Orsay Collection Scraper (v2 — got + cheerio, no Playwright)
+ *
+ * Two search sources:
+ *   1. paintings-domain:  f[0]=artwork_domain:peintures
+ *   2. drawings-pastels:  f[0]=artwork_designation:dessin&pastel&peinture
+ *
+ * Metadata per artwork (from detail page):
+ *   title, artist, year, image, dimensions, medium, objectType[],
+ *   materials[], tags[], accessionNumber, onDisplay, room, detailUrl
+ *
+ * Output: public/data/orsay-collection.json
+ * Progress (resume): downloads/orsay-progress.json
  */
 
-const { chromium } = require('playwright');
-const fs = require('fs');
+const fs   = require('fs');
 const path = require('path');
 
-const BASE_URL = 'https://www.musee-orsay.fr';
-// Painting domain filter: domain_kind_checkboxes[276575]=276575
-const SEARCH_URL = 'https://www.musee-orsay.fr/en/collections/search?search=&domain_kind_checkboxes%5B276575%5D=276575&sort_by=search_api_relevance&items_per_page=15&search_type=simple_search&display_type=grid';
+let got, cheerio, pLimit;
 
-const OUTPUT_DIR = path.join(__dirname, '../downloads/orsay');
-const OUTPUT_FILE = path.join(OUTPUT_DIR, 'orsay-collection.json');
-const PROGRESS_FILE = path.join(OUTPUT_DIR, 'orsay-scrape-progress.json');
+const ROOT      = 'https://www.musee-orsay.fr';
+const OUT_PATH  = path.join(__dirname, '..', 'public', 'data', 'orsay-collection.json');
+const PROG_PATH = path.join(__dirname, '..', 'downloads', 'orsay-progress.json');
+const CONC      = parseInt(process.env.ORSAY_CONCURRENCY || '3', 10);
+const DELAY_MS  = parseInt(process.env.ORSAY_DELAY || '1200', 10);
 
-// How many pages to scrape (set lower for testing)
-const MAX_PAGES = 342; // 0-341
-const ITEMS_PER_PAGE = 15;
+// ── Two search sources ───────────────────────────────────────────────────────
+const SEARCH_SOURCES = [
+  {
+    label: 'paintings-domain',
+    url: 'https://www.musee-orsay.fr/fr/collections/recherche?search=&domain_kind_checkboxes%5B276575%5D=276575&domain_kind_checkboxes%5B276577%5D=276577&index_artwork_has_picture=1&sort_by=search_api_relevance&items_per_page=100&search_type=simple_search&display_type=grid&f%5B0%5D=artwork_domain%3Apeintures',
+  },
+  {
+    label: 'drawings-pastels',
+    url: 'https://www.musee-orsay.fr/fr/collections/recherche?search=&domain_kind_checkboxes%5B276575%5D=276575&domain_kind_checkboxes%5B276577%5D=276577&index_artwork_has_picture=1&sort_by=search_api_relevance&items_per_page=100&search_type=simple_search&display_type=grid&f%5B0%5D=artwork_designation%3Adessin&f%5B1%5D=artwork_designation%3Apastel&f%5B2%5D=artwork_designation%3Apeinture',
+  },
+];
 
-// Rate limiting
-const DELAY_BETWEEN_PAGES = 1500; // ms
+const FETCH_OPTS = {
+  headers: {
+    'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36',
+    'Accept': 'text/html,application/xhtml+xml;q=0.9,*/*;q=0.8',
+    'Accept-Language': 'fr,en;q=0.9',
+    'Referer': ROOT,
+  },
+  timeout: { request: 30000 },
+  retry: { limit: 3, backoffLimit: 10000 },
+};
 
-function ensureDir(dir) {
-  if (!fs.existsSync(dir)) {
-    fs.mkdirSync(dir, { recursive: true });
-  }
+function norm(s) {
+  return String(s || '')
+    .replace(/\s+/g, ' ')
+    .replace(/&amp;/g, '&')
+    .replace(/&#039;/g, "'")
+    .replace(/&lt;/g, '<')
+    .replace(/&gt;/g, '>')
+    .replace(/&ndash;/g, '–')
+    .trim();
 }
 
-function loadProgress() {
-  if (fs.existsSync(PROGRESS_FILE)) {
-    return JSON.parse(fs.readFileSync(PROGRESS_FILE, 'utf8'));
-  }
-  return { lastPage: -1, artworks: [] };
-}
-
-function saveProgress(progress) {
-  fs.writeFileSync(PROGRESS_FILE, JSON.stringify(progress, null, 2));
-}
-
-function delay(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
-}
-
-async function scrapeOrsayCollection() {
-  console.log('🎨 Starting Musée d\'Orsay Collection Scraper\n');
-  
-  ensureDir(OUTPUT_DIR);
-  
-  // Load progress (resume support)
-  const progress = loadProgress();
-  const startPage = progress.lastPage + 1;
-  const artworks = progress.artworks;
-  
-  console.log(`📊 Starting from page ${startPage}`);
-  console.log(`📦 Already collected: ${artworks.length} artworks\n`);
-  
-  const browser = await chromium.launch({ 
-    headless: true
-  });
-  
-  const context = await browser.newContext({
-    userAgent: 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36',
-    viewport: { width: 1920, height: 1080 }
-  });
-  
-  const page = await context.newPage();
-  
-  try {
-    // Cookie banner handling
-    console.log('📄 Loading initial page...');
-    await page.goto(SEARCH_URL, { waitUntil: 'networkidle', timeout: 60000 });
-    
+async function fetchHtml(url) {
+  if (!got) got = (await import('got')).default;
+  for (let attempt = 0; attempt < 4; attempt++) {
     try {
-      const cookieBtn = await page.$('#onetrust-accept-btn-handler, button[id*="cookie"], .cookie-accept');
-      if (cookieBtn) {
-        await cookieBtn.click();
-        console.log('🍪 Cookie banner dismissed');
-        await delay(1000);
-      }
-    } catch (e) {}
-    
-    // Scrape pages
-    for (let pageNum = startPage; pageNum < MAX_PAGES; pageNum++) {
-      const pageUrl = pageNum === 0 
-        ? SEARCH_URL 
-        : `${SEARCH_URL}&page=${pageNum}`;
-      
-      console.log(`\n📄 Page ${pageNum + 1}/${MAX_PAGES} - ${pageUrl.substring(0, 80)}...`);
-      
-      try {
-        await page.goto(pageUrl, { waitUntil: 'networkidle', timeout: 60000 });
-        await delay(500);
-        
-        // Extract artworks from current page
-        const pageArtworks = await page.$$eval('article.artwork-masonry', articles => {
-          return articles.map(article => {
-            const link = article.querySelector('a');
-            const img = article.querySelector('img');
-            const h2 = article.querySelector('h2');
-            const dateDiv = article.querySelector('.date');
-            
-            // Parse artist and title from h2
-            // Format: "Artist Name, <i>Title</i>"
-            let artist = '';
-            let title = '';
-            
-            if (h2) {
-              const h2Html = h2.innerHTML;
-              const italicMatch = h2Html.match(/<i[^>]*>([^<]+)<\/i>/);
-              if (italicMatch) {
-                title = italicMatch[1].trim();
-                // Artist is the text before the comma
-                const textContent = h2.textContent || '';
-                const commaIdx = textContent.indexOf(',');
-                if (commaIdx > 0) {
-                  artist = textContent.substring(0, commaIdx).trim();
-                }
-              } else {
-                // Fallback: just use full text
-                const textContent = h2.textContent || '';
-                const commaIdx = textContent.indexOf(',');
-                if (commaIdx > 0) {
-                  artist = textContent.substring(0, commaIdx).trim();
-                  title = textContent.substring(commaIdx + 1).trim();
-                } else {
-                  title = textContent.trim();
-                }
-              }
-            }
-            
-            // Get figure aria-label as backup
-            const figure = article.querySelector('figure');
-            const ariaLabel = figure?.getAttribute('aria-label') || '';
-            
-            return {
-              href: link?.getAttribute('href') || '',
-              imageUrl: img?.getAttribute('src') || '',
-              artist: artist,
-              title: title,
-              year: dateDiv?.textContent?.trim() || '',
-              ariaLabel: ariaLabel
-            };
-          });
-        });
-        
-        console.log(`   Found ${pageArtworks.length} artworks`);
-        
-        // Helper to clean text (remove extra whitespace, newlines)
-        const cleanText = (str) => str?.replace(/\s+/g, ' ').trim() || '';
-        
-        // Process and add to collection
-        for (const artwork of pageArtworks) {
-          if (!artwork.href || !artwork.imageUrl) continue;
-          
-          // Generate unique ID from URL
-          const urlParts = artwork.href.split('/');
-          const slug = urlParts[urlParts.length - 1] || urlParts[urlParts.length - 2];
-          
-          artworks.push({
-            id: `orsay-${slug}`,
-            title: cleanText(artwork.title) || cleanText(artwork.ariaLabel.split(',').pop()) || 'Untitled',
-            artist: cleanText(artwork.artist) || cleanText(artwork.ariaLabel.split(',')[0]) || 'Unknown',
-            year: cleanText(artwork.year),
-            imageUrl: artwork.imageUrl,
-            detailUrl: artwork.href.startsWith('http') ? artwork.href : `${BASE_URL}${artwork.href}`,
-            source: 'Musée d\'Orsay',
-            scraped: new Date().toISOString()
-          });
-        }
-        
-        // Save progress
-        progress.lastPage = pageNum;
-        progress.artworks = artworks;
-        saveProgress(progress);
-        
-        console.log(`   Total: ${artworks.length} artworks collected`);
-        
-        // Rate limiting
-        await delay(DELAY_BETWEEN_PAGES);
-        
-      } catch (error) {
-        console.error(`   ❌ Error on page ${pageNum}: ${error.message}`);
-        // Save progress and continue
-        saveProgress(progress);
-        await delay(3000);
+      const res = await got(url, { ...FETCH_OPTS });
+      return res.body;
+    } catch (e) {
+      if (e.response?.statusCode === 429 || (e.message || '').includes('429')) {
+        const wait = 12000 * (attempt + 1);
+        console.log(`  Rate limited, waiting ${wait / 1000}s (attempt ${attempt + 1})...`);
+        await new Promise(r => setTimeout(r, wait));
+      } else {
+        throw e;
       }
     }
-    
-    // Save final results
-    console.log('\n✅ Scraping complete!');
-    console.log(`📊 Total artworks: ${artworks.length}`);
-    
-    fs.writeFileSync(OUTPUT_FILE, JSON.stringify(artworks, null, 2));
-    console.log(`💾 Saved to: ${OUTPUT_FILE}`);
-    
-  } catch (error) {
-    console.error('❌ Fatal error:', error);
-    saveProgress(progress);
-  } finally {
-    await browser.close();
   }
+  throw new Error(`Max retries exceeded for ${url}`);
 }
 
-// Run
-scrapeOrsayCollection().catch(console.error);
+// ── Phase 1: Collect artwork URLs from paginated search ───────────────────────
+async function collectArtworkUrls(sourceLabel, baseUrl) {
+  const seen = new Set();
+  const urls = [];
+  let page = 0;
+  let consecutive_empty = 0;
+
+  while (consecutive_empty < 2) {
+    const url = `${baseUrl}&page=${page}`;
+    console.log(`  [${sourceLabel}] Page ${page}...`);
+    try {
+      const html = await fetchHtml(url);
+      if (!cheerio) cheerio = require('cheerio');
+      const $ = cheerio.load(html);
+
+      let found = 0;
+      $('a[href^="/fr/oeuvres/"]').each((_, a) => {
+        const href = $(a).attr('href');
+        if (!href || !/\/fr\/oeuvres\/[a-z0-9%-]+-\d+$/.test(href)) return;
+        const id = parseInt(href.split('-').pop(), 10);
+        if (isNaN(id) || seen.has(id)) return;
+        seen.add(id);
+        urls.push({ id, url: ROOT + href, slug: href.split('/').pop() });
+        found++;
+      });
+
+      console.log(`    → ${found} new, running total: ${urls.length}`);
+      if (found === 0) {
+        consecutive_empty++;
+      } else {
+        consecutive_empty = 0;
+        page++;
+      }
+      await new Promise(r => setTimeout(r, DELAY_MS));
+    } catch (e) {
+      console.error(`  Page ${page} error: ${e.message}`);
+      await new Promise(r => setTimeout(r, 6000));
+      if (++consecutive_empty >= 3) break;
+    }
+  }
+  console.log(`  [${sourceLabel}] Done: ${urls.length} unique URLs`);
+  return urls;
+}
+
+// ── Phase 2: Extract full metadata from detail page ───────────────────────────
+async function fetchArtworkDetail(entry) {
+  if (!cheerio) cheerio = require('cheerio');
+  const html = await fetchHtml(entry.url);
+  const $ = cheerio.load(html);
+
+  // Title (first "titre principal")
+  let title = '';
+  $('#artwork-resume .sub-section').each((_, s) => {
+    if (/Titre/i.test($(s).find('.label').text()) && !title) {
+      $(s).find('.paragraph').each((_, p) => {
+        const t = norm($(p).text());
+        const m = t.match(/titre principal\s*:\s*(.+)/i);
+        if (m && !title) title = m[1].trim();
+      });
+    }
+  });
+  if (!title) title = norm($('title').text().split('|')[0]);
+
+  // Artist
+  let artist = 'Unknown';
+  $('#artwork-resume .sub-section').each((_, s) => {
+    if (/Artiste/i.test($(s).find('.label').text())) {
+      const a = $(s).find('.paragraph a').first();
+      if (a.length) artist = norm(a.text());
+    }
+  });
+
+  // Year
+  let year = '';
+  $('#artwork-resume .sub-section').each((_, s) => {
+    const lbl = norm($(s).find('.label').text());
+    if (lbl === 'Date') year = norm($(s).find('.value').text());
+  });
+
+  // Accession number
+  let accessionNumber = '';
+  $('#artwork-resume .sub-section').each((_, s) => {
+    const lbl = norm($(s).find('.label').text());
+    if (/inventaire/i.test(lbl) && !/autres/i.test(lbl)) {
+      accessionNumber = norm($(s).find('.value').text()).replace(/\s+/g, ' ').trim();
+    }
+  });
+
+  // Description (brief medium from resume)
+  let medium = '';
+  $('#artwork-resume .sub-section').each((_, s) => {
+    if (/Description/i.test($(s).find('.label').text())) {
+      medium = norm($(s).find('.value').text());
+    }
+  });
+
+  // Dimensions
+  let dimensions = '';
+  $('#artwork-resume .sub-section').each((_, s) => {
+    if (/Dimensions/i.test($(s).find('.label').text())) {
+      dimensions = norm($(s).find('.value').html() || '').replace(/<br\s*\/?>/gi, ' ').trim();
+    }
+  });
+
+  // Indexation: objectType, materials, tags
+  const objectType = [];
+  const materials  = [];
+  const tags       = [];
+
+  $('#artwork-indexation').find('.tags').each((_, tagsDiv) => {
+    const drawer = norm($(tagsDiv).find('.drawer').first().text()).toLowerCase();
+    const vals = $(tagsDiv).find('.value a').map((_, a) => norm($(a).text())).get().filter(Boolean);
+    if (drawer.includes("type d'objet") || drawer.includes("type d\u2019objet")) {
+      objectType.push(...vals);
+    } else if (drawer.includes('matériaux') || drawer.includes('materiaux') || drawer.includes('technique')) {
+      materials.push(...vals);
+    } else if (drawer.includes('détails') || drawer.includes('details')) {
+      tags.push(...vals);
+    }
+  });
+
+  // On display / room
+  const bodyText = $.root().text();
+  const notDisplayed = /non\s+expos[ée]e?\s+en\s+salle/i.test(bodyText);
+  const onDisplay    = !notDisplayed;
+  const roomM        = bodyText.match(/Salle\s+(\d+)/);
+  const room         = (onDisplay && roomM) ? roomM[1] : null;
+
+  // Image (first CDN image on page)
+  let image = '';
+  $('img[src*="cdn.mediatheque.epmoo.fr"], source[srcset*="cdn.mediatheque.epmoo.fr"]').each((_, el) => {
+    if (!image) image = $(el).attr('src') || $(el).attr('srcset') || '';
+  });
+
+  return {
+    id: `orsay-${entry.id}`,
+    orsayId: entry.id,
+    title: title || entry.slug.replace(/-\d+$/, '').replace(/-/g, ' '),
+    artist,
+    year,
+    image,
+    dimensions,
+    medium,
+    objectType,
+    materials,
+    tags,
+    accessionNumber,
+    onDisplay,
+    room,
+    detailUrl: entry.url,
+    source: "Musée d'Orsay",
+  };
+}
+
+// ── Main ─────────────────────────────────────────────────────────────────────
+async function main() {
+  got     = (await import('got')).default;
+  pLimit  = (await import('p-limit')).default;
+  cheerio = require('cheerio');
+
+  fs.mkdirSync(path.dirname(PROG_PATH), { recursive: true });
+  fs.mkdirSync(path.dirname(OUT_PATH), { recursive: true });
+
+  // Load / init progress
+  let prog = { phase1: {}, phase2: {}, done: false };
+  if (fs.existsSync(PROG_PATH)) {
+    prog = JSON.parse(fs.readFileSync(PROG_PATH, 'utf8'));
+    console.log('Resuming from progress file');
+    if (prog.done) { console.log('Already complete.'); return; }
+  }
+  if (!prog.phase2) prog.phase2 = {};
+
+  // ── Phase 1 ────────────────────────────────────────────────────────────────
+  const allUrls = new Map();
+  for (const src of SEARCH_SOURCES) {
+    if (prog.phase1[src.label]) {
+      prog.phase1[src.label].forEach(e => allUrls.set(e.id, e));
+      console.log(`[${src.label}] phase1 cached (${prog.phase1[src.label].length})`);
+    } else {
+      console.log(`\nPhase 1 [${src.label}]...`);
+      const urls = await collectArtworkUrls(src.label, src.url);
+      prog.phase1[src.label] = urls;
+      urls.forEach(e => allUrls.set(e.id, e));
+      fs.writeFileSync(PROG_PATH, JSON.stringify(prog, null, 2));
+    }
+  }
+
+  const uniqueEntries = [...allUrls.values()];
+  console.log(`\nUnique artworks: ${uniqueEntries.length}`);
+
+  // ── Phase 2 ────────────────────────────────────────────────────────────────
+  const completed = new Map(
+    Object.entries(prog.phase2).map(([k, v]) => [parseInt(k, 10), v])
+  );
+  const toFetch = uniqueEntries.filter(e => !completed.has(e.id));
+  console.log(`\nPhase 2: ${toFetch.length} to fetch (${completed.size} already done)...`);
+
+  const limit = pLimit(CONC);
+  let newDone = 0;
+  const SAVE_EVERY = 50;
+
+  const tasks = toFetch.map(entry => limit(async () => {
+    try {
+      const artwork = await fetchArtworkDetail(entry);
+      completed.set(entry.id, artwork);
+      prog.phase2[entry.id] = artwork;
+      newDone++;
+      if (newDone % 25 === 0) {
+        process.stdout.write(`  ${completed.size}/${uniqueEntries.length}...\r`);
+      }
+      if (newDone % SAVE_EVERY === 0) {
+        fs.writeFileSync(PROG_PATH, JSON.stringify(prog, null, 2));
+      }
+    } catch (e) {
+      console.error(`  Error [${entry.id}]: ${e.message}`);
+    }
+    await new Promise(r => setTimeout(r, Math.random() * 500 + DELAY_MS));
+  }));
+
+  await Promise.all(tasks);
+  fs.writeFileSync(PROG_PATH, JSON.stringify(prog, null, 2));
+
+  // ── Write output ──────────────────────────────────────────────────────────
+  const artworks = [...completed.values()].filter(a => a?.image);
+  const onDisplayCount = artworks.filter(a => a.onDisplay).length;
+  console.log(`\nWith images: ${artworks.length} (on display: ${onDisplayCount})`);
+
+  const output = {
+    museum: "Musée d'Orsay",
+    museumId: "orsay",
+    collectionName: "Collection",
+    scrapedAt: new Date().toISOString(),
+    totalObjects: artworks.length,
+    objects: artworks,
+  };
+
+  fs.writeFileSync(OUT_PATH, JSON.stringify(output, null, 2));
+  console.log(`Written to ${OUT_PATH}`);
+
+  prog.done = true;
+  fs.writeFileSync(PROG_PATH, JSON.stringify(prog, null, 2));
+}
+
+main().catch(e => { console.error('Fatal:', e); process.exit(1); });

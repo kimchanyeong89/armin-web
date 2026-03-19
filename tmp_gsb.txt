@@ -1,0 +1,201 @@
+
+
+
+            {/* Artist Gallery Modal */}
+            {artistGallery && createPortal(
+                (() => {
+                    const isDark = galleryTheme === 'dark';
+                    const bg = isDark ? '#080807' : '#f7f4ef';
+                    const cardBg = isDark ? '#0f0e0d' : '#ffffff';
+                    const textMain = isDark ? '#f0ede6' : '#1a1918';
+                    const textSub = isDark ? '#8a8075' : '#6b6560';
+                    const accent = isDark ? '#c9a55a' : '#8a6420';
+                    const border = isDark ? '#1e1d1c' : '#ddd8cf';
+                    return (
+                        <div
+                            style={{
+                                position: 'fixed',
+                                inset: 0,
+                                zIndex: galleryZIndex,
+                                background: isDark ? 'rgba(8,8,7,0.97)' : 'rgba(247,244,239,0.97)',
+                                backdropFilter: 'blur(16px)',
+                                WebkitBackdropFilter: 'blur(16px)',
+                                display: 'flex',
+                                alignItems: 'flex-start',
+                                justifyContent: 'center',
+                                padding: isMobile ? 0 : '60px 40px 40px 40px',
+                                overflowY: isMobile ? 'hidden' : 'auto',
+                                transition: 'background 0.3s',
+                            }}
+                            onClick={closeArtistGallery}
+                            onWheel={(e) => e.stopPropagation()}
+                        >
+                            <div
+                                onClick={e => e.stopPropagation()}
+                                style={{
+                                    width: '100%',
+                                    maxWidth: 1200,
+                                    background: bg,
+                                    display: 'flex',
+                                    // CSS vars for ArtistDistributionMap legend & ArtistPage.css
+                                    ['--ap-accent' as any]: accent,
+                                    ['--ap-text-3' as any]: textSub,
+                                    ['--ap-text-4' as any]: isDark ? '#5a5650' : '#9a9590',
+                                    ['--ap-border' as any]: border,
+                                    flexDirection: 'column',
+                                    overflow: 'hidden',
+                                    ...(isMobile ? { height: '100%', borderRadius: 0, border: 'none' } : { marginBottom: 40, borderRadius: 16, border: `1px solid ${border}` }),
+                                }}
+                            >
+                                {/* ── Header ─────────────────────────────────── */}
+                                <div style={{
+                                    padding: isMobile ? '20px 20px 0' : '36px 40px 0',
+                                    borderBottom: `1px solid ${border}`,
+                                    background: bg,
+                                    flexShrink: 0,
+                                }}>
+                                    {/* Top row: title + controls */}
+                                    <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 4 }}>
+                                        <div>
+                                            <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                                                <h2 style={{
+                                                    fontSize: isMobile ? 22 : 36,
+                                                    fontWeight: 700,
+                                                    fontFamily: "'Playfair Display', Georgia, serif",
+                                                    margin: 0,
+                                                    color: textMain,
+                                                    letterSpacing: '-0.01em',
+                                                    lineHeight: 1.15,
+                                                }}>{artistGallery.artist}</h2>
+                                                <HeartOverlay
+                                                    isLiked={artistGalleryIsLiked}
+                                                    onToggle={toggleLikeArtist}
+                                                    size={isMobile ? 18 : 22}
+                                                    color="#e11d48"
+                                                    emptyColor={textSub}
+                                                />
+                                            </div>
+                                            <p style={{ fontSize: isMobile ? 12 : 14, color: accent, margin: '6px 0 0', letterSpacing: '0.08em', textTransform: 'uppercase', fontWeight: 500 }}>
+                                                {artistGallery.artworks.length.toLocaleString()} works in collection
+                                            </p>
+                                        </div>
+                                        <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexShrink: 0 }}>
+                                            {/* Theme toggle */}
+                                            <button
+                                                onClick={() => setGalleryTheme(t => t === 'dark' ? 'light' : 'dark')}
+                                                title={isDark ? 'Switch to light' : 'Switch to dark'}
+                                                style={{
+                                                    width: 36, height: 36, borderRadius: '50%', border: `1px solid ${border}`,
+                                                    background: cardBg, color: textSub, fontSize: 16, cursor: 'pointer',
+                                                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                                    transition: 'all 0.2s',
+                                                }}
+                                            >{isDark ? '☀' : '☾'}</button>
+                                            {/* Close */}
+                                            <button onClick={closeArtistGallery} style={{
+                                                width: 36, height: 36, borderRadius: '50%', border: `1px solid ${border}`,
+                                                background: cardBg, color: textSub, fontSize: 18,
+                                                cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                                transition: 'all 0.2s',
+                                            }}>✕</button>
+                                        </div>
+                                    </div>
+
+                                    {/* Wiki bio */}
+                                    <div style={{ marginTop: 16, marginBottom: 20 }}>
+                                        <ArtistWikiPanel
+                                            artistName={artistGallery.artist}
+                                            imageUrl={undefined}
+                                            fallbackDescription={artistFallbackDescription}
+                                        />
+                                    </div>
+
+                                    {/* Distribution Map — lazy loaded to avoid blocking overlay open */}
+                                    {!isMobile && artistGallery.artworks.length > 0 && (
+                                        <div style={{ marginBottom: 28 }}>
+                                            <p style={{ fontSize: 11, color: textSub, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 10, fontWeight: 500 }}>
+                                                Museum Distribution
+                                            </p>
+                                            <div style={{ height: 240, borderRadius: 10, overflow: 'hidden', border: `1px solid ${border}` }}>
+                                                <Suspense fallback={
+                                                    <div style={{ height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: textSub, fontSize: 12 }}>
+                                                        Loading map…
+                                                    </div>
+                                                }>
+                                                    <ArtistDistributionMap
+                                                        artworks={artistGallery.artworks as any}
+                                                        isDark={isDark}
+                                                    />
+                                                </Suspense>
+                                            </div>
+                                        </div>
+                                    )}
+                                </div>
+
+                                {/* ── Category filter pills ───────────────────── */}
+                                {galleryCategories.length >= 1 && (
+                                    <div style={{
+                                        padding: isMobile ? '10px 16px 0' : '16px 40px 0',
+                                        background: bg,
+                                        flexShrink: 0,
+                                        display: 'flex',
+                                        flexWrap: 'wrap',
+                                        gap: 6,
+                                        borderTop: `1px solid ${border}`,
+                                    }}>
+                                        {/* All */}
+                                        <button
+                                            onClick={() => setGalleryCategory(null)}
+                                            style={{
+                                                padding: '4px 12px',
+                                                borderRadius: 20,
+                                                border: `1px solid ${!galleryCategory ? accent : border}`,
+                                                background: !galleryCategory ? accent : 'transparent',
+                                                color: !galleryCategory ? (isDark ? '#080807' : '#fff') : textSub,
+                                                fontSize: 11,
+                                                fontWeight: 600,
+                                                cursor: 'pointer',
+                                                letterSpacing: '0.04em',
+                                                transition: 'all 0.15s',
+                                            }}
+                                        >All · {artistGallery!.artworks.length.toLocaleString()}</button>
+                                        {galleryCategories.map(({ cat, cnt }) => {
+                                            const active = galleryCategory === cat;
+                                            return (
+                                                <button
+                                                    key={cat}
+                                                    onClick={() => setGalleryCategory(active ? null : cat)}
+                                                    style={{
+                                                        padding: '4px 12px',
+                                                        borderRadius: 20,
+                                                        border: `1px solid ${active ? accent : border}`,
+                                                        background: active ? accent : 'transparent',
+                                                        color: active ? (isDark ? '#080807' : '#fff') : textSub,
+                                                        fontSize: 11,
+                                                        fontWeight: active ? 600 : 400,
+                                                        cursor: 'pointer',
+                                                        letterSpacing: '0.04em',
+                                                        transition: 'all 0.15s',
+                                                    }}
+                                                >{cat} · {cnt.toLocaleString()}</button>
+                                            );
+                                        })}
+                                    </div>
+                                )}
+
+                                {/* ── Artwork Grid ────────────────────────────── */}
+                                <div style={{
+                                    flex: 1,
+                                    overflowY: 'auto',
+                                    padding: isMobile ? '12px' : '20px 40px 40px',
+                                    background: bg,
+                                }}>
+                                    <div style={{ display: 'flex', gap: isMobile ? 10 : 20, alignItems: 'flex-start' }}>
+                                        {artistGalleryColumns.map((column, columnIdx) => (
+                                            <div key={`artist-column-${columnIdx}`} style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: isMobile ? 10 : 20 }}>
+                                                {column.map((art, idx) => {
+                                                    const yearLabel = formatArtworkYear(art.date);
+                                                    const displayTitle = yearLabel ? `${art.name} (${yearLabel})` : art.name;
+                                                    const museumCountry = museumCountryMap.get(art.museumName) || '';
+                                                    const museumDisplay = museumCountry ? `${art.museumName} (${museumCountry})` : art.museumName;
+                                                    const hovered = hoveredArtworkId === art.id;

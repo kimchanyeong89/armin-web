@@ -1,0 +1,522 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head><meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" /><title>
+	National Palace Museum>Selections>Pasturing Horses
+</title><meta name="description" /><meta name="keywords" />
+  <!--favicon-->
+  <!--<link rel="shortcut icon" href="favicons/favicon.ico" />-->
+  <link rel="apple-touch-icon" sizes="57x57" href="images/favicons/apple-touch-icon-57x57.png" /><link rel="apple-touch-icon" sizes="60x60" href="images/favicons/apple-touch-icon-60x60.png" /><link rel="apple-touch-icon" sizes="72x72" href="images/favicons/apple-touch-icon-72x72.png" /><link rel="apple-touch-icon" sizes="76x76" href="images/favicons/apple-touch-icon-76x76.png" /><link rel="icon" type="image/png" href="images/favicons/favicon-32x32.png" sizes="32x32" /><link rel="icon" type="image/png" href="images/favicons/favicon-96x96.png" sizes="96x96" /><link rel="icon" type="image/png" href="images/favicons/favicon-16x16.png" sizes="16x16" /><meta name="msapplication-TileColor" content="#ffc40d" /><meta name="theme-color" content="#ffffff" />
+  <!--favicon end-->
+  
+  <script type="text/javascript" src="common/js/jquery.min.js"></script>
+  <script type="text/javascript" src="common/js/jquery-migrate-3.0.0.js"></script>
+  <link rel="stylesheet" type="text/css" href="common/css/reset.css" /><link rel="stylesheet" type="text/css" href="common/css/common.css" /><link rel="stylesheet" type="text/css" href="common/css/stylesheet.css" /><link rel="stylesheet" type="text/css" href="common/css/stylesheet_rwd.css" /><link id="linkLanguage" rel="stylesheet" type="text/css" href="common/css/2/stylesheet_language.css" />
+  <!--superfish-->
+  <link rel="stylesheet" type="text/css" href="common/css/superfish.css" />
+  <script type="text/javascript" src="common/js/superfish.js"></script>
+  <script type="text/javascript">
+    (function ($) { //create closure so we can safely use $ as alias for jQuery
+      $(document).ready(function () {
+        var example = $('#example').superfish({
+          //add options here if required
+          cssArrows: false
+        });
+      });
+    })(jQuery);
+  </script>
+  <!--superfish end-->
+  <!--pop nav-->
+  <script type="text/javascript" src="common/js/velocity.min.js"></script>
+  <script type="text/javascript" src="common/js/popNav_style_main.js"></script>
+  <link rel="stylesheet" type="text/css" href="common/css/popNav_style.css" />
+  <!--pop nav end-->
+  <script type="text/javascript" src="common/js/ECNetUlTab.min.js"></script>
+  <!--img converted bg-->
+  <script type="text/javascript" src="common/js/imgLiquid.js"></script>
+  <!--img converted bg end-->
+  <!--sticky menu-->
+  <script type="text/javascript" src="common/js/navbar2.js"></script>
+  <script type="text/javascript" src="common/js/jquery.scrollTo-1.4.2-min.js"></script>
+  <script type="text/javascript" src="common/js/waypoints.min.js"></script>
+  <!--sticky menu end-->
+  <!--slick-->
+  <link rel="stylesheet" type="text/css" href="common/css/slick.css" /><link rel="stylesheet" type="text/css" href="common/css/slick-theme.css" /><link rel="stylesheet" type="text/css" href="common/css/prism.css" />
+  <script type="text/javascript" src="common/js/slick.js"></script>
+  <script type="text/javascript" src="common/js/prism.js"></script>
+  <!--slick end-->
+  <!--sly-->
+  <script type="text/javascript" src="common/js/sly.min.js"></script>
+  <script type="text/javascript" src="common/js/horizontal.js"></script>
+  <!--sly end-->
+  <!--colorBox-->
+  <link rel="stylesheet" href="common/css/colorbox.css" />
+  <script type="text/javascript" src="common/js/jquery.colorbox-min.js"></script>
+  <script>
+    $(document).ready(function () {
+      $(".inline").colorbox({ inline: true, innerWidth: "100%", innerHeight: "100%", fixed: true });
+      $(".inline_2").colorbox({ inline: true, innerWidth: "100%", innerHeight: "100%", fixed: true });
+      $(".iframe").colorbox({ iframe: true, innerWidth: "100%", innerHeight: "100%", fixed: true });
+      $(".youtube").colorbox({ iframe: true, innerWidth: "100%", innerHeight: "100%", fixed: true });
+
+
+      //  alert(location.hash);
+      var strHash = location.hash;
+      if (strHash == "#inline_content_intro") { $(".inline_2").trigger("click"); }
+
+    });
+  </script>
+  <!--colorBox end-->
+  <!-- Fotorama -->
+  <link rel="stylesheet" href="common/css/fotorama.css" />
+  <script src="common/js/fotorama.js"></script>
+  <!--masonry-->
+  <script type="text/javascript" src="common/js/jquery.infinitescroll.min.js"></script>
+  <script type="text/javascript" src="common/js/masonry.pkgd.min.js"></script>
+  <script type="text/javascript" src="common/js/jquery.imagesloaded.min.js"></script>
+  <!--masonry end-->
+  <!--link to select-->
+  <script type="text/javascript" src="common/js/jquery.linksToSelect.js"></script>
+  <!--link to select end-->
+  <!--carousel-->
+  <link rel="stylesheet" href="common/css/jquery.mThumbnailScroller.css" />
+  <script src="common/js/jquery.mThumbnailScroller.js"></script>
+  <!--carousel end-->
+  <!--scroll to fix-->
+  <script type="text/javascript" src="common/js/jquery-scrolltofixed.js"></script>
+  <script type="text/javascript">
+    $(document).ready(function () {
+      //  $('.SelectionNav ul').scrollToFixed({ marginTop: 100 });
+    });
+  </script>
+  <!--scroll to fix end-->
+  <!--sky carousel-->
+  <link href="common/css/tooltip_skin.css" type="text/css" rel="stylesheet" />
+  <script type="text/javascript" src="common/js/jquery.sky.carousel-1.0.2.min.js"></script>
+  <!--sky carousel end-->
+
+
+  <!--photo zoom-->
+  <link rel="stylesheet" href="common/css/photoswipe.css" />
+  <script type="module" src="common/js/photoZoom.js"></script>
+  <!--photo zoom end-->
+
+
+  <!--關掉js用-->
+  <noscript>
+    <link rel="stylesheet" type="text/css" href="common/css/noScript.css" />
+  </noscript>
+  <script type="text/javascript" src="common/js/function.js"></script>
+
+  </head>
+<body>
+  <form method="post" action="./Article.aspx?sNo=04009118&amp;lang=2" id="form1">
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="cjPTsb/l52gJ0KJfbRTr3zhvM99GYqU1/LX7erqZUdvFSRHYnA30tXbn2a3WvTyTrhC7Fq7dpWgeu7ndoq5geA==" />
+
+<script type="text/javascript">$(document).ready(function () {$('.thumbWrapper').slick({speed: 300,slidesToShow: 1,centerMode: true,variableWidth: true,infinite: false }); });</script>
+<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="6110917E" />
+
+    <div id="wrapper" class="wrapper theme_2 collection">
+      <!--collection 展件介紹-->
+      
+ <div class="header">
+
+                <div id="wucCntHeader1_divStickyArea" class="stickyArea lightBg">
+                    <!--lightBg 黑色字-->
+                    <!--darkBg 白色字-->
+                    <div class="wrap cf">
+                        <div class="col-l">
+                            <div class="logo">
+                                <h1><a title="Home" href="index.aspx?lang=2">Selections</a></h1>
+                            </div>
+                            <h2></h2>
+                            <div class="gNav">
+                                <div class="wrap">
+                                    <a href="#0" class="cd-nav-trigger">Menu<span class="cd-icon"></span></a>
+                                    <div class="cd-primary-nav-wrap">
+                                        <ul class="cd-primary-nav cf">
+                                            <li id="wucCntHeader1_liMenu1" class="nav1"><a title="By Category" href="Category.aspx?lang=2">By Category</a></li>
+                                            <!--class="current"目前所在頁面-->
+                                            <li id="wucCntHeader1_liMenu2" class="nav2"><a title="By Dynasty" href="Dynasty.aspx?lang=2">By Dynasty</a></li>
+                                            
+                                            <li id="wucCntHeader1_liMenu4" class="nav4"><a title="Multimedia" href="DigitalCollections.aspx?lang=2">Multimedia</a></li>
+                                        </ul>
+                                        <!--這裡要給行動版用-->
+                                        <div class="popUpperNav">
+                                            <div class="wrap cf">
+                                                <div class="row">
+                                                    <div class="col popSearchbox">
+                                                        <input type="search" placeholder="Search......" name="search" class="popSearchbox-input" />
+                                                    
+                                                        <input id="btnSearch" type="bottom" class="popSearchbox-submit" 
+                                                             title ="Search" 
+                                                             value="Search" />
+                                                        
+                                                        
+                                                    </div>
+                                                </div>
+                                                <div class="row rBtn">
+                                                     <a title="Sitemap" href="siteMap.aspx?lang=2">Sitemap</a>
+                                                     <a id="wucCntHeader1_hyLanguageMobile" href="index.aspx">正體中文</a>
+                                                </div>
+                                                <div class="row socialMedia">
+                                                    <a class="fb" href="javascript: void(window.open('http://www.facebook.com/share.php?u='+encodeURIComponent(location.href)+'&t='+encodeURIComponent(document.title)));">facebook</a>
+                                                    <a class="tt" href="javascript: void(window.open('http://twitter.com/home/?status='.concat(encodeURIComponent(document.title)) .concat(' ') .concat(encodeURIComponent(location.href))));">twitter</a>
+                                                    <a class="pk" href="javascript: void(window.open('http://www.plurk.com/?qualifier=shares&status=' .concat(encodeURIComponent(location.href)) .concat(' ') .concat('(') .concat(encodeURIComponent(document.title)) .concat(')')));">Plurk</a>
+                                                    <a class="line" href="javascript: void(window.open('https://line.me/R/msg/text/?'.concat(encodeURIComponent(location.href)) ));">line</a>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                        <!--這裡要給行動版用 end-->
+                                    </div>
+                                    <div class="cd-overlay-nav"><span></span></div>
+                                    <div class="cd-overlay-content"><span></span></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-r">
+                            <!--這裡要給PC版用-->
+                            <div class="upperNav">
+                                <div class="wrap cf">
+                                    <div class="col sitemap">
+                                        <a href="siteMap.aspx?lang=2" title="Sitemap">Sitemap</a>
+                                    </div>
+                                    <div class="col searchbox">
+                                      
+                                       
+                                     
+                                         <a id="spanSearch" class="searchbox-icon"  title ="Search" href ="Search.aspx?lang=2">                                    
+                                             Search                                             
+                                         </a>
+                                       
+
+                                        
+                                    </div>
+                                    <div class="col socialMedia">
+                                        <ul class="sf-menu" id="example">
+                                            <li class="current">
+                                                <a class="btn" href="#" title="Artifact sharing">Artifact sharing</a>
+                                                <ul>
+                                                    <li class="fb">
+                                                        <a title="facebook" href="javascript: void(window.open('http://www.facebook.com/share.php?u='+encodeURIComponent(location.href)+'&t='+encodeURIComponent(document.title)));">facebook</a>
+                                                    </li>
+                                                    <li class="tt">
+                                                        <a title="twitter" href="javascript: void(window.open('http://twitter.com/home/?status='.concat(encodeURIComponent(document.title)) .concat(' ') .concat(encodeURIComponent(location.href))));">twitter</a>
+                                                    </li>
+                                                    <li class="pk">
+                                                        <a title ="plurk" href="javascript: void(window.open('http://www.plurk.com/?qualifier=shares&status=' .concat(encodeURIComponent(location.href)) .concat(' ') .concat('(') .concat(encodeURIComponent(document.title)) .concat(')')));">Plurk</a>
+                                                    </li>
+                                                    <li class="line">
+                                                        <a title ="line" href="javascript: void(window.open('https://line.me/R/msg/text/?'.concat(encodeURIComponent(location.href)) ));">line</a>
+                                                    </li>
+
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                    <div class="col language">
+                                       
+                                         <a id="wucCntHeader1_hyLanguage" title="正體中文" title="正體中文" href="index.aspx">正體中文</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <!--這裡要給PC版用 end-->
+                        </div>
+
+
+                    </div>
+                </div>
+
+            </div>
+
+
+<script>
+
+    $("#btnSearch").bind("click", function () {
+        window.location.href = 'Search.aspx?lang=2';
+    });
+    $("#spanSearch").bind("click", function () {
+        window.location.href = 'Search.aspx?lang=2';
+     });
+  
+</script>
+      <div class="main">
+        
+  <div class="header">
+                    <div class="wrap cf">
+                        <div  class="fontSize">
+                            <ul class="cf" title="字級大小">
+                                <li class="sizeS" id="font100"><a href="javascript:ResetFontSize(100);" title="Small">Small</a></li>
+                                <li class="sizeM current"  id="font120"><a href="javascript:ResetFontSize(120);" title="Normal">Normal</a></li>
+                                <li class="sizeL"  id="font140"><a href="javascript:ResetFontSize(140);" title="Large">Large</a></li>
+                            </ul>
+                        </div>
+                        <ul class="tools">
+                           
+                            <li class="tool_2"><a href="javascript: window.print();" title="Print"><i></i>>Print</a></li>
+                            <li class="tool_3">
+                                <a class="Share" href="javascript:void(0);" title="Artifact sharing"><i></i>Artifact sharing</a>
+                                <div class="shareIcon">
+                                    <div class="share_arrow_box">
+                                        <a title="facebook" href="javascript: void(window.open('http://www.facebook.com/share.php?u='+encodeURIComponent(location.href)+'&t='+encodeURIComponent(document.title)));" title="Facebook">
+                                            <img src="images/icon-multimedia_1.jpg" alt="Facebook" border="0" />
+                                        </a>
+                                        <a title="twitter" href="javascript: void(window.open('http://twitter.com/home/?status='.concat(encodeURIComponent(document.title)) .concat(' ') .concat(encodeURIComponent(location.href))));" title="Plurk">
+                                            <img src="images/icon-multimedia_2.jpg" alt="Plurk" border="0" />
+                                        </a>
+                                        <a title="plurk" href="javascript: void(window.open('http://www.plurk.com/?qualifier=shares&status=' .concat(encodeURIComponent(location.href)) .concat(' ') .concat('(') .concat(encodeURIComponent(document.title)) .concat(')')));" title="Twitter">
+                                            <img src="images/icon-multimedia_3.jpg " alt="Twitter" border="0" />
+                                        </a>
+                                        <a title="google" href="javascript: void(window.open('https://plus.google.com/share?url='.concat(encodeURIComponent(location.href))));" title="Google Plus">
+                                            <img src="images/icon-multimedia_4.jpg " alt="Google Plus" border="0" />
+                                        </a>
+                                    </div>
+                                </div>
+                            </li>
+                        </ul>
+
+                        <ul class="breadCumb cf">
+                            <li><a href="#" class="acc" accesskey="C" title="Main content">:::</a></li>
+                            <li class="home">
+                            
+                            
+                                  <a id="wucCntHead21_hyLanguage" title="Home" href="index.aspx?lang=2">正體中文</a>
+                            </li>
+                           
+                             
+                             
+                            <li>Pasturing Horses</li>
+                        </ul>
+                        <div class="return col-l">
+                            <a href="javascript:window.history.back(1);" title ="Previous Page">Previous Page</a>
+                        </div>
+                    </div>
+                </div>
+        <div class="SelectionSection cf">
+          <div class="col-l">
+            <div class="hd">
+              <h3>
+                Tang dynasty AD618-907
+              </h3>
+              <h2>Han Gan (8th c.)</h2>
+              <h1>
+                Pasturing Horses
+              </h1>
+              
+            </div>
+
+            <div class="content cf">
+              <div class="Img">
+                <div class="PhotoZoomSlider" data-slider-main>
+                  
+                      <a href="https://theme.npm.edu.tw/selection/att/collection/04009118/17010406.jpg" data-pswp-width="1986" data-pswp-height="1624" class="thumb-link">
+                        <img src="https://theme.npm.edu.tw/selection/att/collection/04009118/17010406.jpg" alt="Pasturing Horses">
+                      </a>
+                    
+                </div>
+                <div class="PhotoZoomSlider-nav" data-slider-nav>
+                  
+                      <button type="button" class="thumb">
+                        <img src="https://theme.npm.edu.tw/selection/att/collection/04009118/m_17010406.jpg" alt="Pasturing Horses">
+                      </button>
+                    
+                </div>
+              </div>
+            </div>
+          </div>
+
+        
+        <div class="SelectionNav col-r">
+          <ul>
+            
+
+            
+            <li class="nav1"><a title="Introduction" class="inline_2" href="#inline_content_intro">Introduction</a></li>
+
+            
+            <!--  <li class="nav2">
+                                <a id="hyPhoto" class="iframe" href="photo.aspx?sNo=04009118&amp;lang=2">Artifact images</a>
+                            </li>-->
+
+            <!--外部連結iframe-->
+
+
+            
+            
+
+            <!--內部內容抓<div id='inline_content'>那裡-->
+            
+            
+            <!--內部內容抓<div id='inline_content_video'>那裡-->
+
+          </ul>
+        </div>
+      </div>
+
+
+      <div class="cBoxInlineWrapper">
+
+        <!--典藏簡介內容-->
+        <div id='inline_content_intro'>
+          <div class="content_intro">
+            <div class="wrap">
+              <div id="fixPagination">
+                <h3>
+                  Tang dynasty AD618-907</h3>
+                <h2>Han Gan (8th c.)</h2>
+                <h1>
+                  Pasturing Horses</h1>
+                <p class="size"></p>
+                <div style="text-align: justify;">This work, the third leaf in the album &quot;Collected Treasures of Famous Paintings,&quot; shows a groom riding on a white horse side-by-side leading a black steed. On the painting is an inscription by the Song dynasty emperor Huizong (1082-1135) that reads, &quot;A true trace of Han Gan, (as indicated by) the imperial brush in 'dinghai,'&quot; a cyclical year that corresponds here to 1107.</div>
+<div style="text-align: justify;">Han Gan was a famous painter of horses under Emperor Xuanzong (reigned 712-756) in the Tang dynasty. The style of this painting, the appearance of the groom, and the short legs of these stocky horses all conform to renderings of similar images excavated from Tang dynasty tombs, the forms indeed bearing the vigorous and sturdy bearing of horses and figures in Tang paintings. However, the delicate forcefulness of the lines and continuity of angular strokes in places as well as the brocade decoration of the saddle here all reflect instead the style of painting in Huizong's period, which would make this an exceptional Northern Song copy of an ancient work.</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--典藏簡介內容 end-->
+
+        <!--3D展示內容-->
+
+        <div id='inline_content_3D'>
+          <section class="container-fluid" id="container">
+            <div class="threesixty select1">
+              <div class="spinner">
+                <span>0%</span>
+              </div>
+              <ol class="threesixty_images"></ol>
+            </div>
+          </section>
+        </div>
+
+        <!--3D展示內容 end-->
+
+
+        <!--影音欣賞內容-->
+        
+        
+        <!--影音欣賞內容 end-->
+
+      </div>
+
+
+    </div>
+
+    <div class="footer">
+      <div class="wrap">
+        <div class="copyR">
+          <span>國立故宮博物院著作權所有</span>
+          <span>Copyright © National Palace Museum. All Rights Reserved.</span>
+        </div>
+      </div>
+    </div>
+
+    <p id="back-top" class="back-top">
+      <a href="#top"><span></span></a>
+    </p>
+
+    </div>
+
+
+
+        <!--3D-->
+    <link rel="stylesheet" href="common/css/threesixty.css" />
+    <script type="text/javascript" src='common/js/threesixty.js'></script>
+    
+    <!--3D end-->
+
+
+    
+  </form>
+</body>
+</html>
+
+
+<script type="text/javascript">
+
+
+  $(document).ready(function () {
+
+    ResetFontSize("");
+
+    setTimeout(function () {
+      $("body").scrollTop(2);
+    }, 1000);
+
+
+  });
+
+  //設定字級
+  function ResetFontSize(size) {
+
+    // alert($(obj).attr("class"));
+
+    var docs = document.getElementById('fixPagination');
+
+    //var docs = $(".textArea");
+
+    if (docs) {
+      var imgArr = ["100", "120", "140"];
+      var currentTextSize = 120;
+      var currentLineHeight = null;
+      if (size == "") {	//預設載入時判斷
+        if (get_text_cookie("RangeSize")) {
+          size = get_text_cookie("RangeSize");
+        } else {
+          size = currentTextSize;
+          createCookie("RangeSize", currentTextSize, 1000);
+        }
+      } else {
+        createCookie("RangeSize", size, 1000);
+      }
+
+      currentTextSize = parseInt(size);
+      // currentLineHeight = parseInt((currentTextSize / 10) * 2.4);
+      docs.style.fontSize = currentTextSize + '%';
+
+      $(".fontSize .cf li").removeClass("current");
+      $("#font" + size).addClass("current");
+
+
+    }
+  }
+
+
+
+  function createCookie(name, value, days) {
+    if (days) {
+      var date = new Date();
+      date.setTime(date.getTime() + (days * 24 * 60 * 60 * 1000));
+      var expires = "; expires=" + date.toGMTString();
+    } else {
+      var expires = "";
+    }
+    document.cookie = name + "=" + value + expires + "; path=/";
+  }
+
+  function get_text_cookie(cookie_name) {
+    var results = document.cookie.match(cookie_name + '=(.*?)(;|$)');
+    if (results) {
+      return (unescape(results[1]));
+    }
+    else { return null; }
+  }
+
+
+</script>
+
+
+
+<!-- Global Site Tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-B99QTY5QD8"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag() { dataLayer.push(arguments) };
+  gtag('js', new Date());
+
+  gtag('config', 'G-B99QTY5QD8');
+</script>
+
+
+
+

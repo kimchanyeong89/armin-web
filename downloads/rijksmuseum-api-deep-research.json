@@ -1,0 +1,50 @@
+{
+  "timestamp": "2026-01-12T05:16:58.411Z",
+  "totalApis": 199,
+  "apis": [
+    {
+      "url": "https://www.rijksmuseum.nl/_collection/builds/meta/871b6ec1-d07c-4941-8ae7-4517aa2625d7.json",
+      "method": "GET",
+      "status": 200,
+      "hasMetadata": false
+    },
+    {
+      "url": "https://www.rijksmuseum.nl/_i18n/JePoQlz1/en/messages.json",
+      "method": "GET",
+      "status": 200,
+      "hasMetadata": false
+    },
+    {
+      "url": "https://www.rijksmuseum.nl/api/v1/collection/search?language=en&page=1&sortingType=Popularity&collectionSearchContext=Art",
+      "method": "GET",
+      "status": 200,
+      "hasMetadata": true
+    },
+    {
+      "url": "https://www.rijksmuseum.nl/api/v1/collection/art?objectNodeId=9f1ca72cf761e1764fe22a5516b46ecc&language=en",
+      "method": "GET",
+      "status": 200,
+      "hasMetadata": true
+    }
+  ],
+  "metadataApis": [
+    {
+      "url": "https://www.rijksmuseum.nl/api/v1/user",
+      "method": "GET",
+      "status": 401,
+      "hasMetadata": true
+    },
+    {
+      "url": "https://www.rijksmuseum.nl/api/v1/collection/search?language=en&page=1&sortingType=Popularity&collectionSearchContext=Art",
+      "method": "GET",
+      "status": 200,
+      "hasMetadata": true
+    },
+    {
+      "url": "https://www.rijksmuseum.nl/api/v1/collection/art?objectNodeId=9f1ca72cf761e1764fe22a5516b46ecc&language=en",
+      "method": "GET",
+      "status": 200,
+      "hasMetadata": true
+    }
+  ]
+}

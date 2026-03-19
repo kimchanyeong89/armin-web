@@ -1,0 +1,3 @@
+[ 'museum', 'museumId', 'groupName', 'objects' ]
+false
+false

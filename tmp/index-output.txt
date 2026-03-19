@@ -1,0 +1,225 @@
+🔍 Generating comprehensive search index...
+
+📚 Loaded 203 exhibitions from config for dynamic mapping.
+🔗 Generated 280 dynamic file mappings.
+
+Found 209 collection files
+
+✅ accademia-collection.json: 68 artworks
+✅ acropolis-museum-collection.json: 90 artworks
+✅ adachi-collection.json: 59 artworks
+✅ agnsw-collection.json: 11,276 artworks (skipped 154 duplicates)
+✅ aic-collection.json: 31,528 artworks (skipped 4532 duplicates)
+✅ albertina-photography-100.json: 15,208 artworks (skipped 6761 duplicates)
+✅ albertina-poster-100.json: 2,480 artworks (skipped 124 duplicates)
+✅ alte-pinakothek-collection.json: 5,253 artworks
+✅ ambrosiana-collection.json: 121 artworks (skipped 1 duplicates)
+✅ aros-collection.json: 2,993 artworks
+✅ ateneum-collection.json: 5,352 artworks
+✅ basel-collection.json: 3,132 artworks
+✅ belvedere-collection.json: 9,250 artworks (skipped 8 duplicates)
+✅ beyeler-collection.json: 432 artworks
+✅ bordeaux-collection.json: 5,109 artworks (skipped 489 duplicates)
+✅ borghese-arte-antica-collection.json: 291 artworks
+✅ bruecke-museum-collection.json: 1,326 artworks (skipped 65 duplicates)
+✅ busan-museum.json: 198 artworks
+✅ caixaforum-collection.json: 658 artworks
+✅ carnavalet-paintings.json: 398 artworks
+✅ castello-di-rivoli-collection.json: 807 artworks
+✅ china-art-museum-collection.json: 670 artworks
+✅ cma-collection.json: 5,929 artworks
+✅ courtauld-gallery-collection.json: 604 artworks
+✅ crystal-bridges-gac.json: 72 artworks
+✅ dia-collection.json: 3,742 artworks
+✅ doria-pamphilj-collection.json: 29 artworks
+✅ dpm-intl-paintings-all.json: 445 artworks
+✅ dumoak-kim-work-all.json: 40 artworks
+✅ famsf-collections.json: 8,286 artworks (skipped 194 duplicates)
+✅ fine-arts-be-100.json: 100 artworks
+✅ flv-collection.json: 306 artworks
+✅ folk-museum.json: 927 artworks
+✅ frida-timeline.json: 113 artworks
+✅ galleria-borghese-collection.json: 562 artworks
+✅ gallerie-accademia-venice-collection.json: 187 artworks
+✅ gdmoa-online-collection-all.json: 164 artworks
+✅ gem-collection.json: 175 artworks
+✅ getty-collection.json: 529 artworks (skipped 252 duplicates)
+✅ gidang-collection.json: 45 artworks
+✅ glyptoteket-collection.json: 625 artworks
+✅ grenoble-collection.json: 1,974 artworks (skipped 159 duplicates)
+✅ guggenheim-venice-collection.json: 524 artworks
+✅ gulbenkian-collection.json: 211 artworks
+✅ gwangju-museum.json: 331 artworks
+✅ hamburger-kunsthalle-paintings.json: 1,864 artworks
+✅ hayward-gallery-collection.json: 1,045 artworks
+✅ hermitage-highlights.json: 732 artworks (skipped 5 duplicates)
+✅ high-collection.json: 3,359 artworks
+✅ hirschsprung-collection.json: 779 artworks
+✅ hkmoa-collection.json: 238 artworks
+✅ house-of-refuge-collection.json: 4 artworks
+✅ jeonju-museum.json: 382 artworks
+✅ jmoa-collection-all.json: 1,000 artworks
+✅ kanazawa-all.json: 2,313 artworks (skipped 33 duplicates)
+✅ khm-collection.json: 2,713 artworks
+✅ kiasma-collection.json: 2,955 artworks (skipped 15 duplicates)
+✅ kimtschang-yeul-collection-all.json: 239 artworks
+✅ kremlin-collection.json: 856 artworks
+✅ kroller-muller-paintings.json: 1,196 artworks
+✅ kunsthaus-collection.json: 2,651 artworks
+✅ la-piscine-collection.json: 355 artworks
+✅ lacma-classification-22.json: 1,543 artworks (skipped 9 duplicates)
+✅ lee-jung-seop-collection.json: 56 artworks
+✅ leopold-museum-collection.json: 2,580 artworks
+✅ lille-pba-collection.json: 63 artworks (skipped 36 duplicates)
+✅ long-museum-collection.json: 52 artworks
+✅ louvre-painting-collection.json: 10,617 artworks
+✅ macval-collection.json: 4,788 artworks
+✅ mad-paris-collection.json: 290 artworks (skipped 2 duplicates)
+✅ mah-collection.json: 3,384 artworks
+✅ mam-collection.json: 3,235 artworks (skipped 3237 duplicates)
+✅ mam-painting-collection.json: 2,165 artworks (skipped 1 duplicates)
+✅ mam-photography-collection.json: 1,070 artworks
+✅ mamcs-strasbourg-collection.json: 8,476 artworks (skipped 49 duplicates)
+✅ marmottan-collection.json: 90 artworks
+✅ masp-collection.json: 2,933 artworks
+✅ matisse-nice-collection.json: 486 artworks
+✅ mauritshuis-collection.json: 860 artworks
+✅ mbam-collection.json: 2,495 artworks
+✅ mca-collection.json: 1,004 artworks (skipped 69 duplicates)
+✅ met-ny-collection.json: 1,994 artworks
+✅ mfab-collection.json: 10,760 artworks (skipped 12 duplicates)
+✅ mmca-collection.json: 11,648 artworks (skipped 104 duplicates)
+✅ mnk-collection.json: 7,313 artworks
+✅ moma-collection.json: 24,288 artworks (skipped 22 duplicates)
+✅ mori-collection.json: 492 artworks
+✅ mplus-collection-mplus.json: 4,524 artworks
+✅ mplus-collection-sigg.json: 1,221 artworks
+✅ mucem-collection.json: 3,943 artworks
+✅ munch-collection.json: 1,371 artworks
+✅ musee-armee-collection.json: 1,265 artworks (skipped 211 duplicates)
+✅ musee-chagall-collection.json: 3,276 artworks
+✅ musee-conde-drawings.json: 3,323 artworks
+✅ musee-conde-paintings.json: 813 artworks
+✅ musee-guimet-collection.json: 480 artworks
+✅ musei-capitolini-collection.json: 244 artworks
+✅ museo-archeologico-napoli-collection.json: 221 artworks
+✅ museo-del-novecento-milan-collection.json: 215 artworks
+✅ museo-egizio-collection.json: 5,274 artworks (skipped 140 duplicates)
+✅ museothyssen-collection-41.full.json: 674 artworks (skipped 6 duplicates)
+✅ museum-wales-art.json: 9,675 artworks (skipped 55 duplicates)
+✅ museum-wales-industry.json: 9,894 artworks (skipped 102 duplicates)
+✅ museum-wales-paintings.json: 4,121 artworks (skipped 39 duplicates)
+✅ nam-collection.json: 308 artworks
+✅ namoc-collection.json: 5,215 artworks
+✅ nasjonal-collection.json: 7,672 artworks (skipped 3 duplicates)
+✅ national-museum-korea.json: 4,309 artworks
+✅ neue-pinakothek-collection.json: 129 artworks
+✅ nga-collection.json: 15,367 artworks (skipped 1380 duplicates)
+✅ ngprague-collection.json: 3,833 artworks
+✅ ngs-all.json: 8,511 artworks (skipped 32 duplicates)
+✅ ngv-collection.json: 4,730 artworks
+✅ nich-collection.json: 3,142 artworks
+✅ njmuseum-collection-all.json: 646 artworks
+✅ nmc-highlights-all.json: 107 artworks
+✅ nmwa-collection.json: 837 artworks (skipped 11 duplicates)
+✅ novecento-della-ragione-collection.json: 66 artworks
+✅ novecento-rosai-collection.json: 56 artworks
+✅ npm-selection-painting.json: 105 artworks
+✅ ntmofa-collection.json: 12,875 artworks
+✅ orangerie-collection.json: 161 artworks
+✅ orsay-collection.json: 2,666 artworks
+✅ petit-palais-collection.json: 400 artworks
+✅ philadelphia-collection.json: 10,454 artworks
+✅ picasso-paris-collection.json: 3,481 artworks (skipped 6 duplicates)
+✅ pinacoteca-brera-collection.json: 619 artworks
+✅ pinakothek-moderne-collection.json: 424 artworks
+✅ pinault-collection.json: 1,199 artworks
+✅ pitti-palace-collection.json: 427 artworks
+✅ pompidou-cinema-collection.json: 1,073 artworks
+✅ pompidou-design-collection.json: 1,494 artworks (skipped 181 duplicates)
+✅ pompidou-drawing-collection.json: 7,134 artworks (skipped 6 duplicates)
+✅ pompidou-newmedia-collection.json: 395 artworks (skipped 55 duplicates)
+✅ pompidou-painting-collection.json: 5,108 artworks (skipped 4 duplicates)
+✅ psa-collection-all.json: 385 artworks
+✅ pushkin-paintings.json: 1,796 artworks
+✅ qagoma-collection.json: 8,745 artworks
+✅ reina-sofia-collection.json: 14,613 artworks (skipped 12 duplicates)
+✅ rijksmuseum-cartoon-collection.json: 7,022 artworks (skipped 1396 duplicates)
+✅ rijksmuseum-design-collection.json: 3,980 artworks (skipped 841 duplicates)
+✅ rijksmuseum-docphotos-collection.json: 2,860 artworks (skipped 263 duplicates)
+✅ rijksmuseum-drawings-collection.json: 8,497 artworks (skipped 1505 duplicates)
+✅ rijksmuseum-paintings-collection.json: 4,276 artworks (skipped 94 duplicates)
+✅ rijksmuseum-photography-collection.json: 1,106 artworks (skipped 21 duplicates)
+✅ rijksmuseum-poster-collection.json: 3,014 artworks (skipped 776 duplicates)
+✅ rijksmuseum-prints-collection.json: 8,892 artworks (skipped 1066 duplicates)
+✅ rijksmuseum-prints2-collection.json: 6,268 artworks (skipped 2688 duplicates)
+✅ rodin-collection.json: 4,756 artworks (skipped 3 duplicates)
+✅ rouen-mba-collection.json: 132 artworks
+✅ royal-academy-collection.json: 259 artworks
+✅ rusmuseum-collection.json: 886 artworks
+✅ saam-paintings-full.json: 6,266 artworks
+✅ sammlung-schack-collection.json: 173 artworks
+✅ seoul-museum-of-art-collection.json: 6,065 artworks
+✅ sfmoma-collection.json: 2,936 artworks (skipped 26 duplicates)
+✅ shanghaimuseum-paintings-all.json: 329 artworks
+✅ shenzhenmuseum-l0303-all.json: 250 artworks
+✅ si-asian-art.json: 1,524 artworks
+✅ si-npg.json: 1,828 artworks
+✅ sinebrychoff-collection.json: 1,362 artworks (skipped 2 duplicates)
+✅ skagens-collection.json: 2,125 artworks
+✅ smb-alte-nationalgalerie-collection.json: 2,258 artworks
+✅ smb-altes-museum-collection.json: 658 artworks
+✅ smb-bode-museum-collection.json: 2,255 artworks (skipped 8 duplicates)
+✅ smb-gemaeldegalerie-collection.json: 782 artworks
+✅ smb-humboldt-forum-collection.json: 979 artworks (skipped 1 duplicates)
+✅ smb-neue-nationalgalerie-collection.json: 730 artworks
+✅ smb-neues-museum-collection.json: 322 artworks (skipped 366 duplicates)
+✅ smk-collection.json: 7,036 artworks
+✅ soam-memorial-collection.json: 50 artworks
+✅ soane-paintings.json: 390 artworks
+✅ staatsgalerien-collection.json: 1,200 artworks
+✅ staedel-museum-collection.json: 1,702 artworks
+✅ stedelijk-collection.json: 424 artworks
+✅ sweden-collection.json: 3,978 artworks
+✅ tate-modern-collection.json: 345 artworks
+✅ tepapa-collection.json: 3,821 artworks
+✅ tfam-collection-all.json: 5,109 artworks
+✅ thebroad-collection.json: 1,751 artworks (skipped 10 duplicates)
+✅ tobikan-collection.json: 48 artworks
+✅ today-art-museum.json: 78 artworks
+✅ topkapi-collection.json: 54 artworks
+✅ toulouse-lautrec-collection.json: 212 artworks
+✅ tretyakov-wikidata.json: 1,004 artworks (skipped 14 duplicates)
+✅ uffizi-gallery-collection.json: 507 artworks
+✅ vam-permanent-exhibitions.json: 543 artworks
+✅ vam-posters-display.json: 11,637 artworks (skipped 16 duplicates)
+✅ vangogh-museum-collection.json: 4,508 artworks (skipped 3 duplicates)
+✅ vatican-collection.json: 102 artworks
+✅ versailles-collection.json: 2,018 artworks (skipped 2616 duplicates)
+✅ walker-art-gallery-collection.json: 1,328 artworks (skipped 14 duplicates)
+✅ wallace-collection.json: 806 artworks
+✅ whitney-collection.json: 23,446 artworks (skipped 1 duplicates)
+✅ zjam-collection.json: 273 artworks
+
+🎬 Saved video embed ID list: /Users/kietzsche/armin-web-main/public/data/video-embed-ids.json (7 ids)
+
+📦 Saved full index: /Users/kietzsche/armin-web-main/public/data/search-index.json (145.06 MB)
+
+✂️  Splitting index into chunks...
+   - search-index-part-0.json: 40000 items (9.36 MB)
+   - search-index-part-1.json: 40000 items (10.05 MB)
+   - search-index-part-2.json: 40000 items (9.80 MB)
+   - search-index-part-3.json: 40000 items (10.31 MB)
+   - search-index-part-4.json: 40000 items (8.61 MB)
+   - search-index-part-5.json: 40000 items (10.71 MB)
+   - search-index-part-6.json: 40000 items (9.57 MB)
+   - search-index-part-7.json: 40000 items (10.21 MB)
+   - search-index-part-8.json: 40000 items (10.14 MB)
+   - search-index-part-9.json: 40000 items (10.72 MB)
+   - search-index-part-10.json: 40000 items (9.94 MB)
+   - search-index-part-11.json: 40000 items (9.94 MB)
+   - search-index-part-12.json: 40000 items (9.93 MB)
+   - search-index-part-13.json: 40000 items (11.13 MB)
+   - search-index-part-14.json: 22158 items (4.66 MB)
+
+✅ Saved manifest with 15 chunks

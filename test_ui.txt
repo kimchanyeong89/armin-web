@@ -1,0 +1,1 @@
+We need a unified modal or a redesign of existing ones. I should probably just make `ExhibitionDetails` look like a sketch modal when in drawing mode.

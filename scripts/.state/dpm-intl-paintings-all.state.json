@@ -1,0 +1,14 @@
+{
+  "startedAt": "2026-01-28T11:15:35.348Z",
+  "updatedAt": "2026-01-29T12:58:56.209Z",
+  "totalReported": 13672,
+  "totalPages": 1140,
+  "pagesize": 12,
+  "categoryArrayValue": 132,
+  "lastPageCompleted": 1140,
+  "written": 9970,
+  "skippedNoImage": 0,
+  "skippedPlaceholder": 2,
+  "skippedNonPaintings": 0,
+  "errors": 24
+}

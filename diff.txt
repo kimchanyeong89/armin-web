@@ -1,0 +1,1156 @@
+diff --git a/src/components/GlobalSearchBar.tsx b/src/components/GlobalSearchBar.tsx
+index 2ca52596..30b02567 100644
+--- a/src/components/GlobalSearchBar.tsx
++++ b/src/components/GlobalSearchBar.tsx
+@@ -10,8 +10,15 @@ import { collection, doc, setDoc, deleteDoc, onSnapshot, getDocs } from 'firebas
+ import { HeartOverlay } from './HeartOverlay';
+ import { ProductModal } from './ProductModal';
+ import ArtistWikiPanel from './ArtistWikiPanel';
++import '../styles/ArtistGallery.css';
+ const ArtistDistributionMap = lazy(() => import('./ArtistDistributionMap'));
+ 
++const ExternalLinkIcon = () => (
++    <svg viewBox="0 0 12 12" fill="none" stroke="currentColor" strokeWidth="1.5" xmlns="http://www.w3.org/2000/svg" style={{ width: '1em', height: '1em', marginLeft: 4 }}>
++        <path d="M1 11L11 1M11 1H5M11 1v6" strokeLinecap="round" strokeLinejoin="round" />
++    </svg>
++);
++
+ 
+ 
+ export type SearchableArtwork = {
+@@ -38,14 +45,16 @@ export type Museum = {
+     permanentExhibitions?: { id: string, name: string }[];
+ };
+ 
+-type GlobalSearchBarProps = {
+-    onOpenLightbox: (artwork: SearchableArtwork, openLightbox?: boolean) => void;
+-    onNavigateToMuseum: (museum: { id: string, name: string }, collectionId?: string, artwork?: SearchableArtwork) => void;
++export interface GlobalSearchBarProps {
++    onOpenLightbox?: (artwork: SearchableArtwork, openLightbox?: boolean) => void;
++    onNavigateToMuseum?: (museum: { id: string, name: string }, collectionId?: string, artwork?: SearchableArtwork) => void;
+     museums?: Museum[];
+     isModalOpen?: boolean;
+     initialQuery?: string;
+     isMobile?: boolean;
+     inlineMode?: boolean;
++    isDark?: boolean;
++    skin?: 'default' | 'drawing';
+ };
+ 
+ const normalizeToken = (value?: string) => (value || '')
+@@ -110,12 +119,16 @@ const describeArtworkHighlight = (art?: SearchableArtwork) => {
+ };
+ 
+ // Fallback image for broken images
+-const FALLBACK_IMG = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect fill="%23f3f4f6" width="100" height="100"/><text x="50" y="55" text-anchor="middle" fill="%23999" font-size="12">No Image</text></svg>';
++const FALLBACK_IMG = 'data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20viewBox%3D%220%200%20100%20100%22%3E%3Crect%20fill%3D%22%23f3f4f6%22%20width%3D%22100%22%20height%3D%22100%22%2F%3E%3Ctext%20x%3D%2250%22%20y%3D%2255%22%20text-anchor%3D%22middle%22%20fill%3D%22%23999%22%20font-size%3D%2212%22%3ENo%20Image%3C%2Ftext%3E%3C%2Fsvg%3E';
+ 
+-export default function GlobalSearchBar({ onOpenLightbox, onNavigateToMuseum, museums = [], isModalOpen, inlineMode = false }: GlobalSearchBarProps) {
++export default function GlobalSearchBar({ onOpenLightbox, onNavigateToMuseum, museums = [], isModalOpen, inlineMode = false, isDark, skin = 'default' }: GlobalSearchBarProps) {
++    const isDrawingSkin = skin === 'drawing';
+     void onOpenLightbox; // Deprecated callback (kept for prop compatibility)
+     const navigate = useNavigate();
+     const location = useLocation();
++    const themeIsDark = isDark !== undefined ? isDark : (() => {
++        try { return localStorage.getItem('homeTheme') !== 'light'; } catch { return true; }
++    })();
+     const { artistName: routeArtistSlug } = useParams<{ artistName?: string }>();
+     // Restore query from sessionStorage if available
+     const [query, setQuery] = useState(() => {
+@@ -205,14 +218,6 @@ export default function GlobalSearchBar({ onOpenLightbox, onNavigateToMuseum, mu
+             .slice(0, 200);
+     };
+ 
+-    const toArtistSlug = (value: string) => {
+-        // Strip parentheses for cleaner URLs
+-        return sanitizeArtistId(value)
+-            .replace(/[()]/g, '')
+-            .replace(/[\s_]+/g, '-')
+-            .replace(/-+/g, '-')
+-            .toLowerCase();
+-    };
+ 
+     const getRouteArtistName = useCallback(() => {
+         const params = new URLSearchParams(location.search);
+@@ -225,21 +230,76 @@ export default function GlobalSearchBar({ onOpenLightbox, onNavigateToMuseum, mu
+         return decodeURIComponent(routeArtistSlug).replace(/[-_]+/g, ' ').trim();
+     }, [location.search, routeArtistSlug]);
+ 
+-    const GALLERY_Z_BASE = 4500;
+-    const GALLERY_Z_BELOW_MODAL = 3400;
++    const GALLERY_Z_BASE = 200002; // Must be above all page overlays, GlobalNav(200000), CommunityBtn(200001)
++    const GALLERY_Z_BELOW_MODAL = 199000;
+     // Dynamic Z-Index for ArtistGallery window management
+     const [galleryZIndex, setGalleryZIndex] = useState(GALLERY_Z_BASE);
+     const [hoveredArtworkId, setHoveredArtworkId] = useState<string | null>(null);
+     const [galleryTheme, setGalleryTheme] = useState<'dark' | 'light'>('dark');
+     const [galleryCategory, setGalleryCategory] = useState<string | null>(null);
++    const [artistWikiUrl, setArtistWikiUrl] = useState<string>('');
++    // Card entrance animation
++    const [visibleCardIds, setVisibleCardIds] = useState<Set<string>>(new Set());
++    const [imgLoadedIds, setImgLoadedIds] = useState<Set<string>>(new Set());
++    const artworkGridRef = useRef<HTMLDivElement | null>(null);
++    const galleryIsOverlayRef = useRef(false); // tracks if gallery opened as overlay (no URL nav)
+ 
+     useEffect(() => {
+         // When Artist Gallery opens or content updates, bring to front
+         if (artistGallery) {
+-            setGalleryZIndex(GALLERY_Z_BASE);
++            // In overlay mode, always use maximum z-index to appear above all page overlays
++            setGalleryZIndex(galleryIsOverlayRef.current ? GALLERY_Z_BASE : GALLERY_Z_BASE);
+         }
+     }, [artistGallery]);
+ 
++    // ── Card entrance animation via IntersectionObserver ──────────────────
++    useEffect(() => {
++        // Reset visible state when artist or category changes (so re-entering is animated)
++        setVisibleCardIds(new Set());
++        setImgLoadedIds(new Set());
++    }, [artistGallery?.artist, galleryCategory]);
++
++    useEffect(() => {
++        const grid = artworkGridRef.current;
++        if (!grid || !artistGallery) return;
++        // Give DOM a tick to render the new cards before observing
++        const raf = requestAnimationFrame(() => {
++            const cards = Array.from(grid.querySelectorAll<HTMLElement>('[data-card-id]'));
++            if (cards.length === 0) return;
++
++            let visibleCount = 0; // Track how many items have become visible in this session
++
++            const observer = new IntersectionObserver(
++                (entries) => {
++                    let enteredInThisBatch = 0;
++                    entries.forEach((entry) => {
++                        if (entry.isIntersecting) {
++                            const target = entry.target as HTMLElement;
++                            const id = target.dataset.cardId;
++                            if (id) {
++                                // Add a tiny staggering based on the batch size and running total
++                                // so elements appearing together ripple smoothly. Cap delay at 400ms.
++                                const delayMs = Math.min(enteredInThisBatch * 30 + (visibleCount === 0 ? 0 : 50), 400);
++                                target.style.transitionDelay = `${delayMs}ms`;
++
++                                setVisibleCardIds((prev) => { const s = new Set(prev); s.add(id); return s; });
++                                enteredInThisBatch++;
++                                visibleCount++;
++                            }
++                            observer.unobserve(target);
++                        }
++                    });
++                },
++                { threshold: 0.05, rootMargin: '0px 0px 60px 0px' }
++            );
++            cards.forEach((card) => {
++                observer.observe(card);
++            });
++            return () => observer.disconnect();
++        });
++        return () => cancelAnimationFrame(raf);
++    }, [artistGallery, artworkGridRef, galleryCategory]);
++
+     // ── Category normalization for filter pills ────────────────────────────
+     const normalizeArtworkCategory = useCallback((art: SearchableArtwork): string => {
+         const raw = (
+@@ -287,20 +347,13 @@ export default function GlobalSearchBar({ onOpenLightbox, onNavigateToMuseum, mu
+         setGalleryCategory(null);
+     }, [artistGallery?.artist]);
+ 
+-    const artistGalleryColumns = useMemo(() => {
++    // Get filtered artworks for layout
++    const galleryFilteredArtworks = useMemo(() => {
+         if (!artistGallery || !artistGallery.artworks?.length) return [];
+-        const filtered = galleryCategory
++        return galleryCategory
+             ? artistGallery.artworks.filter(art => normalizeArtworkCategory(art) === galleryCategory)
+             : artistGallery.artworks;
+-        if (!filtered.length) return [];
+-        const desiredCount = isMobile ? 2 : 4;
+-        const safeCount = Math.min(desiredCount, Math.max(1, filtered.length));
+-        const columns = Array.from({ length: safeCount }, () => [] as SearchableArtwork[]);
+-        filtered.forEach((art, index) => {
+-            columns[index % safeCount].push(art);
+-        });
+-        return columns;
+-    }, [artistGallery, isMobile, galleryCategory, normalizeArtworkCategory]);
++    }, [artistGallery, galleryCategory, normalizeArtworkCategory]);
+ 
+     const artistFallbackDescription = useMemo(() => {
+         if (!artistGallery?.artworks?.length) return '';
+@@ -575,6 +628,7 @@ export default function GlobalSearchBar({ onOpenLightbox, onNavigateToMuseum, mu
+                 setFilteredArtworks(preciseResults);
+                 setSuggestedArtists(artists);
+             } else if (type === 'ARTIST_WORKS') {
++                setIsLoading(false);
+                 if (artist) {
+                     const preciseWorks = (works || [])
+                         .map((art: SearchableArtwork) => ({
+@@ -588,14 +642,16 @@ export default function GlobalSearchBar({ onOpenLightbox, onNavigateToMuseum, mu
+                             if (exhibitionId.includes('serpentine') || exhibitionId.includes('british-museum') || exhibitionId.includes('the-british-museum') || exhibitionId.includes('bm-collection')) return false;
+                             return true;
+                         });
+-                    if (preciseWorks.length === 0) return;
++                    // Always set gallery (even if empty) so loading state is properly cleared
+                     const gallery = { artist, artworks: preciseWorks };
+                     setArtistGallery(gallery);
+-                    // Save to sessionStorage
+-                    try {
+-                        sessionStorage.setItem('artistGallery', JSON.stringify(gallery));
+-                    } catch (e) {
+-                        console.error('Failed to save artistGallery to sessionStorage', e);
++                    // Save to sessionStorage only if we have artworks
++                    if (preciseWorks.length > 0) {
++                        try {
++                            sessionStorage.setItem('artistGallery', JSON.stringify(gallery));
++                        } catch (e) {
++                            console.error('Failed to save artistGallery to sessionStorage', e);
++                        }
+                     }
+                 }
+             } else if (type === 'ERROR') {
+@@ -629,11 +685,12 @@ export default function GlobalSearchBar({ onOpenLightbox, onNavigateToMuseum, mu
+     useEffect(() => {
+         const routeName = getRouteArtistName();
+         if (!routeName) {
+-            pendingRouteArtistRef.current = null;
+-            if (artistGallery) {
+-                setArtistGallery(null);
+-                setLightboxArtwork(null);
+-
++            if (!galleryIsOverlayRef.current) {
++                pendingRouteArtistRef.current = null;
++                if (artistGallery) {
++                    setArtistGallery(null);
++                    setLightboxArtwork(null);
++                }
+             }
+             return;
+         }
+@@ -649,6 +706,7 @@ export default function GlobalSearchBar({ onOpenLightbox, onNavigateToMuseum, mu
+             // ignore
+         }
+         ensureWorker();
++        workerRef.current?.postMessage({ type: 'LOAD' });
+         workerRef.current?.postMessage({ type: 'GET_ARTIST_WORKS', query: routeName });
+     }, [artistGallery, artistGallery?.artist, getRouteArtistName, ensureWorker]);
+ 
+@@ -1034,12 +1092,21 @@ export default function GlobalSearchBar({ onOpenLightbox, onNavigateToMuseum, mu
+     useEffect(() => {
+         const handleClickOutside = (e: MouseEvent) => {
+             if (lightboxArtwork) return;
++
++            // NEVER close if clicking anywhere inside the global nav wrapper.
++            // (Menu button will manually close it via event dispatch if clicked).
++            const navWrapper = document.getElementById('global-nav-wrapper');
++            if (navWrapper && navWrapper.contains(e.target as Node)) {
++                return;
++            }
++
+             if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
+                 setIsExpanded(false);
+             }
+         };
+-        document.addEventListener('mousedown', handleClickOutside);
+-        return () => document.removeEventListener('mousedown', handleClickOutside);
++        // Use capture phase to ensure it runs reliably even if react synthetic events stop propagation
++        document.addEventListener('mousedown', handleClickOutside, true);
++        return () => document.removeEventListener('mousedown', handleClickOutside, true);
+     }, [lightboxArtwork]);
+ 
+     // Dispatch events so GlobalNav can react + listen for collapse from GlobalNav
+@@ -1065,7 +1132,7 @@ export default function GlobalSearchBar({ onOpenLightbox, onNavigateToMuseum, mu
+         const onTrigger = (e: Event) => {
+             const detail = (e as CustomEvent<{ query?: string }>).detail;
+             const q = detail?.query || '';
+-            setSearchValue(q);
++            setQuery(q);
+             setIsExpanded(true);
+             if (q) {
+                 workerRef.current?.postMessage({ type: 'SEARCH', query: q });
+@@ -1080,6 +1147,7 @@ export default function GlobalSearchBar({ onOpenLightbox, onNavigateToMuseum, mu
+         if (isExpanded && inputRef.current) inputRef.current.focus();
+     }, [isExpanded]);
+ 
++
+     const handleOpenInMuseum = useCallback((artworkInput: SearchableArtwork) => {
+         // JIT Correction: Ensure we have the precise collection ID
+         // This fixes cases where the loaded data still has generic Museum IDs
+@@ -1120,29 +1188,86 @@ export default function GlobalSearchBar({ onOpenLightbox, onNavigateToMuseum, mu
+             ? resolveCollectionIdForMuseum(artwork, museumMatch)
+             : artwork.exhibitionId;
+ 
+-        onNavigateToMuseum(targetMuseum, targetCollectionId || undefined, artwork);
++        onNavigateToMuseum?.(targetMuseum, targetCollectionId || undefined, artwork);
+     }, [findMuseumForArtwork, onNavigateToMuseum, resolveCollectionIdForMuseum]);
+ 
+     const handleSelectArtwork = useCallback((artwork: SearchableArtwork) => {
+         setLightboxArtwork(artwork);
+     }, []);
+ 
+-    const handleSelectArtist = useCallback((artist: string) => {
++    const handleSelectArtist = useCallback((artist: string, overlayMode = false, prevLightboxArtwork?: SearchableArtwork | null) => {
+         setIsExpanded(false);
+-        setLightboxArtwork(null);
+-        setArtistGallery(null);
+         try {
+             sessionStorage.removeItem('artistGallery');
+         } catch {
+             // ignore
+         }
+-        const slug = toArtistSlug(artist);
+-        const target = `/artist-gallery/${encodeURIComponent(slug)}?name=${encodeURIComponent(artist)}`;
+-        const current = `${location.pathname}${location.search}`;
+-        if (current !== target) {
+-            navigate(target);
++
++        if (overlayMode) {
++            // Set overlay flag BEFORE any state changes to prevent useEffect from clearing gallery
++            galleryIsOverlayRef.current = true;
++            pendingRouteArtistRef.current = artist;
++            // Push history state WITH lightbox info so back button can restore
++            window.history.pushState(
++                { artistGalleryOverlay: artist, prevLightboxArtwork: prevLightboxArtwork ?? null },
++                '',
++                window.location.pathname + window.location.search + '#artist-gallery'
++            );
++            setLightboxArtwork(null);
++            setArtistGallery(null);
++            setIsLoading(true);
++            ensureWorker();
++            workerRef.current?.postMessage({ type: 'LOAD' });
++            workerRef.current?.postMessage({ type: 'GET_ARTIST_WORKS', query: artist });
++        } else {
++            galleryIsOverlayRef.current = false;
++            setLightboxArtwork(null);
++            setArtistGallery(null);
++            const slug = (artist || '')
++                .replace(/[/\\#[\].*?]/g, '_')
++                .trim()
++                .slice(0, 200)
++                .replace(/[\s_]+/g, '-')
++                .replace(/-+/g, '-')
++                .toLowerCase();
++            const target = `/artist-gallery/${encodeURIComponent(slug)}?name=${encodeURIComponent(artist)}`;
++            const current = `${location.pathname}${location.search}`;
++            if (current !== target) navigate(target);
+         }
+-    }, [location.pathname, navigate, toArtistSlug]);
++    }, [location.pathname, location.search, navigate, ensureWorker]);
++
++    // Listen for open-artist-gallery event from lightboxes, modals, etc.
++    useEffect(() => {
++        const onOpenArtistGallery = (e: Event) => {
++            const detail = (e as CustomEvent<{ artist: string; prevLightboxArtwork?: any }>).detail;
++            if (detail?.artist) {
++                handleSelectArtist(detail.artist, true, detail.prevLightboxArtwork); // open as overlay
++            }
++        };
++        window.addEventListener('open-artist-gallery', onOpenArtistGallery);
++        return () => window.removeEventListener('open-artist-gallery', onOpenArtistGallery);
++    }, [handleSelectArtist]);
++
++    // Handle popstate: dismiss overlay mode gallery on browser back, restore previous lightbox if needed
++    useEffect(() => {
++        const handlePopState = (event: PopStateEvent) => {
++            if (galleryIsOverlayRef.current && window.location.hash !== '#artist-gallery') {
++                galleryIsOverlayRef.current = false;
++                setArtistGallery(null);
++                pendingRouteArtistRef.current = null;
++                try { sessionStorage.removeItem('artistGallery'); } catch { /* ignore */ }
++                // Restore previous lightbox artwork if it was stored in history state
++                const prevArtwork = event.state?.prevLightboxArtwork;
++                if (prevArtwork) {
++                    setLightboxArtwork(prevArtwork);
++                } else {
++                    setLightboxArtwork(null);
++                }
++            }
++        };
++        window.addEventListener('popstate', handlePopState);
++        return () => window.removeEventListener('popstate', handlePopState);
++    }, []);
+ 
+     const handleSelectMuseum = useCallback((museum: Museum) => {
+         setIsExpanded(false);
+@@ -1153,21 +1278,29 @@ export default function GlobalSearchBar({ onOpenLightbox, onNavigateToMuseum, mu
+         } catch {
+             // ignore
+         }
+-        onNavigateToMuseum({ id: museum.id, name: museum.name }, museum.permanentExhibitions?.[0]?.id);
++        onNavigateToMuseum?.({ id: museum.id, name: museum.name }, museum.permanentExhibitions?.[0]?.id);
+     }, [onNavigateToMuseum]);
+ 
+     const closeArtistGallery = useCallback(() => {
+-        setArtistGallery(null);
+-        setLightboxArtwork(null);
+-
+         pendingRouteArtistRef.current = null;
+         try {
+             sessionStorage.removeItem('artistGallery');
+         } catch {
+             // ignore
+         }
+-        if (location.pathname.startsWith('/artist-gallery/')) {
+-            navigate('/', { replace: true });
++        if (galleryIsOverlayRef.current) {
++            // Don't clear lightbox here - let popstate handler do it (it won't restore it on close-button)
++            galleryIsOverlayRef.current = false;
++            setArtistGallery(null);
++            setLightboxArtwork(null);
++            window.history.back();
++        } else if (location.pathname.startsWith('/artist/')) {
++            setArtistGallery(null);
++            setLightboxArtwork(null);
++            navigate(-1 as any);
++        } else {
++            setArtistGallery(null);
++            setLightboxArtwork(null);
+         }
+     }, [location.pathname, navigate]);
+ 
+@@ -1178,8 +1311,15 @@ export default function GlobalSearchBar({ onOpenLightbox, onNavigateToMuseum, mu
+     const handleImageError = useCallback((e: React.SyntheticEvent<HTMLImageElement, Event>) => {
+         const target = e.currentTarget;
+         if (target.src === FALLBACK_IMG) return;
+-        target.onerror = null;
+-        target.src = FALLBACK_IMG;
++
++        // Custom simple fallback chain
++        const fallbackSrc = target.getAttribute('data-fallback');
++        if (fallbackSrc && !target.src.includes(encodeURIComponent(fallbackSrc)) && target.src !== fallbackSrc) {
++            target.src = fallbackSrc;
++        } else {
++            target.onerror = null;
++            target.src = FALLBACK_IMG;
++        }
+     }, []);
+ 
+     const lightboxYearLabel = lightboxArtwork ? formatArtworkYear(lightboxArtwork.date) : '';
+@@ -1196,7 +1336,7 @@ export default function GlobalSearchBar({ onOpenLightbox, onNavigateToMuseum, mu
+                         display: 'flex',
+                         alignItems: 'center',
+                         justifyContent: 'center',
+-                        zIndex: 15000,
++                        zIndex: 200003, // Must be above Mypage (100000) and ArtistGallery (200002)
+                         padding: 30,
+                     }}
+                 >
+@@ -1238,6 +1378,7 @@ export default function GlobalSearchBar({ onOpenLightbox, onNavigateToMuseum, mu
+                         <div style={{ position: 'relative', display: 'inline-block' }}>
+                             <img
+                                 src={getLightboxImage(lightboxArtwork.image)}
++                                data-fallback={lightboxArtwork.image}
+                                 alt={lightboxArtwork.name}
+                                 onError={handleImageError}
+                                 onClick={(e) => e.stopPropagation()}
+@@ -1361,7 +1502,7 @@ export default function GlobalSearchBar({ onOpenLightbox, onNavigateToMuseum, mu
+             )}
+ 
+             {/* Backdrop Overlay for Mobile Expanded Mode */}
+-            {isMobile && isExpanded && createPortal(
++            {!inlineMode && isMobile && isExpanded && createPortal(
+                 <div
+                     onClick={() => setIsExpanded(false)}
+                     style={{
+@@ -1369,7 +1510,7 @@ export default function GlobalSearchBar({ onOpenLightbox, onNavigateToMuseum, mu
+                         inset: 0,
+                         zIndex: 4999,
+                         background: 'rgba(0,0,0,0.2)',
+-                        backdropFilter: 'blur(2px)',
++                        // No backdrop filter here, prevents full-screen map blur
+                     }}
+                 />,
+                 document.body
+@@ -1387,15 +1528,15 @@ export default function GlobalSearchBar({ onOpenLightbox, onNavigateToMuseum, mu
+                     position: inlineMode ? 'relative' : 'fixed',
+                     zIndex: (!!artistGallery) && !lightboxArtwork && !isModalOpen ? 14000 : 5000,
+                     transition: inlineMode
+-                        ? 'width 450ms cubic-bezier(0.34, 1.1, 0.64, 1), background 300ms ease, border-radius 350ms ease'
++                        ? (isDrawingSkin ? 'width 0.4s ease-in-out' : 'width 1.3s cubic-bezier(0.22, 1, 0.36, 1), background 1.0s cubic-bezier(0.22, 1, 0.36, 1), border-radius 1.0s cubic-bezier(0.22, 1, 0.36, 1)')
+                         : 'height 600ms cubic-bezier(0.65, 0, 0.35, 1), bottom 600ms cubic-bezier(0.65, 0, 0.35, 1), transform 600ms cubic-bezier(0.65, 0, 0.35, 1), width 600ms cubic-bezier(0.65, 0, 0.35, 1), border-radius 600ms cubic-bezier(0.65, 0, 0.35, 1)',
+ 
+                     ...(inlineMode ? {
+-                        // When collapsed: golden circle | When expanded: full-width transparent pill inside GlobalNav
+-                        width: isExpanded ? 'min(420px, 85vw)' : '48px',
+-                        height: '48px', // always fixed height; dropdown is separate
+-                        background: isExpanded ? 'transparent' : '#e8fb36',
+-                        borderRadius: isExpanded ? '100px' : '48px',
++                        // When collapsed: golden circle | When expanded: transparent to let nav bg show
++                        width: isExpanded ? '100%' : '50px',
++                        height: '50px',
++                        background: isExpanded ? 'transparent' : (isDrawingSkin ? '#111111' : '#e8fb36'),
++                        borderRadius: isExpanded ? '100px' : '50px',
+                         boxShadow: 'none',
+                         backdropFilter: 'none',
+                         WebkitBackdropFilter: 'none',
+@@ -1427,15 +1568,24 @@ export default function GlobalSearchBar({ onOpenLightbox, onNavigateToMuseum, mu
+                             transform: isExpanded
+                                 ? 'translateX(-50%) translateY(0)'
+                                 : 'translateX(-50%) translateY(calc(100dvh - 120px - 50px - 20px))',
+-                            width: isExpanded ? 'min(600px, 94vw)' : 'min(320px, 80vw)',
++                            ...(inlineMode ? {
++                                // Let the wrapper in GlobalNav handle dimensions, we just fill
++                                width: '100%',
++                                boxSizing: 'border-box' as const,
++                            } : {
++                                width: isExpanded ? (isMobile ? 'calc(100vw - 40px)' : '420px') : (isMobile ? '40px' : '40px'),
++                            }),
+                             borderRadius: isExpanded ? 16 : 30,
+                             height: isExpanded ? `${containerHeight}px` : '50px',
+                         }),
+-                        background: isExpanded ? 'rgba(10, 10, 8, 0.82)' : 'rgba(10, 10, 8, 0.72)',
+-                        backdropFilter: 'blur(30px) saturate(180%)',
+-                        WebkitBackdropFilter: 'blur(30px) saturate(180%)',
+-                        border: isExpanded ? '1px solid rgba(201,165,90,0.25)' : '1px solid rgba(201,165,90,0.2)',
+-                        boxShadow: isExpanded ? '0 8px 40px rgba(0,0,0,0.5)' : '0 4px 20px rgba(0,0,0,0.4)',
++                        background: (inlineMode && isDrawingSkin) ? 'transparent' : (isExpanded
++                            ? (themeIsDark ? 'rgba(8, 8, 6, 0.97)' : 'rgba(248, 244, 236, 0.97)')
++                            : (themeIsDark ? 'rgba(8, 8, 6, 0.86)' : 'rgba(248, 244, 236, 0.86)')),
++                        // Never apply backdrop-filter on expanded container: it blurs entire page on mobile
++                        backdropFilter: inlineMode ? 'none' : (isExpanded ? 'none' : 'blur(16px) saturate(150%)'),
++                        WebkitBackdropFilter: inlineMode ? 'none' : (isExpanded ? 'none' : 'blur(16px) saturate(150%)'),
++                        border: isExpanded ? (themeIsDark ? '1px solid rgba(201,165,90,0.25)' : '1px solid rgba(140, 110, 40, 0.25)') : (themeIsDark ? '1px solid rgba(201,165,90,0.2)' : '1px solid rgba(140, 110, 40, 0.2)'),
++                        boxShadow: isExpanded ? (themeIsDark ? '0 8px 40px rgba(0,0,0,0.5)' : '0 8px 40px rgba(0,0,0,0.1)') : (themeIsDark ? '0 4px 20px rgba(0,0,0,0.4)' : '0 4px 20px rgba(0,0,0,0.1)'),
+                         overflow: 'hidden',
+                     }),
+                     cursor: isExpanded ? 'default' : 'pointer',
+@@ -1452,7 +1602,7 @@ export default function GlobalSearchBar({ onOpenLightbox, onNavigateToMuseum, mu
+                     justifyContent: (inlineMode && !isExpanded) ? 'center' : 'flex-start',
+                     boxSizing: 'border-box' as const,
+                 }}>
+-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={inlineMode && !isExpanded ? "#000" : "#c9a55a"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
++                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={isDrawingSkin ? (isExpanded ? "#111" : "#FFFFFF") : (inlineMode && !isExpanded ? "#1a1918" : "#c9a55a")} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ transition: "stroke 0.4s" }}>
+                         <circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" />
+                     </svg>
+ 
+@@ -1467,7 +1617,7 @@ export default function GlobalSearchBar({ onOpenLightbox, onNavigateToMuseum, mu
+                                     setIsExpanded(true);
+                                 }}
+                                 placeholder={isLoading ? 'Loading...' : (isExpanded ? 'Search artworks, artists...' : 'Search artworks...')}
+-                                style={{ flex: 1, border: 'none', background: 'transparent', fontSize: 16, outline: 'none', color: '#f0ede6' }}
++                                style={{ flex: 1, border: 'none', background: 'transparent', fontSize: 16, outline: 'none', color: isDrawingSkin ? '#111' : (themeIsDark ? '#f0ede6' : '#222') }}
+                                 onClick={(e) => {
+                                     e.stopPropagation();
+                                 }}
+@@ -1479,13 +1629,14 @@ export default function GlobalSearchBar({ onOpenLightbox, onNavigateToMuseum, mu
+                             <button
+                                 onClick={(e) => { e.stopPropagation(); setIsAIMode(!isAIMode); setAiResults([]); }}
+                                 style={{
+-                                    background: isAIMode ? '#e8fb36' : 'transparent',
+-                                    border: isAIMode ? 'none' : '1px solid #ddd',
++                                    background: isDrawingSkin ? (isAIMode ? '#111' : '#fff') : (isAIMode ? '#e8fb36' : 'transparent'),
++                                    border: isDrawingSkin ? '2.5px solid #111' : (isAIMode ? 'none' : (themeIsDark ? '1px solid #555' : '1px solid #ddd')),
+                                     borderRadius: '100px',
+                                     padding: '6px 14px',
+                                     fontSize: 12,
+                                     fontWeight: 800,
+-                                    color: isAIMode ? '#000' : '#888',
++                                    color: isDrawingSkin ? (isAIMode ? '#fff' : '#111') : (isAIMode ? '#000' : '#888'),
++                                    boxShadow: (isDrawingSkin && isAIMode === false) ? '2px 2px 0px 0px rgba(17,17,17,1)' : 'none',
+                                     cursor: 'pointer',
+                                     display: 'flex',
+                                     alignItems: 'center',
+@@ -1494,12 +1645,12 @@ export default function GlobalSearchBar({ onOpenLightbox, onNavigateToMuseum, mu
+                                     fontFamily: "'Inter', Arial, sans-serif"
+                                 }}
+                                 onMouseEnter={(e) => {
+-                                    if (!isAIMode) e.currentTarget.style.color = '#000';
+-                                    if (!isAIMode) e.currentTarget.style.borderColor = '#aaa';
++                                    if (!isAIMode) e.currentTarget.style.color = isDrawingSkin ? '#111' : '#000';
++                                    if (!isAIMode) e.currentTarget.style.borderColor = isDrawingSkin ? '#111' : '#aaa';
+                                 }}
+                                 onMouseLeave={(e) => {
+-                                    if (!isAIMode) e.currentTarget.style.color = '#888';
+-                                    if (!isAIMode) e.currentTarget.style.borderColor = '#ddd';
++                                    if (!isAIMode) e.currentTarget.style.color = isDrawingSkin ? '#111' : '#888';
++                                    if (!isAIMode) e.currentTarget.style.borderColor = isDrawingSkin ? '#111' : '#ddd';
+                                 }}
+                                 title={isAIMode ? 'Switch to text search' : 'Switch to AI semantic search'}
+                             >
+@@ -1544,38 +1695,43 @@ export default function GlobalSearchBar({ onOpenLightbox, onNavigateToMuseum, mu
+                             return {
+                                 position: 'absolute' as const,
+                                 top: '100%',
++                                marginTop: '6px',
+                                 left,
+                                 right,
+-                                marginTop: '10px',
+-                                background: 'rgba(255, 255, 255, 0.65)',
+-                                backdropFilter: 'blur(30px) saturate(200%)',
+-                                WebkitBackdropFilter: 'blur(30px) saturate(200%)',
+-                                boxShadow: '0 12px 40px rgba(0,0,0,0.15), inset 0 1px 1px rgba(255, 255, 255, 0.6)',
+-                                borderRadius: '16px',
++                                background: isDrawingSkin ? '#FFFFFF' : (themeIsDark ? 'rgba(6, 6, 5, 0.98)' : 'rgba(248, 245, 238, 0.98)'),
++                                backdropFilter: 'none',
++                                WebkitBackdropFilter: 'none',
++                                boxShadow: isDrawingSkin
++                                    ? '8px 8px 0px 0px rgba(17,17,17,1)'
++                                    : (themeIsDark
++                                        ? '0 12px 40px rgba(0,0,0,0.7), 0 1px 0 rgba(255,255,255,0.04) inset'
++                                        : '0 8px 32px rgba(0,0,0,0.12), 0 1px 0 rgba(255,255,255,0.7) inset'),
++                                filter: isDrawingSkin ? 'url(#dg-sketch-ui)' : 'none',
++                                borderRadius: '20px',
+                                 opacity: isExpanded ? 1 : 0,
+                                 pointerEvents: isExpanded ? 'auto' as const : 'none' as const,
+-                                transition: 'opacity 250ms cubic-bezier(0.2, 0.8, 0.2, 1), transform 250ms cubic-bezier(0.34, 1.56, 0.64, 1)',
+-                                transform: isExpanded ? 'translateY(0) scale(1)' : 'translateY(-8px) scale(0.97)',
+-                                border: '1px solid rgba(255,255,255,0.6)',
++                                transition: 'opacity 500ms cubic-bezier(0.16, 1, 0.3, 1), transform 500ms cubic-bezier(0.16, 1, 0.3, 1)',
++                                transform: isExpanded ? 'translateY(0) scale(1)' : 'translateY(10px) scale(0.98)',
++                                border: isDrawingSkin ? '3px solid #111111' : (themeIsDark ? '1px solid rgba(201,165,90,0.20)' : '1px solid rgba(0,0,0,0.08)'),
+                                 minWidth: '320px',
+                                 width: 'max-content',
+-                                maxWidth: 'min(400px, 94vw)',
++                                maxWidth: 'min(420px, 94vw)',
+                             };
+                         })() : {})
+                     }}
+                 >
+                     {/* Artist suggestions */}
+                     {isExpanded && suggestedArtists.length > 0 && (
+-                        <div style={{ padding: '8px 16px', borderTop: '1px solid rgba(201,165,90,0.15)', background: 'rgba(10,10,8,0.5)' }}>
+-                            <div style={{ fontSize: 10, color: '#8a867d', marginBottom: 8, letterSpacing: '0.08em', textTransform: 'uppercase' }}>Artists</div>
++                        <div style={{ padding: '8px 16px', borderTop: themeIsDark ? '1px solid rgba(201,165,90,0.15)' : '1px solid rgba(140,110,40,0.15)', background: themeIsDark ? 'rgba(10,10,8,0.5)' : 'rgba(255,255,255,0.3)' }}>
++                            <div style={{ fontSize: 10, color: themeIsDark ? '#8a867d' : '#6b665c', marginBottom: 8, letterSpacing: '0.08em', textTransform: 'uppercase' }}>Artists</div>
+                             <div style={{ display: 'flex', overflowX: 'auto', gap: 6, paddingBottom: 4, scrollbarWidth: 'none', msOverflowStyle: 'none', WebkitOverflowScrolling: 'touch' }}>
+                                 {suggestedArtists.map(({ artist, count }) => (
+                                     <button
+                                         key={artist}
+                                         onClick={(e) => { e.stopPropagation(); handleSelectArtist(artist); }}
+-                                        style={{ background: 'rgba(201,165,90,0.12)', border: '1px solid rgba(201,165,90,0.3)', borderRadius: 16, padding: '5px 12px', fontSize: 12, color: '#f0ede6', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 4, transition: 'all 150ms ease', whiteSpace: 'nowrap', flexShrink: 0 }}
+-                                        onMouseEnter={(e) => { e.currentTarget.style.background = 'rgba(201,165,90,0.25)'; e.currentTarget.style.borderColor = '#c9a55a'; }}
+-                                        onMouseLeave={(e) => { e.currentTarget.style.background = 'rgba(201,165,90,0.12)'; e.currentTarget.style.borderColor = 'rgba(201,165,90,0.3)'; }}
++                                        style={{ background: themeIsDark ? 'rgba(201,165,90,0.12)' : 'rgba(140,110,40,0.1)', border: themeIsDark ? '1px solid rgba(201,165,90,0.3)' : '1px solid rgba(140,110,40,0.3)', borderRadius: 16, padding: '5px 12px', fontSize: 12, color: isDrawingSkin ? '#111' : (themeIsDark ? '#f0ede6' : '#222'), cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 4, transition: 'all 150ms ease', whiteSpace: 'nowrap', flexShrink: 0 }}
++                                        onMouseEnter={(e) => { e.currentTarget.style.background = themeIsDark ? 'rgba(201,165,90,0.25)' : 'rgba(140,110,40,0.2)'; e.currentTarget.style.borderColor = themeIsDark ? '#c9a55a' : '#a08030'; }}
++                                        onMouseLeave={(e) => { e.currentTarget.style.background = themeIsDark ? 'rgba(201,165,90,0.12)' : 'rgba(140,110,40,0.1)'; e.currentTarget.style.borderColor = themeIsDark ? 'rgba(201,165,90,0.3)' : 'rgba(140,110,40,0.3)'; }}
+                                     >
+                                         {artist} <span style={{ fontSize: 10, opacity: 0.5 }}>({count})</span>
+                                     </button>
+@@ -1586,16 +1742,16 @@ export default function GlobalSearchBar({ onOpenLightbox, onNavigateToMuseum, mu
+ 
+                     {/* Museum suggestions */}
+                     {isExpanded && filteredMuseums.length > 0 && (
+-                        <div style={{ padding: '8px 16px', borderTop: '1px solid rgba(201,165,90,0.15)', background: 'rgba(10,10,8,0.5)' }}>
+-                            <div style={{ fontSize: 10, color: '#8a867d', marginBottom: 8, letterSpacing: '0.08em', textTransform: 'uppercase' }}>Museums</div>
++                        <div style={{ padding: '8px 16px', borderTop: themeIsDark ? '1px solid rgba(201,165,90,0.15)' : '1px solid rgba(140,110,40,0.15)', background: themeIsDark ? 'rgba(10,10,8,0.5)' : 'rgba(255,255,255,0.3)' }}>
++                            <div style={{ fontSize: 10, color: themeIsDark ? '#8a867d' : '#6b665c', marginBottom: 8, letterSpacing: '0.08em', textTransform: 'uppercase' }}>Museums</div>
+                             <div style={{ display: 'flex', overflowX: 'auto', gap: 6, paddingBottom: 4, scrollbarWidth: 'none', msOverflowStyle: 'none', WebkitOverflowScrolling: 'touch' }}>
+                                 {filteredMuseums.map((museum) => (
+                                     <button
+                                         key={museum.id}
+                                         onClick={(e) => { e.stopPropagation(); handleSelectMuseum(museum); }}
+-                                        style={{ background: 'rgba(201,165,90,0.08)', border: '1px solid rgba(201,165,90,0.25)', borderRadius: 16, padding: '5px 12px', fontSize: 12, color: '#c9a55a', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 6, transition: 'all 150ms ease', whiteSpace: 'nowrap', flexShrink: 0 }}
+-                                        onMouseEnter={(e) => { e.currentTarget.style.background = 'rgba(201,165,90,0.2)'; e.currentTarget.style.borderColor = '#c9a55a'; }}
+-                                        onMouseLeave={(e) => { e.currentTarget.style.background = 'rgba(201,165,90,0.08)'; e.currentTarget.style.borderColor = 'rgba(201,165,90,0.25)'; }}
++                                        style={{ background: themeIsDark ? 'rgba(201,165,90,0.08)' : 'rgba(140,110,40,0.08)', border: themeIsDark ? '1px solid rgba(201,165,90,0.25)' : '1px solid rgba(140,110,40,0.25)', borderRadius: 16, padding: '5px 12px', fontSize: 12, color: themeIsDark ? '#c9a55a' : '#a08030', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: 6, transition: 'all 150ms ease', whiteSpace: 'nowrap', flexShrink: 0 }}
++                                        onMouseEnter={(e) => { e.currentTarget.style.background = themeIsDark ? 'rgba(201,165,90,0.2)' : 'rgba(140,110,40,0.15)'; e.currentTarget.style.borderColor = themeIsDark ? '#c9a55a' : '#8c6e28'; }}
++                                        onMouseLeave={(e) => { e.currentTarget.style.background = themeIsDark ? 'rgba(201,165,90,0.08)' : 'rgba(140,110,40,0.08)'; e.currentTarget.style.borderColor = themeIsDark ? 'rgba(201,165,90,0.25)' : 'rgba(140,110,40,0.25)'; }}
+                                     >
+                                         🏛️ {museum.name} <span style={{ fontSize: 10, opacity: 0.6 }}>• {museum.country}</span>
+                                     </button>
+@@ -1654,7 +1810,7 @@ export default function GlobalSearchBar({ onOpenLightbox, onNavigateToMuseum, mu
+                             onWheel={(e) => e.stopPropagation()}
+                             onTouchMove={(e) => e.stopPropagation()}
+                             style={{
+-                                borderTop: '1px solid #e5e7eb',
++                                borderTop: themeIsDark ? '1px solid rgba(255,255,255,0.1)' : '1px solid #e5e7eb',
+                             }}
+                         >
+                             {aiResults.map((art, idx) => (
+@@ -1662,19 +1818,19 @@ export default function GlobalSearchBar({ onOpenLightbox, onNavigateToMuseum, mu
+                                     key={`ai-${art.id}-${idx}`}
+                                     className="search-result-item"
+                                     onClick={(e) => { e.stopPropagation(); handleSelectArtwork(art); }}
+-                                    style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '8px 16px', cursor: 'pointer', borderBottom: idx < aiResults.length - 1 ? '1px solid #f3f4f6' : 'none', transition: 'background 150ms ease' }}
+-                                    onMouseEnter={(e) => e.currentTarget.style.background = '#f9fafb'}
++                                    style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '8px 16px', cursor: 'pointer', borderBottom: idx < aiResults.length - 1 ? (themeIsDark ? '1px solid rgba(255,255,255,0.08)' : '1px solid #f3f4f6') : 'none', transition: 'background 150ms ease' }}
++                                    onMouseEnter={(e) => e.currentTarget.style.background = themeIsDark ? 'rgba(255,255,255,0.1)' : '#f9fafb'}
+                                     onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}
+                                 >
+-                                    <div style={{ width: 44, height: 44, borderRadius: 6, overflow: 'hidden', flexShrink: 0, background: '#f3f4f6' }}>
+-                                        <img src={getSearchThumbnail(art.image)} alt="" onError={handleImageError} style={{ width: '100%', height: '100%', objectFit: 'cover' }} loading="lazy" />
++                                    <div style={{ width: 44, height: 44, borderRadius: 6, overflow: 'hidden', flexShrink: 0, background: themeIsDark ? '#1a1918' : '#f3f4f6' }}>
++                                        <img src={getSearchThumbnail(art.image)} data-fallback={art.image} alt="" onError={handleImageError} style={{ width: '100%', height: '100%', objectFit: 'cover' }} loading="lazy" />
+                                     </div>
+                                     <div style={{ flex: 1, minWidth: 0 }}>
+-                                        <div style={{ fontSize: 13, fontWeight: 600, color: '#222', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{art.name}</div>
+-                                        <div style={{ fontSize: 11, color: '#666', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{art.artist}</div>
+-                                        <div style={{ fontSize: 10, color: '#999' }}>{art.museumName}</div>
++                                        <div style={{ fontSize: 13, fontWeight: 600, color: isDrawingSkin ? '#111' : (themeIsDark ? '#f0ede6' : '#222'), whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{art.name}</div>
++                                        <div style={{ fontSize: 11, color: themeIsDark ? '#a1a1aa' : '#666', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{art.artist}</div>
++                                        <div style={{ fontSize: 10, color: themeIsDark ? '#71717a' : '#999' }}>{art.museumName}</div>
+                                     </div>
+-                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ccc" strokeWidth="2"><polyline points="9 18 15 12 9 6" /></svg>
++                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={themeIsDark ? "#666" : "#ccc"} strokeWidth="2"><polyline points="9 18 15 12 9 6" /></svg>
+                                 </div>
+                             ))}
+                         </div>
+@@ -1686,7 +1842,7 @@ export default function GlobalSearchBar({ onOpenLightbox, onNavigateToMuseum, mu
+                             onWheel={(e) => e.stopPropagation()}
+                             onTouchMove={(e) => e.stopPropagation()}
+                             style={{
+-                                borderTop: '1px solid rgba(201,165,90,0.12)',
++                                borderTop: themeIsDark ? '1px solid rgba(201,165,90,0.12)' : '1px solid rgba(140,110,40,0.12)',
+                             }}
+                         >
+                             {filteredArtworks.map((art, idx) => (
+@@ -1694,24 +1850,24 @@ export default function GlobalSearchBar({ onOpenLightbox, onNavigateToMuseum, mu
+                                     key={`${art.id}-${idx}`}
+                                     className="search-result-item"
+                                     onClick={(e) => { e.stopPropagation(); handleSelectArtwork(art); }}
+-                                    style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '8px 16px', cursor: 'pointer', borderBottom: idx < filteredArtworks.length - 1 ? '1px solid rgba(201,165,90,0.08)' : 'none', transition: 'background 150ms ease' }}
+-                                    onMouseEnter={(e) => e.currentTarget.style.background = 'rgba(201,165,90,0.08)'}
++                                    style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '8px 16px', cursor: 'pointer', borderBottom: idx < filteredArtworks.length - 1 ? (themeIsDark ? '1px solid rgba(201,165,90,0.08)' : '1px solid rgba(140,110,40,0.08)') : 'none', transition: 'background 150ms ease' }}
++                                    onMouseEnter={(e) => e.currentTarget.style.background = themeIsDark ? 'rgba(201,165,90,0.08)' : 'rgba(140,110,40,0.05)'}
+                                     onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}
+                                 >
+-                                    <div style={{ width: 44, height: 44, borderRadius: 4, overflow: 'hidden', flexShrink: 0, background: '#1a1918' }}>
+-                                        <img src={getSearchThumbnail(art.image)} alt="" onError={handleImageError} style={{ width: '100%', height: '100%', objectFit: 'cover' }} loading="lazy" />
++                                    <div style={{ width: 44, height: 44, borderRadius: 4, overflow: 'hidden', flexShrink: 0, background: themeIsDark ? '#1a1918' : '#e5e5e5' }}>
++                                        <img src={getSearchThumbnail(art.image)} data-fallback={art.image} alt="" onError={handleImageError} style={{ width: '100%', height: '100%', objectFit: 'cover' }} loading="lazy" />
+                                     </div>
+                                     <div style={{ flex: 1, minWidth: 0 }}>
+-                                        <div style={{ fontSize: 13, fontWeight: 600, color: '#f0ede6', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{art.name}</div>
++                                        <div style={{ fontSize: 13, fontWeight: 600, color: isDrawingSkin ? '#111' : (themeIsDark ? '#f0ede6' : '#222'), whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{art.name}</div>
+                                         {(() => {
+                                             const yearLabel = formatArtworkYear(art.date);
+                                             return (
+-                                                <div style={{ fontSize: 11, color: '#8a867d', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
++                                                <div style={{ fontSize: 11, color: themeIsDark ? '#8a867d' : '#666', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                                                     {art.artist}{yearLabel ? ` • ${yearLabel}` : ''}
+                                                 </div>
+                                             );
+                                         })()}
+-                                        <div style={{ fontSize: 10, color: '#5a5650' }}>
++                                        <div style={{ fontSize: 10, color: themeIsDark ? '#5a5650' : '#888' }}>
+                                             {art.museumName}
+                                             {(() => {
+                                                 const m = museums.find(m => m.name === art.museumName);
+@@ -1719,7 +1875,7 @@ export default function GlobalSearchBar({ onOpenLightbox, onNavigateToMuseum, mu
+                                             })()}
+                                         </div>
+                                     </div>
+-                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(201,165,90,0.4)" strokeWidth="2"><polyline points="9 18 15 12 9 6" /></svg>
++                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke={themeIsDark ? "rgba(201,165,90,0.4)" : "rgba(140,110,40,0.4)"} strokeWidth="2"><polyline points="9 18 15 12 9 6" /></svg>
+                                 </div>
+                             ))}
+                         </div>
+@@ -1750,8 +1906,8 @@ export default function GlobalSearchBar({ onOpenLightbox, onNavigateToMuseum, mu
+ 
+ 
+ 
+-            {/* Artist Gallery Modal */}
+-            {artistGallery && createPortal(
++            {/* Artist Gallery Modal or Loading Overlay */}
++            {((galleryIsOverlayRef.current && isLoading) || artistGallery) && createPortal(
+                 (() => {
+                     const isDark = galleryTheme === 'dark';
+                     const bg = isDark ? '#080807' : '#f7f4ef';
+@@ -1760,6 +1916,49 @@ export default function GlobalSearchBar({ onOpenLightbox, onNavigateToMuseum, mu
+                     const textSub = isDark ? '#8a8075' : '#6b6560';
+                     const accent = isDark ? '#c9a55a' : '#8a6420';
+                     const border = isDark ? '#1e1d1c' : '#ddd8cf';
++
++                    if (galleryIsOverlayRef.current && isLoading && !artistGallery) {
++                        return (
++                            <div
++                                style={{
++                                    position: 'fixed',
++                                    inset: 0,
++                                    zIndex: galleryZIndex,
++                                    background: isDark ? 'rgba(8,8,7,0.85)' : 'rgba(247,244,239,0.85)',
++                                    backdropFilter: 'blur(20px)',
++                                    WebkitBackdropFilter: 'blur(20px)',
++                                    display: 'flex',
++                                    flexDirection: 'column',
++                                    alignItems: 'center',
++                                    justifyContent: 'center',
++                                    animation: 'ag-fade-in 0.4s ease forwards',
++                                }}
++                            >
++                                <div style={{
++                                    width: 40, height: 40, borderRadius: '50%',
++                                    border: `1px solid ${border}`,
++                                    borderTopColor: accent,
++                                    animation: 'spin 1.2s cubic-bezier(0.5, 0, 0.5, 1) infinite',
++                                    marginBottom: 24
++                                }} />
++                                <div style={{
++                                    fontFamily: "'Inter', Arial, sans-serif",
++                                    fontSize: 14,
++                                    letterSpacing: '0.1em',
++                                    textTransform: 'uppercase',
++                                    color: textMain,
++                                    fontWeight: 500,
++                                }}>Curating Gallery</div>
++                                <div style={{
++                                    fontSize: 12,
++                                    color: textSub,
++                                    marginTop: 8,
++                                }}>{pendingRouteArtistRef.current}</div>
++                                <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
++                            </div>
++                        );
++                    }
++
+                     return (
+                         <div
+                             style={{
+@@ -1775,111 +1974,114 @@ export default function GlobalSearchBar({ onOpenLightbox, onNavigateToMuseum, mu
+                                 padding: isMobile ? 0 : '60px 40px 40px 40px',
+                                 overflowY: isMobile ? 'hidden' : 'auto',
+                                 transition: 'background 0.3s',
++                                animation: 'ag-fade-in 0.35s ease forwards',
+                             }}
+                             onClick={closeArtistGallery}
+                             onWheel={(e) => e.stopPropagation()}
+                         >
++                            <style>{`
++                                @keyframes ag-fade-in {
++                                    from { opacity: 0; }
++                                    to { opacity: 1; }
++                                }
++                                @keyframes ag-slide-up {
++                                    from { transform: translateY(60px); opacity: 0; }
++                                    to { transform: translateY(0); opacity: 1; }
++                                }
++                                .artist-gallery-anim {
++                                    animation: ag-slide-up 0.55s cubic-bezier(0.16, 1, 0.3, 1) forwards;
++                                }
++                            `}</style>
+                             <div
+                                 onClick={e => e.stopPropagation()}
++                                className="artist-page artist-gallery-anim"
++                                data-theme={galleryTheme}
+                                 style={{
+                                     width: '100%',
+                                     maxWidth: 1200,
+-                                    background: bg,
+                                     display: 'flex',
+-                                    // CSS vars for ArtistDistributionMap legend & ArtistPage.css
+-                                    ['--ap-accent' as any]: accent,
+-                                    ['--ap-text-3' as any]: textSub,
+-                                    ['--ap-text-4' as any]: isDark ? '#5a5650' : '#9a9590',
+-                                    ['--ap-border' as any]: border,
+                                     flexDirection: 'column',
+                                     overflow: 'hidden',
+-                                    ...(isMobile ? { height: '100%', borderRadius: 0, border: 'none' } : { marginBottom: 40, borderRadius: 16, border: `1px solid ${border}` }),
++                                    minHeight: 'auto',
++                                    ...(isMobile ? { height: '100%', borderRadius: 0, border: 'none' } : { marginBottom: 40, borderRadius: 16, border: `1px solid var(--ap-border)` }),
+                                 }}
+                             >
+                                 {/* ── Header ─────────────────────────────────── */}
+-                                <div style={{
+-                                    padding: isMobile ? '20px 20px 0' : '36px 40px 0',
+-                                    borderBottom: `1px solid ${border}`,
+-                                    background: bg,
+-                                    flexShrink: 0,
+-                                }}>
+-                                    {/* Top row: title + controls */}
+-                                    <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', marginBottom: 4 }}>
+-                                        <div>
+-                                            <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+-                                                <h2 style={{
+-                                                    fontSize: isMobile ? 22 : 36,
+-                                                    fontWeight: 700,
+-                                                    fontFamily: "'Playfair Display', Georgia, serif",
+-                                                    margin: 0,
+-                                                    color: textMain,
+-                                                    letterSpacing: '-0.01em',
+-                                                    lineHeight: 1.15,
+-                                                }}>{artistGallery.artist}</h2>
+-                                                <HeartOverlay
+-                                                    isLiked={artistGalleryIsLiked}
+-                                                    onToggle={toggleLikeArtist}
+-                                                    size={isMobile ? 18 : 22}
+-                                                    color="#e11d48"
+-                                                    emptyColor={textSub}
+-                                                />
+-                                            </div>
+-                                            <p style={{ fontSize: isMobile ? 12 : 14, color: accent, margin: '6px 0 0', letterSpacing: '0.08em', textTransform: 'uppercase', fontWeight: 500 }}>
+-                                                {artistGallery.artworks.length.toLocaleString()} works in collection
+-                                            </p>
+-                                        </div>
+-                                        <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexShrink: 0 }}>
+-                                            {/* Theme toggle */}
++                                <header className="artist-hero" style={isMobile ? { padding: '32px 20px 24px' } : undefined}>
++                                    <div className="artist-hero__eyebrow">
++                                        <span className="artist-hero__tag">Artist</span>
++                                        <div className="artist-hero__controls">
+                                             <button
++                                                className="artist-hero__theme-btn"
+                                                 onClick={() => setGalleryTheme(t => t === 'dark' ? 'light' : 'dark')}
+-                                                title={isDark ? 'Switch to light' : 'Switch to dark'}
+-                                                style={{
+-                                                    width: 36, height: 36, borderRadius: '50%', border: `1px solid ${border}`,
+-                                                    background: cardBg, color: textSub, fontSize: 16, cursor: 'pointer',
+-                                                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+-                                                    transition: 'all 0.2s',
+-                                                }}
+-                                            >{isDark ? '☀' : '☾'}</button>
+-                                            {/* Close */}
+-                                            <button onClick={closeArtistGallery} style={{
+-                                                width: 36, height: 36, borderRadius: '50%', border: `1px solid ${border}`,
+-                                                background: cardBg, color: textSub, fontSize: 18,
+-                                                cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center',
+-                                                transition: 'all 0.2s',
+-                                            }}>✕</button>
++                                                aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
++                                                title={isDark ? 'Light mode' : 'Dark mode'}
++                                            >
++                                                {isDark ? '☀' : '☾'}
++                                            </button>
++                                            <button
++                                                className="artist-hero__theme-btn"
++                                                onClick={closeArtistGallery}
++                                                aria-label="Close"
++                                                title="Close"
++                                                style={{ fontSize: 18 }}
++                                            >
++                                                ✕
++                                            </button>
+                                         </div>
+                                     </div>
+ 
+-                                    {/* Wiki bio */}
+-                                    <div style={{ marginTop: 16, marginBottom: 20 }}>
+-                                        <ArtistWikiPanel
+-                                            artistName={artistGallery.artist}
+-                                            imageUrl={undefined}
+-                                            fallbackDescription={artistFallbackDescription}
++                                    <h1 className="artist-hero__name" style={{ display: 'flex', alignItems: 'center', flexWrap: 'wrap', wordBreak: 'break-word', gap: 16, lineHeight: 1 }}>
++                                        {artistGallery?.artist}
++                                        <HeartOverlay
++                                            isLiked={artistGalleryIsLiked}
++                                            onToggle={toggleLikeArtist}
++                                            size={isMobile ? 24 : 34}
++                                            color="#e11d48"
++                                            emptyColor="var(--ap-text-3)"
+                                         />
++                                    </h1>
++
++                                    <div className="artist-hero__footer">
++                                        <span className="artist-hero__count">
++                                            <strong>{artistGallery?.artworks?.length?.toLocaleString() || 0}</strong> WORKS IN COLLECTION
++                                        </span>
++                                        {artistWikiUrl && (
++                                            <a href={artistWikiUrl} className="artist-hero__wiki-link" target="_blank" rel="noreferrer">
++                                                WIKIPEDIA <ExternalLinkIcon />
++                                            </a>
++                                        )}
++                                    </div>
++                                </header>
++
++                                {/* ── Bio + Map ───────────────────── */}
++                                <section className="artist-profile" style={{
++                                    /* overriding ArtistWikiPanel colors with inheritance to let dark mode work */
++                                    ['--ap-wiki-color' as any]: 'var(--ap-text-2)',
++                                }}>
++                                    <div className="artist-bio" style={isMobile ? { padding: '24px 20px' } : undefined}>
++                                        <p className="artist-bio__label">Infinite Wiki</p>
++                                        <div style={{ color: 'var(--ap-wiki-color)' }}>
++                                            <ArtistWikiPanel
++                                                artistName={artistGallery?.artist || ''}
++                                                imageUrl={undefined}
++                                                fallbackDescription={artistFallbackDescription}
++                                                onWikiSourceUrl={setArtistWikiUrl}
++                                            />
++                                        </div>
+                                     </div>
+ 
+-                                    {/* Distribution Map — lazy loaded to avoid blocking overlay open */}
+-                                    {!isMobile && artistGallery.artworks.length > 0 && (
+-                                        <div style={{ marginBottom: 28 }}>
+-                                            <p style={{ fontSize: 11, color: textSub, letterSpacing: '0.1em', textTransform: 'uppercase', marginBottom: 10, fontWeight: 500 }}>
+-                                                Museum Distribution
+-                                            </p>
+-                                            <div style={{ height: 240, borderRadius: 10, overflow: 'hidden', border: `1px solid ${border}` }}>
+-                                                <Suspense fallback={
+-                                                    <div style={{ height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: textSub, fontSize: 12 }}>
+-                                                        Loading map…
+-                                                    </div>
+-                                                }>
+-                                                    <ArtistDistributionMap
+-                                                        artworks={artistGallery.artworks as any}
+-                                                        isDark={isDark}
+-                                                    />
++                                    {!isMobile && (artistGallery?.artworks?.length ?? 0) > 0 && (
++                                        <div className="artist-map-col" style={isMobile ? { padding: '20px' } : undefined}>
++                                            <p className="artist-map-col__label">Global Distribution</p>
++                                            <div style={{ flex: 1, borderRadius: 10, overflow: 'hidden', border: `1px solid var(--ap-border)`, minHeight: 200, height: 260 }}>
++                                                <Suspense fallback={<div style={{ height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'var(--ap-text-3)', fontSize: 12 }}>Loading map…</div>}>
++                                                    <ArtistDistributionMap artworks={artistGallery?.artworks as any} isDark={isDark} />
+                                                 </Suspense>
+                                             </div>
+                                         </div>
+                                     )}
+-                                </div>
++                                </section>
+ 
+                                 {/* ── Category filter pills ───────────────────── */}
+                                 {galleryCategories.length >= 1 && (
+@@ -1939,78 +2141,96 @@ export default function GlobalSearchBar({ onOpenLightbox, onNavigateToMuseum, mu
+                                     padding: isMobile ? '12px' : '20px 40px 40px',
+                                     background: bg,
+                                 }}>
+-                                    <div style={{ display: 'flex', gap: isMobile ? 10 : 20, alignItems: 'flex-start' }}>
+-                                        {artistGalleryColumns.map((column, columnIdx) => (
+-                                            <div key={`artist-column-${columnIdx}`} style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: isMobile ? 10 : 20 }}>
+-                                                {column.map((art, idx) => {
+-                                                    const yearLabel = formatArtworkYear(art.date);
+-                                                    const displayTitle = yearLabel ? `${art.name} (${yearLabel})` : art.name;
+-                                                    const museumCountry = museumCountryMap.get(art.museumName) || '';
+-                                                    const museumDisplay = museumCountry ? `${art.museumName} (${museumCountry})` : art.museumName;
+-                                                    const hovered = hoveredArtworkId === art.id;
+-                                                    return (
+-                                                        <div
+-                                                            key={art.id || `art-${columnIdx}-${idx}`}
+-                                                            onClick={() => handleSelectArtwork(art)}
+-                                                            onMouseEnter={() => setHoveredArtworkId(art.id)}
+-                                                            onMouseLeave={() => setHoveredArtworkId((prev) => (prev === art.id ? null : prev))}
+-                                                            style={{ cursor: 'pointer', position: 'relative' }}
+-                                                        >
+-                                                            <div style={{
+-                                                                borderRadius: 6,
+-                                                                overflow: 'hidden',
+-                                                                background: cardBg,
+-                                                                border: `1px solid ${border}`,
+-                                                                position: 'relative',
+-                                                            }}>
+-                                                                <img
+-                                                                    src={getOptimizedImageUrl(art.image, 600)}
+-                                                                    style={{
+-                                                                        width: '100%', height: 'auto', display: 'block',
+-                                                                        transition: 'transform 750ms cubic-bezier(0.22,1,0.36,1)',
+-                                                                        transform: hovered ? 'scale(1.05)' : 'scale(1)',
+-                                                                    }}
+-                                                                    loading="lazy"
+-                                                                    alt={art.name}
+-                                                                    referrerPolicy="no-referrer"
+-                                                                    onError={handleImageError}
+-                                                                />
+-                                                            </div>
+-                                                            <div style={{ marginTop: 8, paddingBottom: 4 }}>
+-                                                                <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 8 }}>
+-                                                                    <div style={{ fontWeight: 600, fontSize: isMobile ? 11 : 13, color: textMain, lineHeight: 1.35 }}>
+-                                                                        {displayTitle}
+-                                                                    </div>
+-                                                                    <div style={{ display: 'flex', gap: 6, flexShrink: 0, marginTop: 2 }}>
+-                                                                        <div
+-                                                                            onClick={(e) => { e.stopPropagation(); e.preventDefault(); setProductArtwork(art); }}
+-                                                                            title="상품으로 구매하기"
+-                                                                            style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'transform 0.15s ease' }}
+-                                                                            onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.15)'}
+-                                                                            onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+-                                                                        >
+-                                                                            <svg width={isMobile ? 13 : 15} height={isMobile ? 13 : 15} viewBox="0 0 24 24" fill="none" stroke={textSub} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+-                                                                                <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+-                                                                                <rect x="7" y="7" width="10" height="10" />
+-                                                                            </svg>
++                                    <div ref={artworkGridRef} style={{ display: 'flex', gap: isMobile ? 10 : 20, alignItems: 'flex-start' }}>
++                                        {Array.from({ length: isMobile ? 2 : 4 }).map((_, cIdx, colsArr) => (
++                                            <div key={cIdx} style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: isMobile ? 10 : 20 }}>
++                                                {galleryFilteredArtworks
++                                                    .map((art, idx) => ({ art, idx }))
++                                                    .filter((_, idx) => idx % colsArr.length === cIdx)
++                                                    .map(({ art, idx }) => {
++                                                        const yearLabel = formatArtworkYear(art.date);
++                                                        const displayTitle = yearLabel ? `${art.name} (${yearLabel})` : art.name;
++                                                        const museumCountry = museumCountryMap.get(art.museumName) || '';
++                                                        const museumDisplay = museumCountry ? `${art.museumName} (${museumCountry})` : art.museumName;
++                                                        const hovered = hoveredArtworkId === art.id;
++                                                        const cardKey = String(art.id || `art-${idx}`);
++                                                        const isVisible = visibleCardIds.has(cardKey);
++                                                        const imgKey = cardKey + '-img';
++                                                        const imgLoaded = imgLoadedIds.has(imgKey);
++                                                        return (
++                                                            <div
++                                                                key={cardKey}
++                                                                data-card-id={cardKey}
++                                                                onClick={() => handleSelectArtwork(art)}
++                                                                onMouseEnter={() => setHoveredArtworkId(art.id)}
++                                                                onMouseLeave={() => setHoveredArtworkId((prev) => (prev === art.id ? null : prev))}
++                                                                style={{
++                                                                    cursor: 'pointer',
++                                                                    position: 'relative',
++                                                                    opacity: isVisible ? 1 : 0,
++                                                                    transform: isVisible ? 'translateY(0)' : 'translateY(22px)',
++                                                                    transition: 'opacity 0.65s cubic-bezier(0.25, 1.0, 0.35, 1), transform 0.6s cubic-bezier(0.25, 1.0, 0.35, 1)',
++                                                                    width: '100%'
++                                                                }}
++                                                            >
++                                                                <div style={{
++                                                                    borderRadius: 6,
++                                                                    overflow: 'hidden',
++                                                                    background: cardBg,
++                                                                    border: `1px solid ${border}`,
++                                                                    position: 'relative',
++                                                                }}>
++                                                                    <img
++                                                                        src={getOptimizedImageUrl(art.image, 600)}
++                                                                        style={{
++                                                                            width: '100%', height: 'auto', display: 'block',
++                                                                            transition: 'transform 750ms cubic-bezier(0.22,1,0.36,1), opacity 0.5s ease',
++                                                                            transform: hovered ? 'scale(1.05)' : 'scale(1)',
++                                                                            opacity: imgLoaded ? 1 : 0,
++                                                                        }}
++                                                                        loading="lazy"
++                                                                        alt={art.name}
++                                                                        data-fallback={art.image}
++                                                                        referrerPolicy="no-referrer"
++                                                                        onLoad={() => setImgLoadedIds(prev => { const s = new Set(prev); s.add(imgKey); return s; })}
++                                                                        onError={(e) => { handleImageError(e); setImgLoadedIds(prev => { const s = new Set(prev); s.add(imgKey); return s; }); }}
++                                                                    />
++                                                                </div>
++                                                                <div style={{ marginTop: 8, paddingBottom: 4 }}>
++                                                                    <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: 8 }}>
++                                                                        <div style={{ fontWeight: 600, fontSize: isMobile ? 11 : 13, color: textMain, lineHeight: 1.35 }}>
++                                                                            {displayTitle}
++                                                                        </div>
++                                                                        <div style={{ display: 'flex', gap: 6, flexShrink: 0, marginTop: 2 }}>
++                                                                            <div
++                                                                                onClick={(e) => { e.stopPropagation(); e.preventDefault(); setProductArtwork(art); }}
++                                                                                title="상품으로 구매하기"
++                                                                                style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', transition: 'transform 0.15s ease' }}
++                                                                                onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.15)'}
++                                                                                onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
++                                                                            >
++                                                                                <svg width={isMobile ? 13 : 15} height={isMobile ? 13 : 15} viewBox="0 0 24 24" fill="none" stroke={textSub} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
++                                                                                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
++                                                                                    <rect x="7" y="7" width="10" height="10" />
++                                                                                </svg>
++                                                                            </div>
++                                                                            <HeartOverlay
++                                                                                isLiked={likedArtworks.has(art.id)}
++                                                                                onToggle={(e) => toggleLikeArtwork(e, art)}
++                                                                                style={{ padding: 0, background: 'none' }}
++                                                                                size={isMobile ? 13 : 15}
++                                                                                color="#e11d48"
++                                                                                emptyColor={textSub}
++                                                                            />
+                                                                         </div>
+-                                                                        <HeartOverlay
+-                                                                            isLiked={likedArtworks.has(art.id)}
+-                                                                            onToggle={(e) => toggleLikeArtwork(e, art)}
+-                                                                            style={{ padding: 0, background: 'none' }}
+-                                                                            size={isMobile ? 13 : 15}
+-                                                                            color="#e11d48"
+-                                                                            emptyColor={textSub}
+-                                                                        />
+                                                                     </div>
+-                                                                </div>
+-                                                                <div style={{ fontSize: isMobile ? 10 : 11, color: textSub, marginTop: 3 }}>
+-                                                                    {museumDisplay}
++                                                                    <div style={{ fontSize: isMobile ? 10 : 11, color: textSub, marginTop: 6, letterSpacing: '0.01em', lineHeight: 1.4 }}>
++                                                                        {museumDisplay}
++                                                                    </div>
+                                                                 </div>
+                                                             </div>
+-                                                        </div>
+-                                                    );
+-                                                })}
++                                                        );
++                                                    })}
+                                             </div>
+                                         ))}
+                                     </div>

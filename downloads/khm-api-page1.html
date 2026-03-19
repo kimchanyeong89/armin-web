@@ -1,0 +1,882 @@
+<div class="result-list">
+	<div class="htmx-indicator mt-5" id="indicator-object-list" hx-swap-oob="true">
+		<div class="row masonry-grid g-5">
+			<div class="col-md-4 grid-item">
+				<div class="placeholder object"></div>
+			</div>
+			<div class="col-md-4 grid-item">
+				<div class="placeholder object h-small"></div>
+			</div>
+			<div class="col-md-4 grid-item">
+				<div class="placeholder object"></div>
+			</div>
+			<div class="col-md-4 grid-item">
+				<div class="placeholder object h-large"></div>
+			</div>
+			<div class="col-md-4 grid-item">
+				<div class="placeholder object"></div>
+			</div>
+			<div class="col-md-4 grid-item">
+				<div class="placeholder object h-small"></div>
+			</div>
+			<div class="col-md-4 grid-item">
+				<div class="placeholder object h-large"></div>
+			</div>
+			<div class="col-md-4 grid-item">
+				<div class="placeholder object"></div>
+			</div>
+			<div class="col-md-4 grid-item">
+				<div class="placeholder object h-large"></div>
+			</div>
+			<div class="col-md-4 grid-item">
+				<div class="placeholder object h-small"></div>
+			</div>
+			<div class="col-md-4 grid-item">
+				<div class="placeholder object"></div>
+			</div>
+			<div class="col-md-4 grid-item">
+				<div class="placeholder object"></div>
+			</div>
+			 </div>
+		 </div>
+	 <span id="filter-info" hx-swap-oob="true"> 46.403 art objects </span>
+	<section id="objects">
+		<form id="objectdb-form"> <input type="hidden" name="rand" value="">
+			<div class="filter-calender__search mb-3" id="object-list-search" hx-swap-oob="true">
+				<div class="filter-calender__search__field"> <input autocomplete="off" placeholder="Search" minlength="2" aria-label="" aria-describedby="" class="form-control tx-solr-suggest" id="search-field" type="text" name="query"> <label for="search-field" class="visually-hidden">Search in collection</label>
+					<button type="submit"> <span class="icon material-symbols-outlined flex-shrink-0 notranslate" aria-hidden="true" style="font-size:20px">search</span> </button>
+					<button class="tx-solr-reset"> <span class="icon material-symbols-outlined flex-shrink-0 notranslate" aria-hidden="true" style="font-size:20px">close</span> <span class="visually-hidden">Search</span> </button>
+					 </div>
+				 </div>
+			<div id="inline-filter" hx-swap-oob="true">
+				<div class="filter-calender__dropdowns__outer">
+					<div class="filter-calender__dropdowns">
+						<div class="events-filter__dropdown">
+							<div class="dropdown">
+								<button class="button button-tertiary dropdown-toggle" type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false"> Time <span class="icon material-symbols-outlined flex-shrink-0 notranslate" aria-hidden="true" style="font-size:20px">keyboard_arrow_down</span> </button>
+								<div class="dropdown-menu">
+									<div class="dropdown-menu-inner overflow-visible">
+										<div class="time-range-filter">
+											<div class="time-range-filter__inputs">
+												<div class="form-control-row">
+													<div class="form-floating"> <input type="number" name="facet_date_begin" pattern="[1-9][0-9]?" min="1562" max="2022" value="1562" class="form-control" id="timeRangeFrom" placeholder="von" required> <label for="timeRangeFrom" class="form-label">from</label> </div>
+													<div class="form-control-separator">-</div>
+													<div class="form-floating"> <input type="number" name="facet_date_end" pattern="[1-9][0-9]?" min="1562" max="2022" value="2022" class="form-control" id="timeRangeTo" placeholder="bis" required> <label for="timeRangeTo" class="form-label">to</label> </div>
+													 </div>
+												 </div>
+											<div class="time-range-filter__range">
+												<div id="drbar-container" class="drbar-container" data-min="1562" data-max="2022" data-current-lower="1562" data-current-upper="2022"></div>
+												<div class="drbar-labels"> <label class="drbar-labels-from">1562</label> <label class="drbar-labels-zero">0</label> <label class="drbar-labels-to">2022</label> </div>
+												 </div>
+											 </div>
+										 </div>
+									 </div>
+								 </div>
+							 </div>
+						<div class="events-filter__dropdown">
+							<div class="dropdown">
+								<button class="button button-tertiary dropdown-toggle" type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false"> Classification <span class="icon material-symbols-outlined flex-shrink-0 notranslate" aria-hidden="true" style="font-size:20px">keyboard_arrow_down</span> </button>
+								<div class="dropdown-menu">
+									<div class="dropdown-menu-inner">
+										<div class="form-check"> <input type="radio" value="" name="fq[facet_classification]" class="form-check-input" id="facet-3-all" checked > <label class="form-check-label" for="facet-3-all">All</label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-3-1" type="radio" name="fq[facet_classification]" value="Münze"> <label for="facet-3-1" class="form-check-label"> Münze&nbsp;(30.156) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-3-2" type="radio" name="fq[facet_classification]" value="Gemälde"> <label for="facet-3-2" class="form-check-label"> Gemälde&nbsp;(2.787) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-3-3" type="radio" name="fq[facet_classification]" value="Gefäß"> <label for="facet-3-3" class="form-check-label"> Gefäß&nbsp;(1.026) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-3-4" type="radio" name="fq[facet_classification]" value="Glyptik"> <label for="facet-3-4" class="form-check-label"> Glyptik&nbsp;(776) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-3-5" type="radio" name="fq[facet_classification]" value="Medaille"> <label for="facet-3-5" class="form-check-label"> Medaille&nbsp;(701) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-3-6" type="radio" name="fq[facet_classification]" value="" checked="checked"> <label for="facet-3-6" class="form-check-label"> &nbsp;(556) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-3-7" type="radio" name="fq[facet_classification]" value="Grabausstattung"> <label for="facet-3-7" class="form-check-label"> Grabausstattung&nbsp;(523) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-3-8" type="radio" name="fq[facet_classification]" value="Skulptur"> <label for="facet-3-8" class="form-check-label"> Skulptur&nbsp;(501) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-3-9" type="radio" name="fq[facet_classification]" value="Schmuck"> <label for="facet-3-9" class="form-check-label"> Schmuck&nbsp;(465) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-3-10" type="radio" name="fq[facet_classification]" value="Feuerwaffe"> <label for="facet-3-10" class="form-check-label"> Feuerwaffe&nbsp;(440) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-3-11" type="radio" name="fq[facet_classification]" value="Rundplastik"> <label for="facet-3-11" class="form-check-label"> Rundplastik&nbsp;(379) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-3-12" type="radio" name="fq[facet_classification]" value="Harnisch + Harnischteil"> <label for="facet-3-12" class="form-check-label"> Harnisch + Harnischteil&nbsp;(364) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-3-13" type="radio" name="fq[facet_classification]" value="Gerät"> <label for="facet-3-13" class="form-check-label"> Gerät&nbsp;(363) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-3-14" type="radio" name="fq[facet_classification]" value="Keramik"> <label for="facet-3-14" class="form-check-label"> Keramik&nbsp;(358) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-3-15" type="radio" name="fq[facet_classification]" value="Relief"> <label for="facet-3-15" class="form-check-label"> Relief&nbsp;(318) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-3-16" type="radio" name="fq[facet_classification]" value="Statuette"> <label for="facet-3-16" class="form-check-label"> Statuette&nbsp;(296) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-3-17" type="radio" name="fq[facet_classification]" value="Blankwaffe"> <label for="facet-3-17" class="form-check-label"> Blankwaffe&nbsp;(252) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-3-18" type="radio" name="fq[facet_classification]" value="Architektur"> <label for="facet-3-18" class="form-check-label"> Architektur&nbsp;(250) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-3-19" type="radio" name="fq[facet_classification]" value="Stangenwaffe"> <label for="facet-3-19" class="form-check-label"> Stangenwaffe&nbsp;(249) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-3-20" type="radio" name="fq[facet_classification]" value="Plastik"> <label for="facet-3-20" class="form-check-label"> Plastik&nbsp;(204) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-3-21" type="radio" name="fq[facet_classification]" value="Amulett"> <label for="facet-3-21" class="form-check-label"> Amulett&nbsp;(200) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-3-22" type="radio" name="fq[facet_classification]" value="Spiel"> <label for="facet-3-22" class="form-check-label"> Spiel&nbsp;(180) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-3-23" type="radio" name="fq[facet_classification]" value="Kultgegenstand"> <label for="facet-3-23" class="form-check-label"> Kultgegenstand&nbsp;(168) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-3-24" type="radio" name="fq[facet_classification]" value="Turnierrüstung + Tunierzubehör"> <label for="facet-3-24" class="form-check-label"> Turnierrüstung + Tunierzubehör&nbsp;(158) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-3-25" type="radio" name="fq[facet_classification]" value="Varia"> <label for="facet-3-25" class="form-check-label"> Varia&nbsp;(134) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-3-26" type="radio" name="fq[facet_classification]" value="Insigne"> <label for="facet-3-26" class="form-check-label"> Insigne&nbsp;(124) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-3-27" type="radio" name="fq[facet_classification]" value="Helm"> <label for="facet-3-27" class="form-check-label"> Helm&nbsp;(114) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-3-28" type="radio" name="fq[facet_classification]" value="Andachtsbild"> <label for="facet-3-28" class="form-check-label"> Andachtsbild&nbsp;(112) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-3-29" type="radio" name="fq[facet_classification]" value="Reliquiar"> <label for="facet-3-29" class="form-check-label"> Reliquiar&nbsp;(111) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-3-30" type="radio" name="fq[facet_classification]" value="Plakette"> <label for="facet-3-30" class="form-check-label"> Plakette&nbsp;(98) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-3-31" type="radio" name="fq[facet_classification]" value="Uhr"> <label for="facet-3-31" class="form-check-label"> Uhr&nbsp;(97) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-3-32" type="radio" name="fq[facet_classification]" value="Plakat"> <label for="facet-3-32" class="form-check-label"> Plakat&nbsp;(96) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-3-33" type="radio" name="fq[facet_classification]" value="Kirchengerät"> <label for="facet-3-33" class="form-check-label"> Kirchengerät&nbsp;(94) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-3-34" type="radio" name="fq[facet_classification]" value="Papiergeld"> <label for="facet-3-34" class="form-check-label"> Papiergeld&nbsp;(87) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-3-35" type="radio" name="fq[facet_classification]" value="Siegel"> <label for="facet-3-35" class="form-check-label"> Siegel&nbsp;(82) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-3-36" type="radio" name="fq[facet_classification]" value="Reitzeug + Zubehör"> <label for="facet-3-36" class="form-check-label"> Reitzeug + Zubehör&nbsp;(81) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-3-37" type="radio" name="fq[facet_classification]" value="Textil"> <label for="facet-3-37" class="form-check-label"> Textil&nbsp;(80) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-3-38" type="radio" name="fq[facet_classification]" value="Büste"> <label for="facet-3-38" class="form-check-label"> Büste&nbsp;(72) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-3-39" type="radio" name="fq[facet_classification]" value="Schriftliches Dokument"> <label for="facet-3-39" class="form-check-label"> Schriftliches Dokument&nbsp;(65) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-3-40" type="radio" name="fq[facet_classification]" value="Tafelgerät"> <label for="facet-3-40" class="form-check-label"> Tafelgerät&nbsp;(64) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-3-41" type="radio" name="fq[facet_classification]" value="Wissenschaftliches Instrument"> <label for="facet-3-41" class="form-check-label"> Wissenschaftliches Instrument&nbsp;(62) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-3-42" type="radio" name="fq[facet_classification]" value="Terrakotta"> <label for="facet-3-42" class="form-check-label"> Terrakotta&nbsp;(60) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-3-43" type="radio" name="fq[facet_classification]" value="Schild"> <label for="facet-3-43" class="form-check-label"> Schild&nbsp;(59) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-3-44" type="radio" name="fq[facet_classification]" value="Modell"> <label for="facet-3-44" class="form-check-label"> Modell&nbsp;(56) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-3-45" type="radio" name="fq[facet_classification]" value="Orientalische Waffe"> <label for="facet-3-45" class="form-check-label"> Orientalische Waffe&nbsp;(56) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-3-46" type="radio" name="fq[facet_classification]" value="Möbel"> <label for="facet-3-46" class="form-check-label"> Möbel&nbsp;(53) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-3-47" type="radio" name="fq[facet_classification]" value="Schlagwaffe"> <label for="facet-3-47" class="form-check-label"> Schlagwaffe&nbsp;(48) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-3-48" type="radio" name="fq[facet_classification]" value="Toillettezeug"> <label for="facet-3-48" class="form-check-label"> Toillettezeug&nbsp;(47) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-3-49" type="radio" name="fq[facet_classification]" value="Kästchen"> <label for="facet-3-49" class="form-check-label"> Kästchen&nbsp;(42) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-3-50" type="radio" name="fq[facet_classification]" value="Aufsatz"> <label for="facet-3-50" class="form-check-label"> Aufsatz&nbsp;(41) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-3-51" type="radio" name="fq[facet_classification]" value="Textilien"> <label for="facet-3-51" class="form-check-label"> Textilien&nbsp;(38) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-3-52" type="radio" name="fq[facet_classification]" value="Armbrust"> <label for="facet-3-52" class="form-check-label"> Armbrust&nbsp;(37) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-3-53" type="radio" name="fq[facet_classification]" value="Wagen"> <label for="facet-3-53" class="form-check-label"> Wagen&nbsp;(37) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-3-54" type="radio" name="fq[facet_classification]" value="Falkenzeug"> <label for="facet-3-54" class="form-check-label"> Falkenzeug&nbsp;(36) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-3-55" type="radio" name="fq[facet_classification]" value="Graphik"> <label for="facet-3-55" class="form-check-label"> Graphik&nbsp;(36) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-3-56" type="radio" name="fq[facet_classification]" value="Mumie und Grabausstattung"> <label for="facet-3-56" class="form-check-label"> Mumie und Grabausstattung&nbsp;(36) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-3-57" type="radio" name="fq[facet_classification]" value="Messinstrument"> <label for="facet-3-57" class="form-check-label"> Messinstrument&nbsp;(35) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-3-58" type="radio" name="fq[facet_classification]" value="Epigraphik"> <label for="facet-3-58" class="form-check-label"> Epigraphik&nbsp;(33) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-3-59" type="radio" name="fq[facet_classification]" value="Stempel"> <label for="facet-3-59" class="form-check-label"> Stempel&nbsp;(30) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-3-60" type="radio" name="fq[facet_classification]" value="Medaillon"> <label for="facet-3-60" class="form-check-label"> Medaillon&nbsp;(29) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-3-61" type="radio" name="fq[facet_classification]" value="Blasinstrument"> <label for="facet-3-61" class="form-check-label"> Blasinstrument&nbsp;(27) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-3-62" type="radio" name="fq[facet_classification]" value="Tapisserie"> <label for="facet-3-62" class="form-check-label"> Tapisserie&nbsp;(27) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-3-63" type="radio" name="fq[facet_classification]" value="Mumie"> <label for="facet-3-63" class="form-check-label"> Mumie&nbsp;(26) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-3-64" type="radio" name="fq[facet_classification]" value="Automat"> <label for="facet-3-64" class="form-check-label"> Automat&nbsp;(23) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-3-65" type="radio" name="fq[facet_classification]" value="Ostrakon"> <label for="facet-3-65" class="form-check-label"> Ostrakon&nbsp;(23) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-3-66" type="radio" name="fq[facet_classification]" value="Streichinstrument"> <label for="facet-3-66" class="form-check-label"> Streichinstrument&nbsp;(22) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-3-67" type="radio" name="fq[facet_classification]" value="Devotionalie"> <label for="facet-3-67" class="form-check-label"> Devotionalie&nbsp;(18) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-3-68" type="radio" name="fq[facet_classification]" value="Handstein"> <label for="facet-3-68" class="form-check-label"> Handstein&nbsp;(18) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-3-69" type="radio" name="fq[facet_classification]" value="Tasteninstrument"> <label for="facet-3-69" class="form-check-label"> Tasteninstrument&nbsp;(18) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-3-70" type="radio" name="fq[facet_classification]" value="Kleidung"> <label for="facet-3-70" class="form-check-label"> Kleidung&nbsp;(14) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-3-71" type="radio" name="fq[facet_classification]" value="Mosaik"> <label for="facet-3-71" class="form-check-label"> Mosaik&nbsp;(13) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-3-72" type="radio" name="fq[facet_classification]" value="Jagdwaffe"> <label for="facet-3-72" class="form-check-label"> Jagdwaffe&nbsp;(12) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-3-73" type="radio" name="fq[facet_classification]" value="Malerei"> <label for="facet-3-73" class="form-check-label"> Malerei&nbsp;(12) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-3-74" type="radio" name="fq[facet_classification]" value="Bezoar"> <label for="facet-3-74" class="form-check-label"> Bezoar&nbsp;(9) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-3-75" type="radio" name="fq[facet_classification]" value="Zupfinstrument"> <label for="facet-3-75" class="form-check-label"> Zupfinstrument&nbsp;(9) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-3-76" type="radio" name="fq[facet_classification]" value="Barren"> <label for="facet-3-76" class="form-check-label"> Barren&nbsp;(8) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-3-77" type="radio" name="fq[facet_classification]" value="Garnituren für Reiter und Ross"> <label for="facet-3-77" class="form-check-label"> Garnituren für Reiter und Ross&nbsp;(7) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-3-78" type="radio" name="fq[facet_classification]" value="Klavier"> <label for="facet-3-78" class="form-check-label"> Klavier&nbsp;(7) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-3-79" type="radio" name="fq[facet_classification]" value="Organisches"> <label for="facet-3-79" class="form-check-label"> Organisches&nbsp;(7) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-3-80" type="radio" name="fq[facet_classification]" value="Altar"> <label for="facet-3-80" class="form-check-label"> Altar&nbsp;(5) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-3-81" type="radio" name="fq[facet_classification]" value="Bewaffnung"> <label for="facet-3-81" class="form-check-label"> Bewaffnung&nbsp;(5) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-3-82" type="radio" name="fq[facet_classification]" value="Schlaginstrument"> <label for="facet-3-82" class="form-check-label"> Schlaginstrument&nbsp;(5) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-3-83" type="radio" name="fq[facet_classification]" value="Schlitten"> <label for="facet-3-83" class="form-check-label"> Schlitten&nbsp;(5) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-3-84" type="radio" name="fq[facet_classification]" value="(nicht vergeben)"> <label for="facet-3-84" class="form-check-label"> (nicht vergeben)&nbsp;(4) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-3-85" type="radio" name="fq[facet_classification]" value="Beschlag"> <label for="facet-3-85" class="form-check-label"> Beschlag&nbsp;(4) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-3-86" type="radio" name="fq[facet_classification]" value="Bußinstrument"> <label for="facet-3-86" class="form-check-label"> Bußinstrument&nbsp;(4) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-3-87" type="radio" name="fq[facet_classification]" value="Druckgrafik"> <label for="facet-3-87" class="form-check-label"> Druckgrafik&nbsp;(3) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-3-88" type="radio" name="fq[facet_classification]" value="Stele"> <label for="facet-3-88" class="form-check-label"> Stele&nbsp;(3) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-3-89" type="radio" name="fq[facet_classification]" value="Werkzeug"> <label for="facet-3-89" class="form-check-label"> Werkzeug&nbsp;(3) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-3-90" type="radio" name="fq[facet_classification]" value="Dekoration"> <label for="facet-3-90" class="form-check-label"> Dekoration&nbsp;(2) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-3-91" type="radio" name="fq[facet_classification]" value="Jagdtrophäe"> <label for="facet-3-91" class="form-check-label"> Jagdtrophäe&nbsp;(2) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-3-92" type="radio" name="fq[facet_classification]" value="Kodex"> <label for="facet-3-92" class="form-check-label"> Kodex&nbsp;(2) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-3-93" type="radio" name="fq[facet_classification]" value="Naturalie"> <label for="facet-3-93" class="form-check-label"> Naturalie&nbsp;(2) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-3-94" type="radio" name="fq[facet_classification]" value="Realien/Bildquellen zur Hausgeschichte"> <label for="facet-3-94" class="form-check-label"> Realien/Bildquellen zur Hausgeschichte&nbsp;(2) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-3-95" type="radio" name="fq[facet_classification]" value="Handzeichnung"> <label for="facet-3-95" class="form-check-label"> Handzeichnung&nbsp;(1) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-3-96" type="radio" name="fq[facet_classification]" value="Orientalische Rüstung"> <label for="facet-3-96" class="form-check-label"> Orientalische Rüstung&nbsp;(1) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-3-97" type="radio" name="fq[facet_classification]" value="Rahmen"> <label for="facet-3-97" class="form-check-label"> Rahmen&nbsp;(1) </label> </div>
+										 </div>
+									 </div>
+								 </div>
+							 </div>
+						<div class="events-filter__dropdown">
+							<div class="dropdown">
+								<button class="button button-tertiary dropdown-toggle" type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false"> Culture <span class="icon material-symbols-outlined flex-shrink-0 notranslate" aria-hidden="true" style="font-size:20px">keyboard_arrow_down</span> </button>
+								<div class="dropdown-menu">
+									<div class="dropdown-menu-inner">
+										<div class="form-check"> <input type="radio" value="" name="fq[facet_culture]" class="form-check-input" id="facet-4-all" checked > <label class="form-check-label" for="facet-4-all">All</label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-1" type="radio" name="fq[facet_culture]" value="Wien"> <label for="facet-4-1" class="form-check-label"> Wien&nbsp;(3.048) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-2" type="radio" name="fq[facet_culture]" value="Ägyptisch"> <label for="facet-4-2" class="form-check-label"> Ägyptisch&nbsp;(1.706) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-3" type="radio" name="fq[facet_culture]" value="Deutsch"> <label for="facet-4-3" class="form-check-label"> Deutsch&nbsp;(774) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-4" type="radio" name="fq[facet_culture]" value="Römisch"> <label for="facet-4-4" class="form-check-label"> Römisch&nbsp;(668) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-5" type="radio" name="fq[facet_culture]" value="Flämisch"> <label for="facet-4-5" class="form-check-label"> Flämisch&nbsp;(456) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-6" type="radio" name="fq[facet_culture]" value="Griechisch"> <label for="facet-4-6" class="form-check-label"> Griechisch&nbsp;(369) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-7" type="radio" name="fq[facet_culture]" value="Italienisch, Venezianisch"> <label for="facet-4-7" class="form-check-label"> Italienisch, Venezianisch&nbsp;(368) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-8" type="radio" name="fq[facet_culture]" value="Niederländisch"> <label for="facet-4-8" class="form-check-label"> Niederländisch&nbsp;(339) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-9" type="radio" name="fq[facet_culture]" value="Augsburg"> <label for="facet-4-9" class="form-check-label"> Augsburg&nbsp;(267) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-10" type="radio" name="fq[facet_culture]" value="Prag"> <label for="facet-4-10" class="form-check-label"> Prag&nbsp;(239) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-11" type="radio" name="fq[facet_culture]" value="Italienisch"> <label for="facet-4-11" class="form-check-label"> Italienisch&nbsp;(228) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-12" type="radio" name="fq[facet_culture]" value="Holländisch"> <label for="facet-4-12" class="form-check-label"> Holländisch&nbsp;(220) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-13" type="radio" name="fq[facet_culture]" value="Süddeutsch"> <label for="facet-4-13" class="form-check-label"> Süddeutsch&nbsp;(204) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-14" type="radio" name="fq[facet_culture]" value="Innsbruck"> <label for="facet-4-14" class="form-check-label"> Innsbruck&nbsp;(190) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-15" type="radio" name="fq[facet_culture]" value="Mailand"> <label for="facet-4-15" class="form-check-label"> Mailand&nbsp;(172) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-16" type="radio" name="fq[facet_culture]" value="Nürnberg"> <label for="facet-4-16" class="form-check-label"> Nürnberg&nbsp;(158) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-17" type="radio" name="fq[facet_culture]" value="Österreichisch"> <label for="facet-4-17" class="form-check-label"> Österreichisch&nbsp;(143) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-18" type="radio" name="fq[facet_culture]" value="nicht vergeben"> <label for="facet-4-18" class="form-check-label"> nicht vergeben&nbsp;(139) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-19" type="radio" name="fq[facet_culture]" value="Venedig"> <label for="facet-4-19" class="form-check-label"> Venedig&nbsp;(134) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-20" type="radio" name="fq[facet_culture]" value="Innsbruck (?)"> <label for="facet-4-20" class="form-check-label"> Innsbruck (?)&nbsp;(124) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-21" type="radio" name="fq[facet_culture]" value="Zyprisch"> <label for="facet-4-21" class="form-check-label"> Zyprisch&nbsp;(115) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-22" type="radio" name="fq[facet_culture]" value="Italienisch, Emilianisch"> <label for="facet-4-22" class="form-check-label"> Italienisch, Emilianisch&nbsp;(99) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-23" type="radio" name="fq[facet_culture]" value="Wien (?)"> <label for="facet-4-23" class="form-check-label"> Wien (?)&nbsp;(89) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-24" type="radio" name="fq[facet_culture]" value="Rom"> <label for="facet-4-24" class="form-check-label"> Rom&nbsp;(87) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-25" type="radio" name="fq[facet_culture]" value="Etruskisch"> <label for="facet-4-25" class="form-check-label"> Etruskisch&nbsp;(86) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-26" type="radio" name="fq[facet_culture]" value="Französisch"> <label for="facet-4-26" class="form-check-label"> Französisch&nbsp;(85) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-27" type="radio" name="fq[facet_culture]" value="Südarabisch"> <label for="facet-4-27" class="form-check-label"> Südarabisch&nbsp;(81) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-28" type="radio" name="fq[facet_culture]" value="Italienisch, Neapolitanisch"> <label for="facet-4-28" class="form-check-label"> Italienisch, Neapolitanisch&nbsp;(78) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-29" type="radio" name="fq[facet_culture]" value="Niederländisch, Flämisch"> <label for="facet-4-29" class="form-check-label"> Niederländisch, Flämisch&nbsp;(73) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-30" type="radio" name="fq[facet_culture]" value="Frühchristlich"> <label for="facet-4-30" class="form-check-label"> Frühchristlich&nbsp;(68) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-31" type="radio" name="fq[facet_culture]" value="Spanisch"> <label for="facet-4-31" class="form-check-label"> Spanisch&nbsp;(67) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-32" type="radio" name="fq[facet_culture]" value="Nubisch"> <label for="facet-4-32" class="form-check-label"> Nubisch&nbsp;(66) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-33" type="radio" name="fq[facet_culture]" value="Brüssel"> <label for="facet-4-33" class="form-check-label"> Brüssel&nbsp;(63) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-34" type="radio" name="fq[facet_culture]" value="Florenz"> <label for="facet-4-34" class="form-check-label"> Florenz&nbsp;(62) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-35" type="radio" name="fq[facet_culture]" value="Italienisch, Lombardisch"> <label for="facet-4-35" class="form-check-label"> Italienisch, Lombardisch&nbsp;(58) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-36" type="radio" name="fq[facet_culture]" value="Italienisch, Mittelitalienisch"> <label for="facet-4-36" class="form-check-label"> Italienisch, Mittelitalienisch&nbsp;(57) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-37" type="radio" name="fq[facet_culture]" value="Oberitalienisch"> <label for="facet-4-37" class="form-check-label"> Oberitalienisch&nbsp;(57) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-38" type="radio" name="fq[facet_culture]" value="Basel"> <label for="facet-4-38" class="form-check-label"> Basel&nbsp;(55) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-39" type="radio" name="fq[facet_culture]" value="Türkisch"> <label for="facet-4-39" class="form-check-label"> Türkisch&nbsp;(53) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-40" type="radio" name="fq[facet_culture]" value="Italienisch, Römisch"> <label for="facet-4-40" class="form-check-label"> Italienisch, Römisch&nbsp;(50) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-41" type="radio" name="fq[facet_culture]" value="Altniederländisch"> <label for="facet-4-41" class="form-check-label"> Altniederländisch&nbsp;(42) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-42" type="radio" name="fq[facet_culture]" value="Frühbyzantinisch"> <label for="facet-4-42" class="form-check-label"> Frühbyzantinisch&nbsp;(42) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-43" type="radio" name="fq[facet_culture]" value="Italienisch, Florentinisch"> <label for="facet-4-43" class="form-check-label"> Italienisch, Florentinisch&nbsp;(42) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-44" type="radio" name="fq[facet_culture]" value="Neuzeitlich"> <label for="facet-4-44" class="form-check-label"> Neuzeitlich&nbsp;(40) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-45" type="radio" name="fq[facet_culture]" value="Padua"> <label for="facet-4-45" class="form-check-label"> Padua&nbsp;(40) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-46" type="radio" name="fq[facet_culture]" value="Unteritalisch"> <label for="facet-4-46" class="form-check-label"> Unteritalisch&nbsp;(40) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-47" type="radio" name="fq[facet_culture]" value="Augsburg (?)"> <label for="facet-4-47" class="form-check-label"> Augsburg (?)&nbsp;(39) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-48" type="radio" name="fq[facet_culture]" value="Völkerwanderungszeit"> <label for="facet-4-48" class="form-check-label"> Völkerwanderungszeit&nbsp;(39) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-49" type="radio" name="fq[facet_culture]" value="Paris"> <label for="facet-4-49" class="form-check-label"> Paris&nbsp;(38) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-50" type="radio" name="fq[facet_culture]" value="Deutsch (?)"> <label for="facet-4-50" class="form-check-label"> Deutsch (?)&nbsp;(35) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-51" type="radio" name="fq[facet_culture]" value="Caravaggio und caravaggeske Malerei"> <label for="facet-4-51" class="form-check-label"> Caravaggio und caravaggeske Malerei&nbsp;(32) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-52" type="radio" name="fq[facet_culture]" value="Kaufbeuren"> <label for="facet-4-52" class="form-check-label"> Kaufbeuren&nbsp;(31) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-53" type="radio" name="fq[facet_culture]" value="München"> <label for="facet-4-53" class="form-check-label"> München&nbsp;(30) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-54" type="radio" name="fq[facet_culture]" value="Süddeutsch, Augsburg (?)"> <label for="facet-4-54" class="form-check-label"> Süddeutsch, Augsburg (?)&nbsp;(30) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-55" type="radio" name="fq[facet_culture]" value="Böhmen"> <label for="facet-4-55" class="form-check-label"> Böhmen&nbsp;(29) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-56" type="radio" name="fq[facet_culture]" value="Landshut"> <label for="facet-4-56" class="form-check-label"> Landshut&nbsp;(29) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-57" type="radio" name="fq[facet_culture]" value="Salzburg"> <label for="facet-4-57" class="form-check-label"> Salzburg&nbsp;(29) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-58" type="radio" name="fq[facet_culture]" value="Österreich, Wien"> <label for="facet-4-58" class="form-check-label"> Österreich, Wien&nbsp;(27) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-59" type="radio" name="fq[facet_culture]" value="Mailand; Prag (Fassung)"> <label for="facet-4-59" class="form-check-label"> Mailand; Prag (Fassung)&nbsp;(26) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-60" type="radio" name="fq[facet_culture]" value="Mesopotamisch"> <label for="facet-4-60" class="form-check-label"> Mesopotamisch&nbsp;(24) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-61" type="radio" name="fq[facet_culture]" value="Frühes Mittelalter"> <label for="facet-4-61" class="form-check-label"> Frühes Mittelalter&nbsp;(23) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-62" type="radio" name="fq[facet_culture]" value="Limoges"> <label for="facet-4-62" class="form-check-label"> Limoges&nbsp;(23) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-63" type="radio" name="fq[facet_culture]" value="Mantua"> <label for="facet-4-63" class="form-check-label"> Mantua&nbsp;(22) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-64" type="radio" name="fq[facet_culture]" value="Teschen"> <label for="facet-4-64" class="form-check-label"> Teschen&nbsp;(22) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-65" type="radio" name="fq[facet_culture]" value="chinesisch"> <label for="facet-4-65" class="form-check-label"> chinesisch&nbsp;(22) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-66" type="radio" name="fq[facet_culture]" value="Ägyptisch - Neuzeitlich"> <label for="facet-4-66" class="form-check-label"> Ägyptisch - Neuzeitlich&nbsp;(22) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-67" type="radio" name="fq[facet_culture]" value="Byzantinisch"> <label for="facet-4-67" class="form-check-label"> Byzantinisch&nbsp;(20) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-68" type="radio" name="fq[facet_culture]" value="Arabisch"> <label for="facet-4-68" class="form-check-label"> Arabisch&nbsp;(18) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-69" type="radio" name="fq[facet_culture]" value="Italisch"> <label for="facet-4-69" class="form-check-label"> Italisch&nbsp;(18) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-70" type="radio" name="fq[facet_culture]" value="Mittelalter"> <label for="facet-4-70" class="form-check-label"> Mittelalter&nbsp;(18) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-71" type="radio" name="fq[facet_culture]" value="Schwäbisch Hall"> <label for="facet-4-71" class="form-check-label"> Schwäbisch Hall&nbsp;(18) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-72" type="radio" name="fq[facet_culture]" value="Ägyptisch - Römisch"> <label for="facet-4-72" class="form-check-label"> Ägyptisch - Römisch&nbsp;(17) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-73" type="radio" name="fq[facet_culture]" value="Böhmisch"> <label for="facet-4-73" class="form-check-label"> Böhmisch&nbsp;(16) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-74" type="radio" name="fq[facet_culture]" value="Kleinasiatisch"> <label for="facet-4-74" class="form-check-label"> Kleinasiatisch&nbsp;(16) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-75" type="radio" name="fq[facet_culture]" value="Österreich"> <label for="facet-4-75" class="form-check-label"> Österreich&nbsp;(16) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-76" type="radio" name="fq[facet_culture]" value="Chinesisch"> <label for="facet-4-76" class="form-check-label"> Chinesisch&nbsp;(15) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-77" type="radio" name="fq[facet_culture]" value="Dresden"> <label for="facet-4-77" class="form-check-label"> Dresden&nbsp;(15) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-78" type="radio" name="fq[facet_culture]" value="Palmyrenisch"> <label for="facet-4-78" class="form-check-label"> Palmyrenisch&nbsp;(15) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-79" type="radio" name="fq[facet_culture]" value="Spätrömisch"> <label for="facet-4-79" class="form-check-label"> Spätrömisch&nbsp;(15) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-80" type="radio" name="fq[facet_culture]" value="Sächsisch"> <label for="facet-4-80" class="form-check-label"> Sächsisch&nbsp;(15) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-81" type="radio" name="fq[facet_culture]" value="Süddeutsch (Augsburg)"> <label for="facet-4-81" class="form-check-label"> Süddeutsch (Augsburg)&nbsp;(15) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-82" type="radio" name="fq[facet_culture]" value="Braunschweig"> <label for="facet-4-82" class="form-check-label"> Braunschweig&nbsp;(14) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-83" type="radio" name="fq[facet_culture]" value="Koptisch"> <label for="facet-4-83" class="form-check-label"> Koptisch&nbsp;(14) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-84" type="radio" name="fq[facet_culture]" value="Mailand (?)"> <label for="facet-4-84" class="form-check-label"> Mailand (?)&nbsp;(14) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-85" type="radio" name="fq[facet_culture]" value="Nürnberg (?)"> <label for="facet-4-85" class="form-check-label"> Nürnberg (?)&nbsp;(14) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-86" type="radio" name="fq[facet_culture]" value="Potsdam"> <label for="facet-4-86" class="form-check-label"> Potsdam&nbsp;(14) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-87" type="radio" name="fq[facet_culture]" value="Süddeutsch, Nürnberg (?)"> <label for="facet-4-87" class="form-check-label"> Süddeutsch, Nürnberg (?)&nbsp;(14) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-88" type="radio" name="fq[facet_culture]" value="Babylonisch"> <label for="facet-4-88" class="form-check-label"> Babylonisch&nbsp;(13) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-89" type="radio" name="fq[facet_culture]" value="Englisch"> <label for="facet-4-89" class="form-check-label"> Englisch&nbsp;(13) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-90" type="radio" name="fq[facet_culture]" value="Koptisch-Griechisch"> <label for="facet-4-90" class="form-check-label"> Koptisch-Griechisch&nbsp;(13) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-91" type="radio" name="fq[facet_culture]" value="Madrid"> <label for="facet-4-91" class="form-check-label"> Madrid&nbsp;(13) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-92" type="radio" name="fq[facet_culture]" value="Oberitalien"> <label for="facet-4-92" class="form-check-label"> Oberitalien&nbsp;(13) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-93" type="radio" name="fq[facet_culture]" value="Ungarisch"> <label for="facet-4-93" class="form-check-label"> Ungarisch&nbsp;(13) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-94" type="radio" name="fq[facet_culture]" value="Österreichisch (?)"> <label for="facet-4-94" class="form-check-label"> Österreichisch (?)&nbsp;(13) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-95" type="radio" name="fq[facet_culture]" value="Brescia"> <label for="facet-4-95" class="form-check-label"> Brescia&nbsp;(12) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-96" type="radio" name="fq[facet_culture]" value="Deutsch (Tirol?)"> <label for="facet-4-96" class="form-check-label"> Deutsch (Tirol?)&nbsp;(12) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-97" type="radio" name="fq[facet_culture]" value="Französisch (?)"> <label for="facet-4-97" class="form-check-label"> Französisch (?)&nbsp;(12) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-98" type="radio" name="fq[facet_culture]" value="Persisch"> <label for="facet-4-98" class="form-check-label"> Persisch&nbsp;(12) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-99" type="radio" name="fq[facet_culture]" value="Sasanidisch"> <label for="facet-4-99" class="form-check-label"> Sasanidisch&nbsp;(12) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-4-100" type="radio" name="fq[facet_culture]" value="Italienisch (?)"> <label for="facet-4-100" class="form-check-label"> Italienisch (?)&nbsp;(11) </label> </div>
+										 </div>
+									 </div>
+								 </div>
+							 </div>
+						<div class="events-filter__dropdown">
+							<div class="dropdown">
+								<button class="button button-tertiary dropdown-toggle" type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false"> Period <span class="icon material-symbols-outlined flex-shrink-0 notranslate" aria-hidden="true" style="font-size:20px">keyboard_arrow_down</span> </button>
+								<div class="dropdown-menu">
+									<div class="dropdown-menu-inner">
+										<div class="form-check"> <input type="radio" value="" name="fq[facet_period]" class="form-check-input" id="facet-5-all" checked > <label class="form-check-label" for="facet-5-all">All</label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-1" type="radio" name="fq[facet_period]" value="Spätzeit"> <label for="facet-5-1" class="form-check-label"> Spätzeit&nbsp;(440) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-2" type="radio" name="fq[facet_period]" value="Neues Reich"> <label for="facet-5-2" class="form-check-label"> Neues Reich&nbsp;(300) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-3" type="radio" name="fq[facet_period]" value="Altes Reich"> <label for="facet-5-3" class="form-check-label"> Altes Reich&nbsp;(289) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-4" type="radio" name="fq[facet_period]" value="Frühe Kaiserzeit"> <label for="facet-5-4" class="form-check-label"> Frühe Kaiserzeit&nbsp;(206) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-5" type="radio" name="fq[facet_period]" value="Mittlere Kaiserzeit"> <label for="facet-5-5" class="form-check-label"> Mittlere Kaiserzeit&nbsp;(156) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-6" type="radio" name="fq[facet_period]" value="Spätantike"> <label for="facet-5-6" class="form-check-label"> Spätantike&nbsp;(153) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-7" type="radio" name="fq[facet_period]" value="Ptolemäerzeit"> <label for="facet-5-7" class="form-check-label"> Ptolemäerzeit&nbsp;(137) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-8" type="radio" name="fq[facet_period]" value="Mittleres Reich"> <label for="facet-5-8" class="form-check-label"> Mittleres Reich&nbsp;(113) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-9" type="radio" name="fq[facet_period]" value="Attisch, rotfigurig"> <label for="facet-5-9" class="form-check-label"> Attisch, rotfigurig&nbsp;(109) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-10" type="radio" name="fq[facet_period]" value="Spätzeit bis Ptolemäerzeit"> <label for="facet-5-10" class="form-check-label"> Spätzeit bis Ptolemäerzeit&nbsp;(92) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-11" type="radio" name="fq[facet_period]" value="Kaiserzeit"> <label for="facet-5-11" class="form-check-label"> Kaiserzeit&nbsp;(89) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-12" type="radio" name="fq[facet_period]" value="3. Zwischenzeit"> <label for="facet-5-12" class="form-check-label"> 3. Zwischenzeit&nbsp;(78) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-13" type="radio" name="fq[facet_period]" value="Späte Kaiserzeit"> <label for="facet-5-13" class="form-check-label"> Späte Kaiserzeit&nbsp;(76) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-14" type="radio" name="fq[facet_period]" value="Hellenistisch"> <label for="facet-5-14" class="form-check-label"> Hellenistisch&nbsp;(63) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-15" type="radio" name="fq[facet_period]" value="Republikanisch"> <label for="facet-5-15" class="form-check-label"> Republikanisch&nbsp;(56) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-16" type="radio" name="fq[facet_period]" value="Eisenzeit, archaisch"> <label for="facet-5-16" class="form-check-label"> Eisenzeit, archaisch&nbsp;(53) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-17" type="radio" name="fq[facet_period]" value="Attisch, schwarzfigurig"> <label for="facet-5-17" class="form-check-label"> Attisch, schwarzfigurig&nbsp;(52) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-18" type="radio" name="fq[facet_period]" value="Prädynastisch"> <label for="facet-5-18" class="form-check-label"> Prädynastisch&nbsp;(45) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-19" type="radio" name="fq[facet_period]" value="Frühzeit"> <label for="facet-5-19" class="form-check-label"> Frühzeit&nbsp;(40) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-20" type="radio" name="fq[facet_period]" value="Neuzeit"> <label for="facet-5-20" class="form-check-label"> Neuzeit&nbsp;(38) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-21" type="radio" name="fq[facet_period]" value="Prädynastisch bis Frühzeit"> <label for="facet-5-21" class="form-check-label"> Prädynastisch bis Frühzeit&nbsp;(38) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-22" type="radio" name="fq[facet_period]" value="Mittelsüdarabische Zeit"> <label for="facet-5-22" class="form-check-label"> Mittelsüdarabische Zeit&nbsp;(27) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-23" type="radio" name="fq[facet_period]" value="Römische Kaiserzeit"> <label for="facet-5-23" class="form-check-label"> Römische Kaiserzeit&nbsp;(27) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-24" type="radio" name="fq[facet_period]" value="Spätantik"> <label for="facet-5-24" class="form-check-label"> Spätantik&nbsp;(24) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-25" type="radio" name="fq[facet_period]" value="2. Zwischenzeit"> <label for="facet-5-25" class="form-check-label"> 2. Zwischenzeit&nbsp;(23) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-26" type="radio" name="fq[facet_period]" value="Apulisch, rotfigurig"> <label for="facet-5-26" class="form-check-label"> Apulisch, rotfigurig&nbsp;(20) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-27" type="radio" name="fq[facet_period]" value="Germanisch"> <label for="facet-5-27" class="form-check-label"> Germanisch&nbsp;(20) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-28" type="radio" name="fq[facet_period]" value="Böotisch"> <label for="facet-5-28" class="form-check-label"> Böotisch&nbsp;(18) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-29" type="radio" name="fq[facet_period]" value="Koptische Zeit"> <label for="facet-5-29" class="form-check-label"> Koptische Zeit&nbsp;(18) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-30" type="radio" name="fq[facet_period]" value="3. Zwischenzeit bis Spätzeit"> <label for="facet-5-30" class="form-check-label"> 3. Zwischenzeit bis Spätzeit&nbsp;(17) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-31" type="radio" name="fq[facet_period]" value="Bronzezeit, Spätzyprisch"> <label for="facet-5-31" class="form-check-label"> Bronzezeit, Spätzyprisch&nbsp;(17) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-32" type="radio" name="fq[facet_period]" value="Neubabylonische Zeit"> <label for="facet-5-32" class="form-check-label"> Neubabylonische Zeit&nbsp;(16) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-33" type="radio" name="fq[facet_period]" value="Mittleres Reich bis 2. Zwischenzeit"> <label for="facet-5-33" class="form-check-label"> Mittleres Reich bis 2. Zwischenzeit&nbsp;(15) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-34" type="radio" name="fq[facet_period]" value="Prähistorisch"> <label for="facet-5-34" class="form-check-label"> Prähistorisch&nbsp;(15) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-35" type="radio" name="fq[facet_period]" value="Republikanisch - Frühe Kaiserzeit"> <label for="facet-5-35" class="form-check-label"> Republikanisch - Frühe Kaiserzeit&nbsp;(15) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-36" type="radio" name="fq[facet_period]" value="Römerzeit"> <label for="facet-5-36" class="form-check-label"> Römerzeit&nbsp;(15) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-37" type="radio" name="fq[facet_period]" value="Bucchero"> <label for="facet-5-37" class="form-check-label"> Bucchero&nbsp;(14) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-38" type="radio" name="fq[facet_period]" value="Meroitische Zeit"> <label for="facet-5-38" class="form-check-label"> Meroitische Zeit&nbsp;(14) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-39" type="radio" name="fq[facet_period]" value="Bronzezeit, Mittelzyprisch"> <label for="facet-5-39" class="form-check-label"> Bronzezeit, Mittelzyprisch&nbsp;(13) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-40" type="radio" name="fq[facet_period]" value="Attisch"> <label for="facet-5-40" class="form-check-label"> Attisch&nbsp;(11) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-41" type="radio" name="fq[facet_period]" value="Eisenzeit, klassisch"> <label for="facet-5-41" class="form-check-label"> Eisenzeit, klassisch&nbsp;(10) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-42" type="radio" name="fq[facet_period]" value="Frühsüdarabische Zeit"> <label for="facet-5-42" class="form-check-label"> Frühsüdarabische Zeit&nbsp;(10) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-43" type="radio" name="fq[facet_period]" value="Ptolemäerzeit bis Römische Kaiserzeit"> <label for="facet-5-43" class="form-check-label"> Ptolemäerzeit bis Römische Kaiserzeit&nbsp;(10) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-44" type="radio" name="fq[facet_period]" value="Arabische Zeit"> <label for="facet-5-44" class="form-check-label"> Arabische Zeit&nbsp;(9) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-45" type="radio" name="fq[facet_period]" value="Bronzezeit, Früh- bis Mittelzyprisch"> <label for="facet-5-45" class="form-check-label"> Bronzezeit, Früh- bis Mittelzyprisch&nbsp;(9) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-46" type="radio" name="fq[facet_period]" value="Früh- bis mittelsüdarabische Zeit"> <label for="facet-5-46" class="form-check-label"> Früh- bis mittelsüdarabische Zeit&nbsp;(9) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-47" type="radio" name="fq[facet_period]" value="Griechisch-lykisch"> <label for="facet-5-47" class="form-check-label"> Griechisch-lykisch&nbsp;(9) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-48" type="radio" name="fq[facet_period]" value="Mittelkorinthisch"> <label for="facet-5-48" class="form-check-label"> Mittelkorinthisch&nbsp;(9) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-49" type="radio" name="fq[facet_period]" value="Ostgriechisch"> <label for="facet-5-49" class="form-check-label"> Ostgriechisch&nbsp;(9) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-50" type="radio" name="fq[facet_period]" value="Attisch, spätgeometrisch"> <label for="facet-5-50" class="form-check-label"> Attisch, spätgeometrisch&nbsp;(8) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-51" type="radio" name="fq[facet_period]" value="Eisenzeit, geometrisch"> <label for="facet-5-51" class="form-check-label"> Eisenzeit, geometrisch&nbsp;(8) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-52" type="radio" name="fq[facet_period]" value="Spätkorinthisch"> <label for="facet-5-52" class="form-check-label"> Spätkorinthisch&nbsp;(8) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-53" type="radio" name="fq[facet_period]" value="Ägyptisch-römisch"> <label for="facet-5-53" class="form-check-label"> Ägyptisch-römisch&nbsp;(8) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-54" type="radio" name="fq[facet_period]" value="Achämenidische Zeit"> <label for="facet-5-54" class="form-check-label"> Achämenidische Zeit&nbsp;(7) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-55" type="radio" name="fq[facet_period]" value="Altbabylonische Zeit"> <label for="facet-5-55" class="form-check-label"> Altbabylonische Zeit&nbsp;(7) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-56" type="radio" name="fq[facet_period]" value="Attisch, weißgrundig"> <label for="facet-5-56" class="form-check-label"> Attisch, weißgrundig&nbsp;(7) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-57" type="radio" name="fq[facet_period]" value="Neuassyrische Zeit"> <label for="facet-5-57" class="form-check-label"> Neuassyrische Zeit&nbsp;(7) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-58" type="radio" name="fq[facet_period]" value="Südarabische Zeit"> <label for="facet-5-58" class="form-check-label"> Südarabische Zeit&nbsp;(7) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-59" type="radio" name="fq[facet_period]" value="Akkadisch III - Periode"> <label for="facet-5-59" class="form-check-label"> Akkadisch III - Periode&nbsp;(6) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-60" type="radio" name="fq[facet_period]" value="Hellenistisch, Myrina"> <label for="facet-5-60" class="form-check-label"> Hellenistisch, Myrina&nbsp;(6) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-61" type="radio" name="fq[facet_period]" value="Korinthisch"> <label for="facet-5-61" class="form-check-label"> Korinthisch&nbsp;(6) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-62" type="radio" name="fq[facet_period]" value="Mittel- bis spätsüdarabische Zeit"> <label for="facet-5-62" class="form-check-label"> Mittel- bis spätsüdarabische Zeit&nbsp;(6) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-63" type="radio" name="fq[facet_period]" value="Neues Reich bis 3. Zwischenzeit"> <label for="facet-5-63" class="form-check-label"> Neues Reich bis 3. Zwischenzeit&nbsp;(6) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-64" type="radio" name="fq[facet_period]" value="Ostgermanisch"> <label for="facet-5-64" class="form-check-label"> Ostgermanisch&nbsp;(6) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-65" type="radio" name="fq[facet_period]" value="Volterra"> <label for="facet-5-65" class="form-check-label"> Volterra&nbsp;(6) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-66" type="radio" name="fq[facet_period]" value="C-Gruppe"> <label for="facet-5-66" class="form-check-label"> C-Gruppe&nbsp;(5) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-67" type="radio" name="fq[facet_period]" value="Kampanisch, rotfigurig"> <label for="facet-5-67" class="form-check-label"> Kampanisch, rotfigurig&nbsp;(5) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-68" type="radio" name="fq[facet_period]" value="Ostgermanisch (gepidisch?)"> <label for="facet-5-68" class="form-check-label"> Ostgermanisch (gepidisch?)&nbsp;(5) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-69" type="radio" name="fq[facet_period]" value="Ptolemäer- bis Römerzeit"> <label for="facet-5-69" class="form-check-label"> Ptolemäer- bis Römerzeit&nbsp;(5) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-70" type="radio" name="fq[facet_period]" value="1. Zwischenzeit bis Mittleres Reich"> <label for="facet-5-70" class="form-check-label"> 1. Zwischenzeit bis Mittleres Reich&nbsp;(4) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-71" type="radio" name="fq[facet_period]" value="Attisch, mittelgeometrisch"> <label for="facet-5-71" class="form-check-label"> Attisch, mittelgeometrisch&nbsp;(4) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-72" type="radio" name="fq[facet_period]" value="Attisch, schwarzfigurig, weißgrundig"> <label for="facet-5-72" class="form-check-label"> Attisch, schwarzfigurig, weißgrundig&nbsp;(4) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-73" type="radio" name="fq[facet_period]" value="Böotisch, Tanagra"> <label for="facet-5-73" class="form-check-label"> Böotisch, Tanagra&nbsp;(4) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-74" type="radio" name="fq[facet_period]" value="Christliche Zeit"> <label for="facet-5-74" class="form-check-label"> Christliche Zeit&nbsp;(4) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-75" type="radio" name="fq[facet_period]" value="Graeco-phönikisch"> <label for="facet-5-75" class="form-check-label"> Graeco-phönikisch&nbsp;(4) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-76" type="radio" name="fq[facet_period]" value="Neues Reich bis Spätzeit"> <label for="facet-5-76" class="form-check-label"> Neues Reich bis Spätzeit&nbsp;(4) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-77" type="radio" name="fq[facet_period]" value="Rhodisch"> <label for="facet-5-77" class="form-check-label"> Rhodisch&nbsp;(4) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-78" type="radio" name="fq[facet_period]" value="Spätantike Zeit"> <label for="facet-5-78" class="form-check-label"> Spätantike Zeit&nbsp;(4) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-79" type="radio" name="fq[facet_period]" value="Spätsüdarabische Zeit"> <label for="facet-5-79" class="form-check-label"> Spätsüdarabische Zeit&nbsp;(4) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-80" type="radio" name="fq[facet_period]" value="Spätzeit oder Griechisch-Römische Zeit"> <label for="facet-5-80" class="form-check-label"> Spätzeit oder Griechisch-Römische Zeit&nbsp;(4) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-81" type="radio" name="fq[facet_period]" value="praenestinisch"> <label for="facet-5-81" class="form-check-label"> praenestinisch&nbsp;(4) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-82" type="radio" name="fq[facet_period]" value="rotfigurig"> <label for="facet-5-82" class="form-check-label"> rotfigurig&nbsp;(4) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-83" type="radio" name="fq[facet_period]" value="1. Zwischenzeit"> <label for="facet-5-83" class="form-check-label"> 1. Zwischenzeit&nbsp;(3) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-84" type="radio" name="fq[facet_period]" value="3. Zwischenzeit bis Ptolemäerzeit"> <label for="facet-5-84" class="form-check-label"> 3. Zwischenzeit bis Ptolemäerzeit&nbsp;(3) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-85" type="radio" name="fq[facet_period]" value="Altes Reich oder 1. Zwischenzeit"> <label for="facet-5-85" class="form-check-label"> Altes Reich oder 1. Zwischenzeit&nbsp;(3) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-86" type="radio" name="fq[facet_period]" value="Meroitisch"> <label for="facet-5-86" class="form-check-label"> Meroitisch&nbsp;(3) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-87" type="radio" name="fq[facet_period]" value="Neues Reich oder Spätzeit"> <label for="facet-5-87" class="form-check-label"> Neues Reich oder Spätzeit&nbsp;(3) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-88" type="radio" name="fq[facet_period]" value="Ostgriechisch, schwarzfigurig"> <label for="facet-5-88" class="form-check-label"> Ostgriechisch, schwarzfigurig&nbsp;(3) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-89" type="radio" name="fq[facet_period]" value="Protokorinthisch, geometrisch"> <label for="facet-5-89" class="form-check-label"> Protokorinthisch, geometrisch&nbsp;(3) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-90" type="radio" name="fq[facet_period]" value="Altsyrisch"> <label for="facet-5-90" class="form-check-label"> Altsyrisch&nbsp;(2) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-91" type="radio" name="fq[facet_period]" value="Altsyrische Zeit"> <label for="facet-5-91" class="form-check-label"> Altsyrische Zeit&nbsp;(2) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-92" type="radio" name="fq[facet_period]" value="Byzantinisch-provinziell"> <label for="facet-5-92" class="form-check-label"> Byzantinisch-provinziell&nbsp;(2) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-93" type="radio" name="fq[facet_period]" value="Djemdet-Nasr-Zeit"> <label for="facet-5-93" class="form-check-label"> Djemdet-Nasr-Zeit&nbsp;(2) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-94" type="radio" name="fq[facet_period]" value="Eisenzeit, hellenistisch"> <label for="facet-5-94" class="form-check-label"> Eisenzeit, hellenistisch&nbsp;(2) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-95" type="radio" name="fq[facet_period]" value="Früh- bis Mittelsüdarabische Zeit"> <label for="facet-5-95" class="form-check-label"> Früh- bis Mittelsüdarabische Zeit&nbsp;(2) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-96" type="radio" name="fq[facet_period]" value="Germanisch (?)"> <label for="facet-5-96" class="form-check-label"> Germanisch (?)&nbsp;(2) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-97" type="radio" name="fq[facet_period]" value="Lakonisch"> <label for="facet-5-97" class="form-check-label"> Lakonisch&nbsp;(2) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-98" type="radio" name="fq[facet_period]" value="Lokroi"> <label for="facet-5-98" class="form-check-label"> Lokroi&nbsp;(2) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-99" type="radio" name="fq[facet_period]" value="Lukanisch, rotfigurig"> <label for="facet-5-99" class="form-check-label"> Lukanisch, rotfigurig&nbsp;(2) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-5-100" type="radio" name="fq[facet_period]" value="Melisch"> <label for="facet-5-100" class="form-check-label"> Melisch&nbsp;(2) </label> </div>
+										 </div>
+									 </div>
+								 </div>
+							 </div>
+						<div class="events-filter__dropdown">
+							<div class="dropdown">
+								<button class="button button-tertiary dropdown-toggle" type="button" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false"> Person <span class="icon material-symbols-outlined flex-shrink-0 notranslate" aria-hidden="true" style="font-size:20px">keyboard_arrow_down</span> </button>
+								<div class="dropdown-menu">
+									<div class="dropdown-menu-inner">
+										<div class="form-check"> <input type="radio" value="" name="fq[facet_allpersons]" class="form-check-input" id="facet-6-all" checked > <label class="form-check-label" for="facet-6-all">All</label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-6-1" type="radio" name="fq[facet_allpersons]" value="J. Löwy, K. und K. Hof-Photograph, Kunst- und Verlagsanstalt (Wien)"> <label for="facet-6-1" class="form-check-label"> J. Löwy, K. und K. Hof-Photograph, Kunst- und Verlagsanstalt (Wien)&nbsp;(2.668) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-6-2" type="radio" name="fq[facet_allpersons]" value="Hadrianus"> <label for="facet-6-2" class="form-check-label"> Hadrianus&nbsp;(2.391) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-6-3" type="radio" name="fq[facet_allpersons]" value="Ferdinand I."> <label for="facet-6-3" class="form-check-label"> Ferdinand I.&nbsp;(1.163) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-6-4" type="radio" name="fq[facet_allpersons]" value="Maria Theresia"> <label for="facet-6-4" class="form-check-label"> Maria Theresia&nbsp;(907) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-6-5" type="radio" name="fq[facet_allpersons]" value="Maximilian I."> <label for="facet-6-5" class="form-check-label"> Maximilian I.&nbsp;(393) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-6-6" type="radio" name="fq[facet_allpersons]" value="Septimius Severus"> <label for="facet-6-6" class="form-check-label"> Septimius Severus&nbsp;(375) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-6-7" type="radio" name="fq[facet_allpersons]" value="Heinrich II. (Jasomirgott)"> <label for="facet-6-7" class="form-check-label"> Heinrich II. (Jasomirgott)&nbsp;(333) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-6-8" type="radio" name="fq[facet_allpersons]" value="anonym"> <label for="facet-6-8" class="form-check-label"> anonym&nbsp;(312) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-6-9" type="radio" name="fq[facet_allpersons]" value="Traianus"> <label for="facet-6-9" class="form-check-label"> Traianus&nbsp;(294) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-6-10" type="radio" name="fq[facet_allpersons]" value="Augustus"> <label for="facet-6-10" class="form-check-label"> Augustus&nbsp;(211) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-6-11" type="radio" name="fq[facet_allpersons]" value="Sigismund"> <label for="facet-6-11" class="form-check-label"> Sigismund&nbsp;(203) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-6-12" type="radio" name="fq[facet_allpersons]" value="Kunsthistorisches Museum Wien, Wien"> <label for="facet-6-12" class="form-check-label"> Kunsthistorisches Museum Wien, Wien&nbsp;(170) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-6-13" type="radio" name="fq[facet_allpersons]" value="Kaiser Maximilian I. Sohn d. Friedrich III. von Habsburg"> <label for="facet-6-13" class="form-check-label"> Kaiser Maximilian I. Sohn d. Friedrich III. von Habsburg&nbsp;(139) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-6-14" type="radio" name="fq[facet_allpersons]" value="Erzherzog Ferdinand II. Sohn des Ferdinand I. von Habsburg Österreich, Landesherr von Tirol"> <label for="facet-6-14" class="form-check-label"> Erzherzog Ferdinand II. Sohn des Ferdinand I. von Habsburg Österreich, Landesherr von Tirol&nbsp;(138) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-6-15" type="radio" name="fq[facet_allpersons]" value="Innsbrucker Hofglashütte"> <label for="facet-6-15" class="form-check-label"> Innsbrucker Hofglashütte&nbsp;(124) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-6-16" type="radio" name="fq[facet_allpersons]" value="Alexander III. posthum"> <label for="facet-6-16" class="form-check-label"> Alexander III. posthum&nbsp;(118) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-6-17" type="radio" name="fq[facet_allpersons]" value="Peter Paul Rubens"> <label for="facet-6-17" class="form-check-label"> Peter Paul Rubens&nbsp;(117) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-6-18" type="radio" name="fq[facet_allpersons]" value="Alphonse Rothschild"> <label for="facet-6-18" class="form-check-label"> Alphonse Rothschild&nbsp;(113) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-6-19" type="radio" name="fq[facet_allpersons]" value="Julius Scherb, Wien"> <label for="facet-6-19" class="form-check-label"> Julius Scherb, Wien&nbsp;(106) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-6-20" type="radio" name="fq[facet_allpersons]" value="Bernhard"> <label for="facet-6-20" class="form-check-label"> Bernhard&nbsp;(105) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-6-21" type="radio" name="fq[facet_allpersons]" value="Kaiser Joseph I. Sohn des Leopold I. von Habsburg Österreich"> <label for="facet-6-21" class="form-check-label"> Kaiser Joseph I. Sohn des Leopold I. von Habsburg Österreich&nbsp;(96) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-6-22" type="radio" name="fq[facet_allpersons]" value="Joseph I."> <label for="facet-6-22" class="form-check-label"> Joseph I.&nbsp;(85) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-6-23" type="radio" name="fq[facet_allpersons]" value="Anthonis van Dyck"> <label for="facet-6-23" class="form-check-label"> Anthonis van Dyck&nbsp;(78) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-6-24" type="radio" name="fq[facet_allpersons]" value="Diocletianus"> <label for="facet-6-24" class="form-check-label"> Diocletianus&nbsp;(76) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-6-25" type="radio" name="fq[facet_allpersons]" value="Alexander III."> <label for="facet-6-25" class="form-check-label"> Alexander III.&nbsp;(72) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-6-26" type="radio" name="fq[facet_allpersons]" value="Kaiser Ferdinand I. Sohn des Philipp von Habsburg Österreich"> <label for="facet-6-26" class="form-check-label"> Kaiser Ferdinand I. Sohn des Philipp von Habsburg Österreich&nbsp;(71) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-6-27" type="radio" name="fq[facet_allpersons]" value="Ottokar II."> <label for="facet-6-27" class="form-check-label"> Ottokar II.&nbsp;(66) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-6-28" type="radio" name="fq[facet_allpersons]" value="Tiziano Vecellio, gen. Tizian"> <label for="facet-6-28" class="form-check-label"> Tiziano Vecellio, gen. Tizian&nbsp;(64) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-6-29" type="radio" name="fq[facet_allpersons]" value="Anton Matthias Joseph Domanek"> <label for="facet-6-29" class="form-check-label"> Anton Matthias Joseph Domanek&nbsp;(63) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-6-30" type="radio" name="fq[facet_allpersons]" value="Constantinus I. (Magnus)"> <label for="facet-6-30" class="form-check-label"> Constantinus I. (Magnus)&nbsp;(60) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-6-31" type="radio" name="fq[facet_allpersons]" value="unbekannt"> <label for="facet-6-31" class="form-check-label"> unbekannt&nbsp;(60) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-6-32" type="radio" name="fq[facet_allpersons]" value="Jacopo Robusti, gen. Tintoretto"> <label for="facet-6-32" class="form-check-label"> Jacopo Robusti, gen. Tintoretto&nbsp;(58) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-6-33" type="radio" name="fq[facet_allpersons]" value="Konrad Witz"> <label for="facet-6-33" class="form-check-label"> Konrad Witz&nbsp;(56) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-6-34" type="radio" name="fq[facet_allpersons]" value="Kaiser Karl VI. Sohn des Leopold I. von Habsburg Österreich"> <label for="facet-6-34" class="form-check-label"> Kaiser Karl VI. Sohn des Leopold I. von Habsburg Österreich&nbsp;(55) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-6-35" type="radio" name="fq[facet_allpersons]" value="Lucas Cranach d. Ä."> <label for="facet-6-35" class="form-check-label"> Lucas Cranach d. Ä.&nbsp;(54) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-6-36" type="radio" name="fq[facet_allpersons]" value="Niederländisch"> <label for="facet-6-36" class="form-check-label"> Niederländisch&nbsp;(54) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-6-37" type="radio" name="fq[facet_allpersons]" value="Kaiser Maximilian II., Sohn des Ferdinand I. von Habsburg Österreich"> <label for="facet-6-37" class="form-check-label"> Kaiser Maximilian II., Sohn des Ferdinand I. von Habsburg Österreich&nbsp;(53) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-6-38" type="radio" name="fq[facet_allpersons]" value="Albrecht Dürer"> <label for="facet-6-38" class="form-check-label"> Albrecht Dürer&nbsp;(50) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-6-39" type="radio" name="fq[facet_allpersons]" value="Ferdinand van Kessel"> <label for="facet-6-39" class="form-check-label"> Ferdinand van Kessel&nbsp;(50) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-6-40" type="radio" name="fq[facet_allpersons]" value="Paolo Caliari, gen. Veronese"> <label for="facet-6-40" class="form-check-label"> Paolo Caliari, gen. Veronese&nbsp;(50) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-6-41" type="radio" name="fq[facet_allpersons]" value="Valens II."> <label for="facet-6-41" class="form-check-label"> Valens II.&nbsp;(50) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-6-42" type="radio" name="fq[facet_allpersons]" value="Albrecht II."> <label for="facet-6-42" class="form-check-label"> Albrecht II.&nbsp;(49) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-6-43" type="radio" name="fq[facet_allpersons]" value="Deutsch"> <label for="facet-6-43" class="form-check-label"> Deutsch&nbsp;(49) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-6-44" type="radio" name="fq[facet_allpersons]" value="David Teniers d. J."> <label for="facet-6-44" class="form-check-label"> David Teniers d. J.&nbsp;(48) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-6-45" type="radio" name="fq[facet_allpersons]" value="Louis Rothschild"> <label for="facet-6-45" class="form-check-label"> Louis Rothschild&nbsp;(48) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-6-46" type="radio" name="fq[facet_allpersons]" value="Friedrich III., der Schöne"> <label for="facet-6-46" class="form-check-label"> Friedrich III., der Schöne&nbsp;(47) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-6-47" type="radio" name="fq[facet_allpersons]" value="Leopold VI."> <label for="facet-6-47" class="form-check-label"> Leopold VI.&nbsp;(47) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-6-48" type="radio" name="fq[facet_allpersons]" value="Sigismund Ehg."> <label for="facet-6-48" class="form-check-label"> Sigismund Ehg.&nbsp;(47) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-6-49" type="radio" name="fq[facet_allpersons]" value="Aurelianus"> <label for="facet-6-49" class="form-check-label"> Aurelianus&nbsp;(46) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-6-50" type="radio" name="fq[facet_allpersons]" value="Gordianus III."> <label for="facet-6-50" class="form-check-label"> Gordianus III.&nbsp;(46) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-6-51" type="radio" name="fq[facet_allpersons]" value="Hans Wecker"> <label for="facet-6-51" class="form-check-label"> Hans Wecker&nbsp;(46) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-6-52" type="radio" name="fq[facet_allpersons]" value="Pieter Bruegel d. Ä."> <label for="facet-6-52" class="form-check-label"> Pieter Bruegel d. Ä.&nbsp;(44) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-6-53" type="radio" name="fq[facet_allpersons]" value="Albrecht I."> <label for="facet-6-53" class="form-check-label"> Albrecht I.&nbsp;(41) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-6-54" type="radio" name="fq[facet_allpersons]" value="Kaiser Karl V. Sohn des Philipp von Habsburg"> <label for="facet-6-54" class="form-check-label"> Kaiser Karl V. Sohn des Philipp von Habsburg&nbsp;(41) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-6-55" type="radio" name="fq[facet_allpersons]" value="Cesare Vecellio"> <label for="facet-6-55" class="form-check-label"> Cesare Vecellio&nbsp;(40) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-6-56" type="radio" name="fq[facet_allpersons]" value="Christoforo Chrieger"> <label for="facet-6-56" class="form-check-label"> Christoforo Chrieger&nbsp;(40) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-6-57" type="radio" name="fq[facet_allpersons]" value="Jan van den Hoecke"> <label for="facet-6-57" class="form-check-label"> Jan van den Hoecke&nbsp;(40) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-6-58" type="radio" name="fq[facet_allpersons]" value="Kaiserin Maria Theresia Tochter des Karl VI. von Habsburg Österreich"> <label for="facet-6-58" class="form-check-label"> Kaiserin Maria Theresia Tochter des Karl VI. von Habsburg Österreich&nbsp;(40) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-6-59" type="radio" name="fq[facet_allpersons]" value="Kaiser Leopold I."> <label for="facet-6-59" class="form-check-label"> Kaiser Leopold I.&nbsp;(39) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-6-60" type="radio" name="fq[facet_allpersons]" value="Österreich"> <label for="facet-6-60" class="form-check-label"> Österreich&nbsp;(39) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-6-61" type="radio" name="fq[facet_allpersons]" value="Jan Brueghel d. Ä."> <label for="facet-6-61" class="form-check-label"> Jan Brueghel d. Ä.&nbsp;(38) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-6-62" type="radio" name="fq[facet_allpersons]" value="Karl Maria Kölbl"> <label for="facet-6-62" class="form-check-label"> Karl Maria Kölbl&nbsp;(38) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-6-63" type="radio" name="fq[facet_allpersons]" value="Hans von Aachen"> <label for="facet-6-63" class="form-check-label"> Hans von Aachen&nbsp;(37) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-6-64" type="radio" name="fq[facet_allpersons]" value="Erzherzog Leopold Wilhelm Sohn des Ferdinand II. von Habsburg Österreich"> <label for="facet-6-64" class="form-check-label"> Erzherzog Leopold Wilhelm Sohn des Ferdinand II. von Habsburg Österreich&nbsp;(36) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-6-65" type="radio" name="fq[facet_allpersons]" value="Kaiser Rudolf II., Sohn Kaiser Maximilians II. von Habsburg"> <label for="facet-6-65" class="form-check-label"> Kaiser Rudolf II., Sohn Kaiser Maximilians II. von Habsburg&nbsp;(35) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-6-66" type="radio" name="fq[facet_allpersons]" value="Martin van Meytens d. J."> <label for="facet-6-66" class="form-check-label"> Martin van Meytens d. J.&nbsp;(35) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-6-67" type="radio" name="fq[facet_allpersons]" value="Constans I. (nach der Refom von 348)"> <label for="facet-6-67" class="form-check-label"> Constans I. (nach der Refom von 348)&nbsp;(34) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-6-68" type="radio" name="fq[facet_allpersons]" value="Georg Hörmann , Konzept"> <label for="facet-6-68" class="form-check-label"> Georg Hörmann , Konzept&nbsp;(33) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-6-69" type="radio" name="fq[facet_allpersons]" value="Hans Kels d. Ä. , Schnitzerei"> <label for="facet-6-69" class="form-check-label"> Hans Kels d. Ä. , Schnitzerei&nbsp;(33) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-6-70" type="radio" name="fq[facet_allpersons]" value="Jörg Breu d. Ä. , Entwurf"> <label for="facet-6-70" class="form-check-label"> Jörg Breu d. Ä. , Entwurf&nbsp;(33) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-6-71" type="radio" name="fq[facet_allpersons]" value="Jörg Seusenhofer , Plattner"> <label for="facet-6-71" class="form-check-label"> Jörg Seusenhofer , Plattner&nbsp;(33) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-6-72" type="radio" name="fq[facet_allpersons]" value="Leandro da Ponte gen. Leandro Bassano"> <label for="facet-6-72" class="form-check-label"> Leandro da Ponte gen. Leandro Bassano&nbsp;(33) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-6-73" type="radio" name="fq[facet_allpersons]" value="Constantinus II. (337 - 361) nach der Reform von 348"> <label for="facet-6-73" class="form-check-label"> Constantinus II. (337 - 361) nach der Reform von 348&nbsp;(32) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-6-74" type="radio" name="fq[facet_allpersons]" value="Antoninus I. Pius"> <label for="facet-6-74" class="form-check-label"> Antoninus I. Pius&nbsp;(31) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-6-75" type="radio" name="fq[facet_allpersons]" value="Hans Repfl"> <label for="facet-6-75" class="form-check-label"> Hans Repfl&nbsp;(31) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-6-76" type="radio" name="fq[facet_allpersons]" value="Peeter Snayers"> <label for="facet-6-76" class="form-check-label"> Peeter Snayers&nbsp;(31) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-6-77" type="radio" name="fq[facet_allpersons]" value="Ferdinand II."> <label for="facet-6-77" class="form-check-label"> Ferdinand II.&nbsp;(30) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-6-78" type="radio" name="fq[facet_allpersons]" value="Gallienus"> <label for="facet-6-78" class="form-check-label"> Gallienus&nbsp;(30) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-6-79" type="radio" name="fq[facet_allpersons]" value="Guido Reni"> <label for="facet-6-79" class="form-check-label"> Guido Reni&nbsp;(30) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-6-80" type="radio" name="fq[facet_allpersons]" value="Hans Adam Weissenkircher"> <label for="facet-6-80" class="form-check-label"> Hans Adam Weissenkircher&nbsp;(30) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-6-81" type="radio" name="fq[facet_allpersons]" value="Venezianisch"> <label for="facet-6-81" class="form-check-label"> Venezianisch&nbsp;(30) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-6-82" type="radio" name="fq[facet_allpersons]" value="Antoninus III. (Caracalla)"> <label for="facet-6-82" class="form-check-label"> Antoninus III. (Caracalla)&nbsp;(29) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-6-83" type="radio" name="fq[facet_allpersons]" value="Bernardo Bellotto, gen. Canaletto"> <label for="facet-6-83" class="form-check-label"> Bernardo Bellotto, gen. Canaletto&nbsp;(29) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-6-84" type="radio" name="fq[facet_allpersons]" value="Ferdinand Georg Waldmüller"> <label for="facet-6-84" class="form-check-label"> Ferdinand Georg Waldmüller&nbsp;(29) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-6-85" type="radio" name="fq[facet_allpersons]" value="Franz Wögerer , Aufbereiter"> <label for="facet-6-85" class="form-check-label"> Franz Wögerer , Aufbereiter&nbsp;(29) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-6-86" type="radio" name="fq[facet_allpersons]" value="Licinius I."> <label for="facet-6-86" class="form-check-label"> Licinius I.&nbsp;(29) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-6-87" type="radio" name="fq[facet_allpersons]" value="Luca Giordano"> <label for="facet-6-87" class="form-check-label"> Luca Giordano&nbsp;(29) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-6-88" type="radio" name="fq[facet_allpersons]" value="Kaiser Ferdinand III. Sohn des Ferdinand II. von Habsburg Österreich"> <label for="facet-6-88" class="form-check-label"> Kaiser Ferdinand III. Sohn des Ferdinand II. von Habsburg Österreich&nbsp;(28) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-6-89" type="radio" name="fq[facet_allpersons]" value="Nero"> <label for="facet-6-89" class="form-check-label"> Nero&nbsp;(28) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-6-90" type="radio" name="fq[facet_allpersons]" value="Rudolf I."> <label for="facet-6-90" class="form-check-label"> Rudolf I.&nbsp;(28) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-6-91" type="radio" name="fq[facet_allpersons]" value="Diego Rodríguez de Silva y Velázquez"> <label for="facet-6-91" class="form-check-label"> Diego Rodríguez de Silva y Velázquez&nbsp;(27) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-6-92" type="radio" name="fq[facet_allpersons]" value="Hans Perckhammer , Ätzer"> <label for="facet-6-92" class="form-check-label"> Hans Perckhammer , Ätzer&nbsp;(27) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-6-93" type="radio" name="fq[facet_allpersons]" value="Kaiser Franz Joseph I."> <label for="facet-6-93" class="form-check-label"> Kaiser Franz Joseph I.&nbsp;(27) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-6-94" type="radio" name="fq[facet_allpersons]" value="Lucas I. van Valckenborch"> <label for="facet-6-94" class="form-check-label"> Lucas I. van Valckenborch&nbsp;(27) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-6-95" type="radio" name="fq[facet_allpersons]" value="k. k. Kunsthistorisches Hofmuseum"> <label for="facet-6-95" class="form-check-label"> k. k. Kunsthistorisches Hofmuseum&nbsp;(27) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-6-96" type="radio" name="fq[facet_allpersons]" value="Francesco da Ponte, gen. Francesco Bassano"> <label for="facet-6-96" class="form-check-label"> Francesco da Ponte, gen. Francesco Bassano&nbsp;(26) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-6-97" type="radio" name="fq[facet_allpersons]" value="Kaiser Franz I. (II.) Sohn des Leopold II. von Habsburg Lothringen"> <label for="facet-6-97" class="form-check-label"> Kaiser Franz I. (II.) Sohn des Leopold II. von Habsburg Lothringen&nbsp;(26) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-6-98" type="radio" name="fq[facet_allpersons]" value="Magnentius"> <label for="facet-6-98" class="form-check-label"> Magnentius&nbsp;(26) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-6-99" type="radio" name="fq[facet_allpersons]" value="Rembrandt Harmensz van Rijn"> <label for="facet-6-99" class="form-check-label"> Rembrandt Harmensz van Rijn&nbsp;(26) </label> </div>
+										<div class="form-check"> <input class="form-check-input" id="facet-6-100" type="radio" name="fq[facet_allpersons]" value="Bartholomäus Spranger"> <label for="facet-6-100" class="form-check-label"> Bartholomäus Spranger&nbsp;(25) </label> </div>
+										 </div>
+									 </div>
+								 </div>
+							 </div>
+						 </div>
+					 </div>
+				<div class="filter-calender__checkboxes__outer">
+					<div class="filter-calender__checkboxes mt-3">
+						<div class="filter-calender__check">
+							<div class="form-check"> <input type="hidden" name="fq[facet_has_image]" value=""><input class="form-check-input" id="facet-has-image" type="checkbox" name="fq[facet_has_image][]" value="1"> <label class="form-check-label" data-text="with image (46.341)" for="facet-has-image">with image (46.341)</label> </div>
+							 </div>
+						<div class="filter-calender__check">
+							<div class="form-check"> <input type="hidden" name="fq[facet_is_currently_shown]" value=""><input class="form-check-input" id="facet-is-currently-shown" type="checkbox" name="fq[facet_is_currently_shown][]" value="1"> <label class="form-check-label" data-text="currently shown (7.630)" for="facet-is-currently-shown">currently shown (7.630)</label> </div>
+							 </div>
+						 </div>
+					 </div>
+				 </div>
+			<div id="object-list-layout" class="object-list-layout" hx-swap-oob="true">
+				<div class="form-control-row">
+					<div class="form-floating me-2"> <select class="form-select" id="object-layout-toggle" name="view"><option value="0" selected="selected">Text &amp; images</option> <option value="1">Thumbnails</option> </select> <label for="object-layout-toggle" class="form-label">View</label> </div>
+					<div class="form-floating"> <select class="form-select" id="object-sort-toggle" name="sort"><option value="score:desc">Relevancy</option> <option value="date_begin:desc">Dating new-old</option> <option value="date_begin:asc">Dating old-new</option> <option value="sort_person:desc">Producer/artist Z-A</option> <option value="sort_person:asc">Producer/artist A-Z</option> <option value="sort_classification:desc">Object type Z-A</option> <option value="sort_classification:asc">Object type Z-A</option> </select> <label for="object-sort-toggle" class="form-label">Sorted by</label> </div>
+					 </div>
+				 </div>
+			<div class="row object-gallery-isotope g-5" id="object-list">
+				<div class="col-md-4 grid-item">
+					<div class="object-gallery-item"> <a data-id="59118" class="stretched-link detail flex-column" target="_top" href="https://www.khm.at/en/artworks/adler-59118-1">
+							<div class="figure position-relative mb-2 mb-lg-0">
+								<picture> <source srcset="/typo3temp/assets/_processed_/4/3/csm_ANSA_IXa_26_1_CD_web1_fc6f7d3826.jpg 2x,/typo3temp/assets/_processed_/4/3/csm_ANSA_IXa_26_1_CD_web1_29a15091b9.jpg 1x" width="775" height="1033" type="image/jpeg"> <source srcset="/typo3temp/assets/_processed_/4/3/csm_ANSA_IXa_26_1_CD_web1_67ae8d73cd.webp 2x,/typo3temp/assets/_processed_/4/3/csm_ANSA_IXa_26_1_CD_web1_64ccbef6dc.webp 1x" width="775" height="1033" type="image/webp"> <img src="/typo3temp/assets/_processed_/4/3/csm_ANSA_IXa_26_1_CD_web1_64ccbef6dc.webp" width="775" height="1033" class="figure-img img-fluid object-fit format-portrait" alt="Adler" loading="lazy"></picture>
+								 </div>
+							 <span class="visually-hidden">to detail page</span> </a>
+						<div class="d-flex justify-content-between align-items-start">
+							<div class="object-caption">
+								<p> <span> Kameo: Adler</span> <span><small>Römisch, Frühe Kaiserzeit</small></span> <span><small>27 v. Chr.</small></span> </p>
+								 </div>
+							<button type="button" class="btn btn-link btn-my-list-add p-0 remember-object-link" data-id="59118" title="Add to my list" hx-get="/en/?command=toggle&amp;objectID=59118&amp;type=687&amp;cHash=c1454dc9cda71960b9f6053f8c991e0b" hx-trigger="click" hx-target="this" hx-swap="none" data-objectTitle="Adler" data-target-url=""> <span class="icon material-symbols-outlined star flex-shrink-0 notranslate" aria-hidden="true" style="font-size:23px">star</span> <span class="icon material-symbols-outlined check flex-shrink-0 notranslate" aria-hidden="true" style="font-size:23px">check</span> <span class="add">Add to my list</span> <span class="remove">Remove from my list</span> </button>
+							 </div>
+						 </div>
+					 </div>
+				<div class="col-md-4 grid-item">
+					<div class="object-gallery-item"> <a data-id="59121" class="stretched-link detail flex-column" target="_top" href="https://www.khm.at/en/artworks/loewe-59121-1">
+							<div class="figure position-relative mb-2 mb-lg-0">
+								<picture> <source srcset="/typo3temp/assets/_processed_/8/1/csm_ANSA_IXa_29_1_CD_web1_d69c20432d.jpg 2x,/typo3temp/assets/_processed_/8/1/csm_ANSA_IXa_29_1_CD_web1_1a444a62dc.jpg 1x" width="775" height="1033" type="image/jpeg"> <source srcset="/typo3temp/assets/_processed_/8/1/csm_ANSA_IXa_29_1_CD_web1_a913bf6716.webp 2x,/typo3temp/assets/_processed_/8/1/csm_ANSA_IXa_29_1_CD_web1_5b6515f19f.webp 1x" width="775" height="1033" type="image/webp"> <img src="/typo3temp/assets/_processed_/8/1/csm_ANSA_IXa_29_1_CD_web1_5b6515f19f.webp" width="775" height="1033" class="figure-img img-fluid object-fit format-portrait" alt="Löwe" loading="lazy"></picture>
+								 </div>
+							 <span class="visually-hidden">to detail page</span> </a>
+						<div class="d-flex justify-content-between align-items-start">
+							<div class="object-caption">
+								<p> <span> Kameo: Löwe</span> <span><small>Römisch, Frühe Kaiserzeit</small></span> <span><small>Mitte 1. - Mitte 2. Jh. n. Chr.</small></span> </p>
+								 </div>
+							<button type="button" class="btn btn-link btn-my-list-add p-0 remember-object-link" data-id="59121" title="Add to my list" hx-get="/en/?command=toggle&amp;objectID=59121&amp;type=687&amp;cHash=4ec787319bcde21912d9df935719299b" hx-trigger="click" hx-target="this" hx-swap="none" data-objectTitle="Löwe" data-target-url=""> <span class="icon material-symbols-outlined star flex-shrink-0 notranslate" aria-hidden="true" style="font-size:23px">star</span> <span class="icon material-symbols-outlined check flex-shrink-0 notranslate" aria-hidden="true" style="font-size:23px">check</span> <span class="add">Add to my list</span> <span class="remove">Remove from my list</span> </button>
+							 </div>
+						 </div>
+					 </div>
+				<div class="col-md-4 grid-item">
+					<div class="object-gallery-item"> <a data-id="59122" class="stretched-link detail flex-column" target="_top" href="https://www.khm.at/en/artworks/portraet-des-drusus-maior-59122-1">
+							<div class="figure position-relative mb-2 mb-lg-0">
+								<picture> <source srcset="/typo3temp/assets/_processed_/5/c/csm_ANSA_IXa_30_1_CD_web1_bc618caec3.jpg 2x,/typo3temp/assets/_processed_/5/c/csm_ANSA_IXa_30_1_CD_web1_925f6380c3.jpg 1x" width="775" height="1033" type="image/jpeg"> <source srcset="/typo3temp/assets/_processed_/5/c/csm_ANSA_IXa_30_1_CD_web1_d97e99382b.webp 2x,/typo3temp/assets/_processed_/5/c/csm_ANSA_IXa_30_1_CD_web1_1ef3871839.webp 1x" width="775" height="1033" type="image/webp"> <img src="/typo3temp/assets/_processed_/5/c/csm_ANSA_IXa_30_1_CD_web1_1ef3871839.webp" width="775" height="1033" class="figure-img img-fluid object-fit format-portrait" alt="Porträt des Drusus maior" loading="lazy"></picture>
+								 </div>
+							 <span class="visually-hidden">to detail page</span> </a>
+						<div class="d-flex justify-content-between align-items-start">
+							<div class="object-caption">
+								<p> <span> Glaskameo des Herophilos: Porträt des Drusus maior</span> <span><small>Römisch, Frühe Kaiserzeit</small></span> <span><small>um 20 n. Chr.</small></span> </p>
+								 </div>
+							<button type="button" class="btn btn-link btn-my-list-add p-0 remember-object-link" data-id="59122" title="Add to my list" hx-get="/en/?command=toggle&amp;objectID=59122&amp;type=687&amp;cHash=08a0fcd1f8ec7bd1a98f990c750dc36e" hx-trigger="click" hx-target="this" hx-swap="none" data-objectTitle="Porträt des Drusus maior" data-target-url=""> <span class="icon material-symbols-outlined star flex-shrink-0 notranslate" aria-hidden="true" style="font-size:23px">star</span> <span class="icon material-symbols-outlined check flex-shrink-0 notranslate" aria-hidden="true" style="font-size:23px">check</span> <span class="add">Add to my list</span> <span class="remove">Remove from my list</span> </button>
+							 </div>
+						 </div>
+					 </div>
+				<div class="col-md-4 grid-item">
+					<div class="object-gallery-item"> <a data-id="59130" class="stretched-link detail flex-column" target="_top" href="https://www.khm.at/en/artworks/familienbild-59130-1">
+							<div class="figure position-relative mb-2 mb-lg-0">
+								<picture> <source srcset="/typo3temp/assets/_processed_/1/9/csm_ANSA_IXa_38_01_9e3978a5b6.jpg 2x,/typo3temp/assets/_processed_/1/9/csm_ANSA_IXa_38_01_c0e099d145.jpg 1x" width="775" height="582" type="image/jpeg"> <source srcset="/typo3temp/assets/_processed_/1/9/csm_ANSA_IXa_38_01_9c0825ec12.webp 2x,/typo3temp/assets/_processed_/1/9/csm_ANSA_IXa_38_01_aae78f9969.webp 1x" width="775" height="582" type="image/webp"> <img src="/typo3temp/assets/_processed_/1/9/csm_ANSA_IXa_38_01_aae78f9969.webp" width="775" height="582" class="figure-img img-fluid object-fit format-landscape" alt="Familienbild" loading="lazy"></picture>
+								 </div>
+							 <span class="visually-hidden">to detail page</span> </a>
+						<div class="d-flex justify-content-between align-items-start">
+							<div class="object-caption">
+								<p> <span> Gemme: Familienbild</span> <span><small>Römisch, Späte Kaiserzeit</small></span> <span><small>Mitte 3. Jh. n. Chr.</small></span> </p>
+								 </div>
+							<button type="button" class="btn btn-link btn-my-list-add p-0 remember-object-link" data-id="59130" title="Add to my list" hx-get="/en/?command=toggle&amp;objectID=59130&amp;type=687&amp;cHash=636ff1ff984f2995ca331504e62e2344" hx-trigger="click" hx-target="this" hx-swap="none" data-objectTitle="Familienbild" data-target-url=""> <span class="icon material-symbols-outlined star flex-shrink-0 notranslate" aria-hidden="true" style="font-size:23px">star</span> <span class="icon material-symbols-outlined check flex-shrink-0 notranslate" aria-hidden="true" style="font-size:23px">check</span> <span class="add">Add to my list</span> <span class="remove">Remove from my list</span> </button>
+							 </div>
+						 </div>
+					 </div>
+				<div class="col-md-4 grid-item">
+					<div class="object-gallery-item"> <a data-id="59151" class="stretched-link detail flex-column" target="_top" href="https://www.khm.at/en/artworks/kaiser-caligula-und-roma-59151-1">
+							<div class="figure position-relative mb-2 mb-lg-0">
+								<picture> <source srcset="/typo3temp/assets/_processed_/4/6/csm_ANSA_IXa_59_1_CD_web1_ea5f1567e5.jpg 2x,/typo3temp/assets/_processed_/4/6/csm_ANSA_IXa_59_1_CD_web1_724ef58eef.jpg 1x" width="775" height="1033" type="image/jpeg"> <source srcset="/typo3temp/assets/_processed_/4/6/csm_ANSA_IXa_59_1_CD_web1_2b8ee08f92.webp 2x,/typo3temp/assets/_processed_/4/6/csm_ANSA_IXa_59_1_CD_web1_cb9cd45a37.webp 1x" width="775" height="1033" type="image/webp"> <img src="/typo3temp/assets/_processed_/4/6/csm_ANSA_IXa_59_1_CD_web1_cb9cd45a37.webp" width="775" height="1033" class="figure-img img-fluid object-fit format-portrait" alt="Kaiser Caligula und Roma" loading="lazy"></picture>
+								 </div>
+							 <span class="visually-hidden">to detail page</span> </a>
+						<div class="d-flex justify-content-between align-items-start">
+							<div class="object-caption">
+								<p> <span> Kameo: Kaiser Caligula und Roma</span> <span><small>Römisch, Frühe Kaiserzeit</small></span> <span><small>38 - 41 n. Chr.</small></span> </p>
+								 </div>
+							<button type="button" class="btn btn-link btn-my-list-add p-0 remember-object-link" data-id="59151" title="Add to my list" hx-get="/en/?command=toggle&amp;objectID=59151&amp;type=687&amp;cHash=dc290672b806d8a03b47e1c6e4ba5a18" hx-trigger="click" hx-target="this" hx-swap="none" data-objectTitle="Kaiser Caligula und Roma" data-target-url=""> <span class="icon material-symbols-outlined star flex-shrink-0 notranslate" aria-hidden="true" style="font-size:23px">star</span> <span class="icon material-symbols-outlined check flex-shrink-0 notranslate" aria-hidden="true" style="font-size:23px">check</span> <span class="add">Add to my list</span> <span class="remove">Remove from my list</span> </button>
+							 </div>
+						 </div>
+					 </div>
+				<div class="col-md-4 grid-item">
+					<div class="object-gallery-item"> <a data-id="59154" class="stretched-link detail flex-column" target="_top" href="https://www.khm.at/en/artworks/poseidon-as-lord-of-the-isthmian-games-59154">
+							<div class="figure position-relative mb-2 mb-lg-0">
+								<picture> <source srcset="/typo3temp/assets/_processed_/c/9/csm_ANSA_IX_a_62_43720_web1_d77fac845a.jpg 2x,/typo3temp/assets/_processed_/c/9/csm_ANSA_IX_a_62_43720_web1_b8a3cf0466.jpg 1x" width="775" height="681" type="image/jpeg"> <source srcset="/typo3temp/assets/_processed_/c/9/csm_ANSA_IX_a_62_43720_web1_e720916704.webp 2x,/typo3temp/assets/_processed_/c/9/csm_ANSA_IX_a_62_43720_web1_0c4fb6fcf6.webp 1x" width="775" height="681" type="image/webp"> <img src="/typo3temp/assets/_processed_/c/9/csm_ANSA_IX_a_62_43720_web1_0c4fb6fcf6.webp" width="775" height="681" class="figure-img img-fluid object-fit format-landscape" alt="Poseidon als Herr der Isthmischen Spiele (?)" loading="lazy"></picture>
+								 </div>
+							 <span class="visually-hidden">to detail page</span> </a>
+						<div class="d-flex justify-content-between align-items-start">
+							<div class="object-caption">
+								<p> <span> Poseidon als Herr der Isthmischen Spiele (?)</span> <span><small>Mitte 13. Jh. (Kameo), Anfang 19. Jh. (Fassung)</small></span> </p>
+								 </div>
+							<button type="button" class="btn btn-link btn-my-list-add p-0 remember-object-link" data-id="59154" title="Add to my list" hx-get="/en/?command=toggle&amp;objectID=59154&amp;type=687&amp;cHash=2826d142f257ec6d9b6fbb75ebeb6629" hx-trigger="click" hx-target="this" hx-swap="none" data-objectTitle="Poseidon als Herr der Isthmischen Spiele (?)" data-target-url=""> <span class="icon material-symbols-outlined star flex-shrink-0 notranslate" aria-hidden="true" style="font-size:23px">star</span> <span class="icon material-symbols-outlined check flex-shrink-0 notranslate" aria-hidden="true" style="font-size:23px">check</span> <span class="add">Add to my list</span> <span class="remove">Remove from my list</span> </button>
+							 </div>
+						 </div>
+					 </div>
+				<div class="col-md-4 grid-item">
+					<div class="object-gallery-item"> <a data-id="59155" class="stretched-link detail flex-column" target="_top" href="https://www.khm.at/en/artworks/gemma-claudia-59155-1">
+							<div class="figure position-relative mb-2 mb-lg-0">
+								<picture> <source srcset="/typo3temp/assets/_processed_/6/9/csm_ANSA_IXa_63_1_CD_web1_0b1b00f285.jpg 2x,/typo3temp/assets/_processed_/6/9/csm_ANSA_IXa_63_1_CD_web1_1a35764e47.jpg 1x" width="775" height="582" type="image/jpeg"> <source srcset="/typo3temp/assets/_processed_/6/9/csm_ANSA_IXa_63_1_CD_web1_426509235d.webp 2x,/typo3temp/assets/_processed_/6/9/csm_ANSA_IXa_63_1_CD_web1_81e6c8c32c.webp 1x" width="775" height="582" type="image/webp"> <img src="/typo3temp/assets/_processed_/6/9/csm_ANSA_IXa_63_1_CD_web1_81e6c8c32c.webp" width="775" height="582" class="figure-img img-fluid object-fit format-landscape" alt="Gemma Claudia" loading="lazy"></picture>
+								 </div>
+							 <span class="visually-hidden">to detail page</span> </a>
+						<div class="d-flex justify-content-between align-items-start">
+							<div class="object-caption">
+								<p> <span> Kameo: Gemma Claudia</span> <span><small>Römisch, Frühe Kaiserzeit</small></span> <span><small>49 n. Chr.</small></span> </p>
+								 </div>
+							<button type="button" class="btn btn-link btn-my-list-add p-0 remember-object-link" data-id="59155" title="Add to my list" hx-get="/en/?command=toggle&amp;objectID=59155&amp;type=687&amp;cHash=dba1a883ebf66ab3a7965ade68d6e8c7" hx-trigger="click" hx-target="this" hx-swap="none" data-objectTitle="Gemma Claudia" data-target-url=""> <span class="icon material-symbols-outlined star flex-shrink-0 notranslate" aria-hidden="true" style="font-size:23px">star</span> <span class="icon material-symbols-outlined check flex-shrink-0 notranslate" aria-hidden="true" style="font-size:23px">check</span> <span class="add">Add to my list</span> <span class="remove">Remove from my list</span> </button>
+							 </div>
+						 </div>
+					 </div>
+				<div class="col-md-4 grid-item">
+					<div class="object-gallery-item"> <a data-id="59171" class="stretched-link detail flex-column" target="_top" href="https://www.khm.at/en/artworks/gemma-augustea-59171-1">
+							<div class="figure position-relative mb-2 mb-lg-0">
+								<picture> <source srcset="/typo3temp/assets/_processed_/b/1/csm_ANSA_IXa_79_1_CD_web1_ab4e94ac9f.jpg 2x,/typo3temp/assets/_processed_/b/1/csm_ANSA_IXa_79_1_CD_web1_3c63c951ff.jpg 1x" width="775" height="582" type="image/jpeg"> <source srcset="/typo3temp/assets/_processed_/b/1/csm_ANSA_IXa_79_1_CD_web1_23d47f3645.webp 2x,/typo3temp/assets/_processed_/b/1/csm_ANSA_IXa_79_1_CD_web1_3684d0c8c4.webp 1x" width="775" height="582" type="image/webp"> <img src="/typo3temp/assets/_processed_/b/1/csm_ANSA_IXa_79_1_CD_web1_3684d0c8c4.webp" width="775" height="582" class="figure-img img-fluid object-fit format-landscape" alt="Gemma Augustea" loading="lazy"></picture>
+								 </div>
+							 <span class="visually-hidden">to detail page</span> </a>
+						<div class="d-flex justify-content-between align-items-start">
+							<div class="object-caption">
+								<p> <span> Kameo: Gemma Augustea</span> <span><small>Römisch, Frühe Kaiserzeit</small></span> <span><small>9 - 12 n. Chr.</small></span> </p>
+								 </div>
+							<button type="button" class="btn btn-link btn-my-list-add p-0 remember-object-link" data-id="59171" title="Add to my list" hx-get="/en/?command=toggle&amp;objectID=59171&amp;type=687&amp;cHash=700fee9a9565b18b60f0db643b66e4b7" hx-trigger="click" hx-target="this" hx-swap="none" data-objectTitle="Gemma Augustea" data-target-url=""> <span class="icon material-symbols-outlined star flex-shrink-0 notranslate" aria-hidden="true" style="font-size:23px">star</span> <span class="icon material-symbols-outlined check flex-shrink-0 notranslate" aria-hidden="true" style="font-size:23px">check</span> <span class="add">Add to my list</span> <span class="remove">Remove from my list</span> </button>
+							 </div>
+						 </div>
+					 </div>
+				<div class="col-md-4 grid-item">
+					<div class="object-gallery-item"> <a data-id="59173" class="stretched-link detail flex-column" target="_top" href="https://www.khm.at/en/artworks/ptolemaeer-kameo-59173-1">
+							<div class="figure position-relative mb-2 mb-lg-0">
+								<picture> <source srcset="/typo3temp/assets/_processed_/5/8/csm_ANSA_IXa_81_1_CD_web1_c160f62517.jpg 2x,/typo3temp/assets/_processed_/5/8/csm_ANSA_IXa_81_1_CD_web1_e46182ef9c.jpg 1x" width="775" height="1033" type="image/jpeg"> <source srcset="/typo3temp/assets/_processed_/5/8/csm_ANSA_IXa_81_1_CD_web1_6de64897a2.webp 2x,/typo3temp/assets/_processed_/5/8/csm_ANSA_IXa_81_1_CD_web1_7649796b0b.webp 1x" width="775" height="1033" type="image/webp"> <img src="/typo3temp/assets/_processed_/5/8/csm_ANSA_IXa_81_1_CD_web1_7649796b0b.webp" width="775" height="1033" class="figure-img img-fluid object-fit format-portrait" alt="Ptolemäer-Kameo" loading="lazy"></picture>
+								 </div>
+							 <span class="visually-hidden">to detail page</span> </a>
+						<div class="d-flex justify-content-between align-items-start">
+							<div class="object-caption">
+								<p> <span> Kameo: Ptolemäer-Kameo</span> <span><small>Griechisch, Hellenistisch</small></span> <span><small>278 - 269 v. Chr.</small></span> </p>
+								 </div>
+							<button type="button" class="btn btn-link btn-my-list-add p-0 remember-object-link" data-id="59173" title="Add to my list" hx-get="/en/?command=toggle&amp;objectID=59173&amp;type=687&amp;cHash=cf2cb9e2d91b7610a1e16fdb0493f725" hx-trigger="click" hx-target="this" hx-swap="none" data-objectTitle="Ptolemäer-Kameo" data-target-url=""> <span class="icon material-symbols-outlined star flex-shrink-0 notranslate" aria-hidden="true" style="font-size:23px">star</span> <span class="icon material-symbols-outlined check flex-shrink-0 notranslate" aria-hidden="true" style="font-size:23px">check</span> <span class="add">Add to my list</span> <span class="remove">Remove from my list</span> </button>
+							 </div>
+						 </div>
+					 </div>
+				<div class="col-md-4 grid-item">
+					<div class="object-gallery-item"> <a data-id="60028" class="stretched-link detail flex-column" target="_top" href="https://www.khm.at/en/artworks/ein-kaiserlicher-prinz-60028-1">
+							<div class="figure position-relative mb-2 mb-lg-0">
+								<picture> <source srcset="/typo3temp/assets/_processed_/7/e/csm_ANSA_IXb_836_2d332bda5b.jpg 2x,/typo3temp/assets/_processed_/7/e/csm_ANSA_IXb_836_a6e70956af.jpg 1x" width="775" height="549" type="image/jpeg"> <source srcset="/typo3temp/assets/_processed_/7/e/csm_ANSA_IXb_836_e3ae22a35f.webp 2x,/typo3temp/assets/_processed_/7/e/csm_ANSA_IXb_836_37788d82b2.webp 1x" width="775" height="549" type="image/webp"> <img src="/typo3temp/assets/_processed_/7/e/csm_ANSA_IXb_836_37788d82b2.webp" width="775" height="549" class="figure-img img-fluid object-fit format-landscape" alt="Ein kaiserlicher Prinz" loading="lazy"></picture>
+								 </div>
+							 <span class="visually-hidden">to detail page</span> </a>
+						<div class="d-flex justify-content-between align-items-start">
+							<div class="object-caption">
+								<p> <span> Gemme: Ein kaiserlicher Prinz</span> <span><small>Römisch, Frühe Kaiserzeit</small></span> <span><small>um 8 v. Chr.</small></span> </p>
+								 </div>
+							<button type="button" class="btn btn-link btn-my-list-add p-0 remember-object-link" data-id="60028" title="Add to my list" hx-get="/en/?command=toggle&amp;objectID=60028&amp;type=687&amp;cHash=87d9a021f2f73d2827b717421f5404db" hx-trigger="click" hx-target="this" hx-swap="none" data-objectTitle="Ein kaiserlicher Prinz" data-target-url=""> <span class="icon material-symbols-outlined star flex-shrink-0 notranslate" aria-hidden="true" style="font-size:23px">star</span> <span class="icon material-symbols-outlined check flex-shrink-0 notranslate" aria-hidden="true" style="font-size:23px">check</span> <span class="add">Add to my list</span> <span class="remove">Remove from my list</span> </button>
+							 </div>
+						 </div>
+					 </div>
+				<div class="col-md-4 grid-item">
+					<div class="object-gallery-item"> <a data-id="61027" class="stretched-link detail flex-column" target="_top" href="https://www.khm.at/en/artworks/jupiter-dolichenus-61027-1">
+							<div class="figure position-relative mb-2 mb-lg-0">
+								<picture> <source srcset="/typo3temp/assets/_processed_/4/c/csm_ANSA_M_1_01_web1_564bbc4461.jpg 2x,/typo3temp/assets/_processed_/4/c/csm_ANSA_M_1_01_web1_123d5d302d.jpg 1x" width="775" height="1167" type="image/jpeg"> <source srcset="/typo3temp/assets/_processed_/4/c/csm_ANSA_M_1_01_web1_24f70fd67c.webp 2x,/typo3temp/assets/_processed_/4/c/csm_ANSA_M_1_01_web1_98586f80d0.webp 1x" width="775" height="1167" type="image/webp"> <img src="/typo3temp/assets/_processed_/4/c/csm_ANSA_M_1_01_web1_98586f80d0.webp" width="775" height="1167" class="figure-img img-fluid object-fit format-portrait" alt="Jupiter Dolichenus" loading="lazy"></picture>
+								 </div>
+							 <span class="visually-hidden">to detail page</span> </a>
+						<div class="d-flex justify-content-between align-items-start">
+							<div class="object-caption">
+								<p> <span> Statuette: Jupiter Dolichenus</span> <span><small>Römisch, Späte Kaiserzeit</small></span> <span><small>1. Hälfte 3. Jh. n. Chr.</small></span> </p>
+								 </div>
+							<button type="button" class="btn btn-link btn-my-list-add p-0 remember-object-link" data-id="61027" title="Add to my list" hx-get="/en/?command=toggle&amp;objectID=61027&amp;type=687&amp;cHash=264455deb1cff34ce102dec0c6a33e68" hx-trigger="click" hx-target="this" hx-swap="none" data-objectTitle="Jupiter Dolichenus" data-target-url=""> <span class="icon material-symbols-outlined star flex-shrink-0 notranslate" aria-hidden="true" style="font-size:23px">star</span> <span class="icon material-symbols-outlined check flex-shrink-0 notranslate" aria-hidden="true" style="font-size:23px">check</span> <span class="add">Add to my list</span> <span class="remove">Remove from my list</span> </button>
+							 </div>
+						 </div>
+					 </div>
+				<div class="col-md-4 grid-item">
+					<div class="object-gallery-item"> <a data-id="61074" class="stretched-link detail flex-column" target="_top" href="https://www.khm.at/en/artworks/prunksieb-61074-1">
+							<div class="figure position-relative mb-2 mb-lg-0">
+								<picture> <source srcset="/typo3temp/assets/_processed_/4/7/csm_ANSA_M30_7cae959873.jpg 2x,/typo3temp/assets/_processed_/4/7/csm_ANSA_M30_2d51ba1f0d.jpg 1x" width="775" height="556" type="image/jpeg"> <source srcset="/typo3temp/assets/_processed_/4/7/csm_ANSA_M30_ed9ce9974d.webp 2x,/typo3temp/assets/_processed_/4/7/csm_ANSA_M30_20ed066b4c.webp 1x" width="775" height="556" type="image/webp"> <img src="/typo3temp/assets/_processed_/4/7/csm_ANSA_M30_20ed066b4c.webp" width="775" height="556" class="figure-img img-fluid object-fit format-landscape" alt="Prunksieb" loading="lazy"></picture>
+								 </div>
+							 <span class="visually-hidden">to detail page</span> </a>
+						<div class="d-flex justify-content-between align-items-start">
+							<div class="object-caption">
+								<p> <span> Prunksieb</span> <span><small>Römisch, Späte Kaiserzeit</small></span> <span><small>1. Hälfte 3. Jh. n. Chr.</small></span> </p>
+								 </div>
+							<button type="button" class="btn btn-link btn-my-list-add p-0 remember-object-link" data-id="61074" title="Add to my list" hx-get="/en/?command=toggle&amp;objectID=61074&amp;type=687&amp;cHash=0757606c677ca7f14d78480965299dcb" hx-trigger="click" hx-target="this" hx-swap="none" data-objectTitle="Prunksieb" data-target-url=""> <span class="icon material-symbols-outlined star flex-shrink-0 notranslate" aria-hidden="true" style="font-size:23px">star</span> <span class="icon material-symbols-outlined check flex-shrink-0 notranslate" aria-hidden="true" style="font-size:23px">check</span> <span class="add">Add to my list</span> <span class="remove">Remove from my list</span> </button>
+							 </div>
+						 </div>
+					 </div>
+				<div class="col-md-4 grid-item">
+					<div class="object-gallery-item"> <a data-id="61152" class="stretched-link detail flex-column" target="_top" href="https://www.khm.at/en/artworks/prunkfibel-61152-1">
+							<div class="figure position-relative mb-2 mb-lg-0">
+								<picture> <source srcset="/typo3temp/assets/_processed_/8/f/csm_ANSA_U_1_6__web1_07e6b8cfde.jpg 2x,/typo3temp/assets/_processed_/8/f/csm_ANSA_U_1_6__web1_7eb779d962.jpg 1x" width="775" height="515" type="image/jpeg"> <source srcset="/typo3temp/assets/_processed_/8/f/csm_ANSA_U_1_6__web1_dac8d10550.webp 2x,/typo3temp/assets/_processed_/8/f/csm_ANSA_U_1_6__web1_ee5899e4b1.webp 1x" width="775" height="515" type="image/webp"> <img src="/typo3temp/assets/_processed_/8/f/csm_ANSA_U_1_6__web1_ee5899e4b1.webp" width="775" height="515" class="figure-img img-fluid object-fit format-landscape" alt="Prunkfibel" loading="lazy"></picture>
+								 </div>
+							 <span class="visually-hidden">to detail page</span> </a>
+						<div class="d-flex justify-content-between align-items-start">
+							<div class="object-caption">
+								<p> <span> Fibel: Prunkfibel</span> <span><small>Völkerwanderungszeit, Ostgermanisch</small></span> <span><small>Anfang 5. Jh. n. Chr.</small></span> </p>
+								 </div>
+							<button type="button" class="btn btn-link btn-my-list-add p-0 remember-object-link" data-id="61152" title="Add to my list" hx-get="/en/?command=toggle&amp;objectID=61152&amp;type=687&amp;cHash=b6dc6e3dfb94ef83fcc5048ddbe6a6f6" hx-trigger="click" hx-target="this" hx-swap="none" data-objectTitle="Prunkfibel" data-target-url=""> <span class="icon material-symbols-outlined star flex-shrink-0 notranslate" aria-hidden="true" style="font-size:23px">star</span> <span class="icon material-symbols-outlined check flex-shrink-0 notranslate" aria-hidden="true" style="font-size:23px">check</span> <span class="add">Add to my list</span> <span class="remove">Remove from my list</span> </button>
+							 </div>
+						 </div>
+					 </div>
+				<div class="col-md-4 grid-item">
+					<div class="object-gallery-item"> <a data-id="61163" class="stretched-link detail flex-column" target="_top" href="https://www.khm.at/en/artworks/prunkfibel-61163-1">
+							<div class="figure position-relative mb-2 mb-lg-0">
+								<picture> <source srcset="/typo3temp/assets/_processed_/2/4/csm_ANSA_U_2_5_65845bd21e.jpg 2x,/typo3temp/assets/_processed_/2/4/csm_ANSA_U_2_5_c4d48dbf66.jpg 1x" width="775" height="515" type="image/jpeg"> <source srcset="/typo3temp/assets/_processed_/2/4/csm_ANSA_U_2_5_5434c93ebd.webp 2x,/typo3temp/assets/_processed_/2/4/csm_ANSA_U_2_5_e886c335e6.webp 1x" width="775" height="515" type="image/webp"> <img src="/typo3temp/assets/_processed_/2/4/csm_ANSA_U_2_5_e886c335e6.webp" width="775" height="515" class="figure-img img-fluid object-fit format-landscape" alt="Prunkfibel" loading="lazy"></picture>
+								 </div>
+							 <span class="visually-hidden">to detail page</span> </a>
+						<div class="d-flex justify-content-between align-items-start">
+							<div class="object-caption">
+								<p> <span> Fibel: Prunkfibel</span> <span><small>Völkerwanderungszeit, Ostgermanisch</small></span> <span><small>Anfang 5. Jh. n. Chr.</small></span> </p>
+								 </div>
+							<button type="button" class="btn btn-link btn-my-list-add p-0 remember-object-link" data-id="61163" title="Add to my list" hx-get="/en/?command=toggle&amp;objectID=61163&amp;type=687&amp;cHash=6bec50898ef4e76296e6a38811566c63" hx-trigger="click" hx-target="this" hx-swap="none" data-objectTitle="Prunkfibel" data-target-url=""> <span class="icon material-symbols-outlined star flex-shrink-0 notranslate" aria-hidden="true" style="font-size:23px">star</span> <span class="icon material-symbols-outlined check flex-shrink-0 notranslate" aria-hidden="true" style="font-size:23px">check</span> <span class="add">Add to my list</span> <span class="remove">Remove from my list</span> </button>
+							 </div>
+						 </div>
+					 </div>
+				<div class="col-md-4 grid-item">
+					<div class="object-gallery-item"> <a data-id="61403" class="stretched-link detail flex-column" target="_top" href="https://www.khm.at/en/artworks/athena-von-roccaspromonte-61403-1">
+							<div class="figure position-relative mb-2 mb-lg-0">
+								<picture> <source srcset="/typo3temp/assets/_processed_/b/7/csm_ANSA_V_115_55799_ret_web1_525c12cf5b.jpg 2x,/typo3temp/assets/_processed_/b/7/csm_ANSA_V_115_55799_ret_web1_c5391b2002.jpg 1x" width="775" height="1481" type="image/jpeg"> <source srcset="/typo3temp/assets/_processed_/b/7/csm_ANSA_V_115_55799_ret_web1_6dd9961264.webp 2x,/typo3temp/assets/_processed_/b/7/csm_ANSA_V_115_55799_ret_web1_a648857ef9.webp 1x" width="775" height="1481" type="image/webp"> <img src="/typo3temp/assets/_processed_/b/7/csm_ANSA_V_115_55799_ret_web1_a648857ef9.webp" width="775" height="1481" class="figure-img img-fluid object-fit format-portrait" alt="Athena von Roccaspromonte" loading="lazy"></picture>
+								 </div>
+							 <span class="visually-hidden">to detail page</span> </a>
+						<div class="d-flex justify-content-between align-items-start">
+							<div class="object-caption">
+								<p> <span> Statue: Athena von Roccaspromonte</span> <span><small>Italisch</small></span> <span><small>2. Hälfte 4. Jh. v. Chr.(?)</small></span> </p>
+								 </div>
+							<button type="button" class="btn btn-link btn-my-list-add p-0 remember-object-link" data-id="61403" title="Add to my list" hx-get="/en/?command=toggle&amp;objectID=61403&amp;type=687&amp;cHash=91b8e4d42cc076c232f97e819ff323f5" hx-trigger="click" hx-target="this" hx-swap="none" data-objectTitle="Athena von Roccaspromonte" data-target-url=""> <span class="icon material-symbols-outlined star flex-shrink-0 notranslate" aria-hidden="true" style="font-size:23px">star</span> <span class="icon material-symbols-outlined check flex-shrink-0 notranslate" aria-hidden="true" style="font-size:23px">check</span> <span class="add">Add to my list</span> <span class="remove">Remove from my list</span> </button>
+							 </div>
+						 </div>
+					 </div>
+				<div class="col-md-4 grid-item">
+					<div class="object-gallery-item"> <a data-id="84716" class="stretched-link detail flex-column" target="_top" href="https://www.khm.at/en/artworks/theorbo-84716">
+							<div class="figure position-relative mb-2 mb-lg-0">
+								<picture> <source srcset="/pics/84716/SAM_41_C_45_4422.jpg 2x,/pics/84716/SAM_41_C_45_4422.jpg 1x" width="721" height="2271" type="image/jpeg"> <source srcset="/typo3temp/assets/_processed_/8/b/csm_SAM_41_C_45_4422_eea2c2250f.webp 2x,/typo3temp/assets/_processed_/8/b/csm_SAM_41_C_45_4422_39cdc0d82c.webp 1x" width="721" height="2271" type="image/webp"> <img src="/typo3temp/assets/_processed_/8/b/csm_SAM_41_C_45_4422_39cdc0d82c.webp" width="721" height="2271" class="figure-img img-fluid object-fit format-portrait" alt="Chitarrone" loading="lazy"></picture>
+								 </div>
+							 <span class="visually-hidden">to detail page</span> </a>
+						<div class="d-flex justify-content-between align-items-start">
+							<div class="object-caption">
+								<p> <span> </span> <span><small>Manufacturer: Magno Tiefenbrucker</small></span> <span><small>2. Hälfte des 16. Jahrhunderts</small></span> </p>
+								 </div>
+							<button type="button" class="btn btn-link btn-my-list-add p-0 remember-object-link" data-id="84716" title="Add to my list" hx-get="/en/?command=toggle&amp;objectID=84716&amp;type=687&amp;cHash=f78c6cb8155a827bd2cdc4e77c5b65f5" hx-trigger="click" hx-target="this" hx-swap="none" data-objectTitle="" data-target-url=""> <span class="icon material-symbols-outlined star flex-shrink-0 notranslate" aria-hidden="true" style="font-size:23px">star</span> <span class="icon material-symbols-outlined check flex-shrink-0 notranslate" aria-hidden="true" style="font-size:23px">check</span> <span class="add">Add to my list</span> <span class="remove">Remove from my list</span> </button>
+							 </div>
+						 </div>
+					 </div>
+				<div class="col-md-4 grid-item">
+					<div class="object-gallery-item"> <a data-id="84722" class="stretched-link detail flex-column" target="_top" href="https://www.khm.at/en/artworks/chitarra-battente-modified-84722-1">
+							<div class="figure position-relative mb-2 mb-lg-0">
+								<picture> <source srcset="/pics/84722/SAM_47_201706_01.jpg 2x,/typo3temp/assets/_processed_/9/6/csm_SAM_47_201706_01_296a2f18b8.jpg 1x" width="775" height="1162" type="image/jpeg"> <source srcset="/typo3temp/assets/_processed_/9/6/csm_SAM_47_201706_01_361fdd4da7.webp 2x,/typo3temp/assets/_processed_/9/6/csm_SAM_47_201706_01_7ff3834042.webp 1x" width="775" height="1162" type="image/webp"> <img src="/typo3temp/assets/_processed_/9/6/csm_SAM_47_201706_01_7ff3834042.webp" width="775" height="1162" class="figure-img img-fluid object-fit format-portrait" alt="Aus einer Chitarra battente umgebautes Instrument" loading="lazy"></picture>
+								 </div>
+							 <span class="visually-hidden">to detail page</span> </a>
+						<div class="d-flex justify-content-between align-items-start">
+							<div class="object-caption">
+								<p> <span> </span> <span><small>Manufacturer: Matthäus Seelos</small></span> <span><small>1. Hälfte des 17. Jahrhunderts</small></span> </p>
+								 </div>
+							<button type="button" class="btn btn-link btn-my-list-add p-0 remember-object-link" data-id="84722" title="Add to my list" hx-get="/en/?command=toggle&amp;objectID=84722&amp;type=687&amp;cHash=1103c09493cbd3537ad4c2e117148b66" hx-trigger="click" hx-target="this" hx-swap="none" data-objectTitle="" data-target-url=""> <span class="icon material-symbols-outlined star flex-shrink-0 notranslate" aria-hidden="true" style="font-size:23px">star</span> <span class="icon material-symbols-outlined check flex-shrink-0 notranslate" aria-hidden="true" style="font-size:23px">check</span> <span class="add">Add to my list</span> <span class="remove">Remove from my list</span> </button>
+							 </div>
+						 </div>
+					 </div>
+				<div class="col-md-4 grid-item">
+					<div class="object-gallery-item"> <a data-id="84728" class="stretched-link detail flex-column" target="_top" href="https://www.khm.at/en/artworks/double-guitar-84728">
+							<div class="figure position-relative mb-2 mb-lg-0">
+								<picture> <source srcset="/pics/84728/SAM_53_5367.jpg 2x,/typo3temp/assets/_processed_/b/f/csm_SAM_53_5367_d279d74116.jpg 1x" width="775" height="1451" type="image/jpeg"> <source srcset="/typo3temp/assets/_processed_/b/f/csm_SAM_53_5367_c8587e7910.webp 2x,/typo3temp/assets/_processed_/b/f/csm_SAM_53_5367_66f4282c5b.webp 1x" width="775" height="1451" type="image/webp"> <img src="/typo3temp/assets/_processed_/b/f/csm_SAM_53_5367_66f4282c5b.webp" width="775" height="1451" class="figure-img img-fluid object-fit format-portrait" alt="Gitarre" loading="lazy"></picture>
+								 </div>
+							 <span class="visually-hidden">to detail page</span> </a>
+						<div class="d-flex justify-content-between align-items-start">
+							<div class="object-caption">
+								<p> <span> </span> <span><small>Manufacturer: Alexandre Voboam</small></span> <span><small>1690</small></span> </p>
+								 </div>
+							<button type="button" class="btn btn-link btn-my-list-add p-0 remember-object-link" data-id="84728" title="Add to my list" hx-get="/en/?command=toggle&amp;objectID=84728&amp;type=687&amp;cHash=5a4ce5352b2ba5c96ba787c26db102b1" hx-trigger="click" hx-target="this" hx-swap="none" data-objectTitle="" data-target-url=""> <span class="icon material-symbols-outlined star flex-shrink-0 notranslate" aria-hidden="true" style="font-size:23px">star</span> <span class="icon material-symbols-outlined check flex-shrink-0 notranslate" aria-hidden="true" style="font-size:23px">check</span> <span class="add">Add to my list</span> <span class="remove">Remove from my list</span> </button>
+							 </div>
+						 </div>
+					 </div>
+				<div class="col-md-4 grid-item">
+					<div class="object-gallery-item"> <a data-id="84730" class="stretched-link detail flex-column" target="_top" href="https://www.khm.at/en/artworks/bass-cittern-84730">
+							<div class="figure position-relative mb-2 mb-lg-0">
+								<picture> <source srcset="/pics/84730/SAM_55_33925.jpg 2x,/typo3temp/assets/_processed_/2/7/csm_SAM_55_33925_b0dadb9825.jpg 1x" width="775" height="1643" type="image/jpeg"> <source srcset="/typo3temp/assets/_processed_/2/7/csm_SAM_55_33925_96bd9d4c19.webp 2x,/typo3temp/assets/_processed_/2/7/csm_SAM_55_33925_72435e3034.webp 1x" width="775" height="1643" type="image/webp"> <img src="/typo3temp/assets/_processed_/2/7/csm_SAM_55_33925_72435e3034.webp" width="775" height="1643" class="figure-img img-fluid object-fit format-portrait" alt="Baßcister" loading="lazy"></picture>
+								 </div>
+							 <span class="visually-hidden">to detail page</span> </a>
+						<div class="d-flex justify-content-between align-items-start">
+							<div class="object-caption">
+								<p> <span> </span> <span><small>Manufacturer: anonym</small></span> <span><small>zwischen 1580 und 1596</small></span> </p>
+								 </div>
+							<button type="button" class="btn btn-link btn-my-list-add p-0 remember-object-link" data-id="84730" title="Add to my list" hx-get="/en/?command=toggle&amp;objectID=84730&amp;type=687&amp;cHash=c44b2c1cc6a2bf2acc4685f1972b3bd2" hx-trigger="click" hx-target="this" hx-swap="none" data-objectTitle="" data-target-url=""> <span class="icon material-symbols-outlined star flex-shrink-0 notranslate" aria-hidden="true" style="font-size:23px">star</span> <span class="icon material-symbols-outlined check flex-shrink-0 notranslate" aria-hidden="true" style="font-size:23px">check</span> <span class="add">Add to my list</span> <span class="remove">Remove from my list</span> </button>
+							 </div>
+						 </div>
+					 </div>
+				<div class="col-md-4 grid-item">
+					<div class="object-gallery-item"> <a data-id="84731" class="stretched-link detail flex-column" target="_top" href="https://www.khm.at/en/artworks/cittern-84731-1">
+							<div class="figure position-relative mb-2 mb-lg-0">
+								<picture> <source srcset="/pics/84731/SAM_56_01.jpg 2x,/typo3temp/assets/_processed_/c/0/csm_SAM_56_01_8b9bca6b0d.jpg 1x" width="775" height="1167" type="image/jpeg"> <source srcset="/typo3temp/assets/_processed_/c/0/csm_SAM_56_01_c9ddbf3e47.webp 2x,/typo3temp/assets/_processed_/c/0/csm_SAM_56_01_ec4d04f3b5.webp 1x" width="775" height="1167" type="image/webp"> <img src="/typo3temp/assets/_processed_/c/0/csm_SAM_56_01_ec4d04f3b5.webp" width="775" height="1167" class="figure-img img-fluid object-fit format-portrait" alt="Cister" loading="lazy"></picture>
+								 </div>
+							 <span class="visually-hidden">to detail page</span> </a>
+						<div class="d-flex justify-content-between align-items-start">
+							<div class="object-caption">
+								<p> <span> </span> <span><small>Manufacturer: Girolamo de Virchis </small></span> <span><small>1574</small></span> </p>
+								 </div>
+							<button type="button" class="btn btn-link btn-my-list-add p-0 remember-object-link" data-id="84731" title="Add to my list" hx-get="/en/?command=toggle&amp;objectID=84731&amp;type=687&amp;cHash=70937ff70a2cbb2cf9a6b62815dcd411" hx-trigger="click" hx-target="this" hx-swap="none" data-objectTitle="" data-target-url=""> <span class="icon material-symbols-outlined star flex-shrink-0 notranslate" aria-hidden="true" style="font-size:23px">star</span> <span class="icon material-symbols-outlined check flex-shrink-0 notranslate" aria-hidden="true" style="font-size:23px">check</span> <span class="add">Add to my list</span> <span class="remove">Remove from my list</span> </button>
+							 </div>
+						 </div>
+					 </div>
+				<div class="col-md-4 grid-item">
+					<div class="object-gallery-item"> <a data-id="84736" class="stretched-link detail flex-column" target="_top" href="https://www.khm.at/en/artworks/lyre-cittern-84736-1">
+							<div class="figure position-relative mb-2 mb-lg-0">
+								<picture> <source srcset="/pics/84736/SAM_61_01.jpg 2x,/pics/84736/SAM_61_01.jpg 1x" width="733" height="1708" type="image/jpeg"> <source srcset="/typo3temp/assets/_processed_/5/4/csm_SAM_61_01_6039a3f26b.webp 2x,/typo3temp/assets/_processed_/5/4/csm_SAM_61_01_9f3f34d637.webp 1x" width="733" height="1708" type="image/webp"> <img src="/typo3temp/assets/_processed_/5/4/csm_SAM_61_01_9f3f34d637.webp" width="733" height="1708" class="figure-img img-fluid object-fit format-portrait" alt="Lyra-Cister" loading="lazy"></picture>
+								 </div>
+							 <span class="visually-hidden">to detail page</span> </a>
+						<div class="d-flex justify-content-between align-items-start">
+							<div class="object-caption">
+								<p> <span> </span> <span><small>Manufacturer: anonym</small></span> <span><small>16. oder 17. Jahrhundert</small></span> </p>
+								 </div>
+							<button type="button" class="btn btn-link btn-my-list-add p-0 remember-object-link" data-id="84736" title="Add to my list" hx-get="/en/?command=toggle&amp;objectID=84736&amp;type=687&amp;cHash=198839a4400c246efc12c5771913dc88" hx-trigger="click" hx-target="this" hx-swap="none" data-objectTitle="" data-target-url=""> <span class="icon material-symbols-outlined star flex-shrink-0 notranslate" aria-hidden="true" style="font-size:23px">star</span> <span class="icon material-symbols-outlined check flex-shrink-0 notranslate" aria-hidden="true" style="font-size:23px">check</span> <span class="add">Add to my list</span> <span class="remove">Remove from my list</span> </button>
+							 </div>
+						 </div>
+					 </div>
+				<div class="col-md-4 grid-item">
+					<div class="object-gallery-item"> <a data-id="84741" class="stretched-link detail flex-column" target="_top" href="https://www.khm.at/en/artworks/viola-da-gamba-viol-84741">
+							<div class="figure position-relative mb-2 mb-lg-0">
+								<picture> <source srcset="/pics/84741/SAM_66_36671.jpg 2x,/typo3temp/assets/_processed_/b/6/csm_SAM_66_36671_5d8c0d5ad3.jpg 1x" width="775" height="1551" type="image/jpeg"> <source srcset="/typo3temp/assets/_processed_/b/6/csm_SAM_66_36671_7382bcf934.webp 2x,/typo3temp/assets/_processed_/b/6/csm_SAM_66_36671_4a374c96ec.webp 1x" width="775" height="1551" type="image/webp"> <img src="/typo3temp/assets/_processed_/b/6/csm_SAM_66_36671_4a374c96ec.webp" width="775" height="1551" class="figure-img img-fluid object-fit format-portrait" alt="Diskantgambe" loading="lazy"></picture>
+								 </div>
+							 <span class="visually-hidden">to detail page</span> </a>
+						<div class="d-flex justify-content-between align-items-start">
+							<div class="object-caption">
+								<p> <span> </span> <span><small>Manufacturer: Francesco Linarol</small></span> <span><small>16. Jahrhundert</small></span> </p>
+								 </div>
+							<button type="button" class="btn btn-link btn-my-list-add p-0 remember-object-link" data-id="84741" title="Add to my list" hx-get="/en/?command=toggle&amp;objectID=84741&amp;type=687&amp;cHash=7feb862f7b7c1266d48ad6389d0ec389" hx-trigger="click" hx-target="this" hx-swap="none" data-objectTitle="" data-target-url=""> <span class="icon material-symbols-outlined star flex-shrink-0 notranslate" aria-hidden="true" style="font-size:23px">star</span> <span class="icon material-symbols-outlined check flex-shrink-0 notranslate" aria-hidden="true" style="font-size:23px">check</span> <span class="add">Add to my list</span> <span class="remove">Remove from my list</span> </button>
+							 </div>
+						 </div>
+					 </div>
+				<div class="col-md-4 grid-item">
+					<div class="object-gallery-item"> <a data-id="84765" class="stretched-link detail flex-column" target="_top" href="https://www.khm.at/en/artworks/viola-da-gamba-viol-84765">
+							<div class="figure position-relative mb-2 mb-lg-0">
+								<picture> <source srcset="/pics/84765/SAM_70_36687.jpg 2x,/typo3temp/assets/_processed_/1/a/csm_SAM_70_36687_2b7df905fa.jpg 1x" width="775" height="1591" type="image/jpeg"> <source srcset="/typo3temp/assets/_processed_/1/a/csm_SAM_70_36687_f710202f9d.webp 2x,/typo3temp/assets/_processed_/1/a/csm_SAM_70_36687_192ed83741.webp 1x" width="775" height="1591" type="image/webp"> <img src="/typo3temp/assets/_processed_/1/a/csm_SAM_70_36687_192ed83741.webp" width="775" height="1591" class="figure-img img-fluid object-fit format-portrait" alt="Diskantgambe" loading="lazy"></picture>
+								 </div>
+							 <span class="visually-hidden">to detail page</span> </a>
+						<div class="d-flex justify-content-between align-items-start">
+							<div class="object-caption">
+								<p> <span> </span> <span><small>Manufacturer: Antonio Ciciliano</small></span> <span><small>2. Hälfte des 16. Jahrhunderts</small></span> </p>
+								 </div>
+							<button type="button" class="btn btn-link btn-my-list-add p-0 remember-object-link" data-id="84765" title="Add to my list" hx-get="/en/?command=toggle&amp;objectID=84765&amp;type=687&amp;cHash=be9ba05f4083b7532c2f5de8655a0160" hx-trigger="click" hx-target="this" hx-swap="none" data-objectTitle="" data-target-url=""> <span class="icon material-symbols-outlined star flex-shrink-0 notranslate" aria-hidden="true" style="font-size:23px">star</span> <span class="icon material-symbols-outlined check flex-shrink-0 notranslate" aria-hidden="true" style="font-size:23px">check</span> <span class="add">Add to my list</span> <span class="remove">Remove from my list</span> </button>
+							 </div>
+						 </div>
+					 </div>
+				<div class="col-md-4 grid-item">
+					<div class="object-gallery-item"> <a data-id="84767" class="stretched-link detail flex-column" target="_top" href="https://www.khm.at/en/artworks/viola-da-gamba-viol-84767-1">
+							<div class="figure position-relative mb-2 mb-lg-0">
+								<picture> <source srcset="/pics/84767/SAM_72_36713.jpg 2x,/typo3temp/assets/_processed_/e/0/csm_SAM_72_36713_b3de53dae8.jpg 1x" width="775" height="1635" type="image/jpeg"> <source srcset="/typo3temp/assets/_processed_/e/0/csm_SAM_72_36713_0b2003e21e.webp 2x,/typo3temp/assets/_processed_/e/0/csm_SAM_72_36713_93769fff63.webp 1x" width="775" height="1635" type="image/webp"> <img src="/typo3temp/assets/_processed_/e/0/csm_SAM_72_36713_93769fff63.webp" width="775" height="1635" class="figure-img img-fluid object-fit format-portrait" alt="Baßgambe" loading="lazy"></picture>
+								 </div>
+							 <span class="visually-hidden">to detail page</span> </a>
+						<div class="d-flex justify-content-between align-items-start">
+							<div class="object-caption">
+								<p> <span> </span> <span><small>Manufacturer: Antonio Ciciliano</small></span> <span><small>vermutl. nach 1602</small></span> </p>
+								 </div>
+							<button type="button" class="btn btn-link btn-my-list-add p-0 remember-object-link" data-id="84767" title="Add to my list" hx-get="/en/?command=toggle&amp;objectID=84767&amp;type=687&amp;cHash=6b298b8b73767e8161212f3f9fa4859c" hx-trigger="click" hx-target="this" hx-swap="none" data-objectTitle="" data-target-url=""> <span class="icon material-symbols-outlined star flex-shrink-0 notranslate" aria-hidden="true" style="font-size:23px">star</span> <span class="icon material-symbols-outlined check flex-shrink-0 notranslate" aria-hidden="true" style="font-size:23px">check</span> <span class="add">Add to my list</span> <span class="remove">Remove from my list</span> </button>
+							 </div>
+						 </div>
+					 </div>
+				 </div>
+			<div class="h-line mt-5"></div>
+			<div class="events-pagination load-more-container" id="list-pagebrowser" hx-swap-oob="true">
+				<div class="events-pagination-inner">
+					<div class="title">24 of 46403 are shown</div>
+					<div class="indicator">
+						<div class="progressbar" style="width: 0.051720793914187%;"></div>
+						 </div>
+					 </div>
+				<button class="button button-primary" hx-get="/en/artworks/search?facet_date_begin=1562&amp;facet_date_end=2022&amp;listOnly=1&amp;page=2&amp;show=24&amp;tx_theme_objectlist%5Bcontroller%5D=Object&amp;type=686&amp;view=0&amp;cHash=604bcf797dee889b38ebae87ccf2e716" hx-trigger="click" hx-target="#object-list" hx-select="#object-list .grid-item" hx-swap="beforeend" data-loading-indicator="#indicator-object-list" hx-disabled-elt="this"> Load more <span class="icon material-symbols-outlined flex-shrink-0 notranslate" aria-hidden="true" style="font-size:20px">arrow_downward</span> </button>
+				 </div>
+			 </form>
+		 </section>
+	 </div>

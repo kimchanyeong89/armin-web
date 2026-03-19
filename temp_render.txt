@@ -1,0 +1,93 @@
+  return (
+    <div className="artist-page" data-theme={theme}>
+
+      {/* ── HERO ──────────────────────────────────────────────────────── */}
+      <header className="artist-hero">
+        <div className="artist-hero__eyebrow">
+          <span className="artist-hero__tag">Artist</span>
+          <span className="artist-hero__meta">
+            {artist.nationality}
+            {artist.birthYear ? ` · b. ${artist.birthYear}` : ''}
+          </span>
+          <div className="artist-hero__controls">
+            <button
+              className="artist-hero__theme-btn"
+              onClick={toggleTheme}
+              aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+              title={isDark ? 'Light mode' : 'Dark mode'}
+            >
+              {isDark ? '☀' : '☾'}
+            </button>
+          </div>
+        </div>
+
+        <h1 className="artist-hero__name">{artist.name}</h1>
+
+        <div className="artist-hero__footer">
+          <span className="artist-hero__count">
+            <strong>{artistArtworks.length.toLocaleString()}</strong> works in collection
+          </span>
+          {wikiSourceUrl && (
+            <a
+              href={wikiSourceUrl}
+              className="artist-hero__wiki-link"
+              target="_blank"
+              rel="noreferrer"
+            >
+              Wikipedia
+              <ExternalLinkIcon />
+            </a>
+          )}
+        </div>
+      </header>
+
+      {/* ── BIO + MAP ─────────────────────────────────────────────────── */}
+      <section className="artist-profile">
+
+        {/* Bio */}
+        <div className="artist-bio">
+          <p className="artist-bio__label">Infinite Wiki</p>
+          {wikiLoading && !wikiSummary ? (
+            <p className="artist-bio__loading">Loading biography…</p>
+          ) : (
+            <p className="artist-bio__text">
+              {wikiSummary || artist.description}
+            </p>
+          )}
+          {wikiError && <p className="artist-bio__error">{wikiError}</p>}
+
+          {(asciiArt || fallbackAscii) && (
+            <pre
+              className="artist-bio__ascii"
+              aria-label={`${artist.name} ascii art`}
+            >
+              {asciiArt || fallbackAscii}
+            </pre>
+          )}
+        </div>
+
+        {/* Map */}
+        <div className="artist-map-col">
+          <p className="artist-map-col__label">Global Distribution</p>
+          <ArtistDistributionMap artworks={artistArtworks} isDark={isDark} />
+        </div>
+
+      </section>
+
+      {/* ── GALLERY ───────────────────────────────────────────────────── */}
+      <section className="artist-gallery">
+        <div className="artist-gallery__header">
+          <span className="artist-gallery__header-count">
+            {artistArtworks.length.toLocaleString()}
+          </span>
+          <span className="artist-gallery__header-label">
+            {artistArtworks.length === 1 ? 'work' : 'works'}
+          </span>
+          <div className="artist-gallery__divider" />
+        </div>
+
+        <div className="artist-gallery__grid" ref={gridRef}>
+          {artistArtworks.length === 0 ? (
+            <div className="artist-gallery__empty">
+              <div className="artist-gallery__empty-icon">◻</div>
+              <p>아직 등록된 작품이 없습니다.</p>

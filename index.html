@@ -4,19 +4,16 @@
 <head>
   <meta charset="UTF-8" />
   <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.8, user-scalable=yes" />
+
   <!-- Preconnect to R2 for faster geo data loading -->
   <link rel="preconnect" href="https://pub-6ce5ae60b244951ac36ffd277fd6ef76.r2.dev" crossorigin>
   <link rel="dns-prefetch" href="//pub-6ce5ae60b244951ac36ffd277fd6ef76.r2.dev">
-  
+
   <!-- Preconnect to Firebase for auth/data -->
   <link rel="preconnect" href="https://firestore.googleapis.com" crossorigin>
   <link rel="preconnect" href="https://identitytoolkit.googleapis.com" crossorigin>
-  
-  <!-- Preload critical fonts -->
-  <link rel="preload" href="/fonts/din-alternate-bold.woff2" as="font" type="font/woff2" crossorigin>
-  
+
   <!-- Performance hints: speed up external image/CDN connections -->
   <link rel="preconnect" href="https://www.nationalgallery.org.uk" crossorigin>
   <link rel="dns-prefetch" href="//www.nationalgallery.org.uk">
@@ -29,11 +26,84 @@
   <link rel="dns-prefetch" href="//maps.gstatic.com">
   <link rel="preconnect" href="https://www.google-analytics.com" crossorigin>
   <link rel="dns-prefetch" href="//www.google-analytics.com">
+  <script type="text/javascript" src="https://static.nid.naver.com/js/naveridlogin_js_sdk_2.0.2.js"
+    charset="utf-8"></script>
   <title>Armin Gallery</title>
 </head>
 
 <body>
   <div id="root"></div>
+  <script>
+    // Prevent iOS Safari crash by limiting zoom level
+    (function () {
+      var MAX_SCALE = 1.8;
+      var startTouches = null;
+      var startScale = 1;
+
+      document.addEventListener('touchstart', function (e) {
+        if (e.touches.length === 2) {
+          startTouches = {
+            x1: e.touches[0].clientX,
+            y1: e.touches[0].clientY,
+            x2: e.touches[1].clientX,
+            y2: e.touches[1].clientY
+          };
+          startScale = window.visualViewport ? window.visualViewport.scale : 1;
+        }
+      }, { passive: true });
+
+      document.addEventListener('touchmove', function (e) {
+        if (e.touches.length !== 2 || !startTouches) return;
+
+        // Calculate current finger distance
+        var dx = e.touches[0].clientX - e.touches[1].clientX;
+        var dy = e.touches[0].clientY - e.touches[1].clientY;
+        var currentDist = Math.sqrt(dx * dx + dy * dy);
+
+        // Calculate start finger distance
+        var startDx = startTouches.x1 - startTouches.x2;
+        var startDy = startTouches.y1 - startTouches.y2;
+        var startDist = Math.sqrt(startDx * startDx + startDy * startDy);
+
+        if (startDist === 0) return;
+
+        // Calculate projected scale
+        var pinchRatio = currentDist / startDist;
+        var projectedScale = startScale * pinchRatio;
+
+        // If we're zooming IN and would exceed max, block it
+        if (projectedScale > MAX_SCALE && currentDist > startDist) {
+          e.preventDefault();
+          e.stopPropagation();
+        }
+      }, { passive: false });
+
+      document.addEventListener('touchend', function (e) {
+        if (e.touches.length < 2) {
+          startTouches = null;
+        }
+      }, { passive: true });
+
+      // iOS gesture events as backup
+      document.addEventListener('gesturechange', function (e) {
+        var currentScale = window.visualViewport ? window.visualViewport.scale : 1;
+        var projectedScale = currentScale * e.scale;
+        if (projectedScale > MAX_SCALE && e.scale > 1) {
+          e.preventDefault();
+        }
+      }, { passive: false });
+
+      // Prevent double-tap zoom
+      var lastTap = 0;
+      document.addEventListener('touchend', function (e) {
+        var now = Date.now();
+        if (now - lastTap < 300 && e.changedTouches.length === 1) {
+          e.preventDefault();
+        }
+        lastTap = now;
+      }, { passive: false });
+    })();
+  </script>
   <script type="module" src="/src/main.tsx"></script>
 </body>
 

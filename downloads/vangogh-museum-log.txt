@@ -1,0 +1,590 @@
+[2026-01-13T08:17:08.455Z] ═══════════════════════════════════════════════════════════════
+[2026-01-13T08:17:08.466Z]   🏛️  Van Gogh Museum Collection Scraper - Type별 개별 수집
+[2026-01-13T08:17:08.466Z]   📋 각 타입별로 개별 스크래핑 후 합쳐서 1796개 전체 수집
+[2026-01-13T08:17:08.466Z] ═══════════════════════════════════════════════════════════════
+[2026-01-13T08:17:08.518Z]   시작 시간: 1/13/2026, 5:17:08 PM
+[2026-01-13T08:17:08.519Z] ───────────────────────────────────────────────────────────────
+[2026-01-13T08:17:08.525Z] 📥 기존 데이터 로드: 1425개 작품
+[2026-01-13T08:17:08.531Z] 📥 저장된 링크: 0개
+[2026-01-13T08:17:08.532Z] 📥 기존 링크: 0개
+[2026-01-13T08:17:08.533Z] 📥 완료된 타입: 없음
+
+[2026-01-13T08:17:08.534Z] 📋 1단계: 타입별 링크 수집
+
+[2026-01-13T08:17:08.535Z] 📋 [painting] 링크 수집 시작 (목표: 518개)...
+[2026-01-13T08:17:11.910Z]   [painting] from=0: 24개 링크 (총 24개, 새 24개)
+[2026-01-13T08:17:14.692Z]   [painting] from=24: 24개 링크 (총 48개, 새 24개)
+[2026-01-13T08:17:17.627Z]   [painting] from=48: 24개 링크 (총 72개, 새 24개)
+[2026-01-13T08:17:20.450Z]   [painting] from=72: 24개 링크 (총 96개, 새 24개)
+[2026-01-13T08:17:23.508Z]   [painting] from=96: 24개 링크 (총 120개, 새 24개)
+[2026-01-13T08:17:26.379Z]   [painting] from=120: 24개 링크 (총 144개, 새 24개)
+[2026-01-13T08:17:29.006Z]   [painting] from=144: 24개 링크 (총 168개, 새 24개)
+[2026-01-13T08:17:31.846Z]   [painting] from=168: 24개 링크 (총 192개, 새 24개)
+[2026-01-13T08:17:34.595Z]   [painting] from=192: 24개 링크 (총 216개, 새 24개)
+[2026-01-13T08:17:37.295Z]   [painting] from=216: 24개 링크 (총 240개, 새 24개)
+[2026-01-13T08:17:39.893Z]   [painting] from=240: 24개 링크 (총 264개, 새 24개)
+[2026-01-13T08:17:43.841Z]   [painting] from=264: 24개 링크 (총 288개, 새 24개)
+[2026-01-13T08:17:47.813Z]   [painting] from=288: 24개 링크 (총 312개, 새 24개)
+[2026-01-13T08:17:52.226Z]   [painting] from=312: 24개 링크 (총 336개, 새 24개)
+[2026-01-13T08:17:55.545Z]   [painting] from=336: 24개 링크 (총 360개, 새 24개)
+[2026-01-13T08:17:58.235Z]   [painting] from=360: 24개 링크 (총 384개, 새 24개)
+[2026-01-13T08:18:00.847Z]   [painting] from=384: 24개 링크 (총 408개, 새 24개)
+[2026-01-13T08:18:06.905Z]   [painting] from=408: 24개 링크 (총 432개, 새 24개)
+[2026-01-13T08:18:09.557Z]   [painting] from=432: 24개 링크 (총 456개, 새 24개)
+[2026-01-13T08:18:12.289Z]   [painting] from=456: 24개 링크 (총 480개, 새 24개)
+[2026-01-13T08:18:15.045Z]   [painting] from=480: 24개 링크 (총 504개, 새 24개)
+[2026-01-13T08:18:17.455Z]   [painting] from=504: 14개 링크 (총 518개, 새 14개)
+[2026-01-13T08:18:26.607Z]   [painting] from=600: 0개 링크 (총 518개, 새 0개)
+[2026-01-13T08:18:29.733Z] ✅ [painting] 518개 링크 수집 완료
+[2026-01-13T08:18:29.744Z] 💾 [painting] 완료, 현재 총 518개 링크
+
+[2026-01-13T08:18:31.748Z] 📋 [drawing] 링크 수집 시작 (목표: 1021개)...
+[2026-01-13T08:18:33.684Z]   [drawing] from=0: 20개 링크 (총 20개, 새 20개)
+[2026-01-13T08:18:37.855Z]   [drawing] from=24: 24개 링크 (총 44개, 새 24개)
+[2026-01-13T08:18:40.603Z]   [drawing] from=48: 24개 링크 (총 68개, 새 24개)
+[2026-01-13T08:18:43.603Z]   [drawing] from=72: 24개 링크 (총 92개, 새 24개)
+[2026-01-13T08:18:46.375Z]   [drawing] from=96: 24개 링크 (총 116개, 새 24개)
+[2026-01-13T08:18:49.186Z]   [drawing] from=120: 24개 링크 (총 140개, 새 24개)
+[2026-01-13T08:18:51.994Z]   [drawing] from=144: 24개 링크 (총 164개, 새 24개)
+[2026-01-13T08:18:54.822Z]   [drawing] from=168: 24개 링크 (총 188개, 새 24개)
+[2026-01-13T08:18:57.291Z]   [drawing] from=192: 23개 링크 (총 211개, 새 23개)
+[2026-01-13T08:18:59.923Z]   [drawing] from=216: 24개 링크 (총 235개, 새 24개)
+[2026-01-13T08:19:02.527Z]   [drawing] from=240: 24개 링크 (총 259개, 새 24개)
+[2026-01-13T08:19:05.374Z]   [drawing] from=264: 24개 링크 (총 283개, 새 24개)
+[2026-01-13T08:19:08.243Z]   [drawing] from=288: 24개 링크 (총 307개, 새 24개)
+[2026-01-13T08:19:10.939Z]   [drawing] from=312: 24개 링크 (총 331개, 새 24개)
+[2026-01-13T08:19:13.741Z]   [drawing] from=336: 24개 링크 (총 355개, 새 24개)
+[2026-01-13T08:19:16.122Z]   [drawing] from=360: 24개 링크 (총 379개, 새 24개)
+[2026-01-13T08:19:18.749Z]   [drawing] from=384: 24개 링크 (총 403개, 새 24개)
+[2026-01-13T08:19:21.485Z]   [drawing] from=408: 24개 링크 (총 427개, 새 24개)
+[2026-01-13T08:19:24.193Z]   [drawing] from=432: 19개 링크 (총 446개, 새 19개)
+[2026-01-13T08:19:25.663Z]   [drawing] from=456: 14개 링크 (총 460개, 새 14개)
+[2026-01-13T08:19:28.700Z]   [drawing] from=480: 21개 링크 (총 481개, 새 21개)
+[2026-01-13T08:19:31.413Z]   [drawing] from=504: 24개 링크 (총 505개, 새 24개)
+[2026-01-13T08:19:34.462Z]   [drawing] from=528: 24개 링크 (총 529개, 새 24개)
+[2026-01-13T08:19:37.131Z]   [drawing] from=552: 22개 링크 (총 551개, 새 22개)
+[2026-01-13T08:19:42.638Z]   [drawing] from=600: 1개 링크 (총 551개, 새 0개)
+[2026-01-13T08:19:45.259Z]   [drawing] from=624: 2개 링크 (총 552개, 새 1개)
+[2026-01-13T08:19:48.087Z]   [drawing] from=648: 2개 링크 (총 553개, 새 1개)
+[2026-01-13T08:19:50.792Z]   [drawing] from=672: 2개 링크 (총 554개, 새 1개)
+[2026-01-13T08:19:56.140Z]   [drawing] from=720: 1개 링크 (총 554개, 새 0개)
+[2026-01-13T08:20:01.720Z]   [drawing] from=768: 18개 링크 (총 571개, 새 17개)
+[2026-01-13T08:20:04.342Z]   [drawing] from=792: 24개 링크 (총 595개, 새 24개)
+[2026-01-13T08:20:06.989Z]   [drawing] from=816: 23개 링크 (총 617개, 새 22개)
+[2026-01-13T08:20:09.714Z]   [drawing] from=840: 24개 링크 (총 641개, 새 24개)
+[2026-01-13T08:20:15.350Z]   [drawing] from=864: 24개 링크 (총 665개, 새 24개)
+[2026-01-13T08:20:17.979Z]   [drawing] from=888: 24개 링크 (총 689개, 새 24개)
+[2026-01-13T08:20:20.724Z]   [drawing] from=912: 24개 링크 (총 713개, 새 24개)
+[2026-01-13T08:20:23.551Z]   [drawing] from=936: 24개 링크 (총 737개, 새 24개)
+[2026-01-13T08:20:26.424Z]   [drawing] from=960: 18개 링크 (총 755개, 새 18개)
+[2026-01-13T08:20:29.504Z]   [drawing] from=984: 12개 링크 (총 767개, 새 12개)
+[2026-01-13T08:20:32.125Z]   [drawing] from=1008: 9개 링크 (총 776개, 새 9개)
+[2026-01-13T08:20:39.033Z]   [drawing] from=1080: 0개 링크 (총 776개, 새 0개)
+[2026-01-13T08:20:43.662Z] ✅ [drawing] 776개 링크 수집 완료
+[2026-01-13T08:20:43.671Z] 💾 [drawing] 완료, 현재 총 1294개 링크
+
+[2026-01-13T08:20:45.673Z] 📋 [sketch] 링크 수집 시작 (목표: 281개)...
+[2026-01-13T08:20:47.628Z]   [sketch] from=0: 12개 링크 (총 12개, 새 12개)
+[2026-01-13T08:20:49.101Z]   [sketch] from=24: 4개 링크 (총 16개, 새 4개)
+[2026-01-13T08:20:57.549Z]   [sketch] from=96: 2개 링크 (총 17개, 새 1개)
+[2026-01-13T08:21:00.254Z]   [sketch] from=120: 2개 링크 (총 18개, 새 1개)
+[2026-01-13T08:21:03.059Z]   [sketch] from=144: 2개 링크 (총 19개, 새 1개)
+[2026-01-13T08:21:14.593Z]   [sketch] from=240: 23개 링크 (총 41개, 새 22개)
+[2026-01-13T08:21:17.775Z]   [sketch] from=264: 4개 링크 (총 45개, 새 4개)
+[2026-01-13T08:21:26.463Z]   [sketch] from=360: 0개 링크 (총 45개, 새 0개)
+[2026-01-13T08:21:30.839Z] ✅ [sketch] 45개 링크 수집 완료
+[2026-01-13T08:21:30.856Z] 💾 [sketch] 완료, 현재 총 1294개 링크
+
+[2026-01-13T08:21:32.864Z] 📋 [advertisement] 링크 수집 시작 (목표: 83개)...
+[2026-01-13T08:21:34.782Z]   [advertisement] from=0: 0개 링크 (총 0개, 새 0개)
+[2026-01-13T08:21:46.395Z] ✅ [advertisement] 0개 링크 수집 완료
+[2026-01-13T08:21:46.403Z] 💾 [advertisement] 완료, 현재 총 1294개 링크
+
+[2026-01-13T08:21:48.405Z] 📋 [illustration] 링크 수집 시작 (목표: 153개)...
+[2026-01-13T08:21:50.277Z]   [illustration] from=0: 4개 링크 (총 4개, 새 4개)
+[2026-01-13T08:22:04.103Z]   [illustration] from=120: 1개 링크 (총 5개, 새 1개)
+[2026-01-13T08:22:15.927Z]   [illustration] from=240: 0개 링크 (총 5개, 새 0개)
+[2026-01-13T08:22:16.730Z] ✅ [illustration] 5개 링크 수집 완료
+[2026-01-13T08:22:16.738Z] 💾 [illustration] 완료, 현재 총 1299개 링크
+
+[2026-01-13T08:22:18.739Z] 📋 [poster] 링크 수집 시작 (목표: 43개)...
+[2026-01-13T08:22:19.603Z]   [poster] from=0: 0개 링크 (총 0개, 새 0개)
+[2026-01-13T08:22:29.835Z] ✅ [poster] 0개 링크 수집 완료
+[2026-01-13T08:22:29.847Z] 💾 [poster] 완료, 현재 총 1299개 링크
+
+[2026-01-13T08:22:31.848Z] ✅ 모든 타입 링크 수집 완료: 총 1299개 링크
+
+[2026-01-13T08:22:31.848Z] 📦 2단계: 작품 상세 정보 수집
+
+[2026-01-13T08:22:31.855Z] 목표: 1299개, 완료: 1425개
+
+[2026-01-13T08:22:32.876Z] 
+═══════════════════════════════════════════════════════════════
+[2026-01-13T08:22:32.876Z]   ✅ 스크래핑 완료
+[2026-01-13T08:22:32.876Z] ═══════════════════════════════════════════════════════════════
+[2026-01-13T08:22:32.877Z]   총 수집: 1425개 작품
+[2026-01-13T08:22:32.877Z]   오류: 0개
+[2026-01-13T08:22:32.881Z]   완료 시간: 1/13/2026, 5:22:32 PM
+[2026-01-13T08:33:42.107Z] ═══════════════════════════════════════════════════════════════
+[2026-01-13T08:33:42.116Z]   🏛️  Van Gogh Museum Collection Scraper - Type별 개별 수집
+[2026-01-13T08:33:42.116Z]   📋 각 타입별로 개별 스크래핑 후 합쳐서 1796개 전체 수집
+[2026-01-13T08:33:42.117Z] ═══════════════════════════════════════════════════════════════
+[2026-01-13T08:33:42.270Z]   시작 시간: 1/13/2026, 5:33:42 PM
+[2026-01-13T08:33:42.271Z] ───────────────────────────────────────────────────────────────
+[2026-01-13T08:33:42.286Z] 📥 기존 데이터 로드: 1425개 작품
+[2026-01-13T08:33:42.308Z] 📥 저장된 링크: 0개
+[2026-01-13T08:33:42.308Z] 📥 기존 링크: 0개
+[2026-01-13T08:33:42.309Z] 📥 완료된 타입: painting
+
+[2026-01-13T08:33:42.312Z] 📋 1단계: 타입별 링크 수집 (API + 웹페이지 스크롤)
+
+[2026-01-13T08:33:43.499Z] ⏭️  [painting] 이미 완료됨, 건너뜀
+[2026-01-13T08:33:43.501Z] 📋 [drawing] 링크 수집 시작 (목표: 1021개)...
+[2026-01-13T08:33:47.138Z]   [drawing] from=0: 20개 링크 (총 20개, 새 20개)
+[2026-01-13T08:33:50.148Z]   [drawing] from=24: 24개 링크 (총 44개, 새 24개)
+[2026-01-13T08:33:52.773Z]   [drawing] from=48: 24개 링크 (총 68개, 새 24개)
+[2026-01-13T08:33:56.006Z]   [drawing] from=72: 24개 링크 (총 92개, 새 24개)
+[2026-01-13T08:33:59.054Z]   [drawing] from=96: 24개 링크 (총 116개, 새 24개)
+[2026-01-13T08:34:01.844Z]   [drawing] from=120: 24개 링크 (총 140개, 새 24개)
+[2026-01-13T08:34:04.509Z]   [drawing] from=144: 24개 링크 (총 164개, 새 24개)
+[2026-01-13T08:34:07.245Z]   [drawing] from=168: 24개 링크 (총 188개, 새 24개)
+[2026-01-13T08:34:10.064Z]   [drawing] from=192: 23개 링크 (총 211개, 새 23개)
+[2026-01-13T08:34:12.820Z]   [drawing] from=216: 24개 링크 (총 235개, 새 24개)
+[2026-01-13T08:34:15.832Z]   [drawing] from=240: 24개 링크 (총 259개, 새 24개)
+[2026-01-13T08:34:18.587Z]   [drawing] from=264: 24개 링크 (총 283개, 새 24개)
+[2026-01-13T08:34:21.329Z]   [drawing] from=288: 24개 링크 (총 307개, 새 24개)
+[2026-01-13T08:34:22.936Z]   [drawing] from=312: 24개 링크 (총 331개, 새 24개)
+[2026-01-13T08:34:25.793Z]   [drawing] from=336: 24개 링크 (총 355개, 새 24개)
+[2026-01-13T08:34:28.557Z]   [drawing] from=360: 24개 링크 (총 379개, 새 24개)
+[2026-01-13T08:34:32.084Z]   [drawing] from=384: 24개 링크 (총 403개, 새 24개)
+[2026-01-13T08:34:34.859Z]   [drawing] from=408: 24개 링크 (총 427개, 새 24개)
+[2026-01-13T08:34:37.617Z]   [drawing] from=432: 19개 링크 (총 446개, 새 19개)
+[2026-01-13T08:34:40.268Z]   [drawing] from=456: 14개 링크 (총 460개, 새 14개)
+[2026-01-13T08:34:43.681Z]   [drawing] from=480: 21개 링크 (총 481개, 새 21개)
+[2026-01-13T08:34:46.357Z]   [drawing] from=504: 24개 링크 (총 505개, 새 24개)
+[2026-01-13T08:34:49.385Z]   [drawing] from=528: 24개 링크 (총 529개, 새 24개)
+[2026-01-13T08:34:53.580Z]   [drawing] from=552: 22개 링크 (총 551개, 새 22개)
+[2026-01-13T08:34:59.154Z]   [drawing] from=600: 1개 링크 (총 551개, 새 0개)
+[2026-01-13T08:35:01.974Z]   [drawing] from=624: 2개 링크 (총 552개, 새 1개)
+[2026-01-13T08:35:04.707Z]   [drawing] from=648: 2개 링크 (총 553개, 새 1개)
+[2026-01-13T08:35:07.551Z]   [drawing] from=672: 2개 링크 (총 554개, 새 1개)
+[2026-01-13T08:35:13.188Z]   [drawing] from=720: 1개 링크 (총 554개, 새 0개)
+[2026-01-13T08:35:17.701Z]   [drawing] from=768: 18개 링크 (총 571개, 새 17개)
+[2026-01-13T08:35:22.431Z]   [drawing] from=792: 24개 링크 (총 595개, 새 24개)
+[2026-01-13T08:35:25.560Z]   [drawing] from=816: 23개 링크 (총 617개, 새 22개)
+[2026-01-13T08:35:28.329Z]   [drawing] from=840: 24개 링크 (총 641개, 새 24개)
+[2026-01-13T08:35:31.040Z]   [drawing] from=864: 24개 링크 (총 665개, 새 24개)
+[2026-01-13T08:35:33.688Z]   [drawing] from=888: 24개 링크 (총 689개, 새 24개)
+[2026-01-13T08:35:36.656Z]   [drawing] from=912: 24개 링크 (총 713개, 새 24개)
+[2026-01-13T08:35:39.309Z]   [drawing] from=936: 24개 링크 (총 737개, 새 24개)
+[2026-01-13T08:35:42.336Z]   [drawing] from=960: 18개 링크 (총 755개, 새 18개)
+[2026-01-13T08:35:45.262Z]   [drawing] from=984: 12개 링크 (총 767개, 새 12개)
+[2026-01-13T08:35:47.828Z]   [drawing] from=1008: 9개 링크 (총 776개, 새 9개)
+[2026-01-13T08:35:56.322Z]   [drawing] from=1080: 0개 링크 (총 776개, 새 0개)
+[2026-01-13T08:36:01.579Z] ✅ [drawing] API로 776개 링크 수집 완료
+[2026-01-13T08:36:01.583Z] 📋 [drawing] 웹페이지 스크롤로 링크 수집 시작...
+[2026-01-13T08:36:57.800Z]   [drawing] 스크롤 20: 776개 링크
+[2026-01-13T08:37:47.866Z]   [drawing] 스크롤 40: 979개 링크
+[2026-01-13T08:38:40.236Z]   [drawing] 스크롤 60: 979개 링크
+[2026-01-13T08:38:59.538Z]   [drawing] 30번 연속 변화 없음, 종료
+[2026-01-13T08:38:59.540Z] ✅ [drawing] 스크롤로 979개 링크 (추가 수집)
+[2026-01-13T08:38:59.546Z] 💾 [drawing] 완료, 현재 총 979개 링크
+
+[2026-01-13T08:39:01.548Z] 📋 [sketch] 링크 수집 시작 (목표: 281개)...
+[2026-01-13T08:39:03.655Z]   [sketch] from=0: 12개 링크 (총 12개, 새 12개)
+[2026-01-13T08:39:06.324Z]   [sketch] from=24: 4개 링크 (총 16개, 새 4개)
+[2026-01-13T08:39:14.417Z]   [sketch] from=96: 2개 링크 (총 17개, 새 1개)
+[2026-01-13T08:39:17.320Z]   [sketch] from=120: 2개 링크 (총 18개, 새 1개)
+[2026-01-13T08:39:20.032Z]   [sketch] from=144: 2개 링크 (총 19개, 새 1개)
+[2026-01-13T08:39:30.919Z]   [sketch] from=240: 23개 링크 (총 41개, 새 22개)
+[2026-01-13T08:39:33.722Z]   [sketch] from=264: 4개 링크 (총 45개, 새 4개)
+[2026-01-13T08:39:42.100Z]   [sketch] from=360: 0개 링크 (총 45개, 새 0개)
+[2026-01-13T08:39:45.138Z] ✅ [sketch] API로 45개 링크 수집 완료
+[2026-01-13T08:39:45.141Z] 📋 [sketch] 웹페이지 스크롤로 링크 수집 시작...
+[2026-01-13T08:39:52.260Z] ✅ [sketch] 스크롤로 979개 링크 (추가 수집)
+[2026-01-13T08:39:52.271Z] 💾 [sketch] 완료, 현재 총 979개 링크
+
+[2026-01-13T08:39:54.273Z] 📋 [advertisement] 링크 수집 시작 (목표: 83개)...
+[2026-01-13T08:39:56.213Z]   [advertisement] from=0: 0개 링크 (총 0개, 새 0개)
+[2026-01-13T08:40:07.910Z] ✅ [advertisement] API로 0개 링크 수집 완료
+[2026-01-13T08:40:07.912Z] 📋 [advertisement] 웹페이지 스크롤로 링크 수집 시작...
+[2026-01-13T08:40:45.353Z] ❌ [advertisement] 스크롤 오류: page.waitForSelector: Timeout 30000ms exceeded.
+Call log:
+  - waiting for locator('a[href*="/en/collection/"]') to be visible
+
+[2026-01-13T08:40:45.356Z] ✅ [advertisement] 스크롤로 979개 링크 (추가 수집)
+[2026-01-13T08:40:45.369Z] 💾 [advertisement] 완료, 현재 총 979개 링크
+
+[2026-01-13T08:40:47.372Z] 📋 [illustration] 링크 수집 시작 (목표: 153개)...
+[2026-01-13T08:40:51.720Z]   [illustration] from=0: 4개 링크 (총 4개, 새 4개)
+[2026-01-13T08:41:04.054Z]   [illustration] from=120: 1개 링크 (총 5개, 새 1개)
+[2026-01-13T08:41:15.019Z]   [illustration] from=240: 0개 링크 (총 5개, 새 0개)
+[2026-01-13T08:41:15.822Z] ✅ [illustration] API로 5개 링크 수집 완료
+[2026-01-13T08:41:15.823Z] 📋 [illustration] 웹페이지 스크롤로 링크 수집 시작...
+[2026-01-13T08:41:24.908Z] ✅ [illustration] 스크롤로 984개 링크 (추가 수집)
+[2026-01-13T08:41:24.915Z] 💾 [illustration] 완료, 현재 총 984개 링크
+
+[2026-01-13T08:41:26.917Z] 📋 [poster] 링크 수집 시작 (목표: 43개)...
+[2026-01-13T08:41:29.147Z]   [poster] from=0: 0개 링크 (총 0개, 새 0개)
+[2026-01-13T08:41:39.471Z] ✅ [poster] API로 0개 링크 수집 완료
+[2026-01-13T08:41:39.472Z] 📋 [poster] 웹페이지 스크롤로 링크 수집 시작...
+[2026-01-13T08:42:16.645Z] ❌ [poster] 스크롤 오류: page.waitForSelector: Timeout 30000ms exceeded.
+Call log:
+  - waiting for locator('a[href*="/en/collection/"]') to be visible
+
+[2026-01-13T08:42:16.647Z] ✅ [poster] 스크롤로 984개 링크 (추가 수집)
+[2026-01-13T08:42:16.657Z] 💾 [poster] 완료, 현재 총 984개 링크
+
+[2026-01-13T08:42:18.778Z] ✅ 모든 타입 링크 수집 완료: 총 984개 링크
+
+[2026-01-13T08:42:18.778Z] 📦 2단계: 작품 상세 정보 수집
+
+[2026-01-13T08:42:18.778Z] 목표: 984개, 완료: 1425개
+
+[2026-01-13T08:42:19.216Z] 
+═══════════════════════════════════════════════════════════════
+[2026-01-13T08:42:19.216Z]   ✅ 스크래핑 완료
+[2026-01-13T08:42:19.216Z] ═══════════════════════════════════════════════════════════════
+[2026-01-13T08:42:19.216Z]   총 수집: 1425개 작품
+[2026-01-13T08:42:19.216Z]   오류: 0개
+[2026-01-13T08:42:19.220Z]   완료 시간: 1/13/2026, 5:42:19 PM
+[2026-01-13T08:49:46.160Z] ═══════════════════════════════════════════════════════════════
+[2026-01-13T08:49:46.167Z]   🏛️  Van Gogh Museum Collection Scraper - Type별 개별 수집
+[2026-01-13T08:49:46.167Z]   📋 각 타입별로 개별 스크래핑 후 합쳐서 1796개 전체 수집
+[2026-01-13T08:49:46.167Z] ═══════════════════════════════════════════════════════════════
+[2026-01-13T08:49:46.206Z]   시작 시간: 1/13/2026, 5:49:46 PM
+[2026-01-13T08:49:46.207Z] ───────────────────────────────────────────────────────────────
+[2026-01-13T08:49:46.212Z] 📥 기존 데이터 로드: 1425개 작품
+[2026-01-13T08:49:46.213Z] 📥 저장된 링크: 1425개
+[2026-01-13T08:49:46.214Z] 📥 기존 링크: 1425개
+[2026-01-13T08:49:46.215Z] 📥 완료된 타입: painting
+
+[2026-01-13T08:49:46.217Z] 📋 1단계: 타입별 링크 수집 (API + 웹페이지 스크롤)
+
+[2026-01-13T08:49:47.811Z] ⏭️  [painting] 이미 완료됨, 건너뜀
+[2026-01-13T08:49:47.812Z] 📋 [drawing] 링크 수집 시작 (목표: 1021개)...
+[2026-01-13T08:49:50.712Z]   [drawing] from=0: 20개 링크 (총 20개, 새 20개)
+[2026-01-13T08:49:53.565Z]   [drawing] from=24: 24개 링크 (총 44개, 새 24개)
+[2026-01-13T08:49:56.226Z]   [drawing] from=48: 24개 링크 (총 68개, 새 24개)
+[2026-01-13T08:49:58.860Z]   [drawing] from=72: 24개 링크 (총 92개, 새 24개)
+[2026-01-13T08:50:01.502Z]   [drawing] from=96: 24개 링크 (총 116개, 새 24개)
+[2026-01-13T08:50:04.121Z]   [drawing] from=120: 24개 링크 (총 140개, 새 24개)
+[2026-01-13T08:50:06.733Z]   [drawing] from=144: 24개 링크 (총 164개, 새 24개)
+[2026-01-13T08:50:09.551Z]   [drawing] from=168: 24개 링크 (총 188개, 새 24개)
+[2026-01-13T08:50:12.279Z]   [drawing] from=192: 23개 링크 (총 211개, 새 23개)
+[2026-01-13T08:50:15.396Z]   [drawing] from=216: 24개 링크 (총 235개, 새 24개)
+[2026-01-13T08:50:18.168Z]   [drawing] from=240: 24개 링크 (총 259개, 새 24개)
+[2026-01-13T08:50:24.986Z]   [drawing] from=264: 24개 링크 (총 283개, 새 24개)
+[2026-01-13T08:50:28.432Z]   [drawing] from=288: 24개 링크 (총 307개, 새 24개)
+[2026-01-13T08:50:32.724Z]   [drawing] from=312: 24개 링크 (총 331개, 새 24개)
+[2026-01-13T08:50:35.472Z]   [drawing] from=336: 24개 링크 (총 355개, 새 24개)
+[2026-01-13T08:50:38.386Z]   [drawing] from=360: 24개 링크 (총 379개, 새 24개)
+[2026-01-13T08:50:41.008Z]   [drawing] from=384: 24개 링크 (총 403개, 새 24개)
+[2026-01-13T08:50:43.765Z]   [drawing] from=408: 24개 링크 (총 427개, 새 24개)
+[2026-01-13T08:50:46.926Z]   [drawing] from=432: 19개 링크 (총 446개, 새 19개)
+[2026-01-13T08:50:49.629Z]   [drawing] from=456: 14개 링크 (총 460개, 새 14개)
+[2026-01-13T08:50:52.353Z]   [drawing] from=480: 21개 링크 (총 481개, 새 21개)
+[2026-01-13T08:50:55.163Z]   [drawing] from=504: 24개 링크 (총 505개, 새 24개)
+[2026-01-13T08:50:57.784Z]   [drawing] from=528: 24개 링크 (총 529개, 새 24개)
+[2026-01-13T08:51:00.439Z]   [drawing] from=552: 22개 링크 (총 551개, 새 22개)
+[2026-01-13T08:51:08.051Z]   [drawing] from=600: 1개 링크 (총 551개, 새 0개)
+[2026-01-13T08:51:10.893Z]   [drawing] from=624: 2개 링크 (총 552개, 새 1개)
+[2026-01-13T08:51:13.577Z]   [drawing] from=648: 2개 링크 (총 553개, 새 1개)
+[2026-01-13T08:51:16.415Z]   [drawing] from=672: 2개 링크 (총 554개, 새 1개)
+[2026-01-13T08:51:21.990Z]   [drawing] from=720: 1개 링크 (총 554개, 새 0개)
+[2026-01-13T08:51:27.682Z]   [drawing] from=768: 18개 링크 (총 571개, 새 17개)
+[2026-01-13T08:51:31.401Z]   [drawing] from=792: 24개 링크 (총 595개, 새 24개)
+[2026-01-13T08:51:35.802Z]   [drawing] from=816: 23개 링크 (총 617개, 새 22개)
+[2026-01-13T08:51:38.686Z]   [drawing] from=840: 24개 링크 (총 641개, 새 24개)
+[2026-01-13T08:51:41.344Z]   [drawing] from=864: 24개 링크 (총 665개, 새 24개)
+[2026-01-13T08:51:44.135Z]   [drawing] from=888: 24개 링크 (총 689개, 새 24개)
+[2026-01-13T08:51:46.853Z]   [drawing] from=912: 24개 링크 (총 713개, 새 24개)
+[2026-01-13T08:51:49.460Z]   [drawing] from=936: 24개 링크 (총 737개, 새 24개)
+[2026-01-13T08:51:54.080Z]   [drawing] from=960: 18개 링크 (총 755개, 새 18개)
+[2026-01-13T08:51:56.709Z]   [drawing] from=984: 12개 링크 (총 767개, 새 12개)
+[2026-01-13T08:51:59.344Z]   [drawing] from=1008: 9개 링크 (총 776개, 새 9개)
+[2026-01-13T08:52:05.986Z]   [drawing] from=1080: 0개 링크 (총 776개, 새 0개)
+[2026-01-13T08:52:11.259Z] ✅ [drawing] API로 776개 링크 수집 완료
+[2026-01-13T08:52:11.280Z] 📋 [drawing] 웹페이지 스크롤로 링크 수집 시작...
+[2026-01-13T08:52:24.591Z] ✅ [drawing] 스크롤로 추가 0개 링크 수집 (총 1531개)
+[2026-01-13T08:52:24.608Z] 💾 [drawing] 완료, 현재 총 1531개 링크
+
+[2026-01-13T08:52:26.610Z] 📋 [sketch] 링크 수집 시작 (목표: 281개)...
+[2026-01-13T08:52:26.747Z]   [sketch] from=0: 12개 링크 (총 12개, 새 12개)
+[2026-01-13T08:52:27.592Z]   [sketch] from=24: 4개 링크 (총 16개, 새 4개)
+[2026-01-13T08:52:30.222Z]   [sketch] from=96: 2개 링크 (총 17개, 새 1개)
+[2026-01-13T08:52:31.136Z]   [sketch] from=120: 2개 링크 (총 18개, 새 1개)
+[2026-01-13T08:52:31.980Z]   [sketch] from=144: 2개 링크 (총 19개, 새 1개)
+[2026-01-13T08:52:35.506Z]   [sketch] from=240: 23개 링크 (총 41개, 새 22개)
+[2026-01-13T08:52:36.371Z]   [sketch] from=264: 4개 링크 (총 45개, 새 4개)
+[2026-01-13T08:52:39.813Z]   [sketch] from=360: 0개 링크 (총 45개, 새 0개)
+[2026-01-13T08:52:41.435Z] ✅ [sketch] API로 45개 링크 수집 완료
+[2026-01-13T08:52:41.436Z] 📋 [sketch] 웹페이지 스크롤로 링크 수집 시작...
+[2026-01-13T08:52:51.852Z] ✅ [sketch] 스크롤로 추가 0개 링크 수집 (총 1531개)
+[2026-01-13T08:52:51.886Z] 💾 [sketch] 완료, 현재 총 1531개 링크
+
+[2026-01-13T08:52:53.889Z] 📋 [advertisement] 링크 수집 시작 (목표: 83개)...
+[2026-01-13T08:52:55.875Z]   [advertisement] from=0: 0개 링크 (총 0개, 새 0개)
+[2026-01-13T08:53:07.059Z] ✅ [advertisement] API로 0개 링크 수집 완료
+[2026-01-13T08:53:07.065Z] 📋 [advertisement] 웹페이지 스크롤로 링크 수집 시작...
+[2026-01-13T08:53:44.400Z] ❌ [advertisement] 스크롤 오류: page.waitForSelector: Timeout 30000ms exceeded.
+Call log:
+  - waiting for locator('a[href*="/en/collection/"]') to be visible
+
+[2026-01-13T08:54:19.518Z] ❌ [advertisement] 스크롤 오류: page.waitForSelector: Timeout 30000ms exceeded.
+Call log:
+  - waiting for locator('a[href*="/en/collection/"]') to be visible
+
+[2026-01-13T08:54:19.519Z] ✅ [advertisement] 스크롤로 추가 0개 링크 수집 (총 1531개)
+[2026-01-13T08:54:19.534Z] 💾 [advertisement] 완료, 현재 총 1531개 링크
+
+[2026-01-13T08:54:21.535Z] 📋 [illustration] 링크 수집 시작 (목표: 153개)...
+[2026-01-13T08:54:21.848Z]   [illustration] from=0: 4개 링크 (총 4개, 새 4개)
+[2026-01-13T08:54:26.250Z]   [illustration] from=120: 1개 링크 (총 5개, 새 1개)
+[2026-01-13T08:54:30.637Z]   [illustration] from=240: 0개 링크 (총 5개, 새 0개)
+[2026-01-13T08:54:31.438Z] ✅ [illustration] API로 5개 링크 수집 완료
+[2026-01-13T08:54:31.438Z] 📋 [illustration] 웹페이지 스크롤로 링크 수집 시작...
+[2026-01-13T08:54:41.592Z] ✅ [illustration] 스크롤로 추가 0개 링크 수집 (총 1531개)
+[2026-01-13T08:54:41.604Z] 💾 [illustration] 완료, 현재 총 1531개 링크
+
+[2026-01-13T08:54:43.616Z] 📋 [poster] 링크 수집 시작 (목표: 43개)...
+[2026-01-13T08:54:43.883Z]   [poster] from=0: 0개 링크 (총 0개, 새 0개)
+[2026-01-13T08:54:48.593Z] ✅ [poster] API로 0개 링크 수집 완료
+[2026-01-13T08:54:48.598Z] 📋 [poster] 웹페이지 스크롤로 링크 수집 시작...
+[2026-01-13T08:55:23.767Z] ❌ [poster] 스크롤 오류: page.waitForSelector: Timeout 30000ms exceeded.
+Call log:
+  - waiting for locator('a[href*="/en/collection/"]') to be visible
+
+[2026-01-13T08:55:58.877Z] ❌ [poster] 스크롤 오류: page.waitForSelector: Timeout 30000ms exceeded.
+Call log:
+  - waiting for locator('a[href*="/en/collection/"]') to be visible
+
+[2026-01-13T08:55:58.880Z] ✅ [poster] 스크롤로 추가 0개 링크 수집 (총 1531개)
+[2026-01-13T08:55:58.901Z] 💾 [poster] 완료, 현재 총 1531개 링크
+
+[2026-01-13T08:56:00.989Z] ✅ 모든 타입 링크 수집 완료: 총 1531개 링크
+
+[2026-01-13T08:56:00.990Z] 📦 2단계: 작품 상세 정보 수집
+
+[2026-01-13T08:56:00.990Z] 목표: 1531개, 완료: 1425개
+
+[2026-01-13T08:56:01.915Z] [1426/1531] 스크래핑: https://www.vangoghmuseum.nl/en/collection/d0009V1962
+[2026-01-13T08:56:12.743Z]   ✅ Verkoping van afbraak (recto) en Verkoping van afbraak (verso)
+[2026-01-13T08:56:13.551Z] [1427/1531] 스크래핑: https://www.vangoghmuseum.nl/en/collection/d0012V1962
+[2026-01-13T08:56:23.136Z]   ✅ Studies van een zittend meisje, spierman en Venus (recto) en Zittend meisje en Venus (verso)
+[2026-01-13T08:56:23.946Z] [1428/1531] 스크래핑: https://www.vangoghmuseum.nl/en/collection/d0014V1962
+[2026-01-13T08:56:34.727Z]   ✅ Idool (recto) en Idool (verso)
+[2026-01-13T08:56:35.551Z] [1429/1531] 스크래핑: https://www.vangoghmuseum.nl/en/collection/d0015V1962
+[2026-01-13T08:56:46.395Z]   ✅ Idool (recto) en Idool (verso)
+[2026-01-13T08:56:47.221Z] [1430/1531] 스크래핑: https://www.vangoghmuseum.nl/en/collection/d0017V1962
+[2026-01-13T08:56:59.428Z]   ✅ Kop van een man (vermoedelijk Theo van Gogh) (recto) en Kop van een man met hoed (verso)
+[2026-01-13T08:57:00.259Z] [1431/1531] 스크래핑: https://www.vangoghmuseum.nl/en/collection/d0018V1962
+[2026-01-13T08:57:11.183Z]   ✅ Pianist (recto) en Contrabasspeler (verso)
+[2026-01-13T08:57:11.991Z] [1432/1531] 스크래핑: https://www.vangoghmuseum.nl/en/collection/d0019V1962
+[2026-01-13T08:57:22.825Z]   ✅ Klarinettist en piccolospeler (recto) en Studie voor `Vrouw bij een wieg' (verso)
+[2026-01-13T08:57:23.646Z] [1433/1531] 스크래핑: https://www.vangoghmuseum.nl/en/collection/d0020V1962
+[2026-01-13T08:57:34.413Z]   ✅ Violist op de rug gezien (recto) en Violist van voren gezien (verso)
+[2026-01-13T08:57:35.230Z] [1434/1531] 스크래핑: https://www.vangoghmuseum.nl/en/collection/d0025V1962
+[2026-01-13T08:57:46.123Z]   ✅ Gezicht op Het Steen (recto) en Twee vrouwen in een loge (verso)
+[2026-01-13T08:57:46.935Z] [1435/1531] 스크래핑: https://www.vangoghmuseum.nl/en/collection/d0030V1962
+[2026-01-13T08:57:57.625Z]   ✅ Staand mannelijk naakt van voren gezien (recto) en Koppen (verso)
+[2026-01-13T08:57:58.440Z] [1436/1531] 스크래핑: https://www.vangoghmuseum.nl/en/collection/d0031V1962
+[2026-01-13T08:58:11.472Z]   ✅ Staand mannelijk en zittend vrouwelijk naakt (recto) en Venustorso (verso)
+[2026-01-13T08:58:12.280Z] [1437/1531] 스크래핑: https://www.vangoghmuseum.nl/en/collection/d0034V1962
+[2026-01-13T08:58:23.120Z]   ✅ Venustorso (recto) en Jonge slaaf (verso)
+[2026-01-13T08:58:23.928Z] [1438/1531] 스크래핑: https://www.vangoghmuseum.nl/en/collection/d0036V1962
+[2026-01-13T08:58:34.628Z]   ✅ Venus met hoed (recto) en Benen van een vrouw (verso)
+[2026-01-13T08:58:35.445Z] [1439/1531] 스크래핑: https://www.vangoghmuseum.nl/en/collection/d0048V1962
+[2026-01-13T08:58:46.217Z]   ✅ Gedrongen man (recto) en Man en vrouw aan de maaltijd (verso)
+[2026-01-13T08:58:47.030Z] [1440/1531] 스크래핑: https://www.vangoghmuseum.nl/en/collection/d0056V1962
+[2026-01-13T08:58:57.799Z]   ✅ Arm (recto) en Arm (verso)
+[2026-01-13T08:58:58.614Z] [1441/1531] 스크래핑: https://www.vangoghmuseum.nl/en/collection/d0078V1962
+[2026-01-13T08:59:09.274Z]   ✅ Twee handen (recto) en Ketel boven het vuur en een hut bij avond (verso)
+[2026-01-13T08:59:10.084Z] [1442/1531] 스크래핑: https://www.vangoghmuseum.nl/en/collection/d0090V1962
+[2026-01-13T08:59:20.844Z]   ✅ Twee handen en een kop van een vrouw (recto) en Twee studies van een hut (verso)
+[2026-01-13T08:59:21.655Z] [1443/1531] 스크래핑: https://www.vangoghmuseum.nl/en/collection/d0094V1962
+[2026-01-13T08:59:32.430Z]   ✅ Drie handen, twee met mes (recto) en Kop van een jongeman (verso)
+[2026-01-13T08:59:33.246Z] [1444/1531] 스크래핑: https://www.vangoghmuseum.nl/en/collection/d0095V1962
+[2026-01-13T08:59:44.266Z]   ✅ Vier handen (recto) en Lamp voor een raam (verso)
+[2026-01-13T08:59:45.081Z] [1445/1531] 스크래핑: https://www.vangoghmuseum.nl/en/collection/d0096V1962
+[2026-01-13T08:59:55.874Z]   ✅ Twee handen met een stok (recto) en Vier handen, twee met kom (verso)
+[2026-01-13T08:59:56.685Z] [1446/1531] 스크래핑: https://www.vangoghmuseum.nl/en/collection/d0098V1962
+[2026-01-13T09:00:07.473Z]   ✅ Drie handen (recto) en Drie handen (verso)
+[2026-01-13T09:00:08.284Z] [1447/1531] 스크래핑: https://www.vangoghmuseum.nl/en/collection/d0100V1962
+[2026-01-13T09:00:19.270Z]   ✅ Schoot met handen (recto) en Drie handen (verso)
+[2026-01-13T09:00:20.115Z] [1448/1531] 스크래핑: https://www.vangoghmuseum.nl/en/collection/d0103V1962
+[2026-01-13T09:00:30.955Z]   ✅ Vrouw met omslagdoek (recto) en Vrouw met omslagdoek (verso)
+[2026-01-13T09:00:31.767Z] [1449/1531] 스크래핑: https://www.vangoghmuseum.nl/en/collection/d0109V1962
+[2026-01-13T09:00:42.571Z]   ✅ Aardappelrooiende boerin (recto) en Aardappelrooiende boerin (verso)
+[2026-01-13T09:00:43.387Z] [1450/1531] 스크래핑: https://www.vangoghmuseum.nl/en/collection/d0115V1962
+[2026-01-13T09:00:54.177Z]   ✅ Deel van een portret van Anthon van Rappard (recto) en Studies van figuren met takkenbossen (verso)
+[2026-01-13T09:00:54.992Z] [1451/1531] 스크래핑: https://www.vangoghmuseum.nl/en/collection/d0116V1962
+[2026-01-13T09:01:05.824Z]   ✅ Drie studies van een vrouw met omslagdoek (recto) en Vrouw met omslagdoek (verso)
+[2026-01-13T09:01:06.709Z] [1452/1531] 스크래핑: https://www.vangoghmuseum.nl/en/collection/d0123V1962
+[2026-01-13T09:01:17.559Z]   ✅ Korenveld met maaier en schovenbindende boerin (recto) en Boer met gaffel (verso)
+[2026-01-13T09:01:18.389Z] [1453/1531] 스크래핑: https://www.vangoghmuseum.nl/en/collection/d0124V1962
+[2026-01-13T09:01:29.328Z]   ✅ Straat met figuren bij avond (recto) en Man op een bank (verso)
+[2026-01-13T09:01:30.146Z] [1454/1531] 스크래핑: https://www.vangoghmuseum.nl/en/collection/d0126V1969
+[2026-01-13T09:01:40.989Z]   ✅ Park with Figures
+[2026-01-13T09:01:41.814Z] [1455/1531] 스크래핑: https://www.vangoghmuseum.nl/en/collection/d0135V1962
+[2026-01-13T09:01:53.259Z]   ✅ Man en vrouw op de rug gezien (recto) en Blad met schetsen (verso)
+[2026-01-13T09:01:54.075Z] [1456/1531] 스크래핑: https://www.vangoghmuseum.nl/en/collection/d0136V1962
+[2026-01-13T09:02:04.930Z]   ✅ Venustorso (recto) en venustorso (verso)
+[2026-01-13T09:02:05.749Z] [1457/1531] 스크래핑: https://www.vangoghmuseum.nl/en/collection/d0137V1962
+[2026-01-13T09:02:16.492Z]   ✅ Venustorso (recto) en Venustorso en landschap (verso)
+[2026-01-13T09:02:17.312Z] [1458/1531] 스크래핑: https://www.vangoghmuseum.nl/en/collection/d0138V1962
+[2026-01-13T09:02:28.049Z]   ✅ Venustorso (recto) en Mannentorso en Studie voor `Portret van vrouw met bloemen' (verso)
+[2026-01-13T09:02:28.864Z] [1459/1531] 스크래핑: https://www.vangoghmuseum.nl/en/collection/d0140V1962
+[2026-01-13T09:02:38.652Z]   ✅ Venustorso (recto) en Venustorso (verso)
+[2026-01-13T09:02:39.472Z] [1460/1531] 스크래핑: https://www.vangoghmuseum.nl/en/collection/d0142V1962
+[2026-01-13T09:02:50.438Z]   ✅ Studie van de verdedigingswerken (recto) en Studie van de verdedigingswerken (verso)
+[2026-01-13T09:02:51.265Z] [1461/1531] 스크래핑: https://www.vangoghmuseum.nl/en/collection/d0150V1971
+[2026-01-13T09:03:01.947Z]   ✅ Menu van een restaurant (recto) en Geschubde inktzwam (verso)
+[2026-01-13T09:03:02.763Z] [1462/1531] 스크래핑: https://www.vangoghmuseum.nl/en/collection/d0152V1962
+[2026-01-13T09:03:13.633Z]   ✅ Kerkuil van opzij gezien (recto) en Kerkuil van voren gezien (verso)
+[2026-01-13T09:03:14.445Z] [1463/1531] 스크래핑: https://www.vangoghmuseum.nl/en/collection/d0156V1962
+[2026-01-13T09:03:25.241Z]   ✅ Voeten (recto) en Parkgezicht (verso)
+[2026-01-13T09:03:26.056Z] [1464/1531] 스크래핑: https://www.vangoghmuseum.nl/en/collection/d0160V1962
+[2026-01-13T09:03:36.753Z]   ✅ Staand vrouwelijk naakt op de rug gezien (recto) en Idool en schetsen van Venus (verso)
+[2026-01-13T09:03:37.568Z] [1465/1531] 스크래핑: https://www.vangoghmuseum.nl/en/collection/d0166V1962
+[2026-01-13T09:03:48.233Z]   ✅ Landschap met hut (recto) en Laan in een park (verso)
+[2026-01-13T09:03:49.050Z] [1466/1531] 스크래핑: https://www.vangoghmuseum.nl/en/collection/d0169V1962
+[2026-01-13T09:04:00.141Z]   ✅ Buste van een jonge krijger (recto) en Zittend mannelijk naakt op de rug gezien (verso)
+[2026-01-13T09:04:00.958Z] [1467/1531] 스크래핑: https://www.vangoghmuseum.nl/en/collection/d0173V1962
+[2026-01-13T09:04:10.616Z]   ✅ Maaier (recto) en Korenschelven en een molen (verso)
+[2026-01-13T09:04:11.429Z] [1468/1531] 스크래핑: https://www.vangoghmuseum.nl/en/collection/d0180V1962
+[2026-01-13T09:04:22.283Z]   ✅ Venustorso (recto) en Venustorso (verso)
+[2026-01-13T09:04:23.098Z] [1469/1531] 스크래핑: https://www.vangoghmuseum.nl/en/collection/d0186V1962
+[2026-01-13T09:04:33.925Z]   ✅ Winterlandschap met wandelende figuren (recto) en Veld met zaaier (verso)
+[2026-01-13T09:04:34.742Z] [1470/1531] 스크래핑: https://www.vangoghmuseum.nl/en/collection/d0187V1962
+[2026-01-13T09:04:45.570Z]   ✅ Studies van een zaaier en een hand (recto) en Schetsen van figuren en studies van een hand (verso)
+[2026-01-13T09:04:46.387Z] [1471/1531] 스크래핑: https://www.vangoghmuseum.nl/en/collection/d0188V1962
+[2026-01-13T09:04:57.066Z]   ✅ Landschap met figuren met kruiwagens (recto) en Studies van werkende figuren (verso)
+[2026-01-13T09:04:57.883Z] [1472/1531] 스크래핑: https://www.vangoghmuseum.nl/en/collection/d0189V1962
+[2026-01-13T09:05:08.616Z]   ✅ Figuren bij de haard (recto) en Studies van een hand en een spitter (verso)
+[2026-01-13T09:05:09.429Z] [1473/1531] 스크래핑: https://www.vangoghmuseum.nl/en/collection/d0190V1962
+[2026-01-13T09:05:20.332Z]   ✅ Staand mannelijk naakt en zittende figuur (naar Bargue) (recto) en Interieur met tafels en stoelen en schets van De slaapkamer (verso)
+[2026-01-13T09:05:21.145Z] [1474/1531] 스크래핑: https://www.vangoghmuseum.nl/en/collection/d0192V1962
+[2026-01-13T09:05:32.057Z]   ✅ Stoel (recto) en Studie van paarden en boeren (verso)
+[2026-01-13T09:05:32.870Z] [1475/1531] 스크래핑: https://www.vangoghmuseum.nl/en/collection/d0195V1962
+[2026-01-13T09:05:43.576Z]   ✅ Rijtuig en figuren op een weg (recto) en Spittende boer (verso)
+[2026-01-13T09:05:44.397Z] [1476/1531] 스크래핑: https://www.vangoghmuseum.nl/en/collection/d0196V1962
+[2026-01-13T09:05:55.268Z]   ✅ Schets van pijnbomen (recto) en Vier mannen op een weg (verso)
+[2026-01-13T09:05:56.081Z] [1477/1531] 스크래핑: https://www.vangoghmuseum.nl/en/collection/d0197V1962
+[2026-01-13T09:06:07.032Z]   ✅ Winterlandschap met werkende figuren (recto) en Landschap met cipressen en studies van figuren (verso)
+[2026-01-13T09:06:07.853Z] [1478/1531] 스크래핑: https://www.vangoghmuseum.nl/en/collection/d0198V1962
+[2026-01-13T09:06:18.877Z]   ✅ Schetsen van aan tafel zittende figuren (recto) en Schetsen van zittende figuren (verso)
+[2026-01-13T09:06:19.691Z] [1479/1531] 스크래핑: https://www.vangoghmuseum.nl/en/collection/d0199V1971
+[2026-01-13T09:06:30.429Z]   ✅ Figuren op het strand en een bord, kom en lepel (recto) en Figuren op het strand (verso)
+[2026-01-13T09:06:31.246Z] [1480/1531] 스크래핑: https://www.vangoghmuseum.nl/en/collection/d0200V1962
+[2026-01-13T09:06:42.171Z]   ✅ Studies van een hand (recto) en Studies van een dode mus (verso)
+[2026-01-13T09:06:42.985Z] [1481/1531] 스크래핑: https://www.vangoghmuseum.nl/en/collection/d0201V1971
+[2026-01-13T09:06:53.770Z]   ✅ Egyptische kop en figuurstudie (recto) en Egyptische kop (verso)
+[2026-01-13T09:06:54.579Z] [1482/1531] 스크래핑: https://www.vangoghmuseum.nl/en/collection/d0205V1962
+[2026-01-13T09:07:05.283Z]   ✅ Vier gierzwaluwen en schetsen van landschappen (recto) en Gierzaluw (verso)
+[2026-01-13T09:07:06.095Z] [1483/1531] 스크래핑: https://www.vangoghmuseum.nl/en/collection/d0209V1969
+[2026-01-13T09:07:16.981Z]   ✅ Kastanjeblad met peul en landschap met cipressen (recto) en Gezicht op Saint-Rémy en schetsen van een perspectiefraam (verso)
+[2026-01-13T09:07:17.800Z] [1484/1531] 스크래핑: https://www.vangoghmuseum.nl/en/collection/d0210V1962
+[2026-01-13T09:07:28.829Z]   ✅ Landschap met oogstende boeren (recto) en Landschap met oogstende boerinnen (verso)
+[2026-01-13T09:07:29.641Z] [1485/1531] 스크래핑: https://www.vangoghmuseum.nl/en/collection/d0211V1971
+[2026-01-13T09:07:40.533Z]   ✅ Dennenappel (recto) en Studies van een hand (verso)
+[2026-01-13T09:07:41.347Z] [1486/1531] 스크래핑: https://www.vangoghmuseum.nl/en/collection/d0212V1962
+[2026-01-13T09:07:52.184Z]   ✅ Paard met rijtuig (recto) en Zittend mannelijk naakt (naar Bargue) (verso)
+[2026-01-13T09:07:53.006Z] [1487/1531] 스크래핑: https://www.vangoghmuseum.nl/en/collection/d0214V1962
+[2026-01-13T09:08:05.522Z]   ✅ Op het land werkende boerin (recto) en Twee boerinnen op het land (verso)
+[2026-01-13T09:08:06.331Z] [1488/1531] 스크래핑: https://www.vangoghmuseum.nl/en/collection/d0217V1971
+[2026-01-13T09:08:17.585Z]   ✅ Schetsen van dieren en kinderen (recto) en Schetsen van vrouwen die de was doen (verso)
+[2026-01-13T09:08:18.394Z] [1489/1531] 스크래핑: https://www.vangoghmuseum.nl/en/collection/d0218V1971
+[2026-01-13T09:08:29.809Z]   ✅ Egyptische kop (recto) en Boer met een zeis (verso)
+[2026-01-13T09:08:30.622Z] [1490/1531] 스크래핑: https://www.vangoghmuseum.nl/en/collection/d0229V1962
+[2026-01-13T09:08:41.485Z]   ✅ Landschap met huizen en twee spittende mannen (recto) en Interieur met vijf figuren rond een tafel (verso)
+[2026-01-13T09:08:42.304Z] [1491/1531] 스크래핑: https://www.vangoghmuseum.nl/en/collection/d0231V1974
+[2026-01-13T09:08:53.240Z]   ✅ Wandelend paar met kind op een weg in de regen (recto) en Interieur met drie figuren bij een tafel (verso)
+[2026-01-13T09:08:54.051Z] [1492/1531] 스크래핑: https://www.vangoghmuseum.nl/en/collection/d0235V1962
+[2026-01-13T09:09:04.921Z]   ✅ Winterlandschap met wandelend paar (recto) en Interieur met twee etende figuren (verso)
+[2026-01-13T09:09:05.735Z] [1493/1531] 스크래핑: https://www.vangoghmuseum.nl/en/collection/d0236V1962
+[2026-01-13T09:09:16.630Z]   ✅ Twee mannen op een weg (recto) en Twee spittende boerinnen (verso)
+[2026-01-13T09:09:17.444Z] [1494/1531] 스크래핑: https://www.vangoghmuseum.nl/en/collection/d0237V1962
+[2026-01-13T09:09:28.332Z]   ✅ Winterlandschap met figuren (recto) en Landschap met huizen en twee mannen met een schop (verso)
+[2026-01-13T09:09:29.143Z] [1495/1531] 스크래핑: https://www.vangoghmuseum.nl/en/collection/d0238V1962
+[2026-01-13T09:09:40.112Z]   ✅ Wandelend paar op een weg (recto) en Drie etende figuren (verso)
+[2026-01-13T09:09:40.924Z] [1496/1531] 스크래핑: https://www.vangoghmuseum.nl/en/collection/d0239V1971
+[2026-01-13T09:09:51.736Z]   ✅ Egyptische kop en figuurstudie (recto) en Bukkende man (verso)
+[2026-01-13T09:09:52.549Z] [1497/1531] 스크래핑: https://www.vangoghmuseum.nl/en/collection/d0240V1962
+[2026-01-13T09:10:03.488Z]   ✅ Drie mannen met schoppen op een weg in de regen (recto) en Landschap met een huis en twee mannen (verso)
+[2026-01-13T09:10:04.303Z] [1498/1531] 스크래핑: https://www.vangoghmuseum.nl/en/collection/d0241V1962
+[2026-01-13T09:10:15.190Z]   ✅ Studies van figuren (recto) en Studies van werkende en etende figuren (verso)
+[2026-01-13T09:10:15.998Z] [1499/1531] 스크래핑: https://www.vangoghmuseum.nl/en/collection/d0242V1962
+[2026-01-13T09:10:26.040Z]   ✅ Studies van spitters (recto) en Boerderijen en studies van spitters (verso)
+[2026-01-13T09:10:26.852Z] [1500/1531] 스크래핑: https://www.vangoghmuseum.nl/en/collection/d0243V1969
+[2026-01-13T09:10:37.764Z]   ✅ Schets van een vrouw aan tafel en een staande vrouw (recto) en Schetsen van een man en een paard (verso)
+[2026-01-13T09:10:37.779Z] 💾 1500개 작품 저장 완료
+[2026-01-13T09:10:38.581Z] [1501/1531] 스크래핑: https://www.vangoghmuseum.nl/en/collection/d0244V1969
+[2026-01-13T09:10:49.394Z]   ✅ Schetsen van een man en van een vrouw op een weg (recto) en Schets van vrouwen, bezig met de was (verso)
+[2026-01-13T09:10:50.201Z] [1502/1531] 스크래핑: https://www.vangoghmuseum.nl/en/collection/d0245V1962
+[2026-01-13T09:11:01.173Z]   ✅ Studies of a Foot (recto); Study of Horses and a Peasant (verso)
+[2026-01-13T09:11:01.986Z] [1503/1531] 스크래핑: https://www.vangoghmuseum.nl/en/collection/d0248V1969
+[2026-01-13T09:11:13.245Z]   ✅ Schetsen van een paard met huifkar en van een baby in een kinderwagen (recto) en Schets van werkende vrouwen (verso)
+[2026-01-13T09:11:14.056Z] [1504/1531] 스크래핑: https://www.vangoghmuseum.nl/en/collection/d0249V1969
+[2026-01-13T09:11:24.995Z]   ✅ Egyptische kop (recto) en Egyptische kop (verso)
+[2026-01-13T09:11:25.807Z] [1505/1531] 스크래핑: https://www.vangoghmuseum.nl/en/collection/d0250V1962
+[2026-01-13T09:11:36.547Z]   ✅ Stoel en handenstudie (recto) en Berglandschap achter het ommuurde korenveld (verso)
+[2026-01-13T09:11:37.357Z] [1506/1531] 스크래핑: https://www.vangoghmuseum.nl/en/collection/d0251V1969
+[2026-01-13T09:11:48.365Z]   ✅ The Walled Wheatfield
+[2026-01-13T09:11:49.180Z] [1507/1531] 스크래핑: https://www.vangoghmuseum.nl/en/collection/d0253V1971
+[2026-01-13T09:12:00.906Z]   ✅ The Walled Wheatfield
+[2026-01-13T09:12:01.716Z] [1508/1531] 스크래핑: https://www.vangoghmuseum.nl/en/collection/d0262V1962
+[2026-01-13T09:12:12.648Z]   ✅ Bomen en muur in de tuin van de inrichting (recto) en Bomen in de tuin van de inrichting (verso)
+[2026-01-13T09:12:13.461Z] [1509/1531] 스크래핑: https://www.vangoghmuseum.nl/en/collection/d0264V1962
+[2026-01-13T09:12:24.773Z]   ✅ Boom in de tuin van de inrichting (recto) en Bomen en muur in de tuin van de inrichting (verso)
+[2026-01-13T09:12:25.583Z] [1510/1531] 스크래핑: https://www.vangoghmuseum.nl/en/collection/d0271V1969
+[2026-01-13T09:12:39.729Z]   ✅ Kop van een vrouw (recto) en Potloodkrabbels en schets van meerdere figuren (verso)
+[2026-01-13T09:12:40.537Z] [1511/1531] 스크래핑: https://www.vangoghmuseum.nl/en/collection/d0283V1962
+[2026-01-13T09:12:51.407Z]   ✅ Vrouw met riek in een winters landschap (recto) en Figuren in een winters landschap (verso)
+[2026-01-13T09:12:52.243Z] [1512/1531] 스크래핑: https://www.vangoghmuseum.nl/en/collection/d0284V1962
+[2026-01-13T09:13:03.099Z]   ✅ Kerkhof in de winter (recto) en Landschap met kerk (verso)
+[2026-01-13T09:13:03.916Z] [1513/1531] 스크래핑: https://www.vangoghmuseum.nl/en/collection/d0302V1972
+[2026-01-13T09:13:14.924Z]   ✅ Zaaier (recto) en Pricilla (verso)
+[2026-01-13T09:13:15.738Z] [1514/1531] 스크래핑: https://www.vangoghmuseum.nl/en/collection/d0303V1972
+[2026-01-13T09:13:26.922Z]   ✅ Copulerend paar (recto) en Fragment van Venus (verso)
+[2026-01-13T09:13:27.733Z] [1515/1531] 스크래핑: https://www.vangoghmuseum.nl/en/collection/d0313V1970
+[2026-01-13T09:13:38.572Z]   ✅ Grote nachtpauwoog en papaverzaaddoos (recto) en Grote nachtpauwoog en kever (verso)
+[2026-01-13T09:13:39.382Z] [1516/1531] 스크래핑: https://www.vangoghmuseum.nl/en/collection/d0331V1962
+[2026-01-13T09:13:50.214Z]   ✅ Stadhuis van Auvers en kop van een man (recto) en Landschappen met huizen (verso)
+[2026-01-13T09:13:51.024Z] [1517/1531] 스크래핑: https://www.vangoghmuseum.nl/en/collection/d0332V1962
+[2026-01-13T09:14:02.001Z]   ✅ Landschap met huizen (recto) en Bloeiende kastanjebomen bij een huis (verso)
+[2026-01-13T09:14:02.815Z] [1518/1531] 스크래핑: https://www.vangoghmuseum.nl/en/collection/d0338V1962
+[2026-01-13T09:14:15.828Z]   ✅ Zaaier in de regen (recto) en Op het land werkende man (verso)
+[2026-01-13T09:14:16.640Z] [1519/1531] 스크래핑: https://www.vangoghmuseum.nl/en/collection/d0339V1969
+[2026-01-13T09:14:27.463Z]   ✅ Op het land werkende figuren (recto) en Studies van een raam en een voet (verso)
+[2026-01-13T09:14:28.276Z] [1520/1531] 스크래핑: https://www.vangoghmuseum.nl/en/collection/d0359V1962
+[2026-01-13T09:14:39.013Z]   ✅ Zittende man met snor en pet (recto) en Zittende man met baard (verso)
+[2026-01-13T09:14:39.824Z] [1521/1531] 스크래핑: https://www.vangoghmuseum.nl/en/collection/d0388V1962
+[2026-01-13T09:14:50.781Z]   ✅ Vier personen aan de maaltijd (recto) en Vrouw met geheven linkerarm (verso)
+[2026-01-13T09:14:51.594Z] [1522/1531] 스크래핑: https://www.vangoghmuseum.nl/en/collection/d0389V1962
+[2026-01-13T09:15:02.366Z]   ✅ Drie handen, twee met vork (recto) en Interieurstudies van een hut, en schets van De aardappeleters (verso)
+[2026-01-13T09:15:03.180Z] [1523/1531] 스크래핑: https://www.vangoghmuseum.nl/en/collection/d0390V1962
+[2026-01-13T09:15:13.925Z]   ✅ Hand met stok, en vier personen aan de maaltijd (recto) en Handen met een stok (verso)
+[2026-01-13T09:15:14.745Z] [1524/1531] 스크래핑: https://www.vangoghmuseum.nl/en/collection/d0393V1962
+[2026-01-13T09:15:25.591Z]   ✅ Hand met een kom, en een kat (recto) en Drie personen aan de maaltijd (verso)
+[2026-01-13T09:15:26.405Z] [1525/1531] 스크래핑: https://www.vangoghmuseum.nl/en/collection/d0394V1969
+[2026-01-13T09:15:38.049Z]   ✅ Klok, klomp met bestek en een lepelrek (recto) en Bord met bestek en een ketel (verso)
+[2026-01-13T09:15:38.857Z] [1526/1531] 스크래핑: https://www.vangoghmuseum.nl/en/collection/d0400V1962
+[2026-01-13T09:15:49.657Z]   ✅ Spierman en Gladiator Borghese (recto) en Spierman (verso)
+[2026-01-13T09:15:50.473Z] [1527/1531] 스크래핑: https://www.vangoghmuseum.nl/en/collection/d0402V1962
+[2026-01-13T09:16:01.135Z]   ✅ Venustorso (recto) en Venus van Milo (verso)
+[2026-01-13T09:16:01.948Z] [1528/1531] 스크래핑: https://www.vangoghmuseum.nl/en/collection/d0418V1971
+[2026-01-13T09:16:12.621Z]   ✅ Schets van twee vrouwen (recto) en Schets van een rieten dak (verso)
+[2026-01-13T09:16:13.431Z] [1529/1531] 스크래핑: https://www.vangoghmuseum.nl/en/collection/d0427V1962
+[2026-01-13T09:16:24.182Z]   ✅ Marguerite Gachet aan de piano (recto) en Studie van een boom (verso)
+[2026-01-13T09:16:24.990Z] [1530/1531] 스크래핑: https://www.vangoghmuseum.nl/en/collection/d0432V1962
+[2026-01-13T09:16:35.707Z]   ✅ Zelfportretten (recto) en Treurende vrouw (verso)
+[2026-01-13T09:16:36.519Z] [1531/1531] 스크래핑: https://www.vangoghmuseum.nl/en/collection/d0434V1962
+[2026-01-13T09:16:47.353Z]   ✅ Ommuring van het korenveld bij de inrichting (recto) en Studies van spitters (verso)
+[2026-01-13T09:16:48.173Z] 
+═══════════════════════════════════════════════════════════════
+[2026-01-13T09:16:48.173Z]   ✅ 스크래핑 완료
+[2026-01-13T09:16:48.173Z] ═══════════════════════════════════════════════════════════════
+[2026-01-13T09:16:48.173Z]   총 수집: 1531개 작품
+[2026-01-13T09:16:48.173Z]   오류: 0개
+[2026-01-13T09:16:48.178Z]   완료 시간: 1/13/2026, 6:16:48 PM

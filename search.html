@@ -1,0 +1,4040 @@
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <title>* - Deutsche Digitale Bibliothek</title>
+    <meta charset="utf-8"/>
+    
+        <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    
+    <meta name="mobile-web-app-capable" content="yes"/>
+    <meta name="apple-mobile-web-app-status-bar-style" content="default"/>
+    <meta name="referrer" content="strict-origin-when-cross-origin"/>
+
+    <link rel="search" title="Deutsche Digitale Bibliothek"
+          href="/opensearch_de.osdx"
+          type="application/opensearchdescription+xml"/>
+
+    
+
+    <script type="text/javascript" src="/assets/i18n/de/messages-5c88dca3e54385a31546dbb8eb51e59c.js" ></script>
+
+    <script type="text/javascript" src="/assets/vendor/bootstrap-5.3.6/bootstrap.bundle.min-72ebbd786afa713b64f2a5958515f0d3.js" ></script>
+    <link rel="stylesheet" href="/assets/vendor/bootstrap-5.3.6/bootstrap.min-2115a3b579b5003c4731570952d0ade9.css" />
+    <link rel="stylesheet" href="/assets/main-ddb-1edab04df476290509f3af52320b8422.css" />
+
+    <link rel="icon" sizes="any" href="/assets/favicon/ddb/ddb-favicon-c3882c4d4560ae7c63b60e941c3e6bd4.ico"/>
+    <link rel="icon" type="image/svg+xml" href="/assets/favicon/ddb/ddb-favicon-ea43cf3fd0311f5eeda3dbca300356c3.svg"/>
+    <link rel="apple-touch-icon" href="/assets/favicon/ddb/ddb-apple-touch-icon-8895b46c7fe49c543ea0e764928768db.png"/>
+    <link rel="manifest" href="/assets/favicon/ddb/ddb-d254564d657c982fa1978eff61ed2e5b.webmanifest"/>
+    
+    
+    <meta name="page" content="results"/>
+    <meta name="layout" content="main"/>
+    <link rel="canonical"
+          href="https://www.deutsche-digitale-bibliothek.de/searchresults"/>
+
+
+    
+    <!-- Matomo -->
+<script>
+
+    function getPageName() {
+        return document.querySelector("meta[name=page]").getAttribute("content");
+    }
+
+    function getCookie(name) {
+        const cookies = document.cookie.split("; ");
+        for (const cookie of cookies) {
+            const i = cookie.indexOf("=");
+            if (i === -1) continue; // skip malformed cookies
+            const k = cookie.slice(0, i);
+            const v = cookie.slice(i + 1);
+            if (k === name) {
+                return v;
+            }
+        }
+        return null;
+    }
+
+    // Matomo _paq variable
+    var _paq = window._paq = window._paq || [];
+
+    const isFullTrackingEnabled = getCookie("cb_cookie_notice");
+    if (isFullTrackingEnabled === null) {
+        // -------- Phase 1: Before Consent decision (minimal tracking, GDPR compliance) --------
+        _paq.push(['requireCookieConsent']);
+        _paq.push(['disableBrowserFeatureDetection']); // disables plugins, screen size, etc.
+    }
+
+    //---------------- Page specific search analysis ---------------
+    var isObjectSearchResultPage = getPageName() === "results";
+    var isPersonSearchResultPage = getPageName() === "searchperson";
+    var isOrganizationSearchResultPage = getPageName() === "searchinstitution";
+    var isArticleSearchResultPage = getPageName() === "searcharticle";
+    var isNewspaperSearchResultPage = getPageName() === "newspaper/search";
+    var isSearchResultPage = isObjectSearchResultPage || isPersonSearchResultPage || isOrganizationSearchResultPage || isArticleSearchResultPage || isNewspaperSearchResultPage;
+
+    var isItemDetailPage = getPageName() === "item";
+    var isNewspaperItemDetailPage = getPageName() === "newspaper/item";
+
+    // Track not Special pages. Those are handled separately in matomoManager.js
+    if(!isNewspaperItemDetailPage && !isItemDetailPage && !isSearchResultPage) {
+        _paq.push(["trackPageView"]);
+    }
+
+    _paq.push(['setDomains', ["viewer.deutsche-digitale-bibliothek.de"]]);
+    _paq.push(["setCustomVariable", 1, "js", "on", "visit"]);
+    _paq.push(["setExcludedQueryParams", ["by","callback","category","clearFilter","clustered","entityid","facet","facets","facetValues","filterValues","firstHit","hit","id","issuepage","isThumbnailFiltered","keepFilters","lastHit","last_update","minDocs","normdata","offset","onlyWithData","order","query","rows","sort","ALPHA_ASC","ALPHA_DESC","sort_field","random","RELEVANCE","time_asc","time_desc","variantId","viewType","grid","list","thumbnail-filter","search_count","hitNumber","lang","reqType","_","random_seed","randomSeed","randomseed","its_url_id","digitalisat","fbclid"]]);
+    _paq.push(["enableLinkTracking"]);
+    (function () {
+        var u = (("https:" == document.location.protocol) ? "https" : "http") + "://deutschedigitalebibliothek.matomo.cloud/";
+        _paq.push(["setTrackerUrl", u + "matomo.php"]);
+        _paq.push(["setSiteId", "3"]);
+        var d = document, g = d.createElement("script"), s = d.getElementsByTagName("script")[0];
+        g.type = "text/javascript";
+        g.async = true;
+        g.src = (("https:" == document.location.protocol) ? "https" : "http") + "://cdn.matomo.cloud/deutschedigitalebibliothek.matomo.cloud/matomo.js";
+        s.parentNode.insertBefore(g, s);
+    })();
+</script>
+<noscript><p><img referrerpolicy="no-referrer-when-downgrade" src="https://deutschedigitalebibliothek.matomo.cloud/matomo.php?idsite=3&amp;rec=1" style="border:0;" alt="" /></p></noscript>
+<!-- End Matomo Code -->
+</head>
+
+
+
+<div id="viewport-info">
+    <div class="d-block d-sm-none d-md-none d-lg-none d-xl-none" data-size="xs"></div>
+    <div class="d-none d-sm-block d-md-none d-lg-none d-xl-none" data-size="sm"></div>
+    <div class="d-none d-sm-none d-md-block d-lg-none d-xl-none" data-size="md"></div>
+    <div class="d-none d-sm-none d-md-none d-lg-block d-xl-none" data-size="lg"></div>
+    <div class="d-none d-sm-none d-md-none d-lg-none d-xl-block" data-size="xl"></div>
+</div>
+
+
+<body class="theme-ddb search ">
+
+    
+        
+<div class="cookie-notice" id="cookie-notice2">
+    <div class="cookie-wrapper">
+        <p>Auf unserer Webseite werden neben den technisch erforderlichen Cookies noch Cookies zur statistischen Auswertung gesetzt. Sie können die Website auch ohne diese Cookies nutzen. Durch Klicken auf „Ich stimme zu“ erklären Sie sich einverstanden, dass wir Cookies zu Analyse-Zwecken setzen. In unserer <a href="/content/datenschutzerklaerung#cookies">Datenschutzerklärung</a> finden Sie weitere Informationen. Dort können Sie Ihre Cookie-Einstellungen jederzeit ändern.</p>
+        <button id="cookie-accept" class="btn btn-primary cookie-btn"
+                aria-controls="cookie-accept">Ich stimme zu</button>
+        <button id="cookie-refuse" class="btn btn-secondary cookie-btn"
+                aria-controls="cookie-refuse">Ich lehne ab</button>
+    </div>
+</div>
+
+        
+
+
+
+<a class="visually-hidden-focusable skip-link" href="#main-container">
+    Direkt zum Inhalt
+</a>
+
+<header class="header">
+    <div class="container header-container">
+    
+        <a href="/" title="Startseite">
+            <picture>
+                <source srcset="/assets/ddb-logo-lg-09861113a626a68e170a03d1cba40d51.svg" media="(min-width: 768px)"/>
+                <img class="logo" src="/assets/ddb-logo-sm-ad9b53faf32d6d976dc03c7dd8a17ca6.svg"
+                     alt="Logo: Deutsche Digitale Bibliothek"/>
+            </picture>
+        </a>
+
+        <div class="header-controls">
+            <div class="top-row">
+                
+
+<ul class="header-icons-container">
+    <li>
+        <a href="/content/gebaerdensprache" class="link-header-top sign-language-icon">
+            Gebärdensprache
+        </a>
+    </li>
+    <li>
+        <a href="/content/leichte-sprache" class="link-header-top header-icon">
+            Leichte Sprache
+        </a>
+    </li>
+</ul>
+                
+
+<div class="language-switch">
+    
+    
+    
+    
+        <a href="/searchresults?query=&amp;offset=0&amp;rows=10&amp;facetValues%5B%5D=provider_id%3D3KXQ5XC4EJ73TJ4TNOZ73IOYV27X4XXC&amp;viewType=list&amp;lang=en" class="link-language" aria-label="Die Sprache der Webseite zu Englisch wechseln">
+            <span class="active german">DE</span>
+        </a>
+        <a href="/searchresults?query=&amp;offset=0&amp;rows=10&amp;facetValues%5B%5D=provider_id%3D3KXQ5XC4EJ73TJ4TNOZ73IOYV27X4XXC&amp;viewType=list&amp;lang=en" class="link-language" aria-label="Die Sprache der Webseite zu Englisch wechseln">
+            <span class="">EN</span>
+        </a>
+    
+</div>
+
+            </div>
+
+            <div class="bottom-row">
+                
+                <nav class="main-nav">
+                    <ul>
+                        
+
+
+
+
+    
+
+    <li class="level-1 ">
+        
+
+
+  <button class="open-btn header-dropdown-item-content" type="button"
+          data-tippy-dropdown-template-id="ddb-main-f589d58b-2904-4020-8ebb-f232688bd761" data-tippy-placement="bottom">
+    <span class="bold-shift" data-text="Über uns">Über uns</span>
+  </button>
+
+        
+            <div id="ddb-main-f589d58b-2904-4020-8ebb-f232688bd761" style="display: none">
+                <div class="header-dropdown">
+                    <ul>
+                        
+                            
+                            <li class="level-2 header-dropdown-item ">
+                                
+
+
+  <a class="header-dropdown-item-content" href="/content/wer-wir-sind">
+    Wer wir sind
+  </a>
+
+                                
+                            </li>
+                        
+                            
+                            <li class="level-2 header-dropdown-item ">
+                                
+
+
+  <a class="header-dropdown-item-content" href="/content/wie-wir-organisiert-sind">
+    Wie wir organisiert sind
+  </a>
+
+                                
+                            </li>
+                        
+                            
+                            <li class="level-2 header-dropdown-item ">
+                                
+
+
+  <a class="header-dropdown-item-content" href="/about-us/institutions">
+    Beteiligte Kultureinrichtungen
+  </a>
+
+                                
+                            </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+    </li>
+
+    
+
+    <li class="level-1 ">
+        
+
+
+  <button class="open-btn header-dropdown-item-content" type="button"
+          data-tippy-dropdown-template-id="ddb-main-1e652d51-ab0c-44ba-bac6-a94ade82d3f5" data-tippy-placement="bottom">
+    <span class="bold-shift" data-text="Inhalte entdecken">Inhalte entdecken</span>
+  </button>
+
+        
+            <div id="ddb-main-1e652d51-ab0c-44ba-bac6-a94ade82d3f5" style="display: none">
+                <div class="header-dropdown">
+                    <ul>
+                        
+                            
+                            <li class="level-2 header-dropdown-item ">
+                                
+
+
+  <a class="header-dropdown-item-content" href="/content/dossiers">
+    Dossiers
+  </a>
+
+                                
+                            </li>
+                        
+                            
+                            <li class="level-2 header-dropdown-item ">
+                                
+
+
+  <a class="header-dropdown-item-content" href="/content/virtuelle-ausstellungen">
+    Virtuelle Ausstellungen
+  </a>
+
+                                
+                            </li>
+                        
+                            
+                            <li class="level-2 header-dropdown-item ">
+                                
+
+
+  <a class="header-dropdown-item-content" href="/content/lernen-und-entdecken-bildungsangebote-der-deutschen-digitalen-bibliothek">
+    Bildungsangebote
+  </a>
+
+                                
+                            </li>
+                        
+                            
+                            <li class="level-2 header-dropdown-item ">
+                                
+
+
+  <a class="header-dropdown-item-content" href="/content/blog">
+    Blog
+  </a>
+
+                                
+                            </li>
+                        
+                            
+                            <li class="level-2 header-dropdown-item ">
+                                
+
+
+  <a class="header-dropdown-item-content" href="/content/galleries">
+    Bildergalerien
+  </a>
+
+                                
+                            </li>
+                        
+                            
+                            <li class="level-2 header-dropdown-item ">
+                                
+
+
+  <a class="header-dropdown-item-content" href="/content/kalenderblatt">
+    Kalenderblatt
+  </a>
+
+                                
+                            </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+    </li>
+
+    
+
+    <li class="level-1 ">
+        
+
+
+  <button class="open-btn header-dropdown-item-content" type="button"
+          data-tippy-dropdown-template-id="ddb-main-6ab0a0b2-965b-46a2-95ca-f7cc9547ab10" data-tippy-placement="bottom">
+    <span class="bold-shift" data-text="Tipps zur Nutzung">Tipps zur Nutzung</span>
+  </button>
+
+        
+            <div id="ddb-main-6ab0a0b2-965b-46a2-95ca-f7cc9547ab10" style="display: none">
+                <div class="header-dropdown">
+                    <ul>
+                        
+                            
+                            <li class="level-2 header-dropdown-item ">
+                                
+
+
+  <a class="header-dropdown-item-content" href="/content/wie-suche-ich-im-portal">
+    Wie suche ich im Portal
+  </a>
+
+                                
+                            </li>
+                        
+                            
+                            <li class="level-2 header-dropdown-item ">
+                                
+
+
+  <a class="header-dropdown-item-content" href="/content/suchergebnisse-verwenden">
+    Suchergebnisse verwenden
+  </a>
+
+                                
+                            </li>
+                        
+                            
+                            <li class="level-2 header-dropdown-item ">
+                                
+
+
+  <a class="header-dropdown-item-content" href="/content/sensible-und-diskriminierende-inhalte-der-deutschen-digitalen-bibliothek">
+    Sensible Inhalte
+  </a>
+
+                                
+                            </li>
+                        
+                    </ul>
+                </div>
+            </div>
+        
+    </li>
+
+                    </ul>
+                </nav>
+
+                
+                <div class="person-icon">
+                    
+                    
+                        <button class="user logged-out"
+                                type="button"
+                                data-bs-toggle="modal"
+                                data-bs-target="#loginModal"
+                                aria-label="Anmelden">
+                        </button>
+                    
+                </div>
+
+                
+                <button class="search-icon-wrapper chevron-icon" id="header-search-icon" type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#searchModuleCollapse"
+                        aria-expanded="true" aria-controls="searchModuleCollapse">
+                    <span class="icon-search"></span>
+                </button>
+
+            
+                <a href="/searchresults" id="menuIcon" class="menu" role="button" aria-label="Seitenmenü öffnen" data-bs-toggle="offcanvas" data-bs-target="#sideBar" aria-controls="sideBar" aria-expanded="false">
+                    <span class="visually-hidden">Seitenmenü öffnen</span>
+                </a>
+            </div>
+        </div>
+    </div>
+    
+<section class="search-section collapse show"
+         id="searchModuleCollapse" aria-labelledby="search-section-title">
+    <div class="search-section-wrapper container">
+        <h2 class="h2-ddb search-section-title" id="search-section-title">
+            Deutschlands Kulturerbe digital
+        </h2>
+
+        <div class="search-section-form">
+            
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
+    
+    
+
+
+<form action="/searchresults" method="get" role="search" id="form-search" >
+    <ul class="navigation-group standard-search">
+        <li>
+            <button type="button"
+                    class="navigation-item js-hide-person-info js-hide-organization-info js-hide-article-info active"
+                    id="modal-search-objects"
+                    data-url="/searchresults"
+                    data-autocomplete-target="/apis/autocomplete"
+                    data-placeholder="Suche in mehr als 65 Millionen Objekten"
+                    data-text="Objekte"
+                    data-value=""
+                    aria-selected="true">
+                Objekte
+            </button>
+        </li>
+        <li>
+            <button type="button"
+                    class="navigation-item js-hide-info js-hide-organization-info js-hide-article-info "
+                    id="modal-search-persons"
+                    data-url="/search/person"
+                    data-autocomplete-target="/apis/personAutocomplete"
+                    data-placeholder="Suchbegriff eingeben"
+                    data-text="Personen"
+                    data-value=""
+                    aria-selected="false">
+                Personen
+            </button>
+
+        </li>
+        <li>
+            <button type="button"
+                    class="navigation-item js-hide-info js-hide-person-info js-hide-article-info "
+                    id="modal-search-institutions"
+                    data-url="/search/organization"
+                    data-autocomplete-target="/apis/institutionAutocomplete"
+                    data-placeholder="Suchbegriff eingeben"
+                    data-text="Organisationen"
+                    data-value=""
+                    aria-selected="false">
+                Organisationen
+            </button>
+        </li>
+        <li>
+            <button type="button"
+                    class="navigation-item js-hide-info js-hide-person-info js-hide-organization-info "
+                    id="modal-search-articles"
+                    data-url="/search/content"
+                    data-autocomplete-target="/apis/articleAutocomplete"
+                    data-placeholder="Suchbegriff eingeben"
+                    data-text="Themen"
+                    data-value=""
+                    aria-selected="false">
+                Themen
+            </button>
+        </li>
+    </ul>
+
+    <div class="search-bar-grid
+    
+    hide-person-info
+    hide-organization-info
+    hide-article-info">
+        <div class="search-bar-extended"></div>
+        <input type="search" class="query" name="query" id="search-input"
+               aria-label="Suche"
+               autocomplete="off"
+               placeholder="Suche in mehr als 27 Millionen Objekten"
+               value=""/>
+
+        <button type="button" class="clear" aria-label="Eingabefeld löschen"
+                data-target-id="search-input" style="display: none;"></button>
+
+        <div class="thumbnail-filter-container">
+            <div class="thumbnail-filter-tabs">
+                <input type="radio" id="thumbnail-filter-off" name="isThumbnailFiltered"
+                       value="false" 
+                       data-placeholder="Suche in mehr als 65 Millionen Objekten">
+                <label for="thumbnail-filter-off">Alle Objekte</label>
+                <input type="radio" id="thumbnail-filter-on" name="isThumbnailFiltered"
+                       value="true" checked=checked
+                       data-placeholder="Suche in mehr als 27 Millionen Objekten">
+                <label for="thumbnail-filter-on">Digitalisierte Objekte</label>
+            </div>
+        </div>
+
+        <button id="search-submit" type="submit" aria-label="Suche"></button>
+    </div>
+</form>
+
+
+        </div>
+    </div>
+</section>
+
+    
+    
+
+<div class="offcanvas offcanvas-end sidebar" tabindex="-1" id="sideBar" data-bs-keyboard="false"
+     data-bs-backdrop="false">
+    <div class="offcanvas-header">
+        <div class="sidebar-header">
+            
+
+<div class="language-switch">
+    
+    
+    
+    
+        <a href="/searchresults?query=&amp;offset=0&amp;rows=10&amp;facetValues%5B%5D=provider_id%3D3KXQ5XC4EJ73TJ4TNOZ73IOYV27X4XXC&amp;viewType=list&amp;lang=en" class="link-language" aria-label="Die Sprache der Webseite zu Englisch wechseln">
+            <span class="active german">DE</span>
+        </a>
+        <a href="/searchresults?query=&amp;offset=0&amp;rows=10&amp;facetValues%5B%5D=provider_id%3D3KXQ5XC4EJ73TJ4TNOZ73IOYV27X4XXC&amp;viewType=list&amp;lang=en" class="link-language" aria-label="Die Sprache der Webseite zu Englisch wechseln">
+            <span class="">EN</span>
+        </a>
+    
+</div>
+
+            <button type="button" class="close-button" data-bs-dismiss="offcanvas" aria-label="Seitenmenü schließen">
+            </button>
+        </div>
+        
+
+<ul class="header-icons-container">
+    <li>
+        <a href="/content/gebaerdensprache" class="link-header-top sign-language-icon">
+            Gebärdensprache
+        </a>
+    </li>
+    <li>
+        <a href="/content/leichte-sprache" class="link-header-top header-icon">
+            Leichte Sprache
+        </a>
+    </li>
+</ul>
+    </div>
+
+    <div class="offcanvas-body">
+        <ul class="nav flex-column accordion" id="sideBarPanels">
+            
+
+
+
+
+  
+
+  <li class="level-1 ">
+    
+
+
+  <div class="accordion-header" id="heading-f589d58b-2904-4020-8ebb-f232688bd761">
+    <button class="open-btn collapsed"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#ddb-f589d58b-2904-4020-8ebb-f232688bd761"
+            aria-expanded="false"
+            aria-controls="ddb-f589d58b-2904-4020-8ebb-f232688bd761">
+      Über uns
+    </button>
+  </div>
+
+    
+      <div class="collapse accordion-collapse" aria-labelledby="heading-f589d58b-2904-4020-8ebb-f232688bd761" id="ddb-f589d58b-2904-4020-8ebb-f232688bd761">
+        <ul>
+          
+            
+            <li class="level-2 ">
+              
+
+
+  <a href="/content/wer-wir-sind">
+    Wer wir sind
+  </a>
+
+              
+            </li>
+          
+            
+            <li class="level-2 ">
+              
+
+
+  <a href="/content/wie-wir-organisiert-sind">
+    Wie wir organisiert sind
+  </a>
+
+              
+            </li>
+          
+            
+            <li class="level-2 ">
+              
+
+
+  <a href="/about-us/institutions">
+    Beteiligte Kultureinrichtungen
+  </a>
+
+              
+            </li>
+          
+        </ul>
+      </div>
+    
+  </li>
+
+  
+
+  <li class="level-1 ">
+    
+
+
+  <div class="accordion-header" id="heading-1e652d51-ab0c-44ba-bac6-a94ade82d3f5">
+    <button class="open-btn collapsed"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#ddb-1e652d51-ab0c-44ba-bac6-a94ade82d3f5"
+            aria-expanded="false"
+            aria-controls="ddb-1e652d51-ab0c-44ba-bac6-a94ade82d3f5">
+      Inhalte entdecken
+    </button>
+  </div>
+
+    
+      <div class="collapse accordion-collapse" aria-labelledby="heading-1e652d51-ab0c-44ba-bac6-a94ade82d3f5" id="ddb-1e652d51-ab0c-44ba-bac6-a94ade82d3f5">
+        <ul>
+          
+            
+            <li class="level-2 ">
+              
+
+
+  <a href="/content/dossiers">
+    Dossiers
+  </a>
+
+              
+            </li>
+          
+            
+            <li class="level-2 ">
+              
+
+
+  <a href="/content/virtuelle-ausstellungen">
+    Virtuelle Ausstellungen
+  </a>
+
+              
+            </li>
+          
+            
+            <li class="level-2 ">
+              
+
+
+  <a href="/content/lernen-und-entdecken-bildungsangebote-der-deutschen-digitalen-bibliothek">
+    Bildungsangebote
+  </a>
+
+              
+            </li>
+          
+            
+            <li class="level-2 ">
+              
+
+
+  <a href="/content/blog">
+    Blog
+  </a>
+
+              
+            </li>
+          
+            
+            <li class="level-2 ">
+              
+
+
+  <a href="/content/galleries">
+    Bildergalerien
+  </a>
+
+              
+            </li>
+          
+            
+            <li class="level-2 ">
+              
+
+
+  <a href="/content/kalenderblatt">
+    Kalenderblatt
+  </a>
+
+              
+            </li>
+          
+        </ul>
+      </div>
+    
+  </li>
+
+  
+
+  <li class="level-1 ">
+    
+
+
+  <div class="accordion-header" id="heading-6ab0a0b2-965b-46a2-95ca-f7cc9547ab10">
+    <button class="open-btn collapsed"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#ddb-6ab0a0b2-965b-46a2-95ca-f7cc9547ab10"
+            aria-expanded="false"
+            aria-controls="ddb-6ab0a0b2-965b-46a2-95ca-f7cc9547ab10">
+      Tipps zur Nutzung
+    </button>
+  </div>
+
+    
+      <div class="collapse accordion-collapse" aria-labelledby="heading-6ab0a0b2-965b-46a2-95ca-f7cc9547ab10" id="ddb-6ab0a0b2-965b-46a2-95ca-f7cc9547ab10">
+        <ul>
+          
+            
+            <li class="level-2 ">
+              
+
+
+  <a href="/content/wie-suche-ich-im-portal">
+    Wie suche ich im Portal
+  </a>
+
+              
+            </li>
+          
+            
+            <li class="level-2 ">
+              
+
+
+  <a href="/content/suchergebnisse-verwenden">
+    Suchergebnisse verwenden
+  </a>
+
+              
+            </li>
+          
+            
+            <li class="level-2 ">
+              
+
+
+  <a href="/content/sensible-und-diskriminierende-inhalte-der-deutschen-digitalen-bibliothek">
+    Sensible Inhalte
+  </a>
+
+              
+            </li>
+          
+        </ul>
+      </div>
+    
+  </li>
+
+        </ul>
+    </div>
+</div>
+
+</header>
+
+
+    
+
+
+<div id="main-container" class="container-fluid" role="main">
+    
+<div class="search-results-container" data-search-type="item">
+
+    
+
+
+
+
+
+
+
+
+<div class="title-section container">
+    
+
+<div class="scroll-anchor-container">
+    <div id="jsanchor-pagination-scroll" class="scroll-anchor-container-target pagination-scroll"></div>
+</div>
+
+    <div class="title-wrapper">
+        
+            <h1 class="h2-ddb title">
+                <span class="total-results">1.891</span>
+                
+                    Ergebnisse für "*"
+                
+            </h1>
+        
+
+        
+            <div class="add-to-saved-searches-wrapper" data-bs-toggle="modal"
+                 data-bs-target="#loginModal"
+                 data-type="item">
+                <button class="add-to-saved-searches-icon ddb-tooltip-holder"
+                        aria-labelledby="save-search-label" aria-disabled="false"></button>
+                <span class="save-search-label ddb-text-link" id="save-search-label">
+                    Suche speichern
+                </span>
+            </div>
+        
+    </div>
+
+    
+</div>
+
+
+    
+
+<div class="scroll-anchor-container">
+    <div id="jsanchor-facet-filter-scroll" class="scroll-anchor-container-target facet-filter-scroll"></div>
+</div>
+
+    <div class="results-section container">
+        
+        <div class="search-results-content ">
+            
+                
+
+
+
+<div class="page-info-nav ">
+    <div class="page-info-nav-wrap">
+        
+
+
+
+<div class="facets-section" id="facets-section">
+    <div class="floating-wrapper">
+        <button type="button" class="filter-search-button" id="facets-button" aria-expanded="false"
+                aria-controls="facets-container">
+            <span class="filter-search-icon-wrapper position-relative">
+                <span class="filter-search-icon"></span>
+                <span class="position-absolute start-100 translate-middle badge rounded-circle"
+                      id="facets-selected-size">0</span>
+                <span class="visually-hidden">Angewandte Filter</span>
+            </span>
+            <span class="h5-ddb">Suche filtern</span>
+        </button>
+
+        <div class="facets-container" id="facets-container">
+            <div id="facets-loading" style="display: none">
+                <div class="spinner-border spinner-border-size " role="status">
+                    <span class="visually-hidden">Laden...</span>
+                </div>
+            </div>
+
+            <button class="btn btn-secondary facets-container-reset"
+                    id="reset-filters">
+                Alle Filter zurücksetzen
+            </button>
+
+            <div class="facet-container scroll-shadows" id="facet-container" tabindex="-1">
+                
+
+
+<div class="filter-container">
+    
+
+
+
+
+
+    
+
+    
+
+    
+
+        
+
+
+<div id="objecttype_fct" class="select-dropdown" data-filterable="true"
+     data-is-cms="false" data-facet-name=objecttype_fct>
+    
+    
+        <div class="label-wrapper">
+            
+            <img src="/assets/filter/object-type-31c9c95095d1145eb8ef6c7da9246ce7.svg" alt="" aria-hidden="true" loading="lazy"/>
+            
+            <label class="select-dropdown-label x-small-text" for="input-objecttype_fct">
+                Objekttyp
+            </label>
+        </div>
+    
+
+    
+    <div class="facets-selected-wrapper" data-facet-name="objecttype_fct">
+        
+
+
+
+
+    </div>
+
+    
+    <div class="select-box">
+        
+            
+            <input type="text" class="form-control filter filter-input" autocomplete="new-password"
+                   data-tippy-input-facets-template-id="dropdown-objecttype_fct" data-tippy-placement="bottom" name="input-objecttype_fct"
+                   id="input-objecttype_fct">
+        
+
+    </div>
+
+    
+    
+</div>
+    
+
+
+    
+
+    
+
+    
+
+        
+
+
+<div id="affiliate_fct_role" class="select-dropdown" data-filterable="true"
+     data-is-cms="false" data-facet-name=affiliate_fct_role>
+    
+    
+        <div class="label-wrapper">
+            
+            <img src="/assets/filter/person-c092a34a40b4ddee4e81b1ab50fb874d.svg" alt="" aria-hidden="true" loading="lazy"/>
+            
+            <label class="select-dropdown-label x-small-text" for="input-affiliate_fct_role">
+                Person/Organisation
+            </label>
+        </div>
+    
+
+    
+    <div class="facets-selected-wrapper" data-facet-name="affiliate_fct_role">
+        
+
+
+
+
+    </div>
+
+    
+    <div class="select-box">
+        
+            
+            <input type="text" class="form-control filter filter-input" autocomplete="new-password"
+                   data-tippy-input-facets-template-id="dropdown-affiliate_fct_role" data-tippy-placement="bottom" name="input-affiliate_fct_role"
+                   id="input-affiliate_fct_role">
+        
+
+    </div>
+
+    
+    
+</div>
+    
+
+
+    
+
+    
+
+    
+
+        
+
+
+<div id="license_group" class="select-dropdown" data-filterable="false"
+     data-is-cms="false" data-facet-name=license_group>
+    
+    
+        <div class="label-wrapper">
+            
+            <img src="/assets/filter/usability-e76a58f85882aca485a8587be302c3c3.svg" alt="" aria-hidden="true" loading="lazy"/>
+            
+            <label class="select-dropdown-label x-small-text" for="input-license_group">
+                Verwendbarkeit
+            </label>
+        </div>
+    
+
+    
+    <div class="facets-selected-wrapper" data-facet-name="license_group">
+        
+
+
+
+
+    </div>
+
+    
+    <div class="select-box">
+        
+            <button class="form-control filter" id="input-license_group"
+                    data-tippy-dropdown-facets-template-id="dropdown-license_group" data-tippy-placement="bottom"></button>
+        
+
+    </div>
+
+    
+    
+</div>
+    
+
+
+    
+
+    
+
+    
+
+        
+
+
+<div id="type_fct" class="select-dropdown" data-filterable="false"
+     data-is-cms="false" data-facet-name=type_fct>
+    
+    
+        <div class="label-wrapper">
+            
+            <img src="/assets/filter/media-type-60a76768409829cf0eb792f2b0d3c53e.svg" alt="" aria-hidden="true" loading="lazy"/>
+            
+            <label class="select-dropdown-label x-small-text" for="input-type_fct">
+                Medientyp
+            </label>
+        </div>
+    
+
+    
+    <div class="facets-selected-wrapper" data-facet-name="type_fct">
+        
+
+
+
+
+    </div>
+
+    
+    <div class="select-box">
+        
+            <button class="form-control filter" id="input-type_fct"
+                    data-tippy-dropdown-facets-template-id="dropdown-type_fct" data-tippy-placement="bottom"></button>
+        
+
+    </div>
+
+    
+    
+</div>
+    
+
+
+    
+
+    
+
+    
+
+        
+
+
+<div id="place_fct" class="select-dropdown" data-filterable="true"
+     data-is-cms="false" data-facet-name=place_fct>
+    
+    
+        <div class="label-wrapper">
+            
+            <img src="/assets/filter/location-c5b2248602c93704dd6cb108ece843e0.svg" alt="" aria-hidden="true" loading="lazy"/>
+            
+            <label class="select-dropdown-label x-small-text" for="input-place_fct">
+                Ort
+            </label>
+        </div>
+    
+
+    
+    <div class="facets-selected-wrapper" data-facet-name="place_fct">
+        
+
+
+
+
+    </div>
+
+    
+    <div class="select-box">
+        
+            
+            <input type="text" class="form-control filter filter-input" autocomplete="new-password"
+                   data-tippy-input-facets-template-id="dropdown-place_fct" data-tippy-placement="bottom" name="input-place_fct"
+                   id="input-place_fct">
+        
+
+    </div>
+
+    
+    
+</div>
+    
+
+
+    
+
+    
+
+    
+
+        
+
+
+<div id="topic_fct" class="select-dropdown" data-filterable="true"
+     data-is-cms="false" data-facet-name=topic_fct>
+    
+    
+        <div class="label-wrapper">
+            
+            <img src="/assets/filter/topic-672d1f287abe24b3da74ce0c1797ef94.svg" alt="" aria-hidden="true" loading="lazy"/>
+            
+            <label class="select-dropdown-label x-small-text" for="input-topic_fct">
+                Schlagwort
+            </label>
+        </div>
+    
+
+    
+    <div class="facets-selected-wrapper" data-facet-name="topic_fct">
+        
+
+
+
+
+    </div>
+
+    
+    <div class="select-box">
+        
+            
+            <input type="text" class="form-control filter filter-input" autocomplete="new-password"
+                   data-tippy-input-facets-template-id="dropdown-topic_fct" data-tippy-placement="bottom" name="input-topic_fct"
+                   id="input-topic_fct">
+        
+
+    </div>
+
+    
+    
+</div>
+    
+
+
+    
+
+    
+
+    
+
+        
+
+
+<div id="language_fct" class="select-dropdown" data-filterable="true"
+     data-is-cms="false" data-facet-name=language_fct>
+    
+    
+        <div class="label-wrapper">
+            
+            <img src="/assets/filter/language-9e744b056e891b61416580d007d3d92b.svg" alt="" aria-hidden="true" loading="lazy"/>
+            
+            <label class="select-dropdown-label x-small-text" for="input-language_fct">
+                Sprache
+            </label>
+        </div>
+    
+
+    
+    <div class="facets-selected-wrapper" data-facet-name="language_fct">
+        
+
+
+
+
+    </div>
+
+    
+    <div class="select-box">
+        
+            
+            <input type="text" class="form-control filter filter-input" autocomplete="new-password"
+                   data-tippy-input-facets-template-id="dropdown-language_fct" data-tippy-placement="bottom" name="input-language_fct"
+                   id="input-language_fct">
+        
+
+    </div>
+
+    
+    
+</div>
+    
+
+
+    
+
+    
+
+    
+
+        
+
+
+<div id="license" class="select-dropdown" data-filterable="false"
+     data-is-cms="false" data-facet-name=license>
+    
+    
+        <div class="label-wrapper">
+            
+            <img src="/assets/filter/legal-status-43bccac1df63a3ae5eab7fb5a4e28a99.svg" alt="" aria-hidden="true" loading="lazy"/>
+            
+            <label class="select-dropdown-label x-small-text" for="input-license">
+                Rechtsstatus
+            </label>
+        </div>
+    
+
+    
+    <div class="facets-selected-wrapper" data-facet-name="license">
+        
+
+
+
+
+    </div>
+
+    
+    <div class="select-box">
+        
+            <button class="form-control filter" id="input-license"
+                    data-tippy-dropdown-facets-template-id="dropdown-license" data-tippy-placement="bottom"></button>
+        
+
+    </div>
+
+    
+    
+</div>
+    
+
+
+    
+
+    
+
+    
+
+        
+
+
+<div id="sector_fct" class="select-dropdown" data-filterable="false"
+     data-is-cms="false" data-facet-name=sector_fct>
+    
+    
+        <div class="label-wrapper">
+            
+            <img src="/assets/filter/sector-af485ff5111e49832a187555a2e3ad6f.svg" alt="" aria-hidden="true" loading="lazy"/>
+            
+            <label class="select-dropdown-label x-small-text" for="input-sector_fct">
+                Sparte
+            </label>
+        </div>
+    
+
+    
+    <div class="facets-selected-wrapper" data-facet-name="sector_fct">
+        
+
+
+
+
+    </div>
+
+    
+    <div class="select-box">
+        
+            <button class="form-control filter" id="input-sector_fct"
+                    data-tippy-dropdown-facets-template-id="dropdown-sector_fct" data-tippy-placement="bottom"></button>
+        
+
+    </div>
+
+    
+    
+</div>
+    
+
+
+    
+
+    
+
+    
+
+        
+
+
+<div id="dataprovider_fct" class="select-dropdown" data-filterable="true"
+     data-is-cms="false" data-facet-name=dataprovider_fct>
+    
+    
+        <div class="label-wrapper">
+            
+            <img src="/assets/filter/data-provider-74082325c7ae45494362b74fc5119b56.svg" alt="" aria-hidden="true" loading="lazy"/>
+            
+            <label class="select-dropdown-label x-small-text" for="input-dataprovider_fct">
+                Datenpartner
+            </label>
+        </div>
+    
+
+    
+    <div class="facets-selected-wrapper" data-facet-name="dataprovider_fct">
+        
+
+
+
+
+    </div>
+
+    
+    <div class="select-box">
+        
+            
+            <input type="text" class="form-control filter filter-input" autocomplete="new-password"
+                   data-tippy-input-facets-template-id="dropdown-dataprovider_fct" data-tippy-placement="bottom" name="input-dataprovider_fct"
+                   id="input-dataprovider_fct">
+        
+
+    </div>
+
+    
+    
+</div>
+    
+
+
+    
+
+    
+
+    
+
+
+    
+
+    
+
+    
+
+
+    
+
+    
+
+    
+
+
+    
+
+    
+
+    
+
+
+    
+
+    
+
+    
+
+
+    
+
+    
+
+    
+
+</div>
+
+
+
+
+
+
+    <div class="filter-time-container">
+        <div class="time-period-container select-dropdown" id="time">
+            <label class="label-wrapper">
+                <img src="/assets/filter/datum-f6447811f8f84c12ad30d233130c7077.svg" alt="date" loading="lazy" aria-hidden="true"/>
+                <span class="select-dropdown-label x-small-text">Zeitraum</span>
+            </label>
+
+            <div class="facets-selected-wrapper" data-facet-name="time">
+                
+                
+
+
+
+
+            </div>
+
+            <form>
+                <div class="time-form-inputs">
+                    <div class="timePeriod">
+                        <label id="timePeriod_from" class="select-dropdown-label x-small-text">
+                            Von (JJJJ)
+                        </label>
+
+                        <div class="timePeriod-inputs-wrapper">
+                            
+
+
+
+
+    
+
+    
+
+    
+        <div class="facets-item facets-time-margin">
+                
+<div id="year_from"
+     data-filterable="true"
+     data-facet-name="year_from">
+    
+
+    <div class="select-box">
+        <input id="input-year_from" class="form-control text-input filter" type="text" inputmode="numeric" pattern="-?[0-9]+" name="input-year_from" aria-errormessage="input-year_from-error">
+        <p id="input-year_from-error" class="invalid-feedback"></p>
+    </div>
+</div>
+        </div>
+    
+
+
+                        </div>
+                    </div>
+
+                    <div class="timePeriod">
+                        <label id="timePeriod_to" class="select-dropdown-label x-small-text">
+                            Bis (JJJJ)</label>
+
+                        <div class="timePeriod-inputs-wrapper">
+                            
+
+
+
+
+    
+
+    
+
+    
+        <div class="facets-item facets-time-margin">
+                
+<div id="year_to"
+     data-filterable="true"
+     data-facet-name="year_to">
+    
+
+    <div class="select-box">
+        <input id="input-year_to" class="form-control text-input filter" type="text" inputmode="numeric" pattern="-?[0-9]+" name="input-year_to" aria-errormessage="input-year_to-error">
+        <p id="input-year_to-error" class="invalid-feedback"></p>
+    </div>
+</div>
+        </div>
+    
+
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="time-button">
+                    <button class="btn btn-secondary" id="apply-time-facet" type="submit">
+                        Zeitraum anwenden
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+
+                
+                <div id="facet-loading" style="display: none">
+                    <div class="facet-loading">
+                        <div class="spinner-border spinner-border-size " role="status">
+                            <span class="visually-hidden">Laden...</span>
+                        </div>
+                    </div>
+                </div>
+
+                
+                <div class="sentinel" id="bottomSentinel" data-target="facet-container"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+        
+            
+
+
+
+
+<div class="paginator-options-overlay">
+    <div class="paginator-options-container">
+        <div class="results-paginator-options">
+            <div class="paginator-options-body">
+
+                <div class="sort-results-switch">
+                    <label class="sort-results-switch-label" for="sort-results">
+                        Sortierung
+                    </label>
+                    <select class="sort-results-switch-select" id="sort-results" name="sort-results">
+                        <option value=""
+                                >Relevanz</option>
+                    
+                        
+                        <option value="ALPHA_ASC"
+                            >A-Z</option>
+                        <option value="ALPHA_DESC"
+                                >Z-A</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="results-paginator-options">
+            <div class="paginator-options-body">
+                <div class="page-filter">
+                    <label class="page-filter-label" for="page-filter-results">
+                        Ergebnisse pro Seite
+                    </label>
+                    <span>
+                        <select class="page-filter-select" id="page-filter-results" name="page-filter-results">
+                            
+                                <option value="10"
+                                        selected>10
+                                </option>
+                            
+                                <option value="20"
+                                        >20
+                                </option>
+                            
+                                <option value="40"
+                                        >40
+                                </option>
+                            
+                                <option value="60"
+                                        >60
+                                </option>
+                            
+                                <option value="100"
+                                        >100
+                                </option>
+                            
+                        </select>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+        
+        <div class="view-type-switch">
+            <button id="view-grid"
+                    class="grid-view-btn "
+                    type="button"
+                    aria-selected="false"
+                    data-tippy-content="Galerieansicht">
+                Galerieansicht
+            </button>
+            <button id="view-list"
+                    class="list-view-btn active"
+                    type="button"
+                    aria-selected="true"
+                    data-tippy-content="Listenansicht">
+                Listenansicht
+            </button>
+        </div>
+    </div>
+</div>
+
+                
+                    
+                
+            
+
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="search-results">
+                        <div class="search-results-list">
+                            
+                                
+
+
+
+
+<ul id="results-container" class="results-list list-unstyled ">
+  
+  
+    
+    
+    
+    
+    
+      <li class="item">
+        <div class="summary row">
+          
+            
+
+
+
+<div class="summary-main-wrapper ">
+    <div class="summary-main">
+        <p class="category-type">
+            Druckgrafik
+        </p>
+
+        <div class="title-wrap">
+            <h3 class="title title-list">
+                
+                    <a href="/item/22XOCR6EIUJGEGJEZKXB4WMSOV66KFBN" class="persist h4-ddb" title="Muim Institut">
+                        Muim Institut
+                    </a>
+                    <button type="button" class="icon-info ddb-tooltip-holder js-tippy-fetch"
+                            data-item-id="22XOCR6EIUJGEGJEZKXB4WMSOV66KFBN"
+                            aria-label="Informationen">
+                    </button>
+                
+            </h3>
+            <input type="hidden" id="information-item-title-22XOCR6EIUJGEGJEZKXB4WMSOV66KFBN" value="Muim Institut"/>
+        </div>
+
+        
+            <ul class="matches">
+                <li class="matching-item">
+                    
+
+<p class="description">
+    
+        
+            Druckgrafik
+            ...
+        
+    
+        
+            Zusatztitel: Prospekt des MUIM Instituts, Titelvignette
+            ...
+        
+    
+        
+            Holzschnitt auf Papier
+            ...
+        
+    
+        
+            Bildmaß 9,3 x 6 cm
+            ...
+        
+    
+        
+            Blattmaß 20,2 x 14,1 cm
+            ...
+        
+    
+        
+            Rahmenmaß 66,7 x 50,6 x 3,2 cm
+            ...
+        
+    
+</p>
+
+                </li>
+            </ul>
+        
+    </div>
+</div>
+            
+
+
+
+
+
+
+<div class="thumbnail-wrapper ">
+
+    
+        
+
+        <div class="thumbnail" id="thumbnail-22XOCR6EIUJGEGJEZKXB4WMSOV66KFBN">
+            <a href="/item/22XOCR6EIUJGEGJEZKXB4WMSOV66KFBN">
+                
+                    <img src="https://iiif.deutsche-digitale-bibliothek.de/image/2/49130d3d-7797-4e86-a3a8-36ce385e95d8/full/!300,300/0/default.jpg"                      title=""                      alt="Muim Institut"                      class=""                     aria-hidden="true"/>
+                
+            </a>
+        </div>
+
+        <div class="item-options">
+            <ul class="item-options-ul">
+                <li>
+                    
+                    
+                        <div class="ddb-tooltip-holder">
+                            <button class="add-to-favorites"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#loginModal"
+                                    aria-label="Zu Favoriten hinzufügen"
+                                    data-tippy-content="Zu Favoriten hinzufügen">
+                            </button>
+                        </div>
+
+                    
+                </li>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </div>
+
+    
+
+</div>
+
+          
+        </div>
+      </li>
+    
+    
+    
+    
+    
+    
+      <li class="item">
+        <div class="summary row">
+          
+            
+
+
+
+<div class="summary-main-wrapper ">
+    <div class="summary-main">
+        <p class="category-type">
+            Druckgrafik
+        </p>
+
+        <div class="title-wrap">
+            <h3 class="title title-list">
+                
+                    <a href="/item/232UUW6TRZSKRICZU5JWE6U4S6VWAAY5" class="persist h4-ddb" title="Das Paar">
+                        Das Paar
+                    </a>
+                    <button type="button" class="icon-info ddb-tooltip-holder js-tippy-fetch"
+                            data-item-id="232UUW6TRZSKRICZU5JWE6U4S6VWAAY5"
+                            aria-label="Informationen">
+                    </button>
+                
+            </h3>
+            <input type="hidden" id="information-item-title-232UUW6TRZSKRICZU5JWE6U4S6VWAAY5" value="Das Paar"/>
+        </div>
+
+        
+            <ul class="matches">
+                <li class="matching-item">
+                    
+
+<p class="description">
+    
+        
+            Copyright (Online): VG Bild-Kunst; Copyright (Print): Nachlass Erich Heckel, Hemmenhofen
+            ...
+        
+    
+        
+            Druckgrafik
+            ...
+        
+    
+        
+            Holzschnitt auf Bütten
+            ...
+        
+    
+        
+            Bildmaß 18,7 x 15,2 cm
+            ...
+        
+    
+        
+            Blattmaß 34 x 29,2 cm
+            ...
+        
+    
+        
+            Herstellung
+            ...
+        
+    
+</p>
+
+                </li>
+            </ul>
+        
+    </div>
+</div>
+            
+
+
+
+
+
+
+<div class="thumbnail-wrapper ">
+
+    
+        
+
+        <div class="thumbnail" id="thumbnail-232UUW6TRZSKRICZU5JWE6U4S6VWAAY5">
+            <a href="/item/232UUW6TRZSKRICZU5JWE6U4S6VWAAY5">
+                
+                    <img src="/assets/placeholder/searchResultMediaNoDigitisedMedia-25f0d79aa5b074b25a19de0286b16f1b.png" title="Das Paar" alt="Das Paar"/>
+                
+            </a>
+        </div>
+
+        <div class="item-options">
+            <ul class="item-options-ul">
+                <li>
+                    
+                    
+                        <div class="ddb-tooltip-holder">
+                            <button class="add-to-favorites"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#loginModal"
+                                    aria-label="Zu Favoriten hinzufügen"
+                                    data-tippy-content="Zu Favoriten hinzufügen">
+                            </button>
+                        </div>
+
+                    
+                </li>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </div>
+
+    
+
+</div>
+
+          
+        </div>
+      </li>
+    
+    
+    
+    
+    
+    
+      <li class="item">
+        <div class="summary row">
+          
+            
+
+
+
+<div class="summary-main-wrapper ">
+    <div class="summary-main">
+        <p class="category-type">
+            Zeichnung
+        </p>
+
+        <div class="title-wrap">
+            <h3 class="title title-list">
+                
+                    <a href="/item/24IS2BBBOVHDKO5JWPNJTKQA7ZHUVZYL" class="persist h4-ddb" title="Hockende">
+                        Hockende
+                    </a>
+                    <button type="button" class="icon-info ddb-tooltip-holder js-tippy-fetch"
+                            data-item-id="24IS2BBBOVHDKO5JWPNJTKQA7ZHUVZYL"
+                            aria-label="Informationen">
+                    </button>
+                
+            </h3>
+            <input type="hidden" id="information-item-title-24IS2BBBOVHDKO5JWPNJTKQA7ZHUVZYL" value="Hockende"/>
+        </div>
+
+        
+            <ul class="matches">
+                <li class="matching-item">
+                    
+
+<p class="description">
+    
+        
+            Copyright (Online): VG Bild-Kunst; Copyright (Print): Nachlass Erich Heckel, Hemmenhofen
+            ...
+        
+    
+        
+            Zeichnung
+            ...
+        
+    
+        
+            Bleistift auf Papier
+            ...
+        
+    
+        
+            Blattmaß 50 x 30 cm
+            ...
+        
+    
+        
+            Herstellung
+            ...
+        
+    
+        
+            Erich Heckel (1883 - 1970), Künstler
+            ...
+        
+    
+</p>
+
+                </li>
+            </ul>
+        
+    </div>
+</div>
+            
+
+
+
+
+
+
+<div class="thumbnail-wrapper ">
+
+    
+        
+
+        <div class="thumbnail" id="thumbnail-24IS2BBBOVHDKO5JWPNJTKQA7ZHUVZYL">
+            <a href="/item/24IS2BBBOVHDKO5JWPNJTKQA7ZHUVZYL">
+                
+                    <img src="/assets/placeholder/searchResultMediaNoDigitisedMedia-25f0d79aa5b074b25a19de0286b16f1b.png" title="Hockende" alt="Hockende"/>
+                
+            </a>
+        </div>
+
+        <div class="item-options">
+            <ul class="item-options-ul">
+                <li>
+                    
+                    
+                        <div class="ddb-tooltip-holder">
+                            <button class="add-to-favorites"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#loginModal"
+                                    aria-label="Zu Favoriten hinzufügen"
+                                    data-tippy-content="Zu Favoriten hinzufügen">
+                            </button>
+                        </div>
+
+                    
+                </li>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </div>
+
+    
+
+</div>
+
+          
+        </div>
+      </li>
+    
+    
+    
+    
+    
+    
+      <li class="item">
+        <div class="summary row">
+          
+            
+
+
+
+<div class="summary-main-wrapper ">
+    <div class="summary-main">
+        <p class="category-type">
+            Druckgrafik
+        </p>
+
+        <div class="title-wrap">
+            <h3 class="title title-list">
+                
+                    <a href="/item/24ZRZMM5EQYWYIVNXUSL2SC7R4E2BTEP" class="persist h4-ddb" title="Badende Frauen zwischen weißen Steinen, Fehmarn">
+                        Badende Frauen zwischen weißen Steinen, Fehmarn
+                    </a>
+                    <button type="button" class="icon-info ddb-tooltip-holder js-tippy-fetch"
+                            data-item-id="24ZRZMM5EQYWYIVNXUSL2SC7R4E2BTEP"
+                            aria-label="Informationen">
+                    </button>
+                
+            </h3>
+            <input type="hidden" id="information-item-title-24ZRZMM5EQYWYIVNXUSL2SC7R4E2BTEP" value="Badende Frauen zwischen weißen Steinen, Fehmarn"/>
+        </div>
+
+        
+            <ul class="matches">
+                <li class="matching-item">
+                    
+
+<p class="description">
+    
+        
+            Badende Frauen zwischen weißen Steinen
+            ...
+        
+    
+        
+            Druckgrafik
+            ...
+        
+    
+        
+            Farbholzschnitt in Schwarz, Grün und Rosa auf Velin
+            ...
+        
+    
+        
+            Bildmaß 28,5 x 29 cm
+            ...
+        
+    
+        
+            Blattmaß 35,4 x 35,4 cm
+            ...
+        
+    
+        
+            Herstellung
+            ...
+        
+    
+</p>
+
+                </li>
+            </ul>
+        
+    </div>
+</div>
+            
+
+
+
+
+
+
+<div class="thumbnail-wrapper ">
+
+    
+        
+
+        <div class="thumbnail" id="thumbnail-24ZRZMM5EQYWYIVNXUSL2SC7R4E2BTEP">
+            <a href="/item/24ZRZMM5EQYWYIVNXUSL2SC7R4E2BTEP">
+                
+                    <img src="https://iiif.deutsche-digitale-bibliothek.de/image/2/5fcf812f-d58c-405f-9177-636a0b55a3bc/full/!300,300/0/default.jpg"                      title=""                      alt="Badende Frauen zwischen weißen Steinen, Fehmarn"                      class=""                     aria-hidden="true"/>
+                
+            </a>
+        </div>
+
+        <div class="item-options">
+            <ul class="item-options-ul">
+                <li>
+                    
+                    
+                        <div class="ddb-tooltip-holder">
+                            <button class="add-to-favorites"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#loginModal"
+                                    aria-label="Zu Favoriten hinzufügen"
+                                    data-tippy-content="Zu Favoriten hinzufügen">
+                            </button>
+                        </div>
+
+                    
+                </li>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </div>
+
+    
+
+</div>
+
+          
+        </div>
+      </li>
+    
+    
+    
+    
+    
+    
+      <li class="item">
+        <div class="summary row">
+          
+            
+
+
+
+<div class="summary-main-wrapper ">
+    <div class="summary-main">
+        <p class="category-type">
+            Zeichnung
+        </p>
+
+        <div class="title-wrap">
+            <h3 class="title title-list">
+                
+                    <a href="/item/25WTKJXES3JUOQMYHPSGUTU6KL6PFDQF" class="persist h4-ddb" title="Brand-Erbisdorf">
+                        Brand-Erbisdorf
+                    </a>
+                    <button type="button" class="icon-info ddb-tooltip-holder js-tippy-fetch"
+                            data-item-id="25WTKJXES3JUOQMYHPSGUTU6KL6PFDQF"
+                            aria-label="Informationen">
+                    </button>
+                
+            </h3>
+            <input type="hidden" id="information-item-title-25WTKJXES3JUOQMYHPSGUTU6KL6PFDQF" value="Brand-Erbisdorf"/>
+        </div>
+
+        
+            <ul class="matches">
+                <li class="matching-item">
+                    
+
+<p class="description">
+    
+        
+            Copyright: Bleyl, Berlin/Solingen; Eigentum: Brücke-Museum, Berlin; Besitz: Brücke-Museum, Berlin
+            ...
+        
+    
+        
+            Aus einem Konvolut von 3 Landschaftsstudien (Zusatztitel)
+            ...
+        
+    
+        
+            Zeichnung
+            ...
+        
+    
+        
+            Bleistift auf Papier
+            ...
+        
+    
+        
+            Blattmaß 26,4 x 20,5 cm
+            ...
+        
+    
+        
+            Herstellung
+            ...
+        
+    
+</p>
+
+                </li>
+            </ul>
+        
+    </div>
+</div>
+            
+
+
+
+
+
+
+<div class="thumbnail-wrapper ">
+
+    
+        
+
+        <div class="thumbnail" id="thumbnail-25WTKJXES3JUOQMYHPSGUTU6KL6PFDQF">
+            <a href="/item/25WTKJXES3JUOQMYHPSGUTU6KL6PFDQF">
+                
+                    <img src="https://iiif.deutsche-digitale-bibliothek.de/image/2/800fedff-b839-46ba-bb47-a6b6bc6909cb/full/!300,300/0/default.jpg"                      title=""                      alt="Brand-Erbisdorf"                      class=""                     aria-hidden="true"/>
+                
+            </a>
+        </div>
+
+        <div class="item-options">
+            <ul class="item-options-ul">
+                <li>
+                    
+                    
+                        <div class="ddb-tooltip-holder">
+                            <button class="add-to-favorites"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#loginModal"
+                                    aria-label="Zu Favoriten hinzufügen"
+                                    data-tippy-content="Zu Favoriten hinzufügen">
+                            </button>
+                        </div>
+
+                    
+                </li>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </div>
+
+    
+
+</div>
+
+          
+        </div>
+      </li>
+    
+    
+    
+    
+    
+    
+      <li class="item">
+        <div class="summary row">
+          
+            
+
+
+
+<div class="summary-main-wrapper ">
+    <div class="summary-main">
+        <p class="category-type">
+            Druckgrafik
+        </p>
+
+        <div class="title-wrap">
+            <h3 class="title title-list">
+                
+                    <a href="/item/25XXOEHK5M46OY63NJNRDUKNTRGWEJ3O" class="persist h4-ddb" title="Netzzieher">
+                        Netzzieher
+                    </a>
+                    <button type="button" class="icon-info ddb-tooltip-holder js-tippy-fetch"
+                            data-item-id="25XXOEHK5M46OY63NJNRDUKNTRGWEJ3O"
+                            aria-label="Informationen">
+                    </button>
+                
+            </h3>
+            <input type="hidden" id="information-item-title-25XXOEHK5M46OY63NJNRDUKNTRGWEJ3O" value="Netzzieher"/>
+        </div>
+
+        
+            <ul class="matches">
+                <li class="matching-item">
+                    
+
+<p class="description">
+    
+        
+            Eigentum: Brücke-Museum, Berlin
+            ...
+        
+    
+        
+            Druckgrafik
+            ...
+        
+    
+        
+            Holzschnitt auf Papier
+            ...
+        
+    
+        
+            Bildmaß 12,5 x 19,8 cm
+            ...
+        
+    
+        
+            Blattmaß 14,8 x 21 cm
+            ...
+        
+    
+        
+            Herstellung
+            ...
+        
+    
+</p>
+
+                </li>
+            </ul>
+        
+    </div>
+</div>
+            
+
+
+
+
+
+
+<div class="thumbnail-wrapper ">
+
+    
+        
+
+        <div class="thumbnail" id="thumbnail-25XXOEHK5M46OY63NJNRDUKNTRGWEJ3O">
+            <a href="/item/25XXOEHK5M46OY63NJNRDUKNTRGWEJ3O">
+                
+                    <img src="https://iiif.deutsche-digitale-bibliothek.de/image/2/5116c5e3-d019-4757-80ea-7728fe63be73/full/!300,300/0/default.jpg"                      title=""                      alt="Netzzieher"                      class=""                     aria-hidden="true"/>
+                
+            </a>
+        </div>
+
+        <div class="item-options">
+            <ul class="item-options-ul">
+                <li>
+                    
+                    
+                        <div class="ddb-tooltip-holder">
+                            <button class="add-to-favorites"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#loginModal"
+                                    aria-label="Zu Favoriten hinzufügen"
+                                    data-tippy-content="Zu Favoriten hinzufügen">
+                            </button>
+                        </div>
+
+                    
+                </li>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </div>
+
+    
+
+</div>
+
+          
+        </div>
+      </li>
+    
+    
+    
+    
+    
+    
+      <li class="item">
+        <div class="summary row">
+          
+            
+
+
+
+<div class="summary-main-wrapper ">
+    <div class="summary-main">
+        <p class="category-type">
+            Druckgrafik
+        </p>
+
+        <div class="title-wrap">
+            <h3 class="title title-list">
+                
+                    <a href="/item/26DVUG2LWQKHSKJAIDXJG2JBAS62I2Z4" class="persist h4-ddb" title="Im Bad">
+                        Im Bad
+                    </a>
+                    <button type="button" class="icon-info ddb-tooltip-holder js-tippy-fetch"
+                            data-item-id="26DVUG2LWQKHSKJAIDXJG2JBAS62I2Z4"
+                            aria-label="Informationen">
+                    </button>
+                
+            </h3>
+            <input type="hidden" id="information-item-title-26DVUG2LWQKHSKJAIDXJG2JBAS62I2Z4" value="Im Bad"/>
+        </div>
+
+        
+            <ul class="matches">
+                <li class="matching-item">
+                    
+
+<p class="description">
+    
+        
+            Copyright (Online): VG Bild-Kunst; Copyright (Print): Nachlass Erich Heckel, Hemmenhofen
+            ...
+        
+    
+        
+            Druckgrafik
+            ...
+        
+    
+        
+            Holzschnitt auf Papier
+            ...
+        
+    
+        
+            Bildmaß 27,9 x 19,8 cm
+            ...
+        
+    
+        
+            Blattmaß 54 x 34 cm
+            ...
+        
+    
+        
+            Herstellung
+            ...
+        
+    
+</p>
+
+                </li>
+            </ul>
+        
+    </div>
+</div>
+            
+
+
+
+
+
+
+<div class="thumbnail-wrapper ">
+
+    
+        
+
+        <div class="thumbnail" id="thumbnail-26DVUG2LWQKHSKJAIDXJG2JBAS62I2Z4">
+            <a href="/item/26DVUG2LWQKHSKJAIDXJG2JBAS62I2Z4">
+                
+                    <img src="/assets/placeholder/searchResultMediaNoDigitisedMedia-25f0d79aa5b074b25a19de0286b16f1b.png" title="Im Bad" alt="Im Bad"/>
+                
+            </a>
+        </div>
+
+        <div class="item-options">
+            <ul class="item-options-ul">
+                <li>
+                    
+                    
+                        <div class="ddb-tooltip-holder">
+                            <button class="add-to-favorites"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#loginModal"
+                                    aria-label="Zu Favoriten hinzufügen"
+                                    data-tippy-content="Zu Favoriten hinzufügen">
+                            </button>
+                        </div>
+
+                    
+                </li>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </div>
+
+    
+
+</div>
+
+          
+        </div>
+      </li>
+    
+    
+    
+    
+    
+    
+      <li class="item">
+        <div class="summary row">
+          
+            
+
+
+
+<div class="summary-main-wrapper ">
+    <div class="summary-main">
+        <p class="category-type">
+            Gemälde
+        </p>
+
+        <div class="title-wrap">
+            <h3 class="title title-list">
+                
+                    <a href="/item/27KXY4SUT4RDFPYPWSQ2RRXYVDHUOLAC" class="persist h4-ddb" title="Wanderdüne am Haff">
+                        Wanderdüne am Haff
+                    </a>
+                    <button type="button" class="icon-info ddb-tooltip-holder js-tippy-fetch"
+                            data-item-id="27KXY4SUT4RDFPYPWSQ2RRXYVDHUOLAC"
+                            aria-label="Informationen">
+                    </button>
+                
+            </h3>
+            <input type="hidden" id="information-item-title-27KXY4SUT4RDFPYPWSQ2RRXYVDHUOLAC" value="Wanderdüne am Haff"/>
+        </div>
+
+        
+            <ul class="matches">
+                <li class="matching-item">
+                    
+
+<p class="description">
+    
+        
+            Copyright: VG Bild-Kunst; Eigentum: Karl und Emy Schmidt-Rottluff Stiftung, Berlin; Besitz: Brücke-Museum, Berlin
+            ...
+        
+    
+        
+            Gemälde
+            ...
+        
+    
+        
+            Öl auf Leinwand
+            ...
+        
+    
+        
+            Bildmaß 92 x 113 cm
+            ...
+        
+    
+        
+            Rahmenmaß 105,9 x 126,5 x 4 cm
+            ...
+        
+    
+        
+            Herstellung
+            ...
+        
+    
+</p>
+
+                </li>
+            </ul>
+        
+    </div>
+</div>
+            
+
+
+
+
+
+
+<div class="thumbnail-wrapper ">
+
+    
+        
+
+        <div class="thumbnail" id="thumbnail-27KXY4SUT4RDFPYPWSQ2RRXYVDHUOLAC">
+            <a href="/item/27KXY4SUT4RDFPYPWSQ2RRXYVDHUOLAC">
+                
+                    <img src="/assets/placeholder/searchResultMediaImage-78d7330cfd112235175d2eaf7c136bab.png" title="Wanderdüne am Haff" alt="Wanderdüne am Haff"/>
+                
+            </a>
+        </div>
+
+        <div class="item-options">
+            <ul class="item-options-ul">
+                <li>
+                    
+                    
+                        <div class="ddb-tooltip-holder">
+                            <button class="add-to-favorites"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#loginModal"
+                                    aria-label="Zu Favoriten hinzufügen"
+                                    data-tippy-content="Zu Favoriten hinzufügen">
+                            </button>
+                        </div>
+
+                    
+                </li>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </div>
+
+    
+
+</div>
+
+          
+        </div>
+      </li>
+    
+    
+    
+    
+    
+    
+      <li class="item">
+        <div class="summary row">
+          
+            
+
+
+
+<div class="summary-main-wrapper ">
+    <div class="summary-main">
+        <p class="category-type">
+            Zeichnung
+        </p>
+
+        <div class="title-wrap">
+            <h3 class="title title-list">
+                
+                    <a href="/item/27PNNX6J6UZ45JT3OO7VE56QCNUE3X5O" class="persist h4-ddb" title="Liebespaar">
+                        Liebespaar
+                    </a>
+                    <button type="button" class="icon-info ddb-tooltip-holder js-tippy-fetch"
+                            data-item-id="27PNNX6J6UZ45JT3OO7VE56QCNUE3X5O"
+                            aria-label="Informationen">
+                    </button>
+                
+            </h3>
+            <input type="hidden" id="information-item-title-27PNNX6J6UZ45JT3OO7VE56QCNUE3X5O" value="Liebespaar"/>
+        </div>
+
+        
+            <ul class="matches">
+                <li class="matching-item">
+                    
+
+<p class="description">
+    
+        
+            Zeichnung
+            ...
+        
+    
+        
+            Tusche, Pinsel auf Papier
+            ...
+        
+    
+        
+            Blattmaß 44 x 32 cm
+            ...
+        
+    
+        
+            Herstellung
+            ...
+        
+    
+        
+            Ernst Ludwig Kirchner (1880 - 1938), Künstler
+            ...
+        
+    
+        
+            1909
+            ...
+        
+    
+</p>
+
+                </li>
+            </ul>
+        
+    </div>
+</div>
+            
+
+
+
+
+
+
+<div class="thumbnail-wrapper ">
+
+    
+        
+
+        <div class="thumbnail" id="thumbnail-27PNNX6J6UZ45JT3OO7VE56QCNUE3X5O">
+            <a href="/item/27PNNX6J6UZ45JT3OO7VE56QCNUE3X5O">
+                
+                    <img src="https://iiif.deutsche-digitale-bibliothek.de/image/2/f8980872-f6c9-4aa5-867c-b38b51220226/full/!300,300/0/default.jpg"                      title=""                      alt="Liebespaar"                      class=""                     aria-hidden="true"/>
+                
+            </a>
+        </div>
+
+        <div class="item-options">
+            <ul class="item-options-ul">
+                <li>
+                    
+                    
+                        <div class="ddb-tooltip-holder">
+                            <button class="add-to-favorites"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#loginModal"
+                                    aria-label="Zu Favoriten hinzufügen"
+                                    data-tippy-content="Zu Favoriten hinzufügen">
+                            </button>
+                        </div>
+
+                    
+                </li>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </div>
+
+    
+
+</div>
+
+          
+        </div>
+      </li>
+    
+    
+    
+    
+    
+    
+      <li class="item">
+        <div class="summary row">
+          
+            
+
+
+
+<div class="summary-main-wrapper ">
+    <div class="summary-main">
+        <p class="category-type">
+            Aquarell
+        </p>
+
+        <div class="title-wrap">
+            <h3 class="title title-list">
+                
+                    <a href="/item/2AHAYGOD6WIAOI6DSE6BKB2IVJCRMWR4" class="persist h4-ddb" title="Männerkopf">
+                        Männerkopf
+                    </a>
+                    <button type="button" class="icon-info ddb-tooltip-holder js-tippy-fetch"
+                            data-item-id="2AHAYGOD6WIAOI6DSE6BKB2IVJCRMWR4"
+                            aria-label="Informationen">
+                    </button>
+                
+            </h3>
+            <input type="hidden" id="information-item-title-2AHAYGOD6WIAOI6DSE6BKB2IVJCRMWR4" value="Männerkopf"/>
+        </div>
+
+        
+            <ul class="matches">
+                <li class="matching-item">
+                    
+
+<p class="description">
+    
+        
+            Copyright: VG Bild-Kunst; Eigentum: Karl und Emy Schmidt-Rottluff Stiftung, Berlin; Besitz: Brücke-Museum, Berlin
+            ...
+        
+    
+        
+            Aquarell
+            ...
+        
+    
+        
+            Tusche, Feder und Aquarell auf Papier
+            ...
+        
+    
+        
+            Blattmaß 50,5 x 39 cm
+            ...
+        
+    
+        
+            Herstellung
+            ...
+        
+    
+        
+            Karl Schmidt-Rottluff (1884 - 1976), Künstler
+            ...
+        
+    
+</p>
+
+                </li>
+            </ul>
+        
+    </div>
+</div>
+            
+
+
+
+
+
+
+<div class="thumbnail-wrapper ">
+
+    
+        
+
+        <div class="thumbnail" id="thumbnail-2AHAYGOD6WIAOI6DSE6BKB2IVJCRMWR4">
+            <a href="/item/2AHAYGOD6WIAOI6DSE6BKB2IVJCRMWR4">
+                
+                    <img src="/assets/placeholder/searchResultMediaImage-78d7330cfd112235175d2eaf7c136bab.png" title="Männerkopf" alt="Männerkopf"/>
+                
+            </a>
+        </div>
+
+        <div class="item-options">
+            <ul class="item-options-ul">
+                <li>
+                    
+                    
+                        <div class="ddb-tooltip-holder">
+                            <button class="add-to-favorites"
+                                    data-bs-toggle="modal"
+                                    data-bs-target="#loginModal"
+                                    aria-label="Zu Favoriten hinzufügen"
+                                    data-tippy-content="Zu Favoriten hinzufügen">
+                            </button>
+                        </div>
+
+                    
+                </li>
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+            </ul>
+        </div>
+
+    
+
+</div>
+
+          
+        </div>
+      </li>
+    
+  </ul>
+
+
+<!-- Confirmation copy modal -->
+<div class="modal fade" id="addToFavoritesModal" tabindex="-1" role="dialog"
+     aria-labelledby="addToFavoritesModal" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="modal-title h5-ddb">Das Objekt wurde Ihren Favoriten hinzugefügt.</div>
+            </div>
+
+            <div class="modal-body">
+                
+                <div class="big-text add-to-favorites-description">
+                    
+                        <input type="hidden" id="default-folder-id" name="default-folder-id" value="">
+                        Sie haben bisher noch keine Favoritenlisten erstellt.
+                    
+                </div>
+            </div>
+
+            <div class="modal-footer">
+                <input type="hidden" id="item-id" required="required" value=""/>
+                <input type="hidden" id="object-type" required="required" value=""/>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    Schließen
+                </button>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+                <div class="page-info-nav page-info-nav-bottom">
+                    
+
+<div class="page-nav page-nav-sm page-nav-bottom">
+    <nav class="inline">
+        <div class="prev-page">
+            <a class="js-page-nav-link disabled"
+               href=""
+                tabindex=-1 aria-disabled=true
+               aria-label="Zurück"></a>
+        </div>
+
+        <div class="pages-overall-index">
+            <div>
+                
+                
+                    
+                        
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+                    
+                
+
+                
+                
+
+                
+                
+                    <a 
+                       class="page-nav-result js-page-nav-link active">
+                        1
+                    </a>
+                
+                    <a href="/searchresults?query=&amp;offset=10&amp;rows=10&amp;facetValues%5B%5D=provider_id%3D3KXQ5XC4EJ73TJ4TNOZ73IOYV27X4XXC"
+                       class="page-nav-result js-page-nav-link ">
+                        2
+                    </a>
+                
+                    <a href="/searchresults?query=&amp;offset=20&amp;rows=10&amp;facetValues%5B%5D=provider_id%3D3KXQ5XC4EJ73TJ4TNOZ73IOYV27X4XXC"
+                       class="page-nav-result js-page-nav-link ">
+                        3
+                    </a>
+                
+                    <a href="/searchresults?query=&amp;offset=30&amp;rows=10&amp;facetValues%5B%5D=provider_id%3D3KXQ5XC4EJ73TJ4TNOZ73IOYV27X4XXC"
+                       class="page-nav-result js-page-nav-link ">
+                        4
+                    </a>
+                
+                    <a href="/searchresults?query=&amp;offset=40&amp;rows=10&amp;facetValues%5B%5D=provider_id%3D3KXQ5XC4EJ73TJ4TNOZ73IOYV27X4XXC"
+                       class="page-nav-result js-page-nav-link ">
+                        5
+                    </a>
+                
+            </div>
+        </div>
+
+        <div class="next-page">
+            <a class="js-page-nav-link  "
+               href="/searchresults?query=&amp;offset=10&amp;rows=10&amp;facetValues%5B%5D=provider_id%3D3KXQ5XC4EJ73TJ4TNOZ73IOYV27X4XXC" 
+               aria-label="Weiter"></a>
+        </div>
+    </nav>
+</div>
+                    
+
+
+
+    
+    
+
+
+
+    
+
+
+<div class="paginator-mobile">
+    <div class="prev-page">
+        <a href=""
+           class="btn btn-secondary disabled"
+            tabindex=-1 aria-disabled=true>
+            <span>Zurück</span>
+        </a>
+    </div>
+
+    <div class="next-page">
+        <a href="/searchresults?query=&amp;offset=10&amp;rows=10&amp;facetValues%5B%5D=provider_id%3D3KXQ5XC4EJ73TJ4TNOZ73IOYV27X4XXC"
+           class="btn btn-secondary "
+            >
+            <span>Weiter</span>
+        </a>
+    </div>
+</div>
+                </div>
+            
+        </div>
+
+        <div class="search-no-results-content  off">
+                
+                    
+                
+                
+
+<div class="no-results-container">
+    <p class="h6-ddb">
+        Es wurden keine Ergebnisse für Ihre Suchanfrage gefunden.
+    </p>
+
+    <p class="reset-selection off">
+        <a href="/searchresults?clearFilter=true&amp;isThumbnailFiltered=false&amp;query=*" class="ddb-link internal reset-selection-url">
+            Auswahl zurücksetzen
+        </a>
+    </p>
+
+    <p>
+        Notiz:
+    </p>
+
+    <ul>
+        <li>Achten Sie darauf, dass alle Wörter richtig geschrieben sind.</li>
+        <li>Versuchen Sie, weniger Suchbegriffe einzugeben.</li>
+        <li>Versuchen Sie, allgemeinere Suchbegriffe zu verwenden.</li>
+        <li>Versuchen Sie einen anderen Suchbegriff.</li>
+    </ul>
+</div>
+        </div>
+    </div>
+</div>
+
+    <div id="image-lightbox-placeholder"/>
+</div>
+
+
+    
+
+
+
+
+<footer class="footer">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-6 footer-column">
+                <div>
+                    <a href="/" class="logo-container" title="Startseite">
+                        <img class="logo-ddb" src="/assets/ddb-logo-large-d719a45567f1c456b7b8a0e8be49169d.webp" width="306" height="143"
+                             alt="Logo: Deutsche Digitale Bibliothek"/>
+                    </a>
+                </div>
+
+                <p class="footer-description big-18-sb">Die Deutsche Digitale Bibliothek bietet über das Internet umfassenden Zugang zum kulturellen und wissenschaftlichen Erbe Deutschlands.</p>
+
+                <div class="social-media-section">
+                    
+
+<a href="https://openbiblio.social/&#64;ddbkultur" class="social-media mastodon" rel="me nofollow noopener noreferrer" target="_blank"><span class="visually-hidden">Mastodon</span>
+</a>
+<a href="https://de.linkedin.com/company/deutsche-digitale-bibliothek" class="social-media linkedIn" target="_blank"><span class="visually-hidden">LinkedIn</span>
+</a>
+<a href="https://facebook.com/ddbkultur/" class="social-media facebook" target="_blank"><span class="visually-hidden">Facebook</span>
+</a>
+<a href="https://instagram.com/ddbkultur/" class="social-media instagram" target="_blank"><span class="visually-hidden">Instagram</span>
+</a>
+<a href="https://bsky.app/profile/ddbkultur.bsky.social" class="social-media bluesky" target="_blank"><span class="visually-hidden">Bluesky</span>
+</a>
+                </div>
+            </div>
+
+            <div class="col-lg-6 footer-column">
+                <nav aria-label="Fußzeilennavigation">
+                    <ul class="links-container">
+                        
+                            <li>
+                                <a href="/content/datenschutzerklaerung" class="medium-16-sb">Datenschutz</a>
+                            </li>
+                        
+                            <li>
+                                <a href="/content/erklaerung-zur-barrierefreiheit" class="medium-16-sb">Barrierefreiheit</a>
+                            </li>
+                        
+                            <li>
+                                <a href="/content/nutzungshinweise" class="medium-16-sb">Nutzungshinweise</a>
+                            </li>
+                        
+                            <li>
+                                <a href="/content/impressum" class="medium-16-sb">Impressum</a>
+                            </li>
+                        
+                            <li>
+                                <a href="/user/newsletter/" class="medium-16-sb">Newsletter</a>
+                            </li>
+                        
+                            <li>
+                                <a href="/content/datenpartner-werden" class="medium-16-sb">Datenpartner werden</a>
+                            </li>
+                        
+                            <li>
+                                <a href="/content/presse-medien" class="medium-16-sb">Presse</a>
+                            </li>
+                        
+                            <li>
+                                <a href="/content/das-ddb-team" class="medium-16-sb">Team</a>
+                            </li>
+                        
+                            <li>
+                                <a href="/contact" class="medium-16-sb">Kontakt</a>
+                            </li>
+                        
+                    </ul>
+                </nav>
+                <section class="newsletter-row" aria-labelledby="newsletter-title">
+                    
+
+<form action="/newsletter/subscribe" method="post" id="newsletter-subscribe-form" name="newsletter-subscribe-form" class="newsletter-form needs-validation" novalidate="novalidate" autocomplete="off" >
+    <h2 id="newsletter-title" class="medium-16-sb">
+        Unser Newsletter
+    </h2>
+
+    <div class="newsletter-input-container">
+        <input type="email" class="newsletter-input medium-text" name="email" id="email_newsletter"
+               aria-label="E-Mail"
+               aria-errormessage="feedback-email_newsletter"
+               placeholder="Geben Sie hier Ihre E-Mail Adresse ein" autocomplete="email" required>
+
+        <p id="feedback-email_newsletter" class="invalid-feedback">
+            Dieses Feld ist ein Pflichtfeld. Bitte tragen Sie Ihre E-Mail-Adresse hier ein, um sich für den Newsletter anzumelden.
+        </p>
+    </div>
+
+    <div class="newsletter-footer">
+        <div class="checkbox-validation-container">
+            <div class="checkbox-row">
+                <input id="termsOfUseCheck"
+                       class="form-check-input newsletter-checkbox"
+                       aria-errormessage="termsOfUseCheckInvalidFeedback"
+                       type="checkbox"
+                       value=""
+                       required>
+
+                <label for="termsOfUseCheck" class="newsletter-checkbox-label">
+                    Ich stimme der <a href=/content/datenschutzerklaerung#newsletter>Datenschutzerklärung</a> zu. Diese Option muss ausgewählt sein um den Newsletter zu abonnieren.
+                </label>
+            </div>
+
+            <p id="termsOfUseCheckInvalidFeedback" class="invalid-feedback">
+                Dieses Feld ist ein Pflichtfeld.
+            </p>
+        </div>
+
+        <button type="submit" id="newsletter-mobile-submit"
+                class="ddb-link internal">Anmelden</button>
+    </div>
+</form>
+
+                </section>
+            </div>
+        </div>
+
+        <div class="footer-highlighted-sections-container">
+            <section class="footer-highlighted-section other-portals-section otherPortalsContent"
+                     aria-labelledby="otherPortalsTitle">
+                <h2 class="footer-row-title medium-16-sb" id="otherPortalsTitle">
+                    Weitere Portale
+                </h2>
+
+                <div class="otherPortals">
+                    
+
+
+    <a href="https://www.archivportal-d.de/">
+        <img src="https://cms.deutsche-digitale-bibliothek.de/sites/default/files/media/pictures/2022-10/APD-logo-2022.svg" alt="Logo Archivportal-D" loading="lazy">
+    </a>
+
+    <a href="https://www.deutsche-digitale-bibliothek.de/newspaper">
+        <img src="https://cms.deutsche-digitale-bibliothek.de/sites/default/files/media/pictures/2022-10/dzp-logo-lg-rgb.svg" alt="Logo Deutsches Zeitungsportal" loading="lazy">
+    </a>
+
+    <a href="https://ccc.deutsche-digitale-bibliothek.de/">
+        <img src="https://cms.deutsche-digitale-bibliothek.de/sites/default/files/media/pictures/2022-10/ccc-logo-rgb.SVG" alt="Logo Sammlungsgut aus kolonialen Kontexten" loading="lazy">
+    </a>
+
+    <a href="https://pro.deutsche-digitale-bibliothek.de/">
+        <img src="https://cms.deutsche-digitale-bibliothek.de/sites/default/files/media/pictures/2022-10/logo-ddbpro-RGB.svg" alt="DDBpro Logo" loading="lazy">
+    </a>
+
+                </div>
+            </section>
+
+            <section class="footer-highlighted-section funder-section" aria-labelledby="footer-funder">
+                <h2 class="footer-row-title medium-16-sb" id="footer-funder">Gefördert durch</h2>
+
+                <a href="https://kulturstaatsminister.de/" class="funded-by-link">
+                    <img src="/assets/BKM-logo-de-5472d54eaeca4372985c66a19f63bcca.svg" alt="Der Beauftragte der Bundesregierung für Kultur und Medien" loading="lazy" width="222" height="104"/>
+                </a>
+            </section>
+        </div>
+
+        <div class="build x-small-text">Version: 8.9.1 / 7.4</div>
+    </div>
+</footer>
+
+    
+
+<button type="button" class="go-up-arrow-container">
+    <span class="visually-hidden">Nach oben</span>
+</button>
+
+
+
+    
+
+
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="login-modal-title" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="close-modal">
+                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                        aria-label="Schließen"></button>
+            </div>
+            
+
+<div class="error-container container " id="login-errors-container">
+    
+        <div class="message-wrapper">
+            <span class="message-item align-items-center">
+                <i class="message-item-icon"></i>
+                
+                
+                    <p class="message-text">
+                        Die eingegebene Kombination von Benutzername oder E-Mail-Adresse und Passwort wurde nicht erkannt. Bitte versuchen Sie es erneut.</p>
+                
+                
+            </span>
+        </div>
+    
+</div>
+
+            <div class="login-content">
+                <div class="form">
+                    <h2 class="h2-ddb" id="login-modal-title">Anmelden</h2>
+
+                    <p>Felder mit * müssen ausgefüllt werden.</p>
+
+                    <form action="/user/doLogin" method="post" name="login-form" class="needs-validation" novalidate="novalidate" id="login-form" >
+                        <input type="hidden" name="referrer" value="/searchresults?query=&amp;offset=0&amp;rows=10&amp;facetValues%5B%5D=provider_id%3D3KXQ5XC4EJ73TJ4TNOZ73IOYV27X4XXC" id="referrer" />
+
+                        
+
+<div class="row input-container">
+    
+        <label class="x-small-text" for="login_username">
+            Benutzername oder E-Mail*
+        </label>
+    
+    <button type="button" id="clear-login_username" class="btn-close"></button>
+    <input class="text-input "
+           id="login_username"
+           placeholder=""
+           type="text"
+           name="email"
+           value=""
+           autocomplete="email username"
+           aria-label="Benutzername oder E-Mail"
+           aria-errormessage="feedback-login_username"
+           tabindex=""
+        aria-describedby="Bitte geben Sie Ihren Benutzernamen oder Ihre E-Mail ein"
+        required
+        />
+
+    <div id="error-login_username" class="small-text input-error-message"></div>
+    
+        <p id="feedback-login_username" class="invalid-feedback ">
+            Bitte geben Sie Ihren Benutzernamen oder Ihre E-Mail ein
+        </p>
+    
+    
+</div>
+
+                        
+
+<div class="row input-container">
+    
+        <label class="x-small-text" for="login_password">
+            Passwort*
+        </label>
+    
+    <button type="button" id="clear-login_password" class="btn-close"></button>
+    <input class="text-input "
+           id="login_password"
+           placeholder=""
+           type="password"
+           name="password"
+           value=""
+           autocomplete="current-password"
+           aria-label="Passwort"
+           aria-errormessage="feedback-login_password"
+           tabindex=""
+        aria-describedby="Bitte geben Sie Ihr Passwort ein"
+        required
+        />
+
+    <div id="error-login_password" class="small-text input-error-message"></div>
+    
+        <p id="feedback-login_password" class="invalid-feedback ">
+            Bitte geben Sie Ihr Passwort ein
+        </p>
+    
+    
+</div>
+
+                        <div class="login-action">
+                            
+
+<button type="submit" id="login-button" class="btn btn-primary" role="" name="" data-bs-toggle="" data-bs-target="" data-bs-dismiss=""
+        value="" >Anmelden</button>
+
+                            
+
+<div class="d-flex align-items-center ">
+    
+
+    
+        <a
+           
+           aria-label="Passwort vergessen?"
+           aria-describedby=""
+           href="#forgotPassword"
+           class="ddb-text-link mini "
+           aria-labelledBy="linkText Passwort vergessen?"
+           data-bs-toggle="modal" data-bs-target="#forgotPassword" data-bs-dismiss="modal" >Passwort vergessen?</a>
+    
+</div>
+                        </div>
+                    </form>
+                </div>
+
+                <div class="info">
+                    <h2 class="h3-ddb"
+                        id="registration-modal-title">Registrieren</h2>
+                    <h3 class="h5-ddb">Ihre Vorteile</h3>
+                    <div class="info-box">
+                        <ul class="registration-advantages">
+                            <li class="favorite-icon">Favoritenlisten anlegen und bearbeiten</li>
+                            <li class="description-icon">Eigene Beschreibungen zu gespeicherten Favoriten hinzufügen</li>
+                            
+                                <li class="saved-search-icon">
+                                    Suchanfragen speichern
+                                </li>
+                            
+                        </ul>
+
+
+
+                        <div>
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                    data-bs-target="#registrationModal"
+                                    data-bs-dismiss="modal">Benutzerkonto anlegen</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    
+
+
+
+<div class="modal fade" id="registrationModal" tabindex="-1" aria-labelledby="registration-modal-title"
+     aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="close-modal">
+                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                        aria-label="Schließen"></button>
+            </div>
+
+            <div class="row registration-content">
+                <div class="col-12 form">
+                    
+
+<div class="error-container container " id="registration-errors-container">
+    
+        <div class="message-wrapper">
+            <span class="message-item align-items-center">
+                <i class="message-item-icon"></i>
+                
+                    <p class="message-text" id="registration-errors-message"></p>
+                
+                
+                
+            </span>
+        </div>
+    
+</div>
+
+                </div>
+
+                <div class="modal-body">
+                    <div class="registration-container">
+                        <h2 class="h2-ddb" id="registration-modal-title">Benutzerkonto anlegen</h2>
+
+                        <div class="reg-subtitle"><p>Informationen zur Registrierung von Kultur- und Wissenseinrichtungen finden Sie <a href="https://pro.deutsche-digitale-bibliothek.de/ddb-registrierung/" target="_blank">hier</a>.<p>Felder mit * müssen ausgefüllt werden.</p></p>
+                        </div>
+
+                        <div class="row">
+                            <form action="/user/signup" method="post" name="registration-form" class="form-horizontal needs-validation" novalidate="novalidate" id="registration-form" >
+                                <input type="hidden" name="modal" value="true" id="modal" />
+
+                                <div class="container-column">
+                                    <div class="column-padding">
+                                        
+
+<div class="row input-container">
+    
+        <label class="x-small-text" for="registration_username">
+            Benutzername*
+        </label>
+    
+    <button type="button" id="clear-registration_username" class="btn-close"></button>
+    <input class="text-input "
+           id="registration_username"
+           placeholder=""
+           type="text"
+           name="username"
+           value=""
+           autocomplete="username"
+           aria-label="Benutzername"
+           aria-errormessage="feedback-registration_username"
+           tabindex=""
+        aria-describedby="Bitte geben Sie Ihren Benutzernamen ein"
+        required
+        />
+
+    <div id="error-registration_username" class="small-text input-error-message"></div>
+    
+        <p id="feedback-registration_username" class="invalid-feedback ">
+            Bitte geben Sie Ihren Benutzernamen ein
+        </p>
+    
+    
+</div>
+                                    </div>
+                                </div>
+
+                                <div class="container-column">
+                                    <div class="column-padding">
+                                        
+
+<div class="row input-container">
+    
+        <label class="x-small-text" for="registration_email">
+            E-Mail*
+        </label>
+    
+    <button type="button" id="clear-registration_email" class="btn-close"></button>
+    <input class="text-input "
+           id="registration_email"
+           placeholder=""
+           type="text"
+           name="email"
+           value=""
+           autocomplete="email"
+           aria-label="E-Mail"
+           aria-errormessage="feedback-registration_email"
+           tabindex=""
+        aria-describedby="Bitte geben Sie Ihre E-Mail ein"
+        required
+        />
+
+    <div id="error-registration_email" class="small-text input-error-message"></div>
+    
+        <p id="feedback-registration_email" class="invalid-feedback ">
+            Bitte geben Sie Ihre E-Mail ein
+        </p>
+    
+    
+</div>
+                                    </div>
+                                </div>
+                            
+                                <div class="container-column column">
+                                    <div class="column-padding">
+                                        
+
+<div class="row input-container">
+    
+        <label class="x-small-text" for="a_g_e">
+            Bitte füllen Sie dieses Feld nicht aus
+        </label>
+    
+    <button type="button" id="clear-a_g_e" class="btn-close"></button>
+    <input class="text-input "
+           id="a_g_e"
+           placeholder=""
+           type="text"
+           name="age"
+           value=""
+           autocomplete="off"
+           aria-label="Bitte füllen Sie dieses Feld nicht aus"
+           aria-errormessage="feedback-a_g_e"
+           tabindex="-1"
+        aria-describedby=""
+        
+        />
+
+    <div id="error-a_g_e" class="small-text input-error-message"></div>
+    
+    
+</div>
+                                    </div>
+                                </div>
+
+                                <div class="container-column">
+                                    <div class="column-padding">
+                                        
+
+<div class="row input-container">
+    
+        <label class="x-small-text" for="fname">
+            Vorname
+        </label>
+    
+    <button type="button" id="clear-fname" class="btn-close"></button>
+    <input class="text-input "
+           id="fname"
+           placeholder=""
+           type="text"
+           name="fname"
+           value=""
+           autocomplete="given-name"
+           aria-label="Vorname"
+           aria-errormessage="feedback-fname"
+           tabindex=""
+        aria-describedby=""
+        
+        />
+
+    <div id="error-fname" class="small-text input-error-message"></div>
+    
+    
+</div>
+                                    </div>
+                                </div>
+
+                                <div class="container-column">
+                                    <div class="column-padding">
+                                        
+
+<div class="row input-container">
+    
+        <label class="x-small-text" for="lname">
+            Nachname
+        </label>
+    
+    <button type="button" id="clear-lname" class="btn-close"></button>
+    <input class="text-input "
+           id="lname"
+           placeholder=""
+           type="text"
+           name="lname"
+           value=""
+           autocomplete="family-name"
+           aria-label="Nachname"
+           aria-errormessage="feedback-lname"
+           tabindex=""
+        aria-describedby=""
+        
+        />
+
+    <div id="error-lname" class="small-text input-error-message"></div>
+    
+    
+</div>
+                                    </div>
+                                </div>
+
+                                <div class="container-column">
+                                    <div class="column-padding">
+                                        
+
+<div class="row input-container">
+    
+        <label class="x-small-text" for="registration_password">
+            Passwort*
+        </label>
+    
+    <button type="button" id="clear-registration_password" class="btn-close"></button>
+    <input class="text-input "
+           id="registration_password"
+           placeholder=""
+           type="password"
+           name="passwd"
+           value=""
+           autocomplete="new-password"
+           aria-label="Passwort"
+           aria-errormessage="feedback-registration_password"
+           tabindex=""
+        aria-describedby="Bitte geben Sie Ihr Passwort ein"
+        required
+        />
+
+    <div id="error-registration_password" class="small-text input-error-message"></div>
+    
+        <p id="feedback-registration_password" class="invalid-feedback ">
+            Bitte geben Sie Ihr Passwort ein
+        </p>
+    
+    
+</div>
+                                    </div>
+                                </div>
+
+                                <div class="container-column">
+                                    <div class="column-padding">
+                                        
+
+<div class="row input-container">
+    
+        <label class="x-small-text" for="registration_passwordConfirm">
+            Passwort bestätigen*
+        </label>
+    
+    <button type="button" id="clear-registration_passwordConfirm" class="btn-close"></button>
+    <input class="text-input "
+           id="registration_passwordConfirm"
+           placeholder=""
+           type="password"
+           name="conpasswd"
+           value=""
+           autocomplete="new-password"
+           aria-label="Passwort bestätigen"
+           aria-errormessage="feedback-registration_passwordConfirm"
+           tabindex=""
+        aria-describedby="Bitte geben Sie das gleiche Passwort ein"
+        required
+        />
+
+    <div id="error-registration_passwordConfirm" class="small-text input-error-message"></div>
+    
+        <p id="feedback-registration_passwordConfirm" class="invalid-feedback ">
+            Bitte geben Sie das gleiche Passwort ein
+        </p>
+    
+    
+</div>
+                                    </div>
+                                </div>
+
+                                <span class="registration-row">
+                                    
+                                    
+
+<div class="form-check">
+    <input class="form-check-input main-checkbox"
+           type="checkbox"
+           value=""
+           aria-label=""
+           aria-errormessage="feedback-termOfUse"
+           aria-describedby="Dieses Feld ist ein Pflichtfeld."
+           id="termOfUse"
+        
+        
+        
+        required
+        >
+    
+        
+        <label class="form-check-label small-text " for="termOfUse"
+               data-content-toggle="">
+            Ich habe die <a href="/content/datenschutzerklaerung-zur-erhebung-persoenlicher-daten-einwilligung-und-zweck-der-datenspeicherung-und-verarbeitung">Datenschutzerklärung zur Erhebung persönlicher Daten </a> gelesen und stimme ihr zu.*
+        </label>
+    
+    
+        <p id="feedback-termOfUse" class="invalid-feedback">
+            Dieses Feld ist ein Pflichtfeld.
+        </p>
+    
+    
+</div>
+
+                                </span>
+
+                                <span class="registration-row">
+                                    
+
+<div class="form-check">
+    <input class="form-check-input main-checkbox"
+           type="checkbox"
+           value="true"
+           aria-label=""
+           aria-errormessage="feedback-subscribeNewsletter"
+           aria-describedby=""
+           id="subscribeNewsletter"
+        name=subscribeNewsletter
+        
+        
+        
+        >
+    
+        
+        <label class="form-check-label small-text " for="subscribeNewsletter"
+               data-content-toggle="">
+            Ich möchte den Newsletter der Deutschen Digitalen Bibliothek abonnieren. <a class="privacylink" href="/user/newsletter/">Siehe Informationen zum Newsletter-Abonnement</a>.
+        </label>
+    
+    
+    
+</div>
+
+                                </span>
+
+                                <span class="registration-row">
+                                    
+
+<button type="submit" id="registration-button" class="btn btn-primary" role="" name="" data-bs-toggle="" data-bs-target="" data-bs-dismiss=""
+        value="" >Benutzerkonto anlegen</button>
+
+                                </span>
+
+                            </form>
+
+                        </div>
+                    </div>
+
+                    <div id="registrationSuccess-message">
+                        <h2 class="h4-ddb">Benutzerkonto angelegt</h2>
+
+                        <p>Ihr „Meine DDB“-Konto wurde erfolgreich angelegt. Bevor Sie sich in Ihrem Konto anmelden können, müssen Sie auf den Bestätigungslink in der Nachricht klicken, die wir gerade an die von Ihnen angegebene E-Mail-Adresse geschickt haben</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+    
+
+<!-- Modal -->
+<div class="modal fade" id="forgotPassword" tabindex="-1" aria-labelledby="forgotPassword-title">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="close-modal">
+                <button type="button" class="btn-close" data-bs-dismiss="modal"
+                        aria-label="Schließen"></button>
+            </div>
+
+            <div>
+                <h2 class="h5-ddb" id="forgotPassword-title">Passwort zurücksetzen</h2>
+                <div id="forgotPassword-form-container">
+                    <p class="mandatory-notice">Felder mit * müssen ausgefüllt werden.</p>
+
+                    <form action="/user/passwordReset" method="post" name="password-reset-form" class="needs-validation" novalidate="novalidate" id="password-reset-form" >
+
+                        
+
+<div class="row input-container">
+    
+        <label class="x-small-text" for="forgot_password_username">
+            Benutzername oder E-Mail*
+        </label>
+    
+    <button type="button" id="clear-forgot_password_username" class="btn-close"></button>
+    <input class="text-input "
+           id="forgot_password_username"
+           placeholder=""
+           type="text"
+           name="username"
+           value=""
+           autocomplete="email username"
+           aria-label="Benutzername oder E-Mail"
+           aria-errormessage="feedback-forgot_password_username"
+           tabindex=""
+        aria-describedby="Bitte geben Sie Ihren Benutzernamen oder Ihre E-Mail ein"
+        required
+        />
+
+    <div id="error-forgot_password_username" class="small-text input-error-message"></div>
+    
+        <p id="feedback-forgot_password_username" class="invalid-feedback ">
+            Bitte geben Sie Ihren Benutzernamen oder Ihre E-Mail ein
+        </p>
+    
+    
+</div>
+
+                        
+
+<button type="submit" id="forgotPassword-button" class="btn btn-primary" role="" name="" data-bs-toggle="" data-bs-target="" data-bs-dismiss=""
+        value="" >Passwort zurücksetzen</button>
+
+                    </form>
+                </div>
+
+                <div id="forgotPassword-message">
+                    <p>Ihr Passwort wurde zurückgesetzt. Wir haben eine Nachricht mit einem neuen Passwort an Ihre E-Mail-Adresse geschickt.</p><p>Damit die Änderung wirksam wird, müssen Sie auf den in der E-Mail angegebenen Bestätigungslink klicken. Anschließend können Sie sich mit dem neuen Passwort anmelden.</p><p>Wenn Sie keine E-Mail erhalten haben: Überprüfen Sie, ob sich die E-Mail in Ihrem Spam-Ordner befindet oder ob die von Ihnen eingegebene E-Mail-Adresse korrekt ist.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div id="globalJsVariables" class="off"
+     data-js-drupal="https://cms.deutsche-digitale-bibliothek.de/"
+     data-js-app-name="ddb-next"
+     data-js-context-path=""
+     data-js-language="de"
+     data-js-longitude=""
+     data-js-latitude=""
+     data-js-loggedin="false">
+</div>
+
+<script src="/assets/components/matomoManager.js" type="module"></script>
+
+<script type="text/javascript" src="/assets/vendor/popper-2.11.8/popper.min-6faf187b56391e83563fbeceb419a750.js" ></script>
+
+<script type="text/javascript" src="/assets/app-94b5b408b6345e090e7caaeb69037c47.js" ></script>
+<script src="/assets/base/base.js" type="module"></script>
+<script type="text/javascript" src="/assets/vendor/tippy-6.3.7/tippy-bundle.umd.min-9c6ac53055479ae1834fe9d7e27d3b3d.js" ></script>
+
+
+
+</body>
+</html>

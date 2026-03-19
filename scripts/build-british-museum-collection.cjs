@@ -18,6 +18,7 @@ const path = require('path');
 const https = require('https');
 
 const OUT_PATH = path.join(process.cwd(), 'public', 'data', 'british-museum-collection.json');
+const FLAT_OUT_PATH = path.join(process.cwd(), 'public', 'data', 'the-british-museum-collection.json');
 
 // Comprehensive British Museum highlights with verified data
 // Each item has been curated with accurate metadata
@@ -117,6 +118,20 @@ const COLLECTION_DATA = {
           objectNumber: 'EA 73',
           image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/3b/Sekhmet_MNHN.jpg/400px-Sekhmet_MNHN.jpg',
           url: 'https://www.britishmuseum.org/collection/object/Y_EA73'
+        },
+        {
+          id: 'gayer-anderson-cat',
+          name: 'Gayer-Anderson Cat',
+          title: 'Bronze Figure of the Goddess Bastet',
+          description: 'Bronze figure of the cat goddess Bastet, donated by Major Robert Grenville Gayer-Anderson and celebrated for its refined modelling and inlaid ornament.',
+          year: -600,
+          dateText: 'Late Period, 26th Dynasty (c. 600 BC)',
+          materials: 'Bronze with gold, silver, and crystal inlays',
+          dimensions: 'Height 42 cm',
+          culture: 'Ancient Egypt',
+          objectNumber: 'EA 64391',
+          image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/66/Gayer-Anderson_cat_British_Museum.jpg/600px-Gayer-Anderson_cat_British_Museum.jpg',
+          url: 'https://www.britishmuseum.org/collection/object/Y_EA64391'
         }
       ]
     },
@@ -671,6 +686,72 @@ const COLLECTION_DATA = {
           objectNumber: 'ME 121198',
           image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/Queen%27s_Lyre_%28reconstructed%29_of_Ur_at_British_Museum.jpg/600px-Queen%27s_Lyre_%28reconstructed%29_of_Ur_at_British_Museum.jpg',
           url: 'https://www.britishmuseum.org/collection/object/W_1928-1010-1'
+        },
+        {
+          id: 'flood-tablet',
+          name: 'Flood Tablet',
+          title: 'Epic of Gilgamesh, Tablet XI',
+          description: 'Clay tablet with Akkadian cuneiform narrating the Flood story from the Epic of Gilgamesh, one of the earliest surviving works of literature.',
+          year: -700,
+          dateText: 'Neo-Assyrian, c. 700 BC',
+          materials: 'Baked clay',
+          dimensions: 'Height 15 cm, Width 13 cm',
+          culture: 'Assyrian',
+          objectNumber: 'ME 66858',
+          image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Tablet_XI_of_the_Epic_of_Gilgamesh.jpg/600px-Tablet_XI_of_the_Epic_of_Gilgamesh.jpg',
+          url: 'https://www.britishmuseum.org/collection/object/W_1853-1210-1'
+        },
+        {
+          id: 'queen-of-the-night',
+          name: 'Queen of the Night Relief',
+          title: 'Burney Relief (Queen of the Night)',
+          description: 'High-relief baked clay plaque showing a winged goddess, often identified with Inanna/Ishtar or Ereshkigal, from Old Babylonian Mesopotamia.',
+          year: -1750,
+          dateText: 'Old Babylonian, c. 1800-1750 BC',
+          materials: 'Terracotta with traces of pigment',
+          dimensions: 'Height 49.5 cm',
+          culture: 'Babylonian',
+          objectNumber: 'ME 2003,0718.1',
+          image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/fe/Burney_Relief_British_Museum.jpg/600px-Burney_Relief_British_Museum.jpg',
+          url: 'https://www.britishmuseum.org/collection/object/W_2003-0718-1'
+        }
+      ]
+    },
+    {
+      id: 'room-70',
+      roomNumber: '70',
+      title: 'Room 70: Roman Empire',
+      name: 'Roman Empire',
+      floor: 'Upper',
+      description: 'Treasures from the Roman world exploring art, power, and daily life across the empire.',
+      items: [
+        {
+          id: 'lycurgus-cup',
+          name: 'Lycurgus Cup',
+          title: 'The Lycurgus Cup',
+          description: 'Roman glass cage cup famous for its dichroic glass that changes colour from green to red when lit from behind.',
+          year: 350,
+          dateText: 'Roman, 4th century AD',
+          materials: 'Glass with dichroic effect',
+          dimensions: 'Height 16.5 cm',
+          culture: 'Roman',
+          objectNumber: 'GR 1958,1202.1',
+          image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/9/95/Lycurgus_Cup_British_Museum.jpg/600px-Lycurgus_Cup_British_Museum.jpg',
+          url: 'https://www.britishmuseum.org/collection/object/G_1958-1202-1'
+        },
+        {
+          id: 'warren-cup',
+          name: 'Warren Cup',
+          title: 'The Warren Cup',
+          description: 'Exquisitely decorated silver drinking cup portraying scenes of same-sex intimacy, providing insight into Roman social life.',
+          year: 10,
+          dateText: 'Roman, AD 5-15',
+          materials: 'Silver',
+          dimensions: 'Height 11 cm, Diameter 12 cm',
+          culture: 'Roman',
+          objectNumber: 'GR 1999,0426.1',
+          image: 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Warren_cup_British_Museum.jpg/600px-Warren_cup_British_Museum.jpg',
+          url: 'https://www.britishmuseum.org/collection/object/G_1999-0426-1'
         }
       ]
     },
@@ -923,10 +1004,47 @@ async function main() {
   // Save to file
   fs.mkdirSync(path.dirname(OUT_PATH), { recursive: true });
   fs.writeFileSync(OUT_PATH, JSON.stringify(output, null, 2));
+
+  // Flatten room data into the gallery JSON consumed by the site
+  const flatObjects = [];
+  for (const room of COLLECTION_DATA.rooms) {
+    for (const item of room.items) {
+      flatObjects.push({
+        id: `the-british-museum-${item.id}`,
+        title: item.title || item.name,
+        artist: item.culture || 'Unknown',
+        year: item.year ?? null,
+        date: item.dateText || null,
+        image: item.image,
+        medium: item.materials || null,
+        sourceUrl: item.url,
+        room: room.title,
+        roomNumber: room.roomNumber,
+        description: item.description
+      });
+    }
+  }
+
+  const flatOutput = {
+    galleryId: 'the-british-museum',
+    galleryName: 'The British Museum',
+    coverImage: null,
+    partnerDescription: "The British Museum's collection spans over two million years of human history and culture.",
+    scrapedAt: output.scrapedAt,
+    totalObjects: flatObjects.length,
+    videoCount: 0,
+    excludedCount: 0,
+    failedCount: 0,
+    objects: flatObjects
+  };
+
+  fs.mkdirSync(path.dirname(FLAT_OUT_PATH), { recursive: true });
+  fs.writeFileSync(FLAT_OUT_PATH, JSON.stringify(flatOutput, null, 2));
   
   console.log('\n=====================================');
   console.log('✅ Collection data saved!');
   console.log(`📁 Output: ${OUT_PATH}`);
+  console.log(`📁 Flat output: ${FLAT_OUT_PATH}`);
   console.log(`📊 Total rooms: ${output.stats.totalRooms}`);
   console.log(`📊 Total items: ${output.stats.totalItems}`);
   console.log(`📊 Valid images: ${output.stats.validImages}`);

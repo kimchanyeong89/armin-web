@@ -1,0 +1,26 @@
+{
+  "chunkUrl": "https://www.metmuseum.org/_next/static/chunks/app/%5Blocale%5D/(navigation)/art/collection/search/page-f012ce5a9d6cb515.js",
+  "urls": [],
+  "hits": [
+    {
+      "needle": "collection",
+      "index": 2999,
+      "snippet": "C.image.includes(\"NoImage\"));return(0,n.jsxs)(\"figure\",{className:\"\".concat(u().collectionObject,\" collection-object\"),\"data-accession-number\":C.accessionNumber,\"data-sentry-component\":\"BaseCollectionObject\",\"data-sentry-source-file\":\"index.tsx\",children:[(0,n.jsxs)(\"div\",{classN"
+    },
+    {
+      "needle": "search",
+      "index": 1150,
+      "snippet": "{score:t,highlights:a,accessionNumber:r,sortArtist:l,yearFrom:s,yearTo:o,elasticSearchId:i,handleExplain:c,explanation:d}=e,[u,p]=(0,v.useState)(!1);return u?null:(0,n.jsxs)(\"div\",{className:m().container,\"data-sentry-component\":\"DebuggingInfo\",\"data-sentry-source-file\":\"index.ts"
+    },
+    {
+      "needle": "artworks",
+      "index": 12754,
+      "snippet": "r (9-0)\"}],b=[{value:\"highlights\",label:\"Highlights\"},{value:\"withImage\",label:\"Artworks With Image\"},{value:\"onDisplay\",label:\"Artworks on Display\"},{value:\"openAccess\",label:\"Open Access\",toolTip:'<section>\\n\t\t\t<div>As part of the Met\\'s\\n\t\t\t\t<a href=\"/about-the-met/policies-an"
+    },
+    {
+      "needle": "results",
+      "index": 6910,
+      "snippet": "link:\"redundant-link_redundantlink__b5TFR\"}},29851:e=>{e.exports={container:\"no-results_container__FmYF5\",title:\"no-results_title__cUM15\"}},33295:(e,t,a)=>{\"use strict\";a.d(t,{default:()=>s});var n=a(48721),r=a(80729),l=a.n(r);let s=e=>{let{children:t}=e;return(0,n.jsx)(\"section\""
+    }
+  ]
+}

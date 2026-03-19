@@ -1,11 +1,27 @@
 [
   {
+<<<<<<< HEAD
     "origin": ["http://localhost:5173", "https://armin-web.firebaseapp.com"],
     "method": ["GET", "POST", "PUT", "DELETE", "HEAD"],
     "responseHeader": [
       "Content-Type",
       "Access-Control-Allow-Origin",
       "x-goog-resumable"
+=======
+    "origin": [
+      "*"
+    ],
+    "method": [
+      "GET",
+      "POST",
+      "PUT",
+      "DELETE",
+      "HEAD",
+      "OPTIONS"
+    ],
+    "responseHeader": [
+      "*"
+>>>>>>> 06dab5b1 (chore: add 30+ new museum collections, scripts, UI components, and gitignore cleanup)
     ],
     "maxAgeSeconds": 3600
   }

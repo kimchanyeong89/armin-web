@@ -8,6 +8,15 @@ service firebase.storage {
       allow write: if request.auth != null && request.auth.token.admin == true;
     }
 
+<<<<<<< HEAD
+=======
+    // Community uploads (code uploads to community/{submissionId})
+    match /community/{allPaths=**} {
+      allow read: if true;
+      allow write: if request.auth != null;
+    }
+
+>>>>>>> 06dab5b1 (chore: add 30+ new museum collections, scripts, UI components, and gitignore cleanup)
     // Default deny for other paths unless configured
     match /{path=**} {
       allow read, write: if false;

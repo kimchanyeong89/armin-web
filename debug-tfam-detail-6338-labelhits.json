@@ -1,0 +1,162 @@
+[
+  {
+    "lab": "Artist",
+    "snippet": "n '<span id=\"fancybox-title-over\"> ' + (title.length ? ' &nbsp; ' + title : '') + '</span>';\r\n\t\t\t}\r\n\t\t});\r\n\r\n\t\t$(\"a[rel=artist1]\").fancybox({\r\n\t\t\t'transitionIn': 'none',\r\n\t\t\t'transitionOut': 'none',\r\n\t\t\t'titlePosition': 'over',\r\n\t\t\t'titleFormat': function (title, currentArray, currentIndex, currentOpts) {\r\n\t\t\t\treturn '"
+  },
+  {
+    "lab": "Artist",
+    "snippet": "n '<span id=\"fancybox-title-over\"> ' + (title.length ? ' &nbsp; ' + title : '') + '</span>';\r\n\t\t\t}\r\n\t\t});\r\n\r\n\t\t$(\"a[rel=artist2]\").fancybox({\r\n\t\t\t'transitionIn': 'none',\r\n\t\t\t'transitionOut': 'none',\r\n\t\t\t'titlePosition': 'over',\r\n\t\t\t'titleFormat': function (title, currentArray, currentIndex, currentOpts) {\r\n\t\t\t\treturn '"
+  },
+  {
+    "lab": "Artist",
+    "snippet": "             \r\n                                <li>\r\n                                    <a id=\"Menu_302\" href=\"https://artist.tfam.museum/hotelai/?menu=302\" target=\"_blank\" title=\"(Open a new window)\">Special Collection</a>\r\n                                    \r\n                                </li>\r\n                 "
+  },
+  {
+    "lab": "Artist",
+    "snippet": "     <span class=\"plus\"></span><ul class=\"inner-menu\"><li><a href=\"/Common/editor.aspx?id=304\">The Art Museum in Print: Artists Featured in Modern Art</a></li><li><a href=\"/Common/editor.aspx?id=296\">Active Archives II: TFAM Exhibition Archive 1983-1994</a></li><li><a href=\"/Common/editor.aspx?id=288\">Active Archives I"
+  },
+  {
+    "lab": "Artist",
+    "snippet": "                                       <li>\r\n                                            <a id=\"Menu_302\" href=\"https://artist.tfam.museum/hotelai/?menu=302\" target=\"_blank\" title=\"(Open a new window)\">Special Collection</a>\r\n                                            \r\n                                        </li>\r\n "
+  },
+  {
+    "lab": "Artist",
+    "snippet": "pan class=\"plus\"></span><ul class=\"mobile-inner-menu\"><li><a href=\"/Common/editor.aspx?id=304\">The Art Museum in Print: Artists Featured in Modern Art</a></li><li><a href=\"/Common/editor.aspx?id=296\">Active Archives II: TFAM Exhibition Archive 1983-1994</a></li><li><a href=\"/Common/editor.aspx?id=288\">Active Archives I"
+  },
+  {
+    "lab": "Artist",
+    "snippet": "\r\n                                <!--<li style=\"display: block\">\r\n                                    <span class=\"h6\">Artist</span>\r\n                                    YUAN Goang-Ming\r\n                                </li>-->\r\n                                <li style=\"display: block\">\r\n                             "
+  },
+  {
+    "lab": "Artist",
+    "snippet": "               <!--藝術家資料-->\r\n                        <div class=\"content\">\r\n                            <div class=\"h4\">Artist</div>\r\n                            <ul class=\"forms unstyled gray\">\r\n                                <li style=\"display: block\">\r\n                                    <h3 class=\"h2 titleTheme\">\r"
+  },
+  {
+    "lab": "Year",
+    "snippet": "mat: 'yy-mm-dd',\r\n            inline: true,\r\n            changeMonth: true, // shows months dropdown\r\n            changeYear: true   // shows years dropdown\r\n        });\r\n    });\r\n</script>\r\n\r\n\r\n<!--main menu-->\r\n<script type=\"text/javascript\">\r\n    $(function(){\r\n        // 預設顯示第 N 個選項\r\n        var _open = 0;\r\n       "
+  },
+  {
+    "lab": "Year",
+    "snippet": "        inline: true,\r\n            changeMonth: true, // shows months dropdown\r\n            changeYear: true   // shows years dropdown\r\n        });\r\n    });\r\n</script>\r\n\r\n\r\n<!--main menu-->\r\n<script type=\"text/javascript\">\r\n    $(function(){\r\n        // 預設顯示第 N 個選項\r\n        var _open = 0;\r\n        // 幫 #menu li 加上 hove"
+  },
+  {
+    "lab": "Year",
+    "snippet": "\r\n     \r\n    <script type=\"text/javascript\">\r\n        function openCollectData(RowNo, MOrderBy, MImage, MType, MTheme, MYear, KeyWord, Author, ID) {\r\n            var PostUrl = \"CollectionDetail.aspx?ddlLang=\" + syslang + \"&CID=\" + ID;\r\n            ; var f = new PostForm(PostUrl);\r\n            f.addData(\"RowNo\", RowNo);"
+  },
+  {
+    "lab": "Year",
+    "snippet": "e\", MImage);\r\n            f.addData(\"MType\", MType);\r\n            f.addData(\"MTheme\", MTheme);\r\n            f.addData(\"MYear\", MYear);\r\n            f.addData(\"KeyWord\", KeyWord);\r\n            \r\n            f.addData(\"Rohtua\", Author);\r\n            f.submit();\r\n            f = null;\r\n        }\r\n\r\n        $(function () {"
+  },
+  {
+    "lab": "Year",
+    "snippet": "ge);\r\n            f.addData(\"MType\", MType);\r\n            f.addData(\"MTheme\", MTheme);\r\n            f.addData(\"MYear\", MYear);\r\n            f.addData(\"KeyWord\", KeyWord);\r\n            \r\n            f.addData(\"Rohtua\", Author);\r\n            f.submit();\r\n            f = null;\r\n        }\r\n\r\n        $(function () {\r\n      "
+  },
+  {
+    "lab": "Dimensions",
+    "snippet": "/li>\r\n                                <li style=\"display: block\">\r\n                                    <span class=\"h6\">Dimensions</span>\r\n                                    10分33秒\r\n                                </li>\r\n                                <!--<li style=\"display: block\">\r\n                                 "
+  },
+  {
+    "lab": "Type",
+    "snippet": "\r\n\r\n<!DOCTYPE html>\r\n\r\n<html lang=\"en\" xmlns=\"http://www.w3.org/1999/xhtml\">\r\n<head>\r\n\r\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />\r\n<link rel=\"shortcut icon\" href=\"/images/tfam.ico\" "
+  },
+  {
+    "lab": "Type",
+    "snippet": "\r\n\r\n<!DOCTYPE html>\r\n\r\n<html lang=\"en\" xmlns=\"http://www.w3.org/1999/xhtml\">\r\n<head>\r\n\r\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=utf-8\" />\r\n<link rel=\"shortcut icon\" href=\"/images/tfam.ico\" />\r\n\r\n<!--Favicon-->\r\n<link rel=\"apple-touch-icon\" href=\"/images/touch-icon-iphone.png\">\r\n<link rel=\"appl"
+  },
+  {
+    "lab": "Type",
+    "snippet": "\"apple-itunes-app\" content=\"app-id=1000357466\" />\r\n<!--提交網站到 Google 的索引碼-->\r\n\r\n\r\n<!--TFAM官網用新的GAcode 活動會有問題-->\r\n<script type=\"text/javascript\">\r\n  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){\r\n  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),\r\n  m=s.getElem"
+  },
+  {
+    "lab": "Type",
+    "snippet": "ataLayer.push(arguments); }\r\n    gtag('js', new Date());\r\n\r\n    gtag('config', 'G-0KRTQK1YEN');\r\n</script>\r\n\r\n\r\n<script type=\"text/javascript\">\r\n  var lang = (\"en-us\" == \"\") ? \"ch\" : \"en\";\r\n  //var _gaq = _gaq || [];\r\n  //_gaq.push(['_setAccount', 'UA-59049012-1']);\r\n  //_gaq.push(['_trackPageview']);\r\n\r\n  //(function("
+  },
+  {
+    "lab": "Type",
+    "snippet": "012-1']);\r\n  //_gaq.push(['_trackPageview']);\r\n\r\n  //(function() {\r\n  //  var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;\r\n  //  ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';\r\n  //  var s = document.getElementsB"
+  },
+  {
+    "lab": "Type",
+    "snippet": " var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);\r\n  //})();\r\n</script>\r\n\r\n<script type=\"text/javascript\">\r\n    //HTML Code 欄位，過濾<a>標籤，如為檔案，加上GA事件\r\n    function AddGA(object,category,action,valueType)\r\n    {\r\n        if (object != null && $(object).length > 0) {\r\n            $(objec"
+  },
+  {
+    "lab": "Type",
+    "snippet": "<script type=\"text/javascript\">\r\n    //HTML Code 欄位，過濾<a>標籤，如為檔案，加上GA事件\r\n    function AddGA(object,category,action,valueType)\r\n    {\r\n        if (object != null && $(object).length > 0) {\r\n            $(object).each(function () {\r\n                var url = DOMPurify.sanitize($(this).attr(\"href\"));\r\n                var "
+  },
+  {
+    "lab": "Type",
+    "snippet": "     category = $.trim(category);\r\n                        action = $.trim(action);\r\n                        //if (valueType == \"text\")\r\n                        //{\r\n                        //    var fileExt = (/[.]/.exec(fileName)) ? /[^.]+$/.exec(fileName.toLowerCase()) : '';\r\n                        //    fileName ="
+  },
+  {
+    "lab": "Type",
+    "snippet": "m-scale=1.0, maximum-scale=1.0, user-scalable:yes\">\r\n\r\n<!--CSS引述-->\r\n<link rel=\"stylesheet\" href=\"/styles-en/reset.css\" type=\"text/css\" />\r\n<link rel=\"stylesheet\" href=\"/styles-en/base.css\" type=\"text/css\" />\r\n<link rel=\"stylesheet\" href=\"/styles-en/style.css\" type=\"text/css\">\r\n<link rel=\"stylesheet\" href=\"/styles-en/l"
+  },
+  {
+    "lab": "Type",
+    "snippet": "link rel=\"stylesheet\" href=\"/styles-en/reset.css\" type=\"text/css\" />\r\n<link rel=\"stylesheet\" href=\"/styles-en/base.css\" type=\"text/css\" />\r\n<link rel=\"stylesheet\" href=\"/styles-en/style.css\" type=\"text/css\">\r\n<link rel=\"stylesheet\" href=\"/styles-en/layout.css\" type=\"text/css\"/>\r\n<link rel=\"stylesheet\" href=\"/styles-en/"
+  },
+  {
+    "lab": "Title",
+    "snippet": "ady(function () {\r\n\t\t$(\"a[rel=example_group]\").fancybox({\r\n\t\t\t'transitionIn': 'none',\r\n\t\t\t'transitionOut': 'none',\r\n\t\t\t'titlePosition': 'over',\r\n\t\t\t'titleFormat': function (title, currentArray, currentIndex, currentOpts) {\r\n\t\t\t\treturn '<span id=\"fancybox-title-over\"> ' + (title.length ? ' &nbsp; ' + title : '') + '</sp"
+  },
+  {
+    "lab": "Title",
+    "snippet": "=example_group]\").fancybox({\r\n\t\t\t'transitionIn': 'none',\r\n\t\t\t'transitionOut': 'none',\r\n\t\t\t'titlePosition': 'over',\r\n\t\t\t'titleFormat': function (title, currentArray, currentIndex, currentOpts) {\r\n\t\t\t\treturn '<span id=\"fancybox-title-over\"> ' + (title.length ? ' &nbsp; ' + title : '') + '</span>';\r\n\t\t\t}\r\n\t\t});\r\n\r\n\t\t$(\"a["
+  },
+  {
+    "lab": "Title",
+    "snippet": "ox({\r\n\t\t\t'transitionIn': 'none',\r\n\t\t\t'transitionOut': 'none',\r\n\t\t\t'titlePosition': 'over',\r\n\t\t\t'titleFormat': function (title, currentArray, currentIndex, currentOpts) {\r\n\t\t\t\treturn '<span id=\"fancybox-title-over\"> ' + (title.length ? ' &nbsp; ' + title : '') + '</span>';\r\n\t\t\t}\r\n\t\t});\r\n\r\n\t\t$(\"a[rel=artist1]\").fancybox("
+  },
+  {
+    "lab": "Title",
+    "snippet": " 'over',\r\n\t\t\t'titleFormat': function (title, currentArray, currentIndex, currentOpts) {\r\n\t\t\t\treturn '<span id=\"fancybox-title-over\"> ' + (title.length ? ' &nbsp; ' + title : '') + '</span>';\r\n\t\t\t}\r\n\t\t});\r\n\r\n\t\t$(\"a[rel=artist1]\").fancybox({\r\n\t\t\t'transitionIn': 'none',\r\n\t\t\t'transitionOut': 'none',\r\n\t\t\t'titlePosition': 'o"
+  },
+  {
+    "lab": "Title",
+    "snippet": "eFormat': function (title, currentArray, currentIndex, currentOpts) {\r\n\t\t\t\treturn '<span id=\"fancybox-title-over\"> ' + (title.length ? ' &nbsp; ' + title : '') + '</span>';\r\n\t\t\t}\r\n\t\t});\r\n\r\n\t\t$(\"a[rel=artist1]\").fancybox({\r\n\t\t\t'transitionIn': 'none',\r\n\t\t\t'transitionOut': 'none',\r\n\t\t\t'titlePosition': 'over',\r\n\t\t\t'titleFo"
+  },
+  {
+    "lab": "Title",
+    "snippet": "urrentArray, currentIndex, currentOpts) {\r\n\t\t\t\treturn '<span id=\"fancybox-title-over\"> ' + (title.length ? ' &nbsp; ' + title : '') + '</span>';\r\n\t\t\t}\r\n\t\t});\r\n\r\n\t\t$(\"a[rel=artist1]\").fancybox({\r\n\t\t\t'transitionIn': 'none',\r\n\t\t\t'transitionOut': 'none',\r\n\t\t\t'titlePosition': 'over',\r\n\t\t\t'titleFormat': function (title, curr"
+  },
+  {
+    "lab": "Title",
+    "snippet": "/span>';\r\n\t\t\t}\r\n\t\t});\r\n\r\n\t\t$(\"a[rel=artist1]\").fancybox({\r\n\t\t\t'transitionIn': 'none',\r\n\t\t\t'transitionOut': 'none',\r\n\t\t\t'titlePosition': 'over',\r\n\t\t\t'titleFormat': function (title, currentArray, currentIndex, currentOpts) {\r\n\t\t\t\treturn '<span id=\"fancybox-title-over\"> ' + (title.length ? ' &nbsp; ' + title : '') + '</sp"
+  },
+  {
+    "lab": "Title",
+    "snippet": "\"a[rel=artist1]\").fancybox({\r\n\t\t\t'transitionIn': 'none',\r\n\t\t\t'transitionOut': 'none',\r\n\t\t\t'titlePosition': 'over',\r\n\t\t\t'titleFormat': function (title, currentArray, currentIndex, currentOpts) {\r\n\t\t\t\treturn '<span id=\"fancybox-title-over\"> ' + (title.length ? ' &nbsp; ' + title : '') + '</span>';\r\n\t\t\t}\r\n\t\t});\r\n\r\n\t\t$(\"a["
+  },
+  {
+    "lab": "Title",
+    "snippet": "ox({\r\n\t\t\t'transitionIn': 'none',\r\n\t\t\t'transitionOut': 'none',\r\n\t\t\t'titlePosition': 'over',\r\n\t\t\t'titleFormat': function (title, currentArray, currentIndex, currentOpts) {\r\n\t\t\t\treturn '<span id=\"fancybox-title-over\"> ' + (title.length ? ' &nbsp; ' + title : '') + '</span>';\r\n\t\t\t}\r\n\t\t});\r\n\r\n\t\t$(\"a[rel=artist2]\").fancybox("
+  },
+  {
+    "lab": "Title",
+    "snippet": " 'over',\r\n\t\t\t'titleFormat': function (title, currentArray, currentIndex, currentOpts) {\r\n\t\t\t\treturn '<span id=\"fancybox-title-over\"> ' + (title.length ? ' &nbsp; ' + title : '') + '</span>';\r\n\t\t\t}\r\n\t\t});\r\n\r\n\t\t$(\"a[rel=artist2]\").fancybox({\r\n\t\t\t'transitionIn': 'none',\r\n\t\t\t'transitionOut': 'none',\r\n\t\t\t'titlePosition': 'o"
+  },
+  {
+    "lab": "Size",
+    "snippet": " />\r\n\r\n<!--Favicon-->\r\n<link rel=\"apple-touch-icon\" href=\"/images/touch-icon-iphone.png\">\r\n<link rel=\"apple-touch-icon\" sizes=\"76x76\" href=\"/images/touch-icon-ipad.png\">\r\n<link rel=\"apple-touch-icon\" sizes=\"120x120\" href=\"/images/touch-icon-iphone-retina.png\">\r\n<link rel=\"apple-touch-icon\" sizes=\"152x152\" href=\"/images"
+  },
+  {
+    "lab": "Size",
+    "snippet": "one.png\">\r\n<link rel=\"apple-touch-icon\" sizes=\"76x76\" href=\"/images/touch-icon-ipad.png\">\r\n<link rel=\"apple-touch-icon\" sizes=\"120x120\" href=\"/images/touch-icon-iphone-retina.png\">\r\n<link rel=\"apple-touch-icon\" sizes=\"152x152\" href=\"/images/touch-icon-ipad-retina.png\">\r\n\r\n<!--MetaData記錄-->\r\n<meta name=\"DESCRIPTION\" con"
+  },
+  {
+    "lab": "Size",
+    "snippet": "<link rel=\"apple-touch-icon\" sizes=\"120x120\" href=\"/images/touch-icon-iphone-retina.png\">\r\n<link rel=\"apple-touch-icon\" sizes=\"152x152\" href=\"/images/touch-icon-ipad-retina.png\">\r\n\r\n<!--MetaData記錄-->\r\n<meta name=\"DESCRIPTION\" content=\"臺北市立美術館官方網站，1983年12月24日正式開館。位於臺北市圓山中山美術公園，佔地六千二百坪，全館建築共分六層─地下三層、地上三層，共有展場23間、餐廳、戶外咖啡,"
+  },
+  {
+    "lab": "Size",
+    "snippet": "derBy%2522%253A%2522%2522%252C%2522JJMethod%2522%253A%2522GetPublishingList%2522%252C%2522pg_num%2522%253A1%252C%2522pg_size%2522%253A12%257D&menu=241&menu=83\">Annual Reports</a></li><li><a href=\"/Common/editor.aspx?id=84\">Cultural & Creative Projects</a></li></ul>\r\n                                </li>\r\n              "
+  },
+  {
+    "lab": "Size",
+    "snippet": "derBy%2522%253A%2522%2522%252C%2522JJMethod%2522%253A%2522GetPublishingList%2522%252C%2522pg_num%2522%253A1%252C%2522pg_size%2522%253A12%257D&menu=241&menu=83\">Annual Reports</a></li><li><a href=\"/Common/editor.aspx?id=84\">Cultural & Creative Projects</a></li></ul>\r\n                                        </li>\r\n      "
+  },
+  {
+    "lab": "Size",
+    "snippet": "\n\r\n                </div>\r\n\r\n            </div>\r\n\r\n                \r\n\r\n<div id=\"divEditDate\" style=\"color:#9D9D9D; font-size:1rem; left:0; bottom:-40px; width:100%;position:absolute;display:none\">Update:2026/01/07</div>\r\n\r\n<script type=\"text/javascript\">\r\n    $(function () {\r\n        //if (isSetUpdateEditTop == 1) {\r\n "
+  }
+]

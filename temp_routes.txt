@@ -1,0 +1,2 @@
+1235:             if (current !== target) navigate(target);
+1300:             navigate(-1 as any);

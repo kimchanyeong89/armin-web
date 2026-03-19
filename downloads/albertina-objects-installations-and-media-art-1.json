@@ -1,0 +1,39 @@
+{
+  "museum": "ALBERTINA Museum Vienna",
+  "museumId": "albertina",
+  "groupName": "Objects / Installations / Media Art",
+  "groupSlug": "objects--installations-and-media-art",
+  "filter": "mediaExistence:true",
+  "limit": 1,
+  "scrapedAt": "2026-01-14T07:24:50.387Z",
+  "totalOnPage": 100,
+  "objects": [
+    {
+      "id": "429055",
+      "sourceId": "albertina-429055",
+      "title": "Einkehr",
+      "creator": "Franz West",
+      "artist": "Franz West",
+      "date": "1995",
+      "medium": "Chaiselongue (Eisen, Schaumstoff, Baumwollgewebe), Paravent (Eisen, Baumwollgewebe) , Video",
+      "dimensions": "8 Paravents à 230  x 150 x 3 cm; 1 Chaiselongue: 94  x 168 x 80 cm; 1 Video: 30'",
+      "inventory": "EDLDC4059/1 - EDLDC4059/10",
+      "objectNumber": "EDLDC4059/1 - EDLDC4059/10",
+      "imageUrl": "https://sammlungenonline.albertina.at/apis/iiif/image/v2/294643/full/full/0/default.jpg",
+      "description": "null",
+      "url": "https://sammlungenonline.albertina.at/objects/429055/einkehr",
+      "iiifManifest": "https://sammlungenonline.albertina.at/apis/iiif/presentation/v2/1-objects-429055/manifest",
+      "isHighlight": false,
+      "metadata": {
+        "Date": "1995",
+        "Primary Maker": "Franz West",
+        "Copyright": "© Archiv Franz West © Estate Franz West\r\n© Peter Kogler\r\n© Bildrecht, Wien 2025",
+        "Dimensions": "8 Paravents à 230  x 150 x 3 cm; 1 Chaiselongue: 94  x 168 x 80 cm; 1 Video: 30'",
+        "Object number": "EDLDC4059/1 - EDLDC4059/10",
+        "Medium": "Chaiselongue (Eisen, Schaumstoff, Baumwollgewebe), Paravent (Eisen, Baumwollgewebe) , Video"
+      },
+      "source": "ALBERTINA Museum Vienna",
+      "sourceUrl": "https://sammlungenonline.albertina.at"
+    }
+  ]
+}

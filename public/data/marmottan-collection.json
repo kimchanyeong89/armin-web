@@ -4,727 +4,818 @@
   "collectionName": "Collection",
   "scrapedAt": "2025-12-23T15:25:46.203Z",
   "totalObjects": 90,
-  "coverImage": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/4014.jpg",
+  "coverImage": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/marmottan-collection/img-795994b2-coverImage.webp",
   "objects": [
     {
       "id": "4014",
       "artist": "Claude Monet",
       "title": "IMPRESSION, SOLEIL LEVANT",
       "year": "1872",
-      "image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/4014.jpg",
-      "detailUrl": "https://www.marmottan.fr/en//notice/4014"
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/marmottan-collection/4014-795994b2-image.webp",
+      "detailUrl": "https://www.marmottan.fr/en//notice/4014",
+      "original_image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/4014.jpg"
     },
     {
       "id": "6029",
       "artist": "Berthe Morisot",
       "title": "EUGÈNE MANET À L’ÎLE DE WIGHT",
       "year": "1875",
-      "image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/6029.jpg",
-      "detailUrl": "https://www.marmottan.fr/en//notice/6029"
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/marmottan-collection/6029-48edeb39-image.webp",
+      "detailUrl": "https://www.marmottan.fr/en//notice/6029",
+      "original_image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/6029.jpg"
     },
     {
       "id": "956",
       "artist": "Giovanni Maria Benzoni",
       "title": "L’AMOUR ET PSYCHÉ",
       "year": "",
-      "image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/956.jpg",
-      "detailUrl": "https://www.marmottan.fr/en//notice/956"
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/marmottan-collection/956-0d817487-image.webp",
+      "detailUrl": "https://www.marmottan.fr/en//notice/956",
+      "original_image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/956.jpg"
     },
     {
       "id": "6020",
       "artist": "Berthe Morisot",
       "title": "LE CERISIER",
       "year": "1891",
-      "image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/6020.jpg",
-      "detailUrl": "https://www.marmottan.fr/en//notice/6020"
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/marmottan-collection/6020-b68f77a2-image.webp",
+      "detailUrl": "https://www.marmottan.fr/en//notice/6020",
+      "original_image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/6020.jpg"
     },
     {
       "id": "377",
       "artist": "Jeanne Élisabeth Chaudet",
       "title": "PETITE FILLE MANGEANT DES CERISES",
       "year": "1817",
-      "image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/377.jpg",
-      "detailUrl": "https://www.marmottan.fr/en//notice/377"
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/marmottan-collection/377-fdfcefc5-image.webp",
+      "detailUrl": "https://www.marmottan.fr/en//notice/377",
+      "original_image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/377.jpg"
     },
     {
       "id": "5174",
       "artist": "Claude Monet",
       "title": "CATHÉDRALE DE ROUEN, EFFET DE SOLEIL, FIN DE JOURNÉE",
       "year": "1892",
-      "image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/5174.jpg",
-      "detailUrl": "https://www.marmottan.fr/en//notice/5174"
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/marmottan-collection/5174-d01d1cf3-image.webp",
+      "detailUrl": "https://www.marmottan.fr/en//notice/5174",
+      "original_image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/5174.jpg"
     },
     {
       "id": "386",
       "artist": "François Xavier Fabre",
       "title": "PORTRAIT DE LA DUCHESSE DE FELTRE ET DE SES ENFANTS",
       "year": "1810",
-      "image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/386.jpg",
-      "detailUrl": "https://www.marmottan.fr/en//notice/386"
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/marmottan-collection/386-09e8971f-image.webp",
+      "detailUrl": "https://www.marmottan.fr/en//notice/386",
+      "original_image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/386.jpg"
     },
     {
       "id": "6086",
       "artist": "Édouard Manet",
       "title": "PORTRAIT DE BERTHE MORISOT ÉTENDUE",
       "year": "1873",
-      "image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/6086.jpg",
-      "detailUrl": "https://www.marmottan.fr/en//notice/6086"
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/marmottan-collection/6086-d80da23e-image.webp",
+      "detailUrl": "https://www.marmottan.fr/en//notice/6086",
+      "original_image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/6086.jpg"
     },
     {
       "id": "5163",
       "artist": "Claude Monet",
       "title": "NYMPHÉAS",
       "year": "1903",
-      "image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/5163.jpg",
-      "detailUrl": "https://www.marmottan.fr/en//notice/5163"
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/marmottan-collection/5163-cfd4000d-image.webp",
+      "detailUrl": "https://www.marmottan.fr/en//notice/5163",
+      "original_image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/5163.jpg"
     },
     {
       "id": "5062",
       "artist": "Gustave Caillebotte",
       "title": "RUE DE PARIS. TEMPS DE PLUIE",
       "year": "1877",
-      "image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/5062.jpg",
-      "detailUrl": "https://www.marmottan.fr/en//notice/5062"
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/marmottan-collection/5062-55a7817b-image.webp",
+      "detailUrl": "https://www.marmottan.fr/en//notice/5062",
+      "original_image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/5062.jpg"
     },
     {
       "id": "375",
       "artist": "Jacques Augustin Catherine Pajou",
       "title": "PORTRAIT DE FAMILLE",
       "year": "1798",
-      "image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/375.jpg",
-      "detailUrl": "https://www.marmottan.fr/en//notice/375"
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/marmottan-collection/375-dea9ebd8-image.webp",
+      "detailUrl": "https://www.marmottan.fr/en//notice/375",
+      "original_image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/375.jpg"
     },
     {
       "id": "458",
       "artist": "Hans Muelich",
       "title": "DESCENTE DE CROIX",
       "year": "1536",
-      "image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/458.jpg",
-      "detailUrl": "https://www.marmottan.fr/en//notice/458"
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/marmottan-collection/458-5c249b34-image.webp",
+      "detailUrl": "https://www.marmottan.fr/en//notice/458",
+      "original_image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/458.jpg"
     },
     {
       "id": "M-6045",
       "artist": "Du Salomon Wildenstein Maitre",
       "title": "fin du XVe siècle-début du XVIe siècle",
       "year": "SAINT MICHEL TERRASSANT LE DRAGON",
-      "image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/M-6045.jpg",
-      "detailUrl": "https://www.marmottan.fr/en//notice/M-6045"
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/marmottan-collection/M-6045-b11c6286-image.webp",
+      "detailUrl": "https://www.marmottan.fr/en//notice/M-6045",
+      "original_image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/M-6045.jpg"
     },
     {
       "id": "4017",
       "artist": "Claude Monet",
       "title": "LE TRAIN DANS LA NEIGE. LA LOCOMOTIVE",
       "year": "1875",
-      "image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/4017.jpg",
-      "detailUrl": "https://www.marmottan.fr/en//notice/4017"
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/marmottan-collection/4017-18cf325c-image.webp",
+      "detailUrl": "https://www.marmottan.fr/en//notice/4017",
+      "original_image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/4017.jpg"
     },
     {
       "id": "M-6030",
       "artist": "De San Michele Maitre",
       "title": "LA PENTECÔTE",
       "year": "",
-      "image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/M-6030.jpg",
-      "detailUrl": "https://www.marmottan.fr/en//notice/M-6030"
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/marmottan-collection/M-6030-3bee7a9f-image.webp",
+      "detailUrl": "https://www.marmottan.fr/en//notice/M-6030",
+      "original_image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/M-6030.jpg"
     },
     {
       "id": "M-6167",
       "artist": "Jean Colombe",
       "title": "DAVID ET GOLIATH",
       "year": "",
-      "image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/M-6167.jpg",
-      "detailUrl": "https://www.marmottan.fr/en//notice/M-6167"
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/marmottan-collection/M-6167-3f8ee846-image.webp",
+      "detailUrl": "https://www.marmottan.fr/en//notice/M-6167",
+      "original_image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/M-6167.jpg"
     },
     {
       "id": "5098",
       "artist": "Claude Monet",
       "title": "Paris, 1840 ; Giverny, 1926",
       "year": "NYMPHÉAS",
-      "image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/5098.jpg",
-      "detailUrl": "https://www.marmottan.fr/en//notice/5098"
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/marmottan-collection/5098-63e200d5-image.webp",
+      "detailUrl": "https://www.marmottan.fr/en//notice/5098",
+      "original_image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/5098.jpg"
     },
     {
       "id": "M-6016",
       "artist": "Di Gabriello Di Vante Di Francesco Di Bartolo Attavante",
       "title": "Castelfiorentino, 1452 ; 1517",
       "year": "LE SONGE DE SAINT ROMUALD",
-      "image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/M-6016.jpg",
-      "detailUrl": "https://www.marmottan.fr/en//notice/M-6016"
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/marmottan-collection/M-6016-f76cc0fc-image.webp",
+      "detailUrl": "https://www.marmottan.fr/en//notice/M-6016",
+      "original_image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/M-6016.jpg"
     },
     {
       "id": "M-6119",
       "artist": "Giulio Clovio",
       "title": "LA VIERGE, L’ENFANT, SAINT JEAN-BAPTISTE ET SEPT PERSONNAGES",
       "year": "1553 vers",
-      "image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/M-6119.jpg",
-      "detailUrl": "https://www.marmottan.fr/en//notice/M-6119"
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/marmottan-collection/M-6119-a2af2a79-image.webp",
+      "detailUrl": "https://www.marmottan.fr/en//notice/M-6119",
+      "original_image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/M-6119.jpg"
     },
     {
       "id": "6018",
       "artist": "Berthe Morisot",
       "title": "1841 ; 1895",
       "year": "EUGÈNE MANET ET SA FILLE DANS LE JARDIN DE BOUGIVAL",
-      "image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/6018.jpg",
-      "detailUrl": "https://www.marmottan.fr/en//notice/6018"
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/marmottan-collection/6018-4a922810-image.webp",
+      "detailUrl": "https://www.marmottan.fr/en//notice/6018",
+      "original_image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/6018.jpg"
     },
     {
       "id": "M-6120",
       "artist": "Giulio Clovio",
       "title": "LE COMBAT DE DAVID ET GOLIATH",
       "year": "entre 1557 et 1561",
-      "image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/M-6120.jpg",
-      "detailUrl": "https://www.marmottan.fr/en//notice/M-6120"
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/marmottan-collection/M-6120-8f75fc8d-image.webp",
+      "detailUrl": "https://www.marmottan.fr/en//notice/M-6120",
+      "original_image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/M-6120.jpg"
     },
     {
       "id": "D.9-1993",
       "artist": "De Cesi Maitre",
       "title": "L'ASSOMPTION DE LA VIERGE DANS LES BRAS DU CHRIST (PANNEAU CENTRAL) ET HUIT SCÈNES DE LA MORT DE LA VIERGE (VOLETS LATÉRAUX)",
       "year": "",
-      "image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/D.9-1993.jpg",
-      "detailUrl": "https://www.marmottan.fr/en//notice/D.9-1993"
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/marmottan-collection/D_9-1993-547ea099-image.webp",
+      "detailUrl": "https://www.marmottan.fr/en//notice/D.9-1993",
+      "original_image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/D.9-1993.jpg"
     },
     {
       "id": "337",
       "artist": "François-thimotée (bronzier) ; Anonyme Matelin",
       "title": "LA BROUILLE",
       "year": "vers 1810",
-      "image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/337.jpg",
-      "detailUrl": "https://www.marmottan.fr/en//notice/337"
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/marmottan-collection/337-e91cd458-image.webp",
+      "detailUrl": "https://www.marmottan.fr/en//notice/337",
+      "original_image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/337.jpg"
     },
     {
       "id": "622.a",
       "artist": "Anonyme",
       "title": "LA VIERGE ET L’ENFANT JÉSUS",
       "year": "vers 1500",
-      "image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/622.a.jpg",
-      "detailUrl": "https://www.marmottan.fr/en//notice/622.a"
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/marmottan-collection/622_a-6e744a8f-image.webp",
+      "detailUrl": "https://www.marmottan.fr/en//notice/622.a",
+      "original_image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/622.a.jpg"
     },
     {
       "id": "897",
       "artist": "Anonyme",
       "title": "SCÈNE DE LA VIE D’ALEXANDRE",
       "year": "",
-      "image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/897.jpg",
-      "detailUrl": "https://www.marmottan.fr/en//notice/897"
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/marmottan-collection/897-5c3c9242-image.webp",
+      "detailUrl": "https://www.marmottan.fr/en//notice/897",
+      "original_image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/897.jpg"
     },
     {
       "id": "1067",
       "artist": "Jean Joseph Xavier ; Vernet Carle Bidauld",
       "title": "BIDAULD Jean Joseph Xavier (Carpentras, 1758 ; Montmorency, 1846)",
       "year": "LE DÉBUCHÉ DEVANT LE GRAND TRIANON EN 1810",
-      "image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/1067.jpg",
-      "detailUrl": "https://www.marmottan.fr/en//notice/1067"
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/marmottan-collection/1067-d791aae7-image.webp",
+      "detailUrl": "https://www.marmottan.fr/en//notice/1067",
+      "original_image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/1067.jpg"
     },
     {
       "id": "1065",
       "artist": "Jean Joseph Xavier ; Vernet Carle Bidauld",
       "title": "BIDAULD Jean Joseph Xavier (Carpentras, 1758 ; Montmorency, 1846)",
       "year": "DÉPART DE NAPOLÉON IER ET DE MARIE-LOUISE POUR LA CHASSE AU CHÂTEAU DE COMPIÈGNE",
-      "image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/1065.jpg",
-      "detailUrl": "https://www.marmottan.fr/en//notice/1065"
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/marmottan-collection/1065-dd1581b3-image.webp",
+      "detailUrl": "https://www.marmottan.fr/en//notice/1065",
+      "original_image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/1065.jpg"
     },
     {
       "id": "1066",
       "artist": "Jean Joseph Xavier ; Vernet Carle Bidauld",
       "title": "BIDAULD Jean Joseph Xavier (Carpentras, 1758 ; Montmorency, 1846)",
       "year": "PROMENADE DE NAPOLÉON IER ET DE MARIE-LOUISE AU CHÂTEAU DE SAINT-CLOUD",
-      "image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/1066.jpg",
-      "detailUrl": "https://www.marmottan.fr/en//notice/1066"
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/marmottan-collection/1066-3fddb1bd-image.webp",
+      "detailUrl": "https://www.marmottan.fr/en//notice/1066",
+      "original_image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/1066.jpg"
     },
     {
       "id": "341",
       "artist": "Anonyme",
       "title": "vers 1806",
       "year": "",
-      "image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/341.jpg",
-      "detailUrl": "https://www.marmottan.fr/en//notice/341"
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/marmottan-collection/341-3cc589c5-image.webp",
+      "detailUrl": "https://www.marmottan.fr/en//notice/341",
+      "original_image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/341.jpg"
     },
     {
       "id": "1040",
       "artist": "Alexandre Hyacinthe Dunouy",
       "title": "Paris, 1757 ; Jouy-sur-Lionne, 1841",
       "year": "JEAN-JACQUES ROUSSEAU DANS LE PARC DE ROCHECARDON",
-      "image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/1040.jpg",
-      "detailUrl": "https://www.marmottan.fr/en//notice/1040"
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/marmottan-collection/1040-7b1a78d2-image.webp",
+      "detailUrl": "https://www.marmottan.fr/en//notice/1040",
+      "original_image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/1040.jpg"
     },
     {
       "id": "888",
       "artist": "Joseph Franque",
       "title": "Buis-les-Baronnies, 1774 ; 1833",
       "year": "NAPOLÉON BONAPARTE, PREMIER CONSUL",
-      "image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/888.jpg",
-      "detailUrl": "https://www.marmottan.fr/en//notice/888"
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/marmottan-collection/888-26b69faa-image.webp",
+      "detailUrl": "https://www.marmottan.fr/en//notice/888",
+      "original_image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/888.jpg"
     },
     {
       "id": "20",
       "artist": "Louis Gauffier",
       "title": "Poitiers, 1761 ; Livourne, 1801",
       "year": "LA VALLÉE DE L’ARNO VUE DEPUIS LE \"PARADISINO\" DE VALLOMBROSA",
-      "image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/20.jpg",
-      "detailUrl": "https://www.marmottan.fr/en//notice/20"
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/marmottan-collection/20-714fe443-image.webp",
+      "detailUrl": "https://www.marmottan.fr/en//notice/20",
+      "original_image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/20.jpg"
     },
     {
       "id": "6502",
       "artist": "Berthe Morisot",
       "title": "1841 ; 1895",
       "year": "FILLETTE AU JERSEY BLEU",
-      "image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/6502.jpg",
-      "detailUrl": "https://www.marmottan.fr/en//notice/6502"
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/marmottan-collection/6502-2506bad7-image.webp",
+      "detailUrl": "https://www.marmottan.fr/en//notice/6502",
+      "original_image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/6502.jpg"
     },
     {
       "id": "M-6194",
       "artist": "Jean Fouquet",
       "title": "SAINT VRAIN, ÉVÊQUE DE CAVAILLON, GUÉRIT LES POSSÉDÉS",
       "year": "entre 1452 et 1460",
-      "image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/M-6194.jpg",
-      "detailUrl": "https://www.marmottan.fr/en//notice/M-6194"
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/marmottan-collection/M-6194-46633bdf-image.webp",
+      "detailUrl": "https://www.marmottan.fr/en//notice/M-6194",
+      "original_image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/M-6194.jpg"
     },
     {
       "id": "5061",
       "artist": "Gustave Caillebotte",
       "title": "CHRYSANTHÈMES BLANCS ET JAUNES. JARDIN DU PETIT GENNEVILLIERS",
       "year": "1893",
-      "image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/5061.jpg",
-      "detailUrl": "https://www.marmottan.fr/en//notice/5061"
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/marmottan-collection/5061-2cd1aa47-image.webp",
+      "detailUrl": "https://www.marmottan.fr/en//notice/5061",
+      "original_image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/5061.jpg"
     },
     {
       "id": "1068",
       "artist": "baron Gérard François Pascal Simon",
       "title": "Rome, 1770 ; Paris, 1837",
       "year": "PORTRAIT DE JEUNE FEMME",
-      "image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/1068.jpg",
-      "detailUrl": "https://www.marmottan.fr/en//notice/1068"
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/marmottan-collection/1068-dc882844-image.webp",
+      "detailUrl": "https://www.marmottan.fr/en//notice/1068",
+      "original_image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/1068.jpg"
     },
     {
       "id": "854",
       "artist": "Jacques Louis Michel Grandin",
       "title": "SAPHO ET DEUX DE SES COMPAGNES",
       "year": "1808 achevé en",
-      "image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/854.jpg",
-      "detailUrl": "https://www.marmottan.fr/en//notice/854"
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/marmottan-collection/854-ff657fa9-image.webp",
+      "detailUrl": "https://www.marmottan.fr/en//notice/854",
+      "original_image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/854.jpg"
     },
     {
       "id": "6505",
       "artist": "Jean-Baptiste Camille Corot",
       "title": "Paris, 1796 ; Ville-d’Avray, 1875",
       "year": "VOLTERRA. ROUTE DESCENDANT DE LA VILLE",
-      "image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/6505.jpg",
-      "detailUrl": "https://www.marmottan.fr/en//notice/6505"
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/marmottan-collection/6505-98439d1e-image.webp",
+      "detailUrl": "https://www.marmottan.fr/en//notice/6505",
+      "original_image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/6505.jpg"
     },
     {
       "id": "5332",
       "artist": "Claude Monet",
       "title": "Paris, 1840 ; Giverny, 1926",
       "year": "EN PROMENADE PRÈS D’ARGENTEUIL",
-      "image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/5332.jpg",
-      "detailUrl": "https://www.marmottan.fr/en//notice/5332"
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/marmottan-collection/5332-5e37fa9a-image.webp",
+      "detailUrl": "https://www.marmottan.fr/en//notice/5332",
+      "original_image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/5332.jpg"
     },
     {
       "id": "5007",
       "artist": "Claude Monet",
       "title": "Paris, 1840 ; Giverny, 1926",
       "year": "LONDRES, LE PARLEMENT, REFLETS SUR LA TAMISE",
-      "image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/5007.jpg",
-      "detailUrl": "https://www.marmottan.fr/en//notice/5007"
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/marmottan-collection/5007-0a60a474-image.webp",
+      "detailUrl": "https://www.marmottan.fr/en//notice/5007",
+      "original_image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/5007.jpg"
     },
     {
       "id": "4025",
       "artist": "Alfred Sisley",
       "title": "Paris, 1839 ; Moret-sur-Loing, 1899",
       "year": "PRINTEMPS AUX ENVIRONS DE PARIS. POMMIERS EN FLEURS",
-      "image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/4025.jpg",
-      "detailUrl": "https://www.marmottan.fr/en//notice/4025"
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/marmottan-collection/4025-f9d2c121-image.webp",
+      "detailUrl": "https://www.marmottan.fr/en//notice/4025",
+      "original_image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/4025.jpg"
     },
     {
       "id": "892",
       "artist": "Adrienne Marie Louise Grandpierre-deverzy",
       "title": "1798 ; Paris, 1869",
       "year": "L'ATELIER D’ABEL DE PUJOL",
-      "image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/892.jpg",
-      "detailUrl": "https://www.marmottan.fr/en//notice/892"
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/marmottan-collection/892-6b4e8eaa-image.webp",
+      "detailUrl": "https://www.marmottan.fr/en//notice/892",
+      "original_image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/892.jpg"
     },
     {
       "id": "1591",
       "artist": "Auguste Antoine Masse",
       "title": "1795",
       "year": "INTÉRIEUR DE L’ATELIER DE GROS",
-      "image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/1591.jpg",
-      "detailUrl": "https://www.marmottan.fr/en//notice/1591"
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/marmottan-collection/1591-ea788e33-image.webp",
+      "detailUrl": "https://www.marmottan.fr/en//notice/1591",
+      "original_image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/1591.jpg"
     },
     {
       "id": "M-6072",
       "artist": "Cremona Girolamo Da",
       "title": "SAINT PROSDOCIME BAPTISANT VITALIEN (INITIALE P)",
       "year": "1462 avant",
-      "image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/M-6072.jpg",
-      "detailUrl": "https://www.marmottan.fr/en//notice/M-6072"
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/marmottan-collection/M-6072-482f2687-image.webp",
+      "detailUrl": "https://www.marmottan.fr/en//notice/M-6072",
+      "original_image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/M-6072.jpg"
     },
     {
       "id": "5333",
       "artist": "Paul Gauguin",
       "title": "BOUQUET DE FLEURS",
       "year": "1897",
-      "image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/5333.jpg",
-      "detailUrl": "https://www.marmottan.fr/en//notice/5333"
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/marmottan-collection/5333-ed34b970-image.webp",
+      "detailUrl": "https://www.marmottan.fr/en//notice/5333",
+      "original_image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/5333.jpg"
     },
     {
       "id": "997",
       "artist": "Anonyme",
       "title": "BACCHUS",
       "year": "vers 1805",
-      "image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/997.jpg",
-      "detailUrl": "https://www.marmottan.fr/en//notice/997"
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/marmottan-collection/997-e3afc9a6-image.webp",
+      "detailUrl": "https://www.marmottan.fr/en//notice/997",
+      "original_image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/997.jpg"
     },
     {
       "id": "5028",
       "artist": "Gustave Caillebotte",
       "title": "LA LEÇON DE PIANO",
       "year": "1879 vers",
-      "image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/5028.jpg",
-      "detailUrl": "https://www.marmottan.fr/en//notice/5028"
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/marmottan-collection/5028-522f4d03-image.webp",
+      "detailUrl": "https://www.marmottan.fr/en//notice/5028",
+      "original_image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/5028.jpg"
     },
     {
       "id": "M-6135",
       "artist": "William De Brailes",
       "title": "ADAM ET ÈVE CHASSÉS DU PARADIS TERRESTRE",
       "year": "vers 1230-1240 ;",
-      "image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/M-6135.jpg",
-      "detailUrl": "https://www.marmottan.fr/en//notice/M-6135"
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/marmottan-collection/M-6135-0244ff9b-image.webp",
+      "detailUrl": "https://www.marmottan.fr/en//notice/M-6135",
+      "original_image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/M-6135.jpg"
     },
     {
       "id": "89",
       "artist": "Claude ; Bailly Galle",
       "title": "GALLE Claude (1759-1815) ; BAILLY (1780-1821)",
       "year": "PENDULE « L’AMITIÉ VOILANT LES HEURES »",
-      "image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/89.jpg",
-      "detailUrl": "https://www.marmottan.fr/en//notice/89"
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/marmottan-collection/89-043dfb20-image.webp",
+      "detailUrl": "https://www.marmottan.fr/en//notice/89",
+      "original_image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/89.jpg"
     },
     {
       "id": "770",
       "artist": "François Honoré Georges (ébéniste) ; Thomire Pierre Philippe Jacob-desmalter",
       "title": "JACOB-DESMALTER François Honoré Georges (1770 ; 1841) ; THOMIRE Pierre Philippe (Paris, 1751 ; Paris, 1843)",
       "year": "LIT DE NAPOLÉON IER",
-      "image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/770.jpg",
-      "detailUrl": "https://www.marmottan.fr/en//notice/770"
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/marmottan-collection/770-dcd2a0d5-image.webp",
+      "detailUrl": "https://www.marmottan.fr/en//notice/770",
+      "original_image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/770.jpg"
     },
     {
       "id": "345",
       "artist": "François-Honoré-Georges Jacob-Desmalter",
       "title": "1770 ; 1841",
       "year": "vers 1810",
-      "image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/345.jpg",
-      "detailUrl": "https://www.marmottan.fr/en//notice/345"
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/marmottan-collection/345-1a3861ac-image.webp",
+      "detailUrl": "https://www.marmottan.fr/en//notice/345",
+      "original_image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/345.jpg"
     },
     {
       "id": "6499.3",
       "artist": "KLEIN",
       "title": "PSYCHÉ DE BERTHE MORISOT",
       "year": "1807",
-      "image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/6499.3.jpg",
-      "detailUrl": "https://www.marmottan.fr/en//notice/6499.3"
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/marmottan-collection/6499_3-27da281d-image.webp",
+      "detailUrl": "https://www.marmottan.fr/en//notice/6499.3",
+      "original_image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/6499.3.jpg"
     },
     {
       "id": "991",
       "artist": "Manufacture de Sèvres (fabricant)",
       "title": "PENDULE GÉOGRAPHIQUE",
       "year": "1813 de ; 1821 à",
-      "image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/991.jpg",
-      "detailUrl": "https://www.marmottan.fr/en//notice/991"
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/marmottan-collection/991-8e021b3a-image.webp",
+      "detailUrl": "https://www.marmottan.fr/en//notice/991",
+      "original_image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/991.jpg"
     },
     {
       "id": "712.1",
       "artist": "Pierre-Philippe Thomire",
       "title": "Paris, 1751 ; Paris, 1843",
       "year": "vers 1812",
-      "image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/712.1.jpg",
-      "detailUrl": "https://www.marmottan.fr/en//notice/712.1"
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/marmottan-collection/712_1-a928ed9b-image.webp",
+      "detailUrl": "https://www.marmottan.fr/en//notice/712.1",
+      "original_image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/712.1.jpg"
     },
     {
       "id": "5016",
       "artist": "Claude Monet",
       "title": "SUR LA PLAGE À TROUVILLE",
       "year": "1870",
-      "image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/5016.jpg",
-      "detailUrl": "https://www.marmottan.fr/en//notice/5016"
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/marmottan-collection/5016-899a8ac9-image.webp",
+      "detailUrl": "https://www.marmottan.fr/en//notice/5016",
+      "original_image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/5016.jpg"
     },
     {
       "id": "4016",
       "artist": "Claude Monet",
       "title": "LES TUILERIES",
       "year": "1876",
-      "image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/4016.jpg",
-      "detailUrl": "https://www.marmottan.fr/en//notice/4016"
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/marmottan-collection/4016-19e71602-image.webp",
+      "detailUrl": "https://www.marmottan.fr/en//notice/4016",
+      "original_image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/4016.jpg"
     },
     {
       "id": "5390",
       "artist": "Chagall Marc",
       "title": "1887 ; 1985",
       "year": "FIANCÉE AU VISAGE BLEU",
-      "image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/5390.jpg",
-      "detailUrl": "https://www.marmottan.fr/en//notice/5390"
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/marmottan-collection/5390-b42a0743-image.webp",
+      "detailUrl": "https://www.marmottan.fr/en//notice/5390",
+      "original_image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/5390.jpg"
     },
     {
       "id": "4015",
       "artist": "Claude Monet",
       "title": "LE PONT DE L'EUROPE. GARE SAINT-LAZARE.",
       "year": "1877",
-      "image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/4015.jpg",
-      "detailUrl": "https://www.marmottan.fr/en//notice/4015"
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/marmottan-collection/4015-7de91dbb-image.webp",
+      "detailUrl": "https://www.marmottan.fr/en//notice/4015",
+      "original_image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/4015.jpg"
     },
     {
       "id": "M-6133",
       "artist": "William De Brailes",
       "title": "LA CRÉATION D’ADAM ET EVE",
       "year": "vers 1230-1240 ;",
-      "image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/M-6133.jpg",
-      "detailUrl": "https://www.marmottan.fr/en//notice/M-6133"
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/marmottan-collection/M-6133-002304f5-image.webp",
+      "detailUrl": "https://www.marmottan.fr/en//notice/M-6133",
+      "original_image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/M-6133.jpg"
     },
     {
       "id": "5082",
       "artist": "Claude Monet",
       "title": "Paris, 1840 ; Giverny, 1926",
       "year": "LA BARQUE",
-      "image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/5082.jpg",
-      "detailUrl": "https://www.marmottan.fr/en//notice/5082"
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/marmottan-collection/5082-bbb07e8d-image.webp",
+      "detailUrl": "https://www.marmottan.fr/en//notice/5082",
+      "original_image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/5082.jpg"
     },
     {
       "id": "M-6206",
       "artist": "Anonyme",
       "title": "L’AMIRAL DE GRAVILLE CHASSANT LE SANGLIER",
       "year": "vers 1493",
-      "image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/M-6206.jpg",
-      "detailUrl": "https://www.marmottan.fr/en//notice/M-6206"
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/marmottan-collection/M-6206-8fa4c861-image.webp",
+      "detailUrl": "https://www.marmottan.fr/en//notice/M-6206",
+      "original_image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/M-6206.jpg"
     },
     {
       "id": "5167",
       "artist": "Claude Monet",
       "title": "Paris, 1840 ; Giverny, 1926",
       "year": "NYMPHÉAS. EFFET DU SOIR.",
-      "image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/5167.jpg",
-      "detailUrl": "https://www.marmottan.fr/en//notice/5167"
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/marmottan-collection/5167-5136fdbf-image.webp",
+      "detailUrl": "https://www.marmottan.fr/en//notice/5167",
+      "original_image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/5167.jpg"
     },
     {
       "id": "M-6020",
       "artist": "Pavia Belbello Da",
       "title": "SAINTE CATHERINE D’ALEXANDRIE",
       "year": "",
-      "image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/M-6020.jpg",
-      "detailUrl": "https://www.marmottan.fr/en//notice/M-6020"
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/marmottan-collection/M-6020-77548e00-image.webp",
+      "detailUrl": "https://www.marmottan.fr/en//notice/M-6020",
+      "original_image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/M-6020.jpg"
     },
     {
       "id": "M-6188",
       "artist": "Jean Perreal",
       "title": "L’ALCHIMISTE",
       "year": "1516",
-      "image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/M-6188.jpg",
-      "detailUrl": "https://www.marmottan.fr/en//notice/M-6188"
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/marmottan-collection/M-6188-6c23876c-image.webp",
+      "detailUrl": "https://www.marmottan.fr/en//notice/M-6188",
+      "original_image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/M-6188.jpg"
     },
     {
       "id": "4024",
       "artist": "Pierre-Auguste Renoir",
       "title": "1841 ; 1919",
       "year": "PORTRAIT DE MADEMOISELLE VICTORINE DE BELLIO",
-      "image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/4024.jpg",
-      "detailUrl": "https://www.marmottan.fr/en//notice/4024"
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/marmottan-collection/4024-c3736988-image.webp",
+      "detailUrl": "https://www.marmottan.fr/en//notice/4024",
+      "original_image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/4024.jpg"
     },
     {
       "id": "5127",
       "artist": "Auguste Rodin",
       "title": "JUPITER TAUREAU, LE FAUNE ET LA FEMME OU FAUNE ET NYMPHE",
       "year": "vers 1886",
-      "image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/5127.jpg",
-      "detailUrl": "https://www.marmottan.fr/en//notice/5127"
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/marmottan-collection/5127-556d06ea-image.webp",
+      "detailUrl": "https://www.marmottan.fr/en//notice/5127",
+      "original_image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/5127.jpg"
     },
     {
       "id": "453",
       "artist": "Michel Haider",
       "title": "Michel Haider (Actif 1479-1516)",
       "year": "LA VIERGE ET L’ENFANT JÉSUS",
-      "image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/453.jpg",
-      "detailUrl": "https://www.marmottan.fr/en//notice/453"
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/marmottan-collection/453-200cfcf2-image.webp",
+      "detailUrl": "https://www.marmottan.fr/en//notice/453",
+      "original_image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/453.jpg"
     },
     {
       "id": "M-6281",
       "artist": "Willlem Vrelant",
       "title": "LA NATIVITÉ",
       "year": "vers 1460-1470",
-      "image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/M-6281.jpg",
-      "detailUrl": "https://www.marmottan.fr/en//notice/M-6281"
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/marmottan-collection/M-6281-6dba95c6-image.webp",
+      "detailUrl": "https://www.marmottan.fr/en//notice/M-6281",
+      "original_image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/M-6281.jpg"
     },
     {
       "id": "5165",
       "artist": "Claude Monet",
       "title": "Paris, 1840 ; Giverny, 1926",
       "year": "LE BASSIN AUX NYMPHÉAS",
-      "image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/5165.jpg",
-      "detailUrl": "https://www.marmottan.fr/en//notice/5165"
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/marmottan-collection/5165-6c302567-image.webp",
+      "detailUrl": "https://www.marmottan.fr/en//notice/5165",
+      "original_image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/5165.jpg"
     },
     {
       "id": "5164",
       "artist": "Claude Monet",
       "title": "Paris, 1840 ; Giverny, 1926",
       "year": "NYMPHÉAS",
-      "image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/5164.jpg",
-      "detailUrl": "https://www.marmottan.fr/en//notice/5164"
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/marmottan-collection/5164-e14f5e00-image.webp",
+      "detailUrl": "https://www.marmottan.fr/en//notice/5164",
+      "original_image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/5164.jpg"
     },
     {
       "id": "5077",
       "artist": "Claude Monet",
       "title": "Paris, 1840 ; Giverny, 1926",
       "year": "LE PONT JAPONAIS",
-      "image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/5077.jpg",
-      "detailUrl": "https://www.marmottan.fr/en//notice/5077"
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/marmottan-collection/5077-4a9b769e-image.webp",
+      "detailUrl": "https://www.marmottan.fr/en//notice/5077",
+      "original_image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/5077.jpg"
     },
     {
       "id": "5124",
       "artist": "Claude Monet",
       "title": "Paris, 1840 ; Giverny, 1926",
       "year": "GLYCINES",
-      "image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/5124.jpg",
-      "detailUrl": "https://www.marmottan.fr/en//notice/5124"
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/marmottan-collection/5124-9eff7ebd-image.webp",
+      "detailUrl": "https://www.marmottan.fr/en//notice/5124",
+      "original_image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/5124.jpg"
     },
     {
       "id": "5106",
       "artist": "Claude Monet",
       "title": "Paris, 1840 ; Giverny, 1926",
       "year": "LE PONT JAPONAIS",
-      "image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/5106.jpg",
-      "detailUrl": "https://www.marmottan.fr/en//notice/5106"
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/marmottan-collection/5106-a247799c-image.webp",
+      "detailUrl": "https://www.marmottan.fr/en//notice/5106",
+      "original_image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/5106.jpg"
     },
     {
       "id": "5089",
       "artist": "Claude Monet",
       "title": "Paris, 1840 ; Giverny, 1926",
       "year": "L’ALLÉE DES ROSIERS, GIVERNY",
-      "image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/5089.jpg",
-      "detailUrl": "https://www.marmottan.fr/en//notice/5089"
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/marmottan-collection/5089-a6d56348-image.webp",
+      "detailUrl": "https://www.marmottan.fr/en//notice/5089",
+      "original_image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/5089.jpg"
     },
     {
       "id": "707",
       "artist": "Pierre-Philippe Thomire",
       "title": "Paris, 1751 ; Paris, 1843",
       "year": "LUSTRE AUX MUSICIENNES",
-      "image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/707.jpg",
-      "detailUrl": "https://www.marmottan.fr/en//notice/707"
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/marmottan-collection/707-0fd7d0aa-image.webp",
+      "detailUrl": "https://www.marmottan.fr/en//notice/707",
+      "original_image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/707.jpg"
     },
     {
       "id": "4020",
       "artist": "Berthe Morisot",
       "title": "1841 ; 1895",
       "year": "AU BAL",
-      "image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/4020.jpg",
-      "detailUrl": "https://www.marmottan.fr/en//notice/4020"
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/marmottan-collection/4020-607af731-image.webp",
+      "detailUrl": "https://www.marmottan.fr/en//notice/4020",
+      "original_image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/4020.jpg"
     },
     {
       "id": "6017",
       "artist": "Berthe Morisot",
       "title": "1841 ; 1895",
       "year": "LE JARDIN À BOUGIVAL",
-      "image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/6017.jpg",
-      "detailUrl": "https://www.marmottan.fr/en//notice/6017"
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/marmottan-collection/6017-526c82f2-image.webp",
+      "detailUrl": "https://www.marmottan.fr/en//notice/6017",
+      "original_image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/6017.jpg"
     },
     {
       "id": "6022",
       "artist": "Berthe Morisot",
       "title": "1871 ; 1895",
       "year": "AUTOPORTRAIT",
-      "image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/6022.jpg",
-      "detailUrl": "https://www.marmottan.fr/en//notice/6022"
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/marmottan-collection/6022-943816f4-image.webp",
+      "detailUrl": "https://www.marmottan.fr/en//notice/6022",
+      "original_image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/6022.jpg"
     },
     {
       "id": "M-6193",
       "artist": "Jean Bourdichon",
       "title": "LE BAISER DE JUDAS",
       "year": "1498 -1499",
-      "image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/M-6193.jpg",
-      "detailUrl": "https://www.marmottan.fr/en//notice/M-6193"
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/marmottan-collection/M-6193-00427253-image.webp",
+      "detailUrl": "https://www.marmottan.fr/en//notice/M-6193",
+      "original_image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/M-6193.jpg"
     },
     {
       "id": "6501",
       "artist": "Berthe Morisot",
       "title": "1841 ; 1895",
       "year": "ENFANTS À LA VASQUE",
-      "image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/6501.jpg",
-      "detailUrl": "https://www.marmottan.fr/en//notice/6501"
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/marmottan-collection/6501-77ee56e4-image.webp",
+      "detailUrl": "https://www.marmottan.fr/en//notice/6501",
+      "original_image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/6501.jpg"
     },
     {
       "id": "6500",
       "artist": "Berthe Morisot",
       "title": "1841 ; 1895",
       "year": "PAULE GOBILLARD PEIGNANT",
-      "image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/6500.jpg",
-      "detailUrl": "https://www.marmottan.fr/en//notice/6500"
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/marmottan-collection/6500-3356d5f4-image.webp",
+      "detailUrl": "https://www.marmottan.fr/en//notice/6500",
+      "original_image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/6500.jpg"
     },
     {
       "id": "D.11-1993",
       "artist": "Claude Monet",
       "title": "Paris, 1840 ; Giverny, 1926",
       "year": "BRAS DE SEINE PRÈS DE GIVERNY, SOLEIL LEVANT",
-      "image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/D.11-1993.jpg",
-      "detailUrl": "https://www.marmottan.fr/en//notice/D.11-1993"
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/marmottan-collection/D_11-1993-ce5e19f3-image.webp",
+      "detailUrl": "https://www.marmottan.fr/en//notice/D.11-1993",
+      "original_image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/D.11-1993.jpg"
     },
     {
       "id": "6021",
       "artist": "Berthe Morisot",
       "title": "1841 ; 1895",
       "year": "BERGÈRE COUCHÉE",
-      "image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/6021.jpg",
-      "detailUrl": "https://www.marmottan.fr/en//notice/6021"
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/marmottan-collection/6021-47fb0806-image.webp",
+      "detailUrl": "https://www.marmottan.fr/en//notice/6021",
+      "original_image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/6021.jpg"
     },
     {
       "id": "5027",
       "artist": "Berthe Morisot",
       "title": "JULIE MANET ET SA LEVRETTE LAËRTE",
       "year": "1893",
-      "image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/5027.jpg",
-      "detailUrl": "https://www.marmottan.fr/en//notice/5027"
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/marmottan-collection/5027-a3662be1-image.webp",
+      "detailUrl": "https://www.marmottan.fr/en//notice/5027",
+      "original_image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/5027.jpg"
     },
     {
       "id": "935",
       "artist": "Anonyme",
       "title": "vers 1805-1810",
       "year": "",
-      "image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/935.jpg",
-      "detailUrl": "https://www.marmottan.fr/en//notice/935"
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/marmottan-collection/935-cd23cb7e-image.webp",
+      "detailUrl": "https://www.marmottan.fr/en//notice/935",
+      "original_image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/935.jpg"
     },
     {
       "id": "4021",
       "artist": "Camille Pissarro",
       "title": "1830 ; 1903",
       "year": "LES BOULEVARDS EXTÉRIEURS. EFFET DE NEIGE.",
-      "image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/4021.jpg",
-      "detailUrl": "https://www.marmottan.fr/en//notice/4021"
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/marmottan-collection/4021-c6c4a27f-image.webp",
+      "detailUrl": "https://www.marmottan.fr/en//notice/4021",
+      "original_image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/4021.jpg"
     },
     {
       "id": "5013",
       "artist": "Pierre-Auguste Renoir",
       "title": "CLAUDE MONET LISANT",
       "year": "1873 vers",
-      "image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/5013.jpg",
-      "detailUrl": "https://www.marmottan.fr/en//notice/5013"
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/marmottan-collection/5013-3efbfdfd-image.webp",
+      "detailUrl": "https://www.marmottan.fr/en//notice/5013",
+      "original_image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/5013.jpg"
     },
     {
       "id": "5013-bis",
       "artist": "Pierre-Auguste Renoir",
       "title": "PORTRAIT DE MME CLAUDE MONET",
       "year": "1873 vers",
-      "image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/5013-bis.jpg",
-      "detailUrl": "https://www.marmottan.fr/en//notice/5013-bis"
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/marmottan-collection/5013-bis-43845394-image.webp",
+      "detailUrl": "https://www.marmottan.fr/en//notice/5013-bis",
+      "original_image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/5013-bis.jpg"
     },
     {
       "id": "6092",
       "artist": "Pierre-Auguste Renoir",
       "title": "1841 ; 1919",
       "year": "PORTRAIT DE JULIE MANET",
-      "image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/6092.jpg",
-      "detailUrl": "https://www.marmottan.fr/en//notice/6092"
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/marmottan-collection/6092-d3178428-image.webp",
+      "detailUrl": "https://www.marmottan.fr/en//notice/6092",
+      "original_image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/6092.jpg"
     },
     {
       "id": "368",
       "artist": "Antonio Canova",
       "title": "GANYMÈDE",
       "year": "",
-      "image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/368.jpg",
-      "detailUrl": "https://www.marmottan.fr/en//notice/368"
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/marmottan-collection/368-28a1c3a1-image.webp",
+      "detailUrl": "https://www.marmottan.fr/en//notice/368",
+      "original_image": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/368.jpg"
     }
-  ]
+  ],
+  "original_coverImage": "https://www.marmottan.fr/wp-content/themes/marmottan2019/collection/thumb/4014.jpg"
 }

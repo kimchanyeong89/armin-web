@@ -9,9 +9,11 @@ type D3GeoGlobeSimplifiedProps = {
   onSelectExhibition?: (ex: Exhibition) => void;
   focusExhibition?: Exhibition | null; // When set, animate to this exhibition's location
   panOffset?: number; // horizontal offset in pixels when detail panel is open
+  isModalOpen?: boolean; // If modal is open, prevent outside clicks from collapsing clusters
+  isDark?: boolean; // Dark/light theme toggle
 };
 
-const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions, onSelectExhibition, focusExhibition, panOffset = 0 }) => {
+const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions, onSelectExhibition, focusExhibition, panOffset = 0, isModalOpen = false, isDark = true }) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const perfOverlayRef = useRef<HTMLDivElement | null>(null);
   const perfStatsRef = useRef({ fps: 0, frameTime: 0, lastFrame: 0, frameCount: 0 });
@@ -29,6 +31,14 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
   const panOffsetRef = useRef(panOffset);
   useEffect(() => { panOffsetRef.current = panOffset; }, [panOffset]);
 
+  // Keep ref for event handlers
+  const isModalOpenRef = useRef(isModalOpen);
+  useEffect(() => { isModalOpenRef.current = isModalOpen; }, [isModalOpen]);
+
+  // isDark ref for use in canvas drawing callbacks
+  const isDarkRef = useRef(isDark);
+  useEffect(() => { isDarkRef.current = isDark; }, [isDark]);
+
   // Track last focused exhibition to prevent re-triggering
   const lastFocusedRef = useRef<string | null>(null);
 
@@ -40,6 +50,20 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
     const lat = (focusExhibition as any).latitude;
     const lon = (focusExhibition as any).longitude;
     if (typeof lat !== 'number' || typeof lon !== 'number') return;
+
+    // If the user is clicking around inside an already-expanded cluster, keep that cluster open.
+    // Without this guard, selecting another museum in the same expanded cluster re-triggers
+    // the focus animation + expandedClusters reset, which looks like the cluster collapses then re-opens.
+    try {
+      const clusters = clustersListRef.current;
+      if (clusters && expandedClustersRef.current.size > 0) {
+        const matchingCluster = clusters.find(c => c.items.some(item => item.id === focusExhibition.id));
+        if (matchingCluster && expandedClustersRef.current.has(matchingCluster.key)) {
+          lastFocusedRef.current = focusExhibition.id;
+          return;
+        }
+      }
+    } catch { /* ignore */ }
 
     lastFocusedRef.current = focusExhibition.id;
 
@@ -130,29 +154,62 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
   // 자동 LOD 전환은 사용하지 않습니다. (클릭 시 디테일 표시)
 
   // Chaikin smoothing algorithm - makes polygon edges curved
-  const chaikinSmooth = (coords: number[][], iterations: number = 2): number[][] => {
+  const chaikinSmoothClosed = (coords: number[][], iterations: number = 2): number[][] => {
     if (coords.length < 3) return coords;
+    const isClosed = coords[0][0] === coords[coords.length - 1][0] && coords[0][1] === coords[coords.length - 1][1];
+    let result = isClosed ? coords.slice(0, coords.length - 1) : coords;
 
-    let result = coords;
     for (let iter = 0; iter < iterations; iter++) {
       const smoothed: number[][] = [];
       for (let i = 0; i < result.length; i++) {
         const p0 = result[i];
         const p1 = result[(i + 1) % result.length];
 
-        // Q point at 1/4
-        const q: number[] = [
-          0.75 * p0[0] + 0.25 * p1[0],
-          0.75 * p0[1] + 0.25 * p1[1]
-        ];
-        // R point at 3/4
-        const r: number[] = [
-          0.25 * p0[0] + 0.75 * p1[0],
-          0.25 * p0[1] + 0.75 * p1[1]
-        ];
+        let p1x = p1[0];
+        if (p1x - p0[0] > 180) p1x -= 360;
+        else if (p0[0] - p1x > 180) p1x += 360;
 
+        let qx = 0.75 * p0[0] + 0.25 * p1x;
+        let rx = 0.25 * p0[0] + 0.75 * p1x;
+
+        if (qx > 180) qx -= 360; else if (qx <= -180) qx += 360;
+        if (rx > 180) rx -= 360; else if (rx <= -180) rx += 360;
+
+        const q: number[] = [qx, 0.75 * p0[1] + 0.25 * p1[1]];
+        const r: number[] = [rx, 0.25 * p0[1] + 0.75 * p1[1]];
         smoothed.push(q, r);
       }
+      result = smoothed;
+    }
+    if (result.length > 0) result.push([result[0][0], result[0][1]]);
+    return result;
+  };
+
+  const chaikinSmoothOpen = (coords: number[][], iterations: number = 2): number[][] => {
+    if (coords.length < 3) return coords;
+    let result = coords;
+    for (let iter = 0; iter < iterations; iter++) {
+      const smoothed: number[][] = [];
+      smoothed.push(result[0]);
+      for (let i = 0; i < result.length - 1; i++) {
+        const p0 = result[i];
+        const p1 = result[i + 1];
+
+        let p1x = p1[0];
+        if (p1x - p0[0] > 180) p1x -= 360;
+        else if (p0[0] - p1x > 180) p1x += 360;
+
+        let qx = 0.75 * p0[0] + 0.25 * p1x;
+        let rx = 0.25 * p0[0] + 0.75 * p1x;
+
+        if (qx > 180) qx -= 360; else if (qx <= -180) qx += 360;
+        if (rx > 180) rx -= 360; else if (rx <= -180) rx += 360;
+
+        const q = [qx, 0.75 * p0[1] + 0.25 * p1[1]];
+        const r = [rx, 0.25 * p0[1] + 0.75 * p1[1]];
+        smoothed.push(q, r);
+      }
+      smoothed.push(result[result.length - 1]);
       result = smoothed;
     }
     return result;
@@ -165,14 +222,24 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
     if (geometry.type === 'Polygon') {
       return {
         ...geometry,
-        coordinates: geometry.coordinates.map((ring: number[][]) => chaikinSmooth(ring, 2))
+        coordinates: geometry.coordinates.map((ring: number[][]) => chaikinSmoothClosed(ring, 2))
       };
     } else if (geometry.type === 'MultiPolygon') {
       return {
         ...geometry,
         coordinates: geometry.coordinates.map((polygon: number[][][]) =>
-          polygon.map((ring: number[][]) => chaikinSmooth(ring, 2))
+          polygon.map((ring: number[][]) => chaikinSmoothClosed(ring, 2))
         )
+      };
+    } else if (geometry.type === 'LineString') {
+      return {
+        ...geometry,
+        coordinates: chaikinSmoothOpen(geometry.coordinates, 2)
+      };
+    } else if (geometry.type === 'MultiLineString') {
+      return {
+        ...geometry,
+        coordinates: geometry.coordinates.map((line: number[][]) => chaikinSmoothOpen(line, 2))
       };
     }
     return geometry;
@@ -286,46 +353,54 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
       .scale(scaleRef.current * 0.5 * Math.min(width, height))
       .translate([tx, ty])
       .rotate([rotationRef.current.x, -rotationRef.current.y])
+      .clipAngle(90)
       .precision(0.25); // finer resampling for smoother coastlines
 
     const path = d3.geoPath().projection(projection).context(ctx);
 
-    // Draw white sphere background
-    ctx.fillStyle = '#ffffff';
-    ctx.strokeStyle = '#000000';
-    ctx.lineWidth = 0.8; // 글로브 테두리 더 얇게
+    // ── Theme colours (mirrors ArtistDistributionMap palette) ──────────────────
+    const dark = isDarkRef.current;
+    const sphereColor  = dark ? '#0a0a09' : '#f5f0e8';   // ocean
+    const landColor    = dark ? '#1d1c1b' : '#d4cec4';   // land fill
+    const strokeColor  = dark ? '#2e2d2b' : '#bfb9ae';   // borders
+    const hoverColor   = dark ? '#2a2927' : '#ccc7bc';   // hovered country
+    const rimColor     = dark ? 'rgba(201,165,90,0.18)' : 'rgba(0,0,0,0.25)'; // sphere rim
+
+    // Draw sphere background
+    ctx.fillStyle = sphereColor;
+    ctx.strokeStyle = rimColor;
+    ctx.lineWidth = 0.8;
     ctx.beginPath();
     path({ type: 'Sphere' });
     ctx.fill();
     ctx.save();
-    ctx.globalAlpha = BASE_STROKE_OPACITY; // 테두리만 90%
+    ctx.globalAlpha = BASE_STROKE_OPACITY;
     ctx.stroke();
     ctx.restore();
 
     // Graticule removed per request
 
-    // Base: draw country boundaries
+    // Base: draw country fills then borders
     if (countriesRef.current.length > 0) {
       ctx.lineWidth = 0.8;
-      ctx.lineJoin = 'round'; // Rounded joins
-      ctx.lineCap = 'round';  // Rounded caps
+      ctx.lineJoin = 'round';
+      ctx.lineCap = 'round';
       countriesRef.current.forEach((feature: any) => {
         const isHover = hoverCountry && feature === hoverCountry;
-        if (isHover) {
-          // Hover fill 은 100% 불투명 유지
-          ctx.save();
-          ctx.fillStyle = '#ffffff';
-          ctx.globalAlpha = 1;
-          ctx.beginPath();
-          path(feature);
-          ctx.fill();
-          ctx.restore();
-        }
+        // Fill each country (land colour, or highlight on hover)
+        ctx.save();
+        ctx.fillStyle = isHover ? hoverColor : landColor;
+        ctx.globalAlpha = 1;
+        ctx.beginPath();
+        path(feature);
+        ctx.fill();
+        ctx.restore();
+        // Country border stroke
         ctx.beginPath();
         path(feature);
         ctx.save();
-        ctx.globalAlpha = BASE_STROKE_OPACITY; // 국경선 90%
-        ctx.strokeStyle = isHover ? '#444444' : '#111111';
+        ctx.globalAlpha = BASE_STROKE_OPACITY;
+        ctx.strokeStyle = isHover ? (dark ? '#c9a55a' : '#888880') : strokeColor;
         ctx.stroke();
         ctx.restore();
       });
@@ -473,58 +548,57 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
   const CLUSTER_GRID_SIZE = 0.8;
   const roundToGrid = (v: number) => Math.round(v / CLUSTER_GRID_SIZE) * CLUSTER_GRID_SIZE;
 
-  const normalizeCity = (d: any) => {
+  const normalizeCity = (d: any): string => {
     // 1. Check direct region field first
     if (d.region) {
       const r = d.region.toLowerCase();
       if (r.includes('london')) return 'london';
+      if (r.includes('new york')) return 'new york';
       return r.split(',')[0].trim();
     }
     // 2. Check city field if exists
-    if (d.city) return d.city.toLowerCase().trim();
+    if (d.city && typeof d.city === 'string') return d.city.toLowerCase().trim();
 
-    // 3. Fallback to location parsing
-    const s = d.location;
+    const s = d.location || d.region || '';
     if (typeof s !== 'string') return '';
     const raw = s.toLowerCase();
 
-    // Known major cities override
-    if (raw.includes('london')) return 'london';
-    if (raw.includes('seoul') || raw.includes('서울')) return 'seoul';
-    if (raw.includes('manchester')) return 'manchester';
-    if (raw.includes('liverpool')) return 'liverpool';
-    if (raw.includes('edinburgh')) return 'edinburgh';
-    if (raw.includes('cambridge')) return 'cambridge';
-    if (raw.includes('oxford')) return 'oxford';
-    if (raw.includes('paris')) return 'paris';
-    if (raw.includes('new york')) return 'new york';
+    if (raw.includes('london')) return 'London';
+    if (raw.includes('seoul') || raw.includes('서울')) return 'Seoul';
+    if (raw.includes('jeju') || raw.includes('제주') || raw.includes('서귀포') || raw.includes('seogwipo')) return 'Jeju';
+    if (raw.includes('manchester')) return 'Manchester';
+    if (raw.includes('liverpool')) return 'Liverpool';
+    if (raw.includes('edinburgh')) return 'Edinburgh';
+    if (raw.includes('cambridge')) return 'Cambridge';
+    if (raw.includes('oxford')) return 'Oxford';
+    if (raw.includes('paris')) return 'Paris';
+    if (raw.includes('new york')) return 'New York';
 
-    // Generic parse: take last significant word block that isn't a country
-    const parts = raw.split(/[,:]/).map((p: string) => p.trim()).filter((p: string) => p && !/\d/.test(p)); // Filter out parts with numbers (postcodes)
-    const stopWords = new Set(['uk', 'united kingdom', 'england', 'scotland', 'wales', 'gb', 'usa', 'united states', 'korea']);
-
-    while (parts.length && stopWords.has(parts[parts.length - 1])) {
-      parts.pop();
+    if (d.location && typeof d.location === 'string' && d.location.includes(',')) {
+      return d.location.split(',')[0].trim();
     }
-    if (parts.length) return parts[parts.length - 1];
-    return '';
+
+    if (d.region && typeof d.region === 'string') return d.region;
+
+    return s.trim();
   };
 
   type ClusterInfo = { key: string; items: Exhibition[]; centerLon: number; centerLat: number; sortedByName: Exhibition[] };
   const clustersListRef = useRef<ClusterInfo[] | null>(null);
 
   // Re-compute clusters with splitting logic
-  if (true) {
+  useEffect(() => {
     const list = (exhibitions && exhibitions.length ? exhibitions : (exhibitionsData as Exhibition[]));
     const map: Record<string, Exhibition[]> = {};
 
     // Initial grouping - 반드시 국가별로 먼저 분리
     for (const d of list) {
       const country = (d as any).country || extractCountry(d) || 'unknown';
-      const cityKey = normalizeCity(d);
+      const cityKey = (d as any).cityCluster || normalizeCity(d);
       let key: string;
       if (cityKey) {
         // 국가 + 도시로 클러스터 키 생성 (다른 나라 절대 합쳐지지 않음)
+        // cityCluster가 있으면 'New York'처럼 강제로 하나의 키로 묶임
         key = `${country}::city:${cityKey}`;
       } else {
         const gridLon = roundToGrid(d.longitude);
@@ -543,7 +617,10 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
       centerLat: d3.mean(items as any, (d: any) => d.latitude) as number,
       sortedByName: [...items].sort((a: any, b: any) => String(a.name || a.title).localeCompare(String(b.name || b.title)))
     }));
-  }
+
+    // Trigger render after clusters update
+    renderPins();
+  }, [exhibitions]);
 
   // Handle resize and document click
   useEffect(() => {
@@ -553,6 +630,13 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
       renderPins();
     };
     const onDocClick = (e: MouseEvent) => {
+      // Don't collapse if modal is open (user likely clicked close button or backdrop)
+      if (isModalOpenRef.current) return;
+
+      const target = e.target as Element | null;
+      // Don't collapse if clicking inside the details panel
+      if (target && target.closest('.details-panel')) return;
+
       // Don't collapse cluster during drag or immediately after drag ended
       if (isDraggingRef.current) return;
       if (wasDraggingRef.current) {
@@ -560,7 +644,7 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
         return;
       }
       if (!expandedClustersRef.current.size) return;
-      const target = e.target as Element | null;
+
       if (target && (target.closest('.pin') || target.closest('.pins-overlay'))) {
         // Clicked within pins overlay; if it hit empty svg region (no pin), collapse
         if (target.classList.contains('pins-overlay')) {
@@ -590,6 +674,40 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
   // Render pins on view changes
   const renderPins = (fastUpdate = false) => {
     if (!pinsSvgRef.current || !gPinsRef.current || !clustersListRef.current) return;
+
+    // View center for manual backface culling (robust against projection wrapping)
+    const centerLon = -rotationRef.current.x;
+    const centerLat = rotationRef.current.y;
+    // Tolerance of ~1.6 rad (91.7 deg) to allow smooth fade out at edge
+    const isVisible = (lon: number, lat: number) => d3.geoDistance([lon, lat], [centerLon, centerLat]) < 1.6;
+
+    // Helper: Calculate pin scale based on distance from globe center (3D perspective effect)
+    const getPinScale = (px: number, py: number) => {
+      const w = window.innerWidth;
+      const h = window.innerHeight;
+      // Center of globe on screen (considering projection translate)
+      const cx = translateRef.current?.[0] ?? w / 2;
+      const cy = translateRef.current?.[1] ?? h / 2;
+      // Globe radius in pixels
+      const r = scaleRef.current * 0.5 * Math.min(w, h);
+      if (r <= 0) return 0.2;
+
+      const dx = px - cx;
+      const dy = py - cy;
+      const dist = Math.sqrt(dx * dx + dy * dy);
+
+      const norm = Math.min(1, dist / r);
+
+      // Keep scale constant (1.0) for most of the globe face to prevent "pulsing" during drag.
+      // Only fade out near the edge (last 15% of radius) for smooth exit.
+      // 0.0 ~ 0.85 -> 1.0
+      // 0.85 ~ 1.0 -> fade to 0.0
+      const THRESHOLD = 0.85;
+      if (norm < THRESHOLD) return 1;
+
+      const fadeNorm = (norm - THRESHOLD) / (1 - THRESHOLD);
+      return Math.max(0, Math.cos(fadeNorm * Math.PI * 0.5));
+    };
 
     const proj = getProjection();
     const rot = proj.rotate() as [number, number, number];
@@ -624,12 +742,18 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
           // Expanded pins are laid out relative to a cluster center; update using stored offsets.
           if (d._expanded && d._layoutKey && typeof d._dx === 'number' && typeof d._dy === 'number') {
             const layout = expandedLayoutCacheRef.current.get(String(d._layoutKey));
+            if (layout && !isVisible(layout.centerLon, layout.centerLat)) {
+              d3.select(this).style('opacity', 0);
+              return;
+            }
             const center = layout ? (proj([layout.centerLon, layout.centerLat]) as [number, number] | null) : null;
             if (center && Number.isFinite(center[0]) && Number.isFinite(center[1])) {
               const x = center[0] + d._dx * spread;
               const y = center[1] + d._dy * spread;
               const sel = d3.select(this);
-              sel.attr('transform', `translate(${x}, ${y})`);
+              // Apply perspective scale
+              const s = getPinScale(x, y);
+              sel.attr('transform', `translate(${x}, ${y}) scale(${s})`);
               // Fade in as zoom progresses: opacity follows spread
               sel.style('opacity', Math.max(0.1, spread));
 
@@ -648,9 +772,16 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
           }
 
           // Default: geographic projection position
+          if (!isVisible(d.longitude, d.latitude)) {
+            d3.select(this).style('opacity', 0);
+            return;
+          }
           const p = proj([d.longitude, d.latitude]) as [number, number] | null;
           if (p && Number.isFinite(p[0]) && Number.isFinite(p[1])) {
-            d3.select(this).attr('transform', `translate(${p[0]}, ${p[1]})`);
+            const s = getPinScale(p[0], p[1]);
+            const el = d3.select(this);
+            el.attr('transform', `translate(${p[0]}, ${p[1]}) scale(${s})`);
+            el.select('.cluster-count').style('opacity', Math.max(0, Math.min(1, (s - 0.4) * 3)));
           }
         });
         return; // Skip full re-render
@@ -694,12 +825,8 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
       // Get current zoom level for dynamic clustering
       const currentScale = scaleRef.current;
 
-      // Dynamic cluster merge based on zoom level
-      // More aggressive merging at low zoom, less at high zoom
-      // At scale 1: threshold ~80px (merge a lot)
-      // At scale 2: threshold ~50px (merge less)
-      // At scale 4+: threshold ~30px (mostly individual city clusters)
-      const MERGE_THRESHOLD_PX = Math.max(30, 80 / Math.pow(currentScale, 0.5));
+      // Higher threshold to ensure country-level aggregation at base zoom
+      const MERGE_THRESHOLD_PX = Math.max(35, 120 / Math.pow(currentScale, 0.6));
 
       // First, project all cluster centers
       type ClusterCenter = { cluster: ClusterInfo; px: number; py: number };
@@ -786,7 +913,7 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
 
         // Check if this cluster (or any of its merged clusters) is expanded
         const isExpanded = mc.keys.some(k => expandedClustersRef.current.has(k)) && items.length > 1;
-        console.log('[renderPins] cluster key:', key, 'isExpanded:', isExpanded, 'expandedClusters:', [...expandedClustersRef.current], 'mc.keys:', mc.keys, 'items.length:', items.length);
+        // console.log('[renderPins] cluster key:', key, 'isExpanded:', isExpanded, 'expandedClusters:', [...expandedClustersRef.current], 'mc.keys:', mc.keys, 'items.length:', items.length);
 
         if (isExpanded) {
           // Find which key is expanded
@@ -1200,16 +1327,17 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
           .style('cursor', 'pointer')
           .style('pointer-events', 'auto')
           // Start at PARENT center position (water drop effect - split from parent)
-          .attr('transform', (d: any) => `translate(${d._parentCenterX ?? d.px ?? 0}, ${d._parentCenterY ?? d.py ?? 0}) scale(0.3)`);
+          .attr('transform', (d: any) => `translate(${d._parentCenterX ?? d.px ?? 0}, ${d._parentCenterY ?? d.py ?? 0}) scale(0.3)`)
+          .style('opacity', (d: any) => isVisible(d.longitude ?? d.centerLon, d.latitude ?? d.centerLat) ? 1 : 0);
 
         // Add cluster visuals to new elements
         newEnter.each(function (d: any) {
-          const baseW = Math.max(16, 11 + Math.log2(Math.max(1, d.count)) * 2.5);
+          const baseW = Math.max(14.4, 9.9 + Math.log2(Math.max(1, d.count)) * 2.25);
           const baseH = baseW;
           d._collapsedW = baseW;
           d._collapsedH = baseH;
-          d._expandedW = d.cityName ? Math.max(baseW, Math.min(60, d.cityName.length * 5 + 12)) : baseW;
-          d._expandedH = d.cityName ? baseH + 10 : baseH;
+          d._expandedW = d.cityName ? Math.max(baseW, Math.min(54, d.cityName.length * 4.5 + 10.8)) : baseW;
+          d._expandedH = d.cityName ? baseH + 9 : baseH;
 
           const el = d3.select(this);
           el.append('rect')
@@ -1224,7 +1352,7 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
             .attr('class', 'cluster-count')
             .attr('text-anchor', 'middle')
             .attr('dy', '0.35em')
-            .attr('font-size', Math.max(9, 8 + Math.log2(Math.max(1, d.count)) * 0.7))
+            .attr('font-size', Math.max(8.1, 7.2 + Math.log2(Math.max(1, d.count)) * 0.63))
             .attr('font-weight', 'bold')
             .attr('fill', '#ffffff')
             .text(d.count);
@@ -1279,14 +1407,15 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
             d3.select(this).select('.cluster-bg').transition().duration(120).attr('stroke-width', 1.5);
           })
           .on('click', (_evt: any, d: any) => {
-            console.log('[newEnter click] d.key:', d.key, '_allKeys:', d._allKeys, '_isMerged:', d._isMerged, 'items:', d._items?.length);
+            // console.log('[newEnter click] d.key:', d.key, '_allKeys:', d._allKeys, '_isMerged:', d._isMerged, 'items:', d._items?.length);
             if (d._cluster) {
               const k = d.key as string;
-              console.log('[newEnter click] cluster key:', k);
+              // console.log('[newEnter click] cluster key:', k);
               // Use _isMerged flag instead of _allKeys.length for more accurate detection
               const isMergedCluster = d._isMerged === true;
-              console.log('[newEnter click] isMergedCluster:', isMergedCluster);
-              if (d._items && d._items.length === 1 && !isMergedCluster) {
+              // console.log('[newEnter click] isMergedCluster:', isMergedCluster);
+              // Single-item cluster: always directly open the detail panel
+              if (d._items && d._items.length === 1) {
                 try { onSelectExhibitionRef.current && onSelectExhibitionRef.current(d._items[0] as Exhibition); } catch { }
                 return;
               }
@@ -1313,7 +1442,7 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
                   // If already zoomed in enough (scale >= 6), clusters won't split further
                   // In this case, expand the merged cluster showing ALL items
                   if (currentScale >= 6) {
-                    console.log('[newEnter click] merged cluster at high zoom, expanding ALL items:', d._items?.length);
+                    // console.log('[newEnter click] merged cluster at high zoom, expanding ALL items:', d._items?.length);
 
                     // Use the first key as the expansion key
                     const expandKey = k;
@@ -1350,7 +1479,7 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
                   return;
                 }
                 const willExpand = !expandedClustersRef.current.has(k);
-                console.log('[newEnter click] willExpand:', willExpand, 'alreadyZoomedIn:', currentScale >= 4);
+                // console.log('[newEnter click] willExpand:', willExpand, 'alreadyZoomedIn:', currentScale >= 4);
                 const alreadyZoomedIn = currentScale >= 4;
                 const hasExpandedCluster = expandedClustersRef.current.size > 0;
                 if (willExpand && alreadyZoomedIn && hasExpandedCluster) {
@@ -1360,7 +1489,7 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
                   expandedLayoutCacheRef.current.delete(k);
                   animateExpandKeyRef.current = k ? String(k) : null;
                   lastPinsKeyRef.current = '';
-                  console.log('[newEnter click] calling renderPins (alreadyZoomedIn path)');
+                  // console.log('[newEnter click] calling renderPins (alreadyZoomedIn path)');
                   renderPins(false);
                   return;
                 } else if (willExpand) {
@@ -1371,7 +1500,7 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
                     expandedLayoutCacheRef.current.delete(k);
                     animateExpandKeyRef.current = k ? String(k) : null;
                     lastPinsKeyRef.current = '';
-                    console.log('[newEnter click] calling renderPins (delayed expand path)');
+                    // console.log('[newEnter click] calling renderPins (delayed expand path)');
                     renderPins(false);
                   }, expandDelay);
                   animateTo(targetRot, targetScale, duration, () => { frozenClusterKeyRef.current = null; return true; });
@@ -1460,6 +1589,9 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
     const enter = g.selectAll<SVGGElement, any>('g.pin').data(nodes, (d: any) => (d._cluster ? d.key : d.id)).enter().append('g').attr('class', 'pin').style('cursor', 'pointer').style('pointer-events', 'auto')
       // Set initial opacity for expanded pins based on spread factor (so they appear during zoom)
       .style('opacity', (d: any) => {
+        // Fix backface visibility in steady state (mouse release)
+        if (!isVisible(d.longitude ?? d.centerLon, d.latitude ?? d.centerLat)) return 0;
+
         // If animating from origin, start invisible (animation will fade in)
         if (d._originX != null) return 0;
         if (d._expanded && typeof d._initialSpread === 'number') return Math.max(0.1, d._initialSpread);
@@ -1468,23 +1600,30 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
       .attr('transform', (d: any) => {
         // If expanding animation, start from origin position (cluster center)
         if (d._originX != null && d._originY != null) {
+          // Applying scale to origin point too ensures smooth start (though it might be overkill if animating from tiny scale)
+          // But since animations use attrTween, this initial value is mostly relevant for static pins
+          // Use pin scale at origin, maybe multiplied by small start scale? 
+          // Actually, typical expansion animation handles opacity/transform tween.
+          // Let's just stick to position for origin to avoid conflicts with custom tweens if any.
+          // But wait, if tween doesn't include scale, it interpolates from matrix.
           return `translate(${d._originX}, ${d._originY})`;
         }
         const x = d.px ?? 0;
         const y = d.py ?? 0;
-        return `translate(${x}, ${y})`;
+        const s = getPinScale(x, y);
+        return `translate(${x}, ${y}) scale(${s})`;
       });
 
     const enterCluster = enter.filter((d: any) => d._cluster);
 
     // Pre-calculate and store sizes in data to avoid recalculation issues
     enterCluster.each(function (d: any) {
-      const baseW = Math.max(16, 11 + Math.log2(Math.max(1, d.count)) * 2.5);
+      const baseW = Math.max(14.4, 9.9 + Math.log2(Math.max(1, d.count)) * 2.25);
       const baseH = baseW;
       d._collapsedW = baseW;
       d._collapsedH = baseH;
-      d._expandedW = d.cityName ? Math.max(baseW, Math.min(60, d.cityName.length * 5 + 12)) : baseW;
-      d._expandedH = d.cityName ? baseH + 10 : baseH;
+      d._expandedW = d.cityName ? Math.max(baseW, Math.min(54, d.cityName.length * 4.5 + 10.8)) : baseW;
+      d._expandedH = d.cityName ? baseH + 9 : baseH;
       // Check if this cluster is frozen (being zoomed) - should render expanded
       d._frozen = frozenClusterKeyRef.current === d.key;
     });
@@ -1504,7 +1643,7 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
       .attr('class', 'cluster-count')
       .attr('text-anchor', 'middle')
       .attr('dy', (d: any) => d._frozen && d.cityName ? '-0.1em' : '0.35em')
-      .attr('font-size', (d: any) => Math.max(9, 8 + Math.log2(Math.max(1, d.count)) * 0.7))
+      .attr('font-size', (d: any) => Math.max(8.1, 7.2 + Math.log2(Math.max(1, d.count)) * 0.63))
       .attr('font-weight', 'bold')
       .attr('fill', '#ffffff')
       .text((d: any) => d.count);
@@ -1709,7 +1848,8 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
                   l.attr('x2', lx).attr('y2', ly);
                   a.attr('cx', lx).attr('cy', ly);
                 }
-                return `translate(${x},${y})`;
+                const s = getPinScale(x, y);
+                return `translate(${x},${y}) scale(${s})`;
               };
             })
             .on('end', function () {
@@ -1740,7 +1880,8 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
                   l.attr('x2', lx).attr('y2', ly);
                   a.attr('cx', lx).attr('cy', ly);
                 }
-                return `translate(${x},${y})`;
+                const s = getPinScale(x, y);
+                return `translate(${x},${y}) scale(${s})`;
               };
             })
             .on('end', () => {
@@ -1759,7 +1900,9 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
           // Static position update - skip if px/py is NaN
           const px = Number.isFinite(d.px) ? d.px : 0;
           const py = Number.isFinite(d.py) ? d.py : 0;
-          gEl.attr('transform', `translate(${px},${py})`);
+          const s = getPinScale(px, py);
+          gEl.attr('transform', `translate(${px},${py}) scale(${s})`);
+          gEl.select('.cluster-count').style('opacity', Math.max(0, Math.min(1, (s - 0.4) * 3)));
           if (hasAnchor) {
             const dx = (d._anchorX - d.px);
             const dy = (d._anchorY - d.py);
@@ -1798,11 +1941,10 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
           // Check if this is a merged cluster (super-cluster containing multiple clusters)
           // Use _isMerged flag for accurate detection
           const isMergedCluster = d._isMerged === true;
-          console.log('[enter click] key:', k, '_isMerged:', d._isMerged, '_allKeys:', d._allKeys?.length);
+          // console.log('[enter click] key:', k, '_isMerged:', d._isMerged, '_allKeys:', d._allKeys?.length);
 
-          // If single item cluster, directly select it
-          if (d._items && d._items.length === 1 && !isMergedCluster) {
-            console.log('[globe] single cluster click, selecting:', d._items[0]);
+          // Single-item cluster: always directly open the detail panel
+          if (d._items && d._items.length === 1) {
             try {
               onSelectExhibition && onSelectExhibition(d._items[0] as Exhibition);
             } catch (e) { console.error('[globe] select error:', e); }
@@ -1845,7 +1987,7 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
               // If already zoomed in enough (scale >= 6), clusters won't split further
               // In this case, expand the merged cluster showing ALL items
               if (scaleRef.current >= 6) {
-                console.log('[enter click] merged cluster at high zoom, expanding ALL items:', d._items?.length);
+                // console.log('[enter click] merged cluster at high zoom, expanding ALL items:', d._items?.length);
 
                 // Use the first key as the expansion key
                 const expandKey = k;
@@ -2178,7 +2320,7 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
         // Render directly with ref values
         renderGlobe();
         // Also update pins position
-        renderPins();
+        renderPins(true);
 
         lastMouse = { x: event.clientX, y: event.clientY };
         moved += Math.abs(dx) + Math.abs(dy);
@@ -2293,10 +2435,26 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
                 if (hoverFetchTimeoutRef.current) window.clearTimeout(hoverFetchTimeoutRef.current);
                 hoverFetchTimeoutRef.current = window.setTimeout(() => {
                   if (hoverAbortRef.current) hoverAbortRef.current.abort();
+
+                  // Common manual overrides for 404-prone names
+                  let searchName = name;
+                  if (name === 'USA') searchName = 'United States';
+                  if (name === 'UK') searchName = 'United Kingdom';
+                  if (name === 'Russia') searchName = 'Russian Federation';
+                  if (name === 'South Korea') searchName = 'Korea (Republic of)';
+                  if (name === 'North Korea') searchName = 'Korea (Democratic People\'s Republic of)';
+
                   const ctl = new AbortController();
                   hoverAbortRef.current = ctl;
-                  fetch(`https://restcountries.com/v3.1/name/${encodeURIComponent(name)}?fullText=true`, { signal: ctl.signal })
-                    .then(r => r.ok ? r.json() : null)
+
+                  // First try with fullText=true
+                  fetch(`https://restcountries.com/v3.1/name/${encodeURIComponent(searchName)}?fullText=true`, { signal: ctl.signal })
+                    .then(r => {
+                      if (r.ok) return r.json();
+                      // If fullText fails (e.g. USA), try partial match
+                      return fetch(`https://restcountries.com/v3.1/name/${encodeURIComponent(searchName)}`, { signal: ctl.signal })
+                        .then(r2 => r2.ok ? r2.json() : null);
+                    })
                     .then((j: any) => {
                       if (!j || !j[0]) return;
                       const a2 = (j[0]?.cca2 && typeof j[0].cca2 === 'string') ? String(j[0].cca2).toLowerCase() : undefined;
@@ -2589,7 +2747,7 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
       };
 
       renderGlobe();
-      renderPins();
+      renderPins(true);
 
       lastTouch = { x: event.touches[0].clientX, y: event.touches[0].clientY };
       moved += Math.abs(dx) + Math.abs(dy);
@@ -2639,7 +2797,7 @@ const D3GeoGlobeSimplified: React.FC<D3GeoGlobeSimplifiedProps> = ({ exhibitions
       left: 0,
       width: '100vw',
       height: '100vh',
-      backgroundColor: '#ffffff',
+      backgroundColor: isDark ? '#0d0c0b' : '#e8e3da',
       overflow: 'hidden',
       touchAction: 'none',
       transform: panOffset ? `translateX(-${panOffset}px)` : 'none',

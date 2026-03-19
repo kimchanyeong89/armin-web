@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useMemo } from 'react';
+import { getDataFetchOptions } from '../utils/network';
 
 // Lightweight type for the scraped Tate artwork JSON structure
 interface TateArtworkItem {
@@ -82,7 +83,7 @@ const TateModernPermanentPage: React.FC = () => {
     (async () => {
       try {
         setLoading(true);
-        const res = await fetch('/data/tate-artworks.json', { cache: 'no-store' });
+        const res = await fetch('/data/tate-artworks.json', getDataFetchOptions());
         if (!res.ok) throw new Error(`HTTP ${res.status}`);
         const json: TateArtworksData = await res.json();
         if (alive) setData(json);

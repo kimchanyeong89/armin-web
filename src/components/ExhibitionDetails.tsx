@@ -1,11 +1,13 @@
 import { useEffect, useMemo, useRef, useState, useCallback } from "react";
 import { createPortal } from "react-dom";
 import { publicUrl } from "../utils/publicUrl";
+import { getDataFetchOptions } from "../utils/network";
 import type { Exhibition, ExhibitionItem } from "../types/Exhibition";
 import { HeartOverlay } from "./HeartOverlay";
 import { db, auth } from "../firebase";
 import { collection, doc, setDoc, deleteDoc, serverTimestamp, onSnapshot } from "firebase/firestore";
-import { onAuthStateChanged, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { onAuthStateChanged } from "firebase/auth";
+import LoginSelectionModal from "./LoginSelectionModal";
 
 interface ExhibitionDetailsProps {
   exhibition: Exhibition;
@@ -29,10 +31,10 @@ export default function ExhibitionDetails({
   // Liked museums feature
   const [likedMuseums, setLikedMuseums] = useState<Set<string>>(new Set());
   const [currentUser, setCurrentUser] = useState<any>(null);
-  
+
   // Slide-in animation state - starts false to trigger animation on mount
   const [isVisible, setIsVisible] = useState(false);
-  
+
   useEffect(() => {
     if (isOpen) {
       // Small delay to ensure DOM is ready, then trigger slide-in
@@ -88,29 +90,24 @@ export default function ExhibitionDetails({
     return () => unsub();
   }, [currentUser]);
 
+
+  const [showLoginModal, setShowLoginModal] = useState(false);
+
   // Toggle museum like
   const toggleMuseumLike = useCallback(async (e: React.MouseEvent) => {
     e.stopPropagation();
     e.preventDefault();
-    let userToUse = currentUser;
     if (!currentUser || currentUser.isAnonymous) {
-      try {
-        const provider = new GoogleAuthProvider();
-        provider.setCustomParameters({ prompt: 'select_account' });
-        const result = await signInWithPopup(auth, provider);
-        userToUse = result.user;
-      } catch (err) {
-        console.error("Login failed", err);
-        return;
-      }
+      setShowLoginModal(true);
+      return;
     }
-    if (!userToUse) return;
-    
+
+    // ... existing like logic ...
     const rawId = exhibition.slug || exhibition.id;
     const museumId = rawId.replace(/[\/\\#\[\].*]/g, '_').replace(/^https?:_+/i, '').slice(0, 200);
     const isLiked = likedMuseums.has(rawId);
-    const ref = doc(db, `users/${userToUse.uid}/liked_museums/${museumId}`);
-    
+    const ref = doc(db, `users/${currentUser.uid}/liked_museums/${museumId}`);
+
     try {
       if (isLiked) {
         setLikedMuseums(prev => { const next = new Set(prev); next.delete(rawId); return next; });
@@ -135,24 +132,17 @@ export default function ExhibitionDetails({
   const toggleExhibitionLike = useCallback(async (e: React.MouseEvent, item: ExhibitionItem) => {
     e.stopPropagation();
     e.preventDefault();
-    let userToUse = currentUser;
     if (!currentUser || currentUser.isAnonymous) {
-      try {
-        const provider = new GoogleAuthProvider();
-        provider.setCustomParameters({ prompt: 'select_account' });
-        const result = await signInWithPopup(auth, provider);
-        userToUse = result.user;
-      } catch (err) {
-        console.error("Login failed", err);
-        return;
-      }
+      setShowLoginModal(true);
+      return;
     }
-    if (!userToUse) return;
+
+    // ... existing like logic ...
     // Sanitize exhibition ID: replace slashes and special characters for Firestore path compatibility
     const rawId = item.id;
     const exhibitionId = rawId.replace(/[\/\\#\[\].*]/g, '_').replace(/^https?:_+/i, '').slice(0, 200);
     const isLiked = likedExhibitions.has(rawId);
-    const ref = doc(db, `users/${userToUse.uid}/liked_exhibitions/${exhibitionId}`);
+    const ref = doc(db, `users/${currentUser.uid}/liked_exhibitions/${exhibitionId}`);
     try {
       if (isLiked) {
         setLikedExhibitions(prev => { const next = new Set(prev); next.delete(rawId); return next; });
@@ -179,6 +169,9 @@ export default function ExhibitionDetails({
     }
   }, [currentUser, likedExhibitions]);
 
+
+
+
   const getFirstArtworkImage = async (exhibitionItemId: string): Promise<string | null> => {
     // cached?
     if (posterCacheRef.current[exhibitionItemId]) return posterCacheRef.current[exhibitionItemId];
@@ -190,7 +183,7 @@ export default function ExhibitionDetails({
     try {
       // Known local datasets mirrored by ExhibitionModal
       if (exhibitionItemId === 'vam-painting') {
-        const res = await fetch('/data/vam-paintings.json', { cache: 'no-store' });
+        const res = await fetch('/data/vam-paintings.json', getDataFetchOptions());
         if (res.ok) {
           const data = await res.json();
           const items = Array.isArray(data.items) ? data.items : [];
@@ -199,7 +192,7 @@ export default function ExhibitionDetails({
           return put(img);
         }
       } else if (exhibitionItemId === 'vam-portraits') {
-        const res = await fetch('/data/vam-portraits.json', { cache: 'no-store' });
+        const res = await fetch('/data/vam-portraits.json', getDataFetchOptions());
         if (res.ok) {
           const data = await res.json();
           const items = Array.isArray(data.items) ? data.items : [];
@@ -208,7 +201,7 @@ export default function ExhibitionDetails({
           return put(img);
         }
       } else if (exhibitionItemId === 'vam-posters') {
-        const res = await fetch('/data/vam-posters.json', { cache: 'no-store' });
+        const res = await fetch('/data/vam-posters.json', getDataFetchOptions());
         if (res.ok) {
           const data = await res.json();
           const items = Array.isArray(data.items) ? data.items : [];
@@ -217,7 +210,7 @@ export default function ExhibitionDetails({
           return put(img);
         }
       } else if (exhibitionItemId === 'vam-photographs') {
-        const res = await fetch('/data/vam-photographs.json', { cache: 'no-store' });
+        const res = await fetch('/data/vam-photographs.json', getDataFetchOptions());
         if (res.ok) {
           const data = await res.json();
           const items = Array.isArray(data.items) ? data.items : [];
@@ -226,7 +219,7 @@ export default function ExhibitionDetails({
           return put(img);
         }
       } else if (exhibitionItemId === 'npg-floor3-rooms') {
-        const res = await fetch('/data/npg-floor3.json', { cache: 'no-store' });
+        const res = await fetch('/data/npg-floor3.json', getDataFetchOptions());
         if (res.ok) {
           const data = await res.json();
           const rooms: Array<{ items?: any[] }> = Array.isArray(data.rooms) ? data.rooms : [];
@@ -237,7 +230,7 @@ export default function ExhibitionDetails({
           datasetEmptyRef.current[exhibitionItemId] = true;
         }
       } else if (exhibitionItemId === 'tm-perm-1') {
-        const res = await fetch('/data/tate-collection-highlights-artworks.json', { cache: 'no-store' });
+        const res = await fetch('/data/tate-collection-highlights-artworks.json', getDataFetchOptions());
         if (res.ok) {
           const data = await res.json();
           const items = Array.isArray(data.items) ? data.items : [];
@@ -246,7 +239,7 @@ export default function ExhibitionDetails({
           return put(img);
         }
       } else if (exhibitionItemId === 'tm-perm-3') {
-        const res = await fetch('/data/tate-artworks.json', { cache: 'no-store' });
+        const res = await fetch('/data/tate-artworks.json', getDataFetchOptions());
         if (res.ok) {
           const data = await res.json();
           const items = Array.isArray(data.items) ? data.items : [];
@@ -256,7 +249,7 @@ export default function ExhibitionDetails({
         }
       } else if (exhibitionItemId === 'tsi-perm-1') {
         // Tate St Ives Collection
-        const res = await fetch('/data/tate-st-ives-artworks.json', { cache: 'no-store' });
+        const res = await fetch('/data/tate-st-ives-artworks.json', getDataFetchOptions());
         if (res.ok) {
           const data = await res.json();
           const items = Array.isArray(data) ? data : [];
@@ -266,7 +259,7 @@ export default function ExhibitionDetails({
         }
       } else if (exhibitionItemId === 'tbc-perm-1') {
         // Tate Britain Collection
-        const res = await fetch('/data/tate-britain-artworks.json', { cache: 'no-store' });
+        const res = await fetch('/data/tate-britain-artworks.json', getDataFetchOptions());
         if (res.ok) {
           const data = await res.json();
           const items = Array.isArray(data) ? data : [];
@@ -276,7 +269,7 @@ export default function ExhibitionDetails({
         }
       } else if (exhibitionItemId === 'ng-1') {
         // National Gallery Permanent Collection
-        const res = await fetch('/data/national-gallery-permanent.json', { cache: 'no-store' });
+        const res = await fetch('/data/national-gallery-permanent.json', getDataFetchOptions());
         if (res.ok) {
           const data = await res.json();
           const items = Array.isArray(data.items) ? data.items : [];
@@ -286,7 +279,7 @@ export default function ExhibitionDetails({
         }
       } else if (exhibitionItemId === 'dpg-1') {
         // Dulwich Picture Gallery Collection
-        const res = await fetch('/data/dulwich-collection.json', { cache: 'no-store' });
+        const res = await fetch('/data/dulwich-collection.json', getDataFetchOptions());
         if (res.ok) {
           const data = await res.json();
           const items = Array.isArray(data.objects) ? data.objects : [];
@@ -296,7 +289,7 @@ export default function ExhibitionDetails({
         }
       } else if (exhibitionItemId === 'hayward-gallery-collection') {
         // Hayward Gallery Collection
-        const res = await fetch('/data/hayward-gallery-collection.json', { cache: 'no-store' });
+        const res = await fetch('/data/hayward-gallery-collection.json', getDataFetchOptions());
         if (res.ok) {
           const data = await res.json();
           const items = Array.isArray(data.objects) ? data.objects : [];
@@ -306,7 +299,7 @@ export default function ExhibitionDetails({
         }
       } else if (exhibitionItemId === 'ra-1') {
         // Royal Academy Collection
-        const res = await fetch('/data/royal-academy-collection.json', { cache: 'no-store' });
+        const res = await fetch('/data/royal-academy-collection.json', getDataFetchOptions());
         if (res.ok) {
           const data = await res.json();
           const items = Array.isArray(data.objects) ? data.objects : [];
@@ -316,7 +309,7 @@ export default function ExhibitionDetails({
         }
       } else if (exhibitionItemId === 'serp-collection') {
         // Serpentine Gallery Collection
-        const res = await fetch('/data/serpentine-gallery-collection.json', { cache: 'no-store' });
+        const res = await fetch('/data/serpentine-gallery-collection.json', getDataFetchOptions());
         if (res.ok) {
           const data = await res.json();
           const items = Array.isArray(data.objects) ? data.objects : [];
@@ -326,7 +319,7 @@ export default function ExhibitionDetails({
         }
       } else if (exhibitionItemId === 'cg-1') {
         // Courtauld Gallery Collection
-        const res = await fetch('/data/courtauld-gallery-collection.json', { cache: 'no-store' });
+        const res = await fetch('/data/courtauld-gallery-collection.json', getDataFetchOptions());
         if (res.ok) {
           const data = await res.json();
           const items = Array.isArray(data.objects) ? data.objects : [];
@@ -335,18 +328,18 @@ export default function ExhibitionDetails({
           return put(img);
         }
       } else if (exhibitionItemId === 'wag-collection') {
-        // Walker Art Gallery Collection
-        const res = await fetch('/data/walker-art-gallery-collection.json', { cache: 'no-store' });
+        // Walker Art Gallery Collection (flat array, not wrapped in an 'objects' key)
+        const res = await fetch('/data/walker-art-gallery-collection.json', getDataFetchOptions());
         if (res.ok) {
           const data = await res.json();
-          const items = Array.isArray(data.objects) ? data.objects : [];
+          const items = Array.isArray(data) ? data : (Array.isArray(data.objects) ? data.objects : []);
           const img = items.find((it: any) => it && it.image)?.image || null;
           datasetEmptyRef.current[exhibitionItemId] = !(items && items.some((it: any) => it && it.image));
           return put(img);
         }
       } else if (exhibitionItemId === 'sng-collection') {
         // Scottish National Gallery Collection
-        const res = await fetch('/data/scottish-national-gallery-collection.json', { cache: 'no-store' });
+        const res = await fetch('/data/scottish-national-gallery-collection.json', getDataFetchOptions());
         if (res.ok) {
           const data = await res.json();
           const items = Array.isArray(data.objects) ? data.objects : [];
@@ -356,7 +349,7 @@ export default function ExhibitionDetails({
         }
       } else if (exhibitionItemId === 'snpg-collection') {
         // Scottish National Portrait Gallery Collection
-        const res = await fetch('/data/scottish-national-portrait-gallery-collection.json', { cache: 'no-store' });
+        const res = await fetch('/data/scottish-national-portrait-gallery-collection.json', getDataFetchOptions());
         if (res.ok) {
           const data = await res.json();
           const items = Array.isArray(data.objects) ? data.objects : [];
@@ -366,7 +359,7 @@ export default function ExhibitionDetails({
         }
       } else if (exhibitionItemId === 'sngma-collection') {
         // Scottish National Gallery of Modern Art Collection
-        const res = await fetch('/data/scottish-national-gallery-of-modern-art-collection.json', { cache: 'no-store' });
+        const res = await fetch('/data/scottish-national-gallery-of-modern-art-collection.json', getDataFetchOptions());
         if (res.ok) {
           const data = await res.json();
           const items = Array.isArray(data.objects) ? data.objects : [];
@@ -376,7 +369,7 @@ export default function ExhibitionDetails({
         }
       } else if (exhibitionItemId === 'bm-collection') {
         // British Museum Collection
-        const res = await fetch('/data/the-british-museum-collection.json', { cache: 'no-store' });
+        const res = await fetch('/data/the-british-museum-collection.json', getDataFetchOptions());
         if (res.ok) {
           const data = await res.json();
           const items = Array.isArray(data.objects) ? data.objects : [];
@@ -386,7 +379,7 @@ export default function ExhibitionDetails({
         }
       } else if (exhibitionItemId === 'orsay-collection') {
         // Musée d'Orsay Collection
-        const res = await fetch('/data/orsay-collection.json', { cache: 'no-store' });
+        const res = await fetch('/data/orsay-collection.json', getDataFetchOptions());
         if (res.ok) {
           const data = await res.json();
           const items = Array.isArray(data.objects) ? data.objects : [];
@@ -396,7 +389,7 @@ export default function ExhibitionDetails({
         }
       } else if (exhibitionItemId === 'orangerie-collection') {
         // Musée de l'Orangerie Collection
-        const res = await fetch('/data/orangerie-collection.json', { cache: 'no-store' });
+        const res = await fetch('/data/orangerie-collection.json', getDataFetchOptions());
         if (res.ok) {
           const data = await res.json();
           const items = Array.isArray(data.objects) ? data.objects : [];
@@ -406,7 +399,7 @@ export default function ExhibitionDetails({
         }
       } else if (exhibitionItemId === 'pinault-collection') {
         // Pinault Collection
-        const res = await fetch('/data/pinault-collection.json', { cache: 'no-store' });
+        const res = await fetch('/data/pinault-collection.json', getDataFetchOptions());
         if (res.ok) {
           const data = await res.json();
           const items = Array.isArray(data.objects) ? data.objects : [];
@@ -416,7 +409,7 @@ export default function ExhibitionDetails({
         }
       } else if (exhibitionItemId === 'mep-photography') {
         // MEP Photography Collection
-        const res = await fetch('/data/mep-photography-collection.json', { cache: 'no-store' });
+        const res = await fetch('/data/mep-photography-collection.json', getDataFetchOptions());
         if (res.ok) {
           const data = await res.json();
           const items = Array.isArray(data.objects) ? data.objects : [];
@@ -424,69 +417,69 @@ export default function ExhibitionDetails({
           datasetEmptyRef.current[exhibitionItemId] = !(items && items.some((it: any) => it && it.image));
           return put(img);
         }
-      } else if (exhibitionItemId === 'pompidou-cinema') {
+      } else if (exhibitionItemId === 'pompidou-cinema-collection') {
         // Centre Pompidou Cinema Collection
-        const res = await fetch('/data/pompidou-cinema-collection.json', { cache: 'no-store' });
+        const res = await fetch('/data/pompidou-cinema-collection.json', getDataFetchOptions());
         if (res.ok) {
           const data = await res.json();
-          const items = Array.isArray(data.artworks) ? data.artworks : [];
+          const items = Array.isArray(data.artworks) ? data.artworks : (Array.isArray(data.objects) ? data.objects : []);
           const img = items.find((it: any) => it && it.image)?.image || null;
           datasetEmptyRef.current[exhibitionItemId] = !(items && items.some((it: any) => it && it.image));
           return put(img);
         }
-      } else if (exhibitionItemId === 'pompidou-painting') {
+      } else if (exhibitionItemId === 'pompidou-painting-collection') {
         // Centre Pompidou Painting Collection
-        const res = await fetch('/data/pompidou-painting-collection.json', { cache: 'no-store' });
+        const res = await fetch('/data/pompidou-painting-collection.json', getDataFetchOptions());
         if (res.ok) {
           const data = await res.json();
-          const items = Array.isArray(data.artworks) ? data.artworks : [];
+          const items = Array.isArray(data.artworks) ? data.artworks : (Array.isArray(data.objects) ? data.objects : []);
           const img = items.find((it: any) => it && it.image)?.image || null;
           datasetEmptyRef.current[exhibitionItemId] = !(items && items.some((it: any) => it && it.image));
           return put(img);
         }
-      } else if (exhibitionItemId === 'pompidou-drawing') {
+      } else if (exhibitionItemId === 'pompidou-drawing-collection') {
         // Centre Pompidou Drawing Collection
-        const res = await fetch('/data/pompidou-drawing-collection.json', { cache: 'no-store' });
+        const res = await fetch('/data/pompidou-drawing-collection.json', getDataFetchOptions());
         if (res.ok) {
           const data = await res.json();
-          const items = Array.isArray(data.artworks) ? data.artworks : [];
+          const items = Array.isArray(data.artworks) ? data.artworks : (Array.isArray(data.objects) ? data.objects : []);
           const img = items.find((it: any) => it && it.image)?.image || null;
           datasetEmptyRef.current[exhibitionItemId] = !(items && items.some((it: any) => it && it.image));
           return put(img);
         }
-      } else if (exhibitionItemId === 'pompidou-newmedia') {
+      } else if (exhibitionItemId === 'pompidou-newmedia-collection') {
         // Centre Pompidou New Media Collection
-        const res = await fetch('/data/pompidou-newmedia-collection.json', { cache: 'no-store' });
+        const res = await fetch('/data/pompidou-newmedia-collection.json', getDataFetchOptions());
         if (res.ok) {
           const data = await res.json();
-          const items = Array.isArray(data.artworks) ? data.artworks : [];
+          const items = Array.isArray(data.artworks) ? data.artworks : (Array.isArray(data.objects) ? data.objects : []);
           const img = items.find((it: any) => it && it.image)?.image || null;
           datasetEmptyRef.current[exhibitionItemId] = !(items && items.some((it: any) => it && it.image));
           return put(img);
         }
-      } else if (exhibitionItemId === 'pompidou-design') {
+      } else if (exhibitionItemId === 'pompidou-design-collection') {
         // Centre Pompidou Design Collection
-        const res = await fetch('/data/pompidou-design-collection.json', { cache: 'no-store' });
+        const res = await fetch('/data/pompidou-design-collection.json', getDataFetchOptions());
         if (res.ok) {
           const data = await res.json();
-          const items = Array.isArray(data.artworks) ? data.artworks : [];
+          const items = Array.isArray(data.artworks) ? data.artworks : (Array.isArray(data.objects) ? data.objects : []);
           const img = items.find((it: any) => it && it.image)?.image || null;
           datasetEmptyRef.current[exhibitionItemId] = !(items && items.some((it: any) => it && it.image));
           return put(img);
         }
-      } else if (exhibitionItemId === 'mam-perm-painting') {
-        // MAM Paris Painting Collection
-        const res = await fetch('/data/mam-painting-collection.json', { cache: 'no-store' });
+      } else if (exhibitionItemId === 'mam-collection') {
+        // MAM Paris Collection (La Collection)
+        const res = await fetch('/data/mam-collection.json', getDataFetchOptions());
         if (res.ok) {
           const data = await res.json();
-          const items = Array.isArray(data.artworks) ? data.artworks : [];
+          const items = Array.isArray(data.objects) ? data.objects : (Array.isArray(data.artworks) ? data.artworks : []);
           const img = items.find((it: any) => it && it.image)?.image || null;
           datasetEmptyRef.current[exhibitionItemId] = !(items && items.some((it: any) => it && it.image));
           return put(img);
         }
-      } else if (exhibitionItemId === 'louvre-painting') {
+      } else if (exhibitionItemId === 'louvre-painting-collection') {
         // Louvre Painting Collection
-        const res = await fetch('/data/louvre-painting-collection.json', { cache: 'no-store' });
+        const res = await fetch('/data/louvre-painting-collection.json', getDataFetchOptions());
         if (res.ok) {
           const data = await res.json();
           const items = Array.isArray(data.objects) ? data.objects : [];
@@ -496,7 +489,7 @@ export default function ExhibitionDetails({
         }
       } else if (exhibitionItemId === 'jacquemart-collection') {
         // Jacquemart-André Collection
-        const res = await fetch('/data/jacquemart-andre-collection.json', { cache: 'no-store' });
+        const res = await fetch('/data/jacquemart-andre-collection.json', getDataFetchOptions());
         if (res.ok) {
           const data = await res.json();
           const items = Array.isArray(data.objects) ? data.objects : [];
@@ -504,19 +497,19 @@ export default function ExhibitionDetails({
           datasetEmptyRef.current[exhibitionItemId] = !(items && items.some((it: any) => it && it.image));
           return put(img);
         }
-      } else if (exhibitionItemId === 'mam-perm-photography') {
-        // MAM Paris Photography Collection
-        const res = await fetch('/data/mam-photography-collection.json', { cache: 'no-store' });
+      } else if (exhibitionItemId === 'musee-armee-collection') {
+        // Musée de l'Armée - merged collection (peinture + photographie + dessin)
+        const res = await fetch('/data/musee-armee-peinture.json', getDataFetchOptions());
         if (res.ok) {
           const data = await res.json();
-          const items = Array.isArray(data.objects) ? data.objects : [];
-          const img = items.find((it: any) => it && it.image)?.image || null;
-          datasetEmptyRef.current[exhibitionItemId] = !(items && items.some((it: any) => it && it.image));
+          const items = Array.isArray(data.artworks) ? data.artworks : [];
+          const img = items.find((it: any) => it && (it.imageUrl || it.image))?.imageUrl || items.find((it: any) => it && (it.imageUrl || it.image))?.image || null;
+          datasetEmptyRef.current[exhibitionItemId] = !(items && items.some((it: any) => it && (it.imageUrl || it.image)));
           return put(img);
         }
       } else if (exhibitionItemId === 'marmottan-collection') {
         // Musée Marmottan Monet Collection
-        const res = await fetch('/data/marmottan-collection.json', { cache: 'no-store' });
+        const res = await fetch('/data/marmottan-collection.json', getDataFetchOptions());
         if (res.ok) {
           const data = await res.json();
           const items = Array.isArray(data.objects) ? data.objects : [];
@@ -526,7 +519,7 @@ export default function ExhibitionDetails({
         }
       } else if (exhibitionItemId === 'petit-palais-collection') {
         // Petit Palais Collection
-        const res = await fetch('/data/petit-palais-collection.json', { cache: 'no-store' });
+        const res = await fetch('/data/petit-palais-collection.json', getDataFetchOptions());
         if (res.ok) {
           const data = await res.json();
           const items = Array.isArray(data.objects) ? data.objects : [];
@@ -536,7 +529,7 @@ export default function ExhibitionDetails({
         }
       } else if (exhibitionItemId === 'palais-de-tokyo-collection') {
         // Palais de Tokyo Collection
-        const res = await fetch('/data/palais-de-tokyo-collection.json', { cache: 'no-store' });
+        const res = await fetch('/data/palais-de-tokyo-collection.json', getDataFetchOptions());
         if (res.ok) {
           const data = await res.json();
           const items = Array.isArray(data.objects) ? data.objects : [];
@@ -546,7 +539,7 @@ export default function ExhibitionDetails({
         }
       } else if (exhibitionItemId === 'picasso-drawings') {
         // Picasso Drawings Collection
-        const res = await fetch('/data/picasso-drawings-collection.json', { cache: 'no-store' });
+        const res = await fetch('/data/picasso-drawings-collection.json', getDataFetchOptions());
         if (res.ok) {
           const data = await res.json();
           const items = Array.isArray(data.objects) ? data.objects : [];
@@ -556,7 +549,7 @@ export default function ExhibitionDetails({
         }
       } else if (exhibitionItemId === 'picasso-paintings') {
         // Picasso Paintings Collection
-        const res = await fetch('/data/picasso-paintings-collection.json', { cache: 'no-store' });
+        const res = await fetch('/data/picasso-paintings-collection.json', getDataFetchOptions());
         if (res.ok) {
           const data = await res.json();
           const items = Array.isArray(data.objects) ? data.objects : [];
@@ -566,7 +559,7 @@ export default function ExhibitionDetails({
         }
       } else if (exhibitionItemId === 'picasso-sculptures') {
         // Picasso Sculptures Collection
-        const res = await fetch('/data/picasso-sculptures-collection.json', { cache: 'no-store' });
+        const res = await fetch('/data/picasso-sculptures-collection.json', getDataFetchOptions());
         if (res.ok) {
           const data = await res.json();
           const items = Array.isArray(data.objects) ? data.objects : [];
@@ -576,7 +569,7 @@ export default function ExhibitionDetails({
         }
       } else if (exhibitionItemId === 'picasso-prints') {
         // Picasso Prints Collection
-        const res = await fetch('/data/picasso-prints-collection.json', { cache: 'no-store' });
+        const res = await fetch('/data/picasso-prints-collection.json', getDataFetchOptions());
         if (res.ok) {
           const data = await res.json();
           const items = Array.isArray(data.objects) ? data.objects : [];
@@ -586,7 +579,7 @@ export default function ExhibitionDetails({
         }
       } else if (exhibitionItemId === 'guggenheim-bilbao-collection') {
         // Guggenheim Bilbao Collection
-        const res = await fetch('/data/guggenheim-bilbao-collection.json', { cache: 'no-store' });
+        const res = await fetch('/data/guggenheim-bilbao-collection.json', getDataFetchOptions());
         if (res.ok) {
           const data = await res.json();
           const items = Array.isArray(data.artworks) ? data.artworks : [];
@@ -597,7 +590,7 @@ export default function ExhibitionDetails({
         }
       } else if (exhibitionItemId === 'rouen-mba-collection') {
         // Musée des Beaux-Arts de Rouen Collection
-        const res = await fetch('/data/rouen-mba.json', { cache: 'no-store' });
+        const res = await fetch('/data/rouen-mba-collection.json', getDataFetchOptions());
         if (res.ok) {
           const data = await res.json();
           const items = Array.isArray(data) ? data : [];
@@ -605,9 +598,27 @@ export default function ExhibitionDetails({
           datasetEmptyRef.current[exhibitionItemId] = !(items && items.some((it: any) => it && it.imageUrl));
           return put(img);
         }
+      } else if (exhibitionItemId === 'carnavalet-collection') {
+        const res = await fetch('/data/carnavalet-collection.json', getDataFetchOptions());
+        if (res.ok) {
+          const data = await res.json();
+          const items = Array.isArray(data.objects) ? data.objects : (Array.isArray(data) ? data : []);
+          const img = items.find((it: any) => it && it.image)?.image || null;
+          datasetEmptyRef.current[exhibitionItemId] = !(items && items.some((it: any) => it && it.image));
+          return put(img);
+        }
+      } else if (exhibitionItemId === 'carnavalet-prints') {
+        const res = await fetch('/data/carnavalet-prints.json', getDataFetchOptions());
+        if (res.ok) {
+          const data = await res.json();
+          const items = Array.isArray(data.objects) ? data.objects : (Array.isArray(data) ? data : []);
+          const img = items.find((it: any) => it && it.image)?.image || null;
+          datasetEmptyRef.current[exhibitionItemId] = !(items && items.some((it: any) => it && it.image));
+          return put(img);
+        }
       } else if (exhibitionItemId === 'lille-pba-collection') {
         // Palais des Beaux-Arts de Lille Collection
-        const res = await fetch('/data/lille-pba.json', { cache: 'no-store' });
+        const res = await fetch('/data/lille-pba-collection.json', getDataFetchOptions());
         if (res.ok) {
           const data = await res.json();
           const items = Array.isArray(data) ? data : [];
@@ -618,14 +629,14 @@ export default function ExhibitionDetails({
       } else if (exhibitionItemId.startsWith('mamcs-')) {
         // MAMCS Strasbourg Collections
         const typeMap: Record<string, string> = {
-          'mamcs-drawings': '/data/mamcs-strasbourg-drawings-collection.json',
-          'mamcs-paintings': '/data/mamcs-strasbourg-paintings-collection.json',
-          'mamcs-photography': '/data/mamcs-strasbourg-photography-collection.json',
-          'mamcs-graphic-design': '/data/mamcs-strasbourg-graphic-design-collection.json'
+          'mamcs-strasbourg-drawings-collection': '/data/mamcs-strasbourg-drawings-collection.json',
+          'mamcs-strasbourg-paintings-collection': '/data/mamcs-strasbourg-paintings-collection.json',
+          'mamcs-strasbourg-photography-collection': '/data/mamcs-strasbourg-photography-collection.json',
+          'mamcs-strasbourg-graphic-design-collection': '/data/mamcs-strasbourg-graphic-design-collection.json'
         };
         const jsonFile = typeMap[exhibitionItemId];
         if (jsonFile) {
-          const res = await fetch(jsonFile, { cache: 'no-store' });
+          const res = await fetch(jsonFile, getDataFetchOptions());
           if (res.ok) {
             const data = await res.json();
             const items = Array.isArray(data) ? data : [];
@@ -636,7 +647,7 @@ export default function ExhibitionDetails({
         }
       } else if (exhibitionItemId === 'toulouse-lautrec-collection') {
         // Musée Toulouse-Lautrec Collection
-        const res = await fetch('/data/toulouse-lautrec-collection.json', { cache: 'no-store' });
+        const res = await fetch('/data/toulouse-lautrec-collection.json', getDataFetchOptions());
         if (res.ok) {
           const data = await res.json();
           const items = Array.isArray(data) ? data : [];
@@ -646,7 +657,7 @@ export default function ExhibitionDetails({
         }
       } else if (exhibitionItemId === 'granet-collection') {
         // Musée Granet Collection
-        const res = await fetch('/data/musee-granet-collection.json', { cache: 'no-store' });
+        const res = await fetch('/data/musee-granet-collection.json', getDataFetchOptions());
         if (res.ok) {
           const data = await res.json();
           const items = Array.isArray(data) ? data : [];
@@ -663,7 +674,7 @@ export default function ExhibitionDetails({
         };
         const jsonFile = typeMap[exhibitionItemId];
         if (jsonFile) {
-          const res = await fetch(jsonFile, { cache: 'no-store' });
+          const res = await fetch(jsonFile, getDataFetchOptions());
           if (res.ok) {
             const data = await res.json();
             const items = data.artworks || (Array.isArray(data) ? data : []);
@@ -676,12 +687,141 @@ export default function ExhibitionDetails({
         }
       } else if (exhibitionItemId === 'flv-collection') {
         // Fondation Louis Vuitton Collection
-        const res = await fetch('/data/flv-collection.json', { cache: 'no-store' });
+        const res = await fetch('/data/flv-collection.json', getDataFetchOptions());
         if (res.ok) {
           const data = await res.json();
           const items = Array.isArray(data) ? data : [];
           const img = items.find((it: any) => it && it.imageUrl)?.imageUrl || null;
           datasetEmptyRef.current[exhibitionItemId] = !(items && items.some((it: any) => it && it.imageUrl));
+          return put(img);
+        }
+      } else if (exhibitionItemId === 'mad-collection') {
+        // MAD Paris — Les collections (Musée des Arts Décoratifs)
+        const res = await fetch('/data/mad-paris-collection.json', getDataFetchOptions());
+        if (res.ok) {
+          const data = await res.json();
+          const items = Array.isArray(data.objects) ? data.objects : [];
+          const img = items.find((it: any) => it && it.image)?.image || null;
+          datasetEmptyRef.current[exhibitionItemId] = !(items && items.some((it: any) => it && it.image));
+          return put(img);
+        }
+      } else if (
+        exhibitionItemId === 'grenoble-paintings' ||
+        exhibitionItemId === 'grenoble-drawings' ||
+        exhibitionItemId === 'grenoble-photography' ||
+        exhibitionItemId === 'bordeaux-paintings' ||
+        exhibitionItemId === 'bordeaux-drawings' ||
+        exhibitionItemId === 'lyon-collection'
+      ) {
+        // French regional museums using imageUrl field
+        const fileMap: Record<string, string> = {
+          'grenoble-paintings': '/data/musee-grenoble-paintings-collection.json',
+          'grenoble-drawings': '/data/musee-grenoble-drawings-collection.json',
+          'grenoble-photography': '/data/musee-grenoble-photography-collection.json',
+          'bordeaux-paintings': '/data/musba-bordeaux-paintings-collection.json',
+          'bordeaux-drawings': '/data/musba-bordeaux-drawings-collection.json',
+          'lyon-collection': '/data/mba-lyon-collection.json',
+        };
+        const jsonFile = fileMap[exhibitionItemId];
+        if (jsonFile) {
+          const res = await fetch(jsonFile, getDataFetchOptions());
+          if (res.ok) {
+            const data = await res.json();
+            const items = Array.isArray(data) ? data : (Array.isArray(data.objects) ? data.objects : []);
+            const img = items.find((it: any) => it && (it.imageUrl || it.image))?.imageUrl
+              || items.find((it: any) => it && it.image)?.image || null;
+            datasetEmptyRef.current[exhibitionItemId] = !(items && items.some((it: any) => it && (it.imageUrl || it.image)));
+            return put(img);
+          }
+        }
+      } else if (
+        exhibitionItemId === 'conde-paintings' ||
+        exhibitionItemId === 'guimet-collection' ||
+        exhibitionItemId === 'fabre-collection'
+      ) {
+        // French museums using image field with non-matching file names
+        const fileMap: Record<string, string> = {
+          'conde-paintings': '/data/musee-conde-paintings.json',
+          'guimet-collection': '/data/musee-guimet-collection.json',
+          'fabre-collection': '/data/musee-fabre-collection.json',
+        };
+        const jsonFile = fileMap[exhibitionItemId];
+        if (jsonFile) {
+          const res = await fetch(jsonFile, getDataFetchOptions());
+          if (res.ok) {
+            const data = await res.json();
+            const items = Array.isArray(data.objects) ? data.objects : (Array.isArray(data) ? data : []);
+            const img = items.find((it: any) => it && it.image)?.image || null;
+            datasetEmptyRef.current[exhibitionItemId] = !(items && items.some((it: any) => it && it.image));
+            return put(img);
+          }
+        }
+      } else if (exhibitionItemId === 'shanghaimuseum-paintings-all') {
+        // Shanghai Museum — Paintings
+        const res = await fetch('/data/shanghaimuseum-paintings-all.json', getDataFetchOptions());
+        if (res.ok) {
+          const data = await res.json();
+          const items = Array.isArray(data) ? data : [];
+          const img = items.find((it: any) => it && (it.image || it.imageUrl))?.image || items.find((it: any) => it && it.imageUrl)?.imageUrl || null;
+          datasetEmptyRef.current[exhibitionItemId] = !(items && items.some((it: any) => it && (it.image || it.imageUrl)));
+          return put(img);
+        }
+      } else if (exhibitionItemId === 'gdmoa-online-collection') {
+        // Guangdong Museum of Art (GDMOA) — Online Collection
+        const res = await fetch('/data/gdmoa-online-collection-all.json', getDataFetchOptions());
+        if (res.ok) {
+          const data = await res.json();
+          const items = Array.isArray(data) ? data : [];
+          const img = items.find((it: any) => it && (it.image || it.imageUrl))?.image || items.find((it: any) => it && it.imageUrl)?.imageUrl || null;
+          datasetEmptyRef.current[exhibitionItemId] = !(items && items.some((it: any) => it && (it.image || it.imageUrl)));
+          return put(img);
+        }
+      } else if (exhibitionItemId === 'tfam' || exhibitionItemId === 'tfam-collection-100' || exhibitionItemId === 'tfam-collection-all') {
+        // Taipei Fine Arts Museum (TFAM)
+        const urls = ['/data/tfam-collection-all.json', '/data/tfam-collection-100.json'];
+        for (const url of urls) {
+          const res = await fetch(url, getDataFetchOptions());
+          if (!res.ok) continue;
+          const data = await res.json();
+          const items = Array.isArray(data) ? data : [];
+          const img = items.find((it: any) => it && (it.image || it.imageUrl))?.image || items.find((it: any) => it && it.imageUrl)?.imageUrl || null;
+          datasetEmptyRef.current[exhibitionItemId] = !(items && items.some((it: any) => it && (it.image || it.imageUrl)));
+          return put(img);
+        }
+      } else if (
+        exhibitionItemId === 'albertina-paintings-sculpture-100' ||
+        exhibitionItemId === 'albertina-drawings-prints-100' ||
+        exhibitionItemId === 'albertina-photography-100' ||
+        exhibitionItemId === 'albertina-objects-installations-media-art-100' ||
+        exhibitionItemId === 'albertina-poster-100'
+      ) {
+        // ALBERTINA Museum Vienna test groups (5×100 sample datasets)
+        const jsonMap: Record<string, string> = {
+          'albertina-paintings-sculpture-100': '/data/albertina-paintings-sculpture-100.json',
+          'albertina-drawings-prints-100': '/data/albertina-drawings-prints-100.json',
+          'albertina-photography-100': '/data/albertina-photography-100.json',
+          'albertina-objects-installations-media-art-100': '/data/albertina-objects-installations-media-art-100.json',
+          'albertina-poster-100': '/data/albertina-poster-100.json',
+        };
+        const jsonFile = jsonMap[exhibitionItemId];
+        if (jsonFile) {
+          const res = await fetch(jsonFile, getDataFetchOptions());
+          if (res.ok) {
+            const data = await res.json();
+            const items = Array.isArray(data.objects) ? data.objects : [];
+            const img = items.find((it: any) => it && it.imageUrl)?.imageUrl || null;
+            datasetEmptyRef.current[exhibitionItemId] = !(items && items.some((it: any) => it && it.imageUrl));
+            return put(img);
+          }
+        }
+      } else if (exhibitionItemId === 'khm-collection') {
+        // Kunsthistorisches Museum Vienna Collection
+        const res = await fetch('/data/khm-collection.json', getDataFetchOptions());
+        if (res.ok) {
+          const data = await res.json();
+          const items = Array.isArray(data.objects) ? data.objects : [];
+          const img = items.find((it: any) => it && it.image)?.image || null;
+          datasetEmptyRef.current[exhibitionItemId] = !(items && items.some((it: any) => it && it.image));
           return put(img);
         }
       } else if (exhibitionItemId === 'humboldt-collection' || exhibitionItemId === 'altes-collection' || exhibitionItemId === 'neues-collection' || exhibitionItemId === 'gemaeldegalerie-collection' || exhibitionItemId === 'alte-nationalgalerie-collection' || exhibitionItemId === 'neue-nationalgalerie-collection' || exhibitionItemId === 'bode-collection' || exhibitionItemId === 'staedel-collection' || exhibitionItemId === 'bruecke-collection') {
@@ -699,7 +839,7 @@ export default function ExhibitionDetails({
         };
         const jsonFile = jsonMap[exhibitionItemId];
         if (jsonFile) {
-          const res = await fetch(jsonFile, { cache: 'no-store' });
+          const res = await fetch(jsonFile, getDataFetchOptions());
           if (res.ok) {
             const data = await res.json();
             // SMB data is array format with imageUrl field
@@ -710,6 +850,26 @@ export default function ExhibitionDetails({
           }
         }
       }
+      // Generic fallback: for permanent exhibitions not covered above, try loading /data/${id}.json.
+      // Covers cases where the exhibition ID matches the JSON filename pattern (e.g., pompidou-*-collection).
+      try {
+        const res = await fetch(`/data/${exhibitionItemId}.json`, getDataFetchOptions());
+        if (res.ok) {
+          const data = await res.json();
+          const items: any[] = Array.isArray(data) ? data
+            : Array.isArray((data as any).artworks) ? (data as any).artworks
+              : Array.isArray((data as any).objects) ? (data as any).objects
+                : Array.isArray((data as any).items) ? (data as any).items
+                  : [];
+          const img = items.find((it: any) => it && it.image)?.image
+            || items.find((it: any) => it && it.imageUrl)?.imageUrl
+            || null;
+          if (img) {
+            datasetEmptyRef.current[exhibitionItemId] = false;
+            return put(img);
+          }
+        }
+      } catch { /* no matching file — proceed to localStorage fallback */ }
       // Generic: try local cache populated by ExhibitionModal snapshots
       try {
         const cached = localStorage.getItem(`artworks_${exhibitionItemId}`);
@@ -830,21 +990,7 @@ export default function ExhibitionDetails({
     }
     return s; // As-is fallback
   };
-  const [checking, setChecking] = useState(false);
-  async function runHealthcheck() {
-    setChecking(true);
-    try {
-      const { testStorageConnection, testFirestoreConnection } = await import("../utils/firebaseHealth");
-      const s = await testStorageConnection();
-      const f = await testFirestoreConnection();
-      alert(
-        `Storage: ${s.ok ? "OK" : `FAIL (${s.code || "unknown"}) - ${s.error}`}\n` +
-        `Firestore: ${f.ok ? "OK" : `FAIL (${f.code || "unknown"}) - ${f.error}`}`
-      );
-    } finally {
-      setChecking(false);
-    }
-  }
+
 
   // Local-only image policy: always use exhibition.representativeImage (local)
   const [isPermanentCollapsed, setIsPermanentCollapsed] = useState(false);
@@ -877,7 +1023,7 @@ export default function ExhibitionDetails({
       }
 
       try {
-        const res = await fetch(feedPath, { cache: "no-store" });
+        const res = await fetch(feedPath, getDataFetchOptions());
         if (!res.ok) return;
         const data = await res.json();
         if (aborted) return;
@@ -931,7 +1077,7 @@ export default function ExhibitionDetails({
       if (!exhibition || (exhibition.id !== 'tate-modern' && exhibition.id !== 'tm-perm-1')) { return; }
       try {
         const dataFile = exhibition.id === 'tm-perm-1' ? '/data/tate-collection-highlights-artworks.json' : '/data/tate-artworks.json';
-        const res = await fetch(dataFile, { cache: 'no-store' });
+        const res = await fetch(dataFile, getDataFetchOptions());
         if (!res.ok) return;
         const json = await res.json();
         if (cancelled) return;
@@ -1036,169 +1182,300 @@ export default function ExhibitionDetails({
     };
   }, [isOpen]);
 
+  const isMobile = typeof window !== 'undefined' ? window.innerWidth < 768 : false;
+
   return createPortal(
-    <div
-      ref={rootRef}
-      onWheelCapture={(e) => {
-        // Prevent wheel events in the details panel from reaching the map/globe
-        e.stopPropagation();
-      }}
-      onWheel={(e) => {
-        // Extra safety in bubble phase
-        e.stopPropagation();
-      }}
-      style={{
-        position: "fixed",
-        top: window.innerWidth < 768 ? 0 : "20px", // Full screen on mobile
-        right: 0,
-        width: window.innerWidth < 768 ? "100vw" : "min(400px, 90vw)",
-        height: window.innerWidth < 768 ? "100%" : "calc(100% - 20px)", // Full height on mobile
-        backgroundColor: "#fff",
-        overflowY: "auto",
-        paddingLeft: "30px",
-        paddingRight: "30px", // Make right spacing equal to left spacing
-        boxSizing: "border-box", // Include padding within width to avoid clipping on small screens
-        boxShadow: "none",
-        // Slide-in animation
-        transform: isVisible ? "translateX(0)" : "translateX(100%)",
-        transition: "transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)",
-        zIndex: 9999,
-        // Prevent scroll chaining/propagation to underlying page or map
-        overscrollBehavior: "contain",
-        // Improve touch/trackpad behavior; allow vertical scrolling only
-        touchAction: "pan-y"
-      }}
-    >
-      <button
-        onClick={onClose}
-        style={{
-          background: "none",
-          border: "none",
-          fontSize: "1.5rem",
-          cursor: "pointer",
-          marginBottom: "10px",
-          padding: 0,
-          color: "#000", // Set arrow color to black
+    <>
+      {showLoginModal && <LoginSelectionModal onClose={() => setShowLoginModal(false)} />}
+      <div
+        ref={rootRef}
+        onWheelCapture={(e) => {
+          e.stopPropagation();
         }}
-        aria-label="Back"
+        onWheel={(e) => {
+          e.stopPropagation();
+        }}
+        style={{
+          position: 'fixed',
+          top: 0,
+          right: 0,
+          width: isMobile ? '100vw' : 'min(400px, 90vw)',
+          height: '100%',
+          backgroundColor: '#fff',
+          overflowY: 'auto',
+          paddingTop: '30px',
+          paddingLeft: '30px',
+          paddingRight: '30px',
+          boxSizing: 'border-box',
+          boxShadow: 'none',
+          transform: isVisible ? 'translateX(0)' : 'translateX(100%)',
+          transition: 'transform 0.3s cubic-bezier(0.4, 0, 0.2, 1)',
+          zIndex: 3200,
+          overscrollBehavior: 'contain',
+          touchAction: 'pan-y'
+        }}
       >
-        ←
-      </button>
-      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 4 }}>
-        <h2 style={{ margin: 0, flex: 1 }}>{exhibition.name}</h2>
-        <HeartOverlay
-          isLiked={likedMuseums.has(exhibition.slug || exhibition.id)}
-          onToggle={toggleMuseumLike}
-          style={{ marginLeft: 12, padding: 0, background: 'none' }}
-          size={22}
-          color="#e11d48"
-          emptyColor="#999"
-        />
-      </div>
-      {/* 상단 대표 이미지를 로컬 아카이브에서 표시 (외부 링크/리다이렉트 금지) */}
-      {(() => {
-        const rep = exhibition.representativeImage || "";
-        const isUrl = /^https?:\/\//.test(rep);
-        const cleaned = rep.replace(/^\//, "");
-        const isLocal = /^images\//.test(cleaned); // only allow files under public/images
-        if (!isLocal && !isUrl) return null;
-        const src = isUrl ? rep : publicUrl(rep);
-        return (
-          <div
-            style={{
-              width: "100%",
-              height: "180px",
-              margin: "8px 0 10px",
-              overflow: "hidden",
-              borderRadius: 6,
-              background: "#f2f2f2",
-              border: "1px solid #e5e5e5"
-            }}
-            aria-hidden={!src}
-          >
-            {src ? (
-              <img
-                src={src}
-                alt={`${exhibition.name} building exterior`}
-                style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: "center 30%", display: "block" }}
-                loading="lazy"
-                decoding="async"
-                referrerPolicy="no-referrer"
-              />
-            ) : null}
-          </div>
-        );
-      })()}
-      {(() => {
-        // Build a concise one-line intro from description
-        const full = (ngOverride?.description || exhibition.description || "").trim();
-        const firstSentence = (() => {
-          const match = full.match(/^[^.!?\n]+[.!?]?/);
-          return match ? match[0] : full;
-        })();
-        const intro = firstSentence.length > 140 ? `${firstSentence.slice(0, 137)}…` : firstSentence;
-        return (
-          <p
-            style={{
-              fontSize: "0.72rem",
-              fontWeight: 400,
-              color: "#555",
-              marginBottom: "12px",
-              whiteSpace: "nowrap",
-              overflow: "hidden",
-              textOverflow: "ellipsis"
-            }}
-            title={full}
-          >
-            {intro}
-          </p>
-        );
-      })()}
-
-      {/* Permanent exhibitions - Top level section */}
-      <h3>
         <button
-          onClick={() => setIsPermanentCollapsed(!isPermanentCollapsed)}
+          onClick={onClose}
           style={{
-            marginRight: "8px",
-            fontSize: "0.7rem",
-            padding: "2px 5px",
-            background: "#111",
-            color: "#fff",
+            background: "none",
             border: "none",
-            borderRadius: "3px",
-            cursor: "pointer"
+            fontSize: "1.5rem",
+            cursor: "pointer",
+            marginBottom: "10px",
+            padding: 0,
+            color: "#000", // Set arrow color to black
           }}
+          aria-label="Back"
         >
-          {isPermanentCollapsed ? "▶" : "▼"}
+          ←
         </button>
-        Permanent
-      </h3>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: 4 }}>
+          <h2 style={{ margin: 0, flex: 1 }}>{exhibition.name}</h2>
+          <HeartOverlay
+            isLiked={likedMuseums.has(exhibition.slug || exhibition.id)}
+            onToggle={toggleMuseumLike}
+            style={{ marginLeft: 12, padding: 0, background: 'none' }}
+            size={22}
+            color="#e11d48"
+            emptyColor="#999"
+          />
+        </div>
+        {/* 상단 대표 이미지를 로컬 아카이브에서 표시 (외부 링크/리다이렉트 금지) */}
+        {(() => {
+          const rep = exhibition.representativeImage || "";
+          const isUrl = /^https?:\/\//.test(rep);
+          const isData = /^data:image\//.test(rep);
+          const cleaned = rep.replace(/^\//, "");
+          const isLocal = /^images\//.test(cleaned); // only allow files under public/images
+          const src = isData ? rep : (isUrl ? rep : (isLocal ? publicUrl(rep) : ""));
+          const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="600" viewBox="0 0 1200 600"><rect width="100%" height="100%" fill="#f4f4f5"/><text x="60" y="320" font-family="Arial, sans-serif" font-size="64" fill="#111">${(exhibition.name || '').replace(/&/g, '&amp;').replace(/</g, '&lt;')}</text></svg>`;
+          const fallbackSrc = `data:image/svg+xml;utf8,${encodeURIComponent(svg)}`;
+          return (
+            <div
+              style={{
+                width: "100%",
+                height: 140,
+                margin: "8px 0 10px",
+                borderRadius: 6,
+                background: "#fff",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                overflow: "hidden",
+              }}
+              aria-hidden={!src}
+            >
+              {src ? (
+                <img
+                  src={src}
+                  alt={`${exhibition.name} building exterior`}
+                  style={{ maxWidth: "100%", maxHeight: "100%", width: "auto", height: "auto", display: "block", objectFit: "contain" }}
+                  loading="lazy"
+                  decoding="async"
+                  referrerPolicy="no-referrer"
+                  onError={(e) => { e.currentTarget.src = fallbackSrc; }}
+                />
+              ) : null}
+            </div>
+          );
+        })()}
+        {(() => {
+          // Build a concise one-line intro from description
+          const full = (ngOverride?.description || exhibition.description || "").trim();
+          const firstSentence = (() => {
+            const match = full.match(/^[^.!?\n]+[.!?]?/);
+            return match ? match[0] : full;
+          })();
+          const intro = firstSentence.length > 140 ? `${firstSentence.slice(0, 137)}…` : firstSentence;
+          return (
+            <p
+              style={{
+                fontSize: "0.72rem",
+                fontWeight: 400,
+                color: "#555",
+                marginBottom: "12px",
+                whiteSpace: "nowrap",
+                overflow: "hidden",
+                textOverflow: "ellipsis"
+              }}
+              title={full}
+            >
+              {intro}
+            </p>
+          );
+        })()}
 
-      {!isPermanentCollapsed && (
-        <>
-          {(() => {
-            const list = exhibition.permanentExhibitions || [];
-            if (!list.length) return <p>No permanent items.</p>;
-            return (
-              <div
+        {/* Permanent exhibitions - Top level section */}
+        <h3>
+          <button
+            onClick={() => setIsPermanentCollapsed(!isPermanentCollapsed)}
+            style={{
+              marginRight: "8px",
+              fontSize: "0.7rem",
+              padding: "2px 5px",
+              background: "#111",
+              color: "#fff",
+              border: "none",
+              borderRadius: "3px",
+              cursor: "pointer"
+            }}
+          >
+            {isPermanentCollapsed ? "▶" : "▼"}
+          </button>
+          Permanent
+        </h3>
+
+        {!isPermanentCollapsed && (
+          <>
+            {(() => {
+              const list = exhibition.permanentExhibitions || [];
+              if (!list.length) return <p>No permanent items.</p>;
+              return (
+                <div
+                  style={{
+                    display: "grid",
+                    gridTemplateColumns: "repeat(3, 100px)",
+                    gap: "10px",
+                    justifyContent: "center",
+                  }}
+                >
+                  {list.map((item) => {
+                    // Rename European Paintings -> NATIONAL GALLERY COLLECTION for NG
+                    let displayName = item.name;
+                    if (exhibition.id === 'national-gallery' || exhibition.id === 'ng-1') {
+                      if (/European Paintings/i.test(displayName)) {
+                        displayName = 'NATIONAL GALLERY COLLECTION';
+                      }
+                    }
+
+                    return (
+                      <div
+                        key={item.id}
+                        onClick={() => {
+                          onSelectExhibition(item);
+                        }}
+                        style={{
+                          width: "100px",
+                          height: "160px",
+                          border: "1px solid #ccc",
+                          display: "flex",
+                          flexDirection: "column",
+                          alignItems: "center",
+                          justifyContent: "center",
+                          cursor: "pointer"
+                        }}
+                      >
+                        <div style={{ position: 'relative', width: "80px", height: "100px", backgroundColor: "#eee", marginBottom: "3px", overflow: 'hidden', borderRadius: 3 }}>
+                          <PosterImg item={item} width={80} height={100} />
+                          <HeartOverlay
+                            isLiked={likedExhibitions.has(item.id)}
+                            onToggle={(e) => toggleExhibitionLike(e, item)}
+                            style={{ position: 'absolute', bottom: 4, right: 4, padding: 0, background: 'none', zIndex: 10, pointerEvents: 'auto' }}
+                            size={16}
+                            color="#e11d48"
+                            emptyColor="#fff"
+                          />
+                        </div>
+                        <div
+                          style={{
+                            textAlign: "center",
+                            fontSize: "0.75rem",
+                            fontWeight: "bold",
+                            whiteSpace: "nowrap",
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
+                            width: "80px",
+                            position: "relative"
+                          }}
+                        >
+                          <div
+                            style={{
+                              display: "inline-block",
+                              animation: "marquee 5s linear infinite",
+                              animationPlayState: "paused",
+                              whiteSpace: "nowrap"
+                            }}
+                            onMouseEnter={(e) => {
+                              (e.currentTarget as HTMLElement).style.animationPlayState = "running";
+                            }}
+                            onMouseLeave={(e) => {
+                              const target = e.currentTarget as HTMLElement;
+                              target.style.animationPlayState = "paused";
+                              target.style.animation = "none";
+                              target.offsetHeight;
+                              target.style.animation = "marquee 5s linear infinite";
+                              target.style.animationPlayState = "paused";
+                              target.style.transform = "translateX(0)";
+                            }}
+                          >
+                            {displayName}
+                          </div>
+                        </div>
+                        <div style={{ textAlign: "center", fontSize: "0.65rem", color: "#555", marginTop: 2 }}>
+                          <div style={{ fontWeight: 600 }}>{(item.startDate || '').toString().toLowerCase().includes('permanent') ? 'Permanent' : (item.startDate || 'Permanent')}</div>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              );
+            })()}
+          </>
+        )}
+
+        {/* Temporary exhibitions - Top level section */}
+        <h3>
+          <button
+            onClick={() => setIsTemporaryCollapsed(!isTemporaryCollapsed)}
+            style={{
+              marginRight: "8px",
+              fontSize: "0.7rem",
+              padding: "2px 5px",
+              background: "#111",
+              color: "#fff",
+              border: "none",
+              borderRadius: "3px",
+              cursor: "pointer"
+            }}
+          >
+            {isTemporaryCollapsed ? "▶" : "▼"}
+          </button>
+          Temporary
+        </h3>
+
+        {!isTemporaryCollapsed && (
+          <>
+            {/* Current temporary exhibitions */}
+            <h4 style={{ marginLeft: "20px" }}>
+              <button
+                onClick={() => setIsCurrentExhibitionsCollapsed(!isCurrentExhibitionsCollapsed)}
                 style={{
-                  display: "grid",
-                  gridTemplateColumns: "repeat(3, 100px)",
-                  gap: "10px",
-                  justifyContent: "center",
+                  marginRight: "6px",
+                  fontSize: "0.65rem",
+                  padding: "1px 4px",
+                  background: "#333",
+                  color: "#fff",
+                  border: "none",
+                  borderRadius: "3px",
+                  cursor: "pointer"
                 }}
               >
-                {list.map((item) => {
-                  // Rename European Paintings -> NATIONAL GALLERY COLLECTION for NG
-                  let displayName = item.name;
-                  if (exhibition.id === 'national-gallery' || exhibition.id === 'ng-1') {
-                    if (/European Paintings/i.test(displayName)) {
-                      displayName = 'NATIONAL GALLERY COLLECTION';
-                    }
-                  }
-
-                  return (
+                {isCurrentExhibitionsCollapsed ? "▶" : "▼"}
+              </button>
+              Current
+            </h4>
+            {!isCurrentExhibitionsCollapsed && (
+              currentSpecials && currentSpecials.length > 0 ? (
+                <div
+                  style={{
+                    display: "grid",
+                    gridTemplateColumns: "repeat(3, 100px)",
+                    gap: "10px",
+                    justifyContent: "center",
+                  }}
+                >
+                  {currentSpecials.map((item) => (
                     <div
                       key={item.id}
                       onClick={() => {
@@ -1206,7 +1483,7 @@ export default function ExhibitionDetails({
                       }}
                       style={{
                         width: "100px",
-                        height: "160px",
+                        height: "180px",
                         border: "1px solid #ccc",
                         display: "flex",
                         flexDirection: "column",
@@ -1215,7 +1492,7 @@ export default function ExhibitionDetails({
                         cursor: "pointer"
                       }}
                     >
-                      <div style={{ position: 'relative', width: "80px", height: "100px", backgroundColor: "#eee", marginBottom: "3px", overflow: 'hidden', borderRadius: 3 }}>
+                      <div style={{ position: 'relative', width: "80px", height: "100px", backgroundColor: "#eee", marginBottom: "5px", overflow: 'hidden', borderRadius: 3 }}>
                         <PosterImg item={item} width={80} height={100} />
                         <HeartOverlay
                           isLiked={likedExhibitions.has(item.id)}
@@ -1258,337 +1535,208 @@ export default function ExhibitionDetails({
                             target.style.transform = "translateX(0)";
                           }}
                         >
-                          {displayName}
+                          {item.name}
                         </div>
                       </div>
-                      <div style={{ textAlign: "center", fontSize: "0.65rem", color: "#555", marginTop: 2 }}>
-                        <div style={{ fontWeight: 600 }}>{(item.startDate || '').toString().toLowerCase().includes('permanent') ? 'Permanent' : (item.startDate || 'Permanent')}</div>
+                      <div style={{ textAlign: "center", fontSize: "0.65rem", color: "#555", marginTop: 2, lineHeight: 1.2 }}>
+                        {(item as any).dateRange ? (
+                          <div>{(item as any).dateRange}</div>
+                        ) : (
+                          <>
+                            <div>{formatYMD(item.startDate as any) || ""}</div>
+                            <div>{formatYMD(item.endDate as any) || ""}</div>
+                          </>
+                        )}
                       </div>
                     </div>
-                  );
-                })}
-              </div>
-            );
-          })()}
-        </>
-      )}
+                  ))}
+                </div>
+              ) : (
+                <p style={{ marginLeft: "20px" }}>No current items.</p>
+              )
+            )}
 
-      {/* Temporary exhibitions - Top level section */}
-      <h3>
-        <button
-          onClick={() => setIsTemporaryCollapsed(!isTemporaryCollapsed)}
-          style={{
-            marginRight: "8px",
-            fontSize: "0.7rem",
-            padding: "2px 5px",
-            background: "#111",
-            color: "#fff",
-            border: "none",
-            borderRadius: "3px",
-            cursor: "pointer"
-          }}
-        >
-          {isTemporaryCollapsed ? "▶" : "▼"}
-        </button>
-        Temporary
-      </h3>
-
-      {!isTemporaryCollapsed && (
-        <>
-          {/* Current temporary exhibitions */}
-          <h4 style={{ marginLeft: "20px" }}>
-            <button
-              onClick={() => setIsCurrentExhibitionsCollapsed(!isCurrentExhibitionsCollapsed)}
-              style={{
-                marginRight: "6px",
-                fontSize: "0.65rem",
-                padding: "1px 4px",
-                background: "#333",
-                color: "#fff",
-                border: "none",
-                borderRadius: "3px",
-                cursor: "pointer"
-              }}
-            >
-              {isCurrentExhibitionsCollapsed ? "▶" : "▼"}
-            </button>
-            Current
-          </h4>
-          {!isCurrentExhibitionsCollapsed && (
-            currentSpecials && currentSpecials.length > 0 ? (
-              <div
+            {/* Upcoming temporary exhibitions */}
+            <h4 style={{ marginLeft: "20px" }}>
+              <button
+                onClick={() => setIsUpcomingExhibitionsCollapsed(!isUpcomingExhibitionsCollapsed)}
                 style={{
-                  display: "grid",
-                  gridTemplateColumns: "repeat(3, 100px)",
-                  gap: "10px",
-                  justifyContent: "center",
+                  marginRight: "6px",
+                  fontSize: "0.65rem",
+                  padding: "1px 4px",
+                  background: "#333",
+                  color: "#fff",
+                  border: "none",
+                  borderRadius: "3px",
+                  cursor: "pointer"
                 }}
               >
-                {currentSpecials.map((item) => (
-                  <div
-                    key={item.id}
-                    onClick={() => {
-                      onSelectExhibition(item);
-                    }}
-                    style={{
-                      width: "100px",
-                      height: "180px",
-                      border: "1px solid #ccc",
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      cursor: "pointer"
-                    }}
-                  >
-                    <div style={{ position: 'relative', width: "80px", height: "100px", backgroundColor: "#eee", marginBottom: "5px", overflow: 'hidden', borderRadius: 3 }}>
-                      <PosterImg item={item} width={80} height={100} />
-                      <HeartOverlay
-                        isLiked={likedExhibitions.has(item.id)}
-                        onToggle={(e) => toggleExhibitionLike(e, item)}
-                        style={{ position: 'absolute', bottom: 4, right: 4, padding: 0, background: 'none', zIndex: 10, pointerEvents: 'auto' }}
-                        size={16}
-                        color="#e11d48"
-                        emptyColor="#fff"
-                      />
-                    </div>
+                {isUpcomingExhibitionsCollapsed ? "▶" : "▼"}
+              </button>
+              Upcoming
+            </h4>
+            {!isUpcomingExhibitionsCollapsed && (
+              upcomingSpecials && upcomingSpecials.length > 0 ? (
+                <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 100px)", gap: "10px", justifyContent: "center" }}>
+                  {upcomingSpecials.map((item) => (
                     <div
+                      key={`up-${item.id}`}
+                      onClick={() => onSelectExhibition(item)}
                       style={{
-                        textAlign: "center",
-                        fontSize: "0.75rem",
-                        fontWeight: "bold",
-                        whiteSpace: "nowrap",
-                        overflow: "hidden",
-                        textOverflow: "ellipsis",
-                        width: "80px",
-                        position: "relative"
+                        width: "100px",
+                        height: "180px",
+                        border: "1px solid #ccc",
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        cursor: "pointer"
                       }}
                     >
-                      <div
-                        style={{
-                          display: "inline-block",
-                          animation: "marquee 5s linear infinite",
-                          animationPlayState: "paused",
-                          whiteSpace: "nowrap"
-                        }}
-                        onMouseEnter={(e) => {
-                          (e.currentTarget as HTMLElement).style.animationPlayState = "running";
-                        }}
-                        onMouseLeave={(e) => {
-                          const target = e.currentTarget as HTMLElement;
-                          target.style.animationPlayState = "paused";
-                          target.style.animation = "none";
-                          target.offsetHeight;
-                          target.style.animation = "marquee 5s linear infinite";
-                          target.style.animationPlayState = "paused";
-                          target.style.transform = "translateX(0)";
-                        }}
-                      >
-                        {item.name}
+                      <div style={{ position: 'relative', width: "80px", height: "100px", backgroundColor: "#eee", marginBottom: "5px", overflow: 'hidden', borderRadius: 3 }}>
+                        <PosterImg item={item as any} width={80} height={100} />
+                        <HeartOverlay
+                          isLiked={likedExhibitions.has(item.id)}
+                          onToggle={(e) => toggleExhibitionLike(e, item)}
+                          style={{ position: 'absolute', bottom: 4, right: 4, padding: 0, background: 'none', zIndex: 10, pointerEvents: 'auto' }}
+                          size={16}
+                          color="#e11d48"
+                          emptyColor="#fff"
+                        />
+                      </div>
+                      <div style={{ textAlign: "center", fontSize: "0.75rem", fontWeight: 700, width: "80px", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{item.name}</div>
+                      <div style={{ textAlign: "center", fontSize: "0.65rem", color: "#555", marginTop: 2, lineHeight: 1.2 }}>
+                        {(item as any).dateRange ? (
+                          <div>{(item as any).dateRange}</div>
+                        ) : (
+                          <>
+                            <div>{formatYMD(item.startDate as any) || ""}</div>
+                            <div>{formatYMD(item.endDate as any) || ""}</div>
+                          </>
+                        )}
                       </div>
                     </div>
-                    <div style={{ textAlign: "center", fontSize: "0.65rem", color: "#555", marginTop: 2, lineHeight: 1.2 }}>
-                      {(item as any).dateRange ? (
-                        <div>{(item as any).dateRange}</div>
-                      ) : (
-                        <>
-                          <div>{formatYMD(item.startDate as any) || ""}</div>
-                          <div>{formatYMD(item.endDate as any) || ""}</div>
-                        </>
-                      )}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <p style={{ marginLeft: "20px" }}>No current items.</p>
-            )
-          )}
+                  ))}
+                </div>
+              ) : (
+                <p style={{ marginLeft: "20px" }}>No upcoming items.</p>
+              )
+            )}
 
-          {/* Upcoming temporary exhibitions */}
-          <h4 style={{ marginLeft: "20px" }}>
-            <button
-              onClick={() => setIsUpcomingExhibitionsCollapsed(!isUpcomingExhibitionsCollapsed)}
-              style={{
-                marginRight: "6px",
-                fontSize: "0.65rem",
-                padding: "1px 4px",
-                background: "#333",
-                color: "#fff",
-                border: "none",
-                borderRadius: "3px",
-                cursor: "pointer"
-              }}
-            >
-              {isUpcomingExhibitionsCollapsed ? "▶" : "▼"}
-            </button>
-            Upcoming
-          </h4>
-          {!isUpcomingExhibitionsCollapsed && (
-            upcomingSpecials && upcomingSpecials.length > 0 ? (
-              <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 100px)", gap: "10px", justifyContent: "center" }}>
-                {upcomingSpecials.map((item) => (
-                  <div
-                    key={`up-${item.id}`}
-                    onClick={() => onSelectExhibition(item)}
-                    style={{
-                      width: "100px",
-                      height: "180px",
-                      border: "1px solid #ccc",
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      cursor: "pointer"
-                    }}
-                  >
-                    <div style={{ position: 'relative', width: "80px", height: "100px", backgroundColor: "#eee", marginBottom: "5px", overflow: 'hidden', borderRadius: 3 }}>
-                      <PosterImg item={item as any} width={80} height={100} />
-                      <HeartOverlay
-                        isLiked={likedExhibitions.has(item.id)}
-                        onToggle={(e) => toggleExhibitionLike(e, item)}
-                        style={{ position: 'absolute', bottom: 4, right: 4, padding: 0, background: 'none', zIndex: 10, pointerEvents: 'auto' }}
-                        size={16}
-                        color="#e11d48"
-                        emptyColor="#fff"
-                      />
-                    </div>
-                    <div style={{ textAlign: "center", fontSize: "0.75rem", fontWeight: 700, width: "80px", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>{item.name}</div>
-                    <div style={{ textAlign: "center", fontSize: "0.65rem", color: "#555", marginTop: 2, lineHeight: 1.2 }}>
-                      {(item as any).dateRange ? (
-                        <div>{(item as any).dateRange}</div>
-                      ) : (
-                        <>
-                          <div>{formatYMD(item.startDate as any) || ""}</div>
-                          <div>{formatYMD(item.endDate as any) || ""}</div>
-                        </>
-                      )}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <p style={{ marginLeft: "20px" }}>No upcoming items.</p>
-            )
-          )}
-
-          {/* Past temporary exhibitions */}
-          <h4 style={{ marginLeft: "20px" }}>
-            <button
-              onClick={() => setIsPastExhibitionsCollapsed(!isPastExhibitionsCollapsed)}
-              style={{
-                marginRight: "6px",
-                fontSize: "0.65rem",
-                padding: "1px 4px",
-                background: "#333",
-                color: "#fff",
-                border: "none",
-                borderRadius: "3px",
-                cursor: "pointer"
-              }}
-            >
-              {isPastExhibitionsCollapsed ? "▶" : "▼"}
-            </button>
-            Past
-          </h4>
-          {!isPastExhibitionsCollapsed && (
-            pastList && pastList.length > 0 ? (
-              <div
+            {/* Past temporary exhibitions */}
+            <h4 style={{ marginLeft: "20px" }}>
+              <button
+                onClick={() => setIsPastExhibitionsCollapsed(!isPastExhibitionsCollapsed)}
                 style={{
-                  display: "grid",
-                  gridTemplateColumns: "repeat(3, 100px)",
-                  gap: "10px",
-                  justifyContent: "center",
+                  marginRight: "6px",
+                  fontSize: "0.65rem",
+                  padding: "1px 4px",
+                  background: "#333",
+                  color: "#fff",
+                  border: "none",
+                  borderRadius: "3px",
+                  cursor: "pointer"
                 }}
               >
-                {pastList.map((item) => (
-                  <div
-                    key={item.id}
-                    onClick={() => onSelectExhibition(item)}
-                    style={{
-                      width: "100px",
-                      height: "180px",
-                      border: "1px solid #ccc",
-                      display: "flex",
-                      flexDirection: "column",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      cursor: "pointer"
-                    }}
-                  >
-                    <div style={{ position: 'relative', width: "80px", height: "100px", backgroundColor: "#eee", marginBottom: "5px", overflow: 'hidden', borderRadius: 3 }}>
-                      <PosterImg item={item as any} width={80} height={100} />
-                      <HeartOverlay
-                        isLiked={likedExhibitions.has(item.id)}
-                        onToggle={(e) => toggleExhibitionLike(e, item)}
-                        style={{ position: 'absolute', bottom: 4, right: 4, padding: 0, background: 'none', zIndex: 10, pointerEvents: 'auto' }}
-                        size={16}
-                        color="#e11d48"
-                        emptyColor="#fff"
-                      />
-                    </div>
+                {isPastExhibitionsCollapsed ? "▶" : "▼"}
+              </button>
+              Past
+            </h4>
+            {!isPastExhibitionsCollapsed && (
+              pastList && pastList.length > 0 ? (
+                <div
+                  style={{
+                    display: "grid",
+                    gridTemplateColumns: "repeat(3, 100px)",
+                    gap: "10px",
+                    justifyContent: "center",
+                  }}
+                >
+                  {pastList.map((item) => (
                     <div
+                      key={item.id}
+                      onClick={() => onSelectExhibition(item)}
                       style={{
-                        textAlign: "center",
-                        fontSize: "0.75rem",
-                        fontWeight: "bold",
-                        whiteSpace: "nowrap",
-                        overflow: "hidden",
-                        textOverflow: "ellipsis",
-                        width: "80px",
-                        position: "relative"
+                        width: "100px",
+                        height: "180px",
+                        border: "1px solid #ccc",
+                        display: "flex",
+                        flexDirection: "column",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        cursor: "pointer"
                       }}
                     >
+                      <div style={{ position: 'relative', width: "80px", height: "100px", backgroundColor: "#eee", marginBottom: "5px", overflow: 'hidden', borderRadius: 3 }}>
+                        <PosterImg item={item as any} width={80} height={100} />
+                        <HeartOverlay
+                          isLiked={likedExhibitions.has(item.id)}
+                          onToggle={(e) => toggleExhibitionLike(e, item)}
+                          style={{ position: 'absolute', bottom: 4, right: 4, padding: 0, background: 'none', zIndex: 10, pointerEvents: 'auto' }}
+                          size={16}
+                          color="#e11d48"
+                          emptyColor="#fff"
+                        />
+                      </div>
                       <div
                         style={{
-                          display: "inline-block",
-                          animation: "marquee 5s linear infinite",
-                          animationPlayState: "paused",
-                          whiteSpace: "nowrap"
-                        }}
-                        onMouseEnter={(e) => {
-                          (e.currentTarget as HTMLElement).style.animationPlayState = "running";
-                        }}
-                        onMouseLeave={(e) => {
-                          const target = e.currentTarget as HTMLElement;
-                          target.style.animationPlayState = "paused";
-                          target.style.animation = "none";
-                          target.offsetHeight;
-                          target.style.animation = "marquee 5s linear infinite";
-                          target.style.animationPlayState = "paused";
-                          target.style.transform = "translateX(0)";
+                          textAlign: "center",
+                          fontSize: "0.75rem",
+                          fontWeight: "bold",
+                          whiteSpace: "nowrap",
+                          overflow: "hidden",
+                          textOverflow: "ellipsis",
+                          width: "80px",
+                          position: "relative"
                         }}
                       >
-                        {item.name}
+                        <div
+                          style={{
+                            display: "inline-block",
+                            animation: "marquee 5s linear infinite",
+                            animationPlayState: "paused",
+                            whiteSpace: "nowrap"
+                          }}
+                          onMouseEnter={(e) => {
+                            (e.currentTarget as HTMLElement).style.animationPlayState = "running";
+                          }}
+                          onMouseLeave={(e) => {
+                            const target = e.currentTarget as HTMLElement;
+                            target.style.animationPlayState = "paused";
+                            target.style.animation = "none";
+                            target.offsetHeight;
+                            target.style.animation = "marquee 5s linear infinite";
+                            target.style.animationPlayState = "paused";
+                            target.style.transform = "translateX(0)";
+                          }}
+                        >
+                          {item.name}
+                        </div>
+                      </div>
+                      <div style={{ textAlign: "center", fontSize: "0.65rem", color: "#555", marginTop: 2, lineHeight: 1.2 }}>
+                        {(item as any).dateRange ? (
+                          <div>{(item as any).dateRange}</div>
+                        ) : (
+                          <>
+                            <div>{formatYMD(item.startDate as any) || ""}</div>
+                            <div>{formatYMD(item.endDate as any) || ""}</div>
+                          </>
+                        )}
                       </div>
                     </div>
-                    <div style={{ textAlign: "center", fontSize: "0.65rem", color: "#555", marginTop: 2, lineHeight: 1.2 }}>
-                      {(item as any).dateRange ? (
-                        <div>{(item as any).dateRange}</div>
-                      ) : (
-                        <>
-                          <div>{formatYMD(item.startDate as any) || ""}</div>
-                          <div>{formatYMD(item.endDate as any) || ""}</div>
-                        </>
-                      )}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <p style={{ marginLeft: "20px" }}>No past items.</p>
-            )
-          )}
-        </>
-      )}
+                  ))}
+                </div>
+              ) : (
+                <p style={{ marginLeft: "20px" }}>No past items.</p>
+              )
+            )}
+          </>
+        )}
 
-      {/* Dev: Firebase connection healthcheck */}
-      <div style={{ marginTop: 12 }}>
-        <button onClick={runHealthcheck} disabled={checking} style={{ fontSize: "0.85rem" }}>
-          {checking ? "Checking..." : "Check Firebase connection"}
-        </button>
+        {/* Dev: Firebase connection healthcheck */}
+
       </div>
-    </div>,
+    </>,
     document.body
   );
 }

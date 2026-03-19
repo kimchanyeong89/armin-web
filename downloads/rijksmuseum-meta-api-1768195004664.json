@@ -1,0 +1,6 @@
+{
+  "type": "https://tools.ietf.org/html/rfc9110#section-15.5.2",
+  "title": "Unauthorized",
+  "status": 401,
+  "traceId": "00-30baa0f0463fbeaac7250721aea9abe6-d47d95cb1ced8e62-01"
+}

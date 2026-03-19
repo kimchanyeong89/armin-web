@@ -56,12 +56,12 @@ function saveProgress(progress) {
 }
 
 // 작품 목록 페이지에서 링크 수집 (/artworks/ 경로만)
-async function collectArtworkLinks(page) {
+async function collectArtworkLinks(page, existingUrlsSet) {
   log('📋 작품 링크 수집 시작...');
   const artworkLinks = [];
-  const processedUrls = new Set();
+  const processedUrls = new Set(existingUrlsSet || []);
   let attempts = 0;
-  const maxAttempts = 500; // 893개 수집을 위해 충분한 시도
+  const maxAttempts = 1000; // 893개 수집을 위해 더 많은 시도
   
   await page.goto(COLLECTION_URL, { waitUntil: 'networkidle', timeout: 60000 });
   await sleep(5000);
@@ -73,106 +73,154 @@ async function collectArtworkLinks(page) {
     await sleep(2000);
   } catch (e) {}
   
-  let previousCount = 0;
+  let previousCount = existingUrlsSet ? existingUrlsSet.size : 0;
   let noChangeCount = 0;
+  const maxNoChangeCount = 30; // 30번 연속 변화 없어도 계속 시도
   
-  while (artworkLinks.length < TEST_LIMIT && attempts < maxAttempts) {
-    log(`시도 ${attempts + 1}... (현재 ${artworkLinks.length}개 링크)`);
+  while (artworkLinks.length + previousCount < TEST_LIMIT && attempts < maxAttempts) {
+    log(`시도 ${attempts + 1}... (현재 ${artworkLinks.length + previousCount}개 링크, 새로 발견: ${artworkLinks.length}개)`);
     
     try {
-      // 링크 추출
-      const links = await page.evaluate((baseUrl) => {
-        const links = [];
-        const allLinks = document.querySelectorAll('a[href*="/our-collection/artworks/"]');
-        allLinks.forEach(a => {
-          const href = a.getAttribute('href');
-          if (href && href.includes('/artworks/')) {
-            const fullUrl = href.startsWith('http') ? href : `${baseUrl}${href}`;
-            links.push(fullUrl);
+      // 링크 추출 (브라우저가 닫혔으면 재시작)
+      let links = [];
+      try {
+        links = await page.evaluate((baseUrl) => {
+          const links = [];
+          const allLinks = document.querySelectorAll('a[href*="/our-collection/artworks/"]');
+          allLinks.forEach(a => {
+            const href = a.getAttribute('href');
+            if (href && href.includes('/artworks/')) {
+              const fullUrl = href.startsWith('http') ? href : `${baseUrl}${href}`;
+              links.push(fullUrl);
+            }
+          });
+          return [...new Set(links)];
+        }, BASE_URL);
+      } catch (evalError) {
+        if (evalError.message.includes('closed')) {
+          log('  ⚠️ 브라우저가 닫혔습니다, 재접속...');
+          try {
+            await page.goto(COLLECTION_URL, { waitUntil: 'networkidle', timeout: 60000 });
+            await sleep(3000);
+            links = await page.evaluate((baseUrl) => {
+              const links = [];
+              const allLinks = document.querySelectorAll('a[href*="/our-collection/artworks/"]');
+              allLinks.forEach(a => {
+                const href = a.getAttribute('href');
+                if (href && href.includes('/artworks/')) {
+                  const fullUrl = href.startsWith('http') ? href : `${baseUrl}${href}`;
+                  links.push(fullUrl);
+                }
+              });
+              return [...new Set(links)];
+            }, BASE_URL);
+          } catch (reconnectError) {
+            log(`  ❌ 재접속 실패: ${reconnectError.message}`);
+            continue;
           }
-        });
-        return [...new Set(links)];
-      }, BASE_URL);
-      
-      for (const link of links) {
-        if (!processedUrls.has(link) && artworkLinks.length < TEST_LIMIT) {
-          artworkLinks.push(link);
-          processedUrls.add(link);
+        } else {
+          throw evalError;
         }
       }
       
+      let newLinksCount = 0;
+      for (const link of links) {
+        if (!processedUrls.has(link) && (artworkLinks.length + previousCount) < TEST_LIMIT) {
+          artworkLinks.push(link);
+          processedUrls.add(link);
+          newLinksCount++;
+        }
+      }
+      
+      const currentTotal = artworkLinks.length + previousCount;
+      
       // 링크 개수가 증가했는지 확인
-      if (artworkLinks.length === previousCount) {
+      if (newLinksCount === 0) {
         noChangeCount++;
-        // 10번 연속 변화가 없으면 종료
-        if (noChangeCount >= 10) {
-          log(`더 이상 새로운 링크 없음 (${noChangeCount}번 연속)`);
+        if (noChangeCount >= maxNoChangeCount && currentTotal >= 850) {
+          log(`더 이상 새로운 링크 없음 (${noChangeCount}번 연속), 현재: ${currentTotal}개`);
           break;
         }
       } else {
         noChangeCount = 0;
-        previousCount = artworkLinks.length;
+        log(`  ➕ ${newLinksCount}개 새 링크 발견 (총 ${currentTotal}개)`);
       }
       
-      // 우측 화살표 버튼 클릭 시도
-      const clickedRight = await page.evaluate(() => {
-        // 스크롤을 하단으로 이동해서 버튼이 보이도록 함
-        window.scrollTo(0, document.body.scrollHeight);
-        
-        // inpage-horizontal-navigation__scroll-to 클래스 사용 (back이 아닌 것 = 우측 버튼)
-        const navButtons = Array.from(document.querySelectorAll('.inpage-horizontal-navigation__scroll-to'));
-        const rightBtn = navButtons.find(btn => {
-          return !btn.classList.contains('inpage-horizontal-navigation__scroll-to-back') &&
-                 btn.offsetParent !== null &&
-                 !btn.disabled;
-        });
-        
-        if (rightBtn) {
-          rightBtn.click();
-          return true;
-        }
-        
-        // 대체 방법: SVG가 있는 버튼 중 화면 하단에 있는 것
-        const allButtons = Array.from(document.querySelectorAll('button, a'));
-        for (const btn of allButtons) {
-          const rect = btn.getBoundingClientRect();
-          if (rect.bottom < window.innerHeight * 0.7) continue; // 화면 하단에 있는 버튼만
-          const style = window.getComputedStyle(btn);
-          if (style.display === 'none' || style.visibility === 'hidden' || rect.width === 0 || rect.height === 0) continue;
-          if (btn.disabled) continue;
+      // 우측 화살표 버튼 클릭 시도 (브라우저가 닫혔으면 스킵)
+      let clickedRight = false;
+      try {
+        clickedRight = await page.evaluate(() => {
+          // 스크롤을 하단으로 이동해서 버튼이 보이도록 함
+          window.scrollTo(0, document.body.scrollHeight);
           
-          const svg = btn.querySelector('svg');
-          if (svg && rect.width > 20 && rect.width < 100 && rect.height > 20 && rect.height < 100) {
-            // back이 아닌 버튼 (우측)
-            if (!btn.classList.contains('back') && !btn.className.includes('back')) {
-              btn.click();
-              return true;
+          // inpage-horizontal-navigation__scroll-to 클래스 사용 (back이 아닌 것 = 우측 버튼)
+          const navButtons = Array.from(document.querySelectorAll('.inpage-horizontal-navigation__scroll-to'));
+          const rightBtn = navButtons.find(btn => {
+            return !btn.classList.contains('inpage-horizontal-navigation__scroll-to-back') &&
+                   btn.offsetParent !== null &&
+                   !btn.disabled;
+          });
+          
+          if (rightBtn) {
+            rightBtn.click();
+            return true;
+          }
+          
+          // 대체 방법: SVG가 있는 버튼 중 화면 하단에 있는 것
+          const allButtons = Array.from(document.querySelectorAll('button, a'));
+          for (const btn of allButtons) {
+            const rect = btn.getBoundingClientRect();
+            if (rect.bottom < window.innerHeight * 0.7) continue; // 화면 하단에 있는 버튼만
+            const style = window.getComputedStyle(btn);
+            if (style.display === 'none' || style.visibility === 'hidden' || rect.width === 0 || rect.height === 0) continue;
+            if (btn.disabled) continue;
+            
+            const svg = btn.querySelector('svg');
+            if (svg && rect.width > 20 && rect.width < 100 && rect.height > 20 && rect.height < 100) {
+              // back이 아닌 버튼 (우측)
+              if (!btn.classList.contains('back') && !btn.className.includes('back')) {
+                btn.click();
+                return true;
+              }
             }
           }
-        }
-        
-        return false;
-      });
-      
-      if (!clickedRight) {
-        // 버튼이 없으면 스크롤
-        await page.evaluate(() => {
-          window.scrollBy(0, 500);
-          window.scrollTo(0, document.body.scrollHeight);
+          
+          return false;
         });
+      } catch (clickError) {
+        if (!clickError.message.includes('closed')) {
+          log(`  ⚠️ 버튼 클릭 오류: ${clickError.message}`);
+        }
       }
       
-      await sleep(2000); // 로딩 대기
+      if (!clickedRight) {
+        // 버튼이 없으면 스크롤 (더 적극적으로)
+        try {
+          await page.evaluate(() => {
+            window.scrollBy(0, 800);
+            window.scrollTo(0, document.body.scrollHeight);
+          });
+        } catch (scrollError) {
+          if (!scrollError.message.includes('closed')) {
+            log(`  ⚠️ 스크롤 오류: ${scrollError.message}`);
+          }
+        }
+      }
+      
+      await sleep(2500); // 로딩 대기 시간 증가
       attempts++;
       
     } catch (error) {
       log(`❌ 오류: ${error.message}`);
-      break;
+      // 오류가 발생해도 계속 시도
+      await sleep(2000);
+      attempts++;
     }
   }
   
-  log(`✅ 총 ${artworkLinks.length}개 링크 수집 완료`);
-  return artworkLinks.slice(0, TEST_LIMIT);
+  const totalLinks = artworkLinks.length + previousCount;
+  log(`✅ 총 ${totalLinks}개 링크 수집 완료 (기존 ${previousCount}개 + 새로 ${artworkLinks.length}개)`);
+  return artworkLinks;
 }
 
 // 작품 상세 페이지에서 메타데이터 추출
@@ -319,26 +367,29 @@ async function main() {
   
   const progress = loadProgress();
   const processedUrls = new Set(progress.processedUrls || []);
+  const existingUrlsSet = new Set(progress.processedUrls || []);
+  
+  log(`📥 기존 ${existingUrlsSet.size}개 URL 로드됨, 나머지 수집 시작...`);
   
   const browser = await chromium.launch({ headless: true });
   const page = await browser.newPage();
   
   try {
-    const artworkLinks = await collectArtworkLinks(page);
-    log(`\n📦 ${artworkLinks.length}개 작품 상세 정보 수집 시작...\n`);
+    const newArtworkLinks = await collectArtworkLinks(page, existingUrlsSet);
+    log(`\n📦 ${newArtworkLinks.length}개 새 작품 상세 정보 수집 시작...\n`);
     
     const artworks = [];
     const errors = [];
     
-    for (let i = 0; i < artworkLinks.length; i++) {
-      const link = artworkLinks[i];
+    for (let i = 0; i < newArtworkLinks.length; i++) {
+      const link = newArtworkLinks[i];
       
       if (processedUrls.has(link)) {
         log(`⏭️  이미 처리됨: ${link}`);
         continue;
       }
       
-      log(`[${i + 1}/${artworkLinks.length}] 스크래핑: ${link}`);
+      log(`[${i + 1}/${newArtworkLinks.length}] 스크래핑: ${link}`);
       const artwork = await scrapeArtwork(page, link);
       
       if (artwork && artwork.title && artwork.imageUrl) {

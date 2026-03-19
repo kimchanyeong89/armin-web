@@ -129,11 +129,34 @@ const OpenStreetMapComponent: React.FC<OpenStreetMapProps> = ({ focusLatLng, exh
     const gridSize = getClusterGridSize(zoomK);
     const roundToGrid = (v: number) => Math.round(v / gridSize) * gridSize;
     
+    const cityCenters: Record<string, { lat: number, lon: number, count: number }> = {};
+    for (const d of list) {
+        const cc = (d as any).cityCluster;
+        if (cc && zoomK < 200) {
+            if (!cityCenters[cc]) cityCenters[cc] = { lat: 0, lon: 0, count: 0 };
+            cityCenters[cc].lat += (d as any).latitude;
+            cityCenters[cc].lon += (d as any).longitude;
+            cityCenters[cc].count++;
+        }
+    }
+    for (const k in cityCenters) {
+        cityCenters[k].lat /= cityCenters[k].count;
+        cityCenters[k].lon /= cityCenters[k].count;
+    }
+
     const map: Record<string, Exhibition[]> = {};
     for (const d of list) {
       // 좌표 기반 그리드 클러스터링만 사용 (줌에 따라 동적)
-      const gridLon = roundToGrid((d as any).longitude);
-      const gridLat = roundToGrid((d as any).latitude);
+      let lat = (d as any).latitude;
+      let lon = (d as any).longitude;
+      const cc = (d as any).cityCluster;
+      if (cc && cityCenters[cc]) {
+          lat = cityCenters[cc].lat;
+          lon = cityCenters[cc].lon;
+      }
+
+      const gridLon = roundToGrid(lon);
+      const gridLat = roundToGrid(lat);
       const key = `grid:${gridLon},${gridLat}`;
       (map[key] ||= []).push(d);
     }

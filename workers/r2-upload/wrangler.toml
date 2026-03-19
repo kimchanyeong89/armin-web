@@ -4,7 +4,8 @@ compatibility_date = "2024-01-01"
 
 [[r2_buckets]]
 binding = "R2_BUCKET"
-bucket_name = "armin-images"
+bucket_name = "armin-gallery-images"
 
 [vars]
 ENVIRONMENT = "production"
+R2_PUBLIC_URL = "https://pub-6ce5ae60b244951ac36ffd277fd6ef76.r2.dev"

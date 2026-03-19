@@ -1,0 +1,12 @@
+{
+  "success": 6,
+  "failed": 82,
+  "updates": {
+    "tate-modern": "images/tate-modern.jpg",
+    "tate-britain": "images/tate-britain-building.jpg",
+    "national-gallery": "images/national-gallery.jpg",
+    "vam": "images/vam.jpg",
+    "royal-academy": "images/royal-academy-rep.jpg",
+    "british-museum": "images/british-museum.jpg"
+  }
+}
