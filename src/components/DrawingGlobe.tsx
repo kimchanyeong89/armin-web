@@ -926,11 +926,7 @@ export default function DrawingGlobe({ exhibitions, onClose, onSelectExhibition,
           </svg>
         </button>
 
-        {!isMenuOpen && !isSearchOpen && onClose && (
-          <button style={{ ...S.navBtn, marginLeft: 4 }} onClick={onClose} title="Exit Drawing Map">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#111111" strokeWidth="3" strokeLinecap="round"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg>
-          </button>
-        )}
+        {/* X close button removed — use INTERACTIVE MAP toggle button to switch maps */}
       </div>
 
       {/* ── Menu Dropdown ── */}
@@ -945,7 +941,7 @@ export default function DrawingGlobe({ exhibitions, onClose, onSelectExhibition,
       }}>
         <li style={S.navMenuListItem} onClick={() => { setIsMenuOpen(false); if (onClose) onClose(); navigate('/mypage?theme=drawing'); }}>MY PAGE</li>
         <li style={S.navMenuListItem} onClick={() => { setIsMenuOpen(false); if (onClose) onClose(); navigate('/community?theme=drawing'); }}>COMMUNITY</li>
-        {onClose && <li style={{ ...S.navMenuListItem, display: 'flex', alignItems: 'center', gap: 4 }} onClick={onClose}><svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round"><line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" /></svg> EXIT</li>}
+        {/* EXIT menu item removed — no direct close to D3geo */}
       </ul>
 
       {/* ── Search Results Dropdown ── */}

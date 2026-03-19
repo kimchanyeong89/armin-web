@@ -310,30 +310,7 @@ export default function InteractiveGlobeMap({ exhibitions, onSelectExhibition, o
         </AnimatePresence>
       </header>
 
-      {/* ── Exit Button (top-right) ── */}
-      {onExit && (
-        <button
-          onClick={onExit}
-          style={{
-            position: "absolute", top: 24, right: 24, zIndex: 30, display: "flex", alignItems: "center", justifyContent: "center", padding: "8px", borderRadius: "50%", cursor: "pointer", transition: "all 0.2s",
-            backgroundColor: t ? "rgba(0,0,0,0.05)" : "rgba(255,255,255,0.05)",
-            color: t ? "rgba(0,0,0,0.5)" : "rgba(255,255,255,0.5)",
-            border: "none"
-          }}
-          onMouseEnter={(e) => {
-            e.currentTarget.style.backgroundColor = t ? "rgba(0,0,0,0.1)" : "rgba(255,255,255,0.1)";
-            e.currentTarget.style.color = t ? "rgba(0,0,0,0.8)" : "rgba(255,255,255,0.8)";
-          }}
-          onMouseLeave={(e) => {
-            e.currentTarget.style.backgroundColor = t ? "rgba(0,0,0,0.05)" : "rgba(255,255,255,0.05)";
-            e.currentTarget.style.color = t ? "rgba(0,0,0,0.5)" : "rgba(255,255,255,0.5)";
-          }}
-        >
-          <svg fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" style={{ width: 20, height: 20 }}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12"></path>
-          </svg>
-        </button>
-      )}
+      {/* Exit button removed — use DRAWING MAP toggle button to switch maps */}
 
       {/* ── Drawing Map switch — dark digital style matching InteractiveGlobeMap aesthetic ── */}
       {onSwitchToDrawing && (
