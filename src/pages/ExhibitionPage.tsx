@@ -388,9 +388,62 @@ const CSS = `
   .ep-card-title { font-size: 11px; }
 }
 
-/* ExhibitionModal sketch variant — vintage photo effect */
+/* ══════════════════════════════════════════════
+   ExhibitionModal sketch variant overrides
+   Unify style with dg-detail-strip
+══════════════════════════════════════════════ */
 .sketch-modal-theme img {
   filter: sepia(0.18) contrast(1.06) brightness(0.96) saturate(0.9);
+}
+
+/* Filter buttons → sharp corners, bold borders, brutalist */
+.sketch-modal-theme button {
+  border-radius: 0 !important;
+  border: 1.5px solid rgba(17,17,17,0.55) !important;
+  font-family: sans-serif !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.06em !important;
+  font-size: 9px !important;
+  height: 22px !important;
+  padding: 0 8px !important;
+}
+
+/* Tab headers (PANORAMA / ARCHIVE / GALLERY) */
+.sketch-modal-theme [style*="fontSize: 12"] {
+  font-family: sans-serif !important;
+  letter-spacing: 0.12em !important;
+}
+
+/* SEARCH label */
+.sketch-modal-theme [style*="letterSpacing: 1.2"] {
+  font-family: sans-serif !important;
+  font-weight: 700 !important;
+  letter-spacing: 0.3em !important;
+  font-size: 8px !important;
+  color: rgba(17,17,17,0.38) !important;
+}
+
+/* Metadata field labels (TITLE, DATE, CREATOR…) */
+.sketch-modal-theme [style*="letterSpacing: '0.2em'"],
+.sketch-modal-theme [style*='letterSpacing: "0.2em"'] {
+  font-family: sans-serif !important;
+}
+
+/* Search input */
+.sketch-modal-theme input[type="text"],
+.sketch-modal-theme input:not([type]) {
+  border-radius: 0 !important;
+  border: 1.5px solid rgba(17,17,17,0.35) !important;
+  font-family: sans-serif !important;
+  font-size: 9px !important;
+  letter-spacing: 0.08em !important;
+  background: #fafafa !important;
+}
+.sketch-modal-theme input[type="text"]:focus,
+.sketch-modal-theme input:not([type]):focus {
+  border-color: #111111 !important;
+  outline: none !important;
+  box-shadow: 2px 2px 0 rgba(17,17,17,0.15) !important;
 }
 `;
 

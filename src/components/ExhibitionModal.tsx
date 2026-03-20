@@ -10036,9 +10036,9 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
           }
 
           return (
-            <div ref={(el) => { (topBarRef as any).current = el; (headerRef as any).current = el; }} style={{ position: "relative", padding: variant === 'sketch' ? "14px 20px 12px 16px" : "8px 0", marginLeft: narrowMarginLeft, marginRight: narrowMarginRight, zIndex: 100, borderBottom: variant === 'sketch' ? '2px solid rgba(17,17,17,0.14)' : 'none', ...(DEBUG_LAYOUT ? { outline: "1px dashed #00f" } : {}) }}>
+            <div ref={(el) => { (topBarRef as any).current = el; (headerRef as any).current = el; }} style={{ position: "relative", padding: variant === 'sketch' ? "14px 20px 12px 16px" : "8px 0", marginLeft: narrowMarginLeft, marginRight: narrowMarginRight, zIndex: 100, borderBottom: 'none', ...(DEBUG_LAYOUT ? { outline: "1px dashed #00f" } : {}) }}>
               {/* Row 1: Mode tabs */}
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 8, marginBottom: variant === 'sketch' ? 10 : 12, paddingBottom: variant === 'sketch' ? 10 : 0, borderBottom: variant === 'sketch' ? '1.5px solid rgba(17,17,17,0.12)' : 'none' }}>
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 8, marginBottom: variant === 'sketch' ? 10 : 12, paddingBottom: 0, borderBottom: 'none' }}>
                 <span
                   onClick={() => { setViewMode('panorama'); setSelectedIndex(0); }}
                   style={{
