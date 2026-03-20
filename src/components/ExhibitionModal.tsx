@@ -445,7 +445,7 @@ const GalleryItem = React.memo(({
       style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", cursor: 'grab' }}
     >
       <div
-        style={{ width: isMobile ? '100%' : (isNPG ? '100%' : '60%'), background: 'transparent', borderRadius: 0, position: 'relative', aspectRatio: isVideo ? '16/9' : undefined, overflow: 'hidden' }}
+        style={{ width: isMobile ? '100%' : (isNPG ? '100%' : '60%'), background: 'transparent', borderRadius: 0, position: 'relative', aspectRatio: isVideo ? '16/9' : (isNPG ? undefined : '4/3'), overflow: 'hidden' }}
         onMouseEnter={() => setHoveredIndex(index)}
         onMouseLeave={() => setHoveredIndex(null)}
       >
@@ -527,10 +527,10 @@ const GalleryItem = React.memo(({
                     referrerPolicy="no-referrer"
                     style={{
                       width: needsScale ? '117.65%' : '100%',
-                      height: 'auto',
+                      height: isNPG ? 'auto' : '100%',
                       maxHeight: isNPG ? '450px' : undefined,
-                      objectFit: isNPG ? 'contain' : undefined,
-                      objectPosition: isNPG ? 'left bottom' : undefined,
+                      objectFit: isNPG ? 'contain' : 'cover',
+                      objectPosition: isNPG ? 'left bottom' : 'center',
                       display: 'block',
                       cursor: hoverZoom ? 'zoom-out' : 'zoom-in',
                       transform: needsScale ? 'scale(0.85)' : 'none',

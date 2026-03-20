@@ -300,41 +300,47 @@ const CSS = `
   background: #ffffff;
 }
 
-/* Horizontal info strip at top */
+/* Horizontal info strip at top — editorial header bar */
 .dg-detail-strip {
   flex-shrink: 0;
-  display: flex; align-items: stretch;
+  display: flex; align-items: center;
   border-bottom: 3px solid #111111;
-  min-height: 72px;
+  min-height: 60px; padding: 0;
   background: #ffffff;
-  filter: url(#ep-sketch);
+  gap: 0;
 }
+
+/* Type badge: horizontal pill left side */
 .dg-detail-type {
   flex-shrink: 0; display: flex; align-items: center;
-  padding: 0 18px;
+  align-self: stretch;
+  padding: 0 16px;
   font-family: sans-serif; font-size: 7.5px; font-weight: 900;
-  letter-spacing: 0.18em; text-transform: uppercase; color: #111111;
-  background: #CCFF00; border-right: 2px solid #111111;
-  writing-mode: vertical-rl; text-orientation: mixed;
-  transform: rotate(180deg);
+  letter-spacing: 0.22em; text-transform: uppercase; color: #111111;
+  background: #CCFF00; border-right: 3px solid #111111;
+  white-space: nowrap;
+  filter: url(#ep-sketch);
 }
 .dg-detail-type.temp {
-  background: transparent; color: rgba(17,17,17,0.45);
+  background: #f5f5f5; color: rgba(17,17,17,0.5);
 }
+
+/* Exhibition title + stats */
 .dg-detail-info {
-  flex: 1; display: flex; flex-direction: column; justify-content: center;
-  padding: 14px 24px;
-  border-right: 1px solid rgba(17,17,17,0.1);
+  flex: 1; display: flex; flex-direction: row; align-items: baseline;
+  gap: 20px; padding: 0 24px;
+  overflow: hidden;
 }
 .dg-detail-title {
   font-family: sans-serif; font-weight: 900;
-  font-size: clamp(15px, 2.2vw, 26px); text-transform: uppercase;
-  letter-spacing: 0.01em; line-height: 1.12; margin: 0 0 6px;
+  font-size: clamp(14px, 1.9vw, 22px); text-transform: uppercase;
+  letter-spacing: 0.01em; line-height: 1; margin: 0;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
   filter: url(#ep-text-wobble);
 }
 .dg-detail-sub {
-  font-size: 8.5px; letter-spacing: 0.22em; text-transform: uppercase;
-  color: rgba(17,17,17,0.38);
+  font-size: 8px; letter-spacing: 0.24em; text-transform: uppercase;
+  color: rgba(17,17,17,0.35); white-space: nowrap; flex-shrink: 0;
 }
 
 /* Exhibition switcher list — shown when multiple exhibitions */
@@ -371,12 +377,10 @@ const CSS = `
   .dg-row-num { width: 56px; padding-top: 22px; }
   .dg-row-body { padding: 20px 16px; }
   .dg-row-badge-cell { display: none; }
-  .dg-detail-strip { flex-wrap: wrap; min-height: auto; }
-  .dg-detail-type {
-    writing-mode: initial; text-orientation: initial; transform: none;
-    width: 100%; border-right: none; border-bottom: 2px solid #111111;
-    padding: 8px 16px;
-  }
+  .dg-detail-strip { min-height: 50px; }
+  .dg-detail-type { padding: 0 12px; font-size: 7px; }
+  .dg-detail-info { padding: 0 14px; gap: 10px; }
+  .dg-detail-title { font-size: 13px; }
   .dg-detail-switcher { display: none; }
   .dg-detail-info { padding: 12px 16px; }
   .ep-grid { padding: 12px 14px 20px; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 10px; }
@@ -429,21 +433,23 @@ const CSS = `
   font-family: sans-serif !important;
 }
 
-/* Search input */
+/* Search input — bottom line only, no box */
 .sketch-modal-theme input[type="text"],
 .sketch-modal-theme input:not([type]) {
   border-radius: 0 !important;
-  border: 1.5px solid rgba(17,17,17,0.35) !important;
+  border: none !important;
+  border-bottom: 1.5px solid rgba(17,17,17,0.3) !important;
   font-family: sans-serif !important;
   font-size: 9px !important;
   letter-spacing: 0.08em !important;
-  background: #fafafa !important;
+  background: transparent !important;
+  padding: 2px 0 !important;
 }
 .sketch-modal-theme input[type="text"]:focus,
 .sketch-modal-theme input:not([type]):focus {
-  border-color: #111111 !important;
+  border-bottom-color: #111111 !important;
   outline: none !important;
-  box-shadow: 2px 2px 0 rgba(17,17,17,0.15) !important;
+  box-shadow: none !important;
 }
 `;
 
@@ -694,26 +700,18 @@ export default function ExhibitionPage({ exhibitions }: { exhibitions: Exhibitio
           {/* Horizontal info strip */}
           <div className="dg-detail-strip">
 
-            {/* Vertical type label (rotated) */}
+            {/* Type badge — horizontal, left side */}
             <div className={`dg-detail-type${activeItem.type === 'TEMPORARY' ? ' temp' : ''}`}>
               {activeItem.type}
             </div>
 
-            {/* Exhibition title + stats */}
+            {/* Exhibition title + artwork count */}
             <div className="dg-detail-info">
               <h2 className="dg-detail-title">{activeItem.title || activeItem.name}</h2>
               <div className="dg-detail-sub">
                 {activeItem.artworks?.length
-                  ? `${activeItem.artworks.length} artworks`
+                  ? `${activeItem.artworks.length} works`
                   : 'open collection'}
-                {activeItem.description && (
-                  <>
-                    &nbsp;·&nbsp;
-                    {activeItem.description.length > 80
-                      ? `${activeItem.description.slice(0, 80)}…`
-                      : activeItem.description}
-                  </>
-                )}
               </div>
             </div>
 
