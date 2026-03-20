@@ -10036,9 +10036,9 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
           }
 
           return (
-            <div ref={(el) => { (topBarRef as any).current = el; (headerRef as any).current = el; }} style={{ position: "relative", padding: "8px 0", marginLeft: narrowMarginLeft, marginRight: narrowMarginRight, zIndex: 100, ...(DEBUG_LAYOUT ? { outline: "1px dashed #00f" } : {}) }}>
+            <div ref={(el) => { (topBarRef as any).current = el; (headerRef as any).current = el; }} style={{ position: "relative", padding: variant === 'sketch' ? "14px 20px 12px 16px" : "8px 0", marginLeft: narrowMarginLeft, marginRight: narrowMarginRight, zIndex: 100, borderBottom: variant === 'sketch' ? '2px solid rgba(17,17,17,0.14)' : 'none', ...(DEBUG_LAYOUT ? { outline: "1px dashed #00f" } : {}) }}>
               {/* Row 1: Mode tabs */}
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 8, marginBottom: 12 }}>
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 8, marginBottom: variant === 'sketch' ? 10 : 12, paddingBottom: variant === 'sketch' ? 10 : 0, borderBottom: variant === 'sketch' ? '1.5px solid rgba(17,17,17,0.12)' : 'none' }}>
                 <span
                   onClick={() => { setViewMode('panorama'); setSelectedIndex(0); }}
                   style={{
@@ -10077,7 +10077,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
               </div>
 
               {/* Row 2: Content under each tab - 3 columns */}
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 8, alignItems: "start" }}>
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 8, alignItems: "start", marginTop: variant === 'sketch' ? 2 : 0 }}>
                 {/* Column 1: Room selector + Year filter + SEARCH (under PANORAMA) */}
                 <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
                   {/* ALL button - interaction updated */}
@@ -11297,7 +11297,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
                 // Narrow screens need more top padding to avoid overlapping with room/century selectors
                 // Symmetric padding on narrow screens, left padding on wide to clear left panel
                 // Mobile: increased top padding for header+filters, minimal bottom for transparent tabs
-                const gridPadding = isMobile ? '160px 8px 32px 8px' : (isVeryNarrow ? '200px 16px 96px 16px' : (isNarrow ? '200px 24px 96px 24px' : '192px 48px 96px 160px'));
+                const gridPadding = isMobile ? '160px 8px 32px 8px' : (isVeryNarrow ? '200px 16px 96px 16px' : (isNarrow || variant === 'sketch' ? '200px 24px 96px 24px' : '192px 48px 96px 160px'));
                 return (
                   <div style={{ padding: gridPadding }}>
                     {/* Modern Sort UI - Above Grid */}
