@@ -445,7 +445,7 @@ const GalleryItem = React.memo(({
       style={{ display: "flex", flexDirection: "column", alignItems: "flex-start", cursor: 'grab' }}
     >
       <div
-        style={{ width: isMobile ? '100%' : (isNPG ? '100%' : '60%'), background: 'transparent', borderRadius: 0, position: 'relative', aspectRatio: isVideo ? '16/9' : (isNPG ? undefined : '4/3'), overflow: 'hidden' }}
+        style={{ width: '100%', background: 'transparent', borderRadius: 0, position: 'relative', aspectRatio: isVideo ? '16/9' : undefined, overflow: 'hidden' }}
         onMouseEnter={() => setHoveredIndex(index)}
         onMouseLeave={() => setHoveredIndex(null)}
       >
@@ -527,10 +527,10 @@ const GalleryItem = React.memo(({
                     referrerPolicy="no-referrer"
                     style={{
                       width: needsScale ? '117.65%' : '100%',
-                      height: isNPG ? 'auto' : '100%',
+                      height: 'auto',
                       maxHeight: isNPG ? '450px' : undefined,
-                      objectFit: isNPG ? 'contain' : 'cover',
-                      objectPosition: isNPG ? 'left bottom' : 'center',
+                      objectFit: isNPG ? 'contain' : undefined,
+                      objectPosition: isNPG ? 'left bottom' : undefined,
                       display: 'block',
                       cursor: hoverZoom ? 'zoom-out' : 'zoom-in',
                       transform: needsScale ? 'scale(0.85)' : 'none',
@@ -11338,7 +11338,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
                       </div>
                     </div>
 
-                    <div style={{ display: 'grid', gridTemplateColumns: gridColumns, gap: gridGap }}>
+                    <div style={{ display: 'grid', gridTemplateColumns: gridColumns, gap: gridGap, alignItems: 'start' }}>
                       {items.map((a, idx) => (
                         <GalleryItem
                           key={a.id ?? `${idx}`}
