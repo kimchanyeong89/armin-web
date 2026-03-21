@@ -9648,7 +9648,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
           // Hide mode tabs when hover zoom is active
           if (!isNarrow && variant !== 'sketch') {
             return (
-              <div ref={(el) => { (topBarRef as any).current = el; (headerRef as any).current = el; }} style={{ position: "relative", padding: "8px 0", minHeight: topBarHeight, marginLeft: LAYOUT_LEFT_BASE + META_SHIFT, marginRight: 80, zIndex: 100, opacity: hoverZoom ? 0 : 1, transition: 'opacity 200ms ease', pointerEvents: hoverZoom ? 'none' : 'auto', ...(DEBUG_LAYOUT ? { outline: "1px dashed #00f" } : {}) }}>
+              <div ref={(el) => { (topBarRef as any).current = el; (headerRef as any).current = el; }} style={{ position: "relative", padding: "8px 0", paddingTop: !isMobile ? 52 : 8, minHeight: topBarHeight, marginLeft: LAYOUT_LEFT_BASE + META_SHIFT, marginRight: 80, zIndex: 100, opacity: hoverZoom ? 0 : 1, transition: 'opacity 200ms ease', pointerEvents: hoverZoom ? 'none' : 'auto', ...(DEBUG_LAYOUT ? { outline: "1px dashed #00f" } : {}) }}>
                 <span
                   onClick={() => { setViewMode('panorama'); setSelectedIndex(0); }}
                   style={{
@@ -10084,7 +10084,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
           }
 
           return (
-            <div ref={(el) => { (topBarRef as any).current = el; (headerRef as any).current = el; }} style={{ position: "relative", padding: variant === 'sketch' ? "14px 20px 12px 16px" : "8px 0", marginLeft: narrowMarginLeft, marginRight: narrowMarginRight, zIndex: 100, borderBottom: 'none', ...(DEBUG_LAYOUT ? { outline: "1px dashed #00f" } : {}) }}>
+            <div ref={(el) => { (topBarRef as any).current = el; (headerRef as any).current = el; }} style={{ position: "relative", padding: variant === 'sketch' ? "14px 20px 12px 16px" : "8px 0", paddingTop: (!isMobile && variant !== 'sketch') ? 52 : (variant === 'sketch' ? 14 : 8), marginLeft: narrowMarginLeft, marginRight: narrowMarginRight, zIndex: 100, borderBottom: 'none', ...(DEBUG_LAYOUT ? { outline: "1px dashed #00f" } : {}) }}>
               {/* Row 1: Mode tabs */}
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 8, marginBottom: variant === 'sketch' ? 10 : 12, paddingBottom: 0, borderBottom: 'none' }}>
                 <span
@@ -10745,7 +10745,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
         )}
 
         {/* Top Right Controls Group: Heart, Login, Close - aligned with mode tabs */}
-        <div style={{ position: "absolute", top: 7, right: 0, display: "flex", alignItems: "center", gap: 20, paddingRight: 16, zIndex: 200 }}>
+        <div style={{ position: "absolute", top: (!isMobile && variant !== 'sketch') ? 14 : 7, right: 0, display: "flex", alignItems: "center", gap: 20, paddingRight: 16, zIndex: 220 }}>
           {/* Close Button */}
           {!inline && (<button
             onClick={() => {

@@ -26,7 +26,7 @@ files.forEach(file => {
     try {
         const filePath = path.join(dataDir, file);
         const stats = fs.statSync(filePath);
-        if (stats.size > 50 * 1024 * 1024) {
+        if (stats.size > 250 * 1024 * 1024) {
             console.log(`Skipping large file ${file} for safety (or stream it if needed)`);
             // actually 50MB is fine for node usually.
         }
@@ -38,13 +38,18 @@ files.forEach(file => {
             items = content;
         } else if (content.items && Array.isArray(content.items)) {
             items = content.items;
+        } else if (content.objects && Array.isArray(content.objects)) {
+            items = content.objects;
+        } else if (content.artworks && Array.isArray(content.artworks)) {
+            items = content.artworks;
         } else if (Object.values(content).some(val => Array.isArray(val) && val.length > 0 && val[0].id)) {
             // Maybe it's like a mapped object? Logic for existing collections often varies.
             // We'll stick to Array or .items for now.
         }
 
-        items.forEach(item => {
-            let artist = item.artist || item.artistName || item.maker || item.author;
+        if (items && Array.isArray(items)) {
+            items.forEach(item => {
+                let artist = item.artist || item.artistName || item.maker || item.author;
             if (!artist) return;
             if (typeof artist !== 'string') return;
 
@@ -77,6 +82,7 @@ files.forEach(file => {
             artistStats[normKeyUnicode].count++;
             artistStats[normKeyUnicode].displayNames[artist] = (artistStats[normKeyUnicode].displayNames[artist] || 0) + 1;
         });
+        }
 
     } catch (e) {
         console.warn(`Skipping ${file}: ${e.message}`);
