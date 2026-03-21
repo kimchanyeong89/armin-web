@@ -2702,7 +2702,7 @@ export const exhibitions = [
     description: "One of the most famous art museums in the world, home to masterpieces by Botticelli, Michelangelo, Leonardo, Raphael, Caravaggio and more.",
     representativeImage: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Galleria_degli_Uffizi_court.jpg/1280px-Galleria_degli_Uffizi_court.jpg",
     permanentExhibitions: [
-      { id: "uffizi-gallery-collection", name: "Uffizi Collection", title: "Uffizi Gallery Collection", description: "508 masterpieces including works by Botticelli, Michelangelo, Raphael, Leonardo, and Caravaggio.", startDate: "Permanent", endDate: "Permanent", collectionFile: "uffizi-gallery-collection.json" }
+      { id: "uffizi-gallery-collection", name: "Uffizi Collection", title: "Uffizi Gallery Collection", description: "508 masterpieces including works by Botticelli, Michelangelo, Raphael, Leonardo, and Caravaggio.", startDate: "Permanent", endDate: "Permanent", collectionFile: "uffizi-collection.json" }
     ],
     temporaryExhibitions: [],
     pastExhibitions: [],
@@ -5151,5 +5151,7 @@ export const exhibitions = [
     ],
     temporaryExhibitions: [],
     pastExhibitions: []
-  }
+  },
+  /* INJECTED MISSING FILES */
 ];
+

@@ -7,11 +7,12 @@ import CommunityWrite from './CommunityWrite';
 interface CommunityPanelProps {
     isOpen: boolean;
     onClose: () => void;
+    mapMode?: 'default' | 'drawing' | 'interactive';
 }
 
 type View = 'list' | 'detail' | 'write';
 
-const CommunityPanel: React.FC<CommunityPanelProps> = ({ isOpen, onClose }) => {
+const CommunityPanel: React.FC<CommunityPanelProps> = ({ isOpen, onClose, mapMode = 'default' }) => {
     const [view, setView] = useState<View>('list');
     const [selectedPostId, setSelectedPostId] = useState<string | null>(null);
 
@@ -321,8 +322,17 @@ const CommunityPanel: React.FC<CommunityPanelProps> = ({ isOpen, onClose }) => {
                         borderRadius: 0,
                         resize: 'none',
                     }),
-                    backgroundColor: '#ffffff', // Ensures opaque background
-                    boxShadow: dockState === 'none' ? '-4px 0 24px rgba(0,0,0,0.15)' : 'none',
+                    backgroundColor: mapMode === 'drawing' ? '#FFFFFF' : mapMode === 'interactive' ? 'rgba(8,8,7,0.97)' : '#ffffff',
+                    border: mapMode === 'drawing'
+                        ? (dockState === 'none' ? '2.5px solid #111111' : undefined)
+                        : mapMode === 'interactive'
+                        ? (dockState === 'none' ? '1px solid rgba(201,165,90,0.18)' : undefined)
+                        : (dockState === 'none' ? '1px solid rgba(0,0,0,0.1)' : undefined),
+                    boxShadow: mapMode === 'drawing'
+                        ? (dockState === 'none' ? '-6px 6px 0 #111111' : 'none')
+                        : mapMode === 'interactive'
+                        ? '-4px 0 40px rgba(0,0,0,0.6)'
+                        : (dockState === 'none' ? '-4px 0 24px rgba(0,0,0,0.15)' : 'none'),
                     borderRight: dockState === 'left' ? '1px solid rgba(0,0,0,0.1)' : 'none',
                     borderLeft: dockState === 'right' ? '1px solid rgba(0,0,0,0.1)' : 'none',
                     borderTop: dockState === 'bottom' ? '1px solid rgba(0,0,0,0.1)' : 'none',
@@ -330,7 +340,6 @@ const CommunityPanel: React.FC<CommunityPanelProps> = ({ isOpen, onClose }) => {
                     display: 'flex',
                     flexDirection: 'column',
                     overflow: 'hidden',
-                    border: dockState === 'none' ? '1px solid rgba(0,0,0,0.1)' : undefined,
 
                     // Animation Styles
                     opacity: styleState.opacity,
@@ -364,79 +373,161 @@ const CommunityPanel: React.FC<CommunityPanelProps> = ({ isOpen, onClose }) => {
                 <div
                     onMouseDown={handleMouseDown}
                     style={{
-                        padding: '16px',
-                        borderBottom: '1px solid #eee',
+                        padding: mapMode === 'drawing' ? '0' : '16px',
+                        borderBottom: mapMode === 'drawing'
+                            ? 'none'
+                            : mapMode === 'interactive'
+                            ? '1px solid rgba(201,165,90,0.15)'
+                            : '1px solid #eee',
                         display: 'flex',
                         justifyContent: 'space-between',
                         alignItems: 'center',
-                        background: '#fff',
+                        background: mapMode === 'drawing'
+                            ? '#111111'
+                            : mapMode === 'interactive'
+                            ? 'rgba(12,12,10,0.98)'
+                            : '#fff',
                         zIndex: 10,
                         cursor: (isDragging ? 'grabbing' : (dockState === 'fullscreen' ? 'default' : 'grab')),
-                        userSelect: 'none'
+                        userSelect: 'none',
+                        flexShrink: 0,
                     }}
                 >
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                        <span style={{ fontSize: '18px' }}>💬</span>
-                        <h2 style={{ fontSize: '18px', fontWeight: '800', margin: 0 }}>Community</h2>
-                    </div>
-
-                    <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
-                        <button
-                            onClick={() => {
-                                if (dockState === 'fullscreen') {
-                                    setDockState('none');
-                                } else {
-                                    setDockState('fullscreen');
-                                }
-                            }}
-                            style={{
-                                background: 'none',
-                                border: 'none',
-                                cursor: 'pointer',
-                                padding: '6px',
-                                color: '#666',
+                    {mapMode === 'drawing' ? (
+                        /* Drawing Map Header */
+                        <div style={{ display: 'flex', alignItems: 'stretch', width: '100%' }}>
+                            <div style={{
+                                background: '#CCFF00',
+                                padding: '16px 20px',
                                 display: 'flex',
                                 alignItems: 'center',
-                                borderRadius: '6px',
-                                transition: 'background 0.2s'
-                            }}
-                            onMouseEnter={(e) => e.currentTarget.style.background = '#f4f4f5'}
-                            onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}
-                            title={dockState === 'fullscreen' ? "창모드" : "전체화면으로 확장"}
-                        >
-                            {dockState === 'fullscreen' ? (
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3" /></svg>
-                            ) : (
-                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" /></svg>
-                            )}
-                        </button>
-                        <button
-                            onClick={onClose}
-                            style={{
-                                background: 'none',
-                                border: 'none',
-                                fontSize: '24px',
-                                cursor: 'pointer',
-                                lineHeight: 1,
-                                padding: '6px 8px',
-                                color: '#666',
-                                borderRadius: '6px',
-                                transition: 'background 0.2s'
-                            }}
-                            onMouseEnter={(e) => e.currentTarget.style.background = '#fee2e2'}
-                            onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}
-                            title="닫기"
-                        >
-                            &times;
-                        </button>
-                    </div>
+                                gap: 10,
+                                flex: 1,
+                            }}>
+                                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#111111" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                                </svg>
+                                <span style={{
+                                    fontFamily: "'Space Mono', 'Courier New', monospace",
+                                    fontSize: 11,
+                                    fontWeight: 700,
+                                    letterSpacing: '0.22em',
+                                    color: '#111111',
+                                    textTransform: 'uppercase',
+                                }}>
+                                    COMMUNITY
+                                </span>
+                            </div>
+                            <div style={{ display: 'flex', alignItems: 'center', background: '#111111', padding: '0 8px', gap: 4 }}>
+                                <button
+                                    onClick={() => {
+                                        if (dockState === 'fullscreen') setDockState('none');
+                                        else setDockState('fullscreen');
+                                    }}
+                                    style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '8px', color: '#CCFF00', display: 'flex', alignItems: 'center' }}
+                                    title={dockState === 'fullscreen' ? "창모드" : "전체화면"}
+                                >
+                                    {dockState === 'fullscreen' ? (
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3" /></svg>
+                                    ) : (
+                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" /></svg>
+                                    )}
+                                </button>
+                                <button
+                                    onClick={onClose}
+                                    style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '8px', color: '#CCFF00', display: 'flex', alignItems: 'center', fontSize: 20 }}
+                                    title="닫기"
+                                >
+                                    ×
+                                </button>
+                            </div>
+                        </div>
+                    ) : mapMode === 'interactive' ? (
+                        /* Interactive Map Header */
+                        <>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                                <div style={{ width: 28, height: 28, borderRadius: '50%', border: '1px solid rgba(201,165,90,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="rgba(201,165,90,0.8)" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+                                    </svg>
+                                </div>
+                                <span style={{
+                                    fontFamily: "'Space Grotesk', 'Helvetica Neue', sans-serif",
+                                    fontSize: 13,
+                                    fontWeight: 600,
+                                    letterSpacing: '0.08em',
+                                    color: 'rgba(201,165,90,0.85)',
+                                    textTransform: 'uppercase',
+                                }}>
+                                    Community
+                                </span>
+                            </div>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
+                                <button
+                                    onClick={() => {
+                                        if (dockState === 'fullscreen') setDockState('none');
+                                        else setDockState('fullscreen');
+                                    }}
+                                    style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '6px', color: 'rgba(201,165,90,0.5)', display: 'flex', alignItems: 'center', borderRadius: 4 }}
+                                    onMouseEnter={(e) => e.currentTarget.style.color = 'rgba(201,165,90,0.9)'}
+                                    onMouseLeave={(e) => e.currentTarget.style.color = 'rgba(201,165,90,0.5)'}
+                                >
+                                    {dockState === 'fullscreen' ? (
+                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3" /></svg>
+                                    ) : (
+                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" /></svg>
+                                    )}
+                                </button>
+                                <button
+                                    onClick={onClose}
+                                    style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '6px', color: 'rgba(201,165,90,0.4)', display: 'flex', alignItems: 'center', borderRadius: 4, fontSize: 20 }}
+                                    onMouseEnter={(e) => e.currentTarget.style.color = 'rgba(201,165,90,0.9)'}
+                                    onMouseLeave={(e) => e.currentTarget.style.color = 'rgba(201,165,90,0.4)'}
+                                >
+                                    ×
+                                </button>
+                            </div>
+                        </>
+                    ) : (
+                        /* Default Header */
+                        <>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                <span style={{ fontSize: '18px' }}>💬</span>
+                                <h2 style={{ fontSize: '18px', fontWeight: '800', margin: 0 }}>Community</h2>
+                            </div>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '4px' }}>
+                                <button
+                                    onClick={() => {
+                                        if (dockState === 'fullscreen') setDockState('none');
+                                        else setDockState('fullscreen');
+                                    }}
+                                    style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '6px', color: '#666', display: 'flex', alignItems: 'center', borderRadius: '6px' }}
+                                    onMouseEnter={(e) => e.currentTarget.style.background = '#f4f4f5'}
+                                    onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}
+                                    title={dockState === 'fullscreen' ? "창모드" : "전체화면으로 확장"}
+                                >
+                                    {dockState === 'fullscreen' ? (
+                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3" /></svg>
+                                    ) : (
+                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7" /></svg>
+                                    )}
+                                </button>
+                                <button
+                                    onClick={onClose}
+                                    style={{ background: 'none', border: 'none', fontSize: '24px', cursor: 'pointer', padding: '4px 8px', color: '#333', display: 'flex', alignItems: 'center' }}
+                                >
+                                    ×
+                                </button>
+                            </div>
+                        </>
+                    )}
                 </div>
 
                 {/* Panel Content */}
-                <div style={{ flex: 1, overflow: 'hidden', position: 'relative', background: '#fff' }}>
+                <div style={{ flex: 1, overflow: 'hidden', position: 'relative', background: mapMode === 'interactive' ? 'rgba(8,8,7,0.97)' : mapMode === 'drawing' ? '#FFFFFF' : '#fff', color: mapMode === 'interactive' ? 'rgba(220,210,195,0.9)' : '#111111' }}>
                     {view === 'list' && (
                         <div style={{ height: '100%', overflowY: 'auto' }}>
-                            <CommunityList onPostClick={handlePostClick} onWriteClick={handleWriteClick} />
+                            <CommunityList onPostClick={handlePostClick} onWriteClick={handleWriteClick} isDark={mapMode === 'interactive'} isSketch={mapMode === 'drawing'} />
                         </div>
                     )}
                     {view === 'detail' && selectedPostId && (

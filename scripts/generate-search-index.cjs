@@ -228,6 +228,9 @@ const SKIP_EXACT = new Set([
     'british-museum-galleries.json', // Empty galleries list
     'british-museum.json', // Empty metadata file
     'serpentine-gallery-collection.json', // Temporarily excluded
+    'fine-arts-be-urls-temp.json', // Temp file
+    'albertina-poster-1.json', // Partial file
+    'albertina-photography-1.json', // Partial file
 ]);
 
 // Blocked image URLs that are placeholders or broken
@@ -248,20 +251,23 @@ async function loadDynamicMappings() {
         console.log(`📚 Loaded ${exhibitions.length} exhibitions from config for dynamic mapping.`);
 
         for (const museum of exhibitions) {
-            if (museum.permanentExhibitions && Array.isArray(museum.permanentExhibitions)) {
-                for (const perm of museum.permanentExhibitions) {
-                    if (perm.collectionFile) {
-                        // Key: collection filename (without .json is safer for getMuseumInfo logic, or full)
-                        // getMuseumInfo uses filename.replace('.json', '') usually.
-                        const key = perm.collectionFile.replace('.json', '');
-                        DYNAMIC_MAPPINGS.set(key, {
-                            museumName: museum.name,
-                            exhibitionId: perm.id,
-                            // Priority flag if needed, but existing logic can use this map first
-                        });
+            const addExhibitions = (exhibitionsList) => {
+                if (exhibitionsList && Array.isArray(exhibitionsList)) {
+                    for (const exh of exhibitionsList) {
+                        if (exh.collectionFile) {
+                            const key = exh.collectionFile.replace('.json', '');
+                            DYNAMIC_MAPPINGS.set(key, {
+                                museumName: museum.name,
+                                exhibitionId: exh.id,
+                                fullFilename: exh.collectionFile
+                            });
+                        }
                     }
                 }
-            }
+            };
+            addExhibitions(museum.permanentExhibitions);
+            addExhibitions(museum.temporaryExhibitions);
+            addExhibitions(museum.pastExhibitions);
         }
         console.log(`🔗 Generated ${DYNAMIC_MAPPINGS.size} dynamic file mappings.\n`);
     } catch (e) {
@@ -341,6 +347,16 @@ function loadCollection(filePath) {
 
 function getThumbnailUrl(item) {
     let url = item.thumb || item.thumbnailUrl || item.lq || item.image || item.imageUrl || '';
+    
+    // Add support for item.images array 
+    if (!url && item.images && Array.isArray(item.images) && item.images.length > 0) {
+        if (typeof item.images[0] === 'string') {
+            url = item.images[0];
+        } else if (item.images[0] && item.images[0].url) {
+            url = item.images[0].url;
+        }
+    }
+
     if (!url || url.length < 10) return '';
 
     // Check blocked images
@@ -430,11 +446,13 @@ async function generateSearchIndex() {
     await loadDynamicMappings();
 
     const allFiles = fs.readdirSync(DATA_DIR).filter(f => f.endsWith('.json')).sort();
-    const collectionFiles = allFiles.filter(f => {
-        const lower = f.toLowerCase();
-        if (SKIP_EXACT.has(lower)) return false;
-        return !SKIP_SUBSTRINGS.some(pattern => lower.includes(pattern));
-    });
+    
+    // Strict whitelist: Only index files explicitly registered in exhibitions.js
+    const validFilesSet = new Set(
+        Array.from(DYNAMIC_MAPPINGS.values()).map(m => m.fullFilename)
+    );
+
+    const collectionFiles = allFiles.filter(f => validFilesSet.has(f));
 
     console.log(`Found ${collectionFiles.length} collection files\n`);
 

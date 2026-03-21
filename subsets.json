@@ -1,0 +1,50 @@
+[
+  {
+    "subsetFile": "huntington-collection.json",
+    "coveringFile": "met-ny-on-view-paintings-enriched.json",
+    "subsetCount": 511,
+    "supersetCount": 2496
+  },
+  {
+    "subsetFile": "met-ny-on-view-paintings.json",
+    "coveringFile": "met-ny-on-view-paintings-enriched.json",
+    "subsetCount": 2496,
+    "supersetCount": 2496
+  },
+  {
+    "subsetFile": "musba-bordeaux-drawings-collection.json",
+    "coveringFile": "bordeaux-collection.json",
+    "subsetCount": 3302,
+    "supersetCount": 5598
+  },
+  {
+    "subsetFile": "musba-bordeaux-paintings-collection.json",
+    "coveringFile": "bordeaux-collection.json",
+    "subsetCount": 2296,
+    "supersetCount": 5598
+  },
+  {
+    "subsetFile": "national-gallery-permanent.backup.json",
+    "coveringFile": "national-gallery-permanent.backup2.json",
+    "subsetCount": 1067,
+    "supersetCount": 2659
+  },
+  {
+    "subsetFile": "national-gallery-permanent.json",
+    "coveringFile": "national-gallery-permanent.backup2.json",
+    "subsetCount": 2659,
+    "supersetCount": 2659
+  },
+  {
+    "subsetFile": "reina-sofia-collection.json",
+    "coveringFile": "reina-sofia-collection-clean.json",
+    "subsetCount": 14309,
+    "supersetCount": 14309
+  },
+  {
+    "subsetFile": "reina-sofia-on-display.json",
+    "coveringFile": "met-ny-on-view-paintings-enriched.json",
+    "subsetCount": 818,
+    "supersetCount": 2496
+  }
+]

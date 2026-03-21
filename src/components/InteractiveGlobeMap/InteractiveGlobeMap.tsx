@@ -81,7 +81,21 @@ interface InteractiveGlobeMapProps {
 
 export default function InteractiveGlobeMap({ exhibitions, onSelectExhibition, onSelectExhibitionItem, onExit, onSwitchToDrawing }: InteractiveGlobeMapProps) {
   const navigate = useNavigate();
-  const [theme, setTheme] = useState<Theme>("dark");
+  const [theme, setTheme] = useState<Theme>(() => {
+    try { return localStorage.getItem('homeTheme') === 'light' ? 'light' : 'dark'; } catch { return 'dark'; }
+  });
+
+  // Sync with home page dark/light toggle
+  useEffect(() => {
+    const handleThemeChange = () => {
+      try {
+        const isDark = localStorage.getItem('homeTheme') !== 'light';
+        setTheme(isDark ? 'dark' : 'light');
+      } catch { }
+    };
+    window.addEventListener('theme-changed', handleThemeChange);
+    return () => window.removeEventListener('theme-changed', handleThemeChange);
+  }, []);
   const [selectedCity, setSelectedCity] = useState<CityMarker | null>(null);
   const [drilledCountry, setDrilledCountry] = useState<string | null>(null);
   const [rotation, setRotation] = useState<[number, number]>([0, 20]);
@@ -312,38 +326,35 @@ export default function InteractiveGlobeMap({ exhibitions, onSelectExhibition, o
 
       {/* Exit button removed — use DRAWING MAP toggle button to switch maps */}
 
-      {/* ── Drawing Map switch — dark digital style matching InteractiveGlobeMap aesthetic ── */}
+      {/* ── Drawing Map switch — sketch brutalist style ── */}
       {onSwitchToDrawing && (
         <button
           onClick={onSwitchToDrawing}
           style={{
             position: "absolute", bottom: 28, left: 28, zIndex: 30,
-            display: "flex", alignItems: "center", gap: 8,
-            padding: "9px 16px", cursor: "pointer",
-            background: "rgba(8,8,8,0.75)",
-            border: "1px solid rgba(255,255,255,0.12)",
-            color: "rgba(255,255,255,0.55)",
-            fontFamily: "'Space Grotesk', sans-serif",
-            fontSize: 10, fontWeight: 600, letterSpacing: "0.12em",
+            display: "flex", alignItems: "center", gap: 9,
+            padding: "10px 18px", cursor: "pointer",
+            background: "#FFFFFF",
+            border: "2px solid #111111",
+            color: "#111111",
+            fontFamily: "'Space Mono', 'Courier New', monospace",
+            fontSize: 9, fontWeight: 700, letterSpacing: "0.2em",
             textTransform: "uppercase",
-            backdropFilter: "blur(12px)",
-            WebkitBackdropFilter: "blur(12px)",
-            borderRadius: 2,
-            transition: "all 0.2s",
+            borderRadius: 0,
+            boxShadow: "3px 3px 0 rgba(17,17,17,0.55)",
+            transition: "box-shadow 0.1s, transform 0.1s",
+            whiteSpace: "nowrap",
           }}
           onMouseEnter={e => {
-            e.currentTarget.style.color = "rgba(255,255,255,0.9)";
-            e.currentTarget.style.border = "1px solid rgba(255,255,255,0.3)";
-            e.currentTarget.style.background = "rgba(255,255,255,0.06)";
+            e.currentTarget.style.boxShadow = "1px 1px 0 rgba(17,17,17,0.55)";
+            e.currentTarget.style.transform = "translate(2px,2px)";
           }}
           onMouseLeave={e => {
-            e.currentTarget.style.color = "rgba(255,255,255,0.55)";
-            e.currentTarget.style.border = "1px solid rgba(255,255,255,0.12)";
-            e.currentTarget.style.background = "rgba(8,8,8,0.75)";
+            e.currentTarget.style.boxShadow = "3px 3px 0 rgba(17,17,17,0.55)";
+            e.currentTarget.style.transform = "none";
           }}
         >
-          {/* Pencil icon — sketch feel */}
-          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
             <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z" />
           </svg>
           Drawing Map

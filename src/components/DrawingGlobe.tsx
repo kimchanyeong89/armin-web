@@ -1499,28 +1499,26 @@ export default function DrawingGlobe({ exhibitions, onClose, onSelectExhibition,
         <p style={S.instructionText}>Drag to Rotate</p>
       </div>
 
-      {/* Interactive Map switch button */}
-      {/* Interactive Map switch — brutalist sketch style matching DrawingGlobe aesthetic */}
+      {/* Interactive Map switch — brutalist sketch style */}
       {onSwitchToInteractive && (
         <button
           onClick={onSwitchToInteractive}
           style={{
-            position: 'fixed', bottom: 28, left: 32, zIndex: 200,
-            display: 'flex', alignItems: 'center', gap: 9,
-            background: '#111111', color: '#ffffff',
+            position: 'fixed', bottom: 28, left: 28, zIndex: 200,
+            display: 'flex', alignItems: 'center', gap: 10,
+            background: '#111111', color: '#CCFF00',
             border: '2.5px solid #111111',
             padding: '11px 20px', fontSize: 9, fontWeight: 700,
-            letterSpacing: '0.22em', fontFamily: "'Space Mono', 'Courier New', monospace",
+            letterSpacing: '0.2em', fontFamily: "'Space Mono', 'Courier New', monospace",
             cursor: 'pointer', textTransform: 'uppercase',
-            boxShadow: '3px 3px 0 rgba(17,17,17,0.4)',
+            boxShadow: '3px 3px 0 rgba(17,17,17,0.35)',
             filter: 'url(#dg-sketch-ui)',
             transition: 'box-shadow 0.1s, transform 0.1s',
           }}
-          onMouseEnter={e => { e.currentTarget.style.boxShadow = '1px 1px 0 rgba(17,17,17,0.4)'; e.currentTarget.style.transform = 'translate(2px,2px)'; }}
-          onMouseLeave={e => { e.currentTarget.style.boxShadow = '3px 3px 0 rgba(17,17,17,0.4)'; e.currentTarget.style.transform = 'none'; }}
+          onMouseEnter={e => { e.currentTarget.style.boxShadow = '1px 1px 0 rgba(17,17,17,0.35)'; e.currentTarget.style.transform = 'translate(2px,2px)'; }}
+          onMouseLeave={e => { e.currentTarget.style.boxShadow = '3px 3px 0 rgba(17,17,17,0.35)'; e.currentTarget.style.transform = 'none'; }}
         >
-          {/* Globe icon — hand-drawn circle style */}
-          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
+          <svg width="13" height="13" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
             <circle cx="7" cy="7" r="5.5" />
             <ellipse cx="7" cy="7" rx="2.5" ry="5.5" />
             <line x1="1.5" y1="7" x2="12.5" y2="7" />

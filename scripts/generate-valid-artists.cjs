@@ -3,7 +3,17 @@ const path = require('path');
 
 const dataDir = path.join(__dirname, '../public/data');
 // Filter for likely collection files. Excluding 'artists-dates.json' and obvious non-collection metadata.
-const files = fs.readdirSync(dataDir).filter(f => f.endsWith('.json') && !f.startsWith('artists-') && !f.startsWith('valid-') && !f.includes('test'));
+let files = [];
+async function run() {
+    console.log("Loading mapping...");
+    const { exhibitions } = await import('../src/data/exhibitions.js');
+    const validFilesSet = new Set();
+    exhibitions.forEach(m => {
+        (m.permanentExhibitions || []).forEach(e => e.collectionFile && validFilesSet.add(e.collectionFile));
+        (m.temporaryExhibitions || []).forEach(e => e.collectionFile && validFilesSet.add(e.collectionFile));
+        (m.pastExhibitions || []).forEach(e => e.collectionFile && validFilesSet.add(e.collectionFile));
+    });
+    files = fs.readdirSync(dataDir).filter(f => f.endsWith('.json') && validFilesSet.has(f));
 
 const artistCounts = {};
 const artistArtworks = {}; // Store a sample artwork for debug if needed, or just count.
@@ -88,3 +98,6 @@ console.log(`Selected ${validArtists.length} artists with >= 10 artworks.`);
 const outputPath = path.join(dataDir, 'valid-artists.json');
 fs.writeFileSync(outputPath, JSON.stringify(validArtists, null, 2));
 console.log(`Saved to ${outputPath}`);
+
+}
+run().catch(console.error);

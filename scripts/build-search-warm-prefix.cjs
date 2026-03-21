@@ -19,6 +19,78 @@ const normalize = (value = '') =>
     .replace(/[^\p{L}\p{N}]+/gu, ' ')
     .trim();
 
+const KNOWN_ARTIST_KEYS = {
+    'monet': 'monet', 'manet': 'manet', 'renoir': 'renoir', 'picasso': 'picasso',
+    'nolde': 'nolde', 'delacroix': 'delacroix', 'gogh': 'gogh', 'rembrandt': 'rembrandt',
+    'vermeer': 'vermeer', 'cezanne': 'cezanne', 'degas': 'degas', 'gauguin': 'gauguin',
+    'matisse': 'matisse', 'kandinsky': 'kandinsky', 'klimt': 'klimt', 'dali': 'dali',
+    'warhol': 'warhol', 'miro': 'miro', 'chagall': 'chagall', 'klee': 'klee',
+    'mondrian': 'mondrian', 'pollock': 'pollock', 'rothko': 'rothko', 'bacon': 'bacon',
+    'hockney': 'hockney', 'basquiat': 'basquiat', 'caravaggio': 'caravaggio',
+    'raphael': 'raphael', 'michelangelo': 'michelangelo', 'botticelli': 'botticelli',
+    'titian': 'titian', 'tintoretto': 'tintoretto', 'veronese': 'veronese',
+    'rubens': 'rubens', 'velazquez': 'velazquez', 'goya': 'goya', 'greco': 'greco',
+    'bruegel': 'bruegel', 'bosch': 'bosch', 'durer': 'durer', 'holbein': 'holbein',
+    'constable': 'constable', 'turner': 'turner', 'gainsborough': 'gainsborough',
+    'reynolds': 'reynolds', 'hogarth': 'hogarth', 'whistler': 'whistler',
+    'sargent': 'sargent', 'homer': 'homer', 'eakins': 'eakins', 'cassatt': 'cassatt',
+    'seurat': 'seurat', 'signac': 'signac', 'caillebotte': 'caillebotte',
+    'toulouse': 'toulouse-lautrec', 'lautrec': 'toulouse-lautrec',
+    'bonnard': 'bonnard', 'vuillard': 'vuillard', 'redon': 'redon',
+    'munch': 'munch', 'ensor': 'ensor', 'kirchner': 'kirchner', 'schiele': 'schiele',
+    'kokoschka': 'kokoschka', 'beckmann': 'beckmann', 'grosz': 'grosz', 'dix': 'dix',
+    'duchamp': 'duchamp', 'leger': 'leger', 'braque': 'braque', 'gris': 'gris',
+    'malevich': 'malevich', 'tatlin': 'tatlin', 'lissitzky': 'lissitzky',
+    'rivera': 'rivera', 'kahlo': 'kahlo', 'orozco': 'orozco', 'siqueiros': 'siqueiros',
+    'hopper': 'hopper', 'okeefe': 'okeefe', 'wood': 'wood', 'benton': 'benton',
+    'lichtenstein': 'lichtenstein', 'rauschenberg': 'rauschenberg', 'johns': 'johns',
+    'haring': 'haring', 'koons': 'koons', 'richter': 'richter', 'kiefer': 'kiefer',
+    'bourgeois': 'bourgeois', 'kusama': 'kusama', 'ai': 'ai weiwei', 'banksy': 'banksy',
+    'fantin': 'fantin-latour', 'latour': 'fantin-latour',
+    'heckel': 'heckel', 'pechstein': 'pechstein',
+    // Examples and fixes
+    'soutine': 'soutine',
+    'simonet': 'simonet',
+    'desportes': 'desportes',
+    'rottluff': 'schmidt-rottluff',
+    'ofrembrandt': 'rembrandt',
+    'manetti': 'manetti',
+    'paik': 'paik',
+};
+
+function getArtistKey(name) {
+    if (!name) return '';
+
+    let stripped = name.replace(/(?:^|\s)dit\)\s*/i, ' ');
+    const bioRegex = /\([^)]*(\d+|active|born|died|century|france|italy|germany|spain|dutch|flemish|british|lithuania|american|english)[^)]*(\)|$)/ig;
+    stripped = stripped.replace(bioRegex, ' ');
+    stripped = stripped.replace(/[()]/g, ' ');
+
+    if (stripped.includes(',') && !stripped.includes(' and ') && !stripped.includes('&')) {
+        const parts = stripped.split(',');
+        if (parts.length >= 2) {
+            stripped = parts[1] + ' ' + parts[0];
+        }
+    }
+
+    let normalized = normalize(stripped);
+    normalized = normalized
+        .replace(/\b(attributed to|workshop of|circle of|follower of|manner of|style of|pupil of|school of|after)\b/g, '')
+        .replace(/\b(attribue a|atelier de|entourage de|d apres|ecole de|skole|verksted|tilskrevet|nach)\b/g, '')
+        .replace(/\b(workshop ofrembrandt)\b/g, 'rembrandt')
+        .replace(/\brembrandts\b/g, 'rembrandt');
+
+    const tokens = normalized.split(/[\s-]+/).filter(t => t.length > 2 && !['the', 'van', 'der', 'von', 'and', 'und', 'la', 'le'].includes(t));
+
+    for (const token of tokens) {
+        if (KNOWN_ARTIST_KEYS[token]) {
+            return KNOWN_ARTIST_KEYS[token];
+        }
+    }
+
+    return tokens.sort().join(' ');
+}
+
 const getPrefix = (value = '') => {
   const normalized = normalize(value);
   if (!normalized) return '#';
@@ -50,6 +122,8 @@ async function main() {
   if (chunks.length === 0) {
     throw new Error('Manifest has no chunks.');
   }
+  const globalArtistCounts = new Map();
+
 
   const bucketMap = new Map();
 
@@ -85,10 +159,25 @@ async function main() {
       }
 
       if (artist && artist !== 'Unknown') {
-        const artistBucket = getBucket(artistPrefix);
-        artistBucket.artists.set(artist, (artistBucket.artists.get(artist) || 0) + 1);
-        if (!artistBucket.artistSamples.has(artist) && art.i) {
-          artistBucket.artistSamples.set(artist, art.i);
+        const artistKey = getArtistKey(artist);
+        if (artistKey) {
+            const artistBucket = getBucket(artistPrefix);
+            
+            // We use the raw artist name but group them logically
+            if (!artistBucket.artistGroups) artistBucket.artistGroups = new Map();
+            if (!artistBucket.artistGroups.has(artistKey)) {
+                artistBucket.artistGroups.set(artistKey, { variants: new Map(), totalCount: 0 });
+            }
+            
+            const group = artistBucket.artistGroups.get(artistKey);
+            group.variants.set(artist, (group.variants.get(artist) || 0) + 1);
+            group.totalCount++;
+            globalArtistCounts.set(artistKey, (globalArtistCounts.get(artistKey) || 0) + 1);
+
+            
+            if (!artistBucket.artistSamples.has(artistKey) && art.i) {
+                artistBucket.artistSamples.set(artistKey, art.i);
+            }
         }
       }
     }
@@ -107,14 +196,30 @@ async function main() {
 
   for (const prefix of prefixes) {
     const bucket = bucketMap.get(prefix);
-    const topArtists = Array.from(bucket.artists.entries())
-      .sort((a, b) => b[1] - a[1])
-      .slice(0, PREFIX_ARTIST_LIMIT)
-      .map(([artist, count]) => ({
-        artist,
-        count,
-        image: bucket.artistSamples.get(artist) || ''
-      }));
+    const topArtists = [];
+    
+    if (bucket.artistGroups) {
+      const groups = Array.from(bucket.artistGroups.entries())
+        .sort((a, b) => b[1].totalCount - a[1].totalCount)
+        .slice(0, PREFIX_ARTIST_LIMIT);
+        
+      for (const [key, group] of groups) {
+          let bestName = '';
+          let bestCount = -1;
+          for (const [name, count] of group.variants.entries()) {
+              if (count > bestCount) {
+                  bestCount = count;
+                  bestName = name;
+              }
+          }
+          topArtists.push({
+              artist: bestName,
+              count: globalArtistCounts.get(key) || group.totalCount,
+              sortScore: group.totalCount,
+              image: bucket.artistSamples.get(key) || ''
+          });
+      }
+    }
 
     out.buckets[prefix] = {
       artworks: bucket.artworks,

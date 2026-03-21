@@ -101,6 +101,12 @@ export default function HomePage({ exhibitions, isOverlayOpen = false }: HomePag
     return fromDrawingParam || !fromInteractive;
   });
 
+  // Dispatch map mode event whenever the active map changes
+  useEffect(() => {
+    const mode = showDrawingGlobe ? 'drawing' : showInteractiveGlobe ? 'interactive' : 'default';
+    window.dispatchEvent(new CustomEvent('map-mode-changed', { detail: mode }));
+  }, [showDrawingGlobe, showInteractiveGlobe]);
+
   // Dark / light mode for home globe (persisted in localStorage)
   const [homeIsDark, setHomeIsDark] = useState<boolean>(() => {
     try { return localStorage.getItem('homeTheme') !== 'light'; } catch { return true; }
@@ -658,70 +664,100 @@ export default function HomePage({ exhibitions, isOverlayOpen = false }: HomePag
 
 
 
-        {/* 3D Map Trigger */}
+        {/* ── Map toggle buttons — bottom-left stack, each styled to its destination ── */}
         {!selectedModalExhibition && !lightboxArtwork && !isOverlayOpen && (
-          <button
-            onClick={() => setShowInteractiveGlobe(true)}
-            style={{
-              position: "fixed",
-              bottom: 24,
-              left: 24,
-              zIndex: 1000,
-              padding: "10px 18px",
-              borderRadius: 24,
-              background: "rgba(8, 8, 7, 0.82)",
-              color: "#f0ede6",
-              border: "1px solid rgba(201, 165, 90, 0.3)",
-              boxShadow: "0 4px 20px rgba(0,0,0,0.4)",
-              fontWeight: 600,
-              fontSize: "13px",
-              cursor: "pointer",
-              display: "flex",
-              alignItems: "center",
-              gap: 8,
-              backdropFilter: "blur(12px)",
-              WebkitBackdropFilter: "blur(12px)",
-              letterSpacing: "0.04em",
-            }}
-          >
-            <svg fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" width="16" height="16">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M3.055 11H5a2 2 0 012 2v1a2 2 0 002 2 2 2 0 012 2v2.945M8 3.935V5.5A2.5 2.5 0 0010.5 8h.5a2 2 0 012 2 2 2 0 104 0 2 2 0 012-2h1.064M15 20.488V18a2 2 0 012-2h3.064" />
-            </svg>
-            Interactive Globe
-          </button>
-        )}
+          <div style={{
+            position: "fixed",
+            bottom: 24,
+            left: 20,
+            zIndex: 1000,
+            display: "flex",
+            flexDirection: "column",
+            gap: 10,
+            alignItems: "flex-start",
+          }}>
+            {/* Interactive Globe — dark luxury style */}
+            <button
+              onClick={() => setShowInteractiveGlobe(true)}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: 9,
+                padding: "9px 16px",
+                background: "rgba(8,8,7,0.82)",
+                border: "1px solid rgba(201,165,90,0.35)",
+                color: "rgba(201,165,90,0.9)",
+                borderRadius: 3,
+                fontFamily: "'Space Grotesk', 'Helvetica Neue', sans-serif",
+                fontSize: 10,
+                fontWeight: 600,
+                letterSpacing: "0.14em",
+                textTransform: "uppercase",
+                cursor: "pointer",
+                backdropFilter: "blur(16px)",
+                WebkitBackdropFilter: "blur(16px)",
+                boxShadow: "0 0 0 1px rgba(201,165,90,0.08), 0 4px 20px rgba(0,0,0,0.45)",
+                transition: "all 0.2s ease",
+                whiteSpace: "nowrap",
+              }}
+              onMouseEnter={e => {
+                e.currentTarget.style.background = "rgba(201,165,90,0.1)";
+                e.currentTarget.style.borderColor = "rgba(201,165,90,0.65)";
+                e.currentTarget.style.color = "#c9a55a";
+              }}
+              onMouseLeave={e => {
+                e.currentTarget.style.background = "rgba(8,8,7,0.82)";
+                e.currentTarget.style.borderColor = "rgba(201,165,90,0.35)";
+                e.currentTarget.style.color = "rgba(201,165,90,0.9)";
+              }}
+            >
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round">
+                <circle cx="12" cy="12" r="9" />
+                <ellipse cx="12" cy="12" rx="4" ry="9" />
+                <line x1="3" y1="12" x2="21" y2="12" />
+                <line x1="4.5" y1="7.5" x2="19.5" y2="7.5" />
+                <line x1="4.5" y1="16.5" x2="19.5" y2="16.5" />
+              </svg>
+              Interactive Globe
+            </button>
 
-        {/* Drawing Map Trigger */}
-        {!selectedModalExhibition && !lightboxArtwork && !isOverlayOpen && (
-          <button
-            onClick={() => setShowDrawingGlobe(true)}
-            style={{
-              position: "fixed",
-              bottom: 24,
-              left: 180,
-              zIndex: 1000,
-              padding: "10px 18px",
-              borderRadius: 24,
-              background: "rgba(8, 8, 7, 0.82)",
-              color: "#f0ede6",
-              border: "1px solid rgba(201, 165, 90, 0.3)",
-              boxShadow: "0 4px 20px rgba(0,0,0,0.4)",
-              fontWeight: 600,
-              fontSize: "13px",
-              cursor: "pointer",
-              display: "flex",
-              alignItems: "center",
-              gap: 8,
-              backdropFilter: "blur(12px)",
-              WebkitBackdropFilter: "blur(12px)",
-              letterSpacing: "0.04em",
-            }}
-          >
-            <svg fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24" width="16" height="16">
-              <path strokeLinecap="round" strokeLinejoin="round" d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" />
-            </svg>
-            Drawing Map
-          </button>
+            {/* Drawing Map — brutalist sketch style */}
+            <button
+              onClick={() => setShowDrawingGlobe(true)}
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: 9,
+                padding: "9px 16px",
+                background: "#FFFFFF",
+                border: "2px solid #111111",
+                color: "#111111",
+                borderRadius: 0,
+                fontFamily: "'Space Mono', 'Courier New', monospace",
+                fontSize: 9,
+                fontWeight: 700,
+                letterSpacing: "0.2em",
+                textTransform: "uppercase",
+                cursor: "pointer",
+                boxShadow: "3px 3px 0 #111111",
+                transition: "box-shadow 0.1s, transform 0.1s",
+                whiteSpace: "nowrap",
+              }}
+              onMouseEnter={e => {
+                e.currentTarget.style.boxShadow = "1px 1px 0 #111111";
+                e.currentTarget.style.transform = "translate(2px,2px)";
+              }}
+              onMouseLeave={e => {
+                e.currentTarget.style.boxShadow = "3px 3px 0 #111111";
+                e.currentTarget.style.transform = "none";
+              }}
+            >
+              <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z" />
+              </svg>
+              Drawing Map
+            </button>
+          </div>
         )}
 
 
@@ -823,26 +859,26 @@ export default function HomePage({ exhibitions, isOverlayOpen = false }: HomePag
         />
       </div>
 
-      {/* ── Dark / Light mode toggle — bottom-right, above community btn ── */}
+      {/* ── Dark / Light mode toggle — bottom-right, fixed position ── */}
       <button
         onClick={toggleHomeTheme}
         title={homeIsDark ? 'Switch to light mode' : 'Switch to dark mode'}
         style={{
           position: 'fixed',
-          bottom: 84,
+          bottom: 86,
           right: 28,
-          zIndex: 5500,
-          width: 44,
-          height: 44,
+          zIndex: 200002,
+          width: 42,
+          height: 42,
           borderRadius: '50%',
           border: homeIsDark
-            ? '1px solid rgba(201,165,90,0.45)'
-            : '1px solid rgba(140,110,40,0.55)',
+            ? '1px solid rgba(201,165,90,0.4)'
+            : '1px solid rgba(140,110,40,0.45)',
           background: homeIsDark
             ? 'rgba(8,8,7,0.88)'
-            : 'rgba(245,240,228,0.92)',
+            : 'rgba(250,246,236,0.95)',
           color: homeIsDark ? '#c9a55a' : '#7a5a18',
-          fontSize: 17,
+          fontSize: 15,
           display: 'flex',
           alignItems: 'center',
           justifyContent: 'center',
@@ -850,8 +886,8 @@ export default function HomePage({ exhibitions, isOverlayOpen = false }: HomePag
           backdropFilter: 'blur(20px)',
           WebkitBackdropFilter: 'blur(20px)',
           boxShadow: homeIsDark
-            ? '0 0 0 1px rgba(201,165,90,0.12), 0 4px 20px rgba(0,0,0,0.55)'
-            : '0 0 0 1px rgba(140,110,40,0.15), 0 4px 16px rgba(0,0,0,0.18)',
+            ? '0 0 0 1px rgba(201,165,90,0.1), 0 4px 18px rgba(0,0,0,0.5)'
+            : '0 0 0 1px rgba(140,110,40,0.12), 0 4px 14px rgba(0,0,0,0.15)',
           transition: 'all 0.25s ease',
         }}
       >

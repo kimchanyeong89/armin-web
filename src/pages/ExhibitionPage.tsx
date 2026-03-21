@@ -436,6 +436,8 @@ const CSS = `
 /* Search input — bottom line only, no box */
 .sketch-modal-theme input[type="text"],
 .sketch-modal-theme input:not([type]) {
+  -webkit-appearance: none !important;
+  appearance: none !important;
   border-radius: 0 !important;
   border: none !important;
   border-bottom: 1.5px solid rgba(17,17,17,0.3) !important;
@@ -443,13 +445,26 @@ const CSS = `
   font-size: 9px !important;
   letter-spacing: 0.08em !important;
   background: transparent !important;
+  background-color: transparent !important;
   padding: 2px 0 !important;
+  box-shadow: none !important;
+  -webkit-box-shadow: none !important;
 }
 .sketch-modal-theme input[type="text"]:focus,
 .sketch-modal-theme input:not([type]):focus {
   border-bottom-color: #111111 !important;
   outline: none !important;
   box-shadow: none !important;
+  -webkit-box-shadow: none !important;
+  background: transparent !important;
+}
+/* Clear button inside search — no box border */
+.sketch-modal-theme input[type="text"] + button,
+.sketch-modal-theme .search-clear-btn {
+  border: none !important;
+  background: transparent !important;
+  height: auto !important;
+  padding: 2px !important;
 }
 `;
 

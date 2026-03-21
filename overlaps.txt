@@ -1,0 +1,153 @@
+
+Prefix: albertina
+  21933 - albertina-photography-100
+  2603 - albertina-poster-100
+  2583 - albertina-permanent-collection
+  1 - albertina-poster-1
+  1 - albertina-photography-1
+
+Prefix: vam
+  14981 - vam-permanent
+  11637 - vam-posters
+  7 - vam
+
+Prefix: reina
+  14217 - reina-sofia-collection-clean
+  396 - reina-sofia-collection-full
+
+Prefix: hamburger
+  12318 - hamburger-kunsthalle-drawings
+  1864 - hamburger-kunsthalle-paintings
+  289 - hamburger-kunsthalle-video
+
+Prefix: mfab
+  10760 - mfab-collection
+  10760 - mfab-collection-full
+
+Prefix: wales
+  9894 - wales-industry
+  9675 - wales-art
+
+Prefix: rijksmuseum
+  8892 - rijksmuseum-prints
+  8497 - rijksmuseum-drawings
+  7022 - rijksmuseum-cartoon
+  6268 - rijksmuseum-prints2-collection
+  4276 - rijksmuseum-paintings
+  3980 - rijksmuseum-design
+  3014 - rijksmuseum-poster
+  2860 - rijksmuseum-docphotos
+  1106 - rijksmuseum-photography
+
+Prefix: mamcs
+  8476 - mamcs-strasbourg-collection
+  2545 - mamcs-strasbourg-drawings-collection
+  2417 - mamcs-strasbourg-photography-collection
+  1586 - mamcs-strasbourg-paintings-collection
+  1082 - mamcs-strasbourg-graphicdesign-collection
+  1082 - mamcs-strasbourg-graphic-design-collection
+  197 - mamcs-strasbourg
+
+Prefix: pompidou
+  7135 - pompidou-drawing-collection
+  6658 - pompidou-painting-collection
+  3336 - pompidou-newmedia-collection
+  1554 - pompidou-cinema-collection
+  1494 - pompidou-design-collection
+
+Prefix: bordeaux
+  5598 - bordeaux-collection
+  2914 - bordeaux-drawings
+  2195 - bordeaux-paintings
+
+Prefix: museo
+  5274 - museo-egizio-collection
+  215 - museo-novecento-milan-collection
+  10 - museo-novecento-gac-collection
+
+Prefix: ngv
+  4730 - ngv-collection
+  5 - ngv-trove-collection-fixed
+
+Prefix: versailles
+  4634 - versailles-collection
+  2845 - versailles-collection.bak2
+  1188 - versailles-collection.bak
+
+Prefix: mplus
+  4524 - mplus-collection-mplus
+  1221 - mplus-collection-sigg
+
+Prefix: mucem
+  4314 - mucem-collection
+  981 - mucem-prints
+  44 - mucem-drawings
+
+Prefix: musee
+  4136 - musee-conde-collection
+  1475 - musee-armee-collection
+  916 - musee-armee-dessin-backup
+  278 - musee-armee-photographie-backup
+  75 - musee-armee-peinture-backup
+  44 - musee-armee-dessin
+  10 - musee-armee-photographie
+  9 - musee-armee-peinture
+
+Prefix: smb
+  2258 - smb-alte-nationalgalerie-collection
+  2251 - smb-bode-museum-collection
+  979 - smb-humboldt-forum-collection
+  782 - smb-gemaeldegalerie-collection
+  730 - smb-neue-nationalgalerie-collection
+  658 - smb-altes-museum-collection
+  319 - smb-neues-museum-collection
+
+Prefix: guggenheim
+  1864 - guggenheim-ny-collection
+  524 - guggenheim-venice-collection
+  137 - guggenheim-bilbao-collection
+
+Prefix: si
+  1828 - si-npg-collection
+  1524 - si-asian-art-collection
+
+Prefix: tm
+  1251 - tm-perm-3
+  345 - tm-perm-1
+
+Prefix: carnavalet
+  1232 - carnavalet-prints
+  398 - carnavalet-the-collection
+  55 - carnavalet-collection
+
+Prefix: kroller
+  1196 - kroller-muller-collection
+  162 - kroller-muller-photography
+  97 - kroller-muller-film-video
+
+Prefix: grenoble
+  996 - grenoble-paintings
+  954 - grenoble-drawings
+  24 - grenoble-photography
+
+Prefix: uffizi
+  914 - uffizi-collection
+  507 - uffizi-gallery-collection
+
+Prefix: borghese
+  562 - borghese-paintings
+  291 - borghese-arte-antica
+
+Prefix: petit
+  400 - petit-palais-collection
+  146 - petit-palais-drawings
+
+Prefix: novecento
+  66 - novecento-della-ragione-collection
+  56 - novecento-rosai-collection
+
+Prefix: tate
+  18 - tate-modern
+  15 - tate-britain-backup
+  3 - tate-britain
+  2 - tate-st-ives

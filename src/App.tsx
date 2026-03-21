@@ -53,6 +53,16 @@ function AppContent() {
   }, [location.pathname]);
 
   const [isCommunityPanelOpen, setIsCommunityPanelOpen] = useState(false);
+  const [mapMode, setMapMode] = useState<'default' | 'drawing' | 'interactive'>('default');
+
+  useEffect(() => {
+    const handleMapMode = (e: Event) => {
+      const mode = (e as CustomEvent).detail as 'default' | 'drawing' | 'interactive';
+      setMapMode(mode);
+    };
+    window.addEventListener('map-mode-changed', handleMapMode);
+    return () => window.removeEventListener('map-mode-changed', handleMapMode);
+  }, []);
 
   useEffect(() => {
     const handleToggle = () => setIsCommunityPanelOpen(prev => !prev);
@@ -178,38 +188,123 @@ function AppContent() {
       </AnimatedOverlay>
 
       {/* Persistent Community Panel */}
-      <CommunityPanel isOpen={isCommunityPanelOpen} onClose={() => setIsCommunityPanelOpen(false)} />
+      <CommunityPanel isOpen={isCommunityPanelOpen} onClose={() => setIsCommunityPanelOpen(false)} mapMode={mapMode} />
 
       {/* Global Community Toggle Button (Hidden when Community page or panel is open) */}
       {!isCommunity && !isCommunityPanelOpen && (
-        <button
-          onClick={() => setIsCommunityPanelOpen(true)}
-          style={{
-            position: 'fixed',
-            bottom: '24px',
-            right: '24px',
-            width: '50px',
-            height: '50px',
-            borderRadius: '50%',
-            background: '#000',
-            color: '#fff',
-            border: 'none',
-            boxShadow: '0 4px 12px rgba(0,0,0,0.3)',
-            cursor: 'pointer',
-            zIndex: 200001,
-            fontSize: '24px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            transition: 'transform 0.2s',
-            outline: 'none'
-          }}
-          onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
-          onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
-          title="Open Community Side Panel"
-        >
-          💬
-        </button>
+        mapMode === 'drawing' ? (
+          /* Drawing Map community button - brutalist sketch style */
+          <button
+            onClick={() => setIsCommunityPanelOpen(true)}
+            style={{
+              position: 'fixed',
+              bottom: '28px',
+              right: '28px',
+              width: 'auto',
+              height: 'auto',
+              padding: '10px 16px',
+              background: '#CCFF00',
+              color: '#111111',
+              border: '2.5px solid #111111',
+              borderRadius: 0,
+              boxShadow: '3px 3px 0 #111111',
+              cursor: 'pointer',
+              zIndex: 200001,
+              fontFamily: "'Space Mono', 'Courier New', monospace",
+              fontSize: '9px',
+              fontWeight: 700,
+              letterSpacing: '0.18em',
+              textTransform: 'uppercase',
+              display: 'flex',
+              alignItems: 'center',
+              gap: 8,
+              outline: 'none',
+              transition: 'box-shadow 0.1s, transform 0.1s',
+            }}
+            onMouseEnter={(e) => { e.currentTarget.style.boxShadow = '1px 1px 0 #111111'; e.currentTarget.style.transform = 'translate(2px,2px)'; }}
+            onMouseLeave={(e) => { e.currentTarget.style.boxShadow = '3px 3px 0 #111111'; e.currentTarget.style.transform = 'none'; }}
+            title="커뮤니티 열기"
+          >
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+            </svg>
+            COMMUNITY
+          </button>
+        ) : mapMode === 'interactive' ? (
+          /* Interactive Map community button - dark luxury style */
+          <button
+            onClick={() => setIsCommunityPanelOpen(true)}
+            style={{
+              position: 'fixed',
+              bottom: '28px',
+              right: '28px',
+              width: 'auto',
+              height: 'auto',
+              padding: '10px 18px',
+              background: 'rgba(8,8,7,0.88)',
+              color: 'rgba(201,165,90,0.9)',
+              border: '1px solid rgba(201,165,90,0.3)',
+              borderRadius: '4px',
+              boxShadow: '0 0 0 1px rgba(201,165,90,0.08), 0 4px 20px rgba(0,0,0,0.5)',
+              cursor: 'pointer',
+              zIndex: 200001,
+              fontFamily: "'Space Grotesk', 'Helvetica Neue', sans-serif",
+              fontSize: '10px',
+              fontWeight: 600,
+              letterSpacing: '0.14em',
+              textTransform: 'uppercase',
+              display: 'flex',
+              alignItems: 'center',
+              gap: 8,
+              outline: 'none',
+              backdropFilter: 'blur(16px)',
+              WebkitBackdropFilter: 'blur(16px)',
+              transition: 'all 0.2s ease',
+            }}
+            onMouseEnter={(e) => { e.currentTarget.style.background = 'rgba(201,165,90,0.1)'; e.currentTarget.style.borderColor = 'rgba(201,165,90,0.6)'; }}
+            onMouseLeave={(e) => { e.currentTarget.style.background = 'rgba(8,8,7,0.88)'; e.currentTarget.style.borderColor = 'rgba(201,165,90,0.3)'; }}
+            title="커뮤니티 열기"
+          >
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+            </svg>
+            Community
+          </button>
+        ) : (
+          /* Default community button - clean minimal */
+          <button
+            onClick={() => setIsCommunityPanelOpen(true)}
+            style={{
+              position: 'fixed',
+              bottom: '28px',
+              right: '28px',
+              width: '46px',
+              height: '46px',
+              borderRadius: '50%',
+              background: 'rgba(17,17,17,0.9)',
+              color: '#fff',
+              border: '1px solid rgba(255,255,255,0.1)',
+              boxShadow: '0 4px 20px rgba(0,0,0,0.3)',
+              cursor: 'pointer',
+              zIndex: 200001,
+              fontSize: '18px',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              transition: 'transform 0.2s, background 0.2s',
+              outline: 'none',
+              backdropFilter: 'blur(12px)',
+              WebkitBackdropFilter: 'blur(12px)',
+            }}
+            onMouseEnter={(e) => { e.currentTarget.style.transform = 'scale(1.08)'; e.currentTarget.style.background = 'rgba(40,40,40,0.95)'; }}
+            onMouseLeave={(e) => { e.currentTarget.style.transform = 'scale(1)'; e.currentTarget.style.background = 'rgba(17,17,17,0.9)'; }}
+            title="커뮤니티 열기"
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+            </svg>
+          </button>
+        )
       )}
     </div>
   );
