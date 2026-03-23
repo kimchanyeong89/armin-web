@@ -10831,19 +10831,12 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
                       const sourceUrl = (current as any).sourceUrl;
                       return (
                         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 12 }}>
-                          {/* Stage container: explicit height so objectFit:contain works correctly for all aspect ratios */}
                           <div
                             className={isPanorama ? 'no-scrollbar' : undefined}
-                            style={isPanorama ? {
+                            style={{
                               maxWidth: '100%',
-                              overflowX: 'auto',
+                              overflowX: isPanorama ? 'auto' : 'visible',
                               overflowY: 'visible',
-                            } : {
-                              width: '100%',
-                              height: stageMaxH,
-                              display: 'flex',
-                              alignItems: 'center',
-                              justifyContent: 'center',
                             }}
                           >
                             <picture>
@@ -10858,18 +10851,17 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
                                 referrerPolicy="no-referrer"
                                 data-hi={lowSrc === current.image ? '1' : '0'}
                                 style={{
-                                  // Use width/height:100% so objectFit:contain works correctly in the explicit-size container
-                                  // Parent container provides stageMaxH height, so both wide and tall images fit without clipping
-                                  width: isPanorama ? "auto" : "100%",
-                                  height: isPanorama ? stageMaxH : "100%",
-                                  maxWidth: isPanorama ? 'none' : undefined,
+                                  width: "auto",
+                                  height: isPanorama ? stageMaxH : "auto",
+                                  maxWidth: "100%",
+                                  maxHeight: stageMaxH,
                                   objectFit: "contain",
                                   cursor: exhibition.id === 'reina-sofia-collection' && sourceUrl ? 'pointer' : 'zoom-in',
                                   display: "block",
                                   filter: mainLoaded ? 'none' : 'blur(14px)',
                                   transition: 'filter 420ms ease, opacity 420ms ease',
                                   opacity: mainLoaded ? 1 : 0.88,
-                                  background: 'transparent',
+                                  background: '#f5f5f5',
                                 }}
                                 onClick={() => {
                                   // Reina Sofía: open sourceUrl directly instead of lightbox
@@ -11139,16 +11131,16 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
               {(() => {
                 const items: Artwork[] = sortedArtworks.slice(0, galleryLimit);
                 const gridColumns = isMobile ? 'repeat(3, 1fr)' : 'repeat(5, 1fr)';
-                const gridGap = isMobile ? 8 : 64;
+                const gridGap = isMobile ? 8 : 32;
                 // Left panel (150px) shows on all non-mobile screens
-                // gridPadding: top matches f6ce original (192px wide, 200px narrow)
+                // gridPadding: compact top so artworks use the space below the left panel header
                 const gridPadding = isMobile
                   ? '160px 8px 32px 8px'
                   : isVeryNarrow
-                  ? '200px 16px 96px 16px'
+                  ? '160px 16px 96px 16px'
                   : isNarrow
-                  ? '200px 24px 96px 160px'   // narrow: left panel visible
-                  : '192px 48px 96px 160px';  // wide: restored f6ce original top (192px)
+                  ? '160px 24px 96px 160px'   // narrow: artworks fill left panel space
+                  : '120px 48px 96px 160px';  // wide: compact top, artworks use left panel area
                 return (
                   <div style={{ padding: gridPadding }}>
                     {/* Modern Sort UI - Above Grid */}
