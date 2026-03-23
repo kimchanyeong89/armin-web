@@ -4,7 +4,6 @@ import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import { AnimatedOverlay } from "./components/AnimatedOverlay";
 import DrawingLoader, { TransitionBadge } from "./components/DrawingLoader";
 import { exhibitions } from "./data/exhibitions";
-import Navbar from "./components/Navbar";
 import { OnboardingGuard } from "./components/OnboardingGuard";
 import { useNavigate } from "react-router-dom";
 import CommunityPanel from "./components/Community/CommunityPanel";
@@ -110,8 +109,6 @@ function AppContent() {
   return (
     <div style={{ position: 'relative', width: '100vw', height: '100dvh', overflow: 'hidden', background: '#000' }}>
       <OnboardingGuard />
-      <Navbar />
-
       {/* Route-transition badge — floats above page, fades in/out smoothly */}
       <TransitionBadge show={transitioning} />
 
