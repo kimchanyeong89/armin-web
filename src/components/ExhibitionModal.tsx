@@ -8535,21 +8535,26 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
     });
   }, [isMobile, viewMode, filteredArtworks.length]); // NO selectedIndex dependency!
 
-  // Sync scroll position when switching between PC and mobile
+  // Sync scroll position ONLY when switching between PC and mobile (not on every selectedIndex change)
   const prevIsMobileRef = useRef<boolean | null>(null);
+  const prevViewModeRef = useRef<string | null>(null);
   useEffect(() => {
     if (viewMode !== 'archive') return;
 
     // First run - just record current state
     if (prevIsMobileRef.current === null) {
       prevIsMobileRef.current = isMobile;
+      prevViewModeRef.current = viewMode;
       return;
     }
 
-    // No change
-    if (prevIsMobileRef.current === isMobile) return;
+    // Only act when isMobile or viewMode actually changed
+    const mobileChanged = prevIsMobileRef.current !== isMobile;
+    const viewChanged = prevViewModeRef.current !== viewMode;
+    if (!mobileChanged && !viewChanged) return;
 
     prevIsMobileRef.current = isMobile;
+    prevViewModeRef.current = viewMode;
 
     // Need multiple frames for DOM to be ready
     setTimeout(() => {
@@ -8585,7 +8590,8 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
         }
       });
     }, 100); // Wait 100ms for layout to stabilize
-  }, [isMobile, viewMode, selectedIndex]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isMobile, viewMode]); // NOTE: selectedIndex intentionally removed — causes feedback loop
 
   // Momentum scrolling setup (Archive only)
   // ... (Removed redundant effects if combined, but keep momentum separate if cleaner)
@@ -11103,15 +11109,15 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
                 const items: Artwork[] = sortedArtworks.slice(0, galleryLimit);
                 const gridColumns = isMobile ? 'repeat(3, 1fr)' : 'repeat(5, 1fr)';
                 const gridGap = isMobile ? 8 : 64;
-                // Left panel (150px) shows on all non-mobile screens including sketch variant
-                // gridPadding left must be 160px wherever the left panel is visible
+                // Left panel (150px) shows on all non-mobile screens
+                // gridPadding: top matches f6ce original (192px wide, 200px narrow)
                 const gridPadding = isMobile
                   ? '160px 8px 32px 8px'
                   : isVeryNarrow
                   ? '200px 16px 96px 16px'
                   : isNarrow
-                  ? '200px 24px 96px 160px'   // narrow (incl. sketch): left panel visible
-                  : '200px 48px 96px 160px';  // wide: left panel visible
+                  ? '200px 24px 96px 160px'   // narrow: left panel visible
+                  : '192px 48px 96px 160px';  // wide: restored f6ce original top (192px)
                 return (
                   <div style={{ padding: gridPadding }}>
                     {/* Modern Sort UI - Above Grid */}
