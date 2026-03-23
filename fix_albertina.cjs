@@ -1,15 +1,34 @@
 const fs = require('fs');
-const path = require('path');
-const file = path.join(__dirname, 'public', 'data', 'albertina-permanent-collection.json');
-const data = JSON.parse(fs.readFileSync(file, 'utf8'));
-let fixed = 0;
-data.forEach(item => {
-    if (item.imageUrl && !item.imageUrl.includes('r2.dev')) {
-        let proxy = "https://wsrv.nl/?url=" + encodeURIComponent(item.imageUrl);
-        item.original_imageUrl = item.imageUrl;
-        item.imageUrl = proxy;
-        fixed++;
-    }
+
+const mergedFile = 'public/data/albertina-permanent-collection.json';
+const data = JSON.parse(fs.readFileSync(mergedFile));
+
+const mapping = [
+  { name: 'Photography', file: 'albertina-photography-100.json' },
+  { name: 'Posters', file: 'albertina-poster-100.json' },
+  { name: 'Sculptures', file: 'albertina-sculptures-100.json' },
+  { name: 'Objects & Media Art', file: 'albertina-objects-installations-media-art-100.json' }
+];
+
+const idToCat = new Map();
+for (let m of mapping) {
+  const fileData = JSON.parse(fs.readFileSync('public/data/' + m.file));
+  const arr = fileData.objects || fileData;
+  arr.forEach(d => {
+    idToCat.set(d.id, m.name);
+  });
+}
+
+let modified = 0;
+data.objects.forEach(d => {
+  if (idToCat.has(d.id)) {
+    d.category = idToCat.get(d.id);
+  } else {
+    d.category = 'Drawings, Prints, and Paintings'; 
+  }
+  modified++;
 });
-fs.writeFileSync(file, JSON.stringify(data, null, 2));
-console.log(`Proxied ${fixed} URLs in Albertina to wsrv.`);
+
+fs.writeFileSync(mergedFile, JSON.stringify(data, null, 2));
+console.log('Done! Modified', modified, 'icoms.');
+

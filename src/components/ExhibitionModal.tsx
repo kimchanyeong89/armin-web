@@ -526,15 +526,13 @@ const GalleryItem = React.memo(({
                     fetchPriority="low"
                     referrerPolicy="no-referrer"
                     style={{
-                      width: needsScale ? '117.65%' : '100%',
+                      width: '100%',
                       height: 'auto',
                       maxHeight: isNPG ? '450px' : undefined,
                       objectFit: isNPG ? 'contain' : undefined,
                       objectPosition: isNPG ? 'left bottom' : undefined,
                       display: 'block',
                       cursor: hoverZoom ? 'zoom-out' : 'zoom-in',
-                      transform: needsScale ? 'scale(0.85)' : 'none',
-                      transformOrigin: 'top left'
                     }}
                     onClick={() => {
                       if (hoverZoom) {
@@ -11131,7 +11129,8 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
               {(() => {
                 const items: Artwork[] = sortedArtworks.slice(0, galleryLimit);
                 const gridColumns = isMobile ? 'repeat(3, 1fr)' : 'repeat(5, 1fr)';
-                const gridGap = isMobile ? 8 : 32;
+                const gridColumnGap = isMobile ? 8 : 64;
+                const gridRowGap = isMobile ? 8 : 32;
                 // Left panel (150px) shows on all non-mobile screens
                 // gridPadding: compact top so artworks use the space below the left panel header
                 const gridPadding = isMobile
@@ -11181,7 +11180,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
                       </div>
                     </div>
 
-                    <div style={{ display: 'grid', gridTemplateColumns: gridColumns, gap: gridGap, alignItems: 'start' }}>
+                    <div style={{ display: 'grid', gridTemplateColumns: gridColumns, columnGap: gridColumnGap, rowGap: gridRowGap, alignItems: 'start' }}>
                       {items.map((a, idx) => (
                         <div key={a.id ?? `${idx}`} className="em-gallery-item" style={{ animationDelay: `${Math.min(idx * 0.04, 0.6)}s` }}>
                           <GalleryItem
