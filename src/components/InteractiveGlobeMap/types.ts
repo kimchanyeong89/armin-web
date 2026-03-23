@@ -26,4 +26,5 @@ export interface CityMarker {
     country: string;
     detail?: boolean;
     venues: Venue[];
+    artworkCount?: number;
 }

@@ -188,7 +188,7 @@ function AppContent() {
       </AnimatedOverlay>
 
       {/* Persistent Community Panel */}
-      <CommunityPanel isOpen={isCommunityPanelOpen} onClose={() => setIsCommunityPanelOpen(false)} mapMode={mapMode} />
+      <CommunityPanel isOpen={isCommunityPanelOpen} onClose={() => setIsCommunityPanelOpen(false)} mapMode={mapMode === 'interactive' ? 'drawing' : mapMode} />
 
       {/* Global Community Toggle Button (Hidden when Community page or panel is open) */}
       {!isCommunity && !isCommunityPanelOpen && (
@@ -231,38 +231,32 @@ function AppContent() {
             COMMUNITY
           </button>
         ) : mapMode === 'interactive' ? (
-          /* Interactive Map community button - dark luxury style */
+          /* Interactive Map community button - elegant text style */
           <button
             onClick={() => setIsCommunityPanelOpen(true)}
             style={{
               position: 'fixed',
-              bottom: '28px',
-              right: '28px',
-              width: 'auto',
-              height: 'auto',
-              padding: '10px 18px',
-              background: 'rgba(8,8,7,0.88)',
-              color: 'rgba(201,165,90,0.9)',
-              border: '1px solid rgba(201,165,90,0.3)',
-              borderRadius: '4px',
-              boxShadow: '0 0 0 1px rgba(201,165,90,0.08), 0 4px 20px rgba(0,0,0,0.5)',
+              bottom: '34px',
+              right: '34px',
               cursor: 'pointer',
               zIndex: 200001,
-              fontFamily: "'Space Grotesk', 'Helvetica Neue', sans-serif",
-              fontSize: '10px',
-              fontWeight: 600,
-              letterSpacing: '0.14em',
+              fontFamily: "'Space Grotesk', sans-serif",
+              fontSize: '11px',
+              fontWeight: 500,
+              letterSpacing: '0.15em',
               textTransform: 'uppercase',
               display: 'flex',
               alignItems: 'center',
               gap: 8,
               outline: 'none',
-              backdropFilter: 'blur(16px)',
-              WebkitBackdropFilter: 'blur(16px)',
-              transition: 'all 0.2s ease',
+              background: 'none',
+              border: 'none',
+              color: 'rgba(255,255,255,0.4)',
+              transition: 'color 0.2s',
+              mixBlendMode: 'difference'
             }}
-            onMouseEnter={(e) => { e.currentTarget.style.background = 'rgba(201,165,90,0.1)'; e.currentTarget.style.borderColor = 'rgba(201,165,90,0.6)'; }}
-            onMouseLeave={(e) => { e.currentTarget.style.background = 'rgba(8,8,7,0.88)'; e.currentTarget.style.borderColor = 'rgba(201,165,90,0.3)'; }}
+            onMouseEnter={e => e.currentTarget.style.color = '#fff'}
+            onMouseLeave={e => e.currentTarget.style.color = 'rgba(255,255,255,0.4)'}
             title="커뮤니티 열기"
           >
             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">

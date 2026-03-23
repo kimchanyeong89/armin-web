@@ -83,7 +83,8 @@ async function run() {
         return;
     }
 
-    const data = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+    const parsed = JSON.parse(fs.readFileSync(filePath, 'utf8'));
+    const data = Array.isArray(parsed) ? parsed : (parsed.items || []);
     let successes = 0, errors = 0, skipped = 0;
 
     // Filter items to upload

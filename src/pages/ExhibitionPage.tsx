@@ -402,6 +402,7 @@ const CSS = `
 
 /* Filter buttons → sharp corners, bold borders, brutalist */
 .sketch-modal-theme button {
+  box-sizing: border-box !important;
   border-radius: 0 !important;
   border: 1.5px solid rgba(17,17,17,0.55) !important;
   font-family: sans-serif !important;
@@ -527,6 +528,7 @@ export default function ExhibitionPage({ exhibitions }: { exhibitions: Exhibitio
   const mode = isDrawingMode ? 'drawing' : 'interactive';
 
   const [activeItem, setActiveItem] = useState<ExhibitionWithType | null>(null);
+  const [isSwitcherOpen, setIsSwitcherOpen] = useState<boolean>(false);
 
   const allExhibitions = useMemo<ExhibitionWithType[]>(() => [
     ...(museum.permanentExhibitions || []).map((e) => ({ ...e, type: 'PERMANENT' as const })),
@@ -732,20 +734,47 @@ export default function ExhibitionPage({ exhibitions }: { exhibitions: Exhibitio
 
             {/* Exhibition switcher — only when multiple exhibitions */}
             {allExhibitions.length > 1 && (
-              <div className="dg-detail-switcher">
-                <div className="dg-detail-sw-label">Switch</div>
-                {allExhibitions.map((ex, idx) => {
-                  const isActive = ex.id === activeItem.id && ex.type === activeItem.type;
-                  return (
-                    <div
-                      key={ex.id + idx}
-                      className={`dg-detail-sw-item${isActive ? ' active' : ''}`}
-                      onClick={() => openExhibition(ex)}
-                    >
-                      {ex.title || ex.name}
-                    </div>
-                  );
-                })}
+              <div className="dg-detail-switcher" style={{ position: 'relative', overflow: 'visible' }}>
+                <div 
+                  className="dg-detail-sw-label"
+                  onClick={() => setIsSwitcherOpen(!isSwitcherOpen)}
+                  style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}
+                >
+                  <span>Switch</span>
+                  <span style={{ fontSize: '8px', transform: isSwitcherOpen ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s' }}>▼</span>
+                </div>
+                {isSwitcherOpen && (
+                  <div style={{
+                    position: 'absolute',
+                    top: '32px',
+                    left: 0,
+                    width: '100%',
+                    background: '#ffffff',
+                    border: '1.5px solid rgba(17,17,17,0.55)',
+                    padding: '8px 10px',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: '2px',
+                    zIndex: 9999,
+                    boxShadow: '4px 4px 0 rgba(0,0,0,0.1)'
+                  }}>
+                    {allExhibitions.map((ex, idx) => {
+                      const isActive = ex.id === activeItem.id && ex.type === activeItem.type;
+                      return (
+                        <div
+                          key={ex.id + idx}
+                          className={`dg-detail-sw-item${isActive ? ' active' : ''}`}
+                          onClick={() => {
+                            openExhibition(ex);
+                            setIsSwitcherOpen(false);
+                          }}
+                        >
+                          {ex.title || ex.name}
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
               </div>
             )}
           </div>

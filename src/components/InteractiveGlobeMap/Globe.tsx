@@ -227,6 +227,7 @@ interface GlobeProps {
   onDrillDown: (name: string | null) => void;
   onRotationChange?: (coords: [number, number]) => void;
   onZoomChange?: (zoom: number) => void;
+  onHoverData?: (data: { level: string; label: string; count: number } | null) => void;
 }
 
 export function Globe({
@@ -238,6 +239,7 @@ export function Globe({
   onDrillDown,
   onRotationChange,
   onZoomChange,
+  onHoverData,
 }: GlobeProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -260,6 +262,7 @@ export function Globe({
   const hoveredCountryRef = useRef<any>(null);
   const lastHoverCheckRef = useRef(0);
   const mousePosRef = useRef({ x: -1, y: -1 });
+  const lastHoverReportRef = useRef<string>('');
 
   const isDraggingRef = useRef(false);
   const lastPosRef = useRef({ x: 0, y: 0 });
@@ -277,10 +280,10 @@ export function Globe({
   const [tooltipPos, setTooltipPos] = useState({ x: 0, y: 0 });
   const [isLoading, setIsLoading] = useState(true);
 
-  const cbRefs = useRef({ onRotationChange, onZoomChange, onSelectCity, onDrillDown });
+  const cbRefs = useRef({ onRotationChange, onZoomChange, onSelectCity, onDrillDown, onHoverData });
   useEffect(() => {
-    cbRefs.current = { onRotationChange, onZoomChange, onSelectCity, onDrillDown };
-  }, [onRotationChange, onZoomChange, onSelectCity, onDrillDown]);
+    cbRefs.current = { onRotationChange, onZoomChange, onSelectCity, onDrillDown, onHoverData };
+  }, [onRotationChange, onZoomChange, onSelectCity, onDrillDown, onHoverData]);
 
   const prevDrilledProp = useRef<string | null>(null);
   useEffect(() => {
@@ -511,16 +514,17 @@ export function Globe({
         return true;
       });
 
-      // Calculate country totals for un-drilled view
       const countryTotals = new Map<string, number>();
+      const countryArtworks = new Map<string, number>();
       if (!drilled) {
         cities.forEach(c => {
           if (!c.country) return;
           countryTotals.set(c.country, (countryTotals.get(c.country) || 0) + c.venues.length);
+          countryArtworks.set(c.country, (countryArtworks.get(c.country) || 0) + (c.artworkCount || 0));
         });
       }
 
-      // Draw country totals when not drilled — plain numbers, no background
+      // Total country numbers
       if (!drilled && dOp < 0.5 && countriesRef.current) {
         ctx.save();
         ctx.globalAlpha = (1 - dOp * 2) * 0.65;
@@ -549,6 +553,17 @@ export function Globe({
         ctx.restore();
       }
 
+      // Add marker bounding boxes to drawnBoxes first
+      if (drilled && dOp > 0.1) {
+        visibleCities.forEach((m) => {
+          const dist = d3.geoDistance(m.coordinates, [-rot[0], -rot[1]]);
+          if (dist > Math.PI / 2) return;
+          const p = projection(m.coordinates);
+          if (!p) return;
+          drawnBoxes.push({ x1: p[0] - 6, y1: p[1] - 6, x2: p[0] + 6, y2: p[1] + 6 });
+        });
+      }
+
       visibleCities.forEach((m) => {
         const dist = d3.geoDistance(m.coordinates, [-rot[0], -rot[1]]);
         if (dist > Math.PI / 2) return;
@@ -559,8 +574,6 @@ export function Globe({
         const isInDrilledCountry = drilled && m.country === drilled.name;
         const dimFactor = drilled && !isInDrilledCountry ? 0.12 : 1;
         const venueCount = m.venues.length;
-        // Total artworks across all venues in this city (from pre-built counts)
-        const totalArtworks = m.venues.reduce((s, v) => s + ((v as any).artworkCount || 0), 0);
 
         ctx.save();
         ctx.globalAlpha = dimFactor;
@@ -588,22 +601,22 @@ export function Globe({
           drawBevelRect(p[0], p[1], 2.5, 0.8);
           ctx.fillStyle = P.lime;
           ctx.fill();
-        } else if (totalArtworks >= 1000) {
-          // Tier 1: major collection (1000+ artworks) — lime
-          drawBevelRect(p[0], p[1], venueCount > 1 ? 4.5 : 3, 1);
+        } else if (venueCount >= 10) {
+          // Tier 1: Large cluster of museums (10+) — lime
+          drawBevelRect(p[0], p[1], 4.5, 1);
           ctx.fillStyle = P.lime;
           ctx.globalAlpha *= 0.85;
           ctx.fill();
-        } else if (totalArtworks >= 100) {
-          // Tier 2: mid collection (100-999 artworks) — subtle lime
-          drawBevelRect(p[0], p[1], venueCount > 1 ? 4 : 2.8, 0.8);
+        } else if (venueCount >= 3) {
+          // Tier 2: Medium cluster (3-9 museums) — subtle lime
+          drawBevelRect(p[0], p[1], 3.8, 0.8);
           ctx.fillStyle = `rgba(${P.limeFg},0.35)`;
           ctx.fill();
           ctx.strokeStyle = `rgba(${P.limeFg},0.25)`;
           ctx.lineWidth = 0.5;
           ctx.stroke();
         } else {
-          // Tier 3: small or uncounted — neutral
+          // Tier 3: Small (1-2 museums) — neutral
           drawBevelRect(p[0], p[1], venueCount > 1 ? 3.5 : 2.2, 0.6);
           ctx.fillStyle = `rgba(${R},${G},${B},0.40)`;
           ctx.fill();
@@ -622,38 +635,52 @@ export function Globe({
           const textCity = m.city.toUpperCase();
           const tw = ctx.measureText(textCity).width;
           const mw = venueCount > 1 ? ctx.measureText(`${venueCount}`).width + 5 : 0;
-          const totalWidth = offset + 6 + tw + mw;
-          const totalHeight = 12;
+          const tw_total = tw + mw;
 
-          let overlap = false;
-          if (!isActive) {
-            for (const b of drawnBoxes) {
-              if (p[0] < b.x2 && p[0] + totalWidth > b.x1 && p[1] - totalHeight / 2 < b.y2 && p[1] + totalHeight / 2 > b.y1) {
-                overlap = true;
-                break;
-              }
-            }
+          const positions = [
+             { cx: p[0] + offset + 6, cy: p[1],
+               box: { x1: p[0] + offset, y1: p[1] - 6, x2: p[0] + offset + 6 + tw_total, y2: p[1] + 6 }, linePath: [p[0] + offset - 2, p[1], p[0] + offset + 4, p[1]] },
+             { cx: p[0] - offset - 6 - tw_total, cy: p[1],
+               box: { x1: p[0] - offset - 6 - tw_total, y1: p[1] - 6, x2: p[0] - offset, y2: p[1] + 6 }, linePath: [p[0] - offset + 2, p[1], p[0] - offset - 4, p[1]] },
+             { cx: p[0] - tw_total/2, cy: p[1] - offset - 6,
+               box: { x1: p[0] - tw_total/2, y1: p[1] - offset - 12, x2: p[0] + tw_total/2, y2: p[1] - offset }, linePath: [p[0], p[1] - offset + 2, p[0], p[1] - offset - 4] },
+             { cx: p[0] - tw_total/2, cy: p[1] + offset + 6,
+               box: { x1: p[0] - tw_total/2, y1: p[1] + offset, x2: p[0] + tw_total/2, y2: p[1] + offset + 12 }, linePath: [p[0], p[1] + offset - 2, p[0], p[1] + offset + 4] }
+          ];
+
+          let bestPos = null;
+          for (const pos of positions) {
+             let overlap = false;
+             if (!isActive) {
+               for (const b of drawnBoxes) {
+                 if (pos.box.x1 < b.x2 && pos.box.x2 > b.x1 && pos.box.y1 < b.y2 && pos.box.y2 > b.y1) {
+                    overlap = true; break;
+                 }
+               }
+             }
+             if (!overlap) { bestPos = pos; break; }
           }
 
-          if (!overlap || isActive) {
-            if (!isActive) {
-              drawnBoxes.push({ x1: p[0], y1: p[1] - totalHeight / 2, x2: p[0] + totalWidth, y2: p[1] + totalHeight / 2 });
-            }
+          if (bestPos || isActive) {
+            const finalPos = bestPos || positions[0];
+            if (!isActive) drawnBoxes.push(finalPos.box);
 
             ctx.beginPath();
-            ctx.moveTo(p[0] + offset - 2, p[1]);
-            ctx.lineTo(p[0] + offset + 4, p[1]);
+            ctx.moveTo(finalPos.linePath[0], finalPos.linePath[1]);
+            ctx.lineTo(finalPos.linePath[2], finalPos.linePath[3]);
             ctx.strokeStyle = `rgba(${R},${G},${B},0.06)`;
             ctx.lineWidth = 0.5;
             ctx.stroke();
 
-            ctx.fillText(textCity, p[0] + offset + 6, p[1] + 1);
+            // Set center if needed
+            ctx.textAlign = 'left';
+            ctx.fillText(textCity, finalPos.cx, finalPos.cy + 1);
 
             if (venueCount > 1) {
               ctx.globalAlpha = labelAlpha * 0.45;
               ctx.fillStyle = P.lime;
               ctx.font = '8px "Space Mono", monospace';
-              ctx.fillText(`${venueCount}`, p[0] + offset + 6 + tw + 5, p[1] + 1);
+              ctx.fillText(`${venueCount}`, finalPos.cx + tw + 5, finalPos.cy + 1);
             }
           }
         }
@@ -671,6 +698,8 @@ export function Globe({
       ctx.moveTo(cx, cy - 12); ctx.lineTo(cx, cy - 4);
       ctx.moveTo(cx, cy + 4); ctx.lineTo(cx, cy + 12);
       ctx.stroke();
+
+      return { countryTotals, countryArtworks };
     };
 
     const animate = () => {
@@ -699,7 +728,31 @@ export function Globe({
         }
         rotationRef.current[1] = Math.max(-80, Math.min(80, rotationRef.current[1]));
       }
-      draw();
+      const stats = draw();
+
+      const hovCity = hoveredRef.current;
+      const hovCountry = hoveredCountryRef.current;
+      let hd: { level: string; label: string; count: number } | null = null;
+      if (hovCity) {
+         if (hovCity.venues.length === 1) {
+            hd = { level: 'VENUE', label: hovCity.venues[0].name, count: hovCity.artworkCount || 0 };
+         } else {
+            hd = { level: 'CITY', label: hovCity.city, count: hovCity.artworkCount || 0 };
+         }
+      } else if (hovCountry && mousePosRef.current.x > 0 && !isDraggingRef.current) {
+         const name = COUNTRY_NAMES[String(hovCountry.id)];
+         if (name && stats.countryTotals.has(name)) { // means there are venues here
+            const arts = stats.countryArtworks.get(name) || 0;
+            hd = { level: 'COUNTRY', label: name, count: arts };
+         }
+      }
+
+      const hs = hd ? `${hd.level}-${hd.label}` : 'null';
+      if (lastHoverReportRef.current !== hs) {
+         lastHoverReportRef.current = hs;
+         cbRefs.current.onHoverData?.(hd);
+      }
+
       cbRefs.current.onRotationChange?.([-rotationRef.current[0], -rotationRef.current[1]]);
       animFrameRef.current = requestAnimationFrame(animate);
     };

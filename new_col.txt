@@ -1,0 +1,212 @@
+        collectionFile: "acropolis-museum-collection.json"
+        collectionFile: "adachi-collection.json"
+        collectionFile: "agnsw-collection.json"
+        collectionFile: "aic-collection.json"
+        collectionFile: "aros-collection.json"
+        collectionFile: "ateneum-collection.json"
+        collectionFile: "basel-collection.json"
+        collectionFile: "belvedere-collection.json"
+        collectionFile: "beyeler-collection.json"
+        collectionFile: "china-art-museum-collection.json"
+        collectionFile: "cma-collection.json"
+        collectionFile: "crystal-bridges-gac.json"
+        collectionFile: "dia-collection.json"
+        collectionFile: "dpm-intl-paintings-all.json"
+        collectionFile: "dumoak-kim-work-all.json"
+        collectionFile: "famsf-collections.json"
+        collectionFile: "fine-arts-be-complete.json"
+        collectionFile: "frida-timeline.json"
+        collectionFile: "gdmoa-online-collection-all.json"
+        collectionFile: "gem-collection.json"
+        collectionFile: "getty-collection.json"
+        collectionFile: "glyptoteket-collection.json"
+        collectionFile: "guggenheim-bilbao-collection.json"
+        collectionFile: "gulbenkian-collection.json"
+        collectionFile: "hermitage-highlights.json"
+        collectionFile: "high-collection.json"
+        collectionFile: "hirschsprung-collection.json"
+        collectionFile: "hkmoa-collection.json"
+        collectionFile: "house-of-refuge-collection.json"
+        collectionFile: "huntington-collection.json"
+        collectionFile: "jmoa-collection-all.json"
+        collectionFile: "kanazawa-all.json"
+        collectionFile: "khm-collection.json"
+        collectionFile: "kiasma-collection.json"
+        collectionFile: "kimtschang-yeul-collection-all.json"
+        collectionFile: "kremlin-collection.json"
+        collectionFile: "kunsthaus-collection.json"
+        collectionFile: "lacma-classification-22.json"
+        collectionFile: "leopold-museum-collection.json"
+        collectionFile: "long-museum-collection.json"
+        collectionFile: "mah-collection.json"
+        collectionFile: "masp-collection.json"
+        collectionFile: "matisse-nice-collection.json"
+        collectionFile: "mbam-collection.json"
+        collectionFile: "mca-collection.json"
+        collectionFile: "met-ny-collection.json"
+        collectionFile: "mfab-collection.json"
+        collectionFile: "mnk-collection.json"
+        collectionFile: "moma-collection.json"
+        collectionFile: "mori-collection.json"
+        collectionFile: "mplus-collection-mplus.json"
+        collectionFile: "mplus-collection-sigg.json"
+        collectionFile: "munch-collection.json"
+        collectionFile: "museothyssen-collection-41.full.json"
+        collectionFile: "nam-collection.json"
+        collectionFile: "namoc-collection.json"
+        collectionFile: "nasjonal-collection.json"
+        collectionFile: "nga-collection.json"
+        collectionFile: "ngprague-collection.json"
+        collectionFile: "ngs-all.json"
+        collectionFile: "ngv-collection.json"
+        collectionFile: "nich-collection.json"
+        collectionFile: "njmuseum-collection-all.json"
+        collectionFile: "nmc-highlights-all.json"
+        collectionFile: "nmwa-collection.json"
+        collectionFile: "npm-selection-painting.json"
+        collectionFile: "ntmofa-collection.json"
+        collectionFile: "philadelphia-collection.json"
+        collectionFile: "psa-collection-all.json"
+        collectionFile: "pushkin-paintings.json"
+        collectionFile: "qagoma-collection.json"
+        collectionFile: "rusmuseum-collection.json"
+        collectionFile: "saam-paintings-full.json"
+        collectionFile: "sfmoma-collection.json"
+        collectionFile: "shanghaimuseum-paintings-all.json"
+        collectionFile: "shenzhenmuseum-l0303-all.json"
+        collectionFile: "si-asian-art.json"
+        collectionFile: "si-npg.json"
+        collectionFile: "sinebrychoff-collection.json"
+        collectionFile: "skagens-collection.json"
+        collectionFile: "smk-collection.json"
+        collectionFile: "sweden-collection.json"
+        collectionFile: "tate-modern-collection.json"
+        collectionFile: "tepapa-collection.json"
+        collectionFile: "tfam-collection-all.json"
+        collectionFile: "thebroad-collection.json"
+        collectionFile: "tobikan-collection.json"
+        collectionFile: "today-art-museum.json"
+        collectionFile: "topkapi-collection.json"
+        collectionFile: "tretyakov-wikidata.json"
+        collectionFile: "vam-permanent-exhibitions.json"
+        collectionFile: "vam-posters-display.json"
+        collectionFile: "whitney-collection.json"
+        collectionFile: "zjam-collection.json"
+        endDate: "Permanent", collectionFile: "wawel-collection.json" }
+      , collectionFile: "dulwich-collection.json" }
+      { id: "accademia-collection", name: "Florence Collection", title: "Galleria dell'Accademia di Firenze", description: "Michelangelo's David, paintings, sculptures, and the Museum of Musical Instruments.", startDate: "Permanent", endDate: "Permanent", collectionFile: "accademia-collection.json" }
+      { id: "albertina-drawings-prints", name: "Drawings & Prints", title: "Drawings & Prints", description: "Over 28,000 items from the world-famous ALBERTINA graphical collection.", startDate: "Permanent", endDate: "Permanent" , collectionFile: "albertina-drawings-prints.json" },
+      { id: "albertina-permanent-collection", name: "Permanent Collection", title: "ALBERTINA — Permanent Collection", description: "Highlights from the ALBERTINA's permanent collection spanning paintings, sculptures, drawings, prints, and objects & media art.", startDate: "Permanent", endDate: "Permanent" , collectionFile: "albertina-permanent-collection.json" },
+      { id: "albertina-photography", name: "Photography", title: "Photography Collection", description: "Extensive photography collection from the ALBERTINA Museum (over 22,000 photos).", startDate: "Permanent", endDate: "Permanent" , collectionFile: "albertina-photography.json" },
+      { id: "albertina-poster", name: "Posters", title: "Poster Collection", description: "Vast collection of historical and modern posters.", startDate: "Permanent", endDate: "Permanent" , collectionFile: "albertina-poster.json" }
+      { id: "alte-pinakothek-collection", name: "Old Masters Collection", title: "Alte Pinakothek Collection", description: "5,262 masterpieces from the 14th-18th centuries including German, Dutch, Flemish, Italian, and Spanish painting.", startDate: "Permanent", endDate: "Permanent", collectionFile: "alte-pinakothek-collection.json" }
+      { id: "ambrosiana-collection", name: "Pinacoteca Ambrosiana Collection", title: "Ambrosiana Collection", description: "Renaissance masterpieces including works by Leonardo, Caravaggio, Raphael, and Botticelli.", startDate: "Permanent", endDate: "Permanent", collectionFile: "ambrosiana-collection.json" }
+      { id: "bordeaux-collection", name: "The Collection", title: "Musée des Beaux-Arts de Bordeaux - The Collection", description: "르네상스부터 현대까지의 회화 2,296점 및 드로잉 3,302점 전체 컬렉션.", startDate: "Permanent", endDate: "Permanent", collectionFile: "bordeaux-collection.json" }
+      { id: "borghese-arte-antica", name: "Ancient Art Collection", title: "Galleria Borghese Arte Antica", description: "291 ancient Roman sculptures, mosaics, and reliefs.", startDate: "Permanent", endDate: "Permanent", collectionFile: "borghese-arte-antica-collection.json" }
+      { id: "borghese-paintings", name: "Paintings Collection", title: "Galleria Borghese Paintings", description: "562 paintings including masterpieces by Caravaggio, Raphael, Titian, and more.", startDate: "Permanent", endDate: "Permanent", collectionFile: "galleria-borghese-collection.json" },
+      { id: "brera-collection", name: "Brera Collection", title: "Pinacoteca di Brera Collection", description: "619 masterpieces of Italian art from the 14th to 20th century, including works by Raphael, Mantegna, Caravaggio, and Bellini.", startDate: "Permanent", endDate: "Permanent", collectionFile: "pinacoteca-brera-collection.json" }
+      { id: "bruecke-museum-collection", name: "Brücke Collection", title: "Die Brücke Collection", description: "1,152 works of German Expressionism: paintings (Gemälde), drawings (Zeichnung), prints (Druckgrafik), watercolors (Aquarell), and pastels by the founding artists of Die Brücke movement.", startDate: "Permanent", endDate: "Permanent", collectionFile: "bruecke-museum-collection.json" }
+      { id: "busan-collection", name: "부산박물관 회화 컬렉션", name_en: "Busan Museum Paintings", title: "부산박물관 회화 컬렉션", title_en: "Busan Museum Paintings Collection", description: "부산박물관 소장 회화 컬렉션 (198점)", description_en: "Busan Museum paintings collection (198 items)", startDate: "Permanent", endDate: "Permanent", collectionFile: "busan-museum.json" }
+      { id: "caixaforum-collection", name: "Collection", name_en: "Collection", title: "Fundación la Caixa - Collection", title_en: "Fundación la Caixa - Collection", description: "라 카이샤 재단의 현대 미술 컬렉션 723점. 회화, 드로잉, 판화, 비디오, 사진 등 다양한 매체.", description_en: "723 works from the Fundación la Caixa collection: paintings, drawings, prints, video, and photography.", startDate: "Permanent", endDate: "Permanent", collectionFile: "caixaforum-collection.json" }
+      { id: "carnavalet-the-collection", name: "The Collection", title: "Carnavalet - La Collection", description: "파리 역사를 담은 회화 및 판화 컬렉션 1,747점. 필수 작품 55점 포함.", startDate: "Permanent", endDate: "Permanent", collectionFile: "carnavalet-paintings.json" }
+      { id: "castello-di-rivoli-collection", name: "Contemporary Art Collection", title: "Castello di Rivoli Collection", description: "900+ contemporary artworks including video art, installations, paintings, and sculptures by international artists.", startDate: "Permanent", endDate: "Permanent", collectionFile: "castello-di-rivoli-collection.json" }
+      { id: "cg-1", name: "The Courtauld Collection", title: "The Courtauld Collection", description: "Manet's Bar at the Folies-Bergère, Van Gogh's Self-Portrait, Cézanne's Card Players, and many more masterpieces from the world-renowned collection of Impressionist and Post-Impressionist art.", startDate: "Permanent", endDate: "Permanent", collectionFile: "courtauld-gallery-collection.json" }
+      { id: "chagall-collection", name: "Collection", title: "Musée Chagall 컬렉션", description: "마르크 샤갈의 회화, 드로잉, 판화 컬렉션 3,302점.", startDate: "Permanent", endDate: "Permanent", collectionFile: "musee-chagall-collection.json" }
+      { id: "conde-paintings", name: "The Collection", title: "Musée Condé - The Collection", description: "프랑스에서 루브르 다음으로 중요한 올드 마스터 회화 및 드로잉 컬렉션. 라파엘로, 푸생, 앵그르 등 걸작 소장.", startDate: "Permanent", endDate: "Permanent", collectionFile: "musee-conde-collection.json" }
+      { id: "dali-foundation-collection", name: "Collection", name_en: "Collection", title: "Fundació Gala-Salvador Dalí - Collection", title_en: "Fundació Gala-Salvador Dalí - Collection", description: "달리 재단의 작품 컬렉션입니다.", description_en: "Artworks from the Fundació Gala-Salvador Dalí collection.", startDate: "Permanent", endDate: "Permanent", collectionFile: "dali-foundation-collection.json" }
+      { id: "doria-pamphilj-collection", name: "Masterpieces Collection", title: "Galleria Doria Pamphilj Masterpieces", description: "The finest works from the Doria Pamphilj private collection including Velázquez's Portrait of Pope Innocent X and Caravaggio's masterpieces.", startDate: "Permanent", endDate: "Permanent", collectionFile: "doria-pamphilj-collection.json" }
+      { id: "egyptian-museum-cairo-collection", name: "Permanent Collection", title: "Permanent Collection", startDate: "Permanent", endDate: "Permanent", collectionFile: "egyptian-museum-cairo-collection.json" }
+      { id: "flv-collection", name: "Collection", title: "Fondation Louis Vuitton Collection", description: "현대미술 컬렉션 213점.", startDate: "Permanent", endDate: "Permanent", collectionFile: "flv-collection.json" }
+      { id: "folk-collection", name: "국립민속박물관 회화 컬렉션", name_en: "National Folk Museum Paintings", title: "국립민속박물관 회화 컬렉션", title_en: "National Folk Museum Paintings Collection", description: "국립민속박물관 소장 회화 컬렉션 (927점)", description_en: "National Folk Museum paintings collection (927 items)", startDate: "Permanent", endDate: "Permanent", collectionFile: "folk-museum.json" }
+      { id: "gallerie-accademia-venice-collection", name: "Venice Collection", title: "Gallerie dell'Accademia di Venezia", description: "Masterpieces by Giorgione, Bellini, Titian, Veronese, Tintoretto, Carpaccio, and drawings by Leonardo da Vinci.", startDate: "Permanent", endDate: "Permanent", collectionFile: "gallerie-accademia-venice-collection.json" }
+      { id: "gidang-collection", name: "Permanent Collection", title: "Gidang Collection", description: "Permanent exhibition featuring modern calligraphy, paintings, and contemporary art.", startDate: "Permanent", endDate: "Permanent", collectionFile: "gidang-collection.json" }
+      { id: "granet-collection", name: "Collection", title: "Musée Granet Collection", description: "세잔부터 자코메티까지, 14세기-20세기 회화와 조각 30점.", startDate: "Permanent", endDate: "Permanent" , collectionFile: "musee-granet-collection.json" }
+      { id: "grenoble-drawings", name: "Drawings", title: "Musée de Grenoble - Drawings", description: "드로잉 컬렉션", startDate: "Permanent", endDate: "Permanent", collectionFile: "musee-grenoble-drawings-collection.json" },
+      { id: "grenoble-paintings", name: "Paintings", title: "Musée de Grenoble - Paintings", description: "회화 컬렉션", startDate: "Permanent", endDate: "Permanent", collectionFile: "musee-grenoble-paintings-collection.json" },
+      { id: "grenoble-photography", name: "Photography", title: "Musée de Grenoble - Photography", description: "사진 컬렉션", startDate: "Permanent", endDate: "Permanent", collectionFile: "musee-grenoble-photography-collection.json" }
+      { id: "guggenheim-venice-collection", name: "Peggy Guggenheim Collection", title: "Modern Art Collection", description: "613 works of modern art including pieces by Picasso, Pollock, Dalí, Ernst, and Magritte.", startDate: "Permanent", endDate: "Permanent", collectionFile: "guggenheim-venice-collection.json" }
+      { id: "guimet-collection", name: "Asian Art Collection", title: "귀메 아시아 예술 컬렉션", description: "중국, 일본, 한국, 인도 등 아시아 전역의 회화 및 드로잉 컬렉션.", startDate: "Permanent", endDate: "Permanent", collectionFile: "musee-guimet-collection.json" }
+      { id: "gwangju-collection", name: "국립광주박물관 회화 컬렉션", name_en: "Gwangju National Museum Paintings", title: "국립광주박물관 회화 컬렉션", title_en: "Gwangju National Museum Paintings Collection", description: "국립광주박물관 소장 회화 컬렉션 (331점)", description_en: "Gwangju National Museum paintings collection (331 items)", startDate: "Permanent", endDate: "Permanent", collectionFile: "gwangju-museum.json" }
+      { id: "hamburger-kunsthalle-drawings", name: "Drawings Collection", title: "Zeichnung Collection", description: "13,397 drawings from the 15th century to present day, including works by Dürer, Rembrandt, Kirchner, and contemporary artists.", startDate: "Permanent", endDate: "Permanent", collectionFile: "hamburger-kunsthalle-drawings.json" },
+      { id: "hamburger-kunsthalle-paintings", name: "Paintings Collection", title: "Malerei Collection", description: "2,286 paintings spanning seven centuries of European art history, from Old Masters to German Expressionism and contemporary works.", startDate: "Permanent", endDate: "Permanent", collectionFile: "hamburger-kunsthalle-paintings.json" },
+      { id: "hamburger-kunsthalle-video", name: "Video Art Collection", title: "Video Art", description: "289 video artworks and media installations by international contemporary artists.", startDate: "Permanent", endDate: "Permanent", collectionFile: "hamburger-kunsthalle-video.json" }
+      { id: "jacquemart-collection", name: "Must-See Works", title: "Musée Jacquemart-André Must-See Works", description: "Masterpieces by Botticelli, Rembrandt, Fragonard, and other masters in an elegant 19th-century mansion.", startDate: "Permanent", endDate: "Permanent" , collectionFile: "jacquemart-andre-collection.json" }
+      { id: "jeonju-collection", name: "국립전주박물관 회화 컬렉션", name_en: "Jeonju National Museum Paintings", title: "국립전주박물관 회화 컬렉션", title_en: "Jeonju National Museum Paintings Collection", description: "국립전주박물관 소장 회화 컬렉션 (382점)", description_en: "Jeonju National Museum paintings collection (382 items)", startDate: "Permanent", endDate: "Permanent", collectionFile: "jeonju-museum.json" }
+      { id: "kroller-muller-collection", name: "Kröller-Müller Collection", title: "Kröller-Müller Permanent Collection", description: "The complete permanent collection of the Kröller-Müller Museum — one of the largest Van Gogh collections in the world, alongside paintings, drawings, and sculptures by Mondrian, Seurat, Picasso, Redon, and other modern masters, plus an extensive photography collection and pioneering film and video art works.", startDate: "Permanent", endDate: "Permanent", collectionFile: "kroller-muller-paintings.json" }
+      { id: "lille-pba-collection", name: "Collection", title: "Palais des Beaux-Arts de Lille Collection", description: "16세기부터 20세기까지의 회화, 조각, 도자기, 드로잉을 아우르는 종합 컬렉션.", startDate: "Permanent", endDate: "Permanent", collectionFile: "lille-pba-collection.json" }
+      { id: "ljs-collection", name: "Permanent Collection", title: "Lee Jung-seop Collection", description: "Permanent exhibition of Lee Jung-seop's works and related archives.", startDate: "Permanent", endDate: "Permanent", collectionFile: "lee-jung-seop-collection.json" }
+      { id: "lyon-collection", name: "Painting & Graphic Design Collection", title: "Musée des Beaux-Arts de Lyon Collection", description: "15세기부터 현대까지의 회화와 그래픽 디자인 컬렉션 538점.", startDate: "Permanent", endDate: "Permanent" , collectionFile: "mba-lyon-collection.json" }
+      { id: "macval-collection", name: "Photography Collection", title: "MPP 사진 컬렉션", description: "프랑스 국가 사진 아카이브 컬렉션.", startDate: "Permanent", endDate: "Permanent", collectionFile: "macval-collection.json" }
+      { id: "mad-collection", name: "Les collections", title: "Arts décoratifs et design", description: "15세기부터 21세기까지의 장식예술과 디자인 컬렉션 10,863점.", startDate: "Permanent", endDate: "Permanent", collectionFile: "mad-paris-collection.json" }
+      { id: "mam-collection", name: "La Collection", title: "MAM Paris — La Collection", description: "Paintings, photography, and contemporary works from the Musée d'Art Moderne de Paris collection.", startDate: "Permanent", endDate: "Permanent", collectionFile: "mam-collection.json" }
+      { id: "mamcs-strasbourg-collection", name: "전체 컬렉션", title: "MAMCS 스트라스부르 전체 컬렉션", description: "드로잉·회화·그래픽 디자인을 포함한 전체 컬렉션 6,097점.", startDate: "Permanent", endDate: "Permanent", collectionFile: "mamcs-strasbourg-collection.json" }
+      { id: "mauritshuis-collection", name: "Mauritshuis Collection", title: "Mauritshuis Collection", description: "Collection of Dutch Golden Age paintings from the Mauritshuis, including masterpieces by Vermeer, Rembrandt, and other Dutch masters.", startDate: "Permanent", endDate: "Permanent", collectionFile: "mauritshuis-collection.json" }
+      { id: "mep-photography", name: "The Collection", title: "MEP: The Collection", description: "Photography and video works from legendary artists including Brassaï, Robert Frank, Nan Goldin, Irving Penn, William Klein, Erwin Wurm, and contemporary artists.", startDate: "Permanent", endDate: "Permanent", collectionFile: "mep-photography-collection.json" }
+      { id: "mmca-collection", name: "국립현대미술관 소장작품", name_en: "MMCA Collection", title: "국립현대미술관 소장작품", title_en: "MMCA Collection", description: "국립현대미술관 소장작품 컬렉션 (112점)", description_en: "MMCA permanent collection (112 items)", startDate: "Permanent", endDate: "Permanent", collectionFile: "mmca-collection.json" }
+      { id: "mucem-collection", name: "The Collection", title: "Mucem - The Collection", description: "회화, 판화, 드로잉을 포함한 전체 컬렉션 3,943점.", startDate: "Permanent", endDate: "Permanent", collectionFile: "mucem-collection.json" },    ],
+      { id: "musee-armee-collection", name: "The Collection", title: "Musée de l'Armée Collection", description: "회화, 사진, 드로잉 등 1,476점의 군사 역사 소장품.", startDate: "Permanent", endDate: "Permanent", collectionFile: "musee-armee-collection.json" }
+      { id: "musei-capitolini-collection", name: "Capitoline Collection", title: "Musei Capitolini Collection", description: "Ancient Roman sculptures, Renaissance masterpieces, and archaeological treasures spanning over 2,500 years of history.", startDate: "Permanent", endDate: "Permanent", collectionFile: "musei-capitolini-collection.json" }
+      { id: "museo-egizio-collection", name: "Egyptian Collection", title: "Museo Egizio Collection", description: "Over 40,000 artifacts spanning 4,000 years of Egyptian history including statues, papyri, mummies, and sarcophagi.", startDate: "Permanent", endDate: "Permanent", collectionFile: "museo-egizio-collection.json" }
+      { id: "museo-novecento-milan-collection", name: "Museo del Novecento Collection", title: "20th Century Italian Art", description: "Masterpieces of Italian modernism including works by Boccioni, Modigliani, and Fontana.", startDate: "Permanent", endDate: "Permanent", collectionFile: "museo-del-novecento-milan-collection.json" }
+      { id: "museum-wales-paintings", name: "The collection", title: "National Museum Wales – Paintings, Drawings & Watercolours", description: "Selected paintings, drawings, and watercolours from the National Museum Wales art collection, covering Welsh and international artists.", startDate: "Permanent", endDate: "Permanent", collectionFile: "museum-wales-paintings.json" }
+      { id: "napoli-collection", name: "Archaeological Collection", title: "MANN Collection", description: "690 artifacts from Egyptian, Farnese, Mosaic, Fresco, and other collections spanning ancient civilizations.", startDate: "Permanent", endDate: "Permanent", collectionFile: "museo-archeologico-napoli-collection.json" }
+      { id: "neue-pinakothek-collection", name: "19th Century Art", title: "Neue Pinakothek Collection", description: "136 works of 19th-century European painting and sculpture from Romanticism to Art Nouveau.", startDate: "Permanent", endDate: "Permanent", collectionFile: "neue-pinakothek-collection.json" }
+      { id: "ng-1", name: "European Paintings", title: "European Paintings", collectionFile: "national-gallery-permanent.json", collectionFile: "national-gallery-permanent.json", collectionFile: "national-gallery-permanent.json", description: "Masterworks by Botticelli, Van Gogh, Turner and more.", startDate: "Permanent", endDate: "Permanent" }
+      { id: "nmk-collection", name: "국립중앙박물관 회화 컬렉션", name_en: "National Museum of Korea Paintings", title: "국립중앙박물관 회화 컬렉션", title_en: "National Museum of Korea Paintings Collection", description: "국립중앙박물관 소장 회화 컬렉션 (4,309점)", description_en: "National Museum of Korea paintings collection (4,309 items)", startDate: "Permanent", endDate: "Permanent", collectionFile: "national-museum-korea.json" }
+      { id: "novecento-della-ragione-collection", name: "Alberto Della Ragione Collection", title: "Della Ragione Collection", description: "Collection of 20th century Italian art donated by Alberto Della Ragione.", startDate: "Permanent", endDate: "Permanent", collectionFile: "novecento-della-ragione-collection.json" },
+      { id: "novecento-rosai-collection", name: "Ottone Rosai Collection", title: "Rosai Collection", description: "Works by Florentine artist Ottone Rosai (1895-1957).", startDate: "Permanent", endDate: "Permanent", collectionFile: "novecento-rosai-collection.json" }
+      { id: "npg-london-collection", name: "NPG Collection", title: "National Portrait Gallery Collection", description: "The world's largest collection of portraits, featuring paintings of famous British figures from the Middle Ages to the present day.", startDate: "Permanent", endDate: "Permanent", collectionFile: "national-portrait-gallery-london-collection.json" }
+      { id: "orangerie-collection", name: "Orangerie Collection", title: "Musée de l'Orangerie Permanent Collection", description: "Monet's Water Lilies and the Jean Walter and Paul Guillaume collection of Impressionist and Post-Impressionist masterpieces.", startDate: "Permanent", endDate: "Permanent", collectionFile: "orangerie-collection.json" }
+      { id: "picasso-bcn-collection", name: "Collection", name_en: "Collection", title: "Museu Picasso Barcelona - Collection", title_en: "Museu Picasso Barcelona - Collection", description: "바르셀로나 피카소 미술관의 작품 컬렉션입니다.", description_en: "Artworks from the Museu Picasso Barcelona collection.", startDate: "Permanent", endDate: "Permanent", collectionFile: "picasso-bcn-collection.json" }
+      { id: "picasso-paris-collection", name: "The Collection", title: "Musée Picasso Paris - The Collection", description: "드로잉 1,492점, 회화 306점, 조각 340점, 판화 1,349점을 포함한 피카소 미술관 전체 컬렉션.", startDate: "Permanent", endDate: "Permanent", collectionFile: "picasso-paris-collection.json" }
+      { id: "pinakothek-moderne-collection", name: "Modern & Contemporary Art", title: "Pinakothek der Moderne Collection", description: "467 works of 20th and 21st-century art including expressionism, cubism, abstract art, and contemporary installations.", startDate: "Permanent", endDate: "Permanent", collectionFile: "pinakothek-moderne-collection.json" }
+      { id: "piscine-collection", name: "Collection", title: "La Piscine 회화 컬렉션", description: "19-20세기 프랑스 회화 컬렉션.", startDate: "Permanent", endDate: "Permanent", collectionFile: "la-piscine-collection.json" }
+      { id: "pitti-palace-collection", name: "Pitti Collection", title: "Pitti Palace Collection", description: "428 artworks from the Palatine Gallery, Gallery of Modern Art, and Royal Apartments including works by Raphael, Titian, and Rubens.", startDate: "Permanent", endDate: "Permanent", collectionFile: "pitti-palace-collection.json" }
+      { id: "pompidou-cinema-collection", name: "Cinema Collection", title: "Centre Pompidou Cinema Collection", description: "Experimental cinema, video art, and film installations from the Centre Pompidou collection.", startDate: "Permanent", endDate: "Permanent", collectionFile: "pompidou-cinema-collection.json" },
+      { id: "pompidou-design-collection", name: "Design Collection", title: "Centre Pompidou Design Collection", description: "Graphic design, posters, typography and industrial design from the Centre Pompidou collection.", startDate: "Permanent", endDate: "Permanent", collectionFile: "pompidou-design-collection.json" }
+      { id: "pompidou-drawing-collection", name: "Drawing Collection", title: "Centre Pompidou Drawing Collection", description: "Works on paper from the Cabinet d'art graphique, featuring drawings, sketches, and graphic works.", startDate: "Permanent", endDate: "Permanent", collectionFile: "pompidou-drawing-collection.json" },
+      { id: "pompidou-newmedia-collection", name: "New Media Collection", title: "Centre Pompidou New Media Collection", description: "Digital art, interactive installations, and new media works from the collection.", startDate: "Permanent", endDate: "Permanent", collectionFile: "pompidou-newmedia-collection.json" },
+      { id: "pompidou-painting-collection", name: "Painting Collection", title: "Centre Pompidou Painting Collection", description: "Modern and contemporary paintings from the Centre Pompidou collection, featuring masterworks from Picasso, Matisse, Kandinsky, and more.", startDate: "Permanent", endDate: "Permanent", collectionFile: "pompidou-painting-collection.json" },
+      { id: "ra-1", name: "RA Collection", title: "RA Collection", description: "Works acquired since the Academy's founding in 1768, including works by Reynolds, Constable, Turner, and contemporary Royal Academicians.", startDate: "Permanent", endDate: "Permanent", collectionFile: "royal-academy-collection.json" }
+      { id: "reina-sofia-collection", name: "Reina Sofía Collection", name_en: "Reina Sofía Collection", title: "Museo Reina Sofía Collection", title_en: "Museo Reina Sofía Collection", description: "Museo Nacional Centro de Arte Reina Sofía 소장품 컬렉션 (14,712점)", description_en: "Museo Nacional Centro de Arte Reina Sofía collection (14,712 works)", startDate: "Permanent", endDate: "Permanent", collectionFile: "reina-sofia-collection.json" }
+      { id: "rijksmuseum-cartoon", name: "Cartoons & Caricatures", title: "Cartoons & Caricatures", description: "Collection of cartoons and caricatures from the Rijksmuseum archives.", startDate: "Permanent", endDate: "Permanent", collectionFile: "rijksmuseum-cartoon-collection.json" },
+      { id: "rijksmuseum-design", name: "Design Collection", title: "Design Collection", description: "Collection of design objects from the Rijksmuseum, spanning industrial and applied arts.", startDate: "Permanent", endDate: "Permanent", collectionFile: "rijksmuseum-design-collection.json" },
+      { id: "rijksmuseum-docphotos", name: "Documentary Photographs", title: "Documentary Photographs", description: "Collection of documentary photographs from the Rijksmuseum archives.", startDate: "Permanent", endDate: "Permanent", collectionFile: "rijksmuseum-docphotos-collection.json" }
+      { id: "rijksmuseum-drawings", name: "Drawings Collection", title: "Drawings Collection", description: "Collection of drawings from the Rijksmuseum, featuring works from various periods.", startDate: "Permanent", endDate: "Permanent", collectionFile: "rijksmuseum-drawings-collection.json" },
+      { id: "rijksmuseum-paintings", name: "The collection", title: "The collection", description: "Collection of artworks from the Rijksmuseum, including Dutch Golden Age masterpieces and works currently on display.", startDate: "Permanent", endDate: "Permanent", collectionFile: "rijksmuseum-paintings-collection.json" },
+      { id: "rijksmuseum-photography", name: "Photography Collection", title: "Photography Collection", description: "Collection of photographs from the Rijksmuseum, featuring works from the 19th century to the present day.", startDate: "Permanent", endDate: "Permanent", collectionFile: "rijksmuseum-photography-collection.json" },
+      { id: "rijksmuseum-poster", name: "Posters Collection", title: "Posters Collection", description: "Collection of posters from the Rijksmuseum archives, featuring graphic design across the centuries.", startDate: "Permanent", endDate: "Permanent", collectionFile: "rijksmuseum-poster-collection.json" },
+      { id: "rijksmuseum-prints", name: "Book Illustrations", title: "Book Illustrations", description: "Collection of book illustrations from the Rijksmuseum.", startDate: "Permanent", endDate: "Permanent", collectionFile: "rijksmuseum-prints-collection.json" },
+      { id: "rijksmuseum-prints2-collection", name: "Prints Collection", title: "Prints Collection", description: "Collection of prints from the Rijksmuseum.", startDate: "Permanent", endDate: "Permanent", collectionFile: "rijksmuseum-prints2-collection.json" },
+      { id: "rodin-collection", name: "The Collection", title: "Musée Rodin - The Collection", description: "회화 224점, 조각, 판화 1,188점을 포함한 로댕 미술관 전체 컬렉션.", startDate: "Permanent", endDate: "Permanent", collectionFile: "rodin-collection.json" }
+      { id: "rouen-mba-collection", name: "Collection", title: "Musée des Beaux-Arts de Rouen Collection", description: "인상주의, 풍경화, 바로크, 초상화 등 르네상스부터 20세기까지의 유럽 미술 컬렉션.", startDate: "Permanent", endDate: "Permanent", collectionFile: "rouen-mba-collection.json" }
+      { id: "sammlung-schack-collection", name: "German Romanticism", title: "Sammlung Schack Collection", description: "173 works of 19th-century German Romanticism and Late Romanticism painting.", startDate: "Permanent", endDate: "Permanent", collectionFile: "sammlung-schack-collection.json" }
+      { id: "sema-collection", name: "서울시립미술관 소장품", name_en: "Seoul Museum of Art Collection", title: "서울시립미술관 소장품", title_en: "Seoul Museum of Art Collection", description: "서울시립미술관 소장 미술작품 컬렉션 (회화, 사진, 한국화, 드로잉&판화, 조각, 뉴미디어, 설치, 공예, 서예, 디자인 등 6,167점)", description_en: "Seoul Museum of Art collection featuring painting, photography, Korean painting, drawing & print, sculpture, new media, installation, craft, calligraphy, design (6,167 works)", startDate: "Permanent", endDate: "Permanent", collectionFile: "seoul-museum-of-art-collection.json" }
+      { id: "smb-alte-nationalgalerie-collection", name: "19th Century Art", title: "Alte Nationalgalerie Collection", description: "2,258 paintings and sculptures from Romanticism to early Modernism, including works by Caspar David Friedrich, Monet, Renoir, and Menzel.", startDate: "Permanent", endDate: "Permanent", collectionFile: "smb-alte-nationalgalerie-collection.json" }
+      { id: "smb-altes-museum-collection", name: "Classical Antiquity Collection", title: "Altes Museum Collection", description: "Greek, Roman, and Etruscan masterpieces including sculptures, vases, jewelry, and architectural elements.", startDate: "Permanent", endDate: "Permanent", collectionFile: "smb-altes-museum-collection.json" }
+      { id: "smb-bode-museum-collection", name: "Sculptures & Byzantine Art", title: "Bode-Museum Collection", description: "2,263 works including Byzantine art, medieval sculptures, and Renaissance masterpieces by Donatello, Riemenschneider, and Giacometti.", startDate: "Permanent", endDate: "Permanent", collectionFile: "smb-bode-museum-collection.json" }
+      { id: "smb-gemaeldegalerie-collection", name: "European Old Masters", title: "Gemäldegalerie Collection", description: "782 masterpieces of European painting spanning 500 years, from medieval altarpieces to Baroque masterworks.", startDate: "Permanent", endDate: "Permanent", collectionFile: "smb-gemaeldegalerie-collection.json" }
+      { id: "smb-humboldt-forum-collection", name: "World Cultures Collection", title: "Humboldt Forum Collection", description: "Ethnological and Asian art collections from the Staatliche Museen zu Berlin.", startDate: "Permanent", endDate: "Permanent", collectionFile: "smb-humboldt-forum-collection.json" }
+      { id: "smb-neue-nationalgalerie-collection", name: "20th Century Art", title: "Neue Nationalgalerie Collection", description: "2,275 works of modern and contemporary art including masterpieces by Kirchner, Klee, Picasso, Dalí, and Warhol.", startDate: "Permanent", endDate: "Permanent", collectionFile: "smb-neue-nationalgalerie-collection.json" }
+      { id: "smb-neues-museum-collection", name: "Egyptian & Prehistoric Collection", title: "Neues Museum Collection", description: "Ancient Egyptian artifacts including the bust of Nefertiti, plus prehistoric and early history objects.", startDate: "Permanent", endDate: "Permanent", collectionFile: "smb-neues-museum-collection.json" }
+      { id: "sng-collection", name: "SNG Collection", title: "Scottish National Gallery Collection", description: "Masterpieces from the Renaissance to Post-Impressionism, including works by Botticelli, Raphael, Titian, Vermeer, Rembrandt, Monet, Degas, Cézanne, and Van Gogh.", startDate: "Permanent", endDate: "Permanent", collectionFile: "scottish-national-gallery-collection.json" }
+      { id: "sngma-collection", name: "Modern Art Collection", title: "Scottish National Gallery of Modern Art Collection", description: "Contemporary artworks from some of the most influential artists of the 20th and 21st centuries.", startDate: "Permanent", endDate: "Permanent", collectionFile: "scottish-national-gallery-of-modern-art-collection.json" }
+      { id: "snpg-collection", name: "SNPG Collection", title: "Scottish National Portrait Gallery Collection", description: "Portraits of famous Scots from monarchs and poets to scientists and sports heroes, housed in the world's first purpose-built portrait gallery.", startDate: "Permanent", endDate: "Permanent", collectionFile: "scottish-national-portrait-gallery-collection.json" }
+      { id: "soam-collection", name: "Permanent Collection", title: "Soam Collection", description: "Exhibition of Soam Hyun Joong-hwa's calligraphy masterpieces.", startDate: "Permanent", endDate: "Permanent", collectionFile: "soam-memorial-collection.json" }
+      { id: "soane-paintings", name: "Paintings Collection", title: "Paintings and Framed Works", description: "Over 400 paintings, watercolours and prints including Hogarth's A Rake's Progress and The Election series.", startDate: "Permanent", endDate: "Permanent", collectionFile: "soane-paintings.json" }
+      { id: "staatsgalerien-collection", name: "Bavarian Collection", title: "Staatsgalerien Collection", description: "1,200 works from Bavarian State branch galleries across the region.", startDate: "Permanent", endDate: "Permanent", collectionFile: "staatsgalerien-collection.json" }
+      { id: "staedel-museum-collection", name: "Städel Collection", title: "Städel Museum Collection", description: "1,712 masterpieces spanning 700 years: Old Masters (1300-1800), Modern Art (1800-1945), Contemporary Art (1945-present), plus drawings, prints, and photographs.", startDate: "Permanent", endDate: "Permanent", collectionFile: "staedel-museum-collection.json" }
+      { id: "stedelijk-collection", name: "Stedelijk Museum Collection", title: "Stedelijk Museum Collection", description: "Collection of modern and contemporary art and design from the Stedelijk Museum Amsterdam, featuring works from the 20th and 21st centuries.", startDate: "Permanent", endDate: "Permanent", collectionFile: "stedelijk-collection.json" }
+      { id: "tbc-perm-1", name: "Tate Britain Collection", title: "Tate Britain Collection", description: "Complete collection of artworks on display at Tate Britain, featuring British art from 1500 to the present day.", startDate: "Permanent", endDate: "Permanent", collectionFile: "tate-britain-artworks.json" },
+      { id: "tm-perm-3", name: "Tate Collection", title: "Tate Collection", collectionFile: "tate-artworks.json", description: "Complete collection of artworks from Tate galleries.", startDate: "Permanent", endDate: "Permanent" }
+      { id: "tm-perm-3", name: "Tate Collection", title: "Tate Collection", collectionFile: "tate-artworks.json", description: "Complete collection of artworks from Tate galleries.", startDate: "Permanent", endDate: "Permanent" }
+      { id: "tm-perm-3", name: "Tate Collection", title: "Tate Collection", collectionFile: "tate-artworks.json", description: "Complete collection of artworks from Tate galleries.", startDate: "Permanent", endDate: "Permanent" }
+      { id: "tm-perm-3", name: "Tate Collection", title: "Tate Collection", collectionFile: "tate-artworks.json", description: "Complete collection of artworks from Tate galleries.", startDate: "Permanent", endDate: "Permanent" }
+      { id: "toulouse-lautrec-collection", name: "Collection", title: "Musée Toulouse-Lautrec Collection", description: "앙리 드 툴루즈-로트레크의 회화, 드로잉, 포스터 212점.", startDate: "Permanent", endDate: "Permanent", collectionFile: "toulouse-lautrec-collection.json" }
+      { id: "tsi-perm-1", name: "Tate St Ives Collection", title: "Tate St Ives Collection", description: "Complete collection of artworks from Tate galleries.", startDate: "Permanent", endDate: "Permanent", collectionFile: "tate-st-ives-artworks.json" },
+      { id: "uffizi-gallery-collection", name: "Uffizi Collection", title: "Uffizi Gallery Collection", description: "508 masterpieces including works by Botticelli, Michelangelo, Raphael, Leonardo, and Caravaggio.", startDate: "Permanent", endDate: "Permanent", collectionFile: "uffizi-collection.json" }
+      { id: "vangogh-museum-collection", name: "Van Gogh Museum Collection", title: "Van Gogh Museum Collection", description: "Collection of artworks from the Van Gogh Museum, featuring works by Vincent van Gogh and his contemporaries.", startDate: "Permanent", endDate: "Permanent", collectionFile: "vangogh-museum-collection.json" }
+      { id: "vatican-collection", name: "Permanent Collection", title: "Vatican Museums Collection", description: "Masterpieces from the Vatican's extensive art collection including classical sculpture, Renaissance paintings, and more.", startDate: "Permanent", endDate: "Permanent", collectionFile: "vatican-collection.json" }
+      { id: "versailles-collection", name: "Paintings & Drawings", title: "베르사유 회화 및 드로잉 컬렉션", description: "루이 14세부터 나폴레옹 시대까지의 왕실 회화 및 드로잉 컬렉션.", startDate: "Permanent", endDate: "Permanent", collectionFile: "versailles-collection.json" }
+      { id: "wag-collection", name: "Walker Collection", title: "Walker Art Gallery Collection", description: "Outstanding collection of European art from the 13th to 21st century, with renowned Pre-Raphaelite and Victorian paintings.", startDate: "Permanent", endDate: "Permanent", collectionFile: "walker-art-gallery-collection.json" }
+      { id: "wallace-permanent", name: "Permanent Collection", title: "Wallace Collection Permanent Display", description: "Paintings, sculpture, arms and armour, and decorative arts displayed in period room settings.", startDate: "Permanent", endDate: "Permanent", collectionFile: "wallace-collection.json" }

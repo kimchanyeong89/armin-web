@@ -643,6 +643,8 @@ export default function HomePage({ exhibitions, isOverlayOpen = false }: HomePag
                 exhibition={selectedModalExhibition}
                 museumName={selectedExhibition?.name}
                 onClose={closeCollectionModal}
+                variant={homeIsDark ? 'default' : 'sketch'}
+                theme={homeIsDark ? 'dark' : 'light'}
               />
             </Suspense>
           )

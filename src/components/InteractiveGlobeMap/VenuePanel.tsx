@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { useNavigate, useLocation } from "react-router-dom";
+
 import type { CityMarker, Venue, Theme } from "./types";
 import { computeClusterLayout } from "./cityMinimapHelper";
 
@@ -14,20 +14,11 @@ function formatCoord(lat: number, lon: number): string {
   return `${Math.abs(lat).toFixed(1)}\u00b0${latD}  ${Math.abs(lon).toFixed(1)}\u00b0${lonD}`;
 }
 
-// Artwork-count based dot styling (uses real collection sizes)
-function venueDotStyle(venue: { artworkCount?: number }, t: boolean): React.CSSProperties {
-  const count = (venue as any).artworkCount || 0;
-  if (count >= 1000) {
-    return { backgroundColor: "#BFFF0A", borderRadius: '1px' };
-  } else if (count >= 100) {
-    return {
-      backgroundColor: t ? "rgba(107,128,0,0.45)" : "rgba(191,255,10,0.45)",
-      border: `0.5px solid ${t ? "rgba(107,128,0,0.3)" : "rgba(191,255,10,0.3)"}`,
-      borderRadius: '1px'
-    };
-  }
+// Simple dot styling (venue layout)
+function venueDotStyle(t: boolean): React.CSSProperties {
   return {
-    backgroundColor: t ? "rgba(0,0,0,0.18)" : "rgba(255,255,255,0.25)",
+    backgroundColor: t ? "rgba(107,128,0,0.45)" : "rgba(191,255,10,0.45)",
+    border: `0.5px solid ${t ? "rgba(107,128,0,0.3)" : "rgba(191,255,10,0.3)"}`,
     borderRadius: '1px'
   };
 }
@@ -39,14 +30,13 @@ interface VenuePanelProps {
   theme: Theme;
   onClose: () => void;
   onSelectVenue?: (venue: Venue) => void;
+  onViewExhibition?: (ex: any) => void;
 }
 
-export function VenuePanel({ city, theme, onClose, onSelectVenue }: VenuePanelProps) {
+export function VenuePanel({ city, theme, onClose, onSelectVenue, onViewExhibition }: VenuePanelProps) {
   const [selectedVenue, setSelectedVenue] = useState<Venue | null>(null);
   const [hoveredVenueId, setHoveredVenueId] = useState<string | null>(null);
   const [zoomedCity, setZoomedCity] = useState<string | null>(null);
-  const navigate = useNavigate();
-  const location = useLocation();
   const t = theme === "light";
   const isMobile = typeof window !== 'undefined' && window.innerWidth < 640;
 
@@ -250,8 +240,9 @@ export function VenuePanel({ city, theme, onClose, onSelectVenue }: VenuePanelPr
                   return (
                     <motion.svg 
                        width="100%" height="100%" 
-                       animate={{ viewBox: `${minX} ${minY} ${vw} ${vh}` }} 
-                       transition={{ duration: 0.6, ease: [0.32, 0.72, 0, 1] }}
+                       initial={{ opacity: 0, filter: "blur(4px)", viewBox: `${minX} ${minY} ${vw} ${vh}` }}
+                       animate={{ opacity: 1, filter: "blur(0px)", viewBox: `${minX} ${minY} ${vw} ${vh}` }} 
+                       transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
                        style={{ display: 'block', overflow: 'hidden' }}
                     >
                       <rect 
@@ -266,12 +257,13 @@ export function VenuePanel({ city, theme, onClose, onSelectVenue }: VenuePanelPr
                         return (
                         <motion.g 
                           key={`lc-${idx}`}
+                          initial={{ opacity: 0, scale: 0.98 }}
                           animate={{ 
                               x: lc.ox, y: lc.oy, 
-                              opacity: isHidden ? 0.1 : 1,
-                              scale: isHidden ? 0.98 : 1
+                              opacity: isHidden ? 0.05 : 1,
+                              scale: isHidden ? 0.95 : 1
                           }}
-                          transition={{ duration: 0.5 }}
+                          transition={{ duration: 1.2, ease: [0.16, 1, 0.3, 1] }}
                           style={{ cursor: zoomedCity ? 'default' : 'pointer' }}
                           onClick={() => !zoomedCity && setZoomedCity(lc.city)}
                         >
@@ -345,14 +337,14 @@ export function VenuePanel({ city, theme, onClose, onSelectVenue }: VenuePanelPr
                             initial={{ opacity: 0 }}
                             animate={{ opacity: isDimmed ? 0.25 : 1 }}
                             exit={{ opacity: 0 }}
-                            transition={{ duration: 0.3 }}
+                            transition={{ duration: 0.8, delay: 0.15, ease: "easeOut" }}
                             onClick={(e) => {
                               e.stopPropagation();
                               if (isInteractive && dot.venue) {
                                 if (onSelectVenue) {
                                   onSelectVenue(dot.venue);
-                                } else {
-                                  navigate(`/exhibition/${dot.venue.id}`);
+                                } else if (onViewExhibition) { // Changed from navigate
+                                  onViewExhibition(dot.venue); // Changed from navigate
                                 }
                               }
                             }}
@@ -375,37 +367,36 @@ export function VenuePanel({ city, theme, onClose, onSelectVenue }: VenuePanelPr
                             )}
 
                             {/* 글로우 링 (호버시) */}
-                            {isHovered && (
-                              <>
-                                <circle 
-                                  cx={dot.cx} cy={dot.cy} r="14" 
-                                  fill={t ? "rgba(0,0,0,0.04)" : "rgba(255,255,255,0.06)"}
-                                />
-                                <circle 
-                                  cx={dot.cx} cy={dot.cy} r="10" 
-                                  fill="none"
-                                  stroke={t ? "rgba(0,0,0,0.15)" : "rgba(255,255,255,0.2)"}
+                            <AnimatePresence>
+                              {isHovered && (
+                                <motion.circle 
+                                  cx={dot.cx} cy={dot.cy} 
+                                  initial={{ r: 3, opacity: 0 }}
+                                  animate={{ r: 16, opacity: 1 }}
+                                  exit={{ r: 3, opacity: 0 }}
+                                  transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+                                  fill={t ? "rgba(0,0,0,0.03)" : "rgba(255,255,255,0.05)"}
+                                  stroke={t ? "rgba(0,0,0,0.1)" : "rgba(255,255,255,0.15)"}
                                   strokeWidth="1"
-                                  strokeDasharray="3 2"
                                 />
-                              </>
-                            )}
+                              )}
+                            </AnimatePresence>
 
                             {/* 메인 도트 */}
                             <circle 
                               cx={dot.cx} 
                               cy={dot.cy} 
-                              r={!isInteractive ? 2 : isHovered ? 5.5 : 3.5}
+                              r={!isInteractive ? 2 : isHovered ? 4.5 : 3}
                               fill={
                                 !isInteractive
                                   ? (t ? "rgba(0,0,0,0.35)" : "rgba(255,255,255,0.45)")
                                   : isHovered
-                                    ? (t ? "#000" : "#BFFF0A")
-                                    : (t ? "#222" : "#BFFF0A")
+                                    ? (t ? "#111" : "#BFFF0A")
+                                    : (t ? "rgba(0,0,0,0.7)" : "rgba(191,255,10,0.8)")
                               }
-                              stroke={isInteractive ? (t ? "rgba(255,255,255,0.8)" : "rgba(0,0,0,0.5)") : "none"}
-                              strokeWidth={isInteractive ? "1.5" : "0"}
-                              style={{ transition: 'r 0.25s cubic-bezier(0.34,1.56,0.64,1), fill 0.2s' }}
+                              stroke={isHovered ? (t ? "rgba(255,255,255,1)" : "rgba(0,0,0,1)") : isInteractive ? (t ? "rgba(255,255,255,0.8)" : "rgba(0,0,0,0.5)") : "none"}
+                              strokeWidth={isHovered ? "2.5" : isInteractive ? "1.5" : "0"}
+                              style={{ transition: 'r 0.4s cubic-bezier(0.16,1,0.3,1), fill 0.3s, stroke 0.3s, stroke-width 0.3s' }}
                             />
 
                             {/* 레이블 (인터랙티브 + showLabels) */}
@@ -492,7 +483,7 @@ export function VenuePanel({ city, theme, onClose, onSelectVenue }: VenuePanelPr
               <div style={{ display: 'flex', alignItems: 'flex-start', gap: '12px' }}>
                 <div
                   className="ig-dot"
-                  style={{ marginTop: '6px', flexShrink: 0, ...venueDotStyle(selectedVenue, t) }}
+                  style={{ marginTop: '6px', flexShrink: 0, ...venueDotStyle(t) }}
                 />
                 <div className="ig-min-w-0" style={{ flex: 1 }}>
                   <div style={{ color: fg90, letterSpacing: '0.06em', fontSize: "16px" }}>
@@ -543,9 +534,11 @@ export function VenuePanel({ city, theme, onClose, onSelectVenue }: VenuePanelPr
                         key={ex.title + i}
                         className="ig-exhibition-card"
                         onClick={() => {
-                          navigate(`/exhibition/${selectedVenue!.id}`, {
-                            state: { fromInteractiveMap: true, returnPath: location.pathname + location.search }
-                          });
+                          if (onViewExhibition) {
+                            onViewExhibition(ex);
+                          } else if (onSelectVenue) {
+                            onSelectVenue(selectedVenue!);
+                          }
                         }}
                         style={{ cursor: "pointer", backgroundColor: t ? "rgba(0,0,0,0.015)" : "rgba(255,255,255,0.015)" }}
                       >

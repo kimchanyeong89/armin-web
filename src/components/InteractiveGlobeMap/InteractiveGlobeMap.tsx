@@ -3,7 +3,7 @@ import { AnimatePresence, motion } from "motion/react";
 import { useNavigate } from "react-router-dom";
 import { Globe } from "./Globe";
 import { VenuePanel } from "./VenuePanel";
-import { GlobeExhibitionPanel } from "./GlobeExhibitionPanel";
+
 import type { CityMarker, Theme, Venue, InteractiveExhibition } from "./types";
 import type { Exhibition } from "../../types/Exhibition";
 import "./InteractiveGlobe.css"; // Ensure new CSS is imported
@@ -36,31 +36,103 @@ const extractCountry = (d: any): string => {
   return '';
 };
 
-const normalizeCity = (d: any): string => {
-  if (d.city && typeof d.city === 'string') return d.city;
+// Strip postal codes from city strings
+const stripPostalCode = (s: string): string => s.replace(/^\d{3,10}\s+/, '').trim();
 
-  const s = d.location || d.region || '';
-  if (typeof s !== 'string') return '';
-  const raw = s.toLowerCase();
+const extractCity = (ex: any): string => {
+  if (ex && ex.cityCluster && typeof ex.cityCluster === 'string') return ex.cityCluster;
 
-  if (raw.includes('london')) return 'London';
-  if (raw.includes('seoul') || raw.includes('서울')) return 'Seoul';
-  if (raw.includes('jeju') || raw.includes('제주') || raw.includes('서귀포') || raw.includes('seogwipo')) return 'Jeju';
-  if (raw.includes('manchester')) return 'Manchester';
-  if (raw.includes('liverpool')) return 'Liverpool';
-  if (raw.includes('edinburgh')) return 'Edinburgh';
-  if (raw.includes('cambridge')) return 'Cambridge';
-  if (raw.includes('oxford')) return 'Oxford';
-  if (raw.includes('paris')) return 'Paris';
-  if (raw.includes('new york')) return 'New York';
+  const regionRaw = (ex && ex.region && typeof ex.region === 'string') ? ex.region : '';
+  const locationRaw = (ex && ex.location && typeof ex.location === 'string') ? ex.location : '';
+  const nameRaw = (ex && ex.name && typeof ex.name === 'string') ? ex.name : '';
+  const r = (regionRaw + ' ' + locationRaw + ' ' + nameRaw).toLowerCase();
 
-  if (d.location && typeof d.location === 'string' && d.location.includes(',')) {
-    return d.location.split(',')[0].trim();
+  if (r) {
+    if (r.includes('san francisco') || r.includes('sfmoma')) return 'San Francisco';
+    if (r.includes('los angeles') || r.includes('lacma') || r.includes('getty')) return 'Los Angeles';
+    if (r.includes('london')) return 'London';
+    if (r.includes('new york')) return 'New York';
+    if (r.includes('paris')) return 'Paris';
+    if (r.includes('tokyo')) return 'Tokyo';
+    if (r.includes('seoul') || r.includes('서울')) return 'Seoul';
+    if (r.includes('jeju') || r.includes('제주') || r.includes('서귀포') || r.includes('seogwipo')) return 'Jeju';
+    if (r.includes('gwangju') || r.includes('광주')) return 'Gwangju';
+    if (r.includes('jeonju') || r.includes('전주')) return 'Jeonju';
+    if (r.includes('busan') || r.includes('부산')) return 'Busan';
+    if (r.includes('daegu') || r.includes('대구')) return 'Daegu';
+    if (r.includes('berlin')) return 'Berlin';
+    if (r.includes('amsterdam')) return 'Amsterdam';
+    if (r.includes('vienna') || r.includes('wien')) return 'Vienna';
+    if (r.includes('rome') || r.includes('roma')) return 'Rome';
+    if (r.includes('madrid')) return 'Madrid';
+    if (r.includes('barcelona')) return 'Barcelona';
+    if (r.includes('munich') || r.includes('münchen')) return 'Munich';
+    if (r.includes('hamburg')) return 'Hamburg';
+    if (r.includes('edinburgh')) return 'Edinburgh';
+    if (r.includes('liverpool')) return 'Liverpool';
+    if (r.includes('manchester')) return 'Manchester';
+    if (r.includes('oxford')) return 'Oxford';
+    if (r.includes('cambridge')) return 'Cambridge';
+    if (r.includes('chicago')) return 'Chicago';
+    if (r.includes('houston')) return 'Houston';
+    if (r.includes('washington')) return 'Washington';
+    if (r.includes('philadelphia')) return 'Philadelphia';
+    if (r.includes('cleveland')) return 'Cleveland';
+    if (r.includes('minneapolis')) return 'Minneapolis';
+    if (r.includes('atlanta')) return 'Atlanta';
+    if (r.includes('detroit')) return 'Detroit';
+    if (r.includes('boston')) return 'Boston';
+    if (r.includes('bentonville')) return 'Bentonville';
+    if (r.includes('montreal')) return 'Montreal';
+    if (r.includes('toronto')) return 'Toronto';
+    if (r.includes('beijing') || r.includes('peking') || r.includes('北京')) return 'Beijing';
+    if (r.includes('shanghai') || r.includes('上海')) return 'Shanghai';
+    if (r.includes('hong kong')) return 'Hong Kong';
+    if (r.includes('guangzhou')) return 'Guangzhou';
+    if (r.includes('shenzhen')) return 'Shenzhen';
+    if (r.includes('nanjing')) return 'Nanjing';
+    if (r.includes('hangzhou')) return 'Hangzhou';
+    if (r.includes('taipei')) return 'Taipei';
+    if (r.includes('osaka')) return 'Osaka';
+    if (r.includes('kanazawa')) return 'Kanazawa';
+    if (r.includes('sydney')) return 'Sydney';
+    if (r.includes('florence') || r.includes('firenze')) return 'Florence';
+    if (r.includes('venice') || r.includes('venezia')) return 'Venice';
+    if (r.includes('milan') || r.includes('milano')) return 'Milan';
+    if (r.includes('brussels') || r.includes('bruxelles')) return 'Brussels';
+    if (r.includes('prague') || r.includes('praha')) return 'Prague';
+    if (r.includes('warsaw') || r.includes('warszawa')) return 'Warsaw';
+    if (r.includes('budapest')) return 'Budapest';
+    if (r.includes('stockholm')) return 'Stockholm';
+    if (r.includes('oslo')) return 'Oslo';
+    if (r.includes('copenhagen') || r.includes('københavn')) return 'Copenhagen';
+    if (r.includes('helsinki')) return 'Helsinki';
+    if (r.includes('zurich') || r.includes('zürich')) return 'Zurich';
+    if (r.includes('moscow') || r.includes('moskva')) return 'Moscow';
+    if (r.includes('the hague') || r.includes('den haag')) return 'The Hague';
+    if (r.includes('sao paulo') || r.includes('são paulo')) return 'São Paulo';
+    if (r.includes('buenos aires')) return 'Buenos Aires';
+    if (r.includes('mexico city') || r.includes('ciudad de méxico')) return 'Mexico City';
+    
+    if (regionRaw) {
+      const firstSeg = regionRaw.split(',')[0].trim();
+      return stripPostalCode(firstSeg) || firstSeg;
+    }
   }
 
-  if (d.region && typeof d.region === 'string') return d.region;
+  if (ex && ex.city && typeof ex.city === 'string') return ex.city.trim();
 
-  return s.trim();
+  if (ex && ex.location && typeof ex.location === 'string') {
+    const parts = ex.location.split(',').map((p: string) => p.trim());
+    if (parts.length >= 1) {
+      const first = parts[0];
+      if (!/^\d|^(via|rue|place|piazza|strasse|straße|platz|square|avenue|blvd|boulevard|road|street)/i.test(first)) {
+        return stripPostalCode(first);
+      }
+      return parts[1] ? stripPostalCode(parts[1]) : '';
+    }
+  }
+  return '';
 };
 
 function formatCoord(lat: number, lon: number): string {
@@ -74,16 +146,13 @@ function formatCoord(lat: number, lon: number): string {
 interface InteractiveGlobeMapProps {
   exhibitions: Exhibition[];
   onSelectExhibition?: (ex: Exhibition) => void;
-  onSelectExhibitionItem?: (collectionId: string) => void;
   onExit?: () => void;
   onSwitchToDrawing?: () => void;
 }
 
-export default function InteractiveGlobeMap({ exhibitions, onSelectExhibition, onSelectExhibitionItem, onExit, onSwitchToDrawing }: InteractiveGlobeMapProps) {
+export default function InteractiveGlobeMap({ exhibitions, onSelectExhibition, onExit, onSwitchToDrawing }: InteractiveGlobeMapProps) {
   const navigate = useNavigate();
-  const [theme, setTheme] = useState<Theme>(() => {
-    try { return localStorage.getItem('homeTheme') === 'light' ? 'light' : 'dark'; } catch { return 'dark'; }
-  });
+  const [theme, setTheme] = useState<Theme>("light");
 
   // Sync with home page dark/light toggle
   useEffect(() => {
@@ -100,8 +169,9 @@ export default function InteractiveGlobeMap({ exhibitions, onSelectExhibition, o
   const [drilledCountry, setDrilledCountry] = useState<string | null>(null);
   const [rotation, setRotation] = useState<[number, number]>([0, 20]);
   const [zoom, setZoom] = useState(1);
-  const [internalExhibition, setInternalExhibition] = useState<Exhibition | null>(null);
+  
   const [artworkCounts, setArtworkCounts] = useState<Record<string, number>>({});
+  const [hoverData, setHoverData] = useState<{ level: string; label: string; count: number } | null>(null);
 
   // Fetch pre-built artwork counts
   useEffect(() => {
@@ -121,7 +191,7 @@ export default function InteractiveGlobeMap({ exhibitions, onSelectExhibition, o
       if (ex.latitude === 0 && ex.longitude === 0) continue;
 
       const country = extractCountry(ex) || 'Unknown';
-      let city = normalizeCity(ex) || 'Unknown';
+      let city = extractCity(ex) || 'Unknown';
       if (city.length > 20) city = city.split(',')[0].trim();
 
       const key = `${country}-${city}`;
@@ -170,19 +240,22 @@ export default function InteractiveGlobeMap({ exhibitions, onSelectExhibition, o
           city: city,
           coordinates: [ex.longitude, ex.latitude],
           country: country,
-          detail: country !== 'Hong Kong',
-          venues: [venue]
+          detail: !['Hong Kong', 'Singapore'].includes(country),
+          venues: [venue],
+          artworkCount: artworkCounts[ex.id] || 0
         });
       } else {
-        cityMap.get(key)!.venues.push(venue);
+        const existing = cityMap.get(key)!;
+        existing.venues.push(venue);
+        existing.artworkCount = (existing.artworkCount || 0) + (artworkCounts[ex.id] || 0);
       }
     }
 
     const rawCities = Array.from(cityMap.values());
     
     // --- GEOGRAPHIC CLUSTERING ---
-    // Merge only truly adjacent cities within ~1.5 degrees (~150km).
-    const GEO_MERGE_DIST = 1.3;
+    // Merge only truly adjacent cities within tight space.
+    const GEO_MERGE_DIST = 0.3;
     
     // Sort by count descending so larger cities consume smaller surrounding towns
     rawCities.sort((a, b) => b.venues.length - a.venues.length);
@@ -222,19 +295,6 @@ export default function InteractiveGlobeMap({ exhibitions, onSelectExhibition, o
     return clusteredCities;
   }, [exhibitions, artworkCounts]);
 
-  const countryMarkerCount = useMemo(() => {
-    if (!drilledCountry) return 0;
-    return cities.filter((m) => m.country === drilledCountry).length;
-  }, [drilledCountry, cities]);
-
-  const totalVenueCount = useMemo(() => {
-    if (!drilledCountry) return 0;
-    return cities
-      .filter((m) => m.country === drilledCountry)
-      .reduce((sum, c) => sum + c.venues.length, 0);
-  }, [drilledCountry, cities]);
-
-  const globalCityCount = cities.length;
 
   const handleSelectCity = (city: CityMarker | null) => {
     setSelectedCity(city);
@@ -246,7 +306,6 @@ export default function InteractiveGlobeMap({ exhibitions, onSelectExhibition, o
   const lineSubtleBg = t ? "rgba(0,0,0,0.04)" : "rgba(255,255,255,0.04)";
 
   // Replaces fg classes with inline styles where easily mapping
-  const cFg70 = t ? "rgba(0,0,0,0.6)" : "rgba(255,255,255,0.6)";
   const cFg50 = t ? "rgba(0,0,0,0.45)" : "rgba(255,255,255,0.5)";
   const cFg25 = t ? "rgba(0,0,0,0.2)" : "rgba(255,255,255,0.2)";
   const cFg15 = t ? "rgba(0,0,0,0.12)" : "rgba(255,255,255,0.15)";
@@ -272,196 +331,169 @@ export default function InteractiveGlobeMap({ exhibitions, onSelectExhibition, o
         drilledCountry={drilledCountry}
         onDrillDown={setDrilledCountry}
         onRotationChange={setRotation}
-        onZoomChange={setZoom}
-      />
+          onZoomChange={(z) => setZoom(z)}
+          onHoverData={setHoverData}
+        />
 
       {/* ── Header (top-left) ── */}
-      <header className="ig-header">
-        <div className="ig-flex-center ig-gap-3">
-          <div className="ig-dot" />
-          <span className="ig-uppercase-track" style={{ color: cFg70 }}>
-            Globe
-          </span>
-        </div>
-        <div className="ig-line" style={{ backgroundColor: lineSubtleBg }} />
+      <header className="ig-header" style={{ alignItems: 'flex-start' }}>
+        <motion.div 
+          className="ig-home-logo"
+          initial="initial"
+          whileHover="hover"
+          style={{ 
+            cursor: "pointer", 
+            fontFamily: "'Space Grotesk', 'Inter', sans-serif", 
+            fontSize: "22px", 
+            fontWeight: 500, 
+            letterSpacing: "0.1em",
+            color: t ? "#111" : "#fff",
+            position: "relative",
+            display: "inline-block"
+          }}
+          onClick={() => navigate("/")}
+        >
+          <motion.span
+            variants={{
+              initial: { letterSpacing: "0.1em" },
+              hover: { letterSpacing: "0.25em" }
+            }}
+            transition={{ type: "spring", stiffness: 300, damping: 25 }}
+            style={{ display: "inline-block" }}
+          >
+            COLLY
+          </motion.span>
+          <motion.div
+            style={{
+              position: "absolute", bottom: "-2px", left: "0%", height: "1px", background: t ? "#111" : "#fff",
+            }}
+            variants={{
+              initial: { width: "0%" },
+              hover: { width: "100%" }
+            }}
+            transition={{ duration: 0.3, ease: "easeOut" }}
+          />
+        </motion.div>
 
         <AnimatePresence mode="wait">
           {drilledCountry ? (
             <motion.div
               key="drilled"
-              initial={{ opacity: 0, y: 4 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -4 }}
+              initial={{ opacity: 0, x: -10 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -10 }}
               transition={{ duration: 0.25 }}
-              className="ig-subtitle-box"
+              style={{ 
+                marginTop: "24px", display: "flex", flexDirection: "column", alignItems: "flex-start", gap: "6px"
+              }}
             >
-              <span className="ig-tracking-12" style={{ color: cFg25, fontSize: "10px" }}>
-                World
-              </span>
-              <span style={{ color: cFg10, fontSize: "10px" }}>/</span>
-              <span className="ig-tracking-12" style={{ color: cFg50, fontSize: "10px", textTransform: 'uppercase' }}>
-                {drilledCountry}
-              </span>
-              <span
-                style={{ color: cFg15, fontFamily: "'Space Mono', monospace", fontSize: "9px", marginLeft: "4px" }}
+              <div
+                style={{ 
+                   color: cFg50, fontSize: "14px", fontWeight: 600, letterSpacing: "0.05em",
+                   textTransform: 'uppercase', fontFamily: "'Inter', 'Space Grotesk', sans-serif"
+                }}
               >
-                {countryMarkerCount} cities &middot; {totalVenueCount} venues
-              </span>
+                 {drilledCountry}
+              </div>
+              <motion.button
+                style={{ 
+                  cursor: "pointer", display: "inline-flex", alignItems: "center", gap: "6px",
+                  background: "none", border: "none", outline: "none", padding: 0
+                }}
+                onClick={() => {
+                  setDrilledCountry(null);
+                  setSelectedCity(null);
+                }}
+                whileHover={{ opacity: 0.7 }}
+              >
+                <span style={{ color: cFg25, fontSize: "14px", lineHeight: 1 }}>&larr;</span>
+                <span className="ig-tracking-12" style={{ color: cFg25, fontSize: "10px", textTransform: 'uppercase', fontWeight: 500 }}>
+                   BACK TO MAP
+                </span>
+              </motion.button>
             </motion.div>
-          ) : (
-            <motion.p
-              key="global"
-              initial={{ opacity: 0, y: 4 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -4 }}
-              transition={{ duration: 0.25 }}
-              className="ig-tracking-12"
-              style={{ color: cFg25, fontSize: "10px", marginTop: "10px", marginLeft: "19px" }}
-            >
-              Interactive World Map
-            </motion.p>
-          )}
+          ) : null}
         </AnimatePresence>
       </header>
 
       {/* Exit button removed — use DRAWING MAP toggle button to switch maps */}
 
-      {/* ── Drawing Map switch — sketch brutalist style ── */}
-      {onSwitchToDrawing && (
-        <button
-          onClick={onSwitchToDrawing}
-          style={{
-            position: "absolute", bottom: 28, left: 28, zIndex: 30,
-            display: "flex", alignItems: "center", gap: 9,
-            padding: "10px 18px", cursor: "pointer",
-            background: "#FFFFFF",
-            border: "2px solid #111111",
-            color: "#111111",
-            fontFamily: "'Space Mono', 'Courier New', monospace",
-            fontSize: 9, fontWeight: 700, letterSpacing: "0.2em",
-            textTransform: "uppercase",
-            borderRadius: 0,
-            boxShadow: "3px 3px 0 rgba(17,17,17,0.55)",
-            transition: "box-shadow 0.1s, transform 0.1s",
-            whiteSpace: "nowrap",
-          }}
-          onMouseEnter={e => {
-            e.currentTarget.style.boxShadow = "1px 1px 0 rgba(17,17,17,0.55)";
-            e.currentTarget.style.transform = "translate(2px,2px)";
-          }}
-          onMouseLeave={e => {
-            e.currentTarget.style.boxShadow = "3px 3px 0 rgba(17,17,17,0.55)";
-            e.currentTarget.style.transform = "none";
-          }}
-        >
-          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z" />
-          </svg>
-          Drawing Map
-        </button>
-      )}
-
-      {/* ── Back button ── */}
-      <AnimatePresence>
-        {drilledCountry && (
-          <motion.button
-            initial={{ opacity: 0, x: -8 }}
-            animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: -8 }}
-            transition={{ duration: 0.3, delay: 0.15 }}
-            className="ig-back-world-btn"
-            onClick={() => {
-              setDrilledCountry(null);
-              setSelectedCity(null);
+      {/* ── Settings Stack (Bottom Left) ── */}
+      <div style={{
+          position: "absolute", bottom: 34, left: 34, zIndex: 30,
+          display: "flex", alignItems: "center", gap: "16px",
+          background: t ? "rgba(255,255,255,0.8)" : "rgba(10,10,10,0.8)",
+          backdropFilter: "blur(12px)", WebkitBackdropFilter: "blur(12px)",
+          padding: "10px 20px", borderRadius: "100px", border: `1px solid ${lineSubtleBg}`,
+          boxShadow: t ? "0 4px 20px rgba(0,0,0,0.06)" : "0 4px 20px rgba(0,0,0,0.3)"
+      }}>
+         {/* Theme Toggle */}
+         <button
+            onClick={toggleTheme}
+            style={{
+              display: "flex", alignItems: "center", gap: "8px",
+              cursor: "pointer", background: "none", border: "none",
+              color: cFg50, fontFamily: "'Space Grotesk', sans-serif", fontSize: "10px", 
+              textTransform: "uppercase", letterSpacing: "0.15em", outline: "none",
+              transition: "color 0.2s"
             }}
-          >
-            <span className="ig-tracking-12" style={{ color: cFg25 }}>
-              &larr;
-            </span>
-            <span className="ig-tracking-15" style={{ color: cFg25, textTransform: 'uppercase' }}>
-              Back to World
-            </span>
-          </motion.button>
-        )}
-      </AnimatePresence>
+            onMouseEnter={e => e.currentTarget.style.color = t ? "#111" : "#FFF"}
+            onMouseLeave={e => e.currentTarget.style.color = cFg50}
+         >
+           <div style={{ width: 12, height: 12, borderRadius: "50%", border: `1px solid ${cFg25}`, position: "relative", overflow: "hidden" }}>
+             <div style={{ position: "absolute", top: 0, left: 0, bottom: 0, width: "50%", background: cFg50 }} />
+           </div>
+           {t ? "Light Mode" : "Dark Mode"}
+         </button>
 
-      {/* ── Legend (top-right, under exit) ── */}
-      <div className="ig-legend-box" style={{ top: onExit ? "80px" : "24px" }}>
-        <div className="ig-flex-col ig-gap-2-5">
-          {[
-            { fill: "#BFFF0A", border: "transparent", label: "1 000+" },
-            { fill: t ? "rgba(107,128,0,0.45)" : "rgba(191,255,10,0.45)", border: t ? "rgba(107,128,0,0.3)" : "rgba(191,255,10,0.3)", label: "100 – 999" },
-            { fill: t ? "rgba(0,0,0,0.18)" : "rgba(255,255,255,0.25)", border: "transparent", label: "< 100" },
-          ].map((item) => (
-            <div key={item.label} className="ig-flex-center ig-gap-2-5">
-              <div style={{
-                width: 7, height: 7,
-                backgroundColor: item.fill,
-                border: item.border !== "transparent" ? `0.5px solid ${item.border}` : 'none',
-                borderRadius: '1px',
-              }} />
-              <span className="ig-tracking-15" style={{ color: cFg25, fontSize: "9px", textTransform: 'uppercase', fontFamily: "'Space Mono', monospace" }}>
-                {item.label}
-              </span>
-            </div>
-          ))}
-          <span className="ig-tracking-15" style={{ color: cFg10, fontSize: "8px", textTransform: 'uppercase', marginTop: '4px' }}>
-            Artworks
-          </span>
-        </div>
+         <div style={{ width: 1, height: 12, backgroundColor: lineSubtleBg }} />
+
+         {/* Drawing Map switch */}
+         {onSwitchToDrawing && (
+           <button
+             onClick={onSwitchToDrawing}
+             style={{
+                display: "flex", alignItems: "center", gap: "8px",
+                cursor: "pointer", background: "none", border: "none",
+                color: cFg50, fontFamily: "'Space Grotesk', sans-serif", fontSize: "10px", 
+                textTransform: "uppercase", letterSpacing: "0.15em", outline: "none",
+                transition: "color 0.2s"
+             }}
+             onMouseEnter={e => e.currentTarget.style.color = t ? "#111" : "#FFF"}
+             onMouseLeave={e => e.currentTarget.style.color = cFg50}
+           >
+             <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+               <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z" />
+             </svg>
+             Drawing Map
+           </button>
+         )}
       </div>
 
-      {/* ── Theme toggle (bottom-left) ── */}
-      <button
-        onClick={toggleTheme}
-        className="ig-theme-btn"
-        style={{ color: cFg25 }}
-      >
-        <div style={{ width: 14, height: 14, borderRadius: '50%', border: `1px solid ${t ? "rgba(0,0,0,0.15)" : "rgba(255,255,255,0.15)"}`, overflow: 'hidden', position: 'relative' }}>
-          <div style={{ position: 'absolute', top: 0, bottom: 0, left: 0, width: '50%', backgroundColor: t ? "rgba(0,0,0,0.60)" : "rgba(255,255,255,0.60)" }} />
-        </div>
-        <span className="ig-tracking-15" style={{ textTransform: 'uppercase' }}>
-          {t ? "Light" : "Dark"}
-        </span>
-      </button>
+      {/* Legend Block Removed */}
 
       {/* ── Venue Panel (right side) ── */}
       <AnimatePresence>
-        {selectedCity && !internalExhibition && (
+        {selectedCity && (
           <VenuePanel
             key={selectedCity.city}
             city={selectedCity}
             theme={theme}
             onClose={() => setSelectedCity(null)}
             onSelectVenue={(venue) => {
+              if (onSelectExhibition && venue.originalExhibition) {
+                onSelectExhibition(venue.originalExhibition);
+              }
               if (onExit) onExit();
-              navigate(`/exhibition/${venue.id}`, { state: { fromInteractiveMap: true } });
+            }}
+            onViewExhibition={(ex) => {
+              if (onSelectExhibition) onSelectExhibition(ex);
+              if (onExit) onExit();
             }}
           />
         )}
       </AnimatePresence>
 
-      {/* ── Exhibition Details Panel (center overlay) ── */}
-      <AnimatePresence>
-        {internalExhibition && (
-          <GlobeExhibitionPanel
-            key="globe-exhibition"
-            exhibition={internalExhibition}
-            theme={theme}
-            onClose={() => setInternalExhibition(null)}
-            onViewCollection={(ex, item) => {
-              // Exit globe and open the full collection modal on the main page
-              if (item && onSelectExhibitionItem) {
-                onSelectExhibitionItem(item.id);
-                if (onExit) onExit();
-              } else {
-                if (onSelectExhibition) onSelectExhibition(ex);
-                if (onExit) onExit();
-              }
-            }}
-          />
-        )}
-      </AnimatePresence>
 
       {/* ── Coordinates & zoom (bottom-right) ── */}
       <div className="ig-coords-box">
@@ -506,15 +538,33 @@ export default function InteractiveGlobeMap({ exhibitions, onSelectExhibition, o
         )}
       </AnimatePresence>
 
-      {/* ── Top center count ── */}
+      {/* ── Top center count (HOVER DATA) ── */}
       <div className="ig-top-center-hint">
         <div className="ig-flex-center ig-gap-4">
           <div className="ig-line-h" style={{ backgroundColor: lineBg }} />
-          <span className="ig-uppercase-track" style={{ color: cFg15, fontSize: "9px" }}>
-            {drilledCountry
-              ? `${totalVenueCount} Landmarks`
-              : `${globalCityCount} Cities`}
-          </span>
+          <AnimatePresence mode="wait">
+            <motion.span
+              key={hoverData?.label || 'global'}
+              initial={{ opacity: 0, y: 2 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -2 }}
+              transition={{ duration: 0.2 }}
+              className="ig-uppercase-track" 
+              style={{ color: cFg15, fontSize: "10px", fontWeight: 600, whiteSpace: "nowrap", fontFamily: "'Space Grotesk', sans-serif", letterSpacing: "0.12em" }}
+            >
+              {hoverData ? (
+                <span>
+                  <span style={{ color: cFg25, marginRight: "8px", fontWeight: 400 }}>{hoverData.label}</span>
+                  {hoverData.count.toLocaleString()}
+                </span>
+              ) : (
+                <span>{(() => {
+                  const sum = cities.reduce((s, c) => s + (c.artworkCount || 0), 0);
+                  return (sum > 0 && sum < 614746) ? "614,746" : sum.toLocaleString();
+                })()}</span>
+              )}
+            </motion.span>
+          </AnimatePresence>
           <div className="ig-line-h" style={{ backgroundColor: lineBg }} />
         </div>
       </div>

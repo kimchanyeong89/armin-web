@@ -2481,7 +2481,7 @@ export const exhibitions = [
     description: "파리의 역사를 담은 미술관. 고대부터 현대까지 파리의 변천사를 조각, 회화, 사진, 가구 등 60만 점 이상의 소장품으로 전시.",
     representativeImage: "images/carnavalet-logo.svg",
     permanentExhibitions: [
-      { id: "carnavalet-the-collection", name: "The Collection", title: "Carnavalet - La Collection", description: "파리 역사를 담은 회화 및 판화 컬렉션 1,747점. 필수 작품 55점 포함.", startDate: "Permanent", endDate: "Permanent", collectionFile: "carnavalet-paintings.json" }
+      { id: "carnavalet-the-collection", name: "The Collection", title: "Carnavalet - La Collection", description: "파리 역사를 담은 회화 및 판화 컬렉션 1,747점. 필수 작품 55점 포함.", startDate: "Permanent", endDate: "Permanent", collectionFile: "carnavalet-the-collection.json" }
     ],
     temporaryExhibitions: [],
     pastExhibitions: [],
@@ -3290,7 +3290,7 @@ export const exhibitions = [
     description: "One of the largest Van Gogh collections in the world, housed in a stunning museum within De Hoge Veluwe National Park. Features over 90 Van Gogh paintings and 180 drawings, plus works by Picasso, Mondrian, and Seurat.",
     representativeImage: "https://krollermuller.nl/images/museum-exterior.jpg",
     permanentExhibitions: [
-      { id: "kroller-muller-collection", name: "Kröller-Müller Collection", title: "Kröller-Müller Permanent Collection", description: "The complete permanent collection of the Kröller-Müller Museum — one of the largest Van Gogh collections in the world, alongside paintings, drawings, and sculptures by Mondrian, Seurat, Picasso, Redon, and other modern masters, plus an extensive photography collection and pioneering film and video art works.", startDate: "Permanent", endDate: "Permanent", collectionFile: "kroller-muller-paintings.json" }
+      { id: "kroller-muller-collection", name: "Kröller-Müller Collection", title: "Kröller-Müller Permanent Collection", description: "The complete permanent collection of the Kröller-Müller Museum — one of the largest Van Gogh collections in the world, alongside paintings, drawings, and sculptures by Mondrian, Seurat, Picasso, Redon, and other modern masters, plus an extensive photography collection and pioneering film and video art works.", startDate: "Permanent", endDate: "Permanent", collectionFile: "kroller-muller-permanent.json" }
     ],
     temporaryExhibitions: [],
     pastExhibitions: [],
@@ -3672,9 +3672,7 @@ export const exhibitions = [
     representativeImage: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Albertina_Wien_2008.jpg/1200px-Albertina_Wien_2008.jpg",
     floorPlan: "",
     permanentExhibitions: [
-      { id: "albertina-permanent-collection", name: "Permanent Collection", title: "ALBERTINA — Permanent Collection", description: "Highlights from the ALBERTINA's permanent collection spanning paintings, sculptures, drawings, prints, and objects & media art.", startDate: "Permanent", endDate: "Permanent" , collectionFile: "albertina-permanent-collection.json" },
-      { id: "albertina-photography-100", name: "Photography", title: "Photography", description: "Photography collection from the ALBERTINA Museum.", startDate: "Permanent", endDate: "Permanent" , collectionFile: "albertina-photography-100.json" },
-      { id: "albertina-poster-100", name: "Posters", title: "Posters", description: "Poster collection from the ALBERTINA Museum.", startDate: "Permanent", endDate: "Permanent" , collectionFile: "albertina-poster-100.json" }
+      { id: "albertina-permanent-collection", name: "Permanent Collection", title: "ALBERTINA — Permanent Collection", description: "Highlights from the ALBERTINA's permanent collection spanning paintings, sculptures, drawings, prints, and objects & media art.", startDate: "Permanent", endDate: "Permanent" , collectionFile: "albertina-permanent-collection.json" }
     ],
     temporaryExhibitions: [],
     pastExhibitions: [],
@@ -3885,7 +3883,7 @@ export const exhibitions = [
         description: "A selection of 100 paintings from the collection.",
         startDate: "Permanent",
         endDate: "Permanent",
-        collectionFile: "fine-arts-be-100.json"
+        collectionFile: "fine-arts-be-complete.json"
       }
     ],
     temporaryExhibitions: [],
@@ -5260,19 +5258,6 @@ export const exhibitions = [
     temporaryExhibitions: []
   },
   {
-    id: "hidden-carnavalet-prints",
-    slug: "hidden-carnavalet-prints",
-    name: "Hidden - carnavalet-prints",
-    country: "Various",
-    city: "Various",
-    location: "Various",
-    representativeImage: "",
-    permanentExhibitions: [
-      { id: "collection-carnavalet-prints", name: "carnavalet-prints", title: "carnavalet-prints", startDate: "Permanent", endDate: "Permanent", collectionFile: "carnavalet-prints.json" }
-    ],
-    temporaryExhibitions: []
-  },
-  {
     id: "hidden-carnavalet-the-collection",
     slug: "hidden-carnavalet-the-collection",
     name: "Hidden - carnavalet-the-collection",
@@ -5373,19 +5358,6 @@ export const exhibitions = [
     representativeImage: "",
     permanentExhibitions: [
       { id: "collection-kroller-muller-film-video", name: "kroller-muller-film-video", title: "kroller-muller-film-video", startDate: "Permanent", endDate: "Permanent", collectionFile: "kroller-muller-film-video.json" }
-    ],
-    temporaryExhibitions: []
-  },
-  {
-    id: "hidden-kroller-muller-photography",
-    slug: "hidden-kroller-muller-photography",
-    name: "Hidden - kroller-muller-photography",
-    country: "Various",
-    city: "Various",
-    location: "Various",
-    representativeImage: "",
-    permanentExhibitions: [
-      { id: "collection-kroller-muller-photography", name: "kroller-muller-photography", title: "kroller-muller-photography", startDate: "Permanent", endDate: "Permanent", collectionFile: "kroller-muller-photography.json" }
     ],
     temporaryExhibitions: []
   },
@@ -5533,19 +5505,6 @@ export const exhibitions = [
     temporaryExhibitions: []
   },
   {
-    id: "hidden-museum-wales-art",
-    slug: "hidden-museum-wales-art",
-    name: "Hidden - museum-wales-art",
-    country: "Various",
-    city: "Various",
-    location: "Various",
-    representativeImage: "",
-    permanentExhibitions: [
-      { id: "collection-museum-wales-art", name: "museum-wales-art", title: "museum-wales-art", startDate: "Permanent", endDate: "Permanent", collectionFile: "museum-wales-art.json" }
-    ],
-    temporaryExhibitions: []
-  },
-  {
     id: "hidden-museum-wales-extended-new",
     slug: "hidden-museum-wales-extended-new",
     name: "Hidden - museum-wales-extended-new",
@@ -5555,19 +5514,6 @@ export const exhibitions = [
     representativeImage: "",
     permanentExhibitions: [
       { id: "collection-museum-wales-extended-new", name: "museum-wales-extended-new", title: "museum-wales-extended-new", startDate: "Permanent", endDate: "Permanent", collectionFile: "museum-wales-extended-new.json" }
-    ],
-    temporaryExhibitions: []
-  },
-  {
-    id: "hidden-museum-wales-industry",
-    slug: "hidden-museum-wales-industry",
-    name: "Hidden - museum-wales-industry",
-    country: "Various",
-    city: "Various",
-    location: "Various",
-    representativeImage: "",
-    permanentExhibitions: [
-      { id: "collection-museum-wales-industry", name: "museum-wales-industry", title: "museum-wales-industry", startDate: "Permanent", endDate: "Permanent", collectionFile: "museum-wales-industry.json" }
     ],
     temporaryExhibitions: []
   },
