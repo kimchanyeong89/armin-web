@@ -1591,8 +1591,8 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
   useEffect(() => {
     // Reset selected index to 0 for all modes
     setSelectedIndex(0);
-    // Reset archive scroll position state
-    setArchiveScrollTop(0);
+    // Reset archive scroll position ref
+    archiveScrollTopRef.current = 0;
     // Reset gallery scroll container
     const galleryContainer = document.querySelector('.gallery-scroll-container');
     if (galleryContainer) {
