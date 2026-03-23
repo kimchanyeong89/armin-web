@@ -10831,12 +10831,19 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
                       const sourceUrl = (current as any).sourceUrl;
                       return (
                         <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 12 }}>
+                          {/* Stage container: explicit height so objectFit:contain works correctly for all aspect ratios */}
                           <div
                             className={isPanorama ? 'no-scrollbar' : undefined}
-                            style={{
+                            style={isPanorama ? {
                               maxWidth: '100%',
-                              overflowX: 'visible',
+                              overflowX: 'auto',
                               overflowY: 'visible',
+                            } : {
+                              width: '100%',
+                              height: stageMaxH,
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
                             }}
                           >
                             <picture>
@@ -10851,19 +10858,18 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
                                 referrerPolicy="no-referrer"
                                 data-hi={lowSrc === current.image ? '1' : '0'}
                                 style={{
-                                  width: "auto",
-                                  height: isPanorama ? stageMaxH : 'auto',
-                                  maxWidth: isPanorama ? 'none' : (needsScale ? "117.65%" : "100%"),
-                                  maxHeight: stageMaxH,
+                                  // Use width/height:100% so objectFit:contain works correctly in the explicit-size container
+                                  // Parent container provides stageMaxH height, so both wide and tall images fit without clipping
+                                  width: isPanorama ? "auto" : "100%",
+                                  height: isPanorama ? stageMaxH : "100%",
+                                  maxWidth: isPanorama ? 'none' : undefined,
                                   objectFit: "contain",
                                   cursor: exhibition.id === 'reina-sofia-collection' && sourceUrl ? 'pointer' : 'zoom-in',
                                   display: "block",
                                   filter: mainLoaded ? 'none' : 'blur(14px)',
                                   transition: 'filter 420ms ease, opacity 420ms ease',
                                   opacity: mainLoaded ? 1 : 0.88,
-                                  background: '#f5f5f5',
-                                  transform: needsScale ? 'scale(0.85)' : 'none',
-                                  transformOrigin: 'center center'
+                                  background: 'transparent',
                                 }}
                                 onClick={() => {
                                   // Reina Sofía: open sourceUrl directly instead of lightbox
