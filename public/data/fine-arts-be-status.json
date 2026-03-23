@@ -1,9 +1,8 @@
 {
-  "timestamp": "2026-01-16T08:19:06.089Z",
-  "count": 12062,
-  "scraped": 2620,
-  "errors": 3,
-  "page": "Details",
-  "last_item": "Musées royaux des Beaux-Arts de Belgique",
-  "last_type": "Artwork"
+  "timestamp": "2026-03-23T15:12:40.447Z",
+  "count": 100,
+  "scraped": 0,
+  "errors": 0,
+  "letter": "a",
+  "page": "L:a P:5"
 }

@@ -836,9 +836,12 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
 
   const [selectedCentury, setSelectedCentury] = useState<string | null>(null); // '~17' -> ≤1699, '18' -> 1700s, '19' -> 1800s, etc.
   const [viewMode, setViewMode] = useState<'archive' | 'gallery' | 'panorama'>('gallery');
-  // Virtualization state for archive mode
-  const [archiveScrollTop, setArchiveScrollTop] = useState(0);
-  const [archiveContainerHeight, setArchiveContainerHeight] = useState(600);
+  // Virtualization refs for archive mode — using refs to avoid React state lag during fast scroll
+  const archiveScrollTopRef = useRef(0);
+  const archiveContainerHeightRef = useRef(600);
+  // Also keep a state tick to force re-render of virtualized list when scroll changes
+  const [archiveVirtualTick, setArchiveVirtualTick] = React.useState(0);
+  const archiveVirtualRafRef = useRef<number>(0);
   // Liked artworks feature
   const [likedArtworks, setLikedArtworks] = useState<Set<string>>(new Set());
   const [currentUser, setCurrentUser] = useState<any>(null);
@@ -2612,9 +2615,26 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
       if (!filteredArtworks.length) return null;
       return filteredArtworks[Math.min(selectedIndex, filteredArtworks.length - 1)];
     })();
-    setMainLoaded(false);
     setMainNatural(null);
-    if (!currentArt || !currentArt.image) return;
+    if (!currentArt || !currentArt.image) {
+      setMainLoaded(true);
+      return;
+    }
+
+    // Check browser cache: if already loaded, skip blur to avoid flicker
+    const probe = new Image();
+    probe.src = currentArt.image;
+    if (probe.complete && probe.naturalWidth > 0) {
+      setMainLoaded(true);
+      if (mainImgRef.current) {
+        mainImgRef.current.src = currentArt.image;
+        mainImgRef.current.setAttribute('data-hi', '1');
+      }
+      return;
+    }
+
+    // Not in cache yet — apply blur-to-sharp transition
+    setMainLoaded(false);
     let cancelled = false;
     const hi = new Image();
     hi.decoding = 'async';
@@ -2623,12 +2643,9 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
     hi.onload = () => {
       if (cancelled) return;
       setMainLoaded(true);
-      if (mainImgRef.current) {
-        // Swap to full-res if still on low-res
-        if (mainImgRef.current.getAttribute('data-hi') !== '1') {
-          mainImgRef.current.src = currentArt.image;
-          mainImgRef.current.setAttribute('data-hi', '1');
-        }
+      if (mainImgRef.current && mainImgRef.current.getAttribute('data-hi') !== '1') {
+        mainImgRef.current.src = currentArt.image;
+        mainImgRef.current.setAttribute('data-hi', '1');
       }
     };
     hi.onerror = () => { if (!cancelled) setMainLoaded(true); };
@@ -9554,7 +9571,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
                 ref={(el) => {
                   (listRef as React.MutableRefObject<HTMLDivElement | null>).current = el;
                   if (el) {
-                    setArchiveContainerHeight(el.clientHeight);
+                    archiveContainerHeightRef.current = el.clientHeight;
                   }
                 }}
                 className="no-scrollbar"
@@ -9563,14 +9580,22 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
                   const el = e.currentTarget;
                   const currentScrollTop = el.scrollTop;
 
-                  setArchiveScrollTop(currentScrollTop);
-                  // Calculate which item is at center
+                  // Write to ref immediately — no React state lag
+                  archiveScrollTopRef.current = currentScrollTop;
+
+                  // Calculate which item is at center — immediate, no batching
                   const centerY = currentScrollTop + el.clientHeight / 2;
                   const centerIdx = Math.floor(centerY / ITEM_HEIGHT);
                   const clampedIdx = Math.max(0, Math.min(centerIdx, total - 1));
                   if (clampedIdx !== selectedIndex) {
                     setSelectedIndex(clampedIdx);
                   }
+
+                  // Trigger virtualization re-render via RAF (throttled, not every scroll event)
+                  if (archiveVirtualRafRef.current) cancelAnimationFrame(archiveVirtualRafRef.current);
+                  archiveVirtualRafRef.current = requestAnimationFrame(() => {
+                    setArchiveVirtualTick(t => t + 1);
+                  });
 
                   // NMK/Reina Sofía infinite scroll: load more when near bottom
                   if ((exhibition.id === 'nmk-collection' || exhibition.id === 'reina-sofia-collection') && nmkFilteredResults === null) {
@@ -9584,8 +9609,8 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
                 {/* Virtualized rendering - only render visible items */}
                 <div style={{ height: total * ITEM_HEIGHT, position: 'relative' }}>
                   {(() => {
-                    const startIdx = Math.max(0, Math.floor(archiveScrollTop / ITEM_HEIGHT) - BUFFER_COUNT);
-                    const endIdx = Math.min(total, Math.ceil((archiveScrollTop + archiveContainerHeight) / ITEM_HEIGHT) + BUFFER_COUNT);
+                    const startIdx = Math.max(0, Math.floor(archiveScrollTopRef.current / ITEM_HEIGHT) - BUFFER_COUNT);
+                    const endIdx = Math.min(total, Math.ceil((archiveScrollTopRef.current + archiveContainerHeightRef.current) / ITEM_HEIGHT) + BUFFER_COUNT);
                     const visibleItems = [];
 
                     for (let i = startIdx; i < endIdx; i++) {
