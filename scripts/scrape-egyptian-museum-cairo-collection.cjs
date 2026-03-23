@@ -96,8 +96,15 @@ async function extractDetail(page, url) {
 
     let fallbackImage = '';
     if (!image) {
-      const img = content ? content.querySelector('img') : document.querySelector('img');
-      if (img) fallbackImage = text(img.getAttribute('src'));
+      const img = document.querySelector('img[class*="wp-image-"]') || 
+                  document.querySelector('.elementor-widget-image img') ||
+                  (content ? content.querySelector('img') : null);
+      if (img) {
+          const src = img.getAttribute('src');
+          if (src && !src.includes('logo') && !src.includes('WhatsApp')) {
+              fallbackImage = text(src);
+          }
+      }
     }
 
     return {

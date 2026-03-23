@@ -116,50 +116,34 @@ async function scrape() {
           await itemPage.goto(url, { waitUntil: 'domcontentloaded', timeout: 45000 });
           
           const data = await itemPage.evaluate(() => {
-                const invalidTitles = ['Collections', 'Œuvres', 'Rechercher', 'À propos des musées', 'Localisation des musées', 'Partenaires', 'Suivez-nous', 'Abonnez-vous', 'Additional Links', 'Utilisation responsable de vos données', 'Musées royaux des Beaux-Arts de Belgique'];
-                const h2s = Array.from(document.querySelectorAll('h2'));
-                let potentialTitleEl = h2s.find(h => {
-                    const t = h.innerText.trim();
-                    return t.length > 2 && !invalidTitles.some(bad => t === bad || t.includes('Utilisation responsable'));
-                });
-                let fullTitle = potentialTitleEl ? potentialTitleEl.innerText.trim() : '';
-                const artistEl = document.querySelector('h4 a[href*="/artist/"]');
-                let artist = artistEl ? artistEl.innerText.trim() : 'Unknown';
-                let title = fullTitle;
-                if (artist !== 'Unknown' && title.includes(artist)) {
-                    title = title.replace(artist, '').trim();
-                }
-                title = title.replace(/\n/g, ' ').trim();
-                
-                let description = '';
-                const hItems = Array.from(document.querySelectorAll('h3, h4, h5'));
-                const descHeader = hItems.find(h => h.innerText.toUpperCase().includes('DESCRIPTION'));
-                if (descHeader) {
-                    let sibling = descHeader.nextElementSibling;
-                    while (sibling) {
-                        if (['H1','H2','H3','H4','H5'].includes(sibling.tagName)) break;
-                        description += sibling.innerText + '\n';
-                        sibling = sibling.nextElementSibling;
-                    }
-                } else {
-                     const main = document.querySelector('article') || document.body;
-                     if (main) description = main.innerText;
-                }
-
-                // Get Image URL
-                let image = null;
-                const imgEl = document.querySelector('.slideshow img') || document.querySelector('img[src*="/uploads/vubisartworks/"]');
-                if (imgEl) {
-                    image = imgEl.src || imgEl.getAttribute('src');
-                }
-
-                return {
-                    title: title || 'Untitled',
-                    artist,
-                    description: description.trim(),
-                    image,
-                    url: window.location.href
-                };
+              let title = "";
+              let artist = "Unknown";
+              let image = null;
+              const titleEl = document.querySelector(".header .span8 h2");
+              if (titleEl) {
+                  const authorSpan = titleEl.querySelector(".author");
+                  if (authorSpan) {
+                      artist = authorSpan.textContent.trim();
+                      let rawTitle = titleEl.textContent.replace(artist, "");
+                      title = rawTitle.replace(/\n/g, "").trim();
+                  } else {
+                      title = titleEl.textContent.replace(/\n/g, "").trim();
+                  }
+              }
+              let description = "";
+              const imgEl = document.querySelector(".image img") || document.querySelector("img[src*='/uploads/']");
+              if (imgEl) {
+                  let src = imgEl.src || imgEl.getAttribute("src");
+                  if (src && !src.startsWith("http")) src = "https://fine-arts-museum.be" + src;
+                  image = src;
+              }
+              return {
+                  title: title || "Untitled",
+                  artist: artist || "Unknown",
+                  description: "",
+                  image: image,
+                  url: window.location.href
+              };
           });
 
           const objectType = inferType(data.description);
