@@ -519,7 +519,7 @@ export const exhibitions = [
     permanentExhibitions: [
       {
         id: "dpm-intl-paintings",
-        name: "Paintings",
+        name: "The Collection",
         title: "Paintings (First 100)",
         description: "Paintings from the Palace Museum international collection (first 100 items).",
         startDate: "Permanent",
@@ -2329,7 +2329,7 @@ export const exhibitions = [
     description: "라파엘로 등 루브르에 견줄만한 올드 마스터들의 유화가 즐비한 곳.",
     representativeImage: "images/musee-conde-logo.svg",
     permanentExhibitions: [
-      { id: "conde-paintings", name: "The Collection", title: "Musée Condé - The Collection", description: "프랑스에서 루브르 다음으로 중요한 올드 마스터 회화 및 드로잉 컬렉션. 라파엘로, 푸생, 앵그르 등 걸작 소장.", startDate: "Permanent", endDate: "Permanent", collectionFile: "musee-conde-paintings.json" }
+      { id: "conde-paintings", name: "The Collection", title: "Musée Condé - The Collection", description: "프랑스에서 루브르 다음으로 중요한 올드 마스터 회화 및 드로잉 컬렉션. 라파엘로, 푸생, 앵그르 등 걸작 소장.", startDate: "Permanent", endDate: "Permanent", collectionFile: "musee-conde-collection.json" }
     ],
     temporaryExhibitions: [],
     pastExhibitions: [],
@@ -2361,10 +2361,8 @@ export const exhibitions = [
     description: "프랑스 최초로 현대 미술을 수집한 곳으로, 2D 현대 예술의 보고.",
     representativeImage: "images/musee-de-grenoble-logo.svg",
     permanentExhibitions: [
-      { id: "grenoble-paintings", name: "Paintings", title: "Musée de Grenoble - Paintings", description: "회화 컬렉션", startDate: "Permanent", endDate: "Permanent", collectionFile: "musee-grenoble-paintings-collection.json" },
-      { id: "grenoble-drawings", name: "Drawings", title: "Musée de Grenoble - Drawings", description: "드로잉 컬렉션", startDate: "Permanent", endDate: "Permanent", collectionFile: "musee-grenoble-drawings-collection.json" },
-      { id: "grenoble-photography", name: "Photography", title: "Musée de Grenoble - Photography", description: "사진 컬렉션", startDate: "Permanent", endDate: "Permanent", collectionFile: "musee-grenoble-photography-collection.json" }
-    ],
+      { id: "grenoble-collection", name: "The Collection", title: "Musée de Grenoble - The Collection", description: "회화 컬렉션", startDate: "Permanent", endDate: "Permanent", collectionFile: "musee-grenoble-collection.json" },
+      ],
     temporaryExhibitions: [],
     pastExhibitions: [],
     exhibitions: []

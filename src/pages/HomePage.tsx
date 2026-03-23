@@ -773,7 +773,6 @@ export default function HomePage({ exhibitions, isOverlayOpen = false }: HomePag
                 setSelectedExhibition(ex);
                 setShowInteractiveGlobe(false); // Exit globe to show details
               }}
-              onSelectExhibitionItem={(ex) => { openCollectionModal(ex, null); }}
               onExit={() => setShowInteractiveGlobe(false)}
               onSwitchToDrawing={() => { setShowInteractiveGlobe(false); setShowDrawingGlobe(true); }}
             />

@@ -3027,7 +3027,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
           const res = await fetch('/data/fine-arts-be-complete.json', { cache: 'no-store' });
           if (!res.ok) throw new Error('Failed to load Fine Arts BE artworks');
           const data = await res.json();
-          const items = data.items || [];
+          const items = Array.isArray(data) ? data : data.items || [];
 
           const list: Artwork[] = items.map((item: any) => ({
             id: item.url,
@@ -8860,45 +8860,6 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
         }}
       >
         {/* Old handle removed; the corner is now curled by default and interactive via the invisible zone above */}
-        {/* Non-sketch desktop: exhibition info strip at the very top */}
-        {!isMobile && variant !== 'sketch' && (
-          <div style={{
-            position: 'absolute', top: 0, left: 0, right: 0, height: 44, zIndex: 210,
-            display: 'flex', alignItems: 'stretch',
-            background: isDark ? 'rgba(17,17,17,0.96)' : 'rgba(255,255,255,0.97)',
-            borderBottom: isDark ? '1px solid rgba(255,255,255,0.08)' : '1px solid rgba(17,17,17,0.09)',
-            backdropFilter: 'blur(12px)',
-            pointerEvents: 'none',
-          }}>
-            {/* Type badge */}
-            <div style={{ display: 'flex', alignItems: 'center', padding: '0 18px', borderRight: isDark ? '1px solid rgba(255,255,255,0.07)' : '1px solid rgba(17,17,17,0.08)', flexShrink: 0 }}>
-              <span style={{
-                fontSize: 8, fontFamily: 'Space Mono, monospace', fontWeight: 700, letterSpacing: 2,
-                textTransform: 'uppercase',
-                color: exhibition.startDate && !String(exhibition.startDate).toLowerCase().includes('permanent') ? '#c9a55a' : (isDark ? '#CCFF00' : '#111111'),
-                border: `1px solid ${exhibition.startDate && !String(exhibition.startDate).toLowerCase().includes('permanent') ? '#c9a55a' : (isDark ? 'rgba(204,255,0,0.6)' : '#111111')}`,
-                padding: '3px 7px',
-              }}>
-                {exhibition.startDate && !String(exhibition.startDate).toLowerCase().includes('permanent') ? 'TEMPORARY' : 'PERMANENT'}
-              </span>
-            </div>
-            {/* Exhibition title + museum name */}
-            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '0 20px', minWidth: 0, overflow: 'hidden' }}>
-              <div style={{ fontSize: 10, fontFamily: 'Space Mono, monospace', letterSpacing: 1.5, textTransform: 'uppercase', color: isDark ? 'rgba(255,255,255,0.38)' : 'rgba(17,17,17,0.4)', lineHeight: 1, marginBottom: 3 }}>
-                {museumName || exhibition.name}
-              </div>
-              <div style={{ fontSize: 13, fontWeight: 700, color: isDark ? 'rgba(255,255,255,0.88)' : '#111111', letterSpacing: 0.3, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', lineHeight: 1 }}>
-                {exhibition.title || exhibition.name}
-              </div>
-            </div>
-            {/* Count */}
-            <div style={{ display: 'flex', alignItems: 'center', padding: '0 20px', borderLeft: isDark ? '1px solid rgba(255,255,255,0.07)' : '1px solid rgba(17,17,17,0.08)', flexShrink: 0 }}>
-              <span style={{ fontSize: 10, fontFamily: 'Space Mono, monospace', letterSpacing: 1, color: isDark ? 'rgba(255,255,255,0.35)' : 'rgba(17,17,17,0.4)' }}>
-                {filteredArtworks.length.toLocaleString()} WORKS
-              </span>
-            </div>
-          </div>
-        )}
         {/* Mobile: full-width top header bar - hide in archive mode */}
         {isMobile && viewMode !== 'archive' && (
           <div ref={headerRef} style={{ position: 'absolute', top: 0, left: 0, right: 0, background: EM_BG, zIndex: 199, display: 'flex' }}>
@@ -9442,7 +9403,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
           );
         })()}
         {/* Absolute full-height exhibition info panel at far left (all modes) - hidden on mobile */}
-        <div style={{ position: "absolute", top: 44, bottom: 0, left: 0, width: 150, background: EM_BG, zIndex: 200, display: (isMobile || variant === 'sketch') ? 'none' : 'flex', flexDirection: 'column', pointerEvents: 'none', ...(DEBUG_LAYOUT ? { outline: "1px solid #964B00" } : {}) }}>
+        <div style={{ position: "absolute", top: 0, bottom: 0, left: 0, width: 150, background: EM_BG, zIndex: 200, display: (isMobile || variant === 'sketch') ? 'none' : 'flex', flexDirection: 'column', pointerEvents: 'none', ...(DEBUG_LAYOUT ? { outline: "1px solid #964B00" } : {}) }}>
           {/* Left header: title + description + room selector */}
           <div style={{ padding: '8px 8px', borderBottom: '0px solid transparent', pointerEvents: 'auto', background: EM_BG }}>
             {repImage && (
@@ -9697,7 +9658,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
           // Hide mode tabs when hover zoom is active
           if (!isNarrow && variant !== 'sketch') {
             return (
-              <div ref={(el) => { (topBarRef as any).current = el; (headerRef as any).current = el; }} style={{ position: "relative", padding: "8px 0", paddingTop: !isMobile ? 52 : 8, minHeight: topBarHeight, marginLeft: LAYOUT_LEFT_BASE + META_SHIFT, marginRight: 80, zIndex: 100, opacity: hoverZoom ? 0 : 1, transition: 'opacity 200ms ease', pointerEvents: hoverZoom ? 'none' : 'auto', ...(DEBUG_LAYOUT ? { outline: "1px dashed #00f" } : {}) }}>
+              <div ref={(el) => { (topBarRef as any).current = el; (headerRef as any).current = el; }} style={{ position: "relative", padding: "8px 0", minHeight: topBarHeight, marginLeft: LAYOUT_LEFT_BASE + META_SHIFT, marginRight: 80, zIndex: 100, opacity: hoverZoom ? 0 : 1, transition: 'opacity 200ms ease', pointerEvents: hoverZoom ? 'none' : 'auto', ...(DEBUG_LAYOUT ? { outline: "1px dashed #00f" } : {}) }}>
                 <span
                   onClick={() => { setViewMode('panorama'); setSelectedIndex(0); }}
                   style={{
@@ -9851,7 +9812,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
           }
 
           return (
-            <div ref={(el) => { (topBarRef as any).current = el; (headerRef as any).current = el; }} style={{ position: "relative", padding: variant === 'sketch' ? "14px 20px 12px 16px" : "8px 0", paddingTop: (!isMobile && variant !== 'sketch') ? 52 : (variant === 'sketch' ? 14 : 8), marginLeft: narrowMarginLeft, marginRight: narrowMarginRight, zIndex: 100, borderBottom: 'none', ...(DEBUG_LAYOUT ? { outline: "1px dashed #00f" } : {}) }}>
+            <div ref={(el) => { (topBarRef as any).current = el; (headerRef as any).current = el; }} style={{ position: "relative", padding: variant === 'sketch' ? "14px 20px 12px 16px" : "8px 0", marginLeft: narrowMarginLeft, marginRight: narrowMarginRight, zIndex: 100, borderBottom: 'none', ...(DEBUG_LAYOUT ? { outline: "1px dashed #00f" } : {}) }}>
               {/* Row 1: Mode tabs */}
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: 8, marginBottom: variant === 'sketch' ? 10 : 12, paddingBottom: 0, borderBottom: 'none' }}>
                 <span
@@ -10750,7 +10711,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
                                   const h = e.currentTarget.naturalHeight || 0;
                                   if (w > 0 && h > 0) setMainNatural({ w, h });
                                 }}
-                                onClick={(e) => {
+                                onClick={() => {
                                   // Reina Sofía: open sourceUrl directly instead of lightbox
                                   if (exhibition.id === 'reina-sofia-collection' && sourceUrl) {
                                     window.open(sourceUrl, '_blank', 'noopener,noreferrer');
@@ -10857,7 +10818,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
                                   transform: needsScale ? 'scale(0.85)' : 'none',
                                   transformOrigin: 'center center'
                                 }}
-                                onClick={(e) => {
+                                onClick={() => {
                                   // Reina Sofía: open sourceUrl directly instead of lightbox
                                   if (exhibition.id === 'reina-sofia-collection' && sourceUrl) {
                                     window.open(sourceUrl, '_blank', 'noopener,noreferrer');
@@ -11124,10 +11085,8 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
             >
               {(() => {
                 const items: Artwork[] = sortedArtworks.slice(0, galleryLimit);
-                // Masonry column layout — no grid rows, items flow naturally
-                const colCount = isMobile ? 3 : 5;
-                const colGap = isMobile ? 10 : 72;
-                const rowGap = isMobile ? 12 : 72;
+                const gridColumns = isMobile ? 'repeat(3, 1fr)' : 'repeat(5, 1fr)';
+                const gridGap = isMobile ? 8 : 64;
                 // Left panel (150px) shows on screens >= 900px, non-sketch, non-mobile
                 // gridPadding left must be 160px wherever the left panel is visible
                 const gridPadding = isMobile
@@ -11179,7 +11138,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
                       </div>
                     </div>
 
-                    <div style={{ display: 'grid', gridTemplateColumns: `repeat(${colCount}, 1fr)`, columnGap: colGap, rowGap: rowGap, alignItems: 'start' }}>
+                    <div style={{ display: 'grid', gridTemplateColumns: gridColumns, gap: gridGap, alignItems: 'start' }}>
                       {items.map((a, idx) => (
                         <div key={a.id ?? `${idx}`} className="em-gallery-item" style={{ animationDelay: `${Math.min(idx * 0.04, 0.6)}s` }}>
                           <GalleryItem
