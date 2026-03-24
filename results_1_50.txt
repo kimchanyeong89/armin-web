@@ -1,0 +1,130 @@
+
+================================
+Processing ID 1: agnsw-collection.json (diff: 1) Prefix: agnsw-collection
+Output parsed. Found 0 errors.
+
+================================
+Processing ID 4: qagoma-collection.json (diff: 7) Prefix: qagoma-collection
+Output parsed. Found 7 errors.
+Sample Errors:
+[681/8883] ERR: https://collection.qagoma.qld.gov.au/system/files/styles/large/private/object-images/1-0660_011_composite_6.jpg?itok=6ldhb-ul
+[1483/8883] ERR: https://collection.qagoma.qld.gov.au/system/files/styles/large/private/object-images/1-0707_009_composite_6.jpg?itok=1OWmYIr3
+[4805/8883] ERR: https://collection.qagoma.qld.gov.au/system/files/styles/large/private/object-images/2008.393_001.jpg?itok=VeeS_qKj
+[6257/8883] ERR: https://collection.qagoma.qld.gov.au/system/files/styles/large/private/object-images/2003.040_001.jpg?itok=gMJ2Qchu
+[7553/8883] ERR: https://collection.qagoma.qld.gov.au/system/files/styles/large/private/object-images/2014.427_001.jpg?itok=rey4_t-6
+
+================================
+Processing ID 5: albertina-permanent-collection.json (diff: 43) Prefix: albertina-permanent-collection
+Output parsed. Found 43 errors.
+Sample Errors:
+[94/27326] ERR: https://wsrv.nl/?url=https%3A%2F%2Fsammlungenonline.albertina.at%2Fapis%2Fiiif%2Fimage%2Fv2%2F236615%2Ffull%2Ffull%2F0%2Fdefault.jpg
+[100/27326] ERR: https://wsrv.nl/?url=https%3A%2F%2Fsammlungenonline.albertina.at%2Fapis%2Fiiif%2Fimage%2Fv2%2F236624%2Ffull%2Ffull%2F0%2Fdefault.jpg
+[104/27326] ERR: https://wsrv.nl/?url=https%3A%2F%2Fsammlungenonline.albertina.at%2Fapis%2Fiiif%2Fimage%2Fv2%2F236632%2Ffull%2Ffull%2F0%2Fdefault.jpg
+[796/27326] ERR: https://wsrv.nl/?url=https%3A%2F%2Fsammlungenonline.albertina.at%2Fapis%2Fiiif%2Fimage%2Fv2%2F202049%2Ffull%2Ffull%2F0%2Fdefault.jpg
+[800/27326] ERR: https://wsrv.nl/?url=https%3A%2F%2Fsammlungenonline.albertina.at%2Fapis%2Fiiif%2Fimage%2Fv2%2F202157%2Ffull%2Ffull%2F0%2Fdefault.jpg
+
+================================
+Processing ID 6: belvedere-collection.json (diff: 23) Prefix: belvedere-collection
+Output parsed. Found 23 errors.
+Sample Errors:
+[69/9261] ERR: https://sammlung.belvedere.at/internal/media/dispatcher/101650/preview
+[90/9261] ERR: https://sammlung.belvedere.at/internal/media/dispatcher/92481/preview
+[96/9261] ERR: https://sammlung.belvedere.at/internal/media/dispatcher/26336/preview
+[275/9261] ERR: https://sammlung.belvedere.at/internal/media/dispatcher/26340/preview
+[293/9261] ERR: https://sammlung.belvedere.at/internal/media/dispatcher/25671/preview
+
+================================
+Processing ID 8: leopold-museum-collection.json (diff: 445) Prefix: leopold-museum-collection
+Output parsed. Found 0 errors.
+
+================================
+Processing ID 9: fine-arts-be-complete.json (diff: 109) Prefix: fine-arts-be-collection
+Output parsed. Found 0 errors.
+
+================================
+Processing ID 10: masp-collection.json (diff: 1) Prefix: masp-collection
+Output parsed. Found 1 errors.
+Sample Errors:
+[1924/3256] ERR: https://assets.masp.org.br/uploads/temp/WEB_JB_MASP_10606_01.jpg
+
+================================
+Processing ID 11: mbam-collection.json (diff: 2) Prefix: mbam-collection
+Output parsed. Found 2 errors.
+Sample Errors:
+[1479/2537] ERR: https://collections.mbam.qc.ca/2011/PWeb/2011_4_38_IN1.jpg
+[1690/2537] ERR: https://www.mbam.qc.ca/en/works/64616/
+
+================================
+Processing ID 12: china-art-museum-collection.json (diff: 1) Prefix: china-art-museum-collection
+Output parsed. Found 1 errors.
+Sample Errors:
+[82/670] ERR: https://www.artmuseumonline.org/art/upload/image/2019/01/04/8a807cb86817a2d2016818244b2d018c/preview.jpg
+
+================================
+Processing ID 16: namoc-collection.json (diff: 91) Prefix: namoc-collection
+Output parsed. Found 90 errors.
+Sample Errors:
+[25/5216] ERR: https://www.namoc.cn/namoc/zgh/201704/2ac6a3096f334ba28a2aaf6aeccf4b7b/images/6e8ac9d2cedc4c42b22b324bc053c319.jpg
+[1125/5216] ERR: https://www.namoc.cn/namoc/youh/201402/680a0631ce1549feb3c482e33d01d716/images/b51a5fd075344502a37544a1b5a17fc6.jpg
+[1319/5216] ERR: https://www.namoc.cn/namoc/youh/201501/c781ef7946114ebd9e7e0383808ad59a/images/298163063bb54c44be5548b35bd02849.jpg
+[1321/5216] ERR: https://www.namoc.cn/namoc/youh/201501/2950546cead74c0d944fb85d1813d020/images/2cc4d6e88b464cb1ad98da277182e42d.jpg
+[1322/5216] ERR: https://www.namoc.cn/namoc/youh/201501/caf8853412004adc96d13dfc56f3b7bd/images/b9d6a771c6d548c1bbe023b1afc1fe2a.jpg
+
+================================
+Processing ID 24: ngprague-collection.json (diff: 62) Prefix: ngprague-collection
+Output parsed. Found 48 errors.
+Sample Errors:
+[81/3852] ERR: https://web.archive.org/web/20250528000000im_/https://sbirky.ngprague.cz/images/diela/NG./89/CZE_NG.O_2617/CZE_NG.O_2617.jpeg
+[150/3852] ERR: https://web.archive.org/web/20250528000000im_/https://sbirky.ngprague.cz/images/diela/NG./89/CZE_NG.K_30410/CZE_NG.K_30410.jpeg
+[1233/3852] ERR: https://web.archive.org/web/20250528000000im_/https://sbirky.ngprague.cz/images/diela/NG./29/CZE_NG.R_29590/CZE_NG.R_29590.jpeg
+[2199/3852] ERR: https://web.archive.org/web/20250528000000im_/https://sbirky.ngprague.cz/images/diela/NG./81/CZE_NG.R_77379/CZE_NG.R_77379.jpeg
+[2200/3852] ERR: https://web.archive.org/web/20250528000000im_/https://sbirky.ngprague.cz/images/diela/NG./82/CZE_NG.R_61366/CZE_NG.R_61366.jpeg
+
+================================
+Processing ID 25: aros-collection.json (diff: 28) Prefix: aros-collection
+Output parsed. Found 28 errors.
+Sample Errors:
+[55/2995] ERR: https://samlinger.slks.dk/upload/122/000/068/2/b549222b-2bf6-4b22-b140-b7b2d1895777.jpg
+[88/2995] ERR: https://samlinger.slks.dk/upload/122/000/028/9/292fd9f3-92b2-4782-b47a-7e86aa815b65.jpg
+[89/2995] ERR: https://samlinger.slks.dk/upload/122/000/678/2/e4388342-addf-4519-9caf-64c4eb11fbaf.jpg
+[90/2995] ERR: https://samlinger.slks.dk/upload/122/000/289/5/b8cb3558-c8da-434d-a618-222d38792919.jpg
+[92/2995] ERR: https://samlinger.slks.dk/upload/122/000/117/4/4c8dc805-bd91-4e10-bfdb-73499e668b70.jpg
+
+================================
+Processing ID 28: skagens-collection.json (diff: 13) Prefix: skagens-collection
+Output parsed. Found 13 errors.
+Sample Errors:
+[81/2125] ERR: https://samlinger.slks.dk/upload/127/000/011/4/f9d2a52d-a55c-4b5b-b0ca-293f53fb1ec0.jpg
+[458/2125] ERR: https://samlinger.slks.dk/upload/127/000/066/2/620c1328-02f9-4cc8-b4db-b03842342355.jpg
+[518/2125] ERR: https://samlinger.slks.dk/upload/127/000/216/5/4aa89f43-c755-4dcb-a7ba-61dea7d9b337.jpg
+[759/2125] ERR: https://samlinger.slks.dk/upload/127/000/362/2/f4767571-97af-41b3-99e6-e5badbb60fe3.JPG
+[807/2125] ERR: https://samlinger.slks.dk/upload/127/000/002/5/a3821192-f039-4d05-9ed4-3c238fb9a790.jpg
+
+================================
+Processing ID 29: smk-collection.json (diff: 1) Prefix: smk-collection
+Output parsed. Found 1 errors.
+Sample Errors:
+[304/7039] ERR: https://iip-thumb.smk.dk/iiif/jp2/tm70n083t_kms9143.tif.jp2/full/!1024,/0/default.jpg
+
+================================
+Processing ID 31: egyptian-museum-cairo-collection.json (diff: 115) Prefix: egyptian-museum-cairo-collection
+Output parsed. Found 115 errors.
+Sample Errors:
+[1/115] ERR: https://egyptianmuseumcairo.eg/wp-content/uploads/2023/01/egyptian-museum-cairo.jpg
+[2/115] ERR: https://egyptianmuseumcairo.eg/wp-content/uploads/2023/01/egyptian-museum-cairo.jpg
+[3/115] ERR: https://egyptianmuseumcairo.eg/wp-content/uploads/2023/01/egyptian-museum-cairo.jpg
+[4/115] ERR: https://egyptianmuseumcairo.eg/wp-content/uploads/2023/01/egyptian-museum-cairo.jpg
+[5/115] ERR: https://egyptianmuseumcairo.eg/wp-content/uploads/2023/01/egyptian-museum-cairo.jpg
+
+================================
+Processing ID 32: ateneum-collection.json (diff: 28) Prefix: ateneum-collection
+Output parsed. Found 28 errors.
+Sample Errors:
+[421/5367] ERR: https://www.kansallisgalleria.fi/media-assets/1/jpg/1000/232265.jpg
+[424/5367] ERR: https://www.kansallisgalleria.fi/media-assets/1/jpg/1000/2501423.jpg
+[501/5367] ERR: https://www.kansallisgalleria.fi/media-assets/1/jpg/1000/232471.jpg
+[513/5367] ERR: https://www.kansallisgalleria.fi/media-assets/1/jpg/1000/234500.jpg
+[561/5367] ERR: https://www.kansallisgalleria.fi/media-assets/1/jpg/1000/307664.jpg
+
+================================
+Processing ID 33: kiasma-collection.json (diff: 3) Prefix: kiasma-collection

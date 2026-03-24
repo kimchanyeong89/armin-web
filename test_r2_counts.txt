@@ -1,0 +1,5 @@
+[dotenv@17.2.3] injecting env (4) from .env.local -- tip: 👥 sync secrets across teammates & machines: https://dotenvx.com/ops
+artworks/vam-permanent-exhibitions/ has 20819 objects
+artworks/huntington-collection/ has 321 objects
+artworks/lacma-classification-22/ has 7254 objects
+artworks/nga-collection/ has 0 objects

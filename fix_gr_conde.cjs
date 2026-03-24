@@ -1,0 +1,10 @@
+const fs = require('fs');
+const conde = JSON.parse(fs.readFileSync('./public/data/musee-conde-collection.json', 'utf8'));
+console.log('Conde:', conde.objects ? conde.objects.length : conde.length);
+const gr1 = JSON.parse(fs.readFileSync('./public/data/musee-grenoble-paintings-collection.json', 'utf8'));
+const gr2 = JSON.parse(fs.readFileSync('./public/data/musee-grenoble-drawings-collection.json', 'utf8'));
+const gr3 = JSON.parse(fs.readFileSync('./public/data/musee-grenoble-photography-collection.json', 'utf8'));
+const arr = (b) => Array.isArray(b) ? b : b.objects || [];
+let m = [...arr(gr1), ...arr(gr2), ...arr(gr3)];
+console.log('Grenoble merged:', m.length);
+fs.writeFileSync('./public/data/musee-grenoble-collection.json', JSON.stringify({ museum: 'Musée de Grenoble', museumId: 'musee-grenoble', groupName: 'The Collection', objects: m }, null, 2));

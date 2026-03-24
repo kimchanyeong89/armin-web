@@ -2835,7 +2835,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
             exhibitionTitle: exhibition.title,
             roomId: 'default'
           }));
-          const filtered = mapped.filter((a: any) => !!a.image);
+          const filtered = mapped.filter((a: any) => !!a.image && !a.image.includes('images.grandpalaisrmn.fr/thumb.php'));
           setArtworks(filtered);
           setInitialized(true);
         } catch (e) {
@@ -3712,7 +3712,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
             ? data.map((item: any) => {
               const objectId = String(item.objectID ?? item.objectId ?? item.id ?? '').trim();
               const id = objectId ? `met-${objectId}` : `met-${Math.random().toString(36).slice(2)}`;
-              const image = String(item.primaryImageSmall || item.primaryImage || item.imageUrl || '').trim();
+              const image = String(item.primaryImageSmall || item.primaryImage || item.imageUrl || item.image || '').trim();
               const objectDate = String(item.objectDate || item.date || '').trim();
               const year = parseInt(objectDate.match(/\d{4}/)?.[0] || '0', 10) || 0;
               const isOnView = !!item.gallery || item.isOnView === true;
@@ -7222,7 +7222,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
             console.log('[Wallace] list sample roomIds:', list.slice(0, 5).map((a: any) => a.roomId));
           }
           // Filter out items without images or with placeholder "no-image" URLs
-          const withImages = list.filter((a) => !!a.image && !a.image.includes('no-image'));
+          const withImages = list.filter((a) => !!a.image && !a.image.includes('no-image') && !a.image.includes('images.grandpalaisrmn.fr/thumb.php'));
           if (exhibition.id === 'wallace-permanent') {
             console.log('[Wallace] withImages:', withImages.length);
           }
@@ -7946,7 +7946,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
               exhibitionName: exhibition.name,
               exhibitionTitle: exhibition.title,
             };
-          }).filter((a: any) => !!a.image);
+          }).filter((a: any) => !!a.image && !a.image.includes('images.grandpalaisrmn.fr/thumb.php'));
           
           setArtworks(list);
           setInitialized(true);

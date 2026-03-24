@@ -1,0 +1,33 @@
+Items with missing R2 uploads (1-50):
+┌─────────┬────┬─────────────────────────────────────────────────────┬─────────────────────────────────────────┬───────┬───────┬──────┐
+│ (index) │ id │ path                                                │ cols6                                   │ total │ r2    │ diff │
+├─────────┼────┼─────────────────────────────────────────────────────┼─────────────────────────────────────────┼───────┼───────┼──────┤
+│ 0       │ 1  │ 'public/data/agnsw-collection.json'                 │ 'agnsw-collection.json'                 │ 11800 │ 11794 │ 6    │
+│ 1       │ 3  │ 'public/data/ngv-collection.json'                   │ 'ngv-collection.json'                   │ 4865  │ 4864  │ 1    │
+│ 2       │ 4  │ 'public/data/qagoma-collection.json'                │ 'qagoma-collection.json'                │ 8883  │ 8874  │ 9    │
+│ 3       │ 5  │ 'public/data/albertina-permanent-collection.json'   │ 'albertina-permanent-collection.json'   │ 27326 │ 27283 │ 43   │
+│ 4       │ 6  │ 'public/data/belvedere-collection.json'             │ 'belvedere-collection.json'             │ 9261  │ 9238  │ 23   │
+│ 5       │ 8  │ 'public/data/leopold-museum-collection.json'        │ 'leopold-museum-collection.json'        │ 3025  │ 2580  │ 445  │
+│ 6       │ 9  │ 'public/data/fine-arts-be-complete.json'            │ 'fine-arts-be-complete.json'            │ 109   │ 0     │ 109  │
+│ 7       │ 10 │ 'public/data/masp-collection.json'                  │ 'masp-collection.json'                  │ 3256  │ 3255  │ 1    │
+│ 8       │ 11 │ 'public/data/mbam-collection.json'                  │ 'mbam-collection.json'                  │ 2537  │ 2535  │ 2    │
+│ 9       │ 12 │ 'public/data/china-art-museum-collection.json'      │ 'china-art-museum-collection.json'      │ 670   │ 669   │ 1    │
+│ 10      │ 16 │ 'public/data/namoc-collection.json'                 │ 'namoc-collection.json'                 │ 5216  │ 5125  │ 91   │
+│ 11      │ 24 │ 'public/data/ngprague-collection.json'              │ 'ngprague-collection.json'              │ 3852  │ 3790  │ 62   │
+│ 12      │ 25 │ 'public/data/aros-collection.json'                  │ 'aros-collection.json'                  │ 2995  │ 2967  │ 28   │
+│ 13      │ 28 │ 'public/data/skagens-collection.json'               │ 'skagens-collection.json'               │ 2125  │ 2112  │ 13   │
+│ 14      │ 29 │ 'public/data/smk-collection.json'                   │ 'smk-collection.json'                   │ 7039  │ 7038  │ 1    │
+│ 15      │ 31 │ 'public/data/egyptian-museum-cairo-collection.json' │ 'egyptian-museum-cairo-collection.json' │ 115   │ 0     │ 115  │
+│ 16      │ 32 │ 'public/data/ateneum-collection.json'               │ 'ateneum-collection.json'               │ 5367  │ 5339  │ 28   │
+│ 17      │ 33 │ 'public/data/kiasma-collection.json'                │ 'kiasma-collection.json'                │ 3028  │ 3025  │ 3    │
+│ 18      │ 34 │ 'public/data/sinebrychoff-collection.json'          │ 'sinebrychoff-collection.json'          │ 1365  │ 1356  │ 9    │
+│ 19      │ 35 │ 'public/data/pinault-collection.json'               │ 'pinault-collection.json'               │ 1310  │ 1309  │ 1    │
+│ 20      │ 37 │ 'public/data/pompidou-painting-collection.json'     │ 'pompidou-painting-collection.json'     │ 6768  │ 6752  │ 16   │
+│ 21      │ 38 │ 'public/data/pompidou-drawing-collection.json'      │ 'pompidou-drawing-collection.json'      │ 7160  │ 7138  │ 22   │
+│ 22      │ 40 │ 'public/data/pompidou-design-collection.json'       │ 'pompidou-design-collection.json'       │ 1675  │ 1674  │ 1    │
+│ 23      │ 42 │ 'public/data/flv-collection.json'                   │ 'flv-collection.json'                   │ 318   │ 304   │ 14   │
+│ 24      │ 45 │ 'public/data/macval-collection.json'                │ 'macval-collection.json'                │ 4788  │ 4731  │ 57   │
+│ 25      │ 46 │ 'public/data/mucem-collection.json'                 │ 'mucem-collection.json'                 │ 4314  │ 3885  │ 429  │
+│ 26      │ 47 │ 'public/data/carnavalet-the-collection.json'        │ 'carnavalet-the-collection.json'        │ 1630  │ 398   │ 1232 │
+│ 27      │ 48 │ 'public/data/musee-conde-collection.json'           │ 'musee-conde-collection.json'           │ 4136  │ 813   │ 3323 │
+└─────────┴────┴─────────────────────────────────────────────────────┴─────────────────────────────────────────┴───────┴───────┴──────┘

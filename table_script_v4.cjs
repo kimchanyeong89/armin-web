@@ -24,7 +24,7 @@ museums.forEach(museum => {
         if (fs.existsSync(p)) {
             try {
                 let items = JSON.parse(fs.readFileSync(p, 'utf8'));
-                if (ex.id === 'wallace-collection') {
+                if (ex.id === 'wallace-permanent' || filename.includes('wallace')) {
                     items = items.rooms ? items.rooms.flatMap(r => r.artworks || []) : (items.artworks || items);
                 }
                 
@@ -84,9 +84,16 @@ rows.sort((a, b) => a.country.localeCompare(b.country) || a.museumName.localeCom
 let md = `| 순번 | 국가 | 미술관 | 영구전시명 | exhibitionId | 파일명 | 데이터 수 | R2 업로드 수 |\n`;
 md += `|:---:|:---|:---|:---|:---|:---|---:|---:|\n`;
 
+let sumTotal = 0;
+let sumR2 = 0;
 rows.forEach((r, i) => {
+    sumTotal += r.totalCount;
+    sumR2 += r.r2Count;
     md += `| ${i + 1} | ${r.country || ''} | ${(r.museumName || '').replace(/\|/g, ",")} | ${(r.exhibitionName || '').replace(/\|/g, ",")} | ${r.exhibitionId || ''} | ${r.filename || ''} | ${r.totalCount.toLocaleString()} | ${r.r2Count.toLocaleString()} |\n`;
 });
+
+md += `\n**전체 데이터 수 총합:** ${sumTotal.toLocaleString()}\n`;
+md += `**전체 R2 업로드 수 총합:** ${sumR2.toLocaleString()}\n`;
 
 fs.writeFileSync('perm_table_final.md', md, 'utf-8');
 console.log(`Generated ${rows.length} rows to perm_table_final.md.`);

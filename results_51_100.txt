@@ -1,0 +1,180 @@
+
+================================
+Processing ID 52: musee-grenoble-collection.json (diff: 2133) Prefix: grenoble-collection
+Output parsed. Found 0 errors.
+
+================================
+Processing ID 55: mad-paris-collection.json (diff: 1) Prefix: mad-collection
+Output parsed. Found 1 errors.
+Sample Errors:
+[284/292] ERR: https://collections.madparis.fr/media/cache/mosaic/sw-media/647a1ec7cbbfcc351d40507a.jpg
+
+================================
+Processing ID 58: rouen-mba-collection.json (diff: 2) Prefix: rouen-mba-collection
+Output parsed. Found 0 errors.
+
+================================
+Processing ID 59: louvre-painting-collection.json (diff: 2) Prefix: louvre-painting-collection
+Output parsed. Found 1 errors.
+Sample Errors:
+[1932/10617] ERR: https://collections.louvre.fr/media/cache/small/0000000021/0000055826/0000385326_OG.JPG
+
+================================
+Processing ID 61: musee-guimet-collection.json (diff: 1) Prefix: guimet-collection
+Output parsed. Found 1 errors.
+Sample Errors:
+[480/480] ERR: https://images.grandpalaisrmn.fr/thumb.php/00377306.jpg?ID=654532
+
+================================
+Processing ID 65: musee-chagall-collection.json (diff: 28) Prefix: chagall-collection
+Output parsed. Found 28 errors.
+Sample Errors:
+[979/3276] ERR: https://images.grandpalaisrmn.fr/thumb.php/01162162.jpg?eJyrVnJ2VLJKS8wpTtVRcvZQslJSAtIRSlaGQCoSTPl4KlkZASk_oGRqXnp8aXEiUI0vkGdgaGhmBEQgbghYbTBYabAzhOMLoYBSJUWlQPPDg8ECQUpWFgYGQBN94DaHIZj-QEVK5skmZkkpSclpSWZGxkZJFsZmBskWFonJaSnm5qnmRkZKtQAkAy4w
+[1040/3276] ERR: https://images.grandpalaisrmn.fr/thumb.php/01135555.jpg?eJyrVnJ2VLJKS8wpTtVRcvZQslJSAtIRSlaGQCoSTPl4KlkZASk_oGRqXnp8aXEiUI0vkGdgaGhsCgQgbghYbTBYabAzhOMLoYBSJUWlQPPDg8ECQUpWFgYGQBN94DaHIZj-QEVK5skmZkkpSclpSWZGxkZJFsZmBskWFonJaSnm5qnmRkZKtQAmxS42
+[1268/3276] ERR: https://images.grandpalaisrmn.fr/thumb.php/01020105.jpg?eJyrVnJ2VLJKS8wpTtVRcvZQslJSAtIRSlaGQCoSTPl4KlkZASk_oGRqXnp8aXEiUI0vkGdgaGAExKYgbghYbTBYabAzhOMLoYBSJUWlQPPDg8ECQUpWFgYGQBN94DaHIZj-QEVK5skmZkkpSclpSWZGxkZJFsZmBskWFonJaSnm5qnmRkZKtQAfUC4m
+[1290/3276] ERR: https://images.grandpalaisrmn.fr/thumb.php/01010841.jpg?eJyrVnJ2VLJKS8wpTtVRcvZQslJSAtIRSlaGQCoSTPl4KlkZASk_oGRqXnp8aXEiUI0vkGdgCIQWJoYgbghYbTBYabAzhOMLoYBSJUWlQPPDg8ECQUpWFgYGQBN94DaHIZj-QEVK5skmZkkpSclpSWZGxkZJFsZmBskWFonJaSnm5qnmRkZKtQAiHC4s
+[1292/3276] ERR: https://images.grandpalaisrmn.fr/thumb.php/01010424.jpg?eJyrVnJ2VLJKS8wpTtVRcvZQslJSAtIRSlaGQCoSTPl4KlkZASk_oGRqXnp8aXEiUI0vkGdgCIQmRiYgbghYbTBYabAzhOMLoYBSJUWlQPPDg8ECQUpWFgYGQBN94DaHIZj-QEVK5skmZkkpSclpSWZGxkZJFsZmBskWFonJaSnm5qnmRkZKtQAgsy4p
+
+================================
+Processing ID 70: petit-palais-collection.json (diff: 11) Prefix: petit-palais-collection
+Output parsed. Found 11 errors.
+Sample Errors:
+[247/400] ERR: https://images.grandpalaisrmn.fr/thumb.php/01489208.jpg?ID=2751150
+[264/400] ERR: https://images.grandpalaisrmn.fr/thumb.php/01301923.jpg?ID=1409680
+[265/400] ERR: https://images.grandpalaisrmn.fr/thumb.php/01291008.jpg?ID=944148
+[283/400] ERR: https://images.grandpalaisrmn.fr/thumb.php/01134653.jpg?ID=1914822
+[309/400] ERR: https://images.grandpalaisrmn.fr/thumb.php/00828056.jpg?ID=1987755
+
+================================
+Processing ID 71: smb-alte-nationalgalerie-collection.json (diff: 16) Prefix: smb-alte-nationalgalerie-collection
+Output parsed. Found 16 errors.
+Sample Errors:
+[514/2258] ERR: https://recherche.smb.museum/images/2551518_1400x1400.jpg
+[522/2258] ERR: https://recherche.smb.museum/images/4889505_1400x1400.jpg
+[574/2258] ERR: https://recherche.smb.museum/images/2550894_1400x1400.jpg
+[806/2258] ERR: https://recherche.smb.museum/images/5644389_1400x1400.jpg
+[918/2258] ERR: https://recherche.smb.museum/images/2547554_1400x1400.jpg
+
+================================
+Processing ID 72: alte-pinakothek-collection.json (diff: 7) Prefix: alte-pinakothek-collection
+Output parsed. Found 7 errors.
+Sample Errors:
+[19/5262] ERR: https://www.sammlung.pinakothek.de/en/artwork/XR4MrJgxQ1/adriaen-van-der-werff-1659/bildnis-des-herzogs-giovanni-gastone-de-medici-1671-1737-1273
+[2094/5262] ERR: https://www.sammlung.pinakothek.de/en/artwork/1390 A
+[2456/5262] ERR: https://www.sammlung.pinakothek.de/en/artwork/564
+[3213/5262] ERR: https://www.sammlung.pinakothek.de/en/artwork/2mxqDqW48b/david-teniers-d-j-1610/bauernschenke-212
+[3696/5262] ERR: https://www.sammlung.pinakothek.de/en/artwork/4988
+
+================================
+Processing ID 74: smb-bode-museum-collection.json (diff: 95) Prefix: smb-bode-museum-collection
+Output parsed. Found 95 errors.
+Sample Errors:
+[3/2251] ERR: https://recherche.smb.museum/images/2539176_1400x1400.jpg
+[7/2251] ERR: https://recherche.smb.museum/images/2552001_1400x1400.jpg
+[15/2251] ERR: https://recherche.smb.museum/images/2550165_1400x1400.jpg
+[17/2251] ERR: https://recherche.smb.museum/images/2549811_1400x1400.jpg
+[26/2251] ERR: https://recherche.smb.museum/images/2546643_1400x1400.jpg
+
+================================
+Processing ID 75: bruecke-museum-collection.json (diff: 2) Prefix: bruecke-museum-collection
+Output parsed. Found 2 errors.
+Sample Errors:
+[1/1391] ERR: https://iiif.deutsche-digitale-bibliothek.de/image/2/8e3dd712-d189-4bd3-b67c-4af6ca4fe7eb/full/full/0/default.jpg
+[1355/1391] ERR: https://iiif.deutsche-digitale-bibliothek.de/image/2/52e84f64-9ec5-4cc9-870c-5a11ee1a8402/full/full/0/default.jpg
+
+================================
+Processing ID 76: smb-gemaeldegalerie-collection.json (diff: 6) Prefix: smb-gemaeldegalerie-collection
+Output parsed. Found 6 errors.
+Sample Errors:
+[56/782] ERR: https://recherche.smb.museum/images/5680314_1400x1400.jpg
+[270/782] ERR: https://recherche.smb.museum/images/4933878_1400x1400.jpg
+[390/782] ERR: https://recherche.smb.museum/images/4956637_1400x1400.jpg
+[585/782] ERR: https://recherche.smb.museum/images/4934618_1400x1400.jpg
+[752/782] ERR: https://recherche.smb.museum/images/6386865_1400x1400.jpg
+
+================================
+Processing ID 78: hamburger-kunsthalle-drawings.json (diff: 1077) Prefix: hamburger-kunsthalle-drawings
+Output parsed. Found 2 errors.
+Sample Errors:
+[2460/13394] ERR: https://wsrv.nl/?url=https%3A%2F%2Fonline-sammlung.hamburger-kunsthalle.de%2Fsites%2Fdefault%2Ffiles%2Fmultimedia-files%2F81979.jpg
+[2461/13394] ERR: https://wsrv.nl/?url=https%3A%2F%2Fonline-sammlung.hamburger-kunsthalle.de%2Fsites%2Fdefault%2Ffiles%2Fmultimedia-files%2F81984.jpg
+
+================================
+Processing ID 80: smb-humboldt-forum-collection.json (diff: 6) Prefix: smb-humboldt-forum-collection
+Output parsed. Found 6 errors.
+Sample Errors:
+[133/979] ERR: https://recherche.smb.museum/images/4504201_1400x1400.jpg
+[433/979] ERR: https://recherche.smb.museum/images/5941239_1400x1400.jpg
+[692/979] ERR: https://recherche.smb.museum/images/271495_1400x1400.jpg
+[860/979] ERR: https://recherche.smb.museum/images/7487394_1400x1400.jpg
+[865/979] ERR: https://recherche.smb.museum/images/7489644_1400x1400.jpg
+
+================================
+Processing ID 82: neue-pinakothek-collection.json (diff: 7) Prefix: neue-pinakothek-collection
+Output parsed. Found 7 errors.
+Sample Errors:
+[64/136] ERR: https://www.sammlung.pinakothek.de/en/artwork/ma4dvPjLrO/walther-gasch-1886/preussischer-ordensritter-hst-333
+[65/136] ERR: https://www.sammlung.pinakothek.de/en/artwork/0vxoJmY42V/walther-gasch-1886/ministerpraesident-generalfeldmarschall-hermann-goering-hst-309
+[95/136] ERR: https://www.sammlung.pinakothek.de/en/artwork/y7GE9JEGPV/walther-gasch-1886/baeuerin-in-oberbayerischer-wuermgautracht-hst-313
+[96/136] ERR: https://www.sammlung.pinakothek.de/en/artwork/Qm45BQnxNo/walther-gasch-1886/hirsch-hst-314
+[134/136] ERR: https://www.sammlung.pinakothek.de/en/artwork/8eGVwP14WQ/walther-gasch-1886/oberbayerischer-holzfaeller-hst-312
+
+================================
+Processing ID 83: smb-neues-museum-collection.json (diff: 13) Prefix: smb-neues-museum-collection
+Output parsed. Found 13 errors.
+Sample Errors:
+[129/673] ERR: https://recherche.smb.museum/images/5843575_1400x1400.jpg
+[199/673] ERR: https://recherche.smb.museum/images/5580023_1400x1400.jpg
+[269/673] ERR: https://recherche.smb.museum/images/2647024_1400x1400.jpg
+[294/673] ERR: https://recherche.smb.museum/images/5045781_1400x1400.jpg
+[300/673] ERR: https://recherche.smb.museum/images/6632128_1400x1400.jpg
+
+================================
+Processing ID 84: pinakothek-moderne-collection.json (diff: 43) Prefix: pinakothek-moderne-collection
+Output parsed. Found 43 errors.
+Sample Errors:
+[38/467] ERR: https://www.sammlung.pinakothek.de/en/artwork/8eGV5v5LWQ/oskar-coester-1886/sitzende-frau-mit-glas-11857
+[39/467] ERR: https://www.sammlung.pinakothek.de/en/artwork/jpxea8ExJ7/arthur-griehl-1879/vomperloch-11890
+[40/467] ERR: https://www.sammlung.pinakothek.de/en/artwork/A9xlkqg4Wv/arthur-griehl-1879/bayerisches-oberland-am-starnberger-see-11891
+[86/467] ERR: https://www.sammlung.pinakothek.de/en/artwork/ZnxwYXvGXg/max-pechstein-1881/akt-im-zelt-11352
+[87/467] ERR: https://www.sammlung.pinakothek.de/en/artwork/5RGQdMaLz3/karl-hofer-1878/kartenspielende-maedchen-10922
+
+================================
+Processing ID 87: staedel-museum-collection.json (diff: 1) Prefix: staedel-museum-collection
+Output parsed. Found 1 errors.
+Sample Errors:
+[165/1712] ERR: https://sammlung.staedelmuseum.de/images/102048/rheinischer-meister-um-1330-wings-altenberg-altarpiece-sg358-361--thumb-xl.jpg
+
+================================
+Processing ID 92: mplus-collection-sigg.json (diff: 3) Prefix: mplus-collection-sigg
+Output parsed. Found 0 errors.
+
+================================
+Processing ID 93: mfab-collection.json (diff: 2) Prefix: mfab-collection
+Output parsed. Found 2 errors.
+Sample Errors:
+[3376/10777] ERR: https://www.mfab.hu/artworks/670/
+[3580/10777] ERR: https://www.mfab.hu/artworks/718/
+
+================================
+Processing ID 94: castello-di-rivoli-collection.json (diff: 44) Prefix: castello-di-rivoli-collection
+Output parsed. Found 44 errors.
+Sample Errors:
+[26/819] ERR: https://www.castellodirivoli.org/wp-content/uploads/2012/04/Copia-di-A-napoli_HR-scaled.jpg
+[44/819] ERR: https://www.castellodirivoli.org/wp-content/uploads/2012/04/hr_Albero-di-5m-scaled.jpg
+[62/819] ERR: https://www.castellodirivoli.org/wp-content/uploads/2016/05/aquarell_HR-scaled.jpg
+[76/819] ERR: https://www.castellodirivoli.org/wp-content/uploads/2012/02/Clemente_autoritratto_hr-scaled.jpg
+[87/819] ERR: https://www.castellodirivoli.org/wp-content/uploads/2012/01/Bagnoli-Benchè-sia-notte-scaled.jpg
+
+================================
+Processing ID 95: galleria-borghese-collection.json (diff: 1) Prefix: borghese-paintings
+Output parsed. Found 1 errors.
+Sample Errors:
+[37/562] ERR: https://www.collezionegalleriaborghese.it/uploads/server/files/medium/037_1.jpg
+
+================================
+Processing ID 99: gallerie-accademia-venice-collection.json (diff: 1) Prefix: gallerie-accademia-venice-collection
+Output parsed. Found 1 errors.
+Sample Errors:
+[156/188] ERR: https://www.gallerieaccademia.it/sites/default/files/repository/media/images/2022-08/904%20Rondinelli%20Nicolo%CC%80%20Madonna%20col%20bambino.jpg
+Done checking 51-100.

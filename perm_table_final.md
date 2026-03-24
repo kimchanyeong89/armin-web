@@ -1,29 +1,14 @@
 | 순번 | 국가 | 미술관 | 영구전시명 | exhibitionId | 파일명 | 데이터 수 | R2 업로드 수 |
 |:---:|:---|:---|:---|:---|:---|---:|---:|
-| 1 | Australia | Art Gallery of New South Wales | Collection Highlights | agnsw-collection | agnsw-collection.json | 11,800 | 11,794 |
-| 2 Generated 268 rows to perm_table_final.md.
-ZEROES FOUND: [
-  'artists-dates.json',
-  'british-museum.json',
-  'british-museum-collection.json',
-  'british-museum-gac-collection.json',
-  'british-museum-galleries.json',
-  'mfa-boston.json',
-  'national-gallery-exhibitions.json',
-  'ngv-trove-collection.json',
-  'royal-academy-permanent.json',
-  'science-museum-exhibitions.json',
-  'si-nasm.json',
-  'tate-britain-displays.json',
-  'tate-britain-displays-new.json',
-  'the-british-museum-collection.json',
-  'vam-exhibitions.json'
-]
-ina-permanent-collection.json | 2,720 | 2,692 |
+| 1 | Australia | Art Gallery of New South Wales | Collection Highlights | agnsw-collection | agnsw-collection.json | 11,800 | 11,799 |
+| 2 | Australia | Museum of Contemporary Art Australia | MCA Collection Artworks | mca-collection | mca-collection.json | 1,115 | 1,115 |
+| 3 | Australia | National Gallery of Victoria | Collection Highlights (NGV) | ngv-collection | ngv-collection.json | 4,865 | 4,865 |
+| 4 | Australia | Queensland Art Gallery , Gallery of Modern Art | QAGOMA Collection | qagoma-collection | qagoma-collection.json | 8,883 | 8,876 |
+| 5 | Austria | ALBERTINA Museum Vienna | ALBERTINA — Permanent Collection | albertina-permanent-collection | albertina-permanent-collection.json | 27,326 | 27,283 |
 | 6 | Austria | Belvedere Museum | Belvedere Collection | belvedere-collection | belvedere-collection.json | 9,261 | 9,238 |
 | 7 | Austria | Kunsthistorisches Museum Vienna | Kunsthistorisches Museum Collection | khm-collection | khm-collection.json | 2,713 | 2,713 |
 | 8 | Austria | Leopold Museum | Leopold Museum Collection | leopold-museum-collection | leopold-museum-collection.json | 3,025 | 2,580 |
-| 9 | Belgium | Musées royaux des Beaux-Arts de Belgique | Painting Collection Highlights | fine-arts-be-collection | fine-arts-be-complete.json | 973 | 0 |
+| 9 | Belgium | Musées royaux des Beaux-Arts de Belgique | Painting Collection Highlights | fine-arts-be-collection | fine-arts-be-complete.json | 109 | 109 |
 | 10 | Brazil | Museu de Arte de São Paulo | Collection Highlights | masp-collection | masp-collection.json | 3,256 | 3,255 |
 | 11 | Canada | Montreal Museum of Fine Arts | Collection Highlights | mbam-collection | mbam-collection.json | 2,537 | 2,535 |
 | 12 | China | China Art Museum, Shanghai | Collection Highlights | china-art-museum-collection | china-art-museum-collection.json | 670 | 669 |
@@ -124,7 +109,7 @@ ina-permanent-collection.json | 2,720 | 2,692 |
 | 107 | Italy | Pinacoteca Ambrosiana | Ambrosiana Collection | ambrosiana-collection | ambrosiana-collection.json | 122 | 122 |
 | 108 | Italy | Pinacoteca di Brera | Pinacoteca di Brera Collection | brera-collection | pinacoteca-brera-collection.json | 619 | 619 |
 | 109 | Italy | Pitti Palace | Pitti Palace Collection | pitti-palace-collection | pitti-palace-collection.json | 428 | 428 |
-| 110 | Italy | Uffizi Galleries | Uffizi Gallery Collection | uffizi-gallery-collection | uffizi-collection.json | 927 | 0 |
+| 110 | Italy | Uffizi Galleries | Uffizi Gallery Collection | uffizi-gallery-collection | uffizi-gallery-collection.json | 508 | 508 |
 | 111 | Italy | Vatican Museums | Vatican Museums Collection | vatican-collection | vatican-collection.json | 102 | 102 |
 | 112 | Japan | 21st Century Museum of Contemporary Art, Kanazawa | Kanazawa Collection | kanazawa-collection | kanazawa-all.json | 3,810 | 3,809 |
 | 113 | Japan | Adachi Museum of Art | Adachi Collection | adachi-collection | adachi-collection.json | 59 | 59 |
@@ -199,13 +184,13 @@ ina-permanent-collection.json | 2,720 | 2,692 |
 | 182 | United Kingdom | Tate Britain | Tate Britain Collection | tbc-perm-1 | tate-britain-artworks.json | 853 | 853 |
 | 183 | United Kingdom | Tate Britain | Tate Collection | tm-perm-3 | tate-artworks.json | 1,271 | 0 |
 | 184 | United Kingdom | Tate Liverpool + RIBA North | Tate Collection | tm-perm-3 | tate-artworks.json | 1,271 | 0 |
-| 185 | United Kingdom | Tate Modern | Tate Modern Collection | tm-perm-1 | tate-modern-collection.json | 656 | 368 |
+| 185 | United Kingdom | Tate Modern | Tate Modern Collection | tm-perm-1 | tate-modern-collection.json | 368 | 368 |
 | 186 | United Kingdom | Tate Modern | Tate Collection | tm-perm-3 | tate-artworks.json | 1,271 | 0 |
 | 187 | United Kingdom | Tate St Ives | Tate St Ives Collection | tsi-perm-1 | tate-st-ives-artworks.json | 121 | 121 |
 | 188 | United Kingdom | Tate St Ives | Tate Collection | tm-perm-3 | tate-artworks.json | 1,271 | 0 |
 | 189 | United Kingdom | The Courtauld Gallery | The Courtauld Collection | cg-1 | courtauld-gallery-collection.json | 611 | 610 |
-| 190 | United Kingdom | The Wallace Collection | Wallace Collection Permanent Display | wallace-permanent | wallace-collection.json | 32 | 0 |
-| 191 | United Kingdom | Victoria and Albert Museum | Permanent Collection | vam-permanent | vam-permanent-exhibitions.json | 20,819 | 580 |
+| 190 | United Kingdom | The Wallace Collection | Wallace Collection Permanent Display | wallace-permanent | wallace-collection.json | 806 | 806 |
+| 191 | United Kingdom | Victoria and Albert Museum | Permanent Collection | vam-permanent | vam-permanent-exhibitions.json | 20,819 | 20,819 |
 | 192 | United Kingdom | Victoria and Albert Museum | V&A Poster Collection | vam-posters | vam-posters-display.json | 11,653 | 11,653 |
 | 193 | United Kingdom | Walker Art Gallery | Walker Art Gallery Collection | wag-collection | walker-art-gallery-collection.json | 1,342 | 1,342 |
 | 194 | USA | Cleveland Museum of Art | Collection Highlights | cma-collection | cma-collection.json | 5,931 | 5,907 |
@@ -214,8 +199,8 @@ ina-permanent-collection.json | 2,720 | 2,692 |
 | 197 | USA | Fine Arts Museums of San Francisco | FAMSF Permanent Collection | famsf-collections | famsf-collections.json | 10,602 | 8,554 |
 | 198 | USA | Getty Museum | Getty Collection (Paintings) | getty-collection | getty-collection.json | 536 | 536 |
 | 199 | USA | High Museum of Art | Collection Highlights | high-museum-collection | high-collection.json | 3,583 | 3,526 |
-| 200 | USA | Huntington Library | Huntington Museum Permanent Collection | huntington-collection | huntington-collection.json | 511 | 0 |
-| 201 | USA | Los Angeles County Museum of Art (LACMA) | Collection: Paintings, Drawings, and Prints | lacma-paintings | lacma-classification-22.json | 5,678 | 1,612 |
+| 200 | USA | Huntington Library | Huntington Museum Permanent Collection | huntington-collection | huntington-collection.json | 511 | 90 |
+| 201 | USA | Los Angeles County Museum of Art (LACMA) | Collection: Paintings, Drawings, and Prints | lacma-paintings | lacma-classification-22.json | 5,678 | 5,678 |
 | 202 | USA | National Gallery of Art | The Collection | nga-collection | nga-collection.json | 16,912 | 0 |
 | 203 | USA | National Museum of Asian Art | Asian Art (Paintings & Drawings) | si-asian-art-collection | si-asian-art.json | 1,524 | 1,524 |
 | 204 | USA | National Portrait Gallery | Portraits (Paintings, Drawings & Photographs) | si-npg-collection | si-npg.json | 1,828 | 1,814 |
@@ -227,59 +212,6 @@ ina-permanent-collection.json | 2,720 | 2,692 |
 | 210 | USA | The Metropolitan Museum of Art | Collection Highlights | met-ny-collection | met-ny-collection.json | 1,996 | 1,993 |
 | 211 | USA | The Museum of Modern Art | Collection Highlights (Pre-1850 to 2026) | moma-highlights | moma-collection.json | 27,765 | 27,765 |
 | 212 | USA | Whitney Museum of American Art | Full Collection | whitney-collection | whitney-collection.json | 27,379 | 25,538 |
-| 213 | Various | Hidden - artists-dates | artists-dates | collection-artists-dates | artists-dates.json | 0 | 0 |
-| 214 | Various | Hidden - audit-permanent-integrity | audit-permanent-integrity | collection-audit-permanent-integrity | audit-permanent-integrity.json | 1 | 0 |
-| 215 | Various | Hidden - banrep-collection | banrep-collection | collection-banrep-collection | banrep-collection.json | 15 | 0 |
-| 216 | Various | Hidden - british-museum | british-museum | collection-british-museum | british-museum.json | 0 | 0 |
-| 217 | Various | Hidden - british-museum-collection | british-museum-collection | collection-british-museum-collection | british-museum-collection.json | 0 | 0 |
-| 218 | Various | Hidden - british-museum-gac-collection | british-museum-gac-collection | collection-british-museum-gac-collection | british-museum-gac-collection.json | 0 | 0 |
-| 219 | Various | Hidden - british-museum-galleries | british-museum-galleries | collection-british-museum-galleries | british-museum-galleries.json | 0 | 0 |
-| 220 | Various | Hidden - carnavalet-collection | carnavalet-collection | collection-carnavalet-collection | carnavalet-collection.json | 55 | 0 |
-| 221 | Various | Hidden - carnavalet-the-collection | carnavalet-the-collection | collection-carnavalet-the-collection | carnavalet-the-collection.json | 1,630 | 398 |
-| 222 | Various | Hidden - dulwich-exhibitions | dulwich-exhibitions | collection-dulwich-exhibitions | dulwich-exhibitions.json | 1 | 0 |
-| 223 | Various | Hidden - fine-arts-be-complete | fine-arts-be-complete | collection-fine-arts-be-complete | fine-arts-be-complete.json | 973 | 0 |
-| 224 | Various | Hidden - guggenheim-ny-collection | guggenheim-ny-collection | collection-guggenheim-ny-collection | guggenheim-ny-collection.json | 1,985 | 0 |
-| 225 | Various | Hidden - hayward-gallery-exhibitions | hayward-gallery-exhibitions | collection-hayward-gallery-exhibitions | hayward-gallery-exhibitions.json | 99 | 0 |
-| 226 | Various | Hidden - jmw-turner-new | jmw-turner-new | collection-jmw-turner-new | jmw-turner-new.json | 6 | 0 |
-| 227 | Various | Hidden - kim-tschang-yeul-collection | kim-tschang-yeul-collection | collection-kim-tschang-yeul-collection | kim-tschang-yeul-collection.json | 36 | 0 |
-| 228 | Various | Hidden - kroller-muller-film-video | kroller-muller-film-video | collection-kroller-muller-film-video | kroller-muller-film-video.json | 97 | 87 |
-| 229 | Various | Hidden - lille-paintings-new | lille-paintings-new | collection-lille-paintings-new | lille-paintings-new.json | 1,675 | 0 |
-| 230 | Various | Hidden - louvre-painting-collection | louvre-painting-collection | collection-louvre-painting-collection | louvre-painting-collection.json | 10,617 | 10,615 |
-| 231 | Various | Hidden - marmottan-collection | marmottan-collection | collection-marmottan-collection | marmottan-collection.json | 90 | 90 |
-| 232 | Various | Hidden - met-ny-on-view-paintings | met-ny-on-view-paintings | collection-met-ny-on-view-paintings | met-ny-on-view-paintings.json | 2,496 | 0 |
-| 233 | Various | Hidden - met-ny-on-view-paintings-enriched | met-ny-on-view-paintings-enriched | collection-met-ny-on-view-paintings-enriched | met-ny-on-view-paintings-enriched.json | 2,496 | 0 |
-| 234 | Various | Hidden - mfa-boston | mfa-boston | collection-mfa-boston | mfa-boston.json | 0 | 0 |
-| 235 | Various | Hidden - mfah-paintings | mfah-paintings | collection-mfah-paintings | mfah-paintings.json | 168 | 0 |
-| 236 | Various | Hidden - mucem-fine-arts-collection | mucem-fine-arts-collection | collection-mucem-fine-arts-collection | mucem-fine-arts-collection.json | 371 | 0 |
-| 237 | Various | Hidden - musee-conde-collection | musee-conde-collection | collection-musee-conde-collection | musee-conde-collection.json | 4,136 | 813 |
-| 238 | Various | Hidden - museo-novecento-gac-collection | museo-novecento-gac-collection | collection-museo-novecento-gac-collection | museo-novecento-gac-collection.json | 10 | 0 |
-| 239 | Various | Hidden - museum-ludwig-paintings | museum-ludwig-paintings | collection-museum-ludwig-paintings | museum-ludwig-paintings.json | 1,106 | 0 |
-| 240 | Various | Hidden - museum-wales-extended-new | museum-wales-extended-new | collection-museum-wales-extended-new | museum-wales-extended-new.json | 4,836 | 0 |
-| 241 | Various | Hidden - national-gallery-exhibitions | national-gallery-exhibitions | collection-national-gallery-exhibitions | national-gallery-exhibitions.json | 0 | 0 |
-| 242 | Various | Hidden - national-museum-korea-missing | national-museum-korea-missing | collection-national-museum-korea-missing | national-museum-korea-missing.json | 3,300 | 0 |
-| 243 | Various | Hidden - ngv-trove-collection | ngv-trove-collection | collection-ngv-trove-collection | ngv-trove-collection.json | 0 | 0 |
-| 244 | Various | Hidden - ngv-trove-collection-fixed | ngv-trove-collection-fixed | collection-ngv-trove-collection-fixed | ngv-trove-collection-fixed.json | 5 | 0 |
-| 245 | Various | Hidden - nmec-collection | nmec-collection | collection-nmec-collection | nmec-collection.json | 1 | 0 |
-| 246 | Various | Hidden - npg-floor3 | npg-floor3 | collection-npg-floor3 | npg-floor3.json | 18 | 0 |
-| 247 | Various | Hidden - orsay-collection | orsay-collection | collection-orsay-collection | orsay-collection.json | 2,666 | 2,666 |
-| 248 | Various | Hidden - palais-beaux-arts-lille-collection | palais-beaux-arts-lille-collection | collection-palais-beaux-arts-lille-collection | palais-beaux-arts-lille-collection.json | 20 | 0 |
-| 249 | Various | Hidden - palais-de-tokyo-collection | palais-de-tokyo-collection | collection-palais-de-tokyo-collection | palais-de-tokyo-collection.json | 62 | 0 |
-| 250 | Various | Hidden - petit-palais-collection | petit-palais-collection | collection-petit-palais-collection | petit-palais-collection.json | 400 | 389 |
-| 251 | Various | Hidden - petit-palais-drawings | petit-palais-drawings | collection-petit-palais-drawings | petit-palais-drawings.json | 157 | 0 |
-| 252 | Various | Hidden - pinault-collection | pinault-collection | collection-pinault-collection | pinault-collection.json | 1,310 | 1,309 |
-| 253 | Various | Hidden - r2-migration-errors | r2-migration-errors | collection-r2-migration-errors | r2-migration-errors.json | 19 | 0 |
-| 254 | Various | Hidden - reina-sofia-on-display | reina-sofia-on-display | collection-reina-sofia-on-display | reina-sofia-on-display.json | 818 | 0 |
-| 255 | Various | Hidden - rouen-paintings-new | rouen-paintings-new | collection-rouen-paintings-new | rouen-paintings-new.json | 322 | 0 |
-| 256 | Various | Hidden - royal-academy-permanent | royal-academy-permanent | collection-royal-academy-permanent | royal-academy-permanent.json | 0 | 0 |
-| 257 | Various | Hidden - science-museum-exhibitions | science-museum-exhibitions | collection-science-museum-exhibitions | science-museum-exhibitions.json | 0 | 0 |
-| 258 | Various | Hidden - si-nasm | si-nasm | collection-si-nasm | si-nasm.json | 0 | 0 |
-| 259 | Various | Hidden - tate-britain | tate-britain | collection-tate-britain | tate-britain.json | 15 | 3 |
-| 260 | Various | Hidden - tate-britain-displays | tate-britain-displays | collection-tate-britain-displays | tate-britain-displays.json | 0 | 0 |
-| 261 | Various | Hidden - tate-britain-displays-new | tate-britain-displays-new | collection-tate-britain-displays-new | tate-britain-displays-new.json | 0 | 0 |
-| 262 | Various | Hidden - tate-liverpool | tate-liverpool | collection-tate-liverpool | tate-liverpool.json | 2 | 0 |
-| 263 | Various | Hidden - tate-modern | tate-modern | collection-tate-modern | tate-modern.json | 18 | 7 |
-| 264 | Various | Hidden - tate-st-ives | tate-st-ives | collection-tate-st-ives | tate-st-ives.json | 6 | 0 |
-| 265 | Various | Hidden - the-british-museum-collection | the-british-museum-collection | collection-the-british-museum-collection | the-british-museum-collection.json | 0 | 0 |
-| 266 | Various | Hidden - vam | vam | collection-vam | vam.json | 7 | 0 |
-| 267 | Various | Hidden - vam-exhibitions | vam-exhibitions | collection-vam-exhibitions | vam-exhibitions.json | 0 | 0 |
-| 268 | Various | Hidden - zeitz-mocaa-collection | zeitz-mocaa-collection | collection-zeitz-mocaa-collection | zeitz-mocaa-collection.json | 1 | 0 |
+
+**전체 데이터 수 총합:** 682,175
+**전체 R2 업로드 수 총합:** 637,833

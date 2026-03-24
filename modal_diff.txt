@@ -1,0 +1,176 @@
+commit 237a57bd17690cb391538ff03df7752c45589cd8
+Author: kimchanyeong89 <67185549+kimchanyeong89@users.noreply.github.com>
+Date:   Sat Mar 21 12:48:59 2026 +0900
+
+    Fix modal layout: left panel ghost, gallery grid spacing, animation, exhibition header strip
+    
+    - Revert left panel condition: show for isNarrow (900-1100px) screens, fixing missing title/description
+    - Fix gridPadding for isNarrow non-sketch: 160px left to properly clear 150px panel (was 24px → ghost)
+    - Add 44px exhibition info header strip (non-sketch desktop): type badge + title + museum + count
+    - Adjust left panel top: 0→44 to start below new header bar
+    - Increase gallery colGap/rowGap: 28→48 for proper breathing room
+    - Add @keyframes em-gallery-reveal animation (blur→clear + translateY) with per-item stagger delay
+    
+    Co-Authored-By: Claude Sonnet 4.6 <noreply@anthropic.com>
+
+diff --git a/src/components/ExhibitionModal.tsx b/src/components/ExhibitionModal.tsx
+index ced214ca..9ed90566 100644
+--- a/src/components/ExhibitionModal.tsx
++++ b/src/components/ExhibitionModal.tsx
+@@ -8782,6 +8782,15 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
+           .em-dark-panel img { filter: none !important; }
+         `}</style>
+       )}
++      <style>{`
++        @keyframes em-gallery-reveal {
++          from { opacity: 0; filter: blur(6px); transform: translateY(8px); }
++          to   { opacity: 1; filter: blur(0px); transform: translateY(0px); }
++        }
++        .em-gallery-item {
++          animation: em-gallery-reveal 0.5s cubic-bezier(0.22,1,0.36,1) both;
++        }
++      `}</style>
+       <div
+         ref={panelRef}
+         style={{
+@@ -8802,6 +8811,45 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
+         }}
+       >
+         {/* Old handle removed; the corner is now curled by default and interactive via the invisible zone above */}
++        {/* Non-sketch desktop: exhibition info strip at the very top */}
++        {!isMobile && variant !== 'sketch' && (
++          <div style={{
++            position: 'absolute', top: 0, left: 0, right: 0, height: 44, zIndex: 210,
++            display: 'flex', alignItems: 'stretch',
++            background: isDark ? 'rgba(17,17,17,0.96)' : 'rgba(255,255,255,0.97)',
++            borderBottom: isDark ? '1px solid rgba(255,255,255,0.08)' : '1px solid rgba(17,17,17,0.09)',
++            backdropFilter: 'blur(12px)',
++            pointerEvents: 'none',
++          }}>
++            {/* Type badge */}
++            <div style={{ display: 'flex', alignItems: 'center', padding: '0 18px', borderRight: isDark ? '1px solid rgba(255,255,255,0.07)' : '1px solid rgba(17,17,17,0.08)', flexShrink: 0 }}>
++              <span style={{
++                fontSize: 8, fontFamily: 'Space Mono, monospace', fontWeight: 700, letterSpacing: 2,
++                textTransform: 'uppercase',
++                color: exhibition.startDate && !String(exhibition.startDate).toLowerCase().includes('permanent') ? '#c9a55a' : (isDark ? '#CCFF00' : '#111111'),
++                border: `1px solid ${exhibition.startDate && !String(exhibition.startDate).toLowerCase().includes('permanent') ? '#c9a55a' : (isDark ? 'rgba(204,255,0,0.6)' : '#111111')}`,
++                padding: '3px 7px',
++              }}>
++                {exhibition.startDate && !String(exhibition.startDate).toLowerCase().includes('permanent') ? 'TEMPORARY' : 'PERMANENT'}
++              </span>
++            </div>
++            {/* Exhibition title + museum name */}
++            <div style={{ flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'center', padding: '0 20px', minWidth: 0, overflow: 'hidden' }}>
++              <div style={{ fontSize: 10, fontFamily: 'Space Mono, monospace', letterSpacing: 1.5, textTransform: 'uppercase', color: isDark ? 'rgba(255,255,255,0.38)' : 'rgba(17,17,17,0.4)', lineHeight: 1, marginBottom: 3 }}>
++                {museumName || exhibition.name}
++              </div>
++              <div style={{ fontSize: 13, fontWeight: 700, color: isDark ? 'rgba(255,255,255,0.88)' : '#111111', letterSpacing: 0.3, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', lineHeight: 1 }}>
++                {exhibition.title || exhibition.name}
++              </div>
++            </div>
++            {/* Count */}
++            <div style={{ display: 'flex', alignItems: 'center', padding: '0 20px', borderLeft: isDark ? '1px solid rgba(255,255,255,0.07)' : '1px solid rgba(17,17,17,0.08)', flexShrink: 0 }}>
++              <span style={{ fontSize: 10, fontFamily: 'Space Mono, monospace', letterSpacing: 1, color: isDark ? 'rgba(255,255,255,0.35)' : 'rgba(17,17,17,0.4)' }}>
++                {filteredArtworks.length.toLocaleString()} WORKS
++              </span>
++            </div>
++          </div>
++        )}
+         {/* Mobile: full-width top header bar - hide in archive mode */}
+         {isMobile && viewMode !== 'archive' && (
+           <div ref={headerRef} style={{ position: 'absolute', top: 0, left: 0, right: 0, background: EM_BG, zIndex: 199, display: 'flex' }}>
+@@ -9345,7 +9393,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
+           );
+         })()}
+         {/* Absolute full-height exhibition info panel at far left (all modes) - hidden on mobile */}
+-        <div style={{ position: "absolute", top: 0, bottom: 0, left: 0, width: 150, background: EM_BG, zIndex: 200, display: (isMobile || variant === 'sketch') ? 'none' : 'flex', flexDirection: 'column', pointerEvents: 'none', ...(DEBUG_LAYOUT ? { outline: "1px solid #964B00" } : {}) }}>
++        <div style={{ position: "absolute", top: 44, bottom: 0, left: 0, width: 150, background: EM_BG, zIndex: 200, display: (isMobile || isVeryNarrow || variant === 'sketch') ? 'none' : 'flex', flexDirection: 'column', pointerEvents: 'none', ...(DEBUG_LAYOUT ? { outline: "1px solid #964B00" } : {}) }}>
+           {/* Left header: title + description + room selector */}
+           <div style={{ padding: '8px 8px', borderBottom: '0px solid transparent', pointerEvents: 'auto', background: EM_BG }}>
+             {repImage && (
+@@ -11291,13 +11339,21 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
+             >
+               {(() => {
+                 const items: Artwork[] = sortedArtworks.slice(0, galleryLimit);
+-                // Mobile: 3 columns with smaller images, Desktop: 5 columns
+-                const gridColumns = isMobile ? 'repeat(3, 1fr)' : 'repeat(5, 1fr)';
+-                const gridGap = isMobile ? 8 : 64;
+-                // Narrow screens need more top padding to avoid overlapping with room/century selectors
+-                // Symmetric padding on narrow screens, left padding on wide to clear left panel
+-                // Mobile: increased top padding for header+filters, minimal bottom for transparent tabs
+-                const gridPadding = isMobile ? '160px 8px 32px 8px' : (isVeryNarrow ? '200px 16px 96px 16px' : (isNarrow || variant === 'sketch' ? '200px 24px 96px 24px' : '192px 48px 96px 160px'));
++                // Masonry column layout — no grid rows, items flow naturally
++                const colCount = isMobile ? 3 : 5;
++                const colGap = isMobile ? 8 : 48;
++                const rowGap = isMobile ? 10 : 48;
++                // Left panel (150px) shows on screens >= 900px, non-sketch, non-mobile
++                // gridPadding left must be 160px wherever the left panel is visible
++                const gridPadding = isMobile
++                  ? '160px 8px 32px 8px'
++                  : isVeryNarrow
++                  ? '200px 16px 96px 16px'
++                  : variant === 'sketch'
++                  ? '200px 24px 96px 24px'    // sketch: no left panel, no top bar → 24px left
++                  : isNarrow
++                  ? '236px 24px 96px 160px'   // 900-1100px: left panel visible + 44px top bar
++                  : '236px 48px 96px 160px';  // wide (>1100px): left panel visible + 44px top bar
+                 return (
+                   <div style={{ padding: gridPadding }}>
+                     {/* Modern Sort UI - Above Grid */}
+@@ -11338,31 +11394,32 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
+                       </div>
+                     </div>
+ 
+-                    <div style={{ display: 'grid', gridTemplateColumns: gridColumns, gap: gridGap, alignItems: 'start' }}>
++                    <div style={{ display: 'grid', gridTemplateColumns: `repeat(${colCount}, 1fr)`, columnGap: colGap, rowGap: rowGap, alignItems: 'start' }}>
+                       {items.map((a, idx) => (
+-                        <GalleryItem
+-                          key={a.id ?? `${idx}`}
+-                          artwork={a}
+-                          index={idx}
+-                          isMobile={isMobile}
+-                          isVeryNarrow={isVeryNarrow}
+-                          hoveredIndex={hoveredIndex}
+-                          setHoveredIndex={setHoveredIndex}
+-                          galleryVideoReadyIdx={galleryVideoReadyIdx}
+-                          galleryThumbnailHiddenIdx={galleryThumbnailHiddenIdx}
+-                          likedArtworks={likedArtworks}
+-                          toggleLike={toggleLike}
+-                          hoverZoom={hoverZoom}
+-                          setHoverZoom={setHoverZoom}
+-                          closeHoverZoomFromOverlay={closeHoverZoomFromOverlay}
+-                          exhibition={exhibition}
+-                          applyFallbackImage={applyFallbackImage}
+-                          useProxyVal={exhibition.id === 'mnk-collection' || exhibition.id === 'louisiana-collection' || exhibition.id.startsWith('smb-') ? true : useProxy}
+-                          onOpenProduct={(art) => setProductArtwork(art)}
+-                          onOpenComments={(art) => setCommentArtwork(art)}
+-                          stats={artworkStats[normalizeArtworkIdForFirestore(a.id)]}
+-                          museumName={museumName}
+-                        />
++                        <div key={a.id ?? `${idx}`} className="em-gallery-item" style={{ animationDelay: `${Math.min(idx * 0.04, 0.6)}s` }}>
++                          <GalleryItem
++                            artwork={a}
++                            index={idx}
++                            isMobile={isMobile}
++                            isVeryNarrow={isVeryNarrow}
++                            hoveredIndex={hoveredIndex}
++                            setHoveredIndex={setHoveredIndex}
++                            galleryVideoReadyIdx={galleryVideoReadyIdx}
++                            galleryThumbnailHiddenIdx={galleryThumbnailHiddenIdx}
++                            likedArtworks={likedArtworks}
++                            toggleLike={toggleLike}
++                            hoverZoom={hoverZoom}
++                            setHoverZoom={setHoverZoom}
++                            closeHoverZoomFromOverlay={closeHoverZoomFromOverlay}
++                            exhibition={exhibition}
++                            applyFallbackImage={applyFallbackImage}
++                            useProxyVal={exhibition.id === 'mnk-collection' || exhibition.id === 'louisiana-collection' || exhibition.id.startsWith('smb-') ? true : useProxy}
++                            onOpenProduct={(art) => setProductArtwork(art)}
++                            onOpenComments={(art) => setCommentArtwork(art)}
++                            stats={artworkStats[normalizeArtworkIdForFirestore(a.id)]}
++                            museumName={museumName}
++                          />
++                        </div>
+                       ))}
+                     </div>
+                   </div>
