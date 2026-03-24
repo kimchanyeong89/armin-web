@@ -4922,15 +4922,19 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
             const rawDate = item.date || (item.metadata && (item.metadata.Date || item.metadata['Date']));
 
             // Derive category and type from exhibition ID (since data doesn't have classification)
-            let category = '';
+            let category = item.category || '';
             let type: '2D' | '3D' = '2D';
 
-            if (exhibition.id.includes('paintings')) category = 'Painting';
-            else if (exhibition.id.includes('sculptures')) { category = 'Sculpture'; type = '3D'; }
-            else if (exhibition.id.includes('drawings')) category = 'Drawing & Print';
-            else if (exhibition.id.includes('photography')) category = 'Photography';
-            else if (exhibition.id.includes('objects')) { category = 'Object / Media Art'; type = '3D'; }
-            else if (exhibition.id.includes('poster')) category = 'Poster';
+            if (!category) {
+              if (exhibition.id.includes('paintings')) category = 'Painting';
+              else if (exhibition.id.includes('sculptures')) { category = 'Sculpture'; type = '3D'; }
+              else if (exhibition.id.includes('drawings')) category = 'Drawing & Print';
+              else if (exhibition.id.includes('photography')) category = 'Photography';
+              else if (exhibition.id.includes('objects')) { category = 'Object / Media Art'; type = '3D'; }
+              else if (exhibition.id.includes('poster')) category = 'Poster';
+            } else {
+              if (category === 'Sculptures' || category.includes('Objects')) type = '3D';
+            }
 
             return {
               id: item.sourceId || item.id || `${exhibition.id} -${idx} `,
@@ -6990,7 +6994,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
               .trim();
           };
 
-          const isWawel = exhibition.id === 'conde-paintings';
+          const isWawel = exhibition.id.startsWith('wawel-');
 
           const list: Artwork[] = allObjects.map((item: any, idx: number) => {
             let rawTitle = item.title || item.name || item.shortName || 'Untitled';
@@ -11135,7 +11139,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
                 const items: Artwork[] = sortedArtworks.slice(0, galleryLimit);
                 const gridColumns = isMobile ? 'repeat(3, 1fr)' : 'repeat(5, 1fr)';
                 const gridColumnGap = isMobile ? 8 : 64;
-                const gridRowGap = isMobile ? 8 : 32;
+                const gridRowGap = isMobile ? 8 : 80;
                 // Left panel (150px) shows on all non-mobile screens
                 // gridPadding: compact top so artworks use the space below the left panel header
                 const gridPadding = isMobile
