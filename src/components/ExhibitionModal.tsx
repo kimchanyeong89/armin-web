@@ -22,6 +22,11 @@ const RE_YEAR_4 = /\b(\d{4})\b/g;
 const RE_YEAR_3 = /\b(\d{3})\b/;
 
 const CATEGORY_MAP: Record<string, string> = {
+  "drawings, prints, and paintings": "Drawings, Prints, and Paintings",
+  "objects & media art": "Objects & Media Art",
+  "photography": "Photography",
+  "posters": "Posters",
+  "sculptures": "Sculptures",
   "drawing": "Drawing",
   "drawings": "Drawing",
   "draw": "Drawing",
@@ -6718,8 +6723,8 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
         'kroller-muller-paintings': '/data/kroller-muller-permanent.json',
         'kroller-muller-film-video': '/data/kroller-muller-film-video.json',
         'kroller-muller-photography': '/data/kroller-muller-photography.json',
-        // Krakow - Wawel Royal Castle
-        'conde-paintings': '/data/conde-paintings.json',
+        // Musee Conde
+        'conde-paintings': '/data/musee-conde-collection.json',
         // St. Petersburg - Hermitage
         'hermitage-collection': '/data/hermitage-highlights.json',
         'pushkin-collection': '/data/pushkin-paintings.json',
@@ -10748,7 +10753,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
                                   maxHeight: stageMaxH,
                                   objectFit: 'contain',
                                   display: 'block',
-                                  background: '#f5f5f5',
+                                  background: 'transparent',
                                   cursor: exhibition.id === 'reina-sofia-collection' && sourceUrl ? 'pointer' : undefined,
                                 }}
                                 onLoad={(e) => {
@@ -10859,7 +10864,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
                                   filter: mainLoaded ? 'none' : 'blur(14px)',
                                   transition: 'filter 420ms ease, opacity 420ms ease',
                                   opacity: mainLoaded ? 1 : 0.88,
-                                  background: '#f5f5f5',
+                                  background: 'transparent',
                                 }}
                                 onClick={() => {
                                   // Reina Sofía: open sourceUrl directly instead of lightbox
