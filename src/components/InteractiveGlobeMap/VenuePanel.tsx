@@ -979,6 +979,23 @@ export function VenuePanel({ city, theme, onClose, onOpenExhibition }: VenuePane
                     <div style={{ color: cFg35, marginTop: '4px', fontSize: '11px' }}>
                       {city.country}
                     </div>
+                    <button
+                      onClick={onClose}
+                      style={{
+                        marginTop: '10px',
+                        display: 'inline-flex', alignItems: 'center', gap: '6px',
+                        color: cFg35, fontSize: '10px',
+                        letterSpacing: '0.12em', textTransform: 'uppercase',
+                        fontFamily: "'Space Mono', monospace",
+                        cursor: 'pointer',
+                        background: 'none', borderTop: 'none', borderRight: 'none', borderBottom: 'none', borderLeft: 'none', outline: 'none',
+                        padding: 0,
+                      }}
+                      aria-label="Back to map"
+                    >
+                      <span>&larr;</span>
+                      <span>Back to map</span>
+                    </button>
                   </div>
                   <button
                     onClick={onClose}

@@ -1,6 +1,7 @@
 import { useRef, useEffect, useState, useCallback } from "react";
 import * as d3 from "d3";
 import { feature, mesh } from "topojson-client";
+import { AnimatePresence, motion } from "framer-motion";
 
 // ─── Types ─────────────────────────────────────────────────
 import type { Theme, CityMarker } from "./types";
@@ -629,11 +630,10 @@ export function Globe({
           if (!c.country) return;
           const continent = CONTINENT_MAP[c.country] || "Unknown";
           if (!countryClusterMode) {
-            // Show cluster count (city markers), not summed venue count.
-            continentTotals.set(continent, (continentTotals.get(continent) || 0) + 1);
+            continentTotals.set(continent, (continentTotals.get(continent) || 0) + c.venues.length);
             continentArtworks.set(continent, (continentArtworks.get(continent) || 0) + (c.artworkCount || 0));
           } else if (activeContinent === continent) {
-            countryTotals.set(c.country, (countryTotals.get(c.country) || 0) + 1);
+            countryTotals.set(c.country, (countryTotals.get(c.country) || 0) + c.venues.length);
             countryArtworks.set(c.country, (countryArtworks.get(c.country) || 0) + (c.artworkCount || 0));
           }
         });
@@ -1267,50 +1267,57 @@ export function Globe({
         onTouchEnd={handleTouchEnd}
       />
 
-      {hoveredCity && (
-        <div
-          className="ig-tooltip"
-          style={{ left: tooltipPos.x + 16, top: tooltipPos.y - 12 }}
-        >
-          <div
-            className="ig-tooltip-inner"
-            style={{
-              backgroundColor: t ? "rgba(255,255,255,0.9)" : "rgba(10,10,10,0.9)",
-              borderColor: t ? "rgba(0,0,0,0.06)" : "rgba(255,255,255,0.05)"
-            }}
+      <AnimatePresence>
+        {hoveredCity && (
+          <motion.div
+            key={`${hoveredCity.city}-${hoveredCity.venues[0]?.name || ""}`}
+            className="ig-tooltip"
+            style={{ left: tooltipPos.x + 16, top: tooltipPos.y - 12 }}
+            initial={{ opacity: 0, y: 6 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 4 }}
+            transition={{ duration: 0.2, ease: "easeOut" }}
           >
             <div
+              className="ig-tooltip-inner"
               style={{
-                letterSpacing: "0.2em", textTransform: "uppercase",
-                color: t ? "rgba(0,0,0,0.7)" : "rgba(255,255,255,0.7)",
-                fontFamily: "'Space Grotesk', sans-serif", fontSize: "10px"
+                backgroundColor: t ? "rgba(255,255,255,0.9)" : "rgba(10,10,10,0.9)",
+                borderColor: t ? "rgba(0,0,0,0.06)" : "rgba(255,255,255,0.05)"
               }}
             >
-              {hoveredCity.city}
-            </div>
-            <div
-              style={{
-                marginTop: "2px",
-                color: t ? "rgba(0,0,0,0.35)" : "rgba(255,255,255,0.3)",
-                fontFamily: "'Space Grotesk', sans-serif", fontSize: "10px"
-              }}
-            >
-              {hoveredCity.venues[0]?.name}
-            </div>
-            {hoveredCity.venues.length > 1 && (
               <div
                 style={{
-                  marginTop: "4px",
-                  color: t ? "rgba(0,0,0,0.2)" : "rgba(255,255,255,0.2)",
-                  fontFamily: "'Space Mono', monospace", fontSize: "9px"
+                  letterSpacing: "0.2em", textTransform: "uppercase",
+                  color: t ? "rgba(0,0,0,0.7)" : "rgba(255,255,255,0.7)",
+                  fontFamily: "'Space Grotesk', sans-serif", fontSize: "10px"
                 }}
               >
-                +{hoveredCity.venues.length - 1} more
+                {hoveredCity.city}
               </div>
-            )}
-          </div>
-        </div>
-      )}
+              <div
+                style={{
+                  marginTop: "2px",
+                  color: t ? "rgba(0,0,0,0.35)" : "rgba(255,255,255,0.3)",
+                  fontFamily: "'Space Grotesk', sans-serif", fontSize: "10px"
+                }}
+              >
+                {hoveredCity.venues[0]?.name}
+              </div>
+              {hoveredCity.venues.length > 1 && (
+                <div
+                  style={{
+                    marginTop: "4px",
+                    color: t ? "rgba(0,0,0,0.2)" : "rgba(255,255,255,0.2)",
+                    fontFamily: "'Space Mono', monospace", fontSize: "9px"
+                  }}
+                >
+                  +{hoveredCity.venues.length - 1} more
+                </div>
+              )}
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {isLoading && (
         <div className="ig-spinner-container">
