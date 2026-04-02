@@ -186,6 +186,7 @@ export default function InteractiveGlobeMap({ exhibitions, onSelectExhibition, o
     return () => window.removeEventListener('theme-changed', handleThemeChange);
   }, []);
   const [selectedCity, setSelectedCity] = useState<CityMarker | null>(null);
+  const [drilledContinent, setDrilledContinent] = useState<string | null>(null);
   const [drilledCountry, setDrilledCountry] = useState<string | null>(null);
   const [rotation, setRotation] = useState<[number, number]>([0, 20]);
   const [zoom, setZoom] = useState(1);
@@ -580,6 +581,8 @@ export default function InteractiveGlobeMap({ exhibitions, onSelectExhibition, o
         theme={theme}
         selectedCity={selectedCity}
         onSelectCity={handleSelectCity}
+        drilledContinent={drilledContinent}
+        onDrillContinent={setDrilledContinent}
         drilledCountry={drilledCountry}
         onDrillDown={setDrilledCountry}
         onRotationChange={handleRotationChange}
@@ -628,7 +631,7 @@ export default function InteractiveGlobeMap({ exhibitions, onSelectExhibition, o
         </motion.div>
 
         <AnimatePresence mode="wait">
-          {drilledCountry ? (
+          {drilledContinent || drilledCountry ? (
             <motion.div
               key="drilled"
               initial={{ opacity: 0, x: -10 }}
@@ -645,7 +648,7 @@ export default function InteractiveGlobeMap({ exhibitions, onSelectExhibition, o
                    textTransform: 'uppercase', fontFamily: "'Inter', 'Space Grotesk', sans-serif"
                 }}
               >
-                 {drilledCountry}
+                 {drilledCountry ? `${drilledContinent || ''} > ${drilledCountry}` : drilledContinent}
               </div>
               <motion.button
                 style={{ 
@@ -654,6 +657,11 @@ export default function InteractiveGlobeMap({ exhibitions, onSelectExhibition, o
                 }}
                 onClick={() => {
                   setDrilledCountry(null);
+                  if (drilledCountry) {
+                    // if country was active, going back means back to continent level
+                  } else {
+                    setDrilledContinent(null);
+                  }
                   setSelectedCity(null);
                 }}
                 whileHover={{ opacity: 0.7 }}
@@ -921,7 +929,7 @@ export default function InteractiveGlobeMap({ exhibitions, onSelectExhibition, o
       {/* ── Bottom center info ── */}
       <AnimatePresence mode="wait">
         {!selectedCity && (
-          drilledCountry ? (
+          drilledContinent || drilledCountry ? (
             <motion.div
               key="country-hint"
               initial={{ opacity: 0, y: 4 }}

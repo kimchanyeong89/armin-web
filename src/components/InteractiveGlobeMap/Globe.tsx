@@ -53,6 +53,55 @@ const COUNTRY_NAMES: Record<string, string> = {
   "862": "Venezuela", "887": "Yemen", "894": "Zambia", "-99": "N. Cyprus",
 };
 
+const CONTINENT_MAP: Record<string, string> = {
+  "Afghanistan": "Asia", "Albania": "Europe", "Algeria": "Africa", "Angola": "Africa",
+  "Argentina": "South America", "Australia": "Oceania", "Austria": "Europe", "Bangladesh": "Asia",
+  "Belgium": "Europe", "Bhutan": "Asia", "Bolivia": "South America", "Bosnia and Herzegovina": "Europe",
+  "Brazil": "South America", "Bulgaria": "Europe", "Myanmar": "Asia", "Cambodia": "Asia",
+  "Cameroon": "Africa", "Canada": "North America", "Sri Lanka": "Asia", "Chile": "South America",
+  "China": "Asia", "Taiwan": "Asia", "Colombia": "South America", "Congo": "Africa", "DR Congo": "Africa",
+  "Costa Rica": "North America", "Croatia": "Europe", "Cuba": "North America", "Cyprus": "Europe",
+  "Czech Republic": "Europe", "Denmark": "Europe", "Dominican Republic": "North America",
+  "Ecuador": "South America", "Egypt": "Africa", "El Salvador": "North America", "Ethiopia": "Africa",
+  "Eritrea": "Africa", "Estonia": "Europe", "Finland": "Europe", "France": "Europe",
+  "Gabon": "Africa", "Gambia": "Africa", "Germany": "Europe", "Ghana": "Africa",
+  "Greece": "Europe", "Guatemala": "North America", "Guinea": "Africa", "Haiti": "North America",
+  "Honduras": "North America", "Hong Kong": "Asia", "Hungary": "Europe", "Iceland": "Europe", "India": "Asia",
+  "Indonesia": "Asia", "Iran": "Asia", "Iraq": "Asia", "Ireland": "Europe",
+  "Israel": "Asia", "Italy": "Europe", "Ivory Coast": "Africa", "Jamaica": "North America",
+  "Japan": "Asia", "Jordan": "Asia", "Kazakhstan": "Asia", "Kenya": "Africa",
+  "North Korea": "Asia", "South Korea": "Asia", "Kuwait": "Asia", "Laos": "Asia",
+  "Lebanon": "Asia", "Lesotho": "Africa", "Latvia": "Europe", "Libya": "Africa",
+  "Lithuania": "Europe", "Luxembourg": "Europe", "Madagascar": "Africa", "Malawi": "Africa",
+  "Malaysia": "Asia", "Mali": "Africa", "Mauritania": "Africa", "Mexico": "North America",
+  "Mongolia": "Asia", "Morocco": "Africa", "Mozambique": "Africa", "Namibia": "Africa",
+  "Nepal": "Asia", "Netherlands": "Europe", "New Caledonia": "Oceania",
+  "New Zealand": "Oceania", "Nicaragua": "North America", "Niger": "Africa", "Nigeria": "Africa",
+  "Norway": "Europe", "Oman": "Asia", "Pakistan": "Asia", "Panama": "North America",
+  "Papua New Guinea": "Oceania", "Paraguay": "South America", "Peru": "South America",
+  "Philippines": "Asia", "Poland": "Europe", "Portugal": "Europe", "Puerto Rico": "North America",
+  "Qatar": "Asia", "Romania": "Europe", "Russia": "Europe", "Rwanda": "Africa",
+  "Saudi Arabia": "Asia", "Senegal": "Africa", "Serbia": "Europe", "Sierra Leone": "Africa",
+  "Singapore": "Asia", "Slovakia": "Europe", "Vietnam": "Asia", "Slovenia": "Europe",
+  "Somalia": "Africa", "South Africa": "Africa", "Zimbabwe": "Africa", "Spain": "Europe",
+  "South Sudan": "Africa", "Sudan": "Africa", "Suriname": "South America", "Sweden": "Europe",
+  "Switzerland": "Europe", "Syria": "Asia", "Tajikistan": "Asia", "Thailand": "Asia",
+  "Togo": "Africa", "Trinidad and Tobago": "North America", "UAE": "Asia", "Tunisia": "Africa",
+  "Turkey": "Asia", "Turkmenistan": "Asia", "Uganda": "Africa", "Ukraine": "Europe",
+  "North Macedonia": "Europe", "United Kingdom": "Europe", "Tanzania": "Africa",
+  "United States": "North America", "Uruguay": "South America", "Uzbekistan": "Asia",
+  "Venezuela": "South America", "Yemen": "Asia", "Zambia": "Africa", "N. Cyprus": "Europe",
+};
+
+const CONTINENT_CENTERS: Record<string, [number, number]> = {
+  "North America": [-100, 40],
+  "South America": [-60, -15],
+  "Europe": [15, 50],
+  "Africa": [20, 0],
+  "Asia": [90, 40],
+  "Oceania": [135, -25]
+};
+
 // ─── Cities & Venues ───────────────────────────────────────
 
 
@@ -223,6 +272,8 @@ interface GlobeProps {
   theme?: Theme;
   selectedCity: CityMarker | null;
   onSelectCity: (city: CityMarker | null) => void;
+  drilledContinent?: string | null;
+  onDrillContinent?: (name: string | null) => void;
   drilledCountry: string | null;
   onDrillDown: (name: string | null) => void;
   onRotationChange?: (coords: [number, number]) => void;
@@ -235,6 +286,8 @@ export function Globe({
   theme = "dark",
   selectedCity,
   onSelectCity,
+  drilledContinent,
+  onDrillContinent,
   drilledCountry,
   onDrillDown,
   onRotationChange,
@@ -516,13 +569,21 @@ export function Globe({
         return true;
       });
 
+      const continentTotals = new Map<string, number>();
+      const continentArtworks = new Map<string, number>();
       const countryTotals = new Map<string, number>();
       const countryArtworks = new Map<string, number>();
       if (!drilled) {
         cities.forEach(c => {
           if (!c.country) return;
-          countryTotals.set(c.country, (countryTotals.get(c.country) || 0) + c.venues.length);
-          countryArtworks.set(c.country, (countryArtworks.get(c.country) || 0) + (c.artworkCount || 0));
+          const continent = CONTINENT_MAP[c.country] || "Unknown";
+          if (!drilledContinent) {
+            continentTotals.set(continent, (continentTotals.get(continent) || 0) + c.venues.length);
+            continentArtworks.set(continent, (continentArtworks.get(continent) || 0) + (c.artworkCount || 0));
+          } else if (drilledContinent === continent) {
+            countryTotals.set(c.country, (countryTotals.get(c.country) || 0) + c.venues.length);
+            countryArtworks.set(c.country, (countryArtworks.get(c.country) || 0) + (c.artworkCount || 0));
+          }
         });
       }
 
@@ -530,28 +591,40 @@ export function Globe({
       if (!drilled && dOp < 0.5 && countriesRef.current) {
         ctx.save();
         ctx.globalAlpha = (1 - dOp * 2) * 0.65;
-        countriesRef.current.forEach((c: any) => {
-          const id = String(c.id);
-          const name = COUNTRY_NAMES[id];
-          if (!name) return;
-          const total = countryTotals.get(name);
-          if (!total) return;
 
-          const mainlandC = getMainlandFeature(c);
-          const centroid = d3.geoCentroid(mainlandC);
+        const drawNumberAt = (centroid: [number, number], total: number, fontSize: number) => {
           const dist = d3.geoDistance(centroid, [-rot[0], -rot[1]]);
           if (dist > Math.PI / 2) return;
-
           const p = projection(centroid);
           if (!p) return;
-
-          // Plain number text — uniform color, no box
-          ctx.font = '600 10px "Space Grotesk", sans-serif';
+          ctx.font = `600 ${fontSize}px "Space Grotesk", sans-serif`;
           ctx.fillStyle = `rgba(${R},${G},${B},0.55)`;
           ctx.textAlign = "center";
           ctx.textBaseline = "middle";
           ctx.fillText(`${total}`, p[0], p[1]);
-        });
+        };
+
+        if (!drilledContinent) {
+            Array.from(continentTotals.entries()).forEach(([name, total]) => {
+                const centroid = CONTINENT_CENTERS[name];
+                if (!centroid) return;
+                drawNumberAt(centroid, total, name === "Asia" ? 14 : 12);
+            });
+        } else {
+            countriesRef.current.forEach((c: any) => {
+              const id = String(c.id);
+              const name = COUNTRY_NAMES[id];
+              if (!name) return;
+              if (CONTINENT_MAP[name] !== drilledContinent) return;
+              const total = countryTotals.get(name);
+              if (!total) return;
+
+              const mainlandC = getMainlandFeature(c);
+              if (!mainlandC) return;
+              const centroid = d3.geoCentroid(mainlandC);
+              drawNumberAt(centroid, total, 10);
+            });
+        }
         ctx.restore();
       }
 
@@ -701,7 +774,7 @@ export function Globe({
       ctx.moveTo(cx, cy + 4); ctx.lineTo(cx, cy + 12);
       ctx.stroke();
 
-      return { countryTotals, countryArtworks };
+      return { continentTotals, continentArtworks, countryTotals, countryArtworks };
     };
 
     const animate = () => {
@@ -743,9 +816,15 @@ export function Globe({
          }
       } else if (hovCountry && mousePosRef.current.x > 0 && !isDraggingRef.current) {
          const name = COUNTRY_NAMES[String(hovCountry.id)];
-         if (name && stats.countryTotals.has(name)) { // means there are venues here
-            const arts = stats.countryArtworks.get(name) || 0;
-            hd = { level: 'COUNTRY', label: name, count: arts };
+         if (name) {
+           const continent = CONTINENT_MAP[name];
+           if (!drilledContinent && continent && stats.continentTotals.has(continent)) {
+             const arts = stats.continentArtworks.get(continent) || 0;
+             hd = { level: 'CONTINENT', label: continent, count: arts };
+           } else if (drilledContinent === continent && stats.countryTotals.has(name)) {
+             const arts = stats.countryArtworks.get(name) || 0;
+             hd = { level: 'COUNTRY', label: name, count: arts };
+           }
          }
       }
 
@@ -795,6 +874,9 @@ export function Globe({
         targetRotRef.current = null;
         cbRefs.current.onDrillDown(null);
         cbRefs.current.onSelectCity(null);
+      }
+      if (drilledContinent && targetScaleRef.current <= 1.05) {
+        cbRefs.current.onDrillContinent?.(null);
       }
     };
     
@@ -904,6 +986,9 @@ export function Globe({
         if (country && drilledRef.current?.id !== String(country.id)) {
           const id = String(country.id);
           const name = COUNTRY_NAMES[id] || city.country;
+          const continent = CONTINENT_MAP[name];
+          if (continent) cbRefs.current.onDrillContinent?.(continent);
+
           const mainland = getMainlandFeature(country);
           const centroid = d3.geoCentroid(mainland);
           const zoom = calcCountryZoom(country);
@@ -931,6 +1016,10 @@ export function Globe({
         targetScaleRef.current = 1;
         cbRefs.current.onDrillDown(null);
         cbRefs.current.onSelectCity(null);
+      } else if (drilledContinent) {
+        cbRefs.current.onDrillContinent?.(null);
+        targetRotRef.current = null;
+        targetScaleRef.current = 1;
       }
       return;
     }
@@ -943,6 +1032,10 @@ export function Globe({
         targetScaleRef.current = 1;
         cbRefs.current.onDrillDown(null);
         cbRefs.current.onSelectCity(null);
+      } else if (drilledContinent) {
+        cbRefs.current.onDrillContinent?.(null);
+        targetRotRef.current = null;
+        targetScaleRef.current = 1;
       }
       return;
     }
@@ -955,11 +1048,34 @@ export function Globe({
     if (clickedCountry) {
       const id = String(clickedCountry.id);
       const name = COUNTRY_NAMES[id] || `Region ${id}`;
+      const continent = CONTINENT_MAP[name];
 
+      // Phase 1: Click continent if no drilledContinent
+      if (!drilledContinent && continent) {
+        // Zoom into continent
+        const centroid = CONTINENT_CENTERS[continent];
+        if (centroid) {
+          targetRotRef.current = [-centroid[0], -centroid[1], 0];
+          targetScaleRef.current = 1.8; // moderate zoom for continent
+          velocityRef.current = [0, 0];
+          cbRefs.current.onDrillContinent?.(continent);
+          cbRefs.current.onSelectCity(null);
+        }
+        return;
+      }
+
+      // Phase 2: If we are already in a continent, ignore clicks outside it
+      if (drilledContinent && continent !== drilledContinent) {
+         return;
+      }
+
+      // Phase 3: Toggle Country within the drilled continent
       if (drilledRef.current?.id === id) {
         drilledRef.current = null;
-        targetRotRef.current = null;
-        targetScaleRef.current = 1;
+        // Revert to continent view
+        const cCentroid = CONTINENT_CENTERS[continent || ""] || [0, 0];
+        targetRotRef.current = [-cCentroid[0], -cCentroid[1], 0];
+        targetScaleRef.current = 1.8;
         cbRefs.current.onDrillDown(null);
         cbRefs.current.onSelectCity(null);
         return;
@@ -980,6 +1096,10 @@ export function Globe({
         targetRotRef.current = null;
         targetScaleRef.current = 1;
         cbRefs.current.onDrillDown(null);
+      } else if (drilledContinent) {
+        cbRefs.current.onDrillContinent?.(null);
+        targetRotRef.current = null;
+        targetScaleRef.current = 1;
       }
       cbRefs.current.onSelectCity(null);
     }
@@ -1020,10 +1140,16 @@ export function Globe({
         ref={canvasRef}
         className="ig-globe-canvas"
         style={{ cursor: "grab", touchAction: "none" }}
-        onMouseDown={handleMouseDown}
-        onMouseMove={handleMouseMove}
-        onMouseUp={handleMouseUp}
-        onMouseLeave={handleMouseLeave}
+        onPointerDown={(e) => {
+          e.currentTarget.setPointerCapture(e.pointerId);
+          handleMouseDown(e as any);
+        }}
+        onPointerMove={handleMouseMove as any}
+        onPointerUp={(e) => {
+          e.currentTarget.releasePointerCapture(e.pointerId);
+          handleMouseUp();
+        }}
+        onPointerLeave={handleMouseLeave}
         onClick={handleClick}
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
