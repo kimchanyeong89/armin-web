@@ -331,7 +331,11 @@ export function Globe({
   const dragDistRef = useRef(0);
 
   const drilledContinentRef = useRef(drilledContinent);
-  useEffect(() => { drilledContinentRef.current = drilledContinent; }, [drilledContinent]);
+  const lastSyncedContinentRef = useRef<string | null>(drilledContinent || null);
+  useEffect(() => {
+    drilledContinentRef.current = drilledContinent;
+    lastSyncedContinentRef.current = drilledContinent || null;
+  }, [drilledContinent]);
   const citiesRef = useRef(cities);
   useEffect(() => { citiesRef.current = cities; }, [cities]);
   const selectedRef = useRef(selectedCity);
@@ -339,7 +343,6 @@ export function Globe({
 
   const getActiveContinentForView = useCallback((rot: [number, number, number], countryClusterMode: boolean) => {
     if (!countryClusterMode) return null;
-    if (drilledContinentRef.current) return drilledContinentRef.current;
 
     const center: [number, number] = [-rot[0], -rot[1]];
     let best: string | null = null;
@@ -909,8 +912,14 @@ export function Globe({
         rotationRef.current[1] = Math.max(-80, Math.min(80, rotationRef.current[1]));
       }
       const stats = draw();
-  const countryClusterMode = currentScaleRef.current >= COUNTRY_CLUSTER_ZOOM;
-  const activeContinent = getActiveContinentForView(rotationRef.current, countryClusterMode);
+      const countryClusterMode = currentScaleRef.current >= COUNTRY_CLUSTER_ZOOM;
+      const activeContinent = getActiveContinentForView(rotationRef.current, countryClusterMode);
+
+      // Keep parent continent state in sync with current viewport in zoomed country-cluster mode.
+      if (countryClusterMode && activeContinent && lastSyncedContinentRef.current !== activeContinent) {
+        lastSyncedContinentRef.current = activeContinent;
+        cbRefs.current.onDrillContinent?.(activeContinent);
+      }
 
       const hovCity = hoveredRef.current;
       const hovCountry = hoveredCountryRef.current;
@@ -1011,6 +1020,7 @@ export function Globe({
 
   const handleMouseDown = useCallback((e: React.MouseEvent) => {
     isDraggingRef.current = true;
+    targetRotRef.current = null;
     lastPosRef.current = { x: e.clientX, y: e.clientY };
     velocityRef.current = [0, 0];
     dragDistRef.current = 0;
@@ -1221,6 +1231,7 @@ export function Globe({
   const handleTouchStart = useCallback((e: React.TouchEvent) => {
     if (e.touches.length !== 1) return;
     isDraggingRef.current = true;
+    targetRotRef.current = null;
     lastPosRef.current = { x: e.touches[0].clientX, y: e.touches[0].clientY };
     velocityRef.current = [0, 0];
     dragDistRef.current = 0;
