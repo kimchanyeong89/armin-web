@@ -331,6 +331,8 @@ export function Globe({
 
   const drilledContinentRef = useRef(drilledContinent);
   useEffect(() => { drilledContinentRef.current = drilledContinent; }, [drilledContinent]);
+  const citiesRef = useRef(cities);
+  useEffect(() => { citiesRef.current = cities; }, [cities]);
   const selectedRef = useRef(selectedCity);
   useEffect(() => { selectedRef.current = selectedCity; }, [selectedCity]);
 
@@ -610,7 +612,7 @@ export function Globe({
       const sel = selectedRef.current;
       const hov = hoveredRef.current;
 
-      const visibleCities = cities.filter((m) => {
+      const visibleCities = citiesRef.current.filter((m) => {
         if (!countryClusterMode || !activeContinent) return false;
         if (!drilled && m.country && CONTINENT_MAP[m.country] !== activeContinent) return false;
         if (m.detail && !drilled) return false;
@@ -623,7 +625,7 @@ export function Globe({
       const countryTotals = new Map<string, number>();
       const countryArtworks = new Map<string, number>();
       if (!drilled) {
-        cities.forEach(c => {
+        citiesRef.current.forEach(c => {
           if (!c.country) return;
           const continent = CONTINENT_MAP[c.country] || "Unknown";
           if (!countryClusterMode) {
@@ -956,7 +958,7 @@ export function Globe({
 
     animFrameRef.current = requestAnimationFrame(animate);
     return () => { cancelAnimationFrame(animFrameRef.current); obs.disconnect(); };
-  }, []);
+  }, [getActiveContinentForView]);
 
   // ─── Wheel ────────────────────────────────────────
 
@@ -1040,7 +1042,7 @@ export function Globe({
     const countryClusterMode = currentScaleRef.current >= COUNTRY_CLUSTER_ZOOM;
     const activeContinent = getActiveContinentForView(rot, countryClusterMode);
 
-    const visibleCities = cities.filter((m) => {
+    const visibleCities = citiesRef.current.filter((m) => {
       if (!countryClusterMode || !activeContinent) return false;
       if (m.country && CONTINENT_MAP[m.country] !== activeContinent) return false;
       
@@ -1071,7 +1073,7 @@ export function Globe({
     else if (isDraggingRef.current) canvas.style.cursor = "grabbing";
     else if (hoveredCountryRef.current) canvas.style.cursor = "pointer";
     else canvas.style.cursor = "grab";
-  }, []);
+  }, [getActiveContinentForView]);
 
   const handleMouseUp = useCallback(() => { isDraggingRef.current = false; }, []);
 
@@ -1079,7 +1081,7 @@ export function Globe({
     isDraggingRef.current = false;
     mousePosRef.current = { x: -1, y: -1 };
     hoveredCountryRef.current = null;
-  }, []);
+  }, [getActiveContinentForView]);
 
   const handleClick = useCallback((e: React.MouseEvent) => {
     if (dragDistRef.current > 12) return;
