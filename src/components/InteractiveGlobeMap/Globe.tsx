@@ -325,6 +325,8 @@ export function Globe({
   const velocityRef = useRef<[number, number]>([0, 0]);
   const dragDistRef = useRef(0);
 
+  const drilledContinentRef = useRef(drilledContinent);
+  useEffect(() => { drilledContinentRef.current = drilledContinent; }, [drilledContinent]);
   const selectedRef = useRef(selectedCity);
   useEffect(() => { selectedRef.current = selectedCity; }, [selectedCity]);
 
@@ -505,7 +507,7 @@ export function Globe({
         const name = COUNTRY_NAMES[hovId];
         const hovContinent = name ? CONTINENT_MAP[name] : null;
 
-        if (!drilledContinent) {
+        if (!drilledContinentRef.current) {
            if (hovContinent) {
                ctx.save();
                ctx.globalAlpha = (1 - dOp * 0.5);
@@ -520,7 +522,7 @@ export function Globe({
                ctx.fill();
                ctx.restore();
            }
-        } else if (drilledContinent === hovContinent) {
+        } else if (drilledContinentRef.current === hovContinent) {
            const isDrilledCountry = drilled && drilled.id === hovId;
            if (!isDrilledCountry) {
              ctx.save();
@@ -584,8 +586,8 @@ export function Globe({
       const hov = hoveredRef.current;
 
       const visibleCities = cities.filter((m) => {
-        if (!drilledContinent) return false;
-        if (!drilled && m.country && CONTINENT_MAP[m.country] !== drilledContinent) return false;
+        if (!drilledContinentRef.current) return false;
+        if (!drilled && m.country && CONTINENT_MAP[m.country] !== drilledContinentRef.current) return false;
         if (m.detail && !drilled) return false;
         if (m.detail && drilled && m.country !== drilled.name) return false;
         return true;
@@ -599,10 +601,10 @@ export function Globe({
         cities.forEach(c => {
           if (!c.country) return;
           const continent = CONTINENT_MAP[c.country] || "Unknown";
-          if (!drilledContinent) {
+          if (!drilledContinentRef.current) {
             continentTotals.set(continent, (continentTotals.get(continent) || 0) + c.venues.length);
             continentArtworks.set(continent, (continentArtworks.get(continent) || 0) + (c.artworkCount || 0));
-          } else if (drilledContinent === continent) {
+          } else if (drilledContinentRef.current === continent) {
             countryTotals.set(c.country, (countryTotals.get(c.country) || 0) + c.venues.length);
             countryArtworks.set(c.country, (countryArtworks.get(c.country) || 0) + (c.artworkCount || 0));
           }
@@ -626,7 +628,7 @@ export function Globe({
           ctx.fillText(`${total}`, p[0], p[1]);
         };
 
-        if (!drilledContinent) {
+        if (!drilledContinentRef.current) {
             const hovCountry = hoveredCountryRef.current;
             const hovCountryName = hovCountry ? COUNTRY_NAMES[String(hovCountry.id)] : null;
             const hovContinent = hovCountryName ? CONTINENT_MAP[hovCountryName] : null;
@@ -669,7 +671,7 @@ export function Globe({
               const id = String(c.id);
               const name = COUNTRY_NAMES[id];
               if (!name) return;
-              if (CONTINENT_MAP[name] !== drilledContinent) return;
+              if (CONTINENT_MAP[name] !== drilledContinentRef.current) return;
               const total = countryTotals.get(name);
               if (!total) return;
 
@@ -889,10 +891,10 @@ export function Globe({
          const name = COUNTRY_NAMES[String(hovCountry.id)];
          if (name) {
            const continent = CONTINENT_MAP[name];
-           if (!drilledContinent && continent && stats.continentTotals.has(continent)) {
+           if (!drilledContinentRef.current && continent && stats.continentTotals.has(continent)) {
              const arts = stats.continentArtworks.get(continent) || 0;
              hd = { level: 'CONTINENT', label: continent, count: arts };
-           } else if (drilledContinent === continent && stats.countryTotals.has(name)) {
+           } else if (drilledContinentRef.current === continent && stats.countryTotals.has(name)) {
              const arts = stats.countryArtworks.get(name) || 0;
              hd = { level: 'COUNTRY', label: name, count: arts };
            }
@@ -946,7 +948,7 @@ export function Globe({
         cbRefs.current.onDrillDown(null);
         cbRefs.current.onSelectCity(null);
       }
-      if (drilledContinent && targetScaleRef.current <= 1.05) {
+      if (drilledContinentRef.current && targetScaleRef.current <= 1.05) {
         cbRefs.current.onDrillContinent?.(null);
       }
     };
@@ -1006,9 +1008,9 @@ export function Globe({
 
     const visibleCities = cities.filter((m) => {
       // Hide city clusters entirely when at the world level
-      if (!drilledContinent) return false;
+      if (!drilledContinentRef.current) return false;
       // When at the continent level (or country level), hide cities outside the selected continent
-      if (m.country && CONTINENT_MAP[m.country] !== drilledContinent) return false;
+      if (m.country && CONTINENT_MAP[m.country] !== drilledContinentRef.current) return false;
       
       if (m.detail && !drilled) return false;
       if (m.detail && drilled && m.country !== drilled.name) return false;
@@ -1092,7 +1094,7 @@ export function Globe({
         targetScaleRef.current = 1;
         cbRefs.current.onDrillDown(null);
         cbRefs.current.onSelectCity(null);
-      } else if (drilledContinent) {
+      } else if (drilledContinentRef.current) {
         cbRefs.current.onDrillContinent?.(null);
         targetRotRef.current = null;
         targetScaleRef.current = 1;
@@ -1108,7 +1110,7 @@ export function Globe({
         targetScaleRef.current = 1;
         cbRefs.current.onDrillDown(null);
         cbRefs.current.onSelectCity(null);
-      } else if (drilledContinent) {
+      } else if (drilledContinentRef.current) {
         cbRefs.current.onDrillContinent?.(null);
         targetRotRef.current = null;
         targetScaleRef.current = 1;
@@ -1126,8 +1128,8 @@ export function Globe({
       const name = COUNTRY_NAMES[id] || `Region ${id}`;
       const continent = CONTINENT_MAP[name];
 
-      // Phase 1: Click continent if no drilledContinent
-      if (!drilledContinent && continent) {
+      // Phase 1: Click continent if no drilledContinentRef.current
+      if (!drilledContinentRef.current && continent) {
         // Zoom into continent
         const centroid = CONTINENT_CENTERS[continent];
         if (centroid) {
@@ -1141,7 +1143,7 @@ export function Globe({
       }
 
       // Phase 2: If we are already in a continent, ignore clicks outside it
-      if (drilledContinent && continent !== drilledContinent) {
+      if (drilledContinentRef.current && continent !== drilledContinentRef.current) {
          return;
       }
 
@@ -1172,7 +1174,7 @@ export function Globe({
         targetRotRef.current = null;
         targetScaleRef.current = 1;
         cbRefs.current.onDrillDown(null);
-      } else if (drilledContinent) {
+      } else if (drilledContinentRef.current) {
         cbRefs.current.onDrillContinent?.(null);
         targetRotRef.current = null;
         targetScaleRef.current = 1;
