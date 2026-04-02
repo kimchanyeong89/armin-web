@@ -584,6 +584,8 @@ export function Globe({
       const hov = hoveredRef.current;
 
       const visibleCities = cities.filter((m) => {
+        if (!drilledContinent) return false;
+        if (!drilled && m.country && CONTINENT_MAP[m.country] !== drilledContinent) return false;
         if (m.detail && !drilled) return false;
         if (m.detail && drilled && m.country !== drilled.name) return false;
         return true;
@@ -660,6 +662,9 @@ export function Globe({
                 }
             });
         } else {
+            const hovCountry = hoveredCountryRef.current;
+            const hovId = hovCountry ? String(hovCountry.id) : null;
+
             countriesRef.current.forEach((c: any) => {
               const id = String(c.id);
               const name = COUNTRY_NAMES[id];
@@ -671,7 +676,24 @@ export function Globe({
               const mainlandC = getMainlandFeature(c);
               if (!mainlandC) return;
               const centroid = d3.geoCentroid(mainlandC);
-              drawNumberAt(centroid, total, 10);
+              
+              const dist = d3.geoDistance(centroid, [-rot[0], -rot[1]]);
+              if (dist > Math.PI / 2) return;
+              const p = projection(centroid);
+              if (!p) return;
+
+              const isHovered = (id === hovId);
+              
+              // Draw Country Name + Total (acting as a "Country Cluster" marker)
+              ctx.font = `600 10px "Space Grotesk", sans-serif`;
+              ctx.fillStyle = isHovered ? `rgba(${P.limeTxt},0.95)` : `rgba(${R},${G},${B},0.85)`;
+              ctx.textAlign = "center";
+              ctx.textBaseline = "middle";
+              ctx.fillText(name.toUpperCase(), p[0], p[1] - 4);
+              
+              ctx.font = `400 9px "Space Grotesk", sans-serif`;
+              ctx.fillStyle = isHovered ? `rgba(${P.limeTxt},0.85)` : `rgba(${R},${G},${B},0.6)`;
+              ctx.fillText(`${total}`, p[0], p[1] + 8);
             });
         }
         ctx.restore();
@@ -983,6 +1005,11 @@ export function Globe({
     const drilled = drilledRef.current;
 
     const visibleCities = cities.filter((m) => {
+      // Hide city clusters entirely when at the world level
+      if (!drilledContinent) return false;
+      // When at the continent level (or country level), hide cities outside the selected continent
+      if (m.country && CONTINENT_MAP[m.country] !== drilledContinent) return false;
+      
       if (m.detail && !drilled) return false;
       if (m.detail && drilled && m.country !== drilled.name) return false;
       return true;
