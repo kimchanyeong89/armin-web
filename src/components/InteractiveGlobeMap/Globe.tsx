@@ -296,6 +296,7 @@ export function Globe({
 }: GlobeProps) {
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const continentHoverOpacitiesRef = useRef<Map<string, number>>(new Map());
 
   const landRef = useRef<any>(null);
   const bordersRef = useRef<any>(null);
@@ -497,42 +498,61 @@ export function Globe({
         ctx.stroke();
       }
 
-      // Country hover
+      // Country / Continent hover
       const hovCountry = hoveredCountryRef.current;
       if (hovCountry) {
         const hovId = String(hovCountry.id);
-        const isDrilledCountry = drilled && drilled.id === hovId;
-        if (!isDrilledCountry) {
-          ctx.save();
-          ctx.globalAlpha = 1 - dOp * 0.5;
+        const name = COUNTRY_NAMES[hovId];
+        const hovContinent = name ? CONTINENT_MAP[name] : null;
 
-          ctx.beginPath();
-          path(hovCountry._smoothed);
-          ctx.fillStyle = `rgba(${P.limeFg},0.02)`;
-          ctx.fill();
+        if (!drilledContinent) {
+           if (hovContinent) {
+               ctx.save();
+               ctx.globalAlpha = (1 - dOp * 0.5);
+               ctx.fillStyle = `rgba(${P.limeFg},0.015)`;
+               ctx.beginPath();
+               countriesRef.current.forEach((c: any) => {
+                   const cName = COUNTRY_NAMES[String(c.id)];
+                   if (cName && CONTINENT_MAP[cName] === hovContinent) {
+                       path(c._smoothed || c);
+                   }
+               });
+               ctx.fill();
+               ctx.restore();
+           }
+        } else if (drilledContinent === hovContinent) {
+           const isDrilledCountry = drilled && drilled.id === hovId;
+           if (!isDrilledCountry) {
+             ctx.save();
+             ctx.globalAlpha = 1 - dOp * 0.5;
 
-          ctx.beginPath();
-          path(hovCountry._smoothed);
-          ctx.strokeStyle = `rgba(${P.limeFg},0.12)`;
-          ctx.lineWidth = 0.8;
-          ctx.lineJoin = "round";
-          ctx.lineCap = "round";
-          ctx.stroke();
+             ctx.beginPath();
+             path(hovCountry._smoothed);
+             ctx.fillStyle = `rgba(${P.limeFg},0.02)`;
+             ctx.fill();
 
-          const mx = mousePosRef.current.x;
-          const my = mousePosRef.current.y;
-          if (mx > 0 && !drilledRef.current) {
-            const name = COUNTRY_NAMES[hovId];
-            if (name) {
-              ctx.fillStyle = `rgba(${P.limeTxt},0.40)`;
-              ctx.font = '9px "Space Grotesk", sans-serif';
-              ctx.textAlign = "left";
-              ctx.textBaseline = "middle";
-              ctx.fillText(name.toUpperCase(), mx + 18, my + 2);
-            }
-          }
+             ctx.beginPath();
+             path(hovCountry._smoothed);
+             ctx.strokeStyle = `rgba(${P.limeFg},0.12)`;
+             ctx.lineWidth = 0.8;
+             ctx.lineJoin = "round";
+             ctx.lineCap = "round";
+             ctx.stroke();
 
-          ctx.restore();
+             const mx = mousePosRef.current.x;
+             const my = mousePosRef.current.y;
+             if (mx > 0 && !drilledRef.current) {
+               if (name) {
+                 ctx.fillStyle = `rgba(${P.limeTxt},0.40)`;
+                 ctx.font = '9px "Space Grotesk", sans-serif';
+                 ctx.textAlign = "left";
+                 ctx.textBaseline = "middle";
+                 ctx.fillText(name.toUpperCase(), mx + 18, my + 2);
+               }
+             }
+
+             ctx.restore();
+           }
         }
       }
 
@@ -605,10 +625,39 @@ export function Globe({
         };
 
         if (!drilledContinent) {
+            const hovCountry = hoveredCountryRef.current;
+            const hovCountryName = hovCountry ? COUNTRY_NAMES[String(hovCountry.id)] : null;
+            const hovContinent = hovCountryName ? CONTINENT_MAP[hovCountryName] : null;
+
             Array.from(continentTotals.entries()).forEach(([name, total]) => {
                 const centroid = CONTINENT_CENTERS[name];
                 if (!centroid) return;
-                drawNumberAt(centroid, total, name === "Asia" ? 14 : 12);
+
+                const dist = d3.geoDistance(centroid, [-rot[0], -rot[1]]);
+                if (dist > Math.PI / 2) return;
+                const p = projection(centroid);
+                if (!p) return;
+
+                // Animate opacity using lerp
+                const isHovered = (name === hovContinent);
+                const currentOpRef = continentHoverOpacitiesRef.current;
+                let op = currentOpRef.get(name) || 0;
+                op = lerp(op, isHovered ? 1 : 0, 0.15);
+                currentOpRef.set(name, op);
+
+                const fontSize = name === "Asia" ? 14 : 12;
+                ctx.font = `600 ${fontSize}px "Space Grotesk", sans-serif`;
+                ctx.fillStyle = `rgba(${R},${G},${B},0.85)`;
+                ctx.textAlign = "center";
+                ctx.textBaseline = "middle";
+                ctx.fillText(name.toUpperCase(), p[0], p[1] - (op * 4)); // float up slightly
+
+                if (op > 0.01) {
+                  ctx.font = `400 ${fontSize - 2}px "Space Grotesk", sans-serif`;
+                  ctx.fillStyle = `rgba(${R},${G},${B},${op * 0.7})`;
+                  
+                  ctx.fillText(`${total}`, p[0], p[1] + 12 + (op * 2));
+                }
             });
         } else {
             countriesRef.current.forEach((c: any) => {

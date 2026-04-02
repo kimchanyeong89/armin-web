@@ -20,13 +20,13 @@ function typeColor(type: string, t: boolean): string {
 // ─── Column count hook ─────────────────────────────────────
 
 function useColumnCount() {
-  const [cols, setCols] = useState(2);
+  const [cols, setCols] = useState(3);
   useEffect(() => {
     const update = () => {
       if (window.innerWidth >= 1024) setCols(5);
       else if (window.innerWidth >= 768) setCols(4);
       else if (window.innerWidth >= 640) setCols(3);
-      else setCols(2);
+      else setCols(3);
     };
     update();
     window.addEventListener("resize", update);
@@ -53,8 +53,8 @@ type Artwork = {
 
 type SortMode = "default" | "random" | "year_asc" | "year_desc" | "like_desc";
 
-const INITIAL_VISIBLE_ARTWORKS = 120;
-const VISIBLE_ARTWORK_BATCH = 120;
+const INITIAL_VISIBLE_ARTWORKS = 40;
+const VISIBLE_ARTWORK_BATCH = 40;
 const R2_IMAGE_HOST_HINTS = ["r2.dev", "pub-396fad1f96754c2f816f260faf970e63"];
 const UNKNOWN_TEXTS = new Set(["", "unknown", "unknown artist", "n/a", "na", "none", "null", "undefined", "[]", "-"]);
 
@@ -988,10 +988,20 @@ export function InteractiveGlobeRealModal({
       >
         {/* ── Hero ── */}
         <div style={{ position: 'relative', width: '100%', height: '52vh', minHeight: '340px' }}>
-          <img
+          <motion.img
+            initial={{ y: -20, opacity: 0 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={{ duration: 0.8, ease: 'easeOut' }}
             src={heroImage}
             alt={exhibition.title || exhibition.name}
-            style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+            style={{ 
+              width: '100%', 
+              height: '100%', 
+              objectFit: 'cover', 
+              display: 'block',
+              WebkitMaskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 40%, rgba(0,0,0,0.8) 68%, rgba(0,0,0,0.38) 88%, rgba(0,0,0,0) 100%)',
+              maskImage: 'linear-gradient(to bottom, rgba(0,0,0,1) 40%, rgba(0,0,0,0.8) 68%, rgba(0,0,0,0.38) 88%, rgba(0,0,0,0) 100%)'
+            }}
           />
           <div style={{ position: 'absolute', inset: 0, background: `linear-gradient(to bottom, ${bgColor}00 0%, ${bgColor}00 68%, ${bgColor}33 88%, ${bgColor}66 100%)` }} />
           <div style={{ position: 'absolute', inset: 0, background: `linear-gradient(to bottom, ${bgColor}1A 0%, ${bgColor}00 28%)` }} />
@@ -1121,8 +1131,8 @@ export function InteractiveGlobeRealModal({
               )}
             </AnimatePresence>
 
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '16px', marginTop: '14px', paddingTop: '12px', borderTop: `1px solid ${dividerColor}`, flexWrap: 'wrap' }}>
-              <div style={{ flex: '1 1 420px', minWidth: '260px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '16px', marginTop: '14px', paddingTop: '12px', borderTop: `1px solid ${dividerColor}`, flexWrap: 'nowrap' }}>
+              <div style={{ flex: '1 1 auto', minWidth: 0 }}>
                 <SearchInputWithSuggestions
                   value={searchQuery}
                   onChange={handleSearchChange}
@@ -1176,9 +1186,9 @@ export function InteractiveGlobeRealModal({
                 />
               </div>
 
-              <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flexShrink: 0 }}>
-                <span style={{ fontSize: '9px', letterSpacing: '0.14em', color: fgMute, textTransform: 'uppercase' }}>Sort by</span>
-                <div ref={sortMenuRef} style={{ position: 'relative', width: '198px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flex: '0 0 auto', minWidth: 0 }}>
+                <span style={{ fontSize: '9px', letterSpacing: '0.14em', color: fgMute, textTransform: 'uppercase', whiteSpace: 'nowrap' }}>Sort by</span>
+                <div ref={sortMenuRef} style={{ position: 'relative', width: 'clamp(124px, 28vw, 198px)' }}>
                   <button
                     type="button"
                     onClick={() => setIsSortMenuOpen((prev) => !prev)}
@@ -1267,7 +1277,14 @@ export function InteractiveGlobeRealModal({
         <div style={{ padding: `24px ${pad} 16px` }}>
           {artworkRows.map((row, rowIdx) => (
             <React.Fragment key={`row-${rowIdx}`}>
-              <div style={{ display: 'grid', gridTemplateColumns: `repeat(${colCount}, minmax(0, 1fr))`, columnGap: '8px', rowGap: '12px', marginBottom: '14px', alignItems: 'start' }}>
+              <div style={{ 
+                display: 'grid', 
+                gridTemplateColumns: `repeat(${colCount}, minmax(0, 1fr))`, 
+                columnGap: '8px', 
+                rowGap: '12px', 
+                marginBottom: colCount >= 4 ? '80px' : '24px', 
+                alignItems: 'start' 
+              }}>
                 {row.map(({ aw, globalIdx }) => {
                   const isSelected = activeArtwork === globalIdx;
                   const isHovered = hoveredArtwork === globalIdx;
@@ -1291,6 +1308,7 @@ export function InteractiveGlobeRealModal({
                         <img
                           src={aw.lowImage}
                           alt={aw.title}
+                          loading="lazy"
                           style={{ width: '100%', height: 'auto', display: 'block', transform: isHovered ? 'scale(1.04)' : 'scale(1)', transition: 'transform 0.4s' }}
                         />
                         <div style={{ position: 'absolute', inset: 0, transition: 'border 0.2s', borderTop: isSelected ? `2px solid ${limeColor}` : isHovered ? `1px solid ${t ? "rgba(0,0,0,0.20)" : "rgba(255,255,255,0.20)"}` : '1px solid transparent', borderRight: isSelected ? `2px solid ${limeColor}` : isHovered ? `1px solid ${t ? "rgba(0,0,0,0.20)" : "rgba(255,255,255,0.20)"}` : '1px solid transparent', borderBottom: isSelected ? `2px solid ${limeColor}` : isHovered ? `1px solid ${t ? "rgba(0,0,0,0.20)" : "rgba(255,255,255,0.20)"}` : '1px solid transparent', borderLeft: isSelected ? `2px solid ${limeColor}` : isHovered ? `1px solid ${t ? "rgba(0,0,0,0.20)" : "rgba(255,255,255,0.20)"}` : '1px solid transparent' }} />
@@ -1365,6 +1383,7 @@ export function InteractiveGlobeRealModal({
                         <img
                           src={filterResultArtworks[activeArtwork].image}
                           alt={filterResultArtworks[activeArtwork].title}
+                          loading="lazy"
                           style={{ width: '100%', height: 'auto', display: 'block', maxHeight: '58vh', objectFit: 'contain' }}
                         />
                       </div>
