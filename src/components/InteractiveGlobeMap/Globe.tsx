@@ -101,6 +101,10 @@ const CONTINENT_CENTERS: Record<string, [number, number]> = {
   "Asia": [90, 40],
   "Oceania": [135, -25]
 };
+const COUNTRY_CLUSTER_ZOOM = 1.6;
+const COUNTRY_LABEL_ALL_ZOOM = 2.35;
+const COUNTRY_EXIT_ZOOM = COUNTRY_CLUSTER_ZOOM + 0.05;
+const CONTINENT_EXIT_ZOOM = COUNTRY_CLUSTER_ZOOM - 0.1;
 
 // ─── Cities & Venues ───────────────────────────────────────
 
@@ -330,6 +334,25 @@ export function Globe({
   const selectedRef = useRef(selectedCity);
   useEffect(() => { selectedRef.current = selectedCity; }, [selectedCity]);
 
+  const getActiveContinentForView = useCallback((rot: [number, number, number], countryClusterMode: boolean) => {
+    if (!countryClusterMode) return null;
+    if (drilledContinentRef.current) return drilledContinentRef.current;
+
+    const center: [number, number] = [-rot[0], -rot[1]];
+    let best: string | null = null;
+    let bestDist = Number.POSITIVE_INFINITY;
+
+    Object.entries(CONTINENT_CENTERS).forEach(([continent, centroid]) => {
+      const dist = d3.geoDistance(center, centroid);
+      if (dist < bestDist) {
+        bestDist = dist;
+        best = continent;
+      }
+    });
+
+    return best;
+  }, []);
+
   const themeRef = useRef<Theme>(theme);
   useEffect(() => { themeRef.current = theme; }, [theme]);
 
@@ -458,6 +481,9 @@ export function Globe({
       const dTarget = drilled ? 1 : 0;
       drillOpacityRef.current = lerp(drillOpacityRef.current, dTarget, 0.06);
       const dOp = drillOpacityRef.current;
+      const rot = rotationRef.current;
+      const countryClusterMode = currentScaleRef.current >= COUNTRY_CLUSTER_ZOOM;
+      const activeContinent = getActiveContinentForView(rot, countryClusterMode);
 
       updateCountryHover();
 
@@ -507,7 +533,7 @@ export function Globe({
         const name = COUNTRY_NAMES[hovId];
         const hovContinent = name ? CONTINENT_MAP[name] : null;
 
-        if (!drilledContinentRef.current) {
+        if (!countryClusterMode) {
            if (hovContinent) {
                ctx.save();
                ctx.globalAlpha = (1 - dOp * 0.5);
@@ -522,7 +548,7 @@ export function Globe({
                ctx.fill();
                ctx.restore();
            }
-        } else if (drilledContinentRef.current === hovContinent) {
+        } else if (activeContinent && activeContinent === hovContinent) {
            const isDrilledCountry = drilled && drilled.id === hovId;
            if (!isDrilledCountry) {
              ctx.save();
@@ -581,13 +607,12 @@ export function Globe({
 
       // City markers
       const drawnBoxes: { x1: number, y1: number, x2: number, y2: number }[] = [];
-      const rot = rotationRef.current;
       const sel = selectedRef.current;
       const hov = hoveredRef.current;
 
       const visibleCities = cities.filter((m) => {
-        if (!drilledContinentRef.current) return false;
-        if (!drilled && m.country && CONTINENT_MAP[m.country] !== drilledContinentRef.current) return false;
+        if (!countryClusterMode || !activeContinent) return false;
+        if (!drilled && m.country && CONTINENT_MAP[m.country] !== activeContinent) return false;
         if (m.detail && !drilled) return false;
         if (m.detail && drilled && m.country !== drilled.name) return false;
         return true;
@@ -601,11 +626,11 @@ export function Globe({
         cities.forEach(c => {
           if (!c.country) return;
           const continent = CONTINENT_MAP[c.country] || "Unknown";
-          if (!drilledContinentRef.current) {
+          if (!countryClusterMode) {
             // Show cluster count (city markers), not summed venue count.
             continentTotals.set(continent, (continentTotals.get(continent) || 0) + 1);
             continentArtworks.set(continent, (continentArtworks.get(continent) || 0) + (c.artworkCount || 0));
-          } else if (drilledContinentRef.current === continent) {
+          } else if (activeContinent === continent) {
             countryTotals.set(c.country, (countryTotals.get(c.country) || 0) + 1);
             countryArtworks.set(c.country, (countryArtworks.get(c.country) || 0) + (c.artworkCount || 0));
           }
@@ -617,19 +642,7 @@ export function Globe({
         ctx.save();
         ctx.globalAlpha = (1 - dOp * 2) * 0.65;
 
-        const drawNumberAt = (centroid: [number, number], total: number, fontSize: number) => {
-          const dist = d3.geoDistance(centroid, [-rot[0], -rot[1]]);
-          if (dist > Math.PI / 2) return;
-          const p = projection(centroid);
-          if (!p) return;
-          ctx.font = `600 ${fontSize}px "Space Grotesk", sans-serif`;
-          ctx.fillStyle = `rgba(${R},${G},${B},0.55)`;
-          ctx.textAlign = "center";
-          ctx.textBaseline = "middle";
-          ctx.fillText(`${total}`, p[0], p[1]);
-        };
-
-        if (!drilledContinentRef.current) {
+        if (!countryClusterMode) {
             const hovCountry = hoveredCountryRef.current;
             const hovCountryName = hovCountry ? COUNTRY_NAMES[String(hovCountry.id)] : null;
             const hovContinent = hovCountryName ? CONTINENT_MAP[hovCountryName] : null;
@@ -650,29 +663,28 @@ export function Globe({
                 op = lerp(op, isHovered ? 1 : 0, 0.15);
                 currentOpRef.set(name, op);
 
-                const fontSize = name === "Asia" ? 14 : 12;
+                const fontSize = name === "Asia" ? 12 : 10;
                 ctx.font = `600 ${fontSize}px "Space Grotesk", sans-serif`;
                 ctx.fillStyle = `rgba(${R},${G},${B},0.85)`;
                 ctx.textAlign = "center";
                 ctx.textBaseline = "middle";
                 ctx.fillText(name.toUpperCase(), p[0], p[1] - (op * 4)); // float up slightly
 
-                if (op > 0.01) {
-                  ctx.font = `400 ${fontSize - 2}px "Space Grotesk", sans-serif`;
-                  ctx.fillStyle = `rgba(${R},${G},${B},${op * 0.7})`;
-                  
-                  ctx.fillText(`${total}`, p[0], p[1] + 12 + (op * 2));
-                }
+                ctx.font = `400 ${fontSize - 2}px "Space Grotesk", sans-serif`;
+                ctx.fillStyle = `rgba(${R},${G},${B},${0.45 + op * 0.25})`;
+                ctx.fillText(`${total}`, p[0], p[1] + 12 + (op * 2));
             });
-        } else {
+        } else if (activeContinent) {
             const hovCountry = hoveredCountryRef.current;
             const hovId = hovCountry ? String(hovCountry.id) : null;
+            const showDenseNames = currentScaleRef.current >= COUNTRY_LABEL_ALL_ZOOM;
+            const countryLabelBoxes: { x1: number; y1: number; x2: number; y2: number }[] = [];
 
             countriesRef.current.forEach((c: any) => {
               const id = String(c.id);
               const name = COUNTRY_NAMES[id];
               if (!name) return;
-              if (CONTINENT_MAP[name] !== drilledContinentRef.current) return;
+              if (CONTINENT_MAP[name] !== activeContinent) return;
               const total = countryTotals.get(name);
               if (!total) return;
 
@@ -686,17 +698,34 @@ export function Globe({
               if (!p) return;
 
               const isHovered = (id === hovId);
-              
-              // Draw Country Name + Total (acting as a "Country Cluster" marker)
-              ctx.font = `600 10px "Space Grotesk", sans-serif`;
-              ctx.fillStyle = isHovered ? `rgba(${P.limeTxt},0.95)` : `rgba(${R},${G},${B},0.85)`;
-              ctx.textAlign = "center";
-              ctx.textBaseline = "middle";
-              ctx.fillText(name.toUpperCase(), p[0], p[1] - 4);
-              
+
+              // Number is always visible.
               ctx.font = `400 9px "Space Grotesk", sans-serif`;
               ctx.fillStyle = isHovered ? `rgba(${P.limeTxt},0.85)` : `rgba(${R},${G},${B},0.6)`;
               ctx.fillText(`${total}`, p[0], p[1] + 8);
+
+              let shouldShowName = isHovered || showDenseNames;
+              if (shouldShowName) {
+                const label = name.toUpperCase();
+                ctx.font = `600 10px "Space Grotesk", sans-serif`;
+                const tw = ctx.measureText(label).width;
+                const box = { x1: p[0] - tw / 2 - 2, y1: p[1] - 14, x2: p[0] + tw / 2 + 2, y2: p[1] - 2 };
+
+                if (!isHovered && showDenseNames) {
+                  const overlap = countryLabelBoxes.some((b) => (
+                    box.x1 < b.x2 && box.x2 > b.x1 && box.y1 < b.y2 && box.y2 > b.y1
+                  ));
+                  if (overlap) shouldShowName = false;
+                }
+
+                if (shouldShowName) {
+                  countryLabelBoxes.push(box);
+                  ctx.fillStyle = isHovered ? `rgba(${P.limeTxt},0.95)` : `rgba(${R},${G},${B},0.82)`;
+                  ctx.textAlign = "center";
+                  ctx.textBaseline = "middle";
+                  ctx.fillText(label, p[0], p[1] - 4);
+                }
+              }
             });
         }
         ctx.restore();
@@ -878,6 +907,8 @@ export function Globe({
         rotationRef.current[1] = Math.max(-80, Math.min(80, rotationRef.current[1]));
       }
       const stats = draw();
+  const countryClusterMode = currentScaleRef.current >= COUNTRY_CLUSTER_ZOOM;
+  const activeContinent = getActiveContinentForView(rotationRef.current, countryClusterMode);
 
       const hovCity = hoveredRef.current;
       const hovCountry = hoveredCountryRef.current;
@@ -892,10 +923,10 @@ export function Globe({
          const name = COUNTRY_NAMES[String(hovCountry.id)];
          if (name) {
            const continent = CONTINENT_MAP[name];
-           if (!drilledContinentRef.current && continent && stats.continentTotals.has(continent)) {
+           if (!countryClusterMode && continent && stats.continentTotals.has(continent)) {
              const arts = stats.continentArtworks.get(continent) || 0;
              hd = { level: 'CONTINENT', label: continent, count: arts };
-           } else if (drilledContinentRef.current === continent && stats.countryTotals.has(name)) {
+           } else if (countryClusterMode && activeContinent === continent && stats.countryTotals.has(name)) {
              const arts = stats.countryArtworks.get(name) || 0;
              hd = { level: 'COUNTRY', label: name, count: arts };
            }
@@ -943,13 +974,13 @@ export function Globe({
         lastZoomEmitRef.current = { zoom: nextScale, ts: now };
         cbRefs.current.onZoomChange?.(nextScale);
       }
-      if (drilledRef.current && targetScaleRef.current <= 1.05) {
+      if (drilledRef.current && targetScaleRef.current <= COUNTRY_EXIT_ZOOM) {
         drilledRef.current = null;
         targetRotRef.current = null;
         cbRefs.current.onDrillDown(null);
         cbRefs.current.onSelectCity(null);
       }
-      if (drilledContinentRef.current && targetScaleRef.current <= 1.05) {
+      if (drilledContinentRef.current && targetScaleRef.current <= CONTINENT_EXIT_ZOOM) {
         cbRefs.current.onDrillContinent?.(null);
       }
     };
@@ -1006,12 +1037,12 @@ export function Globe({
     const projection = projectionRef.current;
     const rot = rotationRef.current;
     const drilled = drilledRef.current;
+    const countryClusterMode = currentScaleRef.current >= COUNTRY_CLUSTER_ZOOM;
+    const activeContinent = getActiveContinentForView(rot, countryClusterMode);
 
     const visibleCities = cities.filter((m) => {
-      // Hide city clusters entirely when at the world level
-      if (!drilledContinentRef.current) return false;
-      // When at the continent level (or country level), hide cities outside the selected continent
-      if (m.country && CONTINENT_MAP[m.country] !== drilledContinentRef.current) return false;
+      if (!countryClusterMode || !activeContinent) return false;
+      if (m.country && CONTINENT_MAP[m.country] !== activeContinent) return false;
       
       if (m.detail && !drilled) return false;
       if (m.detail && drilled && m.country !== drilled.name) return false;
@@ -1087,6 +1118,8 @@ export function Globe({
     const projection = projectionRef.current;
     const [cx, cy] = projection.translate();
     const scale = projection.scale();
+    const countryClusterMode = currentScaleRef.current >= COUNTRY_CLUSTER_ZOOM;
+    const activeContinent = getActiveContinentForView(rotationRef.current, countryClusterMode);
 
     if (Math.hypot(mx - cx, my - cy) > scale) {
       if (drilledRef.current) {
@@ -1129,13 +1162,11 @@ export function Globe({
       const name = COUNTRY_NAMES[id] || `Region ${id}`;
       const continent = CONTINENT_MAP[name];
 
-      // Phase 1: Click continent if no drilledContinentRef.current
-      if (!drilledContinentRef.current && continent) {
-        // Zoom into continent
+      if (!countryClusterMode && continent) {
         const centroid = CONTINENT_CENTERS[continent];
         if (centroid) {
           targetRotRef.current = [-centroid[0], -centroid[1], 0];
-          targetScaleRef.current = 1.8; // moderate zoom for continent
+          targetScaleRef.current = Math.max(1.8, COUNTRY_CLUSTER_ZOOM + 0.15);
           velocityRef.current = [0, 0];
           cbRefs.current.onDrillContinent?.(continent);
           cbRefs.current.onSelectCity(null);
@@ -1143,18 +1174,17 @@ export function Globe({
         return;
       }
 
-      // Phase 2: If we are already in a continent, ignore clicks outside it
-      if (drilledContinentRef.current && continent !== drilledContinentRef.current) {
+      // Country cluster mode: ignore country clicks outside the active continent.
+      if (countryClusterMode && activeContinent && continent !== activeContinent) {
          return;
       }
 
       // Phase 3: Toggle Country within the drilled continent
       if (drilledRef.current?.id === id) {
         drilledRef.current = null;
-        // Revert to continent view
-        const cCentroid = CONTINENT_CENTERS[continent || ""] || [0, 0];
+        const cCentroid = CONTINENT_CENTERS[(activeContinent || continent || "")] || [0, 0];
         targetRotRef.current = [-cCentroid[0], -cCentroid[1], 0];
-        targetScaleRef.current = 1.8;
+        targetScaleRef.current = Math.max(1.8, COUNTRY_CLUSTER_ZOOM + 0.15);
         cbRefs.current.onDrillDown(null);
         cbRefs.current.onSelectCity(null);
         return;
