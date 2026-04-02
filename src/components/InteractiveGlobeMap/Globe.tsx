@@ -338,10 +338,10 @@ export function Globe({
   const [tooltipPos, setTooltipPos] = useState({ x: 0, y: 0 });
   const [isLoading, setIsLoading] = useState(true);
 
-  const cbRefs = useRef({ onRotationChange, onZoomChange, onSelectCity, onDrillDown, onHoverData });
+  const cbRefs = useRef({ onRotationChange, onZoomChange, onSelectCity, onDrillContinent, onDrillDown, onHoverData });
   useEffect(() => {
-    cbRefs.current = { onRotationChange, onZoomChange, onSelectCity, onDrillDown, onHoverData };
-  }, [onRotationChange, onZoomChange, onSelectCity, onDrillDown, onHoverData]);
+    cbRefs.current = { onRotationChange, onZoomChange, onSelectCity, onDrillContinent, onDrillDown, onHoverData };
+  }, [onRotationChange, onZoomChange, onSelectCity, onDrillContinent, onDrillDown, onHoverData]);
 
   const prevDrilledProp = useRef<string | null>(null);
   useEffect(() => {
@@ -602,10 +602,11 @@ export function Globe({
           if (!c.country) return;
           const continent = CONTINENT_MAP[c.country] || "Unknown";
           if (!drilledContinentRef.current) {
-            continentTotals.set(continent, (continentTotals.get(continent) || 0) + c.venues.length);
+            // Show cluster count (city markers), not summed venue count.
+            continentTotals.set(continent, (continentTotals.get(continent) || 0) + 1);
             continentArtworks.set(continent, (continentArtworks.get(continent) || 0) + (c.artworkCount || 0));
           } else if (drilledContinentRef.current === continent) {
-            countryTotals.set(c.country, (countryTotals.get(c.country) || 0) + c.venues.length);
+            countryTotals.set(c.country, (countryTotals.get(c.country) || 0) + 1);
             countryArtworks.set(c.country, (countryArtworks.get(c.country) || 0) + (c.artworkCount || 0));
           }
         });
