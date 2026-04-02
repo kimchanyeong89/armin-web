@@ -24,8 +24,8 @@ const RE_YEAR_3 = /\b(\d{3})\b/;
 const CATEGORY_MAP: Record<string, string> = {
   "drawings, prints, and paintings": "Drawings, Prints, and Paintings",
   "objects & media art": "Objects & Media Art",
-  "photography": "Photography",
-  "posters": "Posters",
+    "photography": "Photography",
+    "posters": "Posters",
   "sculptures": "Sculptures",
   "drawing": "Drawing",
   "drawings": "Drawing",
@@ -48,16 +48,16 @@ const CATEGORY_MAP: Record<string, string> = {
   "ceramic": "Ceramics",
   "ceramics": "Ceramics",
   "sculpture (visual work)": "Sculpture",
-  "sculptures": "Sculpture",
+    "sculptures": "Sculpture",
   "sculpture": "Sculpture",
   "escultura": "Sculpture",
   "esculturas": "Sculpture",
   "sketchbooks": "Sketchbooks",
   "sketchbook": "Sketchbooks",
-  "photography": "Photography",
+    "photography": "Photography",
   "photograph": "Photography",
   "photos": "Photography",
-  "posters": "Posters",
+    "posters": "Posters",
   "poster": "Posters",
 };
 const CATEGORY_ENTRIES = Object.entries(CATEGORY_MAP);
@@ -814,15 +814,16 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
 
   // Dark theme color tokens
   const isDark = theme === 'dark';
-  const EM_BG = isDark ? '#111111' : '#ffffff';
-  const _EM_BG2 = isDark ? '#1c1c1c' : '#f2f2f2'; void _EM_BG2;
-  const EM_TEXT = isDark ? 'rgba(255,255,255,0.88)' : '#222222';
-  const EM_SUB = isDark ? 'rgba(255,255,255,0.50)' : '#666666';
-  const EM_BORDER = isDark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.06)';
-  const EM_BTN_ACTIVE_BG = isDark ? '#ffffff' : '#111111';
-  const EM_BTN_ACTIVE_FG = isDark ? '#111111' : '#ffffff';
-  const EM_BTN_INACTIVE_BG = isDark ? 'rgba(255,255,255,0.08)' : '#f2f2f2';
-  const EM_BTN_INACTIVE_FG = isDark ? 'rgba(255,255,255,0.5)' : '#666666';
+  const isSketch = variant === 'sketch';
+  const EM_BG = isSketch ? '#ffffff' : (isDark ? '#111111' : '#ffffff');
+  const _EM_BG2 = isSketch ? '#f6f6f6' : (isDark ? '#1c1c1c' : '#f2f2f2'); void _EM_BG2;
+  const EM_TEXT = isSketch ? '#111111' : (isDark ? 'rgba(255,255,255,0.88)' : '#222222');
+  const EM_SUB = isSketch ? 'rgba(17,17,17,0.48)' : (isDark ? 'rgba(255,255,255,0.50)' : '#666666');
+  const EM_BORDER = isSketch ? 'rgba(17,17,17,0.18)' : (isDark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.06)');
+  const EM_BTN_ACTIVE_BG = isSketch ? '#ccff00' : (isDark ? '#ffffff' : '#111111');
+  const EM_BTN_ACTIVE_FG = isSketch ? '#111111' : (isDark ? '#111111' : '#ffffff');
+  const EM_BTN_INACTIVE_BG = isSketch ? '#ffffff' : (isDark ? 'rgba(255,255,255,0.08)' : '#f2f2f2');
+  const EM_BTN_INACTIVE_FG = isSketch ? '#111111' : (isDark ? 'rgba(255,255,255,0.5)' : '#666666');
   // National Museum of Korea pagination state
   const [nmkTotalCount, setNmkTotalCount] = useState<number>(0);
   const [nmkCurrentChunk, setNmkCurrentChunk] = useState<number>(1);
@@ -1480,8 +1481,26 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
   useEffect(() => {
     if (!currentUser) return;
     const q = collection(db, `users/${currentUser.uid}/liked_artworks`);
-    // Subscribe to the whole collection of likes (assuming < 10k likes, this is fine for now)
-    // Optimization: we could load only IDs.
+
+    // On mobile: one-time fetch to avoid persistent WebChannel connection that drains battery
+    if (typeof window !== 'undefined' && window.innerWidth < 768) {
+      getDocs(q).then((snap) => {
+        const s = new Set<string>();
+        snap.forEach(doc => {
+          const data = doc.data() as any;
+          const originalId = typeof data.artworkId === 'string' && data.artworkId.trim().length > 0
+            ? data.artworkId.trim()
+            : doc.id;
+          s.add(originalId);
+        });
+        setLikedArtworks(s);
+      }).catch((err) => {
+        console.warn("Failed to fetch liked artworks (mobile):", err);
+      });
+      return;
+    }
+
+    // Desktop: real-time subscription
     const unsub = onSnapshot(q, (snap) => {
       const s = new Set<string>();
       snap.forEach(doc => {
@@ -2343,19 +2362,24 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
     });
   }, [roomFiltered, exhibition.id]);
 
-  // Fetch stats for visible artworks
+  // PERF: Use a stable string dep (serialized IDs) instead of sortedArtworks object.
+  // sortedArtworks is a new array every render → the old dep caused onSnapshot to
+  // re-subscribe continuously, creating a Firestore stream storm that overheated mobile devices.
+  const visibleStatsIds = useMemo(() => {
+    if (viewMode !== 'gallery') return '';
+    // Skip on mobile entirely - stats aren't worth the connection overhead
+    if (typeof window !== 'undefined' && window.innerWidth < 768) return '';
+    return sortedArtworks
+      .slice(0, galleryLimit)
+      .map(a => String((a as any)?.id ?? '').trim())
+      .filter(Boolean)
+      .join(',');
+  }, [viewMode, sortedArtworks, galleryLimit]);
+
   useEffect(() => {
-    // Only fetch for items currently in the 'window' (galleryLimit)
-    // To avoid hitting limits, we chunk queries or just use a simpler strategy if data is large.
-    // For now, assume batch fetching for visible items.
-    if (viewMode !== 'gallery') return;
+    if (!visibleStatsIds) return;
 
-    const visibleItems = sortedArtworks.slice(0, galleryLimit);
-    if (visibleItems.length === 0) return;
-
-    const ids = visibleItems
-      .map(a => (typeof (a as any)?.id === 'string' ? (a as any).id : String((a as any)?.id ?? '')).trim())
-      .filter((id): id is string => !!id);
+    const ids = visibleStatsIds.split(',').filter(Boolean);
     if (ids.length === 0) return;
 
     // Firestore documentId() cannot contain '/', so use normalized IDs for stats docs.
@@ -2400,7 +2424,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
     return () => {
       unsubs.forEach(u => u());
     };
-  }, [galleryLimit, sortedArtworks, viewMode]);
+  }, [visibleStatsIds]);
 
   const availableDecades = useMemo(() => {
     if (!selectedCentury) return [] as number[];
@@ -2738,7 +2762,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
     if (exhibition.id === 'bm-archive-rooms') {
       (async () => {
         try {
-          const res = await fetch('/data/british-museum-galleries.json', { cache: 'no-store' });
+          const res = await fetch('/data/british-museum-galleries.json', { cache: 'force-cache' });
           if (!res.ok) throw new Error('Missing british-museum-galleries.json');
           const data = await res.json();
           const rooms: Array<{ id: string; title: string; items: any[] }> = Array.isArray(data.rooms) ? data.rooms : [];
@@ -2773,7 +2797,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
       (async () => {
         try {
           console.log('[ExhibitionModal] Fetching Skagens data for id:', exhibition.id);
-          const res = await fetch('/data/skagens-collection.json', { cache: 'no-store' });
+          const res = await fetch('/data/skagens-collection.json', { cache: 'force-cache' });
           if (!res.ok) {
             console.error('[ExhibitionModal] Fetch failed:', res.status, res.statusText);
             throw new Error(`Failed to load Skagens artworks: ${res.status} ${res.statusText}`);
@@ -2815,7 +2839,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
     if (exhibition.id === 'ngs-collection-all') {
       (async () => {
         try {
-          const res = await fetch('/data/ngs-all.json', { cache: 'no-store' });
+          const res = await fetch('/data/ngs-all.json', { cache: 'force-cache' });
           if (!res.ok) throw new Error('Failed to load NGS data');
           const data = await res.json();
           // Map to internal Artwork type
@@ -2874,7 +2898,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
           const dataFile = exhibition.id === 'tm-perm-1'
             ? '/data/tate-modern-collection.json'
             : '/data/tate-artworks.json';
-          const res = await fetch(dataFile, { cache: 'no-store' });
+          const res = await fetch(dataFile, { cache: 'force-cache' });
           if (!res.ok) throw new Error(`Failed to load ${dataFile}`);
           const data = await res.json();
           const toYear = (dateText: string | undefined) => {
@@ -2941,7 +2965,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
     if (exhibition.id === 'mnk-collection') {
       (async () => {
         try {
-          const res = await fetch('/data/mnk-collection.json', { cache: 'no-store' });
+          const res = await fetch('/data/mnk-collection.json', { cache: 'force-cache' });
           if (!res.ok) throw new Error('Failed to load MNK artworks');
           const data = await res.json();
 
@@ -3007,7 +3031,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
     if (exhibition.id === 'mfab-collection') {
       (async () => {
         try {
-          const res = await fetch('/data/mfab-collection.json', { cache: 'no-store' });
+          const res = await fetch('/data/mfab-collection.json', { cache: 'force-cache' });
           if (!res.ok) throw new Error('Failed to load MFAB artworks');
           const data = await res.json();
           const items = data.artworks || [];
@@ -3044,7 +3068,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
     if (exhibition.id === 'fine-arts-be-collection') {
       (async () => {
         try {
-          const res = await fetch('/data/fine-arts-be-complete.json', { cache: 'no-store' });
+          const res = await fetch('/data/fine-arts-be-complete.json', { cache: 'force-cache' });
           if (!res.ok) throw new Error('Failed to load Fine Arts BE artworks');
           const data = await res.json();
           const items = Array.isArray(data) ? data : data.items || [];
@@ -3081,7 +3105,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
     if (exhibition.id === 'gulbenkian-collection') {
       (async () => {
         try {
-          const res = await fetch('/data/gulbenkian-collection.json', { cache: 'no-store' });
+          const res = await fetch('/data/gulbenkian-collection.json', { cache: 'force-cache' });
           if (!res.ok) throw new Error('Failed to load Gulbenkian artworks');
           const data = await res.json();
           // Map to internal Artwork format
@@ -3146,7 +3170,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
     if (exhibition.id === 'nam-collection') {
       (async () => {
         try {
-          const res = await fetch('/data/nam-collection.json', { cache: 'no-store' });
+          const res = await fetch('/data/nam-collection.json', { cache: 'force-cache' });
           if (!res.ok) throw new Error('Failed to load NAM artworks');
           const data = await res.json();
           // Map to internal Artwork format
@@ -3202,7 +3226,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
     if (exhibition.id === 'kunsthaus-collection') {
       (async () => {
         try {
-          const res = await fetch('/data/kunsthaus-collection.json', { cache: 'no-store' });
+          const res = await fetch('/data/kunsthaus-collection.json', { cache: 'force-cache' });
           if (!res.ok) throw new Error('Failed to load Kunsthaus artworks');
           const data = await res.json();
           const _itemsToMap = Array.isArray(data) ? data : (data.items || data.objects || data.data || data.artworks || []);
@@ -3237,7 +3261,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
     if (exhibition.id === 'basel-collection') {
       (async () => {
         try {
-          const res = await fetch('/data/basel-collection.json', { cache: 'no-store' });
+          const res = await fetch('/data/basel-collection.json', { cache: 'force-cache' });
           if (!res.ok) throw new Error('Failed to load Basel artworks');
           const data = await res.json();
           const _itemsToMap = Array.isArray(data) ? data : (data.items || data.objects || data.data || data.artworks || []);
@@ -3271,7 +3295,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
     if (exhibition.id === 'zjam-collection') {
       (async () => {
         try {
-          const res = await fetch('/data/zjam-collection.json', { cache: 'no-store' });
+          const res = await fetch('/data/zjam-collection.json', { cache: 'force-cache' });
           if (!res.ok) throw new Error('Failed to load ZJAM artworks');
           const data = await res.json();
           const _itemsToMap = Array.isArray(data) ? data : (data.items || data.objects || data.data || data.artworks || []);
@@ -3312,7 +3336,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
     if (exhibition.id === 'hkmoa' || exhibition.id === 'hkmoa-collection') {
       (async () => {
         try {
-          const res = await fetch('/data/hkmoa-collection.json', { cache: 'no-store' });
+          const res = await fetch('/data/hkmoa-collection.json', { cache: 'force-cache' });
           if (!res.ok) throw new Error('Failed to load HKMoA artworks');
           const data = await res.json();
           const _itemsToMap = Array.isArray(data) ? data : (data.items || data.objects || data.data || data.artworks || []);
@@ -3357,7 +3381,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
     if (exhibition.id === 'nich-tnm' || exhibition.id === 'tnm-painting-collection') {
       (async () => {
         try {
-          const res = await fetch('/data/nich-collection.json', { cache: 'no-store' });
+          const res = await fetch('/data/nich-collection.json', { cache: 'force-cache' });
           if (!res.ok) throw new Error('Failed to load TNM artworks');
           const data = await res.json();
           const _itemsToMap = Array.isArray(data) ? data : (data.items || data.objects || data.data || data.artworks || []);
@@ -3395,7 +3419,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
     if (exhibition.id === 'tobikan-collection') {
       (async () => {
         try {
-          const res = await fetch('/data/tobikan-collection.json', { cache: 'no-store' });
+          const res = await fetch('/data/tobikan-collection.json', { cache: 'force-cache' });
           if (!res.ok) throw new Error('Failed to load Tobikan artworks');
           const data = await res.json();
           const _itemsToMap = Array.isArray(data) ? data : (data.items || data.objects || data.data || data.artworks || []);
@@ -3435,7 +3459,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
     if (exhibition.id === 'mori-collection') {
       (async () => {
         try {
-          const res = await fetch('/data/mori-collection.json', { cache: 'no-store' });
+          const res = await fetch('/data/mori-collection.json', { cache: 'force-cache' });
           if (!res.ok) throw new Error('Failed to load Mori artworks');
           const data = await res.json();
           const _itemsToMap = Array.isArray(data) ? data : (data.items || data.objects || data.data || data.artworks || []);
@@ -3473,7 +3497,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
     if (exhibition.id === 'sfmoma-collection') {
       (async () => {
         try {
-          const res = await fetch('/data/sfmoma-collection.json', { cache: 'no-store' });
+          const res = await fetch('/data/sfmoma-collection.json', { cache: 'force-cache' });
           if (!res.ok) throw new Error('Failed to load SFMOMA artworks');
           const data = await res.json();
           const _itemsToMap = Array.isArray(data) ? data : (data.items || data.objects || data.data || data.artworks || []);
@@ -3511,7 +3535,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
     if (exhibition.id === 'cma-collection') {
       (async () => {
         try {
-          const res = await fetch('/data/cma-collection.json', { cache: 'no-store' });
+          const res = await fetch('/data/cma-collection.json', { cache: 'force-cache' });
           if (!res.ok) throw new Error('Failed to load CMA artworks');
           const data = await res.json();
           const _itemsToMap = Array.isArray(data) ? data : (data.items || data.objects || data.data || data.artworks || []);
@@ -3549,7 +3573,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
     if (exhibition.id === 'philadelphia-collection') {
       (async () => {
         try {
-          const res = await fetch('/data/philadelphia-collection.json', { cache: 'no-store' });
+          const res = await fetch('/data/philadelphia-collection.json', { cache: 'force-cache' });
           if (!res.ok) throw new Error('Failed to load Philadelphia artworks');
           const data = await res.json();
           const _itemsToMap = Array.isArray(data) ? data : (data.items || data.objects || data.data || data.artworks || []);
@@ -3585,7 +3609,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
     if (exhibition.id === 'dia-collection') {
       (async () => {
         try {
-          const res = await fetch('/data/dia-collection.json', { cache: 'no-store' });
+          const res = await fetch('/data/dia-collection.json', { cache: 'force-cache' });
           if (!res.ok) throw new Error('Failed to load DIA artworks');
           const data = await res.json();
           const _itemsToMap = Array.isArray(data) ? data : (data.items || data.objects || data.data || data.artworks || []);
@@ -3623,7 +3647,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
     if (exhibition.id === 'nmwa-collection') {
       (async () => {
         try {
-          const res = await fetch('/data/nmwa-collection.json', { cache: 'no-store' });
+          const res = await fetch('/data/nmwa-collection.json', { cache: 'force-cache' });
           if (!res.ok) throw new Error('Failed to load NMWA artworks');
           const data = await res.json();
           const list: Artwork[] = Array.isArray(data)
@@ -3661,7 +3685,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
     if (exhibition.id === 'adachi-collection') {
       (async () => {
         try {
-          const res = await fetch('/data/adachi-collection.json', { cache: 'no-store' });
+          const res = await fetch('/data/adachi-collection.json', { cache: 'force-cache' });
           if (!res.ok) throw new Error('Failed to load Adachi artworks');
           const data = await res.json();
           const list: Artwork[] = Array.isArray(data)
@@ -3705,7 +3729,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
         try {
           // met-ny-collection.json for the primary "Collection Highlights" exhibition
           const file = '/data/met-ny-collection.json';
-          const res = await fetch(file, { cache: 'no-store' });
+          const res = await fetch(file, { cache: 'force-cache' });
           if (!res.ok) throw new Error('Failed to load Met artworks');
           const data = await res.json();
           const list: Artwork[] = Array.isArray(data)
@@ -3755,7 +3779,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
     if (exhibition.id === 'kanazawa-collection') {
       (async () => {
         try {
-          const res = await fetch('/data/kanazawa-all.json', { cache: 'no-store' });
+          const res = await fetch('/data/kanazawa-all.json', { cache: 'force-cache' });
           if (!res.ok) throw new Error('Failed to load Kanazawa artworks');
           const data = await res.json();
           const list: Artwork[] = Array.isArray(data)
@@ -3794,7 +3818,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
     if (exhibition.id === 'beyeler-collection') {
       (async () => {
         try {
-          const res = await fetch('/data/beyeler-collection.json', { cache: 'no-store' });
+          const res = await fetch('/data/beyeler-collection.json', { cache: 'force-cache' });
           if (!res.ok) throw new Error('Failed to load Beyeler artworks');
           const data = await res.json();
           const _itemsToMap = Array.isArray(data) ? data : (data.items || data.objects || data.data || data.artworks || []);
@@ -3847,7 +3871,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
     if (exhibition.id === 'nasjonal-collection') {
       (async () => {
         try {
-          const res = await fetch('/data/nasjonal-collection.json', { cache: 'no-store' });
+          const res = await fetch('/data/nasjonal-collection.json', { cache: 'force-cache' });
           if (!res.ok) throw new Error('Failed to load Nasjonalmuseet artworks');
           const data = await res.json();
           const _itemsToMap = Array.isArray(data) ? data : (data.items || data.objects || data.data || data.artworks || []);
@@ -3961,9 +3985,9 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
         try {
           // Load Paintings, Drawings, and Japanese Prints concurrently to form one large collection
           const [resPaintings, resDrawings, resPrints] = await Promise.all([
-            fetch('/data/lacma-classification-22.json', { cache: 'no-store' }),
-            fetch('/data/lacma-drawings-51.json', { cache: 'no-store' }),
-            fetch('/data/lacma-japanese-prints.json', { cache: 'no-store' })
+            fetch('/data/lacma-classification-22.json', { cache: 'force-cache' }),
+            fetch('/data/lacma-drawings-51.json', { cache: 'force-cache' }),
+            fetch('/data/lacma-japanese-prints.json', { cache: 'force-cache' })
           ]);
 
           let dataDetails: any[] = [];
@@ -4068,7 +4092,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
     if (exhibition.id === 'nationalmuseum-sweden-collection') {
       (async () => {
         try {
-          const res = await fetch('/data/sweden-collection.json', { cache: 'no-store' });
+          const res = await fetch('/data/sweden-collection.json', { cache: 'force-cache' });
           if (!res.ok) throw new Error('Failed to load Nationalmuseum Sweden artworks');
           const data = await res.json();
           const _itemsToMap = Array.isArray(data) ? data : (data.items || data.objects || data.data || data.artworks || []);
@@ -4138,7 +4162,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
     if (exhibition.id === 'mah-collection') {
       (async () => {
         try {
-          const res = await fetch('/data/mah-collection.json', { cache: 'no-store' });
+          const res = await fetch('/data/mah-collection.json', { cache: 'force-cache' });
           if (!res.ok) throw new Error('Failed to load MAH artworks');
           const data = await res.json();
           const itemsToMap = Array.isArray(data) ? data : (data.items || data.objects || data.data || data.artworks || []);
@@ -4184,7 +4208,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
           let file = '/data/mplus-collection-mplus.json';
           if (exhibition.id === 'mplus-collection-sigg') file = '/data/mplus-collection-sigg.json';
 
-          const res = await fetch(file, { cache: 'no-store' });
+          const res = await fetch(file, { cache: 'force-cache' });
           if (!res.ok) throw new Error('Failed to load M+ artworks');
           const data = await res.json();
           const _itemsToMap = Array.isArray(data) ? data : (data.items || data.objects || data.data || data.artworks || []);
@@ -4231,7 +4255,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
           // Always use the full collection as default source
           const collectionFile = 'tfam-collection-all.json';
           console.log('[TFAM] Loading', collectionFile);
-          const res = await fetch(`/data/${collectionFile}`, { cache: 'no-store' });
+          const res = await fetch(`/data/${collectionFile}`, { cache: 'force-cache' });
           if (!res.ok) throw new Error(`Failed to load TFAM artworks: ${res.status}`);
           const data = await res.json();
           const _itemsToMap = Array.isArray(data) ? data : (data.items || data.objects || data.data || data.artworks || []);
@@ -4398,7 +4422,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
 
           console.log(`[Seogwipo] Loading ${collectionFile} for ${exhibition.id}`);
 
-          const res = await fetch(`/data/${collectionFile}`, { cache: 'no-store' });
+          const res = await fetch(`/data/${collectionFile}`, { cache: 'force-cache' });
           if (!res.ok) throw new Error(`Failed to load ${exhibition.name} artworks: ${res.status}`);
           const data = await res.json();
           const _itemsToMap = Array.isArray(data) ? data : (data.items || data.objects || data.data || data.artworks || []);
@@ -4614,7 +4638,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
     if (exhibition.id === 'glyptoteket-collection') {
       (async () => {
         try {
-          const res = await fetch('/data/glyptoteket-collection.json', { cache: 'no-store' });
+          const res = await fetch('/data/glyptoteket-collection.json', { cache: 'force-cache' });
           if (!res.ok) throw new Error('Failed to load Glyptoteket artworks');
           const data = await res.json();
           const _itemsToMap = Array.isArray(data) ? data : (data.items || data.objects || data.data || data.artworks || []);
@@ -4650,7 +4674,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
     if (exhibition.id === 'aros-collection') {
       (async () => {
         try {
-          const res = await fetch('/data/aros-collection.json', { cache: 'no-store' });
+          const res = await fetch('/data/aros-collection.json', { cache: 'force-cache' });
           if (!res.ok) throw new Error('Failed to load ARoS artworks');
           const data = await res.json();
           const _itemsToMap = Array.isArray(data) ? data : (data.items || data.objects || data.data || data.artworks || []);
@@ -4685,7 +4709,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
     if (exhibition.id === 'louisiana-collection') {
       (async () => {
         try {
-          const res = await fetch('/data/louisiana-test.json', { cache: 'no-store' });
+          const res = await fetch('/data/louisiana-test.json', { cache: 'force-cache' });
           if (!res.ok) throw new Error('Failed to load Louisiana artworks');
           const data = await res.json();
           const _itemsToMap = Array.isArray(data) ? data : (data.items || data.objects || data.data || data.artworks || []);
@@ -4723,7 +4747,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
     if (exhibition.id === 'tate-st-ives-artworks') {
       (async () => {
         try {
-          const res = await fetch('/data/tate-st-ives-artworks.json', { cache: 'no-store' });
+          const res = await fetch('/data/tate-st-ives-artworks.json', { cache: 'force-cache' });
           if (!res.ok) throw new Error('Failed to load Tate St Ives artworks');
           const data = await res.json();
           const _itemsToMap = Array.isArray(data) ? data : (data.items || data.objects || data.data || data.artworks || []);
@@ -4754,7 +4778,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
     if (exhibition.id === 'tbc-perm-1') {
       (async () => {
         try {
-          const res = await fetch('/data/tate-britain-artworks.json', { cache: 'no-store' });
+          const res = await fetch('/data/tate-britain-artworks.json', { cache: 'force-cache' });
           if (!res.ok) throw new Error('Failed to load Tate Britain artworks');
           const data = await res.json();
           const toYear = (yearText: string | number | undefined) => {
@@ -4792,7 +4816,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
     if (exhibition.id === 'khm-collection') {
       (async () => {
         try {
-          const res = await fetch('/data/khm-collection.json', { cache: 'no-store' });
+          const res = await fetch('/data/khm-collection.json', { cache: 'force-cache' });
           if (!res.ok) throw new Error('Failed to load KHM artworks');
           const data = await res.json();
 
@@ -4846,7 +4870,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
     if (exhibition.id === 'belvedere-collection') {
       (async () => {
         try {
-          const res = await fetch('/data/belvedere-collection.json', { cache: 'no-store' });
+          const res = await fetch('/data/belvedere-collection.json', { cache: 'force-cache' });
           if (!res.ok) throw new Error('Failed to load Belvedere artworks');
           const data = await res.json();
 
@@ -4905,7 +4929,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
           const jsonFile = jsonMap[exhibition.id];
           if (!jsonFile) throw new Error('Unknown Albertina dataset id');
 
-          const res = await fetch(jsonFile, { cache: 'no-store' });
+          const res = await fetch(jsonFile, { cache: 'force-cache' });
           if (!res.ok) throw new Error(`Failed to load ${jsonFile} `);
           const data = await res.json();
 
@@ -4975,9 +4999,9 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
       (async () => {
         try {
           // 전체 컬렉션 파일 우선 시도, 없으면 테스트 파일 사용
-          let res = await fetch('/data/leopold-museum-collection.json', { cache: 'no-store' });
+          let res = await fetch('/data/leopold-museum-collection.json', { cache: 'force-cache' });
           if (!res.ok) {
-            res = await fetch('/data/leopold-museum-collection-test.json', { cache: 'no-store' });
+            res = await fetch('/data/leopold-museum-collection-test.json', { cache: 'force-cache' });
           }
           if (!res.ok) throw new Error('Failed to load Leopold Museum artworks');
           const data = await res.json();
@@ -5023,7 +5047,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
     if (exhibition.id === 'mmca-collection') {
       (async () => {
         try {
-          const res = await fetch('/data/mmca-collection.json', { cache: 'no-store' });
+          const res = await fetch('/data/mmca-collection.json', { cache: 'force-cache' });
           if (!res.ok) throw new Error('Failed to load MMCA artworks');
           const data = await res.json();
           const toYear = (yearText: string | number | undefined) => {
@@ -5075,7 +5099,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
     if (exhibition.id === 'sema-collection') {
       (async () => {
         try {
-          const res = await fetch('/data/seoul-museum-of-art-collection.json', { cache: 'no-store' });
+          const res = await fetch('/data/seoul-museum-of-art-collection.json', { cache: 'force-cache' });
           if (!res.ok) throw new Error('Failed to load Seoul Museum of Art artworks');
           const data = await res.json();
           const toYear = (yearText: string | number | undefined) => {
@@ -5132,7 +5156,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
       (async () => {
         try {
           // Load single filtered file (~4,137 paintings)
-          const response = await fetch('/data/national-museum-korea.json', { cache: 'no-store' });
+          const response = await fetch('/data/national-museum-korea.json', { cache: 'force-cache' });
           if (!response.ok) throw new Error('Failed to load NMK data');
           const data = await response.json();
 
@@ -5199,7 +5223,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
       const config = KOREAN_MUSEUM_CONFIG[exhibition.id];
       (async () => {
         try {
-          const response = await fetch(`/data/${config.file}`, { cache: 'no-store' });
+          const response = await fetch(`/data/${config.file}`, { cache: 'force-cache' });
           if (!response.ok) throw new Error(`Failed to load ${config.file}`);
           const data = await response.json();
 
@@ -5254,7 +5278,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
       (async () => {
         try {
           // Load single part directly
-          const r = await fetch(`/data/reina-sofia-collection.json`, { cache: 'no-store' });
+          const r = await fetch(`/data/reina-sofia-collection.json`, { cache: 'force-cache' });
           if (!r.ok) throw new Error(`Failed to load reina-sofia-collection.json`);
           const data = await r.json();
 
@@ -5314,7 +5338,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
     if (exhibition.id === 'thyssen-collection-41') {
       (async () => {
         try {
-          const res = await fetch('/data/museothyssen-collection-41.full.json', { cache: 'no-store' });
+          const res = await fetch('/data/museothyssen-collection-41.full.json', { cache: 'force-cache' });
           if (!res.ok) throw new Error('Failed to load museothyssen-collection-41.full.json');
           const data = await res.json();
 
@@ -5382,7 +5406,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
     if (exhibition.id === 'dpg-1') {
       (async () => {
         try {
-          const res = await fetch('/data/dulwich-collection.json', { cache: 'no-store' });
+          const res = await fetch('/data/dulwich-collection.json', { cache: 'force-cache' });
           if (!res.ok) throw new Error('Failed to load Dulwich artworks');
           const data = await res.json();
           const toYear = (yearText: string | number | undefined) => {
@@ -5432,7 +5456,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
     if (exhibition.id === 'hayward-gallery-collection') {
       (async () => {
         try {
-          const res = await fetch('/data/hayward-gallery-collection.json', { cache: 'no-store' });
+          const res = await fetch('/data/hayward-gallery-collection.json', { cache: 'force-cache' });
           if (!res.ok) throw new Error('Failed to load Hayward Gallery artworks');
           const data = await res.json();
           const toYear = (yearText: string | number | undefined) => {
@@ -5519,7 +5543,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
     if (exhibition.id === 'ra-1') {
       (async () => {
         try {
-          const res = await fetch('/data/royal-academy-collection.json', { cache: 'no-store' });
+          const res = await fetch('/data/royal-academy-collection.json', { cache: 'force-cache' });
           if (!res.ok) throw new Error('Failed to load Royal Academy artworks');
           const data = await res.json();
           const toYear = (yearText: string | number | undefined) => {
@@ -5600,7 +5624,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
     if (exhibition.id === 'serp-collection' || exhibition.id === 'serpentine-gallery') {
       (async () => {
         try {
-          const res = await fetch('/data/serpentine-gallery-collection.json', { cache: 'no-store' });
+          const res = await fetch('/data/serpentine-gallery-collection.json', { cache: 'force-cache' });
           if (!res.ok) throw new Error('Failed to load Serpentine artworks');
           const data = await res.json();
           const toYear = (yearText: string | number | undefined) => {
@@ -5748,7 +5772,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
     if (exhibition.id === 'cg-1') {
       (async () => {
         try {
-          const res = await fetch('/data/courtauld-gallery-collection.json', { cache: 'no-store' });
+          const res = await fetch('/data/courtauld-gallery-collection.json', { cache: 'force-cache' });
           if (!res.ok) throw new Error('Failed to load Courtauld artworks');
           const data = await res.json();
           const toYear = (yearText: string | number | undefined) => {
@@ -5799,7 +5823,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
     if (exhibition.id === 'wag-collection') {
       (async () => {
         try {
-          const res = await fetch('/data/walker-art-gallery-collection.json', { cache: 'no-store' });
+          const res = await fetch('/data/walker-art-gallery-collection.json', { cache: 'force-cache' });
           if (!res.ok) throw new Error('Failed to load Walker artworks');
           const data = await res.json();
           const toYear = (yearText: string | number | undefined) => {
@@ -5836,7 +5860,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
     if (exhibition.id === 'sng-collection') {
       (async () => {
         try {
-          const res = await fetch('/data/scottish-national-gallery-collection.json', { cache: 'no-store' });
+          const res = await fetch('/data/scottish-national-gallery-collection.json', { cache: 'force-cache' });
           if (!res.ok) throw new Error('Failed to load Scottish National Gallery artworks');
           const data = await res.json();
           const toYear = (yearText: string | number | undefined) => {
@@ -5876,7 +5900,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
     if (exhibition.id === 'snpg-collection') {
       (async () => {
         try {
-          const res = await fetch('/data/scottish-national-portrait-gallery-collection.json', { cache: 'no-store' });
+          const res = await fetch('/data/scottish-national-portrait-gallery-collection.json', { cache: 'force-cache' });
           if (!res.ok) throw new Error('Failed to load Scottish National Portrait Gallery artworks');
           const data = await res.json();
           const toYear = (yearText: string | number | undefined) => {
@@ -5916,7 +5940,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
     if (exhibition.id === 'sngma-collection') {
       (async () => {
         try {
-          const res = await fetch('/data/scottish-national-gallery-of-modern-art-collection.json', { cache: 'no-store' });
+          const res = await fetch('/data/scottish-national-gallery-of-modern-art-collection.json', { cache: 'force-cache' });
           if (!res.ok) throw new Error('Failed to load Scottish National Gallery of Modern Art artworks');
           const data = await res.json();
           const toYear = (yearText: string | number | undefined) => {
@@ -5956,7 +5980,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
     if (exhibition.id === 'npg-london-collection') {
       (async () => {
         try {
-          const res = await fetch('/data/national-portrait-gallery-london-collection.json', { cache: 'no-store' });
+          const res = await fetch('/data/national-portrait-gallery-london-collection.json', { cache: 'force-cache' });
           if (!res.ok) throw new Error('Failed to load National Portrait Gallery artworks');
           const data = await res.json();
           const toYear = (yearText: string | number | undefined) => {
@@ -5996,7 +6020,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
     if (exhibition.id === 'today-art-museum-collection') {
       (async () => {
         try {
-          const res = await fetch('/data/today-art-museum.json', { cache: 'no-store' });
+          const res = await fetch('/data/today-art-museum.json', { cache: 'force-cache' });
           if (!res.ok) throw new Error('Failed to load Today Art Museum artworks');
           const data = await res.json();
 
@@ -6051,7 +6075,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
     if (exhibition.id === 'bm-collection') {
       (async () => {
         try {
-          const res = await fetch('/data/the-british-museum-collection.json', { cache: 'no-store' });
+          const res = await fetch('/data/the-british-museum-collection.json', { cache: 'force-cache' });
           if (!res.ok) throw new Error('Failed to load British Museum artworks');
           const data = await res.json();
           const toYear = (yearText: string | number | undefined) => {
@@ -6090,7 +6114,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
     if (exhibition.id === 'orsay-collection') {
       (async () => {
         try {
-          const res = await fetch('/data/orsay-collection.json', { cache: 'no-store' });
+          const res = await fetch('/data/orsay-collection.json', { cache: 'force-cache' });
           if (!res.ok) throw new Error('Failed to load Orsay artworks');
           const data = await res.json();
           const toYear = (yearText: string | number | undefined) => {
@@ -6129,7 +6153,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
     if (exhibition.id === 'acropolis-highlights' || exhibition.id === 'acropolis-museum') {
       (async () => {
         try {
-          const res = await fetch('/data/acropolis-museum-collection.json', { cache: 'no-store' });
+          const res = await fetch('/data/acropolis-museum-collection.json', { cache: 'force-cache' });
           if (!res.ok) throw new Error('Failed to load Acropolis Museum artworks');
           const data = await res.json();
 
@@ -6174,7 +6198,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
     if (exhibition.id === 'ngprague-collection') {
       (async () => {
         try {
-          const res = await fetch('/data/ngprague-collection.json', { cache: 'no-store' });
+          const res = await fetch('/data/ngprague-collection.json', { cache: 'force-cache' });
           if (!res.ok) throw new Error('Failed to load NG Prague artworks');
           const data = await res.json();
 
@@ -6210,7 +6234,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
     if (exhibition.id === 'matisse-nice-collection') {
       (async () => {
         try {
-          const res = await fetch('/data/matisse-nice-collection.json', { cache: 'no-store' });
+          const res = await fetch('/data/matisse-nice-collection.json', { cache: 'force-cache' });
           if (!res.ok) throw new Error('Failed to load Matisse artworks');
           const data = await res.json();
 
@@ -6246,7 +6270,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
     if (exhibition.id === 'munch-collection') {
       (async () => {
         try {
-          const res = await fetch('/data/munch-collection.json', { cache: 'no-store' });
+          const res = await fetch('/data/munch-collection.json', { cache: 'force-cache' });
           if (!res.ok) throw new Error('Failed to load Munch artworks');
           const data = await res.json();
 
@@ -6282,7 +6306,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
     if (exhibition.id === 'smk-collection') {
       (async () => {
         try {
-          const res = await fetch('/data/smk-collection.json', { cache: 'no-store' });
+          const res = await fetch('/data/smk-collection.json', { cache: 'force-cache' });
           if (!res.ok) throw new Error('Failed to load SMK artworks');
           const data = await res.json();
 
@@ -6322,7 +6346,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
     if (exhibition.id === 'ateneum-collection') {
       (async () => {
         try {
-          const res = await fetch('/data/ateneum-collection.json', { cache: 'no-store' });
+          const res = await fetch('/data/ateneum-collection.json', { cache: 'force-cache' });
           if (!res.ok) throw new Error('Failed to load Ateneum artworks');
           const data = await res.json();
 
@@ -6362,7 +6386,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
     if (exhibition.id === 'kiasma-collection') {
       (async () => {
         try {
-          const res = await fetch('/data/kiasma-collection.json', { cache: 'no-store' });
+          const res = await fetch('/data/kiasma-collection.json', { cache: 'force-cache' });
           if (!res.ok) throw new Error('Failed to load Kiasma artworks');
           const data = await res.json();
 
@@ -6402,7 +6426,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
     if (exhibition.id === 'sinebrychoff-collection') {
       (async () => {
         try {
-          const res = await fetch('/data/sinebrychoff-collection.json', { cache: 'no-store' });
+          const res = await fetch('/data/sinebrychoff-collection.json', { cache: 'force-cache' });
           if (!res.ok) throw new Error('Failed to load Sinebrychoff artworks');
           const data = await res.json();
 
@@ -6442,7 +6466,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
     if (exhibition.id === 'bruecke-collection') {
       (async () => {
         try {
-          const res = await fetch('/data/bruecke-museum-collection.json', { cache: 'no-store' });
+          const res = await fetch('/data/bruecke-museum-collection.json', { cache: 'force-cache' });
           if (!res.ok) throw new Error('Failed to load Brücke artworks');
           const data = await res.json();
 
@@ -6496,7 +6520,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
     if (exhibition.id === 'orangerie-collection') {
       (async () => {
         try {
-          const res = await fetch('/data/orangerie-collection.json', { cache: 'no-store' });
+          const res = await fetch('/data/orangerie-collection.json', { cache: 'force-cache' });
           if (!res.ok) throw new Error('Failed to load Orangerie artworks');
           const data = await res.json();
           const toYear = (yearText: string | number | undefined) => {
@@ -6536,7 +6560,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
     if (exhibition.id === 'pinault-collection') {
       (async () => {
         try {
-          const res = await fetch('/data/pinault-collection.json', { cache: 'no-store' });
+          const res = await fetch('/data/pinault-collection.json', { cache: 'force-cache' });
           if (!res.ok) throw new Error('Failed to load Pinault artworks');
           const data = await res.json();
           const toYear = (yearText: string | number | undefined) => {
@@ -6766,7 +6790,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
       const jsonFile = jsonFiles[exhibition.id];
       (async () => {
         try {
-          const res = await fetch(jsonFile, { cache: 'no-store' });
+          const res = await fetch(jsonFile, { cache: 'force-cache' });
           if (!res.ok) throw new Error('Failed to load artworks');
           const data = await res.json();
           if (exhibition.id.startsWith('kroller-muller-')) {
@@ -7248,7 +7272,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
     if (exhibition.id === 'mep-photography') {
       (async () => {
         try {
-          const res = await fetch('/data/mep-photography-collection.json', { cache: 'no-store' });
+          const res = await fetch('/data/mep-photography-collection.json', { cache: 'force-cache' });
           if (!res.ok) throw new Error('Failed to load MEP artworks');
           const data = await res.json();
           const allObjects = Array.isArray(data.objects) ? data.objects : [];
@@ -7288,7 +7312,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
     if (exhibition.id === 'vam-painting') {
       (async () => {
         try {
-          const res = await fetch('/data/vam-paintings.json', { cache: 'no-store' });
+          const res = await fetch('/data/vam-paintings.json', { cache: 'force-cache' });
           if (!res.ok) throw new Error('Failed to load local artworks');
           const data = await res.json();
           const list = (data.items || []).map((item: any) => ({
@@ -7314,7 +7338,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
     if (exhibition.id === 'vam-posters') {
       (async () => {
         try {
-          const res = await fetch('/data/vam-posters-display.json', { cache: 'no-store' });
+          const res = await fetch('/data/vam-posters-display.json', { cache: 'force-cache' });
           if (!res.ok) throw new Error('Failed to load local posters');
           const data = await res.json();
           const itemsArray = Array.isArray(data) ? data : (data.items || []);
@@ -7341,7 +7365,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
     if (exhibition.id === 'vam-photographs') {
       (async () => {
         try {
-          const res = await fetch('/data/vam-photographs.json', { cache: 'no-store' });
+          const res = await fetch('/data/vam-photographs.json', { cache: 'force-cache' });
           if (!res.ok) throw new Error('Failed to load local photographs');
           const data = await res.json();
           const list = (data.items || []).map((item: any) => ({
@@ -7367,7 +7391,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
     if (exhibition.id === 'vam-portraits') {
       (async () => {
         try {
-          const res = await fetch('/data/vam-portraits.json', { cache: 'no-store' });
+          const res = await fetch('/data/vam-portraits.json', { cache: 'force-cache' });
           if (!res.ok) throw new Error('Failed to load local portraits');
           const data = await res.json();
           const list = (data.items || []).map((item: any) => ({
@@ -7394,7 +7418,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
     if (exhibition.id === 'guggenheim-bilbao-collection') {
       (async () => {
         try {
-          const res = await fetch('/data/guggenheim-bilbao-collection.json', { cache: 'no-store' });
+          const res = await fetch('/data/guggenheim-bilbao-collection.json', { cache: 'force-cache' });
           if (!res.ok) throw new Error('Failed to load Guggenheim Bilbao data');
           const data = await res.json();
           const list = (data.artworks || []).map((item: any, idx: number) => {
@@ -7454,7 +7478,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
     if (exhibition.id === 'picasso-bcn-collection') {
       (async () => {
         try {
-          const res = await fetch('/data/picasso-bcn-collection.json', { cache: 'no-store' });
+          const res = await fetch('/data/picasso-bcn-collection.json', { cache: 'force-cache' });
           if (!res.ok) throw new Error('Failed to load Picasso Barcelona data');
           const data = await res.json();
 
@@ -7526,7 +7550,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
     if (exhibition.id === 'dali-foundation-collection') {
       (async () => {
         try {
-          const res = await fetch('/data/dali-foundation-collection.json', { cache: 'no-store' });
+          const res = await fetch('/data/dali-foundation-collection.json', { cache: 'force-cache' });
           if (!res.ok) throw new Error('Failed to load Dalí Foundation data');
           const data = await res.json();
 
@@ -7589,7 +7613,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
     if (exhibition.id === 'caixaforum-collection') {
       (async () => {
         try {
-          const res = await fetch('/data/caixaforum-collection.json', { cache: 'no-store' });
+          const res = await fetch('/data/caixaforum-collection.json', { cache: 'force-cache' });
           if (!res.ok) throw new Error('Failed to load CaixaForum data');
           const data = await res.json();
 
@@ -7641,7 +7665,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
     if (exhibition.id === 'ng-1') {
       (async () => {
         try {
-          const res = await fetch('/data/national-gallery-permanent.json', { cache: 'no-store' });
+          const res = await fetch('/data/national-gallery-permanent.json', { cache: 'force-cache' });
           if (!res.ok) throw new Error('Failed to load National Gallery data');
           const data = await res.json();
           const list = (data.items || []).map((item: any) => ({
@@ -7670,7 +7694,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
     if (exhibition.id.startsWith('tate-britain-display-')) {
       (async () => {
         try {
-          const res = await fetch('/data/tate-britain.json', { cache: 'no-store' });
+          const res = await fetch('/data/tate-britain.json', { cache: 'force-cache' });
           if (!res.ok) throw new Error('Missing tate-britain.json');
           const data = await res.json();
           const items = Array.isArray(data.items) ? data.items : [];
@@ -7786,7 +7810,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
     if (exhibition.id.startsWith('display-')) {
       (async () => {
         try {
-          const res = await fetch('/data/tate-modern.json', { cache: 'no-store' });
+          const res = await fetch('/data/tate-modern.json', { cache: 'force-cache' });
           if (!res.ok) throw new Error('Missing tate-modern.json');
           const data = await res.json();
           const items = Array.isArray(data.items) ? data.items : [];
@@ -7917,7 +7941,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
         try {
           const file = (exhibition as any).collectionFile;
           console.log('[ExhibitionModal] Using generic collectionFile fallback for:', file);
-          const res = await fetch(`/data/${file}`, { cache: 'no-store' });
+          const res = await fetch(`/data/${file}`, { cache: 'force-cache' });
           if (!res.ok) throw new Error(`Missing ${file}`);
           const rawData = await res.json();
           let arr = Array.isArray(rawData) ? rawData : (rawData.items || rawData.objects || rawData.data || rawData.artworks || []);
@@ -8896,7 +8920,8 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
           height: "100%",
           padding: 0,
           borderRadius: 0,
-          boxShadow: "0 12px 28px rgba(0,0,0,0.25)",
+          boxShadow: isSketch ? "none" : "0 12px 28px rgba(0,0,0,0.25)",
+          borderTop: isSketch ? '3px solid #111111' : 'none',
           display: "flex",
           flexDirection: "column",
           overflow: "hidden",

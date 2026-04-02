@@ -119,10 +119,12 @@ const ImageCropModal = ({ imageUrl, initialCrop, onSave, onClose }: any) => {
   };
   const onPointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
     if (!dragging.current) return;
+    const dx = e.clientX - lastPos.current.x;
+    const dy = e.clientY - lastPos.current.y;
     setCrop((p: any) => ({
       ...p,
-      x: p.x + e.clientX - lastPos.current.x,
-      y: p.y + e.clientY - lastPos.current.y,
+      x: p.x + dx,
+      y: p.y + dy,
     }));
     lastPos.current = { x: e.clientX, y: e.clientY };
   };
@@ -139,7 +141,7 @@ const ImageCropModal = ({ imageUrl, initialCrop, onSave, onClose }: any) => {
         <button onClick={onClose} style={{ background: 'none', border: `1px solid ${DIMMER}`, color: DIM, fontFamily: MONO, fontSize: 9, padding: '7px 14px', cursor: 'pointer', letterSpacing: '0.15em' }}>← BACK</button>
       </div>
       {/* touchAction:'none' prevents browser from intercepting touches for scrolling */}
-      <div style={{ flex: 1, position: 'relative', overflow: 'hidden', cursor: grabbing ? 'grabbing' : 'grab', touchAction: 'none' }}
+      <div style={{ flex: 1, position: 'relative', overflow: 'hidden', cursor: grabbing ? 'grabbing' : 'grab', touchAction: 'none', background: 'transparent' }}
         onPointerDown={onPointerDown}
         onPointerMove={onPointerMove}
         onPointerUp={onPointerUp}
@@ -603,14 +605,14 @@ const OnboardingPage: React.FC = () => {
             <label style={{ display: 'block', fontSize: 9, letterSpacing: '0.3em', color: DIM, marginBottom: 14 }}>YOUR NAME</label>
             <input
               value={nickname} onChange={e => setNickname(e.target.value)} placeholder="nickname..." autoFocus
-              style={{ background: 'none', border: 'none', borderBottom: `1px solid ${nickname ? ACCENT : DIMMER}`, color: TEXT, fontFamily: MONO, fontSize: 24, padding: '8px 0', outline: 'none', width: '100%', transition: 'border-color 0.3s' }}
+              style={{ background: 'none', borderStyle: 'none', borderBottom: `1px solid ${nickname ? ACCENT : DIMMER}`, color: TEXT, fontFamily: MONO, fontSize: 24, padding: '8px 0', outline: 'none', width: '100%', transition: 'border-color 0.3s' }}
             />
           </div>
           <div style={{ marginBottom: 40 }}>
             <label style={{ display: 'block', fontSize: 9, letterSpacing: '0.3em', color: DIM, marginBottom: 14 }}>DATE OF BIRTH</label>
             <input
               value={birthDateInput} onChange={handleBirthDateChange} placeholder="YYYY.MM.DD" maxLength={10}
-              style={{ background: 'none', border: 'none', borderBottom: `1px solid ${birthDateInput.length === 10 ? ACCENT : DIMMER}`, color: birthDateInput.length === 10 ? ACCENT : TEXT, fontFamily: MONO, fontSize: 22, fontWeight: 700, padding: '8px 0', outline: 'none', width: '100%', letterSpacing: '0.04em', transition: 'all 0.3s' }}
+              style={{ background: 'none', borderStyle: 'none', borderBottom: `1px solid ${birthDateInput.length === 10 ? ACCENT : DIMMER}`, color: birthDateInput.length === 10 ? ACCENT : TEXT, fontFamily: MONO, fontSize: 22, fontWeight: 700, padding: '8px 0', outline: 'none', width: '100%', letterSpacing: '0.04em', transition: 'all 0.3s' }}
             />
             <p style={{ fontSize: 9, color: DIM, marginTop: 10, letterSpacing: '0.08em', lineHeight: 1.7 }}>
               WE'LL FIND AN ARTIST WHO DIED<br />ON YOUR BIRTHDAY
@@ -663,7 +665,7 @@ const OnboardingPage: React.FC = () => {
                 <input
                   value={artistSearchQuery} onChange={e => setArtistSearchQuery(e.target.value)}
                   placeholder="Search artist name..." autoFocus
-                  style={{ background: 'none', border: 'none', borderBottom: `1px solid ${DIMMER}`, color: TEXT, fontFamily: MONO, fontSize: 15, padding: '6px 0', outline: 'none', width: '100%' }}
+                  style={{ background: 'none', borderStyle: 'none', borderBottom: `1px solid ${DIMMER}`, color: TEXT, fontFamily: MONO, fontSize: 15, padding: '6px 0', outline: 'none', width: '100%' }}
                 />
                 {artistSearchQuery && (
                   <span style={{ fontSize: 8, color: DIM, letterSpacing: '0.1em' }}>{recommendedArtists.length} FOUND</span>

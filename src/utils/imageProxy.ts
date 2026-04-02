@@ -2,8 +2,22 @@
 // Robust Image Optimization using wsrv.nl (global CDN for resizing/caching)
 // This ensures fast loading for search results and galleries.
 
+export function normalizeImageUrl(url: string): string {
+  if (!url) return '';
+  let normalized = url;
+
+  // Fix for 404 errors with Deutsche Digitale Bibliothek IIIF server
+  if (normalized.includes('iiif.deutsche-digitale-bibliothek.de')) {
+      normalized = normalized.replace(/\/!440,330\//, '/full/');
+      normalized = normalized.replace(/\/\d+,\d+\//, '/full/');
+  }
+
+  return normalized;
+}
+
 export function getWeservUrl(url: string, width: number = 400, quality: number = 80, format?: 'avif' | 'webp'): string {
   if (!url || typeof url !== 'string') return '';
+  url = normalizeImageUrl(url);
 
   // 1. If it's a data URL or blob, return as is
   if (url.startsWith('data:') || url.startsWith('blob:')) return url;
@@ -23,6 +37,8 @@ export function getWeservUrl(url: string, width: number = 400, quality: number =
   if (url.includes('d1hhug17qm51in.cloudfront.net') || url.includes('sfmoma.org')) return url;
   // Bypass deutsche-digitale-bibliothek.de (Brücke Museum) - proxy blocked
   if (url.includes('deutsche-digitale-bibliothek.de')) return url;
+  // Bypass our own R2 bucket entirely - it's already fast and wsrv.nl often fails or caches 404s
+  if (url.includes('r2.dev') || url.includes('pub-396fad1f96754c2f816f260faf970e63')) return url;
 
 
 

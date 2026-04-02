@@ -390,6 +390,80 @@
   padding: 12px;
 }
 
+/* ─────────────────────────────────────────────
+   DRAWING MAP VARIANT (only when mode=drawing)
+───────────────────────────────────────────── */
+.artist-page.artist-page--drawing {
+  --ap-bg: #f5f5f2;
+  --ap-bg-2: #f3f2ee;
+  --ap-surface: #ffffff;
+  --ap-surface-2: #ffffff;
+  --ap-text: #111111;
+  --ap-text-2: #222222;
+  --ap-text-3: #3b3b3b;
+  --ap-text-4: #5a5a5a;
+  --ap-accent: #ccff00;
+  --ap-accent-2: #b6e600;
+  --ap-accent-faint: rgba(204,255,0,0.12);
+  --ap-border: #111111;
+  --ap-border-2: #2c2c2c;
+  --ap-card-bg: #ffffff;
+  --ap-card-hover: #f7f7f7;
+  --ap-shadow: 5px 6px 0 rgba(17,17,17,1);
+  --ap-img-bg: #ededed;
+  font-family: "Space Mono", "SFMono-Regular", Menlo, Monaco, Consolas, monospace;
+}
+
+.artist-page.artist-page--drawing .artist-hero,
+.artist-page.artist-page--drawing .artist-profile,
+.artist-page.artist-page--drawing .artist-gallery {
+  border-color: #111111;
+}
+
+.artist-page.artist-page--drawing .artist-hero {
+  background: #ffffff;
+  box-shadow: 5px 6px 0 rgba(17,17,17,1);
+}
+
+.artist-page.artist-page--drawing .artist-hero__name {
+  font-family: "Space Mono", "SFMono-Regular", Menlo, Monaco, Consolas, monospace;
+  font-weight: 800;
+  letter-spacing: 0.02em;
+}
+
+.artist-page.artist-page--drawing .artist-bio,
+.artist-page.artist-page--drawing .artist-map-col {
+  background: #ffffff;
+}
+
+.artist-page.artist-page--drawing .artist-map-col .adist-map__canvas {
+  border: 2px solid #111111;
+  box-shadow: 4px 5px 0 rgba(17,17,17,1);
+}
+
+.artist-page.artist-page--drawing .artist-gallery__grid {
+  gap: 10px;
+  padding: 10px;
+  background: transparent;
+}
+
+.artist-page.artist-page--drawing .artist-gallery__card {
+  border: 2px solid #111111;
+  border-radius: 10px;
+  box-shadow: 4px 5px 0 rgba(17,17,17,1);
+}
+
+.artist-page.artist-page--drawing .artist-gallery__card::after {
+  border: 0;
+}
+
+.artist-page.artist-page--drawing .artist-gallery__like {
+  opacity: 1;
+  transform: scale(1);
+  background: rgba(255,255,255,0.95);
+  border: 1.5px solid #111111;
+}
+
 /* Empty state */
 .artist-gallery__empty {
   grid-column: 1 / -1;

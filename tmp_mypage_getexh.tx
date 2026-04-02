@@ -1,0 +1,34 @@
+   427	  const getExhibitionId = (art: any) => {
+   428	    if (art.exhibitionId) return art.exhibitionId;
+   429	    const direct = resolveCollectionIdAcrossMuseums(art);
+   430	    if (direct) return direct;
+   431	    const match = findMuseumForArtwork(art, exhibitions);
+   432	    const fromMuseum = resolveCollectionIdForMuseum(art, match);
+   433	    if (fromMuseum) return fromMuseum;
+   434	    // Fallback logic for legacy IDs
+   435	    const artId = art.artworkId || art.id || '';
+   436	    if (artId) {
+   437	      if (artId.startsWith('bruecke-')) return 'bruecke-collection';
+   438	    }
+   439	    return null;
+   440	  };
+   441	
+   442	  const handleViewInMuseum = (art: any) => {
+   443	    let exhId = getExhibitionId(art);
+   444	    if (!exhId) {
+   445	      const match = findMuseumForArtwork(art, exhibitions);
+   446	      if (match) {
+   447	        exhId = resolveCollectionIdForMuseum(art, match) || match.permanentExhibitions?.[0]?.id || null;
+   448	      }
+   449	    }
+   450	    // Manual overrides
+   451	    if (!exhId) {
+   452	      const targetName = (art.museumName || art.museum || art.source || '').toLowerCase();
+   453	      if (targetName.includes('neue nationalgalerie')) exhId = 'smb-neue-nationalgalerie-collection';
+   454	      else if (targetName.includes('alte nationalgalerie')) exhId = 'smb-alte-nationalgalerie-collection';
+   455	      else if (targetName.includes('bode-museum') || targetName.includes('bode museum')) exhId = 'smb-bode-museum-collection';
+   456	      else if (targetName.includes('brücke-museum') || targetName.includes('brucke museum')) exhId = 'bruecke-museum-collection';
+   457	      else if (targetName.includes('picasso') && targetName.includes('barcelona')) exhId = 'picasso-bcn-collection';
+   458	    }
+   459	
+   460	    if (exhId) {

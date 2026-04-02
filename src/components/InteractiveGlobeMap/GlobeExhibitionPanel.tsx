@@ -1,4 +1,4 @@
-import { motion } from "motion/react";
+import { motion } from "framer-motion";
 import type { Exhibition, ExhibitionItem } from "../../types/Exhibition";
 import type { Theme } from "./types";
 import { publicUrl } from "../../utils/publicUrl";

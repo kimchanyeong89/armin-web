@@ -272883,19 +272883,6 @@
     "original_imageUrl": "https://www.moma.org/media/W1siZiIsIjI5MzkyNyJdLFsicCIsImNvbnZlcnQiLCItcmVzaXplIDEwMjR4MTAyNFx1MDAzZSJdXQ.jpg?sha=8bad26063fbb9db0"
   },
   {
-    "id": "176145",
-    "title": "Dan Graham–Pier 18",
-    "artist": "János Kender, Harry Shunk, Dan Graham",
-    "date": "1971",
-    "medium": "Gelatin silver print",
-    "dimensions": "6 5/8 × 9 11/16\" (16.9 × 24.6 cm)",
-    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/moma-collection/176145-df2ae03f-imageUrl.webp",
-    "sourceUrl": "https://www.moma.org/collection/works/176145",
-    "category": "Photograph",
-    "onView": false,
-    "original_imageUrl": "https://www.moma.org/media/W1siZiIsIjI5MzkyOCJdLFsicCIsImNvbnZlcnQiLCItcmVzaXplIDEwMjR4MTAyNFx1MDAzZSJdXQ.jpg?sha=c82ae3ff0fb817b2"
-  },
-  {
     "id": "176146",
     "title": "Dan Graham–Pier 18",
     "artist": "János Kender, Harry Shunk, Dan Graham",
@@ -360943,5 +360930,18 @@
     "category": "Photograph",
     "onView": false,
     "original_imageUrl": "https://www.moma.org/media/W1siZiIsIjYxNTI4NyJdLFsicCIsImNvbnZlcnQiLCItcmVzaXplIDEwMjR4MTAyNFx1MDAzZSJdXQ.jpg?sha=c2e63880655f9ec6"
+  },
+  {
+    "id": "176145",
+    "title": "Dan Graham–Pier 18",
+    "artist": "János Kender, Harry Shunk, Dan Graham",
+    "date": "1971",
+    "medium": "Gelatin silver print",
+    "dimensions": "6 5/8 × 9 11/16\" (16.9 × 24.6 cm)",
+    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/moma-collection/176145-df2ae03f-imageUrl.webp",
+    "sourceUrl": "https://www.moma.org/collection/works/176145",
+    "category": "Photograph",
+    "onView": false,
+    "original_imageUrl": "https://www.moma.org/media/W1siZiIsIjI5MzkyOCJdLFsicCIsImNvbnZlcnQiLCItcmVzaXplIDEwMjR4MTAyNFx1MDAzZSJdXQ.jpg?sha=c82ae3ff0fb817b2"
   }
 ]

@@ -81,13 +81,13 @@ const CommunityList: React.FC<CommunityListProps> = ({ onPostClick, onWriteClick
     const bg         = isDark ? 'rgba(8,8,7,0)' : isSketch ? '#FFFFFF' : '#FFFFFF';
     const textPrim   = isDark ? 'rgba(220,210,195,0.92)' : '#111111';
     const textSec    = isDark ? 'rgba(180,165,140,0.6)' : '#888888';
-    const accentBg   = isDark ? 'rgba(201,165,90,0.12)' : isSketch ? '#CCFF00' : '#111111';
-    const accentText = isDark ? '#c9a55a' : isSketch ? '#111111' : '#ffffff';
-    const divider    = isDark ? 'rgba(201,165,90,0.1)' : isSketch ? 'rgba(17,17,17,0.12)' : '#f0f0f0';
-    const headerBg   = isDark ? 'rgba(201,165,90,0.08)' : isSketch ? '#f5f5f5' : '#f5f5f5';
+    const accentBg   = isDark ? 'rgba(201,165,90,0.12)' : isSketch ? '#111111' : '#111111';
+    const accentText = isDark ? '#c9a55a' : isSketch ? '#ffffff' : '#ffffff';
+    const divider    = isDark ? 'rgba(201,165,90,0.1)' : isSketch ? 'rgba(17,17,17,0.22)' : '#f0f0f0';
+    const headerBg   = isDark ? 'rgba(201,165,90,0.08)' : isSketch ? '#ffffff' : '#f5f5f5';
     const hoverBg    = isDark ? 'rgba(201,165,90,0.06)' : isSketch ? '#f9f9f9' : '#f9f9f9';
     const hoverReset = isDark ? 'transparent' : 'transparent';
-    const tabActive  = isDark ? '#c9a55a' : isSketch ? '#CCFF00' : '#000';
+    const tabActive  = isDark ? '#c9a55a' : isSketch ? '#111111' : '#000';
     const tabBorder  = isDark ? '#c9a55a' : isSketch ? '#111111' : '#000';
     const tabBg      = isDark ? 'rgba(8,8,7,0)' : 'none';
 
@@ -100,7 +100,8 @@ const CommunityList: React.FC<CommunityListProps> = ({ onPostClick, onWriteClick
             flexDirection: 'column',
             height: '100%',
             background: bg,
-            fontFamily: isSketch ? "'Space Mono', 'Courier New', monospace" : 'inherit',
+            fontFamily: isSketch ? "monospace" : 'inherit',
+            filter: isSketch ? 'url(#community-sketch-ui)' : 'none',
         }}>
             {/* Write Button */}
             <div style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center', marginBottom: '16px' }}>
@@ -117,16 +118,16 @@ const CommunityList: React.FC<CommunityListProps> = ({ onPostClick, onWriteClick
                         fontSize: isSketch ? '10px' : '13px',
                         letterSpacing: isSketch ? '0.15em' : 'normal',
                         textTransform: isSketch ? 'uppercase' : 'none',
-                        fontFamily: isSketch ? "'Space Mono', monospace" : 'inherit',
-                        boxShadow: isSketch ? '2px 2px 0 #111111' : isDark ? '0 2px 10px rgba(0,0,0,0.4)' : 'none',
+                        fontFamily: isSketch ? "sans-serif" : 'inherit',
+                        boxShadow: isSketch ? '4px 4px 0 #111111' : isDark ? '0 2px 10px rgba(0,0,0,0.4)' : 'none',
                         transition: 'all 0.15s',
                     }}
                     onMouseEnter={(e) => {
-                        if (isSketch) { e.currentTarget.style.boxShadow = '0px 0px 0 #111111'; e.currentTarget.style.transform = 'translate(2px,2px)'; }
+                        if (isSketch) { e.currentTarget.style.boxShadow = '1px 1px 0 #111111'; e.currentTarget.style.transform = 'translate(3px,3px)'; }
                         else if (isDark) { e.currentTarget.style.borderColor = 'rgba(201,165,90,0.6)'; }
                     }}
                     onMouseLeave={(e) => {
-                        if (isSketch) { e.currentTarget.style.boxShadow = '2px 2px 0 #111111'; e.currentTarget.style.transform = 'none'; }
+                        if (isSketch) { e.currentTarget.style.boxShadow = '4px 4px 0 #111111'; e.currentTarget.style.transform = 'none'; }
                         else if (isDark) { e.currentTarget.style.borderColor = 'rgba(201,165,90,0.3)'; }
                     }}
                 >
@@ -137,7 +138,7 @@ const CommunityList: React.FC<CommunityListProps> = ({ onPostClick, onWriteClick
             {/* Tabs */}
             <div style={{
                 display: 'flex',
-                gap: '2px',
+                gap: '8px',
                 marginBottom: '20px',
                 borderBottom: isDark ? '1px solid rgba(201,165,90,0.12)' : isSketch ? '2px solid #111111' : '1px solid #eee',
             }}>
@@ -148,20 +149,23 @@ const CommunityList: React.FC<CommunityListProps> = ({ onPostClick, onWriteClick
                             key={t}
                             onClick={() => setTab(t)}
                             style={{
-                                padding: '10px 16px',
-                                background: tabBg,
-                                border: 'none',
-                                borderBottom: isActive
-                                    ? `2px solid ${tabBorder}`
-                                    : '2px solid transparent',
+                                padding: '8px 16px',
+                                background: isSketch && isActive ? '#111111' : isSketch ? 'transparent' : tabBg,
+                                borderTop: isSketch ? '2px solid #111111' : 'none',
+                                borderRight: isSketch ? '2px solid #111111' : 'none',
+                                borderLeft: isSketch ? '2px solid #111111' : 'none',
+                                borderBottom: isSketch ? (isActive ? '2px solid #111111' : '2px solid transparent') : (isActive ? `2px solid ${tabBorder}` : '2px solid transparent'),
+                                borderBottomLeftRadius: 0,
+                                borderBottomRightRadius: 0,
+                                marginBottom: isSketch ? '-2px' : '0',
                                 fontWeight: isActive ? 700 : 400,
                                 cursor: 'pointer',
-                                color: isActive ? tabActive : textSec,
-                                fontSize: isSketch ? '10px' : '15px',
-                                letterSpacing: isSketch ? '0.15em' : 'normal',
+                                color: isSketch && isActive ? '#FFFFFF' : (isActive ? tabActive : textSec),
+                                fontSize: isSketch ? '11px' : '15px',
+                                letterSpacing: isSketch ? '0.1em' : 'normal',
                                 textTransform: isSketch ? 'uppercase' : 'none',
-                                fontFamily: isSketch ? "'Space Mono', monospace" : 'inherit',
-                                transition: 'color 0.15s',
+                                fontFamily: isSketch ? "sans-serif" : 'inherit',
+                                transition: 'all 0.15s',
                             }}
                         >
                             {t === 'latest' ? (isSketch ? 'LATEST' : '최신순') : (isSketch ? 'POPULAR' : '인기글')}
@@ -180,7 +184,7 @@ const CommunityList: React.FC<CommunityListProps> = ({ onPostClick, onWriteClick
                 fontWeight: isSketch ? 700 : 500,
                 letterSpacing: isSketch ? '0.15em' : 'normal',
                 textTransform: isSketch ? 'uppercase' : 'none',
-                fontFamily: isSketch ? "'Space Mono', monospace" : 'inherit',
+                fontFamily: isSketch ? "monospace" : 'inherit',
             }}>
                 <div style={{ width: '120px' }}>{isSketch ? 'TAG' : '머릿글'}</div>
                 <div style={{ flex: 1 }}>{isSketch ? 'TITLE' : '제목'}</div>
@@ -195,7 +199,7 @@ const CommunityList: React.FC<CommunityListProps> = ({ onPostClick, onWriteClick
                     padding: '40px',
                     textAlign: 'center',
                     color: textSec,
-                    fontFamily: isSketch ? "'Space Mono', monospace" : 'inherit',
+                    fontFamily: isSketch ? "monospace" : 'inherit',
                     fontSize: isSketch ? '10px' : '14px',
                     letterSpacing: isSketch ? '0.15em' : 'normal',
                 }}>
@@ -208,7 +212,7 @@ const CommunityList: React.FC<CommunityListProps> = ({ onPostClick, onWriteClick
                             padding: '60px 0',
                             textAlign: 'center',
                             color: textSec,
-                            fontFamily: isSketch ? "'Space Mono', monospace" : 'inherit',
+                            fontFamily: isSketch ? "monospace" : 'inherit',
                             fontSize: isSketch ? '10px' : '14px',
                         }}>
                             {isSketch ? 'NO POSTS YET.' : '아직 등록된 게시글이 없습니다.'}
@@ -223,12 +227,13 @@ const CommunityList: React.FC<CommunityListProps> = ({ onPostClick, onWriteClick
                                 display: 'flex',
                                 alignItems: 'center',
                                 padding: '13px 8px',
-                                borderBottom: `1px solid ${divider}`,
+                                borderBottom: isSketch ? `1.5px solid ${divider}` : `1px solid ${divider}`,
                                 cursor: 'pointer',
                                 transition: 'background 0.15s',
                                 fontSize: isSketch ? '11px' : '14px',
-                                fontFamily: isSketch ? "'Space Mono', monospace" : 'inherit',
+                                fontFamily: isSketch ? "monospace" : 'inherit',
                                 background: 'transparent',
+                                
                             }}
                             onMouseEnter={(e) => e.currentTarget.style.background = hoverBg}
                             onMouseLeave={(e) => e.currentTarget.style.background = hoverReset}
@@ -245,7 +250,7 @@ const CommunityList: React.FC<CommunityListProps> = ({ onPostClick, onWriteClick
                                     backgroundColor: headerBg,
                                     padding: isSketch ? '3px 7px' : '4px 8px',
                                     borderRadius: isSketch ? 0 : '4px',
-                                    border: isSketch ? '1px solid rgba(17,17,17,0.2)' : isDark ? '1px solid rgba(201,165,90,0.15)' : 'none',
+                                    border: isSketch ? '2px solid rgba(17,17,17,0.35)' : isDark ? '1px solid rgba(201,165,90,0.15)' : 'none',
                                     letterSpacing: isSketch ? '0.1em' : 'normal',
                                     textTransform: isSketch ? 'uppercase' : 'none',
                                 }}>

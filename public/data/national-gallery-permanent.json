@@ -3781,20 +3781,6 @@
       "type": "2D"
     },
     {
-      "id": "rembrandt-an-elderly-man-as-saint-paul",
-      "name": "An Elderly Man as Saint Paul",
-      "artist": "Rembrandt",
-      "year": 1659,
-      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/national-gallery/collection/rembrandt-an-elderly-man-as-saint-paul.webp",
-      "roomId": "22",
-      "exhibitionName": "European Paintings",
-      "exhibitionTitle": "European Paintings",
-      "url": "https://www.nationalgallery.org.uk/paintings/rembrandt-an-elderly-man-as-saint-paul",
-      "originalImage": "https://www.nationalgallery.org.uk/media/0g4nbujj/n-0190-00-000020-web-hd.jpg",
-      "category": "Painting",
-      "type": "2D"
-    },
-    {
       "id": "rembrandt-a-woman-bathing-in-a-stream-hendrickje-stoffels",
       "name": "A Woman bathing in a Stream (Hendrickje Stoffels?)",
       "artist": "Rembrandt",
@@ -10851,20 +10837,6 @@
       "type": "2D"
     },
     {
-      "id": "petrus-christus-edward-grimston",
-      "name": "Edward Grimston",
-      "artist": "Petrus Christus",
-      "year": 1446,
-      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/national-gallery/collection/petrus-christus-edward-grimston.webp",
-      "roomId": "52",
-      "exhibitionName": "European Paintings",
-      "exhibitionTitle": "European Paintings",
-      "url": "https://www.nationalgallery.org.uk/paintings/petrus-christus-edward-grimston",
-      "originalImage": "https://www.nationalgallery.org.uk/media/pa1jmqf1/n-2593-00-000041-fs-hd.jpg",
-      "category": "Painting",
-      "type": "2D"
-    },
-    {
       "id": "dirk-bouts-the-entombment",
       "name": "The Entombment",
       "artist": "Dirk Bouts",
@@ -12247,20 +12219,6 @@
       "exhibitionTitle": "European Paintings",
       "url": "https://www.nationalgallery.org.uk/paintings/giovanni-di-paolo-the-head-of-john-the-baptist-brought-to-herod",
       "originalImage": "https://www.nationalgallery.org.uk/media/k55axt22/n-5451-00-000021-web-g-hd.jpg",
-      "category": "Painting",
-      "type": "2D"
-    },
-    {
-      "id": "simone-martini-saint-john-the-evangelist",
-      "name": "Saint John the Evangelist",
-      "artist": "Simone Martini",
-      "year": 1320,
-      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/national-gallery/collection/simone-martini-saint-john-the-evangelist.webp",
-      "roomId": "58",
-      "exhibitionName": "European Paintings",
-      "exhibitionTitle": "European Paintings",
-      "url": "https://www.nationalgallery.org.uk/paintings/simone-martini-saint-john-the-evangelist",
-      "originalImage": "https://www.nationalgallery.org.uk/media/35614/desktop-pop-up-stubbs-6569.jpg",
       "category": "Painting",
       "type": "2D"
     },
@@ -15247,20 +15205,6 @@
       "type": "2D"
     },
     {
-      "id": "rosso-fiorentino-a-knight-of-saint-john",
-      "name": "A Knight of Saint John",
-      "artist": "Rosso Fiorentino",
-      "year": 1523,
-      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/national-gallery/collection/rosso-fiorentino-a-knight-of-saint-john.webp",
-      "roomId": "n",
-      "exhibitionName": "European Paintings",
-      "exhibitionTitle": "European Paintings",
-      "url": "https://www.nationalgallery.org.uk/paintings/rosso-fiorentino-a-knight-of-saint-john",
-      "originalImage": "https://www.nationalgallery.org.uk/media/swbamgfz/n-6584-00-000016-web-hd.jpg",
-      "category": "Painting",
-      "type": "2D"
-    },
-    {
       "id": "francesco-morone-the-virgin-and-child",
       "name": "The Virgin and Child",
       "artist": "Francesco Morone",
@@ -16601,20 +16545,6 @@
       "exhibitionTitle": "European Paintings",
       "url": "https://www.nationalgallery.org.uk/paintings/meindert-hobbema-the-haarlem-lock-amsterdam",
       "originalImage": "https://www.nationalgallery.org.uk/media/xh2hnrpu/n-6138-00-000020-web-hd.jpg",
-      "category": "Painting",
-      "type": "2D"
-    },
-    {
-      "id": "frans-hals-portrait-of-a-man-holding-gloves",
-      "name": "Portrait of a Man holding Gloves",
-      "artist": "Frans Hals",
-      "year": 1645,
-      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/national-gallery/collection/frans-hals-portrait-of-a-man-holding-gloves.webp",
-      "roomId": "n",
-      "exhibitionName": "European Paintings",
-      "exhibitionTitle": "European Paintings",
-      "url": "https://www.nationalgallery.org.uk/paintings/frans-hals-portrait-of-a-man-holding-gloves",
-      "originalImage": "https://www.nationalgallery.org.uk/media/jr5czraf/n-2528-00-000029-fs-hd.jpg",
       "category": "Painting",
       "type": "2D"
     },

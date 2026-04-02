@@ -211,6 +211,18 @@ const CONTINENT_MAP: Record<string, string> = {
   'Senegal': 'Africa', 'Tunisia': 'Africa', 'Algeria': 'Africa', 'Zimbabwe': 'Africa',
 };
 
+// 대륙 레이블이 표시되는 시각적 중심 좌표 (미술관 분포 평균이 아닌 지도상 표준 위치)
+// Russia, Kazakhstan 등 영토가 넓은 나라가 centroid를 왜곡하는 문제 방지
+const CONTINENT_VISUAL_CENTERS: Record<string, [number, number]> = {
+  'Europe':             [12,  50],   // 독일/프랑스 중심 — 서유럽 미술관 밀집 지역
+  'Asia':               [110, 30],   // 동아시아/동남아시아 중심
+  'North America':      [-98, 42],   // 미국 중부
+  'South America':      [-58, -14],  // 브라질 중심부
+  'Africa':             [18,   3],   // 중앙아프리카
+  'Australia & Oceania':[133, -26],  // 호주 중심
+  'Other':              [0,    0],
+};
+
 const getContinent = (country: string): string => {
   if (!country) return 'Other';
   if (CONTINENT_MAP[country]) return CONTINENT_MAP[country];
@@ -438,6 +450,8 @@ interface ContinentCluster { id: string; isContinent: boolean; continentName: st
 
 interface Props { exhibitions: Exhibition[]; onClose?: () => void; onSelectExhibition?: (ex: Exhibition) => void; onSwitchToInteractive?: () => void; }
 
+const DRAWING_GLOBE_RETURN_STATE_KEY = 'drawingMap:returnState';
+
 // ── Inline style constants ────────────────────────────────────────────────────
 const S = {
   container: { position: 'relative' as const, overflow: 'hidden', width: '100%', height: '100vh', background: '#FFFFFF', color: '#111111' },
@@ -453,17 +467,17 @@ const S = {
   brLabel: { position: 'absolute' as const, bottom: 32, right: 32, textAlign: 'right' as const, pointerEvents: 'none' as const, zIndex: 10 },
   instructions: { position: 'absolute' as const, bottom: 92, left: 32, textAlign: 'left' as const, pointerEvents: 'none' as const, zIndex: 10, opacity: 0.5 },
   instructionText: { fontSize: 11, fontFamily: 'sans-serif', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase' as const, margin: '2px 0' },
-  panel: (show: boolean) => ({
-    position: 'absolute' as const, top: '50%', left: 32, transform: show ? 'translateY(-50%) translateX(0)' : 'translateY(-50%) translateX(-120%)',
-    background: '#FFFFFF', border: '3px solid #111111',
-    boxShadow: '8px 8px 0px 0px rgba(17,17,17,1)', display: 'flex', flexDirection: 'column' as const,
-    transition: 'transform 0.7s ease, opacity 0.7s ease, width 0.4s ease, height 0.4s ease', opacity: show ? 1 : 0,
-    zIndex: 30, filter: 'url(#dg-sketch-ui)',
-  }),
+  panel: (show: boolean, isMobile: boolean = false) => ({
+      position: isMobile ? 'fixed' : 'absolute' as const, top: isMobile ? 0 : '50%', left: isMobile ? 0 : 32, transform: show ? (isMobile ? 'none' : 'translateY(-50%) translateX(0)') : (isMobile ? 'translateY(120%)' : 'translateY(-50%) translateX(-120%)'),
+      background: '#FFFFFF', border: isMobile ? 'none' : '3px solid #111111',
+      boxShadow: isMobile ? 'none' : '8px 8px 0px 0px rgba(17,17,17,1)', display: 'flex', flexDirection: 'column' as const,
+      transition: 'transform 0.7s ease, opacity 0.7s ease, width 0.4s ease, height 0.4s ease', opacity: show ? 1 : 0,
+      zIndex: 100, filter: isMobile ? 'none' : 'url(#dg-sketch-ui)',
+    }),
   panelHeader: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '3px solid #111111', padding: 16 },
   panelTitle: { fontSize: 18, fontWeight: 900, fontFamily: 'sans-serif', textTransform: 'uppercase' as const, letterSpacing: '0.12em' },
   panelCloseBtn: { background: 'none', border: 'none', cursor: 'pointer' },
-  panelMap: { flex: 1, position: 'relative' as const, borderBottom: '3px solid #111111', background: '#f8f8f8', overflow: 'hidden' },
+  panelMap: { flex: 'none', height: 350, position: 'relative' as const, borderBottom: '3px solid #111111', background: '#f8f8f8', overflow: 'hidden' },
   panelInfo: { padding: 16, background: '#FFFFFF' },
   panelInfoTitle: { fontSize: 13, fontWeight: 900, fontFamily: 'sans-serif', textTransform: 'uppercase' as const, letterSpacing: '0.12em', marginBottom: 8 },
   panelInfoRow: { display: 'flex', justifyContent: 'space-between', fontSize: 11, fontFamily: 'monospace', color: 'rgba(17,17,17,0.7)', marginBottom: 4 },
@@ -499,14 +513,13 @@ export default function DrawingGlobe({ exhibitions, onClose, onSelectExhibition,
   const [hoveredMarker, setHoveredMarker] = useState<string | null>(null);
   const isMobile = typeof window !== 'undefined' && window.innerWidth < 640;
   const [isHomeHovered, setIsHomeHovered] = useState(false);
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
   const [selectedCluster, setSelectedCluster] = useState<CityMarker | null>(null);
   const [selectedCityInPanel, setSelectedCityInPanel] = useState<string | null>(null); // city tab in panel
   const [hoveredMuseumId, setHoveredMuseumId] = useState<string | null>(null); // spotlight hover
+  const [hoverSource, setHoverSource] = useState<'map' | 'list' | null>(null); // to avoid scroll jitter
   const [selectedPointId, setSelectedPointId] = useState<string | null>(null);
   const [rotation, setRotation] = useState<[number, number, number]>([20, -20, 0]);
+  const hasRestoredReturnState = useRef(false);
   const containerRef = useRef<HTMLDivElement>(null);
   const [size, setSize] = useState({ w: 800, h: 600 });
   const initialScale = useMemo(() => Math.min(size.w, size.h) * 0.35, [size]);
@@ -724,7 +737,11 @@ export default function DrawingGlobe({ exhibitions, onClose, onSelectExhibition,
     }
     const continents: ContinentCluster[] = Array.from(contMap.entries()).map(([cn, ca]) => ({
       id: cn.toLowerCase().replace(/[\s&]+/g, '-'), isContinent: true, continentName: cn,
-      coords: [ca.reduce((s, c) => s + c.coords[0], 0) / ca.length, ca.reduce((s, c) => s + c.coords[1], 0) / ca.length] as [number, number],
+      // 시각적 중심 좌표 우선 사용 (미술관 분포 평균은 Russia 등 때문에 왜곡됨)
+      coords: (CONTINENT_VISUAL_CENTERS[cn] ?? [
+        ca.reduce((s, c) => s + c.coords[0], 0) / ca.length,
+        ca.reduce((s, c) => s + c.coords[1], 0) / ca.length,
+      ]) as [number, number],
       count: ca.reduce((s, c) => s + c.count, 0), countries: ca,
     }));
     return { unclusteredCityMarkers: cities, cityMarkers: clusteredCities, countryClusters: countries_, continentClusters: continents };
@@ -732,6 +749,18 @@ export default function DrawingGlobe({ exhibitions, onClose, onSelectExhibition,
 
   // ── Effects ───────────────────────────────────────────────────────────────
   const hasInitialized = useRef(false);
+
+  // Prevent mobile page scrolling when dragging
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    const preventScroll = (e: TouchEvent) => {
+      e.preventDefault();
+    };
+    el.addEventListener("touchmove", preventScroll, { passive: false });
+    return () => el.removeEventListener("touchmove", preventScroll);
+  }, []);
+
   useEffect(() => {
     if (!containerRef.current) return;
     const obs = new ResizeObserver(entries => {
@@ -740,8 +769,10 @@ export default function DrawingGlobe({ exhibitions, onClose, onSelectExhibition,
         setSize({ w, h });
         if (!hasInitialized.current && w > 0 && h > 0) {
           const initSc = Math.min(w, h) * 0.35;
-          scaleRef.current = initSc;
-          setScaleState(initSc);
+          if (!hasRestoredReturnState.current) {
+            scaleRef.current = initSc;
+            setScaleState(initSc);
+          }
           hasInitialized.current = true;
         }
       }
@@ -945,6 +976,15 @@ export default function DrawingGlobe({ exhibitions, onClose, onSelectExhibition,
     return dist <= getDentedRadius(Math.atan2(pos[1] - cy, pos[0] - cx), scale);
   };
 
+  // Keep cluster markers away from the heavily dented rim so they don't appear
+  // in visually clipped/warped regions of the globe.
+  const isInMarkerSafeZone = (pos: [number, number] | null) => {
+    if (!pos) return false;
+    const cx = size.w / 2, cy = size.h / 2;
+    const dist = Math.sqrt((pos[0] - cx) ** 2 + (pos[1] - cy) ** 2);
+    return dist <= getDentedRadius(Math.atan2(pos[1] - cy, pos[0] - cx), scale) * 0.9;
+  };
+
   // ── Backface culling: hide markers on the back hemisphere of the globe ─────
   // Uses geoDistance from the view center. < π/2 rad (90°) = front face, visible.
   // We use 1.55 (slightly less than π/2) for a crisp edge fade.
@@ -958,55 +998,139 @@ export default function DrawingGlobe({ exhibitions, onClose, onSelectExhibition,
 
   // ── Zoom to coords ────────────────────────────────────────────────────────
   const zoomToCoords = useCallback((coords: [number, number], targetScale: number) => {
-    const targetRot = [-coords[0], -coords[1], 0] as [number, number, number];
-    const startRot = rotation, startSc = scaleRef.current;
+    // Always read from ref to get the CURRENT rotation, avoiding stale closure bugs
+    const currentRot = rotationRef.current;
+    let tLon = -coords[0];
+    const sLon = currentRot[0];
+    
+    // Calculate the shortest path for longitude rotation
+    let diff = tLon - sLon;
+    diff = ((diff + 180) % 360 + 360) % 360 - 180;
+    tLon = sLon + diff;
+    
+    const targetRot = [tLon, -coords[1], 0] as [number, number, number];
+    const startRot = currentRot, startSc = scaleRef.current;
     const t0 = performance.now();
     const animate = (t: number) => {
-      const p = Math.min((t - t0) / 800, 1), ease = 1 - Math.pow(1 - p, 3);
+      const p = Math.min((t - t0) / 1200, 1);
+      // Smoother easing curve (cubic in/out)
+      const ease = p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2;
       setRotation([startRot[0] + (targetRot[0] - startRot[0]) * ease, startRot[1] + (targetRot[1] - startRot[1]) * ease, 0]);
       setScale(startSc + (targetScale - startSc) * ease);
       if (p < 1) requestAnimationFrame(animate);
     };
     requestAnimationFrame(animate);
-  }, [rotation]);
+  // No rotation dependency — reads from rotationRef to always get fresh value
+  }, []);
 
   const handleClusterClick = useCallback((item: CityMarker | CountryCluster | ContinentCluster) => {
-    if ((item as ContinentCluster).isContinent) zoomToCoords(item.coords, Math.max(scaleRef.current, initialScale * 1.8));
-    else if ((item as CountryCluster).isCountry) zoomToCoords(item.coords, Math.max(scaleRef.current * 1.5, initialScale * 6.0));
-    else {
-      // City cluster: require the user to be zoomed in enough before opening the panel.
-      // At scale < 3.5x we zoom in closer first; at scale >= 3.5x we open the panel.
-      if (scale < initialScale * 3.5) {
-        // Zoom into this city area so nearby cities become visible separately
-        zoomToCoords(item.coords, Math.max(scaleRef.current * 2.0, initialScale * 8.0));
-      } else {
-        // Already zoomed close enough — open the mini-map panel
-        setSelectedCluster(item as CityMarker);
-        zoomToCoords(item.coords, Math.max(scaleRef.current * 1.5, initialScale * 10.0));
-      }
+    if ((item as ContinentCluster).isContinent) {
+      const continent = item as ContinentCluster;
+      const focusCoords = CONTINENT_VISUAL_CENTERS[continent.continentName] ?? continent.coords;
+      // Rotate to continent center and zoom to level 1 (country clusters visible).
+      // targetLevel switches to 1 at scale >= initialScale * 1.5, so aim for 1.8×.
+      const targetScale = initialScale * 1.8;
+      setSelectedCluster(null); // ensure level stays at 0
+      setSelectedCityInPanel(null);
+      zoomToCoords(focusCoords, targetScale);
+    } else if ((item as CountryCluster).isCountry) {
+      zoomToCoords(item.coords, Math.max(scaleRef.current, initialScale * 6.0));
+    } else {
+      // City cluster: always open the panel immediately when tapped, and also zoom in
+      setSelectedCluster(item as CityMarker);
+      const targetScale = scaleRef.current < initialScale * 3.5 ? Math.max(scaleRef.current, initialScale * 8.0) : Math.max(scaleRef.current, initialScale * 10.0);
+      zoomToCoords(item.coords, targetScale);
     }
-  }, [zoomToCoords, initialScale, scale]);
+  }, [zoomToCoords, initialScale]);
 
   const handleMuseumClick = useCallback((museum: Exhibition & { shortName: string }) => {
     setSelectedPointId(museum.id);
+    try {
+      const fallbackClusterId = selectedCluster?.id || cityMarkers.find((c) => c.museums.some((m) => m.id === museum.id))?.id || null;
+      const snapshot = {
+        ts: Date.now(),
+        selectedClusterId: fallbackClusterId,
+        selectedCityInPanel,
+        selectedPointId: museum.id,
+        rotation: rotationRef.current,
+        scale: scaleRef.current,
+      };
+      sessionStorage.setItem(DRAWING_GLOBE_RETURN_STATE_KEY, JSON.stringify(snapshot));
+    } catch {
+      // ignore
+    }
     if (onSelectExhibition) {
       onSelectExhibition(museum);
     }
-  }, [onSelectExhibition]);
+  }, [cityMarkers, onSelectExhibition, selectedCluster, selectedCityInPanel]);
 
   useEffect(() => {
     if (scale < initialScale * 2.5 && selectedCluster) { setSelectedCluster(null); setSelectedPointId(null); }
   }, [scale, initialScale, selectedCluster]);
 
+  useEffect(() => {
+    window.dispatchEvent(new CustomEvent('drawing-mini-panel-visibility', { detail: { open: !!selectedCluster } }));
+    return () => {
+      window.dispatchEvent(new CustomEvent('drawing-mini-panel-visibility', { detail: { open: false } }));
+    };
+  }, [selectedCluster]);
+
+  useEffect(() => {
+    if (hasRestoredReturnState.current) return;
+    if (!cityMarkers.length) return;
+    let parsed: any = null;
+    try {
+      const raw = sessionStorage.getItem(DRAWING_GLOBE_RETURN_STATE_KEY);
+      if (!raw) return;
+      parsed = JSON.parse(raw);
+    } catch {
+      parsed = null;
+    }
+    if (!parsed || typeof parsed !== 'object') return;
+
+    const { selectedClusterId, selectedCityInPanel: restoredCity, selectedPointId: restoredPoint, rotation: savedRot, scale: savedScale } = parsed;
+    if (Array.isArray(savedRot) && savedRot.length === 3) {
+      const rotTuple: [number, number, number] = [Number(savedRot[0]) || 0, Number(savedRot[1]) || 0, Number(savedRot[2]) || 0];
+      rotationRef.current = rotTuple;
+      setRotation(rotTuple);
+    }
+    if (typeof savedScale === 'number' && Number.isFinite(savedScale) && savedScale > 0) {
+      scaleRef.current = savedScale;
+      setScaleState(savedScale);
+    }
+    if (typeof selectedClusterId === 'string' && selectedClusterId) {
+      const found = cityMarkers.find((c) => c.id === selectedClusterId) || null;
+      if (found) setSelectedCluster(found);
+    }
+    if (typeof restoredCity === 'string') setSelectedCityInPanel(restoredCity);
+    if (typeof restoredPoint === 'string') setSelectedPointId(restoredPoint);
+
+    hasRestoredReturnState.current = true;
+    try {
+      sessionStorage.removeItem(DRAWING_GLOBE_RETURN_STATE_KEY);
+    } catch {
+      // ignore
+    }
+  }, [cityMarkers]);
+
+  useEffect(() => {
+    if (hoveredMuseumId && hoverSource === 'map') {
+      const el = document.getElementById(`dg-museum-item-${hoveredMuseumId}`);
+      if (el) {
+        el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+      }
+    }
+  }, [hoveredMuseumId, hoverSource]);
+
   const getBottomRight = () => {
     if (hoveredMarker) {
       const city = cityMarkers.find(c => c.id === hoveredMarker);
-      if (city) return { title: city.cityName.toUpperCase(), count: `${city.count} MUSEUMS` };
+      if (city) return { title: city.cityName.toUpperCase() };
       const country = countryClusters.find(c => c.id === hoveredMarker);
-      if (country) return { title: country.countryName.toUpperCase(), count: `${country.count} MUSEUMS` };
+      if (country) return { title: country.countryName.toUpperCase() };
     }
-    if (hoveredCountry) return { title: hoveredCountry.toUpperCase(), count: 'HOVER' };
-    return { title: 'COLLY', count: 'ATLAS' };
+    if (hoveredCountry) return { title: hoveredCountry.toUpperCase() };
+    return { title: 'COLLY' };
   };
   const brData = getBottomRight();
 
@@ -1028,92 +1152,6 @@ export default function DrawingGlobe({ exhibitions, onClose, onSelectExhibition,
           </filter>
         </defs>
       </svg>
-
-      {/* ── Navigator (top-right) ── */}
-      <div style={{ ...S.nav, paddingLeft: isSearchOpen ? 16 : 6, gap: 4 }}>
-        <div style={{ display: 'flex', alignItems: 'center', width: isSearchOpen ? 240 : 0, overflow: 'hidden', transition: 'width 0.4s cubic-bezier(0.4, 0, 0.2, 1)', opacity: isSearchOpen ? 1 : 0 }}>
-             <input
-               autoFocus
-               value={searchQuery}
-               onChange={e => setSearchQuery(e.target.value)}
-               placeholder="Search museum or location..."
-               style={{ border: 'none', outline: 'none', background: 'transparent', width: '100%', fontFamily: 'monospace', fontSize: 13, fontWeight: 700, pointerEvents: isSearchOpen ? 'auto' : 'none' }}
-             />
-        </div>
-
-        <button style={{ ...S.navBtn, background: isSearchOpen ? 'transparent' : '#111111', borderRadius: '50%', transition: 'background 0.4s' }} title="Search" onClick={() => { setIsSearchOpen(!isSearchOpen); setIsMenuOpen(false); if(isSearchOpen) setSearchQuery(''); }}>
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={isSearchOpen ? "#111111" : "#FFFFFF"} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ transition: 'stroke 0.4s' }}>
-            <circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" />
-          </svg>
-        </button>
-
-        <button style={S.navBtn} onClick={() => { setIsMenuOpen(!isMenuOpen); setIsSearchOpen(false); }}>
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#111111" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-            <line x1="4" y1="12" x2="20" y2="12" /><line x1="4" y1="6" x2="20" y2="6" /><line x1="4" y1="18" x2="20" y2="18" />
-          </svg>
-        </button>
-
-        {/* X close button removed — use INTERACTIVE MAP toggle button to switch maps */}
-      </div>
-
-      {/* ── Menu Dropdown ── */}
-      <ul style={{
-        position: 'absolute', top: 90, right: 32, display: 'flex', flexDirection: 'column', gap: 16, padding: '24px 32px',
-        background: '#FFFFFF', border: '3px solid #111111', borderRadius: 24, boxShadow: '8px 8px 0px 0px rgba(17,17,17,1)',
-        fontWeight: 900, color: '#111111', fontSize: 13, letterSpacing: '0.15em', fontFamily: 'sans-serif', textTransform: 'uppercase', listStyle: 'none', filter: 'url(#dg-sketch-ui)', zIndex: 19,
-        transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
-        opacity: isMenuOpen ? 1 : 0,
-        transform: isMenuOpen ? 'translateY(0)' : 'translateY(-10px)',
-        pointerEvents: isMenuOpen ? 'auto' : 'none'
-      }}>
-        <li style={S.navMenuListItem} onClick={() => { setIsMenuOpen(false); if (onClose) onClose(); navigate('/mypage?theme=drawing'); }}>MY PAGE</li>
-        <li style={S.navMenuListItem} onClick={() => { setIsMenuOpen(false); if (onClose) onClose(); navigate('/community?theme=drawing'); }}>COMMUNITY</li>
-        {/* EXIT menu item removed — no direct close to D3geo */}
-      </ul>
-
-      {/* ── Search Results Dropdown ── */}
-      <div style={{
-          position: 'absolute', top: 90, right: 32, width: 320, maxHeight: 400, overflowY: 'auto',
-          background: '#FFFFFF', border: '3px solid #111111', borderRadius: 24, padding: 16,
-          boxShadow: '8px 8px 0px 0px rgba(17,17,17,1)', filter: 'url(#dg-sketch-ui)', zIndex: 19,
-          display: 'flex', flexDirection: 'column', gap: 12,
-          transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
-          opacity: isSearchOpen && searchQuery.trim().length > 0 ? 1 : 0,
-          transform: isSearchOpen && searchQuery.trim().length > 0 ? 'translateY(0)' : 'translateY(-10px)',
-          pointerEvents: isSearchOpen && searchQuery.trim().length > 0 ? 'auto' : 'none'
-      }}>
-        {(() => {
-          if (!isSearchOpen || searchQuery.trim().length === 0) return null;
-          const q = searchQuery.toLowerCase();
-          const results = exhibitions.filter(m => 
-            m.name.toLowerCase().includes(q) || 
-            (m as any).region?.toLowerCase().includes(q) ||
-            ((m as any).country || '').toLowerCase().includes(q)
-          ).slice(0, 10);
-          
-          if (results.length === 0) return <div style={{ fontSize: 11, fontFamily: 'monospace', fontWeight: 600, opacity: 0.5, textAlign: 'center', padding: '16px 0' }}>NO RESULTS FOUND</div>;
-
-          return results.map(m => (
-            <div key={m.id} 
-              style={{ cursor: 'pointer', padding: '8px 12px', borderRadius: 12, border: '1px solid rgba(17,17,17,0.1)', background: '#FFFFFF', transition: 'background 0.2s' }}
-              onMouseEnter={e => e.currentTarget.style.background = '#F0F0F0'}
-              onMouseLeave={e => e.currentTarget.style.background = '#FFFFFF'}
-              onClick={() => {
-                setIsSearchOpen(false);
-                setSearchQuery('');
-                const targetCity = cityMarkers.find(c => c.museums.some(mx => mx.id === m.id));
-                if (targetCity) {
-                   handleClusterClick(targetCity);
-                   setSelectedPointId(m.id);
-                }
-              }}
-            >
-              <div style={{ fontSize: 13, fontWeight: 900, fontFamily: 'sans-serif', marginBottom: 2 }}>{m.name}</div>
-              <div style={{ fontSize: 10, fontFamily: 'monospace', opacity: 0.6 }}>{(m as any).region || ''}{((m as any).region && (m as any).country) ? ', ' : ''}{(m as any).country || ''}</div>
-            </div>
-          ));
-        })()}
-      </div>
 
       {/* ── NARD Logo (top-left) ── */}
       <div style={S.logoWrap} onMouseEnter={() => setIsHomeHovered(true)} onMouseLeave={() => setIsHomeHovered(false)}>
@@ -1138,7 +1176,7 @@ export default function DrawingGlobe({ exhibitions, onClose, onSelectExhibition,
               </g>
             </clipPath>
           </defs>
-          <g filter="url(#dg-wb)">
+          <g {...(isMobile ? {} : { filter: "url(#dg-wb)" })}>
             <rect x="16" y="16" width={isHomeHovered ? 110 : 48} height="48" rx="24" fill="none" stroke="#111111" strokeWidth="2.5" style={{ transition: 'all 0.3s' }} />
             <g clipPath="url(#dg-cc)">
               <text x="32" y="48" textAnchor="start" fontSize="24" fontWeight="bold" fill="#111111" fontFamily="sans-serif" className={isHomeHovered ? '' : 'dg-an'} style={{ transition: 'all 0.3s' }}>
@@ -1219,7 +1257,7 @@ export default function DrawingGlobe({ exhibitions, onClose, onSelectExhibition,
                 stroke="none"
                 onMouseEnter={() => setHoveredCountry(country.properties.name)}
                 onMouseLeave={() => setHoveredCountry(null)}
-                onClick={e => { e.stopPropagation(); const c = d3.geoCentroid(country); zoomToCoords(c as [number, number], Math.max(scaleRef.current * 1.5, initialScale * 6.0)); }}
+                onClick={e => { e.stopPropagation(); const c = d3.geoCentroid(country); zoomToCoords(c as [number, number], Math.max(scaleRef.current, initialScale * 6.0)); }}
                 style={{ cursor: 'pointer', pointerEvents: 'auto', transition: 'fill 0.2s' }}
               />
             ))}
@@ -1239,13 +1277,13 @@ export default function DrawingGlobe({ exhibitions, onClose, onSelectExhibition,
 
         {/* BLOBS ONLY inside sketch-globe — each blob sized to match its text label */}
         <g {...(isMobile ? {} : { filter: "url(#dg-sketch-globe)" })}>
-          <g filter="url(#dg-gooey)">
+          <g {...(isMobile ? {} : { filter: "url(#dg-gooey)" })}>
 
             {/* Continent blobs (level 0) */}
             {continentClusters.map(cluster => {
               if (selectedCluster) return null;
               const pos = projection(cluster.coords);
-              if (!pos || !isInGlobe(pos as [number, number]) || !isGeoVisible(cluster.coords)) return null;
+              if (!pos || !isInMarkerSafeZone(pos as [number, number]) || !isGeoVisible(cluster.coords)) return null;
               const txt = cluster.continentName.toUpperCase();
               const bw = txt.length * 8 + 20;
               return (
@@ -1263,7 +1301,7 @@ export default function DrawingGlobe({ exhibitions, onClose, onSelectExhibition,
             {countryClusters.map(cluster => {
               if (selectedCluster) return null;
               const pos = projection(cluster.coords);
-              if (!pos || !isInGlobe(pos as [number, number]) || !isGeoVisible(cluster.coords)) return null;
+              if (!pos || !isInMarkerSafeZone(pos as [number, number]) || !isGeoVisible(cluster.coords)) return null;
               const isHov = hoveredMarker === cluster.id;
               const bw = isHov ? cluster.countryName.toUpperCase().length * 8 + 20 : 28;
               return (
@@ -1284,7 +1322,7 @@ export default function DrawingGlobe({ exhibitions, onClose, onSelectExhibition,
             {/* City blobs (level 2) */}
             {cityMarkers.map(city => {
               const mPos = projection(city.coords);
-              if (!mPos || !isInGlobe(mPos as [number, number]) || !isGeoVisible(city.coords)) return null;
+              if (!mPos || !isInMarkerSafeZone(mPos as [number, number]) || !isGeoVisible(city.coords)) return null;
               if (selectedCluster && selectedCluster.id !== city.id) return null;
 
               const country = (city.museums[0] as any).country || '';
@@ -1338,7 +1376,7 @@ export default function DrawingGlobe({ exhibitions, onClose, onSelectExhibition,
         {continentClusters.map(cluster => {
           if (selectedCluster) return null;
           const pos = projection(cluster.coords);
-          if (!pos || !isInGlobe(pos as [number, number]) || !isGeoVisible(cluster.coords)) return null;
+          if (!pos || !isInMarkerSafeZone(pos as [number, number]) || !isGeoVisible(cluster.coords)) return null;
           const txt = cluster.continentName.toUpperCase();
           const rectWidth = txt.length * 8 + 20;
           const rectX = -(rectWidth / 2);
@@ -1354,10 +1392,11 @@ export default function DrawingGlobe({ exhibitions, onClose, onSelectExhibition,
                 willChange: 'opacity',
               }}
               onClick={e => { e.stopPropagation(); handleClusterClick(cluster); }}
+                onTouchEnd={e => { e.preventDefault(); e.stopPropagation(); handleClusterClick(cluster); }}
               onMouseEnter={() => setHoveredMarker(cluster.id)}
               onMouseLeave={() => setHoveredMarker(null)}>
               <rect x={rectX} y="-34" width={rectWidth} height="28" rx="14" fill="transparent" />
-              <g filter="url(#dg-text-flow)">
+              <g {...(isMobile ? {} : { filter: "url(#dg-text-flow)" })}>
                 <text x="0" y="-15" textAnchor="middle" fontWeight="bold" fill="#FFFFFF" fontFamily="sans-serif"
                   style={{ fontSize: '10px', letterSpacing: '0.05em' }}>
                   {txt}
@@ -1371,7 +1410,7 @@ export default function DrawingGlobe({ exhibitions, onClose, onSelectExhibition,
         {countryClusters.map(cluster => {
           if (selectedCluster) return null;
           const pos = projection(cluster.coords);
-          if (!pos || !isInGlobe(pos as [number, number]) || !isGeoVisible(cluster.coords)) return null;
+          if (!pos || !isInMarkerSafeZone(pos as [number, number]) || !isGeoVisible(cluster.coords)) return null;
           const isHov = hoveredMarker === cluster.id;
           const textContent = isHov ? cluster.countryName.toUpperCase() : cluster.count;
           const rectWidth = isHov ? textContent.toString().length * 8 + 20 : 28;
@@ -1389,10 +1428,11 @@ export default function DrawingGlobe({ exhibitions, onClose, onSelectExhibition,
                 willChange: 'opacity',
               }}
               onClick={e => { e.stopPropagation(); handleClusterClick(cluster); }}
+                onTouchEnd={e => { e.preventDefault(); e.stopPropagation(); handleClusterClick(cluster); }}
               onMouseEnter={() => setHoveredMarker(cluster.id)}
               onMouseLeave={() => setHoveredMarker(null)}>
               <rect x={rectX} y="-34" width={rectWidth} height="28" rx="14" fill="transparent" />
-              <g filter={(targetLevel === 1 || level > 0.5) ? "url(#dg-text-flow)" : undefined}>
+              <g filter={(!isMobile && (targetLevel === 1 || level > 0.5)) ? "url(#dg-text-flow)" : undefined}>
                 <text x="0" y="-15" textAnchor="middle" fontWeight="bold" fill="#FFFFFF" fontFamily="sans-serif"
                   style={{ fontSize: isHov ? '10px' : '14px', letterSpacing: isHov ? '0.05em' : '0' }}>
                   {textContent}
@@ -1407,7 +1447,7 @@ export default function DrawingGlobe({ exhibitions, onClose, onSelectExhibition,
           if (selectedCluster && selectedCluster.id !== city.id) return null;
           
           const mPos = projection(city.coords);
-          if (!mPos || !isInGlobe(mPos as [number, number]) || !isGeoVisible(city.coords)) return null;
+          if (!mPos || !isInMarkerSafeZone(mPos as [number, number]) || !isGeoVisible(city.coords)) return null;
 
           const country = (city.museums[0] as any).country || '';
           const contName = getContinent(country);
@@ -1439,15 +1479,16 @@ export default function DrawingGlobe({ exhibitions, onClose, onSelectExhibition,
               style={{
                 transform: `translate(${tx}px, ${ty}px)`,
                 opacity: isSel ? 1 : (targetLevel === 2 ? 1 : 0),
-                pointerEvents: targetLevel === 2 ? 'auto' : 'none',
+                pointerEvents: (targetLevel === 2 || isSel) ? 'auto' : 'none',
                 transition: 'opacity 0.4s ease',
                 cursor: 'pointer',
                 willChange: 'transform, opacity',
               }}
               onClick={e => {
-                e.stopPropagation();
-                handleClusterClick(city);
-              }}
+e.stopPropagation();
+handleClusterClick(city);
+}}
+                onTouchEnd={e => { e.preventDefault(); e.stopPropagation(); handleClusterClick(city); }}
               onMouseEnter={() => setHoveredMarker(city.id)}
               onMouseLeave={() => setHoveredMarker(null)}>
               
@@ -1461,7 +1502,7 @@ export default function DrawingGlobe({ exhibitions, onClose, onSelectExhibition,
                   </g>
                 </g>
               ) : (
-                <g filter={(targetLevel === 2 || level > 1.0) ? "url(#dg-text-flow)" : undefined}>
+                <g filter={(!isMobile && (targetLevel === 2 || level > 1.0)) ? "url(#dg-text-flow)" : undefined}>
                   <text x="0" y="-15" textAnchor="middle" fontWeight="bold" fill="#FFFFFF" fontFamily="sans-serif"
                     style={{ fontSize: isHov ? '10px' : '14px', letterSpacing: isHov ? '0.05em' : '0' }}>
                     {textContent}
@@ -1478,56 +1519,17 @@ export default function DrawingGlobe({ exhibitions, onClose, onSelectExhibition,
 
       {/* Bottom-right label */}
       <div style={S.brLabel}>
-        <svg width="400" height="80" viewBox="0 0 400 80" style={{ overflow: 'visible' }}>
-          <g filter="url(#dg-kitsch-wobble)">
-            <text x="400" y="40" textAnchor="end"
-              fontSize={brData.title.length > 15 ? 22 : brData.title.length > 10 ? 30 : 40}
+        <svg width="320" height="52" viewBox="0 0 320 52" style={{ overflow: 'visible' }}>
+          <g {...(isMobile ? {} : { filter: "url(#dg-kitsch-wobble)" })}>
+            <text x="320" y="36" textAnchor="end"
+              fontSize={brData.title.length > 15 ? 18 : brData.title.length > 10 ? 24 : 32}
               fontWeight="bold"
               fill="#111111"
               fontFamily="sans-serif"
               letterSpacing="0.1em">{brData.title}</text>
-            <text x="400" y="65" textAnchor="end" fontSize="14" fontWeight="bold" fill="#111111"
-              fontFamily="sans-serif"
-              letterSpacing="0.4em">{brData.count}</text>
           </g>
         </svg>
       </div>
-
-      {/* Instructions */}
-      <div style={S.instructions}>
-        <p style={S.instructionText}>Scroll to Zoom</p>
-        <p style={S.instructionText}>Drag to Rotate</p>
-      </div>
-
-      {/* Interactive Map switch — brutalist sketch style */}
-      {onSwitchToInteractive && (
-        <button
-          onClick={onSwitchToInteractive}
-          style={{
-            position: 'fixed', bottom: 28, left: 28, zIndex: 200,
-            display: 'flex', alignItems: 'center', gap: 10,
-            background: '#111111', color: '#CCFF00',
-            border: '2.5px solid #111111',
-            padding: '11px 20px', fontSize: 9, fontWeight: 700,
-            letterSpacing: '0.2em', fontFamily: "'Space Mono', 'Courier New', monospace",
-            cursor: 'pointer', textTransform: 'uppercase',
-            boxShadow: '3px 3px 0 rgba(17,17,17,0.35)',
-            filter: 'url(#dg-sketch-ui)',
-            transition: 'box-shadow 0.1s, transform 0.1s',
-          }}
-          onMouseEnter={e => { e.currentTarget.style.boxShadow = '1px 1px 0 rgba(17,17,17,0.35)'; e.currentTarget.style.transform = 'translate(2px,2px)'; }}
-          onMouseLeave={e => { e.currentTarget.style.boxShadow = '3px 3px 0 rgba(17,17,17,0.35)'; e.currentTarget.style.transform = 'none'; }}
-        >
-          <svg width="13" height="13" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
-            <circle cx="7" cy="7" r="5.5" />
-            <ellipse cx="7" cy="7" rx="2.5" ry="5.5" />
-            <line x1="1.5" y1="7" x2="12.5" y2="7" />
-            <line x1="2.5" y1="4" x2="11.5" y2="4" />
-            <line x1="2.5" y1="10" x2="11.5" y2="10" />
-          </svg>
-          INTERACTIVE MAP
-        </button>
-      )}
 
       {/* ── City Panel ─────────────────────────────────────────────────── */}
       {(() => {
@@ -1651,31 +1653,77 @@ export default function DrawingGlobe({ exhibitions, onClose, onSelectExhibition,
 
         const winH = typeof window !== 'undefined' ? window.innerHeight : 700;
         const winW = typeof window !== 'undefined' ? window.innerWidth : 900;
-        const panelW = Math.max(400, Math.min(winW - 40, 560));
-        const panelH = Math.min(winH - 40, 600);
+        const panelW = winW <= 768 ? "100%" : Math.max(400, Math.min(winW - 40, 560));
+        const panelH = Math.min(winH - 40, 1200);
         // Thumbnail strip height: fixed 140px when siblings exist (always visible)
         const STRIP_H = hasSiblings ? 142 : 0;
+        const listTargetHeight = Math.round(Math.min(winH * 0.4, Math.max(120, panelMuseums.length * 78 + 20)));
 
         return (
-          <div style={{
-            ...S.panel(show),
-            width: panelW, height: panelH,
-            display: 'flex', flexDirection: 'column',
-            overflow: 'hidden',
-          }}>
-            {/* ── Header ── */}
-            <div style={{ ...S.panelHeader, flexShrink: 0 }}>
-              <h2 style={{ ...S.panelTitle, transition: 'all 0.3s ease' }}>
-                {isOverview ? `${cluster?.cityName?.toUpperCase()} REGION` : activeCity?.cityName?.toUpperCase()} MUSEUMS
-              </h2>
-              <button style={S.panelCloseBtn} onClick={() => {
+          <>
+          {show && (
+            <div
+              onClick={() => {
+                setSelectedCluster(null);
+                setSelectedPointId(null);
+                setSelectedCityInPanel(null);
+                setHoveredMuseumId(null);
+              }}
+              style={{ position: 'fixed', inset: 0, zIndex: 29, background: 'transparent' }}
+            />
+          )}
+          <div
+            onClick={(e) => e.stopPropagation()}
+            style={{
+              ...S.panel(show, winW <= 768),
+              width: panelW, height: panelH, maxHeight: panelH,
+              display: 'flex', flexDirection: 'column',
+              overflow: 'hidden',
+              position: 'relative',
+            }}>
+            <button
+              style={{
+                ...S.panelCloseBtn,
+                width: 38,
+                height: 38,
+                border: '2px solid #111111',
+                borderRadius: 999,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                position: 'absolute',
+                right: 14,
+                top: 8,
+                background: '#ffffff',
+                zIndex: 8,
+                flexShrink: 0,
+              }}
+              onClick={() => {
                 setSelectedCluster(null); setSelectedPointId(null);
                 setSelectedCityInPanel(null); setHoveredMuseumId(null);
-              }}>
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#111111" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
-                  <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
-                </svg>
-              </button>
+              }}
+              aria-label="Close map panel"
+            >
+              <span
+                style={{
+                  pointerEvents: 'none',
+                  color: '#111111',
+                  fontSize: 30,
+                  fontWeight: 900,
+                  lineHeight: 1,
+                  transform: 'translateY(-1px)',
+                  fontFamily: 'monospace',
+                }}
+              >
+                ×
+              </span>
+            </button>
+            {/* ── Header ── */}
+            <div style={{ ...S.panelHeader, flexShrink: 0, minHeight: 52, position: 'relative', padding: '8px 62px 8px 16px' }}>
+              <h2 style={{ ...S.panelTitle, transition: 'all 0.3s ease', margin: 0, maxWidth: 'calc(100% - 62px)', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', fontSize: 15, lineHeight: 1.1, letterSpacing: '0.09em' }}>
+                {isOverview ? `${cluster?.cityName?.toUpperCase()} REGION` : activeCity?.cityName?.toUpperCase()} MUSEUMS 
+                <span style={{ fontSize: '0.8em', opacity: 0.6, marginLeft: 8 }}>({panelMuseums.length})</span>
+              </h2>
             </div>
 
             {/* ── Top: horizontal city thumbnail strip (always visible if siblings exist) ── */}
@@ -1793,8 +1841,7 @@ export default function DrawingGlobe({ exhibitions, onClose, onSelectExhibition,
                   const activeL = layoutCities.find(c => c.id === activeCityId) || layoutCities[0] || { ox: 0, oy: 0 };
                   let localMinX = 0, localMaxX = 200, localMinY = 0, localMaxY = 200;
                   panelMuseums.forEach((m) => {
-                     // Ignore massive label names for the bounding scale, they can bleed off edge
-                     const lw = 20; 
+                     const lw = 20;
                      localMinX = Math.min(localMinX, m.lx - lw);
                      localMaxX = Math.max(localMaxX, m.lx + lw);
                      localMinY = Math.min(localMinY, m.ly - 40);
@@ -1821,7 +1868,7 @@ export default function DrawingGlobe({ exhibitions, onClose, onSelectExhibition,
                 let ty = 400 - viewCy * curScale;
                 
                 return (
-                  <svg viewBox="0 0 800 800" style={{ width: '100%', height: '100%', overflow: 'visible' }}>
+                  <svg viewBox="0 0 800 800" preserveAspectRatio="xMidYMid meet" style={{ width: '100%', height: '100%', overflow: 'hidden' }}>
                     <defs>
                       <style>{`
                         @keyframes dg-dp{0%{stroke-dashoffset:1000}100%{stroke-dashoffset:0}}
@@ -1881,12 +1928,21 @@ export default function DrawingGlobe({ exhibitions, onClose, onSelectExhibition,
                                     const dimmed = hoveredMuseumId !== null && !isHovered && !isSelected;
                                     const lAngle = museum.labelAngle ?? 0;
                                     const anchor = Math.cos(lAngle) < -0.15 ? 'end' : Math.cos(lAngle) > 0.15 ? 'start' : 'middle';
+                                    const rawName = museum.shortName?.toUpperCase() || '';
+                                    const labelName = rawName.length > 26 ? `${rawName.slice(0, 25)}…` : rawName;
+                                    const labelX = Math.max(14, Math.min(186, museum.lx));
                                     
                                     return (
                                       <g key={museum.id}
                                         onClick={() => handleMuseumClick(museum)}
-                                        onMouseEnter={() => setHoveredMuseumId(museum.id)}
-                                        onMouseLeave={() => setHoveredMuseumId(null)}
+                                        onMouseEnter={() => {
+                                          setHoveredMuseumId(museum.id);
+                                          setHoverSource('map');
+                                        }}
+                                        onMouseLeave={() => {
+                                          setHoveredMuseumId(null);
+                                          setHoverSource(null);
+                                        }}
                                         style={{ cursor: 'pointer' }}>
                                         <line x1={museum.cx} y1={museum.cy} x2={museum.lx} y2={museum.ly}
                                           stroke="#111111" strokeWidth="0.6"
@@ -1900,25 +1956,24 @@ export default function DrawingGlobe({ exhibitions, onClose, onSelectExhibition,
                                         {isSelected && <circle cx={museum.cx} cy={museum.cy} r="11" fill="none" stroke="#111" strokeWidth="1.2" strokeDasharray="3.5 2.5" opacity="0.45" style={{ pointerEvents: 'none' }} />}
                                         
                                         {(() => {
-                                          const textStr = museum.shortName?.toUpperCase() || '';
-                                          const twBase = textStr.length * 6.5;
+                                          const twBase = labelName.length * 6.5;
                                           const padX = 14;
                                           const hoverTw = twBase + padX * 2;
                                           const tw = isHovered ? hoverTw : 10;
                                           const th = isHovered ? 28 : 10;
                                           
-                                          let rectX = museum.lx;
-                                          if (anchor === 'end') rectX = isHovered ? museum.lx - twBase - padX : museum.lx - 5;
-                                          else if (anchor === 'middle') rectX = isHovered ? museum.lx - hoverTw / 2 : museum.lx - 5;
-                                          else rectX = isHovered ? museum.lx - padX : museum.lx - 5; // start
+                                          let rectX = labelX;
+                                          if (anchor === 'end') rectX = isHovered ? labelX - twBase - padX : labelX - 5;
+                                          else if (anchor === 'middle') rectX = isHovered ? labelX - hoverTw / 2 : labelX - 5;
+                                          else rectX = isHovered ? labelX - padX : labelX - 5; // start
                                           
                                           return (
                                               <rect fill="#111111"
         x={rectX} y={museum.ly - th / 2} width={tw} height={th} rx={isHovered ? 14 : 5}
-        style={{ opacity: isHovered ? 1 : 0, transformOrigin: `${museum.lx}px ${museum.ly}px`, transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)', pointerEvents: 'none' }} />
+        style={{ opacity: isHovered ? 1 : 0, transformOrigin: `${labelX}px ${museum.ly}px`, transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)', pointerEvents: 'none' }} />
                                           );
                                         })()}
-                                        <text x={museum.lx} y={museum.ly}
+                                        <text x={labelX} y={museum.ly}
                                           fontSize={isHovered ? '10' : '8'}
                                           fontFamily="monospace"
                                           fontWeight={isHovered ? '800' : '600'}
@@ -1935,7 +1990,7 @@ export default function DrawingGlobe({ exhibitions, onClose, onSelectExhibition,
                                             pointerEvents: 'auto',
                                             userSelect: 'none',
                                           }}>
-                                          {museum.shortName?.toUpperCase()}
+                                          {labelName}
                                         </text>
                                       </g>
                                     );
@@ -1950,29 +2005,73 @@ export default function DrawingGlobe({ exhibitions, onClose, onSelectExhibition,
                 );
               })()}
             </div>
-            {/* ── Footer ── */}
-            <div style={{ ...S.panelInfo, flexShrink: 0 }}>
-              <div style={S.panelInfoTitle}>
-                MUSEUMS: {panelMuseums.length}
-                {hasSiblings && activeCity && (
-                  <span style={{ marginLeft: 8, fontWeight: 400, opacity: 0.5, fontSize: 10 }}>
-                    in {activeCity.cityName}
-                  </span>
-                )}
-              </div>
-              <div style={S.panelInfoRow}>
-                <span>LATITUDE:</span>
-                <span>{(activeCity?.coords[1] ?? 0).toFixed(4)}° N</span>
-              </div>
-              <div style={S.panelInfoRow}>
-                <span>LONGITUDE:</span>
-                <span>{(activeCity?.coords[0] ?? 0).toFixed(4)}°</span>
-              </div>
-              <div style={{ ...S.panelInfoRow, marginTop: 8, paddingTop: 8, borderTop: '2px solid rgba(17,17,17,0.2)' }}>
-                <span>STATUS:</span><span style={{ fontWeight: 700, color: '#111111' }}>ACTIVE SCAN</span>
-              </div>
+            {/* ── Scrollable Museum List ── */}
+            <style>{`
+              .dg-museum-list::-webkit-scrollbar { width: 8px; }
+              .dg-museum-list::-webkit-scrollbar-track { background: transparent; border-left: 2px solid rgba(17,17,17,1); }
+              .dg-museum-list::-webkit-scrollbar-thumb { background: #111111; }
+            `}</style>
+            <div className="dg-museum-list" style={{ 
+              flex: '0 0 auto',
+              overflowY: 'auto', 
+              padding: '12px 16px',
+              borderTop: '2px solid rgba(17,17,17,1)',
+              background: 'rgba(255, 255, 255, 0.4)',
+              maxHeight: `${listTargetHeight}px`,
+              minHeight: 88,
+              transition: 'max-height 0.42s cubic-bezier(0.22, 1, 0.36, 1), min-height 0.42s cubic-bezier(0.22, 1, 0.36, 1)'
+            }}>
+              {panelMuseums.map((m, i) => (
+                <div 
+                  id={`dg-museum-item-${m.id}`}
+                  key={m.id || i}
+                  onMouseEnter={() => {
+                    setHoveredMuseumId(m.id);
+                    setHoverSource('list');
+                  }}
+                  onMouseLeave={() => {
+                    setHoveredMuseumId(null);
+                    setHoverSource(null);
+                  }}
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    handleMuseumClick(m);
+                  }}
+                  style={{
+                    padding: '10px 12px',
+                    marginBottom: 8,
+                    background: hoveredMuseumId === m.id ? '#111111' : '#f8f8f8',
+                    color: hoveredMuseumId === m.id ? '#fff' : '#111111',
+                    border: '1.5px solid #111111',
+                    borderRadius: 4,
+                    cursor: 'pointer',
+                    fontFamily: 'monospace',
+                    fontSize: 12,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: 4,
+                    transition: 'all 0.2s cubic-bezier(0.16, 1, 0.3, 1)',
+                    transform: hoveredMuseumId === m.id ? 'translateY(-2px)' : 'none',
+                    boxShadow: hoveredMuseumId === m.id ? '2px 4px 0 rgba(17,17,17,1)' : '1px 2px 0 rgba(17,17,17,.1)'
+                  }}
+                >
+                  <div style={{ fontWeight: 800, fontSize: 13, letterSpacing: '0.04em' }}>
+                    {m.name || m.shortName}
+                  </div>
+                  {m.city && (
+                    <div style={{ 
+                      fontSize: 10, 
+                      opacity: hoveredMuseumId === m.id ? 0.8 : 0.6,
+                      textTransform: 'uppercase'
+                    }}>
+                      {m.city}
+                    </div>
+                  )}
+                </div>
+              ))}
             </div>
           </div>
+          </>
         );
       })()}
 

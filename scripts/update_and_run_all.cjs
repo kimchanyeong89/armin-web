@@ -2,70 +2,87 @@ const fs = require('fs');
 
 const MD_PATH = 'perm_table_final.md';
 let lines = fs.readFileSync(MD_PATH, 'utf-8').split('\n');
-
 const targetsToRun = [];
 
 let inTable = false;
 for (let i = 0; i < lines.length; i++) {
     const line = lines[i];
-    if (line.includes('| ID |')) {
+    if (line.includes('| No.') || line.includes('| 순번')) {
         inTable = true;
         continue;
     }
+    if (line.includes('---')) continue;
     if (inTable && line.startsWith('| ')) {
         const parts = line.split('|').map(x => x.trim());
-        if (parts.length > 5) {
+        if (parts.length > 8) {
             const id = parseInt(parts[1], 10);
             if (isNaN(id)) continue;
             
-            const fileMatch = parts[4].match(/\[(.*?)\]/);
-            if (!fileMatch) continue;
-            const jsonFile = fileMatch[1];
+            const rawFileName = parts[6];
+            if (!rawFileName) continue;
+            let fileMatch = rawFileName.match(/href="([^"]+)"/) || rawFileName.match(/\[(.*?)\]/) || rawFileName;
+            let fileRelPath = Array.isArray(fileMatch) ? fileMatch[1] : fileMatch;
+            if (fileRelPath.includes(' ')) fileRelPath = fileRelPath.split(' ')[0];
+            if (fileRelPath.includes('<')) fileRelPath = fileRelPath.split('<')[0];
+            fileRelPath = fileRelPath.trim();
             
-            const prefixMatch = parts[4].match(/\`(.+?)\`/);
-            const prefix = prefixMatch ? prefixMatch[1] : jsonFile.replace('.json', '');
+            let jsonFile = fileRelPath;
+            const basename = fileRelPath.split('/').pop();
             
-            let totalCount = 0;
-            let totalWithCount = parseInt(parts[2], 10);
-            if (isNaN(totalWithCount)) totalWithCount = 0;
-
+            if (!fs.existsSync(jsonFile)) {
+                if (fs.existsSync(basename)) jsonFile = basename;
+                else if (fs.existsSync('data/' + basename)) jsonFile = 'data/' + basename;
+                else if (fs.existsSync('public/data/' + basename)) jsonFile = 'public/data/' + basename;
+            }
+            
+            const prefix = parts[5].replace(/<[^>]*>?/gm, '').trim();
+            
             if (fs.existsSync(jsonFile)) {
                 try {
-                    const data = JSON.parse(fs.readFileSync(jsonFile, 'utf-8'));
-                    totalCount = data.length || 0;
-                    if (totalCount === 0 && data.items) totalCount = data.items.length;
+                    const content = fs.readFileSync(jsonFile, 'utf-8');
+                    let data = null;
+                    try {
+                        data = JSON.parse(content);
+                    } catch(e) { }
                     
-                    let countR2 = 0;
-                    const items = Array.isArray(data) ? data : (data.items || []);
-                    for (const item of items) {
-                        let ok = false;
-                        if (item.image && typeof item.image === 'string' && item.image.includes('r2.dev')) ok = true;
-                        if (item.images && Array.isArray(item.images)) {
-                            if (item.images.some(img => typeof img === 'string' && img.includes('r2.dev'))) ok = true;
-                            else if (item.images.some(img => img.url && typeof img.url === 'string' && img.url.includes('r2.dev'))) ok = true;
+                    let totalCount = parseInt(parts[7].replace(/,/g, ''), 10) || 0;
+                    
+                    let actualR2 = 0;
+                    if (Array.isArray(data)) {
+                        totalCount = data.length;
+                        for (const item of data) {
+                            let ok = JSON.stringify(item).includes('r2.dev');
+                            if (ok) actualR2++;
                         }
-                        if (item.imageObjects && Array.isArray(item.imageObjects)) {
-                             if (item.imageObjects.some(img => img.url && typeof img.url === 'string' && img.url.includes('r2.dev'))) ok = true;
+                    } else if (data && data.items) {
+                        totalCount = data.items.length;
+                        for (const item of data.items) {
+                            let ok = JSON.stringify(item).includes('r2.dev');
+                            if (ok) actualR2++;
                         }
-                        if (ok) countR2++;
+                    } else if (data && data.data) {
+                        totalCount = data.data.length;
+                        for (const item of data.data) {
+                            let ok = JSON.stringify(item).includes('r2.dev');
+                            if (ok) actualR2++;
+                        }
+                    } else {
+                        actualR2 = (content.match(/r2\.dev/g) || []).length;
                     }
-                    
-                    let pct = Math.floor((countR2 / totalCount) * 100) || 0;
-                    if (totalCount === 0) pct = 0;
-                    
-                    let r2ScoreStr = `${pct}%`;
-                    if (countR2 >= totalCount && totalCount > 0) r2ScoreStr = `100% [DONE]`;
 
-                    // Update parts[6]
-                    parts[6] = r2ScoreStr;
+                    parts[7] = totalCount.toString();
+                    parts[8] = actualR2.toString();
+
                     lines[i] = `| ${parts.slice(1, -1).join(' | ')} |`;
                     
-                    if (countR2 < totalCount && totalCount > 0) {
-                        targetsToRun.push(`"${jsonFile}|${prefix}"`);
+                    if (actualR2 < totalCount && totalCount > 0) {
+                         targetsToRun.push(`${jsonFile}|${prefix}`);
                     }
                 } catch(e) {
-                    console.error("Error parsing " + jsonFile, e.message);
+                     console.error("Error read/parse", jsonFile);
                 }
+            } else {
+                 // console.log("Missing entirely:", jsonFile, "or", basename);
             }
         }
     }
@@ -73,4 +90,4 @@ for (let i = 0; i < lines.length; i++) {
 
 fs.writeFileSync(MD_PATH, lines.join('\n'));
 console.log(`Updated ${MD_PATH}. Need to run ${targetsToRun.length} collections.`);
-fs.writeFileSync('missing_targets.txt', targetsToRun.join(' '));
+fs.writeFileSync('missing_targets.txt', targetsToRun.join('\n'));

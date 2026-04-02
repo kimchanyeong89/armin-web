@@ -4738,20 +4738,6 @@
       "original_imageUrl": "https://online-sammlung.hamburger-kunsthalle.de/sites/default/files/multimedia-files/108344.jpg"
     },
     {
-      "id": "300927",
-      "resultId": "108335",
-      "title": "Vermalung (grau)",
-      "artist": "Gerhard Richter",
-      "date": "1972",
-      "material": "300927",
-      "dimensions": "200cm x 200cm (Bild)",
-      "inventoryNumber": "300927",
-      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/hamburger-kunsthalle-paintings/300927-imageUrl.webp",
-      "thumbnailUrl": "https://online-sammlung.hamburger-kunsthalle.de/sites/default/files/styles/tile/public/multimedia-files/108335.jpg?itok=1eHCR3vG",
-      "detailUrl": "https://online-sammlung.hamburger-kunsthalle.de/en/objekt/300927/vermalung-grau",
-      "original_imageUrl": "https://online-sammlung.hamburger-kunsthalle.de/sites/default/files/multimedia-files/108335.jpg"
-    },
-    {
       "id": "300951",
       "resultId": "108331",
       "title": "Weiße Konstellation, 1975/76",
@@ -5732,48 +5718,6 @@
       "original_imageUrl": "https://online-sammlung.hamburger-kunsthalle.de/sites/default/files/multimedia-files/66709.jpg"
     },
     {
-      "id": "300424",
-      "resultId": "66850",
-      "title": "Untitled Number 069",
-      "artist": "Jerry Zeniuk",
-      "date": "1977",
-      "material": "300424",
-      "dimensions": "",
-      "inventoryNumber": "300424",
-      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/hamburger-kunsthalle-paintings/300424-imageUrl.webp",
-      "thumbnailUrl": "https://online-sammlung.hamburger-kunsthalle.de/sites/default/files/styles/tile/public/multimedia-files/66850.jpg?itok=HocasIoI",
-      "detailUrl": "https://online-sammlung.hamburger-kunsthalle.de/en/objekt/300424/untitled-number-069",
-      "original_imageUrl": "https://online-sammlung.hamburger-kunsthalle.de/sites/default/files/multimedia-files/66850.jpg"
-    },
-    {
-      "id": "300428",
-      "resultId": "66854",
-      "title": "Untitled Number 066  - Berlin",
-      "artist": "Jerry Zeniuk",
-      "date": "1977",
-      "material": "300428",
-      "dimensions": "160cm x 153cm (Bild)",
-      "inventoryNumber": "300428",
-      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/hamburger-kunsthalle-paintings/300428-imageUrl.webp",
-      "thumbnailUrl": "https://online-sammlung.hamburger-kunsthalle.de/sites/default/files/styles/tile/public/multimedia-files/66854.jpg?itok=hscNCLpH",
-      "detailUrl": "https://online-sammlung.hamburger-kunsthalle.de/en/objekt/300428/untitled-number-066---berlin",
-      "original_imageUrl": "https://online-sammlung.hamburger-kunsthalle.de/sites/default/files/multimedia-files/66854.jpg"
-    },
-    {
-      "id": "300426",
-      "resultId": "66852",
-      "title": "Untitled Number 111",
-      "artist": "Jerry Zeniuk",
-      "date": "1987",
-      "material": "300426",
-      "dimensions": "",
-      "inventoryNumber": "300426",
-      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/hamburger-kunsthalle-paintings/300426-imageUrl.webp",
-      "thumbnailUrl": "https://online-sammlung.hamburger-kunsthalle.de/sites/default/files/styles/tile/public/multimedia-files/66852.jpg?itok=Ql0wLBC7",
-      "detailUrl": "https://online-sammlung.hamburger-kunsthalle.de/en/objekt/300426/untitled-number-111",
-      "original_imageUrl": "https://online-sammlung.hamburger-kunsthalle.de/sites/default/files/multimedia-files/66852.jpg"
-    },
-    {
       "id": "300555",
       "resultId": "66867",
       "title": "Pansy Metal / Clovered Hoof",
@@ -6584,20 +6528,6 @@
       "thumbnailUrl": "https://online-sammlung.hamburger-kunsthalle.de/sites/default/files/styles/tile/public/multimedia-files/82002.jpg?itok=o0R7tHuT",
       "detailUrl": "https://online-sammlung.hamburger-kunsthalle.de/en/objekt/HK-5630/huelltoft-hof",
       "original_imageUrl": "https://online-sammlung.hamburger-kunsthalle.de/sites/default/files/multimedia-files/82002.jpg"
-    },
-    {
-      "id": "HK-5632",
-      "resultId": "96717",
-      "title": "Hohes Ufer II",
-      "artist": "Arthur Illies",
-      "date": "1906",
-      "material": "Öl auf Leinwand",
-      "dimensions": "80.7cm x 79.8cm (Bild); 98.5cm x 98.5cm (Rahmen)",
-      "inventoryNumber": "HK-5632",
-      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/hamburger-kunsthalle-paintings/HK-5632-imageUrl.webp",
-      "thumbnailUrl": "https://online-sammlung.hamburger-kunsthalle.de/sites/default/files/styles/tile/public/multimedia-files/96717.jpg?itok=38ACdm2H",
-      "detailUrl": "https://online-sammlung.hamburger-kunsthalle.de/en/objekt/HK-5632/hohes-ufer-ii",
-      "original_imageUrl": "https://online-sammlung.hamburger-kunsthalle.de/sites/default/files/multimedia-files/96717.jpg"
     },
     {
       "id": "HK-200921",
@@ -9932,20 +9862,6 @@
       "original_imageUrl": "https://online-sammlung.hamburger-kunsthalle.de/sites/default/files/multimedia-files/67423.jpg"
     },
     {
-      "id": "HK-5560",
-      "resultId": "67424",
-      "title": "Bildachtzehn",
-      "artist": "Georg Baselitz",
-      "date": "1993",
-      "material": "Öl auf Leinwand",
-      "dimensions": "290.3cm x 450.3cm (Bild); 293cm x 453.5cm (Rahmen)",
-      "inventoryNumber": "HK-5560",
-      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/hamburger-kunsthalle-paintings/HK-5560-imageUrl.webp",
-      "thumbnailUrl": "https://online-sammlung.hamburger-kunsthalle.de/sites/default/files/styles/tile/public/multimedia-files/67424.jpg?itok=I60tru8C",
-      "detailUrl": "https://online-sammlung.hamburger-kunsthalle.de/en/objekt/HK-5560/bildachtzehn",
-      "original_imageUrl": "https://online-sammlung.hamburger-kunsthalle.de/sites/default/files/multimedia-files/67424.jpg"
-    },
-    {
       "id": "HK-5564",
       "resultId": "67428",
       "title": "Wachturm in der Eifel",
@@ -10518,20 +10434,6 @@
       "thumbnailUrl": "https://online-sammlung.hamburger-kunsthalle.de/sites/default/files/styles/tile/public/multimedia-files/67407.jpg?itok=2WTBHFYz",
       "detailUrl": "https://online-sammlung.hamburger-kunsthalle.de/en/objekt/HK-5542/s.-mit-kind",
       "original_imageUrl": "https://online-sammlung.hamburger-kunsthalle.de/sites/default/files/multimedia-files/67407.jpg"
-    },
-    {
-      "id": "HK-5543",
-      "resultId": "67408",
-      "title": "Bildsechsunddreißig",
-      "artist": "Georg Baselitz",
-      "date": "1995",
-      "material": "Öl auf Leinwand",
-      "dimensions": "290.5cm x 450cm (Bild)",
-      "inventoryNumber": "HK-5543",
-      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/hamburger-kunsthalle-paintings/HK-5543-imageUrl.webp",
-      "thumbnailUrl": "https://online-sammlung.hamburger-kunsthalle.de/sites/default/files/styles/tile/public/multimedia-files/67408.jpg?itok=oEaHr7CW",
-      "detailUrl": "https://online-sammlung.hamburger-kunsthalle.de/en/objekt/HK-5543/bildsechsunddreissig",
-      "original_imageUrl": "https://online-sammlung.hamburger-kunsthalle.de/sites/default/files/multimedia-files/67408.jpg"
     },
     {
       "id": "HK-5540",
@@ -14426,20 +14328,6 @@
       "original_imageUrl": "https://online-sammlung.hamburger-kunsthalle.de/sites/default/files/multimedia-files/119801.jpg"
     },
     {
-      "id": "HK-5693",
-      "resultId": "119775",
-      "title": "Dark Rooms",
-      "artist": "Gustav Kluge",
-      "date": "1995",
-      "material": "Öl auf Leinwand | oil on canvas",
-      "dimensions": "",
-      "inventoryNumber": "HK-5693",
-      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/hamburger-kunsthalle-paintings/HK-5693-imageUrl.webp",
-      "thumbnailUrl": "https://online-sammlung.hamburger-kunsthalle.de/sites/default/files/styles/tile/public/multimedia-files/119775.jpg?itok=YasmG37F",
-      "detailUrl": "https://online-sammlung.hamburger-kunsthalle.de/en/objekt/HK-5693/dark-rooms",
-      "original_imageUrl": "https://online-sammlung.hamburger-kunsthalle.de/sites/default/files/multimedia-files/119775.jpg"
-    },
-    {
       "id": "HK-5806",
       "resultId": "193630",
       "title": "Agnes I",
@@ -14900,20 +14788,6 @@
       "thumbnailUrl": "https://online-sammlung.hamburger-kunsthalle.de/sites/default/files/styles/tile/public/multimedia-files/87755.jpg?itok=L-98CtTv",
       "detailUrl": "https://online-sammlung.hamburger-kunsthalle.de/en/objekt/300435/montane",
       "original_imageUrl": "https://online-sammlung.hamburger-kunsthalle.de/sites/default/files/multimedia-files/87755.jpg"
-    },
-    {
-      "id": "300434",
-      "resultId": "87753",
-      "title": "Channel Painting No. 3",
-      "artist": "Alan Charlton",
-      "date": "1975",
-      "material": "300434",
-      "dimensions": "",
-      "inventoryNumber": "300434",
-      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/hamburger-kunsthalle-paintings/300434-imageUrl.webp",
-      "thumbnailUrl": "https://online-sammlung.hamburger-kunsthalle.de/sites/default/files/styles/tile/public/multimedia-files/87753.jpg?itok=kkd9Ovnm",
-      "detailUrl": "https://online-sammlung.hamburger-kunsthalle.de/en/objekt/300434/channel-painting-no.-3",
-      "original_imageUrl": "https://online-sammlung.hamburger-kunsthalle.de/sites/default/files/multimedia-files/87753.jpg"
     },
     {
       "id": "300430",
@@ -15686,34 +15560,6 @@
       "original_imageUrl": "https://online-sammlung.hamburger-kunsthalle.de/sites/default/files/multimedia-files/64085.jpg"
     },
     {
-      "id": "HK-5366",
-      "resultId": "64097",
-      "title": "Number 37",
-      "artist": "Jerry Zeniuk",
-      "date": "1974",
-      "material": "Wachs, Öl auf Leinwand auf Sperrholzplatte / Wax, oil on canvas on plywood",
-      "dimensions": "160cm x 152cm (Bild)",
-      "inventoryNumber": "HK-5366",
-      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/hamburger-kunsthalle-paintings/HK-5366-imageUrl.webp",
-      "thumbnailUrl": "https://online-sammlung.hamburger-kunsthalle.de/sites/default/files/styles/tile/public/multimedia-files/64097.jpg?itok=dHmNr9RO",
-      "detailUrl": "https://online-sammlung.hamburger-kunsthalle.de/en/objekt/HK-5366/number-37",
-      "original_imageUrl": "https://online-sammlung.hamburger-kunsthalle.de/sites/default/files/multimedia-files/64097.jpg"
-    },
-    {
-      "id": "HK-5346",
-      "resultId": "64099",
-      "title": "Number 56",
-      "artist": "Jerry Zeniuk",
-      "date": "1975",
-      "material": "Wachs, Pigment auf Leinwand auf Hartfaserplatte / Wax, pigment on canvas on hardboard",
-      "dimensions": "160cm x 152.7cm (Bild)",
-      "inventoryNumber": "HK-5346",
-      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/hamburger-kunsthalle-paintings/HK-5346-imageUrl.webp",
-      "thumbnailUrl": "https://online-sammlung.hamburger-kunsthalle.de/sites/default/files/styles/tile/public/multimedia-files/64099.jpg?itok=bW5dXW4v",
-      "detailUrl": "https://online-sammlung.hamburger-kunsthalle.de/en/objekt/HK-5346/number-56",
-      "original_imageUrl": "https://online-sammlung.hamburger-kunsthalle.de/sites/default/files/multimedia-files/64099.jpg"
-    },
-    {
       "id": "HK-5469",
       "resultId": "64093",
       "title": "Bild für ein Kissengesicht, 1985/87",
@@ -16092,20 +15938,6 @@
       "original_imageUrl": "https://online-sammlung.hamburger-kunsthalle.de/sites/default/files/multimedia-files/64198.jpg"
     },
     {
-      "id": "HK-5365",
-      "resultId": "64100",
-      "title": "Number 9",
-      "artist": "Jerry Zeniuk",
-      "date": "1971",
-      "material": "Metallfarbe, Graphit, Wachs auf Hartfaserplatte / Metallic paint, graphite, wax on hardboard",
-      "dimensions": "83cm x 76cm (Bild)",
-      "inventoryNumber": "HK-5365",
-      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/hamburger-kunsthalle-paintings/HK-5365-imageUrl.webp",
-      "thumbnailUrl": "https://online-sammlung.hamburger-kunsthalle.de/sites/default/files/styles/tile/public/multimedia-files/64100.jpg?itok=odtmpVZx",
-      "detailUrl": "https://online-sammlung.hamburger-kunsthalle.de/en/objekt/HK-5365/number-9",
-      "original_imageUrl": "https://online-sammlung.hamburger-kunsthalle.de/sites/default/files/multimedia-files/64100.jpg"
-    },
-    {
       "id": "HK-5165",
       "resultId": "64104",
       "title": "Bildnis Egon Erwin Kisch",
@@ -16482,20 +16314,6 @@
       "thumbnailUrl": "https://online-sammlung.hamburger-kunsthalle.de/sites/default/files/styles/tile/public/multimedia-files/64201.jpg?itok=dV_ebuqw",
       "detailUrl": "https://online-sammlung.hamburger-kunsthalle.de/en/objekt/HK-2982/der-goldfisch",
       "original_imageUrl": "https://online-sammlung.hamburger-kunsthalle.de/sites/default/files/multimedia-files/64201.jpg"
-    },
-    {
-      "id": "HK-2534",
-      "resultId": "64209",
-      "title": "Der Journalist und frühere &quot;OberDaDa&quot; Johannes A. Baader",
-      "artist": "Kurt Lohse",
-      "date": "1929",
-      "material": "Öl auf Papier auf Holz",
-      "dimensions": "90.5cm x 63cm (Bild); 108cm x 81cm (Rahmen); cm x cm (Rahmen)",
-      "inventoryNumber": "HK-2534",
-      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/hamburger-kunsthalle-paintings/HK-2534-imageUrl.webp",
-      "thumbnailUrl": "https://online-sammlung.hamburger-kunsthalle.de/sites/default/files/styles/tile/public/multimedia-files/64209.jpg?itok=rqPct4sx",
-      "detailUrl": "https://online-sammlung.hamburger-kunsthalle.de/en/objekt/HK-2534/der-journalist-und-fruehere-%22oberdada%22-johannes-a.-baader",
-      "original_imageUrl": "https://online-sammlung.hamburger-kunsthalle.de/sites/default/files/multimedia-files/64209.jpg"
     },
     {
       "id": "HK-5242",
@@ -17070,20 +16888,6 @@
       "thumbnailUrl": "https://online-sammlung.hamburger-kunsthalle.de/sites/default/files/styles/tile/public/multimedia-files/64325.jpg?itok=VAbzGZba",
       "detailUrl": "https://online-sammlung.hamburger-kunsthalle.de/en/objekt/HK-1774/enten",
       "original_imageUrl": "https://online-sammlung.hamburger-kunsthalle.de/sites/default/files/multimedia-files/64325.jpg"
-    },
-    {
-      "id": "HK-5364",
-      "resultId": "64327",
-      "title": "Er hat die Sandalen ausgezogen (Il a ôté les naïls)",
-      "artist": "Jean Dubuffet",
-      "date": "1947",
-      "material": "Öl auf Leinwand",
-      "dimensions": "99.5cm x 81cm (Bild); 111cm x 92cm (Rahmen)",
-      "inventoryNumber": "HK-5364",
-      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/hamburger-kunsthalle-paintings/HK-5364-imageUrl.webp",
-      "thumbnailUrl": "https://online-sammlung.hamburger-kunsthalle.de/sites/default/files/styles/tile/public/multimedia-files/64327.jpg?itok=9XNV6VLc",
-      "detailUrl": "https://online-sammlung.hamburger-kunsthalle.de/en/objekt/HK-5364/er-hat-die-sandalen-ausgezogen-il-a-%C3%B4t%C3%A9-les-na%C3%AFls",
-      "original_imageUrl": "https://online-sammlung.hamburger-kunsthalle.de/sites/default/files/multimedia-files/64327.jpg"
     },
     {
       "id": "HK-5266",
@@ -18276,20 +18080,6 @@
       "original_imageUrl": "https://online-sammlung.hamburger-kunsthalle.de/sites/default/files/multimedia-files/64525.jpg"
     },
     {
-      "id": "HK-5326",
-      "resultId": "64527",
-      "title": "Köpcke-Workshop-Piece",
-      "artist": "Marwan",
-      "date": "1976",
-      "material": "Eitempera auf Leinwand / egg tempera on canvas",
-      "dimensions": "197cm x 132.5cm (Bild)",
-      "inventoryNumber": "HK-5326",
-      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/hamburger-kunsthalle-paintings/HK-5326-imageUrl.webp",
-      "thumbnailUrl": "https://online-sammlung.hamburger-kunsthalle.de/sites/default/files/styles/tile/public/multimedia-files/64527.jpg?itok=EVtGW2xM",
-      "detailUrl": "https://online-sammlung.hamburger-kunsthalle.de/en/objekt/HK-5326/koepcke-workshop-piece",
-      "original_imageUrl": "https://online-sammlung.hamburger-kunsthalle.de/sites/default/files/multimedia-files/64527.jpg"
-    },
-    {
       "id": "HK-5253",
       "resultId": "64529",
       "title": "&quot;Wir Drei&quot; (Kopie nach Runge)",
@@ -18302,20 +18092,6 @@
       "thumbnailUrl": "https://online-sammlung.hamburger-kunsthalle.de/sites/default/files/styles/tile/public/multimedia-files/64529.jpg?itok=1qYYDNRN",
       "detailUrl": "https://online-sammlung.hamburger-kunsthalle.de/en/objekt/HK-5253/%22wir-drei%22-kopie-nach-runge",
       "original_imageUrl": "https://online-sammlung.hamburger-kunsthalle.de/sites/default/files/multimedia-files/64529.jpg"
-    },
-    {
-      "id": "HK-5419",
-      "resultId": "64532",
-      "title": "Kreuz, 1980/86",
-      "artist": "Arnulf Rainer",
-      "date": "",
-      "material": "Mischtechnik über Fotokarton auf Holz | Mixed media on cardboard on wood",
-      "dimensions": "212cm x 80cm (Bild)",
-      "inventoryNumber": "HK-5419",
-      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/hamburger-kunsthalle-paintings/HK-5419-imageUrl.webp",
-      "thumbnailUrl": "https://online-sammlung.hamburger-kunsthalle.de/sites/default/files/styles/tile/public/multimedia-files/64532.jpg?itok=rojAnB4F",
-      "detailUrl": "https://online-sammlung.hamburger-kunsthalle.de/en/objekt/HK-5419/kreuz",
-      "original_imageUrl": "https://online-sammlung.hamburger-kunsthalle.de/sites/default/files/multimedia-files/64532.jpg"
     },
     {
       "id": "HK-5068",
@@ -18696,20 +18472,6 @@
       "original_imageUrl": "https://online-sammlung.hamburger-kunsthalle.de/sites/default/files/multimedia-files/64635.jpg"
     },
     {
-      "id": "HK-5443",
-      "resultId": "64639",
-      "title": "Ohne Titel",
-      "artist": "Adolf Fleischmann",
-      "date": "1950",
-      "material": "Öl auf Rupfen",
-      "dimensions": "116.2cm x 86.2cm (Bild)",
-      "inventoryNumber": "HK-5443",
-      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/hamburger-kunsthalle-paintings/HK-5443-imageUrl.webp",
-      "thumbnailUrl": "https://online-sammlung.hamburger-kunsthalle.de/sites/default/files/styles/tile/public/multimedia-files/64639.jpg?itok=HgGYJ9UU",
-      "detailUrl": "https://online-sammlung.hamburger-kunsthalle.de/en/objekt/HK-5443/ohne-titel",
-      "original_imageUrl": "https://online-sammlung.hamburger-kunsthalle.de/sites/default/files/multimedia-files/64639.jpg"
-    },
-    {
       "id": "HK-5304",
       "resultId": "64649",
       "title": "Opus 6",
@@ -18764,20 +18526,6 @@
       "thumbnailUrl": "https://online-sammlung.hamburger-kunsthalle.de/sites/default/files/styles/tile/public/multimedia-files/64661.jpg?itok=d-f1kkln",
       "detailUrl": "https://online-sammlung.hamburger-kunsthalle.de/en/objekt/HK-5289/perfecto",
       "original_imageUrl": "https://online-sammlung.hamburger-kunsthalle.de/sites/default/files/multimedia-files/64661.jpg"
-    },
-    {
-      "id": "HK-5267",
-      "resultId": "64663",
-      "title": "Phénix Noir (Schwarzer Phönix)",
-      "artist": "Karl Otto Götz",
-      "date": "1959",
-      "material": "Mischtechnik auf Leinwand",
-      "dimensions": "145cm x 175cm (Bild)",
-      "inventoryNumber": "HK-5267",
-      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/hamburger-kunsthalle-paintings/HK-5267-imageUrl.webp",
-      "thumbnailUrl": "https://online-sammlung.hamburger-kunsthalle.de/sites/default/files/styles/tile/public/multimedia-files/64663.jpg?itok=OtDZM6tA",
-      "detailUrl": "https://online-sammlung.hamburger-kunsthalle.de/en/objekt/HK-5267/ph%C3%A9nix-noir-schwarzer-phoenix",
-      "original_imageUrl": "https://online-sammlung.hamburger-kunsthalle.de/sites/default/files/multimedia-files/64663.jpg"
     },
     {
       "id": "HK-5173",
@@ -19590,20 +19338,6 @@
       "thumbnailUrl": "https://online-sammlung.hamburger-kunsthalle.de/sites/default/files/styles/tile/public/multimedia-files/88854.jpg?itok=tsVvxFPj",
       "detailUrl": "https://online-sammlung.hamburger-kunsthalle.de/en/objekt/HK-5636/gefangener-das-wort-%22freiheit%22-betrachtend",
       "original_imageUrl": "https://online-sammlung.hamburger-kunsthalle.de/sites/default/files/multimedia-files/88854.jpg"
-    },
-    {
-      "id": "HK-5406",
-      "resultId": "64802",
-      "title": "Stilleben mit der Zeichnung der verschiedenen\r\nBewußtseinsebenen (aus dem Ensemble: Künstler sein (Zeichnen nach der Natur, zum Beispiel Lindenblütenblätter))",
-      "artist": "Anna Oppermann",
-      "date": "1976",
-      "material": "Kolorierte Fotoleinwand | Coloured photo canvas",
-      "dimensions": "165.5cm x 122cm (Bild)",
-      "inventoryNumber": "HK-5406",
-      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/hamburger-kunsthalle-paintings/HK-5406-imageUrl.webp",
-      "thumbnailUrl": "https://online-sammlung.hamburger-kunsthalle.de/sites/default/files/styles/tile/public/multimedia-files/64802.jpg?itok=XpqiQh5M",
-      "detailUrl": "https://online-sammlung.hamburger-kunsthalle.de/en/objekt/HK-5406/stilleben-mit-der-zeichnung-der-verschiedenen-bewusstseinsebenen-aus-dem-ensemble-kuenstler-sein-zeichnen-nach-der-natur-zum-beispiel-lindenbluetenblaetter",
-      "original_imageUrl": "https://online-sammlung.hamburger-kunsthalle.de/sites/default/files/multimedia-files/64802.jpg"
     },
     {
       "id": "HK-2822",

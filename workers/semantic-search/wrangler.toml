@@ -2,14 +2,29 @@ name = "armin-semantic-search"
 main = "src/index.ts"
 compatibility_date = "2024-01-01"
 
-# Vectorize binding for storing embeddings
+# ────────────────────────────────────────────────────────────
+# Vectorize — SigLIP 768D 인덱스
+#
+# 먼저 새 인덱스를 생성하세요:
+#   npx wrangler vectorize create armin-art-search-768 --dimensions=768 --metric=cosine
+#
+# 그 다음 배포:
+#   npx wrangler deploy
+# ────────────────────────────────────────────────────────────
 [[vectorize]]
 binding = "VECTORIZE"
-index_name = "armin-art-search"
+index_name = "armin-art-search-768"
 
-# R2 binding for reading images (optional)
-[[r2_buckets]]
-binding = "R2"
-bucket_name = "armin-gallery-images"
+# ────────────────────────────────────────────────────────────
+# KV — 사용자 취향 프로파일 (취향 centroids 저장)
+# ────────────────────────────────────────────────────────────
+[[kv_namespaces]]
+binding = "TASTE_KV"
+id = "4ca7209a702446efb0f205bcacbae33a"
 
-# HF_TOKEN will be set as a secret via wrangler secret put
+# ────────────────────────────────────────────────────────────
+# HuggingFace Token (서버사이드 SigLIP 텍스트 인코딩용)
+# 설정: npx wrangler secret put HF_TOKEN
+# ────────────────────────────────────────────────────────────
+# [vars]
+# HF_TOKEN = ""  # ← secret으로 설정 (평문 금지)

@@ -133,3 +133,10 @@ test-city.js
 test-regex.js
 test-chaikin.cjs
 trove_app.js
+
+# Temporarily Ignore large data files to prevent Git upload block limits
+embedding_results/
+downloads/
+.wrangler/
+public/data/nga-collection*
+public/data/search-index*

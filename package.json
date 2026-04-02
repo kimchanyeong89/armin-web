@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite",
     "prebuild": "node scripts/generate-search-index.cjs && node scripts/build-search-warm-prefix.cjs && npm run build:admin-lines",
-    "build": "tsc -b && vite build && node scripts/postbuild-cleanup.cjs",
+    "build": "vite build && node scripts/postbuild-cleanup.cjs",
     "scrape:dia:collection": "node ./scripts/scrape-dia-collection.cjs",
     "scrape:high:collection": "node ./scripts/scrape-high-collection.cjs",
     "scrape:npg:floor3": "node ./scripts/scrape-npg-floor3.cjs",

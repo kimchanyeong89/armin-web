@@ -1,0 +1,24 @@
+                          } else if (target.dataset.triedJson !== "true" && pl.items && pl.items[0]) {
+                            target.dataset.triedJson = "true";
+                            const firstItem = pl.items[0];
+                            const exhId = firstItem.exhibitionId || firstItem.id;
+                            if (exhId) {
+                               let file = exhId + ".json";
+                               if (exhId === "tm-perm-1") file = "tate-modern-collection.json";
+                               else if (exhId === "tate-britain-1") file = "tate-britain-artworks.json";
+                               else if (exhId === "bm-perm-1") file = "british-museum-galleries.json";
+                               
+                               fetch(`/data/${file}`).then(res => res.json()).then(data => {
+                                 const arr = Array.isArray(data) ? data : (data.artworks || data.objects || []);
+                                 const idToFind = firstItem.artworkId || firstItem.id;
+                                 const art = arr.find((a: any) => String(a.id) === String(idToFind) || String(a.artworkId) === String(idToFind));
+                                 if (art && art.imageUrl) target.src = art.imageUrl;
+                                 else target.style.opacity = '0';
+                               }).catch(() => { target.style.opacity = '0'; });
+                            } else {
+                               target.style.opacity = '0';
+                            }
+                          } else {
+                            target.style.opacity = '0';
+                          }
+                        }}

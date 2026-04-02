@@ -348,12 +348,24 @@ function loadCollection(filePath) {
 function getThumbnailUrl(item) {
     let url = item.thumb || item.thumbnailUrl || item.lq || item.image || item.imageUrl || '';
     
+    // Add support for item.primaryImage as object (NGA, Met, etc)
+    if (!url && item.primaryImage && typeof item.primaryImage === 'object') {
+        url = item.primaryImage.iiifFull || item.primaryImage.iiifThumbUrl || item.primaryImage.image || item.primaryImage.url || '';
+    }
+    // Add support for primaryImage directly as string (some datasets)
+    if (!url && typeof item.primaryImage === 'string') {
+        url = item.primaryImage;
+    }
+    if (!url && typeof item.primaryImageSmall === 'string') {
+        url = item.primaryImageSmall;
+    }
+    
     // Add support for item.images array 
     if (!url && item.images && Array.isArray(item.images) && item.images.length > 0) {
         if (typeof item.images[0] === 'string') {
             url = item.images[0];
-        } else if (item.images[0] && item.images[0].url) {
-            url = item.images[0].url;
+        } else if (item.images[0]) {
+            url = item.images[0].iiifurl || item.images[0].iiifThumbUrl || item.images[0].url || '';
         }
     }
 
@@ -399,14 +411,34 @@ function normalizeArtistName(name) {
 }
 
 function extractArtworkData(item, museumName, exhibitionId, idx) {
-    const name = item.title || item.name || 'Untitled';
-    let artist = item.artist || item.artistName || item.creator || 'Unknown';
+    let nameRaw = item.title || item.name || item.itemTitle || item.shortName || item.tytul || 'Untitled';
+    let artistRaw = item.artist || item.artistName || item.creator || item.autor || 'Unknown';
+
+    // Helper to extract string from potential array or object
+    const extractString = (val) => {
+        if (!val) return 'Unknown';
+        if (typeof val === 'string') return val;
+        if (Array.isArray(val)) {
+            if (val.length === 0) return 'Unknown';
+            if (typeof val[0] === 'string') return val.join(', ');
+            if (val[0].name) return val.map(v => v.name).join(', ');
+            if (val[0].title) return val.map(v => v.title).join(', ');
+            return 'Unknown';
+        }
+        if (typeof val === 'object') {
+            return val.name || val.title || val.value || 'Unknown';
+        }
+        return String(val);
+    };
+
+    const name = nameRaw === 'Untitled' ? 'Untitled' : extractString(nameRaw);
+    let artist = artistRaw === 'Unknown' ? 'Unknown' : extractString(artistRaw);
 
     // Normalize artist name to merge duplicates (e.g. "Kim Tai (김태)" vs "김태")
     artist = normalizeArtistName(artist);
 
     const image = getThumbnailUrl(item);
-    const date = item.date || item.year || '';
+    const date = item.date || item.year || item.creationDate || item.displayDate || '';
     const id = item.id || `${exhibitionId}-${idx}`;
 
     const url = item.sourceUrl || item.detailUrl || item.url || '';
@@ -467,6 +499,7 @@ async function generateSearchIndex() {
         const { museumName, exhibitionId } = getMuseumInfo(file);
 
         const items = loadCollection(filePath);
+        if (file.includes("wawel")) console.log("Loaded wawel items:", items.length);
         if (items.length === 0) continue;
 
         let addedCount = 0;

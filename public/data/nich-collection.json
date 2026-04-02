@@ -25620,20 +25620,6 @@
     "original_image": "https://colbase.nich.go.jp/media/tnm/A-10569-971/image/regular/A-10569-971_E0169715.jpg"
   },
   {
-    "id": "224636",
-    "title": "The Actor Dekijima Daisuke as Okuni in the Kabuki Play \"Suehiro Okuni Kabuki\"",
-    "artist": "Torii Kiyomasu II (1706–1763)",
-    "date": "Edo period, 18th century",
-    "medium": "Woodblock print ([urushi-e])",
-    "category": "Painting",
-    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/nich-collection/224636-241a2446-image.webp",
-    "width": null,
-    "height": null,
-    "source_org": "Tokyo National Museum",
-    "source_id": "A-10569-999",
-    "original_image": "https://colbase.nich.go.jp/media/tnm/A-10569-999/image/regular/A-10569-999_E0169718.jpg"
-  },
-  {
     "id": "206117",
     "title": "Chrysanthemums and a Pheasant",
     "artist": "Utagawa Hiroshige (1797–1858)",
@@ -43985,5 +43971,19 @@
     "source_org": "Tokyo National Museum",
     "source_id": "A-142",
     "original_image": "https://colbase.nich.go.jp/media/tnm/A-142/image/regular/A-142_E0200914.jpg"
+  },
+  {
+    "id": "224636",
+    "title": "The Actor Dekijima Daisuke as Okuni in the Kabuki Play \"Suehiro Okuni Kabuki\"",
+    "artist": "Torii Kiyomasu II (1706–1763)",
+    "date": "Edo period, 18th century",
+    "medium": "Woodblock print ([urushi-e])",
+    "category": "Painting",
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/nich-collection/224636-241a2446-image.webp",
+    "width": null,
+    "height": null,
+    "source_org": "Tokyo National Museum",
+    "source_id": "A-10569-999",
+    "original_image": "https://colbase.nich.go.jp/media/tnm/A-10569-999/image/regular/A-10569-999_E0169718.jpg"
   }
 ]

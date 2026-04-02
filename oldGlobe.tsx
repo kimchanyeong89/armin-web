@@ -1,0 +1,1982 @@
+/**
+ * DrawingGlobe — Sketch-style interactive globe map
+ * Based on https://github.com/kimchanyeong89/Drawing-Map
+ * Uses inline styles (no Tailwind) to match project conventions
+ */
+import React, { useEffect, useState, useRef, useMemo, useCallback } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { geoOrthographic, geoPath } from 'd3-geo';
+import { feature, mesh } from 'topojson-client';
+import * as d3 from 'd3';
+import type { Exhibition } from '../types/Exhibition';
+
+// ── City SVG Shapes ───────────────────────────────────────────────────────────
+const CITY_SHAPES: Record<string, { shape: string; river: string }> = {
+  paris: { shape: "M 50 80 L 80 40 L 130 40 L 160 70 L 150 140 L 90 160 L 40 120 Z", river: "M 170 140 Q 130 100 100 110 T 30 130" },
+  london: { shape: "M 40 100 L 70 40 L 130 40 L 170 90 L 150 150 L 80 160 L 30 130 Z", river: "M 20 110 Q 70 130 100 100 T 180 110" },
+  'new york': { shape: "M 70 30 L 100 30 L 90 90 L 130 110 L 160 90 L 170 140 L 120 160 L 80 120 Z", river: "M 80 20 L 70 180 M 100 20 L 90 100 L 110 180" },
+  tokyo: { shape: "M 40 40 L 130 40 L 140 90 L 110 120 L 90 160 L 40 160 Z", river: "M 110 30 Q 120 80 100 120 T 130 180" },
+  seoul: { shape: "M 40 70 L 90 30 L 150 40 L 180 90 L 150 160 L 70 160 L 20 110 Z", river: "M 20 100 Q 80 120 120 110 T 180 130" },
+  copenhagen: { shape: "M 60 40 L 120 40 L 140 80 L 130 160 L 70 160 Z M 145 60 L 165 60 L 155 140 L 135 140 Z", river: "M 130 30 L 125 170" },
+  budapest: { shape: "M 60 40 L 120 30 L 160 80 L 150 150 L 90 170 L 40 120 Z", river: "M 100 20 Q 110 80 95 120 T 100 180" },
+  amsterdam: { shape: "M 80 50 L 130 40 L 160 80 L 150 130 L 110 160 L 60 150 L 40 110 Z", river: "M 40 90 Q 90 70 130 90 T 170 80" },
+  vienna: { shape: "M 60 50 L 130 40 L 160 90 L 140 150 L 80 160 L 40 120 Z", river: "M 30 80 Q 80 100 130 80 T 180 100" },
+  berlin: { shape: "M 50 50 L 150 50 L 160 100 L 140 150 L 60 150 L 40 100 Z", river: "M 60 30 L 70 180 M 130 30 Q 140 100 130 180" },
+  rome: { shape: "M 70 40 L 130 40 L 160 80 L 150 150 L 100 170 L 50 140 L 40 80 Z", river: "M 40 70 Q 80 130 100 120 T 160 150" },
+  florence: { shape: "M 60 50 L 140 50 L 150 110 L 120 160 L 80 160 L 50 110 Z", river: "M 40 100 Q 90 130 140 100 T 180 120" },
+  venice: { shape: "M 40 70 Q 100 30 160 70 Q 180 110 160 150 Q 100 180 40 150 Z", river: "M 40 90 Q 90 80 140 90 T 180 100 M 80 60 Q 100 110 80 140" },
+  milan: { shape: "M 70 50 L 140 50 L 160 95 L 140 155 L 70 155 L 50 95 Z", river: "M 80 20 Q 100 100 85 180" },
+  chicago: { shape: "M 80 40 L 130 40 L 150 80 L 140 160 L 70 160 L 60 80 Z", river: "M 100 20 L 100 180" },
+  'los angeles': { shape: "M 40 60 L 140 50 L 170 100 L 150 160 L 70 160 L 30 110 Z", river: "M 30 80 Q 100 90 160 80" },
+  'san francisco': { shape: "M 70 30 L 110 30 L 140 70 L 130 150 L 70 160 L 40 130 Z", river: "M 40 80 Q 80 100 130 80" },
+  madrid: { shape: "M 60 50 L 140 50 L 155 100 L 140 155 L 65 155 L 50 100 Z", river: "M 100 20 Q 105 100 100 180" },
+  barcelona: { shape: "M 50 70 L 120 40 L 160 80 L 150 150 L 80 160 L 40 120 Z", river: "M 30 90 Q 90 110 150 90" },
+  munich: { shape: "M 60 50 L 140 45 L 160 90 L 140 150 L 70 155 L 45 110 Z", river: "M 40 100 Q 100 80 160 100" },
+  hamburg: { shape: "M 50 60 L 130 50 L 160 100 L 130 160 L 60 155 L 40 105 Z", river: "M 30 80 Q 100 70 170 90 M 40 120 Q 100 110 160 130" },
+  helsinki: { shape: "M 60 50 L 140 50 L 155 100 L 140 155 L 80 160 L 50 115 Z M 155 50 L 175 60 L 175 120 L 155 130 Z", river: "M 100 20 L 100 170" },
+  oslo: { shape: "M 70 40 L 140 45 L 155 95 L 130 155 L 70 155 L 50 95 Z", river: "M 40 70 Q 100 100 160 80" },
+  stockholm: { shape: "M 60 50 L 120 40 L 150 80 L 140 150 L 80 155 L 50 110 Z M 145 50 L 170 60 L 165 130 L 140 140 Z", river: "M 100 20 Q 110 80 100 170" },
+  zurich: { shape: "M 70 50 L 135 50 L 150 100 L 130 155 L 70 155 L 50 100 Z", river: "M 100 20 L 100 170" },
+  brussels: { shape: "M 60 50 L 140 50 L 155 100 L 135 155 L 65 155 L 48 100 Z", river: "M 50 70 Q 100 90 150 70" },
+  moscow: { shape: "M 50 50 L 150 50 L 165 100 L 145 155 L 55 155 L 38 100 Z", river: "M 80 20 Q 90 100 75 180 M 140 20 Q 150 100 135 180" },
+  warsaw: { shape: "M 60 50 L 145 50 L 158 100 L 138 155 L 62 155 L 44 100 Z", river: "M 105 20 Q 110 100 105 180" },
+  edinburgh: { shape: "M 60 50 L 140 50 L 155 100 L 135 155 L 65 155 L 48 100 Z", river: "M 50 70 Q 100 90 150 70" },
+  prague: { shape: "M 65 50 L 140 50 L 155 100 L 135 155 L 65 155 L 48 100 Z", river: "M 80 20 Q 100 100 80 180" },
+  beijing: { shape: "M 50 50 L 155 50 L 165 100 L 145 155 L 55 155 L 40 100 Z", river: "M 90 20 Q 95 100 90 180" },
+  shanghai: { shape: "M 55 50 L 150 50 L 162 100 L 142 155 L 58 155 L 42 100 Z", river: "M 100 20 Q 105 100 100 180 M 50 70 Q 100 60 155 70" },
+  taipei: { shape: "M 65 50 L 140 50 L 155 100 L 135 155 L 65 155 L 50 100 Z", river: "M 100 20 Q 105 100 100 180" },
+  sydney: { shape: "M 50 60 L 140 50 L 165 95 L 145 155 L 65 160 L 40 110 Z", river: "M 40 80 Q 90 70 150 80 T 180 90" },
+  montreal: { shape: "M 60 50 L 140 50 L 155 100 L 135 155 L 65 155 L 48 100 Z", river: "M 50 80 Q 100 70 155 80 T 180 90" },
+  houston: { shape: "M 50 55 L 155 55 L 165 100 L 145 155 L 55 155 L 40 100 Z", river: "M 100 20 Q 105 100 100 180" },
+  washington: { shape: "M 60 55 L 145 55 L 158 100 L 138 155 L 62 155 L 44 100 Z", river: "M 100 20 Q 105 100 100 180" },
+  philadelphia: { shape: "M 65 50 L 140 50 L 155 100 L 135 155 L 65 155 L 50 100 Z", river: "M 100 20 Q 105 100 100 180" },
+  cleveland: { shape: "M 60 50 L 145 50 L 158 100 L 138 155 L 62 155 L 44 100 Z", river: "M 100 20 Q 105 100 100 180" },
+  minneapolis: { shape: "M 65 50 L 140 50 L 155 100 L 135 155 L 65 155 L 48 100 Z", river: "M 80 20 Q 90 100 80 180 M 120 20 Q 130 100 120 180" },
+  osaka: { shape: "M 50 55 L 155 55 L 165 100 L 145 155 L 55 155 L 40 100 Z", river: "M 100 20 Q 105 100 100 180" },
+  kanazawa: { shape: "M 65 50 L 140 50 L 155 100 L 135 155 L 65 155 L 50 100 Z", river: "M 100 20 Q 105 100 100 180" },
+  'the hague': { shape: "M 65 50 L 140 50 L 155 100 L 135 155 L 65 155 L 48 100 Z", river: "M 100 20 Q 105 100 100 180" },
+  // French cities
+  nice: { shape: "M 70 50 L 120 40 L 155 60 L 165 100 L 150 145 L 100 165 L 55 145 L 40 100 Z", river: "M 30 90 Q 90 110 160 85" },
+  lyon: { shape: "M 65 45 L 130 40 L 160 80 L 155 140 L 110 170 L 65 155 L 40 110 Z", river: "M 95 25 Q 100 90 95 175 M 140 50 Q 130 110 110 170" },
+  bordeaux: { shape: "M 55 55 L 135 50 L 158 95 L 145 155 L 75 165 L 40 120 Z", river: "M 65 30 Q 80 100 60 170 M 155 60 Q 140 110 90 165" },
+  marseille: { shape: "M 45 65 L 120 40 L 165 75 L 170 130 L 130 165 L 70 160 L 35 120 Z", river: "M 160 60 Q 140 110 120 155" },
+  strasbourg: { shape: "M 60 50 L 130 45 L 155 90 L 140 150 L 80 160 L 45 120 Z M 150 50 L 170 60 L 165 130 L 145 135 Z", river: "M 95 25 Q 100 100 95 175" },
+  nantes: { shape: "M 50 60 L 140 50 L 160 100 L 140 155 L 65 160 L 38 110 Z", river: "M 30 100 Q 100 85 170 100" },
+  versailles: { shape: "M 60 55 L 140 55 L 160 100 L 140 150 L 65 150 L 42 100 Z", river: "M 75 20 Q 85 100 75 180" },
+  rouen: { shape: "M 55 55 L 135 50 L 155 95 L 140 150 L 65 155 L 40 105 Z", river: "M 30 90 Q 95 110 170 80" },
+  chantilly: { shape: "M 65 55 L 135 55 L 150 100 L 130 150 L 70 150 L 48 100 Z", river: "M 75 30 Q 80 100 75 170" },
+  // German cities
+  cologne: { shape: "M 58 52 L 138 48 L 157 95 L 138 154 L 63 157 L 42 104 Z", river: "M 100 20 Q 105 90 100 180" },
+  frankfurt: { shape: "M 55 55 L 145 50 L 162 98 L 142 155 L 58 158 L 40 105 Z", river: "M 35 90 Q 100 110 165 85" },
+  dresden: { shape: "M 60 50 L 140 48 L 157 95 L 137 152 L 63 155 L 42 103 Z", river: "M 32 88 Q 100 108 167 82" },
+  dusseldorf: { shape: "M 58 52 L 140 50 L 158 96 L 140 152 L 65 155 L 44 105 Z", river: "M 100 22 Q 104 100 100 178" },
+  // Dutch cities
+  rotterdam: { shape: "M 55 60 L 140 55 L 162 100 L 140 155 L 63 158 L 40 108 Z", river: "M 30 90 Q 100 75 172 90 M 50 130 Q 100 120 150 135" },
+  'den haag': { shape: "M 60 55 L 138 52 L 155 98 L 135 154 L 65 157 L 44 106 Z", river: "M 28 88 Q 92 105 158 82" },
+  leiden: { shape: "M 65 55 L 135 52 L 152 98 L 132 153 L 67 156 L 46 105 Z", river: "M 45 78 Q 98 96 155 76" },
+  // Italian cities
+  turin: { shape: "M 60 50 L 140 48 L 158 95 L 138 153 L 63 156 L 42 104 Z", river: "M 100 20 Q 105 90 100 178 M 38 88 Q 95 108 162 82" },
+  naples: { shape: "M 55 60 L 140 55 L 162 100 L 145 158 L 68 162 L 38 112 Z", river: "M 38 90 Q 98 108 163 85" },
+  palermo: { shape: "M 50 65 L 140 55 L 165 98 L 148 158 L 68 162 L 35 115 Z", river: "M 35 88 Q 100 106 165 83" },
+  genoa: { shape: "M 40 70 Q 100 40 160 65 Q 175 100 155 150 Q 100 170 45 145 Z", river: "M 35 95 Q 100 112 168 88" },
+  // UK cities
+  manchester: { shape: "M 55 52 L 140 48 L 158 95 L 138 153 L 62 156 L 42 104 Z", river: "M 42 84 Q 98 104 162 82" },
+  liverpool: { shape: "M 50 58 L 135 52 L 157 97 L 138 155 L 62 158 L 40 108 Z", river: "M 30 92 Q 98 72 165 88" },
+  birmingham: { shape: "M 58 52 L 140 50 L 158 96 L 140 152 L 64 155 L 43 104 Z", river: "M 45 82 Q 100 100 158 82" },
+  glasgow: { shape: "M 55 52 L 138 48 L 157 95 L 137 152 L 62 155 L 42 103 Z", river: "M 30 88 Q 95 108 165 82" },
+  // Spanish
+  bilbao: { shape: "M 55 58 L 138 52 L 158 98 L 138 154 L 63 157 L 42 106 Z", river: "M 30 90 Q 98 112 165 85" },
+  seville: { shape: "M 55 55 L 140 50 L 160 98 L 140 155 L 65 158 L 42 106 Z", river: "M 100 20 Q 105 92 100 178" },
+  valencia: { shape: "M 50 60 L 140 55 L 163 100 L 143 158 L 65 162 L 38 112 Z", river: "M 38 90 Q 100 110 165 85" },
+  // Other European
+  lisbon: { shape: "M 45 65 Q 100 40 155 68 Q 172 108 150 155 Q 100 175 50 150 Z", river: "M 165 75 Q 140 115 120 155" },
+  athens: { shape: "M 55 58 L 140 52 L 160 98 L 140 155 L 65 158 L 42 106 Z", river: "M 42 88 Q 100 108 162 85" },
+  antwerp: { shape: "M 58 52 L 140 50 L 158 96 L 138 154 L 63 157 L 42 104 Z", river: "M 100 18 Q 104 98 100 176" },
+  ghent: { shape: "M 60 52 L 138 50 L 155 96 L 135 152 L 63 155 L 44 104 Z", river: "M 48 78 Q 98 98 153 78 M 100 20 Q 104 100 100 178" },
+  bruges: { shape: "M 62 52 L 138 50 L 153 96 L 133 152 L 65 154 L 46 104 Z", river: "M 50 80 Q 96 98 150 80" },
+  // Asia extra
+  kyoto: { shape: "M 70 45 L 140 45 L 155 94 L 135 155 L 72 158 L 50 110 Z", river: "M 100 18 Q 102 98 100 178" },
+  hiroshima: { shape: "M 60 52 L 140 50 L 158 96 L 140 152 L 65 155 L 44 104 Z", river: "M 36 90 Q 98 110 164 84" },
+  yokohama: { shape: "M 55 55 L 142 50 L 162 98 L 143 155 L 65 158 L 42 106 Z", river: "M 40 88 Q 100 110 165 82" },
+  // USA extra
+  boston: { shape: "M 55 50 L 138 48 L 158 94 L 138 153 L 62 156 L 42 104 Z", river: "M 165 60 Q 140 110 110 155 M 38 90 Q 95 110 162 82" },
+  seattle: { shape: "M 55 52 L 128 45 L 152 86 Q 160 115 145 155 L 72 160 L 42 115 Z", river: "M 30 85 Q 90 68 150 85" },
+  denver: { shape: "M 58 52 L 140 50 L 158 96 L 140 152 L 65 155 L 44 104 Z", river: "M 100 20 Q 104 100 100 178" },
+  miami: { shape: "M 60 55 L 140 52 L 158 96 L 140 155 L 65 158 L 44 106 Z", river: "M 155 65 Q 140 112 125 158" },
+  dallas: { shape: "M 55 52 L 142 50 L 160 96 L 140 153 L 63 156 L 42 104 Z", river: "M 100 20 Q 104 100 100 178" },
+  // Other
+  'buenos aires': { shape: "M 48 60 Q 100 35 155 58 Q 175 100 155 152 Q 100 175 45 150 Z", river: "M 165 68 Q 148 115 130 158" },
+  'sao paulo': { shape: "M 52 58 L 145 52 L 163 98 L 143 158 L 65 162 L 40 112 Z", river: "M 40 90 Q 100 110 165 85" },
+  toronto: { shape: "M 55 55 L 140 50 L 162 98 L 142 155 L 65 158 L 42 106 Z", river: "M 30 100 Q 100 80 172 100" },
+  'mexico city': { shape: "M 50 58 L 142 52 L 162 98 L 143 157 L 65 160 L 40 110 Z", river: "M 42 88 Q 100 108 162 85" },
+  mumbai: { shape: "M 65 38 Q 90 30 120 40 Q 135 80 120 170 Q 100 180 80 170 Q 60 80 65 38 Z", river: "" },
+  delhi: { shape: "M 52 56 L 142 50 L 162 96 L 142 156 L 64 160 L 40 108 Z", river: "M 100 20 Q 104 100 100 178" },
+  dubai: { shape: "M 50 60 L 142 52 L 165 98 L 145 160 L 63 164 L 36 112 Z", river: "" },
+  'cape town': { shape: "M 48 62 Q 98 38 150 62 Q 172 105 148 158 Q 98 178 48 158 Z", river: "" },
+};
+
+/**
+ * Generate a unique city outline based on city name + coords as seed.
+ * Ensures each unknown city gets a distinct, organic-looking polygon
+ * rather than always using the same hexagon fallback.
+ */
+const generateCityShape = (cityName: string, lat: number = 0, lng: number = 0): { shape: string; river: string } => {
+  // Simple seeded RNG from city name + coords
+  let seed = [...cityName.toLowerCase()].reduce((a, c) => a + c.charCodeAt(0), 0)
+    + Math.round(Math.abs(lat) * 100) + Math.round(Math.abs(lng) * 100);
+  const rng = () => { seed = (seed * 1664525 + 1013904223) & 0xffffffff; return (seed >>> 0) / 0xffffffff; };
+
+  const cx = 100, cy = 100, n = 7 + Math.floor(rng() * 4); // 7-10 vertices
+  const baseR = 50 + rng() * 20;
+  const pts: string[] = [];
+  for (let i = 0; i < n; i++) {
+    const baseAngle = (i / n) * 2 * Math.PI - Math.PI / 2;
+    const angleJitter = (rng() - 0.5) * 0.5;
+    const radiusJitter = 0.6 + rng() * 0.7;
+    const r = baseR * radiusJitter;
+    const x = Math.round(cx + Math.cos(baseAngle + angleJitter) * r);
+    const y = Math.round(cy + Math.sin(baseAngle + angleJitter) * r);
+    pts.push(i === 0 ? `M ${x} ${y}` : `L ${x} ${y}`);
+  }
+  const shape = pts.join(' ') + ' Z';
+
+  // River path: varied curve style based on seed
+  const rStyle = Math.floor(rng() * 3);
+  let river: string;
+  if (rStyle === 0) {
+    // S-curve vertical
+    const rx = 60 + Math.round(rng() * 80);
+    river = `M ${rx} 20 Q ${rx + Math.round(rng() * 30 - 15)} 90 ${cx} 110 T ${rx - Math.round(rng() * 20)} 180`;
+  } else if (rStyle === 1) {
+    // Horizontal sweep
+    const ry = 70 + Math.round(rng() * 60);
+    river = `M 30 ${ry} Q ${cx} ${ry + Math.round(rng() * 30 - 15)} 170 ${ry + Math.round(rng() * 20 - 10)}`;
+  } else {
+    // Diagonal
+    river = `M ${30 + Math.round(rng() * 30)} ${30 + Math.round(rng() * 30)} Q ${cx} ${cy} ${140 + Math.round(rng() * 30)} ${140 + Math.round(rng() * 30)}`;
+  }
+
+  return { shape, river };
+};
+
+const getCityShape = (cityName: string, lat?: number, lng?: number): { shape: string; river: string } => {
+  const key = cityName.toLowerCase().trim();
+  // Exact match
+  if (CITY_SHAPES[key]) return CITY_SHAPES[key];
+  // Partial match (e.g. "Nice, France" -> "nice")
+  for (const k of Object.keys(CITY_SHAPES)) {
+    if (key.includes(k) || k.includes(key.split(',')[0].trim())) return CITY_SHAPES[k];
+  }
+  // Generate unique shape from seed
+  return generateCityShape(cityName, lat, lng);
+};
+
+// ── Continent Map ─────────────────────────────────────────────────────────────
+const CONTINENT_MAP: Record<string, string> = {
+  // North America
+  'USA': 'North America', 'United States': 'North America', 'Canada': 'North America', 'Mexico': 'North America',
+  // Europe
+  'United Kingdom': 'Europe', 'UK': 'Europe', 'England': 'Europe', 'Scotland': 'Europe', 'Wales': 'Europe',
+  'France': 'Europe', 'Germany': 'Europe', 'Italy': 'Europe', 'Spain': 'Europe',
+  'Netherlands': 'Europe', 'Austria': 'Europe', 'Belgium': 'Europe', 'Switzerland': 'Europe',
+  'Denmark': 'Europe', 'Finland': 'Europe', 'Norway': 'Europe', 'Sweden': 'Europe',
+  'Hungary': 'Europe', 'Czech Republic': 'Europe', 'Poland': 'Europe', 'Russia': 'Europe',
+  'Portugal': 'Europe', 'Greece': 'Europe', 'Romania': 'Europe', 'Croatia': 'Europe',
+  'Ireland': 'Europe', 'Luxembourg': 'Europe', 'Slovakia': 'Europe', 'Slovenia': 'Europe',
+  'Estonia': 'Europe', 'Latvia': 'Europe', 'Lithuania': 'Europe', 'Ukraine': 'Europe',
+  'Serbia': 'Europe', 'Bulgaria': 'Europe', 'Iceland': 'Europe', 'Malta': 'Europe',
+  'Cyprus': 'Europe', 'Monaco': 'Europe', 'Liechtenstein': 'Europe',
+  // Asia
+  'Japan': 'Asia', 'South Korea': 'Asia', 'Korea': 'Asia', 'China': 'Asia',
+  'Taiwan': 'Asia', 'Hong Kong': 'Asia', 'Singapore': 'Asia', 'India': 'Asia',
+  'Turkey': 'Asia', 'Israel': 'Asia', 'UAE': 'Asia', 'United Arab Emirates': 'Asia',
+  'Thailand': 'Asia', 'Vietnam': 'Asia', 'Malaysia': 'Asia', 'Indonesia': 'Asia',
+  'Philippines': 'Asia', 'Bangladesh': 'Asia', 'Pakistan': 'Asia', 'Iran': 'Asia',
+  'Iraq': 'Asia', 'Saudi Arabia': 'Asia', 'Qatar': 'Asia', 'Kuwait': 'Asia',
+  'Jordan': 'Asia', 'Lebanon': 'Asia', 'Syria': 'Asia', 'Armenia': 'Asia',
+  'Azerbaijan': 'Asia', 'Georgia': 'Asia', 'Kazakhstan': 'Asia', 'Mongolia': 'Asia',
+  'Myanmar': 'Asia', 'Cambodia': 'Asia', 'Laos': 'Asia', 'Nepal': 'Asia',
+  'Sri Lanka': 'Asia', 'Maldives': 'Asia', 'Brunei': 'Asia',
+  // Oceania
+  'Australia': 'Australia & Oceania', 'New Zealand': 'Australia & Oceania',
+  'Papua New Guinea': 'Australia & Oceania', 'Fiji': 'Australia & Oceania',
+  // South America
+  'Brazil': 'South America', 'Argentina': 'South America', 'Chile': 'South America',
+  'Colombia': 'South America', 'Peru': 'South America', 'Venezuela': 'South America',
+  'Ecuador': 'South America', 'Bolivia': 'South America', 'Paraguay': 'South America',
+  'Uruguay': 'South America', 'Guyana': 'South America', 'Suriname': 'South America',
+  // Africa
+  'Egypt': 'Africa', 'South Africa': 'Africa', 'Nigeria': 'Africa', 'Kenya': 'Africa',
+  'Morocco': 'Africa', 'Ghana': 'Africa', 'Tanzania': 'Africa', 'Ethiopia': 'Africa',
+  'Senegal': 'Africa', 'Tunisia': 'Africa', 'Algeria': 'Africa', 'Zimbabwe': 'Africa',
+};
+
+const getContinent = (country: string): string => {
+  if (!country) return 'Other';
+  if (CONTINENT_MAP[country]) return CONTINENT_MAP[country];
+  // Case-insensitive substring match
+  const lc = country.toLowerCase();
+  for (const [key, cont] of Object.entries(CONTINENT_MAP)) {
+    if (lc === key.toLowerCase() || lc.includes(key.toLowerCase())) return cont;
+  }
+  return 'Other';
+};
+
+// Strip postal codes from city strings: "75007 Paris" → "Paris", "10115 Berlin" → "Berlin"
+const stripPostalCode = (s: string): string => s.replace(/^\d{3,10}\s+/, '').trim();
+
+// Normalize city — matches D3GeoGlobeSimplified.normalizeCity exactly
+// Priority: cityCluster field → region keyword match → location field → region fallback
+const extractCity = (ex: any): string => {
+  // 0. cityCluster field (explicit override, highest priority — same as D3Globe)
+  if (ex && ex.cityCluster && typeof ex.cityCluster === 'string') {
+    return ex.cityCluster;
+  }
+
+  // 1. region keyword match (same order as D3Globe)
+  const regionRaw = (ex && ex.region && typeof ex.region === 'string') ? ex.region : '';
+  if (regionRaw) {
+    const r = regionRaw.toLowerCase();
+    if (r.includes('london')) return 'London';
+    if (r.includes('new york')) return 'New York';
+    if (r.includes('paris')) return 'Paris';
+    if (r.includes('tokyo')) return 'Tokyo';
+    if (r.includes('seoul') || r.includes('서울')) return 'Seoul';
+    if (r.includes('jeju') || r.includes('제주') || r.includes('서귀포')) return 'Jeju';
+    if (r.includes('berlin')) return 'Berlin';
+    if (r.includes('amsterdam')) return 'Amsterdam';
+    if (r.includes('vienna') || r.includes('wien')) return 'Vienna';
+    if (r.includes('rome') || r.includes('roma')) return 'Rome';
+    if (r.includes('madrid')) return 'Madrid';
+    if (r.includes('barcelona')) return 'Barcelona';
+    if (r.includes('munich') || r.includes('münchen')) return 'Munich';
+    if (r.includes('hamburg')) return 'Hamburg';
+    if (r.includes('edinburgh')) return 'Edinburgh';
+    if (r.includes('liverpool')) return 'Liverpool';
+    if (r.includes('manchester')) return 'Manchester';
+    if (r.includes('oxford')) return 'Oxford';
+    if (r.includes('cambridge')) return 'Cambridge';
+    if (r.includes('los angeles')) return 'Los Angeles';
+    if (r.includes('san francisco')) return 'San Francisco';
+    if (r.includes('chicago')) return 'Chicago';
+    if (r.includes('houston')) return 'Houston';
+    if (r.includes('washington')) return 'Washington';
+    if (r.includes('philadelphia')) return 'Philadelphia';
+    if (r.includes('cleveland')) return 'Cleveland';
+    if (r.includes('minneapolis')) return 'Minneapolis';
+    if (r.includes('atlanta')) return 'Atlanta';
+    if (r.includes('detroit')) return 'Detroit';
+    if (r.includes('boston')) return 'Boston';
+    if (r.includes('bentonville')) return 'Bentonville';
+    if (r.includes('montreal')) return 'Montreal';
+    if (r.includes('toronto')) return 'Toronto';
+    if (r.includes('beijing') || r.includes('peking') || r.includes('北京')) return 'Beijing';
+    if (r.includes('shanghai') || r.includes('上海')) return 'Shanghai';
+    if (r.includes('hong kong')) return 'Hong Kong';
+    if (r.includes('guangzhou')) return 'Guangzhou';
+    if (r.includes('shenzhen')) return 'Shenzhen';
+    if (r.includes('nanjing')) return 'Nanjing';
+    if (r.includes('hangzhou')) return 'Hangzhou';
+    if (r.includes('taipei')) return 'Taipei';
+    if (r.includes('osaka')) return 'Osaka';
+    if (r.includes('kanazawa')) return 'Kanazawa';
+    if (r.includes('sydney')) return 'Sydney';
+    if (r.includes('florence') || r.includes('firenze')) return 'Florence';
+    if (r.includes('venice') || r.includes('venezia')) return 'Venice';
+    if (r.includes('milan') || r.includes('milano')) return 'Milan';
+    if (r.includes('brussels') || r.includes('bruxelles')) return 'Brussels';
+    if (r.includes('prague') || r.includes('praha')) return 'Prague';
+    if (r.includes('warsaw') || r.includes('warszawa')) return 'Warsaw';
+    if (r.includes('budapest')) return 'Budapest';
+    if (r.includes('stockholm')) return 'Stockholm';
+    if (r.includes('oslo')) return 'Oslo';
+    if (r.includes('copenhagen') || r.includes('københavn')) return 'Copenhagen';
+    if (r.includes('helsinki')) return 'Helsinki';
+    if (r.includes('zurich') || r.includes('zürich')) return 'Zurich';
+    if (r.includes('moscow') || r.includes('moskva')) return 'Moscow';
+    if (r.includes('the hague') || r.includes('den haag')) return 'The Hague';
+    if (r.includes('sao paulo') || r.includes('são paulo')) return 'São Paulo';
+    if (r.includes('buenos aires')) return 'Buenos Aires';
+    if (r.includes('mexico city') || r.includes('ciudad de méxico')) return 'Mexico City';
+    // Fallback: first segment of region, stripping postal codes
+    const firstSeg = regionRaw.split(',')[0].trim();
+    return stripPostalCode(firstSeg) || firstSeg;
+  }
+
+  // 2. city field
+  if (ex && ex.city && typeof ex.city === 'string') return ex.city.trim();
+
+  // 3. location parsing
+  if (ex && ex.location && typeof ex.location === 'string') {
+    const parts = ex.location.split(',').map((p: string) => p.trim());
+    if (parts.length >= 1) {
+      const first = parts[0];
+      if (!/^\d|^(via|rue|place|piazza|strasse|straße|platz|square|avenue|blvd|boulevard|road|street)/i.test(first)) {
+        return stripPostalCode(first);
+      }
+      return parts[1] ? stripPostalCode(parts[1]) : '';
+    }
+  }
+  return '';
+};
+
+const extractShortName = (name: string): string => {
+  return name;
+};
+
+const computeMuseumPositions = (museums: Exhibition[]) => {
+  if (museums.length === 0) return [];
+
+  const SVG_CENTER = 100;
+
+  // Separate main-city vs outer-city museums based on __isMainCity tag
+  const inner = museums.filter(m => (m as any).__isMainCity !== false);
+  const outer = museums.filter(m => (m as any).__isMainCity === false);
+
+  // --- Inner (main city) museum dot placement: geographic, spread around center ---
+  const DOT_SPREAD = Math.min(28, 20 + inner.length * 0.5);
+  const innerLats = inner.map(m => (m as any).latitude ?? 0);
+  const innerLngs = inner.map(m => (m as any).longitude ?? 0);
+  const minLat = innerLats.length ? Math.min(...innerLats) : 0;
+  const maxLat = innerLats.length ? Math.max(...innerLats) : 0;
+  const minLng = innerLngs.length ? Math.min(...innerLngs) : 0;
+  const maxLng = innerLngs.length ? Math.max(...innerLngs) : 0;
+  const latRange = maxLat - minLat, lngRange = maxLng - minLng;
+  const cols = Math.ceil(Math.sqrt(Math.max(inner.length, 1)));
+  const rows = Math.ceil(inner.length / cols);
+
+  const innerPoints = inner.map((museum, i) => {
+    const lat = (museum as any).latitude ?? 0, lng = (museum as any).longitude ?? 0;
+    let cx = lngRange < 0.005
+      ? SVG_CENTER + ((i % cols) / Math.max(cols - 1, 1) - 0.5) * DOT_SPREAD * 2
+      : SVG_CENTER + ((lng - minLng) / lngRange - 0.5) * DOT_SPREAD * 2;
+    let cy = latRange < 0.005
+      ? SVG_CENTER + (Math.floor(i / cols) / Math.max(rows - 1, 1) - 0.5) * DOT_SPREAD * 2
+      : SVG_CENTER - ((lat - minLat) / latRange - 0.5) * DOT_SPREAD * 2;
+    return { museum, cx: Math.round(cx), cy: Math.round(cy), angle: 0 };
+  });
+
+  // Compute angle of each inner dot, sort to minimise crossing leader lines
+  innerPoints.forEach(p => { p.angle = Math.atan2(p.cy - SVG_CENTER, p.cx - SVG_CENTER); });
+  innerPoints.sort((a, b) => a.angle - b.angle);
+
+  const INNER_LABEL_R = 130;
+  const innerN = innerPoints.length;
+  const innerStep = innerN > 1 ? (2 * Math.PI) / innerN : 0;
+  const innerOffset = -Math.PI / 2 + (innerN > 1 ? innerStep * 0.5 : 0);
+
+  const innerResult = innerPoints.map((p, i) => {
+    const labelAngle = innerOffset + i * innerStep;
+    const lx = Math.round(SVG_CENTER + Math.cos(labelAngle) * INNER_LABEL_R);
+    const ly = Math.round(SVG_CENTER + Math.sin(labelAngle) * INNER_LABEL_R);
+    return {
+      ...p.museum,
+      cx: p.cx, cy: p.cy, lx, ly, labelAngle,
+      shortName: extractShortName(p.museum.name),
+      isMainCity: true,
+      museumCity: (p.museum as any).__museumCity || '',
+    };
+  });
+
+  // --- Outer (other cities) museum placement: beyond OUTER_R, grouped by city ---
+  const outerCityGroups = new Map<string, Exhibition[]>();
+  outer.forEach(m => {
+    const cityName = (m as any).__museumCity || 'Other';
+    if (!outerCityGroups.has(cityName)) outerCityGroups.set(cityName, []);
+    outerCityGroups.get(cityName)!.push(m);
+  });
+
+  const outerCities = Array.from(outerCityGroups.keys());
+  const OUTER_R = 210;
+  const outerResult: any[] = [];
+
+  outerCities.forEach((cityName, gi) => {
+    const group = outerCityGroups.get(cityName)!;
+    // Space outer city groups evenly around a wider ring, offset from inner label ring
+    const outerGroupAngle = (gi / Math.max(outerCities.length, 1)) * 2 * Math.PI - Math.PI * 0.7;
+    const anchorX = Math.round(SVG_CENTER + Math.cos(outerGroupAngle) * OUTER_R);
+    const anchorY = Math.round(SVG_CENTER + Math.sin(outerGroupAngle) * OUTER_R);
+
+    group.forEach((museum, mi) => {
+      // Slight perp-spread within the group so dots don't stack
+      const spread = group.length > 1 ? ((mi / (group.length - 1)) - 0.5) * 14 : 0;
+      const perpAngle = outerGroupAngle + Math.PI / 2;
+      const cx = Math.round(anchorX + Math.cos(perpAngle) * spread);
+      const cy = Math.round(anchorY + Math.sin(perpAngle) * spread);
+      // City-name badge label placed just beyond the anchor (away from center)
+      const BADGE_R = 36;
+      const lx = Math.round(anchorX + Math.cos(outerGroupAngle) * BADGE_R);
+      const ly = Math.round(anchorY + Math.sin(outerGroupAngle) * BADGE_R);
+      outerResult.push({
+        ...museum,
+        cx, cy, lx, ly,
+        labelAngle: outerGroupAngle,
+        shortName: extractShortName(museum.name),
+        isMainCity: false,
+        museumCity: cityName,
+        // Badge anchor (shared across all museums in this outer city group)
+        outerAnchorX: anchorX,
+        outerAnchorY: anchorY,
+        outerGroupAngle,
+        isFirstInGroup: mi === 0, // only first museum renders the city badge
+      });
+    });
+  });
+
+  return [...innerResult, ...outerResult];
+};
+
+interface CityMarker {
+  parentClusterId?: string;
+  id: string; cityName: string; query: string; coords: [number, number];
+  count: number; shape: string; river: string;
+  museums: (Exhibition & { cx: number; cy: number; lx: number; ly: number; shortName: string })[];
+  mergedCities?: CityMarker[]; // adjacent cities merged into this cluster
+}
+interface CountryCluster { id: string; isCountry: boolean; countryName: string; coords: [number, number]; count: number; cities: CityMarker[]; }
+interface ContinentCluster { id: string; isContinent: boolean; continentName: string; coords: [number, number]; count: number; countries: CountryCluster[]; }
+
+interface Props { exhibitions: Exhibition[]; onClose?: () => void; onSelectExhibition?: (ex: Exhibition) => void; onSwitchToInteractive?: () => void; }
+
+// ── Inline style constants ────────────────────────────────────────────────────
+const S = {
+  container: { position: 'relative' as const, overflow: 'hidden', width: '100%', height: '100vh', background: '#FFFFFF', color: '#111111' },
+  grain: { position: 'absolute' as const, inset: 0, pointerEvents: 'none' as const, opacity: 0.15, zIndex: 50, backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.5' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`, mixBlendMode: 'multiply' as const },
+  filterSvg: { width: 0, height: 0, position: 'absolute' as const, pointerEvents: 'none' as const },
+  nav: { position: 'absolute' as const, top: 32, right: 32, zIndex: 20, pointerEvents: 'auto' as const, display: 'flex', alignItems: 'center', background: '#FFFFFF', border: '2.5px solid #111111', borderRadius: 9999, padding: '6px', boxShadow: '4px 4px 0px 0px rgba(17,17,17,1)', filter: 'url(#dg-sketch-ui)', transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)' },
+  navBtn: { padding: 8, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', background: 'none', border: 'none' },
+  navMenuBtn: { padding: 10, background: '#111111', color: '#FFFFFF', borderRadius: 9999, cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', marginLeft: 4, border: 'none' },
+  navMenuList: { display: 'flex', alignItems: 'center', gap: 16, padding: '0 12px', fontWeight: 900, color: '#111111', fontSize: 11, letterSpacing: '0.15em', fontFamily: 'sans-serif', textTransform: 'uppercase' as const, whiteSpace: 'nowrap' as const, listStyle: 'none' },
+  navMenuListItem: { cursor: 'pointer' },
+  logoWrap: { position: 'absolute' as const, top: 32, left: 32, zIndex: 10, pointerEvents: 'auto' as const, cursor: 'pointer' },
+  globeSvg: { position: 'absolute' as const, top: 0, left: 0, width: '100%', height: '100%', cursor: 'grab' },
+  brLabel: { position: 'absolute' as const, bottom: 32, right: 32, textAlign: 'right' as const, pointerEvents: 'none' as const, zIndex: 10 },
+  instructions: { position: 'absolute' as const, bottom: 92, left: 32, textAlign: 'left' as const, pointerEvents: 'none' as const, zIndex: 10, opacity: 0.5 },
+  instructionText: { fontSize: 11, fontFamily: 'sans-serif', fontWeight: 600, letterSpacing: '0.12em', textTransform: 'uppercase' as const, margin: '2px 0' },
+  panel: (show: boolean) => ({
+    position: 'absolute' as const, top: '50%', left: 32, transform: show ? 'translateY(-50%) translateX(0)' : 'translateY(-50%) translateX(-120%)',
+    background: '#FFFFFF', border: '3px solid #111111',
+    boxShadow: '8px 8px 0px 0px rgba(17,17,17,1)', display: 'flex', flexDirection: 'column' as const,
+    transition: 'transform 0.7s ease, opacity 0.7s ease, width 0.4s ease, height 0.4s ease', opacity: show ? 1 : 0,
+    zIndex: 30, filter: 'url(#dg-sketch-ui)',
+  }),
+  panelHeader: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', borderBottom: '3px solid #111111', padding: 16 },
+  panelTitle: { fontSize: 18, fontWeight: 900, fontFamily: 'sans-serif', textTransform: 'uppercase' as const, letterSpacing: '0.12em' },
+  panelCloseBtn: { background: 'none', border: 'none', cursor: 'pointer' },
+  panelMap: { flex: 1, position: 'relative' as const, borderBottom: '3px solid #111111', background: '#f8f8f8', overflow: 'hidden' },
+  panelInfo: { padding: 16, background: '#FFFFFF' },
+  panelInfoTitle: { fontSize: 13, fontWeight: 900, fontFamily: 'sans-serif', textTransform: 'uppercase' as const, letterSpacing: '0.12em', marginBottom: 8 },
+  panelInfoRow: { display: 'flex', justifyContent: 'space-between', fontSize: 11, fontFamily: 'monospace', color: 'rgba(17,17,17,0.7)', marginBottom: 4 },
+  detail: { position: 'fixed' as const, inset: 0, zIndex: 100, background: '#FFFFFF', overflowY: 'auto' as const, display: 'flex', flexDirection: 'column' as const, filter: 'url(#dg-sketch-ui)' },
+  detailHeader: { display: 'flex', flexDirection: 'row' as const, padding: '48px 48px 32px', gap: 32, borderBottom: '3px solid #111111', flexWrap: 'wrap' as const },
+  detailLeft: { width: 260, flexShrink: 0 },
+  detailTitle: { fontSize: 28, fontWeight: 900, fontFamily: 'sans-serif', textTransform: 'uppercase' as const, letterSpacing: '0.08em', marginBottom: 16, lineHeight: 1.2 },
+  detailDesc: { fontFamily: 'monospace', fontSize: 11, lineHeight: 1.7, opacity: 0.8 },
+  filterRow: { display: 'flex', flexWrap: 'wrap' as const, gap: 8, marginTop: 16 },
+  filterBtn: (active: boolean) => ({ padding: '4px 8px', fontWeight: 700, fontSize: 10, border: '2px solid #111111', cursor: 'pointer', background: active ? '#111111' : 'transparent', color: active ? '#FFFFFF' : 'rgba(17,17,17,0.5)', fontFamily: 'sans-serif', letterSpacing: '0.05em' }),
+  detailMid: { flex: 1, padding: '0 48px', display: 'none' as const },
+  detailRight: { display: 'flex', alignItems: 'flex-start', gap: 24, marginLeft: 'auto' },
+  closeBtn: { display: 'flex', alignItems: 'center', gap: 8, cursor: 'pointer', background: 'none', border: 'none', fontWeight: 700, textTransform: 'uppercase' as const, letterSpacing: '0.1em', fontSize: 13, fontFamily: 'sans-serif' },
+  gallery: { padding: '32px 48px', flex: 1 },
+  galleryTop: { display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 32 },
+  galleryCount: { fontFamily: 'monospace', fontSize: 11, fontWeight: 700, textTransform: 'uppercase' as const, opacity: 0.5 },
+  gallerySort: { fontFamily: 'monospace', fontSize: 11, fontWeight: 700, borderBottom: '2px solid #111111', display: 'flex', alignItems: 'center', gap: 4, cursor: 'pointer' },
+  grid: { display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))', gap: '32px 32px' },
+  artCard: { display: 'flex', flexDirection: 'column' as const, gap: 12, cursor: 'pointer' },
+  artImg: { border: '3px solid #111111', aspectRatio: '4/3', overflow: 'hidden', background: '#f0f0f0', boxShadow: '4px 4px 0px 0px rgba(17,17,17,1)' },
+  artNum: { fontFamily: 'monospace', fontSize: 10, fontWeight: 700, marginBottom: 2 },
+  artTitle: { fontFamily: 'sans-serif', fontWeight: 700, fontSize: 13, textTransform: 'uppercase' as const, lineHeight: 1.3 },
+  artArtist: { fontFamily: 'monospace', fontSize: 10, opacity: 0.7, marginTop: 2 },
+  artDate: { fontFamily: 'monospace', fontSize: 9, opacity: 0.5, marginTop: 1 },
+};
+
+export default function DrawingGlobe({ exhibitions, onClose, onSelectExhibition, onSwitchToInteractive }: Props) {
+  const navigate = useNavigate();
+  const [land, setLand] = useState<any>(null);
+  const [borders, setBorders] = useState<any>(null);
+  const [countries, setCountries] = useState<any[]>([]);
+  const [hoveredCountry, setHoveredCountry] = useState<string | null>(null);
+  const [hoveredMarker, setHoveredMarker] = useState<string | null>(null);
+  const isMobile = typeof window !== 'undefined' && window.innerWidth < 640;
+  const [isHomeHovered, setIsHomeHovered] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedCluster, setSelectedCluster] = useState<CityMarker | null>(null);
+  const [selectedCityInPanel, setSelectedCityInPanel] = useState<string | null>(null); // city tab in panel
+  const [hoveredMuseumId, setHoveredMuseumId] = useState<string | null>(null); // spotlight hover
+  const [selectedPointId, setSelectedPointId] = useState<string | null>(null);
+  const [rotation, setRotation] = useState<[number, number, number]>([20, -20, 0]);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [size, setSize] = useState({ w: 800, h: 600 });
+  const initialScale = useMemo(() => Math.min(size.w, size.h) * 0.35, [size]);
+  const scaleRef = useRef(Math.min(800, 600) * 0.35);
+  const [scale, setScaleState] = useState(scaleRef.current);
+
+  const setScale = (v: number | ((s: number) => number)) => {
+    const val = typeof v === 'function' ? v(scaleRef.current) : v;
+    scaleRef.current = val;
+    setScaleState(val);
+  };
+
+  // Sync data refs for imperative access
+  useEffect(() => { landRef.current = land; }, [land]);
+  useEffect(() => { bordersRef.current = borders; }, [borders]);
+  // Sync rotationRef when rotation changes from non-drag sources
+  useEffect(() => { rotationRef.current = rotation; }, [rotation]);
+
+  // Imperative SVG draw — updates path `d` attributes directly without React re-render
+  // Preserves ALL SVG filters and visual aesthetics
+  const imperativeDraw = useCallback(() => {
+    if (!landRef.current) return;
+    const proj = geoOrthographic()
+      .scale(scaleRef.current)
+      .translate([size.w / 2, size.h / 2])
+      .rotate(rotationRef.current)
+      .clipAngle(90);
+    const pathFn = geoPath(proj);
+    const dentedPath = getDentedCirclePath(size.w / 2, size.h / 2, scaleRef.current);
+    if (clipPathRef.current) clipPathRef.current.setAttribute('d', dentedPath);
+    if (spherePathRef.current) spherePathRef.current.setAttribute('d', dentedPath);
+    if (sphereOutlineRef.current) sphereOutlineRef.current.setAttribute('d', dentedPath);
+    if (landPathRef.current) {
+      const d = pathFn(landRef.current);
+      if (d) landPathRef.current.setAttribute('d', d);
+    }
+    if (bordersPathRef.current && bordersRef.current) {
+      const d = pathFn(bordersRef.current);
+      if (d) bordersPathRef.current.setAttribute('d', d);
+    }
+
+    // ── Update marker positions imperatively ──────────────────────────────
+    const lv = levelRef.current;
+    for (const info of markerRegistry.current.values()) {
+      const { el, isBlob } = info;
+      let x: number, y: number;
+
+      if (info.cityCoords) {
+        // City marker: position interpolated based on zoom level
+        const mPos = proj(info.cityCoords);
+        const cPos = info.contCoords ? proj(info.contCoords) : mPos;
+        const ccPos = info.countryCoords ? proj(info.countryCoords) : mPos;
+        if (!mPos || !cPos || !ccPos) { el.style.display = 'none'; continue; }
+        if (lv <= 1) {
+          x = (cPos[0] as number) + ((ccPos[0] as number) - (cPos[0] as number)) * lv;
+          y = (cPos[1] as number) + ((ccPos[1] as number) - (cPos[1] as number)) * lv;
+        } else {
+          const t = Math.min(lv - 1, 1);
+          x = (ccPos[0] as number) + ((mPos[0] as number) - (ccPos[0] as number)) * t;
+          y = (ccPos[1] as number) + ((mPos[1] as number) - (ccPos[1] as number)) * t;
+        }
+      } else if (info.coords) {
+        // Simple continent or country marker
+        const pos = proj(info.coords);
+        if (!pos) { el.style.display = 'none'; continue; }
+        x = pos[0] as number;
+        y = pos[1] as number;
+      } else {
+        continue;
+      }
+
+      el.style.display = '';
+      if (isBlob) {
+        el.setAttribute('transform', `translate(${x},${y})`);
+      } else {
+        el.style.transform = `translate(${x}px,${y}px)`;
+      }
+    }
+  }, [size]);
+
+  // level: 0=continent, 1=country, 2=city-cluster (mini-map on click)
+  const targetLevel: 0 | 1 | 2 = (scale < initialScale * 1.5 && !selectedCluster) ? 0
+    : (scale < initialScale * 2.5 && !selectedCluster) ? 1 : 2;
+  const levelRef = useRef<number>(targetLevel);
+  const [level, setLevel] = useState<number>(targetLevel);
+  // Animate level transitions
+  useEffect(() => {
+    let frameId: number;
+    const startLevel = levelRef.current;
+    const start = performance.now();
+    const animate = (t: number) => {
+      const p = Math.min((t - start) / 700, 1);
+      const ease = p < 0.5 ? 4 * p * p * p : 1 - Math.pow(-2 * p + 2, 3) / 2;
+      const newLevel = startLevel + (targetLevel - startLevel) * ease;
+      levelRef.current = newLevel;
+      setLevel(newLevel);
+      if (p < 1) frameId = requestAnimationFrame(animate);
+    };
+    frameId = requestAnimationFrame(animate);
+    return () => cancelAnimationFrame(frameId);
+  }, [targetLevel]);
+
+  // ── Cluster data ─────────────────────────────────────────────────────────
+  const { cityMarkers, countryClusters, continentClusters } = useMemo(() => {
+    // Group by country+city using region-based city extraction
+    type Key = string;
+    const cityMap = new Map<Key, Exhibition[]>();
+    for (const ex of exhibitions) {
+      const city = extractCity(ex);
+      if (!city) continue;
+      const country = (ex as any).country || '';
+      const key = `${country}__${city}`; // country-scoped key prevents cross-country merging
+      if (!cityMap.has(key)) cityMap.set(key, []);
+      cityMap.get(key)!.push(ex);
+    }
+    const cities: CityMarker[] = Array.from(cityMap.entries()).map(([key, mus]) => {
+      // Recover the actual cityName from the first museum's extracted city
+      const cityName = extractCity(mus[0]) || key.split('__')[1] || key;
+      const lats = mus.map(m => (m as any).latitude ?? 0).filter(Boolean);
+      const lngs = mus.map(m => (m as any).longitude ?? 0).filter(Boolean);
+      const avgLat = lats.length ? lats.reduce((a, b) => a + b, 0) / lats.length : 0;
+      const avgLng = lngs.length ? lngs.reduce((a, b) => a + b, 0) / lngs.length : 0;
+      const country = (mus[0] as any).country || '';
+      const cityKey = cityName.toLowerCase();
+      const cs = getCityShape(cityKey, avgLat, avgLng); // unique shape per city
+      return { 
+        id: `${country}-${cityKey}`.replace(/[\s+]/g, '-'), 
+        cityName, 
+        query: `${cityName}, ${country}`, 
+        coords: [avgLng, avgLat] as [number, number], 
+        count: mus.length, 
+        shape: cs.shape, 
+        river: cs.river, 
+        museums: computeMuseumPositions(mus) as any 
+      };
+    }).filter(c => c.coords[0] !== 0 || c.coords[1] !== 0);
+
+    // --- GEOGRAPHIC CLUSTERING ---
+    // Merge only truly adjacent cities within ~1.5 degrees (~150km).
+    // This ensures only cities in the same metro area (e.g. Paris + Versailles)
+    // are grouped, while distant cities (Paris vs Bordeaux) stay separate.
+    const GEO_MERGE_DIST = 1.3; // Reverted for bigger clusters
+    
+    // Sort by count descending so larger cities consume smaller surrounding towns
+    cities.sort((a, b) => b.count - a.count);
+    
+    const clusteredCities: CityMarker[] = [];
+    const mergedIndices = new Set<number>();
+    
+    for (let i = 0; i < cities.length; i++) {
+        if (mergedIndices.has(i)) continue;
+        const mainCity = cities[i];
+        
+        // Tag museums with their city of origin (isMainCity / museumCity)
+        const taggedMain = mainCity.museums.map((m: any) => ({
+          ...m,
+          __isMainCity: true,
+          __museumCity: mainCity.cityName,
+        }));
+        let mergedCount = mainCity.count;
+        let taggedMerged = [...taggedMain];
+
+        const adjCities: CityMarker[] = [];
+        mainCity.parentClusterId = mainCity.id;
+        for (let j = i + 1; j < cities.length; j++) {
+            if (mergedIndices.has(j)) continue;
+            const otherCity = cities[j];
+            
+            const dx = mainCity.coords[0] - otherCity.coords[0];
+            const dy = mainCity.coords[1] - otherCity.coords[1];
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            
+            if (dist < GEO_MERGE_DIST) {
+                // IMPORTANT: only merge cities within the SAME country
+                const mainCountry = (mainCity.museums[0] as any)?.country || '';
+                const otherCountry = (otherCity.museums[0] as any)?.country || '';
+                if (mainCountry !== otherCountry) continue;
+                mergedCount += otherCity.count;
+                const taggedOther = otherCity.museums.map((m: any) => ({
+                  ...m,
+                  __isMainCity: false,
+                  __museumCity: otherCity.cityName,
+                }));
+                taggedMerged = taggedMerged.concat(taggedOther);
+                mergedIndices.add(j);
+                otherCity.parentClusterId = mainCity.id;
+                adjCities.push(otherCity); // save adjacent city for tab switching
+            }
+        }
+        clusteredCities.push({
+            ...mainCity,
+            count: mergedCount,
+            museums: computeMuseumPositions(taggedMerged) as any,
+            mergedCities: adjCities,
+        });
+    }
+
+    const countryMap = new Map<string, CityMarker[]>();
+    for (const city of clusteredCities) {
+      const country = ((city.museums[0] as any).country || 'Unknown') as string;
+      if (!countryMap.has(country)) countryMap.set(country, []);
+      countryMap.get(country)!.push(city);
+    }
+    const countries_: CountryCluster[] = Array.from(countryMap.entries()).map(([cn, ca]) => ({
+      id: cn.toLowerCase().replace(/\s+/g, '-'), isCountry: true, countryName: cn,
+      coords: [ca.reduce((s, c) => s + c.coords[0], 0) / ca.length, ca.reduce((s, c) => s + c.coords[1], 0) / ca.length] as [number, number],
+      count: ca.reduce((s, c) => s + c.count, 0), cities: ca,
+    }));
+
+    const contMap = new Map<string, CountryCluster[]>();
+    for (const cc of countries_) {
+      const cont = getContinent(cc.countryName);
+      if (!contMap.has(cont)) contMap.set(cont, []);
+      contMap.get(cont)!.push(cc);
+    }
+    const continents: ContinentCluster[] = Array.from(contMap.entries()).map(([cn, ca]) => ({
+      id: cn.toLowerCase().replace(/[\s&]+/g, '-'), isContinent: true, continentName: cn,
+      coords: [ca.reduce((s, c) => s + c.coords[0], 0) / ca.length, ca.reduce((s, c) => s + c.coords[1], 0) / ca.length] as [number, number],
+      count: ca.reduce((s, c) => s + c.count, 0), countries: ca,
+    }));
+    return { unclusteredCityMarkers: cities, cityMarkers: clusteredCities, countryClusters: countries_, continentClusters: continents };
+  }, [exhibitions]);
+
+  // ── Effects ───────────────────────────────────────────────────────────────
+  const hasInitialized = useRef(false);
+  useEffect(() => {
+    if (!containerRef.current) return;
+    const obs = new ResizeObserver(entries => {
+      for (const e of entries) {
+        const w = e.contentRect.width, h = e.contentRect.height;
+        setSize({ w, h });
+        if (!hasInitialized.current && w > 0 && h > 0) {
+          const initSc = Math.min(w, h) * 0.35;
+          scaleRef.current = initSc;
+          setScaleState(initSc);
+          hasInitialized.current = true;
+        }
+      }
+    });
+    obs.observe(containerRef.current);
+    return () => obs.disconnect();
+  }, []);
+
+  useEffect(() => {
+    const tryFetch = (urls: string[], i: number) => {
+      if (i >= urls.length) return;
+      fetch(urls[i]).then(r => { if (!r.ok) throw new Error(); return r.json(); })
+        .then(data => {
+          setLand(feature(data, data.objects.land as any));
+          setBorders(mesh(data, data.objects.countries as any, (a: any, b: any) => a !== b));
+          setCountries((feature(data, data.objects.countries as any) as any).features);
+        }).catch(() => tryFetch(urls, i + 1));
+    };
+    tryFetch(['/geodata/countries-110m.json', 'https://unpkg.com/world-atlas@2.0.2/countries-110m.json'], 0);
+  }, []);
+
+  // ── Drag + scroll ─────────────────────────────────────────────────────────
+  const svgRef = useRef<SVGSVGElement>(null);
+  const isDragging = useRef(false);
+  const lastDragPos = useRef<{ x: number; y: number } | null>(null);
+  const rafId = useRef<number | null>(null);
+  const rotationRef = useRef<[number, number, number]>([20, -20, 0]);
+  const landRef = useRef<any>(null);
+  const bordersRef = useRef<any>(null);
+  // SVG path refs for imperative mobile drawing (avoids React re-renders during drag)
+  const spherePathRef = useRef<SVGPathElement>(null);
+  const sphereOutlineRef = useRef<SVGPathElement>(null);
+  const landPathRef = useRef<SVGPathElement>(null);
+  const bordersPathRef = useRef<SVGPathElement>(null);
+  const clipPathRef = useRef<SVGPathElement>(null);
+
+  const markerRegistry = useRef<Map<string, {
+    el: SVGGElement;
+    isBlob: boolean;         // true → SVG transform attr, false → CSS style.transform
+    coords?: [number, number];           // continent / country center
+    cityCoords?: [number, number];       // city's own coords
+    contCoords?: [number, number];       // parent continent coords
+    countryCoords?: [number, number];    // parent country coords
+  }>>(new Map());
+
+  const handleSvgMouseDown = useCallback((e: React.MouseEvent<SVGSVGElement>) => {
+    // Only start drag on the globe background, not on marker elements
+    const target = e.target as SVGElement;
+    if (target.closest?.('[data-marker]')) return;
+    isDragging.current = true;
+    lastDragPos.current = { x: e.clientX, y: e.clientY };
+    e.currentTarget.style.cursor = 'grabbing';
+  }, []);
+
+  const handleSvgMouseMove = useCallback((e: React.MouseEvent<SVGSVGElement>) => {
+    if (!isDragging.current || !lastDragPos.current) return;
+    const dx = e.clientX - lastDragPos.current.x;
+    const dy = e.clientY - lastDragPos.current.y;
+    lastDragPos.current = { x: e.clientX, y: e.clientY };
+    setRotation(r => {
+      const sens = 0.4 * (initialScale / scaleRef.current);
+      return [r[0] + dx * sens, r[1] - dy * sens, r[2]];
+    });
+  }, [initialScale]);
+
+  const handleSvgMouseUp = useCallback((e: React.MouseEvent<SVGSVGElement>) => {
+    isDragging.current = false;
+    lastDragPos.current = null;
+    e.currentTarget.style.cursor = 'grab';
+  }, []);
+
+  // Touch support for mobile
+  const touchDistRef = useRef<number | null>(null);
+
+  const handleSvgTouchStart = useCallback((e: React.TouchEvent<SVGSVGElement>) => {
+    if (e.touches.length === 1) {
+      const target = e.target as SVGElement;
+      if (target.closest?.('[data-marker]')) return;
+      isDragging.current = true;
+      lastDragPos.current = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+    } else if (e.touches.length === 2) {
+      isDragging.current = false;
+      const dx = e.touches[0].clientX - e.touches[1].clientX;
+      const dy = e.touches[0].clientY - e.touches[1].clientY;
+      touchDistRef.current = Math.hypot(dx, dy);
+    }
+  }, []);
+
+  const handleSvgTouchMove = useCallback((e: React.TouchEvent<SVGSVGElement>) => {
+    e.preventDefault();
+    if (e.touches.length === 1 && isDragging.current && lastDragPos.current) {
+      const dx = e.touches[0].clientX - lastDragPos.current.x;
+      const dy = e.touches[0].clientY - lastDragPos.current.y;
+      lastDragPos.current = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+      const sens = 0.4 * (initialScale / scaleRef.current);
+      if (isMobile) {
+        // Mobile: mutate ref + update SVG DOM directly — zero React re-renders during drag
+        rotationRef.current = [
+          rotationRef.current[0] + dx * sens,
+          rotationRef.current[1] - dy * sens,
+          rotationRef.current[2],
+        ];
+        if (rafId.current === null) {
+          rafId.current = requestAnimationFrame(() => {
+            imperativeDraw();
+            rafId.current = null;
+          });
+        }
+      } else {
+        // Desktop: React state (existing behavior)
+        if (rafId.current !== null) return;
+        const capturedDx = dx;
+        const capturedDy = dy;
+        rafId.current = requestAnimationFrame(() => {
+          setRotation(r => [r[0] + capturedDx * sens, r[1] - capturedDy * sens, r[2]]);
+          rafId.current = null;
+        });
+      }
+    } else if (e.touches.length === 2 && touchDistRef.current !== null) {
+      const dx = e.touches[0].clientX - e.touches[1].clientX;
+      const dy = e.touches[0].clientY - e.touches[1].clientY;
+      const newDist = Math.hypot(dx, dy);
+      const ratio = newDist / touchDistRef.current;
+      touchDistRef.current = newDist;
+      const minSc = initialScale * 0.45;
+      const maxSc = initialScale * 9;
+      if (isMobile) {
+        scaleRef.current = Math.max(minSc, Math.min(scaleRef.current * ratio, maxSc));
+        if (rafId.current === null) {
+          rafId.current = requestAnimationFrame(() => {
+            imperativeDraw();
+            rafId.current = null;
+          });
+        }
+      } else {
+        setScale(s => Math.max(minSc, Math.min(s * ratio, maxSc)));
+      }
+    }
+  }, [initialScale, isMobile, imperativeDraw]);
+
+  const handleSvgTouchEnd = useCallback(() => {
+    isDragging.current = false;
+    lastDragPos.current = null;
+    touchDistRef.current = null;
+    if (rafId.current !== null) {
+      cancelAnimationFrame(rafId.current);
+      rafId.current = null;
+    }
+    if (isMobile) {
+      // Sync React state once on lift — markers reposition, React recalculates paths
+      setRotation([...rotationRef.current] as [number, number, number]);
+      setScaleState(scaleRef.current);
+    }
+  }, [isMobile]);
+
+  useEffect(() => {
+    if (!svgRef.current) return;
+    const node = svgRef.current;
+    const wheelFn = (e: WheelEvent) => {
+      e.preventDefault();
+      const minSc = initialScale * 0.45;
+      const maxSc = initialScale * 9;
+      setScale(s => Math.max(minSc, Math.min(s * (1 - e.deltaY * 0.002), maxSc)));
+    };
+    node.addEventListener('wheel', wheelFn, { passive: false });
+    return () => node.removeEventListener('wheel', wheelFn);
+  }, [initialScale]);
+
+  const projection = useMemo(() =>
+    geoOrthographic().scale(scale).translate([size.w / 2, size.h / 2]).clipAngle(90).rotate(rotation),
+    [rotation, scale, size]);
+  const pathGenerator = useMemo(() => geoPath().projection(projection), [projection]);
+
+  // ── Dented globe ─────────────────────────────────────────────────────────
+  const getDentedRadius = (angle: number, r: number) => {
+    const dentAngle = -Math.PI / 4;
+    let diff = angle - dentAngle;
+    while (diff > Math.PI) diff -= Math.PI * 2;
+    while (diff < -Math.PI) diff += Math.PI * 2;
+    if (Math.abs(diff) < 0.3) {
+      const depth = r * 0.15, nd = diff / 0.3;
+      return r - depth * (1 + Math.cos(nd * Math.PI)) / 2;
+    }
+    return r;
+  };
+  const getDentedCirclePath = (cx: number, cy: number, r: number) => {
+    let path = '';
+    for (let i = 0; i <= 120; i++) {
+      const angle = (i / 120) * Math.PI * 2 - Math.PI / 2;
+      const cr = getDentedRadius(angle, r);
+      const x = cx + Math.cos(angle) * cr, y = cy + Math.sin(angle) * cr;
+      path += i === 0 ? `M ${x},${y}` : ` L ${x},${y}`;
+    }
+    return path + ' Z';
+  };
+
+  const isInGlobe = (pos: [number, number] | null) => {
+    if (!pos) return false;
+    const cx = size.w / 2, cy = size.h / 2;
+    const dist = Math.sqrt((pos[0] - cx) ** 2 + (pos[1] - cy) ** 2);
+    return dist <= getDentedRadius(Math.atan2(pos[1] - cy, pos[0] - cx), scale);
+  };
+
+  // ── Backface culling: hide markers on the back hemisphere of the globe ─────
+  // Uses geoDistance from the view center. < π/2 rad (90°) = front face, visible.
+  // We use 1.55 (slightly less than π/2) for a crisp edge fade.
+  const isGeoVisible = useCallback((coords: [number, number]): boolean => {
+    const centerLon = -rotation[0];
+    const centerLat = -rotation[1];
+    const d = d3.geoDistance(coords, [centerLon, centerLat]);
+    return d < 1.55; // ~88.8°
+  }, [rotation]);
+
+
+  // ── Zoom to coords ────────────────────────────────────────────────────────
+  const zoomToCoords = useCallback((coords: [number, number], targetScale: number) => {
+    const targetRot = [-coords[0], -coords[1], 0] as [number, number, number];
+    const startRot = rotation, startSc = scaleRef.current;
+    const t0 = performance.now();
+    const animate = (t: number) => {
+      const p = Math.min((t - t0) / 800, 1), ease = 1 - Math.pow(1 - p, 3);
+      setRotation([startRot[0] + (targetRot[0] - startRot[0]) * ease, startRot[1] + (targetRot[1] - startRot[1]) * ease, 0]);
+      setScale(startSc + (targetScale - startSc) * ease);
+      if (p < 1) requestAnimationFrame(animate);
+    };
+    requestAnimationFrame(animate);
+  }, [rotation]);
+
+  const handleClusterClick = useCallback((item: CityMarker | CountryCluster | ContinentCluster) => {
+    if ((item as ContinentCluster).isContinent) zoomToCoords(item.coords, Math.max(scaleRef.current, initialScale * 1.8));
+    else if ((item as CountryCluster).isCountry) zoomToCoords(item.coords, Math.max(scaleRef.current * 1.5, initialScale * 6.0));
+    else {
+      // City cluster: require the user to be zoomed in enough before opening the panel.
+      // At scale < 3.5x we zoom in closer first; at scale >= 3.5x we open the panel.
+      if (scale < initialScale * 3.5) {
+        // Zoom into this city area so nearby cities become visible separately
+        zoomToCoords(item.coords, Math.max(scaleRef.current * 2.0, initialScale * 8.0));
+      } else {
+        // Already zoomed close enough — open the mini-map panel
+        setSelectedCluster(item as CityMarker);
+        zoomToCoords(item.coords, Math.max(scaleRef.current * 1.5, initialScale * 10.0));
+      }
+    }
+  }, [zoomToCoords, initialScale, scale]);
+
+  const handleMuseumClick = useCallback((museum: Exhibition & { shortName: string }) => {
+    setSelectedPointId(museum.id);
+    if (onSelectExhibition) {
+      onSelectExhibition(museum);
+    }
+  }, [onSelectExhibition]);
+
+  useEffect(() => {
+    if (scale < initialScale * 2.5 && selectedCluster) { setSelectedCluster(null); setSelectedPointId(null); }
+  }, [scale, initialScale, selectedCluster]);
+
+  const getBottomRight = () => {
+    if (hoveredMarker) {
+      const city = cityMarkers.find(c => c.id === hoveredMarker);
+      if (city) return { title: city.cityName.toUpperCase(), count: `${city.count} MUSEUMS` };
+      const country = countryClusters.find(c => c.id === hoveredMarker);
+      if (country) return { title: country.countryName.toUpperCase(), count: `${country.count} MUSEUMS` };
+    }
+    if (hoveredCountry) return { title: hoveredCountry.toUpperCase(), count: 'HOVER' };
+    return { title: 'COLLY', count: 'ATLAS' };
+  };
+  const brData = getBottomRight();
+
+  return (
+    <div ref={containerRef} style={S.container}>
+      {/* Grain */}
+      <div style={S.grain} />
+
+      {/* SVG filter defs */}
+      <svg style={S.filterSvg}>
+        <defs>
+          <filter id="dg-sketch-ui">
+            <feTurbulence type="fractalNoise" baseFrequency="0.05" numOctaves="3" result="noise" />
+            <feDisplacementMap in="SourceGraphic" in2="noise" scale="2" xChannelSelector="R" yChannelSelector="G" />
+          </filter>
+          <filter id="dg-kitsch-wobble">
+            <feTurbulence type="fractalNoise" baseFrequency="0.015" numOctaves="2" result="noise" />
+            <feDisplacementMap in="SourceGraphic" in2="noise" scale="8" xChannelSelector="R" yChannelSelector="G" />
+          </filter>
+        </defs>
+      </svg>
+
+      {/* ── Navigator (top-right) ── */}
+      <div style={{ ...S.nav, paddingLeft: isSearchOpen ? 16 : 6, gap: 4 }}>
+        <div style={{ display: 'flex', alignItems: 'center', width: isSearchOpen ? 240 : 0, overflow: 'hidden', transition: 'width 0.4s cubic-bezier(0.4, 0, 0.2, 1)', opacity: isSearchOpen ? 1 : 0 }}>
+             <input
+               autoFocus
+               value={searchQuery}
+               onChange={e => setSearchQuery(e.target.value)}
+               placeholder="Search museum or location..."
+               style={{ border: 'none', outline: 'none', background: 'transparent', width: '100%', fontFamily: 'monospace', fontSize: 13, fontWeight: 700, pointerEvents: isSearchOpen ? 'auto' : 'none' }}
+             />
+        </div>
+
+        <button style={{ ...S.navBtn, background: isSearchOpen ? 'transparent' : '#111111', borderRadius: '50%', transition: 'background 0.4s' }} title="Search" onClick={() => { setIsSearchOpen(!isSearchOpen); setIsMenuOpen(false); if(isSearchOpen) setSearchQuery(''); }}>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke={isSearchOpen ? "#111111" : "#FFFFFF"} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ transition: 'stroke 0.4s' }}>
+            <circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" />
+          </svg>
+        </button>
+
+        <button style={S.navBtn} onClick={() => { setIsMenuOpen(!isMenuOpen); setIsSearchOpen(false); }}>
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#111111" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+            <line x1="4" y1="12" x2="20" y2="12" /><line x1="4" y1="6" x2="20" y2="6" /><line x1="4" y1="18" x2="20" y2="18" />
+          </svg>
+        </button>
+
+        {/* X close button removed — use INTERACTIVE MAP toggle button to switch maps */}
+      </div>
+
+      {/* ── Menu Dropdown ── */}
+      <ul style={{
+        position: 'absolute', top: 90, right: 32, display: 'flex', flexDirection: 'column', gap: 16, padding: '24px 32px',
+        background: '#FFFFFF', border: '3px solid #111111', borderRadius: 24, boxShadow: '8px 8px 0px 0px rgba(17,17,17,1)',
+        fontWeight: 900, color: '#111111', fontSize: 13, letterSpacing: '0.15em', fontFamily: 'sans-serif', textTransform: 'uppercase', listStyle: 'none', filter: 'url(#dg-sketch-ui)', zIndex: 19,
+        transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+        opacity: isMenuOpen ? 1 : 0,
+        transform: isMenuOpen ? 'translateY(0)' : 'translateY(-10px)',
+        pointerEvents: isMenuOpen ? 'auto' : 'none'
+      }}>
+        <li style={S.navMenuListItem} onClick={() => { setIsMenuOpen(false); if (onClose) onClose(); navigate('/mypage?theme=drawing'); }}>MY PAGE</li>
+        <li style={S.navMenuListItem} onClick={() => { setIsMenuOpen(false); if (onClose) onClose(); navigate('/community?theme=drawing'); }}>COMMUNITY</li>
+        {/* EXIT menu item removed — no direct close to D3geo */}
+      </ul>
+
+      {/* ── Search Results Dropdown ── */}
+      <div style={{
+          position: 'absolute', top: 90, right: 32, width: 320, maxHeight: 400, overflowY: 'auto',
+          background: '#FFFFFF', border: '3px solid #111111', borderRadius: 24, padding: 16,
+          boxShadow: '8px 8px 0px 0px rgba(17,17,17,1)', filter: 'url(#dg-sketch-ui)', zIndex: 19,
+          display: 'flex', flexDirection: 'column', gap: 12,
+          transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)',
+          opacity: isSearchOpen && searchQuery.trim().length > 0 ? 1 : 0,
+          transform: isSearchOpen && searchQuery.trim().length > 0 ? 'translateY(0)' : 'translateY(-10px)',
+          pointerEvents: isSearchOpen && searchQuery.trim().length > 0 ? 'auto' : 'none'
+      }}>
+        {(() => {
+          if (!isSearchOpen || searchQuery.trim().length === 0) return null;
+          const q = searchQuery.toLowerCase();
+          const results = exhibitions.filter(m => 
+            m.name.toLowerCase().includes(q) || 
+            (m as any).region?.toLowerCase().includes(q) ||
+            ((m as any).country || '').toLowerCase().includes(q)
+          ).slice(0, 10);
+          
+          if (results.length === 0) return <div style={{ fontSize: 11, fontFamily: 'monospace', fontWeight: 600, opacity: 0.5, textAlign: 'center', padding: '16px 0' }}>NO RESULTS FOUND</div>;
+
+          return results.map(m => (
+            <div key={m.id} 
+              style={{ cursor: 'pointer', padding: '8px 12px', borderRadius: 12, border: '1px solid rgba(17,17,17,0.1)', background: '#FFFFFF', transition: 'background 0.2s' }}
+              onMouseEnter={e => e.currentTarget.style.background = '#F0F0F0'}
+              onMouseLeave={e => e.currentTarget.style.background = '#FFFFFF'}
+              onClick={() => {
+                setIsSearchOpen(false);
+                setSearchQuery('');
+                const targetCity = cityMarkers.find(c => c.museums.some(mx => mx.id === m.id));
+                if (targetCity) {
+                   handleClusterClick(targetCity);
+                   setSelectedPointId(m.id);
+                }
+              }}
+            >
+              <div style={{ fontSize: 13, fontWeight: 900, fontFamily: 'sans-serif', marginBottom: 2 }}>{m.name}</div>
+              <div style={{ fontSize: 10, fontFamily: 'monospace', opacity: 0.6 }}>{(m as any).region || ''}{((m as any).region && (m as any).country) ? ', ' : ''}{(m as any).country || ''}</div>
+            </div>
+          ));
+        })()}
+      </div>
+
+      {/* ── NARD Logo (top-left) ── */}
+      <div style={S.logoWrap} onMouseEnter={() => setIsHomeHovered(true)} onMouseLeave={() => setIsHomeHovered(false)}>
+        <svg width="160" height="80" viewBox="0 0 160 80" style={{ overflow: 'visible' }}>
+          <defs>
+            <style>{`
+              @keyframes dg-wave{0%{transform:translateX(0)}50%{transform:translateX(-40px)}100%{transform:translateX(-80px)}}
+              .dg-wv{animation:dg-wave 0.8s steps(4) infinite}
+              @keyframes dg-sn{0%,45%{transform:translateX(0);opacity:1}50%,95%{transform:translateX(-24px);opacity:0}100%{transform:translateX(0);opacity:1}}
+              @keyframes dg-sb{0%,45%{transform:translateX(24px);opacity:0}50%,95%{transform:translateX(0);opacity:1}100%{transform:translateX(24px);opacity:0}}
+              .dg-an{animation:dg-sn 14s ease-in-out infinite}
+              .dg-ab{animation:dg-sb 14s ease-in-out infinite}
+            `}</style>
+            <filter id="dg-wb" x="-50%" y="-50%" width="200%" height="200%">
+              <feTurbulence type="fractalNoise" baseFrequency="0.015" numOctaves="2" result="noise" />
+              <feDisplacementMap in="SourceGraphic" in2="noise" scale="8" xChannelSelector="R" yChannelSelector="G" />
+            </filter>
+            <clipPath id="dg-cc"><rect x="16" y="16" width={isHomeHovered ? 110 : 48} height="48" rx="24" style={{ transition: 'all 0.3s' }} /></clipPath>
+            <clipPath id="dg-wc">
+              <g style={{ transform: isHomeHovered ? 'translateY(36px)' : 'translateY(100px)', transition: `transform 4.0s ease-out ${isHomeHovered ? '1.5s' : '0s'}` }}>
+                <path className="dg-wv" d="M -80 16 Q -60 8, -40 16 T 0 16 T 40 16 T 80 16 T 120 16 T 160 16 T 200 16 T 240 16 L 240 80 L -80 80 Z" />
+              </g>
+            </clipPath>
+          </defs>
+          <g filter="url(#dg-wb)">
+            <rect x="16" y="16" width={isHomeHovered ? 110 : 48} height="48" rx="24" fill="none" stroke="#111111" strokeWidth="2.5" style={{ transition: 'all 0.3s' }} />
+            <g clipPath="url(#dg-cc)">
+              <text x="32" y="48" textAnchor="start" fontSize="24" fontWeight="bold" fill="#111111" fontFamily="sans-serif" className={isHomeHovered ? '' : 'dg-an'} style={{ transition: 'all 0.3s' }}>
+                C<tspan fillOpacity={isHomeHovered ? 1 : 0} style={{ transition: 'fill-opacity 0.3s' }}>OLLY</tspan>
+              </text>
+              <g style={{ transform: isHomeHovered ? 'translateY(36px)' : 'translateY(100px)', transition: `transform 4.0s ease-out ${isHomeHovered ? '1.5s' : '0s'}` }}>
+                <path className="dg-wv" d="M -80 16 Q -60 8, -40 16 T 0 16 T 40 16 T 80 16 T 120 16 T 160 16 T 200 16 T 240 16 L 240 80 L -80 80 Z" fill="#111111" />
+              </g>
+              <g clipPath="url(#dg-wc)">
+                <text x="32" y="48" textAnchor="start" fontSize="24" fontWeight="bold" fill="#FFFFFF" fontFamily="sans-serif" className={isHomeHovered ? '' : 'dg-an'} style={{ transition: 'all 0.3s' }}>
+                  C<tspan fillOpacity={isHomeHovered ? 1 : 0} style={{ transition: 'fill-opacity 0.3s' }}>OLLY</tspan>
+                </text>
+              </g>
+              <g className={isHomeHovered ? '' : 'dg-ab'} style={{ opacity: isHomeHovered ? 0 : 1, transition: 'opacity 0.3s' }}>
+                <g transform="translate(28,18) scale(0.8)">
+                  <g stroke="#111111" fill="none" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M 40 50 C 40 20, 35 5, 20 5 C 10 5, 0 15, -10 20 C 0 20, 5 20, 5 25 C 5 35, 0 50, 0 50" strokeWidth="3.5" />
+                    <circle cx="20" cy="15" r="1.5" fill="#111111" /><circle cx="20" cy="15" r="4" strokeWidth="2" />
+                  </g>
+                </g>
+              </g>
+            </g>
+          </g>
+        </svg>
+      </div>
+
+      {/* ── Globe SVG ── */}
+      <svg
+        ref={svgRef}
+        width={size.w}
+        height={size.h}
+        viewBox={`0 0 ${size.w} ${size.h}`}
+        preserveAspectRatio="xMidYMid meet"
+        style={{ ...S.globeSvg, cursor: 'grab', shapeRendering: isMobile ? 'auto' : 'geometricPrecision', textRendering: 'optimizeLegibility', touchAction: 'none', willChange: 'transform' }}
+        onMouseDown={handleSvgMouseDown}
+        onMouseMove={handleSvgMouseMove}
+        onMouseUp={handleSvgMouseUp}
+        onMouseLeave={handleSvgMouseUp}
+        onTouchStart={handleSvgTouchStart}
+        onTouchMove={handleSvgTouchMove}
+        onTouchEnd={handleSvgTouchEnd}
+      >
+
+        <defs>
+          {/* Gooey filter — tight merge: stdDeviation=3 means only blobs literally touching merge */}
+          <filter id="dg-gooey" x="-15%" y="-15%" width="130%" height="130%">
+            <feGaussianBlur in="SourceGraphic" stdDeviation="3" result="blur" />
+            <feColorMatrix in="blur" mode="matrix" values="
+              0 0 0 0 0
+              0 0 0 0 0
+              0 0 0 0 0
+              0 0 0 35 -14" result="gooey" />
+          </filter>
+          <filter id="dg-sketch-globe" filterUnits="userSpaceOnUse" x="0" y="0" width={size.w} height={size.h}>
+            <feTurbulence type="fractalNoise" baseFrequency="0.04" numOctaves="3" result="noise" />
+            <feDisplacementMap in="SourceGraphic" in2="noise" scale="3" xChannelSelector="R" yChannelSelector="G" />
+          </filter>
+          <clipPath id="dg-globe-clip">
+            <path ref={clipPathRef} d={getDentedCirclePath(size.w / 2, size.h / 2, scale)} />
+          </clipPath>
+          {/* Lightweight text flow filter — subtle turbulence gives text a hand-drawn feel */}
+          <filter id="dg-text-flow" x="-20%" y="-50%" width="140%" height="200%">
+            <feTurbulence type="fractalNoise" baseFrequency="0.08" numOctaves="2" seed="7" result="noise" />
+            <feDisplacementMap in="SourceGraphic" in2="noise" scale="1.2" xChannelSelector="R" yChannelSelector="G" />
+          </filter>
+        </defs>
+
+        {/* Globe body */}
+        <g style={{ opacity: selectedCluster ? 0.3 : 1, filter: selectedCluster ? 'blur(4px)' : 'none', transition: 'all 0.7s' }}>
+          <g {...(isMobile ? {} : { filter: "url(#dg-sketch-globe)" })}>
+            <path ref={spherePathRef} d={getDentedCirclePath(size.w / 2, size.h / 2, scale)} fill="#FFFFFF" stroke="none" />
+          </g>
+          <g {...(isMobile ? { clipPath: "url(#dg-globe-clip)" } : { filter: "url(#dg-sketch-globe)", clipPath: "url(#dg-globe-clip)" })}>
+            {land && <path ref={landPathRef} d={pathGenerator(land) || ''} fill="#FFFFFF" stroke="#111111" strokeWidth="2.5" strokeLinejoin="round" pointerEvents="none" />}
+            {countries.map((country, i) => (
+              <path key={i} d={pathGenerator(country) || ''}
+                fill={hoveredCountry === country.properties.name ? '#111111' : 'transparent'}
+                stroke="none"
+                onMouseEnter={() => setHoveredCountry(country.properties.name)}
+                onMouseLeave={() => setHoveredCountry(null)}
+                onClick={e => { e.stopPropagation(); const c = d3.geoCentroid(country); zoomToCoords(c as [number, number], Math.max(scaleRef.current * 1.5, initialScale * 6.0)); }}
+                style={{ cursor: 'pointer', pointerEvents: 'auto', transition: 'fill 0.2s' }}
+              />
+            ))}
+            {borders && <path ref={bordersPathRef} d={pathGenerator(borders) || ''} fill="none" stroke="#111111" strokeWidth="2.5" strokeLinejoin="round" pointerEvents="none" />}
+          </g>
+          <g {...(isMobile ? {} : { filter: "url(#dg-sketch-globe)" })}>
+            <path ref={sphereOutlineRef} d={getDentedCirclePath(size.w / 2, size.h / 2, scale)} fill="none" stroke="#111111" strokeWidth="2.5" strokeLinejoin="round" pointerEvents="none" />
+          </g>
+        </g>
+
+        {/* ── Cluster Markers ──
+            Architecture (FIX):
+            - Blob shapes: inside sketch-globe filter → get wobbly/sketchy look
+            - Text labels: OUTSIDE sketch-globe → no displacement, stays aligned with blob
+            Keeping text inside sketch-globe causes displacement mismatch between
+            blob center and text position → text flies outside the pill. */}
+
+        {/* BLOBS ONLY inside sketch-globe — each blob sized to match its text label */}
+        <g {...(isMobile ? {} : { filter: "url(#dg-sketch-globe)" })}>
+          <g filter="url(#dg-gooey)">
+
+            {/* Continent blobs (level 0) */}
+            {continentClusters.map(cluster => {
+              if (selectedCluster) return null;
+              const pos = projection(cluster.coords);
+              if (!pos || !isInGlobe(pos as [number, number]) || !isGeoVisible(cluster.coords)) return null;
+              const txt = cluster.continentName.toUpperCase();
+              const bw = txt.length * 8 + 20;
+              return (
+                <g key={`blob-cont-${cluster.id}`}
+                  ref={(el: SVGGElement | null) => { if (el) markerRegistry.current.set(`bc-${cluster.id}`, { el, isBlob: true, coords: cluster.coords }); else markerRegistry.current.delete(`bc-${cluster.id}`); }}
+                  transform={`translate(${pos[0]},${pos[1]})`}
+                  style={{ opacity: targetLevel === 0 ? 1 : 0, transition: 'opacity 0.4s ease' }}>
+                  <path d="M 0 0 L -6 -10 L 6 -10 Z" fill="black" />
+                  <rect x={-(bw / 2)} y="-34" width={bw} height="28" rx="14" fill="black" />
+                </g>
+              );
+            })}
+
+            {/* Country blobs (level 1) */}
+            {countryClusters.map(cluster => {
+              if (selectedCluster) return null;
+              const pos = projection(cluster.coords);
+              if (!pos || !isInGlobe(pos as [number, number]) || !isGeoVisible(cluster.coords)) return null;
+              const isHov = hoveredMarker === cluster.id;
+              const bw = isHov ? cluster.countryName.toUpperCase().length * 8 + 20 : 28;
+              return (
+                <g key={`blob-country-${cluster.id}`}
+                  ref={(el: SVGGElement | null) => { if (el) markerRegistry.current.set(`bcc-${cluster.id}`, { el, isBlob: true, coords: cluster.coords }); else markerRegistry.current.delete(`bcc-${cluster.id}`); }}
+                  transform={`translate(${pos[0]},${pos[1]})`}
+                  style={{ opacity: targetLevel === 1 ? 1 : 0, transition: 'opacity 0.4s ease' }}>
+                  <path d="M 0 0 L -6 -10 L 6 -10 Z" fill="black" />
+                  <rect x={-(bw / 2)} y="-34" width={bw} height="28" rx="14" fill="black"
+                    style={{ transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)' }} />
+                </g>
+              );
+            })}
+
+            {/* City blobs (level 2) — INDIVIDUAL blobs for gooey water-merge effect.
+                Geographic clustering keeps them sparse, and physical proximity makes them 
+                merge like liquid droplets organically during zoom animation. */}
+            {/* City blobs (level 2) */}
+            {cityMarkers.map(city => {
+              const mPos = projection(city.coords);
+              if (!mPos || !isInGlobe(mPos as [number, number]) || !isGeoVisible(city.coords)) return null;
+              if (selectedCluster && selectedCluster.id !== city.id) return null;
+
+              const country = (city.museums[0] as any).country || '';
+              const contName = getContinent(country);
+              const cont = continentClusters.find(c => c.continentName === contName);
+              const countryCluster = countryClusters.find(c => c.countryName === country);
+              const cPos = cont ? projection(cont.coords) : mPos;
+              const ccPos = countryCluster ? projection(countryCluster.coords) : mPos;
+              if (!cPos || !ccPos) return null;
+
+              let tx: number, ty: number;
+              if (level <= 1) {
+                tx = (cPos[0] as number) + ((ccPos[0] as number) - (cPos[0] as number)) * level;
+                ty = (cPos[1] as number) + ((ccPos[1] as number) - (cPos[1] as number)) * level;
+              } else {
+                const t = Math.min(level - 1, 1);
+                tx = (ccPos[0] as number) + ((mPos[0] as number) - (ccPos[0] as number)) * t;
+                ty = (ccPos[1] as number) + ((mPos[1] as number) - (ccPos[1] as number)) * t;
+              }
+
+              const isSel = selectedCluster?.id === city.id;
+              const isHov = hoveredMarker === city.id;
+              const bw = isHov && targetLevel === 2 ? city.cityName.toUpperCase().length * 8 + 20 : 28;
+
+              return (
+                <g key={`blob-city-${city.id}`}
+                  ref={(el: SVGGElement | null) => { if (el) markerRegistry.current.set(`bci-${city.id}`, { el, isBlob: true, cityCoords: city.coords, contCoords: cont?.coords, countryCoords: countryCluster?.coords }); else markerRegistry.current.delete(`bci-${city.id}`); }}
+                  transform={`translate(${tx},${ty})`}>
+                  <g style={{ opacity: targetLevel >= 3 ? 0 : 1, transition: 'opacity 0.4s ease' }}>
+                    <path d="M 0 0 L -6 -10 L 6 -10 Z" fill="black" />
+                    <rect x={-(bw / 2)} y="-34" width={bw} height="28" rx={isSel ? 5 : 14} fill="black"
+                      style={{ transition: 'width 0.25s cubic-bezier(0.4, 0, 0.2, 1), x 0.25s cubic-bezier(0.4, 0, 0.2, 1), rx 0.25s ease' }} />
+                  </g>
+                </g>
+              );
+            })}
+
+
+
+
+
+
+
+          </g>
+        </g>
+
+
+        {/* TEXT LABELS — dg-text-flow filter gives subtle hand-drawn flowing effect */}
+
+        {/* Continent labels (level 0) */}
+        {continentClusters.map(cluster => {
+          if (selectedCluster) return null;
+          const pos = projection(cluster.coords);
+          if (!pos || !isInGlobe(pos as [number, number]) || !isGeoVisible(cluster.coords)) return null;
+          const txt = cluster.continentName.toUpperCase();
+          const rectWidth = txt.length * 8 + 20;
+          const rectX = -(rectWidth / 2);
+          return (
+            <g key={`cont-${cluster.id}`} data-marker="true"
+              ref={(el: SVGGElement | null) => { if (el) markerRegistry.current.set(`tc-${cluster.id}`, { el, isBlob: false, coords: cluster.coords }); else markerRegistry.current.delete(`tc-${cluster.id}`); }}
+              style={{
+                transform: `translate(${pos[0]}px, ${pos[1]}px)`,
+                opacity: targetLevel === 0 ? 1 : 0,
+                pointerEvents: targetLevel === 0 ? 'auto' : 'none',
+                transition: 'opacity 0.4s ease',
+                cursor: 'pointer',
+                willChange: 'opacity',
+              }}
+              onClick={e => { e.stopPropagation(); handleClusterClick(cluster); }}
+              onMouseEnter={() => setHoveredMarker(cluster.id)}
+              onMouseLeave={() => setHoveredMarker(null)}>
+              <rect x={rectX} y="-34" width={rectWidth} height="28" rx="14" fill="transparent" />
+              <g filter="url(#dg-text-flow)">
+                <text x="0" y="-15" textAnchor="middle" fontWeight="bold" fill="#FFFFFF" fontFamily="sans-serif"
+                  style={{ fontSize: '10px', letterSpacing: '0.05em' }}>
+                  {txt}
+                </text>
+              </g>
+            </g>
+          );
+        })}
+
+        {/* Country labels (level 1) */}
+        {countryClusters.map(cluster => {
+          if (selectedCluster) return null;
+          const pos = projection(cluster.coords);
+          if (!pos || !isInGlobe(pos as [number, number]) || !isGeoVisible(cluster.coords)) return null;
+          const isHov = hoveredMarker === cluster.id;
+          const textContent = isHov ? cluster.countryName.toUpperCase() : cluster.count;
+          const rectWidth = isHov ? textContent.toString().length * 8 + 20 : 28;
+          const rectX = -(rectWidth / 2);
+          
+          return (
+            <g key={`country-${cluster.id}`} data-marker="true"
+              ref={(el: SVGGElement | null) => { if (el) markerRegistry.current.set(`tcc-${cluster.id}`, { el, isBlob: false, coords: cluster.coords }); else markerRegistry.current.delete(`tcc-${cluster.id}`); }}
+              style={{
+                transform: `translate(${pos[0]}px, ${pos[1]}px)`,
+                opacity: targetLevel === 1 ? 1 : 0,
+                pointerEvents: targetLevel === 1 ? 'auto' : 'none',
+                transition: 'opacity 0.4s ease',
+                cursor: 'pointer',
+                willChange: 'opacity',
+              }}
+              onClick={e => { e.stopPropagation(); handleClusterClick(cluster); }}
+              onMouseEnter={() => setHoveredMarker(cluster.id)}
+              onMouseLeave={() => setHoveredMarker(null)}>
+              <rect x={rectX} y="-34" width={rectWidth} height="28" rx="14" fill="transparent" />
+              <g filter={(targetLevel === 1 || level > 0.5) ? "url(#dg-text-flow)" : undefined}>
+                <text x="0" y="-15" textAnchor="middle" fontWeight="bold" fill="#FFFFFF" fontFamily="sans-serif"
+                  style={{ fontSize: isHov ? '10px' : '14px', letterSpacing: isHov ? '0.05em' : '0' }}>
+                  {textContent}
+                </text>
+              </g>
+            </g>
+          );
+        })}
+
+        {/* City labels (level 2) — directly aligned with cityMarkers */}
+        {cityMarkers.map(city => {
+          if (selectedCluster && selectedCluster.id !== city.id) return null;
+          
+          const mPos = projection(city.coords);
+          if (!mPos || !isInGlobe(mPos as [number, number]) || !isGeoVisible(city.coords)) return null;
+
+          const country = (city.museums[0] as any).country || '';
+          const contName = getContinent(country);
+          const cont = continentClusters.find(c => c.continentName === contName);
+          const countryCluster = countryClusters.find(c => c.countryName === country);
+          const cPos = cont ? projection(cont.coords) : mPos;
+          const ccPos = countryCluster ? projection(countryCluster.coords) : mPos;
+          if (!cPos || !ccPos) return null;
+
+          let tx: number, ty: number;
+          if (level <= 1) {
+            tx = (cPos[0] as number) + ((ccPos[0] as number) - (cPos[0] as number)) * level;
+            ty = (cPos[1] as number) + ((ccPos[1] as number) - (cPos[1] as number)) * level;
+          } else {
+            const t = level - 1;
+            tx = (ccPos[0] as number) + ((mPos[0] as number) - (ccPos[0] as number)) * t;
+            ty = (ccPos[1] as number) + ((mPos[1] as number) - (ccPos[1] as number)) * t;
+          }
+
+          const isSel = selectedCluster?.id === city.id;
+          const isHov = hoveredMarker === city.id;
+          const textContent = isHov ? city.cityName.toUpperCase() : city.count;
+          const rectWidth = isHov ? textContent.toString().length * 8 + 20 : 28;
+          const rectX = -(rectWidth / 2);
+
+          return (
+            <g key={`city-text-${city.id}`} data-marker="true"
+              ref={(el: SVGGElement | null) => { if (el) markerRegistry.current.set(`tci-${city.id}`, { el, isBlob: false, cityCoords: city.coords, contCoords: cont?.coords, countryCoords: countryCluster?.coords }); else markerRegistry.current.delete(`tci-${city.id}`); }}
+              style={{
+                transform: `translate(${tx}px, ${ty}px)`,
+                opacity: isSel ? 1 : (targetLevel === 2 ? 1 : 0),
+                pointerEvents: targetLevel === 2 ? 'auto' : 'none',
+                transition: 'opacity 0.4s ease',
+                cursor: 'pointer',
+                willChange: 'transform, opacity',
+              }}
+              onClick={e => {
+                e.stopPropagation();
+                handleClusterClick(city);
+              }}
+              onMouseEnter={() => setHoveredMarker(city.id)}
+              onMouseLeave={() => setHoveredMarker(null)}>
+              
+              <rect x={isSel ? -14 : rectX} y="-34" width={isSel ? 28 : rectWidth} height="28" rx="14" fill="transparent" />
+              {isSel ? (
+                <g transform="translate(-6,-31) scale(0.4)">
+                  <g stroke="#FFFFFF" fill="none" strokeLinecap="round" strokeLinejoin="round">
+                    <path d="M 40 50 C 40 20, 35 5, 20 5 C 10 5, 0 15, -10 20 C 0 20, 5 20, 5 25 C 5 35, 0 50, 0 50" strokeWidth="3.5" />
+                    <circle cx="20" cy="15" r="1.5" fill="#FFFFFF" />
+                    <circle cx="20" cy="15" r="4" strokeWidth="2" />
+                  </g>
+                </g>
+              ) : (
+                <g filter={(targetLevel === 2 || level > 1.0) ? "url(#dg-text-flow)" : undefined}>
+                  <text x="0" y="-15" textAnchor="middle" fontWeight="bold" fill="#FFFFFF" fontFamily="sans-serif"
+                    style={{ fontSize: isHov ? '10px' : '14px', letterSpacing: isHov ? '0.05em' : '0' }}>
+                    {textContent}
+                  </text>
+                </g>
+              )}
+            </g>
+          );
+        })}
+
+
+
+      </svg>
+
+      {/* Bottom-right label */}
+      <div style={S.brLabel}>
+        <svg width="400" height="80" viewBox="0 0 400 80" style={{ overflow: 'visible' }}>
+          <g filter="url(#dg-kitsch-wobble)">
+            <text x="400" y="40" textAnchor="end"
+              fontSize={brData.title.length > 15 ? 22 : brData.title.length > 10 ? 30 : 40}
+              fontWeight="bold"
+              fill="#111111"
+              fontFamily="sans-serif"
+              letterSpacing="0.1em">{brData.title}</text>
+            <text x="400" y="65" textAnchor="end" fontSize="14" fontWeight="bold" fill="#111111"
+              fontFamily="sans-serif"
+              letterSpacing="0.4em">{brData.count}</text>
+          </g>
+        </svg>
+      </div>
+
+      {/* Instructions */}
+      <div style={S.instructions}>
+        <p style={S.instructionText}>Scroll to Zoom</p>
+        <p style={S.instructionText}>Drag to Rotate</p>
+      </div>
+
+      {/* Interactive Map switch — brutalist sketch style */}
+      {onSwitchToInteractive && (
+        <button
+          onClick={onSwitchToInteractive}
+          style={{
+            position: 'fixed', bottom: 28, left: 28, zIndex: 200,
+            display: 'flex', alignItems: 'center', gap: 10,
+            background: '#111111', color: '#CCFF00',
+            border: '2.5px solid #111111',
+            padding: '11px 20px', fontSize: 9, fontWeight: 700,
+            letterSpacing: '0.2em', fontFamily: "'Space Mono', 'Courier New', monospace",
+            cursor: 'pointer', textTransform: 'uppercase',
+            boxShadow: '3px 3px 0 rgba(17,17,17,0.35)',
+            filter: 'url(#dg-sketch-ui)',
+            transition: 'box-shadow 0.1s, transform 0.1s',
+          }}
+          onMouseEnter={e => { e.currentTarget.style.boxShadow = '1px 1px 0 rgba(17,17,17,0.35)'; e.currentTarget.style.transform = 'translate(2px,2px)'; }}
+          onMouseLeave={e => { e.currentTarget.style.boxShadow = '3px 3px 0 rgba(17,17,17,0.35)'; e.currentTarget.style.transform = 'none'; }}
+        >
+          <svg width="13" height="13" viewBox="0 0 14 14" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round">
+            <circle cx="7" cy="7" r="5.5" />
+            <ellipse cx="7" cy="7" rx="2.5" ry="5.5" />
+            <line x1="1.5" y1="7" x2="12.5" y2="7" />
+            <line x1="2.5" y1="4" x2="11.5" y2="4" />
+            <line x1="2.5" y1="10" x2="11.5" y2="10" />
+          </svg>
+          INTERACTIVE MAP
+        </button>
+      )}
+
+      {/* ── City Panel ─────────────────────────────────────────────────── */}
+      {(() => {
+        const cluster = selectedCluster;
+        const show = !!cluster;
+
+        const allCities: CityMarker[] = cluster
+          ? [cluster, ...(cluster.mergedCities || [])]
+          : [];
+
+        const hasSiblings = allCities.length > 1;
+        const isOverview = hasSiblings && selectedCityInPanel === null;
+        const activeCityId = selectedCityInPanel ?? (hasSiblings ? null : cluster?.id);
+        const activeCity = isOverview ? null : (allCities.find(c => c.id === activeCityId) ?? cluster);
+
+        const layoutCities = useMemo(() => {
+          if (!allCities.length) return [];
+          const mainC = allCities[0];
+          if (allCities.length === 1) return [{ ...mainC, ox: 0, oy: 0 }];
+          
+          // Legacy layout that overlaps nicely
+          const others = allCities.slice(1).map(c => {
+            const dx = c.coords[0] - mainC.coords[0];
+            const dy = -(c.coords[1] - mainC.coords[1]) * 1.5;
+            return { ...c, angle: Math.atan2(dy, dx) };
+          }).sort((a, b) => a.angle - b.angle);
+
+          for (let iter=0; iter<8; iter++) {
+            for (let i=0; i<others.length; i++) {
+               let j = (i+1) % others.length;
+               let diff = others[j].angle - others[i].angle;
+               if (diff < 0) diff += Math.PI * 2;
+               if (diff < Math.PI / 3.5) {
+                 others[i].angle -= 0.08;
+                 others[j].angle += 0.08;
+               }
+            }
+          }
+          const RADIUS = 110;
+          return [ 
+            { ...mainC, ox: 0, oy: 0 }, 
+            ...others.map(c => {
+              // Special case: Vatican City is physically inside Rome
+              const checkName = (c.cityName || '').toLowerCase();
+              if (checkName.includes('vatican')) {
+                return {
+                  ...c,
+                  ox: 0, // centered precisely
+                  oy: 0, // centered precisely
+                  isSubCity: true // custom flag if needed
+                };
+              }
+
+              return {
+              ...c,
+              ox: Math.cos(c.angle) * RADIUS,
+              oy: Math.sin(c.angle) * RADIUS
+            }})
+          ];
+        }, [allCities]);
+
+        // Helper: get museums for a given city
+        const getMuseumsForCity = (city: CityMarker | null | undefined): any[] => {
+          if (!city || !cluster) return [];
+          if (city.id === cluster.id) return cluster.museums.filter((m: any) => m.isMainCity !== false);
+          return cluster.museums.filter((m: any) => m.museumCity === city.cityName);
+        };
+
+        const activeMuseums = isOverview ? (cluster?.museums || []) : getMuseumsForCity(activeCity);
+
+        // Compute geo-accurate dot positions centred at (100,100)
+        const computeDots = (museums: any[], R = 30): any[] => {
+          if (museums.length === 0) return [];
+          const C = 100;
+          const lats = museums.map((m: any) => m.latitude ?? 0);
+          const lngs = museums.map((m: any) => m.longitude ?? 0);
+          const minLat = Math.min(...lats), maxLat = Math.max(...lats);
+          const minLng = Math.min(...lngs), maxLng = Math.max(...lngs);
+          const latR = maxLat - minLat, lngR = maxLng - minLng;
+          const cols = Math.ceil(Math.sqrt(museums.length));
+          const pts = museums.map((m: any, i: number) => {
+            const lat = m.latitude ?? 0, lng = m.longitude ?? 0;
+            const cx = lngR < 0.005
+              ? C + ((i % cols) / Math.max(cols - 1, 1) - 0.5) * R * 2
+              : C + ((lng - minLng) / lngR - 0.5) * R * 2;
+            const cy = latR < 0.005
+              ? C + (Math.floor(i / cols) / Math.max(Math.ceil(museums.length / cols) - 1, 1) - 0.5) * R * 2
+              : C - ((lat - minLat) / latR - 0.5) * R * 2;
+            return { ...m, cx: Math.round(cx), cy: Math.round(cy) };
+          });
+          // Label positions on a fixed ring
+          const n = pts.length;
+          const step = n > 1 ? (2 * Math.PI) / n : 0;
+          const off = -Math.PI / 2;
+          const LR = 125;
+          return pts.map((p: any, i: number) => {
+            const a = off + i * step;
+            return { ...p, lx: Math.round(C + Math.cos(a) * LR), ly: Math.round(C + Math.sin(a) * LR), labelAngle: a };
+          });
+        };
+
+        const panelMuseums = computeDots(activeMuseums, 30);
+
+        // Fixed-canvas viewBox: always show full 0-200 city shape space + label overflow
+        // This ensures ALL cities appear at the same scale
+        const CANVAS_PAD = 40; // extra padding for labels
+        let vMinX = 0 - CANVAS_PAD, vMaxX = 200 + CANVAS_PAD;
+        let vMinY = 0 - CANVAS_PAD, vMaxY = 200 + CANVAS_PAD;
+        // Expand only for labels that overflow the canvas
+        panelMuseums.forEach((m: any) => {
+          const tw = (m.shortName?.length || 4) * 6 + 12;
+          vMinX = Math.min(vMinX, m.lx - tw);
+          vMaxX = Math.max(vMaxX, m.lx + tw);
+          vMinY = Math.min(vMinY, m.ly - 12);
+          vMaxY = Math.max(vMaxY, m.ly + 12);
+        });
+        // const vBox = `${vMinX} ${vMinY} ${vMaxX - vMinX} ${vMaxY - vMinY}`;
+
+        // Thumbnail shared viewBox: covers the full shape coordinate space (shapes live in ~10-190 range)
+        const THUMB_VB = "5 15 190 175";
+
+        const winH = typeof window !== 'undefined' ? window.innerHeight : 700;
+        const winW = typeof window !== 'undefined' ? window.innerWidth : 900;
+        const panelW = Math.max(400, Math.min(winW - 40, 560));
+        const panelH = Math.min(winH - 40, 600);
+        // Thumbnail strip height: fixed 140px when siblings exist (always visible)
+        const STRIP_H = hasSiblings ? 142 : 0;
+
+        return (
+          <div style={{
+            ...S.panel(show),
+            width: panelW, height: panelH,
+            display: 'flex', flexDirection: 'column',
+            overflow: 'hidden',
+          }}>
+            {/* ── Header ── */}
+            <div style={{ ...S.panelHeader, flexShrink: 0 }}>
+              <h2 style={{ ...S.panelTitle, transition: 'all 0.3s ease' }}>
+                {isOverview ? `${cluster?.cityName?.toUpperCase()} REGION` : activeCity?.cityName?.toUpperCase()} MUSEUMS
+              </h2>
+              <button style={S.panelCloseBtn} onClick={() => {
+                setSelectedCluster(null); setSelectedPointId(null);
+                setSelectedCityInPanel(null); setHoveredMuseumId(null);
+              }}>
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#111111" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
+                  <line x1="18" y1="6" x2="6" y2="18" /><line x1="6" y1="6" x2="18" y2="18" />
+                </svg>
+              </button>
+            </div>
+
+            {/* ── Top: horizontal city thumbnail strip (always visible if siblings exist) ── */}
+            {hasSiblings && (
+              <div 
+                className="dg-thumb-strip"
+                style={{
+                  height: STRIP_H, flexShrink: 0,
+                  display: 'flex', flexDirection: 'row', gap: 0,
+                  overflowX: 'auto', overflowY: 'hidden',
+                  borderBottom: '2px solid rgba(17,17,17,0.12)',
+                  scrollbarWidth: 'auto',
+                }}
+                onWheel={(e) => {
+                  const el = e.currentTarget;
+                  if (Math.abs(e.deltaY) > Math.abs(e.deltaX)) {
+                    el.scrollLeft += e.deltaY;
+                  }
+                }}
+              >
+                <style>{`
+                  .dg-thumb-strip::-webkit-scrollbar { height: 6px; }
+                  .dg-thumb-strip::-webkit-scrollbar-track { background: transparent; }
+                  .dg-thumb-strip::-webkit-scrollbar-thumb { background: rgba(17,17,17,0.2); border-radius: 3px; }
+                  .dg-thumb-strip::-webkit-scrollbar-thumb:hover { background: rgba(17,17,17,0.4); }
+                `}</style>
+                {allCities.map(city => {
+                  const isActive = city.id === activeCityId;
+                  const cityMus = getMuseumsForCity(city);
+                  const thumbDots = computeDots(cityMus, 20);
+                  return (
+                    <button key={city.id}
+                      onClick={() => { setSelectedCityInPanel(city.id); setSelectedPointId(null); setHoveredMuseumId(null); }}
+                      style={{
+                        all: 'unset', cursor: 'pointer', flexShrink: 0,
+                        display: 'flex', flexDirection: 'column', alignItems: 'center',
+                        width: 110, padding: '8px 6px 6px',
+                        background: isActive ? '#111111' : 'transparent',
+                        borderRight: '1.5px solid rgba(17,17,17,0.1)',
+                        transition: 'background 0.2s',
+                        position: 'relative',
+                      }}
+                      onMouseEnter={e => { if (!isActive) (e.currentTarget as HTMLElement).style.background = 'rgba(17,17,17,0.06)'; }}
+                      onMouseLeave={e => { if (!isActive) (e.currentTarget as HTMLElement).style.background = 'transparent'; }}
+                    >
+                      {/* Consistent-scale thumbnail SVG — same viewBox for ALL cities */}
+                      <svg
+                        viewBox={THUMB_VB}
+                        width="88" height="72"
+                        style={{ display: 'block', overflow: 'visible' }}
+                      >
+                        <g transform={(city.cityName || '').toLowerCase().includes("vatican") ? "translate(65, 65) scale(0.35)" : undefined}><path d={city.shape} fill="none"
+                          stroke={isActive ? "rgba(255,255,255,0.85)" : "#111111"}
+                          strokeWidth="4" strokeLinejoin="round" />
+                        {city.river && (
+                          <path d={city.river} fill="none"
+                            stroke={isActive ? "rgba(255,255,255,0.45)" : "#777777"}
+                            strokeWidth="2" strokeDasharray="6 4" />
+                        )}
+                        {thumbDots.map((d: any, i: number) => (
+                          <circle key={i} cx={d.cx} cy={d.cy} r="4"
+                            fill={isActive ? "rgba(255,255,255,0.9)" : "#111111"} />
+                        ))}
+                        </g>
+                      </svg>
+                      {/* City name */}
+                      <div style={{
+                        marginTop: 5,
+                        fontFamily: 'monospace', fontSize: 9.5, fontWeight: 700,
+                        letterSpacing: '0.07em', textTransform: 'uppercase',
+                        color: isActive ? '#ffffff' : '#222222',
+                        textAlign: 'center', lineHeight: 1.2,
+                      }}>
+                        {city.cityName}
+                      </div>
+                      <div style={{
+                        fontFamily: 'monospace', fontSize: 8, fontWeight: 400,
+                        color: isActive ? 'rgba(255,255,255,0.6)' : '#999999',
+                        textAlign: 'center', marginTop: 2,
+                      }}>
+                        {cityMus.length} museum{cityMus.length !== 1 ? 's' : ''}
+                      </div>
+                      {/* Active indicator bar at bottom */}
+                      {isActive && (
+                        <div style={{
+                          position: 'absolute', bottom: 0, left: 0, right: 0,
+                          height: 2, background: 'rgba(255,255,255,0.5)',
+                        }} />
+                      )}
+                    </button>
+                  );
+                })}
+              </div>
+            )}
+
+            {/* ── Main: selected city expanded map or Overview map ── */}
+            <div style={{ ...S.panelMap, overflow: 'hidden', position: 'relative', touchAction: 'none' }}>
+              {(() => {
+                let viewW = 400, viewH = 400, viewCx = 100, viewCy = 100;
+                
+                if (isOverview) {
+                  let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
+                  layoutCities.forEach((c: any) => {
+                     // The city shapes live naturally inside ~ [0..200]
+                     minX = Math.min(minX, c.ox + 30);
+                     maxX = Math.max(maxX, c.ox + 170);
+                     minY = Math.min(minY, c.oy + 30);
+                     maxY = Math.max(maxY, c.oy + 170);
+                  });
+                  viewW = Math.max(maxX - minX, 100);
+                  viewH = Math.max(maxY - minY, 100);
+                  viewCx = minX + viewW / 2;
+                  viewCy = minY + viewH / 2;
+                } else {
+                  const activeL = layoutCities.find(c => c.id === activeCityId) || layoutCities[0] || { ox: 0, oy: 0 };
+                  let localMinX = 0, localMaxX = 200, localMinY = 0, localMaxY = 200;
+                  panelMuseums.forEach((m) => {
+                     // Ignore massive label names for the bounding scale, they can bleed off edge
+                     const lw = 20; 
+                     localMinX = Math.min(localMinX, m.lx - lw);
+                     localMaxX = Math.max(localMaxX, m.lx + lw);
+                     localMinY = Math.min(localMinY, m.ly - 40);
+                     localMaxY = Math.max(localMaxY, m.ly + 40);
+                  });
+                  const bw = localMaxX - localMinX;
+                  const bh = localMaxY - localMinY;
+                  viewW = bw + 80;
+                  viewH = bh + 80;
+                  viewCx = activeL.ox + localMinX + bw / 2;
+                  viewCy = activeL.oy + localMinY + bh / 2;
+                }
+
+                // Map requested view to an arbitrarily large SVG canvas
+                let size = Math.max(viewW, viewH);
+                
+                let curScale = 800 / size;
+                
+                // Extra zoom if needed
+                if (isOverview) curScale *= 1.1;
+                if (!isOverview) curScale *= 1.15;
+
+                let tx = 400 - viewCx * curScale;
+                let ty = 400 - viewCy * curScale;
+                
+                return (
+                  <svg viewBox="0 0 800 800" style={{ width: '100%', height: '100%', overflow: 'visible' }}>
+                    <defs>
+                      <style>{`
+                        @keyframes dg-dp{0%{stroke-dashoffset:1000}100%{stroke-dashoffset:0}}
+                        @keyframes dg-fp{0%{opacity:0;transform:scale(0.9)}100%{opacity:1;transform:scale(1)}}
+                        @keyframes dg-pulse{0%,100%{r:9;opacity:0.4}50%{r:16;opacity:0}}
+                        .dg-draw{stroke-dasharray:1000;animation:dg-dp 1.4s ease-out forwards}
+                        .reg-city{cursor:pointer;}
+                        .reg-bg{transition:all 0.25s cubic-bezier(0.4, 0, 0.2, 1);}
+                        .reg-city:hover .reg-bg{fill:#111111;}
+                        .reg-city:hover .reg-text{fill:#ffffff;}
+                        .reg-city:hover .reg-sub{fill:rgba(255,255,255,0.7);}
+                        .dg-pts{opacity:0;animation:dg-fp 0.3s ease-out 0.8s forwards}
+                      `}</style>
+                    </defs>
+                    <g style={{ 
+                        transform: `translate(${tx}px, ${ty}px) scale(${curScale})`, 
+                        transition: 'transform 0.7s cubic-bezier(0.4, 0, 0.2, 1)'
+                    }}>
+                      {layoutCities.map((city) => {
+                        const isThisActive = city.id === activeCityId;
+                        const isInactiveInDetail = !isOverview && !isThisActive;
+                        const checkName = (city.cityName || '').toLowerCase();
+                        const isVatican = checkName.includes("vatican");
+                        const vaticanScale = isVatican ? 0.35 : 1;
+                        const vaticanOffset = isVatican ? 65 : 0;
+                        const cityMus = getMuseumsForCity(city);
+                        const dots = (isThisActive && !isOverview) ? panelMuseums : computeDots(cityMus, 30);
+
+                        return (
+                          <g key={city.id} style={{ opacity: isInactiveInDetail ? 0.25 : 1, transition: 'opacity 0.5s ease' }} transform={`translate(${city.ox + vaticanOffset}, ${city.oy + vaticanOffset}) scale(${vaticanScale})`}>
+                             {/* Hitbox based strictly on the city shape itself preventing overlaps */}
+                             {isInactiveInDetail && (
+                               <path d={city.shape} fill="rgba(0,0,0,0.01)" className="reg-city" onClick={() => setSelectedCityInPanel(city.id)} style={{ cursor: 'pointer', pointerEvents: 'all' }} />
+                             )}
+                             {isOverview && (
+                               <path d={city.shape} fill="rgba(0,0,0,0.01)" className="reg-city" onClick={() => setSelectedCityInPanel(city.id)} style={{ cursor: 'pointer', pointerEvents: 'all' }} />
+                             )}
+                             
+                             <path d={city.shape} fill="none" stroke="#111" strokeWidth={isOverview ? "3.5" : "2.5"} className={(isThisActive || isOverview) ? "dg-draw" : ""} style={{ pointerEvents: 'none' }} />
+                             {city.river && <path d={city.river} fill="none" stroke="#777" strokeWidth="1.2" strokeDasharray="4 3" className={(isThisActive || isOverview) ? "dg-draw" : ""} style={{ animationDelay: '0.3s', pointerEvents: 'none' }} />}
+                             
+                             {/* Overview: draw dots */}
+                             {isOverview && (
+                               <g style={{ pointerEvents: 'none' }}>
+                                 {dots.map((d: any, idx: number) => (
+                                   <circle key={idx} cx={d.cx} cy={d.cy} r="5" fill="#111" />
+                                 ))}
+                               </g>
+                             )}
+
+                             {/* Detail: draw exact dots & text */}
+                             {(!isOverview && isThisActive) && (
+                                <g className="dg-pts">
+                                  {dots.map((museum) => {
+                                    const isSelected = selectedPointId === museum.id;
+                                    const isHovered = hoveredMuseumId === museum.id;
+                                    const dimmed = hoveredMuseumId !== null && !isHovered && !isSelected;
+                                    const lAngle = museum.labelAngle ?? 0;
+                                    const anchor = Math.cos(lAngle) < -0.15 ? 'end' : Math.cos(lAngle) > 0.15 ? 'start' : 'middle';
+                                    
+                                    return (
+                                      <g key={museum.id}
+                                        onClick={() => handleMuseumClick(museum)}
+                                        onMouseEnter={() => setHoveredMuseumId(museum.id)}
+                                        onMouseLeave={() => setHoveredMuseumId(null)}
+                                        style={{ cursor: 'pointer' }}>
+                                        <line x1={museum.cx} y1={museum.cy} x2={museum.lx} y2={museum.ly}
+                                          stroke="#111111" strokeWidth="0.6"
+                                          opacity={dimmed ? 0.05 : isHovered ? 0.5 : 0.2}
+                                          style={{ transition: 'opacity 0.15s' }} />
+                                        {isHovered && <circle cx={museum.cx} cy={museum.cy} r="9" fill="none" stroke="#111111" strokeWidth="1" style={{ animation: 'dg-pulse 0.9s ease-out infinite' }} />}
+                                        <circle cx={museum.cx} cy={museum.cy}
+                                          r={isSelected ? 7 : isHovered ? 6 : 4}
+                                          fill="#111" opacity={dimmed ? 0.1 : 1}
+                                          style={{ transition: 'r 0.15s ease, opacity 0.15s ease' }} />
+                                        {isSelected && <circle cx={museum.cx} cy={museum.cy} r="11" fill="none" stroke="#111" strokeWidth="1.2" strokeDasharray="3.5 2.5" opacity="0.45" style={{ pointerEvents: 'none' }} />}
+                                        
+                                        {(() => {
+                                          const textStr = museum.shortName?.toUpperCase() || '';
+                                          const twBase = textStr.length * 6.5;
+                                          const padX = 14;
+                                          const hoverTw = twBase + padX * 2;
+                                          const tw = isHovered ? hoverTw : 10;
+                                          const th = isHovered ? 28 : 10;
+                                          
+                                          let rectX = museum.lx;
+                                          if (anchor === 'end') rectX = isHovered ? museum.lx - twBase - padX : museum.lx - 5;
+                                          else if (anchor === 'middle') rectX = isHovered ? museum.lx - hoverTw / 2 : museum.lx - 5;
+                                          else rectX = isHovered ? museum.lx - padX : museum.lx - 5; // start
+                                          
+                                          return (
+                                              <rect fill="#111111"
+        x={rectX} y={museum.ly - th / 2} width={tw} height={th} rx={isHovered ? 14 : 5}
+        style={{ opacity: isHovered ? 1 : 0, transformOrigin: `${museum.lx}px ${museum.ly}px`, transition: 'all 0.3s cubic-bezier(0.4, 0, 0.2, 1)', pointerEvents: 'none' }} />
+                                          );
+                                        })()}
+                                        <text x={museum.lx} y={museum.ly}
+                                          fontSize={isHovered ? '10' : '8'}
+                                          fontFamily="monospace"
+                                          fontWeight={isHovered ? '800' : '600'}
+                                          fill={isHovered ? "#ffffff" : "#111111"}
+                                          textAnchor={anchor} alignmentBaseline="middle"
+                                          opacity={dimmed ? 0.07 : isHovered ? 1 : 0.7}
+                                          style={{
+                                            letterSpacing: isHovered ? '0.08em' : '0.05em',
+                                            stroke: isHovered ? 'rgba(255,255,255,0)' : 'rgba(255,255,255,0.96)',
+                                            strokeWidth: isHovered ? 0 : 3.5,
+                                            paintOrder: 'stroke fill',
+                                            strokeLinejoin: 'round',
+                                            transition: 'all 0.25s cubic-bezier(0.4, 0, 0.2, 1)',
+                                            pointerEvents: 'auto',
+                                            userSelect: 'none',
+                                          }}>
+                                          {museum.shortName?.toUpperCase()}
+                                        </text>
+                                      </g>
+                                    );
+                                  })}
+                                </g>
+                             )}
+                          </g>
+                        );
+                      })}
+                    </g>
+                  </svg>
+                );
+              })()}
+            </div>
+            {/* ── Footer ── */}
+            <div style={{ ...S.panelInfo, flexShrink: 0 }}>
+              <div style={S.panelInfoTitle}>
+                MUSEUMS: {panelMuseums.length}
+                {hasSiblings && activeCity && (
+                  <span style={{ marginLeft: 8, fontWeight: 400, opacity: 0.5, fontSize: 10 }}>
+                    in {activeCity.cityName}
+                  </span>
+                )}
+              </div>
+              <div style={S.panelInfoRow}>
+                <span>LATITUDE:</span>
+                <span>{(activeCity?.coords[1] ?? 0).toFixed(4)}° N</span>
+              </div>
+              <div style={S.panelInfoRow}>
+                <span>LONGITUDE:</span>
+                <span>{(activeCity?.coords[0] ?? 0).toFixed(4)}°</span>
+              </div>
+              <div style={{ ...S.panelInfoRow, marginTop: 8, paddingTop: 8, borderTop: '2px solid rgba(17,17,17,0.2)' }}>
+                <span>STATUS:</span><span style={{ fontWeight: 700, color: '#111111' }}>ACTIVE SCAN</span>
+              </div>
+            </div>
+          </div>
+        );
+      })()}
+
+
+    </div>
+  );
+}

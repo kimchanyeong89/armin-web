@@ -20,6 +20,7 @@ interface Props {
   isDark?: boolean;
   hideLegend?: boolean;
   mapHeight?: string;
+  drawingStyle?: 'default' | 'drawing-flat';
 }
 
 // Known acronyms for common museums
@@ -57,9 +58,10 @@ function abbrevMuseum(name: string): string {
 
 let mapIdCounter = 0;
 
-const ArtistDistributionMap: React.FC<Props> = ({ artworks, isDark = true, hideLegend = false, mapHeight }) => {
+const ArtistDistributionMap: React.FC<Props> = ({ artworks, isDark = true, hideLegend = false, mapHeight, drawingStyle = 'default' }) => {
   const containerId = useRef(`adist-${++mapIdCounter}`);
   const rootRef = useRef<am5.Root | null>(null);
+  const isDrawingFlat = drawingStyle === 'drawing-flat';
 
   // ── Group artworks by museum ───────────────────────────────────────────────
   const museumPoints = useMemo<MuseumPoint[]>(() => {
@@ -101,13 +103,13 @@ const ArtistDistributionMap: React.FC<Props> = ({ artworks, isDark = true, hideL
     rootRef.current = root;
     root.setThemes([]);
 
-    const bgColor = isDark ? 0x0a0a09 : 0xe8e3da;
-    const landColor = isDark ? 0x1d1c1b : 0xd4cec4;
-    const landStroke = isDark ? 0x2e2d2b : 0xbfb9ae;
+    const bgColor = isDrawingFlat ? 0xffffff : (isDark ? 0x0a0a09 : 0xe8e3da);
+    const landColor = isDrawingFlat ? 0xeeece6 : (isDark ? 0x1d1c1b : 0xd4cec4);
+    const landStroke = isDrawingFlat ? 0xc7c2b8 : (isDark ? 0x2e2d2b : 0xbfb9ae);
     const dotFill = isDark ? 0xc9a55a : 0x8a6420;
-    const dotTextColor = isDark ? 0x0a0800 : 0xffffff;
-    const tooltipBg = isDark ? 0x1a1918 : 0xffffff;
-    const tooltipFg = isDark ? 0xf0ede6 : 0x1a1918;
+    const dotTextColor = isDrawingFlat ? 0xffffff : (isDark ? 0x0a0800 : 0xffffff);
+    const tooltipBg = isDrawingFlat ? 0xffffff : (isDark ? 0x1a1918 : 0xffffff);
+    const tooltipFg = isDrawingFlat ? 0x1a1918 : (isDark ? 0xf0ede6 : 0x1a1918);
 
     // Chart
     const chart = root.container.children.push(
@@ -138,7 +140,7 @@ const ArtistDistributionMap: React.FC<Props> = ({ artworks, isDark = true, hideL
     polygonSeries.mapPolygons.template.setAll({
       fill: am5.color(landColor),
       stroke: am5.color(landStroke),
-      strokeWidth: 0.5,
+      strokeWidth: isDrawingFlat ? 0.9 : 0.5,
       tooltipText: '',
       interactive: false,
     });
@@ -235,7 +237,7 @@ const ArtistDistributionMap: React.FC<Props> = ({ artworks, isDark = true, hideL
           strokeOpacity: 0.8,
         });
         container.states.create('hover', {
-          scale: 1.3,
+          scale: isDrawingFlat ? 1 : 1.3,
         });
 
         return am5.Bullet.new(root, { sprite: container });
@@ -259,7 +261,7 @@ const ArtistDistributionMap: React.FC<Props> = ({ artworks, isDark = true, hideL
       root.dispose();
       rootRef.current = null;
     };
-  }, [museumPoints, isDark]);
+  }, [museumPoints, isDark, isDrawingFlat]);
 
   // ── Legend: ALL museums (scrollable) ──────────────────────────────────────
   const accent = isDark ? '#c9a55a' : '#8a6420';
@@ -269,7 +271,7 @@ const ArtistDistributionMap: React.FC<Props> = ({ artworks, isDark = true, hideL
   const cardBg = isDark ? '#111009' : '#f5f2ed';
 
   return (
-    <div style={{ display: 'flex', width: '100%', height: mapHeight || '100%', overflow: 'hidden' }}>
+    <div style={{ display: 'flex', width: '100%', height: mapHeight || '100%', overflow: 'hidden', filter: isDrawingFlat ? 'url(#dg-sketch-ui)' : 'none' }}>
       {/* Map canvas */}
       <div id={containerId.current} style={{ flex: 1, minWidth: 0, height: '100%' }} />
 

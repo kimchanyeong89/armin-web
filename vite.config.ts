@@ -19,6 +19,17 @@ export default defineConfig({
     },
   },
   server: {
+    watch: {
+      // public/data는 1.5GB JSON — HMR watch 대상에서 제외 (CPU 절약)
+      ignored: [
+        '**/public/data/**',
+        '**/embedding_results/**',
+        '**/siglip_processed_ids.txt',
+        '**/siglip_state.json',
+        '**/EMBEDDING_PROGRESS.md',
+        '**/logs/**',
+      ],
+    },
     proxy: {
       // Proxy GeoBoundaries to avoid browser CORS in dev
       '/geoboundaries': {

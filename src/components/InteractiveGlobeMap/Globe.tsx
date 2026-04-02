@@ -263,6 +263,8 @@ export function Globe({
   const lastHoverCheckRef = useRef(0);
   const mousePosRef = useRef({ x: -1, y: -1 });
   const lastHoverReportRef = useRef<string>('');
+  const lastRotationEmitRef = useRef<{ lon: number; lat: number; ts: number }>({ lon: 0, lat: 20, ts: 0 });
+  const lastZoomEmitRef = useRef<{ zoom: number; ts: number }>({ zoom: 1, ts: 0 });
 
   const isDraggingRef = useRef(false);
   const lastPosRef = useRef({ x: 0, y: 0 });
@@ -753,7 +755,18 @@ export function Globe({
          cbRefs.current.onHoverData?.(hd);
       }
 
-      cbRefs.current.onRotationChange?.([-rotationRef.current[0], -rotationRef.current[1]]);
+      const nextLon = -rotationRef.current[0];
+      const nextLat = -rotationRef.current[1];
+      const now = Date.now();
+      const lastRotation = lastRotationEmitRef.current;
+      if (
+        Math.abs(nextLon - lastRotation.lon) >= 0.15 ||
+        Math.abs(nextLat - lastRotation.lat) >= 0.15 ||
+        now - lastRotation.ts >= 100
+      ) {
+        lastRotationEmitRef.current = { lon: nextLon, lat: nextLat, ts: now };
+        cbRefs.current.onRotationChange?.([nextLon, nextLat]);
+      }
       animFrameRef.current = requestAnimationFrame(animate);
     };
 
@@ -769,8 +782,14 @@ export function Globe({
     const onWheel = (e: WheelEvent) => {
       e.preventDefault();
       const delta = -e.deltaY * 0.002;
-      targetScaleRef.current = Math.max(1.0, Math.min(8.0, targetScaleRef.current + delta));
-      cbRefs.current.onZoomChange?.(targetScaleRef.current);
+      const nextScale = Math.max(1.0, Math.min(8.0, targetScaleRef.current + delta));
+      targetScaleRef.current = nextScale;
+      const now = Date.now();
+      const lastZoom = lastZoomEmitRef.current;
+      if (Math.abs(nextScale - lastZoom.zoom) >= 0.01 || now - lastZoom.ts >= 120) {
+        lastZoomEmitRef.current = { zoom: nextScale, ts: now };
+        cbRefs.current.onZoomChange?.(nextScale);
+      }
       if (drilledRef.current && targetScaleRef.current <= 1.05) {
         drilledRef.current = null;
         targetRotRef.current = null;
@@ -778,8 +797,18 @@ export function Globe({
         cbRefs.current.onSelectCity(null);
       }
     };
+    
+    // Prevent mobile scrolling when dragging the globe
+    const onTouchMove = (e: TouchEvent) => {
+      e.preventDefault(); // Stop page scrolling
+    };
+
     canvas.addEventListener("wheel", onWheel, { passive: false });
-    return () => canvas.removeEventListener("wheel", onWheel);
+    canvas.addEventListener("touchmove", onTouchMove, { passive: false });
+    return () => {
+      canvas.removeEventListener("wheel", onWheel);
+      canvas.removeEventListener("touchmove", onTouchMove);
+    };
   }, []);
 
   useEffect(() => {
@@ -990,7 +1019,7 @@ export function Globe({
       <canvas
         ref={canvasRef}
         className="ig-globe-canvas"
-        style={{ cursor: "grab" }}
+        style={{ cursor: "grab", touchAction: "none" }}
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}

@@ -1,0 +1,7 @@
+    // Add inside useEffect where canvas is accessed
+    const canvas = canvasRef.current;
+    if (canvas) {
+      const preventScroll = (e) => e.preventDefault();
+      canvas.addEventListener("touchmove", preventScroll, { passive: false });
+      return () => canvas.removeEventListener("touchmove", preventScroll);
+    }

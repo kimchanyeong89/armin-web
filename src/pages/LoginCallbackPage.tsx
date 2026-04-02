@@ -138,7 +138,7 @@ const LoginCallbackPage: React.FC = () => {
     return (
         <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', flexDirection: 'column' }}>
             <h2>네이버 로그인 처리 중...</h2>
-            <div className="spinner" style={{ marginTop: 20, width: 40, height: 40, border: '4px solid #f3f3f3', borderTop: '4px solid #03C75A', borderRadius: '50%', animation: 'spin 1s linear infinite' }}></div>
+            <div className="spinner" style={{ marginTop: 20, width: 40, height: 40, borderStyle: 'solid', borderWidth: '4px', borderColor: '#f3f3f3', borderTopColor: '4px solid #03C75A', borderRadius: '50%', animation: 'spin 1s linear infinite' }}></div>
             <style>{`
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
       `}</style>

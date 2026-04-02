@@ -1886,7 +1886,8 @@
     "category": "Painting",
     "gallery": "235B Japanese",
     "department": "Japanese Art",
-    "onView": true
+    "onView": true,
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/cma-collection/134430.webp"
   },
   {
     "id": 136682,
@@ -3550,7 +3551,8 @@
     "category": "Painting",
     "gallery": null,
     "department": "Chinese Art",
-    "onView": false
+    "onView": false,
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/cma-collection/135595.webp"
   },
   {
     "id": 124076,
@@ -5514,7 +5516,8 @@
     "category": "Painting",
     "gallery": null,
     "department": "Chinese Art",
-    "onView": false
+    "onView": false,
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/cma-collection/145953.webp"
   },
   {
     "id": 159836,
@@ -5798,7 +5801,8 @@
     "category": "Painting",
     "gallery": null,
     "department": "Chinese Art",
-    "onView": false
+    "onView": false,
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/cma-collection/131672.webp"
   },
   {
     "id": 130638,
@@ -5812,7 +5816,8 @@
     "category": "Painting",
     "gallery": null,
     "department": "Japanese Art",
-    "onView": false
+    "onView": false,
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/cma-collection/130638.webp"
   },
   {
     "id": 119701,
@@ -6471,7 +6476,8 @@
     "category": "Painting",
     "gallery": null,
     "department": "Chinese Art",
-    "onView": false
+    "onView": false,
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/cma-collection/149414.webp"
   },
   {
     "id": 137753,
@@ -6980,7 +6986,8 @@
     "category": "Painting",
     "gallery": null,
     "department": "Chinese Art",
-    "onView": false
+    "onView": false,
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/cma-collection/136296.webp"
   },
   {
     "id": 143314,
@@ -10322,7 +10329,8 @@
     "category": "Painting",
     "gallery": null,
     "department": "Chinese Art",
-    "onView": false
+    "onView": false,
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/cma-collection/132308.webp"
   },
   {
     "id": 147569,
@@ -10621,7 +10629,8 @@
     "category": "Painting",
     "gallery": null,
     "department": "Chinese Art",
-    "onView": false
+    "onView": false,
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/cma-collection/149891.webp"
   },
   {
     "id": 314241,
@@ -11490,7 +11499,8 @@
     "category": "Painting",
     "gallery": null,
     "department": "Japanese Art",
-    "onView": false
+    "onView": false,
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/cma-collection/146443.webp"
   },
   {
     "id": 150028,
@@ -12989,7 +12999,8 @@
     "category": "Painting",
     "gallery": null,
     "department": "Japanese Art",
-    "onView": false
+    "onView": false,
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/cma-collection/146444.webp"
   },
   {
     "id": 146445,
@@ -13003,7 +13014,8 @@
     "category": "Painting",
     "gallery": null,
     "department": "Japanese Art",
-    "onView": false
+    "onView": false,
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/cma-collection/146445.webp"
   },
   {
     "id": 149079,
@@ -13962,7 +13974,8 @@
     "category": "Painting",
     "gallery": null,
     "department": "Japanese Art",
-    "onView": false
+    "onView": false,
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/cma-collection/156976.webp"
   },
   {
     "id": 161326,
@@ -19027,7 +19040,8 @@
     "category": "Painting",
     "gallery": null,
     "department": "Japanese Art",
-    "onView": false
+    "onView": false,
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/cma-collection/149763.webp"
   },
   {
     "id": 539855,
@@ -22819,7 +22833,8 @@
     "category": "Painting",
     "gallery": null,
     "department": "Chinese Art",
-    "onView": false
+    "onView": false,
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/cma-collection/149109.webp"
   },
   {
     "id": 152426,
@@ -22863,7 +22878,8 @@
     "category": "Painting",
     "gallery": null,
     "department": "Chinese Art",
-    "onView": false
+    "onView": false,
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/cma-collection/145409.webp"
   },
   {
     "id": 146211,
@@ -26263,7 +26279,8 @@
     "category": "Painting",
     "gallery": null,
     "department": "Chinese Art",
-    "onView": false
+    "onView": false,
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/cma-collection/125900.webp"
   },
   {
     "id": 135143,
@@ -26637,7 +26654,8 @@
     "category": "Painting",
     "gallery": null,
     "department": "Chinese Art",
-    "onView": false
+    "onView": false,
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/cma-collection/149762.webp"
   },
   {
     "id": 151535,
@@ -26651,7 +26669,8 @@
     "category": "Painting",
     "gallery": null,
     "department": "Japanese Art",
-    "onView": false
+    "onView": false,
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/cma-collection/151535.webp"
   },
   {
     "id": 154757,
@@ -28405,7 +28424,8 @@
     "category": "Painting",
     "gallery": null,
     "department": "Japanese Art",
-    "onView": false
+    "onView": false,
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/cma-collection/153672.webp"
   },
   {
     "id": 154263,
@@ -30125,7 +30145,8 @@
     "category": "Painting",
     "gallery": null,
     "department": "Chinese Art",
-    "onView": false
+    "onView": false,
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/cma-collection/95080.webp"
   },
   {
     "id": 95087,
@@ -37142,7 +37163,8 @@
     "category": "Painting",
     "gallery": null,
     "department": "Japanese Art",
-    "onView": false
+    "onView": false,
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/cma-collection/150925.webp"
   },
   {
     "id": 150926,
@@ -37156,7 +37178,8 @@
     "category": "Painting",
     "gallery": null,
     "department": "Japanese Art",
-    "onView": false
+    "onView": false,
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/cma-collection/150926.webp"
   },
   {
     "id": 152259,
@@ -63103,7 +63126,8 @@
     "category": "Drawing",
     "gallery": null,
     "department": "Chinese Art",
-    "onView": false
+    "onView": false,
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/cma-collection/165736.webp"
   },
   {
     "id": 329329,

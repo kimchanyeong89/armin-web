@@ -5,8 +5,8 @@
   "collection": "Paintings and framed watercolours and prints",
   "type": "permanent",
   "scrapedAt": "2025-12-30T14:35:32.239Z",
-  "totalArtworks": 390,
-  "artworksWithImages": 390,
+  "totalArtworks": 385,
+  "artworksWithImages": 385,
   "artworks": [
     {
       "id": "P1",
@@ -5189,20 +5189,6 @@
       "original_image": "https://collections.soane.org/assets/object_images/4/20/13/131024/v0_high.jpg?_m=1487945332"
     },
     {
-      "id": "P421",
-      "title": "A Shepherd and Shepherdess",
-      "artist": "engraver John Dean",
-      "year": null,
-      "medium": "",
-      "dimensions": "",
-      "description": "",
-      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/soane-paintings/P421-36267447-image.webp",
-      "accessionNumber": "P421",
-      "location": "",
-      "sourceUrl": "https://collections.soane.org/object-p421",
-      "original_image": "https://collections.soane.org/static/img/col_soane/soane_no_image_fullview2.png"
-    },
-    {
       "id": "P422",
       "title": "An Academical figure, possibly Hercules slaying the Hydra",
       "artist": "",
@@ -5215,34 +5201,6 @@
       "location": "",
       "sourceUrl": "https://collections.soane.org/object-p422",
       "original_image": "https://collections.soane.org/assets/object_images/8/20/13/131028/v0_high.jpg?_m=1487945513"
-    },
-    {
-      "id": "P423",
-      "title": "The Harmony between History and Poetry",
-      "artist": "engraver John Dean",
-      "year": "1786",
-      "medium": "",
-      "dimensions": "",
-      "description": "",
-      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/soane-paintings/P423-36267447-image.webp",
-      "accessionNumber": "P423",
-      "location": "",
-      "sourceUrl": "https://collections.soane.org/object-p423",
-      "original_image": "https://collections.soane.org/static/img/col_soane/soane_no_image_fullview2.png"
-    },
-    {
-      "id": "P424",
-      "title": "Portrait of the artist John Hamilton Mortimer, after a self-portrait, 1779",
-      "artist": "engraver Valentine Green",
-      "year": "1779",
-      "medium": "",
-      "dimensions": "",
-      "description": "",
-      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/soane-paintings/P424-36267447-image.webp",
-      "accessionNumber": "P424",
-      "location": "",
-      "sourceUrl": "https://collections.soane.org/object-p424",
-      "original_image": "https://collections.soane.org/static/img/col_soane/soane_no_image_fullview2.png"
     },
     {
       "id": "P425",
@@ -5271,34 +5229,6 @@
       "location": "",
       "sourceUrl": "https://collections.soane.org/object-p426",
       "original_image": "https://collections.soane.org/assets/object_images/1/30/13/131031/v0_high.jpg?_m=1487945723"
-    },
-    {
-      "id": "P427",
-      "title": "A Holy Family",
-      "artist": "engraver John Dean",
-      "year": "1783",
-      "medium": "",
-      "dimensions": "",
-      "description": "",
-      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/soane-paintings/P427-36267447-image.webp",
-      "accessionNumber": "P427",
-      "location": "",
-      "sourceUrl": "https://collections.soane.org/object-p427",
-      "original_image": "https://collections.soane.org/static/img/col_soane/soane_no_image_fullview2.png"
-    },
-    {
-      "id": "P428",
-      "title": "Democritus",
-      "artist": "engraver John Dean",
-      "year": "1786",
-      "medium": "",
-      "dimensions": "",
-      "description": "",
-      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/soane-paintings/P428-36267447-image.webp",
-      "accessionNumber": "P428",
-      "location": "",
-      "sourceUrl": "https://collections.soane.org/object-p428",
-      "original_image": "https://collections.soane.org/static/img/col_soane/soane_no_image_fullview2.png"
     },
     {
       "id": "P429",

@@ -69,6 +69,24 @@ const RANKS = [
   }
 ];
 
+export const getFallbackExhibitionIdForJson = (item: any): string => {
+  if (item.exhibitionId) return item.exhibitionId;
+  if (item.e) return item.e;
+  
+  if (item.museumName || item.m) {
+    const m = (item.museumName || item.m || '').toLowerCase();
+    if (m.includes('brücke') || m.includes('brucke')) return 'bruecke-museum-collection';
+    if (m.includes('tate')) {
+      if (m.includes('modern')) return 'tate-modern-collection';
+      if (m.includes('britain')) return 'tate-britain-artworks';
+      if (m.includes('st iv')) return 'tate-st-ives-artworks';
+      if (m.includes('liverpool')) return 'tate-liverpool-artworks';
+      return 'tate-modern-collection';
+    }
+  }
+  return '';
+};
+
 const MyPage: React.FC = () => {
   const { user, loading: authLoading } = useAuth();
   const navigate = useNavigate();
@@ -741,7 +759,44 @@ const MyPage: React.FC = () => {
                 >
                   <div style={{ width: 140, height: 140, borderRadius: 12, overflow: 'hidden', background: '#f0f0f0', marginBottom: 8, position: 'relative', boxShadow: '0 2px 8px rgba(0,0,0,0.05)' }}>
                     {pl.coverImage ? (
-                      <img src={getOptimizedImageUrl(pl.coverImage, 300)} alt={pl.name} style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                      <img 
+                        src={getOptimizedImageUrl(pl.coverImage, 300)} 
+                        alt={pl.name} 
+                        style={{ width: '100%', height: '100%', objectFit: 'cover' }} 
+                        onError={(e) => {
+                          const target = e.currentTarget;
+                          if (target.dataset.originalTried !== "true") {
+                            target.dataset.originalTried = "true";
+                            let finalUrl = pl.coverImage;
+                            if (finalUrl?.includes('pub-396fad1f96754c2f816f260faf970e63.r2.dev')) {
+                              finalUrl = finalUrl.replace(/^https?:\/\/.*?\//, 'https://');
+                            }
+                            if (finalUrl) target.src = finalUrl;
+                          } else if (target.dataset.triedJson !== "true" && pl.items && pl.items[0]) {
+                            target.dataset.triedJson = "true";
+                            const firstItem = pl.items[0];
+                            const exhId = getFallbackExhibitionIdForJson(firstItem);
+                            if (exhId) {
+                               let file = exhId + ".json";
+                               if (exhId === "tm-perm-1") file = "tate-modern-collection.json";
+                               else if (exhId === "tate-britain-1") file = "tate-britain-artworks.json";
+                               else if (exhId === "bm-perm-1") file = "british-museum-galleries.json";
+                               
+                               fetch(`/data/${file}`).then(res => res.json()).then(data => {
+                                 const arr = Array.isArray(data) ? data : (data.artworks || data.objects || []);
+                                 const idToFind = firstItem.artworkId || firstItem.id;
+                                 const art = arr.find((a: any) => String(a.id) === String(idToFind) || String(a.artworkId) === String(idToFind));
+                                 if (art && art.imageUrl) target.src = art.imageUrl;
+                                 else target.style.opacity = '0';
+                               }).catch(() => { target.style.opacity = '0'; });
+                            } else {
+                               target.style.opacity = '0';
+                            }
+                          } else {
+                            target.style.opacity = '0';
+                          }
+                        }}
+                      />
                     ) : (
                       <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '100%', color: '#999' }}>
                         <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" /><polyline points="17 8 12 3 7 8" /><line x1="12" y1="3" x2="12" y2="15" /></svg>
@@ -844,7 +899,15 @@ const MyPage: React.FC = () => {
             );
           }
 
-          return sorted.map((item, i) => {
+          return sorted.map((rawItem, i) => {
+            const item = {
+               ...rawItem,
+               image: rawItem.image || rawItem.i || '',
+               title: rawItem.title || rawItem.name || rawItem.n || 'Untitled',
+               artist: rawItem.artist || rawItem.a || '',
+               museumName: rawItem.museumName || rawItem.m || '',
+               exhibitionId: rawItem.exhibitionId || rawItem.e || ''
+            };
             const isExhibition = viewMode === 'exhibitions';
             const isMuseum = viewMode === 'museums';
             const isArtist = viewMode === 'artists';
@@ -904,6 +967,65 @@ const MyPage: React.FC = () => {
                       alt={item.title || item.name}
                       style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                       loading="lazy"
+                      onError={(e) => {
+                        const target = e.currentTarget;
+                        
+                        // State transition logic
+                        if (!target.dataset.fallbackTried) {
+                          target.dataset.fallbackTried = "true";
+                          if (item.fallbackImages && item.fallbackImages.length > 0) {
+                            target.src = item.fallbackImages[0];
+                            return;
+                          }
+                        }
+
+                        if (!target.dataset.originalTried) {
+                          target.dataset.originalTried = "true";
+                          let finalUrl = item.image; 
+                          if (finalUrl) {
+                            if (finalUrl.includes('pub-396fad1f96754c2f816f260faf970e63.r2.dev')) {
+                              finalUrl = finalUrl.replace(/^https?:\/\/.*?\//, 'https://');
+                            }
+                            target.src = finalUrl;
+                            return;
+                          }
+                        }
+
+                        if (!target.dataset.triedJson) {
+                          target.dataset.triedJson = "true";
+                          let exhId = getFallbackExhibitionIdForJson(item);
+                          if (exhId) {
+                            let file = exhId + ".json";
+                            // Basic redirects
+                            if (exhId === "tm-perm-1") file = "tate-modern-collection.json";
+                            else if (exhId === "tate-britain-1") file = "tate-britain-artworks.json";
+                            else if (exhId === "tate-st-ives-1") file = "tate-st-ives-artworks.json";
+                            else if (exhId === "tate-liverpool-1") file = "tate-liverpool-artworks.json";
+                            else if (exhId === "bm-perm-1") file = "british-museum-galleries.json";
+                            else if (exhId === "skagens-perm-1") file = "skagens-collection.json";
+                            else if (exhId === "ngs-perm-1") file = "ngs-all.json";
+
+                            fetch(`/data/${file}`)
+                              .then(res => { if (!res.ok) throw new Error(); return res.json(); })
+                              .then(data => {
+                                const arr = Array.isArray(data) ? data : (data.artworks || data.objects || []);
+                                const idToFind = item.artworkId || item.id;
+                                const art = arr.find((a: any) => String(a.id) === String(idToFind) || String(a.artworkId) === String(idToFind));
+                                if (art && art.imageUrl) {
+                                  target.src = art.imageUrl;
+                                } else if (art && art.fallbackImages && art.fallbackImages.length > 0) {
+                                  target.src = art.fallbackImages[0];
+                                } else {
+                                  target.style.opacity = '0';
+                                }
+                              })
+                              .catch(() => { target.style.opacity = '0'; });
+                            return;
+                          }
+                        }
+                        
+                        target.style.opacity = '0';
+                      }}
                     />
                   ) : (
                     <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#999', fontSize: 12 }}>No Image</div>

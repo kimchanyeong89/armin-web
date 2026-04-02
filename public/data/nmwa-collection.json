@@ -340,23 +340,6 @@
     "original_imageUrl": "https://collection.nmwa.go.jp/image_files/l/21544-L.jpg"
   },
   {
-    "id": "nmwa-218",
-    "sourceId": "218",
-    "sourceUrl": "https://collection.nmwa.go.jp/en/P.1965-0007.html",
-    "permalink": "https://collection.nmwa.go.jp/en/P.1965-0007.html",
-    "title": "Eternity",
-    "artist": "Auguste Herbin",
-    "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/nmwa-collection/nmwa-218-8547de9b-imageUrl.webp",
-    "date": "1959",
-    "medium": "oil on canvas",
-    "dimensions": "145.5 x 114.6",
-    "credit": "Donated by Yamamura Family",
-    "collectionId": "P.1965-0007",
-    "onDisplay": false,
-    "category": "Painting",
-    "original_imageUrl": "https://collection.nmwa.go.jp/artize/img/NoImageM.jpg"
-  },
-  {
     "id": "nmwa-342",
     "sourceId": "342",
     "sourceUrl": "https://collection.nmwa.go.jp/en/P.1998-0005.html",
@@ -999,7 +982,8 @@
     "credit": "Donated by Mr. Taro Kuga",
     "collectionId": "P.2003-0001",
     "onDisplay": false,
-    "category": "Painting"
+    "category": "Painting",
+    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/nmwa-collection/nmwa-465.webp"
   },
   {
     "id": "nmwa-57",

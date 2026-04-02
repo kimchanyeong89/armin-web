@@ -1,0 +1,22 @@
+  1953	            {/* ── Footer ── */}
+  1954	            <div style={{ ...S.panelInfo, flexShrink: 0 }}>
+  1955	              <div style={S.panelInfoTitle}>
+  1956	                MUSEUMS: {panelMuseums.length}
+  1957	                {hasSiblings && activeCity && (
+  1958	                  <span style={{ marginLeft: 8, fontWeight: 400, opacity: 0.5, fontSize: 10 }}>
+  1959	                    in {activeCity.cityName}
+  1960	                  </span>
+  1961	                )}
+  1962	              </div>
+  1963	              <div style={S.panelInfoRow}>
+  1964	                <span>LATITUDE:</span>
+  1965	                <span>{(activeCity?.coords[1] ?? 0).toFixed(4)}° N</span>
+  1966	              </div>
+  1967	              <div style={S.panelInfoRow}>
+  1968	                <span>LONGITUDE:</span>
+  1969	                <span>{(activeCity?.coords[0] ?? 0).toFixed(4)}°</span>
+  1970	              </div>
+  1971	              <div style={{ ...S.panelInfoRow, marginTop: 8, paddingTop: 8, borderTop: '2px solid rgba(17,17,17,0.2)' }}>
+  1972	                <span>STATUS:</span><span style={{ fontWeight: 700, color: '#111111' }}>ACTIVE SCAN</span>
+  1973	              </div>
+  1974	            </div>

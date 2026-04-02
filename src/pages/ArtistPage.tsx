@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, useLocation } from "react-router-dom";
 import artworks from "../data/artworks";
 import { artists } from "../data/artists";
 import { exhibitions } from "../data/exhibitions";
@@ -19,6 +19,7 @@ import {
 } from 'firebase/firestore';
 import { findMuseumForArtwork } from '../utils/museumUtils';
 import { shouldLimitNetwork } from '../utils/network';
+import { normalizeImageUrl } from '../utils/imageProxy';
 import ArtistDistributionMap from '../components/ArtistDistributionMap';
 
 // ── SVG icons ──────────────────────────────────────────────────────────────
@@ -89,10 +90,7 @@ const normalizeKnownBrokenImageUrl = (value?: string): string => {
   const raw = String(value || '').trim();
   if (!raw) return '';
   if (raw === 'default.jpg' || raw === '/default.jpg') return '';
-  if (raw.includes('iiif.deutsche-digitale-bibliothek.de')) {
-    return raw.replace(/\/full\/![0-9]+,[0-9]+\/0\/default\.jpg$/i, '/full/full/0/default.jpg');
-  }
-  return raw;
+  return normalizeImageUrl(raw);
 };
 
 const normalizeLookupText = (value?: string) =>
@@ -125,6 +123,11 @@ const buildBrueckeLookupKeyCandidates = (art: any): string[] => {
 export default function ArtistPage() {
   const { id } = useParams();
   const navigate = useNavigate();
+  const location = useLocation();
+  const isDrawingSkinArtist = useMemo(() => {
+    const p = new URLSearchParams(location.search);
+    return p.get('mode') === 'drawing';
+  }, [location.search]);
   // Support both numeric id ("1") and name slug ("vincent-van-gogh")
   const artist = artists.find((a) => a.id === id || toArtistSlug(a.name) === id);
 
@@ -302,10 +305,19 @@ export default function ArtistPage() {
     if (isLiked) {
       await deleteDoc(ref);
     } else {
-      await setDoc(ref, {
+      const normalizedArt = {
         ...art,
+        id: artId,
+        image: art.image || art.i || '',
+        title: art.title || art.n || art.name || 'Untitled',
+        artist: art.artist || art.a || artist?.name || 'Unknown',
+        museumName: art.museumName || art.m || '',
+        url: art.url || art.u || '',
+        exhibitionId: art.exhibitionId || art.e || '',
+      };
+      await setDoc(ref, {
+        ...normalizedArt,
         likedAt: serverTimestamp(),
-        artist: art.artist || artist?.name || 'Unknown',
       });
     }
   };
@@ -382,10 +394,10 @@ export default function ArtistPage() {
     likedArtworks.some(a => (a.artworkId || a.id) === (art.artworkId || art.id));
 
   // ── Render ─────────────────────────────────────────────────────────────────
-  const isDark = theme === 'dark';
+  const isDark = isDrawingSkinArtist ? false : theme === 'dark';
 
   return (
-    <div className="artist-page" data-theme={theme}>
+    <div className={`artist-page${isDrawingSkinArtist ? ' artist-page--drawing' : ''}`} data-theme={isDrawingSkinArtist ? 'light' : theme}>
 
       {/* ── HERO ──────────────────────────────────────────────────────── */}
       <header className="artist-hero">
@@ -395,16 +407,18 @@ export default function ArtistPage() {
             {artist.nationality}
             {artist.birthYear ? ` · b. ${artist.birthYear}` : ''}
           </span>
-          <div className="artist-hero__controls">
-            <button
-              className="artist-hero__theme-btn"
-              onClick={toggleTheme}
-              aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
-              title={isDark ? 'Light mode' : 'Dark mode'}
-            >
-              {isDark ? '☀' : '☾'}
-            </button>
-          </div>
+          {!isDrawingSkinArtist && (
+            <div className="artist-hero__controls">
+              <button
+                className="artist-hero__theme-btn"
+                onClick={toggleTheme}
+                aria-label={isDark ? 'Switch to light mode' : 'Switch to dark mode'}
+                title={isDark ? 'Light mode' : 'Dark mode'}
+              >
+                {isDark ? '☀' : '☾'}
+              </button>
+            </div>
+          )}
         </div>
 
         <h1 className="artist-hero__name">{artist.name}</h1>

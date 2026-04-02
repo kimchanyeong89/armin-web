@@ -5,59 +5,43 @@
 🔍 Generating comprehensive search index...
 
 📚 Loaded 203 exhibitions from config for dynamic mapping.
-🔗 Generated 174 dynamic file mappings.
+🔗 Generated 204 dynamic file mappings.
 
-Found 397 collection files
+Found 204 collection files
 
 ✅ accademia-collection.json: 68 artworks
 ✅ acropolis-museum-collection.json: 90 artworks
 ✅ adachi-collection.json: 59 artworks
-✅ agnsw-collection-fixed.json: 11,276 artworks (skipped 154 duplicates)
-✅ agnsw-collection-full.json: 70 artworks (skipped 3904 duplicates)
-✅ agnsw-collection.json: 11,425 artworks (skipped 5 duplicates)
-✅ agnsw-list-temp.json: 5,233 artworks (skipped 11533 duplicates)
-✅ aic-collection.json: 36,017 artworks (skipped 43 duplicates)
-✅ albertina-drawings-prints-100.json: 49 artworks
-✅ albertina-objects-installations-media-art-100.json: 179 artworks (skipped 110 duplicates)
-✅ albertina-paintings-100.json: 1,684 artworks (skipped 339 duplicates)
-✅ albertina-paintings-sculpture-100.json: 18 artworks (skipped 79 duplicates)
-✅ albertina-permanent-collection.json: 2,555 artworks (skipped 124 duplicates)
-✅ albertina-photography-100.json: 21,933 artworks (skipped 36 duplicates)
-✅ albertina-poster-100.json: 2,603 artworks (skipped 1 duplicates)
-✅ albertina-sculptures-100.json: 190 artworks (skipped 31 duplicates)
+✅ agnsw-collection.json: 11,376 artworks
+✅ aic-collection.json: 35,057 artworks (skipped 9 duplicates)
+✅ albertina-permanent-collection.json: 27,119 artworks (skipped 133 duplicates)
 ✅ alte-pinakothek-collection.json: 5,253 artworks
 ✅ ambrosiana-collection.json: 121 artworks (skipped 1 duplicates)
-✅ aros-collection.json: 2,993 artworks
-✅ ateneum-collection-15k-backup.json: 15,346 artworks (skipped 4 duplicates)
-✅ ateneum-collection.json: 5,324 artworks (skipped 28 duplicates)
-✅ banrep-collection.json: 15 artworks
+✅ aros-collection.json: 2,988 artworks
+✅ ateneum-collection.json: 5,352 artworks
 ✅ basel-collection.json: 3,132 artworks
-✅ belvedere-collection.json: 9,250 artworks (skipped 8 duplicates)
-✅ belvedere-malerei-collection.json: 5,616 artworks (skipped 23 duplicates)
+✅ belvedere-collection.json: 9,230 artworks (skipped 6 duplicates)
 ✅ beyeler-collection.json: 432 artworks
 ✅ bordeaux-collection.json: 5,598 artworks
 ✅ borghese-arte-antica-collection.json: 291 artworks
 ✅ bruecke-museum-collection.json: 1,326 artworks (skipped 65 duplicates)
 ✅ busan-museum.json: 198 artworks
 ✅ caixaforum-collection.json: 658 artworks
-✅ carnavalet-collection.json: 55 artworks
-✅ carnavalet-paintings.json: 398 artworks
-✅ carnavalet-prints.json: 1,232 artworks
-✅ castello-di-rivoli-collection.json: 807 artworks
+✅ carnavalet-the-collection.json: 1,630 artworks
+✅ castello-di-rivoli-collection.json: 804 artworks
 ✅ china-art-museum-collection.json: 670 artworks
 ✅ cma-collection.json: 5,929 artworks
 ✅ courtauld-gallery-collection.json: 604 artworks
-✅ crystal-bridges-gac.json: 72 artworks
+✅ crystal-bridges-gac.json: 71 artworks
+✅ dali-foundation-collection.json: 1,352 artworks
 ✅ dia-collection.json: 3,742 artworks
 ✅ doria-pamphilj-collection.json: 29 artworks
-✅ dpm-intl-paintings-100.json: 43 artworks
 ✅ dpm-intl-paintings-all.json: 445 artworks
 ✅ dulwich-collection.json: 636 artworks
 ✅ dumoak-kim-work-all.json: 40 artworks
-✅ dumoak-kim-work-category8.json: 5 artworks
 ✅ egyptian-museum-cairo-collection.json: 115 artworks
-✅ famsf-collections.json: 8,480 artworks
-✅ fine-arts-be-100.json: 100 artworks
+✅ famsf-collections.json: 8,477 artworks
+✅ fine-arts-be-complete.json: 109 artworks
 ✅ flv-collection.json: 306 artworks
 ✅ folk-museum.json: 927 artworks
 ✅ frida-timeline.json: 113 artworks
@@ -65,18 +49,16 @@ Found 397 collection files
 ✅ gallerie-accademia-venice-collection.json: 187 artworks
 ✅ gdmoa-online-collection-all.json: 164 artworks
 ✅ gem-collection.json: 175 artworks
-✅ getty-collection.json: 529 artworks (skipped 252 duplicates)
+✅ getty-collection.json: 518 artworks (skipped 18 duplicates)
 ✅ gidang-collection.json: 45 artworks
 ✅ glyptoteket-collection.json: 625 artworks
-✅ grenoble-collection.json: 2,073 artworks (skipped 60 duplicates)
-✅ guggenheim-ny-collection.json: 1,864 artworks
+✅ guggenheim-bilbao-collection.json: 137 artworks
 ✅ guggenheim-venice-collection.json: 524 artworks
 ✅ gulbenkian-collection.json: 211 artworks
 ✅ gwangju-museum.json: 331 artworks
 ✅ hamburger-kunsthalle-drawings.json: 12,318 artworks
-✅ hamburger-kunsthalle-paintings.json: 1,864 artworks
-✅ hamburger-kunsthalle-video.json: 289 artworks
-✅ hayward-gallery-collection.json: 1,045 artworks
+✅ hamburger-kunsthalle-paintings.json: 1,845 artworks
+✅ hamburger-kunsthalle-video.json: 287 artworks
 ✅ hermitage-highlights.json: 737 artworks
 ✅ high-collection.json: 3,359 artworks
 ✅ hirschsprung-collection.json: 779 artworks
@@ -84,132 +66,77 @@ Found 397 collection files
 ✅ house-of-refuge-collection.json: 4 artworks
 ✅ jacquemart-andre-collection.json: 29 artworks
 ✅ jeonju-museum.json: 382 artworks
-✅ jmoa-collection-100.json: 100 artworks
 ✅ jmoa-collection-all.json: 1,000 artworks
-✅ kanazawa-all.json: 2,313 artworks (skipped 33 duplicates)
+✅ kanazawa-all.json: 2,178 artworks
 ✅ khm-collection.json: 2,713 artworks
 ✅ kiasma-collection.json: 2,955 artworks (skipped 15 duplicates)
-✅ kim-tschang-yeul-collection.json: 36 artworks
 ✅ kimtschang-yeul-collection-all.json: 239 artworks
 ✅ kremlin-collection.json: 856 artworks
-✅ kroller-muller-film-video.json: 97 artworks
-✅ kroller-muller-paintings.json: 1,196 artworks
-✅ kroller-muller-photography.json: 162 artworks (skipped 44 duplicates)
+✅ kroller-muller-permanent.json: 1,455 artworks (skipped 8 duplicates)
 ✅ kunsthaus-collection.json: 2,651 artworks
 ✅ la-piscine-collection.json: 355 artworks
-✅ lacma-classification-22.json: 1,543 artworks (skipped 9 duplicates)
-✅ lacma-combined-onview.json: 283 artworks
-✅ lacma-drawings-51.json: 955 artworks
-✅ lacma-japanese-prints.json: 2,803 artworks (skipped 1 duplicates)
+✅ lacma-classification-22.json: 5,438 artworks (skipped 9 duplicates)
 ✅ lee-jung-seop-collection.json: 56 artworks
 ✅ leopold-museum-collection.json: 2,580 artworks
 ✅ lille-pba-collection.json: 99 artworks
 ✅ long-museum-collection.json: 52 artworks
-✅ louvre-painting-collection.json: 10,617 artworks
 ✅ macval-collection.json: 4,788 artworks
 ✅ mad-paris-collection.json: 290 artworks (skipped 2 duplicates)
-✅ mah-collection-1768572847125.json: 20 artworks (skipped 980 duplicates)
-✅ mah-collection-1768573047934.json: 20 artworks (skipped 980 duplicates)
-✅ mah-collection-1771378628244.json: 168 artworks (skipped 12 duplicates)
-✅ mah-collection-1771392307793.json: 113 artworks (skipped 127 duplicates)
-✅ mah-collection-1771404087921.json: 3,084 artworks (skipped 300 duplicates)
 ✅ mah-collection.json: 3,384 artworks
-✅ mam-collection.json: 3,235 artworks (skipped 3237 duplicates)
-✅ mam-painting-collection.json: 2,165 artworks (skipped 1 duplicates)
-✅ mam-photography-collection.json: 1,070 artworks
-✅ mamcs-strasbourg-collection.json: 8,476 artworks (skipped 49 duplicates)
-✅ mamcs-strasbourg-drawings-collection.json: 2,550 artworks (skipped 846 duplicates)
-✅ mamcs-strasbourg-graphic-design-collection.json: 1,082 artworks
-✅ mamcs-strasbourg-graphicdesign-collection.json: 1,082 artworks
-✅ mamcs-strasbourg-paintings-collection.json: 1,619 artworks
-✅ mamcs-strasbourg-photography-collection.json: 2,428 artworks
-✅ mamcs-strasbourg.json: 712 artworks (skipped 29 duplicates)
-✅ marmottan-collection.json: 90 artworks
+✅ mam-collection.json: 3,235 artworks (skipped 1 duplicates)
+✅ mamcs-strasbourg-collection.json: 8,476 artworks
 ✅ masp-collection.json: 2,933 artworks
 ✅ matisse-nice-collection.json: 486 artworks
-✅ mauritshuis-collection.json: 860 artworks
+✅ mauritshuis-collection.json: 859 artworks
 ✅ mba-lyon-collection.json: 300 artworks
 ✅ mbam-collection.json: 2,495 artworks
 ✅ mca-collection.json: 1,073 artworks
 ✅ mep-photography-collection.json: 94 artworks
 ✅ met-ny-collection.json: 1,994 artworks
-✅ mfab-collection-full.json: 10,760 artworks (skipped 12 duplicates)
 ✅ mfab-collection.json: 10,760 artworks (skipped 12 duplicates)
-✅ mfah-paintings.json: 160 artworks
 ✅ mmca-collection.json: 11,648 artworks (skipped 104 duplicates)
 ✅ mnk-collection.json: 7,313 artworks
-✅ moma-collection.json: 24,288 artworks (skipped 22 duplicates)
+✅ moma-collection.json: 24,228 artworks
 ✅ mori-collection.json: 492 artworks
-✅ mplus-collection-highlights.json: 2,738 artworks
 ✅ mplus-collection-mplus.json: 4,524 artworks
 ✅ mplus-collection-sigg.json: 1,221 artworks
-✅ mucem-collection.json: 3,943 artworks
-✅ mucem-drawings.json: 44 artworks
-✅ mucem-fine-arts-collection.json: 371 artworks
-✅ mucem-prints.json: 981 artworks
+✅ mucem-collection.json: 4,314 artworks
 ✅ munch-collection.json: 1,371 artworks
-✅ musba-bordeaux-drawings-collection.json: 2,914 artworks (skipped 388 duplicates)
-✅ musba-bordeaux-paintings-collection.json: 2,195 artworks (skipped 101 duplicates)
-✅ musee-armee-collection.json: 1,475 artworks (skipped 1 duplicates)
-✅ musee-armee-dessin-backup.json: 916 artworks (skipped 152 duplicates)
-✅ musee-armee-dessin.json: 44 artworks (skipped 1023 duplicates)
-✅ musee-armee-peinture-backup.json: 75 artworks (skipped 2 duplicates)
-✅ musee-armee-peinture.json: 9 artworks (skipped 68 duplicates)
-✅ musee-armee-photographie-backup.json: 278 artworks (skipped 54 duplicates)
-✅ musee-armee-photographie.json: 10 artworks (skipped 322 duplicates)
+✅ musee-armee-collection.json: 1,475 artworks
 ✅ musee-chagall-collection.json: 3,276 artworks
 ✅ musee-conde-collection.json: 4,136 artworks
 ✅ musee-granet-collection.json: 30 artworks
-✅ musee-grenoble-drawings-collection.json: 954 artworks
-✅ musee-grenoble-paintings-collection.json: 909 artworks (skipped 243 duplicates)
-✅ musee-grenoble-photography-collection.json: 24 artworks (skipped 3 duplicates)
+✅ musee-grenoble-collection.json: 1,874 artworks (skipped 169 duplicates)
 ✅ musee-guimet-collection.json: 480 artworks
 ✅ musei-capitolini-collection.json: 244 artworks
 ✅ museo-archeologico-napoli-collection.json: 221 artworks
 ✅ museo-del-novecento-milan-collection.json: 215 artworks
-✅ museo-del-prado-artworks.full.json: 12 artworks
 ✅ museo-egizio-collection.json: 5,274 artworks (skipped 140 duplicates)
-✅ museo-novecento-gac-collection.json: 10 artworks
-✅ museothyssen-collection-41.full.json: 674 artworks (skipped 6 duplicates)
-✅ museum-wales-art.json: 9,675 artworks (skipped 55 duplicates)
-✅ museum-wales-industry.json: 9,894 artworks (skipped 102 duplicates)
-✅ museum-wales-paintings.json: 4,121 artworks (skipped 39 duplicates)
+✅ museothyssen-collection-41.full.json: 668 artworks (skipped 5 duplicates)
+✅ museum-wales-paintings.json: 4,159 artworks (skipped 1 duplicates)
 ✅ nam-collection.json: 308 artworks
 ✅ namoc-collection.json: 5,215 artworks
 ✅ nasjonal-collection.json: 7,672 artworks (skipped 3 duplicates)
-✅ national-gallery-permanent.json: 2,646 artworks (skipped 13 duplicates)
-✅ national-museum-korea-missing.json: 3,298 artworks
+✅ national-gallery-permanent.json: 2,641 artworks (skipped 13 duplicates)
 ✅ national-museum-korea.json: 4,309 artworks
 ✅ neue-pinakothek-collection.json: 129 artworks
-✅ nga-collection-full.json: 42,828 artworks (skipped 12009 duplicates)
-✅ ngprague-collection.json: 3,833 artworks
-✅ ngs-all.json: 8,511 artworks (skipped 32 duplicates)
-✅ ngv-collection.json: 4,730 artworks
-✅ ngv-trove-collection-fixed.json: 5 artworks
+✅ ngprague-collection.json: 3,830 artworks
+✅ ngs-all.json: 8,338 artworks
+✅ ngv-collection.json: 4,653 artworks
 ✅ nich-collection.json: 3,142 artworks
 ✅ njmuseum-collection-all.json: 646 artworks
-✅ nmc-highlights-100.json: 100 artworks
-✅ nmc-highlights-all.json: 107 artworks
-✅ nmec-collection.json: 8 artworks
-✅ nmwa-collection.json: 837 artworks (skipped 11 duplicates)
+✅ nmc-highlights-all.json: 104 artworks
+✅ nmwa-collection.json: 701 artworks
 ✅ novecento-della-ragione-collection.json: 66 artworks
 ✅ novecento-rosai-collection.json: 56 artworks
 ✅ npm-selection-painting.json: 105 artworks
 ✅ ntmofa-collection.json: 12,875 artworks
 ✅ orangerie-collection.json: 161 artworks
-✅ orsay-collection.json: 2,666 artworks
-✅ palais-de-tokyo-collection.json: 62 artworks
-✅ petit-palais-collection.json: 400 artworks
-✅ petit-palais-drawings.json: 146 artworks (skipped 11 duplicates)
 ✅ philadelphia-collection.json: 10,454 artworks
-✅ picasso-drawings-collection.json: 1,490 artworks (skipped 2 duplicates)
-✅ picasso-paintings-collection.json: 306 artworks
-✅ picasso-paris-collection.json: 3,481 artworks (skipped 6 duplicates)
-✅ picasso-prints-collection.json: 1,349 artworks
-✅ picasso-sculptures-collection.json: 336 artworks (skipped 4 duplicates)
+✅ picasso-bcn-collection.json: 2,496 artworks
+✅ picasso-paris-collection.json: 3,478 artworks (skipped 4 duplicates)
 ✅ pinacoteca-brera-collection.json: 619 artworks
 ✅ pinakothek-moderne-collection.json: 424 artworks
-✅ pinault-collection.json: 1,199 artworks
 ✅ pitti-palace-collection.json: 427 artworks
 ✅ pompidou-cinema-collection.json: 1,554 artworks
 ✅ pompidou-design-collection.json: 1,494 artworks (skipped 181 duplicates)
@@ -219,25 +146,21 @@ Found 397 collection files
 ✅ psa-collection-all.json: 385 artworks
 ✅ pushkin-paintings.json: 1,796 artworks
 ✅ qagoma-collection.json: 8,745 artworks
-✅ reina-sofia-collection-clean.json: 14,613 artworks (skipped 12 duplicates)
+✅ reina-sofia-collection.json: 14,217 artworks (skipped 12 duplicates)
 ✅ rijksmuseum-cartoon-collection.json: 7,022 artworks (skipped 1396 duplicates)
 ✅ rijksmuseum-design-collection.json: 3,980 artworks (skipped 841 duplicates)
 ✅ rijksmuseum-docphotos-collection.json: 2,860 artworks (skipped 263 duplicates)
 ✅ rijksmuseum-drawings-collection.json: 8,497 artworks (skipped 1505 duplicates)
 ✅ rijksmuseum-paintings-collection.json: 4,276 artworks (skipped 94 duplicates)
-✅ rijksmuseum-photography-collection.json: 1,106 artworks (skipped 21 duplicates)
+✅ rijksmuseum-photography-collection.json: 1,106 artworks (skipped 1 duplicates)
 ✅ rijksmuseum-poster-collection.json: 3,014 artworks (skipped 776 duplicates)
 ✅ rijksmuseum-prints-collection.json: 8,892 artworks (skipped 1066 duplicates)
 ✅ rijksmuseum-prints2-collection.json: 6,268 artworks (skipped 2688 duplicates)
-✅ rodin-collection.json: 6,126 artworks (skipped 2088 duplicates)
-✅ rodin-gravures.json: 1,084 artworks (skipped 1 duplicates)
-✅ rodin-peintures.json: 199 artworks
-✅ rodin-sculptures.json: 3,473 artworks (skipped 2 duplicates)
+✅ rodin-collection.json: 4,813 artworks (skipped 1985 duplicates)
 ✅ rouen-mba-collection.json: 132 artworks
-✅ royal-academy-collection.json: 259 artworks
+✅ royal-academy-collection.json: 254 artworks
 ✅ rusmuseum-collection.json: 886 artworks
-✅ saam-paintings-100.json: 80 artworks
-✅ saam-paintings-full.json: 6,266 artworks
+✅ saam-paintings-full.json: 6,265 artworks
 ✅ sammlung-schack-collection.json: 173 artworks
 ✅ seoul-museum-of-art-collection.json: 6,065 artworks
 ✅ sfmoma-collection.json: 2,936 artworks (skipped 26 duplicates)
@@ -249,84 +172,64 @@ Found 397 collection files
 ✅ skagens-collection.json: 2,125 artworks
 ✅ smb-alte-nationalgalerie-collection.json: 2,258 artworks
 ✅ smb-altes-museum-collection.json: 658 artworks
-✅ smb-bode-museum-collection.json: 2,255 artworks (skipped 8 duplicates)
+✅ smb-bode-museum-collection.json: 2,251 artworks
 ✅ smb-gemaeldegalerie-collection.json: 782 artworks
-✅ smb-humboldt-forum-collection.json: 979 artworks (skipped 1 duplicates)
+✅ smb-humboldt-forum-collection.json: 979 artworks
 ✅ smb-neue-nationalgalerie-collection.json: 730 artworks
-✅ smb-neues-museum-collection.json: 322 artworks (skipped 366 duplicates)
+✅ smb-neues-museum-collection.json: 319 artworks (skipped 354 duplicates)
 ✅ smk-collection.json: 7,036 artworks
 ✅ soam-memorial-collection.json: 50 artworks
-✅ soane-paintings.json: 390 artworks
+✅ soane-paintings.json: 385 artworks
 ✅ staatsgalerien-collection.json: 1,200 artworks
 ✅ staedel-museum-collection.json: 1,702 artworks
 ✅ stedelijk-collection.json: 424 artworks
 ✅ sweden-collection.json: 3,978 artworks
 ✅ tate-artworks.json: 1,251 artworks
 ✅ tate-britain-artworks.json: 853 artworks
-✅ tate-britain-backup.json: 15 artworks
-✅ tate-britain.json: 3 artworks (skipped 12 duplicates)
-✅ tate-collection-highlights-artworks.json: 4 artworks
 ✅ tate-modern-collection.json: 345 artworks
-✅ tate-modern.json: 18 artworks
 ✅ tate-st-ives-artworks.json: 121 artworks
-✅ tate-st-ives.json: 2 artworks
 ✅ tepapa-collection.json: 3,821 artworks
-✅ tfam-collection-100.json: 100 artworks
 ✅ tfam-collection-all.json: 5,109 artworks
 ✅ thebroad-collection.json: 1,751 artworks (skipped 10 duplicates)
 ✅ tobikan-collection.json: 48 artworks
 ✅ today-art-museum.json: 78 artworks
 ✅ topkapi-collection.json: 54 artworks
 ✅ toulouse-lautrec-collection.json: 212 artworks
-✅ tretyakov-wikidata.json: 1,005 artworks (skipped 13 duplicates)
-✅ uffizi-collection.json: 914 artworks (skipped 11 duplicates)
+✅ tretyakov-wikidata.json: 996 artworks (skipped 4 duplicates)
 ✅ uffizi-gallery-collection.json: 507 artworks
-✅ vam-paintings.json: 6,494 artworks (skipped 3481 duplicates)
-✅ vam-permanent-exhibitions.json: 543 artworks
-✅ vam-photographs.json: 2,169 artworks (skipped 509 duplicates)
-✅ vam-portraits.json: 1,914 artworks (skipped 1357 duplicates)
+✅ vam-permanent-exhibitions.json: 20,753 artworks
 ✅ vam-posters-display.json: 11,637 artworks (skipped 16 duplicates)
-✅ vam-posters.json: 4,140 artworks (skipped 641 duplicates)
-✅ vam.json: 7 artworks
-✅ vangogh-museum-collection.json: 4,508 artworks (skipped 3 duplicates)
+✅ vangogh-museum-collection.json: 3,797 artworks
 ✅ vatican-collection.json: 102 artworks
-✅ versailles-collection.bak.json: 1,188 artworks
-✅ versailles-collection.bak2.json: 2,845 artworks
-✅ versailles-collection.json: 4,634 artworks
+✅ versailles-collection.json: 2,656 artworks
 ✅ walker-art-gallery-collection.json: 1,342 artworks
-✅ wallace-collection.json: 806 artworks
+✅ wallace-collection.json: 2,122 artworks (skipped 93 duplicates)
 ✅ whitney-collection.json: 23,447 artworks
-✅ zeitz-mocaa-collection.json: 1 artworks
 ✅ zjam-collection.json: 273 artworks
 
-🎬 Saved video embed ID list: /Users/kietzsche/armin-web-main/public/data/video-embed-ids.json (8 ids)
+🎬 Saved video embed ID list: /Users/kietzsche/armin-web-main/public/data/video-embed-ids.json (2 ids)
 
-📦 Saved full index: /Users/kietzsche/armin-web-main/public/data/search-index.json (196.33 MB)
+📦 Saved full index: /Users/kietzsche/armin-web-main/public/data/search-index.json (154.82 MB)
 
 ✂️  Splitting index into chunks...
-   - search-index-part-0.json: 40000 items (10.12 MB)
-   - search-index-part-1.json: 40000 items (10.15 MB)
-   - search-index-part-2.json: 40000 items (9.98 MB)
-   - search-index-part-3.json: 40000 items (9.40 MB)
-   - search-index-part-4.json: 40000 items (9.93 MB)
-   - search-index-part-5.json: 40000 items (11.82 MB)
-   - search-index-part-6.json: 40000 items (10.33 MB)
-   - search-index-part-7.json: 40000 items (10.66 MB)
-   - search-index-part-8.json: 40000 items (8.09 MB)
-   - search-index-part-9.json: 40000 items (10.75 MB)
-   - search-index-part-10.json: 40000 items (10.45 MB)
-   - search-index-part-11.json: 40000 items (10.93 MB)
-   - search-index-part-12.json: 40000 items (10.28 MB)
-   - search-index-part-13.json: 40000 items (10.38 MB)
-   - search-index-part-14.json: 40000 items (9.42 MB)
-   - search-index-part-15.json: 40000 items (8.49 MB)
-   - search-index-part-16.json: 40000 items (11.15 MB)
-   - search-index-part-17.json: 40000 items (9.97 MB)
-   - search-index-part-18.json: 40000 items (11.90 MB)
-   - search-index-part-19.json: 7734 items (2.14 MB)
+   - search-index-part-0.json: 40000 items (10.54 MB)
+   - search-index-part-1.json: 40000 items (10.01 MB)
+   - search-index-part-2.json: 40000 items (9.80 MB)
+   - search-index-part-3.json: 40000 items (10.10 MB)
+   - search-index-part-4.json: 40000 items (11.45 MB)
+   - search-index-part-5.json: 40000 items (10.27 MB)
+   - search-index-part-6.json: 40000 items (11.43 MB)
+   - search-index-part-7.json: 40000 items (10.95 MB)
+   - search-index-part-8.json: 40000 items (10.66 MB)
+   - search-index-part-9.json: 40000 items (10.43 MB)
+   - search-index-part-10.json: 40000 items (8.39 MB)
+   - search-index-part-11.json: 40000 items (9.76 MB)
+   - search-index-part-12.json: 40000 items (10.56 MB)
+   - search-index-part-13.json: 40000 items (11.25 MB)
+   - search-index-part-14.json: 35814 items (9.22 MB)
 
-✅ Saved manifest with 20 chunks
-✅ warm prefix index generated: public/data/search-warm-prefix.json (379.6 KB, prefixes=28)
+✅ Saved manifest with 15 chunks
+✅ warm prefix index generated: public/data/search-warm-prefix.json (395.5 KB, prefixes=28)
 
 > armin-web@0.0.0 build:admin-lines
 > node ./scripts/build-simplified-admin-lines.mjs
@@ -337,28 +240,119 @@ Wrote /Users/kietzsche/armin-web-main/public/atlas/simplified-admin1-lines.topo.
 Wrote /Users/kietzsche/armin-web-main/public/atlas/simplified-admin1-lines.geojson
 
 > armin-web@0.0.0 build
-> tsc -b && vite build && node scripts/postbuild-cleanup.cjs
+> vite build && node scripts/postbuild-cleanup.cjs
 
-src/components/ArtistWikiPanel.tsx(90,10): error TS6133: 'wikiSourceUrl' is declared but its value is never read.
-src/components/GlobalNav.tsx(26,12): error TS6133: 'searchQuery' is declared but its value is never read.
-src/components/GlobalNav.tsx(26,25): error TS6133: 'setSearchQuery' is declared but its value is never read.
-src/components/GlobalNav.tsx(312,66): error TS2322: Type '{ isDark: boolean; onOpenLightbox?: ((artwork: SearchableArtwork, openLightbox?: boolean | undefined) => void) | undefined; onNavigateToMuseum?: ((museum: { id: string; name: string; }, collectionId?: string | undefined, artwork?: SearchableArtwork | undefined) => void) | undefined; museums?: Museum[] | undefined; i...' is not assignable to type 'IntrinsicAttributes & GlobalSearchBarProps'.
-  Property 'isDark' does not exist on type 'IntrinsicAttributes & GlobalSearchBarProps'.
-src/components/GlobalNav.tsx(442,66): error TS2322: Type '{ isDark: boolean; onOpenLightbox?: ((artwork: SearchableArtwork, openLightbox?: boolean | undefined) => void) | undefined; onNavigateToMuseum?: ((museum: { id: string; name: string; }, collectionId?: string | undefined, artwork?: SearchableArtwork | undefined) => void) | undefined; museums?: Museum[] | undefined; i...' is not assignable to type 'IntrinsicAttributes & GlobalSearchBarProps'.
-  Property 'isDark' does not exist on type 'IntrinsicAttributes & GlobalSearchBarProps'.
-src/components/GlobalSearchBar.tsx(1,67): error TS6133: 'Suspense' is declared but its value is never read.
-src/components/GlobalSearchBar.tsx(6,48): error TS6133: 'getOptimizedImageUrl' is declared but its value is never read.
-src/components/GlobalSearchBar.tsx(13,1): error TS6133: 'ArtistWikiPanel' is declared but its value is never read.
-src/components/GlobalSearchBar.tsx(14,7): error TS6133: 'ArtistDistributionMap' is declared but its value is never read.
-src/components/GlobalSearchBar.tsx(233,12): error TS6133: 'galleryZIndex' is declared but its value is never read.
-src/components/GlobalSearchBar.tsx(234,12): error TS6133: 'hoveredArtworkId' is declared but its value is never read.
-src/components/GlobalSearchBar.tsx(234,30): error TS6133: 'setHoveredArtworkId' is declared but its value is never read.
-src/components/GlobalSearchBar.tsx(235,12): error TS6133: 'galleryTheme' is declared but its value is never read.
-src/components/GlobalSearchBar.tsx(235,26): error TS6133: 'setGalleryTheme' is declared but its value is never read.
-src/components/GlobalSearchBar.tsx(273,11): error TS6133: 'galleryCategories' is declared but its value is never read.
-src/components/GlobalSearchBar.tsx(292,11): error TS6133: 'artistGalleryColumns' is declared but its value is never read.
-src/components/GlobalSearchBar.tsx(307,11): error TS6133: 'artistFallbackDescription' is declared but its value is never read.
-src/components/GlobalSearchBar.tsx(322,11): error TS6133: 'museumCountryMap' is declared but its value is never read.
-src/components/GlobalSearchBar.tsx(360,11): error TS6133: 'artistGalleryIsLiked' is declared but its value is never read.
-src/components/GlobalSearchBar.tsx(444,11): error TS6133: 'toggleLikeArtist' is declared but its value is never read.
-src/components/GlobalSearchBar.tsx(1161,11): error TS6133: 'closeArtistGallery' is declared but its value is never read.
+vite v6.4.1 building for production...
+transforming...
+[plugin vite:esbuild] src/components/ExhibitionModal.tsx: Duplicate key "sculptures" in object literal
+49 |    "ceramics": "Ceramics",
+50 |    "sculpture (visual work)": "Sculpture",
+51 |      "sculptures": "Sculpture",
+   |      ^
+52 |    "sculpture": "Sculpture",
+53 |    "escultura": "Sculpture",
+
+[plugin vite:esbuild] src/components/ExhibitionModal.tsx: Duplicate key "photography" in object literal
+55 |    "sketchbooks": "Sketchbooks",
+56 |    "sketchbook": "Sketchbooks",
+57 |      "photography": "Photography",
+   |      ^
+58 |    "photograph": "Photography",
+59 |    "photos": "Photography",
+
+[plugin vite:esbuild] src/components/ExhibitionModal.tsx: Duplicate key "posters" in object literal
+58 |    "photograph": "Photography",
+59 |    "photos": "Photography",
+60 |      "posters": "Posters",
+   |      ^
+61 |    "poster": "Posters",
+62 |  };
+
+[plugin vite:esbuild] src/components/ExhibitionModal.tsx: Duplicate key "egyptian-museum-cairo-collection" in object literal
+6625|          'egyptian-museum-cairo-collection': '/data/egyptian-museum-cairo-collection.json',
+6626|          'collection-fine-arts-be-complete': '/data/fine-arts-be-complete.json',
+6627|          'egyptian-museum-cairo-collection': '/data/egyptian-museum-cairo-collection.json',
+   |          ^
+6628|          'fine-arts-be-complete': '/data/fine-arts-be-complete.json',
+6629|  
+
+[plugin vite:esbuild] src/components/ExhibitionModal.tsx: Duplicate key "conde-paintings" in object literal
+6730|          'kroller-muller-photography': '/data/kroller-muller-photography.json',
+6731|          // Musee Conde
+6732|          'conde-paintings': '/data/musee-conde-collection.json',
+   |          ^
+6733|          // St. Petersburg - Hermitage
+6734|          'hermitage-collection': '/data/hermitage-highlights.json',
+
+[plugin vite:esbuild] src/components/GlobalSearchBar.tsx: Duplicate "onMouseEnter" attribute in JSX element
+1932|                                      fontFamily: "'Inter', Arial, sans-serif"
+1933|                                  }}
+1934|                                  onMouseEnter={(e) => {
+   |                                  ^
+1935|                                      if (!isAIMode) {
+1936|                                          e.currentTarget.style.color = '#000';
+
+✓ 1231 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                                             4.46 kB │ gzip:     1.42 kB
+dist/assets/search.worker-DTha50QP.js                       9.54 kB
+dist/assets/siglip-encoder.worker-B063GbBI.js             877.38 kB
+dist/assets/ort-wasm-simd-threaded.jsep-B0T3yYHD.wasm  21,596.02 kB │ gzip: 5,087.10 kB
+dist/assets/GlobalNav-BCbnQ8to.css                          1.53 kB │ gzip:     0.69 kB
+dist/assets/index-CfJmExYG.css                              2.77 kB │ gzip:     0.97 kB
+dist/assets/InteractiveGlobeMap-CRgzIFce.css                4.29 kB │ gzip:     1.28 kB
+dist/assets/ArtistPage-CYxhlMVW.css                        11.92 kB │ gzip:     3.21 kB
+dist/assets/artists-Dv9TcT7b.js                             0.38 kB │ gzip:     0.26 kB
+dist/assets/SignUp-SpAcFMfc.js                              0.76 kB │ gzip:     0.47 kB
+dist/assets/WorkPage-CkagAANh.js                            0.83 kB │ gzip:     0.49 kB
+dist/assets/HeartOverlay-C3LiW-yJ.js                        0.96 kB │ gzip:     0.57 kB
+dist/assets/museumUtils-DgRZ4WUd.js                         1.46 kB │ gzip:     0.68 kB
+dist/assets/bounds-C5V5yNgx.js                              2.33 kB │ gzip:     1.16 kB
+dist/assets/LoginCallbackPage-DMx1vykX.js                   2.94 kB │ gzip:     1.69 kB
+dist/assets/WritePostPage-BeyTT6ok.js                       3.12 kB │ gzip:     1.44 kB
+dist/assets/PaymentSuccessPage-Bcx899xZ.js                  3.96 kB │ gzip:     1.73 kB
+dist/assets/Login-wiiQ9dss.js                               4.05 kB │ gzip:     1.94 kB
+dist/assets/TateModernPermanentPage-Dn-aDCsK.js             4.71 kB │ gzip:     1.85 kB
+dist/assets/CommunityPage-BZ8yIytW.js                       5.01 kB │ gzip:     1.89 kB
+dist/assets/PostDetailPage-CyRQrrXO.js                      5.23 kB │ gzip:     1.99 kB
+dist/assets/AdminImport-E0SGn3D2.js                         5.58 kB │ gzip:     2.76 kB
+dist/assets/ArtworkRecommendations-DZ4fZ-X_.js              5.80 kB │ gzip:     2.56 kB
+dist/assets/canonicalArtist-D1kFJVL9.js                     6.90 kB │ gzip:     3.14 kB
+dist/assets/CommentModal-Ce3V4CmF.js                       10.38 kB │ gzip:     3.67 kB
+dist/assets/ArtistPage-CKXMmWYA.js                         12.25 kB │ gzip:     5.09 kB
+dist/assets/ArtworkLightbox-LKTA_NLT.js                    12.58 kB │ gzip:     4.37 kB
+dist/assets/AdminPage-B9KQMp04.js                          12.93 kB │ gzip:     3.60 kB
+dist/assets/ProductModal-DO3dYtjk.js                       20.32 kB │ gzip:     6.31 kB
+dist/assets/index-D9tTdAN-.js                              21.45 kB │ gzip:     8.44 kB
+dist/assets/OnboardingPage-D9l8tZgV.js                     23.87 kB │ gzip:     7.15 kB
+dist/assets/ExhibitionPage-CoOd5zyP.js                     28.53 kB │ gzip:     6.95 kB
+dist/assets/Mypage-Bt_aZikn.js                             45.80 kB │ gzip:    12.87 kB
+dist/assets/GlobalNav-BFjGYqvF.js                         100.56 kB │ gzip:    28.43 kB
+dist/assets/InteractiveGlobeMap-BPpe1Fbr.js               176.72 kB │ gzip:    57.94 kB
+dist/assets/HomePage-DeJczc4N.js                          182.94 kB │ gzip:    50.12 kB
+dist/assets/ExhibitionModal-CeNU4QkB.js                   280.07 kB │ gzip:    63.00 kB
+dist/assets/ArtistDistributionMap-D4Ydh5AY.js             530.67 kB │ gzip:   171.06 kB
+dist/assets/index-GpyZcwq8.js                           2,712.50 kB │ gzip:   694.32 kB
+
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rollupOptions.output.manualChunks to improve chunking: https://rollupjs.org/configuration-options/#output-manualchunks
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 9.01s
+🧹 Automatically cleaning large files (>24MB) from dist...
+
+   ✅ Removed large file: atlas/ne_10m_admin_1_states_provinces.geojson (38.8 MB)
+   ✅ Removed large file: atlas/ne_10m_urban_areas.geojson (26.6 MB)
+   ✅ Removed large file: data/aic-collection.json (41.3 MB)
+   ✅ Removed large file: data/albertina-permanent-collection.json (32.7 MB)
+   ✅ Removed large file: data/albertina-photography-100.json (26.2 MB)
+   ✅ Removed large file: data/mca-collection.json (45.4 MB)
+   ✅ Removed large file: data/nga-collection.csv (293.2 MB)
+   ✅ Removed large file: data/nga-collection.json (116.0 MB)
+   ✅ Removed large file: data/qagoma-collection.json (26.1 MB)
+   ✅ Removed large file: data/search-index.json (154.8 MB)
+   ✅ Removed large file: data/tepapa-collection.json (44.2 MB)
+   ✅ Removed large file: geodata/admin1-states-10m.json (38.8 MB)
+
+📊 Total space saved: 884.1 MB

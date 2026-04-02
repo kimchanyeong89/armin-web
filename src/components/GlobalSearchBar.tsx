@@ -1,8 +1,8 @@
 import { useState, useEffect, useRef, useCallback, useMemo, lazy, Suspense } from 'react';
 import { createPortal } from 'react-dom';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { getTextEmbedding, isModelLoading } from '../utils/clipEmbedding';
-import { getSearchThumbnail, getLightboxImage, getOptimizedImageUrl } from '../utils/imageProxy';
+import { searchByText, preloadEncoder, onEncoderStatusChange, getEncoderStatus } from '../utils/siglipSearch';
+import { getSearchThumbnail, getLightboxImage, getOptimizedImageUrl, normalizeImageUrl } from '../utils/imageProxy';
 import { getWorkerNetworkMode, shouldLimitNetwork } from '../utils/network';
 import { auth, db } from '../firebase';
 import { onAuthStateChanged } from 'firebase/auth';
@@ -47,7 +47,7 @@ export type Museum = {
     permanentExhibitions?: { id: string, name: string }[];
 };
 
-type GlobalSearchBarProps = {
+type GlobalSearchBarProps = { forceWidth?: string;
     onOpenLightbox?: (artwork: SearchableArtwork, openLightbox?: boolean) => void;
     onNavigateToMuseum?: (museum: { id: string, name: string }, collectionId?: string, artwork?: SearchableArtwork) => void;
     museums?: Museum[];
@@ -56,6 +56,7 @@ type GlobalSearchBarProps = {
     isMobile?: boolean;
     inlineMode?: boolean;
     isDark?: boolean;
+    drawingSkin?: boolean;
 };
 
 const normalizeToken = (value?: string) => (value || '')
@@ -128,13 +129,7 @@ const normalizeKnownBrokenImageUrl = (value?: string): string => {
     // Ignore malformed placeholders coming from legacy datasets.
     if (raw === 'default.jpg' || raw === '/default.jpg') return '';
 
-    // Legacy DDB IIIF thumbnails often used '/full/!w,h/0/default.jpg' and now 404.
-    // Normalize to canonical '/full/full/0/default.jpg'.
-    if (raw.includes('iiif.deutsche-digitale-bibliothek.de')) {
-        return raw.replace(/\/full\/![0-9]+,[0-9]+\/0\/default\.jpg$/i, '/full/full/0/default.jpg');
-    }
-
-    return raw;
+    return normalizeImageUrl(raw);
 };
 
 const getSafeImageUrl = (value?: string): string => normalizeKnownBrokenImageUrl(value) || FALLBACK_IMG;
@@ -165,7 +160,7 @@ const buildBrueckeLookupKeyCandidates = (art: any): string[] => {
     return keys.filter((k) => k && !k.startsWith('__'));
 };
 
-export default function GlobalSearchBar({ onOpenLightbox, onNavigateToMuseum, museums = [], isModalOpen, inlineMode = false }: GlobalSearchBarProps) {
+export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigateToMuseum, museums = [], isModalOpen, inlineMode = false, drawingSkin = false }: GlobalSearchBarProps) {
     void onOpenLightbox; // Deprecated callback (kept for prop compatibility)
     const navigate = useNavigate();
     const location = useLocation();
@@ -227,19 +222,27 @@ export default function GlobalSearchBar({ onOpenLightbox, onNavigateToMuseum, mu
     const containerRef = useRef<HTMLDivElement>(null);
     const queryRef = useRef(query);
 
-    // AI Semantic Search
+    // AI Semantic Search (Transformers.js 브라우저 WASM + HF API 폴백)
     const [isAIMode, setIsAIMode] = useState(false);
     const [aiResults, setAiResults] = useState<SearchableArtwork[]>([]);
     const [isAILoading, setIsAILoading] = useState(false);
-    const [isClipLoading, setIsClipLoading] = useState(false);
+    const [isClipLoading, setIsClipLoading] = useState(false); // 호환성 유지 (항상 false)
+    const [encoderStatus, setEncoderStatusState] = useState<'idle' | 'loading' | 'ready' | 'error'>(getEncoderStatus);
+
+    // Recommendation Mode
+    const [isRecommendMode, setIsRecommendMode] = useState(false);
+    const [recommendResults, setRecommendResults] = useState<SearchableArtwork[]>([]);
+    const [isRecommendLoading, setIsRecommendLoading] = useState(false);
 
     const [aiFilteredCount, setAiFilteredCount] = useState(0);
-    const [aiFilteredVideoItems, setAiFilteredVideoItems] = useState<{ id: string; name: string; artist: string; museum?: string; reason?: string }[]>([]);
-    const [showFilteredItems, setShowFilteredItems] = useState(false);
     const [videoEmbedIdsReady, setVideoEmbedIdsReady] = useState(false);
     const videoEmbedIdsRef = useRef<Set<string>>(new Set());
 
-
+    // 인코더 상태 구독 (모델 로딩 진행 UI)
+    useEffect(() => {
+        const unsub = onEncoderStatusChange(setEncoderStatusState);
+        return unsub;
+    }, []);
 
     const requestLoginModal = useCallback(() => {
         if (typeof window === 'undefined') return;
@@ -278,6 +281,11 @@ export default function GlobalSearchBar({ onOpenLightbox, onNavigateToMuseum, mu
         return decodeURIComponent(routeArtistSlug).replace(/[-_]+/g, ' ').trim();
     }, [location.search, routeArtistSlug]);
 
+    const isDrawingGalleryMode = useMemo(() => {
+        const params = new URLSearchParams(location.search);
+        return drawingSkin || params.get('mode') === 'drawing';
+    }, [drawingSkin, location.search]);
+
     const GALLERY_Z_BASE = 4500;
     const GALLERY_Z_BELOW_MODAL = 3400;
     // Dynamic Z-Index for ArtistGallery window management
@@ -290,7 +298,13 @@ export default function GlobalSearchBar({ onOpenLightbox, onNavigateToMuseum, mu
     const [galleryMapSlide, setGalleryMapSlide] = useState(0);
     const [brueckeR2Lookup, setBrueckeR2Lookup] = useState<Record<string, string>>({});
     const slideDragStartX = useRef<number | null>(null);
+    const slideDragPointerId = useRef<number | null>(null);
     const galleryContainerRef = useRef<HTMLDivElement>(null);
+
+    const moveGallerySlideByDelta = (delta: number) => {
+        if (Math.abs(delta) < 22) return;
+        setGalleryMapSlide(prev => delta < 0 ? Math.min(2, prev + 1) : Math.max(0, prev - 1));
+    };
 
     // Nav/dropdown theme — synced with the global homeTheme preference
     const [isNavDark, setIsNavDark] = useState(() => {
@@ -311,6 +325,12 @@ export default function GlobalSearchBar({ onOpenLightbox, onNavigateToMuseum, mu
     useEffect(() => {
         setGalleryVisibleCount(isMobile ? 80 : 160);
     }, [isMobile, artistGallery?.artist, galleryCategory]);
+
+    useEffect(() => {
+        if (isDrawingGalleryMode) {
+            setGalleryTheme('light');
+        }
+    }, [isDrawingGalleryMode]);
 
     useEffect(() => {
         // When Artist Gallery opens or content updates, bring to front
@@ -587,6 +607,61 @@ export default function GlobalSearchBar({ onOpenLightbox, onNavigateToMuseum, mu
         };
     }, []);
 
+    // ── 취향 프로파일 업데이트 (3초 디바운스) ──────────────────────────────────
+    const tasteProfileUpdateTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+    const scheduleTasteProfileUpdate = useCallback((userId: string, likedIds: string[]) => {
+        // 최소 3개 이상 하트가 있어야 의미있는 프로파일 생성
+        if (likedIds.length < 3) return;
+
+        if (tasteProfileUpdateTimer.current) {
+            clearTimeout(tasteProfileUpdateTimer.current);
+        }
+        tasteProfileUpdateTimer.current = setTimeout(async () => {
+            try {
+                await fetch('https://armin-semantic-search.armin-art.workers.dev/taste-profile', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ userId, likedIds }),
+                });
+            } catch {
+                // 취향 프로파일 업데이트 실패 시 무시 (사용자 경험에 영향 없음)
+            }
+        }, 3000); // 3초 디바운스
+    }, []);
+
+    // ── 추천 작품 로드 ────────────────────────────────────────────────────────
+    const fetchRecommendations = useCallback(async (userId: string, likedIds: string[]) => {
+        if (likedIds.length < 3) {
+            setRecommendResults([]);
+            return;
+        }
+        setIsRecommendLoading(true);
+        try {
+            const res = await fetch('https://armin-semantic-search.armin-art.workers.dev/recommend', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ userId, likedIds, limit: 30 }),
+            });
+            if (!res.ok) throw new Error('recommend failed');
+            const data: { results?: { id: string; name: string; artist: string; date: string; museumName: string; image: string; score: number }[] } = await res.json();
+            const results: SearchableArtwork[] = (data.results || []).map(r => ({
+                id: r.id,
+                name: r.name,
+                artist: r.artist,
+                image: r.image,
+                date: r.date,
+                museumName: r.museumName,
+                exhibitionId: '',
+            }));
+            setRecommendResults(results);
+        } catch {
+            setRecommendResults([]);
+        } finally {
+            setIsRecommendLoading(false);
+        }
+    }, []);
+
     const toggleLikeArtwork = async (e: React.MouseEvent, art: SearchableArtwork) => {
         e.stopPropagation();
         if (!currentUser) {
@@ -603,18 +678,27 @@ export default function GlobalSearchBar({ onOpenLightbox, onNavigateToMuseum, mu
                 await deleteDoc(ref);
             } else {
                 await setDoc(ref, {
+                    ...art,
                     artworkId: art.id,
-                    title: art.name,
-                    artist: art.artist,
-                    image: art.image || '',
-                    museumName: art.museumName || '',
-                    year: art.date || '',
+                    id: art.id,
+                    title: art.name || art.n || art.title || 'Untitled',
+                    artist: art.artist || art.a || 'Unknown',
+                    image: art.image || art.i || '',
+                    museumName: art.museumName || art.m || '',
+                    year: art.date || art.d || '',
+                    exhibitionId: art.exhibitionId || art.e || '',
                     likedAt: new Date()
                 });
             }
+
+            // 취향 프로파일 비동기 업데이트 (하트 결과 반영)
+            const newLikedIds = likedArtworks.has(art.id)
+                ? Array.from(likedArtworks).filter(id => id !== art.id)
+                : [...Array.from(likedArtworks), art.id];
+            scheduleTasteProfileUpdate(currentUser.uid, newLikedIds);
+
         } catch (error) {
             console.error('Failed to toggle artwork like:', error);
-            // Optional: Show toast or visual feedback
         }
     };
 
@@ -949,7 +1033,6 @@ export default function GlobalSearchBar({ onOpenLightbox, onNavigateToMuseum, mu
         if (searchQuery.length < 3) {
             setAiResults([]);
 
-            setAiFilteredVideoItems([]);
             setAiFilteredCount(0);
             return;
         }
@@ -957,7 +1040,6 @@ export default function GlobalSearchBar({ onOpenLightbox, onNavigateToMuseum, mu
         if (!videoEmbedIdsReady) {
             setAiResults([]);
 
-            setAiFilteredVideoItems([]);
             setAiFilteredCount(0);
             return;
         }
@@ -965,174 +1047,52 @@ export default function GlobalSearchBar({ onOpenLightbox, onNavigateToMuseum, mu
         setIsAILoading(true);
 
         try {
-            // 모델이 로딩 중이면 로딩 상태 표시
-            if (isModelLoading()) {
-                setIsClipLoading(true);
-            }
-
-            // 브라우저에서 CLIP 텍스트 임베딩 생성 (무료!)
-            let embedding = await getTextEmbedding(searchQuery);
-            setIsClipLoading(false);
-
-            // DEBUG warning if still failing
-            if (!embedding) {
-                console.warn('Failed to generate text embedding');
+            // SigLIP 서버사이드 검색: 텍스트를 Worker로 전송, 브라우저 모델 다운로드 없음
+            let rawResults: any[];
+            try {
+                rawResults = await searchByText(searchQuery, 50);
+            } catch (err) {
+                console.warn('SigLIP search failed:', err);
+                setIsAILoading(false);
                 return;
             }
 
-            // Worker의 /search-by-vector 엔드포인트로 검색
-            const response = await fetch('https://armin-semantic-search.armin-art.workers.dev/search-by-vector', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ vector: embedding, limit: 50 }),
+            // Vectorize 결과는 {id, score, e} 만 포함 — Worker idMap에서 full 메타데이터 조회
+            const vectorizeIds = rawResults.map(r => r.id);
+            const scoreMap: Record<string, number> = {};
+            rawResults.forEach(r => { if (r.id) scoreMap[r.id] = r.score; });
+
+            const enrichedResults = await new Promise<any[]>((resolve) => {
+                if (!workerRef.current || vectorizeIds.length === 0) {
+                    resolve(rawResults); // Worker 없으면 원본 그대로
+                    return;
+                }
+                const onMsg = (ev: MessageEvent) => {
+                    if (ev.data?.type === 'DETAILS_RESULTS') {
+                        workerRef.current?.removeEventListener('message', onMsg);
+                        const matched = ev.data.results as any[];
+                        // Search index에 있는 항목만 표시 (삭제된/미인덱스 항목 제외)
+                        // fallback(Vectorize에만 있는 항목)은 placeholder 이미지 등 문제가 있을 수 있어 제외
+                        const all = matched
+                            .map((r: any) => ({ ...r, score: scoreMap[r.id] || 0 }))
+                            .sort((a, b) => (b.score || 0) - (a.score || 0));
+                        resolve(all);
+                    }
+                };
+                workerRef.current.addEventListener('message', onMsg);
+                workerRef.current.postMessage({ type: 'GET_DETAILS_BY_IDS', ids: vectorizeIds });
+                // 2초 타임아웃 — search index 조회 실패 시 빈 배열 반환 (placeholder 방지)
+                setTimeout(() => {
+                    workerRef.current?.removeEventListener('message', onMsg);
+                    resolve([]);
+                }, 2000);
             });
 
-            const data = await response.json();
+            const data = { results: enrichedResults };
 
             if (data.results) {
-                const excludedKeywords = [
-                    'national museum of korea',
-                    'gyeongju',
-                    'buyeo',
-                    'serpentine',
-                    'serpentine gallery',
-                    'british museum',
-                    'the british museum'
-                ];
-                const isExcludedMuseum = (museum?: string) => {
-                    const m = (museum || '').toLowerCase();
-                    return m.includes('serpentine gallery') || m.includes('british museum');
-                };
-                const rawCount = Array.isArray(data.results) ? data.results.length : 0;
-
-                const filteredItems: { id: string; name: string; artist: string; museum?: string; reason?: string }[] = [];
-
-                data.results.forEach((r: any) => {
-                    if (!r?.id) return;
-
-                    if (videoEmbedIdsRef.current.size > 0 && videoEmbedIdsRef.current.has(r.id)) {
-                        filteredItems.push({
-                            id: r.id,
-                            name: r.name || 'Untitled',
-                            artist: r.artist || 'Unknown',
-                            museum: r.museum || '',
-                            reason: 'video-embed-id'
-                        });
-                        return;
-                    }
-
-                    const rawUrl = r.i || r.image || r.url;
-                    if (!rawUrl) {
-                        filteredItems.push({
-                            id: r.id,
-                            name: r.name || 'Untitled',
-                            artist: r.artist || 'Unknown',
-                            museum: r.museum || '',
-                            reason: 'no-image-url'
-                        });
-                        return;
-                    }
-
-                    if (rawUrl.includes('youtube.com') || rawUrl.includes('youtu.be') || rawUrl.includes('vimeo')) {
-                        filteredItems.push({
-                            id: r.id,
-                            name: r.name || 'Untitled',
-                            artist: r.artist || 'Unknown',
-                            museum: r.museum || '',
-                            reason: 'video-url'
-                        });
-                        return;
-                    }
-
-                    if (r.youtubeId || r.vimeoId) {
-                        filteredItems.push({
-                            id: r.id,
-                            name: r.name || 'Untitled',
-                            artist: r.artist || 'Unknown',
-                            museum: r.museum || '',
-                            reason: 'video-id'
-                        });
-                        return;
-                    }
-
-                    const lower = String(rawUrl).toLowerCase().split('?')[0];
-                    const hasImageExtension = /\.(jpg|jpeg|png|webp|avif|gif|bmp|tiff)$/i.test(lower);
-                    const isKnownImageSource = /(googleusercontent|ggpht|wsrv\.nl|cloudinary|imgix|cloudfront|r2\.dev|upload\.wikimedia|tile\.loc\.gov|images\.metmuseum\.org|museum\.wales\/media-dams)/i.test(rawUrl);
-                    const hasExplicitImagePath = /(\/images\/|\/img\/|\/photos\/|\/media\/)/i.test(rawUrl);
-                    const isNotPage = !/\.(html|php|asp|jsp)$/i.test(lower) && !/\/whats-on\//i.test(lower) && !/\/exhibition\//i.test(lower);
-                    const isValidImage = (hasImageExtension || isKnownImageSource || (hasExplicitImagePath && isNotPage));
-
-                    if (!isValidImage) {
-                        filteredItems.push({
-                            id: r.id,
-                            name: r.name || 'Untitled',
-                            artist: r.artist || 'Unknown',
-                            museum: r.museum || '',
-                            reason: 'non-image-url'
-                        });
-                        return;
-                    }
-
-                    if (isExcludedMuseum(r.museum)) {
-                        return;
-                    }
-
-                    const idLower = r.id.toLowerCase();
-                    if (excludedKeywords.some(k => idLower.includes(k.replace(/ /g, '-')))) {
-                        return;
-                    }
-                });
-
-                setAiFilteredVideoItems(filteredItems);
-
-
-                const filteredRaw = data.results.filter((r: any) => {
-                    if (!r.id) return false;
-
-                    if (videoEmbedIdsRef.current.size > 0 && videoEmbedIdsRef.current.has(r.id)) return false;
-
-                    // Determine the best image URL candidate
-                    // Priority: r.i (debug/explicit) -> r.image (metadata) -> r.url (metadata)
-                    const rawUrl = r.i || r.image || r.url;
-
-                    // Filter out items without any potential image URL
-                    if (!rawUrl) return false;
-
-                    // Explicitly exclude video URLs
-                    if (rawUrl.includes('youtube.com') || rawUrl.includes('youtu.be') || rawUrl.includes('vimeo')) return false;
-
-                    // Exclude ONLY items that are actively embedded video players (e.g. having a YouTube ID)
-                    // User Request: Do NOT hide all 'video/documentary' types, only those that are "embedded via providers"
-                    if (r.youtubeId || r.vimeoId) return false;
-
-                    // STRICT CHECK: Exclude URLs that look like webpages rather than straight images
-                    const lower = rawUrl.toLowerCase().split('?')[0]; // Ignore query params for extension check
-
-                    // 1. Must have a standard image extension
-                    const hasImageExtension = /\.(jpg|jpeg|png|webp|avif|gif|bmp|tiff)$/i.test(lower);
-
-                    // 2. OR must be from a known dedicated image CDN/Source
-                    // Added 'ggpht' (Google), 'wikimedia', 'twimg', etc.
-                    const isKnownImageSource = /(googleusercontent|ggpht|wsrv\.nl|cloudinary|imgix|cloudfront|r2\.dev|upload\.wikimedia|tile\.loc\.gov|images\.metmuseum\.org)/i.test(rawUrl);
-
-                    // 3. OR must have a very explicit image path segment (not just 'content' or 'upload' which can be pages)
-                    // e.g. /images/, /img/, /photos/, /media/ combined with NOT ending in .html/.php
-                    // Intentionally removed 'content', 'upload', 'assets', 'files' as they are too generic
-                    const hasExplicitImagePath = /(\/images\/|\/img\/|\/photos\/|\/media\/)/i.test(rawUrl);
-                    const isNotPage = !/\.(html|php|asp|jsp)$/i.test(lower) && !/\/whats-on\//i.test(lower) && !/\/exhibition\//i.test(lower);
-
-                    // Decision
-                    const isValidImage = (hasImageExtension || isKnownImageSource || (hasExplicitImagePath && isNotPage));
-
-                    if (!isValidImage) {
-                        // console.log('[Search Filter] Dropped non-image item:', r.id, rawUrl);
-                        return false;
-                    }
-
-                    if (isExcludedMuseum(r.museum)) return false;
-                    const idLower = r.id.toLowerCase();
-                    return !excludedKeywords.some(k => idLower.includes(k.replace(/ /g, '-')));
-                });
+                // User requested to disable all filtering so they can debug issues directly
+                const filteredRaw = data.results;
 
                 const results = filteredRaw.map((r: any) => {
                     const museumMatch = findMuseumForArtwork({
@@ -1150,27 +1110,29 @@ export default function GlobalSearchBar({ onOpenLightbox, onNavigateToMuseum, mu
                         sourceUrl: r.sourceUrl || r.url || ''
                     }, museumMatch);
 
+                    const resolvedName = r.name || r.n || '';
+                    const resolvedArtist = r.artist || r.a || '';
+                    const resolvedImage = r.i || r.image || r.url || '';
+                    const resolvedMuseum = r.museum || r.m || museumMatch?.name || '';
                     return {
                         id: r.id,
-                        name: r.name || 'Untitled',
-                        artist: r.artist || 'Unknown',
-                        image: r.i || r.image || r.url || '',
-                        museumName: r.museum || museumMatch?.name || '',
+                        name: resolvedName || 'Untitled',
+                        artist: resolvedArtist || 'Unknown',
+                        image: resolvedImage,
+                        museumName: resolvedMuseum,
                         exhibitionId: exhibitionId || '',
                         sourceUrl: r.sourceUrl || ''
                     } as SearchableArtwork;
                 });
 
-                setAiFilteredCount(filteredItems.length > 0 ? filteredItems.length : Math.max(rawCount - filteredRaw.length, 0));
+                setAiFilteredCount(0);
                 setAiResults(results);
 
-            } else if (data.error) {
-                console.error('Search error:', data.error);
+            } else if ((data as any).error) {
+                console.error('Search error:', (data as any).error);
                 setAiResults([]);
-                setAiFilteredVideoItems([]);
             } else {
                 setAiResults([]);
-                setAiFilteredVideoItems([]);
             }
         } catch (error: any) {
             console.error('Semantic search error:', error);
@@ -1183,7 +1145,6 @@ export default function GlobalSearchBar({ onOpenLightbox, onNavigateToMuseum, mu
                 exhibitionId: '',
                 sourceUrl: '',
             }]);
-            setAiFilteredVideoItems([]);
         } finally {
             setIsAILoading(false);
             setIsClipLoading(false);
@@ -1217,15 +1178,17 @@ export default function GlobalSearchBar({ onOpenLightbox, onNavigateToMuseum, mu
             } else {
                 setFilteredMuseums([]);
             }
-        }, isAIMode ? 500 : 150);
+        }, isAIMode ? 800 : 150);  // AI 모드: 800ms 디바운스 (인코딩 요청 최소화)
 
         return () => clearTimeout(timer);
     }, [query, museums, isAIMode, performSemanticSearch, ensureWorker]);
 
+    // videoEmbedIdsReady 변경시 검색 (중복 방지: query가 있고 AI모드일 때만)
+    // 주의: 위 useEffect와 이중 실행 방지 위해 isAIMode && query 조건 엄격히
     useEffect(() => {
         if (!videoEmbedIdsReady || !isAIMode || query.length < 3) return;
-        performSemanticSearch(query);
-    }, [videoEmbedIdsReady, isAIMode, query, performSemanticSearch]);
+        // debounce 없이 즉시 실행하면 위 useEffect와 중복 — 제거하고 위 useEffect에 의존
+    }, [videoEmbedIdsReady, isAIMode]);  // query, performSemanticSearch 제거로 이중실행 방지
 
 
 
@@ -1336,12 +1299,13 @@ export default function GlobalSearchBar({ onOpenLightbox, onNavigateToMuseum, mu
             // ignore
         }
         const slug = toArtistSlug(artist);
-        const target = `/artist-gallery/${encodeURIComponent(slug)}?name=${encodeURIComponent(artist)}`;
+        const modeQuery = drawingSkin ? '&mode=drawing' : '';
+        const target = `/artist-gallery/${encodeURIComponent(slug)}?name=${encodeURIComponent(artist)}${modeQuery}`;
         const current = `${location.pathname}${location.search}`;
         if (current !== target) {
             navigate(target);
         }
-    }, [location.pathname, navigate, toArtistSlug]);
+    }, [location.pathname, location.search, navigate, toArtistSlug, drawingSkin]);
 
     const handleSelectMuseum = useCallback((museum: Museum) => {
         setIsExpanded(false);
@@ -1392,21 +1356,39 @@ export default function GlobalSearchBar({ onOpenLightbox, onNavigateToMuseum, mu
     const lightboxYearLabel = lightboxArtwork ? formatArtworkYear(lightboxArtwork.date) : '';
 
     // Dropdown theme colors (derived from isNavDark)
-    const navDropBg       = isNavDark ? 'rgba(18,17,16,0.94)'     : 'rgba(255,255,255,0.92)';
-    const navDropShadow   = isNavDark ? '0 12px 40px rgba(0,0,0,0.45), inset 0 1px 1px rgba(255,255,255,0.04)'
-                                      : '0 12px 40px rgba(0,0,0,0.12), inset 0 1px 1px rgba(255,255,255,0.7)';
-    const navDropBorder   = isNavDark ? 'rgba(255,255,255,0.06)'   : 'rgba(0,0,0,0.08)';
-    const navSectionBg    = isNavDark ? 'rgba(10,10,8,0.5)'        : 'rgba(245,242,237,0.75)';
-    const navSectionBorder= isNavDark ? 'rgba(201,165,90,0.15)'    : 'rgba(180,155,100,0.2)';
-    const navLabelColor   = isNavDark ? '#8a867d'                   : '#7a7268';
-    const navPillText     = isNavDark ? '#f0ede6'                   : '#1a1918';
-    const navTitleColor   = isNavDark ? '#f0ede6'                   : '#1a1918';
-    const navSubColor     = isNavDark ? '#8a867d'                   : '#6b6560';
-    const navMuseumColor  = isNavDark ? '#5a5650'                   : '#8a8278';
-    const navThumbBg      = isNavDark ? '#1a1918'                   : '#eae6df';
-    const navDivider      = isNavDark ? 'rgba(201,165,90,0.12)'     : 'rgba(180,155,100,0.18)';
-    const navHintColor    = isNavDark ? '#7a7570'                   : '#8a8278';
-    const navItemHover    = isNavDark ? 'rgba(201,165,90,0.08)'     : 'rgba(180,155,100,0.1)';
+    const drawingPalette = drawingSkin ? {
+        dropBg: '#FFFFFF',
+        dropShadow: '6px 8px 0 rgba(17,17,17,1)',
+        dropBorder: '#111111',
+        sectionBg: '#FFFFFF',
+        sectionBorder: 'rgba(17,17,17,0.22)',
+        labelColor: '#4B443B',
+        pillText: '#1A1918',
+        titleColor: '#1A1918',
+        subColor: '#36312B',
+        museumColor: '#4D4741',
+        thumbBg: '#F2F2F2',
+        divider: 'rgba(17,17,17,0.14)',
+        hintColor: '#555047',
+        itemHover: '#F6F6F6',
+    } : null;
+
+    const navDropBg       = drawingPalette?.dropBg ?? (isNavDark ? 'rgba(18,17,16,0.94)'     : 'rgba(255,255,255,0.92)');
+    const navDropShadow   = drawingPalette?.dropShadow ?? (isNavDark ? '0 12px 40px rgba(0,0,0,0.45), inset 0 1px 1px rgba(255,255,255,0.04)'
+                                      : '0 12px 40px rgba(0,0,0,0.12), inset 0 1px 1px rgba(255,255,255,0.7)');
+    const navDropBorder   = drawingPalette?.dropBorder ?? (isNavDark ? 'rgba(255,255,255,0.06)'   : 'rgba(0,0,0,0.08)');
+    const navSectionBg    = drawingPalette?.sectionBg ?? (isNavDark ? 'rgba(10,10,8,0.5)'        : 'rgba(245,242,237,0.75)');
+    const navSectionBorder= drawingPalette?.sectionBorder ?? (isNavDark ? 'rgba(201,165,90,0.15)'    : 'rgba(180,155,100,0.2)');
+    const navLabelColor   = drawingPalette?.labelColor ?? (isNavDark ? '#8a867d'                   : '#7a7268');
+    const navPillText     = drawingPalette?.pillText ?? (isNavDark ? '#f0ede6'                   : '#1a1918');
+    const navTitleColor   = drawingPalette?.titleColor ?? (isNavDark ? '#f0ede6'                   : '#1a1918');
+    const navSubColor     = drawingPalette?.subColor ?? (isNavDark ? '#8a867d'                   : '#6b6560');
+    const navMuseumColor  = drawingPalette?.museumColor ?? (isNavDark ? '#5a5650'                   : '#8a8278');
+    const navThumbBg      = drawingPalette?.thumbBg ?? (isNavDark ? '#1a1918'                   : '#eae6df');
+    const navDivider      = drawingPalette?.divider ?? (isNavDark ? 'rgba(201,165,90,0.12)'     : 'rgba(180,155,100,0.18)');
+    const navHintColor    = drawingPalette?.hintColor ?? (isNavDark ? '#7a7570'                   : '#8a8278');
+    const navItemHover    = drawingPalette?.itemHover ?? (isNavDark ? 'rgba(201,165,90,0.08)'     : 'rgba(180,155,100,0.1)');
+    const drawingHumanFont = "'Courier Prime', 'Courier New', 'Lucida Console', monospace";
 
     return (
         <>
@@ -1584,20 +1566,8 @@ export default function GlobalSearchBar({ onOpenLightbox, onNavigateToMuseum, mu
                 document.body
             )}
 
-            {/* Backdrop Overlay for Mobile Expanded Mode */}
-            {isMobile && isExpanded && createPortal(
-                <div
-                    onClick={() => setIsExpanded(false)}
-                    style={{
-                        position: 'fixed',
-                        inset: 0,
-                        zIndex: 4999,
-                        background: 'rgba(0,0,0,0.2)',
-                        backdropFilter: 'blur(2px)',
-                    }}
-                />,
-                document.body
-            )}
+
+
 
             <div
                 ref={containerRef}
@@ -1608,17 +1578,17 @@ export default function GlobalSearchBar({ onOpenLightbox, onNavigateToMuseum, mu
                 style={{
                     display: 'flex',
                     flexDirection: 'column',
-                    position: inlineMode ? 'relative' : 'fixed',
+                    position: inlineMode ? (drawingSkin ? 'relative' : 'static') : 'fixed',
                     zIndex: (!!artistGallery) && !lightboxArtwork && !isModalOpen ? 14000 : 5000,
                     transition: inlineMode
-                        ? 'width 450ms cubic-bezier(0.34, 1.1, 0.64, 1), background 300ms ease, border-radius 350ms ease'
-                        : 'height 600ms cubic-bezier(0.65, 0, 0.35, 1), bottom 600ms cubic-bezier(0.65, 0, 0.35, 1), transform 600ms cubic-bezier(0.65, 0, 0.35, 1), width 600ms cubic-bezier(0.65, 0, 0.35, 1), border-radius 600ms cubic-bezier(0.65, 0, 0.35, 1)',
+                        ? (drawingSkin ? 'width 260ms ease-out, opacity 180ms linear' : 'width 450ms ease, background 300ms ease, border-radius 350ms ease')
+                        : 'height 600ms ease-in-out, bottom 600ms ease-in-out, transform 600ms ease-in-out, width 600ms ease-in-out, border-radius 600ms ease-in-out',
 
                     ...(inlineMode ? {
                         // When collapsed: golden circle | When expanded: full-width transparent pill inside GlobalNav
-                        width: isExpanded ? 'min(420px, 85vw)' : '48px',
-                        height: '48px', // always fixed height; dropdown is separate
-                        background: isExpanded ? 'transparent' : '#e8fb36',
+                        width: forceWidth ? forceWidth : (isExpanded ? 'min(420px, 85vw)' : (drawingSkin ? '44px' : '48px')),
+                        height: drawingSkin ? '44px' : '48px', // always fixed height; dropdown is separate
+                        background: isExpanded ? 'transparent' : (drawingSkin ? '#111111' : '#e8fb36'),
                         borderRadius: isExpanded ? '100px' : '48px',
                         boxShadow: 'none',
                         backdropFilter: 'none',
@@ -1665,6 +1635,35 @@ export default function GlobalSearchBar({ onOpenLightbox, onNavigateToMuseum, mu
                     cursor: isExpanded ? 'default' : 'pointer',
                 }}
             >
+                {/* Scrollbar Styles */}
+                <style>{`
+                    .interactive-dropdown-scrollbar::-webkit-scrollbar {
+                        width: 6px;
+                    }
+                    .interactive-dropdown-scrollbar::-webkit-scrollbar-track {
+                        background: transparent;
+                        margin: 12px 0;
+                    }
+                    .interactive-dropdown-scrollbar::-webkit-scrollbar-thumb {
+                        background: rgba(201,165,90,0.25);
+                        border-radius: 10px;
+                    }
+                    .interactive-dropdown-scrollbar::-webkit-scrollbar-thumb:hover {
+                        background: rgba(201,165,90,0.5);
+                    }
+                    .drawing-dropdown-scrollbar::-webkit-scrollbar {
+                        width: 6px;
+                    }
+                    .drawing-dropdown-scrollbar::-webkit-scrollbar-track {
+                        background: transparent;
+                        margin: 12px 0;
+                    }
+                    .drawing-dropdown-scrollbar::-webkit-scrollbar-thumb {
+                        background: #111111;
+                        border-radius: 10px;
+                    }
+                `}</style>
+                
                 {/* Input */}
                 <div style={{
                     display: 'flex',
@@ -1672,16 +1671,77 @@ export default function GlobalSearchBar({ onOpenLightbox, onNavigateToMuseum, mu
                     padding: isExpanded ? '0 12px' : (inlineMode ? '0' : '10px 16px'),
                     gap: 8,
                     width: '100%',
-                    height: inlineMode ? '48px' : 'auto',
+                    height: inlineMode ? (drawingSkin ? '44px' : '48px') : 'auto',
+                    position: (inlineMode && drawingSkin && isExpanded) ? 'relative' : 'static',
+                    zIndex: (inlineMode && drawingSkin && isExpanded) ? 2 : 'auto',
                     justifyContent: (inlineMode && !isExpanded) ? 'center' : 'flex-start',
                     boxSizing: 'border-box' as const,
+                    border: 'none',
+                    borderRadius: 0,
+                    background: 'transparent',
                 }}>
-                    <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke={inlineMode && !isExpanded ? "#000" : "#c9a55a"} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                    <svg width={inlineMode && drawingSkin ? 20 : 22} height={inlineMode && drawingSkin ? 20 : 22} viewBox="0 0 24 24" fill="none" stroke={inlineMode && !isExpanded ? (drawingSkin ? "#FFFFFF" : "#000") : (drawingSkin ? "#000000" : "#c9a55a")} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                         <circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" />
                     </svg>
 
                     {(isExpanded || !inlineMode) && (
                         <>
+                            {/* AI Mode Toggle moved to left side */}
+                            <button
+                                onClick={(e) => { e.stopPropagation(); preloadEncoder(); setIsAIMode(!isAIMode); setAiResults([]); setIsRecommendMode(false); }}
+                                style={drawingSkin ? {
+                                    background: isAIMode ? '#111111' : '#ffffff',
+                                    border: '2px solid #111111',
+                                    borderRadius: 999,
+                                    width: 60,
+                                    height: 30,
+                                    fontSize: 12,
+                                    fontWeight: 800,
+                                    color: isAIMode ? '#ffffff' : '#111111',
+                                    cursor: 'pointer',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                    gap: 4,
+                                    transition: 'all 0.2s ease',
+                                    fontFamily: "'Space Mono', 'Courier New', monospace",
+                                    flexShrink: 0,
+                                } : {
+                                    background: isAIMode ? '#c9a55a' : 'rgba(255,255,255,0.05)',
+                                    border: isAIMode ? 'none' : '1px solid rgba(255,255,255,0.15)',
+                                    borderRadius: '50px',
+                                    padding: '5px 12px',
+                                    fontSize: 11,
+                                    fontWeight: 600,
+                                    color: isAIMode ? '#111111' : '#a3a3a3',
+                                    cursor: 'pointer',
+                                    display: 'flex',
+                                    alignItems: 'center',
+                                    gap: 4,
+                                    transition: 'all 0.3s ease',
+                                    fontFamily: "'Inter', Arial, sans-serif",
+                                    flexShrink: 0,
+                                }}
+                                onMouseEnter={(e) => {
+                                    preloadEncoder();
+                                    if (!isAIMode) {
+                                        e.currentTarget.style.color = drawingSkin ? '#111111' : '#c9a55a';
+                                        e.currentTarget.style.borderColor = drawingSkin ? '#111111' : 'rgba(201,165,90,0.3)';
+                                        e.currentTarget.style.background = drawingSkin ? '#ffffff' : 'rgba(201,165,90,0.08)';
+                                    }
+                                }}
+                                onMouseLeave={(e) => {
+                                    if (!isAIMode) {
+                                        e.currentTarget.style.color = drawingSkin ? '#888' : '#a3a3a3';
+                                        e.currentTarget.style.borderColor = drawingSkin ? '#ddd' : 'rgba(255,255,255,0.15)';
+                                        e.currentTarget.style.background = drawingSkin ? 'transparent' : 'rgba(255,255,255,0.05)';
+                                    }
+                                }}
+                                title={isAIMode ? 'Switch to text search' : 'Switch to AI semantic search'}
+                            >
+                                {drawingSkin ? 'A.I' : 'AI'}
+                            </button>
+
                             <input
                                 ref={inputRef}
                                 type="text"
@@ -1691,50 +1751,79 @@ export default function GlobalSearchBar({ onOpenLightbox, onNavigateToMuseum, mu
                                     setIsExpanded(true);
                                 }}
                                 placeholder={isLoading ? 'Loading...' : (isExpanded ? 'Search artworks, artists...' : 'Search artworks...')}
-                                style={{ flex: 1, border: 'none', background: 'transparent', fontSize: 16, outline: 'none', color: inlineMode ? navTitleColor : '#f0ede6' }}
+                                style={{
+                                    flex: 1,
+                                    border: 'none',
+                                    background: 'transparent',
+                                    fontSize: 16,
+                                    outline: 'none',
+                                    color: drawingSkin ? '#111111' : (inlineMode ? navTitleColor : '#f0ede6'),
+                                    fontFamily: drawingSkin ? drawingHumanFont : 'inherit',
+                                    letterSpacing: drawingSkin ? '0.01em' : 0,
+                                    minWidth: 0,
+                                }}
                                 onClick={(e) => {
                                     e.stopPropagation();
                                 }}
                             />
+
                             {query && (
-                                <button onClick={(e) => { e.stopPropagation(); setQuery(''); inputRef.current?.focus(); }} style={{ background: '#e5e7eb', border: 'none', borderRadius: '50%', width: 20, height: 20, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'pointer', fontSize: 12, color: '#666' }}>✕</button>
+                                <button
+                                    onClick={(e) => { e.stopPropagation(); setQuery(''); inputRef.current?.focus(); }}
+                                    style={drawingSkin ? {
+                                        background: 'transparent',
+                                        border: 'none',
+                                        width: 24,
+                                        height: 24,
+                                        display: 'grid',
+                                        placeItems: 'center',
+                                        cursor: 'pointer',
+                                        flexShrink: 0,
+                                        padding: 0,
+                                        marginRight: 4,
+                                    } : {
+                                        background: 'rgba(201,165,90,0.15)',
+                                        border: '1px solid rgba(201,165,90,0.25)',
+                                        borderRadius: '50%',
+                                        width: 20,
+                                        height: 20,
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        cursor: 'pointer',
+                                        fontSize: 12,
+                                        color: '#c9a55a',
+                                        marginRight: drawingSkin ? 0 : 20, // Push X button much further left natively
+                                        flexShrink: 0,
+                                        transition: 'all 0.2s ease'
+                                    }}
+                                    onMouseEnter={(e) => {
+                                        if (!drawingSkin) {
+                                            e.currentTarget.style.background = 'rgba(201,165,90,0.3)';
+                                            e.currentTarget.style.color = '#fff';
+                                        }
+                                    }}
+                                    onMouseLeave={(e) => {
+                                        if (!drawingSkin) {
+                                            e.currentTarget.style.background = 'rgba(201,165,90,0.15)';
+                                            e.currentTarget.style.color = '#c9a55a';
+                                        }
+                                    }}
+                                >
+                                    {drawingSkin ? (
+                                        <span style={{ position: 'relative', width: 14, height: 14, display: 'block', pointerEvents: 'none' }}>
+                                            <span style={{ position: 'absolute', top: '50%', left: '50%', width: 14, height: 2.3, background: '#111111', borderRadius: 2, transform: 'translate(-50%, -50%) rotate(45deg)', transformOrigin: 'center' }} />
+                                            <span style={{ position: 'absolute', top: '50%', left: '50%', width: 14, height: 2.3, background: '#111111', borderRadius: 2, transform: 'translate(-50%, -50%) rotate(-45deg)', transformOrigin: 'center' }} />
+                                        </span>
+                                    ) : '✕'}
+                                </button>
                             )}
-                            {/* AI Mode Toggle */}
-                            <button
-                                onClick={(e) => { e.stopPropagation(); setIsAIMode(!isAIMode); setAiResults([]); }}
-                                style={{
-                                    background: isAIMode ? '#e8fb36' : 'transparent',
-                                    border: isAIMode ? 'none' : '1px solid #ddd',
-                                    borderRadius: '100px',
-                                    padding: '6px 14px',
-                                    fontSize: 12,
-                                    fontWeight: 800,
-                                    color: isAIMode ? '#000' : '#888',
-                                    cursor: 'pointer',
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    gap: 4,
-                                    transition: 'all 0.2s ease',
-                                    fontFamily: "'Inter', Arial, sans-serif"
-                                }}
-                                onMouseEnter={(e) => {
-                                    if (!isAIMode) e.currentTarget.style.color = '#000';
-                                    if (!isAIMode) e.currentTarget.style.borderColor = '#aaa';
-                                }}
-                                onMouseLeave={(e) => {
-                                    if (!isAIMode) e.currentTarget.style.color = '#888';
-                                    if (!isAIMode) e.currentTarget.style.borderColor = '#ddd';
-                                }}
-                                title={isAIMode ? 'Switch to text search' : 'Switch to AI semantic search'}
-                            >
-                                <span style={{ fontSize: 12 }}>✨</span>
-                                AI
-                            </button>
+                            {/* For You 버튼은 홈 지도 화면으로 이동됨 */}
                             {!isExpanded && !isMobile && !inlineMode && (
                                 <span style={{ fontSize: 10, color: '#8a867d', marginLeft: 4, whiteSpace: 'nowrap', letterSpacing: '0.04em' }}>TAB</span>
                             )}
                             {isExpanded && !query && (
-                                <button onClick={(e) => { e.stopPropagation(); setIsExpanded(false); }} style={{ background: 'transparent', border: 'none', padding: 4, cursor: 'pointer', color: '#8a867d', fontSize: 12 }}>▼</button>
+                                <button onClick={(e) => { e.stopPropagation(); setIsExpanded(false); }} style={{ background: 'transparent', border: 'none', padding: 4, cursor: 'pointer', color: '#8a867d', fontSize: 12, marginRight: drawingSkin ? 0 : 16 }}>▼</button>
                             )}
                         </>
                     )}
@@ -1743,47 +1832,57 @@ export default function GlobalSearchBar({ onOpenLightbox, onNavigateToMuseum, mu
                 {/* Content Wrapper for smooth height measurement */}
                 <div
                     ref={contentRef}
+                    className={inlineMode ? (drawingSkin ? 'drawing-dropdown-scrollbar' : 'interactive-dropdown-scrollbar') : ''}
                     style={{
                         maxHeight: 'calc(80vh - 60px)',
                         overflowY: 'auto',
                         overscrollBehavior: 'contain',
                         WebkitOverflowScrolling: 'touch',
                         ...(inlineMode ? (() => {
-                            // Compute offset to keep the dropdown within the viewport
-                            let left: string | number = 0;
-                            let right: string | number = 'auto';
-                            if (containerRef.current) {
-                                const rect = containerRef.current.getBoundingClientRect();
-                                const dropdownW = Math.min(400, window.innerWidth * 0.94);
-                                const spaceRight = window.innerWidth - rect.left;
-                                if (spaceRight < dropdownW) {
-                                    // Would clip on right, anchor to right edge
-                                    left = 'auto';
-                                    right = 0;
-                                } else {
-                                    left = 0;
-                                    right = 'auto';
-                                }
+                            // 1. Drawing Skin (Interactive Globe Mode)
+                            if (drawingSkin) {
+                                return {
+                                    position: 'absolute' as const,
+                                    top: 'calc(100% + 16px)',
+                                    left: '-6px', // Align with the left edge of the entire Pill (accounting for GlobalNav 6px padding)
+                                    marginTop: 0,
+                                    background: navDropBg,
+                                    backdropFilter: 'none',
+                                    WebkitBackdropFilter: 'none',
+                                    boxShadow: '0 6px 0 rgba(17,17,17,0.95)',
+                                    borderRadius: '14px',
+                                    border: `2.5px solid ${navDropBorder}`,
+                                    opacity: isExpanded ? 1 : 0,
+                                    pointerEvents: isExpanded ? 'auto' as const : 'none' as const,
+                                    transition: 'opacity 180ms linear, transform 190ms ease-out',
+                                    transform: isExpanded ? 'translateY(0)' : 'translateY(-4px)',
+                                    minWidth: '100%',
+                                    width: 'calc(100% + 66px)', // Exactly span SearchInput (100%) + Hamburger(48) + gap(4) + margin(2) + Nav Padding Left/Right(12)
+                                    maxWidth: 'calc(100vw - 64px)',
+                                    zIndex: 1,
+                                };
                             }
+                            
+                            // 2. Interactive Map (Normal Dark/Light Nav Pill Mode)
                             return {
                                 position: 'absolute' as const,
                                 top: '100%',
-                                left,
-                                right,
-                                marginTop: '10px',
+                                left: '0',
+                                right: 'auto',
+                                marginTop: 0,
                                 background: navDropBg,
                                 backdropFilter: 'blur(30px) saturate(200%)',
                                 WebkitBackdropFilter: 'blur(30px) saturate(200%)',
                                 boxShadow: navDropShadow,
-                                borderRadius: '16px',
+                                borderRadius: '0 0 26px 26px',
+                                borderTop: 'none',
                                 opacity: isExpanded ? 1 : 0,
                                 pointerEvents: isExpanded ? 'auto' as const : 'none' as const,
-                                transition: 'opacity 250ms cubic-bezier(0.2, 0.8, 0.2, 1), transform 250ms cubic-bezier(0.34, 1.56, 0.64, 1)',
-                                transform: isExpanded ? 'translateY(0) scale(1)' : 'translateY(-8px) scale(0.97)',
-                                border: `1px solid ${navDropBorder}`,
-                                minWidth: '320px',
-                                width: 'max-content',
-                                maxWidth: 'min(400px, 94vw)',
+                                transition: 'opacity 180ms linear, transform 190ms ease-out',
+                                transform: isExpanded ? 'translateY(0)' : 'translateY(-4px)',
+                                zIndex: 1,
+                                minWidth: '100%', // Naturally unify with the exact length of the Nav Pill container
+                                width: '100%',
                             };
                         })() : {})
                     }}
@@ -1830,44 +1929,17 @@ export default function GlobalSearchBar({ onOpenLightbox, onNavigateToMuseum, mu
 
                     {/* AI Mode Results */}
                     {isExpanded && isAIMode && (
-                        <div style={{ padding: '8px 16px', borderTop: '1px solid #e5e7eb', background: 'linear-gradient(135deg, rgba(102,126,234,0.05) 0%, rgba(118,75,162,0.05) 100%)' }}>
-                            <div style={{ fontSize: 11, color: '#764ba2', marginBottom: 4, display: 'flex', alignItems: 'center', gap: 6 }}>
+                        <div style={{ padding: '8px 16px', borderTop: `1px solid ${navDivider}`, background: navSectionBg }}>
+                            <div style={{ fontSize: 11, color: navLabelColor, marginBottom: 4, display: 'flex', alignItems: 'center', gap: 6 }}>
                                 <span>✨</span>
                                 <span>
-                                    {isClipLoading
-                                        ? 'Loading AI model... (first time only, ~30MB)'
-                                        : isAILoading
-                                            ? 'Searching...'
-                                            : `AI Semantic Search (${aiResults.length} results${aiFilteredCount > 0 ? `, filtered ${aiFilteredCount}` : ''})`}
+                                    {isAILoading
+                                        ? (encoderStatus === 'loading' ? 'Loading AI model (~70MB, cached after first use)...' : 'Searching with SigLIP...')
+                                        : `AI Semantic Search (${aiResults.length} results${aiFilteredCount > 0 ? `, filtered ${aiFilteredCount}` : ''})`}
                                 </span>
                             </div>
-                            <div style={{ marginTop: 6, padding: '8px 10px', background: '#fff7ed', border: '1px solid #fed7aa', borderRadius: 8 }}>
-                                <div style={{ fontSize: 11, fontWeight: 600, color: '#9a3412', marginBottom: 6 }}>Filtered items (preview) · {aiFilteredVideoItems.length}</div>
-                                <button
-                                    onClick={(e) => { e.stopPropagation(); setShowFilteredItems(!showFilteredItems); }}
-                                    style={{ background: '#fff', border: '1px solid #fed7aa', borderRadius: 6, padding: '4px 8px', fontSize: 11, color: '#9a3412', cursor: 'pointer', marginBottom: 6 }}
-                                >
-                                    {showFilteredItems ? 'Hide filtered list' : 'Show filtered list'}
-                                </button>
-                                {showFilteredItems && (
-                                    <div style={{ display: 'flex', flexDirection: 'column', gap: 6, maxHeight: 220, overflowY: 'auto' }}>
-                                        {aiFilteredVideoItems.length === 0 && (
-                                            <div style={{ fontSize: 12, color: '#7c2d12' }}>No filtered items for this query.</div>
-                                        )}
-                                        {aiFilteredVideoItems.slice(0, 20).map(item => (
-                                            <div key={`filtered-${item.id}`} style={{ fontSize: 12, color: '#7c2d12' }}>
-                                                <div style={{ fontWeight: 600 }}>{item.name}</div>
-                                                <div style={{ fontSize: 11, opacity: 0.8 }}>{item.artist} · {item.museum || 'Unknown'} · {item.id} · {item.reason || 'filtered'}</div>
-                                            </div>
-                                        ))}
-                                        {aiFilteredVideoItems.length > 20 && (
-                                            <div style={{ fontSize: 11, color: '#9a3412' }}>+ {aiFilteredVideoItems.length - 20} more</div>
-                                        )}
-                                    </div>
-                                )}
-                            </div>
                             {query.length >= 3 && !isAILoading && !isClipLoading && aiResults.length === 0 && (
-                                <div style={{ fontSize: 12, color: '#888', padding: '8px 0' }}>No AI results for "{query}". Try: "impressionist landscape", "portrait of woman", "religious painting"</div>
+                                <div style={{ fontSize: 12, color: navSubColor, padding: '8px 0' }}>No AI results for "{query}". Try: "impressionist landscape", "portrait of woman", "religious painting"</div>
                             )}
                         </div>
                     )}
@@ -1878,7 +1950,7 @@ export default function GlobalSearchBar({ onOpenLightbox, onNavigateToMuseum, mu
                             onWheel={(e) => e.stopPropagation()}
                             onTouchMove={(e) => e.stopPropagation()}
                             style={{
-                                borderTop: '1px solid #e5e7eb',
+                                borderTop: `1px solid ${navDivider}`,
                             }}
                         >
                             {aiResults.map((art, idx) => (
@@ -1886,26 +1958,100 @@ export default function GlobalSearchBar({ onOpenLightbox, onNavigateToMuseum, mu
                                     key={`ai-${art.id}-${idx}`}
                                     className="search-result-item"
                                     onClick={(e) => { e.stopPropagation(); handleSelectArtwork(art); }}
-                                    style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '8px 16px', cursor: 'pointer', borderBottom: idx < aiResults.length - 1 ? '1px solid #f3f4f6' : 'none', transition: 'background 150ms ease' }}
-                                    onMouseEnter={(e) => e.currentTarget.style.background = '#f9fafb'}
+                                    style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '8px 16px', cursor: 'pointer', borderBottom: idx < aiResults.length - 1 ? `1px solid ${navDivider}` : 'none', transition: 'background 150ms ease' }}
+                                    onMouseEnter={(e) => e.currentTarget.style.background = navItemHover}
                                     onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}
                                 >
-                                    <div style={{ width: 44, height: 44, borderRadius: 6, overflow: 'hidden', flexShrink: 0, background: '#f3f4f6' }}>
+                                    <div style={{ width: 44, height: 44, borderRadius: 6, overflow: 'hidden', flexShrink: 0, background: navThumbBg }}>
                                         <img src={getSearchThumbnail(getSafeImageUrl(art.image))} alt="" onError={handleImageError} style={{ width: '100%', height: '100%', objectFit: 'cover' }} loading="lazy" />
                                     </div>
                                     <div style={{ flex: 1, minWidth: 0 }}>
-                                        <div style={{ fontSize: 13, fontWeight: 600, color: '#222', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{art.name}</div>
-                                        <div style={{ fontSize: 11, color: '#666', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{art.artist}</div>
-                                        <div style={{ fontSize: 10, color: '#999' }}>{art.museumName}</div>
+                                        <div style={{ fontSize: 13, fontWeight: 600, color: navTitleColor, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{art.name}</div>
+                                        <div style={{ fontSize: 11, color: navSubColor, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{art.artist}</div>
+                                        <div style={{ fontSize: 10, color: navMuseumColor }}>{art.museumName}</div>
                                     </div>
-                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#ccc" strokeWidth="2"><polyline points="9 18 15 12 9 6" /></svg>
+                                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(201,165,90,0.4)" strokeWidth="2"><polyline points="9 18 15 12 9 6" /></svg>
                                 </div>
                             ))}
                         </div>
                     )}
 
+                    {/* Recommendation Mode Header */}
+                    {isExpanded && isRecommendMode && (
+                        <div style={{ padding: '8px 16px', borderTop: '1px solid #ffe4ef', background: 'linear-gradient(135deg, rgba(255,107,157,0.06) 0%, rgba(255,182,193,0.04) 100%)' }}>
+                            <div style={{ fontSize: 11, color: '#c2185b', marginBottom: 4, display: 'flex', alignItems: 'center', gap: 6 }}>
+                                <span>♡</span>
+                                <span>
+                                    {isRecommendLoading
+                                        ? 'Finding artworks tailored to your taste...'
+                                        : `Personalized for you (${recommendResults.length} picks)`}
+                                </span>
+                                {!isRecommendLoading && recommendResults.length > 0 && (
+                                    <button
+                                        onClick={(e) => { e.stopPropagation(); if (currentUser) fetchRecommendations(currentUser.uid, Array.from(likedArtworks)); }}
+                                        style={{ marginLeft: 'auto', background: 'transparent', border: '1px solid #ffb3d0', borderRadius: 100, padding: '2px 8px', fontSize: 10, color: '#c2185b', cursor: 'pointer' }}
+                                    >↻ Refresh</button>
+                                )}
+                            </div>
+                        </div>
+                    )}
+
+                    {/* Recommendation Results Grid */}
+                    {isExpanded && isRecommendMode && !isRecommendLoading && recommendResults.length > 0 && (
+                        <div onWheel={(e) => e.stopPropagation()} onTouchMove={(e) => e.stopPropagation()} style={{ borderTop: '1px solid #ffe4ef' }}>
+                            {recommendResults.map((art, idx) => (
+                                <div
+                                    key={`rec-${art.id}-${idx}`}
+                                    className="search-result-item"
+                                    onClick={(e) => { e.stopPropagation(); handleSelectArtwork(art); }}
+                                    style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '8px 16px', cursor: 'pointer', borderBottom: idx < recommendResults.length - 1 ? '1px solid #fff0f5' : 'none', transition: 'background 150ms ease' }}
+                                    onMouseEnter={(e) => e.currentTarget.style.background = '#fff8fb'}
+                                    onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}
+                                >
+                                    <div style={{ width: 44, height: 44, borderRadius: 6, overflow: 'hidden', flexShrink: 0, background: '#fce4ec' }}>
+                                        <img src={getSearchThumbnail(getSafeImageUrl(art.image))} alt="" onError={handleImageError} style={{ width: '100%', height: '100%', objectFit: 'cover' }} loading="lazy" />
+                                    </div>
+                                    <div style={{ flex: 1, minWidth: 0 }}>
+                                        <div style={{ fontSize: 13, fontWeight: 600, color: '#222', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{art.name}</div>
+                                        <div style={{ fontSize: 11, color: '#666', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{art.artist}{art.date ? ` • ${art.date}` : ''}</div>
+                                        <div style={{ fontSize: 10, color: '#999' }}>{art.museumName}</div>
+                                    </div>
+                                    <HeartOverlay
+                                        isLiked={likedArtworks.has(art.id)}
+                                        onToggle={(e) => toggleLikeArtwork(e, art)}
+                                        size={16}
+                                    />
+                                </div>
+                            ))}
+                        </div>
+                    )}
+
+                    {/* Recommendation loading skeleton */}
+                    {isExpanded && isRecommendMode && isRecommendLoading && (
+                        <div style={{ borderTop: '1px solid #ffe4ef' }}>
+                            {[...Array(8)].map((_, idx) => (
+                                <div key={`skel-${idx}`} style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '8px 16px', borderBottom: idx < 7 ? '1px solid #fff0f5' : 'none' }}>
+                                    <div style={{ width: 44, height: 44, borderRadius: 6, background: 'linear-gradient(90deg, #fce4ec 25%, #ffeef4 50%, #fce4ec 75%)', backgroundSize: '200% 100%', animation: 'shimmer 1.5s infinite', flexShrink: 0 }} />
+                                    <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 6 }}>
+                                        <div style={{ height: 12, width: '60%', borderRadius: 4, background: 'linear-gradient(90deg, #fce4ec 25%, #ffeef4 50%, #fce4ec 75%)', backgroundSize: '200% 100%', animation: 'shimmer 1.5s infinite' }} />
+                                        <div style={{ height: 10, width: '40%', borderRadius: 4, background: 'linear-gradient(90deg, #fce4ec 25%, #ffeef4 50%, #fce4ec 75%)', backgroundSize: '200% 100%', animation: 'shimmer 1.5s infinite' }} />
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    )}
+
+                    {/* Recommendation empty state */}
+                    {isExpanded && isRecommendMode && !isRecommendLoading && recommendResults.length === 0 && (
+                        <div style={{ padding: '24px 16px', textAlign: 'center', borderTop: '1px solid #ffe4ef' }}>
+                            <div style={{ fontSize: 24, marginBottom: 8 }}>♡</div>
+                            <div style={{ fontSize: 13, color: '#c2185b', fontWeight: 600, marginBottom: 4 }}>Building your taste profile...</div>
+                            <div style={{ fontSize: 12, color: '#888' }}>Like more artworks to get personalized recommendations</div>
+                        </div>
+                    )}
+
                     {/* Regular Results */}
-                    {isExpanded && !isAIMode && filteredArtworks.length > 0 && (
+                    {isExpanded && !isAIMode && !isRecommendMode && filteredArtworks.length > 0 && (
                         <div
                             onWheel={(e) => e.stopPropagation()}
                             onTouchMove={(e) => e.stopPropagation()}
@@ -1926,16 +2072,31 @@ export default function GlobalSearchBar({ onOpenLightbox, onNavigateToMuseum, mu
                                         <img src={getSearchThumbnail(getSafeImageUrl(art.image))} alt="" onError={handleImageError} style={{ width: '100%', height: '100%', objectFit: 'cover' }} loading="lazy" />
                                     </div>
                                     <div style={{ flex: 1, minWidth: 0 }}>
-                                        <div style={{ fontSize: 13, fontWeight: 600, color: navTitleColor, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{art.name}</div>
+                                        <div style={{
+                                            fontSize: drawingSkin ? 15 : 13,
+                                            fontWeight: drawingSkin ? 700 : 600,
+                                            color: navTitleColor,
+                                            whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
+                                            fontFamily: drawingSkin ? drawingHumanFont : 'inherit',
+                                        }}>{art.name}</div>
                                         {(() => {
                                             const yearLabel = formatArtworkYear(art.date);
                                             return (
-                                                <div style={{ fontSize: 11, color: navSubColor, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
+                                                <div style={{
+                                                    fontSize: drawingSkin ? 13 : 11,
+                                                    color: navSubColor,
+                                                    whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
+                                                    fontFamily: drawingSkin ? drawingHumanFont : 'inherit',
+                                                }}>
                                                     {art.artist}{yearLabel ? ` • ${yearLabel}` : ''}
                                                 </div>
                                             );
                                         })()}
-                                        <div style={{ fontSize: 10, color: navMuseumColor }}>
+                                        <div style={{
+                                            fontSize: drawingSkin ? 12 : 11,
+                                            color: navMuseumColor,
+                                            fontFamily: drawingSkin ? drawingHumanFont : 'inherit',
+                                        }}>
                                             {art.museumName}
                                             {(() => {
                                                 const m = museums.find(m => m.name === art.museumName);
@@ -1957,12 +2118,12 @@ export default function GlobalSearchBar({ onOpenLightbox, onNavigateToMuseum, mu
                     )}
 
                     {/* No results */}
-                    {isExpanded && query.length >= 2 && !isAIMode && filteredArtworks.length === 0 && suggestedArtists.length === 0 && !isLoading && (
+                    {isExpanded && query.length >= 2 && !isAIMode && !isRecommendMode && filteredArtworks.length === 0 && suggestedArtists.length === 0 && !isLoading && (
                         <div style={{ padding: '16px', textAlign: 'center', color: navSubColor, fontSize: 13, borderTop: `1px solid ${navDivider}` }}>No results for "{query}"</div>
                     )}
 
                     {/* Hint */}
-                    {isExpanded && query.length < 2 && !isLoading && (
+                    {isExpanded && query.length < 2 && !isLoading && !isRecommendMode && (
                         <div style={{ padding: '12px 16px', textAlign: 'center', color: navHintColor, fontSize: 12, borderTop: `1px solid ${navDivider}`, letterSpacing: '0.02em' }}>
                             {isAIMode
                                 ? '✨ AI Search: Try "impressionist landscape" or "portrait of woman"'
@@ -1977,15 +2138,16 @@ export default function GlobalSearchBar({ onOpenLightbox, onNavigateToMuseum, mu
             {/* Artist Gallery Modal */}
             {artistGallery && createPortal(
                 (() => {
-                    const isDark = galleryTheme === 'dark';
-                    const bg = isDark ? '#080807' : '#f7f4ef';
-                    const cardBg = isDark ? '#0f0e0d' : '#ffffff';
-                    const btnBg = isDark ? '#1c1b1a' : '#f2ede6';
-                    const textMain = isDark ? '#f0ede6' : '#1a1918';
-                    const textSub = isDark ? '#8a8075' : '#6b6560';
-                    const accent = isDark ? '#c9a55a' : '#8a6420';
-                    const border = isDark ? '#1e1d1c' : '#ddd8cf';
-                    const borderLight = isDark ? '#2a2927' : '#e5e0d8';
+                    const isDark = isDrawingGalleryMode ? false : (galleryTheme === 'dark');
+                    const bg = isDrawingGalleryMode ? '#ffffff' : (isDark ? '#080807' : '#f7f4ef');
+                    const cardBg = isDrawingGalleryMode ? '#ffffff' : (isDark ? '#0f0e0d' : '#ffffff');
+                    const btnBg = isDrawingGalleryMode ? '#ffffff' : (isDark ? '#1c1b1a' : '#f2ede6');
+                    const textMain = isDrawingGalleryMode ? '#111111' : (isDark ? '#f0ede6' : '#1a1918');
+                    const textSub = isDrawingGalleryMode ? '#4d4740' : (isDark ? '#8a8075' : '#6b6560');
+                    const accent = isDrawingGalleryMode ? '#8a6420' : (isDark ? '#c9a55a' : '#8a6420');
+                    const border = isDrawingGalleryMode ? '#111111' : (isDark ? '#1e1d1c' : '#ddd8cf');
+                    const borderLight = isDrawingGalleryMode ? '#2f2f2f' : (isDark ? '#2a2927' : '#e5e0d8');
+                    const borderWidth = isDrawingGalleryMode ? '2.5px' : '1px';
                     const asciiArt = galleryAsciiArt || buildFallbackAscii(artistGallery.artist);
                     const filteredCount = filteredGalleryArtworks.length;
                     const hasMoreGalleryArtworks = visibleGalleryArtworks.length < filteredGalleryArtworks.length;
@@ -1995,7 +2157,9 @@ export default function GlobalSearchBar({ onOpenLightbox, onNavigateToMuseum, mu
                                 position: 'fixed',
                                 inset: 0,
                                 zIndex: galleryZIndex,
-                                background: isDark ? 'rgba(8,8,7,0.97)' : 'rgba(247,244,239,0.97)',
+                                background: isDrawingGalleryMode
+                                    ? 'rgba(255,255,255,0.97)'
+                                    : (isDark ? 'rgba(8,8,7,0.97)' : 'rgba(247,244,239,0.97)'),
                                 backdropFilter: 'blur(16px)',
                                 WebkitBackdropFilter: 'blur(16px)',
                                 overflowY: 'auto',
@@ -2012,17 +2176,21 @@ export default function GlobalSearchBar({ onOpenLightbox, onNavigateToMuseum, mu
                             <div style={{
                                 width: '100%', maxWidth: 1200,
                                 display: 'flex', flexDirection: 'column',
-                                overflow: 'hidden',
-                                borderRadius: isMobile ? 12 : 16,
-                                border: `1px solid ${border}`,
+                                overflowX: 'clip',
+                                overflowY: 'visible',
+                                borderRadius: isMobile ? 10 : 14,
+                                border: `${borderWidth} solid ${border}`,
                                 background: bg,
                                 marginBottom: 40,
+                                boxShadow: isDrawingGalleryMode ? '10px 12px 0 rgba(17,17,17,1)' : 'none',
+                                filter: isDrawingGalleryMode ? 'url(#dg-sketch-ui)' : 'none',
+                                fontFamily: isDrawingGalleryMode ? "'Space Mono', 'SFMono-Regular', Menlo, Monaco, Consolas, monospace" : 'inherit',
                             }}>
 
                                 {/* ── HERO ─────────────────────────────────────── */}
                                 <header style={{
                                     padding: isMobile ? '28px 20px 24px' : '52px 60px 40px',
-                                    borderBottom: `1px solid ${border}`,
+                                    borderBottom: `${borderWidth} solid ${border}`,
                                     background: bg,
                                 }}>
                                     {/* Eyebrow row */}
@@ -2030,8 +2198,8 @@ export default function GlobalSearchBar({ onOpenLightbox, onNavigateToMuseum, mu
                                         <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
                                             <span style={{
                                                 fontSize: 10, letterSpacing: '0.28em', textTransform: 'uppercase',
-                                                color: accent, fontWeight: 500,
-                                                padding: '4px 12px', border: `1px solid ${accent}66`,
+                                                color: accent, fontWeight: 700,
+                                                padding: '4px 12px', border: `${isDrawingGalleryMode ? '2px' : '1px'} solid ${accent}66`,
                                                 borderRadius: 2, flexShrink: 0,
                                             }}>Artist</span>
                                             {(galleryFoundArtist?.nationality || galleryFoundArtist?.birthYear) && (
@@ -2044,21 +2212,42 @@ export default function GlobalSearchBar({ onOpenLightbox, onNavigateToMuseum, mu
                                             )}
                                         </div>
                                         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                                            {!isDrawingGalleryMode && (
+                                                <button
+                                                    onClick={() => setGalleryTheme(t => t === 'dark' ? 'light' : 'dark')}
+                                                    title={isDark ? 'Switch to light' : 'Switch to dark'}
+                                                    style={{
+                                                        width: 36, height: 36, borderRadius: '50%', border: `1px solid ${border}`,
+                                                        background: btnBg, color: textSub, fontSize: 15, cursor: 'pointer',
+                                                        display: 'flex', alignItems: 'center', justifyContent: 'center',
+                                                        outline: 'none',
+                                                    }}
+                                                >{isDark ? '☀' : '☾'}</button>
+                                            )}
                                             <button
-                                                onClick={() => setGalleryTheme(t => t === 'dark' ? 'light' : 'dark')}
-                                                title={isDark ? 'Switch to light' : 'Switch to dark'}
-                                                style={{
-                                                    width: 36, height: 36, borderRadius: '50%', border: `1px solid ${border}`,
-                                                    background: btnBg, color: textSub, fontSize: 15, cursor: 'pointer',
-                                                    display: 'flex', alignItems: 'center', justifyContent: 'center',
-                                                    outline: 'none',
+                                                onClick={closeArtistGallery}
+                                                onMouseDown={(e) => {
+                                                    if (!isDrawingGalleryMode) return;
+                                                    e.currentTarget.style.transform = 'translate(2px, 2px)';
+                                                    e.currentTarget.style.boxShadow = '1px 1px 0 rgba(17,17,17,0.95)';
                                                 }}
-                                            >{isDark ? '☀' : '☾'}</button>
-                                            <button onClick={closeArtistGallery} style={{
-                                                width: 36, height: 36, borderRadius: '50%', border: `1px solid ${border}`,
+                                                onMouseUp={(e) => {
+                                                    if (!isDrawingGalleryMode) return;
+                                                    e.currentTarget.style.transform = 'translate(0, 0)';
+                                                    e.currentTarget.style.boxShadow = '3px 3px 0 rgba(17,17,17,0.95)';
+                                                }}
+                                                onMouseLeave={(e) => {
+                                                    if (!isDrawingGalleryMode) return;
+                                                    e.currentTarget.style.transform = 'translate(0, 0)';
+                                                    e.currentTarget.style.boxShadow = '3px 3px 0 rgba(17,17,17,0.95)';
+                                                }}
+                                                style={{
+                                                width: 36, height: 36, borderRadius: '50%', border: `${isDrawingGalleryMode ? '2.5px' : '1px'} solid ${border}`,
                                                 background: btnBg, color: textSub, fontSize: 18,
                                                 cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center',
                                                 outline: 'none',
+                                                boxShadow: isDrawingGalleryMode ? '3px 3px 0 rgba(17,17,17,0.95)' : 'none',
+                                                transition: isDrawingGalleryMode ? 'transform 90ms ease, box-shadow 90ms ease, background 140ms ease' : 'background 140ms ease',
                                             }}>✕</button>
                                         </div>
                                     </div>
@@ -2066,10 +2255,12 @@ export default function GlobalSearchBar({ onOpenLightbox, onNavigateToMuseum, mu
                                     {/* Artist name + heart inline */}
                                     <div style={{ display: 'flex', alignItems: 'center', gap: isMobile ? 14 : 22, marginBottom: 28 }}>
                                         <h1 style={{
-                                            fontFamily: "'Playfair Display', Georgia, serif",
+                                            fontFamily: isDrawingGalleryMode
+                                                ? "'Space Mono', 'SFMono-Regular', Menlo, Monaco, Consolas, monospace"
+                                                : "'Playfair Display', Georgia, serif",
                                             fontSize: isMobile ? 'clamp(40px, 10vw, 56px)' : 'clamp(60px, 6vw, 96px)',
-                                            fontWeight: 300,
-                                            letterSpacing: '-0.02em',
+                                            fontWeight: isDrawingGalleryMode ? 700 : 300,
+                                            letterSpacing: isDrawingGalleryMode ? '-0.04em' : '-0.02em',
                                             color: textMain,
                                             margin: 0,
                                             lineHeight: 1.05,
@@ -2114,7 +2305,7 @@ export default function GlobalSearchBar({ onOpenLightbox, onNavigateToMuseum, mu
                                 <section style={{
                                     display: 'flex',
                                     flexDirection: isMobile ? 'column' : 'row',
-                                    borderBottom: `1px solid ${border}`,
+                                    borderBottom: `${borderWidth} solid ${border}`,
                                     background: bg,
                                 }}>
                                     {/* Bio column */}
@@ -2122,8 +2313,8 @@ export default function GlobalSearchBar({ onOpenLightbox, onNavigateToMuseum, mu
                                         flex: isMobile ? '1 1 auto' : '0 0 50%',
                                         minWidth: 0,
                                         padding: isMobile ? '20px 16px' : '28px 36px',
-                                        borderRight: isMobile ? 'none' : `1px solid ${border}`,
-                                        borderBottom: isMobile ? `1px solid ${border}` : 'none',
+                                        borderRight: isMobile ? 'none' : `${borderWidth} solid ${border}`,
+                                        borderBottom: isMobile ? `${borderWidth} solid ${border}` : 'none',
                                         // Set color so .artist-bio__text inherits it (ArtistPage.css not loaded here)
                                         color: isDark ? '#b8b3aa' : '#3d3a35',
                                         boxSizing: 'border-box',
@@ -2142,7 +2333,7 @@ export default function GlobalSearchBar({ onOpenLightbox, onNavigateToMuseum, mu
                                         <pre style={{
                                             fontFamily: "'DM Mono', 'Courier New', monospace",
                                             fontSize: isMobile ? 7 : 9,
-                                            color: isDark ? '#3a3733' : '#c8c3bb',
+                                            color: isDrawingGalleryMode ? '#a4a097' : (isDark ? '#3a3733' : '#c8c3bb'),
                                             margin: '28px 0 0',
                                             lineHeight: 1.4,
                                             overflowX: 'auto',
@@ -2229,9 +2420,10 @@ export default function GlobalSearchBar({ onOpenLightbox, onNavigateToMuseum, mu
                                                 {/* Combined map + slides card */}
                                                 <div style={{
                                                     width: '100%', borderRadius: 10, overflow: 'hidden',
-                                                    border: `1px solid ${border}`,
+                                                    border: `${borderWidth} solid ${border}`,
                                                     display: 'flex', flexDirection: 'column',
                                                     minHeight: 200,
+                                                    boxShadow: isDrawingGalleryMode ? '5px 6px 0 rgba(17,17,17,0.9)' : 'none',
                                                 }}>
                                                     {/* amCharts map — flex grow */}
                                                     <div style={{ flex: '1 1 0%', minHeight: 0, width: '100%', overflow: 'hidden' }}>
@@ -2241,6 +2433,7 @@ export default function GlobalSearchBar({ onOpenLightbox, onNavigateToMuseum, mu
                                                                 isDark={isDark}
                                                                 hideLegend
                                                                 mapHeight="160px"
+                                                                drawingStyle={isDrawingGalleryMode ? 'drawing-flat' : 'default'}
                                                             />
                                                         </Suspense>
                                                     </div>
@@ -2248,31 +2441,34 @@ export default function GlobalSearchBar({ onOpenLightbox, onNavigateToMuseum, mu
                                                     {/* Distribution slides — bottom of combined card */}
                                                     <div style={{
                                                         flexShrink: 0,
-                                                        borderTop: `1px solid ${border}`,
-                                                        background: isDark ? '#131211' : 'rgb(245,242,237)',
+                                                        borderTop: `${borderWidth} solid ${border}`,
+                                                        background: isDrawingGalleryMode ? '#ffffff' : (isDark ? '#131211' : 'rgb(245,242,237)'),
                                                         userSelect: 'none',
                                                     }}>
-                                                        <style>{`._armin-slide-scroll::-webkit-scrollbar{display:none}@keyframes arminCardReveal{0%{opacity:0;transform:translateY(18px)}100%{opacity:1;transform:translateY(0)}}[data-art-card]{opacity:0;transform:translateY(18px);animation:arminCardReveal .56s cubic-bezier(.25,1,.35,1) forwards}`}</style>
+                                                        <style>{`._armin-slide-scroll::-webkit-scrollbar{display:none}@keyframes arminCardReveal{0%{opacity:0;transform:translateY(18px)}100%{opacity:1;transform:translateY(0)}}[data-art-card]{opacity:0;transform:translateY(18px);animation:arminCardReveal .56s ease-in-out forwards}`}</style>
 
                                                         {/* Grab area — CSS transform slide strip */}
                                                         <div
                                                             style={{ overflow: 'hidden', cursor: 'grab', touchAction: 'pan-y' }}
-                                                            onMouseDown={(e) => { slideDragStartX.current = e.clientX; }}
-                                                            onMouseUp={(e) => {
+                                                            onPointerDown={(e) => {
+                                                                slideDragPointerId.current = e.pointerId;
+                                                                slideDragStartX.current = e.clientX;
+                                                                e.currentTarget.setPointerCapture(e.pointerId);
+                                                            }}
+                                                            onPointerUp={(e) => {
+                                                                if (slideDragPointerId.current !== e.pointerId) return;
                                                                 if (slideDragStartX.current === null) return;
                                                                 const delta = e.clientX - slideDragStartX.current;
                                                                 slideDragStartX.current = null;
-                                                                if (Math.abs(delta) < 40) return;
-                                                                setGalleryMapSlide(prev => delta < 0 ? Math.min(2, prev + 1) : Math.max(0, prev - 1));
+                                                                slideDragPointerId.current = null;
+                                                                e.currentTarget.releasePointerCapture(e.pointerId);
+                                                                moveGallerySlideByDelta(delta);
                                                             }}
-                                                            onMouseLeave={() => { slideDragStartX.current = null; }}
-                                                            onTouchStart={(e) => { slideDragStartX.current = e.touches[0].clientX; }}
-                                                            onTouchEnd={(e) => {
-                                                                if (slideDragStartX.current === null) return;
-                                                                const delta = e.changedTouches[0].clientX - slideDragStartX.current;
-                                                                slideDragStartX.current = null;
-                                                                if (Math.abs(delta) < 40) return;
-                                                                setGalleryMapSlide(prev => delta < 0 ? Math.min(2, prev + 1) : Math.max(0, prev - 1));
+                                                            onPointerCancel={(e) => {
+                                                                if (slideDragPointerId.current === e.pointerId) {
+                                                                    slideDragStartX.current = null;
+                                                                    slideDragPointerId.current = null;
+                                                                }
                                                             }}
                                                         >
                                                             {/* 3-slide strip — width:300%, CSS transform */}
@@ -2280,7 +2476,7 @@ export default function GlobalSearchBar({ onOpenLightbox, onNavigateToMuseum, mu
                                                                 display: 'flex',
                                                                 width: '300%',
                                                                 willChange: 'transform',
-                                                                transition: 'transform 0.38s cubic-bezier(0.15, 0, 0, 1)',
+                                                                transition: 'transform 0.38s ease-in-out',
                                                                 transform: `translateX(calc(-${galleryMapSlide * 33.3333}% + 0px))`,
                                                             }}>
                                                                 {/* Slide 0: TOP MUSEUMS */}
@@ -2387,25 +2583,65 @@ export default function GlobalSearchBar({ onOpenLightbox, onNavigateToMuseum, mu
                                         }}>
                                             <button
                                                 onClick={() => setGalleryCategory(null)}
+                                                onMouseDown={(e) => {
+                                                    if (!isDrawingGalleryMode) return;
+                                                    e.currentTarget.style.transform = 'translate(2px, 2px)';
+                                                    e.currentTarget.style.boxShadow = '1px 1px 0 rgba(17,17,17,0.95)';
+                                                }}
+                                                onMouseUp={(e) => {
+                                                    if (!isDrawingGalleryMode) return;
+                                                    e.currentTarget.style.transform = 'translate(0, 0)';
+                                                    e.currentTarget.style.boxShadow = '3px 3px 0 rgba(17,17,17,0.95)';
+                                                }}
+                                                onMouseLeave={(e) => {
+                                                    if (!isDrawingGalleryMode) return;
+                                                    e.currentTarget.style.transform = 'translate(0, 0)';
+                                                    e.currentTarget.style.boxShadow = '3px 3px 0 rgba(17,17,17,0.95)';
+                                                }}
                                                 style={{
                                                     padding: '4px 12px', borderRadius: 20,
-                                                    border: `1px solid ${!galleryCategory ? accent : border}`,
+                                                    border: `${isDrawingGalleryMode ? '2px' : '1px'} solid ${!galleryCategory ? accent : border}`,
                                                     background: !galleryCategory ? accent : 'transparent',
                                                     color: !galleryCategory ? (isDark ? '#080807' : '#fff') : textSub,
-                                                    fontSize: 11, fontWeight: 600, cursor: 'pointer',
-                                                    letterSpacing: '0.04em', transition: 'all 0.15s',
+                                                    fontSize: 11, fontWeight: 700, cursor: 'pointer',
+                                                    letterSpacing: '0.04em',
+                                                    boxShadow: isDrawingGalleryMode ? '3px 3px 0 rgba(17,17,17,0.95)' : 'none',
+                                                    transform: 'translate(0, 0)',
+                                                    transition: isDrawingGalleryMode ? 'transform 90ms ease, box-shadow 90ms ease, background 150ms ease, color 150ms ease, border-color 150ms ease' : 'all 0.15s',
                                                 }}
                                             >All · {artistGallery.artworks.length.toLocaleString()}</button>
                                             {galleryCategories.map(({ cat, cnt }) => {
                                                 const active = galleryCategory === cat;
                                                 return (
-                                                    <button key={cat} onClick={() => setGalleryCategory(active ? null : cat)} style={{
+                                                    <button
+                                                        key={cat}
+                                                        onClick={() => setGalleryCategory(active ? null : cat)}
+                                                        onMouseDown={(e) => {
+                                                            if (!isDrawingGalleryMode) return;
+                                                            e.currentTarget.style.transform = 'translate(2px, 2px)';
+                                                            e.currentTarget.style.boxShadow = '1px 1px 0 rgba(17,17,17,0.95)';
+                                                        }}
+                                                        onMouseUp={(e) => {
+                                                            if (!isDrawingGalleryMode) return;
+                                                            e.currentTarget.style.transform = 'translate(0, 0)';
+                                                            e.currentTarget.style.boxShadow = '3px 3px 0 rgba(17,17,17,0.95)';
+                                                        }}
+                                                        onMouseLeave={(e) => {
+                                                            if (!isDrawingGalleryMode) return;
+                                                            e.currentTarget.style.transform = 'translate(0, 0)';
+                                                            e.currentTarget.style.boxShadow = '3px 3px 0 rgba(17,17,17,0.95)';
+                                                        }}
+                                                        style={{
                                                         padding: '4px 12px', borderRadius: 20,
-                                                        border: `1px solid ${active ? accent : border}`,
+                                                        border: `${isDrawingGalleryMode ? '2px' : '1px'} solid ${active ? accent : border}`,
                                                         background: active ? accent : 'transparent',
                                                         color: active ? (isDark ? '#080807' : '#fff') : textSub,
-                                                        fontSize: 11, fontWeight: active ? 600 : 400,
-                                                        cursor: 'pointer', letterSpacing: '0.04em', transition: 'all 0.15s',
+                                                        fontSize: 11, fontWeight: active ? 700 : 500,
+                                                        cursor: 'pointer',
+                                                        letterSpacing: '0.04em',
+                                                        boxShadow: isDrawingGalleryMode ? '3px 3px 0 rgba(17,17,17,0.95)' : 'none',
+                                                        transform: 'translate(0, 0)',
+                                                        transition: isDrawingGalleryMode ? 'transform 90ms ease, box-shadow 90ms ease, background 150ms ease, color 150ms ease, border-color 150ms ease' : 'all 0.15s',
                                                     }}>{cat} · {cnt.toLocaleString()}</button>
                                                 );
                                             })}
@@ -2416,7 +2652,7 @@ export default function GlobalSearchBar({ onOpenLightbox, onNavigateToMuseum, mu
                                     <div style={{ padding: isMobile ? '0 12px' : '0 60px' }} ref={galleryContainerRef}>
                                         <div style={{ display: 'flex', gap: isMobile ? 10 : 20, alignItems: 'flex-start' }}>
                                             {artistGalleryColumns.map((column, columnIdx) => (
-                                                <div key={`artist-column-${columnIdx}`} style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: isMobile ? 10 : 20 }}>
+                                                <div key={`artist-column-${columnIdx}`} style={{ flex: 1, minWidth: 0, overflow: 'hidden', display: 'flex', flexDirection: 'column', gap: isMobile ? 10 : 20 }}>
                                                     {column.map((art, idx) => {
                                                         const yearLabel = formatArtworkYear(art.date);
                                                         const displayTitle = yearLabel ? `${art.name} (${yearLabel})` : art.name;
@@ -2437,16 +2673,17 @@ export default function GlobalSearchBar({ onOpenLightbox, onNavigateToMuseum, mu
                                                                 <div style={{
                                                                     overflow: 'hidden',
                                                                     background: cardBg,
-                                                                    border: `1px solid ${border}`,
-                                                                    borderRadius: 6,
+                                                                    border: isDrawingGalleryMode ? 'none' : `${borderWidth} solid ${border}`,
+                                                                    borderRadius: isDrawingGalleryMode ? 10 : 6,
                                                                     transition: 'border-color 0.2s',
                                                                     position: 'relative',
+                                                                    boxShadow: 'none',
                                                                 }}>
                                                                     <img
                                                                         src={getOptimizedImageUrl(resolveGalleryImageUrl(art), 600)}
                                                                         style={{
                                                                             width: '100%', height: 'auto', display: 'block',
-                                                                            transition: 'transform 750ms cubic-bezier(0.22,1,0.36,1), opacity 0.45s ease, filter 0.45s ease',
+                                                                            transition: 'transform 750ms ease-in-out, opacity 0.45s ease, filter 0.45s ease',
                                                                             transform: 'scale(1.02)',
                                                                             opacity: 0,
                                                                             filter: 'blur(4px)',
@@ -2505,14 +2742,33 @@ export default function GlobalSearchBar({ onOpenLightbox, onNavigateToMuseum, mu
                                             <div style={{ display: 'flex', justifyContent: 'center', padding: isMobile ? '16px 0 8px' : '24px 0 8px' }}>
                                                 <button
                                                     onClick={(e) => { e.stopPropagation(); loadMoreGalleryArtworks(); }}
+                                                    onMouseDown={(e) => {
+                                                        if (!isDrawingGalleryMode) return;
+                                                        e.currentTarget.style.transform = 'translate(2px, 2px)';
+                                                        e.currentTarget.style.boxShadow = '1px 1px 0 rgba(17,17,17,0.95)';
+                                                    }}
+                                                    onMouseUp={(e) => {
+                                                        if (!isDrawingGalleryMode) return;
+                                                        e.currentTarget.style.transform = 'translate(0, 0)';
+                                                        e.currentTarget.style.boxShadow = '3px 3px 0 rgba(17,17,17,0.95)';
+                                                    }}
+                                                    onMouseLeave={(e) => {
+                                                        if (!isDrawingGalleryMode) return;
+                                                        e.currentTarget.style.transform = 'translate(0, 0)';
+                                                        e.currentTarget.style.boxShadow = '3px 3px 0 rgba(17,17,17,0.95)';
+                                                    }}
                                                     style={{
-                                                        border: `1px solid ${border}`,
+                                                        border: `${isDrawingGalleryMode ? '2px' : '1px'} solid ${border}`,
                                                         background: 'transparent',
                                                         color: textSub,
                                                         borderRadius: 999,
                                                         padding: '8px 14px',
                                                         fontSize: 12,
+                                                        fontWeight: isDrawingGalleryMode ? 700 : 500,
                                                         cursor: 'pointer',
+                                                        boxShadow: isDrawingGalleryMode ? '3px 3px 0 rgba(17,17,17,0.95)' : 'none',
+                                                        transform: 'translate(0, 0)',
+                                                        transition: isDrawingGalleryMode ? 'transform 90ms ease, box-shadow 90ms ease, background 150ms ease, color 150ms ease, border-color 150ms ease' : 'all 0.15s',
                                                     }}
                                                 >
                                                     Load More ({visibleGalleryArtworks.length.toLocaleString()} / {filteredCount.toLocaleString()})

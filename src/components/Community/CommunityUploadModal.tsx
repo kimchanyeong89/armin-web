@@ -400,7 +400,7 @@ export const CommunityUploadModal: React.FC<CommunityUploadModalProps> = ({ onCl
                                     <img src={item.preview} alt="Preview" style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: item.isScanning ? 0.5 : 1 }} />
                                     {item.isScanning && (
                                         <div style={{ position: 'absolute', inset: 0, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                            <div style={{ width: 16, height: 16, border: '2px solid #fff', borderTopColor: 'transparent', borderRadius: '50%', animation: 'spin 1s linear infinite' }}></div>
+                                            <div style={{ width: 16, height: 16, borderStyle: 'solid', borderWidth: '2px', borderColor: '#fff', borderTopColor: 'transparent', borderRadius: '50%', animation: 'spin 1s linear infinite' }}></div>
                                             <style>{`@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }`}</style>
                                         </div>
                                     )}

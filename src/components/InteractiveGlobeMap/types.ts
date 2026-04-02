@@ -14,6 +14,9 @@ export interface Venue {
     name: string;
     year: string;
     category: "bauhaus" | "design" | "architecture";
+    museumCity?: string;
+    latitude?: number;
+    longitude?: number;
     architect?: string;
     artworkCount: number; // Actual artwork count from collection files
     exhibitions: InteractiveExhibition[];

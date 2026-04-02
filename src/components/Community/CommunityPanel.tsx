@@ -8,14 +8,30 @@ interface CommunityPanelProps {
     isOpen: boolean;
     onClose: () => void;
     mapMode?: 'default' | 'drawing' | 'interactive';
+    isDark?: boolean; // explicit override; falls back to localStorage if omitted
 }
 
 type View = 'list' | 'detail' | 'write';
 
-const CommunityPanel: React.FC<CommunityPanelProps> = ({ isOpen, onClose, mapMode = 'default' }) => {
+const CommunityPanel: React.FC<CommunityPanelProps> = ({ isOpen, onClose, mapMode = 'default', isDark: isDarkProp }) => {
     const [view, setView] = useState<View>('list');
     const [selectedPostId, setSelectedPostId] = useState<string | null>(null);
 
+    // Sync dark mode with the global theme (respects light/dark toggle)
+    const [isDark, setIsDark] = useState(() => {
+        if (isDarkProp !== undefined) return isDarkProp;
+        try { return localStorage.getItem('homeTheme') !== 'light'; } catch { return true; }
+    });
+    useEffect(() => {
+        const handle = () => {
+            if (isDarkProp !== undefined) return;
+            try { setIsDark(localStorage.getItem('homeTheme') !== 'light'); } catch { setIsDark(true); }
+        };
+        window.addEventListener('theme-changed', handle);
+        window.addEventListener('storage', handle);
+        return () => { window.removeEventListener('theme-changed', handle); window.removeEventListener('storage', handle); };
+    }, [isDarkProp]);
+    useEffect(() => { if (isDarkProp !== undefined) setIsDark(isDarkProp); }, [isDarkProp]);
 
     // Draggable Position State
     const [position, setPosition] = useState<{ top: number, left: number } | null>(null);
@@ -250,6 +266,14 @@ const CommunityPanel: React.FC<CommunityPanelProps> = ({ isOpen, onClose, mapMod
 
     return (
         <>
+            {mapMode === 'drawing' && (
+                <svg width="0" height="0" style={{ position: 'absolute', pointerEvents: 'none' }} aria-hidden="true">
+                    <filter id="community-sketch-ui" x="-20%" y="-20%" width="140%" height="140%">
+                        <feTurbulence type="fractalNoise" baseFrequency="0.05" numOctaves="3" result="noise" />
+                        <feDisplacementMap in="SourceGraphic" in2="noise" scale="2" xChannelSelector="R" yChannelSelector="G" />
+                    </filter>
+                </svg>
+            )}
             {/* Dock Preview Indicator */}
             {dockPreview !== 'none' && (
                 <div style={{
@@ -287,7 +311,7 @@ const CommunityPanel: React.FC<CommunityPanelProps> = ({ isOpen, onClose, mapMod
                         maxHeight: 'calc(100vh - 20px)',
                         minWidth: '300px',
                         minHeight: '400px',
-                        borderRadius: '16px',
+                        borderRadius: mapMode === 'drawing' ? '0px' : '16px',
                         resize: 'both',
                     } : dockState === 'left' ? {
                         top: 0,
@@ -322,20 +346,42 @@ const CommunityPanel: React.FC<CommunityPanelProps> = ({ isOpen, onClose, mapMod
                         borderRadius: 0,
                         resize: 'none',
                     }),
-                    backgroundColor: mapMode === 'drawing' ? '#FFFFFF' : mapMode === 'interactive' ? 'rgba(8,8,7,0.97)' : '#ffffff',
-                    border: mapMode === 'drawing'
-                        ? (dockState === 'none' ? '2.5px solid #111111' : undefined)
+                    backgroundColor: mapMode === 'drawing'
+                        ? '#FFFFFF'
                         : mapMode === 'interactive'
-                        ? (dockState === 'none' ? '1px solid rgba(201,165,90,0.18)' : undefined)
-                        : (dockState === 'none' ? '1px solid rgba(0,0,0,0.1)' : undefined),
+                        ? (isDark ? 'rgba(8,8,7,0.97)' : 'rgba(252,250,246,0.97)')
+                        : '#ffffff',
+                    // border 단축키 대신 4면 개별 속성으로 분리 (React 스타일 경고 방지)
+                    ...(dockState === 'none' ? {
+                        borderTop: mapMode === 'drawing' ? '3px solid #111111'
+                            : mapMode === 'interactive' ? (isDark ? '1px solid rgba(201,165,90,0.18)' : '1px solid rgba(0,0,0,0.08)')
+                            : '1px solid rgba(0,0,0,0.1)',
+                        borderRight: mapMode === 'drawing' ? '3px solid #111111'
+                            : mapMode === 'interactive' ? (isDark ? '1px solid rgba(201,165,90,0.18)' : '1px solid rgba(0,0,0,0.08)')
+                            : '1px solid rgba(0,0,0,0.1)',
+                        borderBottom: mapMode === 'drawing' ? '3px solid #111111'
+                            : mapMode === 'interactive' ? (isDark ? '1px solid rgba(201,165,90,0.18)' : '1px solid rgba(0,0,0,0.08)')
+                            : '1px solid rgba(0,0,0,0.1)',
+                        borderLeft: mapMode === 'drawing' ? '3px solid #111111'
+                            : mapMode === 'interactive' ? (isDark ? '1px solid rgba(201,165,90,0.18)' : '1px solid rgba(0,0,0,0.08)')
+                            : '1px solid rgba(0,0,0,0.1)',
+                    } : dockState === 'left' ? {
+                        borderTop: 'none', borderBottom: 'none', borderLeft: 'none',
+                        borderRight: '1px solid rgba(0,0,0,0.1)',
+                    } : dockState === 'right' ? {
+                        borderTop: 'none', borderBottom: 'none', borderRight: 'none',
+                        borderLeft: '1px solid rgba(0,0,0,0.1)',
+                    } : dockState === 'bottom' ? {
+                        borderRight: 'none', borderBottom: 'none', borderLeft: 'none',
+                        borderTop: '1px solid rgba(0,0,0,0.1)',
+                    } : {
+                        borderTop: 'none', borderRight: 'none', borderBottom: 'none', borderLeft: 'none',
+                    }),
                     boxShadow: mapMode === 'drawing'
-                        ? (dockState === 'none' ? '-6px 6px 0 #111111' : 'none')
+                        ? (dockState === 'none' ? '8px 8px 0 #111111' : 'none')
                         : mapMode === 'interactive'
-                        ? '-4px 0 40px rgba(0,0,0,0.6)'
+                        ? (isDark ? '-4px 0 40px rgba(0,0,0,0.6)' : '-4px 0 32px rgba(0,0,0,0.12)')
                         : (dockState === 'none' ? '-4px 0 24px rgba(0,0,0,0.15)' : 'none'),
-                    borderRight: dockState === 'left' ? '1px solid rgba(0,0,0,0.1)' : 'none',
-                    borderLeft: dockState === 'right' ? '1px solid rgba(0,0,0,0.1)' : 'none',
-                    borderTop: dockState === 'bottom' ? '1px solid rgba(0,0,0,0.1)' : 'none',
                     zIndex: 200000,
                     display: 'flex',
                     flexDirection: 'column',
@@ -348,6 +394,8 @@ const CommunityPanel: React.FC<CommunityPanelProps> = ({ isOpen, onClose, mapMod
                     pointerEvents: styleState.pointerEvents,
                     transition: (isDragging || isResizing) ? 'none' : 'all 0.4s cubic-bezier(0.25, 1, 0.5, 1)',
                     visibility: styleState.opacity === 0 ? 'hidden' : 'visible' // Hide when fully closed
+                    ,
+                    filter: mapMode === 'drawing' ? 'url(#community-sketch-ui)' : 'none',
                 }}
             >
                 {/* Custom Resize Handles */}
@@ -377,7 +425,7 @@ const CommunityPanel: React.FC<CommunityPanelProps> = ({ isOpen, onClose, mapMod
                         borderBottom: mapMode === 'drawing'
                             ? 'none'
                             : mapMode === 'interactive'
-                            ? '1px solid rgba(201,165,90,0.15)'
+                            ? (isDark ? '1px solid rgba(201,165,90,0.15)' : '1px solid rgba(0,0,0,0.07)')
                             : '1px solid #eee',
                         display: 'flex',
                         justifyContent: 'space-between',
@@ -385,7 +433,7 @@ const CommunityPanel: React.FC<CommunityPanelProps> = ({ isOpen, onClose, mapMod
                         background: mapMode === 'drawing'
                             ? '#111111'
                             : mapMode === 'interactive'
-                            ? 'rgba(12,12,10,0.98)'
+                            ? (isDark ? 'rgba(12,12,10,0.98)' : 'rgba(252,250,246,0.98)')
                             : '#fff',
                         zIndex: 10,
                         cursor: (isDragging ? 'grabbing' : (dockState === 'fullscreen' ? 'default' : 'grab')),
@@ -395,10 +443,10 @@ const CommunityPanel: React.FC<CommunityPanelProps> = ({ isOpen, onClose, mapMod
                 >
                     {mapMode === 'drawing' ? (
                         /* Drawing Map Header */
-                        <div style={{ display: 'flex', alignItems: 'stretch', width: '100%' }}>
+                        <div style={{ display: 'flex', alignItems: 'stretch', width: '100%', borderBottom: '3px solid #111111', background: '#FFFFFF', transform: 'rotate(-0.15deg)' }}>
                             <div style={{
-                                background: '#CCFF00',
-                                padding: '16px 20px',
+                                background: '#FFFFFF',
+                                padding: '14px 18px',
                                 display: 'flex',
                                 alignItems: 'center',
                                 gap: 10,
@@ -409,22 +457,22 @@ const CommunityPanel: React.FC<CommunityPanelProps> = ({ isOpen, onClose, mapMod
                                 </svg>
                                 <span style={{
                                     fontFamily: "'Space Mono', 'Courier New', monospace",
-                                    fontSize: 11,
+                                    fontSize: 12,
                                     fontWeight: 700,
-                                    letterSpacing: '0.22em',
+                                    letterSpacing: '0.16em',
                                     color: '#111111',
                                     textTransform: 'uppercase',
                                 }}>
                                     COMMUNITY
                                 </span>
                             </div>
-                            <div style={{ display: 'flex', alignItems: 'center', background: '#111111', padding: '0 8px', gap: 4 }}>
+                            <div style={{ display: 'flex', alignItems: 'center', background: '#FFFFFF', padding: '0 10px', gap: 8, borderLeft: '3px solid #111111' }}>
                                 <button
                                     onClick={() => {
                                         if (dockState === 'fullscreen') setDockState('none');
                                         else setDockState('fullscreen');
                                     }}
-                                    style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '8px', color: '#CCFF00', display: 'flex', alignItems: 'center' }}
+                                    style={{ background: '#FFFFFF', border: '2px solid #111111', borderRadius: '46% 54% 52% 48% / 44% 56% 49% 51%', width: 34, height: 34, cursor: 'pointer', padding: 0, color: '#111111', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '2px 2px 0 #111111' }}
                                     title={dockState === 'fullscreen' ? "창모드" : "전체화면"}
                                 >
                                     {dockState === 'fullscreen' ? (
@@ -435,10 +483,13 @@ const CommunityPanel: React.FC<CommunityPanelProps> = ({ isOpen, onClose, mapMod
                                 </button>
                                 <button
                                     onClick={onClose}
-                                    style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '8px', color: '#CCFF00', display: 'flex', alignItems: 'center', fontSize: 20 }}
+                                    style={{ background: '#FFFFFF', border: '2px solid #111111', borderRadius: '51% 49% 47% 53% / 49% 53% 47% 51%', width: 34, height: 34, cursor: 'pointer', padding: 0, color: '#111111', display: 'flex', alignItems: 'center', justifyContent: 'center', boxShadow: '2px 2px 0 #111111' }}
                                     title="닫기"
                                 >
-                                    ×
+                                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" style={{ pointerEvents: 'none' }}>
+                                        <line x1="2" y1="2" x2="12" y2="12" stroke="#111111" strokeWidth="2.3" strokeLinecap="round" />
+                                        <line x1="12" y1="2" x2="2" y2="12" stroke="#111111" strokeWidth="2.3" strokeLinecap="round" />
+                                    </svg>
                                 </button>
                             </div>
                         </div>
@@ -446,17 +497,21 @@ const CommunityPanel: React.FC<CommunityPanelProps> = ({ isOpen, onClose, mapMod
                         /* Interactive Map Header */
                         <>
                             <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                                <div style={{ width: 28, height: 28, borderRadius: '50%', border: '1px solid rgba(201,165,90,0.3)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="rgba(201,165,90,0.8)" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+                                <div style={{
+                                    width: 28, height: 28, borderRadius: '50%',
+                                    border: isDark ? '1px solid rgba(201,165,90,0.3)' : '1px solid rgba(0,0,0,0.12)',
+                                    display: 'flex', alignItems: 'center', justifyContent: 'center'
+                                }}>
+                                    <svg width="13" height="13" viewBox="0 0 24 24" fill="none"
+                                        stroke={isDark ? 'rgba(201,165,90,0.8)' : 'rgba(0,0,0,0.55)'}
+                                        strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
                                         <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
                                     </svg>
                                 </div>
                                 <span style={{
                                     fontFamily: "'Space Grotesk', 'Helvetica Neue', sans-serif",
-                                    fontSize: 13,
-                                    fontWeight: 600,
-                                    letterSpacing: '0.08em',
-                                    color: 'rgba(201,165,90,0.85)',
+                                    fontSize: 13, fontWeight: 600, letterSpacing: '0.08em',
+                                    color: isDark ? 'rgba(201,165,90,0.85)' : 'rgba(0,0,0,0.7)',
                                     textTransform: 'uppercase',
                                 }}>
                                     Community
@@ -468,9 +523,13 @@ const CommunityPanel: React.FC<CommunityPanelProps> = ({ isOpen, onClose, mapMod
                                         if (dockState === 'fullscreen') setDockState('none');
                                         else setDockState('fullscreen');
                                     }}
-                                    style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '6px', color: 'rgba(201,165,90,0.5)', display: 'flex', alignItems: 'center', borderRadius: 4 }}
-                                    onMouseEnter={(e) => e.currentTarget.style.color = 'rgba(201,165,90,0.9)'}
-                                    onMouseLeave={(e) => e.currentTarget.style.color = 'rgba(201,165,90,0.5)'}
+                                    style={{
+                                        background: 'none', border: 'none', cursor: 'pointer', padding: '6px',
+                                        color: isDark ? 'rgba(201,165,90,0.5)' : 'rgba(0,0,0,0.35)',
+                                        display: 'flex', alignItems: 'center', borderRadius: 4
+                                    }}
+                                    onMouseEnter={(e) => e.currentTarget.style.color = isDark ? 'rgba(201,165,90,0.9)' : 'rgba(0,0,0,0.75)'}
+                                    onMouseLeave={(e) => e.currentTarget.style.color = isDark ? 'rgba(201,165,90,0.5)' : 'rgba(0,0,0,0.35)'}
                                 >
                                     {dockState === 'fullscreen' ? (
                                         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3" /></svg>
@@ -480,9 +539,13 @@ const CommunityPanel: React.FC<CommunityPanelProps> = ({ isOpen, onClose, mapMod
                                 </button>
                                 <button
                                     onClick={onClose}
-                                    style={{ background: 'none', border: 'none', cursor: 'pointer', padding: '6px', color: 'rgba(201,165,90,0.4)', display: 'flex', alignItems: 'center', borderRadius: 4, fontSize: 20 }}
-                                    onMouseEnter={(e) => e.currentTarget.style.color = 'rgba(201,165,90,0.9)'}
-                                    onMouseLeave={(e) => e.currentTarget.style.color = 'rgba(201,165,90,0.4)'}
+                                    style={{
+                                        background: 'none', border: 'none', cursor: 'pointer', padding: '6px',
+                                        color: isDark ? 'rgba(201,165,90,0.4)' : 'rgba(0,0,0,0.3)',
+                                        display: 'flex', alignItems: 'center', borderRadius: 4, fontSize: 20
+                                    }}
+                                    onMouseEnter={(e) => e.currentTarget.style.color = isDark ? 'rgba(201,165,90,0.9)' : 'rgba(0,0,0,0.7)'}
+                                    onMouseLeave={(e) => e.currentTarget.style.color = isDark ? 'rgba(201,165,90,0.4)' : 'rgba(0,0,0,0.3)'}
                                 >
                                     ×
                                 </button>
@@ -524,10 +587,23 @@ const CommunityPanel: React.FC<CommunityPanelProps> = ({ isOpen, onClose, mapMod
                 </div>
 
                 {/* Panel Content */}
-                <div style={{ flex: 1, overflow: 'hidden', position: 'relative', background: mapMode === 'interactive' ? 'rgba(8,8,7,0.97)' : mapMode === 'drawing' ? '#FFFFFF' : '#fff', color: mapMode === 'interactive' ? 'rgba(220,210,195,0.9)' : '#111111' }}>
+                <div style={{
+                    flex: 1, overflow: 'hidden', position: 'relative',
+                    background: mapMode === 'interactive'
+                        ? (isDark ? 'rgba(8,8,7,0.97)' : 'rgba(252,250,246,0.97)')
+                        : mapMode === 'drawing' ? '#FFFFFF' : '#fff',
+                    color: mapMode === 'interactive'
+                        ? (isDark ? 'rgba(220,210,195,0.9)' : 'rgba(20,18,14,0.88)')
+                        : '#111111'
+                }}>
                     {view === 'list' && (
                         <div style={{ height: '100%', overflowY: 'auto' }}>
-                            <CommunityList onPostClick={handlePostClick} onWriteClick={handleWriteClick} isDark={mapMode === 'interactive'} isSketch={mapMode === 'drawing'} />
+                            <CommunityList
+                                onPostClick={handlePostClick}
+                                onWriteClick={handleWriteClick}
+                                isDark={mapMode === 'interactive' ? isDark : false}
+                                isSketch={mapMode === 'drawing'}
+                            />
                         </div>
                     )}
                     {view === 'detail' && selectedPostId && (

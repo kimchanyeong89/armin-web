@@ -55,6 +55,10 @@ function AppContent() {
   const [mapMode, setMapMode] = useState<'default' | 'drawing' | 'interactive'>('default');
 
   useEffect(() => {
+    window.dispatchEvent(new CustomEvent('community-panel-visibility', { detail: { open: isCommunityPanelOpen } }));
+  }, [isCommunityPanelOpen]);
+
+  useEffect(() => {
     const handleMapMode = (e: Event) => {
       const mode = (e as CustomEvent).detail as 'default' | 'drawing' | 'interactive';
       setMapMode(mode);
@@ -124,6 +128,8 @@ function AppContent() {
           <Routes location={isOverlayOpen ? frozenBaseLoc : location}>
             <Route element={<HomePage exhibitions={exhibitions} isOverlayOpen={isOverlayOpen} />}>
               <Route path="/" element={null} />
+              <Route path="/interactive" element={null} />
+              <Route path="/interactive/:countrySlug/:citySlug/:exhibitionId" element={null} />
               <Route path="/collection/:collectionId" element={null} />
               <Route path="/artist-gallery/:artistName" element={null} />
             </Route>
@@ -185,117 +191,41 @@ function AppContent() {
       </AnimatedOverlay>
 
       {/* Persistent Community Panel */}
-      <CommunityPanel isOpen={isCommunityPanelOpen} onClose={() => setIsCommunityPanelOpen(false)} mapMode={mapMode === 'interactive' ? 'drawing' : mapMode} />
+      <CommunityPanel isOpen={isCommunityPanelOpen} onClose={() => setIsCommunityPanelOpen(false)} mapMode={mapMode} />
 
-      {/* Global Community Toggle Button (Hidden when Community page or panel is open) */}
-      {!isCommunity && !isCommunityPanelOpen && (
-        mapMode === 'drawing' ? (
-          /* Drawing Map community button - brutalist sketch style */
-          <button
-            onClick={() => setIsCommunityPanelOpen(true)}
-            style={{
-              position: 'fixed',
-              bottom: '28px',
-              right: '28px',
-              width: 'auto',
-              height: 'auto',
-              padding: '10px 16px',
-              background: '#CCFF00',
-              color: '#111111',
-              border: '2.5px solid #111111',
-              borderRadius: 0,
-              boxShadow: '3px 3px 0 #111111',
-              cursor: 'pointer',
-              zIndex: 200001,
-              fontFamily: "'Space Mono', 'Courier New', monospace",
-              fontSize: '9px',
-              fontWeight: 700,
-              letterSpacing: '0.18em',
-              textTransform: 'uppercase',
-              display: 'flex',
-              alignItems: 'center',
-              gap: 8,
-              outline: 'none',
-              transition: 'box-shadow 0.1s, transform 0.1s',
-            }}
-            onMouseEnter={(e) => { e.currentTarget.style.boxShadow = '1px 1px 0 #111111'; e.currentTarget.style.transform = 'translate(2px,2px)'; }}
-            onMouseLeave={(e) => { e.currentTarget.style.boxShadow = '3px 3px 0 #111111'; e.currentTarget.style.transform = 'none'; }}
-            title="커뮤니티 열기"
-          >
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-            </svg>
-            COMMUNITY
-          </button>
-        ) : mapMode === 'interactive' ? (
-          /* Interactive Map community button - elegant text style */
-          <button
-            onClick={() => setIsCommunityPanelOpen(true)}
-            style={{
-              position: 'fixed',
-              bottom: '34px',
-              right: '34px',
-              cursor: 'pointer',
-              zIndex: 200001,
-              fontFamily: "'Space Grotesk', sans-serif",
-              fontSize: '11px',
-              fontWeight: 500,
-              letterSpacing: '0.15em',
-              textTransform: 'uppercase',
-              display: 'flex',
-              alignItems: 'center',
-              gap: 8,
-              outline: 'none',
-              background: 'none',
-              border: 'none',
-              color: 'rgba(255,255,255,0.4)',
-              transition: 'color 0.2s',
-              mixBlendMode: 'difference'
-            }}
-            onMouseEnter={e => e.currentTarget.style.color = '#fff'}
-            onMouseLeave={e => e.currentTarget.style.color = 'rgba(255,255,255,0.4)'}
-            title="커뮤니티 열기"
-          >
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-            </svg>
-            Community
-          </button>
-        ) : (
-          /* Default community button - clean minimal */
-          <button
-            onClick={() => setIsCommunityPanelOpen(true)}
-            style={{
-              position: 'fixed',
-              bottom: '28px',
-              right: '28px',
-              width: '46px',
-              height: '46px',
-              borderRadius: '50%',
-              background: 'rgba(17,17,17,0.9)',
-              color: '#fff',
-              border: '1px solid rgba(255,255,255,0.1)',
-              boxShadow: '0 4px 20px rgba(0,0,0,0.3)',
-              cursor: 'pointer',
-              zIndex: 200001,
-              fontSize: '18px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              transition: 'transform 0.2s, background 0.2s',
-              outline: 'none',
-              backdropFilter: 'blur(12px)',
-              WebkitBackdropFilter: 'blur(12px)',
-            }}
-            onMouseEnter={(e) => { e.currentTarget.style.transform = 'scale(1.08)'; e.currentTarget.style.background = 'rgba(40,40,40,0.95)'; }}
-            onMouseLeave={(e) => { e.currentTarget.style.transform = 'scale(1)'; e.currentTarget.style.background = 'rgba(17,17,17,0.9)'; }}
-            title="커뮤니티 열기"
-          >
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
-            </svg>
-          </button>
-        )
+      {/* Global Community Toggle Button — only in non-map modes (drawing/interactive have their own bars) */}
+      {!isCommunity && !isCommunityPanelOpen && mapMode !== 'drawing' && mapMode !== 'interactive' && (
+        <button
+          onClick={() => setIsCommunityPanelOpen(true)}
+          style={{
+            position: 'fixed',
+            bottom: '28px',
+            right: '28px',
+            width: '46px',
+            height: '46px',
+            borderRadius: '50%',
+            background: 'rgba(17,17,17,0.9)',
+            color: '#fff',
+            border: '1px solid rgba(255,255,255,0.1)',
+            boxShadow: '0 4px 20px rgba(0,0,0,0.3)',
+            cursor: 'pointer',
+            zIndex: 200001,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            transition: 'transform 0.2s, background 0.2s',
+            outline: 'none',
+            backdropFilter: 'blur(12px)',
+            WebkitBackdropFilter: 'blur(12px)',
+          }}
+          onMouseEnter={(e) => { e.currentTarget.style.transform = 'scale(1.08)'; e.currentTarget.style.background = 'rgba(40,40,40,0.95)'; }}
+          onMouseLeave={(e) => { e.currentTarget.style.transform = 'scale(1)'; e.currentTarget.style.background = 'rgba(17,17,17,0.9)'; }}
+          title="커뮤니티 열기"
+        >
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
+          </svg>
+        </button>
       )}
     </div>
   );

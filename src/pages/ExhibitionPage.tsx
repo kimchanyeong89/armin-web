@@ -397,26 +397,69 @@ const CSS = `
    Unify style with dg-detail-strip
 ══════════════════════════════════════════════ */
 .sketch-modal-theme img {
-  filter: sepia(0.18) contrast(1.06) brightness(0.96) saturate(0.9);
+  filter: contrast(1.15) brightness(0.95) saturate(0.85) sepia(0.1);
+  border: 1px solid #111111 !important;
+  box-shadow: 4px 4px 0px 0px rgba(17,17,17,1) !important;
+}
+
+.sketch-modal-theme {
+  background: radial-gradient(circle at center, #ffffff 0%, #f6f5ef 100%) !important;
+}
+
+.sketch-modal-theme * {
+  border-radius: 0 !important;
+}
+
+.sketch-modal-theme [style*="gridTemplateColumns: \"1fr 1fr 1fr\""] {
+  border-top: 2px solid rgba(17,17,17,0.14) !important;
 }
 
 /* Filter buttons → sharp corners, bold borders, brutalist */
 .sketch-modal-theme button {
   box-sizing: border-box !important;
   border-radius: 0 !important;
-  border: 1.5px solid rgba(17,17,17,0.55) !important;
+  border: 2px solid rgba(17,17,17,0.78) !important;
+  box-shadow: 2px 2px 0px 0px rgba(17,17,17,1) !important;
   font-family: sans-serif !important;
-  font-weight: 700 !important;
+  font-weight: 800 !important;
   letter-spacing: 0.06em !important;
   font-size: 9px !important;
   height: 22px !important;
   padding: 0 8px !important;
+  background: #ffffff !important;
+  color: #111111 !important;
+}
+
+.sketch-modal-theme button[style*="background: "][style*="204, 255, 0"],
+.sketch-modal-theme button[style*="background: rgb(204, 255, 0)"],
+.sketch-modal-theme button[style*="background: #ccff00"] {
+  background: #ccff00 !important;
+  color: #111111 !important;
+  border: 2px solid #111111 !important;
+}
+
+.sketch-modal-theme button:hover {
+  background: #111111 !important;
+  color: #ffffff !important;
+}
+
+/* Text items like artist name, title */
+.sketch-modal-theme span, .sketch-modal-theme div {
+  font-family: 'Courier New', Courier, monospace;
+}
+.sketch-modal-theme [style*="fontSize: 12"],
+.sketch-modal-theme [style*="fontSize: 10"],
+.sketch-modal-theme [style*="fontSize: 9"],
+.sketch-modal-theme [style*="fontSize: 8"] {
+  font-family: sans-serif !important;
 }
 
 /* Tab headers (PANORAMA / ARCHIVE / GALLERY) */
 .sketch-modal-theme [style*="fontSize: 12"] {
   font-family: sans-serif !important;
-  letter-spacing: 0.12em !important;
+  letter-spacing: 0.16em !important;
+  font-weight: 900 !important;
+  text-transform: uppercase !important;
 }
 
 /* SEARCH label */
@@ -426,6 +469,12 @@ const CSS = `
   letter-spacing: 0.3em !important;
   font-size: 8px !important;
   color: rgba(17,17,17,0.38) !important;
+}
+
+.sketch-modal-theme [style*="letterSpacing: 0.2em"] {
+  letter-spacing: 0.26em !important;
+  font-weight: 800 !important;
+  color: rgba(17,17,17,0.45) !important;
 }
 
 /* Metadata field labels (TITLE, DATE, CREATOR…) */
@@ -441,7 +490,7 @@ const CSS = `
   appearance: none !important;
   border-radius: 0 !important;
   border: none !important;
-  border-bottom: 1.5px solid rgba(17,17,17,0.3) !important;
+  border-bottom: 2px solid rgba(17,17,17,0.45) !important;
   font-family: sans-serif !important;
   font-size: 9px !important;
   letter-spacing: 0.08em !important;
@@ -466,6 +515,10 @@ const CSS = `
   background: transparent !important;
   height: auto !important;
   padding: 2px !important;
+}
+
+.sketch-modal-theme [style*="gridTemplateColumns: repeat(5, minmax(0, 1fr))"] {
+  gap: 22px !important;
 }
 `;
 
@@ -786,13 +839,15 @@ export default function ExhibitionPage({ exhibitions }: { exhibitions: Exhibitio
                 <DrawingLoader visible label="COLLECTION" />
               </div>
             }>
-              <ExhibitionModal
-                exhibition={activeItem}
-                museumName={museum.name}
-                onClose={closeDetail}
-                inline={true}
-                variant="sketch"
-              />
+              <div className="sketch-modal-theme" style={{ width: '100%', height: '100%', background: '#ffffff' }}>
+                <ExhibitionModal
+                  exhibition={activeItem}
+                  museumName={museum.name}
+                  onClose={closeDetail}
+                  inline={true}
+                  variant="sketch"
+                />
+              </div>
             </Suspense>
           </div>
         </div>

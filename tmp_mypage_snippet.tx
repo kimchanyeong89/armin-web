@@ -1,0 +1,31 @@
+                        // 3) Dynamically load the museum JSON to find the hidden R2 hash
+                        } else if (target.dataset.triedJson !== "true") {
+                          target.dataset.triedJson = "true";
+                          const exhId = item.exhibitionId || item.id;
+                          if (exhId) {
+                            let file = exhId + ".json";
+                            if (exhId === "tm-perm-1") file = "tate-modern-collection.json";
+                            else if (exhId === "tate-britain-1") file = "tate-britain-artworks.json";
+                            else if (exhId === "tate-st-ives-1") file = "tate-st-ives-artworks.json";
+                            else if (exhId === "tate-liverpool-1") file = "tate-liverpool-artworks.json";
+                            else if (exhId === "bm-perm-1") file = "british-museum-galleries.json";
+                            else if (exhId === "skagens-perm-1") file = "skagens-collection.json";
+                            else if (exhId === "ngs-perm-1") file = "ngs-all.json";
+
+                            fetch(`/data/${file}`)
+                              .then(res => { if (!res.ok) throw new Error(); return res.json(); })
+                              .then(data => {
+                                const arr = Array.isArray(data) ? data : (data.artworks || data.objects || []);
+                                const idToFind = item.artworkId || item.id;
+                                const art = arr.find((a: any) => String(a.id) === String(idToFind) || String(a.artworkId) === String(idToFind));
+                                if (art && art.imageUrl) {
+                                  target.src = art.imageUrl;
+                                } else if (art && art.fallbackImages && art.fallbackImages.length > 0) {
+                                  target.src = art.fallbackImages[0];
+                                } else {
+                                  target.style.opacity = '0';
+                                }
+                              })
+                              .catch(() => { target.style.opacity = '0'; });
+                          } else {
+                            target.style.opacity = '0';
