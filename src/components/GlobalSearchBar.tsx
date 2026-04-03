@@ -2735,20 +2735,18 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                                                     minHeight: isMobile ? 160 : 200,
                                                     boxShadow: isDrawingGalleryMode ? '5px 6px 0 rgba(17,17,17,0.9)' : 'none',
                                                 }}>
-                                                    {/* amCharts map — desktop only (too heavy for mobile) */}
-                                                    {!isMobile && (
+                                                                    {/* amCharts map — lazy loaded on all platforms */}
                                                     <div style={{ flex: '1 1 0%', minHeight: 0, width: '100%', overflow: 'hidden' }}>
                                                         <Suspense fallback={<div style={{ height: 160, display: 'flex', alignItems: 'center', justifyContent: 'center', color: textSub, fontSize: 12 }}>Loading map…</div>}>
                                                             <ArtistDistributionMap
                                                                 artworks={artistGallery.artworks as any}
                                                                 isDark={isDark}
                                                                 hideLegend
-                                                                mapHeight="160px"
+                                                                mapHeight={isMobile ? "120px" : "160px"}
                                                                 drawingStyle={isDrawingGalleryMode ? 'drawing-flat' : 'default'}
                                                             />
                                                         </Suspense>
                                                     </div>
-                                                    )}
 
                                                     {/* Distribution slides — bottom of combined card */}
                                                     <div style={{

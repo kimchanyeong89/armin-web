@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&family=Patrick+Hand&family=Space+Mono:wght@400;700&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.8, user-scalable=yes, viewport-fit=cover" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
 
   <!-- Preconnect to R2 for faster geo data loading -->
   <link rel="preconnect" href="https://pub-6ce5ae60b244951ac36ffd277fd6ef76.r2.dev" crossorigin>
@@ -110,25 +110,9 @@
         lastTap = now;
       }, { passive: false });
 
-      // Prevent iOS auto-zoom on input focus by temporarily locking scale
-      var viewportMeta = document.querySelector('meta[name=viewport]');
-      var originalContent = viewportMeta ? viewportMeta.getAttribute('content') : '';
-      var noZoomContent = 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover';
-      document.addEventListener('focusin', function (e) {
-        var el = e.target;
-        if (el && (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') && viewportMeta) {
-          viewportMeta.setAttribute('content', noZoomContent);
-        }
-      }, true);
-      document.addEventListener('focusout', function (e) {
-        var el = e.target;
-        if (el && (el.tagName === 'INPUT' || el.tagName === 'TEXTAREA') && viewportMeta) {
-          // Restore after a short delay so scroll position settles
-          setTimeout(function () {
-            viewportMeta.setAttribute('content', originalContent);
-          }, 150);
-        }
-      }, true);
+      // Viewport is permanently user-scalable=no — iOS will not auto-zoom on input focus.
+      // iOS 10+ ignores user-scalable=no for pinch-to-zoom (accessibility) but still
+      // respects it for input focus auto-zoom, which is exactly what we need.
     })();
   </script>
   <script type="module" src="/src/main.tsx"></script>

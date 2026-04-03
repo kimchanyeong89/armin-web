@@ -215,13 +215,7 @@ export default function ArtistWikiPanel({
     };
 
     const run = async () => {
-      // On mobile: skip API calls to reduce network pressure and avoid "Load failed" errors.
-      // Use the fallback description directly.
-      if (shouldSkipWikiFetchOnMobile()) {
-        setWikiSummary(safeFallbackDescription);
-        setWikiLoading(false);
-        return;
-      }
+      // Always fetch Wikipedia — skip Gemini API only (requires server env var)
       const geminiOk = shouldUseGeminiWikiApi() ? await fetchGeminiWiki() : false;
       let wikiOk = true;
       if (!geminiOk && !controller.signal.aborted) {

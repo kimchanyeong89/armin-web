@@ -3,6 +3,12 @@ import { normalizeSearchText } from "../utils/textNormalize";
 
 // Web Worker for handling search operations off the main thread
 
+// Detect mobile to avoid loading 16 × ~11MB chunks (~176MB) → iOS tab crash
+const IS_MOBILE_WORKER = typeof navigator !== 'undefined' && (
+    navigator.maxTouchPoints > 1 ||
+    /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
+);
+
 // Known artist last names for grouping similar names
 const KNOWN_ARTIST_KEYS: Record<string, string> = {
     'monet': 'monet', 'manet': 'manet', 'renoir': 'renoir', 'picasso': 'picasso',
@@ -106,6 +112,10 @@ const DEFAULT_MODE: WorkerMode = {
 let mode: WorkerMode = { ...DEFAULT_MODE };
 let loadStarted = false;
 let warmLoadStarted = false;
+let loadedManifestToken = '';
+let lastManifestCheckAt = 0;
+let refreshInFlight: Promise<void> | null = null;
+const MANIFEST_CHECK_INTERVAL_MS = 15000;
 
 type WarmArtist = {
     artist: string;
@@ -160,24 +170,72 @@ const getQueryPrefix = (query: string): string => {
 const EXCLUDED_MUSEUMS = ['serpentine gallery', 'british museum'];
 const EXCLUDED_EXHIBITION_IDS = ['british-museum', 'the-british-museum', 'bm-collection'];
 
+const TRUSTED_ARTIST_EXCEPTIONS = new Set(['man ray']);
+const ARTIST_SUGGESTION_SUBJECT_HINTS = new Set([
+    'flower', 'flowers', 'fruit', 'fruits', 'woman', 'women', 'portrait',
+    'landscape', 'still', 'life', 'sunflower', 'sunflowers', 'blossom',
+    'blossoms', 'bird', 'birds', 'nest', 'market', 'lady', 'elderly',
+    'seated', 'nude', 'holding', 'blue', 'hat', 'painting', 'paintings',
+    'study', 'untitled', 'unknown', 'artist',
+]);
+
+function isLowQualityArtistLabel(name: string): boolean {
+    const normalized = normalizeSearchText(name || '');
+    if (!normalized) return true;
+    if (TRUSTED_ARTIST_EXCEPTIONS.has(normalized)) return false;
+    if (normalized === 'unknown' || normalized === 'unknown artist' || normalized === 'artist unknown') return true;
+    if (normalized.includes('portrait miniature of an unknown woman')) return true;
+    if (normalized.includes('portrait of an unknown woman')) return true;
+    if (/\bunknown woman\b/.test(normalized)) return true;
+    if (/^(painting|paintings|woman|women|unknown|artist|anonymous|anon|unidentified|school|workshop|atelier|follower|circle|manner|style)(\b|$)/.test(normalized)) return true;
+    if (/^man\b/.test(normalized) && normalized !== 'man ray') return true;
+    return false;
+}
+
+function isMeaningfulArtistSuggestion(name: string): boolean {
+    const normalized = normalizeSearchText(name || '');
+    if (!normalized) return false;
+    if (isLowQualityArtistLabel(normalized)) return false;
+    if (/\bunknown\b/.test(normalized) || /\bunkno\w*\b/.test(normalized)) return false;
+
+    const tokens = normalized.split(' ').filter(Boolean);
+    if (tokens.length === 0 || tokens.length > 5) return false;
+
+    if (tokens.length >= 4) {
+        const hintMatches = tokens.reduce((acc, token) => acc + (ARTIST_SUGGESTION_SUBJECT_HINTS.has(token) ? 1 : 0), 0);
+        if (hintMatches > 0) return false;
+    }
+
+    const alphaTokens = tokens.filter((token) => /[a-z]/.test(token));
+    if (alphaTokens.length === 0) return false;
+    if (alphaTokens.every((token) => token.length === 1)) return false;
+
+    return true;
+}
+
 // Helper to process data items
 function processChunk(items: any[]) {
     // Flatten if necessary
     const flat = (items.length > 0 && Array.isArray(items[0])) ? items.flat() : items;
 
     // Parse optimized
-    const parsed = flat.map((art: any) => ({
-        id: art.id,
-        name: art.n || '',
-        artist: art.a || 'Unknown',
-        image: art.i || '',
-        date: art.d || '',
-        museumName: art.m || '',
-        exhibitionId: art.e || '',
-        sourceUrl: art.u || '',
-        searchName: normalizeSearchText(art.n || ''),
-        searchArtist: normalizeSearchText(art.a || ''),
-    })).map((item: any) => {
+    const parsed = flat.map((art: any) => {
+        const rawArtist = art.a || 'Unknown';
+        const artist = isLowQualityArtistLabel(rawArtist) ? 'Unknown' : rawArtist;
+        return {
+            id: art.id,
+            name: art.n || '',
+            artist,
+            image: art.i || '',
+            date: art.d || '',
+            museumName: art.m || '',
+            exhibitionId: art.e || '',
+            category: art.c || '',
+            sourceUrl: art.u || '',
+            searchName: normalizeSearchText(art.n || ''),
+            searchArtist: artist === 'Unknown' ? '' : normalizeSearchText(artist),
+        };
+    }).map((item: any) => {
         // Double check for blocked images that might have slipped through
         if (item.image && (item.image.includes('no-image') || item.image.includes('placeholder') || item.image.includes('defaut') || item.image.includes('missing'))) {
             item.image = '';
@@ -199,7 +257,7 @@ function processChunk(items: any[]) {
         if (p.id) idMap.set(p.id, p);
 
         const artistKey = getArtistKey(p.artist);
-        if (artistKey && p.artist !== 'Unknown') {
+        if (artistKey && p.artist !== 'Unknown' && isMeaningfulArtistSuggestion(p.artist)) {
             globalArtistCounts.set(artistKey, (globalArtistCounts.get(artistKey) || 0) + 1);
         }
     }
@@ -227,7 +285,9 @@ async function loadWarmData() {
             const typed = bucket as WarmBucket;
             warmBuckets.set(prefix, {
                 artworks: Array.isArray(typed?.artworks) ? typed.artworks : [],
-                artists: Array.isArray(typed?.artists) ? typed.artists : [],
+                artists: Array.isArray(typed?.artists)
+                    ? typed.artists.filter((a) => isMeaningfulArtistSuggestion(String(a?.artist || '')))
+                    : [],
             });
         }
 
@@ -261,7 +321,18 @@ async function loadData() {
         }
 
         const manifest = await manifestRes.json();
-        const versionParam = manifest?.t ? encodeURIComponent(manifest.t) : '';
+        const manifestToken = manifest?.t ? String(manifest.t) : '';
+        if (manifestToken) {
+            loadedManifestToken = manifestToken;
+        }
+        const versionParam = manifestToken ? encodeURIComponent(manifestToken) : '';
+
+        // On mobile: skip chunk loading to prevent ~176MB memory overload → tab crash
+        // Warm prefix data (search-warm-prefix.json) is already loaded and sufficient
+        if (IS_MOBILE_WORKER) {
+            self.postMessage({ type: 'LOAD_COMPLETE', count: 0 });
+            return;
+        }
 
         // Progressive loading: fire all fetches but update on completion individually
         const tasks = (manifest.chunks || []).map((file: string) => runLimited(async () => {
@@ -283,6 +354,44 @@ async function loadData() {
     }
 }
 
+async function maybeRefreshData(): Promise<void> {
+    if (!loadStarted) return;
+
+    const now = Date.now();
+    if (now - lastManifestCheckAt < MANIFEST_CHECK_INTERVAL_MS) return;
+    lastManifestCheckAt = now;
+
+    if (refreshInFlight) {
+        return refreshInFlight;
+    }
+
+    refreshInFlight = (async () => {
+        try {
+            const manifestRes = await fetch(withCacheBust('/data/search-manifest.json'), fetchInit());
+            if (!manifestRes.ok) return;
+
+            const manifest = await manifestRes.json();
+            const latestToken = manifest?.t ? String(manifest.t) : '';
+            if (!latestToken || !loadedManifestToken || latestToken === loadedManifestToken) {
+                return;
+            }
+
+            // Refresh in-memory index when deployed manifest changes.
+            allArtworks = [];
+            idMap.clear();
+            globalArtistCounts.clear();
+            loadStarted = false;
+            await loadData();
+        } catch (e) {
+            console.error('Manifest refresh check error:', e);
+        } finally {
+            refreshInFlight = null;
+        }
+    })();
+
+    return refreshInFlight;
+}
+
 function searchWarm(query: string) {
     const q = normalizeSearchText(query);
     if (!q || q.length < 2) {
@@ -296,24 +405,28 @@ function searchWarm(query: string) {
     }
 
     const matchingArtworks = (bucket.artworks || [])
-        .map((art: any) => ({
-            id: art.id,
-            name: art.n || '',
-            artist: art.a || 'Unknown',
-            image: art.i || '',
-            date: art.d || '',
-            museumName: art.m || '',
-            exhibitionId: art.e || '',
-            year: art.d || '',
-            sourceUrl: art.u || '',
-            searchName: normalizeSearchText(art.n || ''),
-            searchArtist: normalizeSearchText(art.a || ''),
-        }))
+        .map((art: any) => {
+            const rawArtist = art.a || 'Unknown';
+            const artist = isLowQualityArtistLabel(rawArtist) ? 'Unknown' : rawArtist;
+            return {
+                id: art.id,
+                name: art.n || '',
+                artist,
+                image: art.i || '',
+                date: art.d || '',
+                museumName: art.m || '',
+                exhibitionId: art.e || '',
+                year: art.d || '',
+                sourceUrl: art.u || '',
+                searchName: normalizeSearchText(art.n || ''),
+                searchArtist: artist === 'Unknown' ? '' : normalizeSearchText(artist),
+            };
+        })
         .filter((art: any) => art.searchName.includes(q) || art.searchArtist.includes(q))
         .slice(0, 60);
 
     const matchingArtists = (bucket.artists || [])
-        .filter((a: WarmArtist) => normalizeSearchText(a.artist).includes(q))
+        .filter((a: WarmArtist) => isMeaningfulArtistSuggestion(a.artist) && normalizeSearchText(a.artist).includes(q))
         .slice(0, 5)
         .map((a: WarmArtist) => ({ artist: a.artist, count: a.count }));
 
@@ -322,6 +435,25 @@ function searchWarm(query: string) {
         artists: matchingArtists,
     };
 }
+
+const SEARCH_STOP_TOKENS = new Set([
+    'a', 'an', 'the', 'of', 'and', 'or', 'to', 'for', 'in', 'on', 'at', 'by',
+    'with', 'without', 'de', 'la', 'le', 'du', 'des', 'der', 'die', 'das',
+    'van', 'von', 'da', 'di', 'del', 'della',
+    'painting', 'paintings', 'artwork', 'artworks', 'work', 'works', 'piece', 'pieces',
+]);
+
+const NON_ARTIST_HINT_TOKENS = new Set([
+    'flower', 'flowers', 'painting', 'paintings', 'portrait', 'landscape',
+    'still', 'life', 'sunflower', 'sunflowers', 'blossom', 'blossoms',
+    'parasol', 'umbrella', 'woman', 'man', 'self', 'study', 'untitled',
+]);
+
+const tokenizeQueryForMatch = (value: string): string[] =>
+    (value || '')
+        .split(' ')
+        .map((token) => token.trim())
+        .filter((token) => token.length >= 2 && !SEARCH_STOP_TOKENS.has(token));
 
 function search(query: string) {
     const q = normalizeSearchText(query);
@@ -349,6 +481,11 @@ function search(query: string) {
         return;
     }
     const results = [];
+    const queryTokens = tokenizeQueryForMatch(q);
+    const tokenCount = queryTokens.length;
+    const strongArtistTokens = queryTokens.filter(
+        (token) => token.length >= 4 && !NON_ARTIST_HINT_TOKENS.has(token)
+    );
 
     // Group artist counts by normalized key
     // Map: normalizedKey -> { variants: Map<originalName, count>, totalCount }
@@ -360,6 +497,22 @@ function search(query: string) {
 
         const nameMatch = art.searchName.includes(q);
         const artistMatch = art.searchArtist.includes(q);
+        let nameTokenMatches = 0;
+        let artistTokenMatches = 0;
+        let strongArtistMatches = 0;
+
+        if (tokenCount > 0) {
+            for (const token of queryTokens) {
+                if (art.searchName.includes(token)) nameTokenMatches += 1;
+                if (art.searchArtist.includes(token)) artistTokenMatches += 1;
+            }
+        }
+        if (strongArtistTokens.length > 0) {
+            for (const token of strongArtistTokens) {
+                if (art.searchArtist.includes(token)) strongArtistMatches += 1;
+            }
+        }
+        const totalTokenMatches = nameTokenMatches + artistTokenMatches;
 
         if (nameMatch) {
             score += 10;
@@ -367,10 +520,37 @@ function search(query: string) {
             else if (art.searchName.startsWith(q)) score += 15;
         }
 
+        if (nameTokenMatches > 0) {
+            score += nameTokenMatches * 6;
+        }
+
         if (artistMatch) {
             score += 5;
             if (art.searchArtist === q) score += 20;
+        }
 
+        if (artistTokenMatches > 0) {
+            score += artistTokenMatches * 10;
+        }
+
+        if (strongArtistMatches > 0) {
+            score += strongArtistMatches * 40;
+            if (strongArtistMatches >= strongArtistTokens.length) {
+                score += 30;
+            }
+        } else if (strongArtistTokens.length > 0) {
+            score -= 80;
+        }
+
+        if (tokenCount > 0) {
+            if (totalTokenMatches >= tokenCount) {
+                score += 24;
+            } else if (tokenCount >= 2 && totalTokenMatches >= tokenCount - 1) {
+                score += 12;
+            }
+        }
+
+        if ((artistMatch || artistTokenMatches > 0) && isMeaningfulArtistSuggestion(art.artist)) {
             // Group by normalized artist key
             const artistKey = getArtistKey(art.artist);
             if (artistKey && art.artist !== 'Unknown') {
@@ -390,7 +570,7 @@ function search(query: string) {
 
     // Sort results by score
     results.sort((a, b) => b.score - a.score);
-    const topArtworks = results.slice(0, 30).map(r => r.item);
+    const topArtworks = results.slice(0, 100).map(r => r.item);
 
     // Get top artists: use the most frequent variant name as display name
     const topArtists = Array.from(artistGroups.entries())
@@ -410,7 +590,7 @@ function search(query: string) {
             // but return the totalGlobalCount for display
             return { artist: bestName, count: totalGlobalCount, sortScore: group.totalCount, key };
         })
-        .filter(a => a.artist)
+        .filter(a => a.artist && isMeaningfulArtistSuggestion(a.artist))
         .sort((a, b) => b.sortScore - a.sortScore)
         .slice(0, 5)
         .map(({ artist, count }) => ({ artist, count }));
@@ -434,7 +614,10 @@ self.onmessage = (e: MessageEvent) => {
         if (!warmLoadStarted) {
             loadWarmData();
         }
-        search(query);
+        (async () => {
+            await maybeRefreshData();
+            search(query);
+        })();
     } else if (type === 'GET_ARTIST_WORKS') {
         // Match by normalized key to include all variants
         const targetKey = getArtistKey(query);

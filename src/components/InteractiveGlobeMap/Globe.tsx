@@ -1320,9 +1320,6 @@ export function Globe({
         }}
         onPointerLeave={handleMouseLeave}
         onClick={handleClick}
-        onTouchStart={handleTouchStart}
-        onTouchMove={handleTouchMove}
-        onTouchEnd={handleTouchEnd}
       />
 
       <AnimatePresence>
