@@ -142,6 +142,11 @@ const normalizeLookupText = (value?: string) =>
         .replace(/[^a-z0-9]+/g, ' ')
         .trim();
 
+const ARTIST_INTENT_STOP_TOKENS = new Set([
+    'a', 'an', 'the', 'of', 'and', 'or', 'to', 'for', 'in', 'on', 'at', 'by', 'with',
+    'de', 'la', 'le', 'du', 'des', 'van', 'von', 'da', 'di', 'del', 'della'
+]);
+
 const extractYearToken = (value?: string) => {
     const m = String(value || '').match(/(\d{4})/);
     return m ? m[1] : '';
@@ -238,6 +243,20 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
     const [videoEmbedIdsReady, setVideoEmbedIdsReady] = useState(false);
     const videoEmbedIdsRef = useRef<Set<string>>(new Set());
 
+    const knownArtistTokenSet = useMemo(() => {
+        const tokens = new Set<string>();
+        for (const entry of artists as Array<{ name?: string }>) {
+            const normalizedName = normalizeLookupText(entry?.name || '');
+            if (!normalizedName) continue;
+            for (const token of normalizedName.split(' ')) {
+                if (token.length < 3) continue;
+                if (ARTIST_INTENT_STOP_TOKENS.has(token)) continue;
+                tokens.add(token);
+            }
+        }
+        return tokens;
+    }, []);
+
     // 인코더 상태 구독 (모델 로딩 진행 UI)
     useEffect(() => {
         const unsub = onEncoderStatusChange(setEncoderStatusState);
@@ -291,7 +310,9 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
     // Dynamic Z-Index for ArtistGallery window management
     const [galleryZIndex, setGalleryZIndex] = useState(GALLERY_Z_BASE);
     const [galleryVisibleCount, setGalleryVisibleCount] = useState(160);
-    const [galleryTheme, setGalleryTheme] = useState<'dark' | 'light'>('dark');
+    const [galleryTheme, setGalleryTheme] = useState<'dark' | 'light'>(() => {
+        try { return localStorage.getItem('homeTheme') === 'light' ? 'light' : 'dark'; } catch { return 'dark'; }
+    });
     const [galleryCategory, setGalleryCategory] = useState<string | null>(null);
     const [galleryWikiUrl, setGalleryWikiUrl] = useState('');
     const [galleryAsciiArt, setGalleryAsciiArt] = useState('');
@@ -312,7 +333,11 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
     });
     useEffect(() => {
         const sync = () => {
-            try { setIsNavDark(localStorage.getItem('homeTheme') !== 'light'); } catch { /* ignore */ }
+            try {
+                const isLight = localStorage.getItem('homeTheme') === 'light';
+                setIsNavDark(!isLight);
+                setGalleryTheme(isLight ? 'light' : 'dark');
+            } catch { /* ignore */ }
         };
         window.addEventListener('storage', sync);
         window.addEventListener('theme-changed', sync as EventListener);
@@ -387,11 +412,32 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
         setGalleryMapSlide(0);
     }, [artistGallery?.artist]);
 
+    const artworkSortPriority = (art: any): number => {
+        const name = String(art.name || '').toLowerCase();
+        const id = String(art.id || '');
+        const exhibitionId = String(art.exhibitionId || '').toLowerCase();
+        const category = String((art as any).category || '').toLowerCase();
+        // Letters/text: lowest priority (pushed to end)
+        const isLetter = /\bletter[s]?\b|\blettre[s]?\b|\bbrief[e]?\b|\bcorrespondence\b|\bmanuscript\b/.test(name)
+            || /^b[a-z]?\d+[a-z]*v\d{4}/i.test(id)
+            || /^ba?\d+$/.test(id.toLowerCase())
+            || category === 'letter' || category === 'letters';
+        if (isLetter) return 2;
+        // Paintings: highest priority (pushed to front)
+        const isPainting = category === 'painting' || category === 'paintings'
+            || exhibitionId.includes('painting')
+            || /\bpainting\b|\bpeinture\b|\bgemälde\b|\bschilderij\b/.test(category);
+        if (isPainting) return 0;
+        return 1;
+    };
+
     const filteredGalleryArtworks = useMemo(() => {
         if (!artistGallery?.artworks?.length) return [] as SearchableArtwork[];
-        return galleryCategory
+        const list = galleryCategory
             ? artistGallery.artworks.filter(art => normalizeArtworkCategory(art) === galleryCategory)
             : artistGallery.artworks;
+        // Paintings first, letters/text last
+        return [...list].sort((a, b) => artworkSortPriority(a) - artworkSortPriority(b));
     }, [artistGallery, galleryCategory, normalizeArtworkCategory]);
 
     const visibleGalleryArtworks = useMemo(() => {
@@ -1047,10 +1093,57 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
         setIsAILoading(true);
 
         try {
+            const normalizeForMatch = (value: string) =>
+                (value || '')
+                    .toLowerCase()
+                    .normalize('NFD')
+                    .replace(/[\u0300-\u036f]/g, '')
+                    .replace(/[^a-z0-9\uac00-\ud7a3\s]/g, ' ')
+                    .replace(/\s+/g, ' ')
+                    .trim();
+
+            const queryNorm = normalizeForMatch(searchQuery);
+            const metadataStopTokens = new Set(['a', 'an', 'the', 'of', 'and', 'or', 'to', 'for', 'in', 'on', 'at', 'by', 'with', 'de', 'la', 'le', 'du', 'des', 'van', 'von', 'da', 'di', 'del', 'della', 'painting', 'paintings', 'artwork', 'artworks', 'work', 'works', 'piece', 'pieces']);
+            const nonArtistHintTokens = new Set(['flower', 'flowers', 'painting', 'paintings', 'portrait', 'landscape', 'still', 'life', 'sunflower', 'sunflowers', 'blossom', 'blossoms', 'parasol', 'umbrella', 'woman', 'man', 'self', 'study', 'untitled']);
+            const lowQualityTitleRegex = /^(painting|untitled|study|object|work|image|photo|drawing)(\b|$)/;
+            const trustedArtistExceptions = new Set(['man ray']);
+
+            const isLowQualityArtistLabel = (value: string) => {
+                const artistNorm = normalizeForMatch(value);
+                if (!artistNorm) return true;
+                if (trustedArtistExceptions.has(artistNorm)) return false;
+                if (artistNorm === 'unknown' || artistNorm === 'unknown artist' || artistNorm === 'artist unknown') return true;
+                if (artistNorm.includes('portrait miniature of an unknown woman')) return true;
+                if (artistNorm.includes('portrait of an unknown woman')) return true;
+                if (/\bunknown woman\b/.test(artistNorm)) return true;
+                if (/^(painting|paintings|woman|women|unknown|artist|anonymous|anon|unidentified|school|workshop|atelier|follower|circle|manner|style)(\b|$)/.test(artistNorm)) return true;
+                if (/^man\b/.test(artistNorm) && artistNorm !== 'man ray') return true;
+                return false;
+            };
+
+            const getMetadataReliability = (artistValue: string, titleValue: string) => {
+                const artistNorm = normalizeForMatch(artistValue);
+                const titleNorm = normalizeForMatch(titleValue);
+                let reliability = 1;
+                if (isLowQualityArtistLabel(artistValue)) reliability -= 0.7;
+                if (!titleNorm || lowQualityTitleRegex.test(titleNorm)) reliability -= 0.25;
+                if (/\bunknown\b/.test(artistNorm) || /\bunknown\b/.test(titleNorm)) reliability -= 0.2;
+                return Math.max(0.1, Math.min(1, reliability));
+            };
+            const queryTokens = queryNorm
+                .split(' ')
+                .map((token) => token.trim())
+                .filter((token) => token.length >= 2 && !metadataStopTokens.has(token));
+            const strongArtistQueryTokens = queryTokens
+                .filter((token) => token.length >= 4 && !nonArtistHintTokens.has(token));
+
+            const hasMeaningfulArtistIntent = strongArtistQueryTokens.some((token) => knownArtistTokenSet.has(token));
+            let shouldApplyMetadataFusion = hasMeaningfulArtistIntent;
+
             // SigLIP 서버사이드 검색: 텍스트를 Worker로 전송, 브라우저 모델 다운로드 없음
             let rawResults: any[];
             try {
-                rawResults = await searchByText(searchQuery, 50);
+                rawResults = await searchByText(searchQuery, 100);
             } catch (err) {
                 console.warn('SigLIP search failed:', err);
                 setIsAILoading(false);
@@ -1091,8 +1184,14 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
             const data = { results: enrichedResults };
 
             if (data.results) {
-                // User requested to disable all filtering so they can debug issues directly
-                const filteredRaw = data.results;
+                // Deduplicate by ID while preserving score order from Vectorize
+                const seenRawIds = new Set<string>();
+                const filteredRaw = data.results.filter((r: any) => {
+                    const id = String(r?.id || '');
+                    if (!id || seenRawIds.has(id)) return false;
+                    seenRawIds.add(id);
+                    return true;
+                });
 
                 const results = filteredRaw.map((r: any) => {
                     const museumMatch = findMuseumForArtwork({
@@ -1111,9 +1210,11 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                     }, museumMatch);
 
                     const resolvedName = r.name || r.n || '';
-                    const resolvedArtist = r.artist || r.a || '';
+                    const resolvedArtistRaw = r.artist || r.a || '';
+                    const resolvedArtist = isLowQualityArtistLabel(resolvedArtistRaw) ? 'Unknown' : resolvedArtistRaw;
                     const resolvedImage = r.i || r.image || r.url || '';
                     const resolvedMuseum = r.museum || r.m || museumMatch?.name || '';
+                    const metaReliability = getMetadataReliability(resolvedArtist, resolvedName);
                     return {
                         id: r.id,
                         name: resolvedName || 'Untitled',
@@ -1121,12 +1222,220 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                         image: resolvedImage,
                         museumName: resolvedMuseum,
                         exhibitionId: exhibitionId || '',
-                        sourceUrl: r.sourceUrl || ''
-                    } as SearchableArtwork;
+                        sourceUrl: r.sourceUrl || '',
+                        __semanticScore: Number(r.score || 0),
+                        __metaReliability: metaReliability,
+                    } as SearchableArtwork & { __semanticScore?: number; __metaReliability?: number };
                 });
 
+                const dedupedResults: SearchableArtwork[] = [];
+                const seenResultIds = new Set<string>();
+                for (const item of results) {
+                    const id = String(item.id || '');
+                    if (!id || seenResultIds.has(id)) continue;
+                    seenResultIds.add(id);
+                    dedupedResults.push(item);
+                }
+
+                if (!shouldApplyMetadataFusion && strongArtistQueryTokens.length > 0) {
+                    const runtimeArtistTokenSet = new Set<string>();
+                    for (const item of dedupedResults.slice(0, 60)) {
+                        const artistRaw = item.artist || '';
+                        if (isLowQualityArtistLabel(artistRaw)) continue;
+                        const artistNorm = normalizeForMatch(artistRaw);
+                        if (!artistNorm) continue;
+                        for (const token of artistNorm.split(' ')) {
+                            if (token.length < 3) continue;
+                            if (metadataStopTokens.has(token)) continue;
+                            runtimeArtistTokenSet.add(token);
+                        }
+                    }
+                    shouldApplyMetadataFusion = strongArtistQueryTokens.some((token) => runtimeArtistTokenSet.has(token));
+                }
+
+                let finalResults = dedupedResults;
+                if (shouldApplyMetadataFusion) {
+                    const rerankedSemantic = [...dedupedResults]
+                        .map((item, index) => {
+                            const title = normalizeForMatch(item.name || '');
+                            const artistRaw = item.artist || '';
+                            const artist = isLowQualityArtistLabel(artistRaw) ? '' : normalizeForMatch(artistRaw);
+                            const semanticScore = Number((item as any).__semanticScore || 0);
+                            const metaReliability = Number((item as any).__metaReliability || 1);
+
+                            let titleTokenMatches = 0;
+                            let artistTokenMatches = 0;
+                            for (const token of queryTokens) {
+                                if (title.includes(token)) titleTokenMatches += 1;
+                                if (artist.includes(token)) artistTokenMatches += 1;
+                            }
+
+                            let strongArtistMatches = 0;
+                            for (const token of strongArtistQueryTokens) {
+                                if (artist.includes(token)) strongArtistMatches += 1;
+                            }
+
+                            let metadataBoost = 0;
+                            if (title && queryNorm && title.includes(queryNorm)) metadataBoost += 70;
+                            if (artist && queryNorm && artist.includes(queryNorm)) metadataBoost += 55;
+                            metadataBoost += titleTokenMatches * 11;
+                            metadataBoost += artistTokenMatches * 18;
+                            metadataBoost += strongArtistMatches * 72;
+
+                            if (strongArtistQueryTokens.length > 0) {
+                                if (strongArtistMatches === 0) {
+                                    metadataBoost -= 96;
+                                } else if (strongArtistMatches >= strongArtistQueryTokens.length) {
+                                    metadataBoost += 36;
+                                }
+                            }
+
+                            const totalTokenMatches = titleTokenMatches + artistTokenMatches;
+                            if (queryTokens.length >= 2 && totalTokenMatches >= queryTokens.length) {
+                                metadataBoost += 24;
+                            } else if (queryTokens.length >= 2 && totalTokenMatches >= queryTokens.length - 1) {
+                                metadataBoost += 12;
+                            }
+
+                            metadataBoost *= metaReliability;
+
+                            const rankPrior = Math.max(0, 100 - index) * 0.02;
+                            const combinedScore = (semanticScore * 95) + (metadataBoost * 0.45) + rankPrior;
+                            return { item, combinedScore };
+                        })
+                        .sort((a, b) => b.combinedScore - a.combinedScore)
+                        .map(({ item }) => item);
+
+                    // Rescue exact/strong lexical title matches when pure vector ranking misses them.
+                    // This keeps AI mode useful for explicit title queries like "woman with a parasol".
+                    let lexicalRescue: SearchableArtwork[] = [];
+                    if (workerRef.current && queryNorm.length >= 3) {
+                        lexicalRescue = await new Promise<SearchableArtwork[]>((resolve) => {
+                            const timeoutMs = 2500;
+                            let latestWarmRows: SearchableArtwork[] = [];
+
+                            const mapRows = (payload: any): SearchableArtwork[] =>
+                                (payload?.results || []).map((r: any) => ({
+                                    id: r.id,
+                                    name: r.name || 'Untitled',
+                                    artist: r.artist || 'Unknown',
+                                    image: r.image || '',
+                                    museumName: r.museumName || '',
+                                    exhibitionId: r.exhibitionId || '',
+                                    sourceUrl: r.sourceUrl || '',
+                                } as SearchableArtwork));
+
+                            const onMsg = (ev: MessageEvent) => {
+                                if (ev.data?.type !== 'RESULTS' || ev.data?.query !== searchQuery) return;
+
+                                const rows = mapRows(ev.data);
+                                const source = String(ev.data?.source || '');
+                                const pending = Boolean(ev.data?.pending);
+
+                                // search.worker sends warm results first and full results later.
+                                // Wait for full/non-pending payload to avoid missing strong lexical hits.
+                                if (source === 'full' || pending === false) {
+                                    workerRef.current?.removeEventListener('message', onMsg);
+                                    resolve(rows.length > 0 ? rows : latestWarmRows);
+                                    return;
+                                }
+
+                                if (rows.length > 0) {
+                                    latestWarmRows = rows;
+                                }
+                            };
+
+                            workerRef.current?.addEventListener('message', onMsg);
+                            workerRef.current?.postMessage({ type: 'SEARCH', query: searchQuery });
+                            setTimeout(() => {
+                                workerRef.current?.removeEventListener('message', onMsg);
+                                resolve(latestWarmRows);
+                            }, timeoutMs);
+                        });
+                    }
+
+                    finalResults = rerankedSemantic;
+                    if (lexicalRescue.length > 0) {
+                        const scoredLexical = lexicalRescue
+                            .map((item) => {
+                                const title = normalizeForMatch(item.name || '');
+                                const artistRaw = item.artist || '';
+                                const artist = isLowQualityArtistLabel(artistRaw) ? '' : normalizeForMatch(artistRaw);
+                                let boost = 0;
+                                if (title && queryNorm && title.includes(queryNorm)) boost += 100;
+                                if (artist && queryNorm && queryNorm.includes(artist)) boost += 20;
+
+                                let tokenMatches = 0;
+                                for (const token of queryTokens) {
+                                    if (title.includes(token)) tokenMatches += 1;
+                                }
+
+                                if (tokenMatches > 0) boost += tokenMatches * 12;
+                                if (queryTokens.length >= 3 && tokenMatches >= Math.ceil(queryTokens.length * 0.6)) {
+                                    boost += 28;
+                                }
+
+                                const hasArtistTokenHit = queryTokens.some((token) => artist.includes(token));
+                                if (hasArtistTokenHit) boost += 24;
+
+                                let strongArtistMatches = 0;
+                                for (const token of strongArtistQueryTokens) {
+                                    if (artist.includes(token)) strongArtistMatches += 1;
+                                }
+                                if (strongArtistMatches > 0) boost += strongArtistMatches * 74;
+                                if (strongArtistQueryTokens.length > 0 && strongArtistMatches === 0) boost -= 90;
+
+                                return { item, boost, tokenMatches };
+                            })
+                            .filter(({ boost, tokenMatches }) => boost >= 28 || tokenMatches >= 2)
+                            .sort((a, b) => b.boost - a.boost)
+                            .map(({ item }) => item)
+                            .slice(0, 20);
+
+                        const merged = [...scoredLexical, ...rerankedSemantic];
+                        const seenMergedIds = new Set<string>();
+                        finalResults = merged.filter((item) => {
+                            const id = String(item.id || '');
+                            if (!id || seenMergedIds.has(id)) return false;
+                            seenMergedIds.add(id);
+                            return true;
+                        });
+                    }
+
+                    if (strongArtistQueryTokens.length > 0 && finalResults.length > 0) {
+                        const subjectTokens = queryTokens.filter((token) => !strongArtistQueryTokens.includes(token));
+                        finalResults = [...finalResults]
+                            .map((item) => {
+                                const title = normalizeForMatch(item.name || '');
+                                const artistRaw = item.artist || '';
+                                const artist = isLowQualityArtistLabel(artistRaw) ? '' : normalizeForMatch(artistRaw);
+
+                                let strongArtistMatches = 0;
+                                for (const token of strongArtistQueryTokens) {
+                                    if (artist.includes(token)) strongArtistMatches += 1;
+                                }
+
+                                let subjectMatches = 0;
+                                for (const token of subjectTokens) {
+                                    if (title.includes(token)) subjectMatches += 1;
+                                }
+
+                                let priority = strongArtistMatches * 140 + subjectMatches * 28;
+                                if (strongArtistMatches === 0) priority -= 1000;
+                                return { item, priority };
+                            })
+                            .sort((a, b) => b.priority - a.priority)
+                            .map(({ item }) => item);
+                    }
+                }
+
                 setAiFilteredCount(0);
-                setAiResults(results);
+                const cleanedResults = finalResults
+                    .map((item: any) => {
+                        const { __semanticScore, __metaReliability, ...rest } = item;
+                        return rest as SearchableArtwork;
+                    });
+                setAiResults(cleanedResults.slice(0, 100));
 
             } else if ((data as any).error) {
                 console.error('Search error:', (data as any).error);
@@ -1149,7 +1458,7 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
             setIsAILoading(false);
             setIsClipLoading(false);
         }
-    }, [videoEmbedIdsReady, museums, resolveCollectionIdForMuseum, findMuseumForArtwork]);
+    }, [videoEmbedIdsReady, museums, resolveCollectionIdForMuseum, findMuseumForArtwork, knownArtistTokenSet]);
 
     // Debounced search - artworks + museums
     useEffect(() => {
@@ -1761,6 +2070,7 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                                     fontFamily: drawingSkin ? drawingHumanFont : 'inherit',
                                     letterSpacing: drawingSkin ? '0.01em' : 0,
                                     minWidth: 0,
+                                    touchAction: 'manipulation',  // prevent double-tap zoom on iOS
                                 }}
                                 onClick={(e) => {
                                     e.stopPropagation();
@@ -2341,8 +2651,8 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                                         }}>{asciiArt}</pre>
                                     </div>
 
-                                    {/* Map column + Distribution slides */}
-                                    {!isMobile && artistGallery.artworks.length > 0 && (() => {
+                                    {/* Map column + Distribution slides — shown on all screen sizes */}
+                                    {artistGallery.artworks.length > 0 && (() => {
                                         const allArtworks = artistGallery.artworks;
                                         const total = allArtworks.length;
 
@@ -2414,7 +2724,7 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                                         };
 
                                         return (
-                                            <div style={{ flex: '0 0 50%', minWidth: 0, boxSizing: 'border-box', padding: '24px 32px' }}>
+                                            <div style={{ flex: isMobile ? '1 1 auto' : '0 0 50%', minWidth: 0, boxSizing: 'border-box', padding: isMobile ? '16px' : '24px 32px' }}>
                                                 <p style={{ fontSize: 10, letterSpacing: '0.3em', textTransform: 'uppercase', color: accent, fontWeight: 500, margin: '0 0 14px' }}>Global Distribution</p>
 
                                                 {/* Combined map + slides card */}
@@ -2422,10 +2732,11 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                                                     width: '100%', borderRadius: 10, overflow: 'hidden',
                                                     border: `${borderWidth} solid ${border}`,
                                                     display: 'flex', flexDirection: 'column',
-                                                    minHeight: 200,
+                                                    minHeight: isMobile ? 160 : 200,
                                                     boxShadow: isDrawingGalleryMode ? '5px 6px 0 rgba(17,17,17,0.9)' : 'none',
                                                 }}>
-                                                    {/* amCharts map — flex grow */}
+                                                    {/* amCharts map — desktop only (too heavy for mobile) */}
+                                                    {!isMobile && (
                                                     <div style={{ flex: '1 1 0%', minHeight: 0, width: '100%', overflow: 'hidden' }}>
                                                         <Suspense fallback={<div style={{ height: 160, display: 'flex', alignItems: 'center', justifyContent: 'center', color: textSub, fontSize: 12 }}>Loading map…</div>}>
                                                             <ArtistDistributionMap
@@ -2437,6 +2748,7 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                                                             />
                                                         </Suspense>
                                                     </div>
+                                                    )}
 
                                                     {/* Distribution slides — bottom of combined card */}
                                                     <div style={{

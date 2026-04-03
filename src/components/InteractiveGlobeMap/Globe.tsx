@@ -104,6 +104,7 @@ const CONTINENT_CENTERS: Record<string, [number, number]> = {
 };
 const COUNTRY_CLUSTER_ZOOM = 1.6;
 const COUNTRY_LABEL_ALL_ZOOM = 2.35;
+const CONTINENT_FOCUS_ZOOM = 2.25;
 const COUNTRY_EXIT_ZOOM = COUNTRY_CLUSTER_ZOOM + 0.05;
 const CONTINENT_EXIT_ZOOM = COUNTRY_CLUSTER_ZOOM - 0.1;
 
@@ -188,6 +189,13 @@ function calcCountryZoom(feat: any): number {
   const dy = bounds[1][1] - bounds[0][1];
   const extent = Math.max(dx, dy);
   return Math.min(Math.max(80 / extent, 2), 7);
+}
+
+function getCountryContinentById(id: string | null | undefined): string | null {
+  if (!id) return null;
+  const country = COUNTRY_NAMES[id];
+  if (!country) return null;
+  return CONTINENT_MAP[country] || null;
 }
 
 function lerp(a: number, b: number, t: number) {
@@ -302,6 +310,7 @@ export function Globe({
   const containerRef = useRef<HTMLDivElement>(null);
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const continentHoverOpacitiesRef = useRef<Map<string, number>>(new Map());
+  const countryLabelOpacitiesRef = useRef<Map<string, number>>(new Map());
 
   const landRef = useRef<any>(null);
   const bordersRef = useRef<any>(null);
@@ -376,8 +385,12 @@ export function Globe({
   useEffect(() => {
     if (drilledCountry === null && prevDrilledProp.current !== null) {
       drilledRef.current = null;
-      targetRotRef.current = null;
-      targetScaleRef.current = 1;
+      // Keep continent-level camera when only country drill is cleared.
+      // Full reset is only valid when continent drill is also cleared.
+      if (!drilledContinentRef.current) {
+        targetRotRef.current = null;
+        targetScaleRef.current = 1;
+      }
     }
     prevDrilledProp.current = drilledCountry;
   }, [drilledCountry]);
@@ -573,18 +586,6 @@ export function Globe({
              ctx.lineCap = "round";
              ctx.stroke();
 
-             const mx = mousePosRef.current.x;
-             const my = mousePosRef.current.y;
-             if (mx > 0 && !drilledRef.current) {
-               if (name) {
-                 ctx.fillStyle = `rgba(${P.limeTxt},0.40)`;
-                 ctx.font = '9px "Space Grotesk", sans-serif';
-                 ctx.textAlign = "left";
-                 ctx.textBaseline = "middle";
-                 ctx.fillText(name.toUpperCase(), mx + 18, my + 2);
-               }
-             }
-
              ctx.restore();
            }
         }
@@ -684,6 +685,7 @@ export function Globe({
             const hovId = hovCountry ? String(hovCountry.id) : null;
             const showDenseNames = currentScaleRef.current >= COUNTRY_LABEL_ALL_ZOOM;
             const countryLabelBoxes: { x1: number; y1: number; x2: number; y2: number }[] = [];
+            const labelOpRef = countryLabelOpacitiesRef.current;
 
             countriesRef.current.forEach((c: any) => {
               const id = String(c.id);
@@ -703,16 +705,23 @@ export function Globe({
               if (!p) return;
 
               const isHovered = (id === hovId);
+              const targetNameOp = isHovered ? 1 : (showDenseNames ? 0.9 : 0);
+              let nameOp = labelOpRef.get(id) || 0;
+              nameOp = lerp(nameOp, targetNameOp, 0.18);
+              labelOpRef.set(id, nameOp);
 
               // Number is always visible.
-              ctx.font = `400 9px "Space Grotesk", sans-serif`;
-              ctx.fillStyle = isHovered ? `rgba(${P.limeTxt},0.85)` : `rgba(${R},${G},${B},0.6)`;
+              ctx.font = `500 11px "Space Grotesk", sans-serif`;
+              const numberAlpha = isHovered ? (0.75 + nameOp * 0.2) : (0.54 + nameOp * 0.18);
+              ctx.fillStyle = isHovered ? `rgba(${P.limeTxt},${numberAlpha})` : `rgba(${R},${G},${B},${numberAlpha})`;
+              ctx.textAlign = "center";
+              ctx.textBaseline = "middle";
               ctx.fillText(`${total}`, p[0], p[1] + 8);
 
-              let shouldShowName = isHovered || showDenseNames;
+              let shouldShowName = isHovered || showDenseNames || nameOp > 0.03;
               if (shouldShowName) {
                 const label = name.toUpperCase();
-                ctx.font = `600 10px "Space Grotesk", sans-serif`;
+                ctx.font = `600 12px "Space Grotesk", sans-serif`;
                 const tw = ctx.measureText(label).width;
                 const box = { x1: p[0] - tw / 2 - 2, y1: p[1] - 14, x2: p[0] + tw / 2 + 2, y2: p[1] - 2 };
 
@@ -724,11 +733,12 @@ export function Globe({
                 }
 
                 if (shouldShowName) {
-                  countryLabelBoxes.push(box);
-                  ctx.fillStyle = isHovered ? `rgba(${P.limeTxt},0.95)` : `rgba(${R},${G},${B},0.82)`;
+                  if (!isHovered) countryLabelBoxes.push(box);
+                  const labelAlpha = isHovered ? Math.max(0.75, nameOp) : (0.82 * nameOp);
+                  ctx.fillStyle = isHovered ? `rgba(${P.limeTxt},${labelAlpha})` : `rgba(${R},${G},${B},${labelAlpha})`;
                   ctx.textAlign = "center";
                   ctx.textBaseline = "middle";
-                  ctx.fillText(label, p[0], p[1] - 4);
+                  ctx.fillText(label, p[0], p[1] - 4 - (1 - nameOp) * 2);
                 }
               }
             });
@@ -1067,7 +1077,7 @@ export function Globe({
       if (dist > Math.PI / 2) continue;
       const p = projection(m.coordinates);
       if (!p) continue;
-      if (Math.hypot(p[0] - mx, p[1] - my) < 16) {
+      if (Math.hypot(p[0] - mx, p[1] - my) < 22) {
         found = m;
         setTooltipPos({ x: p[0], y: p[1] });
         break;
@@ -1094,12 +1104,82 @@ export function Globe({
   }, [getActiveContinentForView]);
 
   const handleClick = useCallback((e: React.MouseEvent) => {
-    if (dragDistRef.current > 12) return;
+    const stepZoomOut = () => {
+      const drilled = drilledRef.current;
+      if (drilled) {
+        const continent =
+          drilledContinentRef.current ||
+          getCountryContinentById(drilled.id) ||
+          null;
+        drilledRef.current = null;
+        cbRefs.current.onDrillDown(null);
+        cbRefs.current.onSelectCity(null);
+
+        if (continent) {
+          const centroid = CONTINENT_CENTERS[continent];
+          if (centroid) {
+            targetRotRef.current = [-centroid[0], -centroid[1], 0];
+          } else {
+            targetRotRef.current = null;
+          }
+          targetScaleRef.current = CONTINENT_FOCUS_ZOOM;
+          cbRefs.current.onDrillContinent?.(continent);
+        } else {
+          targetRotRef.current = null;
+          targetScaleRef.current = 1;
+          cbRefs.current.onDrillContinent?.(null);
+        }
+        return;
+      }
+
+      if (drilledContinentRef.current) {
+        cbRefs.current.onDrillContinent?.(null);
+        targetRotRef.current = null;
+        targetScaleRef.current = 1;
+        cbRefs.current.onSelectCity(null);
+      }
+    };
+
+    // Touch events accumulate more drag noise — use a larger threshold
+    const isTouchEvent = e.nativeEvent instanceof PointerEvent && e.nativeEvent.pointerType === 'touch';
+    const dragThreshold = isTouchEvent ? 24 : 12;
+    if (dragDistRef.current > dragThreshold) return;
     const canvas = canvasRef.current;
     if (!canvas) return;
 
-    if (hoveredRef.current) {
-      const city = hoveredRef.current;
+    const rect = canvas.getBoundingClientRect();
+    const clickMx = e.clientX - rect.left;
+    const clickMy = e.clientY - rect.top;
+
+    // For touch: hover state isn't set via mousemove, so do a direct city hit test
+    const HIT_RADIUS = isTouchEvent ? 28 : 16;
+    let touchHitCity: CityMarker | null = null;
+    if (!hoveredRef.current && isTouchEvent) {
+      const rot = rotationRef.current;
+      const countryClusterModeT = currentScaleRef.current >= COUNTRY_CLUSTER_ZOOM;
+      const activeContinentT = getActiveContinentForView(rot, countryClusterModeT);
+      const visibleCitiesT = citiesRef.current.filter((m) => {
+        if (!countryClusterModeT || !activeContinentT) return false;
+        if (m.country && CONTINENT_MAP[m.country] !== activeContinentT) return false;
+        if (m.detail && !drilledRef.current) return false;
+        if (m.detail && drilledRef.current && m.country !== drilledRef.current.name) return false;
+        return true;
+      });
+      for (const m of visibleCitiesT) {
+        const dist = d3.geoDistance(m.coordinates, [-rot[0], -rot[1]]);
+        if (dist > Math.PI / 2) continue;
+        const p = projectionRef.current(m.coordinates);
+        if (!p) continue;
+        if (Math.hypot(p[0] - clickMx, p[1] - clickMy) < HIT_RADIUS) {
+          touchHitCity = m;
+          break;
+        }
+      }
+    }
+
+    const activeCity = hoveredRef.current || touchHitCity;
+    if (activeCity) {
+      const city = activeCity;
       cbRefs.current.onSelectCity(city === selectedRef.current ? null : city);
       if (!city.detail) {
         const country = countriesRef.current.find(
@@ -1124,43 +1204,20 @@ export function Globe({
       return;
     }
 
-    const rect = canvas.getBoundingClientRect();
-    const mx = e.clientX - rect.left;
-    const my = e.clientY - rect.top;
     const projection = projectionRef.current;
     const [cx, cy] = projection.translate();
     const scale = projection.scale();
     const countryClusterMode = currentScaleRef.current >= COUNTRY_CLUSTER_ZOOM;
     const activeContinent = getActiveContinentForView(rotationRef.current, countryClusterMode);
 
-    if (Math.hypot(mx - cx, my - cy) > scale) {
-      if (drilledRef.current) {
-        drilledRef.current = null;
-        targetRotRef.current = null;
-        targetScaleRef.current = 1;
-        cbRefs.current.onDrillDown(null);
-        cbRefs.current.onSelectCity(null);
-      } else if (drilledContinentRef.current) {
-        cbRefs.current.onDrillContinent?.(null);
-        targetRotRef.current = null;
-        targetScaleRef.current = 1;
-      }
+    if (Math.hypot(clickMx - cx, clickMy - cy) > scale) {
+      stepZoomOut();
       return;
     }
 
-    const geoCoords = projection.invert?.([mx, my]);
+    const geoCoords = projection.invert?.([clickMx, clickMy]);
     if (!geoCoords || isNaN(geoCoords[0]) || isNaN(geoCoords[1])) {
-      if (drilledRef.current) {
-        drilledRef.current = null;
-        targetRotRef.current = null;
-        targetScaleRef.current = 1;
-        cbRefs.current.onDrillDown(null);
-        cbRefs.current.onSelectCity(null);
-      } else if (drilledContinentRef.current) {
-        cbRefs.current.onDrillContinent?.(null);
-        targetRotRef.current = null;
-        targetScaleRef.current = 1;
-      }
+      stepZoomOut();
       return;
     }
 
@@ -1178,7 +1235,7 @@ export function Globe({
         const centroid = CONTINENT_CENTERS[continent];
         if (centroid) {
           targetRotRef.current = [-centroid[0], -centroid[1], 0];
-          targetScaleRef.current = Math.max(1.8, COUNTRY_CLUSTER_ZOOM + 0.15);
+          targetScaleRef.current = CONTINENT_FOCUS_ZOOM;
           velocityRef.current = [0, 0];
           cbRefs.current.onDrillContinent?.(continent);
           cbRefs.current.onSelectCity(null);
@@ -1196,7 +1253,7 @@ export function Globe({
         drilledRef.current = null;
         const cCentroid = CONTINENT_CENTERS[(activeContinent || continent || "")] || [0, 0];
         targetRotRef.current = [-cCentroid[0], -cCentroid[1], 0];
-        targetScaleRef.current = Math.max(1.8, COUNTRY_CLUSTER_ZOOM + 0.15);
+        targetScaleRef.current = CONTINENT_FOCUS_ZOOM;
         cbRefs.current.onDrillDown(null);
         cbRefs.current.onSelectCity(null);
         return;
@@ -1212,17 +1269,7 @@ export function Globe({
       cbRefs.current.onDrillDown(name);
       cbRefs.current.onSelectCity(null);
     } else {
-      if (drilledRef.current) {
-        drilledRef.current = null;
-        targetRotRef.current = null;
-        targetScaleRef.current = 1;
-        cbRefs.current.onDrillDown(null);
-      } else if (drilledContinentRef.current) {
-        cbRefs.current.onDrillContinent?.(null);
-        targetRotRef.current = null;
-        targetScaleRef.current = 1;
-      }
-      cbRefs.current.onSelectCity(null);
+      stepZoomOut();
     }
   }, []);
 

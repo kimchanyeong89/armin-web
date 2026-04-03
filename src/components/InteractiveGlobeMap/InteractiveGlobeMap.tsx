@@ -760,7 +760,7 @@ export default function InteractiveGlobeMap({ exhibitions, onSelectExhibition, o
         return (
           <div style={{
             position: 'absolute',
-            bottom: 28,
+            bottom: 'calc(28px + env(safe-area-inset-bottom, 0px))',
             left: '50%',
             transform: 'translateX(-50%) scale(1.2)',
             transformOrigin: 'bottom center',

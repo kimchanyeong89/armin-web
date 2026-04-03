@@ -142,7 +142,9 @@ export default function ArtistPage() {
   const [selectedArtwork, setSelectedArtwork] = useState<any>(null);
   const [likedArtworks, setLikedArtworks] = useState<any[]>([]);
   const [user, setUser] = useState<any>(null);
-  const [theme, setTheme] = useState<'dark' | 'light'>('dark');
+  const [theme, setTheme] = useState<'dark' | 'light'>(() => {
+    try { return localStorage.getItem('homeTheme') === 'light' ? 'light' : 'dark'; } catch { return 'dark'; }
+  });
   const [visibleCount, setVisibleCount] = useState(120);
   const [brueckeR2Lookup, setBrueckeR2Lookup] = useState<Record<string, string>>({});
 

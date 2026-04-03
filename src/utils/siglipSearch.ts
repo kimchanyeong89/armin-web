@@ -12,6 +12,19 @@
 
 const WORKER_URL = 'https://armin-semantic-search.armin-art.workers.dev';
 
+// Mobile devices (touch-primary) skip the 70MB WASM model to prevent crashes
+const IS_MOBILE_DEVICE = typeof navigator !== 'undefined' && (
+    navigator.maxTouchPoints > 1 ||
+    /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
+);
+
+/** fetch with manual AbortController timeout (works on iOS 14+) */
+function fetchWithTimeout(url: string, options: RequestInit, ms: number): Promise<Response> {
+    const ac = new AbortController();
+    const tid = setTimeout(() => ac.abort(new DOMException('Timeout', 'AbortError')), ms);
+    return fetch(url, { ...options, signal: ac.signal }).finally(() => clearTimeout(tid));
+}
+
 export interface SigLIPSearchResult {
     id: string;
     score: number;
@@ -88,8 +101,10 @@ function getWorker(): Worker {
 /**
  * 브라우저 WASM으로 텍스트 → 768D 벡터 변환
  * 첫 호출 시 ~70MB 모델 다운로드 (이후 캐시)
+ * 모바일에서는 메모리 크래시 방지를 위해 스킵
  */
 async function encodeWithBrowser(text: string): Promise<number[] | null> {
+    if (IS_MOBILE_DEVICE) return null; // Skip 70MB WASM on mobile
     return new Promise((resolve) => {
         try {
             const worker = getWorker();
@@ -133,11 +148,13 @@ export async function searchByText(
 
     if (vector && vector.length === 768) {
         try {
-            const res = await fetch(`${WORKER_URL}/search-by-vector`, {
+            const res = await fetchWithTimeout(`${WORKER_URL}/search-by-vector`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
+                credentials: 'omit',
+                mode: 'cors',
                 body: JSON.stringify({ vector, limit }),
-            });
+            }, 12_000);
             if (res.ok) {
                 const data = await res.json() as { results?: SigLIPSearchResult[] };
                 return data.results ?? [];
@@ -147,13 +164,15 @@ export async function searchByText(
         }
     }
 
-    // Tier 2: Worker 서버사이드 인코딩 (HF Inference API)
+    // Tier 2: Worker 서버사이드 인코딩 (HF Inference API) — primary path on mobile
     try {
-        const res = await fetch(`${WORKER_URL}/search-by-text`, {
+        const res = await fetchWithTimeout(`${WORKER_URL}/search-by-text`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
+            credentials: 'omit',
+            mode: 'cors',
             body: JSON.stringify({ text, limit }),
-        });
+        }, 15_000);
         if (res.ok) {
             const data = await res.json() as { results?: SigLIPSearchResult[] };
             return data.results ?? [];
@@ -182,11 +201,13 @@ export async function encodeText(text: string): Promise<number[] | null> {
 export async function searchByVector(vector: number[], limit: number = 50): Promise<SigLIPSearchResult[]> {
     if (!vector || vector.length !== 768) return [];
     try {
-        const res = await fetch(`${WORKER_URL}/search-by-vector`, {
+        const res = await fetchWithTimeout(`${WORKER_URL}/search-by-vector`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
+            credentials: 'omit',
+            mode: 'cors',
             body: JSON.stringify({ vector, limit }),
-        });
+        }, 12_000);
         if (res.ok) {
             const data = await res.json() as { results?: SigLIPSearchResult[] };
             return data.results ?? [];
@@ -206,11 +227,13 @@ export async function searchSimilarTo(id: string, limit: number = 10): Promise<S
     if (!id) return [];
     try {
         // Worker에는 /similar-to GET이 없음 → /recommend-by-id POST 사용
-        const res = await fetch(`${WORKER_URL}/recommend-by-id`, {
+        const res = await fetchWithTimeout(`${WORKER_URL}/recommend-by-id`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
+            credentials: 'omit',
+            mode: 'cors',
             body: JSON.stringify({ id, limit }),
-        });
+        }, 12_000);
         if (res.ok) {
             const data = await res.json() as { results?: SigLIPSearchResult[] };
             return data.results ?? [];
@@ -226,6 +249,7 @@ export async function searchSimilarTo(id: string, limit: number = 10): Promise<S
  * 인코더 모델 백그라운드 프리로드 (AI 버튼 hover 시 호출 권장)
  */
 export function preloadEncoder(): void {
+    if (IS_MOBILE_DEVICE) return; // Don't load 70MB WASM on mobile
     if (encoderStatus === 'idle') {
         try { getWorker(); } catch { /* noop */ }
     }

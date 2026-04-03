@@ -300,22 +300,27 @@ export const GlobalNav: React.FC<GlobalNavProps> = ({ isAdmin, isModalOpen, sear
     const backgroundStyle: React.CSSProperties = {
         position: 'absolute',
         top: 0, left: 0, right: 0, bottom: 0,
+        // Liquid glass: very low base opacity so the background bleeds through
         background: isDark
-            ? (isModalOpen ? 'rgba(10, 8, 6, 0.26)' : 'rgba(10, 8, 6, 0.14)')
-            : (isModalOpen ? 'rgba(255, 255, 255, 0.28)' : 'rgba(255, 255, 255, 0.10)'),
+            ? (isModalOpen ? 'rgba(8, 6, 4, 0.18)' : 'rgba(8, 6, 4, 0.08)')
+            : (isModalOpen ? 'rgba(255, 255, 255, 0.22)' : 'rgba(255, 255, 255, 0.12)'),
         backdropFilter: isDark
-            ? 'blur(72px) saturate(200%) brightness(0.92)'
-            : 'blur(80px) saturate(180%) brightness(1.35)',
+            ? 'blur(48px) saturate(240%) brightness(0.88) contrast(1.04)'
+            : 'blur(56px) saturate(220%) brightness(1.45) contrast(0.98)',
         WebkitBackdropFilter: isDark
-            ? 'blur(72px) saturate(200%) brightness(0.92)'
-            : 'blur(80px) saturate(180%) brightness(1.35)',
-        borderRadius: (isSearchExpanded && skin !== 'drawing') ? '26px 26px 0 0' : '100px',
+            ? 'blur(48px) saturate(240%) brightness(0.88) contrast(1.04)'
+            : 'blur(56px) saturate(220%) brightness(1.45) contrast(0.98)',
+        borderRadius: (isSearchExpanded && skin !== 'drawing') ? '28px 28px 0 0' : '100px',
+        // Top highlight edge (liquid glass specular)
         border: isDark
-            ? '1px solid rgba(255, 255, 255, 0.09)'
-            : '1px solid rgba(255, 255, 255, 0.82)',
+            ? '1px solid rgba(255, 255, 255, 0.11)'
+            : '1px solid rgba(255, 255, 255, 0.90)',
+        borderTop: isDark
+            ? '1px solid rgba(255, 255, 255, 0.18)'
+            : '1px solid rgba(255, 255, 255, 1)',
         boxShadow: isDark
-            ? '0 2px 28px rgba(0,0,0,0.32), 0 1px 0 rgba(255,255,255,0.05) inset'
-            : '0 1px 24px rgba(0,0,0,0.06), 0 1px 0 rgba(255,255,255,0.98) inset, 0 -1px 0 rgba(0,0,0,0.02) inset',
+            ? '0 4px 32px rgba(0,0,0,0.28), 0 1px 0 rgba(255,255,255,0.08) inset, 0 -1px 0 rgba(0,0,0,0.15) inset'
+            : '0 2px 28px rgba(0,0,0,0.05), 0 1px 0 rgba(255,255,255,1) inset, 0 -1px 0 rgba(0,0,0,0.03) inset',
         zIndex: -1,
         pointerEvents: 'none',
         transition: 'background 0.9s ease, box-shadow 0.9s ease, border-color 0.9s ease, backdrop-filter 0.9s ease, border-radius 0.3s ease',
@@ -635,13 +640,13 @@ export const GlobalNav: React.FC<GlobalNavProps> = ({ isAdmin, isModalOpen, sear
                         if (!isMenuOpen) e.currentTarget.style.background = 'transparent';
                     }}
                 >
-                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#c9a55a" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={isDark ? '#c9a55a' : '#7a5c1e'} strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round"
                         style={{ transition: 'transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), opacity 0.4s' }}
                     >
                         {isMenuOpen ? (
                             <>
-                                <line x1="18" y1="6" x2="6" y2="18" stroke="#FFFFFF"></line>
-                                <line x1="6" y1="6" x2="18" y2="18" stroke="#FFFFFF"></line>
+                                <line x1="18" y1="6" x2="6" y2="18" stroke={isDark ? 'rgba(255,255,255,0.85)' : 'rgba(0,0,0,0.7)'}></line>
+                                <line x1="6" y1="6" x2="18" y2="18" stroke={isDark ? 'rgba(255,255,255,0.85)' : 'rgba(0,0,0,0.7)'}></line>
                             </>
                         ) : (
                             <>
