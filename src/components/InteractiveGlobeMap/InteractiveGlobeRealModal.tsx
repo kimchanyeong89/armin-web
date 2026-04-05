@@ -411,7 +411,7 @@ export function InteractiveGlobeRealModal({
 
       for (const candidate of candidates) {
         try {
-          const response = await fetch(candidate, { cache: "force-cache", signal: abortController.signal });
+          const response = await fetch(candidate, { cache: "no-cache", signal: abortController.signal });
           if (!response.ok) continue;
 
           const rawText = await response.text();
@@ -660,7 +660,19 @@ export function InteractiveGlobeRealModal({
               inventoryNo: String(a.id || a.objectNumber || a.registrationNumber || a.inventoryNumber || a.accessionNum || `AW-${i}`),
               sourceUrl: resolveSourceUrl(a)
           }
-      }).filter(a => a.image);
+      }).filter(a => a.image).sort((a, b) => {
+          const isTextOrLetter = (art: any) => {
+              const name = String(art.title || '').toLowerCase();
+              const cat = String(art.category || '').toLowerCase();
+              const mat = String(art.material || '').toLowerCase();
+              const inv = String(art.inventoryNo || '').toLowerCase();
+              return /\bletter[s]?\b|\blettre[s]?\b|\bbrief[e]?\b|\bcorrespondence\b|\bmanuscript\b/.test(name)
+                  || /\bletter[s]?\b|\blettre[s]?\b|\bbrief[e]?\b/.test(cat)
+                  || /\bletter[s]?\b|\blettre[s]?\b|\bbrief[e]?\b/.test(mat)
+                  || /^b\d+v\d{4}/.test(inv);
+          };
+          return (isTextOrLetter(a) ? 1 : 0) - (isTextOrLetter(b) ? 1 : 0);
+      });
   }, [realArtworks, venueName]);
 
 

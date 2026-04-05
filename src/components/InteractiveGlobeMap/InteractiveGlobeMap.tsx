@@ -262,14 +262,38 @@ export default function InteractiveGlobeMap({ exhibitions, onSelectExhibition, o
         });
       }
       if (Array.isArray(ex.temporaryExhibitions)) {
+        const today = new Date(); today.setHours(0, 0, 0, 0);
+        const fmtD = (d?: string) => {
+          if (!d || d === 'ongoing' || d === 'Permanent') return '';
+          // "2026-03-21" → "26.03.21"
+          if (d.length >= 10) return d.slice(2,4) + '.' + d.slice(5,7) + '.' + d.slice(8,10);
+          if (d.length >= 7)  return d.slice(2,4) + '.' + d.slice(5,7);
+          return d.slice(0,4);
+        };
         ex.temporaryExhibitions.forEach(e => {
-          interactiveExhibitions.push({ id: e.id, title: e.title || e.name || '', period: `${e.startDate?.slice(0, 4) || ''} - ${e.endDate?.slice(0, 4) || ''}`.replace(/^- | -$/g, ''), type: "current" });
+          let exType: "current" | "upcoming" | "past" = "current";
+          if (e.endDate && new Date(e.endDate) < today) {
+            exType = "past";
+          } else if (e.startDate && new Date(e.startDate) > today) {
+            exType = "upcoming";
+          }
+          const s = fmtD(e.startDate); const en = fmtD(e.endDate);
+          const period = s && en ? `${s} ~ ${en}` : s || en || e.startDate?.slice(0,4) || '';
+          interactiveExhibitions.push({ id: e.id, title: e.title || e.name || '', period, type: exType });
           if (year === "Unknown" && e.startDate) year = e.startDate.split('-')[0];
         });
       }
       if (Array.isArray(ex.pastExhibitions)) {
+        const fmtD = (d?: string) => {
+          if (!d || d === 'ongoing' || d === 'Permanent') return '';
+          if (d.length >= 10) return d.slice(2,4) + '.' + d.slice(5,7) + '.' + d.slice(8,10);
+          if (d.length >= 7)  return d.slice(2,4) + '.' + d.slice(5,7);
+          return d.slice(0,4);
+        };
         ex.pastExhibitions.forEach(e => {
-          interactiveExhibitions.push({ id: e.id, title: e.title || e.name || '', period: `${e.startDate?.slice(0, 4) || ''} - ${e.endDate?.slice(0, 4) || ''}`.replace(/^- | -$/g, ''), type: "upcoming" });
+          const s = fmtD(e.startDate); const en = fmtD(e.endDate);
+          const period = s && en ? `${s} ~ ${en}` : s || en || e.startDate?.slice(0,4) || '';
+          interactiveExhibitions.push({ id: e.id, title: e.title || e.name || '', period, type: "past" });
           if (year === "Unknown" && e.startDate) year = e.startDate.split('-')[0];
         });
       }

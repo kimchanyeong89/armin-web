@@ -3308,12 +3308,57 @@ export const exhibitions = [
     longitude: 126.981805,
     country: "South Korea",
     region: "Seoul",
-    representativeImage: "/images/mmca-seoul.jpg",
+    representativeImage: "https://upload.wikimedia.org/wikipedia/commons/thumb/9/97/MMCA_Seoul.jpg/1280px-MMCA_Seoul.jpg",
     floorPlan: "",
     permanentExhibitions: [
       { id: "mmca-collection", name: "국립현대미술관 소장작품", name_en: "MMCA Collection", title: "국립현대미술관 소장작품", title_en: "MMCA Collection", description: "국립현대미술관 소장작품 컬렉션 (112점)", description_en: "MMCA permanent collection (112 items)", startDate: "Permanent", endDate: "Permanent", collectionFile: "mmca-collection.json" }
     ],
-    temporaryExhibitions: [],
+    temporaryExhibitions: [
+      {
+        id: "mmca-2026-hirst",
+        title: "데이미언 허스트",
+        titleEn: "Damien Hirst",
+        description: "삶과 죽음, 아름다움에 대한 인간의 복합적 감정을 조명하는 데이미언 허스트의 전시.",
+        startDate: "2026-03-20",
+        endDate: "2026-06-28",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/mmca-202601060002023.png",
+        officialUrl: "https://www.mmca.go.kr/exhibitions/progressList.do",
+        status: "ongoing"
+      },
+      {
+        id: "mmca-2026-hirst-yba",
+        title: "데이미언 허스트와 YBA",
+        titleEn: "Damien Hirst and YBA",
+        description: "허스트와 YBA를 통해 동시대 미술을 조망하는 다큐멘터리 프로그램.",
+        startDate: "2026-04-01",
+        endDate: "2026-06-06",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/mmca-202601060002025.png",
+        officialUrl: "https://www.mmca.go.kr/exhibitions/progressList.do",
+        status: "ongoing"
+      },
+      {
+        id: "mmca-2026-detective",
+        title: "MMCA 다원예술 2026: 탐정의 시간",
+        titleEn: "MMCA Multidisciplinary Arts 2026: Detective's Time",
+        description: "AI의 효율성에 대비하여, 탐정처럼 미세한 단서를 쫓으며 인간 고유의 깊고 느린 시간을 감각하는 다원예술 프로젝트.",
+        startDate: "2026-04-01",
+        endDate: "2026-12-06",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/mmca-202601060002024.gif",
+        officialUrl: "https://www.mmca.go.kr/exhibitions/progressList.do",
+        status: "ongoing"
+      },
+      {
+        id: "mmca-2026-dissolution",
+        title: "소멸의 시학: 삭는 미술에 대하여",
+        titleEn: "Poetics of Dissolution: On Art that Decays",
+        description: "자신의 분해를 공공연히 드러내는 작품을 '삭는 미술'이라는 이름으로 묶어 소개하는 기획전.",
+        startDate: "2026-01-30",
+        endDate: "2026-05-03",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/mmca-202511280002008.gif",
+        officialUrl: "https://www.mmca.go.kr/exhibitions/progressList.do",
+        status: "ongoing"
+      }
+    ],
     pastExhibitions: [],
     rooms: {}
   },
@@ -3331,12 +3376,46 @@ export const exhibitions = [
     longitude: 126.9804,
     country: "South Korea",
     region: "Seoul",
-    representativeImage: "/images/national-museum-korea.jpg",
+    representativeImage: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5b/National_Museum_of_Korea.jpg/1280px-National_Museum_of_Korea.jpg",
     floorPlan: "",
     permanentExhibitions: [
       { id: "nmk-collection", name: "국립중앙박물관 회화 컬렉션", name_en: "National Museum of Korea Paintings", title: "국립중앙박물관 회화 컬렉션", title_en: "National Museum of Korea Paintings Collection", description: "국립중앙박물관 소장 회화 컬렉션 (4,309점)", description_en: "National Museum of Korea paintings collection (4,309 items)", startDate: "Permanent", endDate: "Permanent", collectionFile: "national-museum-korea.json" }
     ],
-    temporaryExhibitions: [],
+    temporaryExhibitions: [
+      {
+        id: "nmk-2026-bongjeongsa",
+        title: "깨달음으로 이끄는 부처: 안동 봉정사 괘불",
+        titleEn: "Large Buddhist Hanging Scroll from Bongjeongsa Temple, Andong",
+        description: "국립중앙박물관의 20번째 괘불전. 1710년에 제작된 봉정사 괘불은 세로 8m 이상, 가로 6m에 달하는 대형 불화로 영산회상 장면을 묘사한다.",
+        startDate: "2026-04-07",
+        endDate: "2026-06-21",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/nmk-2026-bongjeongsa.jpg",
+        officialUrl: "https://www.museum.go.kr/MUSEUM/contents/M0202010000.do?menuId=current",
+        status: "ongoing"
+      },
+      {
+        id: "nmk-2026-conservation",
+        title: "보존과학, 새로운 시작 함께하는 미래",
+        titleEn: "Conservation Science: A New Beginning, Shared Future",
+        description: "국립중앙박물관 보존과학센터 개관을 기념하는 특별전. 문화유산 보존의 과학적 원리와 최신 기술을 소개한다.",
+        startDate: "2025-10-28",
+        endDate: "2026-06-30",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/nmk-2026-conservation.jpg",
+        officialUrl: "https://www.museum.go.kr/MUSEUM/contents/M0202010000.do?menuId=current",
+        status: "ongoing"
+      },
+      {
+        id: "nmk-2026-baekja",
+        title: "각角진 백자 이야기",
+        titleEn: "Stories of Angular White Porcelain",
+        description: "조선 백자 중 각진 형태의 기형에 주목한 테마전. 사각·팔각·육각 등 다양한 각형 백자의 조형미와 시대별 변천을 조명한다.",
+        startDate: "2025-08-26",
+        endDate: "2026-06-21",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/nmk-2026-baekja.jpg",
+        officialUrl: "https://www.museum.go.kr/MUSEUM/contents/M0202010000.do?menuId=current",
+        status: "ongoing"
+      }
+    ],
     pastExhibitions: [],
     rooms: {}
   },
@@ -3446,12 +3525,46 @@ export const exhibitions = [
     longitude: 126.975361,
     country: "South Korea",
     region: "Seoul",
-    representativeImage: "https://collections.eseoul.go.kr/common/file/getImage.do?size=700&fileSeq=FILE_0000083583-1",
+    representativeImage: "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4f/Seoul_Museum_of_Art%2C_Korea.jpg/1280px-Seoul_Museum_of_Art%2C_Korea.jpg",
     floorPlan: "",
     permanentExhibitions: [
       { id: "sema-collection", name: "서울시립미술관 소장품", name_en: "Seoul Museum of Art Collection", title: "서울시립미술관 소장품", title_en: "Seoul Museum of Art Collection", description: "서울시립미술관 소장 미술작품 컬렉션 (회화, 사진, 한국화, 드로잉&판화, 조각, 뉴미디어, 설치, 공예, 서예, 디자인 등 6,167점)", description_en: "Seoul Museum of Art collection featuring painting, photography, Korean painting, drawing & print, sculpture, new media, installation, craft, calligraphy, design (6,167 works)", startDate: "Permanent", endDate: "Permanent", collectionFile: "seoul-museum-of-art-collection.json" }
     ],
-    temporaryExhibitions: [],
+    temporaryExhibitions: [
+      {
+        id: "sema-2026-gana-tech",
+        title: "가나아트컬렉션: 기술의 저변 — 경계에 선 장면들",
+        titleEn: "Gana Art Collection: The Undercurrent of Technology",
+        description: "1970–90년대 급격한 산업화·도시화 속 미디어 환경의 변화가 한국 사회 풍경을 어떻게 형성했는지를 탐구한다. SeMA의 2026년 기관 주제 '기술'의 핵심 전시.",
+        startDate: "2026-04-16",
+        endDate: "2026-11-22",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/sema-2026-gana-tech.jpg",
+        officialUrl: "https://sema.seoul.go.kr/kr/whatson/landing",
+        status: "ongoing"
+      },
+      {
+        id: "sema-2026-yooyoungkuk",
+        title: "유영국: 산은 내 안에 있다",
+        titleEn: "Yoo Young-kuk: The Mountain Is Within Me",
+        description: "한국 추상미술의 선구자 유영국(1916–2002)의 110주년 기념 역대 최대 회고전. 산과 색면으로 유명한 그의 대표작을 통해 한국 현대 추상회화의 궤적을 조망한다.",
+        startDate: "2026-05-14",
+        endDate: "2026-10-18",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/sema-2026-yooyoungkuk.jpg",
+        officialUrl: "https://sema.seoul.go.kr",
+        status: "upcoming"
+      },
+      {
+        id: "sema-2026-hershman",
+        title: "린 허쉬만 리슨",
+        titleEn: "Lynn Hershman Leeson",
+        description: "미국 미디어아트·영화 선구자 린 허쉬만 리슨의 아시아 첫 대규모 개인전. 60년 작업 세계를 아우르며 SeMA의 2026년 '기술' 주제에 응답한다.",
+        startDate: "2026-10-01",
+        endDate: "2027-02-07",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/sema-2026-hershman.jpg",
+        officialUrl: "https://sema.seoul.go.kr",
+        status: "upcoming"
+      }
+    ],
     pastExhibitions: [],
     rooms: {}
   },
@@ -4601,32 +4714,6 @@ export const exhibitions = [
     pastExhibitions: []
   },
   {
-    id: "jeju-museum-of-art",
-    name: "Jeju Museum of Art",
-    slug: "jmoa",
-    location: "1100-ro 2894-78, Jeju-si, Jeju-do",
-    description: "Online digital collection from Jeju Museum of Art (JMOA).",
-    latitude: 33.4892,
-    longitude: 126.4899,
-    country: "South Korea",
-    region: "Jeju",
-    representativeImage: "",
-    permanentExhibitions: [
-      {
-        id: "jmoa-collection",
-        name: "Digital Collection",
-        title: "디지털 소장품",
-        description: "Digital collection imported from onlinejmoa.or.kr.",
-        startDate: "Permanent",
-        endDate: "Permanent",
-        collectionFile: "jmoa-collection-all.json"
-      }
-    ],
-    temporaryExhibitions: [],
-    pastExhibitions: []
-  }
-  ,
-  {
     id: "kim-tschang-yeul-art-museum",
     name: "Kim Tschang-Yeul Art Museum Jeju",
     slug: "kimtschang-yeul",
@@ -5149,5 +5236,524 @@ export const exhibitions = [
     ],
     temporaryExhibitions: [],
     pastExhibitions: []
+  },
+
+  // ─────────────────────────────────────────────────────────────────────────
+  //  한국 주요 미술관 (2026 현재·예정 전시)
+  // ─────────────────────────────────────────────────────────────────────────
+
+  {
+    id: "mmca-gwacheon",
+    slug: "mmca-gwacheon",
+    name: "국립현대미술관 과천관",
+    location: "과천, 경기도, 대한민국",
+    description: "국립현대미술관 과천관은 경기도 과천에 위치한 국립현대미술관의 본관이다. 3,300㎡ 규모의 소장품 상설전시와 한국 근현대미술 대규모 기획전을 개최하며, 2026년 개관 40주년을 맞이한다.",
+    latitude: 37.4397,
+    longitude: 126.9874,
+    country: "South Korea",
+    region: "Gyeonggi",
+    representativeImage: "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2c/MMCA_Gwacheon_Korea.jpg/1280px-MMCA_Gwacheon_Korea.jpg",
+    permanentExhibitions: [],
+    temporaryExhibitions: [
+      {
+        id: "mmca-gwacheon-2026-waterlilies",
+        title: "MMCA 해외 명작: 수련과 샹들리에",
+        titleEn: "MMCA Masterworks: Water Lilies and Chandeliers",
+        description: "국립현대미술관이 소장하고 있는 해외 명작을 소개하는 상설 전시.",
+        startDate: "2025-10-02",
+        endDate: "2027-01-03",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/mmca-202508210001995.gif",
+        officialUrl: "https://www.mmca.go.kr/exhibitions/progressList.do",
+        status: "ongoing"
+      },
+      {
+        id: "mmca-gwacheon-2026-artbank",
+        title: "미술은행 20주년 특별전 «돌아온 미래: 형태와 생각의 발현»",
+        titleEn: "Art Bank 20th Anniversary: The Return of the Future",
+        description: "미술은행 설립 20주년을 기념하는 특별전.",
+        startDate: "2025-08-06",
+        endDate: "2026-06-30",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/mmca-202508060001987.png",
+        officialUrl: "https://www.mmca.go.kr/exhibitions/progressList.do",
+        status: "ongoing"
+      },
+      {
+        id: "mmca-gwacheon-2026-drawing",
+        title: "특별수장고: 국립현대미술관 드로잉·일본 현대 판화 소장품",
+        titleEn: "Special Storage: MMCA Drawings and Japanese Contemporary Prints",
+        description: "국립현대미술관 드로잉과 일본 현대 판화 소장품을 공개하는 특별수장고 전시.",
+        startDate: "2025-07-10",
+        endDate: "2026-06-30",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/mmca-202507100001975.png",
+        officialUrl: "https://www.mmca.go.kr/exhibitions/progressList.do",
+        status: "ongoing"
+      }
+    ],
+    pastExhibitions: []
+  },
+
+  {
+    id: "leeum-museum",
+    slug: "leeum-museum",
+    name: "리움미술관",
+    location: "서울, 대한민국",
+    description: "리움미술관은 삼성문화재단이 운영하는 서울 용산구 한남동의 사립미술관이다. 마리오 보타, 장 누벨, 렘 쿨하스 등 세계적 건축가가 설계한 세 개 건물에 한국 고미술과 국내외 현대미술 컬렉션을 소장·전시한다.",
+    latitude: 37.5380,
+    longitude: 126.9980,
+    country: "South Korea",
+    region: "Seoul",
+    representativeImage: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Leeum_Museum_of_Art_Itaewon_Seoul_Korea.jpg/1280px-Leeum_Museum_of_Art_Itaewon_Seoul_Korea.jpg",
+    permanentExhibitions: [],
+    temporaryExhibitions: [
+      {
+        id: "leeum-2026-sehgal",
+        title: "티노 세갈 개인전",
+        titleEn: "Tino Sehgal",
+        description: "독일-영국 작가 티노 세갈의 국내 첫 개인전. 훈련된 인터프리터가 관객과 직접 상호작용하는 '구성된 상황(Constructed Situations)'으로 유명하다. 25년 작업 세계의 신작과 리움 컬렉션을 활성화하는 라이브 아트를 선보인다.",
+        startDate: "2026-03-03",
+        endDate: "2026-06-28",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/leeum-2026-sehgal.jpg",
+        officialUrl: "https://www.leeumhoam.org/leeum/exhibition",
+        status: "ongoing"
+      },
+      {
+        id: "leeum-2026-orozco",
+        title: "가브리엘 오로스코: 정원",
+        titleEn: "Gabriel Orozco: Garden",
+        description: "멕시코 작가 가브리엘 오로스코의 신규 커미션 야외 작품. 리움 야외 데크를 자연 지향적이고 공공 접근 가능한 공간으로 재구성하는 설치 프로젝트.",
+        startDate: "2026-04-03",
+        endDate: "2026-09-30",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/leeum-2026-orozco.jpg",
+        officialUrl: "https://www.leeumhoam.org/leeum/exhibition",
+        status: "ongoing"
+      },
+      {
+        id: "leeum-2026-koojunga",
+        title: "구정아 개인전: OUSSS",
+        titleEn: "Koo Jeong-a: OUSSS",
+        description: "구정아의 국내 최대 개인전. 자기력·향기·빛 등 비가시적 에너지 흐름을 중심으로 하는 그의 실천이 M2 갤러리를 넘어 로비, 벽면, 고미술 컬렉션 인근 공간까지 확장되며 'OUSSS'라는 개념 세계를 구현한다.",
+        startDate: "2026-09-05",
+        endDate: "2026-12-27",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/leeum-2026-koojunga.jpg",
+        officialUrl: "https://www.leeumhoam.org/leeum/exhibition",
+        status: "upcoming"
+      }
+    ],
+    pastExhibitions: []
+  },
+
+  {
+    id: "apma",
+    slug: "apma",
+    name: "아모레퍼시픽 미술관",
+    location: "서울, 대한민국",
+    description: "아모레퍼시픽 미술관(APMA)은 서울 용산구 아모레퍼시픽 본사 건물에 위치한 기업 미술관이다. 데이비드 치퍼필드 설계의 건물 안에 한국 및 국제 현대미술 컬렉션을 소장하며 격 높은 기획전을 개최한다.",
+    latitude: 37.5289,
+    longitude: 126.9645,
+    country: "South Korea",
+    region: "Seoul",
+    representativeImage: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Amorepacific_Corporation_Headquarters.jpg/1280px-Amorepacific_Corporation_Headquarters.jpg",
+    permanentExhibitions: [],
+    temporaryExhibitions: [
+      {
+        id: "apma-2026-chapter5",
+        title: "APMA, CHAPTER FIVE",
+        titleEn: "APMA, Chapter Five — From the APMA Collection",
+        description: "APMA 소장품 특별전 다섯 번째 시즌. 데이비드 호크니, 로즈 와일리, 키키 스미스, 갈라 포라스-킴, 백남준, 이불, 이우환, 구본창 등 40여 명의 작가 50여 점을 통해 한국·국제 현대미술의 주요 궤적을 조망한다.",
+        startDate: "2026-04-01",
+        endDate: "2026-08-02",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/apma-2026-chapter5.jpg",
+        officialUrl: "https://apma.amorepacific.com/contents/exhibition/index.do",
+        status: "ongoing"
+      },
+      {
+        id: "apma-2026-bradford",
+        title: "마크 브래드포드: KEEP WALKING",
+        titleEn: "Mark Bradford: Keep Walking",
+        description: "미국 작가 마크 브래드포드의 개인전. 상업 포스터, 신문지 등 일상 재료를 겹겹이 쌓아 추상적 화면을 구성하는 그의 작업 세계를 소개한다.",
+        startDate: "2025-09-01",
+        endDate: "2026-02-28",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/apma-2026-bradford.jpg",
+        officialUrl: "https://apma.amorepacific.com/contents/exhibition/index.do",
+        status: "ongoing"
+      }
+    ],
+    pastExhibitions: []
+  },
+
+  {
+    id: "d-museum",
+    slug: "d-museum",
+    name: "디뮤지엄",
+    name_en: "D Museum",
+    location: "서울특별시 성동구 왕십리로 83-21 (성수동)",
+    location_en: "83-21 Wangsimni-ro, Seongdong-gu, Seoul (Seongsu)",
+    description: "대림문화재단이 운영하는 성수동의 현대미술·라이프스타일 복합 뮤지엄. 한남동에서 성수로 이전 후 지역 거점과 맞물려 MZ세대 방문이 폭발적으로 증가했다. 몰입형 체험 전시와 라이프스타일 큐레이션이 특징.",
+    latitude: 37.5474,
+    longitude: 127.0575,
+    country: "South Korea",
+    region: "Seoul",
+    representativeImage: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/57/Seoul_Seongsu-dong_D_museum.jpg/1280px-Seoul_Seongsu-dong_D_museum.jpg",
+    permanentExhibitions: [],
+    temporaryExhibitions: [
+      {
+        id: "dmuseum-2025-home2",
+        title: "취향가옥 2: Art in Life, Life in Art 2",
+        titleEn: "A House of Taste 2: Art in Life, Life in Art 2",
+        description: "디뮤지엄 개관 10주년 기념 대형전. 약 600점의 작품이 영화감독·차 소믈리에·출판 에디터·패션 디렉터·건축가의 상상 속 집 5곳에 배치된다. 백남준의 'Apple Tree'(1995), 이우환, 하종현, 로이 리히텐슈타인, 올라퍼 엘리아슨 등 참여.",
+        startDate: "2025-06-28",
+        endDate: "2026-09-20",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/dmuseum-2025-home2.jpg",
+        officialUrl: "http://www.daelimmuseum.org",
+        status: "ongoing"
+      }
+    ],
+    pastExhibitions: []
+  },
+
+  {
+    id: "hoam-museum",
+    slug: "hoam-museum",
+    name: "호암미술관",
+    location: "용인, 경기도, 대한민국",
+    description: "호암미술관은 삼성문화재단이 운영하는 경기도 용인 에버랜드 인근의 미술관이다. 전통 정원 희원(熙苑) 속에 위치하며 한국 고미술과 현대미술을 아우르는 전시를 개최한다.",
+    latitude: 37.2738,
+    longitude: 127.2100,
+    country: "South Korea",
+    region: "Gyeonggi",
+    representativeImage: "https://upload.wikimedia.org/wikipedia/commons/thumb/7/70/Hoam_Art_Museum.jpg/1280px-Hoam_Art_Museum.jpg",
+    permanentExhibitions: [],
+    temporaryExhibitions: [
+      {
+        id: "hoam-2026-kimyunshin",
+        title: "김윤신: 합이합일 분이분일",
+        titleEn: "Kim Yun Shin: Combine to Make One, Divide to Make One",
+        description: "한국 1세대 여성 조각가이자 기하 추상의 선구자 김윤신(1935-)의 첫 대규모 회고전. 60년 작업 세계를 아우르는 조각·회화·드로잉 약 100점. 자연 소재(나무·돌)를 통해 공간과 시간의 역동성을 표현한 작업을 조명한다. 호암미술관 최초의 한국 여성 작가 단독전.",
+        startDate: "2026-03-17",
+        endDate: "2026-06-28",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/hoam-2026-kimyunshin.jpg",
+        officialUrl: "https://www.leeumhoam.org/hoam/exhibition",
+        status: "ongoing"
+      },
+      {
+        id: "hoam-2026-artspectrum",
+        title: "아트 스펙트럼 2026",
+        titleEn: "Art Spectrum 2026",
+        description: "팔레 드 도쿄(유럽 최대 현대미술 센터)와 공동 기획한 아트 스펙트럼의 실험적 새 버전. 현대미술·영화·디자인·건축·실험음악을 아우르는 복합 프로그램으로, 처음으로 리움이 아닌 호암에서 개최된다.",
+        startDate: "2026-09-01",
+        endDate: "2026-12-31",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/hoam-2026-artspectrum.jpg",
+        officialUrl: "https://www.leeumhoam.org/hoam/exhibition",
+        status: "upcoming"
+      }
+    ],
+    pastExhibitions: []
+  },
+
+  {
+    id: "busan-museum-art",
+    slug: "busan-museum-art",
+    name: "부산시립미술관",
+    location: "부산, 대한민국",
+    description: "부산시립미술관은 부산광역시 해운대구에 위치한 공립미술관이다. 2024년 말부터 2026년 가을까지 본관 대규모 리노베이션 중이며, 이우환 공간은 계속 운영된다. 2026년 가을 재개관 특별 프로그램이 예정되어 있다.",
+    latitude: 35.1795,
+    longitude: 129.1268,
+    country: "South Korea",
+    region: "Busan",
+    representativeImage: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d2/Busan_Museum_of_Art.jpg/1280px-Busan_Museum_of_Art.jpg",
+    permanentExhibitions: [],
+    temporaryExhibitions: [
+      {
+        id: "bma-leeufan-space",
+        title: "이우환 공간 상설전",
+        titleEn: "Lee Ufan Space — Permanent Exhibition",
+        description: "이우환과 건축가 안도 다다오가 공동 설계한 세계 두 번째 이우환 개인 미술관. 1,400㎡ 3개 층에 한국 미니멀리즘 거장의 회화·조각이 상설 전시되며, 2025년 개관 10주년 특별 문화 행사가 열렸다.",
+        startDate: "2015-04-01",
+        endDate: "ongoing",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/bma-leeufan-space.png",
+        officialUrl: "https://art.busan.go.kr",
+        status: "ongoing"
+      },
+      {
+        id: "bma-2026-looplab",
+        title: "2026 LOOP LAB BUSAN",
+        titleEn: "2026 LOOP LAB BUSAN",
+        description: "부산시립미술관 이우환 공간에서 열리는 국제 실험예술 프로그램. 루프 형식의 영상·설치·퍼포먼스 작업을 중심으로 한 동시대 미술 프로젝트.",
+        startDate: "2026-04-16",
+        endDate: "2026-06-28",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/bma-2026-looplab.jpg",
+        officialUrl: "https://art.busan.go.kr/tblTsite07Display/listFutureClient.nm",
+        status: "upcoming"
+      }
+    ],
+    pastExhibitions: []
+  },
+
+  {
+    id: "jeju-museum-art",
+    slug: "jmoa",
+    name: "제주도립미술관",
+    name_en: "Jeju Museum of Art",
+    location: "제주특별자치도 제주시 1100로 2894-78",
+    location_en: "2894-78 1100-ro, Jeju-si, Jeju-do",
+    description: "제주도립미술관(JMOA)은 제주특별자치도가 운영하는 공립미술관으로 제주시 연동에 위치한다. 제주의 자연·역사·문화를 반영한 특색 있는 기획전과 제주 비엔날레를 운영한다.",
+    latitude: 33.4993,
+    longitude: 126.5319,
+    country: "South Korea",
+    region: "Jeju",
+    representativeImage: "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Jeju_Museum_of_Art.jpg/1280px-Jeju_Museum_of_Art.jpg",
+    permanentExhibitions: [
+      {
+        id: "jmoa-collection",
+        name: "Digital Collection",
+        title: "디지털 소장품",
+        description: "온라인 제주도립미술관 소장품. onlinejmoa.or.kr에서 수집한 판화·회화 컬렉션.",
+        startDate: "Permanent",
+        endDate: "Permanent",
+        collectionFile: "jmoa-collection-all.json"
+      }
+    ],
+    temporaryExhibitions: [
+      {
+        id: "jmoa-2025-ujumo",
+        title: "제주도립미술관 중정프로젝트 《우주목(宇宙木)》",
+        titleEn: "JMOA Courtyard Project: Cosmic Tree",
+        description: "제주도립미술관 중정에 설치된 야외 설치 프로젝트. 제주의 자연과 우주를 잇는 거대한 나무 형상의 조형물을 통해 생명·공간·시간의 순환을 탐구한다.",
+        startDate: "2025-08-05",
+        endDate: "2026-05-10",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/jmoa-2026-ujumo.jpg",
+        officialUrl: "https://www.jeju.go.kr/jmoa/show/current.htm",
+        status: "ongoing"
+      },
+      {
+        id: "jmoa-2026-boundary",
+        title: "경계 위의 그녀",
+        titleEn: "She Who Stands on the Boundary",
+        description: "국내외 여성 작가 19명의 작품 68점으로 구성된 기획전. 쿠사마 야요이 등 참여. 자기 인식, 역사적 억압, 치유, 예술적 변용이라는 네 주제 섹션으로 구성되며, 한국 최초의 여성 미술가 나혜석(1896–1948)에게 마지막 섹션을 헌정한다.",
+        startDate: "2026-04-07",
+        endDate: "2026-08-02",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/jmoa-2026-boundary.png",
+        officialUrl: "https://www.jeju.go.kr/jmoa/show/current.htm",
+        status: "upcoming"
+      },
+      {
+        id: "jmoa-2026-biennale",
+        title: "2026 제5회 제주비엔날레",
+        titleEn: "5th Jeju Biennale 2026",
+        description: "주제 '허끄곡 모닥치곡 이야홍: 변용의 기술'. 19개국 70팀 참여. 제주도립미술관·관덕정·제주도청 옛 터·제주아트플랫폼 등 7개 분산 거점에서 개최. 제주의 돌 문화·신화·유배의 역사를 현대미술로 재해석한다.",
+        startDate: "2026-08-25",
+        endDate: "2026-11-15",
+        coverImage: "",
+        officialUrl: "https://www.jeju.go.kr/jmoa/",
+        status: "upcoming"
+      }
+    ],
+    pastExhibitions: []
+  },
+
+  {
+    id: "hangaram-art-museum",
+    slug: "hangaram-art-museum",
+    name: "예술의전당 한가람미술관",
+    name_en: "Seoul Arts Center Hangaram Art Museum",
+    location: "서울특별시 서초구 남부순환로 2406",
+    location_en: "2406 Nambusunhwan-ro, Seocho-gu, Seoul",
+    description: "예술의전당 내 위치한 한가람미술관은 피카소, 달리, 모네 등 세계적 거장의 블록버스터 전시를 국내 최대 규모로 유치하는 복합 전시 공간이다. 연간 관람객 최상위권의 국내 최고 인기 전시 공간.",
+    description_en: "Located within Seoul Arts Center, Hangaram Art Museum hosts world-class blockbuster exhibitions featuring masters like Picasso, Dalí, and Monet. Among Korea's top-attended exhibition spaces annually.",
+    latitude: 37.4784,
+    longitude: 127.0147,
+    country: "South Korea",
+    region: "Seoul",
+    representativeImage: "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Seoul_Arts_Center.jpg/1280px-Seoul_Arts_Center.jpg",
+    floorPlan: "",
+    permanentExhibitions: [],
+    temporaryExhibitions: [
+      {
+        id: "hangaram-2026-botero",
+        title: "페르난도 보테로: 형태의 미학",
+        titleEn: "Fernando Botero: The Aesthetics of Form",
+        description: "콜롬비아 출신 거장 페르난도 보테로의 국내 대규모 회고전. 특유의 풍만한 형태로 인간·동물·정물을 유머러스하게 재해석한 회화·조각 작품을 망라한다.",
+        startDate: "2026-04-24",
+        endDate: "2026-08-30",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/hangaram-2026-botero.jpg",
+        officialUrl: "https://www.sac.or.kr/site/main/show/show_view?SN=76470",
+        status: "ongoing"
+      },
+      {
+        id: "hangaram-2026-spain",
+        title: "스페인 미술 500년",
+        titleEn: "500 Years of Spanish Art",
+        description: "엘 그레코부터 피카소, 달리, 미로까지 스페인 미술 500년의 흐름을 조망하는 대형 기획전. 스페인 주요 미술관 소장품을 포함한 원화 100여 점을 선보인다.",
+        startDate: "2026-09-22",
+        endDate: "2027-01-20",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/hangaram-2026-botero.jpg",
+        officialUrl: "https://www.sac.or.kr/site/main/show/show_view?SN=77679",
+        status: "upcoming"
+      }
+    ],
+    pastExhibitions: [],
+    rooms: {}
+  },
+
+  {
+    id: "ddp-gallery",
+    slug: "ddp-gallery",
+    name: "DDP (동대문디자인플라자)",
+    name_en: "Dongdaemun Design Plaza",
+    location: "서울특별시 중구 을지로 281",
+    location_en: "281 Eulji-ro, Jung-gu, Seoul",
+    description: "자하 하디드가 설계한 서울의 랜드마크 복합 문화 공간. 디자인·패션·예술이 교차하는 비정형 건축물로, 대형 상업 전시와 팝업 전시, 패션위크의 핵심 거점이다.",
+    description_en: "Designed by Zaha Hadid, DDP is a landmark multiplex cultural space in Seoul where design, fashion, and art converge. A prime venue for large commercial exhibitions, pop-up shows, and fashion weeks.",
+    latitude: 37.5665,
+    longitude: 127.0094,
+    country: "South Korea",
+    region: "Seoul",
+    representativeImage: "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/DDP_dongdaemun_design_plaza_2014.jpg/1280px-DDP_dongdaemun_design_plaza_2014.jpg",
+    floorPlan: "",
+    permanentExhibitions: [],
+    temporaryExhibitions: [
+      {
+        id: "ddp-2026-offcourse",
+        title: "OFF COURSE CLUB",
+        titleEn: "OFF COURSE CLUB",
+        description: "DDP 전시.",
+        startDate: "2026-04-03",
+        endDate: "2026-04-26",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/ddp-2026-offcourse.jpg",
+        officialUrl: "https://ddp.or.kr/index.html?menuno=240",
+        status: "ongoing"
+      },
+      {
+        id: "ddp-2026-btheb",
+        title: "BtheB 뷰티기획전 <Beauty For All>",
+        titleEn: "BtheB Beauty Exhibition: Beauty For All",
+        description: "DDP 뮤지엄 뷰티 기획전.",
+        startDate: "2026-02-28",
+        endDate: "2026-06-07",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/ddp-2026-btheb.jpg",
+        officialUrl: "https://ddp.or.kr/index.html?menuno=240",
+        status: "ongoing"
+      },
+      {
+        id: "ddp-2026-ultra",
+        title: "울트라백화점 서울 Vol.2: 포스트 서브컬쳐",
+        titleEn: "Ultra Department Store Seoul Vol.2: Post Subculture",
+        description: "서브컬쳐를 주제로 한 DDP 기획전.",
+        startDate: "2026-02-06",
+        endDate: "2026-05-10",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/ddp-2026-ultra.jpg",
+        officialUrl: "https://ddp.or.kr/index.html?menuno=240",
+        status: "ongoing"
+      }
+    ],
+    pastExhibitions: [],
+    rooms: {}
+  },
+
+  {
+    id: "daelim-museum",
+    slug: "daelim-museum",
+    name: "대림미술관",
+    name_en: "Daelim Museum",
+    location: "서울특별시 종로구 자하문로4길 21",
+    location_en: "21 Jahamun-ro 4-gil, Jongno-gu, Seoul",
+    description: "대림문화재단이 운영하는 서촌 인근의 디자인·사진·생활문화 전문 미술관. MZ세대 취향을 겨냥한 트렌디한 기획전으로 '전시의 대중화'를 이끌었다. 도시 한옥 공간을 활용한 특유의 전시 방식이 특징.",
+    description_en: "Operated by the Daelim Cultural Foundation near Seochon, this design and photography museum pioneered the popularization of art exhibitions with MZ-generation-targeted shows in a hanok-inspired space.",
+    latitude: 37.5788,
+    longitude: 126.9722,
+    country: "South Korea",
+    region: "Seoul",
+    representativeImage: "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Gyeongbokgung_palace.jpg/1280px-Gyeongbokgung_palace.jpg",
+    floorPlan: "",
+    permanentExhibitions: [],
+    temporaryExhibitions: [
+      {
+        id: "daelim-2025-tanaami-dpublic",
+        title: "PUBLIC ART SPACE: 케이이치 타나아미",
+        titleEn: "PUBLIC ART SPACE: Keiichi Tanaami",
+        description: "D PUBLIC PROJECT의 야외 공공 미술 프로그램. 일본 팝아트의 거장 케이이치 타나아미(1936-)의 생동감 넘치는 환상적 이미지를 공공 공간에 설치한다.",
+        startDate: "2025-07-22",
+        endDate: "2026-09-20",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/daelim-2025-tanaami-dpublic.jpg",
+        officialUrl: "https://www.daelimmuseum.org/exhibition/current",
+        status: "ongoing"
+      }
+    ],
+    pastExhibitions: [
+      {
+        id: "daelim-2024-tanaami",
+        title: "Keiichi Tanaami: I'M THE ORIGIN",
+        titleEn: "Keiichi Tanaami: I'M THE ORIGIN",
+        startDate: "2024-12-14",
+        endDate: "2025-06-29",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/daelim-tanaami.jpg",
+        officialUrl: "https://www.daelimmuseum.org/exhibition/past",
+        status: "past"
+      },
+      {
+        id: "daelim-2025-petra",
+        title: "페트라 콜린스: fangirl",
+        titleEn: "Petra Collins: fangirl",
+        startDate: "2025-08-29",
+        endDate: "2026-02-15",
+        coverImage: "",
+        officialUrl: "https://www.daelimmuseum.org/exhibition/past",
+        status: "past"
+      }
+    ],
+    rooms: {}
+  },
+
+      {
+    id: "groundseesaw",
+    slug: "groundseesaw",
+    name: "그라운드시소",
+    name_en: "Ground Seesaw",
+    location: "서울특별시 종로구 자하문로 35 (서촌점)",
+    location_en: "35 Jahamun-ro, Jongno-gu, Seoul (Seocho)",
+    description: "서촌·한남·성수에 위치한 복합 문화공간. 사진, 일러스트, 그래픽 아트 중심의 대중적인 기획전을 주로 개최하며 MZ세대 감성의 전시로 큰 인기를 얻고 있다.",
+    latitude: 37.5842,
+    longitude: 126.9666,
+    country: "South Korea",
+    region: "Seoul",
+    representativeImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/groundseesaw-2026-max.jpg",
+    permanentExhibitions: [],
+    temporaryExhibitions: [
+      {
+        id: "groundseesaw-2026-max",
+        title: "맥스 시덴토프 개인전",
+        titleEn: "Max Siedentopf: NOT SERIOUS",
+        description: "독일 출신 사진작가 겸 감독 맥스 시덴토프의 국내 첫 개인전. 유머와 부조리함으로 가득한 그의 작업 세계를 통해 일상과 예술의 경계를 탐구한다.",
+        startDate: "2026-03-27",
+        endDate: "2026-08-30",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/groundseesaw-2026-max.jpg",
+        officialUrl: "https://www.groundseesaw.co.kr",
+        status: "ongoing"
+      },
+      {
+        id: "groundseesaw-2026-yoru",
+        title: "성률 기획전: 여름을 닮은 우리",
+        titleEn: "Seongryul: Summer Like Us",
+        description: "그라운드시소 한남점 기획전.",
+        startDate: "2026-04-30",
+        endDate: "2026-09-27",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/groundseesaw-2026-yoru.jpg",
+        officialUrl: "https://www.groundseesaw.co.kr",
+        status: "upcoming"
+      },
+      {
+        id: "groundseesaw-2026-roomforwonder",
+        title: "룸 포 원더: 상상의 문을 열다",
+        titleEn: "Room for Wonder: Open the Door to Imagination",
+        description: "그라운드시소 성수 이스트관의 몰입형 복합 전시. 동화적 세계관과 인터랙티브 설치로 구성된 대형 체험전이다.",
+        startDate: "2025-12-19",
+        endDate: "2026-06-07",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/groundseesaw-2026-roomforwonder.jpg",
+        officialUrl: "https://www.groundseesaw.co.kr",
+        status: "ongoing"
+      }
+    ],
+    pastExhibitions: [],
+    rooms: {}
   }
 ];

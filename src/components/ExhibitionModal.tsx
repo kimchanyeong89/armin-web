@@ -24,9 +24,9 @@ const RE_YEAR_3 = /\b(\d{3})\b/;
 const CATEGORY_MAP: Record<string, string> = {
   "drawings, prints, and paintings": "Drawings, Prints, and Paintings",
   "objects & media art": "Objects & Media Art",
-    "photography": "Photography",
-    "posters": "Posters",
-  "sculptures": "Sculptures",
+  "photography": "Photography",
+  "posters": "Posters",
+  "sculptures": "Sculpture",
   "drawing": "Drawing",
   "drawings": "Drawing",
   "draw": "Drawing",
@@ -48,16 +48,13 @@ const CATEGORY_MAP: Record<string, string> = {
   "ceramic": "Ceramics",
   "ceramics": "Ceramics",
   "sculpture (visual work)": "Sculpture",
-    "sculptures": "Sculpture",
   "sculpture": "Sculpture",
   "escultura": "Sculpture",
   "esculturas": "Sculpture",
   "sketchbooks": "Sketchbooks",
   "sketchbook": "Sketchbooks",
-    "photography": "Photography",
   "photograph": "Photography",
   "photos": "Photography",
-    "posters": "Posters",
   "poster": "Posters",
 };
 const CATEGORY_ENTRIES = Object.entries(CATEGORY_MAP);
@@ -6647,7 +6644,6 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
         'mad-collection': '/data/mad-paris-collection.json',
         'egyptian-museum-cairo-collection': '/data/egyptian-museum-cairo-collection.json',
         'collection-fine-arts-be-complete': '/data/fine-arts-be-complete.json',
-        'egyptian-museum-cairo-collection': '/data/egyptian-museum-cairo-collection.json',
         'fine-arts-be-complete': '/data/fine-arts-be-complete.json',
 
         
@@ -6751,8 +6747,6 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
         'kroller-muller-paintings': '/data/kroller-muller-permanent.json',
         'kroller-muller-film-video': '/data/kroller-muller-film-video.json',
         'kroller-muller-photography': '/data/kroller-muller-photography.json',
-        // Musee Conde
-        'conde-paintings': '/data/musee-conde-collection.json',
         // St. Petersburg - Hermitage
         'hermitage-collection': '/data/hermitage-highlights.json',
         'pushkin-collection': '/data/pushkin-paintings.json',
@@ -6790,7 +6784,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
       const jsonFile = jsonFiles[exhibition.id];
       (async () => {
         try {
-          const res = await fetch(jsonFile, { cache: 'force-cache' });
+          const res = await fetch(jsonFile, { cache: 'no-cache' });
           if (!res.ok) throw new Error('Failed to load artworks');
           const data = await res.json();
           if (exhibition.id.startsWith('kroller-muller-')) {
@@ -7256,9 +7250,21 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
             console.log(`[Kröller - Müller ${exhibition.id}] Sample list item: `, list[0]);
             console.log(`[Kröller - Müller ${exhibition.id}] Sample withImages item: `, withImages[0]);
           }
+          // Push letter/text type artworks to the end
+          const isTextOrLetter = (a: any) => {
+            const name = String(a.name || '').toLowerCase();
+            const cat = String(a.category || '').toLowerCase();
+            const med = String(a.medium || a.technique || a.materials || '').toLowerCase();
+            const id = String(a.id || '').toLowerCase();
+            return /\bletter[s]?\b|\blettre[s]?\b|\bbrief[e]?\b|\bcorrespondence\b|\bmanuscript\b/.test(name)
+              || /\bletter[s]?\b|\blettre[s]?\b|\bbrief[e]?\b/.test(cat)
+              || /\bletter[s]?\b|\blettre[s]?\b|\bbrief[e]?\b/.test(med)
+              || /^b\d+v\d{4}/.test(id);
+          };
+          const sortedWithImages = [...withImages].sort((a, b) => (isTextOrLetter(a) ? 1 : 0) - (isTextOrLetter(b) ? 1 : 0));
           setArtworks((prev) => {
             const preservedUserSubmissions = prev.filter(p => p.source === 'user_submission');
-            return [...withImages, ...preservedUserSubmissions];
+            return [...sortedWithImages, ...preservedUserSubmissions];
           });
           setInitialized(true);
         } catch (error) {
@@ -9495,9 +9501,9 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
               onMouseEnter={() => startTitleAutoScroll()}
               onMouseLeave={() => stopTitleAutoScroll(true)}
               style={{ fontSize: 12, fontWeight: 700, color: '#111827', whiteSpace: 'nowrap', overflowX: 'hidden', textOverflow: 'clip', cursor: 'default' }}
-              title={exhibition.title || exhibition.name}
+              title={(exhibition as any)._exhibitionTitle || exhibition.title || exhibition.name}
             >
-              <span style={{ display: 'inline-block', paddingRight: 18 }}>{exhibition.title || exhibition.name}</span>
+              <span style={{ display: 'inline-block', paddingRight: 18 }}>{(exhibition as any)._exhibitionTitle || exhibition.title || exhibition.name}</span>
             </div>
             <div
               style={{
@@ -9540,7 +9546,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
                 el.scrollTo({ top: 0, behavior: 'smooth' });
               }}
             >
-              {exhibition.description || `${(exhibition.title || exhibition.name)} — a short introduction to the exhibition.`}
+              {(exhibition as any)._exhibitionDescription || exhibition.description || `${((exhibition as any)._exhibitionTitle || exhibition.title || exhibition.name)} — a short introduction to the exhibition.`}
             </div>
             {/* Description button - opens overlay with full exhibition details */}
             {((exhibition as any).detailedDescription || (exhibition as any).descriptionHtml || (exhibition as any).url || (exhibition as any).fullDescription || (Array.isArray((exhibition as any).galleryImages) && (exhibition as any).galleryImages.length > 0) || (Array.isArray((exhibition as any).videos) && (exhibition as any).videos.length > 0)) && (
@@ -12204,7 +12210,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
               <div style={{ flex: 1, overflowY: 'auto', padding: '0' }}>
                 {/* Cover Image - use coverImage first, then image, then first artwork */}
                 {(() => {
-                  const coverImage = (exhibition as any).coverImage;
+                  const coverImage = (exhibition as any)._exhibitionCoverImage || (exhibition as any).coverImage;
                   const exhibitionImage = (exhibition as any).image;
                   const fallbackImage = artworks.length > 0 ? artworks[0].image : null;
                   const imageToShow = coverImage || exhibitionImage || fallbackImage;

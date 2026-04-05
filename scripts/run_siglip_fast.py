@@ -177,7 +177,7 @@ def render_dashboard(state, current_e=None, last_error=None):
         f_out.write("\n".join(lines))
 def download_image(art):
     """단일 이미지 다운로드 (스레드풀에서 실행)"""
-    art_id = art.get("id") or f"{art.get('e','x')}-{art.get('n','x')}"
+    art_id = str(art.get("id") or f"{art.get('e','x')}-{art.get('n','x')}")
     img_url = art.get("i")
     try:
         # User-Agent를 최대한 실제 브라우저와 비슷하게 설정하여 Cloudflare 등 차단 우회
@@ -255,7 +255,7 @@ for e_id in sorted_exhibitions:
     if state["museum_processed"].get(e_id, 0) >= len(arts): continue
 
     # 미처리 항목만 필터
-    pending = [a for a in arts if (a.get("id") or f"{a.get('e','x')}-{a.get('n','x')}") not in processed_ids_set]
+    pending = [a for a in arts if str(a.get("id") or f"{a.get('e','x')}-{a.get('n','x')}") not in processed_ids_set]
     if not pending: continue
 
     print(f"\n🏛️  [{e_id}] 미처리: {len(pending)}개 처리 시작", flush=True)

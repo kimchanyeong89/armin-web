@@ -1169,15 +1169,15 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                         const all = matched
                             .map((r: any) => ({ ...r, score: scoreMap[r.id] || 0 }))
                             .sort((a, b) => (b.score || 0) - (a.score || 0));
-                        resolve(all);
+                        resolve(all.length > 0 ? all : rawResults);
                     }
                 };
                 workerRef.current.addEventListener('message', onMsg);
                 workerRef.current.postMessage({ type: 'GET_DETAILS_BY_IDS', ids: vectorizeIds });
-                // 2초 타임아웃 — search index 조회 실패 시 빈 배열 반환 (placeholder 방지)
+                // 2초 타임아웃 — search index 조회 실패 시 rawResults로 폴백
                 setTimeout(() => {
                     workerRef.current?.removeEventListener('message', onMsg);
-                    resolve([]);
+                    resolve(rawResults);
                 }, 2000);
             });
 

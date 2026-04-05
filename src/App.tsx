@@ -25,6 +25,7 @@ const LoginCallbackPage = lazy(() => import("./pages/LoginCallbackPage"));
 const CommunityPage = lazy(() => import("./pages/community/CommunityPage"));
 const WritePostPage = lazy(() => import("./pages/community/WritePostPage"));
 const PostDetailPage = lazy(() => import("./pages/community/PostDetailPage"));
+const ExhibitionsNearMePage = lazy(() => import("./pages/ExhibitionsNearMePage"));
 
 // Drawing-concept loader — unified across all routes
 const PageLoader = () => <DrawingLoader visible={true} />;
@@ -39,7 +40,7 @@ function AppContent() {
   const [transitioning, setTransitioning] = useState(false);
   const prevPath = useRef(location.pathname);
   useEffect(() => {
-    const OVERLAY_PREFIXES = ['/mypage', '/community', '/admin'];
+    const OVERLAY_PREFIXES = ['/mypage', '/community', '/admin', '/exhibitions'];
     const wasOverlay = OVERLAY_PREFIXES.some(p => prevPath.current.startsWith(p));
     const isOverlayNow = OVERLAY_PREFIXES.some(p => location.pathname.startsWith(p));
     if (prevPath.current !== location.pathname && !wasOverlay && !isOverlayNow) {
@@ -85,18 +86,21 @@ function AppContent() {
   const isMyPage = location.pathname.startsWith('/mypage');
   const isCommunity = location.pathname.startsWith('/community');
   const isAdmin = location.pathname.startsWith('/admin');
+  const isExhibitions = location.pathname.startsWith('/exhibitions');
   const isArtistPage = location.pathname.startsWith('/artist/');
 
   // Freeze location for overlays so they don't render empty when closing
   const [frozenMyPageLoc, setFrozenMyPageLoc] = useState(location);
   const [frozenCommunityLoc, setFrozenCommunityLoc] = useState(location);
   const [frozenAdminLoc, setFrozenAdminLoc] = useState(location);
+  const [frozenExhibitionsLoc, setFrozenExhibitionsLoc] = useState(location);
 
   useEffect(() => { if (isMyPage) setFrozenMyPageLoc(location); }, [isMyPage, location]);
   useEffect(() => { if (isCommunity) setFrozenCommunityLoc(location); }, [isCommunity, location]);
   useEffect(() => { if (isAdmin) setFrozenAdminLoc(location); }, [isAdmin, location]);
+  useEffect(() => { if (isExhibitions) setFrozenExhibitionsLoc(location); }, [isExhibitions, location]);
 
-  const isOverlayOpen = isMyPage || isCommunity || isAdmin;
+  const isOverlayOpen = isMyPage || isCommunity || isAdmin || isExhibitions;
   const [frozenBaseLoc, setFrozenBaseLoc] = useState(location);
 
   useEffect(() => {
@@ -109,9 +113,12 @@ function AppContent() {
   if (isMyPage) baseTransform = 'translateX(-30vw)'; // Push slightly left
   else if (isCommunity) baseTransform = 'translateY(-30vh)'; // Push slightly up
   else if (isAdmin) baseTransform = 'translateY(30vh)'; // Push slightly down
+  else if (isExhibitions) baseTransform = 'translateX(-30vw)'; // Push slightly left
+
+  const appShellBackground = mapMode === 'interactive' ? '#f5f5f5' : '#000';
 
   return (
-    <div style={{ position: 'relative', width: '100vw', height: '100dvh', overflow: 'hidden', background: '#000' }}>
+    <div style={{ position: 'relative', width: '100vw', height: '100dvh', minHeight: '100svh', overflow: 'hidden', background: appShellBackground }}>
       <OnboardingGuard />
       {/* Route-transition badge — floats above page, fades in/out smoothly */}
       <TransitionBadge show={transitioning} />
@@ -186,6 +193,19 @@ function AppContent() {
           <Routes location={isAdmin ? location : frozenAdminLoc}>
             <Route path="/admin/import" element={<AdminImport />} />
             <Route path="/admin" element={<AdminPage />} />
+          </Routes>
+        </Suspense>
+      </AnimatedOverlay>
+
+      <AnimatedOverlay
+        isActive={isExhibitions}
+        transformActive="translateX(0)"
+        transformHidden="translateX(100vw)"
+        zIndex={100000}
+      >
+        <Suspense fallback={<PageLoader />}>
+          <Routes location={isExhibitions ? location : frozenExhibitionsLoc}>
+            <Route path="/exhibitions" element={<ExhibitionsNearMePage exhibitions={exhibitions} />} />
           </Routes>
         </Suspense>
       </AnimatedOverlay>

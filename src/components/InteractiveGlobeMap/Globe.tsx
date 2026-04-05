@@ -1,7 +1,6 @@
 import { useRef, useEffect, useState, useCallback } from "react";
 import * as d3 from "d3";
 import { feature, mesh } from "topojson-client";
-import { AnimatePresence, motion } from "framer-motion";
 
 // ─── Types ─────────────────────────────────────────────────
 import type { Theme, CityMarker } from "./types";
@@ -10,6 +9,44 @@ interface DrilledCountry {
   feature: any;
   name: string;
   id: string;
+}
+
+interface MuseumPoint {
+  key: string;
+  cityKey: string;
+  city: CityMarker;
+  country: string;
+  coordinates: [number, number];
+  venueName: string;
+  artworkCount: number;
+  isMajor: boolean;
+}
+
+const MAJOR_MUSEUM_HINTS = [
+  "louvre",
+  "metropolitan museum",
+  "museum of modern art",
+  "moma",
+  "tate",
+  "british museum",
+  "national gallery",
+  "rijksmuseum",
+  "uffizi",
+  "prado",
+  "pompidou",
+  "vatican",
+  "hermitage",
+  "guggenheim",
+  "whitney",
+  "orsay",
+  "albertina",
+  "smithsonian",
+];
+
+function isLikelyMajorMuseum(name: string, artworkCount: number): boolean {
+  const normalized = String(name || "").toLowerCase();
+  if (artworkCount >= 700) return true;
+  return MAJOR_MUSEUM_HINTS.some((hint) => normalized.includes(hint));
 }
 
 // ─── Country Names (ISO 3166-1 numeric) ────────────────────
@@ -326,6 +363,7 @@ export function Globe({
   const drilledRef = useRef<DrilledCountry | null>(null);
   const targetRotRef = useRef<[number, number, number] | null>(null);
   const drillOpacityRef = useRef(0);
+  const museumPreviewOpacityRef = useRef(1);
 
   const hoveredCountryRef = useRef<any>(null);
   const lastHoverCheckRef = useRef(0);
@@ -338,6 +376,7 @@ export function Globe({
   const lastPosRef = useRef({ x: 0, y: 0 });
   const velocityRef = useRef<[number, number]>([0, 0]);
   const dragDistRef = useRef(0);
+  const lastPointerTypeRef = useRef<string | null>(null);
 
   const drilledContinentRef = useRef(drilledContinent);
   const lastSyncedContinentRef = useRef<string | null>(drilledContinent || null);
@@ -347,6 +386,56 @@ export function Globe({
   }, [drilledContinent]);
   const citiesRef = useRef(cities);
   useEffect(() => { citiesRef.current = cities; }, [cities]);
+  const museumPointsRef = useRef<MuseumPoint[]>([]);
+  useEffect(() => {
+    const points: MuseumPoint[] = [];
+
+    cities.forEach((city) => {
+      const cityLat = city.coordinates[1];
+      const cityLon = city.coordinates[0];
+
+      city.venues.forEach((venue, idx: number) => {
+        let lat = typeof venue.latitude === "number" ? venue.latitude : cityLat;
+        let lon = typeof venue.longitude === "number" ? venue.longitude : cityLon;
+
+        if (!Number.isFinite(lat) || !Number.isFinite(lon)) return;
+        if (lat === 0 && lon === 0) return;
+
+        const usesCityFallback =
+          !(typeof venue.latitude === "number" && typeof venue.longitude === "number") ||
+          (Math.abs(lat - cityLat) < 1e-7 && Math.abs(lon - cityLon) < 1e-7 && city.venues.length > 1);
+
+        // Make same-city fallback points individually visible without affecting true coordinates.
+        if (usesCityFallback) {
+          const a = (idx * 137.5 * Math.PI) / 180;
+          const r = 0.02 + Math.floor(idx / 8) * 0.018;
+          lat += Math.sin(a) * r;
+          lon += Math.cos(a) * r;
+        }
+
+        lat = Math.max(-89.8, Math.min(89.8, lat));
+        if (lon > 180) lon -= 360;
+        if (lon < -180) lon += 360;
+
+        const artworkCount = Number(venue.artworkCount || 0);
+        const venueName = String(venue.name || city.city || "Museum");
+        const cityKey = `${city.country}|${city.city}`;
+
+        points.push({
+          key: `${cityKey}|${venue.id || venueName}|${idx}`,
+          cityKey,
+          city,
+          country: city.country,
+          coordinates: [lon, lat],
+          venueName,
+          artworkCount,
+          isMajor: isLikelyMajorMuseum(venueName, artworkCount),
+        });
+      });
+    });
+
+    museumPointsRef.current = points;
+  }, [cities]);
   const selectedRef = useRef(selectedCity);
   useEffect(() => { selectedRef.current = selectedCity; }, [selectedCity]);
 
@@ -372,9 +461,21 @@ export function Globe({
   useEffect(() => { themeRef.current = theme; }, [theme]);
 
   const hoveredRef = useRef<CityMarker | null>(null);
-  const [hoveredCity, setHoveredCity] = useState<CityMarker | null>(null);
-  const [tooltipPos, setTooltipPos] = useState({ x: 0, y: 0 });
   const [isLoading, setIsLoading] = useState(true);
+
+  const getVisibleCities = useCallback((
+    countryClusterMode: boolean,
+    activeContinent: string | null,
+    drilled: DrilledCountry | null,
+  ) => {
+    return citiesRef.current.filter((m) => {
+      if (!countryClusterMode || !activeContinent) return false;
+      if (!drilled && m.country && CONTINENT_MAP[m.country] !== activeContinent) return false;
+      if (m.detail && !drilled) return false;
+      if (m.detail && drilled && m.country !== drilled.name) return false;
+      return true;
+    });
+  }, []);
 
   const cbRefs = useRef({ onRotationChange, onZoomChange, onSelectCity, onDrillContinent, onDrillDown, onHoverData });
   useEffect(() => {
@@ -612,18 +713,9 @@ export function Globe({
         ctx.restore();
       }
 
-      // City markers
-      const drawnBoxes: { x1: number, y1: number, x2: number, y2: number }[] = [];
+      // City markers + zoomed-out museum preview
       const sel = selectedRef.current;
-      const hov = hoveredRef.current;
-
-      const visibleCities = citiesRef.current.filter((m) => {
-        if (!countryClusterMode || !activeContinent) return false;
-        if (!drilled && m.country && CONTINENT_MAP[m.country] !== activeContinent) return false;
-        if (m.detail && !drilled) return false;
-        if (m.detail && drilled && m.country !== drilled.name) return false;
-        return true;
-      });
+      const visibleCities = getVisibleCities(countryClusterMode, activeContinent, drilled);
 
       const continentTotals = new Map<string, number>();
       const continentArtworks = new Map<string, number>();
@@ -746,140 +838,163 @@ export function Globe({
         ctx.restore();
       }
 
-      // Add marker bounding boxes to drawnBoxes first
-      if (drilled && dOp > 0.1) {
+      // Museum preview dots: visible until a country is drilled (smooth fade in/out).
+      const museumPreviewTargetOpacity = drilled ? 0 : 1;
+      museumPreviewOpacityRef.current = lerp(museumPreviewOpacityRef.current, museumPreviewTargetOpacity, 0.12);
+      const museumPreviewOpacity = museumPreviewOpacityRef.current;
+
+      if (museumPreviewOpacity > 0.01) {
+        museumPointsRef.current.forEach((m) => {
+          if (countryClusterMode && activeContinent && CONTINENT_MAP[m.country] !== activeContinent) return;
+          const dist = d3.geoDistance(m.coordinates, [-rot[0], -rot[1]]);
+          if (dist > Math.PI / 2) return;
+          const p = projection(m.coordinates);
+          if (!p) return;
+
+          const r = m.isMajor ? 1.25 : 0.95;
+          const alpha = (m.isMajor ? 0.34 : 0.24) * museumPreviewOpacity;
+          const fill = m.isMajor
+            ? `rgba(${P.limeFg},${alpha})`
+            : `rgba(${R},${G},${B},${alpha})`;
+
+          ctx.beginPath();
+          ctx.arc(p[0], p[1], r, 0, Math.PI * 2);
+          ctx.fillStyle = fill;
+          ctx.fill();
+        });
+      }
+
+      if (countryClusterMode || drilled) {
+        const drawnBoxes: { x1: number, y1: number, x2: number, y2: number }[] = [];
+
+        if (drilled && dOp > 0.1) {
+          visibleCities.forEach((m) => {
+            const dist = d3.geoDistance(m.coordinates, [-rot[0], -rot[1]]);
+            if (dist > Math.PI / 2) return;
+            const p = projection(m.coordinates);
+            if (!p) return;
+            drawnBoxes.push({ x1: p[0] - 6, y1: p[1] - 6, x2: p[0] + 6, y2: p[1] + 6 });
+          });
+        }
+
         visibleCities.forEach((m) => {
           const dist = d3.geoDistance(m.coordinates, [-rot[0], -rot[1]]);
           if (dist > Math.PI / 2) return;
           const p = projection(m.coordinates);
           if (!p) return;
-          drawnBoxes.push({ x1: p[0] - 6, y1: p[1] - 6, x2: p[0] + 6, y2: p[1] + 6 });
-        });
-      }
 
-      visibleCities.forEach((m) => {
-        const dist = d3.geoDistance(m.coordinates, [-rot[0], -rot[1]]);
-        if (dist > Math.PI / 2) return;
-        const p = projection(m.coordinates);
-        if (!p) return;
+          const hov = hoveredRef.current;
+          const isActive = m === sel || m === hov;
+          const isInDrilledCountry = drilled && m.country === drilled.name;
+          const dimFactor = drilled && !isInDrilledCountry ? 0.12 : 1;
+          const venueCount = m.venues.length;
 
-        const isActive = m === sel || m === hov;
-        const isInDrilledCountry = drilled && m.country === drilled.name;
-        const dimFactor = drilled && !isInDrilledCountry ? 0.12 : 1;
-        const venueCount = m.venues.length;
+          ctx.save();
+          ctx.globalAlpha = dimFactor;
 
-        ctx.save();
-        ctx.globalAlpha = dimFactor;
-
-        // Beveled square helper
-        const drawBevelRect = (cx: number, cy: number, half: number, bev: number) => {
-          ctx.beginPath();
-          ctx.moveTo(cx - half + bev, cy - half);
-          ctx.lineTo(cx + half - bev, cy - half);
-          ctx.lineTo(cx + half, cy - half + bev);
-          ctx.lineTo(cx + half, cy + half - bev);
-          ctx.lineTo(cx + half - bev, cy + half);
-          ctx.lineTo(cx - half + bev, cy + half);
-          ctx.lineTo(cx - half, cy + half - bev);
-          ctx.lineTo(cx - half, cy - half + bev);
-          ctx.closePath();
-        };
-
-        if (isActive) {
-          // Active: lime accent ring + solid center
-          drawBevelRect(p[0], p[1], 8, 2);
-          ctx.strokeStyle = P.lime;
-          ctx.lineWidth = 0.8;
-          ctx.stroke();
-          drawBevelRect(p[0], p[1], 2.5, 0.8);
-          ctx.fillStyle = P.lime;
-          ctx.fill();
-        } else if (venueCount >= 10) {
-          // Tier 1: Large cluster of museums (10+) — lime
-          drawBevelRect(p[0], p[1], 4.5, 1);
-          ctx.fillStyle = P.lime;
-          ctx.globalAlpha *= 0.85;
-          ctx.fill();
-        } else if (venueCount >= 3) {
-          // Tier 2: Medium cluster (3-9 museums) — subtle lime
-          drawBevelRect(p[0], p[1], 3.8, 0.8);
-          ctx.fillStyle = `rgba(${P.limeFg},0.35)`;
-          ctx.fill();
-          ctx.strokeStyle = `rgba(${P.limeFg},0.25)`;
-          ctx.lineWidth = 0.5;
-          ctx.stroke();
-        } else {
-          // Tier 3: Small (1-2 museums) — neutral
-          drawBevelRect(p[0], p[1], venueCount > 1 ? 3.5 : 2.2, 0.6);
-          ctx.fillStyle = `rgba(${R},${G},${B},0.40)`;
-          ctx.fill();
-        }
-
-        // Labels in drill-down
-        if (isInDrilledCountry && dOp > 0.1) {
-          const labelAlpha = isActive ? dOp * 0.75 : dOp * 0.45;
-          ctx.globalAlpha = labelAlpha;
-          ctx.fillStyle = `rgba(${R},${G},${B},0.9)`;
-          ctx.font = '9px "Space Grotesk", sans-serif';
-          ctx.textAlign = "left";
-          ctx.textBaseline = "middle";
-
-          const offset = isActive ? 12 : 8;
-          const textCity = m.city.toUpperCase();
-          const tw = ctx.measureText(textCity).width;
-          const mw = venueCount > 1 ? ctx.measureText(`${venueCount}`).width + 5 : 0;
-          const tw_total = tw + mw;
-
-          const positions = [
-             { cx: p[0] + offset + 6, cy: p[1],
-               box: { x1: p[0] + offset, y1: p[1] - 6, x2: p[0] + offset + 6 + tw_total, y2: p[1] + 6 }, linePath: [p[0] + offset - 2, p[1], p[0] + offset + 4, p[1]] },
-             { cx: p[0] - offset - 6 - tw_total, cy: p[1],
-               box: { x1: p[0] - offset - 6 - tw_total, y1: p[1] - 6, x2: p[0] - offset, y2: p[1] + 6 }, linePath: [p[0] - offset + 2, p[1], p[0] - offset - 4, p[1]] },
-             { cx: p[0] - tw_total/2, cy: p[1] - offset - 6,
-               box: { x1: p[0] - tw_total/2, y1: p[1] - offset - 12, x2: p[0] + tw_total/2, y2: p[1] - offset }, linePath: [p[0], p[1] - offset + 2, p[0], p[1] - offset - 4] },
-             { cx: p[0] - tw_total/2, cy: p[1] + offset + 6,
-               box: { x1: p[0] - tw_total/2, y1: p[1] + offset, x2: p[0] + tw_total/2, y2: p[1] + offset + 12 }, linePath: [p[0], p[1] + offset - 2, p[0], p[1] + offset + 4] }
-          ];
-
-          let bestPos = null;
-          for (const pos of positions) {
-             let overlap = false;
-             if (!isActive) {
-               for (const b of drawnBoxes) {
-                 if (pos.box.x1 < b.x2 && pos.box.x2 > b.x1 && pos.box.y1 < b.y2 && pos.box.y2 > b.y1) {
-                    overlap = true; break;
-                 }
-               }
-             }
-             if (!overlap) { bestPos = pos; break; }
-          }
-
-          if (bestPos || isActive) {
-            const finalPos = bestPos || positions[0];
-            if (!isActive) drawnBoxes.push(finalPos.box);
-
+          const drawBevelRect = (cx: number, cy: number, half: number, bev: number) => {
             ctx.beginPath();
-            ctx.moveTo(finalPos.linePath[0], finalPos.linePath[1]);
-            ctx.lineTo(finalPos.linePath[2], finalPos.linePath[3]);
-            ctx.strokeStyle = `rgba(${R},${G},${B},0.06)`;
+            ctx.moveTo(cx - half + bev, cy - half);
+            ctx.lineTo(cx + half - bev, cy - half);
+            ctx.lineTo(cx + half, cy - half + bev);
+            ctx.lineTo(cx + half, cy + half - bev);
+            ctx.lineTo(cx + half - bev, cy + half);
+            ctx.lineTo(cx - half + bev, cy + half);
+            ctx.lineTo(cx - half, cy + half - bev);
+            ctx.lineTo(cx - half, cy - half + bev);
+            ctx.closePath();
+          };
+
+          if (isActive) {
+            drawBevelRect(p[0], p[1], 8, 2);
+            ctx.strokeStyle = P.lime;
+            ctx.lineWidth = 0.8;
+            ctx.stroke();
+            drawBevelRect(p[0], p[1], 2.5, 0.8);
+            ctx.fillStyle = P.lime;
+            ctx.fill();
+          } else if (venueCount >= 10) {
+            drawBevelRect(p[0], p[1], 4.5, 1);
+            ctx.fillStyle = P.lime;
+            ctx.globalAlpha *= 0.85;
+            ctx.fill();
+          } else if (venueCount >= 3) {
+            drawBevelRect(p[0], p[1], 3.8, 0.8);
+            ctx.fillStyle = `rgba(${P.limeFg},0.35)`;
+            ctx.fill();
+            ctx.strokeStyle = `rgba(${P.limeFg},0.25)`;
             ctx.lineWidth = 0.5;
             ctx.stroke();
+          } else {
+            drawBevelRect(p[0], p[1], venueCount > 1 ? 3.5 : 2.2, 0.6);
+            ctx.fillStyle = `rgba(${R},${G},${B},0.40)`;
+            ctx.fill();
+          }
 
-            // Set center if needed
-            ctx.textAlign = 'left';
-            ctx.fillText(textCity, finalPos.cx, finalPos.cy + 1);
+          if (isInDrilledCountry && dOp > 0.1) {
+            const labelAlpha = isActive ? dOp * 0.75 : dOp * 0.45;
+            ctx.globalAlpha = labelAlpha;
+            ctx.fillStyle = `rgba(${R},${G},${B},0.9)`;
+            ctx.font = '9px "Space Grotesk", sans-serif';
+            ctx.textAlign = "left";
+            ctx.textBaseline = "middle";
 
-            if (venueCount > 1) {
-              ctx.globalAlpha = labelAlpha * 0.45;
-              ctx.fillStyle = P.lime;
-              ctx.font = '8px "Space Mono", monospace';
-              ctx.fillText(`${venueCount}`, finalPos.cx + tw + 5, finalPos.cy + 1);
+            const offset = isActive ? 12 : 8;
+            const textCity = m.city.toUpperCase();
+            const tw = ctx.measureText(textCity).width;
+            const mw = venueCount > 1 ? ctx.measureText(`${venueCount}`).width + 5 : 0;
+            const tw_total = tw + mw;
+
+            const positions = [
+               { cx: p[0] + offset + 6, cy: p[1],
+                 box: { x1: p[0] + offset, y1: p[1] - 6, x2: p[0] + offset + 6 + tw_total, y2: p[1] + 6 }, linePath: [p[0] + offset - 2, p[1], p[0] + offset + 4, p[1]] },
+               { cx: p[0] - offset - 6 - tw_total, cy: p[1],
+                 box: { x1: p[0] - offset - 6 - tw_total, y1: p[1] - 6, x2: p[0] - offset, y2: p[1] + 6 }, linePath: [p[0] - offset + 2, p[1], p[0] - offset - 4, p[1]] },
+               { cx: p[0] - tw_total/2, cy: p[1] - offset - 6,
+                 box: { x1: p[0] - tw_total/2, y1: p[1] - offset - 12, x2: p[0] + tw_total/2, y2: p[1] - offset }, linePath: [p[0], p[1] - offset + 2, p[0], p[1] - offset - 4] },
+               { cx: p[0] - tw_total/2, cy: p[1] + offset + 6,
+                 box: { x1: p[0] - tw_total/2, y1: p[1] + offset, x2: p[0] + tw_total/2, y2: p[1] + offset + 12 }, linePath: [p[0], p[1] + offset - 2, p[0], p[1] + offset + 4] }
+            ];
+
+            let bestPos = null;
+            for (const pos of positions) {
+               let overlap = false;
+               if (!isActive) {
+                 for (const b of drawnBoxes) {
+                   if (pos.box.x1 < b.x2 && pos.box.x2 > b.x1 && pos.box.y1 < b.y2 && pos.box.y2 > b.y1) {
+                      overlap = true; break;
+                   }
+                 }
+               }
+               if (!overlap) { bestPos = pos; break; }
+            }
+
+            if (bestPos || isActive) {
+              const finalPos = bestPos || positions[0];
+              if (!isActive) drawnBoxes.push(finalPos.box);
+
+              ctx.beginPath();
+              ctx.moveTo(finalPos.linePath[0], finalPos.linePath[1]);
+              ctx.lineTo(finalPos.linePath[2], finalPos.linePath[3]);
+              ctx.strokeStyle = `rgba(${R},${G},${B},0.06)`;
+              ctx.lineWidth = 0.5;
+              ctx.stroke();
+
+              ctx.textAlign = 'left';
+              ctx.fillText(textCity, finalPos.cx, finalPos.cy + 1);
+
+              if (venueCount > 1) {
+                ctx.globalAlpha = labelAlpha * 0.45;
+                ctx.fillStyle = P.lime;
+                ctx.font = '8px "Space Mono", monospace';
+                ctx.fillText(`${venueCount}`, finalPos.cx + tw + 5, finalPos.cy + 1);
+              }
             }
           }
-        }
 
-        ctx.restore();
-      });
+          ctx.restore();
+        });
+      }
 
       // Crosshair
       const cx = w / 2, cy = h / 2;
@@ -936,9 +1051,9 @@ export function Globe({
       let hd: { level: string; label: string; count: number } | null = null;
       if (hovCity) {
          if (hovCity.venues.length === 1) {
-            hd = { level: 'VENUE', label: hovCity.venues[0].name, count: hovCity.artworkCount || 0 };
+           hd = { level: 'VENUE', label: hovCity.venues[0].name, count: hovCity.artworkCount || 0 };
          } else {
-            hd = { level: 'CITY', label: hovCity.city, count: hovCity.artworkCount || 0 };
+           hd = { level: 'CITY', label: hovCity.city, count: hovCity.artworkCount || 0 };
          }
       } else if (hovCountry && mousePosRef.current.x > 0 && !isDraggingRef.current) {
          const name = COUNTRY_NAMES[String(hovCountry.id)];
@@ -977,7 +1092,7 @@ export function Globe({
 
     animFrameRef.current = requestAnimationFrame(animate);
     return () => { cancelAnimationFrame(animFrameRef.current); obs.disconnect(); };
-  }, [getActiveContinentForView]);
+  }, [getActiveContinentForView, getVisibleCities]);
 
   // ─── Wheel ────────────────────────────────────────
 
@@ -1062,38 +1177,26 @@ export function Globe({
     const countryClusterMode = currentScaleRef.current >= COUNTRY_CLUSTER_ZOOM;
     const activeContinent = getActiveContinentForView(rot, countryClusterMode);
 
-    const visibleCities = citiesRef.current.filter((m) => {
-      if (!countryClusterMode || !activeContinent) return false;
-      if (m.country && CONTINENT_MAP[m.country] !== activeContinent) return false;
-      
-      if (m.detail && !drilled) return false;
-      if (m.detail && drilled && m.country !== drilled.name) return false;
-      return true;
-    });
-
-    let found: CityMarker | null = null;
-    for (const m of visibleCities) {
-      const dist = d3.geoDistance(m.coordinates, [-rot[0], -rot[1]]);
-      if (dist > Math.PI / 2) continue;
-      const p = projection(m.coordinates);
-      if (!p) continue;
-      if (Math.hypot(p[0] - mx, p[1] - my) < 22) {
-        found = m;
-        setTooltipPos({ x: p[0], y: p[1] });
-        break;
+    hoveredRef.current = null;
+    if (countryClusterMode && activeContinent) {
+      const visibleCities = getVisibleCities(countryClusterMode, activeContinent, drilled);
+      for (const m of visibleCities) {
+        const dist = d3.geoDistance(m.coordinates, [-rot[0], -rot[1]]);
+        if (dist > Math.PI / 2) continue;
+        const p = projection(m.coordinates);
+        if (!p) continue;
+        if (Math.hypot(p[0] - mx, p[1] - my) < 22) {
+          hoveredRef.current = m;
+          break;
+        }
       }
     }
 
-    if (found !== hoveredRef.current) {
-      hoveredRef.current = found;
-      setHoveredCity(found);
-    }
-
-    if (found) canvas.style.cursor = "pointer";
+    if (hoveredRef.current) canvas.style.cursor = "pointer";
     else if (isDraggingRef.current) canvas.style.cursor = "grabbing";
     else if (hoveredCountryRef.current) canvas.style.cursor = "pointer";
     else canvas.style.cursor = "grab";
-  }, [getActiveContinentForView]);
+  }, [getActiveContinentForView, getVisibleCities]);
 
   const handleMouseUp = useCallback(() => { isDraggingRef.current = false; }, []);
 
@@ -1101,7 +1204,8 @@ export function Globe({
     isDraggingRef.current = false;
     mousePosRef.current = { x: -1, y: -1 };
     hoveredCountryRef.current = null;
-  }, [getActiveContinentForView]);
+    hoveredRef.current = null;
+  }, []);
 
   const handleClick = useCallback((e: React.MouseEvent) => {
     const stepZoomOut = () => {
@@ -1140,8 +1244,13 @@ export function Globe({
       }
     };
 
-    // Touch events accumulate more drag noise — use a larger threshold
-    const isTouchEvent = e.nativeEvent instanceof PointerEvent && e.nativeEvent.pointerType === 'touch';
+    // React onClick may expose MouseEvent even for touch taps; preserve pointerType from pointerdown/up.
+    const nativeEvent = e.nativeEvent as any;
+    const nativePointerType = typeof nativeEvent?.pointerType === 'string' ? nativeEvent.pointerType : '';
+    const isTouchEvent =
+      nativePointerType === 'touch' ||
+      lastPointerTypeRef.current === 'touch' ||
+      Boolean(nativeEvent?.sourceCapabilities?.firesTouchEvents);
     const dragThreshold = isTouchEvent ? 24 : 12;
     if (dragDistRef.current > dragThreshold) return;
     const canvas = canvasRef.current;
@@ -1151,33 +1260,30 @@ export function Globe({
     const clickMx = e.clientX - rect.left;
     const clickMy = e.clientY - rect.top;
 
-    // For touch: hover state isn't set via mousemove, so do a direct city hit test
+    // Direct city hit test in cluster mode (hover effect is disabled).
     const HIT_RADIUS = isTouchEvent ? 28 : 16;
-    let touchHitCity: CityMarker | null = null;
-    if (!hoveredRef.current && isTouchEvent) {
+    const findHitCity = (radius: number): CityMarker | null => {
       const rot = rotationRef.current;
       const countryClusterModeT = currentScaleRef.current >= COUNTRY_CLUSTER_ZOOM;
       const activeContinentT = getActiveContinentForView(rot, countryClusterModeT);
-      const visibleCitiesT = citiesRef.current.filter((m) => {
-        if (!countryClusterModeT || !activeContinentT) return false;
-        if (m.country && CONTINENT_MAP[m.country] !== activeContinentT) return false;
-        if (m.detail && !drilledRef.current) return false;
-        if (m.detail && drilledRef.current && m.country !== drilledRef.current.name) return false;
-        return true;
-      });
+      const visibleCitiesT = getVisibleCities(countryClusterModeT, activeContinentT, drilledRef.current);
+      let found: CityMarker | null = null;
+      let bestDist = Number.POSITIVE_INFINITY;
       for (const m of visibleCitiesT) {
         const dist = d3.geoDistance(m.coordinates, [-rot[0], -rot[1]]);
         if (dist > Math.PI / 2) continue;
         const p = projectionRef.current(m.coordinates);
         if (!p) continue;
-        if (Math.hypot(p[0] - clickMx, p[1] - clickMy) < HIT_RADIUS) {
-          touchHitCity = m;
-          break;
+        const d = Math.hypot(p[0] - clickMx, p[1] - clickMy);
+        if (d < radius && d < bestDist) {
+          bestDist = d;
+          found = m;
         }
       }
-    }
+      return found;
+    };
 
-    const activeCity = hoveredRef.current || touchHitCity;
+    const activeCity = findHitCity(HIT_RADIUS);
     if (activeCity) {
       const city = activeCity;
       cbRefs.current.onSelectCity(city === selectedRef.current ? null : city);
@@ -1271,33 +1377,7 @@ export function Globe({
     } else {
       stepZoomOut();
     }
-  }, []);
-
-  // ─── Touch ────────────────────────────────────────
-
-  const handleTouchStart = useCallback((e: React.TouchEvent) => {
-    if (e.touches.length !== 1) return;
-    isDraggingRef.current = true;
-    targetRotRef.current = null;
-    lastPosRef.current = { x: e.touches[0].clientX, y: e.touches[0].clientY };
-    velocityRef.current = [0, 0];
-    dragDistRef.current = 0;
-  }, []);
-
-  const handleTouchMove = useCallback((e: React.TouchEvent) => {
-    if (e.touches.length !== 1 || !isDraggingRef.current) return;
-    const dx = e.touches[0].clientX - lastPosRef.current.x;
-    const dy = e.touches[0].clientY - lastPosRef.current.y;
-    dragDistRef.current += Math.abs(dx) + Math.abs(dy);
-    const sens = 0.25 / currentScaleRef.current;
-    rotationRef.current[0] += dx * sens;
-    rotationRef.current[1] -= dy * sens;
-    rotationRef.current[1] = Math.max(-80, Math.min(80, rotationRef.current[1]));
-    velocityRef.current = [dx * sens * 0.35, -dy * sens * 0.35];
-    lastPosRef.current = { x: e.touches[0].clientX, y: e.touches[0].clientY };
-  }, []);
-
-  const handleTouchEnd = useCallback(() => { isDraggingRef.current = false; }, []);
+  }, [getActiveContinentForView, getVisibleCities]);
 
   // ─── Render ───────────────────────────────────────
 
@@ -1310,69 +1390,19 @@ export function Globe({
         className="ig-globe-canvas"
         style={{ cursor: "grab", touchAction: "none" }}
         onPointerDown={(e) => {
+          lastPointerTypeRef.current = e.pointerType || null;
           e.currentTarget.setPointerCapture(e.pointerId);
           handleMouseDown(e as any);
         }}
         onPointerMove={handleMouseMove as any}
         onPointerUp={(e) => {
+          lastPointerTypeRef.current = e.pointerType || lastPointerTypeRef.current;
           e.currentTarget.releasePointerCapture(e.pointerId);
           handleMouseUp();
         }}
         onPointerLeave={handleMouseLeave}
         onClick={handleClick}
       />
-
-      <AnimatePresence>
-        {hoveredCity && (
-          <motion.div
-            key={`${hoveredCity.city}-${hoveredCity.venues[0]?.name || ""}`}
-            className="ig-tooltip"
-            style={{ left: tooltipPos.x + 16, top: tooltipPos.y - 12 }}
-            initial={{ opacity: 0, y: 6 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 4 }}
-            transition={{ duration: 0.2, ease: "easeOut" }}
-          >
-            <div
-              className="ig-tooltip-inner"
-              style={{
-                backgroundColor: t ? "rgba(255,255,255,0.9)" : "rgba(10,10,10,0.9)",
-                borderColor: t ? "rgba(0,0,0,0.06)" : "rgba(255,255,255,0.05)"
-              }}
-            >
-              <div
-                style={{
-                  letterSpacing: "0.2em", textTransform: "uppercase",
-                  color: t ? "rgba(0,0,0,0.7)" : "rgba(255,255,255,0.7)",
-                  fontFamily: "'Space Grotesk', sans-serif", fontSize: "10px"
-                }}
-              >
-                {hoveredCity.city}
-              </div>
-              <div
-                style={{
-                  marginTop: "2px",
-                  color: t ? "rgba(0,0,0,0.35)" : "rgba(255,255,255,0.3)",
-                  fontFamily: "'Space Grotesk', sans-serif", fontSize: "10px"
-                }}
-              >
-                {hoveredCity.venues[0]?.name}
-              </div>
-              {hoveredCity.venues.length > 1 && (
-                <div
-                  style={{
-                    marginTop: "4px",
-                    color: t ? "rgba(0,0,0,0.2)" : "rgba(255,255,255,0.2)",
-                    fontFamily: "'Space Mono', monospace", fontSize: "9px"
-                  }}
-                >
-                  +{hoveredCity.venues.length - 1} more
-                </div>
-              )}
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
 
       {isLoading && (
         <div className="ig-spinner-container">

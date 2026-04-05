@@ -3,14 +3,14 @@
   "configurations": [
     {
       "name": "Dev Server",
-      "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "dev"],
+      "runtimeExecutable": "/Users/kietzsche/.nvm/versions/node/v22.22.2/bin/node",
+      "runtimeArgs": ["/Users/kietzsche/armin-web-main/node_modules/.bin/vite"],
       "port": 5173
     },
     {
       "name": "Preview",
-      "runtimeExecutable": "npm",
-      "runtimeArgs": ["run", "preview"],
+      "runtimeExecutable": "/Users/kietzsche/.nvm/versions/node/v22.22.2/bin/node",
+      "runtimeArgs": ["/Users/kietzsche/armin-web-main/node_modules/.bin/vite", "preview"],
       "port": 4173
     }
   ]

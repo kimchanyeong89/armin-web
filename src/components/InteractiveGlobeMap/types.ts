@@ -6,7 +6,7 @@ export interface InteractiveExhibition {
     id: string;
     title: string;
     period: string;
-    type: "permanent" | "current" | "upcoming";
+    type: "permanent" | "current" | "upcoming" | "past";
 }
 
 export interface Venue {

@@ -346,7 +346,10 @@ function loadCollection(filePath) {
 }
 
 function getThumbnailUrl(item) {
-    let url = item.thumb || item.thumbnailUrl || item.lq || item.image || item.imageUrl || '';
+    // Prefer R2 CDN URLs from any field over original museum URLs
+    const candidates = [item.imageUrl, item.image, item.thumb, item.thumbnailUrl, item.lq].filter(v => typeof v === 'string' && v.trim().length > 10);
+    const r2Url = candidates.find(u => u.includes('r2.dev'));
+    let url = r2Url || candidates[0] || '';
     
     // Add support for item.primaryImage as object (NGA, Met, etc)
     if (!url && item.primaryImage && typeof item.primaryImage === 'object') {
@@ -410,9 +413,50 @@ function normalizeArtistName(name) {
     return name.trim();
 }
 
+function isLowQualityArtistName(name) {
+    const normalized = String(name || '').trim().toLowerCase();
+    if (!normalized) return true;
+    if (normalized === 'unknown') return true;
+    if (normalized === 'unknown artist' || normalized === 'artist unknown') return true;
+
+    if (normalized === 'man ray') return false;
+
+    if (normalized.includes('portrait miniature of an unknown woman')) return true;
+    if (normalized.includes('portrait of an unknown woman')) return true;
+    if (/\bunknown woman\b/.test(normalized)) return true;
+
+    if (/^(painting|paintings|woman|women|artist|artist unknown|unknown artist|anonymous|anon|unidentified|school|workshop|atelier|follower|circle|manner|style)(\b|$)/.test(normalized)) {
+        return true;
+    }
+
+    if (/^man\b/.test(normalized) && normalized !== 'man ray') {
+        return true;
+    }
+
+    return false;
+}
+
 function extractArtworkData(item, museumName, exhibitionId, idx) {
     let nameRaw = item.title || item.name || item.itemTitle || item.shortName || item.tytul || 'Untitled';
-    let artistRaw = item.artist || item.artistName || item.creator || item.autor || 'Unknown';
+    let artistRaw =
+        item.artist ||
+        item.artistName ||
+        item.creator ||
+        item.autor ||
+        item.attribution ||
+        item.attributionInverted ||
+        (Array.isArray(item.artists) && item.artists.length > 0
+            ? item.artists
+                .map((a) =>
+                    a?.constituent?.forwardDisplayName ||
+                    a?.constituent?.preferredDisplayName ||
+                    a?.name ||
+                    ''
+                )
+                .filter(Boolean)
+                .join(', ')
+            : '') ||
+        'Unknown';
 
     // Helper to extract string from potential array or object
     const extractString = (val) => {
@@ -436,12 +480,19 @@ function extractArtworkData(item, museumName, exhibitionId, idx) {
 
     // Normalize artist name to merge duplicates (e.g. "Kim Tai (김태)" vs "김태")
     artist = normalizeArtistName(artist);
+    if (isLowQualityArtistName(artist)) {
+        artist = 'Unknown';
+    }
 
     const image = getThumbnailUrl(item);
     const date = item.date || item.year || item.creationDate || item.displayDate || '';
     const id = item.id || `${exhibitionId}-${idx}`;
 
     const url = item.sourceUrl || item.detailUrl || item.url || '';
+
+    // Normalize category to a short lowercase string for sorting
+    const rawCat = String(item.category || item.artworkType || item.objectType || item.classification || item.type || '').toLowerCase().trim();
+    const cat = rawCat.substring(0, 30);
 
     if (!image) return null;
 
@@ -453,6 +504,7 @@ function extractArtworkData(item, museumName, exhibitionId, idx) {
         d: String(date).substring(0, 4),
         m: museumName,
         e: exhibitionId,
+        ...(cat ? { c: cat } : {}),
         // u removed to save space
     };
 }

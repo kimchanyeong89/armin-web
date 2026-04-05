@@ -412,7 +412,7 @@ export const GlobalNav: React.FC<GlobalNavProps> = ({ isAdmin, isModalOpen, sear
                         alignItems: 'center',
                         gap: 0,
                         overflow: 'hidden',
-                        maxWidth: isMenuOpen ? '420px' : '0px',
+                        maxWidth: isMenuOpen ? '480px' : '0px',
                         opacity: isMenuOpen ? 1 : 0,
                         transition: 'max-width 0.22s linear, opacity 0.2s linear',
                     }}>
@@ -471,10 +471,33 @@ export const GlobalNav: React.FC<GlobalNavProps> = ({ isAdmin, isModalOpen, sear
                             </svg>
                         </button>
 
+                        {/* ── 전시 추천 ── filled frame + calendar dots */}
+                        <button title="전시 추천"
+                            onClick={() => { setIsMenuOpen(false); navigate('/exhibitions'); }}
+                            style={iconBtnStyle(0.12, currentPath === '/exhibitions')}
+                            onMouseEnter={e => { if (currentPath !== '/exhibitions') e.currentTarget.style.background = 'rgba(17,17,17,0.1)'; }}
+                            onMouseLeave={e => { if (currentPath !== '/exhibitions') e.currentTarget.style.background = 'transparent'; }}
+                            onMouseDown={(e) => { e.stopPropagation(); e.nativeEvent.stopImmediatePropagation(); }}
+                        >
+                            <svg width="52" height="52" viewBox="0 0 36 36">
+                                {/* Outer frame */}
+                                <rect x="4" y="9" width="28" height="22" rx="2" fill="#111"/>
+                                {/* Inner canvas (white) */}
+                                <rect x="7" y="14" width="22" height="14" fill="white"/>
+                                {/* Top bar */}
+                                <rect x="4" y="9" width="28" height="5" fill="#111"/>
+                                {/* Hanger dots */}
+                                <circle cx="11" cy="11.5" r="1.8" fill="white"/>
+                                <circle cx="25" cy="11.5" r="1.8" fill="white"/>
+                                {/* Star/sparkle in canvas — abstract art indicator */}
+                                <polygon points="18,16 19,19 22,19 19.5,21 20.5,24 18,22.5 15.5,24 16.5,21 14,19 17,19" fill="#111"/>
+                            </svg>
+                        </button>
+
                         {/* ── BUG REPORT ── filled beetle, white spots + center line */}
                         <button title="Bug Report"
                             onClick={() => { setIsBugReportOpen(!isBugReportOpen); }}
-                            style={iconBtnStyle(0.12, isBugReportOpen)}
+                            style={iconBtnStyle(0.16, isBugReportOpen)}
                             onMouseEnter={e => { if (!isBugReportOpen) e.currentTarget.style.background = 'rgba(17,17,17,0.1)'; }}
                             onMouseLeave={e => { if (!isBugReportOpen) e.currentTarget.style.background = 'transparent'; }}
                             onMouseDown={(e) => { e.stopPropagation(); e.nativeEvent.stopImmediatePropagation(); }}
@@ -595,6 +618,13 @@ export const GlobalNav: React.FC<GlobalNavProps> = ({ isAdmin, isModalOpen, sear
                         onMouseDown={(e) => { e.stopPropagation(); e.nativeEvent.stopImmediatePropagation(); }}
                     >
                         MY PAGE
+                    </button>
+                    <button
+                        onClick={() => navigate('/exhibitions')}
+                        style={{ ...getNavItemStyle(currentPath === '/exhibitions'), transition: 'background 0.35s ease, color 0.35s, transform 1.3s cubic-bezier(0.22, 1, 0.36, 1) 0.12s, opacity 1.0s 0.12s', transform: isMenuOpen ? 'translateX(0)' : 'translateX(-20px)', opacity: isMenuOpen ? 1 : 0 }}
+                        onMouseDown={(e) => { e.stopPropagation(); e.nativeEvent.stopImmediatePropagation(); }}
+                    >
+                        전시 추천
                     </button>
                     <button
                         onClick={() => setIsBugReportOpen(!isBugReportOpen)}

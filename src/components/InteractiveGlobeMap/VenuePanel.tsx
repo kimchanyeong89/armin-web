@@ -8,7 +8,7 @@ import { MiniCityMap } from "./MiniCityMap";
 interface Exhibition {
   title: string;
   period: string;
-  type: "permanent" | "current" | "upcoming";
+  type: "permanent" | "current" | "upcoming" | "past";
   coverImage: string;
   description: string;
   curator?: string;
@@ -352,6 +352,7 @@ function catDotStyle(category: string, t: boolean): React.CSSProperties {
 function typeColor(type: string, t: boolean): string {
   if (type === "current") return t ? "#5A7800" : "#BFFF0A";
   if (type === "upcoming") return t ? "rgba(90,120,0,0.5)" : "rgba(191,255,10,0.5)";
+  if (type === "past") return t ? "rgba(0,0,0,0.28)" : "rgba(255,255,255,0.28)";
   return t ? "rgba(0,0,0,0.18)" : "rgba(255,255,255,0.22)";
 }
 
@@ -882,15 +883,18 @@ export function VenuePanel({ city, theme, onClose, onOpenExhibition }: VenuePane
           .map(normalizeCollectionPath)
           .filter(Boolean);
 
-        let cover = normalizeImageUrl(matchedSub?.representativeImage || original?.representativeImage || "");
-        if (cover) {
-          nextCovers[ex.id] = cover;
-          continue;
+        // Permanent exhibitions → always load first artwork from collection (skip coverImage)
+        // Temporary exhibitions → use coverImage first, fall back to collection
+        const isPermanent = ex.type === "permanent";
+        if (!isPermanent) {
+          const cover = normalizeImageUrl(matchedSub?.coverImage || matchedSub?.representativeImage || original?.representativeImage || "");
+          if (cover) { nextCovers[ex.id] = cover; continue; }
         }
 
+        let cover = "";
         for (const candidate of candidateFiles) {
           try {
-            const response = await fetch(candidate, { cache: "force-cache", signal: abortController.signal });
+            const response = await fetch(candidate, { cache: "no-cache", signal: abortController.signal });
             if (!response.ok) continue;
 
             const rawText = await response.text();
@@ -1191,19 +1195,12 @@ export function VenuePanel({ city, theme, onClose, onOpenExhibition }: VenuePane
                   scrollbarColor: `${scrollbarThumb} ${scrollbarTrack}`,
                 }}
               >
-                {exhibitions.length > 0 ? (
-                  <>
-                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '16px' }}>
-                      <span style={{ color: cFg20, letterSpacing: '0.2em', textTransform: 'uppercase', fontSize: '9px' }}>
-                        Exhibitions
-                      </span>
-                      <span style={{ color: cFg12, fontFamily: "'Space Mono', monospace", fontSize: '9px' }}>
-                        {exhibitions.length}
-                      </span>
-                    </div>
+                {exhibitions.length > 0 ? (() => {
+                    const permExhibitions = exhibitions.filter(ex => ex.type === "permanent");
+                    const tempExhibitions = exhibitions.filter(ex => ex.type !== "permanent" && ex.type !== "past");
+                    const pastExhibitions = exhibitions.filter(ex => ex.type === "past");
 
-                    <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
-                      {exhibitions.map((ex) => (
+                    const renderExList = (list: typeof exhibitions) => list.map((ex) => (
                         <button
                           key={ex.id || ex.title}
                           onClick={() => {
@@ -1220,6 +1217,8 @@ export function VenuePanel({ city, theme, onClose, onOpenExhibition }: VenuePane
                             onOpenExhibition?.({
                               ...origEx,
                               _exhibitionTitle: ex.title,
+                              _exhibitionDescription: (sub as any)?.description || undefined,
+                              _exhibitionCoverImage: (sub as any)?.coverImage || undefined,
                               _selectedExhibitionId: ex.id,
                               _selectedExhibitionType: ex.type,
                               _routeCountry: city.country,
@@ -1277,10 +1276,44 @@ export function VenuePanel({ city, theme, onClose, onOpenExhibition }: VenuePane
                             </div>
                           </div>
                         </button>
-                      ))}
-                    </div>
-                  </>
-                ) : (
+                    ));
+
+                    const sectionHeader = (label: string, count: number) => (
+                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '10px', marginTop: '20px' }}>
+                        <span style={{ color: cFg20, letterSpacing: '0.2em', textTransform: 'uppercase', fontSize: '9px' }}>{label}</span>
+                        <span style={{ color: cFg12, fontFamily: "'Space Mono', monospace", fontSize: '9px' }}>{count}</span>
+                      </div>
+                    );
+
+                    return (
+                      <>
+                        {permExhibitions.length > 0 && (
+                          <>
+                            {sectionHeader('Permanent', permExhibitions.length)}
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                              {renderExList(permExhibitions)}
+                            </div>
+                          </>
+                        )}
+                        {tempExhibitions.length > 0 && (
+                          <>
+                            {sectionHeader('Exhibitions', tempExhibitions.length)}
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
+                              {renderExList(tempExhibitions)}
+                            </div>
+                          </>
+                        )}
+                        {pastExhibitions.length > 0 && (
+                          <>
+                            {sectionHeader('Past', pastExhibitions.length)}
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', opacity: 0.55 }}>
+                              {renderExList(pastExhibitions)}
+                            </div>
+                          </>
+                        )}
+                      </>
+                    );
+                  })() : (
                   <div style={{ color: cFg12, letterSpacing: '0.1em', marginTop: '16px', fontSize: '11px' }}>
                     No exhibition data available
                   </div>

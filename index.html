@@ -104,7 +104,17 @@
       var lastTap = 0;
       document.addEventListener('touchend', function (e) {
         var now = Date.now();
-        if (now - lastTap < 300 && e.changedTouches.length === 1) {
+        var target = e.target;
+        if (target && target.closest) {
+          if (
+            target.closest('input, textarea, select, button, a, [contenteditable="true"]') ||
+            target.closest('.ig-container')
+          ) {
+            lastTap = now;
+            return;
+          }
+        }
+        if (e.cancelable && now - lastTap < 300 && e.changedTouches.length === 1) {
           e.preventDefault();
         }
         lastTap = now;

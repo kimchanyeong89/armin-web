@@ -327,15 +327,8 @@ async function loadData() {
         }
         const versionParam = manifestToken ? encodeURIComponent(manifestToken) : '';
 
-        // On mobile: skip chunk loading to prevent ~176MB memory overload → tab crash
-        // Warm prefix data (search-warm-prefix.json) is already loaded and sufficient
-        if (IS_MOBILE_WORKER) {
-            self.postMessage({ type: 'LOAD_COMPLETE', count: 0 });
-            return;
-        }
-
-        // Progressive loading: fire all fetches but update on completion individually
-        const tasks = (manifest.chunks || []).map((file: string) => runLimited(async () => {
+        const chunkFiles: string[] = Array.isArray(manifest.chunks) ? manifest.chunks : [];
+        const loadChunk = async (file: string) => {
             const baseUrl = `/data/${file}`;
             const chunkUrl = versionParam ? `${baseUrl}?v=${versionParam}` : withCacheBust(baseUrl);
             const res = await fetch(chunkUrl, fetchInit());
@@ -343,6 +336,26 @@ async function loadData() {
             const items = await res.json();
             processChunk(items);
             self.postMessage({ type: 'LOAD_PROGRESS', count: allArtworks.length });
+        };
+
+        if (IS_MOBILE_WORKER) {
+            // Mobile: load chunks one-by-one to avoid parallel decode/memory spikes.
+            for (const file of chunkFiles) {
+                try {
+                    await loadChunk(file);
+                } catch (e) {
+                    console.error(`Chunk failed: ${file}`, e);
+                }
+                // Yield between chunks so UI thread can breathe on lower-end devices.
+                await new Promise((resolve) => setTimeout(resolve, 12));
+            }
+            self.postMessage({ type: 'LOAD_COMPLETE', count: allArtworks.length });
+            return;
+        }
+
+        // Desktop / non-constrained path: parallel loading with bounded concurrency.
+        const tasks = chunkFiles.map((file: string) => runLimited(async () => {
+            await loadChunk(file);
         }).catch(e => console.error(`Chunk failed: ${file}`, e)));
 
         await Promise.allSettled(tasks);

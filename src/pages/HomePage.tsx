@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState, Suspense, lazy, useMemo, useCallback } from "react";
 import { useSearchParams, useNavigate, useLocation, useParams } from "react-router-dom";
 
-// D3GeoGlobeSimplified disabled — Drawing Map is the default entry point
+// D3GeoGlobeSimplified disabled — Interactive Map is the default entry point
 // const D3GeoGlobeSimplified = React.lazy(() => import("../components/D3GeoGlobeSimplified"));
 import DrawingGlobe from "../components/DrawingGlobe";
 import MiniSpinningGlobe from "../components/MiniSpinningGlobe";
@@ -141,23 +141,22 @@ export default function HomePage({ exhibitions, isOverlayOpen = false }: HomePag
   const [selectedExhibition, setSelectedExhibition] = useState<Exhibition | null>(initialFromHistory.parent);
   const [selectedModalExhibition, setSelectedModalExhibition] = useState<ExhibitionItem | null>(initialFromHistory.item);
   const [showInteractiveGlobe, setShowInteractiveGlobe] = useState(() => {
-    if (window.location.pathname.startsWith('/interactive')) return true;
-    // /collection/:id로 이동할 때 fromInteractiveMap state가 있으면 인터랙티브맵 자동 열기
-    try { return !!(window.history.state?.usr?.fromInteractiveMap); } catch { return false; }
+    try {
+      const fromDrawingParam = new URLSearchParams(window.location.search).get('drawingMap') === 'true';
+      if (fromDrawingParam) return false;
+      if (window.location.pathname.startsWith('/interactive')) return true;
+      // /collection/:id로 이동할 때 fromInteractiveMap state가 있으면 인터랙티브맵 자동 열기
+      if (window.history.state?.usr?.fromInteractiveMap) return true;
+      // 첫 진입은 인터랙티브 맵을 기본으로 표시
+      return true;
+    } catch {
+      return true;
+    }
   });
   // Landing page hover state (for animated globe previews)
   const [landingHover, setLandingHover] = useState<'interactive' | 'drawing' | null>(null);
-  // Landing selection page: shown on first visit or when no map is active
-  const [showLanding, setShowLanding] = useState(() => {
-    try {
-      // Skip landing if returning from interactive map or deep-link
-      if (window.history.state?.usr?.fromInteractiveMap) return false;
-      if (new URLSearchParams(window.location.search).get('drawingMap') === 'true') return false;
-      if (window.location.pathname.startsWith('/collection/')) return false;
-      if (window.location.pathname.startsWith('/interactive')) return false;
-      return true;
-    } catch { return true; }
-  });
+  // Landing selection page is disabled: app now opens directly in Interactive Map.
+  const [showLanding, setShowLanding] = useState(false);
   const [showDrawingGlobe, setShowDrawingGlobe] = useState(() => {
     // Don't show any map until user picks from landing
     const fromInteractive = !!(window.history.state?.usr?.fromInteractiveMap);
@@ -1099,7 +1098,7 @@ export default function HomePage({ exhibitions, isOverlayOpen = false }: HomePag
 
   return (
     <>
-      <div style={{ position: "relative", width: "100vw", height: "100vh", overflow: "hidden" }}>
+      <div style={{ position: "relative", width: "100vw", height: "100dvh", minHeight: "100svh", overflow: "hidden" }}>
         {/* Toggle hidden per user request */}
         <div style={{ position: "fixed", top: 12, left: 12, zIndex: 4500, display: 'none' }}>
           <div
@@ -1170,7 +1169,8 @@ export default function HomePage({ exhibitions, isOverlayOpen = false }: HomePag
             top: 0,
             left: 0,
             width: "100vw",
-            height: "100vh",
+            height: "100dvh",
+            minHeight: "100svh",
             zIndex: 1,
             touchAction: 'none',
             overflow: 'hidden'

@@ -5,7 +5,7 @@
  */
 
 // R2 public bucket URL
-export const R2_PUBLIC_URL = 'https://pub-6ce5ae60b244951ac36ffd277fd6ef76.r2.dev';
+export const R2_PUBLIC_URL = 'https://pub-396fad1f96754c2f816f260faf970e63.r2.dev';
 
 // Get full R2 URL for an image path
 export function getR2Url(path: string): string {
