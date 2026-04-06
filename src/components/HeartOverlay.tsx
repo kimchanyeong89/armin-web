@@ -10,7 +10,7 @@ interface HeartOverlayProps {
     className?: string; // Add support for className
 }
 
-export const HeartOverlay: React.FC<HeartOverlayProps> = ({ isLiked, onToggle, style, size = 24, color = "#e11d48", emptyColor = "#fff", className }) => {
+export const HeartOverlay: React.FC<HeartOverlayProps> = ({ isLiked, onToggle, style, size = 24, color = "#BFFF0A", emptyColor = "#fff", className }) => {
     return (
         <div
             className={`heart-btn ${className || ''}`}

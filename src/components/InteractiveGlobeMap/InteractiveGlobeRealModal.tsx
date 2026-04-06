@@ -6,6 +6,8 @@ import { SearchInputWithSuggestions } from "../SearchInputWithSuggestions";
 import { HeartOverlay } from "../HeartOverlay";
 import { ProductModal } from "../ProductModal";
 import CommentModal from "../CommentModal";
+import { PlaylistModal } from "../PlaylistModal";
+import { ArtworkRecommendations } from "../ArtworkRecommendations";
 import type { Artwork as ProductArtwork } from "../../types/Artwork";
 import { collection, onSnapshot, doc, deleteDoc, setDoc, serverTimestamp, increment } from "firebase/firestore";
 import { onAuthStateChanged, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
@@ -55,8 +57,52 @@ type SortMode = "default" | "random" | "year_asc" | "year_desc" | "like_desc";
 
 const INITIAL_VISIBLE_ARTWORKS = 40;
 const VISIBLE_ARTWORK_BATCH = 40;
+const INTERACTIVE_MODAL_STATE_VERSION = 1;
 const R2_IMAGE_HOST_HINTS = ["r2.dev", "pub-396fad1f96754c2f816f260faf970e63"];
 const UNKNOWN_TEXTS = new Set(["", "unknown", "unknown artist", "n/a", "na", "none", "null", "undefined", "[]", "-"]);
+
+type PersistedInteractiveModalState = {
+  version: number;
+  activeFilter: ArtworkCategory | null;
+  sortBy: SortMode;
+  searchQuery: string;
+  visibleCount: number;
+  activeArtworkId: string | null;
+  detailArtworkOverride: Artwork | null;
+  detailArtworkOrigin: Artwork | null;
+  scrollTop: number;
+};
+
+function toPersistedArtwork(input: unknown): Artwork | null {
+  if (!input || typeof input !== "object") return null;
+
+  const source = input as Record<string, unknown>;
+  const toText = (value: unknown): string => {
+    if (typeof value === "string") return value;
+    if (typeof value === "number") return String(value);
+    return "";
+  };
+
+  const image = toText(source.image);
+  const lowImage = toText(source.lowImage) || image;
+
+  const normalized: Artwork = {
+    title: toText(source.title),
+    artist: toText(source.artist),
+    year: toText(source.year),
+    image,
+    lowImage,
+    category: toText(source.category),
+    dimensions: toText(source.dimensions),
+    material: toText(source.material),
+    collection: toText(source.collection),
+    inventoryNo: toText(source.inventoryNo),
+    sourceUrl: toText(source.sourceUrl),
+  };
+
+  if (!normalized.title && !normalized.image && !normalized.inventoryNo) return null;
+  return normalized;
+}
 
 const CATEGORY_ALIASES: Record<string, string> = {
   painting: "Painting",
@@ -309,6 +355,9 @@ export function InteractiveGlobeRealModal({
   const t = theme === "light";
   const [activeArtwork, setActiveArtwork] = useState<number | null>(null);
   const [hoveredArtwork, setHoveredArtwork] = useState<number | null>(null);
+  const [detailArtworkOverride, setDetailArtworkOverride] = useState<Artwork | null>(null);
+  const [detailArtworkOrigin, setDetailArtworkOrigin] = useState<Artwork | null>(null);
+  const [playlistArtwork, setPlaylistArtwork] = useState<any | null>(null);
   const [activeFilter, setActiveFilter] = useState<ArtworkCategory | null>(null);
   const [sortBy, setSortBy] = useState<SortMode>("default");
   const [isSortMenuOpen, setIsSortMenuOpen] = useState(false);
@@ -326,6 +375,16 @@ export function InteractiveGlobeRealModal({
   const onReadyRef = useRef(onReady);
   const randomOrderRef = useRef<Map<string, number>>(new Map());
   const sortMenuRef = useRef<HTMLDivElement | null>(null);
+  const scrollContainerRef = useRef<HTMLDivElement | null>(null);
+  const latestScrollTopRef = useRef(0);
+  const pendingRestoreArtworkIdRef = useRef<string | null>(null);
+  const pendingRestoreScrollTopRef = useRef<number | null>(null);
+  const didApplyScrollRestoreRef = useRef(false);
+
+  const modalStateStorageKey = useMemo(() => {
+    const selectedId = String((exhibition as any)?._selectedExhibitionId || exhibition?.id || "unknown").trim();
+    return `armin:interactive-modal-state:${selectedId || "unknown"}`;
+  }, [exhibition]);
 
   useEffect(() => {
     onReadyRef.current = onReady;
@@ -336,17 +395,76 @@ export function InteractiveGlobeRealModal({
   }, [exhibition]);
 
   useEffect(() => {
+    randomOrderRef.current.clear();
+
+    let restored: PersistedInteractiveModalState | null = null;
+    try {
+      const raw = sessionStorage.getItem(modalStateStorageKey);
+      if (raw) {
+        const parsed = JSON.parse(raw) as Partial<PersistedInteractiveModalState>;
+        if (parsed && typeof parsed === "object") {
+          const parsedSortBy = typeof parsed.sortBy === "string" ? parsed.sortBy : "default";
+          const safeSortBy: SortMode = ["default", "random", "year_asc", "year_desc", "like_desc"].includes(parsedSortBy)
+            ? (parsedSortBy as SortMode)
+            : "default";
+
+          restored = {
+            version: typeof parsed.version === "number" ? parsed.version : 0,
+            activeFilter: typeof parsed.activeFilter === "string" && parsed.activeFilter.trim() ? parsed.activeFilter : null,
+            sortBy: safeSortBy,
+            searchQuery: typeof parsed.searchQuery === "string" ? parsed.searchQuery : "",
+            visibleCount: typeof parsed.visibleCount === "number" && Number.isFinite(parsed.visibleCount)
+              ? Math.max(1, Math.floor(parsed.visibleCount))
+              : INITIAL_VISIBLE_ARTWORKS,
+            activeArtworkId: typeof parsed.activeArtworkId === "string" && parsed.activeArtworkId.trim()
+              ? parsed.activeArtworkId
+              : null,
+            detailArtworkOverride: toPersistedArtwork(parsed.detailArtworkOverride),
+            detailArtworkOrigin: toPersistedArtwork(parsed.detailArtworkOrigin),
+            scrollTop: typeof parsed.scrollTop === "number" && Number.isFinite(parsed.scrollTop)
+              ? Math.max(0, parsed.scrollTop)
+              : 0,
+          };
+        }
+      }
+    } catch {
+      restored = null;
+    }
+
     setActiveArtwork(null);
     setHoveredArtwork(null);
-    setActiveFilter(null);
-    setSortBy("default");
-    setIsSortMenuOpen(false);
-    setSearchQuery("");
-    setDebouncedQuery("");
     setProductArtwork(null);
     setCommentArtworkId(null);
-    randomOrderRef.current.clear();
-  }, [exhibition]);
+    setIsSortMenuOpen(false);
+
+    if (restored && restored.version === INTERACTIVE_MODAL_STATE_VERSION) {
+      setDetailArtworkOverride(restored.detailArtworkOverride);
+      setDetailArtworkOrigin(restored.detailArtworkOrigin);
+      setActiveFilter(restored.activeFilter);
+      setSortBy(restored.sortBy);
+      setSearchQuery(restored.searchQuery);
+      setDebouncedQuery(restored.searchQuery);
+      setVisibleCount(restored.visibleCount);
+
+      pendingRestoreArtworkIdRef.current = restored.activeArtworkId;
+      pendingRestoreScrollTopRef.current = restored.scrollTop;
+      didApplyScrollRestoreRef.current = false;
+      latestScrollTopRef.current = restored.scrollTop;
+    } else {
+      setDetailArtworkOverride(null);
+      setDetailArtworkOrigin(null);
+      setActiveFilter(null);
+      setSortBy("default");
+      setSearchQuery("");
+      setDebouncedQuery("");
+      setVisibleCount(INITIAL_VISIBLE_ARTWORKS);
+
+      pendingRestoreArtworkIdRef.current = null;
+      pendingRestoreScrollTopRef.current = null;
+      didApplyScrollRestoreRef.current = true;
+      latestScrollTopRef.current = 0;
+    }
+  }, [exhibition, modalStateStorageKey]);
 
   useEffect(() => {
     const onDocMouseDown = (event: MouseEvent) => {
@@ -716,6 +834,34 @@ export function InteractiveGlobeRealModal({
     };
   }, [artworkIdFrom, exhibition, venueName]);
 
+  const toInteractiveArtworkFromProduct = useCallback((artwork: ProductArtwork): Artwork => {
+    const normalizedImage = String(artwork.image || "");
+    return {
+      title: String((artwork as any).name || "Untitled"),
+      artist: String(artwork.artist || "Unknown Artist"),
+      year: String(artwork.date || artwork.year || ""),
+      image: normalizedImage,
+      lowImage: getOptimizedImageUrl(normalizedImage, 600, 75, "webp") || normalizedImage,
+      category: String(artwork.category || ""),
+      dimensions: String(artwork.dimension || ""),
+      material: String(artwork.medium || artwork.materials || artwork.technique || ""),
+      collection: String(artwork.exhibitionName || venueName),
+      inventoryNo: String(artwork.id || `${artwork.name}-${artwork.artist}-${artwork.year}`),
+      sourceUrl: String(artwork.sourceUrl || ""),
+    };
+  }, [venueName]);
+
+  const openPlaylistForArtwork = useCallback((artwork: Artwork) => {
+    const normalized = toProductArtwork(artwork);
+    setPlaylistArtwork({
+      ...normalized,
+      artworkId: normalized.id,
+      title: normalized.name,
+      museumName: normalized.exhibitionName || venueName,
+      imageUrl: normalized.image,
+    });
+  }, [toProductArtwork, venueName]);
+
   const recommendedTerms = useMemo(() => {
     const artistCounts = new Map<string, number>();
     mappedArtworks.forEach((art) => {
@@ -903,9 +1049,81 @@ export function InteractiveGlobeRealModal({
     return list;
   }, [mappedArtworks, activeFilter, debouncedQuery, sortBy, likedArtworks, getSortStableId, toSortableYear]);
 
+  const activeArtworkStableId = useMemo(() => {
+    if (activeArtwork === null) return null;
+    const selected = filterResultArtworks[activeArtwork];
+    return selected ? artworkIdFrom(selected) : null;
+  }, [activeArtwork, filterResultArtworks, artworkIdFrom]);
+
   useEffect(() => {
-    setVisibleCount(Math.min(INITIAL_VISIBLE_ARTWORKS, filterResultArtworks.length));
+    const pendingId = pendingRestoreArtworkIdRef.current;
+    if (!pendingId) return;
+
+    const nextIndex = filterResultArtworks.findIndex((artwork) => artworkIdFrom(artwork) === pendingId);
+    setActiveArtwork(nextIndex >= 0 ? nextIndex : null);
+    pendingRestoreArtworkIdRef.current = null;
+  }, [filterResultArtworks, artworkIdFrom]);
+
+  useEffect(() => {
+    setVisibleCount((prev) => {
+      if (filterResultArtworks.length <= 0) return 0;
+      const minVisible = Math.min(INITIAL_VISIBLE_ARTWORKS, filterResultArtworks.length);
+      if (prev <= 0) return minVisible;
+      const clamped = Math.min(prev, filterResultArtworks.length);
+      return Math.max(clamped, minVisible);
+    });
   }, [filterResultArtworks.length]);
+
+  useEffect(() => {
+    if (didApplyScrollRestoreRef.current) return;
+    const nextScrollTop = pendingRestoreScrollTopRef.current;
+    if (nextScrollTop === null) return;
+    if (!scrollContainerRef.current) return;
+    if (isLoading) return;
+
+    const raf = requestAnimationFrame(() => {
+      const container = scrollContainerRef.current;
+      if (!container) return;
+      const maxTop = Math.max(0, container.scrollHeight - container.clientHeight);
+      const appliedTop = Math.max(0, Math.min(nextScrollTop, maxTop));
+      container.scrollTop = appliedTop;
+      latestScrollTopRef.current = appliedTop;
+      pendingRestoreScrollTopRef.current = null;
+      didApplyScrollRestoreRef.current = true;
+    });
+
+    return () => cancelAnimationFrame(raf);
+  }, [filterResultArtworks.length, visibleCount, isLoading]);
+
+  useEffect(() => {
+    return () => {
+      try {
+        const payload: PersistedInteractiveModalState = {
+          version: INTERACTIVE_MODAL_STATE_VERSION,
+          activeFilter: activeFilter || null,
+          sortBy,
+          searchQuery,
+          visibleCount,
+          activeArtworkId: activeArtworkStableId,
+          detailArtworkOverride: detailArtworkOverride || null,
+          detailArtworkOrigin: detailArtworkOrigin || null,
+          scrollTop: latestScrollTopRef.current,
+        };
+        sessionStorage.setItem(modalStateStorageKey, JSON.stringify(payload));
+      } catch {
+        // ignore storage failures
+      }
+    };
+  }, [
+    modalStateStorageKey,
+    activeFilter,
+    sortBy,
+    searchQuery,
+    visibleCount,
+    activeArtworkStableId,
+    detailArtworkOverride,
+    detailArtworkOrigin,
+  ]);
 
   const hasMoreArtworks = visibleCount < filterResultArtworks.length;
 
@@ -936,8 +1154,74 @@ export function InteractiveGlobeRealModal({
     if (hoveredArtwork !== null && hoveredArtwork >= displayedArtworks.length) setHoveredArtwork(null);
   }, [displayedArtworks.length, activeArtwork, hoveredArtwork]);
 
-  const inspectedIdx = hoveredArtwork !== null ? hoveredArtwork : activeArtwork;
-  const inspectedArt = inspectedIdx !== null ? displayedArtworks[inspectedIdx] : null;
+  useEffect(() => {
+    if (activeArtwork === null) {
+      setDetailArtworkOverride(null);
+      setDetailArtworkOrigin(null);
+    }
+  }, [activeArtwork]);
+
+  const baseSelectedArtworkDetail = useMemo(() => {
+    if (activeArtwork === null) return null;
+    return filterResultArtworks[activeArtwork] || null;
+  }, [activeArtwork, filterResultArtworks]);
+
+  const selectedArtworkDetail = useMemo(() => {
+    return detailArtworkOverride || baseSelectedArtworkDetail;
+  }, [detailArtworkOverride, baseSelectedArtworkDetail]);
+
+  const inspectedArt = hoveredArtwork !== null
+    ? (displayedArtworks[hoveredArtwork] || null)
+    : selectedArtworkDetail;
+
+  const selectedRecommendationArtwork = useMemo(() => {
+    if (!selectedArtworkDetail) return null;
+    return toProductArtwork(selectedArtworkDetail);
+  }, [selectedArtworkDetail, toProductArtwork]);
+
+  const selectedRecommendationRelatedArtworks = useMemo(() => {
+    if (!selectedArtworkDetail) return [] as ProductArtwork[];
+    const selectedId = artworkIdFrom(selectedArtworkDetail);
+    return mappedArtworks
+      .filter((candidate) => {
+        const candidateId = artworkIdFrom(candidate);
+        if (candidateId === selectedId) return false;
+        return candidate.artist === selectedArtworkDetail.artist;
+      })
+      .slice(0, 12)
+      .map(toProductArtwork);
+  }, [artworkIdFrom, mappedArtworks, selectedArtworkDetail, toProductArtwork]);
+
+  const handleRecommendationSelect = useCallback((selected: ProductArtwork) => {
+    const selectedId = String(selected.id || "").trim();
+    const selectedTitle = normalizeSearchText(String((selected as any).name || ""));
+    const selectedArtist = normalizeSearchText(String(selected.artist || ""));
+
+    const localIndex = filterResultArtworks.findIndex((art) => {
+      const localId = artworkIdFrom(art);
+      if (selectedId && localId === selectedId) return true;
+      return selectedTitle !== "" && selectedArtist !== ""
+        && normalizeSearchText(art.title) === selectedTitle
+        && normalizeSearchText(art.artist) === selectedArtist;
+    });
+
+    const nextArtwork = localIndex >= 0
+      ? filterResultArtworks[localIndex]
+      : toInteractiveArtworkFromProduct(selected);
+
+    setDetailArtworkOrigin((prev) => prev || baseSelectedArtworkDetail || null);
+    setDetailArtworkOverride(nextArtwork);
+    setHoveredArtwork(null);
+
+    if (activeArtwork === null && localIndex >= 0) {
+      setActiveArtwork(localIndex);
+    }
+  }, [activeArtwork, artworkIdFrom, baseSelectedArtworkDetail, filterResultArtworks, toInteractiveArtworkFromProduct]);
+
+  const resetRecommendationDrilldown = useCallback(() => {
+    setDetailArtworkOverride(null);
+    setDetailArtworkOrigin(null);
+  }, []);
 
   // Group artworks into rows for inline expansion
   const artworkRows = useMemo(() => {
@@ -963,6 +1247,8 @@ export function InteractiveGlobeRealModal({
     setSearchQuery(val);
     setActiveArtwork(null);
     setHoveredArtwork(null);
+    setDetailArtworkOverride(null);
+    setDetailArtworkOrigin(null);
   }, []);
 
   const pad = '40px';
@@ -996,6 +1282,10 @@ export function InteractiveGlobeRealModal({
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, y: 20 }}
         transition={{ duration: 0.35, ease: "easeOut", delay: 0.05 }}
+        ref={scrollContainerRef}
+        onScroll={(event) => {
+          latestScrollTopRef.current = event.currentTarget.scrollTop;
+        }}
         style={{ height: '100%', overflowY: 'auto', overflowX: 'hidden' }}
       >
         {/* ── Hero ── */}
@@ -1090,7 +1380,13 @@ export function InteractiveGlobeRealModal({
           <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between', gap: '16px', flexWrap: 'wrap' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '6px', flexWrap: 'wrap' }}>
               <button
-                onClick={() => { setActiveFilter(null); setActiveArtwork(null); setHoveredArtwork(null); }}
+                onClick={() => {
+                  setActiveFilter(null);
+                  setActiveArtwork(null);
+                  setHoveredArtwork(null);
+                  setDetailArtworkOverride(null);
+                  setDetailArtworkOrigin(null);
+                }}
                 style={{ cursor: 'pointer', padding: '6px 12px', fontSize: '9px', letterSpacing: '0.12em', textTransform: 'uppercase', color: !activeFilter ? limeColor : fgMute, backgroundColor: !activeFilter ? limeBg : 'transparent', borderTop: `1px solid ${!activeFilter ? limeBorder : (t ? "rgba(0,0,0,0.06)" : "rgba(255,255,255,0.06)")}`, borderRight: `1px solid ${!activeFilter ? limeBorder : (t ? "rgba(0,0,0,0.06)" : "rgba(255,255,255,0.06)")}`, borderBottom: `1px solid ${!activeFilter ? limeBorder : (t ? "rgba(0,0,0,0.06)" : "rgba(255,255,255,0.06)")}`, borderLeft: `1px solid ${!activeFilter ? limeBorder : (t ? "rgba(0,0,0,0.06)" : "rgba(255,255,255,0.06)")}`, outline: 'none' }}
               >All</button>
               {availableCategories.map((cat) => {
@@ -1099,7 +1395,13 @@ export function InteractiveGlobeRealModal({
                 const bColor = isActive ? limeBorder : (t ? "rgba(0,0,0,0.06)" : "rgba(255,255,255,0.06)");
                 return (
                   <button key={cat}
-                    onClick={() => { setActiveFilter(isActive ? null : cat); setActiveArtwork(null); setHoveredArtwork(null); }}
+                    onClick={() => {
+                      setActiveFilter(isActive ? null : cat);
+                      setActiveArtwork(null);
+                      setHoveredArtwork(null);
+                      setDetailArtworkOverride(null);
+                      setDetailArtworkOrigin(null);
+                    }}
                     style={{ cursor: 'pointer', padding: '6px 12px', fontSize: '9px', letterSpacing: '0.12em', textTransform: 'uppercase', display: 'flex', alignItems: 'center', gap: '6px', color: isActive ? limeColor : fgMute, backgroundColor: isActive ? limeBg : 'transparent', borderTop: `1px solid ${bColor}`, borderRight: `1px solid ${bColor}`, borderBottom: `1px solid ${bColor}`, borderLeft: `1px solid ${bColor}`, outline: 'none' }}
                   >
                     {cat}<span style={{ fontFamily: "'Space Mono', monospace", fontSize: '8px', opacity: 0.6 }}>{count}</span>
@@ -1305,11 +1607,17 @@ export function InteractiveGlobeRealModal({
                       role="button"
                       tabIndex={0}
                       key={aw.inventoryNo + globalIdx}
-                      onClick={() => setActiveArtwork(isSelected ? null : globalIdx)}
+                      onClick={() => {
+                        setActiveArtwork(isSelected ? null : globalIdx);
+                        setDetailArtworkOverride(null);
+                        setDetailArtworkOrigin(null);
+                      }}
                       onKeyDown={(e) => {
                         if (e.key === 'Enter' || e.key === ' ') {
                           e.preventDefault();
                           setActiveArtwork(isSelected ? null : globalIdx);
+                          setDetailArtworkOverride(null);
+                          setDetailArtworkOrigin(null);
                         }
                       }}
                       onMouseEnter={() => handleArtworkMouseEnter(globalIdx)}
@@ -1352,11 +1660,26 @@ export function InteractiveGlobeRealModal({
                               <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
                             </svg>
                           </button>
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              e.preventDefault();
+                              openPlaylistForArtwork(aw);
+                            }}
+                            title="Add to playlist"
+                            style={{ cursor: 'pointer', width: 24, height: 24, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(0,0,0,0.42)', borderTop: 'none', borderRight: 'none', borderBottom: 'none', borderLeft: 'none', borderRadius: 12, padding: 0, color: '#fff' }}
+                          >
+                            <svg width={15} height={15} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                              <path d="M19 21l-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
+                              <path d="M12 7v6" />
+                              <path d="M9 10h6" />
+                            </svg>
+                          </button>
                           <HeartOverlay
                             isLiked={likedArtworks.has(artworkIdFrom(aw)) || likedArtworks.has(normalizeArtworkIdForFirestore(artworkIdFrom(aw)))}
                             onToggle={(e) => toggleLike(e, aw)}
                             size={16}
-                            color="#e11d48"
+                            color={limeColor}
                             emptyColor="#fff"
                             style={{ width: 24, height: 24, borderRadius: 12, background: 'rgba(0,0,0,0.42)' }}
                           />
@@ -1380,9 +1703,9 @@ export function InteractiveGlobeRealModal({
 
               {/* Inline row expansion */}
               <AnimatePresence>
-                {selectedRow === rowIdx && activeArtwork !== null && filterResultArtworks[activeArtwork] && (
+                {selectedRow === rowIdx && activeArtwork !== null && selectedArtworkDetail && (
                   <motion.div
-                    key={`exp-${activeArtwork}`}
+                    key={`exp-${activeArtwork}-${artworkIdFrom(selectedArtworkDetail)}`}
                     initial={{ opacity: 0, height: 0 }}
                     animate={{ opacity: 1, height: 'auto' }}
                     exit={{ opacity: 0, height: 0 }}
@@ -1391,10 +1714,10 @@ export function InteractiveGlobeRealModal({
                   >
                     <div style={{ height: '1px', backgroundColor: dividerColor }} />
                     <div style={{ padding: '28px 0', display: 'flex', flexDirection: 'row', gap: '32px' }}>
-                      <div style={{ flex: 1, minWidth: 0, display: 'flex', alignItems: 'flex-start', justifyContent: 'center' }}>
+                      <div style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                         <img
-                          src={filterResultArtworks[activeArtwork].image}
-                          alt={filterResultArtworks[activeArtwork].title}
+                          src={selectedArtworkDetail.image}
+                          alt={selectedArtworkDetail.title}
                           loading="lazy"
                           style={{ width: '100%', height: 'auto', display: 'block', maxHeight: '58vh', objectFit: 'contain' }}
                         />
@@ -1402,19 +1725,44 @@ export function InteractiveGlobeRealModal({
                       <div style={{ width: '240px', flexShrink: 0, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
                         <div>
                           <div style={{ fontSize: '17px', color: fgHigh, lineHeight: 1.3 }}>
-                            {filterResultArtworks[activeArtwork].title}
+                            {selectedArtworkDetail.title}
                           </div>
                           <div style={{ marginTop: '10px', fontSize: '13px', color: fgMed }}>
-                            {filterResultArtworks[activeArtwork].artist}
+                            {selectedArtworkDetail.artist}
                           </div>
                           <div style={{ marginTop: '4px', fontFamily: "'Space Mono', monospace", fontSize: '11px', color: fgLow }}>
-                            {formatArtworkYear(filterResultArtworks[activeArtwork].year) || filterResultArtworks[activeArtwork].year}
+                            {formatArtworkYear(selectedArtworkDetail.year) || selectedArtworkDetail.year}
                           </div>
+                          {detailArtworkOverride && detailArtworkOrigin && (
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                resetRecommendationDrilldown();
+                              }}
+                              style={{
+                                marginTop: '10px',
+                                cursor: 'pointer',
+                                padding: '4px 10px',
+                                fontSize: '8px',
+                                letterSpacing: '0.14em',
+                                textTransform: 'uppercase',
+                                color: limeColor,
+                                background: limeBg,
+                                borderTop: `1px solid ${limeBorder}`,
+                                borderRight: `1px solid ${limeBorder}`,
+                                borderBottom: `1px solid ${limeBorder}`,
+                                borderLeft: `1px solid ${limeBorder}`,
+                              }}
+                              title="원래 보고 있던 작품으로 돌아가기"
+                            >
+                              Back to Current
+                            </button>
+                          )}
                           <div style={{ marginTop: '12px', display: 'flex', alignItems: 'center', gap: '10px' }}>
                             <button
                               onClick={(e) => {
                                 e.stopPropagation();
-                                setProductArtwork(toProductArtwork(filterResultArtworks[activeArtwork]));
+                                setProductArtwork(toProductArtwork(selectedArtworkDetail));
                               }}
                               title="상품으로 구매하기"
                               style={{ cursor: 'pointer', width: 30, height: 30, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', background: t ? 'rgba(0,0,0,0.06)' : 'rgba(255,255,255,0.08)', borderTop: 'none', borderRight: 'none', borderBottom: 'none', borderLeft: 'none', borderRadius: 15, padding: 0, color: fgHigh }}
@@ -1427,7 +1775,7 @@ export function InteractiveGlobeRealModal({
                             <button
                               onClick={(e) => {
                                 e.stopPropagation();
-                                setCommentArtworkId(artworkIdFrom(filterResultArtworks[activeArtwork]));
+                                setCommentArtworkId(artworkIdFrom(selectedArtworkDetail));
                               }}
                               title="Comments"
                               style={{ cursor: 'pointer', width: 30, height: 30, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', background: t ? 'rgba(0,0,0,0.06)' : 'rgba(255,255,255,0.08)', borderTop: 'none', borderRight: 'none', borderBottom: 'none', borderLeft: 'none', borderRadius: 15, padding: 0, color: fgHigh }}
@@ -1436,11 +1784,25 @@ export function InteractiveGlobeRealModal({
                                 <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
                               </svg>
                             </button>
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                openPlaylistForArtwork(selectedArtworkDetail);
+                              }}
+                              title="Add to playlist"
+                              style={{ cursor: 'pointer', width: 30, height: 30, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', background: t ? 'rgba(0,0,0,0.06)' : 'rgba(255,255,255,0.08)', borderTop: 'none', borderRight: 'none', borderBottom: 'none', borderLeft: 'none', borderRadius: 15, padding: 0, color: fgHigh }}
+                            >
+                              <svg width={16} height={16} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                <path d="M19 21l-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
+                                <path d="M12 7v6" />
+                                <path d="M9 10h6" />
+                              </svg>
+                            </button>
                             <HeartOverlay
-                              isLiked={likedArtworks.has(artworkIdFrom(filterResultArtworks[activeArtwork])) || likedArtworks.has(normalizeArtworkIdForFirestore(artworkIdFrom(filterResultArtworks[activeArtwork])))}
-                              onToggle={(e) => toggleLike(e, filterResultArtworks[activeArtwork])}
+                              isLiked={likedArtworks.has(artworkIdFrom(selectedArtworkDetail)) || likedArtworks.has(normalizeArtworkIdForFirestore(artworkIdFrom(selectedArtworkDetail)))}
+                              onToggle={(e) => toggleLike(e, selectedArtworkDetail)}
                               size={16}
-                              color="#e11d48"
+                              color={limeColor}
                               emptyColor={fgHigh}
                               style={{ width: 30, height: 30, borderRadius: 15, background: t ? 'rgba(0,0,0,0.06)' : 'rgba(255,255,255,0.08)' }}
                             />
@@ -1448,9 +1810,9 @@ export function InteractiveGlobeRealModal({
                           <div style={{ marginTop: '16px', height: '1px', backgroundColor: dividerColor }} />
                           <div style={{ marginTop: '16px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
                             {[
-                              { label: "Category", value: filterResultArtworks[activeArtwork].category },
-                              { label: "Material", value: filterResultArtworks[activeArtwork].material },
-                              { label: "Dimensions", value: filterResultArtworks[activeArtwork].dimensions },
+                              { label: "Category", value: selectedArtworkDetail.category },
+                              { label: "Material", value: selectedArtworkDetail.material },
+                              { label: "Dimensions", value: selectedArtworkDetail.dimensions },
                             ].map((m) => (
                               <div key={m.label} style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', gap: '12px' }}>
                                 <span style={{ fontSize: '8px', color: fgMute, letterSpacing: '0.15em', textTransform: 'uppercase', flexShrink: 0 }}>{m.label}</span>
@@ -1458,9 +1820,9 @@ export function InteractiveGlobeRealModal({
                               </div>
                             ))}
                           </div>
-                          {filterResultArtworks[activeArtwork].sourceUrl && (
+                          {selectedArtworkDetail.sourceUrl && (
                             <a
-                              href={filterResultArtworks[activeArtwork].sourceUrl}
+                              href={selectedArtworkDetail.sourceUrl}
                               target="_blank"
                               rel="noreferrer"
                               style={{
@@ -1481,7 +1843,11 @@ export function InteractiveGlobeRealModal({
                           )}
                         </div>
                         <button
-                          onClick={() => setActiveArtwork(null)}
+                          onClick={() => {
+                            setActiveArtwork(null);
+                            setDetailArtworkOverride(null);
+                            setDetailArtworkOrigin(null);
+                          }}
                           style={{ marginTop: '24px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px', fontSize: '10px', background: 'none', borderTop: 'none', borderRight: 'none', borderBottom: 'none', borderLeft: 'none', outline: 'none' }}
                         >
                           <span style={{ color: fgMute, letterSpacing: '0.12em', textTransform: 'uppercase' }}>Close</span>
@@ -1489,6 +1855,22 @@ export function InteractiveGlobeRealModal({
                         </button>
                       </div>
                     </div>
+
+                    {selectedRecommendationArtwork && (
+                      <div style={{ marginTop: '2px', paddingTop: '14px', borderTop: `1px solid ${dividerColor}` }}>
+                        <ArtworkRecommendations
+                          artwork={selectedRecommendationArtwork}
+                          relatedArtworks={selectedRecommendationRelatedArtworks}
+                          onSelectArtwork={handleRecommendationSelect}
+                          mode="compact-horizontal"
+                          theme={t ? 'light' : 'dark'}
+                          likedArtworks={likedArtworks}
+                          onToggleLike={(e, artwork) => toggleLike(e, toInteractiveArtworkFromProduct(artwork))}
+                          onOpenProduct={(artwork) => setProductArtwork(toProductArtwork(toInteractiveArtworkFromProduct(artwork)))}
+                        />
+                      </div>
+                    )}
+
                     <div style={{ height: '1px', backgroundColor: dividerColor }} />
                   </motion.div>
                 )}
@@ -1566,6 +1948,16 @@ export function InteractiveGlobeRealModal({
             isOpen={true}
             artworkId={commentArtworkId}
             onClose={() => setCommentArtworkId(null)}
+          />
+        )}
+
+        {playlistArtwork && (
+          <PlaylistModal
+            isOpen={true}
+            onClose={() => setPlaylistArtwork(null)}
+            item={playlistArtwork}
+            itemType="artwork"
+            theme={t ? "light" : "dark"}
           />
         )}
       </motion.div>

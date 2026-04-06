@@ -50,6 +50,9 @@ const CommentModal: React.FC<CommentModalProps> = ({ artworkId, isOpen = true, o
   const [editText, setEditText] = useState('');
   const [replyingToId, setReplyingToId] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isDark, setIsDark] = useState(() => {
+    try { return localStorage.getItem('homeTheme') !== 'light'; } catch { return true; }
+  });
   const scrollRef = useRef<HTMLDivElement>(null);
   const isNetworkConstrained = shouldLimitNetwork();
 
@@ -57,6 +60,27 @@ const CommentModal: React.FC<CommentModalProps> = ({ artworkId, isOpen = true, o
     const unsubscribe = onAuthStateChanged(auth, (u) => setUser(u));
     return () => unsubscribe();
   }, []);
+
+  useEffect(() => {
+    const syncTheme = () => {
+      try { setIsDark(localStorage.getItem('homeTheme') !== 'light'); } catch { setIsDark(true); }
+    };
+    window.addEventListener('theme-changed', syncTheme);
+    window.addEventListener('storage', syncTheme);
+    return () => {
+      window.removeEventListener('theme-changed', syncTheme);
+      window.removeEventListener('storage', syncTheme);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!isOpen) return;
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') onClose();
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [isOpen, onClose]);
 
   useEffect(() => {
     if (!artworkId) return;
@@ -337,6 +361,15 @@ const CommentModal: React.FC<CommentModalProps> = ({ artworkId, isOpen = true, o
     }
   };
 
+  const t = !isDark;
+  const fgHigh = t ? 'rgba(0,0,0,0.9)' : 'rgba(255,255,255,0.92)';
+  const fgMed = t ? 'rgba(0,0,0,0.66)' : 'rgba(255,255,255,0.72)';
+  const fgLow = t ? 'rgba(0,0,0,0.44)' : 'rgba(255,255,255,0.52)';
+  const divider = t ? 'rgba(0,0,0,0.08)' : 'rgba(255,255,255,0.09)';
+  const lime = t ? '#5A7800' : '#BFFF0A';
+  const limeSoft = t ? 'rgba(90,120,0,0.12)' : 'rgba(191,255,10,0.14)';
+  const fallbackAvatar = 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y';
+
   const renderComment = (c: Comment, isReply = false) => {
     const isOwner = user && user.uid === c.userId;
     const isEditing = editingCommentId === c.id;
@@ -346,69 +379,66 @@ const CommentModal: React.FC<CommentModalProps> = ({ artworkId, isOpen = true, o
     const displayName = profile?.nickname || c.userName;
     const displayPhoto = (isOwner && user?.photoURL)
       ? user.photoURL
-      : (profile?.photoURL || c.userPhotoURL || "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y");
+      : (profile?.photoURL || c.userPhotoURL || fallbackAvatar);
 
     const likeCount = c.likes?.length || 0;
     const isLiked = user ? c.likes?.includes(user.uid) : false;
 
-
-    // Animation for new comments
-    const isNew = (Date.now() - (c.createdAt?.toMillis() || Date.now())) < 5000;
-
     return (
       <div key={c.id} style={{
-        marginBottom: 12, display: 'flex', gap: 10, paddingLeft: isReply ? 30 : 0,
-        animation: isNew ? 'fadeIn 0.5s ease-out' : 'none'
+        marginBottom: 10,
+        marginLeft: isReply ? 34 : 0,
+        borderTop: `1px solid ${divider}`,
+        borderRight: `1px solid ${divider}`,
+        borderBottom: `1px solid ${divider}`,
+        borderLeft: `1px solid ${divider}`,
+        background: t ? 'rgba(255,255,255,0.8)' : 'rgba(255,255,255,0.03)',
+        padding: isReply ? '10px 11px' : '12px 13px',
+        display: 'flex',
+        gap: 10,
       }}>
-        <style>
-          {`
-                    @keyframes fadeIn {
-                        from { opacity: 0; transform: translateY(10px); }
-                        to { opacity: 1; transform: translateY(0); }
-                    }
-                `}
-        </style>
         <img
           src={displayPhoto}
           alt={displayName}
           title={displayName}
           onError={(e) => {
             const target = e.currentTarget;
-            if (target.src !== "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y") {
-              target.src = "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y";
+            if (target.src !== fallbackAvatar) {
+              target.src = fallbackAvatar;
             }
           }}
           style={{
-            width: isReply ? 24 : 32, height: isReply ? 24 : 32,
-            borderRadius: '50%', objectFit: 'cover', flexShrink: 0,
-            border: '1px solid #eee',
-            backgroundColor: '#f0f0f0'
+            width: isReply ? 24 : 30,
+            height: isReply ? 24 : 30,
+            borderRadius: '50%',
+            objectFit: 'cover',
+            flexShrink: 0,
+            border: `1px solid ${divider}`,
+            backgroundColor: t ? '#f4f4f4' : '#1a1a1a',
           }}
         />
-        <div style={{ flex: 1 }}>
-          {/* Header Line: Name + Time + Heart */}
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
-              <div style={{ fontSize: 13, fontWeight: 700, color: '#333' }}>
+        <div style={{ flex: 1, minWidth: 0 }}>
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 8 }}>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 7, minWidth: 0 }}>
+              <div style={{ fontSize: 12, fontWeight: 600, color: fgHigh, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                 {displayName}
               </div>
-              <span style={{ fontSize: 11, fontWeight: 400, color: '#999' }}>
+              <span style={{ fontSize: 10, color: fgLow }}>
                 {c.createdAt ? formatDate(c.createdAt.toDate()) : ''}
               </span>
 
-              {/* Heart Icon moved here, next to time */}
               <button
                 onClick={() => toggleLike(c)}
                 style={{
                   background: 'none', border: 'none', cursor: 'pointer', padding: 0,
                   display: 'flex', alignItems: 'center', gap: 3,
-                  color: isLiked ? '#ff4444' : '#ccc', marginLeft: 6
+                  color: isLiked ? lime : fgLow, marginLeft: 6
                 }}
               >
                 <svg width="12" height="12" viewBox="0 0 24 24" fill={isLiked ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2">
                   <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"></path>
                 </svg>
-                {likeCount > 0 && <span style={{ fontSize: 10, color: '#999' }}>{likeCount}</span>}
+                {likeCount > 0 && <span style={{ fontSize: 10 }}>{likeCount}</span>}
               </button>
             </div>
 
@@ -416,63 +446,103 @@ const CommentModal: React.FC<CommentModalProps> = ({ artworkId, isOpen = true, o
               <div style={{ display: 'flex', gap: 8 }}>
                 <button onClick={() => startEditing(c)} style={{
                   background: 'none', border: 'none', cursor: 'pointer', padding: 0,
-                  color: '#999', fontSize: 11
+                  color: fgLow, fontSize: 10, letterSpacing: '0.06em', textTransform: 'uppercase'
                 }}>Edit</button>
                 <button onClick={() => deleteComment(c.id)} style={{
                   background: 'none', border: 'none', cursor: 'pointer', padding: 0,
-                  color: '#ff4444', fontSize: 11
-                }}>Del</button>
+                  color: t ? '#9b2c2c' : '#ff7e7e', fontSize: 10, letterSpacing: '0.06em', textTransform: 'uppercase'
+                }}>Delete</button>
               </div>
             )}
           </div>
 
           {isEditing ? (
-            <div style={{ marginTop: 4 }}>
+            <div style={{ marginTop: 8 }}>
               <textarea
                 value={editText}
                 onChange={(e) => setEditText(e.target.value)}
                 style={{
-                  width: '100%', padding: 8, borderRadius: 4, border: '1px solid #ddd',
-                  fontSize: 13, resize: 'none', minHeight: 60
+                  width: '100%',
+                  padding: '9px 10px',
+                  borderTop: `1px solid ${divider}`,
+                  borderRight: `1px solid ${divider}`,
+                  borderBottom: `1px solid ${divider}`,
+                  borderLeft: `1px solid ${divider}`,
+                  background: t ? '#fff' : 'rgba(255,255,255,0.03)',
+                  color: fgHigh,
+                  fontSize: 12,
+                  lineHeight: 1.4,
+                  resize: 'none',
+                  minHeight: 72,
+                  outline: 'none',
                 }}
               />
-              <div style={{ display: 'flex', gap: 6, marginTop: 4, justifyContent: 'flex-end' }}>
+              <div style={{ display: 'flex', gap: 8, marginTop: 7, justifyContent: 'flex-end' }}>
                 <button onClick={cancelEditing} style={{
-                  padding: '4px 8px', fontSize: 11, background: '#f0f0f0', border: '1px solid #ccc', borderRadius: 4, cursor: 'pointer'
+                  borderTop: `1px solid ${divider}`,
+                  borderRight: `1px solid ${divider}`,
+                  borderBottom: `1px solid ${divider}`,
+                  borderLeft: `1px solid ${divider}`,
+                  background: 'transparent',
+                  color: fgLow,
+                  fontSize: 10,
+                  letterSpacing: '0.08em',
+                  textTransform: 'uppercase',
+                  padding: '6px 10px',
+                  cursor: 'pointer'
                 }}>Cancel</button>
                 <button onClick={() => saveEdit(c.id)} style={{
-                  padding: '4px 8px', fontSize: 11, background: '#0095f6', color: '#fff', border: 'none', borderRadius: 4, cursor: 'pointer'
+                  borderTop: `1px solid ${t ? 'rgba(90,120,0,0.45)' : 'rgba(191,255,10,0.4)'}`,
+                  borderRight: `1px solid ${t ? 'rgba(90,120,0,0.45)' : 'rgba(191,255,10,0.4)'}`,
+                  borderBottom: `1px solid ${t ? 'rgba(90,120,0,0.45)' : 'rgba(191,255,10,0.4)'}`,
+                  borderLeft: `1px solid ${t ? 'rgba(90,120,0,0.45)' : 'rgba(191,255,10,0.4)'}`,
+                  background: limeSoft,
+                  color: lime,
+                  fontSize: 10,
+                  letterSpacing: '0.08em',
+                  textTransform: 'uppercase',
+                  padding: '6px 10px',
+                  cursor: 'pointer'
                 }}>Save</button>
               </div>
             </div>
           ) : (
             <>
-              <div style={{ fontSize: 13, color: '#444', lineHeight: 1.3, whiteSpace: 'pre-wrap', marginTop: 2 }}>
+              <div style={{
+                marginTop: 6,
+                color: fgMed,
+                fontSize: 12,
+                lineHeight: 1.5,
+                whiteSpace: 'pre-wrap',
+                wordBreak: 'break-word'
+              }}>
                 {c.text}
               </div>
-
-              {/* Reply Button - moved closer below text */}
-              <div style={{ marginTop: 0, lineHeight: 1 }}>
-                <button
-                  onClick={() => {
-                    if (!user) { alert("Please sign in to reply."); return; }
-                    setReplyingToId(isReplying ? null : c.id);
-                    setEditingCommentId(null);
-                  }}
-                  style={{
-                    background: 'none', border: 'none', cursor: 'pointer', padding: 0,
-                    color: '#999', fontSize: 11, fontWeight: 500
-                  }}
-                >
-                  Reply
-                </button>
-              </div>
+              <button
+                onClick={() => {
+                  if (!user) { alert("Please sign in to reply."); return; }
+                  setReplyingToId(isReplying ? null : c.id);
+                  setEditingCommentId(null);
+                }}
+                style={{
+                  marginTop: 7,
+                  background: 'none',
+                  border: 'none',
+                  cursor: 'pointer',
+                  padding: 0,
+                  color: isReplying ? lime : fgLow,
+                  fontSize: 10,
+                  letterSpacing: '0.07em',
+                  textTransform: 'uppercase'
+                }}
+              >
+                {isReplying ? 'Cancel Reply' : 'Reply'}
+              </button>
             </>
           )}
 
-          {/* Reply Input */}
           {isReplying && (
-            <div style={{ marginTop: 6, display: 'flex', gap: 8 }}>
+            <div style={{ marginTop: 8 }}>
               <input
                 autoFocus
                 placeholder={`Reply to ${displayName}...`}
@@ -481,11 +551,20 @@ const CommentModal: React.FC<CommentModalProps> = ({ artworkId, isOpen = true, o
                   if (e.key === 'Enter' && !e.shiftKey) {
                     e.preventDefault();
                     handleSend(c.id, (e.target as HTMLInputElement).value);
+                    (e.target as HTMLInputElement).value = '';
                   }
                 }}
                 style={{
-                  flex: 1, padding: '6px 10px', borderRadius: 16,
-                  border: '1px solid #ddd', outline: 'none', fontSize: 12
+                  width: '100%',
+                  padding: '8px 11px',
+                  borderTop: `1px solid ${divider}`,
+                  borderRight: `1px solid ${divider}`,
+                  borderBottom: `1px solid ${divider}`,
+                  borderLeft: `1px solid ${divider}`,
+                  background: t ? '#fff' : 'rgba(255,255,255,0.03)',
+                  color: fgHigh,
+                  outline: 'none',
+                  fontSize: 12
                 }}
               />
             </div>
@@ -502,35 +581,95 @@ const CommentModal: React.FC<CommentModalProps> = ({ artworkId, isOpen = true, o
 
   return (
     <div style={{
-      position: 'fixed', top: 0, left: 0, width: '100vw', height: '100vh',
-      background: 'rgba(0,0,0,0.5)', zIndex: 20000,
-      display: 'flex', alignItems: 'center', justifyContent: 'center'
+      position: 'fixed',
+      inset: 0,
+      background: t ? 'rgba(10,10,10,0.24)' : 'rgba(0,0,0,0.62)',
+      backdropFilter: 'blur(7px)',
+      WebkitBackdropFilter: 'blur(7px)',
+      zIndex: 20000,
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      padding: '24px 16px'
     }} onClick={onClose}>
       <div style={{
-        width: '90%', maxWidth: 400, height: '80vh', maxHeight: 600,
-        background: '#fff', borderRadius: 12, overflow: 'hidden',
-        display: 'flex', flexDirection: 'column',
-        boxShadow: '0 4px 20px rgba(0,0,0,0.2)'
+        width: 'min(520px, 100%)',
+        height: 'min(78vh, 720px)',
+        background: t
+          ? 'linear-gradient(180deg, rgba(250,250,250,1) 0%, rgba(244,245,241,1) 100%)'
+          : 'linear-gradient(180deg, rgba(13,13,13,0.98) 0%, rgba(8,8,8,0.98) 100%)',
+        borderTop: `1px solid ${divider}`,
+        borderRight: `1px solid ${divider}`,
+        borderBottom: `1px solid ${divider}`,
+        borderLeft: `1px solid ${divider}`,
+        boxShadow: t ? '0 22px 48px rgba(0,0,0,0.14)' : '0 26px 56px rgba(0,0,0,0.55)',
+        overflow: 'hidden',
+        display: 'flex',
+        flexDirection: 'column',
       }} onClick={e => e.stopPropagation()}>
 
-        {/* Header */}
         <div style={{
-          padding: '16px 20px', borderBottom: '1px solid #eee',
-          display: 'flex', alignItems: 'center', justifyContent: 'space-between'
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'space-between',
+          padding: '14px 16px',
+          borderBottom: `1px solid ${divider}`,
+          background: t ? 'rgba(255,255,255,0.72)' : 'rgba(0,0,0,0.3)',
         }}>
-          <div style={{ fontWeight: 600, fontSize: 16 }}>Comments</div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 2 }}>
+            <span style={{ fontSize: 13, color: fgHigh, fontWeight: 600, letterSpacing: '0.03em' }}>Comments</span>
+            <span style={{ fontSize: 10, color: fgLow, letterSpacing: '0.08em', textTransform: 'uppercase' }}>
+              {comments.length.toLocaleString()} entries
+            </span>
+          </div>
           <button onClick={onClose} style={{
-            background: 'none', border: 'none', fontSize: 24, lineHeight: 1, cursor: 'pointer', padding: 0, color: '#333'
+            width: 30,
+            height: 30,
+            borderRadius: 15,
+            borderTop: `1px solid ${divider}`,
+            borderRight: `1px solid ${divider}`,
+            borderBottom: `1px solid ${divider}`,
+            borderLeft: `1px solid ${divider}`,
+            background: t ? 'rgba(0,0,0,0.03)' : 'rgba(255,255,255,0.06)',
+            color: fgMed,
+            cursor: 'pointer',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            fontSize: 16,
+            lineHeight: 1,
+            padding: 0,
           }}>&times;</button>
         </div>
 
-        {/* List */}
         <div ref={scrollRef} style={{
-          flex: 1, overflowY: 'auto', padding: '16px', background: '#fafafa'
+          flex: 1,
+          overflowY: 'auto',
+          padding: 12,
+          background: t ? 'rgba(0,0,0,0.015)' : 'rgba(255,255,255,0.02)',
+          scrollbarWidth: 'thin',
         }}>
           {comments.length === 0 ? (
-            <div style={{ textAlign: 'center', color: '#999', marginTop: 40, fontSize: 13 }}>
-              No comments yet.<br />Be the first to share your thoughts!
+            <div style={{
+              height: '100%',
+              minHeight: 220,
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              textAlign: 'center',
+              color: fgLow,
+              fontSize: 12,
+              lineHeight: 1.7,
+              letterSpacing: '0.03em',
+              borderTop: `1px dashed ${divider}`,
+              borderRight: `1px dashed ${divider}`,
+              borderBottom: `1px dashed ${divider}`,
+              borderLeft: `1px dashed ${divider}`,
+              background: t ? 'rgba(255,255,255,0.8)' : 'rgba(255,255,255,0.02)',
+            }}>
+              No comments yet.
+              <br />
+              Start the first conversation around this artwork.
             </div>
           ) : (
             topLevelComments.map(c => (
@@ -542,42 +681,78 @@ const CommentModal: React.FC<CommentModalProps> = ({ artworkId, isOpen = true, o
           )}
         </div>
 
-        {/* Footer / Input */}
         <div style={{
-          padding: '12px', borderTop: '1px solid #eee', background: '#fff',
-          display: 'flex', gap: 8, alignItems: 'center'
+          padding: '11px 12px',
+          borderTop: `1px solid ${divider}`,
+          background: t ? 'rgba(255,255,255,0.74)' : 'rgba(0,0,0,0.25)',
+          display: 'flex',
+          gap: 8,
+          alignItems: 'center'
         }}>
-          {(userProfiles[user?.uid || '']?.photoURL || user?.photoURL) && (
+          {(userProfiles[user?.uid || '']?.photoURL || user?.photoURL) ? (
             <img
               src={userProfiles[user?.uid || '']?.photoURL || user?.photoURL || ''}
               alt="me"
-              style={{ width: 24, height: 24, borderRadius: '50%', objectFit: 'cover' }}
+              style={{
+                width: 26,
+                height: 26,
+                borderRadius: '50%',
+                objectFit: 'cover',
+                border: `1px solid ${divider}`,
+                backgroundColor: t ? '#f0f0f0' : '#1a1a1a',
+              }}
             />
+          ) : (
+            <div style={{
+              width: 26,
+              height: 26,
+              borderRadius: '50%',
+              borderTop: `1px solid ${divider}`,
+              borderRight: `1px solid ${divider}`,
+              borderBottom: `1px solid ${divider}`,
+              borderLeft: `1px solid ${divider}`,
+              background: t ? 'rgba(0,0,0,0.03)' : 'rgba(255,255,255,0.04)',
+            }} />
           )}
           <input
             type="text"
             value={newComment}
             onChange={e => setNewComment(e.target.value)}
             onKeyDown={handleKeyDown}
-            placeholder={user ? "Add a comment..." : "Sign in to comment"}
+            placeholder={user ? "Share your thought on this piece..." : "Sign in to comment"}
             disabled={!user || isSubmitting}
             style={{
-              flex: 1, padding: '10px 12px', borderRadius: 20,
-              border: '1px solid #ddd', outline: 'none', fontSize: 13,
-              background: user ? '#fff' : '#f0f0f0'
+              flex: 1,
+              padding: '9px 11px',
+              borderTop: `1px solid ${divider}`,
+              borderRight: `1px solid ${divider}`,
+              borderBottom: `1px solid ${divider}`,
+              borderLeft: `1px solid ${divider}`,
+              outline: 'none',
+              fontSize: 12,
+              background: user ? (t ? 'rgba(255,255,255,0.95)' : 'rgba(255,255,255,0.05)') : (t ? 'rgba(0,0,0,0.04)' : 'rgba(255,255,255,0.03)'),
+              color: fgHigh
             }}
           />
           <button
             onClick={() => handleSend(null)}
             disabled={!newComment.trim() || !user || isSubmitting}
             style={{
-              background: 'transparent', border: 'none',
-              color: (newComment.trim() && !isSubmitting) ? '#0095f6' : '#b2dffc',
-              fontWeight: 600, fontSize: 13, cursor: (newComment.trim() && !isSubmitting) ? 'pointer' : 'default',
-              padding: '8px'
+              minWidth: 58,
+              padding: '9px 10px',
+              borderTop: `1px solid ${newComment.trim() && user && !isSubmitting ? (t ? 'rgba(90,120,0,0.52)' : 'rgba(191,255,10,0.5)') : divider}`,
+              borderRight: `1px solid ${newComment.trim() && user && !isSubmitting ? (t ? 'rgba(90,120,0,0.52)' : 'rgba(191,255,10,0.5)') : divider}`,
+              borderBottom: `1px solid ${newComment.trim() && user && !isSubmitting ? (t ? 'rgba(90,120,0,0.52)' : 'rgba(191,255,10,0.5)') : divider}`,
+              borderLeft: `1px solid ${newComment.trim() && user && !isSubmitting ? (t ? 'rgba(90,120,0,0.52)' : 'rgba(191,255,10,0.5)') : divider}`,
+              background: newComment.trim() && user && !isSubmitting ? limeSoft : 'transparent',
+              color: newComment.trim() && user && !isSubmitting ? lime : fgLow,
+              fontSize: 10,
+              letterSpacing: '0.09em',
+              textTransform: 'uppercase',
+              cursor: newComment.trim() && user && !isSubmitting ? 'pointer' : 'default'
             }}
           >
-            Post
+            {isSubmitting ? 'Sending' : 'Post'}
           </button>
         </div>
       </div>
