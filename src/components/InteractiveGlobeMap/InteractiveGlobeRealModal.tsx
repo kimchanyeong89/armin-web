@@ -51,6 +51,7 @@ type Artwork = {
   collection: string;
   inventoryNo: string;
   sourceUrl: string;
+  semanticId?: string;
 };
 
 type SortMode = "default" | "random" | "year_asc" | "year_desc" | "like_desc";
@@ -341,6 +342,24 @@ function normalizeImageUrl(url: unknown): string {
   return normalized;
 }
 
+function getCollectionSlugFromPath(inputPath: unknown): string {
+  if (typeof inputPath !== "string") return "";
+  const trimmed = inputPath.trim();
+  if (!trimmed) return "";
+
+  let pathname = trimmed;
+  try {
+    const parsed = new URL(trimmed);
+    pathname = parsed.pathname || trimmed;
+  } catch {
+    pathname = trimmed;
+  }
+
+  const normalized = pathname.split("?")[0].split("#")[0].replace(/\\/g, "/");
+  const lastSegment = normalized.split("/").filter(Boolean).pop() || "";
+  return lastSegment.replace(/\.jsonl?$/i, "").trim();
+}
+
 export function InteractiveGlobeRealModal({
   exhibition,
   theme,
@@ -371,6 +390,7 @@ export function InteractiveGlobeRealModal({
   const [realArtworks, setRealArtworks] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [visibleCount, setVisibleCount] = useState(INITIAL_VISIBLE_ARTWORKS);
+  const [resolvedCollectionCandidate, setResolvedCollectionCandidate] = useState<string>("");
   const loadMoreRef = useRef<HTMLDivElement | null>(null);
   const onReadyRef = useRef(onReady);
   const randomOrderRef = useRef<Map<string, number>>(new Map());
@@ -517,6 +537,7 @@ export function InteractiveGlobeRealModal({
     if (!candidates.length) {
       setIsLoading(false);
       setRealArtworks([]);
+      setResolvedCollectionCandidate("");
       return;
     }
 
@@ -525,7 +546,9 @@ export function InteractiveGlobeRealModal({
 
     const loadArtworks = async () => {
       let firstKnownItems: any[] | null = null;
+      let firstKnownCandidate = "";
       let resolvedItems: any[] = [];
+      let resolvedCandidate = "";
 
       for (const candidate of candidates) {
         try {
@@ -553,9 +576,13 @@ export function InteractiveGlobeRealModal({
           }
 
           const items = extractItemsFromPayload(payload);
-          if (firstKnownItems === null) firstKnownItems = items;
+          if (firstKnownItems === null) {
+            firstKnownItems = items;
+            firstKnownCandidate = candidate;
+          }
           if (items.length > 0) {
             resolvedItems = items;
+            resolvedCandidate = candidate;
             break;
           }
         } catch {
@@ -565,6 +592,7 @@ export function InteractiveGlobeRealModal({
 
       if (!abortController.signal.aborted) {
         setRealArtworks(resolvedItems.length > 0 ? resolvedItems : (firstKnownItems || []));
+        setResolvedCollectionCandidate(resolvedCandidate || firstKnownCandidate || "");
         setIsLoading(false);
       }
     };
@@ -577,6 +605,15 @@ export function InteractiveGlobeRealModal({
   const venueName = exhibition.name || "Gallery";
   const selectedType = (exhibition as any)._selectedExhibitionType || exhibition.type;
   const mappedType = selectedType === "permanent" ? "permanent" : (exhibition as any).startDate ? "current" : "current";
+
+  const collectionSlug = useMemo(() => {
+    const selected = getCollectionSlugFromPath(resolvedCollectionCandidate);
+    if (selected) return selected;
+    const fromExhibition = getCollectionSlugFromPath((exhibition as any)?.collectionFile || (exhibition as any)?.collection);
+    if (fromExhibition) return fromExhibition;
+    const fallback = String(exhibition?.id || "").trim();
+    return fallback ? `${fallback}-collection` : "collection";
+  }, [resolvedCollectionCandidate, exhibition]);
   
   const mappedArtworks = useMemo(() => {
       const getImg = (url: string) => {
@@ -765,6 +802,7 @@ export function InteractiveGlobeRealModal({
 
       return realArtworks.map((a, i) => {
           const imgUrl = resolveImg(a);
+          const semanticId = pickMeaningfulText(a?.semanticId, a?.semantic_id, a?.vectorId, a?.vector_id) || `${collectionSlug}-${i}`;
           return {
               title: resolveTitle(a),
               artist: resolveArtist(a),
@@ -776,7 +814,8 @@ export function InteractiveGlobeRealModal({
               material: resolveMaterial(a),
               collection: venueName,
               inventoryNo: String(a.id || a.objectNumber || a.registrationNumber || a.inventoryNumber || a.accessionNum || `AW-${i}`),
-              sourceUrl: resolveSourceUrl(a)
+              sourceUrl: resolveSourceUrl(a),
+              semanticId,
           }
       }).filter(a => a.image).sort((a, b) => {
           const isTextOrLetter = (art: any) => {
@@ -791,7 +830,7 @@ export function InteractiveGlobeRealModal({
           };
           return (isTextOrLetter(a) ? 1 : 0) - (isTextOrLetter(b) ? 1 : 0);
       });
-  }, [realArtworks, venueName]);
+  }, [realArtworks, venueName, collectionSlug]);
 
 
   const bgColor = t ? "#FAFAFA" : "#080808";
@@ -814,10 +853,19 @@ export function InteractiveGlobeRealModal({
     );
   }, []);
 
+  const recommendationIdFrom = useCallback((artwork: Artwork): string => {
+    return String(
+      artwork.semanticId ||
+      artwork.inventoryNo ||
+      artwork.sourceUrl ||
+      `${artwork.title}-${artwork.artist}-${artwork.year}`
+    );
+  }, []);
+
   const toProductArtwork = useCallback((artwork: Artwork): ProductArtwork => {
     const numericYear = Number(formatArtworkYear(artwork.year));
     return {
-      id: artworkIdFrom(artwork),
+      id: recommendationIdFrom(artwork),
       name: artwork.title,
       artist: artwork.artist,
       year: Number.isFinite(numericYear) ? numericYear : 0,
@@ -831,8 +879,9 @@ export function InteractiveGlobeRealModal({
       medium: artwork.material,
       category: artwork.category,
       mediaType: "image",
+      semanticId: artwork.semanticId,
     };
-  }, [artworkIdFrom, exhibition, venueName]);
+  }, [recommendationIdFrom, exhibition, venueName]);
 
   const toInteractiveArtworkFromProduct = useCallback((artwork: ProductArtwork): Artwork => {
     const normalizedImage = String(artwork.image || "");
@@ -848,6 +897,7 @@ export function InteractiveGlobeRealModal({
       collection: String(artwork.exhibitionName || venueName),
       inventoryNo: String(artwork.id || `${artwork.name}-${artwork.artist}-${artwork.year}`),
       sourceUrl: String(artwork.sourceUrl || ""),
+      semanticId: String((artwork as any).semanticId || artwork.id || ""),
     };
   }, [venueName]);
 
@@ -1199,7 +1249,8 @@ export function InteractiveGlobeRealModal({
 
     const localIndex = filterResultArtworks.findIndex((art) => {
       const localId = artworkIdFrom(art);
-      if (selectedId && localId === selectedId) return true;
+      const localRecommendationId = recommendationIdFrom(art);
+      if (selectedId && (localId === selectedId || localRecommendationId === selectedId)) return true;
       return selectedTitle !== "" && selectedArtist !== ""
         && normalizeSearchText(art.title) === selectedTitle
         && normalizeSearchText(art.artist) === selectedArtist;
@@ -1216,7 +1267,7 @@ export function InteractiveGlobeRealModal({
     if (activeArtwork === null && localIndex >= 0) {
       setActiveArtwork(localIndex);
     }
-  }, [activeArtwork, artworkIdFrom, baseSelectedArtworkDetail, filterResultArtworks, toInteractiveArtworkFromProduct]);
+  }, [activeArtwork, artworkIdFrom, recommendationIdFrom, baseSelectedArtworkDetail, filterResultArtworks, toInteractiveArtworkFromProduct]);
 
   const resetRecommendationDrilldown = useCallback(() => {
     setDetailArtworkOverride(null);
