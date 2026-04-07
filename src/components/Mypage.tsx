@@ -56,6 +56,13 @@ export const getFallbackExhibitionIdForJson = (item: any): string => {
   if (item.exhibitionId) return item.exhibitionId;
   if (item.e) return item.e;
 
+  const museum = findMuseumForArtwork(item, exhibitions);
+  if (museum && museum.permanentExhibitions && museum.permanentExhibitions.length > 0) {
+    const file = museum.permanentExhibitions[0].collectionFile;
+    if (file) return file.replace(".json", "");
+  }
+
+  // Legacy hardcodes as last resort
   if (item.museumName || item.m) {
     const museumName = (item.museumName || item.m || "").toLowerCase();
     if (museumName.includes("brucke") || museumName.includes("brücke")) return "bruecke-museum-collection";
