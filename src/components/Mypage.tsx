@@ -754,7 +754,8 @@ const MyPage: React.FC = () => {
       
       setGalleryArtwork({ 
         ...item, 
-        image: recoveredSrc || item.image || item.i 
+        image: recoveredSrc || item.image || item.i,
+        ...(recoveredSrc && { lightboxImage: recoveredSrc })
       });
     }
   };
