@@ -3,8 +3,12 @@ import type { Artwork } from '../types/Artwork';
 import { getWeservUrl } from '../utils/imageProxy';
 import { exhibitions } from '../data/exhibitions';
 import { HeartOverlay } from './HeartOverlay';
+import { BookmarkPlus, MessageCircle, ShoppingBag } from 'lucide-react';
 
 const WORKER_URL = 'https://armin-semantic-search.armin-art.workers.dev';
+const RECOMMENDATION_BACKOFF_MS = 60_000;
+const recommendationCache = new Map<string, any[]>();
+let recommendationBackoffUntil = 0;
 
 // Map museum names to countries for quick lookup
 const getMuseumCountryMap = () => {
@@ -27,6 +31,8 @@ interface Props {
     likedArtworks?: Set<string>;
     onToggleLike?: (e: React.MouseEvent, artwork: Artwork) => void;
     onOpenProduct?: (artwork: Artwork) => void;
+    onSaveToPlaylist?: (artwork: Artwork) => void;
+    onOpenComments?: (artwork: Artwork) => void;
 }
 
 export const ArtworkRecommendations: React.FC<Props> = ({
@@ -38,92 +44,206 @@ export const ArtworkRecommendations: React.FC<Props> = ({
     theme = 'light',
     likedArtworks,
     onToggleLike,
-    onOpenProduct
+    onOpenProduct,
+    onSaveToPlaylist,
+    onOpenComments
 }) => {
     const [aiRecommendations, setAiRecommendations] = useState<any[]>([]);
     const museumCountryMap = useMemo(() => getMuseumCountryMap(), []);
+    const isMobileViewport = typeof window !== 'undefined' && window.innerWidth <= 768;
 
     useEffect(() => {
+        let cancelled = false;
+        const art = artwork as any;
+        const cacheKey = String(art.semanticId || artwork?.id || `${artwork?.name || ''}|${artwork?.artist || ''}`).trim();
+
+        if (cacheKey && recommendationCache.has(cacheKey)) {
+            setAiRecommendations(recommendationCache.get(cacheKey) || []);
+            return () => {
+                cancelled = true;
+            };
+        }
+
         setAiRecommendations([]);
+
+        const extractRecommendationImage = (item: any): string => {
+            if (!item || typeof item !== 'object') return '';
+            const candidates: any[] = [
+                item.image,
+                item.imageUrl,
+                item.image_url,
+                item.i,
+                item.objectImage,
+                item.representativeImage,
+                item.thumbnail,
+                item.thumbnailUrl,
+                item.thumb,
+                item.coverImage,
+                item.url,
+            ];
+
+            if (Array.isArray(item.images)) candidates.push(...item.images);
+            if (Array.isArray(item.photos)) candidates.push(...item.photos);
+
+            for (const candidate of candidates) {
+                if (!candidate) continue;
+
+                if (typeof candidate === 'string') {
+                    const value = candidate.trim();
+                    if (value) return value;
+                    continue;
+                }
+
+                if (typeof candidate === 'object') {
+                    const nested = [candidate.image, candidate.url, candidate.src, candidate.file, candidate.thumbnail]
+                        .find((v: any) => typeof v === 'string' && v.trim());
+                    if (nested) return String(nested).trim();
+                }
+            }
+
+            return '';
+        };
+
+        const normalizeRecommendationItems = (items: any[]) => {
+            const seenIds = new Set<string>();
+            const seenContent = new Set<string>();
+            const normalize = (s: string) => (s || '').toLowerCase().trim();
+
+            const art = artwork as any;
+            const currentIds = [
+                String(art.semanticId || '').trim(),
+                String(artwork?.id || '').trim(),
+                String(art.inventoryNo || '').trim(),
+            ].filter(Boolean);
+            currentIds.forEach((id) => seenIds.add(id));
+
+            const cName = normalize(artwork.name || art.title || 'Untitled');
+            const cArtist = normalize(artwork.artist || 'Unknown Artist');
+            seenContent.add(`${cName}|${cArtist}`);
+
+            const uniqueResults: any[] = [];
+
+            items.forEach((item: any) => {
+                if (!item) return;
+
+                const itemId = String(item.id || item.semanticId || item.semantic_id || '').trim();
+                if (itemId && seenIds.has(itemId)) return;
+
+                const iName = normalize(item.name || item.n || item.title || 'Untitled');
+                const iArtist = normalize(item.artist || item.a || item.creator || 'Unknown Artist');
+                const contentKey = `${iName}|${iArtist}`;
+                if (seenContent.has(contentKey)) return;
+
+                if (itemId) seenIds.add(itemId);
+                seenContent.add(contentKey);
+
+                uniqueResults.push({
+                    ...item,
+                    image: extractRecommendationImage(item),
+                    museumName: item.museumName || item.museum || item.m,
+                });
+            });
+
+            return uniqueResults;
+        };
+
+        const requestWorker = async (endpoint: string, payload: Record<string, unknown>) => {
+            if (Date.now() < recommendationBackoffUntil) return null;
+
+            const response = await fetch(`${WORKER_URL}${endpoint}`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(payload)
+            });
+
+            if (response.status === 503) {
+                recommendationBackoffUntil = Date.now() + RECOMMENDATION_BACKOFF_MS;
+                return null;
+            }
+
+            if (!response.ok) return null;
+            return response.json();
+        };
+
         const fetchAiRecommendations = async () => {
-            if (!artwork?.id) return;
+            const semanticOrArtworkId = String(art.semanticId || artwork?.id || '').trim();
+
+            const expandIdVariants = (id: string): string[] => {
+                if (!id) return [];
+                const variants = new Set<string>([id]);
+                if (id.includes('__')) variants.add(id.replace(/__/g, '/'));
+                if (id.includes('/')) variants.add(id.replace(/\//g, '__'));
+                return Array.from(variants).map((value) => value.trim()).filter(Boolean);
+            };
+
+            const rawIdCandidates = [
+                semanticOrArtworkId,
+                String(art.semantic_id || '').trim(),
+                String(artwork?.id || '').trim(),
+                String(art.inventoryNo || '').trim(),
+            ].filter(Boolean);
+
+            const idCandidates = rawIdCandidates
+                .flatMap(expandIdVariants)
+                .filter((value, idx, arr) => arr.indexOf(value) === idx);
+
+            const commonMetadata = {
+                name: artwork.name || art.title,
+                artist: artwork.artist,
+                museum: art.museum || art.museumName,
+                image: artwork.image || art.imageUrl || art.url,
+                url: art.url,
+            };
+
+            for (const candidateId of idCandidates) {
+                try {
+                    const data = await requestWorker('/recommend-by-id', {
+                        id: candidateId,
+                        limit: 12,
+                        metadata: commonMetadata,
+                    });
+                    if (!data) continue;
+
+                    const normalized = Array.isArray(data?.results)
+                        ? normalizeRecommendationItems(data.results)
+                        : [];
+
+                    if (normalized.length > 0) {
+                        if (cacheKey) recommendationCache.set(cacheKey, normalized);
+                        if (!cancelled) setAiRecommendations(normalized);
+                        return;
+                    }
+                } catch {
+                    // Continue to next candidate id.
+                }
+            }
+
+            const fallbackQuery = [String(artwork.name || art.title || '').trim(), String(artwork.artist || '').trim()]
+                .filter(Boolean)
+                .join(' ')
+                .trim();
+            if (!fallbackQuery || fallbackQuery.length < 2) return;
+            if (Date.now() < recommendationBackoffUntil) return;
 
             try {
-                const art = artwork as any;
-                const payload = {
-                    id: artwork.id,
-                    limit: 12,
-                    metadata: {
-                        name: artwork.name || art.title,
-                        artist: artwork.artist,
-                        museum: art.museum || art.museumName,
-                        image: artwork.image || art.imageUrl || art.url,
-                        url: art.url,
-                    },
-                };
+                const data = await requestWorker('/search-by-text', { text: fallbackQuery, limit: 12 });
+                if (!data) return;
 
-                const res = await fetch(`${WORKER_URL}/recommend-by-id`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-
-                if (res.ok) {
-                    const data = await res.json();
-                    if (data.results && Array.isArray(data.results)) {
-                        // Deduplicate results
-                        const seenIds = new Set<string>();
-                        const seenContent = new Set<string>();
-
-                        // Helper to normalize strings
-                        const normalize = (s: string) => (s || '').toLowerCase().trim();
-
-                        // Exclude current artwork
-                        if (artwork.id) seenIds.add(artwork.id);
-
-                        // Normalize current artwork fields to exclude it
-                        const curArt = artwork as any;
-                        const cName = normalize(artwork.name || curArt.title || 'Untitled');
-                        const cArtist = normalize(artwork.artist || 'Unknown Artist');
-
-                        // Add current artwork content to seen set (Name + Artist)
-                        seenContent.add(`${cName}|${cArtist}`);
-
-                        const uniqueResults: any[] = [];
-
-                        data.results.forEach((item: any) => {
-                            if (!item) return;
-
-                            // 1. Check ID
-                            if (seenIds.has(item.id)) return;
-
-                            // 2. Check Content (Name + Artist)
-                            const iName = normalize(item.name || item.n || 'Untitled');
-                            const iArtist = normalize(item.artist || item.a || 'Unknown Artist');
-
-                            // Create a content signature
-                            const contentKey = `${iName}|${iArtist}`;
-
-                            if (seenContent.has(contentKey)) return;
-
-                            seenIds.add(item.id);
-                            seenContent.add(contentKey);
-                            uniqueResults.push({
-                                ...item,
-                                image: item.image || item.imageUrl, // normalize
-                                museumName: item.museumName || item.museum
-                            });
-                        });
-
-                        setAiRecommendations(uniqueResults);
-                    }
-                }
+                const normalized = Array.isArray(data?.results)
+                    ? normalizeRecommendationItems(data.results)
+                    : [];
+                if (cacheKey) recommendationCache.set(cacheKey, normalized);
+                if (!cancelled) setAiRecommendations(normalized);
             } catch (e) {
-                console.warn('AI Recommendation failed:', e);
+                console.warn('AI Recommendation fallback failed:', e);
             }
         };
 
-        fetchAiRecommendations();
+        void fetchAiRecommendations();
+
+        return () => {
+            cancelled = true;
+        };
     }, [artwork]);
 
     const uniqueRelatedArtworks = useMemo(() => {
@@ -152,12 +272,14 @@ export const ArtworkRecommendations: React.FC<Props> = ({
 
     const renderCard = (item: any, source: 'AI' | 'Meta') => {
         const compact = mode === 'compact-horizontal';
+        const isMobileViewport = typeof window !== 'undefined' && window.innerWidth <= 768;
+        const compactCardWidth = isMobileViewport ? 126 : 148;
         // Normalize data fields from various sources (Worker vs Local)
         const name = item.name || item.n || 'Untitled';
         const artist = item.artist || item.a || 'Unknown Artist';
 
         // Robust image extraction
-        let image = item.image || item.i || item.url || item.imageUrl || item.objectImage || item.representativeImage || '';
+        let image = item.image || item.i || item.url || item.imageUrl || item.objectImage || item.representativeImage || item.thumbnailUrl || item.thumbnail || '';
         // Handle array of images case
         if (Array.isArray(item.images) && item.images.length > 0) {
             image = item.images[0];
@@ -171,6 +293,26 @@ export const ArtworkRecommendations: React.FC<Props> = ({
 
         const country = getCountry(museum);
         const cardId = String(item.id || `${name}-${artist}-${year}`);
+        const likedKey = String(item.id || item.artworkId || item.semanticId || item.semantic_id || cardId);
+        const actionableArtwork = {
+            ...item,
+            id: likedKey,
+            artworkId: likedKey,
+            name,
+            title: name,
+            artist,
+            image,
+            museumName: museum,
+            year,
+        } as Artwork;
+        const isCardLiked = Boolean(likedArtworks) && [
+            likedKey,
+            String(item.id || ''),
+            String(item.artworkId || ''),
+            String(item.semanticId || ''),
+            String(item.semantic_id || ''),
+            cardId,
+        ].filter(Boolean).some((key) => likedArtworks.has(key));
 
         const textColor = theme === 'dark' ? '#fff' : '#111';
         const subTextColor = theme === 'dark' ? '#ccc' : '#666';
@@ -186,59 +328,88 @@ export const ArtworkRecommendations: React.FC<Props> = ({
             ? (theme === 'dark' ? '#D9FF6E' : '#4A6200')
             : (theme === 'dark' ? 'rgba(255,255,255,0.85)' : 'rgba(0,0,0,0.62)');
 
-        if (!image) return null;
+        const hasImage = typeof image === 'string' && image.trim().length > 0;
+        const actionButtonSize = compact ? 20 : 22;
+        const actionIconSize = compact ? 10 : 12;
+        const actionButtonStyle: React.CSSProperties = {
+            cursor: 'pointer',
+            width: actionButtonSize,
+            height: actionButtonSize,
+            borderRadius: '50%',
+            border: 'none',
+            background: 'rgba(0,0,0,0.56)',
+            color: '#fff',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: 0,
+        };
 
         return (
             <div
                 key={cardId}
                 onClick={(e) => {
                     e.stopPropagation();
-                    onSelectArtwork({
-                        ...item,
-                        name, artist, image, year, museumName: museum
-                    });
+                    onSelectArtwork(actionableArtwork);
                 }}
                 style={{
-                    minWidth: compact ? 168 : 160,
-                    maxWidth: mode === 'grid' ? '100%' : (compact ? 168 : 160),
+                    minWidth: compact ? compactCardWidth : 160,
+                    maxWidth: mode === 'grid' ? '100%' : (compact ? compactCardWidth : 160),
                     cursor: 'pointer',
                     flexShrink: 0,
-                    animation: 'fadeInUp 0.8s cubic-bezier(0.2, 0.8, 0.2, 1) forwards',
-                    opacity: 0 // start invisible
+                    opacity: 1
                 }}
             >
                 <div style={{
                     width: '100%',
-                    aspectRatio: compact ? '1 / 0.84' : '1',
-                    borderRadius: compact ? 6 : 8,
+                    aspectRatio: compact ? '1 / 1' : '1',
+                    borderRadius: compact ? 8 : 8,
                     overflow: 'hidden',
                     marginBottom: compact ? 6 : 8,
                     background: theme === 'dark' ? '#242424' : '#ececec',
                     position: 'relative'
                 }}>
-                    <img
-                        src={getWeservUrl(image, 300)}
-                        alt={name}
-                        loading="lazy"
-                        style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.3s' }}
-                        referrerPolicy="no-referrer"
-                        onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
-                        onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
-                        onError={(e) => {
-                            // Fallback to original if proxy fails
-                            const target = e.currentTarget;
-                            if (image && target.src !== image) {
-                                target.src = image;
-                            } else {
-                                // If even original fails, maybe show a placeholder or hide
-                                target.style.opacity = '0.5';
-                            }
-                        }}
-                    />
+                    {hasImage ? (
+                        <img
+                            src={getWeservUrl(image, 300)}
+                            alt={name}
+                            loading="lazy"
+                            style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.3s' }}
+                            referrerPolicy="no-referrer"
+                            onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
+                            onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+                            onError={(e) => {
+                                // Fallback to original if proxy fails
+                                const target = e.currentTarget;
+                                if (image && target.src !== image) {
+                                    target.src = image;
+                                } else {
+                                    target.style.opacity = '0.5';
+                                }
+                            }}
+                        />
+                    ) : (
+                        <div
+                            style={{
+                                width: '100%',
+                                height: '100%',
+                                display: 'flex',
+                                alignItems: 'center',
+                                justifyContent: 'center',
+                                background: theme === 'dark' ? '#171717' : '#e7e7e7',
+                                color: theme === 'dark' ? 'rgba(255,255,255,0.46)' : 'rgba(0,0,0,0.42)',
+                                fontSize: compact ? 9 : 10,
+                                letterSpacing: '0.08em',
+                                textTransform: 'uppercase',
+                            }}
+                        >
+                            No Image
+                        </div>
+                    )}
                     <div style={{
                         position: 'absolute',
-                        top: compact ? 5 : 6,
-                        left: compact ? 5 : 6,
+                        top: compact ? 6 : 6,
+                        left: compact ? 6 : 6,
                         background: badgeBg,
                         color: badgeColor,
                         fontSize: compact ? 8 : 9,
@@ -253,50 +424,69 @@ export const ArtworkRecommendations: React.FC<Props> = ({
                         {badgeText}
                     </div>
 
-                    {/* Icons Bottom Right */}
+                    {/* Action Icons */}
                     <div style={{
                         position: 'absolute',
-                        bottom: compact ? 5 : 6,
-                        right: compact ? 5 : 6,
+                        bottom: compact ? 6 : 8,
+                        right: compact ? 6 : 6,
                         display: 'flex',
+                        flexDirection: 'column',
                         alignItems: 'center',
-                        gap: compact ? 6 : 8,
+                        gap: compact ? 4 : 5,
                         zIndex: 10,
                         pointerEvents: 'auto'
                     }}>
-                        {/* Frame Icon (Product) */}
-                        {onOpenProduct && (
-                            <div
+                        {onSaveToPlaylist && (
+                            <button
                                 onClick={(e) => {
                                     e.stopPropagation();
-                                    onOpenProduct(item as Artwork);
+                                    onSaveToPlaylist(actionableArtwork);
                                 }}
-                                style={{
-                                    cursor: 'pointer',
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                    transition: 'transform 0.15s ease',
-                                    color: '#fff',
-                                }}
-                                onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.15)'}
-                                onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
-                                title="상품으로 구매하기"
+                                style={actionButtonStyle}
+                                title="Save to Playlist"
                             >
-                                <svg width={compact ? 12 : 14} height={compact ? 12 : 14} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" style={{ filter: 'drop-shadow(0 0 2px rgba(0,0,0,0.5))' }}>
-                                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
-                                    <rect x="7" y="7" width="10" height="10" />
-                                </svg>
-                            </div>
+                                <BookmarkPlus size={actionIconSize} strokeWidth={2.2} />
+                            </button>
                         )}
 
-                        {/* Heart Icon (Like) */}
+                        {onOpenProduct && (
+                            <button
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    onOpenProduct(actionableArtwork);
+                                }}
+                                style={actionButtonStyle}
+                                title="Purchase Product"
+                            >
+                                <ShoppingBag size={actionIconSize} strokeWidth={2.2} />
+                            </button>
+                        )}
+
+                        {onOpenComments && (
+                            <button
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    onOpenComments(actionableArtwork);
+                                }}
+                                style={actionButtonStyle}
+                                title="Comments"
+                            >
+                                <MessageCircle size={actionIconSize} strokeWidth={2.2} />
+                            </button>
+                        )}
+
                         {onToggleLike && likedArtworks && (
                             <HeartOverlay
-                                isLiked={likedArtworks.has(cardId)}
-                                onToggle={(e) => onToggleLike(e, item as Artwork)}
-                                style={{ padding: 0, background: 'none' }}
-                                size={compact ? 12 : 14}
+                                isLiked={isCardLiked}
+                                onToggle={(e) => onToggleLike(e, actionableArtwork)}
+                                style={{
+                                    width: actionButtonSize,
+                                    height: actionButtonSize,
+                                    borderRadius: '50%',
+                                    background: 'rgba(0,0,0,0.56)',
+                                    padding: 0,
+                                }}
+                                size={actionIconSize}
                                 color="#BFFF0A"
                                 emptyColor="#fff"
                             />
@@ -325,15 +515,22 @@ export const ArtworkRecommendations: React.FC<Props> = ({
         );
     };
 
-    if (uniqueRelatedArtworks.length === 0 && aiRecommendations.length === 0) return null;
+    const hasRealAiRecommendations = aiRecommendations.length > 0;
+    const effectiveAiRecommendations = hasRealAiRecommendations
+        ? aiRecommendations
+        : uniqueRelatedArtworks.slice(0, 8);
+    const effectiveMetaRecommendations = hasRealAiRecommendations
+        ? uniqueRelatedArtworks
+        : [];
+
+    if (effectiveAiRecommendations.length === 0 && effectiveMetaRecommendations.length === 0) return null;
 
     const sectionHeaderStyle: React.CSSProperties = {
-        fontSize: 13,
+        fontSize: 14,
         fontWeight: 700,
         color: theme === 'dark' ? '#fff' : '#333',
-        marginBottom: 20,
-        textTransform: 'uppercase',
-        letterSpacing: 1,
+        marginBottom: 12,
+        letterSpacing: '0.02em',
         textAlign: 'left',
         display: 'flex',
         alignItems: 'center',
@@ -342,8 +539,8 @@ export const ArtworkRecommendations: React.FC<Props> = ({
 
     if (mode === 'compact-horizontal') {
         const compactItems: Array<{ item: any; source: 'AI' | 'Meta' }> = [
-            ...aiRecommendations.map((item) => ({ item, source: 'AI' as const })),
-            ...uniqueRelatedArtworks.map((item) => ({ item, source: 'Meta' as const })),
+            ...effectiveAiRecommendations.map((item) => ({ item, source: 'AI' as const })),
+            ...effectiveMetaRecommendations.map((item) => ({ item, source: 'Meta' as const })),
         ];
 
         if (compactItems.length === 0) return null;
@@ -362,16 +559,12 @@ export const ArtworkRecommendations: React.FC<Props> = ({
                         paddingBottom: 8,
                         WebkitOverflowScrolling: 'touch',
                         scrollbarWidth: 'thin',
-                        scrollbarColor: theme === 'dark' ? 'rgba(191,255,10,0.4) rgba(255,255,255,0.04)' : 'rgba(90,120,0,0.42) rgba(0,0,0,0.05)',
+                        scrollbarColor: theme === 'dark' ? 'rgba(255,255,255,0.22) rgba(255,255,255,0.04)' : 'rgba(0,0,0,0.22) rgba(0,0,0,0.05)',
                     }}
                 >
                     {compactItems.map(({ item, source }) => renderCard(item, source))}
                 </div>
                 <style>{`
-                    @keyframes fadeInUp {
-                        from { opacity: 0; transform: translateY(20px); }
-                        to { opacity: 1; transform: translateY(0); }
-                    }
                     .armin-rec-scroll::-webkit-scrollbar {
                         height: 6px;
                     }
@@ -381,12 +574,12 @@ export const ArtworkRecommendations: React.FC<Props> = ({
                         border: 1px solid ${theme === 'dark' ? 'rgba(255,255,255,0.05)' : 'rgba(0,0,0,0.04)'};
                     }
                     .armin-rec-scroll::-webkit-scrollbar-thumb {
-                        background: linear-gradient(90deg, ${theme === 'dark' ? 'rgba(191,255,10,0.30)' : 'rgba(90,120,0,0.26)'}, ${theme === 'dark' ? 'rgba(191,255,10,0.58)' : 'rgba(90,120,0,0.52)'});
+                        background: ${theme === 'dark' ? 'rgba(255,255,255,0.34)' : 'rgba(0,0,0,0.28)'};
                         border-radius: 999px;
-                        border: 1px solid ${theme === 'dark' ? 'rgba(191,255,10,0.18)' : 'rgba(90,120,0,0.18)'};
+                        border: 1px solid ${theme === 'dark' ? 'rgba(255,255,255,0.18)' : 'rgba(0,0,0,0.15)'};
                     }
                     .armin-rec-scroll::-webkit-scrollbar-thumb:hover {
-                        background: linear-gradient(90deg, ${theme === 'dark' ? 'rgba(191,255,10,0.42)' : 'rgba(90,120,0,0.36)'}, ${theme === 'dark' ? 'rgba(191,255,10,0.74)' : 'rgba(90,120,0,0.64)'});
+                        background: ${theme === 'dark' ? 'rgba(255,255,255,0.46)' : 'rgba(0,0,0,0.36)'};
                     }
                 `}</style>
             </div>
@@ -396,54 +589,48 @@ export const ArtworkRecommendations: React.FC<Props> = ({
     return (
         <div style={{ ...style }} className="artwork-recommendations">
             {/* AI Recommendations */}
-            {aiRecommendations.length > 0 && (
+            {effectiveAiRecommendations.length > 0 && (
                 <div style={{ marginBottom: 48 }}>
                     <h3 style={sectionHeaderStyle}>
-                        ✨ Similar Vibe <span style={{ fontSize: 10, fontWeight: 400, color: theme === 'dark' ? '#aaa' : '#888', textTransform: 'none' }}>(AI Image Analysis)</span>
+                        Similar Vibe <span style={{ fontSize: 11, fontWeight: 500, color: theme === 'dark' ? 'rgba(255,255,255,0.62)' : 'rgba(0,0,0,0.56)', textTransform: 'none' }}>Visually related works</span>
                     </h3>
                     <div style={mode === 'grid' ? {
                         display: 'grid',
-                        gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))',
-                        gap: 24,
-                        columnGap: 32 // More spacing
+                        gridTemplateColumns: `repeat(auto-fill, minmax(${isMobileViewport ? 128 : 160}px, 1fr))`,
+                        gap: 14,
+                        columnGap: 14
                     } : {
                         display: 'flex',
-                        gap: 16,
+                        gap: 12,
                         overflowX: 'auto',
                         paddingBottom: 8
                     }}>
-                        {aiRecommendations.map(item => renderCard(item, 'AI'))}
+                        {effectiveAiRecommendations.map(item => renderCard(item, 'AI'))}
                     </div>
                 </div>
             )}
 
             {/* Metadata Recommendations */}
-            {uniqueRelatedArtworks.length > 0 && (
+            {effectiveMetaRecommendations.length > 0 && (
                 <div>
                     <h3 style={sectionHeaderStyle}>
                         More by {artwork.artist}
                     </h3>
                     <div style={mode === 'grid' ? {
                         display: 'grid',
-                        gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))',
-                        gap: 24,
-                        columnGap: 32
+                        gridTemplateColumns: `repeat(auto-fill, minmax(${isMobileViewport ? 128 : 160}px, 1fr))`,
+                        gap: 14,
+                        columnGap: 14
                     } : {
                         display: 'flex',
-                        gap: 16,
+                        gap: 12,
                         overflowX: 'auto',
                         paddingBottom: 8
                     }}>
-                        {uniqueRelatedArtworks.map(item => renderCard(item, 'Meta'))}
+                        {effectiveMetaRecommendations.map(item => renderCard(item, 'Meta'))}
                     </div>
                 </div>
             )}
-            <style>{`
-                @keyframes fadeInUp {
-                    from { opacity: 0; transform: translateY(20px); }
-                    to { opacity: 1; transform: translateY(0); }
-                }
-            `}</style>
         </div>
     );
 };

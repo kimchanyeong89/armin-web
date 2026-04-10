@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { findMuseumForArtwork } from '../utils/museumUtils';
 import { HeartOverlay } from './HeartOverlay';
 import { ArtworkRecommendations } from './ArtworkRecommendations';
+import { BookmarkPlus, ExternalLink, MessageCircle, ShoppingBag } from 'lucide-react';
 // import { buildSourceSet, useProxy } from '../utils/imageProxy'; // Unused
 import { exhibitions } from '../data/exhibitions';
 
@@ -34,6 +35,15 @@ const ensureHttps = (url: string | undefined | null): string => {
         return url.replace('http://', 'https://');
     }
     return url;
+};
+
+const normalizeExternalUrl = (value: unknown): string => {
+    if (typeof value !== 'string') return '';
+    const trimmed = value.trim();
+    if (!trimmed) return '';
+    if (/^https?:\/\//i.test(trimmed)) return ensureHttps(trimmed);
+    if (/^www\./i.test(trimmed)) return `https://${trimmed}`;
+    return '';
 };
 
 // Helper to pick largest variant
@@ -92,6 +102,11 @@ interface ArtworkLightboxProps {
     onChangeArtwork?: (artwork: any) => void;
     // Add to playlist
     onSaveToPlaylist?: (artwork: any) => void;
+    // Optional comments trigger
+    onOpenComments?: (artwork: any) => void;
+    // MyPage-specific action visibility controls
+    hidePurchaseAction?: boolean;
+    hideMuseumAction?: boolean;
 }
 
 // Module-level cache to prevent re-fetching across lightbox opens
@@ -108,6 +123,9 @@ export const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
     likedArtworksList = [],
     onChangeArtwork,
     onSaveToPlaylist,
+    onOpenComments,
+    hidePurchaseAction = false,
+    hideMuseumAction = false,
     // ...
 }) => {
     const [animate, setAnimate] = useState(false);
@@ -163,7 +181,37 @@ export const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
     }, [bestFull.url]);
 
     // Determine standard source URL
-    const sourceUrl = artwork.sourceUrl || artwork.url || artwork.link || artwork.href || artwork.webUrl || artwork.originalLink || artwork.objectUrl || artwork.source;
+    const sourceUrl = normalizeExternalUrl(
+        artwork.sourceUrl ||
+        artwork.originalSourceUrl ||
+        artwork.originalUrl ||
+        artwork.permalink ||
+        artwork.collectionUrl ||
+        artwork.url ||
+        artwork.link ||
+        artwork.href ||
+        artwork.webUrl ||
+        artwork.originalLink ||
+        artwork.objectURL ||
+        artwork.objectUrl ||
+        artwork.source
+    );
+    const isMobile = typeof window !== 'undefined' ? window.innerWidth < 768 : false;
+    const showPurchaseAction = Boolean(onPurchase) && !hidePurchaseAction;
+    const showMuseumAction = Boolean(onViewInMuseum) && !hideMuseumAction;
+    const actionButtonSize = isMobile ? 24 : 28;
+    const actionIconSize = isMobile ? 12 : 14;
+
+    useEffect(() => {
+        const prevBodyOverflow = document.body.style.overflow;
+        const prevDocOverflow = document.documentElement.style.overflow;
+        document.body.style.overflow = 'hidden';
+        document.documentElement.style.overflow = 'hidden';
+        return () => {
+            document.body.style.overflow = prevBodyOverflow;
+            document.documentElement.style.overflow = prevDocOverflow;
+        };
+    }, []);
 
 
 
@@ -193,8 +241,21 @@ export const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
 
         if (!targetArtist) return;
 
+        let localMatchCount = 0;
+        for (const item of likedArtworksList) {
+            const itemArtist = normalize(item.artist || item.a);
+            const itemId = item.id || item.artworkId;
+            if (itemArtist === targetArtist && itemId !== targetId) {
+                localMatchCount += 1;
+                if (localMatchCount >= 8) break;
+            }
+        }
+
+        if (localMatchCount >= 8) return;
+
         // 1. Identify all potential collection files
         const collectionSources: { url: string; museumName: string; country?: string }[] = [];
+        const currentMuseumName = String(artwork.museumName || museumInfo.name || '').toLowerCase();
 
         // Helper to extract collection files from exhibition objects
         const extractCollections = (exhList: any[], parentMuseum: any) => {
@@ -216,9 +277,19 @@ export const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
             // Also check if the museum object itself has a collectionFile logic (though usually in sub-items)
         });
 
+        const uniqueSources = Array.from(new Map(collectionSources.map((source) => [source.url, source])).values());
+        const prioritizedSources = uniqueSources
+            .sort((a, b) => {
+                if (!currentMuseumName) return 0;
+                const aMatch = a.museumName.toLowerCase().includes(currentMuseumName) ? 1 : 0;
+                const bMatch = b.museumName.toLowerCase().includes(currentMuseumName) ? 1 : 0;
+                return bMatch - aMatch;
+            })
+            .slice(0, isMobile ? 6 : 14);
+
         const fetchAndSearch = async () => {
             // Process sequentially or in small batches to avoid network congestion
-            for (const source of collectionSources) {
+            for (const source of prioritizedSources) {
                 if (!isMounted) break;
 
                 try {
@@ -303,7 +374,7 @@ export const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
             clearTimeout(timer);
         };
 
-    }, [artwork]); // Re-run when artwork changes
+    }, [artwork, likedArtworksList, museumInfo.name, isMobile]); // Re-run when artwork changes
 
     // Combined Recommendation Logic (Global + Liked + Async Fetched)
     const relatedArtworks = React.useMemo(() => {
@@ -396,8 +467,6 @@ export const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
     // Create Set for liked artworks checking
     const likedSet = React.useMemo(() => new Set(likedArtworksList.map((a: any) => a.id || a.artworkId)), [likedArtworksList]);
 
-    // Image helpers
-    const isMobile = window.innerWidth < 768;
     // widths/avif/webp/sizes removed as we are using direct img src now
 
     const dateDisplay = (() => {
@@ -416,7 +485,7 @@ export const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
                     left: 0,
                     right: 0,
                     bottom: 0,
-                    zIndex: 14000,
+                    zIndex: 260020,
                     cursor: 'zoom-out',
                     background: animate ? 'rgba(0, 0, 0, 0.92)' : 'rgba(0, 0, 0, 0)',
                     backdropFilter: 'blur(10px)',
@@ -434,13 +503,15 @@ export const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
                     left: 0,
                     right: 0,
                     bottom: 0,
-                    zIndex: 14001,
+                    zIndex: 260021,
                     pointerEvents: 'auto',
                     display: 'flex',
                     flexDirection: 'column',
                     alignItems: 'center',
                     // justifyContent: 'center', // Removed to prevent top clipping on overflow
                     overflowY: 'auto',
+                    overscrollBehaviorY: 'contain',
+                    overscrollBehavior: 'contain',
                     WebkitOverflowScrolling: 'touch',
                     paddingTop: '5vh',
                     paddingBottom: '5vh'
@@ -532,72 +603,126 @@ export const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
                                 bottom: isMobile ? 12 : 16,
                                 right: isMobile ? 12 : 16,
                                 display: 'flex',
-                                gap: 12,
+                                flexDirection: 'column',
+                                alignItems: 'center',
+                                gap: isMobile ? 6 : 8,
                                 zIndex: 100
                             }}>
-
-
-                                {/* Playlist Button */}
                                 {onSaveToPlaylist && (
-                                    <div
+                                    <button
                                         onClick={(e) => {
                                             e.stopPropagation();
                                             onSaveToPlaylist(artwork);
                                         }}
                                         style={{
+                                            width: actionButtonSize,
+                                            height: actionButtonSize,
+                                            borderRadius: '50%',
+                                            border: 'none',
+                                            background: 'rgba(0,0,0,0.56)',
+                                            color: '#fff',
                                             cursor: 'pointer',
                                             display: 'flex',
                                             alignItems: 'center',
                                             justifyContent: 'center',
-                                            transition: 'transform 0.1s',
-                                            zIndex: 20
+                                            padding: 0,
+                                            zIndex: 20,
                                         }}
                                         title="Save to Playlist"
-                                        onMouseDown={(e) => e.currentTarget.style.transform = 'scale(0.9)'}
-                                        onMouseUp={(e) => e.currentTarget.style.transform = 'scale(1)'}
-                                        onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
                                     >
-                                        <svg width={24} height={24} viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ filter: 'drop-shadow(0 0 2px rgba(0,0,0,0.3))' }}>
-                                            <path d="m19 21-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v16z" /><line x1="12" x2="12" y1="7" y2="13" /><line x1="15" x2="9" y1="10" y2="10" />
-                                        </svg>
-                                    </div>
+                                        <BookmarkPlus size={actionIconSize} strokeWidth={2.2} />
+                                    </button>
                                 )}
 
-                                {/* Product Button */}
-                                {onPurchase && (
-                                    <div
+                                {onOpenComments && (
+                                    <button
                                         onClick={(e) => {
                                             e.stopPropagation();
-                                            onPurchase(artwork);
+                                            onOpenComments(artwork);
                                         }}
                                         style={{
+                                            width: actionButtonSize,
+                                            height: actionButtonSize,
+                                            borderRadius: '50%',
+                                            border: 'none',
+                                            background: 'rgba(0,0,0,0.56)',
+                                            color: '#fff',
                                             cursor: 'pointer',
                                             display: 'flex',
                                             alignItems: 'center',
                                             justifyContent: 'center',
-                                            transition: 'transform 0.1s',
-                                            zIndex: 20
+                                            padding: 0,
+                                            zIndex: 20,
                                         }}
-                                        title="Purchase Product"
-                                        onMouseDown={(e) => e.currentTarget.style.transform = 'scale(0.9)'}
-                                        onMouseUp={(e) => e.currentTarget.style.transform = 'scale(1)'}
-                                        onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+                                        title="Comments"
                                     >
-                                        <svg width={24} height={24} viewBox="0 0 24 24" fill="none" stroke="#fff" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ filter: 'drop-shadow(0 0 2px rgba(0,0,0,0.3))' }}>
-                                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
-                                            <rect x="7" y="7" width="10" height="10" />
-                                        </svg>
-                                    </div>
+                                        <MessageCircle size={actionIconSize} strokeWidth={2.2} />
+                                    </button>
                                 )}
 
+                                {sourceUrl && (
+                                    <button
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            window.open(sourceUrl, '_blank', 'noopener,noreferrer');
+                                        }}
+                                        style={{
+                                            width: actionButtonSize,
+                                            height: actionButtonSize,
+                                            borderRadius: '50%',
+                                            border: 'none',
+                                            background: 'rgba(0,0,0,0.56)',
+                                            color: '#fff',
+                                            cursor: 'pointer',
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                            padding: 0,
+                                            zIndex: 20,
+                                        }}
+                                        title="View in Original"
+                                    >
+                                        <ExternalLink size={actionIconSize} strokeWidth={2.2} />
+                                    </button>
+                                )}
 
-                                {/* Like Button */}
+                                {showPurchaseAction && (
+                                    <button
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            onPurchase?.(artwork);
+                                        }}
+                                        style={{
+                                            width: actionButtonSize,
+                                            height: actionButtonSize,
+                                            borderRadius: '50%',
+                                            border: 'none',
+                                            background: 'rgba(0,0,0,0.56)',
+                                            color: '#fff',
+                                            cursor: 'pointer',
+                                            display: 'flex',
+                                            alignItems: 'center',
+                                            justifyContent: 'center',
+                                            padding: 0,
+                                            zIndex: 20,
+                                        }}
+                                        title="Purchase Product"
+                                    >
+                                        <ShoppingBag size={actionIconSize} strokeWidth={2.2} />
+                                    </button>
+                                )}
 
                                 <HeartOverlay
                                     isLiked={isLiked}
                                     onToggle={(e) => onToggleLike(e, artwork)}
-                                    style={{ padding: 0, background: 'none' }}
-                                    size={24}
+                                    style={{
+                                        width: actionButtonSize,
+                                        height: actionButtonSize,
+                                        borderRadius: '50%',
+                                        background: 'rgba(0,0,0,0.56)',
+                                        padding: 0,
+                                    }}
+                                    size={actionIconSize}
                                     color="#e11d48"
                                     emptyColor="#fff"
                                 />
@@ -612,26 +737,27 @@ export const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
                             marginTop: 24,
                             padding: '0 20px',
                             color: '#fff',
+                            fontFamily: "'Space Grotesk', 'Apple SD Gothic Neo', sans-serif",
                             textAlign: 'center',
                             maxWidth: '90vw',
                             display: 'flex',
                             flexDirection: 'column',
                             alignItems: 'center',
-                            gap: 8
+                            gap: 6
                         }}
                     >
-                        <div style={{ fontSize: 22, fontWeight: 600, letterSpacing: '-0.01em', lineHeight: 1.2 }}>
+                        <div style={{ fontSize: isMobile ? 20 : 24, fontWeight: 600, letterSpacing: '-0.015em', lineHeight: 1.18 }}>
                             {artwork.name || artwork.title}
                         </div>
                         {dateDisplay && (
-                            <div style={{ fontSize: 15, opacity: 0.7 }}>
+                            <div style={{ fontSize: 14, opacity: 0.72 }}>
                                 {dateDisplay}
                             </div>
                         )}
-                        <div style={{ fontSize: 16, color: '#e5e5e5', marginTop: 4 }}>
+                        <div style={{ fontSize: 15, color: '#e5e5e5', marginTop: 2 }}>
                             {cleanArtistName(artwork.artist)}
                         </div>
-                        <div style={{ fontSize: 13, color: '#aaa', marginTop: 4, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2 }}>
+                        <div style={{ fontSize: 12, color: '#a8a8a8', marginTop: 2, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2 }}>
                             {museumInfo.name && (
                                 <span>
                                     {museumInfo.name}
@@ -646,11 +772,11 @@ export const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
                         </div>
 
                         <div style={{ display: 'flex', gap: 12, marginTop: 20, justifyContent: 'center', flexWrap: 'wrap' }}>
-                            {onViewInMuseum && (
+                            {showMuseumAction && (
                                 <button
                                     onClick={(e) => {
                                         e.stopPropagation();
-                                        onViewInMuseum(artwork);
+                                        onViewInMuseum?.(artwork);
                                     }}
                                     style={{
                                         padding: '10px 24px',
@@ -667,45 +793,7 @@ export const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
                                         boxShadow: '0 4px 12px rgba(0,0,0,0.2)'
                                     }}
                                 >
-                                    <span>🏛</span> View in Museum
-                                </button>
-                            )}
-
-                            {onPurchase && (
-                                <button
-                                    onClick={(e) => {
-                                        e.stopPropagation();
-                                        onPurchase(artwork);
-                                    }}
-                                    style={{
-                                        padding: '10px 24px',
-                                        background: '#fff',
-                                        border: 'none',
-                                        borderRadius: 30,
-                                        color: '#000',
-                                        cursor: 'pointer',
-                                        fontSize: 14,
-                                        fontWeight: 600,
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        gap: 8,
-                                        boxShadow: '0 4px 12px rgba(0,0,0,0.2)'
-                                    }}
-                                >
-                                    <svg
-                                        width={18}
-                                        height={18}
-                                        viewBox="0 0 24 24"
-                                        fill="none"
-                                        stroke="currentColor"
-                                        strokeWidth="2"
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                    >
-                                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
-                                        <rect x="7" y="7" width="10" height="10" />
-                                    </svg>
-                                    구매하기
+                                    View in Museum
                                 </button>
                             )}
 
@@ -738,7 +826,7 @@ export const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
                                         e.currentTarget.style.borderColor = 'rgba(255,255,255,0.4)';
                                     }}
                                 >
-                                    <span>🔗</span> Original Source
+                                    <span>🔗</span> View in Original Site
                                 </a>
                             )}
                         </div>
@@ -749,15 +837,28 @@ export const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
                         style={{
                             width: '100%',
                             marginTop: 64,
-                            padding: '0 24px',
+                            padding: isMobile ? '0 14px' : '0 24px',
                             maxWidth: 1400,
                             opacity: animate ? 1 : 0,
                             transition: 'opacity 500ms ease 100ms'
                         }}
                         onClick={(e) => e.stopPropagation()}
                     >
-                        <div style={{ color: '#fff', fontSize: 13, fontWeight: 700, marginBottom: 20, borderBottom: '1px solid rgba(255,255,255,0.2)', paddingBottom: 8, textTransform: 'uppercase', letterSpacing: 1 }}>
-                            You might also like
+                        <div
+                            style={{
+                                borderRadius: 14,
+                                border: '1px solid rgba(255,255,255,0.14)',
+                                background: 'rgba(255,255,255,0.04)',
+                                padding: isMobile ? '12px 12px 13px' : '16px 18px 18px',
+                                marginBottom: 18,
+                            }}
+                        >
+                            <div style={{ color: 'rgba(255,255,255,0.98)', fontSize: isMobile ? 15 : 17, fontWeight: 700, letterSpacing: '-0.01em' }}>
+                                Similar Vibe
+                            </div>
+                            <div style={{ marginTop: 4, color: 'rgba(255,255,255,0.62)', fontSize: isMobile ? 11 : 12 }}>
+                                Related works selected by visual and metadata similarity.
+                            </div>
                         </div>
 
                         <ArtworkRecommendations
@@ -774,7 +875,9 @@ export const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
                             theme="dark"
                             likedArtworks={likedSet}
                             onToggleLike={onToggleLike}
-                            onOpenProduct={onPurchase}
+                            onOpenProduct={showPurchaseAction ? onPurchase : undefined}
+                            onSaveToPlaylist={onSaveToPlaylist}
+                            onOpenComments={onOpenComments}
                         />
                     </div>
                 </div>
@@ -798,7 +901,7 @@ export const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
                                 display: 'flex',
                                 alignItems: 'center',
                                 justifyContent: 'center',
-                                zIndex: 15000,
+                                zIndex: 260030,
                                 backdropFilter: 'blur(4px)'
                             }}
                         >

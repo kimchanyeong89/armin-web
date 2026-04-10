@@ -1,6 +1,7 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState, useRef } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
+import { useLanguage } from "../contexts/LanguageContext";
 import {
   getFirestore,
   collection,
@@ -15,7 +16,6 @@ import {
   orderBy,
 } from "firebase/firestore";
 import {
-  ArrowLeft,
   BookmarkPlus,
   Heart,
   ListMusic,
@@ -38,6 +38,9 @@ import { getOptimizedImageUrl } from "../utils/imageProxy";
 import CommentModal from "./CommentModal";
 import Slideshow from "./Slideshow";
 import { PlaylistModal } from "./PlaylistModal";
+import ProfileAvatar from "./ProfileAvatar";
+import { createFirebaseWebPort } from "../adapters/firebaseWebAdapter";
+import type { ProfileImageCrop } from "../types/Profile";
 
 type ViewMode = "artworks" | "exhibitions" | "museums" | "artists" | "playlists";
 type SortMode = "recent" | "oldest" | "newest";
@@ -52,9 +55,29 @@ const RANKS = [
   { name: "Visionary", threshold: 200, short: "Lv.7" },
 ];
 
+// Pre-built map: permanentExhibition.id → collectionFile stem
+// This resolves cases where exhibitionId saved in Firebase is the pe.id ("tm-perm-1")
+// but the JSON file is named after collectionFile ("tate-modern-collection.json")
+const _exhibitionIdToCollectionFile: Record<string, string> = (() => {
+  const map: Record<string, string> = {};
+  for (const museum of exhibitions) {
+    for (const pe of museum.permanentExhibitions || []) {
+      const peId = (pe as any)?.id as string | undefined;
+      const cf = (pe as any)?.collectionFile as string | undefined;
+      if (peId && cf) map[peId] = cf.replace(".json", "");
+    }
+  }
+  return map;
+})();
+
 export const getFallbackExhibitionIdForJson = (item: any): string => {
-  if (item.exhibitionId) return item.exhibitionId;
-  if (item.e) return item.e;
+  const rawId: string = item.exhibitionId || item.e || item.sourceCollection || "";
+  if (rawId) {
+    // First, resolve to collectionFile stem via the lookup map
+    if (_exhibitionIdToCollectionFile[rawId]) return _exhibitionIdToCollectionFile[rawId];
+    // If rawId is already a collectionFile stem (has a matching JSON), use it directly
+    return rawId;
+  }
 
   const museum = findMuseumForArtwork(item, exhibitions);
   if (museum && museum.permanentExhibitions && museum.permanentExhibitions.length > 0) {
@@ -79,6 +102,18 @@ export const getFallbackExhibitionIdForJson = (item: any): string => {
 };
 
 const _recoveredUrlsCache: Record<string, string | null> = {};
+const _brokenImageUrls = new Set<string>();
+const _datasetCache: Record<string, Promise<any[]>> = {};
+
+const fetchDataset = (candidate: string) => {
+  if (!_datasetCache[candidate]) {
+    _datasetCache[candidate] = fetch(`/data/${candidate}.json`)
+      .then(r => r.ok ? r.json() : [])
+      .catch(() => []);
+  }
+  return _datasetCache[candidate];
+};
+const firebaseWebPort = createFirebaseWebPort();
 
 const MyPageImage = ({ item, width = 600, style }: { item: any; width?: number; style?: React.CSSProperties }) => {
   const [loaded, setLoaded] = useState(false);
@@ -86,56 +121,103 @@ const MyPageImage = ({ item, width = 600, style }: { item: any; width?: number; 
   const [recoveredSrc, setRecoveredSrc] = useState<string | null>(null);
   const [hasFailedAll, setHasFailedAll] = useState(false);
 
+  const sanitizeImageValue = (value: unknown): string => {
+    const raw = typeof value === "string" ? value.trim() : "";
+    if (!raw) return "";
+    if (raw === "default.jpg" || raw === "/default.jpg") return "";
+    if (/iiif\.deutsche-digitale-bibliothek\.de\/image\/2\/[^/]+\/full\/(?:full|!\d+,\d+|max)\/0\/default\.jpg/i.test(raw)) return "";
+    if (_brokenImageUrls.has(raw)) return "";
+    return raw;
+  };
+
   const exhId = getFallbackExhibitionIdForJson(item);
   const itemId = item.artworkId || item.id;
 
   const fallbackImages = useMemo(() => {
     const list: string[] = [];
-    const mainImg = item.image || item.i || "";
+    const mainImg = sanitizeImageValue(item.image || item.i || "");
     if (mainImg) list.push(mainImg);
     if (item.fallbackImages && Array.isArray(item.fallbackImages)) {
-      list.push(...item.fallbackImages);
+      item.fallbackImages.forEach((candidate: unknown) => {
+        const safeCandidate = sanitizeImageValue(candidate);
+        if (safeCandidate) list.push(safeCandidate);
+      });
     }
-    if (exhId && itemId) {
-      list.push(`https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/${exhId}/images/${itemId}.jpg`);
+    if (itemId) {
+      // Correct R2 path: artworks/{collectionFileStem}/{itemId}.{ext}
+      if (exhId) {
+        list.push(`https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/${exhId}/${itemId}.jpg`);
+        list.push(`https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/${exhId}/${itemId}.webp`);
+      }
+      // Generic fallback
       list.push(`https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/${itemId}.jpg`);
     }
-    return Array.from(new Set(list)).filter(Boolean);
+    return Array.from(new Set(list)).filter((url) => !!url && !_brokenImageUrls.has(url));
   }, [item, exhId, itemId]);
 
   const handleAdvancedRecovery = async () => {
-    if (!exhId || !itemId) {
+    // Build candidate exhIds to try: the resolved one, plus variations
+    const exhCandidates: string[] = [];
+    if (exhId) {
+      exhCandidates.push(exhId);
+      // Search index uses short form like "rijksmuseum-paintings" but file is "rijksmuseum-paintings-collection"
+      if (!exhId.endsWith("-collection")) exhCandidates.push(`${exhId}-collection`);
+      // Some files have ".full" or other suffixes — also strip "-collection" suffix to try base
+      if (exhId.endsWith("-collection")) exhCandidates.push(exhId.replace(/-collection$/, ""));
+    }
+
+    if (!itemId && exhCandidates.length === 0) {
       setHasFailedAll(true);
       setLoaded(true);
       return;
     }
-    
+
     const cacheKey = `${exhId}_${itemId}`;
     if (_recoveredUrlsCache[cacheKey] !== undefined) {
       const cached = _recoveredUrlsCache[cacheKey];
       if (cached) {
-         setRecoveredSrc(cached);
+        setRecoveredSrc(cached);
       } else {
-         setHasFailedAll(true);
-         setLoaded(true);
+        setHasFailedAll(true);
+        setLoaded(true);
       }
       return;
     }
 
-    try {
-      const res = await fetch(`/data/${exhId}.json`);
-      if (res.ok) {
-        const data = await res.json();
-        const found = data.find((d: any) => d.id === itemId);
-        const realImage = found?.imageUrl || found?.image || found?.original_imageUrl;
+    const itemTitle = String(item.title || item.name || "").toLowerCase().trim();
+
+    const searchInData = (data: any[]): string | null => {
+      if (!Array.isArray(data)) return null;
+      // 1) Exact ID match across multiple possible ID fields
+      let found = data.find((d: any) =>
+        String(d.id) === String(itemId) ||
+        String(d.objectNumber) === String(itemId) ||
+        String(d.inventoryNo) === String(itemId) ||
+        String(d.artworkId) === String(itemId)
+      );
+      // 2) Title fallback when IDs don't match (e.g. sourceUrl-based artworkIds)
+      if (!found && itemTitle && itemTitle.length > 3) {
+        found = data.find((d: any) =>
+          String(d.title || d.name || "").toLowerCase().trim() === itemTitle
+        );
+      }
+      if (!found) return null;
+      return found?.imageUrl || found?.image || found?.i || found?.original_imageUrl || null;
+    };
+
+    for (const candidate of exhCandidates) {
+      try {
+        const data = await fetchDataset(candidate);
+        if (!data || data.length === 0) continue;
+        const realImage = searchInData(data);
         if (realImage) {
           _recoveredUrlsCache[cacheKey] = realImage;
           setRecoveredSrc(realImage);
           return;
         }
-      }
-    } catch(e) {}
-    
+      } catch (_e) { /* network error or parse error — try next candidate */ }
+    }
+
     _recoveredUrlsCache[cacheKey] = null;
     setHasFailedAll(true);
     setLoaded(true);
@@ -144,10 +226,11 @@ const MyPageImage = ({ item, width = 600, style }: { item: any; width?: number; 
   const currentRawSrc = recoveredSrc || fallbackImages[errorCount] || "";
   const currentSrc = currentRawSrc ? getOptimizedImageUrl(currentRawSrc, width) : "";
   const blurSrc = currentRawSrc ? getOptimizedImageUrl(currentRawSrc, 20) : "";
+  const shouldRenderBlurLayer = !!blurSrc && blurSrc !== currentSrc;
 
   return (
-    <div style={{ position: "relative", width: "100%", height: "100%", overflow: "hidden", ...style }}>
-      {blurSrc && (
+    <div style={{ position: "relative", width: "100%", height: "100%", overflow: "hidden", background: "#181818", ...style }}>
+      {shouldRenderBlurLayer && (
         <div
           style={{
             position: "absolute",
@@ -170,6 +253,7 @@ const MyPageImage = ({ item, width = 600, style }: { item: any; width?: number; 
           loading="lazy"
           onLoad={() => setLoaded(true)}
           onError={() => {
+            if (currentRawSrc) _brokenImageUrls.add(currentRawSrc);
             if (recoveredSrc) {
                setHasFailedAll(true);
                setLoaded(true);
@@ -195,14 +279,19 @@ const MyPageImage = ({ item, width = 600, style }: { item: any; width?: number; 
             width: "100%",
             height: "100%",
             display: "flex",
+            flexDirection: "column",
             alignItems: "center",
             justifyContent: "center",
-            color: "rgba(255,255,255,0.36)",
-            fontSize: 12,
+            gap: 6,
             position: "relative",
           }}
         >
-          No Image
+          <svg width={24} height={24} viewBox="0 0 24 24" fill="none" opacity={0.3}>
+            <rect x={3} y={3} width={18} height={18} rx={2} stroke="#999" strokeWidth={1.5} />
+            <circle cx={8.5} cy={8.5} r={1.5} stroke="#999" strokeWidth={1.5} />
+            <path d="M3 15l5-5 4 4 3-3 6 6" stroke="#999" strokeWidth={1.5} strokeLinecap="round" strokeLinejoin="round" />
+          </svg>
+          <span style={{ fontSize: 10, color: "#666", letterSpacing: "0.1em" }}>NO IMAGE</span>
         </div>
       )}
 
@@ -223,16 +312,12 @@ const MyPageImage = ({ item, width = 600, style }: { item: any; width?: number; 
               width: 24,
               height: 24,
               border: "2px solid rgba(255,255,255,0.3)",
-              borderTop: "2px solid rgba(255,255,255,0.9)",
               borderRadius: "50%",
-              animation: "spin 1s linear infinite",
+              borderTop: "2px solid rgba(255,255,255,0.9)",
             }}
           />
         </div>
       )}
-      <style>
-        {`@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }`}
-      </style>
     </div>
   );
 };
@@ -240,6 +325,7 @@ const MyPageImage = ({ item, width = 600, style }: { item: any; width?: number; 
 const MyPage: React.FC = () => {
   const { user, loading: authLoading } = useAuth();
   const navigate = useNavigate();
+  const { t } = useLanguage();
 
   const [loading, setLoading] = useState(true);
   const [likedArtworks, setLikedArtworks] = useState<any[]>([]);
@@ -276,8 +362,22 @@ const MyPage: React.FC = () => {
       return false;
     }
   });
+  const [liveProfilePhoto, setLiveProfilePhoto] = useState<string | null>(null);
+  const [liveProfileCrop, setLiveProfileCrop] = useState<ProfileImageCrop | null>(null);
+  const [isHeroHovered, setIsHeroHovered] = useState(false);
+  const [isHeroPickerOpen, setIsHeroPickerOpen] = useState(false);
+  const [selectedHeroArtworkId, setSelectedHeroArtworkId] = useState<string | null>(null);
+  const [draftHeroArtworkId, setDraftHeroArtworkId] = useState<string | null>(null);
+  const [heroFocusY, setHeroFocusY] = useState(50);
+  const [draftHeroFocusY, setDraftHeroFocusY] = useState(50);
+  const [isSavingHeroPrefs, setIsSavingHeroPrefs] = useState(false);
 
-  const displayPhotoURL = profileData.photoURL || user?.photoURL;
+  const displayPhotoURL = liveProfilePhoto || profileData.photoURL || user?.photoURL;
+
+  const clampHeroFocusY = (value: number) => {
+    if (!Number.isFinite(value)) return 50;
+    return Math.min(85, Math.max(15, Math.round(value)));
+  };
 
   useEffect(() => {
     const onResize = () => setIsMobile(window.innerWidth < 768);
@@ -363,8 +463,8 @@ const MyPage: React.FC = () => {
 
   useEffect(() => {
     if (authLoading) return;
-    if (!user) {
-      navigate("/");
+    if (!user || user.isAnonymous) {
+      navigate("/login", { replace: true, state: { from: "/mypage" } });
       return;
     }
 
@@ -427,6 +527,58 @@ const MyPage: React.FC = () => {
 
     calculateScore();
   }, [user, loading, likedArtworks.length, likedExhibitions.length]);
+
+  useEffect(() => {
+    if (!user || user.isAnonymous) {
+      setLiveProfilePhoto(null);
+      setLiveProfileCrop(null);
+      return;
+    }
+
+    let mounted = true;
+
+    const stopObserve = firebaseWebPort.profile.observeUserProfile?.(
+      user.uid,
+      (data) => {
+        if (!mounted) return;
+        if (data) {
+          setProfileData((prev: any) => ({ ...prev, ...data }));
+          if (data.nickname) setUsername(data.nickname);
+        }
+        setLiveProfilePhoto(data?.photoURL || user.photoURL || null);
+        setLiveProfileCrop(data?.profileImageCrop || null);
+      },
+      () => {
+        if (!mounted) return;
+        setLiveProfilePhoto(user.photoURL || null);
+        setLiveProfileCrop(null);
+      },
+    );
+
+    if (!stopObserve) {
+      void firebaseWebPort.profile
+        .getUserProfile(user.uid)
+        .then((data) => {
+          if (!mounted) return;
+          if (data) {
+            setProfileData((prev: any) => ({ ...prev, ...data }));
+            if (data.nickname) setUsername(data.nickname);
+          }
+          setLiveProfilePhoto(data?.photoURL || user.photoURL || null);
+          setLiveProfileCrop(data?.profileImageCrop || null);
+        })
+        .catch(() => {
+          if (!mounted) return;
+          setLiveProfilePhoto(user.photoURL || null);
+          setLiveProfileCrop(null);
+        });
+    }
+
+    return () => {
+      mounted = false;
+      if (typeof stopObserve === "function") stopObserve();
+    };
+  }, [user]);
 
   const handleUnlike = async (itemId: string, itemType: "artwork" | "exhibition" | "museum" | "artist") => {
     if (!user) return;
@@ -661,10 +813,65 @@ const MyPage: React.FC = () => {
   const faintText = isLightTheme ? "rgba(0,0,0,0.36)" : "rgba(255,255,255,0.36)";
   const divider = isLightTheme ? "rgba(0,0,0,0.08)" : "rgba(255,255,255,0.08)";
   const lime = "#BFFF0A";
+  const heroControlTop = "calc(env(safe-area-inset-top, 0px) + 2px)";
+  const heroPickerTop = "calc(env(safe-area-inset-top, 0px) + 44px)";
 
+  const heroImageOptions = useMemo(() => {
+    return likedArtworks
+      .map((item, index) => {
+        const rawImage = item.image || item.i || "";
+        const image = typeof rawImage === "string" ? rawImage.trim() : "";
+        if (!image || image === "default.jpg" || image === "/default.jpg") return null;
+        return {
+          id: String(item.artworkId || item.id || `liked-${index}`),
+          image,
+          title: item.title || item.name || "Untitled",
+          artist: item.artist || item.a || "",
+        };
+      })
+      .filter(Boolean) as Array<{ id: string; image: string; title: string; artist: string }>;
+  }, [likedArtworks]);
+
+  useEffect(() => {
+    const persistedHeroId = typeof profileData?.heroArtworkId === "string" ? profileData.heroArtworkId : null;
+    const persistedHeroFocus = clampHeroFocusY(Number(profileData?.heroImageFocusY ?? 50));
+
+    setSelectedHeroArtworkId(persistedHeroId);
+    setHeroFocusY(persistedHeroFocus);
+  }, [profileData?.heroArtworkId, profileData?.heroImageFocusY]);
+
+  useEffect(() => {
+    if (!isHeroPickerOpen) return;
+    setDraftHeroArtworkId(selectedHeroArtworkId);
+    setDraftHeroFocusY(heroFocusY);
+  }, [isHeroPickerOpen, selectedHeroArtworkId, heroFocusY]);
+
+  useEffect(() => {
+    if (!selectedHeroArtworkId) return;
+    const exists = heroImageOptions.some((item) => item.id === selectedHeroArtworkId);
+    if (!exists) setSelectedHeroArtworkId(null);
+  }, [heroImageOptions, selectedHeroArtworkId]);
+
+  useEffect(() => {
+    const node = scrollContainerRef.current;
+    if (!node || !isHeroPickerOpen) return;
+    const handleScroll = () => setIsHeroPickerOpen(false);
+    node.addEventListener("scroll", handleScroll, { passive: true });
+    return () => node.removeEventListener("scroll", handleScroll);
+  }, [isHeroPickerOpen]);
+
+  useEffect(() => {
+    if (!draftHeroArtworkId) return;
+    const exists = heroImageOptions.some((item) => item.id === draftHeroArtworkId);
+    if (!exists) setDraftHeroArtworkId(null);
+  }, [heroImageOptions, draftHeroArtworkId]);
+
+  const previewHeroArtworkId = isHeroPickerOpen ? draftHeroArtworkId : selectedHeroArtworkId;
+  const previewHeroFocusY = isHeroPickerOpen ? draftHeroFocusY : heroFocusY;
+  const selectedHeroOption = heroImageOptions.find((item) => item.id === previewHeroArtworkId) || null;
   const heroImage =
-    likedArtworks[0]?.image ||
-    likedArtworks[0]?.i ||
+    selectedHeroOption?.image ||
+    heroImageOptions[0]?.image ||
     displayPhotoURL ||
     "https://images.unsplash.com/photo-1545239351-1141bd82e8a6?w=1800&q=80";
 
@@ -705,6 +912,41 @@ const MyPage: React.FC = () => {
     });
     return cloned;
   }, [currentItems, sortMode]);
+
+  const initialBatchSize = isMobile ? 18 : 48;
+  const loadMoreStep = isMobile ? 18 : 36;
+
+  const [displayedCount, setDisplayedCount] = useState(initialBatchSize);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const observerTarget = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    setDisplayedCount(initialBatchSize);
+  }, [currentItems, sortMode, viewMode, initialBatchSize]);
+
+  useEffect(() => {
+    const root = scrollContainerRef.current;
+    const target = observerTarget.current;
+    if (!target) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        if (entries.some((entry) => entry.isIntersecting)) {
+          setDisplayedCount((prev) => {
+            if (prev >= sortedItems.length) return prev;
+            return Math.min(prev + loadMoreStep, sortedItems.length);
+          });
+        }
+      },
+      {
+        root,
+        rootMargin: isMobile ? "520px 0px" : "720px 0px",
+      }
+    );
+
+    observer.observe(target);
+    return () => observer.disconnect();
+  }, [sortedItems.length, loadMoreStep, isMobile]);
 
   const isArtworkLikeMode = activePlaylist !== null || viewMode === "artworks";
 
@@ -762,9 +1004,42 @@ const MyPage: React.FC = () => {
 
   const displayName = profileData.nickname || username || user?.displayName || "Art Explorer";
 
-  const handleBack = () => {
-    if (window.history.length > 2) navigate(-1);
-    else navigate("/");
+  const saveHeroBackgroundPreference = async () => {
+    const nextHeroId = draftHeroArtworkId || null;
+    const nextFocusY = clampHeroFocusY(draftHeroFocusY);
+
+    setSelectedHeroArtworkId(nextHeroId);
+    setHeroFocusY(nextFocusY);
+
+    if (!user) {
+      setIsHeroPickerOpen(false);
+      return;
+    }
+
+    setIsSavingHeroPrefs(true);
+    try {
+      const db = getFirestore();
+      await setDoc(
+        doc(db, "users", user.uid),
+        {
+          heroArtworkId: nextHeroId,
+          heroImageFocusY: nextFocusY,
+        },
+        { merge: true },
+      );
+
+      setProfileData((prev: any) => ({
+        ...prev,
+        heroArtworkId: nextHeroId,
+        heroImageFocusY: nextFocusY,
+      }));
+      window.dispatchEvent(new CustomEvent("profile-updated"));
+      setIsHeroPickerOpen(false);
+    } catch (error) {
+      console.error("Error saving hero background preference", error);
+    } finally {
+      setIsSavingHeroPrefs(false);
+    }
   };
 
   if (loading) {
@@ -813,9 +1088,11 @@ const MyPage: React.FC = () => {
           borderRadius: 0,
           aspectRatio: "1 / 1",
           background: isLightTheme ? "#f0f0f0" : "#151515",
+          contentVisibility: "auto",
+          containIntrinsicSize: "180px 180px",
         }}
       >
-        <MyPageImage item={normalized} width={900} />
+        <MyPageImage item={normalized} width={isMobile ? 520 : 900} />
 
         <div
           style={{
@@ -826,39 +1103,25 @@ const MyPage: React.FC = () => {
           }}
         />
 
-        <div style={{ position: "absolute", right: 7, bottom: 10, display: "flex", flexDirection: "column", gap: 6 }}>
-          <button
-            onClick={(event) => {
-              event.stopPropagation();
-              if (isUnliked) handleRelike(normalized, itemType);
-              else handleUnlike(itemId, itemType);
-            }}
-            style={{
-              width: 26,
-              height: 26,
-              borderRadius: "50%",
-              border: "none",
-              background: "rgba(0,0,0,0.56)",
-              color: "#fff",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              cursor: "pointer",
-              padding: 0,
-            }}
-            title={isUnliked ? "Like again" : "Unlike"}
-          >
-            <Heart size={13} strokeWidth={2.2} fill={isUnliked ? "none" : lime} color={isUnliked ? "#fff" : lime} />
-          </button>
-
+        <div
+          style={{
+            position: "absolute",
+            right: isMobile ? 6 : 7,
+            bottom: isMobile ? 6 : 10,
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            gap: isMobile ? 4 : 6,
+          }}
+        >
           <button
             onClick={(event) => {
               event.stopPropagation();
               setPlaylistArtwork(normalized);
             }}
             style={{
-              width: 26,
-              height: 26,
+              width: isMobile ? 22 : 26,
+              height: isMobile ? 22 : 26,
               borderRadius: "50%",
               border: "none",
               background: "rgba(0,0,0,0.56)",
@@ -871,7 +1134,7 @@ const MyPage: React.FC = () => {
             }}
             title="Save to Playlist"
           >
-            <BookmarkPlus size={12} strokeWidth={2.2} />
+            <BookmarkPlus size={isMobile ? 10 : 12} strokeWidth={2.2} />
           </button>
 
           <button
@@ -880,8 +1143,8 @@ const MyPage: React.FC = () => {
               setProductArtwork(normalized);
             }}
             style={{
-              width: 26,
-              height: 26,
+              width: isMobile ? 22 : 26,
+              height: isMobile ? 22 : 26,
               borderRadius: "50%",
               border: "none",
               background: "rgba(0,0,0,0.56)",
@@ -894,7 +1157,7 @@ const MyPage: React.FC = () => {
             }}
             title="Purchase Product"
           >
-            <ShoppingBag size={12} strokeWidth={2.1} />
+            <ShoppingBag size={isMobile ? 10 : 12} strokeWidth={2.1} />
           </button>
 
           <button
@@ -903,8 +1166,8 @@ const MyPage: React.FC = () => {
               setCommentArtwork(normalized);
             }}
             style={{
-              width: 26,
-              height: 26,
+              width: isMobile ? 22 : 26,
+              height: isMobile ? 22 : 26,
               borderRadius: "50%",
               border: "none",
               background: "rgba(0,0,0,0.56)",
@@ -917,35 +1180,61 @@ const MyPage: React.FC = () => {
             }}
             title="Comments"
           >
-            <MessageCircle size={12} strokeWidth={2.1} />
+            <MessageCircle size={isMobile ? 10 : 12} strokeWidth={2.1} />
+          </button>
+
+          <button
+            onClick={(event) => {
+              event.stopPropagation();
+              if (isUnliked) handleRelike(normalized, itemType);
+              else handleUnlike(itemId, itemType);
+            }}
+            style={{
+              width: isMobile ? 22 : 26,
+              height: isMobile ? 22 : 26,
+              borderRadius: "50%",
+              border: "none",
+              background: "rgba(0,0,0,0.56)",
+              color: "#fff",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              cursor: "pointer",
+              padding: 0,
+            }}
+            title={isUnliked ? "Like again" : "Unlike"}
+          >
+            <Heart size={isMobile ? 11 : 13} strokeWidth={2.2} fill={isUnliked ? "none" : lime} color={isUnliked ? "#fff" : lime} />
           </button>
         </div>
 
-        <div style={{ position: "absolute", left: 8, right: 40, bottom: 8, color: "#fff", pointerEvents: "none" }}>
-          <div
-            style={{
-              fontSize: 11,
-              fontWeight: 600,
-              whiteSpace: "nowrap",
-              overflow: "hidden",
-              textOverflow: "ellipsis",
-            }}
-          >
-            {normalized.title}
+        {!isMobile && (
+          <div style={{ position: "absolute", left: 8, right: 40, bottom: 8, color: "#fff", pointerEvents: "none" }}>
+            <div
+              style={{
+                fontSize: 11,
+                fontWeight: 600,
+                whiteSpace: "nowrap",
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+              }}
+            >
+              {normalized.title}
+            </div>
+            <div
+              style={{
+                marginTop: 2,
+                fontSize: 10,
+                opacity: 0.88,
+                whiteSpace: "nowrap",
+                overflow: "hidden",
+                textOverflow: "ellipsis",
+              }}
+            >
+              {normalized.artist || normalized.museumName}
+            </div>
           </div>
-          <div
-            style={{
-              marginTop: 2,
-              fontSize: 10,
-              opacity: 0.88,
-              whiteSpace: "nowrap",
-              overflow: "hidden",
-              textOverflow: "ellipsis",
-            }}
-          >
-            {normalized.artist || normalized.museumName}
-          </div>
-        </div>
+        )}
       </div>
     );
   };
@@ -976,7 +1265,7 @@ const MyPage: React.FC = () => {
         }}
       >
         <div style={{ aspectRatio: "4 / 5", background: isLightTheme ? "#f0f0f0" : "#1a1a1a" }}>
-          {normalized.image ? <MyPageImage item={normalized} width={700} /> : null}
+          {normalized.image ? <MyPageImage item={normalized} width={isMobile ? 420 : 700} /> : null}
         </div>
 
         <button
@@ -1037,20 +1326,34 @@ const MyPage: React.FC = () => {
 
   return (
     <div
+      ref={scrollContainerRef}
       style={{
         width: "100%",
-        height: "100%",
+          minHeight: "100dvh",
+          height: "100%",
         overflowY: "auto",
+          touchAction: "pan-y",
+        WebkitOverflowScrolling: "touch",
+        overscrollBehaviorY: "contain",
+        paddingTop: "env(safe-area-inset-top, 0px)",
+          paddingBottom: "max(env(safe-area-inset-bottom, 0px), 100px)",
         background: pageBg,
         color: pageText,
         fontFamily: "'Space Grotesk', 'Apple SD Gothic Neo', sans-serif",
       }}
     >
-      <div style={{ position: "relative", height: isMobile ? 230 : 310, overflow: "hidden" }}>
+      <div
+        style={{ position: "relative", height: isMobile ? 258 : 340, overflow: "hidden" }}
+        onMouseEnter={() => setIsHeroHovered(true)}
+        onMouseLeave={() => {
+          setIsHeroHovered(false);
+          if (!isMobile) setIsHeroPickerOpen(false);
+        }}
+      >
         <img
           src={getOptimizedImageUrl(heroImage, 1400)}
           alt=""
-          style={{ width: "100%", height: "100%", objectFit: "cover", filter: isLightTheme ? "saturate(0.7) contrast(1.02)" : "saturate(0.42) brightness(0.82) contrast(1.1)" }}
+          style={{ width: "100%", height: "100%", objectFit: "cover", objectPosition: `50% ${previewHeroFocusY}%` }}
         />
 
         <div
@@ -1063,61 +1366,193 @@ const MyPage: React.FC = () => {
           }}
         />
 
-        <button
-          onClick={handleBack}
-          style={{
-            position: "absolute",
-            top: 14,
-            left: 14,
-            width: 34,
-            height: 34,
-            borderRadius: "50%",
-            border: panelBorder,
-            background: panelBg,
-            color: pageText,
-            backdropFilter: "blur(10px)",
-            WebkitBackdropFilter: "blur(10px)",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            cursor: "pointer",
-            zIndex: 4,
-            padding: 0,
-          }}
-          title="Back"
-        >
-          <ArrowLeft size={16} strokeWidth={2.4} />
-        </button>
+        {heroImageOptions.length > 0 && (
+          <>
+            <button
+              onClick={() => setIsHeroPickerOpen((prev) => !prev)}
+              style={{
+                position: "absolute",
+                top: heroControlTop,
+                left: isMobile ? 10 : "auto",
+                right: isMobile ? "auto" : 10,
+                width: 34,
+                height: 34,
+                borderRadius: "50%",
+                border: panelBorder,
+                background: panelBg,
+                color: pageText,
+                backdropFilter: "blur(10px)",
+                WebkitBackdropFilter: "blur(10px)",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                padding: 0,
+                cursor: "pointer",
+                zIndex: 260100,
+                opacity: isMobile || isHeroHovered || isHeroPickerOpen ? 1 : 0,
+                pointerEvents: isMobile || isHeroHovered || isHeroPickerOpen ? "auto" : "none",
+                transition: "opacity 0.18s ease",
+              }}
+              title={t({ ko: "배경 변경", en: "Change background" })}
+            >
+              <Palette size={15} strokeWidth={2.2} />
+            </button>
+          </>
+        )}
 
-        <button
-          onClick={() => navigate("/onboarding")}
+      </div>
+
+      {isHeroPickerOpen && heroImageOptions.length > 0 && (
+        <div
           style={{
-            position: "absolute",
-            top: 14,
-            right: 14,
-            height: 30,
-            borderRadius: 999,
+            position: "fixed",
+            top: heroPickerTop,
+            left: isMobile ? 10 : "auto",
+            right: isMobile ? "auto" : 14,
+            width: isMobile ? "min(92vw, 360px)" : 360,
+            maxHeight: isMobile ? "50vh" : 380,
+            overflowY: "auto",
+            padding: 10,
+            borderRadius: 12,
             border: panelBorder,
             background: panelBg,
-            color: pageText,
-            backdropFilter: "blur(10px)",
-            WebkitBackdropFilter: "blur(10px)",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: 5,
-            cursor: "pointer",
-            zIndex: 4,
-            padding: "0 11px",
-            fontSize: 11,
-            fontWeight: 600,
+            backdropFilter: "blur(16px)",
+            WebkitBackdropFilter: "blur(16px)",
+            boxShadow: isLightTheme ? "0 16px 28px rgba(0,0,0,0.16)" : "0 18px 30px rgba(0,0,0,0.42)",
+            zIndex: 260101,
           }}
-          title="Edit"
         >
-          <Pencil size={11} />
-          Edit
-        </button>
-      </div>
+          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 8 }}>
+            <span style={{ fontSize: 11, fontWeight: 700, color: pageText }}>{t({ ko: "하트 작품 배경", en: "Heart List Backgrounds" })}</span>
+            <button
+              onClick={() => setDraftHeroArtworkId(null)}
+              style={{
+                border: panelBorder,
+                borderRadius: 999,
+                background: "transparent",
+                color: subText,
+                height: 22,
+                padding: "0 8px",
+                fontSize: 10,
+                fontWeight: 700,
+                cursor: "pointer",
+              }}
+            >
+              {t({ ko: "자동", en: "Auto" })}
+            </button>
+          </div>
+
+          <div style={{ marginBottom: 10 }}>
+            <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: 6 }}>
+              <span style={{ fontSize: 10, fontWeight: 700, color: subText, letterSpacing: "0.02em" }}>
+                {t({ ko: "배경 위치", en: "Background position" })}
+              </span>
+              <span style={{ fontSize: 10, color: pageText }}>{clampHeroFocusY(draftHeroFocusY)}%</span>
+            </div>
+            <input
+              type="range"
+              min={15}
+              max={85}
+              step={1}
+              value={clampHeroFocusY(draftHeroFocusY)}
+              onChange={(event) => setDraftHeroFocusY(Number(event.currentTarget.value))}
+              style={{ width: "100%", accentColor: lime }}
+            />
+          </div>
+
+          <div style={{ display: "grid", gridTemplateColumns: "repeat(3, minmax(0, 1fr))", gap: 8 }}>
+            {heroImageOptions.slice(0, 30).map((option) => {
+              const isSelected = draftHeroArtworkId === option.id;
+              return (
+                <button
+                  key={option.id}
+                  onClick={() => {
+                    setDraftHeroArtworkId(option.id);
+                  }}
+                  style={{
+                    border: isSelected ? `1px solid ${lime}` : `1px solid ${divider}`,
+                    borderRadius: 9,
+                    padding: 0,
+                    overflow: "hidden",
+                    background: "transparent",
+                    cursor: "pointer",
+                    position: "relative",
+                  }}
+                  title={option.artist ? `${option.title} - ${option.artist}` : option.title}
+                >
+                  <div style={{ width: "100%", aspectRatio: "4 / 3", background: isLightTheme ? "#e8e8e8" : "#171717" }}>
+                    <img src={getOptimizedImageUrl(option.image, 240)} alt={option.title} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+                  </div>
+                  {isSelected && (
+                    <div
+                      style={{
+                        position: "absolute",
+                        inset: 0,
+                        border: `2px solid ${lime}`,
+                        borderRadius: 9,
+                        pointerEvents: "none",
+                      }}
+                    />
+                  )}
+                </button>
+              );
+            })}
+          </div>
+
+          <div
+            style={{
+              position: "sticky",
+              bottom: -10,
+              marginTop: 10,
+              paddingTop: 10,
+              paddingBottom: 2,
+              display: "flex",
+              justifyContent: "flex-end",
+              gap: 8,
+              background: panelBg,
+            }}
+          >
+            <button
+              onClick={() => {
+                setDraftHeroArtworkId(selectedHeroArtworkId);
+                setDraftHeroFocusY(heroFocusY);
+                setIsHeroPickerOpen(false);
+              }}
+              style={{
+                border: panelBorder,
+                borderRadius: 999,
+                background: "transparent",
+                color: subText,
+                height: 28,
+                padding: "0 10px",
+                fontSize: 11,
+                fontWeight: 700,
+                cursor: "pointer",
+              }}
+            >
+              {t({ ko: "취소", en: "Cancel" })}
+            </button>
+            <button
+              onClick={saveHeroBackgroundPreference}
+              disabled={isSavingHeroPrefs}
+              style={{
+                border: "none",
+                borderRadius: 999,
+                background: lime,
+                color: "#000",
+                height: 28,
+                padding: "0 12px",
+                fontSize: 11,
+                fontWeight: 800,
+                cursor: isSavingHeroPrefs ? "default" : "pointer",
+                opacity: isSavingHeroPrefs ? 0.7 : 1,
+              }}
+            >
+              {isSavingHeroPrefs ? t({ ko: "저장 중...", en: "Saving..." }) : t({ ko: "저장", en: "Save" })}
+            </button>
+          </div>
+        </div>
+      )}
 
       <div style={{ padding: isMobile ? "0 10px" : "0 24px", marginTop: -34, position: "relative", zIndex: 3 }}>
         <div
@@ -1129,25 +1564,30 @@ const MyPage: React.FC = () => {
           }}
         >
           <div style={{ display: "flex", alignItems: "center", gap: 14, minWidth: 0 }}>
-            <div
-              style={{
-                width: isMobile ? 58 : 72,
-                height: isMobile ? 58 : 72,
-                borderRadius: "50%",
-                overflow: "hidden",
-                background: lime,
-                flexShrink: 0,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                boxShadow: `0 0 0 4px ${isLightTheme ? "#fafafa" : "#080808"}`,
-              }}
-            >
-              {displayPhotoURL ? (
-                <img src={displayPhotoURL} alt="Profile" style={{ width: "100%", height: "100%", objectFit: "cover" }} />
-              ) : (
-                <span style={{ color: "#000", fontWeight: 700, fontSize: isMobile ? 15 : 18 }}>{displayName.slice(0, 2).toUpperCase()}</span>
-              )}
+            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 8, flexShrink: 0 }}>
+              <div
+                style={{
+                  width: isMobile ? 58 : 72,
+                  height: isMobile ? 58 : 72,
+                  borderRadius: "50%",
+                  overflow: "hidden",
+                  background: "transparent",
+                  flexShrink: 0,
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  boxShadow: `0 0 0 4px ${isLightTheme ? "#fafafa" : "#080808"}`,
+                }}
+              >
+                <ProfileAvatar
+                  src={displayPhotoURL || null}
+                  crop={liveProfileCrop || profileData?.profileImageCrop || null}
+                  size={isMobile ? 58 : 72}
+                  alt="Profile"
+                  background={lime}
+                  fallback={<span style={{ color: "#000", fontWeight: 700, fontSize: isMobile ? 15 : 18 }}>{displayName.slice(0, 2).toUpperCase()}</span>}
+                />
+              </div>
             </div>
 
             <div style={{ minWidth: 0 }}>
@@ -1186,46 +1626,95 @@ const MyPage: React.FC = () => {
                   marginTop: 3,
                   fontSize: isMobile ? 11 : 12,
                   color: subText,
-                  whiteSpace: "nowrap",
-                  overflow: "hidden",
-                  textOverflow: "ellipsis",
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "flex-start",
+                  gap: 6,
                 }}
               >
-                {user?.email} • Score: {userScore}
+                <div
+                  style={{
+                    whiteSpace: "nowrap",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    maxWidth: isMobile ? 180 : 260,
+                  }}
+                >
+                  {user?.email}
+                </div>
+                <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                  <span>Score: {userScore}</span>
+                  <button
+                    onClick={() => navigate('/onboarding')}
+                    style={{
+                      border: panelBorder,
+                      borderRadius: 999,
+                      background: panelBg,
+                      color: pageText,
+                      height: 24,
+                      padding: "0 9px",
+                      fontSize: 10,
+                      fontWeight: 700,
+                      letterSpacing: "0.02em",
+                      cursor: "pointer",
+                      display: "inline-flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      gap: 4,
+                      backdropFilter: "blur(10px)",
+                      WebkitBackdropFilter: "blur(10px)",
+                    }}
+                    title={t({ ko: "프로필 편집", en: "Edit profile" })}
+                  >
+                    <Pencil size={10} />
+                    {t({ ko: "편집", en: "Edit" })}
+                  </button>
+                </div>
               </div>
             </div>
           </div>
 
-          <button
-            onClick={() => setShowSlideshow(true)}
+          <div
             style={{
-              border: "none",
-              borderRadius: 999,
-              background: lime,
-              color: "#000",
-              height: isMobile ? 38 : 44,
-              padding: isMobile ? "0 14px" : "0 20px",
-              cursor: "pointer",
               display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              gap: 6,
+              flexDirection: "column",
+              alignItems: isMobile ? "flex-end" : "stretch",
+              gap: 7,
               flexShrink: 0,
-              fontSize: isMobile ? 12 : 14,
-              fontWeight: 700,
+              width: isMobile ? "auto" : 240,
+              maxWidth: "100%",
+              marginTop: isMobile ? 10 : 6,
             }}
           >
-            <Play size={13} strokeWidth={2.4} />
-            <span>Play Slideshow</span>
-          </button>
+            <button
+              onClick={() => setShowSlideshow(true)}
+              style={{
+                border: "none",
+                  borderRadius: "50%",
+                background: lime,
+                color: "#000",
+                  height: isMobile ? 34 : 40,
+                  width: isMobile ? 34 : 40,
+                  minWidth: 34,
+                  padding: 0,
+                cursor: "pointer",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+                title={t({ ko: "슬라이드쇼 재생", en: "Play slideshow" })}
+            >
+                <Play size={isMobile ? 13 : 14} strokeWidth={2.4} />
+            </button>
+          </div>
         </div>
       </div>
 
       {!activePlaylist && (
         <div style={{ padding: isMobile ? "16px 10px 0" : "18px 24px 0" }}>
           <div style={{ display: "flex", alignItems: "center", gap: 8, color: pageText }}>
-            <span style={{ fontSize: 28, fontWeight: 500, letterSpacing: "-0.03em" }}>My Playlists</span>
-            <span style={{ fontSize: 14, color: subText }}>{playlists.length}</span>
+            <span style={{ fontSize: isMobile ? 16 : 20, fontWeight: 500, letterSpacing: "-0.03em" }}>My Playlists</span>
+            <span style={{ fontSize: isMobile ? 12 : 14, color: subText }}>{playlists.length}</span>
           </div>
 
           {playlists.length > 0 ? (
@@ -1294,7 +1783,7 @@ const MyPage: React.FC = () => {
         </div>
       )}
 
-      <div style={{ marginTop: 8, borderTop: `1px solid ${divider}` }} />
+      <div style={{ marginTop: 0, borderTop: `1px solid ${divider}` }} />
 
       <div
         style={{
@@ -1338,7 +1827,7 @@ const MyPage: React.FC = () => {
         </div>
       </div>
 
-      <div style={{ padding: "10px 12px 8px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+      <div style={{ padding: "8px 12px 6px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
         {activePlaylist ? (
           <button
             onClick={() => setActivePlaylist(null)}
@@ -1368,7 +1857,11 @@ const MyPage: React.FC = () => {
                   color: active ? pageText : faintText,
                 }}
               >
-                {mode === "recent" ? "Latest" : mode === "oldest" ? "Oldest" : "Newest"}
+                {mode === "recent"
+                  ? t({ ko: "최신", en: "Latest" })
+                  : mode === "oldest"
+                    ? t({ ko: "오래된 순", en: "Oldest" })
+                    : t({ ko: "최신 연도", en: "Newest" })}
               </button>
             );
           })}
@@ -1470,7 +1963,10 @@ const MyPage: React.FC = () => {
             padding: "2px 2px 90px",
           }}
         >
-          {sortedItems.map((item, index) => renderArtworkCard(item, index))}
+          {sortedItems.slice(0, displayedCount).map((item, index) => renderArtworkCard(item, index))}
+          {sortedItems.length > displayedCount && (
+            <div ref={observerTarget} style={{ height: "1px", gridColumn: "1 / -1" }} />
+          )}
         </div>
       ) : (
         <div
@@ -1481,7 +1977,10 @@ const MyPage: React.FC = () => {
             padding: "2px 10px 96px",
           }}
         >
-          {sortedItems.map((item, index) => renderSimpleCard(item, index))}
+          {sortedItems.slice(0, displayedCount).map((item, index) => renderSimpleCard(item, index))}
+          {sortedItems.length > displayedCount && (
+            <div ref={observerTarget} style={{ height: "1px", gridColumn: "1 / -1" }} />
+          )}
         </div>
       )}
 
@@ -1506,7 +2005,9 @@ const MyPage: React.FC = () => {
             else handleRelike(artwork, "artwork");
           }}
           onViewInMuseum={handleViewInMuseum}
-          onPurchase={() => setProductArtwork(galleryArtwork)}
+          onPurchase={(artwork) => setProductArtwork(artwork)}
+          hideMuseumAction
+          onOpenComments={(artwork) => setCommentArtwork(artwork)}
           onSaveToPlaylist={(artwork) => setPlaylistArtwork(artwork)}
           likedArtworksList={likedArtworks}
           onChangeArtwork={setGalleryArtwork}
