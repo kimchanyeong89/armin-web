@@ -1041,7 +1041,6 @@ const MyPage: React.FC = () => {
   }, [currentItems, sortMode, viewMode, initialBatchSize]);
 
   useEffect(() => {
-    const root = scrollContainerRef.current;
     const target = observerTarget.current;
     if (!target) return;
 
@@ -1055,7 +1054,7 @@ const MyPage: React.FC = () => {
         }
       },
       {
-        root,
+        root: null,
         rootMargin: isMobile ? "320px 0px" : "720px 0px",
       }
     );
@@ -1255,7 +1254,7 @@ const MyPage: React.FC = () => {
             right: isMobile ? 6 : 7,
             bottom: isMobile ? 6 : 10,
             display: "flex",
-            flexDirection: "column",
+            flexDirection: "row",
             alignItems: "center",
             gap: isMobile ? 4 : 6,
           }}
@@ -1479,14 +1478,14 @@ const MyPage: React.FC = () => {
       ref={scrollContainerRef}
       style={{
         width: "100%",
-          minHeight: "100dvh",
-          height: "100%",
+        minHeight: "100dvh",
+        height: "100%",
         overflowY: "auto",
-          touchAction: "pan-y",
+        touchAction: "pan-y",
         WebkitOverflowScrolling: "touch",
         overscrollBehaviorY: "contain",
         paddingTop: 0,
-          paddingBottom: "max(env(safe-area-inset-bottom, 0px), 100px)",
+        paddingBottom: "max(env(safe-area-inset-bottom, 0px), 100px)",
         background: pageBg,
         color: pageText,
         fontFamily: "'Space Grotesk', 'Apple SD Gothic Neo', sans-serif",
