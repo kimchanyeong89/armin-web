@@ -188,7 +188,7 @@ const Login: React.FC = () => {
     if (naverButton) {
       naverButton.click();
     } else {
-      if (fromAutoStart && attempt < 10) {
+      if (fromAutoStart && attempt < 30) {
         window.setTimeout(() => {
           handleNaverLogin({ fromAutoStart: true, silent: true, attempt: attempt + 1 });
         }, 180);
@@ -289,6 +289,7 @@ const Login: React.FC = () => {
         if (credRawNonce) buildUrl += `&rawNonce=${encodeURIComponent(credRawNonce)}`;
 
         window.location.replace(buildUrl);
+        setManualDeepLinkFallback(buildUrl);
         return;
       }
 
@@ -551,8 +552,10 @@ const Login: React.FC = () => {
     }
 
     if (autoStartProvider === "google" || autoStartProvider === "apple") {
-      const forceRedirect = true; // always use signInWithRedirect in these flows
-      void handleLoginWithProvider(autoStartProvider, forceRedirect);
+      // Intentionally DO NOT auto-start with forceRedirect.
+      // iOS Safari ITP blocks redirect result retrieval via indexedDB.
+      // We must force the user to tap the "Continue with Google/Apple" button manually
+      // inside the external browser so it can trigger signInWithPopup securely.
       return;
     }
 
@@ -600,6 +603,9 @@ const Login: React.FC = () => {
               {t({ ko: "아르민 계정", en: "Armin Account" })}
             </span>
           </div>
+
+          {/* Hidden div required for Naver SDK to mount its button */}
+          <div id="naverIdLogin" style={{ display: 'none' }} />
 
           <h2 style={{ margin: 0, fontSize: "clamp(30px, 6vw, 38px)", lineHeight: 1.1, letterSpacing: "-0.02em" }}>
             {t({ ko: "로그인", en: "Sign In" })}

@@ -185,8 +185,8 @@ export default function App() {
               console.log("[AUTH] Deep link received:", result.url);
               console.log("[AUTH] Parsed params:", JSON.stringify(map));
 
-              // Google/Apple: inject credential into WebView via custom event
-              if (map.provider && map.idToken) {
+              // Google/Apple/Naver: inject credential into WebView via custom event
+              if (map.provider && (map.idToken || (map.email && map.credential))) {
                 console.log("[AUTH] Injecting OAuth credential for provider:", map.provider);
                 const ev = `window.dispatchEvent(new CustomEvent('auth:mobile-credential', { detail: ${JSON.stringify(map)} })); true;`;
                 webViewRef.current?.injectJavaScript(ev);
@@ -240,7 +240,21 @@ export default function App() {
   useEffect(() => {
     const sub = Linking.addEventListener("url", ({ url }) => {
       if (!url.startsWith("com.armin.mobile://auth-complete")) return;
-      webViewRef.current?.reload();
+      try {
+        const urlObj = new URL(url);
+        const map: Record<string, string> = {};
+        urlObj.searchParams.forEach((v, k) => { map[k] = v; });
+
+        if (map.provider && (map.idToken || (map.email && map.credential))) {
+          console.log("[AUTH] Linking listener injecting OAuth credential for provider:", map.provider);
+          const ev = `window.dispatchEvent(new CustomEvent('auth:mobile-credential', { detail: ${JSON.stringify(map)} })); true;`;
+          webViewRef.current?.injectJavaScript(ev);
+        } else {
+          webViewRef.current?.reload();
+        }
+      } catch {
+        webViewRef.current?.reload();
+      }
     });
     return () => sub.remove();
   }, []);

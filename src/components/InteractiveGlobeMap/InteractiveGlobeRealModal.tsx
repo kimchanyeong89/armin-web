@@ -817,7 +817,9 @@ export function InteractiveGlobeRealModal({
 
       return realArtworks.map((a, i) => {
           const imgUrl = resolveImg(a);
-          const semanticId = pickMeaningfulText(a?.semanticId, a?.semantic_id, a?.vectorId, a?.vector_id) || undefined;
+          // semanticId must always resolve to a Vectorize-compatible ID.
+          // For collections without native IDs, artworks were indexed as {collectionSlug}-{i}.
+          const semanticId = pickMeaningfulText(a?.semanticId, a?.semantic_id, a?.vectorId, a?.vector_id) || `${collectionSlug}-${i}`;
           const fallbackIndexedId = recommendationFallbackPrefix
             ? `${recommendationFallbackPrefix}-${i}`
             : `AW-${i}`;

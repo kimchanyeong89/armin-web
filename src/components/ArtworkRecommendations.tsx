@@ -4,12 +4,10 @@ import { getWeservUrl } from '../utils/imageProxy';
 import { exhibitions } from '../data/exhibitions';
 import { HeartOverlay } from './HeartOverlay';
 import { BookmarkPlus, MessageCircle, ShoppingBag } from 'lucide-react';
+import { searchByText as siglipSearchByText } from '../utils/siglipSearch';
 
 const WORKER_URL = 'https://armin-semantic-search.armin-art.workers.dev';
-const RECOMMENDATION_BACKOFF_MS = 30_000;
 const recommendationCache = new Map<string, any[]>();
-// Backoff only applies to text search (which calls HuggingFace). ID-based lookups never need to back off.
-let textSearchBackoffUntil = 0;
 const SHOW_ARTWORK_COMMENTS = false;
 
 // Map museum names to countries for quick lookup
@@ -150,24 +148,11 @@ export const ArtworkRecommendations: React.FC<Props> = ({
         };
 
         const requestWorker = async (endpoint: string, payload: Record<string, unknown>) => {
-            // Only block text search during backoff — ID-based lookup never calls HuggingFace so should not be throttled.
-            const isTextSearch = endpoint === '/search-by-text';
-            if (isTextSearch && Date.now() < textSearchBackoffUntil) return null;
-
             const response = await fetch(`${WORKER_URL}${endpoint}`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(payload)
             });
-
-            if (response.status === 503) {
-                // Only back off for text search (HuggingFace cold-start), not for vectorize ID lookups.
-                if (isTextSearch) {
-                    textSearchBackoffUntil = Date.now() + RECOMMENDATION_BACKOFF_MS;
-                }
-                return null;
-            }
-
             if (!response.ok) return null;
             return response.json();
         };
@@ -225,24 +210,28 @@ export const ArtworkRecommendations: React.FC<Props> = ({
                 }
             }
 
-            const fallbackQuery = [String(artwork.name || art.title || '').trim(), String(artwork.artist || '').trim()]
+            // Text-based semantic fallback: uses browser WASM (Tier 1) → HuggingFace server (Tier 2).
+            // Build a visual descriptor query instead of using the artwork title, which tends to
+            // match text-heavy artworks in SigLIP. Category + era + artist gives better visual similarity.
+            const yearNum = Number(String(artwork.year || art.year || '').replace(/[^0-9]/g, ''));
+            const eraStr = yearNum > 0 ? `${Math.floor(yearNum / 100) * 100}s` : '';
+            const categoryStr = String(art.category || artwork.category || '').trim();
+            const artistStr = String(artwork.artist || '').trim();
+            const fallbackQuery = [categoryStr, eraStr, artistStr]
                 .filter(Boolean)
                 .join(' ')
                 .trim();
             if (!fallbackQuery || fallbackQuery.length < 2) return;
-            if (Date.now() < textSearchBackoffUntil) return;
 
             try {
-                const data = await requestWorker('/search-by-text', { text: fallbackQuery, limit: 12 });
-                if (!data) return;
+                const results = await siglipSearchByText(fallbackQuery, 12);
+                if (!results || results.length === 0) return;
 
-                const normalized = Array.isArray(data?.results)
-                    ? normalizeRecommendationItems(data.results)
-                    : [];
+                const normalized = normalizeRecommendationItems(results);
                 if (cacheKey) recommendationCache.set(cacheKey, normalized);
                 if (!cancelled) setAiRecommendations(normalized);
             } catch (e) {
-                console.warn('AI Recommendation fallback failed:', e);
+                console.warn('AI Recommendation text fallback failed:', e);
             }
         };
 
