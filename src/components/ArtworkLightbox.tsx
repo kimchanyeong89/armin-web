@@ -604,7 +604,9 @@ export const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
                                         transition: 'opacity 0.4s ease',
                                         position: imgLoaded ? 'relative' : 'absolute',
                                         top: imgLoaded ? 'auto' : 0, left: imgLoaded ? 'auto' : 0,
+                                        cursor: 'zoom-out'
                                     }}
+                                    onClick={onClose}
                                     draggable={false}
                                     referrerPolicy="no-referrer"
                                     onLoad={() => setImgLoaded(true)}
@@ -658,7 +660,7 @@ export const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
                                     <button
                                         onClick={(e) => {
                                             e.stopPropagation();
-                                            onOpenComments(artwork);
+                                            onOpenComments?.(artwork);
                                         }}
                                         style={{
                                             width: actionButtonSize,
@@ -909,7 +911,7 @@ export const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
                             onClick={onClose}
                             style={{
                                 position: 'fixed',
-                                top: 16,
+                                top: 'calc(env(safe-area-inset-top, 44px) + 12px)',
                                 right: 16,
                                 width: 40,
                                 height: 40,

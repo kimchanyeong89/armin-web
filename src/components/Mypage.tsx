@@ -1061,7 +1061,7 @@ const MyPage: React.FC = () => {
 
     observer.observe(target);
     return () => observer.disconnect();
-  }, [sortedItems.length, loadMoreStep, isMobile]);
+  }, [sortedItems.length, loadMoreStep, isMobile, displayedCount]);
 
   const isArtworkLikeMode = activePlaylist !== null || viewMode === "artworks";
 
