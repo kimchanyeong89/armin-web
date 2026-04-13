@@ -194,16 +194,13 @@ const Login: React.FC = () => {
 
   const handleLoginWithProvider = useCallback(async (providerType: 'google' | 'apple', forceRedirect = false) => {
     // Determine whether to use redirect or popup:
-    // - Apple: always redirect (Apple Sign-In popup not supported in WKWebView)
+    // - Apple: always redirect (because Apple Sign-In popup is notoriously buggy on many platforms)
     // - Google in external browser (ASWebAuthenticationSession): always redirect
-    // - Google in WebView (isMobileContainer && !isExternalBrowserFlow): use POPUP
-    //   (WKWebView handles window.open via onOpenWindow → App.tsx manages the auth session)
-    // - Google normal web: popup unless forceRedirect
-    const googleInWebView = providerType === 'google' && isMobileContainer && !isExternalBrowserFlow;
+    // - normal web: popup fallback
     const shouldUseRedirect =
-      providerType === 'apple'
-      || (isExternalBrowserFlow && !googleInWebView)
-      || (forceRedirect && !googleInWebView);
+      providerType === 'apple' ||
+      isExternalBrowserFlow ||
+      forceRedirect;
 
     if (pendingProvider && !shouldUseRedirect) {
       postAuthFlowLog("info", `Skip duplicate auth tap for ${providerType}`);
@@ -223,16 +220,12 @@ const Login: React.FC = () => {
       }
 
       // In WebView (mobile container but NOT external browser):
-      // - Google: use signInWithPopup directly in the WebView.
-      //   WKWebView fires onOpenWindow for the popup → App.tsx handles navigation.
-      //   Firebase completes the OAuth and updates auth state directly.
-      // - Apple: delegate to external browser (Apple Sign-In requires ASWebAuthenticationSession).
+      // - Apple & Google: delegate to external browser (opens ASWebAuthenticationSession).
+      // We fixed the localhost issue by forcing external flows to use the production URL,
+      // so signInWithRedirect -> getRedirectResult inside the Safari View will now work.
       if (isMobileContainer && !isExternalBrowserFlow) {
-        if (providerType === 'apple') {
-          requestExternalAuth(providerType);
-          return;
-        }
-        // Google: fall through to signInWithPopup below (don't redirect to external browser)
+        requestExternalAuth(providerType);
+        return;
       }
 
       if (shouldUseRedirect) {
@@ -318,15 +311,6 @@ const Login: React.FC = () => {
       }
 
       if (code === 'auth/operation-not-supported-in-this-environment' || code === 'auth/popup-blocked') {
-        if (isMobileContainer && !isExternalBrowserFlow) {
-          // In WebView: do NOT call signInWithRedirect here — it navigates the WebView to Google,
-          // then back, but getRedirectResult fails in localhost dev environment (cross-origin iframe issue).
-          // Instead, delegate to external browser which handles the OAuth flow properly.
-          postAuthFlowLog("warn", `Popup blocked in WebView, delegating to external browser for ${providerType}`);
-          requestExternalAuth(providerType);
-          return;
-        }
-        // In external browser or regular web: fallback to redirect
         const fallbackProvider = providerType === 'google'
           ? new GoogleAuthProvider()
           : new OAuthProvider('apple.com');
@@ -537,12 +521,14 @@ const Login: React.FC = () => {
     if (user && !user.isAnonymous) {
       if (isExternalBrowserFlow && query.get("returnToApp") === "1") {
         // User is signed in inside the external browser session.
-        // resolveAnyRedirectResult already ran (or is running) and will send the deep link.
-        // Do NOT re-trigger signInWithRedirect — that causes the loop.
+        // We MUST NOT return early here because getRedirectResult only yields OAuth tokens
+        // right after a redirect. If we returned here, resolveAnyRedirectResult would send
+        // signedInOnWeb=1 without an idToken, causing the app to just reload and stay unauthenticated.
+        // The autoStartKey below guarantees the auth redirect only fires ONCE to get fresh tokens.
+      } else {
+        navigate(redirectTarget, { replace: true });
         return;
       }
-      navigate(redirectTarget, { replace: true });
-      return;
     }
 
     // Guard: only fire the auth redirect ONCE per external browser session.
