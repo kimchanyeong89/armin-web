@@ -6,9 +6,10 @@ import { HeartOverlay } from './HeartOverlay';
 import { BookmarkPlus, MessageCircle, ShoppingBag } from 'lucide-react';
 
 const WORKER_URL = 'https://armin-semantic-search.armin-art.workers.dev';
-const RECOMMENDATION_BACKOFF_MS = 60_000;
+const RECOMMENDATION_BACKOFF_MS = 30_000;
 const recommendationCache = new Map<string, any[]>();
-let recommendationBackoffUntil = 0;
+// Backoff only applies to text search (which calls HuggingFace). ID-based lookups never need to back off.
+let textSearchBackoffUntil = 0;
 const SHOW_ARTWORK_COMMENTS = false;
 
 // Map museum names to countries for quick lookup
@@ -149,7 +150,9 @@ export const ArtworkRecommendations: React.FC<Props> = ({
         };
 
         const requestWorker = async (endpoint: string, payload: Record<string, unknown>) => {
-            if (Date.now() < recommendationBackoffUntil) return null;
+            // Only block text search during backoff — ID-based lookup never calls HuggingFace so should not be throttled.
+            const isTextSearch = endpoint === '/search-by-text';
+            if (isTextSearch && Date.now() < textSearchBackoffUntil) return null;
 
             const response = await fetch(`${WORKER_URL}${endpoint}`, {
                 method: 'POST',
@@ -158,7 +161,10 @@ export const ArtworkRecommendations: React.FC<Props> = ({
             });
 
             if (response.status === 503) {
-                recommendationBackoffUntil = Date.now() + RECOMMENDATION_BACKOFF_MS;
+                // Only back off for text search (HuggingFace cold-start), not for vectorize ID lookups.
+                if (isTextSearch) {
+                    textSearchBackoffUntil = Date.now() + RECOMMENDATION_BACKOFF_MS;
+                }
                 return null;
             }
 
@@ -224,7 +230,7 @@ export const ArtworkRecommendations: React.FC<Props> = ({
                 .join(' ')
                 .trim();
             if (!fallbackQuery || fallbackQuery.length < 2) return;
-            if (Date.now() < recommendationBackoffUntil) return;
+            if (Date.now() < textSearchBackoffUntil) return;
 
             try {
                 const data = await requestWorker('/search-by-text', { text: fallbackQuery, limit: 12 });
@@ -540,7 +546,8 @@ export const ArtworkRecommendations: React.FC<Props> = ({
 
     if (mode === 'compact-horizontal') {
         const compactItems: Array<{ item: any; source: 'AI' | 'Meta' }> = [
-            ...effectiveAiRecommendations.map((item) => ({ item, source: 'AI' as const })),
+            // When there are no real AI results, effectiveAiRecommendations is the metadata fallback — label it 'Meta'.
+            ...effectiveAiRecommendations.map((item) => ({ item, source: (hasRealAiRecommendations ? 'AI' : 'Meta') as 'AI' | 'Meta' })),
             ...effectiveMetaRecommendations.map((item) => ({ item, source: 'Meta' as const })),
         ];
 
@@ -589,11 +596,14 @@ export const ArtworkRecommendations: React.FC<Props> = ({
 
     return (
         <div style={{ ...style }} className="artwork-recommendations">
-            {/* AI Recommendations */}
+            {/* AI Recommendations (or metadata fallback labeled as Related) */}
             {effectiveAiRecommendations.length > 0 && (
                 <div style={{ marginBottom: 48 }}>
                     <h3 style={sectionHeaderStyle}>
-                        Similar Vibe <span style={{ fontSize: 11, fontWeight: 500, color: theme === 'dark' ? 'rgba(255,255,255,0.62)' : 'rgba(0,0,0,0.56)', textTransform: 'none' }}>Visually related works</span>
+                        {hasRealAiRecommendations
+                            ? <>Similar Vibe <span style={{ fontSize: 11, fontWeight: 500, color: theme === 'dark' ? 'rgba(255,255,255,0.62)' : 'rgba(0,0,0,0.56)', textTransform: 'none' }}>Visually related works</span></>
+                            : <>Related Works <span style={{ fontSize: 11, fontWeight: 500, color: theme === 'dark' ? 'rgba(255,255,255,0.62)' : 'rgba(0,0,0,0.56)', textTransform: 'none' }}>Same artist or period</span></>
+                        }
                     </h3>
                     <div style={mode === 'grid' ? {
                         display: 'grid',
@@ -606,7 +616,7 @@ export const ArtworkRecommendations: React.FC<Props> = ({
                         overflowX: 'auto',
                         paddingBottom: 8
                     }}>
-                        {effectiveAiRecommendations.map(item => renderCard(item, 'AI'))}
+                        {effectiveAiRecommendations.map(item => renderCard(item, hasRealAiRecommendations ? 'AI' : 'Meta'))}
                     </div>
                 </div>
             )}

@@ -11,7 +11,7 @@ import { getAuth } from "firebase/auth";
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: "AIzaSyAZ9zjFzo6IwHC4Ope4D2lWySeJkGZhCvw",
-  authDomain: "armin-web.firebaseapp.com",
+  authDomain: "armin-web.pages.dev",
   projectId: "armin-web",
   storageBucket: "armin-web.appspot.com",
   messagingSenderId: "380952034390",

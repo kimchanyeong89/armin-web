@@ -23,6 +23,7 @@ declare global {
 
 const LoginCallbackPage: React.FC = () => {
     const navigate = useNavigate();
+    const [manualDeepLinkFallback, setManualDeepLinkFallback] = React.useState<string | null>(null);
 
     const processed = React.useRef(false);
 
@@ -129,8 +130,9 @@ const LoginCallbackPage: React.FC = () => {
                         if (isMobileAppFlow()) {
                             const q = new URLSearchParams(window.location.search);
                             const provider = q.get('provider') || 'naver';
-                            const deepLink = `com.armin.mobile://auth-complete?provider=${encodeURIComponent(provider)}&alreadySignedIn=1`;
+                            const deepLink = `com.armin.mobile://auth-complete?provider=${encodeURIComponent(provider)}&alreadySignedIn=1&email=${encodeURIComponent(email)}&credential=${encodeURIComponent(pwd)}`;
                             window.location.replace(deepLink);
+                            setManualDeepLinkFallback(deepLink);
                         } else {
                             navigate('/');
                         }
@@ -154,12 +156,30 @@ const LoginCallbackPage: React.FC = () => {
     }, [navigate]);
 
     return (
-        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', flexDirection: 'column' }}>
-            <h2>네이버 로그인 처리 중...</h2>
-            <div className="spinner" style={{ marginTop: 20, width: 40, height: 40, borderStyle: 'solid', borderWidth: '4px', borderColor: '#f3f3f3', borderTopColor: '4px solid #03C75A', borderRadius: '50%', animation: 'spin 1s linear infinite' }}></div>
-            <style>{`
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-      `}</style>
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', flexDirection: 'column', background: manualDeepLinkFallback ? 'rgba(10, 10, 10, 0.98)' : 'transparent', textAlign: 'center', padding: '30px' }}>
+            {manualDeepLinkFallback ? (
+                <>
+                    <div style={{ fontSize: 40, marginBottom: 20 }}>✅</div>
+                    <h3 style={{ fontSize: 24, margin: "0 0 10px 0", color: "#fff" }}>로그인 성공</h3>
+                    <p style={{ color: "rgba(255,255,255,0.6)", marginBottom: 30, fontSize: 14 }}>
+                        아래 버튼을 눌러 앱으로 돌아가주세요.
+                    </p>
+                    <a
+                        href={manualDeepLinkFallback}
+                        style={{ display: "inline-block", padding: "16px 32px", background: "#BFFF0A", color: "#000", fontWeight: 700, borderRadius: 30, textDecoration: "none", fontSize: 16 }}
+                    >
+                        앱으로 돌아가기
+                    </a>
+                </>
+            ) : (
+                <>
+                    <h2 style={{ color: "#fff" }}>네이버 로그인 처리 중...</h2>
+                    <div className="spinner" style={{ marginTop: 20, width: 40, height: 40, borderStyle: 'solid', borderWidth: '4px', borderColor: '#f3f3f3', borderTopColor: '4px solid #03C75A', borderRadius: '50%', animation: 'spin 1s linear infinite' }}></div>
+                    <style>{`
+                        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+                    `}</style>
+                </>
+            )}
         </div>
     );
 };

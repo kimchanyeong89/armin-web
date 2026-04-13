@@ -413,11 +413,13 @@ export default {
                     if (!vectors?.length) return Response.json({ results: [] }, { headers: corsHeaders });
 
                     const searchResults = await env.VECTORIZE.query(vectors[0].values, {
-                        topK: Math.min(limit + 10, 50),
+                        topK: Math.min(limit + 20, 50),
                         returnMetadata: true
                     });
 
-                    const matches = searchResults.matches.filter(m => m.id !== id).slice(0, limit);
+                    const candidates = searchResults.matches.filter(m => m.id !== id);
+                    // Apply diversity filtering to prevent same-museum / same-artist bias
+                    const matches = diversify(candidates, limit);
                     return Response.json({
                         results: matches.map(m => ({ id: m.id, score: m.score, ...m.metadata }))
                     }, { headers: corsHeaders });

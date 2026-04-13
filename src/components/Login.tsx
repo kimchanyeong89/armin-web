@@ -125,8 +125,11 @@ const Login: React.FC = () => {
       if (!detail?.provider) return;
       const idToken = typeof detail.idToken === "string" ? detail.idToken : "";
       const accessToken = typeof detail.accessToken === "string" ? detail.accessToken : "";
+      const email = typeof detail.email === "string" ? detail.email : "";
+      const credentialPass = typeof detail.credential === "string" ? detail.credential : "";
       if (detail.provider === "google" && !idToken && !accessToken) return;
       if (detail.provider === "apple" && !idToken) return;
+      if (detail.provider === "naver" && !email) return;
 
       setLoginHint(t({ ko: "로그인 정보를 확인 중입니다...", en: "Verifying login information..." }));
       try {
@@ -136,9 +139,14 @@ const Login: React.FC = () => {
         } else if (detail.provider === "apple") {
           cred = new OAuthProvider("apple.com").credential({ idToken, rawNonce: detail.rawNonce || undefined });
         }
+        
         if (cred) {
           await signInWithCredential(auth, cred);
           postAuthFlowLog("info", "Mobile credential sign in successful", detail.provider);
+        } else if (detail.provider === "naver" && email && credentialPass) {
+          const { signInWithEmailAndPassword } = await import("firebase/auth");
+          await signInWithEmailAndPassword(auth, email, credentialPass);
+          postAuthFlowLog("info", "Mobile credential sign in successful via email", detail.provider);
         }
       } catch (err: unknown) {
         const code = err && typeof err === "object" && "code" in err ? (err as { code: string }).code : "";
@@ -196,11 +204,9 @@ const Login: React.FC = () => {
   const handleLoginWithProvider = useCallback(async (providerType: 'google' | 'apple', forceRedirect = false) => {
     // Determine whether to use redirect or popup:
     // - Apple: always redirect (because Apple Sign-In popup is notoriously buggy on many platforms)
-    // - Google in external browser (ASWebAuthenticationSession): always redirect
-    // - normal web: popup fallback
+    // - normal web & external browser: prefer popup, fallback to redirect if blocked
     const shouldUseRedirect =
       providerType === 'apple' ||
-      isExternalBrowserFlow ||
       forceRedirect;
 
     if (pendingProvider && !shouldUseRedirect) {
@@ -675,7 +681,7 @@ const Login: React.FC = () => {
           </button>
 
           <button
-            onClick={() => handleLoginWithProvider('google', isExternalBrowserFlow)}
+            onClick={() => handleLoginWithProvider('google', false)}
             disabled={pendingProvider !== null}
             style={{
               width: '100%',
