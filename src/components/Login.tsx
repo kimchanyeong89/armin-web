@@ -19,6 +19,7 @@ const Login: React.FC = () => {
   const { language, t } = useLanguage();
   const [loginHint, setLoginHint] = useState<string | null>(null);
   const [pendingProvider, setPendingProvider] = useState<"google" | "apple" | "naver" | null>(null);
+  const [manualDeepLinkFallback, setManualDeepLinkFallback] = useState<string | null>(null);
 
   const query = useMemo(() => new URLSearchParams(location.search), [location.search]);
   const isExternalBrowserFlow = query.get("externalBrowser") === "1";
@@ -410,11 +411,13 @@ const Login: React.FC = () => {
 
           postAuthFlowLog("info", `Sending deep link (hasTokens=${!!(credIdToken || credAccessToken)})`);
 
-          // Clear the autoStart key so the next session can start fresh
-          sessionStorage.removeItem(`${AUTO_START_KEY_PREFIX}google`);
-          sessionStorage.removeItem(`${AUTO_START_KEY_PREFIX}apple`);
-
+          // DO NOT clear autoStartKey here! If window.location.replace fails or is delayed, 
+          // the React component will re-render, see missing autoStartKey, and trigger an infinite redirect loop!
+          
           window.location.replace(buildUrl);
+          
+          // Set manual deep link fallback state in case automatic redirect is blocked by Safari
+          setManualDeepLinkFallback(buildUrl);
           return;
         }
 
@@ -605,6 +608,46 @@ const Login: React.FC = () => {
         </div>
 
         <div style={{ padding: "18px 24px 24px", display: "flex", flexDirection: "column", gap: 11 }}>
+          {manualDeepLinkFallback && (
+            <div style={{
+              position: "absolute",
+              top: 0, left: 0, right: 0, bottom: 0,
+              background: "rgba(10, 10, 10, 0.98)",
+              zIndex: 100,
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              justifyContent: "center",
+              padding: "30px",
+              textAlign: "center"
+            }}>
+              <div style={{ fontSize: 40, marginBottom: 20 }}>✅</div>
+              <h3 style={{ fontSize: 24, margin: "0 0 10px 0" }}>
+                {t({ ko: "로그인 성공", en: "Sign In Successful" })}
+              </h3>
+              <p style={{ color: "rgba(255,255,255,0.6)", marginBottom: 30, fontSize: 14 }}>
+                {t({
+                  ko: "아래 버튼을 눌러 앱으로 돌아가주세요.",
+                  en: "Please tap the button below to return to the app."
+                })}
+              </p>
+              <a
+                href={manualDeepLinkFallback}
+                style={{
+                  display: "inline-block",
+                  padding: "16px 32px",
+                  background: "#BFFF0A",
+                  color: "#000",
+                  fontWeight: 700,
+                  borderRadius: 30,
+                  textDecoration: "none",
+                  fontSize: 16
+                }}
+              >
+                {t({ ko: "앱으로 돌아가기", en: "Return to App" })}
+              </a>
+            </div>
+          )}
           <button
             type="button"
             onClick={() => handleNaverLogin()}
