@@ -2,6 +2,9 @@ import React, { useState, useMemo, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import type { CityMarker, Venue, Theme } from "./types";
 import { MiniCityMap } from "./MiniCityMap";
+import { useLanguage } from "../../contexts/LanguageContext";
+import { localizeCityName, localizeCountryName } from "../../i18n/geoLocalization";
+import { getExhibitionDisplayDescription, getExhibitionDisplayTitle, getExhibitionTypeLabel } from "../../i18n/exhibitionLocalization";
 
 // ─── Exhibition mock data ──────────────────────────────────
 
@@ -335,6 +338,10 @@ function formatCoord(lat: number, lon: number): string {
   const latD = lat >= 0 ? "N" : "S";
   const lonD = lon >= 0 ? "E" : "W";
   return `${Math.abs(lat).toFixed(1)}\u00b0${latD}  ${Math.abs(lon).toFixed(1)}\u00b0${lonD}`;
+}
+
+function clampNumber(value: number, min: number, max: number): number {
+  return Math.min(max, Math.max(min, value));
 }
 
 function catDotStyle(category: string, t: boolean): React.CSSProperties {
@@ -834,9 +841,14 @@ interface VenuePanelProps {
 }
 
 export function VenuePanel({ city, theme, onClose, onOpenExhibition }: VenuePanelProps) {
+  const { language, t: tt } = useLanguage();
   const [selectedVenue, setSelectedVenue] = useState<Venue | null>(null);
   const [hoveredVenueIdx, setHoveredVenueIdx] = useState<number | null>(null);
   const [coverByExhibitionId, setCoverByExhibitionId] = useState<Record<string, string>>({});
+  const [viewportWidth, setViewportWidth] = useState<number>(() =>
+    typeof window !== "undefined" ? window.innerWidth : 1024,
+  );
+  const [venueListScrollTop, setVenueListScrollTop] = useState(0);
   const t = theme === "light";
 
   // Use real exhibition data from the venue, not mock data
@@ -855,6 +867,27 @@ export function VenuePanel({ city, theme, onClose, onOpenExhibition }: VenuePane
   const scrollbarTrack = t ? "rgba(0,0,0,0.05)" : "rgba(255,255,255,0.04)";
   const scrollbarThumb = t ? "rgba(0,0,0,0.22)" : "rgba(255,255,255,0.20)";
   const scrollbarThumbHover = t ? "rgba(0,0,0,0.34)" : "rgba(255,255,255,0.32)";
+  const displayCityName = localizeCityName(city.city, language);
+  const displayCountryName = localizeCountryName(city.country, language);
+  const isMobileViewport = viewportWidth < 768;
+  const mapExpandedHeight = isMobileViewport ? 212 : 300;
+  const mapCollapsedHeight = isMobileViewport ? 108 : 168;
+  const mapShrinkThreshold = isMobileViewport ? 150 : 220;
+  const mapShrinkProgress = clampNumber(venueListScrollTop / mapShrinkThreshold, 0, 1);
+  const mapHeight = Math.round(
+    mapExpandedHeight - (mapExpandedHeight - mapCollapsedHeight) * mapShrinkProgress,
+  );
+
+  useEffect(() => {
+    const updateViewportWidth = () => setViewportWidth(window.innerWidth);
+    updateViewportWidth();
+    window.addEventListener("resize", updateViewportWidth);
+    return () => window.removeEventListener("resize", updateViewportWidth);
+  }, []);
+
+  useEffect(() => {
+    setVenueListScrollTop(0);
+  }, [city.city, selectedVenue]);
 
   useEffect(() => {
     if (!selectedVenue || exhibitions.length === 0) return;
@@ -949,8 +982,8 @@ export function VenuePanel({ city, theme, onClose, onOpenExhibition }: VenuePane
         style={{
           position: 'absolute',
           top: 0, right: 0, bottom: 0,
-          width: '540px',
-          maxWidth: '96vw',
+          width: isMobileViewport ? '100vw' : '540px',
+          maxWidth: isMobileViewport ? '100vw' : '96vw',
           zIndex: 30,
           background: cPanelBg,
           backdropFilter: 'blur(30px) saturate(200%)',
@@ -958,6 +991,8 @@ export function VenuePanel({ city, theme, onClose, onOpenExhibition }: VenuePane
           borderLeft: `1px solid ${cBorder}`,
           display: 'flex',
           flexDirection: 'column',
+          paddingTop: isMobileViewport ? 'calc(env(safe-area-inset-top, 0px) + 34px)' : 'env(safe-area-inset-top, 0px)',
+          paddingBottom: 'env(safe-area-inset-bottom, 0px)',
           overflow: 'hidden',
           fontFamily: "'Space Grotesk', sans-serif",
         }}
@@ -971,17 +1006,18 @@ export function VenuePanel({ city, theme, onClose, onOpenExhibition }: VenuePane
               animate={{ opacity: 1 }}
               exit={{ opacity: 0, x: -16 }}
               transition={{ duration: 0.15 }}
-              style={{ display: 'flex', flexDirection: 'column', height: '100%' }}
+              style={{ display: 'flex', flexDirection: 'column', height: '100%', overflowY: isMobileViewport ? 'auto' : 'hidden' }}
+              onScroll={(event: React.UIEvent<HTMLDivElement>) => isMobileViewport && setVenueListScrollTop(event.currentTarget.scrollTop)}
             >
               {/* Header */}
-              <div style={{ padding: '32px 24px 0', flexShrink: 0 }}>
+              <div style={{ padding: isMobileViewport ? '24px 24px 0' : '18px 24px 0', flexShrink: 0, position: 'relative', zIndex: 2 }}>
                 <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
                   <div>
                     <div style={{ color: cFg90, letterSpacing: '0.18em', textTransform: 'uppercase', fontSize: '14px' }}>
-                      {city.city}
+                      {displayCityName}
                     </div>
                     <div style={{ color: cFg35, marginTop: '4px', fontSize: '11px' }}>
-                      {city.country}
+                      {displayCountryName}
                     </div>
                     <button
                       onClick={onClose}
@@ -994,11 +1030,14 @@ export function VenuePanel({ city, theme, onClose, onOpenExhibition }: VenuePane
                         cursor: 'pointer',
                         background: 'none', borderTop: 'none', borderRight: 'none', borderBottom: 'none', borderLeft: 'none', outline: 'none',
                         padding: 0,
+                        pointerEvents: 'auto',
+                        touchAction: 'manipulation',
+                        WebkitTapHighlightColor: 'transparent',
                       }}
-                      aria-label="Back to map"
+                      aria-label={tt({ ko: "지도로 돌아가기", en: "Back to map" })}
                     >
                       <span>&larr;</span>
-                      <span>Back to map</span>
+                      <span>{tt({ ko: "지도로 돌아가기", en: "Back to map" })}</span>
                     </button>
                   </div>
                   <button
@@ -1007,6 +1046,9 @@ export function VenuePanel({ city, theme, onClose, onOpenExhibition }: VenuePane
                       color: cFg35, cursor: 'pointer', padding: '4px', marginRight: '-4px', marginTop: '-4px',
                       fontSize: '18px', fontFamily: "'Space Mono', monospace", lineHeight: 1,
                       background: 'none', borderTop: 'none', borderRight: 'none', borderBottom: 'none', borderLeft: 'none', outline: 'none',
+                      pointerEvents: 'auto',
+                      touchAction: 'manipulation',
+                      WebkitTapHighlightColor: 'transparent',
                     }}
                   >
                     &times;
@@ -1019,7 +1061,7 @@ export function VenuePanel({ city, theme, onClose, onOpenExhibition }: VenuePane
                   </span>
                   <span style={{ color: cFg12, fontSize: '10px' }}>&middot;</span>
                   <span style={{ color: cFg20, fontFamily: "'Space Mono', monospace", fontSize: '10px' }}>
-                    {city.venues.length} {city.venues.length === 1 ? "venue" : "venues"}
+                    {city.venues.length} {city.venues.length === 1 ? tt({ ko: "미술관", en: "venue" }) : tt({ ko: "미술관", en: "venues" })}
                   </span>
                 </div>
 
@@ -1027,9 +1069,18 @@ export function VenuePanel({ city, theme, onClose, onOpenExhibition }: VenuePane
               </div>
 
               {/* ── Mini City Map ── */}
-              <div style={{ flexShrink: 0, position: 'relative', overflow: 'hidden', borderBottom: `1px solid ${cBorder}` }}>
+              <div
+                style={{
+                  flexShrink: 0,
+                  position: 'relative',
+                  overflow: 'hidden',
+                  borderBottom: `1px solid ${cBorder}`,
+                  height: `${mapHeight}px`,
+                  transition: 'height 240ms cubic-bezier(0.22, 1, 0.36, 1)',
+                }}
+              >
                 <MiniCityMap
-                  cityName={city.city}
+                  cityName={displayCityName}
                   venues={city.venues.map((v) => {
                     const museumCity = (v.museumCity || (v.originalExhibition as any)?.city || city.city).trim();
                     return {
@@ -1045,6 +1096,7 @@ export function VenuePanel({ city, theme, onClose, onOpenExhibition }: VenuePane
                   onHoverIdx={setHoveredVenueIdx}
                   onSelectIdx={(idx) => setSelectedVenue(city.venues[idx])}
                   theme={theme}
+                  height={mapHeight}
                 />
               </div>
 
@@ -1053,11 +1105,12 @@ export function VenuePanel({ city, theme, onClose, onOpenExhibition }: VenuePane
                 className="venue-panel-scroll"
                 style={{
                   padding: '12px',
-                  flex: 1,
-                  overflowY: 'auto',
+                  flex: isMobileViewport ? 'none' : 1,
+                  overflowY: isMobileViewport ? 'visible' : 'auto',
                   scrollbarWidth: 'thin',
                   scrollbarColor: `${scrollbarThumb} ${scrollbarTrack}`,
                 }}
+                onScroll={(event) => !isMobileViewport && setVenueListScrollTop(event.currentTarget.scrollTop)}
               >
                 {city.venues.map((v, idx) => {
                   const isHL = hoveredVenueIdx === idx;
@@ -1127,7 +1180,7 @@ export function VenuePanel({ city, theme, onClose, onOpenExhibition }: VenuePane
               style={{ display: 'flex', flexDirection: 'column', height: '100%' }}
             >
               {/* Back */}
-              <div style={{ padding: '28px 24px 0', flexShrink: 0 }}>
+              <div style={{ padding: isMobileViewport ? '24px 24px 0' : '14px 24px 0', flexShrink: 0, position: 'relative', zIndex: 2 }}>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                   <button
                     onClick={() => setSelectedVenue(null)}
@@ -1135,10 +1188,13 @@ export function VenuePanel({ city, theme, onClose, onOpenExhibition }: VenuePane
                       display: 'flex', alignItems: 'center', gap: '8px', color: cFg35,
                       fontSize: '10px', cursor: 'pointer', background: 'none', borderTop: 'none', borderRight: 'none', borderBottom: 'none', borderLeft: 'none',
                       outline: 'none', letterSpacing: '0.12em', textTransform: 'uppercase',
+                      pointerEvents: 'auto',
+                      touchAction: 'manipulation',
+                      WebkitTapHighlightColor: 'transparent',
                     }}
                   >
                     <span>&larr;</span>
-                    <span>{city.city}</span>
+                    <span>{displayCityName}</span>
                   </button>
                   <button
                     onClick={onClose}
@@ -1146,6 +1202,9 @@ export function VenuePanel({ city, theme, onClose, onOpenExhibition }: VenuePane
                       color: cFg35, cursor: 'pointer', padding: '4px', marginRight: '-4px',
                       fontSize: '18px', fontFamily: "'Space Mono', monospace", lineHeight: 1,
                       background: 'none', borderTop: 'none', borderRight: 'none', borderBottom: 'none', borderLeft: 'none', outline: 'none',
+                      pointerEvents: 'auto',
+                      touchAction: 'manipulation',
+                      WebkitTapHighlightColor: 'transparent',
                     }}
                   >
                     &times;
@@ -1214,10 +1273,12 @@ export function VenuePanel({ city, theme, onClose, onOpenExhibition }: VenuePane
                             const sub = allSubs.find(s => s.id === ex.id) || allSubs[0] || null;
                             const rawFile = sub ? (sub as any).collectionFile : undefined;
                             const colFile = normalizeCollectionPath(rawFile);
+                            const localizedExhibitionTitle = sub ? getExhibitionDisplayTitle(sub as any, language) : ex.title;
+                            const localizedExhibitionDescription = sub ? getExhibitionDisplayDescription(sub as any, language) : (ex as any).description;
                             onOpenExhibition?.({
                               ...origEx,
-                              _exhibitionTitle: ex.title,
-                              _exhibitionDescription: (sub as any)?.description || undefined,
+                              _exhibitionTitle: localizedExhibitionTitle || ex.title,
+                              _exhibitionDescription: localizedExhibitionDescription || undefined,
                               _exhibitionCoverImage: (sub as any)?.coverImage || undefined,
                               _selectedExhibitionId: ex.id,
                               _selectedExhibitionType: ex.type,
@@ -1265,8 +1326,8 @@ export function VenuePanel({ city, theme, onClose, onOpenExhibition }: VenuePane
                                 <span style={{ fontFamily: "'Space Mono', monospace", fontSize: '9px', color: t ? "rgba(0,0,0,0.22)" : "rgba(255,255,255,0.22)" }}>
                                   {ex.period}
                                 </span>
-                                <span style={{ fontSize: '7px', letterSpacing: '0.1em', textTransform: 'uppercase', color: typeColor(ex.type, t) }}>
-                                  {ex.type}
+                                <span style={{ fontSize: '7px', letterSpacing: '0.1em', textTransform: language === 'ko' ? 'none' : 'uppercase', color: typeColor(ex.type, t) }}>
+                                  {getExhibitionTypeLabel(ex.type, language)}
                                 </span>
                               </div>
                             </div>
@@ -1289,7 +1350,7 @@ export function VenuePanel({ city, theme, onClose, onOpenExhibition }: VenuePane
                       <>
                         {permExhibitions.length > 0 && (
                           <>
-                            {sectionHeader('Permanent', permExhibitions.length)}
+                            {sectionHeader(tt({ ko: '상설', en: 'Permanent' }), permExhibitions.length)}
                             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                               {renderExList(permExhibitions)}
                             </div>
@@ -1297,7 +1358,7 @@ export function VenuePanel({ city, theme, onClose, onOpenExhibition }: VenuePane
                         )}
                         {tempExhibitions.length > 0 && (
                           <>
-                            {sectionHeader('Exhibitions', tempExhibitions.length)}
+                            {sectionHeader(tt({ ko: '진행/예정 전시', en: 'Exhibitions' }), tempExhibitions.length)}
                             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>
                               {renderExList(tempExhibitions)}
                             </div>
@@ -1305,7 +1366,7 @@ export function VenuePanel({ city, theme, onClose, onOpenExhibition }: VenuePane
                         )}
                         {pastExhibitions.length > 0 && (
                           <>
-                            {sectionHeader('Past', pastExhibitions.length)}
+                            {sectionHeader(tt({ ko: '지난 전시', en: 'Past' }), pastExhibitions.length)}
                             <div style={{ display: 'flex', flexDirection: 'column', gap: '8px', opacity: 0.55 }}>
                               {renderExList(pastExhibitions)}
                             </div>
@@ -1315,7 +1376,7 @@ export function VenuePanel({ city, theme, onClose, onOpenExhibition }: VenuePane
                     );
                   })() : (
                   <div style={{ color: cFg12, letterSpacing: '0.1em', marginTop: '16px', fontSize: '11px' }}>
-                    No exhibition data available
+                    {tt({ ko: '전시 데이터가 없습니다', en: 'No exhibition data available' })}
                   </div>
                 )}
               </div>

@@ -4,6 +4,8 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { Globe } from "./Globe";
 import { VenuePanel } from "./VenuePanel";
 import { InteractiveGlobeRealModal } from "./InteractiveGlobeRealModal";
+import { useLanguage } from "../../contexts/LanguageContext";
+import { localizeContinentName, localizeCountryName, localizeGeoLabel } from "../../i18n/geoLocalization";
 
 import type { CityMarker, Theme, Venue, InteractiveExhibition } from "./types";
 import type { Exhibition } from "../../types/Exhibition";
@@ -170,6 +172,7 @@ interface InteractiveGlobeMapProps {
 export default function InteractiveGlobeMap({ exhibitions, onSelectExhibition, onExit, onSwitchToDrawing }: InteractiveGlobeMapProps) {
   const navigate = useNavigate();
   const location = useLocation();
+  const { language, t: tt } = useLanguage();
   const [theme, setTheme] = useState<Theme>(() => {
     try { return localStorage.getItem('homeTheme') === 'light' ? 'light' : 'dark'; } catch { return 'light'; }
   });
@@ -194,7 +197,7 @@ export default function InteractiveGlobeMap({ exhibitions, onSelectExhibition, o
   
   const [selectedRealExhibition, setSelectedRealExhibition] = useState<any | null>(null);
   const [isOpeningExhibition, setIsOpeningExhibition] = useState(false);
-  const [openingExhibitionLabel, setOpeningExhibitionLabel] = useState<string>("Opening Exhibition...");
+  const [openingExhibitionLabel, setOpeningExhibitionLabel] = useState<string>(tt({ ko: "전시 여는 중...", en: "Opening Exhibition..." }));
   const closingExhibitionIdRef = useRef<string | null>(null);
   const unresolvedRouteExhibitionIdRef = useRef<string | null>(null);
   const [artworkCounts, setArtworkCounts] = useState<Record<string, number>>({});
@@ -581,6 +584,10 @@ export default function InteractiveGlobeMap({ exhibitions, onSelectExhibition, o
 
   const lineBg = t ? "rgba(0,0,0,0.06)" : "rgba(255,255,255,0.06)";
   const lineSubtleBg = t ? "rgba(0,0,0,0.04)" : "rgba(255,255,255,0.04)";
+  void lineSubtleBg;
+
+  const drilledContinentLabel = drilledContinent ? localizeContinentName(drilledContinent, language) : "";
+  const drilledCountryLabel = drilledCountry ? localizeCountryName(drilledCountry, language) : "";
 
   // Replaces fg classes with inline styles where easily mapping
   const cFg50 = t ? "rgba(0,0,0,0.45)" : "rgba(255,255,255,0.5)";
@@ -603,6 +610,7 @@ export default function InteractiveGlobeMap({ exhibitions, onSelectExhibition, o
       <Globe
         cities={cities}
         theme={theme}
+        language={language}
         selectedCity={selectedCity}
         onSelectCity={handleSelectCity}
         drilledContinent={drilledContinent}
@@ -672,7 +680,7 @@ export default function InteractiveGlobeMap({ exhibitions, onSelectExhibition, o
                    textTransform: 'uppercase', fontFamily: "'Inter', 'Space Grotesk', sans-serif"
                 }}
               >
-                 {drilledCountry ? `${drilledContinent || ''} > ${drilledCountry}` : drilledContinent}
+                 {drilledCountry ? `${drilledContinentLabel || ''} > ${drilledCountryLabel}` : drilledContinentLabel}
               </div>
               <motion.button
                 style={{ 
@@ -692,7 +700,7 @@ export default function InteractiveGlobeMap({ exhibitions, onSelectExhibition, o
               >
                 <span style={{ color: cFg25, fontSize: "14px", lineHeight: 1 }}>&larr;</span>
                 <span className="ig-tracking-12" style={{ color: cFg25, fontSize: "10px", textTransform: 'uppercase', fontWeight: 500 }}>
-                   BACK TO MAP
+                   {tt({ ko: "지도로 돌아가기", en: "BACK TO MAP" })}
                 </span>
               </motion.button>
             </motion.div>
@@ -700,8 +708,8 @@ export default function InteractiveGlobeMap({ exhibitions, onSelectExhibition, o
         </AnimatePresence>
       </header>
 
-      {/* ── 5-item bottom navigation bar — icon + text reveals on hover ── */}
-      {(() => {
+      {/* Legacy dock disabled: main app navigator is now the single bottom nav. */}
+      {false && (() => {
         const fg = t ? 'rgba(0,0,0,0.5)' : 'rgba(255,255,255,0.55)';
         const fgHov = t ? 'rgba(0,0,0,0.85)' : 'rgba(255,255,255,0.95)';
         const divBg = t ? 'rgba(0,0,0,0.10)' : 'rgba(255,255,255,0.12)';
@@ -869,7 +877,11 @@ export default function InteractiveGlobeMap({ exhibitions, onSelectExhibition, o
             onClose={() => setSelectedCity(null)}
             onOpenExhibition={(ex) => {
               closingExhibitionIdRef.current = null;
-              setOpeningExhibitionLabel(ex?._exhibitionTitle ? `Loading ${ex._exhibitionTitle}...` : "Opening Exhibition...");
+              setOpeningExhibitionLabel(
+                ex?._exhibitionTitle
+                  ? tt({ ko: `${ex._exhibitionTitle} 불러오는 중...`, en: `Loading ${ex._exhibitionTitle}...` })
+                  : tt({ ko: "전시 여는 중...", en: "Opening Exhibition..." }),
+              );
               setIsOpeningExhibition(true);
               setSelectedRealExhibition(ex);
             }}
@@ -963,7 +975,7 @@ export default function InteractiveGlobeMap({ exhibitions, onSelectExhibition, o
               className="ig-bottom-center-hint"
             >
               <p className="ig-tracking-15 ig-nowrap" style={{ color: cFg08, fontSize: "9px" }}>
-                Click a pin for details &middot; Zoom out or click ocean to exit
+                {tt({ ko: '핀을 클릭하면 상세정보를 볼 수 있습니다 · 축소하거나 바다를 클릭하면 종료됩니다', en: 'Click a pin for details · Zoom out or click ocean to exit' })}
               </p>
             </motion.div>
           ) : (
@@ -976,7 +988,7 @@ export default function InteractiveGlobeMap({ exhibitions, onSelectExhibition, o
               className="ig-bottom-center-hint"
             >
               <p className="ig-tracking-15 ig-nowrap ig-italic" style={{ color: cFg06, fontSize: "10px" }}>
-                &ldquo;Weniger, aber besser&rdquo; &mdash; Dieter Rams
+                {tt({ ko: '"적게, 그러나 더 좋게" · 디터 람스', en: '"Weniger, aber besser" — Dieter Rams' })}
               </p>
             </motion.div>
           )
@@ -999,7 +1011,7 @@ export default function InteractiveGlobeMap({ exhibitions, onSelectExhibition, o
             >
               {hoverData ? (
                 <span>
-                  <span style={{ color: cFg25, marginRight: "8px", fontWeight: 400 }}>{hoverData.label}</span>
+                  <span style={{ color: cFg25, marginRight: "8px", fontWeight: 400 }}>{localizeGeoLabel(hoverData.level, hoverData.label, language)}</span>
                   {hoverData.count.toLocaleString()}
                 </span>
               ) : (

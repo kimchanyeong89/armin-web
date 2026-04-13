@@ -1,0 +1,19 @@
+{
+  "appName": "ARMIN",
+  "shortDescription": "Global museum exploration and personalized art recommendations",
+  "fullDescription": "ARMIN helps users discover museums and artworks globally, save favorites, and receive personalized recommendations.",
+  "supportUrl": "https://example.com/support",
+  "privacyPolicyUrl": "https://example.com/privacy",
+  "marketingUrl": "https://example.com",
+  "ios": {
+    "subtitle": "Discover art globally",
+    "keywords": ["museum", "art", "gallery", "exhibition", "recommendation"],
+    "primaryCategory": "LIFESTYLE",
+    "secondaryCategory": "EDUCATION"
+  },
+  "android": {
+    "defaultLanguage": "en-US",
+    "shortDescription": "Discover museums and artworks worldwide",
+    "fullDescription": "Explore global museums, like artworks, and get personalized recommendations with ARMIN."
+  }
+}

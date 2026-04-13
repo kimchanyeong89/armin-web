@@ -1,0 +1,29 @@
+# Huge datasets and artifacts not needed for mobile EAS builds
+embedding_results/
+public/
+dist/
+downloads/
+workers/
+google-cloud-sdk/
+node_modules/
+
+# Build/test/temp outputs
+logs/
+coverage/
+.tmp/
+.temp/
+tmp/
+temp*/
+
+# Misc large local artifacts
+*.log
+*.zip
+*.tar
+*.tar.gz
+*.tgz
+
+# Keep mobile app and shared package source
+!apps/mobile/
+!apps/mobile/**
+!packages/shared/
+!packages/shared/**

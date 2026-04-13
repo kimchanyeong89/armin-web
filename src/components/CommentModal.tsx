@@ -1,8 +1,10 @@
 import React, { useState, useEffect, useRef } from 'react';
+import { LiveAvatar, LiveName } from './LiveAuthor';
 import { db, auth } from '../firebase';
 import { collection, query, where, onSnapshot, addDoc, serverTimestamp, Timestamp, doc, setDoc, increment, updateDoc, getDoc, arrayUnion, arrayRemove, getDocs, writeBatch } from 'firebase/firestore';
 import { onAuthStateChanged, type User } from 'firebase/auth';
 import { shouldLimitNetwork } from '../utils/network';
+import type { CommunityUserProfile } from '../types/Community';
 
 interface Comment {
   id: string;
@@ -17,10 +19,7 @@ interface Comment {
   _tempId?: number;
 }
 
-interface UserProfile {
-  nickname?: string;
-  photoURL?: string;
-}
+type UserProfile = CommunityUserProfile;
 
 interface CommentModalProps {
   artworkId: string;
@@ -397,31 +396,12 @@ const CommentModal: React.FC<CommentModalProps> = ({ artworkId, isOpen = true, o
         display: 'flex',
         gap: 10,
       }}>
-        <img
-          src={displayPhoto}
-          alt={displayName}
-          title={displayName}
-          onError={(e) => {
-            const target = e.currentTarget;
-            if (target.src !== fallbackAvatar) {
-              target.src = fallbackAvatar;
-            }
-          }}
-          style={{
-            width: isReply ? 24 : 30,
-            height: isReply ? 24 : 30,
-            borderRadius: '50%',
-            objectFit: 'cover',
-            flexShrink: 0,
-            border: `1px solid ${divider}`,
-            backgroundColor: t ? '#f4f4f4' : '#1a1a1a',
-          }}
-        />
+        <LiveAvatar uid={c.userId} fallbackName={c.userName} fallbackPhoto={c.userPhotoURL} size={isReply ? 24 : 30} style={{ flexShrink: 0, border: `1px solid ${divider}`, backgroundColor: t ? '#f4f4f4' : '#1a1a1a', borderRadius: '50%' }} />
         <div style={{ flex: 1, minWidth: 0 }}>
           <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 8 }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: 7, minWidth: 0 }}>
               <div style={{ fontSize: 12, fontWeight: 600, color: fgHigh, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                {displayName}
+                <LiveName uid={c.userId} fallbackName={c.userName} />
               </div>
               <span style={{ fontSize: 10, color: fgLow }}>
                 {c.createdAt ? formatDate(c.createdAt.toDate()) : ''}

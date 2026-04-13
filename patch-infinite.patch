@@ -1,0 +1,46 @@
+--- src/components/Mypage.tsx
++++ src/components/Mypage.tsx
+@@ -888,6 +888,23 @@
+     return cloned;
+   }, [currentItems, sortMode]);
+ 
++  const [displayedCount, setDisplayedCount] = useState(24);
++  const observerTarget = useRef<HTMLDivElement>(null);
++
++  useEffect(() => {
++    setDisplayedCount(24);
++  }, [currentItems, sortMode, viewMode]);
++
++  useEffect(() => {
++    const observer = new IntersectionObserver(
++      (entries) => {
++        if (entries[0].isIntersecting) setDisplayedCount((prev) => prev + 24);
++      },
++      { rootMargin: "400px" }
++    );
++    if (observerTarget.current) observer.observe(observerTarget.current);
++    return () => observer.disconnect();
++  }, [sortedItems]);
++
+   const isArtworkLikeMode = activePlaylist !== null || viewMode === "artworks";
+ 
+   const renderSimpleCard = (item: any, index: number) => {
+@@ -1842,8 +1859,9 @@
+             padding: "2px 2px 90px",
+           }}
+         >
+-          {sortedItems.map((item, index) => renderArtworkCard(item, index))}
++          {sortedItems.slice(0, displayedCount).map((item, index) => renderArtworkCard(item, index))}
++          {sortedItems.length > displayedCount && <div ref={observerTarget} style={{ height: 10, gridColumn: "1 / -1" }} />}
+         </div>
+       ) : (
+         <div
+@@ -1853,8 +1871,9 @@
+             padding: "2px 10px 96px",
+           }}
+         >
+-          {sortedItems.map((item, index) => renderSimpleCard(item, index))}
++          {sortedItems.slice(0, displayedCount).map((item, index) => renderSimpleCard(item, index))}
++          {sortedItems.length > displayedCount && <div ref={observerTarget} style={{ height: 10, gridColumn: "1 / -1" }} />}
+         </div>
+       )}

@@ -52,6 +52,10 @@ node scripts/sync-exhibitions.mjs --museum jmoa
 
 ### 2단계: exhibitions.js 수동 패치
 
+> ⚠️ **필수 규칙**: `temporaryExhibitions`의 모든 `coverImage`는 반드시 R2 버킷에 업로드된 URL이어야 합니다.
+> 미술관 CDN 이미지 URL은 링크 소멸·Referer 차단·CORS 이슈 등으로 브라우저에서 표시되지 않을 수 있습니다.
+> `coverImage: ""` (빈 문자열)로 두면 앱이 소장품 첫 작품 이미지로 대체합니다.
+
 스크래퍼 출력 결과를 보고 **새로 추가된 전시**만 `exhibitions.js`의 해당 미술관 블록에 추가합니다.
 
 ```javascript
@@ -154,6 +158,36 @@ pastExhibitions: [
 - **스크래퍼**: `scrapeJmoa()`
 - **이미지**: `/files/exhibition/{uuid}.jpg` 경로
 - **특이사항**: `?stat=READY` 파라미터로 예정전시 추가 스캔
+
+### 국립민속박물관 (NFM)
+- **URL**: `https://www.nfm.go.kr/home/exhibition/current.do`
+- **스크래퍼**: 수동 (사이트가 봇 접근 차단 — Chrome MCP 또는 직접 방문 필요)
+- **이미지**: 봇 차단으로 이미지 URL 추출 어려움 → 직접 다운로드 후 R2 업로드 권장
+- **특이사항**: 입장 무료. 현재 전시는 대개 2~3개월 주기로 교체
+
+### 기당미술관 (Gidang)
+- **URL**: `http://culture.seogwipo.go.kr/gidang/index.htm`
+- **스크래퍼**: curl + Referer
+- **이미지**: `http://culture.seogwipo.go.kr/files/exhibition/{uuid}.png` 경로
+- **특이사항**: 서귀포시 문화예술과 운영. 전시 주기 약 3개월
+
+### 이중섭미술관 (Lee Jung-seob)
+- **URL**: `http://culture.seogwipo.go.kr/jslee/index.htm`
+- **스크래퍼**: curl + Referer
+- **이미지**: `http://culture.seogwipo.go.kr/files/exhibition/{uuid}.jpeg` 경로
+- **특이사항**: 서귀포시 문화예술과 운영
+
+### 제주현대미술관 (Jeju MoCA)
+- **URL**: `https://www.jeju.go.kr/jejumuseum/shows/current.htm`
+- **스크래퍼**: curl + Referer (jeju.go.kr)
+- **이미지**: `https://www.jeju.go.kr/files/exhibition/{uuid}.jpg` 경로
+- **특이사항**: JMOA와 동일 도메인(jeju.go.kr)이지만 별도 섹션. 주로 4개 전시 동시 운영
+
+### 제주도립 김창열미술관 (Kim Tschang-yeul)
+- **URL**: `https://kimtschang-yeul.jeju.go.kr/offExList.do?type=c&menuNum=3100`
+- **스크래퍼**: 수동 (이미지가 `getImage.do?atchFileId=` 동적 URL로 세션 쿠키 필요)
+- **이미지**: 브라우저 내 Canvas API로 추출 후 R2 업로드 (`kimtschang-cookies.txt` 세션 활용)
+- **특이사항**: 김창열(1929-2021) 물방울 회화 전문 도립 미술관. 1~2개 기획전 동시 운영
 
 ---
 

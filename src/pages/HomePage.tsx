@@ -26,6 +26,8 @@ import { shouldLimitNetwork } from "../utils/network";
 import { searchByText, encodeText, searchByVector, searchSimilarTo } from "../utils/siglipSearch";
 import { ArtworkLightbox } from "../components/ArtworkLightbox";
 import { GlobalNav } from "../components/GlobalNav";
+import { useLanguage } from "../contexts/LanguageContext";
+import { localizeMuseum } from "../i18n/museumLocalization";
 
 
 // Admin email whitelist
@@ -112,6 +114,7 @@ export default function HomePage({ exhibitions, isOverlayOpen = false }: HomePag
   const navigate = useNavigate();
   const location = useLocation();
   const { collectionId } = useParams<{ collectionId?: string }>();
+  const { language, t } = useLanguage();
   // Compute initial modal/detail state from history synchronously to avoid first-paint flicker
   const initialFromHistory = (() => {
     if (typeof window === 'undefined') return { item: null as ExhibitionItem | null, parent: null as Exhibition | null };
@@ -174,8 +177,13 @@ export default function HomePage({ exhibitions, isOverlayOpen = false }: HomePag
   }, [location.pathname]);
   const [isDrawingMiniPanelOpen, setIsDrawingMiniPanelOpen] = useState(false);
   const [isCommunityPanelVisible, setIsCommunityPanelVisible] = useState(false);
+  const showDrawingQuickDock = false;
   // Trigger for opening ForYou panel from Interactive Map (avoids stale closure)
   const [forYouTrigger, setForYouTrigger] = useState(0);
+  const localizedExhibitions = useMemo(
+    () => exhibitions.map((ex) => localizeMuseum(ex as any, language)),
+    [exhibitions, language],
+  );
 
   useEffect(() => {
     const onMiniPanelVisibility = (e: Event) => {
@@ -225,6 +233,23 @@ export default function HomePage({ exhibitions, isOverlayOpen = false }: HomePag
       return next;
     });
   };
+
+  useEffect(() => {
+    const syncTheme = () => {
+      try {
+        setHomeIsDark(localStorage.getItem('homeTheme') !== 'light');
+      } catch {
+        setHomeIsDark(true);
+      }
+    };
+
+    window.addEventListener('theme-changed', syncTheme);
+    window.addEventListener('storage', syncTheme);
+    return () => {
+      window.removeEventListener('theme-changed', syncTheme);
+      window.removeEventListener('storage', syncTheme);
+    };
+  }, []);
 
 
   // Removed Outline Globe toggle
@@ -976,15 +1001,16 @@ export default function HomePage({ exhibitions, isOverlayOpen = false }: HomePag
             <div style={{
               fontSize: 19, fontWeight: 500, letterSpacing: '0.08em',
               color: 'rgba(201,165,90,0.95)', marginBottom: 9,
-            }}>Interactive Globe</div>
+            }}>{t({ ko: '인터랙티브 글로브', en: 'Interactive Globe' })}</div>
             <div style={{ fontSize: 11, lineHeight: 1.75, color: 'rgba(255,255,255,0.28)', letterSpacing: '0.04em' }}>
-              Zoomable 3D globe · Filter by region<br />City-level museum discovery
+              {t({ ko: '확대 가능한 3D 지구본 · 지역 필터', en: 'Zoomable 3D globe · Filter by region' })}<br />
+              {t({ ko: '도시 단위 미술관 탐색', en: 'City-level museum discovery' })}
             </div>
             <div style={{
               marginTop: 20, fontSize: 10, letterSpacing: '0.24em', textTransform: 'uppercase',
               color: hovI ? 'rgba(201,165,90,0.75)' : 'rgba(201,165,90,0.18)',
               transition: 'color 0.45s ease',
-            }}>Enter →</div>
+            }}>{t({ ko: '입장 →', en: 'Enter →' })}</div>
           </div>
 
           {/* Right edge separator */}
@@ -1065,12 +1091,13 @@ export default function HomePage({ exhibitions, isOverlayOpen = false }: HomePag
               filter: hovD ? 'url(#lp-text-warp)' : 'none',
               transition: 'filter 0.3s ease',
               display: 'inline-block',
-            }}>DRAWING MAP</div>
+            }}>{t({ ko: '드로잉 맵', en: 'DRAWING MAP' })}</div>
             <div style={{
               fontSize: 11, lineHeight: 1.75, color: 'rgba(0,0,0,0.36)',
               letterSpacing: '0.04em', fontFamily: "'Space Mono', monospace",
             }}>
-              Brutalist sketch globe · Black &amp; white<br />Hand-drawn tactile navigation
+              {t({ ko: '브루탈리스트 스케치 글로브 · 흑백', en: 'Brutalist sketch globe · Black & white' })}<br />
+              {t({ ko: '손그림 감성 내비게이션', en: 'Hand-drawn tactile navigation' })}
             </div>
             <div style={{
               marginTop: 20, fontSize: 10, letterSpacing: '0.24em',
@@ -1078,7 +1105,7 @@ export default function HomePage({ exhibitions, isOverlayOpen = false }: HomePag
               color: hovD ? '#111' : 'rgba(0,0,0,0.18)',
               transition: 'color 0.45s ease',
               fontFamily: "'Space Mono', monospace",
-            }}>ENTER →</div>
+            }}>{t({ ko: '입장 →', en: 'ENTER →' })}</div>
           </div>
         </div>
 
@@ -1090,7 +1117,7 @@ export default function HomePage({ exhibitions, isOverlayOpen = false }: HomePag
           <div style={{
             fontSize: 9, letterSpacing: '0.16em', textTransform: 'uppercase',
             color: 'rgba(128,122,108,0.32)', fontFamily: "'Space Mono', monospace",
-          }}>614,746 artworks · 100+ museums worldwide</div>
+          }}>{t({ ko: '614,746 작품 · 전 세계 100+ 미술관', en: '614,746 artworks · 100+ museums worldwide' })}</div>
         </div>
       </div>
     );
@@ -1109,7 +1136,7 @@ export default function HomePage({ exhibitions, isOverlayOpen = false }: HomePag
               try {
                 const EyeDropperCtor = (window as any).EyeDropper;
                 if (!EyeDropperCtor) {
-                  alert('This browser does not support EyeDropper. Please use a recent Chromium-based browser.');
+                  alert(t({ ko: '현재 브라우저는 EyeDropper를 지원하지 않습니다. 최신 크로미움 기반 브라우저를 사용해주세요.', en: 'This browser does not support EyeDropper. Please use a recent Chromium-based browser.' }));
                   return;
                 }
                 const eyeDropper = new EyeDropperCtor();
@@ -1216,7 +1243,7 @@ export default function HomePage({ exhibitions, isOverlayOpen = false }: HomePag
         {/* Selected museum details */}
         {selectedExhibition && !showDrawingGlobe && (
           <ExhibitionDetails
-            exhibition={selectedExhibition}
+            exhibition={localizeMuseum(selectedExhibition as any, language)}
             onClose={() => setSelectedExhibition(null)}
             isOpen={!!selectedExhibition && !selectedModalExhibition && !lightboxArtwork && !isOverlayOpen}
             onSelectExhibition={item => openCollectionModal(item?.id, null)}
@@ -1228,7 +1255,7 @@ export default function HomePage({ exhibitions, isOverlayOpen = false }: HomePag
             <Suspense fallback={null}>
               <ExhibitionModal
                 exhibition={selectedModalExhibition}
-                museumName={selectedExhibition?.name}
+                museumName={selectedExhibition ? localizeMuseum(selectedExhibition as any, language).name : undefined}
                 onClose={closeCollectionModal}
                 variant={homeIsDark ? 'default' : 'sketch'}
                 theme={homeIsDark ? 'dark' : 'light'}
@@ -1344,7 +1371,7 @@ export default function HomePage({ exhibitions, isOverlayOpen = false }: HomePag
               <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
                 <path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z" />
               </svg>
-              Drawing Map
+              {t({ ko: '드로잉 맵', en: 'Drawing Map' })}
             </button>
           </div>
         )}
@@ -1353,9 +1380,9 @@ export default function HomePage({ exhibitions, isOverlayOpen = false }: HomePag
         {/* Interactive Globe Modal layer */}
         {showInteractiveGlobe && (
           <div style={{ position: "fixed", top: 0, left: 0, right: 0, bottom: 0, zIndex: 12500 }}>
-            <React.Suspense fallback={<div style={{ width: '100%', height: '100%', background: '#0a0a0a', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'rgba(255,255,255,0.4)', fontFamily: 'monospace', fontSize: 12, letterSpacing: '0.2em' }}>LOADING MAP…</div>}>
+            <React.Suspense fallback={<div style={{ width: '100%', height: '100%', background: '#0a0a0a', display: 'flex', alignItems: 'center', justifyContent: 'center', color: 'rgba(255,255,255,0.4)', fontFamily: 'monospace', fontSize: 12, letterSpacing: '0.2em' }}>{t({ ko: '지도 로딩 중…', en: 'LOADING MAP…' })}</div>}>
             <InteractiveGlobeMap
-              exhibitions={exhibitions}
+              exhibitions={localizedExhibitions}
               onSelectExhibition={(ex) => {
                 setSelectedExhibition(ex);
                 setShowInteractiveGlobe(false); // Exit globe to show details
@@ -1382,7 +1409,7 @@ export default function HomePage({ exhibitions, isOverlayOpen = false }: HomePag
         {showDrawingGlobe && (
           <div style={{ position: "fixed", top: 0, left: 0, right: 0, bottom: 0, zIndex: 2000 }}>
             <DrawingGlobe
-              exhibitions={exhibitions}
+              exhibitions={localizedExhibitions}
               onClose={() => { setShowDrawingGlobe(false); }}
               onSelectExhibition={(ex) => {
                 navigate(`/exhibition/${ex.id}?mode=drawing`);
@@ -1696,16 +1723,20 @@ export default function HomePage({ exhibitions, isOverlayOpen = false }: HomePag
               if (guessed && openCollectionModal(guessed.exhibition.id, artwork)) return;
               setLightboxArtwork(artwork);
             },
-            museums: exhibitions.map(ex => ({
-              id: ex.id,
-              name: ex.name,
-              country: (ex as any).country || '',
-              region: (ex as any).region,
-              latitude: (ex as any).latitude || 0,
-              longitude: (ex as any).longitude || 0,
-              representativeImage: (ex as any).representativeImage,
-              permanentExhibitions: (ex as any).permanentExhibitions || [],
-            })),
+            museums: exhibitions.map(ex => {
+              const localized = localizeMuseum(ex as any, language);
+              return {
+                ...(localized as any),
+                id: ex.id,
+                name: localized.name,
+                country: (ex as any).country || '',
+                region: (ex as any).region,
+                latitude: (ex as any).latitude || 0,
+                longitude: (ex as any).longitude || 0,
+                representativeImage: (ex as any).representativeImage,
+                permanentExhibitions: (ex as any).permanentExhibitions || [],
+              };
+            }),
             onNavigateToMuseum: (museum, collectionId, artwork) => {
               if (openCollectionModal(collectionId, artwork)) return;
               if (artwork && openCollectionModal(artwork.exhibitionId, artwork)) return;
@@ -1737,7 +1768,7 @@ export default function HomePage({ exhibitions, isOverlayOpen = false }: HomePag
         />
       </div>
 
-      {showDrawingGlobe && (
+      {showDrawingGlobe && showDrawingQuickDock && (
         <div
           style={{
             position: 'fixed',

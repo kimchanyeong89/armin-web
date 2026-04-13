@@ -20,7 +20,6 @@ import {
   Heart,
   ListMusic,
   MapPin,
-  MessageCircle,
   Pencil,
   Play,
   ShoppingBag,
@@ -44,6 +43,7 @@ import type { ProfileImageCrop } from "../types/Profile";
 
 type ViewMode = "artworks" | "exhibitions" | "museums" | "artists" | "playlists";
 type SortMode = "recent" | "oldest" | "newest";
+const SHOW_ARTWORK_COMMENTS = false;
 
 const RANKS = [
   { name: "Observer", threshold: 0, short: "Lv.1" },
@@ -115,7 +115,14 @@ const fetchDataset = (candidate: string) => {
 };
 const firebaseWebPort = createFirebaseWebPort();
 
-const MyPageImage = ({ item, width = 600, style }: { item: any; width?: number; style?: React.CSSProperties }) => {
+type MyPageImageProps = {
+  item: any;
+  width?: number;
+  style?: React.CSSProperties;
+  disableBlur?: boolean;
+};
+
+const MyPageImage = React.memo(({ item, width = 600, style, disableBlur = false }: MyPageImageProps) => {
   const [loaded, setLoaded] = useState(false);
   const [errorCount, setErrorCount] = useState(0);
   const [recoveredSrc, setRecoveredSrc] = useState<string | null>(null);
@@ -226,7 +233,7 @@ const MyPageImage = ({ item, width = 600, style }: { item: any; width?: number; 
   const currentRawSrc = recoveredSrc || fallbackImages[errorCount] || "";
   const currentSrc = currentRawSrc ? getOptimizedImageUrl(currentRawSrc, width) : "";
   const blurSrc = currentRawSrc ? getOptimizedImageUrl(currentRawSrc, 20) : "";
-  const shouldRenderBlurLayer = !!blurSrc && blurSrc !== currentSrc;
+  const shouldRenderBlurLayer = !disableBlur && !!blurSrc && blurSrc !== currentSrc;
 
   return (
     <div style={{ position: "relative", width: "100%", height: "100%", overflow: "hidden", background: "#181818", ...style }}>
@@ -320,7 +327,23 @@ const MyPageImage = ({ item, width = 600, style }: { item: any; width?: number; 
       )}
     </div>
   );
-};
+}, (prev, next) => {
+  if (prev.width !== next.width) return false;
+  if (prev.disableBlur !== next.disableBlur) return false;
+  if (prev.style !== next.style) return false;
+
+  const prevItem = prev.item || {};
+  const nextItem = next.item || {};
+  const prevId = String(prevItem.artworkId || prevItem.id || "");
+  const nextId = String(nextItem.artworkId || nextItem.id || "");
+  if (prevId !== nextId) return false;
+
+  const prevImage = String(prevItem.image || prevItem.i || prevItem.imageUrl || "");
+  const nextImage = String(nextItem.image || nextItem.i || nextItem.imageUrl || "");
+  if (prevImage !== nextImage) return false;
+
+  return String(prevItem.title || prevItem.name || "") === String(nextItem.title || nextItem.name || "");
+});
 
 const MyPage: React.FC = () => {
   const { user, loading: authLoading } = useAuth();
@@ -373,6 +396,7 @@ const MyPage: React.FC = () => {
   const [isSavingHeroPrefs, setIsSavingHeroPrefs] = useState(false);
 
   const displayPhotoURL = liveProfilePhoto || profileData.photoURL || user?.photoURL;
+  const heroPrefsStorageKey = user ? `mypageHeroPrefs:${user.uid}` : null;
 
   const clampHeroFocusY = (value: number) => {
     if (!Number.isFinite(value)) return 50;
@@ -593,10 +617,14 @@ const MyPage: React.FC = () => {
             ? "liked_artists"
             : "liked_artworks";
 
-    const ref = doc(db, `users/${user.uid}/${collectionName}/${itemId}`);
+    const firestoreItemId = String(itemId).includes("/") ? String(itemId).replace(/\//g, "__") : String(itemId);
+    const ref = doc(db, `users/${user.uid}/${collectionName}/${firestoreItemId}`);
 
     try {
       setUnlikedItems((prev) => new Set(prev).add(itemId));
+      if (itemType === "artwork") {
+        setLikedArtworks((prev) => prev.filter((art) => String(art.artworkId || art.id) !== String(itemId)));
+      }
       await deleteDoc(ref);
     } catch (error) {
       console.error("Error unliking item", error);
@@ -621,6 +649,8 @@ const MyPage: React.FC = () => {
             ? item.artist || item.id
             : item.artworkId || item.id;
 
+    if (!itemId) return;
+
     const collectionName =
       itemType === "museum"
         ? "liked_museums"
@@ -630,7 +660,8 @@ const MyPage: React.FC = () => {
             ? "liked_artists"
             : "liked_artworks";
 
-    const ref = doc(db, `users/${user.uid}/${collectionName}/${itemId}`);
+    const firestoreItemId = String(itemId).includes("/") ? String(itemId).replace(/\//g, "__") : String(itemId);
+    const ref = doc(db, `users/${user.uid}/${collectionName}/${firestoreItemId}`);
 
     try {
       setUnlikedItems((prev) => {
@@ -638,6 +669,22 @@ const MyPage: React.FC = () => {
         next.delete(itemId);
         return next;
       });
+      if (itemType === "artwork") {
+        const normalizedId = String(itemId);
+        const normalizedLike = {
+          ...item,
+          id: normalizedId,
+          artworkId: normalizedId,
+          name: item.name || item.title || item.n || "Untitled",
+          artist: item.artist || item.a || "",
+          image: item.image || item.i || item.imageUrl || item.thumbnail || "",
+          likedAt: new Date(),
+        };
+        setLikedArtworks((prev) => {
+          const filtered = prev.filter((art) => String(art.artworkId || art.id) !== normalizedId);
+          return [normalizedLike, ...filtered];
+        });
+      }
       await setDoc(ref, { ...item, likedAt: new Date() });
     } catch (error) {
       console.error("Error re-liking item", error);
@@ -813,32 +860,101 @@ const MyPage: React.FC = () => {
   const faintText = isLightTheme ? "rgba(0,0,0,0.36)" : "rgba(255,255,255,0.36)";
   const divider = isLightTheme ? "rgba(0,0,0,0.08)" : "rgba(255,255,255,0.08)";
   const lime = "#BFFF0A";
-  const heroControlTop = "calc(env(safe-area-inset-top, 0px) + 2px)";
-  const heroPickerTop = "calc(env(safe-area-inset-top, 0px) + 44px)";
+  const heroControlTop = "calc(env(safe-area-inset-top, 0px) - 4px)";
+  const heroPickerTop = "calc(env(safe-area-inset-top, 0px) + 34px)";
 
   const heroImageOptions = useMemo(() => {
+    const sanitizeHeroImage = (value: unknown): string => {
+      const raw = typeof value === "string" ? value.trim() : "";
+      if (!raw) return "";
+      if (raw === "default.jpg" || raw === "/default.jpg") return "";
+      if (/iiif\.deutsche-digitale-bibliothek\.de\/image\/2\/[^/]+\/full\/(?:full|!\d+,\d+|max)\/0\/default\.jpg/i.test(raw)) return "";
+      return raw;
+    };
+
+    const buildOptionId = (item: any, index: number) => {
+      const directId = String(item.artworkId || item.id || "").trim();
+      if (directId) return directId;
+
+      const seed = String(
+        item.sourceUrl ||
+        item.detailUrl ||
+        item.url ||
+        item.link ||
+        item.title ||
+        item.name ||
+        `idx-${index}`,
+      )
+        .toLowerCase()
+        .replace(/[^a-z0-9-_]+/g, "-")
+        .replace(/^-+|-+$/g, "")
+        .slice(0, 120);
+
+      return seed ? `hero-${seed}` : `hero-${index}`;
+    };
+
     return likedArtworks
       .map((item, index) => {
-        const rawImage = item.image || item.i || "";
-        const image = typeof rawImage === "string" ? rawImage.trim() : "";
-        if (!image || image === "default.jpg" || image === "/default.jpg") return null;
+        const image =
+          sanitizeHeroImage(item.image) ||
+          sanitizeHeroImage(item.i) ||
+          sanitizeHeroImage(item.lightboxImage) ||
+          sanitizeHeroImage(item.originalImage) ||
+          sanitizeHeroImage(item.imageUrl) ||
+          sanitizeHeroImage(item.thumbnail?.url) ||
+          sanitizeHeroImage(item.thumbnail?.src) ||
+          sanitizeHeroImage(item.thumbnail?.imageUrl) ||
+          sanitizeHeroImage(item.thumbnail?.iiifUrl) ||
+          "";
+
+        const optionId = buildOptionId(item, index);
         return {
-          id: String(item.artworkId || item.id || `liked-${index}`),
+          id: optionId,
           image,
           title: item.title || item.name || "Untitled",
           artist: item.artist || item.a || "",
+          previewItem: {
+            ...item,
+            artworkId: item.artworkId || item.id || optionId,
+            id: item.id || item.artworkId || optionId,
+            image,
+          },
         };
       })
-      .filter(Boolean) as Array<{ id: string; image: string; title: string; artist: string }>;
+      .filter((option) => !!option.id) as Array<{ id: string; image: string; title: string; artist: string; previewItem: any }>;
   }, [likedArtworks]);
 
   useEffect(() => {
-    const persistedHeroId = typeof profileData?.heroArtworkId === "string" ? profileData.heroArtworkId : null;
-    const persistedHeroFocus = clampHeroFocusY(Number(profileData?.heroImageFocusY ?? 50));
+    const serverHeroId = typeof profileData?.heroArtworkId === "string" ? profileData.heroArtworkId : null;
+    const serverHeroFocus = clampHeroFocusY(Number(profileData?.heroImageFocusY ?? 50));
+    const serverUpdatedAt = Number(profileData?.heroPrefsUpdatedAt || 0);
 
-    setSelectedHeroArtworkId(persistedHeroId);
-    setHeroFocusY(persistedHeroFocus);
-  }, [profileData?.heroArtworkId, profileData?.heroImageFocusY]);
+    let localHeroId: string | null = null;
+    let localHeroFocus = 50;
+    let localUpdatedAt = 0;
+
+    if (heroPrefsStorageKey) {
+      try {
+        const raw = localStorage.getItem(heroPrefsStorageKey);
+        if (raw) {
+          const parsed = JSON.parse(raw) as {
+            heroArtworkId?: string | null;
+            heroImageFocusY?: number;
+            updatedAt?: number;
+          };
+          localHeroId = typeof parsed.heroArtworkId === "string" ? parsed.heroArtworkId : null;
+          localHeroFocus = clampHeroFocusY(Number(parsed.heroImageFocusY ?? 50));
+          localUpdatedAt = Number(parsed.updatedAt || 0);
+        }
+      } catch {
+        // Ignore malformed local cache.
+      }
+    }
+
+    const useLocal = localUpdatedAt > serverUpdatedAt;
+    setSelectedHeroArtworkId(useLocal ? localHeroId : serverHeroId);
+    setHeroFocusY(useLocal ? localHeroFocus : serverHeroFocus);
+  }, [profileData?.heroArtworkId, profileData?.heroImageFocusY, profileData?.heroPrefsUpdatedAt, heroPrefsStorageKey]);
 
   useEffect(() => {
     if (!isHeroPickerOpen) return;
@@ -871,7 +987,7 @@ const MyPage: React.FC = () => {
   const selectedHeroOption = heroImageOptions.find((item) => item.id === previewHeroArtworkId) || null;
   const heroImage =
     selectedHeroOption?.image ||
-    heroImageOptions[0]?.image ||
+    heroImageOptions.find((item) => !!item.image)?.image ||
     displayPhotoURL ||
     "https://images.unsplash.com/photo-1545239351-1141bd82e8a6?w=1800&q=80";
 
@@ -913,8 +1029,8 @@ const MyPage: React.FC = () => {
     return cloned;
   }, [currentItems, sortMode]);
 
-  const initialBatchSize = isMobile ? 18 : 48;
-  const loadMoreStep = isMobile ? 18 : 36;
+  const initialBatchSize = isMobile ? 15 : 48;
+  const loadMoreStep = isMobile ? 12 : 36;
 
   const [displayedCount, setDisplayedCount] = useState(initialBatchSize);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
@@ -940,7 +1056,7 @@ const MyPage: React.FC = () => {
       },
       {
         root,
-        rootMargin: isMobile ? "520px 0px" : "720px 0px",
+        rootMargin: isMobile ? "320px 0px" : "720px 0px",
       }
     );
 
@@ -988,18 +1104,30 @@ const MyPage: React.FC = () => {
       return;
     }
 
-    if (item.image || item.i) {
-      const exhId = getFallbackExhibitionIdForJson(item);
-      const itemId = item.artworkId || item.id;
-      const cacheKey = `${exhId}_${itemId}`;
-      const recoveredSrc = _recoveredUrlsCache[cacheKey];
-      
-      setGalleryArtwork({ 
-        ...item, 
-        image: recoveredSrc || item.image || item.i,
-        ...(recoveredSrc && { lightboxImage: recoveredSrc })
-      });
-    }
+    if (mode !== "artworks") return;
+
+    const exhId = getFallbackExhibitionIdForJson(item);
+    const itemId = item.artworkId || item.id;
+    const cacheKey = `${exhId}_${itemId}`;
+    const recoveredSrc = _recoveredUrlsCache[cacheKey];
+    const fallbackImage =
+      recoveredSrc ||
+      item.image ||
+      item.i ||
+      item.lightboxImage ||
+      item.originalImage ||
+      item.imageUrl ||
+      item.thumbnail?.url ||
+      item.thumbnail?.src ||
+      item.thumbnail?.imageUrl ||
+      item.thumbnail?.iiifUrl ||
+      "";
+
+    setGalleryArtwork({
+      ...item,
+      image: fallbackImage,
+      ...(recoveredSrc && { lightboxImage: recoveredSrc }),
+    });
   };
 
   const displayName = profileData.nickname || username || user?.displayName || "Art Explorer";
@@ -1007,9 +1135,25 @@ const MyPage: React.FC = () => {
   const saveHeroBackgroundPreference = async () => {
     const nextHeroId = draftHeroArtworkId || null;
     const nextFocusY = clampHeroFocusY(draftHeroFocusY);
+    const nextUpdatedAt = Date.now();
 
     setSelectedHeroArtworkId(nextHeroId);
     setHeroFocusY(nextFocusY);
+
+    if (heroPrefsStorageKey) {
+      try {
+        localStorage.setItem(
+          heroPrefsStorageKey,
+          JSON.stringify({
+            heroArtworkId: nextHeroId,
+            heroImageFocusY: nextFocusY,
+            updatedAt: nextUpdatedAt,
+          }),
+        );
+      } catch {
+        // Ignore storage failures.
+      }
+    }
 
     if (!user) {
       setIsHeroPickerOpen(false);
@@ -1024,6 +1168,7 @@ const MyPage: React.FC = () => {
         {
           heroArtworkId: nextHeroId,
           heroImageFocusY: nextFocusY,
+          heroPrefsUpdatedAt: nextUpdatedAt,
         },
         { merge: true },
       );
@@ -1032,6 +1177,7 @@ const MyPage: React.FC = () => {
         ...prev,
         heroArtworkId: nextHeroId,
         heroImageFocusY: nextFocusY,
+        heroPrefsUpdatedAt: nextUpdatedAt,
       }));
       window.dispatchEvent(new CustomEvent("profile-updated"));
       setIsHeroPickerOpen(false);
@@ -1092,7 +1238,7 @@ const MyPage: React.FC = () => {
           containIntrinsicSize: "180px 180px",
         }}
       >
-        <MyPageImage item={normalized} width={isMobile ? 520 : 900} />
+        <MyPageImage item={normalized} width={isMobile ? 260 : 900} disableBlur={isMobile} />
 
         <div
           style={{
@@ -1160,28 +1306,32 @@ const MyPage: React.FC = () => {
             <ShoppingBag size={isMobile ? 10 : 12} strokeWidth={2.1} />
           </button>
 
-          <button
-            onClick={(event) => {
-              event.stopPropagation();
-              setCommentArtwork(normalized);
-            }}
-            style={{
-              width: isMobile ? 22 : 26,
-              height: isMobile ? 22 : 26,
-              borderRadius: "50%",
-              border: "none",
-              background: "rgba(0,0,0,0.56)",
-              color: "#fff",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              cursor: "pointer",
-              padding: 0,
-            }}
-            title="Comments"
-          >
-            <MessageCircle size={isMobile ? 10 : 12} strokeWidth={2.1} />
-          </button>
+          {SHOW_ARTWORK_COMMENTS && (
+            <button
+              onClick={(event) => {
+                event.stopPropagation();
+                setCommentArtwork(normalized);
+              }}
+              style={{
+                width: isMobile ? 22 : 26,
+                height: isMobile ? 22 : 26,
+                borderRadius: "50%",
+                border: "none",
+                background: "rgba(0,0,0,0.56)",
+                color: "#fff",
+                display: "flex",
+                alignItems: "center",
+                justifyContent: "center",
+                cursor: "pointer",
+                padding: 0,
+              }}
+              title="Comments"
+            >
+              <svg width={isMobile ? 10 : 12} height={isMobile ? 10 : 12} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.1" strokeLinecap="round" strokeLinejoin="round">
+                <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
+              </svg>
+            </button>
+          )}
 
           <button
             onClick={(event) => {
@@ -1265,7 +1415,7 @@ const MyPage: React.FC = () => {
         }}
       >
         <div style={{ aspectRatio: "4 / 5", background: isLightTheme ? "#f0f0f0" : "#1a1a1a" }}>
-          {normalized.image ? <MyPageImage item={normalized} width={isMobile ? 420 : 700} /> : null}
+          {normalized.image ? <MyPageImage item={normalized} width={isMobile ? 240 : 700} disableBlur={isMobile} /> : null}
         </div>
 
         <button
@@ -1335,7 +1485,7 @@ const MyPage: React.FC = () => {
           touchAction: "pan-y",
         WebkitOverflowScrolling: "touch",
         overscrollBehaviorY: "contain",
-        paddingTop: "env(safe-area-inset-top, 0px)",
+        paddingTop: 0,
           paddingBottom: "max(env(safe-area-inset-bottom, 0px), 100px)",
         background: pageBg,
         color: pageText,
@@ -1343,7 +1493,11 @@ const MyPage: React.FC = () => {
       }}
     >
       <div
-        style={{ position: "relative", height: isMobile ? 258 : 340, overflow: "hidden" }}
+        style={{
+          position: "relative",
+          height: isMobile ? "calc(258px + env(safe-area-inset-top, 0px))" : 340,
+          overflow: "hidden",
+        }}
         onMouseEnter={() => setIsHeroHovered(true)}
         onMouseLeave={() => {
           setIsHeroHovered(false);
@@ -1373,16 +1527,15 @@ const MyPage: React.FC = () => {
               style={{
                 position: "absolute",
                 top: heroControlTop,
-                left: isMobile ? 10 : "auto",
-                right: isMobile ? "auto" : 10,
+                right: 8,
                 width: 34,
                 height: 34,
                 borderRadius: "50%",
                 border: panelBorder,
                 background: panelBg,
                 color: pageText,
-                backdropFilter: "blur(10px)",
-                WebkitBackdropFilter: "blur(10px)",
+                backdropFilter: isMobile ? "none" : "blur(10px)",
+                WebkitBackdropFilter: isMobile ? "none" : "blur(10px)",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
@@ -1407,8 +1560,7 @@ const MyPage: React.FC = () => {
           style={{
             position: "fixed",
             top: heroPickerTop,
-            left: isMobile ? 10 : "auto",
-            right: isMobile ? "auto" : 14,
+            right: 12,
             width: isMobile ? "min(92vw, 360px)" : 360,
             maxHeight: isMobile ? "50vh" : 380,
             overflowY: "auto",
@@ -1416,8 +1568,8 @@ const MyPage: React.FC = () => {
             borderRadius: 12,
             border: panelBorder,
             background: panelBg,
-            backdropFilter: "blur(16px)",
-            WebkitBackdropFilter: "blur(16px)",
+            backdropFilter: isMobile ? "none" : "blur(16px)",
+            WebkitBackdropFilter: isMobile ? "none" : "blur(16px)",
             boxShadow: isLightTheme ? "0 16px 28px rgba(0,0,0,0.16)" : "0 18px 30px rgba(0,0,0,0.42)",
             zIndex: 260101,
           }}
@@ -1461,7 +1613,7 @@ const MyPage: React.FC = () => {
           </div>
 
           <div style={{ display: "grid", gridTemplateColumns: "repeat(3, minmax(0, 1fr))", gap: 8 }}>
-            {heroImageOptions.slice(0, 30).map((option) => {
+            {heroImageOptions.slice(0, 120).map((option) => {
               const isSelected = draftHeroArtworkId === option.id;
               return (
                 <button
@@ -1481,7 +1633,7 @@ const MyPage: React.FC = () => {
                   title={option.artist ? `${option.title} - ${option.artist}` : option.title}
                 >
                   <div style={{ width: "100%", aspectRatio: "4 / 3", background: isLightTheme ? "#e8e8e8" : "#171717" }}>
-                    <img src={getOptimizedImageUrl(option.image, 240)} alt={option.title} style={{ width: "100%", height: "100%", objectFit: "cover", display: "block" }} />
+                    <MyPageImage item={option.previewItem} width={220} disableBlur={isMobile} />
                   </div>
                   {isSelected && (
                     <div
@@ -1683,28 +1835,34 @@ const MyPage: React.FC = () => {
               flexShrink: 0,
               width: isMobile ? "auto" : 240,
               maxWidth: "100%",
-              marginTop: isMobile ? 10 : 6,
+              marginTop: isMobile ? 14 : 6,
             }}
           >
             <button
               onClick={() => setShowSlideshow(true)}
               style={{
                 border: "none",
-                  borderRadius: "50%",
+                borderRadius: isMobile ? "50%" : 999,
                 background: lime,
                 color: "#000",
-                  height: isMobile ? 34 : 40,
-                  width: isMobile ? 34 : 40,
-                  minWidth: 34,
-                  padding: 0,
+                height: isMobile ? 34 : 40,
+                width: isMobile ? 34 : "auto",
+                minWidth: isMobile ? 34 : 132,
+                padding: isMobile ? 0 : "0 14px 0 12px",
                 cursor: "pointer",
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
+                gap: isMobile ? 0 : 7,
               }}
                 title={t({ ko: "슬라이드쇼 재생", en: "Play slideshow" })}
             >
-                <Play size={isMobile ? 13 : 14} strokeWidth={2.4} />
+              <Play size={isMobile ? 13 : 14} strokeWidth={2.4} />
+              {!isMobile && (
+                <span style={{ fontSize: 12, fontWeight: 800, letterSpacing: "0.03em" }}>
+                  {t({ ko: "SLIDESHOW", en: "SLIDESHOW" })}
+                </span>
+              )}
             </button>
           </div>
         </div>
@@ -1757,7 +1915,7 @@ const MyPage: React.FC = () => {
                     }}
                   >
                     {playlist.coverImage ? (
-                      <MyPageImage item={{ image: playlist.coverImage }} width={300} />
+                      <MyPageImage item={{ image: playlist.coverImage }} width={isMobile ? 180 : 300} disableBlur={isMobile} />
                     ) : null}
                   </div>
 
@@ -1791,8 +1949,8 @@ const MyPage: React.FC = () => {
           top: 0,
           zIndex: 5,
           background: isLightTheme ? "rgba(250,250,250,0.95)" : "rgba(8,8,8,0.95)",
-          backdropFilter: "blur(20px)",
-          WebkitBackdropFilter: "blur(20px)",
+          backdropFilter: isMobile ? "none" : "blur(20px)",
+          WebkitBackdropFilter: isMobile ? "none" : "blur(20px)",
           borderBottom: `1px solid ${divider}`,
         }}
       >
@@ -1903,7 +2061,7 @@ const MyPage: React.FC = () => {
                   }}
                 >
                   {playlist.coverImage ? (
-                    <MyPageImage item={{ image: playlist.coverImage }} width={220} />
+                    <MyPageImage item={{ image: playlist.coverImage }} width={isMobile ? 160 : 220} disableBlur={isMobile} />
                   ) : null}
                 </div>
 
@@ -2007,7 +2165,7 @@ const MyPage: React.FC = () => {
           onViewInMuseum={handleViewInMuseum}
           onPurchase={(artwork) => setProductArtwork(artwork)}
           hideMuseumAction
-          onOpenComments={(artwork) => setCommentArtwork(artwork)}
+          onOpenComments={SHOW_ARTWORK_COMMENTS ? ((artwork) => setCommentArtwork(artwork)) : undefined}
           onSaveToPlaylist={(artwork) => setPlaylistArtwork(artwork)}
           likedArtworksList={likedArtworks}
           onChangeArtwork={setGalleryArtwork}

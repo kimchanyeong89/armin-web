@@ -129,6 +129,40 @@ const CommunityWrite: React.FC<CommunityWriteProps> = ({ onBack, onComplete }) =
     const workerRef = useRef<Worker | null>(null);
     const editorRef = useRef<HTMLDivElement>(null);
 
+    const ensureEditorCaretReady = () => {
+        const editor = editorRef.current;
+        if (!editor) return;
+
+        const hasNode = Array.from(editor.childNodes).some(
+            (node) => node.nodeType === Node.TEXT_NODE || node.nodeType === Node.ELEMENT_NODE,
+        );
+        if (!hasNode) {
+            editor.appendChild(document.createTextNode('\u200B'));
+        }
+
+        const selection = window.getSelection();
+        if (!selection) return;
+        if (selection.rangeCount > 0 && editor.contains(selection.anchorNode)) return;
+
+        const range = document.createRange();
+        range.selectNodeContents(editor);
+        range.collapse(false);
+        selection.removeAllRanges();
+        selection.addRange(range);
+    };
+
+    const focusEditorFromTouch = () => {
+        const active = document.activeElement;
+        if (active instanceof HTMLInputElement || active instanceof HTMLTextAreaElement) {
+            active.blur();
+        }
+
+        requestAnimationFrame(() => {
+            editorRef.current?.focus();
+            ensureEditorCaretReady();
+        });
+    };
+
     const attachmentsRef = useRef<Attachment[]>([]); // NEW
     useEffect(() => { // NEW
         attachmentsRef.current = attachments; // NEW
@@ -350,6 +384,10 @@ const CommunityWrite: React.FC<CommunityWriteProps> = ({ onBack, onComplete }) =
                 } // NEW
             } // NEW
         } // NEW
+
+        if (!target.closest('.post-image-container')) {
+            focusEditorFromTouch();
+        }
     }; // NEW
 
     const insertImageBlock = (
@@ -831,7 +869,15 @@ const CommunityWrite: React.FC<CommunityWriteProps> = ({ onBack, onComplete }) =
                             type="text"
                             value={title}
                             onChange={(e) => setTitle(e.target.value)}
+                            onFocus={() => {
+                                setMentionQuery(null);
+                                setMentionRange(null);
+                                setMentionPosition(null);
+                            }}
                             placeholder="제목을 입력하세요"
+                            autoCapitalize="sentences"
+                            autoCorrect="on"
+                            enterKeyHint="next"
                             style={{
                                 width: '100%',
                                 padding: '12px 0',
@@ -939,6 +985,12 @@ const CommunityWrite: React.FC<CommunityWriteProps> = ({ onBack, onComplete }) =
                         }}
                         onDrop={handleDrop}
                         onInput={handleInput}
+                        onFocus={ensureEditorCaretReady}
+                        onTouchStart={(e) => {
+                            const target = e.target as HTMLElement;
+                            if (target.closest('.remove-attachment-trigger, .crop-trigger, .edit-meta-trigger')) return;
+                            focusEditorFromTouch();
+                        }}
                         style={{
                             width: '100%',
                             minHeight: '300px',

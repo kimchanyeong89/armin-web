@@ -1,0 +1,16 @@
+{
+  "extends": "./node_modules/expo/tsconfig.base",
+  "compilerOptions": {
+    "strict": true,
+    "jsx": "react-jsx",
+    "types": ["react", "react-native"],
+    "skipLibCheck": true,
+    "ignoreDeprecations": "5.0",
+    "baseUrl": ".",
+    "paths": {
+      "@armin/shared": ["../../packages/shared/src/index.ts"],
+      "@armin/shared/*": ["../../packages/shared/src/*"]
+    }
+  },
+  "include": ["**/*.ts", "**/*.tsx"]
+}

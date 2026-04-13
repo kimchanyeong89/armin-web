@@ -41,8 +41,12 @@ const normalizeExternalUrl = (value: unknown): string => {
     if (typeof value !== 'string') return '';
     const trimmed = value.trim();
     if (!trimmed) return '';
+    const embeddedUrlMatch = trimmed.match(/https?:\/\/[^\s)]+/i);
+    if (embeddedUrlMatch?.[0]) return ensureHttps(embeddedUrlMatch[0]);
+    if (/^\/\//.test(trimmed)) return `https:${trimmed}`;
     if (/^https?:\/\//i.test(trimmed)) return ensureHttps(trimmed);
     if (/^www\./i.test(trimmed)) return `https://${trimmed}`;
+    if (/^[\w.-]+\.[a-z]{2,}(?:\/.*)?$/i.test(trimmed)) return `https://${trimmed}`;
     return '';
 };
 
@@ -86,6 +90,8 @@ const getBestFullUrl = (a: any): { url: string; width?: number } => {
     // Fallback to base image
     return { url: ensureHttps(a.image), width: undefined };
 };
+
+const SHOW_ARTWORK_COMMENTS = false;
 
 interface ArtworkLightboxProps {
     artwork: any; // Using any for flexibility with various Artwork types in the app
@@ -183,6 +189,9 @@ export const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
     // Determine standard source URL
     const sourceUrl = normalizeExternalUrl(
         artwork.sourceUrl ||
+        artwork.detailUrl ||
+        artwork.pageUrl ||
+        artwork.detailPageUrl ||
         artwork.originalSourceUrl ||
         artwork.originalUrl ||
         artwork.permalink ||
@@ -199,8 +208,10 @@ export const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
     const isMobile = typeof window !== 'undefined' ? window.innerWidth < 768 : false;
     const showPurchaseAction = Boolean(onPurchase) && !hidePurchaseAction;
     const showMuseumAction = Boolean(onViewInMuseum) && !hideMuseumAction;
-    const actionButtonSize = isMobile ? 24 : 28;
-    const actionIconSize = isMobile ? 12 : 14;
+    const showSourceQuickAction = false && Boolean(sourceUrl);
+    const showCommentQuickAction = SHOW_ARTWORK_COMMENTS && Boolean(onOpenComments);
+    const actionButtonSize = isMobile ? 22 : 26;
+    const actionIconSize = isMobile ? 10 : 12;
 
     useEffect(() => {
         const prevBodyOverflow = document.body.style.overflow;
@@ -285,12 +296,15 @@ export const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
                 const bMatch = b.museumName.toLowerCase().includes(currentMuseumName) ? 1 : 0;
                 return bMatch - aMatch;
             })
-            .slice(0, isMobile ? 6 : 14);
+            .slice(0, isMobile ? 3 : 10);
 
         const fetchAndSearch = async () => {
+            const desiredMatches = isMobile ? 12 : 20;
+            const localSeen = new Set<string>();
             // Process sequentially or in small batches to avoid network congestion
             for (const source of prioritizedSources) {
                 if (!isMounted) break;
+                if (localSeen.size >= desiredMatches) break;
 
                 try {
                     let items = collectionCache[source.url];
@@ -329,7 +343,7 @@ export const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
                         const itemArtist = normalize(item.artist || item.a);
                         const itemId = item.id || item.artworkId;
 
-                        if (itemArtist === targetArtist && itemId !== targetId) {
+                        if (itemArtist === targetArtist && itemId !== targetId && !localSeen.has(String(itemId))) {
                             // Assign museum name/country if missing
                             const enriched = { ...item };
                             if (!enriched.museumName && !enriched.museum && source.museumName) {
@@ -340,6 +354,8 @@ export const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
                                 enriched.country = (source as any).country;
                             }
                             matches.push(enriched);
+                            localSeen.add(String(itemId));
+                            if (localSeen.size >= desiredMatches) break;
                         }
                     }
 
@@ -354,7 +370,7 @@ export const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
                                 seen.add(id);
                                 return true;
                             });
-                            return unique;
+                            return unique.slice(0, desiredMatches);
                         });
                     }
 
@@ -488,7 +504,7 @@ export const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
                     zIndex: 260020,
                     cursor: 'zoom-out',
                     background: animate ? 'rgba(0, 0, 0, 0.92)' : 'rgba(0, 0, 0, 0)',
-                    backdropFilter: 'blur(10px)',
+                    backdropFilter: isMobile ? 'none' : 'blur(10px)',
                     transition: 'background 300ms ease',
                 }}
             />
@@ -551,19 +567,23 @@ export const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
                                     display: 'flex', alignItems: 'center', justifyContent: 'center',
                                     background: '#111',
                                 }}>
-                                    <svg width={80} height={80} viewBox="0 0 140 140" style={{ opacity: 0.45 }}>
-                                        <style>{`
-                                          @keyframes _lb_globe{0%{stroke-dashoffset:377;opacity:.2}60%{stroke-dashoffset:0;opacity:1}100%{stroke-dashoffset:0;opacity:.2}}
-                                          @keyframes _lb_dot{0%,100%{r:2.5;opacity:.3}50%{r:5;opacity:1}}
-                                        `}</style>
-                                        <circle cx={70} cy={70} r={60} fill="none" stroke="rgba(255,255,255,0.4)" strokeWidth="1"
-                                            strokeDasharray="377 377"
-                                            style={{ animation: '_lb_globe 2s ease-in-out infinite', transformOrigin: '70px 70px' }} />
-                                        <ellipse cx={70} cy={70} rx={60} ry={17} fill="none" stroke="rgba(255,255,255,0.15)" strokeWidth="0.8" strokeDasharray="4 5" />
-                                        <line x1={70} y1={10} x2={70} y2={130} stroke="rgba(255,255,255,0.15)" strokeWidth="0.8" strokeDasharray="4 5" />
-                                        <circle cx={70} cy={70} r={4} fill="#CCFF00"
-                                            style={{ animation: '_lb_dot 1.8s ease-in-out infinite' }} />
-                                    </svg>
+                                    {isMobile ? (
+                                        <div style={{ width: 14, height: 14, borderRadius: '50%', background: '#CCFF00', opacity: 0.8 }} />
+                                    ) : (
+                                        <svg width={80} height={80} viewBox="0 0 140 140" style={{ opacity: 0.45 }}>
+                                            <style>{`
+                                              @keyframes _lb_globe{0%{stroke-dashoffset:377;opacity:.2}60%{stroke-dashoffset:0;opacity:1}100%{stroke-dashoffset:0;opacity:.2}}
+                                              @keyframes _lb_dot{0%,100%{r:2.5;opacity:.3}50%{r:5;opacity:1}}
+                                            `}</style>
+                                            <circle cx={70} cy={70} r={60} fill="none" stroke="rgba(255,255,255,0.4)" strokeWidth="1"
+                                                strokeDasharray="377 377"
+                                                style={{ animation: '_lb_globe 2s ease-in-out infinite', transformOrigin: '70px 70px' }} />
+                                            <ellipse cx={70} cy={70} rx={60} ry={17} fill="none" stroke="rgba(255,255,255,0.15)" strokeWidth="0.8" strokeDasharray="4 5" />
+                                            <line x1={70} y1={10} x2={70} y2={130} stroke="rgba(255,255,255,0.15)" strokeWidth="0.8" strokeDasharray="4 5" />
+                                            <circle cx={70} cy={70} r={4} fill="#CCFF00"
+                                                style={{ animation: '_lb_dot 1.8s ease-in-out infinite' }} />
+                                        </svg>
+                                    )}
                                 </div>
                             )}
                             {imageSrc && (
@@ -634,7 +654,7 @@ export const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
                                     </button>
                                 )}
 
-                                {onOpenComments && (
+                                {showCommentQuickAction && (
                                     <button
                                         onClick={(e) => {
                                             e.stopPropagation();
@@ -660,7 +680,7 @@ export const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
                                     </button>
                                 )}
 
-                                {sourceUrl && (
+                                {showSourceQuickAction && (
                                     <button
                                         onClick={(e) => {
                                             e.stopPropagation();
@@ -723,7 +743,7 @@ export const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
                                         padding: 0,
                                     }}
                                     size={actionIconSize}
-                                    color="#e11d48"
+                                    color="#BFFF0A"
                                     emptyColor="#fff"
                                 />
                             </div>
@@ -877,7 +897,7 @@ export const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
                             onToggleLike={onToggleLike}
                             onOpenProduct={showPurchaseAction ? onPurchase : undefined}
                             onSaveToPlaylist={onSaveToPlaylist}
-                            onOpenComments={onOpenComments}
+                            onOpenComments={SHOW_ARTWORK_COMMENTS ? onOpenComments : undefined}
                         />
                     </div>
                 </div>

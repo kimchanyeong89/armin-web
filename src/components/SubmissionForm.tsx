@@ -2,6 +2,7 @@ import React, { useState, useCallback } from 'react';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 import { db, auth } from '../firebase';
 import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth';
+import { isMobileAppContainer } from '../utils/mobileAppAuth';
 
 interface SubmissionFormProps {
     exhibitionId: string;
@@ -63,6 +64,13 @@ export const SubmissionForm: React.FC<SubmissionFormProps> = ({
             // Ensure user is logged in with Google
             let user = auth.currentUser;
             if (!user || user.isAnonymous) {
+                if (isMobileAppContainer()) {
+                    window.dispatchEvent(new Event('auth:request-login'));
+                    setError('로그인이 필요합니다. 앱 내 로그인 후 다시 시도해주세요.');
+                    setSubmitting(false);
+                    return;
+                }
+
                 const provider = new GoogleAuthProvider();
                 provider.setCustomParameters({ prompt: 'select_account' });
                 const result = await signInWithPopup(auth, provider);

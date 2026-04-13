@@ -6,6 +6,7 @@ import { SearchInputWithSuggestions } from "./SearchInputWithSuggestions";
 import { collection, query, where, onSnapshot, getDocs, deleteDoc, doc, setDoc, serverTimestamp, addDoc, increment, documentId } from "firebase/firestore";
 import { onAuthStateChanged, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { db, auth } from "../firebase";
+import { isMobileAppContainer } from "../utils/mobileAppAuth";
 import { buildSourceSet, useProxy, getOptimizedImageUrl, getWeservUrl, tuneWeservUrl } from "../utils/imageProxy";
 import { normalizeSearchText } from "../utils/textNormalize";
 import { usePrefetchNeighbors } from "../hooks/usePrefetchNeighbors";
@@ -15,6 +16,7 @@ import { ProductModal } from "./ProductModal";
 import CommentModal from "./CommentModal";
 
 const ADMIN_EMAILS = ['kietzland@gmail.com'];
+const SHOW_ARTWORK_COMMENTS = false;
 
 const RE_BC_CHECK = /\bBC\b|B\.C\.|BCE/i;
 const RE_CENTURY = /(\d{1,2})(?:st|nd|rd|th)?\s*(?:century|c\b)/i;
@@ -414,6 +416,14 @@ const GalleryItem = React.memo(({
   const isVideo = artwork.youtubeId || artwork.mediaType === 'video';
   const isCurrentlyHovered = hoveredIndex === index;
   const showIframe = isCurrentlyHovered && isVideo && galleryVideoReadyIdx === index;
+  const artworkSourceUrl = ensureHttps(
+    (artwork as any).sourceUrl ||
+    (artwork as any).detailUrl ||
+    (artwork as any).originalUrl ||
+    (artwork as any).url ||
+    (artwork as any).link ||
+    "",
+  );
 
   const isNPG = exhibitionId === 'npg-london-collection' || exhibitionId === 'snpg-collection'; // Fix layout for portrait galleries
 
@@ -686,50 +696,74 @@ const GalleryItem = React.memo(({
                 </svg>
               </div>
 
-              {/* Comment Button - Middle */}
-              <div
-                onClick={(e) => {
-                  e.stopPropagation();
-                  e.preventDefault();
-                  onOpenComments(artwork);
-                }}
-                style={{
-                  cursor: 'pointer',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  transition: 'transform 0.15s ease',
-                  zIndex: 20
-                }}
-                title="댓글 남기기"
-                onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
-                onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
-              >
-                <svg
-                  width={isMobile ? 12 : 14}
-                  height={isMobile ? 12 : 14}
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="#888"
-                  strokeWidth="2"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  style={{ filter: 'drop-shadow(0 0 1px rgba(0,0,0,0.2))' }}
+              {SHOW_ARTWORK_COMMENTS ? (
+                <div
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    e.preventDefault();
+                    onOpenComments(artwork);
+                  }}
+                  style={{
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    transition: 'transform 0.15s ease',
+                    zIndex: 20
+                  }}
+                  title="댓글 남기기"
+                  onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
+                  onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
                 >
-                  <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
-                </svg>
-                {(stats?.commentCount ?? 0) > 0 && (
-                  <span style={{
-                    marginLeft: 4,
-                    fontSize: isMobile ? 10 : 11,
-                    color: '#888',
-                    fontFamily: 'Inter, sans-serif',
-                    lineHeight: 1
-                  }}>
-                    {stats?.commentCount}
-                  </span>
-                )}
-              </div>
+                  <svg
+                    width={isMobile ? 12 : 14}
+                    height={isMobile ? 12 : 14}
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="#888"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    style={{ filter: 'drop-shadow(0 0 1px rgba(0,0,0,0.2))' }}
+                  >
+                    <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
+                  </svg>
+                </div>
+              ) : artworkSourceUrl ? (
+                <div
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    e.preventDefault();
+                    window.open(artworkSourceUrl, '_blank', 'noopener,noreferrer');
+                  }}
+                  style={{
+                    cursor: 'pointer',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    transition: 'transform 0.15s ease',
+                    zIndex: 20
+                  }}
+                  title="원본 보기"
+                  onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.1)'}
+                  onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+                >
+                  <svg
+                    width={isMobile ? 12 : 14}
+                    height={isMobile ? 12 : 14}
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="#888"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    style={{ filter: 'drop-shadow(0 0 1px rgba(0,0,0,0.2))' }}
+                  >
+                    <path d="M7 17L17 7" />
+                    <path d="M7 7h10v10" />
+                  </svg>
+                </div>
+              ) : null}
 
               {/* Heart - Right */}
               <div style={{ display: 'flex', alignItems: 'center' }}>
@@ -1523,6 +1557,11 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
     // Prompt login if not logged in or is anonymous
     if (!currentUser || currentUser.isAnonymous) {
       try {
+        if (isMobileAppContainer()) {
+          window.dispatchEvent(new Event('auth:request-login'));
+          return;
+        }
+
         const provider = new GoogleAuthProvider();
         provider.setCustomParameters({ prompt: 'select_account' });
         const result = await signInWithPopup(auth, provider);
@@ -11038,7 +11077,17 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
                     )
                   ))}
                   {current && (
-                    <div style={{ position: "absolute", bottom: 16, right: 16, zIndex: 30, display: 'flex', gap: 8 }} className="hover-trigger">
+                    <div
+                      style={{
+                        position: "absolute",
+                        top: isMobile ? 8 : 12,
+                        right: isMobile ? 8 : 12,
+                        zIndex: 30,
+                        display: 'flex',
+                        gap: isMobile ? 6 : 8,
+                      }}
+                      className="hover-trigger"
+                    >
                       {/* POD Product Purchase Button - Left */}
                       <div
                         className="product-btn"
@@ -11049,18 +11098,22 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
                         }}
                         style={{
                           cursor: 'pointer',
+                          width: isMobile ? 24 : 28,
+                          height: isMobile ? 24 : 28,
+                          borderRadius: '50%',
+                          background: 'rgba(0,0,0,0.56)',
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'center',
                           transition: 'opacity 0.2s, transform 0.15s ease',
                           zIndex: 20,
-                          opacity: 0
+                          opacity: isMobile ? 1 : 0
                         }}
                         title="상품으로 구매하기"
                       >
                         <svg
-                          width={20}
-                          height={20}
+                          width={isMobile ? 13 : 16}
+                          height={isMobile ? 13 : 16}
                           viewBox="0 0 24 24"
                           fill="none"
                           stroke="#fff"
@@ -11083,17 +11136,21 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
                         }}
                         style={{
                           cursor: 'pointer',
+                          width: isMobile ? 24 : 28,
+                          height: isMobile ? 24 : 28,
+                          borderRadius: '50%',
+                          background: 'rgba(0,0,0,0.56)',
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'center',
                           transition: 'opacity 0.2s, transform 0.15s ease',
                           zIndex: 20,
-                          opacity: 0,
+                          opacity: isMobile ? 1 : 0,
                           color: '#fff'
                         }}
                         title="Comments"
                       >
-                        <svg width={20} height={20} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ filter: 'drop-shadow(0 0 2px rgba(0,0,0,0.5))' }}>
+                        <svg width={isMobile ? 13 : 16} height={isMobile ? 13 : 16} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" style={{ filter: 'drop-shadow(0 0 2px rgba(0,0,0,0.5))' }}>
                           <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
                         </svg>
                       </div>
@@ -11102,17 +11159,20 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
                         isLiked={likedArtworks.has(String(current.id))}
                         onToggle={(e) => toggleLike(e, current)}
                         style={{
-                          background: 'none',
+                          width: isMobile ? 24 : 28,
+                          height: isMobile ? 24 : 28,
+                          borderRadius: '50%',
+                          background: 'rgba(0,0,0,0.56)',
                           padding: 0,
-                          opacity: 0, // initially hidden
+                          opacity: isMobile ? 1 : 0,
                           transition: 'opacity 0.2s'
                         }}
-                        size={20}
+                        size={isMobile ? 13 : 16}
                         color="#e11d48"
                         emptyColor="#fff"
                       />
                       <style>{`
-                        .hover-trigger:hover .heart-btn, .hover-trigger:hover .product-btn, .hover-trigger:hover .comment-btn { opacity: 1 !important; transform: scale(1.1); }
+                        .hover-trigger:hover .heart-btn, .hover-trigger:hover .product-btn, .hover-trigger:hover .comment-btn { opacity: 1 !important; transform: scale(1.06); }
                         div:hover > .hover-trigger .heart-btn, div:hover > .hover-trigger .product-btn, div:hover > .hover-trigger .comment-btn { opacity: 1 !important; }
                       `}</style>
                     </div>

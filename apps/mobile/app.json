@@ -1,0 +1,49 @@
+{
+  "expo": {
+    "name": "ARMIN",
+    "slug": "armin-mobile",
+    "scheme": "com.armin.mobile",
+    "version": "0.1.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "platforms": [
+      "ios",
+      "android"
+    ],
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#f7f3ea"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "icon": "./assets/icon.png",
+      "bundleIdentifier": "com.armin.mobile",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#f7f3ea"
+      },
+      "package": "com.armin.mobile"
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "8ba3bf1e-5aa7-4f08-8e55-7edbdcd45ca9"
+      }
+    },
+    "runtimeVersion": "0.1.0",
+    "updates": {
+      "url": "https://u.expo.dev/8ba3bf1e-5aa7-4f08-8e55-7edbdcd45ca9"
+    },
+    "plugins": [
+      "expo-asset"
+    ]
+  }
+}

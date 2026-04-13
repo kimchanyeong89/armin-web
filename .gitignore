@@ -25,6 +25,7 @@ dist-ssr
 .vercel
 firebase-service-account.json
 .env
+.expo/
 
 # Large files (exceeding GitHub's 100MB limit)
 public/data/search-index.json

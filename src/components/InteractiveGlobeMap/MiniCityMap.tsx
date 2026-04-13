@@ -19,6 +19,7 @@ interface MiniCityMapProps {
   onHoverIdx: (idx: number | null) => void;
   onSelectIdx: (idx: number) => void;
   theme: Theme;
+  height?: number;
 }
 
 interface GroupedCity {
@@ -55,7 +56,7 @@ interface DotPoint {
 }
 
 const W = 320;
-const H = 420;
+const DEFAULT_HEIGHT = 420;
 const FONT_SIZE = 7.4;
 const CHAR_W = 4.62;
 const LBL_H = 11;
@@ -296,7 +297,12 @@ function buildDots(layoutCities: LayoutCity[], groupedCities: GroupedCity[]): Do
   return dots;
 }
 
-function computeViewport(layoutCities: LayoutCity[], allDots: DotPoint[], activeCityKey: string | null) {
+function computeViewport(
+  layoutCities: LayoutCity[],
+  allDots: DotPoint[],
+  activeCityKey: string | null,
+  canvasHeight: number,
+) {
   if (!layoutCities.length) return { scale: 1, tx: 0, ty: 0 };
 
   let viewW = 260;
@@ -353,13 +359,20 @@ function computeViewport(layoutCities: LayoutCity[], allDots: DotPoint[], active
   const guardX = activeCityKey ? 0 : 6;
   const guardY = activeCityKey ? 0 : 8;
   const fitScaleX = (W - guardX * 2) / Math.max(viewW, 1);
-  const fitScaleY = (H - guardY * 2) / Math.max(viewH, 1);
+  const fitScaleY = (canvasHeight - guardY * 2) / Math.max(viewH, 1);
   let scale = Math.min(fitScaleX, fitScaleY);
   scale = Math.max(0.72, Math.min(scale, 3.8));
 
   const tx = W / 2 - viewCx * scale;
-  const ty = H / 2 - viewCy * scale;
+  const ty = canvasHeight / 2 - viewCy * scale;
   return { scale, tx, ty };
+}
+
+function getTouchDistance(touches: TouchList): number | null {
+  if (touches.length < 2) return null;
+  const dx = touches[0].clientX - touches[1].clientX;
+  const dy = touches[0].clientY - touches[1].clientY;
+  return Math.hypot(dx, dy);
 }
 
 export function MiniCityMap({
@@ -369,8 +382,10 @@ export function MiniCityMap({
   onHoverIdx,
   onSelectIdx,
   theme,
+  height = DEFAULT_HEIGHT,
 }: MiniCityMapProps) {
   const t = theme === "light";
+  const mapHeight = clamp(Math.round(height), 160, 520);
 
   const groupedCities = useMemo(() => groupCities(venues, cityName), [venues, cityName]);
   const layoutCities = useMemo(() => buildLayout(groupedCities), [groupedCities]);
@@ -385,6 +400,8 @@ export function MiniCityMap({
   const [hoveredCityKey, setHoveredCityKey] = useState<string | null>(null);
   const [zoomLevel, setZoomLevel] = useState(DEFAULT_ZOOM);
   const zoomTrackRef = useRef<HTMLDivElement | null>(null);
+  const pinchStartDistanceRef = useRef<number | null>(null);
+  const pinchStartZoomRef = useRef(DEFAULT_ZOOM);
 
   const isMultiCity = layoutCities.length > 1;
   const activeCityKey = selectedCityKey;
@@ -393,6 +410,8 @@ export function MiniCityMap({
     setSelectedCityKey(isMultiCity ? null : primaryCityKey);
     setHoveredCityKey(null);
     setZoomLevel(DEFAULT_ZOOM);
+    pinchStartDistanceRef.current = null;
+    pinchStartZoomRef.current = DEFAULT_ZOOM;
     onHoverIdx(null);
   }, [cityName, citySignature, primaryCityKey, isMultiCity, onHoverIdx]);
 
@@ -417,20 +436,20 @@ export function MiniCityMap({
   }, [points, activeCityKey]);
 
   const viewport = useMemo(
-    () => computeViewport(layoutCities, points, activeCityKey),
-    [layoutCities, points, activeCityKey]
+    () => computeViewport(layoutCities, points, activeCityKey, mapHeight),
+    [layoutCities, points, activeCityKey, mapHeight]
   );
 
   const effectiveViewport = useMemo(() => {
     const z = clamp(zoomLevel, ZOOM_MIN, ZOOM_MAX);
     const cx = W / 2;
-    const cy = H / 2;
+    const cy = mapHeight / 2;
     return {
       scale: viewport.scale * z,
       tx: (viewport.tx - cx) * z + cx,
       ty: (viewport.ty - cy) * z + cy,
     };
-  }, [viewport, zoomLevel]);
+  }, [viewport, zoomLevel, mapHeight]);
 
   const zoomRatio = useMemo(
     () => (clamp(zoomLevel, ZOOM_MIN, ZOOM_MAX) - ZOOM_MIN) / (ZOOM_MAX - ZOOM_MIN),
@@ -465,14 +484,46 @@ export function MiniCityMap({
   return (
     <div
       className="relative w-full overflow-hidden select-none"
-      style={{ height: `${H}px` }}
+      style={{ height: `${mapHeight}px`, touchAction: "none" }}
       onWheel={(e) => {
         e.preventDefault();
         const delta = e.deltaY < 0 ? 0.07 : -0.07;
         setZoomLevel((z) => clamp(z + delta, ZOOM_MIN, ZOOM_MAX));
       }}
+      onTouchStart={(event) => {
+        if (event.touches.length < 2) {
+          pinchStartDistanceRef.current = null;
+          return;
+        }
+        const distance = getTouchDistance(event.touches);
+        if (!distance) return;
+        pinchStartDistanceRef.current = distance;
+        pinchStartZoomRef.current = zoomLevel;
+      }}
+      onTouchMove={(event) => {
+        if (event.touches.length < 2) return;
+        const distance = getTouchDistance(event.touches);
+        const startDistance = pinchStartDistanceRef.current;
+        if (!distance || !startDistance) return;
+
+        event.preventDefault();
+        const ratio = distance / startDistance;
+        const nextZoom = clamp(pinchStartZoomRef.current * ratio, ZOOM_MIN, ZOOM_MAX);
+        setZoomLevel(nextZoom);
+      }}
+      onTouchEnd={(event) => {
+        if (event.touches.length >= 2) {
+          const distance = getTouchDistance(event.touches);
+          if (distance) {
+            pinchStartDistanceRef.current = distance;
+            pinchStartZoomRef.current = zoomLevel;
+          }
+          return;
+        }
+        pinchStartDistanceRef.current = null;
+      }}
     >
-      <svg viewBox={`0 0 ${W} ${H}`} width="100%" height="100%" style={{ display: "block" }}>
+      <svg viewBox={`0 0 ${W} ${mapHeight}`} width="100%" height="100%" style={{ display: "block" }}>
         <g
           style={{
             transform: `translate(${effectiveViewport.tx}px, ${effectiveViewport.ty}px) scale(${effectiveViewport.scale})`,

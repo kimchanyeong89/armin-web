@@ -9,6 +9,7 @@ const WORKER_URL = 'https://armin-semantic-search.armin-art.workers.dev';
 const RECOMMENDATION_BACKOFF_MS = 60_000;
 const recommendationCache = new Map<string, any[]>();
 let recommendationBackoffUntil = 0;
+const SHOW_ARTWORK_COMMENTS = false;
 
 // Map museum names to countries for quick lookup
 const getMuseumCountryMap = () => {
@@ -462,7 +463,7 @@ export const ArtworkRecommendations: React.FC<Props> = ({
                             </button>
                         )}
 
-                        {onOpenComments && (
+                        {SHOW_ARTWORK_COMMENTS && onOpenComments && (
                             <button
                                 onClick={(e) => {
                                     e.stopPropagation();

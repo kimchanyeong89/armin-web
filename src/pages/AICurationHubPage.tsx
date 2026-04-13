@@ -2,20 +2,79 @@ import React, { useState, useEffect, useCallback, useMemo, useRef } from "react"
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Sparkles, MapPin, Calendar, X,
-  Heart, Navigation, Clock, Star, BookmarkPlus, MessageCircle, ShoppingBag, Shuffle, RefreshCcw
+  Heart, Navigation, Clock, Star, BookmarkPlus, MessageCircle, ShoppingBag, Shuffle, RotateCw
 } from "lucide-react";
 import { useAuth } from '../contexts/AuthContext';
-import { getFirestore, collection, getDocs, doc, setDoc, deleteDoc } from 'firebase/firestore';
+import { getFirestore, collection, getDocs } from 'firebase/firestore';
 import { exhibitions } from '../data/exhibitions';
 import { ArtworkLightbox } from '../components/ArtworkLightbox';
 import { ProductModal } from '../components/ProductModal';
 import CommentModal from '../components/CommentModal';
 import { PlaylistModal } from '../components/PlaylistModal';
+import { createFirebaseWebPort } from '../adapters/firebaseWebAdapter';
+import { useLanguage } from "../contexts/LanguageContext";
+import { localizeCountryName } from "../i18n/geoLocalization";
+import { getExhibitionDisplayDescription, getExhibitionDisplayTitle } from "../i18n/exhibitionLocalization";
+import { getMuseumDisplayDescription, getMuseumDisplayName } from "../i18n/museumLocalization";
+import type { RecommendationMode, RecommendationResponse, RecommendedArtwork } from "../types/Recommendation";
 
 const WORKER = 'https://armin-semantic-search.armin-art.workers.dev';
+const firebaseWebPort = createFirebaseWebPort();
+
+type RecommendationCardItem = RecommendedArtwork & Record<string, any> & {
+  title?: string;
+  venue?: string;
+  museum?: string;
+  country?: string;
+  period?: string;
+  description?: string;
+  matchScore?: number | null;
+  matchPct?: number | null;
+  sourceCollection?: string;
+  officialUrl?: string;
+  detailUrl?: string;
+  isArtwork?: boolean;
+  distance?: number;
+  daysLeft?: number;
+  communityAvg?: number;
+  finalScore?: number;
+};
+
+type WorkerRecommendationRow = Partial<RecommendedArtwork> & Record<string, any> & {
+  i?: string;
+  n?: string;
+  a?: string;
+  m?: string;
+  e?: string;
+  c?: string;
+  d?: string;
+  u?: string;
+  y?: string | number;
+  desc?: string;
+  museum?: string;
+  venue?: string;
+  imageUrl?: string;
+  sourceCollection?: string;
+  officialUrl?: string;
+  sourceUrl?: string;
+  link?: string;
+  year?: string | number;
+};
+
+type LikedArtworkRecord = {
+  id?: string;
+  artworkId?: string;
+  semanticId?: string;
+  artist?: string;
+  a?: string;
+  museumName?: string;
+  museum?: string;
+  venue?: string;
+  likedAt?: number | { seconds?: number };
+};
 
 // ─── 유틸 ──────────────────────────────────────────────────
-function haversineKm(lat1, lon1, lat2, lon2) {
+function haversineKm(lat1: number, lon1: number, lat2: number, lon2: number) {
   const R = 6371;
   const dLat = (lat2 - lat1) * Math.PI / 180;
   const dLon = (lon2 - lon1) * Math.PI / 180;
@@ -24,12 +83,12 @@ function haversineKm(lat1, lon1, lat2, lon2) {
   return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 }
 
-function cosineSim(a, b) {
+function cosineSim(a: number[] | null | undefined, b: number[] | null | undefined) {
   if (!a?.length || !b?.length || a.length !== b.length) return 0;
   return a.reduce((s, v, i) => s + v * b[i], 0);
 }
 
-function normalizeMetaKey(value) {
+function normalizeMetaKey(value: unknown) {
   if (!value) return '';
   return String(value).trim().toLowerCase();
 }
@@ -39,17 +98,17 @@ function normalizeArtworkIdForFirestore(value: unknown) {
 }
 
 const museumCountryIndex = (() => {
-  const museumToCountry = new Map();
-  const collectionToCountry = new Map();
+  const museumToCountry = new Map<string, string>();
+  const collectionToCountry = new Map<string, string>();
 
-  for (const museum of exhibitions) {
-    const country = museum?.country || '';
+  for (const museum of exhibitions as unknown as Array<Record<string, unknown>>) {
+    const country = String(museum?.country || '');
     const keys = [museum?.id, museum?.slug, museum?.name, museum?.name_en].filter(Boolean);
     for (const key of keys) {
       museumToCountry.set(normalizeMetaKey(key), country);
     }
 
-    for (const p of (museum?.permanentExhibitions || [])) {
+    for (const p of ((museum?.permanentExhibitions || []) as Array<Record<string, unknown>>)) {
       const collectionKeys = [
         p?.id,
         typeof p?.collectionFile === 'string' ? p.collectionFile.replace(/\.json$/i, '') : '',
@@ -63,7 +122,7 @@ const museumCountryIndex = (() => {
   return { museumToCountry, collectionToCountry };
 })();
 
-function resolveCountryFromMeta(museumName, collectionId) {
+function resolveCountryFromMeta(museumName: unknown, collectionId: unknown) {
   const mKey = normalizeMetaKey(museumName);
   if (mKey && museumCountryIndex.museumToCountry.has(mKey)) {
     return museumCountryIndex.museumToCountry.get(mKey) || '';
@@ -77,11 +136,11 @@ function resolveCountryFromMeta(museumName, collectionId) {
   return '';
 }
 
-function buildSearchUrl(query) {
-  return `https://www.google.com/search?q=${encodeURIComponent(query)}`;
+function buildSearchUrl(query: unknown) {
+  return `https://www.google.com/search?q=${encodeURIComponent(String(query || ''))}`;
 }
 
-function resolveExhibitionDetailUrl(museumName, title, rawUrl) {
+function resolveExhibitionDetailUrl(museumName: unknown, title: unknown, rawUrl: unknown) {
   const trimmedUrl = typeof rawUrl === 'string' ? rawUrl.trim() : '';
   if (!trimmedUrl) {
     return buildSearchUrl(`${museumName || ''} ${title || ''} 전시`);
@@ -94,14 +153,71 @@ function resolveExhibitionDetailUrl(museumName, title, rawUrl) {
   return trimmedUrl;
 }
 
-function resolveArtworkDetailUrl(title, artist, museumName, rawUrl) {
+function resolveArtworkDetailUrl(title: unknown, artist: unknown, museumName: unknown, rawUrl: unknown) {
   const trimmedUrl = typeof rawUrl === 'string' ? rawUrl.trim() : '';
   if (trimmedUrl) return trimmedUrl;
   return buildSearchUrl(`${title || ''} ${artist || ''} ${museumName || ''} artwork`);
 }
 
+type Translator = (copy: { ko: string; en: string }) => string;
+
+type ExhibitionDetailProps = {
+  ex: RecommendationCardItem | null;
+  t: boolean;
+  bg: string;
+  fg: string;
+  fgMed: string;
+  fgLow: string;
+  fgFaint: string;
+  divider: string;
+  imgFilter: string;
+  onClose: () => void;
+  isArtwork?: boolean;
+  tr: Translator;
+  language: string;
+};
+
+type CurationTabProps = {
+  t: boolean;
+  language: string;
+  tr: Translator;
+  fg: string;
+  fgLow: string;
+  fgMed: string;
+  fgFaint: string;
+  divider: string;
+  imgFilter: string;
+  onSelect: (ex: RecommendationCardItem) => void;
+  userArtworks: RecommendationCardItem[];
+  loading: boolean;
+  likedArtworkIds: Set<string>;
+  onToggleLike: (artwork: RecommendationCardItem) => void;
+  onOpenProduct: (artwork: RecommendationCardItem) => void;
+  onOpenComment: (artwork: RecommendationCardItem) => void;
+  onOpenPlaylist: (artwork: RecommendationCardItem) => void;
+  recommendMode: RecommendationMode;
+  onChangeRecommendMode: (mode: RecommendationMode) => void;
+  randomArtworks: RecommendationCardItem[];
+  randomLoading: boolean;
+  onRefreshRandom: () => void;
+};
+
+type NearbyTabProps = {
+  t: boolean;
+  fg: string;
+  fgLow: string;
+  fgFaint: string;
+  divider: string;
+  imgFilter: string;
+  onSelect: (ex: RecommendationCardItem) => void;
+  nearbyExhibitions: RecommendationCardItem[];
+  loading: boolean;
+  language: string;
+  tr: Translator;
+};
+
 // ─── Exhibition Detail Sheet ────────────────────────────────
-function ExhibitionDetail({ ex, t, bg, fg, fgMed, fgLow, fgFaint, divider, imgFilter, onClose, isArtwork }) {
+function ExhibitionDetail({ ex, t, bg, fg, fgMed, fgLow, fgFaint: _fgFaint, divider, imgFilter, onClose, isArtwork, tr, language }: ExhibitionDetailProps) {
   if (!ex) return null;
   const safeImg = ex.image || 'https://via.placeholder.com/400x500?text=No+Image';
   return (
@@ -151,12 +267,12 @@ function ExhibitionDetail({ ex, t, bg, fg, fgMed, fgLow, fgFaint, divider, imgFi
         <div style={{ padding: "0 24px 110px", marginTop: -20, position: "relative", zIndex: 5 }}>
           {ex.finalScore !== undefined && ex.finalScore !== null && (
             <div style={{ display: "inline-block", padding: "4px 9px", borderRadius: 999, backgroundColor: "#BFFF0A", color: "#000", fontSize: 10, fontWeight: 700, fontFamily: "'Space Mono', monospace", marginBottom: 16 }}>
-              AI 모델 추천 등급 {(ex.finalScore / 20).toFixed(1)}
+              {tr({ ko: 'AI 모델 추천 등급', en: 'AI Recommendation Score' })} {(ex.finalScore / 20).toFixed(1)}
             </div>
           )}
 
           <div style={{ fontSize: 11, fontWeight: 600, letterSpacing: "0.15em", color: fgMed, textTransform: "uppercase", marginBottom: 8 }}>
-            {ex.venue}
+            {String(ex.venue || '')}
           </div>
           <h2 style={{ fontSize: 24, fontWeight: 700, color: fg, lineHeight: 1.25, marginBottom: 20 }}>
             {ex.title}
@@ -169,7 +285,7 @@ function ExhibitionDetail({ ex, t, bg, fg, fgMed, fgLow, fgFaint, divider, imgFi
                   <Calendar size={15} color={fgMed} />
                 </div>
                 <div>
-                  <div style={{ fontSize: 10, color: fgLow, marginBottom: 2 }}>{isArtwork ? 'Year' : 'Date'}</div>
+                  <div style={{ fontSize: 10, color: fgLow, marginBottom: 2 }}>{isArtwork ? tr({ ko: '연도', en: 'Year' }) : tr({ ko: '기간', en: 'Date' })}</div>
                   <div style={{ fontSize: 13, color: fg, fontWeight: 500 }}>{ex.period}</div>
                 </div>
               </div>
@@ -180,7 +296,7 @@ function ExhibitionDetail({ ex, t, bg, fg, fgMed, fgLow, fgFaint, divider, imgFi
                   <MapPin size={15} color={fgMed} />
                 </div>
                 <div>
-                  <div style={{ fontSize: 10, color: fgLow, marginBottom: 2 }}>Distance</div>
+                  <div style={{ fontSize: 10, color: fgLow, marginBottom: 2 }}>{tr({ ko: '거리', en: 'Distance' })}</div>
                   <div style={{ fontSize: 13, color: fg, fontWeight: 500 }}>{ex.distance}km</div>
                 </div>
               </div>
@@ -191,7 +307,7 @@ function ExhibitionDetail({ ex, t, bg, fg, fgMed, fgLow, fgFaint, divider, imgFi
                   <Star size={15} color={fgMed} />
                 </div>
                 <div>
-                  <div style={{ fontSize: 10, color: fgLow, marginBottom: 2 }}>Community Rating</div>
+                  <div style={{ fontSize: 10, color: fgLow, marginBottom: 2 }}>{tr({ ko: '커뮤니티 평점', en: 'Community Rating' })}</div>
                   <div style={{ fontSize: 13, color: fg, fontWeight: 500 }}>{ex.communityAvg.toFixed(1)} / 5.0</div>
                 </div>
               </div>
@@ -200,7 +316,7 @@ function ExhibitionDetail({ ex, t, bg, fg, fgMed, fgLow, fgFaint, divider, imgFi
 
           {ex.description && (
             <div style={{ marginBottom: 32 }}>
-              <div style={{ fontSize: 11, fontWeight: 600, letterSpacing: "0.1em", color: fgMed, textTransform: "uppercase", marginBottom: 10 }}>About</div>
+              <div style={{ fontSize: 11, fontWeight: 600, letterSpacing: "0.1em", color: fgMed, textTransform: language === 'ko' ? 'none' : 'uppercase', marginBottom: 10 }}>{tr({ ko: '설명', en: 'About' })}</div>
               <p style={{ fontSize: 13, color: fgLow, lineHeight: 1.7 }}>
                 {ex.description}
               </p>
@@ -220,7 +336,7 @@ function ExhibitionDetail({ ex, t, bg, fg, fgMed, fgLow, fgFaint, divider, imgFi
               window.open(targetUrl, '_blank', 'noopener,noreferrer');
             }}>
               <Navigation size={14} />
-              자세히 보기
+              {tr({ ko: '자세히 보기', en: 'View Details' })}
             </button>
 
             <button style={{
@@ -240,10 +356,12 @@ function ExhibitionDetail({ ex, t, bg, fg, fgMed, fgLow, fgFaint, divider, imgFi
 // ─── Curation Tab ───────────────────────────────────────────
 function CurationTab({
   t,
+  language,
+  tr,
   fg,
   fgLow,
   fgMed,
-  fgFaint,
+  fgFaint: _fgFaint,
   divider,
   imgFilter,
   onSelect,
@@ -259,7 +377,7 @@ function CurationTab({
   randomArtworks,
   randomLoading,
   onRefreshRandom,
-}) {
+}: CurationTabProps) {
   const isRandomMode = recommendMode === 'random';
   const isLoading = isRandomMode ? randomLoading : loading;
   const displayArtworks = isRandomMode ? randomArtworks : userArtworks;
@@ -267,7 +385,9 @@ function CurationTab({
   if (isLoading) {
     return (
       <div style={{ padding: 40, textAlign: 'center', color: fgLow, fontSize: 12 }}>
-        {isRandomMode ? '랜덤 추천을 불러오는 중입니다...' : '취향 맞춤 추천을 불러오는 중입니다...'}
+        {isRandomMode
+          ? tr({ ko: '랜덤 추천을 불러오는 중입니다...', en: 'Loading random recommendations...' })
+          : tr({ ko: '취향 맞춤 추천을 불러오는 중입니다...', en: 'Loading personalized recommendations...' })}
       </div>
     );
   }
@@ -276,8 +396,8 @@ function CurationTab({
     return (
       <div style={{ padding: 40, textAlign: 'center', color: fgLow, fontSize: 12 }}>
         {isRandomMode
-          ? '랜덤 추천 결과가 없습니다. 다시 뽑기를 눌러보세요.'
-          : '추천할 작품이 없습니다. 작품에 좋아요를 눌러 취향을 알려주세요!'}
+          ? tr({ ko: '랜덤 추천 결과가 없습니다. 다시 뽑기를 눌러보세요.', en: 'No random results. Try reshuffling.' })
+          : tr({ ko: '추천할 작품이 없습니다. 작품에 좋아요를 눌러 취향을 알려주세요!', en: 'No recommendations yet. Like artworks to train your taste.' })}
       </div>
     );
   }
@@ -316,7 +436,7 @@ function CurationTab({
                 }}
               >
                 <Sparkles size={12} strokeWidth={2.1} />
-                맞춤 추천
+                {tr({ ko: '맞춤 추천', en: 'Taste Match' })}
               </button>
 
               <button
@@ -338,7 +458,7 @@ function CurationTab({
                 }}
               >
                 <Shuffle size={12} strokeWidth={2.1} />
-                랜덤 추천
+                {tr({ ko: '랜덤 추천', en: 'Random Picks' })}
               </button>
             </div>
 
@@ -360,23 +480,26 @@ function CurationTab({
                 borderRadius: 10,
                 border: `1px solid ${divider}`,
                 background: t ? 'rgba(0,0,0,0.05)' : 'rgba(255,255,255,0.08)',
-                color: fg,
+                color: t ? 'rgba(0,0,0,0.74)' : '#BFFF0A',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
                 cursor: 'pointer',
                 flexShrink: 0,
               }}
-              title="다시 뽑기"
+              title={tr({ ko: '다시 뽑기', en: 'Reshuffle' })}
             >
-              <RefreshCcw size={14} strokeWidth={2.2} />
+              <RotateCw size={15} strokeWidth={2.4} color={t ? '#111' : '#BFFF0A'} />
+              <span style={{ position: 'absolute', opacity: 0, pointerEvents: 'none' }}>↻</span>
             </button>
           )}
         </div>
 
         <h2 style={{ fontSize: 18, fontWeight: 700, letterSpacing: "-0.01em", color: fg, marginBottom: 12, display: "flex", alignItems: "center", gap: 8 }}>
           {isRandomMode ? <Shuffle size={16} color={t ? "#5A7800" : "#BFFF0A"} /> : <Sparkles size={16} color={t ? "#5A7800" : "#BFFF0A"} />}
-          {isRandomMode ? '완전 랜덤 추천' : 'AI 취향 맞춤 추천'}
+          {isRandomMode
+            ? tr({ ko: '완전 랜덤 추천', en: 'Pure Random Picks' })
+            : tr({ ko: 'AI 취향 맞춤 추천', en: 'AI Taste Recommendations' })}
         </h2>
 
         <div style={{ display: "grid", gridTemplateColumns: "repeat(3, minmax(0, 1fr))", gap: 10 }}>
@@ -399,7 +522,7 @@ function CurationTab({
                   <img src={ex.image || 'https://via.placeholder.com/300x400?text=No+Image'} alt={ex.title} style={{ width: "100%", height: "100%", objectFit: "cover", filter: imgFilter }} onError={(e) => { e.currentTarget.src = 'https://via.placeholder.com/300x400?text=No+Image'; }} />
                   <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 60%)" }} />
                   {typeof ex.matchScore === 'number' && (
-                    <div style={{ position: "absolute", top: 8, right: 8, backgroundColor: "rgba(0,0,0,0.45)", backdropFilter: "blur(8px)", padding: "4px 8px", borderRadius: 999, color: ex.matchPct >= 90 ? "#BFFF0A" : "#fff", fontSize: 9, fontWeight: 700, fontFamily: "'Space Mono', monospace" }}>
+                      <div style={{ position: "absolute", top: 8, right: 8, backgroundColor: "rgba(0,0,0,0.45)", backdropFilter: "blur(8px)", padding: "4px 8px", borderRadius: 999, color: Number(ex.matchPct ?? 0) >= 90 ? "#BFFF0A" : "#fff", fontSize: 9, fontWeight: 700, fontFamily: "'Space Mono', monospace" }}>
                       {(Math.max(0, Math.min(1, ex.matchScore)) * 100).toFixed(0)}%
                     </div>
                   )}
@@ -408,7 +531,7 @@ function CurationTab({
                     <button
                       onClick={(event) => { event.stopPropagation(); onOpenProduct(ex); }}
                       style={{ width: 29, height: 29, borderRadius: "50%", border: "none", background: "rgba(0,0,0,0.58)", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", padding: 0 }}
-                      title="굿즈 구매"
+                      title={tr({ ko: '굿즈 구매', en: 'Buy Prints' })}
                     >
                       <ShoppingBag size={13} strokeWidth={2.1} />
                     </button>
@@ -416,7 +539,7 @@ function CurationTab({
                     <button
                       onClick={(event) => { event.stopPropagation(); onOpenComment(ex); }}
                       style={{ width: 29, height: 29, borderRadius: "50%", border: "none", background: "rgba(0,0,0,0.58)", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", padding: 0 }}
-                      title="댓글"
+                      title={tr({ ko: '댓글', en: 'Comments' })}
                     >
                       <MessageCircle size={13} strokeWidth={2.1} />
                     </button>
@@ -424,7 +547,7 @@ function CurationTab({
                     <button
                       onClick={(event) => { event.stopPropagation(); onOpenPlaylist(ex); }}
                       style={{ width: 29, height: 29, borderRadius: "50%", border: "none", background: "rgba(0,0,0,0.58)", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", padding: 0 }}
-                      title="플레이리스트"
+                      title={tr({ ko: '플레이리스트', en: 'Playlist' })}
                     >
                       <BookmarkPlus size={13} strokeWidth={2.2} />
                     </button>
@@ -432,7 +555,7 @@ function CurationTab({
                     <button
                       onClick={(event) => { event.stopPropagation(); onToggleLike(ex); }}
                       style={{ width: 29, height: 29, borderRadius: "50%", border: "none", background: "rgba(0,0,0,0.58)", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", padding: 0 }}
-                      title="좋아요"
+                      title={tr({ ko: '좋아요', en: 'Like' })}
                     >
                       <Heart
                         size={14}
@@ -446,13 +569,13 @@ function CurationTab({
                 {/* Meta */}
                 <div style={{ marginTop: 8 }}>
                   <div style={{ fontSize: 10, color: fgLow, marginBottom: 4, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-                    {ex.museum || ex.venue}{ex.country ? ` · ${ex.country}` : ''}
+                    {String(ex.museum || ex.venue || '')}{ex.country ? ` · ${localizeCountryName(ex.country, language as any)}` : ''}
                   </div>
                   <div style={{ fontSize: 13, fontWeight: 700, color: fg, lineHeight: 1.3, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>
                     {ex.title}
                   </div>
                   <div style={{ marginTop: 4, fontSize: 11, color: fgMed, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
-                    {ex.artist || 'Unknown Artist'}
+                    {ex.artist || tr({ ko: '알 수 없는 작가', en: 'Unknown Artist' })}
                   </div>
                 </div>
               </div>
@@ -465,18 +588,18 @@ function CurationTab({
 }
 
 // ─── Nearby Tab ─────────────────────────────────────────────
-function NearbyTab({ t, fg, fgLow, fgFaint, divider, imgFilter, onSelect, nearbyExhibitions, loading }) {
+function NearbyTab({ t, fg, fgLow, fgFaint, divider, imgFilter, onSelect, nearbyExhibitions, loading, language, tr }: NearbyTabProps) {
   const [sortMode, setSortMode] = useState("taste");
 
   if (loading) {
-    return <div style={{ padding: 40, textAlign: 'center', color: fgLow, fontSize: 12 }}>Loading Nearby...</div>;
+    return <div style={{ padding: 40, textAlign: 'center', color: fgLow, fontSize: 12 }}>{tr({ ko: '주변 전시를 불러오는 중입니다...', en: 'Loading nearby exhibitions...' })}</div>;
   }
 
   const SORT_LABELS = [
-    { id: "taste", label: "취향맞춤순" },
-    { id: "distance", label: "거리순" },
-    { id: "popular", label: "평점순" },
-    { id: "deadline", label: "마감임박" },
+    { id: "taste", label: tr({ ko: '취향맞춤순', en: 'Taste Match' }) },
+    { id: "distance", label: tr({ ko: '거리순', en: 'Distance' }) },
+    { id: "popular", label: tr({ ko: '평점순', en: 'Top Rated' }) },
+    { id: "deadline", label: tr({ ko: '마감임박', en: 'Ending Soon' }) },
   ];
 
   const sortedAll = useMemo(() => {
@@ -505,7 +628,7 @@ function NearbyTab({ t, fg, fgLow, fgFaint, divider, imgFilter, onSelect, nearby
               }}>{s.label}</button>
           );
         })}
-        <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 8, color: fgFaint, marginLeft: "auto", flexShrink: 0 }}>{sortedAll.length}개</span>
+        <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 8, color: fgFaint, marginLeft: "auto", flexShrink: 0 }}>{sortedAll.length}{language === 'ko' ? '개' : ''}</span>
       </div>
 
       {/* 3-column grid */}
@@ -526,19 +649,19 @@ function NearbyTab({ t, fg, fgLow, fgFaint, divider, imgFilter, onSelect, nearby
               <div style={{ position: "absolute", bottom: 8, right: 8, display: "flex", flexDirection: "column", gap: 5, alignItems: "flex-end" }}>
                 {ex.finalScore !== null && ex.finalScore !== undefined && (
                    <span style={{ background: "rgba(191,255,10,0.95)", color: "#000", padding: "3px 6px", borderRadius: 4, fontSize: 9.5, fontWeight: 700, fontFamily: "'Space Mono', monospace" }}>
-                     예상 {(ex.finalScore / 20).toFixed(1)}
+                     {tr({ ko: '예상', en: 'Pred' })} {(ex.finalScore / 20).toFixed(1)}
                    </span>
                 )}
                 {ex.communityAvg !== null && ex.communityAvg !== undefined && (
                    <span style={{ background: "rgba(255,255,255,0.9)", color: "#000", padding: "3px 6px", borderRadius: 4, fontSize: 9.5, fontWeight: 700, fontFamily: "'Space Mono', monospace" }}>
-                     평점 {(ex.communityAvg).toFixed(1)}
+                     {tr({ ko: '평점', en: 'Rate' })} {(ex.communityAvg).toFixed(1)}
                    </span>
                 )}
               </div>
             </div>
             {/* Info */}
             <div style={{ padding: "10px 8px", backgroundColor: t ? "rgba(0,0,0,0.02)" : "rgba(255,255,255,0.02)" }}>
-              <div style={{ fontSize: 10, color: fgLow, marginBottom: 4, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{ex.venue}</div>
+              <div style={{ fontSize: 10, color: fgLow, marginBottom: 4, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{String(ex.venue || '')}</div>
               <div style={{ fontSize: 13, fontWeight: 700, color: fg, lineHeight: 1.25, marginBottom: 6, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>{ex.title}</div>
               <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
                 <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: fgFaint, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{ex.period}</div>
@@ -559,6 +682,9 @@ function NearbyTab({ t, fg, fgLow, fgFaint, divider, imgFilter, onSelect, nearby
 
 // ─── Main Component ─────────────────────────────────────────
 export default function AICurationHubPage() {
+  const { language } = useLanguage();
+  const tr = useCallback((copy: { ko: string; en: string }) => (language === 'ko' ? copy.ko : copy.en), [language]);
+
   const [isDark, setIsDark] = useState(() => {
     try { return localStorage.getItem('homeTheme') !== 'light'; } catch { return true; }
   });
@@ -575,13 +701,6 @@ export default function AICurationHubPage() {
     };
   }, []);
 
-  const toggleTheme = () => {
-    const next = isDark ? 'light' : 'dark';
-    localStorage.setItem('homeTheme', next);
-    window.dispatchEvent(new Event('theme-changed'));
-    setIsDark(!isDark);
-  };
-
   const t = !isDark;
   const bg      = t ? "#FAFAFA" : "#080808";
   const fg      = t ? "rgba(0,0,0,0.88)" : "rgba(255,255,255,0.88)";
@@ -593,39 +712,39 @@ export default function AICurationHubPage() {
   const imgFilter = "none";
 
   const [activeTab, setActiveTab] = useState("curation");
-  const [selectedEx, setSelectedEx] = useState(null);
-  const [recommendMode, setRecommendMode] = useState<'taste' | 'random'>('taste');
+  const [selectedEx, setSelectedEx] = useState<RecommendationCardItem | null>(null);
+  const [recommendMode, setRecommendMode] = useState<RecommendationMode>('taste');
 
   // ─── Data Fetching ───
   const { user } = useAuth();
-  const [userArtworks, setUserArtworks] = useState([]);
+  const [userArtworks, setUserArtworks] = useState<RecommendationCardItem[]>([]);
   const [curationLoading, setCurationLoading] = useState(true);
-  const [randomArtworks, setRandomArtworks] = useState<any[]>([]);
+  const [randomArtworks, setRandomArtworks] = useState<RecommendationCardItem[]>([]);
   const [randomLoading, setRandomLoading] = useState(false);
   const [randomWorkerReady, setRandomWorkerReady] = useState(false);
   const randomWorkerRef = useRef<Worker | null>(null);
 
-  const [nearbyExhibitions, setNearbyExhibitions] = useState([]);
+  const [nearbyExhibitions, setNearbyExhibitions] = useState<RecommendationCardItem[]>([]);
   const [nearbyLoading, setNearbyLoading] = useState(true);
 
-  const [lightboxArtwork, setLightboxArtwork] = useState<any>(null);
+  const [lightboxArtwork, setLightboxArtwork] = useState<RecommendationCardItem | null>(null);
   const [likedArtworkIds, setLikedArtworkIds] = useState<Set<string>>(new Set());
-  const [commentArtwork, setCommentArtwork] = useState<any | null>(null);
-  const [productArtwork, setProductArtwork] = useState<any | null>(null);
-  const [playlistArtwork, setPlaylistArtwork] = useState<any | null>(null);
+  const [commentArtwork, setCommentArtwork] = useState<RecommendationCardItem | null>(null);
+  const [productArtwork, setProductArtwork] = useState<RecommendationCardItem | null>(null);
+  const [playlistArtwork, setPlaylistArtwork] = useState<RecommendationCardItem | null>(null);
 
-  const [tasteVector, setTasteVector] = useState(null);
-  const [exhStatsMap, setExhStatsMap] = useState({});
+  const [tasteVector] = useState<number[] | null>(null);
+  const [exhStatsMap, setExhStatsMap] = useState<Record<string, any>>({});
   const [statsLoaded, setStatsLoaded] = useState(false);
 
-  const mapWorkerRandomArtwork = useCallback((row: any, index: number) => {
-    const img = row.i || row.image || row.imageUrl || row.url || '';
-    const title = row.n || row.name || 'Untitled';
-    const artist = row.a || row.artist || 'Unknown Artist';
-    const museum = row.m || row.museumName || row.venue || '';
-    const sourceCollection = row.e || row.sourceCollection || row.exhibitionId || '';
-    const country = row.c || row.country || resolveCountryFromMeta(museum, sourceCollection);
-    const rawUrl = row.u || row.sourceUrl || row.officialUrl || row.url || '';
+  const mapWorkerRandomArtwork = useCallback((row: WorkerRecommendationRow, index: number): RecommendationCardItem => {
+    const img = String(row.i || row.image || row.imageUrl || row.url || '');
+    const title = String(row.n || row.name || 'Untitled');
+    const artist = String(row.a || row.artist || 'Unknown Artist');
+    const museum = String(row.m || row.museumName || row.venue || '');
+    const sourceCollection = String(row.e || row.sourceCollection || row.exhibitionId || '');
+    const country = String(row.c || row.country || resolveCountryFromMeta(museum, sourceCollection));
+    const rawUrl = String(row.u || row.sourceUrl || row.officialUrl || row.url || '');
 
     return {
       id: String(row.id || `random-${index}`),
@@ -665,8 +784,8 @@ export default function AICurationHubPage() {
 
       if (type === 'RANDOM_ARTWORKS') {
         const mapped = (Array.isArray(results) ? results : [])
-          .map((row: any, index: number) => mapWorkerRandomArtwork(row, index))
-          .filter((item: any) => typeof item.image === 'string' && item.image.trim().length > 0);
+          .map((row: WorkerRecommendationRow, index: number) => mapWorkerRandomArtwork(row, index))
+          .filter((item: RecommendationCardItem) => typeof item.image === 'string' && item.image.trim().length > 0);
         setRandomArtworks(mapped);
         setRandomLoading(false);
       }
@@ -686,22 +805,22 @@ export default function AICurationHubPage() {
     requestRandomArtworks(36);
   }, [recommendMode, randomArtworks.length, randomWorkerReady, requestRandomArtworks]);
 
-  const normalizeArtworkForAction = useCallback((artwork: any) => ({
+  const normalizeArtworkForAction = useCallback((artwork: RecommendationCardItem) => ({
     id: String(artwork?.id || ''),
     artworkId: String(artwork?.id || ''),
     title: artwork?.title || artwork?.name || 'Untitled',
     name: artwork?.title || artwork?.name || 'Untitled',
     artist: artwork?.artist || 'Unknown',
     image: artwork?.image || artwork?.i || '',
-    i: artwork?.image || artwork?.i || '',
-    year: artwork?.period || artwork?.year || '',
+    i: String(artwork?.image || artwork?.i || ''),
+    year: String(artwork?.period || artwork?.year || ''),
     museumName: artwork?.museum || artwork?.venue || '',
     country: artwork?.country || '',
     sourceCollection: artwork?.sourceCollection || '',
     officialUrl: artwork?.officialUrl || artwork?.detailUrl || '',
   }), []);
 
-  const handleToggleArtworkLike = useCallback(async (artwork: any) => {
+  const handleToggleArtworkLike = useCallback(async (artwork: RecommendationCardItem) => {
     if (!user) return;
     const normalized = normalizeArtworkForAction(artwork);
     const rawArtworkId = String(normalized.id || '').trim();
@@ -709,12 +828,10 @@ export default function AICurationHubPage() {
     const safeArtworkId = normalizeArtworkIdForFirestore(rawArtworkId);
 
     try {
-      const db = getFirestore();
-      const ref = doc(db, `users/${user.uid}/liked_artworks/${safeArtworkId}`);
       const alreadyLiked = likedArtworkIds.has(rawArtworkId) || likedArtworkIds.has(safeArtworkId);
 
       if (alreadyLiked) {
-        await deleteDoc(ref);
+        await firebaseWebPort.likes.removeLikedArtwork(user.uid, rawArtworkId);
         setLikedArtworkIds((prev) => {
           const next = new Set(prev);
           next.delete(rawArtworkId);
@@ -722,7 +839,7 @@ export default function AICurationHubPage() {
           return next;
         });
       } else {
-        await setDoc(ref, {
+        await firebaseWebPort.likes.setLikedArtwork(user.uid, rawArtworkId, {
           artworkId: rawArtworkId,
           title: normalized.title,
           name: normalized.name,
@@ -735,7 +852,7 @@ export default function AICurationHubPage() {
           sourceCollection: normalized.sourceCollection,
           officialUrl: normalized.officialUrl,
           likedAt: Date.now(),
-        }, { merge: true });
+        });
         setLikedArtworkIds((prev) => {
           const next = new Set(prev);
           next.add(rawArtworkId);
@@ -759,9 +876,9 @@ export default function AICurationHubPage() {
       try {
         const db = getFirestore();
         const snap = await getDocs(collection(db, `users/${user.uid}/liked_artworks`));
-        const likedData = snap.docs.map(d => ({id: d.id, ...d.data()}));
+        const likedData: LikedArtworkRecord[] = snap.docs.map((d) => ({ id: d.id, ...(d.data() as object) } as LikedArtworkRecord));
         const likedIdsForUi = new Set<string>();
-        likedData.forEach((item: any) => {
+        likedData.forEach((item: LikedArtworkRecord) => {
           const docId = String(item?.id || '').trim();
           const rawArtworkId = String(item?.artworkId || item?.semanticId || '').trim();
           if (docId) likedIdsForUi.add(docId);
@@ -771,13 +888,13 @@ export default function AICurationHubPage() {
         setLikedArtworkIds(likedIdsForUi);
 
         const rawCandidateIds = Array.from(new Set(
-          likedData.flatMap((item: any) => [
+          likedData.flatMap((item: LikedArtworkRecord) => [
             item?.semanticId,
             item?.artworkId,
             item?.id,
             typeof item?.id === 'string' ? item.id.replace(/__/g, '/') : null,
-          ]).filter((value: any) => value !== null && value !== undefined && String(value).trim() !== '')
-            .map((value: any) => String(value).trim())
+          ]).filter((value: unknown) => value !== null && value !== undefined && String(value).trim() !== '')
+            .map((value: unknown) => String(value).trim())
         ));
 
         if (rawCandidateIds.length < 1) {
@@ -788,15 +905,19 @@ export default function AICurationHubPage() {
         const likedIds = rawCandidateIds;
 
         const rankedSeedCandidates = likedData
-          .map((item: any) => {
+          .map((item: LikedArtworkRecord) => {
             const seedId = String(item?.semanticId || item?.artworkId || item?.id || '').trim();
             const artistKey = normalizeMetaKey(item?.artist || item?.a || 'unknown');
             const museumKey = normalizeMetaKey(item?.museumName || item?.museum || item?.venue || 'unknown');
-            const likedAtMs = Number(item?.likedAt?.seconds || 0) * 1000 || Number(item?.likedAt || 0) || 0;
+            const likedAtValue = item?.likedAt;
+            const likedAtMs =
+              typeof likedAtValue === 'object' && likedAtValue !== null && 'seconds' in likedAtValue
+                ? Number((likedAtValue as { seconds?: number }).seconds || 0) * 1000
+                : Number(likedAtValue || 0) || 0;
             return { seedId, artistKey, museumKey, likedAtMs };
           })
-          .filter((item: any) => item.seedId.length > 0)
-          .sort((a: any, b: any) => b.likedAtMs - a.likedAtMs);
+          .filter((item: { seedId: string }) => item.seedId.length > 0)
+          .sort((a: { likedAtMs: number }, b: { likedAtMs: number }) => b.likedAtMs - a.likedAtMs);
 
         const diverseSeeds: string[] = [];
         const seenSeed = new Set<string>();
@@ -825,7 +946,7 @@ export default function AICurationHubPage() {
           }
         }
 
-        let fetchedResults = [];
+        let fetchedResults: WorkerRecommendationRow[] = [];
 
         try {
             const recRes = await fetch(`${WORKER}/recommend`, {
@@ -834,13 +955,13 @@ export default function AICurationHubPage() {
               body: JSON.stringify({ userId: user.uid, likedIds: likedIds.slice(-80), limit: 90 }),
             });
             if (recRes.ok) {
-               const data = await recRes.json();
-               if (data.results) fetchedResults = data.results;
+               const data = (await recRes.json()) as Partial<RecommendationResponse>;
+               if (Array.isArray(data.results)) fetchedResults = data.results as WorkerRecommendationRow[];
             }
         } catch (_error) {}
 
-        const merged = new Map();
-        const addMergedRow = (row: any, boost: number) => {
+             const merged = new Map<string, { row: WorkerRecommendationRow; score: number; freq: number }>();
+             const addMergedRow = (row: WorkerRecommendationRow, boost: number) => {
           const rowId = String(row?.id || '');
           if (!rowId) return;
           const score = Number(row?.score || 0) + boost;
@@ -854,7 +975,7 @@ export default function AICurationHubPage() {
           }
         };
 
-        fetchedResults.forEach((row: any, rank: number) => {
+        fetchedResults.forEach((row: WorkerRecommendationRow, rank: number) => {
           const rankBoost = Math.max(0, 0.02 - rank * 0.0005);
           addMergedRow(row, rankBoost);
         });
@@ -873,8 +994,8 @@ export default function AICurationHubPage() {
             if (res.status !== 'fulfilled' || !res.value.ok) continue;
             try {
               const payload = await res.value.json();
-              const rows = Array.isArray(payload?.results) ? payload.results : [];
-              rows.forEach((row: any, rank: number) => {
+              const rows = Array.isArray(payload?.results) ? (payload.results as WorkerRecommendationRow[]) : [];
+              rows.forEach((row: WorkerRecommendationRow, rank: number) => {
                 const rankBoost = Math.max(0, 0.03 - rank * 0.001);
                 addMergedRow(row, rankBoost);
               });
@@ -885,18 +1006,18 @@ export default function AICurationHubPage() {
         }
 
         fetchedResults = Array.from(merged.values())
-          .sort((a: any, b: any) => (b.score + b.freq * 0.02) - (a.score + a.freq * 0.02))
-          .map((entry: any) => entry.row);
+          .sort((a, b) => (b.score + b.freq * 0.02) - (a.score + a.freq * 0.02))
+          .map((entry) => entry.row);
 
         if (fetchedResults && fetchedResults.length > 0) {
-           const mappedArtworks = fetchedResults.map((r, i) => {
-             const img = r.i || r.image || r.imageUrl || r.url || '';
-             const title = r.n || r.name || 'Untitled';
-             const artist = r.a || r.artist || 'Unknown';
-             const museum = r.m || r.museum || r.venue || '';
-             const sourceCollection = r.e || r.sourceCollection || '';
-             const country = r.c || r.country || resolveCountryFromMeta(museum, sourceCollection);
-             const rawUrl = r.u || r.officialUrl || r.sourceUrl || r.link || '';
+           const mappedArtworks: RecommendationCardItem[] = fetchedResults.map((r, i) => {
+             const img = String(r.i || r.image || r.imageUrl || r.url || '');
+             const title = String(r.n || r.name || 'Untitled');
+             const artist = String(r.a || r.artist || 'Unknown');
+             const museum = String(r.m || r.museum || r.venue || '');
+             const sourceCollection = String(r.e || r.sourceCollection || '');
+             const country = String(r.c || r.country || resolveCountryFromMeta(museum, sourceCollection));
+             const rawUrl = String(r.u || r.officialUrl || r.sourceUrl || r.link || '');
              return {
                id: String(r.id || i),
                title,
@@ -904,7 +1025,7 @@ export default function AICurationHubPage() {
                venue: museum || 'Unknown Museum',
                museum,
                country,
-               period: r.year || r.y || '',
+               period: String(r.year || r.y || ''),
                image: img,
                description: r.desc || '',
                matchScore: Number(r.score || 0),
@@ -916,20 +1037,22 @@ export default function AICurationHubPage() {
              };
            }).filter(x => x && typeof x.image === 'string' && x.image.trim().length > 0);
            
-           const groupedByArtist = new Map<string, any[]>();
+           const groupedByArtist = new Map<string, RecommendationCardItem[]>();
            for (const item of mappedArtworks) {
              const artistKey = normalizeMetaKey(item.artist || 'unknown');
              if (!groupedByArtist.has(artistKey)) groupedByArtist.set(artistKey, []);
              groupedByArtist.get(artistKey)!.push(item);
            }
 
-           const interleaved: any[] = [];
+           const interleaved: RecommendationCardItem[] = [];
            let hasRemaining = true;
            while (hasRemaining && interleaved.length < 120) {
              hasRemaining = false;
              for (const [, rows] of groupedByArtist) {
                if (!rows.length) continue;
-               interleaved.push(rows.shift());
+               const nextRow = rows.shift();
+               if (!nextRow) continue;
+               interleaved.push(nextRow);
                hasRemaining = true;
                if (interleaved.length >= 120) break;
              }
@@ -971,13 +1094,13 @@ export default function AICurationHubPage() {
       try {
         const db = getFirestore();
         const snap = await getDocs(collection(db, 'exhibition_stats'));
-        const smap = {};
+        const smap: Record<string, any> = {};
         snap.forEach(d => {
             smap[d.id] = d.data();
         });
         setExhStatsMap(smap);
-      } catch (e: any) {
-        if (e.code !== 'permission-denied') {
+      } catch (e: unknown) {
+        if ((e as { code?: string })?.code !== 'permission-denied') {
           console.error("Failed to fetch exhibition stats", e);
         }
       } finally {
@@ -991,13 +1114,13 @@ export default function AICurationHubPage() {
   useEffect(() => {
     if (!statsLoaded) return; // wait for stats
     setNearbyLoading(true);
-    let uLat = null;
-    let uLng = null;
+    let uLat: number | null = null;
+    let uLng: number | null = null;
 
     const processExhibitions = () => {
         const results = [];
-        for (const m of exhibitions) {
-            for (const e of (m.temporaryExhibitions || [])) {
+        for (const m of exhibitions as any[]) {
+          for (const e of (m.temporaryExhibitions || []) as any[]) {
                 if (e.status === 'past') continue;
                 let dist = undefined;
                 if (uLat !== null && uLng !== null && m.latitude && m.longitude) {
@@ -1013,7 +1136,7 @@ export default function AICurationHubPage() {
                 let finalScore = 0;
                 
                 if (tasteVector && e.coverEmbedding) {
-                    const taste = cosineSim(tasteVector, e.coverEmbedding);
+                  const taste = cosineSim(tasteVector, e.coverEmbedding);
                     const ts = Math.round(Math.max(0, taste) * 100);
                     const ratingAdj = communityAvg > 0 ? (communityAvg - 3.0) * 5 : 0;
                     finalScore = Math.round(Math.min(100, Math.max(0, ts * 0.85 + ratingAdj * 0.15)));
@@ -1022,21 +1145,27 @@ export default function AICurationHubPage() {
                 }
 
                 const img = e.coverImage || '';
+                const localizedTitle = getExhibitionDisplayTitle(e as any, language);
+                const localizedMuseum = getMuseumDisplayName(m as any, language);
+                const localizedDescription = getExhibitionDisplayDescription(e as any, language) || getMuseumDisplayDescription(m as any, language) || '';
+                const localizedPeriod = e.endDate === "ongoing" || e.endDate === "TBD"
+                  ? `${e.startDate} - ${tr({ ko: '상시', en: 'Ongoing' })}`
+                  : `${e.startDate} - ${e.endDate}`;
                 
                 if (img) {
                     results.push({
                        id: e.id,
-                       title: e.title,
-                       venue: m.name,
+                       title: localizedTitle,
+                       venue: localizedMuseum,
                        image: img,
-                       period: e.endDate === "ongoing" || e.endDate === "TBD" ? e.startDate + " - 상시" : e.startDate + " - " + e.endDate,
+                       period: localizedPeriod,
                        distance: dist,
                        daysLeft: daysLeft,
                        communityAvg,
                        finalScore,
                         officialUrl: e.officialUrl || e.url || '',
-                        detailUrl: resolveExhibitionDetailUrl(m.name, e.title, e.officialUrl || e.url || ''),
-                       description: e.description,
+                        detailUrl: resolveExhibitionDetailUrl(localizedMuseum, localizedTitle, e.officialUrl || e.url || ''),
+                       description: localizedDescription,
                        isArtwork: false
                     });
                 }
@@ -1057,58 +1186,21 @@ export default function AICurationHubPage() {
     } else {
         processExhibitions();
     }
-  }, [exhStatsMap, tasteVector, statsLoaded]);
+  }, [exhStatsMap, language, statsLoaded, tasteVector, tr]);
 
   const tabProps = { t, fg, fgLow, fgMed, fgFaint, divider, imgFilter, onSelect: setSelectedEx };
 
   return (
     <div style={{ width: "100%", height: "100dvh", overflowY: "auto", backgroundColor: bg, fontFamily: "'Space Grotesk', sans-serif", color: fg }}>
       
-      {/* ── Global Theme Toggle (fixed bottom-left) ── */}
-      <motion.button
-        onClick={toggleTheme}
-        whileHover={{ scale: 1.08 }}
-        whileTap={{ scale: 0.94 }}
-        style={{
-          position: "fixed", bottom: 88, left: 20, zIndex: 50,
-          display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer",
-          width: 36, height: 36, borderRadius: "50%",
-          backgroundColor: t ? "rgba(0,0,0,0.07)" : "rgba(255,255,255,0.10)",
-          border: t ? "1px solid rgba(0,0,0,0.10)" : "1px solid rgba(255,255,255,0.12)",
-          backdropFilter: "blur(20px)",
-          WebkitBackdropFilter: "blur(20px)",
-          boxShadow: t ? "0 2px 12px rgba(0,0,0,0.08)" : "0 2px 12px rgba(0,0,0,0.40)",
-          color: t ? "rgba(0,0,0,0.60)" : "rgba(255,255,255,0.60)",
-        }}
-        title={t ? "Switch to Dark" : "Switch to Light"}
-      >
-        {t ? (
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
-          </svg>
-        ) : (
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-            <circle cx="12" cy="12" r="5"/>
-            <line x1="12" y1="1" x2="12" y2="3"/>
-            <line x1="12" y1="21" x2="12" y2="23"/>
-            <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"/>
-            <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"/>
-            <line x1="1" y1="12" x2="3" y2="12"/>
-            <line x1="21" y1="12" x2="23" y2="12"/>
-            <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"/>
-            <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"/>
-          </svg>
-        )}
-      </motion.button>
-
       {/* ── Header ── */}
       <div style={{ padding: "48px 20px 0" }}>
         <div style={{ display: "flex", alignItems: "center", gap: 7, marginBottom: 6 }}>
           <div style={{ width: 6, height: 6, backgroundColor: "#BFFF0A" }} />
-          <span style={{ fontSize: 9, letterSpacing: "0.28em", textTransform: "uppercase", color: fgFaint }}>Personal Curation</span>
+          <span style={{ fontSize: 9, letterSpacing: "0.28em", textTransform: language === 'ko' ? 'none' : 'uppercase', color: fgFaint }}>{tr({ ko: '개인 큐레이션', en: 'Personal Curation' })}</span>
         </div>
-        <h1 style={{ fontSize: "clamp(24px,6vw,36px)", letterSpacing: "-0.025em", color: fg, lineHeight: 1.15, marginBottom: 18 }}>
-          AI<br />Recommendation
+        <h1 style={{ fontSize: "clamp(24px,6vw,36px)", letterSpacing: "-0.025em", color: fg, lineHeight: 1.15, marginBottom: 18, whiteSpace: 'nowrap' }}>
+          {tr({ ko: 'AI 추천', en: 'AI Recommendation' })}
         </h1>
       </div>
 
@@ -1116,7 +1208,9 @@ export default function AICurationHubPage() {
       <div style={{ position: "sticky", top: 0, zIndex: 20, padding: "0 20px", backgroundColor: stickyBg, backdropFilter: "blur(20px)", WebkitBackdropFilter: "blur(20px)" }}>
         <div style={{ position: 'relative', display: "flex", gap: 0, borderBottom: `1px solid ${divider}` }}>
           {(["curation", "nearby"]).map((tab) => {
-            const label = tab === "curation" ? "나의 큐레이션" : "주변 전시";
+            const label = tab === "curation"
+              ? tr({ ko: '나의 큐레이션', en: 'My Curation' })
+              : tr({ ko: '주변 전시', en: 'Nearby Exhibitions' });
             const icon  = tab === "curation" ? <Sparkles size={11} strokeWidth={2} /> : <MapPin size={11} strokeWidth={2} />;
             const isActive = activeTab === tab;
             return (
@@ -1146,18 +1240,18 @@ export default function AICurationHubPage() {
           <motion.div key="curation"
             initial={{ opacity: 0, x: -12 }} animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -8 }} transition={{ duration: 0.2 }}>
-            <CurationTab {...tabProps} userArtworks={userArtworks} loading={curationLoading} 
+            <CurationTab {...tabProps} language={language} tr={tr} userArtworks={userArtworks} loading={curationLoading} 
                likedArtworkIds={likedArtworkIds}
-               onToggleLike={(artwork: any) => { void handleToggleArtworkLike(artwork); }}
-               onOpenProduct={(artwork: any) => setProductArtwork(normalizeArtworkForAction(artwork))}
-               onOpenComment={(artwork: any) => setCommentArtwork(normalizeArtworkForAction(artwork))}
-               onOpenPlaylist={(artwork: any) => setPlaylistArtwork(normalizeArtworkForAction(artwork))}
+               onToggleLike={(artwork: RecommendationCardItem) => { void handleToggleArtworkLike(artwork); }}
+               onOpenProduct={(artwork: RecommendationCardItem) => setProductArtwork(normalizeArtworkForAction(artwork))}
+               onOpenComment={(artwork: RecommendationCardItem) => setCommentArtwork(normalizeArtworkForAction(artwork))}
+               onOpenPlaylist={(artwork: RecommendationCardItem) => setPlaylistArtwork(normalizeArtworkForAction(artwork))}
                recommendMode={recommendMode}
                onChangeRecommendMode={setRecommendMode}
                randomArtworks={randomArtworks}
                randomLoading={randomLoading}
                onRefreshRandom={() => requestRandomArtworks(36)}
-               onSelect={(ex: any) => {
+               onSelect={(ex: RecommendationCardItem) => {
                  if (ex.isArtwork) {
                    setLightboxArtwork(ex);
                  } else {
@@ -1171,7 +1265,9 @@ export default function AICurationHubPage() {
             initial={{ opacity: 0, x: 12 }} animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: 8 }} transition={{ duration: 0.2 }}>
             <NearbyTab {...tabProps} nearbyExhibitions={nearbyExhibitions} loading={nearbyLoading} 
-               onSelect={(ex: any) => setSelectedEx(ex)} 
+               language={language}
+               tr={tr}
+               onSelect={(ex: RecommendationCardItem) => setSelectedEx(ex)} 
             />
           </motion.div>
         )}
@@ -1185,6 +1281,8 @@ export default function AICurationHubPage() {
             fgLow={fgLow} fgFaint={fgFaint} divider={divider} imgFilter={imgFilter}
             onClose={() => setSelectedEx(null)}
             isArtwork={selectedEx.isArtwork}
+            tr={tr}
+            language={language}
           />
         )}
       </AnimatePresence>
@@ -1198,8 +1296,8 @@ export default function AICurationHubPage() {
             event.stopPropagation();
             void handleToggleArtworkLike(artwork || lightboxArtwork);
           }}
-          onPurchase={(artwork: any) => setProductArtwork(normalizeArtworkForAction(artwork || lightboxArtwork))}
-          onSaveToPlaylist={(artwork: any) => setPlaylistArtwork(normalizeArtworkForAction(artwork || lightboxArtwork))}
+          onPurchase={(artwork: RecommendationCardItem) => setProductArtwork(normalizeArtworkForAction(artwork || lightboxArtwork))}
+          onSaveToPlaylist={(artwork: RecommendationCardItem) => setPlaylistArtwork(normalizeArtworkForAction(artwork || lightboxArtwork))}
           onClose={() => setLightboxArtwork(null)}
         />
       )}
@@ -1217,7 +1315,7 @@ export default function AICurationHubPage() {
             exhibitionTitle: '',
           }}
           onClose={() => setProductArtwork(null)}
-          onSelectArtwork={(nextArtwork: any) => setProductArtwork(normalizeArtworkForAction(nextArtwork))}
+          onSelectArtwork={(nextArtwork: RecommendationCardItem) => setProductArtwork(normalizeArtworkForAction(nextArtwork))}
         />
       )}
 

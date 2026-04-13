@@ -1,0 +1,31 @@
+# Exclude local install/build artifacts
+node_modules/
+.expo/
+dist/
+build/
+coverage/
+android/
+ios/
+
+# Keep source and config
+!App.tsx
+!app.json
+!babel.config.js
+!metro.config.js
+!package.json
+!package-lock.json
+!tsconfig.json
+!eas.json
+!.env
+!.env.example
+!README.md
+!adapters/
+!adapters/**
+!assets/
+!assets/**
+!src/
+!src/**
+!scripts/
+!scripts/**
+!store/
+!store/**

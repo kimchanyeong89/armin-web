@@ -1,901 +1,978 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import ReactDOM from 'react-dom';
 import { loadTossPayments } from '@tosspayments/payment-sdk';
+import { Minus, Plus, X } from 'lucide-react';
 import type { Artwork } from '../types/Artwork';
+import type { RecommendationResponse, RecommendedArtwork } from '../types/Recommendation';
 import { getWeservUrl } from '../utils/imageProxy';
+import { useCart } from '../contexts/CartContext';
+import {
+  PRODUCT_TYPES,
+  calculateSizesByRatio,
+  formatPrice,
+  getDynamicSizes,
+  getProductTypeById,
+  type ProductSizeOption,
+} from '../features/cart/productCatalog';
 
 interface ProductModalProps {
-    artwork: Artwork;
-    relatedArtworks?: Artwork[];
-    onSelectArtwork?: (artwork: Artwork) => void;
-    onClose: () => void;
+  artwork: Artwork;
+  relatedArtworks?: Artwork[];
+  onSelectArtwork?: (artwork: Artwork) => void;
+  onClose: () => void;
 }
 
 const WORKER_URL = 'https://armin-semantic-search.armin-art.workers.dev';
 
-// Product types with base prices (KRW)
-const PRODUCT_TYPES = [
-    { id: 'poster', name: '포스터', nameEn: 'Poster', icon: '🖼️', basePrice: 15000 },
-    { id: 'frame', name: '액자', nameEn: 'Framed Print', icon: '🪟', basePrice: 45000 },
-    { id: 'canvas', name: '캔버스', nameEn: 'Canvas', icon: '🎨', basePrice: 65000 },
-    { id: 'fabric', name: '패브릭 포스터', nameEn: 'Fabric Poster', icon: '🧵', basePrice: 35000 },
-];
-
-// Base sizes configuration
-const BASE_SIZES = [
-    { id: 'S', longEdge: 30, multiplier: 1 },
-    { id: 'M', longEdge: 50, multiplier: 1.5 },
-    { id: 'L', longEdge: 70, multiplier: 2.2 },
-    { id: 'XL', longEdge: 100, multiplier: 3.5 },
-    { id: 'XXL', longEdge: 150, multiplier: 5.0 },
-];
-
-// Calculate sizes based on aspect ratio
-function calculateSizesByRatio(ratio: number) {
-    return BASE_SIZES.map(base => {
-        let w, h;
-        // ratio = Width / Height
-        if (ratio >= 1) { // Landscape
-            w = base.longEdge;
-            h = Math.round(base.longEdge / ratio);
-        } else { // Portrait
-            h = base.longEdge;
-            w = Math.round(base.longEdge * ratio);
-        }
-
-        return {
-            ...base,
-            name: `${base.id} (${w}×${h}cm)`
-        };
-    });
-}
-
-function getDynamicSizes(artwork: Artwork) {
-    let ratio = 1.0;
-
-    if ((artwork as any).width && (artwork as any).height) {
-        ratio = (artwork as any).width / (artwork as any).height;
-    } else if (artwork.dimension) {
-        const nums = artwork.dimension.match(/[\d.]+/g)?.map(Number).filter(n => !isNaN(n));
-        if (nums && nums.length >= 2) {
-            ratio = nums[0] / nums[1];
-        }
-    }
-    return calculateSizesByRatio(ratio);
-}
-
-
-// Payment methods (Korean)
-const PAYMENT_METHODS = [
-    { id: 'naverpay', name: '네이버페이', icon: '/icons/naverpay.svg', color: '#03C75A' },
-    { id: 'kakaopay', name: '카카오페이', icon: '/icons/kakaopay.svg', color: '#FEE500' },
-    { id: 'tosspay', name: '토스페이', icon: '/icons/tosspay.svg', color: '#0064FF' },
-];
-
-// Format price in Korean Won
-const formatPrice = (price: number): string => {
-    return new Intl.NumberFormat('ko-KR', {
-        style: 'currency',
-        currency: 'KRW',
-        maximumFractionDigits: 0
-    }).format(price);
+type ArtworkWithMeta = Artwork & {
+  width?: number;
+  height?: number;
+  title?: string;
 };
 
-export const ProductModal: React.FC<ProductModalProps> = ({ artwork, onClose, relatedArtworks = [], onSelectArtwork }) => {
-    const [selectedType, setSelectedType] = useState(PRODUCT_TYPES[0].id);
-    const [selectedSize, setSelectedSize] = useState('M');
-    const [selectedPayment, setSelectedPayment] = useState<string | null>(null);
-    const [quantity, setQuantity] = useState(1);
-    const [isImageLoaded, setIsImageLoaded] = useState(false);
-    const [isMobile, setIsMobile] = useState(() => typeof window !== "undefined" ? window.innerWidth < 768 : false);
+type RecommendationItem = Partial<RecommendedArtwork> & {
+  i?: string;
+  n?: string;
+  a?: string;
+  y?: string | number;
+  imageUrl?: string;
+  url?: string;
+};
 
-    useEffect(() => {
-        const onResize = () => setIsMobile(window.innerWidth < 768);
-        window.addEventListener('resize', onResize);
-        return () => window.removeEventListener('resize', onResize);
-    }, []);
+const PAYMENT_METHODS = [
+  { id: 'naverpay', name: '네이버페이', short: 'N', color: '#03C75A' },
+  { id: 'kakaopay', name: '카카오페이', short: 'K', color: '#FEE500' },
+  { id: 'tosspay', name: '토스페이', short: 'T', color: '#0064FF' },
+];
 
-    const uniqueRelatedArtworks = useMemo(() => {
-        if (!relatedArtworks) return [];
-        const seen = new Set<string>();
-        return relatedArtworks.filter(item => {
-            if (!item || !item.id) return false;
-            if (String(item.id) === String(artwork.id)) return false;
-            
-            if (seen.has(String(item.id))) return false;
-            seen.add(String(item.id));
-            return true;
+export const ProductModal: React.FC<ProductModalProps> = ({ artwork, relatedArtworks = [], onSelectArtwork, onClose }) => {
+  const { addItem } = useCart();
+  const [selectedType, setSelectedType] = useState(PRODUCT_TYPES[0].id);
+  const [selectedSize, setSelectedSize] = useState('M');
+  const [selectedPayment, setSelectedPayment] = useState<string | null>(null);
+  const [quantity, setQuantity] = useState(1);
+  const [sizes, setSizes] = useState<ProductSizeOption[]>(() => getDynamicSizes(artwork as any));
+  const [isImageLoaded, setIsImageLoaded] = useState(false);
+  const [isMobile, setIsMobile] = useState(() => typeof window !== 'undefined' ? window.innerWidth < 840 : false);
+  const [cartFeedback, setCartFeedback] = useState('');
+  const [isLightTheme, setIsLightTheme] = useState<boolean>(() => {
+    try {
+      return localStorage.getItem('homeTheme') === 'light';
+    } catch {
+      return false;
+    }
+  });
+  const [aiRecommendations, setAiRecommendations] = useState<RecommendationItem[]>([]);
+
+  useEffect(() => {
+    const onResize = () => setIsMobile(window.innerWidth < 840);
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
+  }, []);
+
+  useEffect(() => {
+    const syncTheme = () => {
+      try {
+        setIsLightTheme(localStorage.getItem('homeTheme') === 'light');
+      } catch {
+        setIsLightTheme(false);
+      }
+    };
+    window.addEventListener('storage', syncTheme);
+    window.addEventListener('theme-changed', syncTheme);
+    return () => {
+      window.removeEventListener('storage', syncTheme);
+      window.removeEventListener('theme-changed', syncTheme);
+    };
+  }, []);
+
+  const uniqueRelatedArtworks = useMemo(() => {
+    const seen = new Set<string>();
+    return (relatedArtworks || []).filter((item) => {
+      if (!item || !item.id) return false;
+      if (String(item.id) === String(artwork.id)) return false;
+      const key = String(item.id);
+      if (seen.has(key)) return false;
+      seen.add(key);
+      return true;
+    });
+  }, [relatedArtworks, artwork.id]);
+
+  useEffect(() => {
+    setSizes(getDynamicSizes(artwork as any));
+    setSelectedSize('M');
+    setQuantity(1);
+    setIsImageLoaded(false);
+    setCartFeedback('');
+  }, [artwork]);
+
+  useEffect(() => {
+    setAiRecommendations([]);
+    const fetchAiRecommendations = async () => {
+      try {
+        const res = await fetch(`${WORKER_URL}/recommend-by-id`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id: artwork.id, limit: 8 }),
         });
-    }, [relatedArtworks, artwork.id]);
+        if (!res.ok) return;
 
-    // Dynamic sizes based on artwork dimensions
-    // Initial estimation + Update regarding real image ratio
-    // Dynamic sizes based on artwork dimensions
-    // Initial estimation + Update regarding real image ratio
-    const [sizes, setSizes] = useState(() => getDynamicSizes(artwork));
-    const [aiRecommendations, setAiRecommendations] = useState<any[]>([]);
+        const data = (await res.json()) as Partial<RecommendationResponse>;
+        if (!Array.isArray(data?.results)) return;
 
-    useEffect(() => {
-        setSizes(getDynamicSizes(artwork));
+        const seenIds = new Set<string>();
+        const seenContent = new Set<string>();
+        const normalize = (s: string) => (s || '').toLowerCase().trim();
 
-        // AI Recommendation Fetch
-        setAiRecommendations([]);
-        const fetchAiRecommendations = async () => {
-            try {
-                const res = await fetch(`${WORKER_URL}/recommend-by-id`, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ id: artwork.id, limit: 6 })
-                });
-                if (res.ok) {
-                    const data = await res.json();
-                    if (data.results && Array.isArray(data.results)) {
-                        // Deduplicate results
-                        const seenIds = new Set<string>();
-                        const seenContent = new Set<string>();
+        if (artwork.id) seenIds.add(String(artwork.id));
+        const currentName = normalize(artwork.name || (artwork as ArtworkWithMeta).title || 'Untitled');
+        const currentArtist = normalize(artwork.artist || 'Unknown Artist');
+        seenContent.add(`${currentName}|${currentArtist}`);
 
-                        // Exclude current artwork
-                        if (artwork.id) seenIds.add(artwork.id);
+        const uniqueResults: RecommendationItem[] = [];
+        data.results.forEach((item) => {
+          if (!item) return;
+          const itemId = String(item.id || '');
+          if (itemId && seenIds.has(itemId)) return;
 
-                        // Normalize current artwork fields to exclude it
-                        const curArt = artwork as any;
-                        const normalize = (s: string) => (s || '').toLowerCase().trim();
-                        const cName = normalize(artwork.name || curArt.title || 'Untitled');
-                        const cArtist = normalize(artwork.artist || 'Unknown Artist');
+          const iName = normalize(item.name || item.n || 'Untitled');
+          const iArtist = normalize(item.artist || item.a || 'Unknown Artist');
+          const contentKey = `${iName}|${iArtist}`;
+          if (seenContent.has(contentKey)) return;
 
-                        // Add current artwork content to seen set
-                        seenContent.add(`${cName}|${cArtist}`);
+          if (itemId) seenIds.add(itemId);
+          seenContent.add(contentKey);
+          uniqueResults.push(item);
+        });
 
-                        const uniqueResults: any[] = [];
-
-                        data.results.forEach((item: any) => {
-                            if (!item) return;
-
-                            // 1. Check ID
-                            if (seenIds.has(item.id)) return;
-
-                            // 2. Check Content (Name + Artist) to avoid duplicates
-                            const iName = normalize(item.name || item.n || 'Untitled');
-                            const iArtist = normalize(item.artist || item.a || 'Unknown Artist');
-
-                            // Create a content signature
-                            const contentKey = `${iName}|${iArtist}`;
-
-                            if (seenContent.has(contentKey)) return;
-
-                            seenIds.add(item.id);
-                            seenContent.add(contentKey);
-                            uniqueResults.push(item);
-                        });
-
-                        setAiRecommendations(uniqueResults);
-                    }
-                }
-            } catch (e) {
-                console.warn('AI Recommendation failed:', e);
-            }
-        };
-        fetchAiRecommendations();
-    }, [artwork]);
-
-    // Calculate price
-    const productType = PRODUCT_TYPES.find(t => t.id === selectedType);
-    const size = sizes.find(s => s.id === selectedSize) || sizes[1]; // Default to M or second item
-    const basePrice = productType?.basePrice || 15000;
-    const multiplier = size?.multiplier || 1;
-    const totalPrice = Math.round(basePrice * multiplier * quantity);
-
-    // Close on ESC key
-    useEffect(() => {
-        const handleKeyDown = (e: KeyboardEvent) => {
-            if (e.key === 'Escape') onClose();
-        };
-        window.addEventListener('keydown', handleKeyDown);
-        return () => window.removeEventListener('keydown', handleKeyDown);
-    }, [onClose]);
-
-    // Prevent body scroll when modal is open
-    useEffect(() => {
-        document.body.style.overflow = 'hidden';
-        return () => {
-            document.body.style.overflow = '';
-        };
-    }, []);
-
-    const handlePurchase = async () => {
-        if (!selectedPayment) {
-            alert('결제 수단을 선택해주세요.');
-            return;
-        }
-
-        try {
-            // 환경 변수에서 클라이언트 키를 가져오거나 테스트 키 사용
-            // 실제 운영 시에는 .env 파일에 VITE_TOSS_CLIENT_KEY=live_ck_... 를 설정하세요.
-            const clientKey = import.meta.env.VITE_TOSS_CLIENT_KEY || 'test_ck_D5GePWvyJnrK0W0k6q8gLzN97Eoq';
-            const tossPayments = await loadTossPayments(clientKey);
-
-            // 주문 ID 생성 (실제로는 서버에서 생성하거나 UUID 사용 권장)
-            const orderId = `order-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`;
-            const orderName = `${artwork.name} - ${productType?.name} (${size?.name}) ${quantity}개`;
-
-            // 간편결제 제공자 매핑
-            let easyPayProvider = '';
-            if (selectedPayment === 'naverpay') easyPayProvider = 'NAVERPAY';
-            else if (selectedPayment === 'kakaopay') easyPayProvider = 'KAKAOPAY';
-            else if (selectedPayment === 'tosspay') easyPayProvider = 'TOSSPAY';
-
-            // 결제 요청 (간편결제 다이렉트 호출)
-            await tossPayments.requestPayment('카드', {
-                amount: totalPrice,
-                orderId: orderId,
-                orderName: orderName,
-                successUrl: `${window.location.origin}/payment/success`,
-                failUrl: `${window.location.origin}/payment/fail`,
-                flowMode: 'DIRECT',
-                easyPay: easyPayProvider
-            } as any);
-
-        } catch (error) {
-            console.error('Payment Error:', error);
-            // 사용자가 결제창을 닫은 경우 등 에러 처리
-            if ((error as any).code === 'USER_CANCEL') {
-                // 사용자 취소는 알림 없이 조용히 처리하거나 토스트 메시지
-            } else {
-                alert(`결제 요청 중 오류가 발생했습니다: ${(error as any).message}`);
-            }
-        }
+        setAiRecommendations(uniqueResults);
+      } catch (error) {
+        console.warn('[ProductModal] AI recommendation failed:', error);
+      }
     };
 
-    return ReactDOM.createPortal(
+    fetchAiRecommendations();
+  }, [artwork]);
+
+  const productType = getProductTypeById(selectedType);
+  const selectedSizeInfo = sizes.find((size) => size.id === selectedSize) || sizes[1] || sizes[0];
+  const totalPrice = Math.round(productType.basePrice * (selectedSizeInfo?.multiplier || 1) * quantity);
+
+  const palette = useMemo(() => {
+    if (isLightTheme) {
+      return {
+        overlay: 'rgba(18,18,18,0.35)',
+        panel: 'linear-gradient(170deg, #ffffff 0%, #f4f5f6 100%)',
+        panelSolid: '#f7f7f8',
+        panelAlt: '#ffffff',
+        border: 'rgba(0,0,0,0.09)',
+        borderSoft: 'rgba(0,0,0,0.06)',
+        text: 'rgba(0,0,0,0.92)',
+        textSub: 'rgba(0,0,0,0.64)',
+        textMute: 'rgba(0,0,0,0.42)',
+        accent: '#5A7800',
+        accentBg: 'rgba(90,120,0,0.12)',
+        accentBorder: 'rgba(90,120,0,0.25)',
+        chip: 'rgba(0,0,0,0.04)',
+        chipHover: 'rgba(0,0,0,0.07)',
+        selectedChip: 'rgba(90,120,0,0.14)',
+        selectedSolid: '#1f2a00',
+      };
+    }
+
+    return {
+      overlay: 'rgba(0,0,0,0.72)',
+      panel: 'linear-gradient(170deg, #0E0E10 0%, #141418 100%)',
+      panelSolid: '#111215',
+      panelAlt: '#17181d',
+      border: 'rgba(255,255,255,0.10)',
+      borderSoft: 'rgba(255,255,255,0.06)',
+      text: 'rgba(255,255,255,0.93)',
+      textSub: 'rgba(255,255,255,0.72)',
+      textMute: 'rgba(255,255,255,0.46)',
+      accent: '#C7FF3D',
+      accentBg: 'rgba(191,255,10,0.16)',
+      accentBorder: 'rgba(191,255,10,0.28)',
+      chip: 'rgba(255,255,255,0.08)',
+      chipHover: 'rgba(255,255,255,0.12)',
+      selectedChip: 'rgba(191,255,10,0.16)',
+      selectedSolid: '#D7FF5A',
+    };
+  }, [isLightTheme]);
+
+  const resolvedArtworkImage = useMemo(() => {
+    const url = artwork.image;
+    if (!url) return '';
+
+    try {
+      const parsed = new URL(url);
+      if (parsed.hostname === 'wsrv.nl' || parsed.hostname === 'images.weserv.nl') {
+        const originalSrc = parsed.searchParams.get('url');
+        if (originalSrc) return getWeservUrl(originalSrc, 1200, 92);
+      }
+    } catch {
+      // Ignore URL parsing failures.
+    }
+
+    return getWeservUrl(url, 1200, 92);
+  }, [artwork.image]);
+
+  useEffect(() => {
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') onClose();
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [onClose]);
+
+  useEffect(() => {
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, []);
+
+  const handlePurchase = async () => {
+    if (!selectedPayment) {
+      alert('결제 수단을 선택해주세요.');
+      return;
+    }
+
+    try {
+      const clientKey = import.meta.env.VITE_TOSS_CLIENT_KEY || 'test_ck_D5GePWvyJnrK0W0k6q8gLzN97Eoq';
+      const tossPayments = await loadTossPayments(clientKey);
+
+      const orderId = `order-${Date.now()}-${Math.random().toString(36).slice(2, 11)}`;
+      const orderName = `${artwork.name} - ${productType.name} (${selectedSizeInfo?.name}) ${quantity}개`;
+
+      let easyPayProvider = '';
+      if (selectedPayment === 'naverpay') easyPayProvider = 'NAVERPAY';
+      else if (selectedPayment === 'kakaopay') easyPayProvider = 'KAKAOPAY';
+      else if (selectedPayment === 'tosspay') easyPayProvider = 'TOSSPAY';
+
+      await tossPayments.requestPayment('카드', {
+        amount: totalPrice,
+        orderId,
+        orderName,
+        successUrl: `${window.location.origin}/payment/success`,
+        failUrl: `${window.location.origin}/payment/fail`,
+        flowMode: 'DIRECT',
+        easyPay: easyPayProvider,
+      } as any);
+    } catch (error) {
+      console.error('[ProductModal] Payment error:', error);
+      if ((error as any)?.code !== 'USER_CANCEL') {
+        alert(`결제 요청 중 오류가 발생했습니다: ${(error as any)?.message || '알 수 없는 오류'}`);
+      }
+    }
+  };
+
+  const handleAddToCart = () => {
+    if (!selectedSizeInfo) return;
+
+    addItem({
+      artworkId: String(artwork.id || '').trim() || `${Date.now()}`,
+      artworkName: artwork.name || (artwork as any).title || 'Untitled',
+      artist: artwork.artist || 'Unknown Artist',
+      year: Number(artwork.year) || undefined,
+      image: resolvedArtworkImage || artwork.image,
+      dimension: artwork.dimension,
+      selectedType,
+      selectedSizeId: selectedSizeInfo.id,
+      quantity,
+      sizeOptions: sizes.map((size) => ({ id: size.id, name: size.name, multiplier: size.multiplier })),
+    });
+
+    setCartFeedback('장바구니에 담았습니다.');
+    window.setTimeout(() => setCartFeedback(''), 1400);
+  };
+
+  const renderRecommendationCard = (item: RecommendationItem, source: 'AI' | 'Artist') => {
+    const image = item.image || item.i || item.url || item.imageUrl || '';
+    const name = item.name || item.n || 'Untitled';
+    const artist = item.artist || item.a || 'Unknown Artist';
+    const year = item.year || item.y || '';
+    if (!image) return null;
+
+    return (
+      <button
+        key={`${source}-${String(item.id || `${name}-${artist}`)}`}
+        type="button"
+        onClick={() => {
+          if (!onSelectArtwork) return;
+          onSelectArtwork({
+            ...(item as object),
+            image,
+            name,
+            artist,
+            year,
+          } as Artwork);
+        }}
+        style={{
+          cursor: 'pointer',
+          borderTop: `1px solid ${palette.borderSoft}`,
+          borderRight: `1px solid ${palette.borderSoft}`,
+          borderBottom: `1px solid ${palette.borderSoft}`,
+          borderLeft: `1px solid ${palette.borderSoft}`,
+          background: palette.panelAlt,
+          borderRadius: 10,
+          padding: 8,
+          display: 'flex',
+          flexDirection: 'column',
+          width: isMobile ? 130 : 148,
+          minWidth: isMobile ? 130 : 148,
+          maxWidth: isMobile ? 130 : 148,
+          textAlign: 'left',
+          color: palette.text,
+          flex: '0 0 auto',
+          overflow: 'hidden',
+        }}
+      >
         <div
-            onClick={onClose}
-            style={{
-                position: 'fixed',
-                inset: 0,
-                zIndex: 20000,
-                background: 'rgba(0, 0, 0, 0.6)',
-                backdropFilter: 'blur(8px)',
-                WebkitBackdropFilter: 'blur(8px)',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                padding: 16,
-                animation: 'fadeIn 0.3s ease-out'
-            }}
+          style={{
+            width: '100%',
+            aspectRatio: '1 / 1',
+            borderRadius: 8,
+            overflow: 'hidden',
+            marginBottom: 7,
+            background: palette.chip,
+            position: 'relative',
+          }}
         >
-            <style>{`
-        @keyframes fadeIn {
+          <img
+            src={getWeservUrl(image, 300, 85)}
+            alt={name}
+            loading="lazy"
+            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+          />
+          <span
+            style={{
+              position: 'absolute',
+              top: 6,
+              left: 6,
+              padding: '2px 6px',
+              borderRadius: 999,
+              fontSize: 8,
+              letterSpacing: '0.1em',
+              textTransform: 'uppercase',
+              color: source === 'AI' ? palette.accent : palette.textSub,
+              background: source === 'AI' ? palette.accentBg : palette.chip,
+              borderTop: `1px solid ${source === 'AI' ? palette.accentBorder : palette.borderSoft}`,
+              borderRight: `1px solid ${source === 'AI' ? palette.accentBorder : palette.borderSoft}`,
+              borderBottom: `1px solid ${source === 'AI' ? palette.accentBorder : palette.borderSoft}`,
+              borderLeft: `1px solid ${source === 'AI' ? palette.accentBorder : palette.borderSoft}`,
+            }}
+          >
+            {source}
+          </span>
+        </div>
+        <div
+          style={{
+            fontSize: 11,
+            fontWeight: 600,
+            lineHeight: 1.35,
+            whiteSpace: 'nowrap',
+            overflow: 'hidden',
+            textOverflow: 'ellipsis',
+            marginBottom: 2,
+          }}
+        >
+          {name}
+        </div>
+        <div style={{ fontSize: 10, color: palette.textSub, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{artist}</div>
+        {year ? <div style={{ fontSize: 10, color: palette.textMute, marginTop: 1 }}>{String(year)}</div> : null}
+      </button>
+    );
+  };
+
+  return ReactDOM.createPortal(
+    <div
+      onClick={onClose}
+      style={{
+        position: 'fixed',
+        inset: 0,
+        zIndex: 20000,
+        background: palette.overlay,
+        backdropFilter: 'blur(10px)',
+        WebkitBackdropFilter: 'blur(10px)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: 14,
+        animation: 'productFadeIn 0.28s ease-out',
+      }}
+    >
+      <style>{`
+        @keyframes productFadeIn {
           from { opacity: 0; }
           to { opacity: 1; }
         }
-        @keyframes slideUp {
-          from { transform: translateY(40px); opacity: 0; }
+        @keyframes productRiseUp {
+          from { transform: translateY(18px); opacity: 0; }
           to { transform: translateY(0); opacity: 1; }
         }
-        .product-modal-content {
-          animation: slideUp 0.4s ease-out;
+        .product-modal-shell {
+          animation: productRiseUp 0.34s cubic-bezier(0.2, 0.8, 0.2, 1);
         }
-        .product-type-btn {
-          transition: all 0.25s ease;
-          border: 2px solid #e5e5e5;
-        }
-        .product-type-btn:hover {
-          border-color: #222;
-          background: #fafafa;
-        }
-        .product-type-btn.selected {
-          border-color: #222;
-          background: #222;
-        }
-        .product-type-btn.selected .type-name,
-        .product-type-btn.selected .type-price {
-          color: #fff !important;
-        }
-        .size-btn {
-          transition: all 0.25s ease;
-          border: 2px solid #e5e5e5;
-        }
-        .size-btn:hover {
-          border-color: #222;
-          background: #f5f5f5;
-        }
-        .size-btn.selected {
-          background: #222;
-          color: white;
-          border-color: #222;
-        }
-        .payment-btn {
-          transition: all 0.25s ease;
-          border: 2px solid #e5e5e5;
-        }
-        .payment-btn:hover {
-          border-color: #222;
-        }
-        .payment-btn.selected {
-          border-color: #222;
-          background: #f0f0f0;
-        }
-        .product-image-container {
-          position: relative;
-          overflow: hidden;
-          border-radius: 12px;
-          background: #fff;
-          display: 'flex';
-          align-items: center;
-          justify-content: center;
-        }
-        .purchase-btn {
-          transition: all 0.3s ease;
-          position: relative;
-          overflow: hidden;
-        }
-        .purchase-btn:hover {
-          transform: translateY(-2px);
-          box-shadow: 0 8px 24px rgba(0,0,0,0.15);
-        }
-        .purchase-btn:active {
-          transform: translateY(0);
-        }
-        .quantity-btn {
-          transition: all 0.15s ease;
-        }
-        .quantity-btn:hover {
-          background: #f0f0f0;
-        }
-        .quantity-btn:active {
-          transform: scale(0.95);
-        }
-        .product-photos-section {
-          border-top: 1px solid #e5e5e5;
-          padding-top: 24px;
-          margin-top: 24px;
-        }
-        .product-photo-placeholder {
-          aspect-ratio: 4/3;
-          background: #f8f8f8;
-          border-radius: 8px;
-          border: 1px dashed #ddd;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          color: '#999';
-          font-size: 13px;
-        }
-        .scroll-container::-webkit-scrollbar {
+        .product-modal-scroll::-webkit-scrollbar,
+        .product-recs-scroll::-webkit-scrollbar {
           width: 6px;
+          height: 6px;
         }
-        .scroll-container::-webkit-scrollbar-track {
-          background: #f5f5f5;
-          border-radius: 3px;
+        .product-modal-scroll::-webkit-scrollbar-track,
+        .product-recs-scroll::-webkit-scrollbar-track {
+          background: transparent;
         }
-        .scroll-container::-webkit-scrollbar-thumb {
-          background: #ccc;
-          border-radius: 3px;
+        .product-modal-scroll::-webkit-scrollbar-thumb,
+        .product-recs-scroll::-webkit-scrollbar-thumb {
+          background: ${isLightTheme ? 'rgba(90,120,0,0.35)' : 'rgba(191,255,10,0.38)'};
+          border-radius: 999px;
         }
-        .scroll-container::-webkit-scrollbar-thumb:hover {
-          background: #aaa;
+        .product-modal-scroll::-webkit-scrollbar-thumb:hover,
+        .product-recs-scroll::-webkit-scrollbar-thumb:hover {
+          background: ${isLightTheme ? 'rgba(90,120,0,0.55)' : 'rgba(191,255,10,0.58)'};
         }
       `}</style>
 
+      <div
+        onClick={(event) => event.stopPropagation()}
+        className="product-modal-shell product-modal-scroll"
+        style={{
+          width: '100%',
+          maxWidth: 980,
+          maxHeight: '92vh',
+          overflowY: 'auto',
+          background: palette.panel,
+          borderRadius: isMobile ? 16 : 22,
+          borderTop: `1px solid ${palette.border}`,
+          borderRight: `1px solid ${palette.border}`,
+          borderBottom: `1px solid ${palette.border}`,
+          borderLeft: `1px solid ${palette.border}`,
+          boxShadow: isLightTheme ? '0 30px 70px rgba(0,0,0,0.16)' : '0 36px 90px rgba(0,0,0,0.52)',
+          position: 'relative',
+        }}
+      >
+        <button
+          onClick={onClose}
+          title="닫기"
+          style={{
+            cursor: 'pointer',
+            position: 'absolute',
+            top: 14,
+            right: 14,
+            width: 34,
+            height: 34,
+            borderRadius: 999,
+            borderTop: `1px solid ${palette.borderSoft}`,
+            borderRight: `1px solid ${palette.borderSoft}`,
+            borderBottom: `1px solid ${palette.borderSoft}`,
+            borderLeft: `1px solid ${palette.borderSoft}`,
+            color: palette.textSub,
+            background: palette.chip,
+            fontSize: 16,
+            display: 'inline-flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            zIndex: 3,
+          }}
+        >
+          <X size={16} strokeWidth={2.4} />
+        </button>
+
+        <div
+          style={{
+            position: 'sticky',
+            top: 0,
+            zIndex: 2,
+            padding: isMobile ? '14px 14px 12px' : '16px 20px 14px',
+            background: isLightTheme ? 'rgba(252,252,252,0.86)' : 'rgba(12,12,14,0.82)',
+            backdropFilter: 'blur(10px)',
+            WebkitBackdropFilter: 'blur(10px)',
+            borderBottom: `1px solid ${palette.borderSoft}`,
+          }}
+        >
+          <div style={{ fontSize: 9, color: palette.textMute, letterSpacing: '0.16em', textTransform: 'uppercase' }}>Armin Print Lab</div>
+          <div style={{ marginTop: 4, marginRight: 40, fontSize: isMobile ? 18 : 22, color: palette.text, lineHeight: 1.2, fontWeight: 700 }}>{artwork.name}</div>
+          <div style={{ marginTop: 6, fontSize: 12, color: palette.textSub }}>{artwork.artist}{artwork.year ? ` · ${artwork.year}` : ''}</div>
+        </div>
+
+        <div style={{ padding: isMobile ? '14px 14px 18px' : '18px 20px 24px' }}>
+          <div
+            style={{
+              display: 'grid',
+              gridTemplateColumns: isMobile ? '1fr' : 'minmax(0,1.05fr) minmax(0,1fr)',
+              gap: isMobile ? 14 : 20,
+            }}
+          >
             <div
-                onClick={(e) => e.stopPropagation()}
-                className="product-modal-content scroll-container"
-                style={{
-                    background: '#fff',
-                    borderRadius: 16,
-                    maxWidth: 900,
-                    width: '100%',
-                    maxHeight: '90vh',
-                    overflowY: 'auto',
-                    position: 'relative',
-                    boxShadow: '0 24px 48px rgba(0,0,0,0.15), 0 0 0 1px rgba(0,0,0,0.05)'
-                }}
+              style={{
+                borderTop: `1px solid ${palette.borderSoft}`,
+                borderRight: `1px solid ${palette.borderSoft}`,
+                borderBottom: `1px solid ${palette.borderSoft}`,
+                borderLeft: `1px solid ${palette.borderSoft}`,
+                borderRadius: 14,
+                background: palette.panelSolid,
+                padding: isMobile ? 12 : 16,
+              }}
             >
-                {/* Close Button */}
-                <button
-                    onClick={onClose}
-                    style={{
-                        position: 'absolute',
-                        top: 16,
-                        right: 16,
-                        width: 36,
-                        height: 36,
-                        borderRadius: '50%',
-                        background: '#f5f5f5',
-                        border: 'none',
-                        color: '#333',
-                        fontSize: 18,
-                        cursor: 'pointer',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        zIndex: 10,
-                        transition: 'all 0.2s ease'
-                    }}
-                    onMouseEnter={(e) => e.currentTarget.style.background = '#e5e5e5'}
-                    onMouseLeave={(e) => e.currentTarget.style.background = '#f5f5f5'}
+              <div
+                style={{
+                  width: '100%',
+                  minHeight: isMobile ? 270 : 360,
+                  borderRadius: 10,
+                  background: isLightTheme
+                    ? 'linear-gradient(160deg, #f1f1f1 0%, #ebebeb 100%)'
+                    : 'linear-gradient(160deg, #16171b 0%, #101114 100%)',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                  padding: 14,
+                }}
+              >
+                <div
+                  style={{
+                    padding: selectedType === 'frame' ? 12 : 0,
+                    background: selectedType === 'frame' ? (isLightTheme ? '#F5F5F5' : '#23252b') : 'transparent',
+                    borderTop: selectedType === 'frame' ? `1px solid ${palette.border}` : 'none',
+                    borderRight: selectedType === 'frame' ? `1px solid ${palette.border}` : 'none',
+                    borderBottom: selectedType === 'frame' ? `1px solid ${palette.border}` : 'none',
+                    borderLeft: selectedType === 'frame' ? `1px solid ${palette.border}` : 'none',
+                    borderRadius: selectedType === 'frame' ? 2 : 0,
+                    boxShadow: selectedType === 'frame'
+                      ? (isLightTheme ? '0 10px 24px rgba(0,0,0,0.15)' : '0 14px 30px rgba(0,0,0,0.42)')
+                      : 'none',
+                    transition: 'all 0.28s ease',
+                  }}
                 >
-                    ✕
-                </button>
+                  <img
+                    onLoad={(event) => {
+                      const img = event.currentTarget;
+                      if (img.naturalWidth && img.naturalHeight) {
+                        const ratio = img.naturalWidth / img.naturalHeight;
+                        setSizes(calculateSizesByRatio(ratio));
+                      }
+                      setIsImageLoaded(true);
+                    }}
+                    src={resolvedArtworkImage}
+                    alt={artwork.name}
+                    style={{
+                      maxWidth: '100%',
+                      maxHeight: isMobile ? 320 : 420,
+                      width: 'auto',
+                      height: 'auto',
+                      objectFit: 'contain',
+                      display: 'block',
+                      borderRadius: selectedType === 'canvas' ? 4 : 0,
+                      boxShadow: selectedType === 'canvas'
+                        ? (isLightTheme ? '4px 4px 0 #d9d9d9, 8px 8px 0 #efefef' : '4px 4px 0 #24262c, 8px 8px 0 #1b1d22')
+                        : selectedType === 'fabric'
+                          ? (isLightTheme ? '0 8px 22px rgba(0,0,0,0.14)' : '0 8px 22px rgba(0,0,0,0.36)')
+                          : (isLightTheme ? '0 6px 18px rgba(0,0,0,0.12)' : '0 8px 18px rgba(0,0,0,0.30)'),
+                      transform: isImageLoaded ? 'scale(1)' : 'scale(0.97)',
+                      opacity: isImageLoaded ? 1 : 0.45,
+                      transition: 'all 0.35s ease',
+                    }}
+                  />
+                </div>
+              </div>
 
-                <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
-                    {/* Top Section: Image + Info */}
-                    <div style={{
-                        display: 'grid',
-                        gridTemplateColumns: window.innerWidth > 640 ? '1fr 1fr' : '1fr',
-                        gap: 32,
-                        padding: 32
-                    }}>
-                        <div className="product-image-container" style={{ width: '100%', minHeight: 300, background: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                            <div style={{
-                                width: '100%',
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                padding: 16
-                            }}>
-                                {/* Simulated frame for framed print */}
-                                <div style={{
-                                    padding: selectedType === 'frame' ? 12 : 0,
-                                    background: selectedType === 'frame' ? '#2a2a2a' : 'transparent',
-                                    boxShadow: selectedType === 'frame' ? '0 4px 16px rgba(0,0,0,0.2)' : 'none',
-                                    borderRadius: selectedType === 'frame' ? 2 : 0,
-                                    transition: 'all 0.3s ease',
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    justifyContent: 'center'
-                                }}>
-                                    <img
-                                        onLoad={(e) => {
-                                            const img = e.currentTarget;
-                                            if (img.naturalWidth && img.naturalHeight) {
-                                                const ratio = img.naturalWidth / img.naturalHeight;
-                                                setSizes(calculateSizesByRatio(ratio));
-                                            }
-                                            // setIsImageLoaded(true); // This is handled by style transition mainly, but logical state update is good too
-                                            setIsImageLoaded(true);
-                                        }}
-                                        src={(() => {
-                                            const url = artwork.image;
-                                            if (!url) return '';
-                                            try {
-                                                const u = new URL(url);
-                                                if (u.hostname === 'wsrv.nl' || u.hostname === 'images.weserv.nl') {
-                                                    // wsrv.nl인 경우 'url' 파라미터가 실제 원본 이미지 주소입니다.
-                                                    // 원본 주소만 추출하여 새롭게 옵션을 적용합니다.
-                                                    const originalSrc = u.searchParams.get('url');
-                                                    if (originalSrc) {
-                                                        // 원본 URL에 이미 들어있을 수 있는 크롭 파라미터 등은 weserv가 처리하므로,
-                                                        // 여기서는 weserv 옵션만 깨끗하게 새로 줍니다.
-                                                        return getWeservUrl(originalSrc, 1200, 90);
-                                                    }
-                                                }
-                                            } catch (e) { }
-                                            return getWeservUrl(url, 1200, 90);
-                                        })()}
-                                        alt={artwork.name}
-                                        style={{
-                                            maxWidth: '100%',
-                                            maxHeight: 360,
-                                            width: 'auto',
-                                            height: 'auto',
-                                            objectFit: 'contain',
-                                            display: 'block',
-                                            boxShadow: selectedType === 'canvas'
-                                                ? '4px 4px 0 #ddd, 8px 8px 0 #eee'
-                                                : selectedType === 'fabric'
-                                                    ? '0 8px 24px rgba(0,0,0,0.15)'
-                                                    : '0 4px 12px rgba(0,0,0,0.1)',
-                                            transform: isImageLoaded ? 'scale(1)' : 'scale(0.95)',
-                                            opacity: isImageLoaded ? 1 : 0.5,
-                                            transition: 'all 0.4s ease'
-                                        }}
-                                    />
-                                </div>
-                            </div>
-                        </div>
+              <div style={{ marginTop: 10, display: 'flex', flexWrap: 'wrap', gap: 8 }}>
+                <span
+                  style={{
+                    fontSize: 9,
+                    color: palette.textSub,
+                    letterSpacing: '0.1em',
+                    textTransform: 'uppercase',
+                    padding: '4px 9px',
+                    borderRadius: 999,
+                    background: palette.chip,
+                    borderTop: `1px solid ${palette.borderSoft}`,
+                    borderRight: `1px solid ${palette.borderSoft}`,
+                    borderBottom: `1px solid ${palette.borderSoft}`,
+                    borderLeft: `1px solid ${palette.borderSoft}`,
+                  }}
+                >
+                  {productType.nameEn}
+                </span>
+                <span
+                  style={{
+                    fontSize: 9,
+                    color: palette.textSub,
+                    letterSpacing: '0.1em',
+                    textTransform: 'uppercase',
+                    padding: '4px 9px',
+                    borderRadius: 999,
+                    background: palette.chip,
+                    borderTop: `1px solid ${palette.borderSoft}`,
+                    borderRight: `1px solid ${palette.borderSoft}`,
+                    borderBottom: `1px solid ${palette.borderSoft}`,
+                    borderLeft: `1px solid ${palette.borderSoft}`,
+                  }}
+                >
+                  {selectedSizeInfo?.name}
+                </span>
+              </div>
+            </div>
 
-                        {/* Product Info */}
-                        <div style={{ display: 'flex', flexDirection: 'column', gap: 24 }}>
-                            {/* Artwork Info */}
-                            <div>
-                                <h2 style={{
-                                    color: '#111',
-                                    fontSize: 22,
-                                    fontWeight: 700,
-                                    margin: 0,
-                                    marginBottom: 8,
-                                    lineHeight: 1.3
-                                }}>
-                                    {artwork.name}
-                                </h2>
-                                <p style={{
-                                    color: '#666',
-                                    fontSize: 14,
-                                    margin: 0
-                                }}>
-                                    {artwork.artist}{artwork.year ? ` · ${artwork.year}` : ''}
-                                </p>
-                            </div>
-
-                            {/* Product Type Selection */}
-                            <div>
-                                <h3 style={{
-                                    color: '#333',
-                                    fontSize: 12,
-                                    fontWeight: 600,
-                                    textTransform: 'uppercase',
-                                    letterSpacing: 1,
-                                    margin: 0,
-                                    marginBottom: 12
-                                }}>
-                                    상품 종류
-                                </h3>
-                                <div style={{
-                                    display: 'grid',
-                                    gridTemplateColumns: 'repeat(2, 1fr)',
-                                    gap: 8
-                                }}>
-                                    {PRODUCT_TYPES.map(type => (
-                                        <button
-                                            key={type.id}
-                                            onClick={() => setSelectedType(type.id)}
-                                            className={`product-type-btn ${selectedType === type.id ? 'selected' : ''}`}
-                                            style={{
-                                                padding: '12px 16px',
-                                                background: selectedType === type.id ? '#222' : '#fff',
-                                                borderRadius: 8,
-                                                cursor: 'pointer',
-                                                display: 'flex',
-                                                alignItems: 'center',
-                                                gap: 10
-                                            }}
-                                        >
-                                            <span style={{ fontSize: 20 }}>{type.icon}</span>
-                                            <div style={{ textAlign: 'left' }}>
-                                                <div className="type-name" style={{ fontWeight: 600, fontSize: 14, color: selectedType === type.id ? '#fff' : '#222' }}>{type.name}</div>
-                                                <div className="type-price" style={{ fontSize: 11, color: selectedType === type.id ? 'rgba(255,255,255,0.8)' : '#888' }}>
-                                                    {formatPrice(type.basePrice)}~
-                                                </div>
-                                            </div>
-                                        </button>
-                                    ))}
-                                </div>
-                            </div>
-
-                            {/* Size Selection */}
-                            <div>
-                                <h3 style={{
-                                    color: '#333',
-                                    fontSize: 12,
-                                    fontWeight: 600,
-                                    textTransform: 'uppercase',
-                                    letterSpacing: 1,
-                                    margin: 0,
-                                    marginBottom: 12
-                                }}>
-                                    크기
-                                </h3>
-                                <div style={{
-                                    display: 'flex',
-                                    flexWrap: 'wrap',
-                                    gap: 8
-                                }}>
-                                    {sizes.map(sizeItem => (
-                                        <button
-                                            key={sizeItem.id}
-                                            onClick={() => setSelectedSize(sizeItem.id)}
-                                            className={`size-btn ${selectedSize === sizeItem.id ? 'selected' : ''}`}
-                                            style={{
-                                                padding: '10px 16px',
-                                                background: selectedSize === sizeItem.id ? '#222' : '#fff',
-                                                borderRadius: 24,
-                                                cursor: 'pointer',
-                                                color: selectedSize === sizeItem.id ? '#fff' : '#333',
-                                                fontSize: 13,
-                                                fontWeight: 600
-                                            }}
-                                        >
-                                            {sizeItem.name}
-                                        </button>
-                                    ))}
-                                </div>
-                            </div>
-
-                            {/* Quantity */}
-                            <div>
-                                <h3 style={{
-                                    color: '#333',
-                                    fontSize: 12,
-                                    fontWeight: 600,
-                                    textTransform: 'uppercase',
-                                    letterSpacing: 1,
-                                    margin: 0,
-                                    marginBottom: 12
-                                }}>
-                                    수량
-                                </h3>
-                                <div style={{
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    gap: 16
-                                }}>
-                                    <button
-                                        onClick={() => setQuantity(q => Math.max(1, q - 1))}
-                                        className="quantity-btn"
-                                        style={{
-                                            width: 36,
-                                            height: 36,
-                                            borderRadius: '50%',
-                                            background: '#f5f5f5',
-                                            border: 'none',
-                                            color: '#333',
-                                            fontSize: 18,
-                                            cursor: 'pointer',
-                                            display: 'flex',
-                                            alignItems: 'center',
-                                            justifyContent: 'center'
-                                        }}
-                                    >
-                                        −
-                                    </button>
-                                    <span style={{
-                                        color: '#111',
-                                        fontSize: 18,
-                                        fontWeight: 700,
-                                        minWidth: 32,
-                                        textAlign: 'center'
-                                    }}>
-                                        {quantity}
-                                    </span>
-                                    <button
-                                        onClick={() => setQuantity(q => Math.min(99, q + 1))}
-                                        className="quantity-btn"
-                                        style={{
-                                            width: 36,
-                                            height: 36,
-                                            borderRadius: '50%',
-                                            background: '#f5f5f5',
-                                            border: 'none',
-                                            color: '#333',
-                                            fontSize: 18,
-                                            cursor: 'pointer',
-                                            display: 'flex',
-                                            alignItems: 'center',
-                                            justifyContent: 'center'
-                                        }}
-                                    >
-                                        +
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* Product Photos Section - Placeholder for real photos */}
-                    <div className="product-photos-section" style={{ padding: '0 32px 24px' }}>
-                        <h3 style={{
-                            color: '#333',
-                            fontSize: 12,
-                            fontWeight: 600,
-                            textTransform: 'uppercase',
-                            letterSpacing: 1,
-                            margin: 0,
-                            marginBottom: 16
-                        }}>
-                            실제 상품 사진
-                        </h3>
-                        <div style={{
-                            display: 'grid',
-                            gridTemplateColumns: window.innerWidth > 640 ? 'repeat(3, 1fr)' : 'repeat(2, 1fr)',
-                            gap: 12
-                        }}>
-                            {[1, 2, 3].map(i => (
-                                <div key={i} className="product-photo-placeholder">
-                                    <span style={{ color: '#999' }}>📷 상품 사진 {i}</span>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-
-
-                    {(uniqueRelatedArtworks.length > 0 || aiRecommendations.length > 0) && (
-                        <div className="recommendation-section" style={{ padding: isMobile ? '0 16px 24px' : '0 32px 32px' }}>
-                            {/* Similar Vibe (AI) */}
-                            {aiRecommendations.length > 0 && (
-                                <div style={{ marginBottom: 24 }}>
-                                    <h3 style={{ color: '#333', fontSize: 12, fontWeight: 600, textTransform: 'uppercase', letterSpacing: 1, margin: '0 0 12px' }}>
-                                        비슷한 분위기의 작품 (AI 추천)
-                                    </h3>
-                                    <div style={{
-                                        display: 'flex',
-                                        gap: 10,
-                                        overflowX: 'auto',
-                                        paddingBottom: 8,
-                                        WebkitOverflowScrolling: 'touch',
-                                        maxWidth: '100%'
-                                    }}>
-                                        {aiRecommendations.map((item) => (
-                                            <div
-                                                key={`ai-${item.id}`}
-                                                onClick={() => onSelectArtwork && onSelectArtwork({ ...item, image: item.i || item.image || item.url, name: item.n || item.name, artist: item.a || item.artist })}
-                                                style={{ minWidth: isMobile ? 100 : 120, width: isMobile ? 100 : 120, cursor: 'pointer' }}
-                                            >
-                                                <div style={{ width: isMobile ? 100 : 120, height: isMobile ? 100 : 120, background: '#f5f5f5', marginBottom: 8, borderRadius: 4, overflow: 'hidden' }}>
-                                                    <img
-                                                        src={getWeservUrl(item.image || item.i || item.url, 200, 200)}
-                                                        alt={item.name || item.n}
-                                                        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                                                    />
-                                                </div>
-                                                <div style={{ fontSize: 11, fontWeight: 600, color: '#333', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                                                    {item.name || item.n}
-                                                </div>
-                                                <div style={{ fontSize: 10, color: '#666', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                                                    {item.artist || item.a}
-                                                </div>
-                                            </div>
-                                        ))}
-                                    </div>
-                                </div>
-                            )}
-
-                            {/* Same Artist (Metadata) */}
-                            {uniqueRelatedArtworks.length > 0 && (
-                                <div>
-                                    <h3 style={{ color: '#333', fontSize: 12, fontWeight: 600, textTransform: 'uppercase', letterSpacing: 1, margin: '0 0 12px' }}>
-                                        이 작가의 다른 작품
-                                    </h3>
-                                    <div style={{
-                                        display: 'flex',
-                                        gap: 10,
-                                        overflowX: 'auto',
-                                        paddingBottom: 8,
-                                        WebkitOverflowScrolling: 'touch',
-                                        maxWidth: '100%'
-                                    }}>
-                                        {uniqueRelatedArtworks.map((item) => (
-                                            <div
-                                                key={`rel-${item.id}`}
-                                                onClick={() => onSelectArtwork && onSelectArtwork(item)}
-                                                style={{ minWidth: isMobile ? 100 : 120, width: isMobile ? 100 : 120, cursor: 'pointer' }}
-                                            >
-                                                <div style={{ width: isMobile ? 100 : 120, height: isMobile ? 100 : 120, background: '#f5f5f5', marginBottom: 8, borderRadius: 4, overflow: 'hidden' }}>
-                                                    <img
-                                                        src={getWeservUrl(item.image, 200, 200)}
-                                                        alt={item.name}
-                                                        style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                                                    />
-                                                </div>
-                                                <div style={{ fontSize: 11, fontWeight: 600, color: '#333', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                                                    {item.name}
-                                                </div>
-                                                <div style={{ fontSize: 10, color: '#666', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                                                    {item.year || ''}
-                                                </div>
-                                            </div>
-                                        ))}
-                                    </div>
-                                </div>
-                            )}
-                        </div>
-                    )}
-
-                    {/* Payment Section */}
-                    <div style={{
-                        background: '#fafafa',
-                        padding: 32,
-                        borderTop: '1px solid #e5e5e5'
-                    }}>
-                        <h3 style={{
-                            color: '#333',
-                            fontSize: 12,
-                            fontWeight: 600,
-                            textTransform: 'uppercase',
-                            letterSpacing: 1,
-                            margin: 0,
-                            marginBottom: 16
-                        }}>
-                            결제 수단
-                        </h3>
-                        <div style={{
-                            display: 'grid',
-                            gridTemplateColumns: 'repeat(3, 1fr)',
-                            gap: 12,
-                            marginBottom: 24
-                        }}>
-                            {PAYMENT_METHODS.map(method => (
-                                <button
-                                    key={method.id}
-                                    onClick={() => setSelectedPayment(method.id)}
-                                    className={`payment-btn ${selectedPayment === method.id ? 'selected' : ''}`}
-                                    style={{
-                                        padding: 16,
-                                        background: '#fff',
-                                        borderRadius: 12,
-                                        cursor: 'pointer',
-                                        display: 'flex',
-                                        flexDirection: 'column',
-                                        alignItems: 'center',
-                                        gap: 8
-                                    }}
-                                >
-                                    <div style={{
-                                        width: 40,
-                                        height: 40,
-                                        borderRadius: 8,
-                                        background: method.color,
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        justifyContent: 'center',
-                                        fontSize: 18,
-                                        fontWeight: 700,
-                                        color: method.id === 'kakaopay' ? '#000' : '#fff'
-                                    }}>
-                                        {method.id === 'naverpay' ? 'N' : method.id === 'kakaopay' ? 'K' : 'T'}
-                                    </div>
-                                    <span style={{
-                                        color: '#333',
-                                        fontSize: 12,
-                                        fontWeight: 500
-                                    }}>
-                                        {method.name}
-                                    </span>
-                                </button>
-                            ))}
-                        </div>
-
-                        {/* Purchase Button */}
-                        <div style={{
+            <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+              <section
+                style={{
+                  borderTop: `1px solid ${palette.borderSoft}`,
+                  borderRight: `1px solid ${palette.borderSoft}`,
+                  borderBottom: `1px solid ${palette.borderSoft}`,
+                  borderLeft: `1px solid ${palette.borderSoft}`,
+                  borderRadius: 14,
+                  background: palette.panelSolid,
+                  padding: 12,
+                }}
+              >
+                <div style={{ marginBottom: 9, fontSize: 10, color: palette.textMute, letterSpacing: '0.13em', textTransform: 'uppercase' }}>상품 종류</div>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, minmax(0, 1fr))', gap: 8 }}>
+                  {PRODUCT_TYPES.map((type) => {
+                    const isSelected = selectedType === type.id;
+                    return (
+                      <button
+                        key={type.id}
+                        type="button"
+                        onClick={() => setSelectedType(type.id)}
+                        style={{
+                          cursor: 'pointer',
+                          borderTop: `1px solid ${isSelected ? palette.accentBorder : palette.borderSoft}`,
+                          borderRight: `1px solid ${isSelected ? palette.accentBorder : palette.borderSoft}`,
+                          borderBottom: `1px solid ${isSelected ? palette.accentBorder : palette.borderSoft}`,
+                          borderLeft: `1px solid ${isSelected ? palette.accentBorder : palette.borderSoft}`,
+                          borderRadius: 10,
+                          padding: '10px 9px',
+                          textAlign: 'left',
+                          background: isSelected ? palette.selectedChip : palette.chip,
+                          color: isSelected ? palette.text : palette.textSub,
+                          display: 'flex',
+                          alignItems: 'center',
+                          gap: 10,
+                        }}
+                      >
+                        <div
+                          style={{
+                            width: 26,
+                            height: 26,
+                            borderRadius: 8,
+                            borderTop: `1px solid ${isSelected ? palette.accentBorder : palette.borderSoft}`,
+                            borderRight: `1px solid ${isSelected ? palette.accentBorder : palette.borderSoft}`,
+                            borderBottom: `1px solid ${isSelected ? palette.accentBorder : palette.borderSoft}`,
+                            borderLeft: `1px solid ${isSelected ? palette.accentBorder : palette.borderSoft}`,
+                            background: isSelected ? palette.accentBg : palette.panelAlt,
                             display: 'flex',
                             alignItems: 'center',
-                            justifyContent: 'space-between',
-                            marginTop: 16
-                        }}>
-                            <div>
-                                <div style={{
-                                    color: '#888',
-                                    fontSize: 12,
-                                    marginBottom: 4
-                                }}>
-                                    총 결제 금액
-                                </div>
-                                <div style={{
-                                    color: '#111',
-                                    fontSize: 26,
-                                    fontWeight: 800,
-                                    letterSpacing: -0.5
-                                }}>
-                                    {formatPrice(totalPrice)}
-                                </div>
-                            </div>
-                            <button
-                                onClick={handlePurchase}
-                                className="purchase-btn"
-                                style={{
-                                    background: '#222',
-                                    border: 'none',
-                                    borderRadius: 12,
-                                    padding: '14px 36px',
-                                    color: 'white',
-                                    fontSize: 15,
-                                    fontWeight: 700,
-                                    cursor: 'pointer',
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    gap: 8
-                                }}
-                            >
-                                <span>구매하기</span>
-                                <span style={{ fontSize: 16 }}>→</span>
-                            </button>
+                            justifyContent: 'center',
+                            fontSize: 10,
+                            letterSpacing: '0.04em',
+                            color: isSelected ? palette.accent : palette.textSub,
+                            flexShrink: 0,
+                          }}
+                        >
+                          {type.marker}
                         </div>
-                    </div>
+                        <div style={{ minWidth: 0 }}>
+                          <div style={{ fontSize: 11, fontWeight: 600, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{type.name}</div>
+                          <div style={{ fontSize: 10, color: palette.textMute }}>{formatPrice(type.basePrice)}~</div>
+                        </div>
+                      </button>
+                    );
+                  })}
                 </div>
+              </section>
+
+              <section
+                style={{
+                  borderTop: `1px solid ${palette.borderSoft}`,
+                  borderRight: `1px solid ${palette.borderSoft}`,
+                  borderBottom: `1px solid ${palette.borderSoft}`,
+                  borderLeft: `1px solid ${palette.borderSoft}`,
+                  borderRadius: 14,
+                  background: palette.panelSolid,
+                  padding: 12,
+                }}
+              >
+                <div style={{ marginBottom: 9, fontSize: 10, color: palette.textMute, letterSpacing: '0.13em', textTransform: 'uppercase' }}>크기</div>
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8 }}>
+                  {sizes.map((size) => {
+                    const isSelected = selectedSize === size.id;
+                    return (
+                      <button
+                        key={size.id}
+                        type="button"
+                        onClick={() => setSelectedSize(size.id)}
+                        style={{
+                          cursor: 'pointer',
+                          borderTop: `1px solid ${isSelected ? palette.accentBorder : palette.borderSoft}`,
+                          borderRight: `1px solid ${isSelected ? palette.accentBorder : palette.borderSoft}`,
+                          borderBottom: `1px solid ${isSelected ? palette.accentBorder : palette.borderSoft}`,
+                          borderLeft: `1px solid ${isSelected ? palette.accentBorder : palette.borderSoft}`,
+                          borderRadius: 999,
+                          padding: '7px 12px',
+                          background: isSelected ? palette.selectedChip : palette.chip,
+                          color: isSelected ? palette.text : palette.textSub,
+                          fontSize: 11,
+                          fontWeight: 600,
+                          whiteSpace: 'nowrap',
+                        }}
+                      >
+                        {size.name}
+                      </button>
+                    );
+                  })}
+                </div>
+              </section>
+
+              <section
+                style={{
+                  borderTop: `1px solid ${palette.borderSoft}`,
+                  borderRight: `1px solid ${palette.borderSoft}`,
+                  borderBottom: `1px solid ${palette.borderSoft}`,
+                  borderLeft: `1px solid ${palette.borderSoft}`,
+                  borderRadius: 14,
+                  background: palette.panelSolid,
+                  padding: 12,
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                }}
+              >
+                <div>
+                  <div style={{ marginBottom: 7, fontSize: 10, color: palette.textMute, letterSpacing: '0.13em', textTransform: 'uppercase' }}>수량</div>
+                  <div style={{ fontSize: 12, color: palette.textSub }}>총 {quantity}개</div>
+                </div>
+                <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                  <button
+                    type="button"
+                    onClick={() => setQuantity((q) => Math.max(1, q - 1))}
+                    style={{
+                      cursor: 'pointer',
+                      width: 32,
+                      height: 32,
+                      borderRadius: 999,
+                      borderTop: `1px solid ${palette.borderSoft}`,
+                      borderRight: `1px solid ${palette.borderSoft}`,
+                      borderBottom: `1px solid ${palette.borderSoft}`,
+                      borderLeft: `1px solid ${palette.borderSoft}`,
+                      background: palette.chip,
+                      color: palette.text,
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      padding: 0,
+                    }}
+                  >
+                    <Minus size={14} strokeWidth={2.3} />
+                  </button>
+                  <div style={{ minWidth: 28, textAlign: 'center', color: palette.text, fontSize: 18, fontWeight: 700 }}>{quantity}</div>
+                  <button
+                    type="button"
+                    onClick={() => setQuantity((q) => Math.min(99, q + 1))}
+                    style={{
+                      cursor: 'pointer',
+                      width: 32,
+                      height: 32,
+                      borderRadius: 999,
+                      borderTop: `1px solid ${palette.borderSoft}`,
+                      borderRight: `1px solid ${palette.borderSoft}`,
+                      borderBottom: `1px solid ${palette.borderSoft}`,
+                      borderLeft: `1px solid ${palette.borderSoft}`,
+                      background: palette.chip,
+                      color: palette.text,
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      padding: 0,
+                    }}
+                  >
+                    <Plus size={14} strokeWidth={2.3} />
+                  </button>
+                </div>
+              </section>
             </div>
-        </div>,
-        document.body
-    );
+          </div>
+
+          <section style={{ marginTop: 18 }}>
+            <div style={{ marginBottom: 9, fontSize: 10, color: palette.textMute, letterSpacing: '0.13em', textTransform: 'uppercase' }}>실제 상품 사진</div>
+            <div style={{ display: 'grid', gridTemplateColumns: isMobile ? 'repeat(2, minmax(0, 1fr))' : 'repeat(3, minmax(0, 1fr))', gap: 10 }}>
+              {[1, 2, 3].map((index) => (
+                <div
+                  key={index}
+                  style={{
+                    borderRadius: 10,
+                    borderTop: `1px dashed ${palette.border}`,
+                    borderRight: `1px dashed ${palette.border}`,
+                    borderBottom: `1px dashed ${palette.border}`,
+                    borderLeft: `1px dashed ${palette.border}`,
+                    minHeight: isMobile ? 88 : 102,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    fontSize: 11,
+                    color: palette.textMute,
+                    background: palette.chip,
+                  }}
+                >
+                  Sample {index}
+                </div>
+              ))}
+            </div>
+          </section>
+
+          {(aiRecommendations.length > 0 || uniqueRelatedArtworks.length > 0) && (
+            <section style={{ marginTop: 18 }}>
+              <div style={{ marginBottom: 9, fontSize: 10, color: palette.textMute, letterSpacing: '0.13em', textTransform: 'uppercase' }}>추천 작품</div>
+
+              {aiRecommendations.length > 0 && (
+                <div style={{ marginBottom: 12 }}>
+                  <div style={{ marginBottom: 8, fontSize: 11, color: palette.textSub }}>비슷한 분위기 (AI)</div>
+                  <div className="product-recs-scroll" style={{ display: 'flex', flexWrap: 'nowrap', gap: 9, overflowX: 'auto', paddingBottom: 8 }}>
+                    {aiRecommendations.map((item) => renderRecommendationCard(item, 'AI'))}
+                  </div>
+                </div>
+              )}
+
+              {uniqueRelatedArtworks.length > 0 && (
+                <div>
+                  <div style={{ marginBottom: 8, fontSize: 11, color: palette.textSub }}>이 작가의 다른 작품</div>
+                  <div className="product-recs-scroll" style={{ display: 'flex', flexWrap: 'nowrap', gap: 9, overflowX: 'auto', paddingBottom: 8 }}>
+                    {uniqueRelatedArtworks.map((item) => renderRecommendationCard(item, 'Artist'))}
+                  </div>
+                </div>
+              )}
+            </section>
+          )}
+
+          <section
+            style={{
+              marginTop: 18,
+              borderTop: `1px solid ${palette.borderSoft}`,
+              borderRight: `1px solid ${palette.borderSoft}`,
+              borderBottom: `1px solid ${palette.borderSoft}`,
+              borderLeft: `1px solid ${palette.borderSoft}`,
+              borderRadius: 14,
+              background: palette.panelSolid,
+              padding: isMobile ? 12 : 14,
+            }}
+          >
+            <div style={{ marginBottom: 10, fontSize: 10, color: palette.textMute, letterSpacing: '0.13em', textTransform: 'uppercase' }}>결제 수단</div>
+            <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, minmax(0, 1fr))', gap: 8 }}>
+              {PAYMENT_METHODS.map((method) => {
+                const isSelected = selectedPayment === method.id;
+                return (
+                  <button
+                    key={method.id}
+                    type="button"
+                    onClick={() => setSelectedPayment(method.id)}
+                    style={{
+                      cursor: 'pointer',
+                      borderTop: `1px solid ${isSelected ? palette.accentBorder : palette.borderSoft}`,
+                      borderRight: `1px solid ${isSelected ? palette.accentBorder : palette.borderSoft}`,
+                      borderBottom: `1px solid ${isSelected ? palette.accentBorder : palette.borderSoft}`,
+                      borderLeft: `1px solid ${isSelected ? palette.accentBorder : palette.borderSoft}`,
+                      borderRadius: 10,
+                      background: isSelected ? palette.selectedChip : palette.panelAlt,
+                      color: palette.text,
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      gap: 8,
+                      padding: '10px 8px',
+                    }}
+                  >
+                    <span
+                      style={{
+                        width: 24,
+                        height: 24,
+                        borderRadius: 7,
+                        background: method.color,
+                        color: method.id === 'kakaopay' ? '#000' : '#fff',
+                        fontSize: 12,
+                        fontWeight: 700,
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        flexShrink: 0,
+                      }}
+                    >
+                      {method.short}
+                    </span>
+                    <span style={{ fontSize: 12, fontWeight: 600 }}>{method.name}</span>
+                  </button>
+                );
+              })}
+            </div>
+
+            <div style={{ marginTop: 14, display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12, flexWrap: 'wrap' }}>
+              <div>
+                <div style={{ fontSize: 11, color: palette.textMute }}>총 결제 금액</div>
+                <div style={{ marginTop: 2, fontSize: 28, color: palette.text, fontWeight: 800, letterSpacing: '-0.02em' }}>{formatPrice(totalPrice)}</div>
+                {cartFeedback && (
+                  <div style={{ marginTop: 6, fontSize: 11, color: palette.accent, fontWeight: 700 }}>{cartFeedback}</div>
+                )}
+              </div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap', width: isMobile ? '100%' : 'auto' }}>
+                <button
+                  type="button"
+                  onClick={handleAddToCart}
+                  style={{
+                    cursor: 'pointer',
+                    borderTop: `1px solid ${palette.accentBorder}`,
+                    borderRight: `1px solid ${palette.accentBorder}`,
+                    borderBottom: `1px solid ${palette.accentBorder}`,
+                    borderLeft: `1px solid ${palette.accentBorder}`,
+                    borderRadius: 12,
+                    padding: '12px 16px',
+                    minWidth: isMobile ? '100%' : 150,
+                    background: palette.selectedChip,
+                    color: palette.accent,
+                    fontSize: 13,
+                    fontWeight: 700,
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                >
+                  장바구니 담기
+                </button>
+                <button
+                  type="button"
+                  onClick={handlePurchase}
+                  style={{
+                    cursor: 'pointer',
+                    borderTop: `1px solid ${selectedPayment ? palette.accentBorder : palette.borderSoft}`,
+                    borderRight: `1px solid ${selectedPayment ? palette.accentBorder : palette.borderSoft}`,
+                    borderBottom: `1px solid ${selectedPayment ? palette.accentBorder : palette.borderSoft}`,
+                    borderLeft: `1px solid ${selectedPayment ? palette.accentBorder : palette.borderSoft}`,
+                    borderRadius: 12,
+                    padding: '12px 20px',
+                    minWidth: isMobile ? '100%' : 170,
+                    background: selectedPayment
+                      ? (isLightTheme ? palette.selectedSolid : palette.accent)
+                      : palette.chip,
+                    color: selectedPayment
+                      ? (isLightTheme ? '#F3FFD0' : '#121212')
+                      : palette.textMute,
+                    fontSize: 14,
+                    fontWeight: 700,
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    gap: 8,
+                  }}
+                >
+                  <span>구매하기</span>
+                  <span style={{ fontSize: 14 }}>{'->'}</span>
+                </button>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>,
+    document.body
+  );
 };
 
 export default ProductModal;

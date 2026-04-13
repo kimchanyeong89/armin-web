@@ -3473,18 +3473,30 @@ export const exhibitions = [
     name_en: "National Folk Museum of Korea",
     location: "서울특별시 종로구 삼청로 37",
     location_en: "37 Samcheong-ro, Jongno-gu, Seoul",
-    description: "한국의 전통 생활문화를 보존하고 전시하는 국립박물관. 민속자료와 회화 컬렉션 소장.",
-    description_en: "National museum preserving and exhibiting traditional Korean folk culture with a collection of folk materials and paintings.",
-    latitude: 37.5817,
-    longitude: 126.9787,
+    description: "경복궁 내에 위치한 한국 민속·생활문화 전문 박물관. 선사시대부터 근현대까지 한국인의 일상생활과 세시풍속·생업·주거 문화를 방대한 소장품과 디오라마로 전시한다. 어린이 박물관 및 야외 민속마을을 운영하며 연간 300만 명 이상이 방문한다.",
+    description_en: "A national museum of Korean folk and everyday culture situated within Gyeongbokgung Palace. It documents Korean daily life from prehistory to the modern era through its extensive collection, dioramas, an outdoor folk village, and a dedicated children's museum.",
+    latitude: 37.5811,
+    longitude: 126.9786,
     country: "South Korea",
     region: "Seoul",
-    representativeImage: "/images/folk-museum.jpg",
+    representativeImage: "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e8/National_Folk_Museum_of_Korea_-_entrance.jpg/1280px-National_Folk_Museum_of_Korea_-_entrance.jpg",
     floorPlan: "",
     permanentExhibitions: [
       { id: "folk-collection", name: "국립민속박물관 회화 컬렉션", name_en: "National Folk Museum Paintings", title: "국립민속박물관 회화 컬렉션", title_en: "National Folk Museum Paintings Collection", description: "국립민속박물관 소장 회화 컬렉션 (927점)", description_en: "National Folk Museum paintings collection (927 items)", startDate: "Permanent", endDate: "Permanent", collectionFile: "folk-museum.json" }
     ],
-    temporaryExhibitions: [],
+    temporaryExhibitions: [
+      {
+        id: "nfm-2025-childbirth",
+        title: "출산, 모두의 잔치",
+        titleEn: "Childbirth, A Celebration for All",
+        description: "선사시대부터 현대까지 한국의 출산 풍습과 의례를 조명하는 특별전. 출산 관련 유물 328점을 통해 생명 탄생을 둘러싼 공동체의 기원과 축하 문화를 살펴본다.",
+        startDate: "2025-12-03",
+        endDate: "2026-05-10",
+        coverImage: "",
+        officialUrl: "https://www.nfm.go.kr/home/exhibition/current.do",
+        status: "ongoing"
+      }
+    ],
     pastExhibitions: [],
     rooms: {}
   },
@@ -4639,36 +4651,66 @@ export const exhibitions = [
   // Seogwipo Museums
   {
     id: "lee-jung-seop-museum",
-    name: "Lee Jung-seop Art Museum",
-    slug: "lee-jung-seop",
-    location: "27-3, Leejungseop-ro, Seogwipo-si, Jeju-do",
-    description: "Located in Seogwipo, the museum honors Lee Jung-seop, a genius painter of Korea, exhibiting his works and personal history.",
+    slug: "lee-jung-seop-museum",
+    name: "이중섭미술관",
+    name_en: "Lee Jung-seob Art Museum",
+    location: "제주특별자치도 서귀포시 이중섭로 27-3",
+    location_en: "27-3 Lee Jung-seop-ro, Seogwipo, Jeju",
+    description: "한국 근대미술의 거장 이중섭(1916-1956)이 피란 시절 거주한 서귀포에 2002년 건립된 미술관. 그의 대표작 〈황소〉를 비롯한 원화, 은지화, 엽서화 등을 소장하며, 인근 이중섭 거리와 함께 서귀포의 문화예술 중심지를 형성한다.",
+    description_en: "Built in 2002 in Seogwipo, where the revered Korean modern master Lee Jung-seob lived as a refugee, this museum houses originals, silver-foil works, and postcard paintings including his iconic bull paintings.",
     latitude: 33.2458,
     longitude: 126.5649,
     country: "South Korea",
     region: "Jeju",
-    representativeImage: "",
+    representativeImage: "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cf/Lee_Jung-seob_Museum.jpg/1280px-Lee_Jung-seob_Museum.jpg",
     permanentExhibitions: [
-      { id: "ljs-collection", name: "Permanent Collection", title: "Lee Jung-seop Collection", description: "Permanent exhibition of Lee Jung-seop's works and related archives.", startDate: "Permanent", endDate: "Permanent", collectionFile: "lee-jung-seop-collection.json" }
+      { id: "ljs-collection", name: "이중섭 소장품", title: "이중섭 소장품", description: "이중섭의 원화, 은지화, 엽서화를 포함한 상설 컬렉션.", startDate: "Permanent", endDate: "Permanent", collectionFile: "lee-jung-seop-collection.json" }
     ],
-    temporaryExhibitions: [],
+    temporaryExhibitions: [
+      {
+        id: "jungseob-2026-archive4",
+        title: "이중섭 아카이브 전시 4부: 1955-1956년",
+        titleEn: "Lee Jung-seob Archive Exhibition Part 4: 1955–1956",
+        description: "이중섭의 말년(1955-1956년)을 집중 조명하는 아카이브 연작 전시 4부. 대구와 서울을 오가며 활동하다 세상을 떠난 그의 마지막 시기 작품과 기록을 통해 생애 말년의 예술 세계를 재조명한다.",
+        startDate: "2026-01-29",
+        endDate: "2026-08-30",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/jungseob-2026-archive4.jpg",
+        officialUrl: "http://culture.seogwipo.go.kr/jslee/",
+        status: "ongoing"
+      }
+    ],
     pastExhibitions: []
   },
   {
     id: "gidang-art-museum",
-    name: "Gidang Art Museum",
-    slug: "gidang",
-    location: "15, Namseongjung-ro 153beon-gil, Seogwipo-si, Jeju-do",
-    description: "The first public general art museum in Korea, established by Gidang Kang Gu-beom. It houses diverse modern and contemporary artworks.",
-    latitude: 33.2435,
-    longitude: 126.5583,
+    slug: "gidang-art-museum",
+    name: "기당미술관",
+    name_en: "Gidang Art Museum",
+    location: "제주특별자치도 서귀포시 남성중로 153번길 15",
+    location_en: "15 Namseongjung-ro 153beon-gil, Seogwipo, Jeju",
+    description: "1987년 서귀포 출신 사업가 기당 강구범이 설립한 제주 최초의 사립 미술관. 제주 출신 화가 변시지의 작품 세계를 중심으로 국내외 현대미술 소장품을 전시하며, 서귀포 도심 속 아늑한 문화 거점으로 자리한다.",
+    description_en: "Jeju's first private art museum, founded in 1987 by businessman Kang Gu-beom. Centered on the works of Jeju-born painter Byun Si-ji, it presents modern and contemporary art in a quiet cultural enclave in central Seogwipo.",
+    latitude: 33.2447,
+    longitude: 126.5518,
     country: "South Korea",
     region: "Jeju",
-    representativeImage: "",
+    representativeImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/gidang-2026-daily.png",
     permanentExhibitions: [
-      { id: "gidang-collection", name: "Permanent Collection", title: "Gidang Collection", description: "Permanent exhibition featuring modern calligraphy, paintings, and contemporary art.", startDate: "Permanent", endDate: "Permanent", collectionFile: "gidang-collection.json" }
+      { id: "gidang-collection", name: "소장품", title: "기당 소장품", description: "변시지를 비롯한 근현대 회화·서예 소장품 상설전.", startDate: "Permanent", endDate: "Permanent", collectionFile: "gidang-collection.json" }
     ],
-    temporaryExhibitions: [],
+    temporaryExhibitions: [
+      {
+        id: "gidang-2026-daily",
+        title: "소장품전 〈일상의 온도〉",
+        titleEn: "Collection Exhibition: The Temperature of Daily Life",
+        description: "기당미술관 소장품을 중심으로 우리 일상의 온도를 담은 작품들을 선보이는 소장품 기획전.",
+        startDate: "2026-02-12",
+        endDate: "2026-05-10",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/gidang-2026-daily.png",
+        officialUrl: "http://culture.seogwipo.go.kr/gidang/",
+        status: "ongoing"
+      }
+    ],
     pastExhibitions: []
   },
   {
@@ -4715,27 +4757,53 @@ export const exhibitions = [
   },
   {
     id: "kim-tschang-yeul-art-museum",
-    name: "Kim Tschang-Yeul Art Museum Jeju",
-    slug: "kimtschang-yeul",
-    location: "Jeju, South Korea",
-    description: "Online collection imported from kimtschang-yeul.jeju.go.kr.",
-    latitude: 33.285,
-    longitude: 126.257,
+    slug: "kim-tschang-yeul-art-museum",
+    name: "제주도립 김창열미술관",
+    name_en: "Kim Tschang-Yeul Art Museum Jeju",
+    location: "제주특별자치도 제주시 한림읍 용금로 883-5",
+    location_en: "883-5 Yonggeum-ro, Hallim-eup, Jeju-si, Jeju",
+    description: "물방울 화가 김창열(1929-2021)의 작품 1200여 점을 소장한 도립 미술관. 2016년 개관. 프랑스에서 활동하며 물방울 회화를 평생 탐구한 그의 작업 세계를 상설 및 기획전으로 선보인다. 제주 저지예술인마을 인근에 위치한다.",
+    description_en: "A provincial museum dedicated to 'waterdrop painter' Kim Tschang-yeul (1929–2021), housing over 1,200 of his works. Opened in 2016, it presents his lifetime exploration of waterdrop painting developed during his decades in France.",
+    latitude: 33.3391,
+    longitude: 126.2688,
     country: "South Korea",
     region: "Jeju",
-    representativeImage: "",
+    representativeImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/kimtschangyeul-2026-waterstones.jpg",
     permanentExhibitions: [
       {
         id: "kimtschang-yeul-collection",
-        name: "Collection",
-        title: "소장품",
-        description: "Digital collection imported from kimtschang-yeul.jeju.go.kr.",
+        name: "소장품",
+        title: "김창열 소장품",
+        description: "물방울 회화를 중심으로 한 김창열 작품 상설 소장품.",
         startDate: "Permanent",
         endDate: "Permanent",
         collectionFile: "kimtschang-yeul-collection-all.json"
       }
     ],
-    temporaryExhibitions: [],
+    temporaryExhibitions: [
+      {
+        id: "kimtschangyeul-2026-waterstones",
+        title: "김창열과 한용진: 물방울과 돌",
+        titleEn: "Kim Tschang-yeul & Han Yongjin: Waterdrops & Stones",
+        description: "김창열의 물방울 회화와 조각가 한용진의 작품 15점을 함께 선보이는 2인전. 물방울과 돌이라는 대비되는 자연 소재를 통해 두 작가의 조형 언어를 대화시킨다.",
+        startDate: "2026-03-24",
+        endDate: "2026-06-14",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/kimtschangyeul-2026-waterstones.jpg",
+        officialUrl: "https://kimtschang-yeul.jeju.go.kr/",
+        status: "ongoing"
+      },
+      {
+        id: "kimtschangyeul-2026-10years",
+        title: "10/10: 미술관 10년의 선택",
+        titleEn: "10/10: A Decade's Selection at the Museum",
+        description: "개관 10주년을 기념하여 큐레이터가 엄선한 김창열 회화 10점을 소개하는 온라인 기획전.",
+        startDate: "2026-02-10",
+        endDate: "2026-12-31",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/kimtschangyeul-2026-10years.jpg",
+        officialUrl: "https://kimtschang-yeul.jeju.go.kr/",
+        status: "ongoing"
+      }
+    ],
     pastExhibitions: []
   }
   ,
@@ -5731,13 +5799,13 @@ export const exhibitions = [
         status: "ongoing"
       },
       {
-        id: "groundseesaw-2026-yoru",
+        id: "groundseesaw-2026-sungryul",
         title: "성률 기획전: 여름을 닮은 우리",
         titleEn: "Seongryul: Summer Like Us",
-        description: "그라운드시소 한남점 기획전.",
+        description: "그라운드시소 한남점 기획전. 한국 일러스트레이터 성률의 감성적 작품 세계를 선보이는 기획전.",
         startDate: "2026-04-30",
         endDate: "2026-09-27",
-        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/groundseesaw-2026-yoru.jpg",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/groundseesaw-2026-sungryul.jpg",
         officialUrl: "https://www.groundseesaw.co.kr",
         status: "upcoming"
       },
@@ -5753,7 +5821,83 @@ export const exhibitions = [
         status: "ongoing"
       }
     ],
-    pastExhibitions: [],
+    pastExhibitions: [
+      {
+        id: "groundseesaw-2025-himuro",
+        title: "히무로 유리: 오늘의 기쁨",
+        titleEn: "Himuro Yuri: Today's Joy",
+        startDate: "2025-10-03",
+        endDate: "2026-04-04",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/groundseesaw-2026-yoru.jpg",
+        officialUrl: "https://www.groundseesaw.co.kr",
+        status: "past"
+      }
+    ],
     rooms: {}
-  }
+  },
+
+  {
+    id: "jeju-contemporary-art-museum",
+    slug: "jeju-contemporary-art-museum",
+    name: "제주현대미술관",
+    name_en: "Jeju Museum of Contemporary Art",
+    location: "제주특별자치도 제주시 한경면 저지리 2114-63",
+    location_en: "2114-63 Jeoji-ri, Hangyeong-myeon, Jeju-si, Jeju",
+    description: "제주 한경면 저지예술인마을 내 위치한 도립 현대미술관. 제주와 국내외 현대미술 작가의 기획전을 개최하며, 야외 조각공원과 공공수장고를 함께 운영한다. 자연 속 미술관 경험을 제공하는 제주 서부의 대표 문화기관이다.",
+    description_en: "A provincial museum of contemporary art located in the Jeoji Artists' Village in Hangyeong, western Jeju. It presents changing exhibitions by Korean and international artists alongside an outdoor sculpture park and public art storage.",
+    latitude: 33.3403,
+    longitude: 126.2663,
+    country: "South Korea",
+    region: "Jeju",
+    representativeImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/jejumodern-2026-kimheungsoo.jpg",
+    permanentExhibitions: [],
+    temporaryExhibitions: [
+      {
+        id: "jejumodern-2026-kimheungsoo",
+        title: "김흥수: 어디서 본 듯한",
+        titleEn: "Kim Heung-soo: Familiar Yet Strange",
+        description: "한국 작가 김흥수의 개인전.",
+        startDate: "2026-04-03",
+        endDate: "2026-10-25",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/jejumodern-2026-kimheungsoo.jpg",
+        officialUrl: "https://www.jeju.go.kr/jejumuseum/index.htm",
+        status: "ongoing"
+      },
+      {
+        id: "jejumodern-2026-parkhanna",
+        title: "박한나: 태양의 소실점에서",
+        titleEn: "Park Han-na: At the Vanishing Point of the Sun",
+        description: "한국 작가 박한나의 개인전.",
+        startDate: "2026-03-24",
+        endDate: "2026-09-13",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/jejumodern-2026-parkhanna.jpg",
+        officialUrl: "https://www.jeju.go.kr/jejumuseum/index.htm",
+        status: "ongoing"
+      },
+      {
+        id: "jejumodern-2026-parkkwangjin",
+        title: "박광진: 형상, 시가 되다",
+        titleEn: "Park Kwang-jin: Form Becomes Poetry",
+        description: "한국 작가 박광진의 개인전.",
+        startDate: "2026-03-06",
+        endDate: "2026-11-01",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/jejumodern-2026-parkkwangjin.jpg",
+        officialUrl: "https://www.jeju.go.kr/jejumuseum/index.htm",
+        status: "ongoing"
+      },
+      {
+        id: "jejumodern-2026-mediaart",
+        title: "공공수장고 미디어아트: 해와 달의 노래",
+        titleEn: "Public Archive Media Art: Song of Sun and Moon",
+        description: "제주현대미술관 공공수장고 연계 미디어아트 전시.",
+        startDate: "2026-03-17",
+        endDate: "2026-05-31",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/jejumodern-2026-mediaart.jpg",
+        officialUrl: "https://www.jeju.go.kr/jejumuseum/index.htm",
+        status: "ongoing"
+      }
+    ],
+    pastExhibitions: []
+  },
+
 ];

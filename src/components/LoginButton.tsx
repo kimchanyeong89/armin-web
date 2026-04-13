@@ -4,6 +4,7 @@ import { auth } from '../firebase';
 import { GoogleAuthProvider, OAuthProvider, signInWithPopup, signInWithRedirect, signOut, onAuthStateChanged } from 'firebase/auth';
 import type { User } from 'firebase/auth';
 import { getFirestore, doc, getDoc } from 'firebase/firestore';
+import { isMobileAppContainer, requestExternalMobileLogin } from '../utils/mobileAppAuth';
 
 // 인앱 브라우저 감지 (카카오톡, 인스타그램, 페이스북 등)
 const isInAppBrowser = (): boolean => {
@@ -18,6 +19,7 @@ const isInAppBrowser = (): boolean => {
 
 export const LoginButton: React.FC<{ style?: React.CSSProperties }> = ({ style }) => {
     const navigate = useNavigate();
+    const mobileAppContainer = isMobileAppContainer();
     const [user, setUser] = useState<User | null>(null);
     const [profileData, setProfileData] = useState<any>(null);
     const [showBrowserAlert, setShowBrowserAlert] = useState(false);
@@ -56,6 +58,12 @@ export const LoginButton: React.FC<{ style?: React.CSSProperties }> = ({ style }
     }, [user]);
 
     const handleLoginWithProvider = async (providerType: 'google' | 'apple') => {
+        if (mobileAppContainer) {
+            setShowLoginModal(false);
+            window.dispatchEvent(new Event('auth:request-login'));
+            return;
+        }
+
         // 인앱 브라우저인 경우 외부 브라우저 유도
         if (isInAppBrowser()) {
             setShowLoginModal(false);
@@ -80,6 +88,11 @@ export const LoginButton: React.FC<{ style?: React.CSSProperties }> = ({ style }
             // disallowed_useragent 에러 시 redirect 방식으로 폴백
             if (error && typeof error === 'object' && 'code' in error &&
                 (error as { code: string }).code === 'auth/operation-not-supported-in-this-environment') {
+                if (mobileAppContainer) {
+                    window.dispatchEvent(new Event('auth:request-login'));
+                    return;
+                }
+
                 let provider;
                 provider = providerType === 'google'
                     ? new GoogleAuthProvider()
@@ -93,6 +106,11 @@ export const LoginButton: React.FC<{ style?: React.CSSProperties }> = ({ style }
     };
 
     const handleLogin = async () => {
+        if (mobileAppContainer) {
+            navigate('/login?mobileApp=1');
+            return;
+        }
+
         // 인앱 브라우저인 경우 외부 브라우저 유도
         if (isInAppBrowser()) {
             setShowBrowserAlert(true);
@@ -113,6 +131,10 @@ export const LoginButton: React.FC<{ style?: React.CSSProperties }> = ({ style }
         if (typeof window === 'undefined') return;
         const handleLoginRequest = () => {
             if (user) return;
+            if (mobileAppContainer) {
+                navigate('/login?mobileApp=1');
+                return;
+            }
             if (isInAppBrowser()) {
                 setShowBrowserAlert(true);
                 return;
@@ -123,7 +145,7 @@ export const LoginButton: React.FC<{ style?: React.CSSProperties }> = ({ style }
         return () => {
             window.removeEventListener('auth:request-login', handleLoginRequest);
         };
-    }, [user]);
+    }, [mobileAppContainer, navigate, user]);
 
     // 인앱 브라우저 알림 모달
     if (showBrowserAlert) {
@@ -279,6 +301,12 @@ export const LoginButton: React.FC<{ style?: React.CSSProperties }> = ({ style }
                         {/* Naver Login */}
                         <button
                             onClick={() => {
+                                if (mobileAppContainer) {
+                                    setShowLoginModal(false);
+                                    requestExternalMobileLogin('naver');
+                                    return;
+                                }
+
                                 const clientId = import.meta.env.VITE_NAVER_CLIENT_ID || "aZtMPBM1Qh_Os83uR3TG";
                                 const callbackUrl = window.location.origin + "/login/callback";
                                 console.log("Naver Login Callback URL:", callbackUrl); // For debugging

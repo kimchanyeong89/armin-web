@@ -12,6 +12,7 @@ import type { Artwork as ProductArtwork } from "../../types/Artwork";
 import { collection, onSnapshot, doc, deleteDoc, setDoc, serverTimestamp, increment } from "firebase/firestore";
 import { onAuthStateChanged, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { db, auth } from "../../firebase";
+import { isMobileAppContainer } from "../../utils/mobileAppAuth";
 
 function typeColor(type: string, t: boolean): string {
   if (type === "current") return t ? "#5A7800" : "#BFFF0A";
@@ -25,9 +26,8 @@ function useColumnCount() {
   const [cols, setCols] = useState(3);
   useEffect(() => {
     const update = () => {
-      if (window.innerWidth >= 1024) setCols(5);
-      else if (window.innerWidth >= 768) setCols(4);
-      else if (window.innerWidth >= 640) setCols(3);
+      if (window.innerWidth >= 1280) setCols(5);
+      else if (window.innerWidth >= 960) setCols(4);
       else setCols(3);
     };
     update();
@@ -387,6 +387,9 @@ export function InteractiveGlobeRealModal({
   const [productArtwork, setProductArtwork] = useState<ProductArtwork | null>(null);
   const [commentArtworkId, setCommentArtworkId] = useState<string | null>(null);
   const colCount = useColumnCount();
+  const isMobile = typeof window !== "undefined" && window.innerWidth < 768;
+  const isNarrowMobile = typeof window !== "undefined" && window.innerWidth < 540;
+  const shouldShowHoverMetadata = !isMobile;
   const [realArtworks, setRealArtworks] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [visibleCount, setVisibleCount] = useState(INITIAL_VISIBLE_ARTWORKS);
@@ -614,6 +617,18 @@ export function InteractiveGlobeRealModal({
     const fallback = String(exhibition?.id || "").trim();
     return fallback ? `${fallback}-collection` : "collection";
   }, [resolvedCollectionCandidate, exhibition]);
+
+  const recommendationFallbackPrefix = useMemo(() => {
+    if (collectionSlug) return collectionSlug;
+
+    const selectedExhibitionId = String((exhibition as any)?._selectedExhibitionId || "").trim();
+    if (selectedExhibitionId) return selectedExhibitionId;
+
+    const exhibitionId = String(exhibition?.id || "").trim();
+    if (exhibitionId) return exhibitionId;
+
+    return collectionSlug;
+  }, [collectionSlug, exhibition]);
   
   const mappedArtworks = useMemo(() => {
       const getImg = (url: string) => {
@@ -802,7 +817,10 @@ export function InteractiveGlobeRealModal({
 
       return realArtworks.map((a, i) => {
           const imgUrl = resolveImg(a);
-          const semanticId = pickMeaningfulText(a?.semanticId, a?.semantic_id, a?.vectorId, a?.vector_id) || `${collectionSlug}-${i}`;
+          const semanticId = pickMeaningfulText(a?.semanticId, a?.semantic_id, a?.vectorId, a?.vector_id) || undefined;
+          const fallbackIndexedId = recommendationFallbackPrefix
+            ? `${recommendationFallbackPrefix}-${i}`
+            : `AW-${i}`;
           return {
               title: resolveTitle(a),
               artist: resolveArtist(a),
@@ -813,7 +831,7 @@ export function InteractiveGlobeRealModal({
               dimensions: resolveDimensions(a),
               material: resolveMaterial(a),
               collection: venueName,
-              inventoryNo: String(a.id || a.objectNumber || a.registrationNumber || a.inventoryNumber || a.accessionNum || `AW-${i}`),
+                inventoryNo: String(a.id || a.objectNumber || a.registrationNumber || a.inventoryNumber || a.accessionNum || fallbackIndexedId),
               sourceUrl: resolveSourceUrl(a),
               semanticId,
           }
@@ -830,7 +848,7 @@ export function InteractiveGlobeRealModal({
           };
           return (isTextOrLetter(a) ? 1 : 0) - (isTextOrLetter(b) ? 1 : 0);
       });
-  }, [realArtworks, venueName, collectionSlug]);
+  }, [realArtworks, recommendationFallbackPrefix, venueName]);
 
 
   const bgColor = t ? "#FAFAFA" : "#080808";
@@ -932,6 +950,11 @@ export function InteractiveGlobeRealModal({
 
     if (!currentUser || currentUser.isAnonymous) {
       try {
+        if (isMobileAppContainer()) {
+          window.dispatchEvent(new Event("auth:request-login"));
+          return;
+        }
+
         const provider = new GoogleAuthProvider();
         provider.setCustomParameters({ prompt: "select_account" });
         const result = await signInWithPopup(auth, provider);
@@ -1220,9 +1243,11 @@ export function InteractiveGlobeRealModal({
     return detailArtworkOverride || baseSelectedArtworkDetail;
   }, [detailArtworkOverride, baseSelectedArtworkDetail]);
 
-  const inspectedArt = hoveredArtwork !== null
-    ? (displayedArtworks[hoveredArtwork] || null)
-    : selectedArtworkDetail;
+  const inspectedArt = shouldShowHoverMetadata
+    ? (hoveredArtwork !== null
+      ? (displayedArtworks[hoveredArtwork] || null)
+      : selectedArtworkDetail)
+    : null;
 
   const selectedRecommendationArtwork = useMemo(() => {
     if (!selectedArtworkDetail) return null;
@@ -1232,14 +1257,46 @@ export function InteractiveGlobeRealModal({
   const selectedRecommendationRelatedArtworks = useMemo(() => {
     if (!selectedArtworkDetail) return [] as ProductArtwork[];
     const selectedId = artworkIdFrom(selectedArtworkDetail);
-    return mappedArtworks
-      .filter((candidate) => {
+    const selectedArtist = normalizeSearchText(selectedArtworkDetail.artist);
+    const selectedCategory = normalizeSearchText(selectedArtworkDetail.category);
+    const selectedYear = Number(formatArtworkYear(String(selectedArtworkDetail.year || ''))) || 0;
+
+    const seen = new Set<string>([selectedId]);
+    const pushUnique = (bucket: Artwork[], source: Artwork[]) => {
+      source.forEach((candidate) => {
         const candidateId = artworkIdFrom(candidate);
-        if (candidateId === selectedId) return false;
-        return candidate.artist === selectedArtworkDetail.artist;
-      })
-      .slice(0, 12)
-      .map(toProductArtwork);
+        if (!candidateId || seen.has(candidateId)) return;
+        seen.add(candidateId);
+        bucket.push(candidate);
+      });
+    };
+
+    const sameArtist = mappedArtworks.filter((candidate) => {
+      const candidateId = artworkIdFrom(candidate);
+      if (!candidateId || candidateId === selectedId) return false;
+      return normalizeSearchText(candidate.artist) === selectedArtist;
+    });
+
+    const sameCategory = mappedArtworks.filter((candidate) => {
+      const candidateId = artworkIdFrom(candidate);
+      if (!candidateId || candidateId === selectedId) return false;
+      return normalizeSearchText(candidate.category) === selectedCategory;
+    });
+
+    const yearNearest = [...mappedArtworks]
+      .filter((candidate) => artworkIdFrom(candidate) !== selectedId)
+      .sort((a, b) => {
+        const ay = Number(formatArtworkYear(String(a.year || ''))) || 0;
+        const by = Number(formatArtworkYear(String(b.year || ''))) || 0;
+        return Math.abs(ay - selectedYear) - Math.abs(by - selectedYear);
+      });
+
+    const merged: Artwork[] = [];
+    pushUnique(merged, sameArtist);
+    pushUnique(merged, sameCategory);
+    pushUnique(merged, yearNearest);
+
+    return merged.slice(0, 12).map(toProductArtwork);
   }, [artworkIdFrom, mappedArtworks, selectedArtworkDetail, toProductArtwork]);
 
   const handleRecommendationSelect = useCallback((selected: ProductArtwork) => {
@@ -1287,12 +1344,14 @@ export function InteractiveGlobeRealModal({
 
   const selectedRow = activeArtwork !== null ? Math.floor(activeArtwork / colCount) : -1;
   const handleArtworkMouseEnter = useCallback((index: number) => {
+    if (!shouldShowHoverMetadata) return;
     setHoveredArtwork((prev) => (prev === index ? prev : index));
-  }, []);
+  }, [shouldShowHoverMetadata]);
 
   const handleArtworkMouseLeave = useCallback(() => {
+    if (!shouldShowHoverMetadata) return;
     setHoveredArtwork((prev) => (prev === null ? prev : null));
-  }, []);
+  }, [shouldShowHoverMetadata]);
 
   const handleSearchChange = useCallback((val: string) => {
     setSearchQuery(val);
@@ -1302,7 +1361,7 @@ export function InteractiveGlobeRealModal({
     setDetailArtworkOrigin(null);
   }, []);
 
-  const pad = '40px';
+  const pad = isNarrowMobile ? '14px' : isMobile ? '20px' : '40px';
 
   const heroImage = useMemo(() => {
     if (mappedArtworks.length > 0) return mappedArtworks[0].lowImage || mappedArtworks[0].image;
@@ -1359,8 +1418,8 @@ export function InteractiveGlobeRealModal({
           <div style={{ position: 'absolute', inset: 0, background: `linear-gradient(to bottom, ${bgColor}00 0%, ${bgColor}00 68%, ${bgColor}33 88%, ${bgColor}66 100%)` }} />
           <div style={{ position: 'absolute', inset: 0, background: `linear-gradient(to bottom, ${bgColor}1A 0%, ${bgColor}00 28%)` }} />
           {/* Nav bar */}
-          <div style={{ position: 'absolute', top: 0, left: 0, right: 0, zIndex: 10, display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: `24px ${pad}` }}>
-            <button onClick={onClose} style={{ display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer', fontSize: '10px', background: 'none', borderTop: 'none', borderRight: 'none', borderBottom: 'none', borderLeft: 'none', outline: 'none' }}>
+          <div style={{ position: 'absolute', top: 0, left: 0, right: 0, zIndex: 30, display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: `${isMobile ? 'calc(40px + env(safe-area-inset-top, 0px))' : 'calc(12px + env(safe-area-inset-top, 0px))'} ${pad} 12px` }}>
+            <button onClick={onClose} style={{ display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer', fontSize: '10px', background: 'none', borderTop: 'none', borderRight: 'none', borderBottom: 'none', borderLeft: 'none', outline: 'none', pointerEvents: 'auto', touchAction: 'manipulation', WebkitTapHighlightColor: 'transparent' }}>
               <span style={{ color: fgLow }}>&larr;</span>
               <span style={{ color: fgLow, letterSpacing: '0.15em', textTransform: 'uppercase' }}>Back</span>
             </button>
@@ -1466,37 +1525,39 @@ export function InteractiveGlobeRealModal({
         {/* ── Sticky metadata panel ── */}
         <div style={{ padding: `0 ${pad} 0`, position: 'sticky', top: 0, zIndex: 20, backgroundColor: bgSticky, backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)', borderBottom: `1px solid ${inspectedArt ? limeBorder : dividerColor}`, transition: 'border-color 0.2s' }}>
           <div style={{ padding: '12px 20px', borderLeft: `2px solid ${inspectedArt ? limeColor : 'transparent'}`, minHeight: '92px', transition: 'border-color 0.2s' }}>
-            <AnimatePresence mode="wait">
-              {inspectedArt ? (
-                <motion.div key={inspectedArt.title + inspectedArt.inventoryNo} initial={{ opacity: 0, x: 6 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -6 }} transition={{ duration: 0.12 }}>
-                  <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, minmax(0, 1fr))', columnGap: '24px', rowGap: '8px' }}>
-                    {[
-                      { label: "Title", value: inspectedArt.title },
-                      { label: "Artist", value: inspectedArt.artist },
-                      { label: "Year", value: formatArtworkYear(inspectedArt.year) || inspectedArt.year },
-                      { label: "Category", value: inspectedArt.category },
-                      { label: "Medium", value: inspectedArt.material },
-                      { label: "Dimensions", value: inspectedArt.dimensions },
-                    ].map((m) => (
-                      <div key={m.label}>
-                        <div style={{ fontSize: '7px', color: fgMute, letterSpacing: '0.15em', textTransform: 'uppercase' }}>{m.label}</div>
-                        <div style={{ fontSize: '11px', color: fgLow, marginTop: '2px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                          {m.value || '-'}
+            {!isMobile && (
+              <AnimatePresence mode="wait">
+                {inspectedArt ? (
+                  <motion.div key={inspectedArt.title + inspectedArt.inventoryNo} initial={{ opacity: 0, x: 6 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -6 }} transition={{ duration: 0.12 }}>
+                    <div style={{ display: 'grid', gridTemplateColumns: isNarrowMobile ? 'repeat(1, minmax(0, 1fr))' : isMobile ? 'repeat(2, minmax(0, 1fr))' : 'repeat(3, minmax(0, 1fr))', columnGap: isMobile ? '12px' : '24px', rowGap: isMobile ? '6px' : '8px' }}>
+                      {[
+                        { label: "Title", value: inspectedArt.title },
+                        { label: "Artist", value: inspectedArt.artist },
+                        { label: "Year", value: formatArtworkYear(inspectedArt.year) || inspectedArt.year },
+                        { label: "Category", value: inspectedArt.category },
+                        { label: "Medium", value: inspectedArt.material },
+                        { label: "Dimensions", value: inspectedArt.dimensions },
+                      ].map((m) => (
+                        <div key={m.label}>
+                          <div style={{ fontSize: '7px', color: fgMute, letterSpacing: '0.15em', textTransform: 'uppercase' }}>{m.label}</div>
+                          <div style={{ fontSize: '11px', color: fgLow, marginTop: '2px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                            {m.value || '-'}
+                          </div>
                         </div>
-                      </div>
-                    ))}
-                  </div>
-                </motion.div>
-              ) : (
-                <motion.div key="empty" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.12 }} style={{ display: 'flex', alignItems: 'center', minHeight: '56px' }}>
-                  <span style={{ fontSize: '10px', color: fgFaint, letterSpacing: '0.12em' }}>
-                    {isLoading ? "Loading artworks..." : "Hover over a work to see details"}
-                  </span>
-                </motion.div>
-              )}
-            </AnimatePresence>
+                      ))}
+                    </div>
+                  </motion.div>
+                ) : (
+                  <motion.div key="empty" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.12 }} style={{ display: 'flex', alignItems: 'center', minHeight: '56px' }}>
+                    <span style={{ fontSize: '10px', color: fgFaint, letterSpacing: '0.12em' }}>
+                      {isLoading ? "Loading artworks..." : "Hover over a work to see details"}
+                    </span>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            )}
 
-            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '16px', marginTop: '14px', paddingTop: '12px', borderTop: `1px solid ${dividerColor}`, flexWrap: 'nowrap' }}>
+            <div style={{ display: 'flex', alignItems: isMobile ? 'stretch' : 'center', justifyContent: 'space-between', gap: isMobile ? '12px' : '16px', marginTop: isMobile ? '0' : '14px', paddingTop: isMobile ? '0' : '12px', borderTop: isMobile ? 'none' : `1px solid ${dividerColor}`, flexWrap: isMobile ? 'wrap' : 'nowrap' }}>
               <div style={{ flex: '1 1 auto', minWidth: 0 }}>
                 <SearchInputWithSuggestions
                   value={searchQuery}
@@ -1551,9 +1612,9 @@ export function InteractiveGlobeRealModal({
                 />
               </div>
 
-              <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flex: '0 0 auto', minWidth: 0 }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flex: isMobile ? '1 1 auto' : '0 0 auto', minWidth: 0, justifyContent: isMobile ? 'space-between' : 'flex-start' }}>
                 <span style={{ fontSize: '9px', letterSpacing: '0.14em', color: fgMute, textTransform: 'uppercase', whiteSpace: 'nowrap' }}>Sort by</span>
-                <div ref={sortMenuRef} style={{ position: 'relative', width: 'clamp(124px, 28vw, 198px)' }}>
+                <div ref={sortMenuRef} style={{ position: 'relative', width: isMobile ? '100%' : 'clamp(124px, 28vw, 198px)', maxWidth: isMobile ? '220px' : 'none' }}>
                   <button
                     type="button"
                     onClick={() => setIsSortMenuOpen((prev) => !prev)}
@@ -1652,7 +1713,26 @@ export function InteractiveGlobeRealModal({
               }}>
                 {row.map(({ aw, globalIdx }) => {
                   const isSelected = activeArtwork === globalIdx;
-                  const isHovered = hoveredArtwork === globalIdx;
+                  const isHovered = shouldShowHoverMetadata && hoveredArtwork === globalIdx;
+                  const showActions = !isMobile && (isHovered || isSelected);
+                  const actionButtonStyle: React.CSSProperties = {
+                    cursor: 'pointer',
+                    width: isMobile ? 22 : 24,
+                    height: isMobile ? 22 : 24,
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    background: t ? 'rgba(255,255,255,0.84)' : 'rgba(0,0,0,0.52)',
+                    borderTop: `1px solid ${t ? 'rgba(0,0,0,0.12)' : 'rgba(255,255,255,0.22)'}`,
+                    borderRight: `1px solid ${t ? 'rgba(0,0,0,0.12)' : 'rgba(255,255,255,0.22)'}`,
+                    borderBottom: `1px solid ${t ? 'rgba(0,0,0,0.12)' : 'rgba(255,255,255,0.22)'}`,
+                    borderLeft: `1px solid ${t ? 'rgba(0,0,0,0.12)' : 'rgba(255,255,255,0.22)'}`,
+                    borderRadius: 999,
+                    padding: 0,
+                    color: t ? '#202020' : '#fff',
+                    backdropFilter: 'blur(6px)',
+                    WebkitBackdropFilter: 'blur(6px)',
+                  };
                   return (
                     <div
                       role="button"
@@ -1683,7 +1763,7 @@ export function InteractiveGlobeRealModal({
                           style={{ width: '100%', height: 'auto', display: 'block', transform: isHovered ? 'scale(1.04)' : 'scale(1)', transition: 'transform 0.4s' }}
                         />
                         <div style={{ position: 'absolute', inset: 0, transition: 'border 0.2s', borderTop: isSelected ? `2px solid ${limeColor}` : isHovered ? `1px solid ${t ? "rgba(0,0,0,0.20)" : "rgba(255,255,255,0.20)"}` : '1px solid transparent', borderRight: isSelected ? `2px solid ${limeColor}` : isHovered ? `1px solid ${t ? "rgba(0,0,0,0.20)" : "rgba(255,255,255,0.20)"}` : '1px solid transparent', borderBottom: isSelected ? `2px solid ${limeColor}` : isHovered ? `1px solid ${t ? "rgba(0,0,0,0.20)" : "rgba(255,255,255,0.20)"}` : '1px solid transparent', borderLeft: isSelected ? `2px solid ${limeColor}` : isHovered ? `1px solid ${t ? "rgba(0,0,0,0.20)" : "rgba(255,255,255,0.20)"}` : '1px solid transparent' }} />
-                        <div style={{ position: 'absolute', right: 8, bottom: 8, display: 'flex', alignItems: 'center', gap: 6, opacity: isHovered || isSelected ? 1 : 0, transform: isHovered || isSelected ? 'translateY(0)' : 'translateY(3px)', transition: 'opacity 0.2s, transform 0.2s' }}>
+                        <div style={{ position: 'absolute', top: 8, right: 8, maxWidth: 'calc(100% - 14px)', display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: 6, opacity: showActions ? 1 : 0, transform: showActions ? 'translateY(0)' : 'translateY(-3px)', transition: 'opacity 0.2s, transform 0.2s' }}>
                           <button
                             onClick={(e) => {
                               e.stopPropagation();
@@ -1691,7 +1771,7 @@ export function InteractiveGlobeRealModal({
                               setProductArtwork(toProductArtwork(aw));
                             }}
                             title="상품으로 구매하기"
-                            style={{ cursor: 'pointer', width: 24, height: 24, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(0,0,0,0.42)', borderTop: 'none', borderRight: 'none', borderBottom: 'none', borderLeft: 'none', borderRadius: 12, padding: 0, color: '#fff' }}
+                            style={actionButtonStyle}
                           >
                             <svg width={15} height={15} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                               <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
@@ -1705,7 +1785,7 @@ export function InteractiveGlobeRealModal({
                               setCommentArtworkId(artworkIdFrom(aw));
                             }}
                             title="Comments"
-                            style={{ cursor: 'pointer', width: 24, height: 24, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(0,0,0,0.42)', borderTop: 'none', borderRight: 'none', borderBottom: 'none', borderLeft: 'none', borderRadius: 12, padding: 0, color: '#fff' }}
+                            style={actionButtonStyle}
                           >
                             <svg width={15} height={15} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                               <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
@@ -1718,7 +1798,7 @@ export function InteractiveGlobeRealModal({
                               openPlaylistForArtwork(aw);
                             }}
                             title="Add to playlist"
-                            style={{ cursor: 'pointer', width: 24, height: 24, display: 'flex', alignItems: 'center', justifyContent: 'center', background: 'rgba(0,0,0,0.42)', borderTop: 'none', borderRight: 'none', borderBottom: 'none', borderLeft: 'none', borderRadius: 12, padding: 0, color: '#fff' }}
+                            style={actionButtonStyle}
                           >
                             <svg width={15} height={15} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                               <path d="M19 21l-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
@@ -1729,10 +1809,10 @@ export function InteractiveGlobeRealModal({
                           <HeartOverlay
                             isLiked={likedArtworks.has(artworkIdFrom(aw)) || likedArtworks.has(normalizeArtworkIdForFirestore(artworkIdFrom(aw)))}
                             onToggle={(e) => toggleLike(e, aw)}
-                            size={16}
+                            size={15}
                             color={limeColor}
-                            emptyColor="#fff"
-                            style={{ width: 24, height: 24, borderRadius: 12, background: 'rgba(0,0,0,0.42)' }}
+                            emptyColor={t ? '#202020' : '#fff'}
+                            style={actionButtonStyle}
                           />
                         </div>
                       </div>
@@ -1764,24 +1844,24 @@ export function InteractiveGlobeRealModal({
                     style={{ overflow: 'hidden', marginBottom: '8px' }}
                   >
                     <div style={{ height: '1px', backgroundColor: dividerColor }} />
-                    <div style={{ padding: '28px 0', display: 'flex', flexDirection: 'row', gap: '32px' }}>
+                    <div style={{ padding: isMobile ? '18px 0' : '28px 0', display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: isMobile ? '14px' : '32px' }}>
                       <div style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
                         <img
                           src={selectedArtworkDetail.image}
                           alt={selectedArtworkDetail.title}
                           loading="lazy"
-                          style={{ width: '100%', height: 'auto', display: 'block', maxHeight: '58vh', objectFit: 'contain' }}
+                          style={{ width: '100%', height: 'auto', display: 'block', maxHeight: isMobile ? '52vh' : '58vh', objectFit: 'contain' }}
                         />
                       </div>
-                      <div style={{ width: '240px', flexShrink: 0, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                      <div style={{ width: isMobile ? '100%' : '240px', flexShrink: 0, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
                         <div>
-                          <div style={{ fontSize: '17px', color: fgHigh, lineHeight: 1.3 }}>
+                          <div style={{ fontSize: isMobile ? '15px' : '17px', color: fgHigh, lineHeight: 1.3 }}>
                             {selectedArtworkDetail.title}
                           </div>
-                          <div style={{ marginTop: '10px', fontSize: '13px', color: fgMed }}>
+                          <div style={{ marginTop: isMobile ? '8px' : '10px', fontSize: isMobile ? '12px' : '13px', color: fgMed }}>
                             {selectedArtworkDetail.artist}
                           </div>
-                          <div style={{ marginTop: '4px', fontFamily: "'Space Mono', monospace", fontSize: '11px', color: fgLow }}>
+                          <div style={{ marginTop: '4px', fontFamily: "'Space Mono', monospace", fontSize: isMobile ? '10px' : '11px', color: fgLow }}>
                             {formatArtworkYear(selectedArtworkDetail.year) || selectedArtworkDetail.year}
                           </div>
                           {detailArtworkOverride && detailArtworkOrigin && (
@@ -1809,7 +1889,7 @@ export function InteractiveGlobeRealModal({
                               Back to Current
                             </button>
                           )}
-                          <div style={{ marginTop: '12px', display: 'flex', alignItems: 'center', gap: '10px' }}>
+                          <div style={{ marginTop: '12px', width: '100%', display: 'flex', justifyContent: 'flex-end', alignItems: 'center', gap: '10px' }}>
                             <button
                               onClick={(e) => {
                                 e.stopPropagation();
@@ -1859,7 +1939,7 @@ export function InteractiveGlobeRealModal({
                             />
                           </div>
                           <div style={{ marginTop: '16px', height: '1px', backgroundColor: dividerColor }} />
-                          <div style={{ marginTop: '16px', display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                          <div style={{ marginTop: isMobile ? '12px' : '16px', display: 'flex', flexDirection: 'column', gap: isMobile ? '8px' : '12px' }}>
                             {[
                               { label: "Category", value: selectedArtworkDetail.category },
                               { label: "Material", value: selectedArtworkDetail.material },
@@ -1867,7 +1947,7 @@ export function InteractiveGlobeRealModal({
                             ].map((m) => (
                               <div key={m.label} style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', gap: '12px' }}>
                                 <span style={{ fontSize: '8px', color: fgMute, letterSpacing: '0.15em', textTransform: 'uppercase', flexShrink: 0 }}>{m.label}</span>
-                                <span style={{ fontSize: '11px', color: fgLow, textAlign: 'right' }}>{m.value}</span>
+                                <span style={{ fontSize: isMobile ? '10px' : '11px', color: fgLow, textAlign: 'right' }}>{m.value}</span>
                               </div>
                             ))}
                           </div>

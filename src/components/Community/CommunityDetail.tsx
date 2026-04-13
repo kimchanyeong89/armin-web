@@ -4,6 +4,7 @@ import { db } from '../../firebase';
 import { useAuth } from '../../contexts/AuthContext';
 import { getOptimizedImageUrl } from '../../utils/imageProxy';
 import { shouldLimitNetwork } from '../../utils/network';
+import type { CommunityUserProfile } from '../../types/Community';
 
 interface Comment {
     id: string;
@@ -18,10 +19,7 @@ interface Comment {
     authorId?: string;
 }
 
-interface UserProfile {
-    nickname?: string;
-    photoURL?: string;
-}
+type UserProfile = CommunityUserProfile;
 
 interface CommunityDetailProps {
     postId: string;
@@ -177,20 +175,25 @@ const CommunityDetail: React.FC<CommunityDetailProps> = ({ postId, onBack }) => 
         const likeRef = doc(db, 'community_posts', postId, 'likes', user.uid);
 
         try {
-            const newLikedString = await runTransaction(db, async (transaction) => {
+            const nextLiked = await runTransaction(db, async (transaction) => {
                 const likeDoc = await transaction.get(likeRef);
                 if (likeDoc.exists()) {
                     transaction.delete(likeRef);
                     transaction.update(postRef, { likes: increment(-1) });
-                    return 'unliked';
+                    return false;
                 } else {
                     transaction.set(likeRef, { userId: user.uid, createdAt: serverTimestamp() });
                     transaction.update(postRef, { likes: increment(1) });
-                    return 'liked';
+                    return true;
                 }
             });
 
-            setHasLiked(newLikedString === 'liked');
+            setHasLiked(nextLiked);
+            setPost((prev: any) => {
+                if (!prev) return prev;
+                const delta = nextLiked ? 1 : -1;
+                return { ...prev, likes: Math.max(0, Number(prev.likes || 0) + delta) };
+            });
         } catch (e) {
             console.error("Error toggling like:", e);
         }
@@ -206,6 +209,28 @@ const CommunityDetail: React.FC<CommunityDetailProps> = ({ postId, onBack }) => 
         if (!textToSend.trim()) return;
 
         setIsSubmitting(true);
+        const optimisticCommentId = `local-${Date.now()}-${Math.random().toString(36).slice(2, 8)}`;
+        const optimisticComment: Comment = {
+            id: optimisticCommentId,
+            text: textToSend.trim(),
+            userId: user.uid,
+            authorId: user.uid,
+            userName: user.displayName || 'Anonymous',
+            authorName: user.displayName || 'Anonymous',
+            userPhotoURL: user.photoURL || undefined,
+            createdAt: new Date(),
+            parentId: parentId || null,
+            likes: [],
+        };
+
+        if (isNetworkConstrained) {
+            setComments((prev) => [...prev, optimisticComment]);
+            setPost((prev: any) => {
+                if (!prev) return prev;
+                return { ...prev, commentCount: Number(prev.commentCount || 0) + 1 };
+            });
+        }
+
         try {
             // Flatten replies to 1 level if nesting is too deep, or just use parentId directly
             // Match CommentModal logic: if parent has parent, use grandparent
@@ -243,6 +268,13 @@ const CommunityDetail: React.FC<CommunityDetailProps> = ({ postId, onBack }) => 
             }
         } catch (error) {
             console.error("Error adding comment:", error);
+            if (isNetworkConstrained) {
+                setComments((prev) => prev.filter((comment) => comment.id !== optimisticCommentId));
+                setPost((prev: any) => {
+                    if (!prev) return prev;
+                    return { ...prev, commentCount: Math.max(0, Number(prev.commentCount || 0) - 1) };
+                });
+            }
         } finally {
             setIsSubmitting(false);
         }
@@ -284,6 +316,16 @@ const CommunityDetail: React.FC<CommunityDetailProps> = ({ postId, onBack }) => 
         const isLiked = comment.likes?.includes(user.uid);
         const ref = doc(db, 'community_posts', postId, 'comments', comment.id);
 
+        setComments((prev) => prev.map((entry) => {
+            if (entry.id !== comment.id) return entry;
+            const likes = Array.isArray(entry.likes) ? [...entry.likes] : [];
+            if (isLiked) {
+                return { ...entry, likes: likes.filter((uid) => uid !== user.uid) };
+            }
+            if (!likes.includes(user.uid)) likes.push(user.uid);
+            return { ...entry, likes };
+        }));
+
         try {
             if (isLiked) {
                 await updateDoc(ref, { likes: arrayRemove(user.uid) });
@@ -292,6 +334,15 @@ const CommunityDetail: React.FC<CommunityDetailProps> = ({ postId, onBack }) => 
             }
         } catch (e) {
             console.error("Failed to like comment", e);
+            setComments((prev) => prev.map((entry) => {
+                if (entry.id !== comment.id) return entry;
+                const likes = Array.isArray(entry.likes) ? [...entry.likes] : [];
+                if (isLiked) {
+                    if (!likes.includes(user.uid)) likes.push(user.uid);
+                    return { ...entry, likes };
+                }
+                return { ...entry, likes: likes.filter((uid) => uid !== user.uid) };
+            }));
         }
     };
 

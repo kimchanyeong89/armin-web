@@ -500,9 +500,16 @@ function search(query: string) {
         (token) => token.length >= 4 && !NON_ARTIST_HINT_TOKENS.has(token)
     );
 
-    // Group artist counts by normalized key
-    // Map: normalizedKey -> { variants: Map<originalName, count>, totalCount }
-    const artistGroups = new Map<string, { variants: Map<string, number>, totalCount: number }>();
+    // Group artist counts by normalized key.
+    // Keep relevance stats so exact/full artist-name matches outrank generic token matches.
+    const artistGroups = new Map<string, {
+        variants: Map<string, number>;
+        totalCount: number;
+        relevanceScore: number;
+        exactMatchCount: number;
+        fullStrongMatchCount: number;
+        strongMatchCount: number;
+    }>();
 
     for (let i = 0; i < allArtworks.length; i++) {
         const art = allArtworks[i];
@@ -568,11 +575,34 @@ function search(query: string) {
             const artistKey = getArtistKey(art.artist);
             if (artistKey && art.artist !== 'Unknown') {
                 if (!artistGroups.has(artistKey)) {
-                    artistGroups.set(artistKey, { variants: new Map(), totalCount: 0 });
+                    artistGroups.set(artistKey, {
+                        variants: new Map(),
+                        totalCount: 0,
+                        relevanceScore: 0,
+                        exactMatchCount: 0,
+                        fullStrongMatchCount: 0,
+                        strongMatchCount: 0,
+                    });
                 }
                 const group = artistGroups.get(artistKey)!;
                 group.variants.set(art.artist, (group.variants.get(art.artist) || 0) + 1);
                 group.totalCount++;
+
+                const exactArtistMatch = art.searchArtist === q;
+                const hasStrongTokens = strongArtistTokens.length > 0;
+                const fullStrongMatch = hasStrongTokens && strongArtistMatches >= strongArtistTokens.length;
+
+                const artistRelevance =
+                    (exactArtistMatch ? 500 : 0) +
+                    (fullStrongMatch ? 220 : 0) +
+                    (strongArtistMatches * 80) +
+                    (artistTokenMatches * 35) +
+                    (artistMatch ? 20 : 0);
+
+                group.relevanceScore += artistRelevance;
+                if (exactArtistMatch) group.exactMatchCount += 1;
+                if (strongArtistMatches > 0) group.strongMatchCount += 1;
+                if (fullStrongMatch) group.fullStrongMatchCount += 1;
             }
         }
 
@@ -599,20 +629,57 @@ function search(query: string) {
             }
             // Use the global count for the artist, not just the search hits
             const totalGlobalCount = globalArtistCounts.get(key) || group.totalCount;
-            // We use group.totalCount for sorting priority (most relevant to search), 
-            // but return the totalGlobalCount for display
-            return { artist: bestName, count: totalGlobalCount, sortScore: group.totalCount, key };
+            // Keep both relevance and total count: relevance decides ordering,
+            // global count is only for display.
+            return {
+                artist: bestName,
+                count: totalGlobalCount,
+                sortScore: group.totalCount,
+                relevanceScore: group.relevanceScore,
+                exactMatchCount: group.exactMatchCount,
+                fullStrongMatchCount: group.fullStrongMatchCount,
+                strongMatchCount: group.strongMatchCount,
+                key,
+            };
         })
         .filter(a => a.artist && isMeaningfulArtistSuggestion(a.artist))
-        .sort((a, b) => b.sortScore - a.sortScore)
-        .slice(0, 5)
+        .sort((a, b) => {
+            if (b.exactMatchCount !== a.exactMatchCount) return b.exactMatchCount - a.exactMatchCount;
+            if (b.fullStrongMatchCount !== a.fullStrongMatchCount) return b.fullStrongMatchCount - a.fullStrongMatchCount;
+            if (b.strongMatchCount !== a.strongMatchCount) return b.strongMatchCount - a.strongMatchCount;
+            if (b.relevanceScore !== a.relevanceScore) return b.relevanceScore - a.relevanceScore;
+            if (b.sortScore !== a.sortScore) return b.sortScore - a.sortScore;
+            return b.count - a.count;
+        })
+        .slice(0, 12)
         .map(({ artist, count }) => ({ artist, count }));
 
     self.postMessage({ type: 'RESULTS', query, results: topArtworks, artists: topArtists, pending: false, source: 'full' });
 }
 
+function getRandomArtworkResults(limit: number, onlyWithImage: boolean): any[] {
+    const source = onlyWithImage
+        ? allArtworks.filter((item) => !!item.image)
+        : allArtworks;
+
+    if (source.length === 0) return [];
+
+    const pickCount = Math.max(1, Math.min(limit, source.length));
+    const pickedIndices = new Set<number>();
+    const results: any[] = [];
+
+    while (results.length < pickCount && pickedIndices.size < source.length) {
+        const index = Math.floor(Math.random() * source.length);
+        if (pickedIndices.has(index)) continue;
+        pickedIndices.add(index);
+        results.push(source[index]);
+    }
+
+    return results;
+}
+
 self.onmessage = (e: MessageEvent) => {
-    const { type, query, ids, mode: nextMode } = e.data;
+    const { type, query, ids, count, onlyWithImage, mode: nextMode } = e.data;
     if (type === 'SET_MODE' && nextMode) {
         mode = {
             ...mode,
@@ -646,5 +713,10 @@ self.onmessage = (e: MessageEvent) => {
             }
         }
         self.postMessage({ type: 'DETAILS_RESULTS', results });
+    } else if (type === 'GET_RANDOM_ARTWORKS') {
+        const limit = Number.isFinite(Number(count)) ? Number(count) : 36;
+        const safeLimit = Math.max(1, Math.min(180, limit));
+        const results = getRandomArtworkResults(safeLimit, Boolean(onlyWithImage));
+        self.postMessage({ type: 'RANDOM_ARTWORKS', results });
     }
 };

@@ -4,18 +4,20 @@ import { LanguageProvider, useLanguage } from "./contexts/LanguageContext";
 import { BrowserRouter, Navigate, Routes, Route, useLocation, useParams } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "./contexts/AuthContext";
+import { signOut } from "firebase/auth";
 import DrawingLoader, { TransitionBadge } from "./components/DrawingLoader";
 import { exhibitions } from "./data/exhibitions";
 import { OnboardingGuard } from "./components/OnboardingGuard";
 import CommunityPanel from "./components/Community/CommunityPanel";
 import { AnimatePresence, motion } from "framer-motion";
 import BottomPageNavigator, { MAIN_TABS, resolveMainTabIndex } from "./components/BottomPageNavigator";
-import { ShoppingCart, User } from "lucide-react";
+import { LogOut, ShoppingCart, User } from "lucide-react";
 import ProfileAvatar from "./components/ProfileAvatar";
 import { createFirebaseWebPort } from "./adapters/firebaseWebAdapter";
 import type { ProfileImageCrop } from "./types/Profile";
 import { isMobileAppContainer } from "./utils/mobileAppAuth";
 import { CartProvider, useCart } from "./contexts/CartContext";
+import { auth } from "./firebase";
 
 // Lazy load pages for code splitting
 const HomePage = lazy(() => import("./pages/HomePage"));
@@ -195,6 +197,9 @@ function AppContent() {
   const [isCommunityPanelOpen, setIsCommunityPanelOpen] = useState(false);
   const [isFloatingActionsOpen, setIsFloatingActionsOpen] = useState(false);
   const [mapMode, setMapMode] = useState<'default' | 'drawing' | 'interactive'>('default');
+  const [viewportWidth, setViewportWidth] = useState<number>(() =>
+    typeof window !== "undefined" ? window.innerWidth : 1280,
+  );
   const [profilePhotoUrl, setProfilePhotoUrl] = useState<string | null>(null);
   const [profileImageCrop, setProfileImageCrop] = useState<ProfileImageCrop | null>(null);
 
@@ -293,10 +298,16 @@ function AppContent() {
     setIsFloatingActionsOpen(false);
   }, [location.pathname, location.search]);
 
+  useEffect(() => {
+    const onResize = () => setViewportWidth(window.innerWidth);
+    window.addEventListener("resize", onResize);
+    return () => window.removeEventListener("resize", onResize);
+  }, []);
+
   const activeTabIndex = resolveMainTabIndex(location.pathname);
   const isCartRoute = location.pathname === "/cart";
   const isBottomNavVisible = activeTabIndex !== null || isCartRoute;
-  const isDesktopViewport = typeof window !== "undefined" ? window.innerWidth > 768 : true;
+  const isDesktopViewport = viewportWidth > 768;
   const isFloatingControlsVisible = isBottomNavVisible || isCartRoute || isDesktopViewport;
 
   const [slideDirection, setSlideDirection] = useState(0);
@@ -398,17 +409,26 @@ function AppContent() {
   const profileInitial = (user?.displayName || user?.email || 'A').trim().slice(0, 1).toUpperCase();
   const effectiveProfilePhoto = profilePhotoUrl || user?.photoURL || null;
   const isMobileShell = isMobileAppContainer();
-  const floatingButtonSize = isMobileShell ? 40 : 46;
-  const floatingRight = isMobileShell ? 14 : 18;
-  const floatingButtonGap = isMobileShell ? 8 : 10;
+  const isDesktopQuickMenu = !isMobileShell && viewportWidth >= 1024;
+  const floatingButtonSize = isMobileShell ? 40 : (isDesktopQuickMenu ? 54 : 46);
+  const floatingRight = isMobileShell ? 14 : (isDesktopQuickMenu ? 24 : 18);
+  const floatingButtonGap = isMobileShell ? 8 : (isDesktopQuickMenu ? 12 : 10);
   const floatingStep = floatingButtonSize + floatingButtonGap;
   const floatingTopBase = isMobileShell
     ? 'calc(env(safe-area-inset-top, 0px) + 10px)'
     : 'max(12px, calc(env(safe-area-inset-top, 0px) + 10px))';
-  const floatingProfileTop = floatingTopBase;
-  const floatingCartTop = `calc(${floatingTopBase} + ${floatingStep}px)`;
-  const floatingLangTop = `calc(${floatingTopBase} + ${floatingStep * 2}px)`;
-  const floatingThemeTop = `calc(${floatingTopBase} + ${floatingStep * 3}px)`;
+  const floatingBottomBase = isDesktopQuickMenu
+    ? 'max(20px, calc(env(safe-area-inset-bottom, 0px) + 18px))'
+    : 'auto';
+  const floatingProfileTop = `calc(${floatingTopBase} + ${floatingStep * 2}px)`;
+  const floatingActionTop1 = `calc(${floatingTopBase} + ${floatingStep}px)`;
+  const floatingActionTop2 = floatingTopBase;
+  const floatingActionTop3 = `calc(${floatingTopBase} + ${floatingStep * 3}px)`;
+  const floatingActionTop4 = `calc(${floatingTopBase} + ${floatingStep * 4}px)`;
+  const floatingActionTop5 = `calc(${floatingTopBase} + ${floatingStep * 5}px)`;
+  const floatingActionBottom1 = `calc(${floatingBottomBase} + ${floatingStep}px)`;
+  const floatingActionBottom2 = `calc(${floatingBottomBase} + ${floatingStep * 2}px)`;
+  const floatingActionBottom3 = `calc(${floatingBottomBase} + ${floatingStep * 3}px)`;
 
   const handleProfileMainClick = async () => {
     if (!isAuthedUser) {
@@ -417,6 +437,17 @@ function AppContent() {
       return;
     }
     setIsFloatingActionsOpen((prev) => !prev);
+  };
+
+  const handleQuickLogout = async () => {
+    try {
+      await signOut(auth);
+    } catch {
+      // Ignore signout failure and continue navigation reset.
+    } finally {
+      setIsFloatingActionsOpen(false);
+      navigate('/');
+    }
   };
 
   const appShellBackground = isLightTheme ? '#f5f5f5' : '#050505';
@@ -498,11 +529,171 @@ function AppContent() {
           <AnimatePresence>
             {isFloatingActionsOpen && (
               <>
+                {isDesktopQuickMenu ? (
+                  <motion.div
+                    initial={{ opacity: 0, x: 14, scale: 0.96 }}
+                    animate={{ opacity: 1, x: 0, scale: 1 }}
+                    exit={{ opacity: 0, x: 12, scale: 0.96 }}
+                    transition={{ duration: 0.2, ease: [0.22, 1, 0.36, 1] }}
+                    style={{
+                      position: 'fixed',
+                      right: `calc(${floatingRight}px + ${floatingButtonSize}px + 6px)`,
+                      bottom: `calc(${floatingBottomBase} + 6px)`,
+                      zIndex: 250012,
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: 6,
+                      padding: '6px',
+                      borderRadius: 999,
+                      border: isLightTheme ? '1px solid rgba(0,0,0,0.18)' : '1px solid rgba(255,255,255,0.20)',
+                      background: isLightTheme ? 'rgba(255,255,255,0.94)' : 'rgba(18,18,18,0.92)',
+                      boxShadow: isLightTheme
+                        ? '0 10px 24px rgba(0,0,0,0.18), inset 0 1px 0 rgba(255,255,255,0.58)'
+                        : '0 14px 28px rgba(0,0,0,0.52), inset 0 1px 0 rgba(255,255,255,0.08)',
+                      backdropFilter: 'blur(14px)',
+                      WebkitBackdropFilter: 'blur(14px)',
+                    }}
+                  >
+                    <button
+                      onClick={() => {
+                        navigate('/mypage');
+                        setIsFloatingActionsOpen(false);
+                      }}
+                      style={{
+                        border: 'none',
+                        height: 36,
+                        borderRadius: 999,
+                        padding: '0 14px',
+                        cursor: 'pointer',
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        gap: 7,
+                        background: isLightTheme ? 'rgba(0,0,0,0.06)' : 'rgba(255,255,255,0.08)',
+                        color: isLightTheme ? '#111111' : '#ffffff',
+                        fontSize: 11,
+                        fontWeight: 800,
+                        letterSpacing: '0.02em',
+                      }}
+                      title={t({ ko: '마이페이지', en: 'My Page' })}
+                    >
+                      <User size={14} strokeWidth={2.2} />
+                      {t({ ko: 'MY PAGE', en: 'MY PAGE' })}
+                    </button>
+
+                    <button
+                      onClick={handleQuickLogout}
+                      style={{
+                        border: 'none',
+                        height: 36,
+                        borderRadius: 999,
+                        padding: '0 14px',
+                        cursor: 'pointer',
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        gap: 7,
+                        background: isLightTheme ? 'rgba(0,0,0,0.06)' : 'rgba(255,255,255,0.08)',
+                        color: isLightTheme ? '#111111' : '#ffffff',
+                        fontSize: 11,
+                        fontWeight: 800,
+                        letterSpacing: '0.02em',
+                      }}
+                      title={t({ ko: '로그아웃', en: 'Logout' })}
+                    >
+                      <LogOut size={14} strokeWidth={2.2} />
+                      {t({ ko: 'LOGOUT', en: 'LOGOUT' })}
+                    </button>
+                  </motion.div>
+                ) : (
+                  <>
+                    <motion.button
+                      initial={{ opacity: 0, y: -10, scale: 0.86 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0, y: -8, scale: 0.88 }}
+                      transition={{ duration: 0.24, ease: [0.22, 1, 0.36, 1] }}
+                      onClick={() => {
+                        navigate('/mypage');
+                        setIsFloatingActionsOpen(false);
+                      }}
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.94 }}
+                      style={{
+                        position: 'fixed',
+                        right: floatingRight,
+                        top: floatingActionTop1,
+                        bottom: 'auto',
+                        zIndex: 250012,
+                        width: floatingButtonSize,
+                        height: floatingButtonSize,
+                        padding: 0,
+                        boxSizing: 'border-box',
+                        borderRadius: '50%',
+                        border: isLightTheme ? '1px solid rgba(0,0,0,0.18)' : '1px solid rgba(255,255,255,0.22)',
+                        background: isLightTheme ? '#ffffff' : 'rgba(22,22,22,0.88)',
+                        color: isLightTheme ? '#111111' : '#ffffff',
+                        cursor: 'pointer',
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        boxShadow: isLightTheme
+                          ? '0 8px 22px rgba(0,0,0,0.16), inset 0 1px 0 rgba(255,255,255,0.55)'
+                          : '0 12px 26px rgba(0,0,0,0.48), inset 0 1px 0 rgba(255,255,255,0.08)',
+                        backdropFilter: 'blur(16px)',
+                        WebkitBackdropFilter: 'blur(16px)',
+                      }}
+                      title={t({ ko: '마이페이지', en: 'My Page' })}
+                    >
+                      <User size={isMobileShell ? 18 : 20} strokeWidth={2.2} />
+                    </motion.button>
+
+                    <motion.button
+                      initial={{ opacity: 0, y: -10, scale: 0.86 }}
+                      animate={{ opacity: 1, y: 0, scale: 1 }}
+                      exit={{ opacity: 0, y: -8, scale: 0.88 }}
+                      transition={{ duration: 0.24, delay: 0.04, ease: [0.22, 1, 0.36, 1] }}
+                      onClick={handleQuickLogout}
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.94 }}
+                      style={{
+                        position: 'fixed',
+                        right: floatingRight,
+                        top: floatingActionTop2,
+                        bottom: 'auto',
+                        zIndex: 250012,
+                        width: floatingButtonSize,
+                        height: floatingButtonSize,
+                        padding: 0,
+                        boxSizing: 'border-box',
+                        borderRadius: '50%',
+                        border: isLightTheme ? '1px solid rgba(0,0,0,0.18)' : '1px solid rgba(255,255,255,0.22)',
+                        background: isLightTheme ? '#ffffff' : 'rgba(22,22,22,0.88)',
+                        color: isLightTheme ? '#111111' : '#ffffff',
+                        cursor: 'pointer',
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        fontSize: 11,
+                        fontWeight: 800,
+                        letterSpacing: '0.02em',
+                        boxShadow: isLightTheme
+                          ? '0 8px 22px rgba(0,0,0,0.16), inset 0 1px 0 rgba(255,255,255,0.55)'
+                          : '0 12px 26px rgba(0,0,0,0.48), inset 0 1px 0 rgba(255,255,255,0.08)',
+                        backdropFilter: 'blur(16px)',
+                        WebkitBackdropFilter: 'blur(16px)',
+                      }}
+                      title={t({ ko: '로그아웃', en: 'Logout' })}
+                    >
+                      OUT
+                    </motion.button>
+                  </>
+                )}
+
                 <motion.button
                   initial={{ opacity: 0, y: -10, scale: 0.86 }}
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, y: -8, scale: 0.88 }}
-                  transition={{ duration: 0.24, ease: [0.22, 1, 0.36, 1] }}
+                  transition={{ duration: 0.24, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
                   onClick={() => {
                     navigate('/cart');
                     setIsFloatingActionsOpen(false);
@@ -512,8 +703,8 @@ function AppContent() {
                   style={{
                     position: 'fixed',
                     right: floatingRight,
-                    top: floatingCartTop,
-                    bottom: 'auto',
+                    top: isDesktopQuickMenu ? 'auto' : floatingActionTop3,
+                    bottom: isDesktopQuickMenu ? floatingActionBottom1 : 'auto',
                     zIndex: 250012,
                     width: floatingButtonSize,
                     height: floatingButtonSize,
@@ -566,7 +757,7 @@ function AppContent() {
                   initial={{ opacity: 0, y: -10, scale: 0.86 }}
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, y: -8, scale: 0.88 }}
-                  transition={{ duration: 0.24, delay: 0.04, ease: [0.22, 1, 0.36, 1] }}
+                  transition={{ duration: 0.24, delay: 0.12, ease: [0.22, 1, 0.36, 1] }}
                   onClick={() => {
                     toggleLanguage();
                     setIsFloatingActionsOpen(false);
@@ -576,8 +767,8 @@ function AppContent() {
                   style={{
                     position: 'fixed',
                     right: floatingRight,
-                    top: floatingLangTop,
-                    bottom: 'auto',
+                    top: isDesktopQuickMenu ? 'auto' : floatingActionTop4,
+                    bottom: isDesktopQuickMenu ? floatingActionBottom2 : 'auto',
                     zIndex: 250012,
                     width: floatingButtonSize,
                     height: floatingButtonSize,
@@ -610,7 +801,7 @@ function AppContent() {
                   initial={{ opacity: 0, y: -10, scale: 0.86 }}
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, y: -8, scale: 0.88 }}
-                  transition={{ duration: 0.24, delay: 0.08, ease: [0.22, 1, 0.36, 1] }}
+                  transition={{ duration: 0.24, delay: 0.16, ease: [0.22, 1, 0.36, 1] }}
                   onClick={() => {
                     toggleGlobalTheme();
                     setIsFloatingActionsOpen(false);
@@ -620,8 +811,8 @@ function AppContent() {
                   style={{
                     position: 'fixed',
                     right: floatingRight,
-                    top: floatingThemeTop,
-                    bottom: 'auto',
+                    top: isDesktopQuickMenu ? 'auto' : floatingActionTop5,
+                    bottom: isDesktopQuickMenu ? floatingActionBottom3 : 'auto',
                     zIndex: 250012,
                     width: floatingButtonSize,
                     height: floatingButtonSize,
@@ -713,8 +904,8 @@ function AppContent() {
             style={{
               position: 'fixed',
               right: floatingRight,
-              top: floatingProfileTop,
-              bottom: 'auto',
+              top: isDesktopQuickMenu ? 'auto' : floatingProfileTop,
+              bottom: isDesktopQuickMenu ? floatingBottomBase : 'auto',
               zIndex: 250012,
               width: floatingButtonSize,
               height: floatingButtonSize,

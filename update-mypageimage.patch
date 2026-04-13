@@ -1,0 +1,31 @@
+--- src/components/Mypage.tsx
++++ src/components/Mypage.tsx
+@@ -106,6 +106,16 @@
+ 
+ const _recoveredUrlsCache: Record<string, string | null> = {};
+ const _brokenImageUrls = new Set<string>();
++const _datasetCache: Record<string, Promise<any[]>> = {};
++
++const fetchDataset = (candidate: string) => {
++  if (!_datasetCache[candidate]) {
++    _datasetCache[candidate] = fetch(`/data/${candidate}.json`)
++      .then(r => r.ok ? r.json() : [])
++      .catch(() => []);
++  }
++  return _datasetCache[candidate];
++};
+ const firebaseWebPort = createFirebaseWebPort();
+ 
+ const MyPageImage = ({ item, width = 600, style }: { item: any; width?: number; style?: React.CSSProperties }) => {
+@@ -201,9 +211,8 @@
+ 
+     for (const candidate of exhCandidates) {
+       try {
+-        const res = await fetch(`/data/${candidate}.json`);
+-        if (!res.ok) continue;
+-        const data = await res.json();
++        const data = await fetchDataset(candidate);
++        if (!data || data.length === 0) continue;
+         const realImage = searchInData(data);
+         if (realImage) {
+           _recoveredUrlsCache[cacheKey] = realImage;

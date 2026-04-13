@@ -5,7 +5,9 @@ import { getFirestore, doc, setDoc, getDoc } from "firebase/firestore";
 import { updateProfile } from "firebase/auth";
 import { exhibitions } from "../data/exhibitions";
 import { getCanonicalName } from "../utils/canonicalArtist";
+import { getWorkerNetworkMode } from "../utils/network";
 import { TransitionBadge } from "../components/DrawingLoader";
+import type { ProfileImageCrop } from "../types/Profile";
 
 // ── Design Tokens ──────────────────────────────────────────────────
 const BG = '#111111';
@@ -157,7 +159,7 @@ const ImageCropModal = ({ imageUrl, initialCrop, onSave, onClose }: any) => {
         <p style={{ textAlign: 'center', fontSize: 9, letterSpacing: '0.2em', color: DIM, marginBottom: 20 }}>DRAG TO REPOSITION · SLIDER TO SCALE</p>
         <div style={{ display: 'flex', alignItems: 'center', gap: 12, marginBottom: 24 }}>
           <span style={{ fontSize: 9, color: DIM }}>0.2×</span>
-          <input type="range" min="0.2" max="3" step="0.05" value={crop.scale}
+          <input type="range" id="modal-profile-crop-scale-range" name="modalProfileCropScale" min="0.2" max="3" step="0.05" value={crop.scale}
             onChange={e => setCrop((p: any) => ({ ...p, scale: parseFloat(e.target.value) }))}
             style={{ flex: 1, accentColor: ACCENT, height: 2 }} />
           <span style={{ fontSize: 9, color: DIM }}>3×</span>
@@ -171,24 +173,30 @@ const ImageCropModal = ({ imageUrl, initialCrop, onSave, onClose }: any) => {
   );
 };
 
+// Module-level cache: avoids re-fetching 200+ JSON files on every mount
+let _cachedArtistDb: Record<string, Array<any>> | null = null;
+let _cachedAllArtists: any[] | null = null;
+
 // ── Main Component ─────────────────────────────────────────────────
 const OnboardingPage: React.FC = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
 
-  const [step, setStep] = useState(0); // 0=welcome, 1=profile, 2=soulmate
+  const [step, setStep] = useState(0); // 0=date, 1=artist, 2=crop
 
   const [nickname, setNickname] = useState("");
   const [birthDateInput, setBirthDateInput] = useState("");
+  const [birthYear, setBirthYear] = useState<number>(() => Math.max(1900, new Date().getFullYear() - 24));
+  const [birthMonth, setBirthMonth] = useState<number>(() => new Date().getMonth() + 1);
+  const [birthDay, setBirthDay] = useState<number>(() => new Date().getDate());
 
   const [recommendedArtists, setRecommendedArtists] = useState<Array<any>>([]);
   const [selectedArtist, setSelectedArtist] = useState<any>(null);
   const [artistDatabase, setArtistDatabase] = useState<Record<string, Array<any>>>({});
   const [selectedImage, setSelectedImage] = useState<string>("");
 
-  const [showCropModal, setShowCropModal] = useState(false);
   const [crop, setCrop] = useState({ x: 0, y: 0, scale: 1 });
-  const [currentImageIsLandscape, setCurrentImageIsLandscape] = useState(true);
+  const cropRef = useRef({ x: 0, y: 0, scale: 1 });
 
   const [loading, setLoading] = useState(false);
   const [artistDataLoading, setArtistDataLoading] = useState(true); // true while collection files are fetching
@@ -196,11 +204,71 @@ const OnboardingPage: React.FC = () => {
   const [searchByBirthday, setSearchByBirthday] = useState(true);
   const [artistSearchQuery, setArtistSearchQuery] = useState('');
   const [allArtists, setAllArtists] = useState<any[]>([]);
+  const [workerArtistArtworks, setWorkerArtistArtworks] = useState<Record<string, string[]>>({});
 
   // Touch swipe state for artist navigation
   const swipeStartX = useRef<number | null>(null);
+  const workerRef = useRef<Worker | null>(null);
+  const workerReadyRef = useRef(false);
 
-  const initialUserPref = React.useRef<{ artistName: string; photoURL: string; crop: any } | null>(null);
+  const initialUserPref = React.useRef<{ artistName: string; photoURL: string; crop: ProfileImageCrop | null } | null>(null);
+
+  useEffect(() => {
+    cropRef.current = crop;
+  }, [crop]);
+
+  const normalizeNameKey = (value: string) =>
+    String(value || "")
+      .toLowerCase()
+      .normalize("NFD")
+      .replace(/[\u0300-\u036f]/g, "")
+      .replace(/\s+/g, "")
+      .trim();
+
+  useEffect(() => {
+    const worker = new Worker(new URL('../workers/search.worker.ts', import.meta.url), { type: 'module' });
+    workerRef.current = worker;
+
+    worker.onmessage = (event) => {
+      const { type, works, artist } = event.data || {};
+      if (type === 'LOAD_COMPLETE') {
+        workerReadyRef.current = true;
+        return;
+      }
+
+      if (type === 'ARTIST_WORKS') {
+        const key = normalizeNameKey(String(artist || ""));
+        if (!key) return;
+        const urls = Array.from(
+          new Set(
+            ((works || []) as any[])
+              .map((item: any) => item?.image || item?.i || item?.imageUrl)
+              .filter((value: any) => typeof value === 'string' && value.trim().length > 0),
+          ),
+        );
+
+        if (urls.length > 0) {
+          setWorkerArtistArtworks((prev) => ({ ...prev, [key]: urls }));
+        }
+      }
+    };
+
+    worker.postMessage({ type: 'SET_MODE', mode: getWorkerNetworkMode() });
+    worker.postMessage({ type: 'LOAD' });
+
+    return () => {
+      worker.terminate();
+      workerRef.current = null;
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!selectedArtist?.name) return;
+    const key = normalizeNameKey(selectedArtist.name);
+    if (!key || workerArtistArtworks[key]?.length) return;
+    if (!workerRef.current || !workerReadyRef.current) return;
+    workerRef.current.postMessage({ type: 'GET_ARTIST_WORKS', query: selectedArtist.name });
+  }, [selectedArtist, workerArtistArtworks]);
 
   // 1. Load User
   useEffect(() => {
@@ -212,7 +280,18 @@ const OnboardingPage: React.FC = () => {
         const data = snap.exists() ? snap.data() : {};
         if (data.nickname) setNickname(data.nickname);
         else if (user.displayName) setNickname(user.displayName || "");
-        if (data.birthDate) setBirthDateInput(data.birthDate);
+        if (data.birthDate) {
+          setBirthDateInput(data.birthDate);
+          const parsed = String(data.birthDate).split('.');
+          if (parsed.length === 3) {
+            const y = Number(parsed[0]);
+            const m = Number(parsed[1]);
+            const d = Number(parsed[2]);
+            if (Number.isFinite(y) && y >= 1900) setBirthYear(y);
+            if (Number.isFinite(m) && m >= 1 && m <= 12) setBirthMonth(m);
+            if (Number.isFinite(d) && d >= 1 && d <= 31) setBirthDay(d);
+          }
+        }
         if (data.soulmateArtist || data.photoURL) {
           initialUserPref.current = { artistName: data.soulmateArtist, photoURL: data.photoURL, crop: data.profileImageCrop };
         }
@@ -220,6 +299,12 @@ const OnboardingPage: React.FC = () => {
       loadUser();
     }
   }, [user]);
+
+  useEffect(() => {
+    const clampDay = Math.max(1, Math.min(31, birthDay));
+    const formatted = `${birthYear}.${String(birthMonth).padStart(2, '0')}.${String(clampDay).padStart(2, '0')}`;
+    setBirthDateInput(formatted);
+  }, [birthYear, birthMonth, birthDay]);
 
   // 2. Load Artist Database
   useEffect(() => {
@@ -474,18 +559,33 @@ const OnboardingPage: React.FC = () => {
     setBirthDateInput(val);
   };
 
+  const cropPreviewSize = 292;
+  const cropMaskSize = 150;
+  const cropScaleFactor = cropPreviewSize / 240;
+
   const handleSubmit = async () => {
-    if (!user || !nickname || birthDateInput.length !== 10) return;
+    if (!user || birthDateInput.length !== 10) return;
+    const safeNickname = nickname?.trim() || user.displayName || user.email?.split('@')[0] || 'Art Explorer';
+    const latestCrop = cropRef.current || { x: 0, y: 0, scale: 1 };
+    const normalizedCrop = {
+      x: Number.isFinite(Number(latestCrop.x)) ? Number(latestCrop.x) : 0,
+      y: Number.isFinite(Number(latestCrop.y)) ? Number(latestCrop.y) : 0,
+      scale: Math.max(0.2, Number.isFinite(Number(latestCrop.scale)) ? Number(latestCrop.scale) : 1),
+      previewSize: cropPreviewSize,
+      maskSize: cropMaskSize,
+      fitMode: 'contain' as const,
+    };
     setLoading(true);
     try {
       const db = getFirestore();
       await setDoc(doc(db, "users", user.uid), {
-        nickname, birthDate: birthDateInput, photoURL: selectedImage,
-        displayName: nickname, email: user.email, isOnboarded: true,
+        nickname: safeNickname, birthDate: birthDateInput, photoURL: selectedImage,
+        displayName: safeNickname, email: user.email, isOnboarded: true,
         updatedAt: new Date(), soulmateArtist: selectedArtist ? selectedArtist.name : null,
-        profileImageCrop: crop
+        profileImageCrop: normalizedCrop
       }, { merge: true });
-      try { await updateProfile(user, { displayName: nickname, photoURL: selectedImage || "" }); } catch (e) { }
+      try { await updateProfile(user, { displayName: safeNickname, photoURL: selectedImage || "" }); } catch (e) { }
+      window.dispatchEvent(new CustomEvent('profile-updated'));
       navigate('/', { replace: true });
     } catch (err: any) { alert("저장 실패: " + err.message); } finally { setLoading(false); }
   };
@@ -521,7 +621,7 @@ const OnboardingPage: React.FC = () => {
 
   // Keyboard arrow support
   useEffect(() => {
-    if (step !== 2) return;
+    if (step !== 1) return;
     const onKey = (e: KeyboardEvent) => {
       if (e.key === 'ArrowLeft') goToPrev();
       if (e.key === 'ArrowRight') goToNext();
@@ -535,291 +635,504 @@ const OnboardingPage: React.FC = () => {
 
   const relevantArtworks = (() => {
     if (!selectedArtist) return [];
-    if (selectedArtist.artworks?.length > 0) {
-      return Array.from(new Set(selectedArtist.artworks as string[])).filter(Boolean).map((url: string) => ({ image: url }));
-    }
-    return [];
+    const key = normalizeNameKey(selectedArtist.name || '');
+    const workerUrls = key ? workerArtistArtworks[key] || [] : [];
+    const seedUrls = selectedArtist.artworks?.length > 0 ? (selectedArtist.artworks as string[]) : [];
+    const merged = Array.from(new Set([...workerUrls, ...seedUrls])).filter(Boolean);
+    return merged.map((url: string) => ({ image: url }));
   })();
 
-  const canProceedStep1 = nickname.trim().length > 0 && birthDateInput.length === 10;
+  const canProceedStep1 = birthDateInput.length === 10;
   const artistYear = selectedArtist?.deathYear;
   const userYear = birthDateInput.length === 10 ? parseInt(birthDateInput.split('.')[0]) : null;
+  const selectedArtistYearsAgo = artistYear ? Math.max(1, Math.abs(birthYear - artistYear)) : null;
+  const yearMin = 1900;
+  const yearMax = Math.max(yearMin + 1, new Date().getFullYear() - 10);
+
+  const [isCropDragging, setIsCropDragging] = useState(false);
+  const cropLast = useRef({ x: 0, y: 0 });
+
+  const onCropPointerDown = (e: React.PointerEvent<HTMLDivElement>) => {
+    e.currentTarget.setPointerCapture(e.pointerId);
+    cropLast.current = { x: e.clientX, y: e.clientY };
+    setIsCropDragging(true);
+  };
+
+  const onCropPointerMove = (e: React.PointerEvent<HTMLDivElement>) => {
+    if (!isCropDragging) return;
+    const dx = e.clientX - cropLast.current.x;
+    const dy = e.clientY - cropLast.current.y;
+    cropLast.current = { x: e.clientX, y: e.clientY };
+    setCrop((prev) => ({ ...prev, x: prev.x + dx / cropScaleFactor, y: prev.y + dy / cropScaleFactor }));
+  };
+
+  const onCropPointerUp = (e: React.PointerEvent<HTMLDivElement>) => {
+    e.currentTarget.releasePointerCapture(e.pointerId);
+    setIsCropDragging(false);
+  };
+
+  const onboardingTopOffset = 96;
 
   // ── Step slide style ───────────────────────────────────────────
   const slide = (s: number): React.CSSProperties => ({
-    position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column',
+    position: 'absolute', left: 0, right: 0, top: onboardingTopOffset, bottom: 0, display: 'flex', flexDirection: 'column',
     opacity: step === s ? 1 : 0,
     transform: step === s ? 'translateY(0)' : step > s ? 'translateY(-24px)' : 'translateY(24px)',
     transition: 'opacity 0.45s cubic-bezier(0.25,1,0.5,1), transform 0.45s cubic-bezier(0.25,1,0.5,1)',
     pointerEvents: step === s ? 'auto' : 'none',
   });
 
-  // No full-screen blocking — badge floats above onboarding UI
-
   return (
-    <div style={{ position: 'fixed', inset: 0, background: BG, zIndex: 1000, fontFamily: MONO, color: TEXT, overflow: 'hidden' }}>
-
-      {/* ── STEP 0: WELCOME ─────────────────────────────────────── */}
-      <div style={{ ...slide(0), alignItems: 'center', justifyContent: 'center', padding: '40px 40px' }}>
-        <div style={{ position: 'relative', marginBottom: 36 }}>
-          <GlobeIcon />
+    <div className="onboarding-shell" style={{ position: 'fixed', inset: 0, background: BG, zIndex: 1000, fontFamily: MONO, color: TEXT, overflow: 'hidden', paddingTop: 'env(safe-area-inset-top)' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '16px 20px', borderBottom: `1px solid ${DIMMER}` }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+          {step > 0 && (
+            <button
+              onClick={() => setStep(step - 1)}
+              style={{ background: 'none', border: 'none', color: DIM, fontFamily: MONO, fontSize: 14, cursor: 'pointer' }}
+            >
+              ←
+            </button>
+          )}
+          <div style={{ width: 6, height: 6, background: ACCENT }} />
+          <span style={{ fontSize: 10, letterSpacing: '0.25em', color: DIM }}>{'프로필 설정'}</span>
         </div>
-        <div style={{ fontSize: 9, letterSpacing: '0.5em', color: DIM, marginBottom: 16, textAlign: 'center' }}>A R M I N</div>
-        <h1 style={{ fontSize: 'clamp(36px, 12vw, 54px)', fontWeight: 700, lineHeight: 0.95, textAlign: 'center', margin: '0 0 8px', letterSpacing: '-0.02em', width: '100%' }}>
-          WELCOME
-        </h1>
-        <h1 style={{ fontSize: 'clamp(36px, 12vw, 54px)', fontWeight: 700, lineHeight: 0.95, textAlign: 'center', margin: '0 0 36px', letterSpacing: '-0.02em', color: ACCENT, width: '100%' }}>
-          ABOARD
-        </h1>
-        <p style={{ fontSize: 10, color: DIM, textAlign: 'center', maxWidth: 260, lineHeight: 1.9, marginBottom: 52, letterSpacing: '0.08em' }}>
-          EXPLORE MUSEUM COLLECTIONS<br />FROM AROUND THE WORLD.<br />LET'S BUILD YOUR PROFILE.
-        </p>
-        <div style={{ position: 'relative', display: 'inline-block' }}>
-          <Corners color={ACCENT} size={12} />
-          <button onClick={() => setStep(1)} style={{
-            display: 'block', padding: '18px 48px', background: ACCENT, color: '#111', border: 'none',
-            fontFamily: MONO, fontSize: 11, letterSpacing: '0.3em', fontWeight: 700, cursor: 'pointer',
-          }}>
-            BEGIN →
-          </button>
-        </div>
-        <button onClick={() => navigate('/')} style={{ marginTop: 28, background: 'none', border: 'none', color: DIM, fontFamily: MONO, fontSize: 9, letterSpacing: '0.15em', cursor: 'pointer', textDecoration: 'underline', textUnderlineOffset: 4 }}>
-          SKIP FOR NOW
+        <button
+          onClick={() => navigate('/')}
+          style={{ background: 'none', border: 'none', color: DIM, fontFamily: MONO, fontSize: 14, cursor: 'pointer' }}
+        >
+          ×
         </button>
       </div>
 
-      {/* ── STEP 1: PROFILE ─────────────────────────────────────── */}
-      <div style={{ ...slide(1), overflowY: 'auto' }}>
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '24px 28px', flexShrink: 0 }}>
-          <button onClick={() => setStep(0)} style={{ background: 'none', border: 'none', color: DIM, fontFamily: MONO, fontSize: 9, letterSpacing: '0.15em', cursor: 'pointer' }}>← BACK</button>
-          <span style={{ fontSize: 9, color: DIM, letterSpacing: '0.2em' }}>01 / 02</span>
-        </div>
-        <div style={{ height: 1, background: DIMMER, flexShrink: 0 }}>
-          <div style={{ height: '100%', width: '50%', background: ACCENT, transition: 'width 0.5s ease' }} />
-        </div>
-        <div style={{ flex: 1, padding: '36px 28px 32px', display: 'flex', flexDirection: 'column' }}>
-          <h2 style={{ fontSize: 'clamp(28px, 9vw, 40px)', fontWeight: 700, lineHeight: 1, margin: '0 0 48px', letterSpacing: '-0.02em' }}>
-            TELL US<br />ABOUT<br /><span style={{ color: ACCENT }}>YOURSELF</span>
+      <div style={{ display: 'flex', gap: 3, padding: '10px 20px 0' }}>
+        {[0, 1, 2].map((idx) => (
+          <div
+            key={idx}
+            style={{
+              flex: 1,
+              height: 2,
+              borderRadius: 1,
+              background: step >= idx ? ACCENT : DIMMER,
+              transition: 'background-color 0.25s ease',
+            }}
+          />
+        ))}
+      </div>
+
+      <div className="onboarding-scroll" style={{ ...slide(0), overflowY: 'auto' }}>
+        <div style={{ maxWidth: 560, margin: '0 auto', padding: '28px 20px 40px' }}>
+          <p style={{ fontSize: 9, letterSpacing: '0.25em', color: 'rgba(255,255,255,0.22)', marginBottom: 10 }}>STEP 1 OF 3</p>
+          <h2 style={{ fontSize: 'clamp(27px,6vw,36px)', letterSpacing: '-0.02em', lineHeight: 1.2, margin: '0 0 8px' }}>
+            생년월일을 알려주세요
           </h2>
-          <div style={{ marginBottom: 40 }}>
-            <label style={{ display: 'block', fontSize: 9, letterSpacing: '0.3em', color: DIM, marginBottom: 14 }}>YOUR NAME</label>
-            <input
-              value={nickname} onChange={e => setNickname(e.target.value)} placeholder="nickname..." autoFocus
-              style={{ background: 'none', borderStyle: 'none', borderBottom: `1px solid ${nickname ? ACCENT : DIMMER}`, color: TEXT, fontFamily: MONO, fontSize: 24, padding: '8px 0', outline: 'none', width: '100%', transition: 'border-color 0.3s' }}
-            />
+          <p style={{ fontSize: 13, color: DIM, lineHeight: 1.7, marginBottom: 24 }}>
+            태어난 해와 날에 맞는 예술가를 찾아드립니다.
+          </p>
+
+          <div style={{ marginBottom: 18 }}>
+            <div style={{ fontSize: 9, letterSpacing: '0.18em', color: 'rgba(255,255,255,0.24)', marginBottom: 8 }}>출생 연도</div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
+              <input
+                type="range"
+                id="birth-year-range"
+                name="birthYear"
+                min={yearMin}
+                max={yearMax}
+                value={birthYear}
+                onChange={(e) => setBirthYear(Number(e.target.value))}
+                style={{ flex: 1, accentColor: ACCENT, height: 4, cursor: 'pointer' }}
+              />
+              <div style={{ minWidth: 62, textAlign: 'center', padding: '8px 12px', borderRadius: 8, border: `1.5px solid ${ACCENT}`, color: ACCENT, fontSize: 16, fontWeight: 700 }}>
+                {birthYear}
+              </div>
+            </div>
           </div>
-          <div style={{ marginBottom: 40 }}>
-            <label style={{ display: 'block', fontSize: 9, letterSpacing: '0.3em', color: DIM, marginBottom: 14 }}>DATE OF BIRTH</label>
-            <input
-              value={birthDateInput} onChange={handleBirthDateChange} placeholder="YYYY.MM.DD" maxLength={10}
-              style={{ background: 'none', borderStyle: 'none', borderBottom: `1px solid ${birthDateInput.length === 10 ? ACCENT : DIMMER}`, color: birthDateInput.length === 10 ? ACCENT : TEXT, fontFamily: MONO, fontSize: 22, fontWeight: 700, padding: '8px 0', outline: 'none', width: '100%', letterSpacing: '0.04em', transition: 'all 0.3s' }}
-            />
-            <p style={{ fontSize: 9, color: DIM, marginTop: 10, letterSpacing: '0.08em', lineHeight: 1.7 }}>
-              WE'LL FIND AN ARTIST WHO DIED<br />ON YOUR BIRTHDAY
-            </p>
+
+          <div style={{ marginBottom: 14 }}>
+            <div style={{ fontSize: 9, letterSpacing: '0.18em', color: 'rgba(255,255,255,0.24)', marginBottom: 8 }}>월</div>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 6 }}>
+              {Array.from({ length: 12 }, (_, i) => i + 1).map((m) => {
+                const active = birthMonth === m;
+                return (
+                  <button
+                    key={m}
+                    onClick={() => setBirthMonth(m)}
+                    style={{
+                      padding: '10px 6px',
+                      borderRadius: 8,
+                      border: `1px solid ${active ? ACCENT : DIMMER}`,
+                      background: active ? 'rgba(191,255,10,0.10)' : 'rgba(255,255,255,0.07)',
+                      color: active ? ACCENT : 'rgba(255,255,255,0.62)',
+                      fontSize: 11,
+                      fontWeight: active ? 700 : 400,
+                      cursor: 'pointer',
+                    }}
+                  >
+                    {m}월
+                  </button>
+                );
+              })}
+            </div>
           </div>
-          <div style={{ marginTop: 'auto' }}>
-            <button
-              onClick={() => { if (canProceedStep1) setStep(2); }}
-              style={{
-                width: '100%', padding: '18px', background: canProceedStep1 ? ACCENT : DIMMER,
-                border: 'none', color: canProceedStep1 ? '#111' : DIM,
-                fontFamily: MONO, fontSize: 10, letterSpacing: '0.15em', fontWeight: 700,
-                cursor: canProceedStep1 ? 'pointer' : 'not-allowed', transition: 'all 0.3s',
-              }}
-            >
-              FIND MY ART SOULMATE →
-            </button>
+
+          <div style={{ marginBottom: 24 }}>
+            <div style={{ fontSize: 9, letterSpacing: '0.18em', color: 'rgba(255,255,255,0.24)', marginBottom: 8 }}>일</div>
+            <div style={{ display: 'flex', gap: 5, overflowX: 'auto', paddingBottom: 4, scrollbarWidth: 'none' }}>
+              {Array.from({ length: 31 }, (_, i) => i + 1).map((d) => {
+                const active = birthDay === d;
+                return (
+                  <button
+                    key={d}
+                    onClick={() => setBirthDay(d)}
+                    style={{
+                      flexShrink: 0,
+                      width: 36,
+                      height: 36,
+                      borderRadius: 7,
+                      border: `1px solid ${active ? ACCENT : DIMMER}`,
+                      background: active ? 'rgba(191,255,10,0.10)' : 'rgba(255,255,255,0.07)',
+                      color: active ? ACCENT : 'rgba(255,255,255,0.62)',
+                      fontSize: 11,
+                      fontWeight: active ? 700 : 400,
+                      cursor: 'pointer',
+                    }}
+                  >
+                    {d}
+                  </button>
+                );
+              })}
+            </div>
           </div>
+
+          {recommendedArtists.length > 0 && (
+            <div style={{ padding: '12px 14px', borderRadius: 10, marginBottom: 16, background: 'rgba(191,255,10,0.06)', border: '1px solid rgba(191,255,10,0.14)' }}>
+              <div style={{ fontSize: 8, letterSpacing: '0.18em', color: ACCENT, marginBottom: 8 }}>
+                {birthMonth}월 {birthDay}일, {Math.max(1, new Date().getFullYear() - birthYear)}년 전 예술가들
+              </div>
+              <div style={{ display: 'flex', gap: 10 }}>
+                {recommendedArtists.slice(0, 4).map((artist, idx) => (
+                  <div key={artist.name || idx} style={{ textAlign: 'center' }}>
+                    <div style={{ width: 36, height: 36, borderRadius: '50%', overflow: 'hidden', margin: '0 auto 4px', border: `1px solid ${DIMMER}` }}>
+                      <img src={artist.artworks?.[0] || artist.image || ''} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                    </div>
+                    <div style={{ fontSize: 8, color: TEXT, whiteSpace: 'nowrap' }}>{String(artist.name || '').split(' ')[0]}</div>
+                    <div style={{ fontSize: 7, color: 'rgba(255,255,255,0.35)' }}>#{idx + 1}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          <button
+            onClick={() => { if (canProceedStep1) { setSearchByBirthday(true); setStep(1); } }}
+            style={{ width: '100%', padding: '14px', borderRadius: 10, background: ACCENT, color: '#000', fontSize: 13, fontWeight: 700, border: 'none', cursor: 'pointer', marginBottom: 12 }}
+          >
+            나의 예술가 찾기 →
+          </button>
+
+          <button
+            onClick={() => { setSearchByBirthday(false); setArtistSearchQuery(''); setStep(1); }}
+            style={{
+              width: '100%',
+              padding: '15px 16px',
+              borderRadius: 10,
+              border: '1.5px solid rgba(191,255,10,0.62)',
+              background: 'linear-gradient(180deg, rgba(191,255,10,0.16), rgba(191,255,10,0.10))',
+              color: '#E9FFAA',
+              fontSize: 13,
+              fontWeight: 700,
+              cursor: 'pointer',
+              textAlign: 'left',
+              boxShadow: '0 8px 18px rgba(191,255,10,0.13)',
+            }}
+          >
+            작가 직접 검색하기
+            <div style={{ fontSize: 10, color: 'rgba(233,255,170,0.84)', marginTop: 2 }}>이름으로 빠르게 찾기</div>
+          </button>
         </div>
       </div>
 
-      {/* ── STEP 2: ART SOULMATE ─────────────────────────────────── */}
-      <div style={{ ...slide(2), overflowY: 'auto' }}>
-        {/* Header */}
-        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '20px 24px', flexShrink: 0 }}>
-          <button onClick={() => setStep(1)} style={{ background: 'none', border: 'none', color: DIM, fontFamily: MONO, fontSize: 9, letterSpacing: '0.15em', cursor: 'pointer' }}>← BACK</button>
-          <span style={{ fontSize: 9, color: DIM, letterSpacing: '0.2em' }}>02 / 02</span>
-        </div>
-        <div style={{ height: 1, background: DIMMER, flexShrink: 0 }}>
-          <div style={{ height: '100%', width: '100%', background: ACCENT }} />
-        </div>
-
-        <div style={{ flex: 1, display: 'flex', flexDirection: 'column', padding: '16px 24px 32px', gap: 16 }}>
-
-          {/* Mode toggle + search */}
-          <div style={{ flexShrink: 0 }}>
-            <div style={{ fontSize: 9, letterSpacing: '0.35em', color: ACCENT, marginBottom: 10 }}>YOUR ART SOULMATE</div>
-            <div style={{ display: 'flex', gap: 6 }}>
-              <button onClick={() => { setSearchByBirthday(true); setArtistSearchQuery(''); }}
-                style={{ padding: '5px 12px', background: searchByBirthday ? ACCENT : 'none', border: `1px solid ${searchByBirthday ? ACCENT : DIMMER}`, color: searchByBirthday ? '#111' : DIM, fontFamily: MONO, fontSize: 8, letterSpacing: '0.15em', cursor: 'pointer', transition: 'all 0.2s' }}>
-                BY BIRTHDAY
-              </button>
-              <button onClick={() => setSearchByBirthday(false)}
-                style={{ padding: '5px 12px', background: !searchByBirthday ? ACCENT : 'none', border: `1px solid ${!searchByBirthday ? ACCENT : DIMMER}`, color: !searchByBirthday ? '#111' : DIM, fontFamily: MONO, fontSize: 8, letterSpacing: '0.15em', cursor: 'pointer', transition: 'all 0.2s' }}>
-                BY NAME
-              </button>
-            </div>
-            {!searchByBirthday && (
-              <div style={{ marginTop: 10 }}>
-                <input
-                  value={artistSearchQuery} onChange={e => setArtistSearchQuery(e.target.value)}
-                  placeholder="Search artist name..." autoFocus
-                  style={{ background: 'none', borderStyle: 'none', borderBottom: `1px solid ${DIMMER}`, color: TEXT, fontFamily: MONO, fontSize: 15, padding: '6px 0', outline: 'none', width: '100%' }}
-                />
-                {artistSearchQuery && (
-                  <span style={{ fontSize: 8, color: DIM, letterSpacing: '0.1em' }}>{recommendedArtists.length} FOUND</span>
-                )}
-              </div>
-            )}
+      <div className="onboarding-scroll" style={{ ...slide(1), overflowY: 'auto' }}>
+        <div style={{ maxWidth: 560, margin: '0 auto', padding: '24px 20px 34px' }}>
+          <p style={{ fontSize: 9, letterSpacing: '0.25em', color: 'rgba(255,255,255,0.22)', marginBottom: 10 }}>STEP 2 OF 3</p>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 14, gap: 10 }}>
+            <h2 style={{ margin: 0, fontSize: 'clamp(21px,5vw,29px)', letterSpacing: '-0.02em', lineHeight: 1.24 }}>
+              {birthMonth}월 {birthDay}일, {birthYear}년으로부터 {selectedArtistYearsAgo ? ` ${selectedArtistYearsAgo}년 전` : ''}
+            </h2>
+            <button
+              onClick={() => setSearchByBirthday((prev) => !prev)}
+              style={{ border: '1.5px solid rgba(191,255,10,0.65)', borderRadius: 999, background: 'rgba(191,255,10,0.15)', color: '#E9FFAA', fontSize: 11, fontWeight: 700, padding: '7px 12px', cursor: 'pointer', whiteSpace: 'nowrap' }}
+            >
+              {searchByBirthday ? '직접 검색' : '생년 기반'}
+            </button>
           </div>
 
-          {/* Artist navigation row */}
-          {recommendedArtists.length > 0 ? (
-            <div style={{ flexShrink: 0 }}>
-              {/* Artist name + info */}
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: 12 }}>
+          {!searchByBirthday && (
+            <div style={{ marginBottom: 12 }}>
+              <input
+                id="artist-search-input"
+                name="artistSearch"
+                value={artistSearchQuery}
+                onChange={(e) => setArtistSearchQuery(e.target.value)}
+                placeholder="작가 이름 검색..."
+                style={{ width: '100%', borderRadius: 10, border: `1px solid ${DIMMER}`, background: 'rgba(255,255,255,0.07)', color: TEXT, fontSize: 14, padding: '11px 13px', outline: 'none' }}
+              />
+            </div>
+          )}
+
+          <div style={{ display: 'flex', gap: 8, overflowX: 'auto', paddingBottom: 6, marginBottom: 14, scrollbarWidth: 'none' }}>
+            {recommendedArtists.map((artist, idx) => {
+              const active = selectedArtist?.name === artist.name;
+              return (
+                <button
+                  key={artist.name || idx}
+                  onClick={() => { setSelectedArtist(artist); setSelectedImage(artist.artworks?.[0] || artist.image || ''); }}
+                  style={{
+                    flexShrink: 0,
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: 8,
+                    borderRadius: 999,
+                    border: `1px solid ${active ? ACCENT : DIMMER}`,
+                    background: active ? 'rgba(191,255,10,0.10)' : 'rgba(255,255,255,0.07)',
+                    padding: '7px 11px 7px 7px',
+                    cursor: 'pointer',
+                  }}
+                >
+                  <div style={{ width: 26, height: 26, borderRadius: '50%', overflow: 'hidden', border: `1px solid ${active ? ACCENT : DIMMER}` }}>
+                    <img src={artist.artworks?.[0] || artist.image || ''} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  </div>
+                  <div style={{ textAlign: 'left' }}>
+                    <div style={{ fontSize: 10, color: active ? ACCENT : TEXT, fontWeight: active ? 700 : 500 }}>{String(artist.name || '').split(' ')[0]}</div>
+                      <div style={{ fontSize: 7, color: 'rgba(255,255,255,0.35)' }}>
+                        {artist?.deathYear ? `${Math.max(1, Math.abs(birthYear - Number(artist.deathYear)))}년 전` : `#${idx + 1}`}
+                      </div>
+                  </div>
+                </button>
+              );
+            })}
+          </div>
+
+          {selectedArtist && (
+            <div style={{ padding: '12px 14px', borderRadius: 10, marginBottom: 14, background: 'rgba(255,255,255,0.06)', border: `1px solid ${DIMMER}` }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+                <div style={{ width: 40, height: 40, borderRadius: '50%', overflow: 'hidden', flexShrink: 0 }}>
+                  <img src={selectedArtist.artworks?.[0] || selectedArtist.image || ''} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                </div>
                 <div>
-                  <h2 style={{ fontSize: 'clamp(18px, 5vw, 26px)', fontWeight: 700, margin: 0, letterSpacing: '-0.01em', lineHeight: 1.1 }}>
-                    {selectedArtist?.name?.toUpperCase() || ''}
-                  </h2>
-                  <div style={{ display: 'flex', gap: 8, alignItems: 'center', marginTop: 6 }}>
-                    {artistYear && (
-                      <span style={{ fontSize: 9, color: DIM, letterSpacing: '0.08em' }}>
-                        DIED {artistYear}.{birthDateInput.split('.')[1] || '??'}.{birthDateInput.split('.')[2] || '??'}
-                      </span>
-                    )}
-                    {artistYear && userYear && (
-                      <span style={{ fontSize: 8, background: ACCENT, color: '#111', padding: '2px 7px', letterSpacing: '0.08em', fontWeight: 700, whiteSpace: 'nowrap', flexShrink: 0 }}>
-                        {Math.abs(userYear - artistYear)}Y APART
-                      </span>
-                    )}
+                  <div style={{ fontSize: 15, fontWeight: 700 }}>{selectedArtist.name}</div>
+                  <div style={{ fontSize: 10, color: DIM, marginTop: 1 }}>
+                    {artistYear ? `${artistYear}년 작고 · ${Math.max(1, Math.abs((userYear || artistYear) - artistYear))}년 전` : '추천 작가'}
                   </div>
-                </div>
-                {total > 1 && (
-                  <span style={{ fontSize: 9, color: DIM, letterSpacing: '0.08em', flexShrink: 0 }}>
-                    {curIdx + 1} / {total}
-                  </span>
-                )}
-              </div>
-
-              {/* Three-circle navigation */}
-              <div
-                style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 12, userSelect: 'none' }}
-                onTouchStart={onSwipeStart}
-                onTouchEnd={onSwipeEnd}
-              >
-                {/* Prev */}
-                <div onClick={goToPrev} style={{
-                  display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6,
-                  cursor: total > 1 ? 'pointer' : 'default', opacity: total > 1 ? 1 : 0,
-                }}>
-                  <div style={{ width: 14, height: 14, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <span style={{ fontSize: 12, color: DIM }}>‹</span>
-                  </div>
-                  {prevArtist && (
-                    <div style={{ width: 64, height: 64, borderRadius: '50%', overflow: 'hidden', border: `2px solid ${DIMMER}`, opacity: 0.5, flexShrink: 0, background: DIMMER }}>
-                      <img src={prevArtist.artworks?.[0] || prevArtist.image || ''} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
-                    </div>
-                  )}
-                  {prevArtist && (
-                    <span style={{ fontSize: 7, color: DIM, letterSpacing: '0.06em', textAlign: 'center', maxWidth: 64, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                      {prevArtist.name.split(' ').pop()?.toUpperCase()}
-                    </span>
-                  )}
-                </div>
-
-                {/* Current (main circle) — tap to adjust crop */}
-                <div onClick={() => selectedImage && setShowCropModal(true)} style={{
-                  width: 164, height: 164, borderRadius: '50%', overflow: 'hidden', flexShrink: 0,
-                  border: `3px solid ${ACCENT}`, boxShadow: `0 0 32px rgba(204,255,0,0.2), 0 0 0 1px rgba(204,255,0,0.05)`,
-                  position: 'relative', cursor: selectedImage ? 'pointer' : 'default', background: '#1c1c1c',
-                }}>
-                  {selectedImage ? (
-                    <img
-                      src={selectedImage}
-                      onLoad={e => { const { naturalWidth: w, naturalHeight: h } = e.currentTarget; setCurrentImageIsLandscape(w >= h); }}
-                      style={{
-                        position: 'absolute', top: '50%', left: '50%',
-                        width: currentImageIsLandscape ? 'auto' : 164,
-                        height: currentImageIsLandscape ? 164 : 'auto',
-                        minWidth: 164, minHeight: 164, maxWidth: 'none', maxHeight: 'none',
-                        transform: `translate(-50%,-50%) translate(${crop.x * (164 / 240)}px,${crop.y * (164 / 240)}px) scale(${crop.scale})`,
-                        objectFit: 'contain', pointerEvents: 'none',
-                      }}
-                    />
-                  ) : (
-                    <div style={{ width: '100%', height: '100%', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                      <span style={{ fontSize: 28, color: DIM }}>?</span>
-                    </div>
-                  )}
-                  {selectedImage && (
-                    <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, background: 'linear-gradient(transparent, rgba(0,0,0,0.7))', padding: '12px 0 5px', textAlign: 'center', pointerEvents: 'none' }}>
-                      <span style={{ fontSize: 7, color: 'rgba(255,255,255,0.5)', letterSpacing: '0.12em' }}>✎ ADJUST</span>
-                    </div>
-                  )}
-                </div>
-
-                {/* Next */}
-                <div onClick={goToNext} style={{
-                  display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 6,
-                  cursor: total > 1 ? 'pointer' : 'default', opacity: total > 1 ? 1 : 0,
-                }}>
-                  <div style={{ width: 14, height: 14, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    <span style={{ fontSize: 12, color: DIM }}>›</span>
-                  </div>
-                  {nextArtist && (
-                    <div style={{ width: 64, height: 64, borderRadius: '50%', overflow: 'hidden', border: `2px solid ${DIMMER}`, opacity: 0.5, flexShrink: 0, background: DIMMER }}>
-                      <img src={nextArtist.artworks?.[0] || nextArtist.image || ''} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
-                    </div>
-                  )}
-                  {nextArtist && (
-                    <span style={{ fontSize: 7, color: DIM, letterSpacing: '0.06em', textAlign: 'center', maxWidth: 64, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                      {nextArtist.name.split(' ').pop()?.toUpperCase()}
-                    </span>
-                  )}
                 </div>
               </div>
+            </div>
+          )}
 
-              {total > 1 && (
-                <div style={{ textAlign: 'center', marginTop: 6 }}>
-                  <span style={{ fontSize: 7, color: DIM, letterSpacing: '0.15em' }}>← SWIPE OR CLICK TO BROWSE →</span>
-                </div>
-              )}
+          {relevantArtworks.length > 0 ? (
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, minmax(0, 1fr))', gap: 6, marginBottom: 18 }}>
+              {relevantArtworks.map((art, idx) => {
+                const active = selectedImage === art.image;
+                return (
+                  <button
+                    key={art.image + idx}
+                    onClick={() => setSelectedImage(art.image)}
+                    style={{
+                      border: `1px solid ${active ? ACCENT : DIMMER}`,
+                      borderRadius: 10,
+                      background: 'transparent',
+                      overflow: 'hidden',
+                      cursor: 'pointer',
+                      padding: 0,
+                    }}
+                  >
+                    <div style={{ aspectRatio: '1 / 1', position: 'relative' }}>
+                      <img src={art.image} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
+                      <div style={{ position: 'absolute', inset: 0, background: active ? 'linear-gradient(to top, rgba(191,255,10,0.18), transparent)' : 'linear-gradient(to top, rgba(0,0,0,0.45), transparent)' }} />
+                      <div style={{ position: 'absolute', left: 6, right: 6, bottom: 6, fontSize: 8, color: '#fff', fontWeight: 700, textAlign: 'left' }}>
+                        Artwork {idx + 1}
+                      </div>
+                    </div>
+                  </button>
+                );
+              })}
             </div>
           ) : (
-            <div style={{ flexShrink: 0, textAlign: 'center', padding: '24px 0', color: DIM, fontSize: 11, letterSpacing: '0.1em' }}>
-              {Object.keys(artistDatabase).length === 0 ? 'LOADING ARTISTS...' : 'NO MATCH FOUND'}
+            <div style={{ textAlign: 'center', color: DIM, fontSize: 12, padding: '22px 8px' }}>
+              {artistDataLoading ? '작가 데이터를 불러오는 중...' : '선택 가능한 작품이 없습니다.'}
             </div>
           )}
 
-          {/* Artwork grid */}
-          {relevantArtworks.length > 0 && (
-            <div style={{ flexShrink: 0 }}>
-              <ArtworkGrid items={relevantArtworks} selectedImage={selectedImage} onSelect={setSelectedImage} />
-            </div>
-          )}
-
-          {/* Submit */}
-          <div style={{ flexShrink: 0, marginTop: 'auto' }}>
-            <button onClick={handleSubmit} disabled={loading}
-              style={{ width: '100%', padding: '18px', background: loading ? DIMMER : ACCENT, border: 'none', color: '#111', fontFamily: MONO, fontSize: 10, letterSpacing: '0.15em', fontWeight: 700, cursor: loading ? 'wait' : 'pointer', transition: 'all 0.3s' }}>
-              {loading ? 'SAVING...' : 'START EXPLORING →'}
+          <div style={{ position: 'sticky', bottom: 0, paddingTop: 10, paddingBottom: 2, background: 'linear-gradient(to top, #111111 68%, rgba(17,17,17,0.18))' }}>
+            <button
+              onClick={() => selectedImage && setStep(2)}
+              disabled={!selectedImage}
+              style={{
+                width: '100%',
+                padding: '14px',
+                borderRadius: 10,
+                border: 'none',
+                background: selectedImage ? ACCENT : DIMMER,
+                color: selectedImage ? '#000' : DIM,
+                fontSize: 13,
+                fontWeight: 800,
+                cursor: selectedImage ? 'pointer' : 'not-allowed',
+              }}
+            >
+              {selectedImage ? '다음 단계로 →' : '작품 선택 후 다음 단계'}
             </button>
           </div>
         </div>
       </div>
 
-      {/* Artist data loading badge — floats above step 2 content */}
-      <TransitionBadge show={artistDataLoading && step === 2} />
+      <div className="onboarding-scroll" style={{ ...slide(2), overflowY: 'auto' }}>
+        <div style={{ maxWidth: 560, margin: '0 auto', padding: '24px 20px 34px' }}>
+          <p style={{ fontSize: 9, letterSpacing: '0.25em', color: 'rgba(255,255,255,0.22)', marginBottom: 10 }}>STEP 3 OF 3</p>
+          <h2 style={{ margin: '0 0 8px', fontSize: 'clamp(24px,5.8vw,34px)', letterSpacing: '-0.02em' }}>프로필 영역 선택</h2>
+          <p style={{ fontSize: 12, color: DIM, marginBottom: 16 }}>작품 이미지를 드래그해 프로필에 사용할 영역을 조정하세요.</p>
 
-      {/* Crop Modal */}
-      {showCropModal && (
-        <ImageCropModal key={selectedImage} imageUrl={selectedImage} initialCrop={crop}
-          onClose={() => setShowCropModal(false)}
-          onSave={(newCrop: any) => { setCrop(newCrop); setShowCropModal(false); }}
-        />
-      )}
+          <div
+            onPointerDown={onCropPointerDown}
+            onPointerMove={onCropPointerMove}
+            onPointerUp={onCropPointerUp}
+            onPointerCancel={onCropPointerUp}
+            style={{
+              width: '100%',
+              maxWidth: cropPreviewSize,
+              height: 360,
+              margin: '0 auto',
+              position: 'relative',
+              overflow: 'hidden',
+              borderRadius: 8,
+              background: '#0d0d0d',
+              border: `1px solid ${DIMMER}`,
+              cursor: isCropDragging ? 'grabbing' : 'grab',
+              touchAction: 'none',
+            }}
+          >
+            {selectedImage && (
+              <img
+                src={selectedImage}
+                draggable={false}
+                style={{
+                  position: 'absolute',
+                  top: '50%',
+                  left: '50%',
+                  width: cropPreviewSize,
+                  height: 'auto',
+                  maxWidth: 'none',
+                  maxHeight: 'none',
+                  transform: `translate(-50%,-50%) translate(${crop.x * cropScaleFactor}px,${crop.y * cropScaleFactor}px) scale(${crop.scale})`,
+                  pointerEvents: 'none',
+                  userSelect: 'none',
+                }}
+              />
+            )}
+
+            {/* Darkened overlay with circular cutout */}
+            <div
+              style={{
+                position: 'absolute',
+                inset: 0,
+                background: 'rgba(0,0,0,0.55)',
+                pointerEvents: 'none',
+                WebkitMaskImage: `radial-gradient(circle ${cropMaskSize / 2}px at 50% 50%, transparent 100%, black 100%)`,
+                maskImage: `radial-gradient(circle ${cropMaskSize / 2}px at 50% 50%, transparent 100%, black 100%)`,
+              }}
+            />
+
+            {/* Circle border */}
+            <div
+              style={{
+                position: 'absolute',
+                top: '50%',
+                left: '50%',
+                width: cropMaskSize,
+                height: cropMaskSize,
+                transform: 'translate(-50%,-50%)',
+                borderRadius: '50%',
+                border: `2px solid ${ACCENT}`,
+                pointerEvents: 'none',
+              }}
+            />
+          </div>
+
+          <div style={{ marginTop: 14, marginBottom: 16 }}>
+            <input
+              type="range"
+              id="profile-crop-scale-range"
+              name="profileCropScale"
+              min="0.2"
+              max="3"
+              step="0.05"
+              value={crop.scale}
+              onChange={(e) => setCrop((prev) => ({ ...prev, scale: parseFloat(e.target.value) }))}
+              style={{ width: '100%', accentColor: ACCENT }}
+            />
+          </div>
+
+          {selectedArtist && (
+            <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 14 }}>
+              <div style={{ width: 42, height: 42, borderRadius: '50%', overflow: 'hidden', border: `2px solid ${ACCENT}` }}>
+                <img src={selectedImage || selectedArtist.artworks?.[0] || selectedArtist.image || ''} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+              </div>
+              <div>
+                <div style={{ fontSize: 14, fontWeight: 700 }}>Art Explorer</div>
+                <div style={{ fontSize: 11, color: DIM }}>{selectedArtist.name}</div>
+              </div>
+            </div>
+          )}
+
+          <button
+            onClick={handleSubmit}
+            disabled={loading || !selectedImage}
+            style={{
+              width: '100%',
+              padding: '14px',
+              borderRadius: 10,
+              border: 'none',
+              background: loading || !selectedImage ? DIMMER : ACCENT,
+              color: loading || !selectedImage ? DIM : '#000',
+              fontSize: 13,
+              fontWeight: 800,
+              cursor: loading || !selectedImage ? 'not-allowed' : 'pointer',
+            }}
+          >
+            {loading ? '저장 중...' : '저장하기 ✓'}
+          </button>
+        </div>
+      </div>
+
+      <TransitionBadge show={artistDataLoading && step === 1} />
+
+      <style>{`
+        .onboarding-shell,
+        .onboarding-scroll {
+          scrollbar-width: thin;
+          scrollbar-color: rgba(191,255,10,0.62) rgba(255,255,255,0.08);
+        }
+        .onboarding-shell::-webkit-scrollbar,
+        .onboarding-scroll::-webkit-scrollbar {
+          width: 10px;
+          height: 10px;
+        }
+        .onboarding-shell::-webkit-scrollbar-track,
+        .onboarding-scroll::-webkit-scrollbar-track {
+          background: rgba(255,255,255,0.08);
+          border-radius: 999px;
+        }
+        .onboarding-shell::-webkit-scrollbar-thumb,
+        .onboarding-scroll::-webkit-scrollbar-thumb {
+          background: linear-gradient(180deg, rgba(191,255,10,0.84), rgba(191,255,10,0.52));
+          border-radius: 999px;
+          border: 1px solid rgba(191,255,10,0.35);
+        }
+        .onboarding-shell::-webkit-scrollbar-thumb:hover,
+        .onboarding-scroll::-webkit-scrollbar-thumb:hover {
+          background: linear-gradient(180deg, rgba(191,255,10,0.96), rgba(191,255,10,0.66));
+        }
+      `}</style>
     </div>
   );
 };

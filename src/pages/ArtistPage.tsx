@@ -18,9 +18,22 @@ import {
   getDocs,
 } from 'firebase/firestore';
 import { findMuseumForArtwork } from '../utils/museumUtils';
-import { shouldLimitNetwork } from '../utils/network';
+import { getWorkerNetworkMode, shouldLimitNetwork } from '../utils/network';
 import { normalizeImageUrl } from '../utils/imageProxy';
 import ArtistDistributionMap from '../components/ArtistDistributionMap';
+
+type WorkerArtwork = {
+  id: string;
+  name: string;
+  artist: string;
+  image: string;
+  date?: string;
+  museumName?: string;
+  exhibitionId?: string;
+  category?: string;
+  sourceUrl?: string;
+  exhibitionTitle?: string;
+};
 
 // ── SVG icons ──────────────────────────────────────────────────────────────
 const HeartIcon = () => (
@@ -121,15 +134,34 @@ const buildBrueckeLookupKeyCandidates = (art: any): string[] => {
 
 // ── Component ────────────────────────────────────────────────────────────────
 export default function ArtistPage() {
-  const { id } = useParams();
+  const { id } = useParams<{ id?: string }>();
   const navigate = useNavigate();
   const location = useLocation();
   const isDrawingSkinArtist = useMemo(() => {
     const p = new URLSearchParams(location.search);
     return p.get('mode') === 'drawing';
   }, [location.search]);
-  // Support both numeric id ("1") and name slug ("vincent-van-gogh")
-  const artist = artists.find((a) => a.id === id || toArtistSlug(a.name) === id);
+
+  const routeArtistName = useMemo(() => {
+    const params = new URLSearchParams(location.search);
+    const byQuery = params.get('name')?.trim();
+    if (byQuery) return byQuery;
+    if (!id) return '';
+    return decodeURIComponent(id).replace(/[-_]+/g, ' ').trim();
+  }, [id, location.search]);
+
+  // Support both numeric id ("1") and slug/name route.
+  const artist = useMemo(() => {
+    const normalizedRoute = normalizeLookupText(routeArtistName);
+    return artists.find((a) => (
+      a.id === id ||
+      toArtistSlug(a.name) === id ||
+      (normalizedRoute && normalizeLookupText(a.name) === normalizedRoute)
+    ));
+  }, [id, routeArtistName]);
+
+  const artistDisplayName = artist?.name || routeArtistName;
+  const artistDescription = artist?.description || '';
 
   // Wiki
   const [wikiSummary, setWikiSummary] = useState<string>("");
@@ -147,6 +179,8 @@ export default function ArtistPage() {
   });
   const [visibleCount, setVisibleCount] = useState(120);
   const [brueckeR2Lookup, setBrueckeR2Lookup] = useState<Record<string, string>>({});
+  const [indexArtistArtworks, setIndexArtistArtworks] = useState<Artwork[]>([]);
+  const [indexLoading, setIndexLoading] = useState(false);
 
   const toggleTheme = useCallback(
     () => setTheme(t => (t === 'dark' ? 'light' : 'dark')),
@@ -181,21 +215,101 @@ export default function ArtistPage() {
     };
   }, []);
 
-  // ── Artist artworks ───────────────────────────────────────────────────────
-  const artistArtworks = useMemo<Artwork[]>(() => {
-    if (!artist) return [];
+  const fallbackArtistArtworks = useMemo<Artwork[]>(() => {
+    if (!artistDisplayName) return [];
+    const normalizedTarget = normalizeLookupText(artistDisplayName);
     return artworks
-      .filter((aw: any) => (aw.artist || "").toLowerCase() === artist.name.toLowerCase())
+      .filter((aw: any) => normalizeLookupText(aw.artist || "") === normalizedTarget)
       .map((aw: any) => ({
         ...aw,
         image: resolveArtworkImage(aw),
         museumName: aw.museumName || aw.museum || aw.source || "",
       })) as Artwork[];
-  }, [artist]);
+  }, [artistDisplayName]);
+
+  useEffect(() => {
+    if (!artistDisplayName) {
+      setIndexArtistArtworks([]);
+      setIndexLoading(false);
+      return;
+    }
+
+    let cancelled = false;
+    let loadComplete = false;
+    const requestedArtist = artistDisplayName;
+    const worker = new Worker(new URL('../workers/search.worker.ts', import.meta.url), { type: 'module' });
+
+    const requestWorks = () => {
+      worker.postMessage({ type: 'GET_ARTIST_WORKS', query: requestedArtist });
+    };
+
+    // If fallback dataset already has entries, render immediately and load index in background.
+    setIndexLoading(fallbackArtistArtworks.length === 0);
+    setIndexArtistArtworks([]);
+
+    worker.onmessage = (event) => {
+      const { type, artist: responseArtist, works } = event.data || {};
+
+      if (type === 'LOAD_COMPLETE') {
+        loadComplete = true;
+        requestWorks();
+        return;
+      }
+
+      if (type === 'ARTIST_WORKS') {
+        if (cancelled) return;
+        const responseName = String(responseArtist || '');
+        if (normalizeLookupText(responseName) !== normalizeLookupText(requestedArtist)) return;
+
+        const mappedWorks: Artwork[] = ((works || []) as WorkerArtwork[])
+          .map((aw: WorkerArtwork) => ({
+            ...aw,
+            id: aw.id,
+            name: aw.name || 'Untitled',
+            artist: aw.artist || requestedArtist,
+            image: normalizeKnownBrokenImageUrl(resolveArtworkImage(aw)),
+            museumName: aw.museumName || '',
+            exhibitionId: aw.exhibitionId || '',
+            sourceUrl: aw.sourceUrl || '',
+            category: aw.category || '',
+            exhibitionTitle: aw.exhibitionTitle || '',
+            year: extractYearToken(aw.date),
+          }))
+          .filter((aw) => !!aw.id && !!aw.name);
+
+        if (!loadComplete && mappedWorks.length === 0) {
+          return;
+        }
+
+        setIndexArtistArtworks(mappedWorks);
+        setIndexLoading(false);
+        return;
+      }
+
+      if (type === 'ERROR' && !cancelled) {
+        setIndexLoading(false);
+      }
+    };
+
+    worker.postMessage({ type: 'SET_MODE', mode: getWorkerNetworkMode() });
+    worker.postMessage({ type: 'LOAD' });
+    requestWorks();
+
+    return () => {
+      cancelled = true;
+      worker.terminate();
+    };
+  }, [artistDisplayName, fallbackArtistArtworks.length]);
+
+  // Prefer full search-index result; fallback to static snapshot when unavailable.
+  const artistArtworks = useMemo<Artwork[]>(() => {
+    if (indexArtistArtworks.length > 0) return indexArtistArtworks;
+    return fallbackArtistArtworks;
+  }, [fallbackArtistArtworks, indexArtistArtworks]);
 
   const fallbackAscii = useMemo(
-    () => buildFallbackAscii(artist?.name ?? "Artist"),
-    [artist?.name]
+    () => buildFallbackAscii(artistDisplayName || "Artist"),
+    [artistDisplayName]
   );
 
   const visibleArtistArtworks = useMemo(() => {
@@ -204,9 +318,13 @@ export default function ArtistPage() {
 
   // ── Wikipedia summary ─────────────────────────────────────────────────────
   useEffect(() => {
-    if (!artist) return;
+    if (!artistDisplayName) {
+      setWikiSummary("");
+      setWikiSourceUrl("");
+      return;
+    }
     const controller = new AbortController();
-    const encodedName = encodeURIComponent(artist.name);
+    const encodedName = encodeURIComponent(artistDisplayName);
 
     const fetchWikiSummary = async () => {
       setWikiLoading(true);
@@ -218,13 +336,13 @@ export default function ArtistPage() {
         );
         if (!res.ok) throw new Error(`Wiki failed (${res.status})`);
         const data = await res.json();
-        setWikiSummary(data.extract || artist.description || "");
+        setWikiSummary(data.extract || artistDescription || "");
         setWikiSourceUrl(data.content_urls?.desktop?.page || "");
       } catch (err) {
         if (controller.signal.aborted) return;
         console.warn("Wiki summary error", err);
         setWikiError("위키 설명을 불러오지 못했습니다.");
-        setWikiSummary(artist.description || "");
+        setWikiSummary(artistDescription || "");
         setWikiSourceUrl("");
       } finally {
         if (!controller.signal.aborted) setWikiLoading(false);
@@ -233,21 +351,21 @@ export default function ArtistPage() {
 
     fetchWikiSummary();
     return () => controller.abort();
-  }, [artist]);
+  }, [artistDescription, artistDisplayName]);
 
   // ── ASCII art ─────────────────────────────────────────────────────────────
   useEffect(() => {
-    if (!artist) {
+    if (!artistDisplayName) {
       setAsciiArt("");
       return;
     }
     // Keep local fallback only; remote artii endpoint frequently fails CORS in browser.
     setAsciiArt(fallbackAscii);
-  }, [artist, fallbackAscii]);
+  }, [artistDisplayName, fallbackAscii]);
 
   useEffect(() => {
     setVisibleCount(120);
-  }, [artist]);
+  }, [artistDisplayName]);
 
   useEffect(() => {
     const shouldLoadLookup = artistArtworks.some((aw: any) => {
@@ -312,7 +430,7 @@ export default function ArtistPage() {
         id: artId,
         image: art.image || art.i || '',
         title: art.title || art.n || art.name || 'Untitled',
-        artist: art.artist || art.a || artist?.name || 'Unknown',
+        artist: art.artist || art.a || artistDisplayName || 'Unknown',
         museumName: art.museumName || art.m || '',
         url: art.url || art.u || '',
         exhibitionId: art.exhibitionId || art.e || '',
@@ -388,7 +506,7 @@ export default function ArtistPage() {
   }, [visibleArtistArtworks]);
 
   // ── Not found ─────────────────────────────────────────────────────────────
-  if (!artist) {
+  if (!artistDisplayName) {
     return <div className="artist-page__not-found">Artist not found.</div>;
   }
 
@@ -406,8 +524,8 @@ export default function ArtistPage() {
         <div className="artist-hero__eyebrow">
           <span className="artist-hero__tag">Artist</span>
           <span className="artist-hero__meta">
-            {artist.nationality}
-            {artist.birthYear ? ` · b. ${artist.birthYear}` : ''}
+            {artist?.nationality || ''}
+            {artist?.birthYear ? ` · b. ${artist.birthYear}` : ''}
           </span>
           {!isDrawingSkinArtist && (
             <div className="artist-hero__controls">
@@ -423,7 +541,7 @@ export default function ArtistPage() {
           )}
         </div>
 
-        <h1 className="artist-hero__name">{artist.name}</h1>
+        <h1 className="artist-hero__name">{artistDisplayName}</h1>
 
         <div className="artist-hero__footer">
           <span className="artist-hero__count">
@@ -453,7 +571,7 @@ export default function ArtistPage() {
             <p className="artist-bio__loading">Loading biography…</p>
           ) : (
             <p className="artist-bio__text">
-              {wikiSummary || artist.description}
+              {wikiSummary || artistDescription}
             </p>
           )}
           {wikiError && <p className="artist-bio__error">{wikiError}</p>}
@@ -461,7 +579,7 @@ export default function ArtistPage() {
           {(asciiArt || fallbackAscii) && (
             <pre
               className="artist-bio__ascii"
-              aria-label={`${artist.name} ascii art`}
+              aria-label={`${artistDisplayName} ascii art`}
             >
               {asciiArt || fallbackAscii}
             </pre>
@@ -492,7 +610,7 @@ export default function ArtistPage() {
           {artistArtworks.length === 0 ? (
             <div className="artist-gallery__empty">
               <div className="artist-gallery__empty-icon">◻</div>
-              <p>아직 등록된 작품이 없습니다.</p>
+              <p>{indexLoading ? '작품을 불러오는 중입니다…' : '아직 등록된 작품이 없습니다.'}</p>
             </div>
           ) : (
             visibleArtistArtworks.map((artwork, idx) => (
@@ -525,7 +643,7 @@ export default function ArtistPage() {
                 <div className="artist-gallery__img-wrap">
                   <img
                     src={resolveArtworkImageForCard(artwork)}
-                    alt={`${artwork.name} by ${artwork.artist}`}
+                    alt={`${artwork.name} by ${artwork.artist || artistDisplayName}`}
                     loading="lazy"
                     draggable={false}
                     onLoad={(e) => {

@@ -1,4 +1,4 @@
-import { Fragment, useState, useEffect, useRef, useCallback, useMemo, lazy, Suspense } from 'react';
+import { Fragment, useState, useEffect, useRef, useCallback, useMemo, lazy, Suspense, type CSSProperties } from 'react';
 import { createPortal } from 'react-dom';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { searchByText, preloadEncoder, onEncoderStatusChange, getEncoderStatus } from '../utils/siglipSearch';
@@ -7,11 +7,14 @@ import { getWorkerNetworkMode, shouldLimitNetwork } from '../utils/network';
 import { auth, db } from '../firebase';
 import { onAuthStateChanged } from 'firebase/auth';
 import { collection, doc, setDoc, deleteDoc, onSnapshot, getDocs } from 'firebase/firestore';
+import { createFirebaseWebPort } from '../adapters/firebaseWebAdapter';
 import { HeartOverlay } from './HeartOverlay';
 import { ProductModal } from './ProductModal';
 import ArtistWikiPanel from './ArtistWikiPanel';
+import type { RecommendationResponse, RecommendedArtwork } from '../types/Recommendation';
 import { artists } from '../data/artists';
 const ArtistDistributionMap = lazy(() => import('./ArtistDistributionMap'));
+const firebaseWebPort = createFirebaseWebPort();
 
 function buildFallbackAscii(name: string) {
     const clean = (name || 'Artist').trim() || 'Artist';
@@ -34,6 +37,14 @@ export type SearchableArtwork = {
     searchName?: string;
     searchArtist?: string;
     sourceUrl?: string;
+};
+
+type RecommendationSearchRow = Partial<RecommendedArtwork> & {
+    date?: string;
+    museumName?: string;
+    m?: string;
+    year?: string | number;
+    y?: string | number;
 };
 
 export type Museum = {
@@ -182,16 +193,22 @@ const SEARCH_FILTER_TABS: Array<{ id: SearchFilterType; label: string }> = [
     { id: 'exhibition', label: '전시' },
 ];
 
-const TRENDING_SEARCH_TERMS = [
-    { rank: 1, term: 'Bauhaus', delta: '▲3' },
-    { rank: 2, term: 'Wassily Kandinsky', delta: '▲1' },
-    { rank: 3, term: 'Vitra Design Museum', delta: '-' },
-    { rank: 4, term: 'Dieter Rams', delta: '▼2' },
-    { rank: 5, term: '바우하우스 데사우', delta: '▲4' },
-    { rank: 6, term: 'Naoshima Island', delta: '▼1' },
-    { rank: 7, term: 'MoMA New York', delta: '-' },
-    { rank: 8, term: 'Abstract Expressionism', delta: '▲2' },
-];
+type SearchTrendItem = {
+    rank: number;
+    term: string;
+    delta: string;
+    score: number;
+};
+
+type SearchTrendStat = {
+    term: string;
+    count: number;
+    lastUsedAt: number;
+};
+
+const SEARCH_TREND_STATS_KEY = 'globalSearchTrendStats:v1';
+const SEARCH_TREND_LAST_RANKS_KEY = 'globalSearchTrendLastRanks:v1';
+const MAX_TRENDING_TERMS = 8;
 
 const ARTIST_INTENT_STOP_TOKENS = new Set([
     'a', 'an', 'the', 'of', 'and', 'or', 'to', 'for', 'in', 'on', 'at', 'by', 'with',
@@ -216,6 +233,14 @@ const buildBrueckeLookupKeyCandidates = (art: any): string[] => {
     return keys.filter((k) => k && !k.startsWith('__'));
 };
 
+const sanitizeTrendTerm = (value?: string) =>
+    String(value || '')
+        .replace(/\s+/g, ' ')
+        .trim();
+
+const normalizeArtworkIdForFirestore = (value?: string) =>
+    String(value || '').trim().replace(/\//g, '__');
+
 export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigateToMuseum, museums = [], isModalOpen, inlineMode = false, drawingSkin = false }: GlobalSearchBarProps) {
     void onOpenLightbox; // Deprecated callback (kept for prop compatibility)
     const navigate = useNavigate();
@@ -239,7 +264,7 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
     const [recentSearches, setRecentSearches] = useState<string[]>(() => {
         try {
             const raw = sessionStorage.getItem('searchRecentKeywords');
-            if (!raw) return ['바우하우스', 'Vitra Museum', '현대건축', 'Paul Klee', 'László Moholy-Nagy'];
+            if (!raw) return [];
             const parsed = JSON.parse(raw);
             if (Array.isArray(parsed)) {
                 return parsed.filter((v) => typeof v === 'string').slice(0, 8);
@@ -247,8 +272,41 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
         } catch {
             // ignore
         }
-        return ['바우하우스', 'Vitra Museum', '현대건축', 'Paul Klee', 'László Moholy-Nagy'];
+        return [];
     });
+    const [searchTrendStats, setSearchTrendStats] = useState<Record<string, SearchTrendStat>>(() => {
+        try {
+            const raw = sessionStorage.getItem(SEARCH_TREND_STATS_KEY);
+            if (!raw) return {};
+            const parsed = JSON.parse(raw);
+            if (!parsed || typeof parsed !== 'object') return {};
+            const next: Record<string, SearchTrendStat> = {};
+            Object.entries(parsed).forEach(([key, value]) => {
+                if (!value || typeof value !== 'object') return;
+                const row = value as Partial<SearchTrendStat>;
+                const term = sanitizeTrendTerm(row.term || key);
+                if (!term) return;
+                next[key] = {
+                    term,
+                    count: Math.max(0, Number(row.count) || 0),
+                    lastUsedAt: Number(row.lastUsedAt) || 0,
+                };
+            });
+            return next;
+        } catch {
+            return {};
+        }
+    });
+    const previousTrendRanksRef = useRef<Record<string, number>>((() => {
+        try {
+            const raw = sessionStorage.getItem(SEARCH_TREND_LAST_RANKS_KEY);
+            if (!raw) return {};
+            const parsed = JSON.parse(raw);
+            return parsed && typeof parsed === 'object' ? parsed as Record<string, number> : {};
+        } catch {
+            return {};
+        }
+    })());
     const [totalCount, setTotalCount] = useState(0);
     const workerRef = useRef<Worker | null>(null);
     const pendingRouteArtistRef = useRef<string | null>(null);
@@ -293,6 +351,37 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
     const inputRef = useRef<HTMLInputElement>(null);
     const containerRef = useRef<HTMLDivElement>(null);
     const queryRef = useRef(query);
+    const semanticSearchRequestSeqRef = useRef(0);
+
+    const mergeResultsPreservingOrder = useCallback((prev: SearchableArtwork[], next: SearchableArtwork[]) => {
+        const nextById = new Map<string, SearchableArtwork>();
+        next.forEach((item) => {
+            const id = String(item.id || '');
+            if (!id || nextById.has(id)) return;
+            nextById.set(id, item);
+        });
+
+        const merged: SearchableArtwork[] = [];
+        const seen = new Set<string>();
+
+        prev.forEach((item) => {
+            const id = String(item.id || '');
+            if (!id || seen.has(id)) return;
+            const matched = nextById.get(id);
+            if (!matched) return;
+            merged.push(matched);
+            seen.add(id);
+        });
+
+        next.forEach((item) => {
+            const id = String(item.id || '');
+            if (!id || seen.has(id)) return;
+            merged.push(item);
+            seen.add(id);
+        });
+
+        return merged;
+    }, []);
 
     // AI Semantic Search (Transformers.js 브라우저 WASM + HF API 폴백)
     const [isAIMode, setIsAIMode] = useState(false);
@@ -311,6 +400,7 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
     const rememberSearchTerm = useCallback((raw: string) => {
         const keyword = String(raw || '').trim();
         if (!keyword) return;
+        const keywordToken = normalizeLookupText(keyword);
         setRecentSearches((prev) => {
             const merged = [keyword, ...prev.filter((v) => normalizeLookupText(v) !== normalizeLookupText(keyword))].slice(0, 8);
             try {
@@ -319,6 +409,25 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                 // ignore
             }
             return merged;
+        });
+        setSearchTrendStats((prev) => {
+            if (!keywordToken) return prev;
+            const now = Date.now();
+            const existing = prev[keywordToken];
+            const next: Record<string, SearchTrendStat> = {
+                ...prev,
+                [keywordToken]: {
+                    term: keyword,
+                    count: (existing?.count || 0) + 1,
+                    lastUsedAt: now,
+                },
+            };
+            try {
+                sessionStorage.setItem(SEARCH_TREND_STATS_KEY, JSON.stringify(next));
+            } catch {
+                // ignore
+            }
+            return next;
         });
     }, []);
 
@@ -379,6 +488,122 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
         }
         return Array.from(unique.values()).slice(0, 8);
     }, [museums, query]);
+
+    const liveTrendingTerms = useMemo<SearchTrendItem[]>(() => {
+        const scoreByToken = new Map<string, { term: string; score: number }>();
+        const exhibitionNameTokenSet = new Set<string>();
+
+        const upsertScore = (rawTerm: string, score: number) => {
+            const term = sanitizeTrendTerm(rawTerm);
+            const token = normalizeLookupText(term);
+            if (!token || token.length < 2 || !term || !Number.isFinite(score) || score <= 0) return;
+            const existing = scoreByToken.get(token);
+            if (!existing) {
+                scoreByToken.set(token, { term, score });
+                return;
+            }
+            existing.score += score;
+            if (term.length > existing.term.length) {
+                existing.term = term;
+            }
+        };
+
+        const now = Date.now();
+
+        Object.values(searchTrendStats).forEach((entry) => {
+            const recencyHours = Math.max(0, (now - Number(entry.lastUsedAt || 0)) / (1000 * 60 * 60));
+            const recencyBoost = Math.max(0, 36 - recencyHours) * 0.35;
+            const frequencyBoost = Math.max(1, Number(entry.count) || 0) * 12;
+            upsertScore(entry.term, frequencyBoost + recencyBoost);
+        });
+
+        recentSearches.forEach((term, index) => {
+            upsertScore(term, Math.max(0, 16 - index * 1.9));
+        });
+
+        museums.forEach((museum) => {
+            const museumName = sanitizeTrendTerm(museum?.name || '');
+            if (museumName) {
+                const exhibitionCount = museum?.permanentExhibitions?.length || 0;
+                upsertScore(museumName, 3 + Math.min(18, exhibitionCount * 0.8));
+            }
+            (museum?.permanentExhibitions || []).forEach((pe) => {
+                const exhibitionName = sanitizeTrendTerm(pe?.name || '');
+                if (!exhibitionName || exhibitionName.length < 3) return;
+                const exhibitionToken = normalizeLookupText(exhibitionName);
+                if (exhibitionToken) exhibitionNameTokenSet.add(exhibitionToken);
+            });
+        });
+
+        const artistCounts = new Map<string, number>();
+        filteredArtworks.forEach((artwork) => {
+            const artist = sanitizeTrendTerm(artwork.artist);
+            if (!artist || normalizeLookupText(artist) === 'unknown artist') return;
+            artistCounts.set(artist, (artistCounts.get(artist) || 0) + 1);
+        });
+
+        Array.from(artistCounts.entries())
+            .sort((a, b) => b[1] - a[1])
+            .slice(0, 10)
+            .forEach(([artist, count]) => {
+                upsertScore(artist, 4 + count * 3.2);
+            });
+
+        const artworkTitleCounts = new Map<string, number>();
+        filteredArtworks.forEach((artwork) => {
+            const title = sanitizeTrendTerm(artwork.name || artwork.searchName || '');
+            if (!title || title.length < 3) return;
+            artworkTitleCounts.set(title, (artworkTitleCounts.get(title) || 0) + 1);
+        });
+
+        Array.from(artworkTitleCounts.entries())
+            .sort((a, b) => b[1] - a[1])
+            .slice(0, 12)
+            .forEach(([title, count]) => {
+                upsertScore(title, 3 + count * 2.4);
+            });
+
+        const ranked = Array.from(scoreByToken.values())
+            .filter((item) => {
+                const token = normalizeLookupText(item.term);
+                if (!token) return false;
+                // Exclude exhibition names from live trending list.
+                if (exhibitionNameTokenSet.has(token)) return false;
+                return true;
+            })
+            .sort((a, b) => b.score - a.score)
+            .slice(0, MAX_TRENDING_TERMS);
+
+        const prevRanks = previousTrendRanksRef.current;
+        return ranked.map((item, index) => {
+            const rank = index + 1;
+            const token = normalizeLookupText(item.term);
+            const previousRank = token ? prevRanks[token] : undefined;
+            let delta = '-';
+            if (typeof previousRank === 'number') {
+                if (previousRank > rank) delta = `▲${previousRank - rank}`;
+                else if (previousRank < rank) delta = `▼${rank - previousRank}`;
+            } else if (item.score >= 20) {
+                delta = 'NEW';
+            }
+            return { rank, term: item.term, delta, score: item.score };
+        });
+    }, [filteredArtworks, museums, recentSearches, searchTrendStats]);
+
+    useEffect(() => {
+        const nextRanks: Record<string, number> = {};
+        liveTrendingTerms.forEach((item) => {
+            const token = normalizeLookupText(item.term);
+            if (!token) return;
+            nextRanks[token] = item.rank;
+        });
+        previousTrendRanksRef.current = nextRanks;
+        try {
+            sessionStorage.setItem(SEARCH_TREND_LAST_RANKS_KEY, JSON.stringify(nextRanks));
+        } catch {
+            // ignore
+        }
+    }, [liveTrendingTerms]);
 
     const artistPreviewImageByName = useMemo(() => {
         const map = new Map<string, string>();
@@ -1023,6 +1248,25 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
     const [likedArtworks, setLikedArtworks] = useState<Set<string>>(new Set());
     const [likedArtists, setLikedArtists] = useState<Set<string>>(new Set());
 
+    const toLikedArtworkIdSet = useCallback((rows: Array<{ id: string; data: () => Record<string, unknown> }>) => {
+        const ids = new Set<string>();
+        rows.forEach((row) => {
+            const docId = String(row.id || '').trim();
+            const rawArtworkId = String(row.data()?.artworkId || '').trim();
+            if (docId) ids.add(docId);
+            if (rawArtworkId) ids.add(rawArtworkId);
+            if (rawArtworkId) ids.add(normalizeArtworkIdForFirestore(rawArtworkId));
+        });
+        return ids;
+    }, []);
+
+    const isArtworkLiked = useCallback((artworkId?: string) => {
+        const rawId = String(artworkId || '').trim();
+        if (!rawId) return false;
+        const safeId = normalizeArtworkIdForFirestore(rawId);
+        return likedArtworks.has(rawId) || likedArtworks.has(safeId);
+    }, [likedArtworks]);
+
     const artistGalleryLikeKey = artistGallery?.artist ? sanitizeArtistId(artistGallery.artist) : '';
     const artistGalleryIsLiked = artistGalleryLikeKey ? likedArtists.has(artistGalleryLikeKey) : false;
 
@@ -1042,8 +1286,7 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
             if (user) {
                 if (shouldLimitNetwork()) {
                     getDocs(collection(db, `users/${user.uid}/liked_artworks`)).then((snap) => {
-                        const ids = new Set(snap.docs.map(doc => doc.id));
-                        setLikedArtworks(ids);
+                        setLikedArtworks(toLikedArtworkIdSet(snap.docs as Array<{ id: string; data: () => Record<string, unknown> }>));
                     }).catch(() => {
                         setLikedArtworks(new Set());
                     });
@@ -1057,8 +1300,7 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                 }
                 // Subscribe to liked artworks
                 unsubArt = onSnapshot(collection(db, `users/${user.uid}/liked_artworks`), (snap) => {
-                    const ids = new Set(snap.docs.map(doc => doc.id));
-                    setLikedArtworks(ids);
+                    setLikedArtworks(toLikedArtworkIdSet(snap.docs as Array<{ id: string; data: () => Record<string, unknown> }>));
                 });
                 // Subscribe to liked artists
                 unsubArtist = onSnapshot(collection(db, `users/${user.uid}/liked_artists`), (snap) => {
@@ -1075,7 +1317,7 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
             if (unsubArtist) unsubArtist();
             unsubscribe();
         };
-    }, []);
+    }, [toLikedArtworkIdSet]);
 
     // ── 취향 프로파일 업데이트 (3초 디바운스) ──────────────────────────────────
     const tasteProfileUpdateTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -1114,14 +1356,14 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                 body: JSON.stringify({ userId, likedIds, limit: 30 }),
             });
             if (!res.ok) throw new Error('recommend failed');
-            const data: { results?: { id: string; name: string; artist: string; date: string; museumName: string; image: string; score: number }[] } = await res.json();
-            const results: SearchableArtwork[] = (data.results || []).map(r => ({
-                id: r.id,
-                name: r.name,
-                artist: r.artist,
-                image: r.image,
-                date: r.date,
-                museumName: r.museumName,
+            const data = (await res.json()) as Partial<RecommendationResponse>;
+            const results: SearchableArtwork[] = (Array.isArray(data.results) ? (data.results as RecommendationSearchRow[]) : []).map(r => ({
+                id: String(r.id || ''),
+                name: String(r.name || r.title || r.n || 'Untitled'),
+                artist: String(r.artist || r.a || 'Unknown'),
+                image: String(r.image || r.i || ''),
+                date: String(r.date || r.year || r.y || ''),
+                museumName: String(r.museumName || r.m || ''),
                 exhibitionId: '',
             }));
             setRecommendResults(results);
@@ -1143,14 +1385,17 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
             return;
         }
         try {
-            const ref = doc(db, `users/${currentUser.uid}/liked_artworks/${art.id}`);
-            if (likedArtworks.has(art.id)) {
-                await deleteDoc(ref);
+            const rawArtworkId = String(art.id || '').trim();
+            const safeArtworkId = normalizeArtworkIdForFirestore(rawArtworkId);
+            const wasLiked = isArtworkLiked(rawArtworkId);
+
+            if (wasLiked) {
+                await firebaseWebPort.likes.removeLikedArtwork(currentUser.uid, rawArtworkId);
             } else {
-                await setDoc(ref, {
+                await firebaseWebPort.likes.setLikedArtwork(currentUser.uid, rawArtworkId, {
                     ...art,
-                    artworkId: art.id,
-                    id: art.id,
+                    artworkId: rawArtworkId,
+                    id: rawArtworkId,
                     title: art.name || art.n || art.title || 'Untitled',
                     artist: art.artist || art.a || 'Unknown',
                     image: art.image || art.i || '',
@@ -1161,10 +1406,22 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                 });
             }
 
+            setLikedArtworks((prev) => {
+                const next = new Set(prev);
+                if (wasLiked) {
+                    next.delete(rawArtworkId);
+                    next.delete(safeArtworkId);
+                } else {
+                    next.add(rawArtworkId);
+                    next.add(safeArtworkId);
+                }
+                return next;
+            });
+
             // 취향 프로파일 비동기 업데이트 (하트 결과 반영)
-            const newLikedIds = likedArtworks.has(art.id)
-                ? Array.from(likedArtworks).filter(id => id !== art.id)
-                : [...Array.from(likedArtworks), art.id];
+            const newLikedIds = wasLiked
+                ? Array.from(likedArtworks).filter(id => id !== rawArtworkId && id !== safeArtworkId)
+                : [...Array.from(likedArtworks), rawArtworkId];
             scheduleTasteProfileUpdate(currentUser.uid, newLikedIds);
 
         } catch (error) {
@@ -1301,6 +1558,10 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                     workerRef.current?.postMessage({ type: 'GET_ARTIST_WORKS', query: pendingRouteArtistRef.current });
                 }
             } else if (type === 'RESULTS') {
+                const incomingQuery = normalizeLookupText(String(e.data?.query || ''));
+                const activeQuery = normalizeLookupText(queryRef.current || '');
+                if (incomingQuery && incomingQuery !== activeQuery) return;
+
                 const preciseResults = (results || [])
                     .map((art: SearchableArtwork) => ({
                         ...art,
@@ -1313,7 +1574,7 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                         if (exhibitionId.includes('serpentine') || exhibitionId.includes('british-museum') || exhibitionId.includes('the-british-museum') || exhibitionId.includes('bm-collection')) return false;
                         return true;
                     });
-                setFilteredArtworks(preciseResults);
+                setFilteredArtworks((prev) => mergeResultsPreservingOrder(prev, preciseResults));
                 setSuggestedArtists(artists);
             } else if (type === 'ARTIST_WORKS') {
                 if (artist) {
@@ -1535,6 +1796,12 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
             return;
         }
 
+        const requestSeq = ++semanticSearchRequestSeqRef.current;
+        const isStaleRequest = () => {
+            if (requestSeq !== semanticSearchRequestSeqRef.current) return true;
+            return normalizeLookupText(queryRef.current || '') !== normalizeLookupText(searchQuery || '');
+        };
+
         setIsAILoading(true);
 
         try {
@@ -1588,12 +1855,17 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
             // SigLIP 서버사이드 검색: 텍스트를 Worker로 전송, 브라우저 모델 다운로드 없음
             let rawResults: any[];
             try {
-                rawResults = await searchByText(searchQuery, 100);
+                const normalizedSemanticQuery = queryNorm || searchQuery.toLowerCase();
+                rawResults = await searchByText(normalizedSemanticQuery, 100);
             } catch (err) {
                 console.warn('SigLIP search failed:', err);
-                setIsAILoading(false);
+                if (!isStaleRequest()) {
+                    setIsAILoading(false);
+                }
                 return;
             }
+
+            if (isStaleRequest()) return;
 
             // Vectorize 결과는 {id, score, e} 만 포함 — Worker idMap에서 full 메타데이터 조회
             const vectorizeIds = rawResults.map(r => r.id);
@@ -1625,6 +1897,8 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                     resolve(rawResults);
                 }, 2000);
             });
+
+            if (isStaleRequest()) return;
 
             const data = { results: enrichedResults };
 
@@ -1880,16 +2154,20 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                         const { __semanticScore, __metaReliability, ...rest } = item;
                         return rest as SearchableArtwork;
                     });
+                if (isStaleRequest()) return;
                 setAiResults(cleanedResults.slice(0, 100));
 
             } else if ((data as any).error) {
                 console.error('Search error:', (data as any).error);
+                if (isStaleRequest()) return;
                 setAiResults([]);
             } else {
+                if (isStaleRequest()) return;
                 setAiResults([]);
             }
         } catch (error: any) {
             console.error('Semantic search error:', error);
+            if (requestSeq !== semanticSearchRequestSeqRef.current) return;
             setAiResults([{
                 id: 'error-msg',
                 name: `Connection Error: ${error.message || 'Unknown'}`,
@@ -1900,10 +2178,12 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                 sourceUrl: '',
             }]);
         } finally {
-            setIsAILoading(false);
-            setIsClipLoading(false);
+            if (requestSeq === semanticSearchRequestSeqRef.current) {
+                setIsAILoading(false);
+                setIsClipLoading(false);
+            }
         }
-    }, [videoEmbedIdsReady, museums, resolveCollectionIdForMuseum, findMuseumForArtwork, knownArtistTokenSet]);
+    }, [videoEmbedIdsReady, museums, resolveCollectionIdForMuseum, findMuseumForArtwork, knownArtistTokenSet, mergeResultsPreservingOrder]);
 
     // Debounced search - artworks + museums
     useEffect(() => {
@@ -2172,6 +2452,7 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
     const handleToggleAIMode = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
         e.stopPropagation();
         preloadEncoder();
+        semanticSearchRequestSeqRef.current += 1;
         setIsAIMode((prev) => !prev);
         setAiResults([]);
         setIsRecommendMode(false);
@@ -2195,6 +2476,12 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
     }, []);
 
     const lightboxYearLabel = lightboxArtwork ? formatArtworkYear(lightboxArtwork.date) : '';
+    const resultRevealStyle = useCallback((index: number): CSSProperties => ({
+        opacity: 0,
+        transform: 'translateY(8px)',
+        animation: 'search-result-reveal 0.32s cubic-bezier(0.22, 1, 0.36, 1) forwards',
+        animationDelay: `${Math.min(index, 15) * 26}ms`,
+    }), []);
 
     // Dropdown theme colors (derived from isNavDark)
     const drawingPalette = drawingSkin ? {
@@ -2341,7 +2628,7 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                                 </div>
                                 {/* Heart - Right */}
                                 <HeartOverlay
-                                    isLiked={likedArtworks.has(lightboxArtwork.id)}
+                                    isLiked={isArtworkLiked(lightboxArtwork.id)}
                                     onToggle={(e) => toggleLikeArtwork(e, lightboxArtwork)}
                                     style={{ padding: 0, background: 'none' }}
                                     size={24}
@@ -2559,6 +2846,10 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                             box-shadow: 0 0 0 0 rgba(191,255,10,0.00), 0 0 0 rgba(153,204,0,0.00);
                         }
                     }
+                    @keyframes search-result-reveal {
+                        0% { opacity: 0; transform: translateY(8px); }
+                        100% { opacity: 1; transform: translateY(0); }
+                    }
                 `}</style>
                 
                 {/* Input */}
@@ -2714,6 +3005,14 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                                 autoComplete="off"
                                 value={query}
                                 onChange={(e) => setQuery(e.target.value)}
+                                onKeyDown={(e) => {
+                                    if (e.key === 'Enter') {
+                                        const typed = String(e.currentTarget.value || '').trim();
+                                        if (typed.length >= 2) {
+                                            rememberSearchTerm(typed);
+                                        }
+                                    }
+                                }}
                                 onFocus={() => {
                                     setIsExpanded(true);
                                 }}
@@ -3026,7 +3325,7 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                                                 }}>LIVE</span>
                                             </div>
                                             <div style={{ display: 'flex', flexDirection: 'column' }}>
-                                                {TRENDING_SEARCH_TERMS.map((item, idx) => (
+                                                {liveTrendingTerms.map((item, idx) => (
                                                     <Fragment key={item.term}>
                                                         <button
                                                             onClick={(e) => {
@@ -3069,7 +3368,7 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                                                                 {item.delta}
                                                             </span>
                                                         </button>
-                                                        {idx < TRENDING_SEARCH_TERMS.length - 1 && <div style={{ height: 1, backgroundColor: divider }} />}
+                                                        {idx < liveTrendingTerms.length - 1 && <div style={{ height: 1, backgroundColor: divider }} />}
                                                     </Fragment>
                                                 ))}
                                             </div>
@@ -3083,7 +3382,7 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                                             <div style={{ marginBottom: 12 }}>
                                                 {sectionLabel('Artists', suggestedArtists.length, isNavDark ? '#BFFF0A' : '#5A7800')}
                                                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: 7 }}>
-                                                    {suggestedArtists.slice(0, 6).map(({ artist, count }) => {
+                                                    {suggestedArtists.slice(0, 12).map(({ artist, count }) => {
                                                         const artistToken = normalizeLookupText(artist);
                                                         const previewImage = artistPreviewImageByName.get(artistToken) || artistPreviewImageAsyncByName[artistToken];
                                                         return (
@@ -3181,7 +3480,7 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                                                 {sectionLabel('Artworks', filteredArtworks.length)}
                                                 <div style={{ borderRadius: 10, overflow: 'hidden', border: `1px solid ${divider}` }}>
                                                     {filteredArtworks.slice(0, 16).map((art, idx) => (
-                                                        <Fragment key={`${art.id}-${idx}`}>
+                                                        <Fragment key={art.id}>
                                                             <button
                                                                 onClick={(e) => {
                                                                     e.stopPropagation();
@@ -3197,6 +3496,7 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                                                                     border: 'none',
                                                                     cursor: 'pointer',
                                                                     textAlign: 'left',
+                                                                    ...resultRevealStyle(idx),
                                                                 }}
                                                             >
                                                                 <div style={{ width: 52, height: 52, borderRadius: 6, overflow: 'hidden', flexShrink: 0, background: chipBg }}>
@@ -3327,7 +3627,7 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                                         style={{ borderRadius: 10, overflow: 'hidden', border: `1px solid ${divider}` }}
                                     >
                                         {aiResults.map((art, idx) => (
-                                            <Fragment key={`ai-search-${art.id}-${idx}`}>
+                                            <Fragment key={`ai-search-${art.id}`}>
                                                 <button
                                                     className="search-result-item"
                                                     onClick={(e) => {
@@ -3344,6 +3644,7 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                                                         background: cardBg,
                                                         cursor: 'pointer',
                                                         textAlign: 'left',
+                                                        ...resultRevealStyle(idx),
                                                     }}
                                                 >
                                                     <div style={{ width: 52, height: 52, borderRadius: 6, overflow: 'hidden', flexShrink: 0, background: isNavDark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.08)' }}>
@@ -3456,10 +3757,10 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                         >
                             {aiResults.map((art, idx) => (
                                 <div
-                                    key={`ai-${art.id}-${idx}`}
+                                    key={`ai-${art.id}`}
                                     className="search-result-item"
                                     onClick={(e) => { e.stopPropagation(); handleSelectArtwork(art); }}
-                                    style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '8px 16px', cursor: 'pointer', borderBottom: idx < aiResults.length - 1 ? `1px solid ${navDivider}` : 'none', transition: 'background 150ms ease' }}
+                                    style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '8px 16px', cursor: 'pointer', borderBottom: idx < aiResults.length - 1 ? `1px solid ${navDivider}` : 'none', transition: 'background 150ms ease', ...resultRevealStyle(idx) }}
                                     onMouseEnter={(e) => e.currentTarget.style.background = navItemHover}
                                     onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}
                                 >
@@ -3518,7 +3819,7 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                                         <div style={{ fontSize: 10, color: '#999' }}>{art.museumName}</div>
                                     </div>
                                     <HeartOverlay
-                                        isLiked={likedArtworks.has(art.id)}
+                                        isLiked={isArtworkLiked(art.id)}
                                         onToggle={(e) => toggleLikeArtwork(e, art)}
                                         size={16}
                                     />
@@ -3562,10 +3863,10 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                         >
                             {filteredArtworks.map((art, idx) => (
                                 <div
-                                    key={`${art.id}-${idx}`}
+                                    key={art.id}
                                     className="search-result-item"
                                     onClick={(e) => { e.stopPropagation(); handleSelectArtwork(art); }}
-                                    style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '8px 16px', cursor: 'pointer', borderBottom: idx < filteredArtworks.length - 1 ? `1px solid ${navDivider}` : 'none', transition: 'background 150ms ease' }}
+                                    style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '8px 16px', cursor: 'pointer', borderBottom: idx < filteredArtworks.length - 1 ? `1px solid ${navDivider}` : 'none', transition: 'background 150ms ease', ...resultRevealStyle(idx) }}
                                     onMouseEnter={(e) => e.currentTarget.style.background = navItemHover}
                                     onMouseLeave={(e) => e.currentTarget.style.background = 'transparent'}
                                 >
@@ -4227,7 +4528,7 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                                                                                 </svg>
                                                                             </div>
                                                                             <HeartOverlay
-                                                                                isLiked={likedArtworks.has(art.id)}
+                                                                                isLiked={isArtworkLiked(art.id)}
                                                                                 onToggle={(e) => toggleLikeArtwork(e, art)}
                                                                                 style={{ padding: 0, background: 'none' }}
                                                                                 size={isMobile ? 13 : 15}
@@ -4301,6 +4602,7 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                         image: productArtwork.image,
                         year: productArtwork.date || undefined
                     } as any}
+                    onSelectArtwork={(nextArtwork) => setProductArtwork(nextArtwork as any)}
                     onClose={() => setProductArtwork(null)}
                 />
             )}

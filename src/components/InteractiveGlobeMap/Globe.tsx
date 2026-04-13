@@ -1,6 +1,8 @@
 import { useRef, useEffect, useState, useCallback } from "react";
 import * as d3 from "d3";
 import { feature, mesh } from "topojson-client";
+import type { AppLanguage } from "../../contexts/LanguageContext";
+import { localizeCityName, localizeContinentName, localizeCountryName } from "../../i18n/geoLocalization";
 
 // ─── Types ─────────────────────────────────────────────────
 import type { Theme, CityMarker } from "./types";
@@ -319,6 +321,7 @@ function smoothGeometry(geometry: any): any {
 
 interface GlobeProps {
   cities: CityMarker[];
+  language?: AppLanguage;
   theme?: Theme;
   selectedCity: CityMarker | null;
   onSelectCity: (city: CityMarker | null) => void;
@@ -333,6 +336,7 @@ interface GlobeProps {
 
 export function Globe({
   cities,
+  language = "ko",
   theme = "dark",
   selectedCity,
   onSelectCity,
@@ -459,6 +463,8 @@ export function Globe({
 
   const themeRef = useRef<Theme>(theme);
   useEffect(() => { themeRef.current = theme; }, [theme]);
+  const languageRef = useRef<AppLanguage>(language);
+  useEffect(() => { languageRef.current = language; }, [language]);
 
   const hoveredRef = useRef<CityMarker | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -762,11 +768,12 @@ export function Globe({
                 currentOpRef.set(name, op);
 
                 const fontSize = name === "Asia" ? 12 : 10;
+                const continentLabel = localizeContinentName(name, languageRef.current);
                 ctx.font = `600 ${fontSize}px "Space Grotesk", sans-serif`;
                 ctx.fillStyle = `rgba(${R},${G},${B},0.85)`;
                 ctx.textAlign = "center";
                 ctx.textBaseline = "middle";
-                ctx.fillText(name.toUpperCase(), p[0], p[1] - (op * 4)); // float up slightly
+                ctx.fillText(languageRef.current === "ko" ? continentLabel : continentLabel.toUpperCase(), p[0], p[1] - (op * 4));
 
                 ctx.font = `400 ${fontSize - 2}px "Space Grotesk", sans-serif`;
                 ctx.fillStyle = `rgba(${R},${G},${B},${0.45 + op * 0.25})`;
@@ -812,7 +819,8 @@ export function Globe({
 
               let shouldShowName = isHovered || showDenseNames || nameOp > 0.03;
               if (shouldShowName) {
-                const label = name.toUpperCase();
+                const localizedCountry = localizeCountryName(name, languageRef.current);
+                const label = languageRef.current === "ko" ? localizedCountry : localizedCountry.toUpperCase();
                 ctx.font = `600 12px "Space Grotesk", sans-serif`;
                 const tw = ctx.measureText(label).width;
                 const box = { x1: p[0] - tw / 2 - 2, y1: p[1] - 14, x2: p[0] + tw / 2 + 2, y2: p[1] - 2 };
@@ -940,7 +948,8 @@ export function Globe({
             ctx.textBaseline = "middle";
 
             const offset = isActive ? 12 : 8;
-            const textCity = m.city.toUpperCase();
+            const localizedCity = localizeCityName(m.city, languageRef.current);
+            const textCity = languageRef.current === "ko" ? localizedCity : localizedCity.toUpperCase();
             const tw = ctx.measureText(textCity).width;
             const mw = venueCount > 1 ? ctx.measureText(`${venueCount}`).width + 5 : 0;
             const tw_total = tw + mw;
@@ -1050,10 +1059,11 @@ export function Globe({
       const hovCountry = hoveredCountryRef.current;
       let hd: { level: string; label: string; count: number } | null = null;
       if (hovCity) {
+         const localizedCity = localizeCityName(hovCity.city, languageRef.current);
          if (hovCity.venues.length === 1) {
            hd = { level: 'VENUE', label: hovCity.venues[0].name, count: hovCity.artworkCount || 0 };
          } else {
-           hd = { level: 'CITY', label: hovCity.city, count: hovCity.artworkCount || 0 };
+           hd = { level: 'CITY', label: localizedCity, count: hovCity.artworkCount || 0 };
          }
       } else if (hovCountry && mousePosRef.current.x > 0 && !isDraggingRef.current) {
          const name = COUNTRY_NAMES[String(hovCountry.id)];
@@ -1061,10 +1071,10 @@ export function Globe({
            const continent = CONTINENT_MAP[name];
            if (!countryClusterMode && continent && stats.continentTotals.has(continent)) {
              const arts = stats.continentArtworks.get(continent) || 0;
-             hd = { level: 'CONTINENT', label: continent, count: arts };
+             hd = { level: 'CONTINENT', label: localizeContinentName(continent, languageRef.current), count: arts };
            } else if (countryClusterMode && activeContinent === continent && stats.countryTotals.has(name)) {
              const arts = stats.countryArtworks.get(name) || 0;
-             hd = { level: 'COUNTRY', label: name, count: arts };
+             hd = { level: 'COUNTRY', label: localizeCountryName(name, languageRef.current), count: arts };
            }
          }
       }

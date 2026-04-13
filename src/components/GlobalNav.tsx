@@ -48,6 +48,17 @@ export const GlobalNav: React.FC<GlobalNavProps> = ({ isAdmin, isModalOpen, sear
     }, []);
 
     const currentPath = location.pathname;
+    const shouldHideLegacyNav = (
+        currentPath === '/' ||
+        currentPath.startsWith('/interactive') ||
+        currentPath.startsWith('/collection') ||
+        currentPath.startsWith('/community') ||
+        currentPath.startsWith('/mypage') ||
+        currentPath.startsWith('/ai') ||
+        currentPath.startsWith('/search') ||
+        currentPath.startsWith('/exhibitions')
+    );
+    if (shouldHideLegacyNav) return null;
     const isDrawingSkin = skin === 'drawing';
     // Ref to always access the current skin value inside effects
     const skinRef = useRef(skin);

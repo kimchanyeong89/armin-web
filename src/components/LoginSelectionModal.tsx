@@ -4,6 +4,7 @@ import { auth } from '../firebase';
 import { GoogleAuthProvider, signInWithPopup, signInAnonymously } from 'firebase/auth';
 import { getFirestore, doc, getDoc, setDoc } from 'firebase/firestore';
 import { useNavigate } from 'react-router-dom';
+import { isMobileAppContainer, requestExternalMobileLogin } from '../utils/mobileAppAuth';
 
 interface LoginSelectionModalProps {
     onClose: () => void;
@@ -17,9 +18,11 @@ declare global {
 
 const LoginSelectionModal: React.FC<LoginSelectionModalProps> = ({ onClose }) => {
     const navigate = useNavigate();
+    const mobileAppContainer = isMobileAppContainer();
 
     // Initialize Naver Login
     useEffect(() => {
+        if (mobileAppContainer) return;
         if (!window.naver) return;
 
         const naverLogin = new window.naver.LoginWithNaverId({
@@ -76,10 +79,16 @@ const LoginSelectionModal: React.FC<LoginSelectionModalProps> = ({ onClose }) =>
             }
         });
 
-    }, [navigate, onClose]);
+    }, [mobileAppContainer, navigate, onClose]);
 
     const handleGoogleLogin = async () => {
         try {
+            if (mobileAppContainer) {
+                window.dispatchEvent(new Event('auth:request-login'));
+                onClose();
+                return;
+            }
+
             const provider = new GoogleAuthProvider();
             const result = await signInWithPopup(auth, provider);
             const user = result.user;
@@ -163,6 +172,12 @@ const LoginSelectionModal: React.FC<LoginSelectionModalProps> = ({ onClose }) =>
 
                     <button
                         onClick={() => {
+                            if (mobileAppContainer) {
+                                requestExternalMobileLogin('naver');
+                                onClose();
+                                return;
+                            }
+
                             const btn = document.getElementById('naverIdLogin')?.firstChild as HTMLElement;
                             if (btn) btn.click();
                         }}
@@ -202,7 +217,9 @@ const LoginSelectionModal: React.FC<LoginSelectionModalProps> = ({ onClose }) =>
                 </button>
 
                 <p style={{ fontSize: 11, color: '#999', marginTop: 12 }}>
-                    * 네이버 로그인을 위해서는 Client ID 설정이 필요합니다.
+                    {mobileAppContainer
+                        ? '* 앱에서는 내부 로그인 화면으로 이동해 인증을 진행합니다.'
+                        : '* 네이버 로그인을 위해서는 Client ID 설정이 필요합니다.'}
                 </p>
             </div>
         </div>

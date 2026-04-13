@@ -25,7 +25,8 @@ export const HeartOverlay: React.FC<HeartOverlayProps> = ({ isLiked, onToggle, s
                 alignItems: 'center',
                 justifyContent: 'center',
                 transition: 'transform 0.1s',
-                zIndex: 20,
+                position: 'relative',
+                zIndex: 2,
                 ...style
             }}
             title={isLiked ? "Unlike" : "Like"}

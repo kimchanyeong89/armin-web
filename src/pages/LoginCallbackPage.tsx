@@ -5,6 +5,16 @@ import { auth } from '../firebase';
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { getFirestore, doc, setDoc, getDoc } from 'firebase/firestore';
 
+/** 모바일 앱 WebView 또는 외부 브라우저 flow에서 실행되는지 확인 */
+function isMobileAppFlow(): boolean {
+  if (typeof window === 'undefined') return false;
+  const q = new URLSearchParams(window.location.search);
+  if (q.get('mobileApp') === '1') return true;
+  if (document.documentElement.getAttribute('data-mobile-app') === '1') return true;
+  const bridge = (window as { ReactNativeWebView?: { postMessage?: unknown } }).ReactNativeWebView;
+  return !!(bridge?.postMessage);
+}
+
 declare global {
     interface Window {
         naver: any;
@@ -115,7 +125,15 @@ const LoginCallbackPage: React.FC = () => {
                             } catch (e) { }
                         }
 
-                        navigate('/');
+                        // 모바일 앱에서 외부 브라우저로 실행된 경우, deep link로 앱으로 복귀
+                        if (isMobileAppFlow()) {
+                            const q = new URLSearchParams(window.location.search);
+                            const provider = q.get('provider') || 'naver';
+                            const deepLink = `com.armin.mobile://auth-complete?provider=${encodeURIComponent(provider)}&alreadySignedIn=1`;
+                            window.location.replace(deepLink);
+                        } else {
+                            navigate('/');
+                        }
                     } catch (error: any) {
                         console.error("Firebase Login Error", error);
                         alert("로그인 처리 중 오류 발생: " + error.message);
