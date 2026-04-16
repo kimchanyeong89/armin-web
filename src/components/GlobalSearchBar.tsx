@@ -3742,18 +3742,26 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                                                                                 src={getSearchThumbnail(getSafeImageUrl(previewImage))}
                                                                                 alt=""
                                                                                 style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                                                                                data-src-r2={previewImage}
                                                                                 data-fallback={exhibitionPreviewFallbackById[item.exhibitionId] || ''}
                                                                                 onError={(e) => {
-                                                                                    const fb = e.currentTarget.getAttribute('data-fallback');
-                                                                                    e.currentTarget.removeAttribute('data-fallback');
-                                                                                    if (fb) {
-                                                                                        e.currentTarget.src = getSearchThumbnail(getSafeImageUrl(fb));
+                                                                                    const img = e.currentTarget;
+                                                                                    const r2 = img.getAttribute('data-src-r2');
+                                                                                    const fb = img.getAttribute('data-fallback');
+                                                                                    img.removeAttribute('data-src-r2');
+                                                                                    img.removeAttribute('data-fallback');
+                                                                                    // 1st fallback: try direct R2 URL (bypass wsrv.nl)
+                                                                                    if (r2 && img.src !== r2) {
+                                                                                        img.src = r2;
+                                                                                    // 2nd fallback: try second collection image
+                                                                                    } else if (fb) {
+                                                                                        img.src = getSearchThumbnail(getSafeImageUrl(fb));
                                                                                     } else {
-                                                                                        e.currentTarget.onerror = null;
-                                                                                        e.currentTarget.src = FALLBACK_IMG;
+                                                                                        img.onerror = null;
+                                                                                        img.src = FALLBACK_IMG;
                                                                                     }
                                                                                 }}
-                                                                                loading="lazy"
+                                                                                loading="eager"
                                                                             />
                                                                         ) : (
                                                                             <div style={{ width: '100%', height: '100%', display: 'grid', placeItems: 'center', color: faintText, fontSize: 10 }}>EXH</div>
