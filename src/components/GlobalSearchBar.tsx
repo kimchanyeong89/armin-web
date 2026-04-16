@@ -393,9 +393,39 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
     const [artistPreviewImageAsyncByName, setArtistPreviewImageAsyncByName] = useState<Record<string, string>>({});
     const [museumPreviewImageAsyncById, setMuseumPreviewImageAsyncById] = useState<Record<string, string>>({});
     const [exhibitionPreviewImageAsyncById, setExhibitionPreviewImageAsyncById] = useState<Record<string, string>>({});
+    const [exhibitionPreviewFallbackById, setExhibitionPreviewFallbackById] = useState<Record<string, string>>({});
     const artistPreviewFetchInFlightRef = useRef<Set<string>>(new Set());
     const collectionPreviewByFileRef = useRef<Map<string, string>>(new Map());
-    const collectionPreviewFetchInFlightRef = useRef<Set<string>>(new Set());
+    const collectionSecondPreviewByFileRef = useRef<Map<string, string>>(new Map());
+    const collectionPreviewFetchInFlightRef = useRef<Map<string, Promise<string>>>(new Map());
+    // Stores exhibition IDs requested before worker finishes loading allArtworks,
+    // so GET_EXHIBITION_SAMPLE can be retried once LOAD_COMPLETE fires.
+    const pendingExhibitionIdsRef = useRef<string[]>([]);
+    // Whether exhibition-previews.json has been loaded
+    const exhibitionPreviewsLoadedRef = useRef(false);
+
+    // ── Pre-populate exhibition preview images from static JSON ───────────────
+    // exhibition-previews.json is pre-built at dev/build time with the first image
+    // URL for every collection. This eliminates runtime Range-fetch and ensures
+    // thumbnails appear immediately — no worker, no network delay.
+    useEffect(() => {
+        if (exhibitionPreviewsLoadedRef.current) return;
+        exhibitionPreviewsLoadedRef.current = true;
+        fetch('/data/exhibition-previews.json')
+            .then(r => r.ok ? r.json() : null)
+            .then((map: Record<string, string> | null) => {
+                if (!map) return;
+                setExhibitionPreviewImageAsyncById(prev => {
+                    const merged: Record<string, string> = { ...map };
+                    // Don't overwrite existing values (e.g., from worker)
+                    for (const [k, v] of Object.entries(prev)) {
+                        if (v) merged[k] = v;
+                    }
+                    return merged;
+                });
+            })
+            .catch(() => {/* silently ignore */});
+    }, []);
 
     const rememberSearchTerm = useCallback((raw: string) => {
         const keyword = String(raw || '').trim();
@@ -627,11 +657,28 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
     const museumIdByName = useMemo(() => {
         const map = new Map<string, string>();
         for (const museum of museums) {
-            const key = normalizeLookupText(museum?.name || '');
-            if (key) map.set(key, museum.id);
+            // Primary key: name only (for basic lookups)
+            const nameKey = normalizeLookupText(museum?.name || '');
+            if (nameKey && !map.has(nameKey)) map.set(nameKey, museum.id);
+            // Secondary key: name+country for disambiguation (e.g. NPG UK vs USA)
+            const countryKey = nameKey && museum.country
+                ? `${nameKey}||${normalizeLookupText(museum.country)}`
+                : '';
+            if (countryKey) map.set(countryKey, museum.id);
         }
         return map;
     }, [museums]);
+
+    /** Resolve museum ID preferring name+country match, falling back to name-only */
+    const resolveMuseumId = useCallback((museumName: string, country?: string) => {
+        const nameKey = normalizeLookupText(museumName);
+        if (country) {
+            const countryKey = `${nameKey}||${normalizeLookupText(country)}`;
+            const byCountry = museumIdByName.get(countryKey);
+            if (byCountry) return byCountry;
+        }
+        return museumIdByName.get(nameKey);
+    }, [museumIdByName]);
 
     const museumPreviewImageById = useMemo(() => {
         const map = new Map<string, string>();
@@ -680,14 +727,15 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
 
         for (const item of matchedExhibitions) {
             if (map.has(item.exhibitionId)) continue;
-            const museumId = museumIdByName.get(normalizeLookupText(item.museumName));
+            // Use country-aware museum lookup to avoid cross-museum collisions (e.g. NPG UK vs USA)
+            const museumId = resolveMuseumId(item.museumName, item.country);
             if (!museumId) continue;
             const museumImg = museumPreviewImageById.get(museumId);
             if (museumImg) map.set(item.exhibitionId, museumImg);
         }
 
         return map;
-    }, [filteredArtworks, matchedExhibitions, museumIdByName, museumPreviewImageById]);
+    }, [filteredArtworks, matchedExhibitions, resolveMuseumId, museumPreviewImageById]);
 
     const resolveCollectionFileByExhibitionId = useCallback((exhibitionId: string, museumIdHint?: string) => {
         const targetToken = normalizeToken(exhibitionId);
@@ -740,30 +788,100 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
         const file = String(collectionFile || '').trim();
         if (!file) return '';
 
+        // Synchronous cache hit
         if (collectionPreviewByFileRef.current.has(file)) {
             return collectionPreviewByFileRef.current.get(file) || '';
         }
 
-        if (collectionPreviewFetchInFlightRef.current.has(file)) {
-            return '';
-        }
+        // In-flight: return the SAME promise so all concurrent callers get the result
+        const existing = collectionPreviewFetchInFlightRef.current.get(file);
+        if (existing) return existing;
 
-        collectionPreviewFetchInFlightRef.current.add(file);
-        try {
-            const res = await fetch(`/data/${file}`);
-            if (!res.ok) return '';
-            const payload = await res.json();
-            const image = pickFirstCollectionImage(payload);
-            if (image) {
+        const promise = (async () => {
+            try {
+                // Fetch only the first 32KB to quickly extract the first image URL,
+                // instead of downloading potentially 10–50MB collection files.
+                const res = await fetch(`/data/${file}`, {
+                    headers: { 'Range': 'bytes=0-32767' },
+                });
+                // Range responses return 206; full responses (small files) return 200
+                if (!res.ok && res.status !== 206) {
+                    collectionPreviewByFileRef.current.set(file, '');
+                    return '';
+                }
+
+                const text = await res.text();
+
+                // Try full JSON parse first (works if the file fits in 32KB or server returns full)
+                let image = '';
+                let secondImage = '';
+                try {
+                    const payload = JSON.parse(text);
+                    // Pick first 2 valid images from the collection.
+                    // Priority: image > imageUrl > thumbnailUrl > i > thumbnail.*
+                    // We also separately grab thumbnailUrl to use as a fallback when
+                    // the primary imageUrl (R2) is the same URL but fails in WebView.
+                    const list = Array.isArray(payload)
+                        ? payload
+                        : (payload?.artworks || payload?.objects || payload?.items || payload?.results || []);
+                    for (const entry of Array.isArray(list) ? list : []) {
+                        const primary = normalizeKnownBrokenImageUrl(
+                            entry?.image || entry?.imageUrl || entry?.i
+                        );
+                        const fallback = normalizeKnownBrokenImageUrl(
+                            entry?.thumbnailUrl || entry?.thumbnail?.url || entry?.thumbnail?.src || entry?.thumbnail
+                        );
+                        if (primary && !image) {
+                            image = primary;
+                            // Use a different-domain fallback (thumbnailUrl) so if the CDN
+                            // that serves `image` is blocked by the WebView, the IIIF-based
+                            // thumbnailUrl (proxied through wsrv.nl) still loads.
+                            if (fallback && fallback !== primary) secondImage = fallback;
+                        } else if (!image && fallback) {
+                            image = fallback;
+                        } else if (image && !secondImage) {
+                            const alt = primary || fallback;
+                            if (alt && alt !== image) { secondImage = alt; break; }
+                        }
+                        if (image && secondImage) break;
+                    }
+                } catch {
+                    // Partial JSON — extract first two image URLs via regex.
+                    const patterns = [
+                        /"(?:image|imageUrl|primaryImageSmall|primaryImage|img)\s*"\s*:\s*"([^"]{10,})"/g,
+                        /"thumbnailUrl"\s*:\s*"(https?:\/\/[^"]{8,})"/g,
+                        /"i"\s*:\s*"(https?:\/\/[^"]{8,})"/g,
+                        /"thumbnail"\s*:\s*\{[^}]*"url"\s*:\s*"([^"]{10,})"/g,
+                    ];
+                    for (const pat of patterns) {
+                        const matches = [...text.matchAll(pat)];
+                        for (const m of matches) {
+                            if (m[1]) {
+                                const candidate = normalizeKnownBrokenImageUrl(m[1]);
+                                if (candidate) {
+                                    if (!image) image = candidate;
+                                    else if (candidate !== image) { secondImage = candidate; break; }
+                                }
+                            }
+                        }
+                        if (image && secondImage) break;
+                    }
+                }
+
+                // Cache both images so we don't retry
                 collectionPreviewByFileRef.current.set(file, image);
+                collectionSecondPreviewByFileRef.current.set(file, secondImage);
                 return image;
+            } catch {
+                collectionPreviewByFileRef.current.set(file, '');
+                return '';
+            } finally {
+                collectionPreviewFetchInFlightRef.current.delete(file);
             }
-            return '';
-        } catch {
-            return '';
-        } finally {
-            collectionPreviewFetchInFlightRef.current.delete(file);
-        }
+        })();
+
+        collectionPreviewFetchInFlightRef.current.set(file, promise);
+        return promise;
     }, [pickFirstCollectionImage]);
 
     const fetchSemanticPreviewImage = useCallback(async (keyword: string) => {
@@ -828,39 +946,87 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
         };
     }, [artistPreviewImageAsyncByName, artistPreviewImageByName, isSearchPageMode, query, suggestedArtists]);
 
+    // ── Worker-based fast exhibition image lookup ──────────────────────────────
+    // When matchedExhibitions changes, immediately ask the search worker to return
+    // one sample image per exhibitionId from its in-memory allArtworks array.
+    // This is O(n) in-memory — no network I/O — and is much faster than Range-fetching
+    // collection JSON files. Falls back to the Range-fetch effect below for slow/cold cases.
     useEffect(() => {
-        if (!isSearchPageMode || !isExpanded) return;
+        if (matchedExhibitions.length === 0) return;
 
-        let cancelled = false;
+        const missingIds = matchedExhibitions
+            .map(item => item.exhibitionId)
+            .filter(id => id && !exhibitionPreviewImageAsyncById[id]);
+
+        if (missingIds.length === 0) return;
+
+        // Always update the pending list (for retry on LOAD_COMPLETE)
+        pendingExhibitionIdsRef.current = missingIds;
+
+        if (workerRef.current) {
+            workerRef.current.postMessage({
+                type: 'GET_EXHIBITION_SAMPLE',
+                exhibitionIds: missingIds,
+            });
+        }
+    }, [matchedExhibitions, exhibitionPreviewImageAsyncById]);
+
+    useEffect(() => {
+        // Fetch preview images for any matched exhibitions/museums that don't yet have one.
+        // NOTE: Do NOT include exhibitionPreviewImageAsyncById / museumPreviewImageAsyncById in
+        // deps — those are the values we're writing to, and including them causes an infinite loop.
+        if (matchedExhibitions.length === 0 && filteredMuseums.length === 0) return;
+
+        // Use a per-task cancel set keyed by exhibitionId/museumId so that a later
+        // effect re-run (triggered by filteredArtworks changes) does NOT cancel
+        // still-pending fetches that started in an earlier run.
+        const cancelledIds = new Set<string>();
         const tasks: Array<Promise<void>> = [];
 
         for (const museum of filteredMuseums.slice(0, 8)) {
-            if (museumPreviewImageById.has(museum.id) || museumPreviewImageAsyncById[museum.id]) continue;
+            if (museumPreviewImageById.has(museum.id)) continue;
             const collectionFile = (museum.permanentExhibitions || [])
                 .map((pe) => String((pe as any)?.collectionFile || '').trim())
                 .find(Boolean);
+            // Skip if we already have a cached result for this file
+            if (collectionFile && collectionPreviewByFileRef.current.has(collectionFile)) continue;
 
+            const id = museum.id;
             tasks.push((async () => {
-                const image = collectionFile
+                const collectionImage = collectionFile
                     ? await fetchCollectionPreviewImage(collectionFile)
-                    : await fetchSemanticPreviewImage(`${museum.name} ${museum.country || ''}`);
-                if (!cancelled && image) {
-                    setMuseumPreviewImageAsyncById((prev) => (prev[museum.id] ? prev : { ...prev, [museum.id]: image }));
+                    : '';
+                const image = collectionImage
+                    || await fetchSemanticPreviewImage(`${museum.name} ${museum.country || ''}`);
+                if (!cancelledIds.has(id) && image) {
+                    setMuseumPreviewImageAsyncById((prev) => (prev[id] ? prev : { ...prev, [id]: image }));
                 }
             })());
         }
 
         for (const item of matchedExhibitions.slice(0, 10)) {
-            if (exhibitionPreviewImageById.has(item.exhibitionId) || exhibitionPreviewImageAsyncById[item.exhibitionId]) continue;
-            const museumId = museumIdByName.get(normalizeLookupText(item.museumName));
+            if (exhibitionPreviewImageById.has(item.exhibitionId)) continue;
+            // Use country-aware museum resolution
+            const museumId = resolveMuseumId(item.museumName, item.country);
             const collectionFile = resolveCollectionFileByExhibitionId(item.exhibitionId, museumId);
 
+            const id = item.exhibitionId;
             tasks.push((async () => {
-                const image = collectionFile
+                const collectionImage = collectionFile
                     ? await fetchCollectionPreviewImage(collectionFile)
-                    : await fetchSemanticPreviewImage(`${item.exhibitionName} ${item.museumName}`);
-                if (!cancelled && image) {
-                    setExhibitionPreviewImageAsyncById((prev) => (prev[item.exhibitionId] ? prev : { ...prev, [item.exhibitionId]: image }));
+                    : '';
+                const image = collectionImage
+                    || await fetchSemanticPreviewImage(`${item.exhibitionName} ${item.museumName}`);
+                if (!cancelledIds.has(id) && image) {
+                    // Always overwrite — collection-file images take priority over stale R2 cache
+                    setExhibitionPreviewImageAsyncById((prev) => (prev[id] === image ? prev : { ...prev, [id]: image }));
+                }
+                // Store second image as onError fallback
+                if (!cancelledIds.has(id) && collectionFile) {
+                    const second = collectionSecondPreviewByFileRef.current.get(collectionFile) || '';
+                    if (second) {
+                        setExhibitionPreviewFallbackById((prev) => (prev[id] === second ? prev : { ...prev, [id]: second }));
+                    }
                 }
             })());
         }
@@ -870,22 +1036,24 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
         }
 
         return () => {
-            cancelled = true;
+            // Mark this batch as cancelled so stale results are ignored.
+            // We cancel per-ID so only the outdated batch is discarded,
+            // not still-pending fetches from a newer effect run.
+            for (const museum of filteredMuseums) cancelledIds.add(museum.id);
+            for (const item of matchedExhibitions) cancelledIds.add(item.exhibitionId);
         };
     }, [
-        exhibitionPreviewImageAsyncById,
+        // Stable: only re-run when the matched set changes, not when async state updates
         exhibitionPreviewImageById,
         fetchCollectionPreviewImage,
         fetchSemanticPreviewImage,
         filteredMuseums,
-        isExpanded,
-        isSearchPageMode,
         matchedExhibitions,
-        museumIdByName,
-        museumPreviewImageAsyncById,
         museumPreviewImageById,
         resolveCollectionFileByExhibitionId,
+        resolveMuseumId,
     ]);
+
 
     const showArtistsInSearchMode = searchFilter === 'all' || searchFilter === 'artist';
     const showMuseumsInSearchMode = searchFilter === 'all' || searchFilter === 'museum';
@@ -1557,6 +1725,14 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                 if (pendingRouteArtistRef.current) {
                     workerRef.current?.postMessage({ type: 'GET_ARTIST_WORKS', query: pendingRouteArtistRef.current });
                 }
+                // Once the full artwork index is loaded, re-request exhibition sample images
+                // so that exhibitions found before data load now get images.
+                if (pendingExhibitionIdsRef.current.length > 0) {
+                    workerRef.current?.postMessage({
+                        type: 'GET_EXHIBITION_SAMPLE',
+                        exhibitionIds: pendingExhibitionIdsRef.current,
+                    });
+                }
             } else if (type === 'RESULTS') {
                 const incomingQuery = normalizeLookupText(String(e.data?.query || ''));
                 const activeQuery = normalizeLookupText(queryRef.current || '');
@@ -1575,7 +1751,7 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                         return true;
                     });
                 setFilteredArtworks((prev) => mergeResultsPreservingOrder(prev, preciseResults));
-                setSuggestedArtists(artists);
+                setSuggestedArtists((artists || []).filter((a: any) => a.count >= 5));
             } else if (type === 'ARTIST_WORKS') {
                 if (artist) {
                     const preciseWorks = (works || [])
@@ -1604,6 +1780,18 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                     } catch (e) {
                         console.error('Failed to save artistGallery to sessionStorage', e);
                     }
+                }
+            } else if (type === 'EXHIBITION_SAMPLE_RESULT') {
+                // Worker returned one sample image per exhibitionId from in-memory allArtworks.
+                const result: Record<string, string> = e.data?.result || {};
+                if (Object.keys(result).length > 0) {
+                    setExhibitionPreviewImageAsyncById(prev => {
+                        const updates: Record<string, string> = {};
+                        for (const [id, img] of Object.entries(result)) {
+                            if (!prev[id] && img) updates[id] = img as string;
+                        }
+                        return Object.keys(updates).length > 0 ? { ...prev, ...updates } : prev;
+                    });
                 }
             } else if (type === 'ERROR') {
                 console.error('Worker error:', e.data.error);
@@ -2409,8 +2597,12 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
         } catch {
             // ignore
         }
-        onNavigateToMuseum?.({ id: museum.id, name: museum.name }, museum.permanentExhibitions?.[0]?.id);
-    }, [onNavigateToMuseum, rememberSearchTerm]);
+        if (onNavigateToMuseum) {
+            onNavigateToMuseum({ id: museum.id, name: museum.name }, museum.permanentExhibitions?.[0]?.id);
+        } else {
+            navigate(`/interactive/world/city/${encodeURIComponent(museum.id)}`);
+        }
+    }, [onNavigateToMuseum, rememberSearchTerm, navigate]);
 
     const handleSelectExhibition = useCallback((exhibitionId: string, exhibitionName: string) => {
         rememberSearchTerm(queryRef.current || exhibitionName);
@@ -2422,7 +2614,7 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
         } catch {
             // ignore
         }
-        navigate(`/collection/${encodeURIComponent(exhibitionId)}`);
+        navigate(`/interactive/world/city/${encodeURIComponent(exhibitionId)}`);
     }, [navigate, rememberSearchTerm]);
 
     const closeArtistGallery = useCallback(() => {
@@ -3216,13 +3408,13 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                 >
                     {isExpanded && isSearchPageMode && !isAIMode && !isRecommendMode && (() => {
                         const hasQuery = query.trim().length > 0;
-                        const pageText = isNavDark ? 'rgba(255,255,255,0.88)' : 'rgba(0,0,0,0.88)';
-                        const medText = isNavDark ? 'rgba(255,255,255,0.56)' : 'rgba(0,0,0,0.56)';
-                        const lowText = isNavDark ? 'rgba(255,255,255,0.36)' : 'rgba(0,0,0,0.36)';
-                        const faintText = isNavDark ? 'rgba(255,255,255,0.18)' : 'rgba(0,0,0,0.18)';
-                        const divider = isNavDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.07)';
-                        const chipBg = isNavDark ? 'rgba(255,255,255,0.07)' : 'rgba(0,0,0,0.05)';
-                        const cardBg = isNavDark ? 'rgba(255,255,255,0.04)' : 'rgba(0,0,0,0.03)';
+                        const pageText = isNavDark ? 'rgba(255,255,255,0.94)' : 'rgba(0,0,0,0.90)';
+                        const medText = isNavDark ? 'rgba(255,255,255,0.72)' : 'rgba(0,0,0,0.60)';
+                        const lowText = isNavDark ? 'rgba(255,255,255,0.58)' : 'rgba(0,0,0,0.48)';
+                        const faintText = isNavDark ? 'rgba(255,255,255,0.40)' : 'rgba(0,0,0,0.32)';
+                        const divider = isNavDark ? 'rgba(255,255,255,0.11)' : 'rgba(0,0,0,0.09)';
+                        const chipBg = isNavDark ? 'rgba(255,255,255,0.10)' : 'rgba(0,0,0,0.06)';
+                        const cardBg = isNavDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.04)';
 
                         const sectionLabel = (label: string, count: number, color?: string) => (
                             <div style={{ display: 'flex', alignItems: 'center', gap: 7, paddingTop: 2, paddingBottom: 8, marginTop: 6 }}>
@@ -3479,7 +3671,7 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                                             <div style={{ marginBottom: 12 }}>
                                                 {sectionLabel('Artworks', filteredArtworks.length)}
                                                 <div style={{ borderRadius: 10, overflow: 'hidden', border: `1px solid ${divider}` }}>
-                                                    {filteredArtworks.slice(0, 16).map((art, idx) => (
+                                                    {filteredArtworks.slice(0, 50).map((art, idx) => (
                                                         <Fragment key={art.id}>
                                                             <button
                                                                 onClick={(e) => {
@@ -3511,7 +3703,7 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                                                                 </div>
                                                                 <span style={{ fontSize: 12, color: faintText }}>ⓘ</span>
                                                             </button>
-                                                            {idx < Math.min(filteredArtworks.length, 16) - 1 && <div style={{ height: 1, backgroundColor: divider }} />}
+                                                            {idx < Math.min(filteredArtworks.length, 50) - 1 && <div style={{ height: 1, backgroundColor: divider }} />}
                                                         </Fragment>
                                                     ))}
                                                 </div>
@@ -3550,7 +3742,17 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                                                                                 src={getSearchThumbnail(getSafeImageUrl(previewImage))}
                                                                                 alt=""
                                                                                 style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                                                                                onError={handleImageError}
+                                                                                data-fallback={exhibitionPreviewFallbackById[item.exhibitionId] || ''}
+                                                                                onError={(e) => {
+                                                                                    const fb = e.currentTarget.getAttribute('data-fallback');
+                                                                                    e.currentTarget.removeAttribute('data-fallback');
+                                                                                    if (fb) {
+                                                                                        e.currentTarget.src = getSearchThumbnail(getSafeImageUrl(fb));
+                                                                                    } else {
+                                                                                        e.currentTarget.onerror = null;
+                                                                                        e.currentTarget.src = FALLBACK_IMG;
+                                                                                    }
+                                                                                }}
                                                                                 loading="lazy"
                                                                             />
                                                                         ) : (

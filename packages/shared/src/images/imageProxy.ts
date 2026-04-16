@@ -59,12 +59,9 @@ export function getWeservUrl(
 
   if (url.includes('deutsche-digitale-bibliothek.de')) return url;
 
-  if (
-    url.includes('r2.dev') ||
-    url.includes('pub-396fad1f96754c2f816f260faf970e63')
-  ) {
-    return url;
-  }
+  // R2 CDN: route through wsrv.nl so WebView / mixed-content environments
+  // can reliably load images regardless of HTTP/HTTPS page origin.
+  // wsrv.nl caches the result so performance impact is minimal after first load.
 
   if (url.includes('www.artic.edu/iiif/2/')) {
     const base = 'https://www.artic.edu/iiif/2/';

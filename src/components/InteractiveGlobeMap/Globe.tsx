@@ -164,18 +164,21 @@ interface Palette {
 
 const PALETTES: Record<Theme, Palette> = {
   dark: {
-    sphereFill: "rgba(255,255,255,0.012)",
-    sphereStroke: "rgba(255,255,255,0.08)",
-    fg: [255, 255, 255],
+    // Ocean: deep navy-black distinguishes globe interior from page background
+    sphereFill: "rgba(18, 26, 52, 0.28)",
+    // Globe rim: soft blue edge like frosted glass
+    sphereStroke: "rgba(80, 120, 200, 0.09)",
+    // Continents: warm antique-paper cream, not cold white
+    fg: [212, 206, 194],
     lime: "#BFFF0A",
     limeFg: "191,255,10",
     limeTxt: "191,255,10",
-    crosshair: "rgba(255,255,255,0.04)",
+    crosshair: "rgba(212,206,194,0.06)",
   },
   light: {
-    sphereFill: "rgba(0,0,0,0.006)",
-    sphereStroke: "rgba(0,0,0,0.06)",
-    fg: [0, 0, 0],
+    sphereFill: "rgba(200, 210, 240, 0.15)",
+    sphereStroke: "rgba(100, 140, 200, 0.12)",
+    fg: [30, 28, 24],
     lime: "#BFFF0A",
     limeFg: "120,165,0",
     limeTxt: "70,100,0",
@@ -381,6 +384,10 @@ export function Globe({
   const velocityRef = useRef<[number, number]>([0, 0]);
   const dragDistRef = useRef(0);
   const lastPointerTypeRef = useRef<string | null>(null);
+  const isMobileRef = useRef(
+    typeof window !== 'undefined' &&
+    (window.matchMedia('(pointer: coarse)').matches || navigator.maxTouchPoints > 0)
+  );
 
   const drilledContinentRef = useRef(drilledContinent);
   const lastSyncedContinentRef = useRef<string | null>(drilledContinent || null);
@@ -622,34 +629,61 @@ export function Globe({
       ctx.lineWidth = 0.8;
       ctx.stroke();
 
-      // Land
+      // Land — warm cream fill on subtle navy ocean, creating antique-map depth
       if (landRef.current) {
-        const fillAlpha = lerp(0.05, 0.02, dOp);
+        const mob = isMobileRef.current;
+        // Slightly more opaque fill on mobile (larger tap targets need clearer regions)
+        const fillAlpha = mob ? lerp(0.09, 0.04, dOp) : lerp(0.07, 0.025, dOp);
         ctx.beginPath();
         path(landRef.current._smoothed);
         ctx.fillStyle = `rgba(${R},${G},${B},${fillAlpha})`;
         ctx.fill();
 
-        const strokeAlpha = lerp(0.10, 0.035, dOp);
+        // Coastline: warm cream, softer than before
+        const strokeAlpha = mob ? lerp(0.18, 0.07, dOp) : lerp(0.13, 0.045, dOp);
         ctx.beginPath();
         path(landRef.current._smoothed);
         ctx.strokeStyle = `rgba(${R},${G},${B},${strokeAlpha})`;
-        ctx.lineWidth = 0.6;
+        ctx.lineWidth = mob ? 0.7 : 0.55;
         ctx.lineJoin = "round";
         ctx.lineCap = "round";
         ctx.stroke();
       }
 
-      // Borders
+      // Country borders — desktop: barely-there etching; mobile: soft glow for tap legibility
       if (bordersRef.current) {
-        const bAlpha = lerp(0.04, 0.015, dOp);
-        ctx.beginPath();
-        path(bordersRef.current._smoothed);
-        ctx.strokeStyle = `rgba(${R},${G},${B},${bAlpha})`;
-        ctx.lineWidth = 0.3;
-        ctx.lineJoin = "round";
-        ctx.lineCap = "round";
-        ctx.stroke();
+        const mob = isMobileRef.current;
+        if (mob) {
+          // Pass 1: ambient glow (gives a subtle halo without harsh lines)
+          ctx.save();
+          ctx.beginPath();
+          path(bordersRef.current._smoothed);
+          ctx.shadowBlur = 6;
+          ctx.shadowColor = `rgba(${R},${G},${B},0.18)`;
+          ctx.strokeStyle = `rgba(${R},${G},${B},${lerp(0.05, 0.018, dOp)})`;
+          ctx.lineWidth = 1.4;
+          ctx.lineJoin = "round";
+          ctx.lineCap = "round";
+          ctx.stroke();
+          ctx.restore();
+          // Pass 2: fine crisp line over glow
+          ctx.beginPath();
+          path(bordersRef.current._smoothed);
+          ctx.strokeStyle = `rgba(${R},${G},${B},${lerp(0.11, 0.042, dOp)})`;
+          ctx.lineWidth = 0.38;
+          ctx.lineJoin = "round";
+          ctx.lineCap = "round";
+          ctx.stroke();
+        } else {
+          // Desktop: single ultra-fine etched line (hover does the heavy lifting)
+          ctx.beginPath();
+          path(bordersRef.current._smoothed);
+          ctx.strokeStyle = `rgba(${R},${G},${B},${lerp(0.05, 0.018, dOp)})`;
+          ctx.lineWidth = 0.32;
+          ctx.lineJoin = "round";
+          ctx.lineCap = "round";
+          ctx.stroke();
+        }
       }
 
       // Country / Continent hover
@@ -769,14 +803,14 @@ export function Globe({
 
                 const fontSize = name === "Asia" ? 12 : 10;
                 const continentLabel = localizeContinentName(name, languageRef.current);
-                ctx.font = `600 ${fontSize}px "Space Grotesk", sans-serif`;
-                ctx.fillStyle = `rgba(${R},${G},${B},0.85)`;
+                ctx.font = `700 ${fontSize}px "Space Grotesk", sans-serif`;
+                ctx.fillStyle = `rgba(${R},${G},${B},0.94)`;
                 ctx.textAlign = "center";
                 ctx.textBaseline = "middle";
                 ctx.fillText(languageRef.current === "ko" ? continentLabel : continentLabel.toUpperCase(), p[0], p[1] - (op * 4));
 
-                ctx.font = `400 ${fontSize - 2}px "Space Grotesk", sans-serif`;
-                ctx.fillStyle = `rgba(${R},${G},${B},${0.45 + op * 0.25})`;
+                ctx.font = `500 ${fontSize - 2}px "Space Grotesk", sans-serif`;
+                ctx.fillStyle = `rgba(${R},${G},${B},${0.65 + op * 0.20})`;
                 ctx.fillText(`${total}`, p[0], p[1] + 12 + (op * 2));
             });
         } else if (activeContinent) {
@@ -810,8 +844,8 @@ export function Globe({
               labelOpRef.set(id, nameOp);
 
               // Number is always visible.
-              ctx.font = `500 11px "Space Grotesk", sans-serif`;
-              const numberAlpha = isHovered ? (0.75 + nameOp * 0.2) : (0.54 + nameOp * 0.18);
+              ctx.font = `600 11px "Space Grotesk", sans-serif`;
+              const numberAlpha = isHovered ? (0.90 + nameOp * 0.1) : (0.72 + nameOp * 0.15);
               ctx.fillStyle = isHovered ? `rgba(${P.limeTxt},${numberAlpha})` : `rgba(${R},${G},${B},${numberAlpha})`;
               ctx.textAlign = "center";
               ctx.textBaseline = "middle";
@@ -834,7 +868,7 @@ export function Globe({
 
                 if (shouldShowName) {
                   if (!isHovered) countryLabelBoxes.push(box);
-                  const labelAlpha = isHovered ? Math.max(0.75, nameOp) : (0.82 * nameOp);
+                  const labelAlpha = isHovered ? Math.max(0.90, nameOp) : (0.92 * nameOp);
                   ctx.fillStyle = isHovered ? `rgba(${P.limeTxt},${labelAlpha})` : `rgba(${R},${G},${B},${labelAlpha})`;
                   ctx.textAlign = "center";
                   ctx.textBaseline = "middle";
