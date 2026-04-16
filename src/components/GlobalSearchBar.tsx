@@ -134,6 +134,72 @@ const describeArtworkHighlight = (art?: SearchableArtwork) => {
 // Fallback image for broken images
 const FALLBACK_IMG = 'data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><rect fill="%23f3f4f6" width="100" height="100"/><text x="50" y="55" text-anchor="middle" fill="%23999" font-size="12">No Image</text></svg>';
 
+/**
+ * ExhibitionThumb — React-state-based image with 3-level fallback.
+ *
+ * Uses internal state for fallback so React never fights with imperative
+ * img.src mutations (which caused the "No Image" regression in WKWebView).
+ *
+ * Chain: wsrv.nl proxied → direct R2 → second collection image → FALLBACK_IMG
+ */
+type ExhibitionThumbProps = {
+    primaryUrl: string;        // The raw URL (R2 or other)
+    fallbackUrl?: string;      // Second image from collection (may be different domain)
+    style?: CSSProperties;
+    exhibitionId?: string;     // For debug logging only
+};
+
+function ExhibitionThumb({ primaryUrl, fallbackUrl, style, exhibitionId }: ExhibitionThumbProps) {
+    // 0 = wsrv proxied primary, 1 = direct primary, 2 = wsrv proxied fallback, 3 = FALLBACK_IMG
+    const [attempt, setAttempt] = useState(0);
+
+    // Reset attempt to 0 whenever the primary URL changes (new search result)
+    useEffect(() => {
+        setAttempt(0);
+    }, [primaryUrl]);
+
+    const safeUrl = normalizeKnownBrokenImageUrl(primaryUrl);
+    if (!safeUrl) return <div style={style} />;
+
+    let src: string;
+    if (attempt === 0) {
+        src = getSearchThumbnail(safeUrl);
+    } else if (attempt === 1) {
+        // Direct R2 (bypass wsrv.nl)
+        src = safeUrl;
+    } else if (attempt === 2 && fallbackUrl) {
+        const safeFb = normalizeKnownBrokenImageUrl(fallbackUrl);
+        src = safeFb ? getSearchThumbnail(safeFb) : FALLBACK_IMG;
+    } else {
+        src = FALLBACK_IMG;
+    }
+
+    const handleError = () => {
+        console.warn(`[IMG-DEBUG] ExhibitionThumb error attempt=${attempt} id="${exhibitionId}" src=${src}`);
+        setAttempt(prev => {
+            const next = prev + 1;
+            // Skip attempt 2 if no fallbackUrl
+            if (next === 2 && !fallbackUrl) return 3;
+            return next;
+        });
+    };
+
+    if (src === FALLBACK_IMG) {
+        return <img src={FALLBACK_IMG} alt="" style={style} />;
+    }
+
+    return (
+        <img
+            key={`${exhibitionId}-${attempt}`}
+            src={src}
+            alt=""
+            style={style}
+            loading="eager"
+            onError={handleError}
+        />
+    );
+}
+
 const normalizeKnownBrokenImageUrl = (value?: string): string => {
     const raw = String(value || '').trim();
     if (!raw) return '';
@@ -412,9 +478,19 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
         if (exhibitionPreviewsLoadedRef.current) return;
         exhibitionPreviewsLoadedRef.current = true;
         fetch('/data/exhibition-previews.json')
-            .then(r => r.ok ? r.json() : null)
+            .then(r => {
+                console.log('[IMG-DEBUG] exhibition-previews.json fetch status:', r.status, r.ok);
+                return r.ok ? r.json() : null;
+            })
             .then((map: Record<string, string> | null) => {
-                if (!map) return;
+                if (!map) { console.warn('[IMG-DEBUG] exhibition-previews.json returned null/empty'); return; }
+                console.log('[IMG-DEBUG] exhibition-previews.json loaded. Keys:', Object.keys(map).length, '| Sample keys:', Object.keys(map).slice(0, 10));
+                // Log Rijksmuseum entries specifically
+                const rijksKeys = Object.keys(map).filter(k => k.includes('rijks'));
+                console.log('[IMG-DEBUG] Rijksmuseum entries in previews JSON:', rijksKeys.length, rijksKeys);
+                for (const k of rijksKeys) {
+                    console.log(`[IMG-DEBUG]   ${k} → ${map[k]}`);
+                }
                 setExhibitionPreviewImageAsyncById(prev => {
                     const merged: Record<string, string> = { ...map };
                     // Don't overwrite existing values (e.g., from worker)
@@ -424,7 +500,7 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                     return merged;
                 });
             })
-            .catch(() => {/* silently ignore */});
+            .catch((err) => { console.error('[IMG-DEBUG] exhibition-previews.json fetch failed:', err); });
     }, []);
 
     const rememberSearchTerm = useCallback((raw: string) => {
@@ -869,10 +945,12 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                 }
 
                 // Cache both images so we don't retry
+                console.log(`[IMG-DEBUG] fetchCollectionPreviewImage("${file}") → image=${image || 'NONE'} | second=${secondImage || 'NONE'}`);
                 collectionPreviewByFileRef.current.set(file, image);
                 collectionSecondPreviewByFileRef.current.set(file, secondImage);
                 return image;
-            } catch {
+            } catch (err) {
+                console.error(`[IMG-DEBUG] fetchCollectionPreviewImage("${file}") EXCEPTION:`, err);
                 collectionPreviewByFileRef.current.set(file, '');
                 return '';
             } finally {
@@ -3717,7 +3795,11 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                                                     {matchedExhibitions.map((item, idx) => (
                                                         <Fragment key={item.exhibitionId}>
                                                             {(() => {
-                                                                const previewImage = exhibitionPreviewImageById.get(item.exhibitionId) || exhibitionPreviewImageAsyncById[item.exhibitionId];
+                                                                const fromSync = exhibitionPreviewImageById.get(item.exhibitionId);
+                                                                const fromAsync = exhibitionPreviewImageAsyncById[item.exhibitionId];
+                                                                const previewImage = fromSync || fromAsync;
+                                                                const _wsrvDbg = previewImage ? getSearchThumbnail(getSafeImageUrl(previewImage)) : '';
+                                                                console.log(`[IMG-DEBUG] Rendering "${item.exhibitionId}" | sync=${fromSync ? '✓' : '✗'} async=${fromAsync ? '✓' : '✗'} | url=${previewImage || 'NONE'} | wsrv=${_wsrvDbg || 'NONE'}`);
                                                                 return (
                                                             <button
                                                                 onClick={(e) => {
@@ -3738,30 +3820,11 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                                                             >
                                                                 <div style={{ width: 52, height: 38, borderRadius: 5, overflow: 'hidden', flexShrink: 0, background: chipBg }}>
                                                                         {previewImage ? (
-                                                                            <img
-                                                                                src={getSearchThumbnail(getSafeImageUrl(previewImage))}
-                                                                                alt=""
+                                                                            <ExhibitionThumb
+                                                                                primaryUrl={previewImage}
+                                                                                fallbackUrl={exhibitionPreviewFallbackById[item.exhibitionId]}
+                                                                                exhibitionId={item.exhibitionId}
                                                                                 style={{ width: '100%', height: '100%', objectFit: 'cover' }}
-                                                                                data-src-r2={previewImage}
-                                                                                data-fallback={exhibitionPreviewFallbackById[item.exhibitionId] || ''}
-                                                                                onError={(e) => {
-                                                                                    const img = e.currentTarget;
-                                                                                    const r2 = img.getAttribute('data-src-r2');
-                                                                                    const fb = img.getAttribute('data-fallback');
-                                                                                    img.removeAttribute('data-src-r2');
-                                                                                    img.removeAttribute('data-fallback');
-                                                                                    // 1st fallback: try direct R2 URL (bypass wsrv.nl)
-                                                                                    if (r2 && img.src !== r2) {
-                                                                                        img.src = r2;
-                                                                                    // 2nd fallback: try second collection image
-                                                                                    } else if (fb) {
-                                                                                        img.src = getSearchThumbnail(getSafeImageUrl(fb));
-                                                                                    } else {
-                                                                                        img.onerror = null;
-                                                                                        img.src = FALLBACK_IMG;
-                                                                                    }
-                                                                                }}
-                                                                                loading="eager"
                                                                             />
                                                                         ) : (
                                                                             <div style={{ width: '100%', height: '100%', display: 'grid', placeItems: 'center', color: faintText, fontSize: 10 }}>EXH</div>
