@@ -7,6 +7,7 @@ import { getOptimizedImageUrl } from "../../utils/imageProxy";
 import { resolveCommunityRank } from "../../utils/communityRank";
 import { useLanguage } from "../../contexts/LanguageContext";
 import { LiveAvatar, LiveName } from "../../components/LiveAuthor";
+import { SAMPLE_COMMUNITY_POSTS } from "../../data/sampleCommunityPosts";
 
 type SortTab = "latest" | "popular";
 type CategoryTab = "리뷰" | "뉴스" | "토론" | "인터뷰" | "소식" | "질문";
@@ -71,83 +72,21 @@ const REVIEW_FILTER_LABELS: Record<HeaderType, { ko: string; en: string }> = {
   exhibition: { ko: "전시", en: "Exhibition" },
 };
 
-const SAMPLE_POSTS: Post[] = [
-  {
-    id: "sample-news-1",
-    title: "이번 주 전시 오픈 소식 모음",
-    category: "뉴스",
-    isSample: true,
-    authorName: "Armin Team",
-    authorRank: "Lv.3 Collector",
-    authorPhotoURL: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=120&q=80",
-    createdAt: new Date(Date.now() - 1000 * 60 * 52),
-    likes: 14,
-    commentCount: 3,
-    contentSnippet: "주말 기준 새롭게 시작하는 주요 전시와 운영 시간 변경 사항을 정리했습니다.",
-    content: "",
-    header: { id: "sample", type: "exhibition", name: "Sample" },
-  },
-  {
-    id: "sample-discussion-1",
-    title: "요즘 가장 인상적인 작품 연출은?",
-    category: "토론",
-    isSample: true,
-    authorName: "Gallery Hopper",
-    authorRank: "Lv.2 Seeker",
-    authorPhotoURL: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=120&q=80",
-    createdAt: new Date(Date.now() - 1000 * 60 * 60 * 3),
-    likes: 9,
-    commentCount: 11,
-    contentSnippet: "조명, 동선, 사운드까지 포함해서 전시 연출을 평가해보는 스레드입니다.",
-    content: "",
-    header: { id: "sample", type: "exhibition", name: "Sample" },
-  },
-  {
-    id: "sample-interview-1",
-    title: "큐레이터 인터뷰: 작품 옆 텍스트, 어디까지 필요한가",
-    category: "인터뷰",
-    isSample: true,
-    authorName: "Editor Min",
-    authorRank: "Lv.4 Curator",
-    authorPhotoURL: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=120&q=80",
-    createdAt: new Date(Date.now() - 1000 * 60 * 60 * 7),
-    likes: 22,
-    commentCount: 2,
-    contentSnippet: "현장 큐레이터에게 전시 텍스트의 역할과 관람 리듬에 대해 물었습니다.",
-    content: "",
-    header: { id: "sample", type: "exhibition", name: "Sample" },
-  },
-  {
-    id: "sample-notice-1",
-    title: "커뮤니티 작성 가이드 업데이트",
-    category: "소식",
-    isSample: true,
-    authorName: "Community Bot",
-    authorRank: "Lv.5 Gallerist",
-    authorPhotoURL: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=120&q=80",
-    createdAt: new Date(Date.now() - 1000 * 60 * 60 * 10),
-    likes: 5,
-    commentCount: 0,
-    contentSnippet: "카테고리/태그 기준과 이미지 첨부 규칙이 업데이트되었습니다.",
-    content: "",
-    header: { id: "sample", type: "exhibition", name: "Sample" },
-  },
-  {
-    id: "sample-question-1",
-    title: "전시 러닝타임 긴 곳, 동선 팁 있을까요?",
-    category: "질문",
-    isSample: true,
-    authorName: "New Visitor",
-    authorRank: "Lv.1 Observer",
-    authorPhotoURL: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=120&q=80",
-    createdAt: new Date(Date.now() - 1000 * 60 * 60 * 15),
-    likes: 3,
-    commentCount: 6,
-    contentSnippet: "반나절 이상 걸리는 전시를 효율적으로 보는 방법이 궁금합니다.",
-    content: "",
-    header: { id: "sample", type: "exhibition", name: "Sample" },
-  },
-];
+const SAMPLE_POSTS: Post[] = SAMPLE_COMMUNITY_POSTS.map((post) => ({
+  id: post.id,
+  title: post.title,
+  category: post.category,
+  isSample: true,
+  authorName: post.authorName,
+  authorRank: post.authorRank,
+  authorPhotoURL: post.authorPhotoURL ?? null,
+  createdAt: post.createdAt,
+  likes: post.likes,
+  commentCount: post.commentCount,
+  contentSnippet: post.contentSnippet,
+  content: "",
+  header: post.header,
+}));
 
 function decodeHtml(raw: string): string {
   if (typeof window === "undefined") return raw;
@@ -585,7 +524,7 @@ const CommunityPage: React.FC = () => {
                 <button
                   key={post.id}
                   onClick={() => {
-                    if (!post.isSample) navigate(`/community/post/${post.id}`);
+                    navigate(`/community/post/${post.id}`);
                   }}
                   style={{
                     width: "100%",
@@ -593,7 +532,7 @@ const CommunityPage: React.FC = () => {
                     background: "transparent",
                     color: "inherit",
                     padding: "0 14px",
-                    cursor: post.isSample ? "default" : "pointer",
+                    cursor: "pointer",
                     textAlign: "left",
                   }}
                 >

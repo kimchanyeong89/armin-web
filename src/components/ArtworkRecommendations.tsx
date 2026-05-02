@@ -2,9 +2,8 @@ import React, { useState, useEffect, useMemo } from 'react';
 import type { Artwork } from '../types/Artwork';
 import { getWeservUrl } from '../utils/imageProxy';
 import { exhibitions } from '../data/exhibitions';
-import { HeartOverlay } from './HeartOverlay';
-import { BookmarkPlus, MessageCircle, ShoppingBag } from 'lucide-react';
-import { searchByText as siglipSearchByText } from '../utils/siglipSearch';
+import { BookmarkPlus, ShoppingBag } from 'lucide-react';
+import { ExpandableActionMenu } from './ExpandableActionMenu';
 
 const WORKER_URL = 'https://armin-semantic-search.armin-art.workers.dev';
 const recommendationCache = new Map<string, any[]>();
@@ -107,7 +106,23 @@ export const ArtworkRecommendations: React.FC<Props> = ({
         const normalizeRecommendationItems = (items: any[]) => {
             const seenIds = new Set<string>();
             const seenContent = new Set<string>();
+            const seenImages = new Set<string>();
             const normalize = (s: string) => (s || '').toLowerCase().trim();
+            // Strip query/hash + lowercase so wsrv-proxied and direct R2 URLs collapse.
+            const normalizeImage = (raw: string) => {
+                const trimmed = (raw || '').trim();
+                if (!trimmed) return '';
+                try {
+                    const u = new URL(trimmed, 'https://placeholder.local');
+                    if (u.hostname === 'wsrv.nl' || u.hostname === 'images.weserv.nl') {
+                        const inner = u.searchParams.get('url');
+                        if (inner) return normalizeImage(inner);
+                    }
+                    return `${u.hostname}${u.pathname}`.toLowerCase();
+                } catch {
+                    return trimmed.toLowerCase().split('?')[0];
+                }
+            };
 
             const art = artwork as any;
             const currentIds = [
@@ -120,6 +135,8 @@ export const ArtworkRecommendations: React.FC<Props> = ({
             const cName = normalize(artwork.name || art.title || 'Untitled');
             const cArtist = normalize(artwork.artist || 'Unknown Artist');
             seenContent.add(`${cName}|${cArtist}`);
+            const currentImageKey = normalizeImage(String(artwork.image || art.imageUrl || art.url || ''));
+            if (currentImageKey) seenImages.add(currentImageKey);
 
             const uniqueResults: any[] = [];
 
@@ -134,12 +151,23 @@ export const ArtworkRecommendations: React.FC<Props> = ({
                 const contentKey = `${iName}|${iArtist}`;
                 if (seenContent.has(contentKey)) return;
 
+                const resolvedImage = extractRecommendationImage(item);
+                // Skip items with no image — Vectorize metadata may be incomplete for some uploads.
+                if (!resolvedImage) return;
+
+                // Drop duplicate images: when Vectorize returns several IDs whose
+                // metadata points at the same R2 placeholder, all but the first
+                // would render as visually identical "different" cards.
+                const imageKey = normalizeImage(resolvedImage);
+                if (imageKey && seenImages.has(imageKey)) return;
+
                 if (itemId) seenIds.add(itemId);
                 seenContent.add(contentKey);
+                if (imageKey) seenImages.add(imageKey);
 
                 uniqueResults.push({
                     ...item,
-                    image: extractRecommendationImage(item),
+                    image: resolvedImage,
                     museumName: item.museumName || item.museum || item.m,
                 });
             });
@@ -210,29 +238,9 @@ export const ArtworkRecommendations: React.FC<Props> = ({
                 }
             }
 
-            // Text-based semantic fallback: uses browser WASM (Tier 1) → HuggingFace server (Tier 2).
-            // Build a visual descriptor query instead of using the artwork title, which tends to
-            // match text-heavy artworks in SigLIP. Category + era + artist gives better visual similarity.
-            const yearNum = Number(String(artwork.year || art.year || '').replace(/[^0-9]/g, ''));
-            const eraStr = yearNum > 0 ? `${Math.floor(yearNum / 100) * 100}s` : '';
-            const categoryStr = String(art.category || artwork.category || '').trim();
-            const artistStr = String(artwork.artist || '').trim();
-            const fallbackQuery = [categoryStr, eraStr, artistStr]
-                .filter(Boolean)
-                .join(' ')
-                .trim();
-            if (!fallbackQuery || fallbackQuery.length < 2) return;
-
-            try {
-                const results = await siglipSearchByText(fallbackQuery, 12);
-                if (!results || results.length === 0) return;
-
-                const normalized = normalizeRecommendationItems(results);
-                if (cacheKey) recommendationCache.set(cacheKey, normalized);
-                if (!cancelled) setAiRecommendations(normalized);
-            } catch (e) {
-                console.warn('AI Recommendation text fallback failed:', e);
-            }
+            // No text-based fallback: SigLIP text queries on an image-embedding DB return
+            // visually unrelated results (matches typography/posters for artwork title queries).
+            // When ID-based lookup fails, we fall through to the metadata relatedArtworks below.
         };
 
         void fetchAiRecommendations();
@@ -266,7 +274,7 @@ export const ArtworkRecommendations: React.FC<Props> = ({
         return '';
     };
 
-    const renderCard = (item: any, source: 'AI' | 'Meta') => {
+    const renderCard = (item: any, source: 'AI' | 'Meta', index: number = 0) => {
         const compact = mode === 'compact-horizontal';
         const isMobileViewport = typeof window !== 'undefined' && window.innerWidth <= 768;
         const compactCardWidth = isMobileViewport ? 126 : 148;
@@ -341,9 +349,17 @@ export const ArtworkRecommendations: React.FC<Props> = ({
             padding: 0,
         };
 
+        // Plain div wrapper — using motion.div with `layout` here breaks the
+        // badge's backdrop-filter (transformed ancestors kill the filter so
+        // the 18%-opacity lime/12%-white pill renders as nothing). The CSS
+        // keyframe `ar-card-fade` below gives a lightweight stagger entry
+        // without a transform-based wrapper.
+        const enterDelay = Math.min(index * 0.04, 0.4);
+
         return (
             <div
                 key={cardId}
+                className="ar-card"
                 onClick={(e) => {
                     e.stopPropagation();
                     onSelectArtwork(actionableArtwork);
@@ -353,7 +369,7 @@ export const ArtworkRecommendations: React.FC<Props> = ({
                     maxWidth: mode === 'grid' ? '100%' : (compact ? compactCardWidth : 160),
                     cursor: 'pointer',
                     flexShrink: 0,
-                    opacity: 1
+                    animationDelay: `${enterDelay}s`,
                 }}
             >
                 <div style={{
@@ -367,13 +383,20 @@ export const ArtworkRecommendations: React.FC<Props> = ({
                 }}>
                     {hasImage ? (
                         <img
-                            src={getWeservUrl(image, 300)}
+                            // 240px (was 300) — smaller payload from wsrv.nl
+                            // while still 2x-sharp at the 126-148px card width.
+                            src={getWeservUrl(image, 240)}
                             alt={name}
-                            loading="lazy"
-                            style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.3s' }}
+                            // First 3 cards eager-load and jump network priority
+                            // queue so they appear quickly when the AI fetch
+                            // resolves; the rest stay lazy.
+                            loading={index < 3 ? 'eager' : 'lazy'}
+                            fetchPriority={index < 3 ? 'high' : 'auto'}
+                            decoding="async"
                             referrerPolicy="no-referrer"
-                            onMouseEnter={(e) => e.currentTarget.style.transform = 'scale(1.05)'}
-                            onMouseLeave={(e) => e.currentTarget.style.transform = 'scale(1)'}
+                            className="ar-img"
+                            onLoad={(e) => e.currentTarget.classList.add('ar-img-loaded')}
+                            style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
                             onError={(e) => {
                                 // Fallback to original if proxy fails
                                 const target = e.currentTarget;
@@ -415,79 +438,25 @@ export const ArtworkRecommendations: React.FC<Props> = ({
                         border: `1px solid ${badgeBorder}`,
                         textTransform: 'uppercase',
                         letterSpacing: '0.08em',
-                        backdropFilter: 'blur(6px)'
+                        backdropFilter: 'blur(6px)',
+                        WebkitBackdropFilter: 'blur(6px)',
+                        zIndex: 3,
                     }}>
                         {badgeText}
                     </div>
 
                     {/* Action Icons */}
-                    <div style={{
-                        position: 'absolute',
-                        bottom: compact ? 6 : 8,
-                        right: compact ? 6 : 6,
-                        display: 'flex',
-                        flexDirection: 'column',
-                        alignItems: 'center',
-                        gap: compact ? 4 : 5,
-                        zIndex: 10,
-                        pointerEvents: 'auto'
-                    }}>
-                        {onSaveToPlaylist && (
-                            <button
-                                onClick={(e) => {
-                                    e.stopPropagation();
-                                    onSaveToPlaylist(actionableArtwork);
-                                }}
-                                style={actionButtonStyle}
-                                title="Save to Playlist"
-                            >
-                                <BookmarkPlus size={actionIconSize} strokeWidth={2.2} />
-                            </button>
-                        )}
-
-                        {onOpenProduct && (
-                            <button
-                                onClick={(e) => {
-                                    e.stopPropagation();
-                                    onOpenProduct(actionableArtwork);
-                                }}
-                                style={actionButtonStyle}
-                                title="Purchase Product"
-                            >
-                                <ShoppingBag size={actionIconSize} strokeWidth={2.2} />
-                            </button>
-                        )}
-
-                        {SHOW_ARTWORK_COMMENTS && onOpenComments && (
-                            <button
-                                onClick={(e) => {
-                                    e.stopPropagation();
-                                    onOpenComments(actionableArtwork);
-                                }}
-                                style={actionButtonStyle}
-                                title="Comments"
-                            >
-                                <MessageCircle size={actionIconSize} strokeWidth={2.2} />
-                            </button>
-                        )}
-
-                        {onToggleLike && likedArtworks && (
-                            <HeartOverlay
-                                isLiked={isCardLiked}
-                                onToggle={(e) => onToggleLike(e, actionableArtwork)}
-                                style={{
-                                    width: actionButtonSize,
-                                    height: actionButtonSize,
-                                    borderRadius: '50%',
-                                    background: 'rgba(0,0,0,0.56)',
-                                    padding: 0,
-                                }}
-                                size={actionIconSize}
-                                color="#BFFF0A"
-                                emptyColor="#fff"
-                            />
-                        )}
-                    </div>
+                    <ExpandableActionMenu
+                        isMobile={isMobileViewport}
+                        isLiked={isCardLiked}
+                        onToggleLike={(e) => onToggleLike && onToggleLike(e, actionableArtwork)}
+                        onOpenProduct={onOpenProduct ? (e) => onOpenProduct(actionableArtwork) : undefined}
+                        onOpenPlaylist={onSaveToPlaylist ? (e) => onSaveToPlaylist(actionableArtwork) : undefined}
+                        iconSize={actionIconSize}
+                        buttonSize={actionButtonSize}
+                        buttonBg="rgba(0,0,0,0.56)"
+                        buttonColor="#fff"
+                    />
                 </div>
 
                 {/* Title & Year */}
@@ -507,7 +476,7 @@ export const ArtworkRecommendations: React.FC<Props> = ({
                         </div>
                     )
                 }
-            </div >
+            </div>
         );
     };
 
@@ -559,7 +528,7 @@ export const ArtworkRecommendations: React.FC<Props> = ({
                         scrollbarColor: theme === 'dark' ? 'rgba(255,255,255,0.22) rgba(255,255,255,0.04)' : 'rgba(0,0,0,0.22) rgba(0,0,0,0.05)',
                     }}
                 >
-                    {compactItems.map(({ item, source }) => renderCard(item, source))}
+                    {compactItems.map(({ item, source }, i) => renderCard(item, source, i))}
                 </div>
                 <style>{`
                     .armin-rec-scroll::-webkit-scrollbar {
@@ -577,6 +546,23 @@ export const ArtworkRecommendations: React.FC<Props> = ({
                     }
                     .armin-rec-scroll::-webkit-scrollbar-thumb:hover {
                         background: ${theme === 'dark' ? 'rgba(255,255,255,0.46)' : 'rgba(0,0,0,0.36)'};
+                    }
+                    @keyframes ar-card-fade {
+                        from { opacity: 0; transform: translateY(8px); }
+                        to   { opacity: 1; transform: none; }
+                    }
+                    .ar-card {
+                        animation: ar-card-fade 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+                    }
+                    /* Image fade-in without using transform — transform on
+                       image creates a stacking context that breaks
+                       backdrop-filter on the sibling AI/Related badge. */
+                    .ar-img {
+                        opacity: 0;
+                        transition: opacity 0.45s ease-out;
+                    }
+                    .ar-img.ar-img-loaded {
+                        opacity: 1;
                     }
                 `}</style>
             </div>
@@ -605,7 +591,7 @@ export const ArtworkRecommendations: React.FC<Props> = ({
                         overflowX: 'auto',
                         paddingBottom: 8
                     }}>
-                        {effectiveAiRecommendations.map(item => renderCard(item, hasRealAiRecommendations ? 'AI' : 'Meta'))}
+                        {effectiveAiRecommendations.map((item, i) => renderCard(item, hasRealAiRecommendations ? 'AI' : 'Meta', i))}
                     </div>
                 </div>
             )}
@@ -627,7 +613,7 @@ export const ArtworkRecommendations: React.FC<Props> = ({
                         overflowX: 'auto',
                         paddingBottom: 8
                     }}>
-                        {effectiveMetaRecommendations.map(item => renderCard(item, 'Meta'))}
+                        {effectiveMetaRecommendations.map((item, i) => renderCard(item, 'Meta', i))}
                     </div>
                 </div>
             )}

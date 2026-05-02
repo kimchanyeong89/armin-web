@@ -6709,19 +6709,6 @@
       "type": "unknown",
       "museum": "Musée national des arts asiatiques - Guimet",
       "original_image": "https://images.grandpalaisrmn.fr/thumb.php/00037763.jpg?ID=1101450"
-    },
-    {
-      "id": "musee-guimet-collection-480",
-      "mediaNumber": "00377306",
-      "title": "Birvâpa",
-      "artist": "Unknown",
-      "year": "17th century",
-      "medium": "Painting",
-      "dimensions": "",
-      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/guimet-collection/musee-guimet-collection-480.webp",
-      "sourceUrl": "https://images.grandpalaisrmn.fr/ark:/36255/12-506872",
-      "type": "unknown",
-      "museum": "Musée national des arts asiatiques - Guimet"
     }
   ]
 }

@@ -19886,19 +19886,6 @@
     "original_image": "https://images.grandpalaisrmn.fr/thumb.php/00473038.jpg?ID=3028098"
   },
   {
-    "id": "mucem-collection-1422",
-    "mediaNumber": "00471717",
-    "title": "Sainte Marguerite",
-    "artist": "Anonymus",
-    "year": "Location",
-    "medium": "Mixed",
-    "dimensions": "",
-    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/mucem-collection/mucem-collection-1422.webp",
-    "sourceUrl": "https://images.grandpalaisrmn.fr/ark:/36255/12-549048",
-    "type": "unknown",
-    "museum": "Mucem, Marseille"
-  },
-  {
     "id": "mucem-collection-1423",
     "mediaNumber": "00471508",
     "title": "Marine française",
@@ -21325,19 +21312,6 @@
     "type": "unknown",
     "museum": "Mucem, Marseille",
     "original_image": "https://images.grandpalaisrmn.fr/thumb.php/00400510.jpg?ID=388843"
-  },
-  {
-    "id": "mucem-collection-1525",
-    "mediaNumber": "00400440",
-    "title": "Saint Michel terrassant le dragon",
-    "artist": "Unknown",
-    "year": null,
-    "medium": "Mixed",
-    "dimensions": "",
-    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/mucem-collection/mucem-collection-1525.webp",
-    "sourceUrl": "https://images.grandpalaisrmn.fr/ark:/36255/11-533170",
-    "type": "unknown",
-    "museum": "Mucem, Marseille"
   },
   {
     "id": "mucem-collection-1526",
@@ -23004,19 +22978,6 @@
     "type": "unknown",
     "museum": "Mucem, Marseille",
     "original_image": "https://images.grandpalaisrmn.fr/thumb.php/00301365.jpg?ID=487478"
-  },
-  {
-    "id": "mucem-collection-1645",
-    "mediaNumber": "00299991",
-    "title": "Signe du zodiaque : Bélier",
-    "artist": "Anonymus",
-    "year": "Location",
-    "medium": "Mixed",
-    "dimensions": "",
-    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/mucem-collection/mucem-collection-1645.webp",
-    "sourceUrl": "https://images.grandpalaisrmn.fr/ark:/36255/11-533332",
-    "type": "unknown",
-    "museum": "Mucem, Marseille"
   },
   {
     "id": "mucem-collection-1646",
@@ -53754,19 +53715,6 @@
     "original_image": "https://images.grandpalaisrmn.fr/thumb.php/00071014.jpg?ID=3064695"
   },
   {
-    "id": "mucem-collection-3843",
-    "mediaNumber": "00071007",
-    "title": "Jongleur",
-    "artist": "Unknown",
-    "year": null,
-    "medium": "Mixed",
-    "dimensions": "",
-    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/mucem-collection/mucem-collection-3843.webp",
-    "sourceUrl": "https://images.grandpalaisrmn.fr/ark:/36255/09-577913",
-    "type": "unknown",
-    "museum": "Mucem, Marseille"
-  },
-  {
     "id": "mucem-collection-3844",
     "mediaNumber": "00069433",
     "title": "Les noyers de Charzais",
@@ -55040,19 +54988,6 @@
     "museum": "Mucem, Marseille"
   },
   {
-    "id": "mucem-collection-3936",
-    "mediaNumber": "00004629",
-    "title": "Cantinière, lancier",
-    "artist": "Unknown",
-    "year": null,
-    "medium": "Mixed",
-    "dimensions": "",
-    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/mucem-collection/mucem-collection-3936.webp",
-    "sourceUrl": "https://images.grandpalaisrmn.fr/ark:/36255/09-569199",
-    "type": "unknown",
-    "museum": "Mucem, Marseille"
-  },
-  {
     "id": "mucem-collection-3937",
     "mediaNumber": "00004535",
     "title": "Album \"Le Cirque en images\" : Tigre, au cirque Médrano",
@@ -55088,19 +55023,6 @@
     "dimensions": "",
     "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/mucem-collection/mucem-collection-3939.webp",
     "sourceUrl": "https://images.grandpalaisrmn.fr/ark:/36255/07-518399",
-    "type": "unknown",
-    "museum": "Mucem, Marseille"
-  },
-  {
-    "id": "mucem-collection-3940",
-    "mediaNumber": "00002971",
-    "title": "Etudes de fleurs, d'une cosse de petit pois et d'une cerise",
-    "artist": "Unknown",
-    "year": null,
-    "medium": "Mixed",
-    "dimensions": "",
-    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/mucem-collection/mucem-collection-3940.webp",
-    "sourceUrl": "https://images.grandpalaisrmn.fr/ark:/36255/08-516405",
     "type": "unknown",
     "museum": "Mucem, Marseille"
   },

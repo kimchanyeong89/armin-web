@@ -22,6 +22,11 @@ import { getOptimizedImageUrl } from "../../utils/imageProxy";
 import { DEFAULT_COMMUNITY_RANK, resolveCommunityRank } from "../../utils/communityRank";
 import { useLanguage } from "../../contexts/LanguageContext";
 import type { CommunityComment, CommunityUserProfile } from "../../types/Community";
+import { getSampleCommunityPost, isSampleCommunityPostId } from "../../data/sampleCommunityPosts";
+import { ErrorBoundary } from "../../components/ErrorBoundary";
+import { LiveAvatar, LiveName } from "../../components/LiveAuthor";
+
+const FIRESTORE_LOAD_TIMEOUT_MS = 8000;
 
 type Comment = CommunityComment;
 type UserProfile = CommunityUserProfile;
@@ -87,11 +92,14 @@ const PostDetailPage: React.FC = () => {
   const { user } = useAuth();
   const { language, t } = useLanguage();
 
+  const isSamplePost = isSampleCommunityPostId(id);
+
   const [post, setPost] = useState<any>(null);
   const [comments, setComments] = useState<Comment[]>([]);
   const [newComment, setNewComment] = useState("");
   const [hasLiked, setHasLiked] = useState(false);
   const [loading, setLoading] = useState(true);
+  const [loadError, setLoadError] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [authorProfile, setAuthorProfile] = useState<UserProfile | null>(null);
   const [commentProfiles, setCommentProfiles] = useState<Record<string, UserProfile>>({});
@@ -126,42 +134,86 @@ const PostDetailPage: React.FC = () => {
   useEffect(() => {
     if (!id) return;
 
+    setLoadError(false);
+
+    if (isSamplePost) {
+      const sample = getSampleCommunityPost(id);
+      setPost(sample);
+      setComments([]);
+      setLoading(false);
+      return;
+    }
+
     const postRef = doc(db, "community_posts", id);
+    let cancelled = false;
+    const timeoutId = window.setTimeout(() => {
+      if (cancelled) return;
+      setLoading((wasLoading) => {
+        if (wasLoading) setLoadError(true);
+        return false;
+      });
+    }, FIRESTORE_LOAD_TIMEOUT_MS);
+
+    const finishLoading = () => {
+      if (cancelled) return;
+      window.clearTimeout(timeoutId);
+      setLoading(false);
+    };
 
     if (isNetworkConstrained) {
       void (async () => {
         try {
           const docSnap = await getDoc(postRef);
+          if (cancelled) return;
           setPost(docSnap.exists() ? { id: docSnap.id, ...docSnap.data() } : null);
 
           const commentsRef = collection(db, "community_posts", id, "comments");
           const commentsQ = query(commentsRef, orderBy("createdAt", "desc"));
           const snapshot = await getDocs(commentsQ);
+          if (cancelled) return;
           setComments(snapshot.docs.map((commentDoc) => ({ id: commentDoc.id, ...commentDoc.data() } as Comment)));
+        } catch {
+          if (!cancelled) setLoadError(true);
         } finally {
-          setLoading(false);
+          finishLoading();
         }
       })();
 
-      return;
+      return () => {
+        cancelled = true;
+        window.clearTimeout(timeoutId);
+      };
     }
 
-    const unsubscribePost = onSnapshot(postRef, (docSnap) => {
-      setPost(docSnap.exists() ? { id: docSnap.id, ...docSnap.data() } : null);
-      setLoading(false);
-    });
+    const unsubscribePost = onSnapshot(
+      postRef,
+      (docSnap) => {
+        if (cancelled) return;
+        setPost(docSnap.exists() ? { id: docSnap.id, ...docSnap.data() } : null);
+        finishLoading();
+      },
+      () => {
+        if (!cancelled) {
+          setLoadError(true);
+          finishLoading();
+        }
+      },
+    );
 
     const commentsRef = collection(db, "community_posts", id, "comments");
     const commentsQ = query(commentsRef, orderBy("createdAt", "desc"));
     const unsubscribeComments = onSnapshot(commentsQ, (snapshot) => {
+      if (cancelled) return;
       setComments(snapshot.docs.map((commentDoc) => ({ id: commentDoc.id, ...commentDoc.data() } as Comment)));
     });
 
     return () => {
+      cancelled = true;
+      window.clearTimeout(timeoutId);
       unsubscribePost();
       unsubscribeComments();
     };
-  }, [id, isNetworkConstrained]);
+  }, [id, isNetworkConstrained, isSamplePost]);
 
   useEffect(() => {
     if (!post?.authorId) {
@@ -238,6 +290,10 @@ const PostDetailPage: React.FC = () => {
   }, [id, user]);
 
   const handleLike = async () => {
+    if (isSamplePost) {
+      alert(t({ ko: "예시 게시글은 좋아요를 누를 수 없습니다.", en: "Sample posts can't be liked." }));
+      return;
+    }
     if (!user) {
       alert(t({ ko: "로그인이 필요합니다.", en: "Login is required." }));
       return;
@@ -275,6 +331,10 @@ const PostDetailPage: React.FC = () => {
   const handleCommentSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
+    if (isSamplePost) {
+      alert(t({ ko: "예시 게시글에는 댓글을 달 수 없습니다.", en: "Sample posts don't accept comments." }));
+      return;
+    }
     if (!user) {
       alert(t({ ko: "로그인이 필요합니다.", en: "Login is required." }));
       return;
@@ -357,19 +417,79 @@ const PostDetailPage: React.FC = () => {
   const authorName = authorProfile?.nickname || authorProfile?.displayName || post?.authorName || t({ ko: "익명", en: "Unknown" });
   const authorPhoto = authorProfile?.photoURL || post?.authorPhotoURL || post?.authorPhoto || null;
 
+  // Outer wrapper for ALL early-return states. Without this, the loading/
+  // error divs inherit a transparent background — which on iOS WebView
+  // composites against the app shell's white default and looks like a
+  // pure-white "frozen" screen.
+  const overlayWrap = (children: React.ReactNode) => (
+    <div
+      style={{
+        width: "100%",
+        height: "100%",
+        background: colors.pageBg,
+        color: colors.text,
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+        justifyContent: "center",
+        gap: 14,
+        padding: "0 24px",
+        textAlign: "center",
+        fontFamily: "'Space Grotesk', 'Apple SD Gothic Neo', sans-serif",
+      }}
+    >
+      {children}
+    </div>
+  );
+
   if (loading) {
-    return (
-      <div style={{ width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center", color: colors.medText }}>
-        {t({ ko: "불러오는 중...", en: "Loading..." })}
-      </div>
+    return overlayWrap(
+      <>
+        <div
+          style={{
+            width: 28, height: 28, borderRadius: "50%",
+            border: `2px solid ${colors.divider}`,
+            borderTopColor: "#BFFF0A",
+            animation: "post-detail-spin 0.9s linear infinite",
+          }}
+        />
+        <div style={{ color: colors.medText, fontSize: 13 }}>
+          {t({ ko: "불러오는 중...", en: "Loading..." })}
+        </div>
+        <style>{`@keyframes post-detail-spin { to { transform: rotate(360deg); } }`}</style>
+      </>,
+    );
+  }
+
+  if (loadError && !post) {
+    return overlayWrap(
+      <>
+        <div style={{ color: colors.text, fontSize: 14 }}>
+          {t({ ko: "게시글을 불러오지 못했습니다.", en: "Couldn't load this post." })}
+        </div>
+        <div style={{ display: "flex", gap: 8 }}>
+          <button
+            onClick={() => navigate("/community")}
+            style={{ border: `1px solid ${colors.divider}`, background: colors.panelBg, color: colors.text, borderRadius: 999, padding: "8px 14px", fontSize: 12, cursor: "pointer" }}
+          >
+            {t({ ko: "목록으로", en: "Back to list" })}
+          </button>
+          <button
+            onClick={() => window.location.reload()}
+            style={{ border: "none", background: "#BFFF0A", color: "#000", borderRadius: 999, padding: "8px 14px", fontSize: 12, fontWeight: 600, cursor: "pointer" }}
+          >
+            {t({ ko: "다시 시도", en: "Retry" })}
+          </button>
+        </div>
+      </>,
     );
   }
 
   if (!post) {
-    return (
-      <div style={{ width: "100%", height: "100%", display: "flex", alignItems: "center", justifyContent: "center", color: colors.medText }}>
+    return overlayWrap(
+      <div style={{ color: colors.medText, fontSize: 13 }}>
         {t({ ko: "게시글을 찾을 수 없습니다.", en: "Post not found." })}
-      </div>
+      </div>,
     );
   }
 
@@ -625,4 +745,10 @@ const PostDetailPage: React.FC = () => {
   );
 };
 
-export default PostDetailPage;
+const PostDetailPageWithBoundary: React.FC = () => (
+  <ErrorBoundary label="게시글">
+    <PostDetailPage />
+  </ErrorBoundary>
+);
+
+export default PostDetailPageWithBoundary;

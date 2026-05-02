@@ -11,8 +11,10 @@ import { ArtworkLightbox } from '../components/ArtworkLightbox';
 import { ProductModal } from '../components/ProductModal';
 import CommentModal from '../components/CommentModal';
 import { PlaylistModal } from '../components/PlaylistModal';
+import { ExpandableActionMenu } from '../components/ExpandableActionMenu';
 import { createFirebaseWebPort } from '../adapters/firebaseWebAdapter';
 import { useLanguage } from "../contexts/LanguageContext";
+import { NO_IMAGE_PLACEHOLDER_DARK } from '../utils/noImagePlaceholder';
 import { localizeCountryName } from "../i18n/geoLocalization";
 import { getExhibitionDisplayDescription, getExhibitionDisplayTitle } from "../i18n/exhibitionLocalization";
 import { getMuseumDisplayDescription, getMuseumDisplayName } from "../i18n/museumLocalization";
@@ -199,7 +201,7 @@ type CurationTabProps = {
   onChangeRecommendMode: (mode: RecommendationMode) => void;
   randomArtworks: RecommendationCardItem[];
   randomLoading: boolean;
-  onRefreshRandom: () => void;
+  onRefreshRandom: (count?: number, append?: boolean) => void;
 };
 
 type NearbyTabProps = {
@@ -219,7 +221,7 @@ type NearbyTabProps = {
 // ─── Exhibition Detail Sheet ────────────────────────────────
 function ExhibitionDetail({ ex, t, bg, fg, fgMed, fgLow, fgFaint: _fgFaint, divider, imgFilter, onClose, isArtwork, tr, language }: ExhibitionDetailProps) {
   if (!ex) return null;
-  const safeImg = ex.image || 'https://via.placeholder.com/400x500?text=No+Image';
+  const safeImg = ex.image || NO_IMAGE_PLACEHOLDER_DARK;
   return (
     <motion.div
       initial={{ y: "100%", opacity: 0 }}
@@ -381,32 +383,108 @@ function CurationTab({
   const isRandomMode = recommendMode === 'random';
   const isLoading = isRandomMode ? randomLoading : loading;
   const displayArtworks = isRandomMode ? randomArtworks : userArtworks;
+  
+  const [displayedCount, setDisplayedCount] = useState(15);
+  const [observerNode, setObserverNode] = useState<HTMLDivElement | null>(null);
+  const isMobile = typeof window !== 'undefined' && window.innerWidth <= 768;
 
-  if (isLoading) {
+  useEffect(() => {
+    setDisplayedCount(isMobile ? 15 : 24);
+  }, [recommendMode, isMobile]);
+
+  // Latest-state ref so the observer callback can read current props/state
+  // without re-creating the observer on every parent render. Re-creating it
+  // synchronously re-fired observe()'s initial callback against the still-
+  // intersecting target, which looped setDisplayedCount → re-render → new
+  // observer → fire → … and froze the page on iOS WebView.
+  const intersectStateRef = useRef({
+    isRandomMode,
+    displayedCount,
+    displayArtworksLength: displayArtworks.length,
+    isMobile,
+    randomLoading,
+    onRefreshRandom,
+  });
+  intersectStateRef.current = {
+    isRandomMode,
+    displayedCount,
+    displayArtworksLength: displayArtworks.length,
+    isMobile,
+    randomLoading,
+    onRefreshRandom,
+  };
+
+  // Callback-ref pattern: depend on the actual DOM node rather than a useRef,
+  // so the effect re-runs (and the observer attaches) when the target div
+  // first mounts — including the case where the user switches from For You
+  // (target hidden) to Random mode (target appears).
+  useEffect(() => {
+    if (!observerNode) return;
+
+    const observer = new IntersectionObserver((entries) => {
+      if (!entries.some(entry => entry.isIntersecting)) return;
+      const s = intersectStateRef.current;
+      if (s.isRandomMode && s.displayedCount >= s.displayArtworksLength) {
+        if (s.randomLoading) return;
+        setDisplayedCount(prev => prev + 12);
+        s.onRefreshRandom(12, true);
+      } else {
+        setDisplayedCount(prev => Math.min(prev + (s.isMobile ? 12 : 24), s.displayArtworksLength));
+      }
+    }, { root: null, rootMargin: '400px 0px' });
+
+    observer.observe(observerNode);
+    return () => observer.disconnect();
+  }, [observerNode]);
+
+  const isInitialLoading = isLoading && (!displayArtworks || displayArtworks.length === 0);
+
+  if (isInitialLoading) {
     return (
-      <div style={{ padding: 40, textAlign: 'center', color: fgLow, fontSize: 12 }}>
-        {isRandomMode
-          ? tr({ ko: '랜덤 추천을 불러오는 중입니다...', en: 'Loading random recommendations...' })
-          : tr({ ko: '취향 맞춤 추천을 불러오는 중입니다...', en: 'Loading personalized recommendations...' })}
+      <div style={{ padding: 80, display: 'flex', justifyContent: 'center' }}>
+        <svg width={30} height={30} viewBox="0 0 24 24" fill="none" stroke={fgMed} strokeWidth={2}>
+          <style>{`@keyframes _hub_spin { 100% { transform: rotate(360deg); } }`}</style>
+          <circle cx={12} cy={12} r={10} strokeOpacity={0.2} />
+          <path d="M12 2 a10 10 0 0 1 10 10" strokeLinecap="round" style={{ transformOrigin: '12px 12px', animation: '_hub_spin 1s linear infinite' }} />
+        </svg>
       </div>
     );
   }
 
   if (!displayArtworks || displayArtworks.length === 0) {
+    if (!isRandomMode) {
+      return (
+        <div style={{ padding: 40, textAlign: 'center', color: fgLow, fontSize: 12 }}>
+          {tr({ ko: '추천할 작품이 없습니다. 작품에 좋아요를 눌러 취향을 알려주세요!', en: 'No recommendations yet. Like artworks to train your taste.' })}
+        </div>
+      );
+    }
     return (
-      <div style={{ padding: 40, textAlign: 'center', color: fgLow, fontSize: 12 }}>
-        {isRandomMode
-          ? tr({ ko: '랜덤 추천 결과가 없습니다. 다시 뽑기를 눌러보세요.', en: 'No random results. Try reshuffling.' })
-          : tr({ ko: '추천할 작품이 없습니다. 작품에 좋아요를 눌러 취향을 알려주세요!', en: 'No recommendations yet. Like artworks to train your taste.' })}
+      <div style={{ padding: 80, display: 'flex', justifyContent: 'center' }}>
+        <svg width={30} height={30} viewBox="0 0 24 24" fill="none" stroke={fgMed} strokeWidth={2}>
+          <style>{`@keyframes _hub_spin { 100% { transform: rotate(360deg); } }`}</style>
+          <circle cx={12} cy={12} r={10} strokeOpacity={0.2} />
+          <path d="M12 2 a10 10 0 0 1 10 10" strokeLinecap="round" style={{ transformOrigin: '12px 12px', animation: '_hub_spin 1s linear infinite' }} />
+        </svg>
       </div>
     );
   }
 
   return (
-    <div style={{ paddingBottom: 100 }}>
+    <div style={{ paddingBottom: 65 }}>
       {/* ── Highlight Section ── */}
-      <div style={{ padding: "32px 20px 48px", borderBottom: `1px solid ${divider}` }}>
-        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 10, marginBottom: 12 }}>
+      <div style={{
+        position: "sticky",
+        top: "calc(45px + env(safe-area-inset-top, 0px))",
+        zIndex: 15,
+        padding: "16px 20px 16px",
+        backgroundColor: t ? "rgba(250,250,250,0.97)" : "rgba(8,8,8,0.97)",
+        backdropFilter: "blur(20px)",
+        WebkitBackdropFilter: "blur(20px)",
+        borderBottom: `1px solid ${divider}`,
+        marginBottom: 24,
+      }}>
+        <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 10 }}>
           <div style={{ flex: 1 }}>
             <div style={{
               display: 'grid',
@@ -470,14 +548,24 @@ function CurationTab({
               />
             </div>
           </div>
+        </div>
+      </div>
 
+      <div style={{ padding: "0 20px" }}>
+        <h2 style={{ fontSize: 18, fontWeight: 700, letterSpacing: "-0.01em", color: fg, display: "flex", alignItems: "center", gap: 8, marginBottom: 16 }}>
+          {isRandomMode ? <Shuffle size={16} color={t ? "#5A7800" : "#BFFF0A"} /> : <Sparkles size={16} color={t ? "#5A7800" : "#BFFF0A"} />}
+          {isRandomMode
+            ? tr({ ko: '완전 랜덤 추천', en: 'Pure Random Picks' })
+            : tr({ ko: 'AI 취향 맞춤 추천', en: 'AI Taste Recommendations' })}
+            
           {isRandomMode && (
             <button
-              onClick={onRefreshRandom}
+              onClick={() => onRefreshRandom(36, false)}
               style={{
-                width: 40,
-                height: 40,
-                borderRadius: 10,
+                marginLeft: 'auto',
+                width: 32,
+                height: 32,
+                borderRadius: 8,
                 border: `1px solid ${divider}`,
                 background: t ? 'rgba(0,0,0,0.05)' : 'rgba(255,255,255,0.08)',
                 color: t ? 'rgba(0,0,0,0.74)' : '#BFFF0A',
@@ -485,30 +573,23 @@ function CurationTab({
                 alignItems: 'center',
                 justifyContent: 'center',
                 cursor: 'pointer',
-                flexShrink: 0,
+                flexShrink: 0
               }}
               title={tr({ ko: '다시 뽑기', en: 'Reshuffle' })}
             >
-              <RotateCw size={15} strokeWidth={2.4} color={t ? '#111' : '#BFFF0A'} />
+              <RotateCw size={14} strokeWidth={2.4} color={t ? '#111' : '#BFFF0A'} />
               <span style={{ position: 'absolute', opacity: 0, pointerEvents: 'none' }}>↻</span>
             </button>
           )}
-        </div>
-
-        <h2 style={{ fontSize: 18, fontWeight: 700, letterSpacing: "-0.01em", color: fg, marginBottom: 12, display: "flex", alignItems: "center", gap: 8 }}>
-          {isRandomMode ? <Shuffle size={16} color={t ? "#5A7800" : "#BFFF0A"} /> : <Sparkles size={16} color={t ? "#5A7800" : "#BFFF0A"} />}
-          {isRandomMode
-            ? tr({ ko: '완전 랜덤 추천', en: 'Pure Random Picks' })
-            : tr({ ko: 'AI 취향 맞춤 추천', en: 'AI Taste Recommendations' })}
         </h2>
 
         <div style={{ display: "grid", gridTemplateColumns: "repeat(3, minmax(0, 1fr))", gap: 10 }}>
-          {displayArtworks.map((ex, idx) => (
+          {displayArtworks.slice(0, displayedCount).map((ex, idx) => (
             <motion.div
               key={ex.id + '-' + idx}
               initial={{ opacity: 0, scale: 0.96 }}
               animate={{ opacity: 1, scale: 1 }}
-              transition={{ delay: idx * 0.08 }}
+              transition={{ delay: (idx % 12) * 0.05 }}
             >
               <div
                 style={{
@@ -519,7 +600,7 @@ function CurationTab({
               >
                 {/* Cover — poster ratio */}
                 <div style={{ aspectRatio: "3/4", position: "relative", overflow: "hidden", borderRadius: 12, marginBottom: 8, backgroundColor: "#1a1a1a" }}>
-                  <img src={ex.image || 'https://via.placeholder.com/300x400?text=No+Image'} alt={ex.title} style={{ width: "100%", height: "100%", objectFit: "cover", filter: imgFilter }} onError={(e) => { e.currentTarget.src = 'https://via.placeholder.com/300x400?text=No+Image'; }} />
+                  <img src={ex.image || NO_IMAGE_PLACEHOLDER_DARK} alt={ex.title} style={{ width: "100%", height: "100%", objectFit: "cover", filter: imgFilter }} onError={(e) => { e.currentTarget.src = NO_IMAGE_PLACEHOLDER_DARK; }} />
                   <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 60%)" }} />
                   {typeof ex.matchScore === 'number' && (
                       <div style={{ position: "absolute", top: 8, right: 8, backgroundColor: "rgba(0,0,0,0.45)", backdropFilter: "blur(8px)", padding: "4px 8px", borderRadius: 999, color: Number(ex.matchPct ?? 0) >= 90 ? "#BFFF0A" : "#fff", fontSize: 9, fontWeight: 700, fontFamily: "'Space Mono', monospace" }}>
@@ -527,44 +608,15 @@ function CurationTab({
                     </div>
                   )}
 
-                  <div style={{ position: "absolute", right: 8, bottom: 8, display: "flex", justifyContent: "flex-end", gap: 6 }}>
-                    <button
-                      onClick={(event) => { event.stopPropagation(); onOpenProduct(ex); }}
-                      style={{ width: 29, height: 29, borderRadius: "50%", border: "none", background: "rgba(0,0,0,0.58)", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", padding: 0 }}
-                      title={tr({ ko: '굿즈 구매', en: 'Buy Prints' })}
-                    >
-                      <ShoppingBag size={13} strokeWidth={2.1} />
-                    </button>
-
-                    <button
-                      onClick={(event) => { event.stopPropagation(); onOpenComment(ex); }}
-                      style={{ width: 29, height: 29, borderRadius: "50%", border: "none", background: "rgba(0,0,0,0.58)", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", padding: 0 }}
-                      title={tr({ ko: '댓글', en: 'Comments' })}
-                    >
-                      <MessageCircle size={13} strokeWidth={2.1} />
-                    </button>
-
-                    <button
-                      onClick={(event) => { event.stopPropagation(); onOpenPlaylist(ex); }}
-                      style={{ width: 29, height: 29, borderRadius: "50%", border: "none", background: "rgba(0,0,0,0.58)", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", padding: 0 }}
-                      title={tr({ ko: '플레이리스트', en: 'Playlist' })}
-                    >
-                      <BookmarkPlus size={13} strokeWidth={2.2} />
-                    </button>
-
-                    <button
-                      onClick={(event) => { event.stopPropagation(); onToggleLike(ex); }}
-                      style={{ width: 29, height: 29, borderRadius: "50%", border: "none", background: "rgba(0,0,0,0.58)", color: "#fff", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", padding: 0 }}
-                      title={tr({ ko: '좋아요', en: 'Like' })}
-                    >
-                      <Heart
-                        size={14}
-                        strokeWidth={2.2}
-                        fill={(likedArtworkIds?.has(String(ex.id)) || likedArtworkIds?.has(normalizeArtworkIdForFirestore(ex.id))) ? "#BFFF0A" : "none"}
-                        color={(likedArtworkIds?.has(String(ex.id)) || likedArtworkIds?.has(normalizeArtworkIdForFirestore(ex.id))) ? "#BFFF0A" : "#fff"}
-                      />
-                    </button>
-                  </div>
+                  <ExpandableActionMenu
+                    isMobile={isMobile}
+                    isLiked={Boolean(likedArtworkIds?.has(String(ex.id)) || likedArtworkIds?.has(normalizeArtworkIdForFirestore(ex.id)))}
+                    onToggleLike={(e) => onToggleLike(ex)}
+                    onOpenProduct={(e) => onOpenProduct(ex)}
+                    onOpenPlaylist={(e) => onOpenPlaylist(ex)}
+                    iconSize={13}
+                    buttonSize={29}
+                  />
                 </div>
                 {/* Meta */}
                 <div style={{ marginTop: 8 }}>
@@ -581,6 +633,17 @@ function CurationTab({
               </div>
             </motion.div>
           ))}
+          {(isRandomMode || displayArtworks.length > displayedCount) && (
+            <div ref={setObserverNode} style={{ height: "1px", gridColumn: "1 / -1", pointerEvents: "none" }} />
+          )}
+          {isLoading && displayArtworks.length > 0 && (
+            <div style={{ gridColumn: "1 / -1", padding: 20, display: "flex", justifyContent: "center" }}>
+              <svg width={24} height={24} viewBox="0 0 24 24" fill="none" stroke={fgMed} strokeWidth={2}>
+                <circle cx={12} cy={12} r={10} strokeOpacity={0.2} />
+                <path d="M12 2 a10 10 0 0 1 10 10" strokeLinecap="round" style={{ transformOrigin: "12px 12px", animation: "_hub_spin 1s linear infinite" }} />
+              </svg>
+            </div>
+          )}
         </div>
       </div>
     </div>
@@ -642,7 +705,7 @@ function NearbyTab({ t, fg, fgLow, fgFaint, divider, imgFilter, onSelect, nearby
           >
             {/* Cover */}
             <div style={{ aspectRatio: "3/4", position: "relative", overflow: "hidden", backgroundColor: "#1a1a1a" }}>
-              <img src={ex.image || 'https://via.placeholder.com/300x400?text=No+Image'} alt={ex.title} style={{ width: "100%", height: "100%", objectFit: "cover", filter: imgFilter }} onError={(e) => { e.currentTarget.src = 'https://via.placeholder.com/300x400?text=No+Image'; }} />
+              <img src={ex.image || NO_IMAGE_PLACEHOLDER_DARK} alt={ex.title} style={{ width: "100%", height: "100%", objectFit: "cover", filter: imgFilter }} onError={(e) => { e.currentTarget.src = NO_IMAGE_PLACEHOLDER_DARK; }} />
               <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.5) 0%, transparent 40%)" }} />
               
               {/* Badges UI - Bottom Right */}
@@ -723,6 +786,8 @@ export default function AICurationHubPage() {
   const [randomLoading, setRandomLoading] = useState(false);
   const [randomWorkerReady, setRandomWorkerReady] = useState(false);
   const randomWorkerRef = useRef<Worker | null>(null);
+  const randomAppendRef = useRef(false);
+  const randomLoadingRef = useRef(false);
 
   const [nearbyExhibitions, setNearbyExhibitions] = useState<RecommendationCardItem[]>([]);
   const [nearbyLoading, setNearbyLoading] = useState(true);
@@ -765,9 +830,11 @@ export default function AICurationHubPage() {
     };
   }, []);
 
-  const requestRandomArtworks = useCallback((count = 36) => {
-    if (!randomWorkerRef.current || !randomWorkerReady) return;
+  const requestRandomArtworks = useCallback((count = 36, append = false) => {
+    if (!randomWorkerRef.current || !randomWorkerReady || randomLoadingRef.current) return;
+    randomLoadingRef.current = true;
     setRandomLoading(true);
+    randomAppendRef.current = append;
     randomWorkerRef.current.postMessage({ type: 'GET_RANDOM_ARTWORKS', count, onlyWithImage: true });
   }, [randomWorkerReady]);
 
@@ -776,7 +843,19 @@ export default function AICurationHubPage() {
     randomWorkerRef.current = worker;
 
     worker.onmessage = (event: MessageEvent) => {
-      const { type, results } = event.data || {};
+      const { type, results, count } = event.data || {};
+      if (type === 'LOAD_PROGRESS') {
+        // Random Picks only needs a sample to be useful — mark the worker
+        // ready as soon as the first chunk is in memory (~12K items in
+        // ~1-3 s on mobile) instead of blocking on the full 16-chunk
+        // ~180 MB load that finishes in ~30-60 s. Subsequent chunks expand
+        // the pool transparently. Threshold > 100 guards against firing
+        // when allArtworks is still effectively empty.
+        if (typeof count === 'number' && count > 100) {
+          setRandomWorkerReady(prev => prev || true);
+        }
+        return;
+      }
       if (type === 'LOAD_COMPLETE') {
         setRandomWorkerReady(true);
         return;
@@ -786,8 +865,9 @@ export default function AICurationHubPage() {
         const mapped = (Array.isArray(results) ? results : [])
           .map((row: WorkerRecommendationRow, index: number) => mapWorkerRandomArtwork(row, index))
           .filter((item: RecommendationCardItem) => typeof item.image === 'string' && item.image.trim().length > 0);
-        setRandomArtworks(mapped);
+        setRandomArtworks(prev => randomAppendRef.current ? [...prev, ...mapped] : mapped);
         setRandomLoading(false);
+        randomLoadingRef.current = false;
       }
     };
 
@@ -1046,7 +1126,7 @@ export default function AICurationHubPage() {
 
            const interleaved: RecommendationCardItem[] = [];
            let hasRemaining = true;
-           while (hasRemaining && interleaved.length < 120) {
+           while (hasRemaining && interleaved.length < 300) {
              hasRemaining = false;
              for (const [, rows] of groupedByArtist) {
                if (!rows.length) continue;
@@ -1054,7 +1134,7 @@ export default function AICurationHubPage() {
                if (!nextRow) continue;
                interleaved.push(nextRow);
                hasRemaining = true;
-               if (interleaved.length >= 120) break;
+               if (interleaved.length >= 300) break;
              }
            }
 
@@ -1067,14 +1147,15 @@ export default function AICurationHubPage() {
               if (seen.has(item.id) || seen.has(item.title)) continue;
               const artistKey = normalizeMetaKey(item.artist || 'unknown');
               const museumKey = normalizeMetaKey(item.museum || item.venue || 'unknown');
-              if ((artistCounter.get(artistKey) || 0) >= 2) continue;
-              if ((museumCounter.get(museumKey) || 0) >= 8) continue;
+              // Relax diversity constraints slightly for a larger pool
+              if ((artistCounter.get(artistKey) || 0) >= 6) continue;
+              if ((museumCounter.get(museumKey) || 0) >= 20) continue;
 
               seen.add(item.id); seen.add(item.title);
               artistCounter.set(artistKey, (artistCounter.get(artistKey) || 0) + 1);
               museumCounter.set(museumKey, (museumCounter.get(museumKey) || 0) + 1);
               unique.push(item);
-              if (unique.length >= 40) break;
+              if (unique.length >= 200) break;
            }
            setUserArtworks(unique);
         }
@@ -1205,7 +1286,7 @@ export default function AICurationHubPage() {
       </div>
 
       {/* ── Tab Switch ── */}
-      <div style={{ position: "sticky", top: 0, zIndex: 20, padding: "0 20px", backgroundColor: stickyBg, backdropFilter: "blur(20px)", WebkitBackdropFilter: "blur(20px)" }}>
+      <div style={{ position: "sticky", top: 0, zIndex: 20, paddingTop: "env(safe-area-inset-top, 0px)", paddingLeft: 20, paddingRight: 20, backgroundColor: stickyBg, backdropFilter: "blur(20px)", WebkitBackdropFilter: "blur(20px)" }}>
         <div style={{ position: 'relative', display: "flex", gap: 0, borderBottom: `1px solid ${divider}` }}>
           {(["curation", "nearby"]).map((tab) => {
             const label = tab === "curation"
@@ -1250,7 +1331,7 @@ export default function AICurationHubPage() {
                onChangeRecommendMode={setRecommendMode}
                randomArtworks={randomArtworks}
                randomLoading={randomLoading}
-               onRefreshRandom={() => requestRandomArtworks(36)}
+               onRefreshRandom={(count = 36, append = false) => requestRandomArtworks(count, append)}
                onSelect={(ex: RecommendationCardItem) => {
                  if (ex.isArtwork) {
                    setLightboxArtwork(ex);

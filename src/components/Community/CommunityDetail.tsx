@@ -138,30 +138,44 @@ const CommunityDetail: React.FC<CommunityDetailProps> = ({ postId, onBack }) => 
 
     // Fetch user profiles for comments
     useEffect(() => {
-        const fetchProfiles = async () => {
-            const uniqueIds = new Set(comments.map(c => c.userId));
-            if (user) uniqueIds.add(user.uid);
+        if (comments.length === 0) return;
 
-            const idsToFetch = Array.from(uniqueIds).filter(uid => uid && !userProfiles[uid]);
+        const uniqueIds = new Set(comments.map(c => c.userId));
+        if (user) uniqueIds.add(user.uid);
+        const idsToFetch = Array.from(uniqueIds).filter(uid => uid && !userProfiles[uid]);
+        if (idsToFetch.length === 0) return;
 
-            idsToFetch.forEach(async (uid) => {
-                try {
-                    const snap = await getDoc(doc(db, 'users', uid));
-                    if (snap.exists()) {
-                        const d = snap.data();
-                        setUserProfiles(prev => ({
-                            ...prev,
-                            [uid]: { nickname: d.nickname, photoURL: d.photoURL }
-                        }));
-                    }
-                } catch (e) {
-                    console.error("Error fetching profile", uid, e);
-                }
-            });
-        };
-        if (comments.length > 0) {
-            fetchProfiles();
-        }
+        let cancelled = false;
+        void (async () => {
+            try {
+                const results = await Promise.all(
+                    idsToFetch.map(async (uid) => {
+                        try {
+                            const snap = await getDoc(doc(db, 'users', uid));
+                            if (!snap.exists()) return null;
+                            const d = snap.data();
+                            return [uid, { nickname: d.nickname, photoURL: d.photoURL } as UserProfile] as const;
+                        } catch (err) {
+                            console.error("Error fetching profile", uid, err);
+                            return null;
+                        }
+                    })
+                );
+
+                if (cancelled) return;
+                const updates = results.filter((entry): entry is readonly [string, UserProfile] => Boolean(entry));
+                if (updates.length === 0) return;
+                setUserProfiles(prev => {
+                    const next = { ...prev };
+                    for (const [uid, profile] of updates) next[uid] = profile;
+                    return next;
+                });
+            } catch (err) {
+                if (!cancelled) console.error("Error fetching profiles", err);
+            }
+        })();
+
+        return () => { cancelled = true; };
     }, [comments, user, userProfiles]);
 
     const handleLikeToggle = async () => {
@@ -595,6 +609,8 @@ const CommunityDetail: React.FC<CommunityDetailProps> = ({ postId, onBack }) => 
                         <img
                             src={userProfiles[user?.uid || '']?.photoURL || user?.photoURL || ''}
                             alt="me"
+                            loading="eager"
+                            referrerPolicy="no-referrer"
                             style={{ width: 32, height: 32, borderRadius: '50%', objectFit: 'cover', border: '1px solid #eee' }}
                         />
                     )}

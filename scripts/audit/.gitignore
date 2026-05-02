@@ -1,0 +1,5 @@
+# Generated artifacts — large, regenerable. Do not commit.
+head-results.ndjson
+full-run.log
+audit-report.json
+placeholder-deletion-report.json
