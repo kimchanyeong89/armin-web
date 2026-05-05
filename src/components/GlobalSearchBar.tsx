@@ -3,8 +3,9 @@ import { createPortal } from 'react-dom';
 import { ShoppingBag, BookmarkPlus } from 'lucide-react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
 import { searchByText, preloadEncoder, onEncoderStatusChange, getEncoderStatus } from '../utils/siglipSearch';
+import { searchTextServer } from '../utils/serverKeywordSearch';
 import { getSearchThumbnail, getLightboxImage, getOptimizedImageUrl, normalizeImageUrl } from '../utils/imageProxy';
-import { shouldLimitNetwork } from '../utils/network';
+import { shouldLimitNetwork, isLikelyMobileDevice } from '../utils/network';
 import { ensureSharedSearchWorkerLoaded } from '../utils/searchWorkerRuntime';
 import { auth, db } from '../firebase';
 import { onAuthStateChanged } from 'firebase/auth';
@@ -2065,15 +2066,17 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                 if (now - lastProgressAtRef.current > 350) {
                     lastProgressAtRef.current = now;
                     setTotalCount(count);
-                    // Streaming: when a chunk lands and the user already has a
-                    // query in flight, re-run search against the larger index
-                    // so partial matches stream in. The UI's
-                    // mergeResultsPreservingOrder keeps already-shown results
-                    // pinned in place — late high-scoring matches append below
-                    // instead of jumping above what the user is reading.
-                    const activeQuery = queryRef.current || '';
-                    if (activeQuery && activeQuery.trim().length >= 2) {
-                        workerRef.current?.postMessage({ type: 'SEARCH', query: activeQuery });
+                    // Streaming: re-run search per chunk only on desktop.
+                    // Mobile WebView's full-text-index path is already disabled
+                    // (it OOM-killed the WebView at ~1.2GB), so a re-fire here
+                    // is wasted CPU on every chunk that never arrives. Even on
+                    // desktop, gate behind isLikelyMobileDevice so we don't
+                    // re-scan 600K items on a phone-shaped viewport.
+                    if (!isLikelyMobileDevice()) {
+                        const activeQuery = queryRef.current || '';
+                        if (activeQuery && activeQuery.trim().length >= 2) {
+                            workerRef.current?.postMessage({ type: 'SEARCH', query: activeQuery });
+                        }
                     }
                 }
             } else if (type === 'LOAD_COMPLETE') {
@@ -2849,6 +2852,38 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                 if (query.length >= 2) {
                     ensureWorker();
                     workerRef.current?.postMessage({ type: 'SEARCH', query });
+                    // Server-side keyword search runs in parallel with the
+                    // local worker. Whichever returns first feeds the merge
+                    // logic; the local worker stays the authority for full
+                    // coverage once chunks are loaded. searchTextServer
+                    // self-suppresses when D1 isn't deployed (HTTP 503),
+                    // so this is safe to ship before the D1 seed lands.
+                    void (async () => {
+                        const startedQuery = query;
+                        const rows = await searchTextServer(startedQuery, 50);
+                        if (rows.length === 0) return;
+                        if ((queryRef.current || '').trim() !== startedQuery.trim()) return;
+                        const mapped = rows.map((r) => ({
+                            id: String(r.id),
+                            name: r.n || '',
+                            artist: r.a || '',
+                            image: r.i || '',
+                            date: r.d || '',
+                            year: r.d || '',
+                            museumName: r.m || '',
+                            exhibitionId: r.e || '',
+                            sourceUrl: r.u || '',
+                        }) as SearchableArtwork)
+                          .filter((art) => {
+                              const museumName = (art.museumName || '').toLowerCase();
+                              const exhibitionId = (art.exhibitionId || '').toLowerCase();
+                              if (museumName.includes('serpentine gallery') || museumName.includes('british museum')) return false;
+                              if (exhibitionId.includes('serpentine') || exhibitionId.includes('british-museum') || exhibitionId.includes('the-british-museum') || exhibitionId.includes('bm-collection')) return false;
+                              return true;
+                          });
+                        if (mapped.length === 0) return;
+                        setFilteredArtworks((prev) => mergeResultsPreservingOrder(prev, mapped));
+                    })();
                 } else {
                     setFilteredArtworks([]);
                     setSuggestedArtists([]);
