@@ -7518,19 +7518,6 @@
     "original_image": "https://images.grandpalaisrmn.fr/thumb.php/01144689.jpg?ID=576045"
   },
   {
-    "id": "mucem-collection-538",
-    "mediaNumber": "01143143",
-    "title": "Tableau de scènes similaires n° 212",
-    "artist": "Unknown",
-    "year": null,
-    "medium": "Mixed",
-    "dimensions": "",
-    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/mucem-collection/mucem-collection-538.webp",
-    "sourceUrl": "https://images.grandpalaisrmn.fr/ark:/36255/12-548927",
-    "type": "unknown",
-    "museum": "Mucem, Marseille"
-  },
-  {
     "id": "mucem-collection-539",
     "mediaNumber": "01143083",
     "title": "Napoléon aux Pyramides",
@@ -13915,19 +13902,6 @@
     "original_image": "https://images.grandpalaisrmn.fr/thumb.php/00801045.jpg?ID=383484"
   },
   {
-    "id": "mucem-collection-995",
-    "mediaNumber": "00800877",
-    "title": "Au clair de la lune",
-    "artist": "Fonds",
-    "year": "19th century",
-    "medium": "Mixed",
-    "dimensions": "",
-    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/mucem-collection/mucem-collection-995.webp",
-    "sourceUrl": "https://images.grandpalaisrmn.fr/ark:/36255/08-521156",
-    "type": "unknown",
-    "museum": "Mucem, Marseille"
-  },
-  {
     "id": "mucem-collection-996",
     "mediaNumber": "00800713",
     "title": "Décoration de calendrier : ouverture de la Porte Sainte",
@@ -14402,32 +14376,6 @@
     "type": "unknown",
     "museum": "Mucem, Marseille",
     "original_image": "https://images.grandpalaisrmn.fr/thumb.php/00779114.jpg?ID=3027669"
-  },
-  {
-    "id": "mucem-collection-1030",
-    "mediaNumber": "00777799",
-    "title": "Moulin de Vendée",
-    "artist": "Anonymus",
-    "year": "Location",
-    "medium": "Mixed",
-    "dimensions": "",
-    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/mucem-collection/mucem-collection-1030.webp",
-    "sourceUrl": "https://images.grandpalaisrmn.fr/ark:/36255/12-549270",
-    "type": "unknown",
-    "museum": "Mucem, Marseille"
-  },
-  {
-    "id": "mucem-collection-1031",
-    "mediaNumber": "00777738",
-    "title": "Motif d'impression floral pour tissu",
-    "artist": "Anonymus",
-    "year": "Location",
-    "medium": "Mixed",
-    "dimensions": "",
-    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/mucem-collection/mucem-collection-1031.webp",
-    "sourceUrl": "https://images.grandpalaisrmn.fr/ark:/36255/11-533318",
-    "type": "unknown",
-    "museum": "Mucem, Marseille"
   },
   {
     "id": "mucem-collection-1032",
@@ -15788,19 +15736,6 @@
     "original_image": "https://images.grandpalaisrmn.fr/thumb.php/00696014.jpg?ID=581367"
   },
   {
-    "id": "mucem-collection-1129",
-    "mediaNumber": "00695789",
-    "title": "Exercices d'artillerie",
-    "artist": "Fonds",
-    "year": "19th century",
-    "medium": "Mixed",
-    "dimensions": "",
-    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/mucem-collection/mucem-collection-1129.webp",
-    "sourceUrl": "https://images.grandpalaisrmn.fr/ark:/36255/08-521112",
-    "type": "unknown",
-    "museum": "Mucem, Marseille"
-  },
-  {
     "id": "mucem-collection-1130",
     "mediaNumber": "00694488",
     "title": "L'astronome surpris",
@@ -16359,19 +16294,6 @@
     "type": "unknown",
     "museum": "Mucem, Marseille",
     "original_image": "https://images.grandpalaisrmn.fr/thumb.php/00661793.jpg?ID=1244713"
-  },
-  {
-    "id": "mucem-collection-1170",
-    "mediaNumber": "00661661",
-    "title": "Saint Pierre apôtre",
-    "artist": "Unknown",
-    "year": null,
-    "medium": "Mixed",
-    "dimensions": "",
-    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/mucem-collection/mucem-collection-1170.webp",
-    "sourceUrl": "https://images.grandpalaisrmn.fr/ark:/36255/08-538920",
-    "type": "unknown",
-    "museum": "Mucem, Marseille"
   },
   {
     "id": "mucem-collection-1171",
@@ -18404,19 +18326,6 @@
     "original_image": "https://images.grandpalaisrmn.fr/thumb.php/00544263.jpg?ID=1472355"
   },
   {
-    "id": "mucem-collection-1316",
-    "mediaNumber": "00544054",
-    "title": "Décor de théâtre : coulisses de la chambre rustique",
-    "artist": "Fonds",
-    "year": "19th century",
-    "medium": "Mixed",
-    "dimensions": "",
-    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/mucem-collection/mucem-collection-1316.webp",
-    "sourceUrl": "https://images.grandpalaisrmn.fr/ark:/36255/08-521312",
-    "type": "unknown",
-    "museum": "Mucem, Marseille"
-  },
-  {
     "id": "mucem-collection-1317",
     "mediaNumber": "00543304",
     "title": "Plaque de lanterne magique : Paul et Virginie",
@@ -19829,19 +19738,6 @@
     "type": "unknown",
     "museum": "Mucem, Marseille",
     "original_image": "https://images.grandpalaisrmn.fr/thumb.php/00475949.jpg?ID=569867"
-  },
-  {
-    "id": "mucem-collection-1418",
-    "mediaNumber": "00474749",
-    "title": "La Cène",
-    "artist": "Unknown",
-    "year": null,
-    "medium": "Mixed",
-    "dimensions": "",
-    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/mucem-collection/mucem-collection-1418.webp",
-    "sourceUrl": "https://images.grandpalaisrmn.fr/ark:/36255/11-543982",
-    "type": "unknown",
-    "museum": "Mucem, Marseille"
   },
   {
     "id": "mucem-collection-1419",
@@ -26998,19 +26894,6 @@
     "original_image": "https://images.grandpalaisrmn.fr/thumb.php/00091142.jpg?ID=1256797"
   },
   {
-    "id": "mucem-collection-1933",
-    "mediaNumber": "00089898",
-    "title": "La bûche de Noël",
-    "artist": "Lhermitte Léon",
-    "year": "19th century",
-    "medium": "Mixed",
-    "dimensions": "",
-    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/mucem-collection/mucem-collection-1933.webp",
-    "sourceUrl": "https://images.grandpalaisrmn.fr/ark:/36255/13-559872",
-    "type": "unknown",
-    "museum": "Mucem, Marseille"
-  },
-  {
     "id": "mucem-collection-1934",
     "mediaNumber": "00089813",
     "title": "Histoire de Judith et Holopherne",
@@ -28647,19 +28530,6 @@
     "type": "unknown",
     "museum": "Mucem, Marseille",
     "original_image": "https://images.grandpalaisrmn.fr/thumb.php/01517601.jpg?ID=755758"
-  },
-  {
-    "id": "mucem-collection-2051",
-    "mediaNumber": "01516161",
-    "title": "Sainte Christina",
-    "artist": "Anonymus",
-    "year": "18th century",
-    "medium": "Mixed",
-    "dimensions": "",
-    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/mucem-collection/mucem-collection-2051.webp",
-    "sourceUrl": "https://images.grandpalaisrmn.fr/ark:/36255/11-556647",
-    "type": "unknown",
-    "museum": "Mucem, Marseille"
   },
   {
     "id": "mucem-collection-2052",
@@ -30312,19 +30182,6 @@
     "type": "unknown",
     "museum": "Mucem, Marseille",
     "original_image": "https://images.grandpalaisrmn.fr/thumb.php/01415482.jpg?ID=942836"
-  },
-  {
-    "id": "mucem-collection-2170",
-    "mediaNumber": "01414128",
-    "title": "Oiseaux autour d'un décor végétal stylisé",
-    "artist": "Anonymus",
-    "year": "19th century",
-    "medium": "Mixed",
-    "dimensions": "",
-    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/mucem-collection/mucem-collection-2170.webp",
-    "sourceUrl": "https://images.grandpalaisrmn.fr/ark:/36255/11-556729",
-    "type": "unknown",
-    "museum": "Mucem, Marseille"
   },
   {
     "id": "mucem-collection-2171",
@@ -33113,19 +32970,6 @@
     "original_image": "https://images.grandpalaisrmn.fr/thumb.php/01259195.jpg?ID=729160"
   },
   {
-    "id": "mucem-collection-2370",
-    "mediaNumber": "01256957",
-    "title": "Vieux Breton de Pont-Aven fumant sa pipe",
-    "artist": "Anker Hermanus Franciscus van den",
-    "year": "19th century",
-    "medium": "Mixed",
-    "dimensions": "",
-    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/mucem-collection/mucem-collection-2370.webp",
-    "sourceUrl": "https://images.grandpalaisrmn.fr/ark:/36255/20-502140",
-    "type": "unknown",
-    "museum": "Mucem, Marseille"
-  },
-  {
     "id": "mucem-collection-2371",
     "mediaNumber": "01256131",
     "title": "La Revue (les titres de propriétés) ; gweladen",
@@ -34272,19 +34116,6 @@
     "type": "unknown",
     "museum": "Mucem, Marseille",
     "original_image": "https://images.grandpalaisrmn.fr/thumb.php/01192291.jpg?ID=413755"
-  },
-  {
-    "id": "mucem-collection-2453",
-    "mediaNumber": "01191193",
-    "title": "Il se soustrait au coeur mais ce n'est qu'une épreuve...",
-    "artist": "Anonymus",
-    "year": "18th century",
-    "medium": "Mixed",
-    "dimensions": "",
-    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/mucem-collection/mucem-collection-2453.webp",
-    "sourceUrl": "https://images.grandpalaisrmn.fr/ark:/36255/11-556580",
-    "type": "unknown",
-    "museum": "Mucem, Marseille"
   },
   {
     "id": "mucem-collection-2454",
@@ -37213,19 +37044,6 @@
     "original_image": "https://images.grandpalaisrmn.fr/thumb.php/01011391.jpg?ID=625929"
   },
   {
-    "id": "mucem-collection-2663",
-    "mediaNumber": "01010956",
-    "title": "Album Lalaisse : \"Caraboussen\" coiffure des pêcheurs (Bretagne, Finistère, Kerlouan)",
-    "artist": "Unknown",
-    "year": null,
-    "medium": "Mixed",
-    "dimensions": "",
-    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/mucem-collection/mucem-collection-2663.webp",
-    "sourceUrl": "https://images.grandpalaisrmn.fr/ark:/36255/81-000509",
-    "type": "unknown",
-    "museum": "Mucem, Marseille"
-  },
-  {
     "id": "mucem-collection-2664",
     "mediaNumber": "01008256",
     "title": "Impasse quai Fort Fidèle",
@@ -37476,19 +37294,6 @@
     "type": "unknown",
     "museum": "Mucem, Marseille",
     "original_image": "https://images.grandpalaisrmn.fr/thumb.php/00995800.jpg?ID=645763"
-  },
-  {
-    "id": "mucem-collection-2682",
-    "mediaNumber": "00995748",
-    "title": "Numéro de cirque : clown deguisé en femme se poudrant",
-    "artist": "Vesque Marthe",
-    "year": "20th century",
-    "medium": "Mixed",
-    "dimensions": "",
-    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/mucem-collection/mucem-collection-2682.webp",
-    "sourceUrl": "https://images.grandpalaisrmn.fr/ark:/36255/08-516577",
-    "type": "unknown",
-    "museum": "Mucem, Marseille"
   },
   {
     "id": "mucem-collection-2683",
@@ -38175,32 +37980,6 @@
     "type": "unknown",
     "museum": "Mucem, Marseille",
     "original_image": "https://images.grandpalaisrmn.fr/thumb.php/00956060.jpg?ID=1211755"
-  },
-  {
-    "id": "mucem-collection-2732",
-    "mediaNumber": "00955559",
-    "title": "Les achats au bourg",
-    "artist": "Perrin Olivier Stanislas",
-    "year": "19th century",
-    "medium": "Mixed",
-    "dimensions": "",
-    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/mucem-collection/mucem-collection-2732.webp",
-    "sourceUrl": "https://images.grandpalaisrmn.fr/ark:/36255/10-500151",
-    "type": "unknown",
-    "museum": "Mucem, Marseille"
-  },
-  {
-    "id": "mucem-collection-2733",
-    "mediaNumber": "00955552",
-    "title": "Jongleurs et acrobates",
-    "artist": "Unknown",
-    "year": null,
-    "medium": "Mixed",
-    "dimensions": "",
-    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/mucem-collection/mucem-collection-2733.webp",
-    "sourceUrl": "https://images.grandpalaisrmn.fr/ark:/36255/09-577917",
-    "type": "unknown",
-    "museum": "Mucem, Marseille"
   },
   {
     "id": "mucem-collection-2734",
@@ -39265,19 +39044,6 @@
     "type": "unknown",
     "museum": "Mucem, Marseille",
     "original_image": "https://images.grandpalaisrmn.fr/thumb.php/00890568.jpg?ID=869176"
-  },
-  {
-    "id": "mucem-collection-2810",
-    "mediaNumber": "00889008",
-    "title": "Cabane des Douaniers à St Hilaire-de-Riez",
-    "artist": "Boutin Emile",
-    "year": "20th century",
-    "medium": "Mixed",
-    "dimensions": "",
-    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/mucem-collection/mucem-collection-2810.webp",
-    "sourceUrl": "https://images.grandpalaisrmn.fr/ark:/36255/10-500076",
-    "type": "unknown",
-    "museum": "Mucem, Marseille"
   },
   {
     "id": "mucem-collection-2811",
@@ -41660,19 +41426,6 @@
     "original_image": "https://images.grandpalaisrmn.fr/thumb.php/00762219.jpg?ID=1188159"
   },
   {
-    "id": "mucem-collection-2981",
-    "mediaNumber": "00761869",
-    "title": "Album Lalaisse : dernière page avec notes manuscrites",
-    "artist": "Unknown",
-    "year": null,
-    "medium": "Mixed",
-    "dimensions": "",
-    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/mucem-collection/mucem-collection-2981.webp",
-    "sourceUrl": "https://images.grandpalaisrmn.fr/ark:/36255/81-000526",
-    "type": "unknown",
-    "museum": "Mucem, Marseille"
-  },
-  {
     "id": "mucem-collection-2982",
     "mediaNumber": "00759166",
     "title": "Quai Fort-Fidèle, Saint-Gilles-Croix-de-Vie",
@@ -42035,19 +41788,6 @@
     "type": "unknown",
     "museum": "Mucem, Marseille",
     "original_image": "https://images.grandpalaisrmn.fr/thumb.php/00739040.jpg?ID=710929"
-  },
-  {
-    "id": "mucem-collection-3008",
-    "mediaNumber": "00739007",
-    "title": "Album \"Le Cirque en images\" : Les Fred le 18 mai 1913 ; Les Revel le 5 juin 1911",
-    "artist": "Vesque Marthe",
-    "year": "20th century",
-    "medium": "Mixed",
-    "dimensions": "",
-    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/mucem-collection/mucem-collection-3008.webp",
-    "sourceUrl": "https://images.grandpalaisrmn.fr/ark:/36255/07-518405",
-    "type": "unknown",
-    "museum": "Mucem, Marseille"
   },
   {
     "id": "mucem-collection-3009",
@@ -43000,19 +42740,6 @@
     "type": "unknown",
     "museum": "Mucem, Marseille",
     "original_image": "https://images.grandpalaisrmn.fr/thumb.php/00678800.jpg?ID=1562061"
-  },
-  {
-    "id": "mucem-collection-3077",
-    "mediaNumber": "00678787",
-    "title": "Transhumance, le mas Bontemps",
-    "artist": "Jordan André",
-    "year": "20th century",
-    "medium": "Mixed",
-    "dimensions": "",
-    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/mucem-collection/mucem-collection-3077.webp",
-    "sourceUrl": "https://images.grandpalaisrmn.fr/ark:/36255/09-532499",
-    "type": "unknown",
-    "museum": "Mucem, Marseille"
   },
   {
     "id": "mucem-collection-3078",
@@ -45661,19 +45388,6 @@
     "original_image": "https://images.grandpalaisrmn.fr/thumb.php/00522523.jpg?ID=376095"
   },
   {
-    "id": "mucem-collection-3267",
-    "mediaNumber": "00522522",
-    "title": "Numéro de cirque : les Bartros à l'Olympia",
-    "artist": "Unknown",
-    "year": null,
-    "medium": "Mixed",
-    "dimensions": "",
-    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/mucem-collection/mucem-collection-3267.webp",
-    "sourceUrl": "https://images.grandpalaisrmn.fr/ark:/36255/09-577889",
-    "type": "unknown",
-    "museum": "Mucem, Marseille"
-  },
-  {
     "id": "mucem-collection-3268",
     "mediaNumber": "00520972",
     "title": "de cirque : Misaka Chokichi, Marley et Flora au Cirque de Paris et àl'Olympia",
@@ -46498,19 +46212,6 @@
     "type": "unknown",
     "museum": "Mucem, Marseille",
     "original_image": "https://images.grandpalaisrmn.fr/thumb.php/00471568.jpg?ID=2252682"
-  },
-  {
-    "id": "mucem-collection-3327",
-    "mediaNumber": "00470042",
-    "title": "Le départ des valets",
-    "artist": "Unknown",
-    "year": null,
-    "medium": "Mixed",
-    "dimensions": "",
-    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/mucem-collection/mucem-collection-3327.webp",
-    "sourceUrl": "https://images.grandpalaisrmn.fr/ark:/36255/10-500168",
-    "type": "unknown",
-    "museum": "Mucem, Marseille"
   },
   {
     "id": "mucem-collection-3328",
@@ -47407,19 +47108,6 @@
     "type": "unknown",
     "museum": "Mucem, Marseille",
     "original_image": "https://images.grandpalaisrmn.fr/thumb.php/00421765.jpg?ID=1184789"
-  },
-  {
-    "id": "mucem-collection-3392",
-    "mediaNumber": "00420421",
-    "title": "Saint Josephus",
-    "artist": "Anonymus",
-    "year": "18th century",
-    "medium": "Mixed",
-    "dimensions": "",
-    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/mucem-collection/mucem-collection-3392.webp",
-    "sourceUrl": "https://images.grandpalaisrmn.fr/ark:/36255/11-556679",
-    "type": "unknown",
-    "museum": "Mucem, Marseille"
   },
   {
     "id": "mucem-collection-3393",
@@ -50446,19 +50134,6 @@
     "original_image": "https://images.grandpalaisrmn.fr/thumb.php/00244515.jpg?ID=1241292"
   },
   {
-    "id": "mucem-collection-3609",
-    "mediaNumber": "00244024",
-    "title": "Ouvrier de dos, travaillant, la coulée ?",
-    "artist": "Boris TASLITZKY",
-    "year": "20th century",
-    "medium": "Mixed",
-    "dimensions": "",
-    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/mucem-collection/mucem-collection-3609.webp",
-    "sourceUrl": "https://images.grandpalaisrmn.fr/ark:/36255/06-524706",
-    "type": "unknown",
-    "museum": "Mucem, Marseille"
-  },
-  {
     "id": "mucem-collection-3610",
     "mediaNumber": "00241080",
     "title": "Dans ma forêt de la Farge de Saint-Hilaire-de-Riez",
@@ -50667,19 +50342,6 @@
     "type": "unknown",
     "museum": "Mucem, Marseille",
     "original_image": "https://images.grandpalaisrmn.fr/thumb.php/00230241.jpg?ID=1225471"
-  },
-  {
-    "id": "mucem-collection-3625",
-    "mediaNumber": "00230236",
-    "title": "Maison de vigneron à Cuse (Doubs)",
-    "artist": "Perrot René",
-    "year": "20th century",
-    "medium": "Mixed",
-    "dimensions": "",
-    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/mucem-collection/mucem-collection-3625.webp",
-    "sourceUrl": "https://images.grandpalaisrmn.fr/ark:/36255/09-520462",
-    "type": "unknown",
-    "museum": "Mucem, Marseille"
   },
   {
     "id": "mucem-collection-3626",
@@ -51984,19 +51646,6 @@
     "original_image": "https://images.grandpalaisrmn.fr/thumb.php/00171763.jpg?ID=406311"
   },
   {
-    "id": "mucem-collection-3719",
-    "mediaNumber": "00171711",
-    "title": "Bateau de pêche sur la plage de Berck",
-    "artist": "Fonds",
-    "year": "19th century",
-    "medium": "Mixed",
-    "dimensions": "",
-    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/mucem-collection/mucem-collection-3719.webp",
-    "sourceUrl": "https://images.grandpalaisrmn.fr/ark:/36255/08-545994",
-    "type": "unknown",
-    "museum": "Mucem, Marseille"
-  },
-  {
     "id": "mucem-collection-3720",
     "mediaNumber": "00171590",
     "title": "Numéro de cirque : les Annytos et Mlle Sylvio au cirque Médrano",
@@ -52023,32 +51672,6 @@
     "type": "unknown",
     "museum": "Mucem, Marseille",
     "original_image": "https://images.grandpalaisrmn.fr/thumb.php/00170188.jpg?ID=293042"
-  },
-  {
-    "id": "mucem-collection-3722",
-    "mediaNumber": "00170178",
-    "title": "Numéro de cirque : Duo Passel au Cirque Médrano",
-    "artist": "Vesque Marthe",
-    "year": "20th century",
-    "medium": "Mixed",
-    "dimensions": "",
-    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/mucem-collection/mucem-collection-3722.webp",
-    "sourceUrl": "https://images.grandpalaisrmn.fr/ark:/36255/09-577879",
-    "type": "unknown",
-    "museum": "Mucem, Marseille"
-  },
-  {
-    "id": "mucem-collection-3723",
-    "mediaNumber": "00170173",
-    "title": "Armoire",
-    "artist": "Fonds",
-    "year": "Location",
-    "medium": "Mixed",
-    "dimensions": "",
-    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/mucem-collection/mucem-collection-3723.webp",
-    "sourceUrl": "https://images.grandpalaisrmn.fr/ark:/36255/09-576882",
-    "type": "unknown",
-    "museum": "Mucem, Marseille"
   },
   {
     "id": "mucem-collection-3724",
@@ -53171,19 +52794,6 @@
     "original_image": "https://images.grandpalaisrmn.fr/thumb.php/00103457.jpg?ID=90963"
   },
   {
-    "id": "mucem-collection-3804",
-    "mediaNumber": "00102021",
-    "title": "Outil de l'atelier du vannier Xavier Parguet",
-    "artist": "Perrot René",
-    "year": "20th century",
-    "medium": "Mixed",
-    "dimensions": "",
-    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/mucem-collection/mucem-collection-3804.webp",
-    "sourceUrl": "https://images.grandpalaisrmn.fr/ark:/36255/09-520249",
-    "type": "unknown",
-    "museum": "Mucem, Marseille"
-  },
-  {
     "id": "mucem-collection-3805",
     "mediaNumber": "00100481",
     "title": "Torrent de Campeaume, près Molitg",
@@ -53238,19 +52848,6 @@
     "type": "unknown",
     "museum": "Mucem, Marseille",
     "original_image": "https://images.grandpalaisrmn.fr/thumb.php/00098931.jpg?ID=3029523"
-  },
-  {
-    "id": "mucem-collection-3809",
-    "mediaNumber": "00098098",
-    "title": "Plumassier et Panachier",
-    "artist": "Unknown",
-    "year": null,
-    "medium": "Mixed",
-    "dimensions": "",
-    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/mucem-collection/mucem-collection-3809.webp",
-    "sourceUrl": "https://images.grandpalaisrmn.fr/ark:/36255/17-618513",
-    "type": "unknown",
-    "museum": "Mucem, Marseille"
   },
   {
     "id": "mucem-collection-3810",
@@ -54681,19 +54278,6 @@
     "original_image": "https://images.grandpalaisrmn.fr/thumb.php/00015286.jpg?ID=778970"
   },
   {
-    "id": "mucem-collection-3913",
-    "mediaNumber": "00015151",
-    "title": "Paysage : pont et maison",
-    "artist": "Soury Gustave",
-    "year": "20th century",
-    "medium": "Mixed",
-    "dimensions": "",
-    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/mucem-collection/mucem-collection-3913.webp",
-    "sourceUrl": "https://images.grandpalaisrmn.fr/ark:/36255/08-516610",
-    "type": "unknown",
-    "museum": "Mucem, Marseille"
-  },
-  {
     "id": "mucem-collection-3914",
     "mediaNumber": "00013757",
     "title": "La succession",
@@ -54792,123 +54376,6 @@
     "original_image": "https://images.grandpalaisrmn.fr/thumb.php/00010632.jpg?ID=1257764"
   },
   {
-    "id": "mucem-collection-3921",
-    "mediaNumber": "00009192",
-    "title": "Lecture",
-    "artist": "Fonds",
-    "year": "Location",
-    "medium": "Mixed",
-    "dimensions": "",
-    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/mucem-collection/mucem-collection-3921.webp",
-    "sourceUrl": "https://images.grandpalaisrmn.fr/ark:/36255/09-569290",
-    "type": "unknown",
-    "museum": "Mucem, Marseille"
-  },
-  {
-    "id": "mucem-collection-3922",
-    "mediaNumber": "00009180",
-    "title": "Cultivateur de Bouconvillers",
-    "artist": "Jordan André",
-    "year": "20th century",
-    "medium": "Mixed",
-    "dimensions": "",
-    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/mucem-collection/mucem-collection-3922.webp",
-    "sourceUrl": "https://images.grandpalaisrmn.fr/ark:/36255/09-532401",
-    "type": "unknown",
-    "museum": "Mucem, Marseille"
-  },
-  {
-    "id": "mucem-collection-3923",
-    "mediaNumber": "00009166",
-    "title": "Coiffe féminine de Murat (Cantal)",
-    "artist": "Perrot René",
-    "year": "20th century",
-    "medium": "Mixed",
-    "dimensions": "",
-    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/mucem-collection/mucem-collection-3923.webp",
-    "sourceUrl": "https://images.grandpalaisrmn.fr/ark:/36255/09-520437",
-    "type": "unknown",
-    "museum": "Mucem, Marseille"
-  },
-  {
-    "id": "mucem-collection-3924",
-    "mediaNumber": "00009122",
-    "title": "Projet d'affiche (?) de cirque",
-    "artist": "Soury Gustave",
-    "year": "20th century",
-    "medium": "Mixed",
-    "dimensions": "",
-    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/mucem-collection/mucem-collection-3924.webp",
-    "sourceUrl": "https://images.grandpalaisrmn.fr/ark:/36255/08-516449",
-    "type": "unknown",
-    "museum": "Mucem, Marseille"
-  },
-  {
-    "id": "mucem-collection-3925",
-    "mediaNumber": "00009081",
-    "title": "Album \"Le Cirque en image\" : Chapiteaux : \"Jardin d'acclimatation\" 9 juin 1930",
-    "artist": "Vesque Marthe",
-    "year": "20th century",
-    "medium": "Mixed",
-    "dimensions": "",
-    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/mucem-collection/mucem-collection-3925.webp",
-    "sourceUrl": "https://images.grandpalaisrmn.fr/ark:/36255/07-518443",
-    "type": "unknown",
-    "museum": "Mucem, Marseille"
-  },
-  {
-    "id": "mucem-collection-3926",
-    "mediaNumber": "00007677",
-    "title": "La Grand'combe, Chateleu, industrie du bois, fabrication des roulettes pour les jouets d'enfant",
-    "artist": "Unknown",
-    "year": null,
-    "medium": "Mixed",
-    "dimensions": "",
-    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/mucem-collection/mucem-collection-3926.webp",
-    "sourceUrl": "https://images.grandpalaisrmn.fr/ark:/36255/09-520427",
-    "type": "unknown",
-    "museum": "Mucem, Marseille"
-  },
-  {
-    "id": "mucem-collection-3927",
-    "mediaNumber": "00007671",
-    "title": "Corps de ferme à Levimpont",
-    "artist": "Unknown",
-    "year": null,
-    "medium": "Mixed",
-    "dimensions": "",
-    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/mucem-collection/mucem-collection-3927.webp",
-    "sourceUrl": "https://images.grandpalaisrmn.fr/ark:/36255/09-532391",
-    "type": "unknown",
-    "museum": "Mucem, Marseille"
-  },
-  {
-    "id": "mucem-collection-3928",
-    "mediaNumber": "00007615",
-    "title": "Lion",
-    "artist": "Unknown",
-    "year": null,
-    "medium": "Mixed",
-    "dimensions": "",
-    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/mucem-collection/mucem-collection-3928.webp",
-    "sourceUrl": "https://images.grandpalaisrmn.fr/ark:/36255/08-516439",
-    "type": "unknown",
-    "museum": "Mucem, Marseille"
-  },
-  {
-    "id": "mucem-collection-3929",
-    "mediaNumber": "00007540",
-    "title": "Livraison à domicile",
-    "artist": "Unknown",
-    "year": null,
-    "medium": "Mixed",
-    "dimensions": "",
-    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/mucem-collection/mucem-collection-3929.webp",
-    "sourceUrl": "https://images.grandpalaisrmn.fr/ark:/36255/09-569280",
-    "type": "unknown",
-    "museum": "Mucem, Marseille"
-  },
-  {
     "id": "mucem-collection-3930",
     "mediaNumber": "00007525",
     "title": "Album \"Le cirque en image\" : Chapiteaux, Cirque Gleich",
@@ -54921,149 +54388,6 @@
     "type": "unknown",
     "museum": "Mucem, Marseille",
     "original_image": "https://images.grandpalaisrmn.fr/thumb.php/00007525.jpg?ID=380450"
-  },
-  {
-    "id": "mucem-collection-3931",
-    "mediaNumber": "00006157",
-    "title": "Le Tricheur",
-    "artist": "Fonds",
-    "year": "19th century",
-    "medium": "Mixed",
-    "dimensions": "",
-    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/mucem-collection/mucem-collection-3931.webp",
-    "sourceUrl": "https://images.grandpalaisrmn.fr/ark:/36255/09-569255",
-    "type": "unknown",
-    "museum": "Mucem, Marseille"
-  },
-  {
-    "id": "mucem-collection-3932",
-    "mediaNumber": "00006149",
-    "title": "Ferme à Pupillin",
-    "artist": "Perrot René",
-    "year": "20th century",
-    "medium": "Mixed",
-    "dimensions": "",
-    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/mucem-collection/mucem-collection-3932.webp",
-    "sourceUrl": "https://images.grandpalaisrmn.fr/ark:/36255/09-532366",
-    "type": "unknown",
-    "museum": "Mucem, Marseille"
-  },
-  {
-    "id": "mucem-collection-3933",
-    "mediaNumber": "00006134",
-    "title": "Grand'combe, ferme",
-    "artist": "Perrot René",
-    "year": "20th century",
-    "medium": "Mixed",
-    "dimensions": "",
-    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/mucem-collection/mucem-collection-3933.webp",
-    "sourceUrl": "https://images.grandpalaisrmn.fr/ark:/36255/09-520402",
-    "type": "unknown",
-    "museum": "Mucem, Marseille"
-  },
-  {
-    "id": "mucem-collection-3934",
-    "mediaNumber": "00006077",
-    "title": "Etude de bayadère sur la tête d'un éléphant dressé",
-    "artist": "Soury Gustave",
-    "year": "20th century",
-    "medium": "Mixed",
-    "dimensions": "",
-    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/mucem-collection/mucem-collection-3934.webp",
-    "sourceUrl": "https://images.grandpalaisrmn.fr/ark:/36255/08-516414",
-    "type": "unknown",
-    "museum": "Mucem, Marseille"
-  },
-  {
-    "id": "mucem-collection-3935",
-    "mediaNumber": "00006054",
-    "title": "Album \"Le cirque en image\" : Eldid à l'Olympia",
-    "artist": "Vesque Marthe",
-    "year": "20th century",
-    "medium": "Mixed",
-    "dimensions": "",
-    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/mucem-collection/mucem-collection-3935.webp",
-    "sourceUrl": "https://images.grandpalaisrmn.fr/ark:/36255/07-518408",
-    "type": "unknown",
-    "museum": "Mucem, Marseille"
-  },
-  {
-    "id": "mucem-collection-3937",
-    "mediaNumber": "00004535",
-    "title": "Album \"Le Cirque en images\" : Tigre, au cirque Médrano",
-    "artist": "Unknown",
-    "year": null,
-    "medium": "Mixed",
-    "dimensions": "",
-    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/mucem-collection/mucem-collection-3937.webp",
-    "sourceUrl": "https://images.grandpalaisrmn.fr/ark:/36255/07-518352",
-    "type": "unknown",
-    "museum": "Mucem, Marseille"
-  },
-  {
-    "id": "mucem-collection-3938",
-    "mediaNumber": "00003136",
-    "title": "Animaux illustrés",
-    "artist": "Unknown",
-    "year": null,
-    "medium": "Mixed",
-    "dimensions": "",
-    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/mucem-collection/mucem-collection-3938.webp",
-    "sourceUrl": "https://images.grandpalaisrmn.fr/ark:/36255/09-569246",
-    "type": "unknown",
-    "museum": "Mucem, Marseille"
-  },
-  {
-    "id": "mucem-collection-3939",
-    "mediaNumber": "00003019",
-    "title": "Album \"Le cirque en image\" : Harry de Coé à l'Alhambra",
-    "artist": "Unknown",
-    "year": null,
-    "medium": "Mixed",
-    "dimensions": "",
-    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/mucem-collection/mucem-collection-3939.webp",
-    "sourceUrl": "https://images.grandpalaisrmn.fr/ark:/36255/07-518399",
-    "type": "unknown",
-    "museum": "Mucem, Marseille"
-  },
-  {
-    "id": "mucem-collection-3941",
-    "mediaNumber": "00002969",
-    "title": "La Chevanne",
-    "artist": "Perrot René",
-    "year": "20th century",
-    "medium": "Mixed",
-    "dimensions": "",
-    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/mucem-collection/mucem-collection-3941.webp",
-    "sourceUrl": "https://images.grandpalaisrmn.fr/ark:/36255/09-520393",
-    "type": "unknown",
-    "museum": "Mucem, Marseille"
-  },
-  {
-    "id": "mucem-collection-3942",
-    "mediaNumber": "00001116",
-    "title": "Le loup et la cigogne",
-    "artist": "Fonds",
-    "year": "Location",
-    "medium": "Mixed",
-    "dimensions": "",
-    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/mucem-collection/mucem-collection-3942.webp",
-    "sourceUrl": "https://images.grandpalaisrmn.fr/ark:/36255/80-001539",
-    "type": "unknown",
-    "museum": "Mucem, Marseille"
-  },
-  {
-    "id": "mucem-collection-3943",
-    "mediaNumber": "00000897",
-    "title": "Cochon",
-    "artist": "Anonymus",
-    "year": "19th century",
-    "medium": "Mixed",
-    "dimensions": "",
-    "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/mucem-collection/mucem-collection-3943.webp",
-    "sourceUrl": "https://images.grandpalaisrmn.fr/ark:/36255/11-556753",
-    "type": "unknown",
-    "museum": "Mucem, Marseille"
   },
   {
     "id": "mucem-c-160414",
