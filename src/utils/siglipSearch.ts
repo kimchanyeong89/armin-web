@@ -102,7 +102,13 @@ function getWorker(): Worker {
  * 브라우저 WASM으로 텍스트 → 768D 벡터 변환
  * 첫 호출 시 ~70MB 모델 다운로드 (이후 캐시)
  * 모바일에서는 메모리 크래시 방지를 위해 스킵
+ *
+ * Timeout was 45s (covering cold model download). Now 7s — if WASM hasn't
+ * encoded by then, the parallel server race below has long since won and
+ * the browser result is moot.
  */
+const BROWSER_ENCODE_TIMEOUT_MS = 7_000;
+
 async function encodeWithBrowser(text: string): Promise<number[] | null> {
     if (IS_MOBILE_DEVICE) return null; // Skip 70MB WASM on mobile
     return new Promise((resolve) => {
@@ -110,12 +116,10 @@ async function encodeWithBrowser(text: string): Promise<number[] | null> {
             const worker = getWorker();
             const id = String(++requestId);
 
-            // 45초 타임아웃 (첫 로드 시 모델 다운로드 포함)
             const timer = setTimeout(() => {
                 pending.delete(id);
-                console.warn('[SigLIP] Browser encoding timeout');
                 resolve(null);
-            }, 45_000);
+            }, BROWSER_ENCODE_TIMEOUT_MS);
 
             pending.set(id, {
                 resolve: (v) => { clearTimeout(timer); resolve(v); },
@@ -135,18 +139,54 @@ async function encodeWithBrowser(text: string): Promise<number[] | null> {
 // ─────────────────────────────────────────────────────────────
 
 /**
- * 텍스트로 시맨틱 검색
- *  Tier 1: 브라우저 WASM (Transformers.js) → 완전 무료, 서버 불필요
- *  Tier 2: Cloudflare Worker /search-by-text → HF Inference API 폴백
+ * 텍스트로 시맨틱 검색 — Tier 1과 Tier 2를 병렬로 실행해서 먼저 끝나는 쪽 채택.
+ * 이전 구현은 Tier 1 → Tier 2 순차였는데, WASM 인코더가 콜드 로드 중이면
+ * 브라우저 경로가 7초 가까이 막히고 그 동안 사용자는 빈 화면을 본다.
+ * 이제는 두 경로를 동시에 띄워서:
+ *   - WASM이 이미 ready 상태면 ~50-200ms로 브라우저 쪽이 이긴다
+ *   - WASM이 cold/loading이면 서버가 ~500ms로 먼저 결과를 돌려준다
+ * 어느 쪽이든 1초 안에 결과를 받는다.
+ *
+ *  Tier 1: 브라우저 WASM (Transformers.js) → 무료, 서버 round-trip 절약
+ *  Tier 2: Cloudflare Worker /search-by-text → 항상 일관된 baseline
  */
 export async function searchByText(
     text: string,
     limit: number = 50
 ): Promise<SigLIPSearchResult[]> {
-    // Tier 1: 브라우저 내 인코딩
-    const vector = await encodeWithBrowser(text);
+    const trimmed = (text || '').trim();
+    if (!trimmed) return [];
 
-    if (vector && vector.length === 768) {
+    // Tier 2 — server. Always fire (it's our reliable baseline).
+    const serverPromise: Promise<SigLIPSearchResult[] | null> = (async () => {
+        try {
+            const res = await fetchWithTimeout(`${WORKER_URL}/search-by-text`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'omit',
+                mode: 'cors',
+                body: JSON.stringify({ text: trimmed, limit }),
+            }, 12_000);
+            if (!res.ok) {
+                const errText = await res.text().catch(() => '');
+                console.warn(`[SigLIP] /search-by-text failed (${res.status}): ${errText.slice(0, 200)}`);
+                return null;
+            }
+            const data = await res.json() as { results?: SigLIPSearchResult[] };
+            return data?.results ?? [];
+        } catch (err) {
+            console.warn('[SigLIP] /search-by-text request failed:', err);
+            return null;
+        }
+    })();
+
+    // Tier 1 — browser WASM. Skipped on mobile entirely.  On desktop we
+    // still try it because once the model is loaded a single round-trip
+    // (no HF call on the worker) is faster than tier 2.
+    const browserPromise: Promise<SigLIPSearchResult[] | null> = (async () => {
+        if (IS_MOBILE_DEVICE) return null;
+        const vector = await encodeWithBrowser(trimmed);
+        if (!vector || vector.length !== 768) return null;
         try {
             const res = await fetchWithTimeout(`${WORKER_URL}/search-by-vector`, {
                 method: 'POST',
@@ -155,35 +195,36 @@ export async function searchByText(
                 mode: 'cors',
                 body: JSON.stringify({ vector, limit }),
             }, 12_000);
-            if (res.ok) {
-                const data = await res.json() as { results?: SigLIPSearchResult[] };
-                return data.results ?? [];
-            }
+            if (!res.ok) return null;
+            const data = await res.json() as { results?: SigLIPSearchResult[] };
+            return data?.results ?? [];
         } catch (err) {
             console.warn('[SigLIP] /search-by-vector failed:', err);
+            return null;
         }
-    }
+    })();
 
-    // Tier 2: Worker 서버사이드 인코딩 (HF Inference API) — primary path on mobile
-    try {
-        const res = await fetchWithTimeout(`${WORKER_URL}/search-by-text`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            credentials: 'omit',
-            mode: 'cors',
-            body: JSON.stringify({ text, limit }),
-        }, 15_000);
-        if (res.ok) {
-            const data = await res.json() as { results?: SigLIPSearchResult[] };
-            return data.results ?? [];
-        }
-        const errText = await res.text().catch(() => '');
-        console.warn(`[SigLIP] /search-by-text failed (${res.status}): ${errText.slice(0, 200)}`);
-    } catch (err) {
-        console.warn('[SigLIP] /search-by-text request failed:', err);
-    }
+    // Race: take whichever returns first with a non-empty result.
+    // Promise.race resolves on the first SETTLED promise, so we can't naively
+    // race them — a path that fails fast (returns null) would 'win' over a
+    // slower path that returns real data. We resolve race only on non-empty
+    // success; null/empty is treated as 'still racing'.
+    const racingWinner = await new Promise<SigLIPSearchResult[] | null>((resolve) => {
+        let settled = 0;
+        const onResult = (r: SigLIPSearchResult[] | null) => {
+            settled += 1;
+            if (r && r.length > 0) resolve(r);
+            else if (settled === 2) resolve(null);
+        };
+        browserPromise.then(onResult, () => onResult(null));
+        serverPromise.then(onResult, () => onResult(null));
+    });
 
-    return [];
+    if (racingWinner) return racingWinner;
+
+    // Both paths returned empty / failed. Award server its retry-cycle so the
+    // caller can see the actual server response (might be a transient empty).
+    return (await serverPromise) ?? [];
 }
 
 /**
