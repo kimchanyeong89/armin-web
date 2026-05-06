@@ -17,6 +17,31 @@ interface Env {
     VECTORIZE: VectorizeIndex;
     HF_TOKEN: string;
     TASTE_KV: KVNamespace;
+    /** D1 database for keyword text search (FTS5 on artwork name/artist/museum).
+     *  Created via:  npx wrangler d1 create armin-text-search
+     *  Schema seeded from workers/semantic-search/schema.sql + d1-seed.sql */
+    DB?: D1Database;
+    /** Optional: full URL to a self-hosted SigLIP encoder (e.g. HF Space FastAPI).
+     *  Expected: POST {url}/encode  → { vector: number[768] } or { embeddings: [[768D]] }
+     *  When set, this is tried FIRST. Falls back to HF Inference Providers afterwards.
+     *  Configure via:  npx wrangler secret put SIGLIP_ENDPOINT_URL
+     */
+    SIGLIP_ENDPOINT_URL?: string;
+    /** Optional: bearer token for the self-hosted encoder (if it requires auth). */
+    SIGLIP_ENDPOINT_TOKEN?: string;
+}
+
+interface D1PreparedStatement {
+    bind(...values: any[]): D1PreparedStatement;
+    all(): Promise<{ results: any[] }>;
+    first<T = any>(): Promise<T | null>;
+    run(): Promise<any>;
+}
+
+interface D1Database {
+    prepare(query: string): D1PreparedStatement;
+    exec(query: string): Promise<any>;
+    batch(statements: D1PreparedStatement[]): Promise<any>;
 }
 
 interface KVNamespace {
@@ -58,6 +83,8 @@ interface TasteProfile {
 const VECTOR_DIM = 768;
 const MODEL_ID   = 'google/siglip-base-patch16-224';
 const TASTE_KV_TTL = 60 * 60 * 24 * 30; // 30일
+const QUERY_CACHE_TTL = 60 * 60 * 24 * 7; // 쿼리 벡터 캐시 7일
+const QUERY_CACHE_PREFIX = 'qcache:v1:'; // bump suffix to invalidate cache
 
 const corsHeaders = {
     'Access-Control-Allow-Origin': '*',
@@ -67,72 +94,158 @@ const corsHeaders = {
 };
 
 // ============================================================
-// SigLIP 텍스트 인코딩 (HuggingFace Feature Extraction API)
+// 쿼리 벡터 캐시 (KV)
+// 동일 검색어 재요청 시 HF 호출을 우회하여 비용/지연 감소.
+// ============================================================
+async function sha256Hex(text: string): Promise<string> {
+    const data = new TextEncoder().encode(text);
+    const hash = await crypto.subtle.digest('SHA-256', data);
+    return Array.from(new Uint8Array(hash))
+        .map(b => b.toString(16).padStart(2, '0'))
+        .join('');
+}
+
+async function cacheKey(text: string): Promise<string> {
+    // normalize: lowercase + collapse whitespace → 같은 의미 쿼리는 같은 키
+    const normalized = text.trim().toLowerCase().replace(/\s+/g, ' ');
+    return QUERY_CACHE_PREFIX + (await sha256Hex(normalized));
+}
+
+async function getCachedVector(env: Env, text: string): Promise<number[] | null> {
+    if (!env.TASTE_KV) return null;
+    try {
+        const key = await cacheKey(text);
+        const raw = await env.TASTE_KV.get(key);
+        if (!raw) return null;
+        const vec = JSON.parse(raw) as number[];
+        if (!Array.isArray(vec) || vec.length !== VECTOR_DIM) return null;
+        return vec;
+    } catch {
+        return null;
+    }
+}
+
+async function putCachedVector(env: Env, text: string, vec: number[]): Promise<void> {
+    if (!env.TASTE_KV) return;
+    try {
+        const key = await cacheKey(text);
+        await env.TASTE_KV.put(key, JSON.stringify(vec), { expirationTtl: QUERY_CACHE_TTL });
+    } catch (err) {
+        console.warn('query-cache put failed:', err);
+    }
+}
+
+// ============================================================
+// SigLIP 텍스트 인코딩
+//
+// HuggingFace는 google/siglip-base-patch16-224 의 feature-extraction
+// 호스팅을 hf-inference 프로바이더에서 종료했습니다 (2025-late~).
+// 어떤 Inference Provider도 현재 이 모델을 호스팅하지 않습니다.
+//
+// 따라서 우선순위는:
+//   1. SIGLIP_ENDPOINT_URL — 사용자 자체 호스팅 (HF Space CPU FastAPI 등)
+//   2. HF Router /hf-inference/models/... — 추후 복구되면 자동 사용 가능
+//   3. HF api-inference.huggingface.co — 레거시 fallback
+//
+// 모든 경로 실패 시 null 반환 (호출 측에서 503 + code=siglip_unavailable 응답).
 // ============================================================
 let vectorError = 'unknown';
 
-async function encodeTextWithSigLIP(text: string, hfToken: string): Promise<number[] | null> {
-    const endpoints = [
-        `https://router.huggingface.co/hf-inference/pipeline/feature-extraction/${MODEL_ID}`,
-        `https://api-inference.huggingface.co/pipeline/feature-extraction/${MODEL_ID}`,
-        `https://router.huggingface.co/hf-inference/models/${MODEL_ID}`,
-    ];
+function parseHFVector(raw: any): number[] | null {
+    let vec: any;
+    // 자체 호스팅 응답: { vector: [...] } 또는 { embedding: [...] } 또는 { embeddings: [[...]] }
+    if (raw && typeof raw === 'object' && !Array.isArray(raw)) {
+        vec = raw.vector ?? raw.embedding ?? raw.embeddings ?? null;
+        if (Array.isArray(vec) && Array.isArray(vec[0])) vec = vec[0];
+    }
+    // HF Inference API 응답: [[...]] 또는 [...]
+    if (vec == null) {
+        if (Array.isArray(raw) && Array.isArray(raw[0])) vec = raw[0];
+        else if (Array.isArray(raw)) vec = raw;
+    }
+    if (!Array.isArray(vec) || vec.length !== VECTOR_DIM) return null;
+    if (typeof vec[0] !== 'number') return null;
+    const norm = Math.sqrt(vec.reduce((s: number, v: number) => s + v * v, 0));
+    if (norm === 0) return null;
+    return vec.map((v: number) => v / norm);
+}
 
-    const parseVector = (raw: any): number[] | null => {
-        let vec: number[];
-        if (Array.isArray(raw) && Array.isArray(raw[0])) {
-            vec = raw[0];
-        } else if (Array.isArray(raw)) {
-            vec = raw;
-        } else {
-            return null;
-        }
-        if (vec.length !== VECTOR_DIM) return null;
-        const norm = Math.sqrt(vec.reduce((s, v) => s + v * v, 0));
-        if (norm === 0) return null;
-        return vec.map(v => v / norm);
-    };
+async function tryEndpoint(
+    url: string,
+    headers: Record<string, string>,
+    body: any,
+    label: string,
+    timeoutMs: number = 60_000,
+): Promise<number[] | null> {
+    for (let attempt = 0; attempt < 3; attempt++) {
+        const ctrl = new AbortController();
+        const timer = setTimeout(() => ctrl.abort(), timeoutMs);
+        try {
+            const res = await fetch(url, {
+                method: 'POST',
+                headers,
+                body: JSON.stringify(body),
+                signal: ctrl.signal,
+            });
+            clearTimeout(timer);
 
-    for (const url of endpoints) {
-        // 503 cold-start 시 최대 2회 재시도 (총 3회 시도)
-        for (let attempt = 0; attempt < 3; attempt++) {
-            try {
-                const res = await fetch(url, {
-                    method: 'POST',
-                    headers: {
-                        'Authorization': `Bearer ${hfToken}`,
-                        'Content-Type': 'application/json',
-                        'X-Wait-For-Model': 'true',   // HTTP 헤더 버전
-                        'X-Use-Cache': 'true',
-                    },
-                    body: JSON.stringify({ inputs: text, options: { wait_for_model: true, use_cache: true } })
-                });
-
-                if (!res.ok) {
-                    const errText = await res.text();
-                    vectorError = `HF ${res.status} (attempt ${attempt + 1}, ${url.includes('api-inference') ? 'direct' : 'router'}): ${errText.slice(0, 200)}`;
-                    if (res.status === 404) break; // 이 엔드포인트는 모델 없음 → 다음 엔드포인트
-                    if (res.status === 503 && attempt < 2) {
-                        // 모델 콜드 스타트 → 잠깐 기다렸다가 재시도
-                        await new Promise(r => setTimeout(r, 2000 * (attempt + 1)));
-                        continue;
-                    }
-                    break; // 다른 에러 → 다음 엔드포인트
+            if (!res.ok) {
+                const errText = await res.text().catch(() => '');
+                vectorError = `${label} ${res.status} (attempt ${attempt + 1}): ${errText.slice(0, 200)}`;
+                if (res.status === 400 || res.status === 401 || res.status === 403 || res.status === 404) return null;
+                if ((res.status === 503 || res.status === 502 || res.status === 504) && attempt < 2) {
+                    // cold start → wait then retry
+                    await new Promise(r => setTimeout(r, 2500 * (attempt + 1)));
+                    continue;
                 }
-
-                const raw: any = await res.json();
-                const vec = parseVector(raw);
-                if (vec) return vec;
-
-                vectorError = 'HF response format invalid or dimension mismatch';
-                break;
-            } catch (err) {
-                vectorError = `HF request failed (attempt ${attempt + 1}): ${String(err).slice(0, 200)}`;
-                console.error('encodeTextWithSigLIP error:', err);
-                if (attempt < 2) await new Promise(r => setTimeout(r, 1500));
+                return null;
             }
+
+            const raw: any = await res.json();
+            const vec = parseHFVector(raw);
+            if (vec) return vec;
+            vectorError = `${label}: response format invalid or dimension mismatch`;
+            return null;
+        } catch (err: any) {
+            clearTimeout(timer);
+            const msg = err?.name === 'AbortError' ? 'timeout' : String(err);
+            vectorError = `${label} request failed (attempt ${attempt + 1}): ${msg.slice(0, 200)}`;
+            if (attempt < 2) await new Promise(r => setTimeout(r, 1500));
         }
     }
+    return null;
+}
+
+async function encodeTextWithSigLIP(text: string, env: Env): Promise<number[] | null> {
+    // ── Tier 1: 사용자 자체 호스팅 (FastAPI HF Space 등) ──
+    if (env.SIGLIP_ENDPOINT_URL) {
+        const url = env.SIGLIP_ENDPOINT_URL.replace(/\/+$/, '') + '/encode';
+        const headers: Record<string, string> = { 'Content-Type': 'application/json' };
+        if (env.SIGLIP_ENDPOINT_TOKEN) headers['Authorization'] = `Bearer ${env.SIGLIP_ENDPOINT_TOKEN}`;
+        const vec = await tryEndpoint(url, headers, { text }, 'self-host', 60_000);
+        if (vec) return vec;
+    }
+
+    // ── Tier 2: HF Inference Providers (currently broken for SigLIP) ──
+    if (env.HF_TOKEN) {
+        const hfHeaders: Record<string, string> = {
+            'Authorization': `Bearer ${env.HF_TOKEN}`,
+            'Content-Type': 'application/json',
+            'X-Wait-For-Model': 'true',
+            'X-Use-Cache': 'true',
+        };
+        const hfBody = { inputs: text, options: { wait_for_model: true, use_cache: true } };
+        const hfEndpoints = [
+            `https://router.huggingface.co/hf-inference/pipeline/feature-extraction/${MODEL_ID}`,
+            `https://router.huggingface.co/hf-inference/models/${MODEL_ID}`,
+            `https://api-inference.huggingface.co/pipeline/feature-extraction/${MODEL_ID}`,
+        ];
+        for (const url of hfEndpoints) {
+            const vec = await tryEndpoint(url, hfHeaders, hfBody, `HF (${url.includes('api-inference') ? 'direct' : 'router'})`, 30_000);
+            if (vec) return vec;
+        }
+    }
+
     return null;
 }
 
@@ -344,17 +457,33 @@ export default {
                 if (!text || typeof text !== 'string' || text.trim().length < 2) {
                     return Response.json({ error: 'text must be at least 2 characters' }, { status: 400, headers: corsHeaders });
                 }
-                if (!env.HF_TOKEN) {
-                    return Response.json({ error: 'HF_TOKEN not configured' }, { status: 500, headers: corsHeaders });
+                if (!env.HF_TOKEN && !env.SIGLIP_ENDPOINT_URL) {
+                    return Response.json({
+                        error: 'AI search is temporarily unavailable.',
+                        code: 'siglip_unavailable',
+                        detail: 'Neither HF_TOKEN nor SIGLIP_ENDPOINT_URL is configured.',
+                    }, { status: 503, headers: corsHeaders });
                 }
 
-                const vector = await encodeTextWithSigLIP(text.trim(), env.HF_TOKEN);
+                const trimmed = text.trim();
+                let vector = await getCachedVector(env, trimmed);
+                let cacheHit = !!vector;
+
                 if (!vector) {
-                    return Response.json({ error: 'Failed to encode text.', detail: vectorError }, { status: 503, headers: corsHeaders });
+                    vector = await encodeTextWithSigLIP(trimmed, env);
+                    if (!vector) {
+                        return Response.json({
+                            error: 'AI search is temporarily unavailable.',
+                            code: 'siglip_unavailable',
+                            detail: vectorError,
+                        }, { status: 503, headers: corsHeaders });
+                    }
+                    // fire-and-forget cache write — don't block response
+                    ctx.waitUntil(putCachedVector(env, trimmed, vector));
                 }
 
                 const results = await queryWithMetadata(env, vector, Math.min(limit, 100));
-                return Response.json({ results }, { headers: corsHeaders });
+                return Response.json({ results, cached: cacheHit }, { headers: corsHeaders });
             }
 
             // ──────────────────────────────────────────────
@@ -581,6 +710,135 @@ export default {
             }
 
             // ──────────────────────────────────────────────
+            // POST /search-text   (KEYWORD search via D1 FTS5)
+            // ──────────────────────────────────────────────
+            // Returns artworks whose name / artist / museum matches the query
+            // tokens.  Server-side replacement for the 170MB client-side text
+            // index — first results in <200ms, no chunk download required.
+            if (url.pathname === '/search-text' && request.method === 'POST') {
+                if (!env.DB) {
+                    return Response.json(
+                        { error: 'D1 not configured. Run scripts/build-d1-index.mjs and add the d1_databases binding to wrangler.toml.' },
+                        { status: 503, headers: corsHeaders }
+                    );
+                }
+                let body: { query?: string; limit?: number; museum?: string; artist?: string };
+                try { body = await request.json() as any; }
+                catch { return Response.json({ error: 'Invalid JSON' }, { status: 400, headers: corsHeaders }); }
+
+                const rawQuery = String(body?.query || '').trim();
+                const limit = Math.max(1, Math.min(100, Number(body?.limit) || 50));
+
+                if (!rawQuery || rawQuery.length < 2) {
+                    return Response.json({ results: [], query: rawQuery }, { headers: corsHeaders });
+                }
+
+                // Sanitize for FTS5: strip operator characters, lowercase,
+                // tokenize, prefix-match each token.  Joining with " " is an
+                // implicit AND — every token must match.  For "monet water" this
+                // becomes `monet* water*`, which hits "Claude Monet — Water Lilies".
+                const tokens = rawQuery
+                    .toLowerCase()
+                    .replace(/["'()\\]/g, ' ')
+                    .replace(/[ -]/g, ' ')
+                    .split(/\s+/)
+                    .map((t) => t.trim())
+                    .filter((t) => t.length >= 2);
+
+                if (tokens.length === 0) {
+                    return Response.json({ results: [], query: rawQuery }, { headers: corsHeaders });
+                }
+
+                const ftsQuery = tokens.map((t) => `"${t}"*`).join(' ');
+
+                try {
+                    const stmt = env.DB.prepare(
+                        `SELECT a.id AS id, a.name AS n, a.artist AS a, a.museum AS m,
+                                a.exhibition_id AS e, a.image AS i, a.date AS d, a.source_url AS u,
+                                a.category AS c, fts.rank AS rank
+                         FROM artworks_fts fts
+                         JOIN artworks a ON a.rowid = fts.rowid
+                         WHERE artworks_fts MATCH ?
+                         ORDER BY fts.rank
+                         LIMIT ?`
+                    ).bind(ftsQuery, limit);
+                    const result = await stmt.all();
+                    return Response.json(
+                        { results: result.results || [], query: rawQuery, count: (result.results || []).length },
+                        { headers: corsHeaders }
+                    );
+                } catch (err: any) {
+                    return Response.json(
+                        { error: err?.message || String(err), query: rawQuery, ftsQuery },
+                        { status: 500, headers: corsHeaders }
+                    );
+                }
+            }
+
+            // ──────────────────────────────────────────────
+            // POST /refresh-metadata
+            // ──────────────────────────────────────────────
+            // Re-attaches metadata (n,a,m,i,e,d,c,u) to existing Vectorize
+            // records WITHOUT changing the embedding vector.  Many records
+            // were upserted historically with empty metadata; their embedding
+            // exists but the search/recommend response carries blank
+            // image/title/artist fields and the UI shows blank cards.
+            //
+            // Body: { records: [{id, metadata: {n,a,m,i,e,d,c,u}}, ...] }
+            // For each id we getByIds → preserve `values` → upsert with new metadata.
+            // Returns: { updated, missing, failed }
+            if (url.pathname === '/refresh-metadata' && request.method === 'POST') {
+                let body: { records?: Array<{ id: string; metadata?: Record<string, string> }> };
+                try { body = await request.json() as any; }
+                catch { return Response.json({ error: 'Invalid JSON' }, { status: 400, headers: corsHeaders }); }
+
+                const records = Array.isArray(body?.records) ? body.records : [];
+                if (records.length === 0) {
+                    return Response.json({ error: 'records array required' }, { status: 400, headers: corsHeaders });
+                }
+                if (records.length > 20) {
+                    return Response.json({ error: 'max 20 records per call (Vectorize getByIds caps at 20)' }, { status: 400, headers: corsHeaders });
+                }
+
+                const ids = records.map((r) => r.id).filter(Boolean);
+                const metadataMap = new Map<string, Record<string, string>>();
+                for (const r of records) {
+                    if (r.id && r.metadata) metadataMap.set(r.id, r.metadata);
+                }
+
+                let existing: VectorRecord[] = [];
+                try { existing = await env.VECTORIZE.getByIds(ids); }
+                catch (err: any) {
+                    return Response.json({ error: 'getByIds failed: ' + err.message }, { status: 500, headers: corsHeaders });
+                }
+
+                const found = new Set(existing.map((e) => e.id));
+                const missing = ids.filter((id) => !found.has(id));
+
+                const upserts: VectorRecord[] = existing.map((e) => ({
+                    id: e.id,
+                    values: e.values,
+                    metadata: metadataMap.get(e.id) || e.metadata || {},
+                }));
+
+                if (upserts.length === 0) {
+                    return Response.json({ updated: 0, missing: missing.length, missingIds: missing }, { headers: corsHeaders });
+                }
+
+                try {
+                    const result = await env.VECTORIZE.upsert(upserts);
+                    return Response.json({
+                        updated: upserts.length,
+                        missing: missing.length,
+                        missingIds: missing,
+                        mutationResult: result,
+                    }, { headers: corsHeaders });
+                } catch (err: any) {
+                    return Response.json({ error: 'upsert failed: ' + err.message, attempted: upserts.length }, { status: 500, headers: corsHeaders });
+                }
+            }
+
+            // ──────────────────────────────────────────────
             // POST /delete-ids
             // ──────────────────────────────────────────────
             if (url.pathname === '/delete-ids' && request.method === 'POST') {
@@ -617,15 +875,19 @@ export default {
                     status: 'ok',
                     model: MODEL_ID,
                     dimensions: VECTOR_DIM,
-                    textEncoding: 'server-side (HuggingFace API)',
-                    browserDownload: '0MB',
+                    encoder: env.SIGLIP_ENDPOINT_URL
+                        ? 'self-hosted (SIGLIP_ENDPOINT_URL)'
+                        : 'HuggingFace Inference Providers (deprecated for SigLIP)',
+                    selfHostConfigured: !!env.SIGLIP_ENDPOINT_URL,
+                    queryCache: env.TASTE_KV ? `KV (TTL ${QUERY_CACHE_TTL}s)` : 'disabled',
                     vectorize: 'armin-art-search-768',
-                    features: ['search-by-text', 'search-by-vector', 'taste-profile', 'recommend'],
+                    features: ['search-text', 'search-by-text', 'search-by-vector', 'taste-profile', 'recommend'],
+                    d1Enabled: !!env.DB,
                 }, { headers: corsHeaders });
             }
 
             return Response.json(
-                { error: 'Not found. Endpoints: /search-by-text, /search-by-vector, /upsert, /recommend-by-id, /taste-profile, /recommend, /check-ids, /delete-ids, /status' },
+                { error: 'Not found. Endpoints: /search-text, /search-by-text, /search-by-vector, /upsert, /refresh-metadata, /recommend-by-id, /taste-profile, /recommend, /check-ids, /delete-ids, /status' },
                 { status: 404, headers: corsHeaders }
             );
 

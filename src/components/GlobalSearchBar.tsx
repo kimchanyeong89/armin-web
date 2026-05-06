@@ -2805,6 +2805,16 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                     .map((item: any) => {
                         const { __semanticScore, __metaReliability, ...rest } = item;
                         return rest as SearchableArtwork;
+                    })
+                    // Drop entries whose image URL is empty.  These appear
+                    // when a Vectorize record was upserted without metadata
+                    // (~10% of vectors right now); they would render as
+                    // blank dark cards.  The proper long-term fix is to
+                    // refresh metadata server-side, but until that lands we
+                    // hide them here so the user never sees a blank slot.
+                    .filter((item) => {
+                        const url = String((item as any)?.image || '').trim();
+                        return url.length > 0;
                     });
                 if (isStaleRequest()) return;
                 if (cleanedResults.length === 0) {

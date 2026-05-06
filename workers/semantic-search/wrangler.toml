@@ -28,3 +28,21 @@ id = "4ca7209a702446efb0f205bcacbae33a"
 # ────────────────────────────────────────────────────────────
 # [vars]
 # HF_TOKEN = ""  # ← secret으로 설정 (평문 금지)
+
+# ────────────────────────────────────────────────────────────
+# D1 — 키워드 검색용 SQLite + FTS5 풀텍스트 인덱스
+#
+# 처음 배포 전 한 번 실행:
+#   npx wrangler d1 create armin-text-search
+#     → 출력된 database_id를 아래 database_id 값에 붙여넣고 주석 해제
+#   npx wrangler d1 execute armin-text-search --file=./schema.sql
+#   node scripts/build-d1-index.mjs            # 로컬에서 SQL dump 생성
+#   npx wrangler d1 execute armin-text-search --file=./d1-seed.sql
+#
+# 이후 워커 코드 수정만 변경되면 그냥:
+#   npx wrangler deploy
+# ────────────────────────────────────────────────────────────
+# [[d1_databases]]
+# binding = "DB"
+# database_name = "armin-text-search"
+# database_id = "REPLACE_WITH_OUTPUT_OF_wrangler_d1_create"
