@@ -2801,47 +2801,36 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                 }
 
                 setAiFilteredCount(0);
-                const cleanedResults = finalResults
-                    .map((item: any) => {
-                        const { __semanticScore, __metaReliability, ...rest } = item;
-                        return rest as SearchableArtwork & { __semanticScore?: number };
-                    });
 
-                // Similarity-threshold cut-off — per user's request: limit
-                // results by relevance, not a fixed top-N count.  SigLIP cos
-                // scores for these queries typically peak around 0.13-0.25,
-                // so:
-                //
+                // Similarity-threshold cut-off — limit by relevance, not a
+                // fixed top-N count. Floor scales with query specificity:
                 //   floor = max(top * (1 - DROP), MIN_FLOOR)
+                // For top=0.20 → keep score >= 0.14; for top=0.05 → keep >= 0.05.
                 //
-                // - DROP = 0.30 → drop anything more than 30% below the top
-                //   score.  For top=0.20 → keep score >= 0.14; for top=0.05
-                //   → keep score >= 0.035.
-                // - MIN_FLOOR = 0.05 → don't include anything below this even
-                //   when the top score is itself low (near-noise queries).
-                //
-                // No artificial top-N cap.  If 100 results are all strong,
-                // all 100 show; if only 8 cluster near the top, only 8 show.
+                // We do this BEFORE stripping __semanticScore from items,
+                // since the threshold check needs to read it.
                 const SCORE_RELATIVE_DROP = 0.30;
                 const SCORE_MIN_FLOOR = 0.05;
-                const topScore = (finalResults[0] as any)?.__semanticScore ?? 0;
+                const topScore = Number((finalResults[0] as any)?.__semanticScore || 0);
                 const relativeFloor = topScore * (1 - SCORE_RELATIVE_DROP);
                 const effectiveFloor = Math.max(relativeFloor, SCORE_MIN_FLOOR);
                 const thresholdedResults = topScore > 0
-                    ? cleanedResults.filter((item: any) => Number(item.__semanticScore || 0) >= effectiveFloor)
-                    : cleanedResults;
-                const finalCleaned = thresholdedResults.map((item: any) => {
-                    const { __semanticScore, ...rest } = item;
+                    ? finalResults.filter((item: any) => Number(item.__semanticScore || 0) >= effectiveFloor)
+                    : finalResults;
+
+                // Strip internal scoring fields only after thresholding.
+                const cleanedResults = thresholdedResults.map((item: any) => {
+                    const { __semanticScore, __metaReliability, ...rest } = item;
                     return rest as SearchableArtwork;
                 });
 
                 if (isStaleRequest()) return;
-                if (finalCleaned.length === 0) {
+                if (cleanedResults.length === 0) {
                     const lexicalFallback = await runWorkerLexicalFallback(searchQuery);
                     if (isStaleRequest()) return;
                     setAiResults(lexicalFallback);
                 } else {
-                    setAiResults(finalCleaned);
+                    setAiResults(cleanedResults);
                 }
 
             } else if ((data as any).error) {
