@@ -2807,22 +2807,26 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                         return rest as SearchableArtwork & { __semanticScore?: number };
                     });
 
-                // Similarity-threshold cut-off: instead of a hard top-N
-                // count, keep results until the similarity score drops too
-                // far from the top match.  Vectorize scores for SigLIP queries
-                // typically land in 0.05-0.30 (cosine-ish), with the best
-                // matches clustered near the top.  We keep:
-                //  - everything within 25% of the top score, OR
-                //  - everything above an absolute floor (0.10), whichever is
-                //    more permissive.
-                // No artificial cap — even if Vectorize returns 100 strong
-                // matches, all of them get shown.  If only 8 results are
-                // close enough, only 8 are shown.
-                const SCORE_RELATIVE_DROP = 0.25;
-                const SCORE_ABSOLUTE_FLOOR = 0.10;
+                // Similarity-threshold cut-off — per user's request: limit
+                // results by relevance, not a fixed top-N count.  SigLIP cos
+                // scores for these queries typically peak around 0.13-0.25,
+                // so:
+                //
+                //   floor = max(top * (1 - DROP), MIN_FLOOR)
+                //
+                // - DROP = 0.30 → drop anything more than 30% below the top
+                //   score.  For top=0.20 → keep score >= 0.14; for top=0.05
+                //   → keep score >= 0.035.
+                // - MIN_FLOOR = 0.05 → don't include anything below this even
+                //   when the top score is itself low (near-noise queries).
+                //
+                // No artificial top-N cap.  If 100 results are all strong,
+                // all 100 show; if only 8 cluster near the top, only 8 show.
+                const SCORE_RELATIVE_DROP = 0.30;
+                const SCORE_MIN_FLOOR = 0.05;
                 const topScore = (finalResults[0] as any)?.__semanticScore ?? 0;
                 const relativeFloor = topScore * (1 - SCORE_RELATIVE_DROP);
-                const effectiveFloor = Math.max(0, Math.min(relativeFloor, SCORE_ABSOLUTE_FLOOR));
+                const effectiveFloor = Math.max(relativeFloor, SCORE_MIN_FLOOR);
                 const thresholdedResults = topScore > 0
                     ? cleanedResults.filter((item: any) => Number(item.__semanticScore || 0) >= effectiveFloor)
                     : cleanedResults;
