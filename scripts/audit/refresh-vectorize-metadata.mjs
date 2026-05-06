@@ -81,10 +81,15 @@ function loadIdMap() {
     for (const item of arr) {
       const id = String(item?.id || item?.semanticId || item?.semantic_id || '').trim();
       if (!id) continue;
-      // Skip if image URL is empty — refreshing metadata to "" is pointless;
-      // those records should be deleted instead, not refreshed.
+      // Skip if image URL is empty — refreshing metadata to "" is pointless.
       const meta = pickFields(item, defaults);
       if (!meta.i) continue;
+      // Skip IDs longer than Vectorize's 64-byte limit. These IDs were
+      // never successfully embedded anyway (the original /upsert pipeline
+      // would have rejected them with the same VECTOR_GET_ERROR 40008).
+      // Sending them in a batch causes Vectorize to reject the entire
+      // batch (cascade failure for the 19 valid IDs alongside).
+      if (Buffer.byteLength(id, 'utf8') > 64) continue;
       // First write wins (some IDs appear in multiple files; prefer the
       // collection JSON over search-index dups)
       if (!map.has(id) || f.includes('-collection.json')) {

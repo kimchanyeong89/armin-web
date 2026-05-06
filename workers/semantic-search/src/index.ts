@@ -93,6 +93,57 @@ const corsHeaders = {
     'Access-Control-Max-Age': '86400',
 };
 
+// Vectorize hard-caps record IDs at 64 bytes (VECTOR_GET_ERROR 40008).
+// Any longer ID we generate a deterministic short alias for. Short IDs are
+// only used internally — the worker swaps them back to the original ID
+// (carried in metadata.o) before responding, so the frontend never sees them.
+const VECTORIZE_ID_MAX_BYTES = 64;
+const SHORT_ID_PREFIX = 'vbz_'; // 4 bytes; leaves 60 for the hash
+
+async function shortenId(originalId: string): Promise<string> {
+    const data = new TextEncoder().encode(originalId);
+    const digest = await crypto.subtle.digest('SHA-1', data);
+    // hex slice — 16 chars after the prefix → 20-byte total ID, far under 64.
+    let hex = '';
+    const bytes = new Uint8Array(digest);
+    for (let i = 0; i < 8; i++) hex += bytes[i].toString(16).padStart(2, '0');
+    return SHORT_ID_PREFIX + hex;
+}
+
+/**
+ * Map an arbitrary artwork ID to the form actually stored in Vectorize.
+ * Short IDs (≤64 bytes) pass through unchanged so the existing 612K records
+ * stay accessible. Longer IDs get a deterministic SHA-1 alias prefixed with
+ * `vbz_` — the alias is 20 bytes and guaranteed to round-trip the same way.
+ */
+async function effectiveVectorId(originalId: string): Promise<string> {
+    if (!originalId) return '';
+    if (originalId.startsWith(SHORT_ID_PREFIX)) return originalId; // already short
+    if (new TextEncoder().encode(originalId).length <= VECTORIZE_ID_MAX_BYTES) return originalId;
+    return shortenId(originalId);
+}
+
+/**
+ * Replace short IDs with their `metadata.o` (original ID) before sending to
+ * the client. Preserves all other fields and removes the now-redundant `o`
+ * key. Idempotent — records with no `o` field are returned untouched.
+ */
+function denormalizeRecord<T extends { id: string; metadata?: Record<string, any> } | { id: string; [key: string]: any }>(rec: T): T {
+    const r = rec as any;
+    const original = r?.metadata?.o ?? r?.o;
+    if (typeof original === 'string' && original.length > 0) {
+        if (r.metadata && 'o' in r.metadata) {
+            const { o, ...rest } = r.metadata;
+            r.metadata = rest;
+        } else if ('o' in r) {
+            const { o, ...rest } = r;
+            return { ...rest, id: original } as T;
+        }
+        r.id = original;
+    }
+    return r;
+}
+
 // ============================================================
 // 쿼리 벡터 캐시 (KV)
 // 동일 검색어 재요청 시 HF 호출을 우회하여 비용/지연 감소.
@@ -213,6 +264,74 @@ async function tryEndpoint(
             if (attempt < 2) await new Promise(r => setTimeout(r, 1500));
         }
     }
+    return null;
+}
+
+/**
+ * Encode an image (by URL) into a 768-D SigLIP vector. Used by the
+ * /encode-and-upsert endpoint when re-embedding artworks whose IDs were
+ * too long for Vectorize's 64-byte limit.
+ *
+ * Tries the self-hosted endpoint first with several common payload
+ * shapes (different SigLIP FastAPI servers use different keys), then
+ * falls back to HuggingFace Inference API with the image bytes.
+ */
+async function encodeImageWithSigLIP(imageUrl: string, env: Env): Promise<number[] | null> {
+    if (env.SIGLIP_ENDPOINT_URL) {
+        const headers: Record<string, string> = { 'Content-Type': 'application/json' };
+        if (env.SIGLIP_ENDPOINT_TOKEN) headers['Authorization'] = `Bearer ${env.SIGLIP_ENDPOINT_TOKEN}`;
+
+        // Path 1: dedicated /encode-image endpoint
+        const baseUrl = env.SIGLIP_ENDPOINT_URL.replace(/\/+$/, '');
+        const candidates: Array<{ url: string; body: any; label: string }> = [
+            { url: `${baseUrl}/encode-image`, body: { image_url: imageUrl }, label: 'self-host /encode-image image_url' },
+            { url: `${baseUrl}/encode-image`, body: { url: imageUrl }, label: 'self-host /encode-image url' },
+            { url: `${baseUrl}/embed-image`, body: { image_url: imageUrl }, label: 'self-host /embed-image' },
+            { url: `${baseUrl}/encode`, body: { image_url: imageUrl }, label: 'self-host /encode image_url' },
+            { url: `${baseUrl}/encode`, body: { url: imageUrl }, label: 'self-host /encode url' },
+        ];
+        for (const cand of candidates) {
+            const vec = await tryEndpoint(cand.url, headers, cand.body, cand.label, 90_000);
+            if (vec) return vec;
+        }
+    }
+
+    if (env.HF_TOKEN) {
+        // HF expects raw image bytes for image feature extraction.
+        try {
+            const imgRes = await fetch(imageUrl);
+            if (!imgRes.ok) {
+                vectorError = `image fetch failed (${imgRes.status})`;
+                return null;
+            }
+            const bytes = await imgRes.arrayBuffer();
+            const ctrl = new AbortController();
+            const timer = setTimeout(() => ctrl.abort(), 60_000);
+            try {
+                const res = await fetch(`https://api-inference.huggingface.co/pipeline/feature-extraction/${MODEL_ID}`, {
+                    method: 'POST',
+                    headers: {
+                        'Authorization': `Bearer ${env.HF_TOKEN}`,
+                        'Content-Type': imgRes.headers.get('content-type') || 'image/jpeg',
+                        'X-Wait-For-Model': 'true',
+                    },
+                    body: bytes,
+                    signal: ctrl.signal,
+                });
+                clearTimeout(timer);
+                if (!res.ok) {
+                    vectorError = `HF image (${res.status}): ${(await res.text().catch(() => '')).slice(0, 200)}`;
+                    return null;
+                }
+                const raw = await res.json();
+                return parseHFVector(raw);
+            } finally { clearTimeout(timer); }
+        } catch (err: any) {
+            vectorError = `HF image request failed: ${String(err).slice(0, 200)}`;
+            return null;
+        }
+    }
+
     return null;
 }
 
@@ -403,7 +522,18 @@ async function queryWithMetadata(
     if (safeTopK <= 50) {
         // 50개 이하면 단일 쿼리로 메타데이터까지 한 번에 가져옴
         const res = await env.VECTORIZE.query(vector, { topK: safeTopK, returnMetadata: true });
-        return res.matches.map(m => ({ id: m.id, score: m.score, ...m.metadata }));
+        return res.matches.map(m => {
+            const md = m.metadata || {};
+            // metadata.o is the original ID for shortened-ID records;
+            // swap it back so the client never sees the internal vbz_ alias.
+            const original = typeof md.o === 'string' ? md.o : '';
+            const { o, ...rest } = md as any;
+            return {
+                id: original || m.id,
+                score: m.score,
+                ...rest,
+            };
+        });
     }
 
     // 50개 초과: 2-step 쿼리
@@ -427,11 +557,16 @@ async function queryWithMetadata(
     const metaMap = new Map<string, Record<string, any>>(
         metaRecords.map(r => [r.id, r.metadata || {}])
     );
-    return ids.map(id => ({
-        id,
-        score: scoreMap.get(id) ?? 0,
-        ...metaMap.get(id),
-    }));
+    return ids.map(id => {
+        const md = metaMap.get(id) || {};
+        const original = typeof md.o === 'string' ? md.o : '';
+        const { o, ...rest } = md as any;
+        return {
+            id: original || id,
+            score: scoreMap.get(id) ?? 0,
+            ...rest,
+        };
+    });
 }
 
 // ============================================================
@@ -538,7 +673,10 @@ export default {
                 if (!id) return Response.json({ error: 'ID is required' }, { status: 400, headers: corsHeaders });
 
                 try {
-                    const vectors = await env.VECTORIZE.getByIds([id]);
+                    // Translate long original IDs to their internal short alias.
+                    // For ≤64-byte IDs this is a no-op (returns input unchanged).
+                    const lookupId = await effectiveVectorId(id);
+                    const vectors = await env.VECTORIZE.getByIds([lookupId]);
                     if (!vectors?.length) return Response.json({ results: [] }, { headers: corsHeaders });
 
                     const searchResults = await env.VECTORIZE.query(vectors[0].values, {
@@ -546,11 +684,22 @@ export default {
                         returnMetadata: true
                     });
 
-                    const candidates = searchResults.matches.filter(m => m.id !== id);
-                    // Apply diversity filtering to prevent same-museum / same-artist bias
+                    // Filter out the source artwork itself by matching either the
+                    // internal short id OR the carried-back original id.
+                    const candidates = searchResults.matches.filter((m) => {
+                        if (m.id === lookupId) return false;
+                        const original = m.metadata?.o;
+                        if (typeof original === 'string' && original === id) return false;
+                        return true;
+                    });
                     const matches = diversify(candidates, limit);
                     return Response.json({
-                        results: matches.map(m => ({ id: m.id, score: m.score, ...m.metadata }))
+                        results: matches.map((m) => {
+                            const md = m.metadata || {};
+                            const original = typeof md.o === 'string' ? md.o : '';
+                            const { o, ...rest } = md as any;
+                            return { id: original || m.id, score: m.score, ...rest };
+                        })
                     }, { headers: corsHeaders });
                 } catch (err: any) {
                     return Response.json({ results: [] }, { headers: corsHeaders });
@@ -800,26 +949,41 @@ export default {
                     return Response.json({ error: 'max 20 records per call (Vectorize getByIds caps at 20)' }, { status: 400, headers: corsHeaders });
                 }
 
-                const ids = records.map((r) => r.id).filter(Boolean);
-                const metadataMap = new Map<string, Record<string, string>>();
+                // Translate every input ID through effectiveVectorId so callers
+                // can keep passing the long original IDs.  Long IDs map to the
+                // internal vbz_ alias; short IDs pass through unchanged.
+                // We also stamp `o: <originalId>` into the metadata so the
+                // alias is reversible on the way back out.
+                const lookupIds: string[] = [];
+                const originalById = new Map<string, string>(); // lookupId → originalId
+                const metadataByLookup = new Map<string, Record<string, string>>();
                 for (const r of records) {
-                    if (r.id && r.metadata) metadataMap.set(r.id, r.metadata);
+                    if (!r.id) continue;
+                    const lookupId = await effectiveVectorId(r.id);
+                    lookupIds.push(lookupId);
+                    originalById.set(lookupId, r.id);
+                    if (r.metadata) {
+                        // Preserve the original ID for response-side denormalization.
+                        const md = lookupId !== r.id ? { ...r.metadata, o: r.id } : { ...r.metadata };
+                        metadataByLookup.set(lookupId, md);
+                    }
                 }
 
                 let existing: VectorRecord[] = [];
-                try { existing = await env.VECTORIZE.getByIds(ids); }
+                try { existing = await env.VECTORIZE.getByIds(lookupIds); }
                 catch (err: any) {
                     return Response.json({ error: 'getByIds failed: ' + err.message }, { status: 500, headers: corsHeaders });
                 }
 
                 const found = new Set(existing.map((e) => e.id));
-                const missing = ids.filter((id) => !found.has(id));
+                const missing = lookupIds
+                    .filter((id) => !found.has(id))
+                    .map((id) => originalById.get(id) || id);
 
-                const upserts: VectorRecord[] = existing.map((e) => ({
-                    id: e.id,
-                    values: e.values,
-                    metadata: metadataMap.get(e.id) || e.metadata || {},
-                }));
+                const upserts: VectorRecord[] = existing.map((e) => {
+                    const md = metadataByLookup.get(e.id) || e.metadata || {};
+                    return { id: e.id, values: e.values, metadata: md };
+                });
 
                 if (upserts.length === 0) {
                     return Response.json({ updated: 0, missing: missing.length, missingIds: missing }, { headers: corsHeaders });
@@ -847,7 +1011,10 @@ export default {
                     return Response.json({ error: 'ids array required' }, { status: 400, headers: corsHeaders });
                 }
                 try {
-                    const result = await env.VECTORIZE.deleteByIds(ids);
+                    // Translate originals → vbz_ aliases for any oversized IDs.
+                    const translated: string[] = [];
+                    for (const id of ids) translated.push(await effectiveVectorId(id));
+                    const result = await env.VECTORIZE.deleteByIds(translated);
                     return Response.json({ success: true, deleted: result }, { headers: corsHeaders });
                 } catch (err: any) {
                     return Response.json({ error: err.message }, { status: 500, headers: corsHeaders });
@@ -860,10 +1027,89 @@ export default {
             if (url.pathname === '/check-ids' && request.method === 'POST') {
                 const { ids } = await request.json() as { ids: string[] };
                 try {
-                    const found = await env.VECTORIZE.getByIds(ids);
-                    return Response.json({ count: found.length, foundIds: found.map(f => f.id) }, { headers: corsHeaders });
+                    // Translate originals → aliases.  For each lookup id, remember
+                    // which original it came from so we can return the original.
+                    const lookupIds: string[] = [];
+                    const lookupToOriginal = new Map<string, string>();
+                    for (const id of ids) {
+                        const lookup = await effectiveVectorId(id);
+                        lookupIds.push(lookup);
+                        lookupToOriginal.set(lookup, id);
+                    }
+                    const found = await env.VECTORIZE.getByIds(lookupIds);
+                    const foundIds = found.map((f) => lookupToOriginal.get(f.id) || f.id);
+                    return Response.json({ count: found.length, foundIds }, { headers: corsHeaders });
                 } catch (err: any) {
                     return Response.json({ error: err.message }, { status: 500, headers: corsHeaders });
+                }
+            }
+
+            // ──────────────────────────────────────────────
+            // POST /encode-and-upsert     (image embedding + upsert)
+            // ──────────────────────────────────────────────
+            // Embeds an image via the self-hosted SigLIP endpoint and upserts
+            // the resulting vector under either the provided ID (if ≤64 bytes)
+            // or a deterministic vbz_ alias (if longer). Always stamps
+            // metadata.o = originalId so the response side can swap it back.
+            //
+            // Body: { records: [{id, imageUrl, metadata: {n,a,m,e,d,c,u}}, ...] }
+            //   - id: original artwork ID (any length, can be Korean / long slug)
+            //   - imageUrl: R2 (or any) URL the SigLIP encoder can reach
+            //   - metadata: same shape as /upsert; `i` and `o` are auto-populated
+            // Returns { upserted, failed, results: [{id, lookupId, ok, error?}, ...] }
+            if (url.pathname === '/encode-and-upsert' && request.method === 'POST') {
+                let body: { records?: Array<{ id: string; imageUrl: string; metadata?: Record<string, string> }> };
+                try { body = await request.json() as any; }
+                catch { return Response.json({ error: 'Invalid JSON' }, { status: 400, headers: corsHeaders }); }
+
+                const records = Array.isArray(body?.records) ? body.records : [];
+                if (records.length === 0) {
+                    return Response.json({ error: 'records array required' }, { status: 400, headers: corsHeaders });
+                }
+                if (records.length > 10) {
+                    return Response.json({ error: 'max 10 per call (image encoding is heavy)' }, { status: 400, headers: corsHeaders });
+                }
+                if (!env.SIGLIP_ENDPOINT_URL && !env.HF_TOKEN) {
+                    return Response.json({ error: 'No SIGLIP_ENDPOINT_URL or HF_TOKEN configured for image encoding.' }, { status: 503, headers: corsHeaders });
+                }
+
+                const results: Array<any> = [];
+                const upserts: VectorRecord[] = [];
+
+                for (const r of records) {
+                    if (!r?.id || !r?.imageUrl) {
+                        results.push({ id: r?.id || '', ok: false, error: 'id and imageUrl required' });
+                        continue;
+                    }
+
+                    const lookupId = await effectiveVectorId(r.id);
+                    const isAliased = lookupId !== r.id;
+
+                    // Try the self-hosted endpoint with imageUrl. Most SigLIP
+                    // FastAPI servers accept either {image_url} or {imageUrl}
+                    // or {url}; try them all and fall through on 4xx.
+                    const vec = await encodeImageWithSigLIP(r.imageUrl, env);
+                    if (!vec) {
+                        results.push({ id: r.id, lookupId, ok: false, error: vectorError || 'image encode failed' });
+                        continue;
+                    }
+
+                    const baseMeta = { ...(r.metadata || {}), i: r.imageUrl };
+                    const meta = isAliased ? { ...baseMeta, o: r.id } : baseMeta;
+                    upserts.push({ id: lookupId, values: vec, metadata: meta });
+                    results.push({ id: r.id, lookupId, ok: true });
+                }
+
+                if (upserts.length === 0) {
+                    return Response.json({ upserted: 0, failed: results.length, results }, { headers: corsHeaders });
+                }
+
+                try {
+                    const mut = await env.VECTORIZE.upsert(upserts);
+                    const failed = results.filter((r) => !r.ok).length;
+                    return Response.json({ upserted: upserts.length, failed, mutationResult: mut, results }, { headers: corsHeaders });
+                } catch (err: any) {
+                    return Response.json({ error: 'upsert failed: ' + err.message, attempted: upserts.length, results }, { status: 500, headers: corsHeaders });
                 }
             }
 
@@ -887,7 +1133,7 @@ export default {
             }
 
             return Response.json(
-                { error: 'Not found. Endpoints: /search-text, /search-by-text, /search-by-vector, /upsert, /refresh-metadata, /recommend-by-id, /taste-profile, /recommend, /check-ids, /delete-ids, /status' },
+                { error: 'Not found. Endpoints: /search-text, /search-by-text, /search-by-vector, /upsert, /encode-and-upsert, /refresh-metadata, /recommend-by-id, /taste-profile, /recommend, /check-ids, /delete-ids, /status' },
                 { status: 404, headers: corsHeaders }
             );
 
