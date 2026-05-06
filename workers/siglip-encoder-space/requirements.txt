@@ -1,0 +1,15 @@
+--extra-index-url https://download.pytorch.org/whl/cpu
+fastapi==0.115.0
+uvicorn[standard]==0.30.6
+torch==2.4.1+cpu
+transformers==4.45.2
+numpy==1.26.4
+sentencepiece==0.2.0
+# SigLIP tokenizer (SiglipTokenizer) loads from a protobuf-encoded
+# spm.model file shipped on Hub. Without protobuf, transformers raises
+# `ImportError: SiglipTokenizer requires the protobuf library`.
+protobuf==4.25.5
+# /encode-image fetches images by URL and decodes them with Pillow,
+# then preprocesses with the SigLIP image processor.
+Pillow==10.4.0
+requests==2.32.3
