@@ -2923,17 +2923,30 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                     if (isLikelyMobileDevice()) {
                         void (async () => {
                             const startedQuery = query;
-                            // Pull more from server (100) so artist filter has
-                            // a deeper pool to find name matches in.
-                            const rows = await searchByText(startedQuery, 100);
+                            // Two-tier server augmentation:
+                            //  Tier 1: D1 + FTS5 keyword search via /search-text.
+                            //          Returns exact text/prefix matches (e.g.
+                            //          'Gogh' → all Vincent van Gogh works).
+                            //          ~150ms when seeded; returns [] with
+                            //          30s backoff if 404/503 (D1 not ready).
+                            //  Tier 2: SigLIP semantic /search-by-text.
+                            //          Used when keyword returned nothing,
+                            //          for queries that have no text match
+                            //          but might have visual neighbours
+                            //          (e.g. 'abstract red').
+                            const keywordRows = await searchTextServer(startedQuery, 60);
+                            const useKeyword = keywordRows.length > 0;
+                            const rows = useKeyword
+                                ? keywordRows
+                                : await searchByText(startedQuery, 100);
                             if (!rows || rows.length === 0) return;
                             if ((queryRef.current || '').trim() !== startedQuery.trim()) return;
-                            const mapped = rows.map((r) => ({
+                            const mapped = rows.map((r: any) => ({
                                 id: String(r.id || ''),
                                 name: r.n || 'Untitled',
                                 artist: r.a || 'Unknown',
                                 image: r.i || '',
-                                year: '',
+                                year: r.d || '',
                                 museumName: r.m || '',
                                 exhibitionId: r.e || '',
                                 sourceUrl: r.u || '',
@@ -2947,15 +2960,34 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                                   return true;
                               });
                             if (mapped.length === 0) return;
-                            // mergeMobileServerAugment: keeps ALL local matches
-                            // (they're real keyword hits), then puts server's
-                            // artist-name matches first, then title matches,
-                            // then pure visual matches.  For "Gogh" this
-                            // surfaces actual Van Gogh works that weren't in
-                            // the warm-prefix 'g' bucket (because his name
-                            // starts with V) and demotes Sternennacht-style
-                            // visual lookalikes by other artists.
-                            setFilteredArtworks((prev) => mergeMobileServerAugment(prev, mapped, startedQuery).slice(0, 50));
+                            // For keyword (FTS5) results: those are already
+                            // ordered by relevance/rank — ALL of them are
+                            // valid name/title matches, no need to re-triage.
+                            // For semantic results: triage by artist-name
+                            // match so visual-only fillers stay below.
+                            setFilteredArtworks((prev) => {
+                                const merged = useKeyword
+                                    ? (() => {
+                                        // Keep local prev first, dedupe, then append keyword rows.
+                                        const seen = new Set<string>();
+                                        const out: SearchableArtwork[] = [];
+                                        for (const item of prev) {
+                                            const id = String(item.id || '');
+                                            if (!id || seen.has(id)) continue;
+                                            seen.add(id);
+                                            out.push(item);
+                                        }
+                                        for (const item of mapped) {
+                                            const id = String(item.id || '');
+                                            if (!id || seen.has(id)) continue;
+                                            seen.add(id);
+                                            out.push(item);
+                                        }
+                                        return out;
+                                    })()
+                                    : mergeMobileServerAugment(prev, mapped, startedQuery);
+                                return merged.slice(0, 50);
+                            });
                         })();
                     }
                 } else {

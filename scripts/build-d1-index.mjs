@@ -15,11 +15,16 @@ import path from 'node:path';
 const REPO_ROOT = path.resolve(new URL('..', import.meta.url).pathname);
 const DATA_DIR = path.join(REPO_ROOT, 'public', 'data');
 const OUT_SQL = path.join(REPO_ROOT, 'workers', 'semantic-search', 'd1-seed.sql');
-const BATCH = 200; // rows per INSERT — D1 limit is generous, keeps statements parseable
+// D1 has a per-statement size limit (SQLITE_TOOBIG triggered around the
+// 875th 200-row batch when a long-field row pushed the statement past
+// the cap). Smaller batches + per-field truncation keep us well clear.
+const BATCH = 50;
+const MAX_FIELD_LEN = 1000; // truncate any single string field above this
 
 function escapeSqlString(value) {
   if (value == null) return "''";
-  const str = String(value);
+  let str = String(value);
+  if (str.length > MAX_FIELD_LEN) str = str.slice(0, MAX_FIELD_LEN);
   return "'" + str.replace(/'/g, "''") + "'";
 }
 
