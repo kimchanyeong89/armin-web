@@ -42,7 +42,7 @@ id = "4ca7209a702446efb0f205bcacbae33a"
 # 이후 워커 코드 수정만 변경되면 그냥:
 #   npx wrangler deploy
 # ────────────────────────────────────────────────────────────
-# [[d1_databases]]
-# binding = "DB"
-# database_name = "armin-text-search"
-# database_id = "REPLACE_WITH_OUTPUT_OF_wrangler_d1_create"
+[[d1_databases]]
+binding = "DB"
+database_name = "armin-text-search"
+database_id = "6e99c748-1ee0-49ee-89d7-dda9595aa032"

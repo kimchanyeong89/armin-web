@@ -634,6 +634,47 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
         return [...pinned, ...fresh];
     }, []);
 
+    // Mobile augmentation merge — DIFFERENT from the chunk-streaming merge above.
+    // - prev = local warm-prefix matches (real keyword matches against artist/title)
+    // - next = server semantic matches (visually similar, may not be name matches)
+    //
+    // Local matches are AUTHORITATIVE for keyword queries (they actually contain
+    // the substring). We keep them all, then prepend server results that are also
+    // real artist matches (catches "Gogh" → all "Vincent van Gogh" works that
+    // weren't in the local "g" bucket because the artist's name starts with V).
+    // Pure visual matches go below the artist matches as supplementary.
+    const mergeMobileServerAugment = useCallback((prev: SearchableArtwork[], next: SearchableArtwork[], queryText: string) => {
+        const seen = new Set<string>();
+        const local: SearchableArtwork[] = [];
+        const artistMatches: SearchableArtwork[] = [];
+        const titleMatches: SearchableArtwork[] = [];
+        const visualOnly: SearchableArtwork[] = [];
+        const q = (queryText || '').trim().toLowerCase();
+
+        // 1) Keep ALL local results (these are real text matches from warm prefix)
+        for (const item of prev) {
+            const id = String(item.id || '');
+            if (!id || seen.has(id)) continue;
+            seen.add(id);
+            local.push(item);
+        }
+
+        // 2) Triage server results into artist-name match / title match / visual-only
+        for (const item of next) {
+            const id = String(item.id || '');
+            if (!id || seen.has(id)) continue;
+            seen.add(id);
+            const artist = (item.artist || '').toLowerCase();
+            const name = (item.name || '').toLowerCase();
+            if (q.length >= 2 && artist.includes(q)) artistMatches.push(item);
+            else if (q.length >= 2 && name.includes(q)) titleMatches.push(item);
+            else visualOnly.push(item);
+        }
+
+        // 3) Order: local (authoritative) → artist matches → title matches → visual
+        return [...local, ...artistMatches, ...titleMatches, ...visualOnly];
+    }, []);
+
     // AI Semantic Search (Transformers.js 브라우저 WASM + HF API 폴백)
     const [isAIMode, setIsAIMode] = useState(false);
     const [aiPulsing, setAiPulsing] = useState(false);
@@ -2882,7 +2923,9 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                     if (isLikelyMobileDevice()) {
                         void (async () => {
                             const startedQuery = query;
-                            const rows = await searchByText(startedQuery, 50);
+                            // Pull more from server (100) so artist filter has
+                            // a deeper pool to find name matches in.
+                            const rows = await searchByText(startedQuery, 100);
                             if (!rows || rows.length === 0) return;
                             if ((queryRef.current || '').trim() !== startedQuery.trim()) return;
                             const mapped = rows.map((r) => ({
@@ -2904,9 +2947,15 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                                   return true;
                               });
                             if (mapped.length === 0) return;
-                            // Append after whatever the local worker
-                            // returned (warm-prefix matches stay first).
-                            setFilteredArtworks((prev) => mergeResultsPreservingOrder(prev, mapped).slice(0, 30));
+                            // mergeMobileServerAugment: keeps ALL local matches
+                            // (they're real keyword hits), then puts server's
+                            // artist-name matches first, then title matches,
+                            // then pure visual matches.  For "Gogh" this
+                            // surfaces actual Van Gogh works that weren't in
+                            // the warm-prefix 'g' bucket (because his name
+                            // starts with V) and demotes Sternennacht-style
+                            // visual lookalikes by other artists.
+                            setFilteredArtworks((prev) => mergeMobileServerAugment(prev, mapped, startedQuery).slice(0, 50));
                         })();
                     }
                 } else {
