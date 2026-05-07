@@ -451,35 +451,54 @@ function searchWarm(query: string) {
 
     const prefix = getQueryPrefix(q);
     const bucket = warmBuckets.get(prefix);
-    if (!bucket) {
-        return { results: [], artists: [] };
+
+    // Artworks: still bucketed by query prefix (warm-prefix file is small,
+    // 45 artworks per bucket — searching all buckets here is fine but
+    // mostly redundant for artworks).
+    const matchingArtworks = bucket
+        ? (bucket.artworks || [])
+            .map((art: any) => {
+                const rawArtist = art.a || 'Unknown';
+                const artist = isLowQualityArtistLabel(rawArtist) ? 'Unknown' : rawArtist;
+                return {
+                    id: art.id,
+                    name: art.n || '',
+                    artist,
+                    image: art.i || '',
+                    date: art.d || '',
+                    museumName: art.m || '',
+                    exhibitionId: art.e || '',
+                    year: art.d || '',
+                    sourceUrl: art.u || '',
+                    searchName: normalizeSearchText(art.n || ''),
+                    searchArtist: artist === 'Unknown' ? '' : normalizeSearchText(artist),
+                };
+            })
+            .filter((art: any) => art.searchName.includes(q) || art.searchArtist.includes(q))
+            .slice(0, 60)
+        : [];
+
+    // Artists: search ACROSS ALL buckets so a query like "Gogh" surfaces
+    // "Vincent van Gogh" (whose normalized name starts with V — warm-prefix
+    // would only ever return him for queries starting with V).  The total
+    // artist pool is small (~8 artists × 28 buckets = 224 max), so a
+    // full-scan is cheap.  Dedupe by artist name afterwards because the
+    // same canonical artist may live in multiple buckets if the JSON
+    // includes name variants.
+    const seenArtists = new Set<string>();
+    const matchingArtists: Array<{ artist: string; count: number }> = [];
+    for (const b of warmBuckets.values()) {
+        for (const a of (b.artists || [])) {
+            if (!isMeaningfulArtistSuggestion(a.artist)) continue;
+            if (!normalizeSearchText(a.artist).includes(q)) continue;
+            const dedupeKey = a.artist.toLowerCase();
+            if (seenArtists.has(dedupeKey)) continue;
+            seenArtists.add(dedupeKey);
+            matchingArtists.push({ artist: a.artist, count: a.count });
+            if (matchingArtists.length >= 12) break;
+        }
+        if (matchingArtists.length >= 12) break;
     }
-
-    const matchingArtworks = (bucket.artworks || [])
-        .map((art: any) => {
-            const rawArtist = art.a || 'Unknown';
-            const artist = isLowQualityArtistLabel(rawArtist) ? 'Unknown' : rawArtist;
-            return {
-                id: art.id,
-                name: art.n || '',
-                artist,
-                image: art.i || '',
-                date: art.d || '',
-                museumName: art.m || '',
-                exhibitionId: art.e || '',
-                year: art.d || '',
-                sourceUrl: art.u || '',
-                searchName: normalizeSearchText(art.n || ''),
-                searchArtist: artist === 'Unknown' ? '' : normalizeSearchText(artist),
-            };
-        })
-        .filter((art: any) => art.searchName.includes(q) || art.searchArtist.includes(q))
-        .slice(0, 60);
-
-    const matchingArtists = (bucket.artists || [])
-        .filter((a: WarmArtist) => isMeaningfulArtistSuggestion(a.artist) && normalizeSearchText(a.artist).includes(q))
-        .slice(0, 5)
-        .map((a: WarmArtist) => ({ artist: a.artist, count: a.count }));
 
     return {
         results: matchingArtworks,
