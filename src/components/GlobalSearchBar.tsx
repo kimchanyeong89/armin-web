@@ -2870,14 +2870,45 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                 if (query.length >= 2) {
                     ensureWorker();
                     workerRef.current?.postMessage({ type: 'SEARCH', query });
-                    // Removed parallel searchTextServer call:
-                    // /search-text requires D1 (not deployed yet) so it
-                    // returns 503 every time — pure overhead, plus piles up
-                    // an unawaited promise per keystroke. The local worker
-                    // (warm prefix on mobile, full chunks on desktop) is
-                    // sufficient until D1 is provisioned. Re-enable later
-                    // once `wrangler d1 create armin-text-search` is run
-                    // and the wrangler.toml binding is uncommented.
+
+                    // Mobile augmentation: the local worker only has the
+                    // 385KB warm-prefix on mobile (chunks are disabled to
+                    // prevent the 1.2GB OOM crash). Warm-prefix only
+                    // contains 45 artworks per letter bucket — for popular
+                    // artists ("Gogh", "Picasso") that's effectively empty.
+                    // Augment with server-side semantic search so mobile
+                    // users see real artworks instead of a blank ARTWORKS
+                    // section.
+                    if (isLikelyMobileDevice()) {
+                        void (async () => {
+                            const startedQuery = query;
+                            const rows = await searchByText(startedQuery, 50);
+                            if (!rows || rows.length === 0) return;
+                            if ((queryRef.current || '').trim() !== startedQuery.trim()) return;
+                            const mapped = rows.map((r) => ({
+                                id: String(r.id || ''),
+                                name: r.n || 'Untitled',
+                                artist: r.a || 'Unknown',
+                                image: r.i || '',
+                                year: '',
+                                museumName: r.m || '',
+                                exhibitionId: r.e || '',
+                                sourceUrl: r.u || '',
+                            }) as SearchableArtwork)
+                              .filter((art) => {
+                                  if (!art.image) return false;
+                                  const museumName = (art.museumName || '').toLowerCase();
+                                  const exhibitionId = (art.exhibitionId || '').toLowerCase();
+                                  if (museumName.includes('serpentine gallery') || museumName.includes('british museum')) return false;
+                                  if (exhibitionId.includes('serpentine') || exhibitionId.includes('british-museum') || exhibitionId.includes('the-british-museum') || exhibitionId.includes('bm-collection')) return false;
+                                  return true;
+                              });
+                            if (mapped.length === 0) return;
+                            // Append after whatever the local worker
+                            // returned (warm-prefix matches stay first).
+                            setFilteredArtworks((prev) => mergeResultsPreservingOrder(prev, mapped).slice(0, 30));
+                        })();
+                    }
                 } else {
                     setFilteredArtworks([]);
                     setSuggestedArtists([]);
