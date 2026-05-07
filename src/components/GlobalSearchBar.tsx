@@ -2870,38 +2870,14 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                 if (query.length >= 2) {
                     ensureWorker();
                     workerRef.current?.postMessage({ type: 'SEARCH', query });
-                    // Server-side keyword search runs in parallel with the
-                    // local worker. Whichever returns first feeds the merge
-                    // logic; the local worker stays the authority for full
-                    // coverage once chunks are loaded. searchTextServer
-                    // self-suppresses when D1 isn't deployed (HTTP 503),
-                    // so this is safe to ship before the D1 seed lands.
-                    void (async () => {
-                        const startedQuery = query;
-                        const rows = await searchTextServer(startedQuery, 50);
-                        if (rows.length === 0) return;
-                        if ((queryRef.current || '').trim() !== startedQuery.trim()) return;
-                        const mapped = rows.map((r) => ({
-                            id: String(r.id),
-                            name: r.n || '',
-                            artist: r.a || '',
-                            image: r.i || '',
-                            date: r.d || '',
-                            year: r.d || '',
-                            museumName: r.m || '',
-                            exhibitionId: r.e || '',
-                            sourceUrl: r.u || '',
-                        }) as SearchableArtwork)
-                          .filter((art) => {
-                              const museumName = (art.museumName || '').toLowerCase();
-                              const exhibitionId = (art.exhibitionId || '').toLowerCase();
-                              if (museumName.includes('serpentine gallery') || museumName.includes('british museum')) return false;
-                              if (exhibitionId.includes('serpentine') || exhibitionId.includes('british-museum') || exhibitionId.includes('the-british-museum') || exhibitionId.includes('bm-collection')) return false;
-                              return true;
-                          });
-                        if (mapped.length === 0) return;
-                        setFilteredArtworks((prev) => mergeResultsPreservingOrder(prev, mapped));
-                    })();
+                    // Removed parallel searchTextServer call:
+                    // /search-text requires D1 (not deployed yet) so it
+                    // returns 503 every time — pure overhead, plus piles up
+                    // an unawaited promise per keystroke. The local worker
+                    // (warm prefix on mobile, full chunks on desktop) is
+                    // sufficient until D1 is provisioned. Re-enable later
+                    // once `wrangler d1 create armin-text-search` is run
+                    // and the wrangler.toml binding is uncommented.
                 } else {
                     setFilteredArtworks([]);
                     setSuggestedArtists([]);
@@ -2920,7 +2896,7 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
             } else {
                 setFilteredMuseums([]);
             }
-        }, isAIMode ? 450 : 60);  // 일반 검색 반응성 강화, AI 모드는 과도한 요청 방지
+        }, isAIMode ? 450 : 200);  // 200ms (was 60) — protects iOS WebView from rapid-fire SEARCH postMessages overwhelming the worker thread mid-render. AI stays at 450ms (more expensive call).
 
         return () => clearTimeout(timer);
     }, [query, museums, isAIMode, performSemanticSearch, ensureWorker]);

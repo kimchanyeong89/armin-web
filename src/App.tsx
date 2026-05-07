@@ -9,6 +9,7 @@ import DrawingLoader, { TransitionBadge } from "./components/DrawingLoader";
 import { exhibitions } from "./data/exhibitions";
 import { OnboardingGuard } from "./components/OnboardingGuard";
 import CommunityPanel from "./components/Community/CommunityPanel";
+import { ErrorBoundary } from "./components/ErrorBoundary";
 import { AnimatePresence, motion } from "framer-motion";
 import BottomPageNavigator, { MAIN_TABS, resolveMainTabIndex } from "./components/BottomPageNavigator";
 import { LogOut, ShoppingCart, User } from "lucide-react";
@@ -18,6 +19,7 @@ import type { ProfileImageCrop } from "./types/Profile";
 import { isMobileAppContainer } from "./utils/mobileAppAuth";
 import { CartProvider, useCart } from "./contexts/CartContext";
 import { auth } from "./firebase";
+import { ensureSharedSearchWorkerLoaded } from "./utils/searchWorkerRuntime";
 
 // Lazy load pages for code splitting
 const HomePage = lazy(() => import("./pages/HomePage"));
@@ -179,6 +181,11 @@ function AppContent() {
     void import("./components/Mypage");
     void import("./pages/AICurationHubPage");
     void import("./pages/SearchPage");
+
+    // Mobile shell: prewarm search worker at app launch so first query is faster.
+    if (isMobileAppContainer()) {
+      ensureSharedSearchWorkerLoaded();
+    }
   }, []);
 
   // Route-transition badge
@@ -202,11 +209,64 @@ function AppContent() {
   );
   const [profilePhotoUrl, setProfilePhotoUrl] = useState<string | null>(null);
   const [profileImageCrop, setProfileImageCrop] = useState<ProfileImageCrop | null>(null);
+  // True iff Firestore data.photoURL is set (user has uploaded a custom
+  // photo). Used to decide whether the saved crop should be applied —
+  // a stale crop must NOT be applied when we're rendering the OAuth
+  // provider's avatar fallback.
+  const [hasCustomPhotoSaved, setHasCustomPhotoSaved] = useState<boolean>(false);
+
+  // Draggable profile button position (Y offset from top)
+  const [profileDragY, setProfileDragY] = useState<number>(() => {
+    try {
+      const saved = localStorage.getItem('armin:profileBtnY');
+      if (saved !== null) {
+        const v = Number(saved);
+        if (Number.isFinite(v) && v >= 0) return v;
+      }
+    } catch { /* ignore */ }
+    return -1; // -1 = use default CSS position
+  });
+  const profileDragRef = useRef<{ startY: number; startDragY: number } | null>(null);
+  const profileIsDragging = useRef(false);
+  const profileBtnRef = useRef<HTMLButtonElement | null>(null);
+
+  useEffect(() => {
+    const handleMove = (clientY: number) => {
+      if (!profileIsDragging.current || !profileDragRef.current) return;
+      const dy = clientY - profileDragRef.current.startY;
+      let newY = profileDragRef.current.startDragY + dy;
+      newY = Math.max(0, Math.min(newY, (window.innerHeight || 800) - 60));
+      setProfileDragY(newY);
+    };
+    const handleEnd = () => {
+      if (!profileIsDragging.current) return;
+      profileIsDragging.current = false;
+      profileDragRef.current = null;
+      // Save position
+      setProfileDragY(prev => {
+        try { localStorage.setItem('armin:profileBtnY', String(prev)); } catch { /* */ }
+        return prev;
+      });
+    };
+    const onMouseMove = (e: MouseEvent) => handleMove(e.clientY);
+    const onTouchMove = (e: TouchEvent) => { if (e.touches[0]) handleMove(e.touches[0].clientY); };
+    document.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('mouseup', handleEnd);
+    document.addEventListener('touchmove', onTouchMove, { passive: true });
+    document.addEventListener('touchend', handleEnd);
+    return () => {
+      document.removeEventListener('mousemove', onMouseMove);
+      document.removeEventListener('mouseup', handleEnd);
+      document.removeEventListener('touchmove', onTouchMove);
+      document.removeEventListener('touchend', handleEnd);
+    };
+  }, []);
 
   useEffect(() => {
     if (!user || user.isAnonymous) {
       setProfilePhotoUrl(null);
       setProfileImageCrop(null);
+      setHasCustomPhotoSaved(false);
       return;
     }
 
@@ -218,11 +278,13 @@ function AppContent() {
         if (!mounted) return;
         setProfilePhotoUrl(data?.photoURL || user.photoURL || null);
         setProfileImageCrop(data?.profileImageCrop || null);
+        setHasCustomPhotoSaved(!!data?.photoURL);
       },
       () => {
         if (!mounted) return;
         setProfilePhotoUrl(user.photoURL || null);
         setProfileImageCrop(null);
+        setHasCustomPhotoSaved(false);
       },
     );
 
@@ -233,11 +295,13 @@ function AppContent() {
           if (!mounted) return;
           setProfilePhotoUrl(data?.photoURL || user.photoURL || null);
           setProfileImageCrop(data?.profileImageCrop || null);
+          setHasCustomPhotoSaved(!!data?.photoURL);
         })
         .catch(() => {
           if (!mounted) return;
           setProfilePhotoUrl(user.photoURL || null);
           setProfileImageCrop(null);
+          setHasCustomPhotoSaved(false);
         });
     }
 
@@ -353,42 +417,17 @@ function AppContent() {
     prevTabIndex.current = activeTabIndex;
   }, [activeTabIndex]);
 
+  // Horizontal-swipe-to-switch-tab gesture removed by user request:
+  // it triggered far too often on incidental finger drags during normal
+  // browsing (e.g. dragging the globe, scrolling lists with a slight
+  // horizontal component) and silently navigated to the wrong tab.
+  // Tab navigation now goes exclusively through the bottom nav bar's
+  // tap targets, which is unambiguous.
   const swipeStartRef = useRef<{ x: number; y: number } | null>(null);
-
-  const onPointerDown = (e: ReactPointerEvent<HTMLDivElement>) => {
-    if (activeTabIndex === null) return;
-    if (isSwipeBlockedTarget(e.target)) return;
-    if (activeTabIndex === 0 && e.clientY < window.innerHeight - 170) return;
-    swipeStartRef.current = { x: e.clientX, y: e.clientY };
-  };
-
-  const onPointerUp = (e: ReactPointerEvent<HTMLDivElement>) => {
-    if (activeTabIndex === null) return;
-    if (!swipeStartRef.current) return;
-
-    const dx = e.clientX - swipeStartRef.current.x;
-    const dy = e.clientY - swipeStartRef.current.y;
-    swipeStartRef.current = null;
-
-    if (Math.abs(dx) < 72) return;
-    if (Math.abs(dy) > Math.abs(dx) * 0.72) return;
-
-    if (dx < 0 && activeTabIndex < MAIN_TABS.length - 1) {
-      updateSlideDirection(1);
-      navigate(MAIN_TABS[activeTabIndex + 1].path);
-      return;
-    }
-
-    if (dx > 0 && activeTabIndex > 0) {
-      updateSlideDirection(-1);
-      const prevTab = MAIN_TABS[activeTabIndex - 1];
-      if (prevTab?.id === "map") {
-        navigate(resolveLastMapPath());
-      } else if (prevTab) {
-        navigate(prevTab.path);
-      }
-    }
-  };
+  const onPointerDown = (_e: ReactPointerEvent<HTMLDivElement>) => { /* no-op */ };
+  const onPointerUp = (_e: ReactPointerEvent<HTMLDivElement>) => { /* no-op */ };
+  // Reference kept so TS doesn't flag the unused ref binding above.
+  void swipeStartRef;
 
   const handleBottomNavChange = (targetIndex: number) => {
     if (activeTabIndex !== null && targetIndex === activeTabIndex) return;
@@ -408,6 +447,10 @@ function AppContent() {
   const isAuthedUser = !!user && !user.isAnonymous;
   const profileInitial = (user?.displayName || user?.email || 'A').trim().slice(0, 1).toUpperCase();
   const effectiveProfilePhoto = profilePhotoUrl || user?.photoURL || null;
+  // Only apply the saved crop when Firestore says the user actually has a
+  // custom photo. If we're rendering the OAuth provider fallback, a stale
+  // crop from an old custom upload would push that photo off-screen.
+  const effectiveProfileCrop = hasCustomPhotoSaved ? profileImageCrop : null;
   const isMobileShell = isMobileAppContainer();
   const isDesktopQuickMenu = !isMobileShell && viewportWidth >= 1024;
   const floatingButtonSize = isMobileShell ? 40 : (isDesktopQuickMenu ? 54 : 46);
@@ -420,15 +463,40 @@ function AppContent() {
   const floatingBottomBase = isDesktopQuickMenu
     ? 'max(20px, calc(env(safe-area-inset-bottom, 0px) + 18px))'
     : 'auto';
+  // Profile button top: use drag position if pinned, otherwise default CSS cascade
+  const profileBtnTop = (!isDesktopQuickMenu && profileDragY >= 0)
+    ? profileDragY
+    : undefined;
+  const floatingProfileTopCSS = profileBtnTop !== undefined
+    ? `${profileBtnTop}px`
+    : `calc(${floatingTopBase} + ${floatingStep * 2}px)`;
   const floatingProfileTop = `calc(${floatingTopBase} + ${floatingStep * 2}px)`;
-  const floatingActionTop1 = `calc(${floatingTopBase} + ${floatingStep}px)`;
-  const floatingActionTop2 = floatingTopBase;
-  const floatingActionTop3 = `calc(${floatingTopBase} + ${floatingStep * 3}px)`;
-  const floatingActionTop4 = `calc(${floatingTopBase} + ${floatingStep * 4}px)`;
-  const floatingActionTop5 = `calc(${floatingTopBase} + ${floatingStep * 5}px)`;
+
+  // Action buttons: when profile is dragged, position relative to its pixel Y.
+  // When not dragged, fall back to CSS calc expressions above the default profile position.
+  const _draggedY = profileBtnTop; // pixel Y of profile, or undefined
+  const floatingActionTop1 = _draggedY !== undefined
+    ? `${Math.max(0, _draggedY - floatingStep)}px`             // MyPage: 1 step above profile
+    : `calc(${floatingTopBase} + ${floatingStep}px)`;
+  const floatingActionTop2 = _draggedY !== undefined
+    ? `${Math.max(0, _draggedY - floatingStep * 2)}px`         // Logout: 2 steps above profile
+    : floatingTopBase;
+  const floatingActionTop3 = _draggedY !== undefined
+    ? `${Math.min(typeof window !== 'undefined' ? window.innerHeight - floatingStep : 9999, _draggedY + floatingStep)}px`   // Cart: 1 step below
+    : `calc(${floatingTopBase} + ${floatingStep * 3}px)`;
+  const floatingActionTop4 = _draggedY !== undefined
+    ? `${Math.min(typeof window !== 'undefined' ? window.innerHeight - floatingStep : 9999, _draggedY + floatingStep * 2)}px` // Language: 2 steps below
+    : `calc(${floatingTopBase} + ${floatingStep * 4}px)`;
+  const floatingActionTop5 = _draggedY !== undefined
+    ? `${Math.min(typeof window !== 'undefined' ? window.innerHeight - floatingStep : 9999, _draggedY + floatingStep * 3)}px` // Theme: 3 steps below
+    : `calc(${floatingTopBase} + ${floatingStep * 5}px)`;
+  const floatingActionTop6 = _draggedY !== undefined
+    ? `${Math.min(typeof window !== 'undefined' ? window.innerHeight - floatingStep : 9999, _draggedY + floatingStep * 4)}px` // Logout: 4 steps below
+    : `calc(${floatingTopBase} + ${floatingStep * 6}px)`;
   const floatingActionBottom1 = `calc(${floatingBottomBase} + ${floatingStep}px)`;
   const floatingActionBottom2 = `calc(${floatingBottomBase} + ${floatingStep * 2}px)`;
   const floatingActionBottom3 = `calc(${floatingBottomBase} + ${floatingStep * 3}px)`;
+  const floatingActionBottom4 = `calc(${floatingBottomBase} + ${floatingStep * 4}px)`;
 
   const handleProfileMainClick = async () => {
     if (!isAuthedUser) {
@@ -488,6 +556,11 @@ function AppContent() {
             style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', willChange: 'transform', background: appShellBackground }}
           >
             <Suspense fallback={<PageLoader />}>
+              {/* Top-level ErrorBoundary so that a single thrown render in
+                  any route can't blank the entire React tree (which on
+                  React Native WebView shows up as iOS reloading the app
+                  back to the Expo "Opening project..." menu). */}
+              <ErrorBoundary label="Page">
               <Routes location={location}>
                 <Route element={<HomePage exhibitions={exhibitions} isOverlayOpen={false} />}>
                   <Route path="/" element={null} />
@@ -517,6 +590,7 @@ function AppContent() {
                 <Route path="/admin/import" element={<AdminImport />} />
                 <Route path="/admin" element={<AdminPage />} />
               </Routes>
+              </ErrorBoundary>
             </Suspense>
           </motion.div>
         </AnimatePresence>
@@ -555,36 +629,9 @@ function AppContent() {
                     }}
                   >
                     <button
-                      onClick={() => {
-                        navigate('/mypage');
-                        setIsFloatingActionsOpen(false);
-                      }}
-                      style={{
-                        border: 'none',
-                        height: 36,
-                        borderRadius: 999,
-                        padding: '0 14px',
-                        cursor: 'pointer',
-                        display: 'inline-flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        gap: 7,
-                        background: isLightTheme ? 'rgba(0,0,0,0.06)' : 'rgba(255,255,255,0.08)',
-                        color: isLightTheme ? '#111111' : '#ffffff',
-                        fontSize: 11,
-                        fontWeight: 800,
-                        letterSpacing: '0.02em',
-                      }}
-                      title={t({ ko: '마이페이지', en: 'My Page' })}
-                    >
-                      <User size={14} strokeWidth={2.2} />
-                      {t({ ko: 'MY PAGE', en: 'MY PAGE' })}
-                    </button>
-
-                    <button
                       onClick={handleQuickLogout}
                       style={{
-                        border: 'none',
+                        border: isLightTheme ? '1px solid rgba(180,30,30,0.18)' : '1px solid rgba(255,80,80,0.22)',
                         height: 36,
                         borderRadius: 999,
                         padding: '0 14px',
@@ -593,101 +640,23 @@ function AppContent() {
                         alignItems: 'center',
                         justifyContent: 'center',
                         gap: 7,
-                        background: isLightTheme ? 'rgba(0,0,0,0.06)' : 'rgba(255,255,255,0.08)',
-                        color: isLightTheme ? '#111111' : '#ffffff',
+                        background: isLightTheme ? 'rgba(200,30,30,0.07)' : 'rgba(255,60,60,0.10)',
+                        color: isLightTheme ? '#b01c1c' : '#ff7070',
                         fontSize: 11,
-                        fontWeight: 800,
-                        letterSpacing: '0.02em',
+                        fontWeight: 700,
+                        letterSpacing: '0.06em',
                       }}
                       title={t({ ko: '로그아웃', en: 'Logout' })}
                     >
-                      <LogOut size={14} strokeWidth={2.2} />
+                      <svg width="13" height="13" viewBox="0 0 13 13" fill="none" style={{ flexShrink: 0 }}>
+                        <path d="M5 2H2.5A1.5 1.5 0 0 0 1 3.5v6A1.5 1.5 0 0 0 2.5 11H5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+                        <path d="M8.5 4.5L11 6.5L8.5 8.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                        <line x1="11" y1="6.5" x2="5" y2="6.5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
+                      </svg>
                       {t({ ko: 'LOGOUT', en: 'LOGOUT' })}
                     </button>
                   </motion.div>
-                ) : (
-                  <>
-                    <motion.button
-                      initial={{ opacity: 0, y: -10, scale: 0.86 }}
-                      animate={{ opacity: 1, y: 0, scale: 1 }}
-                      exit={{ opacity: 0, y: -8, scale: 0.88 }}
-                      transition={{ duration: 0.24, ease: [0.22, 1, 0.36, 1] }}
-                      onClick={() => {
-                        navigate('/mypage');
-                        setIsFloatingActionsOpen(false);
-                      }}
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.94 }}
-                      style={{
-                        position: 'fixed',
-                        right: floatingRight,
-                        top: floatingActionTop1,
-                        bottom: 'auto',
-                        zIndex: 250012,
-                        width: floatingButtonSize,
-                        height: floatingButtonSize,
-                        padding: 0,
-                        boxSizing: 'border-box',
-                        borderRadius: '50%',
-                        border: isLightTheme ? '1px solid rgba(0,0,0,0.18)' : '1px solid rgba(255,255,255,0.22)',
-                        background: isLightTheme ? '#ffffff' : 'rgba(22,22,22,0.88)',
-                        color: isLightTheme ? '#111111' : '#ffffff',
-                        cursor: 'pointer',
-                        display: 'inline-flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        boxShadow: isLightTheme
-                          ? '0 8px 22px rgba(0,0,0,0.16), inset 0 1px 0 rgba(255,255,255,0.55)'
-                          : '0 12px 26px rgba(0,0,0,0.48), inset 0 1px 0 rgba(255,255,255,0.08)',
-                        backdropFilter: 'blur(16px)',
-                        WebkitBackdropFilter: 'blur(16px)',
-                      }}
-                      title={t({ ko: '마이페이지', en: 'My Page' })}
-                    >
-                      <User size={isMobileShell ? 18 : 20} strokeWidth={2.2} />
-                    </motion.button>
-
-                    <motion.button
-                      initial={{ opacity: 0, y: -10, scale: 0.86 }}
-                      animate={{ opacity: 1, y: 0, scale: 1 }}
-                      exit={{ opacity: 0, y: -8, scale: 0.88 }}
-                      transition={{ duration: 0.24, delay: 0.04, ease: [0.22, 1, 0.36, 1] }}
-                      onClick={handleQuickLogout}
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.94 }}
-                      style={{
-                        position: 'fixed',
-                        right: floatingRight,
-                        top: floatingActionTop2,
-                        bottom: 'auto',
-                        zIndex: 250012,
-                        width: floatingButtonSize,
-                        height: floatingButtonSize,
-                        padding: 0,
-                        boxSizing: 'border-box',
-                        borderRadius: '50%',
-                        border: isLightTheme ? '1px solid rgba(0,0,0,0.18)' : '1px solid rgba(255,255,255,0.22)',
-                        background: isLightTheme ? '#ffffff' : 'rgba(22,22,22,0.88)',
-                        color: isLightTheme ? '#111111' : '#ffffff',
-                        cursor: 'pointer',
-                        display: 'inline-flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        fontSize: 11,
-                        fontWeight: 800,
-                        letterSpacing: '0.02em',
-                        boxShadow: isLightTheme
-                          ? '0 8px 22px rgba(0,0,0,0.16), inset 0 1px 0 rgba(255,255,255,0.55)'
-                          : '0 12px 26px rgba(0,0,0,0.48), inset 0 1px 0 rgba(255,255,255,0.08)',
-                        backdropFilter: 'blur(16px)',
-                        WebkitBackdropFilter: 'blur(16px)',
-                      }}
-                      title={t({ ko: '로그아웃', en: 'Logout' })}
-                    >
-                      OUT
-                    </motion.button>
-                  </>
-                )}
+                ) : null}
 
                 <motion.button
                   initial={{ opacity: 0, y: -10, scale: 0.86 }}
@@ -879,15 +848,57 @@ function AppContent() {
                     </svg>
                   </span>
                 </motion.button>
+
+                {/* ── LOGOUT — bottom of mobile stack (desktop uses pill) ── */}
+                {!isDesktopQuickMenu && <motion.button
+                  initial={{ opacity: 0, y: -10, scale: 0.86 }}
+                  animate={{ opacity: 1, y: 0, scale: 1 }}
+                  exit={{ opacity: 0, y: -8, scale: 0.88 }}
+                  transition={{ duration: 0.24, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+                  onClick={handleQuickLogout}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.94 }}
+                  style={{
+                    position: 'fixed',
+                    right: floatingRight,
+                    top: isDesktopQuickMenu ? 'auto' : floatingActionTop6,
+                    bottom: isDesktopQuickMenu ? floatingActionBottom4 : 'auto',
+                    zIndex: 250012,
+                    width: floatingButtonSize,
+                    height: floatingButtonSize,
+                    padding: 0,
+                    boxSizing: 'border-box',
+                    borderRadius: '50%',
+                    border: isLightTheme ? '1px solid rgba(180,30,30,0.28)' : '1px solid rgba(255,80,80,0.28)',
+                    background: isLightTheme ? 'rgba(200,30,30,0.08)' : 'rgba(30,10,10,0.88)',
+                    color: isLightTheme ? '#b01c1c' : '#ff8080',
+                    cursor: 'pointer',
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    boxShadow: isLightTheme
+                      ? '0 8px 22px rgba(180,0,0,0.12), inset 0 1px 0 rgba(255,255,255,0.55)'
+                      : '0 12px 26px rgba(120,0,0,0.32), inset 0 1px 0 rgba(255,100,100,0.10)',
+                    backdropFilter: 'blur(16px)',
+                    WebkitBackdropFilter: 'blur(16px)',
+                  }}
+                  title={t({ ko: '로그아웃', en: 'Logout' })}
+                >
+                  {/* Exit/door SVG icon */}
+                  <svg width={isMobileShell ? 17 : 19} height={isMobileShell ? 17 : 19} viewBox="0 0 18 18" fill="none">
+                    <path d="M6.5 3H3.5A1.5 1.5 0 0 0 2 4.5v9A1.5 1.5 0 0 0 3.5 15H6.5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round"/>
+                    <path d="M11.5 5.5L15 9L11.5 12.5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
+                    <line x1="15" y1="9" x2="7" y2="9" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round"/>
+                  </svg>
+                </motion.button>}
               </>
             )}
           </AnimatePresence>
 
           <motion.button
+            ref={profileBtnRef}
             initial={{ opacity: 0, y: 8 }}
             onClick={handleProfileMainClick}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.94 }}
             animate={{
               opacity: 1,
               y: 0,
@@ -901,10 +912,22 @@ function AppContent() {
                   : '0 12px 26px rgba(0,0,0,0.48), inset 0 1px 0 rgba(255,255,255,0.08)'),
             }}
             transition={{ duration: 0.24, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+            onMouseDown={(e) => {
+              // Start drag on non-interactive area (e.g., drag with 2+ fingers not needed – just pointer hold)
+              profileDragRef.current = { startY: e.clientY, startDragY: profileDragY >= 0 ? profileDragY : (profileBtnRef.current?.getBoundingClientRect().top ?? 100) };
+              profileIsDragging.current = true;
+              e.preventDefault();
+            }}
+            onTouchStart={(e) => {
+              const t = e.touches[0];
+              if (!t) return;
+              profileDragRef.current = { startY: t.clientY, startDragY: profileDragY >= 0 ? profileDragY : (profileBtnRef.current?.getBoundingClientRect().top ?? 100) };
+              profileIsDragging.current = true;
+            }}
             style={{
               position: 'fixed',
               right: floatingRight,
-              top: isDesktopQuickMenu ? 'auto' : floatingProfileTop,
+              top: isDesktopQuickMenu ? 'auto' : floatingProfileTopCSS,
               bottom: isDesktopQuickMenu ? floatingBottomBase : 'auto',
               zIndex: 250012,
               width: floatingButtonSize,
@@ -915,7 +938,7 @@ function AppContent() {
               border: isLightTheme ? '1px solid rgba(0,0,0,0.18)' : '1px solid rgba(255,255,255,0.22)',
               background: isLightTheme ? '#ffffff' : 'rgba(22,22,22,0.88)',
               color: isLightTheme ? '#111111' : '#ffffff',
-              cursor: 'pointer',
+              cursor: profileIsDragging.current ? 'grabbing' : 'grab',
               display: 'inline-flex',
               alignItems: 'center',
               justifyContent: 'center',
@@ -925,13 +948,16 @@ function AppContent() {
               overflow: 'hidden',
               backdropFilter: 'blur(16px)',
               WebkitBackdropFilter: 'blur(16px)',
+              touchAction: 'none',
+              userSelect: 'none',
+              WebkitUserSelect: 'none',
             }}
             title={isAuthedUser ? t({ ko: '빠른 메뉴 열기', en: 'Toggle quick actions' }) : t({ ko: '로그인', en: 'Login' })}
           >
             {isAuthedUser && effectiveProfilePhoto ? (
               <ProfileAvatar
                 src={effectiveProfilePhoto}
-                crop={profileImageCrop}
+                crop={effectiveProfileCrop}
                 size={floatingButtonSize}
                 alt="Profile"
                 fallback={null}
