@@ -543,7 +543,7 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
     const [isExpanded, setIsExpanded] = useState(false);
     const [searchFilter, setSearchFilter] = useState<SearchFilterType>('all');
     const [filteredArtworks, setFilteredArtworks] = useState<SearchableArtwork[]>([]);
-    const [suggestedArtists, setSuggestedArtists] = useState<Array<{ artist: string; count: number; image?: string }>>([]);
+    const [workerArtistSuggestions, setSuggestedArtists] = useState<Array<{ artist: string; count: number; image?: string }>>([]);
     const [filteredMuseums, setFilteredMuseums] = useState<Museum[]>([]);
     const [recentSearches, setRecentSearches] = useState<string[]>(() => {
         try {
@@ -2060,6 +2060,87 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
     };
 
     useEffect(() => { queryRef.current = query; }, [query]);
+
+    // ── Artist index ──────────────────────────────────────────────────────────
+    // The warm-prefix worker bucket only contains ~224 hand-picked artists, so
+    // famous painters like Monet/Manet never surfaced as suggestions. We ship a
+    // small ~1.6MB index of every artist with ≥10 works (8K artists) at
+    // /artists/_index.json. It loads once, lazily, and we substring-match
+    // against pre-normalized search text so partial queries (e.g. "mon",
+    // "manet", "gogh") return matches even when the worker has nothing.
+    const artistIndexRef = useRef<Array<{ k: string; a: string; c: number; i: string; s: string }> | null>(null);
+    const [artistIndexLoaded, setArtistIndexLoaded] = useState(false);
+    const [artistIndexMatches, setArtistIndexMatches] = useState<Array<{ artist: string; count: number; image?: string }>>([]);
+    useEffect(() => {
+        // Lazy load on first interaction (input focus / query typed)
+        if (artistIndexRef.current || !isExpanded) return;
+        let cancelled = false;
+        fetch('/artists/_index.json')
+            .then(r => r.ok ? r.json() : null)
+            .then((data: any[] | null) => {
+                if (cancelled || !Array.isArray(data)) return;
+                artistIndexRef.current = data;
+                setArtistIndexLoaded(true);
+            })
+            .catch(() => {});
+        return () => { cancelled = true; };
+    }, [isExpanded]);
+
+    // Recompute matches whenever query changes
+    useEffect(() => {
+        const idx = artistIndexRef.current;
+        if (!idx) {
+            if (artistIndexMatches.length > 0) setArtistIndexMatches([]);
+            return;
+        }
+        const q = normalizeLookupText(query).trim();
+        if (q.length < 2) {
+            if (artistIndexMatches.length > 0) setArtistIndexMatches([]);
+            return;
+        }
+        // Substring match across pre-normalized 's' field. Rank: prefix > word-start > substring.
+        const matches: Array<{ entry: typeof idx[number]; score: number }> = [];
+        for (const entry of idx) {
+            const s = entry.s;
+            if (!s.includes(q)) continue;
+            let score = entry.c; // base = artwork count
+            if (s.startsWith(q)) score += 100000;
+            else if (s.includes(' ' + q)) score += 50000; // word-start
+            matches.push({ entry, score });
+            if (matches.length > 200) break; // cap pre-sort to bound CPU
+        }
+        matches.sort((a, b) => b.score - a.score);
+        const top = matches.slice(0, 24).map(m => ({
+            artist: m.entry.a,
+            count: m.entry.c,
+            image: m.entry.i,
+        }));
+        // Avoid setState if shallow-equal (keeps render thrash low)
+        const same = top.length === artistIndexMatches.length
+            && top.every((t, i) => t.artist === artistIndexMatches[i].artist);
+        if (!same) setArtistIndexMatches(top);
+    }, [query, artistIndexLoaded]); // eslint-disable-line react-hooks/exhaustive-deps
+
+    // Combined artist suggestions: worker results take precedence (richer image
+    // metadata), then dedupe-append local-index matches so substring queries
+    // like "monet" / "manet" surface even when the worker returned nothing.
+    const suggestedArtists = useMemo(() => {
+        const seen = new Set<string>();
+        const out: Array<{ artist: string; count: number; image?: string }> = [];
+        for (const a of workerArtistSuggestions) {
+            const key = normalizeLookupText(a.artist);
+            if (!key || seen.has(key)) continue;
+            seen.add(key);
+            out.push(a);
+        }
+        for (const a of artistIndexMatches) {
+            const key = normalizeLookupText(a.artist);
+            if (!key || seen.has(key)) continue;
+            seen.add(key);
+            out.push(a);
+        }
+        return out;
+    }, [workerArtistSuggestions, artistIndexMatches]);
 
     // Save query to sessionStorage whenever it changes
     useEffect(() => {
