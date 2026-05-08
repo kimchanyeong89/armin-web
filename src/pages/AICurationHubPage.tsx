@@ -2,8 +2,9 @@ import React, { useState, useEffect, useCallback, useMemo, useRef } from "react"
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Sparkles, MapPin, Calendar, X,
-  Heart, Navigation, Clock, Star, BookmarkPlus, MessageCircle, ShoppingBag, Shuffle, RotateCw
+  Heart, Navigation, Clock, Star, BookmarkPlus, MessageCircle, ShoppingBag, Shuffle, RotateCw, BookOpen
 } from "lucide-react";
+import WeeklyCurationTab from '../components/WeeklyCurationTab';
 import { useAuth } from '../contexts/AuthContext';
 import { getFirestore, collection, getDocs } from 'firebase/firestore';
 import { exhibitions } from '../data/exhibitions';
@@ -774,7 +775,7 @@ export default function AICurationHubPage() {
   const stickyBg = t ? "rgba(250,250,250,0.97)" : "rgba(8,8,8,0.97)";
   const imgFilter = "none";
 
-  const [activeTab, setActiveTab] = useState("curation");
+  const [activeTab, setActiveTab] = useState<"curation" | "nearby" | "weekly">("curation");
   const [selectedEx, setSelectedEx] = useState<RecommendationCardItem | null>(null);
   const [recommendMode, setRecommendMode] = useState<RecommendationMode>('taste');
 
@@ -1288,14 +1289,14 @@ export default function AICurationHubPage() {
       {/* ── Tab Switch ── */}
       <div style={{ position: "sticky", top: 0, zIndex: 20, paddingTop: "env(safe-area-inset-top, 0px)", paddingLeft: 20, paddingRight: 20, backgroundColor: stickyBg, backdropFilter: "blur(20px)", WebkitBackdropFilter: "blur(20px)" }}>
         <div style={{ position: 'relative', display: "flex", gap: 0, borderBottom: `1px solid ${divider}` }}>
-          {(["curation", "nearby"]).map((tab) => {
-            const label = tab === "curation"
-              ? tr({ ko: '나의 큐레이션', en: 'My Curation' })
-              : tr({ ko: '주변 전시', en: 'Nearby Exhibitions' });
-            const icon  = tab === "curation" ? <Sparkles size={11} strokeWidth={2} /> : <MapPin size={11} strokeWidth={2} />;
-            const isActive = activeTab === tab;
+          {([
+            { id: "curation", label: tr({ ko: '나의 큐레이션', en: 'My Curation' }), icon: <Sparkles size={11} strokeWidth={2} /> },
+            { id: "nearby",   label: tr({ ko: '주변 전시', en: 'Nearby' }),           icon: <MapPin size={11} strokeWidth={2} /> },
+            { id: "weekly",   label: tr({ ko: '주간 큐레이션', en: 'Weekly' }),        icon: <BookOpen size={11} strokeWidth={2} /> },
+          ]).map(({ id, label, icon }) => {
+            const isActive = activeTab === id;
             return (
-              <button key={tab} onClick={() => setActiveTab(tab)}
+              <button key={id} onClick={() => setActiveTab(id as "curation" | "nearby" | "weekly")}
                 style={{
                   flex: 1, display: "flex", alignItems: "center", justifyContent: "center", gap: 6,
                   padding: "14px 0", background: "none", border: "none",
@@ -1308,20 +1309,20 @@ export default function AICurationHubPage() {
             );
           })}
           <motion.div
-            animate={{ left: activeTab === 'curation' ? '0%' : '50%' }}
+            animate={{ left: activeTab === 'curation' ? '0%' : activeTab === 'nearby' ? '33.33%' : '66.67%' }}
             transition={{ duration: 0.18, ease: 'easeOut' }}
-            style={{ position: 'absolute', bottom: -1, width: '50%', height: 2, backgroundColor: '#BFFF0A' }}
+            style={{ position: 'absolute', bottom: -1, width: '33.33%', height: 2, backgroundColor: '#BFFF0A' }}
           />
         </div>
       </div>
 
       {/* ── Tab Content ── */}
       <AnimatePresence mode="wait">
-        {activeTab === "curation" ? (
+        {activeTab === "curation" && (
           <motion.div key="curation"
             initial={{ opacity: 0, x: -12 }} animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -8 }} transition={{ duration: 0.2 }}>
-            <CurationTab {...tabProps} language={language} tr={tr} userArtworks={userArtworks} loading={curationLoading} 
+            <CurationTab {...tabProps} language={language} tr={tr} userArtworks={userArtworks} loading={curationLoading}
                likedArtworkIds={likedArtworkIds}
                onToggleLike={(artwork: RecommendationCardItem) => { void handleToggleArtworkLike(artwork); }}
                onOpenProduct={(artwork: RecommendationCardItem) => setProductArtwork(normalizeArtworkForAction(artwork))}
@@ -1338,17 +1339,28 @@ export default function AICurationHubPage() {
                  } else {
                    setSelectedEx(ex);
                  }
-               }} 
+               }}
             />
           </motion.div>
-        ) : (
+        )}
+        {activeTab === "nearby" && (
           <motion.div key="nearby"
             initial={{ opacity: 0, x: 12 }} animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: 8 }} transition={{ duration: 0.2 }}>
-            <NearbyTab {...tabProps} nearbyExhibitions={nearbyExhibitions} loading={nearbyLoading} 
+            <NearbyTab {...tabProps} nearbyExhibitions={nearbyExhibitions} loading={nearbyLoading}
                language={language}
                tr={tr}
-               onSelect={(ex: RecommendationCardItem) => setSelectedEx(ex)} 
+               onSelect={(ex: RecommendationCardItem) => setSelectedEx(ex)}
+            />
+          </motion.div>
+        )}
+        {activeTab === "weekly" && (
+          <motion.div key="weekly"
+            initial={{ opacity: 0, x: 12 }} animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: 8 }} transition={{ duration: 0.2 }}>
+            <WeeklyCurationTab
+              t={t} fg={fg} fgMed={fgMed} fgLow={fgLow} fgFaint={fgFaint} divider={divider}
+              language={language} tr={tr}
             />
           </motion.div>
         )}

@@ -425,6 +425,48 @@ const getArtistGalleryCacheKey = (artistName: string) => {
     return `artistGalleryCache:${token}`;
 };
 
+// Known artist last-name keys (mirrors search.worker.ts KNOWN_ARTIST_KEYS)
+const KNOWN_ARTIST_FILE_KEYS: Record<string, string> = {
+    monet:'monet', manet:'manet', renoir:'renoir', picasso:'picasso', nolde:'nolde',
+    delacroix:'delacroix', gogh:'gogh', rembrandt:'rembrandt', vermeer:'vermeer',
+    cezanne:'cezanne', degas:'degas', gauguin:'gauguin', matisse:'matisse',
+    kandinsky:'kandinsky', klimt:'klimt', dali:'dali', warhol:'warhol', miro:'miro',
+    chagall:'chagall', klee:'klee', rodin:'rodin', mondrian:'mondrian',
+    pollock:'pollock', rothko:'rothko', bacon:'bacon', hockney:'hockney',
+    basquiat:'basquiat', caravaggio:'caravaggio', raphael:'raphael',
+    michelangelo:'michelangelo', botticelli:'botticelli', titian:'titian',
+    tintoretto:'tintoretto', veronese:'veronese', rubens:'rubens', velazquez:'velazquez',
+    goya:'goya', greco:'greco', bruegel:'bruegel', bosch:'bosch', durer:'durer',
+    holbein:'holbein', constable:'constable', turner:'turner', gainsborough:'gainsborough',
+    reynolds:'reynolds', hogarth:'hogarth', whistler:'whistler', sargent:'sargent',
+    homer:'homer', eakins:'eakins', cassatt:'cassatt', seurat:'seurat', signac:'signac',
+    caillebotte:'caillebotte', toulouse:'toulouse-lautrec', lautrec:'toulouse-lautrec',
+    bonnard:'bonnard', vuillard:'vuillard', redon:'redon', munch:'munch', ensor:'ensor',
+    kirchner:'kirchner', schiele:'schiele', kokoschka:'kokoschka', beckmann:'beckmann',
+    grosz:'grosz', dix:'dix', duchamp:'duchamp', leger:'leger', braque:'braque',
+    gris:'gris', malevich:'malevich', tatlin:'tatlin', lissitzky:'lissitzky',
+    rivera:'rivera', kahlo:'kahlo', orozco:'orozco', siqueiros:'siqueiros',
+    hopper:'hopper', okeefe:'okeefe', wood:'wood', benton:'benton',
+    lichtenstein:'lichtenstein', rauschenberg:'rauschenberg', johns:'johns',
+    haring:'haring', koons:'koons', richter:'richter', kiefer:'kiefer',
+    bourgeois:'bourgeois', kusama:'kusama', banksy:'banksy', heckel:'heckel',
+    pechstein:'pechstein', soutine:'soutine', simonet:'simonet', desportes:'desportes',
+    rottluff:'schmidt-rottluff', manetti:'manetti', paik:'paik',
+    fantin:'fantin-latour', latour:'fantin-latour',
+};
+const ARTIST_KEY_STOP = new Set(['the','van','der','von','and','und','la','le']);
+
+/** Returns the static-file key for a known artist name (e.g. "gogh" for Vincent van Gogh). */
+const getArtistStaticFileKey = (artistName: string): string => {
+    const norm = normalizeLookupText(artistName);
+    const tokens = norm.split(/\s+/).filter(t => t.length > 2 && !ARTIST_KEY_STOP.has(t));
+    for (const t of tokens) {
+        if (KNOWN_ARTIST_FILE_KEYS[t]) return KNOWN_ARTIST_FILE_KEYS[t];
+    }
+    // Fallback: sorted tokens (for warm-data artists not in KNOWN list)
+    return tokens.sort().join('_');
+};
+
 type SearchFilterType = 'all' | 'artwork' | 'artist' | 'museum' | 'exhibition';
 
 const SEARCH_FILTER_TABS: Array<{ id: SearchFilterType; label: string }> = [
@@ -2290,6 +2332,54 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
         ensureWorker();
         workerRef.current?.postMessage({ type: 'GET_ARTIST_WORKS', query: routeName });
     }, [getRouteArtistName, ensureWorker]);
+
+    // Mobile fallback: when the worker finishes but returns 0 works (because it skips loading
+    // the 170MB chunk index on iOS), fetch from the pre-built per-artist static JSON file.
+    useEffect(() => {
+        if (!artistGallery) return;
+        if (artistGallery.isLoading !== false) return;       // still loading, wait
+        if (artistGallery.artworks.length > 0) return;       // already have works
+        if (!isLikelyMobileDevice()) return;                 // desktop has full index
+        const capturedArtist = artistGallery.artist;
+        if (!capturedArtist) return;
+        const fileKey = getArtistStaticFileKey(capturedArtist);
+        if (!fileKey) return;
+        const safeKey = fileKey.replace(/[^\w\-]/g, '_');
+        let cancelled = false;
+        fetch(`/artists/${safeKey}.json`)
+            .then(r => r.ok ? r.json() : null)
+            .then((items: any[] | null) => {
+                if (cancelled || !Array.isArray(items) || items.length === 0) return;
+                const mapped: SearchableArtwork[] = items
+                    .map(art => ({
+                        id: String(art.id || ''),
+                        name: art.n || 'Untitled',
+                        artist: art.a || capturedArtist,
+                        image: art.i || '',
+                        date: art.d || '',
+                        museumName: art.m || '',
+                        exhibitionId: art.e || '',
+                        sourceUrl: art.u || '',
+                    }))
+                    .filter(art => {
+                        const mn = (art.museumName || '').toLowerCase();
+                        const ei = (art.exhibitionId || '').toLowerCase();
+                        if (mn.includes('serpentine gallery') || mn.includes('british museum')) return false;
+                        if (ei.includes('serpentine') || ei.includes('british-museum') || ei.includes('the-british-museum') || ei.includes('bm-collection')) return false;
+                        return true;
+                    });
+                if (mapped.length === 0) return;
+                setArtistGallery(prev => {
+                    if (!prev || prev.artist !== capturedArtist) return prev;
+                    if ((prev.artworks?.length ?? 0) > 0) return prev; // don't overwrite if worker caught up
+                    const gallery = { artist: capturedArtist, artworks: mapped, isLoading: false };
+                    try { sessionStorage.setItem(getArtistGalleryCacheKey(capturedArtist), JSON.stringify(gallery)); } catch {}
+                    return gallery;
+                });
+            })
+            .catch(() => {}); // silently ignore fetch errors
+        return () => { cancelled = true; };
+    }, [artistGallery?.artist, artistGallery?.isLoading, artistGallery?.artworks?.length]);
 
     useEffect(() => {
         fetch('/data/video-embed-ids.json')

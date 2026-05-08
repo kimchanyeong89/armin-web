@@ -798,6 +798,38 @@ self.onmessage = (e: MessageEvent) => {
         // Match by normalized key to include all variants
         const targetKey = getArtistKey(query);
         const works = allArtworks.filter(a => getArtistKey(a.artist) === targetKey);
+
+        // On mobile allArtworks is intentionally empty (chunks not loaded to save memory).
+        // Fall back to the pre-built per-artist static file shipped with the app.
+        if (works.length === 0 && IS_MOBILE_WORKER && targetKey) {
+            const safeKey = targetKey.replace(/[^\w\-]/g, '_');
+            fetch(`/artists/${safeKey}.json`)
+                .then(r => r.ok ? r.json() : [])
+                .then((items: any[]) => {
+                    if (!Array.isArray(items) || items.length === 0) {
+                        self.postMessage({ type: 'ARTIST_WORKS', artist: query, works: [] });
+                        return;
+                    }
+                    const mapped = items.map((art: any) => ({
+                        id: art.id || '',
+                        name: art.n || '',
+                        artist: art.a || query,
+                        image: art.i || '',
+                        date: art.d || '',
+                        museumName: art.m || '',
+                        exhibitionId: art.e || '',
+                        sourceUrl: art.u || '',
+                        searchName: normalizeSearchText(art.n || ''),
+                        searchArtist: normalizeSearchText(art.a || query),
+                    }));
+                    self.postMessage({ type: 'ARTIST_WORKS', artist: query, works: mapped });
+                })
+                .catch(() => {
+                    self.postMessage({ type: 'ARTIST_WORKS', artist: query, works: [] });
+                });
+            return; // response sent asynchronously above
+        }
+
         self.postMessage({ type: 'ARTIST_WORKS', artist: query, works });
     } else if (type === 'GET_DETAILS_BY_IDS') {
         // Retrieve full artwork objects for the given IDs
