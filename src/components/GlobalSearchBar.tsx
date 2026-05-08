@@ -544,6 +544,28 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
     const [searchFilter, setSearchFilter] = useState<SearchFilterType>('all');
     const [filteredArtworks, setFilteredArtworks] = useState<SearchableArtwork[]>([]);
     const [workerArtistSuggestions, setSuggestedArtists] = useState<Array<{ artist: string; count: number; image?: string }>>([]);
+    // Local artist index (substring search across ~8K artists) — populated by an effect below.
+    const [artistIndexMatches, setArtistIndexMatches] = useState<Array<{ artist: string; count: number; image?: string }>>([]);
+    // Combined artist suggestions: worker results take precedence (richer image
+    // metadata), then dedupe-append local-index matches so substring queries
+    // like "monet" / "manet" surface even when the worker returned nothing.
+    const suggestedArtists = useMemo(() => {
+        const seen = new Set<string>();
+        const out: Array<{ artist: string; count: number; image?: string }> = [];
+        for (const a of workerArtistSuggestions) {
+            const key = normalizeLookupText(a.artist);
+            if (!key || seen.has(key)) continue;
+            seen.add(key);
+            out.push(a);
+        }
+        for (const a of artistIndexMatches) {
+            const key = normalizeLookupText(a.artist);
+            if (!key || seen.has(key)) continue;
+            seen.add(key);
+            out.push(a);
+        }
+        return out;
+    }, [workerArtistSuggestions, artistIndexMatches]);
     const [filteredMuseums, setFilteredMuseums] = useState<Museum[]>([]);
     const [recentSearches, setRecentSearches] = useState<string[]>(() => {
         try {
@@ -2070,7 +2092,6 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
     // "manet", "gogh") return matches even when the worker has nothing.
     const artistIndexRef = useRef<Array<{ k: string; a: string; c: number; i: string; s: string }> | null>(null);
     const [artistIndexLoaded, setArtistIndexLoaded] = useState(false);
-    const [artistIndexMatches, setArtistIndexMatches] = useState<Array<{ artist: string; count: number; image?: string }>>([]);
     useEffect(() => {
         // Lazy load on first interaction (input focus / query typed)
         if (artistIndexRef.current || !isExpanded) return;
@@ -2120,27 +2141,6 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
             && top.every((t, i) => t.artist === artistIndexMatches[i].artist);
         if (!same) setArtistIndexMatches(top);
     }, [query, artistIndexLoaded]); // eslint-disable-line react-hooks/exhaustive-deps
-
-    // Combined artist suggestions: worker results take precedence (richer image
-    // metadata), then dedupe-append local-index matches so substring queries
-    // like "monet" / "manet" surface even when the worker returned nothing.
-    const suggestedArtists = useMemo(() => {
-        const seen = new Set<string>();
-        const out: Array<{ artist: string; count: number; image?: string }> = [];
-        for (const a of workerArtistSuggestions) {
-            const key = normalizeLookupText(a.artist);
-            if (!key || seen.has(key)) continue;
-            seen.add(key);
-            out.push(a);
-        }
-        for (const a of artistIndexMatches) {
-            const key = normalizeLookupText(a.artist);
-            if (!key || seen.has(key)) continue;
-            seen.add(key);
-            out.push(a);
-        }
-        return out;
-    }, [workerArtistSuggestions, artistIndexMatches]);
 
     // Save query to sessionStorage whenever it changes
     useEffect(() => {
