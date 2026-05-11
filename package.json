@@ -100,6 +100,7 @@
     "download-gallery-images": "npx tsx scripts/download-gallery-images.ts",
     "test": "vitest run",
     "test:watch": "vitest",
+    "typecheck": "tsc --noEmit -p tsconfig.app.json",
     "weekly:generate": "npx tsx scripts/weekly/generate-proposals.ts",
     "weekly:publish": "npx tsx scripts/weekly/publish-curation.ts"
   },

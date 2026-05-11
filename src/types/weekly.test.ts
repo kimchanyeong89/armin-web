@@ -1,12 +1,5 @@
 import { describe, it, expectTypeOf } from 'vitest';
-import type {
-  WeeklyProposalFile,
-  WeeklyCard,
-  WeeklyWork,
-  PersonaId,
-  LensId,
-  TriggerType,
-} from './weekly';
+import type { WeeklyCard, PersonaId, LensId } from './weekly';
 
 describe('weekly types', () => {
   it('PersonaId is the three known personas', () => {
