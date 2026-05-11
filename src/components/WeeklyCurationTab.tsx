@@ -4,6 +4,8 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { BookmarkPlus, Check, X, ChevronLeft, ChevronRight } from "lucide-react";
+import { fetchCurrentCuration } from "../lib/weekly";
+import type { WeeklyPublishedFile, PersonaId } from "../types/weekly";
 
 // ── Types ──────────────────────────────────────────────────────────────────
 
@@ -230,6 +232,76 @@ export const WEEKLY_EDITIONS: WeeklyEdition[] = [
     ],
   },
 ];
+
+// ── Adapter: WeeklyPublishedFile → WeeklyEdition ──────────────────────────
+// The internal WeeklyEdition shape has richer fields (medium, dimensions,
+// museumCity, aspect, korean translations of artist/medium) than the
+// published file carries. We fill missing fields with safe defaults so the
+// existing JSX renders without modification.
+
+const PERSONA_NAMES: Record<PersonaId, { en: string; ko: string; role: string }> = {
+  'yuna-choi':     { en: 'Yuna Choi',     ko: '최유나',  role: 'Senior Editor, Armin' },
+  'marco-rinaldi': { en: 'Marco Rinaldi', ko: '마르코 리날디', role: 'Editor at Large, Armin' },
+  'anika-voss':    { en: 'Anika Voss',    ko: '아니카 보스', role: 'Contributing Editor, Armin' },
+};
+
+function parseIsoWeek(weekStr: string): { year: number; week: number } {
+  // e.g. "2026-W19" → { year: 2026, week: 19 }
+  const m = /^(\d{4})-W(\d{1,2})$/.exec(weekStr);
+  if (!m) return { year: new Date().getFullYear(), week: 1 };
+  return { year: parseInt(m[1], 10), week: parseInt(m[2], 10) };
+}
+
+function formatPublishedDate(isoTimestamp: string, langKo: 'ko' | 'en'): string {
+  const d = new Date(isoTimestamp);
+  if (isNaN(d.getTime())) return '';
+  if (langKo === 'ko') {
+    return `${d.getFullYear()}년 ${d.getMonth() + 1}월 ${d.getDate()}일`;
+  }
+  return d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+}
+
+export function adaptPublishedToEdition(file: WeeklyPublishedFile): WeeklyEdition {
+  const { year, week } = parseIsoWeek(file.week);
+  const persona = PERSONA_NAMES[file.persona_id] ?? { en: file.persona_id, ko: file.persona_id, role: 'Editor, Armin' };
+
+  return {
+    id: file.id,
+    week,
+    year,
+    date: formatPublishedDate(file.published_at, 'en'),
+    dateKo: formatPublishedDate(file.published_at, 'ko'),
+    title: file.title_en,
+    titleKo: file.title_ko,
+    editorName: persona.en,
+    editorNameKo: persona.ko,
+    editorRole: persona.role,
+    intro: file.intro_en,
+    introKo: file.intro_ko,
+    theme: file.subtitle_chip,
+    themeKo: file.subtitle_chip,
+    workCount: file.works.length,
+    works: file.works.map((w) => ({
+      id: w.artwork_ref,
+      seed: w.artwork_ref,
+      idx: w.position,
+      title: w.title,
+      titleKo: w.title,            // published file has no KO title — fall back to EN
+      artist: w.artist,
+      artistKo: w.artist,          // published file has no KO artist — fall back
+      year: w.year,
+      medium: '',
+      mediumKo: '',
+      dimensions: '',
+      museum: w.source_collection,
+      museumCity: '',
+      description: w.caption_en,
+      descriptionKo: w.caption_ko,
+      aspect: 1.2,
+      highlight: w.role === 'hero',
+    })),
+  };
+}
 
 // ── Design tokens ─────────────────────────────────────────────────────────
 
@@ -1349,11 +1421,27 @@ export type WeeklyCurationTabProps = {
 export default function WeeklyCurationTab({
   t, fg, fgMed, fgLow, fgFaint, divider, language,
 }: WeeklyCurationTabProps) {
-  const edition = WEEKLY_EDITIONS[0];
+  // V1 strategy: default to the hardcoded edition so the page is never empty
+  // during initial rollout (most weeks won't have a published curation yet).
+  // When fetchCurrentCuration returns a published file for this week, we
+  // replace `edition` with the live one. If it returns null, the hardcoded
+  // sample remains visible — intentional, see Task 18 plan.
+  const [edition, setEdition] = useState<WeeklyEdition>(WEEKLY_EDITIONS[0]);
   const [selectedWork, setSelectedWork] = useState<WeeklyWork | null>(null);
   const [langKo, setLangKo] = useState(language === 'ko');
   const [savedIds, setSavedIds] = useState<Set<string>>(new Set());
   const [isMobile, setIsMobile] = useState(() => typeof window !== 'undefined' && window.innerWidth < 768);
+
+  useEffect(() => {
+    let cancelled = false;
+    fetchCurrentCuration()
+      .then((file: WeeklyPublishedFile | null) => {
+        if (cancelled || !file) return;
+        setEdition(adaptPublishedToEdition(file));
+      })
+      .catch(() => { /* keep hardcoded fallback on fetch failure */ });
+    return () => { cancelled = true; };
+  }, []);
 
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 768);
