@@ -100,13 +100,12 @@
     "download-gallery-images": "npx tsx scripts/download-gallery-images.ts",
     "test": "vitest run",
     "test:watch": "vitest",
-    "weekly:generate": "tsx scripts/weekly/generate-proposals.ts",
-    "weekly:publish": "tsx scripts/weekly/publish-curation.ts"
+    "weekly:generate": "npx tsx scripts/weekly/generate-proposals.ts",
+    "weekly:publish": "npx tsx scripts/weekly/publish-curation.ts"
   },
   "dependencies": {
     "@amcharts/amcharts5": "^5.12.2",
     "@amcharts/amcharts5-geodata": "^5.1.5",
-    "@anthropic-ai/sdk": "^0.95.1",
     "@aws-sdk/client-s3": "^3.948.0",
     "@huggingface/transformers": "^3.8.1",
     "@react-google-maps/api": "^2.20.7",
@@ -143,6 +142,7 @@
     "vite-plugin-cesium": "^1.2.23"
   },
   "devDependencies": {
+    "@anthropic-ai/sdk": "^0.95.1",
     "@eslint/js": "^9.25.0",
     "@types/react": "^19.1.2",
     "@types/react-dom": "^19.1.2",
