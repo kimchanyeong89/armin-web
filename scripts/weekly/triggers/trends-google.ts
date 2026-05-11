@@ -1,11 +1,10 @@
 // Task 8 — Google Trends KR daily-trending fetcher.
-// Source: https://trends.google.com/trends/trendingsearches/daily/rss?geo=KR
+// Source: https://trends.google.com/trending/rss?geo=KR&hl=ko
 // Parses the RSS feed and returns up to `limit` { term, traffic } entries.
-// On any network/parse failure (incl. the now-common 404 from this endpoint)
-// returns [] so callers can degrade gracefully.
+// On any network/parse failure returns [] so callers can degrade gracefully.
 import { XMLParser } from 'fast-xml-parser';
 
-const DEFAULT_ENDPOINT = 'https://trends.google.com/trends/trendingsearches/daily/rss?geo=KR';
+const DEFAULT_ENDPOINT = 'https://trends.google.com/trending/rss?geo=KR&hl=ko';
 const DEFAULT_LIMIT = 20;
 
 export interface TrendTerm {
@@ -36,7 +35,7 @@ export async function fetchGoogleTrendsKR(
 
   let res: Response;
   try {
-    res = await fetch(endpoint);
+    res = await fetch(endpoint, { headers: { 'User-Agent': 'Mozilla/5.0 armin-weekly/1.0' } });
   } catch {
     return [];
   }
