@@ -4,7 +4,7 @@ import { loadPersonas, PERSONA_IDS } from './personas';
 import { motifsForWeek } from './motif-calendar';
 import { anniversaryArtistsForWeek } from './triggers/anniversary';
 import { fetchGoogleTrendsKR } from './triggers/trends-google';
-import { fetchNaverDataLabKR } from './triggers/trends-naver';
+import { fetchNaverTrendsKR } from './triggers/trends-naver';
 import { buildBiographicalLens } from './selectors/lens-biographical';
 import { buildThematicLens } from './selectors/lens-thematic';
 import { buildDialogueLens } from './selectors/lens-dialogue';
@@ -162,7 +162,7 @@ export async function generateProposals(
     anniversaryArtistsForWeek(week),
     motifsForWeek(week),
     fetchGoogleTrendsKR({ limit: 10 }),
-    fetchNaverDataLabKR(),
+    fetchNaverTrendsKR(),
   ]);
 
   const cards: WeeklyCard[] = [];

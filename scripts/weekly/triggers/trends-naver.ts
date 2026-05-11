@@ -1,14 +1,31 @@
-// Task 9 — Naver DataLab fetcher (intentional stub).
-// The Naver source is still ambiguous: DataLab's public Open API requires
-// pre-defined keyword groups (no "what's trending right now" call), and a
-// scraping path against Naver search/shopping trends is not yet agreed.
-// Until the user picks an approach, this returns [] regardless of env
-// vars, so the rest of the L3 pipeline can wire it in without breaking.
-export type { TrendTerm } from './trends-google';
+// Task 9 — Naver-flavored Korean realtime trends, via signal.bz aggregator.
+// signal.bz exposes a free, unauthenticated JSON endpoint returning the
+// current top-10 trending Korean search keywords. Returns [] on any
+// network/parse failure so callers can degrade gracefully.
 import type { TrendTerm } from './trends-google';
+export type { TrendTerm } from './trends-google';
 
-export async function fetchNaverDataLabKR(
-  _opts: { limit?: number } = {},
+const DEFAULT_ENDPOINT = 'https://api.signal.bz/news/realtime';
+
+interface SignalBzResponse {
+  now?: number;
+  top10?: Array<{ rank: number; keyword: string; state?: string }>;
+}
+
+export async function fetchNaverTrendsKR(
+  opts: { limit?: number } = {},
 ): Promise<TrendTerm[]> {
-  return [];
+  const limit = opts.limit ?? 10;
+  const endpoint = process.env.NAVER_TRENDS_ENDPOINT ?? DEFAULT_ENDPOINT;
+  try {
+    const res = await fetch(endpoint, {
+      headers: { 'User-Agent': 'Mozilla/5.0 armin-weekly/1.0' },
+    });
+    if (!res.ok) return [];
+    const data = (await res.json()) as SignalBzResponse;
+    const items = data.top10 ?? [];
+    return items.slice(0, limit).map((it) => ({ term: it.keyword }));
+  } catch {
+    return [];
+  }
 }
