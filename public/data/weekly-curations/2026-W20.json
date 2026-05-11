@@ -1,0 +1,99 @@
+{
+  "id": "yuna-choi__biographical__vilhelm-hammersh-i-birth-1864-05-15",
+  "persona_id": "yuna-choi",
+  "lens": "biographical",
+  "trigger": {
+    "type": "anniversary",
+    "value": "Vilhelm Hammershøi · birth 1864.05.15",
+    "source": "artists-dates.json"
+  },
+  "title_en": "The Light He Returned To",
+  "title_ko": "다시, 그 방의 빛",
+  "intro_en": "Vilhelm Hammershøi was born this week in 1864. For the last decade of his short life he painted, again and again, the same rooms in the same Copenhagen apartment — Strandgade 30, then Bredgade 25. Different windows, different times of day, sometimes a single figure with her back turned, often no figure at all.\n\nWhat he kept finding there was a kind of light that other painters had stopped looking for. Not noon. Not theatre. A gray that lifts slowly from a wall — paler at the cornice, deeper near the floor. The dust suspended in it. The way it falls across a closed door and waits.\n\nThese six interiors, painted between 1901 and 1912, now live in six different cities — Frankfurt, Berlin, Cleveland, Chicago, Tokyo, Los Angeles. Each one is its own room, but together they read like a single long afternoon.",
+  "intro_ko": "빌헬름 함메르쇼이는 이번 주, 1864년에 태어났다. 그의 짧은 생애 마지막 10년은 같은 코펜하겐 아파트의 방들 — 스트란가데 30번지, 그리고 브레드가데 25번지 — 을 거듭 다시 그리며 보냈다. 한낮의 빛도, 극적인 빛도 아닌, 회색에서 천천히 들어 올려지는 빛. 1901년부터 1912년 사이 그려진 이 여섯 점은 지금 여섯 도시 — 프랑크푸르트, 베를린, 클리블랜드, 시카고, 도쿄, LA — 의 미술관에 흩어져 있다.",
+  "subtitle_chip": "조용한 빛",
+  "works": [
+    {
+      "position": 1,
+      "role": "hero",
+      "artwork_ref": "staedel-museum-collection#staedel-1468",
+      "artist": "Vilhelm Hammershøi",
+      "title": "Interior. Strandgade 30",
+      "year": "1901",
+      "image_url": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/staedel-museum-collection/staedel-1468-3ee51514-imageUrl.webp",
+      "source_collection": "staedel-museum-collection",
+      "source_url": "",
+      "caption_en": "The first room — late morning, a chair half-turned to the window.",
+      "caption_ko": "첫 번째 방. 늦은 아침, 창을 향해 반쯤 돌아선 의자 하나."
+    },
+    {
+      "position": 2,
+      "role": "standard",
+      "artwork_ref": "smb-alte-nationalgalerie-collection#smb-alte-nationalgalerie-967799",
+      "artist": "Vilhelm Hammershøi",
+      "title": "Sonnige Stube",
+      "year": "1905",
+      "image_url": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/smb-alte-nationalgalerie-collection/smb-alte-nationalgalerie-96779-2379413b-imageUrl.webp",
+      "source_collection": "smb-alte-nationalgalerie-collection",
+      "source_url": "https://id.smb.museum/object/967799/sonnige-stube",
+      "caption_en": "Sunshine flattens against the back wall and does not move.",
+      "caption_ko": "햇빛이 뒤쪽 벽에 들러붙어 더는 움직이지 않는다."
+    },
+    {
+      "position": 3,
+      "role": "standard",
+      "artwork_ref": "cma-collection#87891",
+      "artist": "Vilhelm Hammershøi",
+      "title": "Strandgade, Sunshine",
+      "year": "c. 1906",
+      "image_url": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/cma-collection/87891-499d8161-imageUrl.webp",
+      "source_collection": "cma-collection",
+      "source_url": "",
+      "caption_en": "The same door, four years later — but now the light has come closer.",
+      "caption_ko": "같은 문, 4년이 흘러 — 그러나 이제 빛이 더 가까워졌다."
+    },
+    {
+      "position": 4,
+      "role": "standard",
+      "artwork_ref": "aic-collection#270002",
+      "artist": "Vilhelm Hammershøi",
+      "title": "Interior. The Music Room, Strandgade 30",
+      "year": "1907",
+      "image_url": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/aic-collection/270002-eeeda540-imageUrl.webp",
+      "source_collection": "aic-collection",
+      "source_url": "https://www.artic.edu/artworks/270002",
+      "lqip": "data:image/gif;base64,R0lGODlhBAAFAPQAAEJBNUVDN0VENEREPE9OQVJPQFBQQVBQR1VURVhWRlpZRVpaR1lZS2RjUmhnUGxqV25wZnZ2ZHp6agAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACH5BAAAAAAALAAAAAAEAAUAAAURYEIEgAQdQ6QYjKMIytMgRQgAOw==",
+      "caption_en": "A piano he never paints anyone playing.",
+      "caption_ko": "그가 한 번도 누군가가 치고 있는 모습으로 그리지 않은 피아노."
+    },
+    {
+      "position": 5,
+      "role": "standard",
+      "artwork_ref": "nmwa-collection#nmwa-5975",
+      "artist": "Vilhelm Hammershøi",
+      "title": "Interior with Ida Playing the Piano",
+      "year": "1910",
+      "image_url": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/nmwa-collection/nmwa-5975-20b384f9-imageUrl.webp",
+      "source_collection": "nmwa-collection",
+      "source_url": "https://collection.nmwa.go.jp/en/P.2008-0003.html",
+      "caption_en": "Until once, his wife Ida — and even she is turned away.",
+      "caption_ko": "그러다 한 번, 아내 이다. 그런데 그녀마저 등을 돌리고 있다."
+    },
+    {
+      "position": 6,
+      "role": "standard",
+      "artwork_ref": "getty-collection#object/60448397-8601-4133-a367-d7fceb352709",
+      "artist": "Vilhelm Hammershøi",
+      "title": "Interior with an Easel, Bredgade 25",
+      "year": "1912",
+      "image_url": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/getty-collection/object_60448397-8601-4133-a367-2959d681-imageUrl.webp",
+      "source_collection": "getty-collection",
+      "source_url": "https://www.getty.edu/art/collection/object/109PF5",
+      "caption_en": "The last apartment, the last year of working — the easel itself becomes the figure.",
+      "caption_ko": "마지막 아파트, 작업의 마지막 해 — 이젤 자체가 인물이 된다."
+    }
+  ],
+  "week": "2026-W20",
+  "published_at": "2026-05-11T06:06:15.409Z",
+  "published_by": "kietzsche"
+}
