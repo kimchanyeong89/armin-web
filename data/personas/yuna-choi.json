@@ -1,0 +1,25 @@
+{
+  "id": "yuna-choi",
+  "name": "Yuna Choi",
+  "role": "Senior Editor, ARMIN",
+  "avatar": "/personas/yuna-choi.jpg",
+  "language_primary": "en",
+  "language_gloss": "ko",
+  "taste": {
+    "eras": [
+      {"range": [1860, 1920], "w": 1.0},
+      {"range": [1990, 2025], "w": 0.8},
+      {"range": [1600, 1700], "w": 0.7}
+    ],
+    "regions": {"KR": 1.0, "JP": 1.0, "NL": 0.9, "DK": 0.8, "CN": 0.7, "SE": 0.7},
+    "media": ["paper", "watercolor", "oil_intimate", "bw_photo"],
+    "themes": ["light", "interior", "stillness", "letter", "window", "garden", "sleep", "domestic"]
+  },
+  "lensAffinity": {"biographical": 1.0, "thematic": 1.0, "dialogue": 0.3},
+  "tone": {
+    "style": "poetic_minimal",
+    "sentence": "short",
+    "punctuation": ["em_dash", "ellipsis"],
+    "sample": "There is a particular quality of light that painters have always chased — not the blazing noon, not the dramatic storm, but the in-between."
+  }
+}
