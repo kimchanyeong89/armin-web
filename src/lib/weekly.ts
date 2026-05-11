@@ -1,5 +1,5 @@
 import type { WeeklyPublishedFile } from '../types/weekly';
-import { isoWeek } from '../../scripts/weekly/motif-calendar';
+import { isoWeek } from './iso-week';
 
 export async function fetchCurrentCuration(
   date: Date = new Date(),
