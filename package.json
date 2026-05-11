@@ -97,11 +97,16 @@
     "sync-all": "npx tsx scripts/sync-all.ts",
     "sync-new": "npx tsx scripts/sync-new-exhibitions.ts",
     "restore-backup": "npx tsx scripts/restore-backup.ts",
-    "download-gallery-images": "npx tsx scripts/download-gallery-images.ts"
+    "download-gallery-images": "npx tsx scripts/download-gallery-images.ts",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "weekly:generate": "tsx scripts/weekly/generate-proposals.ts",
+    "weekly:publish": "tsx scripts/weekly/publish-curation.ts"
   },
   "dependencies": {
     "@amcharts/amcharts5": "^5.12.2",
     "@amcharts/amcharts5-geodata": "^5.1.5",
+    "@anthropic-ai/sdk": "^0.95.1",
     "@aws-sdk/client-s3": "^3.948.0",
     "@huggingface/transformers": "^3.8.1",
     "@react-google-maps/api": "^2.20.7",
@@ -142,6 +147,7 @@
     "@types/react": "^19.1.2",
     "@types/react-dom": "^19.1.2",
     "@vitejs/plugin-react": "^4.4.1",
+    "@vitest/ui": "^4.1.5",
     "cheerio": "^1.2.0",
     "eslint": "^9.25.0",
     "eslint-plugin-react-hooks": "^5.2.0",
@@ -164,6 +170,7 @@
     "typescript": "~5.8.3",
     "typescript-eslint": "^8.30.1",
     "vite": "^6.3.5",
+    "vitest": "^4.1.5",
     "wrangler": "^4.80.0"
   }
 }
