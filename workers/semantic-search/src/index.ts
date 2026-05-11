@@ -4,6 +4,7 @@
  * 엔드포인트 목록:
  *  - POST /search-by-text   : 텍스트 → SigLIP 인코딩 → 유사 작품 검색
  *  - POST /search-by-vector : 벡터 직접 검색
+ *  - POST /encode           : 텍스트 → SigLIP 768D 벡터 (raw, for external clients)
  *  - POST /upsert           : 768D 벡터 업로드
  *  - POST /recommend-by-id  : ID 기반 유사 작품 추천
  *  - POST /taste-profile    : 사용자 취향 프로파일 생성/업데이트 (K-Means)
@@ -1114,6 +1115,55 @@ export default {
             }
 
             // ──────────────────────────────────────────────
+            // POST /encode
+            // 텍스트 → 768D SigLIP 벡터를 그대로 반환.
+            // 외부 Node 스크립트(scripts/weekly/embedding/text-encoder.ts)가
+            // HF Space URL(시크릿)을 모른 채 인코더를 사용할 수 있도록 노출.
+            // 내부 `/search-by-text` 등이 쓰는 `encodeTextWithSigLIP`을 재사용.
+            // ──────────────────────────────────────────────
+            if (url.pathname === '/encode' && request.method === 'POST') {
+                let body: { text?: string };
+                try {
+                    body = await request.json() as { text?: string };
+                } catch {
+                    return Response.json({ error: 'invalid_json' }, { status: 400, headers: corsHeaders });
+                }
+                const text = (body?.text ?? '').trim();
+                if (text.length < 2) {
+                    return Response.json(
+                        { error: 'text must be at least 2 characters' },
+                        { status: 400, headers: corsHeaders }
+                    );
+                }
+                if (!env.HF_TOKEN && !env.SIGLIP_ENDPOINT_URL) {
+                    return Response.json({
+                        error: 'AI search is temporarily unavailable.',
+                        code: 'siglip_unavailable',
+                        detail: 'Neither HF_TOKEN nor SIGLIP_ENDPOINT_URL is configured.',
+                    }, { status: 503, headers: corsHeaders });
+                }
+
+                let vector = await getCachedVector(env, text);
+                const cacheHit = !!vector;
+                if (!vector) {
+                    vector = await encodeTextWithSigLIP(text, env);
+                    if (!vector) {
+                        return Response.json({
+                            error: 'AI search is temporarily unavailable.',
+                            code: 'siglip_unavailable',
+                            detail: vectorError,
+                        }, { status: 503, headers: corsHeaders });
+                    }
+                    ctx.waitUntil(putCachedVector(env, text, vector));
+                }
+
+                return Response.json(
+                    { vector, dim: vector.length, cached: cacheHit },
+                    { headers: corsHeaders }
+                );
+            }
+
+            // ──────────────────────────────────────────────
             // GET /status
             // ──────────────────────────────────────────────
             if (url.pathname === '/status') {
@@ -1127,13 +1177,13 @@ export default {
                     selfHostConfigured: !!env.SIGLIP_ENDPOINT_URL,
                     queryCache: env.TASTE_KV ? `KV (TTL ${QUERY_CACHE_TTL}s)` : 'disabled',
                     vectorize: 'armin-art-search-768',
-                    features: ['search-text', 'search-by-text', 'search-by-vector', 'taste-profile', 'recommend'],
+                    features: ['search-text', 'search-by-text', 'search-by-vector', 'encode', 'taste-profile', 'recommend'],
                     d1Enabled: !!env.DB,
                 }, { headers: corsHeaders });
             }
 
             return Response.json(
-                { error: 'Not found. Endpoints: /search-text, /search-by-text, /search-by-vector, /upsert, /encode-and-upsert, /refresh-metadata, /recommend-by-id, /taste-profile, /recommend, /check-ids, /delete-ids, /status' },
+                { error: 'Not found. Endpoints: /search-text, /search-by-text, /search-by-vector, /encode, /upsert, /encode-and-upsert, /refresh-metadata, /recommend-by-id, /taste-profile, /recommend, /check-ids, /delete-ids, /status' },
                 { status: 404, headers: corsHeaders }
             );
 
