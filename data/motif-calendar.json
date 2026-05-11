@@ -1,0 +1,18 @@
+{
+  "default": [{"en": "light and shadow", "ko": "빛과 그림자"}],
+  "monthly": {
+    "01": [{"en": "winter silence", "ko": "겨울의 침묵"}, {"en": "snow", "ko": "눈"}],
+    "02": [{"en": "early thaw", "ko": "초봄의 해빙"}, {"en": "interiority", "ko": "내면"}],
+    "03": [{"en": "first bloom", "ko": "첫 개화"}, {"en": "renewal", "ko": "재생"}],
+    "04": [{"en": "spring rain", "ko": "봄비"}, {"en": "garden", "ko": "정원"}],
+    "05": [{"en": "light in quiet rooms", "ko": "조용한 빛"}, {"en": "windows", "ko": "창"}],
+    "06": [{"en": "summer haze", "ko": "여름 안개"}, {"en": "sea", "ko": "바다"}],
+    "07": [{"en": "noon heat", "ko": "한낮의 열기"}, {"en": "languor", "ko": "나른함"}],
+    "08": [{"en": "harvest", "ko": "수확"}, {"en": "abundance", "ko": "풍요"}],
+    "09": [{"en": "first cold", "ko": "첫 추위"}, {"en": "leaves turning", "ko": "단풍"}],
+    "10": [{"en": "long evenings", "ko": "긴 저녁"}, {"en": "candle", "ko": "촛불"}],
+    "11": [{"en": "portrait", "ko": "초상"}, {"en": "memory", "ko": "기억"}],
+    "12": [{"en": "stillness before year end", "ko": "한 해의 끝"}, {"en": "snow at night", "ko": "밤눈"}]
+  },
+  "weekly": {}
+}
