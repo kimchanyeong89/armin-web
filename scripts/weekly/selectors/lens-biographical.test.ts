@@ -10,5 +10,5 @@ describe('biographical lens', () => {
     // Should be sorted ascending (or all zeros)
     const sorted = [...years].sort((a, b) => a - b);
     expect(years).toEqual(sorted);
-  });
+  }, 30000);   // builds full 303-file collection index — slow on cold cache
 });

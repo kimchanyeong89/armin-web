@@ -9,5 +9,5 @@ describe('dialogue lens', () => {
     if (works.length >= 4) {
       expect(works[0].artist).not.toBe(works[1].artist);
     }
-  });
+  }, 30000);   // depends on collection-index build — slow on cold cache
 });

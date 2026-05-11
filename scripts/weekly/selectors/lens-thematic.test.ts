@@ -8,5 +8,5 @@ describe('thematic lens', () => {
     const counts = new Map<string, number>();
     for (const w of works) counts.set(w.artist, (counts.get(w.artist) ?? 0) + 1);
     for (const c of counts.values()) expect(c).toBeLessThanOrEqual(3);
-  });
+  }, 30000);   // hits live semantic-search worker — 5s default is tight under parallel load
 });
