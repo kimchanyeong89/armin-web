@@ -35,6 +35,22 @@ A React + TypeScript + Vite art museum directory. ESM project (`"type": "module"
 - **Edit the main repo, not worktrees.** The user runs Vite dev server against this repo; HMR reflects edits live. Working in `.claude/worktrees/*` breaks the loop.
 - **JSON field names are contracts.** Phase B (future D1 migration) depends on JSON field names matching future column names 1:1. Do not rename fields casually.
 
+### Coding principles — apply throughout every task
+
+- **DRY (Don't Repeat Yourself).** Single source of truth for any non-trivial fact. Examples that bite in this plan:
+  - ISO-week math lives once in `scripts/weekly/motif-calendar.ts` (or extracted to `src/lib/iso-week.ts` if both `scripts/` and `src/` need it). Don't reimplement it in the orchestrator or the app.
+  - Type definitions live once in `src/types/weekly.ts`. Both the generator scripts and the React app import from there — no parallel duplicate types.
+  - Persona spec is the source of truth for taste, tone, *and* writer prompt context. The LLM writer reads the same JSON the scorer reads — no separate "prompt template" file with copy-pasted persona traits.
+  - Collection index (Task 5) is the one place artwork lookup happens. Don't open `public/data/*.json` from anywhere else.
+- **ETC (Easier To Change).** Write so the next change is small and local. Concrete habits:
+  - Endpoints (SigLIP, FTS5, LLM model name) come from env vars with sensible defaults, not hardcoded strings scattered through files.
+  - Tunables (`QUALITY_THRESHOLD = 0.35`, `TREND_MATCH_THRESHOLD = 0.28`, `CARD_WORK_COUNT = 10`) are named constants at the top of the orchestrator. One place to change a knob.
+  - `fetchCurrentCuration()` (Task 17) is the only place the React app touches the curation data surface. Phase B is a one-line URL change inside that function — nothing else moves.
+  - Lens builders share signature `(input, opts) => Promise<IndexedWork[]>`. Adding a fourth lens later doesn't require changing the orchestrator's contract.
+  - Trigger fetchers all return a uniform `{term/name, source, traffic?}` shape so the orchestrator treats them interchangeably.
+- **YAGNI.** Already in the design. Don't build for hypothetical future needs.
+- **Surgical changes.** When modifying existing files (e.g., `WeeklyTab.tsx` in Task 18), touch only what the task requires. Don't refactor adjacent code, even if it looks tempting.
+
 ### Toolchain — verify or install in Task 0
 
 - `tsx` (for running `.ts` scripts without compile step)
