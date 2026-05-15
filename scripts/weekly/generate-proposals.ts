@@ -56,32 +56,57 @@ async function buildBaseCellCard(
     return await emitCard(persona, lens, trigger, works, best.score);
   }
 
-  if (lens === 'thematic' && motifs.length > 0) {
-    const motif = motifs[0];
-    const works = await buildThematicLens(motif.en, { count: CARD_WORK_COUNT });
-    if (works.length < 6) return null;
-    const avg = works.reduce((s, w) => s + scoreWorkForPersona(w, persona), 0) / works.length;
-    if (avg < QUALITY_THRESHOLD) return null;
-    const trigger: Trigger = {
-      type: 'motif',
-      value: `${motif.en} / ${motif.ko}`,
-      source: 'motif-calendar.json',
-    };
-    return await emitCard(persona, lens, trigger, works, avg);
+  if (lens === 'thematic') {
+    // Try the week's motif first (Yuna's territory by default), then fall
+    // back through this persona's own theme keywords so Marco / Anika can
+    // still produce a thematic card even when the calendar motif isn't theirs.
+    const queries = [
+      ...motifs.map((m) => ({ label: `${m.en} / ${m.ko}`, query: m.en, source: 'motif-calendar.json' as const })),
+      ...persona.taste.themes.map((t) => ({ label: t, query: t, source: 'persona-themes' as const })),
+    ];
+    let best: { trigger: Trigger; works: Awaited<ReturnType<typeof buildThematicLens>>; avg: number } | null = null;
+    for (const q of queries) {
+      const works = await buildThematicLens(q.query, { count: CARD_WORK_COUNT });
+      if (works.length < 6) continue;
+      const avg = works.reduce((s, w) => s + scoreWorkForPersona(w, persona), 0) / works.length;
+      if (avg < QUALITY_THRESHOLD) continue;
+      if (!best || avg > best.avg) {
+        best = {
+          trigger: { type: 'motif', value: q.label, source: q.source },
+          works,
+          avg,
+        };
+        // Stop early if motif scores well — keeps the motif-of-the-week visible
+        // when it does fit. Otherwise we keep iterating through persona themes.
+        if (q.source === 'motif-calendar.json') break;
+      }
+    }
+    if (!best) return null;
+    return await emitCard(persona, lens, best.trigger, best.works, best.avg);
   }
 
   if (lens === 'dialogue' && anniversaries.length >= 2) {
-    const [a, b] = anniversaries;
-    const works = await buildDialogueLens(a.name, b.name, { perArtist: 5 });
-    if (works.length < 6) return null;
-    const avg = works.reduce((s, w) => s + scoreWorkForPersona(w, persona), 0) / works.length;
-    if (avg < QUALITY_THRESHOLD) return null;
+    // Try EVERY pair of week-anniversary artists and pick the pair that
+    // scores highest for this persona — not just the first two as listed.
+    let best: { a: typeof anniversaries[number]; b: typeof anniversaries[number]; works: Awaited<ReturnType<typeof buildDialogueLens>>; avg: number } | null = null;
+    for (let i = 0; i < anniversaries.length; i++) {
+      for (let j = i + 1; j < anniversaries.length; j++) {
+        const a = anniversaries[i];
+        const b = anniversaries[j];
+        const works = await buildDialogueLens(a.name, b.name, { perArtist: 5 });
+        if (works.length < 6) continue;
+        const avg = works.reduce((s, w) => s + scoreWorkForPersona(w, persona), 0) / works.length;
+        if (avg < QUALITY_THRESHOLD) continue;
+        if (!best || avg > best.avg) best = { a, b, works, avg };
+      }
+    }
+    if (!best) return null;
     const trigger: Trigger = {
       type: 'anniversary',
-      value: `${a.name} × ${b.name}`,
+      value: `${best.a.name} × ${best.b.name}`,
       source: 'artists-dates.json',
     };
-    return await emitCard(persona, lens, trigger, works, avg);
+    return await emitCard(persona, lens, trigger, best.works, best.avg);
   }
 
   return null;

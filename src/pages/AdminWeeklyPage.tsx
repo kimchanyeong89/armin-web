@@ -82,6 +82,7 @@ function WeeklyProposalCardView({
   isPublished: boolean;
   onCopy: (text: string, label: string) => void;
 }) {
+  const navigate = useNavigate();
   const [showSpecialForm, setShowSpecialForm] = useState(false);
   const defaultSlug = useMemo(() => {
     const tail = card.id.split('__').pop() ?? card.id;
@@ -89,7 +90,6 @@ function WeeklyProposalCardView({
   }, [card.id]);
   const [slug, setSlug] = useState(defaultSlug);
   const [rawOpen, setRawOpen] = useState(false);
-  const [previewOpen, setPreviewOpen] = useState(false);
 
   const hero = card.works.find((w) => w.role === 'hero') ?? card.works[0];
   const heroUrl = hero?.image_url;
@@ -294,18 +294,18 @@ function WeeklyProposalCardView({
         {/* Actions */}
         <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginTop: 4 }}>
           <button
-            onClick={() => setPreviewOpen((v) => !v)}
+            onClick={() => navigate(`/ai?preview=${encodeURIComponent(card.id)}&week=${encodeURIComponent(week)}`)}
             style={{
               ...LABEL,
               fontSize: 10,
               padding: '8px 12px',
-              background: previewOpen ? COLOR_ACCENT : 'transparent',
-              color: previewOpen ? '#000' : COLOR_FG,
-              border: previewOpen ? 'none' : `1px solid ${COLOR_ACCENT}`,
+              background: COLOR_ACCENT,
+              color: '#000',
+              border: 'none',
               cursor: 'pointer',
             }}
           >
-            {previewOpen ? 'Hide preview ▴' : 'Preview ▾'}
+            Preview →
           </button>
           <button
             onClick={publishWeekly}
@@ -393,30 +393,6 @@ function WeeklyProposalCardView({
             >
               Copy command
             </button>
-          </div>
-        )}
-
-        {/* Inline preview — iframe of /ai?preview=<id>&week=<week> so the
-            candidate renders pixel-identical to a published weekly, in place. */}
-        {previewOpen && (
-          <div
-            style={{
-              marginTop: 8,
-              border: `1px solid ${COLOR_ACCENT}`,
-              background: COLOR_BG,
-            }}
-          >
-            <iframe
-              src={`/ai?preview=${encodeURIComponent(card.id)}&week=${encodeURIComponent(week)}`}
-              title={`Preview · ${card.id}`}
-              style={{
-                width: '100%',
-                height: 'min(80vh, 1100px)',
-                border: 'none',
-                display: 'block',
-                background: COLOR_BG,
-              }}
-            />
           </div>
         )}
 
