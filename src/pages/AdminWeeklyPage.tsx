@@ -35,7 +35,7 @@ const COLOR_FG_MED = 'rgba(244,241,234,0.78)';
 const COLOR_FG_LOW = 'rgba(244,241,234,0.55)';
 const COLOR_FG_FAINT = 'rgba(244,241,234,0.36)';
 const COLOR_ACCENT = '#D4A547';
-const COLOR_ACCENT_NEON = '#CCFF00';
+const COLOR_ACCENT_NEON = '#D4A547';
 
 const LABEL: React.CSSProperties = {
   fontFamily: "'Space Mono', monospace",

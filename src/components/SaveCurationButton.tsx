@@ -59,7 +59,7 @@ export default function SaveCurationButton({ file, langKo }: SaveCurationButtonP
     }
   };
 
-  const accent = '#CCFF00';
+  const accent = '#D4A547';
   const isSaved = saved;
   const disabled = busy || savedLoading;
 

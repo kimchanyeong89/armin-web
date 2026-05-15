@@ -54,11 +54,25 @@ function sanitizeDocId(value: string): string {
 }
 
 function buildPayload(work: ArtworkLikePayload, source: LikeSource) {
+  // Write the field names MyPage (`Mypage.tsx`) already reads when listing
+  // liked_artworks — artworkId / title / artist / image / museumName /
+  // sourceCollection. If we wrote only the curation-internal snake_case
+  // shape, the user would press "save" → see "Saved" → open MyPage Artworks
+  // tab → find nothing. Cross-surface compatibility wins over local purity.
+  // We also keep the snake_case fields so internal hook readers (e.g. the
+  // useLikedArtworks list view) work uniformly.
   return {
-    artwork_ref: work.artwork_ref,
-    artist: work.artist,
+    artworkId: work.artwork_ref,
     title: work.title,
+    artist: work.artist,
     year: work.year,
+    image: work.image_url,
+    imageUrl: work.image_url,
+    museumName: work.source_collection,
+    sourceCollection: work.source_collection,
+    exhibitionId: work.source_collection,
+    // Snake-case aliases for the curation pipeline:
+    artwork_ref: work.artwork_ref,
     image_url: work.image_url,
     source_collection: work.source_collection,
     saved_at: serverTimestamp(),

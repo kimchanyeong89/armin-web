@@ -28,7 +28,7 @@ const MONTHLY_PRICE_KRW = 4900;
 const FG = '#F4F1EA';
 const FG_LOW = 'rgba(244,241,234,0.55)';
 const FG_FAINT = 'rgba(244,241,234,0.35)';
-const ACCENT = '#CCFF00';
+const ACCENT = '#D4A547';
 const DIVIDER = 'rgba(244,241,234,0.12)';
 
 const LABEL: React.CSSProperties = {
