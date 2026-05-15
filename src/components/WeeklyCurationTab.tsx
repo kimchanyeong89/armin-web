@@ -1452,12 +1452,12 @@ export type WeeklyCurationTabProps = {
 export default function WeeklyCurationTab({
   t, fg, fgMed, fgLow, fgFaint, divider, language,
 }: WeeklyCurationTabProps) {
-  // V1 strategy: default to the hardcoded edition so the page is never empty
-  // during initial rollout (most weeks won't have a published curation yet).
-  // When fetchCurrentCuration returns a published file for this week, we
-  // replace `edition` with the live one. If it returns null, the hardcoded
-  // sample remains visible — intentional, see Task 18 plan.
-  const [edition, setEdition] = useState<WeeklyEdition>(WEEKLY_EDITIONS[0]);
+  // Fetched on mount. Start with null (showing skeleton) rather than the
+  // hardcoded WEEKLY_EDITIONS[0] — otherwise stale React state can survive
+  // a Vite HMR cycle and we keep rendering an old adapter's output (which is
+  // what caused the "imageUrl missing → gradient-only" bug). Falling back to
+  // hardcoded is now explicit: only if fetch resolves to null.
+  const [edition, setEdition] = useState<WeeklyEdition | null>(null);
   const [selectedWork, setSelectedWork] = useState<WeeklyWork | null>(null);
   const [langKo, setLangKo] = useState(language === 'ko');
   const [savedIds, setSavedIds] = useState<Set<string>>(new Set());
@@ -1467,12 +1467,41 @@ export default function WeeklyCurationTab({
     let cancelled = false;
     fetchCurrentCuration()
       .then((file: WeeklyPublishedFile | null) => {
-        if (cancelled || !file) return;
-        setEdition(adaptPublishedToEdition(file));
+        if (cancelled) return;
+        if (file) {
+          const adapted = adaptPublishedToEdition(file);
+          // Diagnostic: confirms the new adapter ran and wired imageUrl through.
+          // Look for this in the browser console to verify a fresh module load.
+          // eslint-disable-next-line no-console
+          console.log('[WeeklyCurationTab] adapted live curation', {
+            week: file.week, id: file.id, works: adapted.works.length,
+            firstImageUrl: adapted.works[0]?.imageUrl,
+          });
+          setEdition(adapted);
+        } else {
+          setEdition(WEEKLY_EDITIONS[0]);
+        }
       })
-      .catch(() => { /* keep hardcoded fallback on fetch failure */ });
+      .catch(() => { setEdition(WEEKLY_EDITIONS[0]); });
     return () => { cancelled = true; };
   }, []);
+
+  // Skeleton: brief flash while fetching. Acceptable for V1.
+  if (!edition) {
+    return (
+      <div style={{
+        padding: 'clamp(40px,6vw,80px)',
+        textAlign: 'center',
+        color: 'rgba(244,241,234,0.4)',
+        fontFamily: "'Space Mono', monospace",
+        fontSize: 11,
+        letterSpacing: '0.12em',
+        textTransform: 'uppercase',
+      }}>
+        Loading this week's curation…
+      </div>
+    );
+  }
 
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < 768);
