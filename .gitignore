@@ -141,3 +141,7 @@ downloads/
 .wrangler/
 public/data/nga-collection*
 public/data/search-index*
+
+# Weekly curation proposals — generator output (large; not source-of-truth).
+# The admin UI reads these to compose published curations.
+public/data/weekly-proposals/

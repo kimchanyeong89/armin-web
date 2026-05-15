@@ -153,7 +153,7 @@ export async function generateProposals(
   week: string,
   opts: { outDir?: string } = {},
 ): Promise<string> {
-  const outDir = opts.outDir ?? join(process.cwd(), 'data', 'weekly-proposals');
+  const outDir = opts.outDir ?? join(process.cwd(), 'public', 'data', 'weekly-proposals');
   await mkdir(outDir, { recursive: true });
   await buildIndex();   // warm up
 

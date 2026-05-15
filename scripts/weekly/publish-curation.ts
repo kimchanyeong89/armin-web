@@ -82,7 +82,7 @@ async function readSpecialIndex(path: string): Promise<SpecialIndexFile> {
 
 export async function publishCuration(opts: PublishOpts): Promise<string> {
   const type: PublishType = opts.type ?? 'weekly';
-  const proposalsDir = opts.proposalsDir ?? join(process.cwd(), 'data', 'weekly-proposals');
+  const proposalsDir = opts.proposalsDir ?? join(process.cwd(), 'public', 'data', 'weekly-proposals');
   const card = await loadProposal(proposalsDir, opts.week, opts.cardId);
   const stripped = stripCardForPublish(card);
   const publishedAt = new Date().toISOString();
