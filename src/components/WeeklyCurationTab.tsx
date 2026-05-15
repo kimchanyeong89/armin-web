@@ -2034,6 +2034,11 @@ export default function WeeklyCurationTab({
   const [searchParams] = useSearchParams();
   const weeklyParam = searchParams.get('weekly');
   const specialParam = searchParams.get('special');
+  // Admin preview: ?preview=<cardId>&week=<YYYY-Www> renders a not-yet-published
+  // candidate card straight from the proposal JSON, so admins can see exactly
+  // what the curation would look like before clicking Publish.
+  const previewCardId = searchParams.get('preview');
+  const previewWeek = searchParams.get('week');
 
   useEffect(() => {
     let cancelled = false;
@@ -2073,7 +2078,33 @@ export default function WeeklyCurationTab({
       }
     };
 
+    const tryPreview = async (cardId: string, week: string): Promise<boolean> => {
+      try {
+        const res = await fetch(`/data/weekly-proposals/${week}.json`);
+        if (!res.ok) return false;
+        const proposal = await res.json() as { cards: WeeklyPublishedFile[] };
+        const card = (proposal.cards ?? []).find((c) => c.id === cardId);
+        if (!card) return false;
+        // Synthesise the same shape as a published file so the rendering
+        // path is identical.
+        applyFile({
+          ...card,
+          week,
+          published_at: new Date().toISOString(),
+          published_by: 'preview',
+        } as WeeklyPublishedFile);
+        return true;
+      } catch {
+        return false;
+      }
+    };
+
     (async () => {
+      if (previewCardId && previewWeek) {
+        const ok = await tryPreview(previewCardId, previewWeek);
+        if (!ok) { console.warn(`[WeeklyCurationTab] preview ?preview=${previewCardId}&week=${previewWeek} not found; falling back`); fallback(); }
+        return;
+      }
       if (weeklyParam) {
         const ok = await tryDeepLink(`/data/weekly-curations/${weeklyParam}.json`);
         if (!ok) { console.warn(`[WeeklyCurationTab] deep-link ?weekly=${weeklyParam} not found; falling back`); fallback(); }
@@ -2088,7 +2119,7 @@ export default function WeeklyCurationTab({
     })();
 
     return () => { cancelled = true; };
-  }, [weeklyParam, specialParam]);
+  }, [weeklyParam, specialParam, previewCardId, previewWeek]);
 
   // Lazy-load archive + special lists on mount. Both helpers handle 404s
   // and network errors gracefully.

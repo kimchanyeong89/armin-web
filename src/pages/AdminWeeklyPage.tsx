@@ -292,15 +292,33 @@ function WeeklyProposalCardView({
 
         {/* Actions */}
         <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginTop: 4 }}>
+          <a
+            href={`/ai?preview=${encodeURIComponent(card.id)}&week=${encodeURIComponent(week)}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            style={{
+              ...LABEL,
+              fontSize: 10,
+              padding: '8px 12px',
+              background: COLOR_ACCENT,
+              color: '#000',
+              border: 'none',
+              cursor: 'pointer',
+              textDecoration: 'none',
+              display: 'inline-block',
+            }}
+          >
+            Preview ↗
+          </a>
           <button
             onClick={publishWeekly}
             style={{
               ...LABEL,
               fontSize: 10,
               padding: '8px 12px',
-              background: COLOR_ACCENT_NEON,
-              color: '#000',
-              border: 'none',
+              background: 'transparent',
+              color: COLOR_FG,
+              border: `1px solid ${COLOR_BORDER_STRONG}`,
               cursor: 'pointer',
             }}
           >
