@@ -23,5 +23,5 @@ describe('generate-proposals orchestrator', () => {
     } finally {
       await rm(outDir, { recursive: true, force: true });
     }
-  }, 30000);
+  }, 60000);   // many network calls (semantic-search worker, trends sources) — 30s flakes
 });

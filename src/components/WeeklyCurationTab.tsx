@@ -27,6 +27,7 @@ export type WeeklyWork = {
   descriptionKo: string;
   aspect: number;
   highlight?: boolean;
+  imageUrl?: string;   // real artwork image (R2 URL). When absent, ArtworkPlaceholder renders gradient only.
 };
 
 export type WeeklyEdition = {
@@ -299,6 +300,7 @@ export function adaptPublishedToEdition(file: WeeklyPublishedFile): WeeklyEditio
       descriptionKo: w.caption_ko,
       aspect: 1.2,
       highlight: w.role === 'hero',
+      imageUrl: w.image_url,
     })),
   };
 }
@@ -313,12 +315,12 @@ const LABEL: React.CSSProperties = {
 };
 
 const BODY: React.CSSProperties = {
-  fontFamily: "'Space Grotesk', sans-serif",
+  fontFamily: "'Inter', 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif",
   fontWeight: 400,
 };
 
 const HEADING: React.CSSProperties = {
-  fontFamily: "'Space Grotesk', sans-serif",
+  fontFamily: "'Inter', 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif",
   fontWeight: 700,
 };
 
@@ -348,11 +350,15 @@ function ArtworkPlaceholder({
   aspect,
   style,
   onClick,
+  imageUrl,
+  alt,
 }: {
   seed: string;
   aspect: number;
   style?: React.CSSProperties;
   onClick?: () => void;
+  imageUrl?: string;
+  alt?: string;
 }) {
   return (
     <div
@@ -361,21 +367,37 @@ function ArtworkPlaceholder({
         position: 'relative',
         width: '100%',
         paddingTop: `${(1 / aspect) * 100}%`,
-        background: artGradient(seed),
+        background: artGradient(seed),   // shows during image load + as fallback if load fails
         overflow: 'hidden',
         ...style,
       }}
     >
-      <div style={{
-        position: 'absolute', inset: 0,
-        display: 'flex', alignItems: 'center', justifyContent: 'center',
-      }}>
+      {imageUrl ? (
+        <img
+          src={imageUrl}
+          alt={alt ?? ''}
+          loading="lazy"
+          style={{
+            position: 'absolute', inset: 0,
+            width: '100%', height: '100%',
+            objectFit: 'cover',
+            display: 'block',
+          }}
+          // If the image fails (404, CORS, etc.) hide it and let the gradient show.
+          onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none'; }}
+        />
+      ) : (
         <div style={{
-          width: 32, height: 32, opacity: 0.12,
-          border: '1px solid currentColor',
-          borderRadius: 0,
-        }} />
-      </div>
+          position: 'absolute', inset: 0,
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+        }}>
+          <div style={{
+            width: 32, height: 32, opacity: 0.12,
+            border: '1px solid currentColor',
+            borderRadius: 0,
+          }} />
+        </div>
+      )}
     </div>
   );
 }
@@ -384,7 +406,7 @@ function SectionRule({ label, divider }: { label?: string; divider: string }) {
   return (
     <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
       {label && (
-        <span style={{ ...LABEL, fontSize: 9, color: 'rgba(255,255,255,0.28)', whiteSpace: 'nowrap' }}>
+        <span style={{ ...LABEL, fontSize: 9, color: 'rgba(244,241,234,0.55)', whiteSpace: 'nowrap' }}>
           {label}
         </span>
       )}
@@ -410,8 +432,8 @@ function EditionHeader({
 }) {
   const bg2 = t ? 'rgba(0,0,0,0.02)' : 'rgba(255,255,255,0.02)';
   const surface = t ? 'rgba(0,0,0,0.04)' : 'rgba(255,255,255,0.04)';
-  const accent = '#BFFF0A';
-  const accentText = t ? '#5A7800' : '#BFFF0A';
+  const accent = '#D4A547';
+  const accentText = t ? '#8A6B1F' : '#D4A547';
 
   return (
     <div style={{
@@ -554,8 +576,8 @@ function HeroWork({
   divider: string;
 }) {
   const [hov, setHov] = useState(false);
-  const accent = '#BFFF0A';
-  const accentText = t ? '#5A7800' : '#BFFF0A';
+  const accent = '#D4A547';
+  const accentText = t ? '#8A6B1F' : '#D4A547';
 
   return (
     <div style={{ padding: '40px clamp(20px,4vw,56px) 0', maxWidth: 1080, margin: '0 auto' }}>
@@ -699,8 +721,8 @@ function WorkRow({
   divider: string;
 }) {
   const [hov, setHov] = useState(false);
-  const accent = '#BFFF0A';
-  const accentText = t ? '#5A7800' : '#BFFF0A';
+  const accent = '#D4A547';
+  const accentText = t ? '#8A6B1F' : '#D4A547';
   const isEven = index % 2 === 0;
 
   return (
@@ -822,7 +844,7 @@ function WeeklyLightbox({
   onNext: () => void;
 }) {
   const currentIdx = edition.works.findIndex(w => w.id === work.id);
-  const accent = '#BFFF0A';
+  const accent = '#D4A547';
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
@@ -863,11 +885,11 @@ function WeeklyLightbox({
             <X size={15} color="currentColor" /> Close
           </button>
           <div style={{ width: 1, height: 14, background: 'rgba(255,255,255,0.1)' }} />
-          <span style={{ ...LABEL, fontSize: 10, color: 'rgba(255,255,255,0.28)' }}>
+          <span style={{ ...LABEL, fontSize: 10, color: 'rgba(244,241,234,0.55)' }}>
             Weekly Curation · Week {edition.week}
           </span>
           <div style={{ width: 1, height: 14, background: 'rgba(255,255,255,0.1)' }} />
-          <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 10, color: 'rgba(255,255,255,0.28)' }}>
+          <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 10, color: 'rgba(244,241,234,0.55)' }}>
             {String(currentIdx + 1).padStart(2, '0')} / {String(edition.workCount).padStart(2, '0')}
           </span>
         </div>
@@ -906,7 +928,7 @@ function WeeklyLightbox({
             maxHeight: '80vh',
             width: `min(${Math.round(work.aspect * 560)}px, 90%)`,
           }}>
-            <ArtworkPlaceholder seed={work.seed} aspect={work.aspect} style={{ width: '100%' }} />
+            <ArtworkPlaceholder seed={work.seed} aspect={work.aspect} imageUrl={work.imageUrl} alt={`${work.artist} — ${work.title}`} style={{ width: '100%' }} />
           </div>
         </div>
 
@@ -921,23 +943,23 @@ function WeeklyLightbox({
               <span style={{ ...LABEL, fontSize: 9, background: accent, color: '#000', padding: '3px 8px' }}>
                 Week {edition.week}
               </span>
-              <span style={{ ...LABEL, fontSize: 9, color: 'rgba(255,255,255,0.28)' }}>{edition.dateKo}</span>
+              <span style={{ ...LABEL, fontSize: 9, color: 'rgba(244,241,234,0.55)' }}>{edition.dateKo}</span>
             </div>
 
             <div style={{ ...LABEL, fontSize: 10, color: accent, marginBottom: 10 }}>
               {work.artist} ({work.artistKo}) · {work.year}
             </div>
 
-            <h2 style={{ ...HEADING, fontSize: 22, color: 'rgba(255,255,255,0.88)', lineHeight: 1.1, marginBottom: 5 }}>
+            <h2 style={{ ...HEADING, fontSize: 22, color: 'rgba(244,241,234,0.96)', lineHeight: 1.1, marginBottom: 5 }}>
               {langKo ? work.titleKo : work.title}
             </h2>
-            <p style={{ ...BODY, fontSize: 12, color: 'rgba(255,255,255,0.28)', marginBottom: 22 }}>
+            <p style={{ ...BODY, fontSize: 12, color: 'rgba(244,241,234,0.55)', marginBottom: 22 }}>
               {langKo ? work.title : work.titleKo}
             </p>
 
             <div style={{ height: '0.5px', background: 'rgba(255,255,255,0.07)', marginBottom: 18 }} />
 
-            <p style={{ ...BODY, fontSize: 13, color: 'rgba(255,255,255,0.56)', lineHeight: 1.9, marginBottom: 22 }}>
+            <p style={{ ...BODY, fontSize: 13, color: 'rgba(244,241,234,0.80)', lineHeight: 1.9, marginBottom: 22 }}>
               {langKo ? work.descriptionKo : work.description}
             </p>
 
@@ -950,8 +972,8 @@ function WeeklyLightbox({
               ['City', work.museumCity],
             ] as [string, string][]).map(([k, v]) => (
               <div key={k} style={{ marginBottom: 12 }}>
-                <div style={{ ...LABEL, fontSize: 9, color: 'rgba(255,255,255,0.28)', marginBottom: 3 }}>{k}</div>
-                <div style={{ ...BODY, fontSize: 13, color: 'rgba(255,255,255,0.56)' }}>{v}</div>
+                <div style={{ ...LABEL, fontSize: 9, color: 'rgba(244,241,234,0.55)', marginBottom: 3 }}>{k}</div>
+                <div style={{ ...BODY, fontSize: 13, color: 'rgba(244,241,234,0.80)' }}>{v}</div>
               </div>
             ))}
 
@@ -962,7 +984,7 @@ function WeeklyLightbox({
               display: 'flex', alignItems: 'center', gap: 9, padding: '11px 14px',
               border: `1px solid ${saved ? accent : 'rgba(255,255,255,0.12)'}`,
               background: 'transparent', cursor: 'pointer',
-              color: saved ? accent : 'rgba(255,255,255,0.56)',
+              color: saved ? accent : 'rgba(244,241,234,0.80)',
               ...LABEL, fontSize: 10,
               transition: 'border-color 0.15s, color 0.15s',
             }}>
@@ -977,7 +999,7 @@ function WeeklyLightbox({
             padding: '14px 18px',
             display: 'flex', justifyContent: 'space-between', alignItems: 'center',
           }}>
-            <span style={{ ...LABEL, fontSize: 9, color: 'rgba(255,255,255,0.28)' }}>
+            <span style={{ ...LABEL, fontSize: 9, color: 'rgba(244,241,234,0.55)' }}>
               {String(currentIdx + 1).padStart(2, '0')} of {edition.workCount} works
             </span>
             <div style={{ display: 'flex', gap: 4 }}>
@@ -1007,8 +1029,8 @@ function MobileEditionHeader({
   langKo: boolean;
   t: boolean; fg: string; fgMed: string; fgLow: string; fgFaint: string; divider: string;
 }) {
-  const accent = '#BFFF0A';
-  const accentText = t ? '#5A7800' : '#BFFF0A';
+  const accent = '#D4A547';
+  const accentText = t ? '#8A6B1F' : '#D4A547';
   const bg2 = t ? 'rgba(0,0,0,0.02)' : 'rgba(255,255,255,0.025)';
   const surface = t ? 'rgba(0,0,0,0.05)' : 'rgba(255,255,255,0.06)';
 
@@ -1073,8 +1095,8 @@ function MobileHeroWork({
   saved: boolean; onSave: () => void; onClick: () => void;
   t: boolean; fg: string; fgMed: string; fgLow: string; fgFaint: string; divider: string;
 }) {
-  const accent = '#BFFF0A';
-  const accentText = t ? '#5A7800' : '#BFFF0A';
+  const accent = '#D4A547';
+  const accentText = t ? '#8A6B1F' : '#D4A547';
 
   return (
     <div style={{ padding: '14px 16px 0' }}>
@@ -1085,7 +1107,7 @@ function MobileHeroWork({
 
       {/* Image */}
       <div style={{ position: 'relative', cursor: 'pointer' }} onClick={onClick}>
-        <ArtworkPlaceholder seed={work.seed} aspect={work.aspect} style={{ width: '100%' }} />
+        <ArtworkPlaceholder seed={work.seed} aspect={work.aspect} imageUrl={work.imageUrl} alt={`${work.artist} — ${work.title}`} style={{ width: '100%' }} />
         <div style={{
           position: 'absolute', top: 10, left: 10,
           background: accent, color: '#0c0c0a',
@@ -1159,8 +1181,8 @@ function MobileWorkCard({
   t: boolean; fg: string; fgMed: string; fgLow: string; fgFaint: string; divider: string;
 }) {
   const [pressed, setPressed] = useState(false);
-  const accent = '#BFFF0A';
-  const accentText = t ? '#5A7800' : '#BFFF0A';
+  const accent = '#D4A547';
+  const accentText = t ? '#8A6B1F' : '#D4A547';
   const pressedBg = t ? 'rgba(0,0,0,0.03)' : 'rgba(255,255,255,0.04)';
 
   return (
@@ -1175,6 +1197,15 @@ function MobileWorkCard({
         {/* Thumbnail */}
         <div style={{ position: 'relative', flexShrink: 0, width: 84, height: 84, cursor: 'pointer', overflow: 'hidden' }} onClick={onClick}>
           <div style={{ position: 'absolute', inset: 0, background: artGradient(work.seed) }} />
+          {work.imageUrl && (
+            <img
+              src={work.imageUrl}
+              alt={`${work.artist} — ${work.title}`}
+              loading="lazy"
+              style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+              onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none'; }}
+            />
+          )}
           <div style={{
             position: 'absolute', top: 4, left: 4,
             fontFamily: "'Space Mono', monospace", fontSize: 8,
@@ -1250,8 +1281,8 @@ function MobileWorkDetail({
   onPrev: () => void; onNext: () => void; currentIdx: number;
   t: boolean; fg: string; fgMed: string; fgLow: string; fgFaint: string; divider: string;
 }) {
-  const accent = '#BFFF0A';
-  const accentText = t ? '#5A7800' : '#BFFF0A';
+  const accent = '#D4A547';
+  const accentText = t ? '#8A6B1F' : '#D4A547';
   const bg = t ? '#FAFAFA' : '#080808';
   const bg2 = t ? 'rgba(0,0,0,0.02)' : 'rgba(255,255,255,0.025)';
   const total = edition.works.length;
@@ -1314,7 +1345,7 @@ function MobileWorkDetail({
 
       {/* Artwork image with prev/next arrows */}
       <div style={{ position: 'relative', background: t ? 'rgba(0,0,0,0.04)' : 'rgba(255,255,255,0.03)' }}>
-        <ArtworkPlaceholder seed={work.seed} aspect={work.aspect} style={{ width: '100%' }} />
+        <ArtworkPlaceholder seed={work.seed} aspect={work.aspect} imageUrl={work.imageUrl} alt={`${work.artist} — ${work.title}`} style={{ width: '100%' }} />
         <button onClick={onPrev} disabled={currentIdx === 0} style={{
           position: 'absolute', left: 0, top: 0, bottom: 0, width: 48,
           display: 'flex', alignItems: 'center', justifyContent: 'center',
