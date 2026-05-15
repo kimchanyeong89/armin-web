@@ -12,6 +12,8 @@ import {
   type SpecialEntry,
 } from "../lib/weekly";
 import type { WeeklyPublishedFile, PersonaId } from "../types/weekly";
+import SubscribeModal from "./SubscribeModal";
+import { useSubscription } from "../hooks/useSubscription";
 
 // ── Types ──────────────────────────────────────────────────────────────────
 
@@ -1584,7 +1586,7 @@ function GridCard({
 // ── Archive grid ──────────────────────────────────────────────────────────
 
 function ArchiveGrid({
-  entries, loading, langKo, onSelectWeek, onLockedClick,
+  entries, loading, langKo, onSelectWeek, onLockedClick, isSubscriber,
   fg, fgMed, fgFaint, divider,
 }: {
   entries: ArchiveEntry[];
@@ -1592,6 +1594,7 @@ function ArchiveGrid({
   langKo: boolean;
   onSelectWeek: (week: string) => void;
   onLockedClick: () => void;
+  isSubscriber: boolean;
   fg: string;
   fgMed: string;
   fgFaint: string;
@@ -1630,7 +1633,8 @@ function ArchiveGrid({
       padding: 'clamp(20px, 4vw, 32px)',
     }}>
       {entries.map((entry, i) => {
-        const locked = i >= UNLOCKED_COUNT;
+        // Subscribers see everything; otherwise the position-based rule applies.
+        const locked = !isSubscriber && i >= UNLOCKED_COUNT;
         const weekLabel = entry.week.replace('-W', ' · WEEK ');
         const worksCount = entry.works_count;
         return (
@@ -1656,7 +1660,7 @@ function ArchiveGrid({
 // ── Special series grid ───────────────────────────────────────────────────
 
 function SpecialGrid({
-  entries, loading, langKo, onSelectSpecial, onLockedClick,
+  entries, loading, langKo, onSelectSpecial, onLockedClick, isSubscriber,
   fg, fgMed, fgFaint, divider,
 }: {
   entries: SpecialEntry[];
@@ -1664,6 +1668,7 @@ function SpecialGrid({
   langKo: boolean;
   onSelectSpecial: (slug: string) => void;
   onLockedClick: () => void;
+  isSubscriber: boolean;
   fg: string;
   fgMed: string;
   fgFaint: string;
@@ -1702,7 +1707,7 @@ function SpecialGrid({
       padding: 'clamp(20px, 4vw, 32px)',
     }}>
       {entries.map((entry, i) => {
-        const locked = i >= UNLOCKED_COUNT;
+        const locked = !isSubscriber && i >= UNLOCKED_COUNT;
         return (
           <GridCard
             key={entry.slug}
@@ -1758,6 +1763,14 @@ export default function WeeklyCurationTab({
   const [specialEntries, setSpecialEntries] = useState<SpecialEntry[]>([]);
   const [specialLoading, setSpecialLoading] = useState(true);
 
+  // Paywall modal state. `subscribeContext` shapes copy in SubscribeModal.
+  const [subscribeModalOpen, setSubscribeModalOpen] = useState(false);
+  const [subscribeContext, setSubscribeContext] = useState<'archive' | 'special'>('archive');
+
+  // Subscription status drives the lock rule below. Hook order matters,
+  // so this stays above any early return.
+  const { isSubscriber } = useSubscription();
+
   useEffect(() => {
     let cancelled = false;
     fetchCurrentCuration()
@@ -1796,10 +1809,9 @@ export default function WeeklyCurationTab({
     return () => { cancelled = true; };
   }, []);
 
-  const handleLockedClick = useCallback(() => {
-    // V1 stub. A follow-up task wires the Toss Payments subscribe modal.
-    // eslint-disable-next-line no-console
-    console.log('Subscribe prompt — wire payment modal next');
+  const handleLockedClick = useCallback((context: 'archive' | 'special') => {
+    setSubscribeContext(context);
+    setSubscribeModalOpen(true);
   }, []);
 
   const handleSelectArchiveWeek = useCallback(async (week: string) => {
@@ -1882,7 +1894,8 @@ export default function WeeklyCurationTab({
       loading={archiveLoading}
       langKo={langKo}
       onSelectWeek={handleSelectArchiveWeek}
-      onLockedClick={handleLockedClick}
+      onLockedClick={() => handleLockedClick('archive')}
+      isSubscriber={isSubscriber}
       fg={fg}
       fgMed={fgMed}
       fgFaint={fgFaint}
@@ -1896,7 +1909,8 @@ export default function WeeklyCurationTab({
       loading={specialLoading}
       langKo={langKo}
       onSelectSpecial={handleSelectSpecial}
-      onLockedClick={handleLockedClick}
+      onLockedClick={() => handleLockedClick('special')}
+      isSubscriber={isSubscriber}
       fg={fg}
       fgMed={fgMed}
       fgFaint={fgFaint}
@@ -1904,13 +1918,23 @@ export default function WeeklyCurationTab({
     />
   );
 
+  // Rendered alongside every layout branch so it's available regardless
+  // of where the click came from.
+  const subscribeModal = (
+    <SubscribeModal
+      open={subscribeModalOpen}
+      onClose={() => setSubscribeModalOpen(false)}
+      triggerContext={subscribeContext}
+    />
+  );
+
   // ── Mobile layout ────────────────────────────────────────────────────────
   if (isMobile) {
     if (mode === 'archive') {
-      return <div style={{ paddingBottom: 80 }}>{topNav}{archiveView}</div>;
+      return <div style={{ paddingBottom: 80 }}>{topNav}{archiveView}{subscribeModal}</div>;
     }
     if (mode === 'special') {
-      return <div style={{ paddingBottom: 80 }}>{topNav}{specialView}</div>;
+      return <div style={{ paddingBottom: 80 }}>{topNav}{specialView}{subscribeModal}</div>;
     }
     return (
       <div style={{ paddingBottom: 80 }}>
@@ -1969,16 +1993,17 @@ export default function WeeklyCurationTab({
             />
           )}
         </AnimatePresence>
+        {subscribeModal}
       </div>
     );
   }
 
   // ── Desktop layout ───────────────────────────────────────────────────────
   if (mode === 'archive') {
-    return <div style={{ paddingBottom: 80 }}>{topNav}{archiveView}</div>;
+    return <div style={{ paddingBottom: 80 }}>{topNav}{archiveView}{subscribeModal}</div>;
   }
   if (mode === 'special') {
-    return <div style={{ paddingBottom: 80 }}>{topNav}{specialView}</div>;
+    return <div style={{ paddingBottom: 80 }}>{topNav}{specialView}{subscribeModal}</div>;
   }
 
   return (
@@ -2037,6 +2062,7 @@ export default function WeeklyCurationTab({
           />
         )}
       </AnimatePresence>
+      {subscribeModal}
     </div>
   );
 }
