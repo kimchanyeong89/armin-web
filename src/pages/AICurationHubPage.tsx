@@ -777,15 +777,26 @@ export default function AICurationHubPage() {
   const imgFilter = "none";
 
   const [searchParams] = useSearchParams();
+  // `preview` is the admin-side deep-link from /admin/weekly's "Preview"
+  // button — same Weekly-tab landing as `weekly` / `special`, just fed by
+  // the proposals JSON instead of the published one.
   const initialTab: "curation" | "nearby" | "weekly" =
-    searchParams.get('weekly') || searchParams.get('special') ? 'weekly' : 'curation';
+    searchParams.get('weekly') ||
+    searchParams.get('special') ||
+    searchParams.get('preview')
+      ? 'weekly'
+      : 'curation';
   const [activeTab, setActiveTab] = useState<"curation" | "nearby" | "weekly">(initialTab);
 
   // If the URL gains a deep-link param after mount (e.g. from in-app
   // navigation), jump to the weekly tab. Pure presence-check; we leave
   // tab control to the user otherwise.
   useEffect(() => {
-    if (searchParams.get('weekly') || searchParams.get('special')) {
+    if (
+      searchParams.get('weekly') ||
+      searchParams.get('special') ||
+      searchParams.get('preview')
+    ) {
       setActiveTab('weekly');
     }
   }, [searchParams]);
