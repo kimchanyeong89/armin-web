@@ -1,3 +1,12 @@
+// GlobalNav — the FLOATING corner widget (profile avatar in top-right + its
+// expandable menu / search). Not to be confused with the BottomPageNavigator
+// pill at the bottom which is the user's primary route nav (Globe / Community
+// / AI / Profile / Search).
+//
+// If you want to add a discoverable shortcut (e.g. an admin link), put it on
+// BottomPageNavigator — its hamburger menu is where users actually look.
+// GlobalNav is for ambient profile/auth utilities only.
+
 import React, { useState, useRef, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import BugReportModal from './BugReportModal';
@@ -496,33 +505,8 @@ export const GlobalNav: React.FC<GlobalNavProps> = ({ isAdmin, isModalOpen, sear
                             </button>
                         )}
 
-                        {/* ── WEEKLY ADMIN ── filled calendar grid with a tiny star */}
-                        {showAdmin && (
-                            <button title="Weekly Admin"
-                                onClick={() => { setIsMenuOpen(false); navigate('/admin/weekly'); }}
-                                style={iconBtnStyle(0.02)}
-                                onMouseEnter={e => { e.currentTarget.style.background = 'rgba(17,17,17,0.1)'; }}
-                                onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; }}
-                                onMouseDown={(e) => { e.stopPropagation(); e.nativeEvent.stopImmediatePropagation(); }}
-                            >
-                                <svg width="52" height="52" viewBox="0 0 36 36">
-                                    {/* Calendar body */}
-                                    <rect x="5" y="8" width="26" height="24" rx="2" fill="#111"/>
-                                    {/* Header bar */}
-                                    <rect x="5" y="8" width="26" height="6" fill="#111"/>
-                                    {/* Hanger tabs */}
-                                    <rect x="10" y="4" width="3" height="7" rx="1" fill="#111"/>
-                                    <rect x="23" y="4" width="3" height="7" rx="1" fill="#111"/>
-                                    {/* Calendar grid dots — white */}
-                                    <circle cx="11" cy="19" r="1.6" fill="white"/>
-                                    <circle cx="18" cy="19" r="1.6" fill="white"/>
-                                    <circle cx="25" cy="19" r="1.6" fill="white"/>
-                                    <circle cx="11" cy="25" r="1.6" fill="white"/>
-                                    {/* Highlighted day — small star */}
-                                    <polygon points="18,23 19,25.5 21.7,25.7 19.6,27.4 20.3,30 18,28.6 15.7,30 16.4,27.4 14.3,25.7 17,25.5" fill="white"/>
-                                </svg>
-                            </button>
-                        )}
+                        {/* Weekly Admin link removed — moved to BottomPageNavigator's
+                            hamburger menu which is the user's actual primary nav. */}
 
                         {/* ── MY PAGE ── filled heart (나의 것) */}
                         <button title="My Page"
@@ -700,15 +684,8 @@ export const GlobalNav: React.FC<GlobalNavProps> = ({ isAdmin, isModalOpen, sear
                             ADMIN PROFILE
                         </button>
                     )}
-                    {showAdmin && (
-                        <button
-                            onClick={() => navigate('/admin/weekly')}
-                            style={{ ...getNavItemStyle(currentPath === '/admin/weekly'), transition: 'background 0.35s ease, color 0.35s, transform 1.3s cubic-bezier(0.22, 1, 0.36, 1) 0.03s, opacity 1.0s 0.03s', transform: isMenuOpen ? 'translateX(0)' : 'translateX(-20px)', opacity: isMenuOpen ? 1 : 0 }}
-                            onMouseDown={(e) => { e.stopPropagation(); e.nativeEvent.stopImmediatePropagation(); }}
-                        >
-                            WEEKLY ADMIN
-                        </button>
-                    )}
+                    {/* WEEKLY ADMIN entry removed — lives in BottomPageNavigator
+                        hamburger menu instead (the user's actual primary nav). */}
                     <button
                         onClick={() => navigate('/mypage')}
                         style={{ ...getNavItemStyle(currentPath === '/mypage'), transition: 'background 0.35s ease, color 0.35s, transform 1.3s cubic-bezier(0.22, 1, 0.36, 1) 0.06s, opacity 1.0s 0.06s', transform: isMenuOpen ? 'translateX(0)' : 'translateX(-20px)', opacity: isMenuOpen ? 1 : 0 }}
