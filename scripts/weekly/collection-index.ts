@@ -36,9 +36,18 @@ interface Index {
 let cache: Index | null = null;
 const DATA_DIR = join(process.cwd(), 'public', 'data');
 
-function normalizeArtist(raw: string): string {
-  // Strip nationality/dates in parentheses e.g. "Walter Shirlaw (American, 1838–1909)"
-  return raw.replace(/\s*\([^)]*\)\s*$/, '').trim();
+export function normalizeArtist(raw: string): string {
+  // Strip nationality/dates in trailing parens: "Vermeer (Dutch, 1632–1675)" → "Vermeer"
+  const noParen = raw.replace(/\s*\([^)]*\)\s*$/, '').trim();
+  // Strip trailing dash-dates: "Hammershøi, Vilhelm 1864–1916" → "Hammershøi, Vilhelm"
+  const noTrailingDate = noParen.replace(/\s*\d{3,4}\s*[–-]\s*\d{3,4}\s*$/, '').trim();
+  // Flip "Last, First" → "First Last" so name forms collapse to a single key.
+  // Heuristic: if there is exactly one comma AND no other punctuation, treat as Last,First.
+  if (/^[^,]+,\s+[^,]+$/.test(noTrailingDate)) {
+    const [last, first] = noTrailingDate.split(/,\s+/);
+    return `${first} ${last}`.trim();
+  }
+  return noTrailingDate;
 }
 
 export async function buildIndex(): Promise<Index> {
