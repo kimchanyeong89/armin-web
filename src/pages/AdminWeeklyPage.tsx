@@ -659,7 +659,21 @@ const AdminWeeklyPage: React.FC = () => {
   }
 
   return (
-    <div style={{ minHeight: '100vh', background: COLOR_BG, color: COLOR_FG, paddingBottom: 80 }}>
+    // App.tsx pins its root with `overflow: hidden`, so this page needs its
+    // own scroll container — otherwise content past the viewport (cards 4+)
+    // is silently clipped.
+    <div
+      style={{
+        position: 'absolute',
+        inset: 0,
+        overflowY: 'auto',
+        overflowX: 'hidden',
+        background: COLOR_BG,
+        color: COLOR_FG,
+        paddingBottom: 100,
+        WebkitOverflowScrolling: 'touch',
+      }}
+    >
       {/* Global nav */}
       <div
         style={{

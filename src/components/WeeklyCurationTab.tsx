@@ -2,9 +2,9 @@
 // Sub-tab of the AI section alongside My Curation & Nearby Exhibition.
 
 import React, { useState, useEffect, useCallback, useRef } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, useNavigate } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { BookmarkPlus, Check, X, ChevronLeft, ChevronRight, Lock } from "lucide-react";
+import { Heart, X, ChevronLeft, ChevronRight, Lock } from "lucide-react";
 import {
   fetchCurrentCuration,
   fetchArchiveList,
@@ -15,7 +15,7 @@ import {
 import type { WeeklyPublishedFile, PersonaId } from "../types/weekly";
 import SubscribeModal from "./SubscribeModal";
 import SaveCurationButton from "./SaveCurationButton";
-import MuseumOverlay, { prettifyMuseumName } from "./MuseumOverlay";
+import { museumDisplayName } from "../lib/museum-names";
 import { useSubscription } from "../hooks/useSubscription";
 import {
   likeArtwork,
@@ -377,7 +377,10 @@ function MuseumLink({
   color: string;
   size: number;
 }) {
-  const display = prettifyMuseumName(collectionId) + (suffix ? `, ${suffix}` : '');
+  // Full museum name (e.g. "Statens Museum for Kunst, Copenhagen") — the
+  // earlier "SMK" abbreviation was unreadable for users. `suffix` is now
+  // rarely needed since museumDisplayName already embeds the city.
+  const display = museumDisplayName(collectionId) + (suffix ? `, ${suffix}` : '');
   if (!onClick) return <>{display}</>;
   return (
     <button
@@ -749,7 +752,7 @@ function HeroWork({
               ...LABEL, fontSize: 10,
               transition: 'border-color 0.15s, color 0.15s',
             }}>
-              {saved ? <Check size={13} color="currentColor" /> : <BookmarkPlus size={13} color="currentColor" />}
+              <Heart size={13} color="currentColor" fill={saved ? "currentColor" : "none"} />
               {saved ? (langKo ? '저장됨' : 'Saved') : (langKo ? '작품 저장' : 'Save artwork')}
             </button>
             <button onClick={onClick} style={{
@@ -886,7 +889,7 @@ function WorkRow({
             ...LABEL, fontSize: 9,
             transition: 'border-color 0.15s, color 0.15s',
           }}>
-            {saved ? <Check size={11} color="currentColor" /> : <BookmarkPlus size={11} color="currentColor" />}
+            <Heart size={11} color="currentColor" fill={saved ? "currentColor" : "none"} />
             {saved ? (langKo ? '저장됨' : 'Saved') : (langKo ? '작품 저장' : 'Save artwork')}
           </button>
           <button onClick={(e) => { e.stopPropagation(); onClick(); }} style={{
@@ -1148,7 +1151,7 @@ function WeeklyLightbox({
               ...LABEL, fontSize: 10,
               transition: 'border-color 0.15s, color 0.15s',
             }}>
-              {saved ? <Check size={14} color="currentColor" /> : <BookmarkPlus size={14} color="currentColor" />}
+              <Heart size={14} color="currentColor" fill={saved ? "currentColor" : "none"} />
               {saved ? (langKo ? '저장됨 · Saved' : 'Saved · 저장됨') : (langKo ? '작품 저장 · Save artwork' : 'Save artwork · 작품 저장')}
             </button>
           </div>
@@ -1320,7 +1323,7 @@ function MobileHeroWork({
             display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 6,
             ...LABEL, fontSize: 10,
           }}>
-            {saved ? <Check size={13} color="currentColor" /> : <BookmarkPlus size={13} color="currentColor" />}
+            <Heart size={13} color="currentColor" fill={saved ? "currentColor" : "none"} />
             {saved ? (langKo ? '저장됨' : 'Saved') : (langKo ? '작품 저장' : 'Save artwork')}
           </button>
           <button onClick={onClick} style={{
@@ -1425,7 +1428,7 @@ function MobileWorkCard({
               display: 'flex', alignItems: 'center', gap: 5,
               ...LABEL, fontSize: 9,
             }}>
-              {saved ? <Check size={11} color="currentColor" /> : <BookmarkPlus size={11} color="currentColor" />}
+              <Heart size={11} color="currentColor" fill={saved ? "currentColor" : "none"} />
               {saved ? (langKo ? '저장됨' : 'Saved') : (langKo ? '작품 저장' : 'Save artwork')}
             </button>
             <button onClick={onClick} style={{
@@ -1514,7 +1517,7 @@ function MobileWorkDetail({
           color: saved ? accentText : fgLow,
           display: 'flex', alignItems: 'center', gap: 5,
         }}>
-          {saved ? <Check size={14} color="currentColor" /> : <BookmarkPlus size={14} color="currentColor" />}
+          <Heart size={14} color="currentColor" fill={saved ? "currentColor" : "none"} />
           {saved ? (langKo ? '저장됨' : 'Saved') : (langKo ? '작품 저장' : 'Save artwork')}
         </button>
       </div>
@@ -1609,7 +1612,7 @@ function MobileWorkDetail({
           ...LABEL, fontSize: 11,
           transition: 'border-color 0.15s, color 0.15s',
         }}>
-          {saved ? <Check size={15} color="currentColor" /> : <BookmarkPlus size={15} color="currentColor" />}
+          <Heart size={15} color="currentColor" fill={saved ? "currentColor" : "none"} />
           {saved ? (langKo ? '저장됨 · Saved' : 'Saved · 저장됨') : (langKo ? '작품 저장 · Save artwork' : 'Save artwork · 작품 저장')}
         </button>
       </div>
@@ -1949,15 +1952,14 @@ export default function WeeklyCurationTab({
   const [subscribeModalOpen, setSubscribeModalOpen] = useState(false);
   const [subscribeContext, setSubscribeContext] = useState<'archive' | 'special'>('archive');
 
-  // Museum permanent-collection overlay. Triggered from clicking a work
-  // card's museum name. Stays in the same route on purpose so scroll
-  // position is preserved and back-button just closes the overlay.
-  // Hook must stay above the `if (!edition)` early return below — hook
-  // count must be identical across renders.
-  const [museumOverlayId, setMuseumOverlayId] = useState<string | null>(null);
+  // Museum click → navigate to /collection/<slug>. The HomePage route
+  // already mounts the real ExhibitionModal when this path matches, so we
+  // get the full museum-detail experience for free instead of a side-grade
+  // simplified overlay. Browser back returns to this curation page.
+  const navigate = useNavigate();
   const openMuseum = useCallback((collectionId: string) => {
-    setMuseumOverlayId(collectionId);
-  }, []);
+    navigate(`/collection/${collectionId}`);
+  }, [navigate]);
 
   // Subscription status drives the lock rule below. Hook order matters,
   // so this stays above any early return.
@@ -2198,16 +2200,9 @@ export default function WeeklyCurationTab({
     />
   );
 
-  // Single shared MuseumOverlay element — same reason as subscribeModal
-  // above. Mobile and desktop branches all render it so the overlay is
-  // available regardless of which work-card variant was clicked.
-  const museumOverlay = (
-    <MuseumOverlay
-      open={museumOverlayId !== null}
-      collectionId={museumOverlayId}
-      onClose={() => setMuseumOverlayId(null)}
-    />
-  );
+  // Museum overlay removed — clicks on museum names now navigate to
+  // /collection/<slug>, which opens the full ExhibitionModal via HomePage.
+  // No render element needed here.
 
   // Inline toast for sign-in feedback when a per-work save is clicked while
   // signed out. The web build has no global handler that opens a login modal
@@ -2242,10 +2237,10 @@ export default function WeeklyCurationTab({
   // ── Mobile layout ────────────────────────────────────────────────────────
   if (isMobile) {
     if (mode === 'archive') {
-      return <div style={{ paddingBottom: 80 }}>{topNav}{archiveView}{subscribeModal}{museumOverlay}{authToast}</div>;
+      return <div style={{ paddingBottom: 80 }}>{topNav}{archiveView}{subscribeModal}{authToast}</div>;
     }
     if (mode === 'special') {
-      return <div style={{ paddingBottom: 80 }}>{topNav}{specialView}{subscribeModal}{museumOverlay}{authToast}</div>;
+      return <div style={{ paddingBottom: 80 }}>{topNav}{specialView}{subscribeModal}{authToast}</div>;
     }
     return (
       <div style={{ paddingBottom: 80 }}>
@@ -2319,7 +2314,7 @@ export default function WeeklyCurationTab({
           )}
         </AnimatePresence>
         {subscribeModal}
-        {museumOverlay}
+        
         {authToast}
       </div>
     );
@@ -2327,10 +2322,10 @@ export default function WeeklyCurationTab({
 
   // ── Desktop layout ───────────────────────────────────────────────────────
   if (mode === 'archive') {
-    return <div style={{ paddingBottom: 80 }}>{topNav}{archiveView}{subscribeModal}{museumOverlay}{authToast}</div>;
+    return <div style={{ paddingBottom: 80 }}>{topNav}{archiveView}{subscribeModal}{authToast}</div>;
   }
   if (mode === 'special') {
-    return <div style={{ paddingBottom: 80 }}>{topNav}{specialView}{subscribeModal}{museumOverlay}{authToast}</div>;
+    return <div style={{ paddingBottom: 80 }}>{topNav}{specialView}{subscribeModal}{authToast}</div>;
   }
 
   return (
@@ -2404,7 +2399,7 @@ export default function WeeklyCurationTab({
         )}
       </AnimatePresence>
       {subscribeModal}
-      {museumOverlay}
+      
       {authToast}
     </div>
   );
