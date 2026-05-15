@@ -13,6 +13,7 @@ import {
 } from "../lib/weekly";
 import type { WeeklyPublishedFile, PersonaId } from "../types/weekly";
 import SubscribeModal from "./SubscribeModal";
+import SaveCurationButton from "./SaveCurationButton";
 import { useSubscription } from "../hooks/useSubscription";
 
 // ── Types ──────────────────────────────────────────────────────────────────
@@ -1754,6 +1755,10 @@ export default function WeeklyCurationTab({
   // what caused the "imageUrl missing → gradient-only" bug). Falling back to
   // hardcoded is now explicit: only if fetch resolves to null.
   const [edition, setEdition] = useState<WeeklyEdition | null>(null);
+  // Keep the raw published file alongside the adapted edition so the
+  // "Save this curation" button can persist the canonical shape without
+  // needing to refetch.
+  const [editionFile, setEditionFile] = useState<WeeklyPublishedFile | null>(null);
   const [selectedWork, setSelectedWork] = useState<WeeklyWork | null>(null);
   const [langKo, setLangKo] = useState(language === 'ko');
   const [savedIds, setSavedIds] = useState<Set<string>>(new Set());
@@ -1790,11 +1795,13 @@ export default function WeeklyCurationTab({
             firstImageUrl: adapted.works[0]?.imageUrl,
           });
           setEdition(adapted);
+          setEditionFile(file);
         } else {
           setEdition(WEEKLY_EDITIONS[0]);
+          setEditionFile(null);
         }
       })
-      .catch(() => { setEdition(WEEKLY_EDITIONS[0]); });
+      .catch(() => { setEdition(WEEKLY_EDITIONS[0]); setEditionFile(null); });
     return () => { cancelled = true; };
   }, []);
 
@@ -1824,6 +1831,7 @@ export default function WeeklyCurationTab({
       if (!res.ok) return;
       const file = await res.json() as WeeklyPublishedFile;
       setEdition(adaptPublishedToEdition(file));
+      setEditionFile(file);
       setMode('this-week');
       if (typeof window !== 'undefined') window.scrollTo({ top: 0, behavior: 'smooth' });
     } catch {
@@ -1839,6 +1847,7 @@ export default function WeeklyCurationTab({
       // published-file fields adaptPublishedToEdition expects.
       const file = await res.json() as WeeklyPublishedFile;
       setEdition(adaptPublishedToEdition(file));
+      setEditionFile(file);
       setMode('this-week');
       if (typeof window !== 'undefined') window.scrollTo({ top: 0, behavior: 'smooth' });
     } catch {
@@ -1984,6 +1993,10 @@ export default function WeeklyCurationTab({
           ))}
         </div>
 
+        {editionFile && (
+          <SaveCurationButton file={editionFile} langKo={langKo} />
+        )}
+
         <AnimatePresence>
           {selectedWork && (
             <MobileWorkDetail
@@ -2050,6 +2063,10 @@ export default function WeeklyCurationTab({
           ))}
         </div>
       </div>
+
+      {editionFile && (
+        <SaveCurationButton file={editionFile} langKo={langKo} />
+      )}
 
       <AnimatePresence>
         {selectedWork && (
