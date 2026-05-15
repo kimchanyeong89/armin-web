@@ -10,6 +10,7 @@ import {
   setDoc,
   deleteDoc,
   getDocs,
+  onSnapshot,
   query,
   where,
   getCountFromServer,
@@ -1247,51 +1248,62 @@ const MyPage: React.FC = () => {
 
     const db = getFirestore();
 
-    const fetchData = async () => {
-      try {
-        const [artworksSnap, exhibitionsSnap, museumsSnap, artistsSnap] = await Promise.all([
-          getDocs(collection(db, `users/${user.uid}/liked_artworks`)),
-          getDocs(collection(db, `users/${user.uid}/liked_exhibitions`)),
-          getDocs(collection(db, `users/${user.uid}/liked_museums`)),
-          getDocs(collection(db, `users/${user.uid}/liked_artists`)),
-        ]);
-
-        setLikedArtworks(
-          artworksSnap.docs.map((record) => {
-            const data = (record.data() || {}) as Record<string, unknown>;
-            const docId = String(record.id || "").trim();
-            const canonicalArtworkId = String(data.artworkId || data.id || docId).trim();
-            return {
-              ...data,
-              _docId: docId,
-              likeDocId: docId,
-              artworkId: canonicalArtworkId,
-              id: canonicalArtworkId,
-              title: String(data.title || data.name || data.n || "Untitled"),
-              name: String(data.name || data.title || data.n || "Untitled"),
-              artist: String(data.artist || data.a || "Unknown"),
-              museumName: String(data.museumName || data.museum || data.m || ""),
-              exhibitionId: String(data.exhibitionId || data.e || data.sourceCollection || ""),
-              sourceCollection: String(data.sourceCollection || data.exhibitionId || data.e || ""),
-              sourceUrl: String(data.sourceUrl || data.url || data.detailUrl || data.officialUrl || ""),
-              image: String(data.image || data.i || data.imageUrl || ""),
-              i: String(data.i || data.image || data.imageUrl || ""),
-            };
-          }),
-        );
-        setLikedExhibitions(exhibitionsSnap.docs.map((record) => ({ id: record.id, ...record.data() })));
-        setLikedMuseums(museumsSnap.docs.map((record) => ({ id: record.id, ...record.data() })));
-        setLikedArtists(artistsSnap.docs.map((record) => ({ id: record.id, ...record.data() })));
-
-        await Promise.all([fetchPlaylists(), fetchProfile()]);
-      } catch (error) {
-        console.error("Error fetching mypage data", error);
-      } finally {
-        setLoading(false);
-      }
+    // Real-time subscription for the four liked-* collections. The page used
+    // to call getDocs() once on mount, which meant saving an artwork from
+    // anywhere else (e.g. WeeklyCurationTab) did not show up until the user
+    // re-mounted the page. onSnapshot pushes updates instantly.
+    const mapArtwork = (record: { id: string; data: () => Record<string, unknown> | undefined }) => {
+      const data = (record.data() || {}) as Record<string, unknown>;
+      const docId = String(record.id || "").trim();
+      const canonicalArtworkId = String(data.artworkId || data.id || docId).trim();
+      return {
+        ...data,
+        _docId: docId,
+        likeDocId: docId,
+        artworkId: canonicalArtworkId,
+        id: canonicalArtworkId,
+        title: String(data.title || data.name || data.n || "Untitled"),
+        name: String(data.name || data.title || data.n || "Untitled"),
+        artist: String(data.artist || data.a || "Unknown"),
+        museumName: String(data.museumName || data.museum || data.m || ""),
+        exhibitionId: String(data.exhibitionId || data.e || data.sourceCollection || ""),
+        sourceCollection: String(data.sourceCollection || data.exhibitionId || data.e || ""),
+        sourceUrl: String(data.sourceUrl || data.url || data.detailUrl || data.officialUrl || ""),
+        image: String(data.image || data.i || data.imageUrl || ""),
+        i: String(data.i || data.image || data.imageUrl || ""),
+      };
     };
 
-    fetchData();
+    const unsubArtworks = onSnapshot(
+      collection(db, `users/${user.uid}/liked_artworks`),
+      (snap) => setLikedArtworks(snap.docs.map(mapArtwork)),
+      (err) => console.error("[Mypage] liked_artworks snapshot error", err),
+    );
+    const unsubExhibitions = onSnapshot(
+      collection(db, `users/${user.uid}/liked_exhibitions`),
+      (snap) => setLikedExhibitions(snap.docs.map((record) => ({ id: record.id, ...record.data() }))),
+    );
+    const unsubMuseums = onSnapshot(
+      collection(db, `users/${user.uid}/liked_museums`),
+      (snap) => setLikedMuseums(snap.docs.map((record) => ({ id: record.id, ...record.data() }))),
+    );
+    const unsubArtists = onSnapshot(
+      collection(db, `users/${user.uid}/liked_artists`),
+      (snap) => setLikedArtists(snap.docs.map((record) => ({ id: record.id, ...record.data() }))),
+    );
+
+    // Profile + playlists still load once — they don't have the "save from
+    // another page" problem the artworks collection does.
+    Promise.all([fetchPlaylists(), fetchProfile()])
+      .catch((error) => console.error("Error fetching mypage profile/playlists", error))
+      .finally(() => setLoading(false));
+
+    return () => {
+      unsubArtworks();
+      unsubExhibitions();
+      unsubMuseums();
+      unsubArtists();
+    };
   }, [authLoading, user, navigate]);
 
   useEffect(() => {
