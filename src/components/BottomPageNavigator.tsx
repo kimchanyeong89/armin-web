@@ -1,6 +1,7 @@
 import { Globe2, Search, Sparkles, User, Users, Menu, CalendarCheck } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 import { useLanguage } from "../contexts/LanguageContext";
 import { useIsAdmin } from "../lib/admin";
 
@@ -44,14 +45,20 @@ export function resolveMainTabIndex(pathname: string): number | null {
   return null;
 }
 
-// Easing curves — Apple-ish "out" spring for the organic open/close feel
-// the user asked for. cubic-bezier(0.32, 0.72, 0, 1) is the one Apple's
-// motion designers use in SwiftUI defaults — fast pickup, soft settle.
+// Apple-ish "out" curve used only for the hamburger popover. The pill's
+// collapse/expand uses framer-motion springs (see motion.button transitions
+// below) — CSS transitions on max-width + padding + gap caused subpixel
+// jitter because each property reflowed on its own curve; springs coordinate
+// all properties on one physics clock.
 const SPRING_OUT = "cubic-bezier(0.32, 0.72, 0, 1)";
-const TRANS_TAB =
-  `max-width 0.55s ${SPRING_OUT}, padding 0.55s ${SPRING_OUT}, ` +
-  `opacity 0.35s ease-out, gap 0.55s ${SPRING_OUT}`;
 const TRANS_MENU = `opacity 0.25s ease-out, transform 0.35s ${SPRING_OUT}`;
+
+// Spring presets for the pill animation. Tuned for a quick pickup with a
+// gentle settle (no overshoot bounce on width — that would re-introduce the
+// "shaking" the user complained about).
+const SPRING_WIDTH = { type: "spring" as const, stiffness: 280, damping: 30, mass: 0.6 };
+const SPRING_SCALE = { type: "spring" as const, stiffness: 360, damping: 28 };
+const FADE_FAST = { duration: 0.18, ease: [0.32, 0.72, 0, 1] as [number, number, number, number] };
 
 export default function BottomPageNavigator({ activeIndex, onChange, lightMode = false }: BottomPageNavigatorProps) {
   const { language } = useLanguage();
@@ -175,129 +182,219 @@ export default function BottomPageNavigator({ activeIndex, onChange, lightMode =
         </div>
       )}
 
-      <div
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: isMobile ? "space-between" : "flex-start",
-          gap: isMobile ? 0 : isNarrow ? 0 : 2,
-          padding: isMobile
-            ? "6px 6px 24px 6px"
-            : isNarrow
-              ? 4
-              : 6,
-          borderRadius: isMobile ? "24px 24px 0 0" : 999,
-          background: isMobile
-            ? (lightMode ? "rgba(246,246,246,0.97)" : "rgba(15,15,15,0.94)")
-            : containerBg,
-          border: isMobile
-            ? (lightMode ? "1px solid rgba(0,0,0,0.08)" : "1px solid rgba(255,255,255,0.10)")
-            : containerBorder,
-          boxShadow: isMobile
-            ? (lightMode
+      {isMobile ? (
+        // ── Mobile: full-width bottom bar, no hover, no animation. ──────────
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+            gap: 0,
+            padding: "6px 6px 24px 6px",
+            borderRadius: "24px 24px 0 0",
+            background: lightMode ? "rgba(246,246,246,0.97)" : "rgba(15,15,15,0.94)",
+            border: lightMode ? "1px solid rgba(0,0,0,0.08)" : "1px solid rgba(255,255,255,0.10)",
+            boxShadow: lightMode
               ? "0 -8px 24px rgba(0,0,0,0.10), inset 0 1px 0 rgba(255,255,255,0.65)"
-              : "0 -12px 30px rgba(0,0,0,0.50), inset 0 1px 0 rgba(255,255,255,0.05)")
-            : containerShadow,
-          backdropFilter: "blur(28px)",
-          WebkitBackdropFilter: "blur(28px)",
-          overflow: "hidden",
-          // The container itself transitions width via its flex children.
-          // Animating gap keeps spacing organic when collapsing/expanding.
-          transition: `gap 0.55s ${SPRING_OUT}, padding 0.55s ${SPRING_OUT}`,
-        }}
-      >
-        {MAIN_TABS.map((item, index) => {
-          const isActive = index === activeIndex;
-          // Collapse rule: when not expanded, only the active tab is visible.
-          // Mobile is always "expanded" (isExpanded === true above).
-          const isVisible = isExpanded || isActive;
-
-          const fullLabel = language === "ko"
-            ? (item.id === "map" ? "지도" : item.id === "community" ? "커뮤니티" : item.id === "ai" ? "AI" : item.id === "profile" ? "마이페이지" : "검색")
-            : item.label;
-          const shortLabel = language === "ko"
-            ? (item.id === "map" ? "지도" : item.id === "community" ? "커뮤" : item.id === "ai" ? "AI" : item.id === "profile" ? "마이" : "검색")
-            : item.shortLabel;
-
-          return (
-            <button
-              key={item.id}
-              onClick={() => onChange(index)}
-              tabIndex={isVisible ? 0 : -1}
-              aria-hidden={!isVisible}
-              style={{
-                position: "relative",
-                display: "flex",
-                flexDirection: isMobile ? "column" : "row",
-                alignItems: "center",
-                gap: isMobile ? 2 : 6,
-                border: "none",
-                background: "transparent",
-                borderRadius: isMobile ? 12 : 999,
-                // On desktop collapsed, hidden tabs squeeze to 0 width with
-                // 0 padding so the pill shrinks around the active tab.
-                maxWidth: isMobile ? "none" : (isVisible ? 220 : 0),
-                padding: isMobile
-                  ? "6px 2px"
-                  : isVisible
-                    ? (isNarrow ? "8px 8px" : "9px 18px")
-                    : "9px 0",
-                color: isActive ? "#000" : inactiveColor,
-                fontSize: isMobile ? 10 : isNarrow ? 10 : 12,
-                fontWeight: isActive ? 600 : 400,
-                letterSpacing: "0.015em",
-                cursor: "pointer",
-                outline: "none",
-                userSelect: "none",
-                whiteSpace: "nowrap",
-                minWidth: 0,
-                flex: isMobile ? "1 1 0" : "0 0 auto",
-                justifyContent: "center",
-                minHeight: isMobile ? 44 : undefined,
-                overflow: "hidden",
-                opacity: isVisible ? 1 : 0,
-                pointerEvents: isVisible ? "auto" : "none",
-                transition: isMobile ? "color 0.15s" : TRANS_TAB,
-              }}
-              aria-current={isActive ? "page" : undefined}
-              aria-label={fullLabel}
-            >
-              {isActive && (
-                <span
-                  style={{
-                    position: "absolute",
-                    inset: isMobile ? "2px" : 0,
-                    borderRadius: isMobile ? 12 : 999,
-                    background: "#D4A547",
-                  }}
-                />
-              )}
-              <item.Icon
-                size={isMobile ? (isNarrow ? 14 : 15) : isNarrow ? 12 : 13}
-                strokeWidth={isActive ? 2.5 : 1.75}
-                style={{ position: "relative", zIndex: 1, flexShrink: 0 }}
-              />
-              <span
+              : "0 -12px 30px rgba(0,0,0,0.50), inset 0 1px 0 rgba(255,255,255,0.05)",
+            backdropFilter: "blur(28px)",
+            WebkitBackdropFilter: "blur(28px)",
+            overflow: "hidden",
+          }}
+        >
+          {MAIN_TABS.map((item, index) => {
+            const isActive = index === activeIndex;
+            const fullLabel = language === "ko"
+              ? (item.id === "map" ? "지도" : item.id === "community" ? "커뮤니티" : item.id === "ai" ? "AI" : item.id === "profile" ? "마이페이지" : "검색")
+              : item.label;
+            const shortLabel = language === "ko"
+              ? (item.id === "map" ? "지도" : item.id === "community" ? "커뮤" : item.id === "ai" ? "AI" : item.id === "profile" ? "마이" : "검색")
+              : item.shortLabel;
+            return (
+              <button
+                key={item.id}
+                onClick={() => onChange(index)}
                 style={{
                   position: "relative",
-                  zIndex: 1,
-                  fontSize: isMobile ? (isNarrow ? 9 : 10) : isNarrow ? 9 : 12,
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  gap: 2,
+                  border: "none",
+                  background: "transparent",
+                  borderRadius: 12,
+                  padding: "6px 2px",
+                  color: isActive ? "#000" : inactiveColor,
+                  fontSize: isNarrow ? 10 : 10,
+                  fontWeight: isActive ? 600 : 400,
+                  letterSpacing: "0.015em",
+                  cursor: "pointer",
+                  outline: "none",
+                  userSelect: "none",
+                  whiteSpace: "nowrap",
+                  minWidth: 0,
+                  flex: "1 1 0",
+                  justifyContent: "center",
+                  minHeight: 44,
                   overflow: "hidden",
-                  textOverflow: "ellipsis",
-                  lineHeight: 1.1,
+                  transition: "color 0.15s",
                 }}
+                aria-current={isActive ? "page" : undefined}
+                aria-label={fullLabel}
               >
-                {isMobile ? shortLabel : fullLabel}
-              </span>
-            </button>
-          );
-        })}
+                {isActive && (
+                  <span
+                    style={{
+                      position: "absolute",
+                      inset: "2px",
+                      borderRadius: 12,
+                      background: "#D4A547",
+                    }}
+                  />
+                )}
+                <item.Icon
+                  size={isNarrow ? 14 : 15}
+                  strokeWidth={isActive ? 2.5 : 1.75}
+                  style={{ position: "relative", zIndex: 1, flexShrink: 0 }}
+                />
+                <span
+                  style={{
+                    position: "relative",
+                    zIndex: 1,
+                    fontSize: isNarrow ? 9 : 10,
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    lineHeight: 1.1,
+                  }}
+                >
+                  {shortLabel}
+                </span>
+              </button>
+            );
+          })}
+        </div>
+      ) : (
+        // ── Desktop: collapsing pill driven by framer-motion springs. ───────
+        // No explicit container width — children animate width+padding via
+        // springs, and the flex container auto-fits. Springs coordinate all
+        // properties on one physics clock, which is what kills the jitter
+        // the user was seeing with parallel CSS transitions.
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "flex-start",
+            gap: isNarrow ? 0 : 2,
+            padding: isNarrow ? 4 : 6,
+            borderRadius: 999,
+            background: containerBg,
+            border: containerBorder,
+            boxShadow: containerShadow,
+            backdropFilter: "blur(28px)",
+            WebkitBackdropFilter: "blur(28px)",
+            overflow: "hidden",
+            // height is constant: vertical padding doesn't change with state,
+            // so we don't need a fixed-height value. No transition needed
+            // here either — the children drive the width animation.
+          }}
+        >
+          {MAIN_TABS.map((item, index) => {
+            const isActive = index === activeIndex;
+            // Collapse rule: when not expanded, only the active tab is visible.
+            const isVisible = isExpanded || isActive;
+            // Active tab grows when collapsed — pure transform, no reflow.
+            const activeGrowScale = !isExpanded && isActive ? 1.18 : 1;
 
-        {/* Hamburger — desktop only. Visible only when the pill is expanded
-            (hovered or menu open). On mobile we skip it; the existing 5-tab
-            layout is wide enough and hover doesn't apply. */}
-        {!isMobile && (
-          <button
+            const fullLabel = language === "ko"
+              ? (item.id === "map" ? "지도" : item.id === "community" ? "커뮤니티" : item.id === "ai" ? "AI" : item.id === "profile" ? "마이페이지" : "검색")
+              : item.label;
+
+            const horizPadding = isVisible ? (isNarrow ? 8 : 18) : 0;
+
+            return (
+              <motion.button
+                key={item.id}
+                onClick={() => onChange(index)}
+                tabIndex={isVisible ? 0 : -1}
+                aria-hidden={!isVisible}
+                initial={false}
+                animate={{
+                  width: isVisible ? "auto" : 0,
+                  opacity: isVisible ? 1 : 0,
+                  paddingLeft: horizPadding,
+                  paddingRight: horizPadding,
+                  scale: activeGrowScale,
+                }}
+                transition={{
+                  width: SPRING_WIDTH,
+                  paddingLeft: SPRING_WIDTH,
+                  paddingRight: SPRING_WIDTH,
+                  opacity: FADE_FAST,
+                  scale: SPRING_SCALE,
+                }}
+                style={{
+                  position: "relative",
+                  display: "flex",
+                  flexDirection: "row",
+                  alignItems: "center",
+                  gap: 6,
+                  border: "none",
+                  background: "transparent",
+                  borderRadius: 999,
+                  paddingTop: 9,
+                  paddingBottom: 9,
+                  color: isActive ? "#000" : inactiveColor,
+                  fontSize: isNarrow ? 10 : 12,
+                  fontWeight: isActive ? 600 : 400,
+                  letterSpacing: "0.015em",
+                  cursor: "pointer",
+                  outline: "none",
+                  userSelect: "none",
+                  whiteSpace: "nowrap",
+                  minWidth: 0,
+                  flex: "0 0 auto",
+                  justifyContent: "center",
+                  overflow: "hidden",
+                  pointerEvents: isVisible ? "auto" : "none",
+                  // Grow from the center so the pill stays balanced.
+                  transformOrigin: "center center",
+                }}
+                aria-current={isActive ? "page" : undefined}
+                aria-label={fullLabel}
+              >
+                {isActive && (
+                  <span
+                    style={{
+                      position: "absolute",
+                      inset: 0,
+                      borderRadius: 999,
+                      background: "#D4A547",
+                    }}
+                  />
+                )}
+                <item.Icon
+                  size={isNarrow ? 12 : 13}
+                  strokeWidth={isActive ? 2.5 : 1.75}
+                  style={{ position: "relative", zIndex: 1, flexShrink: 0 }}
+                />
+                <span
+                  style={{
+                    position: "relative",
+                    zIndex: 1,
+                    fontSize: isNarrow ? 9 : 12,
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
+                    lineHeight: 1.1,
+                  }}
+                >
+                  {fullLabel}
+                </span>
+              </motion.button>
+            );
+          })}
+
+          {/* Hamburger — desktop only. Same width+opacity collapse pattern. */}
+          <motion.button
             onClick={(e) => {
               e.stopPropagation();
               setIsMenuOpen((v) => !v);
@@ -305,6 +402,19 @@ export default function BottomPageNavigator({ activeIndex, onChange, lightMode =
             aria-label={language === "ko" ? "더보기 메뉴" : "More menu"}
             aria-expanded={isMenuOpen}
             tabIndex={isExpanded ? 0 : -1}
+            initial={false}
+            animate={{
+              width: isExpanded ? "auto" : 0,
+              opacity: isExpanded ? 1 : 0,
+              paddingLeft: isExpanded ? 12 : 0,
+              paddingRight: isExpanded ? 12 : 0,
+            }}
+            transition={{
+              width: SPRING_WIDTH,
+              paddingLeft: SPRING_WIDTH,
+              paddingRight: SPRING_WIDTH,
+              opacity: FADE_FAST,
+            }}
             style={{
               position: "relative",
               display: "flex",
@@ -315,8 +425,8 @@ export default function BottomPageNavigator({ activeIndex, onChange, lightMode =
                 ? (lightMode ? "rgba(0,0,0,0.08)" : "rgba(255,255,255,0.12)")
                 : "transparent",
               borderRadius: 999,
-              maxWidth: isExpanded ? 44 : 0,
-              padding: isExpanded ? "9px 12px" : "9px 0",
+              paddingTop: 9,
+              paddingBottom: 9,
               color: isMenuOpen
                 ? (lightMode ? "#000" : "#fff")
                 : inactiveColor,
@@ -324,9 +434,7 @@ export default function BottomPageNavigator({ activeIndex, onChange, lightMode =
               outline: "none",
               flex: "0 0 auto",
               overflow: "hidden",
-              opacity: isExpanded ? 1 : 0,
               pointerEvents: isExpanded ? "auto" : "none",
-              transition: TRANS_TAB,
             }}
           >
             <Menu
@@ -334,9 +442,9 @@ export default function BottomPageNavigator({ activeIndex, onChange, lightMode =
               strokeWidth={isMenuOpen ? 2.5 : 1.75}
               style={{ flexShrink: 0 }}
             />
-          </button>
-        )}
-      </div>
+          </motion.button>
+        </div>
+      )}
     </nav>
   );
 }
