@@ -713,7 +713,12 @@ export default function HomePage({ exhibitions, isOverlayOpen = false }: HomePag
   const closeCollectionModal = useCallback(() => {
     setSelectedModalExhibition(null);
     if (location.pathname.startsWith('/collection/')) {
-      navigate('/', { replace: true });
+      // Prefer history.back so the user returns to wherever they opened
+      // the modal from (e.g. /ai weekly curation, /search results). Only
+      // fall back to '/' when there's no in-app history to pop — that's
+      // the deep-link / direct-load case where '/' is the safest landing.
+      if (window.history.length > 1) navigate(-1);
+      else navigate('/', { replace: true });
     }
   }, [location.pathname, navigate]);
 
