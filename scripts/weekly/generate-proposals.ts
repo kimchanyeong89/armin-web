@@ -20,7 +20,10 @@ import type {
 const LENSES: LensId[] = ['biographical', 'thematic', 'dialogue'];
 const QUALITY_THRESHOLD = 0.35;
 const TREND_MATCH_THRESHOLD = 0.28;
-const CARD_WORK_COUNT = 10;
+// Design-doc target is 10–20 works per card. 12 reads cleanly for a
+// biographical arc (early/mid/late) and gives thematic enough cross-artist
+// variety without overwhelming the reader.
+const CARD_WORK_COUNT = 12;
 
 function slug(s: string): string {
   return s.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '').slice(0, 40);

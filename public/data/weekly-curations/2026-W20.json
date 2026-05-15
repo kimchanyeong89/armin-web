@@ -9,8 +9,8 @@
   },
   "title_en": "The Light He Returned To",
   "title_ko": "다시, 그 방의 빛",
-  "intro_en": "Vilhelm Hammershøi was born this week in 1864. For the last decade of his short life he painted, again and again, the same rooms in the same Copenhagen apartment — Strandgade 30, then Bredgade 25. Different windows, different times of day, sometimes a single figure with her back turned, often no figure at all.\n\nWhat he kept finding there was a kind of light that other painters had stopped looking for. Not noon. Not theatre. A gray that lifts slowly from a wall — paler at the cornice, deeper near the floor. The dust suspended in it. The way it falls across a closed door and waits.\n\nThese six interiors, painted between 1901 and 1912, now live in six different cities — Frankfurt, Berlin, Cleveland, Chicago, Tokyo, Los Angeles. Each one is its own room, but together they read like a single long afternoon.",
-  "intro_ko": "빌헬름 함메르쇼이는 이번 주, 1864년에 태어났다. 그의 짧은 생애 마지막 10년은 같은 코펜하겐 아파트의 방들 — 스트란가데 30번지, 그리고 브레드가데 25번지 — 을 거듭 다시 그리며 보냈다. 한낮의 빛도, 극적인 빛도 아닌, 회색에서 천천히 들어 올려지는 빛. 1901년부터 1912년 사이 그려진 이 여섯 점은 지금 여섯 도시 — 프랑크푸르트, 베를린, 클리블랜드, 시카고, 도쿄, LA — 의 미술관에 흩어져 있다.",
+  "intro_en": "Vilhelm Hammershøi was born this week in 1864. Across the thirty years he painted, he kept returning to the same kind of room — first an attic, then a Lyngby summerhouse with an iron stove, then the long apartment at Strandgade 30 in Copenhagen, finally Bredgade 25. Different windows, different times of day, sometimes a single figure with her back turned, often no figure at all.\n\nWhat he kept finding there was a kind of light that other painters had stopped looking for. Not noon. Not theatre. A gray that lifts slowly from a wall — paler at the cornice, deeper near the floor. The dust suspended in it. The way it falls across a closed door and waits.\n\nThese twelve interiors, painted between 1883 and 1912, now live in nine different museums across Europe, America and Asia. Each one is its own room, but together they read like a single long afternoon that lasted a working life.",
+  "intro_ko": "빌헬름 함메르쇼이는 이번 주, 1864년에 태어났다. 그가 그림을 그린 30년 내내 그는 같은 종류의 방으로 돌아갔다 — 다락방, 룽뷔의 여름 별장과 무쇠 화로, 그리고 코펜하겐 스트란가데 30번지의 긴 아파트, 마지막으로 브레드가데 25번지. 한낮의 빛도, 극적인 빛도 아닌, 회색에서 천천히 들어 올려지는 빛. 1883년부터 1912년 사이 그려진 이 열두 점은 지금 유럽·미국·아시아의 아홉 개 미술관에 흩어져 한 평생의 긴 오후처럼 함께 읽힌다.",
   "subtitle_chip": "조용한 빛",
   "works": [
     {
@@ -29,6 +29,58 @@
     {
       "position": 2,
       "role": "standard",
+      "artwork_ref": "smk-collection#DEP1249",
+      "artist": "Vilhelm Hammershøi",
+      "title": "Loftværelse med bord og stol",
+      "year": "1883-1885",
+      "image_url": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/smk-collection/DEP1249-f2c249d3-image.webp",
+      "source_collection": "smk-collection",
+      "source_url": "",
+      "caption_en": "Years before Strandgade — the first quiet room, already empty of people.",
+      "caption_ko": "스트란가데에 닿기 전, 이미 사람이 빠져 있는 첫 번째 방."
+    },
+    {
+      "position": 3,
+      "role": "standard",
+      "artwork_ref": "smk-collection#KMS7246",
+      "artist": "Vilhelm Hammershøi",
+      "title": "Interiør. Den gamle bilæggerovn",
+      "year": "1888",
+      "image_url": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/smk-collection/KMS7246-4ad223a2-image.webp",
+      "source_collection": "smk-collection",
+      "source_url": "",
+      "caption_en": "An iron stove at Albertines Lyst — heat as a presence the room has stopped expecting.",
+      "caption_ko": "알베르티네스 뤼스트의 무쇠 화로. 방이 더 이상 기대하지 않게 된 온기."
+    },
+    {
+      "position": 4,
+      "role": "standard",
+      "artwork_ref": "smk-collection#KMS1808",
+      "artist": "Vilhelm Hammershøi",
+      "title": "Afteninteriør. Kunstnerens moder og hustru",
+      "year": "1891",
+      "image_url": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/smk-collection/KMS1808-dfc4973d-image.webp",
+      "source_collection": "smk-collection",
+      "source_url": "",
+      "caption_en": "Two women in lamplight — the rare painting where the room holds more than one figure, and neither looks up.",
+      "caption_ko": "등불 아래 두 여인. 한 방이 한 사람 이상을 품은 드문 그림 — 그런데 누구도 올려다보지 않는다."
+    },
+    {
+      "position": 5,
+      "role": "standard",
+      "artwork_ref": "smk-collection#KMS3696",
+      "artist": "Vilhelm Hammershøi",
+      "title": "Stue i Strandgade med solskin på gulvet",
+      "year": "1901",
+      "image_url": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/smk-collection/KMS3696-077b381b-image.webp",
+      "source_collection": "smk-collection",
+      "source_url": "",
+      "caption_en": "Same building as the hero — but now the sun has fallen onto the floor and no one stands in it.",
+      "caption_ko": "히어로 작품과 같은 건물. 그러나 햇빛은 바닥에 내려앉았고, 그 안엔 누구도 서 있지 않다."
+    },
+    {
+      "position": 6,
+      "role": "standard",
       "artwork_ref": "smb-alte-nationalgalerie-collection#smb-alte-nationalgalerie-967799",
       "artist": "Vilhelm Hammershøi",
       "title": "Sonnige Stube",
@@ -40,7 +92,7 @@
       "caption_ko": "햇빛이 뒤쪽 벽에 들러붙어 더는 움직이지 않는다."
     },
     {
-      "position": 3,
+      "position": 7,
       "role": "standard",
       "artwork_ref": "cma-collection#87891",
       "artist": "Vilhelm Hammershøi",
@@ -53,7 +105,7 @@
       "caption_ko": "같은 문, 4년이 흘러 — 그러나 이제 빛이 더 가까워졌다."
     },
     {
-      "position": 4,
+      "position": 8,
       "role": "standard",
       "artwork_ref": "aic-collection#270002",
       "artist": "Vilhelm Hammershøi",
@@ -67,7 +119,20 @@
       "caption_ko": "그가 한 번도 누군가가 치고 있는 모습으로 그리지 않은 피아노."
     },
     {
-      "position": 5,
+      "position": 9,
+      "role": "standard",
+      "artwork_ref": "smk-collection#KMS8677",
+      "artist": "Vilhelm Hammershøi",
+      "title": "Interiør. Kunstigt lys",
+      "year": "1909",
+      "image_url": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/smk-collection/KMS8677-b71e230a-image.webp",
+      "source_collection": "smk-collection",
+      "source_url": "",
+      "caption_en": "Late in the decade he turned the lamp on and let the daylight fail.",
+      "caption_ko": "10년의 끝, 그는 등을 켜고 자연광을 꺼지게 두었다."
+    },
+    {
+      "position": 10,
       "role": "standard",
       "artwork_ref": "nmwa-collection#nmwa-5975",
       "artist": "Vilhelm Hammershøi",
@@ -80,7 +145,20 @@
       "caption_ko": "그러다 한 번, 아내 이다. 그런데 그녀마저 등을 돌리고 있다."
     },
     {
-      "position": 6,
+      "position": 11,
+      "role": "standard",
+      "artwork_ref": "aros-collection#04019cf6-4111-4ba3-bcb1-59149732c669",
+      "artist": "Vilhelm Hammershøi",
+      "title": "Interiør fra Bredgade med kunstnerens hustru",
+      "year": "1911",
+      "image_url": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/aros-collection/04019cf6-4111-4ba3-bcb1-591497-12643899-image.webp",
+      "source_collection": "aros-collection",
+      "source_url": "https://samlinger.slks.dk/samlinger/04019cf6-4111-4ba3-bcb1-59149732c669",
+      "caption_en": "Bredgade now — same architectural rituals, same back of her head, different windows.",
+      "caption_ko": "이제 브레드가데. 같은 건축의 의식, 같은 그녀의 뒷모습, 다른 창."
+    },
+    {
+      "position": 12,
       "role": "standard",
       "artwork_ref": "getty-collection#object/60448397-8601-4133-a367-d7fceb352709",
       "artist": "Vilhelm Hammershøi",
@@ -94,6 +172,6 @@
     }
   ],
   "week": "2026-W20",
-  "published_at": "2026-05-11T06:06:15.409Z",
+  "published_at": "2026-05-15T01:35:00Z",
   "published_by": "kietzsche"
 }

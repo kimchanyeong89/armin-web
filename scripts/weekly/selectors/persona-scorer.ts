@@ -1,8 +1,9 @@
 import type { Persona } from '../personas';
 import type { IndexedWork } from '../collection-index';
 
-function parseYear(raw: string): number | null {
-  const m = raw.match(/-?\d{3,4}/);
+function parseYear(raw: string | null | undefined): number | null {
+  if (!raw) return null;
+  const m = String(raw).match(/-?\d{3,4}/);
   return m ? parseInt(m[0], 10) : null;
 }
 

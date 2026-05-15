@@ -1,7 +1,8 @@
 import { worksByArtist, type IndexedWork } from '../collection-index';
 
-function parseYear(raw: string): number {
-  const m = raw.match(/-?\d{4}/);
+function parseYear(raw: string | null | undefined): number {
+  if (!raw) return 0;
+  const m = String(raw).match(/-?\d{4}/);
   return m ? parseInt(m[0], 10) : 0;
 }
 
