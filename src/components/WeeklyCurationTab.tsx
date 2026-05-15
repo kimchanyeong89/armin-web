@@ -2,6 +2,7 @@
 // Sub-tab of the AI section alongside My Curation & Nearby Exhibition.
 
 import React, { useState, useEffect, useCallback } from "react";
+import { useSearchParams } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { BookmarkPlus, Check, X, ChevronLeft, ChevronRight, Lock } from "lucide-react";
 import {
@@ -1780,30 +1781,67 @@ export default function WeeklyCurationTab({
   // so this stays above any early return.
   const { isSubscriber } = useSubscription();
 
+  // Deep-link support: ?weekly=2026-W20 / ?special=<slug>. If neither is
+  // present we fall back to the current week. A 404 on the deep-linked file
+  // also falls back gracefully.
+  const [searchParams] = useSearchParams();
+  const weeklyParam = searchParams.get('weekly');
+  const specialParam = searchParams.get('special');
+
   useEffect(() => {
     let cancelled = false;
-    fetchCurrentCuration()
-      .then((file: WeeklyPublishedFile | null) => {
-        if (cancelled) return;
-        if (file) {
-          const adapted = adaptPublishedToEdition(file);
-          // Diagnostic: confirms the new adapter ran and wired imageUrl through.
-          // Look for this in the browser console to verify a fresh module load.
-          // eslint-disable-next-line no-console
-          console.log('[WeeklyCurationTab] adapted live curation', {
-            week: file.week, id: file.id, works: adapted.works.length,
-            firstImageUrl: adapted.works[0]?.imageUrl,
-          });
-          setEdition(adapted);
-          setEditionFile(file);
-        } else {
-          setEdition(WEEKLY_EDITIONS[0]);
-          setEditionFile(null);
-        }
-      })
-      .catch(() => { setEdition(WEEKLY_EDITIONS[0]); setEditionFile(null); });
+
+    const applyFile = (file: WeeklyPublishedFile) => {
+      if (cancelled) return;
+      const adapted = adaptPublishedToEdition(file);
+      // eslint-disable-next-line no-console
+      console.log('[WeeklyCurationTab] adapted live curation', {
+        week: file.week, id: file.id, works: adapted.works.length,
+        firstImageUrl: adapted.works[0]?.imageUrl,
+      });
+      setEdition(adapted);
+      setEditionFile(file);
+    };
+
+    const fallback = () => {
+      if (cancelled) return;
+      fetchCurrentCuration()
+        .then((file: WeeklyPublishedFile | null) => {
+          if (cancelled) return;
+          if (file) applyFile(file);
+          else { setEdition(WEEKLY_EDITIONS[0]); setEditionFile(null); }
+        })
+        .catch(() => { if (!cancelled) { setEdition(WEEKLY_EDITIONS[0]); setEditionFile(null); } });
+    };
+
+    const tryDeepLink = async (url: string): Promise<boolean> => {
+      try {
+        const res = await fetch(url);
+        if (!res.ok) return false;
+        const file = await res.json() as WeeklyPublishedFile;
+        applyFile(file);
+        return true;
+      } catch {
+        return false;
+      }
+    };
+
+    (async () => {
+      if (weeklyParam) {
+        const ok = await tryDeepLink(`/data/weekly-curations/${weeklyParam}.json`);
+        if (!ok) { console.warn(`[WeeklyCurationTab] deep-link ?weekly=${weeklyParam} not found; falling back`); fallback(); }
+        return;
+      }
+      if (specialParam) {
+        const ok = await tryDeepLink(`/data/special-series/${specialParam}.json`);
+        if (!ok) { console.warn(`[WeeklyCurationTab] deep-link ?special=${specialParam} not found; falling back`); fallback(); }
+        return;
+      }
+      fallback();
+    })();
+
     return () => { cancelled = true; };
-  }, []);
+  }, [weeklyParam, specialParam]);
 
   // Lazy-load archive + special lists on mount. Both helpers handle 404s
   // and network errors gracefully.

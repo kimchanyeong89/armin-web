@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useCallback, useMemo, useRef } from "react";
+import { useSearchParams } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Sparkles, MapPin, Calendar, X,
@@ -269,7 +270,7 @@ function ExhibitionDetail({ ex, t, bg, fg, fgMed, fgLow, fgFaint: _fgFaint, divi
 
         <div style={{ padding: "0 24px 110px", marginTop: -20, position: "relative", zIndex: 5 }}>
           {ex.finalScore !== undefined && ex.finalScore !== null && (
-            <div style={{ display: "inline-block", padding: "4px 9px", borderRadius: 999, backgroundColor: "#BFFF0A", color: "#000", fontSize: 10, fontWeight: 700, fontFamily: "'Space Mono', monospace", marginBottom: 16 }}>
+            <div style={{ display: "inline-block", padding: "4px 9px", borderRadius: 999, backgroundColor: "#D4A547", color: "#000", fontSize: 10, fontWeight: 700, fontFamily: "'Space Mono', monospace", marginBottom: 16 }}>
               {tr({ ko: 'AI 모델 추천 등급', en: 'AI Recommendation Score' })} {(ex.finalScore / 20).toFixed(1)}
             </div>
           )}
@@ -329,7 +330,7 @@ function ExhibitionDetail({ ex, t, bg, fg, fgMed, fgLow, fgFaint: _fgFaint, divi
           <div style={{ display: "flex", gap: 8, marginTop: 32 }}>
             <button style={{
               flex: 1, padding: "14px", borderRadius: 10, cursor: "pointer",
-              backgroundColor: "#BFFF0A", color: "#000",
+              backgroundColor: "#D4A547", color: "#000",
               border: "none", fontSize: 13, fontWeight: 700,
               display: "flex", alignItems: "center", justifyContent: "center", gap: 6,
             }} onClick={() => {
@@ -500,7 +501,7 @@ function CurationTab({
                 onClick={() => onChangeRecommendMode('taste')}
                 style={{
                   border: 'none',
-                  background: recommendMode === 'taste' ? '#BFFF0A' : 'transparent',
+                  background: recommendMode === 'taste' ? '#D4A547' : 'transparent',
                   color: recommendMode === 'taste' ? '#000' : fgLow,
                   borderRadius: 8,
                   padding: '10px 8px',
@@ -522,7 +523,7 @@ function CurationTab({
                 onClick={() => onChangeRecommendMode('random')}
                 style={{
                   border: 'none',
-                  background: recommendMode === 'random' ? '#BFFF0A' : 'transparent',
+                  background: recommendMode === 'random' ? '#D4A547' : 'transparent',
                   color: recommendMode === 'random' ? '#000' : fgLow,
                   borderRadius: 8,
                   padding: '10px 8px',
@@ -545,7 +546,7 @@ function CurationTab({
               <motion.div
                 animate={{ left: recommendMode === 'taste' ? '0%' : '50%' }}
                 transition={{ duration: 0.18, ease: 'easeOut' }}
-                style={{ position: 'absolute', top: 0, width: '50%', height: '100%', backgroundColor: '#BFFF0A' }}
+                style={{ position: 'absolute', top: 0, width: '50%', height: '100%', backgroundColor: '#D4A547' }}
               />
             </div>
           </div>
@@ -554,7 +555,7 @@ function CurationTab({
 
       <div style={{ padding: "0 20px" }}>
         <h2 style={{ fontSize: 18, fontWeight: 700, letterSpacing: "-0.01em", color: fg, display: "flex", alignItems: "center", gap: 8, marginBottom: 16 }}>
-          {isRandomMode ? <Shuffle size={16} color={t ? "#5A7800" : "#BFFF0A"} /> : <Sparkles size={16} color={t ? "#5A7800" : "#BFFF0A"} />}
+          {isRandomMode ? <Shuffle size={16} color={t ? "#8A6B1F" : "#D4A547"} /> : <Sparkles size={16} color={t ? "#8A6B1F" : "#D4A547"} />}
           {isRandomMode
             ? tr({ ko: '완전 랜덤 추천', en: 'Pure Random Picks' })
             : tr({ ko: 'AI 취향 맞춤 추천', en: 'AI Taste Recommendations' })}
@@ -569,7 +570,7 @@ function CurationTab({
                 borderRadius: 8,
                 border: `1px solid ${divider}`,
                 background: t ? 'rgba(0,0,0,0.05)' : 'rgba(255,255,255,0.08)',
-                color: t ? 'rgba(0,0,0,0.74)' : '#BFFF0A',
+                color: t ? 'rgba(0,0,0,0.74)' : '#D4A547',
                 display: 'flex',
                 alignItems: 'center',
                 justifyContent: 'center',
@@ -578,7 +579,7 @@ function CurationTab({
               }}
               title={tr({ ko: '다시 뽑기', en: 'Reshuffle' })}
             >
-              <RotateCw size={14} strokeWidth={2.4} color={t ? '#111' : '#BFFF0A'} />
+              <RotateCw size={14} strokeWidth={2.4} color={t ? '#111' : '#D4A547'} />
               <span style={{ position: 'absolute', opacity: 0, pointerEvents: 'none' }}>↻</span>
             </button>
           )}
@@ -604,7 +605,7 @@ function CurationTab({
                   <img src={ex.image || NO_IMAGE_PLACEHOLDER_DARK} alt={ex.title} style={{ width: "100%", height: "100%", objectFit: "cover", filter: imgFilter }} onError={(e) => { e.currentTarget.src = NO_IMAGE_PLACEHOLDER_DARK; }} />
                   <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 60%)" }} />
                   {typeof ex.matchScore === 'number' && (
-                      <div style={{ position: "absolute", top: 8, right: 8, backgroundColor: "rgba(0,0,0,0.45)", backdropFilter: "blur(8px)", padding: "4px 8px", borderRadius: 999, color: Number(ex.matchPct ?? 0) >= 90 ? "#BFFF0A" : "#fff", fontSize: 9, fontWeight: 700, fontFamily: "'Space Mono', monospace" }}>
+                      <div style={{ position: "absolute", top: 8, right: 8, backgroundColor: "rgba(0,0,0,0.45)", backdropFilter: "blur(8px)", padding: "4px 8px", borderRadius: 999, color: Number(ex.matchPct ?? 0) >= 90 ? "#D4A547" : "#fff", fontSize: 9, fontWeight: 700, fontFamily: "'Space Mono', monospace" }}>
                       {(Math.max(0, Math.min(1, ex.matchScore)) * 100).toFixed(0)}%
                     </div>
                   )}
@@ -687,7 +688,7 @@ function NearbyTab({ t, fg, fgLow, fgFaint, divider, imgFilter, onSelect, nearby
               style={{
                 padding: "4px 11px", borderRadius: 999, fontSize: 10, fontWeight: isActive ? 600 : 400,
                 cursor: "pointer", flexShrink: 0, border: "none", transition: "all 0.15s",
-                backgroundColor: isActive ? "#BFFF0A" : (t ? "rgba(0,0,0,0.06)" : "rgba(255,255,255,0.07)"),
+                backgroundColor: isActive ? "#D4A547" : (t ? "rgba(0,0,0,0.06)" : "rgba(255,255,255,0.07)"),
                 color: isActive ? "#000" : fgLow,
               }}>{s.label}</button>
           );
@@ -712,7 +713,7 @@ function NearbyTab({ t, fg, fgLow, fgFaint, divider, imgFilter, onSelect, nearby
               {/* Badges UI - Bottom Right */}
               <div style={{ position: "absolute", bottom: 8, right: 8, display: "flex", flexDirection: "column", gap: 5, alignItems: "flex-end" }}>
                 {ex.finalScore !== null && ex.finalScore !== undefined && (
-                   <span style={{ background: "rgba(191,255,10,0.95)", color: "#000", padding: "3px 6px", borderRadius: 4, fontSize: 9.5, fontWeight: 700, fontFamily: "'Space Mono', monospace" }}>
+                   <span style={{ background: "rgba(212,165,71,0.95)", color: "#000", padding: "3px 6px", borderRadius: 4, fontSize: 9.5, fontWeight: 700, fontFamily: "'Space Mono', monospace" }}>
                      {tr({ ko: '예상', en: 'Pred' })} {(ex.finalScore / 20).toFixed(1)}
                    </span>
                 )}
@@ -767,15 +768,27 @@ export default function AICurationHubPage() {
 
   const t = !isDark;
   const bg      = t ? "#FAFAFA" : "#080808";
-  const fg      = t ? "rgba(0,0,0,0.88)" : "rgba(255,255,255,0.88)";
-  const fgMed   = t ? "rgba(0,0,0,0.56)" : "rgba(255,255,255,0.56)";
-  const fgLow   = t ? "rgba(0,0,0,0.36)" : "rgba(255,255,255,0.36)";
-  const fgFaint = t ? "rgba(0,0,0,0.18)" : "rgba(255,255,255,0.18)";
-  const divider = t ? "rgba(0,0,0,0.07)" : "rgba(255,255,255,0.06)";
+  const fg      = t ? "rgba(0,0,0,0.92)" : "rgba(244,241,234,0.96)";
+  const fgMed   = t ? "rgba(0,0,0,0.72)" : "rgba(244,241,234,0.82)";
+  const fgLow   = t ? "rgba(0,0,0,0.58)" : "rgba(244,241,234,0.64)";
+  const fgFaint = t ? "rgba(0,0,0,0.36)" : "rgba(244,241,234,0.40)";
+  const divider = t ? "rgba(0,0,0,0.08)" : "rgba(244,241,234,0.08)";
   const stickyBg = t ? "rgba(250,250,250,0.97)" : "rgba(8,8,8,0.97)";
   const imgFilter = "none";
 
-  const [activeTab, setActiveTab] = useState<"curation" | "nearby" | "weekly">("curation");
+  const [searchParams] = useSearchParams();
+  const initialTab: "curation" | "nearby" | "weekly" =
+    searchParams.get('weekly') || searchParams.get('special') ? 'weekly' : 'curation';
+  const [activeTab, setActiveTab] = useState<"curation" | "nearby" | "weekly">(initialTab);
+
+  // If the URL gains a deep-link param after mount (e.g. from in-app
+  // navigation), jump to the weekly tab. Pure presence-check; we leave
+  // tab control to the user otherwise.
+  useEffect(() => {
+    if (searchParams.get('weekly') || searchParams.get('special')) {
+      setActiveTab('weekly');
+    }
+  }, [searchParams]);
   const [selectedEx, setSelectedEx] = useState<RecommendationCardItem | null>(null);
   const [recommendMode, setRecommendMode] = useState<RecommendationMode>('taste');
 
@@ -1278,7 +1291,7 @@ export default function AICurationHubPage() {
       {/* ── Header ── */}
       <div style={{ padding: "48px 20px 0" }}>
         <div style={{ display: "flex", alignItems: "center", gap: 7, marginBottom: 6 }}>
-          <div style={{ width: 6, height: 6, backgroundColor: "#BFFF0A" }} />
+          <div style={{ width: 6, height: 6, backgroundColor: "#D4A547" }} />
           <span style={{ fontSize: 9, letterSpacing: "0.28em", textTransform: language === 'ko' ? 'none' : 'uppercase', color: fgFaint }}>{tr({ ko: '개인 큐레이션', en: 'Personal Curation' })}</span>
         </div>
         <h1 style={{ fontSize: "clamp(24px,6vw,36px)", letterSpacing: "-0.025em", color: fg, lineHeight: 1.15, marginBottom: 18, whiteSpace: 'nowrap' }}>
@@ -1303,7 +1316,7 @@ export default function AICurationHubPage() {
                   cursor: "pointer", transition: "color 0.15s",
                   color: isActive ? fg : fgLow, fontSize: 12, fontWeight: isActive ? 600 : 400,
                 }}>
-                <span style={{ color: isActive ? (t ? "#5A7800" : "#BFFF0A") : fgFaint }}>{icon}</span>
+                <span style={{ color: isActive ? (t ? "#8A6B1F" : "#D4A547") : fgFaint }}>{icon}</span>
                 {label}
               </button>
             );
@@ -1311,7 +1324,7 @@ export default function AICurationHubPage() {
           <motion.div
             animate={{ left: activeTab === 'curation' ? '0%' : activeTab === 'nearby' ? '33.33%' : '66.67%' }}
             transition={{ duration: 0.18, ease: 'easeOut' }}
-            style={{ position: 'absolute', bottom: -1, width: '33.33%', height: 2, backgroundColor: '#BFFF0A' }}
+            style={{ position: 'absolute', bottom: -1, width: '33.33%', height: 2, backgroundColor: '#D4A547' }}
           />
         </div>
       </div>
