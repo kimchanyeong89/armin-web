@@ -1,6 +1,19 @@
 rules_version = '2';
 service cloud.firestore {
   match /databases/{database}/documents {
+
+    // Admin list managed via /admin/weekly UI. Read by any authed user so
+    // the client can compute `isAdmin`. Write restricted to bootstrap admins
+    // (hardcoded here so admin can't be silently transferred away by anyone
+    // newly added through the UI).
+    match /config/admins {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null && (
+        request.auth.token.email == 'kietzland@gmail.com' ||
+        request.auth.token.email == 'niet89@kookmin.ac.kr'
+      );
+    }
+
     // Allow public read of artworks collection (images and metadata) without auth
     match /artworks/{docId} {
       allow read: if true;
@@ -47,6 +60,11 @@ service cloud.firestore {
       allow read, write: if request.auth != null && request.auth.uid == userId;
     }
 
+    // Allow authenticated users to read/write their own cart subcollection
+    match /users/{userId}/cart/{itemId} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+
     // Allow authenticated users to create pending submissions
     match /pending_submissions/{submissionId} {
       // Anyone authenticated can create a submission
@@ -55,8 +73,6 @@ service cloud.firestore {
       allow read, update, delete: if request.auth != null;
     }
 
-<<<<<<< HEAD
-=======
     match /bug_reports/{reportId} {
       allow create: if true;
       allow read, update, delete: if request.auth != null;
@@ -75,7 +91,7 @@ service cloud.firestore {
       // Allow owner to update everything (e.g. text)
       // Allow others to only update 'likes' (for liking/unliking)
       allow update: if request.auth != null && (
-        request.auth.uid == resource.data.userId || 
+        request.auth.uid == resource.data.userId ||
         request.resource.data.diff(resource.data).affectedKeys().hasOnly(['likes'])
       );
     }
@@ -86,8 +102,6 @@ service cloud.firestore {
       allow write: if request.auth != null;
     }
 
-
->>>>>>> 06dab5b1 (chore: add 30+ new museum collections, scripts, UI components, and gitignore cleanup)
     // Allow read of exhibition_artworks (approved submissions), admin write
     match /exhibition_artworks/{docId} {
       allow read: if true;
@@ -101,8 +115,6 @@ service cloud.firestore {
       allow read, update, delete: if false; // Only via Console for now, or auth admin
     }
 
-<<<<<<< HEAD
-=======
     // Community Posts
     match /community/{postId} {
       allow read: if true;
@@ -130,7 +142,7 @@ service cloud.firestore {
         allow delete: if request.auth != null && resource.data.authorId == request.auth.uid;
         allow update: if request.auth != null && resource.data.authorId == request.auth.uid;
       }
-      
+
       // Allow users to manage their own like status
       match /likes/{userId} {
         allow read: if true;
@@ -138,7 +150,6 @@ service cloud.firestore {
       }
     }
 
->>>>>>> 06dab5b1 (chore: add 30+ new museum collections, scripts, UI components, and gitignore cleanup)
     // Other collections default: no public access
     match /{document=**} {
       allow read, write: if false;

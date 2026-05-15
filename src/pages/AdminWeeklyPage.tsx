@@ -9,8 +9,6 @@
 
 import React, { useState, useEffect, useMemo, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { onAuthStateChanged } from 'firebase/auth';
-import { auth } from '../firebase';
 import { GlobalNav } from '../components/GlobalNav';
 import type {
   WeeklyProposalFile,
@@ -19,9 +17,7 @@ import type {
   PersonaId,
 } from '../types/weekly';
 import { isoWeek } from '../lib/iso-week';
-
-// ── Auth ──────────────────────────────────────────────────────────────────
-const ADMIN_EMAILS = ['kietzland@gmail.com', 'niet89@kookmin.ac.kr'];
+import { useIsAdmin, addAdminEmail, removeAdminEmail, BOOTSTRAP_ADMINS } from '../lib/admin';
 
 // ── Week index ────────────────────────────────────────────────────────────
 // V1: hardcoded. TODO: have generator script emit
@@ -409,11 +405,167 @@ function WeeklyProposalCardView({
   );
 }
 
+// ── Admin management panel ────────────────────────────────────────────────
+// Lists current admins; bootstrap admins can add new emails or remove
+// non-bootstrap ones. Bootstrap admins themselves are shown but not removable.
+function AdminListPanel({
+  allAdmins,
+  isBootstrap,
+  onToast,
+}: {
+  allAdmins: string[];
+  isBootstrap: boolean;
+  onToast: (msg: string) => void;
+}) {
+  const [input, setInput] = useState('');
+  const [busy, setBusy] = useState(false);
+  const bootstrapSet = useMemo(
+    () => new Set(BOOTSTRAP_ADMINS.map((e) => e.toLowerCase())),
+    [],
+  );
+
+  const handleAdd = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!input.trim() || busy) return;
+    setBusy(true);
+    try {
+      await addAdminEmail(input);
+      onToast(`Added admin: ${input.trim().toLowerCase()}`);
+      setInput('');
+    } catch (err) {
+      onToast(`Failed to add: ${err instanceof Error ? err.message : String(err)}`);
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const handleRemove = async (email: string) => {
+    if (!window.confirm(`Remove admin: ${email}?`)) return;
+    setBusy(true);
+    try {
+      await removeAdminEmail(email);
+      onToast(`Removed admin: ${email}`);
+    } catch (err) {
+      onToast(`Failed to remove: ${err instanceof Error ? err.message : String(err)}`);
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  return (
+    <div
+      style={{
+        marginTop: 48,
+        padding: 24,
+        background: COLOR_SURFACE,
+        border: `1px solid ${COLOR_BORDER}`,
+      }}
+    >
+      <div style={{ ...LABEL, fontSize: 10, color: COLOR_ACCENT, marginBottom: 6 }}>
+        Admin management
+      </div>
+      <h2 style={{ ...HEADING, fontSize: 18, margin: '0 0 4px', color: COLOR_FG }}>
+        Who can access /admin/weekly
+      </h2>
+      <div style={{ ...BODY, fontSize: 12, color: COLOR_FG_LOW, marginBottom: 18, lineHeight: 1.5 }}>
+        Bootstrap admins (hardcoded) cannot be removed. Other admins can be
+        added or removed only by bootstrap admins. New admins can use the
+        dashboards but cannot grant admin to anyone else.
+      </div>
+
+      {/* List */}
+      <div style={{ display: 'flex', flexDirection: 'column', gap: 8, marginBottom: 18 }}>
+        {allAdmins.map((email) => {
+          const lower = email.toLowerCase();
+          const isBoot = bootstrapSet.has(lower);
+          return (
+            <div
+              key={email}
+              style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: 12,
+                padding: '10px 14px',
+                background: COLOR_SURFACE_2,
+                border: `1px solid ${COLOR_BORDER}`,
+              }}
+            >
+              <span style={{ ...BODY, fontSize: 13, color: COLOR_FG, flex: 1 }}>{email}</span>
+              {isBoot ? (
+                <span style={{ ...LABEL, fontSize: 9, color: COLOR_ACCENT }}>BOOTSTRAP</span>
+              ) : (
+                <button
+                  type="button"
+                  disabled={!isBootstrap || busy}
+                  onClick={() => handleRemove(email)}
+                  style={{
+                    ...LABEL,
+                    fontSize: 9,
+                    padding: '6px 10px',
+                    background: 'transparent',
+                    color: isBootstrap ? COLOR_FG_MED : COLOR_FG_FAINT,
+                    border: `1px solid ${COLOR_BORDER_STRONG}`,
+                    cursor: isBootstrap && !busy ? 'pointer' : 'not-allowed',
+                  }}
+                >
+                  Remove
+                </button>
+              )}
+            </div>
+          );
+        })}
+      </div>
+
+      {/* Add form */}
+      {isBootstrap ? (
+        <form onSubmit={handleAdd} style={{ display: 'flex', gap: 8 }}>
+          <input
+            type="email"
+            placeholder="new-admin@example.com"
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            disabled={busy}
+            style={{
+              ...BODY,
+              fontSize: 13,
+              flex: 1,
+              padding: '10px 12px',
+              background: COLOR_SURFACE_2,
+              color: COLOR_FG,
+              border: `1px solid ${COLOR_BORDER_STRONG}`,
+              outline: 'none',
+            }}
+          />
+          <button
+            type="submit"
+            disabled={!input.trim() || busy}
+            style={{
+              ...LABEL,
+              fontSize: 10,
+              padding: '10px 16px',
+              background: input.trim() && !busy ? COLOR_ACCENT_NEON : COLOR_FG_FAINT,
+              color: '#000',
+              border: 'none',
+              cursor: input.trim() && !busy ? 'pointer' : 'not-allowed',
+            }}
+          >
+            {busy ? 'Adding…' : 'Add admin'}
+          </button>
+        </form>
+      ) : (
+        <div style={{ ...BODY, fontSize: 12, color: COLOR_FG_FAINT, fontStyle: 'italic' }}>
+          Only bootstrap admins can add or remove admins. Ask a bootstrap admin
+          ({BOOTSTRAP_ADMINS.join(', ')}) if you need to grant access.
+        </div>
+      )}
+    </div>
+  );
+}
+
 // ── Page component ────────────────────────────────────────────────────────
 const AdminWeeklyPage: React.FC = () => {
   const navigate = useNavigate();
-  const [isAdmin, setIsAdmin] = useState(false);
-  const [authLoading, setAuthLoading] = useState(true);
+  const { isAdmin, loading: authLoading, isBootstrap, allAdmins } = useIsAdmin();
 
   const [week, setWeek] = useState<string>(() => {
     // Prefer current ISO week if a proposal for it exists; else first known.
@@ -427,19 +579,12 @@ const AdminWeeklyPage: React.FC = () => {
 
   const toast = useToast();
 
-  // Auth gate
+  // Redirect non-admins once auth has resolved.
   useEffect(() => {
-    const unsub = onAuthStateChanged(auth, (user) => {
-      if (user && ADMIN_EMAILS.includes(user.email || '')) {
-        setIsAdmin(true);
-      } else {
-        setIsAdmin(false);
-        navigate('/', { replace: true });
-      }
-      setAuthLoading(false);
-    });
-    return () => unsub();
-  }, [navigate]);
+    if (!authLoading && !isAdmin) {
+      navigate('/', { replace: true });
+    }
+  }, [authLoading, isAdmin, navigate]);
 
   // Load proposal + published for the selected week
   useEffect(() => {
@@ -651,6 +796,13 @@ const AdminWeeklyPage: React.FC = () => {
             ))}
           </div>
         )}
+
+        {/* Admin management — only bootstrap admins can write the list. */}
+        <AdminListPanel
+          allAdmins={allAdmins}
+          isBootstrap={isBootstrap}
+          onToast={(m) => toast.show(m)}
+        />
       </div>
 
       {/* Toast */}

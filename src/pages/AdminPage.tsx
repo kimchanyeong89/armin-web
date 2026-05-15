@@ -1,12 +1,9 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { collection, query, orderBy, onSnapshot, doc, updateDoc, deleteDoc, serverTimestamp, setDoc } from 'firebase/firestore';
-import { db, auth } from '../firebase';
-import { onAuthStateChanged } from 'firebase/auth';
+import { db } from '../firebase';
 import { useNavigate } from 'react-router-dom';
 import { GlobalNav } from '../components/GlobalNav';
-
-// Admin email whitelist
-const ADMIN_EMAILS = ['kietzland@gmail.com'];
+import { useIsAdmin } from '../lib/admin';
 
 interface Submission {
     id: string;
@@ -41,27 +38,13 @@ interface BugReport {
 
 const AdminPage: React.FC = () => {
     const navigate = useNavigate();
-    const [isAdmin, setIsAdmin] = useState(false);
-    const [loading, setLoading] = useState(true);
+    const { isAdmin, loading } = useIsAdmin();
     const [submissions, setSubmissions] = useState<Submission[]>([]);
     const [bugReports, setBugReports] = useState<BugReport[]>([]);
     const [filter, setFilter] = useState<'pending' | 'approved' | 'rejected' | 'all'>('pending');
     const [processingId, setProcessingId] = useState<string | null>(null);
     const [selectedSubmission, setSelectedSubmission] = useState<Submission | null>(null);
     const [currentTab, setCurrentTab] = useState<'artworks' | 'bugs'>('bugs');
-
-    // Check if current user is admin
-    useEffect(() => {
-        const unsubAuth = onAuthStateChanged(auth, (user) => {
-            if (user && ADMIN_EMAILS.includes(user.email || '')) {
-                setIsAdmin(true);
-            } else {
-                setIsAdmin(false);
-            }
-            setLoading(false);
-        });
-        return () => unsubAuth();
-    }, []);
 
     // Fetch submissions
     useEffect(() => {
