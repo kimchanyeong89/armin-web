@@ -2009,14 +2009,20 @@ export default function WeeklyCurationTab({
   const [subscribeModalOpen, setSubscribeModalOpen] = useState(false);
   const [subscribeContext, setSubscribeContext] = useState<'archive' | 'special'>('archive');
 
-  // Museum click → navigate to /collection/<slug>. The HomePage route
-  // already mounts the real ExhibitionModal when this path matches, so we
-  // get the full museum-detail experience for free instead of a side-grade
-  // simplified overlay. Browser back returns to this curation page.
-  const navigate = useNavigate();
+  // Museum click → mount the real ExhibitionModal as an in-place overlay so
+  // the user stays on the curation page and returns to their exact scroll
+  // position when the modal closes. Previously this used navigate() to
+  // /collection/<slug>, which left the AI tab entirely and dropped the user
+  // on the homepage when the modal's X was clicked.
+  const [exhibitionOverlay, setExhibitionOverlay] =
+    useState<ExhibitionLookupResult | null>(null);
   const openMuseum = useCallback((collectionId: string) => {
-    navigate(`/collection/${collectionId}`);
-  }, [navigate]);
+    const entry = findExhibitionByCollectionSlug(collectionId);
+    if (entry) setExhibitionOverlay(entry);
+  }, []);
+  const closeExhibitionOverlay = useCallback(() => {
+    setExhibitionOverlay(null);
+  }, []);
 
   // Subscription status drives the lock rule below. Hook order matters,
   // so this stays above any early return.
@@ -2257,9 +2263,22 @@ export default function WeeklyCurationTab({
     />
   );
 
-  // Museum overlay removed — clicks on museum names now navigate to
-  // /collection/<slug>, which opens the full ExhibitionModal via HomePage.
-  // No render element needed here.
+  // Museum overlay — clicks on museum names mount ExhibitionModal in place
+  // on top of the current curation view. Shared across mobile and desktop
+  // layouts and across all top-nav modes (this-week / archive / special).
+  // Theme is fixed to 'dark' (default variant) because the AI tab itself
+  // is the dark luxury surface.
+  const museumOverlay = exhibitionOverlay ? (
+    <Suspense fallback={null}>
+      <ExhibitionModal
+        exhibition={exhibitionOverlay.exhibition}
+        museumName={exhibitionOverlay.museum.name}
+        onClose={closeExhibitionOverlay}
+        variant="default"
+        theme="dark"
+      />
+    </Suspense>
+  ) : null;
 
   // Inline toast for sign-in feedback when a per-work save is clicked while
   // signed out. The web build has no global handler that opens a login modal
@@ -2294,10 +2313,10 @@ export default function WeeklyCurationTab({
   // ── Mobile layout ────────────────────────────────────────────────────────
   if (isMobile) {
     if (mode === 'archive') {
-      return <div style={{ paddingBottom: 80 }}>{topNav}{archiveView}{subscribeModal}{authToast}</div>;
+      return <div style={{ paddingBottom: 80 }}>{topNav}{archiveView}{subscribeModal}{authToast}{museumOverlay}</div>;
     }
     if (mode === 'special') {
-      return <div style={{ paddingBottom: 80 }}>{topNav}{specialView}{subscribeModal}{authToast}</div>;
+      return <div style={{ paddingBottom: 80 }}>{topNav}{specialView}{subscribeModal}{authToast}{museumOverlay}</div>;
     }
     return (
       <div style={{ paddingBottom: 80 }}>
@@ -2371,18 +2390,19 @@ export default function WeeklyCurationTab({
           )}
         </AnimatePresence>
         {subscribeModal}
-        
+
         {authToast}
+        {museumOverlay}
       </div>
     );
   }
 
   // ── Desktop layout ───────────────────────────────────────────────────────
   if (mode === 'archive') {
-    return <div style={{ paddingBottom: 80 }}>{topNav}{archiveView}{subscribeModal}{authToast}</div>;
+    return <div style={{ paddingBottom: 80 }}>{topNav}{archiveView}{subscribeModal}{authToast}{museumOverlay}</div>;
   }
   if (mode === 'special') {
-    return <div style={{ paddingBottom: 80 }}>{topNav}{specialView}{subscribeModal}{authToast}</div>;
+    return <div style={{ paddingBottom: 80 }}>{topNav}{specialView}{subscribeModal}{authToast}{museumOverlay}</div>;
   }
 
   return (
@@ -2456,8 +2476,9 @@ export default function WeeklyCurationTab({
         )}
       </AnimatePresence>
       {subscribeModal}
-      
+
       {authToast}
+      {museumOverlay}
     </div>
   );
 }
