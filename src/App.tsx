@@ -30,6 +30,7 @@ const SignUp = lazy(() => import("./components/SignUp"));
 const MyPage = lazy(() => import("./components/Mypage"));
 const AdminImport = lazy(() => import("./pages/AdminImport"));
 const AdminPage = lazy(() => import("./pages/AdminPage"));
+const AdminWeeklyPage = lazy(() => import("./pages/AdminWeeklyPage"));
 const TateModernPermanentPage = lazy(() => import("./pages/TateModernPermanentPage"));
 const PaymentSuccessPage = lazy(() => import("./pages/PaymentSuccessPage").then(module => ({ default: module.PaymentSuccessPage })));
 const OnboardingPage = lazy(() => import("./pages/OnboardingPage"));
@@ -588,6 +589,7 @@ function AppContent() {
                 <Route path="/payment/success" element={<PaymentSuccessPage />} />
                 <Route path="/payment/fail" element={<PaymentSuccessPage />} />
                 <Route path="/admin/import" element={<AdminImport />} />
+                <Route path="/admin/weekly" element={<AdminWeeklyPage />} />
                 <Route path="/admin" element={<AdminPage />} />
               </Routes>
               </ErrorBoundary>
