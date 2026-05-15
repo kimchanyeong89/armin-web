@@ -1981,10 +1981,13 @@ export type WeeklyCurationTabProps = {
   divider: string;
   language: string;
   tr: (copy: { ko: string; en: string }) => string;
+  // When true, suppress the This Week / Archive / Special top nav strip.
+  // Used by AdminWeeklyPreviewPage to render a single candidate standalone.
+  chromeless?: boolean;
 };
 
 export default function WeeklyCurationTab({
-  t, fg, fgMed, fgLow, fgFaint, divider, language,
+  t, fg, fgMed, fgLow, fgFaint, divider, language, chromeless = false,
 }: WeeklyCurationTabProps) {
   // Fetched on mount. Start with null (showing skeleton) rather than the
   // hardcoded WEEKLY_EDITIONS[0] — otherwise stale React state can survive
@@ -2252,7 +2255,10 @@ export default function WeeklyCurationTab({
 
   const tokens = { t, fg, fgMed, fgLow, fgFaint, divider };
 
-  const topNav = (
+  // When chromeless (standalone preview from /admin/weekly/preview), the
+  // This Week / Archive / Special strip is suppressed — the page caller
+  // already has its own header chrome (back button etc.).
+  const topNav = chromeless ? null : (
     <WeeklyTopNav
       mode={mode}
       setMode={setMode}

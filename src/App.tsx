@@ -31,6 +31,7 @@ const MyPage = lazy(() => import("./components/Mypage"));
 const AdminImport = lazy(() => import("./pages/AdminImport"));
 const AdminPage = lazy(() => import("./pages/AdminPage"));
 const AdminWeeklyPage = lazy(() => import("./pages/AdminWeeklyPage"));
+const AdminWeeklyPreviewPage = lazy(() => import("./pages/AdminWeeklyPreviewPage"));
 const TateModernPermanentPage = lazy(() => import("./pages/TateModernPermanentPage"));
 const PaymentSuccessPage = lazy(() => import("./pages/PaymentSuccessPage").then(module => ({ default: module.PaymentSuccessPage })));
 const OnboardingPage = lazy(() => import("./pages/OnboardingPage"));
@@ -227,30 +228,64 @@ function AppContent() {
     } catch { /* ignore */ }
     return -1; // -1 = use default CSS position
   });
-  const profileDragRef = useRef<{ startY: number; startDragY: number } | null>(null);
+  // Which edge the floating button stack is pinned to once a drag ends.
+  // Determined at release time by which edge the finger is closer to —
+  // the CSS `left` transition turns the snap into a magnetic glide.
+  const [profileDragSide, setProfileDragSide] = useState<'left' | 'right'>(() => {
+    try {
+      const saved = localStorage.getItem('armin:profileBtnSide');
+      if (saved === 'left' || saved === 'right') return saved;
+    } catch { /* ignore */ }
+    return 'right';
+  });
+  // Live X coordinate of the button's left edge while the user is
+  // actively dragging. When non-null, the button follows the finger
+  // freely instead of being clamped to an edge. Cleared on release so
+  // the side-edge style + CSS transition produce the snap animation.
+  const [profileLiveX, setProfileLiveX] = useState<number | null>(null);
+  const profileDragRef = useRef<{ startX: number; startY: number; startDragX: number; startDragY: number } | null>(null);
   const profileIsDragging = useRef(false);
   const profileBtnRef = useRef<HTMLButtonElement | null>(null);
 
   useEffect(() => {
-    const handleMove = (clientY: number) => {
+    const handleMove = (clientX: number, clientY: number) => {
       if (!profileIsDragging.current || !profileDragRef.current) return;
+      const W = window.innerWidth || 800;
+      const H = window.innerHeight || 800;
+      const btnSize = profileBtnRef.current?.offsetWidth || 46;
       const dy = clientY - profileDragRef.current.startY;
       let newY = profileDragRef.current.startDragY + dy;
-      newY = Math.max(0, Math.min(newY, (window.innerHeight || 800) - 60));
+      newY = Math.max(0, Math.min(newY, H - btnSize));
       setProfileDragY(newY);
+      const dx = clientX - profileDragRef.current.startX;
+      let newX = profileDragRef.current.startDragX + dx;
+      newX = Math.max(0, Math.min(newX, W - btnSize));
+      setProfileLiveX(newX);
     };
     const handleEnd = () => {
       if (!profileIsDragging.current) return;
       profileIsDragging.current = false;
       profileDragRef.current = null;
-      // Save position
+      // Persist Y. Resolve side by which edge is closer at release; clearing
+      // liveX swaps the rendered `left` from finger-position to side-edge,
+      // and the CSS transition tweens the magnetic snap.
       setProfileDragY(prev => {
         try { localStorage.setItem('armin:profileBtnY', String(prev)); } catch { /* */ }
         return prev;
       });
+      setProfileLiveX(currentX => {
+        if (currentX === null) return null;
+        const W = window.innerWidth || 800;
+        const btnSize = profileBtnRef.current?.offsetWidth || 46;
+        const centerX = currentX + btnSize / 2;
+        const newSide: 'left' | 'right' = centerX < W / 2 ? 'left' : 'right';
+        setProfileDragSide(newSide);
+        try { localStorage.setItem('armin:profileBtnSide', newSide); } catch { /* */ }
+        return null;
+      });
     };
-    const onMouseMove = (e: MouseEvent) => handleMove(e.clientY);
-    const onTouchMove = (e: TouchEvent) => { if (e.touches[0]) handleMove(e.touches[0].clientY); };
+    const onMouseMove = (e: MouseEvent) => handleMove(e.clientX, e.clientY);
+    const onTouchMove = (e: TouchEvent) => { if (e.touches[0]) handleMove(e.touches[0].clientX, e.touches[0].clientY); };
     document.addEventListener('mousemove', onMouseMove);
     document.addEventListener('mouseup', handleEnd);
     document.addEventListener('touchmove', onTouchMove, { passive: true });
@@ -499,6 +534,22 @@ function AppContent() {
   const floatingActionBottom3 = `calc(${floatingBottomBase} + ${floatingStep * 3}px)`;
   const floatingActionBottom4 = `calc(${floatingBottomBase} + ${floatingStep * 4}px)`;
 
+  // Horizontal anchor for the floating button stack. Desktop quick-menu
+  // mode keeps a fixed right anchor (bottom-right corner cluster). On
+  // mobile/tablet the stack uses `left`: while dragging it follows the
+  // finger (profileLiveX), and on release it snaps to the chosen edge
+  // with a CSS-tweened transition for the magnetic glide.
+  const floatingHorizontalStyle: React.CSSProperties = isDesktopQuickMenu
+    ? { right: floatingRight, left: 'auto' }
+    : profileLiveX !== null
+      ? { left: profileLiveX, right: 'auto' }
+      : profileDragSide === 'left'
+        ? { left: floatingRight, right: 'auto' }
+        : { left: Math.max(0, viewportWidth - floatingButtonSize - floatingRight), right: 'auto' };
+  const floatingHorizontalTransition = (isDesktopQuickMenu || profileLiveX !== null)
+    ? undefined
+    : 'left 0.36s cubic-bezier(0.22, 1, 0.36, 1)';
+
   const handleProfileMainClick = async () => {
     if (!isAuthedUser) {
       setIsFloatingActionsOpen(false);
@@ -589,6 +640,7 @@ function AppContent() {
                 <Route path="/payment/success" element={<PaymentSuccessPage />} />
                 <Route path="/payment/fail" element={<PaymentSuccessPage />} />
                 <Route path="/admin/import" element={<AdminImport />} />
+                <Route path="/admin/weekly/preview" element={<AdminWeeklyPreviewPage />} />
                 <Route path="/admin/weekly" element={<AdminWeeklyPage />} />
                 <Route path="/admin" element={<AdminPage />} />
               </Routes>
@@ -673,7 +725,8 @@ function AppContent() {
                   whileTap={{ scale: 0.94 }}
                   style={{
                     position: 'fixed',
-                    right: floatingRight,
+                    ...floatingHorizontalStyle,
+                    transition: floatingHorizontalTransition,
                     top: isDesktopQuickMenu ? 'auto' : floatingActionTop3,
                     bottom: isDesktopQuickMenu ? floatingActionBottom1 : 'auto',
                     zIndex: 250012,
@@ -708,7 +761,7 @@ function AppContent() {
                           minWidth: 18,
                           height: 18,
                           borderRadius: 999,
-                          background: '#BFFF0A',
+                          background: '#D4A547',
                           color: '#111',
                           fontSize: 10,
                           fontWeight: 800,
@@ -737,7 +790,8 @@ function AppContent() {
                   whileTap={{ scale: 0.94 }}
                   style={{
                     position: 'fixed',
-                    right: floatingRight,
+                    ...floatingHorizontalStyle,
+                    transition: floatingHorizontalTransition,
                     top: isDesktopQuickMenu ? 'auto' : floatingActionTop4,
                     bottom: isDesktopQuickMenu ? floatingActionBottom2 : 'auto',
                     zIndex: 250012,
@@ -747,7 +801,7 @@ function AppContent() {
                     boxSizing: 'border-box',
                     borderRadius: '50%',
                     border: isLightTheme ? '1px solid rgba(0,0,0,0.18)' : '1px solid rgba(255,255,255,0.22)',
-                    background: language === 'ko' ? '#BFFF0A' : (isLightTheme ? '#ffffff' : 'rgba(22,22,22,0.88)'),
+                    background: language === 'ko' ? '#D4A547' : (isLightTheme ? '#ffffff' : 'rgba(22,22,22,0.88)'),
                     color: language === 'ko' ? '#000' : (isLightTheme ? '#111' : '#fff'),
                     cursor: 'pointer',
                     display: 'inline-flex',
@@ -781,7 +835,8 @@ function AppContent() {
                   whileTap={{ scale: 0.94 }}
                   style={{
                     position: 'fixed',
-                    right: floatingRight,
+                    ...floatingHorizontalStyle,
+                    transition: floatingHorizontalTransition,
                     top: isDesktopQuickMenu ? 'auto' : floatingActionTop5,
                     bottom: isDesktopQuickMenu ? floatingActionBottom3 : 'auto',
                     zIndex: 250012,
@@ -815,7 +870,7 @@ function AppContent() {
                         transition: 'opacity 0.4s cubic-bezier(0.4,0,0.2,1), transform 0.4s cubic-bezier(0.4,0,0.2,1)',
                       }}
                     >
-                      <circle cx={10} cy={10} r={3.6} fill="#BFFF0A" />
+                      <circle cx={10} cy={10} r={3.6} fill="#D4A547" />
                       {[0, 45, 90, 135, 180, 225, 270, 315].map((ang, i) => {
                         const r = Math.PI / 180;
                         const a = ang * r;
@@ -827,7 +882,7 @@ function AppContent() {
                         return (
                           <polygon
                             key={i}
-                            fill="#BFFF0A"
+                            fill="#D4A547"
                             points={[
                               `${ox + ir * Math.sin(a - half)},${oy - ir * Math.cos(a - half)}`,
                               `${ox + or * Math.sin(a)},${oy - or * Math.cos(a)}`,
@@ -846,7 +901,7 @@ function AppContent() {
                         transition: 'opacity 0.4s cubic-bezier(0.4,0,0.2,1), transform 0.4s cubic-bezier(0.4,0,0.2,1)',
                       }}
                     >
-                      <path d="M15.5 10.5A6.5 6.5 0 0 1 9 4a6.5 6.5 0 1 0 6.5 6.5z" fill="#CCFF00" />
+                      <path d="M15.5 10.5A6.5 6.5 0 0 1 9 4a6.5 6.5 0 1 0 6.5 6.5z" fill="#D4A547" />
                     </svg>
                   </span>
                 </motion.button>
@@ -862,7 +917,8 @@ function AppContent() {
                   whileTap={{ scale: 0.94 }}
                   style={{
                     position: 'fixed',
-                    right: floatingRight,
+                    ...floatingHorizontalStyle,
+                    transition: floatingHorizontalTransition,
                     top: isDesktopQuickMenu ? 'auto' : floatingActionTop6,
                     bottom: isDesktopQuickMenu ? floatingActionBottom4 : 'auto',
                     zIndex: 250012,
@@ -915,20 +971,32 @@ function AppContent() {
             }}
             transition={{ duration: 0.24, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
             onMouseDown={(e) => {
-              // Start drag on non-interactive area (e.g., drag with 2+ fingers not needed – just pointer hold)
-              profileDragRef.current = { startY: e.clientY, startDragY: profileDragY >= 0 ? profileDragY : (profileBtnRef.current?.getBoundingClientRect().top ?? 100) };
+              const rect = profileBtnRef.current?.getBoundingClientRect();
+              profileDragRef.current = {
+                startX: e.clientX,
+                startY: e.clientY,
+                startDragX: rect?.left ?? 0,
+                startDragY: profileDragY >= 0 ? profileDragY : (rect?.top ?? 100),
+              };
               profileIsDragging.current = true;
               e.preventDefault();
             }}
             onTouchStart={(e) => {
               const t = e.touches[0];
               if (!t) return;
-              profileDragRef.current = { startY: t.clientY, startDragY: profileDragY >= 0 ? profileDragY : (profileBtnRef.current?.getBoundingClientRect().top ?? 100) };
+              const rect = profileBtnRef.current?.getBoundingClientRect();
+              profileDragRef.current = {
+                startX: t.clientX,
+                startY: t.clientY,
+                startDragX: rect?.left ?? 0,
+                startDragY: profileDragY >= 0 ? profileDragY : (rect?.top ?? 100),
+              };
               profileIsDragging.current = true;
             }}
             style={{
               position: 'fixed',
-              right: floatingRight,
+              ...floatingHorizontalStyle,
+              transition: floatingHorizontalTransition,
               top: isDesktopQuickMenu ? 'auto' : floatingProfileTopCSS,
               bottom: isDesktopQuickMenu ? floatingBottomBase : 'auto',
               zIndex: 250012,

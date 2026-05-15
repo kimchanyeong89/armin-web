@@ -294,7 +294,7 @@ function WeeklyProposalCardView({
         {/* Actions */}
         <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginTop: 4 }}>
           <button
-            onClick={() => navigate(`/ai?preview=${encodeURIComponent(card.id)}&week=${encodeURIComponent(week)}`)}
+            onClick={() => navigate(`/admin/weekly/preview?preview=${encodeURIComponent(card.id)}&week=${encodeURIComponent(week)}`)}
             style={{
               ...LABEL,
               fontSize: 10,
