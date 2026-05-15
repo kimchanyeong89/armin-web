@@ -3,6 +3,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import BugReportModal from './BugReportModal';
 import GlobalSearchBar from './GlobalSearchBar';
 import type { SearchableArtwork, Museum } from './GlobalSearchBar';
+import { useIsAdmin } from '../lib/admin';
 
 interface GlobalNavProps {
     isAdmin: boolean;
@@ -19,6 +20,10 @@ interface GlobalNavProps {
 export const GlobalNav: React.FC<GlobalNavProps> = ({ isAdmin, isModalOpen, searchProps, skin = 'default' }) => {
     const navigate = useNavigate();
     const location = useLocation();
+    const { isAdmin: liveIsAdmin } = useIsAdmin();
+    // Combine live admin state with prop fallback so admin menu items appear for
+    // admins on every page, not just pages that pass `isAdmin={true}`.
+    const showAdmin = liveIsAdmin || isAdmin;
     const [isBugReportOpen, setIsBugReportOpen] = useState(false);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [isSearchExpanded, setIsSearchExpanded] = useState(false);
@@ -113,13 +118,35 @@ export const GlobalNav: React.FC<GlobalNavProps> = ({ isAdmin, isModalOpen, sear
             }
         };
 
+        // Touch equivalents for mobile drag support
+        const handleTouchMove = (e: TouchEvent) => {
+            if (!isDragging.current || !dragRef.current) return;
+            const touch = e.touches[0];
+            if (!touch) return;
+            const dx = touch.clientX - dragRef.current.startX;
+            const dy = touch.clientY - dragRef.current.startY;
+            let newX = dragRef.current.initialX - dx;
+            let newY = dragRef.current.initialY + dy;
+            newX = Math.max(dragRef.current.minX, Math.min(newX, dragRef.current.maxX));
+            newY = Math.max(dragRef.current.minY, Math.min(newY, dragRef.current.maxY));
+            setPosition({ x: newX, y: newY });
+        };
+        const handleTouchEnd = () => {
+            isDragging.current = false;
+        };
+
         document.addEventListener('mousemove', handleMouseMove);
         document.addEventListener('mouseup', handleMouseUp);
+        document.addEventListener('touchmove', handleTouchMove, { passive: true });
+        document.addEventListener('touchend', handleTouchEnd);
         return () => {
             document.removeEventListener('mousemove', handleMouseMove);
             document.removeEventListener('mouseup', handleMouseUp);
+            document.removeEventListener('touchmove', handleTouchMove);
+            document.removeEventListener('touchend', handleTouchEnd);
         };
     }, []);
+
 
     // Save position whenever it changes (after a drag)
     useEffect(() => {
@@ -224,6 +251,28 @@ export const GlobalNav: React.FC<GlobalNavProps> = ({ isAdmin, isModalOpen, sear
         isDragging.current = true;
         wrapperRef.current.style.cursor = 'grabbing';
     };
+
+    const handleTouchStart = (e: React.TouchEvent) => {
+        const target = e.target as HTMLElement;
+        if (target.tagName.toLowerCase() === 'button' || target.tagName.toLowerCase() === 'input' || target.closest('button')) {
+            return;
+        }
+        if (isSearchExpanded) return;
+        const touch = e.touches[0];
+        if (!touch) return;
+        dragRef.current = {
+            startX: touch.clientX,
+            startY: touch.clientY,
+            initialX: clampedX,
+            initialY: clampedY,
+            minX: minDragX,
+            maxX: maxDragX,
+            minY: minDragY,
+            maxY: maxDragY
+        };
+        isDragging.current = true;
+    };
+
 
     // ── Position logic ─────────────────────────────────────────────────────
     // KEY PRINCIPLE: keep top:0 / left:0 constant; drive ALL positions through
@@ -428,7 +477,7 @@ export const GlobalNav: React.FC<GlobalNavProps> = ({ isAdmin, isModalOpen, sear
                         transition: 'max-width 0.22s linear, opacity 0.2s linear',
                     }}>
                         {/* ── ADMIN ── person silhouette + tilted crown */}
-                        {isAdmin && (
+                        {showAdmin && (
                             <button title="Admin Profile"
                                 onClick={() => { setIsMenuOpen(false); navigate('/admin'); }}
                                 style={iconBtnStyle(0)}
@@ -443,6 +492,34 @@ export const GlobalNav: React.FC<GlobalNavProps> = ({ isAdmin, isModalOpen, sear
                                     <path d="M4 33 C4.5 26 8.5 22 14 22 C19.5 22 23.5 26 24 33Z" fill="#111"/>
                                     {/* Crown — 5-point star, slightly lopsided */}
                                     <path d="M23 4 L24.5 7.5 L28.5 7 L26 10 L27.5 13.5 L23.5 12 L20 14 L21 10.5 L18.5 8 L22.5 7.5 Z" fill="#111"/>
+                                </svg>
+                            </button>
+                        )}
+
+                        {/* ── WEEKLY ADMIN ── filled calendar grid with a tiny star */}
+                        {showAdmin && (
+                            <button title="Weekly Admin"
+                                onClick={() => { setIsMenuOpen(false); navigate('/admin/weekly'); }}
+                                style={iconBtnStyle(0.02)}
+                                onMouseEnter={e => { e.currentTarget.style.background = 'rgba(17,17,17,0.1)'; }}
+                                onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; }}
+                                onMouseDown={(e) => { e.stopPropagation(); e.nativeEvent.stopImmediatePropagation(); }}
+                            >
+                                <svg width="52" height="52" viewBox="0 0 36 36">
+                                    {/* Calendar body */}
+                                    <rect x="5" y="8" width="26" height="24" rx="2" fill="#111"/>
+                                    {/* Header bar */}
+                                    <rect x="5" y="8" width="26" height="6" fill="#111"/>
+                                    {/* Hanger tabs */}
+                                    <rect x="10" y="4" width="3" height="7" rx="1" fill="#111"/>
+                                    <rect x="23" y="4" width="3" height="7" rx="1" fill="#111"/>
+                                    {/* Calendar grid dots — white */}
+                                    <circle cx="11" cy="19" r="1.6" fill="white"/>
+                                    <circle cx="18" cy="19" r="1.6" fill="white"/>
+                                    <circle cx="25" cy="19" r="1.6" fill="white"/>
+                                    <circle cx="11" cy="25" r="1.6" fill="white"/>
+                                    {/* Highlighted day — small star */}
+                                    <polygon points="18,23 19,25.5 21.7,25.7 19.6,27.4 20.3,30 18,28.6 15.7,30 16.4,27.4 14.3,25.7 17,25.5" fill="white"/>
                                 </svg>
                             </button>
                         )}
@@ -591,7 +668,7 @@ export const GlobalNav: React.FC<GlobalNavProps> = ({ isAdmin, isModalOpen, sear
     }
 
     return (
-        <div id="global-nav-wrapper" ref={wrapperRef} style={wrapperStyle} onMouseDown={handleMouseDown}>
+        <div id="global-nav-wrapper" ref={wrapperRef} style={wrapperStyle} onMouseDown={handleMouseDown} onTouchStart={handleTouchStart}>
             <div style={containerStyle}>
                 <div style={backgroundStyle} />
                 <div style={{
@@ -614,13 +691,22 @@ export const GlobalNav: React.FC<GlobalNavProps> = ({ isAdmin, isModalOpen, sear
                     opacity: isMenuOpen ? 1 : 0,
                     transition: 'max-width 0.42s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease',
                 }}>
-                    {isAdmin && (
+                    {showAdmin && (
                         <button
                             onClick={() => navigate('/admin')}
                             style={{ ...getNavItemStyle(currentPath === '/admin'), transition: 'background 0.35s ease, color 0.35s, transform 1.3s cubic-bezier(0.22, 1, 0.36, 1), opacity 1.0s', transform: isMenuOpen ? 'translateX(0)' : 'translateX(-20px)', opacity: isMenuOpen ? 1 : 0 }}
                             onMouseDown={(e) => { e.stopPropagation(); e.nativeEvent.stopImmediatePropagation(); }}
                         >
                             ADMIN PROFILE
+                        </button>
+                    )}
+                    {showAdmin && (
+                        <button
+                            onClick={() => navigate('/admin/weekly')}
+                            style={{ ...getNavItemStyle(currentPath === '/admin/weekly'), transition: 'background 0.35s ease, color 0.35s, transform 1.3s cubic-bezier(0.22, 1, 0.36, 1) 0.03s, opacity 1.0s 0.03s', transform: isMenuOpen ? 'translateX(0)' : 'translateX(-20px)', opacity: isMenuOpen ? 1 : 0 }}
+                            onMouseDown={(e) => { e.stopPropagation(); e.nativeEvent.stopImmediatePropagation(); }}
+                        >
+                            WEEKLY ADMIN
                         </button>
                     )}
                     <button
