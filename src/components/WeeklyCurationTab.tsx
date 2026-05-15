@@ -1,8 +1,8 @@
 // Weekly Curation — editor-curated online exhibition, refreshed every week.
 // Sub-tab of the AI section alongside My Curation & Nearby Exhibition.
 
-import React, { useState, useEffect, useCallback, useRef } from "react";
-import { useSearchParams, useNavigate } from "react-router-dom";
+import React, { useState, useEffect, useCallback, useRef, lazy, Suspense } from "react";
+import { useSearchParams } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { Heart, X, ChevronLeft, ChevronRight, Lock } from "lucide-react";
 import {
@@ -25,6 +25,14 @@ import {
   type LikeSource,
 } from "../hooks/useLikedArtworks";
 import { auth } from "../firebase";
+import {
+  findExhibitionByCollectionSlug,
+  type ExhibitionLookupResult,
+} from "../lib/find-exhibition";
+
+// Lazy so the curation tab doesn't drag in the full ExhibitionModal bundle
+// unless a user actually clicks a museum link.
+const ExhibitionModal = lazy(() => import("./ExhibitionModal"));
 
 // ── Types ──────────────────────────────────────────────────────────────────
 
@@ -1641,35 +1649,84 @@ function WeeklyTopNav({
     { id: 'archive',   label: 'Archive',    labelKo: '지난 주' },
     { id: 'special',   label: 'Special',    labelKo: '특집' },
   ];
+  const fgFaint = 'rgba(244,241,234,0.55)';
 
   return (
     <div style={{
-      display: 'flex', gap: 24,
-      padding: 'clamp(16px, 3vw, 24px) clamp(20px, 4vw, 56px)',
+      padding: 'clamp(18px, 3vw, 26px) clamp(20px, 4vw, 56px)',
       borderBottom: `0.5px solid ${divider}`,
+      display: 'flex',
+      flexDirection: 'column',
+      gap: 12,
     }}>
-      {tabs.map(tab => {
-        const active = mode === tab.id;
-        return (
-          <button
-            key={tab.id}
-            onClick={() => setMode(tab.id)}
-            style={{
-              ...LABEL,
-              fontSize: 10,
-              background: 'transparent',
-              border: 'none',
-              color: active ? fg : fgLow,
-              borderBottom: active ? `1px solid ${accent}` : '1px solid transparent',
-              padding: '4px 0',
-              cursor: 'pointer',
-              transition: 'color 0.15s, border-color 0.15s',
-            }}
-          >
-            {langKo ? tab.labelKo : tab.label}
-          </button>
-        );
-      })}
+      {/* Editorial eyebrow — matches EditionHeader / SectionRule voice */}
+      <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+        <span style={{ ...LABEL, fontSize: 9, color: fgFaint, whiteSpace: 'nowrap' }}>
+          § Section · 섹션
+        </span>
+        <div style={{ flex: 1, height: '0.5px', background: divider }} />
+      </div>
+
+      {/* Pill segmented control */}
+      <div
+        role="tablist"
+        style={{
+          display: 'inline-flex',
+          flexWrap: 'wrap',
+          alignSelf: 'flex-start',
+          gap: 4,
+          padding: 4,
+          border: `0.5px solid ${divider}`,
+          background: 'rgba(255,255,255,0.02)',
+          borderRadius: 999,
+        }}
+      >
+        {tabs.map(tab => {
+          const active = mode === tab.id;
+          return (
+            <button
+              key={tab.id}
+              role="tab"
+              aria-selected={active}
+              onClick={() => setMode(tab.id)}
+              style={{
+                position: 'relative',
+                ...LABEL,
+                fontSize: 10,
+                background: 'transparent',
+                border: 'none',
+                color: active ? '#000' : fgLow,
+                padding: '8px 16px',
+                cursor: 'pointer',
+                borderRadius: 999,
+                transition: 'color 0.2s ease',
+                WebkitTapHighlightColor: 'transparent',
+                zIndex: 1,
+              }}
+              onMouseEnter={e => { if (!active) e.currentTarget.style.color = fg; }}
+              onMouseLeave={e => { if (!active) e.currentTarget.style.color = fgLow; }}
+            >
+              {active && (
+                <motion.span
+                  layoutId="weekly-topnav-pill"
+                  aria-hidden
+                  style={{
+                    position: 'absolute',
+                    inset: 0,
+                    background: accent,
+                    borderRadius: 999,
+                    zIndex: -1,
+                  }}
+                  transition={{ type: 'spring', stiffness: 380, damping: 32 }}
+                />
+              )}
+              <span style={{ position: 'relative' }}>
+                {langKo ? tab.labelKo : tab.label}
+              </span>
+            </button>
+          );
+        })}
+      </div>
     </div>
   );
 }
