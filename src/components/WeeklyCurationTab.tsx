@@ -611,6 +611,8 @@ function HeroWork({
           <ArtworkPlaceholder
             seed={work.seed}
             aspect={work.aspect}
+            imageUrl={work.imageUrl}
+            alt={`${work.artist} — ${work.title}`}
             style={{
               outline: hov ? `1.5px solid ${accent}` : '1.5px solid transparent',
               transition: 'outline 0.2s',
@@ -753,6 +755,8 @@ function WorkRow({
         <ArtworkPlaceholder
           seed={work.seed}
           aspect={work.aspect}
+          imageUrl={work.imageUrl}
+          alt={`${work.artist} — ${work.title}`}
           style={{
             outline: hov ? `1.5px solid ${accent}` : '1.5px solid transparent',
             transition: 'outline 0.2s',
