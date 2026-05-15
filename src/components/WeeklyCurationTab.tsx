@@ -1842,7 +1842,24 @@ export default function WeeklyCurationTab({
     }
   }, []);
 
-  // Skeleton: brief flash while fetching. Acceptable for V1.
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener('resize', check);
+    return () => window.removeEventListener('resize', check);
+  }, []);
+
+  const toggleSave = useCallback((id: string) => {
+    setSavedIds(prev => {
+      const next = new Set(prev);
+      next.has(id) ? next.delete(id) : next.add(id);
+      return next;
+    });
+  }, []);
+
+  // Skeleton: brief flash while fetching. MUST come after every hook above —
+  // React's rules-of-hooks require the hook count to be identical across
+  // renders. Putting this early-return earlier caused "Rendered more hooks
+  // than during the previous render."
   if (!edition) {
     return (
       <div style={{
@@ -1858,20 +1875,6 @@ export default function WeeklyCurationTab({
       </div>
     );
   }
-
-  useEffect(() => {
-    const check = () => setIsMobile(window.innerWidth < 768);
-    window.addEventListener('resize', check);
-    return () => window.removeEventListener('resize', check);
-  }, []);
-
-  const toggleSave = useCallback((id: string) => {
-    setSavedIds(prev => {
-      const next = new Set(prev);
-      next.has(id) ? next.delete(id) : next.add(id);
-      return next;
-    });
-  }, []);
 
   const currentIdx = selectedWork ? edition.works.findIndex(w => w.id === selectedWork.id) : -1;
 
