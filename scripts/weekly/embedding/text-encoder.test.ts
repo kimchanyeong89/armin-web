@@ -6,13 +6,13 @@ describe('text encoder', () => {
     const v = await encodeText('light in quiet rooms');
     expect(v.length).toBeGreaterThan(0);
     expect(v.every((x) => typeof x === 'number')).toBe(true);
-  });
+  }, 30000);   // hits live worker /encode; 5s default flakes under load
 
   it('is deterministic for the same input', async () => {
     const a = await encodeText('test');
     const b = await encodeText('test');
     expect(a).toEqual(b);
-  });
+  }, 30000);
 
   it('falls back to deterministic vector when endpoint unreachable', async () => {
     const prev = process.env.SIGLIP_ENCODE_ENDPOINT;
