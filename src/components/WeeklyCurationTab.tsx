@@ -1949,6 +1949,16 @@ export default function WeeklyCurationTab({
   const [subscribeModalOpen, setSubscribeModalOpen] = useState(false);
   const [subscribeContext, setSubscribeContext] = useState<'archive' | 'special'>('archive');
 
+  // Museum permanent-collection overlay. Triggered from clicking a work
+  // card's museum name. Stays in the same route on purpose so scroll
+  // position is preserved and back-button just closes the overlay.
+  // Hook must stay above the `if (!edition)` early return below — hook
+  // count must be identical across renders.
+  const [museumOverlayId, setMuseumOverlayId] = useState<string | null>(null);
+  const openMuseum = useCallback((collectionId: string) => {
+    setMuseumOverlayId(collectionId);
+  }, []);
+
   // Subscription status drives the lock rule below. Hook order matters,
   // so this stays above any early return.
   const { isSubscriber } = useSubscription();
@@ -2188,6 +2198,17 @@ export default function WeeklyCurationTab({
     />
   );
 
+  // Single shared MuseumOverlay element — same reason as subscribeModal
+  // above. Mobile and desktop branches all render it so the overlay is
+  // available regardless of which work-card variant was clicked.
+  const museumOverlay = (
+    <MuseumOverlay
+      open={museumOverlayId !== null}
+      collectionId={museumOverlayId}
+      onClose={() => setMuseumOverlayId(null)}
+    />
+  );
+
   // Inline toast for sign-in feedback when a per-work save is clicked while
   // signed out. The web build has no global handler that opens a login modal
   // — without this toast the button looked dead.
@@ -2221,10 +2242,10 @@ export default function WeeklyCurationTab({
   // ── Mobile layout ────────────────────────────────────────────────────────
   if (isMobile) {
     if (mode === 'archive') {
-      return <div style={{ paddingBottom: 80 }}>{topNav}{archiveView}{subscribeModal}{authToast}</div>;
+      return <div style={{ paddingBottom: 80 }}>{topNav}{archiveView}{subscribeModal}{museumOverlay}{authToast}</div>;
     }
     if (mode === 'special') {
-      return <div style={{ paddingBottom: 80 }}>{topNav}{specialView}{subscribeModal}{authToast}</div>;
+      return <div style={{ paddingBottom: 80 }}>{topNav}{specialView}{subscribeModal}{museumOverlay}{authToast}</div>;
     }
     return (
       <div style={{ paddingBottom: 80 }}>
@@ -2245,6 +2266,7 @@ export default function WeeklyCurationTab({
           saved={likedIds.has(edition.works[0].id)}
           onSave={() => toggleSave(edition.works[0])}
           onClick={() => setSelectedWork(edition.works[0])}
+          onMuseumClick={openMuseum}
           {...tokens}
         />
 
@@ -2269,6 +2291,7 @@ export default function WeeklyCurationTab({
               saved={likedIds.has(work.id)}
               onSave={() => toggleSave(work)}
               onClick={() => setSelectedWork(work)}
+              onMuseumClick={openMuseum}
               {...tokens}
             />
           ))}
@@ -2290,11 +2313,13 @@ export default function WeeklyCurationTab({
               onPrev={() => { if (currentIdx > 0) setSelectedWork(edition.works[currentIdx - 1]); }}
               onNext={() => { if (currentIdx < edition.works.length - 1) setSelectedWork(edition.works[currentIdx + 1]); }}
               currentIdx={currentIdx}
+              onMuseumClick={openMuseum}
               {...tokens}
             />
           )}
         </AnimatePresence>
         {subscribeModal}
+        {museumOverlay}
         {authToast}
       </div>
     );
@@ -2302,10 +2327,10 @@ export default function WeeklyCurationTab({
 
   // ── Desktop layout ───────────────────────────────────────────────────────
   if (mode === 'archive') {
-    return <div style={{ paddingBottom: 80 }}>{topNav}{archiveView}{subscribeModal}{authToast}</div>;
+    return <div style={{ paddingBottom: 80 }}>{topNav}{archiveView}{subscribeModal}{museumOverlay}{authToast}</div>;
   }
   if (mode === 'special') {
-    return <div style={{ paddingBottom: 80 }}>{topNav}{specialView}{subscribeModal}{authToast}</div>;
+    return <div style={{ paddingBottom: 80 }}>{topNav}{specialView}{subscribeModal}{museumOverlay}{authToast}</div>;
   }
 
   return (
@@ -2332,6 +2357,7 @@ export default function WeeklyCurationTab({
         saved={likedIds.has(edition.works[0].id)}
         onSave={() => toggleSave(edition.works[0])}
         onClick={() => setSelectedWork(edition.works[0])}
+        onMuseumClick={openMuseum}
         {...tokens}
       />
 
@@ -2347,6 +2373,7 @@ export default function WeeklyCurationTab({
               saved={likedIds.has(work.id)}
               onSave={() => toggleSave(work)}
               onClick={() => setSelectedWork(work)}
+              onMuseumClick={openMuseum}
               {...tokens}
             />
           ))}
@@ -2372,10 +2399,12 @@ export default function WeeklyCurationTab({
             onNext={() => {
               if (currentIdx < edition.works.length - 1) setSelectedWork(edition.works[currentIdx + 1]);
             }}
+            onMuseumClick={openMuseum}
           />
         )}
       </AnimatePresence>
       {subscribeModal}
+      {museumOverlay}
       {authToast}
     </div>
   );
