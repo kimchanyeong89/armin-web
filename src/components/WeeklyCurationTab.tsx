@@ -15,7 +15,16 @@ import {
 import type { WeeklyPublishedFile, PersonaId } from "../types/weekly";
 import SubscribeModal from "./SubscribeModal";
 import SaveCurationButton from "./SaveCurationButton";
+import MuseumOverlay, { prettifyMuseumName } from "./MuseumOverlay";
 import { useSubscription } from "../hooks/useSubscription";
+import {
+  likeArtwork,
+  unlikeArtwork,
+  useLikedArtworks,
+  type ArtworkLikePayload,
+  type LikeSource,
+} from "../hooks/useLikedArtworks";
+import { auth } from "../firebase";
 
 // ── Types ──────────────────────────────────────────────────────────────────
 
@@ -355,6 +364,45 @@ function artGradient(seed: string): string {
 
 // ── Utility components ─────────────────────────────────────────────────────
 
+// Clickable museum/collection name. Used in every work-card variant so the
+// rendered text and click behavior stay identical (DRY). Renders nothing
+// clickable when collectionId is blank (e.g. the hardcoded sample edition
+// where museum is "Rijksmuseum" not a slug).
+function MuseumLink({
+  collectionId, suffix, onClick, color, size,
+}: {
+  collectionId: string;
+  suffix?: string;       // optional ", City" appended after the pretty name
+  onClick?: (id: string) => void;
+  color: string;
+  size: number;
+}) {
+  const display = prettifyMuseumName(collectionId) + (suffix ? `, ${suffix}` : '');
+  if (!onClick) return <>{display}</>;
+  return (
+    <button
+      onClick={(e) => { e.stopPropagation(); onClick(collectionId); }}
+      style={{
+        background: 'transparent',
+        border: 'none',
+        padding: 0,
+        margin: 0,
+        color,
+        cursor: 'pointer',
+        textDecoration: 'underline',
+        textDecorationColor: 'rgba(244,241,234,0.25)',
+        textUnderlineOffset: 3,
+        font: 'inherit',
+        fontSize: size,
+        letterSpacing: 'inherit',
+        textTransform: 'inherit',
+      }}
+    >
+      {display}
+    </button>
+  );
+}
+
 function ArtworkPlaceholder({
   seed,
   aspect,
@@ -569,7 +617,7 @@ function EditionHeader({
 // ── Hero work ──────────────────────────────────────────────────────────────
 
 function HeroWork({
-  work, total, langKo, saved, onSave, onClick,
+  work, total, langKo, saved, onSave, onClick, onMuseumClick,
   t, fg, fgMed, fgLow, fgFaint, divider,
 }: {
   work: WeeklyWork;
@@ -578,6 +626,7 @@ function HeroWork({
   saved: boolean;
   onSave: () => void;
   onClick: () => void;
+  onMuseumClick?: (collectionId: string) => void;
   t: boolean;
   fg: string;
   fgMed: string;
@@ -674,8 +723,14 @@ function HeroWork({
               ['Year', work.year],
               ['Medium', langKo ? work.mediumKo : work.medium],
               ['Size', work.dimensions],
-              ['Museum', `${work.museum}, ${work.museumCity}`],
-            ] as [string, string][]).map(([k, v]) => (
+              ['Museum', <MuseumLink
+                collectionId={work.museum}
+                suffix={work.museumCity || undefined}
+                onClick={onMuseumClick}
+                color={fgMed}
+                size={13}
+              />],
+            ] as [string, React.ReactNode][]).map(([k, v]) => (
               <div key={k} style={{ display: 'flex', gap: 14, alignItems: 'flex-start' }}>
                 <span style={{ ...LABEL, fontSize: 9, color: fgFaint, minWidth: 50, paddingTop: 2, flexShrink: 0 }}>{k}</span>
                 <span style={{ ...BODY, fontSize: 13, color: fgMed, lineHeight: 1.5 }}>{v}</span>
@@ -695,7 +750,7 @@ function HeroWork({
               transition: 'border-color 0.15s, color 0.15s',
             }}>
               {saved ? <Check size={13} color="currentColor" /> : <BookmarkPlus size={13} color="currentColor" />}
-              {saved ? 'Saved' : 'Save'}
+              {saved ? (langKo ? '저장됨' : 'Saved') : (langKo ? '작품 저장' : 'Save artwork')}
             </button>
             <button onClick={onClick} style={{
               flex: 2, padding: '11px 0',
@@ -716,7 +771,7 @@ function HeroWork({
 // ── Work row (alternating layout) ─────────────────────────────────────────
 
 function WorkRow({
-  work, index, langKo, saved, onSave, onClick,
+  work, index, langKo, saved, onSave, onClick, onMuseumClick,
   t, fg, fgMed, fgLow, fgFaint, divider,
 }: {
   work: WeeklyWork;
@@ -725,6 +780,7 @@ function WorkRow({
   saved: boolean;
   onSave: () => void;
   onClick: () => void;
+  onMuseumClick?: (collectionId: string) => void;
   t: boolean;
   fg: string;
   fgMed: string;
@@ -804,9 +860,17 @@ function WorkRow({
         </p>
 
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px 16px', marginBottom: 16 }}>
-          {[langKo ? work.mediumKo : work.medium, work.dimensions, `${work.museum}, ${work.museumCity}`].map((v, i) => (
-            <span key={i} style={{ ...LABEL, fontSize: 9, color: fgFaint }}>{v}</span>
-          ))}
+          <span style={{ ...LABEL, fontSize: 9, color: fgFaint }}>{langKo ? work.mediumKo : work.medium}</span>
+          <span style={{ ...LABEL, fontSize: 9, color: fgFaint }}>{work.dimensions}</span>
+          <span style={{ ...LABEL, fontSize: 9, color: fgFaint }}>
+            <MuseumLink
+              collectionId={work.museum}
+              suffix={work.museumCity || undefined}
+              onClick={onMuseumClick}
+              color={fgFaint}
+              size={9}
+            />
+          </span>
         </div>
 
         <div style={{ height: '0.5px', background: divider, marginBottom: 14 }} />
@@ -823,7 +887,7 @@ function WorkRow({
             transition: 'border-color 0.15s, color 0.15s',
           }}>
             {saved ? <Check size={11} color="currentColor" /> : <BookmarkPlus size={11} color="currentColor" />}
-            {saved ? 'Saved' : 'Save'}
+            {saved ? (langKo ? '저장됨' : 'Saved') : (langKo ? '작품 저장' : 'Save artwork')}
           </button>
           <button onClick={(e) => { e.stopPropagation(); onClick(); }} style={{
             padding: '7px 14px',
@@ -846,7 +910,7 @@ function WorkRow({
 // ── Weekly Lightbox ────────────────────────────────────────────────────────
 
 function WeeklyLightbox({
-  work, edition, langKo, saved, onSave, onClose, onPrev, onNext,
+  work, edition, langKo, saved, onSave, onClose, onPrev, onNext, onMuseumClick,
 }: {
   work: WeeklyWork;
   edition: WeeklyEdition;
@@ -856,6 +920,7 @@ function WeeklyLightbox({
   onClose: () => void;
   onPrev: () => void;
   onNext: () => void;
+  onMuseumClick?: (collectionId: string) => void;
 }) {
   const currentIdx = edition.works.findIndex(w => w.id === work.id);
   const total = edition.works.length;
@@ -1058,9 +1123,14 @@ function WeeklyLightbox({
             {([
               ['Medium', langKo ? work.mediumKo : work.medium],
               ['Size', work.dimensions],
-              ['Museum', work.museum],
+              ['Museum', <MuseumLink
+                collectionId={work.museum}
+                onClick={onMuseumClick}
+                color="rgba(244,241,234,0.80)"
+                size={13}
+              />],
               ['City', work.museumCity],
-            ] as [string, string][]).map(([k, v]) => (
+            ] as [string, React.ReactNode][]).map(([k, v]) => (
               <div key={k} style={{ marginBottom: 12 }}>
                 <div style={{ ...LABEL, fontSize: 9, color: 'rgba(244,241,234,0.55)', marginBottom: 3 }}>{k}</div>
                 <div style={{ ...BODY, fontSize: 13, color: 'rgba(244,241,234,0.80)' }}>{v}</div>
@@ -1079,7 +1149,7 @@ function WeeklyLightbox({
               transition: 'border-color 0.15s, color 0.15s',
             }}>
               {saved ? <Check size={14} color="currentColor" /> : <BookmarkPlus size={14} color="currentColor" />}
-              {saved ? 'Saved to collection' : 'Save to collection'}
+              {saved ? (langKo ? '저장됨 · Saved' : 'Saved · 저장됨') : (langKo ? '작품 저장 · Save artwork' : 'Save artwork · 작품 저장')}
             </button>
           </div>
 
@@ -1178,11 +1248,12 @@ function MobileEditionHeader({
 // ── Mobile hero work ───────────────────────────────────────────────────────
 
 function MobileHeroWork({
-  work, total, langKo, saved, onSave, onClick,
+  work, total, langKo, saved, onSave, onClick, onMuseumClick,
   t, fg, fgMed, fgLow, fgFaint, divider,
 }: {
   work: WeeklyWork; total: number; langKo: boolean;
   saved: boolean; onSave: () => void; onClick: () => void;
+  onMuseumClick?: (collectionId: string) => void;
   t: boolean; fg: string; fgMed: string; fgLow: string; fgFaint: string; divider: string;
 }) {
   const accent = '#D4A547';
@@ -1229,9 +1300,16 @@ function MobileHeroWork({
           {langKo ? work.descriptionKo : work.description}
         </p>
         <div style={{ display: 'flex', flexWrap: 'wrap', gap: '4px 12px', marginBottom: 14 }}>
-          {[work.museum, work.museumCity, work.dimensions].map((v, i) => (
-            <span key={i} style={{ ...LABEL, fontSize: 9, color: fgFaint }}>{v}</span>
-          ))}
+          <span style={{ ...LABEL, fontSize: 9, color: fgFaint }}>
+            <MuseumLink
+              collectionId={work.museum}
+              onClick={onMuseumClick}
+              color={fgFaint}
+              size={9}
+            />
+          </span>
+          <span style={{ ...LABEL, fontSize: 9, color: fgFaint }}>{work.museumCity}</span>
+          <span style={{ ...LABEL, fontSize: 9, color: fgFaint }}>{work.dimensions}</span>
         </div>
         <div style={{ display: 'flex', gap: 8 }}>
           <button onClick={onSave} style={{
@@ -1243,7 +1321,7 @@ function MobileHeroWork({
             ...LABEL, fontSize: 10,
           }}>
             {saved ? <Check size={13} color="currentColor" /> : <BookmarkPlus size={13} color="currentColor" />}
-            {saved ? 'Saved' : 'Save'}
+            {saved ? (langKo ? '저장됨' : 'Saved') : (langKo ? '작품 저장' : 'Save artwork')}
           </button>
           <button onClick={onClick} style={{
             flex: 2, padding: '9px 0',
@@ -1263,11 +1341,12 @@ function MobileHeroWork({
 // ── Mobile work card ───────────────────────────────────────────────────────
 
 function MobileWorkCard({
-  work, index, langKo, saved, onSave, onClick,
+  work, index, langKo, saved, onSave, onClick, onMuseumClick,
   t, fg, fgMed, fgLow, fgFaint, divider,
 }: {
   work: WeeklyWork; index: number; langKo: boolean;
   saved: boolean; onSave: () => void; onClick: () => void;
+  onMuseumClick?: (collectionId: string) => void;
   t: boolean; fg: string; fgMed: string; fgLow: string; fgFaint: string; divider: string;
 }) {
   const [pressed, setPressed] = useState(false);
@@ -1329,7 +1408,13 @@ function MobileWorkCard({
             {langKo ? work.descriptionKo : work.description}
           </p>
           <div style={{ ...LABEL, fontSize: 9, color: fgFaint, marginBottom: 9 }}>
-            {work.museum} · {work.museumCity}
+            <MuseumLink
+              collectionId={work.museum}
+              onClick={onMuseumClick}
+              color={fgFaint}
+              size={9}
+            />
+            {work.museumCity ? ` · ${work.museumCity}` : ''}
           </div>
           <div style={{ display: 'flex', gap: 6 }}>
             <button onClick={(e) => { e.stopPropagation(); onSave(); }} style={{
@@ -1341,7 +1426,7 @@ function MobileWorkCard({
               ...LABEL, fontSize: 9,
             }}>
               {saved ? <Check size={11} color="currentColor" /> : <BookmarkPlus size={11} color="currentColor" />}
-              {saved ? 'Saved' : 'Save'}
+              {saved ? (langKo ? '저장됨' : 'Saved') : (langKo ? '작품 저장' : 'Save artwork')}
             </button>
             <button onClick={onClick} style={{
               padding: '6px 10px',
@@ -1363,12 +1448,13 @@ function MobileWorkCard({
 // ── Mobile work detail (full-screen) ──────────────────────────────────────
 
 function MobileWorkDetail({
-  work, edition, langKo, saved, onSave, onClose, onPrev, onNext, currentIdx,
+  work, edition, langKo, saved, onSave, onClose, onPrev, onNext, currentIdx, onMuseumClick,
   t, fg, fgMed, fgLow, fgFaint, divider,
 }: {
   work: WeeklyWork; edition: WeeklyEdition; langKo: boolean;
   saved: boolean; onSave: () => void; onClose: () => void;
   onPrev: () => void; onNext: () => void; currentIdx: number;
+  onMuseumClick?: (collectionId: string) => void;
   t: boolean; fg: string; fgMed: string; fgLow: string; fgFaint: string; divider: string;
 }) {
   const accent = '#D4A547';
@@ -1429,7 +1515,7 @@ function MobileWorkDetail({
           display: 'flex', alignItems: 'center', gap: 5,
         }}>
           {saved ? <Check size={14} color="currentColor" /> : <BookmarkPlus size={14} color="currentColor" />}
-          {saved ? 'Saved' : 'Save'}
+          {saved ? (langKo ? '저장됨' : 'Saved') : (langKo ? '작품 저장' : 'Save artwork')}
         </button>
       </div>
 
@@ -1499,9 +1585,14 @@ function MobileWorkDetail({
           {([
             ['Medium', langKo ? work.mediumKo : work.medium],
             ['Size', work.dimensions],
-            ['Museum', work.museum],
+            ['Museum', <MuseumLink
+              collectionId={work.museum}
+              onClick={onMuseumClick}
+              color={fgMed}
+              size={13}
+            />],
             ['City', work.museumCity],
-          ] as [string, string][]).map(([k, v]) => (
+          ] as [string, React.ReactNode][]).map(([k, v]) => (
             <div key={k} style={{ display: 'flex', gap: 12 }}>
               <span style={{ ...LABEL, fontSize: 9, color: fgFaint, minWidth: 50, paddingTop: 2 }}>{k}</span>
               <span style={{ ...BODY, fontSize: 13, color: fgMed, flex: 1, lineHeight: 1.4 }}>{v}</span>
@@ -1519,7 +1610,7 @@ function MobileWorkDetail({
           transition: 'border-color 0.15s, color 0.15s',
         }}>
           {saved ? <Check size={15} color="currentColor" /> : <BookmarkPlus size={15} color="currentColor" />}
-          {saved ? 'Saved to collection' : 'Save to collection'}
+          {saved ? (langKo ? '저장됨 · Saved' : 'Saved · 저장됨') : (langKo ? '작품 저장 · Save artwork' : 'Save artwork · 작품 저장')}
         </button>
       </div>
     </motion.div>
@@ -1838,7 +1929,12 @@ export default function WeeklyCurationTab({
   const [editionFile, setEditionFile] = useState<WeeklyPublishedFile | null>(null);
   const [selectedWork, setSelectedWork] = useState<WeeklyWork | null>(null);
   const [langKo, setLangKo] = useState(language === 'ko');
-  const [savedIds, setSavedIds] = useState<Set<string>>(new Set());
+  // Per-work saves persist to Firestore (users/{uid}/liked_artworks). The
+  // local Set used to live here was non-persistent and shared no state with
+  // the rest of the app; now we subscribe to the user's likes via the hook
+  // and dispatch real writes on save/unsave.
+  const { ids: likedIds } = useLikedArtworks();
+  const [authedNote, setAuthedNote] = useState<string | null>(null);
   const [isMobile, setIsMobile] = useState(() => typeof window !== 'undefined' && window.innerWidth < 768);
 
   // Top-nav mode + archive/special data (kept above the early return below
@@ -1975,13 +2071,47 @@ export default function WeeklyCurationTab({
     return () => window.removeEventListener('resize', check);
   }, []);
 
-  const toggleSave = useCallback((id: string) => {
-    setSavedIds(prev => {
-      const next = new Set(prev);
-      next.has(id) ? next.delete(id) : next.add(id);
-      return next;
-    });
-  }, []);
+  // Auto-clear the "sign in to save" toast after a beat. Lives next to the
+  // toggleSave callback so the lifecycle is obvious.
+  useEffect(() => {
+    if (!authedNote) return;
+    const id = window.setTimeout(() => setAuthedNote(null), 2400);
+    return () => window.clearTimeout(id);
+  }, [authedNote]);
+
+  // toggleSave maps the locally-shaped WeeklyWork back to the canonical
+  // ArtworkLikePayload (the in-file type renames image_url → imageUrl etc.).
+  // `source` distinguishes weekly vs special saves so Mypage can group them.
+  const toggleSave = useCallback(
+    async (work: WeeklyWork) => {
+      // eslint-disable-next-line no-console
+      console.debug('[WeeklyCurationTab] toggleSave click', { id: work.id, signedIn: !!auth.currentUser });
+      const user = auth.currentUser;
+      if (!user) {
+        setAuthedNote(langKo ? '로그인하면 저장됩니다 · Sign in to save' : 'Sign in to save · 로그인하면 저장됩니다');
+        window.dispatchEvent(new CustomEvent('auth:request-login'));
+        return;
+      }
+      const payload: ArtworkLikePayload = {
+        artwork_ref: work.id,
+        artist: work.artist,
+        title: work.title,
+        year: work.year,
+        image_url: work.imageUrl ?? '',
+        source_collection: work.museum,
+      };
+      const isSpecial = !!(editionFile && (editionFile as unknown as { slug?: string }).slug);
+      const source: LikeSource = isSpecial ? 'special_curation' : 'weekly_curation';
+      try {
+        if (likedIds.has(work.id)) await unlikeArtwork(work.id);
+        else await likeArtwork(payload, source);
+      } catch (err) {
+        // eslint-disable-next-line no-console
+        console.warn('[WeeklyCurationTab] like/unlike failed', err);
+      }
+    },
+    [editionFile, langKo, likedIds],
+  );
 
   // Skeleton: brief flash while fetching. MUST come after every hook above —
   // React's rules-of-hooks require the hook count to be identical across
@@ -2058,25 +2188,62 @@ export default function WeeklyCurationTab({
     />
   );
 
+  // Inline toast for sign-in feedback when a per-work save is clicked while
+  // signed out. The web build has no global handler that opens a login modal
+  // — without this toast the button looked dead.
+  const authToast = authedNote ? (
+    <div
+      role="status"
+      aria-live="polite"
+      style={{
+        position: 'fixed',
+        bottom: 'calc(env(safe-area-inset-bottom, 0px) + 24px)',
+        left: '50%',
+        transform: 'translateX(-50%)',
+        padding: '12px 18px',
+        background: '#F4F1EA',
+        color: '#0c0c0a',
+        fontFamily: "'Space Mono', monospace",
+        fontSize: 11,
+        fontWeight: 700,
+        letterSpacing: '0.12em',
+        textTransform: 'uppercase',
+        zIndex: 20000,
+        maxWidth: '90vw',
+        whiteSpace: 'nowrap',
+        pointerEvents: 'none',
+      }}
+    >
+      {authedNote}
+    </div>
+  ) : null;
+
   // ── Mobile layout ────────────────────────────────────────────────────────
   if (isMobile) {
     if (mode === 'archive') {
-      return <div style={{ paddingBottom: 80 }}>{topNav}{archiveView}{subscribeModal}</div>;
+      return <div style={{ paddingBottom: 80 }}>{topNav}{archiveView}{subscribeModal}{authToast}</div>;
     }
     if (mode === 'special') {
-      return <div style={{ paddingBottom: 80 }}>{topNav}{specialView}{subscribeModal}</div>;
+      return <div style={{ paddingBottom: 80 }}>{topNav}{specialView}{subscribeModal}{authToast}</div>;
     }
     return (
       <div style={{ paddingBottom: 80 }}>
         {topNav}
         <MobileEditionHeader edition={edition} langKo={langKo} {...tokens} />
 
+        {/* Top Save-Curation button — same component as the footer below.
+            The user asked for it at BOTH ends so the CTA is reachable without
+            scrolling through the full 12-work list. */}
+        {editionFile && (
+          <SaveCurationButton file={editionFile} langKo={langKo} />
+        )}
+
         <MobileHeroWork
           work={edition.works[0]}
           total={edition.workCount}
           langKo={langKo}
-          saved={savedIds.has(edition.works[0].id)}
-          onSave={() => toggleSave(edition.works[0].id)}
+          saved={likedIds.has(edition.works[0].id)}
+          onSave={() => toggleSave(edition.works[0])}
           onClick={() => setSelectedWork(edition.works[0])}
           {...tokens}
         />
@@ -2099,8 +2266,8 @@ export default function WeeklyCurationTab({
               work={work}
               index={i + 2}
               langKo={langKo}
-              saved={savedIds.has(work.id)}
-              onSave={() => toggleSave(work.id)}
+              saved={likedIds.has(work.id)}
+              onSave={() => toggleSave(work)}
               onClick={() => setSelectedWork(work)}
               {...tokens}
             />
@@ -2117,8 +2284,8 @@ export default function WeeklyCurationTab({
               work={selectedWork}
               edition={edition}
               langKo={langKo}
-              saved={savedIds.has(selectedWork.id)}
-              onSave={() => toggleSave(selectedWork.id)}
+              saved={likedIds.has(selectedWork.id)}
+              onSave={() => toggleSave(selectedWork)}
               onClose={() => setSelectedWork(null)}
               onPrev={() => { if (currentIdx > 0) setSelectedWork(edition.works[currentIdx - 1]); }}
               onNext={() => { if (currentIdx < edition.works.length - 1) setSelectedWork(edition.works[currentIdx + 1]); }}
@@ -2128,16 +2295,17 @@ export default function WeeklyCurationTab({
           )}
         </AnimatePresence>
         {subscribeModal}
+        {authToast}
       </div>
     );
   }
 
   // ── Desktop layout ───────────────────────────────────────────────────────
   if (mode === 'archive') {
-    return <div style={{ paddingBottom: 80 }}>{topNav}{archiveView}{subscribeModal}</div>;
+    return <div style={{ paddingBottom: 80 }}>{topNav}{archiveView}{subscribeModal}{authToast}</div>;
   }
   if (mode === 'special') {
-    return <div style={{ paddingBottom: 80 }}>{topNav}{specialView}{subscribeModal}</div>;
+    return <div style={{ paddingBottom: 80 }}>{topNav}{specialView}{subscribeModal}{authToast}</div>;
   }
 
   return (
@@ -2150,12 +2318,19 @@ export default function WeeklyCurationTab({
         {...tokens}
       />
 
+      {/* Top Save-Curation button — same component as the footer below. The
+          user asked for it at BOTH ends so the CTA is reachable without
+          scrolling through the works list. */}
+      {editionFile && (
+        <SaveCurationButton file={editionFile} langKo={langKo} />
+      )}
+
       <HeroWork
         work={edition.works[0]}
         total={edition.workCount}
         langKo={langKo}
-        saved={savedIds.has(edition.works[0].id)}
-        onSave={() => toggleSave(edition.works[0].id)}
+        saved={likedIds.has(edition.works[0].id)}
+        onSave={() => toggleSave(edition.works[0])}
         onClick={() => setSelectedWork(edition.works[0])}
         {...tokens}
       />
@@ -2169,8 +2344,8 @@ export default function WeeklyCurationTab({
               work={work}
               index={i + 2}
               langKo={langKo}
-              saved={savedIds.has(work.id)}
-              onSave={() => toggleSave(work.id)}
+              saved={likedIds.has(work.id)}
+              onSave={() => toggleSave(work)}
               onClick={() => setSelectedWork(work)}
               {...tokens}
             />
@@ -2188,8 +2363,8 @@ export default function WeeklyCurationTab({
             work={selectedWork}
             edition={edition}
             langKo={langKo}
-            saved={savedIds.has(selectedWork.id)}
-            onSave={() => toggleSave(selectedWork.id)}
+            saved={likedIds.has(selectedWork.id)}
+            onSave={() => toggleSave(selectedWork)}
             onClose={() => setSelectedWork(null)}
             onPrev={() => {
               if (currentIdx > 0) setSelectedWork(edition.works[currentIdx - 1]);
@@ -2201,6 +2376,7 @@ export default function WeeklyCurationTab({
         )}
       </AnimatePresence>
       {subscribeModal}
+      {authToast}
     </div>
   );
 }
