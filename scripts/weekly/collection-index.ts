@@ -1,5 +1,6 @@
 import { readdir, readFile } from 'node:fs/promises';
 import { join } from 'node:path';
+import { pickImageUrl } from '../../src/lib/artwork-image';
 
 export interface IndexedWork {
   artwork_ref: string;          // `${collection}#${id}`
@@ -19,9 +20,9 @@ interface RawWork {
   title?: string;
   artist?: string;
   date?: string;
-  // Different collection JSONs use different field names for the image URL.
-  // Common variants observed: imageUrl (camelCase, AIC-style), image (snake/single
-  // word, SMK/Hirschsprung/Aros/Nasjonal/Met-NY etc.), img, src.
+  // Image-URL field variants are handled by the shared pickImageUrl helper
+  // in src/lib/artwork-image.ts — keep those four fields here so the RawWork
+  // type stays self-documenting when reading source JSONs.
   imageUrl?: string;
   image?: string;
   img?: string;
@@ -30,10 +31,6 @@ interface RawWork {
   category?: string;
   medium?: string;
   thumbnail?: { lqip?: string };
-}
-
-function pickImageUrl(r: RawWork): string | undefined {
-  return r.imageUrl || r.image || r.img || r.src;
 }
 
 interface Index {

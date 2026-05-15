@@ -1,7 +1,7 @@
 // Weekly Curation — editor-curated online exhibition, refreshed every week.
 // Sub-tab of the AI section alongside My Curation & Nearby Exhibition.
 
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import { useSearchParams } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import { BookmarkPlus, Check, X, ChevronLeft, ChevronRight, Lock } from "lucide-react";
@@ -858,7 +858,13 @@ function WeeklyLightbox({
   onNext: () => void;
 }) {
   const currentIdx = edition.works.findIndex(w => w.id === work.id);
+  const total = edition.works.length;
+  const atFirst = currentIdx === 0;
+  const atLast = currentIdx === total - 1;
   const accent = '#D4A547';
+  const [hoverPrev, setHoverPrev] = useState(false);
+  const [hoverNext, setHoverNext] = useState(false);
+  const touchStartX = useRef<number | null>(null);
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
@@ -869,6 +875,19 @@ function WeeklyLightbox({
     window.addEventListener('keydown', handler);
     return () => window.removeEventListener('keydown', handler);
   }, [onClose, onPrev, onNext]);
+
+  const onTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0]?.clientX ?? null;
+  };
+  const onTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX.current === null) return;
+    const dx = (e.changedTouches[0]?.clientX ?? 0) - touchStartX.current;
+    if (Math.abs(dx) > 50) {
+      if (dx < 0) onNext();
+      else onPrev();
+    }
+    touchStartX.current = null;
+  };
 
   return (
     <motion.div
@@ -902,47 +921,104 @@ function WeeklyLightbox({
           <span style={{ ...LABEL, fontSize: 10, color: 'rgba(244,241,234,0.55)' }}>
             Weekly Curation · Week {edition.week}
           </span>
-          <div style={{ width: 1, height: 14, background: 'rgba(255,255,255,0.1)' }} />
-          <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 10, color: 'rgba(244,241,234,0.55)' }}>
-            {String(currentIdx + 1).padStart(2, '0')} / {String(edition.workCount).padStart(2, '0')}
-          </span>
-        </div>
-        <div style={{ display: 'flex', gap: 8 }}>
-          <button onClick={onPrev} disabled={currentIdx === 0} style={{
-            width: 34, height: 34,
-            border: '1px solid rgba(255,255,255,0.12)',
-            background: 'none', cursor: currentIdx === 0 ? 'default' : 'pointer',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            color: 'rgba(255,255,255,0.5)',
-            opacity: currentIdx === 0 ? 0.3 : 1,
-          }}>
-            <ChevronLeft size={15} />
-          </button>
-          <button onClick={onNext} disabled={currentIdx === edition.works.length - 1} style={{
-            width: 34, height: 34,
-            border: '1px solid rgba(255,255,255,0.12)',
-            background: 'none', cursor: currentIdx === edition.works.length - 1 ? 'default' : 'pointer',
-            display: 'flex', alignItems: 'center', justifyContent: 'center',
-            color: 'rgba(255,255,255,0.5)',
-            opacity: currentIdx === edition.works.length - 1 ? 0.3 : 1,
-          }}>
-            <ChevronRight size={15} />
-          </button>
         </div>
       </div>
 
       {/* Body */}
       <div style={{ flex: 1, display: 'grid', gridTemplateColumns: '1fr 400px', overflow: 'hidden' }}>
         {/* Artwork */}
-        <div style={{
-          display: 'flex', alignItems: 'center', justifyContent: 'center',
-          padding: 40, overflow: 'hidden',
-        }}>
+        <div
+          onTouchStart={onTouchStart}
+          onTouchEnd={onTouchEnd}
+          style={{
+            position: 'relative',
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            padding: 40, overflow: 'hidden',
+          }}
+        >
           <div style={{
             maxHeight: '80vh',
             width: `min(${Math.round(work.aspect * 560)}px, 90%)`,
           }}>
             <ArtworkPlaceholder seed={work.seed} aspect={work.aspect} imageUrl={work.imageUrl} alt={`${work.artist} — ${work.title}`} style={{ width: '100%' }} />
+          </div>
+
+          {/* Overlay: Prev */}
+          <button
+            onClick={onPrev}
+            disabled={atFirst}
+            aria-label="Previous artwork"
+            onMouseEnter={() => setHoverPrev(true)}
+            onMouseLeave={() => setHoverPrev(false)}
+            style={{
+              position: 'absolute',
+              left: 24, top: '50%',
+              transform: 'translateY(-50%)',
+              width: 56, height: 56,
+              borderRadius: '50%',
+              background: atFirst
+                ? 'rgba(0,0,0,0.25)'
+                : (hoverPrev ? 'rgba(0,0,0,0.70)' : 'rgba(0,0,0,0.45)'),
+              backdropFilter: 'blur(20px)',
+              border: `1px solid rgba(255,255,255,${atFirst ? 0.08 : (hoverPrev ? 0.32 : 0.18)})`,
+              color: `rgba(255,255,255,${atFirst ? 0.25 : 0.92})`,
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              cursor: atFirst ? 'default' : 'pointer',
+              transition: 'background 0.18s, border-color 0.18s, color 0.18s',
+              opacity: atFirst ? 0.45 : 1,
+              zIndex: 5,
+            }}
+          >
+            <ChevronLeft size={28} strokeWidth={1.75} color="currentColor" />
+          </button>
+
+          {/* Overlay: Next */}
+          <button
+            onClick={onNext}
+            disabled={atLast}
+            aria-label="Next artwork"
+            onMouseEnter={() => setHoverNext(true)}
+            onMouseLeave={() => setHoverNext(false)}
+            style={{
+              position: 'absolute',
+              right: 24, top: '50%',
+              transform: 'translateY(-50%)',
+              width: 56, height: 56,
+              borderRadius: '50%',
+              background: atLast
+                ? 'rgba(0,0,0,0.25)'
+                : (hoverNext ? 'rgba(0,0,0,0.70)' : 'rgba(0,0,0,0.45)'),
+              backdropFilter: 'blur(20px)',
+              border: `1px solid rgba(255,255,255,${atLast ? 0.08 : (hoverNext ? 0.32 : 0.18)})`,
+              color: `rgba(255,255,255,${atLast ? 0.25 : 0.92})`,
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              cursor: atLast ? 'default' : 'pointer',
+              transition: 'background 0.18s, border-color 0.18s, color 0.18s',
+              opacity: atLast ? 0.45 : 1,
+              zIndex: 5,
+            }}
+          >
+            <ChevronRight size={28} strokeWidth={1.75} color="currentColor" />
+          </button>
+
+          {/* Overlay: Position counter */}
+          <div style={{
+            position: 'absolute',
+            bottom: 24, left: '50%',
+            transform: 'translateX(-50%)',
+            padding: '8px 16px',
+            borderRadius: 999,
+            background: 'rgba(0,0,0,0.55)',
+            backdropFilter: 'blur(20px)',
+            border: '1px solid rgba(255,255,255,0.15)',
+            color: 'rgba(255,255,255,0.95)',
+            fontFamily: "'Space Mono', monospace",
+            fontSize: 11,
+            letterSpacing: '0.15em',
+            zIndex: 5,
+            pointerEvents: 'none',
+          }}>
+            {String(currentIdx + 1).padStart(2, '0')} / {String(total).padStart(2, '0')}
           </div>
         </div>
 
