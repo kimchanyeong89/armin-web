@@ -1,3 +1,24 @@
+// ═════════════════════════════════════════════════════════════════════════
+// ▼ SKETCH / DRAWING-GALLERY MODAL — DO NOT USE FOR NEW "INTERACTIVE" UI ▼
+//
+// This file renders the **Sketch (drawing-mode) gallery modal** opened from
+// ExhibitionPage's sketch variant only. CSS prefix: em-*
+//
+// FOR NEW CODE (museum-detail overlay, "open this collection" interactions,
+// anything that should match the Globe tab's behavior), use:
+//   → src/components/InteractiveGlobeMap/InteractiveGlobeRealModal.tsx
+//
+// That's the canonical interactive modal — full toolbar, filters, lightbox,
+// liked-state subscription, etc. This file is kept ONLY because the existing
+// sketch-mode pages still depend on it. Picking this file for an "interactive
+// overlay" use case is a bug.
+//
+// Related files:
+//   - src/components/InteractiveGlobeMap/InteractiveGlobeRealModal.tsx
+//       → the INTERACTIVE modal (canonical; use this)
+//   - src/pages/ExhibitionPage.tsx
+//       → page shell that hosts either modal (ep-* CSS)
+// ═════════════════════════════════════════════════════════════════════════
 import type { ExhibitionItem } from "../types/Exhibition";
 import type { Artwork } from "../types/Artwork";
 import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react';
@@ -789,12 +810,12 @@ const GalleryItem = React.memo(({
               </div>
             </div>
           </div>
-          <div style={{ fontSize: isMobile ? 10 : 12, fontWeight: 700, color: '#222', marginTop: 2 }}>{artwork.name}{artwork.year ? ` (${cleanDateText(artwork.year)})` : (artwork.date && /^\d+c/.test(artwork.date) ? ` (${artwork.date})` : '')}</div>
+          <div style={{ fontFamily: "'Inter', 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif", fontSize: isMobile ? 12 : 13.5, fontWeight: 600, color: '#222', marginTop: 4, lineHeight: 1.35, letterSpacing: 0 }}>{artwork.name}{artwork.year ? ` (${cleanDateText(artwork.year)})` : (artwork.date && /^\d+c/.test(artwork.date) ? ` (${artwork.date})` : '')}</div>
           {(() => {
             const artistStr = cleanArtistName(artwork.artist);
             const isUnknown = !artistStr || artistStr.toLowerCase() === 'unknown artist' || artistStr.toLowerCase() === 'unknown';
             return (
-              <div style={{ fontSize: isMobile ? 9 : 11, color: '#777', marginTop: 2 }}>
+              <div style={{ fontFamily: "'Inter', 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif", fontSize: isMobile ? 11 : 12, fontWeight: 400, color: '#777', marginTop: 3, lineHeight: 1.4, letterSpacing: 0 }}>
                 {isUnknown ? (artistStr || '') : (
                   <span
                     onClick={(e) => { e.stopPropagation(); window.dispatchEvent(new CustomEvent('open-artist-gallery', { detail: { artist: artistStr } })); }}
@@ -851,7 +872,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
   const EM_TEXT = isSketch ? '#111111' : (isDark ? 'rgba(255,255,255,0.88)' : '#222222');
   const EM_SUB = isSketch ? 'rgba(17,17,17,0.48)' : (isDark ? 'rgba(255,255,255,0.50)' : '#666666');
   const EM_BORDER = isSketch ? 'rgba(17,17,17,0.18)' : (isDark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.06)');
-  const EM_BTN_ACTIVE_BG = isSketch ? '#ccff00' : (isDark ? '#ffffff' : '#111111');
+  const EM_BTN_ACTIVE_BG = isSketch ? '#d4a547' : (isDark ? '#ffffff' : '#111111');
   const EM_BTN_ACTIVE_FG = isSketch ? '#111111' : (isDark ? '#111111' : '#ffffff');
   const EM_BTN_INACTIVE_BG = isSketch ? '#ffffff' : (isDark ? 'rgba(255,255,255,0.08)' : '#f2f2f2');
   const EM_BTN_INACTIVE_FG = isSketch ? '#111111' : (isDark ? 'rgba(255,255,255,0.5)' : '#666666');
@@ -1621,15 +1642,23 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
         await setDoc(ref, {
           likedAt: serverTimestamp(),
           artworkId,
+          id: artworkId,
           title: artwork.name || '',
+          name: artwork.name || '',
           artist: artwork.artist || '',
           year: artwork.year || 0,
           image: artwork.image || '',
+          i: artwork.image || '',
+          imageUrl: artwork.image || '',
           youtubeId: artwork.youtubeId || null,
           mediaType: artwork.mediaType || 'image',
           museum: museumName || '',
+          museumName: museumName || '',
           exhibitionId: exhibition.id || '',
+          sourceCollection: exhibition.id || '',
           exhibitionName: exhibition.name || '',
+          sourceUrl: String((artwork as any).sourceUrl || (artwork as any).url || (artwork as any).detailUrl || (artwork as any).officialUrl || ''),
+          detailUrl: String((artwork as any).detailUrl || (artwork as any).officialUrl || (artwork as any).url || ''),
         });
         // Increment global count
         await setDoc(statsRef, { likeCount: increment(1), artworkId }, { merge: true });

@@ -30,9 +30,18 @@ import {
   type ExhibitionLookupResult,
 } from "../lib/find-exhibition";
 
-// Lazy so the curation tab doesn't drag in the full ExhibitionModal bundle
-// unless a user actually clicks a museum link.
-const ExhibitionModal = lazy(() => import("./ExhibitionModal"));
+// Lazy so the curation tab doesn't drag in the full modal bundle unless a
+// user actually clicks a museum link.
+//
+// IMPORTANT: this is InteractiveGlobeRealModal — the interactive overlay
+// the rest of the app uses for "view a collection in place." It is NOT
+// `./ExhibitionModal.tsx` (that one is the older static modal and is
+// deprecated for new code; see the header in that file).
+const InteractiveGlobeRealModal = lazy(() =>
+  import("./InteractiveGlobeMap/InteractiveGlobeRealModal").then((m) => ({
+    default: m.InteractiveGlobeRealModal,
+  })),
+);
 
 // ── Types ──────────────────────────────────────────────────────────────────
 
@@ -2294,22 +2303,25 @@ export default function WeeklyCurationTab({
     />
   );
 
-  // Museum overlay — clicks on museum names mount ExhibitionModal in place
-  // on top of the current curation view. Shared across mobile and desktop
-  // layouts and across all top-nav modes (this-week / archive / special).
-  // Theme is fixed to 'dark' (default variant) because the AI tab itself
-  // is the dark luxury surface.
-  const museumOverlay = exhibitionOverlay ? (
-    <Suspense fallback={null}>
-      <ExhibitionModal
-        exhibition={exhibitionOverlay.exhibition}
-        museumName={exhibitionOverlay.museum.name}
-        onClose={closeExhibitionOverlay}
-        variant="default"
-        theme="dark"
-      />
-    </Suspense>
-  ) : null;
+  // Museum overlay — clicks on museum names mount InteractiveGlobeRealModal
+  // in place on top of the current curation view. This is the same
+  // interactive modal the Globe tab uses (full toolbar, filters, lightbox,
+  // saved-state etc.) — NOT the older static ExhibitionModal. Shared across
+  // mobile and desktop layouts and across all top-nav modes. Theme is fixed
+  // to 'dark' because the AI tab itself is the dark luxury surface.
+  const museumOverlay = (
+    <AnimatePresence>
+      {exhibitionOverlay && (
+        <Suspense fallback={null}>
+          <InteractiveGlobeRealModal
+            exhibition={exhibitionOverlay.exhibition as any}
+            theme="dark"
+            onClose={closeExhibitionOverlay}
+          />
+        </Suspense>
+      )}
+    </AnimatePresence>
+  );
 
   // Inline toast for sign-in feedback when a per-work save is clicked while
   // signed out. The web build has no global handler that opens a login modal
