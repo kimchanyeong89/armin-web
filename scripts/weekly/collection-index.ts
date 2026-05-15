@@ -19,11 +19,21 @@ interface RawWork {
   title?: string;
   artist?: string;
   date?: string;
+  // Different collection JSONs use different field names for the image URL.
+  // Common variants observed: imageUrl (camelCase, AIC-style), image (snake/single
+  // word, SMK/Hirschsprung/Aros/Nasjonal/Met-NY etc.), img, src.
   imageUrl?: string;
+  image?: string;
+  img?: string;
+  src?: string;
   sourceUrl?: string;
   category?: string;
   medium?: string;
   thumbnail?: { lqip?: string };
+}
+
+function pickImageUrl(r: RawWork): string | undefined {
+  return r.imageUrl || r.image || r.img || r.src;
 }
 
 interface Index {
@@ -66,7 +76,8 @@ export async function buildIndex(): Promise<Index> {
     }
     const rows: RawWork[] = Array.isArray(parsed) ? parsed as RawWork[] : [];
     for (const r of rows) {
-      if (!r.imageUrl || !r.artist) continue;
+      const imageUrl = pickImageUrl(r);
+      if (!imageUrl || !r.artist) continue;
       const artist = normalizeArtist(r.artist);
       const work: IndexedWork = {
         artwork_ref: `${collection}#${r.id ?? ''}`,
@@ -74,7 +85,7 @@ export async function buildIndex(): Promise<Index> {
         artist,
         title: r.title ?? '(untitled)',
         year: r.date ?? '',
-        image_url: r.imageUrl,
+        image_url: imageUrl,
         source_url: r.sourceUrl ?? '',
         lqip: r.thumbnail?.lqip,
         category: r.category,
