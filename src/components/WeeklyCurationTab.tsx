@@ -3,8 +3,14 @@
 
 import React, { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { BookmarkPlus, Check, X, ChevronLeft, ChevronRight } from "lucide-react";
-import { fetchCurrentCuration } from "../lib/weekly";
+import { BookmarkPlus, Check, X, ChevronLeft, ChevronRight, Lock } from "lucide-react";
+import {
+  fetchCurrentCuration,
+  fetchArchiveList,
+  fetchSpecialList,
+  type ArchiveEntry,
+  type SpecialEntry,
+} from "../lib/weekly";
 import type { WeeklyPublishedFile, PersonaId } from "../types/weekly";
 
 // ── Types ──────────────────────────────────────────────────────────────────
@@ -1436,6 +1442,287 @@ function MobileWorkDetail({
   );
 }
 
+// ── Top navigation strip ──────────────────────────────────────────────────
+
+type WeeklyMode = 'this-week' | 'archive' | 'special';
+
+function WeeklyTopNav({
+  mode, setMode, langKo,
+  fg, fgLow, divider,
+}: {
+  mode: WeeklyMode;
+  setMode: (m: WeeklyMode) => void;
+  langKo: boolean;
+  fg: string;
+  fgLow: string;
+  divider: string;
+}) {
+  const accent = '#D4A547';
+  const tabs: Array<{ id: WeeklyMode; label: string; labelKo: string }> = [
+    { id: 'this-week', label: 'This Week',  labelKo: '이번 주' },
+    { id: 'archive',   label: 'Archive',    labelKo: '지난 주' },
+    { id: 'special',   label: 'Special',    labelKo: '특집' },
+  ];
+
+  return (
+    <div style={{
+      display: 'flex', gap: 24,
+      padding: 'clamp(16px, 3vw, 24px) clamp(20px, 4vw, 56px)',
+      borderBottom: `0.5px solid ${divider}`,
+    }}>
+      {tabs.map(tab => {
+        const active = mode === tab.id;
+        return (
+          <button
+            key={tab.id}
+            onClick={() => setMode(tab.id)}
+            style={{
+              ...LABEL,
+              fontSize: 10,
+              background: 'transparent',
+              border: 'none',
+              color: active ? fg : fgLow,
+              borderBottom: active ? `1px solid ${accent}` : '1px solid transparent',
+              padding: '4px 0',
+              cursor: 'pointer',
+              transition: 'color 0.15s, border-color 0.15s',
+            }}
+          >
+            {langKo ? tab.labelKo : tab.label}
+          </button>
+        );
+      })}
+    </div>
+  );
+}
+
+// ── Grid card (shared by Archive + Special) ───────────────────────────────
+
+function GridCard({
+  imageUrl, eyebrow, titlePrimary, titleSecondary, locked, onClick,
+  fg, fgMed, fgFaint, divider,
+}: {
+  imageUrl: string;
+  eyebrow: string;
+  titlePrimary: string;
+  titleSecondary: string;
+  locked: boolean;
+  onClick: () => void;
+  fg: string;
+  fgMed: string;
+  fgFaint: string;
+  divider: string;
+}) {
+  const accent = '#D4A547';
+  const [hov, setHov] = useState(false);
+
+  return (
+    <div
+      onClick={onClick}
+      onMouseEnter={() => setHov(true)}
+      onMouseLeave={() => setHov(false)}
+      style={{
+        position: 'relative',
+        cursor: 'pointer',
+        border: `0.5px solid ${divider}`,
+        background: 'rgba(255,255,255,0.02)',
+        overflow: 'hidden',
+        outline: hov ? `1px solid ${accent}` : '1px solid transparent',
+        transition: 'outline 0.15s',
+      }}
+    >
+      <div style={{ position: 'relative', aspectRatio: '4/3', overflow: 'hidden', background: 'rgba(255,255,255,0.03)' }}>
+        {imageUrl ? (
+          <img
+            src={imageUrl}
+            alt={titlePrimary}
+            loading="lazy"
+            style={{
+              width: '100%', height: '100%', objectFit: 'cover', display: 'block',
+              filter: locked ? 'grayscale(0.6) brightness(0.5)' : 'none',
+              transition: 'filter 0.2s',
+            }}
+            onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none'; }}
+          />
+        ) : null}
+        {locked && (
+          <div style={{
+            position: 'absolute', inset: 0,
+            display: 'flex', alignItems: 'center', justifyContent: 'center',
+            pointerEvents: 'none',
+          }}>
+            <Lock size={28} color="rgba(255,255,255,0.9)" />
+          </div>
+        )}
+      </div>
+      <div style={{ padding: 16 }}>
+        <div style={{ ...LABEL, fontSize: 9, color: accent, marginBottom: 6 }}>
+          {eyebrow}
+        </div>
+        <h3 style={{
+          ...HEADING, fontSize: 16, lineHeight: 1.25, color: fg,
+          letterSpacing: '-0.018em', marginBottom: 4,
+        }}>
+          {titlePrimary}
+        </h3>
+        <p style={{ ...BODY, fontSize: 11, color: fgMed, marginTop: 0 }}>
+          {titleSecondary}
+        </p>
+        {locked && (
+          <div style={{
+            marginTop: 10,
+            ...LABEL, fontSize: 8, color: fgFaint,
+          }}>
+            구독자 전용 · Subscribers only
+          </div>
+        )}
+      </div>
+    </div>
+  );
+}
+
+// ── Archive grid ──────────────────────────────────────────────────────────
+
+function ArchiveGrid({
+  entries, loading, langKo, onSelectWeek, onLockedClick,
+  fg, fgMed, fgFaint, divider,
+}: {
+  entries: ArchiveEntry[];
+  loading: boolean;
+  langKo: boolean;
+  onSelectWeek: (week: string) => void;
+  onLockedClick: () => void;
+  fg: string;
+  fgMed: string;
+  fgFaint: string;
+  divider: string;
+}) {
+  if (loading) {
+    return (
+      <div style={{
+        padding: 'clamp(40px,6vw,80px)', textAlign: 'center',
+        ...LABEL, fontSize: 11, color: fgFaint,
+      }}>
+        Loading archive…
+      </div>
+    );
+  }
+
+  if (entries.length === 0) {
+    return (
+      <div style={{
+        padding: 'clamp(40px,6vw,80px)', textAlign: 'center',
+        ...LABEL, fontSize: 11, color: fgFaint,
+      }}>
+        No archived editions yet.
+      </div>
+    );
+  }
+
+  // Most-recent 4 unlocked; everything older is locked.
+  const UNLOCKED_COUNT = 4;
+
+  return (
+    <div style={{
+      display: 'grid',
+      gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
+      gap: 16,
+      padding: 'clamp(20px, 4vw, 32px)',
+    }}>
+      {entries.map((entry, i) => {
+        const locked = i >= UNLOCKED_COUNT;
+        const weekLabel = entry.week.replace('-W', ' · WEEK ');
+        const worksCount = entry.works_count;
+        return (
+          <GridCard
+            key={entry.week}
+            imageUrl={entry.hero_image_url}
+            eyebrow={weekLabel}
+            titlePrimary={langKo ? entry.title_ko : entry.title_en}
+            titleSecondary={`${entry.persona_id} · ${worksCount}${langKo ? '점' : ' works'}`}
+            locked={locked}
+            onClick={locked ? onLockedClick : () => onSelectWeek(entry.week)}
+            fg={fg}
+            fgMed={fgMed}
+            fgFaint={fgFaint}
+            divider={divider}
+          />
+        );
+      })}
+    </div>
+  );
+}
+
+// ── Special series grid ───────────────────────────────────────────────────
+
+function SpecialGrid({
+  entries, loading, langKo, onSelectSpecial, onLockedClick,
+  fg, fgMed, fgFaint, divider,
+}: {
+  entries: SpecialEntry[];
+  loading: boolean;
+  langKo: boolean;
+  onSelectSpecial: (slug: string) => void;
+  onLockedClick: () => void;
+  fg: string;
+  fgMed: string;
+  fgFaint: string;
+  divider: string;
+}) {
+  if (loading) {
+    return (
+      <div style={{
+        padding: 'clamp(40px,6vw,80px)', textAlign: 'center',
+        ...LABEL, fontSize: 11, color: fgFaint,
+      }}>
+        Loading specials…
+      </div>
+    );
+  }
+
+  if (entries.length === 0) {
+    return (
+      <div style={{
+        padding: 'clamp(40px,6vw,80px)', textAlign: 'center',
+        ...LABEL, fontSize: 11, color: fgFaint,
+      }}>
+        {langKo ? '특집이 곧 공개됩니다.' : 'Special editions coming soon.'}
+      </div>
+    );
+  }
+
+  // Most-recent 1 unlocked.
+  const UNLOCKED_COUNT = 1;
+
+  return (
+    <div style={{
+      display: 'grid',
+      gridTemplateColumns: 'repeat(auto-fill, minmax(280px, 1fr))',
+      gap: 16,
+      padding: 'clamp(20px, 4vw, 32px)',
+    }}>
+      {entries.map((entry, i) => {
+        const locked = i >= UNLOCKED_COUNT;
+        return (
+          <GridCard
+            key={entry.slug}
+            imageUrl={entry.hero_image_url}
+            eyebrow={`SPECIAL · ${entry.lens.toUpperCase()}`}
+            titlePrimary={langKo ? entry.title_ko : entry.title_en}
+            titleSecondary={`${entry.persona_id} · ${entry.source_week}`}
+            locked={locked}
+            onClick={locked ? onLockedClick : () => onSelectSpecial(entry.slug)}
+            fg={fg}
+            fgMed={fgMed}
+            fgFaint={fgFaint}
+            divider={divider}
+          />
+        );
+      })}
+    </div>
+  );
+}
+
 // ── Main exported component ────────────────────────────────────────────────
 
 export type WeeklyCurationTabProps = {
@@ -1463,6 +1750,14 @@ export default function WeeklyCurationTab({
   const [savedIds, setSavedIds] = useState<Set<string>>(new Set());
   const [isMobile, setIsMobile] = useState(() => typeof window !== 'undefined' && window.innerWidth < 768);
 
+  // Top-nav mode + archive/special data (kept above the early return below
+  // so hook order stays stable across renders).
+  const [mode, setMode] = useState<WeeklyMode>('this-week');
+  const [archiveEntries, setArchiveEntries] = useState<ArchiveEntry[]>([]);
+  const [archiveLoading, setArchiveLoading] = useState(true);
+  const [specialEntries, setSpecialEntries] = useState<SpecialEntry[]>([]);
+  const [specialLoading, setSpecialLoading] = useState(true);
+
   useEffect(() => {
     let cancelled = false;
     fetchCurrentCuration()
@@ -1484,6 +1779,55 @@ export default function WeeklyCurationTab({
       })
       .catch(() => { setEdition(WEEKLY_EDITIONS[0]); });
     return () => { cancelled = true; };
+  }, []);
+
+  // Lazy-load archive + special lists on mount. Both helpers handle 404s
+  // and network errors gracefully.
+  useEffect(() => {
+    let cancelled = false;
+    fetchArchiveList()
+      .then((rows) => { if (!cancelled) setArchiveEntries(rows); })
+      .catch(() => { /* keep empty */ })
+      .finally(() => { if (!cancelled) setArchiveLoading(false); });
+    fetchSpecialList()
+      .then((rows) => { if (!cancelled) setSpecialEntries(rows); })
+      .catch(() => { /* keep empty */ })
+      .finally(() => { if (!cancelled) setSpecialLoading(false); });
+    return () => { cancelled = true; };
+  }, []);
+
+  const handleLockedClick = useCallback(() => {
+    // V1 stub. A follow-up task wires the Toss Payments subscribe modal.
+    // eslint-disable-next-line no-console
+    console.log('Subscribe prompt — wire payment modal next');
+  }, []);
+
+  const handleSelectArchiveWeek = useCallback(async (week: string) => {
+    try {
+      const res = await fetch(`/data/weekly-curations/${week}.json`);
+      if (!res.ok) return;
+      const file = await res.json() as WeeklyPublishedFile;
+      setEdition(adaptPublishedToEdition(file));
+      setMode('this-week');
+      if (typeof window !== 'undefined') window.scrollTo({ top: 0, behavior: 'smooth' });
+    } catch {
+      // Silent failure: leave the user on archive view.
+    }
+  }, []);
+
+  const handleSelectSpecial = useCallback(async (slug: string) => {
+    try {
+      const res = await fetch(`/data/special-series/${slug}.json`);
+      if (!res.ok) return;
+      // Special-series files extend the WeeklyCard shape with the same
+      // published-file fields adaptPublishedToEdition expects.
+      const file = await res.json() as WeeklyPublishedFile;
+      setEdition(adaptPublishedToEdition(file));
+      setMode('this-week');
+      if (typeof window !== 'undefined') window.scrollTo({ top: 0, behavior: 'smooth' });
+    } catch {
+      // Silent failure.
+    }
   }, []);
 
   // Skeleton: brief flash while fetching. Acceptable for V1.
@@ -1521,10 +1865,56 @@ export default function WeeklyCurationTab({
 
   const tokens = { t, fg, fgMed, fgLow, fgFaint, divider };
 
+  const topNav = (
+    <WeeklyTopNav
+      mode={mode}
+      setMode={setMode}
+      langKo={langKo}
+      fg={fg}
+      fgLow={fgLow}
+      divider={divider}
+    />
+  );
+
+  const archiveView = (
+    <ArchiveGrid
+      entries={archiveEntries}
+      loading={archiveLoading}
+      langKo={langKo}
+      onSelectWeek={handleSelectArchiveWeek}
+      onLockedClick={handleLockedClick}
+      fg={fg}
+      fgMed={fgMed}
+      fgFaint={fgFaint}
+      divider={divider}
+    />
+  );
+
+  const specialView = (
+    <SpecialGrid
+      entries={specialEntries}
+      loading={specialLoading}
+      langKo={langKo}
+      onSelectSpecial={handleSelectSpecial}
+      onLockedClick={handleLockedClick}
+      fg={fg}
+      fgMed={fgMed}
+      fgFaint={fgFaint}
+      divider={divider}
+    />
+  );
+
   // ── Mobile layout ────────────────────────────────────────────────────────
   if (isMobile) {
+    if (mode === 'archive') {
+      return <div style={{ paddingBottom: 80 }}>{topNav}{archiveView}</div>;
+    }
+    if (mode === 'special') {
+      return <div style={{ paddingBottom: 80 }}>{topNav}{specialView}</div>;
+    }
     return (
       <div style={{ paddingBottom: 80 }}>
+        {topNav}
         <MobileEditionHeader edition={edition} langKo={langKo} {...tokens} />
 
         <MobileHeroWork
@@ -1584,8 +1974,16 @@ export default function WeeklyCurationTab({
   }
 
   // ── Desktop layout ───────────────────────────────────────────────────────
+  if (mode === 'archive') {
+    return <div style={{ paddingBottom: 80 }}>{topNav}{archiveView}</div>;
+  }
+  if (mode === 'special') {
+    return <div style={{ paddingBottom: 80 }}>{topNav}{specialView}</div>;
+  }
+
   return (
     <div style={{ paddingBottom: 80 }}>
+      {topNav}
       <EditionHeader
         edition={edition}
         langKo={langKo}
