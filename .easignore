@@ -6,6 +6,9 @@ downloads/
 workers/
 google-cloud-sdk/
 node_modules/
+amcharts5/
+world.geo.json-master/
+raw-artworks/
 
 # Build/test/temp outputs
 logs/
@@ -14,6 +17,7 @@ coverage/
 .temp/
 tmp/
 temp*/
+temp-tate-*/
 
 # Misc large local artifacts
 *.log
@@ -21,9 +25,47 @@ temp*/
 *.tar
 *.tar.gz
 *.tgz
+*.csv
+*.aab
+*.ipa
+
+# Embedding pipeline state and outputs (large, regenerable)
+siglip_*.jsonl
+siglip_*.json
+siglip_*.txt
+siglip_*.bak
+siglip_*.log
+.embedding-progress*
+permanent_missing_pending.jsonl
+upload_stuck_progress.json
+upload_progress.json
+vectors_to_delete.json
+
+# Local scrape state and debug dumps
+*-progress.json
+*-state.json
+*-checkpoint.json
+debug-*.json
+sweden-solr-*.json
+hkmoa-collection.json
+universal_placeholder_state.json
+ddb_*.html
+ExhibitionModal_*.tsx
 
 # Keep mobile app and shared package source
 !apps/mobile/
 !apps/mobile/**
 !packages/shared/
 !packages/shared/**
+
+# ── Exclude heavy generated dirs inside mobile (re-applied after the !includes above) ──
+apps/mobile/node_modules/
+apps/mobile/android/
+apps/mobile/ios/Pods/
+apps/mobile/ios/build/
+apps/mobile/.expo/
+apps/mobile/build/
+apps/mobile/armin-mobile-production.aab
+apps/mobile/build-*.ipa
+apps/mobile/build-*.aab
+apps/mobile/ios-*.png

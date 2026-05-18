@@ -1,0 +1,572 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=1640" />
+<title>Armin · Typography Redesign — A / B / C 비교</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Inter:wght@300;400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; background: #050505; color: #fff; }
+  body {
+    font-family: 'Inter', 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+    -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
+  }
+
+  /* ── Page chrome ────────────────────────────────────────── */
+  .topbar {
+    position: sticky; top: 0; z-index: 10;
+    background: #050505;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    padding: 18px 28px;
+    display: flex; align-items: baseline; gap: 18px;
+  }
+  .topbar h1 { font-size: 17px; font-weight: 600; letter-spacing: 0.01em; margin: 0; }
+  .topbar p  { font-size: 13px; color: rgba(255,255,255,0.5); margin: 0; }
+
+  .grid {
+    display: grid;
+    grid-template-columns: 260px repeat(4, 1fr);
+    gap: 0;
+    min-height: calc(100vh - 60px);
+  }
+
+  /* Row labels on the left */
+  .row-labels {
+    border-right: 1px solid rgba(255,255,255,0.08);
+    background: #050505;
+    padding: 20px 18px;
+  }
+  .row-labels .row {
+    height: 360px;
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 16px 0;
+    border-bottom: 1px dashed rgba(255,255,255,0.08);
+  }
+  .row-labels .row:last-child { border-bottom: none; }
+  .row-labels .row-num {
+    font: 700 11px/1 'Space Mono', monospace;
+    color: rgba(255,255,255,0.4);
+    letter-spacing: 0.18em;
+    margin-bottom: 8px;
+  }
+  .row-labels .row-title {
+    font: 600 15px/1.4 'Inter', sans-serif;
+    color: rgba(255,255,255,0.92);
+  }
+  .row-labels .row-desc {
+    font: 400 12px/1.55 'Inter', sans-serif;
+    color: rgba(255,255,255,0.55);
+    margin-top: 6px;
+  }
+
+  /* Variant columns */
+  .col {
+    border-right: 1px solid rgba(255,255,255,0.08);
+    padding: 0;
+    display: flex; flex-direction: column;
+  }
+  .col:last-child { border-right: none; }
+  .col-head {
+    position: sticky; top: 60px; z-index: 5;
+    padding: 18px 22px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    background: #050505;
+  }
+  .col-head .tag {
+    display: inline-block;
+    font: 700 10px/1 'Space Mono', monospace;
+    letter-spacing: 0.2em;
+    color: #CCFF00;
+    border: 1px solid rgba(204,255,0,0.45);
+    padding: 5px 8px;
+    border-radius: 2px;
+    margin-bottom: 10px;
+  }
+  .col-head h2 { font: 700 22px/1.2 'Inter', sans-serif; margin: 0 0 6px; }
+  .col-head h2 small { display: block; font-size: 13px; font-weight: 400; color: rgba(255,255,255,0.55); margin-top: 4px; }
+  .col-head .tokens {
+    margin-top: 12px;
+    font: 400 11px/1.55 'Space Mono', monospace;
+    color: rgba(255,255,255,0.6);
+    white-space: pre-line;
+  }
+  .col-body { display: flex; flex-direction: column; }
+  .cell {
+    height: 360px;
+    padding: 22px;
+    border-bottom: 1px dashed rgba(255,255,255,0.08);
+    overflow: hidden;
+  }
+  .cell:last-child { border-bottom: none; }
+
+  /* ═══════════════════════════════════════════════════════════════
+     CURRENT (baseline) — same defaults as the live app
+  ═══════════════════════════════════════════════════════════════ */
+  .v-current {
+    --bg: #111111;
+    --text: #FFFFFF;
+    --dim: rgba(255,255,255,0.35);
+    --dim-mid: rgba(255,255,255,0.56);
+    --accent: #CCFF00;
+    --line: rgba(255,255,255,0.08);
+    --line-strong: rgba(255,255,255,0.18);
+    --body-font: 'Space Mono', monospace;
+    --body-weight: 700;
+    --label-spacing: 0.15em;
+  }
+
+  /* ═══════════════════════════════════════════════════════════════
+     A — SUBTLE LIFT (절제)
+     Same palette, but lift contrast + lighten weight + tighten letter-spacing
+  ═══════════════════════════════════════════════════════════════ */
+  .v-a {
+    --bg: #111111;
+    --text: rgba(255,255,255,0.96);
+    --dim: rgba(255,255,255,0.66);
+    --dim-mid: rgba(255,255,255,0.78);
+    --accent: #DDFF33;
+    --line: rgba(255,255,255,0.10);
+    --line-strong: rgba(255,255,255,0.22);
+    --body-font: 'Space Mono', monospace;
+    --body-weight: 500;
+    --label-spacing: 0.10em;
+  }
+
+  /* ═══════════════════════════════════════════════════════════════
+     B — EDITORIAL (에디토리얼)
+     Mono only for labels; body switches to humanist sans (Inter) for clarity
+  ═══════════════════════════════════════════════════════════════ */
+  .v-b {
+    --bg: #0E0E10;
+    --text: #F4F1EA;
+    --dim: rgba(244,241,234,0.74);
+    --dim-mid: rgba(244,241,234,0.86);
+    --accent: #C8FF3D;
+    --line: rgba(244,241,234,0.10);
+    --line-strong: rgba(244,241,234,0.25);
+    --body-font: 'Inter', 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+    --body-weight: 400;
+    --label-spacing: 0.14em;
+  }
+
+  /* ═══════════════════════════════════════════════════════════════
+     C — MUSEUM / WARM PAPER (박물관)
+     Warm charcoal + parchment cream + serif body for editorial text
+  ═══════════════════════════════════════════════════════════════ */
+  .v-c {
+    --bg: #14110D;
+    --text: #ECE3D0;
+    --dim: rgba(236,227,208,0.78);
+    --dim-mid: rgba(236,227,208,0.88);
+    --accent: #E8D269;
+    --line: rgba(236,227,208,0.10);
+    --line-strong: rgba(236,227,208,0.28);
+    --body-font: 'Cormorant Garamond', 'Apple SD Gothic Neo', 'Noto Serif KR', serif;
+    --body-weight: 500;
+    --label-spacing: 0.16em;
+  }
+
+  /* ═══════════════════════════════════════════════════════════════
+     SHARED FRAGMENT STYLES (use variables only — no hardcoded colors)
+  ═══════════════════════════════════════════════════════════════ */
+  .frag {
+    background: var(--bg);
+    color: var(--text);
+    height: 100%;
+    border-radius: 6px;
+    border: 1px solid var(--line);
+    padding: 18px;
+    display: flex; flex-direction: column;
+    overflow: hidden;
+  }
+
+  /* ── Fragment 1: Museum detail card (numbered) ── */
+  .frag-museum .ep-card-num {
+    font: 700 10px/1 'Space Mono', monospace;
+    color: var(--dim);
+    letter-spacing: var(--label-spacing);
+    margin-bottom: 14px;
+  }
+  .frag-museum .ep-card-image {
+    background: linear-gradient(135deg, #4a3520 0%, #8b5a3c 50%, #c89167 100%);
+    height: 170px;
+    border-radius: 3px;
+    margin-bottom: 14px;
+    position: relative;
+    overflow: hidden;
+  }
+  .frag-museum .ep-card-image::after {
+    content: '';
+    position: absolute; inset: 12px;
+    border: 8px solid rgba(0,0,0,0.35);
+    border-radius: 2px;
+    box-shadow: inset 0 0 60px rgba(0,0,0,0.4);
+  }
+  .frag-museum .ep-card-title {
+    font-family: var(--body-font);
+    font-weight: var(--body-weight);
+    font-size: 14px;
+    line-height: 1.35;
+    color: var(--text);
+    margin-bottom: 6px;
+  }
+  .v-current .frag-museum .ep-card-title { font-size: 13px; }
+  .v-b .frag-museum .ep-card-title { font-weight: 600; }
+  .v-c .frag-museum .ep-card-title { font-size: 18px; line-height: 1.25; }
+  .frag-museum .ep-card-year {
+    font-family: 'Space Mono', monospace;
+    font-weight: 400;
+    color: var(--dim);
+  }
+  .v-current .frag-museum .ep-card-year { font-weight: 700; }
+  .frag-museum .ep-card-sub {
+    font-family: var(--body-font);
+    font-weight: var(--body-weight);
+    font-size: 12px;
+    line-height: 1.45;
+    color: var(--dim);
+    margin-top: 4px;
+  }
+  .v-current .frag-museum .ep-card-sub { font-size: 11px; letter-spacing: 0.05em; }
+  .v-c .frag-museum .ep-card-sub { font-size: 14px; font-style: italic; }
+
+  /* ── Fragment 2: Weekly curation sidebar ── */
+  .frag-weekly { padding: 16px 18px; }
+  .frag-weekly .row-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px 18px;
+  }
+  .frag-weekly .field-label {
+    font-family: 'Space Mono', monospace;
+    font-weight: 700;
+    font-size: 10px;
+    letter-spacing: var(--label-spacing);
+    color: var(--dim);
+    text-transform: uppercase;
+    margin-bottom: 6px;
+  }
+  .frag-weekly .field-value {
+    font-family: var(--body-font);
+    font-weight: var(--body-weight);
+    font-size: 15px;
+    line-height: 1.3;
+    color: var(--text);
+  }
+  .v-current .frag-weekly .field-value { font-size: 14px; }
+  .v-b .frag-weekly .field-value { font-weight: 500; }
+  .v-c .frag-weekly .field-value { font-size: 19px; }
+
+  .frag-weekly .editor-row {
+    display: flex; align-items: center; gap: 12px;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--line);
+    margin-bottom: 14px;
+  }
+  .frag-weekly .editor-avatar {
+    width: 38px; height: 38px; border-radius: 50%;
+    background: linear-gradient(135deg, #5a6b3a, #c4ff3d);
+    display: flex; align-items: center; justify-content: center;
+    font: 700 16px 'Space Mono', monospace;
+    color: #0c0c0c;
+    flex-shrink: 0;
+  }
+  .frag-weekly .editor-name {
+    font-family: var(--body-font);
+    font-weight: 600;
+    font-size: 15px;
+    color: var(--text);
+  }
+  .v-c .frag-weekly .editor-name { font-size: 18px; }
+  .frag-weekly .editor-meta {
+    font-family: 'Space Mono', monospace;
+    font-weight: 400;
+    font-size: 10px;
+    letter-spacing: var(--label-spacing);
+    color: var(--dim);
+    text-transform: uppercase;
+    margin-top: 3px;
+  }
+
+  /* ── Fragment 3: Artist wiki + map info ── */
+  .frag-artist .bio {
+    font-family: var(--body-font);
+    font-weight: var(--body-weight);
+    font-size: 14px;
+    line-height: 1.55;
+    color: var(--dim-mid);
+  }
+  .v-current .frag-artist .bio { font-size: 13px; line-height: 1.45; }
+  .v-b .frag-artist .bio { font-size: 15px; line-height: 1.65; color: var(--text); }
+  .v-c .frag-artist .bio { font-size: 17px; line-height: 1.55; color: var(--text); }
+  .frag-artist .museum-list {
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid var(--line);
+    display: grid; grid-template-columns: 1fr auto; gap: 6px 12px;
+    font-family: 'Space Mono', monospace;
+    font-weight: 400;
+    font-size: 12px;
+    color: var(--dim-mid);
+  }
+  .v-current .frag-artist .museum-list { font-size: 11px; font-weight: 700; color: var(--dim); }
+  .frag-artist .museum-list .count { color: var(--text); }
+
+  /* Wrap each fragment in its variant class container */
+  .skin { display: contents; }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <h1>Armin · Typography Redesign</h1>
+  <p>현재 상태 / 변형 A / 변형 B / 변형 C — 동일한 콘텐츠를 네 가지 토큰으로 렌더링</p>
+</div>
+
+<div class="grid">
+
+  <!-- ─── Row labels (left column) ─── -->
+  <aside class="row-labels">
+    <div class="row">
+      <div class="row-num">01 · MUSEUM DETAIL</div>
+      <div class="row-title">미술관 페이지의 작품 카드</div>
+      <div class="row-desc">번호, 작품명, 연도, 작가 — 현재 가장 작고 흐린 텍스트가 모이는 부분.</div>
+    </div>
+    <div class="row">
+      <div class="row-num">02 · WEEKLY CURATION</div>
+      <div class="row-title">주간 큐레이션 사이드바</div>
+      <div class="row-desc">에디터·테마·작품 수·시기 등 메타데이터. 라벨과 값의 위계가 약함.</div>
+    </div>
+    <div class="row">
+      <div class="row-num">03 · ARTIST + MAP</div>
+      <div class="row-title">작가 위키 본문 + 컬렉션 분포</div>
+      <div class="row-desc">긴 본문 단락과 박물관 목록. 본문 폰트가 가독성을 가장 크게 좌우.</div>
+    </div>
+  </aside>
+
+  <!-- ═════════════════ CURRENT (baseline) ═════════════════ -->
+  <div class="col v-current">
+    <header class="col-head">
+      <span class="tag" style="color:rgba(255,255,255,0.45); border-color:rgba(255,255,255,0.25)">CURRENT</span>
+      <h2>현재 상태<small>지금 라이브 화면 — 기준선</small></h2>
+      <div class="tokens">font: Space Mono 700
+text: #FFFFFF
+dim:  rgba(255,255,255,0.35)
+size: 10–13px
+letter: 0.15em</div>
+    </header>
+    <div class="col-body">
+
+      <!-- Row 1 -->
+      <div class="cell">
+        <div class="frag frag-museum">
+          <div class="ep-card-num">01 / 2666</div>
+          <div class="ep-card-image"></div>
+          <div class="ep-card-title">Marché à Gisors <span class="ep-card-year">(1890)</span></div>
+          <div class="ep-card-sub">Camille Pissarro</div>
+        </div>
+      </div>
+
+      <!-- Row 2 -->
+      <div class="cell">
+        <div class="frag frag-weekly">
+          <div class="editor-row">
+            <div class="editor-avatar">Y</div>
+            <div>
+              <div class="editor-name">Yuna Choi</div>
+              <div class="editor-meta">SENIOR EDITOR · ARMIN</div>
+            </div>
+          </div>
+          <div class="row-grid">
+            <div><div class="field-label">THEME</div><div class="field-value">조용한 빛</div></div>
+            <div><div class="field-label">WORKS</div><div class="field-value">6점</div></div>
+            <div><div class="field-label">PERIOD</div><div class="field-value">4 Centuries</div></div>
+            <div><div class="field-label">EDITION</div><div class="field-value">Week 20</div></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Row 3 -->
+      <div class="cell">
+        <div class="frag frag-artist">
+          <div class="bio">Vincent Willem van Gogh was a Dutch Post-Impressionist painter who is among the most famous and influential figures in the history of Western art. In just over a decade he created about 2,100 artworks.</div>
+          <div class="museum-list">
+            <span>Van Gogh Museum</span><span class="count">1.0k</span>
+            <span>Kröller-Müller Museum</span><span class="count">84</span>
+            <span>National Gallery of Art</span><span class="count">23</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═════════════════ VARIANT A · SUBTLE LIFT ═════════════════ -->
+  <div class="col v-a">
+    <header class="col-head">
+      <span class="tag">A · 절제</span>
+      <h2>Subtle Lift<small>같은 톤, 대비·무게·간격만 조정</small></h2>
+      <div class="tokens">font: Space Mono 500
+text: rgba(255,255,255,0.96)
+dim:  rgba(255,255,255,0.66)
+size: 11–15px
+letter: 0.10em</div>
+    </header>
+    <div class="col-body">
+
+      <div class="cell">
+        <div class="frag frag-museum">
+          <div class="ep-card-num">01 / 2666</div>
+          <div class="ep-card-image"></div>
+          <div class="ep-card-title">Marché à Gisors <span class="ep-card-year">(1890)</span></div>
+          <div class="ep-card-sub">Camille Pissarro</div>
+        </div>
+      </div>
+
+      <div class="cell">
+        <div class="frag frag-weekly">
+          <div class="editor-row">
+            <div class="editor-avatar">Y</div>
+            <div>
+              <div class="editor-name">Yuna Choi</div>
+              <div class="editor-meta">SENIOR EDITOR · ARMIN</div>
+            </div>
+          </div>
+          <div class="row-grid">
+            <div><div class="field-label">THEME</div><div class="field-value">조용한 빛</div></div>
+            <div><div class="field-label">WORKS</div><div class="field-value">6점</div></div>
+            <div><div class="field-label">PERIOD</div><div class="field-value">4 Centuries</div></div>
+            <div><div class="field-label">EDITION</div><div class="field-value">Week 20</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="cell">
+        <div class="frag frag-artist">
+          <div class="bio">Vincent Willem van Gogh was a Dutch Post-Impressionist painter who is among the most famous and influential figures in the history of Western art. In just over a decade he created about 2,100 artworks.</div>
+          <div class="museum-list">
+            <span>Van Gogh Museum</span><span class="count">1.0k</span>
+            <span>Kröller-Müller Museum</span><span class="count">84</span>
+            <span>National Gallery of Art</span><span class="count">23</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═════════════════ VARIANT B · EDITORIAL ═════════════════ -->
+  <div class="col v-b">
+    <header class="col-head">
+      <span class="tag">B · 에디토리얼</span>
+      <h2>Editorial<small>본문은 Inter, 라벨만 Mono</small></h2>
+      <div class="tokens">label: Space Mono 700
+body:  Inter 400 / 14–15px
+text:  #F4F1EA (warm white)
+dim:   rgba(244,241,234,0.74)</div>
+    </header>
+    <div class="col-body">
+
+      <div class="cell">
+        <div class="frag frag-museum">
+          <div class="ep-card-num">01 / 2666</div>
+          <div class="ep-card-image"></div>
+          <div class="ep-card-title">Marché à Gisors <span class="ep-card-year">(1890)</span></div>
+          <div class="ep-card-sub">Camille Pissarro</div>
+        </div>
+      </div>
+
+      <div class="cell">
+        <div class="frag frag-weekly">
+          <div class="editor-row">
+            <div class="editor-avatar">Y</div>
+            <div>
+              <div class="editor-name">Yuna Choi</div>
+              <div class="editor-meta">SENIOR EDITOR · ARMIN</div>
+            </div>
+          </div>
+          <div class="row-grid">
+            <div><div class="field-label">THEME</div><div class="field-value">조용한 빛</div></div>
+            <div><div class="field-label">WORKS</div><div class="field-value">6점</div></div>
+            <div><div class="field-label">PERIOD</div><div class="field-value">4 Centuries</div></div>
+            <div><div class="field-label">EDITION</div><div class="field-value">Week 20</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="cell">
+        <div class="frag frag-artist">
+          <div class="bio">Vincent Willem van Gogh was a Dutch Post-Impressionist painter who is among the most famous and influential figures in the history of Western art. In just over a decade he created about 2,100 artworks.</div>
+          <div class="museum-list">
+            <span>Van Gogh Museum</span><span class="count">1.0k</span>
+            <span>Kröller-Müller Museum</span><span class="count">84</span>
+            <span>National Gallery of Art</span><span class="count">23</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ═════════════════ VARIANT C · MUSEUM / WARM PAPER ═════════════════ -->
+  <div class="col v-c">
+    <header class="col-head">
+      <span class="tag">C · 박물관</span>
+      <h2>Museum<small>웜 차콜 + 파치먼트 크림 + Serif 본문</small></h2>
+      <div class="tokens">label: Space Mono 700
+body:  Cormorant Garamond 500
+       17px / line 1.55
+text:  #ECE3D0 (parchment)
+bg:    #14110D (warm charcoal)</div>
+    </header>
+    <div class="col-body">
+
+      <div class="cell">
+        <div class="frag frag-museum">
+          <div class="ep-card-num">01 / 2666</div>
+          <div class="ep-card-image"></div>
+          <div class="ep-card-title">Marché à Gisors <span class="ep-card-year">(1890)</span></div>
+          <div class="ep-card-sub">Camille Pissarro</div>
+        </div>
+      </div>
+
+      <div class="cell">
+        <div class="frag frag-weekly">
+          <div class="editor-row">
+            <div class="editor-avatar">Y</div>
+            <div>
+              <div class="editor-name">Yuna Choi</div>
+              <div class="editor-meta">SENIOR EDITOR · ARMIN</div>
+            </div>
+          </div>
+          <div class="row-grid">
+            <div><div class="field-label">THEME</div><div class="field-value">조용한 빛</div></div>
+            <div><div class="field-label">WORKS</div><div class="field-value">6점</div></div>
+            <div><div class="field-label">PERIOD</div><div class="field-value">4 Centuries</div></div>
+            <div><div class="field-label">EDITION</div><div class="field-value">Week 20</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="cell">
+        <div class="frag frag-artist">
+          <div class="bio">Vincent Willem van Gogh was a Dutch Post-Impressionist painter who is among the most famous and influential figures in the history of Western art. In just over a decade he created about 2,100 artworks.</div>
+          <div class="museum-list">
+            <span>Van Gogh Museum</span><span class="count">1.0k</span>
+            <span>Kröller-Müller Museum</span><span class="count">84</span>
+            <span>National Gallery of Art</span><span class="count">23</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>

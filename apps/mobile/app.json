@@ -43,7 +43,18 @@
       "url": "https://u.expo.dev/8ba3bf1e-5aa7-4f08-8e55-7edbdcd45ca9"
     },
     "plugins": [
-      "expo-asset"
+      "expo-asset",
+      [
+        "expo-build-properties",
+        {
+          "android": {
+            "compileSdkVersion": 36,
+            "targetSdkVersion": 36,
+            "buildToolsVersion": "36.0.0"
+          }
+        }
+      ],
+      "./plugins/withAndroidxCorePin.js"
     ]
   }
 }

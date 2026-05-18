@@ -25,6 +25,7 @@ import { collection, doc, setDoc, deleteDoc, onSnapshot, serverTimestamp, getDoc
 import { shouldLimitNetwork } from "../utils/network";
 import { searchByText, encodeText, searchByVector, searchSimilarTo } from "../utils/siglipSearch";
 import { ArtworkLightbox } from "../components/ArtworkLightbox";
+import { FadeInImage } from "../components/ProgressiveImage";
 import { GlobalNav } from "../components/GlobalNav";
 import { useLanguage } from "../contexts/LanguageContext";
 import { localizeMuseum } from "../i18n/museumLocalization";
@@ -1128,6 +1129,57 @@ export default function HomePage({ exhibitions, isOverlayOpen = false }: HomePag
     );
   }
 
+  const memoizedSearchProps = useMemo(() => ({
+    onOpenLightbox: (artwork: any, openLightbox = true) => {
+      if (!openLightbox) return;
+      if (artwork.exhibitionId && openCollectionModal(artwork.exhibitionId, artwork)) return;
+      const guessed = guessCollectionFromArtwork(artwork);
+      if (guessed && openCollectionModal(guessed.exhibition.id, artwork)) return;
+      setLightboxArtwork(artwork);
+    },
+    museums: exhibitions.map(ex => {
+      const localized = localizeMuseum(ex as any, language);
+      return {
+        ...(localized as any),
+        id: ex.id,
+        name: localized.name,
+        country: (ex as any).country || '',
+        region: (ex as any).region,
+        latitude: (ex as any).latitude || 0,
+        longitude: (ex as any).longitude || 0,
+        representativeImage: (ex as any).representativeImage,
+        permanentExhibitions: (ex as any).permanentExhibitions || [],
+      };
+    }),
+    onNavigateToMuseum: (museum: any, collectionId?: string, artwork?: any) => {
+      if (openCollectionModal(collectionId, artwork)) return;
+      if (artwork && openCollectionModal(artwork.exhibitionId, artwork)) return;
+      const guessedEntry = guessCollectionFromArtwork(artwork);
+      if (guessedEntry && openCollectionModal(guessedEntry.exhibition.id, artwork)) return;
+      const fallbackMuseum = exhibitions.find(e => e.id === museum.id) || guessedEntry?.museum;
+      if (fallbackMuseum) {
+        setSelectedExhibition(fallbackMuseum);
+        const firstPermanent = ((fallbackMuseum as any).permanentExhibitions || [])[0];
+        if (collectionId && firstPermanent && firstPermanent.id === collectionId) {
+          setSelectedModalExhibition({ ...firstPermanent, initialArtwork: artwork });
+          return;
+        }
+        setSelectedModalExhibition(null);
+        return;
+      }
+      setSelectedModalExhibition({
+        id: artwork?.id || museum.id,
+        name: museum.name,
+        title: museum.name,
+        image: artwork?.image,
+        description: artwork?.name || '',
+        startDate: '',
+        endDate: '',
+        initialArtwork: artwork,
+      } as any);
+    },
+  }), [exhibitions, language]); // Functions inside refer to mostly stable hooks
+
   return (
     <>
       <div style={{ position: "relative", width: "100vw", height: "100dvh", minHeight: "100svh", overflow: "hidden" }}>
@@ -1535,7 +1587,7 @@ export default function HomePage({ exhibitions, isOverlayOpen = false }: HomePag
                       onMouseEnter={() => setForYouImageHovered(true)}
                       onMouseLeave={() => setForYouImageHovered(false)}
                     >
-                      <img
+                      <FadeInImage
                         key={`main-${forYouCurrentIdx}`}
                         src={imgSrc}
                         alt={title}
@@ -1552,7 +1604,6 @@ export default function HomePage({ exhibitions, isOverlayOpen = false }: HomePag
                           boxShadow: isDark
                             ? '0 28px 80px rgba(0,0,0,0.97), 0 6px 24px rgba(0,0,0,0.7)'
                             : '0 12px 52px rgba(0,0,0,0.22), 0 2px 10px rgba(0,0,0,0.09)',
-                          transition: 'opacity 0.2s ease',
                         }}
                       />
                       {/* 호버 액션 버튼 (♡ 하트 · 댓글 · 액자) */}
@@ -1720,56 +1771,7 @@ export default function HomePage({ exhibitions, isOverlayOpen = false }: HomePag
           skin={showDrawingGlobe ? 'drawing' : 'default'}
           isAdmin={isAdmin}
           isModalOpen={!!selectedModalExhibition}
-          searchProps={{
-            onOpenLightbox: (artwork, openLightbox = true) => {
-              if (!openLightbox) return;
-              if (artwork.exhibitionId && openCollectionModal(artwork.exhibitionId, artwork)) return;
-              const guessed = guessCollectionFromArtwork(artwork);
-              if (guessed && openCollectionModal(guessed.exhibition.id, artwork)) return;
-              setLightboxArtwork(artwork);
-            },
-            museums: exhibitions.map(ex => {
-              const localized = localizeMuseum(ex as any, language);
-              return {
-                ...(localized as any),
-                id: ex.id,
-                name: localized.name,
-                country: (ex as any).country || '',
-                region: (ex as any).region,
-                latitude: (ex as any).latitude || 0,
-                longitude: (ex as any).longitude || 0,
-                representativeImage: (ex as any).representativeImage,
-                permanentExhibitions: (ex as any).permanentExhibitions || [],
-              };
-            }),
-            onNavigateToMuseum: (museum, collectionId, artwork) => {
-              if (openCollectionModal(collectionId, artwork)) return;
-              if (artwork && openCollectionModal(artwork.exhibitionId, artwork)) return;
-              const guessedEntry = guessCollectionFromArtwork(artwork);
-              if (guessedEntry && openCollectionModal(guessedEntry.exhibition.id, artwork)) return;
-              const fallbackMuseum = exhibitions.find(e => e.id === museum.id) || guessedEntry?.museum;
-              if (fallbackMuseum) {
-                setSelectedExhibition(fallbackMuseum);
-                const firstPermanent = ((fallbackMuseum as any).permanentExhibitions || [])[0];
-                if (collectionId && firstPermanent && firstPermanent.id === collectionId) {
-                  setSelectedModalExhibition({ ...firstPermanent, initialArtwork: artwork });
-                  return;
-                }
-                setSelectedModalExhibition(null);
-                return;
-              }
-              setSelectedModalExhibition({
-                id: artwork?.id || museum.id,
-                name: museum.name,
-                title: museum.name,
-                image: artwork?.image,
-                description: artwork?.name || '',
-                startDate: '',
-                endDate: '',
-                initialArtwork: artwork,
-              } as any);
-            },
-          }}
+          searchProps={memoizedSearchProps}
         />
       </div>
 
@@ -1807,7 +1809,7 @@ export default function HomePage({ exhibitions, isOverlayOpen = false }: HomePag
               border: '2px solid #111111',
               borderRadius: 11,
               background: '#111111',
-              color: '#CCFF00',
+              color: '#D4A547',
               display: 'flex',
               alignItems: 'center',
               justifyContent: 'center',
@@ -1829,7 +1831,7 @@ export default function HomePage({ exhibitions, isOverlayOpen = false }: HomePag
               height: 58,
               border: '2px solid #111111',
               borderRadius: 11,
-              background: '#CCFF00',
+              background: '#D4A547',
               color: '#111111',
               display: 'flex',
               alignItems: 'center',

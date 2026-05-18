@@ -345,7 +345,7 @@ function clampNumber(value: number, min: number, max: number): number {
 }
 
 function catDotStyle(category: string, t: boolean): React.CSSProperties {
-  if (category === "bauhaus") return { backgroundColor: "#BFFF0A" };
+  if (category === "bauhaus") return { backgroundColor: "#D4A547" };
   if (category === "design") return { backgroundColor: t ? "rgba(0,0,0,0.45)" : "rgba(255,255,255,0.55)" };
   const borderColor = t ? "rgba(0,0,0,0.28)" : "rgba(255,255,255,0.35)";
   return {
@@ -357,8 +357,8 @@ function catDotStyle(category: string, t: boolean): React.CSSProperties {
 }
 
 function typeColor(type: string, t: boolean): string {
-  if (type === "current") return t ? "#5A7800" : "#BFFF0A";
-  if (type === "upcoming") return t ? "rgba(90,120,0,0.5)" : "rgba(191,255,10,0.5)";
+  if (type === "current") return t ? "#8A6B1F" : "#D4A547";
+  if (type === "upcoming") return t ? "rgba(138,107,31,0.5)" : "rgba(212,165,71,0.5)";
   if (type === "past") return t ? "rgba(0,0,0,0.28)" : "rgba(255,255,255,0.28)";
   return t ? "rgba(0,0,0,0.18)" : "rgba(255,255,255,0.22)";
 }
@@ -401,15 +401,15 @@ function ExhibitionModal({
 
   const bgColor = t ? "#FAFAFA" : "#080808";
   const bgSticky = t ? "rgba(250,250,250,0.97)" : "rgba(8,8,8,0.97)";
-  const fgHigh = t ? "rgba(0,0,0,0.90)" : "rgba(255,255,255,0.92)";
-  const fgMed = t ? "rgba(0,0,0,0.68)" : "rgba(255,255,255,0.72)";
-  const fgLow = t ? "rgba(0,0,0,0.50)" : "rgba(255,255,255,0.55)";
-  const fgMute = t ? "rgba(0,0,0,0.32)" : "rgba(255,255,255,0.38)";
-  const fgFaint = t ? "rgba(0,0,0,0.16)" : "rgba(255,255,255,0.20)";
+  const fgHigh = t ? "rgba(0,0,0,0.92)" : "rgba(255,255,255,0.96)";
+  const fgMed = t ? "rgba(0,0,0,0.70)" : "rgba(255,255,255,0.82)";
+  const fgLow = t ? "rgba(0,0,0,0.54)" : "rgba(255,255,255,0.72)";
+  const fgMute = t ? "rgba(0,0,0,0.36)" : "rgba(255,255,255,0.54)";
+  const fgFaint = t ? "rgba(0,0,0,0.20)" : "rgba(255,255,255,0.36)";
   const dividerColor = t ? "rgba(0,0,0,0.07)" : "rgba(255,255,255,0.06)";
-  const limeColor = t ? "#5A7800" : "#BFFF0A";
-  const limeBg = t ? "rgba(90,120,0,0.08)" : "rgba(191,255,10,0.08)";
-  const limeBorder = t ? "rgba(90,120,0,0.25)" : "rgba(191,255,10,0.2)";
+  const limeColor = t ? "#8A6B1F" : "#D4A547";
+  const limeBg = t ? "rgba(138,107,31,0.08)" : "rgba(212,165,71,0.08)";
+  const limeBorder = t ? "rgba(138,107,31,0.25)" : "rgba(212,165,71,0.2)";
 
   const availableCategories = useMemo(() => {
     const cats = new Set(exhibition.artworks.map((a) => a.category));
@@ -838,11 +838,14 @@ interface VenuePanelProps {
   theme: Theme;
   onClose: () => void;
   onOpenExhibition?: (exhibition: any) => void;
+  initialVenueId?: string | null;
 }
 
-export function VenuePanel({ city, theme, onClose, onOpenExhibition }: VenuePanelProps) {
+export function VenuePanel({ city, theme, onClose, onOpenExhibition, initialVenueId }: VenuePanelProps) {
   const { language, t: tt } = useLanguage();
-  const [selectedVenue, setSelectedVenue] = useState<Venue | null>(null);
+  const [selectedVenue, setSelectedVenue] = useState<Venue | null>(() => {
+    return initialVenueId ? (city.venues.find(v => v.id === initialVenueId || (v.originalExhibition as any)?.id === initialVenueId) || null) : null;
+  });
   const [hoveredVenueIdx, setHoveredVenueIdx] = useState<number | null>(null);
   const [coverByExhibitionId, setCoverByExhibitionId] = useState<Record<string, string>>({});
   const [viewportWidth, setViewportWidth] = useState<number>(() =>
@@ -857,10 +860,10 @@ export function VenuePanel({ city, theme, onClose, onOpenExhibition }: VenuePane
   // (Tailwind string vars removed — using resolved inline color values below in return)
 
   // Resolved inline color values (replacing non-functional Tailwind class strings)
-  const cFg90  = t ? "rgba(0,0,0,0.80)"  : "rgba(255,255,255,0.75)";
-  const cFg35  = t ? "rgba(0,0,0,0.30)"  : "rgba(255,255,255,0.25)";
-  const cFg20  = t ? "rgba(0,0,0,0.15)"  : "rgba(255,255,255,0.12)";
-  const cFg12  = t ? "rgba(0,0,0,0.08)"  : "rgba(255,255,255,0.06)";
+  const cFg90  = t ? "rgba(0,0,0,0.88)"  : "rgba(255,255,255,0.90)";
+  const cFg35  = t ? "rgba(0,0,0,0.46)"  : "rgba(255,255,255,0.58)";
+  const cFg20  = t ? "rgba(0,0,0,0.26)"  : "rgba(255,255,255,0.38)";
+  const cFg12  = t ? "rgba(0,0,0,0.14)"  : "rgba(255,255,255,0.22)";
   const cDiv   = t ? "rgba(0,0,0,0.06)"  : "rgba(255,255,255,0.04)";
   const cBorder= t ? "rgba(0,0,0,0.06)"  : "rgba(255,255,255,0.05)";
   const cPanelBg = t ? "rgba(255,255,255,0.92)" : "rgba(12,12,12,0.92)";
@@ -985,13 +988,22 @@ export function VenuePanel({ city, theme, onClose, onOpenExhibition }: VenuePane
           width: isMobileViewport ? '100vw' : '540px',
           maxWidth: isMobileViewport ? '100vw' : '96vw',
           zIndex: 30,
-          background: cPanelBg,
-          backdropFilter: 'blur(30px) saturate(200%)',
-          WebkitBackdropFilter: 'blur(30px) saturate(200%)',
+          // Solid panel background (no backdrop-filter): on Android Chrome
+          // WebView, `backdrop-filter: blur(...)` creates a sticky GPU
+          // compositor layer that survives even after a sibling modal
+          // mounts on top, leaving the panel's content visible through
+          // the modal as a faint dim/hexagon ghost. A solid background
+          // matches the dark theme aesthetics anyway.
+          background: t ? 'rgb(248,248,248)' : 'rgb(12,12,12)',
           borderLeft: `1px solid ${cBorder}`,
           display: 'flex',
           flexDirection: 'column',
-          paddingTop: isMobileViewport ? 'calc(env(safe-area-inset-top, 0px) + 34px)' : 'env(safe-area-inset-top, 0px)',
+          // Match the Globe header's BACK Y-coordinate exactly:
+          //   Globe header total top inset  = safe-area + 24px
+          //   Panel container paddingTop    = safe-area  (no extra +34)
+          //   Panel inner header padding    = 24px       (set below)
+          // → BACK button lands at `safe-area + 24px` in both views.
+          paddingTop: 'env(safe-area-inset-top, 0px)',
           paddingBottom: 'env(safe-area-inset-bottom, 0px)',
           overflow: 'hidden',
           fontFamily: "'Space Grotesk', sans-serif",
@@ -1010,40 +1022,37 @@ export function VenuePanel({ city, theme, onClose, onOpenExhibition }: VenuePane
               onScroll={(event: React.UIEvent<HTMLDivElement>) => isMobileViewport && setVenueListScrollTop(event.currentTarget.scrollTop)}
             >
               {/* Header */}
-              <div style={{ padding: isMobileViewport ? '24px 24px 0' : '18px 24px 0', flexShrink: 0, position: 'relative', zIndex: 2 }}>
-                <div style={{ display: 'flex', alignItems: 'flex-start', justifyContent: 'space-between' }}>
-                  <div>
-                    <div style={{ color: cFg90, letterSpacing: '0.18em', textTransform: 'uppercase', fontSize: '14px' }}>
-                      {displayCityName}
-                    </div>
-                    <div style={{ color: cFg35, marginTop: '4px', fontSize: '11px' }}>
-                      {displayCountryName}
-                    </div>
-                    <button
-                      onClick={onClose}
-                      style={{
-                        marginTop: '10px',
-                        display: 'inline-flex', alignItems: 'center', gap: '6px',
-                        color: cFg35, fontSize: '10px',
-                        letterSpacing: '0.12em', textTransform: 'uppercase',
-                        fontFamily: "'Space Mono', monospace",
-                        cursor: 'pointer',
-                        background: 'none', borderTop: 'none', borderRight: 'none', borderBottom: 'none', borderLeft: 'none', outline: 'none',
-                        padding: 0,
-                        pointerEvents: 'auto',
-                        touchAction: 'manipulation',
-                        WebkitTapHighlightColor: 'transparent',
-                      }}
-                      aria-label={tt({ ko: "지도로 돌아가기", en: "Back to map" })}
-                    >
-                      <span>&larr;</span>
-                      <span>{tt({ ko: "지도로 돌아가기", en: "Back to map" })}</span>
-                    </button>
-                  </div>
+              <div style={{ padding: '24px 24px 0', flexShrink: 0, position: 'relative', zIndex: 2 }}>
+                {/* Top bar: BACK on the left, close (×) on the right.
+                    Sits at the very top of the panel — first thing the user
+                    sees, easiest to reach with thumb. */}
+                <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: '14px' }}>
                   <button
                     onClick={onClose}
                     style={{
-                      color: cFg35, cursor: 'pointer', padding: '4px', marginRight: '-4px', marginTop: '-4px',
+                      display: 'inline-flex', alignItems: 'center', gap: '6px',
+                      color: t ? 'rgba(0,0,0,0.78)' : 'rgba(255,255,255,0.78)',
+                      fontSize: '11px',
+                      letterSpacing: '0.12em', textTransform: 'uppercase',
+                      fontFamily: "'Space Mono', monospace",
+                      cursor: 'pointer',
+                      background: 'none',
+                      border: 'none',
+                      outline: 'none',
+                      padding: '4px 0',
+                      pointerEvents: 'auto',
+                      touchAction: 'manipulation',
+                      WebkitTapHighlightColor: 'transparent',
+                    }}
+                    aria-label={tt({ ko: "지도로 돌아가기", en: "Back to map" })}
+                  >
+                    <span>&larr;</span>
+                    <span>{tt({ ko: "지도로 돌아가기", en: "Back to map" })}</span>
+                  </button>
+                  <button
+                    onClick={onClose}
+                    style={{
+                      color: cFg35, cursor: 'pointer', padding: '4px', marginRight: '-4px',
                       fontSize: '18px', fontFamily: "'Space Mono', monospace", lineHeight: 1,
                       background: 'none', borderTop: 'none', borderRight: 'none', borderBottom: 'none', borderLeft: 'none', outline: 'none',
                       pointerEvents: 'auto',
@@ -1053,6 +1062,15 @@ export function VenuePanel({ city, theme, onClose, onOpenExhibition }: VenuePane
                   >
                     &times;
                   </button>
+                </div>
+
+                <div>
+                  <div style={{ color: cFg90, letterSpacing: '0.18em', textTransform: 'uppercase', fontSize: '14px' }}>
+                    {displayCityName}
+                  </div>
+                  <div style={{ color: cFg35, marginTop: '4px', fontSize: '11px' }}>
+                    {displayCountryName}
+                  </div>
                 </div>
 
                 <div style={{ display: 'flex', alignItems: 'center', gap: '12px', marginTop: '12px' }}>
@@ -1104,7 +1122,9 @@ export function VenuePanel({ city, theme, onClose, onOpenExhibition }: VenuePane
               <div
                 className="venue-panel-scroll"
                 style={{
-                  padding: '12px',
+                  padding: isMobileViewport
+                    ? '12px 12px calc(108px + env(safe-area-inset-bottom, 0px))'
+                    : '12px',
                   flex: isMobileViewport ? 'none' : 1,
                   overflowY: isMobileViewport ? 'visible' : 'auto',
                   scrollbarWidth: 'thin',
@@ -1130,7 +1150,7 @@ export function VenuePanel({ city, theme, onClose, onOpenExhibition }: VenuePane
                       <div
                         style={{
                           flexShrink: 0, width: '6px', height: '6px', borderRadius: '50%', transition: 'background 0.15s',
-                          ...(isHL ? { backgroundColor: t ? "#5A7800" : "#BFFF0A" } : catDotStyle(v.category, t)),
+                          ...(isHL ? { backgroundColor: t ? "#8A6B1F" : "#D4A547" } : catDotStyle(v.category, t)),
                         }}
                       />
                       <div style={{ flex: 1, minWidth: 0 }}>

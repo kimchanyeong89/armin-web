@@ -449,7 +449,7 @@ const PostDetailPage: React.FC = () => {
           style={{
             width: 28, height: 28, borderRadius: "50%",
             border: `2px solid ${colors.divider}`,
-            borderTopColor: "#BFFF0A",
+            borderTopColor: "#D4A547",
             animation: "post-detail-spin 0.9s linear infinite",
           }}
         />
@@ -476,7 +476,7 @@ const PostDetailPage: React.FC = () => {
           </button>
           <button
             onClick={() => window.location.reload()}
-            style={{ border: "none", background: "#BFFF0A", color: "#000", borderRadius: 999, padding: "8px 14px", fontSize: 12, fontWeight: 600, cursor: "pointer" }}
+            style={{ border: "none", background: "#D4A547", color: "#000", borderRadius: 999, padding: "8px 14px", fontSize: 12, fontWeight: 600, cursor: "pointer" }}
           >
             {t({ ko: "다시 시도", en: "Retry" })}
           </button>
@@ -512,8 +512,9 @@ const PostDetailPage: React.FC = () => {
             zIndex: 12,
             display: "flex",
             alignItems: "center",
-            justifyContent: "space-between",
+            justifyContent: "flex-start",
             padding: "14px 14px",
+            paddingTop: "calc(env(safe-area-inset-top, 0px) + 14px)",
             borderBottom: `1px solid ${colors.divider}`,
             backdropFilter: "blur(16px)",
             WebkitBackdropFilter: "blur(16px)",
@@ -534,24 +535,6 @@ const PostDetailPage: React.FC = () => {
             }}
           >
             <ArrowLeft size={14} strokeWidth={2.2} /> {t({ ko: "목록", en: "Back" })}
-          </button>
-
-          <button
-            onClick={handleLike}
-            style={{
-              border: "none",
-              borderRadius: 999,
-              padding: "6px 12px",
-              background: hasLiked ? "rgba(191,255,10,0.14)" : colors.panelBg,
-              color: hasLiked ? (isLightTheme ? "#5A7800" : "#BFFF0A") : colors.medText,
-              cursor: "pointer",
-              display: "flex",
-              alignItems: "center",
-              gap: 5,
-              fontSize: 11,
-            }}
-          >
-            <Heart size={12} strokeWidth={2} /> {post.likes || 0}
           </button>
         </div>
 
@@ -682,7 +665,7 @@ const PostDetailPage: React.FC = () => {
                   height: 34,
                   borderRadius: 999,
                   border: "none",
-                  background: newComment.trim() && user ? "#BFFF0A" : colors.panelBg,
+                  background: newComment.trim() && user ? "#D4A547" : colors.panelBg,
                   color: newComment.trim() && user ? "#000" : colors.lowText,
                   cursor: newComment.trim() && user ? "pointer" : "not-allowed",
                   display: "flex",

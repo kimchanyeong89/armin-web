@@ -7,12 +7,24 @@ import { exhibitions } from "../data/exhibitions";
 import { getCanonicalName } from "../utils/canonicalArtist";
 import { getWorkerNetworkMode } from "../utils/network";
 import { TransitionBadge } from "../components/DrawingLoader";
+import { getOptimizedImageUrl } from "../utils/imageProxy";
 import type { ProfileImageCrop } from "../types/Profile";
+
+// Proxy onboarding artwork thumbnails through wsrv.nl at low resolution
+// so the picker grid loads quickly on mobile data, regardless of the
+// original museum CDN's image size. The full-resolution URL is still
+// what we save as the user's selected hero image — this only affects
+// the thumbnails on screen.
+function thumbUrl(url: string, width = 220): string {
+  if (!url) return "";
+  if (url.startsWith("data:") || url.startsWith("blob:")) return url;
+  return getOptimizedImageUrl(url, width, 70, "webp");
+}
 
 // ── Design Tokens ──────────────────────────────────────────────────
 const BG = '#111111';
 const TEXT = '#FFFFFF';
-const ACCENT = '#CCFF00';
+const ACCENT = '#D4A547';
 const DIM = '#555555';
 const DIMMER = '#2A2A2A';
 const MONO = "'Space Mono', 'Courier New', monospace";
@@ -81,7 +93,7 @@ const ArtworkGrid = ({ items, selectedImage, onSelect }: {
               border: isSelected ? `2px solid ${ACCENT}` : `2px solid transparent`,
               opacity: isSelected ? 1 : 0.55,
               transition: 'all 0.15s',
-              boxShadow: isSelected ? `0 0 10px rgba(204,255,0,0.25)` : 'none',
+              boxShadow: isSelected ? `0 0 10px rgba(212,165,71,0.25)` : 'none',
               background: DIMMER,
             }}>
               <img src={item.image} style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block', pointerEvents: 'none' }} />
@@ -182,6 +194,18 @@ const OnboardingPage: React.FC = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
 
+  // Compact layout when running inside the mobile WebView so the entire
+  // birthday step fits on a single screen without scrolling.
+  const [isMobile, setIsMobile] = useState<boolean>(() => {
+    if (typeof window === "undefined") return false;
+    return window.innerWidth < 768;
+  });
+  useEffect(() => {
+    const handler = () => setIsMobile(window.innerWidth < 768);
+    window.addEventListener("resize", handler);
+    return () => window.removeEventListener("resize", handler);
+  }, []);
+
   const [step, setStep] = useState(0); // 0=date, 1=artist, 2=crop
 
   const [nickname, setNickname] = useState("");
@@ -197,6 +221,11 @@ const OnboardingPage: React.FC = () => {
 
   const [crop, setCrop] = useState({ x: 0, y: 0, scale: 1 });
   const cropRef = useRef({ x: 0, y: 0, scale: 1 });
+  // Editor's preview image natural aspect (height/width). Used to set an
+  // explicit pixel height on the <img> so the editor renders identically
+  // on Android WebView and iOS WebKit; `height: auto` gets resolved on
+  // different timelines relative to the transform on the two engines.
+  const [cropImgAspect, setCropImgAspect] = useState<number>(1.5);
 
   const [loading, setLoading] = useState(false);
   const [artistDataLoading, setArtistDataLoading] = useState(true); // true while collection files are fetching
@@ -671,41 +700,81 @@ const OnboardingPage: React.FC = () => {
     setIsCropDragging(false);
   };
 
-  const onboardingTopOffset = 96;
-
   // ── Step slide style ───────────────────────────────────────────
+  // Slides absolute-fill their parent (the slideContainer below) so the
+  // shell's flex layout determines the actual height. Previously each
+  // slide had a hard-coded `top: 76px` which was correct for Android (no
+  // safe-area-inset on the page) but meant the slide overlapped the
+  // header on iOS, where env(safe-area-inset-top) pushes everything
+  // ~47–59 px lower. Letting the parent size the slide fixes both.
   const slide = (s: number): React.CSSProperties => ({
-    position: 'absolute', left: 0, right: 0, top: onboardingTopOffset, bottom: 0, display: 'flex', flexDirection: 'column',
+    position: 'absolute', inset: 0, display: 'flex', flexDirection: 'column',
     opacity: step === s ? 1 : 0,
     transform: step === s ? 'translateY(0)' : step > s ? 'translateY(-24px)' : 'translateY(24px)',
     transition: 'opacity 0.45s cubic-bezier(0.25,1,0.5,1), transform 0.45s cubic-bezier(0.25,1,0.5,1)',
     pointerEvents: step === s ? 'auto' : 'none',
   });
 
+  // 44×44 is the iOS HIG / Android Material minimum hit target.
+  const HEADER_BTN_STYLE: React.CSSProperties = {
+    background: 'none',
+    border: 'none',
+    color: DIM,
+    fontFamily: MONO,
+    fontSize: 18,
+    cursor: 'pointer',
+    minWidth: 44,
+    minHeight: 44,
+    display: 'inline-flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    padding: 0,
+  };
+
   return (
-    <div className="onboarding-shell" style={{ position: 'fixed', inset: 0, background: BG, zIndex: 1000, fontFamily: MONO, color: TEXT, overflow: 'hidden', paddingTop: 'env(safe-area-inset-top)' }}>
-      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '16px 20px', borderBottom: `1px solid ${DIMMER}` }}>
-        <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
+    <div
+      className="onboarding-shell"
+      style={{
+        position: 'fixed',
+        inset: 0,
+        background: BG,
+        zIndex: 1000,
+        fontFamily: MONO,
+        color: TEXT,
+        overflowX: 'hidden',
+        overflowY: 'hidden',
+        paddingTop: 'env(safe-area-inset-top)',
+        // Flex column lets header + progress bar take their natural
+        // height and the slide container claim the rest. No hard-coded
+        // top offset that has to guess each platform's safe-area.
+        display: 'flex',
+        flexDirection: 'column',
+      }}
+    >
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: isMobile ? '4px 8px' : '8px 12px', borderBottom: `1px solid ${DIMMER}`, flexShrink: 0 }}>
+        <div style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
           {step > 0 && (
             <button
               onClick={() => setStep(step - 1)}
-              style={{ background: 'none', border: 'none', color: DIM, fontFamily: MONO, fontSize: 14, cursor: 'pointer' }}
+              aria-label="Back"
+              style={HEADER_BTN_STYLE}
             >
               ←
             </button>
           )}
-          <div style={{ width: 6, height: 6, background: ACCENT }} />
+          <div style={{ width: 6, height: 6, background: ACCENT, marginLeft: step > 0 ? 0 : 12 }} />
           <span style={{ fontSize: 10, letterSpacing: '0.25em', color: DIM }}>{'프로필 설정'}</span>
         </div>
         <button
           onClick={() => navigate('/')}
-          style={{ background: 'none', border: 'none', color: DIM, fontFamily: MONO, fontSize: 14, cursor: 'pointer' }}
+          aria-label="Close"
+          style={HEADER_BTN_STYLE}
         >
           ×
         </button>
       </div>
 
-      <div style={{ display: 'flex', gap: 3, padding: '10px 20px 0' }}>
+      <div style={{ display: 'flex', gap: 3, padding: '10px 20px 0', flexShrink: 0 }}>
         {[0, 1, 2].map((idx) => (
           <div
             key={idx}
@@ -720,18 +789,30 @@ const OnboardingPage: React.FC = () => {
         ))}
       </div>
 
+      {/* Slide container fills the remaining flex space and acts as the
+          positioning parent for each absolute-positioned slide. */}
+      <div style={{ position: 'relative', flex: 1, minHeight: 0 }}>
+
       <div className="onboarding-scroll" style={{ ...slide(0), overflowY: 'auto' }}>
-        <div style={{ maxWidth: 560, margin: '0 auto', padding: '28px 20px 40px' }}>
-          <p style={{ fontSize: 9, letterSpacing: '0.25em', color: 'rgba(255,255,255,0.22)', marginBottom: 10 }}>STEP 1 OF 3</p>
-          <h2 style={{ fontSize: 'clamp(27px,6vw,36px)', letterSpacing: '-0.02em', lineHeight: 1.2, margin: '0 0 8px' }}>
+        <div
+          style={{
+            width: '100%',
+            maxWidth: 560,
+            margin: '0 auto',
+            padding: isMobile ? '14px 16px 20px' : '28px 20px 40px',
+            boxSizing: 'border-box',
+          }}
+        >
+          <p style={{ fontSize: 9, letterSpacing: '0.25em', color: 'rgba(255,255,255,0.22)', marginBottom: isMobile ? 6 : 10 }}>STEP 1 OF 3</p>
+          <h2 style={{ fontSize: isMobile ? 22 : 'clamp(27px,6vw,36px)', letterSpacing: '-0.02em', lineHeight: 1.25, margin: isMobile ? '0 0 6px' : '0 0 8px' }}>
             생년월일을 알려주세요
           </h2>
-          <p style={{ fontSize: 13, color: DIM, lineHeight: 1.7, marginBottom: 24 }}>
+          <p style={{ fontSize: isMobile ? 11 : 13, color: DIM, lineHeight: 1.5, marginBottom: isMobile ? 18 : 24 }}>
             태어난 해와 날에 맞는 예술가를 찾아드립니다.
           </p>
 
-          <div style={{ marginBottom: 18 }}>
-            <div style={{ fontSize: 9, letterSpacing: '0.18em', color: 'rgba(255,255,255,0.24)', marginBottom: 8 }}>출생 연도</div>
+          <div style={{ marginBottom: isMobile ? 14 : 18 }}>
+            <div style={{ fontSize: 9, letterSpacing: '0.18em', color: 'rgba(255,255,255,0.24)', marginBottom: isMobile ? 4 : 8 }}>출생 연도</div>
             <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
               <input
                 type="range"
@@ -743,15 +824,15 @@ const OnboardingPage: React.FC = () => {
                 onChange={(e) => setBirthYear(Number(e.target.value))}
                 style={{ flex: 1, accentColor: ACCENT, height: 4, cursor: 'pointer' }}
               />
-              <div style={{ minWidth: 62, textAlign: 'center', padding: '8px 12px', borderRadius: 8, border: `1.5px solid ${ACCENT}`, color: ACCENT, fontSize: 16, fontWeight: 700 }}>
+              <div style={{ minWidth: isMobile ? 54 : 62, textAlign: 'center', padding: isMobile ? '5px 8px' : '8px 12px', borderRadius: 8, border: `1.5px solid ${ACCENT}`, color: ACCENT, fontSize: isMobile ? 13 : 16, fontWeight: 700 }}>
                 {birthYear}
               </div>
             </div>
           </div>
 
-          <div style={{ marginBottom: 14 }}>
-            <div style={{ fontSize: 9, letterSpacing: '0.18em', color: 'rgba(255,255,255,0.24)', marginBottom: 8 }}>월</div>
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(4, 1fr)', gap: 6 }}>
+          <div style={{ marginBottom: isMobile ? 8 : 14 }}>
+            <div style={{ fontSize: 9, letterSpacing: '0.18em', color: 'rgba(255,255,255,0.24)', marginBottom: isMobile ? 4 : 8 }}>월</div>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(6, 1fr)', gap: isMobile ? 4 : 6 }}>
               {Array.from({ length: 12 }, (_, i) => i + 1).map((m) => {
                 const active = birthMonth === m;
                 return (
@@ -759,12 +840,12 @@ const OnboardingPage: React.FC = () => {
                     key={m}
                     onClick={() => setBirthMonth(m)}
                     style={{
-                      padding: '10px 6px',
-                      borderRadius: 8,
+                      padding: isMobile ? '6px 2px' : '10px 6px',
+                      borderRadius: 7,
                       border: `1px solid ${active ? ACCENT : DIMMER}`,
-                      background: active ? 'rgba(191,255,10,0.10)' : 'rgba(255,255,255,0.07)',
+                      background: active ? 'rgba(212,165,71,0.10)' : 'rgba(255,255,255,0.07)',
                       color: active ? ACCENT : 'rgba(255,255,255,0.62)',
-                      fontSize: 11,
+                      fontSize: isMobile ? 10 : 11,
                       fontWeight: active ? 700 : 400,
                       cursor: 'pointer',
                     }}
@@ -776,9 +857,9 @@ const OnboardingPage: React.FC = () => {
             </div>
           </div>
 
-          <div style={{ marginBottom: 24 }}>
-            <div style={{ fontSize: 9, letterSpacing: '0.18em', color: 'rgba(255,255,255,0.24)', marginBottom: 8 }}>일</div>
-            <div style={{ display: 'flex', gap: 5, overflowX: 'auto', paddingBottom: 4, scrollbarWidth: 'none' }}>
+          <div style={{ marginBottom: isMobile ? 12 : 24 }}>
+            <div style={{ fontSize: 9, letterSpacing: '0.18em', color: 'rgba(255,255,255,0.24)', marginBottom: isMobile ? 4 : 8 }}>일</div>
+            <div style={{ display: 'flex', gap: isMobile ? 4 : 5, overflowX: 'auto', paddingBottom: 4, scrollbarWidth: 'none' }}>
               {Array.from({ length: 31 }, (_, i) => i + 1).map((d) => {
                 const active = birthDay === d;
                 return (
@@ -787,13 +868,13 @@ const OnboardingPage: React.FC = () => {
                     onClick={() => setBirthDay(d)}
                     style={{
                       flexShrink: 0,
-                      width: 36,
-                      height: 36,
+                      width: isMobile ? 30 : 36,
+                      height: isMobile ? 30 : 36,
                       borderRadius: 7,
                       border: `1px solid ${active ? ACCENT : DIMMER}`,
-                      background: active ? 'rgba(191,255,10,0.10)' : 'rgba(255,255,255,0.07)',
+                      background: active ? 'rgba(212,165,71,0.10)' : 'rgba(255,255,255,0.07)',
                       color: active ? ACCENT : 'rgba(255,255,255,0.62)',
-                      fontSize: 11,
+                      fontSize: isMobile ? 10 : 11,
                       fontWeight: active ? 700 : 400,
                       cursor: 'pointer',
                     }}
@@ -806,15 +887,15 @@ const OnboardingPage: React.FC = () => {
           </div>
 
           {recommendedArtists.length > 0 && (
-            <div style={{ padding: '12px 14px', borderRadius: 10, marginBottom: 16, background: 'rgba(191,255,10,0.06)', border: '1px solid rgba(191,255,10,0.14)' }}>
-              <div style={{ fontSize: 8, letterSpacing: '0.18em', color: ACCENT, marginBottom: 8 }}>
+            <div style={{ padding: isMobile ? '10px 12px' : '12px 14px', borderRadius: 10, marginBottom: isMobile ? 14 : 16, background: 'rgba(212,165,71,0.06)', border: '1px solid rgba(212,165,71,0.14)' }}>
+              <div style={{ fontSize: 8, letterSpacing: '0.18em', color: ACCENT, marginBottom: isMobile ? 6 : 8 }}>
                 {birthMonth}월 {birthDay}일, {Math.max(1, new Date().getFullYear() - birthYear)}년 전 예술가들
               </div>
-              <div style={{ display: 'flex', gap: 10 }}>
+              <div style={{ display: 'flex', gap: isMobile ? 10 : 10 }}>
                 {recommendedArtists.slice(0, 4).map((artist, idx) => (
                   <div key={artist.name || idx} style={{ textAlign: 'center' }}>
-                    <div style={{ width: 36, height: 36, borderRadius: '50%', overflow: 'hidden', margin: '0 auto 4px', border: `1px solid ${DIMMER}` }}>
-                      <img src={artist.artworks?.[0] || artist.image || ''} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                    <div style={{ width: isMobile ? 32 : 36, height: isMobile ? 32 : 36, borderRadius: '50%', overflow: 'hidden', margin: '0 auto 4px', border: `1px solid ${DIMMER}` }}>
+                      <img src={thumbUrl(artist.artworks?.[0] || artist.image || '', 96)} alt="" loading="lazy" decoding="async" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                     </div>
                     <div style={{ fontSize: 8, color: TEXT, whiteSpace: 'nowrap' }}>{String(artist.name || '').split(' ')[0]}</div>
                     <div style={{ fontSize: 7, color: 'rgba(255,255,255,0.35)' }}>#{idx + 1}</div>
@@ -826,7 +907,7 @@ const OnboardingPage: React.FC = () => {
 
           <button
             onClick={() => { if (canProceedStep1) { setSearchByBirthday(true); setStep(1); } }}
-            style={{ width: '100%', padding: '14px', borderRadius: 10, background: ACCENT, color: '#000', fontSize: 13, fontWeight: 700, border: 'none', cursor: 'pointer', marginBottom: 12 }}
+            style={{ width: '100%', padding: isMobile ? '13px' : '14px', borderRadius: 10, background: ACCENT, color: '#000', fontSize: 13, fontWeight: 700, border: 'none', cursor: 'pointer', marginBottom: isMobile ? 10 : 12 }}
           >
             나의 예술가 찾기 →
           </button>
@@ -835,34 +916,42 @@ const OnboardingPage: React.FC = () => {
             onClick={() => { setSearchByBirthday(false); setArtistSearchQuery(''); setStep(1); }}
             style={{
               width: '100%',
-              padding: '15px 16px',
+              padding: isMobile ? '12px 14px' : '15px 16px',
               borderRadius: 10,
-              border: '1.5px solid rgba(191,255,10,0.62)',
-              background: 'linear-gradient(180deg, rgba(191,255,10,0.16), rgba(191,255,10,0.10))',
+              border: '1.5px solid rgba(212,165,71,0.62)',
+              background: 'linear-gradient(180deg, rgba(212,165,71,0.16), rgba(212,165,71,0.10))',
               color: '#E9FFAA',
-              fontSize: 13,
+              fontSize: isMobile ? 13 : 13,
               fontWeight: 700,
               cursor: 'pointer',
               textAlign: 'left',
-              boxShadow: '0 8px 18px rgba(191,255,10,0.13)',
+              boxShadow: '0 8px 18px rgba(212,165,71,0.13)',
             }}
           >
             작가 직접 검색하기
-            <div style={{ fontSize: 10, color: 'rgba(233,255,170,0.84)', marginTop: 2 }}>이름으로 빠르게 찾기</div>
+            <div style={{ fontSize: isMobile ? 10 : 10, color: 'rgba(233,255,170,0.84)', marginTop: 2 }}>이름으로 빠르게 찾기</div>
           </button>
         </div>
       </div>
 
-      <div className="onboarding-scroll" style={{ ...slide(1), overflowY: 'auto' }}>
-        <div style={{ maxWidth: 560, margin: '0 auto', padding: '24px 20px 34px' }}>
-          <p style={{ fontSize: 9, letterSpacing: '0.25em', color: 'rgba(255,255,255,0.22)', marginBottom: 10 }}>STEP 2 OF 3</p>
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 14, gap: 10 }}>
-            <h2 style={{ margin: 0, fontSize: 'clamp(21px,5vw,29px)', letterSpacing: '-0.02em', lineHeight: 1.24 }}>
+      <div className="onboarding-scroll" style={{ ...slide(1), overflowY: 'auto', overflowX: 'hidden' }}>
+        <div
+          style={{
+            width: '100%',
+            maxWidth: 560,
+            margin: '0 auto',
+            padding: isMobile ? '14px 16px 20px' : '24px 20px 34px',
+            boxSizing: 'border-box',
+          }}
+        >
+          <p style={{ fontSize: 9, letterSpacing: '0.25em', color: 'rgba(255,255,255,0.22)', marginBottom: isMobile ? 8 : 10 }}>STEP 2 OF 3</p>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: isMobile ? 10 : 14, gap: 10 }}>
+            <h2 style={{ margin: 0, fontSize: isMobile ? 18 : 'clamp(21px,5vw,29px)', letterSpacing: '-0.02em', lineHeight: 1.24, minWidth: 0, flex: 1 }}>
               {birthMonth}월 {birthDay}일, {birthYear}년으로부터 {selectedArtistYearsAgo ? ` ${selectedArtistYearsAgo}년 전` : ''}
             </h2>
             <button
               onClick={() => setSearchByBirthday((prev) => !prev)}
-              style={{ border: '1.5px solid rgba(191,255,10,0.65)', borderRadius: 999, background: 'rgba(191,255,10,0.15)', color: '#E9FFAA', fontSize: 11, fontWeight: 700, padding: '7px 12px', cursor: 'pointer', whiteSpace: 'nowrap' }}
+              style={{ border: '1.5px solid rgba(212,165,71,0.65)', borderRadius: 999, background: 'rgba(212,165,71,0.15)', color: '#E9FFAA', fontSize: 11, fontWeight: 700, padding: '7px 12px', cursor: 'pointer', whiteSpace: 'nowrap' }}
             >
               {searchByBirthday ? '직접 검색' : '생년 기반'}
             </button>
@@ -881,7 +970,24 @@ const OnboardingPage: React.FC = () => {
             </div>
           )}
 
-          <div style={{ display: 'flex', gap: 8, overflowX: 'auto', paddingBottom: 6, marginBottom: 14, scrollbarWidth: 'none' }}>
+          <div
+            style={{
+              display: 'flex',
+              gap: 8,
+              overflowX: 'auto',
+              overflowY: 'hidden',
+              paddingBottom: 6,
+              marginBottom: isMobile ? 10 : 14,
+              scrollbarWidth: 'none',
+              // Constrain panning to horizontal only on this row so it
+              // doesn't fight the page's vertical scroll when the user
+              // swipes the area, and prevent the scroll from chaining out
+              // and shifting the rest of the page sideways.
+              touchAction: 'pan-x',
+              overscrollBehavior: 'contain',
+              WebkitOverflowScrolling: 'touch',
+            }}
+          >
             {recommendedArtists.map((artist, idx) => {
               const active = selectedArtist?.name === artist.name;
               return (
@@ -895,13 +1001,13 @@ const OnboardingPage: React.FC = () => {
                     gap: 8,
                     borderRadius: 999,
                     border: `1px solid ${active ? ACCENT : DIMMER}`,
-                    background: active ? 'rgba(191,255,10,0.10)' : 'rgba(255,255,255,0.07)',
+                    background: active ? 'rgba(212,165,71,0.10)' : 'rgba(255,255,255,0.07)',
                     padding: '7px 11px 7px 7px',
                     cursor: 'pointer',
                   }}
                 >
                   <div style={{ width: 26, height: 26, borderRadius: '50%', overflow: 'hidden', border: `1px solid ${active ? ACCENT : DIMMER}` }}>
-                    <img src={artist.artworks?.[0] || artist.image || ''} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                    <img src={thumbUrl(artist.artworks?.[0] || artist.image || '', 96)} alt="" loading="lazy" decoding="async" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                   </div>
                   <div style={{ textAlign: 'left' }}>
                     <div style={{ fontSize: 10, color: active ? ACCENT : TEXT, fontWeight: active ? 700 : 500 }}>{String(artist.name || '').split(' ')[0]}</div>
@@ -918,7 +1024,7 @@ const OnboardingPage: React.FC = () => {
             <div style={{ padding: '12px 14px', borderRadius: 10, marginBottom: 14, background: 'rgba(255,255,255,0.06)', border: `1px solid ${DIMMER}` }}>
               <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
                 <div style={{ width: 40, height: 40, borderRadius: '50%', overflow: 'hidden', flexShrink: 0 }}>
-                  <img src={selectedArtist.artworks?.[0] || selectedArtist.image || ''} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                  <img src={thumbUrl(selectedArtist.artworks?.[0] || selectedArtist.image || '', 120)} alt="" loading="lazy" decoding="async" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                 </div>
                 <div>
                   <div style={{ fontSize: 15, fontWeight: 700 }}>{selectedArtist.name}</div>
@@ -948,8 +1054,14 @@ const OnboardingPage: React.FC = () => {
                     }}
                   >
                     <div style={{ aspectRatio: '1 / 1', position: 'relative' }}>
-                      <img src={art.image} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} />
-                      <div style={{ position: 'absolute', inset: 0, background: active ? 'linear-gradient(to top, rgba(191,255,10,0.18), transparent)' : 'linear-gradient(to top, rgba(0,0,0,0.45), transparent)' }} />
+                      <img
+                        src={thumbUrl(art.image, 220)}
+                        alt=""
+                        loading="lazy"
+                        decoding="async"
+                        style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+                      />
+                      <div style={{ position: 'absolute', inset: 0, background: active ? 'linear-gradient(to top, rgba(212,165,71,0.18), transparent)' : 'linear-gradient(to top, rgba(0,0,0,0.45), transparent)' }} />
                       <div style={{ position: 'absolute', left: 6, right: 6, bottom: 6, fontSize: 8, color: '#fff', fontWeight: 700, textAlign: 'left' }}>
                         Artwork {idx + 1}
                       </div>
@@ -964,7 +1076,17 @@ const OnboardingPage: React.FC = () => {
             </div>
           )}
 
-          <div style={{ position: 'sticky', bottom: 0, paddingTop: 10, paddingBottom: 2, background: 'linear-gradient(to top, #111111 68%, rgba(17,17,17,0.18))' }}>
+          <div
+            style={{
+              position: 'sticky',
+              bottom: 0,
+              paddingTop: 10,
+              // Respect iOS home-indicator + Android navigation bar so
+              // the next-step button isn't hidden behind the system UI.
+              paddingBottom: 'calc(env(safe-area-inset-bottom, 0px) + 8px)',
+              background: 'linear-gradient(to top, #111111 68%, rgba(17,17,17,0.18))',
+            }}
+          >
             <button
               onClick={() => selectedImage && setStep(2)}
               disabled={!selectedImage}
@@ -986,8 +1108,16 @@ const OnboardingPage: React.FC = () => {
         </div>
       </div>
 
-      <div className="onboarding-scroll" style={{ ...slide(2), overflowY: 'auto' }}>
-        <div style={{ maxWidth: 560, margin: '0 auto', padding: '24px 20px 34px' }}>
+      <div className="onboarding-scroll" style={{ ...slide(2), overflowY: 'auto', overflowX: 'hidden' }}>
+        <div
+          style={{
+            width: '100%',
+            maxWidth: 560,
+            margin: '0 auto',
+            padding: isMobile ? '14px 16px 20px' : '24px 20px 34px',
+            boxSizing: 'border-box',
+          }}
+        >
           <p style={{ fontSize: 9, letterSpacing: '0.25em', color: 'rgba(255,255,255,0.22)', marginBottom: 10 }}>STEP 3 OF 3</p>
           <h2 style={{ margin: '0 0 8px', fontSize: 'clamp(24px,5.8vw,34px)', letterSpacing: '-0.02em' }}>프로필 영역 선택</h2>
           <p style={{ fontSize: 12, color: DIM, marginBottom: 16 }}>작품 이미지를 드래그해 프로필에 사용할 영역을 조정하세요.</p>
@@ -1013,14 +1143,23 @@ const OnboardingPage: React.FC = () => {
           >
             {selectedImage && (
               <img
-                src={selectedImage}
+                src={thumbUrl(selectedImage, 800)}
                 draggable={false}
+                onLoad={(e) => {
+                  const img = e.currentTarget;
+                  if (img.naturalWidth > 0 && img.naturalHeight > 0) {
+                    const a = img.naturalHeight / img.naturalWidth;
+                    if (Number.isFinite(a) && a > 0 && Math.abs(a - cropImgAspect) > 0.001) {
+                      setCropImgAspect(a);
+                    }
+                  }
+                }}
                 style={{
                   position: 'absolute',
                   top: '50%',
                   left: '50%',
                   width: cropPreviewSize,
-                  height: 'auto',
+                  height: cropPreviewSize * cropImgAspect,
                   maxWidth: 'none',
                   maxHeight: 'none',
                   transform: `translate(-50%,-50%) translate(${crop.x * cropScaleFactor}px,${crop.y * cropScaleFactor}px) scale(${crop.scale})`,
@@ -1075,7 +1214,7 @@ const OnboardingPage: React.FC = () => {
           {selectedArtist && (
             <div style={{ display: 'flex', alignItems: 'center', gap: 10, marginBottom: 14 }}>
               <div style={{ width: 42, height: 42, borderRadius: '50%', overflow: 'hidden', border: `2px solid ${ACCENT}` }}>
-                <img src={selectedImage || selectedArtist.artworks?.[0] || selectedArtist.image || ''} alt="" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                <img src={thumbUrl(selectedImage || selectedArtist.artworks?.[0] || selectedArtist.image || '', 128)} alt="" loading="lazy" decoding="async" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
               </div>
               <div>
                 <div style={{ fontSize: 14, fontWeight: 700 }}>Art Explorer</div>
@@ -1097,11 +1236,15 @@ const OnboardingPage: React.FC = () => {
               fontSize: 13,
               fontWeight: 800,
               cursor: loading || !selectedImage ? 'not-allowed' : 'pointer',
+              // Reserve room below the button for the iOS home indicator
+              // / Android nav bar so it isn't hidden behind system UI.
+              marginBottom: 'env(safe-area-inset-bottom, 0px)',
             }}
           >
             {loading ? '저장 중...' : '저장하기 ✓'}
           </button>
         </div>
+      </div>
       </div>
 
       <TransitionBadge show={artistDataLoading && step === 1} />
@@ -1110,7 +1253,7 @@ const OnboardingPage: React.FC = () => {
         .onboarding-shell,
         .onboarding-scroll {
           scrollbar-width: thin;
-          scrollbar-color: rgba(191,255,10,0.62) rgba(255,255,255,0.08);
+          scrollbar-color: rgba(212,165,71,0.62) rgba(255,255,255,0.08);
         }
         .onboarding-shell::-webkit-scrollbar,
         .onboarding-scroll::-webkit-scrollbar {
@@ -1124,13 +1267,13 @@ const OnboardingPage: React.FC = () => {
         }
         .onboarding-shell::-webkit-scrollbar-thumb,
         .onboarding-scroll::-webkit-scrollbar-thumb {
-          background: linear-gradient(180deg, rgba(191,255,10,0.84), rgba(191,255,10,0.52));
+          background: linear-gradient(180deg, rgba(212,165,71,0.84), rgba(212,165,71,0.52));
           border-radius: 999px;
-          border: 1px solid rgba(191,255,10,0.35);
+          border: 1px solid rgba(212,165,71,0.35);
         }
         .onboarding-shell::-webkit-scrollbar-thumb:hover,
         .onboarding-scroll::-webkit-scrollbar-thumb:hover {
-          background: linear-gradient(180deg, rgba(191,255,10,0.96), rgba(191,255,10,0.66));
+          background: linear-gradient(180deg, rgba(212,165,71,0.96), rgba(212,165,71,0.66));
         }
       `}</style>
     </div>

@@ -5,7 +5,7 @@ import { Globe } from "./Globe";
 import { VenuePanel } from "./VenuePanel";
 import { InteractiveGlobeRealModal } from "./InteractiveGlobeRealModal";
 import { useLanguage } from "../../contexts/LanguageContext";
-import { localizeContinentName, localizeCountryName, localizeGeoLabel } from "../../i18n/geoLocalization";
+import { localizeCityName, localizeContinentName, localizeCountryName, localizeGeoLabel } from "../../i18n/geoLocalization";
 
 import type { CityMarker, Theme, Venue, InteractiveExhibition } from "./types";
 import type { Exhibition } from "../../types/Exhibition";
@@ -42,8 +42,17 @@ const extractCountry = (d: any): string => {
 // Strip postal codes from city strings
 const stripPostalCode = (s: string): string => s.replace(/^\d{3,10}\s+/, '').trim();
 
+// Collapse spelling variants to a single canonical city name so the same place
+// (e.g. "St. Petersburg" vs "Saint Petersburg") shares one minimap entry.
+const normalizeCityName = (name: string): string => {
+  const trimmed = (name || '').trim();
+  if (!trimmed) return trimmed;
+  if (/^st\.?\s+petersburg$/i.test(trimmed)) return 'Saint Petersburg';
+  return trimmed;
+};
+
 const extractCity = (ex: any): string => {
-  if (ex && ex.cityCluster && typeof ex.cityCluster === 'string') return ex.cityCluster;
+  if (ex && ex.cityCluster && typeof ex.cityCluster === 'string') return normalizeCityName(ex.cityCluster);
 
   const regionRaw = (ex && ex.region && typeof ex.region === 'string') ? ex.region : '';
   if (regionRaw) {
@@ -51,6 +60,31 @@ const extractCity = (ex: any): string => {
 
     if (r.includes('san francisco') || r.includes('sfmoma')) return 'San Francisco';
     if (r.includes('los angeles') || r.includes('lacma') || r.includes('getty')) return 'Los Angeles';
+    // California state-only fallback: split by latitude (Bay Area ≈ 37+, LA ≈ 34)
+    if (r === 'california' || r.startsWith('california,') || r.startsWith('california ')) {
+      const lat = Number(ex.latitude);
+      if (Number.isFinite(lat) && lat >= 36) return 'San Francisco';
+      return 'Los Angeles';
+    }
+    // US state-only regions that map unambiguously to a single city in current data
+    if (r === 'massachusetts' || r.startsWith('massachusetts,')) return 'Boston';
+    if (r === 'texas' || r.startsWith('texas,')) return 'Houston';
+    if (r === 'arkansas' || r.startsWith('arkansas,')) return 'Bentonville';
+    if (r === 'ohio' || r.startsWith('ohio,')) return 'Cleveland';
+    if (r === 'pennsylvania' || r.startsWith('pennsylvania,')) return 'Philadelphia';
+    if (r === 'georgia' || r.startsWith('georgia,')) return 'Atlanta';
+    if (r === 'michigan' || r.startsWith('michigan,')) return 'Detroit';
+    if (r === 'quebec' || r.startsWith('quebec,')) return 'Montreal';
+    if (r === 'cornwall' || r.startsWith('cornwall,')) return 'St Ives';
+    if (r.includes('new south wales')) return 'Sydney';
+    if (r === 'victoria' || r === 'victoria, australia') return 'Melbourne';
+    if (r === 'queensland' || r.startsWith('queensland,')) return 'Brisbane';
+    if (r.includes('cairo governorate')) return 'Cairo';
+    if (r.includes('giza governorate')) return 'Giza';
+    if (r.includes('western cape')) return 'Cape Town';
+    if (r.includes('north jutland') || r.includes('nordjylland')) return 'Skagen';
+    if (r === 'gyeonggi' || r.startsWith('gyeonggi') || r.includes('경기')) return 'Gwacheon';
+    if (r === 'wales' || r.startsWith('wales,')) return 'Cardiff';
     if (r.includes('london')) return 'London';
     if (r.includes('new york')) return 'New York';
     if (r.includes('paris')) return 'Paris';
@@ -116,19 +150,19 @@ const extractCity = (ex: any): string => {
     if (r.includes('mexico city') || r.includes('ciudad de méxico')) return 'Mexico City';
 
     const firstSeg = regionRaw.split(',')[0].trim();
-    return stripPostalCode(firstSeg) || firstSeg;
+    return normalizeCityName(stripPostalCode(firstSeg) || firstSeg);
   }
 
-  if (ex && ex.city && typeof ex.city === 'string') return ex.city.trim();
+  if (ex && ex.city && typeof ex.city === 'string') return normalizeCityName(ex.city);
 
   if (ex && ex.location && typeof ex.location === 'string') {
     const parts = ex.location.split(',').map((p: string) => p.trim());
     if (parts.length >= 1) {
       const first = parts[0];
       if (!/^\d|^(via|rue|place|piazza|strasse|straße|platz|square|avenue|blvd|boulevard|road|street)/i.test(first)) {
-        return stripPostalCode(first);
+        return normalizeCityName(stripPostalCode(first));
       }
-      return parts[1] ? stripPostalCode(parts[1]) : '';
+      return parts[1] ? normalizeCityName(stripPostalCode(parts[1])) : '';
     }
   }
   return '';
@@ -386,26 +420,25 @@ export default function InteractiveGlobeMap({ exhibitions, onSelectExhibition, o
     if (!routeExhibitionId) {
       unresolvedRouteExhibitionIdRef.current = null;
       closingExhibitionIdRef.current = null;
-      if (selectedRealExhibition && !isOpeningExhibition) setSelectedRealExhibition(null);
+      setSelectedRealExhibition((prev) => {
+        if (prev) return null;
+        return prev;
+      });
       setIsOpeningExhibition(false);
       return;
     }
 
-    // Prevent immediate reopen of the same exhibition while close navigation is settling.
     if (
       closingExhibitionIdRef.current &&
-      routeExhibitionId === closingExhibitionIdRef.current &&
-      !selectedRealExhibition
+      routeExhibitionId === closingExhibitionIdRef.current
     ) {
+      // Avoid immediate reopen if just closed
       return;
     }
 
     if (closingExhibitionIdRef.current && routeExhibitionId !== closingExhibitionIdRef.current) {
       closingExhibitionIdRef.current = null;
     }
-
-    const currentId = String(selectedRealExhibition?._selectedExhibitionId || selectedRealExhibition?.id || '');
-    if (currentId === routeExhibitionId) return;
 
     for (const cityMarker of cities) {
       for (const venue of cityMarker.venues) {
@@ -416,23 +449,12 @@ export default function InteractiveGlobeMap({ exhibitions, onSelectExhibition, o
           const museumRouteId = String(original?.id || venue.id || "");
           if (museumRouteId !== routeExhibitionId) continue;
 
-          const firstSub =
-            venue.exhibitions.find((entry) => entry?.id) ||
-            venue.exhibitions[0] ||
-            null;
-
           unresolvedRouteExhibitionIdRef.current = null;
-
           setSelectedCity(cityMarker);
-          setSelectedRealExhibition({
-            ...original,
-            _exhibitionTitle: firstSub?.title || original?.name || venue.name,
-            _selectedExhibitionId: firstSub?.id,
-            _selectedExhibitionType: firstSub?.type || "permanent",
-            _routeCountry: cityMarker.country,
-            _routeCity: cityMarker.city,
-            _routeVenue: venue.name,
-            collectionFile: normalizeCollectionPath((firstSub as any)?.collectionFile || original?.collectionFile),
+          setSelectedRealExhibition((prev) => {
+            // ONLY clear if we just navigated to the museum explicitly.
+            // If prev evaluates to true, we return null to clear it safely.
+            return null;
           });
           setIsOpeningExhibition(false);
           return;
@@ -448,28 +470,35 @@ export default function InteractiveGlobeMap({ exhibitions, onSelectExhibition, o
         unresolvedRouteExhibitionIdRef.current = null;
 
         setSelectedCity(cityMarker);
-        setSelectedRealExhibition({
-          ...original,
-          _exhibitionTitle: matched.title,
-          _selectedExhibitionId: matched.id,
-          _selectedExhibitionType: matched.type,
-          _routeCountry: cityMarker.country,
-          _routeCity: cityMarker.city,
-          _routeVenue: venue.name,
-          collectionFile: normalizeCollectionPath(fullSub?.collectionFile),
+        setSelectedRealExhibition((prev) => {
+          const currentId = String(prev?._selectedExhibitionId || prev?.id || '');
+          if (currentId === matched.id) return prev;
+          return {
+            ...original,
+            _exhibitionTitle: matched.title,
+            _selectedExhibitionId: matched.id,
+            _selectedExhibitionType: matched.type,
+            _routeCountry: cityMarker.country,
+            _routeCity: cityMarker.city,
+            _routeVenue: venue.name,
+            collectionFile: normalizeCollectionPath(fullSub?.collectionFile),
+          };
         });
         setIsOpeningExhibition(false);
         return;
       }
     }
 
-    // Route target not found in current city/venue graph: stop spinner to avoid infinite waiting.
+    // Route target not found in current city/venue graph
     unresolvedRouteExhibitionIdRef.current = routeExhibitionId;
-    if (selectedRealExhibition && currentId !== routeExhibitionId && !isOpeningExhibition) {
-      setSelectedRealExhibition(null);
-    }
+    setSelectedRealExhibition((prev) => {
+      const currentId = String(prev?._selectedExhibitionId || prev?.id || '');
+      if (currentId !== routeExhibitionId) return null;
+      return prev;
+    });
     setIsOpeningExhibition(false);
-  }, [location.pathname, cities, selectedRealExhibition, isOpeningExhibition]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [location.pathname, cities]);
 
   useEffect(() => {
     if (!location.pathname.startsWith('/interactive/')) {
@@ -575,6 +604,25 @@ export default function InteractiveGlobeMap({ exhibitions, onSelectExhibition, o
     setIsOpeningExhibition(false);
   }, []);
 
+  // Belt-and-suspenders: as soon as the modal has an exhibition to render,
+  // the opening overlay is no longer needed. This guards against Android
+  // Chrome WebView cases where the modal's onReady callback fires but a
+  // separate route-sync effect re-flips isOpeningExhibition back on.
+  useEffect(() => {
+    if (selectedRealExhibition && isOpeningExhibition) {
+      setIsOpeningExhibition(false);
+    }
+  }, [selectedRealExhibition, isOpeningExhibition]);
+
+  // Hard ceiling: never let the opening overlay sit on screen for more than
+  // 1.5s. Without this, a stalled framer-motion exit animation on Android
+  // can leave the blur layer permanently covering the modal.
+  useEffect(() => {
+    if (!isOpeningExhibition) return;
+    const t = setTimeout(() => setIsOpeningExhibition(false), 1500);
+    return () => clearTimeout(t);
+  }, [isOpeningExhibition]);
+
   const toggleTheme = () => {
     const next = theme === "dark" ? "light" : "dark";
     try { localStorage.setItem('homeTheme', next); } catch { }
@@ -582,28 +630,28 @@ export default function InteractiveGlobeMap({ exhibitions, onSelectExhibition, o
     window.dispatchEvent(new Event('theme-changed'));
   };
 
-  const lineBg = t ? "rgba(0,0,0,0.06)" : "rgba(255,255,255,0.06)";
-  const lineSubtleBg = t ? "rgba(0,0,0,0.04)" : "rgba(255,255,255,0.04)";
+  const lineBg = t ? "rgba(0,0,0,0.09)" : "rgba(255,255,255,0.11)";
+  const lineSubtleBg = t ? "rgba(0,0,0,0.06)" : "rgba(255,255,255,0.07)";
   void lineSubtleBg;
 
   const drilledContinentLabel = drilledContinent ? localizeContinentName(drilledContinent, language) : "";
   const drilledCountryLabel = drilledCountry ? localizeCountryName(drilledCountry, language) : "";
 
   // Replaces fg classes with inline styles where easily mapping
-  const cFg50 = t ? "rgba(0,0,0,0.45)" : "rgba(255,255,255,0.5)";
-  const cFg25 = t ? "rgba(0,0,0,0.2)" : "rgba(255,255,255,0.2)";
-  const cFg15 = t ? "rgba(0,0,0,0.12)" : "rgba(255,255,255,0.15)";
-  const cFg10 = t ? "rgba(0,0,0,0.08)" : "rgba(255,255,255,0.10)";
-  const cFg08 = t ? "rgba(0,0,0,0.06)" : "rgba(255,255,255,0.08)";
-  const cFg06 = t ? "rgba(0,0,0,0.05)" : "rgba(255,255,255,0.06)";
+  const cFg50 = t ? "rgba(0,0,0,0.60)" : "rgba(255,255,255,0.72)";
+  const cFg25 = t ? "rgba(0,0,0,0.34)" : "rgba(255,255,255,0.50)";
+  const cFg15 = t ? "rgba(0,0,0,0.18)" : "rgba(255,255,255,0.30)";
+  const cFg10 = t ? "rgba(0,0,0,0.12)" : "rgba(255,255,255,0.20)";
+  const cFg08 = t ? "rgba(0,0,0,0.09)" : "rgba(255,255,255,0.15)";
+  const cFg06 = t ? "rgba(0,0,0,0.07)" : "rgba(255,255,255,0.12)";
 
   return (
     <div
       className="ig-container"
       style={{
-        fontFamily: "'Space Grotesk', sans-serif",
-        backgroundColor: t ? "#FAFAFA" : "#080808",
-        color: t ? "#000" : "#fff",
+        fontFamily: "'Inter', 'Space Grotesk', 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif",
+        backgroundColor: t ? "#FAFAFA" : "#0c0c0a",
+        color: t ? "#111" : "#f0ede6",
       }}
     >
       {/* ── Globe ── */}
@@ -622,79 +670,38 @@ export default function InteractiveGlobeMap({ exhibitions, onSelectExhibition, o
         onHoverData={handleHoverDataChange}
         />
 
-      {/* ── Header (top-left) ── */}
-      <header className="ig-header" style={{ alignItems: 'flex-start' }}>
-        <motion.div 
-          className="ig-home-logo"
-          initial="initial"
-          whileHover="hover"
-          style={{ 
-            cursor: "pointer", 
-            fontFamily: "'Space Grotesk', 'Inter', sans-serif", 
-            fontSize: "18px", 
-            fontWeight: 500, 
-            letterSpacing: "0.08em",
-            color: t ? "#111" : "#fff",
-            position: "relative",
-            display: "inline-block"
-          }}
-          onClick={() => navigate("/")}
-        >
-          <motion.span
-            variants={{
-              initial: { letterSpacing: "0.1em" },
-              hover: { letterSpacing: "0.25em" }
-            }}
-            transition={{ type: "spring", stiffness: 300, damping: 25 }}
-            style={{ display: "inline-block" }}
-          >
-            COLLY
-          </motion.span>
-          <motion.div
-            style={{
-              position: "absolute", bottom: "-2px", left: "0%", height: "1px", background: t ? "#111" : "#fff",
-            }}
-            variants={{
-              initial: { width: "0%" },
-              hover: { width: "100%" }
-            }}
-            transition={{ duration: 0.3, ease: "easeOut" }}
-          />
-        </motion.div>
-
+      {/* ── Header (top-left) ──
+           Two mutually-exclusive states:
+             • Not drilled  → just the COLLY brand logo
+             • Drilled      → BACK button + breadcrumb, COLLY hidden
+           `flex-direction: column` so children stack vertically and don't
+           collide with each other on the same baseline. */}
+      <header
+        className="ig-header"
+        style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: '10px' }}
+      >
         <AnimatePresence mode="wait">
-          {drilledContinent || drilledCountry ? (
+          {drilledContinent || drilledCountry || selectedCity ? (
             <motion.div
-              key="drilled"
+              key="drilled-cluster"
               initial={{ opacity: 0, x: -10 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -10 }}
-              transition={{ duration: 0.25 }}
-              style={{ 
-                marginTop: "24px", display: "flex", flexDirection: "column", alignItems: "flex-start", gap: "6px"
-              }}
+              transition={{ duration: 0.2 }}
+              style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: '12px' }}
             >
-              <div
-                style={{ 
-                   color: cFg50, fontSize: "14px", fontWeight: 600, letterSpacing: "0.05em",
-                   textTransform: 'uppercase', fontFamily: "'Inter', 'Space Grotesk', sans-serif"
-                }}
-              >
-                 {drilledCountry ? `${drilledContinentLabel || ''} > ${drilledCountryLabel}` : drilledContinentLabel}
-              </div>
               <motion.button
-                style={{ 
+                style={{
                   cursor: "pointer", display: "inline-flex", alignItems: "center", gap: "6px",
-                  background: "none", border: "none", outline: "none", padding: 0
+                  background: "none", border: "none", outline: "none", padding: 0,
                 }}
                 onClick={() => {
-                  setDrilledCountry(null);
-                  if (drilledCountry) {
-                    // if country was active, going back means back to continent level
-                  } else {
-                    setDrilledContinent(null);
-                  }
+                  // "Back to MAP" means back to the full globe view in one
+                  // press — clear every drill level at once. Stepping up one
+                  // level at a time was forcing 2-3 taps to reach COLLY.
                   setSelectedCity(null);
+                  setDrilledCountry(null);
+                  setDrilledContinent(null);
                 }}
                 whileHover={{ opacity: 0.7 }}
               >
@@ -703,10 +710,119 @@ export default function InteractiveGlobeMap({ exhibitions, onSelectExhibition, o
                    {tt({ ko: "지도로 돌아가기", en: "BACK TO MAP" })}
                 </span>
               </motion.button>
+
+              <div
+                style={{
+                  color: cFg50, fontSize: "14px", fontWeight: 600, letterSpacing: "0.05em",
+                  textTransform: 'uppercase', fontFamily: "'Inter', 'Space Grotesk', sans-serif"
+                }}
+              >
+                {[drilledContinentLabel, drilledCountryLabel, selectedCity ? localizeCityName(selectedCity.city, language) : null].filter(Boolean).join(' > ')}
+              </div>
             </motion.div>
-          ) : null}
+          ) : (
+            <motion.div
+              key="brand-logo"
+              initial={{ opacity: 0, x: -10 }}
+              animate={{ opacity: 1, x: 0 }}
+              exit={{ opacity: 0, x: -10 }}
+              transition={{ duration: 0.2 }}
+              className="ig-home-logo"
+              style={{
+                cursor: "pointer",
+                fontFamily: "'Space Grotesk', 'Inter', sans-serif",
+                fontSize: "18px",
+                fontWeight: 500,
+                letterSpacing: "0.08em",
+                color: t ? "#111" : "#fff",
+                position: "relative",
+                display: "inline-block"
+              }}
+              onClick={() => navigate("/")}
+              whileHover={{ letterSpacing: "0.25em" }}
+              transition={{ type: "spring", stiffness: 300, damping: 25 }}
+            >
+              COLLY
+            </motion.div>
+          )}
         </AnimatePresence>
       </header>
+
+      {/* ── Region filter pills (from Globe Proposals · Option B) ──
+           Surfaces continent drill-down as a visible UI element so the user
+           doesn't have to find continent labels on the globe itself. Mobile:
+           horizontally scrollable. Web: same row, fits 6 continents + All. */}
+      {!selectedCity && !drilledCountry && (
+        <div
+          className="ig-region-pills"
+          style={{
+            position: 'absolute',
+            top: 'calc(env(safe-area-inset-top, 0px) + 60px)',
+            left: '50%',
+            transform: 'translateX(-50%)',
+            zIndex: 12,
+            display: 'flex',
+            gap: 6,
+            padding: '4px 12px',
+            maxWidth: 'calc(100vw - 32px)',
+            overflowX: 'auto',
+            scrollbarWidth: 'none',
+            WebkitOverflowScrolling: 'touch',
+          }}
+        >
+          {[null, "Europe", "Asia", "North America", "South America", "Africa", "Oceania"].map((c) => {
+            const isActive = drilledContinent === c;
+            const labelKo: Record<string, string> = {
+              "Europe": "유럽", "Asia": "아시아",
+              "North America": "북미", "South America": "남미",
+              "Africa": "아프리카", "Oceania": "오세아니아",
+            };
+            const labelEn: Record<string, string> = {
+              "Europe": "Europe", "Asia": "Asia",
+              "North America": "N. America", "South America": "S. America",
+              "Africa": "Africa", "Oceania": "Oceania",
+            };
+            const label = c === null
+              ? (language === 'ko' ? '전체' : 'All')
+              : (language === 'ko' ? labelKo[c] : labelEn[c]);
+            const accent = t ? '#8A6B1F' : '#D4A547';
+            return (
+              <button
+                key={c ?? 'all'}
+                onClick={() => {
+                  // Dispatch via window event — pure setDrilledContinent
+                  // cascades through page-level useEffects that synchronously
+                  // reset it back to null on /interactive root. The window
+                  // event is handled in Globe.tsx and mutates internal refs
+                  // directly, then re-emits the state via onDrillContinent.
+                  window.dispatchEvent(new CustomEvent('armin:drill-continent', { detail: c }));
+                }}
+                style={{
+                  flexShrink: 0,
+                  padding: '6px 13px',
+                  fontFamily: "'Space Mono', monospace",
+                  fontWeight: 700,
+                  fontSize: 11,
+                  letterSpacing: '0.14em',
+                  textTransform: 'uppercase',
+                  border: `0.5px solid ${isActive ? accent : (t ? 'rgba(0,0,0,0.10)' : 'rgba(244,241,234,0.12)')}`,
+                  background: isActive
+                    ? (t ? 'rgba(138,107,31,0.10)' : 'rgba(212,165,71,0.10)')
+                    : (t ? 'rgba(255,255,255,0.65)' : 'rgba(244,241,234,0.04)'),
+                  color: isActive ? accent : (t ? 'rgba(0,0,0,0.70)' : 'rgba(244,241,234,0.78)'),
+                  cursor: 'pointer',
+                  backdropFilter: 'blur(8px)',
+                  borderRadius: 2,
+                  transition: 'all 0.15s',
+                  whiteSpace: 'nowrap',
+                }}
+              >
+                {label}
+              </button>
+            );
+          })}
+        </div>
+      )}
 
       {/* Legacy dock disabled: main app navigator is now the single bottom nav. */}
       {false && (() => {
@@ -877,14 +993,15 @@ export default function InteractiveGlobeMap({ exhibitions, onSelectExhibition, o
             onClose={() => setSelectedCity(null)}
             onOpenExhibition={(ex) => {
               closingExhibitionIdRef.current = null;
-              setOpeningExhibitionLabel(
-                ex?._exhibitionTitle
-                  ? tt({ ko: `${ex._exhibitionTitle} 불러오는 중...`, en: `Loading ${ex._exhibitionTitle}...` })
-                  : tt({ ko: "전시 여는 중...", en: "Opening Exhibition..." }),
-              );
-              setIsOpeningExhibition(true);
+              // Don't trigger the opening overlay here. The exhibition data is
+              // already in hand at click time, so the modal mounts in the same
+              // render — the overlay would only flash for one frame. On Android
+              // Chrome WebView that one-frame composite layer can stick on the
+              // GPU even after React unmounts the element, leaving a permanent
+              // dim/spinner overlay covering the modal.
               setSelectedRealExhibition(ex);
             }}
+            initialVenueId={location.pathname.split('/').filter(Boolean).length >= 4 ? decodeURIComponent(location.pathname.split('/').filter(Boolean)[3]) : null}
           />
         )}
       </AnimatePresence>
@@ -902,55 +1019,52 @@ export default function InteractiveGlobeMap({ exhibitions, onSelectExhibition, o
         )}
       </AnimatePresence>
 
-      <AnimatePresence>
-        {isOpeningExhibition && !selectedRealExhibition && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.15 }}
+      {/* Opening overlay — no AnimatePresence/motion. Framer Motion's
+          opacity animation stalls on Android Chrome WebView (probably
+          a compositor + UA-spoofed-iOS-Safari interaction), which would
+          leave this layer covering the modal indefinitely. Plain JSX
+          with a CSS keyframe spinner unmounts cleanly. */}
+      {isOpeningExhibition && !selectedRealExhibition && (
+        <div
+          style={{
+            position: 'fixed',
+            inset: 0,
+            zIndex: 95,
+            background: t ? 'rgba(250,250,250,0.92)' : 'rgba(8,8,8,0.92)',
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            pointerEvents: 'none',
+          }}
+        >
+          <div
             style={{
-              position: 'fixed',
-              inset: 0,
-              zIndex: 95,
-              background: t ? 'rgba(250,250,250,0.68)' : 'rgba(8,8,8,0.68)',
-              backdropFilter: 'blur(4px)',
-              WebkitBackdropFilter: 'blur(4px)',
               display: 'flex',
+              flexDirection: 'column',
               alignItems: 'center',
-              justifyContent: 'center',
-              pointerEvents: 'none',
+              gap: '12px',
+              color: t ? 'rgba(0,0,0,0.68)' : 'rgba(255,255,255,0.74)',
+              fontFamily: "'Space Mono', monospace",
+              fontSize: '11px',
+              letterSpacing: '0.08em',
+              textTransform: 'uppercase',
             }}
           >
             <div
               style={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                gap: '12px',
-                color: t ? 'rgba(0,0,0,0.68)' : 'rgba(255,255,255,0.74)',
-                fontFamily: "'Space Mono', monospace",
-                fontSize: '11px',
-                letterSpacing: '0.08em',
-                textTransform: 'uppercase',
+                width: '28px',
+                height: '28px',
+                borderRadius: '50%',
+                border: `2px solid ${t ? 'rgba(0,0,0,0.20)' : 'rgba(255,255,255,0.22)'}`,
+                borderTopColor: t ? '#8A6B1F' : '#D4A547',
+                animation: 'igmap-opening-spin 0.9s linear infinite',
               }}
-            >
-              <motion.div
-                style={{
-                  width: '28px',
-                  height: '28px',
-                  borderRadius: '50%',
-                  border: `2px solid ${t ? 'rgba(0,0,0,0.20)' : 'rgba(255,255,255,0.22)'}`,
-                  borderTopColor: t ? '#5A7800' : '#BFFF0A',
-                }}
-                animate={{ rotate: 360 }}
-                transition={{ duration: 0.9, repeat: Infinity, ease: 'linear' }}
-              />
-              <span>{openingExhibitionLabel}</span>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+            />
+            <span>{openingExhibitionLabel}</span>
+          </div>
+          <style>{`@keyframes igmap-opening-spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }`}</style>
+        </div>
+      )}
 
       {/* ── Coordinates & zoom (bottom-right) ── */}
       <div className="ig-coords-box">

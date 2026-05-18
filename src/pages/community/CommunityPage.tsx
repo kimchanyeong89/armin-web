@@ -39,7 +39,7 @@ interface Post {
 const CATEGORY_TABS: CategoryTab[] = ["리뷰", "뉴스", "토론", "인터뷰", "소식", "질문"];
 
 const CATEGORY_COLORS: Record<CategoryTab, string> = {
-  리뷰: "#BFFF0A",
+  리뷰: "#D4A547",
   뉴스: "#60A5FA",
   토론: "#F97316",
   인터뷰: "#A78BFA",
@@ -49,7 +49,7 @@ const CATEGORY_COLORS: Record<CategoryTab, string> = {
 
 const REVIEW_FILTERS: Array<{ id: HeaderType; label: string; color: string }> = [
   { id: "all", label: "전체", color: "" },
-  { id: "museum", label: "미술관", color: "#BFFF0A" },
+  { id: "museum", label: "미술관", color: "#D4A547" },
   { id: "artist", label: "작가", color: "#60A5FA" },
   { id: "artwork", label: "작품", color: "#FB7185" },
   { id: "exhibition", label: "전시", color: "#A78BFA" },
@@ -335,7 +335,7 @@ const CommunityPage: React.FC = () => {
           <div style={{ display: "flex", alignItems: "flex-end", justifyContent: "space-between", gap: 12, paddingBottom: 14 }}>
             <div>
               <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 4 }}>
-                <span style={{ width: 5, height: 5, borderRadius: 999, background: "#BFFF0A", display: "inline-block" }} />
+                <span style={{ width: 5, height: 5, borderRadius: 999, background: "#D4A547", display: "inline-block" }} />
                 <span style={{ fontSize: 9, letterSpacing: "0.28em", color: colors.lowText, textTransform: "uppercase" }}>
                   {t({ ko: "커뮤니티", en: "Community" })}
                 </span>
@@ -350,7 +350,7 @@ const CommunityPage: React.FC = () => {
               style={{
                 border: "none",
                 borderRadius: 999,
-                background: "#BFFF0A",
+                background: "#D4A547",
                 color: "#000",
                 height: 36,
                 padding: "0 14px",
@@ -386,7 +386,7 @@ const CommunityPage: React.FC = () => {
                 border: "none",
                 borderRadius: 999,
                 padding: "7px 12px",
-                background: sortTab === "latest" ? "#BFFF0A" : "transparent",
+                background: sortTab === "latest" ? "#D4A547" : "transparent",
                 color: sortTab === "latest" ? "#000" : colors.medText,
                 cursor: "pointer",
                 fontSize: 11,
@@ -596,7 +596,7 @@ const CommunityPage: React.FC = () => {
                           {resolveTagLabel(post)}
                         </span>
                         {hot && (
-                          <span style={{ display: "flex", alignItems: "center", gap: 4, fontSize: 9, color: "#BFFF0A", letterSpacing: "0.06em" }}>
+                          <span style={{ display: "flex", alignItems: "center", gap: 4, fontSize: 9, color: "#D4A547", letterSpacing: "0.06em" }}>
                             <TrendingUp size={10} strokeWidth={2.3} /> {t({ ko: "인기", en: "HOT" })}
                           </span>
                         )}

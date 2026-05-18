@@ -10,6 +10,23 @@ interface Props {
 
 type ExhibitionWithType = ExhibitionItem & { type: 'PERMANENT' | 'TEMPORARY' };
 
+/** Pick the best available thumbnail for an exhibition card:
+ *  1. ex.image (explicitly set on the exhibition object)
+ *  2. First image from ex.artworks[]
+ *  3. museum.representativeImage as last resort
+ */
+function resolveExhibitionThumbnail(ex: ExhibitionWithType, museumRepImg?: string): string {
+  if (ex.image) return ex.image;
+  const artworks = (ex as any).artworks;
+  if (Array.isArray(artworks)) {
+    for (const art of artworks) {
+      const img = art?.image || art?.imageUrl || art?.i || art?.thumbnail?.url || art?.thumbnail?.src || art?.thumbnail;
+      if (img && typeof img === 'string' && img.trim()) return img.trim();
+    }
+  }
+  return museumRepImg || '';
+}
+
 export default function DrawingMapModal({ museum, onClose }: Props) {
   const [activeItem, setActiveItem] = useState<ExhibitionWithType | null>(null);
   const [isSwitcherOpen, setIsSwitcherOpen] = useState(false);
@@ -412,23 +429,39 @@ export default function DrawingMapModal({ museum, onClose }: Props) {
         <main className="dm-main">
           {!activeItem && (
             <section className="dm-grid">
-              {filteredExhibitions.map((ex, idx) => (
-                <article key={ex.id + idx} className="dm-card" onClick={() => openExhibition(ex)}>
-                  {ex.image ? (
-                    <img src={ex.image} alt={ex.title || ex.name} className="dm-card-image" />
-                  ) : (
-                    <div className="dm-card-image" style={{ display: 'grid', placeItems: 'center', color: '#8a867d', fontWeight: 700, fontSize: 12 }}>
-                      No Image
-                    </div>
-                  )}
+              {filteredExhibitions.map((ex, idx) => {
+                const thumb = resolveExhibitionThumbnail(ex, museum.representativeImage);
+                return (
+                  <article key={ex.id + idx} className="dm-card" onClick={() => openExhibition(ex)}>
+                    {thumb ? (
+                      <img
+                        src={thumb}
+                        alt={ex.title || ex.name}
+                        className="dm-card-image"
+                        onError={(e) => {
+                          // Try to chain to next fallback on error
+                          const repImg = museum.representativeImage;
+                          if (e.currentTarget.src !== repImg && repImg) {
+                            e.currentTarget.src = repImg;
+                          } else {
+                            e.currentTarget.style.display = 'none';
+                          }
+                        }}
+                      />
+                    ) : (
+                      <div className="dm-card-image" style={{ display: 'grid', placeItems: 'center', color: '#8a867d', fontWeight: 700, fontSize: 12 }}>
+                        No Image
+                      </div>
+                    )}
 
-                  <div className="dm-card-body">
-                    <span className="dm-tag">{ex.type}</span>
-                    <h3 className="dm-card-title">{ex.title || ex.name}</h3>
-                    <p className="dm-card-sub">{ex.artworks?.length ? `${ex.artworks.length} artworks` : 'Open exhibition details'}</p>
-                  </div>
-                </article>
-              ))}
+                    <div className="dm-card-body">
+                      <span className="dm-tag">{ex.type}</span>
+                      <h3 className="dm-card-title">{ex.title || ex.name}</h3>
+                      <p className="dm-card-sub">{(ex as any).artworks?.length ? `${(ex as any).artworks.length} artworks` : 'Open exhibition details'}</p>
+                    </div>
+                  </article>
+                );
+              })}
 
               {filteredExhibitions.length === 0 && <div className="dm-empty">No exhibitions found.</div>}
             </section>

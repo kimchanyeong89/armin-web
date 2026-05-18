@@ -7,6 +7,18 @@ coverage/
 android/
 ios/
 
+# Exclude large web-app assets committed to the monorepo root
+# (gitignore patterns match at any depth, so these cover armin-web-main/public/ etc.)
+public/
+downloads/
+embedding_results/
+workers/
+google-cloud-sdk/
+*.aab
+*.csv
+*.tar.gz
+*.tgz
+
 # Keep source and config
 !App.tsx
 !app.json

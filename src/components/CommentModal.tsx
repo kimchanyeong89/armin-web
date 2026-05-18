@@ -365,8 +365,8 @@ const CommentModal: React.FC<CommentModalProps> = ({ artworkId, isOpen = true, o
   const fgMed = t ? 'rgba(0,0,0,0.66)' : 'rgba(255,255,255,0.72)';
   const fgLow = t ? 'rgba(0,0,0,0.44)' : 'rgba(255,255,255,0.52)';
   const divider = t ? 'rgba(0,0,0,0.08)' : 'rgba(255,255,255,0.09)';
-  const lime = t ? '#5A7800' : '#BFFF0A';
-  const limeSoft = t ? 'rgba(90,120,0,0.12)' : 'rgba(191,255,10,0.14)';
+  const lime = t ? '#8A6B1F' : '#D4A547';
+  const limeSoft = t ? 'rgba(138,107,31,0.12)' : 'rgba(212,165,71,0.14)';
   const fallbackAvatar = 'https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&f=y';
 
   const renderComment = (c: Comment, isReply = false) => {
@@ -472,10 +472,10 @@ const CommentModal: React.FC<CommentModalProps> = ({ artworkId, isOpen = true, o
                   cursor: 'pointer'
                 }}>Cancel</button>
                 <button onClick={() => saveEdit(c.id)} style={{
-                  borderTop: `1px solid ${t ? 'rgba(90,120,0,0.45)' : 'rgba(191,255,10,0.4)'}`,
-                  borderRight: `1px solid ${t ? 'rgba(90,120,0,0.45)' : 'rgba(191,255,10,0.4)'}`,
-                  borderBottom: `1px solid ${t ? 'rgba(90,120,0,0.45)' : 'rgba(191,255,10,0.4)'}`,
-                  borderLeft: `1px solid ${t ? 'rgba(90,120,0,0.45)' : 'rgba(191,255,10,0.4)'}`,
+                  borderTop: `1px solid ${t ? 'rgba(138,107,31,0.45)' : 'rgba(212,165,71,0.4)'}`,
+                  borderRight: `1px solid ${t ? 'rgba(138,107,31,0.45)' : 'rgba(212,165,71,0.4)'}`,
+                  borderBottom: `1px solid ${t ? 'rgba(138,107,31,0.45)' : 'rgba(212,165,71,0.4)'}`,
+                  borderLeft: `1px solid ${t ? 'rgba(138,107,31,0.45)' : 'rgba(212,165,71,0.4)'}`,
                   background: limeSoft,
                   color: lime,
                   fontSize: 10,
@@ -673,6 +673,8 @@ const CommentModal: React.FC<CommentModalProps> = ({ artworkId, isOpen = true, o
             <img
               src={userProfiles[user?.uid || '']?.photoURL || user?.photoURL || ''}
               alt="me"
+              loading="eager"
+              referrerPolicy="no-referrer"
               style={{
                 width: 26,
                 height: 26,
@@ -720,10 +722,10 @@ const CommentModal: React.FC<CommentModalProps> = ({ artworkId, isOpen = true, o
             style={{
               minWidth: 58,
               padding: '9px 10px',
-              borderTop: `1px solid ${newComment.trim() && user && !isSubmitting ? (t ? 'rgba(90,120,0,0.52)' : 'rgba(191,255,10,0.5)') : divider}`,
-              borderRight: `1px solid ${newComment.trim() && user && !isSubmitting ? (t ? 'rgba(90,120,0,0.52)' : 'rgba(191,255,10,0.5)') : divider}`,
-              borderBottom: `1px solid ${newComment.trim() && user && !isSubmitting ? (t ? 'rgba(90,120,0,0.52)' : 'rgba(191,255,10,0.5)') : divider}`,
-              borderLeft: `1px solid ${newComment.trim() && user && !isSubmitting ? (t ? 'rgba(90,120,0,0.52)' : 'rgba(191,255,10,0.5)') : divider}`,
+              borderTop: `1px solid ${newComment.trim() && user && !isSubmitting ? (t ? 'rgba(138,107,31,0.52)' : 'rgba(212,165,71,0.5)') : divider}`,
+              borderRight: `1px solid ${newComment.trim() && user && !isSubmitting ? (t ? 'rgba(138,107,31,0.52)' : 'rgba(212,165,71,0.5)') : divider}`,
+              borderBottom: `1px solid ${newComment.trim() && user && !isSubmitting ? (t ? 'rgba(138,107,31,0.52)' : 'rgba(212,165,71,0.5)') : divider}`,
+              borderLeft: `1px solid ${newComment.trim() && user && !isSubmitting ? (t ? 'rgba(138,107,31,0.52)' : 'rgba(212,165,71,0.5)') : divider}`,
               background: newComment.trim() && user && !isSubmitting ? limeSoft : 'transparent',
               color: newComment.trim() && user && !isSubmitting ? lime : fgLow,
               fontSize: 10,

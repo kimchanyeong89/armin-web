@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import type { Theme } from "./types";
-import { getCityShape } from "./cityMinimapHelper";
+import { getCityShape, type CityGeoBox } from "./cityMinimapHelper";
 
 interface VenuePoint {
   name: string;
@@ -41,6 +41,35 @@ interface LayoutCity {
   oy: number;
   shape: string;
   river: string;
+  geoBox?: CityGeoBox;
+}
+
+interface SvgBox {
+  minX: number;
+  maxX: number;
+  minY: number;
+  maxY: number;
+}
+
+// Approximate a path's bounding box from its raw numeric pairs. Quadratic
+// control points slightly inflate the box, which is fine for venue placement.
+function parseSvgBox(d: string): SvgBox {
+  const fallback: SvgBox = { minX: 30, maxX: 170, minY: 30, maxY: 170 };
+  if (!d) return fallback;
+  const nums = d.match(/-?\d+(?:\.\d+)?/g)?.map(Number) || [];
+  const xs: number[] = [];
+  const ys: number[] = [];
+  for (let i = 0; i + 1 < nums.length; i += 2) {
+    xs.push(nums[i]);
+    ys.push(nums[i + 1]);
+  }
+  if (!xs.length) return fallback;
+  return {
+    minX: Math.min(...xs),
+    maxX: Math.max(...xs),
+    minY: Math.min(...ys),
+    maxY: Math.max(...ys),
+  };
 }
 
 interface DotPoint {
@@ -198,6 +227,7 @@ function buildLayout(cities: GroupedCity[]): LayoutCity[] {
     oy: 0,
     shape: mainShape.shape,
     river: mainShape.river,
+    geoBox: mainShape.geoBox,
   });
 
   others.forEach((city) => {
@@ -218,6 +248,7 @@ function buildLayout(cities: GroupedCity[]): LayoutCity[] {
       oy,
       shape: shape.shape,
       river: shape.river,
+      geoBox: shape.geoBox,
     });
   });
 
@@ -237,47 +268,95 @@ function buildDots(layoutCities: LayoutCity[], groupedCities: GroupedCity[]): Do
     const cityVenues = grouped.venues;
     if (!cityVenues.length) return;
 
-    const lats = cityVenues.map((v) => v.lat || grouped.lat);
-    const lngs = cityVenues.map((v) => v.lng || grouped.lng);
-    const minLat = Math.min(...lats);
-    const maxLat = Math.max(...lats);
-    const minLng = Math.min(...lngs);
-    const maxLng = Math.max(...lngs);
-    const latRange = maxLat - minLat;
-    const lngRange = maxLng - minLng;
-
-    const spread = Math.min(20, 12 + cityVenues.length * 0.6);
-    const cols = Math.ceil(Math.sqrt(Math.max(cityVenues.length, 1)));
-    const rows = Math.ceil(cityVenues.length / cols);
     const labelRingRadius = cityVenues.length >= 16 ? 88 : cityVenues.length >= 11 ? 94 : cityVenues.length >= 7 ? 100 : 108;
     const step = cityVenues.length > 1 ? (Math.PI * 2) / cityVenues.length : 0;
     const startAngle = -Math.PI / 2;
 
-    const positioned = cityVenues.map((entry, i) => {
-      let cx =
-        lngRange < 0.005
-          ? 100 + ((i % cols) / Math.max(cols - 1, 1) - 0.5) * spread * 2
-          : 100 + ((entry.lng - minLng) / lngRange - 0.5) * spread * 2;
-      let cy =
-        latRange < 0.005
-          ? 100 + (Math.floor(i / cols) / Math.max(rows - 1, 1) - 0.5) * spread * 2
-          : 100 - ((entry.lat - minLat) / latRange - 0.5) * spread * 2;
+    // Preferred path: project each venue's real lat/lng into the city's shape
+    // using the curated geoBox + the shape's SVG bounding box. Falls back to
+    // relative-coordinate spread when no geoBox is defined for this city.
+    let positioned: Array<{
+      idx: number;
+      venue: VenuePoint;
+      lat: number;
+      lng: number;
+      cx: number;
+      cy: number;
+      lx: number;
+      ly: number;
+      labelAngle: number;
+    }>;
 
-      if (lngRange === 0 && latRange === 0 && cityVenues.length > 1) {
-        const jitterAngle = (i / cityVenues.length) * Math.PI * 2;
-        cx += Math.cos(jitterAngle) * 15;
-        cy += Math.sin(jitterAngle) * 15;
-      }
+    if (layoutCity.geoBox) {
+      const geoBox = layoutCity.geoBox;
+      const svgBox = parseSvgBox(layoutCity.shape);
+      const latSpan = Math.max(geoBox.maxLat - geoBox.minLat, 1e-6);
+      const lngSpan = Math.max(geoBox.maxLng - geoBox.minLng, 1e-6);
+      const xSpan = Math.max(svgBox.maxX - svgBox.minX, 1);
+      const ySpan = Math.max(svgBox.maxY - svgBox.minY, 1);
+      // Inset so dots don't hug the outline
+      const insetX = xSpan * 0.12;
+      const insetY = ySpan * 0.12;
 
-      return {
-        ...entry,
-        cx,
-        cy,
-        lx: 100 + Math.cos(startAngle + i * step) * labelRingRadius,
-        ly: 100 + Math.sin(startAngle + i * step) * labelRingRadius,
-        labelAngle: startAngle + i * step,
-      };
-    });
+      positioned = cityVenues.map((entry, i) => {
+        const lat = entry.lat || grouped.lat;
+        const lng = entry.lng || grouped.lng;
+        const nx = clamp((lng - geoBox.minLng) / lngSpan, 0, 1);
+        const ny = clamp((lat - geoBox.minLat) / latSpan, 0, 1);
+        let cx = svgBox.minX + insetX + nx * (xSpan - 2 * insetX);
+        let cy = svgBox.maxY - insetY - ny * (ySpan - 2 * insetY); // flip y (SVG)
+
+        cx = clamp(cx, svgBox.minX + 4, svgBox.maxX - 4);
+        cy = clamp(cy, svgBox.minY + 4, svgBox.maxY - 4);
+
+        return {
+          ...entry,
+          cx,
+          cy,
+          lx: 100 + Math.cos(startAngle + i * step) * labelRingRadius,
+          ly: 100 + Math.sin(startAngle + i * step) * labelRingRadius,
+          labelAngle: startAngle + i * step,
+        };
+      });
+    } else {
+      const lats = cityVenues.map((v) => v.lat || grouped.lat);
+      const lngs = cityVenues.map((v) => v.lng || grouped.lng);
+      const minLat = Math.min(...lats);
+      const maxLat = Math.max(...lats);
+      const minLng = Math.min(...lngs);
+      const maxLng = Math.max(...lngs);
+      const latRange = maxLat - minLat;
+      const lngRange = maxLng - minLng;
+      const spread = Math.min(20, 12 + cityVenues.length * 0.6);
+      const cols = Math.ceil(Math.sqrt(Math.max(cityVenues.length, 1)));
+      const rows = Math.ceil(cityVenues.length / cols);
+
+      positioned = cityVenues.map((entry, i) => {
+        let cx =
+          lngRange < 0.005
+            ? 100 + ((i % cols) / Math.max(cols - 1, 1) - 0.5) * spread * 2
+            : 100 + ((entry.lng - minLng) / lngRange - 0.5) * spread * 2;
+        let cy =
+          latRange < 0.005
+            ? 100 + (Math.floor(i / cols) / Math.max(rows - 1, 1) - 0.5) * spread * 2
+            : 100 - ((entry.lat - minLat) / latRange - 0.5) * spread * 2;
+
+        if (lngRange === 0 && latRange === 0 && cityVenues.length > 1) {
+          const jitterAngle = (i / cityVenues.length) * Math.PI * 2;
+          cx += Math.cos(jitterAngle) * 15;
+          cy += Math.sin(jitterAngle) * 15;
+        }
+
+        return {
+          ...entry,
+          cx,
+          cy,
+          lx: 100 + Math.cos(startAngle + i * step) * labelRingRadius,
+          ly: 100 + Math.sin(startAngle + i * step) * labelRingRadius,
+          labelAngle: startAngle + i * step,
+        };
+      });
+    }
 
     positioned.forEach((entry) => {
       dots.push({
@@ -457,17 +536,17 @@ export function MiniCityMap({
   );
 
   const shapeStroke = t ? "rgba(0,0,0,0.24)" : "rgba(255,255,255,0.20)";
-  const shapeHovered = t ? "rgba(90,120,0,0.75)" : "rgba(191,255,10,0.78)";
+  const shapeHovered = t ? "rgba(138,107,31,0.75)" : "rgba(212,165,71,0.78)";
   const shapeDim = t ? "rgba(0,0,0,0.11)" : "rgba(255,255,255,0.11)";
   const riverStroke = t ? "rgba(0,0,0,0.12)" : "rgba(255,255,255,0.11)";
   const dotDefault = t ? "rgba(0,0,0,0.50)" : "rgba(255,255,255,0.50)";
-  const dotLime = t ? "#5A7800" : "#BFFF0A";
-  const limeGlow = t ? "rgba(90,120,0,0.22)" : "rgba(191,255,10,0.20)";
+  const dotLime = t ? "#8A6B1F" : "#D4A547";
+  const limeGlow = t ? "rgba(138,107,31,0.22)" : "rgba(212,165,71,0.20)";
   const lblDefault = t ? "rgba(0,0,0,0.34)" : "rgba(255,255,255,0.33)";
-  const lblActive = t ? "#5A7800" : "#BFFF0A";
+  const lblActive = t ? "#8A6B1F" : "#D4A547";
   const lblBgHover = t ? "rgba(255,255,255,0.94)" : "rgba(10,10,10,0.92)";
   const leaderDef = t ? "rgba(0,0,0,0.18)" : "rgba(255,255,255,0.18)";
-  const leaderHL = t ? "rgba(90,120,0,0.60)" : "rgba(191,255,10,0.56)";
+  const leaderHL = t ? "rgba(138,107,31,0.60)" : "rgba(212,165,71,0.56)";
   const vig = t ? "255,255,255" : "12,12,12";
   const liveLabelFontSize = visiblePoints.length >= 18 ? 5.8 : visiblePoints.length >= 12 ? 6.4 : FONT_SIZE;
 

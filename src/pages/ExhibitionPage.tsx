@@ -1,3 +1,14 @@
+// ═════════════════════════════════════════════════════════════════════════
+// ▼ EXHIBITION PAGE SHELL (ep-*) ▼
+// Page-level shell that switches between two modes via data-mode:
+//   data-mode="interactive" → hosts InteractiveGlobeRealModal
+//   data-mode="drawing"     → hosts ExhibitionModal (sketch gallery, em-*)
+//
+// Token sets `I.*` (interactive) and `D.*` (drawing) below.
+// Do NOT edit the in-modal card typography here — edit the matching modal:
+//   - Interactive cards → InteractiveGlobeMap/InteractiveGlobeRealModal.tsx
+//   - Sketch cards      → components/ExhibitionModal.tsx (em-gallery-item)
+// ═════════════════════════════════════════════════════════════════════════
 import { useParams, useNavigate, useSearchParams } from "react-router-dom";
 import React, { Suspense, useMemo, useState } from 'react';
 import type { Exhibition, ExhibitionItem } from '../types/Exhibition';
@@ -8,23 +19,24 @@ const ExhibitionModal = React.lazy(() => import('../components/ExhibitionModal')
 // ── Design tokens ──────────────────────────────────────────────────
 const I = {
   BG:     '#111111',
-  TEXT:   '#FFFFFF',
-  ACCENT: '#CCFF00',
-  DIM:    'rgba(255,255,255,0.35)',
-  LINE:   'rgba(255,255,255,0.08)',
-  LINE_S: 'rgba(255,255,255,0.18)',
+  TEXT:   '#F4F1EA',
+  ACCENT: '#D4A547',
+  DIM:    'rgba(244,241,234,0.74)',
+  LINE:   'rgba(244,241,234,0.10)',
+  LINE_S: 'rgba(244,241,234,0.25)',
 };
 
 const D = {
   BG:     '#FFFFFF',
   TEXT:   '#111111',
-  ACCENT: '#CCFF00',
+  ACCENT: '#D4A547',
   DIM:    'rgba(17,17,17,0.45)',
   LINE:   'rgba(17,17,17,0.10)',
   LINE_S: '#111111',
 };
 
 const MONO = "'Space Mono', 'Courier New', monospace";
+const SANS = "'Inter', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Helvetica Neue', Arial, sans-serif";
 
 // ── Injected CSS ────────────────────────────────────────────────────
 const CSS = `
@@ -67,7 +79,7 @@ const CSS = `
   border: 1px solid ${I.LINE}; background: rgba(255,255,255,0.025);
 }
 .ep-shell[data-mode="interactive"] .ep-card:hover {
-  border-color: rgba(204,255,0,0.4); background: rgba(204,255,0,0.03);
+  border-color: rgba(212,165,71,0.4); background: rgba(212,165,71,0.03);
 }
 .ep-shell[data-mode="interactive"] .ep-card-no-img { background: #1a1a1a; }
 .ep-shell[data-mode="interactive"] .ep-card-num { color: ${I.DIM}; }
@@ -75,10 +87,10 @@ const CSS = `
   border-color: ${I.LINE_S}; color: ${I.DIM};
 }
 .ep-shell[data-mode="interactive"] .ep-card-tag.permanent {
-  border-color: rgba(204,255,0,0.3); color: ${I.ACCENT};
+  border-color: rgba(212,165,71,0.3); color: ${I.ACCENT};
 }
 .ep-shell[data-mode="interactive"] .ep-card-sub { color: ${I.DIM}; }
-.ep-shell[data-mode="interactive"] .ep-card-arrow { color: rgba(204,255,0,0.55); }
+.ep-shell[data-mode="interactive"] .ep-card-arrow { color: rgba(212,165,71,0.55); }
 .ep-shell[data-mode="interactive"] .ep-grid::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.1); }
 
 /* ══════════════════════════════════════════════
@@ -144,7 +156,8 @@ const CSS = `
   font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase;
 }
 .ep-hero-desc {
-  font-size: 10px; line-height: 1.8; letter-spacing: 0.03em; max-width: 520px;
+  font-family: ${SANS};
+  font-size: 13px; font-weight: 400; line-height: 1.65; letter-spacing: 0.005em; max-width: 560px;
 }
 .ep-main {
   position: relative; z-index: 2; flex: 1; min-height: 0; overflow: hidden;
@@ -178,8 +191,8 @@ const CSS = `
   font-size: 8px; letter-spacing: 0.1em; text-transform: uppercase;
   width: fit-content; border-width: 1px; border-style: solid;
 }
-.ep-card-title { font-size: 12.5px; font-weight: 700; line-height: 1.28; margin: 0; }
-.ep-card-sub { font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; }
+.ep-card-title { font-family: ${SANS}; font-size: 13.5px; font-weight: 600; line-height: 1.32; margin: 0; letter-spacing: 0; }
+.ep-card-sub { font-family: ${SANS}; font-size: 11px; font-weight: 400; letter-spacing: 0; text-transform: none; }
 .ep-card-arrow { margin-top: auto; padding-top: 7px; font-size: 9px; letter-spacing: 0.16em; }
 .ep-empty { padding: 32px 20px; font-size: 10px; letter-spacing: 0.2em; opacity: 0.45; }
 
@@ -254,8 +267,8 @@ const CSS = `
 .dg-row:hover .dg-row-num { color: rgba(255,255,255,0.14); border-right-color: rgba(255,255,255,0.08); }
 .dg-row:hover .dg-row-meta { color: rgba(255,255,255,0.35); }
 .dg-row:hover .dg-row-badge { border-color: rgba(255,255,255,0.25); color: rgba(255,255,255,0.55); background: transparent; }
-.dg-row:hover .dg-row-badge.perm { background: #CCFF00; border-color: #CCFF00; color: #111111; }
-.dg-row:hover .dg-row-arrow { color: #CCFF00; border-left-color: rgba(255,255,255,0.08); }
+.dg-row:hover .dg-row-badge.perm { background: #D4A547; border-color: #D4A547; color: #111111; }
+.dg-row:hover .dg-row-arrow { color: #D4A547; border-left-color: rgba(255,255,255,0.08); }
 
 .dg-row-num {
   width: 88px; flex-shrink: 0;
@@ -282,7 +295,7 @@ const CSS = `
   text-transform: uppercase; border: 2px solid #111111; padding: 5px 10px;
   white-space: nowrap; filter: url(#ep-sketch);
 }
-.dg-row-badge.perm { background: #CCFF00; }
+.dg-row-badge.perm { background: #D4A547; }
 .dg-row-arrow {
   width: 68px; flex-shrink: 0;
   display: flex; align-items: center; justify-content: center;
@@ -317,7 +330,7 @@ const CSS = `
   padding: 0 16px;
   font-family: sans-serif; font-size: 7.5px; font-weight: 900;
   letter-spacing: 0.22em; text-transform: uppercase; color: #111111;
-  background: #CCFF00; border-right: 3px solid #111111;
+  background: #D4A547; border-right: 3px solid #111111;
   white-space: nowrap;
   filter: url(#ep-sketch);
 }
@@ -363,7 +376,7 @@ const CSS = `
   filter: url(#ep-text-wobble);
 }
 .dg-detail-sw-item:hover { background: #111111; color: #ffffff; border-color: #111111; }
-.dg-detail-sw-item.active { background: #CCFF00; border-color: #111111; color: #111111; }
+.dg-detail-sw-item.active { background: #D4A547; border-color: #111111; color: #111111; }
 
 /* Full-width artwork canvas — ExhibitionModal lives here */
 .dg-detail-canvas {
@@ -388,8 +401,9 @@ const CSS = `
   .ep-header-meta { display: none; }
   .ep-hero { padding: 16px 14px 14px; }
   .ep-hero-name { font-size: clamp(20px, 6vw, 36px); margin-bottom: 8px; }
-  .ep-hero-desc { font-size: 10px; max-width: 100%; }
-  .ep-card-title { font-size: 11px; }
+  .ep-hero-desc { font-size: 12px; line-height: 1.6; max-width: 100%; }
+  .ep-card-title { font-size: 12.5px; }
+  .ep-card-sub { font-size: 10.5px; }
 }
 
 /* ══════════════════════════════════════════════
@@ -432,8 +446,8 @@ const CSS = `
 
 .sketch-modal-theme button[style*="background: "][style*="204, 255, 0"],
 .sketch-modal-theme button[style*="background: rgb(204, 255, 0)"],
-.sketch-modal-theme button[style*="background: #ccff00"] {
-  background: #ccff00 !important;
+.sketch-modal-theme button[style*="background: #d4a547"] {
+  background: #d4a547 !important;
   color: #111111 !important;
   border: 2px solid #111111 !important;
 }
@@ -546,7 +560,7 @@ const DrawingCorner = ({
 
 const MiniGlobe = ({ dark }: { dark: boolean }) => {
   const c = dark ? 'rgba(255,255,255,0.18)' : 'rgba(0,0,0,0.14)';
-  const d = dark ? 'rgba(204,255,0,0.4)' : 'rgba(0,0,0,0.2)';
+  const d = dark ? 'rgba(212,165,71,0.4)' : 'rgba(0,0,0,0.2)';
   return (
     <svg width={44} height={44} viewBox="0 0 44 44" fill="none">
       <circle cx={22} cy={22} r={18} stroke={c} strokeWidth="1" strokeDasharray="3.5 2.5" />

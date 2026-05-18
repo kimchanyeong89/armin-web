@@ -1,0 +1,123 @@
+{
+  "generatedAt": "2026-05-06T12:38:15.626Z",
+  "totalProcessed": 7865,
+  "upserted": 7842,
+  "failed": 23,
+  "failures": [
+    {
+      "id": "egyptian-cairo-four-canopic-jar-of-kiya-with-human-headed-stopper",
+      "lookupId": "vbz_ef2db32ec0858dbe",
+      "error": "image fetch failed (404)"
+    },
+    {
+      "id": "egyptian-cairo-four-fragments-of-queen-hatshepsuts-expedition-to-the-land-of-punt",
+      "lookupId": "vbz_ab177377ecb7df6e",
+      "error": "image fetch failed (404)"
+    },
+    {
+      "id": "egyptian-cairo-ostracon-head-of-king-to-right-wearing-helmet-colored",
+      "lookupId": "vbz_f4e5ff66ab79dadc",
+      "error": "image fetch failed (404)"
+    },
+    {
+      "id": "egyptian-cairo-sarcophagus-of-dagi-decorated-with-paintings-and-reliefs",
+      "lookupId": "vbz_a17ad8f50958b949",
+      "error": "image fetch failed (404)"
+    },
+    {
+      "id": "egyptian-cairo-statue-of-ramesses-ii-as-a-child-and-the-god-horun",
+      "lookupId": "vbz_51e3586a8f0bd91c",
+      "error": "image fetch failed (404)"
+    },
+    {
+      "id": "egyptian-cairo-three-polychrome-handled-vase-with-combed-festoons",
+      "lookupId": "vbz_e8d9c6a499507b3e",
+      "error": "image fetch failed (404)"
+    },
+    {
+      "id": "egyptian-cairo-wall-reliefs-with-scenes-of-an-expedition-to-punti",
+      "lookupId": "vbz_35c2ea44df5da9dd",
+      "error": "image fetch failed (404)"
+    },
+    {
+      "id": "requinto-lead-guitar-as-in-guero-of-trio-los-panchos-from-the-installation-naco-modern",
+      "lookupId": "vbz_4c01d6790cb7979f",
+      "error": "image fetch failed (403)"
+    },
+    {
+      "id": "pollero-would-be-undocumented-worker-smuggler-from-the-installation-naco-modern",
+      "lookupId": "vbz_be83d8c6daec2a77",
+      "error": "image fetch failed (403)"
+    },
+    {
+      "id": "pinto-imprisoned-convicted-felon-from-the-installation-naco-modern",
+      "lookupId": "vbz_024dced7fb668ec0",
+      "error": "image fetch failed (403)"
+    },
+    {
+      "id": "pinche-darned-ie-pinche-estupido-fucking-idiot-from-the-installation-naco-modern",
+      "lookupId": "vbz_3caf6f1b43525995",
+      "error": "image fetch failed (403)"
+    },
+    {
+      "id": "patatus-heatstroke-heart-attack-from-the-installation-naco-modern",
+      "lookupId": "vbz_54cbf9c13830b93d",
+      "error": "image fetch failed (403)"
+    },
+    {
+      "id": "narco-a-drug-enforcement-agent-a-drug-smuggler-from-the-installation-naco-modern",
+      "lookupId": "vbz_b4cd9cca020baeac",
+      "error": "image fetch failed (403)"
+    },
+    {
+      "id": "milagritos-small-silver-amulets-from-the-installation-naco-modern",
+      "lookupId": "vbz_b0926d90212ee60f",
+      "error": "image fetch failed (403)"
+    },
+    {
+      "id": "loca-slang-for-affected-male-homo-a-queen-from-the-installation-naco-modern",
+      "lookupId": "vbz_cebcb51cdcf27390",
+      "error": "image fetch failed (403)"
+    },
+    {
+      "id": "leno-a-marijuana-spliff-of-hand-rolled-cigarette-from-the-installation-naco-modern",
+      "lookupId": "vbz_6f715b0f8c7031b3",
+      "error": "image fetch failed (403)"
+    },
+    {
+      "id": "comal-stove-top-or-open-flame-flat-metal-plate-used-to-make-tortillas-from-the-installation-naco-modern",
+      "lookupId": "vbz_5508d66e1956e7ab",
+      "error": "image fetch failed (403)"
+    },
+    {
+      "id": "chingon-solid-strong-the-best-tops-from-the-installation-naco-modern",
+      "lookupId": "vbz_19159560c0fc18b1",
+      "error": "image fetch failed (403)"
+    },
+    {
+      "id": "caldo-de-queso-cheesetomato-soup-from-northern-mexico-from-the-installation-naco-modern",
+      "lookupId": "vbz_6bb8a0935af67fcb",
+      "error": "image fetch failed (403)"
+    },
+    {
+      "id": "bien-pacheco-loaded-hammered-fucked-up-wasted-from-the-installation-naco-modern",
+      "lookupId": "vbz_cce8ca78922ed682",
+      "error": "image fetch failed (403)"
+    },
+    {
+      "id": "bien-machin-super-cool-hard-core-ultra-tough-from-the-installation-naco-modern",
+      "lookupId": "vbz_547c050b2740994f",
+      "error": "image fetch failed (403)"
+    },
+    {
+      "id": "banda-norteno-style-musical-genre-full-orchestra-from-the-installation-naco-modern",
+      "lookupId": "vbz_e54087d74435d2d7",
+      "error": "image fetch failed (403)"
+    },
+    {
+      "id": "dennis-oppenheim-performances-program-4-vibration-1-vibration-2-2-stage-transfer-drawing-retreating-to-a-past-state-2-stage-transfer-drawing-advancing-to-a-future-state",
+      "lookupId": "vbz_20a5a4a14ca7fa24",
+      "error": "image fetch failed (404)"
+    }
+  ]
+}

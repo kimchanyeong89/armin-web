@@ -5,7 +5,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { GoogleAuthProvider, OAuthProvider, browserLocalPersistence, getRedirectResult, setPersistence, signInWithPopup, signInWithRedirect, signInWithCredential } from 'firebase/auth';
 import { auth } from "../firebase";
 import { useLanguage } from "../contexts/LanguageContext";
-import { isMobileAppContainer, requestExternalMobileLogin } from "../utils/mobileAppAuth";
+import { isMobileAppContainer, requestExternalMobileLogin, startGoogleCustomOAuth } from "../utils/mobileAppAuth";
 
 const AUTO_START_KEY_PREFIX = "auth:auto-start:";
 const REDIRECT_LOCK_PREFIX = "auth:redirect-lock:";
@@ -227,11 +227,22 @@ const Login: React.FC = () => {
       }
 
       // In WebView (mobile container but NOT external browser):
-      // - Apple & Google: delegate to external browser (opens ASWebAuthenticationSession).
-      // We fixed the localhost issue by forcing external flows to use the production URL,
-      // so signInWithRedirect -> getRedirectResult inside the Safari View will now work.
+      // delegate to external browser (opens Chrome Custom Tabs / ASWebAuthenticationSession).
       if (isMobileContainer && !isExternalBrowserFlow) {
         requestExternalAuth(providerType);
+        return;
+      }
+
+      // Manual tap on Google inside the external browser /login page:
+      // use the custom OAuth flow that returns the id_token directly to
+      // /login/callback — same reasoning as the auto-start path. This
+      // avoids signInWithRedirect's getRedirectResult-returns-null issue
+      // when state is dropped across the round trip.
+      if (providerType === "google" && isExternalBrowserFlow) {
+        startGoogleCustomOAuth({
+          returnToApp: query.get("returnToApp") === "1",
+          mobileApp: isMobileContainer,
+        });
         return;
       }
 
@@ -551,11 +562,26 @@ const Login: React.FC = () => {
       sessionStorage.setItem(autoStartKey, "1");
     }
 
-    if (autoStartProvider === "google" || autoStartProvider === "apple") {
-      // Intentionally DO NOT auto-start with forceRedirect.
-      // iOS Safari ITP blocks redirect result retrieval via indexedDB.
-      // We must force the user to tap the "Continue with Google/Apple" button manually
-      // inside the external browser so it can trigger signInWithPopup securely.
+    if (autoStartProvider === "google") {
+      if (isExternalBrowserFlow) {
+        // Custom Google OAuth: bypass Firebase signInWithRedirect entirely.
+        // Firebase's redirect drops state across the OAuth round trip on
+        // Chrome Custom Tabs / ASWebAuthenticationSession, so getRedirectResult
+        // returns null and the user can never come back into the app. Our
+        // custom flow returns the id_token directly in the URL fragment
+        // at /login/callback — storage drops can't lose it.
+        startGoogleCustomOAuth({
+          returnToApp: query.get("returnToApp") === "1",
+          mobileApp: isMobileContainer,
+        });
+      }
+      return;
+    }
+
+    if (autoStartProvider === "apple") {
+      // Apple Sign-In stays on the existing signInWithRedirect path; Apple
+      // does not allow redirect_uri values like our /login/callback for
+      // the public Web client without separate configuration.
       return;
     }
 
@@ -571,7 +597,7 @@ const Login: React.FC = () => {
     <div style={{
       width: "100%",
       minHeight: "100dvh",
-      background: "radial-gradient(1200px 420px at 50% -200px, rgba(191,255,10,0.12), transparent 70%), #050505",
+      background: "radial-gradient(1200px 420px at 50% -200px, rgba(212,165,71,0.12), transparent 70%), #050505",
       color: "rgba(255,255,255,0.92)",
       fontFamily: "'Space Grotesk', 'Apple SD Gothic Neo', sans-serif",
       display: "flex",
@@ -595,10 +621,10 @@ const Login: React.FC = () => {
         <div style={{
           padding: "26px 24px 20px",
           borderBottom: "1px solid rgba(255,255,255,0.08)",
-          background: "linear-gradient(180deg, rgba(191,255,10,0.08), transparent 55%)",
+          background: "linear-gradient(180deg, rgba(212,165,71,0.08), transparent 55%)",
         }}>
           <div style={{ display: "flex", alignItems: "center", gap: 7, marginBottom: 10 }}>
-            <span style={{ width: 6, height: 6, borderRadius: 999, background: "#BFFF0A", display: "inline-block" }} />
+            <span style={{ width: 6, height: 6, borderRadius: 999, background: "#D4A547", display: "inline-block" }} />
             <span style={{ fontSize: 10, letterSpacing: "0.22em", color: "rgba(255,255,255,0.46)", textTransform: language === "ko" ? "none" : "uppercase" }}>
               {t({ ko: "아르민 계정", en: "Armin Account" })}
             </span>
@@ -648,7 +674,7 @@ const Login: React.FC = () => {
                 style={{
                   display: "inline-block",
                   padding: "16px 32px",
-                  background: "#BFFF0A",
+                  background: "#D4A547",
                   color: "#000",
                   fontWeight: 700,
                   borderRadius: 30,
@@ -660,32 +686,8 @@ const Login: React.FC = () => {
               </a>
             </div>
           )}
-          <button
-            type="button"
-            onClick={() => handleNaverLogin()}
-            style={{
-              width: '100%',
-              height: 48,
-              background: '#03C75A',
-              color: 'white',
-              border: 'none',
-              borderRadius: '12px',
-              fontSize: '14px',
-              fontWeight: 700,
-              cursor: 'pointer',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              gap: '10px',
-              boxShadow: '0 10px 24px rgba(3,199,90,0.28)'
-            }}
-          >
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="white">
-              <path d="M16.273 12.845L7.376 0H0v24h7.726V11.156L16.624 24H24V0h-7.727v12.845z" />
-            </svg>
-            {t({ ko: "네이버로 계속하기", en: "Continue with Naver" })}
-          </button>
-
+          {/* Order: Google → Naver → Apple (per user request). Auth logic
+              is unchanged from the last known-good commit (d1a7b937). */}
           <button
             onClick={() => handleLoginWithProvider('google', false)}
             disabled={pendingProvider !== null}
@@ -713,6 +715,32 @@ const Login: React.FC = () => {
               <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" />
             </svg>
             {t({ ko: "Google로 계속하기", en: "Continue with Google" })}
+          </button>
+
+          <button
+            type="button"
+            onClick={() => handleNaverLogin()}
+            style={{
+              width: '100%',
+              height: 48,
+              background: '#03C75A',
+              color: 'white',
+              border: 'none',
+              borderRadius: '12px',
+              fontSize: '14px',
+              fontWeight: 700,
+              cursor: 'pointer',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              gap: '10px',
+              boxShadow: '0 10px 24px rgba(3,199,90,0.28)'
+            }}
+          >
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="white">
+              <path d="M16.273 12.845L7.376 0H0v24h7.726V11.156L16.624 24H24V0h-7.727v12.845z" />
+            </svg>
+            {t({ ko: "네이버로 계속하기", en: "Continue with Naver" })}
           </button>
 
           <button
@@ -747,8 +775,8 @@ const Login: React.FC = () => {
                 fontSize: 12,
                 lineHeight: 1.6,
                 color: "rgba(255,255,255,0.78)",
-                border: "1px solid rgba(191,255,10,0.35)",
-                background: "rgba(191,255,10,0.08)",
+                border: "1px solid rgba(212,165,71,0.35)",
+                background: "rgba(212,165,71,0.08)",
                 borderRadius: 10,
                 padding: "8px 10px",
               }}

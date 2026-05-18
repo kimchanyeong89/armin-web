@@ -1,12 +1,12 @@
 import { useEffect, useMemo, useRef, useState } from "react";
-import { ActivityIndicator, Linking, Pressable, StyleSheet, Text, View } from "react-native";
+import { ActivityIndicator, Linking, Platform, Pressable, StyleSheet, Text, View } from "react-native";
 import * as WebBrowser from "expo-web-browser";
 import { StatusBar } from "expo-status-bar";
 import { WebView } from "react-native-webview";
 import type { ShouldStartLoadRequest, WebViewMessageEvent } from "react-native-webview/lib/WebViewTypes";
 
 const DEFAULT_WEB_URL = "https://armin-web.pages.dev";
-const DEV_WEB_URL = "http://localhost:5173";
+const DEV_WEB_URL = "http://localhost:5181";
 const IOS_SAFARI_USER_AGENT =
   "Mozilla/5.0 (iPhone; CPU iPhone OS 17_5 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/17.5 Mobile/15E148 Safari/604.1";
 const IN_APP_AUTH_HOSTS = new Set([
@@ -37,7 +37,11 @@ const RESPONSIVE_INJECTION = `
     meta.setAttribute('name', 'viewport');
     document.head.appendChild(meta);
   }
-  meta.setAttribute('content', 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover');
+  // Note: we DO NOT set user-scalable=no / maximum-scale=1 here.
+  // iOS WebView swallows 2-finger pinch gestures when those are set, which
+  // breaks the D3 globe's custom pinch-to-zoom. Each interactive component
+  // uses touch-action CSS to prevent double-tap zoom where needed.
+  meta.setAttribute('content', 'width=device-width, initial-scale=1, viewport-fit=cover');
 
   var sync = function() {
     var vw = Math.max(document.documentElement.clientWidth || 0, window.innerWidth || 0);
@@ -70,6 +74,28 @@ const RESPONSIVE_INJECTION = `
   sync();
   window.addEventListener('resize', sync);
   window.addEventListener('orientationchange', sync);
+
+  // ── Console + error forwarder for native logcat (DEBUG_BRIDGE) ──
+  try {
+    var post = function(level, args) {
+      try {
+        var msg = Array.prototype.slice.call(args).map(function(a){
+          if (a instanceof Error) return a.stack || a.message;
+          if (typeof a === 'object') { try { return JSON.stringify(a); } catch(_) { return String(a); } }
+          return String(a);
+        }).join(' ');
+        if (window.ReactNativeWebView && window.ReactNativeWebView.postMessage) {
+          window.ReactNativeWebView.postMessage(JSON.stringify({ type: 'DEBUG_BRIDGE', level: level, message: msg.slice(0, 4000) }));
+        }
+      } catch(_) {}
+    };
+    ['log','warn','error'].forEach(function(level) {
+      var orig = console[level];
+      console[level] = function() { post(level, arguments); if (orig) orig.apply(console, arguments); };
+    });
+    window.addEventListener('error', function(e) { post('error', ['[window.error]', e.message, e.filename + ':' + e.lineno]); });
+    window.addEventListener('unhandledrejection', function(e) { post('error', ['[unhandledrejection]', e.reason && (e.reason.stack || e.reason.message || e.reason)]); });
+  } catch(_) {}
 })();
 true;
 `;
@@ -79,11 +105,28 @@ export default function App() {
   const authFlowInProgressRef = useRef(false);
   const [isLoading, setIsLoading] = useState(true);
   const [loadError, setLoadError] = useState(false);
+  // Android WebView fires onLoadStart for sub-frame loads (Firebase auth
+  // iframes, image-proxy redirects, etc.) but the matching onLoadEnd is
+  // unreliable, leaving the cream-colored ActivityIndicator overlay stuck
+  // forever the moment the user opens the InteractiveGlobeRealModal. iOS
+  // only fires these for the main frame, so it's not affected. Track
+  // first-load completion and ignore subsequent loadStart events on Android.
+  const hasCompletedFirstLoadRef = useRef(false);
+  const loadEndTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  // On Android, the OAuth deep link return fires BOTH the OS-level Linking
+  // listener AND the WebBrowser.openAuthSessionAsync resolution, so without
+  // dedupe both inject the same credential and signInWithCredential runs
+  // twice — the second sign-in transiently flips Firebase auth state to
+  // null, which makes the Login route remount and the user lands back on
+  // Sign In. iOS doesn't fire OS deep links during ASWebAuthenticationSession
+  // so it's not affected. We dedupe by deep-link URL within a short window.
+  const lastConsumedAuthUrlRef = useRef<{ url: string; at: number } | null>(null);
 
   const webAppUrl = useMemo(() => {
     const raw = (process.env.EXPO_PUBLIC_WEB_APP_URL || "").trim();
     const devDefault = typeof __DEV__ !== "undefined" && __DEV__ ? DEV_WEB_URL : DEFAULT_WEB_URL;
-    const base = raw.length > 0 ? raw : devDefault;
+    // By default in dev, use localhost to ensure local changes from Vite are immediately visible in the app
+    const base = (typeof __DEV__ !== "undefined" && __DEV__) ? devDefault : (raw.length > 0 ? raw : devDefault);
     try {
       const url = new URL(base);
       url.searchParams.set("mobileApp", "1");
@@ -104,6 +147,9 @@ export default function App() {
   const handleRetry = () => {
     setLoadError(false);
     setIsLoading(true);
+    // Reset first-load flag so the overlay is allowed to show again on the
+    // retried load (then the same Android-specific guard takes over after).
+    hasCompletedFirstLoadRef.current = false;
     webViewRef.current?.reload();
   };
 
@@ -153,6 +199,16 @@ export default function App() {
     return true;
   };
 
+  const consumeAuthDeepLink = (url: string): boolean => {
+    const last = lastConsumedAuthUrlRef.current;
+    const now = Date.now();
+    if (last && last.url === url && now - last.at < 10000) {
+      return false;
+    }
+    lastConsumedAuthUrlRef.current = { url, at: now };
+    return true;
+  };
+
   const handleWebMessage = (event: WebViewMessageEvent) => {
     const raw = String(event.nativeEvent.data || "").trim();
     if (!raw) return;
@@ -167,6 +223,11 @@ export default function App() {
         code?: string;
       };
 
+      if (payload.type === "DEBUG_BRIDGE") {
+        console.log("[WV:" + (payload.level || "log") + "]", payload.message || "");
+        return;
+      }
+
       if (payload.type === "OPEN_EXTERNAL_LOGIN") {
         authFlowInProgressRef.current = true;
         const externalUrl = String(payload.url || "").trim();
@@ -177,6 +238,11 @@ export default function App() {
 
           if (result.type === "success" && result.url) {
             try {
+              if (!consumeAuthDeepLink(result.url)) {
+                console.log("[AUTH] WebBrowser deep link already consumed by Linking listener — skipping");
+                return;
+              }
+
               // Parse the deep link query params
               const urlObj = new URL(result.url);
               const map: Record<string, string> = {};
@@ -240,6 +306,10 @@ export default function App() {
   useEffect(() => {
     const sub = Linking.addEventListener("url", ({ url }) => {
       if (!url.startsWith("com.armin.mobile://auth-complete")) return;
+      if (!consumeAuthDeepLink(url)) {
+        console.log("[AUTH] Linking deep link already consumed by WebBrowser callback — skipping");
+        return;
+      }
       try {
         const urlObj = new URL(url);
         const map: Record<string, string> = {};
@@ -259,6 +329,15 @@ export default function App() {
     return () => sub.remove();
   }, []);
 
+  useEffect(() => {
+    return () => {
+      if (loadEndTimeoutRef.current) {
+        clearTimeout(loadEndTimeoutRef.current);
+        loadEndTimeoutRef.current = null;
+      }
+    };
+  }, []);
+
   return (
     <View style={styles.container}>
       <View style={styles.webContainer}>
@@ -271,10 +350,30 @@ export default function App() {
           onShouldStartLoadWithRequest={handleShouldStart}
           onMessage={handleWebMessage}
           onLoadStart={() => {
+            // After the very first successful load, ignore loadStart events.
+            // On Android these fire for sub-frame loads with no matching
+            // loadEnd, which would lock the overlay on top of the modal.
+            if (Platform.OS === "android" && hasCompletedFirstLoadRef.current) {
+              return;
+            }
             setIsLoading(true);
             setLoadError(false);
+            // Safety net: if loadEnd never fires (Android sub-frame quirk),
+            // force-clear the overlay after 6s so the user is never stuck.
+            if (loadEndTimeoutRef.current) clearTimeout(loadEndTimeoutRef.current);
+            loadEndTimeoutRef.current = setTimeout(() => {
+              setIsLoading(false);
+              hasCompletedFirstLoadRef.current = true;
+            }, 6000);
           }}
-          onLoadEnd={() => setIsLoading(false)}
+          onLoadEnd={() => {
+            if (loadEndTimeoutRef.current) {
+              clearTimeout(loadEndTimeoutRef.current);
+              loadEndTimeoutRef.current = null;
+            }
+            setIsLoading(false);
+            hasCompletedFirstLoadRef.current = true;
+          }}
           onNavigationStateChange={(state) => {
             const currentUrl = String(state.url || "");
             try {
@@ -303,10 +402,26 @@ export default function App() {
           domStorageEnabled
           sharedCookiesEnabled
           thirdPartyCookiesEnabled
-          contentInsetAdjustmentBehavior="automatic"
-          automaticallyAdjustContentInsets
+          webviewDebuggingEnabled
+          // Android: don't override the layer type. Tried "hardware" and
+          // "software" — neither resolved the dim/spinner ghost in the
+          // emulator, and "software" introduced visible stutter. Leaving
+          // it at the platform default while the underlying compositor
+          // issue is investigated at the page level.
+          // iOS: do NOT auto-adjust scroll insets. The "automatic" behavior
+          // dynamically resizes the WebView viewport as iOS shows/hides the
+          // home-indicator zone during scroll, which made the entire web app
+          // (top header, globe, bottom tab bar) shake up and down. We let the
+          // web side manage its own safe-area padding via env(safe-area-inset-*)
+          // CSS variables — that gives a stable viewport and stable layout.
+          contentInsetAdjustmentBehavior="never"
+          automaticallyAdjustContentInsets={false}
           startInLoadingState
-          allowsBackForwardNavigationGestures
+          // Disabled: iOS edge swipe-to-go-back/forward translates the entire
+          // WebView horizontally, which causes the Lightbox / ProductModal to
+          // slide off-screen mid-gesture and (when the gesture is canceled
+          // partway) leaves the modal stuck in a shifted position.
+          allowsBackForwardNavigationGestures={false}
           setSupportMultipleWindows
         />
 

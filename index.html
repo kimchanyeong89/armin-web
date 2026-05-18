@@ -8,11 +8,22 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Kalam:wght@400;700&family=Patrick+Hand&family=Space+Mono:wght@400;700&family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <!-- Allow pinch-to-zoom. The Drawing Globe and other interactive maps have
+       their own pinch handlers; blocking pinch globally (user-scalable=no) also
+       prevents those JS handlers from seeing multi-touch events on iOS WebView. -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 
   <!-- Preconnect to R2 for faster geo data loading -->
   <link rel="preconnect" href="https://pub-6ce5ae60b244951ac36ffd277fd6ef76.r2.dev" crossorigin>
   <link rel="dns-prefetch" href="//pub-6ce5ae60b244951ac36ffd277fd6ef76.r2.dev">
+
+  <!-- Preconnect to wsrv.nl (image proxy used for "Similar Works" thumbnails)
+       and the SigLIP semantic-search worker. Doing the TLS+DNS handshake
+       up front shaves ~200-400ms off the first AI recommendation render. -->
+  <link rel="preconnect" href="https://wsrv.nl" crossorigin>
+  <link rel="dns-prefetch" href="//wsrv.nl">
+  <link rel="preconnect" href="https://armin-semantic-search.armin-art.workers.dev" crossorigin>
+  <link rel="dns-prefetch" href="//armin-semantic-search.armin-art.workers.dev">
 
   <!-- Preconnect to Firebase for auth/data -->
   <link rel="preconnect" href="https://firestore.googleapis.com" crossorigin>
@@ -41,66 +52,13 @@
 <body>
   <div id="root"></div>
   <script>
-    // Prevent iOS Safari crash by limiting zoom level
+    // Prevent double-tap-zoom only. The previous version of this script also
+    // blocked multi-finger pinch gestures via stopPropagation, which prevented
+    // the Drawing Globe and Interactive Map from receiving pinch-to-zoom events
+    // on iOS WebView. Browser-level pinch is now governed by `touch-action` CSS:
+    // interactive maps set `touch-action: none` on their root so the browser
+    // leaves multi-touch to JS; other parts of the page allow normal pinch zoom.
     (function () {
-      var MAX_SCALE = 1.8;
-      var startTouches = null;
-      var startScale = 1;
-
-      document.addEventListener('touchstart', function (e) {
-        if (e.touches.length === 2) {
-          startTouches = {
-            x1: e.touches[0].clientX,
-            y1: e.touches[0].clientY,
-            x2: e.touches[1].clientX,
-            y2: e.touches[1].clientY
-          };
-          startScale = window.visualViewport ? window.visualViewport.scale : 1;
-        }
-      }, { passive: true });
-
-      document.addEventListener('touchmove', function (e) {
-        if (e.touches.length !== 2 || !startTouches) return;
-
-        // Calculate current finger distance
-        var dx = e.touches[0].clientX - e.touches[1].clientX;
-        var dy = e.touches[0].clientY - e.touches[1].clientY;
-        var currentDist = Math.sqrt(dx * dx + dy * dy);
-
-        // Calculate start finger distance
-        var startDx = startTouches.x1 - startTouches.x2;
-        var startDy = startTouches.y1 - startTouches.y2;
-        var startDist = Math.sqrt(startDx * startDx + startDy * startDy);
-
-        if (startDist === 0) return;
-
-        // Calculate projected scale
-        var pinchRatio = currentDist / startDist;
-        var projectedScale = startScale * pinchRatio;
-
-        // If we're zooming IN and would exceed max, block it
-        if (projectedScale > MAX_SCALE && currentDist > startDist) {
-          e.preventDefault();
-          e.stopPropagation();
-        }
-      }, { passive: false });
-
-      document.addEventListener('touchend', function (e) {
-        if (e.touches.length < 2) {
-          startTouches = null;
-        }
-      }, { passive: true });
-
-      // iOS gesture events as backup
-      document.addEventListener('gesturechange', function (e) {
-        var currentScale = window.visualViewport ? window.visualViewport.scale : 1;
-        var projectedScale = currentScale * e.scale;
-        if (projectedScale > MAX_SCALE && e.scale > 1) {
-          e.preventDefault();
-        }
-      }, { passive: false });
-
-      // Prevent double-tap zoom
       var lastTap = 0;
       document.addEventListener('touchend', function (e) {
         var now = Date.now();
@@ -119,10 +77,6 @@
         }
         lastTap = now;
       }, { passive: false });
-
-      // Viewport is permanently user-scalable=no — iOS will not auto-zoom on input focus.
-      // iOS 10+ ignores user-scalable=no for pinch-to-zoom (accessibility) but still
-      // respects it for input focus auto-zoom, which is exactly what we need.
     })();
   </script>
   <script type="module" src="/src/main.tsx"></script>

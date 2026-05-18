@@ -167,18 +167,18 @@ const PALETTES: Record<Theme, Palette> = {
     sphereFill: "rgba(255,255,255,0.012)",
     sphereStroke: "rgba(255,255,255,0.08)",
     fg: [255, 255, 255],
-    lime: "#BFFF0A",
-    limeFg: "191,255,10",
-    limeTxt: "191,255,10",
+    lime: "#D4A547",
+    limeFg: "212,165,71",
+    limeTxt: "212,165,71",
     crosshair: "rgba(255,255,255,0.04)",
   },
   light: {
     sphereFill: "rgba(0,0,0,0.006)",
     sphereStroke: "rgba(0,0,0,0.06)",
     fg: [0, 0, 0],
-    lime: "#BFFF0A",
-    limeFg: "120,165,0",
-    limeTxt: "70,100,0",
+    lime: "#8A6B1F",
+    limeFg: "138,107,31",
+    limeTxt: "138,107,31",
     crosshair: "rgba(0,0,0,0.04)",
   },
 };
@@ -363,6 +363,8 @@ export function Globe({
   const currentScaleRef = useRef(1);
   const baseSizeRef = useRef(300);
   const animFrameRef = useRef(0);
+  const animRunningRef = useRef(false);
+  const wakeGlobeRef = useRef<(() => void) | null>(null);
 
   const drilledRef = useRef<DrilledCountry | null>(null);
   const targetRotRef = useRef<[number, number, number] | null>(null);
@@ -381,6 +383,8 @@ export function Globe({
   const velocityRef = useRef<[number, number]>([0, 0]);
   const dragDistRef = useRef(0);
   const lastPointerTypeRef = useRef<string | null>(null);
+  const activePointersRef = useRef<Map<number, { x: number; y: number }>>(new Map());
+  const pinchStateRef = useRef<{ startDist: number; startScale: number } | null>(null);
   const isMobileRef = useRef(
     typeof window !== 'undefined' &&
     (window.matchMedia('(pointer: coarse)').matches || navigator.maxTouchPoints > 0)
@@ -391,9 +395,40 @@ export function Globe({
   useEffect(() => {
     drilledContinentRef.current = drilledContinent;
     lastSyncedContinentRef.current = drilledContinent || null;
+    wakeGlobeRef.current?.();
   }, [drilledContinent]);
+
+  // External drill driver (e.g. region filter pills) — bypasses React state
+  // because the page-level state cascades back through other useEffects that
+  // synchronously reset drilledContinent to null. By mutating refs directly,
+  // the globe physically zooms/rotates to the requested continent and we
+  // emit the parent callback at the end so the breadcrumb/UI updates.
+  useEffect(() => {
+    const onExternalDrill = (e: Event) => {
+      const detail = (e as CustomEvent).detail as string | null | undefined;
+      const continent = detail || null;
+      drilledContinentRef.current = continent;
+      lastSyncedContinentRef.current = continent;
+      if (continent) {
+        const centroid = CONTINENT_CENTERS[continent];
+        if (centroid) {
+          targetRotRef.current = [-centroid[0], -centroid[1], 0];
+        }
+        targetScaleRef.current = CONTINENT_FOCUS_ZOOM;
+      } else {
+        targetRotRef.current = null;
+        targetScaleRef.current = 1;
+      }
+      velocityRef.current = [0, 0];
+      cbRefs.current.onSelectCity(null);
+      cbRefs.current.onDrillContinent?.(continent);
+      wakeGlobeRef.current?.();
+    };
+    window.addEventListener('armin:drill-continent', onExternalDrill);
+    return () => window.removeEventListener('armin:drill-continent', onExternalDrill);
+  }, []);
   const citiesRef = useRef(cities);
-  useEffect(() => { citiesRef.current = cities; }, [cities]);
+  useEffect(() => { citiesRef.current = cities; wakeGlobeRef.current?.(); }, [cities]);
   const museumPointsRef = useRef<MuseumPoint[]>([]);
   useEffect(() => {
     const points: MuseumPoint[] = [];
@@ -445,7 +480,7 @@ export function Globe({
     museumPointsRef.current = points;
   }, [cities]);
   const selectedRef = useRef(selectedCity);
-  useEffect(() => { selectedRef.current = selectedCity; }, [selectedCity]);
+  useEffect(() => { selectedRef.current = selectedCity; wakeGlobeRef.current?.(); }, [selectedCity]);
 
   const getActiveContinentForView = useCallback((rot: [number, number, number], countryClusterMode: boolean) => {
     if (!countryClusterMode) return null;
@@ -466,9 +501,9 @@ export function Globe({
   }, []);
 
   const themeRef = useRef<Theme>(theme);
-  useEffect(() => { themeRef.current = theme; }, [theme]);
+  useEffect(() => { themeRef.current = theme; wakeGlobeRef.current?.(); }, [theme]);
   const languageRef = useRef<AppLanguage>(language);
-  useEffect(() => { languageRef.current = language; }, [language]);
+  useEffect(() => { languageRef.current = language; wakeGlobeRef.current?.(); }, [language]);
 
   const hoveredRef = useRef<CityMarker | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -564,7 +599,18 @@ export function Globe({
     };
 
     resize();
-    const obs = new ResizeObserver(resize);
+    // Debounced ResizeObserver: iOS Safari fires this on every pixel of URL-bar
+    // show/hide, so redrawing geometry for each one is wasteful. Coalesce into
+    // a single redraw after the resize settles.
+    let resizeTimeout: number | null = null;
+    const debouncedResize = () => {
+      if (resizeTimeout !== null) window.clearTimeout(resizeTimeout);
+      resizeTimeout = window.setTimeout(() => {
+        resize();
+        wakeGlobeRef.current?.();
+      }, 120);
+    };
+    const obs = new ResizeObserver(debouncedResize);
     obs.observe(container);
 
     const sphere: d3.GeoPermissibleObjects = { type: "Sphere" };
@@ -596,7 +642,11 @@ export function Globe({
       const [R, G, B] = P.fg;
 
       const baseScale = baseSizeRef.current * 0.38;
-      currentScaleRef.current = lerp(currentScaleRef.current, targetScaleRef.current, 0.07);
+      // Higher lerp factor (0.22 vs old 0.07) makes cluster taps feel
+      // near-instant: ~167ms to fully zoom into a country/city instead of
+      // ~500ms. Pinch and wheel still feel smooth because their input is
+      // already incremental.
+      currentScaleRef.current = lerp(currentScaleRef.current, targetScaleRef.current, 0.22);
 
       projection
         .translate([w / 2, h / 2])
@@ -1050,7 +1100,9 @@ export function Globe({
       if (!isDraggingRef.current) {
         const tRot = targetRotRef.current;
         if (tRot) {
-          const speed = 0.055;
+          // Faster rotation lerp so cluster click → centred view feels
+          // immediate (matches the scale-lerp bump above).
+          const speed = 0.18;
           rotationRef.current[0] = lerp(rotationRef.current[0], tRot[0], speed);
           rotationRef.current[1] = lerp(rotationRef.current[1], tRot[1], speed);
           if (Math.hypot(rotationRef.current[0] - tRot[0], rotationRef.current[1] - tRot[1]) < 0.08) {
@@ -1124,11 +1176,63 @@ export function Globe({
         lastRotationEmitRef.current = { lon: nextLon, lat: nextLat, ts: now };
         cbRefs.current.onRotationChange?.([nextLon, nextLat]);
       }
-      animFrameRef.current = requestAnimationFrame(animate);
+
+      // Idle detection: if nothing is animating or interactive, pause the rAF
+      // loop to stop burning CPU/GPU. Any subsequent user input (pointer/wheel)
+      // calls wake() to restart the loop.
+      const drillTarget = drilledRef.current ? 1 : 0;
+      const previewTarget = drilledRef.current ? 0 : 1;
+      const stillAnimating =
+        isDraggingRef.current ||
+        pinchStateRef.current !== null ||
+        targetRotRef.current !== null ||
+        Math.abs(velocityRef.current[0]) > 0.003 ||
+        Math.abs(velocityRef.current[1]) > 0.003 ||
+        Math.abs(targetScaleRef.current - currentScaleRef.current) > 0.001 ||
+        Math.abs(drillOpacityRef.current - drillTarget) > 0.005 ||
+        Math.abs(museumPreviewOpacityRef.current - previewTarget) > 0.005 ||
+        hoveredCountryRef.current !== null ||
+        hoveredRef.current !== null;
+
+      if (stillAnimating) {
+        animFrameRef.current = requestAnimationFrame(animate);
+      } else {
+        animRunningRef.current = false;
+      }
     };
 
+    let pageVisible = typeof document === 'undefined' || !document.hidden;
+
+    const wake = () => {
+      if (animRunningRef.current || !pageVisible) return;
+      animRunningRef.current = true;
+      animFrameRef.current = requestAnimationFrame(animate);
+    };
+    wakeGlobeRef.current = wake;
+
+    // Pause the rAF loop while the tab/app is backgrounded. iOS WebView can
+    // keep executing JS when the host app goes to the background, so without
+    // this the globe would keep rendering off-screen and heat the device.
+    const onVisibility = () => {
+      pageVisible = !document.hidden;
+      if (pageVisible) wake();
+      else {
+        animRunningRef.current = false;
+        cancelAnimationFrame(animFrameRef.current);
+      }
+    };
+    document.addEventListener('visibilitychange', onVisibility);
+
+    animRunningRef.current = true;
     animFrameRef.current = requestAnimationFrame(animate);
-    return () => { cancelAnimationFrame(animFrameRef.current); obs.disconnect(); };
+    return () => {
+      animRunningRef.current = false;
+      cancelAnimationFrame(animFrameRef.current);
+      obs.disconnect();
+      document.removeEventListener('visibilitychange', onVisibility);
+      if (resizeTimeout !== null) window.clearTimeout(resizeTimeout);
+      if (wakeGlobeRef.current === wake) wakeGlobeRef.current = null;
+    };
   }, [getActiveContinentForView, getVisibleCities]);
 
   // ─── Wheel ────────────────────────────────────────
@@ -1141,6 +1245,7 @@ export function Globe({
       const delta = -e.deltaY * 0.002;
       const nextScale = Math.max(1.0, Math.min(8.0, targetScaleRef.current + delta));
       targetScaleRef.current = nextScale;
+      wakeGlobeRef.current?.();
       const now = Date.now();
       const lastZoom = lastZoomEmitRef.current;
       if (Math.abs(nextScale - lastZoom.zoom) >= 0.01 || now - lastZoom.ts >= 120) {
@@ -1186,6 +1291,7 @@ export function Globe({
     lastPosRef.current = { x: e.clientX, y: e.clientY };
     velocityRef.current = [0, 0];
     dragDistRef.current = 0;
+    wakeGlobeRef.current?.();
   }, []);
 
   const handleMouseMove = useCallback((e: React.MouseEvent) => {
@@ -1195,6 +1301,7 @@ export function Globe({
     const mx = e.clientX - rect.left;
     const my = e.clientY - rect.top;
     mousePosRef.current = { x: mx, y: my };
+    wakeGlobeRef.current?.();
 
     if (isDraggingRef.current) {
       const dx = e.clientX - lastPosRef.current.x;
@@ -1242,9 +1349,11 @@ export function Globe({
     mousePosRef.current = { x: -1, y: -1 };
     hoveredCountryRef.current = null;
     hoveredRef.current = null;
+    wakeGlobeRef.current?.();
   }, []);
 
   const handleClick = useCallback((e: React.MouseEvent) => {
+    wakeGlobeRef.current?.();
     const stepZoomOut = () => {
       const drilled = drilledRef.current;
       if (drilled) {
@@ -1428,13 +1537,71 @@ export function Globe({
         style={{ cursor: "grab", touchAction: "none" }}
         onPointerDown={(e) => {
           lastPointerTypeRef.current = e.pointerType || null;
-          e.currentTarget.setPointerCapture(e.pointerId);
+          try { e.currentTarget.setPointerCapture(e.pointerId); } catch {}
+          activePointersRef.current.set(e.pointerId, { x: e.clientX, y: e.clientY });
+          if (activePointersRef.current.size >= 2) {
+            isDraggingRef.current = false;
+            targetRotRef.current = null;
+            velocityRef.current = [0, 0];
+            dragDistRef.current = 9999;
+            const pts = Array.from(activePointersRef.current.values()).slice(0, 2);
+            const dx = pts[0].x - pts[1].x;
+            const dy = pts[0].y - pts[1].y;
+            pinchStateRef.current = {
+              startDist: Math.hypot(dx, dy) || 1,
+              startScale: targetScaleRef.current,
+            };
+            wakeGlobeRef.current?.();
+            return;
+          }
           handleMouseDown(e as any);
         }}
-        onPointerMove={handleMouseMove as any}
+        onPointerMove={(e) => {
+          if (activePointersRef.current.has(e.pointerId)) {
+            activePointersRef.current.set(e.pointerId, { x: e.clientX, y: e.clientY });
+          }
+          if (pinchStateRef.current && activePointersRef.current.size >= 2) {
+            const pts = Array.from(activePointersRef.current.values()).slice(0, 2);
+            const dx = pts[0].x - pts[1].x;
+            const dy = pts[0].y - pts[1].y;
+            const currentDist = Math.hypot(dx, dy) || 1;
+            const { startDist, startScale } = pinchStateRef.current;
+            const nextScale = Math.max(1.0, Math.min(8.0, startScale * (currentDist / startDist)));
+            targetScaleRef.current = nextScale;
+            wakeGlobeRef.current?.();
+            const now = Date.now();
+            const lastZoom = lastZoomEmitRef.current;
+            if (Math.abs(nextScale - lastZoom.zoom) >= 0.01 || now - lastZoom.ts >= 120) {
+              lastZoomEmitRef.current = { zoom: nextScale, ts: now };
+              cbRefs.current.onZoomChange?.(nextScale);
+            }
+            if (drilledRef.current && targetScaleRef.current <= COUNTRY_EXIT_ZOOM) {
+              drilledRef.current = null;
+              targetRotRef.current = null;
+              cbRefs.current.onDrillDown(null);
+              cbRefs.current.onSelectCity(null);
+            }
+            if (drilledContinentRef.current && targetScaleRef.current <= CONTINENT_EXIT_ZOOM) {
+              cbRefs.current.onDrillContinent?.(null);
+            }
+            return;
+          }
+          handleMouseMove(e as any);
+        }}
         onPointerUp={(e) => {
           lastPointerTypeRef.current = e.pointerType || lastPointerTypeRef.current;
-          e.currentTarget.releasePointerCapture(e.pointerId);
+          try { e.currentTarget.releasePointerCapture(e.pointerId); } catch {}
+          activePointersRef.current.delete(e.pointerId);
+          if (activePointersRef.current.size < 2 && pinchStateRef.current) {
+            pinchStateRef.current = null;
+            dragDistRef.current = 9999;
+            isDraggingRef.current = false;
+          }
+          handleMouseUp();
+        }}
+        onPointerCancel={(e) => {
+          activePointersRef.current.delete(e.pointerId);
+          if (activePointersRef.current.size < 2) pinchStateRef.current = null;
           handleMouseUp();
         }}
         onPointerLeave={handleMouseLeave}

@@ -43,8 +43,8 @@ export const PlaylistModal: React.FC<PlaylistModalProps> = ({
   const textMuted = isLight ? "rgba(0,0,0,0.42)" : "rgba(255,255,255,0.42)";
   const divider = isLight ? "rgba(0,0,0,0.08)" : "rgba(255,255,255,0.08)";
   const limeText = isLight ? "#4E6700" : "#D9FF6E";
-  const limeBg = isLight ? "rgba(90,120,0,0.10)" : "rgba(191,255,10,0.14)";
-  const limeBorder = isLight ? "rgba(90,120,0,0.25)" : "rgba(191,255,10,0.30)";
+  const limeBg = isLight ? "rgba(138,107,31,0.10)" : "rgba(212,165,71,0.14)";
+  const limeBorder = isLight ? "rgba(138,107,31,0.25)" : "rgba(212,165,71,0.30)";
   const controlBg = isLight ? "rgba(0,0,0,0.03)" : "rgba(255,255,255,0.04)";
 
   useEffect(() => {
@@ -242,7 +242,7 @@ export const PlaylistModal: React.FC<PlaylistModalProps> = ({
                 }}
                 onFocus={(e) => {
                   e.currentTarget.style.borderColor = limeBorder;
-                  e.currentTarget.style.background = isLight ? "rgba(90,120,0,0.06)" : "rgba(191,255,10,0.07)";
+                  e.currentTarget.style.background = isLight ? "rgba(138,107,31,0.06)" : "rgba(212,165,71,0.07)";
                 }}
                 onBlur={(e) => {
                   e.currentTarget.style.borderColor = divider;
@@ -326,7 +326,7 @@ export const PlaylistModal: React.FC<PlaylistModalProps> = ({
                 gap: 8,
                 paddingRight: 2,
                 scrollbarWidth: "thin",
-                scrollbarColor: isLight ? "rgba(90,120,0,0.35) rgba(0,0,0,0.05)" : "rgba(191,255,10,0.35) rgba(255,255,255,0.05)",
+                scrollbarColor: isLight ? "rgba(138,107,31,0.35) rgba(0,0,0,0.05)" : "rgba(212,165,71,0.35) rgba(255,255,255,0.05)",
               }}
             >
               {playlists.map((pl) => (
@@ -353,7 +353,7 @@ export const PlaylistModal: React.FC<PlaylistModalProps> = ({
                   onMouseEnter={(e) => {
                     if (!saving) {
                       e.currentTarget.style.borderColor = limeBorder;
-                      e.currentTarget.style.background = isLight ? "rgba(90,120,0,0.07)" : "rgba(191,255,10,0.07)";
+                      e.currentTarget.style.background = isLight ? "rgba(138,107,31,0.07)" : "rgba(212,165,71,0.07)";
                     }
                   }}
                   onMouseLeave={(e) => {
@@ -411,11 +411,11 @@ export const PlaylistModal: React.FC<PlaylistModalProps> = ({
               border-radius: 999px;
             }
             .playlist-scroll::-webkit-scrollbar-thumb {
-              background: ${isLight ? "rgba(90,120,0,0.36)" : "rgba(191,255,10,0.34)"};
+              background: ${isLight ? "rgba(138,107,31,0.36)" : "rgba(212,165,71,0.34)"};
               border-radius: 999px;
             }
             .playlist-scroll::-webkit-scrollbar-thumb:hover {
-              background: ${isLight ? "rgba(90,120,0,0.55)" : "rgba(191,255,10,0.54)"};
+              background: ${isLight ? "rgba(138,107,31,0.55)" : "rgba(212,165,71,0.54)"};
             }
           `}</style>
         </div>

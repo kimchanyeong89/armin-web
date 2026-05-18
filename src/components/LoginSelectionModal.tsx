@@ -84,7 +84,11 @@ const LoginSelectionModal: React.FC<LoginSelectionModalProps> = ({ onClose }) =>
     const handleGoogleLogin = async () => {
         try {
             if (mobileAppContainer) {
-                window.dispatchEvent(new Event('auth:request-login'));
+                // Skip the intermediate in-WebView /login page — open the
+                // external browser auth session directly. The /login page in
+                // the external browser auto-triggers signInWithRedirect on
+                // Android, so the user only sees Google's account picker.
+                requestExternalMobileLogin('google');
                 onClose();
                 return;
             }

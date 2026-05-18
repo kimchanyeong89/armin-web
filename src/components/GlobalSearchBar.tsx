@@ -3644,30 +3644,30 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                     }
                     @keyframes ai-search-border-pulse-dark {
                         0% {
-                            border-color: #BFFF0A;
-                            box-shadow: 0 0 0 0 rgba(191,255,10,0.00), 0 0 0 rgba(191,255,10,0.00);
+                            border-color: #D4A547;
+                            box-shadow: 0 0 0 0 rgba(212,165,71,0.00), 0 0 0 rgba(212,165,71,0.00);
                         }
                         50% {
                             border-color: #D8FF72;
-                            box-shadow: 0 0 0 3px rgba(191,255,10,0.16), 0 0 22px rgba(191,255,10,0.24);
+                            box-shadow: 0 0 0 3px rgba(212,165,71,0.16), 0 0 22px rgba(212,165,71,0.24);
                         }
                         100% {
-                            border-color: #BFFF0A;
-                            box-shadow: 0 0 0 0 rgba(191,255,10,0.00), 0 0 0 rgba(191,255,10,0.00);
+                            border-color: #D4A547;
+                            box-shadow: 0 0 0 0 rgba(212,165,71,0.00), 0 0 0 rgba(212,165,71,0.00);
                         }
                     }
                     @keyframes ai-search-border-pulse-light {
                         0% {
-                            border-color: #99CC00;
-                            box-shadow: 0 0 0 0 rgba(191,255,10,0.00), 0 0 0 rgba(153,204,0,0.00);
+                            border-color: #B89438;
+                            box-shadow: 0 0 0 0 rgba(212,165,71,0.00), 0 0 0 rgba(153,204,0,0.00);
                         }
                         50% {
                             border-color: #B6E400;
-                            box-shadow: 0 0 0 3px rgba(191,255,10,0.18), 0 0 20px rgba(120,160,0,0.22);
+                            box-shadow: 0 0 0 3px rgba(212,165,71,0.18), 0 0 20px rgba(120,160,0,0.22);
                         }
                         100% {
-                            border-color: #99CC00;
-                            box-shadow: 0 0 0 0 rgba(191,255,10,0.00), 0 0 0 rgba(153,204,0,0.00);
+                            border-color: #B89438;
+                            box-shadow: 0 0 0 0 rgba(212,165,71,0.00), 0 0 0 rgba(153,204,0,0.00);
                         }
                     }
                     @keyframes search-result-reveal {
@@ -3690,13 +3690,13 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                     zIndex: (inlineMode && drawingSkin && isExpanded) ? 2 : 'auto',
                     justifyContent: (inlineMode && !isExpanded) ? 'center' : 'flex-start',
                     boxSizing: 'border-box' as const,
-                    border: isSearchPageMode ? `1.5px solid ${isAIMode ? (isNavDark ? '#BFFF0A' : '#99CC00') : (isNavDark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.08)')}` : 'none',
+                    border: isSearchPageMode ? `1.5px solid ${isAIMode ? (isNavDark ? '#D4A547' : '#B89438') : (isNavDark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.08)')}` : 'none',
                     borderRadius: isSearchPageMode ? 12 : 0,
                     background: isSearchPageMode
                         ? (isNavDark ? 'rgba(255,255,255,0.07)' : 'rgba(0,0,0,0.05)')
                         : 'transparent',
                     boxShadow: isSearchPageMode && isAIMode
-                        ? (isNavDark ? '0 0 0 3px rgba(191,255,10,0.10)' : '0 0 0 3px rgba(191,255,10,0.14)')
+                        ? (isNavDark ? '0 0 0 3px rgba(212,165,71,0.10)' : '0 0 0 3px rgba(212,165,71,0.14)')
                         : 'none',
                     animation: isSearchPageMode && isAIMode
                         ? (isNavDark ? 'ai-search-border-pulse-dark 1.35s ease-in-out infinite' : 'ai-search-border-pulse-light 1.35s ease-in-out infinite')
@@ -3714,7 +3714,7 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                                 onClick={handleToggleAIMode}
                                 style={isSearchPageMode ? {
                                     background: isAIMode
-                                        ? 'linear-gradient(135deg, #BFFF0A 0%, #90c000 100%)'
+                                        ? 'linear-gradient(135deg, #D4A547 0%, #A88735 100%)'
                                         : (isNavDark ? 'rgba(255,255,255,0.10)' : 'rgba(0,0,0,0.08)'),
                                     border: 'none',
                                     borderRadius: 999,
@@ -3738,7 +3738,7 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                                     transform: 'scale(1)',
                                     animation: aiPulsing ? 'ai-search-button-press 0.4s ease-in-out 1' : 'none',
                                     boxShadow: isAIMode
-                                        ? (isNavDark ? '0 0 0 1px rgba(191,255,10,0.45), 0 0 18px rgba(191,255,10,0.22)' : '0 0 0 1px rgba(90,120,0,0.45), 0 0 18px rgba(90,120,0,0.16)')
+                                        ? (isNavDark ? '0 0 0 1px rgba(212,165,71,0.45), 0 0 18px rgba(212,165,71,0.22)' : '0 0 0 1px rgba(138,107,31,0.45), 0 0 18px rgba(138,107,31,0.16)')
                                         : 'none',
                                     willChange: 'transform',
                                 } : drawingSkin ? {
@@ -3965,7 +3965,7 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                             color: isNavDark ? 'rgba(255,255,255,0.36)' : 'rgba(0,0,0,0.36)',
                             }}
                         >
-                            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke={isNavDark ? '#BFFF0A' : '#5A7800'} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke={isNavDark ? '#D4A547' : '#8A6B1F'} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                 <path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.937A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .962 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.582a.5.5 0 0 1 0 .962L15.5 14.063A2 2 0 0 0 14.063 15.5l-1.582 6.135a.5.5 0 0 1-.962 0z" />
                             </svg>
                             <span style={{ fontSize: 11 }}>AI 검색 모드 활성화 - 자연어로 자유롭게 검색하세요</span>
@@ -4080,8 +4080,8 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                                                     fontSize: 11,
                                                     fontWeight: active ? 600 : 400,
                                                     color: active ? '#000000' : medText,
-                                                    backgroundColor: active ? '#BFFF0A' : chipBg,
-                                                    border: `1px solid ${active ? '#BFFF0A' : divider}`,
+                                                    backgroundColor: active ? '#D4A547' : chipBg,
+                                                    border: `1px solid ${active ? '#D4A547' : divider}`,
                                                     cursor: 'pointer',
                                                     flexShrink: 0,
                                                     transition: 'all 0.15s',
@@ -4150,8 +4150,8 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                                                     fontSize: 7,
                                                     fontWeight: 700,
                                                     letterSpacing: '0.12em',
-                                                    backgroundColor: isNavDark ? 'rgba(191,255,10,0.12)' : 'rgba(191,255,10,0.15)',
-                                                    color: isNavDark ? '#BFFF0A' : '#5A7800',
+                                                    backgroundColor: isNavDark ? 'rgba(212,165,71,0.12)' : 'rgba(212,165,71,0.15)',
+                                                    color: isNavDark ? '#D4A547' : '#8A6B1F',
                                                 }}>LIVE</span>
                                             </div>
                                             <div style={{ display: 'flex', flexDirection: 'column' }}>
@@ -4179,7 +4179,7 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                                                             <span style={{
                                                                 fontFamily: "'Space Mono', monospace",
                                                                 fontSize: 11,
-                                                                color: idx < 3 ? (isNavDark ? '#BFFF0A' : '#5A7800') : faintText,
+                                                                color: idx < 3 ? (isNavDark ? '#D4A547' : '#8A6B1F') : faintText,
                                                                 fontWeight: idx < 3 ? 700 : 400,
                                                                 minWidth: 20,
                                                                 textAlign: 'right',
@@ -4190,7 +4190,7 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                                                             <span style={{
                                                                 fontSize: 9,
                                                                 color: item.delta.startsWith('▲')
-                                                                    ? (isNavDark ? '#BFFF0A' : '#5A7800')
+                                                                    ? (isNavDark ? '#D4A547' : '#8A6B1F')
                                                                     : item.delta.startsWith('▼')
                                                                         ? '#FF6B6B'
                                                                         : faintText,
@@ -4210,7 +4210,7 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                                     <div style={{ padding: '8px 0 4px' }}>
                                         {showArtistsInSearchMode && suggestedArtists.length > 0 && (
                                             <div style={{ marginBottom: 12 }}>
-                                                {sectionLabel('Artists', suggestedArtists.length, isNavDark ? '#BFFF0A' : '#5A7800')}
+                                                {sectionLabel('Artists', suggestedArtists.length, isNavDark ? '#D4A547' : '#8A6B1F')}
                                                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: 7 }}>
                                                     {suggestedArtists.slice(0, artistCollapsedCount).map(({ artist, count, image }, idx) => {
                                                         const artistToken = normalizeLookupText(artist);
@@ -4253,7 +4253,7 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                                                                     borderRadius: '50%',
                                                                     overflow: 'hidden',
                                                                     flexShrink: 0,
-                                                                    border: `1.5px solid ${isNavDark ? 'rgba(191,255,10,0.25)' : 'rgba(90,120,0,0.25)'}`,
+                                                                    border: `1.5px solid ${isNavDark ? 'rgba(212,165,71,0.25)' : 'rgba(138,107,31,0.25)'}`,
                                                                     background: isNavDark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.08)',
                                                                 }}>
                                                                     <ArtistChipThumb
@@ -4328,7 +4328,7 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                                                                                 borderRadius: '50%',
                                                                                 overflow: 'hidden',
                                                                                 flexShrink: 0,
-                                                                                border: `1.5px solid ${isNavDark ? 'rgba(191,255,10,0.25)' : 'rgba(90,120,0,0.25)'}`,
+                                                                                border: `1.5px solid ${isNavDark ? 'rgba(212,165,71,0.25)' : 'rgba(138,107,31,0.25)'}`,
                                                                                 background: isNavDark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.08)',
                                                                             }}>
                                                                                 <ArtistChipThumb
@@ -4561,7 +4561,7 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                         return (
                             <div style={{ paddingBottom: 26 }}>
                                 <div style={{ display: 'flex', alignItems: 'center', gap: 7, paddingBottom: 10 }}>
-                                    <div style={{ width: 3, height: 3, borderRadius: '50%', backgroundColor: '#BFFF0A' }} />
+                                    <div style={{ width: 3, height: 3, borderRadius: '50%', backgroundColor: '#D4A547' }} />
                                     <span style={{ fontSize: 9, letterSpacing: '0.22em', textTransform: 'uppercase', color: faintText }}>AI Results</span>
                                     <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: faintText }}>{aiResults.length}</span>
                                 </div>
@@ -4922,7 +4922,7 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                     const btnBg = isDrawingGalleryMode ? '#ffffff' : '#1e1e1e';
                     const textMain = isDrawingGalleryMode ? '#111111' : '#ffffff';
                     const textSub = isDrawingGalleryMode ? '#4d4740' : 'rgba(255,255,255,0.45)';
-                    const accent = isDrawingGalleryMode ? '#ccff00' : '#ccff00';
+                    const accent = isDrawingGalleryMode ? '#d4a547' : '#d4a547';
                     const border = isDrawingGalleryMode ? '#111111' : 'rgba(255,255,255,0.08)';
                     const borderLight = isDrawingGalleryMode ? '#2f2f2f' : 'rgba(255,255,255,0.14)';
                     const borderWidth = isDrawingGalleryMode ? '2.5px' : '1px';
@@ -5100,12 +5100,13 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                                         padding: isMobile ? '16px 10px' : '28px 36px',
                                         borderRight: isMobile ? 'none' : `${borderWidth} solid ${border}`,
                                         borderBottom: isMobile ? `${borderWidth} solid ${border}` : 'none',
-                                        // Monospace font for the wiki body text
-                                        fontFamily: "'Space Mono', 'IBM Plex Mono', 'DM Mono', SFMono-Regular, Menlo, Consolas, monospace",
-                                        color: isDark ? '#b8b3aa' : '#3d3a35',
+                                        // Editorial body font for long-form wiki text
+                                        fontFamily: "'Inter', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Helvetica Neue', Arial, sans-serif",
+                                        color: isDark ? '#ECE8DE' : '#2A2622',
                                         boxSizing: 'border-box',
-                                        fontSize: isMobile ? 11 : 13,
-                                        lineHeight: 1.7,
+                                        fontSize: isMobile ? 13 : 14.5,
+                                        lineHeight: 1.65,
+                                        fontWeight: 400,
                                     }}>
                                         <p style={{
                                             fontSize: 10, letterSpacing: '0.3em', textTransform: 'uppercase',
@@ -5153,7 +5154,7 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                                             .sort((a, b) => b[1] - a[1])
                                             .map(([name, count]) => ({ name, count, pct: Math.round(count / total * 100) }));
 
-                                        const DONUT_COLORS = ['#ccff00', '#aee000', '#d4ff40', '#88cc00', '#e8ff80', '#66aa00', '#f0ff99', '#448800'];
+                                        const DONUT_COLORS = ['#d4a547', '#aee000', '#d4ff40', '#88cc00', '#e8ff80', '#66aa00', '#f0ff99', '#448800'];
 
                                         const renderDonut = (data: { name: string; count: number }[], _centerLabel: string) => {
                                             const cx = 56, cy = 56, outerR = 44, innerR = 26;
@@ -5603,7 +5604,7 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                                                                                 onToggle={(e) => toggleLikeArtwork(e, art)}
                                                                                 style={{ padding: 0, background: 'none' }}
                                                                                 size={isMobile ? 14 : 16}
-                                                                                color="#BFFF0A"
+                                                                                color="#D4A547"
                                                                                 emptyColor="#fff"
                                                                             />
                                                                         </div>

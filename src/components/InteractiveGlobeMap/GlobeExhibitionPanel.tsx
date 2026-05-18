@@ -26,7 +26,7 @@ export function GlobeExhibitionPanel({ exhibition, theme, onClose, onViewCollect
   const fg60 = t ? "rgba(0,0,0,0.55)" : "rgba(255,255,255,0.50)";
   const fg30 = t ? "rgba(0,0,0,0.25)" : "rgba(255,255,255,0.20)";
   const fg15 = t ? "rgba(0,0,0,0.08)" : "rgba(255,255,255,0.06)";
-  const lime = "#BFFF0A";
+  const lime = "#D4A547";
 
   // Representative image handling
   const rep = exhibition.representativeImage || "";

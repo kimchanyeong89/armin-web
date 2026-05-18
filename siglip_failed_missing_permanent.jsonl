@@ -1,0 +1,8 @@
+{"id": "louvre-cl010055826", "e": "louvre-painting-collection", "error": "cannot identify image file <_io.BytesIO object at 0x30bdfd940>", "url": "https://collections.louvre.fr/media/cache/small/0000000021/0000055826/0000385326_OG.JPG", "stage": "download"}
+{"id": "pinault-sacrificial-heart-qo9v", "e": "pinault-collection", "error": "HTTP 403", "url": "https://lesoeuvres.pinaultcollection.com/media/styles/ex_v/s3/art/10801_visuel_REF_NOBLEandWEBSTER_SacrificialHeart.jpg?itok=rKUrhysz", "stage": "download"}
+{"id": "1997-144-1", "e": "philadelphia-collection", "error": "HTTP 400", "url": "https://iiif.micr.io/jtvOG/full/512,/0/default.jpg", "stage": "download"}
+{"id": "untitled-126775", "e": "famsf-collections", "error": "HTTP 202", "url": "https://famsf.emuseum.com/internal/media/dispatcher/170822/famsfwebsite-800px", "stage": "download"}
+{"id": "untitled-55882", "e": "famsf-collections", "error": "HTTP 202", "url": "https://famsf.emuseum.com/internal/media/dispatcher/163678/famsfwebsite-800px", "stage": "download"}
+{"id": "hermitage-97179", "e": "hermitage-collection", "error": "HTTP 404", "url": "https://www.hermitagemuseum.org/api/files/fshow?needlePath=%3Fw%3D1600%26h%3D1600", "stage": "download"}
+{"id": "RP-F-F01018-AT", "e": "rijksmuseum-photography", "error": "HTTP 400", "url": "https://iiif.micr.io/dUcky/full/1000,/0/default.jpg", "stage": "download"}
+{"id": "RP-T-1979-248-B", "e": "rijksmuseum-design", "error": "HTTP 404", "url": "https://iiif.micr.io/Dmvle/full/max/0/default.jpg", "stage": "download"}

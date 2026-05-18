@@ -55,6 +55,7 @@ export const ProductModal: React.FC<ProductModalProps> = ({ artwork, relatedArtw
   const [isImageLoaded, setIsImageLoaded] = useState(false);
   const [isMobile, setIsMobile] = useState(() => typeof window !== 'undefined' ? window.innerWidth < 840 : false);
   const [cartFeedback, setCartFeedback] = useState('');
+  const [showPayment, setShowPayment] = useState(false);
   const [isLightTheme, setIsLightTheme] = useState<boolean>(() => {
     try {
       return localStorage.getItem('homeTheme') === 'light';
@@ -170,12 +171,12 @@ export const ProductModal: React.FC<ProductModalProps> = ({ artwork, relatedArtw
         text: 'rgba(0,0,0,0.92)',
         textSub: 'rgba(0,0,0,0.64)',
         textMute: 'rgba(0,0,0,0.42)',
-        accent: '#5A7800',
-        accentBg: 'rgba(90,120,0,0.12)',
-        accentBorder: 'rgba(90,120,0,0.25)',
+        accent: '#8A6B1F',
+        accentBg: 'rgba(138,107,31,0.12)',
+        accentBorder: 'rgba(138,107,31,0.25)',
         chip: 'rgba(0,0,0,0.04)',
         chipHover: 'rgba(0,0,0,0.07)',
-        selectedChip: 'rgba(90,120,0,0.14)',
+        selectedChip: 'rgba(138,107,31,0.14)',
         selectedSolid: '#1f2a00',
       };
     }
@@ -191,12 +192,12 @@ export const ProductModal: React.FC<ProductModalProps> = ({ artwork, relatedArtw
       textSub: 'rgba(255,255,255,0.72)',
       textMute: 'rgba(255,255,255,0.46)',
       accent: '#C7FF3D',
-      accentBg: 'rgba(191,255,10,0.16)',
-      accentBorder: 'rgba(191,255,10,0.28)',
+      accentBg: 'rgba(212,165,71,0.16)',
+      accentBorder: 'rgba(212,165,71,0.28)',
       chip: 'rgba(255,255,255,0.08)',
       chipHover: 'rgba(255,255,255,0.12)',
-      selectedChip: 'rgba(191,255,10,0.16)',
-      selectedSolid: '#D7FF5A',
+      selectedChip: 'rgba(212,165,71,0.16)',
+      selectedSolid: '#E8C56F',
     };
   }, [isLightTheme]);
 
@@ -233,6 +234,10 @@ export const ProductModal: React.FC<ProductModalProps> = ({ artwork, relatedArtw
   }, []);
 
   const handlePurchase = async () => {
+    if (!showPayment) {
+      setShowPayment(true);
+      return;
+    }
     if (!selectedPayment) {
       alert('결제 수단을 선택해주세요.');
       return;
@@ -391,7 +396,7 @@ export const ProductModal: React.FC<ProductModalProps> = ({ artwork, relatedArtw
       style={{
         position: 'fixed',
         inset: 0,
-        zIndex: 20000,
+        zIndex: 290000,
         background: palette.overlay,
         backdropFilter: 'blur(10px)',
         WebkitBackdropFilter: 'blur(10px)',
@@ -425,12 +430,12 @@ export const ProductModal: React.FC<ProductModalProps> = ({ artwork, relatedArtw
         }
         .product-modal-scroll::-webkit-scrollbar-thumb,
         .product-recs-scroll::-webkit-scrollbar-thumb {
-          background: ${isLightTheme ? 'rgba(90,120,0,0.35)' : 'rgba(191,255,10,0.38)'};
+          background: ${isLightTheme ? 'rgba(138,107,31,0.35)' : 'rgba(212,165,71,0.38)'};
           border-radius: 999px;
         }
         .product-modal-scroll::-webkit-scrollbar-thumb:hover,
         .product-recs-scroll::-webkit-scrollbar-thumb:hover {
-          background: ${isLightTheme ? 'rgba(90,120,0,0.55)' : 'rgba(191,255,10,0.58)'};
+          background: ${isLightTheme ? 'rgba(138,107,31,0.55)' : 'rgba(212,165,71,0.58)'};
         }
       `}</style>
 
@@ -790,6 +795,139 @@ export const ProductModal: React.FC<ProductModalProps> = ({ artwork, relatedArtw
                   </button>
                 </div>
               </section>
+              <section
+                style={{
+                  borderTop: `1px solid ${palette.borderSoft}`,
+                  borderRight: `1px solid ${palette.borderSoft}`,
+                  borderBottom: `1px solid ${palette.borderSoft}`,
+                  borderLeft: `1px solid ${palette.borderSoft}`,
+                  borderRadius: 14,
+                  background: palette.panelSolid,
+                  padding: 14,
+                  marginTop: 14,
+                }}
+              >
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 14 }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
+                    <div style={{ fontSize: 11, color: palette.textMute }}>총 결제 금액 <span style={{fontSize: 10, opacity: 0.6}}>(옵션 포함)</span></div>
+                    <div style={{ fontSize: 24, color: palette.text, fontWeight: 800, letterSpacing: '-0.02em', lineHeight: 1 }}>{formatPrice(totalPrice)}</div>
+                  </div>
+                  {cartFeedback && (
+                    <div style={{ fontSize: 11, color: palette.accent, fontWeight: 700, textAlign: 'right' }}>{cartFeedback}</div>
+                  )}
+                  
+                  <div style={{ display: 'flex', gap: 8, width: '100%' }}>
+                    <button
+                      type="button"
+                      onClick={handleAddToCart}
+                      style={{
+                        flex: 1,
+                        cursor: 'pointer',
+                        border: `1px solid ${palette.accentBorder}`,
+                        borderRadius: 12,
+                        padding: '12px 0',
+                        background: palette.selectedChip,
+                        color: palette.accent,
+                        fontSize: 13,
+                        fontWeight: 700,
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                      }}
+                    >
+                      장바구니 담기
+                    </button>
+                    <button
+                      type="button"
+                      onClick={handlePurchase}
+                      style={{
+                        flex: showPayment ? 1 : 1.5,
+                        cursor: 'pointer',
+                        border: `1px solid ${showPayment ? palette.accentBorder : palette.borderSoft}`,
+                        borderRadius: 12,
+                        padding: '12px 0',
+                        background: showPayment
+                          ? (isLightTheme ? palette.selectedSolid : palette.accent)
+                          : palette.chip,
+                        color: showPayment
+                          ? (isLightTheme ? '#F3FFD0' : '#121212')
+                          : palette.textMute,
+                        fontSize: 13,
+                        fontWeight: 700,
+                        display: 'inline-flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        transition: 'all 0.2s ease',
+                      }}
+                    >
+                      {showPayment ? '결제 진행' : '구매하기'}
+                    </button>
+                  </div>
+                </div>
+              </section>
+
+              {showPayment && (
+                <section
+                  style={{
+                    borderTop: `1px solid ${palette.borderSoft}`,
+                    borderRight: `1px solid ${palette.borderSoft}`,
+                    borderBottom: `1px solid ${palette.borderSoft}`,
+                    borderLeft: `1px solid ${palette.borderSoft}`,
+                    borderRadius: 14,
+                    background: palette.panelSolid,
+                    padding: isMobile ? 12 : 14,
+                    animation: 'productFadeIn 0.28s ease-out',
+                  }}
+                >
+                  <div style={{ marginBottom: 10, fontSize: 10, color: palette.textMute, letterSpacing: '0.13em', textTransform: 'uppercase' }}>결제 수단</div>
+                  <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, minmax(0, 1fr))', gap: 8 }}>
+                    {PAYMENT_METHODS.map((method) => {
+                      const isSelected = selectedPayment === method.id;
+                      return (
+                        <button
+                          key={method.id}
+                          type="button"
+                          onClick={() => setSelectedPayment(method.id)}
+                          style={{
+                            cursor: 'pointer',
+                            borderTop: `1px solid ${isSelected ? palette.accentBorder : palette.borderSoft}`,
+                            borderRight: `1px solid ${isSelected ? palette.accentBorder : palette.borderSoft}`,
+                            borderBottom: `1px solid ${isSelected ? palette.accentBorder : palette.borderSoft}`,
+                            borderLeft: `1px solid ${isSelected ? palette.accentBorder : palette.borderSoft}`,
+                            borderRadius: 10,
+                            background: isSelected ? palette.selectedChip : palette.panelAlt,
+                            color: palette.text,
+                            display: 'flex',
+                            alignItems: 'center',
+                            justifyContent: 'center',
+                            gap: 8,
+                            padding: '10px 8px',
+                          }}
+                        >
+                          <span
+                            style={{
+                              width: 24,
+                              height: 24,
+                              borderRadius: 7,
+                              background: method.color,
+                              color: method.id === 'kakaopay' ? '#000' : '#fff',
+                              fontSize: 12,
+                              fontWeight: 700,
+                              display: 'inline-flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              flexShrink: 0,
+                            }}
+                          >
+                            {method.short}
+                          </span>
+                          <span style={{ fontSize: 12, fontWeight: 600 }}>{method.name}</span>
+                        </button>
+                      );
+                    })}
+                  </div>
+                </section>
+              )}
             </div>
           </div>
 
@@ -844,130 +982,7 @@ export const ProductModal: React.FC<ProductModalProps> = ({ artwork, relatedArtw
             </section>
           )}
 
-          <section
-            style={{
-              marginTop: 18,
-              borderTop: `1px solid ${palette.borderSoft}`,
-              borderRight: `1px solid ${palette.borderSoft}`,
-              borderBottom: `1px solid ${palette.borderSoft}`,
-              borderLeft: `1px solid ${palette.borderSoft}`,
-              borderRadius: 14,
-              background: palette.panelSolid,
-              padding: isMobile ? 12 : 14,
-            }}
-          >
-            <div style={{ marginBottom: 10, fontSize: 10, color: palette.textMute, letterSpacing: '0.13em', textTransform: 'uppercase' }}>결제 수단</div>
-            <div style={{ display: 'grid', gridTemplateColumns: isMobile ? '1fr' : 'repeat(3, minmax(0, 1fr))', gap: 8 }}>
-              {PAYMENT_METHODS.map((method) => {
-                const isSelected = selectedPayment === method.id;
-                return (
-                  <button
-                    key={method.id}
-                    type="button"
-                    onClick={() => setSelectedPayment(method.id)}
-                    style={{
-                      cursor: 'pointer',
-                      borderTop: `1px solid ${isSelected ? palette.accentBorder : palette.borderSoft}`,
-                      borderRight: `1px solid ${isSelected ? palette.accentBorder : palette.borderSoft}`,
-                      borderBottom: `1px solid ${isSelected ? palette.accentBorder : palette.borderSoft}`,
-                      borderLeft: `1px solid ${isSelected ? palette.accentBorder : palette.borderSoft}`,
-                      borderRadius: 10,
-                      background: isSelected ? palette.selectedChip : palette.panelAlt,
-                      color: palette.text,
-                      display: 'flex',
-                      alignItems: 'center',
-                      justifyContent: 'center',
-                      gap: 8,
-                      padding: '10px 8px',
-                    }}
-                  >
-                    <span
-                      style={{
-                        width: 24,
-                        height: 24,
-                        borderRadius: 7,
-                        background: method.color,
-                        color: method.id === 'kakaopay' ? '#000' : '#fff',
-                        fontSize: 12,
-                        fontWeight: 700,
-                        display: 'inline-flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        flexShrink: 0,
-                      }}
-                    >
-                      {method.short}
-                    </span>
-                    <span style={{ fontSize: 12, fontWeight: 600 }}>{method.name}</span>
-                  </button>
-                );
-              })}
-            </div>
 
-            <div style={{ marginTop: 14, display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 12, flexWrap: 'wrap' }}>
-              <div>
-                <div style={{ fontSize: 11, color: palette.textMute }}>총 결제 금액</div>
-                <div style={{ marginTop: 2, fontSize: 28, color: palette.text, fontWeight: 800, letterSpacing: '-0.02em' }}>{formatPrice(totalPrice)}</div>
-                {cartFeedback && (
-                  <div style={{ marginTop: 6, fontSize: 11, color: palette.accent, fontWeight: 700 }}>{cartFeedback}</div>
-                )}
-              </div>
-              <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexWrap: 'wrap', width: isMobile ? '100%' : 'auto' }}>
-                <button
-                  type="button"
-                  onClick={handleAddToCart}
-                  style={{
-                    cursor: 'pointer',
-                    borderTop: `1px solid ${palette.accentBorder}`,
-                    borderRight: `1px solid ${palette.accentBorder}`,
-                    borderBottom: `1px solid ${palette.accentBorder}`,
-                    borderLeft: `1px solid ${palette.accentBorder}`,
-                    borderRadius: 12,
-                    padding: '12px 16px',
-                    minWidth: isMobile ? '100%' : 150,
-                    background: palette.selectedChip,
-                    color: palette.accent,
-                    fontSize: 13,
-                    fontWeight: 700,
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}
-                >
-                  장바구니 담기
-                </button>
-                <button
-                  type="button"
-                  onClick={handlePurchase}
-                  style={{
-                    cursor: 'pointer',
-                    borderTop: `1px solid ${selectedPayment ? palette.accentBorder : palette.borderSoft}`,
-                    borderRight: `1px solid ${selectedPayment ? palette.accentBorder : palette.borderSoft}`,
-                    borderBottom: `1px solid ${selectedPayment ? palette.accentBorder : palette.borderSoft}`,
-                    borderLeft: `1px solid ${selectedPayment ? palette.accentBorder : palette.borderSoft}`,
-                    borderRadius: 12,
-                    padding: '12px 20px',
-                    minWidth: isMobile ? '100%' : 170,
-                    background: selectedPayment
-                      ? (isLightTheme ? palette.selectedSolid : palette.accent)
-                      : palette.chip,
-                    color: selectedPayment
-                      ? (isLightTheme ? '#F3FFD0' : '#121212')
-                      : palette.textMute,
-                    fontSize: 14,
-                    fontWeight: 700,
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    gap: 8,
-                  }}
-                >
-                  <span>구매하기</span>
-                  <span style={{ fontSize: 14 }}>{'->'}</span>
-                </button>
-              </div>
-            </div>
-          </section>
         </div>
       </div>
     </div>,

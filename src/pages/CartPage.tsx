@@ -81,9 +81,9 @@ export default function CartPage() {
         textSub: "rgba(0,0,0,0.64)",
         textMute: "rgba(0,0,0,0.42)",
         chip: "rgba(0,0,0,0.04)",
-        chipActive: "rgba(90,120,0,0.13)",
-        accent: "#5A7800",
-        accentBg: "#BFFF0A",
+        chipActive: "rgba(138,107,31,0.13)",
+        accent: "#8A6B1F",
+        accentBg: "#D4A547",
       }
     : {
         pageBg: "#050505",
@@ -95,7 +95,7 @@ export default function CartPage() {
         textSub: "rgba(255,255,255,0.68)",
         textMute: "rgba(255,255,255,0.45)",
         chip: "rgba(255,255,255,0.08)",
-        chipActive: "rgba(191,255,10,0.16)",
+        chipActive: "rgba(212,165,71,0.16)",
         accent: "#C7FF3D",
         accentBg: "#C7FF3D",
       };

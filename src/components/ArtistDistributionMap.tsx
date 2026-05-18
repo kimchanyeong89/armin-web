@@ -15,6 +15,13 @@ interface MuseumPoint {
   lng: number;
 }
 
+interface ClusterPoint {
+  lat: number;
+  lng: number;
+  count: number;
+  museums: MuseumPoint[]; // sorted by count desc
+}
+
 interface Props {
   artworks: Artwork[];
   isDark?: boolean;
@@ -51,14 +58,59 @@ function abbrevMuseum(name: string): string {
   for (const [key, abbr] of Object.entries(ACRONYMS)) {
     if (name.includes(key)) return abbr;
   }
-  // First word, max 8 chars
   const first = name.split(/[\s,\-]+/)[0];
   return first.length > 8 ? first.slice(0, 7) + '.' : first;
 }
 
+/**
+ * Greedy spatial clustering — merges museums within `thresholdDeg` (great-circle
+ * approximation) into a single cluster marker. Museums are processed in descending
+ * count order so the dominant museum anchors each cluster position.
+ */
+function clusterMuseumPoints(points: MuseumPoint[], thresholdDeg: number): ClusterPoint[] {
+  const clusters: ClusterPoint[] = [];
+  // Process largest first so dominant museum anchors position
+  const sorted = [...points].sort((a, b) => b.count - a.count);
+
+  for (const p of sorted) {
+    let bestCluster: ClusterPoint | null = null;
+    let bestDist = Infinity;
+
+    for (const c of clusters) {
+      // Euclidean approximation — good enough for clustering at this zoom level
+      const dlat = p.lat - c.lat;
+      const dlng = p.lng - c.lng;
+      const dist = Math.sqrt(dlat * dlat + dlng * dlng);
+      if (dist < thresholdDeg && dist < bestDist) {
+        bestDist = dist;
+        bestCluster = c;
+      }
+    }
+
+    if (bestCluster) {
+      // Weighted centroid update
+      const totalCount = bestCluster.count + p.count;
+      bestCluster.lat = (bestCluster.lat * bestCluster.count + p.lat * p.count) / totalCount;
+      bestCluster.lng = (bestCluster.lng * bestCluster.count + p.lng * p.count) / totalCount;
+      bestCluster.count = totalCount;
+      bestCluster.museums.push(p);
+    } else {
+      clusters.push({ lat: p.lat, lng: p.lng, count: p.count, museums: [p] });
+    }
+  }
+
+  return clusters.sort((a, b) => b.count - a.count);
+}
+
 let mapIdCounter = 0;
 
-const ArtistDistributionMap: React.FC<Props> = ({ artworks, isDark = true, hideLegend = false, mapHeight, drawingStyle = 'default' }) => {
+const ArtistDistributionMap: React.FC<Props> = ({
+  artworks,
+  isDark = true,
+  hideLegend = false,
+  mapHeight,
+  drawingStyle = 'default',
+}) => {
   const containerId = useRef(`adist-${++mapIdCounter}`);
   const rootRef = useRef<am5.Root | null>(null);
   const isDrawingFlat = drawingStyle === 'drawing-flat';
@@ -96,6 +148,13 @@ const ArtistDistributionMap: React.FC<Props> = ({ artworks, isDark = true, hideL
     return Array.from(counts.values()).sort((a, b) => b.count - a.count);
   }, [artworks]);
 
+  // Cluster nearby museums — threshold scales with map density
+  const clusterThresholdDeg = isDrawingFlat ? 6 : 9;
+  const clusteredPoints = useMemo(
+    () => clusterMuseumPoints(museumPoints, clusterThresholdDeg),
+    [museumPoints, clusterThresholdDeg],
+  );
+
   // ── amCharts5 map ──────────────────────────────────────────────────────────
   useEffect(() => {
     const id = containerId.current;
@@ -103,15 +162,21 @@ const ArtistDistributionMap: React.FC<Props> = ({ artworks, isDark = true, hideL
     rootRef.current = root;
     root.setThemes([]);
 
-    const bgColor = isDrawingFlat ? 0xffffff : (isDark ? 0x0a0a09 : 0xe8e3da);
-    const landColor = isDrawingFlat ? 0xeeece6 : (isDark ? 0x1d1c1b : 0xd4cec4);
-    const landStroke = isDrawingFlat ? 0xc7c2b8 : (isDark ? 0x2e2d2b : 0xbfb9ae);
-    const dotFill = isDark ? 0xc9a55a : 0x8a6420;
-    const dotTextColor = isDrawingFlat ? 0xffffff : (isDark ? 0x0a0800 : 0xffffff);
-    const tooltipBg = isDrawingFlat ? 0xffffff : (isDark ? 0x1a1918 : 0xffffff);
-    const tooltipFg = isDrawingFlat ? 0x1a1918 : (isDark ? 0xf0ede6 : 0x1a1918);
+    // ── Palette ─────────────────────────────────────────────────────────────
+    // Drawing mode: light brutalist sketch style
+    // Dark mode:    dark luxury (#111 bg, lime accent)
+    const bgColor      = isDrawingFlat ? 0xffffff  : (isDark ? 0x111111 : 0xe8e3da);
+    const landColor    = isDrawingFlat ? 0xeeece6  : (isDark ? 0x242424 : 0xd4cec4);
+    const landStroke   = isDrawingFlat ? 0xc7c2b8  : (isDark ? 0x383838 : 0xbfb9ae);
+    const landHover    = isDrawingFlat ? 0xe0ddd6  : (isDark ? 0x2e2e2e : 0xcac4ba);
+    // Marker: lime on dark, gold on drawing
+    const dotFill      = isDrawingFlat ? 0x8a6420  : 0xd4a547;
+    const dotTextColor = isDrawingFlat ? 0xffffff  : 0x111111;
+    const tooltipBg    = isDrawingFlat ? 0xffffff  : (isDark ? 0x1a1a1a : 0xffffff);
+    const tooltipFg    = isDrawingFlat ? 0x1a1918  : (isDark ? 0xffffff : 0x1a1918);
+    const tooltipAccent = isDrawingFlat ? 0x8a6420 : 0xd4a547;
 
-    // Chart
+    // ── Chart ───────────────────────────────────────────────────────────────
     const chart = root.container.children.push(
       am5map.MapChart.new(root, {
         projection: am5map.geoMercator(),
@@ -130,7 +195,7 @@ const ArtistDistributionMap: React.FC<Props> = ({ artworks, isDark = true, hideL
       fillOpacity: 1,
     }));
 
-    // Countries
+    // ── Country polygons ─────────────────────────────────────────────────────
     const polygonSeries = chart.series.push(
       am5map.MapPolygonSeries.new(root, {
         geoJSON: am5geodata_worldLow,
@@ -140,38 +205,43 @@ const ArtistDistributionMap: React.FC<Props> = ({ artworks, isDark = true, hideL
     polygonSeries.mapPolygons.template.setAll({
       fill: am5.color(landColor),
       stroke: am5.color(landStroke),
-      strokeWidth: isDrawingFlat ? 0.9 : 0.5,
+      strokeWidth: isDrawingFlat ? 0.9 : 0.6,
       tooltipText: '',
-      interactive: false,
+      interactive: true,
+    });
+    polygonSeries.mapPolygons.template.states.create('hover', {
+      fill: am5.color(landHover),
     });
 
-    // Shared tooltip (styled to match luxury theme)
+    // ── Shared tooltip ───────────────────────────────────────────────────────
     const tooltip = am5.Tooltip.new(root, {
       getFillFromSprite: false,
       pointerOrientation: 'up',
       background: am5.RoundedRectangle.new(root, {
         fill: am5.color(tooltipBg),
         fillOpacity: 0.97,
-        stroke: am5.color(dotFill),
-        strokeOpacity: 0.5,
+        stroke: am5.color(tooltipAccent),
+        strokeOpacity: 0.4,
         strokeWidth: 1,
-        cornerRadiusTL: 6, cornerRadiusTR: 6,
-        cornerRadiusBL: 6, cornerRadiusBR: 6,
+        cornerRadiusTL: 5,
+        cornerRadiusTR: 5,
+        cornerRadiusBL: 5,
+        cornerRadiusBR: 5,
       }),
     });
     tooltip.label.setAll({
       fill: am5.color(tooltipFg),
       fontSize: 11,
-      paddingTop: 6,
-      paddingBottom: 6,
-      paddingLeft: 8,
-      paddingRight: 8,
+      paddingTop: 7,
+      paddingBottom: 7,
+      paddingLeft: 10,
+      paddingRight: 10,
+      lineHeight: 1.5,
     });
 
-    // Points — squares with count labels
-    if (museumPoints.length > 0) {
-      const visiblePoints = museumPoints.slice(0, 40);
-      const maxCount = visiblePoints[0]?.count ?? 1;
+    // ── Point markers ────────────────────────────────────────────────────────
+    if (clusteredPoints.length > 0) {
+      const maxCount = clusteredPoints[0]?.count ?? 1;
 
       const pointSeries = chart.series.push(
         am5map.MapPointSeries.new(root, {
@@ -181,76 +251,106 @@ const ArtistDistributionMap: React.FC<Props> = ({ artworks, isDark = true, hideL
       );
 
       pointSeries.bullets.push((_root, _series, dataItem) => {
-        const d = dataItem.dataContext as MuseumPoint;
+        const d = dataItem.dataContext as ClusterPoint;
         const count = d?.count ?? 1;
+        const museums = d?.museums ?? [];
 
-        // Square size: log-scaled, compact range 10–22px
-        const size = Math.round(10 + 12 * Math.log(count + 1) / Math.log(maxCount + 1));
-        const fontSize = size < 14 ? 6 : size < 17 ? 7 : 9;
+        // Circle diameter: log-scaled, 12px (min) → 30px (max)
+        const logRatio  = Math.log(count + 1) / Math.log(maxCount + 1);
+        const diameter  = Math.round(12 + 18 * logRatio);
+        const radius    = diameter / 2;
+        const fontSize  = diameter < 15 ? 7 : diameter < 19 ? 8 : diameter < 24 ? 9 : 10;
+        const isCluster = museums.length > 1;
 
-        // Container holds rect + label — centerX/Y centers it on the map point
+        // ── Tooltip — list every museum with its individual count ────────────
+        const fmtCount = (n: number) =>
+          n >= 1000 ? `${(n / 1000).toFixed(1)}k` : String(n);
+
+        let tooltipText = '';
+        const showN  = Math.min(museums.length, 8);
+        for (let i = 0; i < showN; i++) {
+          const m = museums[i];
+          const cStr = fmtCount(m.count);
+          if (i === 0) {
+            tooltipText += `[bold]${m.name}[/]  ${cStr}`;
+          } else {
+            tooltipText += `\n${m.name}  ${cStr}`;
+          }
+        }
+        const hiddenMuseums = museums.slice(showN);
+        if (hiddenMuseums.length > 0) {
+          const hiddenCount = hiddenMuseums.reduce((s, m) => s + m.count, 0);
+          tooltipText += `\n[opacity=0.55]+ ${hiddenMuseums.length} more  ${fmtCount(hiddenCount)}[/]`;
+        }
+        if (isCluster) {
+          tooltipText += `\n[opacity=0.4]───────────────────────[/]\n[bold]Total  ${fmtCount(count)}[/]`;
+        }
+
+        // ── Container — centered on the map point ────────────────────────────
         const container = am5.Container.new(root, {
-          width: size,
-          height: size,
+          width: diameter,
+          height: diameter,
           centerX: am5.p50,
           centerY: am5.p50,
           cursorOverStyle: 'pointer',
           interactive: true,
-          tooltipText: '[bold]{name}[/]\n{count} works',
-          tooltip: tooltip,
+          tooltipText,
+          tooltip,
         });
 
-        // Gold square background (slightly rounded corners)
-        const rect = container.children.push(
-          am5.RoundedRectangle.new(root, {
-            width: size,
-            height: size,
-            cornerRadiusTL: 2,
-            cornerRadiusTR: 2,
-            cornerRadiusBL: 2,
-            cornerRadiusBR: 2,
+        // Circle: MUST set x/y at p50 so it centers within the container.
+        // Without this the circle's origin sits at the container's (0,0) top-left
+        // and the count label renders outside the dot.
+        const circle = container.children.push(
+          am5.Circle.new(root, {
+            radius,
+            x: am5.p50,
+            y: am5.p50,
+            centerX: am5.p50,
+            centerY: am5.p50,
             fill: am5.color(dotFill),
-            fillOpacity: 0.88,
-            stroke: am5.color(isDark ? 0xf0d898 : 0xffffff),
+            fillOpacity: isCluster ? 0.90 : 0.85,
+            stroke: am5.color(isDark && !isDrawingFlat ? 0x111111 : 0x111111),
+            strokeOpacity: isCluster ? 0.2 : 0.0,
             strokeWidth: 1,
-            strokeOpacity: 0.35,
           })
         );
 
-        // Count label — x/y at 50% positions it at container center, centerX/Y aligns label anchor
+        // Count label — centered in container, sits on top of circle
+        const countLabel = count > 999
+          ? `${(count / 1000).toFixed(count >= 10000 ? 0 : 1)}k`
+          : String(count);
         container.children.push(
           am5.Label.new(root, {
-            text: count > 999 ? `${Math.round(count / 1000)}k` : count > 99 ? '99+' : String(count),
+            text: countLabel,
             x: am5.p50,
             y: am5.p50,
             centerX: am5.p50,
             centerY: am5.p50,
             fontSize,
             fontWeight: '700',
-            fill: am5.color(dotTextColor)
+            fill: am5.color(dotTextColor),
           })
         );
 
-        // Hover state
-        rect.states.create('hover', {
+        // Hover states
+        circle.states.create('hover', {
           fillOpacity: 1,
-          strokeOpacity: 0.8,
+          strokeOpacity: 0.4,
         });
         container.states.create('hover', {
-          scale: isDrawingFlat ? 1 : 1.3,
+          scale: 1.2,
         });
 
         return am5.Bullet.new(root, { sprite: container });
       });
 
       pointSeries.data.setAll(
-        visiblePoints.map(m => ({
-          lat: m.lat,
-          lng: m.lng,
-          name: m.name,
-          shortName: m.shortName,
-          location: m.location,
-          count: m.count,
+        clusteredPoints.map(c => ({
+          lat: c.lat,
+          lng: c.lng,
+          count: c.count,
+          museums: c.museums,
         }))
       );
     }
@@ -261,21 +361,29 @@ const ArtistDistributionMap: React.FC<Props> = ({ artworks, isDark = true, hideL
       root.dispose();
       rootRef.current = null;
     };
-  }, [museumPoints, isDark, isDrawingFlat]);
+  }, [clusteredPoints, isDark, isDrawingFlat]);
 
-  // ── Legend: ALL museums (scrollable) ──────────────────────────────────────
-  const accent = isDark ? '#c9a55a' : '#8a6420';
-  const textMain = isDark ? '#e8e3da' : '#1a1918';
-  const textSub = isDark ? '#7a7570' : '#9a9590';
-  const borderC = isDark ? '#2a2927' : '#ddd8cf';
-  const cardBg = isDark ? '#111009' : '#f5f2ed';
+  // ── Legend ─────────────────────────────────────────────────────────────────
+  const accentLegend = isDark && !isDrawingFlat ? '#d4a547' : '#8a6420';
+  const textMain     = isDark && !isDrawingFlat ? '#ffffff' : '#1a1918';
+  const textSub      = isDark && !isDrawingFlat ? 'rgba(255,255,255,0.4)' : '#9a9590';
+  const borderC      = isDark && !isDrawingFlat ? 'rgba(255,255,255,0.08)' : '#ddd8cf';
+  const cardBg       = isDark && !isDrawingFlat ? '#0f0f0f' : '#f5f2ed';
 
   return (
-    <div style={{ display: 'flex', width: '100%', height: mapHeight || '100%', overflow: 'hidden', filter: isDrawingFlat ? 'url(#dg-sketch-ui)' : 'none' }}>
+    <div
+      style={{
+        display: 'flex',
+        width: '100%',
+        height: mapHeight || '100%',
+        overflow: 'hidden',
+        filter: isDrawingFlat ? 'url(#dg-sketch-ui)' : 'none',
+      }}
+    >
       {/* Map canvas */}
       <div id={containerId.current} style={{ flex: 1, minWidth: 0, height: '100%' }} />
 
-      {/* Legend — right panel, scrollable (scrollbar hidden visually) */}
+      {/* Legend — right panel, scrollable */}
       {!hideLegend && museumPoints.length > 0 && (
         <div
           style={{
@@ -284,7 +392,6 @@ const ArtistDistributionMap: React.FC<Props> = ({ artworks, isDark = true, hideL
             borderLeft: `1px solid ${borderC}`,
             background: cardBg,
             padding: '10px 12px',
-            /* ↓ scroll works, bar hidden */
             overflowY: 'scroll',
             scrollbarWidth: 'none',
             msOverflowStyle: 'none',
@@ -293,37 +400,86 @@ const ArtistDistributionMap: React.FC<Props> = ({ artworks, isDark = true, hideL
             gap: 5,
           } as React.CSSProperties}
         >
-          <style>{`#adist-legend-${containerId.current.replace(/[^a-z0-9]/g, '')}::-webkit-scrollbar{display:none}`}</style>
-          <p style={{
-            fontSize: 9, letterSpacing: '0.1em', textTransform: 'uppercase',
-            color: textSub, margin: '0 0 6px', fontWeight: 600, flexShrink: 0,
-          }}>
+          <p
+            style={{
+              fontFamily: "'Space Mono', monospace",
+              fontSize: 11,
+              letterSpacing: '0.16em',
+              textTransform: 'uppercase',
+              color: textSub,
+              margin: '0 0 10px',
+              fontWeight: 700,
+              flexShrink: 0,
+            }}
+          >
             Top Museums
           </p>
           {museumPoints.map((m, i) => {
-            const pct = Math.round((m.count / (museumPoints[0]?.count ?? 1)) * 100);
+            const pct = Math.round(
+              (m.count / (museumPoints[0]?.count ?? 1)) * 100,
+            );
             return (
-              <div key={m.name} style={{ display: 'flex', flexDirection: 'column', gap: 3, flexShrink: 0 }}>
-                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: 6 }}>
-                  <span style={{
-                    fontSize: 10, color: textMain, lineHeight: 1.3,
-                    overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', flex: 1,
-                    opacity: Math.max(0.45, 1 - i * 0.05),
-                  }}>{m.name}</span>
-                  <span style={{
-                    fontSize: 10, color: accent, fontVariantNumeric: 'tabular-nums',
-                    flexShrink: 0, fontWeight: 600,
-                  }}>
-                    {m.count >= 1000 ? (m.count / 1000).toFixed(1) + 'k' : m.count}
+              <div
+                key={m.name}
+                style={{ display: 'flex', flexDirection: 'column', gap: 3, flexShrink: 0 }}
+              >
+                <div
+                  style={{
+                    display: 'flex',
+                    justifyContent: 'space-between',
+                    alignItems: 'baseline',
+                    gap: 6,
+                  }}
+                >
+                  <span
+                    style={{
+                      fontSize: 13,
+                      fontWeight: 500,
+                      color: textMain,
+                      lineHeight: 1.35,
+                      overflow: 'hidden',
+                      textOverflow: 'ellipsis',
+                      whiteSpace: 'nowrap',
+                      flex: 1,
+                      opacity: Math.max(0.72, 1 - i * 0.025),
+                    }}
+                  >
+                    {m.name}
+                  </span>
+                  <span
+                    style={{
+                      fontFamily: "'Space Mono', monospace",
+                      fontSize: 12,
+                      color: accentLegend,
+                      fontVariantNumeric: 'tabular-nums',
+                      flexShrink: 0,
+                      fontWeight: 700,
+                    }}
+                  >
+                    {m.count >= 1000
+                      ? (m.count / 1000).toFixed(1) + 'k'
+                      : m.count}
                   </span>
                 </div>
                 {/* Proportional bar */}
-                <div style={{ height: 2, background: borderC, borderRadius: 1, overflow: 'hidden' }}>
-                  <div style={{
-                    height: '100%', width: `${pct}%`, background: accent,
-                    opacity: Math.max(0.25, 0.7 - i * 0.04),
-                    borderRadius: 1, transition: 'width 0.4s',
-                  }} />
+                <div
+                  style={{
+                    height: 2,
+                    background: borderC,
+                    borderRadius: 1,
+                    overflow: 'hidden',
+                  }}
+                >
+                  <div
+                    style={{
+                      height: '100%',
+                      width: `${pct}%`,
+                      background: accentLegend,
+                      opacity: Math.max(0.3, 0.8 - i * 0.04),
+                      borderRadius: 1,
+                      transition: 'width 0.4s',
+                    }}
+                  />
                 </div>
               </div>
             );

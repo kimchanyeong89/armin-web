@@ -187,47 +187,63 @@ export default function ArtistWikiPanel({
     };
 
     const fetchWikipediaFallback = async () => {
-      try {
-        const response = await fetch(
-          `https://en.wikipedia.org/api/rest_v1/page/summary/${encodedName}`,
-          { signal: controller.signal, mode: "cors", ...getDataFetchOptions() }
-        );
+      // Try multiple Wikipedia language editions in priority order. Many of
+      // the artists in the index (e.g. "Tor Refsum", a Norwegian painter)
+      // only have a Wikipedia article in their native language — English
+      // alone returns 404 and the user sees the error banner. Falling
+      // through ko → no → de → fr → it → es covers the most common cases
+      // for European/Nordic/Asian artists in the dataset.
+      const langs = ["en", "ko", "no", "de", "fr", "it", "es", "ru"];
+      for (const lang of langs) {
+        if (controller.signal.aborted) return;
+        try {
+          const response = await fetch(
+            `https://${lang}.wikipedia.org/api/rest_v1/page/summary/${encodedName}`,
+            { signal: controller.signal, mode: "cors", ...getDataFetchOptions() }
+          );
 
-        if (!response.ok) {
-          throw new Error(`Wikipedia summary failed (${response.status})`);
-        }
+          if (!response.ok) continue;
 
-        const data = await response.json();
-        setWikiSummary(data.extract || safeFallbackDescription);
-        setWikiSourceUrl(data.content_urls?.desktop?.page || "");
-        if (data.extract) saveCache(data.extract, data.content_urls?.desktop?.page || "");
-        return true;
-      } catch (error) {
-        if (controller.signal.aborted) {
-          return;
+          const data = await response.json();
+          // Disambiguation / "no such page" pages return 200 but with a
+          // non-standard type. Skip those — they're not real artist pages.
+          if (data.type && data.type !== "standard") continue;
+          if (!data.extract || data.extract.trim().length < 30) continue;
+
+          setWikiSummary(data.extract);
+          setWikiSourceUrl(data.content_urls?.desktop?.page || "");
+          saveCache(data.extract, data.content_urls?.desktop?.page || "");
+          return true;
+        } catch (error) {
+          if (controller.signal.aborted) return;
+          // Try the next language
+          console.warn(`Wikipedia ${lang} fallback error`, error);
         }
-        console.warn("Wikipedia fallback error", error);
-        setWikiError("설명을 생성하지 못했어요. 네트워크 또는 API 설정을 확인해 주세요.");
+      }
+
+      // All language editions exhausted — show the fallback description
+      // but DON'T flash a network-error banner; this is just an artist
+      // without a Wikipedia page (or whose name doesn't match a page
+      // title). The default safe-fallback copy is acceptable on its own.
+      if (!controller.signal.aborted) {
         setWikiSummary(safeFallbackDescription);
         setWikiSourceUrl("");
-        return false;
       }
+      return false;
     };
 
     const run = async () => {
       // Always fetch Wikipedia — skip Gemini API only (requires server env var)
       const geminiOk = shouldUseGeminiWikiApi() ? await fetchGeminiWiki() : false;
-      let wikiOk = true;
       if (!geminiOk && !controller.signal.aborted) {
-        const fallbackResult = await fetchWikipediaFallback();
-        wikiOk = fallbackResult ?? false;
+        await fetchWikipediaFallback();
       }
-      if (!wikiOk && !controller.signal.aborted) {
-        setWikiError("설명을 생성하지 못했어요. 네트워크 또는 API 설정을 확인해 주세요.");
-      } else if (!controller.signal.aborted) {
-        setWikiError("");
-      }
+      // Never show the "설명을 생성하지 못했어요. 네트워크 또는 API 설정을 확인해 주세요"
+      // banner — for niche artists missing from every Wikipedia language
+      // edition the safeFallbackDescription is enough, and the banner
+      // implied a setup-error to the user that wasn't actually present.
       if (!controller.signal.aborted) {
+        setWikiError("");
         setWikiLoading(false);
       }
     };

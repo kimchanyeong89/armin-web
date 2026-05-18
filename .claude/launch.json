@@ -4,14 +4,20 @@
     {
       "name": "Dev Server",
       "runtimeExecutable": "/Users/kietzsche/.nvm/versions/node/v22.22.2/bin/node",
-      "runtimeArgs": ["/Users/kietzsche/armin-web-main/node_modules/.bin/vite"],
-      "port": 5173
+      "runtimeArgs": ["/Users/kietzsche/armin-web-main/node_modules/.bin/vite", "--port", "5190", "--strictPort"],
+      "port": 5190
     },
     {
       "name": "Preview",
       "runtimeExecutable": "/Users/kietzsche/.nvm/versions/node/v22.22.2/bin/node",
       "runtimeArgs": ["/Users/kietzsche/armin-web-main/node_modules/.bin/vite", "preview"],
       "port": 4173
+    },
+    {
+      "name": "Typography Preview",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "5191", "--directory", "/Users/kietzsche/armin-web-main/.claude/preview", "--bind", "127.0.0.1"],
+      "port": 5191
     }
   ]
 }

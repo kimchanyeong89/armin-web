@@ -32,6 +32,9 @@
     "production": {
       "channel": "production",
       "autoIncrement": true,
+      "ios": {
+        "image": "latest"
+      },
       "env": {
         "APP_ENV": "production"
       }
@@ -45,7 +48,7 @@
       },
       "android": {
         "serviceAccountKeyPath": "../../firebase-service-account.json",
-        "track": "production",
+        "track": "internal",
         "releaseStatus": "draft"
       }
     }

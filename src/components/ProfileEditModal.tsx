@@ -80,7 +80,7 @@ const ProfileEditModal: React.FC<ProfileEditModalProps> = ({ onClose, onUpdate, 
                                     cursor: 'pointer',
                                     position: 'relative'
                                 }}>
-                                <img src={selectedImage || user?.photoURL || ''} alt="Profile" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
+                                <img src={selectedImage || user?.photoURL || ''} alt="Profile" loading="eager" referrerPolicy="no-referrer" style={{ width: '100%', height: '100%', objectFit: 'cover' }} />
                                 <div style={{
                                     position: 'absolute', bottom: 0, left: 0, right: 0, background: 'rgba(0,0,0,0.6)',
                                     color: 'white', fontSize: 10, textAlign: 'center', padding: 4

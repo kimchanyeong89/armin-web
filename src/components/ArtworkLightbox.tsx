@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { findMuseumForArtwork } from '../utils/museumUtils';
 import { HeartOverlay } from './HeartOverlay';
 import { ArtworkRecommendations } from './ArtworkRecommendations';
-import { BookmarkPlus, ExternalLink, MessageCircle, ShoppingBag } from 'lucide-react';
+import { BookmarkPlus, ExternalLink, ShoppingBag } from 'lucide-react';
+import { ExpandableActionMenu } from './ExpandableActionMenu';
 // import { buildSourceSet, useProxy } from '../utils/imageProxy'; // Unused
 import { exhibitions } from '../data/exhibitions';
 
@@ -145,6 +146,15 @@ export const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
         return () => clearTimeout(tm);
     }, [artwork]);
 
+    // Safety valve: if the image hasn't loaded in 4 s, remove the skeleton
+    // so the user can at least see the artwork metadata below.
+    useEffect(() => {
+        if (imgLoaded) return;
+        const tm = setTimeout(() => setImgLoaded(true), 4000);
+        return () => clearTimeout(tm);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [artwork]); // only reset when artwork changes, not on every imgLoaded flip
+
     // Resolve Museum Info for display
     const museumInfo = React.useMemo(() => {
         const found = findMuseumForArtwork(artwork, exhibitions);
@@ -210,8 +220,12 @@ export const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
     const showMuseumAction = Boolean(onViewInMuseum) && !hideMuseumAction;
     const showSourceQuickAction = false && Boolean(sourceUrl);
     const showCommentQuickAction = SHOW_ARTWORK_COMMENTS && Boolean(onOpenComments);
-    const actionButtonSize = isMobile ? 22 : 26;
-    const actionIconSize = isMobile ? 10 : 12;
+    // The lightbox shows artworks at full screen. The action buttons used
+    // to be sized for the small in-grid card (22/10 on mobile), which made
+    // them feel disproportionately tiny here. Bumped to a touch-friendly
+    // size that matches the scale of the surrounding artwork.
+    const actionButtonSize = isMobile ? 36 : 32;
+    const actionIconSize = isMobile ? 18 : 14;
 
     useEffect(() => {
         const prevBodyOverflow = document.body.style.overflow;
@@ -568,7 +582,7 @@ export const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
                                     background: '#111',
                                 }}>
                                     {isMobile ? (
-                                        <div style={{ width: 14, height: 14, borderRadius: '50%', background: '#CCFF00', opacity: 0.8 }} />
+                                        <div style={{ width: 14, height: 14, borderRadius: '50%', background: '#D4A547', opacity: 0.8 }} />
                                     ) : (
                                         <svg width={80} height={80} viewBox="0 0 140 140" style={{ opacity: 0.45 }}>
                                             <style>{`
@@ -580,7 +594,7 @@ export const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
                                                 style={{ animation: '_lb_globe 2s ease-in-out infinite', transformOrigin: '70px 70px' }} />
                                             <ellipse cx={70} cy={70} rx={60} ry={17} fill="none" stroke="rgba(255,255,255,0.15)" strokeWidth="0.8" strokeDasharray="4 5" />
                                             <line x1={70} y1={10} x2={70} y2={130} stroke="rgba(255,255,255,0.15)" strokeWidth="0.8" strokeDasharray="4 5" />
-                                            <circle cx={70} cy={70} r={4} fill="#CCFF00"
+                                            <circle cx={70} cy={70} r={4} fill="#D4A547"
                                                 style={{ animation: '_lb_dot 1.8s ease-in-out infinite' }} />
                                         </svg>
                                     )}
@@ -600,8 +614,13 @@ export const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
                                         display: 'block',
                                         borderRadius: 4,
                                         boxShadow: '0 8px 40px rgba(0,0,0,0.5)',
+                                        // Smooth reveal: fade opacity + unblur + slight scale.
+                                        // Avoids the sudden pop when the image finishes loading.
                                         opacity: imgLoaded ? 1 : 0,
-                                        transition: 'opacity 0.4s ease',
+                                        filter: imgLoaded ? 'blur(0)' : 'blur(18px)',
+                                        transform: imgLoaded ? 'scale(1)' : 'scale(1.03)',
+                                        transition: 'opacity 420ms ease, filter 520ms ease, transform 520ms ease',
+                                        willChange: 'opacity, filter, transform',
                                         position: imgLoaded ? 'relative' : 'absolute',
                                         top: imgLoaded ? 'auto' : 0, left: imgLoaded ? 'auto' : 0,
                                         cursor: 'zoom-out'
@@ -620,135 +639,17 @@ export const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
                                 />
                             )}
 
-                            <div style={{
-                                position: 'absolute',
-                                bottom: isMobile ? 12 : 16,
-                                right: isMobile ? 12 : 16,
-                                display: 'flex',
-                                flexDirection: 'column',
-                                alignItems: 'center',
-                                gap: isMobile ? 6 : 8,
-                                zIndex: 100
-                            }}>
-                                {onSaveToPlaylist && (
-                                    <button
-                                        onClick={(e) => {
-                                            e.stopPropagation();
-                                            onSaveToPlaylist(artwork);
-                                        }}
-                                        style={{
-                                            width: actionButtonSize,
-                                            height: actionButtonSize,
-                                            borderRadius: '50%',
-                                            border: 'none',
-                                            background: 'rgba(0,0,0,0.56)',
-                                            color: '#fff',
-                                            cursor: 'pointer',
-                                            display: 'flex',
-                                            alignItems: 'center',
-                                            justifyContent: 'center',
-                                            padding: 0,
-                                            zIndex: 20,
-                                        }}
-                                        title="Save to Playlist"
-                                    >
-                                        <BookmarkPlus size={actionIconSize} strokeWidth={2.2} />
-                                    </button>
-                                )}
-
-                                {showCommentQuickAction && (
-                                    <button
-                                        onClick={(e) => {
-                                            e.stopPropagation();
-                                            onOpenComments?.(artwork);
-                                        }}
-                                        style={{
-                                            width: actionButtonSize,
-                                            height: actionButtonSize,
-                                            borderRadius: '50%',
-                                            border: 'none',
-                                            background: 'rgba(0,0,0,0.56)',
-                                            color: '#fff',
-                                            cursor: 'pointer',
-                                            display: 'flex',
-                                            alignItems: 'center',
-                                            justifyContent: 'center',
-                                            padding: 0,
-                                            zIndex: 20,
-                                        }}
-                                        title="Comments"
-                                    >
-                                        <MessageCircle size={actionIconSize} strokeWidth={2.2} />
-                                    </button>
-                                )}
-
-                                {showSourceQuickAction && (
-                                    <button
-                                        onClick={(e) => {
-                                            e.stopPropagation();
-                                            window.open(sourceUrl, '_blank', 'noopener,noreferrer');
-                                        }}
-                                        style={{
-                                            width: actionButtonSize,
-                                            height: actionButtonSize,
-                                            borderRadius: '50%',
-                                            border: 'none',
-                                            background: 'rgba(0,0,0,0.56)',
-                                            color: '#fff',
-                                            cursor: 'pointer',
-                                            display: 'flex',
-                                            alignItems: 'center',
-                                            justifyContent: 'center',
-                                            padding: 0,
-                                            zIndex: 20,
-                                        }}
-                                        title="View in Original"
-                                    >
-                                        <ExternalLink size={actionIconSize} strokeWidth={2.2} />
-                                    </button>
-                                )}
-
-                                {showPurchaseAction && (
-                                    <button
-                                        onClick={(e) => {
-                                            e.stopPropagation();
-                                            onPurchase?.(artwork);
-                                        }}
-                                        style={{
-                                            width: actionButtonSize,
-                                            height: actionButtonSize,
-                                            borderRadius: '50%',
-                                            border: 'none',
-                                            background: 'rgba(0,0,0,0.56)',
-                                            color: '#fff',
-                                            cursor: 'pointer',
-                                            display: 'flex',
-                                            alignItems: 'center',
-                                            justifyContent: 'center',
-                                            padding: 0,
-                                            zIndex: 20,
-                                        }}
-                                        title="Purchase Product"
-                                    >
-                                        <ShoppingBag size={actionIconSize} strokeWidth={2.2} />
-                                    </button>
-                                )}
-
-                                <HeartOverlay
-                                    isLiked={isLiked}
-                                    onToggle={(e) => onToggleLike(e, artwork)}
-                                    style={{
-                                        width: actionButtonSize,
-                                        height: actionButtonSize,
-                                        borderRadius: '50%',
-                                        background: 'rgba(0,0,0,0.56)',
-                                        padding: 0,
-                                    }}
-                                    size={actionIconSize}
-                                    color="#BFFF0A"
-                                    emptyColor="#fff"
-                                />
-                            </div>
+                            <ExpandableActionMenu
+                                isMobile={false}
+                                isLiked={isLiked}
+                                onToggleLike={(e) => onToggleLike(e, artwork)}
+                                onOpenProduct={showPurchaseAction ? (e) => onPurchase?.(artwork) : undefined}
+                                onOpenPlaylist={onSaveToPlaylist ? (e) => onSaveToPlaylist(artwork) : undefined}
+                                iconSize={actionIconSize}
+                                buttonSize={actionButtonSize}
+                                buttonBg="rgba(0,0,0,0.56)"
+                                buttonColor="#fff"
+                            />
                         </div>
                     </div>
 

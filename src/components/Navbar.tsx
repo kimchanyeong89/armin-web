@@ -60,7 +60,7 @@ const Navbar: React.FC = () => {
   };
 
   const handleSearchSubmit = () => {
-    if (location.pathname === '/' || location.pathname.startsWith('/collection/')) {
+    if (location.pathname === '/' || location.pathname.startsWith('/interactive/') || location.pathname.startsWith('/collection/')) {
       // If on map (Home), trigger generic search via event to open GlobalSearchBar
       window.dispatchEvent(new CustomEvent('global-search-trigger', { detail: { query: searchQuery } }));
     } else {

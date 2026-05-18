@@ -323,10 +323,10 @@ export const ArtworkRecommendations: React.FC<Props> = ({
         const mutedColor = theme === 'dark' ? '#bbb' : '#888';
         const badgeText = source === 'AI' ? 'AI' : 'Related';
         const badgeBg = source === 'AI'
-            ? (theme === 'dark' ? 'rgba(191,255,10,0.18)' : 'rgba(90,120,0,0.13)')
+            ? (theme === 'dark' ? 'rgba(212,165,71,0.18)' : 'rgba(138,107,31,0.13)')
             : (theme === 'dark' ? 'rgba(255,255,255,0.12)' : 'rgba(0,0,0,0.08)');
         const badgeBorder = source === 'AI'
-            ? (theme === 'dark' ? 'rgba(191,255,10,0.32)' : 'rgba(90,120,0,0.26)')
+            ? (theme === 'dark' ? 'rgba(212,165,71,0.32)' : 'rgba(138,107,31,0.26)')
             : (theme === 'dark' ? 'rgba(255,255,255,0.18)' : 'rgba(0,0,0,0.10)');
         const badgeColor = source === 'AI'
             ? (theme === 'dark' ? '#D9FF6E' : '#4A6200')

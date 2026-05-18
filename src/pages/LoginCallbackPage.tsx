@@ -2,7 +2,7 @@
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { auth } from '../firebase';
-import { signInWithEmailAndPassword, createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
+import { GoogleAuthProvider, signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithCredential, updateProfile } from 'firebase/auth';
 import { getFirestore, doc, setDoc, getDoc } from 'firebase/firestore';
 
 /** 모바일 앱 WebView 또는 외부 브라우저 flow에서 실행되는지 확인 */
@@ -33,6 +33,75 @@ const LoginCallbackPage: React.FC = () => {
 
         const processLogin = async () => {
             const location = window.location;
+
+            // ── Google custom OAuth (id_token in URL fragment) ─────────────
+            // Routed here instead of through Firebase's signInWithRedirect
+            // because Firebase's flow loses state across Chrome Custom Tabs /
+            // ASWebAuthenticationSession round trips, leaving the user stuck
+            // in a "select account → return → not signed in" loop.
+            if (location.hash.includes("id_token=")) {
+                const fragment = new URLSearchParams(location.hash.replace(/^#/, ""));
+                const idToken = fragment.get("id_token") || "";
+                const returnedState = fragment.get("state") || "";
+                const errorParam = fragment.get("error") || "";
+
+                if (errorParam) {
+                    console.error("Google OAuth error:", errorParam);
+                    alert("Google 로그인 실패: " + errorParam);
+                    navigate('/login');
+                    return;
+                }
+
+                const expectedState = sessionStorage.getItem("auth:google-oauth:state") || "";
+                const ctxRaw = sessionStorage.getItem("auth:google-oauth:ctx") || "";
+                sessionStorage.removeItem("auth:google-oauth:state");
+                sessionStorage.removeItem("auth:google-oauth:nonce");
+                sessionStorage.removeItem("auth:google-oauth:ctx");
+
+                if (!idToken) {
+                    console.error("Google OAuth: missing id_token");
+                    navigate('/login');
+                    return;
+                }
+                if (!expectedState || expectedState !== returnedState) {
+                    console.error("Google OAuth: CSRF state mismatch");
+                    alert("로그인 검증에 실패했습니다. 다시 시도해주세요.");
+                    navigate('/login');
+                    return;
+                }
+
+                let returnToApp = false;
+                let mobileApp = false;
+                try {
+                    const ctx = ctxRaw ? JSON.parse(ctxRaw) : {};
+                    returnToApp = !!ctx.returnToApp;
+                    mobileApp = !!ctx.mobileApp;
+                } catch {
+                    // Default to non-mobile flow if context is corrupted.
+                }
+
+                // Mobile app external browser session: hand the credential back
+                // to the native shell via deep link so the WebView can call
+                // signInWithCredential. This is the path the WebBrowser auth
+                // session is listening for.
+                if (mobileApp && returnToApp) {
+                    const deepLink = `com.armin.mobile://auth-complete?provider=google&idToken=${encodeURIComponent(idToken)}`;
+                    window.location.replace(deepLink);
+                    setManualDeepLinkFallback(deepLink);
+                    return;
+                }
+
+                // Plain web flow: sign the user in directly.
+                try {
+                    const cred = GoogleAuthProvider.credential(idToken);
+                    await signInWithCredential(auth, cred);
+                    navigate('/');
+                } catch (err) {
+                    console.error("signInWithCredential failed", err);
+                    navigate('/login');
+                }
+                return;
+            }
 
             // Naver returns access_token in the hash
             if (!location.hash.includes('access_token')) {
@@ -166,7 +235,7 @@ const LoginCallbackPage: React.FC = () => {
                     </p>
                     <a
                         href={manualDeepLinkFallback}
-                        style={{ display: "inline-block", padding: "16px 32px", background: "#BFFF0A", color: "#000", fontWeight: 700, borderRadius: 30, textDecoration: "none", fontSize: 16 }}
+                        style={{ display: "inline-block", padding: "16px 32px", background: "#D4A547", color: "#000", fontWeight: 700, borderRadius: 30, textDecoration: "none", fontSize: 16 }}
                     >
                         앱으로 돌아가기
                     </a>

@@ -30,6 +30,12 @@ interface Env {
     SIGLIP_ENDPOINT_URL?: string;
     /** Optional: bearer token for the self-hosted encoder (if it requires auth). */
     SIGLIP_ENDPOINT_TOKEN?: string;
+    /** Cloudflare Workers AI binding — used to translate non-English queries
+     *  (Korean / Japanese / Chinese / etc.) into English before SigLIP encoding,
+     *  because the deployed SigLIP base model is English-only. */
+    AI?: {
+        run(model: string, input: Record<string, unknown>): Promise<unknown>;
+    };
 }
 
 interface D1PreparedStatement {
@@ -86,6 +92,8 @@ const MODEL_ID   = 'google/siglip-base-patch16-224';
 const TASTE_KV_TTL = 60 * 60 * 24 * 30; // 30일
 const QUERY_CACHE_TTL = 60 * 60 * 24 * 7; // 쿼리 벡터 캐시 7일
 const QUERY_CACHE_PREFIX = 'qcache:v1:'; // bump suffix to invalidate cache
+const TRANSLATION_CACHE_TTL = 60 * 60 * 24 * 90; // 번역 캐시 90일 (의미가 거의 안 변함)
+const TRANSLATION_CACHE_PREFIX = 'tx:v1:';
 
 const corsHeaders = {
     'Access-Control-Allow-Origin': '*',
@@ -184,6 +192,73 @@ async function putCachedVector(env: Env, text: string, vec: number[]): Promise<v
         await env.TASTE_KV.put(key, JSON.stringify(vec), { expirationTtl: QUERY_CACHE_TTL });
     } catch (err) {
         console.warn('query-cache put failed:', err);
+    }
+}
+
+// ============================================================
+// 비영어 쿼리 → 영어 번역 (Cloudflare Workers AI)
+//
+// SigLIP base 모델은 영어 캡션만으로 학습되어 한국어/일본어/중국어 등은
+// 토큰화 단계에서 망가진다. 따라서 비라틴 쿼리는 m2m100으로 영어 번역 후 인코딩.
+// 번역 결과는 KV에 90일 캐시 (같은 쿼리 재요청 시 AI 호출 0회).
+// ============================================================
+
+/**
+ * 영어가 아닌 문자(한글, CJK, 키릴, 아랍, 데바나가리, 태국, 히브리 등)가 들어있으면 true.
+ * 순수 ASCII Latin 문자열은 영어로 간주하고 번역하지 않는다.
+ *
+ * 보수적 판정 — Latin-1 확장(악센트 부호 포함 유럽어)은 SigLIP이 어느 정도
+ * 처리하므로 굳이 번역하지 않는다.
+ */
+function looksNonEnglish(text: string): boolean {
+    return /[ㄱ-ㆎ가-힣぀-ゟ゠-ヿ一-鿿Ѐ-ӿ؀-ۿऀ-ॿ฀-๿֐-׿]/.test(text);
+}
+
+async function translationCacheKey(text: string): Promise<string> {
+    const normalized = text.trim().toLowerCase().replace(/\s+/g, ' ');
+    return TRANSLATION_CACHE_PREFIX + (await sha256Hex(normalized));
+}
+
+async function getCachedTranslation(env: Env, text: string): Promise<string | null> {
+    if (!env.TASTE_KV) return null;
+    try {
+        const key = await translationCacheKey(text);
+        return await env.TASTE_KV.get(key);
+    } catch {
+        return null;
+    }
+}
+
+async function putCachedTranslation(env: Env, original: string, translated: string): Promise<void> {
+    if (!env.TASTE_KV) return;
+    try {
+        const key = await translationCacheKey(original);
+        await env.TASTE_KV.put(key, translated, { expirationTtl: TRANSLATION_CACHE_TTL });
+    } catch (err) {
+        console.warn('translation-cache put failed:', err);
+    }
+}
+
+/**
+ * Cloudflare Workers AI m2m100-1.2B로 임의 언어 → 영어 번역.
+ * source_lang을 명시하지 않아 자동 감지(한국어/일본어/중국어/러시아어 등 처리).
+ * 실패 시 null — 호출자는 원문을 그대로 인코딩 시도해야 한다.
+ */
+async function translateToEnglish(text: string, env: Env): Promise<string | null> {
+    if (!env.AI) return null;
+    try {
+        const result = await env.AI.run('@cf/meta/m2m100-1.2B', {
+            text,
+            target_lang: 'english',
+        });
+        const translated = (result as { translated_text?: string })?.translated_text;
+        if (typeof translated === 'string' && translated.trim().length > 0) {
+            return translated.trim();
+        }
+        return null;
+    } catch (err) {
+        console.warn('[translate] m2m100 failed:', err);
+        return null;
     }
 }
 
@@ -602,11 +677,32 @@ export default {
                 }
 
                 const trimmed = text.trim();
-                let vector = await getCachedVector(env, trimmed);
+
+                // ── 비영어 → 영어 자동 번역 (SigLIP 영어 전용 모델 보완) ──
+                // 인코딩에 쓸 쿼리(queryForEncoding)와 응답에 표시할 메타데이터(translatedFrom/effectiveQuery)를 분리.
+                // 캐시 키도 번역된 영어 쿼리 기준이라야 한국어/일본어/중국어가 같은 의미면 같은 벡터를 재사용한다.
+                let queryForEncoding = trimmed;
+                let translatedFrom: string | null = null;
+                if (looksNonEnglish(trimmed)) {
+                    let translated = await getCachedTranslation(env, trimmed);
+                    if (!translated) {
+                        translated = await translateToEnglish(trimmed, env);
+                        if (translated) {
+                            ctx.waitUntil(putCachedTranslation(env, trimmed, translated));
+                        }
+                    }
+                    if (translated) {
+                        queryForEncoding = translated;
+                        translatedFrom = trimmed;
+                    }
+                    // 번역 실패 시 원문 그대로 진행 — SigLIP이 영어 단어가 섞여 있다면 부분적 신호라도 잡을 수 있음
+                }
+
+                let vector = await getCachedVector(env, queryForEncoding);
                 let cacheHit = !!vector;
 
                 if (!vector) {
-                    vector = await encodeTextWithSigLIP(trimmed, env);
+                    vector = await encodeTextWithSigLIP(queryForEncoding, env);
                     if (!vector) {
                         return Response.json({
                             error: 'AI search is temporarily unavailable.',
@@ -615,11 +711,15 @@ export default {
                         }, { status: 503, headers: corsHeaders });
                     }
                     // fire-and-forget cache write — don't block response
-                    ctx.waitUntil(putCachedVector(env, trimmed, vector));
+                    ctx.waitUntil(putCachedVector(env, queryForEncoding, vector));
                 }
 
                 const results = await queryWithMetadata(env, vector, Math.min(limit, 100));
-                return Response.json({ results, cached: cacheHit }, { headers: corsHeaders });
+                return Response.json({
+                    results,
+                    cached: cacheHit,
+                    ...(translatedFrom ? { translatedFrom, effectiveQuery: queryForEncoding } : {}),
+                }, { headers: corsHeaders });
             }
 
             // ──────────────────────────────────────────────

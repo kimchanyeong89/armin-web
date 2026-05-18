@@ -1,7 +1,7 @@
 import { Globe2, Search, Sparkles, User, Users, Menu, CalendarCheck } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { useLanguage } from "../contexts/LanguageContext";
 import { useIsAdmin } from "../lib/admin";
 
@@ -45,20 +45,15 @@ export function resolveMainTabIndex(pathname: string): number | null {
   return null;
 }
 
-// Apple-ish "out" curve used only for the hamburger popover. The pill's
-// collapse/expand uses framer-motion springs (see motion.button transitions
-// below) — CSS transitions on max-width + padding + gap caused subpixel
-// jitter because each property reflowed on its own curve; springs coordinate
-// all properties on one physics clock.
+// Cubic for the hamburger popover (one-off CSS transition, fine).
 const SPRING_OUT = "cubic-bezier(0.32, 0.72, 0, 1)";
 const TRANS_MENU = `opacity 0.25s ease-out, transform 0.35s ${SPRING_OUT}`;
 
-// Spring presets for the pill animation. Tuned for a quick pickup with a
-// gentle settle (no overshoot bounce on width — that would re-introduce the
-// "shaking" the user complained about).
-const SPRING_WIDTH = { type: "spring" as const, stiffness: 280, damping: 30, mass: 0.6 };
-const SPRING_SCALE = { type: "spring" as const, stiffness: 360, damping: 28 };
-const FADE_FAST = { duration: 0.18, ease: [0.32, 0.72, 0, 1] as [number, number, number, number] };
+// Single spring used for every layout animation in the pill. Framer's
+// `layout` prop runs FLIP on a GPU transform, so we don't pay reflow cost
+// per property — one spring drives the whole thing and stays buttery.
+const LAYOUT_SPRING = { type: "spring" as const, stiffness: 360, damping: 34, mass: 0.7 };
+const FADE = { duration: 0.16, ease: [0.32, 0.72, 0, 1] as [number, number, number, number] };
 
 export default function BottomPageNavigator({ activeIndex, onChange, lightMode = false }: BottomPageNavigatorProps) {
   const { language } = useLanguage();
@@ -274,176 +269,161 @@ export default function BottomPageNavigator({ activeIndex, onChange, lightMode =
           })}
         </div>
       ) : (
-        // ── Desktop: collapsing pill driven by framer-motion springs. ───────
-        // No explicit container width — children animate width+padding via
-        // springs, and the flex container auto-fits. Springs coordinate all
-        // properties on one physics clock, which is what kills the jitter
-        // the user was seeing with parallel CSS transitions.
-        <div
+        // ── Desktop: collapsing pill driven by framer-motion `layout` (FLIP). ─
+        // Container and children use `layout` for coordinated size animation
+        // on a single physics clock. AnimatePresence with `popLayout` mode
+        // handles enter/exit so exiting tabs slide out of layout immediately
+        // and remaining tabs reflow smoothly.
+        <motion.div
+          layout
+          transition={LAYOUT_SPRING}
           style={{
             display: "flex",
             alignItems: "center",
             justifyContent: "flex-start",
-            gap: isNarrow ? 0 : 2,
-            padding: isNarrow ? 4 : 6,
+            gap: 4,
+            padding: isExpanded ? (isNarrow ? 4 : 6) : 4,
             borderRadius: 999,
             background: containerBg,
             border: containerBorder,
             boxShadow: containerShadow,
             backdropFilter: "blur(28px)",
             WebkitBackdropFilter: "blur(28px)",
-            overflow: "hidden",
-            // height is constant: vertical padding doesn't change with state,
-            // so we don't need a fixed-height value. No transition needed
-            // here either — the children drive the width animation.
           }}
         >
-          {MAIN_TABS.map((item, index) => {
-            const isActive = index === activeIndex;
-            // Collapse rule: when not expanded, only the active tab is visible.
-            const isVisible = isExpanded || isActive;
-            // Active tab grows when collapsed — pure transform, no reflow.
-            const activeGrowScale = !isExpanded && isActive ? 1.18 : 1;
+          <AnimatePresence initial={false} mode="popLayout">
+            {MAIN_TABS.map((item, index) => {
+              const isActive = index === activeIndex;
+              const isVisible = isExpanded || isActive;
+              if (!isVisible) return null;
 
-            const fullLabel = language === "ko"
-              ? (item.id === "map" ? "지도" : item.id === "community" ? "커뮤니티" : item.id === "ai" ? "AI" : item.id === "profile" ? "마이페이지" : "검색")
-              : item.label;
+              // Collapsed resting state: active tab becomes an icon-only
+              // circular pill. No label, no two-phase choreography — the
+              // whole pill shrinks and grows in one layout animation.
+              const isIconOnly = !isExpanded && isActive;
 
-            const horizPadding = isVisible ? (isNarrow ? 8 : 18) : 0;
+              const fullLabel = language === "ko"
+                ? (item.id === "map" ? "지도" : item.id === "community" ? "커뮤니티" : item.id === "ai" ? "AI" : item.id === "profile" ? "마이페이지" : "검색")
+                : item.label;
 
-            return (
+              // Active tab is always mounted → safe to use `layout` for a
+              // smooth FLIP between icon-only (collapsed) and full pill
+              // (expanded). Non-active tabs mount/unmount, so they get NO
+              // `layout` — mixing `layout` with AnimatePresence mount/unmount
+              // makes framer pick up garbage "before" measurements and lock
+              // transforms at scaleX 5+. The container's own `layout` still
+              // animates its size smoothly as children come and go.
+              return (
+                <motion.button
+                  key={item.id}
+                  layout
+                  transition={LAYOUT_SPRING}
+                  initial={{ opacity: 0, scale: 0.6 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.6, transition: FADE }}
+                  onClick={() => onChange(index)}
+                  style={{
+                    position: "relative",
+                    display: "flex",
+                    flexDirection: "row",
+                    alignItems: "center",
+                    gap: isIconOnly ? 0 : 6,
+                    border: "none",
+                    background: "transparent",
+                    borderRadius: 999,
+                    paddingLeft: isIconOnly ? 14 : (isNarrow ? 10 : 18),
+                    paddingRight: isIconOnly ? 14 : (isNarrow ? 10 : 18),
+                    paddingTop: isIconOnly ? 14 : 9,
+                    paddingBottom: isIconOnly ? 14 : 9,
+                    color: isActive ? "#000" : inactiveColor,
+                    fontSize: isNarrow ? 10 : 12,
+                    fontWeight: isActive ? 600 : 400,
+                    letterSpacing: "0.015em",
+                    cursor: "pointer",
+                    outline: "none",
+                    userSelect: "none",
+                    whiteSpace: "nowrap",
+                    flex: "0 0 auto",
+                    justifyContent: "center",
+                  }}
+                  aria-current={isActive ? "page" : undefined}
+                  aria-label={fullLabel}
+                >
+                  {isActive && (
+                    <span
+                      style={{
+                        position: "absolute",
+                        inset: 0,
+                        borderRadius: 999,
+                        background: "#D4A547",
+                      }}
+                    />
+                  )}
+                  <item.Icon
+                    size={isIconOnly ? 22 : (isNarrow ? 12 : 13)}
+                    strokeWidth={isActive ? 2.5 : 1.75}
+                    style={{ position: "relative", zIndex: 1, flexShrink: 0 }}
+                  />
+                  {!isIconOnly && (
+                    <span
+                      style={{
+                        position: "relative",
+                        zIndex: 1,
+                        lineHeight: 1.1,
+                      }}
+                    >
+                      {fullLabel}
+                    </span>
+                  )}
+                </motion.button>
+              );
+            })}
+
+            {isExpanded && (
               <motion.button
-                key={item.id}
-                onClick={() => onChange(index)}
-                tabIndex={isVisible ? 0 : -1}
-                aria-hidden={!isVisible}
-                initial={false}
-                animate={{
-                  width: isVisible ? "auto" : 0,
-                  opacity: isVisible ? 1 : 0,
-                  paddingLeft: horizPadding,
-                  paddingRight: horizPadding,
-                  scale: activeGrowScale,
+                key="hamburger"
+                layout
+                transition={LAYOUT_SPRING}
+                initial={{ opacity: 0, scale: 0.6 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0, scale: 0.6, transition: FADE }}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setIsMenuOpen((v) => !v);
                 }}
-                transition={{
-                  width: SPRING_WIDTH,
-                  paddingLeft: SPRING_WIDTH,
-                  paddingRight: SPRING_WIDTH,
-                  opacity: FADE_FAST,
-                  scale: SPRING_SCALE,
-                }}
+                aria-label={language === "ko" ? "더보기 메뉴" : "More menu"}
+                aria-expanded={isMenuOpen}
                 style={{
                   position: "relative",
                   display: "flex",
-                  flexDirection: "row",
                   alignItems: "center",
-                  gap: 6,
+                  justifyContent: "center",
                   border: "none",
-                  background: "transparent",
+                  background: isMenuOpen
+                    ? (lightMode ? "rgba(0,0,0,0.08)" : "rgba(255,255,255,0.12)")
+                    : "transparent",
                   borderRadius: 999,
+                  paddingLeft: 12,
+                  paddingRight: 12,
                   paddingTop: 9,
                   paddingBottom: 9,
-                  color: isActive ? "#000" : inactiveColor,
-                  fontSize: isNarrow ? 10 : 12,
-                  fontWeight: isActive ? 600 : 400,
-                  letterSpacing: "0.015em",
+                  color: isMenuOpen
+                    ? (lightMode ? "#000" : "#fff")
+                    : inactiveColor,
                   cursor: "pointer",
                   outline: "none",
-                  userSelect: "none",
-                  whiteSpace: "nowrap",
-                  minWidth: 0,
                   flex: "0 0 auto",
-                  justifyContent: "center",
-                  overflow: "hidden",
-                  pointerEvents: isVisible ? "auto" : "none",
-                  // Grow from the center so the pill stays balanced.
-                  transformOrigin: "center center",
                 }}
-                aria-current={isActive ? "page" : undefined}
-                aria-label={fullLabel}
               >
-                {isActive && (
-                  <span
-                    style={{
-                      position: "absolute",
-                      inset: 0,
-                      borderRadius: 999,
-                      background: "#D4A547",
-                    }}
-                  />
-                )}
-                <item.Icon
-                  size={isNarrow ? 12 : 13}
-                  strokeWidth={isActive ? 2.5 : 1.75}
-                  style={{ position: "relative", zIndex: 1, flexShrink: 0 }}
+                <Menu
+                  size={isNarrow ? 14 : 16}
+                  strokeWidth={isMenuOpen ? 2.5 : 1.75}
+                  style={{ flexShrink: 0 }}
                 />
-                <span
-                  style={{
-                    position: "relative",
-                    zIndex: 1,
-                    fontSize: isNarrow ? 9 : 12,
-                    overflow: "hidden",
-                    textOverflow: "ellipsis",
-                    lineHeight: 1.1,
-                  }}
-                >
-                  {fullLabel}
-                </span>
               </motion.button>
-            );
-          })}
-
-          {/* Hamburger — desktop only. Same width+opacity collapse pattern. */}
-          <motion.button
-            onClick={(e) => {
-              e.stopPropagation();
-              setIsMenuOpen((v) => !v);
-            }}
-            aria-label={language === "ko" ? "더보기 메뉴" : "More menu"}
-            aria-expanded={isMenuOpen}
-            tabIndex={isExpanded ? 0 : -1}
-            initial={false}
-            animate={{
-              width: isExpanded ? "auto" : 0,
-              opacity: isExpanded ? 1 : 0,
-              paddingLeft: isExpanded ? 12 : 0,
-              paddingRight: isExpanded ? 12 : 0,
-            }}
-            transition={{
-              width: SPRING_WIDTH,
-              paddingLeft: SPRING_WIDTH,
-              paddingRight: SPRING_WIDTH,
-              opacity: FADE_FAST,
-            }}
-            style={{
-              position: "relative",
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              border: "none",
-              background: isMenuOpen
-                ? (lightMode ? "rgba(0,0,0,0.08)" : "rgba(255,255,255,0.12)")
-                : "transparent",
-              borderRadius: 999,
-              paddingTop: 9,
-              paddingBottom: 9,
-              color: isMenuOpen
-                ? (lightMode ? "#000" : "#fff")
-                : inactiveColor,
-              cursor: "pointer",
-              outline: "none",
-              flex: "0 0 auto",
-              overflow: "hidden",
-              pointerEvents: isExpanded ? "auto" : "none",
-            }}
-          >
-            <Menu
-              size={isNarrow ? 14 : 16}
-              strokeWidth={isMenuOpen ? 2.5 : 1.75}
-              style={{ flexShrink: 0 }}
-            />
-          </motion.button>
-        </div>
+            )}
+          </AnimatePresence>
+        </motion.div>
       )}
     </nav>
   );

@@ -103,7 +103,7 @@ export default function MiniSpinningGlobe({ size = 200, variant, speed = 8 }: Pr
         if (!isVis(plon, plat, lon)) return;
         const pt = proj([plon, plat]); if (!pt) return;
         const s = 5.5;
-        ctx.fillStyle = "#CCFF00"; ctx.fillRect(pt[0]-s/2, pt[1]-s/2, s, s);
+        ctx.fillStyle = "#D4A547"; ctx.fillRect(pt[0]-s/2, pt[1]-s/2, s, s);
         ctx.strokeStyle = "rgba(20,20,20,0.8)"; ctx.lineWidth = 1;
         ctx.strokeRect(pt[0]-s/2, pt[1]-s/2, s, s);
       });
@@ -172,7 +172,12 @@ export default function MiniSpinningGlobe({ size = 200, variant, speed = 8 }: Pr
       else drawInteractive(lon);
     }
 
+    let visible = true;
+    let pageVisible = typeof document === 'undefined' || !document.hidden;
+    let running = false;
+
     function animate(time: number) {
+      if (!visible || !pageVisible) { running = false; return; }
       if (lastTimeRef.current === null) lastTimeRef.current = time;
       const dt = (time - lastTimeRef.current) / 1000;
       lastTimeRef.current = time;
@@ -181,9 +186,40 @@ export default function MiniSpinningGlobe({ size = 200, variant, speed = 8 }: Pr
       rafRef.current = requestAnimationFrame(animate);
     }
 
+    const start = () => {
+      if (running || !visible || !pageVisible) return;
+      running = true;
+      lastTimeRef.current = null; // avoid a giant dt after resume
+      rafRef.current = requestAnimationFrame(animate);
+    };
+
     draw(lonRef.current);
-    rafRef.current = requestAnimationFrame(animate);
-    return () => cancelAnimationFrame(rafRef.current);
+    start();
+
+    // Pause rAF while the canvas is off-screen (e.g. user scrolled past it).
+    const io = new IntersectionObserver(
+      (entries) => {
+        for (const e of entries) {
+          visible = e.isIntersecting;
+          if (visible) start();
+        }
+      },
+      { threshold: 0.01 }
+    );
+    io.observe(canvas);
+
+    // Pause rAF when the tab/app is backgrounded.
+    const onVisibility = () => {
+      pageVisible = !document.hidden;
+      if (pageVisible) start();
+    };
+    document.addEventListener('visibilitychange', onVisibility);
+
+    return () => {
+      cancelAnimationFrame(rafRef.current);
+      io.disconnect();
+      document.removeEventListener('visibilitychange', onVisibility);
+    };
   }, [size, isDraw, speed]);
 
   return (

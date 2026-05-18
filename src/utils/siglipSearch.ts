@@ -18,6 +18,18 @@ const IS_MOBILE_DEVICE = typeof navigator !== 'undefined' && (
     /iPhone|iPad|iPod|Android/i.test(navigator.userAgent)
 );
 
+/**
+ * 비영어(한글/CJK/키릴/아랍/데바나가리/태국/히브리) 문자가 포함되어 있으면 true.
+ *
+ * 배포된 SigLIP base 모델은 영어 학습이라 브라우저 WASM 인코더(Tier 1)에 한국어를
+ * 직접 넣으면 토크나이저가 망가져서 "쓰레기 벡터"를 반환한다. 그게 서버 경로(Tier 2,
+ * 자동 번역 후 인코딩)보다 빨리 race를 이기면 사용자는 무의미한 결과를 본다.
+ * 따라서 비영어 쿼리는 Tier 1을 건너뛰고 서버에만 맡긴다.
+ */
+function looksNonEnglish(text: string): boolean {
+    return /[ㄱ-ㆎ가-힣぀-ゟ゠-ヿ一-鿿Ѐ-ӿ؀-ۿऀ-ॿ฀-๿֐-׿]/.test(text);
+}
+
 /** fetch with manual AbortController timeout (works on iOS 14+) */
 function fetchWithTimeout(url: string, options: RequestInit, ms: number): Promise<Response> {
     const ac = new AbortController();
@@ -180,11 +192,14 @@ export async function searchByText(
         }
     })();
 
-    // Tier 1 — browser WASM. Skipped on mobile entirely.  On desktop we
-    // still try it because once the model is loaded a single round-trip
-    // (no HF call on the worker) is faster than tier 2.
+    // Tier 1 — browser WASM. Skipped when:
+    //  • mobile (70MB WASM crashes weaker devices)
+    //  • query contains non-Latin script (current SigLIP is English-only;
+    //    WASM would produce garbage vectors that could win the race vs.
+    //    the server path which auto-translates before encoding)
     const browserPromise: Promise<SigLIPSearchResult[] | null> = (async () => {
         if (IS_MOBILE_DEVICE) return null;
+        if (looksNonEnglish(trimmed)) return null;
         const vector = await encodeWithBrowser(trimmed);
         if (!vector || vector.length !== 768) return null;
         try {

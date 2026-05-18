@@ -19,6 +19,8 @@ export default defineConfig({
     },
   },
   server: {
+    port: 5181,
+    strictPort: true,
     watch: {
       // public/data는 1.5GB JSON — HMR watch 대상에서 제외 (CPU 절약)
       ignored: [

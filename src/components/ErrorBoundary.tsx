@@ -84,7 +84,7 @@ export class ErrorBoundary extends Component<Props, State> {
           </button>
           <button
             onClick={this.reset}
-            style={{ border: "none", background: "#BFFF0A", color: "#000", borderRadius: 999, padding: "8px 14px", fontSize: 12, fontWeight: 600, cursor: "pointer" }}
+            style={{ border: "none", background: "#D4A547", color: "#000", borderRadius: 999, padding: "8px 14px", fontSize: 12, fontWeight: 600, cursor: "pointer" }}
           >
             다시 시도
           </button>

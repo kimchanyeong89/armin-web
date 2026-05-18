@@ -34,7 +34,7 @@ const CATEGORY_LABELS: Record<string, { ko: string; en: string }> = {
 };
 
 const CATEGORY_COLORS: Record<string, string> = {
-  리뷰: "#BFFF0A",
+  리뷰: "#D4A547",
   뉴스: "#60A5FA",
   토론: "#F97316",
   인터뷰: "#A78BFA",
@@ -525,7 +525,7 @@ const WritePostPage: React.FC = () => {
           <div style={{ fontSize: 22, marginBottom: 10 }}>{t({ ko: "로그인이 필요합니다.", en: "Login is required." })}</div>
           <button
             onClick={() => navigate("/login")}
-            style={{ border: "none", borderRadius: 999, padding: "10px 18px", background: "#BFFF0A", color: "#000", cursor: "pointer", fontWeight: 700 }}
+            style={{ border: "none", borderRadius: 999, padding: "10px 18px", background: "#D4A547", color: "#000", cursor: "pointer", fontWeight: 700 }}
           >
             {t({ ko: "로그인하기", en: "Go to Login" })}
           </button>
@@ -579,7 +579,7 @@ const WritePostPage: React.FC = () => {
                 fontSize: 12,
                 fontWeight: 700,
                 cursor: isSubmitting || !title.trim() || !plainText || (category === "리뷰" && !header) ? "not-allowed" : "pointer",
-                background: isSubmitting || !title.trim() || !plainText || (category === "리뷰" && !header) ? colors.panelBgStrong : "#BFFF0A",
+                background: isSubmitting || !title.trim() || !plainText || (category === "리뷰" && !header) ? colors.panelBgStrong : "#D4A547",
                 color: isSubmitting || !title.trim() || !plainText || (category === "리뷰" && !header) ? colors.lowText : "#000",
               }}
             >
@@ -625,9 +625,9 @@ const WritePostPage: React.FC = () => {
                         type="button"
                         onClick={() => setSubjectType(id)}
                         style={{
-                          border: `1px solid ${active ? "#BFFF0A" : colors.divider}`,
+                          border: `1px solid ${active ? "#D4A547" : colors.divider}`,
                           borderRadius: 8,
-                          background: active ? "rgba(191,255,10,0.12)" : colors.panelBg,
+                          background: active ? "rgba(212,165,71,0.12)" : colors.panelBg,
                           padding: "9px 6px",
                           display: "flex",
                           flexDirection: "column",
@@ -636,7 +636,7 @@ const WritePostPage: React.FC = () => {
                           cursor: "pointer",
                         }}
                       >
-                        <Icon size={12} strokeWidth={1.9} color={active ? "#BFFF0A" : colors.lowText} />
+                        <Icon size={12} strokeWidth={1.9} color={active ? "#D4A547" : colors.lowText} />
                         <span style={{ fontSize: 10, color: active ? colors.text : colors.lowText }}>
                           {t(SUBJECT_TYPE_LABELS[id])}
                         </span>
@@ -667,7 +667,7 @@ const WritePostPage: React.FC = () => {
                     border: "none",
                     borderRadius: 6,
                     padding: "4px 8px",
-                    background: fontSize === mode ? "#BFFF0A" : "transparent",
+                    background: fontSize === mode ? "#D4A547" : "transparent",
                     color: fontSize === mode ? "#000" : colors.lowText,
                     cursor: "pointer",
                     fontSize: mode === "small" ? 10 : mode === "body" ? 11 : 13,
@@ -688,7 +688,7 @@ const WritePostPage: React.FC = () => {
                   border: "none",
                   borderRadius: 6,
                   padding: "4px 8px",
-                  background: bold ? "#BFFF0A" : "transparent",
+                  background: bold ? "#D4A547" : "transparent",
                   color: bold ? "#000" : colors.lowText,
                   cursor: "pointer",
                   fontSize: 12,
@@ -708,7 +708,7 @@ const WritePostPage: React.FC = () => {
                   border: "none",
                   borderRadius: 6,
                   padding: "4px 8px",
-                  background: italic ? "#BFFF0A" : "transparent",
+                  background: italic ? "#D4A547" : "transparent",
                   color: italic ? "#000" : colors.lowText,
                   cursor: "pointer",
                   fontSize: 12,

@@ -454,7 +454,7 @@ const DRAWING_GLOBE_RETURN_STATE_KEY = 'drawingMap:returnState';
 
 // ── Inline style constants ────────────────────────────────────────────────────
 const S = {
-  container: { position: 'relative' as const, overflow: 'hidden', width: '100%', height: '100vh', background: '#FFFFFF', color: '#111111' },
+  container: { position: 'relative' as const, overflow: 'hidden', width: '100%', height: '100vh', background: '#FFFFFF', color: '#111111', touchAction: 'none' as const },
   grain: { position: 'absolute' as const, inset: 0, pointerEvents: 'none' as const, opacity: 0.15, zIndex: 50, backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='1.5' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")`, mixBlendMode: 'multiply' as const },
   filterSvg: { width: 0, height: 0, position: 'absolute' as const, pointerEvents: 'none' as const },
   nav: { position: 'absolute' as const, top: 32, right: 32, zIndex: 20, pointerEvents: 'auto' as const, display: 'flex', alignItems: 'center', background: '#FFFFFF', border: '2.5px solid #111111', borderRadius: 9999, padding: '6px', boxShadow: '4px 4px 0px 0px rgba(17,17,17,1)', filter: 'url(#dg-sketch-ui)', transition: 'all 0.4s cubic-bezier(0.4, 0, 0.2, 1)' },
@@ -750,12 +750,15 @@ export default function DrawingGlobe({ exhibitions, onClose, onSelectExhibition,
   // ── Effects ───────────────────────────────────────────────────────────────
   const hasInitialized = useRef(false);
 
-  // Prevent mobile page scrolling when dragging
+  // Prevent mobile page scrolling when dragging (single-touch only).
+  // We intentionally do NOT call e.preventDefault() for 2-finger events so
+  // that the pinch gesture reaches our React onTouchMove handler without
+  // any native-layer interference.
   useEffect(() => {
     const el = containerRef.current;
     if (!el) return;
     const preventScroll = (e: TouchEvent) => {
-      e.preventDefault();
+      if (e.touches.length < 2) e.preventDefault();
     };
     el.addEventListener("touchmove", preventScroll, { passive: false });
     return () => el.removeEventListener("touchmove", preventScroll);
@@ -846,18 +849,27 @@ export default function DrawingGlobe({ exhibitions, onClose, onSelectExhibition,
 
   // Touch support for mobile
   const touchDistRef = useRef<number | null>(null);
+  // Tracks whether a multi-touch (pinch) gesture is or was active during the
+  // current touch session. Marker tap handlers check this so a pinch that
+  // started on a marker does not trigger a cluster navigation when fingers lift.
+  const multiTouchActiveRef = useRef<boolean>(false);
 
   const handleSvgTouchStart = useCallback((e: React.TouchEvent<SVGSVGElement>) => {
+    if (e.touches.length >= 2) {
+      // Pinch gesture begins (or adds a finger). Flip the multi-touch flag so
+      // marker tap handlers that fire on touchend can bail out.
+      multiTouchActiveRef.current = true;
+      isDragging.current = false;
+      const dx = e.touches[0].clientX - e.touches[1].clientX;
+      const dy = e.touches[0].clientY - e.touches[1].clientY;
+      touchDistRef.current = Math.hypot(dx, dy);
+      return;
+    }
     if (e.touches.length === 1) {
       const target = e.target as SVGElement;
       if (target.closest?.('[data-marker]')) return;
       isDragging.current = true;
       lastDragPos.current = { x: e.touches[0].clientX, y: e.touches[0].clientY };
-    } else if (e.touches.length === 2) {
-      isDragging.current = false;
-      const dx = e.touches[0].clientX - e.touches[1].clientX;
-      const dy = e.touches[0].clientY - e.touches[1].clientY;
-      touchDistRef.current = Math.hypot(dx, dy);
     }
   }, []);
 
@@ -891,7 +903,17 @@ export default function DrawingGlobe({ exhibitions, onClose, onSelectExhibition,
           rafId.current = null;
         });
       }
-    } else if (e.touches.length === 2 && touchDistRef.current !== null) {
+    } else if (e.touches.length >= 2) {
+      // Late-initialize pinch distance if touchstart fired outside the SVG
+      // (e.g. 2nd finger placed on a floating button or panel) so the ref is null.
+      if (touchDistRef.current === null) {
+        const dx0 = e.touches[0].clientX - e.touches[1].clientX;
+        const dy0 = e.touches[0].clientY - e.touches[1].clientY;
+        touchDistRef.current = Math.hypot(dx0, dy0);
+        multiTouchActiveRef.current = true;
+        isDragging.current = false;
+        return; // skip first frame (no ratio yet)
+      }
       const dx = e.touches[0].clientX - e.touches[1].clientX;
       const dy = e.touches[0].clientY - e.touches[1].clientY;
       const newDist = Math.hypot(dx, dy);
@@ -913,7 +935,7 @@ export default function DrawingGlobe({ exhibitions, onClose, onSelectExhibition,
     }
   }, [initialScale, isMobile, imperativeDraw]);
 
-  const handleSvgTouchEnd = useCallback(() => {
+  const handleSvgTouchEnd = useCallback((e: React.TouchEvent<SVGSVGElement>) => {
     isDragging.current = false;
     lastDragPos.current = null;
     touchDistRef.current = null;
@@ -925,6 +947,14 @@ export default function DrawingGlobe({ exhibitions, onClose, onSelectExhibition,
       // Sync React state once on lift — markers reposition, React recalculates paths
       setRotation([...rotationRef.current] as [number, number, number]);
       setScaleState(scaleRef.current);
+    }
+    // Only clear the multi-touch flag once *all* fingers have lifted, so that
+    // a marker tap right after a pinch (while the second finger is still down)
+    // stays suppressed.
+    if (e.touches.length === 0) {
+      // Defer clearing by one frame so any marker onTouchEnd that fires in the
+      // same microtask still sees multiTouchActiveRef === true.
+      requestAnimationFrame(() => { multiTouchActiveRef.current = false; });
     }
   }, [isMobile]);
 
@@ -1392,7 +1422,12 @@ export default function DrawingGlobe({ exhibitions, onClose, onSelectExhibition,
                 willChange: 'opacity',
               }}
               onClick={e => { e.stopPropagation(); handleClusterClick(cluster); }}
-                onTouchEnd={e => { e.preventDefault(); e.stopPropagation(); handleClusterClick(cluster); }}
+                onTouchEnd={e => {
+                  // Skip if user was pinching — we don't want to navigate into
+                  // a cluster when they were actually trying to zoom.
+                  if (multiTouchActiveRef.current || e.touches.length > 0) return;
+                  e.preventDefault(); e.stopPropagation(); handleClusterClick(cluster);
+                }}
               onMouseEnter={() => setHoveredMarker(cluster.id)}
               onMouseLeave={() => setHoveredMarker(null)}>
               <rect x={rectX} y="-34" width={rectWidth} height="28" rx="14" fill="transparent" />
@@ -1428,7 +1463,10 @@ export default function DrawingGlobe({ exhibitions, onClose, onSelectExhibition,
                 willChange: 'opacity',
               }}
               onClick={e => { e.stopPropagation(); handleClusterClick(cluster); }}
-                onTouchEnd={e => { e.preventDefault(); e.stopPropagation(); handleClusterClick(cluster); }}
+                onTouchEnd={e => {
+                  if (multiTouchActiveRef.current || e.touches.length > 0) return;
+                  e.preventDefault(); e.stopPropagation(); handleClusterClick(cluster);
+                }}
               onMouseEnter={() => setHoveredMarker(cluster.id)}
               onMouseLeave={() => setHoveredMarker(null)}>
               <rect x={rectX} y="-34" width={rectWidth} height="28" rx="14" fill="transparent" />
@@ -1488,7 +1526,10 @@ export default function DrawingGlobe({ exhibitions, onClose, onSelectExhibition,
 e.stopPropagation();
 handleClusterClick(city);
 }}
-                onTouchEnd={e => { e.preventDefault(); e.stopPropagation(); handleClusterClick(city); }}
+                onTouchEnd={e => {
+                  if (multiTouchActiveRef.current || e.touches.length > 0) return;
+                  e.preventDefault(); e.stopPropagation(); handleClusterClick(city);
+                }}
               onMouseEnter={() => setHoveredMarker(city.id)}
               onMouseLeave={() => setHoveredMarker(null)}>
               

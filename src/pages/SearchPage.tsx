@@ -1,4 +1,4 @@
-import { useEffect, useMemo } from "react";
+import { useEffect, useMemo, useState } from "react";
 import GlobalSearchBar from "../components/GlobalSearchBar";
 import { exhibitions } from "../data/exhibitions";
 import { useLanguage } from "../contexts/LanguageContext";
@@ -6,6 +6,10 @@ import { localizeMuseum } from "../i18n/museumLocalization";
 
 export default function SearchPage() {
   const { language } = useLanguage();
+  const [isMobileLayout, setIsMobileLayout] = useState(() => {
+    if (typeof window === "undefined") return false;
+    return window.innerWidth < 768;
+  });
   const museums = useMemo(
     () =>
       exhibitions.map((ex) => {
@@ -38,6 +42,14 @@ export default function SearchPage() {
     return () => window.clearTimeout(t);
   }, []);
 
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    const syncLayout = () => setIsMobileLayout(window.innerWidth < 768);
+    syncLayout();
+    window.addEventListener("resize", syncLayout);
+    return () => window.removeEventListener("resize", syncLayout);
+  }, []);
+
   return (
     <div
       style={{
@@ -45,16 +57,25 @@ export default function SearchPage() {
         height: "100dvh",
         overflowY: "auto",
         background:
-          "radial-gradient(1200px 380px at 50% -240px, rgba(191,255,10,0.08), transparent 70%), #050505",
+          "radial-gradient(1200px 380px at 50% -240px, rgba(212,165,71,0.08), transparent 70%), #050505",
         color: "#f2f2f2",
         fontFamily: "'Space Grotesk', 'Pretendard', 'Apple SD Gothic Neo', sans-serif",
-        padding: "14px 12px 110px",
+        padding: isMobileLayout
+          ? "calc(10px + env(safe-area-inset-top, 0px)) 6px 110px"
+          : "calc(14px + env(safe-area-inset-top, 0px)) 12px 110px",
         boxSizing: "border-box",
       }}
     >
-      <div style={{ maxWidth: 1200, margin: "0 auto" }}>
+      <div style={{ maxWidth: isMobileLayout ? "100%" : 1200, margin: "0 auto" }}>
         <div
-          style={{
+          style={isMobileLayout ? {
+            padding: 0,
+            overflow: "visible",
+            background: "transparent",
+            border: "none",
+            borderRadius: 0,
+            boxShadow: "none",
+          } : {
             borderRadius: 18,
             border: "1px solid rgba(255,255,255,0.10)",
             background: "linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.02) 30%, rgba(0,0,0,0.24))",

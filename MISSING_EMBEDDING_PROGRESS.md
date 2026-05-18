@@ -1,0 +1,89 @@
+# 🎨 Missing Permanent Embeddings — live progress
+
+> **Updated**: 2026-04-28 12:18:08
+> **Pending total**: 20,695
+> **Embedded**: 20,687 | **Failed**: 8 | **Uploaded**: 18,387 | **Upload-retry queued**: 2,300
+> **Speed**: 12.8/s | **ETA**: 0.0 min
+
+| Exhibition ID | Embedded | Failed |
+|:---|---:|---:|
+| accademia-collection | 2 | 0 |
+| agnsw-collection | 366 | 0 |
+| albertina-permanent-collection | 114 | 0 |
+| alte-pinakothek-collection | 2 | 0 |
+| ambrosiana-collection | 1 | 0 |
+| aros-collection | 2 | 0 |
+| ateneum-collection | 15 | 0 |
+| basel-collection | 7 | 0 |
+| belvedere-collection | 11 | 0 |
+| borghese-paintings | 7 | 0 |
+| castello-di-rivoli-collection | 13 | 0 |
+| cg-1 | 7 | 0 |
+| cma-collection | 2 | 0 |
+| dia-collection | 24 | 0 |
+| famsf-collections | 170 | 2 |
+| flv-collection | 12 | 0 |
+| gallerie-accademia-venice-collection | 1 | 0 |
+| guggenheim-bilbao-collection | 5 | 0 |
+| hamburger-kunsthalle-drawings | 1 | 0 |
+| hamburger-kunsthalle-paintings | 1 | 0 |
+| hayward-gallery-collection | 1,045 | 0 |
+| hermitage-collection | 6 | 1 |
+| high-museum-collection | 3 | 0 |
+| huntington-collection | 5 | 0 |
+| kiasma-collection | 63 | 0 |
+| kunsthaus-collection | 4 | 0 |
+| lacma-paintings | 166 | 0 |
+| louvre-painting-collection | 10,616 | 1 |
+| mad-collection | 2 | 0 |
+| mah-collection | 20 | 0 |
+| mam-collection | 2 | 0 |
+| marmottan-collection | 31 | 0 |
+| mbam-collection | 41 | 0 |
+| mca-collection | 42 | 0 |
+| met-ny-collection | 16 | 0 |
+| mfab-collection | 10 | 0 |
+| mmca-collection | 104 | 0 |
+| mnk-collection | 1 | 0 |
+| moma-highlights | 17 | 0 |
+| mori-collection | 12 | 0 |
+| museo-egizio-collection | 154 | 0 |
+| museum-wales-paintings | 44 | 0 |
+| nasjonal-collection | 46 | 0 |
+| nationalmuseum-sweden-collection | 6 | 0 |
+| ng-1 | 13 | 0 |
+| nga-collection | 1,545 | 0 |
+| ngprague-collection | 22 | 0 |
+| ngs-collection-all | 171 | 0 |
+| ngv-collection | 135 | 0 |
+| nmwa-collection | 1 | 0 |
+| ntmofa-collection | 82 | 0 |
+| orsay-collection | 2,666 | 0 |
+| petit-palais-collection | 400 | 0 |
+| philadelphia-collection | 343 | 1 |
+| picasso-paris-collection | 4 | 0 |
+| pinault-collection | 1,309 | 1 |
+| pitti-palace-collection | 1 | 0 |
+| pompidou-drawing-collection | 25 | 0 |
+| qagoma-collection | 138 | 0 |
+| reina-sofia-collection | 1 | 0 |
+| rijksmuseum-design | 0 | 1 |
+| rijksmuseum-drawings | 1 | 0 |
+| rijksmuseum-photography | 0 | 1 |
+| rusmuseum-collection | 1 | 0 |
+| saam-paintings | 160 | 0 |
+| sema-collection | 102 | 0 |
+| sinebrychoff-collection | 1 | 0 |
+| smk-collection | 3 | 0 |
+| staedel-museum-collection | 10 | 0 |
+| stedelijk-collection | 7 | 0 |
+| tepapa-paintings | 24 | 0 |
+| tfam-collection-all | 133 | 0 |
+| thyssen-collection-41 | 2 | 0 |
+| tm-perm-3 | 80 | 0 |
+| tnm-painting-collection | 17 | 0 |
+| today-art-museum-collection | 2 | 0 |
+| tretyakov-collection | 4 | 0 |
+| uffizi-gallery-collection | 1 | 0 |
+| vam-permanent | 57 | 0 |
+| vam-posters | 7 | 0 |

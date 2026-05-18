@@ -3,7 +3,7 @@ import React from 'react';
 // ── Design tokens ─────────────────────────────────────────────────
 const BG     = '#111111';
 const TEXT   = '#FFFFFF';
-const ACCENT = '#CCFF00';
+const ACCENT = '#D4A547';
 const MONO   = "'Space Mono', 'Courier New', monospace";
 
 // ── CSS keyframes (injected once) ─────────────────────────────────
@@ -213,7 +213,7 @@ const DrawingLoader: React.FC<DrawingLoaderProps> = ({
       <div style={{ position: 'absolute', inset: 0, overflow: 'hidden', pointerEvents: 'none' }}>
         <div style={{
           position: 'absolute', top: 0, bottom: 0, width: '35%',
-          background: `linear-gradient(to right, transparent 0%, rgba(204,255,0,0.025) 40%, rgba(204,255,0,0.05) 50%, rgba(204,255,0,0.025) 60%, transparent 100%)`,
+          background: `linear-gradient(to right, transparent 0%, rgba(212,165,71,0.025) 40%, rgba(212,165,71,0.05) 50%, rgba(212,165,71,0.025) 60%, transparent 100%)`,
           animation: `dl-scan 3.2s ease-in-out infinite`,
         }} />
       </div>

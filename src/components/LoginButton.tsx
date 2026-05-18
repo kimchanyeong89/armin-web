@@ -60,7 +60,11 @@ export const LoginButton: React.FC<{ style?: React.CSSProperties }> = ({ style }
     const handleLoginWithProvider = async (providerType: 'google' | 'apple') => {
         if (mobileAppContainer) {
             setShowLoginModal(false);
-            window.dispatchEvent(new Event('auth:request-login'));
+            // Skip the intermediate in-WebView /login page — open the
+            // external browser auth session directly. /login in the
+            // external browser auto-triggers signInWithRedirect on Android,
+            // so the user only sees Google's account picker.
+            requestExternalMobileLogin(providerType);
             return;
         }
 
@@ -394,7 +398,15 @@ export const LoginButton: React.FC<{ style?: React.CSSProperties }> = ({ style }
                 {(() => {
                     const photoURL = profileData?.photoURL || user?.photoURL;
                     if (photoURL) {
-                        const crop = profileData?.profileImageCrop || { x: 0, y: 0, scale: 1 };
+                        // Only apply the saved crop when we are showing the
+                        // user-uploaded custom photo. If we fell back to the
+                        // OAuth provider photo (user.photoURL), the crop was
+                        // saved for a different image and would shift this
+                        // one off-screen.
+                        const isCustom = !!profileData?.photoURL;
+                        const crop = isCustom
+                            ? (profileData?.profileImageCrop || { x: 0, y: 0, scale: 1 })
+                            : { x: 0, y: 0, scale: 1 };
                         // Icon size is 24px, original crop was 240px. Ratio = 24 / 240 = 0.1
                         const ratio = 24 / 240;
 
@@ -402,6 +414,8 @@ export const LoginButton: React.FC<{ style?: React.CSSProperties }> = ({ style }
                             <img
                                 src={photoURL}
                                 alt="Profile"
+                                loading="eager"
+                                referrerPolicy="no-referrer"
                                 onLoad={(e) => {
                                     const { naturalWidth, naturalHeight } = e.currentTarget;
                                     setIsLandscape(naturalWidth >= naturalHeight);

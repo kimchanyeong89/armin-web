@@ -22,7 +22,7 @@ const firebaseConfig = {
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 // Initialize analytics only in browsers that support it to avoid runtime errors in some environments
-if (typeof window !== 'undefined') {
+if (typeof window !== 'undefined' && !window.location.hostname.includes('localhost')) {
   isSupported().then((ok) => {
     if (ok) {
       try { getAnalytics(app); } catch {}

@@ -1,5 +1,21 @@
+// ═════════════════════════════════════════════════════════════════════════
+// ▼ INTERACTIVE MODAL  (globe → museum detail) ▼
+// This file renders the **Interactive** modal: globe-launched museum
+// detail with FEATURED WORKS grid, TITLE/ARTIST/YEAR meta strip, filters,
+// sort, and the artwork item cards used inside that view.
+//
+// Do NOT confuse with:
+//   - src/components/ExhibitionModal.tsx              → the SKETCH / drawing
+//                                                       gallery modal (em-*)
+//   - src/pages/ExhibitionPage.tsx                    → page shell hosting
+//                                                       either modal (ep-*)
+//
+// Token table (line ~915):  fgHigh, fgMed, fgLow, fgMute, fgFaint
+// Base body font (line ~1454): Inter, sans-serif
+// ═════════════════════════════════════════════════════════════════════════
 import React, { useState, useMemo, useEffect, useRef, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { Heart, BookmarkPlus, ShoppingBag } from "lucide-react";
 import type { Theme } from "./types";
 import { getOptimizedImageUrl } from "../../utils/imageProxy";
 import { SearchInputWithSuggestions } from "../SearchInputWithSuggestions";
@@ -15,8 +31,8 @@ import { db, auth } from "../../firebase";
 import { isMobileAppContainer } from "../../utils/mobileAppAuth";
 
 function typeColor(type: string, t: boolean): string {
-  if (type === "current") return t ? "#5A7800" : "#BFFF0A";
-  if (type === "upcoming") return t ? "rgba(90,120,0,0.5)" : "rgba(191,255,10,0.5)";
+  if (type === "current") return t ? "#8A6B1F" : "#D4A547";
+  if (type === "upcoming") return t ? "rgba(138,107,31,0.5)" : "rgba(212,165,71,0.5)";
   return t ? "rgba(0,0,0,0.18)" : "rgba(255,255,255,0.22)";
 }
 
@@ -342,6 +358,23 @@ function normalizeImageUrl(url: unknown): string {
   return normalized;
 }
 
+// Lazy-load the semantic ID override map. The search manifest adds hash suffixes
+// to artwork IDs that would otherwise collide across collections (e.g. Orangerie
+// artwork 196301 collides with AIC artwork 196301). The actual Vectorize ID is the
+// hash-suffixed version. This map corrects the lookup: { exhibitionId: { nativeId: vectorizeId } }
+let semanticOverridesPromise: Promise<Record<string, Record<string, string>>> | null = null;
+let semanticOverridesCache: Record<string, Record<string, string>> | null = null;
+function loadSemanticOverrides() {
+  if (semanticOverridesCache) return Promise.resolve(semanticOverridesCache);
+  if (!semanticOverridesPromise) {
+    semanticOverridesPromise = fetch('/semantic-id-overrides.json')
+      .then(r => r.ok ? r.json() : {})
+      .then(data => { semanticOverridesCache = data; return data; })
+      .catch(() => { semanticOverridesCache = {}; return {}; });
+  }
+  return semanticOverridesPromise;
+}
+
 function getCollectionSlugFromPath(inputPath: unknown): string {
   if (typeof inputPath !== "string") return "";
   const trimmed = inputPath.trim();
@@ -394,6 +427,7 @@ export function InteractiveGlobeRealModal({
   const [isLoading, setIsLoading] = useState(true);
   const [visibleCount, setVisibleCount] = useState(INITIAL_VISIBLE_ARTWORKS);
   const [resolvedCollectionCandidate, setResolvedCollectionCandidate] = useState<string>("");
+  const [semanticOverrides, setSemanticOverrides] = useState<Record<string, Record<string, string>> | null>(semanticOverridesCache);
   const loadMoreRef = useRef<HTMLDivElement | null>(null);
   const onReadyRef = useRef(onReady);
   const randomOrderRef = useRef<Map<string, number>>(new Map());
@@ -408,6 +442,13 @@ export function InteractiveGlobeRealModal({
     const selectedId = String((exhibition as any)?._selectedExhibitionId || exhibition?.id || "unknown").trim();
     return `armin:interactive-modal-state:${selectedId || "unknown"}`;
   }, [exhibition]);
+
+  useEffect(() => {
+    if (!semanticOverridesCache) {
+      loadSemanticOverrides().then(data => setSemanticOverrides(data));
+    }
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     onReadyRef.current = onReady;
@@ -658,6 +699,17 @@ export function InteractiveGlobeRealModal({
       };
 
       const resolveImg = (a: any): string => {
+        // NGA IIIF: convert thumbnail (!200,200) to high-res (800,)
+        const ngaIiifHiRes = (() => {
+          const iiif = a?.primaryImage?.iiifUrl || a?.primaryImage?.iiifurl
+            || (Array.isArray(a?.images) && a.images[0]?.iiifUrl)
+            || (Array.isArray(a?.images) && a.images[0]?.iiifurl);
+          if (iiif && typeof iiif === 'string' && iiif.includes('api.nga.gov/iiif')) {
+            return iiif.replace(/\/full\/[^/]+\/0\/default\.jpg$/, '') + '/full/800,/0/default.jpg';
+          }
+          return null;
+        })();
+
         const imageCandidates: unknown[] = [
           a?.originalImage,
           a?.original_image,
@@ -665,6 +717,7 @@ export function InteractiveGlobeRealModal({
           a?.image,
           a?.imageUrl,
           a?.original_imageUrl,
+          ngaIiifHiRes,
           a?.thumbnailUrl,
           a?.thumb,
           a?.rawUrl,
@@ -683,8 +736,16 @@ export function InteractiveGlobeRealModal({
 
         const artworkCandidates = normalizedCandidates.filter((url) => !isLikelyLogoAsset(url));
 
-        const r2Url = artworkCandidates.find(isR2ImageUrl);
-        if (r2Url) return r2Url;
+        // Prefer R2 full-quality images. Skip R2 thumbnail-only URLs (-thumbnail.webp)
+        // when a higher-quality non-R2 URL is available (e.g. LACMA original_image).
+        const r2FullUrl = artworkCandidates.find(u => isR2ImageUrl(u) && !u.endsWith('-thumbnail.webp'));
+        if (r2FullUrl) return r2FullUrl;
+
+        const nonR2Url = artworkCandidates.find(u => !isR2ImageUrl(u));
+        if (nonR2Url) return nonR2Url;
+
+        const r2ThumbUrl = artworkCandidates.find(isR2ImageUrl);
+        if (r2ThumbUrl) return r2ThumbUrl;
 
         return artworkCandidates[0] || normalizedCandidates[0] || '';
       };
@@ -777,6 +838,7 @@ export function InteractiveGlobeRealModal({
           a?.permalink,
           a?.sourceUrl,
           a?.u,
+          a?.urls?.artworkPage,
           a?.raw?.url,
           a?.raw?.link,
         ];
@@ -815,11 +877,21 @@ export function InteractiveGlobeRealModal({
         return pickMeaningfulText(a?.title, a?.name, a?.tytul, a?.raw?.title) || "Untitled";
       };
 
+      // The exhibitionId for the override lookup — matches the key used in EMBEDDING_PROGRESS.md
+      const exhibitionIdForOverride = String((exhibition as any)?._selectedExhibitionId || exhibition?.id || collectionSlug || '').trim();
+      const exhibitionOverrides = (semanticOverrides?.[exhibitionIdForOverride]) ?? {};
+
       return realArtworks.map((a, i) => {
           const imgUrl = resolveImg(a);
-          // semanticId must always resolve to a Vectorize-compatible ID.
-          // For collections without native IDs, artworks were indexed as {collectionSlug}-{i}.
-          const semanticId = pickMeaningfulText(a?.semanticId, a?.semantic_id, a?.vectorId, a?.vector_id) || `${collectionSlug}-${i}`;
+          // semanticId must resolve to the exact Vectorize ID used at embedding time.
+          // The embedding script uses art.id from the search manifest. For some artworks,
+          // the manifest adds a hash suffix (e.g. "196301-7741c144") to prevent cross-collection
+          // ID collisions. The semanticOverrides map corrects for this: nativeId → vectorizeId.
+          const nativeId = String(a?.id || a?.objectNumber || a?.registrationNumber || a?.inventoryNumber || a?.accessionNum || '').trim();
+          const overriddenId = nativeId ? (exhibitionOverrides[nativeId] ?? nativeId) : '';
+          const semanticId = pickMeaningfulText(a?.semanticId, a?.semantic_id, a?.vectorId, a?.vector_id)
+            || overriddenId
+            || `${collectionSlug}-${i}`;
           const fallbackIndexedId = recommendationFallbackPrefix
             ? `${recommendationFallbackPrefix}-${i}`
             : `AW-${i}`;
@@ -850,20 +922,21 @@ export function InteractiveGlobeRealModal({
           };
           return (isTextOrLetter(a) ? 1 : 0) - (isTextOrLetter(b) ? 1 : 0);
       });
-  }, [realArtworks, recommendationFallbackPrefix, venueName]);
+  }, [realArtworks, recommendationFallbackPrefix, venueName, collectionSlug, exhibition, semanticOverrides]);
 
 
+  // Variant B (Editorial) token palette — warm-white on near-black, no opacity for primary
   const bgColor = t ? "#FAFAFA" : "#080808";
   const bgSticky = t ? "rgba(250,250,250,0.97)" : "rgba(8,8,8,0.97)";
-  const fgHigh = t ? "rgba(0,0,0,0.90)" : "rgba(255,255,255,0.92)";
-  const fgMed = t ? "rgba(0,0,0,0.68)" : "rgba(255,255,255,0.72)";
-  const fgLow = t ? "rgba(0,0,0,0.50)" : "rgba(255,255,255,0.55)";
-  const fgMute = t ? "rgba(0,0,0,0.32)" : "rgba(255,255,255,0.38)";
-  const fgFaint = t ? "rgba(0,0,0,0.16)" : "rgba(255,255,255,0.20)";
-  const dividerColor = t ? "rgba(0,0,0,0.07)" : "rgba(255,255,255,0.06)";
-  const limeColor = t ? "#5A7800" : "#BFFF0A";
-  const limeBg = t ? "rgba(90,120,0,0.08)" : "rgba(191,255,10,0.08)";
-  const limeBorder = t ? "rgba(90,120,0,0.25)" : "rgba(191,255,10,0.2)";
+  const fgHigh  = t ? "rgba(0,0,0,0.95)" : "rgba(244,241,234,0.98)";
+  const fgMed   = t ? "rgba(0,0,0,0.78)" : "rgba(244,241,234,0.88)";
+  const fgLow   = t ? "rgba(0,0,0,0.64)" : "rgba(244,241,234,0.78)";
+  const fgMute  = t ? "rgba(0,0,0,0.50)" : "rgba(244,241,234,0.64)";
+  const fgFaint = t ? "rgba(0,0,0,0.34)" : "rgba(244,241,234,0.46)";
+  const dividerColor = t ? "rgba(0,0,0,0.10)" : "rgba(244,241,234,0.14)";
+  const limeColor = t ? "#8A6B1F" : "#D4A547";
+  const limeBg = t ? "rgba(138,107,31,0.08)" : "rgba(212,165,71,0.08)";
+  const limeBorder = t ? "rgba(138,107,31,0.25)" : "rgba(212,165,71,0.2)";
 
   const artworkIdFrom = useCallback((artwork: Artwork): string => {
     return String(
@@ -995,14 +1068,22 @@ export function InteractiveGlobeRealModal({
         await setDoc(likeRef, {
           likedAt: serverTimestamp(),
           artworkId,
+          id: artworkId,
           title: artwork.title,
+          name: artwork.title,
           artist: artwork.artist,
           year: formatArtworkYear(artwork.year) || artwork.year || "",
           image: artwork.image,
+          i: artwork.image,
+          imageUrl: artwork.image,
           mediaType: "image",
           museum: venueName,
+          museumName: venueName,
           exhibitionId: exhibition.id || "",
+          sourceCollection: exhibition.id || "",
           exhibitionName: exhibition.name || exhibition.title || "",
+          sourceUrl: String((artwork as any).sourceUrl || (artwork as any).url || (artwork as any).detailUrl || (artwork as any).officialUrl || ""),
+          detailUrl: String((artwork as any).detailUrl || (artwork as any).officialUrl || (artwork as any).url || ""),
         });
         await setDoc(statsRef, { likeCount: increment(1), artworkId }, { merge: true });
       }
@@ -1379,21 +1460,54 @@ export function InteractiveGlobeRealModal({
   }, [artworkIdFrom, mappedArtworks, productArtwork, toProductArtwork]);
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      exit={{ opacity: 0 }}
-      transition={{ duration: 0.3 }}
+    // Plain div — Framer Motion's opacity entry animation can stall in
+    // Android Chrome WebView (iOS-Safari-spoofed UA + compositor), leaving
+    // the modal at partial opacity so the Globe + spinner behind shows
+    // through. A static, fully-opaque modal is reliable on every platform.
+    <div
       style={{
         position: 'fixed', inset: 0, zIndex: 100, overflow: 'hidden',
-        fontFamily: "'Space Grotesk', sans-serif", backgroundColor: bgColor,
+        fontFamily: "'Inter', 'Apple SD Gothic Neo', 'Noto Sans KR', 'Helvetica Neue', Arial, sans-serif",
+        backgroundColor: bgColor,
       }}
     >
-      <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        exit={{ opacity: 0, y: 20 }}
-        transition={{ duration: 0.35, ease: "easeOut", delay: 0.05 }}
+      <style>{`
+        /* Staggered reveal for each artwork card in the grid. Quick fade —
+           we want the cascade to be felt, not waited on. */
+        @keyframes igrm-card-reveal {
+          from { opacity: 0; transform: translateY(6px); }
+          to   { opacity: 1; transform: translateY(0); }
+        }
+        .igrm-card {
+          animation: igrm-card-reveal 0.32s cubic-bezier(0.22, 1, 0.36, 1) both;
+        }
+        /* Per-image fade-in. Initial state hides the <img> at opacity 0 with
+           a SHORT soft blur. onLoad sets data-loaded="1" which runs a quick
+           keyframe — kept under 280ms so users don't feel the load extra. */
+        .igrm-thumb,
+        .igrm-detail-img {
+          opacity: 0;
+          filter: blur(4px);
+        }
+        .igrm-thumb[data-loaded="1"] {
+          animation: igrm-img-fade 0.28s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+        .igrm-detail-img[data-loaded="1"] {
+          animation: igrm-img-fade-large 0.36s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+        }
+        @keyframes igrm-img-fade {
+          from { opacity: 0; filter: blur(4px); }
+          to   { opacity: 1; filter: blur(0); }
+        }
+        @keyframes igrm-img-fade-large {
+          from { opacity: 0; filter: blur(6px); }
+          to   { opacity: 1; filter: blur(0); }
+        }
+      `}</style>
+      {/* Plain div — same Android Chrome WebView opacity-stall risk as
+          the outer motion.div. Static is reliable; the modal is already
+          obviously appearing because of the page transition. */}
+      <div
         ref={scrollContainerRef}
         onScroll={(event) => {
           latestScrollTopRef.current = event.currentTarget.scrollTop;
@@ -1419,13 +1533,32 @@ export function InteractiveGlobeRealModal({
           />
           <div style={{ position: 'absolute', inset: 0, background: `linear-gradient(to bottom, ${bgColor}00 0%, ${bgColor}00 68%, ${bgColor}33 88%, ${bgColor}66 100%)` }} />
           <div style={{ position: 'absolute', inset: 0, background: `linear-gradient(to bottom, ${bgColor}1A 0%, ${bgColor}00 28%)` }} />
-          {/* Nav bar */}
-          <div style={{ position: 'absolute', top: 0, left: 0, right: 0, zIndex: 30, display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: `${isMobile ? 'calc(40px + env(safe-area-inset-top, 0px))' : 'calc(12px + env(safe-area-inset-top, 0px))'} ${pad} 12px` }}>
-            <button onClick={onClose} style={{ display: 'flex', alignItems: 'center', gap: '10px', cursor: 'pointer', fontSize: '10px', background: 'none', borderTop: 'none', borderRight: 'none', borderBottom: 'none', borderLeft: 'none', outline: 'none', pointerEvents: 'auto', touchAction: 'manipulation', WebkitTapHighlightColor: 'transparent' }}>
-              <span style={{ color: fgLow }}>&larr;</span>
-              <span style={{ color: fgLow, letterSpacing: '0.15em', textTransform: 'uppercase' }}>Back</span>
+          {/* Nav bar — absolute inside hero so it scrolls away naturally with the image.
+              Top inset is `safe-area + 24px` so the BACK button lands at the
+              SAME Y-coordinate as Globe header BACK and VenuePanel BACK —
+              consistent muscle memory across Globe → City → Venue → Modal. */}
+          <div style={{ position: 'absolute', top: 0, left: 0, right: 0, zIndex: 30, display: 'flex', alignItems: 'center', justifyContent: 'space-between', padding: `calc(env(safe-area-inset-top, 0px) + 24px) ${pad} 6px`, pointerEvents: 'none' }}>
+            <button
+              onClick={onClose}
+              style={{
+                display: 'inline-flex', alignItems: 'center', gap: '8px',
+                cursor: 'pointer', fontSize: '10px',
+                color: fgHigh,
+                background: t ? 'rgba(255,255,255,0.55)' : 'rgba(0,0,0,0.45)',
+                border: `1px solid ${t ? 'rgba(0,0,0,0.10)' : 'rgba(255,255,255,0.14)'}`,
+                outline: 'none',
+                padding: '6px 12px',
+                backdropFilter: 'blur(10px)',
+                WebkitBackdropFilter: 'blur(10px)',
+                pointerEvents: 'auto',
+                touchAction: 'manipulation',
+                WebkitTapHighlightColor: 'transparent',
+              }}
+            >
+              <span style={{ fontSize: '12px', lineHeight: 1 }}>&#x2190;</span>
+              <span style={{ letterSpacing: '0.18em', textTransform: 'uppercase', fontWeight: 600 }}>Back</span>
             </button>
-            <span style={{ padding: '4px 10px', fontSize: '8px', letterSpacing: '0.15em', textTransform: 'uppercase', backgroundColor: t ? "rgba(255,255,255,0.75)" : "rgba(0,0,0,0.55)", color: typeColor(mappedType, t), backdropFilter: 'blur(8px)' }}>{mappedType}</span>
+            <span style={{ padding: '4px 10px', fontSize: '8px', letterSpacing: '0.15em', textTransform: 'uppercase', backgroundColor: t ? "rgba(255,255,255,0.75)" : "rgba(0,0,0,0.55)", color: typeColor(mappedType, t), backdropFilter: 'blur(8px)', pointerEvents: 'auto' }}>{mappedType}</span>
           </div>
           {/* Title overlay */}
           <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: `0 ${pad} 8px` }}>
@@ -1483,8 +1616,8 @@ export function InteractiveGlobeRealModal({
         <div style={{ padding: `56px ${pad} 0` }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginBottom: '24px' }}>
             <div style={{ width: '24px', height: '1px', backgroundColor: dividerColor }} />
-            <span style={{ fontSize: '9px', color: fgMute, letterSpacing: '0.25em', textTransform: 'uppercase' }}>Featured Works</span>
-            <span style={{ fontFamily: "'Space Mono', monospace", fontSize: '9px', color: fgFaint }}>
+            <span style={{ fontFamily: "'Space Mono', monospace", fontSize: '11px', fontWeight: 700, color: fgLow, letterSpacing: '0.22em', textTransform: 'uppercase' }}>Featured Works</span>
+            <span style={{ fontFamily: "'Space Mono', monospace", fontSize: '11px', fontWeight: 700, color: fgMute }}>
               {filterResultArtworks.length}{activeFilter ? ` / ${mappedArtworks.length}` : ""}
             </span>
             <div style={{ flex: 1, height: '1px', backgroundColor: dividerColor }} />
@@ -1499,7 +1632,7 @@ export function InteractiveGlobeRealModal({
                   setDetailArtworkOverride(null);
                   setDetailArtworkOrigin(null);
                 }}
-                style={{ cursor: 'pointer', padding: '6px 12px', fontSize: '9px', letterSpacing: '0.12em', textTransform: 'uppercase', color: !activeFilter ? limeColor : fgMute, backgroundColor: !activeFilter ? limeBg : 'transparent', borderTop: `1px solid ${!activeFilter ? limeBorder : (t ? "rgba(0,0,0,0.06)" : "rgba(255,255,255,0.06)")}`, borderRight: `1px solid ${!activeFilter ? limeBorder : (t ? "rgba(0,0,0,0.06)" : "rgba(255,255,255,0.06)")}`, borderBottom: `1px solid ${!activeFilter ? limeBorder : (t ? "rgba(0,0,0,0.06)" : "rgba(255,255,255,0.06)")}`, borderLeft: `1px solid ${!activeFilter ? limeBorder : (t ? "rgba(0,0,0,0.06)" : "rgba(255,255,255,0.06)")}`, outline: 'none' }}
+                style={{ cursor: 'pointer', padding: '7px 13px', fontFamily: "'Space Mono', monospace", fontWeight: 700, fontSize: '11px', letterSpacing: '0.14em', textTransform: 'uppercase', color: !activeFilter ? limeColor : fgMute, backgroundColor: !activeFilter ? limeBg : 'transparent', borderTop: `1px solid ${!activeFilter ? limeBorder : (t ? "rgba(0,0,0,0.06)" : "rgba(255,255,255,0.06)")}`, borderRight: `1px solid ${!activeFilter ? limeBorder : (t ? "rgba(0,0,0,0.06)" : "rgba(255,255,255,0.06)")}`, borderBottom: `1px solid ${!activeFilter ? limeBorder : (t ? "rgba(0,0,0,0.06)" : "rgba(255,255,255,0.06)")}`, borderLeft: `1px solid ${!activeFilter ? limeBorder : (t ? "rgba(0,0,0,0.06)" : "rgba(255,255,255,0.06)")}`, outline: 'none' }}
               >All</button>
               {availableCategories.map((cat) => {
                 const count = mappedArtworks.filter((a) => a.category === cat).length;
@@ -1514,7 +1647,7 @@ export function InteractiveGlobeRealModal({
                       setDetailArtworkOverride(null);
                       setDetailArtworkOrigin(null);
                     }}
-                    style={{ cursor: 'pointer', padding: '6px 12px', fontSize: '9px', letterSpacing: '0.12em', textTransform: 'uppercase', display: 'flex', alignItems: 'center', gap: '6px', color: isActive ? limeColor : fgMute, backgroundColor: isActive ? limeBg : 'transparent', borderTop: `1px solid ${bColor}`, borderRight: `1px solid ${bColor}`, borderBottom: `1px solid ${bColor}`, borderLeft: `1px solid ${bColor}`, outline: 'none' }}
+                    style={{ cursor: 'pointer', padding: '7px 13px', fontFamily: "'Space Mono', monospace", fontWeight: 700, fontSize: '11px', letterSpacing: '0.14em', textTransform: 'uppercase', display: 'flex', alignItems: 'center', gap: '6px', color: isActive ? limeColor : fgMute, backgroundColor: isActive ? limeBg : 'transparent', borderTop: `1px solid ${bColor}`, borderRight: `1px solid ${bColor}`, borderBottom: `1px solid ${bColor}`, borderLeft: `1px solid ${bColor}`, outline: 'none' }}
                   >
                     {cat}<span style={{ fontFamily: "'Space Mono', monospace", fontSize: '8px', opacity: 0.6 }}>{count}</span>
                   </button>
@@ -1525,8 +1658,41 @@ export function InteractiveGlobeRealModal({
         </div>
 
         {/* ── Sticky metadata panel ── */}
-        <div style={{ padding: `0 ${pad} 0`, position: 'sticky', top: 0, zIndex: 20, backgroundColor: bgSticky, backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)', borderBottom: `1px solid ${inspectedArt ? limeBorder : dividerColor}`, transition: 'border-color 0.2s' }}>
-          <div style={{ padding: '12px 20px', borderLeft: `2px solid ${inspectedArt ? limeColor : 'transparent'}`, minHeight: '92px', transition: 'border-color 0.2s' }}>
+        <div style={{ padding: `env(safe-area-inset-top, 0px) ${pad} 0`, position: 'sticky', top: 0, zIndex: 20, backgroundColor: bgSticky, backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)', borderBottom: `1px solid ${inspectedArt ? limeBorder : dividerColor}`, transition: 'border-color 0.2s' }}>
+          {/* Header row: back + exhibition type — integrates the back button into the sticky header so it stays reachable while scrolling */}
+          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: '12px', padding: isMobile ? '6px 0' : '8px 0', borderBottom: `1px solid ${dividerColor}` }}>
+            <button
+              onClick={onClose}
+              style={{
+                display: 'inline-flex', alignItems: 'center', gap: '8px',
+                cursor: 'pointer', fontSize: '10px',
+                color: fgMed,
+                background: 'none',
+                borderTop: 'none', borderRight: 'none', borderBottom: 'none', borderLeft: 'none',
+                outline: 'none',
+                padding: '4px 0',
+                pointerEvents: 'auto',
+                touchAction: 'manipulation',
+                WebkitTapHighlightColor: 'transparent',
+              }}
+              onMouseEnter={(e) => { (e.currentTarget as HTMLButtonElement).style.color = fgHigh; }}
+              onMouseLeave={(e) => { (e.currentTarget as HTMLButtonElement).style.color = fgMed; }}
+            >
+              <span style={{ fontSize: '12px', lineHeight: 1 }}>&#x2190;</span>
+              <span style={{ letterSpacing: '0.18em', textTransform: 'uppercase', fontWeight: 600 }}>Back</span>
+            </button>
+            <span style={{
+              padding: '3px 9px',
+              fontSize: '8px',
+              letterSpacing: '0.15em',
+              textTransform: 'uppercase',
+              backgroundColor: t ? 'rgba(0,0,0,0.04)' : 'rgba(255,255,255,0.06)',
+              color: typeColor(mappedType, t),
+              border: `1px solid ${dividerColor}`,
+            }}>{mappedType}</span>
+          </div>
+
+          <div style={{ padding: isMobile ? '6px 0' : '12px 20px', borderLeft: isMobile ? 'none' : `2px solid ${inspectedArt ? limeColor : 'transparent'}`, minHeight: isMobile ? 0 : '92px', transition: 'border-color 0.2s' }}>
             {!isMobile && (
               <AnimatePresence mode="wait">
                 {inspectedArt ? (
@@ -1541,8 +1707,8 @@ export function InteractiveGlobeRealModal({
                         { label: "Dimensions", value: inspectedArt.dimensions },
                       ].map((m) => (
                         <div key={m.label}>
-                          <div style={{ fontSize: '7px', color: fgMute, letterSpacing: '0.15em', textTransform: 'uppercase' }}>{m.label}</div>
-                          <div style={{ fontSize: '11px', color: fgLow, marginTop: '2px', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
+                          <div style={{ fontFamily: "'Space Mono', monospace", fontSize: '10px', fontWeight: 700, color: fgMute, letterSpacing: '0.16em', textTransform: 'uppercase' }}>{m.label}</div>
+                          <div style={{ fontSize: '13.5px', fontWeight: 500, color: fgMed, marginTop: '4px', lineHeight: 1.35, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
                             {m.value || '-'}
                           </div>
                         </div>
@@ -1559,7 +1725,7 @@ export function InteractiveGlobeRealModal({
               </AnimatePresence>
             )}
 
-            <div style={{ display: 'flex', alignItems: isMobile ? 'stretch' : 'center', justifyContent: 'space-between', gap: isMobile ? '12px' : '16px', marginTop: isMobile ? '0' : '14px', paddingTop: isMobile ? '0' : '12px', borderTop: isMobile ? 'none' : `1px solid ${dividerColor}`, flexWrap: isMobile ? 'wrap' : 'nowrap' }}>
+            <div style={{ display: 'flex', alignItems: isMobile ? 'stretch' : 'center', justifyContent: 'space-between', gap: isMobile ? '8px' : '16px', marginTop: isMobile ? '0' : '14px', paddingTop: isMobile ? '0' : '12px', borderTop: isMobile ? 'none' : `1px solid ${dividerColor}`, flexWrap: isMobile ? 'wrap' : 'nowrap' }}>
               <div style={{ flex: '1 1 auto', minWidth: 0 }}>
                 <SearchInputWithSuggestions
                   value={searchQuery}
@@ -1567,7 +1733,7 @@ export function InteractiveGlobeRealModal({
                   suggestions={recommendedTerms}
                   inputId="interactive-sticky-search"
                   inputName="interactiveStickySearch"
-                  placeholder="Search in this collection · Artist, title, year"
+                  placeholder="Search in this collection"
                   recommendedLabel="Recommended"
                   style={{ width: '100%' }}
                   inputStyle={{
@@ -1605,17 +1771,17 @@ export function InteractiveGlobeRealModal({
                     background: 'transparent',
                   }}
                   dropdownItemHoverStyle={{
-                    background: t ? 'rgba(90,120,0,0.07)' : 'rgba(191,255,10,0.09)',
+                    background: t ? 'rgba(138,107,31,0.07)' : 'rgba(212,165,71,0.09)',
                     color: fgHigh,
                   }}
                   dropdownScrollbarTrackColor={t ? 'rgba(0,0,0,0.05)' : 'rgba(255,255,255,0.05)'}
-                  dropdownScrollbarThumbColor={t ? 'rgba(90,120,0,0.35)' : 'rgba(191,255,10,0.40)'}
-                  dropdownScrollbarThumbHoverColor={t ? 'rgba(90,120,0,0.52)' : 'rgba(191,255,10,0.62)'}
+                  dropdownScrollbarThumbColor={t ? 'rgba(138,107,31,0.35)' : 'rgba(212,165,71,0.40)'}
+                  dropdownScrollbarThumbHoverColor={t ? 'rgba(138,107,31,0.52)' : 'rgba(212,165,71,0.62)'}
                 />
               </div>
 
               <div style={{ display: 'flex', alignItems: 'center', gap: '10px', flex: isMobile ? '1 1 auto' : '0 0 auto', minWidth: 0, justifyContent: isMobile ? 'space-between' : 'flex-start' }}>
-                <span style={{ fontSize: '9px', letterSpacing: '0.14em', color: fgMute, textTransform: 'uppercase', whiteSpace: 'nowrap' }}>Sort by</span>
+                <span style={{ fontFamily: "'Space Mono', monospace", fontWeight: 700, fontSize: '11px', letterSpacing: '0.16em', color: fgLow, textTransform: 'uppercase', whiteSpace: 'nowrap' }}>Sort by</span>
                 <div ref={sortMenuRef} style={{ position: 'relative', width: isMobile ? '100%' : 'clamp(124px, 28vw, 198px)', maxWidth: isMobile ? '220px' : 'none' }}>
                   <button
                     type="button"
@@ -1677,9 +1843,9 @@ export function InteractiveGlobeRealModal({
                               padding: '8px 12px',
                               fontSize: 11,
                               letterSpacing: '0.01em',
-                              color: isActive ? (t ? '#2D3B00' : '#D7FF5A') : fgMed,
+                              color: isActive ? (t ? '#3B2F0F' : '#E8C56F') : fgMed,
                               background: isActive
-                                ? (t ? 'rgba(90,120,0,0.14)' : 'rgba(191,255,10,0.12)')
+                                ? (t ? 'rgba(138,107,31,0.14)' : 'rgba(212,165,71,0.12)')
                                 : 'transparent',
                               borderTop: 'none',
                               borderRight: 'none',
@@ -1705,41 +1871,41 @@ export function InteractiveGlobeRealModal({
         <div style={{ padding: `24px ${pad} 16px` }}>
           {artworkRows.map((row, rowIdx) => (
             <React.Fragment key={`row-${rowIdx}`}>
-              <div style={{ 
-                display: 'grid', 
-                gridTemplateColumns: `repeat(${colCount}, minmax(0, 1fr))`, 
-                columnGap: '8px', 
-                rowGap: '12px', 
-                marginBottom: colCount >= 4 ? '80px' : '24px', 
-                alignItems: 'start' 
+              <div style={{
+                display: 'grid',
+                gridTemplateColumns: `repeat(${colCount}, minmax(0, 1fr))`,
+                columnGap: isMobile ? '3px' : '8px',
+                rowGap: isMobile ? '6px' : '12px',
+                marginBottom: colCount >= 4 ? '80px' : '24px',
+                alignItems: 'start'
               }}>
                 {row.map(({ aw, globalIdx }) => {
                   const isSelected = activeArtwork === globalIdx;
                   const isHovered = shouldShowHoverMetadata && hoveredArtwork === globalIdx;
-                  const showActions = !isMobile && (isHovered || isSelected);
+                  const isLikedAw = likedArtworks.has(artworkIdFrom(aw)) || likedArtworks.has(normalizeArtworkIdForFirestore(artworkIdFrom(aw)));
+                  // Match Profile tab (Mypage) icon style: solid semi-transparent
+                  // dark circles, no border, no backdrop-blur. All three icons
+                  // are always visible regardless of hover/touch state — the
+                  // user explicitly asked for the Mypage system.
                   const actionButtonStyle: React.CSSProperties = {
                     cursor: 'pointer',
-                    width: isMobile ? 22 : 24,
-                    height: isMobile ? 22 : 24,
+                    width: isMobile ? 28 : 30,
+                    height: isMobile ? 28 : 30,
+                    borderRadius: '50%',
+                    border: 'none',
+                    background: 'rgba(0,0,0,0.56)',
+                    color: '#fff',
                     display: 'flex',
                     alignItems: 'center',
                     justifyContent: 'center',
-                    background: t ? 'rgba(255,255,255,0.84)' : 'rgba(0,0,0,0.52)',
-                    borderTop: `1px solid ${t ? 'rgba(0,0,0,0.12)' : 'rgba(255,255,255,0.22)'}`,
-                    borderRight: `1px solid ${t ? 'rgba(0,0,0,0.12)' : 'rgba(255,255,255,0.22)'}`,
-                    borderBottom: `1px solid ${t ? 'rgba(0,0,0,0.12)' : 'rgba(255,255,255,0.22)'}`,
-                    borderLeft: `1px solid ${t ? 'rgba(0,0,0,0.12)' : 'rgba(255,255,255,0.22)'}`,
-                    borderRadius: 999,
                     padding: 0,
-                    color: t ? '#202020' : '#fff',
-                    backdropFilter: 'blur(6px)',
-                    WebkitBackdropFilter: 'blur(6px)',
                   };
                   return (
                     <div
                       role="button"
                       tabIndex={0}
                       key={aw.inventoryNo + globalIdx}
+                      className="igrm-card"
                       onClick={() => {
                         setActiveArtwork(isSelected ? null : globalIdx);
                         setDetailArtworkOverride(null);
@@ -1755,77 +1921,69 @@ export function InteractiveGlobeRealModal({
                       }}
                       onMouseEnter={() => handleArtworkMouseEnter(globalIdx)}
                       onMouseLeave={handleArtworkMouseLeave}
-                      style={{ textAlign: 'left', cursor: 'pointer', position: 'relative', background: 'none', borderTop: 'none', borderRight: 'none', borderBottom: 'none', borderLeft: 'none', outline: 'none', padding: 0 }}
+                      style={{ textAlign: 'left', cursor: 'pointer', position: 'relative', background: 'none', borderTop: 'none', borderRight: 'none', borderBottom: 'none', borderLeft: 'none', outline: 'none', padding: 0, animationDelay: `${Math.min(rowIdx * 0.045, 0.28)}s` }}
                     >
-                      <div style={{ position: 'relative', overflow: 'hidden', width: '100%' }}>
+                      <div style={{ position: 'relative', overflow: 'hidden', width: '100%', background: t ? '#ececec' : '#161616' }}>
                         <img
                           src={aw.lowImage}
                           alt={aw.title}
-                          loading="lazy"
+                          loading={rowIdx < 3 ? 'eager' : 'lazy'}
+                          fetchPriority={rowIdx < 2 ? 'high' : 'auto'}
+                          decoding="async"
+                          className="igrm-thumb"
+                          onLoad={(e) => e.currentTarget.setAttribute('data-loaded', '1')}
                           style={{ width: '100%', height: 'auto', display: 'block', transform: isHovered ? 'scale(1.04)' : 'scale(1)', transition: 'transform 0.4s' }}
                         />
                         <div style={{ position: 'absolute', inset: 0, transition: 'border 0.2s', borderTop: isSelected ? `2px solid ${limeColor}` : isHovered ? `1px solid ${t ? "rgba(0,0,0,0.20)" : "rgba(255,255,255,0.20)"}` : '1px solid transparent', borderRight: isSelected ? `2px solid ${limeColor}` : isHovered ? `1px solid ${t ? "rgba(0,0,0,0.20)" : "rgba(255,255,255,0.20)"}` : '1px solid transparent', borderBottom: isSelected ? `2px solid ${limeColor}` : isHovered ? `1px solid ${t ? "rgba(0,0,0,0.20)" : "rgba(255,255,255,0.20)"}` : '1px solid transparent', borderLeft: isSelected ? `2px solid ${limeColor}` : isHovered ? `1px solid ${t ? "rgba(0,0,0,0.20)" : "rgba(255,255,255,0.20)"}` : '1px solid transparent' }} />
-                        <div style={{ position: 'absolute', top: 8, right: 8, maxWidth: 'calc(100% - 14px)', display: 'flex', alignItems: 'center', justifyContent: 'flex-end', gap: 6, opacity: showActions ? 1 : 0, transform: showActions ? 'translateY(0)' : 'translateY(-3px)', transition: 'opacity 0.2s, transform 0.2s' }}>
-                          <button
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              e.preventDefault();
-                              setProductArtwork(toProductArtwork(aw));
-                            }}
-                            title="상품으로 구매하기"
-                            style={actionButtonStyle}
-                          >
-                            <svg width={15} height={15} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                              <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
-                              <rect x="7" y="7" width="10" height="10" />
-                            </svg>
-                          </button>
-                          <button
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              e.preventDefault();
-                              setCommentArtworkId(artworkIdFrom(aw));
-                            }}
-                            title="Comments"
-                            style={actionButtonStyle}
-                          >
-                            <svg width={15} height={15} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                              <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
-                            </svg>
-                          </button>
+                        <div style={{ position: 'absolute', bottom: isMobile ? 6 : 10, right: isMobile ? 6 : 10, display: 'flex', alignItems: 'center', gap: isMobile ? 6 : 8, zIndex: 2, pointerEvents: 'auto' }}>
                           <button
                             onClick={(e) => {
                               e.stopPropagation();
                               e.preventDefault();
                               openPlaylistForArtwork(aw);
                             }}
-                            title="Add to playlist"
+                            title="Save to Playlist"
                             style={actionButtonStyle}
                           >
-                            <svg width={15} height={15} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                              <path d="M19 21l-7-4-7 4V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z" />
-                              <path d="M12 7v6" />
-                              <path d="M9 10h6" />
-                            </svg>
+                            <BookmarkPlus size={isMobile ? 12 : 14} strokeWidth={2.2} />
                           </button>
-                          <HeartOverlay
-                            isLiked={likedArtworks.has(artworkIdFrom(aw)) || likedArtworks.has(normalizeArtworkIdForFirestore(artworkIdFrom(aw)))}
-                            onToggle={(e) => toggleLike(e, aw)}
-                            size={15}
-                            color={limeColor}
-                            emptyColor={t ? '#202020' : '#fff'}
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              e.preventDefault();
+                              setProductArtwork(toProductArtwork(aw));
+                            }}
+                            title="Purchase Product"
                             style={actionButtonStyle}
-                          />
+                          >
+                            <ShoppingBag size={isMobile ? 12 : 14} strokeWidth={2.1} />
+                          </button>
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              e.preventDefault();
+                              toggleLike(e as unknown as React.MouseEvent, aw);
+                            }}
+                            title={isLikedAw ? 'Unlike' : 'Like'}
+                            style={actionButtonStyle}
+                          >
+                            <Heart
+                              size={isMobile ? 13 : 15}
+                              strokeWidth={2.2}
+                              fill={isLikedAw ? limeColor : 'none'}
+                              color={isLikedAw ? limeColor : '#fff'}
+                            />
+                          </button>
                         </div>
                       </div>
-                      <div style={{ marginTop: '6px', padding: '0 2px' }}>
-                        <div style={{ fontFamily: "'Space Mono', monospace", fontSize: '8px', color: fgMute }}>
+                      <div style={{ marginTop: '8px', padding: '0 2px' }}>
+                        <div style={{ fontFamily: "'Space Mono', monospace", fontSize: '10px', fontWeight: 700, letterSpacing: '0.14em', color: fgMute }}>
                           {String(globalIdx + 1).padStart(2, '0')}
                         </div>
-                        <div style={{ fontSize: '10px', color: isSelected || isHovered ? fgHigh : fgMed, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', marginTop: '2px', transition: 'color 0.15s' }}>
-                          {aw.title} <span style={{ color: fgMute }}>({formatArtworkYear(aw.year) || aw.year})</span>
+                        <div style={{ fontSize: '13.5px', fontWeight: 600, lineHeight: 1.32, color: isSelected || isHovered ? fgHigh : fgMed, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', marginTop: '4px', transition: 'color 0.15s' }}>
+                          {aw.title} <span style={{ color: fgMute, fontWeight: 400 }}>({formatArtworkYear(aw.year) || aw.year})</span>
                         </div>
-                        <div style={{ fontSize: '9px', color: fgMute, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', marginTop: '2px' }}>
+                        <div style={{ fontSize: '12px', fontWeight: 400, lineHeight: 1.4, color: fgLow, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', marginTop: '3px' }}>
                           {aw.artist}
                         </div>
                       </div>
@@ -1847,11 +2005,13 @@ export function InteractiveGlobeRealModal({
                   >
                     <div style={{ height: '1px', backgroundColor: dividerColor }} />
                     <div style={{ padding: isMobile ? '18px 0' : '28px 0', display: 'flex', flexDirection: isMobile ? 'column' : 'row', gap: isMobile ? '14px' : '32px' }}>
-                      <div style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', alignItems: 'center' }}>
+                      <div style={{ flex: 1, minWidth: 0, display: 'flex', flexDirection: 'column', alignItems: 'center', background: t ? 'rgba(0,0,0,0.04)' : 'rgba(255,255,255,0.02)', minHeight: isMobile ? '220px' : '260px' }}>
                         <img
                           src={selectedArtworkDetail.image}
                           alt={selectedArtworkDetail.title}
                           loading="lazy"
+                          className="igrm-detail-img"
+                          onLoad={(e) => e.currentTarget.setAttribute('data-loaded', '1')}
                           style={{ width: '100%', height: 'auto', display: 'block', maxHeight: isMobile ? '52vh' : '58vh', objectFit: 'contain' }}
                         />
                       </div>
@@ -1908,18 +2068,6 @@ export function InteractiveGlobeRealModal({
                             <button
                               onClick={(e) => {
                                 e.stopPropagation();
-                                setCommentArtworkId(artworkIdFrom(selectedArtworkDetail));
-                              }}
-                              title="Comments"
-                              style={{ cursor: 'pointer', width: 30, height: 30, display: 'inline-flex', alignItems: 'center', justifyContent: 'center', background: t ? 'rgba(0,0,0,0.06)' : 'rgba(255,255,255,0.08)', borderTop: 'none', borderRight: 'none', borderBottom: 'none', borderLeft: 'none', borderRadius: 15, padding: 0, color: fgHigh }}
-                            >
-                              <svg width={16} height={16} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
-                              </svg>
-                            </button>
-                            <button
-                              onClick={(e) => {
-                                e.stopPropagation();
                                 openPlaylistForArtwork(selectedArtworkDetail);
                               }}
                               title="Add to playlist"
@@ -1948,8 +2096,8 @@ export function InteractiveGlobeRealModal({
                               { label: "Dimensions", value: selectedArtworkDetail.dimensions },
                             ].map((m) => (
                               <div key={m.label} style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', gap: '12px' }}>
-                                <span style={{ fontSize: '8px', color: fgMute, letterSpacing: '0.15em', textTransform: 'uppercase', flexShrink: 0 }}>{m.label}</span>
-                                <span style={{ fontSize: isMobile ? '10px' : '11px', color: fgLow, textAlign: 'right' }}>{m.value}</span>
+                                <span style={{ fontFamily: "'Space Mono', monospace", fontSize: '10px', fontWeight: 700, color: fgMute, letterSpacing: '0.16em', textTransform: 'uppercase', flexShrink: 0 }}>{m.label}</span>
+                                <span style={{ fontSize: isMobile ? '12px' : '13px', fontWeight: 500, color: fgMed, textAlign: 'right', lineHeight: 1.4 }}>{m.value}</span>
                               </div>
                             ))}
                           </div>
@@ -1971,7 +2119,7 @@ export function InteractiveGlobeRealModal({
                               }}
                             >
                               <span>View Original</span>
-                              <span>&nearr;</span>
+                              <span>↗</span>
                             </a>
                           )}
                         </div>
@@ -2000,6 +2148,7 @@ export function InteractiveGlobeRealModal({
                           likedArtworks={likedArtworks}
                           onToggleLike={(e, artwork) => toggleLike(e, toInteractiveArtworkFromProduct(artwork))}
                           onOpenProduct={(artwork) => setProductArtwork(toProductArtwork(toInteractiveArtworkFromProduct(artwork)))}
+                          onSaveToPlaylist={(artwork) => openPlaylistForArtwork(toInteractiveArtworkFromProduct(artwork))}
                         />
                       </div>
                     )}
@@ -2093,7 +2242,7 @@ export function InteractiveGlobeRealModal({
             theme={t ? "light" : "dark"}
           />
         )}
-      </motion.div>
-    </motion.div>
+      </div>
+    </div>
   );
 }
