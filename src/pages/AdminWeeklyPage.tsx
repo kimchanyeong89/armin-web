@@ -22,7 +22,7 @@ import { useIsAdmin, addAdminEmail, removeAdminEmail, BOOTSTRAP_ADMINS } from '.
 // ── Week index ────────────────────────────────────────────────────────────
 // V1: hardcoded. TODO: have generator script emit
 // `public/data/weekly-proposals-index.json` listing weeks.
-const KNOWN_WEEKS: string[] = ['2026-W20'];
+const KNOWN_WEEKS: string[] = ['2026-W21', '2026-W20'];
 
 // ── Design tokens — match WeeklyCurationTab.tsx ──────────────────────────
 const COLOR_BG = '#0a0a0a';
@@ -613,20 +613,26 @@ const AdminWeeklyPage: React.FC = () => {
     (async () => {
       try {
         const [propRes, pubRes] = await Promise.all([
-          fetch(`/data/weekly-proposals/${week}.json`),
-          fetch(`/data/weekly-curations/${week}.json`),
+          fetch(`/data/weekly-proposals/${week}.json`, { cache: 'no-store' }),
+          fetch(`/data/weekly-curations/${week}.json`, { cache: 'no-store' }),
         ]);
         if (cancelled) return;
-        if (propRes.ok) {
-          setProposal((await propRes.json()) as WeeklyProposalFile);
+        // A missing /data/*.json is answered with the SPA fallback (HTTP 200,
+        // text/html) — res.ok is not enough, so require a real JSON body.
+        const [propText, pubText] = await Promise.all([propRes.text(), pubRes.text()]);
+        if (cancelled) return;
+        const propJson = propText.trimStart().startsWith('{')
+          ? (JSON.parse(propText) as WeeklyProposalFile)
+          : null;
+        const pubJson = pubText.trimStart().startsWith('{')
+          ? (JSON.parse(pubText) as WeeklyPublishedFile)
+          : null;
+        if (propJson) {
+          setProposal(propJson);
         } else {
           setDataError(`No proposal file for ${week} (HTTP ${propRes.status})`);
         }
-        if (pubRes.ok) {
-          setPublished((await pubRes.json()) as WeeklyPublishedFile);
-        } else {
-          setPublished(null);
-        }
+        setPublished(pubJson);
       } catch (err) {
         if (!cancelled) setDataError(String(err));
       } finally {

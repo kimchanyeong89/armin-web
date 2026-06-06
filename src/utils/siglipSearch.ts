@@ -26,8 +26,21 @@ const IS_MOBILE_DEVICE = typeof navigator !== 'undefined' && (
  * 자동 번역 후 인코딩)보다 빨리 race를 이기면 사용자는 무의미한 결과를 본다.
  * 따라서 비영어 쿼리는 Tier 1을 건너뛰고 서버에만 맡긴다.
  */
-function looksNonEnglish(text: string): boolean {
+export function looksNonEnglish(text: string): boolean {
     return /[ㄱ-ㆎ가-힣぀-ゟ゠-ヿ一-鿿Ѐ-ӿ؀-ۿऀ-ॿ฀-๿֐-׿]/.test(text);
+}
+
+/**
+ * Wrap a query in a minimal caption so SigLIP's text encoder (trained on
+ * caption-like alt-text) aligns with the image embeddings — a bare keyword
+ * lands near the modality-gap centroid and retrieves near-random images.
+ * Mirrors `toSiglipCaption` in workers/semantic-search/src/index.ts; the two
+ * must stay in sync so the browser (Tier 1) and server (Tier 2) encode the
+ * same text.
+ */
+function toSiglipCaption(text: string): string {
+    const q = (text || '').trim();
+    return q ? `a painting of ${q}` : q;
 }
 
 /** fetch with manual AbortController timeout (works on iOS 14+) */
@@ -164,10 +177,16 @@ async function encodeWithBrowser(text: string): Promise<number[] | null> {
  */
 export async function searchByText(
     text: string,
-    limit: number = 50
+    limit: number = 50,
+    engine: 'siglip' | 'jina' = 'siglip'
 ): Promise<SigLIPSearchResult[]> {
     const trimmed = (text || '').trim();
     if (!trimmed) return [];
+
+    // engine='jina' 면 브라우저 WASM tier 건너뛰고 워커의 Jina path 강제.
+    // 워커가 engine='jina' 를 받으면 한국어 native 인코더 사용.
+    const wantJina = engine === 'jina';
+    const serverTimeout = wantJina ? 15_000 : 12_000;  // Jina 인코더는 ~3초 더 걸림
 
     // Tier 2 — server. Always fire (it's our reliable baseline).
     const serverPromise: Promise<SigLIPSearchResult[] | null> = (async () => {
@@ -177,8 +196,8 @@ export async function searchByText(
                 headers: { 'Content-Type': 'application/json' },
                 credentials: 'omit',
                 mode: 'cors',
-                body: JSON.stringify({ text: trimmed, limit }),
-            }, 12_000);
+                body: JSON.stringify({ text: trimmed, limit, engine: wantJina ? 'jina' : 'siglip' }),
+            }, serverTimeout);
             if (!res.ok) {
                 const errText = await res.text().catch(() => '');
                 console.warn(`[SigLIP] /search-by-text failed (${res.status}): ${errText.slice(0, 200)}`);
@@ -198,9 +217,12 @@ export async function searchByText(
     //    WASM would produce garbage vectors that could win the race vs.
     //    the server path which auto-translates before encoding)
     const browserPromise: Promise<SigLIPSearchResult[] | null> = (async () => {
+        if (wantJina) return null;  // 정밀 검색(Jina) 모드면 브라우저 SigLIP 패스 스킵
         if (IS_MOBILE_DEVICE) return null;
         if (looksNonEnglish(trimmed)) return null;
-        const vector = await encodeWithBrowser(trimmed);
+        // Encode the caption, not the bare query — matches the server tier,
+        // which captions internally inside /search-by-text.
+        const vector = await encodeWithBrowser(toSiglipCaption(trimmed));
         if (!vector || vector.length !== 768) return null;
         try {
             const res = await fetchWithTimeout(`${WORKER_URL}/search-by-vector`, {

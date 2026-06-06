@@ -17,6 +17,19 @@ describe('fetchCurrentCuration', () => {
     global.fetch = vi.fn(async () => ({ ok: false, status: 404 })) as any;
     expect(await fetchCurrentCuration()).toBeNull();
   });
+
+  it('falls back to the most recent previous week when the current week has no file', async () => {
+    // 2026-05-21 is ISO week 21; W21 is unpublished, W20 exists.
+    const week20 = { week: '2026-W20', id: 'prev', title_en: 'Prev' };
+    global.fetch = vi.fn(async (url: any) => {
+      if (url === '/data/weekly-curations/2026-W20.json') {
+        return { ok: true, json: async () => week20 };
+      }
+      return { ok: false, status: 404 };
+    }) as any;
+    const data = await fetchCurrentCuration(new Date('2026-05-21T00:00:00Z'));
+    expect(data?.week).toBe('2026-W20');
+  });
 });
 
 describe('fetchArchiveList', () => {

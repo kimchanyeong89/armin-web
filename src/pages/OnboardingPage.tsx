@@ -859,7 +859,7 @@ const OnboardingPage: React.FC = () => {
 
           <div style={{ marginBottom: isMobile ? 12 : 24 }}>
             <div style={{ fontSize: 9, letterSpacing: '0.18em', color: 'rgba(255,255,255,0.24)', marginBottom: isMobile ? 4 : 8 }}>일</div>
-            <div style={{ display: 'flex', gap: isMobile ? 4 : 5, overflowX: 'auto', paddingBottom: 4, scrollbarWidth: 'none' }}>
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(7, 1fr)', gap: isMobile ? 4 : 6 }}>
               {Array.from({ length: 31 }, (_, i) => i + 1).map((d) => {
                 const active = birthDay === d;
                 return (
@@ -867,9 +867,7 @@ const OnboardingPage: React.FC = () => {
                     key={d}
                     onClick={() => setBirthDay(d)}
                     style={{
-                      flexShrink: 0,
-                      width: isMobile ? 30 : 36,
-                      height: isMobile ? 30 : 36,
+                      padding: isMobile ? '6px 2px' : '9px 4px',
                       borderRadius: 7,
                       border: `1px solid ${active ? ACCENT : DIMMER}`,
                       background: active ? 'rgba(212,165,71,0.10)' : 'rgba(255,255,255,0.07)',

@@ -1,0 +1,132 @@
+{
+  "museum": "National Gallery of Modern Art, New Delhi (NGMA)",
+  "slug": "ngma-newdelhi",
+  "removed_count": 5,
+  "artworks": [
+    {
+      "id": "ngma_del-ngma-02093-1368",
+      "objectNumber": "ngma-02093",
+      "title": "portrait of a Queen",
+      "artist": "Anonymous",
+      "date": null,
+      "year": null,
+      "medium": "Tempera on ivory",
+      "dimensions": "3.2 X 4.6 cms",
+      "category": "painting",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/ngma-newdelhi-collection/ngma_del-ngma-02093-1368-214d0ddf-imageUrl.webp?v=6",
+      "thumbnailUrl": "http:///museumsofindia.gov.in:81/cdn/thumbnail_m_2/[ngma_del]/ngma_del-ngma-02093-1368.jpg",
+      "onDisplay": true,
+      "displayLocation": "NGMA-New Delhi",
+      "sourceUrl": "https://museumsofindia.gov.in/repository/record/ngma_del-ngma-02093-1368",
+      "metadata": {
+        "ngmaRecordId": "ngma_del-ngma-02093-1368",
+        "objectType": "painting",
+        "country": "",
+        "nationality": "",
+        "inscription": ""
+      },
+      "original_imageUrl": "https://museumsofindia.gov.in/repository/file/ngma_del/ngma_del-ngma-02093-1368/ngma_del-ngma-02093-1368_01_h.jpg"
+    },
+    {
+      "id": "ngma_del-ngma-02094-1369",
+      "objectNumber": "ngma-02094",
+      "title": "Portrait of a Prince",
+      "artist": "Anonymous",
+      "date": null,
+      "year": null,
+      "medium": "Tempera on ivory",
+      "dimensions": "4 X 5.4 cms",
+      "category": "painting",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/ngma-newdelhi-collection/ngma_del-ngma-02094-1369-bc33f08e-imageUrl.webp?v=6",
+      "thumbnailUrl": "http:///museumsofindia.gov.in:81/cdn/thumbnail_m_2/[ngma_del]/ngma_del-ngma-02094-1369.jpg",
+      "onDisplay": true,
+      "displayLocation": "NGMA-New Delhi",
+      "sourceUrl": "https://museumsofindia.gov.in/repository/record/ngma_del-ngma-02094-1369",
+      "metadata": {
+        "ngmaRecordId": "ngma_del-ngma-02094-1369",
+        "objectType": "painting",
+        "country": "",
+        "nationality": "",
+        "inscription": ""
+      },
+      "original_imageUrl": "https://museumsofindia.gov.in/repository/file/ngma_del/ngma_del-ngma-02094-1369/ngma_del-ngma-02094-1369_01_h.jpg"
+    },
+    {
+      "id": "ngma_del-ngma-02095-1370",
+      "objectNumber": "ngma-02095",
+      "title": "Portrait of a Prince",
+      "artist": "Anonymous",
+      "date": null,
+      "year": null,
+      "medium": "Tempera on ivory",
+      "dimensions": "4 X 5.5 cms",
+      "category": "painting",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/ngma-newdelhi-collection/ngma_del-ngma-02095-1370-92f9bff6-imageUrl.webp?v=6",
+      "thumbnailUrl": "http:///museumsofindia.gov.in:81/cdn/thumbnail_m_2/[ngma_del]/ngma_del-ngma-02095-1370.jpg",
+      "onDisplay": true,
+      "displayLocation": "NGMA-New Delhi",
+      "sourceUrl": "https://museumsofindia.gov.in/repository/record/ngma_del-ngma-02095-1370",
+      "metadata": {
+        "ngmaRecordId": "ngma_del-ngma-02095-1370",
+        "objectType": "painting",
+        "country": "",
+        "nationality": "",
+        "inscription": ""
+      },
+      "original_imageUrl": "https://museumsofindia.gov.in/repository/file/ngma_del/ngma_del-ngma-02095-1370/ngma_del-ngma-02095-1370_01_h.jpg"
+    },
+    {
+      "id": "ngma_del-ngma-02096-1371",
+      "objectNumber": "ngma-02096",
+      "title": "Portrait of a Man",
+      "artist": "Anonymous",
+      "date": null,
+      "year": null,
+      "medium": "Tempera on ivory",
+      "dimensions": "4 X 5.1 cms",
+      "category": "painting",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/ngma-newdelhi-collection/ngma_del-ngma-02096-1371-cbf33008-imageUrl.webp?v=6",
+      "thumbnailUrl": "http:///museumsofindia.gov.in:81/cdn/thumbnail_m_2/[ngma_del]/ngma_del-ngma-02096-1371.jpg",
+      "onDisplay": true,
+      "displayLocation": "NGMA-New Delhi",
+      "sourceUrl": "https://museumsofindia.gov.in/repository/record/ngma_del-ngma-02096-1371",
+      "metadata": {
+        "ngmaRecordId": "ngma_del-ngma-02096-1371",
+        "objectType": "painting",
+        "country": "",
+        "nationality": "",
+        "inscription": ""
+      },
+      "original_imageUrl": "https://museumsofindia.gov.in/repository/file/ngma_del/ngma_del-ngma-02096-1371/ngma_del-ngma-02096-1371_01_h.jpg"
+    },
+    {
+      "id": "ngma_del-ngma-12681-12717",
+      "objectNumber": "ngma-12681",
+      "title": "AB-Ductus",
+      "artist": "Pedro Proenca",
+      "date": null,
+      "year": null,
+      "medium": "Enamel on canvas",
+      "dimensions": "",
+      "category": "print",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/ngma-newdelhi-collection/ngma_del-ngma-12681-12717-f1082fb0-imageUrl.webp?v=6",
+      "thumbnailUrl": "http:///museumsofindia.gov.in:81/cdn/thumbnail_m_2/[ngma_del]/ngma_del-ngma-12681-12717.jpg",
+      "onDisplay": true,
+      "displayLocation": "",
+      "sourceUrl": "https://museumsofindia.gov.in/repository/record/ngma_del-ngma-12681-12717",
+      "metadata": {
+        "ngmaRecordId": "ngma_del-ngma-12681-12717",
+        "objectType": "print",
+        "country": "",
+        "nationality": "",
+        "inscription": ""
+      },
+      "original_imageUrl": "https://museumsofindia.gov.in/repository/file/ngma_del/ngma_del-ngma-12681-12717/ngma_del-ngma-12681-12717_01_h.jpg"
+    }
+  ]
+}

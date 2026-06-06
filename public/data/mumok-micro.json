@@ -1,0 +1,89 @@
+{
+  "museum": "Museum moderner Kunst Stiftung Ludwig Wien (mumok)",
+  "collection": "Flat visual art — paintings (all), prints, photographs & video (value-filtered)",
+  "website": "https://www.mumok.at/en/online-collection",
+  "source": "mumok.at TYPO3 online-collection — HTML scrape (no API/IIIF); sitemap record list + per-detail parse",
+  "scraped_date": "2026-06-04",
+  "total_count": 3,
+  "source_type": "html-scrape",
+  "artworks": [
+    {
+      "id": "mumok-tenebrosa-95",
+      "objectNumber": "ÖL-Stg 5/0",
+      "title": "Tenebrosa",
+      "artist": "Baer, Jo",
+      "date": "1971",
+      "year": 1971,
+      "medium": "Oil on canvas",
+      "dimensions": "Object: height: 56,5 cm, width: 245 cm, depth: 10,2 cm",
+      "category": "painting",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/mumok-collection/mumok-tenebrosa-95-83458e44-imageUrl.webp",
+      "thumbnailUrl": "https://www.mumok.at/fileadmin/_processed_/2/b/csm_OEL-Stg_5_0_Baer2_he_Web_678771c739.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://www.mumok.at/en/online-collection/detail/tenebrosa-95",
+      "metadata": {
+        "rawCategory": "painting",
+        "material": "Painting layer: oil paint Support: canvas",
+        "technique": "Object: oil paintings",
+        "acquisitionYear": "1981",
+        "creditline": "mumok - Museum moderner Kunst Stiftung Ludwig Wien, Leihgabe der Österreichischen Ludwig-Stiftung",
+        "rights": "Baer, Jo"
+      },
+      "original_imageUrl": "https://www.mumok.at/fileadmin/_processed_/2/b/csm_OEL-Stg_5_0_Baer2_he_Web_678771c739.jpg"
+    },
+    {
+      "id": "mumok-elegua-112",
+      "objectNumber": "B 6/0",
+      "title": "Elegua",
+      "artist": "Lam, Wifredo",
+      "date": "1959",
+      "year": 1959,
+      "medium": "Oil on canvas",
+      "dimensions": "",
+      "category": "painting",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/mumok-collection/mumok-elegua-112-d2bb73fe-imageUrl.webp",
+      "thumbnailUrl": "https://www.mumok.at/fileadmin/_processed_/3/b/csm_B_6_0_Lam_01_Web_8f9b9224e3.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://www.mumok.at/en/online-collection/detail/elegua-112",
+      "metadata": {
+        "rawCategory": "painting",
+        "material": "Support: canvas Painting layer: oil paint",
+        "technique": "object: oil paintings",
+        "acquisitionYear": "1960",
+        "creditline": "mumok - Museum moderner Kunst Stiftung Ludwig Wien",
+        "rights": "Bildrecht, Wien"
+      },
+      "original_imageUrl": "https://www.mumok.at/fileadmin/_processed_/3/b/csm_B_6_0_Lam_01_Web_8f9b9224e3.jpg"
+    },
+    {
+      "id": "mumok-entwurf-fuer-ein-buehnenbild-zu-hoffmanns-erzaehlungen-kroll-oper-berlin-189",
+      "objectNumber": "G 9/0",
+      "title": "Entwurf für ein Bühnenbild zu Hoffmanns Erzählungen (Kroll-Oper, Berlin)",
+      "artist": "Moholy-Nagy, László",
+      "date": "1929",
+      "year": 1929,
+      "medium": "Gouache on paper",
+      "dimensions": "object size: height: 39 cm, width: 56 cm frame dimension: height: 62 cm, width: 79,2 cm, depth: 4,8 cm",
+      "category": "print",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/mumok-collection/mumok-entwurf-fuer-ein-buehnenbild-zu-hoffmanns-erzaehlungen-kroll-oper-berlin-189-331037ed-imageUrl.webp",
+      "thumbnailUrl": "https://www.mumok.at/fileadmin/_processed_/1/d/csm_00029201_m_9d970384ab.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://www.mumok.at/en/online-collection/detail/entwurf-fuer-ein-buehnenbild-zu-hoffmanns-erzaehlungen-kroll-oper-berlin-189",
+      "metadata": {
+        "rawCategory": "graphics",
+        "material": "Painting layer: gouache image carrier: paper",
+        "technique": "object: gouache",
+        "acquisitionYear": "1965",
+        "creditline": "mumok - Museum moderner Kunst Stiftung Ludwig Wien",
+        "rights": "Gemeinfrei | public domain"
+      },
+      "original_imageUrl": "https://www.mumok.at/fileadmin/_processed_/1/d/csm_00029201_m_9d970384ab.jpg"
+    }
+  ]
+}

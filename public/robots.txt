@@ -1,0 +1,39 @@
+# ARMIN — robots policy
+# 정책 근거: GOALS.md §2.1 (GEO). 노출 우선 → 기본 Allow.
+# 비공개·트랜잭션 경로만 Disallow. AI 엔진(GPT/Perplexity/Claude/Gemini 등)도 동일.
+
+User-agent: *
+Allow: /
+Disallow: /admin
+Disallow: /login
+Disallow: /signup
+Disallow: /onboarding
+Disallow: /mypage
+Disallow: /cart
+Disallow: /payment/
+Disallow: /community/write
+
+# AI / LLM 크롤러 — 명시적 Allow (정책 가시성을 위해 별도 블록 유지)
+# 노출 우선, 학습 차단 없음. 정책 변경 시 이 블록만 수정하면 됨.
+User-agent: GPTBot
+User-agent: OAI-SearchBot
+User-agent: ChatGPT-User
+User-agent: PerplexityBot
+User-agent: Perplexity-User
+User-agent: ClaudeBot
+User-agent: anthropic-ai
+User-agent: Claude-Web
+User-agent: Google-Extended
+User-agent: Applebot-Extended
+User-agent: CCBot
+Allow: /
+Disallow: /admin
+Disallow: /login
+Disallow: /signup
+Disallow: /onboarding
+Disallow: /mypage
+Disallow: /cart
+Disallow: /payment/
+Disallow: /community/write
+
+Sitemap: https://armin-web.pages.dev/sitemap.xml

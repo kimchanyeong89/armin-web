@@ -13,6 +13,8 @@ import { useParams, useNavigate, useSearchParams } from "react-router-dom";
 import React, { Suspense, useMemo, useState } from 'react';
 import type { Exhibition, ExhibitionItem } from '../types/Exhibition';
 import DrawingLoader from '../components/DrawingLoader';
+import { useLanguage } from '../contexts/LanguageContext';
+import { getMuseumDisplayName, getMuseumDisplayLocation, getMuseumDisplayDescription } from '../i18n/museumLocalization';
 
 const ExhibitionModal = React.lazy(() => import('../components/ExhibitionModal'));
 
@@ -587,9 +589,14 @@ export default function ExhibitionPage({ exhibitions }: { exhibitions: Exhibitio
   const { id } = useParams();
   const navigate = useNavigate();
   const [searchParams] = useSearchParams();
+  const { language } = useLanguage();
 
   const museum = exhibitions.find((e) => e.id === id);
   if (!museum) return <div />;
+
+  const museumName = getMuseumDisplayName(museum, language);
+  const museumLocation = getMuseumDisplayLocation(museum, language);
+  const museumDesc = getMuseumDisplayDescription(museum, language);
 
   const isDrawingMode = searchParams.get('mode') === 'drawing';
   const mode = isDrawingMode ? 'drawing' : 'interactive';
@@ -652,8 +659,8 @@ export default function ExhibitionPage({ exhibitions }: { exhibitions: Exhibitio
         )}
         <span className="ep-header-meta">
           {activeItem
-            ? museum.name.toUpperCase()
-            : (museum.location || museum.name || 'GLOBAL').toUpperCase()}
+            ? museumName.toUpperCase()
+            : (museumLocation || museumName || 'GLOBAL').toUpperCase()}
         </span>
       </header>
 
@@ -661,17 +668,21 @@ export default function ExhibitionPage({ exhibitions }: { exhibitions: Exhibitio
       {!isDrawingMode && !activeItem && (
         <section className="ep-hero">
           <div className="ep-hero-label">ARMIN · INTERACTIVE</div>
-          <h1 className="ep-hero-name">{museum.name}</h1>
+          <h1 className="ep-hero-name">{museumName}</h1>
           <div className="ep-hero-row">
-            {museum.location && <span className="ep-hero-loc">{museum.location}</span>}
+            {museumLocation && <span className="ep-hero-loc">{museumLocation}</span>}
             <span className="ep-hero-meta">
-              {allExhibitions.length} exhibition{allExhibitions.length !== 1 ? 's' : ''}
-              {totalArtworks > 0 && ` · ${totalArtworks.toLocaleString()} works`}
+              {language === 'ko'
+                ? `전시 ${allExhibitions.length}개`
+                : `${allExhibitions.length} exhibition${allExhibitions.length !== 1 ? 's' : ''}`}
+              {totalArtworks > 0 && (language === 'ko'
+                ? ` · 작품 ${totalArtworks.toLocaleString()}점`
+                : ` · ${totalArtworks.toLocaleString()} works`)}
             </span>
           </div>
-          {museum.description && (
+          {museumDesc && (
             <p className="ep-hero-desc">
-              {museum.description.length > 230 ? `${museum.description.slice(0, 230)}…` : museum.description}
+              {museumDesc.length > 230 ? `${museumDesc.slice(0, 230)}…` : museumDesc}
             </p>
           )}
         </section>
@@ -691,14 +702,14 @@ export default function ExhibitionPage({ exhibitions }: { exhibitions: Exhibitio
                   : <div className="ep-card-no-img"><MiniGlobe dark={true} /></div>}
                 <div className="ep-card-body">
                   <span className="ep-card-num">{String(idx + 1).padStart(2, '0')}</span>
-                  <span className={`ep-card-tag${ex.type === 'PERMANENT' ? ' permanent' : ''}`}>{ex.type}</span>
+                  <span className={`ep-card-tag${ex.type === 'PERMANENT' ? ' permanent' : ''}`}>{language === 'ko' ? (ex.type === 'PERMANENT' ? '상설' : '기획·임시') : ex.type}</span>
                   <h3 className="ep-card-title">{ex.title || ex.name}</h3>
-                  <p className="ep-card-sub">{ex.artworks?.length ? `${ex.artworks.length} artworks` : 'Open collection'}</p>
-                  <div className="ep-card-arrow">EXPLORE →</div>
+                  <p className="ep-card-sub">{ex.artworks?.length ? (language === 'ko' ? `작품 ${ex.artworks.length}점` : `${ex.artworks.length} artworks`) : (language === 'ko' ? '컬렉션 열기' : 'Open collection')}</p>
+                  <div className="ep-card-arrow">{language === 'ko' ? '둘러보기 →' : 'EXPLORE →'}</div>
                 </div>
               </article>
             ))}
-            {allExhibitions.length === 0 && <div className="ep-empty">NO EXHIBITIONS FOUND</div>}
+            {allExhibitions.length === 0 && <div className="ep-empty">{language === 'ko' ? '등록된 전시가 없습니다' : 'NO EXHIBITIONS FOUND'}</div>}
           </div>
         </main>
       )}
@@ -718,21 +729,23 @@ export default function ExhibitionPage({ exhibitions }: { exhibitions: Exhibitio
                 </span>
               )}
             </div>
-            <h1 className="dg-museum-name">{museum.name}</h1>
+            <h1 className="dg-museum-name">{museumName}</h1>
             <div className="dg-hero-meta">
-              {museum.location && <span>{museum.location}</span>}
-              {museum.location && <span className="dg-hero-meta-sep">·</span>}
-              <span>{allExhibitions.length} exhibition{allExhibitions.length !== 1 ? 's' : ''}</span>
+              {museumLocation && <span>{museumLocation}</span>}
+              {museumLocation && <span className="dg-hero-meta-sep">·</span>}
+              <span>{language === 'ko'
+                ? `전시 ${allExhibitions.length}개`
+                : `${allExhibitions.length} exhibition${allExhibitions.length !== 1 ? 's' : ''}`}</span>
               {totalArtworks > 0 && (
                 <>
                   <span className="dg-hero-meta-sep">·</span>
-                  <span>{totalArtworks.toLocaleString()} works</span>
+                  <span>{language === 'ko' ? `작품 ${totalArtworks.toLocaleString()}점` : `${totalArtworks.toLocaleString()} works`}</span>
                 </>
               )}
             </div>
-            {museum.description && (
+            {museumDesc && (
               <p className="dg-hero-desc">
-                {museum.description.length > 300 ? `${museum.description.slice(0, 300)}…` : museum.description}
+                {museumDesc.length > 300 ? `${museumDesc.slice(0, 300)}…` : museumDesc}
               </p>
             )}
           </div>
@@ -740,7 +753,7 @@ export default function ExhibitionPage({ exhibitions }: { exhibitions: Exhibitio
           {/* Exhibition index */}
           <div className="dg-rule" />
           <div className="dg-list-hd">
-            <span>EXHIBITIONS</span>
+            <span>{language === 'ko' ? '전시 목록' : 'EXHIBITIONS'}</span>
             <span>{allExhibitions.length}</span>
           </div>
           <div className="dg-rule" />
@@ -756,11 +769,11 @@ export default function ExhibitionPage({ exhibitions }: { exhibitions: Exhibitio
               <div className="dg-row-body">
                 <h3 className="dg-row-title">{ex.title || ex.name}</h3>
                 <div className="dg-row-meta">
-                  {ex.artworks?.length ? `${ex.artworks.length} artworks` : 'Open collection'}
+                  {ex.artworks?.length ? (language === 'ko' ? `작품 ${ex.artworks.length}점` : `${ex.artworks.length} artworks`) : (language === 'ko' ? '컬렉션 열기' : 'Open collection')}
                 </div>
               </div>
               <div className="dg-row-badge-cell">
-                <span className={`dg-row-badge${ex.type === 'PERMANENT' ? ' perm' : ''}`}>{ex.type}</span>
+                <span className={`dg-row-badge${ex.type === 'PERMANENT' ? ' perm' : ''}`}>{language === 'ko' ? (ex.type === 'PERMANENT' ? '상설' : '기획') : ex.type}</span>
               </div>
               <div className="dg-row-arrow">→</div>
             </div>
@@ -768,7 +781,7 @@ export default function ExhibitionPage({ exhibitions }: { exhibitions: Exhibitio
 
           {allExhibitions.length === 0 && (
             <div style={{ padding: '32px 40px', fontFamily: 'sans-serif', fontSize: 10, letterSpacing: '0.2em', opacity: 0.4 }}>
-              NO EXHIBITIONS
+              {language === 'ko' ? '등록된 전시 없음' : 'NO EXHIBITIONS'}
             </div>
           )}
         </div>
@@ -856,7 +869,7 @@ export default function ExhibitionPage({ exhibitions }: { exhibitions: Exhibitio
               <div className="sketch-modal-theme" style={{ width: '100%', height: '100%', background: '#ffffff' }}>
                 <ExhibitionModal
                   exhibition={activeItem}
-                  museumName={museum.name}
+                  museumName={museumName}
                   onClose={closeDetail}
                   inline={true}
                   variant="sketch"
@@ -876,7 +889,7 @@ export default function ExhibitionPage({ exhibitions }: { exhibitions: Exhibitio
         }>
           <ExhibitionModal
             exhibition={activeItem}
-            museumName={museum.name}
+            museumName={museumName}
             onClose={closeDetail}
             inline={false}
             variant="default"

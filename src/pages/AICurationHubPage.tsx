@@ -10,20 +10,20 @@ import { useAuth } from '../contexts/AuthContext';
 import { getFirestore, collection, getDocs } from 'firebase/firestore';
 import { exhibitions } from '../data/exhibitions';
 import { ArtworkLightbox } from '../components/ArtworkLightbox';
+import { useLikedArtworkSet } from '../hooks/useLikedArtworkSet';
 import { ProductModal } from '../components/ProductModal';
 import CommentModal from '../components/CommentModal';
 import { PlaylistModal } from '../components/PlaylistModal';
 import { ExpandableActionMenu } from '../components/ExpandableActionMenu';
-import { createFirebaseWebPort } from '../adapters/firebaseWebAdapter';
 import { useLanguage } from "../contexts/LanguageContext";
 import { NO_IMAGE_PLACEHOLDER_DARK } from '../utils/noImagePlaceholder';
+import { getOptimizedImageUrl } from '../utils/imageProxy';
 import { localizeCountryName } from "../i18n/geoLocalization";
 import { getExhibitionDisplayDescription, getExhibitionDisplayTitle } from "../i18n/exhibitionLocalization";
 import { getMuseumDisplayDescription, getMuseumDisplayName } from "../i18n/museumLocalization";
 import type { RecommendationMode, RecommendationResponse, RecommendedArtwork } from "../types/Recommendation";
 
 const WORKER = 'https://armin-semantic-search.armin-art.workers.dev';
-const firebaseWebPort = createFirebaseWebPort();
 
 type RecommendationCardItem = RecommendedArtwork & Record<string, any> & {
   title?: string;
@@ -204,6 +204,7 @@ type CurationTabProps = {
   randomArtworks: RecommendationCardItem[];
   randomLoading: boolean;
   onRefreshRandom: (count?: number, append?: boolean) => void;
+  onTasteOnboardingSubmit: (selected: RecommendationCardItem[]) => Promise<void>;
 };
 
 type NearbyTabProps = {
@@ -358,6 +359,187 @@ function ExhibitionDetail({ ex, t, bg, fg, fgMed, fgLow, fgFaint: _fgFaint, divi
 }
 
 // ─── Curation Tab ───────────────────────────────────────────
+// ─── First-time Taste Onboarding ────────────────────────────
+// 좋아요 이력이 없는 첫 사용자를 위한 취향 픽커. 랜덤 작품을 3개 이상 고르면
+// 좋아요로 저장되고 취향 프로파일이 만들어져 추천이 로드된다.
+function TasteOnboarding({
+  tr, t, fg, fgLow, fgMed, divider,
+  pool, poolLoading, onShuffle, onSubmit, onBrowseRandom,
+}: {
+  tr: Translator;
+  t: boolean;
+  fg: string;
+  fgLow: string;
+  fgMed: string;
+  divider: string;
+  pool: RecommendationCardItem[];
+  poolLoading: boolean;
+  onShuffle: () => void;
+  onSubmit: (selected: RecommendationCardItem[]) => Promise<void>;
+  onBrowseRandom: () => void;
+}) {
+  const MIN_PICKS = 3;
+  const [selected, setSelected] = useState<RecommendationCardItem[]>([]);
+  const [submitting, setSubmitting] = useState(false);
+  const [brokenIds, setBrokenIds] = useState<Set<string>>(new Set());
+
+  // 한 화면에 들어오는 양(6개)만 노출 — 나머지는 "다른 작품 보기"로 넘겨가며 고른다.
+  // 선택(selected)은 풀이 바뀌어도 유지되므로 새로고침하며 누적 선택할 수 있다.
+  const visible = pool
+    .filter((a) => a.image && !brokenIds.has(String(a.id)))
+    .slice(0, 6);
+
+  const toggle = (art: RecommendationCardItem) => {
+    if (submitting) return;
+    setSelected((prev) =>
+      prev.some((a) => a.id === art.id)
+        ? prev.filter((a) => a.id !== art.id)
+        : [...prev, art],
+    );
+  };
+
+  const handleSubmit = async () => {
+    if (selected.length < MIN_PICKS || submitting) return;
+    setSubmitting(true);
+    try {
+      await onSubmit(selected);
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  const enough = selected.length >= MIN_PICKS;
+
+  return (
+    <div style={{ padding: '24px 20px 12px', maxWidth: 620, margin: '0 auto' }}>
+      <div style={{ textAlign: 'center', marginBottom: 22 }}>
+        <div style={{ display: 'inline-flex', alignItems: 'center', gap: 6, marginBottom: 10 }}>
+          <Sparkles size={15} color="#D4A547" strokeWidth={2.1} />
+          <span style={{ fontSize: 10.5, fontWeight: 700, letterSpacing: '0.16em', color: '#D4A547' }}>
+            {tr({ ko: '취향 분석 시작', en: 'BUILD YOUR TASTE' })}
+          </span>
+        </div>
+        <h2 style={{ fontSize: 19, fontWeight: 700, color: fg, margin: '0 0 8px', letterSpacing: '-0.01em' }}>
+          {tr({ ko: '마음에 드는 작품을 골라주세요', en: 'Pick the artworks you love' })}
+        </h2>
+        <p style={{ fontSize: 12.5, lineHeight: 1.65, color: fgLow, margin: 0 }}>
+          {tr({
+            ko: '최소 3개 — 더 많이 고를수록 추천이 정확해져요.',
+            en: 'At least 3 — the more you pick, the better your recommendations.',
+          })}
+        </p>
+      </div>
+
+      {(poolLoading || pool.length === 0) && visible.length === 0 ? (
+        <div style={{ padding: 60, display: 'flex', justifyContent: 'center' }}>
+          <svg width={28} height={28} viewBox="0 0 24 24" fill="none" stroke={fgMed} strokeWidth={2}>
+            <style>{`@keyframes _to_spin { 100% { transform: rotate(360deg); } }`}</style>
+            <circle cx={12} cy={12} r={10} strokeOpacity={0.2} />
+            <path d="M12 2 a10 10 0 0 1 10 10" strokeLinecap="round" style={{ transformOrigin: '12px 12px', animation: '_to_spin 1s linear infinite' }} />
+          </svg>
+        </div>
+      ) : (
+        <div style={{
+          display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 8,
+          opacity: submitting ? 0.5 : 1, transition: 'opacity 0.2s',
+        }}>
+          {visible.map((art) => {
+            const isSel = selected.some((a) => a.id === art.id);
+            return (
+              <button
+                key={String(art.id)}
+                onClick={() => toggle(art)}
+                aria-pressed={isSel}
+                style={{
+                  position: 'relative', aspectRatio: '1 / 1', padding: 0,
+                  cursor: submitting ? 'default' : 'pointer',
+                  borderRadius: 10, overflow: 'hidden', background: divider,
+                  border: isSel ? '2px solid #D4A547' : '2px solid transparent',
+                  boxShadow: isSel ? '0 6px 18px rgba(212,165,71,0.3)' : 'none',
+                  transition: 'border-color 0.12s, box-shadow 0.12s',
+                }}
+              >
+                <img
+                  src={getOptimizedImageUrl(String(art.image), 240, 70, 'webp')}
+                  alt={art.title || ''}
+                  loading="lazy"
+                  decoding="async"
+                  onError={() => setBrokenIds((p) => { const n = new Set(p); n.add(String(art.id)); return n; })}
+                  style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block', opacity: isSel ? 1 : 0.9 }}
+                />
+                {isSel && (
+                  <div style={{
+                    position: 'absolute', top: 6, right: 6, width: 22, height: 22, borderRadius: '50%',
+                    background: '#D4A547', display: 'flex', alignItems: 'center', justifyContent: 'center',
+                  }}>
+                    <span style={{ fontSize: 12, fontWeight: 800, color: '#000', lineHeight: 1 }}>✓</span>
+                  </div>
+                )}
+              </button>
+            );
+          })}
+        </div>
+      )}
+
+      <button
+        onClick={onShuffle}
+        disabled={poolLoading || submitting}
+        style={{
+          marginTop: 14, width: '100%', padding: '11px', borderRadius: 9,
+          background: 'transparent', border: `1px solid ${divider}`, color: fgLow,
+          fontSize: 12, fontWeight: 600,
+          cursor: poolLoading || submitting ? 'default' : 'pointer',
+          display: 'flex', alignItems: 'center', justifyContent: 'center', gap: 7,
+        }}
+      >
+        <Shuffle size={13} strokeWidth={2.1} />
+        {tr({ ko: '다른 작품 보기', en: 'Show different artworks' })}
+      </button>
+      <p style={{ margin: '8px 0 0', textAlign: 'center', fontSize: 11, lineHeight: 1.5, color: fgMed }}>
+        {tr({
+          ko: '새 작품을 불러와요 · 고른 작품은 그대로 유지돼요',
+          en: 'Loads new artworks — your picks are kept',
+        })}
+      </p>
+
+      <div style={{
+        position: 'sticky', bottom: 0, marginTop: 16, paddingTop: 12,
+        paddingBottom: 'calc(env(safe-area-inset-bottom, 0px) + 12px)',
+        background: `linear-gradient(to top, ${t ? '#fafafa' : '#080808'} 60%, transparent)`,
+      }}>
+        <button
+          onClick={handleSubmit}
+          disabled={!enough || submitting}
+          style={{
+            width: '100%', padding: '15px', borderRadius: 11, border: 'none',
+            background: enough && !submitting ? '#D4A547' : divider,
+            color: enough && !submitting ? '#000' : fgMed,
+            fontSize: 13.5, fontWeight: 800,
+            cursor: enough && !submitting ? 'pointer' : 'not-allowed',
+          }}
+        >
+          {submitting
+            ? tr({ ko: '취향을 분석하는 중…', en: 'Analyzing your taste…' })
+            : enough
+              ? tr({ ko: `이 작품들로 추천받기 (${selected.length})`, en: `Get recommendations (${selected.length})` })
+              : tr({ ko: `${MIN_PICKS}개 이상 골라주세요 · 현재 ${selected.length}개`, en: `Pick ${MIN_PICKS}+ · ${selected.length} selected` })}
+        </button>
+        <button
+          onClick={onBrowseRandom}
+          disabled={submitting}
+          style={{
+            marginTop: 8, width: '100%', padding: '8px', background: 'none', border: 'none',
+            color: fgMed, fontSize: 11.5, fontWeight: 600,
+            cursor: submitting ? 'default' : 'pointer', textDecoration: 'underline', textUnderlineOffset: 3,
+          }}
+        >
+          {tr({ ko: '아직은 둘러보기만 할게요', en: 'Just browse for now' })}
+        </button>
+      </div>
+    </div>
+  );
+}
+
 function CurationTab({
   t,
   language,
@@ -381,6 +563,7 @@ function CurationTab({
   randomArtworks,
   randomLoading,
   onRefreshRandom,
+  onTasteOnboardingSubmit,
 }: CurationTabProps) {
   const isRandomMode = recommendMode === 'random';
   const isLoading = isRandomMode ? randomLoading : loading;
@@ -456,9 +639,19 @@ function CurationTab({
   if (!displayArtworks || displayArtworks.length === 0) {
     if (!isRandomMode) {
       return (
-        <div style={{ padding: 40, textAlign: 'center', color: fgLow, fontSize: 12 }}>
-          {tr({ ko: '추천할 작품이 없습니다. 작품에 좋아요를 눌러 취향을 알려주세요!', en: 'No recommendations yet. Like artworks to train your taste.' })}
-        </div>
+        <TasteOnboarding
+          tr={tr}
+          t={t}
+          fg={fg}
+          fgLow={fgLow}
+          fgMed={fgMed}
+          divider={divider}
+          pool={randomArtworks}
+          poolLoading={randomLoading}
+          onShuffle={() => onRefreshRandom(36, false)}
+          onSubmit={onTasteOnboardingSubmit}
+          onBrowseRandom={() => onChangeRecommendMode('random')}
+        />
       );
     }
     return (
@@ -807,6 +1000,8 @@ export default function AICurationHubPage() {
   const { user } = useAuth();
   const [userArtworks, setUserArtworks] = useState<RecommendationCardItem[]>([]);
   const [curationLoading, setCurationLoading] = useState(true);
+  // 첫 사용자 취향 온보딩 완료 시 bump → fetchArtworks 재실행 트리거
+  const [tasteRefreshKey, setTasteRefreshKey] = useState(0);
   const [randomArtworks, setRandomArtworks] = useState<RecommendationCardItem[]>([]);
   const [randomLoading, setRandomLoading] = useState(false);
   const [randomWorkerReady, setRandomWorkerReady] = useState(false);
@@ -818,7 +1013,7 @@ export default function AICurationHubPage() {
   const [nearbyLoading, setNearbyLoading] = useState(true);
 
   const [lightboxArtwork, setLightboxArtwork] = useState<RecommendationCardItem | null>(null);
-  const [likedArtworkIds, setLikedArtworkIds] = useState<Set<string>>(new Set());
+  const { likedIds, isLiked, toggleLike } = useLikedArtworkSet();
   const [commentArtwork, setCommentArtwork] = useState<RecommendationCardItem | null>(null);
   const [productArtwork, setProductArtwork] = useState<RecommendationCardItem | null>(null);
   const [playlistArtwork, setPlaylistArtwork] = useState<RecommendationCardItem | null>(null);
@@ -905,10 +1100,14 @@ export default function AICurationHubPage() {
   }, [mapWorkerRandomArtwork]);
 
   useEffect(() => {
-    if (recommendMode !== 'random' || !randomWorkerReady) return;
-    if (randomArtworks.length > 0) return;
-    requestRandomArtworks(36);
-  }, [recommendMode, randomArtworks.length, randomWorkerReady, requestRandomArtworks]);
+    if (!randomWorkerReady || randomArtworks.length > 0) return;
+    // 랜덤 탭이거나, 취향 탭인데 추천이 비어(첫 사용자) 취향 픽커를 띄워야 할 때 풀을 채운다.
+    const needsTastePicker =
+      recommendMode === 'taste' && !curationLoading && userArtworks.length === 0;
+    if (recommendMode === 'random' || needsTastePicker) {
+      requestRandomArtworks(36);
+    }
+  }, [recommendMode, randomArtworks.length, randomWorkerReady, requestRandomArtworks, curationLoading, userArtworks.length]);
 
   const normalizeArtworkForAction = useCallback((artwork: RecommendationCardItem) => ({
     id: String(artwork?.id || ''),
@@ -925,72 +1124,44 @@ export default function AICurationHubPage() {
     officialUrl: artwork?.officialUrl || artwork?.detailUrl || '',
   }), []);
 
-  const handleToggleArtworkLike = useCallback(async (artwork: RecommendationCardItem) => {
-    if (!user) return;
-    const normalized = normalizeArtworkForAction(artwork);
-    const rawArtworkId = String(normalized.id || '').trim();
-    if (!rawArtworkId) return;
-    const safeArtworkId = normalizeArtworkIdForFirestore(rawArtworkId);
-
+  // 첫 사용자 취향 온보딩 — 고른 작품을 좋아요로 저장하고 추천을 로드한다.
+  const handleTasteOnboardingSubmit = useCallback(async (selected: RecommendationCardItem[]) => {
+    if (!user || selected.length === 0) return;
+    // 1) 고른 작품을 모두 좋아요 → Firestore liked_artworks 에 기록된다.
+    await Promise.all(selected.map((art) => toggleLike(art)));
+    // 2) 취향 프로파일을 worker KV 에 저장. id 형태(원본/__/슬래시)를 모두 보내
+    //    Vectorize 키와 어긋나지 않게 한다. 실패해도 /recommend 가 즉석 계산으로 대체.
+    const likedIdList = Array.from(new Set(
+      selected.flatMap((art) => {
+        const raw = String(art?.id || '').trim();
+        return raw ? [raw, raw.replace(/\//g, '__'), raw.replace(/__/g, '/')] : [];
+      }),
+    ));
     try {
-      const alreadyLiked = likedArtworkIds.has(rawArtworkId) || likedArtworkIds.has(safeArtworkId);
-
-      if (alreadyLiked) {
-        await firebaseWebPort.likes.removeLikedArtwork(user.uid, rawArtworkId);
-        setLikedArtworkIds((prev) => {
-          const next = new Set(prev);
-          next.delete(rawArtworkId);
-          next.delete(safeArtworkId);
-          return next;
-        });
-      } else {
-        await firebaseWebPort.likes.setLikedArtwork(user.uid, rawArtworkId, {
-          artworkId: rawArtworkId,
-          title: normalized.title,
-          name: normalized.name,
-          artist: normalized.artist,
-          image: normalized.image,
-          i: normalized.image,
-          year: normalized.year,
-          museumName: normalized.museumName,
-          country: normalized.country,
-          sourceCollection: normalized.sourceCollection,
-          officialUrl: normalized.officialUrl,
-          likedAt: Date.now(),
-        });
-        setLikedArtworkIds((prev) => {
-          const next = new Set(prev);
-          next.add(rawArtworkId);
-          next.add(safeArtworkId);
-          return next;
-        });
-      }
-    } catch (error) {
-      console.error('Failed to toggle artwork like', error);
+      await fetch(`${WORKER}/taste-profile`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ userId: user.uid, likedIds: likedIdList }),
+      });
+    } catch {
+      /* 프로파일 저장 실패는 무시 — /recommend 가 즉석 계산으로 처리 */
     }
-  }, [likedArtworkIds, normalizeArtworkForAction, user]);
+    // 3) 추천 다시 로드 (fetchArtworks 가 tasteRefreshKey 의존성으로 재실행)
+    setTasteRefreshKey((k) => k + 1);
+  }, [user, toggleLike]);
 
   // Fetch 'For You' artworks
   useEffect(() => {
     const fetchArtworks = async () => {
       if (!user) {
-        setLikedArtworkIds(new Set());
         setCurationLoading(false);
         return;
       }
+      setCurationLoading(true);
       try {
         const db = getFirestore();
         const snap = await getDocs(collection(db, `users/${user.uid}/liked_artworks`));
         const likedData: LikedArtworkRecord[] = snap.docs.map((d) => ({ id: d.id, ...(d.data() as object) } as LikedArtworkRecord));
-        const likedIdsForUi = new Set<string>();
-        likedData.forEach((item: LikedArtworkRecord) => {
-          const docId = String(item?.id || '').trim();
-          const rawArtworkId = String(item?.artworkId || item?.semanticId || '').trim();
-          if (docId) likedIdsForUi.add(docId);
-          if (rawArtworkId) likedIdsForUi.add(rawArtworkId);
-          if (rawArtworkId) likedIdsForUi.add(normalizeArtworkIdForFirestore(rawArtworkId));
-        });
-        setLikedArtworkIds(likedIdsForUi);
 
         const rawCandidateIds = Array.from(new Set(
           likedData.flatMap((item: LikedArtworkRecord) => [
@@ -1065,26 +1236,21 @@ export default function AICurationHubPage() {
             }
         } catch (_error) {}
 
-             const merged = new Map<string, { row: WorkerRecommendationRow; score: number; freq: number }>();
-             const addMergedRow = (row: WorkerRecommendationRow, boost: number) => {
+        // /recommend 결과를 1차 백본으로 사용한다. worker가 이미 취향 군집별로
+        // 공정하게 인터리브해 반환하므로, 절대 cosine 점수로 재정렬하면
+        // 가장 밀집된 한 군집(예: 화병/화분)이 상위를 독식한다.
+        const mergedIds = new Set<string>();
+        const orderedRows: WorkerRecommendationRow[] = [];
+        const pushRow = (row: WorkerRecommendationRow) => {
           const rowId = String(row?.id || '');
-          if (!rowId) return;
-          const score = Number(row?.score || 0) + boost;
-          const prev = merged.get(rowId);
-          if (!prev) {
-            merged.set(rowId, { row, score, freq: 1 });
-          } else {
-            prev.score += score;
-            prev.freq += 1;
-            if (score > Number(prev.row?.score || 0)) prev.row = row;
-          }
+          if (!rowId || mergedIds.has(rowId)) return;
+          mergedIds.add(rowId);
+          orderedRows.push(row);
         };
 
-        fetchedResults.forEach((row: WorkerRecommendationRow, rank: number) => {
-          const rankBoost = Math.max(0, 0.02 - rank * 0.0005);
-          addMergedRow(row, rankBoost);
-        });
+        fetchedResults.forEach(pushRow);
 
+        // /recommend-by-id (최근 좋아요 기반 유사작) 은 보충용 — 백본 뒤에 덧붙인다.
         if (likedIds.length > 0) {
           const recentSeeds = diverseSeeds.length > 0 ? diverseSeeds : likedIds.slice(-12).reverse();
           const seededResponses = await Promise.allSettled(
@@ -1095,24 +1261,28 @@ export default function AICurationHubPage() {
             }))
           );
 
+          // 시드(취향)별 리스트를 모아 라운드로빈으로 덧붙인다 →
+          // 보충분도 특정 시드 하나가 독식하지 않게.
+          const seededLists: WorkerRecommendationRow[][] = [];
           for (const res of seededResponses) {
             if (res.status !== 'fulfilled' || !res.value.ok) continue;
             try {
               const payload = await res.value.json();
               const rows = Array.isArray(payload?.results) ? (payload.results as WorkerRecommendationRow[]) : [];
-              rows.forEach((row: WorkerRecommendationRow, rank: number) => {
-                const rankBoost = Math.max(0, 0.03 - rank * 0.001);
-                addMergedRow(row, rankBoost);
-              });
+              seededLists.push(rows);
             } catch (_seedError) {
               continue;
             }
           }
+          const maxSeedRank = seededLists.reduce((mx, l) => Math.max(mx, l.length), 0);
+          for (let rank = 0; rank < maxSeedRank; rank++) {
+            for (const list of seededLists) {
+              if (list[rank]) pushRow(list[rank]);
+            }
+          }
         }
 
-        fetchedResults = Array.from(merged.values())
-          .sort((a, b) => (b.score + b.freq * 0.02) - (a.score + a.freq * 0.02))
-          .map((entry) => entry.row);
+        fetchedResults = orderedRows;
 
         if (fetchedResults && fetchedResults.length > 0) {
            const mappedArtworks: RecommendationCardItem[] = fetchedResults.map((r, i) => {
@@ -1192,7 +1362,7 @@ export default function AICurationHubPage() {
       }
     };
     fetchArtworks();
-  }, [user]);
+  }, [user, tasteRefreshKey]);
 
   // Fetch Community Exhibition Stats
   useEffect(() => {
@@ -1347,13 +1517,14 @@ export default function AICurationHubPage() {
             initial={{ opacity: 0, x: -12 }} animate={{ opacity: 1, x: 0 }}
             exit={{ opacity: 0, x: -8 }} transition={{ duration: 0.2 }}>
             <CurationTab {...tabProps} language={language} tr={tr} userArtworks={userArtworks} loading={curationLoading}
-               likedArtworkIds={likedArtworkIds}
-               onToggleLike={(artwork: RecommendationCardItem) => { void handleToggleArtworkLike(artwork); }}
+               likedArtworkIds={likedIds}
+               onToggleLike={(artwork: RecommendationCardItem) => { void toggleLike(artwork); }}
                onOpenProduct={(artwork: RecommendationCardItem) => setProductArtwork(normalizeArtworkForAction(artwork))}
                onOpenComment={(artwork: RecommendationCardItem) => setCommentArtwork(normalizeArtworkForAction(artwork))}
                onOpenPlaylist={(artwork: RecommendationCardItem) => setPlaylistArtwork(normalizeArtworkForAction(artwork))}
                recommendMode={recommendMode}
                onChangeRecommendMode={setRecommendMode}
+               onTasteOnboardingSubmit={handleTasteOnboardingSubmit}
                randomArtworks={randomArtworks}
                randomLoading={randomLoading}
                onRefreshRandom={(count = 36, append = false) => requestRandomArtworks(count, append)}
@@ -1408,11 +1579,13 @@ export default function AICurationHubPage() {
       {lightboxArtwork && (
         <ArtworkLightbox 
           artwork={lightboxArtwork}
-          isLiked={likedArtworkIds.has(String(lightboxArtwork?.id || ''))}
+          isLiked={isLiked(lightboxArtwork?.id)}
+          likedArtworksList={Array.from(likedIds).map((id) => ({ id, artworkId: id }))}
           onToggleLike={(event: React.MouseEvent, artwork: any) => {
             event.stopPropagation();
-            void handleToggleArtworkLike(artwork || lightboxArtwork);
+            void toggleLike(artwork || lightboxArtwork);
           }}
+          onChangeArtwork={(art: any) => setLightboxArtwork(art)}
           onPurchase={(artwork: RecommendationCardItem) => setProductArtwork(normalizeArtworkForAction(artwork || lightboxArtwork))}
           onSaveToPlaylist={(artwork: RecommendationCardItem) => setPlaylistArtwork(normalizeArtworkForAction(artwork || lightboxArtwork))}
           onClose={() => setLightboxArtwork(null)}

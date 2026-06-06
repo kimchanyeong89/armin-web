@@ -1,0 +1,446 @@
+{
+  "museum": "The Fitzwilliam Museum",
+  "collection": "Pilot 16 items",
+  "website": "https://fitzmuseum.cam.ac.uk/explore-our-collection",
+  "source": "FitzwilliamMuseum/fitz-collection-raw-data (CC0 dump) objects.csv.gz + per-object JSON; images via museum IIIF (api.fitz.ms)",
+  "scraped_date": "2026-06-03",
+  "total_count": 16,
+  "source_type": "github-cc0-dump+iiif",
+  "artworks": [
+    {
+      "id": "object-1027",
+      "objectNumber": "PD.53-1993",
+      "title": "Joseph and Potiphar's wife",
+      "artist": "Reni, Guido",
+      "date": "1625 - 1626",
+      "year": 1625,
+      "medium": "painting (image-making); canvas",
+      "dimensions": "Height 220 cm × Width 188 cm",
+      "category": "painting",
+      "description": "Cardinal Giovanni Carlo, Prince of Florence; (?) Senatore Cospi; Costaguti Collection, Rome; bt. Gavin Hamilton, for Lord Leicester, in 1759; by descent to Viscount Coke",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/fitzwilliam-pilot-collection/object-1027-b66b667c-imageUrl.webp",
+      "thumbnailUrl": "https://data.fitzmuseum.cam.ac.uk/imagestore/pdp/pdp3/preview_PD_53_1993.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://data.fitzmuseum.cam.ac.uk/id/object/1027",
+      "metadata": {
+        "priref": "1027",
+        "department": "Paintings, Drawings and Prints",
+        "primaryCategory": "painting",
+        "school_or_style": [
+          "Italian",
+          "Bolognese School"
+        ],
+        "manifestURI": ""
+      },
+      "original_imageUrl": "https://data.fitzmuseum.cam.ac.uk/imagestore/pdp/pdp3/PD_53_1993.jpg"
+    },
+    {
+      "id": "object-1044",
+      "objectNumber": "PD.66-1996",
+      "title": "Study for 'The Massacre of the Innocents'",
+      "artist": "Trevisani, Francesco",
+      "date": "1700 - 1710",
+      "year": 1700,
+      "medium": "painting (image-making); canvas",
+      "dimensions": "Height 53.3 cm × Width 37.5 cm",
+      "category": "painting",
+      "description": "(?) Cardinal Ottoboni; Christie's, New York; with Thomas Agnew, & Sons Ltd,",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/fitzwilliam-pilot-collection/object-1044-9e5a36d2-imageUrl.webp",
+      "thumbnailUrl": "https://data.fitzmuseum.cam.ac.uk/imagestore/pdp/pdp82/preview_PD_66_1996_1_201307_adn21_dc2.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://data.fitzmuseum.cam.ac.uk/id/object/1044",
+      "metadata": {
+        "priref": "1044",
+        "department": "Paintings, Drawings and Prints",
+        "primaryCategory": "painting",
+        "school_or_style": [
+          "Italian"
+        ],
+        "manifestURI": ""
+      },
+      "original_imageUrl": "https://data.fitzmuseum.cam.ac.uk/imagestore/pdp/pdp82/PD_66_1996_1_201307_adn21_dc2.jpg"
+    },
+    {
+      "id": "object-1034",
+      "objectNumber": "PD.55-1997",
+      "title": "Madonna and Child",
+      "artist": "Sebastiano del Piombo (Sebastiano Luciani)",
+      "date": "1513",
+      "year": 1513,
+      "medium": "painting (image-making); panel (wood)",
+      "dimensions": "Diameter 68.5 cm",
+      "category": "painting",
+      "description": "Charles Ranshaw, sale, Christie's 2 May 1947, lot 117; bt. Philip Pouncey, on behalf of his uncle, Duncan Roberts, who bequeathed it to Philip Pouncey; Mrs Philip Pouncey",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/fitzwilliam-pilot-collection/object-1034-47eb4415-imageUrl.webp",
+      "thumbnailUrl": "https://data.fitzmuseum.cam.ac.uk/imagestore/pdp/pdp2/preview_PD_55_1997.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://data.fitzmuseum.cam.ac.uk/id/object/1034",
+      "metadata": {
+        "priref": "1034",
+        "department": "Paintings, Drawings and Prints",
+        "primaryCategory": "painting",
+        "school_or_style": [
+          "Italian"
+        ],
+        "manifestURI": ""
+      },
+      "original_imageUrl": "https://data.fitzmuseum.cam.ac.uk/imagestore/pdp/pdp2/PD_55_1997.jpg"
+    },
+    {
+      "id": "object-1051",
+      "objectNumber": "PD.11-1983",
+      "title": "The Month of June",
+      "artist": "Zocchi, Giuseppe (I)",
+      "date": "1761",
+      "year": 1761,
+      "medium": "painting (image-making); paper",
+      "dimensions": "",
+      "category": "painting",
+      "description": "Bernard Lyons, of Bradford; sale at Sotheby's on his behalf, 30 October 1957 (80), as Watteau de Lille, Fête champêtre; bought in, collected by Agnews; Phillips, 8 June 1983, New York, (229),  bt. Jean-Luc Baroni",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/fitzwilliam-pilot-collection/object-1051-982c04ff-imageUrl.webp",
+      "thumbnailUrl": "https://data.fitzmuseum.cam.ac.uk/imagestore/pdp/pdp3/preview_PD_11_1983.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://data.fitzmuseum.cam.ac.uk/id/object/1051",
+      "metadata": {
+        "priref": "1051",
+        "department": "Paintings, Drawings and Prints",
+        "primaryCategory": "painting",
+        "school_or_style": [
+          "Italian"
+        ],
+        "manifestURI": ""
+      },
+      "original_imageUrl": "https://data.fitzmuseum.cam.ac.uk/imagestore/pdp/pdp3/PD_11_1983.jpg"
+    },
+    {
+      "id": "object-1029",
+      "objectNumber": "PD.260-1985",
+      "title": "St John and St Peter at the empty tomb of Christ",
+      "artist": "Romanelli, Giovanni Francesco",
+      "date": "1641",
+      "year": 1641,
+      "medium": "painting (image-making); copper",
+      "dimensions": "Height 46.8 cm × Width 38.4 cm",
+      "category": "painting",
+      "description": "Pope Urban VIII, for whom painted; Domenicho, Servio and Cardinal Bichi; Abbé Theulin, Paris, 1927; Sotheby's, Monte Carlo, (?) 25 June 1984, lot 3339; with Hazlitt; Gooden and Fox, from whom bought",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/fitzwilliam-pilot-collection/object-1029-8e3ab5a4-imageUrl.webp",
+      "thumbnailUrl": "https://data.fitzmuseum.cam.ac.uk/imagestore/pdp/pdp3/preview_PD_260_1985.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://data.fitzmuseum.cam.ac.uk/id/object/1029",
+      "metadata": {
+        "priref": "1029",
+        "department": "Paintings, Drawings and Prints",
+        "primaryCategory": "painting",
+        "school_or_style": [
+          "Italian"
+        ],
+        "manifestURI": "https://api.fitz.ms/data-distributor/iiif/object-1029/manifest"
+      },
+      "original_imageUrl": "https://api.fitz.ms/data-distributor/iiif/image/portfolio-media-2779334507/full/full/0/default.jpg"
+    },
+    {
+      "id": "object-1012",
+      "objectNumber": "PD.52-1973",
+      "title": "An Allegorical Monument to Sir Isaac Newton",
+      "artist": "Valeriani, Giuseppe",
+      "date": "1727 - 1729",
+      "year": 1727,
+      "medium": "painting (image-making); canvas",
+      "dimensions": "",
+      "category": "painting",
+      "description": "Sir William Morice; Captain Heatley, by whom given to Ushaw College, Durham, c. 1820; sold by that institution, Sotheby's 21 March 1973, lot 29, repr.; Weitzner, Julius and associates, bt. \"Holstein\"",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/fitzwilliam-pilot-collection/object-1012-53d631ee-imageUrl.webp",
+      "thumbnailUrl": "https://data.fitzmuseum.cam.ac.uk/imagestore/pdp/pdp82/preview_PD_52_1973_201408_adn21_dc2.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://data.fitzmuseum.cam.ac.uk/id/object/1012",
+      "metadata": {
+        "priref": "1012",
+        "department": "Paintings, Drawings and Prints",
+        "primaryCategory": "painting",
+        "school_or_style": [
+          "Italian"
+        ],
+        "manifestURI": "https://api.fitz.ms/data-distributor/iiif/object-1012/manifest"
+      },
+      "original_imageUrl": "https://api.fitz.ms/data-distributor/iiif/image/portfolio-media-94301999/full/full/0/default.jpg"
+    },
+    {
+      "id": "object-1048",
+      "objectNumber": "PD.33-1986",
+      "title": "The Adoration of the Shepherds",
+      "artist": "Turchi, Alessandro (Orbetto)",
+      "date": "1600 - 1610",
+      "year": 1600,
+      "medium": "painting (image-making); copper",
+      "dimensions": "Height 47.4 cm × Width 23.4 cm",
+      "category": "painting",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/fitzwilliam-pilot-collection/object-1048-21ef51eb-imageUrl.webp",
+      "thumbnailUrl": "https://data.fitzmuseum.cam.ac.uk/imagestore/pdp/pdp82/preview_PD_33_1986_dc2.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://data.fitzmuseum.cam.ac.uk/id/object/1048",
+      "metadata": {
+        "priref": "1048",
+        "department": "Paintings, Drawings and Prints",
+        "primaryCategory": "painting",
+        "school_or_style": [
+          "Italian"
+        ],
+        "manifestURI": "https://api.fitz.ms/data-distributor/iiif/object-1048/manifest"
+      },
+      "original_imageUrl": "https://api.fitz.ms/data-distributor/iiif/image/portfolio-media-3495905069/full/full/0/default.jpg"
+    },
+    {
+      "id": "object-1071",
+      "objectNumber": "424",
+      "title": "Landscape with flocks",
+      "artist": "Antonissen, Henricus Josephus",
+      "date": "1787",
+      "year": 1787,
+      "medium": "painting (image-making); panel (wood)",
+      "dimensions": "Height 29.2 cm × Width 38.7 cm",
+      "category": "painting",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/fitzwilliam-pilot-collection/object-1071-5e99e062-imageUrl.webp",
+      "thumbnailUrl": "https://data.fitzmuseum.cam.ac.uk/imagestore/pdp/pdp2/preview_424.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://data.fitzmuseum.cam.ac.uk/id/object/1071",
+      "metadata": {
+        "priref": "1071",
+        "department": "Paintings, Drawings and Prints",
+        "primaryCategory": "painting",
+        "school_or_style": [
+          "Dutch"
+        ],
+        "manifestURI": ""
+      },
+      "original_imageUrl": "https://data.fitzmuseum.cam.ac.uk/imagestore/pdp/pdp2/424.jpg"
+    },
+    {
+      "id": "object-1064",
+      "objectNumber": "300",
+      "title": "Group of flowers",
+      "artist": "Aelst, Willem van",
+      "date": "1675",
+      "year": 1675,
+      "medium": "painting (image-making); canvas",
+      "dimensions": "Height 31.1 cm × Width 25.4 cm",
+      "category": "painting",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/fitzwilliam-pilot-collection/object-1064-c0c4a23b-imageUrl.webp",
+      "thumbnailUrl": "https://data.fitzmuseum.cam.ac.uk/imagestore/pdp/pdp82/preview_300_201202_adn21_dc2.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://data.fitzmuseum.cam.ac.uk/id/object/1064",
+      "metadata": {
+        "priref": "1064",
+        "department": "Paintings, Drawings and Prints",
+        "primaryCategory": "painting",
+        "school_or_style": [
+          "Dutch"
+        ],
+        "manifestURI": "https://api.fitz.ms/data-distributor/iiif/object-1064/manifest"
+      },
+      "original_imageUrl": "https://api.fitz.ms/data-distributor/iiif/image/portfolio-media-623068749/full/full/0/default.jpg"
+    },
+    {
+      "id": "object-1070",
+      "objectNumber": "43",
+      "title": "View of Scheveningen Sands",
+      "artist": "Anthonissen, Hendrick van",
+      "date": "1641",
+      "year": 1641,
+      "medium": "painting (image-making); panel (wood)",
+      "dimensions": "Height 56.8 cm × Width 102.8 cm",
+      "category": "painting",
+      "description": "Benjamin van der Gucht; bought from him as de Vlieger by Rev. Thomas Kerrich, father of the Rev. R.E. Kerrich, 1792",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/fitzwilliam-pilot-collection/object-1070-19dc656d-imageUrl.webp",
+      "thumbnailUrl": "https://data.fitzmuseum.cam.ac.uk/imagestore/pdp/pdp65/preview_43_201406_adn21_dc2.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://data.fitzmuseum.cam.ac.uk/id/object/1070",
+      "metadata": {
+        "priref": "1070",
+        "department": "Paintings, Drawings and Prints",
+        "primaryCategory": "painting",
+        "school_or_style": [
+          "Dutch"
+        ],
+        "manifestURI": "https://api.fitz.ms/data-distributor/iiif/object-1070/manifest"
+      },
+      "original_imageUrl": "https://api.fitz.ms/data-distributor/iiif/image/portfolio-media-475100103/full/full/0/default.jpg"
+    },
+    {
+      "id": "object-109",
+      "objectNumber": "162",
+      "title": "The Virgin and Child with the infant Baptist",
+      "artist": "Albertinelli, Mariotto",
+      "date": "1509",
+      "year": 1509,
+      "medium": "painting (image-making); panel (wood)",
+      "dimensions": "Height 67.3 cm × Width 50.1 cm",
+      "category": "painting",
+      "description": "The Venerable J.C. Hare,  Archdeacon of Lewes",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/fitzwilliam-pilot-collection/object-109-da779e23-imageUrl.webp",
+      "thumbnailUrl": "https://data.fitzmuseum.cam.ac.uk/imagestore/pdp/pdp3/preview_162.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://data.fitzmuseum.cam.ac.uk/id/object/109",
+      "metadata": {
+        "priref": "109",
+        "department": "Paintings, Drawings and Prints",
+        "primaryCategory": "painting",
+        "school_or_style": [
+          "Italian",
+          "Florentine School"
+        ],
+        "manifestURI": ""
+      },
+      "original_imageUrl": "https://data.fitzmuseum.cam.ac.uk/imagestore/pdp/pdp3/162.jpg"
+    },
+    {
+      "id": "object-1094",
+      "objectNumber": "412",
+      "title": "Adoration of the Shepherds",
+      "artist": "Balen, Hendrik I van",
+      "date": "1595",
+      "year": 1595,
+      "medium": "painting (image-making); copper",
+      "dimensions": "Height 34.6 cm × Width 27.3 cm",
+      "category": "painting",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/fitzwilliam-pilot-collection/object-1094-02eaa22b-imageUrl.webp",
+      "thumbnailUrl": "https://data.fitzmuseum.cam.ac.uk/imagestore/pdp/pdp2/preview_412.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://data.fitzmuseum.cam.ac.uk/id/object/1094",
+      "metadata": {
+        "priref": "1094",
+        "department": "Paintings, Drawings and Prints",
+        "primaryCategory": "painting",
+        "school_or_style": [
+          "Flemish"
+        ],
+        "manifestURI": ""
+      },
+      "original_imageUrl": "https://data.fitzmuseum.cam.ac.uk/imagestore/pdp/pdp2/412.jpg"
+    },
+    {
+      "id": "object-1096",
+      "objectNumber": "98",
+      "title": "The Annunciation",
+      "artist": "Orley, Bernart van",
+      "date": "1517",
+      "year": 1517,
+      "medium": "painting (image-making); panel (wood)",
+      "dimensions": "Height 68.0 cm × Width 54.0 cm",
+      "category": "painting",
+      "description": "Possibly Earl of Bessborough; sold Christie's 5 February 1801, lot 62 as by Durer; bt. Walton.",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/fitzwilliam-pilot-collection/object-1096-31b2d8fc-imageUrl.webp",
+      "thumbnailUrl": "https://data.fitzmuseum.cam.ac.uk/imagestore/pdp/pdp2/preview_98.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://data.fitzmuseum.cam.ac.uk/id/object/1096",
+      "metadata": {
+        "priref": "1096",
+        "department": "Paintings, Drawings and Prints",
+        "primaryCategory": "painting",
+        "school_or_style": [
+          "Dutch"
+        ],
+        "manifestURI": "https://api.fitz.ms/data-distributor/iiif/object-1096/manifest"
+      },
+      "original_imageUrl": "https://api.fitz.ms/data-distributor/iiif/image/portfolio-media-961517618/full/full/0/default.jpg"
+    },
+    {
+      "id": "object-1099",
+      "objectNumber": "PD.8-1960",
+      "title": "Landscape with Nymphs and Satyrs",
+      "artist": "Berchem, Nicolaes Pietersz.",
+      "date": "1645",
+      "year": 1645,
+      "medium": "painting (image-making); canvas",
+      "dimensions": "Height 59 cm × Width 51 cm",
+      "category": "painting",
+      "description": "3rd Duke of Bridgewater; 1st Duke of Sutherland; Earls of Ellesmere; Sir John Vaughan-Morgan, Bart.;  P. and D. Colnaghi, Co., Ltd",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/fitzwilliam-pilot-collection/object-1099-daa1f526-imageUrl.webp",
+      "thumbnailUrl": "https://data.fitzmuseum.cam.ac.uk/imagestore/pdp/pdp82/preview_PD_8_1960_1_201310_adn21_dc2.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://data.fitzmuseum.cam.ac.uk/id/object/1099",
+      "metadata": {
+        "priref": "1099",
+        "department": "Paintings, Drawings and Prints",
+        "primaryCategory": "painting",
+        "school_or_style": [
+          "Dutch"
+        ],
+        "manifestURI": ""
+      },
+      "original_imageUrl": "https://data.fitzmuseum.cam.ac.uk/imagestore/pdp/pdp82/PD_8_1960_1_201310_adn21_dc2.jpg"
+    },
+    {
+      "id": "object-110",
+      "objectNumber": "561",
+      "title": "Virgin and Child between St Jerome and St Peter",
+      "artist": "Andrea di Niccolà di Giacomo",
+      "date": "1500",
+      "year": 1500,
+      "medium": "painting (image-making); panel (wood)",
+      "dimensions": "Height 53 cm × Width 41 cm",
+      "category": "painting",
+      "description": "Charles Fairfax Murray; Charles Butler",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/fitzwilliam-pilot-collection/object-110-2cb1ad15-imageUrl.webp",
+      "thumbnailUrl": "https://data.fitzmuseum.cam.ac.uk/imagestore/pdp/pdp82/preview_561_dc2.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://data.fitzmuseum.cam.ac.uk/id/object/110",
+      "metadata": {
+        "priref": "110",
+        "department": "Paintings, Drawings and Prints",
+        "primaryCategory": "painting",
+        "school_or_style": [
+          "Italian",
+          "Sienese School"
+        ],
+        "manifestURI": "https://api.fitz.ms/data-distributor/iiif/object-110/manifest"
+      },
+      "original_imageUrl": "https://api.fitz.ms/data-distributor/iiif/image/portfolio-media-3395037637/full/full/0/default.jpg"
+    },
+    {
+      "id": "object-1078",
+      "objectNumber": "295",
+      "title": "Still life with fruit and macaws",
+      "artist": "Ast, Balthasar van der",
+      "date": "1622",
+      "year": 1622,
+      "medium": "painting (image-making); copper",
+      "dimensions": "Height 20.5 cm × Width 26.8 cm",
+      "category": "painting",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/fitzwilliam-pilot-collection/object-1078-e67dc2ba-imageUrl.webp",
+      "thumbnailUrl": "https://data.fitzmuseum.cam.ac.uk/imagestore/aa/aa30/preview_295_1_20140218_mfj22_mas.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://data.fitzmuseum.cam.ac.uk/id/object/1078",
+      "metadata": {
+        "priref": "1078",
+        "department": "Paintings, Drawings and Prints",
+        "primaryCategory": "painting",
+        "school_or_style": [
+          "Dutch"
+        ],
+        "manifestURI": "https://api.fitz.ms/data-distributor/iiif/object-1078/manifest"
+      },
+      "original_imageUrl": "https://api.fitz.ms/data-distributor/iiif/image/portfolio-media-2225183497/full/full/0/default.jpg"
+    }
+  ]
+}

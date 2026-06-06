@@ -1,8 +1,8 @@
-import { Fragment, useState, useEffect, useRef, useCallback, useMemo, lazy, Suspense, type CSSProperties } from 'react';
+import { Fragment, useState, useEffect, useRef, useCallback, useMemo, useDeferredValue, lazy, Suspense, type CSSProperties } from 'react';
 import { createPortal } from 'react-dom';
 import { ShoppingBag, BookmarkPlus } from 'lucide-react';
 import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { searchByText, preloadEncoder, onEncoderStatusChange, getEncoderStatus } from '../utils/siglipSearch';
+import { searchByText, preloadEncoder, onEncoderStatusChange, getEncoderStatus, looksNonEnglish } from '../utils/siglipSearch';
 import { searchTextServer } from '../utils/serverKeywordSearch';
 import { getSearchThumbnail, getLightboxImage, getOptimizedImageUrl, normalizeImageUrl } from '../utils/imageProxy';
 import { shouldLimitNetwork, isLikelyMobileDevice } from '../utils/network';
@@ -10,16 +10,23 @@ import { ensureSharedSearchWorkerLoaded } from '../utils/searchWorkerRuntime';
 import { auth, db } from '../firebase';
 import { onAuthStateChanged } from 'firebase/auth';
 import { collection, doc, setDoc, deleteDoc, onSnapshot, getDocs } from 'firebase/firestore';
-import { createFirebaseWebPort } from '../adapters/firebaseWebAdapter';
 import { HeartOverlay } from './HeartOverlay';
 import { ProductModal } from './ProductModal';
 import { PlaylistModal } from './PlaylistModal';
 import ArtistWikiPanel from './ArtistWikiPanel';
 import { ArtworkLightbox } from './ArtworkLightbox';
+import LanguageToggle from './LanguageToggle';
+import { useLanguage } from '../contexts/LanguageContext';
+import { useArtistI18n, getArtistDisplayName, resolveKoreanToEnglishArtist } from '../i18n/artistLocalization';
+import { getCanonicalName, prettifyArtistName } from '../utils/canonicalArtist';
+import { getArtworkTitle, useArtworkI18n } from '../i18n/artworkLocalization';
+import { getMuseumDisplayName } from '../i18n/museumLocalization';
+import { localizeCountryName } from '../i18n/geoLocalization';
+import { getMediumKo } from '../i18n/mediumGlossary';
+import { useLikedArtworkSet } from '../hooks/useLikedArtworkSet';
 import type { RecommendationResponse, RecommendedArtwork } from '../types/Recommendation';
 import { artists } from '../data/artists';
 const ArtistDistributionMap = lazy(() => import('./ArtistDistributionMap'));
-const firebaseWebPort = createFirebaseWebPort();
 
 function buildFallbackAscii(name: string) {
     const clean = (name || 'Artist').trim() || 'Artist';
@@ -150,6 +157,51 @@ type ProgressiveThumbProps = {
     loading?: 'lazy' | 'eager';
 };
 
+// Rotating curator-flavoured loading copy (see SearchWittyLoader).
+/**
+ * Loading state shown while a search is in flight but nothing has rendered
+ * yet — ARMIN's interlocking-loop mark with light tracing it, under a plain
+ * "Searching" label. Keeps the first-search gap from feeling broken.
+ */
+function SearchWittyLoader({ dark }: { dark: boolean }) {
+    // ARMIN "Knot" mark (01) — brand Knot shape, in the app's own amber
+    // (#D4A547). A light segment travels each loop so the search reads as
+    // in-progress — a clean highlight tracing the path, no glow, no shine.
+    const ring = dark ? '#D4A547' : '#B89438';
+    const trace = dark ? '#E8CC88' : '#D6BE7C';
+    const markColor = dark ? 'rgba(255,255,255,0.4)' : 'rgba(0,0,0,0.45)';
+    return (
+        <div
+            role="status"
+            aria-label="검색 중"
+            style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: 22, padding: '52px 20px' }}
+        >
+            <svg width="80" height="80" viewBox="0 0 64 64" fill="none" aria-hidden="true">
+                {/* ARMIN Knot mark — verbatim from the brand asset */}
+                <circle cx="32" cy="32" r="26" fill="#0A0A0A" />
+                <ellipse cx="26" cy="32" rx="10" ry="14" fill="none" stroke={ring} strokeWidth="2.5" transform="rotate(-30 26 32)" />
+                <ellipse cx="38" cy="32" rx="10" ry="14" fill="none" stroke={ring} strokeWidth="2.5" transform="rotate(30 38 32)" />
+                {/* a light segment travels each loop — the loading motion, flat (no glow) */}
+                <ellipse cx="26" cy="32" rx="10" ry="14" fill="none" stroke={trace} strokeWidth="2.5" strokeLinecap="round"
+                    transform="rotate(-30 26 32)" pathLength={1} strokeDasharray="0.18 0.82"
+                    style={{ animation: 'armin-orbit-a 2.4s linear infinite' }} />
+                <ellipse cx="38" cy="32" rx="10" ry="14" fill="none" stroke={trace} strokeWidth="2.5" strokeLinecap="round"
+                    transform="rotate(30 38 32)" pathLength={1} strokeDasharray="0.18 0.82"
+                    style={{ animation: 'armin-orbit-b 2.4s linear infinite' }} />
+            </svg>
+            <span style={{
+                display: 'flex', alignItems: 'center', gap: 9,
+                fontFamily: "'Space Mono', 'SFMono-Regular', monospace", fontSize: 9, letterSpacing: '0.42em',
+                textTransform: 'uppercase', color: markColor, paddingLeft: '0.42em',
+            }}>
+                <span style={{ width: 18, height: 1, background: `linear-gradient(90deg, transparent, ${markColor})` }} />
+                Searching
+                <span style={{ width: 18, height: 1, background: `linear-gradient(90deg, ${markColor}, transparent)` }} />
+            </span>
+        </div>
+    );
+}
+
 function ProgressiveThumb({
     primaryUrl,
     fallbackUrl,
@@ -159,6 +211,7 @@ function ProgressiveThumb({
 }: ProgressiveThumbProps) {
     const [attempt, setAttempt] = useState(0);
     const [loaded, setLoaded] = useState(false);
+    const imgRef = useRef<HTMLImageElement | null>(null);
 
     const primary = normalizeKnownBrokenImageUrl(primaryUrl);
     const fallback = normalizeKnownBrokenImageUrl(fallbackUrl);
@@ -194,6 +247,26 @@ function ProgressiveThumb({
     const blurSeed = primary || fallback;
     const blurSrc = blurSeed ? getTinyBlurThumbnail(blurSeed) : FALLBACK_IMG;
 
+    // A cached image can finish decoding before React attaches its onLoad
+    // listener — onLoad then never fires and the thumbnail stays pinned behind
+    // the blur layer (very common on a repeat search). Detect the already-
+    // decoded <img> directly and reveal it. The single delayed re-check covers
+    // the commit/decode race without force-revealing lazy/offscreen images.
+    useEffect(() => {
+        if (loaded) return;
+        const reveal = () => {
+            const img = imgRef.current;
+            if (img && img.complete && img.naturalWidth > 0) {
+                setLoaded(true);
+                return true;
+            }
+            return false;
+        };
+        if (reveal()) return;
+        const t = setTimeout(reveal, 60);
+        return () => clearTimeout(t);
+    }, [activeSrc, loaded]);
+
     return (
         <div style={{ position: 'relative', width: '100%', height: '100%', overflow: 'hidden' }}>
             {blurSrc && (
@@ -217,6 +290,7 @@ function ProgressiveThumb({
             )}
             <img
                 key={`${activeSrc}-${attempt}`}
+                ref={imgRef}
                 src={activeSrc}
                 alt=""
                 loading={loading}
@@ -348,16 +422,24 @@ function ExhibitionThumb({ primaryUrl, fallbackUrl, backupUrl, style, exhibition
  */
 function SmoothThumb({ src, style, onError }: { src: string; style?: CSSProperties; onError?: () => void }) {
     const [loaded, setLoaded] = useState(false);
+    const imgRef = useRef<HTMLImageElement | null>(null);
     useEffect(() => { setLoaded(false); }, [src]);
-    // Safety valve: if the browser never fires onLoad (e.g. element starts
-    // scrolled out of view, CORS issue, etc.) we still reveal the image so
-    // thumbnails don't stay invisible indefinitely.
+    // A cached image can already be decoded before React attaches onLoad, so
+    // reveal it immediately when it is. Safety valve: if the browser never
+    // fires onLoad (CORS issue, stalled proxy, etc.) we still reveal the image
+    // after a timeout so thumbnails don't stay blurred indefinitely.
     useEffect(() => {
+        const img = imgRef.current;
+        if (img && img.complete && img.naturalWidth > 0) {
+            setLoaded(true);
+            return;
+        }
         const tm = setTimeout(() => setLoaded(true), 2500);
         return () => clearTimeout(tm);
     }, [src]);
     return (
         <img
+            ref={imgRef}
             src={src}
             alt=""
             loading="eager"
@@ -402,6 +484,13 @@ const normalizeLookupText = (value?: string) =>
         .replace(/[^a-z0-9]+/g, ' ')
         .trim();
 
+/**
+ * AI \uc2dc\ub9e8\ud2f1 \uac80\uc0c9\uc774 \uc2dc\uc791\ub418\ub294 \ucd5c\uc18c \uae00\uc790 \uc218.
+ * \uc601\uc5b4\ub294 2\uc790 \ucffc\ub9ac\uac00 \ub178\uc774\uc988\ub77c 3\uc790\ub97c \uc720\uc9c0\ud558\uc9c0\ub9cc, \ud55c\uad6d\uc5b4 \ub4f1 \ube44\ub77c\ud2f4 \uc5b8\uc5b4\ub294
+ * 2\uc790 \ub2e8\uc5b4\uac00 \ud754\ud558\ubbc0\ub85c(\ubc14\ub2e4\u00b7\ud558\ub298\u00b7\uc0ac\ub791\u00b7\uace0\uc591\u2026) 2\uc790\ubd80\ud130 \uac80\uc0c9\uc744 \ud5c8\uc6a9\ud55c\ub2e4.
+ */
+const aiSearchMinLen = (q: string): number => (looksNonEnglish(q) ? 2 : 3);
+
 const isStrictArtistNameMatch = (candidateRaw?: string, targetRaw?: string) => {
     const candidate = normalizeLookupText(candidateRaw);
     const target = normalizeLookupText(targetRaw);
@@ -423,6 +512,34 @@ const isStrictArtistNameMatch = (candidateRaw?: string, targetRaw?: string) => {
 const getArtistGalleryCacheKey = (artistName: string) => {
     const token = normalizeLookupText(artistName).replace(/\s+/g, '-');
     return `artistGalleryCache:${token}`;
+};
+
+// Persists a per-artist gallery to sessionStorage. When the quota is exceeded,
+// stale artistGalleryCache:* entries are evicted and the write retried once, so
+// the cache stays warm for the current artist without growing unbounded.
+const writeArtistGalleryCache = (artistName: string, gallery: unknown) => {
+    const key = getArtistGalleryCacheKey(artistName);
+    let json: string;
+    try {
+        json = JSON.stringify(gallery);
+    } catch {
+        return;
+    }
+    try {
+        sessionStorage.setItem(key, json);
+    } catch {
+        for (let i = sessionStorage.length - 1; i >= 0; i--) {
+            const k = sessionStorage.key(i);
+            if (k && k !== key && k.startsWith('artistGalleryCache:')) {
+                sessionStorage.removeItem(k);
+            }
+        }
+        try {
+            sessionStorage.setItem(key, json);
+        } catch {
+            // Gallery still too large for the freed space — skip caching it.
+        }
+    }
 };
 
 // Known artist last-name keys (mirrors search.worker.ts KNOWN_ARTIST_KEYS)
@@ -458,7 +575,10 @@ const ARTIST_KEY_STOP = new Set(['the','van','der','von','and','und','la','le'])
 
 /** Returns the static-file key for a known artist name (e.g. "gogh" for Vincent van Gogh). */
 const getArtistStaticFileKey = (artistName: string): string => {
-    const norm = normalizeLookupText(artistName);
+    // Canonicalize first so malformed labels — "1840-1926) Claude Monet (French",
+    // "Alberto Giacometti (Switzerland, 1901-19" — collapse to the same key as the
+    // clean name instead of leaking bio tokens (switzerland/1901) into the fallback.
+    const norm = normalizeLookupText(getCanonicalName(artistName) || artistName);
     const tokens = norm.split(/\s+/).filter(t => t.length > 2 && !ARTIST_KEY_STOP.has(t));
     for (const t of tokens) {
         if (KNOWN_ARTIST_FILE_KEYS[t]) return KNOWN_ARTIST_FILE_KEYS[t];
@@ -522,13 +642,21 @@ const sanitizeTrendTerm = (value?: string) =>
         .replace(/\s+/g, ' ')
         .trim();
 
-const normalizeArtworkIdForFirestore = (value?: string) =>
-    String(value || '').trim().replace(/\//g, '__');
-
 export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigateToMuseum, museums = [], isModalOpen, inlineMode = false, drawingSkin = false }: GlobalSearchBarProps) {
     void onOpenLightbox; // Deprecated callback (kept for prop compatibility)
     const navigate = useNavigate();
     const location = useLocation();
+    const { language, t } = useLanguage();
+    const artistMap = useArtistI18n();
+    const titleMap = useArtworkI18n();
+    // Latest artist map for use inside async search closures whose effect deps
+    // intentionally exclude artistMap (it loads once and caches).
+    const artistMapRef = useRef(artistMap);
+    artistMapRef.current = artistMap;
+    // Tracks which non-English query the artwork list is currently accumulating
+    // (worker + server results are merged per-query). Lets us reset the list when
+    // the query itself changes so e.g. "모네" results don't linger under "샤갈".
+    const augmentQueryRef = useRef<string>('');
     const isSearchPageMode = inlineMode && location.pathname.startsWith('/search');
     const { artistName: routeArtistSlug } = useParams<{ artistName?: string }>();
     // Restore query from sessionStorage if available
@@ -540,6 +668,13 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
             return '';
         }
     });
+    // Deferred copy of `query`. The <input> stays bound to `query` (instant,
+    // urgent update) while heavy per-keystroke work — notably the ~8K artist
+    // index scan below, which does a per-entry Korean name lookup — reads
+    // `deferredQuery`. React keeps the deferred value lagging during fast typing
+    // and only settles it once the main thread is idle, so that scan effectively
+    // runs "after typing pauses" instead of on every character → no input jank.
+    const deferredQuery = useDeferredValue(query);
     const [isExpanded, setIsExpanded] = useState(false);
     const [searchFilter, setSearchFilter] = useState<SearchFilterType>('all');
     const [filteredArtworks, setFilteredArtworks] = useState<SearchableArtwork[]>([]);
@@ -549,22 +684,34 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
     // Combined artist suggestions: worker results take precedence (richer image
     // metadata), then dedupe-append local-index matches so substring queries
     // like "monet" / "manet" surface even when the worker returned nothing.
+    // Dedupe by canonical artist key (getArtistStaticFileKey) so name-order /
+    // casing variants of one artist — "Henri Matisse" vs "MATISSE Henri" —
+    // merge into a single chip with a cleaned-up display name.
     const suggestedArtists = useMemo(() => {
-        const seen = new Set<string>();
-        const out: Array<{ artist: string; count: number; image?: string }> = [];
-        for (const a of workerArtistSuggestions) {
-            const key = normalizeLookupText(a.artist);
-            if (!key || seen.has(key)) continue;
-            seen.add(key);
-            out.push(a);
-        }
-        for (const a of artistIndexMatches) {
-            const key = normalizeLookupText(a.artist);
-            if (!key || seen.has(key)) continue;
-            seen.add(key);
-            out.push(a);
-        }
-        return out;
+        const byKey = new Map<string, { artist: string; count: number; image?: string; src: 'worker' | 'index' }>();
+        const order: string[] = [];
+        const consider = (a: { artist: string; count: number; image?: string }, src: 'worker' | 'index') => {
+            const key = getArtistStaticFileKey(a.artist) || normalizeLookupText(a.artist);
+            if (!key) return;
+            const existing = byKey.get(key);
+            if (!existing) {
+                // Canonicalize before prettifying so the displayed name is the clean
+                // form ("Claude Monet") the Korean i18n map is keyed by — getCanonicalName
+                // also strips bio garbage that prettify alone would re-order into noise.
+                byKey.set(key, { artist: prettifyArtistName(getCanonicalName(a.artist) || a.artist), count: a.count || 0, image: a.image, src });
+                order.push(key);
+                return;
+            }
+            // The worker's count is the authoritative global tally, so never stack the
+            // index on top of it. But two *index* rows of one artist (a clean label plus
+            // a malformed "(Switzerland, 1901-19" mis-split) are distinct buckets that
+            // canonicalize to the same person — sum them so the chip shows the real total.
+            if (existing.src === 'index' && src === 'index') existing.count += a.count || 0;
+            if (!existing.image && a.image) existing.image = a.image;
+        };
+        for (const a of workerArtistSuggestions) consider(a, 'worker');
+        for (const a of artistIndexMatches) consider(a, 'index');
+        return order.map((k) => { const { src, ...rest } = byKey.get(k)!; void src; return rest; });
     }, [workerArtistSuggestions, artistIndexMatches]);
     const [filteredMuseums, setFilteredMuseums] = useState<Museum[]>([]);
     const [recentSearches, setRecentSearches] = useState<string[]>(() => {
@@ -618,6 +765,9 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
     const workerMessageHandlerRef = useRef<((e: MessageEvent) => void) | null>(null);
     const pendingRouteArtistRef = useRef<string | null>(null);
     const [isLoading, setIsLoading] = useState(false);
+    // True while a non-AI search is in flight with nothing rendered yet —
+    // drives the witty loading state so the first-search gap isn't blank.
+    const [searchPending, setSearchPending] = useState(false);
     const [isNetworkConstrained] = useState(() => shouldLimitNetwork());
     // Restore artistGallery from sessionStorage if available
     const [artistGallery, setArtistGallery] = useState<{ artist: string; artworks: SearchableArtwork[]; isLoading?: boolean } | null>(() => {
@@ -662,43 +812,7 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
     const queryRef = useRef(query);
     const semanticSearchRequestSeqRef = useRef(0);
 
-    // Pin only the first PINNED_COUNT (=7) of prev in their existing positions.
-    // Slots 8+ are re-ranked freely from the new chunk's results so a late but
-    // highly relevant match can bubble up near the top — not get buried at
-    // position 21+ behind already-displayed but weaker matches.
-    const PINNED_COUNT = 7;
-    const mergeResultsPreservingOrder = useCallback((prev: SearchableArtwork[], next: SearchableArtwork[]) => {
-        const nextById = new Map<string, SearchableArtwork>();
-        next.forEach((item) => {
-            const id = String(item.id || '');
-            if (!id || nextById.has(id)) return;
-            nextById.set(id, item);
-        });
-
-        // Top-7 freeze: keep prev[0..6] in place if they're still ranked.
-        const pinnedIds = new Set<string>();
-        const pinned: SearchableArtwork[] = [];
-        prev.slice(0, PINNED_COUNT).forEach((item) => {
-            const id = String(item.id || '');
-            if (!id || pinnedIds.has(id)) return;
-            const matched = nextById.get(id);
-            if (!matched) return;
-            pinned.push(matched);
-            pinnedIds.add(id);
-        });
-
-        // Everything below the pin: take from `next` in its full ranked order.
-        const fresh: SearchableArtwork[] = [];
-        next.forEach((item) => {
-            const id = String(item.id || '');
-            if (!id || pinnedIds.has(id)) return;
-            fresh.push(item);
-        });
-
-        return [...pinned, ...fresh];
-    }, []);
-
-    // Mobile augmentation merge — DIFFERENT from the chunk-streaming merge above.
+    // Mobile augmentation merge.
     // - prev = local warm-prefix matches (real keyword matches against artist/title)
     // - next = server semantic matches (visually similar, may not be name matches)
     //
@@ -741,6 +855,8 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
 
     // AI Semantic Search (Transformers.js 브라우저 WASM + HF API 폴백)
     const [isAIMode, setIsAIMode] = useState(false);
+    // AI 모드 안의 정밀 검색 토글 (Jina CLIP v2 한국어 native). 기본 OFF = SigLIP+번역.
+    const [isPrecisionMode, setIsPrecisionMode] = useState(false);
     const [aiPulsing, setAiPulsing] = useState(false);
     const [aiResults, setAiResults] = useState<SearchableArtwork[]>([]);
     const [isAILoading, setIsAILoading] = useState(false);
@@ -903,29 +1019,34 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
 
     const matchedExhibitions = useMemo(() => {
         const q = normalizeLookupText(query);
-        if (!q) return [] as Array<{ exhibitionId: string; exhibitionName: string; museumName: string; country?: string }>;
-        const unique = new Map<string, { exhibitionId: string; exhibitionName: string; museumName: string; country?: string }>();
+        if (!q) return [] as Array<{ exhibitionId: string; exhibitionName: string; museumName: string; museumNameDisplay: string; country?: string }>;
+        const unique = new Map<string, { exhibitionId: string; exhibitionName: string; museumName: string; museumNameDisplay: string; country?: string }>();
         for (const museum of museums) {
+            // museumName stays canonical (used as a resolveMuseumId key); the
+            // display/match-token below carries the localized name.
             const museumName = museum?.name || '';
+            const museumNameDisplay = getMuseumDisplayName(museum, language);
             const museumToken = normalizeLookupText(museumName);
+            const museumKoToken = normalizeLookupText(museumNameDisplay);
             for (const pe of museum?.permanentExhibitions || []) {
                 const exhibitionId = String(pe?.id || '').trim();
                 if (!exhibitionId) continue;
                 const exhibitionName = String(pe?.name || '').trim() || exhibitionId;
                 const exhibitionToken = normalizeLookupText(exhibitionName);
-                if (!exhibitionToken.includes(q) && !museumToken.includes(q)) continue;
+                if (!exhibitionToken.includes(q) && !museumToken.includes(q) && !museumKoToken.includes(q)) continue;
                 if (!unique.has(exhibitionId)) {
                     unique.set(exhibitionId, {
                         exhibitionId,
                         exhibitionName,
                         museumName,
+                        museumNameDisplay,
                         country: museum?.country,
                     });
                 }
             }
         }
         return Array.from(unique.values()).slice(0, 8);
-    }, [museums, query]);
+    }, [museums, query, language]);
 
     const liveTrendingTerms = useMemo<SearchTrendItem[]>(() => {
         const scoreByToken = new Map<string, { term: string; score: number }>();
@@ -1868,51 +1989,26 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
 
     // User & Likes Logic
     const [currentUser, setCurrentUser] = useState<any>(null);
-    const [likedArtworks, setLikedArtworks] = useState<Set<string>>(new Set());
     const [likedArtists, setLikedArtists] = useState<Set<string>>(new Set());
 
-    const toLikedArtworkIdSet = useCallback((rows: Array<{ id: string; data: () => Record<string, unknown> }>) => {
-        const ids = new Set<string>();
-        rows.forEach((row) => {
-            const docId = String(row.id || '').trim();
-            const rawArtworkId = String(row.data()?.artworkId || '').trim();
-            if (docId) ids.add(docId);
-            if (rawArtworkId) ids.add(rawArtworkId);
-            if (rawArtworkId) ids.add(normalizeArtworkIdForFirestore(rawArtworkId));
-        });
-        return ids;
-    }, []);
-
-    const isArtworkLiked = useCallback((artworkId?: string) => {
-        const rawId = String(artworkId || '').trim();
-        if (!rawId) return false;
-        const safeId = normalizeArtworkIdForFirestore(rawId);
-        return likedArtworks.has(rawId) || likedArtworks.has(safeId);
-    }, [likedArtworks]);
+    // liked_artworks state + optimistic toggle are owned by the shared
+    // useLikedArtworkSet hook (also used by AICurationHubPage). Aliased to the
+    // prior local names so existing call sites need no change.
+    const { likedIds: likedArtworks, isLiked: isArtworkLiked, toggleLike } = useLikedArtworkSet();
 
     const artistGalleryLikeKey = artistGallery?.artist ? sanitizeArtistId(artistGallery.artist) : '';
     const artistGalleryIsLiked = artistGalleryLikeKey ? likedArtists.has(artistGalleryLikeKey) : false;
 
     useEffect(() => {
-        let unsubArt: (() => void) | null = null;
         let unsubArtist: (() => void) | null = null;
         const unsubscribe = onAuthStateChanged(auth, (user) => {
             setCurrentUser(user);
-            if (unsubArt) {
-                unsubArt();
-                unsubArt = null;
-            }
             if (unsubArtist) {
                 unsubArtist();
                 unsubArtist = null;
             }
             if (user) {
                 if (shouldLimitNetwork()) {
-                    getDocs(collection(db, `users/${user.uid}/liked_artworks`)).then((snap) => {
-                        setLikedArtworks(toLikedArtworkIdSet(snap.docs as Array<{ id: string; data: () => Record<string, unknown> }>));
-                    }).catch(() => {
-                        setLikedArtworks(new Set());
-                    });
                     getDocs(collection(db, `users/${user.uid}/liked_artists`)).then((snap) => {
                         const ids = new Set(snap.docs.map(doc => doc.id));
                         setLikedArtists(ids);
@@ -1921,26 +2017,26 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                     });
                     return;
                 }
-                // Subscribe to liked artworks
-                unsubArt = onSnapshot(collection(db, `users/${user.uid}/liked_artworks`), (snap) => {
-                    setLikedArtworks(toLikedArtworkIdSet(snap.docs as Array<{ id: string; data: () => Record<string, unknown> }>));
-                });
-                // Subscribe to liked artists
-                unsubArtist = onSnapshot(collection(db, `users/${user.uid}/liked_artists`), (snap) => {
-                    const ids = new Set(snap.docs.map(doc => doc.id));
-                    setLikedArtists(ids);
-                });
+                // Subscribe to liked artists (liked_artworks is owned by useLikedArtworkSet)
+                unsubArtist = onSnapshot(
+                    collection(db, `users/${user.uid}/liked_artists`),
+                    (snap) => {
+                        const ids = new Set(snap.docs.map(doc => doc.id));
+                        setLikedArtists(ids);
+                    },
+                    (error) => {
+                        console.error('liked_artists snapshot listener failed:', error);
+                    },
+                );
             } else {
-                setLikedArtworks(new Set());
                 setLikedArtists(new Set());
             }
         });
         return () => {
-            if (unsubArt) unsubArt();
             if (unsubArtist) unsubArtist();
             unsubscribe();
         };
-    }, [toLikedArtworkIdSet]);
+    }, []);
 
     // ── 취향 프로파일 업데이트 (3초 디바운스) ──────────────────────────────────
     const tasteProfileUpdateTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -2007,48 +2103,12 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
             console.warn('Cannot like artwork without ID');
             return;
         }
-        try {
-            const rawArtworkId = String(art.id || '').trim();
-            const safeArtworkId = normalizeArtworkIdForFirestore(rawArtworkId);
-            const wasLiked = isArtworkLiked(rawArtworkId);
 
-            if (wasLiked) {
-                await firebaseWebPort.likes.removeLikedArtwork(currentUser.uid, rawArtworkId);
-            } else {
-                await firebaseWebPort.likes.setLikedArtwork(currentUser.uid, rawArtworkId, {
-                    ...art,
-                    artworkId: rawArtworkId,
-                    id: rawArtworkId,
-                    title: art.name || art.n || art.title || 'Untitled',
-                    artist: art.artist || art.a || 'Unknown',
-                    image: art.image || art.i || '',
-                    museumName: art.museumName || art.m || '',
-                    year: art.date || art.d || '',
-                    exhibitionId: art.exhibitionId || art.e || '',
-                    likedAt: new Date()
-                });
-            }
-
-            setLikedArtworks((prev) => {
-                const next = new Set(prev);
-                if (wasLiked) {
-                    next.delete(rawArtworkId);
-                    next.delete(safeArtworkId);
-                } else {
-                    next.add(rawArtworkId);
-                    next.add(safeArtworkId);
-                }
-                return next;
-            });
-
-            // 취향 프로파일 비동기 업데이트 (하트 결과 반영)
-            const newLikedIds = wasLiked
-                ? Array.from(likedArtworks).filter(id => id !== rawArtworkId && id !== safeArtworkId)
-                : [...Array.from(likedArtworks), rawArtworkId];
+        // The shared hook handles the optimistic flip, Firestore write and rollback.
+        const newLikedIds = await toggleLike(art);
+        // 취향 프로파일 업데이트 — 쓰기 성공 시에만 (실패하면 toggleLike가 null 반환).
+        if (newLikedIds) {
             scheduleTasteProfileUpdate(currentUser.uid, newLikedIds);
-
-        } catch (error) {
-            console.error('Failed to toggle artwork like:', error);
         }
     };
 
@@ -2114,8 +2174,13 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
             if (artistIndexMatches.length > 0) setArtistIndexMatches([]);
             return;
         }
-        const q = normalizeLookupText(query).trim();
-        if (q.length < 2) {
+        const q = normalizeLookupText(deferredQuery).trim();
+        // Korean (or other non-Latin) query: normalizeLookupText strips it to '',
+        // so keep a Hangul-preserving copy and match against each artist's name_ko.
+        // This makes "고흐" resolve to "빈센트 반 고흐" → Vincent van Gogh, same key as "gogh".
+        const qKo = deferredQuery.toLowerCase().replace(/\s+/g, ' ').trim();
+        const hasKo = /[가-힣]/.test(qKo);
+        if (q.length < 2 && !(hasKo && qKo.length >= 2)) {
             if (artistIndexMatches.length > 0) setArtistIndexMatches([]);
             return;
         }
@@ -2123,10 +2188,20 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
         const matches: Array<{ entry: typeof idx[number]; score: number }> = [];
         for (const entry of idx) {
             const s = entry.s;
-            if (!s.includes(q)) continue;
-            let score = entry.c; // base = artwork count
-            if (s.startsWith(q)) score += 100000;
-            else if (s.includes(' ' + q)) score += 50000; // word-start
+            let score = -1;
+            if (q.length >= 2 && s.includes(q)) {
+                score = entry.c; // base = artwork count
+                if (s.startsWith(q)) score += 100000;
+                else if (s.includes(' ' + q)) score += 50000; // word-start
+            } else if (hasKo && artistMap) {
+                const ko = getArtistDisplayName(entry.a, 'ko', artistMap).toLowerCase();
+                if (ko.includes(qKo)) {
+                    score = entry.c;
+                    if (ko.startsWith(qKo)) score += 100000;
+                    else if (ko.includes(' ' + qKo)) score += 50000;
+                }
+            }
+            if (score < 0) continue;
             matches.push({ entry, score });
             if (matches.length > 200) break; // cap pre-sort to bound CPU
         }
@@ -2140,7 +2215,7 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
         const same = top.length === artistIndexMatches.length
             && top.every((t, i) => t.artist === artistIndexMatches[i].artist);
         if (!same) setArtistIndexMatches(top);
-    }, [query, artistIndexLoaded]); // eslint-disable-line react-hooks/exhaustive-deps
+    }, [deferredQuery, artistIndexLoaded, artistMap]); // eslint-disable-line react-hooks/exhaustive-deps
 
     // Save query to sessionStorage whenever it changes
     useEffect(() => {
@@ -2230,18 +2305,14 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                 if (now - lastProgressAtRef.current > 350) {
                     lastProgressAtRef.current = now;
                     setTotalCount(count);
-                    // Streaming: re-run search per chunk only on desktop.
-                    // Mobile WebView's full-text-index path is already disabled
-                    // (it OOM-killed the WebView at ~1.2GB), so a re-fire here
-                    // is wasted CPU on every chunk that never arrives. Even on
-                    // desktop, gate behind isLikelyMobileDevice so we don't
-                    // re-scan 600K items on a phone-shaped viewport.
-                    if (!isLikelyMobileDevice()) {
-                        const activeQuery = queryRef.current || '';
-                        if (activeQuery && activeQuery.trim().length >= 2) {
-                            workerRef.current?.postMessage({ type: 'SEARCH', query: activeQuery });
-                        }
-                    }
+                    // Intentionally do NOT re-run the search on every chunk.
+                    // Per-chunk re-search made the Artworks list clear and
+                    // refill — and the artist work-count flip between the
+                    // correct warm count and a partial count — every ~350ms
+                    // for the entire index load. That constant remount also
+                    // left thumbnails stuck on their blur placeholder because
+                    // each image was reset before it could finish loading.
+                    // Results now settle exactly once, on LOAD_COMPLETE below.
                 }
             } else if (type === 'LOAD_COMPLETE') {
                 setTotalCount(count);
@@ -2265,6 +2336,8 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                 const incomingQuery = normalizeLookupText(String(e.data?.query || ''));
                 const activeQuery = normalizeLookupText(queryRef.current || '');
                 if (incomingQuery && incomingQuery !== activeQuery) return;
+                // A 'full' message is the definitive result — end the loading state.
+                if (String(e.data?.source || '') === 'full') setSearchPending(false);
 
                 const preciseResults = (results || [])
                     .map((art: SearchableArtwork) => ({
@@ -2278,7 +2351,43 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                         if (exhibitionId.includes('serpentine') || exhibitionId.includes('british-museum') || exhibitionId.includes('the-british-museum') || exhibitionId.includes('bm-collection')) return false;
                         return true;
                     });
-                setFilteredArtworks((prev) => mergeResultsPreservingOrder(prev, preciseResults).slice(0, 30));
+                // The worker emits two messages per search: an instant 'warm'
+                // result from a small pre-baked prefix bucket, then the 'full'
+                // index scan. The warm bucket holds no artworks for many
+                // popular artists (e.g. Picasso), so an empty warm `results`
+                // must NOT wipe a list the full scan already filled — that was
+                // blanking the Artworks section and remounting every thumbnail.
+                const isWarmResult = String(e.data?.source || '') === 'warm';
+                if (looksNonEnglish(String(e.data?.query || ''))) {
+                    // Non-Latin query (Korean/CJK/…): the local index is an
+                    // English corpus, so the worker only incidentally matches
+                    // works whose title was already localized (e.g. the single
+                    // Korean-titled Monet work for "모네"). The server
+                    // augmentation below resolves the query to the English
+                    // canonical and returns the artist's full body of work.
+                    // MERGE rather than replace so the worker's tiny incidental
+                    // result can't clobber the server's complete set — and
+                    // vice-versa — whichever arrives last.
+                    if (preciseResults.length > 0) {
+                        setFilteredArtworks((prev) => {
+                            const seen = new Set<string>();
+                            const out: SearchableArtwork[] = [];
+                            for (const item of [...prev, ...preciseResults]) {
+                                const id = String(item.id || '');
+                                if (!id || seen.has(id)) continue;
+                                seen.add(id);
+                                out.push(item);
+                            }
+                            return out.slice(0, 50);
+                        });
+                    }
+                } else if (!(isWarmResult && preciseResults.length === 0)) {
+                    // Replace, don't merge: for artist-name queries the worker
+                    // returns a fresh random sample each search, so preserving
+                    // the previous order would re-pin the same works and
+                    // defeat the per-search variety.
+                    setFilteredArtworks(preciseResults.slice(0, 30));
+                }
                 setSuggestedArtists(
                     (artists || [])
                         .filter((a: any) => a.count >= 5)
@@ -2313,10 +2422,10 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                     // Save to sessionStorage
                     try {
                         sessionStorage.setItem('artistGallery', JSON.stringify(gallery));
-                        sessionStorage.setItem(getArtistGalleryCacheKey(artist), JSON.stringify(gallery));
                     } catch (e) {
                         console.error('Failed to save artistGallery to sessionStorage', e);
                     }
+                    writeArtistGalleryCache(artist, gallery);
                 }
             } else if (type === 'EXHIBITION_SAMPLE_RESULT') {
                 // Worker returned one sample image per exhibitionId from in-memory allArtworks.
@@ -2333,6 +2442,7 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
             } else if (type === 'ERROR') {
                 console.error('Worker error:', e.data.error);
                 setIsLoading(false);
+                setSearchPending(false);
             }
         };
 
@@ -2454,7 +2564,7 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                     if (!prev || prev.artist !== capturedArtist) return prev;
                     if ((prev.artworks?.length ?? 0) > 0) return prev; // don't overwrite if worker caught up
                     const gallery = { artist: capturedArtist, artworks: mapped, isLoading: false };
-                    try { sessionStorage.setItem(getArtistGalleryCacheKey(capturedArtist), JSON.stringify(gallery)); } catch {}
+                    writeArtistGalleryCache(capturedArtist, gallery);
                     return gallery;
                 });
             })
@@ -2627,7 +2737,7 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
     // Semantic search function - 브라우저에서 CLIP 텍스트 임베딩 생성
     const performSemanticSearch = useCallback(async (searchQuery: string) => {
         console.log('Performing semantic search with query:', searchQuery, 'videoReady:', videoEmbedIdsReady);
-        if (searchQuery.length < 3) {
+        if (searchQuery.length < aiSearchMinLen(searchQuery)) {
             setAiResults([]);
 
             setAiFilteredCount(0);
@@ -2702,7 +2812,7 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
             let rawResults: any[];
             try {
                 const normalizedSemanticQuery = queryNorm || searchQuery.toLowerCase();
-                rawResults = await searchByText(normalizedSemanticQuery, 100);
+                rawResults = await searchByText(normalizedSemanticQuery, 100, isPrecisionMode ? 'jina' : 'siglip');
             } catch (err) {
                 console.warn('SigLIP search failed:', err);
                 if (isStaleRequest()) return;
@@ -2745,12 +2855,27 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                     if (ev.data?.type === 'DETAILS_RESULTS') {
                         workerRef.current?.removeEventListener('message', onMsg);
                         const matched = ev.data.results as any[];
-                        // Search index에 있는 항목만 표시 (삭제된/미인덱스 항목 제외)
-                        // fallback(Vectorize에만 있는 항목)은 placeholder 이미지 등 문제가 있을 수 있어 제외
-                        const all = matched
-                            .map((r: any) => ({ ...r, score: scoreMap[r.id] || 0 }))
+                        // Problem 3 fix: the local search index is a smaller,
+                        // different set than the Vectorize corpus, so the old
+                        // "keep idMap hits only" filter silently dropped real
+                        // semantic matches. Keep EVERY Vectorize result; use
+                        // the local entry only to enrich. Vectorize metadata is
+                        // complete (id/n/a/i/m/e/u) and `raw` is spread last so
+                        // its image always wins — a stale/empty local entry can
+                        // never blank a result.
+                        const localById = new Map<string, any>();
+                        for (const m of matched) {
+                            const mid = String(m?.id || '');
+                            if (mid && !localById.has(mid)) localById.set(mid, m);
+                        }
+                        const enriched = rawResults
+                            .map((raw: any) => {
+                                const local = localById.get(String(raw.id));
+                                const score = scoreMap[raw.id] || 0;
+                                return local ? { ...local, ...raw, score } : { ...raw, score };
+                            })
                             .sort((a, b) => (b.score || 0) - (a.score || 0));
-                        resolve(all.length > 0 ? all : rawResults);
+                        resolve(enriched);
                     }
                 };
                 workerRef.current.addEventListener('message', onMsg);
@@ -3014,10 +3139,13 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
 
                 setAiFilteredCount(0);
 
-                // Similarity-threshold cut-off — limit by relevance, not a
-                // fixed top-N count. Floor scales with query specificity:
-                //   floor = max(top * (1 - DROP), MIN_FLOOR)
-                // For top=0.20 → keep score >= 0.14; for top=0.05 → keep >= 0.05.
+                // Similarity-threshold cut-off — drop the deep noise tail while
+                // keeping the moderately-relevant band. Floor scales with the
+                // top score: floor = max(top * (1 - DROP), MIN_FLOOR).
+                // text→image SigLIP scores sit in a compressed band
+                // (~0.10–0.22) from the modality gap; this trims the noise
+                // tail (lexical/visual look-alikes that rank low) without
+                // gutting the list.
                 //
                 // We do this BEFORE stripping __semanticScore from items,
                 // since the threshold check needs to read it.
@@ -3037,13 +3165,16 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                 });
 
                 if (isStaleRequest()) return;
-                if (cleanedResults.length === 0) {
-                    const lexicalFallback = await runWorkerLexicalFallback(searchQuery);
-                    if (isStaleRequest()) return;
-                    setAiResults(lexicalFallback);
-                } else {
-                    setAiResults(cleanedResults);
-                }
+
+                // AI search is purely semantic — SigLIP text→image only. No
+                // keyword/metadata matching: that pulls in lexical look-alikes
+                // ("apple" → "Applique", artist "Appleton") that belong in
+                // plain text search, not here. Drop imageless results so no
+                // card renders blank.
+                const semanticResults = cleanedResults.filter(
+                    (it) => !!String(it.image || '').trim()
+                );
+                setAiResults(semanticResults);
 
             } else if ((data as any).error) {
                 console.error('Search error:', (data as any).error);
@@ -3071,10 +3202,14 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                 setIsClipLoading(false);
             }
         }
-    }, [videoEmbedIdsReady, museums, resolveCollectionIdForMuseum, findMuseumForArtwork, knownArtistTokenSet, mergeResultsPreservingOrder, runWorkerLexicalFallback, ensureWorker]);
+    }, [videoEmbedIdsReady, museums, resolveCollectionIdForMuseum, findMuseumForArtwork, knownArtistTokenSet, runWorkerLexicalFallback, ensureWorker]);
 
     // Debounced search - artworks + museums
     useEffect(() => {
+        // A non-AI search with a real query is "pending" until the worker
+        // posts a full result (see the RESULTS handler) or the safety timeout
+        // fires — this drives the witty loading state.
+        setSearchPending(!isAIMode && query.trim().length >= 2);
         const timer = setTimeout(() => {
             if (isAIMode) {
                 performSemanticSearch(query);
@@ -3083,17 +3218,33 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                     ensureWorker();
                     workerRef.current?.postMessage({ type: 'SEARCH', query });
 
-                    // Mobile augmentation: the local worker only has the
-                    // 385KB warm-prefix on mobile (chunks are disabled to
-                    // prevent the 1.2GB OOM crash). Warm-prefix only
-                    // contains 45 artworks per letter bucket — for popular
-                    // artists ("Gogh", "Picasso") that's effectively empty.
-                    // Augment with server-side semantic search so mobile
-                    // users see real artworks instead of a blank ARTWORKS
-                    // section.
-                    if (isLikelyMobileDevice()) {
+                    // Server augmentation — runs in two cases:
+                    //  1. Mobile: the local worker only has the 385KB
+                    //     warm-prefix (chunks disabled to avoid the 1.2GB OOM
+                    //     crash), effectively empty for popular artists.
+                    //  2. Non-Latin query (Korean/CJK/etc.): the local index
+                    //     is an English corpus, so a Korean query like "고양이"
+                    //     matches almost nothing locally. The server /search-text
+                    //     translates the query before FTS5 matching, so it can
+                    //     return real artworks ("Cat" works for "고양이").
+                    if (isLikelyMobileDevice() || looksNonEnglish(query)) {
+                        // Non-Latin results are merged (not replaced) so the
+                        // worker's tiny incidental match and the server's full
+                        // set survive each other (see the RESULTS handler). That
+                        // accumulator must reset when the QUERY changes, or a
+                        // previous query's works ("모네") stay pinned ahead of the
+                        // new query's ("샤갈") and get sliced off at 50.
+                        if (looksNonEnglish(query) && augmentQueryRef.current !== query) {
+                            augmentQueryRef.current = query;
+                            setFilteredArtworks([]);
+                        }
                         void (async () => {
                             const startedQuery = query;
+                            // The server translates common nouns ("고양이"→cat) but not
+                            // artist transliterations ("모네"→Monet), so a Korean name
+                            // query found nothing. Resolve it to the English canonical
+                            // here so the artwork search behaves like typing "monet".
+                            const serverQuery = resolveKoreanToEnglishArtist(startedQuery, artistMapRef.current) || startedQuery;
                             // Two-tier server augmentation:
                             //  Tier 1: D1 + FTS5 keyword search via /search-text.
                             //          Returns exact text/prefix matches (e.g.
@@ -3105,11 +3256,11 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                             //          for queries that have no text match
                             //          but might have visual neighbours
                             //          (e.g. 'abstract red').
-                            const keywordRows = await searchTextServer(startedQuery, 60);
+                            const keywordRows = await searchTextServer(serverQuery, 60);
                             const useKeyword = keywordRows.length > 0;
                             const rows = useKeyword
                                 ? keywordRows
-                                : await searchByText(startedQuery, 100);
+                                : await searchByText(serverQuery, 100, isPrecisionMode ? 'jina' : 'siglip');
                             if (!rows || rows.length === 0) return;
                             if ((queryRef.current || '').trim() !== startedQuery.trim()) return;
                             const mapped = rows.map((r: any) => ({
@@ -3181,8 +3332,18 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
             }
         }, isAIMode ? 450 : 200);  // 200ms (was 60) — protects iOS WebView from rapid-fire SEARCH postMessages overwhelming the worker thread mid-render. AI stays at 450ms (more expensive call).
 
-        return () => clearTimeout(timer);
-    }, [query, museums, isAIMode, performSemanticSearch, ensureWorker]);
+        // Safety net: never let the loading state spin forever if the worker
+        // somehow never answers.
+        const pendingSafety = setTimeout(() => setSearchPending(false), 15000);
+        return () => { clearTimeout(timer); clearTimeout(pendingSafety); };
+        // `artistMap` is a dep so the search RE-RUNS once the (async, ~70KB)
+        // artist i18n map finishes loading. Without it, a Korean artist query
+        // typed before the map arrived ("고흐") resolves to null → the raw query
+        // hits the keyword index and returns a handful of Hangul-title matches,
+        // and never corrects itself. Re-firing on map-ready resolves it to
+        // "Vincent van Gogh" and returns the full set. The debounce timer's
+        // cleanup makes the extra run safe (no duplicate in-flight search).
+    }, [query, museums, isAIMode, performSemanticSearch, ensureWorker, artistMap]);
 
     // videoEmbedIdsReady 변경시 검색 (중복 방지: query가 있고 AI모드일 때만)
     // 주의: 위 useEffect와 이중 실행 방지 위해 isAIMode && query 조건 엄격히
@@ -3197,13 +3358,17 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
     useEffect(() => {
         const handleClickOutside = (e: MouseEvent) => {
             if (lightboxArtwork) return;
+            // On the dedicated /search page the results ARE the page, so clicking
+            // elsewhere must leave them up. Only the floating inline dropdown (over
+            // the map/nav) still collapses on outside click.
+            if (isSearchPageMode) return;
             if (containerRef.current && !containerRef.current.contains(e.target as Node)) {
                 setIsExpanded(false);
             }
         };
         document.addEventListener('mousedown', handleClickOutside);
         return () => document.removeEventListener('mousedown', handleClickOutside);
-    }, [lightboxArtwork]);
+    }, [lightboxArtwork, isSearchPageMode]);
 
     // Dispatch events so GlobalNav can react + listen for collapse from GlobalNav
     useEffect(() => {
@@ -3233,11 +3398,10 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
         const onTrigger = (e: Event) => {
             const detail = (e as CustomEvent<{ query?: string }>).detail;
             const q = detail?.query || '';
+            // Only set the query — the debounced search effect posts the SEARCH.
+            // Posting it here too caused a duplicate search per trigger.
             setQuery(q);
             setIsExpanded(true);
-            if (q) {
-                workerRef.current?.postMessage({ type: 'SEARCH', query: q });
-            }
             setTimeout(() => inputRef.current?.focus(), 50);
         };
         window.addEventListener('global-search-trigger', onTrigger);
@@ -3299,8 +3463,14 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
     const buildQuickArtistDraft = useCallback((artist: string) => {
         const target = normalizeLookupText(artist);
         if (!target) return [] as SearchableArtwork[];
+        // Match on the canonical artist key so a cleaned-up chip name
+        // ("Henri Matisse") still finds works catalogued under a variant
+        // ("MATISSE Henri"); fall back to plain text match if no key resolves.
+        const targetKey = getArtistStaticFileKey(artist);
         const seen = new Set<string>();
-        const exact = filteredArtworks.filter((art) => normalizeLookupText(art.artist) === target);
+        const exact = filteredArtworks.filter((art) => targetKey
+            ? getArtistStaticFileKey(art.artist) === targetKey
+            : normalizeLookupText(art.artist) === target);
         const source = exact.length > 0 ? exact : filteredArtworks.filter((art) => normalizeLookupText(art.artist).includes(target));
         const deduped = source.filter((art) => {
             const key = (art.id || `${art.name}-${art.artist}`).trim();
@@ -3496,11 +3666,10 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                     onClose={closeLightbox}
                     isLiked={isArtworkLiked(lightboxArtwork.id)}
                     onToggleLike={(e, art) => {
-                        if (!currentUser) {
-                            closeLightbox();
-                            requestLoginModal();
-                            return;
-                        }
+                        // ArtworkLightbox intercepts the heart for guests and
+                        // shows its own LoginSelectionModal above the lightbox,
+                        // so we don't need to close + dispatch a global event
+                        // here anymore. Stay on the artwork the user was viewing.
                         toggleLikeArtwork(e, art);
                     }}
                     onViewInMuseum={handleOpenInMuseum}
@@ -3674,6 +3843,14 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                         0% { opacity: 0; transform: translateY(8px); }
                         100% { opacity: 1; transform: translateY(0); }
                     }
+                    @keyframes armin-orbit-a {
+                        from { stroke-dashoffset: 0; }
+                        to { stroke-dashoffset: 1; }
+                    }
+                    @keyframes armin-orbit-b {
+                        from { stroke-dashoffset: 0; }
+                        to { stroke-dashoffset: -1; }
+                    }
                 `}</style>
                 
                 {/* Input */}
@@ -3821,6 +3998,79 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                                 )}
                             </button>
 
+                            {/* 정밀 검색 토글 (AI 모드 활성 시에만 표시).
+                                기본 OFF = SigLIP (빠름, 영어 모델 + 번역)
+                                ON = Jina v2 (한국어 native, 5초 정도 더 걸림) */}
+                            {isAIMode && (isExpanded || !inlineMode) && (
+                                <button
+                                    onClick={(e) => {
+                                        e.stopPropagation();
+                                        setIsPrecisionMode((prev) => !prev);
+                                        semanticSearchRequestSeqRef.current += 1;
+                                        setAiResults([]);
+                                    }}
+                                    title={isPrecisionMode
+                                        ? '정밀 검색 ON — 한국어 native AI (약간 느림)'
+                                        : '정밀 검색 OFF — 빠른 영어 기반 AI'}
+                                    style={{
+                                        display: 'inline-flex',
+                                        alignItems: 'center',
+                                        gap: 6,
+                                        marginLeft: 6,
+                                        padding: '4px 8px 4px 4px',
+                                        height: 24,
+                                        borderRadius: 999,
+                                        border: isPrecisionMode
+                                            ? '1px solid rgba(212,165,71,0.55)'
+                                            : (isNavDark ? '1px solid rgba(255,255,255,0.18)' : '1px solid rgba(0,0,0,0.18)'),
+                                        background: isPrecisionMode
+                                            ? 'linear-gradient(135deg, rgba(212,165,71,0.18) 0%, rgba(168,135,53,0.10) 100%)'
+                                            : 'transparent',
+                                        cursor: 'pointer',
+                                        transition: 'all 0.25s ease',
+                                        flexShrink: 0,
+                                        fontFamily: "'Space Grotesk', 'Pretendard', sans-serif",
+                                    }}
+                                >
+                                    {/* 슬라이드 트랙 */}
+                                    <span style={{
+                                        position: 'relative',
+                                        width: 22,
+                                        height: 12,
+                                        borderRadius: 999,
+                                        background: isPrecisionMode
+                                            ? 'linear-gradient(90deg, #D4A547 0%, #A88735 100%)'
+                                            : (isNavDark ? 'rgba(255,255,255,0.20)' : 'rgba(0,0,0,0.20)'),
+                                        transition: 'background 0.25s ease',
+                                    }}>
+                                        {/* 슬라이드 핸들 */}
+                                        <span style={{
+                                            position: 'absolute',
+                                            top: 1,
+                                            left: isPrecisionMode ? 11 : 1,
+                                            width: 10,
+                                            height: 10,
+                                            borderRadius: '50%',
+                                            background: '#FFFFFF',
+                                            transition: 'left 0.25s cubic-bezier(0.4, 0, 0.2, 1)',
+                                            boxShadow: '0 1px 2px rgba(0,0,0,0.2)',
+                                        }} />
+                                    </span>
+                                    <span style={{
+                                        fontSize: 10,
+                                        fontWeight: 700,
+                                        letterSpacing: '0.04em',
+                                        color: isPrecisionMode
+                                            ? (isNavDark ? '#E5C880' : '#8A6B1F')
+                                            : (isNavDark ? 'rgba(255,255,255,0.55)' : 'rgba(0,0,0,0.55)'),
+                                        whiteSpace: 'nowrap',
+                                        transition: 'color 0.25s ease',
+                                    }}>
+                                        정밀
+                                    </span>
+                                </button>
+                            )}
+
                             <input
                                 ref={inputRef}
                                 id="global-search-input"
@@ -3847,10 +4097,10 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                                     preloadEncoder();
                                 }}
                                 placeholder={isLoading
-                                    ? 'Loading...'
+                                    ? t({ ko: '불러오는 중...', en: 'Loading...' })
                                     : (isSearchPageMode && isAIMode
-                                        ? 'AI에게 자연어로 자유롭게 물어보세요...'
-                                        : (isExpanded ? 'Search artworks, artists...' : 'Search artworks...'))}
+                                        ? t({ ko: 'AI에게 자연어로 자유롭게 물어보세요...', en: 'Ask AI in natural language...' })
+                                        : (isExpanded ? t({ ko: '작품, 작가 검색...', en: 'Search artworks, artists...' }) : t({ ko: '작품 검색...', en: 'Search artworks...' })))}
                                 style={{
                                     flex: 1,
                                     border: 'none',
@@ -3940,6 +4190,14 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                             )}
                             {isExpanded && !query && !isSearchPageMode && (
                                 <button onClick={(e) => { e.stopPropagation(); setIsExpanded(false); }} style={{ background: 'transparent', border: 'none', padding: 4, cursor: 'pointer', color: '#8a867d', fontSize: 12, marginRight: drawingSkin ? 0 : 16 }}>▼</button>
+                            )}
+                            {/* KR|EN switch lives inside the bar on the search page (where the
+                                full bar is always present); App.tsx hides its floating copy on
+                                /search to avoid two switches stacking in the corner. */}
+                            {isSearchPageMode && (
+                                <div onClick={(e) => e.stopPropagation()} style={{ flexShrink: 0, display: 'flex', alignItems: 'center', marginLeft: 6 }}>
+                                    <LanguageToggle light={!isNavDark} layoutId="language-toggle-pill-search" />
+                                </div>
                             )}
                         </>
                     )}
@@ -4210,7 +4468,7 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                                     <div style={{ padding: '8px 0 4px' }}>
                                         {showArtistsInSearchMode && suggestedArtists.length > 0 && (
                                             <div style={{ marginBottom: 12 }}>
-                                                {sectionLabel('Artists', suggestedArtists.length, isNavDark ? '#D4A547' : '#8A6B1F')}
+                                                {sectionLabel(t({ ko: '작가', en: 'Artists' }), suggestedArtists.length, isNavDark ? '#D4A547' : '#8A6B1F')}
                                                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: 7 }}>
                                                     {suggestedArtists.slice(0, artistCollapsedCount).map(({ artist, count, image }, idx) => {
                                                         const artistToken = normalizeLookupText(artist);
@@ -4264,9 +4522,9 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                                                                 </div>
                                                                 <div style={{ flex: 1, minWidth: 0 }}>
                                                                     <div style={{ fontSize: isMobile ? 10 : 11, color: pageText, fontWeight: 600, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                                                                        {artist}
+                                                                        {getArtistDisplayName(artist, language, artistMap)}
                                                                     </div>
-                                                                    <div style={{ fontSize: isMobile ? 8 : 9, color: faintText, marginTop: 1 }}>{count.toLocaleString()} works</div>
+                                                                    <div style={{ fontSize: isMobile ? 8 : 9, color: faintText, marginTop: 1 }}>{count.toLocaleString()}{t({ ko: '점', en: ' works' })}</div>
                                                                 </div>
                                                             </button>
                                                         );
@@ -4339,9 +4597,9 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                                                                             </div>
                                                                             <div style={{ flex: 1, minWidth: 0 }}>
                                                                                 <div style={{ fontSize: isMobile ? 10 : 11, color: pageText, fontWeight: 600, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                                                                                    {artist}
+                                                                                    {getArtistDisplayName(artist, language, artistMap)}
                                                                                 </div>
-                                                                                <div style={{ fontSize: isMobile ? 8 : 9, color: faintText, marginTop: 1 }}>{count.toLocaleString()} works</div>
+                                                                                <div style={{ fontSize: isMobile ? 8 : 9, color: faintText, marginTop: 1 }}>{count.toLocaleString()}{t({ ko: '점', en: ' works' })}</div>
                                                                             </div>
                                                                         </button>
                                                                     );
@@ -4387,7 +4645,7 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
 
                                         {showMuseumsInSearchMode && filteredMuseums.length > 0 && (
                                             <div style={{ marginBottom: 12 }}>
-                                                {sectionLabel('Museums', filteredMuseums.length, '#6B9AFF')}
+                                                {sectionLabel(t({ ko: '미술관', en: 'Museums' }), filteredMuseums.length, '#6B9AFF')}
                                                 <div style={{ display: 'flex', flexWrap: 'wrap', gap: 7 }}>
                                                     {filteredMuseums.slice(0, 6).map((museum) => {
                                                         return (
@@ -4411,10 +4669,10 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                                                             >
                                                                 <div style={{ flex: 1, minWidth: 0 }}>
                                                                     <div style={{ fontSize: 11, color: pageText, fontWeight: 600, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                                                                        {museum.name}
+                                                                        {getMuseumDisplayName(museum, language)}
                                                                     </div>
                                                                     <div style={{ fontSize: 9, color: faintText, marginTop: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                                                                        {museum.country || ''}
+                                                                        {localizeCountryName(museum.country || '', language)}
                                                                     </div>
                                                                 </div>
                                                             </button>
@@ -4426,7 +4684,7 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
 
                                         {showArtworksInSearchMode && filteredArtworks.length > 0 && (
                                             <div style={{ marginBottom: 12 }}>
-                                                {sectionLabel('Artworks', filteredArtworks.length)}
+                                                {sectionLabel(t({ ko: '작품', en: 'Artworks' }), filteredArtworks.length)}
                                                 <div style={{ borderRadius: 10, overflow: 'hidden', border: `1px solid ${divider}` }}>
                                                     {filteredArtworks.slice(0, 50).map((art, idx) => (
                                                         <Fragment key={art.id}>
@@ -4456,9 +4714,9 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                                                                     />
                                                                 </div>
                                                                 <div style={{ flex: 1, minWidth: 0 }}>
-                                                                    <div style={{ fontSize: 13, color: pageText, fontWeight: 500, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{art.name}</div>
+                                                                    <div style={{ fontSize: 13, color: pageText, fontWeight: 500, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{getArtworkTitle(art, language, titleMap)}</div>
                                                                     <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginTop: 2 }}>
-                                                                        <span style={{ fontSize: 11, color: lowText, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{art.artist}</span>
+                                                                        <span style={{ fontSize: 11, color: lowText, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{getArtistDisplayName(art.artist, language, artistMap)}</span>
                                                                         {formatArtworkYear(art.date) && <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: faintText }}>{formatArtworkYear(art.date)}</span>}
                                                                     </div>
                                                                 </div>
@@ -4473,7 +4731,7 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
 
                                         {showExhibitionsInSearchMode && matchedExhibitions.length > 0 && (
                                             <div style={{ marginBottom: 12 }}>
-                                                {sectionLabel('Exhibitions', matchedExhibitions.length)}
+                                                {sectionLabel(t({ ko: '전시', en: 'Exhibitions' }), matchedExhibitions.length)}
                                                 <div style={{ borderRadius: 10, overflow: 'hidden', border: `1px solid ${divider}` }}>
                                                     {matchedExhibitions.map((item, idx) => (
                                                         <Fragment key={item.exhibitionId}>
@@ -4526,7 +4784,7 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                                                                 <div style={{ flex: 1, minWidth: 0 }}>
                                                                     <div style={{ fontSize: 12, color: pageText, fontWeight: 500, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{item.exhibitionName}</div>
                                                                     <div style={{ fontSize: 10, color: lowText, marginTop: 1, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                                                                        {item.museumName}{item.country ? ` · ${item.country}` : ''}
+                                                                        {item.museumNameDisplay || item.museumName}{item.country ? ` · ${localizeCountryName(item.country, language)}` : ''}
                                                                     </div>
                                                                 </div>
                                                             </button>
@@ -4540,10 +4798,12 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                                         )}
 
                                         {showArtworksInSearchMode && showArtistsInSearchMode && showMuseumsInSearchMode && showExhibitionsInSearchMode &&
-                                            filteredArtworks.length === 0 && suggestedArtists.length === 0 && filteredMuseums.length === 0 && matchedExhibitions.length === 0 && !isLoading && (
-                                                <div style={{ textAlign: 'center', paddingTop: 56, color: faintText, fontSize: 13 }}>
-                                                    검색 결과가 없습니다
-                                                </div>
+                                            filteredArtworks.length === 0 && suggestedArtists.length === 0 && filteredMuseums.length === 0 && matchedExhibitions.length === 0 && (
+                                                searchPending && query.trim().length >= 2
+                                                    ? <SearchWittyLoader dark={isNavDark} />
+                                                    : <div style={{ textAlign: 'center', paddingTop: 56, color: faintText, fontSize: 13 }}>
+                                                          검색 결과가 없습니다
+                                                      </div>
                                             )}
                                     </div>
                                 )}
@@ -4566,27 +4826,17 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                                     <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: faintText }}>{aiResults.length}</span>
                                 </div>
 
-                                {query.trim().length < 3 && (
+                                {query.trim().length < aiSearchMinLen(query) && (
                                     <div style={{ fontSize: 12, color: lowText, padding: '10px 0 6px' }}>
-                                        검색어를 3글자 이상 입력하면 AI 시맨틱 검색이 시작됩니다
+                                        검색어를 {aiSearchMinLen(query)}글자 이상 입력하면 AI 시맨틱 검색이 시작됩니다
                                     </div>
                                 )}
 
-                                {(isAILoading || isClipLoading) && query.trim().length >= 3 && (
-                                    <div style={{ borderRadius: 10, overflow: 'hidden', border: `1px solid ${divider}` }}>
-                                        {[...Array(6)].map((_, idx) => (
-                                            <div key={`ai-skeleton-${idx}`} style={{ display: 'flex', alignItems: 'center', gap: 12, padding: '10px 12px', borderBottom: idx < 5 ? `1px solid ${divider}` : 'none', backgroundColor: cardBg }}>
-                                                <div style={{ width: 52, height: 52, borderRadius: 6, background: isNavDark ? 'linear-gradient(90deg, rgba(255,255,255,0.06) 25%, rgba(255,255,255,0.12) 50%, rgba(255,255,255,0.06) 75%)' : 'linear-gradient(90deg, rgba(0,0,0,0.05) 25%, rgba(0,0,0,0.11) 50%, rgba(0,0,0,0.05) 75%)', backgroundSize: '200% 100%', animation: 'shimmer 1.5s infinite', flexShrink: 0 }} />
-                                                <div style={{ flex: 1, display: 'flex', flexDirection: 'column', gap: 6 }}>
-                                                    <div style={{ height: 12, width: '58%', borderRadius: 4, background: isNavDark ? 'rgba(255,255,255,0.16)' : 'rgba(0,0,0,0.12)' }} />
-                                                    <div style={{ height: 10, width: '38%', borderRadius: 4, background: isNavDark ? 'rgba(255,255,255,0.10)' : 'rgba(0,0,0,0.08)' }} />
-                                                </div>
-                                            </div>
-                                        ))}
-                                    </div>
+                                {(isAILoading || isClipLoading) && query.trim().length >= aiSearchMinLen(query) && (
+                                    <SearchWittyLoader dark={isNavDark} />
                                 )}
 
-                                {query.length >= 3 && !isAILoading && !isClipLoading && aiResults.length > 0 && (
+                                {query.length >= aiSearchMinLen(query) && !isAILoading && !isClipLoading && aiResults.length > 0 && (
                                     <div
                                         onWheel={(e) => e.stopPropagation()}
                                         onTouchMove={(e) => e.stopPropagation()}
@@ -4621,14 +4871,14 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                                                         />
                                                     </div>
                                                     <div style={{ flex: 1, minWidth: 0 }}>
-                                                        <div style={{ fontSize: 13, color: pageText, fontWeight: 500, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{art.name}</div>
+                                                        <div style={{ fontSize: 13, color: pageText, fontWeight: 500, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{getArtworkTitle(art, language, titleMap)}</div>
                                                         <div style={{ display: 'flex', alignItems: 'center', gap: 6, marginTop: 2 }}>
-                                                            <span style={{ fontSize: 11, color: lowText, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{art.artist}</span>
+                                                            <span style={{ fontSize: 11, color: lowText, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{getArtistDisplayName(art.artist, language, artistMap)}</span>
                                                             <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: faintText }}>AI</span>
                                                         </div>
                                                         {art.museumName && (
                                                             <div style={{ fontSize: 10, color: faintText, marginTop: 1, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>
-                                                                {art.museumName}
+                                                                {getMuseumDisplayName(museums.find(mm => mm.name === art.museumName) ?? { name: art.museumName }, language)}
                                                             </div>
                                                         )}
                                                     </div>
@@ -4644,7 +4894,7 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                                     </div>
                                 )}
 
-                                {query.length >= 3 && !isAILoading && !isClipLoading && aiResults.length === 0 && (
+                                {query.length >= aiSearchMinLen(query) && !isAILoading && !isClipLoading && aiResults.length === 0 && (
                                     <div style={{ textAlign: 'center', paddingTop: 44, color: faintText, fontSize: 13 }}>
                                         AI 검색 결과가 없습니다
                                     </div>
@@ -4666,7 +4916,7 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                                         onMouseEnter={(e) => { e.currentTarget.style.background = 'rgba(201,165,90,0.25)'; e.currentTarget.style.borderColor = '#c9a55a'; }}
                                         onMouseLeave={(e) => { e.currentTarget.style.background = 'rgba(201,165,90,0.12)'; e.currentTarget.style.borderColor = 'rgba(201,165,90,0.3)'; }}
                                     >
-                                        {artist} <span style={{ fontSize: 10, opacity: 0.5 }}>({count})</span>
+                                        {getArtistDisplayName(artist, language, artistMap)} <span style={{ fontSize: 10, opacity: 0.5 }}>({count})</span>
                                     </button>
                                 ))}
                             </div>
@@ -4676,7 +4926,7 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                     {/* Museum suggestions */}
                     {isExpanded && !isSearchPageMode && filteredMuseums.length > 0 && (
                         <div style={{ padding: '8px 16px', borderTop: `1px solid ${navSectionBorder}`, background: navSectionBg }}>
-                            <div style={{ fontSize: 10, color: navLabelColor, marginBottom: 8, letterSpacing: '0.08em', textTransform: 'uppercase' }}>Museums</div>
+                            <div style={{ fontSize: 10, color: navLabelColor, marginBottom: 8, letterSpacing: '0.08em', textTransform: 'uppercase' }}>{t({ ko: '미술관', en: 'Museums' })}</div>
                             <div style={{ display: 'flex', overflowX: 'auto', gap: 6, paddingBottom: 4, scrollbarWidth: 'none', msOverflowStyle: 'none', WebkitOverflowScrolling: 'touch' }}>
                                 {filteredMuseums.map((museum) => (
                                     <button
@@ -4686,7 +4936,7 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                                         onMouseEnter={(e) => { e.currentTarget.style.background = 'rgba(201,165,90,0.2)'; e.currentTarget.style.borderColor = '#c9a55a'; }}
                                         onMouseLeave={(e) => { e.currentTarget.style.background = 'rgba(201,165,90,0.08)'; e.currentTarget.style.borderColor = 'rgba(201,165,90,0.25)'; }}
                                     >
-                                        🏛️ {museum.name} <span style={{ fontSize: 10, opacity: 0.6 }}>• {museum.country}</span>
+                                        🏛️ {getMuseumDisplayName(museum, language)} <span style={{ fontSize: 10, opacity: 0.6 }}>• {localizeCountryName(museum.country || '', language)}</span>
                                     </button>
                                 ))}
                             </div>
@@ -4704,7 +4954,7 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                                         : `AI Semantic Search (${aiResults.length} results${aiFilteredCount > 0 ? `, filtered ${aiFilteredCount}` : ''})`}
                                 </span>
                             </div>
-                            {query.length >= 3 && !isAILoading && !isClipLoading && aiResults.length === 0 && (
+                            {query.length >= aiSearchMinLen(query) && !isAILoading && !isClipLoading && aiResults.length === 0 && (
                                 <div style={{ fontSize: 12, color: navSubColor, padding: '8px 0' }}>No AI results for "{query}". Try: "impressionist landscape", "portrait of woman", "religious painting"</div>
                             )}
                         </div>
@@ -4736,8 +4986,8 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                                         />
                                     </div>
                                     <div style={{ flex: 1, minWidth: 0 }}>
-                                        <div style={{ fontSize: 13, fontWeight: 600, color: navTitleColor, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{art.name}</div>
-                                        <div style={{ fontSize: 11, color: navSubColor, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{art.artist}</div>
+                                        <div style={{ fontSize: 13, fontWeight: 600, color: navTitleColor, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{getArtworkTitle(art, language, titleMap)}</div>
+                                        <div style={{ fontSize: 11, color: navSubColor, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{getArtistDisplayName(art.artist, language, artistMap)}</div>
                                         <div style={{ fontSize: 10, color: navMuseumColor }}>{art.museumName}</div>
                                     </div>
                                     <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="rgba(201,165,90,0.4)" strokeWidth="2"><polyline points="9 18 15 12 9 6" /></svg>
@@ -4786,8 +5036,8 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                                         />
                                     </div>
                                     <div style={{ flex: 1, minWidth: 0 }}>
-                                        <div style={{ fontSize: 13, fontWeight: 600, color: '#222', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{art.name}</div>
-                                        <div style={{ fontSize: 11, color: '#666', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{art.artist}{art.date ? ` • ${art.date}` : ''}</div>
+                                        <div style={{ fontSize: 13, fontWeight: 600, color: '#222', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{getArtworkTitle(art, language, titleMap)}</div>
+                                        <div style={{ fontSize: 11, color: '#666', whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis' }}>{getArtistDisplayName(art.artist, language, artistMap)}{art.date ? ` • ${art.date}` : ''}</div>
                                         <div style={{ fontSize: 10, color: '#999' }}>{art.museumName}</div>
                                     </div>
                                     <HeartOverlay
@@ -4856,7 +5106,7 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                                             color: navTitleColor,
                                             whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
                                             fontFamily: drawingSkin ? drawingHumanFont : 'inherit',
-                                        }}>{art.name}</div>
+                                        }}>{getArtworkTitle(art, language, titleMap)}</div>
                                         {(() => {
                                             const yearLabel = formatArtworkYear(art.date);
                                             return (
@@ -4866,7 +5116,7 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                                                     whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
                                                     fontFamily: drawingSkin ? drawingHumanFont : 'inherit',
                                                 }}>
-                                                    {art.artist}{yearLabel ? ` • ${yearLabel}` : ''}
+                                                    {getArtistDisplayName(art.artist, language, artistMap)}{yearLabel ? ` • ${yearLabel}` : ''}
                                                 </div>
                                             );
                                         })()}
@@ -4875,10 +5125,10 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                                             color: navMuseumColor,
                                             fontFamily: drawingSkin ? drawingHumanFont : 'inherit',
                                         }}>
-                                            {art.museumName}
                                             {(() => {
-                                                const m = museums.find(m => m.name === art.museumName);
-                                                return m?.country ? ` • ${m.country}` : '';
+                                                const m = museums.find(mm => mm.name === art.museumName);
+                                                const nm = getMuseumDisplayName(m ?? { name: art.museumName }, language);
+                                                return m?.country ? `${nm} • ${localizeCountryName(m.country, language)}` : nm;
                                             })()}
                                         </div>
                                     </div>
@@ -4895,9 +5145,11 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                         </div>
                     )}
 
-                    {/* No results */}
-                    {isExpanded && !isSearchPageMode && query.length >= 2 && !isAIMode && !isRecommendMode && filteredArtworks.length === 0 && suggestedArtists.length === 0 && !isLoading && (
-                        <div style={{ padding: '16px', textAlign: 'center', color: navSubColor, fontSize: 13, borderTop: `1px solid ${navDivider}` }}>No results for "{query}"</div>
+                    {/* No results / witty loading */}
+                    {isExpanded && !isSearchPageMode && query.length >= 2 && !isAIMode && !isRecommendMode && filteredArtworks.length === 0 && suggestedArtists.length === 0 && (
+                        searchPending
+                            ? <div style={{ borderTop: `1px solid ${navDivider}` }}><SearchWittyLoader dark={isNavDark} /></div>
+                            : <div style={{ padding: '16px', textAlign: 'center', color: navSubColor, fontSize: 13, borderTop: `1px solid ${navDivider}` }}>No results for "{query}"</div>
                     )}
 
                     {/* Hint */}
@@ -4978,9 +5230,34 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                                         : '52px 60px 40px',
                                     borderBottom: `${borderWidth} solid ${border}`,
                                     background: bg,
+                                    position: 'relative',
+                                    overflow: 'hidden',
                                 }}>
+                                    {/* Ghost decorative text — last word of artist name, huge */}
+                                    {!isMobile && !isDrawingGalleryMode && (
+                                        <div
+                                            aria-hidden
+                                            style={{
+                                                position: 'absolute',
+                                                right: -20,
+                                                top: '50%',
+                                                transform: 'translateY(-50%)',
+                                                fontFamily: "'Space Grotesk', system-ui, -apple-system, sans-serif",
+                                                fontWeight: 700,
+                                                fontSize: 'clamp(100px, 14vw, 180px)',
+                                                color: 'rgba(255,255,255,0.035)',
+                                                letterSpacing: '-0.05em',
+                                                lineHeight: 1,
+                                                pointerEvents: 'none',
+                                                userSelect: 'none',
+                                                whiteSpace: 'nowrap',
+                                            }}
+                                        >
+                                            {artistGallery.artist.split(' ').pop()}
+                                        </div>
+                                    )}
                                     {/* Eyebrow row */}
-                                    <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: isMobile ? 18 : 28 }}>
+                                    <div style={{ position: 'relative', zIndex: 1, display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginBottom: isMobile ? 18 : 28 }}>
                                         <div style={{ display: 'flex', alignItems: 'center', gap: 12 }}>
                                             <span style={{
                                                 fontSize: 10, letterSpacing: '0.28em', textTransform: 'uppercase',
@@ -4989,12 +5266,12 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                                                 padding: '4px 12px',
                                                 border: isDrawingGalleryMode ? '2px solid #111111' : 'none',
                                                 borderRadius: 2, flexShrink: 0,
-                                            }}>Artist</span>
+                                            }}>{t({ ko: '작가', en: 'Artist' })}</span>
                                             {(galleryFoundArtist?.nationality || galleryFoundArtist?.birthYear) && (
                                                 <span style={{ fontSize: 12, color: textSub, letterSpacing: '0.04em' }}>
                                                     {[
-                                                        galleryFoundArtist?.nationality,
-                                                        galleryFoundArtist?.birthYear ? `b. ${galleryFoundArtist.birthYear}` : null,
+                                                        galleryFoundArtist?.nationality ? localizeCountryName(galleryFoundArtist.nationality, language) : null,
+                                                        galleryFoundArtist?.birthYear ? (language === 'ko' ? `${galleryFoundArtist.birthYear}년생` : `b. ${galleryFoundArtist.birthYear}`) : null,
                                                     ].filter(Boolean).join(' · ')}
                                                 </span>
                                             )}
@@ -5028,58 +5305,117 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                                         </div>
                                     </div>
 
-                                    {/* Artist name + heart inline */}
-                                    <div style={{ display: 'flex', alignItems: 'center', gap: isMobile ? 14 : 22, marginBottom: 28 }}>
-                                        <h1 style={{
-                                            fontFamily: isDrawingGalleryMode
-                                                ? "'Space Mono', 'SFMono-Regular', Menlo, Monaco, Consolas, monospace"
-                                                : "'Space Grotesk', system-ui, -apple-system, sans-serif",
-                                            fontSize: isMobile ? 'clamp(40px, 10vw, 56px)' : 'clamp(60px, 6vw, 96px)',
-                                            fontWeight: 800,
-                                            letterSpacing: '-0.03em',
-                                            color: textMain,
-                                            margin: 0,
-                                            lineHeight: 0.95,
-                                        }}>{artistGallery.artist}</h1>
-                                        <HeartOverlay
-                                            isLiked={artistGalleryIsLiked}
-                                            onToggle={toggleLikeArtist}
-                                            size={isMobile ? 22 : 30}
-                                            color="#e11d48"
-                                            emptyColor={`${textSub}99`}
-                                        />
-                                    </div>
+                                    {/* Artist name */}
+                                    <h1 style={{
+                                        position: 'relative', zIndex: 1,
+                                        fontFamily: isDrawingGalleryMode
+                                            ? "'Space Mono', 'SFMono-Regular', Menlo, Monaco, Consolas, monospace"
+                                            : "'Space Grotesk', system-ui, -apple-system, sans-serif",
+                                        fontSize: isMobile ? 'clamp(40px, 10vw, 56px)' : 'clamp(60px, 6vw, 96px)',
+                                        fontWeight: 800,
+                                        letterSpacing: '-0.03em',
+                                        color: textMain,
+                                        margin: '0 0 28px',
+                                        lineHeight: 0.92,
+                                    }}>{artistGallery.artist}</h1>
 
-                                    {/* Footer row */}
-                                    <div style={{ display: 'flex', alignItems: 'center', gap: 20, flexWrap: 'wrap' }}>
-                                        <span style={{ fontSize: 12, color: textSub, letterSpacing: '0.1em', textTransform: 'uppercase', fontWeight: 500 }}>
-                                            <strong style={{ color: accent, fontVariantNumeric: 'tabular-nums', fontWeight: 700 }}>
+                                    {/* Footer row — Claude design: accent count + style tag + Follow Artist + Wikipedia */}
+                                    <div style={{ position: 'relative', zIndex: 1, display: 'flex', alignItems: 'center', gap: isMobile ? 12 : 20, flexWrap: 'wrap' }}>
+                                        <div style={{ display: 'flex', alignItems: 'baseline', gap: 8 }}>
+                                            <span style={{
+                                                fontFamily: "'Space Grotesk', system-ui, -apple-system, sans-serif",
+                                                fontSize: isMobile ? 22 : 28,
+                                                fontWeight: 700,
+                                                color: accent,
+                                                letterSpacing: '-0.03em',
+                                                fontVariantNumeric: 'tabular-nums',
+                                                lineHeight: 1,
+                                            }}>
                                                 {(artistGallery.isLoading && artistGallery.artworks.length === 0)
                                                     ? '...'
                                                     : artistGallery.artworks.length.toLocaleString()}
-                                            </strong>{' '}Works in Collection
-                                        </span>
+                                            </span>
+                                            <span style={{
+                                                fontFamily: "'Space Mono', monospace",
+                                                fontSize: 11,
+                                                color: textSub,
+                                                letterSpacing: '0.12em',
+                                                textTransform: 'uppercase',
+                                            }}>{t({ ko: '점 소장', en: 'works in collection' })}</span>
+                                        </div>
+                                        {galleryCategories.length > 0 && (
+                                            <>
+                                                <div style={{ width: 1, height: 16, background: borderLight }} />
+                                                <span style={{
+                                                    display: 'inline-block',
+                                                    padding: '3px 10px',
+                                                    background: 'rgba(255,255,255,0.04)',
+                                                    color: textSub,
+                                                    fontFamily: "'Space Mono', monospace",
+                                                    fontSize: 10,
+                                                    letterSpacing: '0.12em',
+                                                    textTransform: 'uppercase',
+                                                    lineHeight: 1.6,
+                                                }}>{getMediumKo(galleryCategories[0].cat, language)}</span>
+                                            </>
+                                        )}
                                         {artistGallery.isLoading && (
                                             <span style={{ fontSize: 11, color: textSub, letterSpacing: '0.08em', textTransform: 'uppercase' }}>
-                                                Syncing full collection...
+                                                {t({ ko: '전체 컬렉션 불러오는 중...', en: 'Syncing full collection...' })}
                                             </span>
                                         )}
+                                        <div style={{ flex: 1 }} />
+                                        <button
+                                            type="button"
+                                            onClick={toggleLikeArtist}
+                                            style={{
+                                                display: 'flex', alignItems: 'center', gap: 8,
+                                                padding: '9px 18px',
+                                                border: `1px solid ${artistGalleryIsLiked ? accent : borderLight}`,
+                                                background: 'transparent',
+                                                color: artistGalleryIsLiked ? accent : textMain,
+                                                fontFamily: "'Space Mono', monospace",
+                                                fontSize: 11,
+                                                letterSpacing: '0.12em',
+                                                textTransform: 'uppercase',
+                                                cursor: 'pointer',
+                                                transition: 'border-color 0.15s, color 0.15s',
+                                            }}
+                                            onMouseEnter={(e) => {
+                                                if (artistGalleryIsLiked) return;
+                                                e.currentTarget.style.borderColor = accent;
+                                                e.currentTarget.style.color = accent;
+                                            }}
+                                            onMouseLeave={(e) => {
+                                                if (artistGalleryIsLiked) return;
+                                                e.currentTarget.style.borderColor = borderLight;
+                                                e.currentTarget.style.color = textMain;
+                                            }}
+                                        >
+                                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                                                <path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z" fill={artistGalleryIsLiked ? accent : 'none'} />
+                                            </svg>
+                                            {artistGalleryIsLiked ? t({ ko: '팔로잉', en: 'Following' }) : t({ ko: '작가 팔로우', en: 'Follow artist' })}
+                                        </button>
                                         {galleryWikiUrl && (
                                             <a href={galleryWikiUrl} target="_blank" rel="noreferrer"
                                                 style={{
-                                                    display: 'inline-flex', alignItems: 'center', gap: 5,
-                                                    fontSize: 11, color: accent, letterSpacing: '0.12em',
+                                                    display: 'inline-flex', alignItems: 'center', gap: 6,
+                                                    fontFamily: "'Space Mono', monospace",
+                                                    fontSize: 11, color: textSub, letterSpacing: '0.12em',
                                                     textDecoration: 'none',
-                                                    borderBottom: `1px solid ${accent}55`,
-                                                    paddingBottom: 1,
-                                                    textTransform: 'uppercase', fontWeight: 500,
+                                                    borderBottom: `1px solid ${borderLight}`,
+                                                    paddingBottom: 2,
+                                                    textTransform: 'uppercase',
                                                 }}
-                                                onMouseEnter={(e) => (e.currentTarget.style.opacity = '0.7')}
-                                                onMouseLeave={(e) => (e.currentTarget.style.opacity = '1')}
+                                                onMouseEnter={(e) => { e.currentTarget.style.color = accent; e.currentTarget.style.borderBottomColor = accent; }}
+                                                onMouseLeave={(e) => { e.currentTarget.style.color = textSub; e.currentTarget.style.borderBottomColor = borderLight; }}
                                             >
-                                                Wikipedia
-                                                <svg viewBox="0 0 12 12" width="10" height="10" fill="none" stroke="currentColor" strokeWidth="1.5">
-                                                    <path d="M1 11L11 1M11 1H5M11 1v6" strokeLinecap="round" strokeLinejoin="round" />
+                                                {t({ ko: '위키백과', en: 'Wikipedia' })}
+                                                <svg viewBox="0 0 24 24" width="11" height="11" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+                                                    <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6" />
+                                                    <polyline points="15 3 21 3 21 9" />
+                                                    <line x1="10" y1="14" x2="21" y2="3" />
                                                 </svg>
                                             </a>
                                         )}
@@ -5112,7 +5448,7 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                                             fontSize: 10, letterSpacing: '0.3em', textTransform: 'uppercase',
                                             color: accent, fontWeight: 500, margin: '0 0 14px',
                                             fontFamily: "'Space Mono', 'SFMono-Regular', Menlo, Consolas, monospace",
-                                        }}>Infinite Wiki</p>
+                                        }}>{t({ ko: '인피니트 위키', en: 'Infinite Wiki' })}</p>
                                         <ArtistWikiPanel
                                             artistName={artistGallery.artist}
                                             imageUrl={undefined}
@@ -5141,20 +5477,22 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                                         }
                                         const musArr_ = Array.from(musMap_.entries())
                                             .sort((a, b) => b[1] - a[1])
-                                            .map(([name, count]) => ({ name, count, pct: Math.round(count / total * 100) }));
+                                            .map(([name, count]) => {
+                                                const mus = (museums || []).find(m => m.name === name);
+                                                return { name, count, country: mus?.country || '', pct: Math.round(count / total * 100) };
+                                            });
 
                                         // Country distribution
                                         const cntryMap_: Map<string, number> = new Map();
-                                        for (const { name, count } of musArr_) {
-                                            const mus = (museums || []).find(m => m.name === name);
-                                            const country = mus?.country || '';
+                                        for (const { country, count } of musArr_) {
                                             if (country) cntryMap_.set(country, (cntryMap_.get(country) || 0) + count);
                                         }
                                         const cntryArr_ = Array.from(cntryMap_.entries())
                                             .sort((a, b) => b[1] - a[1])
                                             .map(([name, count]) => ({ name, count, pct: Math.round(count / total * 100) }));
 
-                                        const DONUT_COLORS = ['#d4a547', '#aee000', '#d4ff40', '#88cc00', '#e8ff80', '#66aa00', '#f0ff99', '#448800'];
+                                        // Gold/amber palette — donut segments + legend dots
+                                        const DONUT_COLORS = ['#d4a547', '#f0c878', '#a07028', '#f5dca6', '#6b4514', '#e8b85f', '#fae8c4', '#3f2906'];
 
                                         const renderDonut = (data: { name: string; count: number }[], _centerLabel: string) => {
                                             const cx = 56, cy = 56, outerR = 44, innerR = 26;
@@ -5215,7 +5553,7 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
 
                                         return (
                                             <div style={{ flex: isMobile ? '1 1 auto' : '0 0 50%', minWidth: 0, boxSizing: 'border-box', padding: isMobile ? '16px' : '24px 32px' }}>
-                                                <p style={{ fontSize: 10, letterSpacing: '0.3em', textTransform: 'uppercase', color: accent, fontWeight: 500, margin: '0 0 14px' }}>Global Distribution</p>
+                                                <p style={{ fontSize: 10, letterSpacing: '0.3em', textTransform: 'uppercase', color: accent, fontWeight: 500, margin: '0 0 14px' }}>{t({ ko: '전 세계 분포', en: 'Global Distribution' })}</p>
 
                                                 {/* Combined map + slides card */}
                                                 <div style={{
@@ -5227,7 +5565,7 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                                                 }}>
                                                                     {/* amCharts map — lazy loaded on all platforms */}
                                                     <div style={{ flex: '1 1 0%', minHeight: 0, width: '100%', overflow: 'hidden' }}>
-                                                        <Suspense fallback={<div style={{ height: 160, display: 'flex', alignItems: 'center', justifyContent: 'center', color: textSub, fontSize: 12 }}>Loading map…</div>}>
+                                                        <Suspense fallback={<div style={{ height: 160, display: 'flex', alignItems: 'center', justifyContent: 'center', color: textSub, fontSize: 12 }}>{t({ ko: '지도 불러오는 중…', en: 'Loading map…' })}</div>}>
                                                             <ArtistDistributionMap
                                                                 artworks={artistGallery.artworks as any}
                                                                 isDark={isDark}
@@ -5279,9 +5617,49 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                                                                 transition: 'transform 0.38s ease-in-out',
                                                                 transform: `translateX(calc(-${galleryMapSlide * 33.3333}% + 0px))`,
                                                             }}>
-                                                                {/* Slide 0: TOP MUSEUMS */}
+                                                                {/* Slide 0: 국가별 소장 분포 */}
                                                                 <div style={{ width: '33.3333%', flexShrink: 0, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
-                                                                    <p style={{ fontSize: 9, letterSpacing: '0.1em', textTransform: 'uppercase', color: textSub, margin: '8px 16px 4px', fontWeight: 600, pointerEvents: 'none', flexShrink: 0 }}>Top Museums</p>
+                                                                    <p style={{ fontSize: 9, letterSpacing: '0.1em', textTransform: 'uppercase', color: textSub, margin: '8px 16px 4px', fontWeight: 600, pointerEvents: 'none', flexShrink: 0 }}>{t({ ko: '국가별 소장 분포', en: 'By Country' })}</p>
+                                                                    <div className="_armin-slide-scroll" style={{ width: '100%', maxHeight: 118, overflowY: 'auto', overflowX: 'hidden', scrollbarWidth: 'none', padding: '0 12px 8px', boxSizing: 'border-box' } as React.CSSProperties}>
+                                                                        <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
+                                                                            {renderDonut(cntryArr_.length > 0 ? cntryArr_ : musArr_, 'COUNTRY')}
+                                                                            <div style={{ flex: 1, minWidth: 0 }}>
+                                                                                {(cntryArr_.length > 0 ? cntryArr_ : musArr_).slice(0, 6).map((d, i) => (
+                                                                                    <div key={d.name} style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 5 }}>
+                                                                                        <div style={{ width: 9, height: 9, borderRadius: 1, background: DONUT_COLORS[i % DONUT_COLORS.length], flexShrink: 0 }} />
+                                                                                        <span style={{ flex: 1, minWidth: 0, fontSize: 10, color: textMain, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', opacity: Math.max(0.5, 1 - i * 0.08), lineHeight: 1.3 }}>{localizeCountryName(d.name, language)}</span>
+                                                                                        <span style={{ fontSize: 11, color: accent, fontWeight: 700, fontVariantNumeric: 'tabular-nums', flexShrink: 0 }}>{d.pct}%</span>
+                                                                                    </div>
+                                                                                ))}
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                                {/* Slide 1: 미술관별 소장 분포 */}
+                                                                <div style={{ width: '33.3333%', flexShrink: 0, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
+                                                                    <p style={{ fontSize: 9, letterSpacing: '0.1em', textTransform: 'uppercase', color: textSub, margin: '8px 16px 4px', fontWeight: 600, pointerEvents: 'none', flexShrink: 0 }}>{t({ ko: '미술관별 소장 분포', en: 'By Museum' })}</p>
+                                                                    <div className="_armin-slide-scroll" style={{ width: '100%', maxHeight: 118, overflowY: 'auto', overflowX: 'hidden', scrollbarWidth: 'none', padding: '0 12px 8px', boxSizing: 'border-box' } as React.CSSProperties}>
+                                                                        <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
+                                                                            {renderDonut(musArr_, 'MUSEUM')}
+                                                                            <div style={{ flex: 1, minWidth: 0 }}>
+                                                                                {musArr_.slice(0, 6).map((d, i) => (
+                                                                                    <div key={d.name} style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 5 }}>
+                                                                                        <div style={{ width: 9, height: 9, borderRadius: 1, background: DONUT_COLORS[i % DONUT_COLORS.length], flexShrink: 0 }} />
+                                                                                        <span style={{ flex: 1, minWidth: 0, fontSize: 10, color: textMain, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', opacity: Math.max(0.5, 1 - i * 0.08), lineHeight: 1.3 }}>
+                                                                                            {getMuseumDisplayName(museums.find(x => x.name === d.name) ?? { name: d.name }, language)}{(d as any).country ? <span style={{ color: textSub, fontWeight: 400 }}> · {localizeCountryName((d as any).country, language)}</span> : null}
+                                                                                        </span>
+                                                                                        <span style={{ fontSize: 11, color: accent, fontWeight: 700, fontVariantNumeric: 'tabular-nums', flexShrink: 0 }}>{d.pct}%</span>
+                                                                                    </div>
+                                                                                ))}
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+
+                                                                {/* Slide 2: TOP MUSEUMS */}
+                                                                <div style={{ width: '33.3333%', flexShrink: 0, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
+                                                                    <p style={{ fontSize: 9, letterSpacing: '0.1em', textTransform: 'uppercase', color: textSub, margin: '8px 16px 4px', fontWeight: 600, pointerEvents: 'none', flexShrink: 0 }}>{t({ ko: '인기 미술관', en: 'Top Museums' })}</p>
                                                                     <div className="_armin-slide-scroll" style={{ width: '100%', maxHeight: 118, overflowY: 'auto', overflowX: 'hidden', scrollbarWidth: 'none', padding: '0 12px 8px', boxSizing: 'border-box' } as React.CSSProperties}>
                                                                         <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '7px 16px' }}>
                                                                             {musArr_.slice(0, 12).map((m, i) => {
@@ -5289,7 +5667,9 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                                                                                 return (
                                                                                     <div key={m.name} style={{ display: 'flex', flexDirection: 'column', gap: 3, minWidth: 0 }}>
                                                                                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', gap: 4 }}>
-                                                                                            <span style={{ fontSize: 10, color: textMain, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', flex: 1, minWidth: 0, opacity: Math.max(0.5, 1 - i * 0.04), lineHeight: 1.3 }}>{m.name}</span>
+                                                                                            <span style={{ fontSize: 10, color: textMain, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', flex: 1, minWidth: 0, opacity: Math.max(0.5, 1 - i * 0.04), lineHeight: 1.3 }}>
+                                                                                                {getMuseumDisplayName(museums.find(x => x.name === m.name) ?? { name: m.name }, language)}{m.country ? <span style={{ color: textSub, fontWeight: 400 }}> · {localizeCountryName(m.country, language)}</span> : null}
+                                                                                            </span>
                                                                                             <span style={{ fontSize: 11, color: accent, fontWeight: 700, fontVariantNumeric: 'tabular-nums', flexShrink: 0 }}>{m.count >= 1000 ? `${(m.count / 1000).toFixed(1)}k` : m.count}</span>
                                                                                         </div>
                                                                                         <div style={{ height: 2, background: border, borderRadius: 1, overflow: 'hidden' }}>
@@ -5298,44 +5678,6 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                                                                                     </div>
                                                                                 );
                                                                             })}
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-
-                                                                {/* Slide 1: 미술관별 소장 분포 */}
-                                                                <div style={{ width: '33.3333%', flexShrink: 0, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
-                                                                    <p style={{ fontSize: 9, letterSpacing: '0.1em', textTransform: 'uppercase', color: textSub, margin: '8px 16px 4px', fontWeight: 600, pointerEvents: 'none', flexShrink: 0 }}>미술관별 소장 분포</p>
-                                                                    <div className="_armin-slide-scroll" style={{ width: '100%', maxHeight: 118, overflowY: 'auto', overflowX: 'hidden', scrollbarWidth: 'none', padding: '0 12px 8px', boxSizing: 'border-box' } as React.CSSProperties}>
-                                                                        <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
-                                                                            {renderDonut(musArr_, 'MUSEUM')}
-                                                                            <div style={{ flex: 1, minWidth: 0 }}>
-                                                                                {musArr_.slice(0, 6).map((d, i) => (
-                                                                                    <div key={d.name} style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 5 }}>
-                                                                                        <div style={{ width: 9, height: 9, borderRadius: 1, background: DONUT_COLORS[i % DONUT_COLORS.length], flexShrink: 0 }} />
-                                                                                        <span style={{ flex: 1, minWidth: 0, fontSize: 10, color: textMain, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', opacity: Math.max(0.5, 1 - i * 0.08), lineHeight: 1.3 }}>{d.name}</span>
-                                                                                        <span style={{ fontSize: 11, color: accent, fontWeight: 700, fontVariantNumeric: 'tabular-nums', flexShrink: 0 }}>{d.pct}%</span>
-                                                                                    </div>
-                                                                                ))}
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-
-                                                                {/* Slide 2: 국가별 소장 분포 */}
-                                                                <div style={{ width: '33.3333%', flexShrink: 0, overflow: 'hidden', display: 'flex', flexDirection: 'column' }}>
-                                                                    <p style={{ fontSize: 9, letterSpacing: '0.1em', textTransform: 'uppercase', color: textSub, margin: '8px 16px 4px', fontWeight: 600, pointerEvents: 'none', flexShrink: 0 }}>국가별 소장 분포</p>
-                                                                    <div className="_armin-slide-scroll" style={{ width: '100%', maxHeight: 118, overflowY: 'auto', overflowX: 'hidden', scrollbarWidth: 'none', padding: '0 12px 8px', boxSizing: 'border-box' } as React.CSSProperties}>
-                                                                        <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
-                                                                            {renderDonut(cntryArr_.length > 0 ? cntryArr_ : musArr_, 'COUNTRY')}
-                                                                            <div style={{ flex: 1, minWidth: 0 }}>
-                                                                                {(cntryArr_.length > 0 ? cntryArr_ : musArr_).slice(0, 6).map((d, i) => (
-                                                                                    <div key={d.name} style={{ display: 'flex', alignItems: 'center', gap: 6, marginBottom: 5 }}>
-                                                                                        <div style={{ width: 9, height: 9, borderRadius: 1, background: DONUT_COLORS[i % DONUT_COLORS.length], flexShrink: 0 }} />
-                                                                                        <span style={{ flex: 1, minWidth: 0, fontSize: 10, color: textMain, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', opacity: Math.max(0.5, 1 - i * 0.08), lineHeight: 1.3 }}>{d.name}</span>
-                                                                                        <span style={{ fontSize: 11, color: accent, fontWeight: 700, fontVariantNumeric: 'tabular-nums', flexShrink: 0 }}>{d.pct}%</span>
-                                                                                    </div>
-                                                                                ))}
-                                                                            </div>
                                                                         </div>
                                                                     </div>
                                                                 </div>
@@ -5371,7 +5713,7 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                                         <span style={{ fontSize: isMobile ? 20 : 28, fontWeight: 700, color: textMain, fontVariantNumeric: 'tabular-nums' }}>
                                             {filteredCount.toLocaleString()}
                                         </span>
-                                        <span style={{ fontSize: 13, color: textSub }}>works</span>
+                                        <span style={{ fontSize: 13, color: textSub }}>{t({ ko: '점', en: 'works' })}</span>
                                         <div style={{ flex: 1, height: 1, background: borderLight }} />
                                     </div>
 
@@ -5409,7 +5751,7 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                                                     transform: 'translate(0, 0)',
                                                     transition: isDrawingGalleryMode ? 'transform 90ms ease, box-shadow 90ms ease, background 150ms ease, color 150ms ease, border-color 150ms ease' : 'all 0.15s',
                                                 }}
-                                            >All · {artistGallery.artworks.length.toLocaleString()}</button>
+                                            >{t({ ko: '전체', en: 'All' })} · {artistGallery.artworks.length.toLocaleString()}</button>
                                             {galleryCategories.map(({ cat, cnt }) => {
                                                 const active = galleryCategory === cat;
                                                 return (
@@ -5442,7 +5784,7 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                                                         boxShadow: isDrawingGalleryMode ? '3px 3px 0 rgba(17,17,17,0.95)' : 'none',
                                                         transform: 'translate(0, 0)',
                                                         transition: isDrawingGalleryMode ? 'transform 90ms ease, box-shadow 90ms ease, background 150ms ease, color 150ms ease, border-color 150ms ease' : 'all 0.15s',
-                                                    }}>{cat} · {cnt.toLocaleString()}</button>
+                                                    }}>{getMediumKo(cat, language)} · {cnt.toLocaleString()}</button>
                                                 );
                                             })}
                                         </div>
@@ -5457,12 +5799,26 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                                                         const yearLabel = formatArtworkYear(art.date);
                                                         const displayTitle = yearLabel ? `${art.name} (${yearLabel})` : art.name;
                                                         const museumCountry = museumCountryMap.get(art.museumName) || '';
+                                                        const museumNameLocalized = getMuseumDisplayName(museums.find(mm => mm.name === art.museumName) ?? { name: art.museumName }, language);
+                                                        const museumCountryLocalized = museumCountry ? localizeCountryName(museumCountry, language) : '';
                                                         const museumDisplay = museumCountry ? `${art.museumName} (${museumCountry})` : art.museumName;
                                                         return (
                                                             <div
                                                                 key={art.id || `art-${columnIdx}-${idx}`}
                                                                 data-art-card={art.id || `${columnIdx}-${idx}`}
                                                                 onClick={() => handleSelectArtwork(art)}
+                                                                onMouseEnter={(e) => {
+                                                                    const imgWrap = e.currentTarget.querySelector('[data-card-img-wrap]') as HTMLElement | null;
+                                                                    if (imgWrap) imgWrap.style.boxShadow = `inset 0 0 0 1.5px ${accent}`;
+                                                                    const title = e.currentTarget.querySelector('[data-card-title]') as HTMLElement | null;
+                                                                    if (title) title.style.color = accent;
+                                                                }}
+                                                                onMouseLeave={(e) => {
+                                                                    const imgWrap = e.currentTarget.querySelector('[data-card-img-wrap]') as HTMLElement | null;
+                                                                    if (imgWrap) imgWrap.style.boxShadow = 'none';
+                                                                    const title = e.currentTarget.querySelector('[data-card-title]') as HTMLElement | null;
+                                                                    if (title) title.style.color = textMain;
+                                                                }}
                                                                 style={{
                                                                     cursor: 'pointer',
                                                                     position: 'relative',
@@ -5470,15 +5826,17 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                                                                     animationDelay: `${Math.min(700, (idx * 55) + (columnIdx * 90))}ms`,
                                                                 }}
                                                             >
-                                                                <div style={{
-                                                                    overflow: 'hidden',
-                                                                    background: cardBg,
-                                                                    border: isDrawingGalleryMode ? 'none' : `${borderWidth} solid ${border}`,
-                                                                    borderRadius: isDrawingGalleryMode ? 10 : 6,
-                                                                    transition: 'border-color 0.2s',
-                                                                    position: 'relative',
-                                                                    boxShadow: 'none',
-                                                                }}>
+                                                                <div
+                                                                    data-card-img-wrap
+                                                                    style={{
+                                                                        overflow: 'hidden',
+                                                                        background: cardBg,
+                                                                        border: isDrawingGalleryMode ? 'none' : `${borderWidth} solid ${border}`,
+                                                                        borderRadius: isDrawingGalleryMode ? 10 : 6,
+                                                                        transition: 'box-shadow 0.2s, border-color 0.2s',
+                                                                        position: 'relative',
+                                                                        boxShadow: 'none',
+                                                                    }}>
                                                                     {(() => {
                                                                         const directUrl = resolveGalleryImageUrl(art);
                                                                         const isR2 = directUrl.includes('.r2.dev') || directUrl.includes('.r2.cloudflarestorage.com');
@@ -5612,12 +5970,37 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                                                                 </div>
                                                                 {/* Title + museum line — full width, no longer
                                                                     competing with the action icons for space. */}
-                                                                <div style={{ marginTop: 8, paddingBottom: 4 }}>
-                                                                    <div style={{ fontWeight: 600, fontSize: isMobile ? 11 : 13, color: textMain, lineHeight: 1.35, whiteSpace: 'normal', wordBreak: 'break-word' }}>
-                                                                        {displayTitle}
+                                                                <div style={{ marginTop: 10, paddingBottom: 4, display: 'flex', flexDirection: 'column', gap: 4 }}>
+                                                                    <div
+                                                                        data-card-title
+                                                                        style={{
+                                                                            fontFamily: "'Space Grotesk', system-ui, -apple-system, sans-serif",
+                                                                            fontWeight: 500,
+                                                                            fontSize: isMobile ? 12 : 13,
+                                                                            color: textMain,
+                                                                            lineHeight: 1.35,
+                                                                            whiteSpace: 'normal',
+                                                                            wordBreak: 'break-word',
+                                                                            transition: 'color 0.18s',
+                                                                        }}
+                                                                    >
+                                                                        {getArtworkTitle(art, language, titleMap)}
                                                                     </div>
-                                                                    <div style={{ fontSize: isMobile ? 10 : 11, color: textSub, marginTop: 3 }}>
-                                                                        {museumDisplay}
+                                                                    <div style={{
+                                                                        fontFamily: "'Space Mono', monospace",
+                                                                        fontSize: isMobile ? 9 : 10,
+                                                                        color: textSub,
+                                                                        letterSpacing: '0.06em',
+                                                                        textTransform: 'uppercase',
+                                                                        lineHeight: 1.5,
+                                                                        whiteSpace: 'nowrap',
+                                                                        overflow: 'hidden',
+                                                                        textOverflow: 'ellipsis',
+                                                                    }}>
+                                                                        {yearLabel && <span>{yearLabel}</span>}
+                                                                        {yearLabel && art.museumName && <span style={{ margin: '0 6px', opacity: 0.5 }}>·</span>}
+                                                                        {art.museumName && <span>{museumNameLocalized}</span>}
+                                                                        {museumCountryLocalized && <span style={{ opacity: 0.6 }}> ({museumCountryLocalized})</span>}
                                                                     </div>
                                                                 </div>
                                                             </div>

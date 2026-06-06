@@ -1,6 +1,7 @@
 
 import React, { useState, useEffect, useRef, useCallback } from 'react';
 import { getOptimizedImageUrl } from '../utils/imageProxy';
+import { prettifyArtistName } from '../utils/canonicalArtist';
 
 interface SlideshowProps {
     artworks: any[];
@@ -153,7 +154,7 @@ const Slideshow: React.FC<SlideshowProps> = ({ artworks, onClose }) => {
                 maxWidth: '80%'
             }}>
                 <h2 style={{ fontSize: '2rem', margin: '0 0 10px 0', fontWeight: 300 }}>{currentArtwork.title}</h2>
-                <p style={{ fontSize: '1.2rem', margin: 0, opacity: 0.8 }}>{currentArtwork.artist}</p>
+                <p style={{ fontSize: '1.2rem', margin: 0, opacity: 0.8 }}>{prettifyArtistName(currentArtwork.artist)}</p>
                 <p style={{ fontSize: '0.9rem', margin: '5px 0 0 0', opacity: 0.6 }}>{currentArtwork.year}</p>
             </div>
 

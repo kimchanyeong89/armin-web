@@ -75,6 +75,10 @@ function buildPayload(work: ArtworkLikePayload, source: LikeSource) {
     artwork_ref: work.artwork_ref,
     image_url: work.image_url,
     source_collection: work.source_collection,
+    // MyPage sorts its Artworks grid on `likedAt` (Mypage.tsx) and every other
+    // heart in the app writes that field — weekly/special saves must too, or
+    // they sink below every other save and look "missing" to the user.
+    likedAt: serverTimestamp(),
     saved_at: serverTimestamp(),
     source,
   };

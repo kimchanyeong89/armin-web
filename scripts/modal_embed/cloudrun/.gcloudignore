@@ -1,0 +1,11 @@
+# Cloud Build에 보낼 때 제외할 파일들
+.git
+.gitignore
+.DS_Store
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+.env
+*.log
+README.md

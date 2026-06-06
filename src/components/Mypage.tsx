@@ -588,6 +588,7 @@ type MyPageImageProps = {
 
 const MyPageImage = React.memo(({ item, width = 600, style, disableBlur = true }: MyPageImageProps) => {
   const rootRef = useRef<HTMLDivElement | null>(null);
+  const imgRef = useRef<HTMLImageElement | null>(null);
   const [recoveredSrc, setRecoveredSrc] = useState<string | null>(null);
   const [hasFailedAll, setHasFailedAll] = useState(false);
   const [imageLoaded, setImageLoaded] = useState(false);
@@ -937,6 +938,18 @@ const MyPageImage = React.memo(({ item, width = 600, style, disableBlur = true }
     setIsResolving(false);
   };
 
+  // A browser-cached image can finish loading before React wires up onLoad —
+  // most common on reload — so onLoad never fires and the <img> stays at
+  // opacity 0 behind the skeleton (blank). Detect the already-complete <img>
+  // here and settle it manually.
+  useEffect(() => {
+    const img = imgRef.current;
+    if (img && img.complete && img.naturalWidth > 0 && !imageLoaded) {
+      handleImgLoad();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [currentSrc]);
+
   return (
     <div
       ref={rootRef}
@@ -1001,6 +1014,7 @@ const MyPageImage = React.memo(({ item, width = 600, style, disableBlur = true }
       {!hasFailedAll && currentSrc && (
         <img
           key={currentSrc}
+          ref={imgRef}
           src={currentSrc}
           alt={item.title || item.name || "Artwork"}
           loading="lazy"

@@ -1,0 +1,19 @@
+{
+  "slug": "mfab",
+  "removed_count": 1,
+  "artworks": [
+    {
+      "id": "350",
+      "title": "Portrait of Napoleon I\n                                    \n                                                                        \n                            \n                                Jean-Baptiste Isabey",
+      "artist": "Jean-Baptiste Isabey",
+      "dateStr": "first half of the 19th century",
+      "year": 0,
+      "medium": "oil on ivory miniautre",
+      "dimensions": "7 x 5.8 cm",
+      "image": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/mfab-collection/350-02ab83e2-image.webp",
+      "url": "https://www.mfab.hu/artworks/350/",
+      "classification": "Painting",
+      "original_image": "https://www.mfab.hu/app/uploads/2022/08/234485.jpg"
+    }
+  ]
+}

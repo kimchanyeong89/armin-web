@@ -1142,7 +1142,7 @@ export default function HomePage({ exhibitions, isOverlayOpen = false }: HomePag
       return {
         ...(localized as any),
         id: ex.id,
-        name: localized.name,
+        name: (ex as any).name,
         country: (ex as any).country || '',
         region: (ex as any).region,
         latitude: (ex as any).latitude || 0,

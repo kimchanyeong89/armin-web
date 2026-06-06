@@ -438,13 +438,17 @@ function ArtworkPlaceholder({
   imageUrl?: string;
   alt?: string;
 }) {
+  // Box ratio defaults to the caller's hint, then snaps to the image's true
+  // intrinsic ratio once it loads — so the artwork is shown uncropped.
+  const [naturalAspect, setNaturalAspect] = useState<number | null>(null);
+  const boxAspect = naturalAspect ?? aspect;
   return (
     <div
       onClick={onClick}
       style={{
         position: 'relative',
         width: '100%',
-        paddingTop: `${(1 / aspect) * 100}%`,
+        paddingTop: `${(1 / boxAspect) * 100}%`,
         background: artGradient(seed),   // shows during image load + as fallback if load fails
         overflow: 'hidden',
         ...style,
@@ -460,6 +464,13 @@ function ArtworkPlaceholder({
             width: '100%', height: '100%',
             objectFit: 'cover',
             display: 'block',
+          }}
+          // Snap the box to the image's true aspect ratio so nothing is cropped.
+          onLoad={(e) => {
+            const img = e.currentTarget as HTMLImageElement;
+            if (img.naturalWidth > 0 && img.naturalHeight > 0) {
+              setNaturalAspect(img.naturalWidth / img.naturalHeight);
+            }
           }}
           // If the image fails (404, CORS, etc.) hide it and let the gradient show.
           onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none'; }}
@@ -1938,7 +1949,9 @@ function SpecialGrid({
     );
   }
 
-  // Most-recent 1 unlocked.
+  // Special-exhibition paywall is temporarily disabled per request — every
+  // special is free. Flip PAYWALL_ENABLED back to true to re-apply the gate.
+  const PAYWALL_ENABLED = false;
   const UNLOCKED_COUNT = 1;
 
   return (
@@ -1949,7 +1962,7 @@ function SpecialGrid({
       padding: 'clamp(20px, 4vw, 32px)',
     }}>
       {entries.map((entry, i) => {
-        const locked = !isSubscriber && i >= UNLOCKED_COUNT;
+        const locked = PAYWALL_ENABLED && !isSubscriber && i >= UNLOCKED_COUNT;
         return (
           <GridCard
             key={entry.slug}
@@ -1966,6 +1979,142 @@ function SpecialGrid({
           />
         );
       })}
+    </div>
+  );
+}
+
+// ── Curation carousel — horizontal quick-nav strip under the section header ─
+// Recent weekly curations + special exhibitions as thumbnails; click to load.
+function WeeklyCarousel({
+  archiveEntries, specialEntries, activeKey, isMobile,
+  onSelectWeek, onSelectSpecial, langKo, fg, fgFaint, divider,
+}: {
+  archiveEntries: ArchiveEntry[];
+  specialEntries: SpecialEntry[];
+  activeKey: string | null;
+  isMobile: boolean;
+  onSelectWeek: (week: string) => void;
+  onSelectSpecial: (slug: string) => void;
+  langKo: boolean;
+  fg: string;
+  fgFaint: string;
+  divider: string;
+}) {
+  const accent = '#D4A547';
+  const fgLow = 'rgba(244,241,234,0.55)';
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [hovKey, setHovKey] = useState<string | null>(null);
+
+  const items = [
+    ...archiveEntries.map((e) => ({
+      key: `week:${e.week}`,
+      eyebrow: e.week.replace('-W', ' · WEEK '),
+      title: langKo ? e.title_ko : e.title_en,
+      image: e.hero_image_url,
+      onClick: () => onSelectWeek(e.week),
+    })),
+    ...specialEntries.map((e) => ({
+      key: `special:${e.slug}`,
+      eyebrow: `Special · ${e.lens}`,
+      title: langKo ? e.title_ko : e.title_en,
+      image: e.hero_image_url,
+      onClick: () => onSelectSpecial(e.slug),
+    })),
+  ];
+  if (items.length === 0) return null;
+
+  const PAD = 'clamp(20px, 4vw, 56px)';
+  const nudge = (dir: number) =>
+    scrollRef.current?.scrollBy({ left: dir * 380, behavior: 'smooth' });
+
+  return (
+    <div style={{ borderBottom: `0.5px solid ${divider}`, padding: 'clamp(16px,2.4vw,22px) 0' }}>
+      <div style={{ display: 'flex', alignItems: 'center', gap: 10, padding: `0 ${PAD}`, marginBottom: 12 }}>
+        <span style={{ ...LABEL, fontSize: 9, color: fgFaint, whiteSpace: 'nowrap' }}>
+          § Browse · 둘러보기
+        </span>
+        <div style={{ flex: 1, height: '0.5px', background: divider }} />
+        {!isMobile && [-1, 1].map((dir) => (
+          <button
+            key={dir}
+            type="button"
+            aria-label={dir < 0 ? 'Scroll left' : 'Scroll right'}
+            onClick={() => nudge(dir)}
+            style={{
+              width: 26, height: 26, flex: '0 0 auto',
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              background: 'transparent', border: `0.5px solid ${divider}`,
+              borderRadius: 999, color: fgLow, cursor: 'pointer',
+              fontSize: 14, lineHeight: 1, padding: 0,
+              transition: 'color 0.15s, border-color 0.15s',
+            }}
+            onMouseEnter={(e) => { e.currentTarget.style.color = accent; e.currentTarget.style.borderColor = accent; }}
+            onMouseLeave={(e) => { e.currentTarget.style.color = fgLow; e.currentTarget.style.borderColor = divider; }}
+          >
+            {dir < 0 ? '‹' : '›'}
+          </button>
+        ))}
+      </div>
+
+      <div
+        ref={scrollRef}
+        style={{
+          display: 'flex', gap: 12, overflowX: 'auto',
+          scrollbarWidth: 'none',
+          padding: `0 ${PAD}`,
+        }}
+      >
+        {items.map((it) => {
+          const active = it.key === activeKey;
+          const hov = hovKey === it.key;
+          return (
+            <button
+              key={it.key}
+              type="button"
+              onClick={it.onClick}
+              onMouseEnter={() => setHovKey(it.key)}
+              onMouseLeave={() => setHovKey(null)}
+              style={{
+                flex: '0 0 auto', width: 172,
+                padding: 0, cursor: 'pointer', textAlign: 'left',
+                background: 'rgba(255,255,255,0.02)',
+                border: `0.5px solid ${active ? accent : divider}`,
+                outline: hov && !active ? `1px solid ${accent}` : '1px solid transparent',
+                transition: 'outline 0.15s, border-color 0.15s',
+              }}
+            >
+              <div style={{ position: 'relative', aspectRatio: '3 / 2', overflow: 'hidden', background: 'rgba(255,255,255,0.03)' }}>
+                {it.image ? (
+                  <img
+                    src={it.image}
+                    alt={it.title}
+                    loading="lazy"
+                    style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+                    onError={(e) => { (e.currentTarget as HTMLImageElement).style.display = 'none'; }}
+                  />
+                ) : null}
+              </div>
+              <div style={{ padding: '8px 10px 10px' }}>
+                <div style={{
+                  ...LABEL, fontSize: 8, marginBottom: 4,
+                  color: active ? accent : fgFaint,
+                  whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis',
+                }}>
+                  {it.eyebrow}
+                </div>
+                <div style={{
+                  ...HEADING, fontSize: 12, lineHeight: 1.3, color: fg,
+                  letterSpacing: '-0.01em',
+                  display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical',
+                  overflow: 'hidden',
+                }}>
+                  {it.title}
+                </div>
+              </div>
+            </button>
+          );
+        })}
+      </div>
     </div>
   );
 }
@@ -2269,6 +2418,28 @@ export default function WeeklyCurationTab({
     />
   );
 
+  // Quick-nav carousel key for the currently-shown edition (highlights it).
+  const activeKey: string | null = editionFile
+    ? ((editionFile as { slug?: string }).slug
+        ? `special:${(editionFile as { slug?: string }).slug}`
+        : `week:${editionFile.week}`)
+    : null;
+
+  const carousel = chromeless ? null : (
+    <WeeklyCarousel
+      archiveEntries={archiveEntries}
+      specialEntries={specialEntries}
+      activeKey={activeKey}
+      isMobile={isMobile}
+      onSelectWeek={handleSelectArchiveWeek}
+      onSelectSpecial={handleSelectSpecial}
+      langKo={langKo}
+      fg={fg}
+      fgFaint={fgFaint}
+      divider={divider}
+    />
+  );
+
   const archiveView = (
     <ArchiveGrid
       entries={archiveEntries}
@@ -2370,6 +2541,7 @@ export default function WeeklyCurationTab({
     return (
       <div style={{ paddingBottom: 80 }}>
         {topNav}
+        {carousel}
         <MobileEditionHeader edition={edition} langKo={langKo} {...tokens} />
 
         {/* Top Save-Curation button — same component as the footer below.
@@ -2457,6 +2629,7 @@ export default function WeeklyCurationTab({
   return (
     <div style={{ paddingBottom: 80 }}>
       {topNav}
+      {carousel}
       <EditionHeader
         edition={edition}
         langKo={langKo}

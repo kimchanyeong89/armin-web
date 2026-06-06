@@ -3,11 +3,21 @@ import { isoWeek } from './iso-week';
 
 export async function fetchCurrentCuration(
   date: Date = new Date(),
+  maxLookback = 12,
 ): Promise<WeeklyPublishedFile | null> {
-  const week = isoWeek(date);
-  const res = await fetch(`/data/weekly-curations/${week}.json`);
-  if (!res.ok) return null;
-  return await res.json() as WeeklyPublishedFile;
+  // Try the current ISO week, then walk backwards so an unpublished week
+  // shows the most recent real curation instead of the placeholder sample.
+  let week = isoWeek(date);
+  for (let i = 0; i < maxLookback; i++) {
+    try {
+      const res = await fetch(`/data/weekly-curations/${week}.json`);
+      if (res.ok) return await res.json() as WeeklyPublishedFile;
+    } catch {
+      // Network error on this week — fall through and try the previous one.
+    }
+    week = previousWeek(week);
+  }
+  return null;
 }
 
 // ── Archive list ────────────────────────────────────────────────────────────

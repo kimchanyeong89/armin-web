@@ -48,6 +48,9 @@ const normalizeCityName = (name: string): string => {
   const trimmed = (name || '').trim();
   if (!trimmed) return trimmed;
   if (/^st\.?\s+petersburg$/i.test(trimmed)) return 'Saint Petersburg';
+  // Vatican City is a 0.5 km² enclave inside Rome — fold it into the Rome cluster
+  // so the Vatican Museums show up as a dot on Rome's minimap.
+  if (/^vatican/i.test(trimmed)) return 'Rome';
   return trimmed;
 };
 
@@ -83,7 +86,14 @@ const extractCity = (ex: any): string => {
     if (r.includes('giza governorate')) return 'Giza';
     if (r.includes('western cape')) return 'Cape Town';
     if (r.includes('north jutland') || r.includes('nordjylland')) return 'Skagen';
-    if (r === 'gyeonggi' || r.startsWith('gyeonggi') || r.includes('경기')) return 'Gwacheon';
+    if (r === 'gyeonggi' || r.startsWith('gyeonggi') || r.includes('경기')) {
+      // Gyeonggi covers many cities; use location field to differentiate before falling back
+      const loc = (ex.location || '').toLowerCase();
+      if (loc.includes('용인') || loc.includes('yongin')) return 'Yongin';
+      if (loc.includes('수원') || loc.includes('suwon')) return 'Suwon';
+      if (loc.includes('과천') || loc.includes('gwacheon')) return 'Gwacheon';
+      return 'Gwacheon';
+    }
     if (r === 'wales' || r.startsWith('wales,')) return 'Cardiff';
     if (r.includes('london')) return 'London';
     if (r.includes('new york')) return 'New York';
@@ -370,30 +380,42 @@ export default function InteractiveGlobeMap({ exhibitions, onSelectExhibition, o
     const rawCities = Array.from(cityMap.values());
     
     // --- GEOGRAPHIC CLUSTERING ---
-    // Match DrawingMap behavior to keep adjacent metro clusters consistent.
-    const GEO_MERGE_DIST = 1.3;
-    
+    // Merge only cities close enough to read as one metro area; keep genuinely
+    // separate cities on their own marker. Distance is real-world kilometres
+    // (equirectangular approximation) so the rule behaves the same at every
+    // latitude — a fixed degree radius would cover far more ground near the
+    // equator than near the poles. 45 km sits in the natural gap between metro
+    // satellites that should stay folded in (Seoul–Yongin ~40 km, Paris–
+    // Versailles ~17 km, LA–San Marino ~15 km) and distinct cities that should
+    // split (Jeonju–Gwangju ~75 km, Liverpool–Manchester ~51 km).
+    const GEO_MERGE_DIST_KM = 45;
+    const distanceKm = (a: [number, number], b: [number, number]): number => {
+        const dLat = a[1] - b[1];
+        const dLng = a[0] - b[0];
+        const meanLat = ((a[1] + b[1]) / 2) * Math.PI / 180;
+        const x = dLng * Math.cos(meanLat);
+        return 111.195 * Math.sqrt(dLat * dLat + x * x);
+    };
+
     // Sort by count descending so larger cities consume smaller surrounding towns
     rawCities.sort((a, b) => b.venues.length - a.venues.length);
-    
+
     const clusteredCities: CityMarker[] = [];
     const mergedIndices = new Set<number>();
-    
+
     for (let i = 0; i < rawCities.length; i++) {
         if (mergedIndices.has(i)) continue;
         const mainCity = rawCities[i];
-        
+
         let mergedVenues = [...mainCity.venues];
 
         for (let j = i + 1; j < rawCities.length; j++) {
             if (mergedIndices.has(j)) continue;
             const otherCity = rawCities[j];
-            
-            const dx = mainCity.coordinates[0] - otherCity.coordinates[0];
-            const dy = mainCity.coordinates[1] - otherCity.coordinates[1];
-            const dist = Math.sqrt(dx * dx + dy * dy);
-            
-            if (dist < GEO_MERGE_DIST) {
+
+            const dist = distanceKm(mainCity.coordinates, otherCity.coordinates);
+
+            if (dist < GEO_MERGE_DIST_KM) {
                 // IMPORTANT: only merge cities within the SAME country
                 if (mainCity.country !== otherCity.country) continue;
                 

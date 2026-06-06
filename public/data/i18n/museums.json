@@ -1,0 +1,884 @@
+{
+  "21st Century Museum of Contemporary Art, Kanazawa": {
+    "name_ko": "가나자와 21세기 미술관",
+    "wikiId": "Q3242206",
+    "source": "wikidata",
+    "matched_en": "21st Century Museum of Contemporary Art"
+  },
+  "ARoS Aarhus Kunstmuseum": {
+    "name_ko": "아로스 오르후스 쿤스트뮤지엄",
+    "wikiId": "Q296962",
+    "source": "wikidata",
+    "matched_en": "ARoS Aarhus Kunstmuseum"
+  },
+  "Acropolis Museum": {
+    "name_ko": "아크로폴리스 박물관",
+    "wikiId": "Q421084",
+    "source": "wikidata",
+    "matched_en": "Acropolis Museum"
+  },
+  "Adachi Museum of Art": {
+    "name_ko": "아다치 미술관",
+    "wikiId": "Q3329561",
+    "source": "wikidata",
+    "matched_en": "Adachi Museum of Art"
+  },
+  "Alte Nationalgalerie": {
+    "name_ko": "베를린 구 국립미술관",
+    "wikiId": "Q162111",
+    "source": "wikidata",
+    "matched_en": "Alte Nationalgalerie"
+  },
+  "Alte Pinakothek": {
+    "name_ko": "알테 피나코테크",
+    "wikiId": "Q154568",
+    "source": "wikidata",
+    "matched_en": "Alte Pinakothek"
+  },
+  "Altes Museum": {
+    "name_ko": "베를린 구 박물관",
+    "wikiId": "Q156722",
+    "source": "wikidata",
+    "matched_en": "Altes Museum"
+  },
+  "Art Gallery of New South Wales": {
+    "name_ko": "뉴사우스웨일스 주 아트 갤러리",
+    "wikiId": "Q705551",
+    "source": "wikidata",
+    "matched_en": "Art Gallery of New South Wales"
+  },
+  "Belvedere Museum": {
+    "name_ko": "오스트리아 벨베데레 미술관",
+    "wikiId": "Q303139",
+    "source": "wikidata",
+    "matched_en": "Belvedere"
+  },
+  "Bode-Museum": {
+    "name_ko": "보데 박물관",
+    "wikiId": "Q157825",
+    "source": "wikidata",
+    "matched_en": "Bode Museum"
+  },
+  "British Museum": {
+    "name_ko": "대영박물관",
+    "wikiId": "Q6373",
+    "source": "wikidata",
+    "matched_en": "British Museum"
+  },
+  "Centre Pompidou": {
+    "name_ko": "조르주 퐁피두 센터",
+    "wikiId": "Q178065",
+    "source": "wikidata",
+    "matched_en": "Centre Georges Pompidou"
+  },
+  "Château de Versailles": {
+    "name_ko": "베르사유궁",
+    "wikiId": "Q2946",
+    "source": "wikidata",
+    "matched_en": "Palace of Versailles"
+  },
+  "Cleveland Museum of Art": {
+    "name_ko": "클리블랜드 미술관",
+    "wikiId": "Q657415",
+    "source": "wikidata",
+    "matched_en": "Cleveland Museum of Art"
+  },
+  "DDP (동대문디자인플라자)": {
+    "name_ko": "동대문디자인플라자",
+    "wikiId": "Q5295847",
+    "source": "manual",
+    "matched_en": "Dongdaemun Design Plaza"
+  },
+  "Den Hirschsprungske Samling": {
+    "name_ko": "히르슈프룽 컬렉션",
+    "wikiId": "Q2982867",
+    "source": "wikidata",
+    "matched_en": "Hirschsprung Collection"
+  },
+  "Detroit Institute of Arts": {
+    "name_ko": "디트로이트 미술관",
+    "wikiId": "Q1201549",
+    "source": "wikidata",
+    "matched_en": "Detroit Institute of Arts"
+  },
+  "Fine Arts Museums of San Francisco": {
+    "name_ko": "샌프란시스코 미술관",
+    "wikiId": "Q1416890",
+    "source": "wikidata",
+    "matched_en": "Fine Arts Museums of San Francisco"
+  },
+  "Fondation Beyeler": {
+    "name_ko": "바이엘러 재단",
+    "wikiId": "Q673833",
+    "source": "wikidata",
+    "matched_en": "Beyeler Foundation"
+  },
+  "Fondation Louis Vuitton": {
+    "name_ko": "루이비통 파운데이션",
+    "wikiId": "Q3075489",
+    "source": "wikidata",
+    "matched_en": "Louis Vuitton Foundation"
+  },
+  "Galleria Borghese": {
+    "name_ko": "보르게세 미술관",
+    "wikiId": "Q841506",
+    "source": "wikidata",
+    "matched_en": "Galleria Borghese"
+  },
+  "Galleria Doria Pamphilj": {
+    "name_ko": "도리아 팜필리 미술관",
+    "wikiId": "Q1203458",
+    "source": "wikidata",
+    "matched_en": "Galleria Doria Pamphilj"
+  },
+  "Galleria dell'Accademia": {
+    "name_ko": "아카데미아 미술관",
+    "wikiId": "Q10855544",
+    "source": "wikidata",
+    "matched_en": "Galleria dell'Accademia"
+  },
+  "Gallerie dell'Accademia di Venezia": {
+    "name_ko": "아카데미아 미술관",
+    "wikiId": "Q338330",
+    "source": "wikidata",
+    "matched_en": "Gallerie dell'Accademia"
+  },
+  "Gemäldegalerie": {
+    "name_ko": "베를린 국립회화관",
+    "wikiId": "Q165631",
+    "source": "wikidata",
+    "matched_en": "Gemäldegalerie Berlin"
+  },
+  "Getty Museum": {
+    "name_ko": "J. 폴 게티 미술관",
+    "wikiId": "Q731126",
+    "source": "wikidata",
+    "matched_en": "J. Paul Getty Museum"
+  },
+  "Grand Egyptian Museum": {
+    "name_ko": "대이집트 박물관",
+    "wikiId": "Q2583681",
+    "source": "wikidata",
+    "matched_en": "Grand Egyptian Museum"
+  },
+  "Guggenheim Bilbao": {
+    "name_ko": "빌바오 구겐하임 미술관",
+    "wikiId": "Q179199",
+    "source": "wikidata",
+    "matched_en": "Guggenheim Museum Bilbao"
+  },
+  "Gulbenkian Museum": {
+    "name_ko": "칼루스트 굴벤키안 미술관",
+    "wikiId": "Q211262",
+    "source": "wikidata",
+    "matched_en": "Calouste Gulbenkian Museum"
+  },
+  "Hamburger Kunsthalle": {
+    "name_ko": "함부르크 미술관",
+    "wikiId": "Q169542",
+    "source": "wikidata",
+    "matched_en": "Hamburger Kunsthalle"
+  },
+  "Hayward Gallery": {
+    "name_ko": "헤이워드 갤러리",
+    "wikiId": "Q779736",
+    "source": "wikidata",
+    "matched_en": "Hayward Gallery"
+  },
+  "Hong Kong Museum of Art": {
+    "name_ko": "홍콩 예술관",
+    "wikiId": "Q908216",
+    "source": "wikidata",
+    "matched_en": "Hong Kong Museum of Art"
+  },
+  "Humboldt Forum": {
+    "name_ko": "훔볼트 포룸",
+    "wikiId": "Q20196262",
+    "source": "wikidata",
+    "matched_en": "Humboldt Forum"
+  },
+  "Jeu de Paume": {
+    "name_ko": "주드폼",
+    "wikiId": "Q797108",
+    "source": "wikidata",
+    "matched_en": "jeu de paume"
+  },
+  "Kröller-Müller Museum": {
+    "name_ko": "크뢸러 뮐러 미술관",
+    "wikiId": "Q1051928",
+    "source": "wikidata",
+    "matched_en": "Kröller-Müller Museum"
+  },
+  "Kunsthaus Zürich": {
+    "name_ko": "취리히 미술관",
+    "wikiId": "Q685038",
+    "source": "wikidata",
+    "matched_en": "Kunsthaus Zürich"
+  },
+  "Kunstmuseum Basel": {
+    "name_ko": "바젤 시립 미술관",
+    "wikiId": "Q194626",
+    "source": "wikidata",
+    "matched_en": "Kunstmuseum Basel"
+  },
+  "Leopold Museum": {
+    "name_ko": "레오폴트 미술관",
+    "wikiId": "Q59435",
+    "source": "wikidata",
+    "matched_en": "Leopold Museum"
+  },
+  "Los Angeles County Museum of Art (LACMA)": {
+    "name_ko": "로스앤젤레스 카운티 미술관",
+    "wikiId": "Q1641836",
+    "source": "wikidata",
+    "matched_en": "Los Angeles County Museum of Art"
+  },
+  "Louisiana Museum of Modern Art": {
+    "name_ko": "루이지애나 근대미술관",
+    "wikiId": "Q1410617",
+    "source": "wikidata",
+    "matched_en": "Louisiana Museum of Modern Art"
+  },
+  "Manchester Art Gallery": {
+    "name_ko": "맨체스터 미술관",
+    "wikiId": "Q2638817",
+    "source": "wikidata",
+    "matched_en": "Manchester Art Gallery"
+  },
+  "Mauritshuis": {
+    "name_ko": "마우리츠하위스 미술관",
+    "wikiId": "Q221092",
+    "source": "wikidata",
+    "matched_en": "Mauritshuis"
+  },
+  "Montreal Museum of Fine Arts": {
+    "name_ko": "몬트리올 미술관",
+    "wikiId": "Q860812",
+    "source": "wikidata",
+    "matched_en": "Montreal Museum of Fine Arts"
+  },
+  "Mucem": {
+    "name_ko": "유럽지중해문명박물관",
+    "wikiId": "Q2808698",
+    "source": "wikidata",
+    "matched_en": "Museum of European and Mediterranean Civilisations"
+  },
+  "Munchmuseet": {
+    "name_ko": "뭉크 미술관",
+    "wikiId": "Q844926",
+    "source": "wikidata",
+    "matched_en": "Munch Museum"
+  },
+  "Musei Capitolini": {
+    "name_ko": "카피톨리노 박물관",
+    "wikiId": "Q333906",
+    "source": "wikidata",
+    "matched_en": "Capitoline Museums"
+  },
+  "Museo Archeologico Nazionale di Napoli": {
+    "name_ko": "나폴리 국립 고고학 박물관",
+    "wikiId": "Q637248",
+    "source": "wikidata",
+    "matched_en": "Naples National Archaeological Museum"
+  },
+  "Museo Egizio": {
+    "name_ko": "이지오 박물관",
+    "wikiId": "Q19877",
+    "source": "wikidata",
+    "matched_en": "Museo Egizio"
+  },
+  "Museo Reina Sofía": {
+    "name_ko": "국립 소피아 왕비 예술센터",
+    "wikiId": "Q460889",
+    "source": "wikidata",
+    "matched_en": "Museo Nacional Centro de Arte Reina Sofía"
+  },
+  "Museo Thyssen-Bornemisza": {
+    "name_ko": "티센보르네미차 미술관",
+    "wikiId": "Q176251",
+    "source": "wikidata",
+    "matched_en": "Thyssen-Bornemisza Museum"
+  },
+  "Museo del Novecento": {
+    "name_ko": "노베첸토 박물관",
+    "wikiId": "Q261233",
+    "source": "wikidata",
+    "matched_en": "Museo del Novecento"
+  },
+  "Museu de Arte de São Paulo": {
+    "name_ko": "상파울루 미술관",
+    "wikiId": "Q82941",
+    "source": "wikidata",
+    "matched_en": "São Paulo Museum of Art"
+  },
+  "Museum of Contemporary Art Australia": {
+    "name_ko": "시드니 현대 미술관",
+    "wikiId": "Q690242",
+    "source": "wikidata",
+    "matched_en": "Museum of Contemporary Art Australia"
+  },
+  "Museum of Fine Arts, Boston": {
+    "name_ko": "보스턴 미술관",
+    "wikiId": "Q49133",
+    "source": "wikidata",
+    "matched_en": "Museum of Fine Arts Boston"
+  },
+  "Museum of Fine Arts, Budapest": {
+    "name_ko": "부다페스트 미술관",
+    "wikiId": "Q840886",
+    "source": "wikidata",
+    "matched_en": "Museum of Fine Arts, Budapest"
+  },
+  "Museum of Fine Arts, Houston": {
+    "name_ko": "휴스턴 미술관",
+    "wikiId": "Q1565911",
+    "source": "wikidata",
+    "matched_en": "Museum of Fine Arts, Houston"
+  },
+  "Musée Carnavalet - Histoire de Paris": {
+    "name_ko": "카르나발레 박물관",
+    "wikiId": "Q640447",
+    "source": "wikidata",
+    "matched_en": "Musée Carnavalet"
+  },
+  "Musée Condé": {
+    "name_ko": "콩데 미술관",
+    "wikiId": "Q1236032",
+    "source": "wikidata",
+    "matched_en": "Condé Museum"
+  },
+  "Musée Fabre": {
+    "name_ko": "파브르 미술관",
+    "wikiId": "Q1519002",
+    "source": "wikidata",
+    "matched_en": "Musée Fabre"
+  },
+  "Musée Guimet": {
+    "name_ko": "국립 기메 동양 박물관",
+    "wikiId": "Q860994",
+    "source": "wikidata",
+    "matched_en": "Guimet Museum"
+  },
+  "Musée Marmottan Monet": {
+    "name_ko": "마르모탕 모네 미술관",
+    "wikiId": "Q1327886",
+    "source": "wikidata",
+    "matched_en": "Musée Marmottan Monet"
+  },
+  "Musée Rodin": {
+    "name_ko": "로댕 미술관",
+    "wikiId": "Q650519",
+    "source": "wikidata",
+    "matched_en": "Musée Rodin"
+  },
+  "Musée Toulouse-Lautrec": {
+    "name_ko": "툴루즈로트레크 미술관",
+    "wikiId": "Q2538129",
+    "source": "wikidata",
+    "matched_en": "Musée Toulouse-Lautrec"
+  },
+  "Musée d'Art Moderne de Paris": {
+    "name_ko": "파리시립현대미술관",
+    "wikiId": "Q857276",
+    "source": "wikidata",
+    "matched_en": "Musée d'art moderne de Paris"
+  },
+  "Musée d'Art Moderne et Contemporain de Strasbourg": {
+    "name_ko": "스트라스부르 근현대미술관",
+    "wikiId": "Q845468",
+    "source": "wikidata",
+    "matched_en": "Strasbourg Museum of Modern and Contemporary Art"
+  },
+  "Musée d'Art et d'Histoire": {
+    "name_ko": "제네바 미술사 박물관",
+    "wikiId": "Q679075",
+    "source": "wikidata",
+    "matched_en": "Museum of Art and History Geneva"
+  },
+  "Musée d'Orsay": {
+    "name_ko": "오르세 미술관",
+    "wikiId": "Q23402",
+    "source": "wikidata",
+    "matched_en": "Musée d'Orsay"
+  },
+  "Musée de Grenoble": {
+    "name_ko": "그르노블 미술관",
+    "wikiId": "Q1952944",
+    "source": "wikidata",
+    "matched_en": "Museum of Grenoble"
+  },
+  "Musée de l'Orangerie": {
+    "name_ko": "오랑주리 미술관",
+    "wikiId": "Q726781",
+    "source": "wikidata",
+    "matched_en": "Musée de l'Orangerie"
+  },
+  "Musée des Arts Décoratifs": {
+    "name_ko": "파리 장식미술관",
+    "wikiId": "Q1319378",
+    "source": "wikidata",
+    "matched_en": "Musée des Arts Décoratifs"
+  },
+  "Musée des Beaux-Arts de Lyon": {
+    "name_ko": "리옹 미술관",
+    "wikiId": "Q511",
+    "source": "wikidata",
+    "matched_en": "Museum of Fine Arts of Lyon"
+  },
+  "Musée des Beaux-Arts de Rouen": {
+    "name_ko": "루앙 미술관",
+    "wikiId": "Q3086934",
+    "source": "wikidata",
+    "matched_en": "Musée des Beaux-Arts de Rouen"
+  },
+  "Musée du Louvre": {
+    "name_ko": "루브르 박물관",
+    "wikiId": "Q19675",
+    "source": "wikidata",
+    "matched_en": "Louvre Museum"
+  },
+  "Musées royaux des Beaux-Arts de Belgique": {
+    "name_ko": "벨기에 왕립미술관",
+    "wikiId": "Q377500",
+    "source": "wikidata",
+    "matched_en": "Royal Museums of Fine Arts of Belgium"
+  },
+  "Nanjing Museum": {
+    "name_ko": "난징박물원",
+    "wikiId": "Q1815891",
+    "source": "wikidata",
+    "matched_en": "Nanjing Museum"
+  },
+  "Nasjonalmuseet": {
+    "name_ko": "노르웨이 국립박물관",
+    "wikiId": "Q1132918",
+    "source": "wikidata",
+    "matched_en": "National Museum of Art, Architecture and Design"
+  },
+  "National Archaeological Museum": {
+    "name_ko": "아테네 국립 고고학 박물관",
+    "wikiId": "Q637187",
+    "source": "wikidata",
+    "matched_en": "National Archaeological Museum of Athens"
+  },
+  "National Art Museum of China": {
+    "name_ko": "중국미술관",
+    "wikiId": "Q233705",
+    "source": "wikidata",
+    "matched_en": "National Art Museum of China"
+  },
+  "National Gallery": {
+    "name_ko": "내셔널 갤러리",
+    "wikiId": "Q180788",
+    "source": "wikidata",
+    "matched_en": "National Gallery"
+  },
+  "National Gallery Prague": {
+    "name_ko": "프라하 국립미술관",
+    "wikiId": "Q1419555",
+    "source": "wikidata",
+    "matched_en": "National Gallery Prague"
+  },
+  "National Gallery Singapore": {
+    "name_ko": "내셔널 갤러리 싱가포르",
+    "wikiId": "Q6970475",
+    "source": "wikidata",
+    "matched_en": "National Gallery Singapore"
+  },
+  "National Gallery of Art": {
+    "name_ko": "내셔널 갤러리 오브 아트",
+    "wikiId": "Q214867",
+    "source": "wikidata",
+    "matched_en": "National Gallery of Art"
+  },
+  "National Gallery of Victoria": {
+    "name_ko": "빅토리아 국립미술관",
+    "wikiId": "Q1464509",
+    "source": "wikidata",
+    "matched_en": "National Gallery of Victoria"
+  },
+  "National Museum Wales": {
+    "name_ko": "카디프 국립박물관",
+    "wikiId": "Q1321874",
+    "source": "wikidata",
+    "matched_en": "National Museum Cardiff"
+  },
+  "National Museum in Krakow": {
+    "name_ko": "크라쿠프 국립미술관",
+    "wikiId": "Q195311",
+    "source": "wikidata",
+    "matched_en": "National Museum in Kraków"
+  },
+  "National Museum of China": {
+    "name_ko": "중국국가박물관",
+    "wikiId": "Q1074318",
+    "source": "wikidata",
+    "matched_en": "National Museum of China"
+  },
+  "National Museum of Western Art": {
+    "name_ko": "국립서양미술관",
+    "wikiId": "Q1362629",
+    "source": "wikidata",
+    "matched_en": "National Museum of Western Art"
+  },
+  "National Palace Museum (Taipei)": {
+    "name_ko": "국립고궁박물원",
+    "wikiId": "Q540668",
+    "source": "wikidata",
+    "matched_en": "National Palace Museum"
+  },
+  "National Portrait Gallery": {
+    "name_ko": "국립 초상화 미술관",
+    "wikiId": "Q238587",
+    "source": "wikidata",
+    "matched_en": "National Portrait Gallery"
+  },
+  "National Taiwan Museum of Fine Arts": {
+    "name_ko": "국립대만미술관",
+    "wikiId": "Q10927014",
+    "source": "wikidata",
+    "matched_en": "National Taiwan Museum of Fine Arts"
+  },
+  "Nationalmuseum Sweden": {
+    "name_ko": "스웨덴 국립미술관",
+    "wikiId": "Q842858",
+    "source": "wikidata",
+    "matched_en": "Nationalmuseum"
+  },
+  "Neue Nationalgalerie": {
+    "name_ko": "신 국립미술관",
+    "wikiId": "Q32659772",
+    "source": "wikidata",
+    "matched_en": "Neue Nationalgalerie"
+  },
+  "Neue Pinakothek": {
+    "name_ko": "노이에 피나코테크",
+    "wikiId": "Q170152",
+    "source": "wikidata",
+    "matched_en": "Neue Pinakothek"
+  },
+  "Neues Museum": {
+    "name_ko": "베를린 신 박물관",
+    "wikiId": "Q157316",
+    "source": "wikidata",
+    "matched_en": "Neues Museum"
+  },
+  "Ny Carlsberg Glyptotek": {
+    "name_ko": "글립토테크 미술관",
+    "wikiId": "Q1140507",
+    "source": "wikidata",
+    "matched_en": "Ny Carlsberg Glyptotek"
+  },
+  "Palais de Tokyo": {
+    "name_ko": "팔레 드 도쿄",
+    "wikiId": "Q1535247",
+    "source": "wikidata+manual",
+    "matched_en": "Musée d’Art Moderne"
+  },
+  "Peggy Guggenheim Collection": {
+    "name_ko": "페기 구겐하임 컬렉션",
+    "wikiId": "Q1049033",
+    "source": "wikidata",
+    "matched_en": "Peggy Guggenheim Collection"
+  },
+  "Petit Palais": {
+    "name_ko": "프티 팔레",
+    "wikiId": "Q820892",
+    "source": "wikidata",
+    "matched_en": "Petit Palais"
+  },
+  "Philadelphia Museum of Art": {
+    "name_ko": "필라델피아 미술관",
+    "wikiId": "Q510324",
+    "source": "wikidata",
+    "matched_en": "Philadelphia Museum of Art"
+  },
+  "Pinacoteca Ambrosiana": {
+    "name_ko": "암브로시아나 회화관",
+    "wikiId": "Q815611",
+    "source": "wikidata+manual",
+    "matched_en": "Biblioteca Ambrosiana"
+  },
+  "Pinacoteca di Brera": {
+    "name_ko": "피나코테카 디 브레라",
+    "wikiId": "Q150066",
+    "source": "wikidata",
+    "matched_en": "Pinacoteca di Brera"
+  },
+  "Pitti Palace": {
+    "name_ko": "피티궁",
+    "wikiId": "Q29286",
+    "source": "wikidata",
+    "matched_en": "Palazzo Pitti"
+  },
+  "Rijksmuseum": {
+    "name_ko": "암스테르담 국립미술관",
+    "wikiId": "Q190804",
+    "source": "wikidata",
+    "matched_en": "Rijksmuseum"
+  },
+  "Royal Academy of Arts": {
+    "name_ko": "로열 아카데미 오브 아츠",
+    "wikiId": "Q270920",
+    "source": "wikidata",
+    "matched_en": "Royal Academy of Arts"
+  },
+  "San Francisco Museum of Modern Art (SFMOMA)": {
+    "name_ko": "샌프란시스코 현대미술관",
+    "wikiId": "Q913672",
+    "source": "wikidata",
+    "matched_en": "San Francisco Museum of Modern Art"
+  },
+  "Scottish National Gallery": {
+    "name_ko": "스코틀랜드 국립미술관",
+    "wikiId": "Q942713",
+    "source": "wikidata",
+    "matched_en": "Scottish National Gallery"
+  },
+  "Scottish National Portrait Gallery": {
+    "name_ko": "스코틀랜드 국립 초상화 미술관",
+    "wikiId": "Q2441562",
+    "source": "wikidata",
+    "matched_en": "Scottish National Portrait Gallery"
+  },
+  "Shanghai Museum": {
+    "name_ko": "상하이 박물관",
+    "wikiId": "Q1051293",
+    "source": "wikidata",
+    "matched_en": "Shanghai Museum"
+  },
+  "Smithsonian American Art Museum": {
+    "name_ko": "스미스소니언 미술관",
+    "wikiId": "Q1192305",
+    "source": "wikidata",
+    "matched_en": "Smithsonian American Art Museum"
+  },
+  "State Hermitage Museum": {
+    "name_ko": "예르미타시 미술관",
+    "wikiId": "Q132783",
+    "source": "wikidata",
+    "matched_en": "Hermitage Museum"
+  },
+  "State Tretyakov Gallery": {
+    "name_ko": "트레티야코프 미술관",
+    "wikiId": "Q183334",
+    "source": "wikidata",
+    "matched_en": "Tretyakov Gallery"
+  },
+  "Stedelijk Museum Amsterdam": {
+    "name_ko": "암스테르담 시립 미술관",
+    "wikiId": "Q924335",
+    "source": "wikidata",
+    "matched_en": "Stedelijk Museum Amsterdam"
+  },
+  "Städel Museum": {
+    "name_ko": "슈테델 미술관",
+    "wikiId": "Q163804",
+    "source": "wikidata",
+    "matched_en": "Städel Museum"
+  },
+  "Taipei Fine Arts Museum": {
+    "name_ko": "타이베이 시립미술관",
+    "wikiId": "Q697319",
+    "source": "wikidata",
+    "matched_en": "Taipei Fine Arts Museum"
+  },
+  "Tate Britain": {
+    "name_ko": "테이트 브리튼",
+    "wikiId": "Q195436",
+    "source": "wikidata",
+    "matched_en": "Tate Britain"
+  },
+  "Tate Modern": {
+    "name_ko": "테이트 모던",
+    "wikiId": "Q193375",
+    "source": "wikidata",
+    "matched_en": "Tate Modern"
+  },
+  "Tate St Ives": {
+    "name_ko": "테이트 세인트아이브스",
+    "wikiId": "Q2577210",
+    "source": "wikidata",
+    "matched_en": "Tate St Ives"
+  },
+  "Te Papa Tongarewa": {
+    "name_ko": "뉴질랜드 테 파파 통가레와 박물관",
+    "wikiId": "Q915603",
+    "source": "wikidata",
+    "matched_en": "Museum of New Zealand Te Papa Tongarewa"
+  },
+  "The Art Institute of Chicago": {
+    "name_ko": "시카고 미술관",
+    "wikiId": "Q239303",
+    "source": "wikidata",
+    "matched_en": "Art Institute of Chicago"
+  },
+  "The Courtauld Gallery": {
+    "name_ko": "코톨드 갤러리",
+    "wikiId": "Q12110695",
+    "source": "wikidata",
+    "matched_en": "Courtauld Gallery"
+  },
+  "The Metropolitan Museum of Art": {
+    "name_ko": "메트로폴리탄 미술관",
+    "wikiId": "Q160236",
+    "source": "wikidata",
+    "matched_en": "Metropolitan Museum of Art"
+  },
+  "The Museum of Modern Art": {
+    "name_ko": "뉴욕 근대미술관",
+    "wikiId": "Q188740",
+    "source": "wikidata",
+    "matched_en": "Museum of Modern Art"
+  },
+  "The Palace Museum (International)": {
+    "name_ko": "고궁박물원",
+    "wikiId": "Q2047427",
+    "source": "wikidata",
+    "matched_en": "The Palace Museum"
+  },
+  "The Pushkin State Museum of Fine Arts": {
+    "name_ko": "푸시킨 미술관",
+    "wikiId": "Q4872",
+    "source": "wikidata",
+    "matched_en": "Pushkin Museum of Fine Arts"
+  },
+  "Tokyo Metropolitan Art Museum": {
+    "name_ko": "도쿄도 미술관",
+    "wikiId": "Q864957",
+    "source": "wikidata",
+    "matched_en": "Tokyo Metropolitan Art Museum"
+  },
+  "Tokyo National Museum (ColBase)": {
+    "name_ko": "도쿄 국립박물관",
+    "wikiId": "Q653433",
+    "source": "wikidata",
+    "matched_en": "Tokyo National Museum"
+  },
+  "Topkapi Palace Museum": {
+    "name_ko": "톱카프 궁전",
+    "wikiId": "Q170495",
+    "source": "wikidata",
+    "matched_en": "Topkapı Palace"
+  },
+  "Van Gogh Museum": {
+    "name_ko": "반 고흐 미술관",
+    "wikiId": "Q224124",
+    "source": "wikidata",
+    "matched_en": "Van Gogh Museum"
+  },
+  "Vatican Museums": {
+    "name_ko": "바티칸 미술관",
+    "wikiId": "Q182955",
+    "source": "wikidata",
+    "matched_en": "Vatican Museums"
+  },
+  "Victoria and Albert Museum": {
+    "name_ko": "빅토리아 앨버트 박물관",
+    "wikiId": "Q213322",
+    "source": "wikidata",
+    "matched_en": "Victoria and Albert Museum"
+  },
+  "Whitney Museum of American Art": {
+    "name_ko": "휘트니 미술관",
+    "wikiId": "Q639791",
+    "source": "wikidata",
+    "matched_en": "Whitney Museum of American Art"
+  },
+  "국립광주박물관": {
+    "name_ko": "국립광주박물관",
+    "wikiId": "Q4896461",
+    "source": "wikidata",
+    "matched_en": "Gwangju National Museum"
+  },
+  "국립민속박물관": {
+    "name_ko": "국립민속박물관",
+    "wikiId": "Q486449",
+    "source": "wikidata",
+    "matched_en": "National Folk Museum of Korea"
+  },
+  "국립전주박물관": {
+    "name_ko": "국립전주박물관",
+    "wikiId": "Q4845795",
+    "source": "wikidata",
+    "matched_en": "Jeonju National Museum"
+  },
+  "국립중앙박물관": {
+    "name_ko": "국립중앙박물관",
+    "wikiId": "Q494407",
+    "source": "wikidata",
+    "matched_en": "National Museum of Korea"
+  },
+  "국립현대미술관": {
+    "name_ko": "국립현대미술관",
+    "wikiId": "Q484054",
+    "source": "wikidata",
+    "matched_en": "National Museum of Modern and Contemporary Art, South Korea"
+  },
+  "국립현대미술관 과천관": {
+    "name_ko": "국립현대미술관 과천",
+    "wikiId": "Q60823450",
+    "source": "wikidata",
+    "matched_en": "National Museum of Modern Art, Gwacheon"
+  },
+  "기당미술관": {
+    "name_ko": "기당미술관",
+    "wikiId": "Q18015974",
+    "source": "wikidata",
+    "matched_en": "기당미술관"
+  },
+  "대림미술관": {
+    "name_ko": "대림미술관",
+    "wikiId": "Q55728978",
+    "source": "wikidata",
+    "matched_en": "Taerim Misulgwan"
+  },
+  "디뮤지엄": {
+    "name_ko": "디뮤지엄",
+    "wikiId": "Q55729334",
+    "source": "wikidata",
+    "matched_en": "디뮤지엄"
+  },
+  "리움미술관": {
+    "name_ko": "리움미술관",
+    "wikiId": "Q487498",
+    "source": "wikidata",
+    "matched_en": "Leeum, Samsung Museum of Art"
+  },
+  "부산광역시립박물관": {
+    "name_ko": "부산광역시립박물관",
+    "wikiId": "Q16689597",
+    "source": "wikidata",
+    "matched_en": "Busan Museum"
+  },
+  "부산시립미술관": {
+    "name_ko": "부산광역시립미술관",
+    "wikiId": "Q16096732",
+    "source": "wikidata",
+    "matched_en": "Busan Museum of Art"
+  },
+  "서울시립미술관": {
+    "name_ko": "서울특별시립미술관",
+    "wikiId": "Q7451676",
+    "source": "wikidata",
+    "matched_en": "Seoul Museum of Art"
+  },
+  "이중섭미술관": {
+    "name_ko": "이중섭미술관",
+    "wikiId": "Q18016002",
+    "source": "wikidata",
+    "matched_en": "이중섭미술관"
+  },
+  "제주도립미술관": {
+    "name_ko": "제주도립미술관",
+    "wikiId": "Q16180345",
+    "source": "wikidata",
+    "matched_en": "Cheju Torip Misulgwan"
+  },
+  "호암미술관": {
+    "name_ko": "호암미술관",
+    "wikiId": "Q491279",
+    "source": "wikidata",
+    "matched_en": "Ho-Am Art Museum"
+  }
+}

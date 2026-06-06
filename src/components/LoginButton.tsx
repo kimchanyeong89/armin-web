@@ -315,7 +315,10 @@ export const LoginButton: React.FC<{ style?: React.CSSProperties }> = ({ style }
                                 const callbackUrl = window.location.origin + "/login/callback";
                                 console.log("Naver Login Callback URL:", callbackUrl); // For debugging
                                 const state = Math.random().toString(36).substring(7);
-                                const naverAuthUrl = `https://nid.naver.com/oauth2.0/authorize?response_type=token&client_id=${clientId}&redirect_uri=${encodeURIComponent(callbackUrl)}&state=${state}`;
+                                // `auth_type=reauthenticate` forces Naver to show the login
+                                // screen each time so the user can pick a different account
+                                // instead of silently re-using the existing Naver session.
+                                const naverAuthUrl = `https://nid.naver.com/oauth2.0/authorize?response_type=token&client_id=${clientId}&redirect_uri=${encodeURIComponent(callbackUrl)}&state=${state}&auth_type=reauthenticate`;
                                 window.location.href = naverAuthUrl;
                             }}
                             style={{

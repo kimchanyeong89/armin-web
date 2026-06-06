@@ -18,6 +18,12 @@
       "runtimeExecutable": "python3",
       "runtimeArgs": ["-m", "http.server", "5191", "--directory", "/Users/kietzsche/armin-web-main/.claude/preview", "--bind", "127.0.0.1"],
       "port": 5191
+    },
+    {
+      "name": "Pongdang",
+      "runtimeExecutable": "/Users/kietzsche/.nvm/versions/node/v22.22.2/bin/node",
+      "runtimeArgs": ["/Users/kietzsche/pongdang/node_modules/.bin/vite", "/Users/kietzsche/pongdang", "--port", "5182", "--strictPort"],
+      "port": 5182
     }
   ]
 }

@@ -5,6 +5,7 @@ import { MiniCityMap } from "./MiniCityMap";
 import { useLanguage } from "../../contexts/LanguageContext";
 import { localizeCityName, localizeCountryName } from "../../i18n/geoLocalization";
 import { getExhibitionDisplayDescription, getExhibitionDisplayTitle, getExhibitionTypeLabel } from "../../i18n/exhibitionLocalization";
+import { getMuseumDisplayName } from "../../i18n/museumLocalization";
 
 // ─── Exhibition mock data ──────────────────────────────────
 
@@ -843,6 +844,9 @@ interface VenuePanelProps {
 
 export function VenuePanel({ city, theme, onClose, onOpenExhibition, initialVenueId }: VenuePanelProps) {
   const { language, t: tt } = useLanguage();
+  // Museum name for display: reads name_ko from the venue's source museum object.
+  // venue.name itself stays English so it remains a stable React key / route id.
+  const venueName = (v: Venue) => getMuseumDisplayName((v.originalExhibition as any) ?? { name: v.name }, language);
   const [selectedVenue, setSelectedVenue] = useState<Venue | null>(() => {
     return initialVenueId ? (city.venues.find(v => v.id === initialVenueId || (v.originalExhibition as any)?.id === initialVenueId) || null) : null;
   });
@@ -1102,7 +1106,7 @@ export function VenuePanel({ city, theme, onClose, onOpenExhibition, initialVenu
                   venues={city.venues.map((v) => {
                     const museumCity = (v.museumCity || (v.originalExhibition as any)?.city || city.city).trim();
                     return {
-                      name: v.name,
+                      name: venueName(v),
                       category: v.category,
                       latitude: v.latitude ?? (v.originalExhibition as any)?.latitude,
                       longitude: v.longitude ?? (v.originalExhibition as any)?.longitude,
@@ -1164,7 +1168,7 @@ export function VenuePanel({ city, theme, onClose, onOpenExhibition, initialVenu
                               transition: 'color 0.15s',
                             }}
                           >
-                            {v.name}
+                            {venueName(v)}
                           </span>
                           <span style={{ color: cFg20, fontFamily: "'Space Mono', monospace", fontSize: '10px', flexShrink: 0 }}>
                             {v.year}
@@ -1243,7 +1247,7 @@ export function VenuePanel({ city, theme, onClose, onOpenExhibition, initialVenu
                   />
                   <div style={{ flex: 1, minWidth: 0 }}>
                     <div style={{ color: cFg90, letterSpacing: '0.06em', fontSize: '16px' }}>
-                      {selectedVenue.name}
+                      {venueName(selectedVenue)}
                     </div>
                   </div>
                 </div>

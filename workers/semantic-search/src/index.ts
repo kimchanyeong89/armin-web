@@ -16,6 +16,10 @@
 
 interface Env {
     VECTORIZE: VectorizeIndex;
+    /** Jina CLIP v2 1024D 인덱스. 마이그레이션 중. */
+    VECTORIZE_JINA?: VectorizeIndex;
+    /** Modal에 배포된 Jina v2 텍스트 인코더 URL. 미설정 시 기본값 사용. */
+    JINA_TEXT_ENCODER_URL?: string;
     HF_TOKEN: string;
     TASTE_KV: KVNamespace;
     /** D1 database for keyword text search (FTS5 on artwork name/artist/museum).
@@ -91,9 +95,9 @@ const VECTOR_DIM = 768;
 const MODEL_ID   = 'google/siglip-base-patch16-224';
 const TASTE_KV_TTL = 60 * 60 * 24 * 30; // 30일
 const QUERY_CACHE_TTL = 60 * 60 * 24 * 7; // 쿼리 벡터 캐시 7일
-const QUERY_CACHE_PREFIX = 'qcache:v1:'; // bump suffix to invalidate cache
+const QUERY_CACHE_PREFIX = 'qcache:v2:'; // bump suffix to invalidate cache
 const TRANSLATION_CACHE_TTL = 60 * 60 * 24 * 90; // 번역 캐시 90일 (의미가 거의 안 변함)
-const TRANSLATION_CACHE_PREFIX = 'tx:v1:';
+const TRANSLATION_CACHE_PREFIX = 'tx:v2:'; // v2: m2m100 → llama instruct 전환 시 캐시 무효화
 
 const corsHeaders = {
     'Access-Control-Allow-Origin': '*',
@@ -171,14 +175,14 @@ async function cacheKey(text: string): Promise<string> {
     return QUERY_CACHE_PREFIX + (await sha256Hex(normalized));
 }
 
-async function getCachedVector(env: Env, text: string): Promise<number[] | null> {
+async function getCachedVector(env: Env, text: string, expectedDim: number = VECTOR_DIM): Promise<number[] | null> {
     if (!env.TASTE_KV) return null;
     try {
         const key = await cacheKey(text);
         const raw = await env.TASTE_KV.get(key);
         if (!raw) return null;
         const vec = JSON.parse(raw) as number[];
-        if (!Array.isArray(vec) || vec.length !== VECTOR_DIM) return null;
+        if (!Array.isArray(vec) || vec.length !== expectedDim) return null;
         return vec;
     } catch {
         return null;
@@ -195,6 +199,36 @@ async function putCachedVector(env: Env, text: string, vec: number[]): Promise<v
     }
 }
 
+// ─────────────────────────────────────────────────────────────
+// 검색 결과 자체 캐시 — 인코더 호출 + Vectorize 쿼리 둘 다 건너뜀.
+// 인기 query (예: "추상화", "풍경") cache hit 시 latency 0-50ms.
+// 7일 TTL.
+// ─────────────────────────────────────────────────────────────
+const SEARCH_RESULT_TTL = 60 * 60 * 24 * 7;  // 7일
+
+async function getCachedSearchResults(env: Env, cacheKeyStr: string): Promise<any[] | null> {
+    if (!env.TASTE_KV) return null;
+    try {
+        const key = 'sres:' + (await sha256Hex(cacheKeyStr));
+        const raw = await env.TASTE_KV.get(key);
+        if (!raw) return null;
+        const arr = JSON.parse(raw);
+        return Array.isArray(arr) ? arr : null;
+    } catch {
+        return null;
+    }
+}
+
+async function putCachedSearchResults(env: Env, cacheKeyStr: string, results: any[]): Promise<void> {
+    if (!env.TASTE_KV) return;
+    try {
+        const key = 'sres:' + (await sha256Hex(cacheKeyStr));
+        await env.TASTE_KV.put(key, JSON.stringify(results), { expirationTtl: SEARCH_RESULT_TTL });
+    } catch (err) {
+        console.warn('search-result cache put failed:', err);
+    }
+}
+
 // ============================================================
 // 비영어 쿼리 → 영어 번역 (Cloudflare Workers AI)
 //
@@ -204,14 +238,30 @@ async function putCachedVector(env: Env, text: string, vec: number[]): Promise<v
 // ============================================================
 
 /**
- * 영어가 아닌 문자(한글, CJK, 키릴, 아랍, 데바나가리, 태국, 히브리 등)가 들어있으면 true.
- * 순수 ASCII Latin 문자열은 영어로 간주하고 번역하지 않는다.
+ * 텍스트의 주요 스크립트로 언어 코드를 추정한다.
+ * 순수 ASCII/Latin이면 null — 영어로 간주, 번역을 건너뛴다.
+ * 비영어 코드를 반환하면 호출부는 번역 경로를 탄다 (코드 자체는 게이트 용도).
  *
- * 보수적 판정 — Latin-1 확장(악센트 부호 포함 유럽어)은 SigLIP이 어느 정도
- * 처리하므로 굳이 번역하지 않는다.
+ * 일본어는 한자(漢字)를 포함하므로 가나(かな) 존재 여부를 한자보다 먼저 검사한다.
  */
-function looksNonEnglish(text: string): boolean {
-    return /[ㄱ-ㆎ가-힣぀-ゟ゠-ヿ一-鿿Ѐ-ӿ؀-ۿऀ-ॿ฀-๿֐-׿]/.test(text);
+function detectSourceLang(text: string): string | null {
+    if (/[가-힣ㄱ-ㆎ]/.test(text)) return 'ko';   // 한글
+    if (/[぀-ゟ゠-ヿ]/.test(text)) return 'ja';     // 히라가나·가타카나 → 일본어
+    if (/[一-鿿]/.test(text)) return 'zh';          // 한자만 → 중국어
+    if (/[Ѐ-ӿ]/.test(text)) return 'ru';           // 키릴
+    if (/[؀-ۿ]/.test(text)) return 'ar';           // 아랍
+    if (/[ऀ-ॿ]/.test(text)) return 'hi';           // 데바나가리
+    if (/[฀-๿]/.test(text)) return 'th';           // 태국
+    if (/[֐-׿]/.test(text)) return 'he';           // 히브리
+    return null;
+}
+
+// SigLIP's text encoder expects caption-like text; a bare keyword ("tiger") lands
+// near the modality-gap centroid and retrieves near-random images. Wrapping the
+// query in a minimal caption restores text→image alignment.
+function toSiglipCaption(query: string): string {
+    const q = (query || '').trim();
+    return q ? `a painting of ${q}` : q;
 }
 
 async function translationCacheKey(text: string): Promise<string> {
@@ -240,26 +290,54 @@ async function putCachedTranslation(env: Env, original: string, translated: stri
 }
 
 /**
- * Cloudflare Workers AI m2m100-1.2B로 임의 언어 → 영어 번역.
- * source_lang을 명시하지 않아 자동 감지(한국어/일본어/중국어/러시아어 등 처리).
+ * Cloudflare Workers AI LLM(llama-3.1-8b-instruct)으로 임의 언어 → 영어 번역.
+ *
+ * 전용 번역 모델(m2m100)보다 instruct LLM을 쓰는 이유: AI 검색은 "자연어로
+ * 자유롭게" 검색하는 것이 핵심이라 시적·서술적 쿼리가 많은데, m2m100은 짧은
+ * 비문법 구절에서 의미를 흘린다(예: "고요한 풍경" → "a silent sight", 'scenery' 누락).
+ * LLM은 검색 의도를 보존한 자연스러운 영어 구절을 만든다.
+ *
+ * 결과는 90일 캐시되므로 호출당 neuron 비용은 사실상 무시 가능.
  * 실패 시 null — 호출자는 원문을 그대로 인코딩 시도해야 한다.
  */
 async function translateToEnglish(text: string, env: Env): Promise<string | null> {
     if (!env.AI) return null;
     try {
-        const result = await env.AI.run('@cf/meta/m2m100-1.2B', {
-            text,
-            target_lang: 'english',
+        const result = await env.AI.run('@cf/meta/llama-3.1-8b-instruct', {
+            messages: [
+                {
+                    role: 'system',
+                    content: 'You translate art-image search queries into English. ' +
+                        'The query may be in any language. Output ONLY the English translation ' +
+                        'as a short, natural, descriptive search phrase — no quotes, no explanation, ' +
+                        'no preamble. Preserve the visual and emotional intent of the query. ' +
+                        'If the input is already English, return it unchanged.',
+                },
+                { role: 'user', content: text },
+            ],
+            max_tokens: 64,
+            temperature: 0,
         });
-        const translated = (result as { translated_text?: string })?.translated_text;
-        if (typeof translated === 'string' && translated.trim().length > 0) {
-            return translated.trim();
-        }
-        return null;
+        const raw = (result as { response?: string })?.response;
+        if (typeof raw !== 'string') return null;
+        // LLM이 가끔 따옴표·마침표를 붙이므로 정리
+        const cleaned = raw.trim().replace(/^["'`]|["'`]$/g, '').trim();
+        return cleaned.length > 0 ? cleaned : null;
     } catch (err) {
-        console.warn('[translate] m2m100 failed:', err);
+        console.warn('[translate] llama failed:', err);
         return null;
     }
+}
+
+/** FTS5 키워드 토큰화: 연산자·제어 문자 제거 → 소문자 → 공백 분리 → 2자 이상만 남김 */
+function ftsTokenize(text: string): string[] {
+    return text
+        .toLowerCase()
+        .replace(/["'()\\]/g, ' ')
+        .replace(/[ -]/g, ' ')
+        .split(/\s+/)
+        .map((t) => t.trim())
+        .filter((t) => t.length >= 2);
 }
 
 // ============================================================
@@ -514,14 +592,20 @@ function kMeans(vectors: number[][], k: number, maxIter: number = 50): number[][
     return centroids;
 }
 
+// ── 취향 군집(K-Means) 설정 ──────────────────────────────────────────
+// K(군집 수)는 좋아요 수에 비례해 늘어난다. 단, /recommend가 centroid마다
+// Vectorize를 1회씩 순차 호출하므로 worker 부하 보호를 위해 MAX_TASTE_K로 상한.
+const TASTE_K_PER_LIKES = 8;                              // 좋아요 8개당 군집 1개
+const MAX_TASTE_K = 24;                                   // 군집 수 상한
+const TASTE_SAMPLE_CAP = MAX_TASTE_K * TASTE_K_PER_LIKES; // 클러스터링 표본 상한(=192) — K 상한 도달에 필요한 최소 벡터 수
+const TASTE_ID_SCAN_CAP = 400;                            // Vectorize에서 시도할 최대 좋아요 ID 수
+
 /**
- * 좋아요 수에 따라 최적 K 결정
+ * 좋아요 수에 비례해 취향 군집 수 K를 결정한다.
+ * 좋아요 TASTE_K_PER_LIKES개당 군집 1개씩 늘어나며 MAX_TASTE_K에서 상한.
  */
 function chooseK(likedCount: number): number {
-    if (likedCount < 5)  return 1;
-    if (likedCount < 16) return 2;
-    if (likedCount < 31) return 3;
-    return 4;
+    return Math.max(1, Math.min(MAX_TASTE_K, Math.ceil(likedCount / TASTE_K_PER_LIKES)));
 }
 
 // ============================================================
@@ -540,14 +624,14 @@ function getEra(dateStr: string): string {
     return 'contemporary';
 }
 
-function diversify(matches: VectorMatch[], limit: number): VectorMatch[] {
+function diversify(matches: VectorMatch[], limit: number, preSorted = false): VectorMatch[] {
     const artistCount  = new Map<string, number>();
     const eraCount     = new Map<string, number>();
     const museumCount  = new Map<string, number>();
     const result: VectorMatch[] = [];
 
-    // 점수 내림차순 정렬
-    matches.sort((a, b) => (b.score ?? 0) - (a.score ?? 0));
+    // 점수 내림차순 정렬 — preSorted=true면 호출자가 정한 순서(취향 군집 인터리브)를 유지
+    if (!preSorted) matches.sort((a, b) => (b.score ?? 0) - (a.score ?? 0));
 
     const maxArtist  = 3;
     const maxEra     = Math.ceil(limit * 0.30);
@@ -649,6 +733,25 @@ async function queryWithMetadata(
 // 메인 핸들러
 // ============================================================
 export default {
+    /**
+     * 매 4분마다 Cloud Run Jina 인코더에 /warmup 호출 → cold start 회피.
+     * Cloud Run min=0 (비용 절감)이라 idle 시 컨테이너 종료 → 첫 요청 cold.
+     * scheduled 으로 항상-warm 유지. CF Workers scheduled = 무료 무제한.
+     */
+    async scheduled(_event: ScheduledEvent, env: Env, ctx: ExecutionContext): Promise<void> {
+        const url = env.JINA_TEXT_ENCODER_URL;
+        if (!url) return;
+        try {
+            const ctl = new AbortController();
+            const timer = setTimeout(() => ctl.abort(), 25000);
+            const r = await fetch(`${url}/warmup`, { signal: ctl.signal });
+            clearTimeout(timer);
+            console.log(`[warmup] HTTP ${r.status}`);
+        } catch (err: any) {
+            console.warn(`[warmup] failed: ${err.message}`);
+        }
+    },
+
     async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
         if (request.method === 'OPTIONS') {
             return new Response(null, { headers: corsHeaders });
@@ -660,30 +763,127 @@ export default {
 
             // ──────────────────────────────────────────────
             // POST /search-by-text
+            //
+            // 라우팅: Jina v2 (한국어 native) 시도 → 실패 시 SigLIP+번역 fallback
+            //   - body.engine = 'siglip' 강제 지정 시 우회 가능 (A/B용)
+            //   - Jina 인코더 다운/타임아웃 시 자동 SigLIP fallback → 검색 영구 작동
+            //   - 응답에 engine 필드로 어느 path가 사용됐는지 표시
             // ──────────────────────────────────────────────
             if (url.pathname === '/search-by-text' && request.method === 'POST') {
-                const body = await request.json() as { text: string; limit?: number };
-                const { text, limit = 50 } = body;
+                const body = await request.json() as { text: string; limit?: number; engine?: 'auto' | 'jina' | 'siglip' };
+                const { text, limit = 50, engine = 'auto' } = body;
 
                 if (!text || typeof text !== 'string' || text.trim().length < 2) {
                     return Response.json({ error: 'text must be at least 2 characters' }, { status: 400, headers: corsHeaders });
                 }
+
+                const trimmed = text.trim();
+
+                // ── Jina path (auto/jina) ──
+                // 인코더는 외부(Modal). 5초 timeout. 실패 시 SigLIP로 fallback.
+                if (engine !== 'siglip' && env.VECTORIZE_JINA) {
+                    const encoderUrl = env.JINA_TEXT_ENCODER_URL
+                        || 'https://kimchanyeong89--jina-text-encoder-textencoder-encode.modal.run';
+
+                    // 1) 검색 결과 통째 캐시 (인코더 + Vectorize 둘 다 건너뜀)
+                    const resultsCacheKey = `jina:res:${trimmed}:${Math.min(limit, 100)}`;
+                    const cachedResults = await getCachedSearchResults(env, resultsCacheKey);
+                    if (cachedResults) {
+                        return Response.json({
+                            results: cachedResults,
+                            cached: true,
+                            cacheLayer: 'results',
+                            engine: 'jina-clip-v2',
+                        }, { headers: corsHeaders });
+                    }
+
+                    try {
+                        const cacheKey = `jinavec:${trimmed}`;
+                        let vec: number[] | null = await getCachedVector(env, cacheKey, 1024);
+                        let cached = !!vec;
+                        if (!vec) {
+                            const ctl = new AbortController();
+                            // 30초 — Cloud Run cold start (min=0) 시 ~20초 모델 로드 허용.
+                            // warm 상태면 보통 1-3초.
+                            const timer = setTimeout(() => ctl.abort(), 30000);
+                            const enc = await fetch(encoderUrl, {
+                                method: 'POST',
+                                headers: { 'Content-Type': 'application/json' },
+                                body: JSON.stringify({ text: trimmed }),
+                                signal: ctl.signal,
+                            });
+                            clearTimeout(timer);
+                            if (enc.ok) {
+                                const data = await enc.json() as { vectors?: number[][] };
+                                vec = data.vectors?.[0] ?? null;
+                                if (vec) ctx.waitUntil(putCachedVector(env, cacheKey, vec));
+                            }
+                        }
+                        if (vec) {
+                            const safeTopK = Math.min(limit, 100);
+                            const qres = await env.VECTORIZE_JINA.query(vec, { topK: safeTopK, returnMetadata: 'none' });
+                            if (qres.matches.length) {
+                                const ids = qres.matches.map(m => m.id);
+                                const scoreMap = new Map<string, number>(qres.matches.map(m => [m.id, m.score]));
+                                const BATCH = 20;
+                                const slices: string[][] = [];
+                                for (let i = 0; i < ids.length; i += BATCH) slices.push(ids.slice(i, i + BATCH));
+                                // 두 인덱스(Jina+SigLIP)의 모든 배치를 순차가 아니라 병렬 조회.
+                                // limit=100이면 ~10번의 직렬 왕복이 한 번의 물결로 합쳐진다.
+                                // SigLIP은 해당 ID가 없을 수 있어(768 인덱스 미보유) 빈 배치로 가드.
+                                const [jinaBatches, sigBatches] = await Promise.all([
+                                    Promise.all(slices.map(s => env.VECTORIZE_JINA.getByIds(s))),
+                                    Promise.all(slices.map(s => env.VECTORIZE.getByIds(s).catch(() => [] as VectorRecord[]))),
+                                ]);
+                                const jinaMeta: VectorRecord[] = jinaBatches.flat();
+                                const sigMeta: VectorRecord[] = sigBatches.flat();
+                                const jmm = new Map<string, Record<string, any>>(jinaMeta.map(r => [r.id, r.metadata || {}]));
+                                const smm = new Map<string, Record<string, any>>(sigMeta.map(r => [r.id, r.metadata || {}]));
+                                const results = ids
+                                    .map(id => {
+                                        const jm = jmm.get(id) || {};
+                                        const sm = smm.get(id) || {};
+                                        const original = typeof jm.o === 'string' ? jm.o : null;
+                                        const { o: _o, ...sigRest } = sm as any;
+                                        return {
+                                            id: original || id,
+                                            score: scoreMap.get(id),
+                                            ...sigRest,
+                                            ...(jm.e ? { e: jm.e } : {}),
+                                        };
+                                    })
+                                    .filter(r => r.score !== undefined);
+                                // 결과 캐시 저장 (다음 같은 query는 인코더 + Vectorize 둘 다 스킵)
+                                ctx.waitUntil(putCachedSearchResults(env, resultsCacheKey, results));
+                                return Response.json({
+                                    results,
+                                    cached,
+                                    cacheLayer: cached ? 'vector' : 'none',
+                                    engine: 'jina-clip-v2',
+                                }, { headers: corsHeaders });
+                            }
+                        }
+                        // 인코더 다운 / 빈 결과 → SigLIP fallback
+                    } catch (err) {
+                        // Jina path 예외 → SigLIP fallback
+                    }
+                }
+
+                // ── SigLIP fallback path ──
                 if (!env.HF_TOKEN && !env.SIGLIP_ENDPOINT_URL) {
                     return Response.json({
                         error: 'AI search is temporarily unavailable.',
                         code: 'siglip_unavailable',
-                        detail: 'Neither HF_TOKEN nor SIGLIP_ENDPOINT_URL is configured.',
+                        detail: 'Both Jina and SigLIP unavailable. Neither HF_TOKEN nor SIGLIP_ENDPOINT_URL configured.',
                     }, { status: 503, headers: corsHeaders });
                 }
-
-                const trimmed = text.trim();
 
                 // ── 비영어 → 영어 자동 번역 (SigLIP 영어 전용 모델 보완) ──
                 // 인코딩에 쓸 쿼리(queryForEncoding)와 응답에 표시할 메타데이터(translatedFrom/effectiveQuery)를 분리.
                 // 캐시 키도 번역된 영어 쿼리 기준이라야 한국어/일본어/중국어가 같은 의미면 같은 벡터를 재사용한다.
                 let queryForEncoding = trimmed;
                 let translatedFrom: string | null = null;
-                if (looksNonEnglish(trimmed)) {
+                if (detectSourceLang(trimmed)) {
                     let translated = await getCachedTranslation(env, trimmed);
                     if (!translated) {
                         translated = await translateToEnglish(trimmed, env);
@@ -698,11 +898,16 @@ export default {
                     // 번역 실패 시 원문 그대로 진행 — SigLIP이 영어 단어가 섞여 있다면 부분적 신호라도 잡을 수 있음
                 }
 
-                let vector = await getCachedVector(env, queryForEncoding);
+                // Encode a caption ("a painting of …"), not the bare query.
+                // Cache is keyed on the caption so it never collides with the
+                // raw-text vectors stored by the /encode endpoint.
+                const captionForEncoding = toSiglipCaption(queryForEncoding);
+
+                let vector = await getCachedVector(env, captionForEncoding);
                 let cacheHit = !!vector;
 
                 if (!vector) {
-                    vector = await encodeTextWithSigLIP(queryForEncoding, env);
+                    vector = await encodeTextWithSigLIP(captionForEncoding, env);
                     if (!vector) {
                         return Response.json({
                             error: 'AI search is temporarily unavailable.',
@@ -711,7 +916,7 @@ export default {
                         }, { status: 503, headers: corsHeaders });
                     }
                     // fire-and-forget cache write — don't block response
-                    ctx.waitUntil(putCachedVector(env, queryForEncoding, vector));
+                    ctx.waitUntil(putCachedVector(env, captionForEncoding, vector));
                 }
 
                 const results = await queryWithMetadata(env, vector, Math.min(limit, 100));
@@ -720,6 +925,97 @@ export default {
                     cached: cacheHit,
                     ...(translatedFrom ? { translatedFrom, effectiveQuery: queryForEncoding } : {}),
                 }, { headers: corsHeaders });
+            }
+
+            // ──────────────────────────────────────────────
+            // POST /search-by-text-jina  (한국어 native, Jina CLIP v2 1024D)
+            // 마이그레이션 검증용 신규 엔드포인트. 검증 후 /search-by-text 도 이쪽으로 라우팅 전환.
+            // ──────────────────────────────────────────────
+            if (url.pathname === '/search-by-text-jina' && request.method === 'POST') {
+                if (!env.VECTORIZE_JINA) {
+                    return Response.json({ error: 'VECTORIZE_JINA not configured' }, { status: 503, headers: corsHeaders });
+                }
+                const body = await request.json() as { text: string; limit?: number };
+                const { text, limit = 50 } = body;
+                if (!text || typeof text !== 'string' || text.trim().length < 2) {
+                    return Response.json({ error: 'text must be at least 2 characters' }, { status: 400, headers: corsHeaders });
+                }
+                const trimmed = text.trim();
+                const encoderUrl = env.JINA_TEXT_ENCODER_URL
+                    || 'https://kimchanyeong89--jina-text-encoder-textencoder-encode.modal.run';
+
+                // 1) Modal text encoder 호출 → 1024D vector
+                let vector: number[];
+                try {
+                    const enc = await fetch(encoderUrl, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({ text: trimmed }),
+                    });
+                    if (!enc.ok) {
+                        return Response.json({ error: `text encoder ${enc.status}` }, { status: 502, headers: corsHeaders });
+                    }
+                    const data = await enc.json() as { vectors?: number[][]; error?: string };
+                    if (data.error || !data.vectors?.[0]) {
+                        return Response.json({ error: data.error || 'encoder returned no vector' }, { status: 502, headers: corsHeaders });
+                    }
+                    vector = data.vectors[0];
+                } catch (e: any) {
+                    return Response.json({ error: `text encoder fetch failed: ${e.message}` }, { status: 502, headers: corsHeaders });
+                }
+
+                // 2) Vectorize Jina 인덱스 쿼리
+                const safeTopK = Math.min(limit, 100);
+                const queryRes = await env.VECTORIZE_JINA.query(vector, { topK: safeTopK, returnMetadata: 'none' });
+                if (!queryRes.matches.length) {
+                    return Response.json({ results: [] }, { headers: corsHeaders });
+                }
+
+                // 3) 메타데이터 조회 — Jina 인덱스는 {e, o} 만 저장.
+                //    n(작품명), a(작가) 등 풀 메타는 SigLIP 인덱스(armin-art-search-768)에 있어 거기서 보강.
+                const ids = queryRes.matches.map(m => m.id);
+                const scoreMap = new Map<string, number>(queryRes.matches.map(m => [m.id, m.score]));
+                const BATCH = 20;
+
+                // 3a) Jina 인덱스에서 e, o 조회
+                const jinaMeta: VectorRecord[] = [];
+                for (let i = 0; i < ids.length; i += BATCH) {
+                    const batch = await env.VECTORIZE_JINA.getByIds(ids.slice(i, i + BATCH));
+                    jinaMeta.push(...batch);
+                }
+                const jinaMetaMap = new Map<string, Record<string, any>>(
+                    jinaMeta.map(r => [r.id, r.metadata || {}])
+                );
+
+                // 3b) SigLIP 인덱스에서 n, a, m 등 풀 메타 조회 (같은 ID로 저장되어 있음)
+                const sigMeta: VectorRecord[] = [];
+                for (let i = 0; i < ids.length; i += BATCH) {
+                    try {
+                        const batch = await env.VECTORIZE.getByIds(ids.slice(i, i + BATCH));
+                        sigMeta.push(...batch);
+                    } catch { /* SigLIP에 없는 ID는 무시 — Jina에만 있는 신규 항목 */ }
+                }
+                const sigMetaMap = new Map<string, Record<string, any>>(
+                    sigMeta.map(r => [r.id, r.metadata || {}])
+                );
+
+                // 4) Jina + SigLIP 메타 머지, 원본 ID 복원
+                const results = ids
+                    .map(id => {
+                        const jm = jinaMetaMap.get(id) || {};
+                        const sm = sigMetaMap.get(id) || {};
+                        const original = typeof jm.o === 'string' ? jm.o : null;
+                        const { o: _o, ...sigRest } = sm as any;
+                        return {
+                            id: original || id,
+                            score: scoreMap.get(id),
+                            ...sigRest,                       // n, a, m, c 등 SigLIP 메타가 우선
+                            ...(jm.e ? { e: jm.e } : {}),     // exhibition id는 Jina 쪽 사용
+                        };
+                    })
+                    .filter(r => r.score !== undefined);
+
+                return Response.json({ results, engine: 'jina-clip-v2' }, { headers: corsHeaders });
             }
 
             // ──────────────────────────────────────────────
@@ -761,6 +1057,108 @@ export default {
                 try {
                     await env.VECTORIZE.upsert(records);
                     return Response.json({ success: true, count: records.length }, { headers: corsHeaders });
+                } catch (err: any) {
+                    return Response.json({ success: false, error: err.message }, { status: 500, headers: corsHeaders });
+                }
+            }
+
+            // ──────────────────────────────────────────────
+            // GET /image-proxy?url=...
+            // Cloudflare POP에서 박물관 서버로 fetch — 가정용 IP 차단 우회용.
+            // 마이그레이션 임시 도구이므로 응답에 CORS 모두 허용.
+            // ──────────────────────────────────────────────
+            if (url.pathname === '/image-proxy' && request.method === 'GET') {
+                const target = url.searchParams.get('url');
+                if (!target || !/^https?:\/\//.test(target)) {
+                    return new Response('invalid url', { status: 400, headers: corsHeaders });
+                }
+                try {
+                    const upstream = await fetch(target, {
+                        headers: {
+                            'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/122.0.0.0 Safari/537.36',
+                            'Accept': 'image/avif,image/webp,image/apng,image/svg+xml,image/*,*/*;q=0.8',
+                            'Accept-Language': 'en-US,en;q=0.9',
+                        },
+                        cf: { cacheTtl: 3600, cacheEverything: true },
+                    });
+                    if (!upstream.ok) {
+                        return new Response(`upstream ${upstream.status}`, {
+                            status: upstream.status,
+                            headers: corsHeaders,
+                        });
+                    }
+                    return new Response(upstream.body, {
+                        headers: {
+                            ...corsHeaders,
+                            'Content-Type': upstream.headers.get('content-type') || 'image/jpeg',
+                            'Cache-Control': 'public, max-age=3600',
+                        },
+                    });
+                } catch (err: any) {
+                    return new Response(`proxy error: ${err.message}`, { status: 502, headers: corsHeaders });
+                }
+            }
+
+            // ──────────────────────────────────────────────
+            // GET /jina-stats  (마이그레이션 모니터링 — 외부에서 폴링)
+            // ──────────────────────────────────────────────
+            if (url.pathname === '/jina-stats' && request.method === 'GET') {
+                if (!env.VECTORIZE_JINA) {
+                    return Response.json({ error: 'VECTORIZE_JINA not configured' }, { status: 503, headers: corsHeaders });
+                }
+                try {
+                    const desc = await env.VECTORIZE_JINA.describe() as any;
+                    const count = desc.vectorCount ?? desc.vectorsCount ?? 0;
+                    return Response.json({
+                        index: 'armin-art-search-jina-1024',
+                        vectorCount: count,
+                        dimensions: desc.dimensions,
+                        target: 609251,
+                        progressPct: Number((count / 609251 * 100).toFixed(2)),
+                        processedUpToDatetime: desc.processedUpToDatetime,
+                        ts: new Date().toISOString(),
+                    }, { headers: corsHeaders });
+                } catch (err: any) {
+                    return Response.json({ error: err.message }, { status: 500, headers: corsHeaders });
+                }
+            }
+
+            // ──────────────────────────────────────────────
+            // POST /upsert-jina  (Jina CLIP v2 1024D, 마이그레이션 진행 중)
+            // ──────────────────────────────────────────────
+            if (url.pathname === '/upsert-jina' && request.method === 'POST') {
+                if (!env.VECTORIZE_JINA) {
+                    return Response.json(
+                        { error: 'VECTORIZE_JINA binding not configured' },
+                        { status: 503, headers: corsHeaders }
+                    );
+                }
+                const { vectors } = await request.json() as {
+                    vectors: Array<{ id: string; values: number[]; metadata?: Record<string, string> }>
+                };
+                if (!vectors?.length) {
+                    return Response.json({ error: 'No vectors provided' }, { status: 400, headers: corsHeaders });
+                }
+                const JINA_DIM = 1024;
+                const valid = vectors.filter(v => v.id && Array.isArray(v.values) && v.values.length === JINA_DIM);
+                if (valid.length === 0) {
+                    return Response.json({ error: `No valid ${JINA_DIM}-dim vectors found` }, { status: 400, headers: corsHeaders });
+                }
+                // Vectorize는 ID 64바이트 한도. 더 긴 ID는 SHA-1 short alias로 매핑하고
+                // 원본은 metadata.o에 저장 — 조회 시 denormalizeRecord로 역변환.
+                // 일부 컬렉션은 ID가 number 타입으로 오므로 명시적 String() 캐스팅.
+                const records: VectorRecord[] = await Promise.all(
+                    valid.map(async (v) => {
+                        const origStr = String(v.id);
+                        const effectiveId = await effectiveVectorId(origStr);
+                        const md: Record<string, string> = { ...(v.metadata || {}) };
+                        if (effectiveId !== origStr) md.o = origStr;
+                        return { id: effectiveId, values: v.values, metadata: md };
+                    })
+                );
+                try {
+                    await env.VECTORIZE_JINA.upsert(records);
+                    return Response.json({ success: true, count: records.length, index: 'jina-1024' }, { headers: corsHeaders });
                 } catch (err: any) {
                     return Response.json({ success: false, error: err.message }, { status: 500, headers: corsHeaders });
                 }
@@ -823,12 +1221,12 @@ export default {
                     return Response.json({ error: 'likedIds array required' }, { status: 400, headers: corsHeaders });
                 }
 
-                // Vectorize에서 하트 작품 벡터 fetch (최대 300개, 배치로)
+                // Vectorize에서 하트 작품 벡터 fetch (배치로)
                 // 많은 하트 중 앞쪽이 임베딩 없을 수 있어 셔플 후 시도
                 const shuffledIds = [...likedIds].sort(() => Math.random() - 0.5);
                 const BATCH = 30; // Vectorize getByIds 배치 크기
                 const allVecs: number[][] = [];
-                for (let i = 0; i < Math.min(shuffledIds.length, 300); i += BATCH) {
+                for (let i = 0; i < Math.min(shuffledIds.length, TASTE_ID_SCAN_CAP); i += BATCH) {
                     const batch = shuffledIds.slice(i, i + BATCH);
                     try {
                         const fetched = await env.VECTORIZE.getByIds(batch);
@@ -840,7 +1238,7 @@ export default {
                     } catch {
                         // 배치 오류 시 스킵
                     }
-                    if (allVecs.length >= 60) break; // 충분하면 조기 종료
+                    if (allVecs.length >= TASTE_SAMPLE_CAP) break; // 표본 상한 도달 시 조기 종료
                 }
 
                 if (allVecs.length === 0) {
@@ -899,14 +1297,14 @@ export default {
                 if (!profile && likedIds?.length >= 1) {
                     const shuffled = [...likedIds].sort(() => Math.random() - 0.5);
                     const vecs: number[][] = [];
-                    for (let i = 0; i < Math.min(shuffled.length, 150); i += 30) {
+                    for (let i = 0; i < Math.min(shuffled.length, TASTE_ID_SCAN_CAP); i += 30) {
                         try {
                             const batch = await env.VECTORIZE.getByIds(shuffled.slice(i, i + 30));
                             for (const rec of batch) {
                                 if (rec.values?.length === VECTOR_DIM) vecs.push(rec.values);
                             }
                         } catch { /* skip */ }
-                        if (vecs.length >= 30) break; // 충분하면 조기 종료
+                        if (vecs.length >= TASTE_SAMPLE_CAP) break; // 표본 상한 도달 시 조기 종료
                     }
                     if (vecs.length > 0) {
                         const k = chooseK(vecs.length);
@@ -918,10 +1316,14 @@ export default {
                     return Response.json({ results: [], reason: 'no_profile' }, { headers: corsHeaders });
                 }
 
-                // 각 centroid에서 Vectorize 검색 (적절히 여유있게 pull)
+                // 각 centroid(취향 군집)에서 Vectorize 검색.
+                // ⚠️ 결과를 한 풀에 합쳐 점수순 정렬하면 안 된다 — cosine 점수는
+                // centroid마다 스케일이 다르다(밀집 군집=고점수, 느슨한 군집=저점수).
+                // 그대로 정렬하면 가장 밀집된 한 군집이 상위를 독식한다.
+                // → 군집별 리스트를 따로 보관해 라운드로빈으로 인터리브한다.
                 const likedSet = new Set(likedIds ?? []);
                 const perK     = Math.ceil((limit * 3) / profile.centroids.length);
-                const allMatches = new Map<string, VectorMatch>();
+                const perCentroid: VectorMatch[][] = [];
 
                 for (let ci = 0; ci < profile.centroids.length; ci++) {
                     let searchVec = profile.centroids[ci];
@@ -939,18 +1341,32 @@ export default {
                             topK: Math.min(perK + Math.min(likedIds?.length ?? 0, 200), 100),
                             returnMetadata: true,
                         });
-                        for (const m of res.matches) {
-                            if (likedSet.has(m.id)) continue; // 이미 하트한 것 제외
-                            const existing = allMatches.get(m.id);
-                            if (!existing || existing.score < m.score) {
-                                allMatches.set(m.id, m);
-                            }
-                        }
-                    } catch { /* centroid 검색 실패 시 스킵 */ }
+                        const list = res.matches
+                            .filter(m => !likedSet.has(m.id)) // 이미 하트한 것 제외
+                            .sort((a, b) => (b.score ?? 0) - (a.score ?? 0));
+                        perCentroid.push(list);
+                    } catch {
+                        perCentroid.push([]); // centroid 검색 실패 → 빈 슬롯
+                    }
                 }
 
-                // 다양성 보정 후 최종 결과
-                const diversified = diversify(Array.from(allMatches.values()), limit);
+                // 라운드로빈 인터리브 — 모든 군집의 rank 0을 먼저, 그다음 rank 1 …
+                // 같은 작품이 여러 군집에 걸치면 가장 먼저(최고 순위) 만난 곳에서 채택.
+                const seen = new Set<string>();
+                const interleaved: VectorMatch[] = [];
+                const maxRank = perCentroid.reduce((mx, l) => Math.max(mx, l.length), 0);
+                for (let rank = 0; rank < maxRank; rank++) {
+                    for (const list of perCentroid) {
+                        const m = list[rank];
+                        if (!m || seen.has(m.id)) continue;
+                        seen.add(m.id);
+                        interleaved.push(m);
+                    }
+                }
+
+                // 다양성 보정(작가/시대/미술관 편중 제거). 인터리브 순서를 지켜야
+                // 하므로 점수 재정렬은 건너뛴다(preSorted=true).
+                const diversified = diversify(interleaved, limit, true);
 
                 return Response.json({
                     results: diversified.map(m => ({ id: m.id, score: m.score, ...m.metadata })),
@@ -983,23 +1399,37 @@ export default {
                     return Response.json({ results: [], query: rawQuery }, { headers: corsHeaders });
                 }
 
-                // Sanitize for FTS5: strip operator characters, lowercase,
-                // tokenize, prefix-match each token.  Joining with " " is an
-                // implicit AND — every token must match.  For "monet water" this
-                // becomes `monet* water*`, which hits "Claude Monet — Water Lilies".
-                const tokens = rawQuery
-                    .toLowerCase()
-                    .replace(/["'()\\]/g, ' ')
-                    .replace(/[ -]/g, ' ')
-                    .split(/\s+/)
-                    .map((t) => t.trim())
-                    .filter((t) => t.length >= 2);
+                // 비영어 쿼리 → 영어 번역. 코퍼스는 대부분 영어 제목이라
+                // "고양이"는 "cat"으로 번역해야 영어 제목 작품이 잡힌다.
+                // 단 원문 토큰도 함께 유지 — 한국어 제목 작품은 원문으로 직접 매칭.
+                let translatedQuery: string | null = null;
+                if (detectSourceLang(rawQuery)) {
+                    translatedQuery = await getCachedTranslation(env, rawQuery);
+                    if (!translatedQuery) {
+                        translatedQuery = await translateToEnglish(rawQuery, env);
+                        if (translatedQuery) ctx.waitUntil(putCachedTranslation(env, rawQuery, translatedQuery));
+                    }
+                }
 
-                if (tokens.length === 0) {
+                // FTS5 쿼리: 그룹 내부는 implicit AND(모든 토큰 매칭),
+                // 원문 그룹과 번역 그룹 사이는 OR — 어느 쪽이든 맞으면 매칭.
+                const ftsGroups: string[] = [];
+                const origTokens = ftsTokenize(rawQuery);
+                if (origTokens.length) {
+                    ftsGroups.push('(' + origTokens.map((t) => `"${t}"*`).join(' ') + ')');
+                }
+                if (translatedQuery) {
+                    const trTokens = ftsTokenize(translatedQuery);
+                    if (trTokens.length) {
+                        ftsGroups.push('(' + trTokens.map((t) => `"${t}"*`).join(' ') + ')');
+                    }
+                }
+
+                if (ftsGroups.length === 0) {
                     return Response.json({ results: [], query: rawQuery }, { headers: corsHeaders });
                 }
 
-                const ftsQuery = tokens.map((t) => `"${t}"*`).join(' ');
+                const ftsQuery = ftsGroups.join(' OR ');
 
                 try {
                     const stmt = env.DB.prepare(
@@ -1014,7 +1444,12 @@ export default {
                     ).bind(ftsQuery, limit);
                     const result = await stmt.all();
                     return Response.json(
-                        { results: result.results || [], query: rawQuery, count: (result.results || []).length },
+                        {
+                            results: result.results || [],
+                            query: rawQuery,
+                            count: (result.results || []).length,
+                            ...(translatedQuery ? { translatedFrom: rawQuery, effectiveQuery: translatedQuery } : {}),
+                        },
                         { headers: corsHeaders }
                     );
                 } catch (err: any) {

@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useMemo } from 'react';
 import { getDataFetchOptions } from '../utils/network';
+import { prettifyArtistName } from '../utils/canonicalArtist';
 
 // Lightweight type for the scraped Tate artwork JSON structure
 interface TateArtworkItem {
@@ -50,7 +51,7 @@ const ArtworkCard: React.FC<{ item: TateArtworkItem }> = ({ item }) => {
       </div>
       <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
         <h3 style={{ margin: 0, fontSize: 14, fontWeight: 600, lineHeight: 1.3 }}>{item.title}</h3>
-        <p style={{ margin: 0, fontSize: 12, color: '#374151' }}>{item.artist}</p>
+        <p style={{ margin: 0, fontSize: 12, color: '#374151' }}>{prettifyArtistName(item.artist)}</p>
         {item.dateText && <p style={{ margin: 0, fontSize: 11, color: '#6b7280' }}>{item.dateText}</p>}
         {item.medium && <p style={{ margin: 0, fontSize: 11, color: '#6b7280' }}>{item.medium}</p>}
         {item.dimensions && <p style={{ margin: 0, fontSize: 11, color: '#6b7280' }}>{item.dimensions}</p>}

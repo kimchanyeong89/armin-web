@@ -118,6 +118,17 @@ let lastManifestCheckAt = 0;
 let refreshInFlight: Promise<void> | null = null;
 const MANIFEST_CHECK_INTERVAL_MS = 15000;
 
+// True once the full artwork index has finished loading. Until then search()
+// returns warm results only — never a partial scan — so the result list and
+// the artist work-count appear once, complete, instead of creeping upward.
+let indexLoadComplete = false;
+
+// Caches the most recent artist-browse sample (see isArtistBrowseQuery). The
+// same query reuses it, so internal re-searches (LOAD_COMPLETE refresh, React
+// dependency re-fires) never reshuffle the list under the user; a different
+// query produces a fresh sample, preserving per-search variety.
+let lastArtistBrowse: { query: string; artworks: any[] } = { query: '', artworks: [] };
+
 type WarmArtist = {
     artist: string;
     count: number;
@@ -351,6 +362,7 @@ async function loadData() {
                 const data = await res.json();
                 processChunk(data.a || []);
                 finalizeArtists();
+                indexLoadComplete = true;
                 self.postMessage({ type: 'LOAD_COMPLETE', count: allArtworks.length });
             }
             return;
@@ -386,6 +398,7 @@ async function loadData() {
             //   3. The Cloudflare Worker's /search-by-text endpoint for
             //      semantic / AI-mode search
             // Result: mobile holds ~few MB instead of 170MB and never crashes.
+            indexLoadComplete = true;
             self.postMessage({ type: 'LOAD_COMPLETE', count: allArtworks.length });
             return;
         }
@@ -397,6 +410,7 @@ async function loadData() {
 
         await Promise.allSettled(tasks);
         finalizeArtists();
+        indexLoadComplete = true;
         self.postMessage({ type: 'LOAD_COMPLETE', count: allArtworks.length });
 
     } catch (e) {
@@ -432,6 +446,8 @@ async function maybeRefreshData(): Promise<void> {
             idMap.clear();
             globalArtistCounts.clear();
             loadStarted = false;
+            indexLoadComplete = false;
+            lastArtistBrowse = { query: '', artworks: [] };
             await loadData();
         } catch (e) {
             console.error('Manifest refresh check error:', e);
@@ -482,16 +498,16 @@ function searchWarm(query: string) {
     // "Vincent van Gogh" (whose normalized name starts with V — warm-prefix
     // would only ever return him for queries starting with V).  The total
     // artist pool is small (~8 artists × 28 buckets = 224 max), so a
-    // full-scan is cheap.  Dedupe by artist name afterwards because the
-    // same canonical artist may live in multiple buckets if the JSON
-    // includes name variants.
+    // full-scan is cheap.  Dedupe by canonical artist key (getArtistKey) so
+    // name-order / casing variants of the same artist — e.g. "Henri Matisse"
+    // and "MATISSE Henri" — collapse into one suggestion instead of two.
     const seenArtists = new Set<string>();
     const matchingArtists: Array<{ artist: string; count: number }> = [];
     for (const b of warmBuckets.values()) {
         for (const a of (b.artists || [])) {
             if (!isMeaningfulArtistSuggestion(a.artist)) continue;
             if (!normalizeSearchText(a.artist).includes(q)) continue;
-            const dedupeKey = a.artist.toLowerCase();
+            const dedupeKey = getArtistKey(a.artist) || a.artist.toLowerCase();
             if (seenArtists.has(dedupeKey)) continue;
             seenArtists.add(dedupeKey);
             matchingArtists.push({ artist: a.artist, count: a.count });
@@ -525,7 +541,116 @@ const tokenizeQueryForMatch = (value: string): string[] =>
         .map((token) => token.trim())
         .filter((token) => token.length >= 2 && !SEARCH_STOP_TOKENS.has(token));
 
-function search(query: string, requestId?: string) {
+// Fisher-Yates in-place shuffle — used to return a fresh random sample of an
+// artist's works for artist-name queries (see searchArtistBrowse).
+const shuffleInPlace = <T>(arr: T[]): T[] => {
+    for (let i = arr.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        const tmp = arr[i];
+        arr[i] = arr[j];
+        arr[j] = tmp;
+    }
+    return arr;
+};
+
+// ── Per-artist file search ─────────────────────────────────────────────────
+// An artist-name query loads that artist's small pre-built file (e.g.
+// /artists/picasso.json, ~2MB) instead of waiting on / scanning the ~177MB
+// streaming index. One fast fetch — so the artwork list and the work-count
+// appear once, quickly, and never creep or reload while the big index streams.
+const artistFileCache = new Map<string, any[] | null>();
+const artistFileInflight = new Map<string, Promise<any[] | null>>();
+
+// Returns the per-artist file key for a short artist-name query, else ''.
+const getArtistBrowseFileKey = (q: string): string => {
+    const tokens = tokenizeQueryForMatch(q);
+    if (tokens.length === 0 || tokens.length > 2) return '';
+    for (const token of tokens) {
+        const key = KNOWN_ARTIST_KEYS[token];
+        if (key) return key;
+    }
+    return '';
+};
+
+const loadArtistFile = async (fileKey: string): Promise<any[] | null> => {
+    if (artistFileCache.has(fileKey)) return artistFileCache.get(fileKey) ?? null;
+    const inflight = artistFileInflight.get(fileKey);
+    if (inflight) return inflight;
+    const promise = (async (): Promise<any[] | null> => {
+        try {
+            const res = await fetch(`/artists/${encodeURIComponent(fileKey)}.json`);
+            if (!res.ok) return null;
+            const raw = await res.json();
+            if (!Array.isArray(raw)) return null;
+            const seen = new Set<string>();
+            const mapped: any[] = [];
+            for (const art of raw) {
+                const id = String(art?.id || '');
+                const image = String(art?.i || '');
+                if (!id || !image || seen.has(id)) continue;
+                seen.add(id);
+                mapped.push({
+                    id,
+                    name: art?.n || '',
+                    artist: art?.a || '',
+                    image,
+                    date: art?.d || '',
+                    museumName: art?.m || '',
+                    exhibitionId: art?.e || '',
+                    sourceUrl: art?.u || '',
+                });
+            }
+            return mapped;
+        } catch {
+            return null;
+        }
+    })();
+    artistFileInflight.set(fileKey, promise);
+    const result = await promise;
+    artistFileInflight.delete(fileKey);
+    artistFileCache.set(fileKey, result);
+    return result;
+};
+
+// Posts a random sample of an artist's works from their pre-built file. The
+// sample is cached per query, so internal re-searches reuse it (the list never
+// reshuffles under the user) while a new query gets a fresh sample. Returns
+// false — caller falls through to the index path — when the file is missing.
+async function searchArtistBrowse(
+    query: string,
+    q: string,
+    fileKey: string,
+    warmArtists: Array<{ artist: string; count: number; image?: string }>,
+    requestId?: string,
+): Promise<boolean> {
+    const works = await loadArtistFile(fileKey);
+    if (!works || works.length < 12) return false;
+
+    let topArtworks: any[];
+    if (lastArtistBrowse.query === q && lastArtistBrowse.artworks.length > 0) {
+        topArtworks = lastArtistBrowse.artworks;
+    } else {
+        topArtworks = shuffleInPlace(works.slice()).slice(0, 100);
+        lastArtistBrowse = { query: q, artworks: topArtworks };
+    }
+
+    const artists = warmArtists.length > 0
+        ? warmArtists
+        : [{ artist: works[0]?.artist || query, count: works.length, image: works[0]?.image || '' }];
+
+    self.postMessage({
+        type: 'RESULTS',
+        query,
+        results: topArtworks,
+        artists,
+        pending: false,
+        source: 'full',
+        ...(requestId ? { requestId } : {}),
+    });
+    return true;
+}
+
+async function search(query: string, requestId?: string) {
     const q = normalizeSearchText(query);
     if (!q || q.length < 2) {
         self.postMessage({ type: 'RESULTS', query, results: [], artists: [], pending: false, source: 'none', ...(requestId ? { requestId } : {}) });
@@ -539,15 +664,29 @@ function search(query: string, requestId?: string) {
             query,
             results: warm.results,
             artists: warm.artists,
-            pending: allArtworks.length === 0,
+            pending: !indexLoadComplete,
             source: 'warm',
             ...(requestId ? { requestId } : {}),
         });
     }
 
-    if (allArtworks.length === 0) {
+    // Artist-name query → load that artist's small pre-built file instead of
+    // scanning the streaming index, so results appear in one fast fetch.
+    const artistFileKey = getArtistBrowseFileKey(q);
+    if (artistFileKey) {
+        const handled = await searchArtistBrowse(query, q, artistFileKey, warm.artists, requestId);
+        if (handled) return;
+        // File unavailable → fall through to the normal index path.
+    }
+
+    // Until the full index has finished loading, return warm results only.
+    // A partial scan here would post incomplete results and a too-low artist
+    // work-count that then jump when the rest of the index arrives — the
+    // "sequential loading / keeps reloading" the user sees. The component
+    // re-runs this search once on LOAD_COMPLETE.
+    if (allArtworks.length === 0 || !indexLoadComplete) {
         if (warm.results.length === 0 && warm.artists.length === 0) {
-            self.postMessage({ type: 'RESULTS', query, results: [], artists: [], pending: true, source: 'warm', ...(requestId ? { requestId } : {}) });
+            self.postMessage({ type: 'RESULTS', query, results: [], artists: [], pending: !indexLoadComplete, source: 'warm', ...(requestId ? { requestId } : {}) });
         }
         return;
     }
@@ -591,6 +730,7 @@ function search(query: string, requestId?: string) {
                 if (art.searchArtist.includes(token)) strongArtistMatches += 1;
             }
         }
+
         const totalTokenMatches = nameTokenMatches + artistTokenMatches;
 
         if (nameMatch) {
@@ -792,7 +932,7 @@ self.onmessage = (e: MessageEvent) => {
         }
         (async () => {
             await maybeRefreshData();
-            search(query, requestId);
+            await search(query, requestId);
         })();
     } else if (type === 'GET_ARTIST_WORKS') {
         // Match by normalized key to include all variants

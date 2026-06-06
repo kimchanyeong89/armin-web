@@ -12,6 +12,7 @@ import CommunityPanel from "./components/Community/CommunityPanel";
 import { ErrorBoundary } from "./components/ErrorBoundary";
 import { AnimatePresence, motion } from "framer-motion";
 import BottomPageNavigator, { MAIN_TABS, resolveMainTabIndex } from "./components/BottomPageNavigator";
+import LanguageToggle from "./components/LanguageToggle";
 import { LogOut, ShoppingCart, User } from "lucide-react";
 import ProfileAvatar from "./components/ProfileAvatar";
 import { createFirebaseWebPort } from "./adapters/firebaseWebAdapter";
@@ -105,7 +106,7 @@ function AppContent() {
   const navigate = useNavigate();
   const location = useLocation();
   const { user, loading: authLoading } = useAuth();
-  const { language, toggleLanguage, t } = useLanguage();
+  const { language, t } = useLanguage();
   const { itemCount } = useCart();
   const languageMorphScopeRef = useRef<HTMLDivElement | null>(null);
   const prevLanguageRef = useRef(language);
@@ -521,18 +522,14 @@ function AppContent() {
     ? `${Math.min(typeof window !== 'undefined' ? window.innerHeight - floatingStep : 9999, _draggedY + floatingStep)}px`   // Cart: 1 step below
     : `calc(${floatingTopBase} + ${floatingStep * 3}px)`;
   const floatingActionTop4 = _draggedY !== undefined
-    ? `${Math.min(typeof window !== 'undefined' ? window.innerHeight - floatingStep : 9999, _draggedY + floatingStep * 2)}px` // Language: 2 steps below
+    ? `${Math.min(typeof window !== 'undefined' ? window.innerHeight - floatingStep : 9999, _draggedY + floatingStep * 2)}px` // Theme: 2 steps below
     : `calc(${floatingTopBase} + ${floatingStep * 4}px)`;
   const floatingActionTop5 = _draggedY !== undefined
-    ? `${Math.min(typeof window !== 'undefined' ? window.innerHeight - floatingStep : 9999, _draggedY + floatingStep * 3)}px` // Theme: 3 steps below
+    ? `${Math.min(typeof window !== 'undefined' ? window.innerHeight - floatingStep : 9999, _draggedY + floatingStep * 3)}px` // Logout: 3 steps below
     : `calc(${floatingTopBase} + ${floatingStep * 5}px)`;
-  const floatingActionTop6 = _draggedY !== undefined
-    ? `${Math.min(typeof window !== 'undefined' ? window.innerHeight - floatingStep : 9999, _draggedY + floatingStep * 4)}px` // Logout: 4 steps below
-    : `calc(${floatingTopBase} + ${floatingStep * 6}px)`;
   const floatingActionBottom1 = `calc(${floatingBottomBase} + ${floatingStep}px)`;
   const floatingActionBottom2 = `calc(${floatingBottomBase} + ${floatingStep * 2}px)`;
   const floatingActionBottom3 = `calc(${floatingBottomBase} + ${floatingStep * 3}px)`;
-  const floatingActionBottom4 = `calc(${floatingBottomBase} + ${floatingStep * 4}px)`;
 
   // Horizontal anchor for the floating button stack. Desktop quick-menu
   // mode keeps a fixed right anchor (bottom-right corner cluster). On
@@ -783,7 +780,7 @@ function AppContent() {
                   exit={{ opacity: 0, y: -8, scale: 0.88 }}
                   transition={{ duration: 0.24, delay: 0.12, ease: [0.22, 1, 0.36, 1] }}
                   onClick={() => {
-                    toggleLanguage();
+                    toggleGlobalTheme();
                     setIsFloatingActionsOpen(false);
                   }}
                   whileHover={{ scale: 1.05 }}
@@ -794,51 +791,6 @@ function AppContent() {
                     transition: floatingHorizontalTransition,
                     top: isDesktopQuickMenu ? 'auto' : floatingActionTop4,
                     bottom: isDesktopQuickMenu ? floatingActionBottom2 : 'auto',
-                    zIndex: 250012,
-                    width: floatingButtonSize,
-                    height: floatingButtonSize,
-                    padding: 0,
-                    boxSizing: 'border-box',
-                    borderRadius: '50%',
-                    border: isLightTheme ? '1px solid rgba(0,0,0,0.18)' : '1px solid rgba(255,255,255,0.22)',
-                    background: language === 'ko' ? '#D4A547' : (isLightTheme ? '#ffffff' : 'rgba(22,22,22,0.88)'),
-                    color: language === 'ko' ? '#000' : (isLightTheme ? '#111' : '#fff'),
-                    cursor: 'pointer',
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    fontSize: 11,
-                    fontWeight: 800,
-                    letterSpacing: '0.04em',
-                    boxShadow: isLightTheme
-                      ? '0 8px 22px rgba(0,0,0,0.16), inset 0 1px 0 rgba(255,255,255,0.55)'
-                      : '0 12px 26px rgba(0,0,0,0.48), inset 0 1px 0 rgba(255,255,255,0.08)',
-                    backdropFilter: 'blur(16px)',
-                    WebkitBackdropFilter: 'blur(16px)',
-                    fontFamily: "'Space Grotesk', sans-serif",
-                  }}
-                  title={t({ ko: '언어 변경', en: 'Switch language' })}
-                >
-                  {language === 'ko' ? 'KR' : 'EN'}
-                </motion.button>
-
-                <motion.button
-                  initial={{ opacity: 0, y: -10, scale: 0.86 }}
-                  animate={{ opacity: 1, y: 0, scale: 1 }}
-                  exit={{ opacity: 0, y: -8, scale: 0.88 }}
-                  transition={{ duration: 0.24, delay: 0.16, ease: [0.22, 1, 0.36, 1] }}
-                  onClick={() => {
-                    toggleGlobalTheme();
-                    setIsFloatingActionsOpen(false);
-                  }}
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.94 }}
-                  style={{
-                    position: 'fixed',
-                    ...floatingHorizontalStyle,
-                    transition: floatingHorizontalTransition,
-                    top: isDesktopQuickMenu ? 'auto' : floatingActionTop5,
-                    bottom: isDesktopQuickMenu ? floatingActionBottom3 : 'auto',
                     zIndex: 250012,
                     width: floatingButtonSize,
                     height: floatingButtonSize,
@@ -911,7 +863,7 @@ function AppContent() {
                   initial={{ opacity: 0, y: -10, scale: 0.86 }}
                   animate={{ opacity: 1, y: 0, scale: 1 }}
                   exit={{ opacity: 0, y: -8, scale: 0.88 }}
-                  transition={{ duration: 0.24, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
+                  transition={{ duration: 0.24, delay: 0.16, ease: [0.22, 1, 0.36, 1] }}
                   onClick={handleQuickLogout}
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.94 }}
@@ -919,8 +871,8 @@ function AppContent() {
                     position: 'fixed',
                     ...floatingHorizontalStyle,
                     transition: floatingHorizontalTransition,
-                    top: isDesktopQuickMenu ? 'auto' : floatingActionTop6,
-                    bottom: isDesktopQuickMenu ? floatingActionBottom4 : 'auto',
+                    top: isDesktopQuickMenu ? 'auto' : floatingActionTop5,
+                    bottom: isDesktopQuickMenu ? floatingActionBottom3 : 'auto',
                     zIndex: 250012,
                     width: floatingButtonSize,
                     height: floatingButtonSize,
@@ -1049,6 +1001,23 @@ function AppContent() {
           onChange={handleBottomNavChange}
           lightMode={isLightTheme}
         />
+      )}
+
+      {/* Floating language switch — reachable on every route EXCEPT /search,
+          where it lives inside the search bar instead so the two don't stack in
+          the corner. Sits below the profile cluster (z 250012) and full-screen
+          overlays so it never covers their close buttons, yet above page content. */}
+      {!location.pathname.startsWith('/search') && (
+        <div
+          style={{
+            position: 'fixed',
+            top: 'max(12px, calc(env(safe-area-inset-top, 0px) + 10px))',
+            right: 14,
+            zIndex: 199900,
+          }}
+        >
+          <LanguageToggle light={isLightTheme} />
+        </div>
       )}
     </div>
   );

@@ -29,6 +29,12 @@ import { collection, onSnapshot, doc, deleteDoc, setDoc, serverTimestamp, increm
 import { onAuthStateChanged, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 import { db, auth } from "../../firebase";
 import { isMobileAppContainer } from "../../utils/mobileAppAuth";
+import { useLanguage } from "../../contexts/LanguageContext";
+import { useArtistI18n, getArtistDisplayName } from "../../i18n/artistLocalization";
+import { getArtworkTitle, useArtworkI18n } from "../../i18n/artworkLocalization";
+import { getDateKo } from "../../i18n/dateLocalization";
+import { getMediumKo } from "../../i18n/mediumGlossary";
+import { getExhibitionTypeLabel } from "../../i18n/exhibitionLocalization";
 
 function typeColor(type: string, t: boolean): string {
   if (type === "current") return t ? "#8A6B1F" : "#D4A547";
@@ -405,6 +411,10 @@ export function InteractiveGlobeRealModal({
   onReady?: () => void;
 }) {
   const t = theme === "light";
+  const { language } = useLanguage();
+  const L = (ko: string, en: string) => (language === "ko" ? ko : en);
+  const artistMap = useArtistI18n();
+  const titleMap = useArtworkI18n();
   const [activeArtwork, setActiveArtwork] = useState<number | null>(null);
   const [hoveredArtwork, setHoveredArtwork] = useState<number | null>(null);
   const [detailArtworkOverride, setDetailArtworkOverride] = useState<Artwork | null>(null);
@@ -1558,7 +1568,7 @@ export function InteractiveGlobeRealModal({
               <span style={{ fontSize: '12px', lineHeight: 1 }}>&#x2190;</span>
               <span style={{ letterSpacing: '0.18em', textTransform: 'uppercase', fontWeight: 600 }}>Back</span>
             </button>
-            <span style={{ padding: '4px 10px', fontSize: '8px', letterSpacing: '0.15em', textTransform: 'uppercase', backgroundColor: t ? "rgba(255,255,255,0.75)" : "rgba(0,0,0,0.55)", color: typeColor(mappedType, t), backdropFilter: 'blur(8px)', pointerEvents: 'auto' }}>{mappedType}</span>
+            <span style={{ padding: '4px 10px', fontSize: '8px', letterSpacing: '0.15em', textTransform: 'uppercase', backgroundColor: t ? "rgba(255,255,255,0.75)" : "rgba(0,0,0,0.55)", color: typeColor(mappedType, t), backdropFilter: 'blur(8px)', pointerEvents: 'auto' }}>{getExhibitionTypeLabel(mappedType, language)}</span>
           </div>
           {/* Title overlay */}
           <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: `0 ${pad} 8px` }}>
@@ -1689,7 +1699,7 @@ export function InteractiveGlobeRealModal({
               backgroundColor: t ? 'rgba(0,0,0,0.04)' : 'rgba(255,255,255,0.06)',
               color: typeColor(mappedType, t),
               border: `1px solid ${dividerColor}`,
-            }}>{mappedType}</span>
+            }}>{getExhibitionTypeLabel(mappedType, language)}</span>
           </div>
 
           <div style={{ padding: isMobile ? '6px 0' : '12px 20px', borderLeft: isMobile ? 'none' : `2px solid ${inspectedArt ? limeColor : 'transparent'}`, minHeight: isMobile ? 0 : '92px', transition: 'border-color 0.2s' }}>
@@ -1699,12 +1709,12 @@ export function InteractiveGlobeRealModal({
                   <motion.div key={inspectedArt.title + inspectedArt.inventoryNo} initial={{ opacity: 0, x: 6 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -6 }} transition={{ duration: 0.12 }}>
                     <div style={{ display: 'grid', gridTemplateColumns: isNarrowMobile ? 'repeat(1, minmax(0, 1fr))' : isMobile ? 'repeat(2, minmax(0, 1fr))' : 'repeat(3, minmax(0, 1fr))', columnGap: isMobile ? '12px' : '24px', rowGap: isMobile ? '6px' : '8px' }}>
                       {[
-                        { label: "Title", value: inspectedArt.title },
-                        { label: "Artist", value: inspectedArt.artist },
-                        { label: "Year", value: formatArtworkYear(inspectedArt.year) || inspectedArt.year },
-                        { label: "Category", value: inspectedArt.category },
-                        { label: "Medium", value: inspectedArt.material },
-                        { label: "Dimensions", value: inspectedArt.dimensions },
+                        { label: L("제목", "Title"), value: inspectedArt.title },
+                        { label: L("작가", "Artist"), value: getArtistDisplayName(inspectedArt.artist, language, artistMap) },
+                        { label: L("연도", "Year"), value: formatArtworkYear(inspectedArt.year) || inspectedArt.year },
+                        { label: L("분류", "Category"), value: getMediumKo(inspectedArt.category, language) },
+                        { label: L("재료", "Medium"), value: getMediumKo(inspectedArt.material, language) },
+                        { label: L("크기", "Dimensions"), value: inspectedArt.dimensions },
                       ].map((m) => (
                         <div key={m.label}>
                           <div style={{ fontFamily: "'Space Mono', monospace", fontSize: '10px', fontWeight: 700, color: fgMute, letterSpacing: '0.16em', textTransform: 'uppercase' }}>{m.label}</div>
@@ -1718,7 +1728,7 @@ export function InteractiveGlobeRealModal({
                 ) : (
                   <motion.div key="empty" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.12 }} style={{ display: 'flex', alignItems: 'center', minHeight: '56px' }}>
                     <span style={{ fontSize: '10px', color: fgFaint, letterSpacing: '0.12em' }}>
-                      {isLoading ? "Loading artworks..." : "Hover over a work to see details"}
+                      {isLoading ? L("작품 불러오는 중...", "Loading artworks...") : L("작품에 마우스를 올리면 정보가 표시됩니다", "Hover over a work to see details")}
                     </span>
                   </motion.div>
                 )}
@@ -1981,10 +1991,10 @@ export function InteractiveGlobeRealModal({
                           {String(globalIdx + 1).padStart(2, '0')}
                         </div>
                         <div style={{ fontSize: '13.5px', fontWeight: 600, lineHeight: 1.32, color: isSelected || isHovered ? fgHigh : fgMed, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', marginTop: '4px', transition: 'color 0.15s' }}>
-                          {aw.title} <span style={{ color: fgMute, fontWeight: 400 }}>({formatArtworkYear(aw.year) || aw.year})</span>
+                          {getArtworkTitle(aw, language, titleMap)}{(() => { const y = getDateKo(formatArtworkYear(aw.year) || aw.year, language); return y ? <span style={{ color: fgMute, fontWeight: 400 }}> ({y})</span> : null; })()}
                         </div>
                         <div style={{ fontSize: '12px', fontWeight: 400, lineHeight: 1.4, color: fgLow, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', marginTop: '3px' }}>
-                          {aw.artist}
+                          {getArtistDisplayName(aw.artist, language, artistMap)}
                         </div>
                       </div>
                     </div>
@@ -2018,13 +2028,13 @@ export function InteractiveGlobeRealModal({
                       <div style={{ width: isMobile ? '100%' : '240px', flexShrink: 0, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
                         <div>
                           <div style={{ fontSize: isMobile ? '15px' : '17px', color: fgHigh, lineHeight: 1.3 }}>
-                            {selectedArtworkDetail.title}
+                            {getArtworkTitle(selectedArtworkDetail, language, titleMap)}
                           </div>
                           <div style={{ marginTop: isMobile ? '8px' : '10px', fontSize: isMobile ? '12px' : '13px', color: fgMed }}>
-                            {selectedArtworkDetail.artist}
+                            {getArtistDisplayName(selectedArtworkDetail.artist, language, artistMap)}
                           </div>
                           <div style={{ marginTop: '4px', fontFamily: "'Space Mono', monospace", fontSize: isMobile ? '10px' : '11px', color: fgLow }}>
-                            {formatArtworkYear(selectedArtworkDetail.year) || selectedArtworkDetail.year}
+                            {getDateKo(formatArtworkYear(selectedArtworkDetail.year) || selectedArtworkDetail.year, language)}
                           </div>
                           {detailArtworkOverride && detailArtworkOrigin && (
                             <button
@@ -2091,9 +2101,9 @@ export function InteractiveGlobeRealModal({
                           <div style={{ marginTop: '16px', height: '1px', backgroundColor: dividerColor }} />
                           <div style={{ marginTop: isMobile ? '12px' : '16px', display: 'flex', flexDirection: 'column', gap: isMobile ? '8px' : '12px' }}>
                             {[
-                              { label: "Category", value: selectedArtworkDetail.category },
-                              { label: "Material", value: selectedArtworkDetail.material },
-                              { label: "Dimensions", value: selectedArtworkDetail.dimensions },
+                              { label: L("분류", "Category"), value: getMediumKo(selectedArtworkDetail.category, language) },
+                              { label: L("재료", "Material"), value: getMediumKo(selectedArtworkDetail.material, language) },
+                              { label: L("크기", "Dimensions"), value: selectedArtworkDetail.dimensions },
                             ].map((m) => (
                               <div key={m.label} style={{ display: 'flex', alignItems: 'baseline', justifyContent: 'space-between', gap: '12px' }}>
                                 <span style={{ fontFamily: "'Space Mono', monospace", fontSize: '10px', fontWeight: 700, color: fgMute, letterSpacing: '0.16em', textTransform: 'uppercase', flexShrink: 0 }}>{m.label}</span>
@@ -2118,7 +2128,7 @@ export function InteractiveGlobeRealModal({
                                 textTransform: 'uppercase'
                               }}
                             >
-                              <span>View Original</span>
+                              <span>{L("원본 보기", "View Original")}</span>
                               <span>↗</span>
                             </a>
                           )}
@@ -2131,7 +2141,7 @@ export function InteractiveGlobeRealModal({
                           }}
                           style={{ marginTop: '24px', cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px', fontSize: '10px', background: 'none', borderTop: 'none', borderRight: 'none', borderBottom: 'none', borderLeft: 'none', outline: 'none' }}
                         >
-                          <span style={{ color: fgMute, letterSpacing: '0.12em', textTransform: 'uppercase' }}>Close</span>
+                          <span style={{ color: fgMute, letterSpacing: '0.12em', textTransform: 'uppercase' }}>{L("닫기", "Close")}</span>
                           <span style={{ color: fgMute }}>&times;</span>
                         </button>
                       </div>
@@ -2205,7 +2215,7 @@ export function InteractiveGlobeRealModal({
               </span>
               <span style={{ fontSize: '9px', color: fgFaint }}>&middot;</span>
               <span style={{ fontSize: '8px', color: fgFaint, letterSpacing: '0.1em', textTransform: 'uppercase' }}>
-                {mappedType}
+                {getExhibitionTypeLabel(mappedType, language)}
               </span>
             </div>
             <button onClick={onClose} style={{ cursor: 'pointer', display: 'flex', alignItems: 'center', gap: '8px', fontSize: '10px', background: 'none', borderTop: 'none', borderRight: 'none', borderBottom: 'none', borderLeft: 'none', outline: 'none' }}>

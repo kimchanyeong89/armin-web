@@ -2,6 +2,10 @@ import { motion } from "framer-motion";
 import type { Exhibition, ExhibitionItem } from "../../types/Exhibition";
 import type { Theme } from "./types";
 import { publicUrl } from "../../utils/publicUrl";
+import { useLanguage } from "../../contexts/LanguageContext";
+import { getMuseumDisplayName, getMuseumDisplayLocation, getMuseumDisplayDescription } from "../../i18n/museumLocalization";
+import { getExhibitionDisplayTitle, getExhibitionTypeLabel } from "../../i18n/exhibitionLocalization";
+import type { AppLanguage } from "../../contexts/LanguageContext";
 
 interface Props {
   exhibition: Exhibition;
@@ -10,15 +14,16 @@ interface Props {
   onViewCollection: (exhibition: Exhibition, item?: ExhibitionItem) => void;
 }
 
-function formatDate(d?: string): string {
+function formatDate(d: string | undefined, language: AppLanguage): string {
   if (!d) return '';
-  if (d.toLowerCase().includes('permanent')) return 'Permanent';
+  if (d.toLowerCase().includes('permanent')) return getExhibitionTypeLabel('permanent', language);
   const match = d.match(/^(\d{4})/);
   return match ? match[1] : d;
 }
 
 export function GlobeExhibitionPanel({ exhibition, theme, onClose, onViewCollection }: Props) {
   const t = theme === "light";
+  const { language } = useLanguage();
 
   const bg = t ? "rgba(255, 255, 255, 0.65)" : "rgba(10, 10, 10, 0.65)";
   const border = t ? "rgba(0,0,0,0.08)" : "rgba(255,255,255,0.06)";
@@ -43,7 +48,7 @@ export function GlobeExhibitionPanel({ exhibition, theme, onClose, onViewCollect
   const totalCollections = permanent.length + temporary.length + past.length;
 
   // Description: first sentence
-  const fullDesc = (exhibition.description || "").trim();
+  const fullDesc = getMuseumDisplayDescription(exhibition, language).trim();
   const firstSentence = (() => {
     const match = fullDesc.match(/^[^.!?\n]+[.!?]?/);
     return match ? match[0] : fullDesc;
@@ -51,8 +56,8 @@ export function GlobeExhibitionPanel({ exhibition, theme, onClose, onViewCollect
 
   const renderExhibitionItem = (item: ExhibitionItem, type: 'permanent' | 'current' | 'past') => {
     const period = type === 'permanent'
-      ? 'Permanent'
-      : `${formatDate(item.startDate)}${item.endDate ? ' – ' + formatDate(item.endDate) : ''}`;
+      ? getExhibitionTypeLabel('permanent', language)
+      : `${formatDate(item.startDate, language)}${item.endDate ? ' – ' + formatDate(item.endDate, language) : ''}`;
 
     return (
       <button
@@ -104,7 +109,7 @@ export function GlobeExhibitionPanel({ exhibition, theme, onClose, onViewCollect
             overflow: 'hidden', textOverflow: 'ellipsis',
             display: '-webkit-box', WebkitLineClamp: 2, WebkitBoxOrient: 'vertical',
           }}>
-            {item.name}
+            {getExhibitionDisplayTitle(item, language)}
           </div>
           <div style={{
             fontSize: '10px', color: fg60, marginTop: '4px',
@@ -196,19 +201,21 @@ export function GlobeExhibitionPanel({ exhibition, theme, onClose, onViewCollect
             fontSize: '22px', fontWeight: 600, marginBottom: '4px',
             letterSpacing: '-0.02em', lineHeight: 1.2, paddingRight: '28px',
           }}>
-            {exhibition.name}
+            {getMuseumDisplayName(exhibition, language)}
           </h2>
           <div style={{
             display: 'flex', alignItems: 'center', gap: '8px',
             marginTop: '8px',
           }}>
-            <span style={{ fontSize: '12px', color: fg60 }}>{exhibition.location}</span>
+            <span style={{ fontSize: '12px', color: fg60 }}>{getMuseumDisplayLocation(exhibition, language)}</span>
             <span style={{ fontSize: '10px', color: fg15 }}>·</span>
             <span style={{
               fontSize: '10px', color: fg30,
               fontFamily: "'Space Mono', monospace",
             }}>
-              {totalCollections} {totalCollections === 1 ? 'collection' : 'collections'}
+              {language === 'ko'
+                ? `컬렉션 ${totalCollections}개`
+                : `${totalCollections} ${totalCollections === 1 ? 'collection' : 'collections'}`}
             </span>
           </div>
 
@@ -238,7 +245,7 @@ export function GlobeExhibitionPanel({ exhibition, theme, onClose, onViewCollect
             onMouseEnter={e => e.currentTarget.style.opacity = '0.85'}
             onMouseLeave={e => e.currentTarget.style.opacity = '1'}
           >
-            View Collection →
+            {language === 'ko' ? '소장품 보기 →' : 'View Collection →'}
           </button>
         </div>
       </div>
@@ -256,7 +263,7 @@ export function GlobeExhibitionPanel({ exhibition, theme, onClose, onViewCollect
               letterSpacing: '0.15em', textTransform: 'uppercase',
               marginBottom: '4px', fontFamily: "'Space Mono', monospace",
             }}>
-              Permanent
+              {getExhibitionTypeLabel('permanent', language)}
             </div>
             {permanent.map(item => renderExhibitionItem(item, 'permanent'))}
           </div>
@@ -270,7 +277,7 @@ export function GlobeExhibitionPanel({ exhibition, theme, onClose, onViewCollect
               letterSpacing: '0.15em', textTransform: 'uppercase',
               marginBottom: '4px', fontFamily: "'Space Mono', monospace",
             }}>
-              Temporary
+              {language === 'ko' ? '기획·임시' : 'Temporary'}
             </div>
             {temporary.map(item => renderExhibitionItem(item, 'current'))}
           </div>
@@ -284,7 +291,7 @@ export function GlobeExhibitionPanel({ exhibition, theme, onClose, onViewCollect
               letterSpacing: '0.15em', textTransform: 'uppercase',
               marginBottom: '4px', fontFamily: "'Space Mono', monospace",
             }}>
-              Past
+              {language === 'ko' ? '지난 전시' : 'Past'}
             </div>
             {past.map(item => renderExhibitionItem(item, 'past'))}
           </div>
@@ -295,7 +302,7 @@ export function GlobeExhibitionPanel({ exhibition, theme, onClose, onViewCollect
             display: 'flex', alignItems: 'center', justifyContent: 'center',
             height: '80px', color: fg30, fontSize: '12px',
           }}>
-            No exhibition data available.
+            {language === 'ko' ? '전시 정보가 아직 없습니다.' : 'No exhibition data available.'}
           </div>
         )}
       </div>

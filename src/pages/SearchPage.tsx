@@ -1,31 +1,29 @@
 import { useEffect, useMemo, useState } from "react";
 import GlobalSearchBar from "../components/GlobalSearchBar";
 import { exhibitions } from "../data/exhibitions";
-import { useLanguage } from "../contexts/LanguageContext";
-import { localizeMuseum } from "../i18n/museumLocalization";
 
 export default function SearchPage() {
-  const { language } = useLanguage();
   const [isMobileLayout, setIsMobileLayout] = useState(() => {
     if (typeof window === "undefined") return false;
     return window.innerWidth < 768;
   });
+  // `name` stays the canonical value so it matches artwork.museumName in the
+  // search index; name_ko/name_en ride along for getMuseumDisplayName to localize.
   const museums = useMemo(
     () =>
-      exhibitions.map((ex) => {
-        const localized = localizeMuseum(ex as any, language);
-        return {
+      exhibitions.map((ex) => ({
         id: ex.id,
-        name: localized.name,
+        name: (ex as any).name,
+        name_ko: (ex as any).name_ko,
+        name_en: (ex as any).name_en,
         country: (ex as any).country || "",
         region: (ex as any).region,
         latitude: (ex as any).latitude || 0,
         longitude: (ex as any).longitude || 0,
         representativeImage: (ex as any).representativeImage,
         permanentExhibitions: (ex as any).permanentExhibitions || [],
-        };
-      }),
-    [language],
+      })),
+    [],
   );
 
   useEffect(() => {

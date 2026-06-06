@@ -1,11 +1,17 @@
 import React, { useState, useEffect } from 'react';
+import { onAuthStateChanged } from 'firebase/auth';
 import { findMuseumForArtwork } from '../utils/museumUtils';
 import { HeartOverlay } from './HeartOverlay';
 import { ArtworkRecommendations } from './ArtworkRecommendations';
 import { BookmarkPlus, ExternalLink, ShoppingBag } from 'lucide-react';
 import { ExpandableActionMenu } from './ExpandableActionMenu';
+import LoginSelectionModal from './LoginSelectionModal';
 // import { buildSourceSet, useProxy } from '../utils/imageProxy'; // Unused
 import { exhibitions } from '../data/exhibitions';
+import { auth } from '../firebase';
+import { useLanguage } from '../contexts/LanguageContext';
+import { useArtistI18n, getArtistDisplayName } from '../i18n/artistLocalization';
+import { getArtworkTitle, getArtworkDate, useArtworkI18n } from '../i18n/artworkLocalization';
 
 
 // Helper: Clean Artist Name (copied from ExhibitionModal to ensure consistency)
@@ -103,10 +109,13 @@ interface ArtworkLightboxProps {
     onViewInMuseum?: (artwork: any) => void;
     // On Purchase (POD)
     onPurchase?: (artwork: any) => void;
-    // Liked list for recommendations logic
-    likedArtworksList?: any[];
-    // For navigation within lightbox
-    onChangeArtwork?: (artwork: any) => void;
+    // Liked artworks list — REQUIRED so the Similar Vibe recommendation hearts
+    // reflect liked state. Made required after a call site (AICurationHubPage)
+    // shipped without it and silently broke those hearts.
+    likedArtworksList: any[];
+    // Navigation within the lightbox — REQUIRED so Similar Vibe cards stay
+    // clickable. Required for the same structural reason as likedArtworksList.
+    onChangeArtwork: (artwork: any) => void;
     // Add to playlist
     onSaveToPlaylist?: (artwork: any) => void;
     // Optional comments trigger
@@ -135,8 +144,35 @@ export const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
     hideMuseumAction = false,
     // ...
 }) => {
+    const { language } = useLanguage();
+    const artistMap = useArtistI18n();
+    const titleMap = useArtworkI18n();
     const [animate, setAnimate] = useState(false);
     const [imgLoaded, setImgLoaded] = useState(false);
+    const [showLoginModal, setShowLoginModal] = useState(false);
+    // Track auth so the heart can prompt sign-in before the call site's
+    // toggleLike runs (otherwise it's a silent no-op for guests, which
+    // looked like "the heart did nothing" / "the lightbox just closed").
+    const [isSignedIn, setIsSignedIn] = useState(
+        () => !!auth.currentUser && !auth.currentUser.isAnonymous,
+    );
+    useEffect(() => {
+        const unsub = onAuthStateChanged(auth, (u) => {
+            setIsSignedIn(!!u && !u.isAnonymous);
+            // Auto-dismiss the login prompt once auth completes.
+            if (u && !u.isAnonymous) setShowLoginModal(false);
+        });
+        return () => unsub();
+    }, []);
+
+    const handleToggleLike = (e: React.MouseEvent, art: any) => {
+        e.stopPropagation();
+        if (!isSignedIn) {
+            setShowLoginModal(true);
+            return;
+        }
+        onToggleLike(e, art);
+    };
 
     // Reset animation + image-loaded state when artwork changes
     useEffect(() => {
@@ -499,10 +535,7 @@ export const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
 
     // widths/avif/webp/sizes removed as we are using direct img src now
 
-    const dateDisplay = (() => {
-        const yr = String(artwork.year || artwork.dateStr || artwork.date || '');
-        return yr.replace(/^\((-?\d+)\)$/, '$1'); // clean cleanup
-    })();
+    const dateDisplay = getArtworkDate(artwork, language);
 
     return (
         <>
@@ -642,7 +675,7 @@ export const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
                             <ExpandableActionMenu
                                 isMobile={false}
                                 isLiked={isLiked}
-                                onToggleLike={(e) => onToggleLike(e, artwork)}
+                                onToggleLike={(e) => handleToggleLike(e, artwork)}
                                 onOpenProduct={showPurchaseAction ? (e) => onPurchase?.(artwork) : undefined}
                                 onOpenPlaylist={onSaveToPlaylist ? (e) => onSaveToPlaylist(artwork) : undefined}
                                 iconSize={actionIconSize}
@@ -670,7 +703,7 @@ export const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
                         }}
                     >
                         <div style={{ fontSize: isMobile ? 20 : 24, fontWeight: 600, letterSpacing: '-0.015em', lineHeight: 1.18 }}>
-                            {artwork.name || artwork.title}
+                            {getArtworkTitle(artwork, language, titleMap)}
                         </div>
                         {dateDisplay && (
                             <div style={{ fontSize: 14, opacity: 0.72 }}>
@@ -678,7 +711,7 @@ export const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
                             </div>
                         )}
                         <div style={{ fontSize: 15, color: '#e5e5e5', marginTop: 2 }}>
-                            {cleanArtistName(artwork.artist)}
+                            {getArtistDisplayName(cleanArtistName(artwork.artist), language, artistMap)}
                         </div>
                         <div style={{ fontSize: 12, color: '#a8a8a8', marginTop: 2, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 2 }}>
                             {museumInfo.name && (
@@ -797,7 +830,7 @@ export const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
                             mode="grid"
                             theme="dark"
                             likedArtworks={likedSet}
-                            onToggleLike={onToggleLike}
+                            onToggleLike={handleToggleLike}
                             onOpenProduct={showPurchaseAction ? onPurchase : undefined}
                             onSaveToPlaylist={onSaveToPlaylist}
                             onOpenComments={SHOW_ARTWORK_COMMENTS ? onOpenComments : undefined}
@@ -833,6 +866,12 @@ export const ArtworkLightbox: React.FC<ArtworkLightboxProps> = ({
                     )
                 }
             </div >
+
+            {/* Sign-in prompt — rendered above the lightbox so the user
+                doesn't lose context when the heart requires auth. */}
+            {showLoginModal && (
+                <LoginSelectionModal onClose={() => setShowLoginModal(false)} />
+            )}
         </>
     );
 };

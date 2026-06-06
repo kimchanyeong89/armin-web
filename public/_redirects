@@ -1,1 +1,10 @@
+# Proxy Firebase Auth handler routes to Firebase Hosting so OAuth redirects
+# (Apple, Google popup/redirect, signInWithRedirect getRedirectResult round
+# trip) actually land on Firebase's handler script. Without these the SPA's
+# index.html is served for /__/auth/handler, the OAuth callback never runs,
+# and the user is stuck on a blank page after sign-in.
+/__/auth/* https://armin-web.firebaseapp.com/__/auth/:splat 200
+/__/firebase/* https://armin-web.firebaseapp.com/__/firebase/:splat 200
+
+# SPA fallback for everything else.
 /* /index.html 200

@@ -1,0 +1,45 @@
+{
+  "updated_at": "2026-05-22T03:23:13.046Z",
+  "entries": [
+    {
+      "slug": "albrecht-d-rer-carlo-crivelli",
+      "title_en": "Two Renaissances, North and South",
+      "title_ko": "북과 남, 두 개의 르네상스",
+      "persona_id": "marco-rinaldi",
+      "lens": "dialogue",
+      "published_at": "2026-05-22T02:40:43.255Z",
+      "hero_image_url": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/staedel-museum-collection/staedel-609-b0f8b222-imageUrl.webp",
+      "source_week": "2026-W21"
+    },
+    {
+      "slug": "david-octavius-hill-gertrude-k-sebier",
+      "title_en": "Photography Begins Twice",
+      "title_ko": "사진은 두 번 시작된다",
+      "persona_id": "anika-voss",
+      "lens": "dialogue",
+      "published_at": "2026-05-22T02:40:44.352Z",
+      "hero_image_url": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/reina-sofia-collection/lady-ruthven-imageUrl.webp",
+      "source_week": "2026-W21"
+    },
+    {
+      "slug": "henri-michaux",
+      "title_en": "An Alphabet Before Language",
+      "title_ko": "언어 이전의 알파벳",
+      "persona_id": "anika-voss",
+      "lens": "biographical",
+      "published_at": "2026-05-22T03:23:12.561Z",
+      "hero_image_url": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/moma-collection/479566-942c6bcf-imageUrl.webp",
+      "source_week": "2026-W21"
+    },
+    {
+      "slug": "jacob-jordaens",
+      "title_en": "The Painter Who Stayed",
+      "title_ko": "안트베르펀에 남은 화가",
+      "persona_id": "marco-rinaldi",
+      "lens": "biographical",
+      "published_at": "2026-05-22T03:23:13.046Z",
+      "hero_image_url": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/smb-gemaeldegalerie-collection/smb-gemaeldegalerie-864831-31cbe47d-imageUrl.webp",
+      "source_week": "2026-W21"
+    }
+  ]
+}

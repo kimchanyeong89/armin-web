@@ -1,5 +1,7 @@
 import React, { Suspense, useMemo, useState } from 'react';
 import type { Exhibition, ExhibitionItem } from '../types/Exhibition';
+import { useLanguage } from '../contexts/LanguageContext';
+import { getMuseumDisplayName, getMuseumDisplayLocation, getMuseumDisplayDescription } from '../i18n/museumLocalization';
 
 const ExhibitionModal = React.lazy(() => import('./ExhibitionModal'));
 
@@ -28,6 +30,10 @@ function resolveExhibitionThumbnail(ex: ExhibitionWithType, museumRepImg?: strin
 }
 
 export default function DrawingMapModal({ museum, onClose }: Props) {
+  const { language } = useLanguage();
+  const museumName = getMuseumDisplayName(museum, language);
+  const museumLocation = getMuseumDisplayLocation(museum, language);
+  const museumDesc = getMuseumDisplayDescription(museum, language);
   const [activeItem, setActiveItem] = useState<ExhibitionWithType | null>(null);
   const [isSwitcherOpen, setIsSwitcherOpen] = useState(false);
   const [search, setSearch] = useState('');
@@ -403,17 +409,19 @@ export default function DrawingMapModal({ museum, onClose }: Props) {
             <div className="dm-header-actions">
               <button onClick={onClose} className="dm-btn">Back To Map</button>
               {activeItem && (
-                <button onClick={() => setActiveItem(null)} className="dm-btn">All Exhibitions</button>
+                <button onClick={() => setActiveItem(null)} className="dm-btn">{language === 'ko' ? '전체 전시' : 'All Exhibitions'}</button>
               )}
             </div>
 
-            <h1 className="dm-title">{museum.name}</h1>
+            <h1 className="dm-title">{museumName}</h1>
             <p className="dm-meta">
-              {allExhibitions.length} exhibitions · {museum.location || 'global collection'}
+              {language === 'ko'
+                ? `전시 ${allExhibitions.length}개 · ${museumLocation || '전 세계 컬렉션'}`
+                : `${allExhibitions.length} exhibitions · ${museumLocation || 'global collection'}`}
             </p>
           </div>
 
-          {!activeItem && museum.description && (
+          {!activeItem && museumDesc && (
             <p style={{
               margin: 0,
               maxWidth: 460,
@@ -421,7 +429,7 @@ export default function DrawingMapModal({ museum, onClose }: Props) {
               fontSize: 13,
               lineHeight: 1.55
             }}>
-              {museum.description.length > 220 ? `${museum.description.slice(0, 220)}...` : museum.description}
+              {museumDesc.length > 220 ? `${museumDesc.slice(0, 220)}...` : museumDesc}
             </p>
           )}
         </header>
@@ -523,7 +531,7 @@ export default function DrawingMapModal({ museum, onClose }: Props) {
                 <Suspense fallback={<div className="dm-empty">Loading exhibition...</div>}>
                   <ExhibitionModal
                     exhibition={activeItem}
-                    museumName={museum.name}
+                    museumName={museumName}
                     onClose={() => setActiveItem(null)}
                     inline={true}
                     variant="sketch"
