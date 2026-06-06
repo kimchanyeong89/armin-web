@@ -88,11 +88,11 @@
 | 30 | `frick-collection` | [The Frick Collection](https://collections.frick.org) (프릭) | New York, US | P, D, Pr | ✅ | ❌ escalated | Fastly WAF가 하드 418(0바이트)로 강화 — 브라우저로도 challenge JS 실행 불가, clearance 쿠키 획득 불가(스크립트는 완성, WAF만 통과 못 함) |
 | 31 | `brooklyn-museum` | [Brooklyn Museum](https://www.brooklynmuseum.org/opencollection) (브루클린) | New York, US | P, Ph, D, Pr | ✅ | ❌ escalated | API 키 필수(api.brooklynmuseum.org)+공개 덤프/IIIF 없음 — 키 없이는 접근 불가 |
 | 32 | `hirshhorn` | [Hirshhorn Museum](https://hirshhorn.si.edu/collection/) (허시혼) | Washington DC, US | P, Ph, V | ✅ | ✅ merged-local | 344 (Smithsonian OpenAccess CC0 덤프; 회화159·드로잉98·사진69·판화18; 메타 REAL 100%) |
-| 33 | `walker-art-center` | [Walker Art Center](https://walkerart.org/collections) (워커) | Minneapolis, US | P, Ph, V | ✅ | pending | |
+| 33 | `walker-art-center` | [Walker Art Center](https://walkerart.org/collections) (워커) | Minneapolis, US | P, Ph, V | ✅ | ✅ merged-local | 11,291 (HTML sitemap+imgix; 판화7,644·사진1,430·회화921·드로잉630·영상519·혼합147; 매체로 평면분류; 11.6MB; 메타 REAL ~100%) |
 | 34 | `mia-minneapolis` | [Minneapolis Institute of Art](https://collections.artsmia.org) (MIA) | Minneapolis, US | P, D, Pr, Ph | ✅ | ❌ escalated | 메타는 CC0 GitHub 덤프(완벽)지만 모든 이미지호스트 사망(api.artsmia.org 무응답·iiif.dx DNS사망·CloudFront 403·imgix 410) — 작동 이미지URL 0 |
 | 35 | `nelson-atkins` | [Nelson-Atkins Museum of Art](https://art.nelson-atkins.org/collections) (넬슨-앳킨스) | Kansas City, US | P, D, Pr | ✅ | ❌ escalated | art.nelson-atkins.org TCP:443 하드 네트워크 차단(샌드박스에서 도달 불가) |
 | 36 | `kimbell` | [Kimbell Art Museum](https://www.kimbellart.org/collection) (킴벨) | Fort Worth, US | P, D | ✅ | ❌ escalated | Cloudflare 관리형 JS challenge — 자동 접근 차단(IIIF도 동일) |
-| 37 | `dma-dallas` | [Dallas Museum of Art](https://collections.dma.org) (DMA) | Dallas, US | P, Ph, D | ✅ | pending | |
+| 37 | `dma-dallas` | [Dallas Museum of Art](https://collections.dma.org) (DMA) | Dallas, US | P, Ph, D | ✅ | ✅ merged-local | 7,652 (museum IIIF full/full; 판화3,625·회화1,714·사진1,209·드로잉1,104; 8.7MB; 메타 REAL ~100%) |
 | 38 | `norton-simon` | [Norton Simon Museum](https://www.nortonsimon.org/art/) (노턴 사이먼) | Pasadena, US | P, D, Pr | ✅ | pending | |
 | 39 | `eastman-museum` | [George Eastman Museum](https://collections.eastman.org) (조지 이스트먼) | Rochester, US | Ph, V | ✅ | pending | |
 | 40 | `icp-ny` | [International Center of Photography](https://www.icp.org/browse/archive) (ICP) | New York, US | Ph | ✅ | pending | |

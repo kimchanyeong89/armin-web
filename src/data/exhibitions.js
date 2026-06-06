@@ -6804,5 +6804,41 @@ export const exhibitions = [
     pastExhibitions: [],
     exhibitions: []
   },
+  {
+    id: "walker-art-center",
+    name_ko: "워커 아트 센터",
+    name: "Walker Art Center",
+    city: "Minneapolis",
+    country: "USA",
+    latitude: 44.96806,
+    longitude: -93.28861,
+    description_ko: "미니애폴리스를 대표하는 현대미술센터로, 전후·동시대 판화와 사진·회화·무빙이미지에 강한 컬렉션을 갖췄으며 미니애폴리스 조각공원과 이어진다.",
+    description: "A leading contemporary art center in Minneapolis, known for its multidisciplinary program and a collection strong in postwar and contemporary prints, photography, painting, and moving image, adjoining the Minneapolis Sculpture Garden.",
+    representativeImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/walker-art-center-collection/wac_425-ed1a4a18-imageUrl.webp",
+    permanentExhibitions: [
+      { id: "walker-art-center-collection", name: "Collection", name_en: "Collection", title: "Walker Art Center — Collection", title_en: "Walker Art Center — Collection", description: "11,291점 — 판화·사진·회화·드로잉·영상 (전후·동시대; 매체로 평면 분류).", description_en: "11,291 works — prints, photographs, paintings, drawings and moving image (postwar and contemporary).", startDate: "Permanent", endDate: "Permanent", collectionFile: "walker-art-center-collection.json" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    exhibitions: []
+  },
+  {
+    id: "dma-dallas",
+    name_ko: "댈러스 미술관",
+    name: "Dallas Museum of Art",
+    city: "Dallas",
+    country: "USA",
+    latitude: 32.7876,
+    longitude: -96.801,
+    description_ko: "댈러스 아트 디스트릭트에 자리한 종합 미술관으로, 고대부터 현대까지 전 세계 문화를 아우르는 약 2만 9천 점의 소장품을 회화·조각·장식미술·종이 작품에 걸쳐 보유하고 있다.",
+    description: "A major encyclopedic art museum in the Dallas Arts District, its 29,000-object collection spans global cultures from antiquity to contemporary art across painting, sculpture, decorative arts, and works on paper.",
+    representativeImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/dma-dallas-collection/3039527-4b4dba48-imageUrl.webp",
+    permanentExhibitions: [
+      { id: "dma-dallas-collection", name: "Collection", name_en: "Collection", title: "Dallas Museum of Art — Collection", title_en: "Dallas Museum of Art — Collection", description: "7,652점 — 판화·회화·사진·드로잉 (종합 컬렉션의 평면 작품).", description_en: "7,652 flat works — prints, paintings, photographs and drawings from the encyclopedic collection.", startDate: "Permanent", endDate: "Permanent", collectionFile: "dma-dallas-collection.json" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    exhibitions: []
+  },
 
 ];
