@@ -62,7 +62,7 @@
 | 11 | `k20-k21` | [Kunstsammlung NRW K20/K21](https://www.kunstsammlung.de/en/collection) (K20/K21) | Düsseldorf, DE | P, Ph, V | ✅ | ✅ merged-local | 309 (sammlung.kunstsammlung.de) |
 | 12 | `folkwang` | [Museum Folkwang](https://www.museum-folkwang.de/en/collection) (폴크방) | Essen, DE | P, Ph | ✅ | ✅ merged-local | 501 (eMuseumPlus) |
 | 13 | `co-berlin` | [C/O Berlin](https://www.co-berlin.org/en) | Berlin, DE | Ph | 🟡 | ❌ escalated | 구조적 불가 — 상설 컬렉션 없는 전시공간(Kunsthalle). 자체 작품 DB 없음(Drupal jsonapi 비활성, IIIF/OAI 없음) |
-| 14 | `boijmans` | [Museum Boijmans Van Beuningen](https://www.boijmans.nl/en/collection) (보이만스) | Rotterdam, NL | P, D, Pr | ✅ | ✅ merged-local | 20,008 (Algolia+modal API; 판화11,688·드로잉5,921·회화1,568·사진831; 21MB→Pages; 메타 REAL ~100%; ⚠️판화 많음=큐레이션 후보) |
+| 14 | `boijmans` | [Museum Boijmans Van Beuningen](https://www.boijmans.nl/en/collection) (보이만스) | Rotterdam, NL | P, D, Pr | ✅ | ✅ merged-local | 17,987/20,008 (Algolia+modal API; 플레이스홀더 2,021 제거→`.placeholder-removed.json` 백업; ⚠️판화 多=흑백판화 큐레이션 후보) |
 | 15 | `foam-amsterdam` | [Foam Photography Museum](https://www.foam.org) (포암) | Amsterdam, NL | Ph | ✅ | ✅ merged-local | 153/~171 (Wayback __NEXT_DATA__+Storyblok CDN; 전부 사진; 라이브 Vercel 봇차단 우회; 메타 REAL 100%) |
 | 16 | `eye-filmmuseum` | [EYE Filmmuseum](https://www.eyefilm.nl/en/collection) (아이 필름박물관) | Amsterdam, NL | V | ✅ | ❌ escalated | 카탈로그(catalogus.eyefilm.nl 60k) 로그인 필요 — 공개 작품 메타+이미지 접근 불가 |
 | 17 | `moderna-museet` | [Moderna Museet](https://www.modernamuseet.se/stockholm/en/collection/) (모데르나) | Stockholm, SE | P, Ph, D, V | ✅ | ✅ merged-local | 25,539/37,441 (큐레이션: medium없는 사진11,379+중복523 제거→`.curated-removed.json` 백업; 23.5MB→Pages 정상; 드로잉9,004·판화7,183·사진5,691·회화3,127·영상534) |
