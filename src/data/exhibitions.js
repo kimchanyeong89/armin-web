@@ -6672,7 +6672,7 @@ export const exhibitions = [
     description: "One of the Netherlands' oldest and most wide-ranging art museums in Rotterdam, holding masterpieces from Bosch, Bruegel and Rembrandt through to Surrealism and contemporary art.",
     representativeImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/boijmans-collection/60832-b6e7bdcd-imageUrl.webp",
     permanentExhibitions: [
-      { id: "boijmans-collection", name: "Collection", name_en: "Collection", title: "Museum Boijmans Van Beuningen — Collection", title_en: "Museum Boijmans Van Beuningen — Collection", description: "17,987점 — 판화·드로잉·회화·사진 (플레이스홀더 2,021 제거).", description_en: "17,987 flat works — prints, drawings, paintings, and photographs (2,021 placeholders removed).", startDate: "Permanent", endDate: "Permanent", collectionFile: "boijmans-collection.json" }
+      { id: "boijmans-collection", name: "Collection", name_en: "Collection", title: "Museum Boijmans Van Beuningen — Collection", title_en: "Museum Boijmans Van Beuningen — Collection", description: "9,574점 — 드로잉5,499·판화1,911·회화1,449·사진715. 흑백 복제판화·플레이스홀더 정리.", description_en: "9,574 works — drawings, prints, paintings and photographs (B&W reproductive prints and placeholders curated out).", startDate: "Permanent", endDate: "Permanent", collectionFile: "boijmans-collection.json" }
     ],
     temporaryExhibitions: [],
     pastExhibitions: [],
