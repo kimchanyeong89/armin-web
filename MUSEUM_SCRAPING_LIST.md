@@ -112,7 +112,7 @@
 | 47 | `malba` | [MALBA](https://www.malba.org.ar/coleccion/) (말바) | Buenos Aires, AR | P, Ph, V | ✅ | pending | |
 | 48 | `mnba-buenosaires` | [Museo Nacional de Bellas Artes](https://www.bellasartes.gob.ar/coleccion/) (아르헨티나 국립) | Buenos Aires, AR | P, D, Pr | ✅ | ❌ escalated | Cloudflare JS 챌린지 전면 + robots ai-train=no·ClaudeBot 차단(자동수집 명시 거부) |
 | 49 | `mnba-santiago` | [Museo Nacional de Bellas Artes](https://www.mnba.gob.cl/coleccion) (칠레 국립) | Santiago, CL | P, D | 🟡 | 🔄 retry-pending | probe 세션한도 중단 — 재시도 |
-| 50 | `museo-botero` | [Museo Botero](https://www.banrepcultural.org/bogota/museo-botero) (보테로) | Bogotá, CO | P, D | ✅ | 🔄 retry-pending | probe viable; 스크립트작성 세션한도 중단 — 재시도 |
+| 50 | `museo-botero` | [Museo Botero](https://www.banrepcultural.org/bogota/museo-botero) (보테로) | Bogotá, CO | P, D | ✅ | ✅ merged-local | 151/157 (banrepcultural 포털; 회화 중심 — 보테로 기증작+개인소장 거장컬렉션; min4 6점 드롭; REAL fill 100%) |
 | 51 | `mali-lima` | [Museo de Arte de Lima](https://mali.pe/colecciones/) (MALI) | Lima, PE | P, Ph, D | ✅ | 🔄 retry-pending | probe viable; 스크립트작성 세션한도 중단 — 재시도 |
 
 ---
@@ -146,8 +146,8 @@
 
 | # | Slug | Museum | City | Cat | Online | Status | PR |
 |---|---|---|---|---|---|---|---|
-| 70 | `louvre-abudhabi` | [Louvre Abu Dhabi](https://www.louvreabudhabi.ae/en/explore/highlights-of-the-collection) (루브르 아부다비) | Abu Dhabi, AE | P, D, Mn, Ms | ✅ | pending | |
-| 71 | `sharjah-art-museum` | [Sharjah Art Museum](https://sharjahmuseums.ae/en-US/Our-Museums/Sharjah-Art-Museum) (샤르자) | Sharjah, AE | P, D | 🟡 | pending | |
+| 70 | `louvre-abudhabi` | [Louvre Abu Dhabi](https://www.louvreabudhabi.ae/en/explore/highlights-of-the-collection) (루브르 아부다비) | Abu Dhabi, AE | P, D, Mn, Ms | ✅ | ❌ escalated | Cloudflare 챌린지(403 Just a moment; 사전선별 curl로 확인 — 에이전트 미투입) |
+| 71 | `sharjah-art-museum` | [Sharjah Art Museum](https://sharjahmuseums.ae/en-US/Our-Museums/Sharjah-Art-Museum) (샤르자) | Sharjah, AE | P, D | 🟡 | ❌ escalated | 사이트 도달 불가(20s·40s 타임아웃; 지역차단 추정) |
 | 72 | `mia-doha` | [Museum of Islamic Art](https://www.mia.org.qa/en/collections) (이슬람 예술관 도하) | Doha, QA | Mn, Cal, Ms | ✅ | pending | |
 | 73 | `mathaf-doha` | [Mathaf: Arab Museum of Modern Art](https://mathaf.org.qa/en/collections) (마타프) | Doha, QA | P, Ph, V | ✅ | pending | |
 | 74 | `israel-museum` | [Israel Museum](https://www.imj.org.il/en/collections) (이스라엘 박물관) | Jerusalem, IL | P, Ph, D, Pr | ✅ | pending | |
@@ -164,9 +164,9 @@
 
 | # | Slug | Museum | City | Cat | Online | Status | PR |
 |---|---|---|---|---|---|---|---|
-| 81 | `mmvi-rabat` | [Mohammed VI Museum of Modern Art](https://www.museemohammed6.ma/en/collections/) (모하메드 6세) | Rabat, MA | P, D | 🟡 | pending | |
+| 81 | `mmvi-rabat` | [Mohammed VI Museum of Modern Art](https://www.museemohammed6.ma/en/collections/) (모하메드 6세) | Rabat, MA | P, D | 🟡 | ❌ escalated | 사이트 도달 불가(20s·40s 타임아웃) |
 | 82 | `macaal` | [MACAAL](https://macaal.org/en/collection-2/) (마카알) | Marrakech, MA | P, Ph | ✅ | pending | |
-| 83 | `mama-alger` | [MAMA Alger](http://mama-dz.com) (알제 현대미술관) | Algiers, DZ | P, D | 🟡 | pending | |
+| 83 | `mama-alger` | [MAMA Alger](http://mama-dz.com) (알제 현대미술관) | Algiers, DZ | P, D | 🟡 | ❌ escalated | 도메인 매물 상태(mama-dz.com Domain for Sale) — 사이트 소멸 |
 | 84 | `iziko-sang` | [Iziko South African National Gallery](https://www.iziko.org.za/museums/south-african-national-gallery/) (이지코) | Cape Town, ZA | P, Ph, D | ✅ | pending | |
 
 ---
@@ -175,7 +175,7 @@
 
 | # | Slug | Museum | City | Cat | Online | Status | PR |
 |---|---|---|---|---|---|---|---|
-| 85 | `nga-canberra` | [National Gallery of Australia](https://nga.gov.au/collection/) (호주 국립) | Canberra, AU | P, Ph, D, Pr | ✅ | pending | |
+| 85 | `nga-canberra` | [National Gallery of Australia](https://nga.gov.au/collection/) (호주 국립) | Canberra, AU | P, Ph, D, Pr | ✅ | ❌ escalated | 전면 403 0B 하드차단(본진+searchthecollection 서브도메인+api까지; UA 무관) |
 
 ---
 

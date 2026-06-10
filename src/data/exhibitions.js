@@ -6912,5 +6912,23 @@ export const exhibitions = [
     pastExhibitions: [],
     exhibitions: []
   },
+  {
+    id: "museo-botero",
+    name_ko: "보테로 미술관",
+    name: "Museo Botero",
+    city: "Bogotá",
+    country: "Colombia",
+    latitude: 4.5968,
+    longitude: -74.073,
+    description_ko: "페르난도 보테로가 고국에 기증한 대표작들과 그가 평생 모은 피카소, 모네, 프랜시스 베이컨 등 거장들의 작품을 한자리에서 볼 수 있는 곳. 보고타 옛 도심 라 칸델라리아의 식민지 시대 저택에 자리하며 누구나 무료로 관람할 수 있다.",
+    description: "Housed in a colonial mansion in Bogotá's La Candelaria, the museum presents Fernando Botero's 2000 donation to Colombia: his own signature paintings and drawings alongside his personal collection of international masters including Picasso, Monet, Bacon, Chagall and Dalí — free to all visitors.",
+    representativeImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/museo-botero-collection/museo-botero-63a069015d96b8790f25fff8-b620c2a8-imageUrl.webp",
+    permanentExhibitions: [
+      { id: "museo-botero-collection", name: "Collection", name_en: "Collection", title: "Museo Botero — Collection", title_en: "Museo Botero — Collection", description: "151점 — 회화113·드로잉33·판화4·혼합매체1.", description_en: "151 works — painting, drawing, print, mixed_media_2d.", startDate: "Permanent", endDate: "Permanent", collectionFile: "museo-botero-collection.json" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    exhibitions: []
+  },
 
 ];
