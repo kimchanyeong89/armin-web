@@ -6840,5 +6840,23 @@ export const exhibitions = [
     pastExhibitions: [],
     exhibitions: []
   },
+  {
+    id: "icp-ny",
+    name_ko: "국제사진센터",
+    name: "International Center of Photography",
+    city: "New York",
+    country: "USA",
+    latitude: 40.7174,
+    longitude: -73.9883,
+    description_ko: "1974년 코넬 카파가 '참여 사진'을 기치로 세운 사진 전문 미술관. 위지 아카이브를 비롯해 포토저널리즘과 다큐멘터리, 동시대 사진까지 폭넓게 소장하고 있다.",
+    description: "New York's museum devoted entirely to photography, founded by Cornell Capa in 1974 to champion \"concerned photography.\" Its archive spans photojournalism and documentary work — including the Weegee archive — through fine-art and contemporary image-making.",
+    representativeImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/icp-ny-collection/icp-ny-309-ec3019d7-imageUrl.webp",
+    permanentExhibitions: [
+      { id: "icp-ny-collection", name: "Collection", name_en: "Collection", title: "International Center of Photography — Collection", title_en: "International Center of Photography — Collection", description: "23,007점 — 사진 (포토저널리즘·다큐멘터리·동시대 사진).", description_en: "23,007 photographs — photojournalism, documentary and contemporary image-making.", startDate: "Permanent", endDate: "Permanent", collectionFile: "icp-ny-collection.json" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    exhibitions: []
+  },
 
 ];

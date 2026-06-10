@@ -58,7 +58,7 @@
 | 7 | `wallace-collection` | [The Wallace Collection](https://wallacelive.wallacecollection.org) (월리스) | London, UK | P, D | ✅ | ✅ merged-local | 448 (eMuseumPlus; 미니어쳐 127점 제외 → `.miniatures-removed.json` 백업) |
 | 8 | `ashmolean` | [Ashmolean Museum](https://collections.ashmolean.org) (애슈몰린) | Oxford, UK | P, D, Pr | ✅ | ✅ merged-local | 2,542 (GLAM API+IIIF; 미니어쳐 218점 제외 → `.miniatures-removed.json` 백업) — 흑백판화 1 제거(`.grayscale-prints-removed.json`) |
 | 9 | `fitzwilliam` | [The Fitzwilliam Museum](https://collection.fitzmuseum.cam.ac.uk) (피츠윌리엄) | Cambridge, UK | P, D, Pr | ✅ | ✅ merged-local | 3,830 (CC0 dump+IIIF; 미니어쳐 297점 제외 → `.miniatures-removed.json` 백업) — 흑백판화 7,136 제거(`.grayscale-prints-removed.json`) |
-| 10 | `museum-ludwig` | [Museum Ludwig](https://www.museum-ludwig.de/en/collection/) (루트비히) | Cologne, DE | P, Ph | ✅ | ✅ merged-local | 1500 (Cologne KEK portal) — 흑백판화 667 제거(`.grayscale-prints-removed.json`) |
+| 10 | `museum-ludwig` | [Museum Ludwig](https://www.museum-ludwig.de/en/collection/) (루트비히) | Cologne, DE | P, Ph | ✅ | ✅ merged-local | 11,281 (Cologne KEK portal 재스크랩 11,948) — 흑백판화 667 제거(`.grayscale-prints-removed.json`) |
 | 11 | `k20-k21` | [Kunstsammlung NRW K20/K21](https://www.kunstsammlung.de/en/collection) (K20/K21) | Düsseldorf, DE | P, Ph, V | ✅ | ✅ merged-local | 309 (sammlung.kunstsammlung.de) |
 | 12 | `folkwang` | [Museum Folkwang](https://www.museum-folkwang.de/en/collection) (폴크방) | Essen, DE | P, Ph | ✅ | ✅ merged-local | 501 (eMuseumPlus) |
 | 13 | `co-berlin` | [C/O Berlin](https://www.co-berlin.org/en) | Berlin, DE | Ph | 🟡 | ❌ escalated | 구조적 불가 — 상설 컬렉션 없는 전시공간(Kunsthalle). 자체 작품 DB 없음(Drupal jsonapi 비활성, IIIF/OAI 없음) |
@@ -93,12 +93,12 @@
 | 35 | `nelson-atkins` | [Nelson-Atkins Museum of Art](https://art.nelson-atkins.org/collections) (넬슨-앳킨스) | Kansas City, US | P, D, Pr | ✅ | ❌ escalated | art.nelson-atkins.org TCP:443 하드 네트워크 차단(샌드박스에서 도달 불가) |
 | 36 | `kimbell` | [Kimbell Art Museum](https://www.kimbellart.org/collection) (킴벨) | Fort Worth, US | P, D | ✅ | ❌ escalated | Cloudflare 관리형 JS challenge — 자동 접근 차단(IIIF도 동일) |
 | 37 | `dma-dallas` | [Dallas Museum of Art](https://collections.dma.org) (DMA) | Dallas, US | P, Ph, D | ✅ | ✅ merged-local | 5,686 (museum IIIF full/full; 판화3,625·회화1,714·사진1,209·드로잉1,104; 8.7MB; 메타 REAL ~100%) — 흑백판화 1,966 제거(`.grayscale-prints-removed.json`) |
-| 38 | `norton-simon` | [Norton Simon Museum](https://www.nortonsimon.org/art/) (노턴 사이먼) | Pasadena, US | P, D, Pr | ✅ | pending | |
-| 39 | `eastman-museum` | [George Eastman Museum](https://collections.eastman.org) (조지 이스트먼) | Rochester, US | Ph, V | ✅ | pending | |
-| 40 | `icp-ny` | [International Center of Photography](https://www.icp.org/browse/archive) (ICP) | New York, US | Ph | ✅ | pending | |
-| 41 | `ago-toronto` | [Art Gallery of Ontario](https://ago.ca/collection) (AGO) | Toronto, CA | P, D, Pr, Ph | ✅ | pending | |
-| 42 | `ngc-ottawa` | [National Gallery of Canada](https://www.gallery.ca/collection) (캐나다 국립) | Ottawa, CA | P, Ph, D, Pr | ✅ | pending | |
-| 43 | `museo-jumex` | [Museo Jumex](https://www.fundacionjumex.org/coleccion) (후멕스) | Mexico City, MX | P, Ph, V | ✅ | pending | |
+| 38 | `norton-simon` | [Norton Simon Museum](https://www.nortonsimon.org/art/) (노턴 사이먼) | Pasadena, US | P, D, Pr | ✅ | ❌ escalated | Cloudflare Turnstile 인터랙티브 챌린지 전면(eMuseum 오프라인·WP도 챌린지) |
+| 39 | `eastman-museum` | [George Eastman Museum](https://collections.eastman.org) (조지 이스트먼) | Rochester, US | Ph, V | ✅ | ❌ escalated | Cloudflare WAF 하드 403 전면(UA 무관 콘텐츠 차단; 대체 호스트 전부 NXDOMAIN) |
+| 40 | `icp-ny` | [International Center of Photography](https://www.icp.org/browse/archive) (ICP) | New York, US | Ph | ✅ | ✅ merged-local | 23,007 사진 (Drupal sitemap 54,809 중 23k캡/19MB; REAL fill ~100%; B&W게이트는 판화만, 사진 비적용) |
+| 41 | `ago-toronto` | [Art Gallery of Ontario](https://ago.ca/collection) (AGO) | Toronto, CA | P, D, Pr, Ph | ✅ | ❌ escalated | Cloudflare Turnstile 챌린지 전 경로 403(cf-mitigated; Drupal JSON:API도 차단) |
+| 42 | `ngc-ottawa` | [National Gallery of Canada](https://www.gallery.ca/collection) (캐나다 국립) | Ottawa, CA | P, Ph, D, Pr | ✅ | ❌ escalated | Cloudflare JS 챌린지 전면(TLS 핑거프린트 기반; robots ClaudeBot 차단·ai-train=no) |
+| 43 | `museo-jumex` | [Museo Jumex](https://www.fundacionjumex.org/coleccion) (후멕스) | Mexico City, MX | P, Ph, V | ✅ | 🔄 in-progress | probe 통과(~270 in-scope/593); 풀스크랩 진행 중 |
 
 ---
 
@@ -106,14 +106,14 @@
 
 | # | Slug | Museum | City | Cat | Online | Status | PR |
 |---|---|---|---|---|---|---|---|
-| 44 | `inhotim` | [Inhotim](https://www.inhotim.org.br/inhotim/arte-contemporanea/) (이뇨칭) | Brumadinho, BR | P, Ph, V | 🟡 | pending | |
-| 45 | `pinacoteca-sp` | [Pinacoteca de São Paulo](https://pinacoteca.org.br/programacao/acervo/) (피나코테카) | São Paulo, BR | P, D, Pr | ✅ | pending | |
-| 46 | `mar-rio` | [Museu de Arte do Rio](https://www.museudeartedorio.org.br/acervo/) (MAR) | Rio de Janeiro, BR | P, Ph | ✅ | pending | |
+| 44 | `inhotim` | [Inhotim](https://www.inhotim.org.br/inhotim/arte-contemporanea/) (이뇨칭) | Brumadinho, BR | P, Ph, V | 🟡 | ❌ escalated | 구조적 스코프 외 — 사이트특정 설치·파빌리온 중심(평면 ~10-15점뿐, 그마저 설치사진) |
+| 45 | `pinacoteca-sp` | [Pinacoteca de São Paulo](https://pinacoteca.org.br/programacao/acervo/) (피나코테카) | São Paulo, BR | P, D, Pr | ✅ | 🔄 retry-pending | probe viable; 스크립트작성 세션한도 중단 — 재시도 |
+| 46 | `mar-rio` | [Museu de Arte do Rio](https://www.museudeartedorio.org.br/acervo/) (MAR) | Rio de Janeiro, BR | P, Ph | ✅ | ❌ escalated | 자체 카탈로그(~11k) 열렸으나 평면작품 이미지 0건(저작권 정책상 메타만 공개) |
 | 47 | `malba` | [MALBA](https://www.malba.org.ar/coleccion/) (말바) | Buenos Aires, AR | P, Ph, V | ✅ | pending | |
-| 48 | `mnba-buenosaires` | [Museo Nacional de Bellas Artes](https://www.bellasartes.gob.ar/coleccion/) (아르헨티나 국립) | Buenos Aires, AR | P, D, Pr | ✅ | pending | |
-| 49 | `mnba-santiago` | [Museo Nacional de Bellas Artes](https://www.mnba.gob.cl/coleccion) (칠레 국립) | Santiago, CL | P, D | 🟡 | pending | |
-| 50 | `museo-botero` | [Museo Botero](https://www.banrepcultural.org/bogota/museo-botero) (보테로) | Bogotá, CO | P, D | ✅ | pending | |
-| 51 | `mali-lima` | [Museo de Arte de Lima](https://mali.pe/colecciones/) (MALI) | Lima, PE | P, Ph, D | ✅ | pending | |
+| 48 | `mnba-buenosaires` | [Museo Nacional de Bellas Artes](https://www.bellasartes.gob.ar/coleccion/) (아르헨티나 국립) | Buenos Aires, AR | P, D, Pr | ✅ | ❌ escalated | Cloudflare JS 챌린지 전면 + robots ai-train=no·ClaudeBot 차단(자동수집 명시 거부) |
+| 49 | `mnba-santiago` | [Museo Nacional de Bellas Artes](https://www.mnba.gob.cl/coleccion) (칠레 국립) | Santiago, CL | P, D | 🟡 | 🔄 retry-pending | probe 세션한도 중단 — 재시도 |
+| 50 | `museo-botero` | [Museo Botero](https://www.banrepcultural.org/bogota/museo-botero) (보테로) | Bogotá, CO | P, D | ✅ | 🔄 retry-pending | probe viable; 스크립트작성 세션한도 중단 — 재시도 |
+| 51 | `mali-lima` | [Museo de Arte de Lima](https://mali.pe/colecciones/) (MALI) | Lima, PE | P, Ph, D | ✅ | 🔄 retry-pending | probe viable; 스크립트작성 세션한도 중단 — 재시도 |
 
 ---
 
@@ -123,8 +123,8 @@
 |---|---|---|---|---|---|---|---|
 | 52 | `ngma-newdelhi` | [National Gallery of Modern Art](https://ngmaindia.gov.in/collections.asp) (인도 NGMA) | New Delhi, IN | P, D, Pr | ✅ | pending | — 흑백판화 894 제거(`.grayscale-prints-removed.json`) |
 | 53 | `kiran-nadar` | [Kiran Nadar Museum of Art](https://www.knma.in/collections) (키란 나다르) | Delhi, IN | P, Ph, V | 🟡 | **escalated** | Cloudflare blocks all; needs Chrome MCP path |
-| 54 | `salar-jung` | [Salar Jung Museum](https://salarjungmuseum.in/collection/) (살라르 정) | Hyderabad, IN | P, Mn | 🟡 | pending | |
-| 55 | `maiiam` | [MAIIAM Contemporary Art Museum](https://www.maiiam.com/maiiam-collection) (마이얌) | Chiang Mai, TH | P, Ph, V | ✅ | pending | |
+| 54 | `salar-jung` | [Salar Jung Museum](https://salarjungmuseum.in/collection/) (살라르 정) | Hyderabad, IN | P, Mn | 🟡 | 🔄 retry-pending | probe viable; 스크립트작성 세션한도 중단 — 재시도 |
+| 55 | `maiiam` | [MAIIAM Contemporary Art Museum](https://www.maiiam.com/maiiam-collection) (마이얌) | Chiang Mai, TH | P, Ph, V | ✅ | ❌ escalated | 자체 사이트(Sanity CMS)에 작품 카탈로그 없음(작품 레코드 0) |
 | 56 | `macan-jakarta` | [Museum MACAN](https://www.museummacan.org/collection) (마칸) | Jakarta, ID | P, Ph, V | ✅ | pending | |
 | 57 | `galnas-jakarta` | [Galeri Nasional Indonesia](https://gni.kemdikbud.go.id/collection/) (인니 국립갤러리) | Jakarta, ID | P, D | ✅ | pending | |
 | 58 | `vnfam-hanoi` | [Vietnam Fine Arts Museum](http://vnfam.vn/en/collection.html) (베트남 미술관) | Hanoi, VN | P, D | 🟡 | pending | |
