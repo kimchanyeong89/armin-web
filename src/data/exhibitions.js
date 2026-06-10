@@ -4038,7 +4038,7 @@ export const exhibitions = [
     description: "Spain's national art museum, opened in Madrid in 1819 from the Habsburg royal collection. Houses masterpieces by Velázquez, Goya, and Bosch under one roof.",
     representativeImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/prado-collection/Q208758-d4b863ba-imageUrl.webp",
     permanentExhibitions: [
-      { id: "prado-collection", name: "Collection", name_en: "Collection", title: "Museo Nacional del Prado — Collection", title_en: "Museo Nacional del Prado — Collection", description: "3,744점의 회화 컬렉션. 1100~1900년대를 아우르며 1600년대 스페인 황금기가 무게 중심이다.", description_en: "3,744 paintings spanning the 1100s–1900s, weighted toward the 17th-century Spanish Golden Age.", startDate: "Permanent", endDate: "Permanent", collectionFile: "prado-collection.json" }
+      { id: "prado-collection", name: "Collection", name_en: "Collection", title: "Museo Nacional del Prado — Collection", title_en: "Museo Nacional del Prado — Collection", description: "3,743점의 회화 컬렉션. 1100~1900년대를 아우르며 1600년대 스페인 황금기가 무게 중심이다.", description_en: "3,743 paintings spanning the 1100s–1900s, weighted toward the 17th-century Spanish Golden Age.", startDate: "Permanent", endDate: "Permanent", collectionFile: "prado-collection.json" }
     ],
     temporaryExhibitions: [],
     pastExhibitions: [],
@@ -4146,7 +4146,7 @@ export const exhibitions = [
     description: "Cologne museum of modern art beside the cathedral, renowned for its Picasso holdings, German Expressionism, and one of Europe's largest Pop Art collections.",
     representativeImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/museum-ludwig-collection/05020164-68d9c373-imageUrl.webp",
     permanentExhibitions: [
-      { id: "museum-ludwig-collection", name: "Collection", name_en: "Collection", title: "Museum Ludwig — Collection", title_en: "Museum Ludwig — Collection", description: "11,948점 — 회화 전체 + 그래픽·사진. 피카소, 표현주의, 팝아트 중심.", description_en: "11,948 works — all paintings plus graphics and photography, spanning Picasso, Expressionism and Pop Art.", startDate: "Permanent", endDate: "Permanent", collectionFile: "museum-ludwig-collection.json" }
+      { id: "museum-ludwig-collection", name: "Collection", name_en: "Collection", title: "Museum Ludwig — Collection", title_en: "Museum Ludwig — Collection", description: "11,281점 — 회화 전체 + 그래픽·사진. 피카소, 표현주의, 팝아트 중심.", description_en: "11,281 works — all paintings plus graphics and photography, spanning Picasso, Expressionism and Pop Art.", startDate: "Permanent", endDate: "Permanent", collectionFile: "museum-ludwig-collection.json" }
     ],
     temporaryExhibitions: [],
     pastExhibitions: [],
@@ -4218,7 +4218,7 @@ export const exhibitions = [
     description: "India's national museum of modern art in New Delhi, tracing the evolution of Indian art from Mughal miniatures to 20th-century modernism — Amrita Sher-Gil, Jamini Roy, the Bengal School.",
     representativeImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/ngma-newdelhi-collection/ngma_del-ngma-00079-12-0d8ff03a-imageUrl.webp",
     permanentExhibitions: [
-      { id: "ngma-newdelhi-collection", name: "Collection", name_en: "Collection", title: "NGMA New Delhi — Collection", title_en: "NGMA New Delhi — Collection", description: "13,203점의 평면 컬렉션. 회화·드로잉·판화·사진을 아우르는 인도 근현대 미술.", description_en: "13,203 works spanning painting, drawing, print, and photography — Indian modern art.", startDate: "Permanent", endDate: "Permanent", collectionFile: "ngma-newdelhi-collection.json" }
+      { id: "ngma-newdelhi-collection", name: "Collection", name_en: "Collection", title: "NGMA New Delhi — Collection", title_en: "NGMA New Delhi — Collection", description: "12,309점의 평면 컬렉션. 회화·드로잉·판화·사진을 아우르는 인도 근현대 미술.", description_en: "12,309 works spanning painting, drawing, print, and photography — Indian modern art.", startDate: "Permanent", endDate: "Permanent", collectionFile: "ngma-newdelhi-collection.json" }
     ],
     temporaryExhibitions: [],
     pastExhibitions: [],
@@ -6488,8 +6488,8 @@ export const exhibitions = [
         name_en: "Paintings, Drawings & Prints",
         title: "The Fitzwilliam Museum — Paintings, Drawings & Prints",
         title_en: "The Fitzwilliam Museum — Paintings, Drawings & Prints",
-        description: "10,966점 — 회화 전체 + 드로잉·판화·사진. 작가·연도·재료 메타데이터 포함.",
-        description_en: "10,966 works — all paintings plus drawings, prints and photographs.",
+        description: "3,830점 — 회화 전체 + 드로잉·판화·사진. 작가·연도·재료 메타데이터 포함.",
+        description_en: "3,830 works — all paintings plus drawings, prints and photographs.",
         startDate: "Permanent",
         endDate: "Permanent",
         collectionFile: "fitzwilliam-collection.json"
@@ -6528,7 +6528,7 @@ export const exhibitions = [
     description: "Oxford University's Ashmolean, the world's first public museum (opened 1683), spanning Western and Eastern painting and drawings by Raphael and Turner.",
     representativeImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/ashmolean-collection/90589-fb75c7d7-imageUrl.webp",
     permanentExhibitions: [
-      { id: "ashmolean-collection", name: "Collection", name_en: "Collection", title: "Ashmolean Museum — Collection", title_en: "Ashmolean Museum — Collection", description: "2,543점 — 회화(2,505) + 전시 중 드로잉·판화. 동서양 회화를 아우른다. (상아·에나멜 미니어쳐 218점 제외)", description_en: "2,543 works — 2,505 paintings plus on-display drawings and prints, spanning Western and Eastern art (218 ivory/enamel miniatures excluded).", startDate: "Permanent", endDate: "Permanent", collectionFile: "ashmolean-collection.json" }
+      { id: "ashmolean-collection", name: "Collection", name_en: "Collection", title: "Ashmolean Museum — Collection", title_en: "Ashmolean Museum — Collection", description: "2,542점 — 회화(2,505) + 전시 중 드로잉·판화. 동서양 회화를 아우른다. (상아·에나멜 미니어쳐 218점 제외)", description_en: "2,542 works — 2,505 paintings plus on-display drawings and prints, spanning Western and Eastern art (218 ivory/enamel miniatures excluded).", startDate: "Permanent", endDate: "Permanent", collectionFile: "ashmolean-collection.json" }
     ],
     temporaryExhibitions: [],
     pastExhibitions: [],
@@ -6690,7 +6690,7 @@ export const exhibitions = [
     description: "Ireland's national art museum on Merrion Square in Dublin, home to the national collection of European and Irish fine art including Caravaggio's The Taking of Christ.",
     representativeImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/ngi-dublin-collection/21-84fda157-imageUrl.webp",
     permanentExhibitions: [
-      { id: "ngi-dublin-collection", name: "Collection", name_en: "Collection", title: "National Gallery of Ireland — Collection", title_en: "National Gallery of Ireland — Collection", description: "2,623점 — 회화·드로잉·판화 (유럽·아일랜드 미술; 풀해상도 가능분만).", description_en: "2,623 works — paintings, drawings, and prints (European and Irish art; full-resolution images only).", startDate: "Permanent", endDate: "Permanent", collectionFile: "ngi-dublin-collection.json" }
+      { id: "ngi-dublin-collection", name: "Collection", name_en: "Collection", title: "National Gallery of Ireland — Collection", title_en: "National Gallery of Ireland — Collection", description: "1,947점 — 회화·드로잉·판화 (유럽·아일랜드 미술; 풀해상도 가능분만).", description_en: "1,947 works — paintings, drawings, and prints (European and Irish art; full-resolution images only).", startDate: "Permanent", endDate: "Permanent", collectionFile: "ngi-dublin-collection.json" }
     ],
     temporaryExhibitions: [],
     pastExhibitions: [],
@@ -6708,7 +6708,7 @@ export const exhibitions = [
     description: "Housed in Buda Castle, the Hungarian National Gallery holds the largest collection of Hungarian art from the medieval period to the present day.",
     representativeImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/hungarian-ng-collection/19-a202a7ae-imageUrl.webp",
     permanentExhibitions: [
-      { id: "hungarian-ng-collection", name: "Collection", name_en: "Collection", title: "Hungarian National Gallery — Collection", title_en: "Hungarian National Gallery — Collection", description: "11,249점 — 회화·드로잉·판화·사진. 중세부터 현대까지 헝가리 미술.", description_en: "11,249 works — paintings, drawings, prints and photographs spanning Hungarian art.", startDate: "Permanent", endDate: "Permanent", collectionFile: "hungarian-ng-collection.json" }
+      { id: "hungarian-ng-collection", name: "Collection", name_en: "Collection", title: "Hungarian National Gallery — Collection", title_en: "Hungarian National Gallery — Collection", description: "10,767점 — 회화·드로잉·판화·사진. 중세부터 현대까지 헝가리 미술.", description_en: "10,767 works — paintings, drawings, prints and photographs spanning Hungarian art.", startDate: "Permanent", endDate: "Permanent", collectionFile: "hungarian-ng-collection.json" }
     ],
     temporaryExhibitions: [],
     pastExhibitions: [],
@@ -6726,7 +6726,7 @@ export const exhibitions = [
     description: "Slovakia's central state gallery on the Danube embankment in Bratislava, holding the country's largest collection of Slovak and European art from the Gothic era to the present.",
     representativeImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sng-bratislava-collection/SVK:SNG.DO_1117-2aeb8343-imageUrl.webp",
     permanentExhibitions: [
-      { id: "sng-bratislava-collection", name: "Collection", name_en: "Collection", title: "Slovak National Gallery — Collection", title_en: "Slovak National Gallery — Collection", description: "19,349점 — 회화·판화·드로잉 (슬로바키아·중유럽 미술).", description_en: "19,349 works — paintings, prints and drawings (Slovak and Central European art).", startDate: "Permanent", endDate: "Permanent", collectionFile: "sng-bratislava-collection.json" }
+      { id: "sng-bratislava-collection", name: "Collection", name_en: "Collection", title: "Slovak National Gallery — Collection", title_en: "Slovak National Gallery — Collection", description: "14,395점 — 회화·판화·드로잉 (슬로바키아·중유럽 미술).", description_en: "14,395 works — paintings, prints and drawings (Slovak and Central European art).", startDate: "Permanent", endDate: "Permanent", collectionFile: "sng-bratislava-collection.json" }
     ],
     temporaryExhibitions: [],
     pastExhibitions: [],
@@ -6744,7 +6744,7 @@ export const exhibitions = [
     description: "Sweden's national museum of modern and contemporary art on the island of Skeppsholmen in Stockholm, holding a major collection of 20th- and 21st-century painting, photography, sculpture and film.",
     representativeImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/moderna-museet-collection/123855-855ff327-imageUrl.webp",
     permanentExhibitions: [
-      { id: "moderna-museet-collection", name: "Collection", name_en: "Collection", title: "Moderna Museet — Collection", title_en: "Moderna Museet — Collection", description: "37,441점 — 사진·드로잉·판화·회화·영상 (스웨덴 근현대미술).", description_en: "25,539 works — drawings, prints, paintings, photographs and video (Swedish modern and contemporary art; low-value photos curated).", startDate: "Permanent", endDate: "Permanent", collectionFile: "moderna-museet-collection.json" }
+      { id: "moderna-museet-collection", name: "Collection", name_en: "Collection", title: "Moderna Museet — Collection", title_en: "Moderna Museet — Collection", description: "37,441점 — 사진·드로잉·판화·회화·영상 (스웨덴 근현대미술).", description_en: "21,446 works — drawings, prints, paintings, photographs and video (Swedish modern and contemporary art; low-value photos curated).", startDate: "Permanent", endDate: "Permanent", collectionFile: "moderna-museet-collection.json" }
     ],
     temporaryExhibitions: [],
     pastExhibitions: [],
@@ -6762,7 +6762,7 @@ export const exhibitions = [
     description: "Switzerland's leading museum of modern and contemporary Italian-Swiss art, spread across the lakeside LAC cultural centre and Palazzo Reali in Lugano.",
     representativeImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/masi-lugano-collection/95095-e4cdaec8-imageUrl.webp",
     permanentExhibitions: [
-      { id: "masi-lugano-collection", name: "Collection", name_en: "Collection", title: "Museo d'arte della Svizzera italiana (MASI Lugano) — Collection", title_en: "Museo d'arte della Svizzera italiana (MASI Lugano) — Collection", description: "2,965점 — 회화·드로잉·판화·사진.", description_en: "2,965 works — paintings, drawings, prints and photographs.", startDate: "Permanent", endDate: "Permanent", collectionFile: "masi-lugano-collection.json" }
+      { id: "masi-lugano-collection", name: "Collection", name_en: "Collection", title: "Museo d'arte della Svizzera italiana (MASI Lugano) — Collection", title_en: "Museo d'arte della Svizzera italiana (MASI Lugano) — Collection", description: "2,720점 — 회화·드로잉·판화·사진.", description_en: "2,720 works — paintings, drawings, prints and photographs.", startDate: "Permanent", endDate: "Permanent", collectionFile: "masi-lugano-collection.json" }
     ],
     temporaryExhibitions: [],
     pastExhibitions: [],
@@ -6816,7 +6816,7 @@ export const exhibitions = [
     description: "A leading contemporary art center in Minneapolis, known for its multidisciplinary program and a collection strong in postwar and contemporary prints, photography, painting, and moving image, adjoining the Minneapolis Sculpture Garden.",
     representativeImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/walker-art-center-collection/wac_425-ed1a4a18-imageUrl.webp",
     permanentExhibitions: [
-      { id: "walker-art-center-collection", name: "Collection", name_en: "Collection", title: "Walker Art Center — Collection", title_en: "Walker Art Center — Collection", description: "11,291점 — 판화·사진·회화·드로잉·영상 (전후·동시대; 매체로 평면 분류).", description_en: "11,291 works — prints, photographs, paintings, drawings and moving image (postwar and contemporary).", startDate: "Permanent", endDate: "Permanent", collectionFile: "walker-art-center-collection.json" }
+      { id: "walker-art-center-collection", name: "Collection", name_en: "Collection", title: "Walker Art Center — Collection", title_en: "Walker Art Center — Collection", description: "7,595점 — 판화·사진·회화·드로잉·영상 (전후·동시대; 매체로 평면 분류).", description_en: "7,595 works — prints, photographs, paintings, drawings and moving image (postwar and contemporary).", startDate: "Permanent", endDate: "Permanent", collectionFile: "walker-art-center-collection.json" }
     ],
     temporaryExhibitions: [],
     pastExhibitions: [],
@@ -6834,7 +6834,7 @@ export const exhibitions = [
     description: "A major encyclopedic art museum in the Dallas Arts District, its 29,000-object collection spans global cultures from antiquity to contemporary art across painting, sculpture, decorative arts, and works on paper.",
     representativeImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/dma-dallas-collection/3039527-4b4dba48-imageUrl.webp",
     permanentExhibitions: [
-      { id: "dma-dallas-collection", name: "Collection", name_en: "Collection", title: "Dallas Museum of Art — Collection", title_en: "Dallas Museum of Art — Collection", description: "7,652점 — 판화·회화·사진·드로잉 (종합 컬렉션의 평면 작품).", description_en: "7,652 flat works — prints, paintings, photographs and drawings from the encyclopedic collection.", startDate: "Permanent", endDate: "Permanent", collectionFile: "dma-dallas-collection.json" }
+      { id: "dma-dallas-collection", name: "Collection", name_en: "Collection", title: "Dallas Museum of Art — Collection", title_en: "Dallas Museum of Art — Collection", description: "5,686점 — 판화·회화·사진·드로잉 (종합 컬렉션의 평면 작품).", description_en: "5,686 flat works — prints, paintings, photographs and drawings from the encyclopedic collection.", startDate: "Permanent", endDate: "Permanent", collectionFile: "dma-dallas-collection.json" }
     ],
     temporaryExhibitions: [],
     pastExhibitions: [],

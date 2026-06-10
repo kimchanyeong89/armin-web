@@ -12,7 +12,7 @@
 | # | Slug | 지역 / 국가 | 상태 | 수집 (검증 통과) |
 |---|---|---|---|---|
 | 47 | `malba` | 중남미 / 아르헨티나 | ✅ merged-local | 582점 |
-| 52 | `ngma-newdelhi` | 남아시아 / 인도 | ✅ merged-local | 13,203점 (미니어쳐 5점 제외) |
+| 52 | `ngma-newdelhi` | 남아시아 / 인도 | ✅ merged-local | 12,309점 (미니어쳐 5점 제외) — 흑백판화 894 제거(`.grayscale-prints-removed.json`) |
 | 57 | `galnas-jakarta` | 동남아 / 인도네시아 | ✅ merged-local | 38점 |
 | 60 | `nmfa-manila` | 동남아 / 필리핀 | ✅ merged-local | 52점 |
 | 73 | `mathaf-doha` | 서남아 / 카타르 | ✅ merged-local | 233점 |
@@ -49,34 +49,34 @@
 
 | # | Slug | Museum | City | Cat | Online | Status | PR |
 |---|---|---|---|---|---|---|---|
-| 1 | `prado` | [Museo Nacional del Prado](https://www.museodelprado.es/coleccion) (프라도) | Madrid, ES | P, D, Pr | ✅ | **merged-local** | 3744 works, Wikidata source |
+| 1 | `prado` | [Museo Nacional del Prado](https://www.museodelprado.es/coleccion) (프라도) | Madrid, ES | P, D, Pr | ✅ | **merged-local** | 3743 works, Wikidata source — 흑백판화 1 제거(`.grayscale-prints-removed.json`) |
 | 2 | `sorolla` | [Museo Sorolla](https://www.cultura.gob.es/msorolla/colecciones.html) (소로야) | Madrid, ES | P, D | ✅ | **merged-local** | 62 works (Wikidata); CER.es probed but thumb-only |
 | 3 | `maxxi` | [MAXXI](https://www.maxxi.art/en/collection/) (마시) | Rome, IT | P, Ph, V | ✅ | ❌ escalated | no per-artwork online catalogue (Google Arts only) |
 | 4 | `capodimonte` | [Museo di Capodimonte](https://capodimonte.cultura.gov.it) (카포디몬테) | Naples, IT | P, D, Pr | ✅ | ❌ escalated | cultura.gov.it firewall-blocked (region) |
 | 5 | `gnam-rome` | [Galleria Nazionale d'Arte Moderna](https://lagallerianazionale.com/en/opere) (GNAM 로마) | Rome, IT | P, D | ✅ | ❌ escalated | real site gnamc.cultura.gov.it firewall-blocked |
 | 6 | `whitechapel` | [Whitechapel Gallery](https://www.whitechapelgallery.org/exhibitions/) (화이트채플) | London, UK | P, Ph, V | 🟡 | ✅ merged-local | 156 (artist editions; no permanent collection) |
 | 7 | `wallace-collection` | [The Wallace Collection](https://wallacelive.wallacecollection.org) (월리스) | London, UK | P, D | ✅ | ✅ merged-local | 448 (eMuseumPlus; 미니어쳐 127점 제외 → `.miniatures-removed.json` 백업) |
-| 8 | `ashmolean` | [Ashmolean Museum](https://collections.ashmolean.org) (애슈몰린) | Oxford, UK | P, D, Pr | ✅ | ✅ merged-local | 2,543 (GLAM API+IIIF; 미니어쳐 218점 제외 → `.miniatures-removed.json` 백업) |
-| 9 | `fitzwilliam` | [The Fitzwilliam Museum](https://collection.fitzmuseum.cam.ac.uk) (피츠윌리엄) | Cambridge, UK | P, D, Pr | ✅ | ✅ merged-local | 10,966 (CC0 dump+IIIF; 미니어쳐 297점 제외 → `.miniatures-removed.json` 백업) |
-| 10 | `museum-ludwig` | [Museum Ludwig](https://www.museum-ludwig.de/en/collection/) (루트비히) | Cologne, DE | P, Ph | ✅ | ✅ merged-local | 1500 (Cologne KEK portal) |
+| 8 | `ashmolean` | [Ashmolean Museum](https://collections.ashmolean.org) (애슈몰린) | Oxford, UK | P, D, Pr | ✅ | ✅ merged-local | 2,542 (GLAM API+IIIF; 미니어쳐 218점 제외 → `.miniatures-removed.json` 백업) — 흑백판화 1 제거(`.grayscale-prints-removed.json`) |
+| 9 | `fitzwilliam` | [The Fitzwilliam Museum](https://collection.fitzmuseum.cam.ac.uk) (피츠윌리엄) | Cambridge, UK | P, D, Pr | ✅ | ✅ merged-local | 3,830 (CC0 dump+IIIF; 미니어쳐 297점 제외 → `.miniatures-removed.json` 백업) — 흑백판화 7,136 제거(`.grayscale-prints-removed.json`) |
+| 10 | `museum-ludwig` | [Museum Ludwig](https://www.museum-ludwig.de/en/collection/) (루트비히) | Cologne, DE | P, Ph | ✅ | ✅ merged-local | 1500 (Cologne KEK portal) — 흑백판화 667 제거(`.grayscale-prints-removed.json`) |
 | 11 | `k20-k21` | [Kunstsammlung NRW K20/K21](https://www.kunstsammlung.de/en/collection) (K20/K21) | Düsseldorf, DE | P, Ph, V | ✅ | ✅ merged-local | 309 (sammlung.kunstsammlung.de) |
 | 12 | `folkwang` | [Museum Folkwang](https://www.museum-folkwang.de/en/collection) (폴크방) | Essen, DE | P, Ph | ✅ | ✅ merged-local | 501 (eMuseumPlus) |
 | 13 | `co-berlin` | [C/O Berlin](https://www.co-berlin.org/en) | Berlin, DE | Ph | 🟡 | ❌ escalated | 구조적 불가 — 상설 컬렉션 없는 전시공간(Kunsthalle). 자체 작품 DB 없음(Drupal jsonapi 비활성, IIIF/OAI 없음) |
 | 14 | `boijmans` | [Museum Boijmans Van Beuningen](https://www.boijmans.nl/en/collection) (보이만스) | Rotterdam, NL | P, D, Pr | ✅ | ✅ merged-local | 9,574/20,008 (Algolia+modal API; 드로잉5,499·판화1,911·회화1,449·사진715; 흑백복제판화8,413→`.grayscale-prints-removed.json`+플레이스홀더2,021→`.placeholder-removed.json` 백업; 드로잉은 흑백이어도 유지) |
 | 15 | `foam-amsterdam` | [Foam Photography Museum](https://www.foam.org) (포암) | Amsterdam, NL | Ph | ✅ | ✅ merged-local | 153/~171 (Wayback __NEXT_DATA__+Storyblok CDN; 전부 사진; 라이브 Vercel 봇차단 우회; 메타 REAL 100%) |
 | 16 | `eye-filmmuseum` | [EYE Filmmuseum](https://www.eyefilm.nl/en/collection) (아이 필름박물관) | Amsterdam, NL | V | ✅ | ❌ escalated | 카탈로그(catalogus.eyefilm.nl 60k) 로그인 필요 — 공개 작품 메타+이미지 접근 불가 |
-| 17 | `moderna-museet` | [Moderna Museet](https://www.modernamuseet.se/stockholm/en/collection/) (모데르나) | Stockholm, SE | P, Ph, D, V | ✅ | ✅ merged-local | 25,539/37,441 (큐레이션: medium없는 사진11,379+중복523 제거→`.curated-removed.json` 백업; 23.5MB→Pages 정상; 드로잉9,004·판화7,183·사진5,691·회화3,127·영상534) |
+| 17 | `moderna-museet` | [Moderna Museet](https://www.modernamuseet.se/stockholm/en/collection/) (모데르나) | Stockholm, SE | P, Ph, D, V | ✅ | ✅ merged-local | 21,446/37,441 (큐레이션: medium없는 사진11,379+중복523 제거→`.curated-removed.json` 백업; 23.5MB→Pages 정상; 드로잉9,004·판화7,183·사진5,691·회화3,127·영상534) — 흑백판화 4,093 제거(`.grayscale-prints-removed.json`) |
 | 18 | `astrup-fearnley` | [Astrup Fearnley Museum](https://www.afmuseet.no/en/collection/) (아스트럽 페른리) | Oslo, NO | P, Ph, V | ✅ | ✅ merged-local | 282/282 (WP REST; 회화153·사진71·드로잉22·영상15·혼합14·판화7; 메타 REAL 100%) |
 | 19 | `mumok` | [MUMOK](https://www.mumok.at/en/collection) (무모크) | Vienna, AT | P, Ph, V | ✅ | ⚠️ deferred | 스크립트 정체(scan 1900에서 멈춤)+이미지 600px 썸네일만 — 저우선·재작성 필요 |
 | 20 | `garage-moscow` | [Garage Museum of Contemporary Art](https://garagemca.org/en/collection) (가라지) | Moscow, RU | P, Ph, V | ✅ | ✅ merged-local | 100/100 in-scope (Next.js _next/data; 회화39·영상37·사진24; ~394 카탈로그 중 설치·오브제 제외; 메타 REAL 100%) |
-| 21 | `ngi-dublin` | [National Gallery of Ireland](https://www.nationalgallery.ie/art-and-artists) (아일랜드 국립) | Dublin, IE | P, D, Pr | ✅ | ✅ merged-local | 2,623/13,388 (eMuseum; 회화523·드로잉1,172·판화928; 썸네일전용 다수 드롭; 메타 REAL ~100%) |
+| 21 | `ngi-dublin` | [National Gallery of Ireland](https://www.nationalgallery.ie/art-and-artists) (아일랜드 국립) | Dublin, IE | P, D, Pr | ✅ | ✅ merged-local | 1,947/13,388 (eMuseum; 회화523·드로잉1,172·판화928; 썸네일전용 다수 드롭; 메타 REAL ~100%) — 흑백판화 676 제거(`.grayscale-prints-removed.json`) |
 | 22 | `ngi-reykjavik` | [National Gallery of Iceland](https://www.listasafn.is/en/collection/) (아이슬란드 국립) | Reykjavík, IS | P, D | 🟡 | ✅ merged-local | 305 (Next.js _next/data; 회화206·드로잉70·사진17·판화12; 메타 REAL ~100%; 작은이미지 3 드롭) |
 | 23 | `kumu` | [Kumu Art Museum](https://kumu.ekm.ee/en/collection/) (쿠무) | Tallinn, EE | P, D, Pr | ✅ | ❌ escalated | EKM Digitaalkogu 메타는 우수하나 공개 이미지가 375×480 썸네일만(풀해상도 로그인 필요·/static robots차단) |
-| 24 | `hungarian-ng` | [Hungarian National Gallery](https://en.mng.hu/collection/) (헝가리 국립) | Budapest, HU | P, D | ✅ | ✅ merged-local | 11,249 (WP admin-ajax; 회화7,190·드로잉2,373·사진941·판화734; 9.3MB; 메타 REAL 100%) |
+| 24 | `hungarian-ng` | [Hungarian National Gallery](https://en.mng.hu/collection/) (헝가리 국립) | Budapest, HU | P, D | ✅ | ✅ merged-local | 10,767 (WP admin-ajax; 회화7,190·드로잉2,373·사진941·판화734; 9.3MB; 메타 REAL 100%) — 흑백판화 482 제거(`.grayscale-prints-removed.json`) |
 | 25 | `mnar-bucharest` | [National Museum of Art of Romania](https://www.mnar.arts.ro/en/) (루마니아 국립) | Bucharest, RO | P, D | ✅ | ❌ escalated | Joomla CMS·기계가독 작품 소스 없음(API/IIIF/덤프/구조화 상세페이지 전무, editorial만) |
-| 26 | `sng-bratislava` | [Slovak National Gallery](https://www.webumenia.sk/en/) (슬로바키아 국립 / Webumenia) | Bratislava, SK | P, D, Pr | ✅ | ✅ merged-local | 19,349 (Webumenia REST+IIIF 2048px; 판화7,563·회화6,912·드로잉4,874; API 페이지상한~10k/유형; 21MB; 메타 REAL 100%) |
+| 26 | `sng-bratislava` | [Slovak National Gallery](https://www.webumenia.sk/en/) (슬로바키아 국립 / Webumenia) | Bratislava, SK | P, D, Pr | ✅ | ✅ merged-local | 14,395 (Webumenia REST+IIIF 2048px; 판화7,563·회화6,912·드로잉4,874; API 페이지상한~10k/유형; 21MB; 메타 REAL 100%) — 흑백판화 4,954 제거(`.grayscale-prints-removed.json`) |
 | 27 | `museum-kampa` | [Museum Kampa](https://www.museumkampa.cz/en/) (캄파) | Prague, CZ | P, D | 🟡 | ✅ merged-local | 326/629 (eSbirky; 드로잉253·판화73; 옛사진/콜라주+무제연작중복 84점 큐레이션 제거→`.curated-removed.json` 백업; ~800px 소스상한) |
-| 28 | `masi-lugano` | [MASI Lugano](https://www.masilugano.ch/en/collection) (MASI 루가노) | Lugano, CH | P, Ph | 🟡 | ✅ merged-local | 2,965 (오픈 Solr; 회화1,457·드로잉560·판화523·사진416; 메타 REAL ~100%) |
+| 28 | `masi-lugano` | [MASI Lugano](https://www.masilugano.ch/en/collection) (MASI 루가노) | Lugano, CH | P, Ph | 🟡 | ✅ merged-local | 2,720 (오픈 Solr; 회화1,457·드로잉560·판화523·사진416; 메타 REAL ~100%) — 흑백판화 245 제거(`.grayscale-prints-removed.json`) |
 
 ---
 
@@ -88,11 +88,11 @@
 | 30 | `frick-collection` | [The Frick Collection](https://collections.frick.org) (프릭) | New York, US | P, D, Pr | ✅ | ❌ escalated | Fastly WAF가 하드 418(0바이트)로 강화 — 브라우저로도 challenge JS 실행 불가, clearance 쿠키 획득 불가(스크립트는 완성, WAF만 통과 못 함) |
 | 31 | `brooklyn-museum` | [Brooklyn Museum](https://www.brooklynmuseum.org/opencollection) (브루클린) | New York, US | P, Ph, D, Pr | ✅ | ❌ escalated | API 키 필수(api.brooklynmuseum.org)+공개 덤프/IIIF 없음 — 키 없이는 접근 불가 |
 | 32 | `hirshhorn` | [Hirshhorn Museum](https://hirshhorn.si.edu/collection/) (허시혼) | Washington DC, US | P, Ph, V | ✅ | ✅ merged-local | 344 (Smithsonian OpenAccess CC0 덤프; 회화159·드로잉98·사진69·판화18; 메타 REAL 100%) |
-| 33 | `walker-art-center` | [Walker Art Center](https://walkerart.org/collections) (워커) | Minneapolis, US | P, Ph, V | ✅ | ✅ merged-local | 11,291 (HTML sitemap+imgix; 판화7,644·사진1,430·회화921·드로잉630·영상519·혼합147; 매체로 평면분류; 11.6MB; 메타 REAL ~100%) |
+| 33 | `walker-art-center` | [Walker Art Center](https://walkerart.org/collections) (워커) | Minneapolis, US | P, Ph, V | ✅ | ✅ merged-local | 7,595 (HTML sitemap+imgix; 판화7,644·사진1,430·회화921·드로잉630·영상519·혼합147; 매체로 평면분류; 11.6MB; 메타 REAL ~100%) — 흑백판화 3,696 제거(`.grayscale-prints-removed.json`) |
 | 34 | `mia-minneapolis` | [Minneapolis Institute of Art](https://collections.artsmia.org) (MIA) | Minneapolis, US | P, D, Pr, Ph | ✅ | ❌ escalated | 메타는 CC0 GitHub 덤프(완벽)지만 모든 이미지호스트 사망(api.artsmia.org 무응답·iiif.dx DNS사망·CloudFront 403·imgix 410) — 작동 이미지URL 0 |
 | 35 | `nelson-atkins` | [Nelson-Atkins Museum of Art](https://art.nelson-atkins.org/collections) (넬슨-앳킨스) | Kansas City, US | P, D, Pr | ✅ | ❌ escalated | art.nelson-atkins.org TCP:443 하드 네트워크 차단(샌드박스에서 도달 불가) |
 | 36 | `kimbell` | [Kimbell Art Museum](https://www.kimbellart.org/collection) (킴벨) | Fort Worth, US | P, D | ✅ | ❌ escalated | Cloudflare 관리형 JS challenge — 자동 접근 차단(IIIF도 동일) |
-| 37 | `dma-dallas` | [Dallas Museum of Art](https://collections.dma.org) (DMA) | Dallas, US | P, Ph, D | ✅ | ✅ merged-local | 7,652 (museum IIIF full/full; 판화3,625·회화1,714·사진1,209·드로잉1,104; 8.7MB; 메타 REAL ~100%) |
+| 37 | `dma-dallas` | [Dallas Museum of Art](https://collections.dma.org) (DMA) | Dallas, US | P, Ph, D | ✅ | ✅ merged-local | 5,686 (museum IIIF full/full; 판화3,625·회화1,714·사진1,209·드로잉1,104; 8.7MB; 메타 REAL ~100%) — 흑백판화 1,966 제거(`.grayscale-prints-removed.json`) |
 | 38 | `norton-simon` | [Norton Simon Museum](https://www.nortonsimon.org/art/) (노턴 사이먼) | Pasadena, US | P, D, Pr | ✅ | pending | |
 | 39 | `eastman-museum` | [George Eastman Museum](https://collections.eastman.org) (조지 이스트먼) | Rochester, US | Ph, V | ✅ | pending | |
 | 40 | `icp-ny` | [International Center of Photography](https://www.icp.org/browse/archive) (ICP) | New York, US | Ph | ✅ | pending | |
@@ -121,7 +121,7 @@
 
 | # | Slug | Museum | City | Cat | Online | Status | PR |
 |---|---|---|---|---|---|---|---|
-| 52 | `ngma-newdelhi` | [National Gallery of Modern Art](https://ngmaindia.gov.in/collections.asp) (인도 NGMA) | New Delhi, IN | P, D, Pr | ✅ | pending | |
+| 52 | `ngma-newdelhi` | [National Gallery of Modern Art](https://ngmaindia.gov.in/collections.asp) (인도 NGMA) | New Delhi, IN | P, D, Pr | ✅ | pending | — 흑백판화 894 제거(`.grayscale-prints-removed.json`) |
 | 53 | `kiran-nadar` | [Kiran Nadar Museum of Art](https://www.knma.in/collections) (키란 나다르) | Delhi, IN | P, Ph, V | 🟡 | **escalated** | Cloudflare blocks all; needs Chrome MCP path |
 | 54 | `salar-jung` | [Salar Jung Museum](https://salarjungmuseum.in/collection/) (살라르 정) | Hyderabad, IN | P, Mn | 🟡 | pending | |
 | 55 | `maiiam` | [MAIIAM Contemporary Art Museum](https://www.maiiam.com/maiiam-collection) (마이얌) | Chiang Mai, TH | P, Ph, V | ✅ | pending | |

@@ -25,6 +25,10 @@
 - **포트레이트 미니어처** (펜던트·로켓에 넣는 상아/에나멜/벨럼 장식 초상) — 기술적으로는 회화지만 시각 그리드·SigLIP을 오염시키므로 **수집하지 않는다**. 주력 컬렉션(예: Wallace·Fitzwilliam)이라도 예외 없음.
   - **감지**: 소스가 `category: miniature`로 분류한 것이 가장 정확(미술관 자체 분류). 분류가 없으면 휴리스틱 — medium에 `ivory|enamel|vellum` + 최대변 ≤14cm.
   - **제거(가역적)**: 수집 후 `node scripts/remove-miniatures.mjs <slug> --apply` → 제거분은 `{slug}.miniatures-removed.json`로 백업, `--restore`로 복구. R2 이미지는 그대로 둠(고아 객체, 무해).
+- **흑백(단색) 복제판화** — `category: print`이면서 이미지가 단색(흑백·세피아 단색 인쇄)인 것은 **수집하지 않는다** (저가치 대량 복제판화가 컬렉션을 지배하는 것 방지; boijmans에서 판화 81%가 해당). **드로잉은 흑백이어도 무조건 유지** — 카테고리로 보호. 색 판화(우키요에 등)는 유지.
+  - **스크랩 단계 감지(권장)**: 이미지 다운로드 직후 Hasler-Süsstrunk colorfulness < 20 이면 skip (R2 업로드·레코드 모두 생략). sharp로 80×80 리사이즈 후 `sqrt(std(R-G)² + std(0.5(R+G)-B)²) + 0.3·sqrt(mean²…)` — 구현 예: `scripts/audit/curate-grayscale-prints.mjs`의 `colorfulness()`.
+  - **수집 후 제거(가역적)**: `node scripts/audit/curate-grayscale-prints.mjs <slug> --apply` → `{slug}.grayscale-prints-removed.json` 백업, `--restore` 복구.
+- **플레이스홀더 이미지** — 소스가 "image not available" 그래픽을 정상 URL로 줄 수 있음(boijmans 2,021건). 같은 바이트의 이미지가 다수 작품에 반복되면 의심. 수집 후 `node scripts/audit/detect-placeholder-images.mjs <slug> --apply` (R2 ETag 클러스터링)로 검출·제거.
 
 ---
 

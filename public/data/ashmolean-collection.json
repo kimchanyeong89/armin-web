@@ -4,7 +4,7 @@
   "website": "https://collections.ashmolean.org",
   "source": "GLAM Digital Online Collections API (prd-online.glamdigital.io/v2 search + /item/full) + DAMS IIIF images (dams.ashmus.ox.ac.uk)",
   "scraped_date": "2026-06-03",
-  "total_count": 2543,
+  "total_count": 2542,
   "source_type": "glamdigital-api+iiif",
   "reason": "Ashmolean in-scope flat art: paintings 3742 / drawings 29736 / prints 131203 (photographs 0). Cap policy: PAINTINGS collected in full (all image-bearing + published, 2723 kept). DRAWINGS & PRINTS are huge categories (25k / 110k imaged) with no usable curatorial value flag (no highlight/masterpiece facet; the only photo-quality tag is ~90% \"Record shot\") — per guide HUGE-category rule, only the ON-DISPLAY subset was collected (onDisplayFilter=\"Objects on display\": drawings 48 / prints 16 on the source). Excluded: the ~25k stored drawings and ~110k stored prints not on gallery display, plus any image failing the 400px long-edge / placeholder / broken gate. Images delivered via IIIF full/max (~1000px long edge).",
   "artworks": [
@@ -68614,33 +68614,6 @@
         "iiifManifest": "https://dams.ashmus.ox.ac.uk/iiif/58488/manifest"
       },
       "original_imageUrl": "https://dams.ashmus.ox.ac.uk/iiif/image/58488/full/max/0/default.jpg"
-    },
-    {
-      "id": "835654",
-      "objectNumber": "WA2017.85",
-      "title": "Hortus Botanicus, or The Phisick Garden (Botanic Garden), from 'Oxonia illustrata' (1675)",
-      "artist": "David Loggan",
-      "date": "1675",
-      "year": 1675,
-      "medium": "engraving",
-      "dimensions": "sheet 42.6 x 55.2cm (height x width) × plate 40.7 x 49.8cm (height x width)",
-      "category": "print",
-      "description": "Transferred from the Department of Antiquities, 2017.",
-      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/ashmolean-collection/835654-203e586e-imageUrl.webp?v=6",
-      "thumbnailUrl": "https://dams.ashmus.ox.ac.uk/iiif/image/1820/full/max/0/default.jpg",
-      "onDisplay": true,
-      "displayLocation": "Level 3 | Gallery 61 | Special Exhibitions (The John Sainsbury Exhibition Galleries)",
-      "sourceUrl": "https://collections.ashmolean.org/object/835654",
-      "metadata": {
-        "ashIrn": "835654",
-        "resourceSpaceId": "1820",
-        "department": "Western Art",
-        "webCategory": "prints",
-        "objectName": "visual representation > print",
-        "provenance": "",
-        "iiifManifest": "https://dams.ashmus.ox.ac.uk/iiif/1820/manifest"
-      },
-      "original_imageUrl": "https://dams.ashmus.ox.ac.uk/iiif/image/1820/full/max/0/default.jpg"
     },
     {
       "id": "843125",

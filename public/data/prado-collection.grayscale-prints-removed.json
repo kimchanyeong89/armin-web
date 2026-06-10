@@ -1,0 +1,31 @@
+{
+  "museum": "Museo Nacional del Prado",
+  "slug": "prado",
+  "removed_count": 1,
+  "artworks": [
+    {
+      "id": "Q6796631",
+      "objectNumber": "Q6796631",
+      "title": "The rope is breaking.",
+      "artist": "Francisco Goya",
+      "date": "1815-01-01T00:00:00Z",
+      "year": 1815,
+      "medium": "sepia; sepia; laid paper; papel verjurado; India ink; tinta china",
+      "dimensions": "",
+      "category": "print",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/prado-collection/Q6796631-b9e5f6c9-imageUrl.webp?v=6",
+      "thumbnailUrl": "http://commons.wikimedia.org/wiki/Special:FilePath/Prado%20-%20Los%20Desastres%20de%20la%20Guerra%20-%20No.%2077%20-%20Que%20se%20rompe%20la%20cuerda.jpg?width=400",
+      "onDisplay": true,
+      "displayLocation": "",
+      "sourceUrl": "https://www.wikidata.org/wiki/Q6796631",
+      "metadata": {
+        "wikidataQid": "Q6796631",
+        "sitelinks": 3,
+        "instanceOf": "aguafuerte; etching print",
+        "genre": ""
+      },
+      "original_imageUrl": "http://commons.wikimedia.org/wiki/Special:FilePath/Prado%20-%20Los%20Desastres%20de%20la%20Guerra%20-%20No.%2077%20-%20Que%20se%20rompe%20la%20cuerda.jpg"
+    }
+  ]
+}

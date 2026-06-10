@@ -1,0 +1,34 @@
+{
+  "museum": "Ashmolean Museum",
+  "slug": "ashmolean",
+  "removed_count": 1,
+  "artworks": [
+    {
+      "id": "835654",
+      "objectNumber": "WA2017.85",
+      "title": "Hortus Botanicus, or The Phisick Garden (Botanic Garden), from 'Oxonia illustrata' (1675)",
+      "artist": "David Loggan",
+      "date": "1675",
+      "year": 1675,
+      "medium": "engraving",
+      "dimensions": "sheet 42.6 x 55.2cm (height x width) × plate 40.7 x 49.8cm (height x width)",
+      "category": "print",
+      "description": "Transferred from the Department of Antiquities, 2017.",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/ashmolean-collection/835654-203e586e-imageUrl.webp?v=6",
+      "thumbnailUrl": "https://dams.ashmus.ox.ac.uk/iiif/image/1820/full/max/0/default.jpg",
+      "onDisplay": true,
+      "displayLocation": "Level 3 | Gallery 61 | Special Exhibitions (The John Sainsbury Exhibition Galleries)",
+      "sourceUrl": "https://collections.ashmolean.org/object/835654",
+      "metadata": {
+        "ashIrn": "835654",
+        "resourceSpaceId": "1820",
+        "department": "Western Art",
+        "webCategory": "prints",
+        "objectName": "visual representation > print",
+        "provenance": "",
+        "iiifManifest": "https://dams.ashmus.ox.ac.uk/iiif/1820/manifest"
+      },
+      "original_imageUrl": "https://dams.ashmus.ox.ac.uk/iiif/image/1820/full/max/0/default.jpg"
+    }
+  ]
+}
