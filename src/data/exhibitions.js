@@ -6858,5 +6858,23 @@ export const exhibitions = [
     pastExhibitions: [],
     exhibitions: []
   },
+  {
+    id: "museo-jumex",
+    name_ko: "후멕스 미술관",
+    name: "Museo Jumex",
+    city: "Mexico City",
+    country: "Mexico",
+    latitude: 19.44,
+    longitude: -99.2047,
+    description_ko: "멕시코시티 폴랑코의 톱니 지붕 건물(데이비드 치퍼필드 설계)에 자리한 멕시코 대표 현대미술관입니다. 라틴아메리카 최대급 민간 현대미술 컬렉션인 콜렉시온 후멕스를 통해 가브리엘 오로스코부터 피슐리 & 바이스까지 동시대 작품을 선보입니다.",
+    description: "Mexico's leading contemporary art museum, housed in David Chipperfield's saw-toothed building in Polanco. It presents Colección Jumex, one of Latin America's largest private holdings of contemporary art, from Gabriel Orozco to Fischli & Weiss.",
+    representativeImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/museo-jumex-collection/21-c90bf033-imageUrl.webp",
+    permanentExhibitions: [
+      { id: "museo-jumex-collection", name: "Collection", name_en: "Collection", title: "Museo Jumex — Collection", title_en: "Museo Jumex — Collection", description: "301점 — 사진·회화·영상·드로잉 (콜렉시온 후멕스 동시대 미술).", description_en: "301 works — photographs, paintings, video and drawings from Colección Jumex.", startDate: "Permanent", endDate: "Permanent", collectionFile: "museo-jumex-collection.json" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    exhibitions: []
+  },
 
 ];

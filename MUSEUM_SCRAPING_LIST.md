@@ -98,7 +98,7 @@
 | 40 | `icp-ny` | [International Center of Photography](https://www.icp.org/browse/archive) (ICP) | New York, US | Ph | ✅ | ✅ merged-local | 23,007 사진 (Drupal sitemap 54,809 중 23k캡/19MB; REAL fill ~100%; B&W게이트는 판화만, 사진 비적용) |
 | 41 | `ago-toronto` | [Art Gallery of Ontario](https://ago.ca/collection) (AGO) | Toronto, CA | P, D, Pr, Ph | ✅ | ❌ escalated | Cloudflare Turnstile 챌린지 전 경로 403(cf-mitigated; Drupal JSON:API도 차단) |
 | 42 | `ngc-ottawa` | [National Gallery of Canada](https://www.gallery.ca/collection) (캐나다 국립) | Ottawa, CA | P, Ph, D, Pr | ✅ | ❌ escalated | Cloudflare JS 챌린지 전면(TLS 핑거프린트 기반; robots ClaudeBot 차단·ai-train=no) |
-| 43 | `museo-jumex` | [Museo Jumex](https://www.fundacionjumex.org/coleccion) (후멕스) | Mexico City, MX | P, Ph, V | ✅ | 🔄 in-progress | probe 통과(~270 in-scope/593); 풀스크랩 진행 중 |
+| 43 | `museo-jumex` | [Museo Jumex](https://www.fundacionjumex.org/coleccion) (후멕스) | Mexico City, MX | P, Ph, V | ✅ | ✅ merged-local | 301/593 in-scope (사진143·회화68·영상37·드로잉22·판화16·혼합15; 흑백판화 12 다운로드단계 스킵; REAL fill 100%) |
 
 ---
 
