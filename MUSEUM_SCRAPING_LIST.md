@@ -125,18 +125,18 @@
 | 53 | `kiran-nadar` | [Kiran Nadar Museum of Art](https://www.knma.in/collections) (키란 나다르) | Delhi, IN | P, Ph, V | 🟡 | **escalated** | Cloudflare blocks all; needs Chrome MCP path |
 | 54 | `salar-jung` | [Salar Jung Museum](https://salarjungmuseum.in/collection/) (살라르 정) | Hyderabad, IN | P, Mn | 🟡 | 🔄 retry-pending | probe viable; 스크립트작성 세션한도 중단 — 재시도 |
 | 55 | `maiiam` | [MAIIAM Contemporary Art Museum](https://www.maiiam.com/maiiam-collection) (마이얌) | Chiang Mai, TH | P, Ph, V | ✅ | ❌ escalated | 자체 사이트(Sanity CMS)에 작품 카탈로그 없음(작품 레코드 0) |
-| 56 | `macan-jakarta` | [Museum MACAN](https://www.museummacan.org/collection) (마칸) | Jakarta, ID | P, Ph, V | ✅ | pending | |
+| 56 | `macan-jakarta` | [Museum MACAN](https://www.museummacan.org/collection) (마칸) | Jakarta, ID | P, Ph, V | ✅ | ❌ escalated | 온라인 컬렉션 카탈로그 없음(/collections 404·soft-404; sitemap에 작품 0; WP REST/Algolia/GraphQL 전무) |
 | 57 | `galnas-jakarta` | [Galeri Nasional Indonesia](https://gni.kemdikbud.go.id/collection/) (인니 국립갤러리) | Jakarta, ID | P, D | ✅ | pending | |
-| 58 | `vnfam-hanoi` | [Vietnam Fine Arts Museum](http://vnfam.vn/en/collection.html) (베트남 미술관) | Hanoi, VN | P, D | 🟡 | pending | |
-| 59 | `ayala-museum` | [Ayala Museum](https://www.ayalamuseum.org/collections) (아얄라) | Manila, PH | P, D | ✅ | pending | |
+| 58 | `vnfam-hanoi` | [Vietnam Fine Arts Museum](http://vnfam.vn/en/collection.html) (베트남 미술관) | Hanoi, VN | P, D | 🟡 | ✅ merged-local | 196점 (Algolia+GraphQL; 회화174 옻칠·비단·동호민화 포함; REAL fill 100%) |
+| 59 | `ayala-museum` | [Ayala Museum](https://www.ayalamuseum.org/collections) (아얄라) | Manila, PH | P, D | ✅ | ❌ escalated | 이미지 ~500px 상한(세로작품; 원본 자체가 소형) + robots Disallow:/ + in-scope ~101점뿐 |
 | 60 | `nmfa-manila` | [National Museum of Fine Arts](https://www.nationalmuseum.gov.ph/our-museums/national-museum-of-fine-arts/) (필리핀 국립미술관) | Manila, PH | P, D | 🟡 | pending | |
-| 61 | `sam-singapore` | [Singapore Art Museum](https://www.singaporeartmuseum.sg/art-collection/highlights) (SAM) | Singapore, SG | P, Ph, V | ✅ | pending | |
-| 62 | `nvag-kl` | [National Visual Arts Gallery](https://www.artgallery.gov.my/en/our-collection/) (말련 국립) | Kuala Lumpur, MY | P, Pr | 🟡 | pending | |
-| 63 | `benesse-house` | [Benesse House Museum](https://benesse-artsite.jp/en/art/benessehouse-museum.html) (베네세 하우스) | Naoshima, JP | P, Ph, V | ✅ | pending | |
-| 64 | `nezu-museum` | [Nezu Museum](https://www.nezu-muse.or.jp/en/collection/) (네즈) | Tokyo, JP | P, Cal | ✅ | pending | |
-| 65 | `yuz-shanghai` | [Yuz Museum](https://yuzmshanghai.org/en/collection/) (위즈) | Shanghai, CN | P, Ph, V | 🟡 | pending | |
-| 66 | `ucca-beijing` | [UCCA Center for Contemporary Art](https://ucca.org.cn/en/collection/) (UCCA) | Beijing, CN | P, Ph, V | 🟡 | pending | |
-| 67 | `rockbund-shanghai` | [Rockbund Art Museum](https://www.rockbundartmuseum.org/en/) (록번드) | Shanghai, CN | P, Ph, V | 🟡 | pending | |
+| 61 | `sam-singapore` | [Singapore Art Museum](https://www.singaporeartmuseum.sg/art-collection/highlights) (SAM) | Singapore, SG | P, Ph, V | ✅ | ✅ merged-local | 1,462점 (roots.gov.sg NHB API; 회화919·사진537·판화6; 동남아 현대미술; REAL fill 100%) |
+| 62 | `nvag-kl` | [National Visual Arts Gallery](https://www.artgallery.gov.my/en/our-collection/) (말련 국립) | Kuala Lumpur, MY | P, Pr | 🟡 | ❌ escalated | MalCare Pro 방화벽 전면 403(동적 라우트·REST 전부; UA 무관 핑거프린트 차단; api 서브도메인 TCP timeout) |
+| 63 | `benesse-house` | [Benesse House Museum](https://benesse-artsite.jp/en/art/benessehouse-museum.html) (베네세 하우스) | Naoshima, JP | P, Ph, V | ✅ | ❌ escalated | 작품별 이미지 0 — 전시작 63점이 텍스트 목록뿐(구역사진 5장); 평면 ~20점도 다운로드 불가 |
+| 64 | `nezu-museum` | [Nezu Museum](https://www.nezu-muse.or.jp/en/collection/) (네즈) | Tokyo, JP | P, Cal | ✅ | ❌ escalated | 온라인은 하이라이트 108점뿐(in-scope ~36) + 이미지 ~320px 상한; 본 컬렉션 7,600점은 오프라인(인쇄도록만) |
+| 65 | `yuz-shanghai` | [Yuz Museum](https://yuzmshanghai.org/en/collection/) (위즈) | Shanghai, CN | P, Ph, V | 🟡 | ❌ escalated | 컬렉션 카탈로그 없음 — 2014년 WP 전시아카이브 사이트(작품 레코드 0; REST API 이전 버전) |
+| 66 | `ucca-beijing` | [UCCA Center for Contemporary Art](https://ucca.org.cn/en/collection/) (UCCA) | Beijing, CN | P, Ph, V | 🟡 | ❌ escalated | 비수집 Kunsthalle — 2017 재편 때 울렌스 컬렉션 매각; 사이트에 소장품 섹션 자체가 없음 |
+| 67 | `rockbund-shanghai` | [Rockbund Art Museum](https://www.rockbundartmuseum.org/en/) (록번드) | Shanghai, CN | P, Ph, V | 🟡 | ❌ escalated | 비수집 Kunsthalle — sitemap 648 URL 중 작품 경로 0; 수집 프로그램 없음 |
 | 68 | `moca-busan` | [부산현대미술관 MoCA Busan](https://www.busan.go.kr/moca/) | Busan, KR | P, Ph, V | ✅ | pending | |
 | 69 | `njpac` | [백남준아트센터](https://njp.ggcf.kr/exhibitions/collection) (Nam June Paik Art Center) | Yongin, KR | V, Mx | ✅ | pending | |
 

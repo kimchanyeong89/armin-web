@@ -6876,5 +6876,41 @@ export const exhibitions = [
     pastExhibitions: [],
     exhibitions: []
   },
+  {
+    id: "vnfam-hanoi",
+    name_ko: "베트남 국립미술관",
+    name: "Vietnam National Fine Arts Museum",
+    city: "Hanoi",
+    country: "Vietnam",
+    latitude: 21.0293,
+    longitude: 105.8386,
+    description_ko: "하노이 한복판의 옛 프랑스풍 건물에 자리한 베트남 대표 미술관. 국보로 지정된 쩐 반 껀의 〈엠 투이〉를 비롯해 옻칠화와 비단 그림 등 베트남 근현대 미술의 정수를 모아놓았다.",
+    description: "Vietnam's national art museum in a French-colonial building in central Hanoi, home to the country's defining lacquer (son mai) and silk paintings — including Tran Van Can's national-treasure portrait Em Thuy and Nguyen Gia Tri's monumental lacquer screens.",
+    representativeImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/vnfam-hanoi-collection/vnfam-hanoi-5a61a3f99f1f592e7371ab12-0791a3f1-imageUrl.webp",
+    permanentExhibitions: [
+      { id: "vnfam-hanoi-collection", name: "Collection", name_en: "Collection", title: "Vietnam National Fine Arts Museum — Collection", title_en: "Vietnam National Fine Arts Museum — Collection", description: "196점 — 회화174·판화17·혼합매체4·드로잉1.", description_en: "196 works — painting, print, mixed_media_2d, drawing.", startDate: "Permanent", endDate: "Permanent", collectionFile: "vnfam-hanoi-collection.json" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    exhibitions: []
+  },
+  {
+    id: "sam-singapore",
+    name_ko: "싱가포르 미술관",
+    name: "Singapore Art Museum",
+    city: "Singapore",
+    country: "Singapore",
+    latitude: 1.2706,
+    longitude: 103.8386,
+    description_ko: "1996년 개관한 싱가포르의 대표 현대미술관. 동남아시아 현대미술을 세계에서 가장 폭넓게 소장한 곳으로 꼽히며, 현재는 탄종파가 디스트리파크에서 회화와 사진 중심의 국가 컬렉션을 선보인다.",
+    description: "Singapore's flagship contemporary art museum, holding one of the world's most significant collections of Southeast Asian contemporary art. Opened in 1996 and now based at Tanjong Pagar Distripark, its National Collection holdings span painting and photography from across the region.",
+    representativeImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sam-singapore-collection/sam-singapore-1000039-3133b167-imageUrl.webp",
+    permanentExhibitions: [
+      { id: "sam-singapore-collection", name: "Collection", name_en: "Collection", title: "Singapore Art Museum — Collection", title_en: "Singapore Art Museum — Collection", description: "1,462점 — 회화919·사진537·판화6.", description_en: "1,462 works — painting, photograph, print.", startDate: "Permanent", endDate: "Permanent", collectionFile: "sam-singapore-collection.json" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    exhibitions: []
+  },
 
 ];
