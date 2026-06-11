@@ -123,7 +123,7 @@
 |---|---|---|---|---|---|---|---|
 | 52 | `ngma-newdelhi` | [National Gallery of Modern Art](https://ngmaindia.gov.in/collections.asp) (인도 NGMA) | New Delhi, IN | P, D, Pr | ✅ | pending | — 흑백판화 894 제거(`.grayscale-prints-removed.json`) |
 | 53 | `kiran-nadar` | [Kiran Nadar Museum of Art](https://www.knma.in/collections) (키란 나다르) | Delhi, IN | P, Ph, V | 🟡 | **escalated** | Cloudflare blocks all; needs Chrome MCP path |
-| 54 | `salar-jung` | [Salar Jung Museum](https://salarjungmuseum.in/collection/) (살라르 정) | Hyderabad, IN | P, Mn | 🟡 | 🔄 in-progress | 404내성 패치 후 재실행 중 (~4,700 레코드, ETA ~4h) |
+| 54 | `salar-jung` | [Salar Jung Museum](https://salarjungmuseum.in/collection/) (살라르 정) | Hyderabad, IN | P, Mn | 🟡 | ✅ merged-local | 3,266점 (자체 repository API; 회화3,145 — 무굴/라자스탄 앨범 세밀화 포함; 404내성 패치로 완주; REAL fill 100%) |
 | 55 | `maiiam` | [MAIIAM Contemporary Art Museum](https://www.maiiam.com/maiiam-collection) (마이얌) | Chiang Mai, TH | P, Ph, V | ✅ | ❌ escalated | 자체 사이트(Sanity CMS)에 작품 카탈로그 없음(작품 레코드 0) |
 | 56 | `macan-jakarta` | [Museum MACAN](https://www.museummacan.org/collection) (마칸) | Jakarta, ID | P, Ph, V | ✅ | ❌ escalated | 온라인 컬렉션 카탈로그 없음(/collections 404·soft-404; sitemap에 작품 0; WP REST/Algolia/GraphQL 전무) |
 | 57 | `galnas-jakarta` | [Galeri Nasional Indonesia](https://gni.kemdikbud.go.id/collection/) (인니 국립갤러리) | Jakarta, ID | P, D | ✅ | pending | |
@@ -153,10 +153,10 @@
 | 74 | `israel-museum` | [Israel Museum](https://www.imj.org.il/en/collections) (이스라엘 박물관) | Jerusalem, IL | P, Ph, D, Pr | ✅ | pending | |
 | 75 | `tama-telaviv` | [Tel Aviv Museum of Art](https://www.tamuseum.org.il/en/collection/) (텔아비브) | Tel Aviv, IL | P, Ph, V | ✅ | pending | |
 | 76 | `tmoca-tehran` | [Tehran Museum of Contemporary Art](https://www.tmoca.com/en/collection) (테헤란 현대미술관) | Tehran, IR | P, D, Pr | 🟡 | pending | |
-| 77 | `jngfa-amman` | [Jordan National Gallery of Fine Arts](https://www.nationalgallery.org/collection/) (요르단 국립) | Amman, JO | P, D, Pr | ✅ | 🔄 in-progress | probe 통과(WP; ~2,000 예상) — 풀스크랩 중 |
-| 78 | `pera-museum` | [Pera Museum](https://www.peramuseum.org/collection) (페라) | Istanbul, TR | P, Mn | ✅ | 🔄 in-progress | probe 통과(회화12·사진8/20; Unknown 다수=미술관 자체 무귀속 오스만 사진) — 풀스크랩 중 |
+| 77 | `jngfa-amman` | [Jordan National Gallery of Fine Arts](https://www.nationalgallery.org/collection/) (요르단 국립) | Amman, JO | P, D, Pr | ✅ | ✅ merged-local | 2,285점 (WP 자체; 회화1,257·판화449·혼합272 — 아랍 현대미술; REAL fill ~100%) |
+| 78 | `pera-museum` | [Pera Museum](https://www.peramuseum.org/collection) (페라) | Istanbul, TR | P, Mn | ✅ | ✅ merged-local | 41점 (공개 셀렉션 전체; 회화28·사진13 — 오스만 하미디 베이 포함; 무명작가 63%=미술관 자체 무귀속 검증) |
 | 79 | `istanbul-modern` | [Istanbul Modern](https://www.istanbulmodern.org/en/collection_3.html) (이스탄불 모던) | Istanbul, TR | P, Ph, V | ✅ | ✅ merged-local | 504점 (자체 filtercollection JSON; 사진261·회화180·영상37; REAL fill ~100%) |
-| 80 | `sakip-sabanci` | [Sakıp Sabancı Müzesi](https://www.sakipsabancimuzesi.org/en/page/collections) (사크프 사반즈) | Istanbul, TR | P, Cal, Ms | ✅ | 🔄 in-progress | probe 통과(CONTENTdm dmwebservices; ~1,020 예상) — 풀스크랩 중 |
+| 80 | `sakip-sabanci` | [Sakıp Sabancı Müzesi](https://www.sakipsabancimuzesi.org/en/page/collections) (사크프 사반즈) | Istanbul, TR | P, Cal, Ms | ✅ | ✅ merged-local | 1,047점 (digitalssm.org CONTENTdm; 회화502·서예222·필사본134 — 오스만 서예·터키 회화; REAL fill ~100%) |
 
 ---
 

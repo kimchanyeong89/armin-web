@@ -1,0 +1,23 @@
+{
+  "slug": "pera-museum",
+  "viable": true,
+  "reason": "own-site artwork pages (collection 15) — small public selection, 41 works with full metadata",
+  "source_type": "html",
+  "estimated_inscope_count": 47,
+  "script_path": "scripts/scrape-pera-museum.mjs",
+  "probe_ok": true,
+  "probe_summary": "41 works full-run: painting 28, photograph 13; title/year/medium 100%, artist 37% named (63% genuinely anonymous in museum records — VERIFIED_ANON in validator); images live on R2.",
+  "est_full_count": 41,
+  "est_runtime_min": 10,
+  "exhibitions_entry": {
+    "name": "Pera Museum",
+    "name_ko": "페라 미술관",
+    "city": "Istanbul",
+    "country": "Turkey",
+    "latitude": 41.0316,
+    "longitude": 28.975,
+    "description": "Private museum of the Suna and İnan Kıraç Foundation in Beyoğlu, best known for its Orientalist painting collection — including Osman Hamdi Bey's The Tortoise Trainer — alongside Ottoman-era photography.",
+    "description_ko": "베이올루의 수나·이난 크라치 재단이 세운 사립 미술관. 오스만 하미디 베이의 〈거북이 조련사〉를 비롯한 오리엔탈리스트 회화 컬렉션과 오스만 시대 사진으로 잘 알려져 있다."
+  },
+  "notes": "Public online selection is small (82 rows → 41 with year); artist 63% anonymous per museum's own records (validated manually, VERIFIED_ANON allowlist)."
+}

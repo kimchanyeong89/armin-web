@@ -23,6 +23,11 @@ const PLACEHOLDER_ARTIST = /^(anonymous|unknown|unidentified|n\/?a|none|sin firm
 // NOTE: "Untitled" / "Sin título" / "No Title" are LEGITIMATE museum-assigned titles for
 // genuinely untitled works — NOT junk. Junk = empty, pure punctuation, N/A, QIDs, filenames.
 const JUNK_TITLE = /^(n\/?a|none|-+|\?+|\.+)$/i;
+// Collections where a >50% anonymous-artist ratio was MANUALLY VERIFIED as genuine
+// (museum's own records carry no attribution), not a parser bug. pera-museum: Suna Kıraç
+// Orientalist paintings + Ottoman photos — source JSON has no artist field for 63%;
+// detail pages are JS-rendered with no additional attribution (checked 2026-06-11).
+const VERIFIED_ANON = new Set(['pera-museum']);
 const QID_TITLE = /^Q\d+$/;
 const FILENAME_TITLE = /\.(jpg|jpeg|png|webp|tif)$/i;
 // A value that accidentally swallowed another FIELD label (greedy-regex bug), e.g.
@@ -70,7 +75,7 @@ function validate(slug, json) {
   // 4-must: title + artist + year + category must be REAL (placeholders don't count)
   if (cnt.titleReal < n) issues.push({ level: cnt.titleReal < n * 0.95 ? 'BLOCKER' : 'WARN', msg: `title real ${pct(cnt.titleReal)}% (${n - cnt.titleReal} junk/empty)` });
   if (cnt.placeholderArtist === n) issues.push({ level: 'BLOCKER', msg: `artist 100% placeholder — parser extracted ZERO real artists` });
-  else if (cnt.placeholderArtist > n * 0.5) issues.push({ level: 'BLOCKER', msg: `artist ${pct(cnt.placeholderArtist)}% placeholder — likely parser bug (verify against detail page)` });
+  else if (cnt.placeholderArtist > n * 0.5) issues.push({ level: VERIFIED_ANON.has(slug) ? 'WARN' : 'BLOCKER', msg: `artist ${pct(cnt.placeholderArtist)}% placeholder — ${VERIFIED_ANON.has(slug) ? 'manually verified: museum source itself carries no attribution' : 'likely parser bug (verify against detail page)'}` });
   else if (cnt.placeholderArtist > n * 0.15) issues.push({ level: 'WARN', msg: `artist ${pct(cnt.placeholderArtist)}% placeholder — confirm these are genuinely anonymous` });
   if (cnt.contamTitle || cnt.contamArtist) issues.push({ level: 'BLOCKER', msg: `label contamination: ${cnt.contamTitle} titles + ${cnt.contamArtist} artists contain another field's label (greedy-regex bug)` });
   if (cnt.qidTitle) issues.push({ level: 'BLOCKER', msg: `${cnt.qidTitle} titles are raw QIDs (label fetch failed)` });

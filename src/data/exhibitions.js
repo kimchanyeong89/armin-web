@@ -7038,5 +7038,77 @@ export const exhibitions = [
     pastExhibitions: [],
     exhibitions: []
   },
+  {
+    id: "jngfa-amman",
+    name_ko: "요르단 국립미술관",
+    name: "Jordan National Gallery of Fine Arts",
+    city: "Amman",
+    country: "Jordan",
+    latitude: 31.9619,
+    longitude: 35.9227,
+    description_ko: "1980년 왕립미술협회가 암만 자발 루웨이브데 언덕에 세운 요르단 대표 현대미술관. 아랍권을 중심으로 아시아·아프리카 작가들의 작품 3천여 점을 소장하고 있다.",
+    description: "Founded in 1980 by the Royal Society of Fine Arts, Jordan's foremost modern art museum holds some 3,000 works by artists from the Arab world, Asia, Africa, and beyond.",
+    representativeImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/jngfa-amman-collection/jngfa-amman-a-d-pirous-terrestrial-triangle-0c169e2b-imageUrl.webp",
+    permanentExhibitions: [
+      { id: "jngfa-amman-collection", name: "Collection", name_en: "Collection", title: "Jordan National Gallery of Fine Arts — Collection", title_en: "Jordan National Gallery of Fine Arts — Collection", description: "2,285점 — 회화1257·판화449·혼합매체272·드로잉163·사진141·영상3.", description_en: "2,285 works — painting, print, mixed_media_2d, drawing, photograph, video.", startDate: "Permanent", endDate: "Permanent", collectionFile: "jngfa-amman-collection.json" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    exhibitions: []
+  },
+  {
+    id: "sakip-sabanci",
+    name_ko: "사크프 사반즈 미술관",
+    name: "Sakıp Sabancı Museum",
+    city: "Istanbul",
+    country: "Turkey",
+    latitude: 41.1087,
+    longitude: 29.0537,
+    description_ko: "보스포루스 해협이 내려다보이는 에미르간 언덕의 옛 저택에 자리한 사반즈 대학교 부속 미술관. 오스만 서예와 채식 필사본으로는 튀르키예에서 손꼽히는 컬렉션을 보유하며, 오스만 말기와 공화국 초기의 튀르키예 회화도 함께 선보인다.",
+    description: "Sabancı University's museum in a Bosphorus-side mansion at Emirgan, holding Turkey's foremost collection of Ottoman calligraphy and illuminated manuscripts alongside late-Ottoman and early-Republican Turkish painting.",
+    representativeImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/sakip-sabanci-collection/sakip-sabanci-resim-1000-4ccba8ed-imageUrl.webp",
+    permanentExhibitions: [
+      { id: "sakip-sabanci-collection", name: "Collection", name_en: "Collection", title: "Sakıp Sabancı Museum — Collection", title_en: "Sakıp Sabancı Museum — Collection", description: "1,047점 — 회화502·서예222·드로잉177·manuscript134·판화11·사진1.", description_en: "1,047 works — painting, calligraphy, drawing, manuscript, print, photograph.", startDate: "Permanent", endDate: "Permanent", collectionFile: "sakip-sabanci-collection.json" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    exhibitions: []
+  },
+  {
+    id: "salar-jung",
+    name_ko: "살라르 정 박물관",
+    name: "Salar Jung Museum",
+    city: "Hyderabad",
+    country: "India",
+    latitude: 17.3714,
+    longitude: 78.4803,
+    description_ko: "니잠 왕국의 재상 살라르 정 3세가 평생 사들인 보물들로 꾸려진 하이데라바드의 국립 박물관. 한 사람이 모은 컬렉션으로는 세계 최대 규모로 꼽힌다. 무굴·라자스탄·데칸 세밀화부터 19세기 유럽 회화까지 폭넓게 아우르며, 무시강 변의 건물 자체도 도시의 명소다.",
+    description: "On the banks of the Musi River in Hyderabad, this national museum holds what is often called the world's largest one-man collection of art — amassed by Nawab Mir Yousuf Ali Khan, Salar Jung III, prime minister of the Nizam state. Its galleries span Mughal, Rajasthani and Deccani miniature paintings, nineteenth-century European oils, and decorative arts from across Asia and Europe.",
+    representativeImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/salar-jung-collection/salar-jung-ACQ-61-1-50416-ea896073-imageUrl.webp",
+    permanentExhibitions: [
+      { id: "salar-jung-collection", name: "Collection", name_en: "Collection", title: "Salar Jung Museum — Collection", title_en: "Salar Jung Museum — Collection", description: "3,266점 — 회화3145·드로잉107·판화10·사진4.", description_en: "3,266 works — painting, drawing, print, photograph.", startDate: "Permanent", endDate: "Permanent", collectionFile: "salar-jung-collection.json" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    exhibitions: []
+  },
+  {
+    id: "pera-museum",
+    name_ko: "페라 미술관",
+    name: "Pera Museum",
+    city: "Istanbul",
+    country: "Turkey",
+    latitude: 41.0316,
+    longitude: 28.975,
+    description_ko: "베이올루의 수나·이난 크라치 재단이 세운 사립 미술관. 오스만 하미디 베이의 〈거북이 조련사〉를 비롯한 오리엔탈리스트 회화 컬렉션과 오스만 시대 사진으로 잘 알려져 있다.",
+    description: "Private museum of the Suna and İnan Kıraç Foundation in Beyoğlu, best known for its Orientalist painting collection — including Osman Hamdi Bey's The Tortoise Trainer — alongside Ottoman-era photography.",
+    representativeImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/pera-museum-collection/pera-museum-89-172ea3ed-imageUrl.webp",
+    permanentExhibitions: [
+      { id: "pera-museum-collection", name: "Collection", name_en: "Collection", title: "Pera Museum — Collection", title_en: "Pera Museum — Collection", description: "41점 — 회화28·사진13.", description_en: "41 works — painting, photograph.", startDate: "Permanent", endDate: "Permanent", collectionFile: "pera-museum-collection.json" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    exhibitions: []
+  },
 
 ];
