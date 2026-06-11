@@ -199,6 +199,8 @@ async function fooTags(session, pageIndex) {
     pageIndex: String(pageIndex), sNSTarefa: NS, sFiltro: '', tipo: t, valor: '',
     navegacao: 'nao', valorInicial: '', valorFinal: '', fieldname: t, termo: t,
     modoVisualizacao: 'album', tituloTag: t, museu: '', tipoPesquisa: '', valorTexto: '',
+    // Empirically verified (4 pages × 49 disjoint ids): refazPesquisa MUST be 'sim' on EVERY
+    // page — the server re-runs the search and honours pageIndex. 'nao' re-serves page 1.
     ordenacao: '2511', ordenacaoAZ: 'asc', filtro: '', refazPesquisa: 'sim',
     tipoFiltroPesquisa: '', textoPesquisa: '', designacaoPesquisa: '', todosRegistos: 'false',
     tabelaDisplay: '', valorFicha: '', tabelaFicha: '', fieldnameFicha: '', tags: 'nao',
@@ -306,8 +308,9 @@ const countOk = (prog) => Object.values(prog.works).filter((w) => w.status === '
 async function enumerateCategory(prog, cat, { onePageOnly = false } = {}) {
   const st = prog.cats[cat];
   if (st.complete) return;
-  const session = await openCategorySession(cat);
+  let session = await openCategorySession(cat);
   while (!st.complete) {
+    await new Promise((r) => setTimeout(r, 800)); // verified pacing — too-fast pages re-serve p1
     const { ids, total, done } = await fooTags(session, st.nextPage);
     if (st.total == null && total > 0) { st.total = total; console.log(`[enum] ${cat}: total=${total}`); }
     const fresh = ids.filter((id) => !(id in prog.idCat));
@@ -321,10 +324,16 @@ async function enumerateCategory(prog, cat, { onePageOnly = false } = {}) {
       console.log(`[enum] ${cat} p${st.nextPage}: SEMRESULTADOS → complete (${catCount} ids)`);
     } else if (fresh.length === 0) {
       st.noFresh = (st.noFresh || 0) + 1;
-      if (st.noFresh >= 2 || (st.total && st.nextPage > Math.ceil(st.total / PAGE_SIZE) + 3) || ids.length === 0) {
+      // transient server hiccups re-serve page 1 — reopen the session and retry the SAME
+      // page up to 3 times before declaring the category complete
+      if (st.noFresh >= 4 || (st.total && st.nextPage > Math.ceil(st.total / PAGE_SIZE) + 3) || ids.length === 0) {
         st.complete = true;
         console.log(`[enum] ${cat} p${st.nextPage}: no new ids → complete (${catCount} ids of total ${st.total})`);
-      } else st.nextPage++;
+      } else {
+        console.log(`[enum] ${cat} p${st.nextPage}: stale page (retry ${st.noFresh}/3, fresh session)`);
+        await new Promise((r) => setTimeout(r, 1500));
+        session = await openCategorySession(cat);
+      }
     } else {
       st.noFresh = 0;
       if (st.nextPage % 10 === 0 || st.nextPage === 1) console.log(`[enum] ${cat} p${st.nextPage}: +${fresh.length} (cat ${catCount}/${st.total})`);

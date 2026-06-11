@@ -1,0 +1,2451 @@
+{
+  "museum": "Museum of Islamic Art",
+  "collection": "Collection",
+  "website": "https://collections.qm.org.qa/en/objects?museum=museum-of-islamic-art",
+  "scraped_date": "2026-06-11",
+  "total_count": 84,
+  "source_type": "ssr-payload",
+  "category_breakdown": {
+    "manuscript": 54,
+    "painting": 30
+  },
+  "artworks": [
+    {
+      "id": "mia-doha-mia-2013-108-3",
+      "objectNumber": "MIA.2013.108.3",
+      "title": "Folio of the Pink Qur'an",
+      "artist": "Nasrid Spain",
+      "date": "1230 - 1300",
+      "year": 1230,
+      "medium": "Paper, Ink, Gold",
+      "dimensions": "33.5 × 26.2 cm",
+      "category": "manuscript",
+      "description": "This folio comes from an Andalusian Qur’an manuscript known as the ‘Pink Qur’an’, named after the colour of its paper. Each page contains five lines of text copied in dark brown ink with diacritical marks and verse markers in gold paint and diverse opaque watercolours. This manuscript is an exquisite example of how the maghrebi script had evolved. Maghrebi script has distinct features such as large round curved letters and the specific use of some diacritical marks to distinguish consonants; it is usually written in dark brown or black ink with gold illuminations and a colourful vocalisation system. The script was first developed in Al-Andalus and the Maghreb region, hence its name. This rare example of dyed pink paper was probably produced in the city of Jativa, in today south-eastern Spain, where the site of the earliest Spanish paper mill is located. The use of paper is an innovation for Andalusian manuscripts as parchment was still the most common writing support used for Qur’ans during that time in the Iberian Peninsula.",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/mia-doha-collection/mia-doha-mia-2013-108-3-e8552bac-imageUrl.webp",
+      "thumbnailUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MIA.2013.108.3.MQ.width-360.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://collections.qm.org.qa/en/objects/folio-of-the-pink-quran-mia20131083",
+      "metadata": {
+        "qmId": 3593,
+        "objectName": "Folio",
+        "period": "Nasrid",
+        "productionPlace": "Spain",
+        "techniques": [
+          "Calligraphy",
+          "Illumination",
+          "Dyeing"
+        ],
+        "titleAR": "صفحة من المصحف الوردي "
+      },
+      "original_imageUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MIA.2013.108.3.MQ.width-4000.jpg"
+    },
+    {
+      "id": "mia-doha-mia-2013-154",
+      "objectNumber": "MIA.2013.154",
+      "title": "Folio Depicting a Camel Fight",
+      "artist": "Abdallah Sayrafi",
+      "date": "1500 - 1600",
+      "year": 1500,
+      "medium": "Paper, Marbled paper, Gouache, Gold",
+      "dimensions": "21.2 × 28.2 cm",
+      "category": "painting",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/mia-doha-collection/mia-doha-mia-2013-154-96c09c5c-imageUrl.webp",
+      "thumbnailUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MIA.2013.154-layers.MQ.width-360.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://collections.qm.org.qa/en/objects/folio-depicting-a-camel-fight-mia2013154",
+      "metadata": {
+        "qmId": 3597,
+        "objectName": "Folio",
+        "period": "Shaybanid",
+        "productionPlace": "Uzbekistan",
+        "techniques": [
+          "Painting"
+        ],
+        "titleAR": "صفحة تصور قتال جمل "
+      },
+      "original_imageUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MIA.2013.154-layers.MQ.width-4000.jpg"
+    },
+    {
+      "id": "mia-doha-mia-2014-195",
+      "objectNumber": "MIA.2014.195",
+      "title": "Folio from a Safavid copy of the Shahnama of Firdausi",
+      "artist": "Firdawsi",
+      "date": "1560 - 1580",
+      "year": 1560,
+      "medium": "Paper, Gouache, Ink, Gold",
+      "dimensions": "38.5 × 26 cm",
+      "category": "painting",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/mia-doha-collection/mia-doha-mia-2014-195-afa8a33b-imageUrl.webp",
+      "thumbnailUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MIA.2014.195-1.MQ.width-360.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://collections.qm.org.qa/en/objects/folio-from-a-safavid-copy-of-the-shahnama-of-firdausi-mia2014195",
+      "metadata": {
+        "qmId": 3603,
+        "objectName": "Folio",
+        "period": "Safavid",
+        "productionPlace": "Iran",
+        "techniques": [
+          "Illustration",
+          "Illumination",
+          "Calligraphy"
+        ],
+        "titleAR": "صفحة من الشاهنامه الفردوسي بالنسخة الصفوية "
+      },
+      "original_imageUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MIA.2014.195-1.MQ.width-4000.jpg"
+    },
+    {
+      "id": "mia-doha-mia-2014-217",
+      "objectNumber": "MIA.2014.217",
+      "title": "Folio from the Big Head Shahnama",
+      "artist": "Timurid Iran",
+      "date": "1494",
+      "year": 1494,
+      "medium": "Paper, Ink, Gouache, Gold",
+      "dimensions": "34.3 × 24.5 cm",
+      "category": "painting",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/mia-doha-collection/mia-doha-mia-2014-217-9c9177de-imageUrl.webp",
+      "thumbnailUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MIA.2014.217.1__f.1r.MQ.width-360.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://collections.qm.org.qa/en/objects/folio-from-the-big-head-shahnama-mia2014217",
+      "metadata": {
+        "qmId": 3604,
+        "objectName": "Folio",
+        "period": "Timurid",
+        "productionPlace": "Iran",
+        "techniques": [
+          "Calligraphy",
+          "Illustration",
+          "Illumination"
+        ],
+        "titleAR": "صفحة من الشاهنامه الرأس الكبير"
+      },
+      "original_imageUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MIA.2014.217.1__f.1r.MQ.width-4000.jpg"
+    },
+    {
+      "id": "mia-doha-mia-2014-218",
+      "objectNumber": "MIA.2014.218",
+      "title": "Bifolio from a dispersed Shahnama of Firdausi",
+      "artist": "Firdawsi",
+      "date": "1467 - 1500",
+      "year": 1467,
+      "medium": "Paper, Ink, Gouache, Gold",
+      "dimensions": "33 × 23 cm",
+      "category": "painting",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/mia-doha-collection/mia-doha-mia-2014-218-f54402c0-imageUrl.webp",
+      "thumbnailUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MIA.2014.218.1__f1r.MQ.width-360.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://collections.qm.org.qa/en/objects/bifolio-from-a-dispersed-shahnama-of-firdausi-mia2014218",
+      "metadata": {
+        "qmId": 3605,
+        "objectName": "Folio",
+        "period": "Timurid",
+        "productionPlace": "Iran",
+        "techniques": [
+          "Calligraphy",
+          "Illustration",
+          "Illumination"
+        ],
+        "titleAR": "صفحة مزدوجة من شاهنامه متفرقة للفردوسي"
+      },
+      "original_imageUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MIA.2014.218.1__f1r.MQ.width-4000.jpg"
+    },
+    {
+      "id": "mia-doha-mia-2014-56",
+      "objectNumber": "MIA.2014.56",
+      "title": "Illuminated Album Folio of Calligraphy",
+      "artist": "Shah Mahmud, Ayshi",
+      "date": "1553",
+      "year": 1553,
+      "medium": "Paper, Ink, Gouache, Gold, Coloured paper",
+      "dimensions": "251.5 × 34.5 cm",
+      "category": "manuscript",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/mia-doha-collection/mia-doha-mia-2014-56-a98eef45-imageUrl.webp",
+      "thumbnailUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MIA.2014.56.1.MQ.width-360.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://collections.qm.org.qa/en/objects/illuminated-album-folio-of-calligraphy-mia201456",
+      "metadata": {
+        "qmId": 3599,
+        "objectName": "Folio",
+        "period": "Safavid",
+        "productionPlace": "Afghanistan",
+        "techniques": [
+          "Calligraphy",
+          "Illumination"
+        ],
+        "titleAR": "ورقة ألبوم مزينة من الخط العربي "
+      },
+      "original_imageUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MIA.2014.56.1.MQ.width-4000.jpg"
+    },
+    {
+      "id": "mia-doha-ms-11-1999",
+      "objectNumber": "MS.11.1999",
+      "title": "Alawite last section (juz') of a 30-volume Qur'an",
+      "artist": "Abu Muhammad Sayyid ‘. Al Ghazwani, Ahmad I. Ibn Abi Ibrahim",
+      "date": "1653",
+      "year": 1653,
+      "medium": "Paper, Ink, Gold, Gouache, Leather",
+      "dimensions": "25.8 × 20.5 × 3.3 cm",
+      "category": "manuscript",
+      "description": "This Qur’an juz’ is the last section of a 30 volumes Qur’an from Morocco. It is copied on paper in dark brown ink, using the maghribi script. This script was developed in the 4th century AH / 10th century CE in North Africa and is characterised by its curved lines and large strokes. The sura headings are written in gold Kufic script, sometimes on a blue background and are marked in the margin by decorated medallions. The word Allah is also highlighted in gold throughout the manuscript and the vocalisation is rendered with red and blue ink. Individual verses are indicated by polylobed gold markers while the groups of five and ten verses are respectively separated by teardrop and circular shapes, sometimes highlighted with blue colour and inscribed with the words khams and ‘ashr. The volume ends with a colophon written in gold thuluth script set on a blue background. The manuscript was copied and illuminated by Ahmad ibn ‘Ali ibn Abi Ibrahim and the date, 1063 AH / 1653 CE, was interestingly written using European numerals as seen in other North African and Andalusian medieval manuscripts. It was dedicated to Abu Muhammad Sayyid ‘Abdallah al-Ghazwani, one of the seven Sufi saints of Marrakesh, a follower of the Jazuli order who died in 935 AH / 1529 CE. The format follows a typical vertical layout used in Spain and North Africa from the 7th century AH /13th century CE onwards, whether on parchment or paper. Several earlier examples copied on the Jativa pink paper exist and feature the same characteristics (see Marrakesh Ben Youssef library inv. 431). Such high quality volumes would have been produced for prestigious religious institutions such as madrasas and zawiyas and would have commonly been registered as endowments (awqaf or habous).",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/mia-doha-collection/mia-doha-ms-11-1999-7ed4d534-imageUrl.webp",
+      "thumbnailUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.11.1999.layers.MQ.width-360_EVvUJnr.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://collections.qm.org.qa/en/objects/alawite-last-section-juz-of-a-30-volume-quran-ms111999",
+      "metadata": {
+        "qmId": 2713,
+        "objectName": "Manuscript",
+        "period": "Alawite",
+        "productionPlace": "Morocco",
+        "techniques": [
+          "Bookbinding",
+          "Calligraphy",
+          "Illumination"
+        ],
+        "titleAR": " الجزء الأخير من مصحف علوي مكون من 30 مجلداً"
+      },
+      "original_imageUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.11.1999.layers.MQ.width-4000.jpg"
+    },
+    {
+      "id": "mia-doha-ms-119-2007",
+      "objectNumber": "MS.119.2007",
+      "title": "Folio from a monumental Qur'an",
+      "artist": "Umar Al Aqta",
+      "date": "1400 - 1430",
+      "year": 1400,
+      "medium": "Paper, Ink, Gold",
+      "dimensions": "177 × 111.5 cm",
+      "category": "manuscript",
+      "description": "Written in elegant muhaqqaq script, this page is from the largest medieval Qur'an ever made, the so-called Baysunghur Qur'an. It would have required 1600 pages in total and 2700 square meters of paper to complete this Qur'an. Traditionally ascribed to the patronage of Timurid ruler Baysunghur, it is more likely to have been produced for Timur himself (r. 771-807 AH / 1370-1405 CE). The story is that it was produced by a one-armed calligrapher, Umar-e Aqta, who also spent years producing a miniature Qur'an that would fit into a ring. When he presented this proudly to Timur, the great ruler thought the small size unworthy of the Qur'an. Timur was also known for monumental architectural plans, thus miniature size might not have striken the ruler interest. Not turned down by this initial cold reaction, the calligrapher then set about producing the largest Qur'an manuscript ever seen and presented it to Timur, who this time granted the appreciation sought by the artist. A Qur'an stand in carved stone large enough to hold the manuscript was commissioned by Ulugh Beg, a grandson of Timur, and is still standing in the courtyard of the Bibi Khanum Mosque in Samarkand, where Timur established his capital.",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/mia-doha-collection/mia-doha-ms-119-2007-2b63eb22-imageUrl.webp",
+      "thumbnailUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.119.2007.MQ.width-360_ONRv403.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://collections.qm.org.qa/en/objects/folio-from-a-monumental-quran-ms1192007",
+      "metadata": {
+        "qmId": 2719,
+        "objectName": "Folio",
+        "period": "Timurid",
+        "productionPlace": "Uzbekistan",
+        "techniques": [
+          "Calligraphy",
+          "Illumination"
+        ],
+        "titleAR": "صفحة من قرآن ضخم"
+      },
+      "original_imageUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.119.2007.MQ.width-4000.jpg"
+    },
+    {
+      "id": "mia-doha-ms-158-2000",
+      "objectNumber": "MS.158.2000",
+      "title": "Folio from the Jahangir Album",
+      "artist": "Ali al-Sultani",
+      "date": "1600 - 1620",
+      "year": 1600,
+      "medium": "Paper, Gouache, Ink, Gold",
+      "dimensions": "42.5 × 26.8 cm",
+      "category": "painting",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/mia-doha-collection/mia-doha-ms-158-2000-67fad163-imageUrl.webp",
+      "thumbnailUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.158.2000.MQ.width-360.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://collections.qm.org.qa/en/objects/folio-from-the-jahangir-album-ms1582000",
+      "metadata": {
+        "qmId": 3611,
+        "objectName": "Folio",
+        "period": "Mughal",
+        "productionPlace": "India",
+        "techniques": [
+          "Illustration",
+          "Calligraphy",
+          "Illumination"
+        ],
+        "titleAR": "صفحة من ألبوم جهانغير"
+      },
+      "original_imageUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.158.2000.MQ.width-4000.jpg"
+    },
+    {
+      "id": "mia-doha-ms-160-2007-1",
+      "objectNumber": "MS.160.2007.1",
+      "title": "Folio of the Qur'an in Bihari Script",
+      "artist": "Delhi Sultanates India",
+      "date": "1400 - 1499",
+      "year": 1400,
+      "medium": "Paper, Ink, Gouache, Gold",
+      "dimensions": "249 × 225 mm",
+      "category": "manuscript",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/mia-doha-collection/mia-doha-ms-160-2007-1-8c154bc0-imageUrl.webp",
+      "thumbnailUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.160.2007.1.MQ.width-360.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://collections.qm.org.qa/en/objects/folio-of-the-quran-in-bihari-script-ms16020071",
+      "metadata": {
+        "qmId": 3315,
+        "objectName": "Folio",
+        "period": "Delhi Sultanates",
+        "productionPlace": "India",
+        "techniques": [
+          "Calligraphy"
+        ],
+        "titleAR": "صفحة من القرآن بالخط البيهاري"
+      },
+      "original_imageUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.160.2007.1.MQ.width-4000.jpg"
+    },
+    {
+      "id": "mia-doha-ms-160-2007-10",
+      "objectNumber": "MS.160.2007.10",
+      "title": "Folio of the Qur'an in Bihari Script",
+      "artist": "Delhi Sultanates India",
+      "date": "1500",
+      "year": 1500,
+      "medium": "Paper, Ink, Gouache, Gold",
+      "dimensions": "33 × 23 cm",
+      "category": "manuscript",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/mia-doha-collection/mia-doha-ms-160-2007-10-64edd2d9-imageUrl.webp",
+      "thumbnailUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.160.2007.10.MQ.width-360.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://collections.qm.org.qa/en/objects/folio-of-the-quran-in-bihari-script-ms160200710",
+      "metadata": {
+        "qmId": 3618,
+        "objectName": "Folio",
+        "period": "Delhi Sultanates",
+        "productionPlace": "India",
+        "techniques": [
+          "Calligraphy"
+        ],
+        "titleAR": "صفحة من القرآن بالخط البيهاري"
+      },
+      "original_imageUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.160.2007.10.MQ.width-4000.jpg"
+    },
+    {
+      "id": "mia-doha-ms-160-2007-11",
+      "objectNumber": "MS.160.2007.11",
+      "title": "Folio of the Qur'an in Bihari Script",
+      "artist": "Delhi Sultanates India",
+      "date": "1500",
+      "year": 1500,
+      "medium": "Paper, Ink, Gouache, Gold",
+      "dimensions": "33 × 24.4 cm",
+      "category": "manuscript",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/mia-doha-collection/mia-doha-ms-160-2007-11-daa2948a-imageUrl.webp",
+      "thumbnailUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.160.2007.11.MQ.width-360.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://collections.qm.org.qa/en/objects/folio-of-the-quran-in-bihari-script-ms160200711",
+      "metadata": {
+        "qmId": 3619,
+        "objectName": "Folio",
+        "period": "Delhi Sultanates",
+        "productionPlace": "India",
+        "techniques": [
+          "Calligraphy"
+        ],
+        "titleAR": "صفحة من القرآن بالخط البيهاري"
+      },
+      "original_imageUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.160.2007.11.MQ.width-4000.jpg"
+    },
+    {
+      "id": "mia-doha-ms-160-2007-2",
+      "objectNumber": "MS.160.2007.2",
+      "title": "Folio of the Qur'an in Bihari Script",
+      "artist": "Delhi Sultanates India",
+      "date": "1400 - 1499",
+      "year": 1400,
+      "medium": "Paper, Ink, Gouache, Gold",
+      "dimensions": "24.5 × 22.2 cm",
+      "category": "manuscript",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/mia-doha-collection/mia-doha-ms-160-2007-2-236df0c8-imageUrl.webp",
+      "thumbnailUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.160.2007.2.MQ.width-360.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://collections.qm.org.qa/en/objects/folio-of-the-quran-in-bihari-script-ms16020072",
+      "metadata": {
+        "qmId": 3316,
+        "objectName": "Folio",
+        "period": "Delhi Sultanates",
+        "productionPlace": "India",
+        "techniques": [
+          "Calligraphy"
+        ],
+        "titleAR": "صفحة من القرآن بالخط البيهاري"
+      },
+      "original_imageUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.160.2007.2.MQ.width-4000.jpg"
+    },
+    {
+      "id": "mia-doha-ms-160-2007-3",
+      "objectNumber": "MS.160.2007.3",
+      "title": "Folio of the Qur'an in Bihari Script",
+      "artist": "Delhi Sultanates India",
+      "date": "1500",
+      "year": 1500,
+      "medium": "Paper, Ink, Gouache, Gold",
+      "dimensions": "24.5 × 22 cm",
+      "category": "manuscript",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/mia-doha-collection/mia-doha-ms-160-2007-3-e4bd6d5f-imageUrl.webp",
+      "thumbnailUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.160.2007.3.MQ.width-360.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://collections.qm.org.qa/en/objects/folio-of-the-quran-in-bihari-script-ms16020073",
+      "metadata": {
+        "qmId": 3612,
+        "objectName": "Folio",
+        "period": "Delhi Sultanates",
+        "productionPlace": "India",
+        "techniques": [
+          "Calligraphy"
+        ],
+        "titleAR": "صفحة من القرآن بالخط البيهاري"
+      },
+      "original_imageUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.160.2007.3.MQ.width-4000.jpg"
+    },
+    {
+      "id": "mia-doha-ms-160-2007-4",
+      "objectNumber": "MS.160.2007.4",
+      "title": "Folio of the Qur'an in Bihari Script",
+      "artist": "Delhi Sultanates India",
+      "date": "1500",
+      "year": 1500,
+      "medium": "Paper, Ink, Gouache, Gold",
+      "dimensions": "24.5 × 22 cm",
+      "category": "manuscript",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/mia-doha-collection/mia-doha-ms-160-2007-4-c2202408-imageUrl.webp",
+      "thumbnailUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.160.2007.4.MQ.width-360.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://collections.qm.org.qa/en/objects/folio-of-the-quran-in-bihari-script-ms16020074",
+      "metadata": {
+        "qmId": 3613,
+        "objectName": "Folio",
+        "period": "Delhi Sultanates",
+        "productionPlace": "India",
+        "techniques": [
+          "Calligraphy"
+        ],
+        "titleAR": "صفحة قرآن بالخط البيهاري"
+      },
+      "original_imageUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.160.2007.4.MQ.width-4000.jpg"
+    },
+    {
+      "id": "mia-doha-ms-160-2007-5",
+      "objectNumber": "MS.160.2007.5",
+      "title": "Folio of the Qur'an in Bihari Script",
+      "artist": "Delhi Sultanates India",
+      "date": "1400 - 1499",
+      "year": 1400,
+      "medium": "Paper, Ink, Gouache, Gold",
+      "dimensions": "24.5 × 21.6 cm",
+      "category": "manuscript",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/mia-doha-collection/mia-doha-ms-160-2007-5-40d1c508-imageUrl.webp",
+      "thumbnailUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.160.2007.5.MQ.width-360.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://collections.qm.org.qa/en/objects/folio-of-the-quran-in-bihari-script-ms16020075",
+      "metadata": {
+        "qmId": 3317,
+        "objectName": "Folio",
+        "period": "Delhi Sultanates",
+        "productionPlace": "India",
+        "techniques": [
+          "Calligraphy",
+          "Illumination"
+        ],
+        "titleAR": "صفحة من القرآن بالخط البيهاري"
+      },
+      "original_imageUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.160.2007.5.MQ.width-4000.jpg"
+    },
+    {
+      "id": "mia-doha-ms-160-2007-6",
+      "objectNumber": "MS.160.2007.6",
+      "title": "Folio of the Qur'an in Bihari Script",
+      "artist": "Delhi Sultanates India",
+      "date": "1500",
+      "year": 1500,
+      "medium": "Paper, Ink, Gouache, Gold",
+      "dimensions": "24 × 21.4 cm",
+      "category": "manuscript",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/mia-doha-collection/mia-doha-ms-160-2007-6-6ed06df1-imageUrl.webp",
+      "thumbnailUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.160.2007.6.MQ.width-360.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://collections.qm.org.qa/en/objects/folio-of-the-quran-in-bihari-script-ms16020076",
+      "metadata": {
+        "qmId": 3614,
+        "objectName": "Folio",
+        "period": "Delhi Sultanates",
+        "productionPlace": "India",
+        "techniques": [
+          "Calligraphy"
+        ],
+        "titleAR": "صفحة من القرآن بالخط البيهاري"
+      },
+      "original_imageUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.160.2007.6.MQ.width-4000.jpg"
+    },
+    {
+      "id": "mia-doha-ms-160-2007-7",
+      "objectNumber": "MS.160.2007.7",
+      "title": "Folio of the Qur'an in Bihari Script",
+      "artist": "Delhi Sultanates India",
+      "date": "1500",
+      "year": 1500,
+      "medium": "Paper, Ink, Gouache, Gold",
+      "dimensions": "34.1 × 24.2 cm",
+      "category": "manuscript",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/mia-doha-collection/mia-doha-ms-160-2007-7-90a18e4d-imageUrl.webp",
+      "thumbnailUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.160.2007.7.MQ.width-360.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://collections.qm.org.qa/en/objects/folio-of-the-quran-in-bihari-script-ms16020077",
+      "metadata": {
+        "qmId": 3615,
+        "objectName": "Folio",
+        "period": "Delhi Sultanates",
+        "productionPlace": "India",
+        "techniques": [
+          "Calligraphy"
+        ],
+        "titleAR": "صفحة من القرآن بالخط البيهاري"
+      },
+      "original_imageUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.160.2007.7.MQ.width-4000.jpg"
+    },
+    {
+      "id": "mia-doha-ms-160-2007-8",
+      "objectNumber": "MS.160.2007.8",
+      "title": "Folio of the Qur'an in Bihari Script",
+      "artist": "Delhi Sultanates India",
+      "date": "1500",
+      "year": 1500,
+      "medium": "Paper, Ink, Gouache, Gold",
+      "dimensions": "32.7 × 23.7 cm",
+      "category": "manuscript",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/mia-doha-collection/mia-doha-ms-160-2007-8-a7a180ce-imageUrl.webp",
+      "thumbnailUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.160.2007.8.MQ.width-360.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://collections.qm.org.qa/en/objects/folio-of-the-quran-in-bihari-script-ms16020078",
+      "metadata": {
+        "qmId": 3616,
+        "objectName": "Folio",
+        "period": "Delhi Sultanates",
+        "productionPlace": "India",
+        "techniques": [
+          "Calligraphy"
+        ],
+        "titleAR": "صفحة من القرآن بالخط البيهاري"
+      },
+      "original_imageUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.160.2007.8.MQ.width-4000.jpg"
+    },
+    {
+      "id": "mia-doha-ms-160-2007-9",
+      "objectNumber": "MS.160.2007.9",
+      "title": "Folio of the Qur'an in Bihari Script",
+      "artist": "Delhi Sultanates India",
+      "date": "1500",
+      "year": 1500,
+      "medium": "Paper, Ink, Gouache, Gold",
+      "dimensions": "32.5 × 24.2 cm",
+      "category": "manuscript",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/mia-doha-collection/mia-doha-ms-160-2007-9-6d974265-imageUrl.webp",
+      "thumbnailUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.160.2007.9.MQ.width-360.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://collections.qm.org.qa/en/objects/folio-of-the-quran-in-bihari-script-ms16020079",
+      "metadata": {
+        "qmId": 3617,
+        "objectName": "Folio",
+        "period": "Delhi Sultanates",
+        "productionPlace": "India",
+        "techniques": [
+          "Calligraphy"
+        ],
+        "titleAR": "صفحة من القرآن بالخط البيهاري"
+      },
+      "original_imageUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.160.2007.9.MQ.width-4000.jpg"
+    },
+    {
+      "id": "mia-doha-ms-180-2007",
+      "objectNumber": "MS.180.2007",
+      "title": "The Simurgh brings Zal to Sam, Illustrated folio from the Shahnama (Book of Kings) of Firdausi",
+      "artist": "Safavid Iran",
+      "date": "1675 - 1700",
+      "year": 1675,
+      "medium": "Paper, Gouache, Ink, Gold",
+      "dimensions": "41.5 × 26.5 cm",
+      "category": "painting",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/mia-doha-collection/mia-doha-ms-180-2007-35347579-imageUrl.webp",
+      "thumbnailUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.180.2007.MQ.width-360.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://collections.qm.org.qa/en/objects/the-simurgh-brings-zal-to-sam-illustrated-folio-from-the-shahnama-book-of-kings-of-firdausi-ms1802007",
+      "metadata": {
+        "qmId": 3620,
+        "objectName": "Folio",
+        "period": "Safavid",
+        "productionPlace": "Iran",
+        "techniques": [
+          "Illustration",
+          "Calligraphy",
+          "Illumination"
+        ],
+        "titleAR": "السيمرغ يُعيد زال إلى سام، صفحة مُصوّرة من الشاهنامه (كتاب الملوك) للفردوسي "
+      },
+      "original_imageUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.180.2007.MQ.width-4000.jpg"
+    },
+    {
+      "id": "mia-doha-ms-181-2007",
+      "objectNumber": "MS.181.2007",
+      "title": "Rustam Discovers Sohrab’s Identity",
+      "artist": "Safavid Iran",
+      "date": "1675 - 1700",
+      "year": 1675,
+      "medium": "Paper, Gouache, Ink, Gold",
+      "dimensions": "41.2 × 26 cm",
+      "category": "painting",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/mia-doha-collection/mia-doha-ms-181-2007-2ad7e5f9-imageUrl.webp",
+      "thumbnailUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.181.2007.1__f.1r.MQ.width-360.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://collections.qm.org.qa/en/objects/rustam-discovers-sohrabs-identity-ms1812007",
+      "metadata": {
+        "qmId": 3621,
+        "objectName": "Folio",
+        "period": "Safavid",
+        "productionPlace": "Iran",
+        "techniques": [
+          "Illustration",
+          "Calligraphy"
+        ],
+        "titleAR": "رستم يكشف هوية زهراب"
+      },
+      "original_imageUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.181.2007.1__f.1r.MQ.width-4000.jpg"
+    },
+    {
+      "id": "mia-doha-ms-200-2003",
+      "objectNumber": "MS.200.2003",
+      "title": "Feridoun Storms Palace of Zahhak, Folio from the Great Mongol Shahnameh",
+      "artist": "Abdallah Sayrafi, Firdawsi",
+      "date": "1305 - 1355",
+      "year": 1305,
+      "medium": "Paper, Ink, Gouache, Gold",
+      "dimensions": "57.4 × 40.3 cm",
+      "category": "painting",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/mia-doha-collection/mia-doha-ms-200-2003-14ea494d-imageUrl.webp",
+      "thumbnailUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.200.2003.1__f.1-r.MQ.width-360.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://collections.qm.org.qa/en/objects/feridoun-storms-palace-of-zahhak-folio-from-the-great-mongol-shahnameh-ms2002003",
+      "metadata": {
+        "qmId": 3622,
+        "objectName": "Folio",
+        "period": "Ilkhanid",
+        "productionPlace": "Iran",
+        "techniques": [
+          "Calligraphy",
+          "Illustration",
+          "Illumination"
+        ],
+        "titleAR": "فريدون يقتحم قصر الضحّاك، صفحة من الشاهنامه المغولية العظمى "
+      },
+      "original_imageUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.200.2003.1__f.1-r.MQ.width-4000.jpg"
+    },
+    {
+      "id": "mia-doha-ms-228-1998",
+      "objectNumber": "MS.228.1998",
+      "title": "Map of the World",
+      "artist": "Mamluk Egypt",
+      "date": "1400 - 1499",
+      "year": 1400,
+      "medium": "Paper, Ink, Gouache, Gold",
+      "dimensions": "27 × 18.2 cm",
+      "category": "painting",
+      "description": "This map is a hemispherical representation of the world with the south at the top. The world is divided into seven climes drawn with red lines and features the continents of Asia, Africa and Europe, with depictions in blue of the Nile, Tigris and Euphrates rivers and the Caspian, Mediterranean, and Indian Oceans. Set within a border of decorated gold roundels, the verso has twenty-five lines of Arabic text written in black and red, supporting the inclusion of this page within a larger manuscript. This map follows the tradition of cartography developed under the seventh Abbasid caliph Abu al-Abbas Abdallah ibn Harun al-Rashid (known by his regnal name, al-Ma’mun (r. 197-218 AH/813-33 CE) and was directly influenced by the translation of Indian and Greek texts, and Sassanid mathematical geography and cartography.",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/mia-doha-collection/mia-doha-ms-228-1998-5264302a-imageUrl.webp",
+      "thumbnailUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.228_recto.MQ.width-360.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://collections.qm.org.qa/en/objects/map-of-the-world-ms2281998",
+      "metadata": {
+        "qmId": 3623,
+        "objectName": "Folio",
+        "period": "Mamluk",
+        "productionPlace": "Egypt",
+        "techniques": [
+          "Illustration",
+          "Calligraphy",
+          "Illumination"
+        ],
+        "titleAR": "خريطة العالم "
+      },
+      "original_imageUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.228_recto.MQ.width-4000.jpg"
+    },
+    {
+      "id": "mia-doha-ms-232-1999",
+      "objectNumber": "MS.232.1999",
+      "title": "Folio from a Qur’an in New Style script",
+      "artist": "Khwarezmid Iran",
+      "date": "1175 - 1200",
+      "year": 1175,
+      "medium": "Ink, Gold, Paper",
+      "dimensions": "27.9 × 17.8 cm",
+      "category": "manuscript",
+      "description": "Despite some damage, this folio still retains its iconic beauty. It once belonged to a now widely dispersed Qur’an manuscript in 30 volumes, for a total count of circa 2250 folios. The calligraphy is a remarkable example of New Style script, an angular handwriting mainly adopted in the Eastern Islamic world. The calligrapher exaggerated certain features typical of this script, i.e. vertical elevation and sharp hedges, so that two lines of text become a monumental composition. However, the beauty of the calligraphy does not impair its legibility. The text is set against a delicate pattern of swirling tendrils in sepia ink; a variety of pigments, from burgundy to turquoise, were employed for this background decoration throughout the manuscript, resulting into a visually vibrant effect. Two marginal half-medallions originally complemented the illumination and have later been cut and pasted onto the top left corner of the page. Comparisons with the 4th to 5th-century AH epigraphic pottery excavated in Nishapur and old Samarkand, stucco decoration from Khurasan and Afghanistan, and codicological analysis suggest an Eastern provenance for this manuscript. With its striking calligraphy and colourful decoration, the manuscript must have been a true masterpiece of its age, possibly destined to a princely patron.",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/mia-doha-collection/mia-doha-ms-232-1999-bcbd00f3-imageUrl.webp",
+      "thumbnailUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.232.1999.1__f.1r.MQ.width-360.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://collections.qm.org.qa/en/objects/folio-from-a-quran-in-new-style-script-ms2321999",
+      "metadata": {
+        "qmId": 2720,
+        "objectName": "Folio",
+        "period": "Khwarezmid",
+        "productionPlace": "Iran",
+        "techniques": [
+          "Calligraphy"
+        ],
+        "titleAR": "صفحة من قرآن بخط النمط الجديد"
+      },
+      "original_imageUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.232.1999.1__f.1r.MQ.width-4000.jpg"
+    },
+    {
+      "id": "mia-doha-ms-249",
+      "objectNumber": "MS.249.",
+      "title": "Umar Comes to Look for the Corpse of Mihr-Nigar, Illustrated folio of the Hamzanama",
+      "artist": "Shravana",
+      "date": "1560 - 1574",
+      "year": 1560,
+      "medium": "Paper, Cloth, Gouache, Ink, Gold",
+      "dimensions": "75 × 61.5 cm",
+      "category": "painting",
+      "description": "This folio comes from an imperial Mughal album illustrating the adventures of Hamza (known as the Hamzanama) which tells the story of Amir Hamza, the uncle of the Prophet Muhammad. The story itself is a fanciful blend of both history and local legend, reflecting a popular collection of action filled stories that come from the Persian tradition of oral literature. However, this Hamzanama is unique in its production: is it the largest manuscript of Persian poetry ever produced (each folio measures nearly six feet in height); and the only one known to have been painted on cloth. It is also one of the first major commissions made by the Mughal emperor Akbar (r. 963-1014 AH/1556-1605 CE), which - according to his official court chronicles - was done between 971 AH/1564 CE and 981 AH/1573 CE. Several imminent Persian artists were known to have worked on this manuscript, including ‘Abd al-Samad and Mir Sayyid Ali, both of whom left the imperial painting ateliers of the Safavid ruler Shah Tahmasp (919- 982 AH/1514-76 CE). This particular folio has been attributed to the esteemed court painter Shravana, who was active between 972-1009 AH/1565-1600 CE. In this painting ‘Umar, Hamza’s friend, is looking at the corpse of Mihr-Nigar, the daughter of Anoushirvan (King of Persia) who is betrothed to Hamza; she unfortunately died before the marriage occurred. The reverse is decorated with lines of Persian text written in black nastaliq. The Hamzanama manuscript originally comprised some 1400 folios, of which about 200 are extant, with this folio placed in volume 6 of the original commission.",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/mia-doha-collection/mia-doha-ms-249-5392f0b8-imageUrl.webp",
+      "thumbnailUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.249.1-full.MQ.width-360.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://collections.qm.org.qa/en/objects/umar-comes-to-look-for-the-corpse-of-mihr-nigar-illustrated-folio-of-the-hamzanama-ms249",
+      "metadata": {
+        "qmId": 3625,
+        "objectName": "Folio",
+        "period": "Mughal",
+        "productionPlace": "India",
+        "techniques": [
+          "Illustration"
+        ],
+        "titleAR": "عُمر يأتي للبحث عن جثمان مهر-نگار، صفحة مُصوّرة من الحمزنامه "
+      },
+      "original_imageUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.249.1-full.MQ.width-4000.jpg"
+    },
+    {
+      "id": "mia-doha-ms-255-2003",
+      "objectNumber": "MS.255.2003",
+      "title": "Manuscript of the Shahnama (Book of Kings)",
+      "artist": "Firdawsi",
+      "date": "1485 - 1486",
+      "year": 1485,
+      "medium": "Ink, Pigment, Gold, Paper, Leather",
+      "dimensions": "35 × 26 × 10 cm",
+      "category": "manuscript",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/mia-doha-collection/mia-doha-ms-255-2003-1c10ed2e-imageUrl.webp",
+      "thumbnailUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.255-012rv.MQ.width-360.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://collections.qm.org.qa/en/objects/manuscript-of-the-shahnama-book-of-kings-ms2552003",
+      "metadata": {
+        "qmId": 2721,
+        "objectName": "Manuscript",
+        "period": "Timurid",
+        "productionPlace": "Iran",
+        "techniques": [
+          "Illustration",
+          "Illumination",
+          "Bookbinding"
+        ],
+        "titleAR": "مخطوطة الشاهنامه (كتاب الملوك)"
+      },
+      "original_imageUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.255-012rv.MQ.width-4000.jpg"
+    },
+    {
+      "id": "mia-doha-ms-259-2003",
+      "objectNumber": "MS.259.2003",
+      "title": "Monumental Sultanate Qur'an",
+      "artist": "Delhi Sultanates India",
+      "date": "1375 - 1399",
+      "year": 1375,
+      "medium": "Paper, Ink, Gouache, Gold, Leather",
+      "dimensions": "57 × 36.5 × 8.5 cm",
+      "category": "manuscript",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/mia-doha-collection/mia-doha-ms-259-2003-6fa85dac-imageUrl.webp",
+      "thumbnailUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.259.2003.MQ.width-360.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://collections.qm.org.qa/en/objects/monumental-sultanate-quran-ms2592003",
+      "metadata": {
+        "qmId": 3626,
+        "objectName": "Manuscript",
+        "period": "Delhi Sultanates",
+        "productionPlace": "India",
+        "techniques": [
+          "Bookbinding",
+          "Calligraphy"
+        ],
+        "titleAR": "مصحف سلطاني ضخم "
+      },
+      "original_imageUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.259.2003.MQ.width-4000.jpg"
+    },
+    {
+      "id": "mia-doha-ms-26-2007",
+      "objectNumber": "MS.26.2007",
+      "title": "Khurshedchihr Frees Hamid, illustrated folio of the Hamzanama",
+      "artist": "Shravana, Jagana",
+      "date": "1557 - 1572",
+      "year": 1557,
+      "medium": "Gouache, Paper, Gold, Cloth",
+      "dimensions": "83 × 63 × 5 cm",
+      "category": "painting",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/mia-doha-collection/mia-doha-ms-26-2007-1cc8c869-imageUrl.webp",
+      "thumbnailUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.26.2007.1.MQ.width-360.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://collections.qm.org.qa/en/objects/khurshedchihr-frees-hamid-illustrated-folio-of-the-hamzanama-ms262007",
+      "metadata": {
+        "qmId": 3609,
+        "objectName": "Folio",
+        "period": "Mughal",
+        "productionPlace": "India",
+        "techniques": [
+          "Illustration",
+          "Painting"
+        ],
+        "titleAR": "خورشيدچهر يحرر حميد، مجموعة مصورة من كتاب حمزنامه"
+      },
+      "original_imageUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.26.2007.1.MQ.width-4000.jpg"
+    },
+    {
+      "id": "mia-doha-ms-260-2000",
+      "objectNumber": "MS.260.2000",
+      "title": "Diwan (Collected Poems) of Jami",
+      "artist": "Nur Al Din 'Abd Al Rahman Jami, M. Al Katib Al Shirazi, Shah Muhammad A. Al Shirazi",
+      "date": "1563 - 1564",
+      "year": 1563,
+      "medium": "Leather, Paper, Ink, Gouache, Gold",
+      "dimensions": "42.5 × 27 × 7 cm",
+      "category": "manuscript",
+      "description": "Coveted possessions for Muslim rulers across the Islamic world, illustrated manuscripts were highly mobile objects, exchanged and transferred as gifts or war booties. This fine copy of the Divan-e Jami shared the destiny of many other luxurious books: probably made in Shiraz for an affluent patron, it later entered the royal library of Ibrahim ʿAdil Shah II (r. 988-1036 AH/1580-1627 CE), the sixth ruler of Bijapur (nowadays Karnataka, India), as the numerous impressions of Ibrahim’s circular Qur’anic seal on the manuscript show. The Divan-e Jami is a famous collection of mystical and theological works composed by the late Timurid poet and Naqshbandi Sufi scholar Jami during his lifetime. The opening bifolios of this manuscript show two pairs of richly illuminated frontispieces: the polychrome shamsas list the titles of Jami’s poetic works in the manuscript in white ink on gold, while the almond-shaped lapis-lazuli centrepieces contain a short eulogy of the author in gold script. Nineteenth illustrations with golden marginal decorations complete this manuscript. The paintings are remarkable examples of the Shirazi painting tradition under the first Safavid rulers and account for the creative engagement of the artists with Jami’s poetry and its visual interpretation as they feature both popular subjects and less illustrated scenes. The manuscript probably reached Ibrahim’s court with the wave of illustrious Iranian artists and intellectuals that migrated to the subcontinent between the 10th and the 11th century AH (last quarter of the 16th century CE). It thus stands as a fitting example of the intense cultural and diplomatic exchanges between the Bijapur court and Safavid Iran during the reign of Ibrahim ʿAdil Shah II and of the reach of Perso-Islamic ideals well into the subcontinent.",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/mia-doha-collection/mia-doha-ms-260-2000-3d91ca09-imageUrl.webp",
+      "thumbnailUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.260.2000-1.MQ.width-360.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://collections.qm.org.qa/en/objects/diwan-collected-poems-of-jami-ms2602000",
+      "metadata": {
+        "qmId": 2722,
+        "objectName": "Manuscript",
+        "period": "Safavid",
+        "productionPlace": "Iran",
+        "techniques": [
+          "Bookbinding",
+          "Calligraphy",
+          "Illustration",
+          "Illumination"
+        ],
+        "titleAR": "ديوان جامي"
+      },
+      "original_imageUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.260.2000-1.MQ.width-4000.jpg"
+    },
+    {
+      "id": "mia-doha-ms-27-1999",
+      "objectNumber": "MS.27.1999",
+      "title": "Manuscript of Sulwan Al-Muta'a fi 'Udwan al-Atba' (Consolation of the Prince over the Hostility of his Subjects)",
+      "artist": "Ibn Zafar Al Siqilli",
+      "date": "1300 - 1400",
+      "year": 1300,
+      "medium": "Paper, Ink, Gouache, Gold, Leather",
+      "dimensions": "25.1 × 19 × 4 cm",
+      "category": "manuscript",
+      "description": "This manuscript is a Mamluk copy of the Sulwan Al-Muta‘ fi ‘Udwan al-Atba‘ (\"Consolation of the Sovereign during the Hostility of his subjects\"), written by Abu ‘Abdallah Muhammad b. Abi Muhammad ibn Zafar al-Siqilli (497-565 AH / 1104- 1170 CE). The text belongs to the medieval literary genre of the \"mirror for princes\", in which a set of rules and ethics for good governance (adab) are addressed to an ideal sovereign and staged through animal fables and anecdotes with historical figures. The genre appears as early as the 1st century AH / 7th century CE and the most famous of them is the Kalila wa Dimna of Ibn al-Muqaffa‘. Featuring 26 paintings, this manuscript is the only illustrated copy of the text in the medieval period. His cycle of paintings demonstrates the use of pictorial archetypes already established in the 7th-century AH/13th-century CE manuscripts workshops, combining the Mesopotamian tradition, in particular with the representation of human figures and the introduction of Chinese motifs like the lotus flower, and the Byzantine tradition, with the gold background and the image of the sovereign and patron on the frontispiece pages.",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/mia-doha-collection/mia-doha-ms-27-1999-dbd4a931-imageUrl.webp",
+      "thumbnailUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.27.1999.185__f.90r-89v.MQ.width-360_EB2N0jC.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://collections.qm.org.qa/en/objects/manuscript-of-sulwan-al-mutaa-fi-udwan-al-atba-consolation-of-the-prince-over-the-hostility-of-his-subjects-ms271999",
+      "metadata": {
+        "qmId": 2714,
+        "objectName": "Manuscript",
+        "period": "Mamluk",
+        "productionPlace": "Syria",
+        "techniques": [
+          "Bookbinding",
+          "Calligraphy",
+          "Illustration",
+          "Illumination"
+        ],
+        "titleAR": "مخطوطة سلوان المطاع في عدوان الأتباع"
+      },
+      "original_imageUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.27.1999.185__f.90r-89v.MQ.width-4000.jpg"
+    },
+    {
+      "id": "mia-doha-ms-271-1999",
+      "objectNumber": "MS.271.1999",
+      "title": "Section (juz') of the Qur'an",
+      "artist": "Qing Dynasty China",
+      "date": "1600 - 1700",
+      "year": 1600,
+      "medium": "Paper, Ink, Gouache, Gold, Leather",
+      "dimensions": "25.5 × 22 × 3 cm",
+      "category": "manuscript",
+      "description": "This volume was once part of a 30-volume Qur’an manuscript. Several Qur’ans originating from China present a division into thirty volumes. As for other coeval examples, this manuscript and its sister volumes follow a precise, regular pattern for decoration and page layout. The opening and final two pages have illuminated rectangular frames, which may be adorned with cartouches and arches which protrude into the margins, enclosing three lines of text on each page. The rest of the pages present the text framed by a simple double-ruled red ink frames containing five lines of text. The text is written in a bold type of muḥaqqaq in carbon-black ink, probably outlined in gold at a later stage. The script presents a pictorial quality comparable to Chinese traditional calligraphy, accounting for the pivotal importance of calligraphy in Chinese culture at large.",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/mia-doha-collection/mia-doha-ms-271-1999-9c4b474a-imageUrl.webp",
+      "thumbnailUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.271.1999.1.MQ.width-360.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://collections.qm.org.qa/en/objects/section-juz-of-the-quran-ms2711999",
+      "metadata": {
+        "qmId": 3627,
+        "objectName": "Manuscript",
+        "period": "Qing Dynasty",
+        "productionPlace": "China",
+        "techniques": [
+          "Bookbinding",
+          "Calligraphy",
+          "Illumination"
+        ],
+        "titleAR": "جزء من القرآن الكريم"
+      },
+      "original_imageUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.271.1999.1.MQ.width-4000.jpg"
+    },
+    {
+      "id": "mia-doha-ms-279-1999",
+      "objectNumber": "MS.279.1999",
+      "title": "Album of Calligraphy",
+      "artist": "Ottoman Türkiye",
+      "date": "1500 - 1800",
+      "year": 1500,
+      "medium": "Ink, Pigment, Gold, Paper, Leather, Gilding",
+      "dimensions": "24.5 × 19.3 × 2 cm",
+      "category": "manuscript",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/mia-doha-collection/mia-doha-ms-279-1999-5b2ecf2a-imageUrl.webp",
+      "thumbnailUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.279.1999.10.MQ.width-360.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://collections.qm.org.qa/en/objects/album-of-calligraphy-ms2791999",
+      "metadata": {
+        "qmId": 3318,
+        "objectName": "Manuscript",
+        "period": "Ottoman",
+        "productionPlace": "Türkiye",
+        "techniques": [
+          "Calligraphy",
+          "Binding",
+          "Marbling"
+        ],
+        "titleAR": "مجلد خط"
+      },
+      "original_imageUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.279.1999.10.MQ.width-4000.jpg"
+    },
+    {
+      "id": "mia-doha-ms-288-2007",
+      "objectNumber": "MS.288.2007",
+      "title": "Folio with Falcon in Découpage Technique",
+      "artist": "Ottoman Türkiye",
+      "date": "1500 - 1700",
+      "year": 1500,
+      "medium": "Paper, Gouache, Gilt paint, Coloured paper, Marbled paper",
+      "dimensions": "15 × 10 cm",
+      "category": "painting",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/mia-doha-collection/mia-doha-ms-288-2007-1d4aff1b-imageUrl.webp",
+      "thumbnailUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.288.2007.Recto-1.MQ.width-360.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://collections.qm.org.qa/en/objects/folio-with-falcon-in-decoupage-technique-ms2882007",
+      "metadata": {
+        "qmId": 3628,
+        "objectName": "Folio",
+        "period": "Ottoman",
+        "productionPlace": "Türkiye",
+        "techniques": [
+          "Illustration",
+          "Decoupage"
+        ],
+        "titleAR": "صفحة تحتوي على صقر بتقنية القص واللصق (الدِيكوباج) "
+      },
+      "original_imageUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.288.2007.Recto-1.MQ.width-4000.jpg"
+    },
+    {
+      "id": "mia-doha-ms-348-2002",
+      "objectNumber": "MS.348.2002",
+      "title": "Illuminated album page with calligraphy",
+      "artist": "Ayshi",
+      "date": "1530 - 1560",
+      "year": 1530,
+      "medium": "Paper, Ink, Gouache, Gold",
+      "dimensions": "40 × 25 cm",
+      "category": "painting",
+      "description": "This folio, originally part of a now dispersed artistic album, dates to the first half of the 10th century AH / 16th century CE. It displays six different calligraphic blocks arranged to fill the page, resulting however into a coherent composition that feels spatially full yet visually balanced. Illuminated boxes separate the calligraphies, on the upper part an illuminated drawing of floral sprouts has been pasted; its treatment with light touches of colour reminds of early Timurid examples. A border of heavily gold-sprinkled marbled paper frames the page. The calligraphy is by ʿAyshi, a renown Safavid calligrapher said to be associated with either Shah Ismaʾil I or Ibrahim Mirza’s court in Mashhad. During 9th century AH / 15th century CE a renewed interest in book culture prompted the development of new art forms in book shape developing across Iran and Central Asia. Among these stands the Persian album (muraqqa'), a composite artwork between two covers containing a vast array of artistic material (mostly paintings and calligraphy) from both contemporary artists and past masters, arranged according to specific criteria. While the Persian album will gain popularity and acquire its iconic appearance in 10th-century AH / 16th-century CE Safavid Iran, its roots delve deep into the artistic and cultural practices of the early Timurid workshops.",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/mia-doha-collection/mia-doha-ms-348-2002-8555e1ca-imageUrl.webp",
+      "thumbnailUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.348.2002.1-full.MQ.width-360.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://collections.qm.org.qa/en/objects/illuminated-album-page-with-calligraphy-ms3482002",
+      "metadata": {
+        "qmId": 2723,
+        "objectName": "Folio, Marbled paper",
+        "period": "Safavid",
+        "productionPlace": "Iran",
+        "techniques": [
+          "Calligraphy",
+          "Illumination",
+          "Marbling",
+          "Painting"
+        ],
+        "titleAR": "صفحة ألبوم مزخرفة مع خط عربي"
+      },
+      "original_imageUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.348.2002.1-full.MQ.width-4000.jpg"
+    },
+    {
+      "id": "mia-doha-ms-367-2007",
+      "objectNumber": "MS.367.2007",
+      "title": "Safavid miniature Qur'an",
+      "artist": "Safavid Iran",
+      "date": "1500 - 1550",
+      "year": 1500,
+      "medium": "Paper, Ink, Gouache, Gold, Leather",
+      "dimensions": "2.2 × 5 × 5 cm",
+      "category": "manuscript",
+      "description": "Written in a flawless miniaturised script known as ghubari (from the Arabic ghubar, meaning “dust”) with a minute sharp nib, this miniature Qur’an might have served his owner more as a protective device rather than an actual book to read and consult. The manuscript would have originally fitted into a small octagonal box with loops and hooks to be carried around, tied on the upper arm with strings or sewn on clothes or robe lining. Miniature Qur’ans had an important protective function for their carriers; small pieces of parchment with Qur’anic passages were already used, rolled in small pendants, in the first centuries of the Islamic history. It is likely that soldiers heading to battle would have worn copies of the Qur’an such as this one around their necks, seeking protection that derives from the baraka of the divine message. Sources from the Ottoman period inform us that miniature Qur’an manuscripts were also stitched on banners to be carrier on the battlefield.",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/mia-doha-collection/mia-doha-ms-367-2007-a1fa3fab-imageUrl.webp",
+      "thumbnailUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.367-B.MQ.width-360_Pb9nptL.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://collections.qm.org.qa/en/objects/safavid-miniature-quran-ms3672007",
+      "metadata": {
+        "qmId": 2724,
+        "objectName": "Manuscript",
+        "period": "Safavid",
+        "productionPlace": "Iran",
+        "techniques": [
+          "Bookbinding",
+          "Calligraphy",
+          "Illumination"
+        ],
+        "titleAR": "نسخة صفوية منمنمة من القرآن الكريم"
+      },
+      "original_imageUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.367-B.MQ.width-4000.jpg"
+    },
+    {
+      "id": "mia-doha-ms-372-2007",
+      "objectNumber": "MS.372.2007",
+      "title": "Qur'an",
+      "artist": "Mughal India",
+      "date": "1700 - 1750",
+      "year": 1700,
+      "medium": "Paper, Velvet, Gouache, Ink, Gilt paint",
+      "dimensions": "38 × 24.5 cm",
+      "category": "manuscript",
+      "description": "Regarded as one of the finest artworks of its kind for this period in the MIA collection, this complete Qur’an manuscript is remarkable for its discreet beauty, the subtle interplay between the highly polished cream paper and gleaming illumination and the elegant calligraphy layout. The opening pages with the Sura al-Fatihah (“The Opener”) have extensive illumination in gold and subdued pastel colours. The rest of the pages have been divided into four panels in minute naskh separated by bands in rayhani and thuluth script, major textual divisions are indicated in medallions on the borders. This type of Qur’an manuscript is known as “si-varqi”, a 30-leaved format that became popular across South Asia from the 11th century AH/17th century CE on. The division in 30 equal sections (juz’/ajza') is particularly fitting for the reading of the Qur’an over thirty days, most notably during the fasting month of Ramadan.",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/mia-doha-collection/mia-doha-ms-372-2007-2801f758-imageUrl.webp",
+      "thumbnailUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.372.2007-3.MQ.width-360.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://collections.qm.org.qa/en/objects/quran-ms3722007",
+      "metadata": {
+        "qmId": 2725,
+        "objectName": "Manuscript",
+        "period": "Mughal",
+        "productionPlace": "India",
+        "techniques": [
+          "Calligraphy",
+          "Bookbinding"
+        ],
+        "titleAR": "قرآن"
+      },
+      "original_imageUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.372.2007-3.MQ.width-4000.jpg"
+    },
+    {
+      "id": "mia-doha-ms-383-2007",
+      "objectNumber": "MS.383.2007",
+      "title": "Indonesian Qur'an",
+      "artist": "Indonesia, 19th century CE",
+      "date": "1800 - 1900",
+      "year": 1800,
+      "medium": "Paper, Ink, Gouache, Leather",
+      "dimensions": "27.5 × 18.5 cm",
+      "category": "manuscript",
+      "description": "The paper used for this Qur’an manuscript from Java may look a bit rugged and not particularly luxurious today, but it is soft and smooth at touch. It is called dluwang, a local paper made from the beaten and polished bark of the mulberry tree. Despite using a relatively modest writing support, the text of this Qur’an has been copied by an expert calligrapher in a sharp script which slopes slightly on the left. The sura titles have been written in red ink and placed within simple black ruled frames, the multiple-knotted decorative shape of the final letter ta’ marbuta that can be seen at the end of each title is a typical characteristic of Javanese Arabic manuscripts. The manuscript has no embellishment besides of the opening and closing pages, which display a lively decoration in reserve against a bright red ground with a domed arch on the outer vertical margins.",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/mia-doha-collection/mia-doha-ms-383-2007-176ec312-imageUrl.webp",
+      "thumbnailUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.383.2007-1.MQ.width-360.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://collections.qm.org.qa/en/objects/indonesian-quran-ms3832007",
+      "metadata": {
+        "qmId": 3629,
+        "objectName": "Manuscript",
+        "period": "19th century CE",
+        "productionPlace": "Indonesia",
+        "techniques": [
+          "Bookbinding"
+        ],
+        "titleAR": "مصحف إندونيسي"
+      },
+      "original_imageUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.383.2007-1.MQ.width-4000.jpg"
+    },
+    {
+      "id": "mia-doha-ms-399-2007",
+      "objectNumber": "MS.399.2007",
+      "title": "Ottoman Illustrated Prayer Book",
+      "artist": "Al Hajj Muhammad Rasim, Al Hajj Ahmad Ayasufya",
+      "date": "1877",
+      "year": 1877,
+      "medium": "Paper, Ink, Gouache, Gold, Leather",
+      "dimensions": "24.7 × 17.5 × 3.7 cm",
+      "category": "manuscript",
+      "description": "This En‘am-i Sherif is a devotional prayer book consisting of a collection of Qur’anic chapters with supplicatory prayers (du‘a) and religious poems in both Arabic and Ottoman Turkish, combined with a group of sacred images including that of Mecca and Medina, the relics and other motifs related to the Prophet Muhammad. Produced from the middle of the 11th century AH / 17th century CE to the last quarter of the 13th century AH / 19th century CE, such manuscripts were very popular in the Ottoman world. Executed in memory of Sultan Abdülmecid who died in 1278 AH / 1861 CE, this copy was possibly commissioned by his daughter Princess Refia, whose name is mentioned in the text. It features, among the series of 45 diagrams, the only known example of the representation of hell, with a rare depiction of heaven, showing a blue sky and kiosk-like pavilions. Such manuscripts demonstrate the devotional role of illustrated prayer books, which images connect its owner or its reader to the holy sites, to the Prophets and their relics, and to the concept of afterlife.",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/mia-doha-collection/mia-doha-ms-399-2007-490e1192-imageUrl.webp",
+      "thumbnailUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.399.2007.31.width-360.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://collections.qm.org.qa/en/objects/ottoman-illustrated-prayer-book-ms3992007",
+      "metadata": {
+        "qmId": 3319,
+        "objectName": "Manuscript",
+        "period": "Ottoman",
+        "productionPlace": "Türkiye",
+        "techniques": [
+          "Bookbinding",
+          "Calligraphy",
+          "Illumination",
+          "Painting",
+          "Illustration"
+        ],
+        "titleAR": "كتاب أدعية عثماني مزخرف"
+      },
+      "original_imageUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.399.2007.31.width-4000.jpg"
+    },
+    {
+      "id": "mia-doha-ms-40-2007",
+      "objectNumber": "MS.40.2007",
+      "title": "Folio from the Shahnama of Shah Tahmasp",
+      "artist": "Sultan Muhammad",
+      "date": "1525 - 1535",
+      "year": 1525,
+      "medium": "Paper, Ink, Gouache, Gold",
+      "dimensions": "47.2 × 31.9 cm",
+      "category": "painting",
+      "description": "The Shahnama, the national epos of Iran composed by the poet Abu'l Qasim Firdausi at the turn of the 5th century AH/early 11th century CE for the Ghaznavid ruler Mahmud of Ghazni enjoyed great popularity among rulers across the Islamic world and it has been extensively copied and illustrated from the Ilkhanid period onwards. A staple book in the libraries of Islamic rulers, the Shahnama provided guidance for princes through exemplary tales of kings and heroes of Iran and functioned as a powerful means of political propaganda for centuries. This beautiful illustrated folio once belonged to the so-called Shahnama of Shah Tahmasp, probably the most luxurious and celebrated Shahnama manuscript ever produced for a royal patron. This painting depicts the Iranian hero Faridun as he crosses the river Tigris with his army to march against the evil tyrant Zahhak, who ruthlessly rules over Iran. The water was originally painted in silver, now fully oxidized. The final effect of this page must have been stunning due to the interplay between the bright, flat colours and the warm shine of the silver paint and the golden flakes applied on the margins. The Shahnama of Shah Tahmasp was begun most probably under Shah Isma'il I (the founder of the Safavid dynasty) and completed under his successor, Shah Tahmasp. It thus required a few decades to be completed and the manpower of the entire royal workshop of Tabriz. The full manuscript counted of 759 folios of text written in flawless nasta'liq, accompanied by 258 paintings made by the most famous artists of their time. Shortly after its completion, the manuscript was sent to Istanbul as an official gift for the accession ceremony of the Ottoman Sultan Selim II (r. 973-981 AH/1566-1574 CE). Today, the surviving folios and illustrations are scattered among several museums, cultural institutions, and private collections worldwide.",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/mia-doha-collection/mia-doha-ms-40-2007-6f3cd62c-imageUrl.webp",
+      "thumbnailUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.40.2007_001.MQ.width-360.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://collections.qm.org.qa/en/objects/folio-from-the-shahnama-of-shah-tahmasp-ms402007",
+      "metadata": {
+        "qmId": 3313,
+        "objectName": "Folio",
+        "period": "Safavid",
+        "productionPlace": "Iran",
+        "techniques": [
+          "Illustration",
+          "Calligraphy"
+        ],
+        "titleAR": "صفحة من شهنامه الشاه طهماسب"
+      },
+      "original_imageUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.40.2007_001.MQ.width-4000.jpg"
+    },
+    {
+      "id": "mia-doha-ms-405-2007",
+      "objectNumber": "MS.405.2007",
+      "title": "Manuscript copy of the Qur’an",
+      "artist": "Muhammad Sadiq Ibn Hajji Muhammad Al Mashhadi",
+      "date": "1659 - 1660",
+      "year": 1659,
+      "medium": "Paper, Ink, Gouache, Gold, Leather, Lacquer",
+      "dimensions": "38.2 × 25.2 × 6.2 cm",
+      "category": "manuscript",
+      "description": "This large Mughal Qur'an comprises of four hundred and fourteen handwritten and illuminated folios. Written in relatively large naskh script, the text is accompanied by a Persian translation and commentary also written in naskh. The commentary is written with exceptional clarity in the outer borders, with certain words underlined in gold and sentences demarcated by gold discs. The Qur'an's opening pages (folios 1a – 2b) each contain a saying of the Prophet written in white naskh against a gold ground, set within a succession of poly-lobed medallions forming a radiating star. Richly illuminated, the ground is further ornamented with light, dark blue, and white flowers reminiscent of a carpet design. The opening surah (2b-3a) has four lines of black naskh script written within a rectangular panel surrounded by an illuminated border. The remaining pages of the manuscript all have gold sprinkled borders. Rather unusually, the surah headings – which appear in medallions – are each written in violet riqa script. Equally unusual is the colophon, which appears inconspicuously in the upper left corner of the manuscript's last page (in the al-Nas surah), recording the scribe's name and date, Muhammad Sadiq ibn Hajji Muhammad al-Mashhadi, 1070 AH (1659-1660 CE). In the bottom right-hand margin is a further note by the scribe, mentioning the Qur'anic marginal commentary and providing another date, 1087 AH (1676 CE). Although nothing is known of this scribe, he was clearly a master calligrapher; furthermore, while a period of sixteen years spans between these two recorded dates, the main text, interlinear translation, commentary and illumination were probably all planned at the outset.",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/mia-doha-collection/mia-doha-ms-405-2007-72c1494b-imageUrl.webp",
+      "thumbnailUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.405.2007-2.MQ.width-360_JZhEHam.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://collections.qm.org.qa/en/objects/manuscript-copy-of-the-quran-ms4052007",
+      "metadata": {
+        "qmId": 2726,
+        "objectName": "Manuscript",
+        "period": "Mughal",
+        "productionPlace": "India",
+        "techniques": [
+          "Bookbinding",
+          "Calligraphy",
+          "Illumination",
+          "Lacquering"
+        ],
+        "titleAR": "نسخة مخطوطة قرآنية"
+      },
+      "original_imageUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.405.2007-2.MQ.width-4000.jpg"
+    },
+    {
+      "id": "mia-doha-ms-41-2007",
+      "objectNumber": "MS.41.2007",
+      "title": "The Nightmare of Zahhak",
+      "artist": "Mir Musavvir",
+      "date": "1525 - 1535",
+      "year": 1525,
+      "medium": "Paper, Ink, Gouache, Gold",
+      "dimensions": "47.2 × 32.1 cm",
+      "category": "painting",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/mia-doha-collection/mia-doha-ms-41-2007-cc2d7428-imageUrl.webp",
+      "thumbnailUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.41.2007_001.MQ.width-360_wTYbZIh.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://collections.qm.org.qa/en/objects/the-nightmare-of-zahhak-ms412007",
+      "metadata": {
+        "qmId": 2715,
+        "objectName": "Folio",
+        "period": "Safavid",
+        "productionPlace": "Iran",
+        "techniques": [
+          "Illustration",
+          "Calligraphy"
+        ],
+        "titleAR": "كابوس الضحاك"
+      },
+      "original_imageUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.41.2007_001.MQ.width-4000.jpg"
+    },
+    {
+      "id": "mia-doha-ms-42-2007",
+      "objectNumber": "MS.42.2007",
+      "title": "Folio of a Kneeling Youth",
+      "artist": "Mirza ‘Ali",
+      "date": "1540 - 1590",
+      "year": 1540,
+      "medium": "Paper, Gouache, Gold",
+      "dimensions": "32 × 20.2 cm",
+      "category": "painting",
+      "description": "This painting depicts a young man kneeling as he stretches his arms to present an oblong-format piece of paper he is holding in his hands. His posture and upward gaze suggest this be a figure formally presenting himself in front of a ruler while he hands over a document. In manuscript illustrations from the Ilkhanid period onwards, court attendants and servants have often been depicted kneeled in front of royal figures, reflecting real-life elements of court etiquette that were established by the Mongols. The youthful figure wears a simple yet elegant attire with a white turbant, a green long robe, a belt with large golden fittings, to which a small ceremonial knife is attached. His child-like, even feminine, facial features embody an ideal of beauty particularly popular during the Safavid period. The painting has been attributed to the Safavid painter Mirza 'Ali, son of the renown royal artist Sultan Muhammad. After the dismissal of Shah Tahmasp's artistic atelier, Mirza 'Ali migrated the Mughal court in India until he returned to Iran to work for the Safavid prince Sultan Ibrahim Mirza, nephew of Shah Tahmasp and a great patron of the arts. Considering the standardised depiction of this youth, this painting might well be a product of the working practices of the kitabkhana (artistic atelier often attached to a royal court) and might have been used as a model or visual reference for this type of figural representation to be replicated on a number of artworks in a variety of artistic media.",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/mia-doha-collection/mia-doha-ms-42-2007-07fab376-imageUrl.webp",
+      "thumbnailUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.42.2007.1-recto-full.MQ.width-360.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://collections.qm.org.qa/en/objects/folio-of-a-kneeling-youth-ms422007",
+      "metadata": {
+        "qmId": 3610,
+        "objectName": "Folio",
+        "period": "Safavid",
+        "productionPlace": "Iran",
+        "techniques": [
+          "Illustration"
+        ],
+        "titleAR": "صفحة لشاب راكع"
+      },
+      "original_imageUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.42.2007.1-recto-full.MQ.width-4000.jpg"
+    },
+    {
+      "id": "mia-doha-ms-427-2007",
+      "objectNumber": "MS.427.2007",
+      "title": "Copy of the Dala’il al-Khayrat (Ways for the Good Deeds')",
+      "artist": "al-Jazuli, Al Hajj Muhammad Amin, Al Hajj Hafiz Muhammad Nuri",
+      "date": "1801",
+      "year": 1801,
+      "medium": "Paper, Ink, Gouache, Gold, Leather",
+      "dimensions": "23.4 × 16.7 × 2.8 cm",
+      "category": "manuscript",
+      "description": "The Dala’il al-Khayrat (‘the Ways of Edification’) is one of the most successful prayer book in the Islamic world, often carried by pilgrims on their journey to Medina. It reads as a long litany of blessings over the Prophet Muhammad, to be read as daily prayers at the Mosque of the Prophet. The text was written by the Moroccan mystic, Abu ‘Abdullah Muhammad Ibn Sulayman al-Jazuli, who was killed in 870 AH / 1465 CE. Member of the ṭariqa shadhiliyya (Sufi order), he is said to have stayed in Mecca and Medina for a number of years. This Ottoman copy was produced by Mehmed Emin, a highly respected calligrapher who was the head clerk of the Imperial Chancery in Istanbul at the time the manuscript was completed. Dala’il al-Khayrat manuscripts include illustrations showing elements of the Prophet’s Mosque in Medina, including the minbar, the mihrab, the tomb of the Prophet and those of Abu Bakr and ‘Umar, sometimes associated with views of the Great Mosque of Mecca. Here the illustrations of the Masjid al-Haram in Mecca (f. 16 v.) and the Prophet’s mosque in Medina (f. 17 r.) combine a bird’s eye view perspective with two-dimensional aspects. The folio 3 r. bears the depiction of a pink rose, a well-known metaphor of the Prophet Muhammad’s physical attributes often represented in Ottoman manuscripts.",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/mia-doha-collection/mia-doha-ms-427-2007-6025c09b-imageUrl.webp",
+      "thumbnailUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.427.2007-6.MQ.width-360_PeUVFz5.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://collections.qm.org.qa/en/objects/copy-of-the-dalail-al-khayrat-ways-for-the-good-deeds-ms4272007",
+      "metadata": {
+        "qmId": 2727,
+        "objectName": "Manuscript",
+        "period": "Ottoman",
+        "productionPlace": "Türkiye",
+        "techniques": [
+          "Bookbinding",
+          "Calligraphy",
+          "Illumination",
+          "Tooling"
+        ],
+        "titleAR": "نسخة من كتاب دلائل الخيرات"
+      },
+      "original_imageUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.427.2007-6.MQ.width-4000.jpg"
+    },
+    {
+      "id": "mia-doha-ms-53-2007",
+      "objectNumber": "MS.53.2007",
+      "title": "Illuminated Shamsa (Blazon) from a Royal Album of Shah Jahan",
+      "artist": "Mughal India",
+      "date": "1640 - 1650",
+      "year": 1640,
+      "medium": "Paper, Gouache, Gold",
+      "dimensions": "38 × 27.4 cm",
+      "category": "painting",
+      "description": "This spectacularly illuminated folio would have been the opening page of a manuscript or assembled album, known as a muraqqa, in which a compilation of carefully crafted pages of paintings and calligraphy were put together by a patron. Here, this page follows a long tradition of embellishing the first page of Islamic manuscripts – in particular those from Iran and India – with a radiating shamsa (from the Arabic, sun). This visually empowering statement not only declared the beginning of the album, but often included the name of the patron for whom the album was commissioned. While this folio remains unmarked, perhaps a sign that the album was either unfinished or never delivered to its patron, its style and size are nevertheless reminiscent of the spectacular pages and albums commissioned by the Mughal emperor Shah Jahan (r. 1037-1068 AH/1628-58 CE). Indeed, known and dated imperial pages confidently attributed to the Emperor all feature similar amounts of gold paint, colours, and a central poly-lobed rosette detailed with scrolling blue arabesques. The splendid illumination on this folio, symbolic of a radiating sun-disc - itself a symbol of imperial power - supports its royal commission by Shah Jahan sometime during the 1050s or 1060s AH/ 1640s or 1650s CE.",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/mia-doha-collection/mia-doha-ms-53-2007-b14f88ec-imageUrl.webp",
+      "thumbnailUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.53-200MPixel.MQ.width-360_sYKmoyU.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://collections.qm.org.qa/en/objects/illuminated-shamsa-blazon-from-a-royal-album-of-shah-jahan-ms532007",
+      "metadata": {
+        "qmId": 2716,
+        "objectName": "Folio",
+        "period": "Mughal",
+        "productionPlace": "India",
+        "techniques": [
+          "Illumination",
+          "Painting"
+        ],
+        "titleAR": "شمسة مذهبة من مجلد شاه جهان الملكي"
+      },
+      "original_imageUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.53-200MPixel.MQ.width-4000.jpg"
+    },
+    {
+      "id": "mia-doha-ms-609-2007",
+      "objectNumber": "MS.609.2007",
+      "title": "Royal Qur’an of Shah Sulayman Safavi",
+      "artist": "Shah Suleyman I, Muhammad Reza I. Al 'Abbasi, Muhammad H. Shirazi",
+      "date": "1683 - 1684",
+      "year": 1683,
+      "medium": "Paper, Gouache, Gold, Textile, Leather",
+      "dimensions": "34.3 × 21.8 × 6.5 cm",
+      "category": "manuscript",
+      "description": "This luxurious copy of the Qur’an was produced for Shah Sulayman Safavi, the eighth ruler of the Safavid dynasty (r. 1076-1105 AH/1666-1694 CE). During the reign of Shah Sulayman I, luxurious Qur’an manuscripts followed and expanded the formal vocabulary developed in the workshops of Herat and Shiraz during the 10th century AH/16th century CE, establishing models that would become canonical during the Zand and Qajar periods. This richly illuminated copy of the Qur’an is a telling example of the level of artistry and refinement in the arts of the book reached by the artists working for Safavid patrons in the royal workshop of Isfahan. The manuscript opens with a finely illuminated double-page frontispiece; the rest of the pages are highly polished and heavily sprinkled with gold. The Qur’anic text has been copied in naskh script, a very legible calligraphic style that became a standard feature for Qur’an manuscripts from the 6th century AH/12th century CE onwards. The manuscript bears the rare impression of Shah Sulayman's personal seal, also in the collections of MIA (MIA.2013.160).",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/mia-doha-collection/mia-doha-ms-609-2007-e204cdf7-imageUrl.webp",
+      "thumbnailUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.609.2007.1.MQ.width-360.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://collections.qm.org.qa/en/objects/royal-quran-of-shah-sulayman-safavi-ms6092007",
+      "metadata": {
+        "qmId": 2729,
+        "objectName": "Manuscript",
+        "period": "Safavid",
+        "productionPlace": "Iran",
+        "techniques": [
+          "Bookbinding",
+          "Calligraphy",
+          "Illumination",
+          "Filigree"
+        ],
+        "titleAR": "مصحف ملكي للشاه سليمان الصفوي"
+      },
+      "original_imageUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.609.2007.1.MQ.width-4000.jpg"
+    },
+    {
+      "id": "mia-doha-ms-616-2007",
+      "objectNumber": "MS.616.2007",
+      "title": "Folio from a Qur’an manuscript in kufic script",
+      "artist": "Abbasid North Africa",
+      "date": "900 - 1000",
+      "year": 900,
+      "medium": "Parchment, Ink, Gold",
+      "dimensions": "24 × 33.7 cm",
+      "category": "manuscript",
+      "description": "Written on polished and smooth cream parchment in dark brown ink with touches of colours to indicate vocalisation when needed, this folio comes from an importat early Qur'an manuscript. The kufic script adopted by the calligrapher is notable for its unusual features: the elongation of the vertical letters, the sweeping curves of the terminal letter nun, and the very fine and thin tail of the terminal min (last letter of the third line). Diacritical marks are conventionally indicated by diagonal dashes and verses are separated by gold dots arranged into pyramids. The tenth verse division is marked by a large illuminated rosette on the margin bearing the word 'ashr (ten) in reserve in the centre. Due to the rather large format of the calligraphy, each folio (recto and verso) would accomodate for a maximum of six lines of text, meaning the whole manuscript would have required a large quantity of costly parchment to be completed. This suggests that the manuscript was most probably produced for a very affluent and important patron. This particular form of the kufic script is found on two other known early Qur'an manuscripts, whose folios are scattered among different collections worldwide.",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/mia-doha-collection/mia-doha-ms-616-2007-a93bf1b3-imageUrl.webp",
+      "thumbnailUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.616.2007.1-v.MQ.width-360_fePigHz.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://collections.qm.org.qa/en/objects/folio-from-a-quran-manuscript-in-kufic-script-ms6162007",
+      "metadata": {
+        "qmId": 2730,
+        "objectName": "Folio",
+        "period": "Abbasid",
+        "productionPlace": "North Africa",
+        "techniques": [
+          "Calligraphy"
+        ],
+        "titleAR": "صفحة من مخطوطة قرآنية بالخط الكوفي"
+      },
+      "original_imageUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.616.2007.1-v.MQ.width-4000.jpg"
+    },
+    {
+      "id": "mia-doha-ms-617-2007",
+      "objectNumber": "MS.617.2007",
+      "title": "Opening Folio of a Qur'an",
+      "artist": "Abbasid North Africa",
+      "date": "800 - 900",
+      "year": 800,
+      "medium": "Parchment, Gold, Ink",
+      "dimensions": "19.3 × 28 cm",
+      "category": "manuscript",
+      "description": "Under the ‘Abbasid caliphate, illumination became an increasingly important feature of Qur’an manuscripts and luxurious copies would have displayed richly illuminated opening and closing pages. This illuminated opening page offers a glimpse into the level of sophistication that illuminators reached during the early ‘Abbasid period. Both sides of this parchment are occupied by beautifully complex central panels: a field of delicate leaves (now almost faded) in a punctuated diamond-shape lattice motif realised with a hard point on one side, and an intricate motive of interwoven bands of strapwork on the other. Large marginal medallions with hatching details complete this rich decoration. Pigments have discretely been used to accentuate the delicate and complex decorative structure. Considering the remarkable quality of the illumination and its large scale, this folio must have once belonged to a magnificent Qur'an manuscript, most probably divided into multiple volumes. Similar other examples that can be related to this folios are preserved in Tunis at the National Library, at the Raqqada National Museum of Islamic Art in Qayrawan, the Chester Beatty Library in Dublin, and the Freer Gallery, Smithsonian Institution, in Washington D.C., as well as in private collections.",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/mia-doha-collection/mia-doha-ms-617-2007-4c62fbe4-imageUrl.webp",
+      "thumbnailUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.617.2007_Verso-1.MQ.width-360.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://collections.qm.org.qa/en/objects/opening-folio-of-a-quran-ms6172007",
+      "metadata": {
+        "qmId": 3320,
+        "objectName": "Folio",
+        "period": "Abbasid",
+        "productionPlace": "North Africa",
+        "techniques": [
+          "Illumination"
+        ],
+        "titleAR": "صفحة افتتاحية من قرآن"
+      },
+      "original_imageUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.617.2007_Verso-1.MQ.width-4000.jpg"
+    },
+    {
+      "id": "mia-doha-ms-620-2007",
+      "objectNumber": "MS.620.2007",
+      "title": "Qur'an in kufic script",
+      "artist": "Abbasid North Africa",
+      "date": "900 - 925",
+      "year": 900,
+      "medium": "Parchment, Ink, Gold, Leather",
+      "dimensions": "16.5 × 13 × 5.2 cm",
+      "category": "manuscript",
+      "description": "With its vertical format and a rather compact, minute kufic script, this manuscript illustrates the transitional phase that Qur’an manuscripts underwent in the Eastern Islamic world during the 4th century AH/10th century CE. The script shows some sharp features that will eventually become standard in the “New Style” script, while the illuminations still resemble earlier ‘Abbasid motifs, with sura titles in thick kufic script in reserve against gold background and large vegetal elements on the margins. In few places, the calligrapher has adopted a curious system to justify the page layout, repeating certain consonants in a row to reach the end of a text line. The small format would have made this manuscript particularly suitable for carrying around and must have been prepared as a copy for personal use.",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/mia-doha-collection/mia-doha-ms-620-2007-d3c0892c-imageUrl.webp",
+      "thumbnailUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.620.flat-shadow.MQ.width-360_pSqvEr9.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://collections.qm.org.qa/en/objects/quran-in-kufic-script-ms6202007",
+      "metadata": {
+        "qmId": 2731,
+        "objectName": "Manuscript",
+        "period": "Abbasid",
+        "productionPlace": "North Africa",
+        "techniques": [
+          "Bookbinding",
+          "Calligraphy",
+          "Illumination"
+        ],
+        "titleAR": "قرآن بالخط الكوفي"
+      },
+      "original_imageUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.620.flat-shadow.MQ.width-4000.jpg"
+    },
+    {
+      "id": "mia-doha-ms-621-2007",
+      "objectNumber": "MS.621.2007",
+      "title": "Abbasid Qur’an in gold thuluth script",
+      "artist": "Yahya Ibn Muhammad Ibn 'Umar",
+      "date": "1203 - 1204",
+      "year": 1203,
+      "medium": "Paper, Ink, Gold, Cloth, Leather",
+      "dimensions": "13.8 × 11.2 × 5 cm",
+      "category": "manuscript",
+      "description": "This manuscript is considered the earliest known complete Qur'an with the entire text copied in gold ink. The text is written in black-outlined gold thuluth. Although the pages have a very dense visual appearance with 15 lines of text arranged in a small area of 10.2 x 6.7 cm, the final layout results well-balanced and aesthetically pleasing, thanks to the calligrapher's mastery in balancing the flow of the black outline with the golden lettering. The margins contain illuminated markers and notes. Groups of ten and five verses are marked by large roundels inscribed with Arabic letters and palmettes, rectangular inscribed panels indicate the major text divisions. Lavishly illuminated carpet pages open and close the manuscript. The small format of this Qur'an would have made it a sort of luxurious \"pocket-book\", easy to transport and consult. The colophon gives us the name of the master calligrapher and the date of completion for this manuscript but does not mention the patron. However, due to its precious appearance, we can assume that this Qur'an was made for the personal use of a very wealthy patron or a court member, perhaps even a prince, possibly in northern Jazeera, a region renowned for the production of finely illuminated manuscripts under the Ayyubids and, then, the Mamluks.",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/mia-doha-collection/mia-doha-ms-621-2007-82ca02c4-imageUrl.webp",
+      "thumbnailUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.621.2007-3.MQ.width-360_EHp1nuP.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://collections.qm.org.qa/en/objects/abbasid-quran-in-gold-thuluth-script-ms6212007",
+      "metadata": {
+        "qmId": 2732,
+        "objectName": "Manuscript",
+        "period": "Abbasid",
+        "productionPlace": "Iraq",
+        "techniques": [
+          "Bookbinding",
+          "Calligraphy",
+          "Illumination"
+        ],
+        "titleAR": "مصحف عباسي بخط الثلث الذهبي"
+      },
+      "original_imageUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.621.2007-3.MQ.width-4000.jpg"
+    },
+    {
+      "id": "mia-doha-ms-630-2007",
+      "objectNumber": "MS.630.2007",
+      "title": "Majnun in the Wilderness, Illustrated Folio from a Khamsa of Nizami",
+      "artist": "Abd Al Jabar, Jamal Al Din A. Nizami",
+      "date": "1608 - 1609",
+      "year": 1608,
+      "medium": "Paper, Ink, Gouache, Gold",
+      "dimensions": "20.5 × 13 cm",
+      "category": "painting",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/mia-doha-collection/mia-doha-ms-630-2007-7a0e58d6-imageUrl.webp",
+      "thumbnailUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.630.2007.1__f.1r.MQ.width-360.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://collections.qm.org.qa/en/objects/majnun-in-the-wilderness-illustrated-folio-from-a-khamsa-of-nizami-ms6302007",
+      "metadata": {
+        "qmId": 3631,
+        "objectName": "Folio",
+        "period": "Safavid",
+        "productionPlace": "Iran",
+        "techniques": [
+          "Illustration",
+          "Illumination",
+          "Calligraphy"
+        ],
+        "titleAR": "مجنون في البرية، صفحة مُصوّرة من خُماسية نظامي "
+      },
+      "original_imageUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.630.2007.1__f.1r.MQ.width-4000.jpg"
+    },
+    {
+      "id": "mia-doha-ms-643",
+      "objectNumber": "MS.643.",
+      "title": "Folio from an monumental Ilkhanid Qur’an",
+      "artist": "Ahmad Ibn Suhrawardi, Muhammad I. Ibn Abdallah",
+      "date": "1306 - 1307",
+      "year": 1306,
+      "medium": "Paper, Ink, Gouache, Gold",
+      "dimensions": "58.2 × 43.1 cm",
+      "category": "manuscript",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/mia-doha-collection/mia-doha-ms-643-743242ec-imageUrl.webp",
+      "thumbnailUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.643.MQ.width-360.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://collections.qm.org.qa/en/objects/folio-from-an-monumental-ilkhanid-quran-ms643",
+      "metadata": {
+        "qmId": 3632,
+        "objectName": "Folio",
+        "period": "Ilkhanid",
+        "productionPlace": "Iraq",
+        "techniques": [
+          "Calligraphy",
+          "Illumination"
+        ],
+        "titleAR": "صفحة من مصحف ضخم من العصر الإلخاني "
+      },
+      "original_imageUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.643.MQ.width-4000.jpg"
+    },
+    {
+      "id": "mia-doha-ms-647-1",
+      "objectNumber": "MS.647.1",
+      "title": "Folio from Aja'ib al-Makhluqat wa Ghara'ib al-Mawjudat (The Wonders of Creation and the Oddities of Existence)",
+      "artist": "Zakariya Al Qazwini",
+      "date": "1275 - 1300",
+      "year": 1275,
+      "medium": "Paper, Ink",
+      "dimensions": "35 × 27 cm",
+      "category": "manuscript",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/mia-doha-collection/mia-doha-ms-647-1-5a393dac-imageUrl.webp",
+      "thumbnailUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.647.1v.MQ.width-360.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://collections.qm.org.qa/en/objects/folio-from-ajaib-al-makhluqat-wa-gharaib-al-mawjudat-the-wonders-of-creation-and-the-oddities-of-existence-ms6471",
+      "metadata": {
+        "qmId": 2975,
+        "objectName": "Folio",
+        "period": "Mamluk",
+        "productionPlace": "Syria",
+        "techniques": [
+          "Calligraphy"
+        ],
+        "titleAR": "صفحة من كتاب عجائب المخلوقات وغرائب الموجودات"
+      },
+      "original_imageUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.647.1v.MQ.width-4000.jpg"
+    },
+    {
+      "id": "mia-doha-ms-647-11",
+      "objectNumber": "MS.647.11",
+      "title": "Folio from Aja'ib al-Makhluqat wa Ghara'ib al-Mawjudat (The Wonders of Creation and the Oddities of Existence)",
+      "artist": "Zakariya Al Qazwini",
+      "date": "1275 - 1300",
+      "year": 1275,
+      "medium": "Paper, Ink, Gouache",
+      "dimensions": "44 × 33.5 cm",
+      "category": "painting",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/mia-doha-collection/mia-doha-ms-647-11-ee614f85-imageUrl.webp",
+      "thumbnailUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.647.11r.MQ.width-360.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://collections.qm.org.qa/en/objects/folio-from-ajaib-al-makhluqat-wa-gharaib-al-mawjudat-the-wonders-of-creation-and-the-oddities-of-existence-ms64711",
+      "metadata": {
+        "qmId": 3633,
+        "objectName": "Folio",
+        "period": "13th century CE",
+        "productionPlace": "Syria",
+        "techniques": [
+          "Calligraphy",
+          "Illustration"
+        ],
+        "titleAR": "صفحة من كتاب عجائب المخلوقات وغرائب الموجودات "
+      },
+      "original_imageUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.647.11r.MQ.width-4000.jpg"
+    },
+    {
+      "id": "mia-doha-ms-654-2000",
+      "objectNumber": "MS.654.2000",
+      "title": "Folio Depicting Two Cranes with Two Ducks",
+      "artist": "Khwaja Abd Al Hayy",
+      "date": "1370 - 1380",
+      "year": 1370,
+      "medium": "Paper, Ink, Gouache, Gold",
+      "dimensions": "36.5 × 24.2 cm",
+      "category": "painting",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/mia-doha-collection/mia-doha-ms-654-2000-2ab4d628-imageUrl.webp",
+      "thumbnailUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.654.2000.1.MQ.width-360.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://collections.qm.org.qa/en/objects/folio-depicting-two-cranes-with-two-ducks-ms6542000",
+      "metadata": {
+        "qmId": 3634,
+        "objectName": "Folio",
+        "period": "Jalayirid",
+        "productionPlace": "Iran",
+        "techniques": [
+          "Illustration",
+          "Illumination",
+          "Calligraphy"
+        ],
+        "titleAR": "صفحة تُصوّر طائرين من الرافعات مع بطين "
+      },
+      "original_imageUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.654.2000.1.MQ.width-4000.jpg"
+    },
+    {
+      "id": "mia-doha-ms-659-2008",
+      "objectNumber": "MS.659.2008",
+      "title": "Fragment of a bifolio from the Mushaf al-Hadina (the ‘Nurse's Qur'an’)",
+      "artist": "Ali Al Warraq",
+      "date": "1020",
+      "year": 1020,
+      "medium": "Parchment, Ink",
+      "dimensions": "44.5 × 61.5 cm",
+      "category": "manuscript",
+      "description": "This bifolio in vellum, written with brown ink and red, blue, and green vocalisation marks, was once part of a copy of the Qur’an known as the Mushaf al-Hadina (the ‘Nurse’s Qur’an’). It is named after its patron, the nurse of al-Mu‘izz bin Badis, ruler of the Zirid dynasty of Ifriqiya who reigned over the central Maghreb region from 406 to 454 AH / 1016-1062 CE. The copy was recorded as a waqf (‘endowment’) in the Great Mosque of Qayrawan in 410 AH / 1020 CE. The use of a Western Kufic script, with bold and angular cursive letters is in line with the Eastern Kufic script (also called ‘broken cursive’), appearing the same century in Iran and Mesopotamia not only in manuscripts, but also on ceramics and textiles. Its female patron and the rarity of documents and artefacts from the Zirid period give it an even more distinctive value.",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/mia-doha-collection/mia-doha-ms-659-2008-7a8c4419-imageUrl.webp",
+      "thumbnailUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.659.2008.MQ.width-360_wr9dwLf.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://collections.qm.org.qa/en/objects/fragment-of-a-bifolio-from-the-mushaf-al-hadina-the-nurses-quran-ms6592008",
+      "metadata": {
+        "qmId": 2733,
+        "objectName": "Folio",
+        "period": "Zirid",
+        "productionPlace": "Tunisia",
+        "techniques": [
+          "Calligraphy"
+        ],
+        "titleAR": "جزء من صفحة مزدوجة من مصحف الحاضنة"
+      },
+      "original_imageUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.659.2008.MQ.width-4000.jpg"
+    },
+    {
+      "id": "mia-doha-ms-67-2007-1",
+      "objectNumber": "MS.67.2007.1",
+      "title": "Bifolio of a Qur'an in hijazi script",
+      "artist": "Arabian Peninsula, 7th century CE",
+      "date": "600 - 733",
+      "year": 600,
+      "medium": "Parchment, Ink",
+      "dimensions": "33.6 × 48.1 cm",
+      "category": "manuscript",
+      "description": "The first Qur’ans were copied onto parchment in a vertical format in the so called hijazi script, a reference to the Hijaz region where Mecca and Medina are located. Until recently, researchers believed that these folios, produced by the second half of the 1st century AH (end of the 7th century CE and early 8th century CE), were made in this region. However, it is equally likely that they were copied in other regions of the newly conquered territories. This bifolio features between 22 to 28 lines per page, written in a clear brown hijazi script, highlighted with red vocalization marks that were added at a later stage. A few diacritical markers were noted on some letters, in addition to end of verses indicated by groups of dots. This type of vertical format was supplanted by a landscape format known as the “Italian format”, written in kufic script, with just a few lines per page in a far larger script than was the case for folios in hijazi. These were made primarily for practical reading use; presumably their main purpose was to record the text in a format which made it easier to memorise.",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/mia-doha-collection/mia-doha-ms-67-2007-1-4014266e-imageUrl.webp",
+      "thumbnailUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.67.2007.1__001.MQ.width-360_vgyGWJj.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://collections.qm.org.qa/en/objects/bifolio-of-a-quran-in-hijazi-script-ms6720071",
+      "metadata": {
+        "qmId": 2717,
+        "objectName": "Bifolio",
+        "period": "7th century CE",
+        "productionPlace": "Arabian Peninsula",
+        "techniques": [
+          "Calligraphy"
+        ],
+        "titleAR": "صفحة مزدوجة من قرآن بالخط الحجازي"
+      },
+      "original_imageUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.67.2007.1__001.MQ.width-4000_sM0FTqJ.jpg"
+    },
+    {
+      "id": "mia-doha-ms-67-2007-2",
+      "objectNumber": "MS.67.2007.2",
+      "title": "Bifolio of a Qur'an in Hijazi Script",
+      "artist": "Saudi Arabia, 7th century CE",
+      "date": "650 - 733",
+      "year": 650,
+      "medium": "Parchment, Ink",
+      "dimensions": "33.8 × 49.3 cm",
+      "category": "manuscript",
+      "description": "The first Qur’ans were copied onto parchment in a vertical format in the so-called hijazi script, a reference to the Hijaz region where Mecca and Medina are located. Until recently, researchers were of the opinion that these folios, produced by the second half of the 1st century AH (end of the 7th century CE and early 8th century CE), were made in this region. However, it is equally likely that they were copied elsewhere in the Middle East if we take into account the fact that conquests already extended over a large part of the Peninsula and the Middle East at this time. This type of format was supplanted by the “Italian format” in kufic script, with just a few lines per page in a far larger script than was the case for folios in hijazi. These were made primarily for practical reading use; presumably their main purpose was to record the text in a format which made it easier to memorise.",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/mia-doha-collection/mia-doha-ms-67-2007-2-5f9337e4-imageUrl.webp",
+      "thumbnailUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.67.2007.2-1.MQ.width-360.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://collections.qm.org.qa/en/objects/bifolio-of-a-quran-in-hijazi-script-ms6720072",
+      "metadata": {
+        "qmId": 3314,
+        "objectName": "Bifolio",
+        "period": "7th century CE",
+        "productionPlace": "Saudi Arabia",
+        "techniques": [
+          "Calligraphy",
+          "Illumination"
+        ],
+        "titleAR": "صفحة مزدوجة من قرآن بالخط الحجازي"
+      },
+      "original_imageUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.67.2007.2-1.MQ.width-4000.jpg"
+    },
+    {
+      "id": "mia-doha-ms-69-2007",
+      "objectNumber": "MS.69.2007",
+      "title": "Bifolio of a Qur'an manuscript",
+      "artist": "Arabian Peninsula, 7th century CE",
+      "date": "600 - 700",
+      "year": 600,
+      "medium": "Parchment, Ink",
+      "dimensions": "35 × 55 cm",
+      "category": "manuscript",
+      "description": "This bifolio most probably belonged to the same manuscript from which the three MIA folios of MS.68.2007 originate. The vertical format of the folio and the script, an unclassified type very close to hijazi examples, are clear indicators of the early date of this manuscript. The scribe wrote the text in a neat script devoid of the usual rightward sloping present in the majority of early Qur’an copies in hijazi script. The straight stroke of the vertical letters gives an elegant visual rhythm to the page, which is filled with text in its entirety as typical for early Qur’an manuscripts. Small clusters of dots and dashes occasionally indicate verse divisions, while the use of diacritical marks is kept to the bare minimum. Due to the unusual features of its script, this manuscript represents a unique and rare example in the early history of Qur’an manuscripts and is an important testimony for the study of the early developments of Arabic as a written language.",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/mia-doha-collection/mia-doha-ms-69-2007-147bd1ab-imageUrl.webp",
+      "thumbnailUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.69.2007.1v.MQ.width-360_mnLlISJ.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://collections.qm.org.qa/en/objects/bifolio-of-a-quran-manuscript-ms692007",
+      "metadata": {
+        "qmId": 2718,
+        "objectName": "Bifolio",
+        "period": "7th century CE",
+        "productionPlace": "Arabian Peninsula",
+        "techniques": [
+          "Calligraphy"
+        ],
+        "titleAR": "صفحة مزدوجة من مخطوطة قرآنية"
+      },
+      "original_imageUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.69.2007.1v.MQ.width-4000.jpg"
+    },
+    {
+      "id": "mia-doha-ms-705-2004",
+      "objectNumber": "MS.705.2004",
+      "title": "Folio of a Qur'an in kufic script",
+      "artist": "Abbasid North Africa",
+      "date": "800 - 900",
+      "year": 800,
+      "medium": "Parchment, Ink, Gold",
+      "dimensions": "23.4 × 32 cm",
+      "category": "manuscript",
+      "description": "The transitional period between the end of the Umayyad caliphate and the rise of the Abbasid power was a key moment for the production of Qur’ans and the development of the arts of the book across the Islamic world. With its carefully executed calligraphic text and strongly angular kufic script, this fragment well illustrates the changes in workflow among scribes from the end of the 2nd century AH/9th CE century onwards. The extreme and precise stretching (mashq) of certain letters (up to 17.5 cm) indicates that the copyist took a substantial amount of time to complete each trait and word. The gold illuminated sura heading shows a medallion of delicate swirling branches with an almost embossed, tri-dimensional effect.",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/mia-doha-collection/mia-doha-ms-705-2004-1ba3fafd-imageUrl.webp",
+      "thumbnailUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.705.2004.Recto.MQ.width-360.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://collections.qm.org.qa/en/objects/folio-of-a-quran-in-kufic-script-ms7052004",
+      "metadata": {
+        "qmId": 3635,
+        "objectName": "Folio",
+        "period": "Abbasid",
+        "productionPlace": "North Africa",
+        "techniques": [
+          "Calligraphy",
+          "Illumination"
+        ],
+        "titleAR": "صفحة من مصحف بالخط الكوفي  "
+      },
+      "original_imageUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.705.2004.Recto.MQ.width-4000.jpg"
+    },
+    {
+      "id": "mia-doha-ms-709-2010",
+      "objectNumber": "MS.709.2010",
+      "title": "Ottoman Navigational Chart of the Mediterranean Coastline",
+      "artist": "Ottoman Türkiye",
+      "date": "1600 - 1625",
+      "year": 1600,
+      "medium": "Paper, Ink, Watercolour",
+      "dimensions": "117.5 × 128 cm",
+      "category": "manuscript",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/mia-doha-collection/mia-doha-ms-709-2010-650632ad-imageUrl.webp",
+      "thumbnailUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.709.2010.12.MQ.width-360.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://collections.qm.org.qa/en/objects/ottoman-navigational-chart-of-the-mediterranean-coastline-ms7092010",
+      "metadata": {
+        "qmId": 3321,
+        "objectName": "Map",
+        "period": "Ottoman",
+        "productionPlace": "Türkiye",
+        "techniques": [
+          "Drawing"
+        ],
+        "titleAR": "مخطط ملاحي عثماني لساحل البحر الأبيض المتوسط"
+      },
+      "original_imageUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.709.2010.12.MQ.width-4000.jpg"
+    },
+    {
+      "id": "mia-doha-ms-709-2010-1",
+      "objectNumber": "MS.709.2010.1",
+      "title": "Ottoman navigational chart of the mediterranean coastline",
+      "artist": "Ottoman Türkiye",
+      "date": "1600 - 1625",
+      "year": 1600,
+      "medium": "Paper, Ink, Watercolour",
+      "dimensions": "117.5 × 128 cm",
+      "category": "manuscript",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/mia-doha-collection/mia-doha-ms-709-2010-1-64d184e0-imageUrl.webp",
+      "thumbnailUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.709.2010.1.MQ.width-360_aDykjkA.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://collections.qm.org.qa/en/objects/ottoman-navigational-chart-of-the-mediterranean-coastline-ms70920101",
+      "metadata": {
+        "qmId": 2734,
+        "objectName": "Map",
+        "period": "Ottoman",
+        "productionPlace": "Türkiye",
+        "techniques": [
+          "Drawing"
+        ],
+        "titleAR": "مخطط ملاحي عثماني لساحل البحر الأبيض المتوسط"
+      },
+      "original_imageUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.709.2010.1.MQ.width-4000.jpg"
+    },
+    {
+      "id": "mia-doha-ms-709-2010-2",
+      "objectNumber": "MS.709.2010.2",
+      "title": "Ottoman Navigational Chart of the Mediterranean Coastline",
+      "artist": "Ottoman Türkiye",
+      "date": "1600 - 1625",
+      "year": 1600,
+      "medium": "Paper, Ink, Watercolour",
+      "dimensions": "119 × 128 cm",
+      "category": "manuscript",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/mia-doha-collection/mia-doha-ms-709-2010-2-7cd51581-imageUrl.webp",
+      "thumbnailUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.709.2010.2.MQ.width-360.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://collections.qm.org.qa/en/objects/ottoman-navigational-chart-of-the-mediterranean-coastline-ms70920102",
+      "metadata": {
+        "qmId": 3322,
+        "objectName": "Map",
+        "period": "Ottoman",
+        "productionPlace": "Türkiye",
+        "techniques": [
+          "Drawing"
+        ],
+        "titleAR": "مخطط ملاحي عثماني لساحل البحر الأبيض المتوسط"
+      },
+      "original_imageUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.709.2010.2.MQ.width-4000.jpg"
+    },
+    {
+      "id": "mia-doha-ms-723-2010",
+      "objectNumber": "MS.723.2010",
+      "title": "Hanging Scroll",
+      "artist": "China, 19th century CE",
+      "date": "1800 - 1899",
+      "year": 1800,
+      "medium": "Ink, Paper",
+      "dimensions": "147.5 × 65 cm",
+      "category": "manuscript",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/mia-doha-collection/mia-doha-ms-723-2010-d22f3506-imageUrl.webp",
+      "thumbnailUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.723.2010-fullres.MQ.width-360.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://collections.qm.org.qa/en/objects/hanging-scroll-ms7232010",
+      "metadata": {
+        "qmId": 3323,
+        "objectName": "Scroll",
+        "period": "19th century CE",
+        "productionPlace": "China",
+        "techniques": [
+          "Calligraphy"
+        ],
+        "titleAR": "لفيفية معلقة"
+      },
+      "original_imageUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.723.2010-fullres.MQ.width-4000.jpg"
+    },
+    {
+      "id": "mia-doha-ms-754-2011",
+      "objectNumber": "MS.754.2011",
+      "title": "Folio of a Qur'an in kufic script",
+      "artist": "Abbasid North Africa",
+      "date": "900 - 1000",
+      "year": 900,
+      "medium": "Parchment, Ink, Gold",
+      "dimensions": "25.8 × 39 cm",
+      "category": "manuscript",
+      "description": "The Abbasid period was a key moment for the development of the arts of the book across the Islamic world and Qur'an manuscripts became the ideal ground for formal and aesthetic experimentation by calligraphers and illuminators. This folio from a dispersed copy of the Qur'an on parchment well illustrates a later phase in the development of the Qur'anic page, which will eventually lead to a return to vertical (codex) format for the page and a more legible calligraphy. In fact, here the calligrapher has adopted a style of the kufic script that appears more legible when compared to earlier examples and shows a stronger vertical elevation. The shape of certain letters, as the curved structure of the lam-alif, notably relates to later examples in New Style script, a form of angular script that was mainly but not exclusively adopted in the Eastern regions of the Islamic world. In this page, it is evident the intention of the calligrapher to give the script a strong presence and an almost pictorial dimension.",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/mia-doha-collection/mia-doha-ms-754-2011-5b172a21-imageUrl.webp",
+      "thumbnailUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.754.2011.1__f.1r.MQ.width-360.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://collections.qm.org.qa/en/objects/folio-of-a-quran-in-kufic-script-ms7542011",
+      "metadata": {
+        "qmId": 3637,
+        "objectName": "Folio",
+        "period": "Abbasid",
+        "productionPlace": "North Africa",
+        "techniques": [
+          "Calligraphy",
+          "Illumination"
+        ],
+        "titleAR": "صفحة من مصحف بالخط الكوفي "
+      },
+      "original_imageUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.754.2011.1__f.1r.MQ.width-4000.jpg"
+    },
+    {
+      "id": "mia-doha-ms-764-2011-5",
+      "objectNumber": "MS.764.2011.5",
+      "title": "Juz' 1 of the Qur'an",
+      "artist": "China, 18th century CE",
+      "date": "1700 - 1900",
+      "year": 1700,
+      "medium": "Ink, Pigment, Gold, Paper",
+      "dimensions": "28.5 × 20 cm",
+      "category": "manuscript",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/mia-doha-collection/mia-doha-ms-764-2011-5-640cb117-imageUrl.webp",
+      "thumbnailUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.764.2011.5.MQ.width-360.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://collections.qm.org.qa/en/objects/juz-1-of-the-quran-ms76420115",
+      "metadata": {
+        "qmId": 3638,
+        "objectName": "Manuscript",
+        "period": "18th century CE",
+        "productionPlace": "China",
+        "techniques": [
+          "Bookbinding",
+          "Illumination",
+          "Calligraphy"
+        ],
+        "titleAR": "الجزء الأول من القرآن "
+      },
+      "original_imageUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.764.2011.5.MQ.width-4000.jpg"
+    },
+    {
+      "id": "mia-doha-ms-768-2011",
+      "objectNumber": "MS.768.2011",
+      "title": "Folio from a Qur'an in gold kufic script",
+      "artist": "Abbasid North Africa",
+      "date": "900 - 1000",
+      "year": 900,
+      "medium": "Parchment, Ink, Gold, Gouache",
+      "dimensions": "14.7 × 21.8 cm",
+      "category": "manuscript",
+      "description": "During the first centuries of the 'Abbasid caliphate, the use of decorative devices and illumination on Qur'anic pages progressively increased and manuscripts begun to be populated with illuminated sura headings, medallions, verse markers, richly illuminated opening and closing pages. The most lavish decoration of all was the complete transcription of the Qur'anic text using gold and this folio originally belonged to one of the very few Qur'an manuscripts which were entirely copied by using gold ink (chrysography, lit. golden writing). Written using the kufic script typical of the first centuries of the 'Abbasid period, the complete manuscript was most probably divided into several volumes. The composition of this Qur'an must have been lengthy and laborious, chrysography being a technique that requires different stages of work, hence the rarity of such manuscript exemplars. The extensive use of precious material indicates that this was most likely a commission for a very high-profile, perhaps even royal, patron. Several pages from this manuscript are nowadays dispersed among several public and private collections of Islamic Art.",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/mia-doha-collection/mia-doha-ms-768-2011-e397ea4c-imageUrl.webp",
+      "thumbnailUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.768.2011.1__f.1v.MQ.width-360.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://collections.qm.org.qa/en/objects/folio-from-a-quran-in-gold-kufic-script-ms7682011",
+      "metadata": {
+        "qmId": 3639,
+        "objectName": "Folio",
+        "period": "Abbasid",
+        "productionPlace": "North Africa",
+        "techniques": [
+          "Calligraphy",
+          "Illumination"
+        ],
+        "titleAR": "صفحة من مخطوطة قرآنية بالخط الكوفي المذهب"
+      },
+      "original_imageUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.768.2011.1__f.1v.MQ.width-4000.jpg"
+    },
+    {
+      "id": "mia-doha-ms-780-2011",
+      "objectNumber": "MS.780.2011",
+      "title": "A Bifolio from the Mushaf al-Hadinah, the \"Nurse's Qur'an\"",
+      "artist": "Ali Al Warraq",
+      "date": "1020",
+      "year": 1020,
+      "medium": "Parchment, Ink",
+      "dimensions": "44.8 × 60.7 cm",
+      "category": "manuscript",
+      "description": "This bifolio in vellum, written with brown ink and red, blue, and green vocalisation marks, was once part of a copy of the Qur’an known as the Mushaf al-Hadina (the ‘Nurse’s Qur’an’). It is named after its patron, the nurse of al-Mu‘izz bin Badis, ruler of the Zirid dynasty of Ifriqiya who reigned over the central Maghreb region from 406 to 454 AH / 1016-1062 CE. The copy was recorded as a waqf (‘endowment’) in the Great Mosque of Qayrawan in 410 AH / 1020 CE. The use of a Western Kufic script, with bold and angular cursive letters, is in line with the Eastern Kufic script (also called ‘broken cursive’), appearing the same century in Iran and Mesopotamia not only in manuscripts but also on ceramics and textiles. Its female patron and the rarity of documents and artefacts from the Zirid period give it an even more distinctive value.",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/mia-doha-collection/mia-doha-ms-780-2011-737d2341-imageUrl.webp",
+      "thumbnailUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.780.2011_Verso.MQ.width-360.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://collections.qm.org.qa/en/objects/a-bifolio-from-the-mushaf-al-hadinah-the-nurses-quran-ms7802011",
+      "metadata": {
+        "qmId": 3640,
+        "objectName": "Bifolio",
+        "period": "Zirid",
+        "productionPlace": "Tunisia",
+        "techniques": [
+          "Calligraphy"
+        ],
+        "titleAR": "صفحة مزدوجة من مصحف الحاضنة"
+      },
+      "original_imageUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.780.2011_Verso.MQ.width-4000.jpg"
+    },
+    {
+      "id": "mia-doha-ms-786-2011",
+      "objectNumber": "MS.786.2011",
+      "title": "Ottoman Manuscript of the Qur'an",
+      "artist": "Fatima Bint Abdullah, Manal Kucuk",
+      "date": "1843",
+      "year": 1843,
+      "medium": "Paper, Ink, Gouache, Gold, Leather",
+      "dimensions": "18 × 12 × 2 cm",
+      "category": "manuscript",
+      "description": "This copy of the Qur’an is characteristic of the production of Qur’ans in 13th-century AH / 19th-century CE Turkey, bearing gold double frontispieces and decorated in a rococo style with blue and pink stylized vegetation. Although Qur’ans are mainly aniconic in the Islamic world, some examples of Ottoman Qur’ans copied in imperial workshops like this example, bear depictions of the holy sites, showing the importance given to Mecca and Medina by the Ottoman court, especially knowing the role of the sultan as khadim al-Haramayn (‘Custodian of the two holy cities’) since the conquest of the Hijaz in 922 AH / 1516 CE. The Hajj caravan from Damascus and Cairo to Mecca and Medina would also transport Qur’ans among other gifts to the holy sanctuaries. In this manuscript, the representation of Mecca and Medina are enclosed into small cartouches on the frontispiece and use a bird’s eye view perspective influenced by European prints and reminiscent of the adoption of three-dimensional pictorial space from the 12th century AH / 18th century CE onwards, as seen on representations of naturalistic landscapes in interiors of Ottoman houses. This copy of the Qur’an is signed and dated by two women: a copyist named Fatima bint Abdullah, and the illuminator Manal Kucuk. It demonstrates the presence and role of women in the production of manuscripts in workshops.",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/mia-doha-collection/mia-doha-ms-786-2011-682dd36f-imageUrl.webp",
+      "thumbnailUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.786.2011-4.MQ.width-360.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://collections.qm.org.qa/en/objects/ottoman-manuscript-of-the-quran-ms7862011",
+      "metadata": {
+        "qmId": 2735,
+        "objectName": "Manuscript",
+        "period": "Ottoman",
+        "productionPlace": "Saudi Arabia",
+        "techniques": [
+          "Bookbinding",
+          "Calligraphy",
+          "Illumination",
+          "Painting"
+        ],
+        "titleAR": "مخطوطة عثمانية من القرآن"
+      },
+      "original_imageUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.786.2011-4.MQ.width-4000.jpg"
+    },
+    {
+      "id": "mia-doha-ms-8-2006",
+      "objectNumber": "MS.8.2006",
+      "title": "Folio from the so-called 'Blue Qur'an'",
+      "artist": "Umayyad of al-Andalus Spain",
+      "date": "800 - 950",
+      "year": 800,
+      "medium": "Parchment, Gold, Silver, Dye",
+      "dimensions": "28 × 38 cm",
+      "category": "manuscript",
+      "description": "This folio once belonged to the so-called 'Blue Qur’an', by far one of the most celebrated Qur’an manuscripts of the entire Islamic World. The text in stretched kufic script has been copied in gold ink on blue-dyed parchment; the striking contrast of the gleaming gold ink against the deep blue page makes this manuscript a true masterpiece of minimalistic beauty. It has been suggested that this precious manuscript would have counted over 600 folios, probably divided into several volumes, once completed. Scholars are still debating around the provenance and the dating of this unique manuscript. Today, most of the remaining pages are preserved in Raqqada, a few kilometres from Qayrawan (present-day Tunisia), others are scattered in various museum collections worldwide.",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/mia-doha-collection/mia-doha-ms-8-2006-4d64165f-imageUrl.webp",
+      "thumbnailUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.8.2006__001-f.1v.MQ.width-360_VlhGkDH.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://collections.qm.org.qa/en/objects/folio-from-the-so-called-blue-quran-ms82006",
+      "metadata": {
+        "qmId": 2127,
+        "objectName": "Folio",
+        "period": "Umayyad of al-Andalus",
+        "productionPlace": "Spain",
+        "techniques": [
+          "Calligraphy"
+        ],
+        "titleAR": "صفحة من المصحف الأزرق"
+      },
+      "original_imageUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.8.2006__001-f.1v.MQ.width-4000_jHa7LnQ.jpg"
+    },
+    {
+      "id": "mia-doha-ms-809-2011",
+      "objectNumber": "MS.809.2011",
+      "title": "Illuminated Page from the Divan of Sultan Husayn Mirza Bayqara",
+      "artist": "Timurid Afghanistan",
+      "date": "1470 - 1506",
+      "year": 1470,
+      "medium": "Gouache, Gold, Coloured paper",
+      "dimensions": "23.9 × 15.5 cm",
+      "category": "manuscript",
+      "description": "This beautiful folio comes from a 9th century AH/late 15th-century CE manuscript of poetry by the last Timurid ruler, Sultan Husayn Bayqara (r. 873-911 AH/1469-1506 CE). The volume is an exceptional testimony of the refined culture of the court of Sultan Husayn in Herat during the last decades of the century and of the artistic skills of the master calligraphers working in the Timurid royal workshop (kitabkhana). The folio, dyed in indigo, presents margins richly sprinkled with gold and a masterfully illuminated heading. The central rectangular panel (matn) contains the poetic text, which has been executed in accomplished nasta'liq script in découpage technique (cut-out paper) in cream white paper mounted onto the deep blue colour of the background. The poems on this folio are short odes in rhyming couplets (ghazal) in which the poet Husayni (the pen-name of Sultan Husayn) talks about his unrequited love. They have been composed in Chagatay Turkish, a language which obtained literary dignity thanks to the work of 'Ali Shir Nava'i, prominent Herati poet and politician at the court of Sultan Husayn.",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/mia-doha-collection/mia-doha-ms-809-2011-2d458a22-imageUrl.webp",
+      "thumbnailUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.809.2011-1.MQ.width-360.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://collections.qm.org.qa/en/objects/illuminated-page-from-the-divan-of-sultan-husayn-mirza-bayqara-ms8092011",
+      "metadata": {
+        "qmId": 3325,
+        "objectName": "Folio",
+        "period": "Timurid",
+        "productionPlace": "Afghanistan",
+        "techniques": [
+          "Decoupage",
+          "Calligraphy"
+        ],
+        "titleAR": "صفحة مزخرفة من ديوان السلطان حسين ميرزا ​​بايقرا"
+      },
+      "original_imageUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.809.2011-1.MQ.width-4000.jpg"
+    },
+    {
+      "id": "mia-doha-ms-816-2011",
+      "objectNumber": "MS.816.2011",
+      "title": "Calligraphic horse with the Throne Verse",
+      "artist": "Deccan Sultanates India",
+      "date": "1690 - 1710",
+      "year": 1690,
+      "medium": "Paper, Gouache, Gold",
+      "dimensions": "26.2 × 17.1 cm",
+      "category": "painting",
+      "description": "Among the many Qur'anic passages employed to decorate architecture and objects of daily used of much smaller scale across the Islamic world up to the present days, the Throne Verse (Ayat al-Kursi, Sura al-Baqara, verse 255) holds a very special place, being often memorised and recited by Muslims. The Throne Verse declares the incomparable, unmatching power of God, it is reputed to be particularly powerful and auspicious, hence it is often recited aloud to ward off evil or displayed on a variety of objects. In this folio, the master calligrapher and illuminator has turned the verse into the shape of a horse, quite a rare choice even within the field of zoomorphic calligraphy. In fact, Arabic zoomorphic calligraphy shows a predilection for bird- and lion-shaped compositions, allusions respectively to the paradise and God (and references to Qur'anic passages), and, in certain contexts, to 'Ali. According to modern scholars, the choice to depicts a horse might refer to the content of the Throne Verse, with the rather small rider representing the human soul. Some compositional incongruities between the horse and its rider suggest that the latter was perhaps added at some point after the completion of the calligraphic horse. The folio bears two inscriptions in black ink, partly smudged and illegible, that might have been added at a second stage. Beautifully penned in gold ink, the text (from which a couple of words are missing) starts from the head of the horse and runs diagonally to its tail outlining the profile of the horse figure and filling its body.",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/mia-doha-collection/mia-doha-ms-816-2011-8c9d7955-imageUrl.webp",
+      "thumbnailUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.816.2001.1__f.1-r.MQ.width-360.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://collections.qm.org.qa/en/objects/calligraphic-horse-with-the-throne-verse-ms8162011",
+      "metadata": {
+        "qmId": 2736,
+        "objectName": "Folio",
+        "period": "Deccan Sultanates",
+        "productionPlace": "India",
+        "techniques": [
+          "Illustration",
+          "Illumination",
+          "Calligraphy"
+        ],
+        "titleAR": "حصان بالخط العربي لآية الكرسي"
+      },
+      "original_imageUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.816.2001.1__f.1-r.MQ.width-4000.jpg"
+    },
+    {
+      "id": "mia-doha-ms-9-2006",
+      "objectNumber": "MS.9.2006",
+      "title": "Copy of the Qur'an from China",
+      "artist": "China, 17th century CE",
+      "date": "1600 - 1900",
+      "year": 1600,
+      "medium": "Paper, Ink, Watercolour, Gold, Leather",
+      "dimensions": "34.5 × 23.5 × 7 cm",
+      "category": "manuscript",
+      "description": "This manuscript is a fine example of Qur’an production in China, most likely produced during the Qing dynasty (1644-1911 CE), This Qur’an manuscript consists of 297 leaves written in Sini muhaqqaq script, which was distinctive to that region. The use of diacritics and full vocalization is seen in the text; to differentiate, the verses are marked with red circles/dots, and the chapter headings are in red ink indicating the sura and the number of verses. The two pages shown are the opening pages of the Qur’an; the page on the right is Sura al-Fatihah (The Opener) and on the left Sura al-Baqarah (The Cow). The pages are beautifully bordered with Chinese floral motifs in vibrant colors such as red, green and gold to stand out. Since the latter mentioned pages are the opening of the Qur’an one can notice that at the top of each border there is a round design in swirling letters with the words - قال الله (Allah states) on the left, and - جل جلاله ( The Almighty) on the right. The Chinese pagodas is what makes this manuscript unique as well, the words within the pagodas on each corner say Qur’an Kareem (noble Qur’an). Since the 2nd century AH/8th century CE, trade played an integral role in the spread of Islam and its culture in China, and Qur’an production became an important aspect of that. Unlike this example, several Chinese Qur’an manuscripts were often produced in thirty-volume books (juz’/ajza') instead of a single volume. The Chinese artistic tradition strongly inspired the style of decoration as many Qur’ans include similar floral patterns and colour schemes, and Chinese symbols such as pagodas and lanterns. This was also a way to make these manuscripts distinctive to their region.",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/mia-doha-collection/mia-doha-ms-9-2006-800fefee-imageUrl.webp",
+      "thumbnailUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.9.2006.layers.MQ.width-360.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://collections.qm.org.qa/en/objects/copy-of-the-quran-from-china-ms92006",
+      "metadata": {
+        "qmId": 2712,
+        "objectName": "Manuscript",
+        "period": "17th century CE",
+        "productionPlace": "China",
+        "techniques": [
+          "Bookbinding",
+          "Calligraphy",
+          "Illustration",
+          "Illumination"
+        ],
+        "titleAR": "نسخة من القرآن الكريم من الصين"
+      },
+      "original_imageUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/MS.9.2006.layers.MQ.width-4000.jpg"
+    },
+    {
+      "id": "mia-doha-pa-18-2010",
+      "objectNumber": "PA.18.2010",
+      "title": "Portrait of Fath 'Ali Shah Qajar",
+      "artist": "Mihr 'Ali",
+      "date": "1816",
+      "year": 1816,
+      "medium": "Oil paint, Canvas",
+      "dimensions": "162 × 110 cm",
+      "category": "painting",
+      "description": "Monumental royal painting from the early Qajar era merges in original ways the ancient, pre-Islamic Iranian tradition of large-scale idealised portraits of the king with the Western-imported technique of oil painting, progressively introduced at court during in the late Safavid and in the Zandi periods, as in the case of this official portrait of Fath 'Ali Shah, second ruler of the Qajar dynasty. During his reign (1212-1250 AH/1797-1834 CE) Iran and the world underwent great changes, and this is reflected also in the art produced during this period. The shah is depicted wearing a heavily bejewelled parure and a feathered crown encrusted with precious stones and pearls. He is sitting on the floor, resting on a rug with pearl bordure, his back supported by a large bolster embroidered with pearls. In his hands, Fath 'Ali Shah holds a ceremonial mace and, on his lap, rests a bejewelled sword, a symbol of power and authority that regularly features in his portraits. This painting has been attributed to the court painter Mihr 'Ali, one of the most prominent painters of his time and a favourite by Fath 'Ali Shah. His royal portraits capture not only the grandeur and the majesty of the shah and his court; they were also instrumental in conveying precise messages to their onlookers and so used as political tools. In fact, the portraits of Fath 'Ali Shah were mainly produced to be sent abroad as gifts to ambassadors, foreign monarchs, and governments to show the wealth and power of the Persian crown and its people in a period during which Iran became a major political target of the expansionist plans of European nations such as Britain, France, and tsarist Russia. A relatively small number of large royal portraits of Fath 'Ali Shah are preserved in Western public institutions, the majority being still in Iran or in private collections. For long neglected by historians of Islamic Art, since a couple of decades Qajar art and, in particular, painting have stirred new interest, gaining popularity through the work of scholars and the practices of contemporary Iranian artists. Its rediscovery has shed new light onto a complex historical period, during which Iran entered the global arena of modernity.",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/mia-doha-collection/mia-doha-pa-18-2010-48c8114d-imageUrl.webp",
+      "thumbnailUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/PA.18.2010__001.MQ.width-360.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://collections.qm.org.qa/en/objects/portrait-of-fath-ali-shah-qajar-pa182010",
+      "metadata": {
+        "qmId": 3661,
+        "objectName": "Painting",
+        "period": "Qajar",
+        "productionPlace": "Iran",
+        "techniques": [
+          "Painting"
+        ],
+        "titleAR": "بورتريه فتح علي شاه قاجار "
+      },
+      "original_imageUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/PA.18.2010__001.MQ.width-4000.jpg"
+    },
+    {
+      "id": "mia-doha-pa-2-1997",
+      "objectNumber": "PA.2.1997",
+      "title": "Portrait of a European Gentleman",
+      "artist": "Safavid Iran",
+      "date": "1650 - 1700",
+      "year": 1650,
+      "medium": "Oil paint, Canvas",
+      "dimensions": "220 × 137 × 5 cm",
+      "category": "painting",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/mia-doha-collection/mia-doha-pa-2-1997-82dbb155-imageUrl.webp",
+      "thumbnailUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/PA.2.1997_001.MQ.width-360_UDQkmxg.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://collections.qm.org.qa/en/objects/portrait-of-a-european-gentleman-pa21997",
+      "metadata": {
+        "qmId": 2779,
+        "objectName": "Painting",
+        "period": "Safavid",
+        "productionPlace": "Iran",
+        "techniques": [
+          "Oil painting"
+        ],
+        "titleAR": "لوحة شخصية لنبيل أوروبي"
+      },
+      "original_imageUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/PA.2.1997_001.MQ.width-4000.jpg"
+    },
+    {
+      "id": "mia-doha-pa-3-2004",
+      "objectNumber": "PA.3.2004",
+      "title": "Portrait of Sheikh Ali Mirza",
+      "artist": "Mihr 'Ali",
+      "date": "1810 - 1815",
+      "year": 1810,
+      "medium": "Oil paint, Canvas",
+      "dimensions": "174 × 100 × 2.5 cm",
+      "category": "painting",
+      "description": "This oil painting depicts Shaykh ‘Ali Mirza (b. 1211-1263 AH / 1795-1846-7 CE), ninth son of Qajar ruler Fath ‘Ali Shah (r. 1212-1250 AH / 1797-1834 CE). This portrait and those of Fath ‘Ali Shah of the same period correspond to the development of official portraiture in Iran, mainly executed as diplomatic gifts to rulers of Europe, India and Russia but which also decorated Qajar palaces like the Golestan, as stand-ins for the ruler himself in public processions. The image of masculinity takes on the symbolization of legitimacy and the manifestation of the ruler’s authority, featuring traditional elements of Persian painting while drawing from European pictorial codes the concept of a single model portrait on a life-size canvas. This painting goes in pair with a portrait of one of his brothers, Hasan ‘Ali Mirza (PA.4), both standing, wearing a crown and other royal emblems of official portraits: the lengthy beard, the stern gaze and the other luxurious regalia. This painting was certainly commissioned as a political statement before the accession of Muhammad Shah who arrested all his brothers to avoid any coup, sending them to various prisons.",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/mia-doha-collection/mia-doha-pa-3-2004-b411f7cf-imageUrl.webp",
+      "thumbnailUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/PA.3_002.MQ.width-360.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://collections.qm.org.qa/en/objects/portrait-of-sheikh-ali-mirza-pa32004",
+      "metadata": {
+        "qmId": 2780,
+        "objectName": "Painting",
+        "period": "Qajar",
+        "productionPlace": "Iran",
+        "techniques": [
+          "Oil painting"
+        ],
+        "titleAR": "لوحة شخصية للشيخ علي ميرزا"
+      },
+      "original_imageUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/PA.3_002.MQ.width-4000.jpg"
+    },
+    {
+      "id": "mia-doha-pa-4-2004",
+      "objectNumber": "PA.4.2004",
+      "title": "Portrait of Hasan Ali Mirza",
+      "artist": "Mihr 'Ali",
+      "date": "1810 - 1815",
+      "year": 1810,
+      "medium": "Oil paint, Canvas",
+      "dimensions": "178.9 × 101.7 × 2.8 cm",
+      "category": "painting",
+      "description": "This life-sized oil painting of Fath ‘Ali Shah’s sixth son, Hasan Ali Mirza Shuja al-Sultana (1203-1270 AH/1789-1853 CE) is an excellent example of the Qajar dynasty’s use of imperial imagery to reinforce their political power. After Agha Muhammad Khan (1154-1212 AH/1742-1797 CE) established Qajar rule in 1208 AH/1794 CE, he and his immediate successor, Fath ‘Ali Shah (1185-1250 AH/1772-1834 CE) embarked on a program of creating an image of power for the new Qajar reign. Agha Muhammad was a eunuch, tribal leader and battle-scared warrior whose wizened face often invoked fear or disgust in those who beheld his terrifying countenance. Therefore, a more idealized vision of manly rule was created for the Qajars, one that symbolically reinforced the imperial legitimacy of their rule. For instance, the long black beards common to the portraits of Qajar men are indicative of the manliness of the Qajar rulers – a point that needed to be reinforced because the founder of the dynasty was a beardless eunuch. Furthermore, the elaborate court regalia depicted as colorful silk tunics embroidered with pearls and jewels and embellished with further valuable ornaments, such as jeweled belts and armbands and towering crowns, reinforced the image of imperial wealth. The sheathed dagger presented in portraits of Qajar rulers also indicated a veiled threat of violence to both foreign powers and possible rebels within the Qajar realms. This particular portrait, of Hasan Ali Mirza Shuja al-Sultana, is typical of the genre.",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/mia-doha-collection/mia-doha-pa-4-2004-9ebc4d77-imageUrl.webp",
+      "thumbnailUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/PA.4_002.MQ.width-360_lXQzlXs.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://collections.qm.org.qa/en/objects/portrait-of-hasan-ali-mirza-pa42004",
+      "metadata": {
+        "qmId": 2781,
+        "objectName": "Painting",
+        "period": "Qajar",
+        "productionPlace": "Iran",
+        "techniques": [
+          "Oil painting"
+        ],
+        "titleAR": "لوحة شخصية لحسن علي ميرزا"
+      },
+      "original_imageUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/PA.4_002.MQ.width-4000.jpg"
+    },
+    {
+      "id": "mia-doha-pa-66-1998",
+      "objectNumber": "PA.66.1998",
+      "title": "Portrait of an Armenian Lady",
+      "artist": "Safavid Iran",
+      "date": "1650 - 1700",
+      "year": 1650,
+      "medium": "Oil paint, Canvas",
+      "dimensions": "163.5 × 90 cm",
+      "category": "painting",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/mia-doha-collection/mia-doha-pa-66-1998-26bc30bc-imageUrl.webp",
+      "thumbnailUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/PA.66.1998_001.MQ.width-360.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://collections.qm.org.qa/en/objects/portrait-of-an-armenian-lady-pa661998",
+      "metadata": {
+        "qmId": 3334,
+        "objectName": "Painting",
+        "period": "Safavid",
+        "productionPlace": "Iran",
+        "techniques": [
+          "Oil painting"
+        ],
+        "titleAR": "صورة سيدة أرمينية"
+      },
+      "original_imageUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/PA.66.1998_001.MQ.width-4000.jpg"
+    },
+    {
+      "id": "mia-doha-pa-70-2010",
+      "objectNumber": "PA.70.2010",
+      "title": "Portrait of a Lady",
+      "artist": "Mirza Baba",
+      "date": "1790 - 1810",
+      "year": 1790,
+      "medium": "Oil paint, Canvas, Wood",
+      "dimensions": "135.5 × 123.5 × 4 cm",
+      "category": "painting",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/mia-doha-collection/mia-doha-pa-70-2010-ccb6e378-imageUrl.webp",
+      "thumbnailUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/PA.70.2010-1.MQ.width-360.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://collections.qm.org.qa/en/objects/portrait-of-a-lady-pa702010",
+      "metadata": {
+        "qmId": 3335,
+        "objectName": "Painting",
+        "period": "Zand",
+        "productionPlace": "Iran",
+        "techniques": [
+          "Oil painting"
+        ],
+        "titleAR": "صورة لسيدة"
+      },
+      "original_imageUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/PA.70.2010-1.MQ.width-4000.jpg"
+    },
+    {
+      "id": "mia-doha-pa-73-2011",
+      "objectNumber": "PA.73.2011",
+      "title": "Georgian Youth",
+      "artist": "Safavid Iran",
+      "date": "1670 - 1690",
+      "year": 1670,
+      "medium": "Oil paint, Canvas",
+      "dimensions": "157.5 × 81 × 3 cm",
+      "category": "painting",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/mia-doha-collection/mia-doha-pa-73-2011-47e6e6be-imageUrl.webp",
+      "thumbnailUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/PA.73.MQ.width-360_uSTzChv.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://collections.qm.org.qa/en/objects/georgian-youth-pa732011",
+      "metadata": {
+        "qmId": 2782,
+        "objectName": "Painting",
+        "period": "Safavid",
+        "productionPlace": "Iran",
+        "techniques": [
+          "Painting"
+        ],
+        "titleAR": "شاب جورجي"
+      },
+      "original_imageUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/PA.73.MQ.width-4000.jpg"
+    },
+    {
+      "id": "mia-doha-pa-74-2011",
+      "objectNumber": "PA.74.2011",
+      "title": "Georgian Maiden",
+      "artist": "Safavid Iran",
+      "date": "1670 - 1690",
+      "year": 1670,
+      "medium": "Oil paint, Canvas",
+      "dimensions": "157.5 × 81 × 3 cm",
+      "category": "painting",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/mia-doha-collection/mia-doha-pa-74-2011-9ab61d51-imageUrl.webp",
+      "thumbnailUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/PA.74.MQ.width-360_kpAWtiD.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://collections.qm.org.qa/en/objects/georgian-maiden-pa742011",
+      "metadata": {
+        "qmId": 2783,
+        "objectName": "Painting",
+        "period": "Safavid",
+        "productionPlace": "Iran",
+        "techniques": [
+          "Painting"
+        ],
+        "titleAR": "شابة جورجية"
+      },
+      "original_imageUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/PA.74.MQ.width-4000.jpg"
+    },
+    {
+      "id": "mia-doha-pa-83-2011-15",
+      "objectNumber": "PA.83.2011.15",
+      "title": "Preparatory Painting Depicting the Battle of Pollilur",
+      "artist": "India, 18th century CE",
+      "date": "1780 - 1802",
+      "year": 1780,
+      "medium": "Oil paint, Paper",
+      "dimensions": "127.5 × 127 × 3.5 cm",
+      "category": "painting",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/mia-doha-collection/mia-doha-pa-83-2011-15-25c485ba-imageUrl.webp",
+      "thumbnailUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/PA.83.2011.15.MQ.width-360_1n4ZodP.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://collections.qm.org.qa/en/objects/preparatory-painting-depicting-the-battle-of-pollilur-pa83201115",
+      "metadata": {
+        "qmId": 2976,
+        "objectName": "Painting",
+        "period": "18th century CE",
+        "productionPlace": "India",
+        "techniques": [
+          "Painting"
+        ],
+        "titleAR": "لوحة تمهيدية تصور معركة بوليلور"
+      },
+      "original_imageUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/PA.83.2011.15.MQ.width-4000.jpg"
+    },
+    {
+      "id": "mia-doha-qm-2017-0365",
+      "objectNumber": "QM.2017.0365",
+      "title": "Folio from a Qur'an in gold Kufic Script",
+      "artist": "Umayyad of al-Andalus Tunisia",
+      "date": "800 - 1000",
+      "year": 800,
+      "medium": "Vellum, Dye, Ink, Gold, Silver",
+      "dimensions": "276 × 357 mm",
+      "category": "manuscript",
+      "description": "This folio belongs to the famous Blue Qur’an. Scholars have dated it to the end of the 2nd-middle of the 4th century AH (9th to middle of the 10th century CE) and attributed it to Qairouan (Tunisia) or Umayyad Spain. This page shows fifteen lines of text in Kufic script and a large rosette in now oxidised silver at the top right. It marks major text divisions. The other side shows only traces of faded writing. The calligrapher gave the Kufic script a severe and controlled elegance by balancing between short and elongated letters. The Blue Qur’an is considered one of the most luxurious surviving early Qur’an manuscripts. It pairs gold calligraphy against a deep indigo background on vellum. Scholars suggest the use of gold on blue dye may have been inspired by Byzantine manuscripts. Comparisons with early medieval manuscripts from Iberia, such as Bibles, and later Syriac examples have also been drawn to suggest other possible models. The original manuscript likely had about 600 folios. Today, only 100 survive.",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/mia-doha-collection/mia-doha-qm-2017-0365-082c1aa3-imageUrl.webp",
+      "thumbnailUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/QM.2017.0365.1__f.1r.width-360.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://collections.qm.org.qa/en/objects/folio-from-a-quran-in-gold-kufic-script-qm20170365",
+      "metadata": {
+        "qmId": 4029,
+        "objectName": "Folio",
+        "period": "Umayyad of al-Andalus",
+        "productionPlace": "Tunisia",
+        "techniques": [
+          "Calligraphy"
+        ],
+        "titleAR": "صفحة من القرآن الكريم مكتوبة بالخط الكوفي الذهبي"
+      },
+      "original_imageUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/QM.2017.0365.1__f.1r.width-4000.jpg"
+    },
+    {
+      "id": "mia-doha-qm-2017-0366",
+      "objectNumber": "QM.2017.0366",
+      "title": "Four Folio from a Rasulid Qur'an",
+      "artist": "Rasulid Yemen",
+      "date": "1300 - 1400",
+      "year": 1300,
+      "medium": "Paper, Ink, Gold, Gouache",
+      "dimensions": "39.2 × 31.8 cm",
+      "category": "manuscript",
+      "description": "",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/mia-doha-collection/mia-doha-qm-2017-0366-5adb6201-imageUrl.webp",
+      "thumbnailUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/QM.2017.0366.1.MQ.width-360.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://collections.qm.org.qa/en/objects/four-folio-from-a-rasulid-quran-qm20170366",
+      "metadata": {
+        "qmId": 3356,
+        "objectName": "Folio",
+        "period": "Rasulid",
+        "productionPlace": "Yemen",
+        "techniques": [
+          "Calligraphy",
+          "Illumination"
+        ],
+        "titleAR": "أربع صفحات من قرآن رسولي"
+      },
+      "original_imageUrl": "https://dgcollectionprod.blob.core.windows.net/media/images/QM.2017.0366.1.MQ.width-4000.jpg"
+    }
+  ]
+}

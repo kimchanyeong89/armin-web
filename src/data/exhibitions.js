@@ -6930,5 +6930,113 @@ export const exhibitions = [
     pastExhibitions: [],
     exhibitions: []
   },
+  {
+    id: "mali-lima",
+    name_ko: "리마 미술관",
+    name: "Museo de Arte de Lima",
+    city: "Lima",
+    country: "Peru",
+    latitude: -12.0599,
+    longitude: -77.0366,
+    description_ko: "1872년 리마 국제박람회장으로 지어진 엑스포시시온 궁전에 자리한 페루 대표 미술관. 잉카 이전 직물과 식민지 시대 회화부터 공화국기 아카데미즘, 사진, 동시대 미술까지 페루 미술 3천 년을 아우른다.",
+    description: "Peru's foremost art museum, housed in the 1872 Palacio de la Exposición, with a collection spanning 3,000 years of Peruvian art — from pre-Columbian textiles and colonial painting to Republican-era academicism, photography and contemporary work.",
+    representativeImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/mali-lima-collection/mali-lima-25-57bf8643-imageUrl.webp",
+    permanentExhibitions: [
+      { id: "mali-lima-collection", name: "Collection", name_en: "Collection", title: "Museo de Arte de Lima — Collection", title_en: "Museo de Arte de Lima — Collection", description: "6,721점 — 드로잉3372·회화1609·사진1549·판화191.", description_en: "6,721 works — drawing, painting, photograph, print.", startDate: "Permanent", endDate: "Permanent", collectionFile: "mali-lima-collection.json" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    exhibitions: []
+  },
+  {
+    id: "mnba-santiago",
+    name_ko: "칠레 국립미술관",
+    name: "Museo Nacional de Bellas Artes, Santiago",
+    city: "Santiago",
+    country: "Chile",
+    latitude: -33.4356,
+    longitude: -70.6431,
+    description_ko: "1880년 문을 연 라틴아메리카 최초의 미술관. 산티아고 파르케 포레스탈의 보자르 양식 궁전에서 식민지 시대 종교화와 힐 데 카스트로의 독립기 초상부터 동시대 사진까지, 칠레 미술 두 세기를 한자리에서 보여준다.",
+    description: "Chile's national fine-arts museum, founded in 1880 and regarded as Latin America's first art museum, housed in the beaux-arts Palacio de Bellas Artes in Parque Forestal — from viceregal colonial painting and Gil de Castro's independence-era portraits to two centuries of Chilean painting, prints and photography.",
+    representativeImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/mnba-santiago-collection/mnba-santiago-2-1-9cad2dd6-imageUrl.webp",
+    permanentExhibitions: [
+      { id: "mnba-santiago-collection", name: "Collection", name_en: "Collection", title: "Museo Nacional de Bellas Artes, Santiago — Collection", title_en: "Museo Nacional de Bellas Artes, Santiago — Collection", description: "2,195점 — 회화1006·판화482·드로잉475·사진197·혼합매체27·영상8.", description_en: "2,195 works — painting, print, drawing, photograph, mixed_media_2d, video.", startDate: "Permanent", endDate: "Permanent", collectionFile: "mnba-santiago-collection.json" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    exhibitions: []
+  },
+  {
+    id: "moca-busan",
+    name_ko: "부산현대미술관",
+    name: "Museum of Contemporary Art Busan",
+    city: "Busan",
+    country: "South Korea",
+    latitude: 35.1049,
+    longitude: 128.9416,
+    description_ko: "낙동강 하구 을숙도에 2018년 문을 연 부산 시립 현대미술관. 백남준부터 빌 비올라까지, 뉴미디어와 영상, 생태를 화두로 삼은 동시대 미술을 소장하고 있다.",
+    description: "Busan's municipal contemporary art museum, opened in 2018 on Eulsukdo Island in the Nakdong River estuary. Its collection centers on new media, video, and ecology-minded contemporary art, from Nam June Paik to Bill Viola.",
+    representativeImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/moca-busan-collection/moca-busan-5917-8b7eb886-imageUrl.webp",
+    permanentExhibitions: [
+      { id: "moca-busan-collection", name: "Collection", name_en: "Collection", title: "Museum of Contemporary Art Busan — Collection", title_en: "Museum of Contemporary Art Busan — Collection", description: "172점 — 영상121·회화21·사진12·드로잉9·혼합매체8·판화1.", description_en: "172 works — video, painting, photograph, drawing, mixed_media_2d, print.", startDate: "Permanent", endDate: "Permanent", collectionFile: "moca-busan-collection.json" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    exhibitions: []
+  },
+  {
+    id: "njpac",
+    name_ko: "백남준아트센터",
+    name: "Nam June Paik Art Center",
+    city: "Yongin",
+    country: "South Korea",
+    latitude: 37.268,
+    longitude: 127.1097,
+    description_ko: "비디오 아트의 선구자 백남준을 기리는 미술관. 백남준의 드로잉과 비디오 작품은 물론 플럭서스 시절 퍼포먼스를 담은 기록 사진까지 두루 소장하고 있다.",
+    description: "Museum dedicated to video-art pioneer Nam June Paik, holding his drawings and video works alongside Fluxus-era performance photographs by Manfred Leve and Manfred Montwe.",
+    representativeImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/njpac-collection/njpac-2-1fa18ecf-imageUrl.webp",
+    permanentExhibitions: [
+      { id: "njpac-collection", name: "Collection", name_en: "Collection", title: "Nam June Paik Art Center — Collection", title_en: "Nam June Paik Art Center — Collection", description: "172점 — 사진113·회화48·드로잉8·영상3.", description_en: "172 works — photograph, painting, drawing, video.", startDate: "Permanent", endDate: "Permanent", collectionFile: "njpac-collection.json" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    exhibitions: []
+  },
+  {
+    id: "mia-doha",
+    name_ko: "이슬람 예술 박물관",
+    name: "Museum of Islamic Art",
+    city: "Doha",
+    country: "Qatar",
+    latitude: 25.2954,
+    longitude: 51.5392,
+    description_ko: "I. M. 페이가 설계한 도하 해안가의 랜드마크로, 1400년에 걸친 이슬람 예술의 정수를 한자리에 모았다. 쿠란 필사본과 페르시아·무굴 세밀화부터 금속공예·도자까지 세 대륙을 아우른다.",
+    description: "I. M. Pei's landmark museum on Doha's Corniche holds one of the world's finest collections of Islamic art, spanning 1,400 years and three continents — masterpiece Qur'an folios, Persian and Mughal miniatures, calligraphy, metalwork and ceramics.",
+    representativeImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/mia-doha-collection/mia-doha-mia-2013-154-96c09c5c-imageUrl.webp",
+    permanentExhibitions: [
+      { id: "mia-doha-collection", name: "Collection", name_en: "Collection", title: "Museum of Islamic Art — Collection", title_en: "Museum of Islamic Art — Collection", description: "84점 — manuscript54·회화30.", description_en: "84 works — manuscript, painting.", startDate: "Permanent", endDate: "Permanent", collectionFile: "mia-doha-collection.json" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    exhibitions: []
+  },
+  {
+    id: "istanbul-modern",
+    name_ko: "이스탄불 현대미술관",
+    name: "Istanbul Modern",
+    city: "Istanbul",
+    country: "Turkey",
+    latitude: 41.0253,
+    longitude: 28.9831,
+    description_ko: "보스포루스 해협이 내려다보이는 토프하네에 렌조 피아노 설계로 새 둥지를 튼, 튀르키예 최초의 현대미술관입니다. 튀르키예 근현대 회화와 폭넓은 사진 컬렉션이 소장품의 중심을 이룹니다.",
+    description: "Turkey's first museum of modern and contemporary art, reopened in a Renzo Piano-designed building on the Bosphorus waterfront at Tophane. Its collection centers on modern and contemporary Turkish painting alongside an extensive photography collection.",
+    representativeImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/istanbul-modern-collection/istanbul-modern-self-portrait-71d14200-imageUrl.webp",
+    permanentExhibitions: [
+      { id: "istanbul-modern-collection", name: "Collection", name_en: "Collection", title: "Istanbul Modern — Collection", title_en: "Istanbul Modern — Collection", description: "504점 — 사진261·회화180·영상37·드로잉25·판화1.", description_en: "504 works — photograph, painting, video, drawing, print.", startDate: "Permanent", endDate: "Permanent", collectionFile: "istanbul-modern-collection.json" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    exhibitions: []
+  },
 
 ];

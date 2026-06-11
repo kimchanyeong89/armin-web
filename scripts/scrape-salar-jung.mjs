@@ -324,8 +324,19 @@ async function listCategory(cat) {
   const rids = [];
   const seen = new Set();
   let pages = 2;
+  let pageErrs = 0;
   for (let p = 1; p <= pages; p++) {
-    const d = await fetchJson(`${BASE}/repository/collection/fetchRecords?collectionType=ObjectType&collectionCategory=${encodeURIComponent(cat)}&pageNo=${p}&museum=${MUSEUM_ID}`);
+    let d;
+    try {
+      d = await fetchJson(`${BASE}/repository/collection/fetchRecords?collectionType=ObjectType&collectionCategory=${encodeURIComponent(cat)}&pageNo=${p}&museum=${MUSEUM_ID}`);
+    } catch (e) {
+      // flaky API: individual pages 404/5xx — skip the page, give up the category after 5 misses
+      pageErrs++;
+      console.log(`[list] ${cat} p${p}: ${e.message} → skip page (${pageErrs})`);
+      if (p === 1 || pageErrs >= 5) break;
+      await sleep(800);
+      continue;
+    }
     const list = d.listOfResult || [];
     if (p === 1) pages = Math.ceil((d.resultSize || 0) / 16) + 1;
     if (!list.length) break;

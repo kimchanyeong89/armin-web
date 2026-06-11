@@ -28,7 +28,8 @@ const FILENAME_TITLE = /\.(jpg|jpeg|png|webp|tif)$/i;
 // A value that accidentally swallowed another FIELD label (greedy-regex bug), e.g.
 // title="The Red One Artist: Samia Halaby". Match only Capitalised field labels so that
 // legitimate lowercase title text like "Portrait of the artist:" is NOT flagged.
-const LABEL_CONTAM = /\b(Artist|Date|Title|Medium|Technique|Dimensions?|Material|Técnica|Año|Título|Autor)\s*:\s*\S/;
+// "Sin Título: A" (Spanish "Untitled: A") is a legitimate title — not contamination.
+const LABEL_CONTAM = /\b(?<!Sin\s)(Artist|Date|Title|Medium|Technique|Dimensions?|Material|Técnica|Año|Título|Autor)\s*:\s*\S/;
 
 function fill(s) { return s != null && String(s).trim().length > 0; }
 

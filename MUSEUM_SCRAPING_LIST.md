@@ -107,13 +107,13 @@
 | # | Slug | Museum | City | Cat | Online | Status | PR |
 |---|---|---|---|---|---|---|---|
 | 44 | `inhotim` | [Inhotim](https://www.inhotim.org.br/inhotim/arte-contemporanea/) (이뇨칭) | Brumadinho, BR | P, Ph, V | 🟡 | ❌ escalated | 구조적 스코프 외 — 사이트특정 설치·파빌리온 중심(평면 ~10-15점뿐, 그마저 설치사진) |
-| 45 | `pinacoteca-sp` | [Pinacoteca de São Paulo](https://pinacoteca.org.br/programacao/acervo/) (피나코테카) | São Paulo, BR | P, D, Pr | ✅ | 🔄 retry-pending | probe viable; 스크립트작성 세션한도 중단 — 재시도 |
+| 45 | `pinacoteca-sp` | [Pinacoteca de São Paulo](https://pinacoteca.org.br/programacao/acervo/) (피나코테카) | São Paulo, BR | P, D, Pr | ✅ | 🔄 in-progress | 페이지네이션 프로토콜 검증·패치(매페이지 refaz=sim+800ms) 후 재실행 중 (~10,904 enum) |
 | 46 | `mar-rio` | [Museu de Arte do Rio](https://www.museudeartedorio.org.br/acervo/) (MAR) | Rio de Janeiro, BR | P, Ph | ✅ | ❌ escalated | 자체 카탈로그(~11k) 열렸으나 평면작품 이미지 0건(저작권 정책상 메타만 공개) |
 | 47 | `malba` | [MALBA](https://www.malba.org.ar/coleccion/) (말바) | Buenos Aires, AR | P, Ph, V | ✅ | pending | |
 | 48 | `mnba-buenosaires` | [Museo Nacional de Bellas Artes](https://www.bellasartes.gob.ar/coleccion/) (아르헨티나 국립) | Buenos Aires, AR | P, D, Pr | ✅ | ❌ escalated | Cloudflare JS 챌린지 전면 + robots ai-train=no·ClaudeBot 차단(자동수집 명시 거부) |
-| 49 | `mnba-santiago` | [Museo Nacional de Bellas Artes](https://www.mnba.gob.cl/coleccion) (칠레 국립) | Santiago, CL | P, D | 🟡 | 🔄 retry-pending | probe 세션한도 중단 — 재시도 |
+| 49 | `mnba-santiago` | [Museo Nacional de Bellas Artes](https://www.mnba.gob.cl/coleccion) (칠레 국립) | Santiago, CL | P, D | 🟡 | ✅ merged-local | 2,195점 (회화1,006·판화482·드로잉475·사진197; REAL fill ~100%) |
 | 50 | `museo-botero` | [Museo Botero](https://www.banrepcultural.org/bogota/museo-botero) (보테로) | Bogotá, CO | P, D | ✅ | ✅ merged-local | 151/157 (banrepcultural 포털; 회화 중심 — 보테로 기증작+개인소장 거장컬렉션; min4 6점 드롭; REAL fill 100%) |
-| 51 | `mali-lima` | [Museo de Arte de Lima](https://mali.pe/colecciones/) (MALI) | Lima, PE | P, Ph, D | ✅ | 🔄 retry-pending | probe viable; 스크립트작성 세션한도 중단 — 재시도 |
+| 51 | `mali-lima` | [Museo de Arte de Lima](https://mali.pe/colecciones/) (MALI) | Lima, PE | P, Ph, D | ✅ | ✅ merged-local | 6,721점 (eMuseum HTML; 드로잉3,372·회화1,609·사진1,549·판화191; REAL fill 100%) |
 
 ---
 
@@ -123,7 +123,7 @@
 |---|---|---|---|---|---|---|---|
 | 52 | `ngma-newdelhi` | [National Gallery of Modern Art](https://ngmaindia.gov.in/collections.asp) (인도 NGMA) | New Delhi, IN | P, D, Pr | ✅ | pending | — 흑백판화 894 제거(`.grayscale-prints-removed.json`) |
 | 53 | `kiran-nadar` | [Kiran Nadar Museum of Art](https://www.knma.in/collections) (키란 나다르) | Delhi, IN | P, Ph, V | 🟡 | **escalated** | Cloudflare blocks all; needs Chrome MCP path |
-| 54 | `salar-jung` | [Salar Jung Museum](https://salarjungmuseum.in/collection/) (살라르 정) | Hyderabad, IN | P, Mn | 🟡 | 🔄 retry-pending | probe viable; 스크립트작성 세션한도 중단 — 재시도 |
+| 54 | `salar-jung` | [Salar Jung Museum](https://salarjungmuseum.in/collection/) (살라르 정) | Hyderabad, IN | P, Mn | 🟡 | 🔄 in-progress | 404내성 패치 후 재실행 중 (~4,700 레코드, ETA ~4h) |
 | 55 | `maiiam` | [MAIIAM Contemporary Art Museum](https://www.maiiam.com/maiiam-collection) (마이얌) | Chiang Mai, TH | P, Ph, V | ✅ | ❌ escalated | 자체 사이트(Sanity CMS)에 작품 카탈로그 없음(작품 레코드 0) |
 | 56 | `macan-jakarta` | [Museum MACAN](https://www.museummacan.org/collection) (마칸) | Jakarta, ID | P, Ph, V | ✅ | ❌ escalated | 온라인 컬렉션 카탈로그 없음(/collections 404·soft-404; sitemap에 작품 0; WP REST/Algolia/GraphQL 전무) |
 | 57 | `galnas-jakarta` | [Galeri Nasional Indonesia](https://gni.kemdikbud.go.id/collection/) (인니 국립갤러리) | Jakarta, ID | P, D | ✅ | pending | |
@@ -137,8 +137,8 @@
 | 65 | `yuz-shanghai` | [Yuz Museum](https://yuzmshanghai.org/en/collection/) (위즈) | Shanghai, CN | P, Ph, V | 🟡 | ❌ escalated | 컬렉션 카탈로그 없음 — 2014년 WP 전시아카이브 사이트(작품 레코드 0; REST API 이전 버전) |
 | 66 | `ucca-beijing` | [UCCA Center for Contemporary Art](https://ucca.org.cn/en/collection/) (UCCA) | Beijing, CN | P, Ph, V | 🟡 | ❌ escalated | 비수집 Kunsthalle — 2017 재편 때 울렌스 컬렉션 매각; 사이트에 소장품 섹션 자체가 없음 |
 | 67 | `rockbund-shanghai` | [Rockbund Art Museum](https://www.rockbundartmuseum.org/en/) (록번드) | Shanghai, CN | P, Ph, V | 🟡 | ❌ escalated | 비수집 Kunsthalle — sitemap 648 URL 중 작품 경로 0; 수집 프로그램 없음 |
-| 68 | `moca-busan` | [부산현대미술관 MoCA Busan](https://www.busan.go.kr/moca/) | Busan, KR | P, Ph, V | ✅ | pending | |
-| 69 | `njpac` | [백남준아트센터](https://njp.ggcf.kr/exhibitions/collection) (Nam June Paik Art Center) | Yongin, KR | V, Mx | ✅ | pending | |
+| 68 | `moca-busan` | [부산현대미술관 MoCA Busan](https://www.busan.go.kr/moca/) | Busan, KR | P, Ph, V | ✅ | ✅ merged-local | 172점 (busan.go.kr CMS; 영상121·회화21·사진12 — 뉴미디어 중심; REAL fill 100%) |
+| 69 | `njpac` | [백남준아트센터](https://njp.ggcf.kr/exhibitions/collection) (Nam June Paik Art Center) | Yongin, KR | V, Mx | ✅ | ✅ merged-local | 172점 (njpart.ggcf.kr EN 카탈로그; 사진113·회화48 — 백남준 드로잉+플럭서스 기록사진; REAL fill 100%) |
 
 ---
 
@@ -148,15 +148,15 @@
 |---|---|---|---|---|---|---|---|
 | 70 | `louvre-abudhabi` | [Louvre Abu Dhabi](https://www.louvreabudhabi.ae/en/explore/highlights-of-the-collection) (루브르 아부다비) | Abu Dhabi, AE | P, D, Mn, Ms | ✅ | ❌ escalated | Cloudflare 챌린지(403 Just a moment; 사전선별 curl로 확인 — 에이전트 미투입) |
 | 71 | `sharjah-art-museum` | [Sharjah Art Museum](https://sharjahmuseums.ae/en-US/Our-Museums/Sharjah-Art-Museum) (샤르자) | Sharjah, AE | P, D | 🟡 | ❌ escalated | 사이트 도달 불가(20s·40s 타임아웃; 지역차단 추정) |
-| 72 | `mia-doha` | [Museum of Islamic Art](https://www.mia.org.qa/en/collections) (이슬람 예술관 도하) | Doha, QA | Mn, Cal, Ms | ✅ | pending | |
+| 72 | `mia-doha` | [Museum of Islamic Art](https://www.mia.org.qa/en/collections) (이슬람 예술관 도하) | Doha, QA | Mn, Cal, Ms | ✅ | ✅ merged-local | 84점 (collections.qm.org.qa __NUXT_DATA__; 필사본54·회화30 — 쿠란·페르시아/무굴 세밀화; REAL fill 100%) |
 | 73 | `mathaf-doha` | [Mathaf: Arab Museum of Modern Art](https://mathaf.org.qa/en/collections) (마타프) | Doha, QA | P, Ph, V | ✅ | pending | |
 | 74 | `israel-museum` | [Israel Museum](https://www.imj.org.il/en/collections) (이스라엘 박물관) | Jerusalem, IL | P, Ph, D, Pr | ✅ | pending | |
 | 75 | `tama-telaviv` | [Tel Aviv Museum of Art](https://www.tamuseum.org.il/en/collection/) (텔아비브) | Tel Aviv, IL | P, Ph, V | ✅ | pending | |
 | 76 | `tmoca-tehran` | [Tehran Museum of Contemporary Art](https://www.tmoca.com/en/collection) (테헤란 현대미술관) | Tehran, IR | P, D, Pr | 🟡 | pending | |
-| 77 | `jngfa-amman` | [Jordan National Gallery of Fine Arts](https://www.nationalgallery.org/collection/) (요르단 국립) | Amman, JO | P, D, Pr | ✅ | pending | |
-| 78 | `pera-museum` | [Pera Museum](https://www.peramuseum.org/collection) (페라) | Istanbul, TR | P, Mn | ✅ | pending | |
-| 79 | `istanbul-modern` | [Istanbul Modern](https://www.istanbulmodern.org/en/collection_3.html) (이스탄불 모던) | Istanbul, TR | P, Ph, V | ✅ | pending | |
-| 80 | `sakip-sabanci` | [Sakıp Sabancı Müzesi](https://www.sakipsabancimuzesi.org/en/page/collections) (사크프 사반즈) | Istanbul, TR | P, Cal, Ms | ✅ | pending | |
+| 77 | `jngfa-amman` | [Jordan National Gallery of Fine Arts](https://www.nationalgallery.org/collection/) (요르단 국립) | Amman, JO | P, D, Pr | ✅ | 🔄 in-progress | probe 통과(WP; ~2,000 예상) — 풀스크랩 중 |
+| 78 | `pera-museum` | [Pera Museum](https://www.peramuseum.org/collection) (페라) | Istanbul, TR | P, Mn | ✅ | 🔄 in-progress | probe 통과(회화12·사진8/20; Unknown 다수=미술관 자체 무귀속 오스만 사진) — 풀스크랩 중 |
+| 79 | `istanbul-modern` | [Istanbul Modern](https://www.istanbulmodern.org/en/collection_3.html) (이스탄불 모던) | Istanbul, TR | P, Ph, V | ✅ | ✅ merged-local | 504점 (자체 filtercollection JSON; 사진261·회화180·영상37; REAL fill ~100%) |
+| 80 | `sakip-sabanci` | [Sakıp Sabancı Müzesi](https://www.sakipsabancimuzesi.org/en/page/collections) (사크프 사반즈) | Istanbul, TR | P, Cal, Ms | ✅ | 🔄 in-progress | probe 통과(CONTENTdm dmwebservices; ~1,020 예상) — 풀스크랩 중 |
 
 ---
 
