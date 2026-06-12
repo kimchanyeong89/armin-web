@@ -107,7 +107,7 @@
 | # | Slug | Museum | City | Cat | Online | Status | PR |
 |---|---|---|---|---|---|---|---|
 | 44 | `inhotim` | [Inhotim](https://www.inhotim.org.br/inhotim/arte-contemporanea/) (이뇨칭) | Brumadinho, BR | P, Ph, V | 🟡 | ❌ escalated | 구조적 스코프 외 — 사이트특정 설치·파빌리온 중심(평면 ~10-15점뿐, 그마저 설치사진) |
-| 45 | `pinacoteca-sp` | [Pinacoteca de São Paulo](https://pinacoteca.org.br/programacao/acervo/) (피나코테카) | São Paulo, BR | P, D, Pr | ✅ | 🔄 in-progress | 페이지네이션 프로토콜 검증·패치(매페이지 refaz=sim+800ms) 후 재실행 중 (~10,904 enum) |
+| 45 | `pinacoteca-sp` | [Pinacoteca de São Paulo](https://pinacoteca.org.br/programacao/acervo/) (피나코테카) | São Paulo, BR | P, D, Pr | ✅ | ✅ merged-local | 5,763/10,574 enum (InWeb ASP.NET; 페이지네이션 프로토콜 직접 실증·수술 — 무조건전진 enum; 무연도·흑백판화·소형이미지 드롭; REAL fill ~100%) |
 | 46 | `mar-rio` | [Museu de Arte do Rio](https://www.museudeartedorio.org.br/acervo/) (MAR) | Rio de Janeiro, BR | P, Ph | ✅ | ❌ escalated | 자체 카탈로그(~11k) 열렸으나 평면작품 이미지 0건(저작권 정책상 메타만 공개) |
 | 47 | `malba` | [MALBA](https://www.malba.org.ar/coleccion/) (말바) | Buenos Aires, AR | P, Ph, V | ✅ | pending | |
 | 48 | `mnba-buenosaires` | [Museo Nacional de Bellas Artes](https://www.bellasartes.gob.ar/coleccion/) (아르헨티나 국립) | Buenos Aires, AR | P, D, Pr | ✅ | ❌ escalated | Cloudflare JS 챌린지 전면 + robots ai-train=no·ClaudeBot 차단(자동수집 명시 거부) |

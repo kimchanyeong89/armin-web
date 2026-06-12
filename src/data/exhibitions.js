@@ -7110,5 +7110,23 @@ export const exhibitions = [
     pastExhibitions: [],
     exhibitions: []
   },
+  {
+    id: "pinacoteca-sp",
+    name_ko: "상파울루 피나코테카",
+    name: "Pinacoteca de São Paulo",
+    city: "São Paulo",
+    country: "Brazil",
+    latitude: -23.534,
+    longitude: -46.6336,
+    description_ko: "1905년 문을 연 상파울루에서 가장 오래된 미술관. 루스 역 옆 붉은 벽돌 건물에 자리하며, 알메이다 주니오르부터 포르치나리까지 브라질 회화의 계보를 가장 깊이 있게 보여준다.",
+    description: "São Paulo's oldest art museum, founded in 1905 in a monumental brick building beside Luz station; its collection is the defining survey of Brazilian art, from 19th-century masters like Almeida Júnior to modernists such as Portinari and the Grupo Santa Helena.",
+    representativeImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/pinacoteca-sp-collection/pinacoteca-sp-8080-66821997-imageUrl.webp",
+    permanentExhibitions: [
+      { id: "pinacoteca-sp-collection", name: "Collection", name_en: "Collection", title: "Pinacoteca de São Paulo — Collection", title_en: "Pinacoteca de São Paulo — Collection", description: "5,763점 — 판화1716·회화1634·드로잉1441·사진972.", description_en: "5,763 works — print, painting, drawing, photograph.", startDate: "Permanent", endDate: "Permanent", collectionFile: "pinacoteca-sp-collection.json" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    exhibitions: []
+  },
 
 ];

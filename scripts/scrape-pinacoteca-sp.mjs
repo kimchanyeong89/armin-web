@@ -319,26 +319,16 @@ async function enumerateCategory(prog, cat, { onePageOnly = false } = {}) {
       prog.ids.push(id);
     }
     const catCount = prog.ids.filter((i) => prog.idCat[i] === cat).length;
-    if (done) {
+    // pages advance UNCONDITIONALLY — a page returning only already-known ids is normal
+    // (e.g. after a progress reset); freshness must never gate the cursor. Stop only on
+    // the server's own end marker (SEMRESULTADOS / empty) or the total-based page cap.
+    if (done || ids.length === 0) {
       st.complete = true;
-      console.log(`[enum] ${cat} p${st.nextPage}: SEMRESULTADOS → complete (${catCount} ids)`);
-    } else if (fresh.length === 0) {
-      st.noFresh = (st.noFresh || 0) + 1;
-      // transient server hiccups re-serve page 1 — reopen the session and retry the SAME
-      // page up to 3 times before declaring the category complete
-      if (st.noFresh >= 4 || (st.total && st.nextPage > Math.ceil(st.total / PAGE_SIZE) + 3) || ids.length === 0) {
-        st.complete = true;
-        console.log(`[enum] ${cat} p${st.nextPage}: no new ids → complete (${catCount} ids of total ${st.total})`);
-      } else {
-        console.log(`[enum] ${cat} p${st.nextPage}: stale page (retry ${st.noFresh}/3, fresh session)`);
-        await new Promise((r) => setTimeout(r, 1500));
-        session = await openCategorySession(cat);
-      }
+      console.log(`[enum] ${cat} p${st.nextPage}: end marker → complete (${catCount} ids of total ${st.total})`);
     } else {
-      st.noFresh = 0;
-      if (st.nextPage % 10 === 0 || st.nextPage === 1) console.log(`[enum] ${cat} p${st.nextPage}: +${fresh.length} (cat ${catCount}/${st.total})`);
+      if (st.nextPage % 10 === 0 || st.nextPage === 1) console.log(`[enum] ${cat} p${st.nextPage}: +${fresh.length} fresh (cat ${catCount}/${st.total})`);
       st.nextPage++;
-      if (st.total && st.nextPage > Math.ceil(st.total / PAGE_SIZE) + 3) {
+      if (st.total && st.nextPage > Math.ceil(st.total / PAGE_SIZE) + 2) {
         st.complete = true;
         console.log(`[enum] ${cat}: page cap reached → complete (${catCount} ids of total ${st.total})`);
       }
