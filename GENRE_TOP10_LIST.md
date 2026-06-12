@@ -157,3 +157,46 @@ ARMIN 등록 260곳 기준 보유 여부 표시. **조건부합 작품 수는 �
 | 그래픽·포스터 | 3/10 | 중간 | **Museum für Gestaltung Zürich (eMuseum 공개, 포스터 35만)** |
 | 영화 | 1/10 | **큼** | Deutsche Kinemathek·KOFA (영화 포스터·스틸 = 평면 수집 가능) |
 | 만화·애니 | 0/10 | **전면 공백** | 교토 국제만화뮤지엄, CIBDI 앙굴렘 (원화 디지털 아카이브 보유) |
+
+---
+
+## 🎯 갭 수집 트래커 (2026-06-12 시작 — 저코스트 모드: 동시 2 에이전트)
+
+사전선별(curl, 토큰 0)로 4곳 즉시 escalate. 나머지 30곳 우선순위 큐 (쉬운 소스 먼저).
+
+| Slug | 미술관 | 분야 | 상태 |
+|---|---|---|---|
+| `cooper-hewitt` | Cooper Hewitt | 디자인 | 🔄 queued #1 (Smithsonian OA 기대) |
+| `gestaltung-zurich` | Museum für Gestaltung | 포스터 | 🔄 queued #2 (eMuseum 확인) |
+| `mak-vienna` | MAK | 디자인 | 🔄 queued #3 (컬렉션 온라인 확인) |
+| `moravian-gallery` | Moravská galerie | 포스터 | 🔄 queued #4 (sbírky 온라인 확인) |
+| `kupferstichkabinett` | Kupferstichkabinett (SMB) | 판화드로잉 | 🔄 queued #5 (SMB recherche) |
+| `morgan-library` | Morgan Library | 판화드로잉 | 🔄 queued |
+| `zkm` | ZKM | 미디어아트 | 🔄 queued |
+| `vitra` | Vitra Design Museum | 디자인 | 🔄 queued |
+| `design-museum-london` | Design Museum | 디자인 | 🔄 queued |
+| `tokyo-photographic` | 도쿄도사진미술관 | 사진 | 🔄 queued |
+| `cinematheque-fr` | Cinémathèque française | 영화 | 🔄 queued |
+| `bfi` | BFI National Archive | 영화 | 🔄 queued |
+| `nfaj` | 国立映画アーカイブ | 영화 | 🔄 queued |
+| `kofa` | 한국영상자료원 | 영화 | 🔄 queued |
+| `triennale` | Triennale Milano | 디자인 | 🔄 queued |
+| `designmuseum-dk` | Designmuseum Danmark | 디자인 | 🔄 queued |
+| `academy-museum` | Academy Museum | 영화 | 🔄 queued |
+| `deutsche-kinemathek` | Deutsche Kinemathek | 영화 | 🔄 queued |
+| `poster-house` | Poster House | 포스터 | 🔄 queued |
+| `wilanow-poster` | Plakatmuseum Wilanów | 포스터 | 🔄 queued |
+| `ggg-tokyo` | ginza graphic gallery | 포스터 | 🔄 queued |
+| `kyoto-manga` | 교토 국제만화뮤지엄 | 만화 | 🔄 queued |
+| `cibdi-angouleme` | CIBDI 앙굴렘 | 만화 | 🔄 queued |
+| `belgian-comic` | Comic Art Museum Brussels | 만화 | 🔄 queued |
+| `herge` | Musée Hergé | 만화 | 🔄 queued |
+| `billy-ireland` | Billy Ireland | 만화 | 🔄 queued |
+| `schulz` | Schulz Museum | 만화 | 🔄 queued |
+| `korea-manhwa` | 한국만화박물관 | 만화 | 🔄 queued |
+| `cartoon-art-sf` | Cartoon Art Museum | 만화 | 🔄 queued |
+| `ghibli` | 지브리 미술관 | 애니 | 🔄 queued (디지털 카탈로그 없을 가능성 ↑) |
+| `fotomuseum-winterthur` | Fotomuseum Winterthur | 사진 | ❌ escalated — Cloudflare 챌린지 (사전선별) |
+| `julia-stoschek` | Julia Stoschek Foundation | 미디어 | ❌ escalated — Cloudflare 챌린지 (사전선별) |
+| `momi-ny` | Museum of the Moving Image | 영화 | ❌ escalated — Cloudflare 차단 (사전선별) |
+| `tezuka` | 데즈카 오사무 기념관 | 만화 | ❌ escalated — 403 (사전선별) |
