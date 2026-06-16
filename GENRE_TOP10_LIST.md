@@ -166,12 +166,12 @@ ARMIN 등록 260곳 기준 보유 여부 표시. **조건부합 작품 수는 �
 
 | Slug | 미술관 | 분야 | 상태 |
 |---|---|---|---|
-| `cooper-hewitt` | Cooper Hewitt | 디자인 | 🔄 queued #1 (Smithsonian OA 기대) |
-| `gestaltung-zurich` | Museum für Gestaltung | 포스터 | 🔄 queued #2 (eMuseum 확인) |
-| `mak-vienna` | MAK | 디자인 | 🔄 queued #3 (컬렉션 온라인 확인) |
-| `moravian-gallery` | Moravská galerie | 포스터 | 🔄 queued #4 (sbírky 온라인 확인) |
+| `cooper-hewitt` | Cooper Hewitt | 디자인 | 🔄 스크립트 준비 (예상 16,000) |
+| `gestaltung-zurich` | Museum für Gestaltung | 포스터 | 🔄 스크립트 준비 (예상 24,000) |
+| `mak-vienna` | MAK | 디자인 | 🔄 스크립트 준비 (예상 21,000) |
+| `moravian-gallery` | Moravská galerie | 포스터 | 🔄 수집중 **173**/25,000 |
 | `kupferstichkabinett` | Kupferstichkabinett (SMB) | 판화드로잉 | 🔄 queued #5 (SMB recherche) |
-| `morgan-library` | Morgan Library | 판화드로잉 | 🔄 queued |
+| `morgan-library` | Morgan Library | 판화드로잉 | 🔄 스크립트 준비 (예상 11,000) |
 | `zkm` | ZKM | 미디어아트 | 🔄 queued |
 | `vitra` | Vitra Design Museum | 디자인 | 🔄 queued |
 | `design-museum-london` | Design Museum | 디자인 | 🔄 queued |

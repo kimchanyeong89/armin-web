@@ -1,0 +1,24 @@
+{
+  "slug": "morgan-library",
+  "viable": true,
+  "reason": "Drupal site with sitemap-enumerable object pages (15,307 items: 14,782 drawings + 525 objects); JSON-LD/structured metadata on detail pages; high-res images. Probe collected 17/17 drawings end-to-end.",
+  "source_type": "html+sitemap",
+  "easy_source_found": "none — no public API/dump; sitemap.xml enumeration of /collection object pages",
+  "estimated_inscope_count": 14782,
+  "script_path": "scripts/scrape-morgan-library.mjs",
+  "probe_ok": true,
+  "probe_summary": "17/17 drawings collected end-to-end, 1 min-4 drop (undated), 0 failures. Master drawings collection.",
+  "est_full_count": 11000,
+  "est_runtime_min": 240,
+  "exhibitions_entry": {
+    "name": "The Morgan Library & Museum",
+    "name_ko": "모건 라이브러리 앤 뮤지엄",
+    "city": "New York",
+    "country": "USA",
+    "latitude": 40.7491,
+    "longitude": -73.9815,
+    "description": "J. Pierpont Morgan's former library on Madison Avenue, now a museum with one of the world's finest collections of master drawings, old master prints and illuminated manuscripts — from Rembrandt and Rubens to Dürer.",
+    "description_ko": "J. 피어폰트 모건의 매디슨가 서재가 미술관이 된 곳. 렘브란트·루벤스·뒤러로 이어지는 거장 드로잉과 채식필사본 컬렉션의 깊이로 세계 최고 수준을 자랑한다."
+  },
+  "notes": "Sitemap-based; min-4 drops undated drawings. Drawings-only in-scope (525 'objects' are mostly 3D/seals — excluded)."
+}
