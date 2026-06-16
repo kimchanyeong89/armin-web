@@ -1,0 +1,24 @@
+{
+  "slug": "kupferstichkabinett",
+  "viable": true,
+  "reason": "SMB recherche Elasticsearch API (museum-own, no auth on search) returns 45,866 in-scope Kupferstichkabinett works on paper with German detail-page-complete metadata (involvedParties→artist, dating/dateRange→year, materialAndTechnique→medium, dimensionsAndWeight, technicalTerm→category). Phase-A sampling: 98% in-scope, ~84% pass min-4+image, mix ~77% drawings / ~20% prints. Images via museum CDN eMuseumPlus keyed by assets[0] (assetId): 21/22 sampled resolve at 2295-2500px JPEG; probe confirmed real master drawings (Menzel, Rubens, Goltzius, Jordaens, van Goyen). Probe 15/15 assembled, validate-metadata REAL fill 100% on all six standard fields, R2 webp upload verified live.",
+  "source_type": "api",
+  "easy_source_found": "SMB documented API at api.smb.museum — the recherche.smb.museum React app posts to ELASTIC_API_URL=https://api.smb.museum/search/ (config extracted from /static/js/main.*.chunk.js). POST /search/?limit=100&offset=N&language=en with body {\"q_advanced\":[{\"field\":\"collectionKey\",\"operator\":\"AND\",\"q\":\"KK*\"}]}. No API key. (api.smb.museum/console is a separate Hasura GraphQL CMS, not the collection search.)",
+  "estimated_inscope_count": 44796,
+  "script_path": "/Users/kietzsche/armin-web-main/scripts/scrape-kupferstichkabinett.mjs",
+  "probe_ok": true,
+  "probe_summary": "node scripts/scrape-kupferstichkabinett.mjs --probe → 15/15 in-scope works assembled, 0 image errors, 1 grayscale reproductive print correctly skipped. All drawings 1510-1887, full artist names + medium + dimensions, images 1978-2500px long-edge. validate-metadata: REAL fill title/artist/year/category/medium/dim all 100%, no BLOCKERS. One R2 webp (Goltzius silverpoint portrait, 2048px) fetched+viewed = genuine artwork.",
+  "est_full_count": 21000,
+  "est_runtime_min": 120,
+  "exhibitions_entry": {
+    "name": "Kupferstichkabinett (Staatliche Museen zu Berlin)",
+    "name_ko": "베를린 동판화관 (쿠퍼슈티히카비네트)",
+    "city": "Berlin",
+    "country": "Germany",
+    "latitude": 52.5089,
+    "longitude": 13.3667,
+    "description": "The Kupferstichkabinett (Museum of Prints and Drawings) at Berlin's Kulturforum is Germany's largest graphic-arts collection, holding roughly half a million works on paper spanning the late Middle Ages to the present — drawings, watercolours, prints and illustrated books by masters from Botticelli, Dürer and Rembrandt to Goltzius, Menzel and Picasso.",
+    "description_ko": "베를린 쿨투어포룸에 자리한 동판화관은 독일 최대 규모의 종이 작품 컬렉션으로, 중세 후기부터 현대까지 약 50만 점의 드로잉, 수채, 판화, 삽화본을 소장한다. 보티첼리와 뒤러, 렘브란트부터 골치우스, 멘첼, 피카소에 이르는 거장들의 종이 위 작업을 만날 수 있다."
+  },
+  "notes": "IMAGE: https://www.smb-digital.de/eMuseumPlus?service=ImageAsset&module=collection&objectId={assetId}&resolution=screen where {assetId}=API assets[0] (NOT the object id — object-id route only hits ~40%; assetId route ~95%). recherche.smb.museum/images/{assetId} is HTTP-Basic-Auth protected (unused). API LIMITS: limit capped at 100/page; hard offset ceiling = 25,000 (offset 24,900 OK, 25,000→HTTP 500, likely ES max_result_window). Flat KK* query therefore reaches ~21k usable records — under the 24MB/25k JSON cap, already a named-artist+dated set so no extra value-filter needed. To reach the full ~38k usable later, partition the query (technicalTerm or date ranges verified to work: technicalTerm=Zeichnung→27k, Druck→12k) so each sub-query stays under 25k offset. SCOPE: drawings never grayscale-gated; reproductive B&W prints skipped at download via colorfulness<20; portrait miniatures (technicalTerm 'Miniatur'), plain books/autographs/acquisition-ledger scans excluded. NOT RUN: --full (per instructions). German artist qualifiers like 'Zugeschrieben:'/'andere Zuschreibung:' are preserved on names (accurate scholarly attribution)."
+}

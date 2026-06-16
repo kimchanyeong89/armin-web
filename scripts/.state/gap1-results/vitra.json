@@ -1,0 +1,15 @@
+{
+  "slug": "vitra",
+  "viable": false,
+  "reason": "Probe technically succeeded (open GraphQL API at collectiononline.design-museum.de/graphql, introspection enabled, hi-res images on vitra.zetcom.com), but the entire online collection is OUT OF SCOPE: it is industrial furniture, lighting, and 3D design objects only. Enumerated a 1,000-object slice across 126 distinct categories — 100% are 3D/furniture (chair 260, lounge chair 154, armchair 106, table, sofa, stool, desk, shelf, floor lamp, etc.). Targeted searches for flat works all returned only furniture: searchQuery='poster' -> 2 chairs (model named 'Poster'); searchMaterial='paper' -> 16 chairs/desks (paper as a furniture material: paper cord, glassine-paper chair); searchQuery='drawing' -> 23 chairs/tables ('Drawing chair', 'Child's Drawing Table'); category='Poster' -> 0. ZERO posters, prints, drawings-on-paper, graphic-design works, or photographs exist in the online DB. ARMIN collects flat works only (chairs/lamps/furniture explicitly excluded by scope), so nothing here is collectable.",
+  "source_type": "graphql",
+  "easy_source_found": "Open zetcom MuseumPlus GraphQL API at https://collectiononline.design-museum.de/graphql (also mirrored at http://collection.design-museum.de/graphql). Introspection ENABLED; Relay schema (Query.store.objects with searchQuery/searchTitle/searchPerson/searchMaterial/searchYearFrom/To and objectsByCategoryName). Hi-res images at https://vitra.zetcom.com/Vitra/Images/CollectionModuleStandardImages/highImageResolution/{id}.jpg. Fully machine-readable — would be trivial to scrape IF content were in scope, but it is 3D furniture only.",
+  "estimated_inscope_count": 0,
+  "script_path": null,
+  "probe_ok": false,
+  "probe_summary": "GraphQL endpoint reachable and open; data is exclusively furniture/3D design objects. No flat works (posters/prints/drawings/graphic-design/photographs) in the catalogue. Out of scope per task brief.",
+  "est_full_count": 0,
+  "est_runtime_min": 0,
+  "exhibitions_entry": null,
+  "notes": "Museum is the Vitra Design Museum (Weil am Rhein, Germany), founded 1989, Frank Gehry building. Collection focus per its own site: industrial furniture design and lighting, plus the Eames Office collection and estates of Girard, Anton Lorenz, George Nelson, Verner Panton. This is the canonical 'furniture/3D only' case the brief said to reject. Skip permanently — no flat-work holdings to revisit. The GraphQL API itself is a clean, open zetcom MuseumPlus instance with introspection on, should a furniture/product-design vertical ever be added to ARMIN. Default Query.store.objects only returns ~30 highlight objects unpaginated; full collection is reachable via search params (searchTitle single-letter returns 1000-cap pages) but irrelevant given scope."
+}

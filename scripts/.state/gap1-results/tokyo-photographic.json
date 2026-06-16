@@ -1,0 +1,24 @@
+{
+  "slug": "tokyo-photographic",
+  "viable": false,
+  "reason": "Catalogue is excellent and machine-readable (46,921 photographs) but image resolution is too small everywhere. (1) Museum's OWN catalogue at collection.topmuseum.jp ('電子所蔵品目録', CC-BY 4.0) serves real artwork images that cap at 250px on the long edge (M variant: 250x169/250x180/182x250 across all records tested); the L/O/XL/ORG tokens all return an identical 9096-byte 381x380 placeholder graphic (md5 b058da9d799e5affa29a7e6acee44239), not a real large image. No IIIF/CDN/high-res host referenced anywhere in detail-page source. (2) Official Tokyo metropolitan consortium portal ToMuCo (museumcollection.tokyo) DOES have a clean keyless JSON-LD API (?output=json&museums[]=topmuseum) and exposes the same 46,921 TPAM works with rich bilingual metadata — but TPAM photographs are metadata-ONLY: 12/12 work pages tested show 9-11 'no_image' markers and only a generic site fallback og:image (og_image_ja.png share-card, or a 250x169 placeholder). Zero TPAM records carry their own artwork image (modern photography still in copyright — Cartier-Bresson d.2004, etc.). The 791x1000 high-res IIIF/-L.jpg images on ToMuCo belong to OTHER consortium museums (Edo-Tokyo lacquerware, ukiyo-e, etc.), not TPAM. Both sources fail the hard >=600px image requirement.",
+  "source_type": "none",
+  "easy_source_found": "ToMuCo (museumcollection.tokyo) — official Tokyo metropolitan museum consortium portal with a public keyless JSON-LD/Schema.org API (https://museumcollection.tokyo/works/?output=json&museums[]=topmuseum&limit=1000&offset=N; also ?output=iiif per work) and an OAI-PMH endpoint (/wp-json/jpsearch/v1/oai-pmh, Cloudflare-flaky/502). Returns all 46,921 TPAM works with bilingual EN/JA title, creator+birth/death, genre, dateCreated, material, size, accession number — but NO image URLs for TPAM (rights-restricted). The museum's own collection.topmuseum.jp is also fully machine-readable (server-rendered, predictable pagination + /Publish/detailPage/{id}/ + /Publish/pic/{picid}/M) but maxes at 250px images.",
+  "estimated_inscope_count": 0,
+  "script_path": null,
+  "probe_ok": false,
+  "probe_summary": "Two machine-readable sources found and fully characterized; both fail on image resolution. Own catalogue collection.topmuseum.jp ('Electronic Collection Catalogue') = 46,921 records, real images cap at 250px (L variant is a shared placeholder, md5-confirmed identical across records). ToMuCo API = same 46,921 TPAM works with excellent metadata but image-less (12/12 sampled work pages = no_image/placeholder only; high-res 791x1000 images on ToMuCo belong to other consortium museums). No IIIF manifest resolves for TPAM works (?output=iiif -> 000). Verdict: viable:false, source_type:none — fails hard >=600px image gate.",
+  "est_full_count": 0,
+  "est_runtime_min": 0,
+  "exhibitions_entry": {
+    "name": "Tokyo Photographic Art Museum",
+    "name_ko": "도쿄도 사진미술관",
+    "city": "Tokyo",
+    "country": "Japan",
+    "latitude": 35.6418,
+    "longitude": 139.7132,
+    "description": "Japan's first public museum dedicated to photography and the moving image, located in the Yebisu Garden Place complex in Meguro, Tokyo. Operated by the Tokyo Metropolitan Government, it holds a collection of roughly 47,000 photographs and films spanning the history of the medium from its 19th-century origins to contemporary work, both Japanese and international.",
+    "description_ko": "에비스 가든 플레이스 안에 자리한, 사진과 영상에 특화된 일본 최초의 공립 미술관이다. 도쿄도가 운영하며 19세기 초창기부터 동시대까지 사진의 역사를 아우르는 일본과 해외 작품 약 4만 7천 점을 소장하고 있다."
+  },
+  "notes": "Both the museum's own Electronic Collection Catalogue (電子所蔵品目録, collection.topmuseum.jp) and the metropolitan ToMuCo portal (museumcollection.tokyo) are technically ideal targets — strong bilingual metadata, CC-BY 4.0 / CC-PDM licensing, a documented keyless JSON API (museumcollection.tokyo/developer), and 46,921 in-scope photographs. The ONLY blocker is image resolution: TPAM serves its own photographs at most at 250px, and on ToMuCo the photographs are entirely image-less (still in copyright). If the museum ever publishes higher-res scans (e.g. for the older public-domain Bakumatsu/Meiji Japanese photographs) this becomes immediately viable via the ToMuCo JSON API — revisit then. RE-PROBE outcome for gap wave 1b task #32: tokyo-photographic = NOT VIABLE (image res ceiling), not a scraping/access problem."
+}
