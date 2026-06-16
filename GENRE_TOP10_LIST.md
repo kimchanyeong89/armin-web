@@ -166,23 +166,23 @@ ARMIN 등록 260곳 기준 보유 여부 표시. **조건부합 작품 수는 �
 
 | Slug | 미술관 | 분야 | 상태 |
 |---|---|---|---|
-| `cooper-hewitt` | Cooper Hewitt | 디자인 | 🔄 수집중 **1,364**/16,000 |
-| `gestaltung-zurich` | Museum für Gestaltung | 포스터 | 🔄 수집중 **5,637**/24,000 |
+| `cooper-hewitt` | Cooper Hewitt | 디자인 | 🔄 수집중 **3,280**/16,000 |
+| `gestaltung-zurich` | Museum für Gestaltung | 포스터 | 🔄 수집중 **14,136**/24,000 |
 | `mak-vienna` | MAK | 디자인 | 🔄 스크립트 준비 (예상 21,000) |
-| `moravian-gallery` | Moravská galerie | 포스터 | 🔄 수집중 **16,005**/25,000 |
+| `moravian-gallery` | Moravská galerie | 포스터 | ✅ merged **21,822**점 |
 | `kupferstichkabinett` | Kupferstichkabinett (SMB) | 판화드로잉 | 🔄 스크립트 준비 (예상 21,000) |
-| `morgan-library` | Morgan Library | 판화드로잉 | 🔄 스크립트 준비 (예상 11,000) |
-| `zkm` | ZKM | 미디어아트 | 🔄 스크립트 준비 (예상 1,950) |
+| `morgan-library` | Morgan Library | 판화드로잉 | ✅ merged **9,313**점 |
+| `zkm` | ZKM | 미디어아트 | ✅ merged **1,990**점 |
 | `vitra` | Vitra Design Museum | 디자인 | ❌ escalated — Probe technically succeeded (open GraphQL API at collectiononline.design-museum.de/graphql, int |
 | `design-museum-london` | Design Museum | 디자인 | ❌ escalated — No object-level online catalogue exists at all. |
 | `tokyo-photographic` | 도쿄도사진미술관 | 사진 | ❌ escalated — Catalogue is excellent and machine-readable (46,921 photographs) but image resolution is too sm |
 | `cinematheque-fr` | Cinémathèque française | 영화 | ❌ escalated — La Cinematheque francaise has a large flat-art collection (24,108 posters + drawings + ad mater |
 | `bfi` | BFI National Archive | 영화 | ❌ escalated — BFI National Archive's online catalogue (collections-search.bfi.org.uk, an Axiell/Adlib 'AIS' p |
-| `nfaj` | 国立映画アーカイブ | 영화 | 🔄 스크립트 준비 (예상 4,754) |
-| `kofa` | 한국영상자료원 | 영화 | 🔄 스크립트 준비 (예상 30,000) |
+| `nfaj` | 国立映画アーカイブ | 영화 | ✅ merged **4,754**점 |
+| `kofa` | 한국영상자료원 | 영화 | ❌ escalated — KMDb Open API가 API 키 필수(kmdb.or.kr 또는 data.go.kr 발급) |
 | `triennale` | Triennale Milano | 디자인 | 🔄 queued |
 | `designmuseum-dk` | Designmuseum Danmark | 디자인 | 🔄 queued |
-| `academy-museum` | Academy Museum | 영화 | 🔄 스크립트 준비 (예상 1,890) |
+| `academy-museum` | Academy Museum | 영화 | ✅ merged **540**점 |
 | `deutsche-kinemathek` | Deutsche Kinemathek | 영화 | ❌ escalated — Museum's only enumerable machine-readable source is the FlowWorks 'FlowCenter' DAM behind a pro |
 | `poster-house` | Poster House | 포스터 | 🔄 queued |
 | `wilanow-poster` | Plakatmuseum Wilanów | 포스터 | 🔄 queued |

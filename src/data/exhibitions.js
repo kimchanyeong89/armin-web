@@ -7128,5 +7128,95 @@ export const exhibitions = [
     pastExhibitions: [],
     exhibitions: []
   },
+  {
+    id: "moravian-gallery",
+    name_ko: "모라비아 미술관",
+    name: "Moravian Gallery in Brno",
+    city: "Brno",
+    country: "Czech Republic",
+    latitude: 49.1928,
+    longitude: 16.6053,
+    description_ko: "체코에서 두 번째로 큰 미술관으로, 브르노 시내 다섯 채의 건물에서 고전 회화부터 현대미술까지 아우른다. 브르노 그래픽디자인 비엔날레와 함께 쌓아 온 포스터·그래픽디자인 컬렉션으로 특히 이름 높다.",
+    description: "The Czech Republic's second-largest art museum, spanning old masters to contemporary art across five Brno buildings. Its poster and graphic design holdings, built around the Brno Graphic Design Biennale, are among the finest in Europe.",
+    representativeImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/moravian-gallery-collection/moravian-gallery-A_1000-09c56f36-imageUrl.webp",
+    permanentExhibitions: [
+      { id: "moravian-gallery-collection", name: "Collection", name_en: "Collection", title: "Moravian Gallery in Brno — Collection", title_en: "Moravian Gallery in Brno — Collection", description: "21,822점 — poster14702·혼합매체3205·드로잉1678·판화1508·회화729.", description_en: "21,822 works — poster, mixed_media_2d, drawing, print, painting.", startDate: "Permanent", endDate: "Permanent", collectionFile: "moravian-gallery-collection.json" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    exhibitions: []
+  },
+  {
+    id: "morgan-library",
+    name_ko: "모건 라이브러리 앤 뮤지엄",
+    name: "The Morgan Library & Museum",
+    city: "New York",
+    country: "USA",
+    latitude: 40.7491,
+    longitude: -73.9815,
+    description_ko: "J. 피어폰트 모건의 매디슨가 서재가 미술관이 된 곳. 렘브란트·루벤스·뒤러로 이어지는 거장 드로잉과 채식필사본 컬렉션의 깊이로 세계 최고 수준을 자랑한다.",
+    description: "J. Pierpont Morgan's former library on Madison Avenue, now a museum with one of the world's finest collections of master drawings, old master prints and illuminated manuscripts — from Rembrandt and Rubens to Dürer.",
+    representativeImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/morgan-library-collection/morgan-library-141403-d70c589c-imageUrl.webp",
+    permanentExhibitions: [
+      { id: "morgan-library-collection", name: "Collection", name_en: "Collection", title: "The Morgan Library & Museum — Collection", title_en: "The Morgan Library & Museum — Collection", description: "9,313점 — 드로잉9289·회화24.", description_en: "9,313 works — drawing, painting.", startDate: "Permanent", endDate: "Permanent", collectionFile: "morgan-library-collection.json" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    exhibitions: []
+  },
+  {
+    id: "zkm",
+    name_ko: "ZKM 카를스루에 예술미디어센터",
+    name: "ZKM | Center for Art and Media Karlsruhe",
+    city: "Karlsruhe",
+    country: "Germany",
+    latitude: 49.0004,
+    longitude: 8.3853,
+    description_ko: "1989년 설립되어 1997년부터 옛 군수공장(Hallenbau A) 건물에 자리 잡은 카를스루에의 ZKM은 디지털 미디어 시대의 예술을 다루는 세계 최고의 기관이다. 전시 공간과 자체 제작·연구 실험실을 한데 묶어 미디어 아트와 비디오, 컴퓨터 기반·인터랙티브 작업을 끊임없이 진화하는 살아 있는 실천으로 다룬다는 점에서 여느 미술관과 구별된다. 소장품과 아카이브는 무빙 이미지와 전자예술의 역사를, 회화·드로잉·사진·판화 같은 동시대 평면 작업과 나란히 기록한다.",
+    description: "Founded in 1989 and housed since 1997 in a vast former munitions factory (the Hallenbau A), the ZKM in Karlsruhe is the world's foremost institution devoted to art in the age of digital media. It is unique among museums in uniting exhibition spaces with its own production and research laboratories, treating media art, video, computer-based and interactive work as a living, evolving practice. Its collection and archives document the history of the moving image and electronic art alongside contemporary painting, drawing, photography and prints.",
+    representativeImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/zkm-collection/zkm-2-quadrate-16-kreise-32-halbkreise-45fccb82-imageUrl.webp",
+    permanentExhibitions: [
+      { id: "zkm-collection", name: "Collection", name_en: "Collection", title: "ZKM | Center for Art and Media Karlsruhe — Collection", title_en: "ZKM | Center for Art and Media Karlsruhe — Collection", description: "1,990점 — 영상1129·사진621·회화92·드로잉76·판화64·혼합매체8.", description_en: "1,990 works — video, photograph, painting, drawing, print, mixed_media_2d.", startDate: "Permanent", endDate: "Permanent", collectionFile: "zkm-collection.json" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    exhibitions: []
+  },
+  {
+    id: "nfaj",
+    name_ko: "국립영화아카이브",
+    name: "National Film Archive of Japan",
+    city: "Tokyo",
+    country: "Japan",
+    latitude: 35.6755,
+    longitude: 139.7706,
+    description_ko: "도쿄 교바시에 자리한 국립영화아카이브(NFAJ)는 일본에서 영화만을 전문으로 다루는 유일한 국립기관이자, 일곱 번째 국립미술관이다. 본래 도쿄국립근대미술관의 필름센터였다가 2018년 독립했으며, 8만여 편의 영화 필름과 더불어 포스터, 영화관 전단(치라시), 극장 프로그램, 스틸, 영사·촬영 기재를 망라해 수집해 왔다. '일본영화유산(Japanese Film Heritage)' 디지털 포털은 이 지면 유산을 일반에 공개한다. 1910년대부터 이어진 일본 영화 포스터, 삽화가 담긴 영화관 전단, 정교하게 디자인된 극장 프로그램이 한 세기에 걸친 영화 관람 문화를 보여준다.",
+    description: "The National Film Archive of Japan (NFAJ) in Kyobashi, Tokyo is the country's only national institution dedicated to film, and the seventh of Japan's national art museums. Independent since 2018 (formerly the National Film Center of the National Museum of Modern Art), it preserves more than 80,000 film titles alongside an exhaustively gathered non-film collection of posters, cinema flyers (chirashi), theatre programmes, stills and apparatus. Its 'Japanese Film Heritage' digital portal opens this paper heritage to the public — vintage Japanese film posters from the 1910s onward, illustrated cinema handbills, and richly designed theatre programmes documenting a century of moviegoing culture.",
+    representativeImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/nfaj-collection/635-8239c6ed-imageUrl.webp",
+    permanentExhibitions: [
+      { id: "nfaj-collection", name: "Collection", name_en: "Collection", title: "National Film Archive of Japan — Collection", title_en: "National Film Archive of Japan — Collection", description: "4,754점 — 판화4754.", description_en: "4,754 works — print.", startDate: "Permanent", endDate: "Permanent", collectionFile: "nfaj-collection.json" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    exhibitions: []
+  },
+  {
+    id: "academy-museum",
+    name_ko: "아카데미 영화 박물관",
+    name: "Academy Museum of Motion Pictures",
+    city: "Los Angeles",
+    country: "USA",
+    latitude: 34.0638,
+    longitude: -118.3592,
+    description_ko: "영화의 예술과 기술을 다루는 미국 최대 규모의 영화 박물관으로, 2021년 윌셔 대로의 옛 메이 컴퍼니 백화점 건물(1939년 사반 빌딩)을 개조해 문을 열었다. 렌조 피아노가 설계한 구(球) 형태의 데이비드 게펜 극장이 함께 들어섰다. 오스카상을 주관하는 미국 영화예술과학아카데미(AMPAS)가 운영하며, 전시는 영화 제작의 기예와 역사, 그리고 영화를 만든 사람들을 보여준다. 아카데미의 수집 기관인 마거릿 헤릭 도서관은 파라마운트·RKO의 제작 스틸과 스튜디오 인물 사진, 로비 카드, 포스터, 환등 슬라이드, 히치콕·드밀·쿠커·스티븐스 같은 감독들의 자료를 비롯해 세계에서 손꼽히는 영화 평면 아카이브를 소장하고 있다.",
+    description: "The largest museum in the United States devoted to the art and science of movies, opened in 2021 in the renovated 1939 Saban Building (the former May Company department store) on Wilshire Boulevard, with a spherical David Geffen Theater addition by Renzo Piano. Operated by the Academy of Motion Picture Arts and Sciences (the Oscars), its galleries trace filmmaking craft, history, and the people behind the movies. The Academy's collecting arm, the Margaret Herrick Library, holds one of the world's deepest archives of film-related flat art — production stills, studio portraits, lobby cards, posters, and promotional glass slides from Paramount, RKO, and the personal papers of directors such as Hitchcock, DeMille, Cukor, and Stevens.",
+    representativeImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/academy-museum-collection/academy-museum-19-98c2a763-imageUrl.webp",
+    permanentExhibitions: [
+      { id: "academy-museum-collection", name: "Collection", name_en: "Collection", title: "Academy Museum of Motion Pictures — Collection", title_en: "Academy Museum of Motion Pictures — Collection", description: "540점 — 사진540.", description_en: "540 works — photograph.", startDate: "Permanent", endDate: "Permanent", collectionFile: "academy-museum-collection.json" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    exhibitions: []
+  },
 
 ];
