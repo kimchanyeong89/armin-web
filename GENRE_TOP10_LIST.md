@@ -166,8 +166,8 @@ ARMIN 등록 260곳 기준 보유 여부 표시. **조건부합 작품 수는 �
 
 | Slug | 미술관 | 분야 | 상태 |
 |---|---|---|---|
-| `cooper-hewitt` | Cooper Hewitt | 디자인 | 🔄 수집중 **4,379**/16,000 |
-| `gestaltung-zurich` | Museum für Gestaltung | 포스터 | 🔄 수집중 **18,514**/24,000 |
+| `cooper-hewitt` | Cooper Hewitt | 디자인 | 🔄 수집중 **5,031**/16,000 |
+| `gestaltung-zurich` | Museum für Gestaltung | 포스터 | 🔄 수집중 **21,321**/24,000 |
 | `mak-vienna` | MAK | 디자인 | 🔄 스크립트 준비 (예상 21,000) |
 | `moravian-gallery` | Moravská galerie | 포스터 | ✅ merged **21,822**점 |
 | `kupferstichkabinett` | Kupferstichkabinett (SMB) | 판화드로잉 | 🔄 스크립트 준비 (예상 21,000) |
@@ -180,20 +180,20 @@ ARMIN 등록 260곳 기준 보유 여부 표시. **조건부합 작품 수는 �
 | `bfi` | BFI National Archive | 영화 | ❌ escalated — BFI National Archive's online catalogue (collections-search.bfi.org.uk, an Axiell/Adlib 'AIS' p |
 | `nfaj` | 国立映画アーカイブ | 영화 | ✅ merged **4,754**점 |
 | `kofa` | 한국영상자료원 | 영화 | ❌ escalated — KMDb Open API가 API 키 필수(kmdb.or.kr 또는 data.go.kr 발급) |
-| `triennale` | Triennale Milano | 디자인 | 🔄 queued |
-| `designmuseum-dk` | Designmuseum Danmark | 디자인 | 🔄 queued |
+| `triennale` | Triennale Milano | 디자인 | ❌ escalated — Triennale Milano runs a dedicated per-object archive platform at archivi.triennale.org (Next.js |
+| `designmuseum-dk` | Designmuseum Danmark | 디자인 | ❌ escalated — FLAT-art online catalogues are offline for system migration. |
 | `academy-museum` | Academy Museum | 영화 | ✅ merged **540**점 |
 | `deutsche-kinemathek` | Deutsche Kinemathek | 영화 | ❌ escalated — Museum's only enumerable machine-readable source is the FlowWorks 'FlowCenter' DAM behind a pro |
-| `poster-house` | Poster House | 포스터 | 🔄 queued |
-| `wilanow-poster` | Plakatmuseum Wilanów | 포스터 | 🔄 queued |
-| `ggg-tokyo` | ginza graphic gallery | 포스터 | 🔄 queued |
+| `poster-house` | Poster House | 포스터 | 🔄 스크립트 준비 (예상 7,400) |
+| `wilanow-poster` | Plakatmuseum Wilanów | 포스터 | 🔄 스크립트 준비 (예상 652) |
+| `ggg-tokyo` | ginza graphic gallery | 포스터 | ❌ escalated — ggg (ginza graphic gallery) is run by the DNP Foundation for Cultural Promotion (dnpfcp.jp |
 | `kyoto-manga` | 교토 국제만화뮤지엄 | 만화 | ❌ escalated — No reachable, in-scope, image-serving source on the museum's own infra. |
-| `cibdi-angouleme` | CIBDI 앙굴렘 | 만화 | 🔄 스크립트 준비 (예상 2,450) |
+| `cibdi-angouleme` | CIBDI 앙굴렘 | 만화 | 🔄 수집중 **2,071**/2,450 |
 | `belgian-comic` | Comic Art Museum Brussels | 만화 | ❌ escalated — Centre belge de la bande dessinee (Musee de la BD, Brussels |
 | `herge` | Musée Hergé | 만화 | ❌ escalated — Musée Hergé (Louvain-la-Neuve) has NO open per-object catalogue and images are copyright-locked |
 | `billy-ireland` | Billy Ireland | 만화 | ❌ escalated — Both candidate sources fail the copyright/quality scope. |
 | `schulz` | Schulz Museum | 만화 | ❌ escalated — Charles M. |
-| `korea-manhwa` | 한국만화박물관 | 만화 | 🔄 스크립트 준비 (예상 25) |
+| `korea-manhwa` | 한국만화박물관 | 만화 | 🔄 수집중 **23**/25 |
 | `cartoon-art-sf` | Cartoon Art Museum | 만화 | ❌ escalated — No per-object online collection catalogue exists. |
 | `ghibli` | 지브리 미술관 | 애니 | ❌ escalated — No online collection catalogue. |
 | `fotomuseum-winterthur` | Fotomuseum Winterthur | 사진 | ❌ escalated — Cloudflare 챌린지 (사전선별) |

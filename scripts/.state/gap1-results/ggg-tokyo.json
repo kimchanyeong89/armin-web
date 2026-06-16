@@ -1,0 +1,24 @@
+{
+  "slug": "ggg-tokyo",
+  "viable": false,
+  "reason": "ggg (ginza graphic gallery) is run by the DNP Foundation for Cultural Promotion (dnpfcp.jp; the hint's dnpfoundation.or.jp is NXDOMAIN). It DOES have a real machine-readable, server-rendered per-object collection database on its own infra at https://collection.dnpfcp.jp/ja/ (PHP 8.4, hierarchy: collection -> series -> folder -> /ja/items/{id} detail pages with a clean metadata table; full-text search at /ja/items/?search=). Subject scope is a perfect fit: posters & graphic design (DNPグラフィックデザイン・アーカイブ ~20k posters / 230+ designers, collection 2), Tyler Graphics prints (collection 1), and the Tanaka Ikko / Fukuda Shigeo / Nagai Kazumasa designer archives. BLOCKING ISSUE: every artwork image is capped at 400px on the long edge (thumbnail_l = ~300-317 x 400px; thumbnail_s = 75-100px). No larger variant exists — thumbnail_m, large, original, master, xl, _o all 302-redirect to a not-found handler, and the magnific-popup zoom only powers help dialogs, not image zoom. This fails the >=600px image requirement (same mumok-style thumbnail-only failure). Records also carry restrictive terms (公開条件: viewable only inside CCGA by reservation; reproduction requires copyright-holder permission). In-scope by subject but unusable for the visual grid / SigLIP corpus due to sub-600px imagery.",
+  "source_type": "none",
+  "easy_source_found": "No open-data/API dump. The museum's OWN collection DB exists and is fully machine-readable via HTML: https://collection.dnpfcp.jp/ja/ — collections /ja/collections/{1-6}/series, series /ja/series/{id}/folders, folders /ja/folders/{id}/items, item detail /ja/items/{id}, keyword search /ja/items/?search=<kw>&per_page=200. Images at /image/contents/thumbnail_l/{imageId}.jpg. NOT viable only because the largest image variant on the server is 400px (no 600px+ source anywhere).",
+  "estimated_inscope_count": 0,
+  "script_path": null,
+  "probe_ok": false,
+  "probe_summary": "Located live collection DB on museum infra (collection.dnpfcp.jp). Traced full hierarchy to per-object detail pages with rich metadata (title, artist, year, publisher, dimensions, technique, classification). Downloaded multiple images: ALL max out at ~300-317 x 400px (thumbnail_l). Verified thumbnail_m/large/original/master/xl/_o variants all 302-redirect (do not exist). 400px < 600px requirement -> probe fails.",
+  "est_full_count": 0,
+  "est_runtime_min": 0,
+  "exhibitions_entry": {
+    "name": "ginza graphic gallery (ggg)",
+    "name_ko": "긴자 그래픽 갤러리 (ggg)",
+    "city": "Tokyo",
+    "country": "Japan",
+    "latitude": 35.6695,
+    "longitude": 139.761,
+    "description": "Founded in 1986 and run by the DNP Foundation for Cultural Promotion, ginza graphic gallery (ggg) in Tokyo's Ginza district is one of the world's leading exhibition spaces devoted exclusively to graphic design and graphic art. It presents a continuous program of solo and themed shows on Japanese and international designers, and anchors the DNP Graphic Design Archive — a collection of roughly 20,000 posters by more than 230 designers, alongside the Tyler Graphics print archive and the Tanaka Ikko, Fukuda Shigeo and Nagai Kazumasa archives.",
+    "description_ko": "1986년 문을 연 긴자 그래픽 갤러리(ggg)는 DNP문화진흥재단이 운영하는, 도쿄 긴자에 자리한 그래픽 디자인 전문 전시 공간이다. 포스터와 그래픽 아트를 중심으로 일본과 해외 디자이너들의 개인전·기획전을 꾸준히 선보이며, 디자이너 230여 명의 포스터 약 2만 점을 모은 'DNP 그래픽 디자인 아카이브'를 비롯해 타일러 그래픽스 판화 컬렉션, 다나카 잇코·후쿠다 시게오·나가이 가즈마사 아카이브를 함께 보존한다."
+  },
+  "notes": "Hint domains were stale: dnpfoundation.or.jp = NXDOMAIN, dnp.co.jp/CGG = 404. Live home: https://www.dnpfcp.jp/ ; collection DB: https://collection.dnpfcp.jp/ja/ (English at /en/). This is NOT exhibition-only — there is a genuine, well-structured per-object catalogue scrapeable purely from HTML (no JS rendering, no Cloudflare). RE-VISIT IF the 600px rule is relaxed: a scraper is straightforward — paginate /ja/items/?search=<kw>&per_page=200 or walk collections 1-6 series->folders->items, parse the detail table, pull image id from <img src=/image/contents/thumbnail_l/{id}.jpg>. In-scope corpus by subject ~8-10k+ usable (6,038 'poster' hits + 1,584 'print' hits + designer-archive flat works; designer-archive 'series listing' counts like 53,000 appear to be aggregate item/page counts, not artwork totals). Categories map cleanly: posters->'poster', prints->'print', drawings->'drawing'. Only the image resolution disqualifies it today."
+}

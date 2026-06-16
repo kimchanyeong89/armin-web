@@ -1,0 +1,25 @@
+{
+  "slug": "poster-house",
+  "viable": true,
+  "reason": "Poster House's online collection lives on its OWN infrastructure at collection.posterhouse.org (WordPress theme `posterhouse-emuseum` fronting a TMS/eMuseum backend). Two-layer machine-readable source, no auth: (1) WP REST custom post type `poster` (GET /wp-json/wp/v2/poster?per_page=100&page=P&_fields=id,slug,link) enumerates ALL 7,573 posters via X-WP-Total; (2) each poster's server-rendered HTML page carries full metadata (title .poster-title, date, designer/artist via .about-item.designer, dimensions, OBJECT NUMBER, COUNTRY OF ORIGIN, CREDIT LINE, KEYWORDS) plus the full image URL on the museum's own eMuseum host (posterhouse.emuseum.com/internal/media/dispatcher/{id}/full?key=...). Verified images download as JPEG with the long edge at 800px (e.g. 566x800, 800x578) — comfortably over the 600px floor. Entire collection is posters → 100% flat, in-scope, the priority category. Probe built 15/15 records end-to-end with R2 upload and 0 drops. The eMuseum site's native JSON API (posterhouse.emuseum.com/objects/.../json) returns HTTP 202 bot-challenge, but the WP-REST+HTML path is fully open and sufficient.",
+  "source_type": "api+html",
+  "easy_source_found": "No bulk/open-data dump (no /opendata, /api, data.* host, GitHub, or IIIF/Solr collection endpoint). The eMuseum native JSON API on posterhouse.emuseum.com is WAF-gated (HTTP 202 challenge). BUT the museum's own WordPress REST API on the collection subdomain (collection.posterhouse.org/wp-json/wp/v2/poster) is fully open and lists all 7,573 posters with permalinks — used as the enumeration layer; per-object metadata + images are scraped from each WP-rendered poster HTML page (image served by the museum's own eMuseum media dispatcher).",
+  "estimated_inscope_count": 7573,
+  "script_path": "/Users/kietzsche/armin-web-main/scripts/scrape-poster-house.mjs",
+  "probe_ok": true,
+  "probe_summary": "node scripts/scrape-poster-house.mjs --probe → parsed 15/15, built 15, 0 drops, 0 image errors. Each record has title, artist(designer), year, dimensions, objectNumber, category='poster', description, and a live R2 webp image (verified 533x800, image/webp, HTTP 200). Output: public/data/poster-house-collection-probe.json. NOTE: an initial run dropped 11/15 because the designer row's visible LABEL flips between 'Designer' and 'Artist' for the same `.about-item.designer` row — fixed by keying extraction on the CSS class, not the label text; this recovered every attribution (Tom Daly, Mihaly Biro, Gran OM & Co., etc.). Anonymous works are catalogued by the museum as 'Designer Unknown' (a real attribution string), so they pass min-4 and are kept.",
+  "est_full_count": 7400,
+  "est_runtime_min": 70,
+  "exhibitions_entry": {
+    "name": "Poster House",
+    "name_ko": "포스터 하우스",
+    "city": "New York",
+    "country": "USA",
+    "latitude": 40.7434,
+    "longitude": -73.9928,
+    "description": "The first museum in the United States dedicated exclusively to the art and history of posters. Opened in 2019 in Manhattan's Chelsea neighborhood, Poster House presents the poster as both a commercial object and a powerful art form, with a permanent collection of more than 7,500 works spanning the medium's golden age to the present — from Art Nouveau advertising and Belle Epoque lithographs to political propaganda, psychedelic concert posters, and contemporary graphic design from around the world.",
+    "description_ko": "포스터의 예술과 역사를 전문으로 다루는 미국 최초의 미술관. 2019년 맨해튼 첼시에 문을 열었으며, 포스터를 상업적 매체이자 강력한 예술 형식으로 함께 조명한다. 아르누보 광고와 벨에포크 석판화부터 정치 선전 포스터, 사이키델릭 콘서트 포스터, 그리고 동시대 그래픽 디자인에 이르기까지 전 세계 7,500여 점의 포스터를 소장하고 있다.",
+    "name_full": "Poster House"
+  },
+  "notes": "ARCHITECTURE: scrape-poster-house.mjs is a two-layer scraper. --probe processes the first 15 posters end-to-end (REST list -> fetch HTML -> parse -> download/size-gate/autocrop/R2 upload -> write *-probe.json). --full enumerates all 7,573 via REST pagination (76 pages), fetches each poster HTML, parses, image->R2, resumable (scripts/.state/poster-house-progress.json holds completed wp_ids; reloads already-built artworks from disk on restart), failures->scripts/.state/poster-house-failed.ndjson, checkpoint write every 30s. category is the constant 'poster' (whole collection is posters; the app treats 'poster' as a 2D class). NO colour-gating — posters are never colour-gated per scope, and there are no reproductive prints here, so colorfulness() was not needed. ids prefixed 'poster-house-'; R2 key artworks/poster-house-collection/{id}-{hash8}-imageUrl.webp. medium is empty for every record — the Poster House detail page exposes no medium/technique field (dimensions, designer, date, object number, country, credit, keywords are all present). Projected full JSON ~9MB (well under the 24MB cap; a binary-search cap-and-trim safety net is implemented anyway). DID NOT run --full per instructions. To run full: node scripts/scrape-poster-house.mjs --full"
+}

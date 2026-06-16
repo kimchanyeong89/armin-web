@@ -1,0 +1,24 @@
+{
+  "slug": "wilanow-poster",
+  "viable": true,
+  "reason": "Poster Museum at Wilanów (Muzeum Plakatu w Wilanowie) is a branch (Oddział) of Muzeum Narodowe w Warszawie (MNW). Its own postermuseum.pl has no per-object online catalogue, but the parent national platform cyfrowe.mnw.art.pl runs MuzaCMS API v2.21.1 (https://cyfrowe-api.mnw.art.pl/api) which cleanly exposes the museum's holdings. Filter filter[owner][]=110099 ('Muzeum Plakatu w Wilanowie, Oddział MNW') returns exactly 652 objects; a full survey of all 652 found 0%% missing author, 0%% missing year, 0%% missing image, 0%% missing title. Types are 100%% FLAT: 627 plakat (poster), 17 projekt (design), plus a few wywieszka/ulotka/grafika użytkowa/replika — no 3D. HQ images on the museum CDN (cyfrowe-cdn.mnw.art.pl/upload/multimedia/{filePath}.{ext}) download at ~6000px (largest edge). Probe of 15 works ran end-to-end (detail fetch + image download + autocrop→webp + R2 upload) with 15/15 ok, 0 min-4 drops, 0 image errors, smallest long edge 2004px.",
+  "source_type": "api",
+  "easy_source_found": "YES — parent national-museum digital platform. cyfrowe.mnw.art.pl (MNW 'Zbiory Cyfrowe', Angular SPA) is backed by the MuzaCMS REST API at https://cyfrowe-api.mnw.art.pl/api (v2.21.1, no auth). Endpoints: GET /api/search/Object/page/{n}?filter[owner][]=110099 (paginated list, 15/page, 44 pages, owner 110099 == the Poster Museum branch); GET /api/object/{id} (full per-object detail). Image CDN https://cyfrowe-cdn.mnw.art.pl/upload/multimedia/{filePath}.{ext} (~6000px). Also an OAI-PMH endpoint exists (https://cyfrowe-oaipmh.mnw.art.pl/?verb=GetRecord...) but the JSON search/detail API is cleaner and was used. The museum's own postermuseum.pl is a CMS brochure site (edito/ideo) with no collection database.",
+  "estimated_inscope_count": 652,
+  "script_path": "/Users/kietzsche/armin-web-main/scripts/scrape-wilanow-poster.mjs",
+  "probe_ok": true,
+  "probe_summary": "node scripts/scrape-wilanow-poster.mjs --probe → 15/15 ok, 0 min-4 drops, 0 image errors. Categories 13 poster + 2 drawing. Smallest long edge 2004px (most 6000px). R2 webp verified live (image/webp, 2048px). Famous Polish poster designers present: Tomaszewski, Gronowski, Sarnecki ('Solidarność — W samo południe'), Lex Drewinski, Bartłomiejczyk, W.T. Benda. Probe JSON: public/data/wilanow-poster-collection-probe.json.",
+  "est_full_count": 652,
+  "est_runtime_min": 20,
+  "exhibitions_entry": {
+    "name": "Poster Museum at Wilanów",
+    "name_ko": "빌라누프 포스터 미술관",
+    "city": "Warsaw",
+    "country": "Poland",
+    "latitude": 52.1648,
+    "longitude": 21.0905,
+    "description": "Founded in 1968 on the grounds of the Wilanów Palace, this was the world's first museum devoted entirely to poster art. A branch of the National Museum in Warsaw, it holds one of the largest poster collections anywhere — the cornerstone of the celebrated Polish School of Poster — spanning political and propaganda posters, film and theatre bills, exhibition and advertising graphics, and original designs by masters such as Henryk Tomaszewski, Tadeusz Gronowski, and Tomasz Sarnecki.",
+    "description_ko": "1968년 빌라누프 궁전 부지에 문을 연 세계 최초의 포스터 전문 미술관이다. 바르샤바 국립미술관의 분관으로, 폴란드 포스터 화파의 본산이라 할 만한 방대한 포스터 컬렉션을 소장하고 있다. 정치·선전 포스터부터 영화·연극 포스터, 전시·광고 그래픽, 그리고 헨리크 토마셰프스키, 타데우시 그로노프스키, 토마시 사르네츠키 같은 거장들의 원화 디자인까지 폭넓게 아우른다."
+  },
+  "notes": "SCOPE filter = filter[owner][]=110099 (the Poster Museum's own holdings; 652 works, all flat, all imaged, all min-4 complete). An alternative filter[types][]=117009 (type=plakat) yields 692 but includes posters owned by other MNW departments — owner=110099 is the authoritative 'this museum' scope and was chosen. Category mapping: plakat/wywieszka/ulotka/untyped → 'poster' (app's artworkClassification.ts maps poster→2D); projekt/grafika użytkowa/replika → 'drawing'. NO colour-gating (posters/photographs/drawings never grayscale-curated per guide §1). Metadata is Polish (titles, techniques, materials), which is acceptable per task. Artist names kept in source 'Last, First (dates)' form; multiple contributors (autor; drukarnia; projektant) joined with '; '. objectNumber = inventoryNumber || positionNumber. JSON for full 652 ≈ <1MB (well under 24MB cap; no capping needed). --full is resumable via scripts/.state/wilanow-poster-progress.json with failures→wilanow-poster-failed.ndjson (concurrency 5). DID NOT run --full per instructions. sourceUrl uses SPA route https://cyfrowe.mnw.art.pl/pl/katalog/objects/{mnw_id}."
+}

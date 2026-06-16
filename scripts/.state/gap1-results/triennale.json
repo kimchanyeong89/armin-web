@@ -1,0 +1,24 @@
+{
+  "slug": "triennale",
+  "viable": false,
+  "reason": "Triennale Milano runs a dedicated per-object archive platform at archivi.triennale.org (Next.js App Router, CollectiveAccess backend on DigitalOcean Spaces CDN trn-triennale-archive.fra1.cdn.digitaloceanspaces.com). It HAS rich per-object catalogue records (/item/{id}) with excellent metadata (Titolo, Tipologia, Persona/graphic designer, Data, Dimensioni, Segnatura) and abundant FLAT in-scope material: facets 'Grafica e pubblicita della Triennale', 'Grafica nelle Triennali', 'Fotografia' (~38k aggregation), named graphic designers (Mario Sironi etc.), posters/manifesti, drawings. BUT the only publicly served images are DITHERED black/white halftone previews: every image across homepage, /item detail, /moodboard and /explorer/grid RSC (40/40 grid items) is in the images-dithered/ prefix with suffix _original_dithered.png. Sample is 500x344px, 4-bit (16-color) colormap PNG ~26KB - a deliberate stylized B/W aesthetic, below the >=600px full-fidelity bar and color-destroyed, would poison the visual grid + SigLIP. The real (non-dithered) originals are hard-blocked: every original path variant (images/, images-original/, root, original/) returns 403 AccessDenied under both research and browser UA + referer; bucket ListBucket is 403; zero non-dithered URLs appear in any served payload. Additionally robots.txt site-wide Disallow for ClaudeBot/anthropic-ai/Claude-SearchBot. No accessible full-resolution artwork imagery exists. STOP per 'images too small / blocked' criterion.",
+  "source_type": "none",
+  "easy_source_found": "No open-data/API/dump. Main site triennale.org is a Prismic-backed Next.js SPA (all guessed paths return SPA 404 fallback with pageProps.error). The real collection lives on a SEPARATE platform archivi.triennale.org (and alias archivio.triennale.org): a Next.js App Router app over a CollectiveAccess CMS (ca_objects/ca_object_representations naming), images hosted on DigitalOcean Spaces (trn-triennale-archive.fra1.cdn.digitaloceanspaces.com). It exposes only dithered B/W preview PNGs publicly; no JSON API, no IIIF, no non-dithered images. robots.txt blocks AI crawlers.",
+  "estimated_inscope_count": 0,
+  "script_path": "",
+  "probe_ok": false,
+  "probe_summary": "Found dedicated archive (archivi.triennale.org, CollectiveAccess + DO Spaces CDN) with strong per-object FLAT graphic-design catalogue (posters, graphics, photography, drawings; named designers like Mario Sironi) and good metadata. FATAL: only dithered 500px 4-bit B/W halftone previews are public; non-dithered originals 403 AccessDenied (all path variants, both UAs + referer); bucket listing 403; robots.txt disallows ClaudeBot/anthropic-ai. No usable full-res imagery -> viable:false.",
+  "est_full_count": 0,
+  "est_runtime_min": 0,
+  "exhibitions_entry": {
+    "name": "Triennale Milano - Museo del Design Italiano",
+    "name_ko": "트리엔날레 밀라노 - 이탈리아 디자인 박물관",
+    "city": "Milan",
+    "country": "Italy",
+    "latitude": 45.4725,
+    "longitude": 9.1717,
+    "description": "Housed in the Palazzo dell'Arte in Parco Sempione, Triennale Milano is Italy's leading institution for design, architecture and the visual arts, founded in 1923. Its Museo del Design Italiano traces the story of Italian design, and its century-deep archive holds posters, graphic design, drawings, photographs and models documenting the Triennale exhibitions and the designers who shaped modern Italy, from Mario Sironi to Gio Ponti.",
+    "description_ko": "밀라노 셈피오네 공원의 팔라초 델라르테에 자리한 트리엔날레 밀라노는 1923년 출범한 이탈리아 대표 디자인·건축·시각예술 기관이다. 부설 '이탈리아 디자인 박물관'은 이탈리아 디자인의 흐름을 짚어 보이며, 100년에 이르는 아카이브에는 역대 트리엔날레 전시와 마리오 시로니, 지오 폰티 등 이탈리아 현대 디자인을 일군 작가들을 담은 포스터·그래픽·드로잉·사진·모형이 보관되어 있다."
+  },
+  "notes": "Backend = CollectiveAccess; CDN = DigitalOcean Spaces (trn-triennale-archive.fra1). Detail route /item/{id}; grid /explorer/grid with sortFields=year|preferredLabel|similarityIndex and rich facets (edition-by-edition Triennale counts, types Manifesto/Documento/Fotografia/Allestimento, named photographers & designers). Largest facets ~49k and ~38k suggest a very large archive (tens of thousands of flat works in scope). RE-VISIT TRIGGER: if Triennale ever exposes non-dithered originals on the CDN (e.g. an images/ or IIIF endpoint) or publishes an API, this becomes a strong viable target - metadata is already high quality. The dithered B/W layer is purely a front-end aesthetic choice masking the real assets."
+}

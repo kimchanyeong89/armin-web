@@ -1,0 +1,24 @@
+{
+  "slug": "designmuseum-dk",
+  "viable": false,
+  "reason": "FLAT-art online catalogues are offline for system migration. Designmuseum Danmark (designmuseum.dk) is a WordPress/Yoast marketing site with NO collection post type (sitemaps contain only page/exhibition/events/standin/media_category). The two in-scope FLAT collections each have a section page but no live database: Poster Collection (/en/samlinger/plakatsamlingen/) states 'The software that runs the archive can no longer be upgraded. We are moving the database to a new system. The poster collection will be available again in a few months.' Prints & Drawings (/en/samlinger/arkiv-dansk-design/) states 'The museum's Prints and Drawings register will be available online in the second half of 2026.' The ONLY live database is the Furniture Index (external host mus.reindex.net/DMFURT/main/Landing.php) = 12,000 furniture objects = 3D only, out of scope. Probed sibling reindex DB codes (DMPLAK/DMPOSTER/DMPLAKAT/DMPRINT/DMGRAF/DMTEGN etc.) all 404 — no flat-art DB on that host. No collection subdomain resolves (samlinger/collection/objects/emuseum/sara/digital.designmuseum.dk all NXDOMAIN). No SARA/kulturarv/natmus national platform currently exposes this museum's flat works. Per FLAT-only scope (3D-only online catalogue with no flat works → not viable). RE-PROBE in H2 2026 when posters + prints/drawings registers come back online.",
+  "source_type": "none",
+  "easy_source_found": "None usable. designmuseum.dk has WP REST (/wp-json/, wp/v2 namespace) but only marketing post types (no objects/collection endpoint). robots.txt sitemaps (sitemap_index.xml, /en/sitemap_index.xml) list no collection sitemap. No /opendata, /api, data.designmuseum.dk, or GitHub dump. Furniture Index is the only machine-touchable catalogue (mus.reindex.net/DMFURT, a reindex.net PHP platform) but is 3D furniture-only. National platforms checked: kulturarv.dk resolves (200) but is a portal, not a per-object API for this museum's flat works; samlinger.natmus.dk / sara.kulturarv.dk / api.dimu.org did not yield a Designmuseum-DK flat-art endpoint.",
+  "estimated_inscope_count": 0,
+  "script_path": null,
+  "probe_ok": false,
+  "probe_summary": "No probe script written. Stage 1 manual probing established no per-object FLAT catalogue is currently online: WP site has no collection content type; poster DB and prints/drawings DB are both down for migration (poster 'a few months', prints/drawings 'second half of 2026'); only live DB is furniture-only (3D, ~12k, mus.reindex.net/DMFURT). Verdict: viable:false.",
+  "est_full_count": 0,
+  "est_runtime_min": 0,
+  "exhibitions_entry": {
+    "name": "Designmuseum Danmark",
+    "name_ko": "덴마크 디자인박물관",
+    "city": "Copenhagen",
+    "country": "Denmark",
+    "latitude": 55.6855,
+    "longitude": 12.5901,
+    "description": "Denmark's central museum for Danish and international design and crafts, housed in the 18th-century former Frederiks Hospital in Copenhagen. Its holdings span furniture, ceramics, textiles, fashion, industrial design, and a renowned graphic collection of posters, prints, and drawings. The museum is best known for its collection of 20th-century Danish modern design and the chairs of the Danish Modern movement.",
+    "description_ko": "코펜하겐의 18세기 옥 프레데릭스 병원 건물에 자리한 덴마크의 대표 디자인·공예 박물관이다. 가구, 도자기, 직물, 패션, 산업디자인과 함께 포스터·판화·드로잉을 아우르는 방대한 그래픽 컴렉션을 소장했다. 특히 20세기 덴마크 모던 디자인과 덴마크 모던 의자 컴렉션으로 세계적인 명성을 얻었다.\n\n⚠ 현재 온라인 컬렉션 특이사항: 포스터·판화·드로잉(평면 작품) 데이터베이스는 시스템 이전 작업으로 잠정 중단되어 있으며(포스터는 수개월 내, 판화·드로잉은 2026년 하반기 재개 예정), 현재 온라인 공개된 데이터베이스는 가구 색인(Furniture Index, 3D 전용)뿐이다."
+  },
+  "notes": "RE-PROBE in H2 2026 (prints/drawings register promised 'second half of 2026'; poster collection 'a few months' from mid-2026). Watch for: (1) a new collection-online platform replacing the legacy reindex.net system — likely a SARA/Axiell-backed site or a fresh subdomain; (2) the poster collection in particular is the priority FLAT target. Furniture Index (mus.reindex.net/DMFURT) is a reindex.net PHP catalogue (~12k furniture, 3D) — do NOT scrape (out of scope). When re-probing, recheck samlinger/collection/objects.designmuseum.dk subdomains and the national kulturarv.dk / SARA endpoints for a Designmuseum-DK flat-art feed. The exhibitions_entry above can be added to src/data/exhibitions.js as a map pin without a collectionFile (museum has no in-scope online collection yet)."
+}
