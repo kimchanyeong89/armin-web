@@ -1,0 +1,24 @@
+{
+  "slug": "schulz",
+  "viable": false,
+  "reason": "Charles M. Schulz Museum DOES have a public per-object online catalogue (PastPerfect Online at schulzmuseum.pastperfectonline.com, embedded via /digital-collection/) with rich parseable metadata for original Peanuts strip art (Object ID, Title, Artist 'Schulz, Charles M.', Object Name 'Strip, Cartoon', Date, Dimensions, Medium, Collection; ~3,800+ object records). HOWEVER it fails BOTH gating criteria: (1) IMAGES TOO SMALL — every public image is hard-capped at 450px on the long edge (daily strips 450x150, Sundays 450x314/319/322, documents 294x450, magazine covers 356x450). The 'full-size' image is just the thumbs/ path with the size segment dropped; no fullsize/original/large/web variant exists (all return S3 404) and there is no IIIF/API/OAI endpoint. 450px < 600px scope minimum. (2) COPYRIGHT-LOCKED — PEANUTS (c) Peanuts Worldwide LLC; site terms restrict images to personal/educational/non-commercial fair use, prohibit commercial reproduction without rights-holder permission, and high-res masters are reproduction-fee-gated (Research Services & Reproduction Fee Schedule). Per SCOPE rule 'only collect if the museum openly serves downloadable images >=600px on its own infra; if copyright-locked/watermarked-thumbnails -> viable:false'.",
+  "source_type": "none",
+  "easy_source_found": "No open data / API / IIIF / OAI / GitHub dump. The only machine-readable catalogue is PastPerfect Online (third-party SaaS on museum subdomain schulzmuseum.pastperfectonline.com): ASP.NET MVC, records at /webobject/{GUID} (objects=strips), /archive/{GUID}, /library/{GUID}, /photo/{GUID}; search at /search?search_criteria=...; images on s3.amazonaws.com/pastperfectonline/images/museum_110/{NNN}/[thumbs/]{objnum}.jpg. Metadata is HTML-scrapable but images max out at 450px so it is unusable for this corpus.",
+  "estimated_inscope_count": 0,
+  "script_path": null,
+  "probe_ok": false,
+  "probe_summary": "Found museum's own online catalogue (PastPerfect Online) with ~3,800+ original-strip object records and full structured metadata, but ALL public images are capped at 450px long edge (no >=600px variant anywhere; no IIIF/API), and content is Peanuts Worldwide copyright with non-commercial-fair-use-only terms. Both image-size and copyright gates fail -> not viable.",
+  "est_full_count": 0,
+  "est_runtime_min": 0,
+  "exhibitions_entry": {
+    "name": "Charles M. Schulz Museum and Research Center",
+    "name_ko": "찰스 M. 슐츠 박물관",
+    "city": "Santa Rosa",
+    "country": "USA",
+    "latitude": 38.4471,
+    "longitude": -122.7233,
+    "description": "Dedicated to the life and art of Charles M. Schulz, creator of Peanuts, the museum in Santa Rosa, California holds the world's largest collection of original Peanuts comic strips (over 17,000) alongside Schulz's drawings, archives, and personal effects. Its online PastPerfect catalogue lets visitors browse and search thousands of objects, but the strip imagery is copyright-protected by Peanuts Worldwide and served only as small reference images, so it is not included in the ARMIN visual collection.",
+    "description_ko": "'피너츠'를 창조한 만화가 찰스 M. 슐츠의 삶과 작품에 헌정된 미술관으로, 캘리포니아주 산타로사에 있다. 1만 7천 점이 넘는 피너츠 원화 연재만화를 비롯해 슐츠의 드로잉과 아카이브, 유품까지 세계 최대 규모의 컬렉션을 소장하고 있다. 온라인 PastPerfect 카탈로그에서 수천 점의 소장품을 검색해 둘러볼 수 있지만, 연재만화 이미지는 Peanuts Worldwide의 저작권으로 보호되어 작은 참고용 이미지로만 제공되므로 ARMIN 비주얼 컬렉션에는 포함하지 않았다."
+  },
+  "notes": "Stage 0/1 only; no script written (correctly gated out at probe). Catalogue itself is high quality and would be trivially scrapable for METADATA (clean PastPerfect HTML, ~3.8k object records, named artist=Schulz, dated, dimensioned) IF the image policy ever changes. Re-probe trigger: if the museum migrates off PastPerfect Online to an eMuseum/IIIF platform OR begins serving >=600px images. R2/SigLIP would in any case be polluted by 450px line-art scans even if copyright permitted. Reproduction-fee page confirms high-res is order-only: schulzmuseum.org/explore/research-center/research-services-and-reproduction-fee-schedule/. Lat/long = museum at 2301 Hardies Ln, Santa Rosa CA 95403."
+}

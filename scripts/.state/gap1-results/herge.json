@@ -1,0 +1,24 @@
+{
+  "slug": "herge",
+  "viable": false,
+  "reason": "Musée Hergé (Louvain-la-Neuve) has NO open per-object catalogue and images are copyright-locked. The official site museeherge.be/.com is a standard WordPress marketing site (Avada theme + SmartCrawl/Hummingbird plugins, PHP 8.3). WP REST /wp-json/wp/v2/types exposes only post, page, avada_portfolio (x-wp-total: 0) and avada_faq — there is no object/artwork/collection post type. The sitemapindex contains only post/page/slide/category/extras sitemaps (no collection sitemap); zero pages match collection/oeuvre/planche/original/drawing keywords. The site states physical holdings of 'Over 80 original illustration plates, 800 photos, documents' but provides no online browsing/search of them. Images are explicitly copyright-protected ('© Hergé / Tintinimaginatio – for visuals taken from Hergé's work') by the Hergé estate, so even if a few editorial images exist they are copyright-locked, not openly downloadable ≥600px on museum infra. Fails copyright gate and per-object-catalogue requirement.",
+  "source_type": "none",
+  "easy_source_found": "none — no /opendata or /api, no data.museeherge.* subdomain, no GitHub dump, not a university-library digital collection (no CONTENTdm/IIIF/eMuseum). Only standard WordPress WP REST (marketing content) which carries no artwork objects.",
+  "estimated_inscope_count": 0,
+  "script_path": null,
+  "probe_ok": false,
+  "probe_summary": "Probed museeherge.com/en (200, WordPress) and museeherge.be sitemap + WP REST. types = only post/page/avada_portfolio(0)/avada_faq → no per-object catalogue. No collection sitemap. Copyright: '© Hergé / Tintinimaginatio'. Estate-protected, editorial-only. STOP at Stage 1.",
+  "est_full_count": 0,
+  "est_runtime_min": 0,
+  "exhibitions_entry": {
+    "name": "Musée Hergé",
+    "name_ko": "에르제 미술관",
+    "city": "Louvain-la-Neuve",
+    "country": "Belgium",
+    "latitude": 50.6686,
+    "longitude": 4.6118,
+    "description": "Museum in Louvain-la-Neuve dedicated to Hergé (Georges Remi), creator of The Adventures of Tintin. Designed by architect Christian de Portzamparc and opened in 2009, it presents original illustration plates, drawings, photographs and documents tracing Hergé's life and work. Note: the Hergé estate (Tintinimaginatio) holds copyright over the works, and the museum does not publish an open online collection catalogue.",
+    "description_ko": "땡땡의 모험을 창조한 에르제(조르주 레미)에게 헌정된 벨기에 루뱅라뇌브의 미술관이다. 건축가 크리스티앙 드 포르장파르크가 설계해 2009년 문을 열었으며, 에르제의 삶과 작업을 보여주는 원화 일러스트 플레이트, 드로잉, 사진, 자료를 전시한다. 작품 저작권은 에르제 재단(Tintinimaginatio)이 보유하고 있어 온라인 소장품 카탈로그는 공개하지 않는다."
+  },
+  "notes": "Decisive at Stage 1 (no script written, no --full). Evidence: (1) WP REST types lacks any collection/object CPT; avada_portfolio empty. (2) sitemapindex = post/page/slide/category/extras only. (3) Estate copyright '© Hergé / Tintinimaginatio' is a hard gate per COMICS/ANIMATION copyright rule. Per-object Hergé original art is also unlikely to ever be openly licensed given Moulinsart/Tintinimaginatio's well-known aggressive IP enforcement. Coordinates are for the museum building (rue du Labrador 26, Louvain-la-Neuve). RECOMMENDATION: leave as a directory pin with editorial description; do not attempt scraping unless the estate ever opens a licensed open-access program (none known as of 2026)."
+}

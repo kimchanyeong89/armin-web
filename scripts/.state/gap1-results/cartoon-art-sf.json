@@ -1,0 +1,26 @@
+{
+  "slug": "cartoon-art-sf",
+  "viable": false,
+  "reason": "No per-object online collection catalogue exists. cartoonart.org is a Squarespace editorial/commerce site (confirmed via ?format=json: collection typeName='index' = Squarespace nav-indexes, NOT an object DB; no eMuseum/TMS/IIIF/Solr/CONTENTdm/Drupal-jsonapi anywhere). /collection 404s. The /collections-index page is a donor-info 'how to donate' landing page describing ~9,000 physical pieces and 25+ named donor collections in prose, with NO searchable database, NO per-object pages, NO individual artwork records, NO downloadable images (verified by WebFetch). Full sitemap = 746 URLs, 100% editorial: 528 calendar/event pages, 46 store items (only 'catalogs' are printed exhibition catalogs sold in the shop), 33 press-releases, exhibition gallery + donation pages; zero collection/object/artwork URLs. robots.txt additionally blocks anthropic-ai, ClaudeBot and all /api/ with Disallow:/ . Matches the task hint: small US cartoon museum with only editorial pages and no per-object catalogue with images -> not collectable.",
+  "source_type": "none",
+  "easy_source_found": "None. Stage-0 checks all negative: no /opendata (404), no /api (404, and robots.txt Disallow:/api/), no data.cartoonart.org, no GitHub dumps, no university-library digital-collections platform (CONTENTdm/IIIF), no eMuseum/Solr/Drupal-jsonapi. Site is plain Squarespace (images.squarespace-cdn.com); ?format=json exposes only Squarespace page-collections of typeName 'index', not artwork objects.",
+  "estimated_inscope_count": 0,
+  "script_path": null,
+  "probe_ok": false,
+  "probe_summary": "Stage-1 probe decisive negative. (1) Homepage 200 (Squarespace). (2) /collection 404; /collections & /collections-index return a donor-info landing page, not a catalogue. (3) Full sitemap.xml fetched (746 <loc>): grep for collection|catalog|object|artwork|permanent|item found ZERO catalogue URLs - all paths are calendar/store/press-releases/exhibition/donation. (4) Squarespace ?format=json confirms collection typeName='index' (no object collection). (5) No collection-DB hint string ('search the collection', 'eMuseum', 'iiif', 'tms', 'catalogue', 'opac') anywhere in homepage HTML. (6) robots.txt blocks anthropic-ai/ClaudeBot + /api/. No in-scope original flat art is served as a per-object catalogue with downloadable >=600px images. Nothing to scrape.",
+  "est_full_count": 0,
+  "est_runtime_min": 0,
+  "exhibitions_entry": {
+    "name": "Cartoon Art Museum",
+    "name_ko": "카툰 아트 뮤지엄",
+    "city": "San Francisco",
+    "country": "USA",
+    "latitude": 37.8062567,
+    "longitude": -122.4217103,
+    "description": "Founded in 1984, the Cartoon Art Museum is the only museum in the western United States dedicated to all forms of cartoon art - comic strips, comic books, anime, political cartoons, graphic novels and underground comix. Its permanent collection holds roughly 9,000 original works, including comic-strip and comic-book art, animation cels and original drawings by figures such as Charles Schulz, Bill Watterson and Edward Gorey. Now located at 781 Beach Street in Fisherman's Wharf, it shows rotating selections through curated exhibitions but does not maintain a searchable online collection database.",
+    "description_ko": "1984년에 문을 연 카툰 아트 뮤지엄은 미국 서부에서 유일하게 모든 형태의 만화 예술을 다루는 미술관이다. 신문 연재만화와 코믹북, 애니메이션, 정치 풍자만화, 그래픽 노블, 언더그라운드 코믹스를 두루 아우른다. 약 9천 점에 이르는 소장품에는 만화 원화와 애니메이션 셀, 그리고 찰스 슐츠, 빌 워터슨, 에드워드 고리 같은 작가들의 원화가 포함되어 있다. 현재 샌프란시스코 피셔맨스워프의 비치 스트리트 781번지에 자리하며, 기획전을 통해 소장품을 번갈아 선보이지만 온라인 검색용 소장품 데이터베이스는 운영하지 않는다.",
+    "founded": 1984,
+    "type": "Cartoon / comic / animation art museum"
+  },
+  "notes": "Skip for collection ingestion. The museum is a strong real-world institution (good candidate for the directory/map as an exhibitions_entry only) but serves no machine-readable per-object catalogue and no own-infra downloadable images, so there is no flat-art corpus to harvest. robots.txt is also AI-hostile (anthropic-ai/ClaudeBot Disallow:/). The only 'catalogs' on the site are printed exhibition catalogs for sale in the Squarespace store (out of scope: printed reproductions, not original-art object records). Confirmed coords from Squarespace site location JSON (781 Beach Street, SF 94109). If a collection ever becomes desirable, the realistic path would be a direct data request to the curator, not scraping."
+}

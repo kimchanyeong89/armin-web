@@ -1,0 +1,25 @@
+{
+  "slug": "ghibli",
+  "viable": false,
+  "reason": "No online collection catalogue. Homepage (https://www.ghibli-museum.jp/) returns 200 but is a visitor-info/blog site: sitemap.xml (904 URLs) contains only diary (397), news (300), exhibition (91 = temporary special-exhibition announcement pages, NOT per-object records), trih, shop, about, cinema, cafe, ticket, info. No /wp-json (404), /jsonapi (404), /opendata (404); /api returns generic 403 (not JSON); no data.* subdomain (no DNS); no IIIF/eMuseum/Solr/Algolia/CONTENTdm. WebFetch of /en/ confirms no online collection database, no per-object artwork pages, no downloadable images, no digital archive of cels/concept art/original drawings. Ghibli Museum is famously no-photography and experiential; all original art (Miyazaki layout boards, animation cels, concept art) is Studio Ghibli copyright-locked and never served as downloadable images on the museum's own infra. In-scope original flat art served openly at >=600px: zero.",
+  "source_type": "none",
+  "easy_source_found": "none — checked /api (403), /opendata (404), /wp-json (404), /jsonapi (404), data.ghibli-museum.jp (no DNS), GitHub dumps (none), IIIF/eMuseum/Solr/CONTENTdm (none). sitemap.xml exists (904 URLs) but contains only blog/news/visitor-info + temporary-exhibition announcement pages, no per-object collection records.",
+  "estimated_inscope_count": 0,
+  "script_path": null,
+  "probe_ok": false,
+  "probe_summary": "No machine-readable source for in-scope original flat art on the museum's own infra. Sitemap parsed: diary/news/exhibition/shop/about only; no collection/object/work/gallery/art paths. /en/ has no collection nav section. Copyright-locked, no-photo museum; no downloadable artwork images at any size.",
+  "est_full_count": 0,
+  "est_runtime_min": 0,
+  "exhibitions_entry": {
+    "name": "Ghibli Museum, Mitaka",
+    "name_ko": "지브리 미술관",
+    "city": "Mitaka",
+    "country": "Japan",
+    "latitude": 35.6962,
+    "longitude": 139.5703,
+    "description": "A museum of the Japanese animation studio Studio Ghibli, set in Inokashira Park in Mitaka on the western edge of Tokyo. Designed under the direction of Hayao Miyazaki and opened in 2001, it is a deliberately experiential, no-photography space: visitors wander winding stairways and rooftop gardens past a recreated animator's studio, original sketches and watercolour concept boards, a Saturn Theater showing exclusive short films, and the giant Robot Soldier from Castle in the Sky. The museum has no online collection catalogue, and its original art is copyright-protected and not published as downloadable images.",
+    "description_ko": "도쿄 서쪽 미타카의 이노카시라 공원 안에 자리한, 일본 애니메이션 스튜디오 지브리의 미술관입니다. 미야자키 하야오가 직접 구상해 2001년 문을 열었고, 사진 촬영을 금지한 채 오롯이 두 발로 걸으며 체험하도록 만든 공간입니다. 구불구불한 계단과 옥상 정원을 따라 애니메이터의 작업실을 재현한 방, 미야자키의 밑그림과 수채 콘셉트 보드, 이곳에서만 볼 수 있는 단편을 상영하는 토성좌 극장, 그리고 '천공의 성 라퓨타'의 로봇 병사 조형물이 이어집니다. 온라인 소장품 카탈로그가 없고, 원화는 모두 저작권으로 보호되어 내려받을 수 있는 이미지로 공개되지 않습니다.",
+    "name_note": "uses common English/Korean name; full JP: 三鷹の森ジブリ美術館"
+  },
+  "notes": "Matches the prior hint exactly (closed/no-photo, copyright-locked, no digital catalogue). Decisive STAGE-1 stop after STAGE-0 easy-source check + sitemap parse + /en/ WebFetch (~6 min). No scraper written. exhibitions_entry provided for directory listing only (museum exists, world-famous), but NOT collectible under armin's open-image scope. coords = Inokashira Park, Mitaka."
+}

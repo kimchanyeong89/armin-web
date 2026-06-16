@@ -1,0 +1,25 @@
+{
+  "slug": "belgian-comic",
+  "viable": false,
+  "reason": "Centre belge de la bande dessinee (Musee de la BD, Brussels; cbbd.be / comicscenter.net) has NO online per-object collection catalogue. The site is a ~2012-era custom CMS (jQuery 1.8.18) serving only editorial/visit content. Full sitemap.xml audit returned exclusively: visit info, library pages, animations, temporary-exhibition announcements (la gallery = named shows like petzi/julie-maroh, NOT object records), and le-catalogue-phila-bd (postage-stamp/philately editions). No /oeuvre, /collection, /catalogue object pages exist. Probed endpoints all 404: /api, /opendata, /jsonapi, /api/collection, /collection.json, /oeuvres, /fr/collection(s), /fr/catalogue, /wp-json (no WP REST), /search/json; data.cbbd.be does not resolve. No eMuseum / IIIF / Solr / Algolia / GraphQL / _next data. The museum holds ~6,000 original works but they rotate physically and are NOT inventoried online. The only images on gallery pages are exhibition posters (e.g. petzi-affiche-a3) and installation/visitor photos credited (c) Daniel Fouss / Musee de la BD — not per-object scans of original planches with title/artist/date/medium metadata. Fails Stage 1: no machine-readable per-object source for in-scope original flat art on the museum's own infra.",
+  "source_type": "none",
+  "easy_source_found": "none — no /opendata or /api, no data.cbbd.be subdomain, no GitHub dump, no university-library digital-collections platform (CONTENTdm/IIIF), no eMuseum/Solr/Drupal-jsonapi. cbbd.be is a legacy bespoke CMS with editorial pages only.",
+  "estimated_inscope_count": 0,
+  "script_path": null,
+  "probe_ok": false,
+  "probe_summary": "Stage 0 + Stage 1 both negative. comicscenter.net/en/home (200) is the EN front of cbbd.be (canonical FR root www.cbbd.be/fr/accueil). sitemap.xml enumerated ~all pages: editorial only. No per-object collection anywhere; all API/data probes 404; gallery pages carry only posters + museum-photographer installation shots (watermark-credit (c) Daniel Fouss), no original-planche object catalogue with downloadable >=600px scans.",
+  "est_full_count": 0,
+  "est_runtime_min": 0,
+  "exhibitions_entry": {
+    "name": "Belgian Comic Strip Center",
+    "name_ko": "벨기에 만화 센터",
+    "city": "Brussels",
+    "country": "Belgium",
+    "latitude": 50.8503,
+    "longitude": 4.3601,
+    "description": "Housed in a 1906 Art Nouveau department store designed by Victor Horta, the Belgian Comic Strip Center (Centre belge de la bande dessinee / Musee de la BD) celebrates Belgium's central role in the ninth art, from Herge's Tintin to the Spirou and Smurfs schools. Its holdings include roughly 6,000 original comic plates (planches originales) shown on rotation, alongside a major comics study library. The collection is not catalogued online: the museum's website offers only visit information and temporary-exhibition announcements, with no per-object database.",
+    "description_ko": "1906년 빅토르 오르타가 설계한 아르누보 양식의 옛 백화점 건물에 들어선 벨기에 만화 센터(Centre belge de la bande dessinee)는 에르제의 탱탱부터 스피루와 스머프 계보에 이르기까지, 만화를 제9의 예술로 끌어올린 벨기에의 위상을 보여주는 곳이다. 순회 전시로 선보이는 약 6천 점의 만화 원화(planches originales)와 방대한 만화 전문 도서관을 갖추고 있다. 다만 소장품을 위한 온라인 카탈로그는 없으며, 공식 웹사이트는 관람 안내와 기획전 소식만 제공한다.",
+    "address": "Rue des Sables 20 / Zandstraat 20, 1000 Brussels (Maison Waucquez, Victor Horta)"
+  },
+  "notes": "Brussels also hosts MIMA and the Marc Sleen Museum (separate institutions). For Belgian / franco-belge original comic art that actually has an online catalogue, the viable target is CIBDI Angouleme (probed earlier this wave: scripts/.state/gap1-results/cibdi-angouleme.json). cbbd.be is a dead end for scraping: no object catalogue, no API/JSON, and the only images are exhibition posters and installation photos (museum-photographer credit), not downloadable per-object scans of original plates. lat/lng = Maison Waucquez, Rue des Sables 20, 1000 Brussels."
+}

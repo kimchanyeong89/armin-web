@@ -1,0 +1,24 @@
+{
+  "slug": "billy-ireland",
+  "viable": false,
+  "reason": "Both candidate sources fail the copyright/quality scope. (1) The museum's primary 'Original Art Database' is hosted on PastPerfect Online (osucartoons.pastperfectonline.com, ~300,000 records, S3 images under s3.amazonaws.com/pastperfectonline/images/museum_466/{NNN}/...). It is machine-reachable and on the museum's own infra, but EVERY full-size image carries a baked-in diagonal watermark 'Copyright restrictions may apply' stamped across the centre of the artwork (confirmed on 2 independent samples: a Vallman 1973 political cartoon and a Joel Pett original). Full images are also resolution-capped at ~640px long edge (640x455, 640x504, 640x630 observed); the site itself labels its images 'thumbnails' ('More than 60% of these records include thumbnail images'). Watermarked images explicitly violate the scope rule (copyright-locked/watermarked => viable:false) and would pollute the SigLIP/visual grid. (2) The secondary pointer, OSU Digital Collections (library.osu.edu/dc, a Samvera/Hyrax/Blacklight platform), is entirely behind an AWS WAF 'Human Verification' challenge: both the HTML catalog and the .json API return HTTP 405 with a CAPTCHA page (gokuProps/awsWafCookieDomainList), and no IIIF host is reachable (iiif.library.osu.edu / images.library.osu.edu refuse connections). No copyright-clean, unwatermarked, >=600px, machine-readable source exists on the museum's own infrastructure.",
+  "source_type": "none",
+  "easy_source_found": "PastPerfect Online instance at osucartoons.pastperfectonline.com (museum_466) — REST-ish .NET app with /Search, /AdvancedSearch, /Vocabulary, /RandomImages; S3-backed images. Reachable but watermarked + 640px-capped. OSU Digital Collections (library.osu.edu/dc) is Samvera/Hyrax/Blacklight (would have .json + IIIF) but is fully WAF/CAPTCHA-gated (AWS WAF Human Verification). No /opendata, /api, data.* dump, GitHub dump, or open IIIF endpoint found.",
+  "estimated_inscope_count": 0,
+  "script_path": null,
+  "probe_ok": false,
+  "probe_summary": "Probe halted at image-quality gate. PastPerfect full-size images (the only catalogue with per-object access) are watermarked 'Copyright restrictions may apply' across the artwork and capped at ~640px; visually confirmed on 2 downloaded samples. OSU DC alternative is CAPTCHA/WAF-gated (HTTP 405 + AWS WAF challenge on HTML and JSON). No unwatermarked >=600px image obtainable on museum infra => viable:false.",
+  "est_full_count": 0,
+  "est_runtime_min": 0,
+  "exhibitions_entry": {
+    "name": "Billy Ireland Cartoon Library & Museum",
+    "name_ko": "빌리 아일랜드 카툰 도서관 & 박물관",
+    "city": "Columbus",
+    "country": "USA",
+    "latitude": 39.9967,
+    "longitude": -83.0086,
+    "description": "Part of Ohio State University Libraries, the Billy Ireland Cartoon Library & Museum holds the world's largest and most comprehensive academic collection of materials documenting cartoon and comic art — more than 300,000 original cartoons, prints and photographs spanning from the 1700s to the present, alongside vast archives of comic strips, editorial cartoons, graphic novels and animation.",
+    "description_ko": "오하이오 주립대학교 도서관 소속 기관으로, 카툰과 만화 예술을 기록한 세계 최대 규모의 학술 컬렉션을 자랑한다. 1700년대부터 오늘날까지 이어지는 30만 점이 넘는 원화·판화·사진을 비롯해 신문 연재만화, 시사만화, 그래픽 노블, 애니메이션 관련 방대한 아카이브를 소장하고 있다."
+  },
+  "notes": "Detail: PastPerfect record URLs follow /byperson, /photo, /webobject style routes; results render via DataTables AJAX (search result HTML pages are robots-excluded). Image scheme: thumb = s3.amazonaws.com/pastperfectonline/images/museum_466/{shard}/thumbs/{filecode}.jpg (~210px); full = same path minus '/thumbs/' (~640px, WATERMARKED). No larger/unwatermarked variant exists (tested fullsize/large/web/originals/display subfolders => all 404). If OSU ever publishes the Digital Collections IIIF behind the WAF, or PastPerfect serves an unwatermarked tier, re-probe. As-is: viable:false on copyright grounds (watermark) compounded by sub-spec resolution and a CAPTCHA-walled secondary platform. Note the museum collects PRINTED cartoon art heavily (newspaper strips/editorial cartoons are reproductions in many records), but the original-art board holdings themselves are large and in-scope by subject — the blocker is purely image licensing/access, not scope."
+}
