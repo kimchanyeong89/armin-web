@@ -1,0 +1,24 @@
+{
+  "slug": "moravian-gallery",
+  "viable": true,
+  "reason": "Open JSON API on museum's own infrastructure (webumenia-platform Laravel backend at admin.sbirky-umeni.cz/api/v1/items, no auth) serves all 46,493 imaged MG records with rich metadata; images at /dielo/nahlad/{id}/800 deliver 800px JPEGs. Probe scraped 16 works end-to-end with live R2 uploads and 0 errors.",
+  "source_type": "api",
+  "easy_source_found": "api — open Laravel/Elasticsearch JSON API at https://admin.sbirky-umeni.cz/api/v1/items (filter[gallery]=Moravská galerie, MG & filter[has_image]=true; size up to 500/page). No opendata page, no GitHub dump, no OAI-PMH; sitemap useless (3 URLs).",
+  "estimated_inscope_count": 28000,
+  "script_path": "/Users/kietzsche/armin-web-main/scripts/scrape-moravian-gallery.mjs",
+  "probe_ok": true,
+  "probe_summary": "16 works end-to-end (4 paintings, 5 posters, 3 drawings, 2 prints, 2 mixed_media_2d): real metadata (Antonín Slavíček, Joža Uprka 'Jízda králů', Jiří Rathouský graphic design), all 16 R2 uploads live HTTP 200 (12-126KB webp), source images 800px long side, colorfulness gate skipped 2 monochrome reproductive prints, 0 image errors, min-4 guard dropped unattributed/undated records.",
+  "est_full_count": 25000,
+  "est_runtime_min": 150,
+  "exhibitions_entry": {
+    "name": "Moravian Gallery in Brno",
+    "name_ko": "모라비아 미술관",
+    "city": "Brno",
+    "country": "Czech Republic",
+    "latitude": 49.1928,
+    "longitude": 16.6053,
+    "description": "The Czech Republic's second-largest art museum, spanning old masters to contemporary art across five Brno buildings. Its poster and graphic design holdings, built around the Brno Graphic Design Biennale, are among the finest in Europe.",
+    "description_ko": "체코에서 두 번째로 큰 미술관으로, 브르노 시내 다섯 채의 건물에서 고전 회화부터 현대미술까지 아우른다. 브르노 그래픽디자인 비엔날레와 함께 쌓아 온 포스터·그래픽디자인 컬렉션으로 특히 이름 높다."
+  },
+  "notes": "Platform is shared with UPM Prague — filter[gallery]='Moravská galerie, MG' is mandatory (46,760 MG vs 55,188 total; 46,493 with images). KEY CONSTRAINT: Elasticsearch 10k result window (HTTP 500 past from+size=10,000) — script bisects filter[date_earliest][gte/lt] ranges into slices ≤9,000 (covers all 34,316 dated items) plus small work_type/technique/medium subsets (each ≤9k total, nulls sort last so fully reachable) to recover most of the 12,177 null-dated items; null-dated items without a parseable year are dropped by the min-4 rule anyway. Scope via MG inventory prefixes: A/Z=paintings, B/SDK=drawings, C/MM=prints, GD/ARN=graphic design dept ('poster' category, Brno Biennale goldmine), GDR=ex libris ('print'), JV=Jiří Valoch conceptual works on paper; OUT: U(applied 3D), E(sculpture), ST/BF(books). In-scope offered ~28k > CAP 25,000 — paintings/drawings/prints/JV kept fully, posters ranked by museum's own view_count fill the rest. Images capped at 800px by the server (1200+ returns 404; IIP server iip.offgridlab.sk rejects direct access 403). MG's famous photography collection is NOT on this platform yet (work_type fotografia = UPM-only). Colorfulness<20 gate applied ONLY to category 'print'. Resume: scripts/.state/moravian-gallery-{progress.json,items.ndjson,uploaded.ndjson,failed.ndjson}. author name_formatted gives natural 'First Last' order; 96% author fill in modern slices."
+}

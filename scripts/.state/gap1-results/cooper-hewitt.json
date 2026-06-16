@@ -1,0 +1,24 @@
+{
+  "slug": "cooper-hewitt",
+  "viable": true,
+  "reason": "Smithsonian Open Access S3 dump (unit CHNDM) is key-free, CC0, current (refreshed 2026-06-08): ~60k records, ~62% in the Drawings, Prints, and Graphic Design Department (flat works). Hi-res images via ids.si.edu IIIF (2048px+, verified). Probe collected 26 works end-to-end with live R2 uploads, 0 errors.",
+  "source_type": "open-data-dump",
+  "easy_source_found": "dump — SI OpenAccess per-unit S3 shards https://smithsonian-open-access.s3-us-west-2.amazonaws.com/metadata/edan/chndm/{00..ff}.txt (no key, CC0, same EDAN schema as hirshhorn precedent); api.si.edu works too but needs api.data.gov key; github.com/cooperhewitt dumps are historic (~2016), not used",
+  "estimated_inscope_count": 23500,
+  "script_path": "scripts/scrape-cooper-hewitt.mjs",
+  "probe_ok": true,
+  "probe_summary": "Shard 00: 90/237 records in-scope. 26 works collected end-to-end (15 written to cooper-hewitt-collection-probe.json), 0 image errors, 4/30 B&W reproductive prints gray-skipped (colorfulness<20). Min-4 fill 15/15, medium 14/15, dims 13/15. R2 uploads live (HTTP 200 image/webp, 2048px; eyeballed real artwork — Duban 1833 watercolor). sourceUrl resolves 200 on collection.cooperhewitt.org.",
+  "est_full_count": 16000,
+  "est_runtime_min": 330,
+  "exhibitions_entry": {
+    "name": "Cooper Hewitt, Smithsonian Design Museum",
+    "name_ko": "쿠퍼 휴잇 스미스소니언 디자인 미술관",
+    "city": "New York",
+    "country": "USA",
+    "latitude": 40.7843,
+    "longitude": -73.9578,
+    "description": "America's only museum devoted exclusively to historic and contemporary design, housed in Andrew Carnegie's Fifth Avenue mansion. Its world-renowned drawings, prints, and graphic design holdings span five centuries of design history.",
+    "description_ko": "앤드루 카네기의 5번가 저택에 자리한 미국 유일의 디자인 전문 미술관. 르네상스 장식 드로잉부터 현대 그래픽 디자인까지 5세기에 걸친 디자인 소장품으로 손꼽히는 곳이다."
+  },
+  "notes": "SCOPE: only 'Drawings, Prints, and Graphic Design Department' records (setName) — Textiles/Wallcoverings/Product Design depts excluded as 3D/pattern material. objectType is often a SUBJECT label (figures, architecture); classifier falls through objectType→medium→title-prefix, validated 98% on 1,401-record sample. Posters map to category 'print' (single category, as allowed). NO study/sketch title filter — design studies ARE this museum's primary holdings. Artist kept raw EDAN string incl. nationality/dates (hirshhorn precedent; display layer prettifies). ids prefixed cooper-hewitt-{record_ID} e.g. cooper-hewitt-chndm_1991-17-1. Colorfulness<20 gate on prints only — probe suggests ~half of prints (B&W ornament engravings) will be skipped, hence est_full_count 16k from 23.5k candidates. Cap 25,000 (real-title priority) — likely not hit after gate. --full resumable: scripts/.state/cooper-hewitt-progress.json + cooper-hewitt-works.ndjson (append-only), failures cooper-hewitt-failed.ndjson. IDS WAF: gentle pacing CONC=3 + 400ms stagger + growing backoff (Request Rejected HTML stub detection). Modern 20th-c posters mostly absent from CC0 release (copyright) — collection skews 16th-19th c. design drawings/prints."
+}

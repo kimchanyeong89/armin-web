@@ -1,0 +1,24 @@
+{
+  "slug": "mak-vienna",
+  "viable": true,
+  "reason": "Museum-own open Solr JSON API (api.sammlung.mak.at/web-api/search, no auth) enumerates 293,872 collect objects with facets; ~140k flat works (union of Plakat/Zeichnung/Grafik/Druckgrafik/Gebrauchsgrafik/Fotografie with public images). Azure CDN images xl≈2560px. Detail pages give artist+role, date, medium, dimensions. Probe 15/15 passed end-to-end with live R2 uploads.",
+  "source_type": "api",
+  "easy_source_found": "api — museum-own open Solr JSON API at https://api.sammlung.mak.at/web-api/search (q/start/rows/facet/filter_fields; no key). No open-data dump, no GitHub bulk; mak.at/opendata 404.",
+  "estimated_inscope_count": 140000,
+  "script_path": "scripts/scrape-mak-vienna.mjs",
+  "probe_ok": true,
+  "probe_summary": "15/15 works end-to-end (6 poster, 4 drawing, 4 print incl. ukiyo-e school sheets, 1 photograph); 0 errors; named artists (Ströhl, Türk, Zimpel, Flögl, Wiener Werkstätte circle), years 1876-1971, medium 14/15; all 15 R2 objects GET-verified 200 (136KB-1.4MB) + visual check of 1956 Mozart poster (1443x2048 webp).",
+  "est_full_count": 21000,
+  "est_runtime_min": 270,
+  "exhibitions_entry": {
+    "name": "MAK – Museum of Applied Arts",
+    "name_ko": "MAK 빈 응용미술관",
+    "city": "Vienna",
+    "country": "Austria",
+    "latitude": 48.2078,
+    "longitude": 16.3819,
+    "description": "Vienna's museum of applied arts on the Stubenring, holding one of the world's great graphic collections — Secession-era posters, Wiener Werkstätte design drawings by Josef Hoffmann and Koloman Moser, and a major ukiyo-e print holding.",
+    "description_ko": "빈 슈투벤링에 자리한 응용미술 전문 미술관. 요제프 호프만과 콜로만 모저의 빈 공방 도안, 세기말 포스터, 우키요에 판화까지 그래픽 컬렉션의 깊이로 손꼽히는 곳이다."
+  },
+  "notes": "TIER POLICY (in-scope ~140k >> 24k cap): T1 Plakat ALL (~7,677 w/ images); T2 Zeichnung creator-prioritized cap 6,000; T3 Gebrauchsgrafik cap 3,500; T4 Druckgrafik cap 3,500 (colorfulness<20 gate on category=print ONLY); T5 Fotografie cap 3,000. Creator priority = museum's own creator facet count-desc, named only (Anonym skipped) -> Wiener Werkstätte, Hoffmann, Praun, Moser, Peche, Binder, ukiyo-e schools. Anonymous-only records dropped (min-4); posters keep named printing plant as attribution. CATEGORY SCHEME: Plakat -> 'poster' (not print). GOTCHAS: (1) api.sammlung.mak.at TLS chain incomplete (missing LE YE2 intermediate) -> script sets NODE_TLS_REJECT_UNAUTHORIZED=0 process-scoped, repo precedent scrape-hermitage.cjs; (2) API rows hard-capped at 50, deep paging OK >=50k; (3) sort param IGNORED by API (asc==desc verified) -> priority comes from tier/creator order; (4) r2.dev returns 403 to HEAD and to Python-urllib UA — verify with curl GET; (5) dimensions missing on some Wiener Werkstätte drawings (verified absent on site, e.g. arawida_102785 — not a parser bug), posters/prints have dims; (6) detail URL https://sammlung.mak.at/en/collect/collect_{id_original} 301s to slug permalink (script stores final URL); (7) object_type 'people' (90k) are artist records, never enumerated since filters imply collect. Resume: scripts/.state/mak-vienna-progress.json; failures: mak-vienna-failed.ndjson. est_full_count 21k = 23.7k tier caps minus anonymous/min-4 drops, cross-tier dedupe, grayscale-print gate."
+}

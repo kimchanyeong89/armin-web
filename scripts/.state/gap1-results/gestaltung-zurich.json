@@ -1,0 +1,24 @@
+{
+  "slug": "gestaltung-zurich",
+  "viable": true,
+  "reason": "eMuseum (Gallery Systems, Tapestry5) at emuseum.ch is fully scrapeable via stable HTML: fielded search listings (classifications:\"Plakat\" etc., 30/page, deep paging verified to page 2134) + detailField metadata blocks + media dispatcher images (fullsize, long side 800px). Probe passed 13/15 end-to-end with live R2 uploads (2 fails = intentional monochrome Kunstgrafik colour-gate skips).",
+  "source_type": "html",
+  "easy_source_found": "none — eMuseum /json API module exists but is key-gated (HTTP 403); ?format=json is ignored (returns HTML); no GitHub/open-data dump (opendata.swiss blocks programmatic access, no museum dataset known)",
+  "estimated_inscope_count": 81795,
+  "script_path": "scripts/scrape-gestaltung-zurich.mjs",
+  "probe_ok": true,
+  "probe_summary": "13/15 works end-to-end (poster 7, photograph 4, print 2); validate-metadata.mjs OK — REAL fill title/artist/year/category/medium 100%, dimensions 69%; R2 uploads live; sample image visually verified (Albe Steiner, 14. Triennale di Milano 1968, 544x800 webp). The 2 misses were Kunstgrafik B&W prints correctly skipped by the colorfulness<20 gate.",
+  "est_full_count": 24000,
+  "est_runtime_min": 300,
+  "exhibitions_entry": {
+    "name": "Museum für Gestaltung Zürich",
+    "name_ko": "취리히 디자인 미술관",
+    "city": "Zürich",
+    "country": "Switzerland",
+    "latitude": 47.3824,
+    "longitude": 8.535,
+    "description": "Switzerland's leading museum for design and visual communication, home to one of the world's largest poster collections alongside graphic design, applied arts and photography archives of the ZHdK.",
+    "description_ko": "스위스를 대표하는 디자인 미술관. 세계 최대급으로 꼽히는 포스터 컬렉션을 비롯해 그래픽 디자인과 사진 아카이브를 소장하고 있다."
+  },
+  "notes": "In-scope online: Plakat 64,046 + Gebrauchsgrafik 8,337 + Kunstgrafik 3,522 + Fotografie 5,890 = 81,795 (3D classes never queried; Schrift/Typografie omitted — '/' in term breaks Tapestry path encoding). Cap 25k via value selection: named maker + 4-digit date, museum catalogue order; per-class caps Plakat 15,000 / Gebrauchsgrafik 4,500 / Kunstgrafik 2,000 / Fotografie 3,500. Category mapping uses 'poster' for Plakat (not 'print'). Colour gate applied ONLY to Kunstgrafik; posters/graphic design/photographs never gated. Animated 'digital posters' (medium MP4) are skipped at detail stage. Artist from people-role blocks with role exclusions (Client/Print/Publishing/Portrayed Work/Department leaked in v1 — fixed); fallback to grid primaryMaker. robots.txt requests Crawl-delay 30 (advisory); script runs polite ~3 rps single-file, JSESSIONID reused. Images cap at 800px long side from dispatcher (no IIIF/zoom endpoint found) — meets >=600 bar, below 800+ ideal for portrait posters (~566x800). Resume: failures in gestaltung-zurich-failed.ndjson are not retried within a resume (clear file to retry). --full NOT run per instructions."
+}

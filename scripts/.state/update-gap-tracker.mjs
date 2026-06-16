@@ -36,6 +36,12 @@ function estimate(slug) {
   if (fs.existsSync(f)) { try { const d = JSON.parse(fs.readFileSync(f, 'utf8')); return d.est_full_count || d.estimated_inscope_count || null; } catch {} }
   return null;
 }
+// viable:false from an agent probe → escalation note (first sentence of reason)
+function escalatedReason(slug) {
+  const f = P + 'gap1-results/' + slug + '.json';
+  if (fs.existsSync(f)) { try { const d = JSON.parse(fs.readFileSync(f, 'utf8')); if (d.viable === false) return (d.reason || '').split(/(?<=[.。])\s|;|—/)[0].slice(0, 95).trim(); } catch {} }
+  return null;
+}
 
 const lines = fs.readFileSync(DOC, 'utf8').split('\n');
 let touched = 0;
@@ -46,12 +52,13 @@ const out = lines.map((line) => {
   const cells = line.split('|');
   if (cells.length < 6) return line;
   const cur = cells[4];
-  const n = collected(slug), e = estimate(slug);
-  // escalated with no data collected → leave the reason intact
-  if (/escalated/.test(cur) && n == null) return line;
+  const n = collected(slug), e = estimate(slug), esc = escalatedReason(slug);
+  // pre-filter escalated (no agent result file) → leave the existing reason intact
+  if (/escalated/.test(cur) && n == null && !esc) return line;
   let status;
   if (registered.has(slug) && n != null) status = ` ✅ merged **${fmt(n)}**점 `;
   else if (n != null && n >= 15) status = ` 🔄 수집중 **${fmt(n)}**/${fmt(e)} `;
+  else if (esc) status = ` ❌ escalated — ${esc} `;
   else if (e != null) status = ` 🔄 스크립트 준비 (예상 ${fmt(e)}) `;
   else return line; // queued/unprobed — keep existing cell
   if (status !== cur) touched++;

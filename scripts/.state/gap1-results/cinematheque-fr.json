@@ -1,0 +1,26 @@
+{
+  "slug": "cinematheque-fr",
+  "viable": false,
+  "reason": "La Cinematheque francaise has a large flat-art collection (24,108 posters + drawings + ad materials + ~500k cinema photographs) but NO public machine-readable source serving downloadable images >=600px. (1) collections.cinematheque.fr is dead (HTTP 000); no /opendata|/api|/jsonapi on cinematheque.fr (all 404). (2) The live catalogue is Cine-Ressources (cineressources.net, a Cinematheque-fr/BiFi-operated collective catalogue) -- but it is metadata-ONLY. Every affiche notice (affiches.do.php) shows full catalographic data (title, affichiste, year, dimensions, printer) yet ZERO image URLs; digitized images carry 'Acces a la ressource numerisee : Bibliotheque et institutions partenaires' and physical 'Acces reserve'. The full-page image view ressource.php returns 'Ressource indisponible'. Verified across the Renoir(2011) affiche pk=36742 notice. (3) The catalogue itself is frozen ('Suite a la refonte... le catalogue Cine-ressources n'est plus mis a jour'). (4) The only online image library is CINEMAGE (cinemage.bifi.fr), which per the institution's own description requires registration/login for remote consultation -- and it returns an anti-bot interstitial redirect to an external IP (203.233.19.27) on every request. The /affiches/recherche_s/ and /dessins/recherche_s/ collection sub-apps and laternamagica.fr return the same anti-bot redirect. (5) 'Galerie des affichistes' is a poster-ARTIST name list (repertoire.php?repertoire=AFFI), 0 poster images. Net: in-scope flat film art exists but images are firewalled behind library/partner-institution access + a registration login; nothing downloadable publicly.",
+  "source_type": "none",
+  "easy_source_found": "No. No /opendata, /api, /developers, data.cinematheque.fr (all 404 or HTTP 000); no Drupal /jsonapi, no eMuseum/CONTENTdm/Solr/IIIF/_next/data/GraphQL. cinematheque.fr/sitemap.xml is 404. The catalogue (cineressources.net) is a legacy XHR/PHP app (affiches.do.php returns XML notices) but image-gated and frozen; not an open-data source.",
+  "estimated_inscope_count": 0,
+  "script_path": null,
+  "probe_ok": false,
+  "probe_summary": "Probed cineressources.net transversal search (recherche_t.php works server-side -> films/persons), drilled film -> /affiches/resultat_f/ -> affiches.do.php notice. Affiche notices are metadata-only with 'Acces reserve' and no image; ressource.php pleine-page = 'Ressource indisponible'. CINEMAGE online iconotheque is login-gated + anti-bot redirect. collections.cinematheque.fr dead. No public downloadable flat-art images >=600px anywhere.",
+  "est_full_count": 0,
+  "est_runtime_min": 0,
+  "exhibitions_entry": {
+    "name": "La Cinematheque francaise",
+    "name_ko": "프랑스 시네마테크",
+    "city": "Paris",
+    "country": "France",
+    "latitude": 48.8366,
+    "longitude": 2.3829,
+    "description": "Founded in 1936 by Henri Langlois, Georges Franju and Jean Mitry, La Cinematheque francaise is one of the world's foremost film archives and museums, housed since 2005 in a Frank Gehry building in Bercy, Paris. Beyond its vast moving-image holdings it conserves four major iconographic collections -- film posters (over 24,000), production and design drawings, advertising material, and roughly 500,000 cinema photographs -- alongside cameras, costumes and props. Its digitized posters and drawings are accessible online only to registered users through the CINEMAGE iconographic library and on-site at the iconotheque.",
+    "description_ko": "1936년 앙리 랑글루아, 조르주 프랑주, 장 미트리가 설립한 프랑스 시네마테크는 세계에서 손꼽히는 영화 아카이브이자 박물관이다. 2005년부터 파리 베르시에 자리한 프랭크 게리 설계 건물에 들어서 있다. 방대한 필름 소장품 외에도 영화 포스터 2만 4천여 점, 제작·의상 디자인 드로잉, 광고물, 그리고 약 50만 점에 이르는 영화 사진 등 네 갈래의 도상 컬렉션을 보존하며, 카메라와 의상, 소품도 함께 소장하고 있다. 디지털화된 포스터와 드로잉은 온라인 도상 라이브러리 CINEMAGE에 가입한 이용자와 현장 도상열람실(iconotheque)에서만 열람할 수 있다.",
+    "name_localizations": {},
+    "description_localizations": {}
+  },
+  "notes": "Re-check only if (a) the planned national platform GARANCE (replacing Cine-Ressources) launches with a public open-image API, or (b) CINEMAGE exposes a public IIIF/anonymous endpoint. The Cinematheque is a partner of these French OA efforts but as of probe date (2026-06-16) all in-scope flat-art imagery is login/partner-gated. Note the recurring anti-bot redirect to 203.233.19.27 on /*/recherche_s/, laternamagica.fr and cinemage.bifi.fr -- a real browser session with cookies might pass it, but even then CINEMAGE requires account registration, so still not anonymously scrapable. coords = 51 rue de Bercy, Paris 12e (Gehry building)."
+}
