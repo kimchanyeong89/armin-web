@@ -34,6 +34,7 @@ import { usePrefetchNeighbors } from "../hooks/usePrefetchNeighbors";
 import { HeartOverlay } from "./HeartOverlay";
 import { SubmissionForm } from "./SubmissionForm";
 import { ProductModal } from "./ProductModal";
+import { SHOW_SALES_UI } from "../config/features";
 import CommentModal from "./CommentModal";
 
 const ADMIN_EMAILS = ['kietzland@gmail.com'];
@@ -681,7 +682,8 @@ const GalleryItem = React.memo(({
               <span style={{ fontSize: 10, color: '#e11d48' }}>▶</span>
             )}
             <div style={{ opacity: isMobile ? 1 : 0, display: 'flex', alignItems: 'center', gap: "6px 6px" }} className="gallery-heart-trigger">
-              {/* POD Product Purchase Button - Left */}
+              {/* POD Product Purchase Button - Left (hidden while sales UI is off) */}
+              {SHOW_SALES_UI && (
               <div
                 onClick={(e) => {
                   e.stopPropagation();
@@ -716,6 +718,7 @@ const GalleryItem = React.memo(({
                   <rect x="7" y="7" width="10" height="10" />
                 </svg>
               </div>
+              )}
 
               {SHOW_ARTWORK_COMMENTS ? (
                 <div
@@ -11118,6 +11121,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
                       className="hover-trigger"
                     >
                       {/* POD Product Purchase Button - Left */}
+                      {SHOW_SALES_UI && (
                       <div
                         className="product-btn"
                         onClick={(e) => {
@@ -11155,6 +11159,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
                           <rect x="7" y="7" width="10" height="10" />
                         </svg>
                       </div>
+                      )}
                       {/* Comment Button */}
                       <div
                         className="comment-btn"
@@ -11426,7 +11431,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
                       </picture>
                       {current && (
                         <div style={{ position: "absolute", bottom: 16, left: 16, zIndex: 30, display: 'flex', gap: 8 }}>
-                          {/* POD Product Purchase Button - Left */}
+                          {SHOW_SALES_UI && (
                           <div
                             onClick={(e) => {
                               e.stopPropagation();
@@ -11460,6 +11465,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
                               <rect x="7" y="7" width="10" height="10" />
                             </svg>
                           </div>
+                          )}
                           {/* Comment Button */}
                           <div
                             onClick={(e) => {
@@ -11664,6 +11670,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
                   zIndex: 12000
                 }}>
                   {/* POD Product Purchase Button - Left */}
+                  {SHOW_SALES_UI && (
                   <div
                     onClick={(e) => {
                       e.stopPropagation();
@@ -11697,6 +11704,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
                       <rect x="7" y="7" width="10" height="10" />
                     </svg>
                   </div>
+                  )}
                   {/* Comment Button */}
                   <div
                     onClick={(e) => {
@@ -11963,6 +11971,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
                         onClick={(e) => e.stopPropagation()}
                       >
                         {/* POD Product Purchase Button - Left */}
+                        {SHOW_SALES_UI && (
                         <div
                           onClick={(e) => {
                             e.stopPropagation();
@@ -11995,6 +12004,7 @@ const ExhibitionModal: React.FC<ExhibitionModalProps> = ({ exhibition, museumNam
                             <rect x="7" y="7" width="10" height="10" />
                           </svg>
                         </div>
+                        )}
                         {/* Comment Button - Middle */}
                         <div
                           onClick={(e) => {

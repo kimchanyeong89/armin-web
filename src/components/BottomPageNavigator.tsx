@@ -60,7 +60,6 @@ export default function BottomPageNavigator({ activeIndex, onChange, lightMode =
   const navigate = useNavigate();
   const { isAdmin } = useIsAdmin();
   const [viewportWidth, setViewportWidth] = useState(() => (typeof window !== "undefined" ? window.innerWidth : 1280));
-  const [isHovered, setIsHovered] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const menuRef = useRef<HTMLDivElement | null>(null);
 
@@ -85,11 +84,8 @@ export default function BottomPageNavigator({ activeIndex, onChange, lightMode =
   const isMobile = viewportWidth < 768;
   const isNarrow = viewportWidth < 390;
 
-  // On desktop the pill collapses to show only the active tab (+ hamburger)
-  // at rest, then expands on hover. On mobile we never collapse — touch
-  // devices don't have hover, and the existing full-width bottom bar is
-  // already the expected mobile pattern.
-  const isExpanded = isMobile || isHovered || isMenuOpen;
+  // Fixed pill per design: always show every tab. No hover collapse/expand.
+  const isExpanded = true;
 
   const inactiveColor = lightMode ? "rgba(0,0,0,0.46)" : "rgba(255,255,255,0.46)";
   const containerBg = lightMode ? "rgba(10,10,10,0.06)" : "rgba(255,255,255,0.09)";
@@ -100,8 +96,6 @@ export default function BottomPageNavigator({ activeIndex, onChange, lightMode =
 
   return (
     <nav
-      onMouseEnter={() => !isMobile && setIsHovered(true)}
-      onMouseLeave={() => !isMobile && setIsHovered(false)}
       style={{
         position: "fixed",
         left: isMobile ? 0 : "50%",
@@ -238,7 +232,9 @@ export default function BottomPageNavigator({ activeIndex, onChange, lightMode =
                 aria-label={fullLabel}
               >
                 {isActive && (
-                  <span
+                  <motion.span
+                    layoutId="navActivePillMobile"
+                    transition={LAYOUT_SPRING}
                     style={{
                       position: "absolute",
                       inset: "2px",
@@ -281,8 +277,8 @@ export default function BottomPageNavigator({ activeIndex, onChange, lightMode =
             display: "flex",
             alignItems: "center",
             justifyContent: "flex-start",
-            gap: 4,
-            padding: isExpanded ? (isNarrow ? 4 : 6) : 4,
+            gap: 5,
+            padding: isNarrow ? 5 : 8,
             borderRadius: 999,
             background: containerBg,
             border: containerBorder,
@@ -327,16 +323,16 @@ export default function BottomPageNavigator({ activeIndex, onChange, lightMode =
                     display: "flex",
                     flexDirection: "row",
                     alignItems: "center",
-                    gap: isIconOnly ? 0 : 6,
+                    gap: isIconOnly ? 0 : 7,
                     border: "none",
                     background: "transparent",
                     borderRadius: 999,
-                    paddingLeft: isIconOnly ? 14 : (isNarrow ? 10 : 18),
-                    paddingRight: isIconOnly ? 14 : (isNarrow ? 10 : 18),
-                    paddingTop: isIconOnly ? 14 : 9,
-                    paddingBottom: isIconOnly ? 14 : 9,
+                    paddingLeft: isIconOnly ? 14 : (isNarrow ? 12 : 22),
+                    paddingRight: isIconOnly ? 14 : (isNarrow ? 12 : 22),
+                    paddingTop: isIconOnly ? 14 : 12,
+                    paddingBottom: isIconOnly ? 14 : 12,
                     color: isActive ? "#000" : inactiveColor,
-                    fontSize: isNarrow ? 10 : 12,
+                    fontSize: isNarrow ? 11 : 14,
                     fontWeight: isActive ? 600 : 400,
                     letterSpacing: "0.015em",
                     cursor: "pointer",
@@ -350,7 +346,9 @@ export default function BottomPageNavigator({ activeIndex, onChange, lightMode =
                   aria-label={fullLabel}
                 >
                   {isActive && (
-                    <span
+                    <motion.span
+                      layoutId="navActivePill"
+                      transition={LAYOUT_SPRING}
                       style={{
                         position: "absolute",
                         inset: 0,
@@ -360,7 +358,7 @@ export default function BottomPageNavigator({ activeIndex, onChange, lightMode =
                     />
                   )}
                   <item.Icon
-                    size={isIconOnly ? 22 : (isNarrow ? 12 : 13)}
+                    size={isIconOnly ? 22 : (isNarrow ? 13 : 16)}
                     strokeWidth={isActive ? 2.5 : 1.75}
                     style={{ position: "relative", zIndex: 1, flexShrink: 0 }}
                   />

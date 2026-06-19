@@ -21,6 +21,7 @@ import { getOptimizedImageUrl } from "../../utils/imageProxy";
 import { SearchInputWithSuggestions } from "../SearchInputWithSuggestions";
 import { HeartOverlay } from "../HeartOverlay";
 import { ProductModal } from "../ProductModal";
+import { SHOW_SALES_UI } from "../../config/features";
 import CommentModal from "../CommentModal";
 import { PlaylistModal } from "../PlaylistModal";
 import { ArtworkRecommendations } from "../ArtworkRecommendations";
@@ -1957,6 +1958,7 @@ export function InteractiveGlobeRealModal({
                           >
                             <BookmarkPlus size={isMobile ? 12 : 14} strokeWidth={2.2} />
                           </button>
+                          {SHOW_SALES_UI && (
                           <button
                             onClick={(e) => {
                               e.stopPropagation();
@@ -1968,6 +1970,7 @@ export function InteractiveGlobeRealModal({
                           >
                             <ShoppingBag size={isMobile ? 12 : 14} strokeWidth={2.1} />
                           </button>
+                          )}
                           <button
                             onClick={(e) => {
                               e.stopPropagation();
@@ -2062,6 +2065,7 @@ export function InteractiveGlobeRealModal({
                             </button>
                           )}
                           <div style={{ marginTop: '12px', width: '100%', display: 'flex', justifyContent: 'flex-end', alignItems: 'center', gap: '10px' }}>
+                            {SHOW_SALES_UI && (
                             <button
                               onClick={(e) => {
                                 e.stopPropagation();
@@ -2075,6 +2079,7 @@ export function InteractiveGlobeRealModal({
                                 <rect x="7" y="7" width="10" height="10" />
                               </svg>
                             </button>
+                            )}
                             <button
                               onClick={(e) => {
                                 e.stopPropagation();

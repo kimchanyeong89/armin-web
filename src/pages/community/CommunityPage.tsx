@@ -1,8 +1,9 @@
 import React, { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { collection, getDocs, limit, orderBy, query } from "firebase/firestore";
-import { BadgeCheck, MessageSquare, PenLine, TrendingUp, Heart } from "lucide-react";
+import { BadgeCheck, MessageSquare, PenLine, TrendingUp, Heart, MapPin } from "lucide-react";
 import { db } from "../../firebase";
+import NearbyExhibitions from "../../components/NearbyExhibitions";
 import { getOptimizedImageUrl } from "../../utils/imageProxy";
 import { resolveCommunityRank } from "../../utils/communityRank";
 import { useLanguage } from "../../contexts/LanguageContext";
@@ -133,6 +134,9 @@ const CommunityPage: React.FC = () => {
   const [activeCategory, setActiveCategory] = useState<CategoryTab>("리뷰");
   const [activeFilter, setActiveFilter] = useState<HeaderType>("all");
   const [remotePostsDisabled, setRemotePostsDisabled] = useState(false);
+  // When true, the category row's "주변 전시" chip is selected and the post
+  // list is replaced by the nearby-exhibition browser (moved here from the AI tab).
+  const [nearbyView, setNearbyView] = useState(false);
 
   const [isLightTheme, setIsLightTheme] = useState<boolean>(() => {
     try {
@@ -368,6 +372,7 @@ const CommunityPage: React.FC = () => {
             </button>
           </div>
 
+          {!nearbyView && (
           <div
             style={{
               display: "inline-flex",
@@ -415,6 +420,7 @@ const CommunityPage: React.FC = () => {
               {t({ ko: "인기", en: "Popular" })}
             </button>
           </div>
+          )}
         </div>
 
         <div
@@ -429,12 +435,35 @@ const CommunityPage: React.FC = () => {
           }}
         >
           <div style={{ display: "flex", gap: 8, overflowX: "auto", overflowY: "visible", padding: "4px 4px 12px", scrollbarWidth: "none", msOverflowStyle: "none" }}>
+            <button
+              key="nearby"
+              onClick={() => setNearbyView(true)}
+              style={{
+                border: `1px solid ${nearbyView ? "#D4A547" : "rgba(212,165,71,0.55)"}`,
+                borderRadius: 999,
+                padding: "7px 14px",
+                background: nearbyView ? "#D4A547" : "rgba(212,165,71,0.16)",
+                color: nearbyView ? "#000" : "#D4A547",
+                cursor: "pointer",
+                fontSize: 11,
+                fontWeight: 700,
+                whiteSpace: "nowrap",
+                display: "inline-flex",
+                alignItems: "center",
+                gap: 5,
+                flexShrink: 0,
+              }}
+            >
+              <MapPin size={12} strokeWidth={2.4} />
+              {t({ ko: "주변 전시", en: "Nearby" })}
+            </button>
             {CATEGORY_TABS.map((tab) => {
-              const active = activeCategory === tab;
+              const active = !nearbyView && activeCategory === tab;
               return (
                 <button
                   key={tab}
                   onClick={() => {
+                    setNearbyView(false);
                     setActiveCategory(tab);
                     if (tab !== "리뷰") {
                       setActiveFilter("all");
@@ -459,6 +488,10 @@ const CommunityPage: React.FC = () => {
           </div>
         </div>
 
+        {nearbyView ? (
+          <NearbyExhibitions isLight={isLightTheme} language={language} />
+        ) : (
+        <>
         {activeCategory === "리뷰" && (
           <div style={{ display: "flex", flexDirection: "column", gap: 7, padding: "0 14px 12px" }}>
             <div style={{ display: "flex", gap: 8, overflowX: "auto", overflowY: "visible", scrollbarWidth: "none", msOverflowStyle: "none" }}>
@@ -642,6 +675,8 @@ const CommunityPage: React.FC = () => {
             })
           )}
         </div>
+        </>
+        )}
       </div>
     </div>
   );

@@ -6,6 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "./contexts/AuthContext";
 import { signOut } from "firebase/auth";
 import DrawingLoader, { TransitionBadge } from "./components/DrawingLoader";
+import CinematicIntro from "./components/CinematicIntro";
 import { exhibitions } from "./data/exhibitions";
 import { OnboardingGuard } from "./components/OnboardingGuard";
 import CommunityPanel from "./components/Community/CommunityPanel";
@@ -14,6 +15,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import BottomPageNavigator, { MAIN_TABS, resolveMainTabIndex } from "./components/BottomPageNavigator";
 import LanguageToggle from "./components/LanguageToggle";
 import { LogOut, ShoppingCart, User } from "lucide-react";
+import { SHOW_SALES_UI } from "./config/features";
 import ProfileAvatar from "./components/ProfileAvatar";
 import { createFirebaseWebPort } from "./adapters/firebaseWebAdapter";
 import type { ProfileImageCrop } from "./types/Profile";
@@ -81,6 +83,11 @@ const routeSlideVariants = {
 };
 
 const MAP_PATH_STORAGE_KEY = "armin:last-map-path";
+
+// REVIEW AID: while we design the intro it shows on every home load IN THE WEB (easy to review).
+// It is HIDDEN inside the iOS/native app (the React-Native WebView) for now. Set this to false
+// later to restore first-visit-only on the web.
+const INTRO_REVIEW_MODE: boolean = true;
 const firebaseWebPort = createFirebaseWebPort();
 
 function RequireSignedIn({ children }: { children: React.ReactElement }) {
@@ -114,6 +121,26 @@ function AppContent() {
   const [isLightTheme, setIsLightTheme] = useState<boolean>(() => {
     try {
       return localStorage.getItem('homeTheme') === 'light';
+    } catch {
+      return false;
+    }
+  });
+
+  // First-visit cinematic intro overlay (plays once over the home globe).
+  const [showIntro, setShowIntro] = useState<boolean>(() => {
+    try {
+      // Only START on the home globe (the intro then drives the router itself).
+      const path = window.location.pathname;
+      if (path !== '/' && !path.startsWith('/interactive')) return false;
+      // ?intro=1 force-replays the intro (works everywhere, even in the app); ?intro=0 skips it.
+      const introParam = new URLSearchParams(window.location.search).get('intro');
+      if (introParam === '1') return true;
+      if (introParam === '0') return false;
+      // Hidden inside the iOS/native app for now; the WEB still shows it (for review).
+      if (isMobileAppContainer()) return false;
+      if (typeof window !== 'undefined' && window.matchMedia?.('(prefers-reduced-motion: reduce)').matches) return false;
+      if (INTRO_REVIEW_MODE) return true;
+      return localStorage.getItem('armin:intro-seen') !== 'true';
     } catch {
       return false;
     }
@@ -482,6 +509,17 @@ function AppContent() {
   };
 
   const isAuthedUser = !!user && !user.isAnonymous;
+
+  // Tabs the cinematic intro cross-fades through. `kind` selects a built design-mockup
+  // (rendered in CinematicIntro's TabMock) — no screenshots, so nothing crops or overlaps.
+  const introTourSteps = [
+    { kind: 'community' as const, title: '커뮤니티 — 감상을 나누는 사람들', body: '같은 작품을 본 사람들과 리뷰·뉴스·토론·인터뷰를 나눕니다.' },
+    { kind: 'ai' as const, title: 'AI 추천 — 취향을 읽는 큐레이션', body: '마음에 든 작품 몇 개만 고르면, AI가 76만 점에서 당신의 취향을 찾아냅니다.' },
+    { kind: 'weekly' as const, title: '주간 큐레이션 — 매주 새로 거는 전시', body: '에디터가 매주 한 편씩, 작가와 작품을 깊이 있게 엮어 소개합니다.' },
+    { kind: 'profile' as const, title: '마이페이지 — 나만의 컬렉션', body: '좋아한 작품·전시·작가를 모으고, 플레이리스트와 슬라이드쇼로 다시 감상합니다.' },
+    { kind: 'search' as const, title: '검색 — 자연어 AI 검색', body: '자연어로 물으면 분위기로 찾아주고, 작가를 누르면 작가 페이지로 이어집니다.' },
+    { kind: 'artist' as const, title: '작가 페이지 — 작가의 모든 것', body: '검색에서 작가를 누르면, 소개·작품 통계·전 작품이 한 페이지에 펼쳐집니다.' },
+  ];
   const profileInitial = (user?.displayName || user?.email || 'A').trim().slice(0, 1).toUpperCase();
   const effectiveProfilePhoto = profilePhotoUrl || user?.photoURL || null;
   // Only apply the saved crop when Firestore says the user actually has a
@@ -593,6 +631,16 @@ function AppContent() {
       <OnboardingGuard />
       <TransitionBadge show={transitioning} />
 
+      {showIntro && (
+        <CinematicIntro
+          onDone={() => {
+            try { localStorage.setItem('armin:intro-seen', 'true'); } catch { /* ignore */ }
+            setShowIntro(false);
+          }}
+          tourSteps={introTourSteps}
+        />
+      )}
+
       <div ref={languageMorphScopeRef} style={{ position: 'relative', width: '100%', height: '100%', overflow: 'hidden' }}>
         <AnimatePresence initial={false} mode="sync" custom={slideDirectionRef.current}>
           <motion.div
@@ -649,7 +697,7 @@ function AppContent() {
 
       <CommunityPanel isOpen={isCommunityPanelOpen} onClose={() => setIsCommunityPanelOpen(false)} mapMode={mapMode} />
 
-      {isFloatingControlsVisible && (
+      {isFloatingControlsVisible && !showIntro && (
         <>
           <AnimatePresence>
             {isFloatingActionsOpen && (
@@ -709,6 +757,7 @@ function AppContent() {
                   </motion.div>
                 ) : null}
 
+                {SHOW_SALES_UI && (
                 <motion.button
                   initial={{ opacity: 0, y: -10, scale: 0.86 }}
                   animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -773,6 +822,7 @@ function AppContent() {
                     )}
                   </span>
                 </motion.button>
+                )}
 
                 <motion.button
                   initial={{ opacity: 0, y: -10, scale: 0.86 }}
@@ -995,7 +1045,7 @@ function AppContent() {
         </>
       )}
 
-      {isBottomNavVisible && (
+      {isBottomNavVisible && !showIntro && (
         <BottomPageNavigator
           activeIndex={activeTabIndex ?? lastNonNullTabIndexRef.current}
           onChange={handleBottomNavChange}

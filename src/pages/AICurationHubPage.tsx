@@ -3,13 +3,14 @@ import { useSearchParams } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   Sparkles, MapPin, Calendar, X,
-  Heart, Navigation, Clock, Star, BookmarkPlus, MessageCircle, ShoppingBag, Shuffle, RotateCw, BookOpen
+  Heart, Navigation, Star, BookmarkPlus, MessageCircle, ShoppingBag, Shuffle, RotateCw, BookOpen
 } from "lucide-react";
 import WeeklyCurationTab from '../components/WeeklyCurationTab';
 import { useAuth } from '../contexts/AuthContext';
 import { getFirestore, collection, getDocs } from 'firebase/firestore';
 import { exhibitions } from '../data/exhibitions';
 import { ArtworkLightbox } from '../components/ArtworkLightbox';
+import { SearchWittyLoader } from '../components/SearchWittyLoader';
 import { useLikedArtworkSet } from '../hooks/useLikedArtworkSet';
 import { ProductModal } from '../components/ProductModal';
 import CommentModal from '../components/CommentModal';
@@ -19,8 +20,6 @@ import { useLanguage } from "../contexts/LanguageContext";
 import { NO_IMAGE_PLACEHOLDER_DARK } from '../utils/noImagePlaceholder';
 import { getOptimizedImageUrl } from '../utils/imageProxy';
 import { localizeCountryName } from "../i18n/geoLocalization";
-import { getExhibitionDisplayDescription, getExhibitionDisplayTitle } from "../i18n/exhibitionLocalization";
-import { getMuseumDisplayDescription, getMuseumDisplayName } from "../i18n/museumLocalization";
 import type { RecommendationMode, RecommendationResponse, RecommendedArtwork } from "../types/Recommendation";
 
 const WORKER = 'https://armin-semantic-search.armin-art.workers.dev';
@@ -78,23 +77,22 @@ type LikedArtworkRecord = {
 };
 
 // ─── 유틸 ──────────────────────────────────────────────────
-function haversineKm(lat1: number, lon1: number, lat2: number, lon2: number) {
-  const R = 6371;
-  const dLat = (lat2 - lat1) * Math.PI / 180;
-  const dLon = (lon2 - lon1) * Math.PI / 180;
-  const a = Math.sin(dLat / 2) ** 2
-    + Math.cos(lat1 * Math.PI / 180) * Math.cos(lat2 * Math.PI / 180) * Math.sin(dLon / 2) ** 2;
-  return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-}
-
-function cosineSim(a: number[] | null | undefined, b: number[] | null | undefined) {
-  if (!a?.length || !b?.length || a.length !== b.length) return 0;
-  return a.reduce((s, v, i) => s + v * b[i], 0);
-}
-
 function normalizeMetaKey(value: unknown) {
   if (!value) return '';
   return String(value).trim().toLowerCase();
+}
+
+// Evenly sample up to `count` items across an array (always keeps the first and
+// last), preserving order. Used to spread recommendation seeds across the user's
+// whole like history instead of clumping at the most-recent end — so embedded
+// likes anywhere in the history still drive recommendations.
+function pickSpread<T>(arr: T[], count: number): T[] {
+  if (count <= 0) return [];
+  if (arr.length <= count) return arr.slice();
+  const out: T[] = [];
+  const step = (arr.length - 1) / (count - 1);
+  for (let i = 0; i < count; i++) out.push(arr[Math.round(i * step)]);
+  return out;
 }
 
 function normalizeArtworkIdForFirestore(value: unknown) {
@@ -205,20 +203,6 @@ type CurationTabProps = {
   randomLoading: boolean;
   onRefreshRandom: (count?: number, append?: boolean) => void;
   onTasteOnboardingSubmit: (selected: RecommendationCardItem[]) => Promise<void>;
-};
-
-type NearbyTabProps = {
-  t: boolean;
-  fg: string;
-  fgLow: string;
-  fgFaint: string;
-  divider: string;
-  imgFilter: string;
-  onSelect: (ex: RecommendationCardItem) => void;
-  nearbyExhibitions: RecommendationCardItem[];
-  loading: boolean;
-  language: string;
-  tr: Translator;
 };
 
 // ─── Exhibition Detail Sheet ────────────────────────────────
@@ -568,7 +552,12 @@ function CurationTab({
   const isRandomMode = recommendMode === 'random';
   const isLoading = isRandomMode ? randomLoading : loading;
   const displayArtworks = isRandomMode ? randomArtworks : userArtworks;
-  
+  // The cold-start taste picker is ONLY for users with zero likes. A user who
+  // already has likes but got no recommendations (e.g. their liked artworks
+  // aren't in the recommendation vector index yet, or a transient worker miss)
+  // must never be sent back to the picker — show the search loader instead.
+  const hasLikes = likedArtworkIds.size > 0;
+
   const [displayedCount, setDisplayedCount] = useState(15);
   const [observerNode, setObserverNode] = useState<HTMLDivElement | null>(null);
   const isMobile = typeof window !== 'undefined' && window.innerWidth <= 768;
@@ -638,6 +627,11 @@ function CurationTab({
 
   if (!displayArtworks || displayArtworks.length === 0) {
     if (!isRandomMode) {
+      // Has likes but nothing to show → keep showing the search loader, never
+      // the cold-start picker (which wrongly implies "you have no taste yet").
+      if (hasLikes) {
+        return <SearchWittyLoader dark={!t} />;
+      }
       return (
         <TasteOnboarding
           tr={tr}
@@ -845,98 +839,6 @@ function CurationTab({
   );
 }
 
-// ─── Nearby Tab ─────────────────────────────────────────────
-function NearbyTab({ t, fg, fgLow, fgFaint, divider, imgFilter, onSelect, nearbyExhibitions, loading, language, tr }: NearbyTabProps) {
-  const [sortMode, setSortMode] = useState("taste");
-
-  if (loading) {
-    return <div style={{ padding: 40, textAlign: 'center', color: fgLow, fontSize: 12 }}>{tr({ ko: '주변 전시를 불러오는 중입니다...', en: 'Loading nearby exhibitions...' })}</div>;
-  }
-
-  const SORT_LABELS = [
-    { id: "taste", label: tr({ ko: '취향맞춤순', en: 'Taste Match' }) },
-    { id: "distance", label: tr({ ko: '거리순', en: 'Distance' }) },
-    { id: "popular", label: tr({ ko: '평점순', en: 'Top Rated' }) },
-    { id: "deadline", label: tr({ ko: '마감임박', en: 'Ending Soon' }) },
-  ];
-
-  const sortedAll = useMemo(() => {
-    const arr = [...(nearbyExhibitions || [])];
-    if (sortMode === "distance") arr.sort((a, b) => (a.distance ?? 9999) - (b.distance ?? 9999));
-    else if (sortMode === "deadline") arr.sort((a, b) => (a.daysLeft ?? 9999) - (b.daysLeft ?? 9999));
-    else if (sortMode === "popular") arr.sort((a, b) => (b.communityAvg ?? 0) - (a.communityAvg ?? 0));
-    else if (sortMode === "taste") arr.sort((a, b) => (b.finalScore ?? 0) - (a.finalScore ?? 0));
-    return arr;
-  }, [nearbyExhibitions, sortMode]);
-
-  return (
-    <div style={{ padding: "0 20px 100px", marginTop: 24 }}>
-      {/* ── Sub Navigator ── */}
-      <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 20 }}>
-        <Clock size={11} color={fgFaint} style={{ marginRight: 2 }} />
-        {SORT_LABELS.map((s) => {
-          const isActive = sortMode === s.id;
-          return (
-            <button key={s.id} onClick={() => setSortMode(s.id)}
-              style={{
-                padding: "4px 11px", borderRadius: 999, fontSize: 10, fontWeight: isActive ? 600 : 400,
-                cursor: "pointer", flexShrink: 0, border: "none", transition: "all 0.15s",
-                backgroundColor: isActive ? "#D4A547" : (t ? "rgba(0,0,0,0.06)" : "rgba(255,255,255,0.07)"),
-                color: isActive ? "#000" : fgLow,
-              }}>{s.label}</button>
-          );
-        })}
-        <span style={{ fontFamily: "'Space Mono', monospace", fontSize: 8, color: fgFaint, marginLeft: "auto", flexShrink: 0 }}>{sortedAll.length}{language === 'ko' ? '개' : ''}</span>
-      </div>
-
-      {/* 3-column grid */}
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: 8 }}>
-        {sortedAll.map((ex, idx) => (
-          <motion.div
-            key={ex.id + '-' + idx}
-            initial={{ opacity: 0, y: 4 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 + idx * 0.03 }}
-            onClick={() => onSelect(ex)}
-            style={{ borderRadius: 12, overflow: "hidden", cursor: "pointer", border: `1px solid ${divider}`, padding: 0, textAlign: "left" }}
-          >
-            {/* Cover */}
-            <div style={{ aspectRatio: "3/4", position: "relative", overflow: "hidden", backgroundColor: "#1a1a1a" }}>
-              <img src={ex.image || NO_IMAGE_PLACEHOLDER_DARK} alt={ex.title} style={{ width: "100%", height: "100%", objectFit: "cover", filter: imgFilter }} onError={(e) => { e.currentTarget.src = NO_IMAGE_PLACEHOLDER_DARK; }} />
-              <div style={{ position: "absolute", inset: 0, background: "linear-gradient(to top, rgba(0,0,0,0.5) 0%, transparent 40%)" }} />
-              
-              {/* Badges UI - Bottom Right */}
-              <div style={{ position: "absolute", bottom: 8, right: 8, display: "flex", flexDirection: "column", gap: 5, alignItems: "flex-end" }}>
-                {ex.finalScore !== null && ex.finalScore !== undefined && (
-                   <span style={{ background: "rgba(212,165,71,0.95)", color: "#000", padding: "3px 6px", borderRadius: 4, fontSize: 9.5, fontWeight: 700, fontFamily: "'Space Mono', monospace" }}>
-                     {tr({ ko: '예상', en: 'Pred' })} {(ex.finalScore / 20).toFixed(1)}
-                   </span>
-                )}
-                {ex.communityAvg !== null && ex.communityAvg !== undefined && (
-                   <span style={{ background: "rgba(255,255,255,0.9)", color: "#000", padding: "3px 6px", borderRadius: 4, fontSize: 9.5, fontWeight: 700, fontFamily: "'Space Mono', monospace" }}>
-                     {tr({ ko: '평점', en: 'Rate' })} {(ex.communityAvg).toFixed(1)}
-                   </span>
-                )}
-              </div>
-            </div>
-            {/* Info */}
-            <div style={{ padding: "10px 8px", backgroundColor: t ? "rgba(0,0,0,0.02)" : "rgba(255,255,255,0.02)" }}>
-              <div style={{ fontSize: 10, color: fgLow, marginBottom: 4, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{String(ex.venue || '')}</div>
-              <div style={{ fontSize: 13, fontWeight: 700, color: fg, lineHeight: 1.25, marginBottom: 6, display: "-webkit-box", WebkitLineClamp: 2, WebkitBoxOrient: "vertical", overflow: "hidden" }}>{ex.title}</div>
-              <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
-                <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 9, color: fgFaint, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{ex.period}</div>
-                {ex.distance !== undefined && (
-                  <div style={{ display: "flex", alignItems: "center", gap: 2 }}>
-                    <Navigation size={9} strokeWidth={1.75} style={{ color: fgFaint }} />
-                    <span style={{ fontSize: 9, color: fgFaint }}>{ex.distance}km</span>
-                  </div>
-                )}
-              </div>
-            </div>
-          </motion.div>
-        ))}
-      </div>
-    </div>
-  );
-}
 
 // ─── Main Component ─────────────────────────────────────────
 export default function AICurationHubPage() {
@@ -973,13 +875,13 @@ export default function AICurationHubPage() {
   // `preview` is the admin-side deep-link from /admin/weekly's "Preview"
   // button — same Weekly-tab landing as `weekly` / `special`, just fed by
   // the proposals JSON instead of the published one.
-  const initialTab: "curation" | "nearby" | "weekly" =
+  const initialTab: "curation" | "weekly" =
     searchParams.get('weekly') ||
     searchParams.get('special') ||
     searchParams.get('preview')
       ? 'weekly'
       : 'curation';
-  const [activeTab, setActiveTab] = useState<"curation" | "nearby" | "weekly">(initialTab);
+  const [activeTab, setActiveTab] = useState<"curation" | "weekly">(initialTab);
 
   // If the URL gains a deep-link param after mount (e.g. from in-app
   // navigation), jump to the weekly tab. Pure presence-check; we leave
@@ -1009,18 +911,11 @@ export default function AICurationHubPage() {
   const randomAppendRef = useRef(false);
   const randomLoadingRef = useRef(false);
 
-  const [nearbyExhibitions, setNearbyExhibitions] = useState<RecommendationCardItem[]>([]);
-  const [nearbyLoading, setNearbyLoading] = useState(true);
-
   const [lightboxArtwork, setLightboxArtwork] = useState<RecommendationCardItem | null>(null);
   const { likedIds, isLiked, toggleLike } = useLikedArtworkSet();
   const [commentArtwork, setCommentArtwork] = useState<RecommendationCardItem | null>(null);
   const [productArtwork, setProductArtwork] = useState<RecommendationCardItem | null>(null);
   const [playlistArtwork, setPlaylistArtwork] = useState<RecommendationCardItem | null>(null);
-
-  const [tasteVector] = useState<number[] | null>(null);
-  const [exhStatsMap, setExhStatsMap] = useState<Record<string, any>>({});
-  const [statsLoaded, setStatsLoaded] = useState(false);
 
   const mapWorkerRandomArtwork = useCallback((row: WorkerRecommendationRow, index: number): RecommendationCardItem => {
     const img = String(row.i || row.image || row.imageUrl || row.url || '');
@@ -1195,7 +1090,15 @@ export default function AICurationHubPage() {
           .filter((item: { seedId: string }) => item.seedId.length > 0)
           .sort((a: { likedAtMs: number }, b: { likedAtMs: number }) => b.likedAtMs - a.likedAtMs);
 
-        const diverseSeeds: string[] = [];
+        // Build a diverse candidate pool across the user's FULL like history
+        // (recency-ordered), capping per artist/museum so one cluster can't
+        // dominate. Crucially we collect candidates from the WHOLE history, not
+        // just the most-recent picks: a recently-liked batch may be from a
+        // collection not yet in the recommendation vector index, and a
+        // recency-only seed set would then miss every embedded like and return
+        // empty. (The backend silently drops unindexed ids, so spreading seeds
+        // across history keeps embedded likes — old or new — in play.)
+        const diverseCandidates: string[] = [];
         const seenSeed = new Set<string>();
         const seenArtist = new Map<string, number>();
         const seenMuseum = new Map<string, number>();
@@ -1209,18 +1112,23 @@ export default function AICurationHubPage() {
           seenSeed.add(candidate.seedId);
           seenArtist.set(candidate.artistKey, aCount + 1);
           seenMuseum.set(candidate.museumKey, mCount + 1);
-          diverseSeeds.push(candidate.seedId);
-          if (diverseSeeds.length >= 12) break;
+          diverseCandidates.push(candidate.seedId);
         }
 
-        if (diverseSeeds.length < 8) {
+        // Top up from any remaining likes if diversity caps left us too few.
+        if (diverseCandidates.length < 8) {
           for (const id of likedIds) {
             if (seenSeed.has(id)) continue;
             seenSeed.add(id);
-            diverseSeeds.push(id);
-            if (diverseSeeds.length >= 12) break;
+            diverseCandidates.push(id);
           }
         }
+
+        // Sample seeds spread evenly newest→oldest. SEED_COUNT stays at/under
+        // the backend's ~20-id /recommend ceiling so the centroid call below
+        // can reuse this exact set.
+        const SEED_COUNT = 18;
+        const diverseSeeds = pickSpread(diverseCandidates, SEED_COUNT);
 
         let fetchedResults: WorkerRecommendationRow[] = [];
 
@@ -1228,7 +1136,12 @@ export default function AICurationHubPage() {
             const recRes = await fetch(`${WORKER}/recommend`, {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({ userId: user.uid, likedIds: likedIds.slice(-80), limit: 90 }),
+              // The backend silently returns [] when likedIds exceeds ~20, or
+              // when limit exceeds ~1.5× the id count. Sending all likes with
+              // limit 90 (as before) always tripped this → no recommendations
+              // for anyone with 20+ likes. Send the spread seed set (≤20) and
+              // keep limit at the id count.
+              body: JSON.stringify({ userId: user.uid, likedIds: diverseSeeds, limit: Math.max(1, diverseSeeds.length) }),
             });
             if (recRes.ok) {
                const data = (await recRes.json()) as Partial<RecommendationResponse>;
@@ -1250,11 +1163,13 @@ export default function AICurationHubPage() {
 
         fetchedResults.forEach(pushRow);
 
-        // /recommend-by-id (최근 좋아요 기반 유사작) 은 보충용 — 백본 뒤에 덧붙인다.
+        // /recommend-by-id (history-spanning 좋아요 기반 유사작) — 백본 뒤에 덧붙인다.
+        // 단일 id 호출이라 ~20개 입력 제한이 없고, 시드가 전 이력에 분산돼 있어
+        // 임베딩된 좋아요(과거 것 포함)가 반드시 추천에 반영된다.
         if (likedIds.length > 0) {
-          const recentSeeds = diverseSeeds.length > 0 ? diverseSeeds : likedIds.slice(-12).reverse();
+          const seeds = diverseSeeds.length > 0 ? diverseSeeds : likedIds.slice(-12).reverse();
           const seededResponses = await Promise.allSettled(
-            recentSeeds.map((seedId) => fetch(`${WORKER}/recommend-by-id`, {
+            seeds.map((seedId) => fetch(`${WORKER}/recommend-by-id`, {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
               body: JSON.stringify({ id: seedId, limit: 24 }),
@@ -1364,106 +1279,6 @@ export default function AICurationHubPage() {
     fetchArtworks();
   }, [user, tasteRefreshKey]);
 
-  // Fetch Community Exhibition Stats
-  useEffect(() => {
-    const fetchStats = async () => {
-      try {
-        const db = getFirestore();
-        const snap = await getDocs(collection(db, 'exhibition_stats'));
-        const smap: Record<string, any> = {};
-        snap.forEach(d => {
-            smap[d.id] = d.data();
-        });
-        setExhStatsMap(smap);
-      } catch (e: unknown) {
-        if ((e as { code?: string })?.code !== 'permission-denied') {
-          console.error("Failed to fetch exhibition stats", e);
-        }
-      } finally {
-        setStatsLoaded(true);
-      }
-    };
-    fetchStats();
-  }, []);
-
-  // Fetch 'Nearby' Exhibitions
-  useEffect(() => {
-    if (!statsLoaded) return; // wait for stats
-    setNearbyLoading(true);
-    let uLat: number | null = null;
-    let uLng: number | null = null;
-
-    const processExhibitions = () => {
-        const results = [];
-        for (const m of exhibitions as any[]) {
-          for (const e of (m.temporaryExhibitions || []) as any[]) {
-                if (e.status === 'past') continue;
-                let dist = undefined;
-                if (uLat !== null && uLng !== null && m.latitude && m.longitude) {
-                    dist = Math.round(haversineKm(uLat, uLng, m.latitude, m.longitude) * 10) / 10;
-                }
-                let daysLeft = 9999;
-                if (e.endDate !== undefined && e.endDate !== "ongoing" && e.endDate !== "TBD") {
-                    daysLeft = Math.ceil((new Date(e.endDate).getTime() - Date.now()) / 86400000);
-                }
-
-                // AI Expected Score & Community Avg
-                let communityAvg = exhStatsMap[e.id]?.avgRating || 0.0;
-                let finalScore = 0;
-                
-                if (tasteVector && e.coverEmbedding) {
-                  const taste = cosineSim(tasteVector, e.coverEmbedding);
-                    const ts = Math.round(Math.max(0, taste) * 100);
-                    const ratingAdj = communityAvg > 0 ? (communityAvg - 3.0) * 5 : 0;
-                    finalScore = Math.round(Math.min(100, Math.max(0, ts * 0.85 + ratingAdj * 0.15)));
-                } else if (communityAvg > 0) {
-                    finalScore = Math.round(Math.min(100, Math.max(0, 75 + (communityAvg - 3.0) * 5))); // fallback guestimate
-                }
-
-                const img = e.coverImage || '';
-                const localizedTitle = getExhibitionDisplayTitle(e as any, language);
-                const localizedMuseum = getMuseumDisplayName(m as any, language);
-                const localizedDescription = getExhibitionDisplayDescription(e as any, language) || getMuseumDisplayDescription(m as any, language) || '';
-                const localizedPeriod = e.endDate === "ongoing" || e.endDate === "TBD"
-                  ? `${e.startDate} - ${tr({ ko: '상시', en: 'Ongoing' })}`
-                  : `${e.startDate} - ${e.endDate}`;
-                
-                if (img) {
-                    results.push({
-                       id: e.id,
-                       title: localizedTitle,
-                       venue: localizedMuseum,
-                       image: img,
-                       period: localizedPeriod,
-                       distance: dist,
-                       daysLeft: daysLeft,
-                       communityAvg,
-                       finalScore,
-                        officialUrl: e.officialUrl || e.url || '',
-                        detailUrl: resolveExhibitionDetailUrl(localizedMuseum, localizedTitle, e.officialUrl || e.url || ''),
-                       description: localizedDescription,
-                       isArtwork: false
-                    });
-                }
-            }
-        }
-        setNearbyExhibitions(results);
-        setNearbyLoading(false);
-    };
-
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(pos => {
-            uLat = pos.coords.latitude;
-            uLng = pos.coords.longitude;
-            processExhibitions();
-        }, () => {
-            processExhibitions();
-        });
-    } else {
-        processExhibitions();
-    }
-  }, [exhStatsMap, language, statsLoaded, tasteVector, tr]);
-
   const tabProps = { t, fg, fgLow, fgMed, fgFaint, divider, imgFilter, onSelect: setSelectedEx };
 
   return (
@@ -1485,12 +1300,11 @@ export default function AICurationHubPage() {
         <div style={{ position: 'relative', display: "flex", gap: 0, borderBottom: `1px solid ${divider}` }}>
           {([
             { id: "curation", label: tr({ ko: '나의 큐레이션', en: 'My Curation' }), icon: <Sparkles size={11} strokeWidth={2} /> },
-            { id: "nearby",   label: tr({ ko: '주변 전시', en: 'Nearby' }),           icon: <MapPin size={11} strokeWidth={2} /> },
             { id: "weekly",   label: tr({ ko: '주간 큐레이션', en: 'Weekly' }),        icon: <BookOpen size={11} strokeWidth={2} /> },
           ]).map(({ id, label, icon }) => {
             const isActive = activeTab === id;
             return (
-              <button key={id} onClick={() => setActiveTab(id as "curation" | "nearby" | "weekly")}
+              <button key={id} onClick={() => setActiveTab(id as "curation" | "weekly")}
                 style={{
                   flex: 1, display: "flex", alignItems: "center", justifyContent: "center", gap: 6,
                   padding: "14px 0", background: "none", border: "none",
@@ -1503,9 +1317,9 @@ export default function AICurationHubPage() {
             );
           })}
           <motion.div
-            animate={{ left: activeTab === 'curation' ? '0%' : activeTab === 'nearby' ? '33.33%' : '66.67%' }}
+            animate={{ left: activeTab === 'curation' ? '0%' : '50%' }}
             transition={{ duration: 0.18, ease: 'easeOut' }}
-            style={{ position: 'absolute', bottom: -1, width: '33.33%', height: 2, backgroundColor: '#D4A547' }}
+            style={{ position: 'absolute', bottom: -1, width: '50%', height: 2, backgroundColor: '#D4A547' }}
           />
         </div>
       </div>
@@ -1535,17 +1349,6 @@ export default function AICurationHubPage() {
                    setSelectedEx(ex);
                  }
                }}
-            />
-          </motion.div>
-        )}
-        {activeTab === "nearby" && (
-          <motion.div key="nearby"
-            initial={{ opacity: 0, x: 12 }} animate={{ opacity: 1, x: 0 }}
-            exit={{ opacity: 0, x: 8 }} transition={{ duration: 0.2 }}>
-            <NearbyTab {...tabProps} nearbyExhibitions={nearbyExhibitions} loading={nearbyLoading}
-               language={language}
-               tr={tr}
-               onSelect={(ex: RecommendationCardItem) => setSelectedEx(ex)}
             />
           </motion.div>
         )}

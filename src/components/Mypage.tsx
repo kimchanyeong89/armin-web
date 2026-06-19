@@ -33,6 +33,7 @@ import {
 import { useSavedCurations } from "../hooks/useSavedCurations";
 
 import { ProductModal } from "./ProductModal";
+import { SHOW_SALES_UI } from "../config/features";
 import { ArtworkLightbox } from "../components/ArtworkLightbox";
 import { exhibitions } from "../data/exhibitions";
 import { findMuseumForArtwork, getExhibitionTokens, normalizeToken } from "../utils/museumUtils";
@@ -2063,6 +2064,7 @@ const MyPage: React.FC = () => {
             <BookmarkPlus size={isMobile ? 12 : 14} strokeWidth={2.2} />
           </button>
 
+          {SHOW_SALES_UI && (
           <button
             onClick={(event) => {
               event.stopPropagation();
@@ -2085,6 +2087,7 @@ const MyPage: React.FC = () => {
           >
             <ShoppingBag size={isMobile ? 12 : 14} strokeWidth={2.1} />
           </button>
+          )}
 
           <button
             onClick={(event) => {

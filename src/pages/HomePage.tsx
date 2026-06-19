@@ -116,6 +116,13 @@ export default function HomePage({ exhibitions, isOverlayOpen = false }: HomePag
   const location = useLocation();
   const { collectionId } = useParams<{ collectionId?: string }>();
   const { language, t } = useLanguage();
+  // Live total artwork count — read from the search manifest (`c`), which is regenerated whenever the
+  // index is rebuilt, so the headline number stays in sync as collections grow. Museum count is just
+  // the number of registered museums (exhibitions), so it updates with the data too.
+  const [totalArtworks, setTotalArtworks] = useState<number | null>(null);
+  useEffect(() => {
+    fetch('/data/search-manifest.json').then((r) => r.json()).then((m) => { if (m && typeof m.c === 'number') setTotalArtworks(m.c); }).catch(() => {});
+  }, []);
   // Compute initial modal/detail state from history synchronously to avoid first-paint flicker
   const initialFromHistory = (() => {
     if (typeof window === 'undefined') return { item: null as ExhibitionItem | null, parent: null as Exhibition | null };
@@ -1123,7 +1130,11 @@ export default function HomePage({ exhibitions, isOverlayOpen = false }: HomePag
           <div style={{
             fontSize: 9, letterSpacing: '0.16em', textTransform: 'uppercase',
             color: 'rgba(128,122,108,0.32)', fontFamily: "'Space Mono', monospace",
-          }}>{t({ ko: '614,746 작품 · 전 세계 100+ 미술관', en: '614,746 artworks · 100+ museums worldwide' })}</div>
+          }}>{(() => {
+            const a = (totalArtworks ?? 614746).toLocaleString();
+            const m = exhibitions.length;
+            return t({ ko: `${a} 작품 · 전 세계 미술관 ${m}곳`, en: `${a} artworks · ${m} museums worldwide` });
+          })()}</div>
         </div>
       </div>
     );

@@ -928,7 +928,10 @@ export function Globe({
       museumPreviewOpacityRef.current = lerp(museumPreviewOpacityRef.current, museumPreviewTargetOpacity, 0.12);
       const museumPreviewOpacity = museumPreviewOpacityRef.current;
 
-      if (museumPreviewOpacity > 0.01) {
+      // The cinematic intro hides all pins until its particles land on them.
+      const introHidesPins = typeof window !== "undefined" && (window as any).__arminHidePins;
+
+      if (museumPreviewOpacity > 0.01 && !introHidesPins) {
         museumPointsRef.current.forEach((m) => {
           if (countryClusterMode && activeContinent && CONTINENT_MAP[m.country] !== activeContinent) return;
           const dist = d3.geoDistance(m.coordinates, [-rot[0], -rot[1]]);
@@ -949,7 +952,7 @@ export function Globe({
         });
       }
 
-      if (countryClusterMode || drilled) {
+      if ((countryClusterMode || drilled) && !introHidesPins) {
         const drawnBoxes: { x1: number, y1: number, x2: number, y2: number }[] = [];
 
         if (drilled && dOp > 0.1) {

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { BookmarkPlus, ShoppingBag, Heart } from 'lucide-react';
+import { SHOW_SALES_UI } from '../config/features';
 
 interface ExpandableActionMenuProps {
   isMobile: boolean;
@@ -67,7 +68,7 @@ export function ExpandableActionMenu({
       <AnimatePresence>
         {showAll && (
           <>
-            {onOpenProduct && (
+            {SHOW_SALES_UI && onOpenProduct && (
               <motion.button
                 key="product"
                 initial={isMobile ? { opacity: 0, x: 70, scale: 0.8, zIndex: 1 } : { opacity: 1, x: 0, scale: 1, zIndex: 1 }}

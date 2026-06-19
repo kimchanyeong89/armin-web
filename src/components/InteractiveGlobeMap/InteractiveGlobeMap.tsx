@@ -245,6 +245,8 @@ export default function InteractiveGlobeMap({ exhibitions, onSelectExhibition, o
   const closingExhibitionIdRef = useRef<string | null>(null);
   const unresolvedRouteExhibitionIdRef = useRef<string | null>(null);
   const [artworkCounts, setArtworkCounts] = useState<Record<string, number>>({});
+  // Live total artwork count from the search manifest (`c`), so the headline number tracks the data.
+  const [totalArtworks, setTotalArtworks] = useState<number>(0);
   const [hoverData, setHoverData] = useState<{ level: string; label: string; count: number } | null>(null);
   const lastRotationUpdateRef = useRef<{ lon: number; lat: number; ts: number }>({ lon: 0, lat: 20, ts: 0 });
   const lastZoomUpdateRef = useRef<{ zoom: number; ts: number }>({ zoom: 1, ts: 0 });
@@ -277,6 +279,10 @@ export default function InteractiveGlobeMap({ exhibitions, onSelectExhibition, o
     fetch('/data/museum-artwork-counts.json')
       .then(r => r.json())
       .then(data => setArtworkCounts(data))
+      .catch(() => { });
+    fetch('/data/search-manifest.json')
+      .then(r => r.json())
+      .then(m => { if (m && typeof m.c === 'number') setTotalArtworks(m.c); })
       .catch(() => { });
   }, []);
 
@@ -1151,10 +1157,20 @@ export default function InteractiveGlobeMap({ exhibitions, onSelectExhibition, o
                   {hoverData.count.toLocaleString()}
                 </span>
               ) : (
-                <span>{(() => {
+                (() => {
                   const sum = cities.reduce((s, c) => s + (c.artworkCount || 0), 0);
-                  return (sum > 0 && sum < 614746) ? "614,746" : sum.toLocaleString();
-                })()}</span>
+                  const art = ((totalArtworks > 0 && sum < totalArtworks) ? totalArtworks : sum).toLocaleString();
+                  const mus = exhibitions.length;
+                  const L = language === "ko" ? { a: "작품", m: "미술관" } : { a: "Artworks", m: "Museums" };
+                  // two clean stat pairs (bright number + dim label) divided by a hairline, instead of one run-on line
+                  return (
+                    <span style={{ display: "inline-flex", alignItems: "center", gap: 11 }}>
+                      <span>{art} <span style={{ color: cFg06 }}>{L.a}</span></span>
+                      <span style={{ width: 1, height: 9, background: lineBg, display: "inline-block" }} />
+                      <span>{mus} <span style={{ color: cFg06 }}>{L.m}</span></span>
+                    </span>
+                  );
+                })()
               )}
             </motion.span>
           </AnimatePresence>

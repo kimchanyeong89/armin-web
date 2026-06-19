@@ -1,7 +1,7 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAnalytics, isSupported } from "firebase/analytics";
-import { initializeFirestore, persistentLocalCache, persistentMultipleTabManager } from "firebase/firestore";
+import { initializeFirestore, persistentLocalCache, persistentSingleTabManager } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
 import { getAuth } from "firebase/auth";
 // TODO: Add SDKs for Firebase products that you want to use
@@ -40,8 +40,15 @@ if (typeof window !== 'undefined' && !window.location.hostname.includes('localho
 // This cuts read volume sharply and makes reloads faster. The SDK keeps the
 // cache in sync and falls back to an in-memory cache if IndexedDB is
 // unavailable (private browsing, etc.), so behavior is unchanged.
+//
+// Single-tab manager (not multi-tab): the multi-tab manager coordinates the
+// watch stream across tabs via IndexedDB, and that coordination is what trips
+// the Firestore "INTERNAL ASSERTION FAILED (ID: b815/ca9)" crash when many
+// live listeners churn (e.g. the Community feed's per-author listeners under
+// React StrictMode's double-mount). Single-tab keeps the read-cost cache for
+// the active tab; extra tabs gracefully fall back to an in-memory cache.
 export const db = initializeFirestore(app, {
-  localCache: persistentLocalCache({ tabManager: persistentMultipleTabManager() }),
+  localCache: persistentLocalCache({ tabManager: persistentSingleTabManager(undefined) }),
 });
 export const storage = getStorage(app);
 export const auth = getAuth(app);
