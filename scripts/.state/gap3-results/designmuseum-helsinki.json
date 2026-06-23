@@ -1,0 +1,25 @@
+{
+  "slug": "designmuseum-helsinki",
+  "genre": "디자인",
+  "viable": false,
+  "reason": "The Design Museum Helsinki merged with the Museum of Finnish Architecture in Jan 2024 into the Architecture & Design Museum (AD-museo, admuseo.fi); the old www.designmuseum.fi now 301-redirects to admuseo.fi. The museum has NO own machine-readable collection database: (1) admuseo.fi is a WordPress/Yoast site whose REST API (wp-json/wp/v2) exposes only institutional post types (admission, department, designer[9 bio records], event, exhibition, learning_material, person, research_material, service) — there is NO artwork/object/collection post type; the sitemap_index.xml confirms this (post/page/event/exhibition/designer/service sitemaps only, no object sitemap). (2) Every probed own-platform subdomain (collections./kokoelmat./collection./digi./catalogue./emuseum./navigart./objects. on both admuseo.fi and designmuseum.fi) returns DNS 000 (does not resolve) — no eMuseum/Navigart/MuseumPlus instance exists. (3) The ONLY collection-search link anywhere on the site (Explore page) points to mfa.finna.fi — the Finna national aggregator, which is FORBIDDEN per task rules (aggregator, not museum-own infra). (4) The Collections page itself states the collections are being moved to new premises and 'collection services and image services are therefore temporarily closed.' Collection volume is large (75,000 objects, ~555,000 drawings, ~350,000 photographs per the site's own 'Collections in Numbers') and ~25% digitized, but all digitized access is gated behind Finna only. No museum-own API/CDN/Solr/IIIF/CONTENTdm/Drupal-jsonapi source for in-scope flat works (posters/graphic design/drawings) exists.",
+  "source_type": "none",
+  "easy_source_found": "none — checked /opendata, /api, data.* and api.* subdomains (no DNS), GitHub (none), WP REST wp-json (institutional post types only, no artwork type), sitemap_index.xml (no object sitemap). National OA route would be Finna.fi (mfa.finna.fi) which is a FORBIDDEN aggregator. No Navigart/eMuseum/CONTENTdm/Solr/IIIF/Drupal-jsonapi on museum-own infra.",
+  "estimated_inscope_count": 0,
+  "script_path": null,
+  "probe_ok": false,
+  "probe_summary": "Stage 1 probe BLOCKED (aggregator-only). designmuseum.fi 301→admuseo.fi (merged AD-museo). WP REST API has no artwork/object/collection post type — only institutional types (admission/department/designer/event/exhibition/learning_material/person/research_material/service). All own-platform collection subdomains (collections./kokoelmat./collection./digi./emuseum./navigart./objects.) return DNS 000. Only collection-search link on site → mfa.finna.fi (FORBIDDEN national aggregator). Museum states collection & image services temporarily closed for relocation. No museum-own machine-readable source for in-scope flat works. viable:false.",
+  "est_full_count": 0,
+  "est_runtime_min": 0,
+  "exhibitions_entry": {
+    "name": "Architecture & Design Museum (Design Museum Helsinki)",
+    "name_ko": "건축·디자인 박물관 (헬싱키 디자인 미술관)",
+    "city": "Helsinki",
+    "country": "Finland",
+    "latitude": 60.1632,
+    "longitude": 24.9476,
+    "description": "Finland's national museum of design and architecture in Helsinki's Design District, formed in January 2024 by the merger of the Design Museum (founded 1873) and the Museum of Finnish Architecture. Its collections span over 75,000 design objects, roughly 555,000 drawings and 350,000 photographs documenting Finnish applied arts and architecture from the 1870s to today, including icons such as Marimekko, Artek, Kaj Franck and Alvar Aalto. Note: not ingested — the museum has no own online collection API; its digitized holdings are accessible only via the Finna national aggregator, and collection/image services are temporarily closed during a move to new premises.",
+    "description_ko": "헬싱키 디자인 디스트릭트에 자리한 핀란드의 국립 디자인·건축 박물관으로, 1873년 설립된 디자인 미술관과 핀란드 건축박물관이 2024년 1월 합병해 탄생했다. 1870년대부터 오늘날까지 핀란드 응용미술과 건축의 역사를 담은 디자인 오브제 7만 5천여 점, 도면 약 55만 점, 사진 약 35만 점을 소장하며 마리메코, 아르텍, 카이 프랑크, 알바 알토 같은 거장들의 작품을 아우른다. (수집 제외 — 자체 온라인 컬렉션 API가 없고 디지털화된 소장품은 핀란드 국가 통합포털 Finna를 통해서만 열람 가능하며, 현재 신축 이전 작업으로 컬렉션·이미지 서비스가 일시 중단된 상태다.)"
+  },
+  "notes": "Re-probe later ONLY if AD-museo launches its own collection portal after the relocation (current site says collection/image services temporarily closed). Today the sole digital access is mfa.finna.fi (Finna aggregator = FORBIDDEN). Old domain www.designmuseum.fi is dead (301→admuseo.fi). Coords are the historic Korkeavuorenkatu 23 building (still listed as current address on admuseo.fi)."
+}
