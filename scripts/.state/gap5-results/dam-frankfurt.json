@@ -1,0 +1,25 @@
+{
+  "slug": "dam-frankfurt",
+  "genre": "건축",
+  "viable": true,
+  "reason": "DAM's own digital collection portal (sammlungen.dam-online.de, linked from dam-online.de → 'Sammlung digital') is a custom-built catalogue on museum infrastructure (nginx/Express). Server-rendered HTML: paginated search '/suche/collection/ergebnisse?query=*&withImageOnly=1&pageSize=100&page=N' enumerates object UUIDs (3,591 with images, 3,846 total); detail pages '/detail/collection/{uuid}' carry a full info-list (Inventarnummer, Beschreibung, Maße, Material/Technik, Objekttyp, Datierung, Ort, Beteiligte). Images via the museum's own IIIF Image API 2.0 ('/iiif/iiif/2/dam___{mediaUUID}/full/full/0/default.jpg') — verified 5000x4978 originals, CC BY-NC-SA 4.0, not watermarked. Scope is cleanly separable: per-object Objekttyp distinguishes flat works (Zeichnung/Pause/Druck/Kopie/Foto) from 3D models (Modell), reinforced by Maße (Blattmaß sheet vs 3-axis Objektmaß). 60-object sample: 62% in-scope (drawing 34, photograph 3), 0 missing IIIF. Probe built 15/15 works (drawing 12, photograph 3) end-to-end with R2 images rendering at 2048px. CAVEAT: the portal temporarily rate-limits request bursts (empty body, not a status code) and recovers after a cooldown — scraper fetches sequentially with a 1.1s delay + exponential backoff.",
+  "source_type": "html",
+  "easy_source_found": "No turnkey OA dump/API. Checked: no /opendata or /api, no data. subdomain, no GitHub dump, no Navigart/national-OA. dam-online.de is WordPress (wp/v2 REST exposed) but collection objects are NOT WP posts (wp/v2/search returns only events). The real catalogue is a separate custom portal at sammlungen.dam-online.de — server-rendered HTML enumeration + a museum-hosted IIIF Image API 2.0 (best available 'easy' surface: parametrized IIIF gives full-res images; a JSON facet endpoint '/filter/collection/ergebnisse/{facet}' exists for material/person facets but not per-object records).",
+  "estimated_inscope_count": 2214,
+  "script_path": "/Users/kietzsche/armin-web-main/scripts/scrape-dam-frankfurt.mjs",
+  "probe_ok": true,
+  "probe_summary": "node scripts/scrape-dam-frankfurt.mjs --probe → enumerated 3,591 imaged objects; scanned 61; kept 15 in-scope (drawing 12, photograph 3); 23 out-of-scope (Modell); 0 image errors. Wrote public/data/dam-frankfurt-collection-probe.json. 4-required fields 15/15 (title/artist/year/category); 6-standard 13/15 (medium+dimensions missing only on photographs — genuine source limitation). R2 images verified live and high-res (e.g. 1056x2048, 2048x618 webp). Visual check of a 'Trassenstadt' drawing (Günter Bock, ink on tracing paper) = genuine in-scope architectural drawing, full sheet, no watermark.",
+  "est_full_count": 2214,
+  "est_runtime_min": 165,
+  "exhibitions_entry": {
+    "name": "Deutsches Architekturmuseum (DAM)",
+    "name_ko": "독일 건축박물관 (DAM)",
+    "city": "Frankfurt",
+    "country": "Germany",
+    "latitude": 50.1033,
+    "longitude": 8.6722,
+    "description": "Germany's national museum of architecture, founded in 1979 on Frankfurt's Museumsufer. Its digital collection makes thousands of architectural drawings, plans, tracings, renderings and photographs freely accessible under CC BY-NC-SA — spanning visionary postwar designs (Günter Bock, Archigram, O. M. Ungers, Gottfried Böhm) to contemporary practices, served at high resolution via the museum's own IIIF viewer.",
+    "description_ko": "1979년 설립된 독일의 국립 건축박물관으로, 프랑크푸르트 마인강 남안 박물관 거리(무제움스우퍼)에 자리한다. 디지털 컬렉션을 통해 수천 점의 건축 도면·평면도·트레이싱·렌더링·사진을 CC BY-NC-SA 라이선스로 공개하며, 전후 비전 건축(귄터 보크, 아키그램, O. M. 웅거스, 고트프리트 뵘)부터 현대 건축까지 아우른다. 자체 IIIF 뷰어로 고해상도 이미지를 제공한다."
+  },
+  "notes": "Scope = per-object Objekttyp + Maße. KEEP (flat): Zeichnung, Pause, Skizze, Entwurf, Plan/Grundriss/Aufriss/Schnitt, Perspektive/Ansicht, Rendering, Druck, Kopie, Collage, Foto/Fotografie. DROP (3D): Modell/Architekturmodell/Entwurfsmodell, Skulptur/Plastik/Relief/Objekt, or any 3-axis 'a x b x c' Maße. Drawings & photographs are never colour-gated (B&W architectural drawings retained). IDs prefixed 'dam-frankfurt-{uuid}'; R2 key artworks/dam-frankfurt-collection/dam-frankfurt-{uuid}-{hash8}-imageUrl.webp. Image = IIIF /full/full (falls back to /full/2048, then /full/1400,), then autocropToWebp (2048/q85, trim OFF). --full is resumable via scripts/.state/dam-frankfurt-progress.json (per-UUID done map) + dam-frankfurt-failed.ndjson. NOT run per instructions. Est. full ~2,214 in-scope of 3,591 imaged; output pretty-printed (~5-8MB, under 23MB, compact branch not triggered). THROTTLE is the main operational risk: keep sequential 1.1s pacing; bursts trip a temporary IP cooldown (recovers in ~30-90s). validate-metadata.mjs only accepts '{slug}-collection.json' filenames, so the probe file can't be validated by it directly; manual checks confirmed 0 BLOCKER-class issues (no placeholder artists, no label contamination, clean categories)."
+}

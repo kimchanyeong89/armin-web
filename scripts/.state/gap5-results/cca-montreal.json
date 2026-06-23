@@ -1,0 +1,26 @@
+{
+  "slug": "cca-montreal",
+  "genre": "건축",
+  "viable": true,
+  "reason": "CCA's own Elasticsearch-backed search XHR (GET /en/search?query=&filters=<json>&img_filter=1&page=N with header X-Requested-With: XMLHttpRequest) returns clean JSON (mislabeled text/html) with full TMS metadata in _source. img_filter=1 restricts to digitized records (images[] populated). In-scope FLAT forms (digitized): drawings 17,823 + photographs 28,509 + works of art 1,263 + graphic materials 209 + maps 92 = 47,896. Probe: 15/15 eligible drawings end-to-end with live R2 images at 1545x2048 (masters up to 1920x3200), real works by James Stirling, Aldo Rossi, Léon Krier. validate-metadata REAL fill: title/artist/year/category 100%, dim 100%, medium 93%. Images pre-signed via /img-collection thumbor (xlarge 1920), no watermark, far above 600px. robots.txt fully open.",
+  "source_type": "api",
+  "easy_source_found": "No public opendata/IIIF/GitHub dump for the collection. cca.qc.ca/en/collection redirects (cookie loop). BUT the museum's own search page (/en/search) is backed by an Elasticsearch JSON XHR on its own infra: add header X-Requested-With: XMLHttpRequest and it returns {search_obj.results.hits.hits[]._source} with TMS fields + pre-signed /img-collection image URLs (small..xlarge). Form facet via filters={\"forms_collection_library_bookstore\":[\"drawings\"]}; img_filter=1 (top-level GET param) = digitized-only. This museum-own API is what the scraper uses.",
+  "estimated_inscope_count": 47896,
+  "script_path": "/Users/kietzsche/armin-web-main/scripts/scrape-cca-montreal.mjs",
+  "probe_ok": true,
+  "probe_summary": "node scripts/scrape-cca-montreal.mjs --probe → PASS. 15/15 in-scope drawings collected end-to-end with live R2 webp images (1545x2048, masters to 1920x3200). validate-metadata: ✓ OK n=15, REAL fill title/artist/year/category 100%, dim 100%, medium 93%. Sample: James Stirling Florey Building axonometric (1970, ink+graphite+coloured crayon on tracing paper, AP140.S2.SS1.D31.P5.2); Aldo Rossi San Cataldo cemetery site plan (1972). Probe JSON: public/data/cca-montreal-collection-probe.json.",
+  "est_full_count": 37000,
+  "est_runtime_min": 75,
+  "exhibitions_entry": {
+    "name": "Canadian Centre for Architecture",
+    "name_ko": "캐나다 건축센터",
+    "city": "Montreal",
+    "country": "Canada",
+    "latitude": 45.4889,
+    "longitude": -73.5806,
+    "description": "A world-leading museum and research centre for architecture in Montréal, founded in 1979 by Phyllis Lambert. Its collection spans architectural drawings, plans, sketches, prints, and photographs documenting the built environment from the Renaissance to the present, with major fonds from architects such as James Stirling, Aldo Rossi, Cedric Price, Peter Eisenman, and Gordon Matta-Clark.",
+    "description_ko": "1979년 필리스 램버트가 몬트리올에 세운, 건축을 공공의 관심사로 다루는 세계적 건축 미술관이자 연구소다. 르네상스부터 현대까지 건축 드로잉·도면·스케치·판화·사진을 아우르며, 제임스 스털링·알도 로시·세드릭 프라이스·피터 아이젠만·고든 마타클락 등의 주요 아카이브를 소장하고 있다.",
+    "name_ko_note": ""
+  },
+  "notes": "Endpoint quirk: the XHR serves valid JSON but mislabels Content-Type as text/html — the scraper parses the body and checks for search_obj (does NOT trust the header). Pagination: 40/page when img_filter=1; paging.next_page provides the next URL. sourceUrl pattern = /en/search/details/collection/object/{ObjectID} (verified 200). Forms IN scope: drawings→drawing, photographs→photograph, graphic materials→print, maps→drawing, works of art→painting. Forms SKIPPED (3D/AV/library): archives, artefacts, models, books, audio, video, textual records, born digital. Whole-index (incl. non-digitized) form counts are larger: drawings 52,688 / photographs 49,451 — but most are archival File groupings without images; we use img_filter=1 to get only the ~48k digitized single pieces. >25k in-scope → --full prioritizes named+dated (min-4 eligible, ~85% of hits) and CAPS the JSON <23MB COMPACT; est ~37k collected before the size cap binds. Drawings/photographs are NEVER colour-gated (no grayscale skip), per guide §1. R2 key: artworks/cca-montreal-collection/{ObjectID}-{hash8}-imageUrl.webp. DID NOT run --full."
+}

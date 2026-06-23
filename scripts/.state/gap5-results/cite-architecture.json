@@ -1,0 +1,25 @@
+{
+  "slug": "cite-architecture",
+  "genre": "건축",
+  "viable": true,
+  "reason": "Museum's OWN Drupal collection DB at citedelarchitecture.fr/fr/collections (3,220 records total). Server-rendered, crawlable: in-scope FLAT works enumerated via denomination facets (/fr/collections/denomination/{id}?page=N, 20/page, exact 'N résultats' counts). FLAT in-scope ≈ Dessin 1,094 + Photographie 185 + Croquis 77 + Fichiers photographiques 74 + Dessin d'architecture (tirage num.) 72 + Dessin d'architecture 17 + Cartes/plans 11 + Carnet de croquis 11 + Plan 8 + Portfolio 1 + Estampes 1; de-duplicated union ≈ 1,300 unique works. 3D casts (Moulage 780) & models (Maquette 317) are deliberately excluded by enumerating only flat denominations. Detail pages (/fr/oeuvre/{slug}) expose all metadata as Drupal field--name-* blocks (title via og:title, field-auteurs, field-denominations, field-techniques+field-matieres, datation, dimensions, field-num-inventaire). Largest image is the lightbox derivative 'desktop_oeuvre_collection_full' (≥1280px for BOTH drawings and photographs; verified drawings 1280×1932, photos 1280×1910), no watermark — confirmed by viewing an R2-uploaded webp. Probe collected 15/15 with 0 errors; validate-metadata REAL fill 100% on title/artist/year/category/medium/dimensions.",
+  "source_type": "html",
+  "easy_source_found": "None. No /opendata, /api, IIIF, or data.* on the domain. No Navigart/Videomuseum subdomain (citedelarchitecture.navigart.fr → DNS 000). Two non-image-collection portals exist but are out of scope as artwork sources: ArchiWebture (archiwebture.citedelarchitecture.fr = archival finding-aids, no item images) and the documentary portal (portaildocumentaire.citedelarchitecture.fr = library catalogue). The artwork collection is a Drupal Search-API view on the museum's own site, scraped via HTML — no JSON API behind it.",
+  "estimated_inscope_count": 1300,
+  "script_path": "/Users/kietzsche/armin-web-main/scripts/scrape-cite-architecture.mjs",
+  "probe_ok": true,
+  "probe_summary": "node scripts/scrape-cite-architecture.mjs --probe → collected 15/15 works (all drawings), 0 image errors, 3 min-4 drops (genuinely missing author+year, e.g. anonymous 'relevé d'architecture'). Images 1280px+ from museum CDN, autocropped→webp→R2 (artworks/cite-architecture-collection/{id}-{hash8}-imageUrl.webp). Photographs separately verified end-to-end (denomination=Photographie → category photograph, 1280×~1900, author+year 1977). validate-metadata cite-architecture → OK, REAL fill: title/artist/year/category/medium/dim all 100%. Probe JSON: public/data/cite-architecture-collection-probe.json.",
+  "est_full_count": 1100,
+  "est_runtime_min": 110,
+  "exhibitions_entry": {
+    "name": "Cité de l'architecture et du patrimoine",
+    "name_ko": "건축·문화유산 박물관 (시테 드 라르시텍튀르)",
+    "city": "Paris",
+    "country": "France",
+    "latitude": 48.8625,
+    "longitude": 2.2875,
+    "description": "France's national museum of architecture and heritage, housed in the Palais de Chaillot facing the Eiffel Tower. Its collection spans plaster casts of medieval and Renaissance monuments, scale models, and an extensive holding of architectural drawings and photographs documenting French built heritage from the 19th to 21st centuries.",
+    "description_ko": "에펠탑 맞은편 샤요궁에 자리한 프랑스 국립 건축·문화유산 박물관이다. 중세·르네상스 기념물의 석고 주형과 건축 모형은 물론, 19세기부터 21세기까지 프랑스 건축 유산을 기록한 방대한 건축 도면과 사진을 소장하고 있다."
+  },
+  "notes": "Enumerator = denomination facets (museum's own Search-API view); de-dup by /fr/oeuvre/{slug}, then by inventory-derived id. Drawings & photographs are NEVER colour-gated (guide §1) — many architectural drawings are pencil/graphite on paper and must be kept. SCOPE: only flat denominations are crawled, so Moulage/Maquette/Relief/architectural-element 3D casts never enter. DATE CAVEAT (architecture-specific): a record's `datation` block frequently describes the DEPICTED MONUMENT's period (e.g. 'Vers 1140' for a 12th-c. building) rather than the drawing's creation date. The scraper therefore derives `year` from the AUTHOR's active period first (field-auteurs / field-oeuvre-ref-auteurs year tokens) — correct order of magnitude for a 19th-c. workshop drawing — and only falls back to datation/title; the raw datation string is preserved in `date` and metadata.datation, so no source value is lost. A large share of the corpus is the Geoffroy-Dechaume workshop (Notre-Dame / Sainte-Chapelle restoration studies, ~1840s-60s). IMAGE: must use the 'desktop_oeuvre_collection_full' lightbox derivative (data-target on detail page); the un-styled original is sometimes only ~315px for photographs. Run before registering: prefix-collection-ids.mjs --apply (ids already prefixed cite-architecture- by the scraper) + validate-metadata. --full is resumable via scripts/.state/cite-architecture-progress.json + cite-architecture-collected.ndjson. Expect ~15% min-4 droppage (anonymous, undated relevés). DO NOT run --full per task; only --probe was run."
+}

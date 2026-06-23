@@ -1,0 +1,25 @@
+{
+  "slug": "austrian-filmmuseum",
+  "genre": "영화",
+  "viable": false,
+  "reason": "Museum runs a JART CMS / dbcon2 catalogue on its own infra (filmmuseum.at), but no in-scope FLAT-art image source meets the >=600px bar. Collection is overwhelmingly moving-image (film, NOT collectable). The only searchable DBs that actually serve flat-art IMAGES are: (1) Amateur film posters — only 161 objects, images hard-capped at 500px width (uniform server-side resize; ?width=2000 still returns 500px short edge; portrait long-edge ~700px but these are 35-90KB web thumbnails). (2) Mats collection (press advertising mats) — 841 objects, previews fixed at 360px height; no full-res variant (.tif and _big.jpg both 404). The Stills collection and the main Poster collection have NO online image database (descriptive pages only + a generic library catalogue link). The Paper collection (27,442 objects) is a TEXT-ONLY catalogue (zero img-db thumbnails) of promotional papers/screenplays. No IIIF, no /opendata, no /api, no high-res image service. All available flat-art imagery is below the >=600px short-edge threshold (max 500px) and the only above-threshold-on-long-edge set is a tiny 161-item thumbnail gallery.",
+  "source_type": "none",
+  "easy_source_found": "none — checked /opendata (404), /api (404), data.filmmuseum.at (serves CMS HTML, not data), no IIIF (filmmuseum.at/iiif 404, iiif.filmmuseum.at no host), no GitHub dump. Site is JART CMS (jart/prj3/filmmuseum/main.jart) with a dbcon2 SQL backend; collection search apps render server-side HTML with fixed-size thumbnails, no JSON API exposed. Europeana lists the museum but is a forbidden aggregator.",
+  "estimated_inscope_count": 0,
+  "script_path": "",
+  "probe_ok": false,
+  "probe_summary": "Found 4 collection search apps on museum infra: amateur film posters (161 objs, 500px-wide thumbs), mats/press-mats (841 objs, 360px-tall thumbs), paper collection (27,442 objs, TEXT-ONLY no images), Schlemmer frames (showcase page, not a DB). Verified image resolutions with sips: amateur posters uniformly 500px short edge (500x686..500x1065), mats uniformly 360px tall (190..305 x 360). ?width=2000 param ignored (returns 500px). No higher-res variants (404). No IIIF/API/opendata. Stills + commercial poster collections have no online image catalogue.",
+  "est_full_count": 0,
+  "est_runtime_min": 0,
+  "exhibitions_entry": {
+    "name": "Austrian Film Museum",
+    "name_ko": "오스트리아 영화 박물관",
+    "city": "Vienna",
+    "country": "Austria",
+    "latitude": 48.2049,
+    "longitude": 16.3683,
+    "description": "Founded in 1964 and housed in Vienna's Albertina building, the Austrian Film Museum (Osterreichisches Filmmuseum) is a cinematheque dedicated to collecting, preserving, researching and screening film as art. Its holdings exceed 500,000 objects, including ~31,000 films plus posters, stills, screenplays and documents.",
+    "description_ko": "1964년 설립되어 빈 알베르티나 건물에 자리한 오스트리아 영화 박물관은 영화를 예술로서 수집·보존·연구·상영하는 시네마테크다. 약 3만 1천 편의 필름을 비롯해 포스터, 스틸, 시나리오, 자료 등 50만 점이 넘는 소장품을 갖추고 있다."
+  },
+  "notes": "RETRY result: still viable:false. Prior session-limit was not masking a usable source — the resolution ceiling is the blocker, not access. If the size bar were relaxed to long-edge>=600, the 161 amateur posters (portrait ~700px long edge) would qualify as a tiny niche set, but short edge is fixed at 500px and count is trivial; not worth a collection. The rich 27,442-record paper catalogue has metadata but no images. Revisit only if the museum publishes a high-res image API or IIIF (none today). Coordinates point to the Albertina building (Albertinaplatz 1, 1010 Wien)."
+}

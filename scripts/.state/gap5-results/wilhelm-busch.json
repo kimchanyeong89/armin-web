@@ -1,0 +1,25 @@
+{
+  "slug": "wilhelm-busch",
+  "genre": "만화",
+  "viable": false,
+  "reason": "Museum's own collection DB (sammlungonline.karikatur-museum.de, zetcom eMuseumPlus — URL pattern /eMP/eMuseumPlus?service=ExternalInterface&module=collection&objectId=N&viewType=detailView) is persistently DOWN: HTTP 503 'No server is available to handle this request' (HAProxy/LBaaS = zero healthy backends) on EVERY path (root, /eMP/eMuseumPlus, exact indexed detail URLs incl. objectId=3526/9646/1256, bogus paths), both http+https, museum-research UA AND browser UA with referer/cookies/Accept-Language, across 8+ requests + 5 spaced retries + 2 independent egress IPs (curl + WebFetch). Not a WAF/rate block (those return 403/429/challenge) — the eMuseumPlus app server itself is unavailable. DNS: sammlungonline -> emp-web-83.zetcom.ch -> zem-emp-lbaas-01.os.stoney-cloud.com (zetcom hosted SaaS). Matches task hint 'RETRY (session-limit before)' — prior session hit the same wall; server still down. Could not verify any image >=600px, so cannot confirm a downloadable per-object source. No alternative on museum's own infra: no /opendata, no /api (404), no IIIF, no national OA dump. Additionally the collection is dominated by in-copyright 20th-c caricature/comic art (Ronald Searle d.2011, Loriot, Sempe, etc.), so even with server up, public high-res download is likely rights-restricted. Re-probe later when sammlungonline returns 200.",
+  "source_type": "none",
+  "easy_source_found": "No open-data/API/IIIF/national-OA. Only machine-readable source is the museum's own zetcom eMuseumPlus instance at https://sammlungonline.karikatur-museum.de/eMP/eMuseumPlus (per-object detailView, ExternalInterface module=collection) — currently returning persistent HTTP 503 (zero healthy backends). Main site karikatur-museum.de is a static CMS; /opendata and /api are 404.",
+  "estimated_inscope_count": 0,
+  "script_path": null,
+  "probe_ok": false,
+  "probe_summary": "STAGE0: no opendata/api/IIIF (404). STAGE1: located museum's own collection DB on zetcom eMuseumPlus (sammlungonline.karikatur-museum.de/eMP/eMuseumPlus, objectId detailView pattern) — correct museum-owned per-object source, but it returns persistent HTTP 503 'No server is available' (HAProxy zero-backend) on all paths/UAs/IPs over 8+ attempts. Cannot reach catalogue or verify any image dimension. Server-down, not blocked-by-us. Collection also largely in-copyright 20th-c caricature (Searle/Loriot). viable:false; re-probe when host recovers (200).",
+  "est_full_count": 0,
+  "est_runtime_min": 0,
+  "exhibitions_entry": {
+    "name": "Wilhelm Busch – German Museum of Caricature and Drawing",
+    "name_ko": "빌헬름 부쉬 독일 풍자화·드로잉 미술관",
+    "city": "Hannover",
+    "country": "Germany",
+    "latitude": 52.4022,
+    "longitude": 9.7058,
+    "description": "Germany's national museum of caricature and the art of drawing, set in the Georgengarten landscape park in Hannover. Its holdings exceed 50,000 works and trace the history of caricature from around 1600 to the present, anchored by the complete oeuvre of Wilhelm Busch and the Ronald Searle Archive. The museum runs a zetcom eMuseumPlus online collection (Searle archive first), but the database server is currently unavailable.",
+    "description_ko": "하노버의 영국식 풍경 정원 게오르겐가르텐 안에 자리한 독일의 대표적인 풍자화·드로잉 전문 미술관이다. 소장품은 5만여 점에 이르며 1600년경부터 오늘날까지 풍자화의 역사를 아우른다. 빌헬름 부쉬의 전작과 영국 작가 로널드 서얼의 아카이브가 핵심을 이룬다. 미술관은 zetcom eMuseumPlus 기반의 온라인 컬렉션(서얼 아카이브부터 순차 공개)을 운영하지만, 현재 데이터베이스 서버가 접속 불가 상태다."
+  },
+  "notes": "Re-probe trigger: GET https://sammlungonline.karikatur-museum.de/eMP/eMuseumPlus?service=ExternalInterface&lang=de should return 200 (currently 503). When up, the scrape path is the zetcom eMuseumPlus ExternalInterface: detailView per objectId (objectId enumerable; seen IDs 1256, 3526, 9646), image delivery typically via eMuseumPlus webImageViewer/deliverFile derivate endpoints — verify >=600px non-watermarked before scripting. CAVEAT: heavy in-copyright 20th-c content (Ronald Searle d.2011, Loriot, Sempe, Marie Marcks, F.K. Waechter; comic artists McCay). Public-domain-safe in-scope subset would be pre-1930 caricature (Hogarth, 19th-c satire, Wilhelm Busch's own pen drawings d.1908) — may be a small fraction of the 50k. If server recovers but high-res download is rights-gated/watermarked, remains viable:false. lat/lng = Georgenpalais, Georgengarten, Hannover."
+}
