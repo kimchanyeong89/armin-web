@@ -1,14 +1,6 @@
-import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import './index.css'
 import App from './App.tsx'
-
-const isMobileAppContainer = (() => {
-  if (typeof window === 'undefined') return false;
-  const query = new URLSearchParams(window.location.search);
-  if (query.get('mobileApp') === '1') return true;
-  return document.documentElement.getAttribute('data-mobile-app') === '1';
-})();
 
 if (typeof window !== 'undefined') {
   const query = new URLSearchParams(window.location.search);
@@ -18,13 +10,13 @@ if (typeof window !== 'undefined') {
   }
 }
 
-createRoot(document.getElementById('root')!).render(
-  isMobileAppContainer ? <App /> : (
-    <StrictMode>
-      <App />
-    </StrictMode>
-  ),
-)
+// NOTE: React.StrictMode intentionally removed. Its dev-only double-mount rapidly
+// subscribes/unsubscribes Firestore onSnapshot listeners, which trips the firebase 11.10.0
+// SDK bug "INTERNAL ASSERTION FAILED (ID: b815 / ca9)" — an uncatchable watch-stream
+// assertion that blanks the entire app in dev. Production builds never double-invoke, so
+// this only ever hurt local dev. Re-add StrictMode only after upgrading firebase past the
+// b815/ca9 fix and confirming the preview (vite dev) stays crash-free.
+createRoot(document.getElementById('root')!).render(<App />)
 
 // Unregister service workers as they are causing load failures
 if ('serviceWorker' in navigator) {
