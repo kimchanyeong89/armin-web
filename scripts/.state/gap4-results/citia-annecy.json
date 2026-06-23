@@ -1,0 +1,26 @@
+{
+  "slug": "citia-annecy",
+  "genre": "애니메이션",
+  "viable": false,
+  "reason": "No machine-readable collection source on CITIA/Annecy's own infrastructure. The animation art collection (~8,000-10,000 works, 'Musée de France' label) is OWNED BY THE CITY OF ANNECY (formerly Musée du film d'animation, closed 2024-08-30; now Cité internationale du cinéma d'animation, opened 2026-06-19, managed by CITIA). Probed every own-infra candidate: (1) citia.org = festival/org TYPO3 site, no catalogue, /opendata + /api both return HTTP 500. (2) musees.annecy.fr = TYPO3 Headless + Nuxt SPA CMS — content pages only, NO Navigart, NO collection-search DB, NO own image CDN; its /api endpoint serves CMS page JSON (page id 903, generator 'TYPO3 CMS x T3Headless'), not artwork records. (3) citeanimationannecy.com = visitor-info site for the new building, no online collection (/collections 404). (4) annecy.org / annecyfestival.com = festival site, HTTP 403. The ONLY per-object catalogue path is POP/Joconde (pop.culture.gouv.fr/notice/museo/M1052), which is the French NATIONAL aggregator run by the Ministry of Culture — explicitly forbidden (aggregator, not museum's own infra). No own-infra source with openly downloadable >=600px in-scope flat-art images exists.",
+  "source_type": "none",
+  "easy_source_found": "No. No {domain}/opendata or /api (citia.org/opendata + /api = HTTP 500), no data.annecy.fr (DNS fail), no GitHub dump, no Navigart instance (annecy.navigart.fr DNS fail, navigart.fr/annecy 404), no eMuseum/Solr/IIIF/Drupal-jsonapi. musees.annecy.fr is TYPO3 Headless (Nuxt frontend) with a CMS content API only, no collection/artwork data source. The sole catalogue is the national POP/Joconde aggregator (museo notice M1052) — forbidden as an aggregator.",
+  "estimated_inscope_count": 0,
+  "script_path": null,
+  "probe_ok": false,
+  "probe_summary": "Stage-1 probe failed to find any own-infra machine-readable source. citia.org (TYPO3) HTTP 200 but /opendata + /api = 500, no catalogue. musees.annecy.fr (collection owner) is a TYPO3 Headless/Nuxt SPA: all routes 200 via SPA fallback, /api returns CMS page JSON not artworks, no Navigart/search/collection DB, no own image CDN. citeanimationannecy.com (new Cité, opened 2026-06-19) is a visitor-info site with no online collection (/collections 404). annecy.org festival site = 403. Only per-object catalogue = POP/Joconde national aggregator (M1052), forbidden. No >=600px in-scope flat-art image verified because no per-object source exists. Verdict: viable:false.",
+  "est_full_count": 0,
+  "est_runtime_min": 0,
+  "exhibitions_entry": {
+    "name": "Cité internationale du cinéma d'animation (CITIA)",
+    "name_ko": "안시 국제 애니메이션 시네마 시티 (CITIA)",
+    "city": "Annecy",
+    "country": "France",
+    "latitude": 45.8992,
+    "longitude": 6.1294,
+    "description": "Run by CITIA, the organisation behind the Annecy International Animation Film Festival, the Cité internationale du cinéma d'animation opened in June 2026 at the historic Haras site. It houses the City of Annecy's 'Musée de France'-labelled animation art collection of roughly 8,000-10,000 works (production drawings, cels, concept art, posters, puppets, optical toys and pre-cinema apparatus), succeeding the Musée du film d'animation that closed in 2024. The collection is one of the most significant animation-heritage holdings in Europe.",
+    "description_ko": "안시 국제 애니메이션 영화제를 운영하는 단체 CITIA가 만든 '안시 국제 애니메이션 시네마 시티'는 2026년 6월 옛 국립 종마장(Haras) 부지에 문을 열었다. 2024년 폐관한 애니메이션 영화 박물관을 이어받아, '프랑스 박물관(Musée de France)' 인증을 받은 안시시 소유의 애니메이션 미술 컬렉션 약 8,000~10,000점을 소장한다. 제작용 드로잉, 셀, 콘셉트 아트, 포스터부터 인형, 광학 완구, 영화 이전 시대의 장치까지 아우르며, 유럽에서 손꼽히는 애니메이션 유산 컬렉션으로 평가받는다.",
+    "note": "exhibitions_entry is reference metadata only; viable:false so this museum is NOT being registered/scraped."
+  },
+  "notes": "Predicted festival-org/city-museum outcome confirmed. The collection is institutionally interesting (~8-10k works, Musée de France label) but inaccessible on the museum's own infra. (1) Re-probe IF the new Cité (citeanimationannecy.com) launches an online collection portal with downloadable images — it just opened 2026-06-19, so a digital catalogue may follow. (2) Much of the physical collection is 3D/out-of-scope (puppets, optical toys, magic lanterns, equipment); only the flat subset (drawings, cels, concept/character sheets, posters) would be collectable even if a source appeared. (3) Animation production art for festival/studio films is also frequently studio-copyright-locked, an additional barrier. (4) Joconde/POP records exist (museo M1052) but are forbidden as a national aggregator and would need a separate policy decision to use. Probed sites: citia.org, musees.annecy.fr (TYPO3 Headless), citeanimationannecy.com, annecy.org/annecyfestival.com, data.annecy.fr (none viable)."
+}

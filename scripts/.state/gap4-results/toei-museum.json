@@ -1,0 +1,26 @@
+{
+  "slug": "toei-museum",
+  "genre": "애니메이션",
+  "viable": false,
+  "reason": "Toei Animation Museum (東映アニメーションミュージアム, opened 2018) is a static corporate brochure museum (企業博物館) with NO collection infrastructure. Stage 0 easy-source checks all 404: no /api, /opendata, data.{domain}, /wp-json, /collection, robots.txt, or sitemap.xml; site is hand-coded static HTML under /assets/ with no CMS (no Drupal/eMuseum/IIIF/Solr). Navigation is purely visitor-facing (トップ/ごあいさつ/ご利用案内/展示/ショップ/アクセス/開館カレンダー) with no デジタルアーカイブ/所蔵品/作品 catalogue; /collection and /en/collection both 404. The exhibition page (/exhibition/) shows only ~25 web-optimized promotional photos of the gallery interior (display cases, photo spots, Pero fountain) — NOT per-object production-art records. Verified: the largest exhibition images (img_materials_1.jpg, img_animationworks.jpg) are 750x560 px room photos, below the 600px-per-object threshold and not isolated cels/backgrounds/setting sheets. The materials-display gallery (材料展示) explicitly PROHIBITS photography. All of Toei's production art (Dragon Ball, One Piece, Sailor Moon, Pretty Cure, etc.) is studio-copyright-locked. No machine-readable, openly downloadable, per-object catalogue of in-scope flat animation art (cels セル画 / backgrounds / 設定資料 / storyboards) exists on the museum's own infrastructure.",
+  "source_type": "none",
+  "easy_source_found": "none — /api, /opendata, data.{domain}, /wp-json, /collection, robots.txt, sitemap.xml all 404; no GitHub dump; no Navigart/national-OA/eMuseum/IIIF/Drupal-jsonapi. Site is static hand-coded HTML, no CMS, no API of any kind. (Aggregators like Wikimedia/Wikidata are out of scope per task.)",
+  "estimated_inscope_count": 0,
+  "script_path": null,
+  "probe_ok": false,
+  "probe_summary": "Site live (HTTP 200) but is a corporate visitor-info brochure with zero collection/archive/database. All easy-source endpoints 404. Only images are 750x560 promotional room photos (verified via curl + sips); photography banned in the materials gallery; all studio production art is copyright-locked. No downloadable >=600px per-object catalogue of cels/backgrounds/setting sheets/storyboards. Decisive viable:false.",
+  "est_full_count": 0,
+  "est_runtime_min": 0,
+  "exhibitions_entry": {
+    "name": "Toei Animation Museum",
+    "name_ko": "도에이 애니메이션 뮤지엄",
+    "city": "Tokyo",
+    "country": "Japan",
+    "latitude": 35.75181,
+    "longitude": 139.59464,
+    "description": "Corporate museum opened in 2018 by Toei Animation, Japan's first full-scale animation studio (founded 1956), at its Oizumi base in Nerima, Tokyo — the cradle of Japanese anime. It traces the studio's seven decades of work, from early theatrical features to franchises such as Dragon Ball, Sailor Moon, One Piece, and Pretty Cure, with displays of production materials, photo spots, and the Pero mascot fountain. The materials gallery prohibits photography and the studio retains copyright on all its production art, so there is no openly downloadable per-object collection.",
+    "description_ko": "일본 최초의 본격 애니메이션 제작사 도에이 애니메이션(1956년 설립)이 2018년 도쿄 네리마구 오이즈미 본사 부지에 문을 연 기업 박물관이다. 오이즈미는 일본 애니메이션의 발상지로 불리는 곳으로, 박물관은 초창기 극장용 장편부터 드래곤볼, 세일러문, 원피스, 프리큐어 같은 대표작에 이르기까지 약 70년에 걸친 스튜디오의 작업을 자료 전시, 포토 스폿, 마스코트 페로 분수 등으로 보여준다. 자료 전시실은 촬영이 금지되어 있고 모든 제작 원화의 저작권을 스튜디오가 보유하고 있어, 외부에서 내려받을 수 있는 개별 작품 단위 컬렉션은 제공되지 않는다.",
+    "name_ko_note": "Nerima ward, not central Tokyo; coords confirmed via mapcarta/japantravel"
+  },
+  "notes": "Toei Animation Museum sits at the studio's Oizumi-gakuen production complex (2-10-5 Higashi-Oizumi, Nerima-ku, Tokyo 178-8567). It is a company history museum, not a collecting art institution: it exhibits production materials in situ but publishes no catalogue, archive, or digital asset library, and the materials gallery bans photography. Studio copyright (DB/One Piece/Sailor Moon/Pretty Cure) makes any cel/setting-sheet corpus impossible to source openly. Matches the pre-probe expectation (JP studio museum, no open collection). Exhibitions_entry is filled for optional directory inclusion as a venue, but viable:false — nothing to scrape. No scraper written (per task: STOP at Stage 1 when blocked/no catalogue/copyright-locked). Verification commands: curl -A armin-museum-research/1.0 of /collection, /en/collection, /api, /opendata, /wp-json, robots.txt, sitemap.xml -> all 404; sips on img_materials_1.jpg/img_animationworks.jpg -> 750x560."
+}

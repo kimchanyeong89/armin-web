@@ -1,0 +1,25 @@
+{
+  "slug": "nfb-canada",
+  "genre": "애니메이션",
+  "viable": false,
+  "reason": "NFB's online presence is moving-image-only with no flat-art catalogue on its own infra. (1) www.nfb.ca/animation/ and collection.nfb.ca are catalogues of ~13,000 STREAMING FILMS (moving image, not collectable per scope); collection.nfb.ca is a client-side Webpack SPA with no public API/IIIF (all /api/* and /graphql return 404). Film pages expose only a 16:9 promo 'keyart' video poster on cloudfront (e.g. 146716_neighbours_en_keyart_16x9.jpg), not flat production art. (2) archives.nfb.ca/photos/ describes ~500k photographs but offers NO online searchable image database — purchases are fulfilled manually via archives@nfb.ca (no self-serve, no API, no downloadable images). (3) Catalogue open-data is MARC21/KBART bibliographic film records only (no images), gated behind an account + manual activation. (4) The genuine animation production art (Norman McLaren etchings, Ryan Larkin 'Walking' watercolours, Ishu Patel 'Paradise' drawings) is PHYSICAL archival material being LENT to other museums (Academy Museum LA 2024; Annecy Musée du cinéma d'animation 2026) — it is not published in any open online catalogue with downloadable >=600px images on NFB's own infrastructure. No in-scope flat animation production art source exists.",
+  "source_type": "none",
+  "easy_source_found": "No usable easy source. NFB.ca offers MARC21/KBART catalogue downloads (bibliographic FILM records, no images; account + manual activation required). open.canada.ca/nfb-onf has only a 'video content published online' dataset (films, and an aggregator — out of scope). No /opendata, no data.nfb.ca (DNS fails), no /api, no wp-json, no IIIF/Solr/eMuseum/Drupal-jsonapi anywhere on nfb.ca / collection.nfb.ca / archives.nfb.ca.",
+  "estimated_inscope_count": 0,
+  "script_path": null,
+  "probe_ok": false,
+  "probe_summary": "Probed nfb.ca (animation page = streaming films), collection.nfb.ca (Webpack SPA, film/video only, /api 404), archives.nfb.ca/photos (no online DB, manual email fulfilment), and open-data routes (MARC/KBART only). No machine-readable source for flat animation production art with downloadable images on NFB own infra. Animation art is physical/loaned, not digitized openly.",
+  "est_full_count": 0,
+  "est_runtime_min": 0,
+  "exhibitions_entry": {
+    "name": "National Film Board of Canada",
+    "name_ko": "캐나다 국립영화위원회",
+    "city": "Montreal",
+    "country": "Canada",
+    "latitude": 45.5088,
+    "longitude": -73.5616,
+    "description": "Canada's public film producer and distributor, founded in 1939, renowned worldwide for its auteur animation legacy (Norman McLaren, Ryan Larkin, Ishu Patel, Caroline Leaf). Its collection of over 13,000 titles is offered online as streaming films, and its archival animation production art (cels, drawings, watercolours, experiments on paper) is preserved physically and exhibited through loans to institutions such as the Academy Museum of Motion Pictures and Annecy's Musée du cinéma d'animation.",
+    "description_ko": "1939년 설립된 캐나다의 공공 영화 제작·배급 기관으로, 노먼 매클래런·라이언 라킨·이슈 파텔·캐럴라인 리프로 이어지는 작가주의 애니메이션 유산으로 세계적 명성을 얻었다. 1만 3천 편이 넘는 소장 작품은 온라인 스트리밍 영상으로 공개되며, 셀화·드로잉·수채화·종이 실험작 같은 애니메이션 원화 자료는 실물로 보존되어 아카데미 영화박물관, 안시 애니메이션 영화박물관 등에 대여 전시 형태로 선보인다."
+  },
+  "notes": "Famous animation legacy but online = streaming films only; flat production art is physical/loaned, not in an open downloadable catalogue. Re-probe trigger: if NFB ever launches a public collections image database (IIIF/eMuseum) for its production-art archive, or if a partner museum (Academy Museum LA, Annecy Musée du cinéma d'animation) publishes the loaned NFB art under an open license on its own infra. Bibliographic MARC/KBART is the only structured open data and carries no images."
+}

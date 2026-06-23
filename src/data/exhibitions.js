@@ -7326,5 +7326,77 @@ export const exhibitions = [
     pastExhibitions: [],
     exhibitions: []
   },
+  {
+    id: "letterform-archive",
+    name_ko: "레터폼 아카이브",
+    name: "Letterform Archive",
+    city: "San Francisco",
+    country: "USA",
+    latitude: 37.7601,
+    longitude: -122.3883,
+    description_ko: "샌프란시스코 도그패치에 자리한 비영리 레터링·타이포그래피·그래픽디자인 전문 아카이브이자 도서관이다. 2,000년에 걸친 활자 견본집, 포스터, 레터링, 캘리그래피, 디자인 인쇄물, 희귀본 등 10만 점이 넘는 소장품을 모았으며, 그 일부를 누구나 둘러볼 수 있는 온라인 아카이브로 고해상도 이미지와 함께 공개하고 있다.",
+    description: "A nonprofit center and library in San Francisco's Dogpatch devoted to lettering, typography, and graphic design. Its collection of 100,000+ items — type specimens, posters, lettering, calligraphy, design ephemera, and rare books spanning 2,000 years — is partly digitized in the Online Archive, an openly browsable catalogue of high-resolution graphic-design works.",
+    representativeImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/letterform-archive-collection/letterform-archive-lfa_skillscollections_0223-81517ad5-imageUrl.webp",
+    permanentExhibitions: [
+      { id: "letterform-archive-collection", name: "Collection", name_en: "Collection", title: "Letterform Archive — Collection", title_en: "Letterform Archive — Collection", description: "5,560점 — 판화2468·혼합매체2328·poster424·서예332·드로잉4·사진2·회화2.", description_en: "5,560 works — print, mixed_media_2d, poster, calligraphy, drawing, photograph, painting.", startDate: "Permanent", endDate: "Permanent", collectionFile: "letterform-archive-collection.json" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    exhibitions: []
+  },
+  {
+    id: "huis-marseille",
+    name_ko: "하위스 마르세이유 사진 미술관",
+    name: "Huis Marseille, Museum for Photography",
+    city: "Amsterdam",
+    country: "Netherlands",
+    latitude: 52.3668,
+    longitude: 4.8845,
+    description_ko: "1999년 암스테르담 케이저르스흐라흐트 운하변의 17세기 저택 두 채를 복원해 문을 연, 네덜란드 최초의 사진 전문 미술관이다. 하위스 마르세이유는 전 세계의 현대·역사 사진을 수집하고 전시하며, 다큐멘터리·풍경·인물 사진에서 특히 두각을 나타낸다. 약 220명의 작가가 찍은 880여 점의 사진을 소장하고 있으며, 아우이스카 판 더르 몰런, 안드레아스 구르스키, 하타케야마 나오야, 디아나 로슨, 마메디아라 니앙 등의 작품이 포함된다.",
+    description: "The Netherlands' first museum dedicated to photography, founded in 1999 in a pair of restored 17th-century canal houses on the Keizersgracht in Amsterdam. Huis Marseille collects and exhibits contemporary and historical photography from across the world, with particular strength in documentary, landscape, and portrait work. Its permanent collection holds roughly 880 photographs by some 220 photographers, including Awoiska van der Molen, Andreas Gursky, Naoya Hatakeyama, Deana Lawson, and Mame-Diarra Niang.",
+    representativeImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/huis-marseille-collection/huis-marseille-hma-1996-01-9e2d5043-imageUrl.webp",
+    permanentExhibitions: [
+      { id: "huis-marseille-collection", name: "Collection", name_en: "Collection", title: "Huis Marseille, Museum for Photography — Collection", title_en: "Huis Marseille, Museum for Photography — Collection", description: "847점 — 사진847.", description_en: "847 works — photograph.", startDate: "Permanent", endDate: "Permanent", collectionFile: "huis-marseille-collection.json" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    exhibitions: []
+  },
+  {
+    id: "nationalmuseum-se",
+    name_ko: "스웨덴 국립미술관 (나티오날무세움)",
+    name: "Nationalmuseum",
+    city: "Stockholm",
+    country: "Sweden",
+    latitude: 59.3286,
+    longitude: 18.0781,
+    description_ko: "스톡홀름 도심 블라시에홀멘 반도에 자리한 스웨덴 국립미술관으로, 1792년에 세워져 1866년 완공된 궁전식 건물을 쓴다. 약 70만 점의 소장품은 회화와 조각은 물론, 약 50만 장에 이르는 세계적인 드로잉 컬렉션과 방대한 응용미술·디자인 소장품을 아우른다. 공개 API와 IIIF 이미지 서버를 통해 디자인·건축·장식 도안과 판화, 회화를 누구나 열어볼 수 있다.",
+    description: "Sweden's national museum of art and design, founded in 1792 and housed in an 1866 palace on the Blasieholmen peninsula in central Stockholm. Its ~700,000-object collection spans painting and sculpture alongside one of the world's great holdings of drawings (around half a million sheets) and a deep applied-art and design collection. A free, open API and an IIIF image server make its design, architecture and ornament drawings, prints and paintings publicly accessible.",
+    representativeImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/nationalmuseum-se-collection/nationalmuseum-se-100529-1474afb5-imageUrl.webp",
+    permanentExhibitions: [
+      { id: "nationalmuseum-se-collection", name: "Collection", name_en: "Collection", title: "Nationalmuseum — Collection", title_en: "Nationalmuseum — Collection", description: "7,826점 — 회화3644·드로잉3481·사진353·판화348.", description_en: "7,826 works — painting, drawing, photograph, print.", startDate: "Permanent", endDate: "Permanent", collectionFile: "nationalmuseum-se-collection.json" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    exhibitions: []
+  },
+  {
+    id: "filmmuseum-potsdam",
+    name_ko: "포츠담 영화박물관",
+    name: "Filmmuseum Potsdam",
+    city: "Potsdam",
+    country: "Germany",
+    latitude: 52.39528,
+    longitude: 13.05776,
+    description_ko: "1981년에 문을 연 독일에서 가장 오래된 영화박물관으로, 포츠담 상수시 공원 곁의 옛 왕실 마구간 건물(마르슈탈)에 자리하며 바벨스베르크 촬영소와 이웃해 있다. 독일 영화사를 다루되 특히 동독(DDR)의 국영 영화사 DEFA에 무게를 둔다. 약 1만 5천 점의 영화 포스터를 소장하는데, 그중 1945~1990년 동독 시기의 서로 다른 포스터가 약 9,500점으로 대부분 국영 배급사 프로그레스(Progress-Film-Verleih)를 위해 제작된 것이며, 독일 최고의 동독 영화 포스터 컬렉션으로 꼽힌다. 그 가운데 디지털화된 일부가 DEFA 재단과 함께 공개 플랫폼 museum-digital에 게재되어 있다.",
+    description: "Germany's oldest film museum, founded in 1981 in the historic Marstall (the former royal stables) by the Sanssouci park in Potsdam, next to the Babelsberg studio. It documents German film history with a special focus on DEFA, the state-owned film studio of the GDR. Its poster collection holds roughly 15,000 film posters — about 9,500 distinct SBZ/GDR posters (1945–1990), largely for the Progress-Film-Verleih distributor — and is regarded as the most important German collection of GDR film posters; a digitised selection is published with the DEFA-Stiftung on the open museum-digital platform.",
+    representativeImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/filmmuseum-potsdam-collection/966082-0b110592-imageUrl.webp",
+    permanentExhibitions: [
+      { id: "filmmuseum-potsdam-collection", name: "Collection", name_en: "Collection", title: "Filmmuseum Potsdam — Collection", title_en: "Filmmuseum Potsdam — Collection", description: "99점 — poster99.", description_en: "99 works — poster.", startDate: "Permanent", endDate: "Permanent", collectionFile: "filmmuseum-potsdam-collection.json" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    exhibitions: []
+  },
 
 ];

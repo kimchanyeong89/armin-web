@@ -1,0 +1,25 @@
+{
+  "slug": "cnap-france",
+  "genre": "디자인",
+  "viable": true,
+  "reason": "CNAP의 자체 인프라(Navigart/Videomuseum 백엔드)가 공개 JSON API를 제공한다: https://api.navigart.fr/15/artworks?sort=by_inv&size=N&from=M (15 = CNAP 컬렉션 id; 공개 SPA는 www.cnap.fr/collection-en-ligne). 인증·키 불필요. totalCount=128,640점, 이미지 보유 ~97,095점. 이미지는 images.navigart.fr/{size}/{file_name} 템플릿(size=1000 → 긴 변 ~1000px, ≥600px 보장; 2000은 415, original은 404이라 1000이 최대 래스터). 2,000건 분산 샘플 분류 결과 디자인 장르 in-scope(사진+art graphique+평면 design) 53.7% = 약 69,000점(사진 ~37.5k, 드로잉 ~25.2k, 판화/포스터 ~4.8k, 평면혼합 ~1.5k). 샘플의 in-scope 작품 전부 'Reproduction internet autorisée'(인터넷 복제 허용)이며 다수가 Domaine public. 프로브 15/15 작품을 end-to-end로 수집(이미지 다운로드+R2 업로드) 성공, 이미지 0 에러. R2 이미지 1점 육안 확인 = 칸딘스키 1902 진품 1000×458 webp(플레이스홀더·워터마크 아님). 참고: www.cnap.fr 프런트엔드는 우리 네트워크에서 IP 185.145.32.247:443 타임아웃(봇/지오 차단, RETRY 힌트와 일치)이나, 실제 데이터 호스트는 api.navigart.fr이며 정상 응답 — cnap.fr 차단은 수집에 무관.",
+  "source_type": "api",
+  "easy_source_found": "예 — api.navigart.fr/15 (Navigart/Videomuseum GColl JSON API). GitHub papposilene/navigart-pytools가 동일 백엔드의 하드코딩 호스트 'https://api.navigart.fr/15/artworks?sort=by_inv&size=&from='를 노출해 엔드포인트 확정. data.culture.gouv.fr의 별도 오픈데이터 셋은 404(없음). www.cnap.fr/opendata·/api 없음. 그러나 Navigart API 자체가 키 불필요·페이지네이션 가능한 풀 컬렉션 소스라 easy-source로 충분.",
+  "estimated_inscope_count": 69000,
+  "script_path": "/Users/kietzsche/armin-web-main/scripts/scrape-cnap-france.mjs",
+  "probe_ok": true,
+  "probe_summary": "node scripts/scrape-cnap-france.mjs --probe → 15/15 in-scope 작품 수집, 이미지 0 에러, 0 min-4 드롭. 출력 public/data/cnap-france-collection-probe.json (drawing 14 + print 1). R2 업로드 확인(pub-396fad…r2.dev/artworks/cnap-france-collection/{id}-{hash8}-imageUrl.webp). R2에서 되받은 첫 이미지 = 1000×458 webp 102KB, 육안 확인 시 칸딘스키 'Marktplatz' 1902 실제 회화 study(고품질 컬러, 플레이스홀더 아님). 프로브 윈도(첫 ~600 인벤토리)가 art-graphique cabinet에 치우쳐 photograph가 안 잡혔으나, 별도 2,000건 분산 classify 샘플에서 photograph ~37.5k/drawing ~25.2k/print ~4.8k/mixed_media_2d ~1.5k 전 카테고리 정상 분류 확인.",
+  "est_full_count": 69000,
+  "est_runtime_min": 150,
+  "exhibitions_entry": {
+    "name": "Centre national des arts plastiques (Cnap)",
+    "name_ko": "국립조형예술센터 (Cnap)",
+    "city": "Paris",
+    "country": "France",
+    "latitude": 48.8917,
+    "longitude": 2.2389,
+    "description": "France's national contemporary-art collection (Fonds national d'art contemporain), founded in its modern form in 1791 and holding over 108,000 works acquired across more than two centuries. The CNAP does not have its own galleries — it lends and deposits works across French institutions — but publishes more than 90,000 of them through its Navigart-powered online collection. Its photography cabinet, graphic-arts cabinet and design holdings make it one of the richest public sources for photographs, drawings, posters and design works.",
+    "description_ko": "프랑스의 국가 현대미술 컬렉션(Fonds national d'art contemporain)으로, 1791년 지금의 형태로 출발해 두 세기에 걸쳐 모은 작품이 10만 8천 점을 넘는다. Cnap은 자체 전시장 없이 작품을 프랑스 전역 기관에 대여·기탁하는 기관이지만, 그중 9만 점 이상을 Navigart 기반 온라인 컬렉션으로 공개한다. 사진 캐비닛·판화소묘 캐비닛·디자인 컬렉션이 두텁게 갖춰져 있어, 사진과 드로잉, 포스터, 디자인 작업을 찾기에 가장 풍부한 공공 소스 중 하나다."
+  },
+  "notes": "API 필터 DSL은 비공개(structured q 파라미터는 0건 반환; q=free-text는 전체검색이라 과대매칭). 그래서 스크래퍼는 서버측 부서 필터 대신 from/size로 전수 페이징 후 collection_department 필드로 in-script 분류(orthogonal·견고). 분류 규칙: Cabinet de la photographie→photograph(전부), Cabinet d'art graphique→mst로 print/drawing/mixed_media_2d, Design→평면만(domain에 'Objet' 포함 3D는 제외; affiche/poster→print). Architecture·Cinéma·Nouveaux medias·Arts Plastiques 부서는 디자인 장르 스코프 밖이라 제외. 69k > 25k이므로 --full은 COMPACT JSON + named+dated 우선정렬 + 23MB 캡(스크립트 내 CAP_BYTES) + resumable(progress.json). 사진·드로잉은 흑백이어도 컬러게이트 없음(가이드 §1). --full 미실행(지시대로). 등록/임베딩은 후속. 좌표는 Tour Atlantique, 1 place de la Pyramide, Paris-La Défense(92911) 기준."
+}
