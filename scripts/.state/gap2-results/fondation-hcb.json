@@ -1,0 +1,26 @@
+{
+  "slug": "fondation-hcb",
+  "genre": "사진",
+  "viable": false,
+  "reason": "Fondation HCB has NO machine-readable per-object collection catalogue on its own infrastructure. The site is WordPress 6.9.4 + WPML; the WP REST API (/wp-json/wp/v2/) exposes only default post types (post/page/media/blocks/templates) and the sitemap's custom post types are events-only (cp_actualites/cp_rencontres/cp_expositions/cp_publications/cp_laureats/cp_partenaires/cp_biographies) — there is NO cp_collection/cp_oeuvre/cp_photographie type. The 'collection' URLs (/en/fondation/collection/, /en/hcb/collections/, /en/prints/) are editorial prose pages with a few decorative images, not searchable object databases. No collection subdomain exists (collection./collections./archives. all refuse connection). All imagery is copyright-locked: every photograph is credited '© Fondation Henri Cartier-Bresson / Magnum Photos' or '© Martine Franck / Magnum Photos'; print production ceased after the artists' deaths and the Prints page directs buyers to galleries/auction houses. Critically, the foundation states the searchable archive lives OFF its infrastructure on magnumphotos.com (a forbidden third-party aggregator), the inventory project is 'still in progress', and physical consultation requires an in-person appointment. Copyright-locked + no own-infra catalogue → viable:false.",
+  "source_type": "none",
+  "easy_source_found": "No. Checked /api, /opendata, /jsonapi (all 404), /wp-json (200, WordPress REST). WP REST namespaces are only oembed + WPML + installer + site-health + block-editor + abilities — no custom collection namespace. /wp/v2/types returns only default WordPress types. No GitHub bulk dump, no IIIF, no Solr/CONTENTdm/eMuseum. The only 'easy source' is the third-party magnumphotos.com (FORBIDDEN aggregator) — not usable.",
+  "estimated_inscope_count": 0,
+  "script_path": null,
+  "probe_ok": false,
+  "probe_summary": "Probe stopped at Stage 1. Homepage 200. Confirmed WordPress (6.9.4) + WPML institutional/events site. WP REST API has no artwork/collection/photograph post type; sitemap custom types are events/news/publications only. The three collection-named pages are descriptive editorial text, not object catalogues. No machine-readable in-scope photograph records served from the foundation's own infra. All images copyright-locked (HCB/Martine Franck / Magnum Photos). Searchable archive is hosted by Magnum Photos (third-party, forbidden). No script written.",
+  "est_full_count": 0,
+  "est_runtime_min": 0,
+  "exhibitions_entry": {
+    "name": "Fondation Henri Cartier-Bresson",
+    "name_ko": "앙리 카르티에브레송 재단",
+    "city": "Paris",
+    "country": "France",
+    "latitude": 48.861,
+    "longitude": 2.36017,
+    "description": "Founded in 2003 by Martine Franck and Mélanie Cartier-Bresson, the Fondation HCB preserves and shares the legacy of photographer Henri Cartier-Bresson and his wife Martine Franck. Since 2018 it has occupied a former industrial building at 79 rue des Archives in the Marais district of Paris, where it stages temporary exhibitions and conserves the artists' archives of vintage prints, contact sheets, drawings, films, books and correspondence. The collection itself is not published as an open online catalogue; archived images circulate through Magnum Photos and physical consultation is by appointment.",
+    "description_ko": "앙리 카르티에브레송 재단은 2003년 마르틴 프랑크와 멜라니 카르티에브레송이 설립해, 사진가 앙리 카르티에브레송과 그의 아내 마르틴 프랑크의 유산을 지키고 알리는 곳이다. 2018년부터 파리 마레 지구 아르시브가 79번지의 옛 공장 건물에 자리 잡고, 기획전을 열며 빈티지 프린트·콘택트 시트·드로잉·필름·서적·서신으로 이루어진 두 작가의 아카이브를 보존한다. 다만 소장품을 온라인 공개 카탈로그로 내놓지는 않으며, 아카이브 이미지는 매그넘 포토스를 통해 유통되고 실물 열람은 예약제로만 가능하다.",
+    "_note": "Reference-only entry. NOT to be registered as a collection — viable:false (copyright-locked, no own-infra catalogue)."
+  },
+  "notes": "사진 슬롯 후보였으나 수집 불가. 핵심 차단 요인 3가지: (1) 자체 인프라에 작품 단위 카탈로그/API/IIIF 자체가 없음 — WordPress 이벤트·뉴스용 사이트일 뿐(커스텀 포스트타입이 expositions/actualites/publications 등 행사용만 존재). (2) 모든 이미지가 저작권 잠금(© Fondation HCB / Martine Franck / Magnum Photos), 작가 사후 프린트 생산 중단. (3) 검색 가능한 아카이브는 재단 도메인이 아니라 magnumphotos.com(제3자 애그리게이터, 규칙상 금지)에 있음. 재단 스스로 '인벤토리 작업 진행 중'이며 열람은 예약제 현장 방문이라고 명시. ★ 사진 장르 빈 슬롯은 저작권이 열려 있고 자체 컬렉션 DB(eMuseum/IIIF/CONTENTdm 등)를 운영하는 다른 사진 기관(예: George Eastman Museum, Fotomuseum 계열, 국공립 사진 컬렉션)으로 재타겟 권장. HCB류 단일작가 저작권 재단(에스테이트형)은 일반적으로 동일 사유로 수집 불가."
+}

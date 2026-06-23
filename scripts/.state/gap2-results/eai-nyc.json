@@ -1,0 +1,25 @@
+{
+  "slug": "eai-nyc",
+  "genre": "비디오",
+  "viable": false,
+  "reason": "EAI is a non-profit VIDEO-ART DISTRIBUTOR/archive, not a flat-image collection. Per-title pages (/titles/{slug}) embed Vimeo streaming previews of copyright-locked artist video; the full works are rental/streaming only. Each title carries at most ONE still image under /user_files/images/title/. Probe of 47 representative titles across 13 artists & all eras: only 7 (15%) serve a still >=600px (the '_l' HD variant, mostly recent 2020s works e.g. Jake Brush 'Petpourri' 1920x1080); 38 (81%) serve ONLY a 250x188 thumbnail (the '_xl' slot is itself only 250px and is the LARGEST variant — e.g. the canonical Martha Rosler 'Semiotics of the Kitchen' is 250x188 with no larger version, '_l' 404s), 2 (4%) have no still at all. The defining historical video-art canon (Acconci, Joan Jonas, Nam June Paik, Mendieta, Rosler, Bill Viola, Warhol) is locked to 250px thumbnails fronting copyright video. Fails the gate: images too small + copyright-locked + moving-image-only.",
+  "source_type": "none",
+  "easy_source_found": "No. eai.org is a bespoke Bootstrap5/jQuery site (no Drupal/eMuseum/CONTENTdm/Solr/IIIF). /opendata, /api, /jsonapi all 404. No GitHub bulk dump, no national-OA API. Browse paths exist (/artists-main, /artists/{slug}/titles, /titles/{slug}, /title-search) but expose video-distribution metadata + Vimeo previews, not downloadable flat-image catalogue.",
+  "estimated_inscope_count": 0,
+  "script_path": null,
+  "probe_ok": false,
+  "probe_summary": "Sampled 47 titles end-to-end: extracted still URL per /titles/{slug}, downloaded & measured pixels. OK(>=600px)=7, SMALL(250px)=38, NOSTILL=2 -> ~15% usable. Confirmed 250px is the MAX served for classic works (Rosler semiotics _xl=250x188, _l 404). HD stills exist only for a recent-work minority; everything else is copyright-locked moving-image behind 250px thumbnails.",
+  "est_full_count": 0,
+  "est_runtime_min": 0,
+  "exhibitions_entry": {
+    "name": "Electronic Arts Intermix (EAI)",
+    "name_ko": "일렉트로닉 아츠 인터믹스 (EAI)",
+    "city": "New York",
+    "country": "USA",
+    "latitude": 40.7411,
+    "longitude": -74.0061,
+    "description": "Founded in 1971, Electronic Arts Intermix is one of the world's foremost nonprofit resources for video art and media art, distributing and preserving a collection of more than 3,500 works by 200+ artists, from pioneers such as Nam June Paik, Vito Acconci, Joan Jonas and Martha Rosler to contemporary makers.",
+    "description_ko": "1971년 설립된 일렉트로닉 아츠 인터믹스(EAI)는 비디오·미디어 아트 분야에서 세계적으로 손꼽히는 비영리 기관이다. 백남준, 비토 아콘치, 조앤 조나스, 마사 로슬러 같은 선구자부터 동시대 작가까지 200여 명의 작품 3,500점 이상을 배급하고 보존하며, 영상 예술의 역사를 잇는 살아 있는 아카이브 역할을 한다."
+  },
+  "notes": "STOP at Stage 1 (no Stage 2 script written). EAI's value is moving-image, which is out of scope for a flat-image grid + SigLIP corpus. The ~15% of titles with HD stills are not separable from copyright-video pages by any clean API filter, and they under-represent the canonical collection, so harvesting them would yield a small, skewed, mostly-recent set not worth a scraper. If video-stills ever become in scope, the path would be: GET /artists-main -> artist slugs -> /artists/{slug}/titles -> /titles/{slug}, take only '_l' stills that measure >=600px (skip '_xl' which is 250px), metadata in the d-lg-none block: <h5> title, <h6> artist link, <em>YEAR, DURATION, color/bw, sound, FORMAT</em>. Coordinates = EAI office, 535 W 22nd St, 5th Fl, Chelsea, Manhattan."
+}

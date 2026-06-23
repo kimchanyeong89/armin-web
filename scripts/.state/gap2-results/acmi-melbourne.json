@@ -1,0 +1,25 @@
+{
+  "slug": "acmi-melbourne",
+  "genre": "비디오",
+  "viable": false,
+  "reason": "ACMI's collection (api.acmi.net.au + github.com/ACMILabs/acmi-api) is METADATA-ONLY with NO images on the museum's own infrastructure. The official API docs (acmi.net.au/api) state verbatim: 'This data does not include any images or video content.' The repo README lists Images/Videos as 'coming soon...' and the public S3 bucket (s3://acmi-public-api) is gated 'when we have arranged suitable licenses with our partners.' Verified empirically: (1) /works/{id}/ schema has NO image field at all (49 keys, none image-related); work 110000 media_note='Sorry, we don't have images or video for this item', empty links/video_links/holdings-images. (2) Linked Art representation (?format=linked-art) returns ZERO image URLs (no representation/digitally_shown_by node). (3) 40 /search/ records scanned (21 Film, 18 Object, 1 Videogame) -> 0 image hints. The only documented image path is via TMDB/IGDB third-party APIs using source_identifier, which are aggregators (FORBIDDEN: museum-own-infra only). Metadata is wonderfully open (CC0) but unusable for a visual/image-grid art directory requiring downloadable images >=600px.",
+  "source_type": "none",
+  "easy_source_found": "ACMI public API at api.acmi.net.au is live (200) with full CC0 metadata: /works/{id}/ (individual records), /search/?query= (paginated, ES window capped at 10000), /creators/, /constellations/, and Linked Art JSON-LD via ?format=linked-art. Bulk JSON+TSV dump at github.com/ACMILabs/acmi-api (/app/json/, /app/tsv/, ~42,500 rows). EXCELLENT for text metadata but provides NO image assets whatsoever -> not usable for this directory.",
+  "estimated_inscope_count": 0,
+  "script_path": "",
+  "probe_ok": false,
+  "probe_summary": "Stage-0/1 only (no scriptwrite, not viable). API live and rich, but every image check failed: schema has no image field; media_note explicitly 'we don't have images'; Linked Art has no representation node; 0/40 search records carry any image URL; docs say 'no images or video content'; S3 assets 'coming soon' (license-gated). Images only retrievable via forbidden TMDB/IGDB aggregators.",
+  "est_full_count": 0,
+  "est_runtime_min": 0,
+  "exhibitions_entry": {
+    "name": "Australian Centre for the Moving Image (ACMI)",
+    "name_ko": "호주 무빙이미지 센터 (ACMI)",
+    "city": "Melbourne",
+    "country": "Australia",
+    "latitude": -37.8172,
+    "longitude": 144.9690,
+    "description": "Australia's national museum of film, television, videogames, digital culture and art, located at Federation Square in Melbourne. ACMI holds a collection of roughly 45,000 catalogued works and is celebrated for releasing its collection metadata as fully open data (CC0) via a public API and GitHub. Image and video assets, however, are not yet publicly available pending partner licensing.",
+    "description_ko": "멜버른 페더레이션 광장에 자리한 호주의 국립 영화·텔레비전·비디오게임·디지털 문화 박물관이다. 약 4만 5천 점의 소장 기록을 보유하며, 컬렉션 메타데이터를 완전 공개 데이터(CC0)로 공개한 API와 깃허브로 잘 알려져 있다. 다만 이미지와 영상 자료는 파트너 라이선스 협의가 끝나기 전까지는 아직 공개되지 않았다."
+  },
+  "notes": "ACMI is the textbook example of an open-data museum that is nonetheless NOT usable for an image-driven directory: open metadata, zero open images. Re-evaluate ONLY if ACMI later populates s3://acmi-public-api (README 'Images: coming soon...') or adds an image field to /works/{id}/. At that point the public API would make a full scrape trivial (CC0, resumable by sequential id, type=Film/Videogame -> video; Object -> photograph/object). The ~10000 search 'count' is an Elasticsearch window cap, not the true total (~45k); a full crawl would iterate /works/{id}/ over the id range. Genre note: works are moving-image (Film/Videogame/TV) so even WITH images many would be video-genre, but a handful of Object records and film stills/posters would map to photograph/poster. No script written (scrape-acmi-melbourne.mjs not created) per Stage-2 gate (viable=false)."
+}

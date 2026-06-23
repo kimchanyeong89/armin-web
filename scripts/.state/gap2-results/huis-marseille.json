@@ -1,0 +1,25 @@
+{
+  "slug": "huis-marseille",
+  "genre": "사진",
+  "viable": true,
+  "reason": "Huis Marseille (Amsterdam) is a photography-only museum. Its own WordPress collection archive renders complete, server-side `.tease` cards at huismarseille.nl/en/collection/page/{N}/ (60 cards/page, 15 pages = 878 works). Each card carries everything in-scope: artist (collectie-title link, 100%), title+year (100%), inventory number HMA-YYYY-NN (100% → objectNumber), dimensions when present (12%, source limit), and a full-resolution original image via the data-fancybox href (1.5k-5k px; 876/878 = 99.8% are >=600px). The WP REST post type /wp/v2/collectie exists (1,759 records) but returns EMPTY acf/meta/content (no artist/year/medium) and double-counts EN+NL Polylang copies, so the HTML archive is the correct source. Probe scraped 15 works end-to-end with live R2 uploads (verified 2048px WebP, HTTP 200); title/artist/year/objectNumber 100%, 0 image errors.",
+  "source_type": "html",
+  "easy_source_found": "Partial. No /opendata or bulk dump. WP REST is live (/wp-json/wp/v2/collectie, 1,759 records, X-WP-Total header) and a custom endpoint /wp-json/endpoint/v2/en/collectie exists, BUT both are metadata-poor: the collectie post type has empty acf/meta/content (no artist/year/medium/dimensions), and the custom endpoint only returns 40 'selected' highlights. The clean, complete per-work metadata (artist via photographer link, title, year, inventory no., dimensions, full image) is rendered only in the server-side .tease cards of the paginated collection archive HTML. So: museum-own infra is fully usable, but via HTML scraping of the archive pages, not a turnkey API dump.",
+  "estimated_inscope_count": 878,
+  "script_path": "/Users/kietzsche/armin-web-main/scripts/scrape-huis-marseille.mjs",
+  "probe_ok": true,
+  "probe_summary": "node scripts/scrape-huis-marseille.mjs --probe collected 870 unique works across 15 archive pages, processed first 15 end-to-end. Coverage on probe: title 15/15, artist 15/15, year 15/15, objectNumber 15/15, dimensions 0/15 (first page = most recent acquisitions whose captions omit cm). Full-collection field scan (all 878 captions): artist 100% (224 unique photographers), year 100%, inventory 100%, dimensions(cm) 12%. 0 image errors, 0 too-small. R2 upload verified: huis-marseille-hma-2025-16-655a5c32-imageUrl.webp = 2048x1638 WebP, 286KB, HTTP 200. Output public/data/huis-marseille-collection-probe.json validates against canonical schema (ids prefixed huis-marseille-, category=photograph, R2 key format correct).",
+  "est_full_count": 876,
+  "est_runtime_min": 20,
+  "exhibitions_entry": {
+    "name": "Huis Marseille, Museum for Photography",
+    "name_ko": "하위스 마르세이유 사진 미술관",
+    "city": "Amsterdam",
+    "country": "Netherlands",
+    "latitude": 52.3668,
+    "longitude": 4.8845,
+    "description": "The Netherlands' first museum dedicated to photography, founded in 1999 in a pair of restored 17th-century canal houses on the Keizersgracht in Amsterdam. Huis Marseille collects and exhibits contemporary and historical photography from across the world, with particular strength in documentary, landscape, and portrait work. Its permanent collection holds roughly 880 photographs by some 220 photographers, including Awoiska van der Molen, Andreas Gursky, Naoya Hatakeyama, Deana Lawson, and Mame-Diarra Niang.",
+    "description_ko": "1999년 암스테르담 케이저르스흐라흐트 운하변의 17세기 저택 두 채를 복원해 문을 연, 네덜란드 최초의 사진 전문 미술관이다. 하위스 마르세이유는 전 세계의 현대·역사 사진을 수집하고 전시하며, 다큐멘터리·풍경·인물 사진에서 특히 두각을 나타낸다. 약 220명의 작가가 찍은 880여 점의 사진을 소장하고 있으며, 아우이스카 판 더르 몰런, 안드레아스 구르스키, 하타케야마 나오야, 디아나 로슨, 마메디아라 니앙 등의 작품이 포함된다."
+  },
+  "notes": "Source = collection archive HTML, NOT a JSON API (REST exists but is metadata-empty). The scraper paginates /en/collection/page/{N}/ until an empty page (auto-stops at ~15), dedups by full-image URL, parses each .tease card for artist (collectie-title link, authoritative) + title/year (grey span) + data-caption (inventory + dimensions, with a fix so European decimal commas like '25,12 cm' are not mis-split). Stable id = huis-marseille-{HMA inventory} (falls back to image-hash when missing). category = photograph for ALL (photography-only museum; per scope photographs are never colour-gated, so no colorfulness gate needed). --full is resumable (scripts/.state/huis-marseille-progress.json) and writes COMPACT JSON to public/data/huis-marseille-collection.json. CAVEATS: (1) medium is not exposed anywhere in the source (acf empty, no detail page, not in caption) -> medium='' for all; (2) dimensions present in only ~12% of captions (source limit, acceptable per guide as SHOULD); (3) there is no per-work detail page -> sourceUrl points to the photographer's page (closest museum URL); (4) ~2 works have full images <600px and are skipped by the thumb guard. Est full runtime ~20 min at conc 4 (878 image downloads + autocrop + R2). DO NOT run --full yet per instructions."
+}

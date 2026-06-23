@@ -1,0 +1,25 @@
+{
+  "slug": "designmuseum-gent",
+  "genre": "디자인",
+  "viable": false,
+  "reason": "Design Museum Gent has an EXCELLENT official open-data API (CoGhent / data.designmuseumgent.be v2, CIDOC-CRM JSON-LD, 9,340 objects, IIIF images up to 6722x9544 verified downloadable at 1000px) — but the collection is a decorative-arts/product-design museum that is ~98% 3D objects. Type index (657 types): plates 694, vases 612, wall tiles 540, product packaging 428 (3D boxes/etuis w/ depth dimension), chairs 386+, bowls/cups/glasses/tableware/furniture-fittings dominate. Genuine FLAT 2D in-scope works are tiny: affiche/posters 44, ontwerptekening 6, lithografie 1, zeefdruk 1, collage 2. Borderline 'ontwerp'(88)/'kaart'(87) overlap and are 10.8x10.8cm ceramic-tile design swatch cards, not graphic design. Total genuine flat works ~52-130 out of 9,340 — far below the threshold for the graphic-design genre (cf. viable poster-house 7,573, gestaltung-zurich thousands). 3D-furniture/decorative-arts museum per task's 3D-only=viable:false rule.",
+  "source_type": "iiif",
+  "easy_source_found": "YES — official CoGhent open-data API. v2 REST: https://data.designmuseumgent.be/v2/id/objects (CIDOC-CRM JSON-LD, Hydra pagination, ?fullRecord=true bulk, ?type= / ?hasImages= / ?q= filters, total 9,340 objects). Images via IIIF: api.collectie.gent/iiif/presentation/v2/manifest/dmg:{PID} -> IIIF Image API 2.0 (verified 6722x9544, 1000px download OK). REST API docs/Swagger at data.designmuseumgent.be/api-docs. (Not used for scrape — collection is 3D-only for our scope.)",
+  "estimated_inscope_count": 52,
+  "script_path": null,
+  "probe_ok": false,
+  "probe_summary": "API probe fully successful technically: v2 objects endpoint returns 9,340 items; affiche full record parsed (dims 60x42cm, type, objectnummer, exhibition links); IIIF manifest resolved + 1000x1420 image downloaded. FAILS on scope: only ~44 posters + ~12 other flat works; rest is furniture/vases/plates/tiles/packaging (3D decorative arts). Not viable for the graphic-design (디자인) genre.",
+  "est_full_count": 52,
+  "est_runtime_min": 0,
+  "exhibitions_entry": {
+    "name": "Design Museum Gent",
+    "name_ko": "헨트 디자인 미술관",
+    "city": "Ghent",
+    "country": "Belgium",
+    "latitude": 51.0556,
+    "longitude": 3.7193,
+    "description": "Belgian design museum in Ghent with a ~9,300-object collection of decorative and applied arts and product design, from the 15th century to today — ceramics, glass, furniture, tableware and packaging. Its CoGhent open-data API publishes the full collection as CIDOC-CRM linked data with IIIF imagery, but holdings are overwhelmingly three-dimensional, with only a small set of flat graphic works (posters, design drawings).",
+    "description_ko": "벨기에 헨트에 있는 디자인 미술관으로, 15세기부터 현재까지 도자기·유리·가구·식기·포장 등 장식미술과 제품 디자인을 아우르는 약 9,300점의 소장품을 갖고 있다. CoGhent 오픈데이터 API로 전 소장품을 CIDOC-CRM 연결데이터와 IIIF 이미지로 공개하지만, 소장품 대부분이 입체 공예품이고 평면 그래픽 작품(포스터·디자인 드로잉)은 소수에 그친다."
+  },
+  "notes": "Technically the cleanest source encountered in this gap wave — fully open, well-documented, high-res IIIF, no auth, no rate issues. The blocker is purely scope: this is a decorative-arts/product-design museum (3D), not a graphic-design museum. If COLLY ever adds a 'decorative arts / product design / 3D design' vertical, this would be an immediately scrapable ~9,340-object source (est ~6-9h full harvest at 250ms/obj + IIIF download). Reusable endpoint pattern for any future Flemish-museum work: data.{museum}.be/v2/ + api.collectie.gent IIIF. Sibling CoGhent museums (STAM, Industriemuseum, Huis van Alijn, Archief Gent) share the same api.collectie.gent IIIF + apidg.gent.be event-stream infra."
+}

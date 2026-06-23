@@ -1,0 +1,25 @@
+{
+  "slug": "cartoonmuseum-basel",
+  "genre": "만화",
+  "viable": false,
+  "reason": "No public online collection. Cartoonmuseum Basel is a small kunsthalle-style centre for narrative drawing (~10,000 originals + ~2,000 loans, 700 artists). Its own Sammlung page states works are 'inventoried in a fully digital manner and indexed according to scientific criteria' — i.e. an INTERNAL collection-management database, NOT published online. The public website (Nuxt SPA on Netlify, backed by a Craft CMS headless GraphQL API at cms.cartoonmuseum.ch/api) has NO per-object catalogue: GraphQL introspection shows the 'collection' section = 1 entry (a single editorial page with fields sammlungText + contentBlock) and 'highlight' = 1 entry; total CMS entries = 298 (exhibitions 58, events 89, news 17, shop products 63, archive 1, etc.), and the whole media library is only 4,583 assets (exhibition/event/press/product/team photos). There is no artwork content type, no per-work pages, and the entire site navigation lacks any collection/database/online-catalogue link. Decisive blocker = absence of any published per-object source on the museum's own infra; copyright on living 20th–21st c. comic/caricature artists is a secondary blocker. No FORBIDDEN aggregators consulted.",
+  "source_type": "none",
+  "easy_source_found": "none — checked /opendata,/api,/jsonapi,/?format=json,data.* & api.* & collection.* subdomains (all 301-to-homepage-fallback or DNS-fail). robots.txt allows all but exposes no catalogue. Site is Nuxt+Craft CMS; introspected its GraphQL endpoint (cms.cartoonmuseum.ch/api): only editorial content types (exhibitions/events/news/products/press/about + single 'collection' and 'highlight' page entries) — no artwork/object/work type. No GitHub dump, no eMuseum/CONTENTdm/Solr/IIIF.",
+  "estimated_inscope_count": 0,
+  "script_path": null,
+  "probe_ok": false,
+  "probe_summary": "STAGE 1 probe stopped at viability gate. www→non-www host normalization (cartoonmuseum.ch). Sammlung page (cartoonmuseum.ch/en/sammlung) confirms internal-only digitisation; no 'online collection' UI. Craft CMS GraphQL introspection: queryType has collectionEntries/highlightEntries but each resolves to a SINGLE page entry, not per-work objects; entryCount=298 total, assetCount=4583 total — orders of magnitude below the ~10,000 collection originals, and unstructured for artwork harvest. Individual CMS images do download large (verified 1901x2422, 1.8MB JPEG with browser UA+referer) but they are exhibition/marketing assets, not catalogued collection objects. No per-object metadata source exists.",
+  "est_full_count": 0,
+  "est_runtime_min": 0,
+  "exhibitions_entry": {
+    "name": "Cartoonmuseum Basel",
+    "name_ko": "바젤 카툰 미술관",
+    "city": "Basel",
+    "country": "Switzerland",
+    "latitude": 47.5527,
+    "longitude": 7.5905,
+    "description": "Switzerland's only museum dedicated exclusively to the art of narrative drawing — comics, graphic novels, caricature and cartoon. Founded in 1979 (as the Basler Cartoonsammlung; today the Centre for Narrative Art), it holds a collection of roughly 10,000 original works by some 700 artists from nearly 40 countries, shown through changing exhibitions in a Herzog & de Meuron-renovated building in Basel's old town.",
+    "description_ko": "스위스에서 유일하게 서사적 드로잉 예술, 즉 만화와 그래픽노블, 캐리커처와 카툰만을 다루는 미술관이다. 1979년 바젤 카툰 컬렉션으로 출발해 오늘날 '서사 예술 센터'로 자리 잡았으며, 약 40개국 700여 작가의 원화 1만여 점을 소장하고 있다. 헤어초크 & 드 뫼롱이 개조한 바젤 구시가의 건물에서 기획전 형식으로 작품을 선보인다."
+  },
+  "notes": "NEXT-RANKED 만화 candidate — declined. Recommendation: do NOT escalate; there is no published per-object source to escalate to (collection lives in an internal CMS only). Mirrors the same blocker seen on other small comic/caricature kunsthalles. The CMS GraphQL endpoint (cms.cartoonmuseum.ch/api, Craft) is fully introspectable should the museum ever add a collection content type — re-probe trigger would be a new 'sammlung'/'werk'/'artwork' section appearing in queryType fields. Coordinates are the Cartoonmuseum at St. Alban-Vorstadt 28, 4052 Basel."
+}

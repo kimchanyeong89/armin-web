@@ -1,0 +1,26 @@
+{
+  "slug": "niepce-chalon",
+  "genre": "사진",
+  "viable": true,
+  "reason": "Museum runs its own free-image bank 'Open musée Niépce' (www.open-museeniepce.com) — '20 000 photographies libres de droits issues des collections du musée', explicitly inviting download/share. Clean server-side-paginated HTML on the museum's own infra: list GET /recherche-photos?page=N&length=200 yields /recherche-photos/photo,{id} links (last page 104@200 → ~20,700 photos); detail GET /accueil/photo,{id} carries labelled fields (Titre inscrit / Légende, Date, Auteur, Technique, Mots-clés); full-res image GET /downloadPhoto?id={id} returns native PNG ~1024px max-side (libre de droits, NOT watermarked, verified 1.6MB). Probe 15/15 OK with real metadata + live R2 uploads (all 1024px wide). NO aggregator used.",
+  "source_type": "html",
+  "easy_source_found": "No bulk dump/API. Checked: museeniepce.com/collections (403); collections.* subdomain (redirects to root); sitemap.xml on open-museeniepce is a generic xml-sitemaps.com crawl capped at 500 URLs (only 478 photos, not the full 20k) so not a usable bulk index; robots.txt only disallows /html/contents/{DCIMchalon,imports,panierzip,projetzip}. No /opendata, /api, /jsonapi, /wp-json, eMuseum, CONTENTdm, Solr, or IIIF. Source of record is the paginated HTML image bank itself (open-museeniepce.com), which IS machine-iterable.",
+  "estimated_inscope_count": 20700,
+  "script_path": "/Users/kietzsche/armin-web-main/scripts/scrape-niepce-chalon.mjs",
+  "probe_ok": true,
+  "probe_summary": "node scripts/scrape-niepce-chalon.mjs --probe → 15/15 OK, 0 image errors, 0 empty-title. Examples: 'Portrait d'artiste en studio' (INTRAN STUDIO, 1024x1348), 'Temple de Karnak' (Antonio-Felice BEATO, 19e s.), 'Quai Debilly /Inondations' (Robert DEMACHY, janvier 1910). All category=photograph, objectNumber=inventory no (e.g. 1989.57.4.28P01B). R2 webp publicly live (HTTP 200, image/webp, 1024px). Probe JSON: public/data/niepce-chalon-collection-probe.json.",
+  "est_full_count": 20700,
+  "est_runtime_min": 210,
+  "exhibitions_entry": {
+    "name": "Musée Nicéphore Niépce",
+    "name_ko": "니세포르 니엡스 박물관",
+    "city": "Chalon-sur-Saône",
+    "country": "France",
+    "latitude": 46.7806,
+    "longitude": 4.8531,
+    "description": "Municipal museum of photography in Chalon-sur-Saône, the birthplace of Nicéphore Niépce, who made the first surviving photograph here in 1827. The only generalist museum devoted to the entire history of photography, it holds roughly four million images spanning every photographic process from the 19th century to today, alongside cameras and photographically illustrated books. Its free 'Open musée Niépce' image bank shares 20,000 rights-free photographs from the collection.",
+    "description_ko": "사진술의 발명자 니세포르 니엡스가 1827년 인류 최초의 사진을 찍은 도시 샬롱쉬르손에 자리한 시립 사진 박물관이다. 사진의 역사 전체를 다루는 세계 유일의 종합 사진 박물관으로, 19세기부터 현재까지 거의 모든 사진 기법을 아우르는 약 400만 점의 이미지와 카메라, 사진이 실린 서적을 소장하고 있다. 무료 이미지 뱅크 'Open musée Niépce'를 통해 소장품 중 저작권이 자유로운 사진 2만 점을 공개한다.",
+    "latitude_note": "Coordinates of the museum building, 28 Quai des Messageries, Chalon-sur-Saône."
+  },
+  "notes": "Collection is overwhelmingly black-and-white photography (gélatino-bromure d'argent, albumen, héliogravure). Per COLLECTION_SCRAPING_GUIDE §1, PHOTOGRAPHS ARE NEVER COLOUR-GATED — no colorfulness() filter applied; every record → category 'photograph'. Title fallback chain Titre inscrit→Titre→Légende (≈1/3 of records use only a Légende caption). objectNumber = protectimage/download filename stem (museum accession no). ids prefixed 'niepce-chalon-'; R2 key artworks/niepce-chalon-collection/{id}-{hash8}-imageUrl.webp. --full is resumable (scripts/.state/niepce-chalon-progress.json, failures→niepce-chalon-failed.ndjson); harvests all ids by paging length=200 then fetches detail+image at CONC=4. Native images cap at 1024px max-side (no larger available), comfortably ≥600px. Compact JSON for ~20.7k records ≈ 7MB, well under 23MB cap; size-guard drops description/keywords then trims overflow if ever needed. DID NOT run --full per instructions. Metadata is French (titles/dates/medium kept raw)."
+}

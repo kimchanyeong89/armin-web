@@ -1,0 +1,26 @@
+{
+  "slug": "dff-frankfurt",
+  "genre": "영화",
+  "viable": false,
+  "reason": "DFF's own infra exposes a per-film catalogue only via filmportal.de (their Drupal platform), which holds posters/lobby-cards/stills in per-film galleries (e.g. Metropolis /node/27069/gallery has 56 items incl. 'Filmplakat 02/03', 'Kleinplakat', Aushangfotos). BUT every served image is hard-capped at 544px width: the 'gal_image' style = 544x328, the 'movie_teaser' style = 300px, and de-styling the file URL still returns the same 544px progressive web copy (masters of ~2476-2479px are recorded in EXIF but NOT served). No larger image style exists (styles large/original/gal_full/zoom/1000 all 404; Drupal does not generate unknown derivatives) and there is no IIIF/zoom (no /iiif, /cantaloupe, /loris, no OpenSeadragon/deepzoom). 544px < 600px in-scope minimum, so every poster/still is below threshold. DFF's dff.film Bildarchiv (2.3M photos) & Plakatarchiv (~42,000 posters/20,000 films) pages have NO online database -- only 'order reproductions / contact archivist' + PDF order forms; the archive portal dif.dff.film redirects to wp-login.php (login-gated WordPress). No /opendata, /api, or /jsonapi (Drupal JSON:API disabled), no data/collection subdomains. Conclusion: own-infra catalogue exists but images too small (<600px) and full archive login-gated.",
+  "source_type": "none",
+  "easy_source_found": "No bulk/OA source. dff.film has no /opendata|/api|/jsonapi and no data.* subdomain (DNS NXDOMAIN). DFF's public catalogue is filmportal.de (Drupal 9/10, robots Allow CSS/JS only) -- but its JSON:API is disabled (/jsonapi -> 404) and all gallery images are size-capped at 544px. DFF pushes selections to Deutsche Digitale Bibliothek (aggregator, forbidden as source). The dif.dff.film archive portal is login-gated (wp-login.php).",
+  "estimated_inscope_count": 0,
+  "script_path": null,
+  "probe_ok": false,
+  "probe_summary": "Found DFF's own-infra catalogue (filmportal.de) with per-film galleries containing real film POSTERS + lobby cards + stills, and confirmed metadata is present. Decisive blocker = resolution: gal_image derivative AND de-styled original both serve 544px-wide JPEGs (e.g. Metropolis poster f000150_af_01: gal_image=544x328, original=544x328 with EXIF master 2479x1494 unserved). All attempts to obtain a larger derivative (custom style names) returned 404; no IIIF. 544px < 600px threshold => no in-scope works retrievable. The full-res Bildarchiv/Plakatarchiv is order-only / login-gated (dif.dff.film -> wp-login.php).",
+  "est_full_count": 0,
+  "est_runtime_min": 0,
+  "exhibitions_entry": {
+    "name": "DFF - Deutsches Filminstitut & Filmmuseum",
+    "name_ko": "독일 영화연구소 & 영화박물관 (DFF)",
+    "city": "Frankfurt",
+    "country": "Germany",
+    "latitude": 50.1035,
+    "longitude": 8.6796,
+    "description": "Germany's national film institute and film museum on Frankfurt's Museumsufer, founded 1949. It holds one of the world's largest film-related collections: a poster archive of roughly 42,000 posters for 20,000 films (silent era to present), a Bildarchiv of about 2.3 million photographs and slides, plus apparatus, costumes and design materials. Selections are published on its own platform filmportal.de, but per-object images there are size-capped (544px) and the full archive is accessible only by order or in the reading room.",
+    "description_ko": "프랑크푸르트 무제움스우퍼(박물관 강변)에 자리한 독일의 국립 영화연구소이자 영화박물관으로, 1949년에 세워졌다. 세계 최대 규모의 영화 관련 컬렉션 가운데 하나를 소장하는데, 무성영화부터 현재까지 영화 2만 편을 아우르는 약 4만 2천 점의 영화 포스터, 약 230만 점의 사진·슬라이드로 이뤄진 이미지 아카이브(Bildarchiv), 그리고 영사기·의상·디자인 자료 등을 갖추고 있다. 일부 자료는 자체 플랫폼 filmportal.de에서 공개하지만 개별 이미지는 해상도가 544px로 제한돼 있고, 전체 아카이브는 대여 신청이나 열람실 방문으로만 볼 수 있다.",
+    "latitude_note": "DFF building, Schaumainkai 41, Frankfurt am Main"
+  },
+  "notes": "NEXT-RANKED 영화 candidate -> viable:false. Two real own-infra surfaces exist but both fail scope: (1) filmportal.de (Drupal) DOES expose posters/lobby-cards/stills with metadata per film via /node/<id>/gallery and /node/<id>/material/<mid>, but image styles cap at 544px (gal_image) / 300px (movie_teaser); de-styled original = same 544px web copy; masters (~2.5k px per EXIF) not served; no large/zoom style (404) and no IIIF -> below 600px. (2) dff.film Bildarchiv (2.3M) & Plakatarchiv (~42k posters) have NO online DB (order-only); the dif.dff.film portal -> wp-login.php (login-gated). robots.txt on www.dff.film currently Disallow:* (says 'test purposes all directives deactivated', Googlebot allowed). filmportal film-URL pattern = /film/<slug>_<32hex>; ~33k film entries enumerable via sitemap.xml?page=40+ . IF DFF later opens a high-res/IIIF endpoint or a public Plakatarchiv DB, revisit -- the ~42k poster corpus would be a strong 영화 fill. For now, recommend a different 영화/poster source. Schloendorff virtual-exhibition microsite (deutsches-filminstitut.de) also <600px (-495x400) and photo-only, not a catalogue."
+}

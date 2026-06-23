@@ -1,0 +1,26 @@
+{
+  "slug": "letterform-archive",
+  "genre": "포스터",
+  "viable": true,
+  "reason": "Museum-own API on oa.letterformarchive.org (Websy platform) is fully machine-readable WITHOUT login. A guest session cookie (X-Online-Archive) is auto-set on the first GET /, and that cookie + a same-origin Referer authorize all data + image endpoints (without it the image route returns 'Not allowed'). LIST: GET /search/items?where=queryid:results0 returns the ENTIRE curated public set of 3,654 'Full Records' in one JSON response (offset/limit ignored server-side, so no pagination). DETAIL: GET /search/item/{workid} returns clean per-item metadata (title, measurements, date_txt, decade, description, attributes{format,discipline,technique,material,country}, people[]{name,involvement,role}, img_front_full). IMAGE: GET /oaapi/image/{workid}/{basename} serves FULL-resolution JPEGs (verified 1984x3000, 2354x3000, up to 7084x9925 — NOT watermarked thumbnails; mid variant is 800px long edge). Image availability is ~100% (30/30 random works downloaded OK). Entirely in-scope flat works: graphic design (1,271), lettering (506), cover design (186), calligraphy (173), packaging (147), illustration (117), printmaking (101), typography (56) + posters/type-specimens/ephemera/book-jackets/broadsides. Probe ran end-to-end (15 works → 9 collected, 6 poster + 3 mixed_media_2d; 1 CDN 404; 5 min-4 drops) with live R2 uploads verified (uploaded WebP fetchable at 1354x2048).",
+  "source_type": "api",
+  "easy_source_found": "No bulk dump / opendata / IIIF. The Online Archive SPA (oa.letterformarchive.org, 'Powered By Websy') exposes an undocumented same-origin REST API that is publicly readable with a guest cookie: /search/items (full list), /search/item/{workid} (detail), /search/allcategories + /search/attribute (facets), /oaapi/image/{mid/}{workid}/{basename} (images). /api, /opendata return the SPA shell (200 but client-routed); robots returns SPA shell too. No Wikimedia/aggregator used — all on museum infra.",
+  "estimated_inscope_count": 3654,
+  "script_path": "/Users/kietzsche/armin-web-main/scripts/scrape-letterform-archive.mjs",
+  "probe_ok": true,
+  "probe_summary": "node scripts/scrape-letterform-archive.mjs --probe : guest cookie acquired → list rowCount=3654 → 15 works processed → 9 collected (poster 6, mixed_media_2d 3), 1 img 404 (lfa_posters_0211 legacy record), 5 min-4 drops (missing artist/year). Output public/data/letterform-archive-collection-probe.json (compact, single-line). Live R2 upload verified: https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/letterform-archive-collection/letterform-archive-lfa_posters_0019-7b992eff-imageUrl.webp = image/webp 1354x2048 (HTTP 200).",
+  "est_full_count": 2200,
+  "est_runtime_min": 35,
+  "exhibitions_entry": {
+    "name": "Letterform Archive",
+    "name_ko": "레터폼 아카이브",
+    "city": "San Francisco",
+    "country": "USA",
+    "latitude": 37.7601,
+    "longitude": -122.3883,
+    "description": "A nonprofit center and library in San Francisco's Dogpatch devoted to lettering, typography, and graphic design. Its collection of 100,000+ items — type specimens, posters, lettering, calligraphy, design ephemera, and rare books spanning 2,000 years — is partly digitized in the Online Archive, an openly browsable catalogue of high-resolution graphic-design works.",
+    "description_ko": "샌프란시스코 도그패치에 자리한 비영리 레터링·타이포그래피·그래픽디자인 전문 아카이브이자 도서관이다. 2,000년에 걸친 활자 견본집, 포스터, 레터링, 캘리그래피, 디자인 인쇄물, 희귀본 등 10만 점이 넘는 소장품을 모았으며, 그 일부를 누구나 둘러볼 수 있는 온라인 아카이브로 고해상도 이미지와 함께 공개하고 있다.",
+    "address": "2325 Third St, Floor 4R, San Francisco, CA 94107"
+  },
+  "notes": "Scope: every record is flat 2D graphic design — category mapped by attributes.format + .discipline + workid prefix (lfa_posters_*→poster, calligraphy/writing-manuals→calligraphy, print techniques→print, else→mixed_media_2d). NOT colour-gated (posters/lettering/design are never grayscale-filtered; LFA 'prints' are design objects, kept). NO pagination — /search/items returns all 3,654 at once; the --full loop iterates that single list, calling /search/item/{workid} per work for clean metadata. Resumable via scripts/.state/letterform-archive-progress.json; failures → letterform-archive-failed.ndjson (404s marked done so resume skips them). ids prefixed 'letterform-archive-'; R2 key artworks/letterform-archive-collection/{id}-{hash8}-imageUrl.webp. min-4 drop rate ~40% (unattributed/undated ephemera) → est ~2,200 final survivors of 3,654. Copyright: footer says 'All images © Letterform Archive' but the Online Archive is openly browsable (guest cookie, no paywall) and images are full-res — same posture as other registered design archives. DID NOT run --full per instructions."
+}
