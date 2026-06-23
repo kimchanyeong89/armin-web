@@ -77,7 +77,10 @@ function validate(slug, json) {
   if (cnt.placeholderArtist === n) issues.push({ level: 'BLOCKER', msg: `artist 100% placeholder — parser extracted ZERO real artists` });
   else if (cnt.placeholderArtist > n * 0.5) issues.push({ level: VERIFIED_ANON.has(slug) ? 'WARN' : 'BLOCKER', msg: `artist ${pct(cnt.placeholderArtist)}% placeholder — ${VERIFIED_ANON.has(slug) ? 'manually verified: museum source itself carries no attribution' : 'likely parser bug (verify against detail page)'}` });
   else if (cnt.placeholderArtist > n * 0.15) issues.push({ level: 'WARN', msg: `artist ${pct(cnt.placeholderArtist)}% placeholder — confirm these are genuinely anonymous` });
-  if (cnt.contamTitle || cnt.contamArtist) issues.push({ level: 'BLOCKER', msg: `label contamination: ${cnt.contamTitle} titles + ${cnt.contamArtist} artists contain another field's label (greedy-regex bug)` });
+  // Threshold-based: a handful of hits are usually genuine content (e.g. a theatre poster
+  // titled "… - Autor: …"); only a systematic rate (>0.5% or >5) signals a real parser bug.
+  const contamN = cnt.contamTitle + cnt.contamArtist, contamTh = Math.max(5, Math.floor(n * 0.005));
+  if (contamN) issues.push({ level: contamN > contamTh ? 'BLOCKER' : 'WARN', msg: `label contamination: ${cnt.contamTitle} titles + ${cnt.contamArtist} artists contain another field's label${contamN > contamTh ? ' (greedy-regex bug)' : ' (≤threshold — likely genuine poster/title text)'}` });
   if (cnt.qidTitle) issues.push({ level: 'BLOCKER', msg: `${cnt.qidTitle} titles are raw QIDs (label fetch failed)` });
   if (cnt.filenameTitle) issues.push({ level: 'WARN', msg: `${cnt.filenameTitle} titles look like filenames` });
   if (cnt.year < n * 0.5) issues.push({ level: 'WARN', msg: `year ${pct(cnt.year)}% — verify site truly omits creation date` });

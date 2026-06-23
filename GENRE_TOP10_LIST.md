@@ -81,7 +81,7 @@
 |---|---|---|---|---|---|
 | 1 | Vitra Design Museum | Weil am Rhein | Germany | 유럽 | ❌ 수집불가 (Probe technically succeeded (open Gr…) |
 | 2 | Design Museum | London | UK | 유럽 | ❌ 수집불가 (No object-level online catalogue exi…) |
-| 3 | Cooper Hewitt, Smithsonian Design Museum | New York | USA | 북미 | ❌ 수집불가 (No object-level online catalogue exi…) |
+| 3 | Cooper Hewitt, Smithsonian Design Museum | New York | USA | 북미 | 🔄 수집중 13,886/16,000 |
 | 4 | Die Neue Sammlung (노이에 잠룽) | Munich | Germany | 유럽 | ✅ `pinakothek-der-moderne` 내 |
 | 5 | MoMA — Architecture & Design | New York | USA | 북미 | ✅ `moma-collection` |
 | 6 | V&A | London | UK | 유럽 | ✅ `vam` |
@@ -90,7 +90,7 @@
 | 9 | Triennale Milano — Museo del Design Italiano | Milan | Italy | 유럽 | ❌ 수집불가 (Triennale Milano runs a dedicated pe…) |
 | 10 | MAK — Museum für angewandte Kunst | Vienna | Austria | 유럽 | 🔄 수집예정 (~21,000) |
 
-## ✏️ 판화·드로잉 (Prints & Drawings) — 보유 9/10
+## ✏️ 판화·드로잉 (Prints & Drawings) — 보유 10/10
 
 | # | 미술관 | 도시 | 국가 | 대륙 | ARMIN |
 |---|---|---|---|---|---|
@@ -99,38 +99,38 @@
 | 3 | Louvre — Cabinet des dessins | Paris | France | 유럽 | ✅ `musee-du-louvre` |
 | 4 | Met — Drawings & Prints | New York | USA | 북미 | ✅ `met-ny` |
 | 5 | Morgan Library & Museum | New York | USA | 북미 | ✅ 보유 9,313점 |
-| 6 | Kupferstichkabinett (베를린 동판화관) | Berlin | Germany | 유럽 | 🔄 수집예정 (~21,000) |
+| 6 | Kupferstichkabinett (베를린 동판화관) | Berlin | Germany | 유럽 | ✅ 보유 13,714점 |
 | 7 | Uffizi — Gabinetto dei Disegni e delle Stampe | Florence | Italy | 유럽 | ✅ `uffizi` |
 | 8 | Ashmolean Museum | Oxford | UK | 유럽 | ✅ `ashmolean` |
 | 9 | Fitzwilliam Museum | Cambridge | UK | 유럽 | ✅ `fitzwilliam` |
 | 10 | Museum Boijmans Van Beuningen | Rotterdam | Netherlands | 유럽 | ✅ `boijmans` |
 
-## 🖼 그래픽디자인·포스터 (Graphic Design & Posters) — 보유 4/10
+## 🖼 그래픽디자인·포스터 (Graphic Design & Posters) — 보유 7/10
 
 | # | 미술관 | 도시 | 국가 | 대륙 | ARMIN |
 |---|---|---|---|---|---|
 | 1 | Stedelijk Museum (그래픽 컬렉션) | Amsterdam | Netherlands | 유럽 | ✅ `stedelijk-museum` |
-| 2 | Museum für Gestaltung (취리히 조형미술관) | Zürich | Switzerland | 유럽 | 🔄 수집중 21,321/24,000 |
+| 2 | Museum für Gestaltung (취리히 조형미술관) | Zürich | Switzerland | 유럽 | ✅ 보유 21,321점 |
 | 3 | V&A | London | UK | 유럽 | ✅ `vam` |
 | 4 | Musée des Arts Décoratifs — 광고·그래픽 | Paris | France | 유럽 | ✅ `mad-paris` |
-| 5 | Plakatmuseum Wilanów (빌라누프 포스터) | Warsaw | Poland | 유럽 | 🔄 수집중 652/652 |
-| 6 | Poster House | New York | USA | 북미 | 🔄 수집중 7,471/7,400 |
-| 7 | Cooper Hewitt | New York | USA | 북미 | 🔄 수집중 7,457/16,000 |
+| 5 | Plakatmuseum Wilanów (빌라누프 포스터) | Warsaw | Poland | 유럽 | ✅ 보유 652점 |
+| 6 | Poster House | New York | USA | 북미 | ✅ 보유 7,471점 |
+| 7 | Cooper Hewitt | New York | USA | 북미 | 🔄 수집중 13,886/16,000 |
 | 8 | Moravská galerie (모라비아 갤러리 — 그래픽 비엔날레) | Brno | Czech Republic | 유럽 | ✅ 보유 21,822점 |
 | 9 | ginza graphic gallery (ggg) / DNP | Tokyo | Japan | 아시아 | ❌ 수집불가 (ggg (ginza graphic gallery) is run b…) |
 | 10 | MAK Vienna | Vienna | Austria | 유럽 | 🔄 수집예정 (~21,000) |
 
-## 💬 만화·애니메이션 (Comics & Animation) — 보유 0/10 ⚠️ 전 장르 공백
+## 💬 만화·애니메이션 (Comics & Animation) — 보유 2/10 ⚠️ 전 장르 공백
 
 | # | 미술관 | 도시 | 국가 | 대륙 | ARMIN |
 |---|---|---|---|---|---|
 | 1 | 三鷹の森ジブリ美術館 (지브리 미술관) | Mitaka | Japan | 아시아 | ❌ 수집불가 (No online collection catalogue. Home…) |
 | 2 | 京都国際マンガミュージアム (교토 국제만화뮤지엄) | Kyoto | Japan | 아시아 | ❌ 수집불가 (No reachable, in-scope, image-servin…) |
-| 3 | Cité de la BD (CIBDI 앙굴렘) | Angoulême | France | 유럽 | 🔄 수집중 2,071/2,450 |
+| 3 | Cité de la BD (CIBDI 앙굴렘) | Angoulême | France | 유럽 | ✅ 보유 2,071점 |
 | 4 | Belgian Comic Strip Center (벨기에 만화센터) | Brussels | Belgium | 유럽 | ❌ 수집불가 (Centre belge de la bande dessinee (M…) |
 | 5 | Billy Ireland Cartoon Library & Museum | Columbus | USA | 북미 | ❌ 수집불가 (Both candidate sources fail the copy…) |
 | 6 | Charles M. Schulz Museum | Santa Rosa | USA | 북미 | ❌ 수집불가 (Charles M. Schulz Museum DOES have a…) |
-| 7 | 한국만화박물관 | Bucheon | South Korea | 아시아 | 🔄 수집중 23/25 |
+| 7 | 한국만화박물관 | Bucheon | South Korea | 아시아 | ✅ 보유 23점 |
 | 8 | 手塚治虫記念館 (데즈카 오사무 기념관) | Takarazuka | Japan | 아시아 | ❌ 수집불가 (403 차단) |
 | 9 | Musée Hergé (에르제 미술관) | Louvain-la-Neuve | Belgium | 유럽 | ❌ 수집불가 (Musée Hergé (Louvain-la-Neuve) has N…) |
 | 10 | Cartoon Art Museum | San Francisco | USA | 북미 | ❌ 수집불가 (No per-object online collection cata…) |
@@ -174,11 +174,11 @@
 
 | Slug | 미술관 | 분야 | 상태 |
 |---|---|---|---|
-| `cooper-hewitt` | Cooper Hewitt | 디자인 | 🔄 수집중 **5,031**/16,000 |
-| `gestaltung-zurich` | Museum für Gestaltung | 포스터 | 🔄 수집중 **21,321**/24,000 |
+| `cooper-hewitt` | Cooper Hewitt | 디자인 | 🔄 수집중 **13,886**/16,000 |
+| `gestaltung-zurich` | Museum für Gestaltung | 포스터 | ✅ merged **21,321**점 |
 | `mak-vienna` | MAK | 디자인 | 🔄 스크립트 준비 (예상 21,000) |
 | `moravian-gallery` | Moravská galerie | 포스터 | ✅ merged **21,822**점 |
-| `kupferstichkabinett` | Kupferstichkabinett (SMB) | 판화드로잉 | 🔄 스크립트 준비 (예상 21,000) |
+| `kupferstichkabinett` | Kupferstichkabinett (SMB) | 판화드로잉 | ✅ merged **13,714**점 |
 | `morgan-library` | Morgan Library | 판화드로잉 | ✅ merged **9,313**점 |
 | `zkm` | ZKM | 미디어아트 | ✅ merged **1,990**점 |
 | `vitra` | Vitra Design Museum | 디자인 | ❌ escalated — Probe technically succeeded (open GraphQL API at collectiononline.design-museum.de/graphql, int |
@@ -192,16 +192,16 @@
 | `designmuseum-dk` | Designmuseum Danmark | 디자인 | ❌ escalated — FLAT-art online catalogues are offline for system migration. |
 | `academy-museum` | Academy Museum | 영화 | ✅ merged **540**점 |
 | `deutsche-kinemathek` | Deutsche Kinemathek | 영화 | ❌ escalated — Museum's only enumerable machine-readable source is the FlowWorks 'FlowCenter' DAM behind a pro |
-| `poster-house` | Poster House | 포스터 | 🔄 스크립트 준비 (예상 7,400) |
-| `wilanow-poster` | Plakatmuseum Wilanów | 포스터 | 🔄 스크립트 준비 (예상 652) |
+| `poster-house` | Poster House | 포스터 | ✅ merged **7,471**점 |
+| `wilanow-poster` | Plakatmuseum Wilanów | 포스터 | ✅ merged **652**점 |
 | `ggg-tokyo` | ginza graphic gallery | 포스터 | ❌ escalated — ggg (ginza graphic gallery) is run by the DNP Foundation for Cultural Promotion (dnpfcp.jp |
 | `kyoto-manga` | 교토 국제만화뮤지엄 | 만화 | ❌ escalated — No reachable, in-scope, image-serving source on the museum's own infra. |
-| `cibdi-angouleme` | CIBDI 앙굴렘 | 만화 | 🔄 수집중 **2,071**/2,450 |
+| `cibdi-angouleme` | CIBDI 앙굴렘 | 만화 | ✅ merged **2,071**점 |
 | `belgian-comic` | Comic Art Museum Brussels | 만화 | ❌ escalated — Centre belge de la bande dessinee (Musee de la BD, Brussels |
 | `herge` | Musée Hergé | 만화 | ❌ escalated — Musée Hergé (Louvain-la-Neuve) has NO open per-object catalogue and images are copyright-locked |
 | `billy-ireland` | Billy Ireland | 만화 | ❌ escalated — Both candidate sources fail the copyright/quality scope. |
 | `schulz` | Schulz Museum | 만화 | ❌ escalated — Charles M. |
-| `korea-manhwa` | 한국만화박물관 | 만화 | 🔄 수집중 **23**/25 |
+| `korea-manhwa` | 한국만화박물관 | 만화 | ✅ merged **23**점 |
 | `cartoon-art-sf` | Cartoon Art Museum | 만화 | ❌ escalated — No per-object online collection catalogue exists. |
 | `ghibli` | 지브리 미술관 | 애니 | ❌ escalated — No online collection catalogue. |
 | `fotomuseum-winterthur` | Fotomuseum Winterthur | 사진 | ❌ escalated — Cloudflare 챌린지 (사전선별) |

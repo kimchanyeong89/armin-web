@@ -34,7 +34,7 @@ const NAME2SLUG = [
   ['ZKM', 'zkm'], ['Julia Stoschek', 'julia-stoschek'],
   ['Cinémathèque', 'cinematheque-fr'], ['Academy Museum', 'academy-museum'], ['Moving Image', 'momi-ny'],
   ['Deutsche Kinemathek', 'deutsche-kinemathek'], ['BFI', 'bfi'], ['KOFA', 'kofa'], ['NFAJ', 'nfaj'], ['映画アーカイブ', 'nfaj'],
-  ['Vitra', 'vitra'], ['Design Museum', 'design-museum-london'], ['Cooper Hewitt', 'cooper-hewitt'],
+  ['Vitra', 'vitra'], ['Cooper Hewitt', 'cooper-hewitt'], ['Design Museum', 'design-museum-london'],
   ['Designmuseum Danmark', 'designmuseum-dk'], ['Triennale', 'triennale'], ['MAK', 'mak-vienna'],
   ['Morgan Library', 'morgan-library'], ['Kupferstichkabinett', 'kupferstichkabinett'],
   ['Museum für Gestaltung', 'gestaltung-zurich'], ['Wilanów', 'wilanow-poster'], ['Poster House', 'poster-house'],

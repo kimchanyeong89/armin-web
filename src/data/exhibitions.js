@@ -7218,5 +7218,113 @@ export const exhibitions = [
     pastExhibitions: [],
     exhibitions: []
   },
+  {
+    id: "gestaltung-zurich",
+    name_ko: "취리히 디자인 미술관",
+    name: "Museum für Gestaltung Zürich",
+    city: "Zürich",
+    country: "Switzerland",
+    latitude: 47.3824,
+    longitude: 8.535,
+    description_ko: "스위스를 대표하는 디자인 미술관. 세계 최대급으로 꼽히는 포스터 컬렉션을 비롯해 그래픽 디자인과 사진 아카이브를 소장하고 있다.",
+    description: "Switzerland's leading museum for design and visual communication, home to one of the world's largest poster collections alongside graphic design, applied arts and photography archives of the ZHdK.",
+    representativeImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/gestaltung-zurich-collection/gestaltung-zurich-180267-77e9017f-imageUrl.webp",
+    permanentExhibitions: [
+      { id: "gestaltung-zurich-collection", name: "Collection", name_en: "Collection", title: "Museum für Gestaltung Zürich — Collection", title_en: "Museum für Gestaltung Zürich — Collection", description: "21,321점 — poster12587·판화5280·사진3454.", description_en: "21,321 works — poster, print, photograph.", startDate: "Permanent", endDate: "Permanent", collectionFile: "gestaltung-zurich-collection.json" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    exhibitions: []
+  },
+  {
+    id: "kupferstichkabinett",
+    name_ko: "베를린 동판화관 (쿠퍼슈티히카비네트)",
+    name: "Kupferstichkabinett (Staatliche Museen zu Berlin)",
+    city: "Berlin",
+    country: "Germany",
+    latitude: 52.5089,
+    longitude: 13.3667,
+    description_ko: "베를린 쿨투어포룸에 자리한 동판화관은 독일 최대 규모의 종이 작품 컬렉션으로, 중세 후기부터 현대까지 약 50만 점의 드로잉, 수채, 판화, 삽화본을 소장한다. 보티첼리와 뒤러, 렘브란트부터 골치우스, 멘첼, 피카소에 이르는 거장들의 종이 위 작업을 만날 수 있다.",
+    description: "The Kupferstichkabinett (Museum of Prints and Drawings) at Berlin's Kulturforum is Germany's largest graphic-arts collection, holding roughly half a million works on paper spanning the late Middle Ages to the present — drawings, watercolours, prints and illustrated books by masters from Botticelli, Dürer and Rembrandt to Goltzius, Menzel and Picasso.",
+    representativeImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/kupferstichkabinett-collection/kupferstichkabinett-447469-67e67365-imageUrl.webp",
+    permanentExhibitions: [
+      { id: "kupferstichkabinett-collection", name: "Collection", name_en: "Collection", title: "Kupferstichkabinett (Staatliche Museen zu Berlin) — Collection", title_en: "Kupferstichkabinett (Staatliche Museen zu Berlin) — Collection", description: "13,714점 — 드로잉13071·판화617·manuscript10·혼합매체8·사진8.", description_en: "13,714 works — drawing, print, manuscript, mixed_media_2d, photograph.", startDate: "Permanent", endDate: "Permanent", collectionFile: "kupferstichkabinett-collection.json" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    exhibitions: []
+  },
+  {
+    id: "cibdi-angouleme",
+    name_ko: "앙굴렘 국제 만화 이미지 센터",
+    name: "Cité internationale de la bande dessinée et de l'image",
+    city: "Angoulême",
+    country: "France",
+    latitude: 45.6531,
+    longitude: 0.1506,
+    description_ko: "샤랑트 강변의 19세기 양조 창고를 개조해 들어선, 유럽을 대표하는 만화 미술관이다. 프랑코-벨기에 만화부터 미국 코믹스, 아시아 망가까지 '제9의 예술' 전반을 아우르며 25,000점이 넘는 만화 원화(planche originale)를 소장한다. 프랑캥, 칼보, 키노, 코제, 생-토강 같은 거장들의 손으로 그린 원화 수천 점을 온라인 카탈로그에서 만날 수 있다.",
+    description: "Europe's foremost museum of comic art, set in restored 19th-century riverside warehouses on the Charente. Its collection holds more than 25,000 original comic boards (planches originales) tracing the ninth art from its Franco-Belgian cradle to American comics and Asian manga; the digitised catalogue serves thousands of original drawings by masters such as Franquin, Calvo, Quino, Cosey and Saint-Ogan.",
+    representativeImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/cibdi-angouleme-collection/cibdi-angouleme-13-6140ca26-imageUrl.webp",
+    permanentExhibitions: [
+      { id: "cibdi-angouleme-collection", name: "Collection", name_en: "Collection", title: "Cité internationale de la bande dessinée et de l'image — Collection", title_en: "Cité internationale de la bande dessinée et de l'image — Collection", description: "2,071점 — 드로잉1805·판화263·혼합매체3.", description_en: "2,071 works — drawing, print, mixed_media_2d.", startDate: "Permanent", endDate: "Permanent", collectionFile: "cibdi-angouleme-collection.json" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    exhibitions: []
+  },
+  {
+    id: "korea-manhwa",
+    name_ko: "한국만화박물관",
+    name: "Korea Manhwa Museum",
+    city: "Bucheon",
+    country: "South Korea",
+    latitude: 37.5047,
+    longitude: 126.7544,
+    description_ko: "한국 최초이자 최대 규모의 만화 전문 박물관으로, 부천에 자리한 한국만화영상진흥원(KOMACON)이 운영한다. 김성환의 「왈순 아지매」, 신문수의 「도깨비 감투」를 비롯해 이두호·길창덕·박재동 등 한국 만화를 일군 거장들의 손그림 원고(원화)를 소장하고 있으며, 만화·잡지·애니메이션 자료까지 폭넓게 아우른다. 원화 소장품은 박물관이 운영하는 만화규장각(KMAS)에 고해상도로 디지털화되어 있다.",
+    description: "Korea's first and largest museum dedicated to manhwa (Korean comics), run by the Korea Manhwa Content Agency (KOMACON) in Bucheon. Its collection preserves original hand-drawn comic-art boards (원화) by the masters who built modern Korean comics — from Kim Song-hwan's 'Wae Sun Ajimae' and Sin Mun-su's 'Dokkaebi Gamtu' to Lee Doo-ho, Gil Chang-deok and Park Jae-dong — alongside an extensive archive of comics, magazines and animation. The original-art holdings are digitized at full resolution in the museum's 만화규장각 (KMAS) archive.",
+    representativeImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/korea-manhwa-collection/korea-manhwa-2-3464255a-imageUrl.webp",
+    permanentExhibitions: [
+      { id: "korea-manhwa-collection", name: "Collection", name_en: "Collection", title: "Korea Manhwa Museum — Collection", title_en: "Korea Manhwa Museum — Collection", description: "23점 — 드로잉23.", description_en: "23 works — drawing.", startDate: "Permanent", endDate: "Permanent", collectionFile: "korea-manhwa-collection.json" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    exhibitions: []
+  },
+  {
+    id: "poster-house",
+    name_ko: "포스터 하우스",
+    name: "Poster House",
+    city: "New York",
+    country: "USA",
+    latitude: 40.7434,
+    longitude: -73.9928,
+    description_ko: "포스터의 예술과 역사를 전문으로 다루는 미국 최초의 미술관. 2019년 맨해튼 첼시에 문을 열었으며, 포스터를 상업적 매체이자 강력한 예술 형식으로 함께 조명한다. 아르누보 광고와 벨에포크 석판화부터 정치 선전 포스터, 사이키델릭 콘서트 포스터, 그리고 동시대 그래픽 디자인에 이르기까지 전 세계 7,500여 점의 포스터를 소장하고 있다.",
+    description: "The first museum in the United States dedicated exclusively to the art and history of posters. Opened in 2019 in Manhattan's Chelsea neighborhood, Poster House presents the poster as both a commercial object and a powerful art form, with a permanent collection of more than 7,500 works spanning the medium's golden age to the present — from Art Nouveau advertising and Belle Epoque lithographs to political propaganda, psychedelic concert posters, and contemporary graphic design from around the world.",
+    representativeImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/poster-house-collection/15279-996aa5fc-imageUrl.webp",
+    permanentExhibitions: [
+      { id: "poster-house-collection", name: "Collection", name_en: "Collection", title: "Poster House — Collection", title_en: "Poster House — Collection", description: "7,471점 — poster7471.", description_en: "7,471 works — poster.", startDate: "Permanent", endDate: "Permanent", collectionFile: "poster-house-collection.json" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    exhibitions: []
+  },
+  {
+    id: "wilanow-poster",
+    name_ko: "빌라누프 포스터 미술관",
+    name: "Poster Museum at Wilanów",
+    city: "Warsaw",
+    country: "Poland",
+    latitude: 52.1648,
+    longitude: 21.0905,
+    description_ko: "1968년 빌라누프 궁전 부지에 문을 연 세계 최초의 포스터 전문 미술관이다. 바르샤바 국립미술관의 분관으로, 폴란드 포스터 화파의 본산이라 할 만한 방대한 포스터 컬렉션을 소장하고 있다. 정치·선전 포스터부터 영화·연극 포스터, 전시·광고 그래픽, 그리고 헨리크 토마셰프스키, 타데우시 그로노프스키, 토마시 사르네츠키 같은 거장들의 원화 디자인까지 폭넓게 아우른다.",
+    description: "Founded in 1968 on the grounds of the Wilanów Palace, this was the world's first museum devoted entirely to poster art. A branch of the National Museum in Warsaw, it holds one of the largest poster collections anywhere — the cornerstone of the celebrated Polish School of Poster — spanning political and propaganda posters, film and theatre bills, exhibition and advertising graphics, and original designs by masters such as Henryk Tomaszewski, Tadeusz Gronowski, and Tomasz Sarnecki.",
+    representativeImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/wilanow-poster-collection/wilanow-poster-228319-c8541604-imageUrl.webp",
+    permanentExhibitions: [
+      { id: "wilanow-poster-collection", name: "Collection", name_en: "Collection", title: "Poster Museum at Wilanów — Collection", title_en: "Poster Museum at Wilanów — Collection", description: "652점 — poster631·드로잉21.", description_en: "652 works — poster, drawing.", startDate: "Permanent", endDate: "Permanent", collectionFile: "wilanow-poster-collection.json" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    exhibitions: []
+  },
 
 ];
