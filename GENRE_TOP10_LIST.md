@@ -30,18 +30,18 @@
 | 9 | Kunsthistorisches Museum (빈 미술사) | Vienna | Austria | 유럽 | ✅ `kunsthistorisches-museum-vienna` |
 | 10 | Alte Pinakothek (알테 피나코테크) | Munich | Germany | 유럽 | ✅ `alte-pinakothek` |
 
-## 📷 사진 (Photography) — 보유 7/10
+## 📷 사진 (Photography) — 보유 9/10
 
 | # | 미술관 | 도시 | 국가 | 대륙 | ARMIN |
 |---|---|---|---|---|---|
 | 1 | MoMA — Dept. of Photography | New York | USA | 북미 | ✅ `moma-collection` |
 | 2 | International Center of Photography (ICP) | New York | USA | 북미 | ✅ `icp-ny` (23,007점) |
-| 3 | George Eastman Museum (이스트먼) | Rochester | USA | 북미 | ❌ 수집불가 (Cloudflare 전면차단) |
+| 3 | Musée Nicéphore Niépce (니엡스) | Chalon-sur-Saône | France | 유럽 | ✅ 보유 19,479점 |
 | 4 | V&A — Photography Centre | London | UK | 유럽 | ✅ `vam` |
 | 5 | Centre Pompidou — Cabinet de la photographie | Paris | France | 유럽 | ✅ `centre-pompidou` |
 | 6 | Maison Européenne de la Photographie (MEP) | Paris | France | 유럽 | ✅ `maison-europeenne-de-la-photographie` |
 | 7 | Foam Photography Museum (포암) | Amsterdam | Netherlands | 유럽 | ✅ `foam-amsterdam` |
-| 8 | Fotomuseum Winterthur | Winterthur | Switzerland | 유럽 | ❌ 수집불가 (Cloudflare 챌린지) |
+| 8 | Huis Marseille | Amsterdam | Netherlands | 유럽 | ✅ 보유 847점 |
 | 9 | Tokyo Photographic Art Museum (도쿄도사진미술관) | Tokyo | Japan | 아시아 | ❌ 수집불가 (Catalogue is excellent and machine-r…) |
 | 10 | Getty Museum — Photographs | Los Angeles | USA | 북미 | ✅ `getty` |
 
@@ -60,12 +60,12 @@
 | 9 | Julia Stoschek Foundation | Düsseldorf/Berlin | Germany | 유럽 | ❌ 수집불가 (Cloudflare 챌린지) |
 | 10 | 부산현대미술관 (MoCA Busan) | Busan | South Korea | 아시아 | ✅ `moca-busan` |
 
-## 🎬 영화 (Film) — 보유 3/10 ⚠️ 최대 갭
+## 🎬 영화 (Film) — 보유 4/10 ⚠️ 최대 갭
 
 | # | 미술관 | 도시 | 국가 | 대륙 | ARMIN |
 |---|---|---|---|---|---|
 | 1 | MoMA — Dept. of Film | New York | USA | 북미 | ✅ `moma-collection` |
-| 2 | La Cinémathèque française | Paris | France | 유럽 | ❌ 수집불가 (La Cinematheque francaise has a larg…) |
+| 2 | Filmmuseum Potsdam | Potsdam | Germany | 유럽 | ✅ 보유 99점 |
 | 3 | EYE Filmmuseum | Amsterdam | Netherlands | 유럽 | ❌ 수집불가 (카탈로그 로그인 전용) |
 | 4 | Academy Museum of Motion Pictures | Los Angeles | USA | 북미 | ✅ 보유 540점 |
 | 5 | Museum of the Moving Image (MoMI) | New York | USA | 북미 | ❌ 수집불가 (Cloudflare 차단) |
@@ -75,18 +75,18 @@
 | 9 | 한국영상자료원 (KOFA) | Seoul | South Korea | 아시아 | ❌ 수집불가 (KMDb Open API가 API 키 필수(kmdb.or.kr 또…) |
 | 10 | 国立映画アーカイブ (NFAJ) | Tokyo | Japan | 아시아 | ✅ 보유 4,754점 |
 
-## 🪑 제품·산업디자인 (Product & Industrial Design) — 보유 4/10
+## 🪑 제품·산업디자인 (Product & Industrial Design) — 보유 8/10
 
 | # | 미술관 | 도시 | 국가 | 대륙 | ARMIN |
 |---|---|---|---|---|---|
-| 1 | Vitra Design Museum | Weil am Rhein | Germany | 유럽 | ❌ 수집불가 (Probe technically succeeded (open Gr…) |
-| 2 | Design Museum | London | UK | 유럽 | ❌ 수집불가 (No object-level online catalogue exi…) |
-| 3 | Cooper Hewitt, Smithsonian Design Museum | New York | USA | 북미 | 🔄 수집중 16,102/16,000 |
+| 1 | CNAP (프랑스 국립조형예술센터) | Paris | France | 유럽 | ✅ 보유 25,658점 |
+| 2 | Powerhouse Museum | Sydney | Australia | 오세아니아 | ✅ 보유 7,751점 |
+| 3 | Cooper Hewitt, Smithsonian Design Museum | New York | USA | 북미 | ✅ 보유 18,597점 |
 | 4 | Die Neue Sammlung (노이에 잠룽) | Munich | Germany | 유럽 | ✅ `pinakothek-der-moderne` 내 |
 | 5 | MoMA — Architecture & Design | New York | USA | 북미 | ✅ `moma-collection` |
 | 6 | V&A | London | UK | 유럽 | ✅ `vam` |
 | 7 | Musée des Arts Décoratifs (MAD) | Paris | France | 유럽 | ✅ `mad-paris` |
-| 8 | Designmuseum Danmark | Copenhagen | Denmark | 유럽 | ❌ 수집불가 (FLAT-art online catalogues are offli…) |
+| 8 | Nationalmuseum (스웨덴 국립) | Stockholm | Sweden | 유럽 | ✅ 보유 7,826점 |
 | 9 | Triennale Milano — Museo del Design Italiano | Milan | Italy | 유럽 | ❌ 수집불가 (Triennale Milano runs a dedicated pe…) |
 | 10 | MAK — Museum für angewandte Kunst | Vienna | Austria | 유럽 | 🔄 수집예정 (~21,000) |
 
@@ -105,7 +105,7 @@
 | 9 | Fitzwilliam Museum | Cambridge | UK | 유럽 | ✅ `fitzwilliam` |
 | 10 | Museum Boijmans Van Beuningen | Rotterdam | Netherlands | 유럽 | ✅ `boijmans` |
 
-## 🖼 그래픽디자인·포스터 (Graphic Design & Posters) — 보유 7/10
+## 🖼 그래픽디자인·포스터 (Graphic Design & Posters) — 보유 9/10
 
 | # | 미술관 | 도시 | 국가 | 대륙 | ARMIN |
 |---|---|---|---|---|---|
@@ -115,9 +115,9 @@
 | 4 | Musée des Arts Décoratifs — 광고·그래픽 | Paris | France | 유럽 | ✅ `mad-paris` |
 | 5 | Plakatmuseum Wilanów (빌라누프 포스터) | Warsaw | Poland | 유럽 | ✅ 보유 652점 |
 | 6 | Poster House | New York | USA | 북미 | ✅ 보유 7,471점 |
-| 7 | Cooper Hewitt | New York | USA | 북미 | 🔄 수집중 16,102/16,000 |
+| 7 | Cooper Hewitt | New York | USA | 북미 | ✅ 보유 18,597점 |
 | 8 | Moravská galerie (모라비아 갤러리 — 그래픽 비엔날레) | Brno | Czech Republic | 유럽 | ✅ 보유 21,822점 |
-| 9 | ginza graphic gallery (ggg) / DNP | Tokyo | Japan | 아시아 | ❌ 수집불가 (ggg (ginza graphic gallery) is run b…) |
+| 9 | Letterform Archive | San Francisco | USA | 북미 | ✅ 보유 5,560점 |
 | 10 | MAK Vienna | Vienna | Austria | 유럽 | 🔄 수집예정 (~21,000) |
 
 ## 💬 만화 (Comics / Manga / BD) — 보유 2/10
@@ -169,21 +169,21 @@
 | 9 | Museo Reina Sofía | Madrid | Spain | 유럽 | ✅ `museo-reina-sofia` |
 | 10 | The Broad | Los Angeles | USA | 북미 | ✅ `thebroad` |
 
-## 🏛 건축 (Architecture) — 보유 4/10
+## 🏛 건축 (Architecture) — 보유 7/10
 
 건축 드로잉·도면·렌더링·스케치 + 건축사진 등 **평면작만** (3D 모형·건물 자체는 스코프 외). 회화처럼 단독 미술관보다 종합관의 A&D 부서가 많아, 보유 4곳은 등록된 종합관의 건축 부서.
 
 | # | 미술관 | 도시 | 국가 | 대륙 | ARMIN |
 |---|---|---|---|---|---|
-| 1 | Canadian Centre for Architecture (CCA) | Montreal | Canada | 북미 | 🔄 시도예정 |
+| 1 | Canadian Centre for Architecture (CCA) | Montreal | Canada | 북미 | 🔄 수집중 10,697/37,000 |
 | 2 | MoMA — Architecture & Design | New York | USA | 북미 | ✅ 보유 (`moma-collection` 내) |
-| 3 | RIBA Collections (RIBApix) | London | UK | 유럽 | ❌ 수집불가 (Cloudflare 차단) |
+| 3 | RIBA Collections (RIBApix) | London | UK | 유럽 | ⚪ 미시도 |
 | 4 | Centre Pompidou — Architecture | Paris | France | 유럽 | ✅ 보유 (`centre-pompidou` 내) |
 | 5 | Sir John Soane's Museum | London | UK | 유럽 | ✅ 보유 (`soane-museum`) |
-| 6 | Het Nieuwe Instituut (네덜란드 건축아카이브) | Rotterdam | Netherlands | 유럽 | 🔄 시도예정 |
-| 7 | Cité de l'architecture et du patrimoine | Paris | France | 유럽 | 🔄 시도예정 |
-| 8 | Deutsches Architekturmuseum (DAM) | Frankfurt | Germany | 유럽 | 🔄 시도예정 |
-| 9 | Avery Architectural & Fine Arts Library (Columbia) | New York | USA | 북미 | 🔄 시도예정 |
+| 6 | Het Nieuwe Instituut (네덜란드 건축아카이브) | Rotterdam | Netherlands | 유럽 | ✅ 보유 470점 |
+| 7 | Cité de l'architecture et du patrimoine | Paris | France | 유럽 | ✅ 보유 1,290점 |
+| 8 | Deutsches Architekturmuseum (DAM) | Frankfurt | Germany | 유럽 | ✅ 보유 1,454점 |
+| 9 | Avery Architectural & Fine Arts Library (Columbia) | New York | USA | 북미 | 🔄 수집예정 (~5,500) |
 | 10 | Art Institute of Chicago — Architecture & Design | Chicago | USA | 북미 | ✅ 보유 (`art-institute-of-chicago` 내) |
 
 ---
@@ -210,7 +210,7 @@
 
 | Slug | 미술관 | 분야 | 상태 |
 |---|---|---|---|
-| `cooper-hewitt` | Cooper Hewitt | 디자인 | 🔄 수집중 **16,102**/16,000 |
+| `cooper-hewitt` | Cooper Hewitt | 디자인 | 🔄 수집중 **18,597**/16,000 |
 | `gestaltung-zurich` | Museum für Gestaltung | 포스터 | ✅ merged **21,321**점 |
 | `mak-vienna` | MAK | 디자인 | 🔄 스크립트 준비 (예상 21,000) |
 | `moravian-gallery` | Moravská galerie | 포스터 | ✅ merged **21,822**점 |

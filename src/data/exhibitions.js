@@ -7398,5 +7398,131 @@ export const exhibitions = [
     pastExhibitions: [],
     exhibitions: []
   },
+  {
+    id: "cooper-hewitt",
+    name_ko: "쿠퍼 휴잇 스미스소니언 디자인 미술관",
+    name: "Cooper Hewitt, Smithsonian Design Museum",
+    city: "New York",
+    country: "USA",
+    latitude: 40.7843,
+    longitude: -73.9578,
+    description_ko: "앤드루 카네기의 5번가 저택에 자리한 미국 유일의 디자인 전문 미술관. 르네상스 장식 드로잉부터 현대 그래픽 디자인까지 5세기에 걸친 디자인 소장품으로 손꼽히는 곳이다.",
+    description: "America's only museum devoted exclusively to historic and contemporary design, housed in Andrew Carnegie's Fifth Avenue mansion. Its world-renowned drawings, prints, and graphic design holdings span five centuries of design history.",
+    representativeImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/cooper-hewitt-collection/cooper-hewitt-chndm_1896-29-1-0bce12dc-imageUrl.webp",
+    permanentExhibitions: [
+      { id: "cooper-hewitt-collection", name: "Collection", name_en: "Collection", title: "Cooper Hewitt, Smithsonian Design Museum — Collection", title_en: "Cooper Hewitt, Smithsonian Design Museum — Collection", description: "18,597점 — 드로잉11785·판화6596·회화153·사진63.", description_en: "18,597 works — drawing, print, painting, photograph.", startDate: "Permanent", endDate: "Permanent", collectionFile: "cooper-hewitt-collection.json" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    exhibitions: []
+  },
+  {
+    id: "niepce-chalon",
+    name_ko: "니세포르 니엡스 박물관",
+    name: "Musée Nicéphore Niépce",
+    city: "Chalon-sur-Saône",
+    country: "France",
+    latitude: 46.7806,
+    longitude: 4.8531,
+    description_ko: "사진술의 발명자 니세포르 니엡스가 1827년 인류 최초의 사진을 찍은 도시 샬롱쉬르손에 자리한 시립 사진 박물관이다. 사진의 역사 전체를 다루는 세계 유일의 종합 사진 박물관으로, 19세기부터 현재까지 거의 모든 사진 기법을 아우르는 약 400만 점의 이미지와 카메라, 사진이 실린 서적을 소장하고 있다. 무료 이미지 뱅크 'Open musée Niépce'를 통해 소장품 중 저작권이 자유로운 사진 2만 점을 공개한다.",
+    description: "Municipal museum of photography in Chalon-sur-Saône, the birthplace of Nicéphore Niépce, who made the first surviving photograph here in 1827. The only generalist museum devoted to the entire history of photography, it holds roughly four million images spanning every photographic process from the 19th century to today, alongside cameras and photographically illustrated books. Its free 'Open musée Niépce' image bank shares 20,000 rights-free photographs from the collection.",
+    representativeImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/niepce-chalon-collection/niepce-chalon-1-81ba542b-imageUrl.webp",
+    permanentExhibitions: [
+      { id: "niepce-chalon-collection", name: "Collection", name_en: "Collection", title: "Musée Nicéphore Niépce — Collection", title_en: "Musée Nicéphore Niépce — Collection", description: "19,479점 — 사진19479.", description_en: "19,479 works — photograph.", startDate: "Permanent", endDate: "Permanent", collectionFile: "niepce-chalon-collection.json" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    exhibitions: []
+  },
+  {
+    id: "powerhouse-sydney",
+    name_ko: "파워하우스 박물관",
+    name: "Powerhouse Museum",
+    city: "Sydney",
+    country: "Australia",
+    latitude: -33.8786,
+    longitude: 151.1996,
+    description_ko: "시드니 얼티모에 자리한 호주 최대의 응용미술·과학 박물관으로, 옛 이름은 응용미술과학박물관(MAAS)이다. 디자인·기술·장식미술을 아우르는 방대한 소장품 가운데 평면 작업은 그래픽·산업 디자인 중심으로, 포스터와 광고물, 디자인 드로잉과 건축 도면, 삽화 판화, 그리고 폭넓은 사진 아카이브가 고해상 이미지와 함께 온라인에 공개돼 있다.",
+    description: "Australia's largest museum of applied arts and sciences (the former Museum of Applied Arts and Sciences, MAAS), in Sydney's Ultimo. Its sprawling collection spans design, technology and decorative arts; the flat holdings most relevant here are graphic and industrial design works on paper — posters, advertising and design drawings, architectural drawings, illustrated prints and a deep photography archive — published online with open high-resolution imaging.",
+    representativeImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/powerhouse-sydney-collection/1013312-0adad3f7-imageUrl.webp",
+    permanentExhibitions: [
+      { id: "powerhouse-sydney-collection", name: "Collection", name_en: "Collection", title: "Powerhouse Museum — Collection", title_en: "Powerhouse Museum — Collection", description: "7,751점 — 사진4162·판화3589.", description_en: "7,751 works — photograph, print.", startDate: "Permanent", endDate: "Permanent", collectionFile: "powerhouse-sydney-collection.json" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    exhibitions: []
+  },
+  {
+    id: "cnap-france",
+    name_ko: "국립조형예술센터 (Cnap)",
+    name: "Centre national des arts plastiques (Cnap)",
+    city: "Paris",
+    country: "France",
+    latitude: 48.8917,
+    longitude: 2.2389,
+    description_ko: "프랑스의 국가 현대미술 컬렉션(Fonds national d'art contemporain)으로, 1791년 지금의 형태로 출발해 두 세기에 걸쳐 모은 작품이 10만 8천 점을 넘는다. Cnap은 자체 전시장 없이 작품을 프랑스 전역 기관에 대여·기탁하는 기관이지만, 그중 9만 점 이상을 Navigart 기반 온라인 컬렉션으로 공개한다. 사진 캐비닛·판화소묘 캐비닛·디자인 컬렉션이 두텁게 갖춰져 있어, 사진과 드로잉, 포스터, 디자인 작업을 찾기에 가장 풍부한 공공 소스 중 하나다.",
+    description: "France's national contemporary-art collection (Fonds national d'art contemporain), founded in its modern form in 1791 and holding over 108,000 works acquired across more than two centuries. The CNAP does not have its own galleries — it lends and deposits works across French institutions — but publishes more than 90,000 of them through its Navigart-powered online collection. Its photography cabinet, graphic-arts cabinet and design holdings make it one of the richest public sources for photographs, drawings, posters and design works.",
+    representativeImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/cnap-france-collection/150000000003780-1a365d99-imageUrl.webp",
+    permanentExhibitions: [
+      { id: "cnap-france-collection", name: "Collection", name_en: "Collection", title: "Centre national des arts plastiques (Cnap) — Collection", title_en: "Centre national des arts plastiques (Cnap) — Collection", description: "25,658점 — 사진17249·드로잉6835·판화1497·혼합매체77.", description_en: "25,658 works — photograph, drawing, print, mixed_media_2d.", startDate: "Permanent", endDate: "Permanent", collectionFile: "cnap-france-collection.json" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    exhibitions: []
+  },
+  {
+    id: "het-nieuwe-instituut",
+    name_ko: "니우어 인스티튜트",
+    name: "Nieuwe Instituut",
+    city: "Rotterdam",
+    country: "Netherlands",
+    latitude: 51.9148,
+    longitude: 4.4726,
+    description_ko: "네덜란드 건축·디자인·디지털문화 국립기관으로, '네덜란드 건축·도시계획 국가컬렉션'을 보존한다. 수백 명의 건축가 아카이브에 걸친 약 450만 점의 자료를 소장한 세계 최대 규모의 건축 컬렉션 가운데 하나다. 로테르담 뮈세윔파르크에 자리한 요 쿠넨 설계의 건물에 있으며, 소장 카탈로그를 오픈 링크드 데이터로 공개한다. 빌럼 마리뉘스 뒤독, 판 덴 브룩 엔 바케마, J. 흐라타마 같은 건축가들이 남긴 원본 건축 드로잉·평면도·단면도·입면도·청사진·사진 수천 점이 포함된다.",
+    description: "The Netherlands' national institute for architecture, design and digital culture, custodian of the National Collection for Dutch Architecture and Urban Planning — around 4.5 million documents across hundreds of architects' archives, one of the world's largest architecture collections. Housed in Jo Coenen's landmark building on Rotterdam's Museumpark, it publishes its catalogue as open linked data, including thousands of original architectural drawings, plans, sections, elevations, blueprints and photographs by figures such as Willem Marinus Dudok, Van den Broek en Bakema and J. Gratama.",
+    representativeImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/het-nieuwe-instituut-collection/het-nieuwe-instituut-10335-d763d616-imageUrl.webp",
+    permanentExhibitions: [
+      { id: "het-nieuwe-instituut-collection", name: "Collection", name_en: "Collection", title: "Nieuwe Instituut — Collection", title_en: "Nieuwe Instituut — Collection", description: "470점 — 드로잉463·사진7.", description_en: "470 works — drawing, photograph.", startDate: "Permanent", endDate: "Permanent", collectionFile: "het-nieuwe-instituut-collection.json" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    exhibitions: []
+  },
+  {
+    id: "cite-architecture",
+    name_ko: "건축·문화유산 박물관 (시테 드 라르시텍튀르)",
+    name: "Cité de l'architecture et du patrimoine",
+    city: "Paris",
+    country: "France",
+    latitude: 48.8625,
+    longitude: 2.2875,
+    description_ko: "에펠탑 맞은편 샤요궁에 자리한 프랑스 국립 건축·문화유산 박물관이다. 중세·르네상스 기념물의 석고 주형과 건축 모형은 물론, 19세기부터 21세기까지 프랑스 건축 유산을 기록한 방대한 건축 도면과 사진을 소장하고 있다.",
+    description: "France's national museum of architecture and heritage, housed in the Palais de Chaillot facing the Eiffel Tower. Its collection spans plaster casts of medieval and Renaissance monuments, scale models, and an extensive holding of architectural drawings and photographs documenting French built heritage from the 19th to 21st centuries.",
+    representativeImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/cite-architecture-collection/cite-architecture-1998.1.10-9bf3e1b4-imageUrl.webp",
+    permanentExhibitions: [
+      { id: "cite-architecture-collection", name: "Collection", name_en: "Collection", title: "Cité de l'architecture et du patrimoine — Collection", title_en: "Cité de l'architecture et du patrimoine — Collection", description: "1,290점 — 드로잉1077·사진213.", description_en: "1,290 works — drawing, photograph.", startDate: "Permanent", endDate: "Permanent", collectionFile: "cite-architecture-collection.json" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    exhibitions: []
+  },
+  {
+    id: "dam-frankfurt",
+    name_ko: "독일 건축박물관 (DAM)",
+    name: "Deutsches Architekturmuseum (DAM)",
+    city: "Frankfurt",
+    country: "Germany",
+    latitude: 50.1033,
+    longitude: 8.6722,
+    description_ko: "1979년 설립된 독일의 국립 건축박물관으로, 프랑크푸르트 마인강 남안 박물관 거리(무제움스우퍼)에 자리한다. 디지털 컬렉션을 통해 수천 점의 건축 도면·평면도·트레이싱·렌더링·사진을 CC BY-NC-SA 라이선스로 공개하며, 전후 비전 건축(귄터 보크, 아키그램, O. M. 웅거스, 고트프리트 뵘)부터 현대 건축까지 아우른다. 자체 IIIF 뷰어로 고해상도 이미지를 제공한다.",
+    description: "Germany's national museum of architecture, founded in 1979 on Frankfurt's Museumsufer. Its digital collection makes thousands of architectural drawings, plans, tracings, renderings and photographs freely accessible under CC BY-NC-SA — spanning visionary postwar designs (Günter Bock, Archigram, O. M. Ungers, Gottfried Böhm) to contemporary practices, served at high resolution via the museum's own IIIF viewer.",
+    representativeImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/dam-frankfurt-collection/dam-frankfurt-432bc868-58da-4ca5-af3f-6029be59326a-8427d459-imageUrl.webp",
+    permanentExhibitions: [
+      { id: "dam-frankfurt-collection", name: "Collection", name_en: "Collection", title: "Deutsches Architekturmuseum (DAM) — Collection", title_en: "Deutsches Architekturmuseum (DAM) — Collection", description: "1,454점 — 드로잉1297·사진157.", description_en: "1,454 works — drawing, photograph.", startDate: "Permanent", endDate: "Permanent", collectionFile: "dam-frankfurt-collection.json" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    exhibitions: []
+  },
 
 ];

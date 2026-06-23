@@ -26,7 +26,7 @@ function liveCount(slug) {
   if (fs.existsSync(pf)) { try { const j = JSON.parse(fs.readFileSync(pf, 'utf8')); if (j.works) return Object.values(j.works).filter((w) => w && w.status === 'ok').length; if (j.done) return Object.values(j.done).filter((d) => d && d.s === 'ok').length; } catch {} }
   return null;
 }
-function gap(slug) { const f = P + 'gap1-results/' + slug + '.json'; if (fs.existsSync(f)) { try { return JSON.parse(fs.readFileSync(f, 'utf8')); } catch {} } return null; }
+function gap(slug) { for (const d of ['gap1-results', 'gap2-results', 'gap3-results', 'gap4-results', 'gap5-results']) { const f = P + d + '/' + slug + '.json'; if (fs.existsSync(f)) { try { return JSON.parse(fs.readFileSync(f, 'utf8')); } catch {} } } return null; }
 
 // genre-table museum-name substring → gap slug (only for the rows we've worked on)
 const NAME2SLUG = [
@@ -43,6 +43,14 @@ const NAME2SLUG = [
   ['Cité de la BD', 'cibdi-angouleme'], ['CIBDI', 'cibdi-angouleme'], ['Belgian Comic', 'belgian-comic'],
   ['Billy Ireland', 'billy-ireland'], ['Schulz', 'schulz'], ['한국만화박물관', 'korea-manhwa'],
   ['手塚治虫', 'tezuka'], ['데즈카', 'tezuka'], ['Hergé', 'herge'], ['Cartoon Art', 'cartoon-art-sf'],
+  // next-ranked fillers (gap2-5)
+  ['Nicéphore Niépce', 'niepce-chalon'], ['Huis Marseille', 'huis-marseille'], ['Nationalmuseum', 'nationalmuseum-se'],
+  ['Filmmuseum Potsdam', 'filmmuseum-potsdam'], ['Letterform Archive', 'letterform-archive'], ['Powerhouse', 'powerhouse-sydney'],
+  ['CNAP', 'cnap-france'], ['LIMA', 'li-ma'],
+  // architecture
+  ['Canadian Centre for Architecture', 'cca-montreal'], ['Het Nieuwe Instituut', 'het-nieuwe-instituut'],
+  ['Cité de l\'architecture', 'cite-architecture'], ['Deutsches Architekturmuseum', 'dam-frankfurt'], ['Avery', 'avery-columbia'],
+  ['RIBA', 'riba'],
 ];
 
 // pre-filter (curl) escalations that never got a gap1-results file — keyed by name substring

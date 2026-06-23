@@ -31,17 +31,11 @@ function collected(slug) {
   }
   return null;
 }
-function estimate(slug) {
-  const f = P + 'gap1-results/' + slug + '.json';
-  if (fs.existsSync(f)) { try { const d = JSON.parse(fs.readFileSync(f, 'utf8')); return d.est_full_count || d.estimated_inscope_count || null; } catch {} }
-  return null;
-}
+const GAP_DIRS = ['gap1-results', 'gap2-results', 'gap3-results', 'gap4-results', 'gap5-results'];
+function readGap(slug) { for (const d of GAP_DIRS) { const f = P + d + '/' + slug + '.json'; if (fs.existsSync(f)) { try { return JSON.parse(fs.readFileSync(f, 'utf8')); } catch {} } } return null; }
+function estimate(slug) { const d = readGap(slug); return d ? (d.est_full_count || d.estimated_inscope_count || null) : null; }
 // viable:false from an agent probe → escalation note (first sentence of reason)
-function escalatedReason(slug) {
-  const f = P + 'gap1-results/' + slug + '.json';
-  if (fs.existsSync(f)) { try { const d = JSON.parse(fs.readFileSync(f, 'utf8')); if (d.viable === false) return (d.reason || '').split(/(?<=[.。])\s|;|—/)[0].slice(0, 95).trim(); } catch {} }
-  return null;
-}
+function escalatedReason(slug) { const d = readGap(slug); if (d && d.viable === false) return (d.reason || '').split(/(?<=[.。])\s|;|—/)[0].slice(0, 95).trim(); return null; }
 
 const lines = fs.readFileSync(DOC, 'utf8').split('\n');
 let touched = 0;
