@@ -30,7 +30,7 @@
 | 9 | Kunsthistorisches Museum (빈 미술사) | Vienna | Austria | 유럽 | ✅ `kunsthistorisches-museum-vienna` |
 | 10 | Alte Pinakothek (알테 피나코테크) | Munich | Germany | 유럽 | ✅ `alte-pinakothek` |
 
-## 📷 사진 (Photography) — 보유 9/10
+## 📷 사진 (Photography) — 보유 10/10
 
 | # | 미술관 | 도시 | 국가 | 대륙 | ARMIN |
 |---|---|---|---|---|---|
@@ -42,7 +42,7 @@
 | 6 | Maison Européenne de la Photographie (MEP) | Paris | France | 유럽 | ✅ `maison-europeenne-de-la-photographie` |
 | 7 | Foam Photography Museum (포암) | Amsterdam | Netherlands | 유럽 | ✅ `foam-amsterdam` |
 | 8 | Huis Marseille | Amsterdam | Netherlands | 유럽 | ✅ 보유 847점 |
-| 9 | Tokyo Photographic Art Museum (도쿄도사진미술관) | Tokyo | Japan | 아시아 | ❌ 수집불가 (Catalogue is excellent and machine-r…) |
+| 9 | FOMU — FotoMuseum Antwerpen | Antwerp | Belgium | 유럽 | ✅ 보유 3,050점 |
 | 10 | Getty Museum — Photographs | Los Angeles | USA | 북미 | ✅ `getty` |
 
 ## 📺 비디오·미디어아트 (Video & Media Art) — 보유 10/10
@@ -75,7 +75,7 @@
 | 9 | 한국영상자료원 (KOFA) | Seoul | South Korea | 아시아 | ❌ 수집불가 (KMDb Open API가 API 키 필수(kmdb.or.kr 또…) |
 | 10 | 国立映画アーカイブ (NFAJ) | Tokyo | Japan | 아시아 | ✅ 보유 4,754점 |
 
-## 🪑 제품·산업디자인 (Product & Industrial Design) — 보유 9/10
+## 🪑 제품·산업디자인 (Product & Industrial Design) — 보유 10/10
 
 | # | 미술관 | 도시 | 국가 | 대륙 | ARMIN |
 |---|---|---|---|---|---|
@@ -87,8 +87,8 @@
 | 6 | V&A | London | UK | 유럽 | ✅ `vam` |
 | 7 | Musée des Arts Décoratifs (MAD) | Paris | France | 유럽 | ✅ `mad-paris` |
 | 8 | Nationalmuseum (스웨덴 국립) | Stockholm | Sweden | 유럽 | ✅ 보유 7,826점 |
-| 9 | Triennale Milano — Museo del Design Italiano | Milan | Italy | 유럽 | ❌ 수집불가 (Triennale Milano runs a dedicated pe…) |
-| 10 | MAK — Museum für angewandte Kunst | Vienna | Austria | 유럽 | ✅ 보유 23,848점 |
+| 9 | Museum für Kunst und Gewerbe Hamburg (MKG) | Hamburg | Germany | 유럽 | ✅ 보유 17,547점 |
+| 10 | MAK — Museum für angewandte Kunst | Vienna | Austria | 유럽 | ✅ 보유 24,000점 |
 
 ## ✏️ 판화·드로잉 (Prints & Drawings) — 보유 10/10
 
@@ -118,7 +118,7 @@
 | 7 | Cooper Hewitt | New York | USA | 북미 | ✅ 보유 18,597점 |
 | 8 | Moravská galerie (모라비아 갤러리 — 그래픽 비엔날레) | Brno | Czech Republic | 유럽 | ✅ 보유 21,822점 |
 | 9 | Letterform Archive | San Francisco | USA | 북미 | ✅ 보유 5,560점 |
-| 10 | MAK Vienna | Vienna | Austria | 유럽 | ✅ 보유 23,848점 |
+| 10 | MAK Vienna | Vienna | Austria | 유럽 | ✅ 보유 24,000점 |
 
 ## 💬 만화·애니메이션 (Comics · Animation) — 보유 2/10 ⚠️ 구조적 천장
 
@@ -152,7 +152,7 @@
 | 9 | Museo Reina Sofía | Madrid | Spain | 유럽 | ✅ `museo-reina-sofia` |
 | 10 | The Broad | Los Angeles | USA | 북미 | ✅ `thebroad` |
 
-## 🏛 건축 (Architecture) — 보유 9/10
+## 🏛 건축 (Architecture) — 보유 10/10
 
 건축 드로잉·도면·렌더링·스케치 + 건축사진 등 **평면작만** (3D 모형·건물 자체는 스코프 외). 회화처럼 단독 미술관보다 종합관의 A&D 부서가 많아, 보유 4곳은 등록된 종합관의 건축 부서.
 
@@ -160,7 +160,7 @@
 |---|---|---|---|---|---|
 | 1 | Canadian Centre for Architecture (CCA) | Montreal | Canada | 북미 | ✅ 보유 19,301점 |
 | 2 | MoMA — Architecture & Design | New York | USA | 북미 | ✅ 보유 (`moma-collection` 내) |
-| 3 | RIBA Collections (RIBApix) | London | UK | 유럽 | ⚪ 미시도 |
+| 3 | Frac Centre-Val de Loire | Orléans | France | 유럽 | ✅ 보유 9,260점 |
 | 4 | Centre Pompidou — Architecture | Paris | France | 유럽 | ✅ 보유 (`centre-pompidou` 내) |
 | 5 | Sir John Soane's Museum | London | UK | 유럽 | ✅ 보유 (`soane-museum`) |
 | 6 | Het Nieuwe Instituut (네덜란드 건축아카이브) | Rotterdam | Netherlands | 유럽 | ✅ 보유 470점 |
@@ -195,7 +195,7 @@
 |---|---|---|---|
 | `cooper-hewitt` | Cooper Hewitt | 디자인 | ✅ merged **18,597**점 |
 | `gestaltung-zurich` | Museum für Gestaltung | 포스터 | ✅ merged **21,321**점 |
-| `mak-vienna` | MAK | 디자인 | ✅ merged **23,848**점 |
+| `mak-vienna` | MAK | 디자인 | ✅ merged **24,000**점 |
 | `moravian-gallery` | Moravská galerie | 포스터 | ✅ merged **21,822**점 |
 | `kupferstichkabinett` | Kupferstichkabinett (SMB) | 판화드로잉 | ✅ merged **13,714**점 |
 | `morgan-library` | Morgan Library | 판화드로잉 | ✅ merged **9,313**점 |

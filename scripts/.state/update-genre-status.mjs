@@ -54,6 +54,9 @@ const NAME2SLUG = [
   // gap6 fillers
   ['Ars Electronica', 'ars-electronica'], ['Architekturzentrum Wien', 'azw-vienna'], ['Az W', 'azw-vienna'],
   ['Die Neue Sammlung', 'neue-sammlung'],
+  // gap7 last-slot fillers
+  ['FOMU', 'fomu-antwerp'], ['FotoMuseum Antwerpen', 'fomu-antwerp'],
+  ['Kunst und Gewerbe', 'mkg-hamburg'], ['MKG', 'mkg-hamburg'], ['Frac Centre', 'frac-centre'],
 ];
 
 // pre-filter (curl) escalations that never got a gap1-results file — keyed by name substring

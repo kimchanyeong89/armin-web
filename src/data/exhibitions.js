@@ -6859,6 +6859,24 @@ export const exhibitions = [
     exhibitions: []
   },
   {
+    id: "fomu-antwerp",
+    name_ko: "포토뮤지엄 안트베르펜 (FOMU)",
+    name: "FOMU — FotoMuseum Antwerpen",
+    city: "Antwerp",
+    country: "Belgium",
+    latitude: 51.20884,
+    longitude: 4.38733,
+    description_ko: "안트베르펜 남부 부둣가에 자리한 벨기에 플란데런의 사진 전문 미술관. 19세기 초기 인화부터 동시대 작가까지 사진의 역사를 폭넓게 아우르며, 온라인 카탈로그로 수만 점의 소장 사진을 공개한다.",
+    description: "Flanders' museum of photography, on Antwerp's southern docks. Its holdings trace the medium from early 19th-century prints to contemporary practice, with tens of thousands of catalogued photographs published through its online collection.",
+    representativeImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/fomu-antwerp-collection/fomu-antwerp-40161-1aea4412-imageUrl.webp",
+    permanentExhibitions: [
+      { id: "fomu-antwerp-collection", name: "Collection", name_en: "Collection", title: "FOMU — Collection", title_en: "FOMU — Collection", description: "사진 — 19세기 초기 인화부터 동시대 작가까지.", description_en: "Photography — from early 19th-century prints to contemporary image-making.", startDate: "Permanent", endDate: "Permanent", collectionFile: "fomu-antwerp-collection.json" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    exhibitions: []
+  },
+  {
     id: "museo-jumex",
     name_ko: "후멕스 미술관",
     name: "Museo Jumex",
@@ -7525,6 +7543,24 @@ export const exhibitions = [
     exhibitions: []
   },
   {
+    id: "mkg-hamburg",
+    name_ko: "함부르크 미술공예박물관 (MKG)",
+    name: "Museum für Kunst und Gewerbe Hamburg (MKG)",
+    city: "Hamburg",
+    country: "Germany",
+    latitude: 53.5527,
+    longitude: 10.0086,
+    description_ko: "1874년 문을 연 독일 응용미술·디자인 박물관으로, 함부르크 중앙역 옆 슈타인토어플라츠에 있다. 빈 응용미술관(MAK)을 본떠 산업화 시대 공예와 디자인의 질을 끌어올리려 세워졌고, 포스터·그래픽·사진·일본 가타가미 염색본·아르누보 디자인이 특히 두텁다. 소장품 온라인을 일찌감치 오픈 데이터(퍼블릭 도메인)로 공개한 선구적 미술관으로, 알폰스 무하와 앙리 가브리엘 이벨의 석판 포스터, 하인리히 퀸의 피토리얼리즘 사진, 히에로니무스 호프퍼의 16세기 장식 판화까지 평면 디자인의 역사를 폭넓게 보여준다.",
+    description: "Germany's museum of applied arts and design, founded in 1874 beside Hamburg's central station. Modelled on Vienna's MAK to raise the quality of craft and design in the industrial age, it is especially deep in posters, graphic design, photography, Japanese katagami stencils and Art Nouveau design. An early pioneer of open data, it released its online collection under a Public Domain dedication — spanning the history of flat design from Alphonse Mucha and Henri-Gabriel Ibels lithographic posters and Heinrich Kühn's Pictorialist photography to Hieronymus Hopfer's 16th-century ornament engravings.",
+    representativeImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/mkg-hamburg-collection/mkg-e00109610-7e96232d-imageUrl.webp",
+    permanentExhibitions: [
+      { id: "mkg-hamburg-collection", name: "Collection", name_en: "Collection", title: "Museum für Kunst und Gewerbe Hamburg (MKG) — Collection", title_en: "Museum für Kunst und Gewerbe Hamburg (MKG) — Collection", description: "포스터·그래픽·사진·판화·드로잉 등 평면 디자인 (퍼블릭 도메인 오픈 데이터).", description_en: "Posters, graphic design, photography, prints & drawings — flat design works (Public Domain open data).", startDate: "Permanent", endDate: "Permanent", collectionFile: "mkg-hamburg-collection.json" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    exhibitions: []
+  },
+  {
     id: "het-nieuwe-instituut",
     name_ko: "니우어 인스티튜트",
     name: "Nieuwe Instituut",
@@ -7555,6 +7591,24 @@ export const exhibitions = [
     representativeImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/cca-montreal-collection/192-d7c91e62-imageUrl.webp",
     permanentExhibitions: [
       { id: "cca-montreal-collection", name: "Collection", name_en: "Collection", title: "Canadian Centre for Architecture — Collection", title_en: "Canadian Centre for Architecture — Collection", description: "19,301점 — 드로잉9679·사진8316·회화1121·판화185.", description_en: "19,301 works — drawing, photograph, painting, print.", startDate: "Permanent", endDate: "Permanent", collectionFile: "cca-montreal-collection.json" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    exhibitions: []
+  },
+  {
+    id: "frac-centre",
+    name_ko: "프락 상트르발드루아르",
+    name: "Frac Centre-Val de Loire",
+    city: "Orléans",
+    country: "France",
+    latitude: 47.9028,
+    longitude: 1.9097,
+    description_ko: "실험 건축에 특화된 프랑스 지역현대미술기금(Frac)으로, 1991년 시작한 국제 건축 비엔날레 '아르시랩(ArchiLab)'을 통해 모은 소장품이 핵심이다. 종이 위에 그려진 유토피아·아방가르드 건축의 보고로, 클로드 파랑·아키그램·쿠프 힘멜블라우·이토 도요·자하 하디드 등의 드로잉과 도면, 사진 수천 점을 Navigart 기반 온라인 컬렉션으로 공개한다. 완성된 건물이 아니라 '지어지지 않은 건축의 상상력'을 펼쳐 보이는 곳이다.",
+    description: "A French regional contemporary-art fund (Frac) devoted to experimental architecture, built around its international ArchiLab biennial launched in 1991. It is a treasury of utopian and avant-garde architecture on paper — thousands of drawings, plans and photographs by figures such as Claude Parent, Archigram, Coop Himmelb(l)au, Toyo Ito and Zaha Hadid — published through its Navigart-powered online collection. Its focus is not finished buildings but the imagination of architecture yet to be built.",
+    representativeImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/frac-centre-collection/5030000000002322-90f60a14-imageUrl.webp",
+    permanentExhibitions: [
+      { id: "frac-centre-collection", name: "Collection", name_en: "Collection", title: "Frac Centre-Val de Loire — Collection", title_en: "Frac Centre-Val de Loire — Collection", description: "9,260점 — 드로잉8052·사진935·판화273.", description_en: "9,260 works — drawing, photograph, print.", startDate: "Permanent", endDate: "Permanent", collectionFile: "frac-centre-collection.json" }
     ],
     temporaryExhibitions: [],
     pastExhibitions: [],
