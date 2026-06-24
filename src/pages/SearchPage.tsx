@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import GlobalSearchBar from "../components/GlobalSearchBar";
+import GenreMuseumBrowse from "../components/GenreMuseumBrowse";
 import { exhibitions } from "../data/exhibitions";
 
 export default function SearchPage() {
@@ -84,6 +85,8 @@ export default function SearchPage() {
         >
           <GlobalSearchBar inlineMode forceWidth="100%" museums={museums as any} />
         </div>
+
+        <GenreMuseumBrowse isMobile={isMobileLayout} />
       </div>
     </div>
   );
