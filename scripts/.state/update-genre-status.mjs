@@ -51,6 +51,9 @@ const NAME2SLUG = [
   ['Canadian Centre for Architecture', 'cca-montreal'], ['Het Nieuwe Instituut', 'het-nieuwe-instituut'],
   ['Cité de l\'architecture', 'cite-architecture'], ['Deutsches Architekturmuseum', 'dam-frankfurt'], ['Avery', 'avery-columbia'],
   ['RIBA', 'riba'],
+  // gap6 fillers
+  ['Ars Electronica', 'ars-electronica'], ['Architekturzentrum Wien', 'azw-vienna'], ['Az W', 'azw-vienna'],
+  ['Die Neue Sammlung', 'neue-sammlung'],
 ];
 
 // pre-filter (curl) escalations that never got a gap1-results file — keyed by name substring

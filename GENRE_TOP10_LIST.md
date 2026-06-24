@@ -45,7 +45,7 @@
 | 9 | Tokyo Photographic Art Museum (도쿄도사진미술관) | Tokyo | Japan | 아시아 | ❌ 수집불가 (Catalogue is excellent and machine-r…) |
 | 10 | Getty Museum — Photographs | Los Angeles | USA | 북미 | ✅ `getty` |
 
-## 📺 비디오·미디어아트 (Video & Media Art) — 보유 9/10
+## 📺 비디오·미디어아트 (Video & Media Art) — 보유 10/10
 
 | # | 미술관 | 도시 | 국가 | 대륙 | ARMIN |
 |---|---|---|---|---|---|
@@ -57,7 +57,7 @@
 | 6 | Walker Art Center (워커) | Minneapolis | USA | 북미 | ✅ `walker-art-center` |
 | 7 | Stedelijk Museum | Amsterdam | Netherlands | 유럽 | ✅ `stedelijk-museum` |
 | 8 | 국립현대미술관 (MMCA) | Seoul | South Korea | 아시아 | ✅ `mmca-seoul` |
-| 9 | Julia Stoschek Foundation | Düsseldorf/Berlin | Germany | 유럽 | ❌ 수집불가 (Cloudflare 챌린지) |
+| 9 | Ars Electronica Archive (미디어아트) | Linz | Austria | 유럽 | ✅ 보유 2,512점 |
 | 10 | 부산현대미술관 (MoCA Busan) | Busan | South Korea | 아시아 | ✅ `moca-busan` |
 
 ## 🎬 영화 (Film) — 보유 4/10 ⚠️ 최대 갭
@@ -82,7 +82,7 @@
 | 1 | CNAP (프랑스 국립조형예술센터) | Paris | France | 유럽 | ✅ 보유 25,658점 |
 | 2 | Powerhouse Museum | Sydney | Australia | 오세아니아 | ✅ 보유 7,751점 |
 | 3 | Cooper Hewitt, Smithsonian Design Museum | New York | USA | 북미 | ✅ 보유 18,597점 |
-| 4 | Die Neue Sammlung (노이에 잠룽) | Munich | Germany | 유럽 | ✅ `pinakothek-der-moderne` 내 |
+| 4 | Die Neue Sammlung (노이에 잠룽) | Munich | Germany | 유럽 | ✅ 보유 82점 |
 | 5 | MoMA — Architecture & Design | New York | USA | 북미 | ✅ `moma-collection` |
 | 6 | V&A | London | UK | 유럽 | ✅ `vam` |
 | 7 | Musée des Arts Décoratifs (MAD) | Paris | France | 유럽 | ✅ `mad-paris` |
@@ -152,7 +152,7 @@
 | 9 | Museo Reina Sofía | Madrid | Spain | 유럽 | ✅ `museo-reina-sofia` |
 | 10 | The Broad | Los Angeles | USA | 북미 | ✅ `thebroad` |
 
-## 🏛 건축 (Architecture) — 보유 8/10
+## 🏛 건축 (Architecture) — 보유 9/10
 
 건축 드로잉·도면·렌더링·스케치 + 건축사진 등 **평면작만** (3D 모형·건물 자체는 스코프 외). 회화처럼 단독 미술관보다 종합관의 A&D 부서가 많아, 보유 4곳은 등록된 종합관의 건축 부서.
 
@@ -166,7 +166,7 @@
 | 6 | Het Nieuwe Instituut (네덜란드 건축아카이브) | Rotterdam | Netherlands | 유럽 | ✅ 보유 470점 |
 | 7 | Cité de l'architecture et du patrimoine | Paris | France | 유럽 | ✅ 보유 1,290점 |
 | 8 | Deutsches Architekturmuseum (DAM) | Frankfurt | Germany | 유럽 | ✅ 보유 1,454점 |
-| 9 | Avery Architectural & Fine Arts Library (Columbia) | New York | USA | 북미 | 🔄 수집예정 (~5,500) |
+| 9 | Architekturzentrum Wien (Az W) | Vienna | Austria | 유럽 | ✅ 보유 7,014점 |
 | 10 | Art Institute of Chicago — Architecture & Design | Chicago | USA | 북미 | ✅ 보유 (`art-institute-of-chicago` 내) |
 
 ---

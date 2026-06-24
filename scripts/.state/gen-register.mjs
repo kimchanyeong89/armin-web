@@ -8,7 +8,10 @@ if (!swPath || !anchorSlug) { console.error('usage: gen-register.mjs <swJson> <a
 
 const sw = JSON.parse(fs.readFileSync(swPath, 'utf8'));
 const slug = sw.slug;
-const e = sw.exhibitions_entry;
+// exhibitions_entry may be a structured object (older waves) or a JS-literal STRING
+// (gap6 schema). Normalize a string entry into an object so e.name_ko/.city/etc work.
+let e = sw.exhibitions_entry;
+if (typeof e === 'string') e = (new Function('return (' + e + ')'))();
 const d = JSON.parse(fs.readFileSync(`public/data/${slug}-collection.json`, 'utf8'));
 const cnt = d.artworks.length;
 const cntF = cnt.toLocaleString('en-US');

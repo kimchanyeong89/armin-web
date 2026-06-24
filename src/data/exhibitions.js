@@ -7183,6 +7183,24 @@ export const exhibitions = [
     exhibitions: []
   },
   {
+    id: "ars-electronica",
+    name_ko: "아르스 일렉트로니카 아카이브",
+    name: "Ars Electronica Archive",
+    city: "Linz",
+    country: "Austria",
+    latitude: 48.3155,
+    longitude: 14.2999,
+    description_ko: "1979년 오스트리아 린츠에서 시작된 아르스 일렉트로니카는 예술과 기술, 사회가 만나는 지점을 다뤄 온 세계적인 미디어아트 기관이다. 그 핵심에 자리한 프리 아르스 일렉트로니카(Prix Ars Electronica)는 1987년부터 컴퓨터 애니메이션, 인터랙티브 아트, 디지털 음악, 생성예술 등 디지털·미디어 예술 전 분야의 수상·출품작을 기록해 온, 이 분야 최장수 시상 아카이브다. 온라인 아카이브는 40년에 걸친 미디어아트의 흐름을 작가·연도·부문별로 보여 주며, 각 프로젝트는 설치 전경, 스크린샷, 생성예술 스틸 같은 시각 기록과 함께 문서화되어 있다.",
+    description: "Founded in 1979 in Linz, Austria, Ars Electronica is one of the world's leading institutions for art at the intersection of technology and society. At its heart, the Prix Ars Electronica — running since 1987 — is the longest-standing awards archive for digital and media art, documenting winning and submitted works across computer animation, interactive art, digital music, and generative art. Its online archive maps four decades of media-art practice by artist, year and category, with each project documented through visual records such as installation views, screenshots and generative-art stills.",
+    representativeImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/ars-electronica-collection/112877-cba85330-imageUrl.webp",
+    permanentExhibitions: [
+      { id: "ars-electronica-collection", name: "Collection", name_en: "Collection", title: "Ars Electronica Archive — Collection", title_en: "Ars Electronica Archive — Collection", description: "2,512점 — 미디어아트2512.", description_en: "2,512 works — media_art.", startDate: "Permanent", endDate: "Permanent", collectionFile: "ars-electronica-collection.json" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    exhibitions: []
+  },
+  {
     id: "nfaj",
     name_ko: "국립영화아카이브",
     name: "National Film Archive of Japan",
@@ -7417,6 +7435,24 @@ export const exhibitions = [
     exhibitions: []
   },
   {
+    id: "neue-sammlung",
+    name_ko: "디 노이에 잠믈룽 — 디자인 미술관",
+    name: "Die Neue Sammlung — The Design Museum",
+    city: "Munich",
+    country: "Germany",
+    latitude: 48.1486,
+    longitude: 11.5722,
+    description_ko: "뮌헨 피나코테크 데어 모데르네 안에 자리한, 세계에서 가장 큰 산업·제품 디자인 미술관 중 하나다. 가구·도자·조명·자동차·전자제품까지 20세기 이후 디자인 전반을 아우르지만, 컬렉션 온라인이 공개하는 1,247점 가운데 평면 작품은 그래픽 디자인 영역에 집중돼 있다. 로즈마리 티시, 후쿠다 시게오, 슈테판 자그마이스터 같은 디자이너의 문화·관광·전시 포스터가 핵심으로, 다채롭고 실험적인 20세기 포스터 디자인을 한자리에서 볼 수 있다.",
+    description: "One of the world's largest collections of industrial and product design, housed in the Pinakothek der Moderne in Munich. Its holdings span furniture, ceramics, lighting, vehicles and electronics across the 20th and 21st centuries; among the 1,247 objects published in its online collection, the flat works centre on graphic design — cultural, travel and exhibition posters by designers such as Rosmarie Tissi, Shigeo Fukuda and Stefan Sagmeister — a vivid survey of experimental 20th-century poster design.",
+    representativeImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/neue-sammlung-collection/40845-0-64df0c96-imageUrl.webp",
+    permanentExhibitions: [
+      { id: "neue-sammlung-collection", name: "Collection", name_en: "Collection", title: "Die Neue Sammlung — The Design Museum — Collection", title_en: "Die Neue Sammlung — The Design Museum — Collection", description: "82점 — 판화81·사진1.", description_en: "82 works — print, photograph.", startDate: "Permanent", endDate: "Permanent", collectionFile: "neue-sammlung-collection.json" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    exhibitions: []
+  },
+  {
     id: "niepce-chalon",
     name_ko: "니세포르 니엡스 박물관",
     name: "Musée Nicéphore Niépce",
@@ -7501,6 +7537,24 @@ export const exhibitions = [
     representativeImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/cca-montreal-collection/192-d7c91e62-imageUrl.webp",
     permanentExhibitions: [
       { id: "cca-montreal-collection", name: "Collection", name_en: "Collection", title: "Canadian Centre for Architecture — Collection", title_en: "Canadian Centre for Architecture — Collection", description: "19,301점 — 드로잉9679·사진8316·회화1121·판화185.", description_en: "19,301 works — drawing, photograph, painting, print.", startDate: "Permanent", endDate: "Permanent", collectionFile: "cca-montreal-collection.json" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    exhibitions: []
+  },
+  {
+    id: "azw-vienna",
+    name_ko: "빈 건축센터",
+    name: "Architekturzentrum Wien (Az W)",
+    city: "Vienna",
+    country: "Austria",
+    latitude: 48.2065,
+    longitude: 16.359,
+    description_ko: "빈 무제움스크바르티어에 자리한 오스트리아 국립 건축박물관이다. 1993년 설립 이래 오스트리아 근현대 건축을 기록·전시하며, 프리드리히 아흐라이트너·마르게리타 스필루티니·한스 홀라인·귄터 도메니히 등 주요 건축가·사진가의 아카이브를 소장한다. 온라인 소장품은 건축 사진·도면·드로잉을 아우른다.",
+    description: "Austria's national museum of architecture, in Vienna's MuseumsQuartier. Founded in 1993, it documents and exhibits 20th- and 21st-century Austrian architecture, holding major archives of architects and photographers such as Friedrich Achleitner, Margherita Spiluttini, Hans Hollein, and Günther Domenig. Its online collection spans architectural photographs, plans, and drawings.",
+    representativeImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/azw-vienna-collection/azw-vienna-1-flakturm-projekt-mit-hubschrauberlandeplatz-fe0bed2f-8d767f85-imageUrl.webp",
+    permanentExhibitions: [
+      { id: "azw-vienna-collection", name: "Collection", name_en: "Collection", title: "Architekturzentrum Wien (Az W) — Collection", title_en: "Architekturzentrum Wien (Az W) — Collection", description: "7,014점 — 사진5710·드로잉1304.", description_en: "7,014 works — photograph, drawing.", startDate: "Permanent", endDate: "Permanent", collectionFile: "azw-vienna-collection.json" }
     ],
     temporaryExhibitions: [],
     pastExhibitions: [],
