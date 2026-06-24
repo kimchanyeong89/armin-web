@@ -120,39 +120,22 @@
 | 9 | Letterform Archive | San Francisco | USA | 북미 | ✅ 보유 5,560점 |
 | 10 | MAK Vienna | Vienna | Austria | 유럽 | 🔄 수집예정 (~21,000) |
 
-## 💬 만화 (Comics / Manga / BD) — 보유 2/10
+## 💬 만화·애니메이션 (Comics · Animation) — 보유 2/10 ⚠️ 구조적 천장
 
-원화(planches originales)·만화 原画·카툰/캐리커처 드로잉 등 종이 위 평면 작품.
+원화(planches originales)·만화 原画·카툰 드로잉·셀화/배경화/설정화 등 종이·셀 위 평면 작품. **만화·애니 모두 원화 대부분이 작가/스튜디오 저작권으로 묶이고, 공공 애니·만화 박물관조차 객체별 온라인 이미지 카탈로그를 공개하는 곳이 극소수** — 横手(増田만화관)·新潟 등 공공관 wp-json에도 컬렉션 포스트타입 없음(원화는 물리보유하나 미공개). 현재 CIBDI 앙굴렘만 실제 객체 카탈로그 보유.
 
 | # | 미술관 | 도시 | 국가 | 대륙 | ARMIN |
 |---|---|---|---|---|---|
 | 1 | Cité de la BD (CIBDI 앙굴렘) | Angoulême | France | 유럽 | ✅ 보유 2,071점 |
 | 2 | 한국만화박물관 | Bucheon | South Korea | 아시아 | ✅ 보유 23점 |
-| 3 | 京都国際マンガミュージアム (교토 국제만화뮤지엄) | Kyoto | Japan | 아시아 | ❌ 수집불가 (No reachable, in-scope, image-servin…) |
+| 3 | 京都国際マンガミュージアム (교토 국제만화) | Kyoto | Japan | 아시아 | ❌ 수집불가 (No reachable, in-scope, image-servin…) |
 | 4 | Belgian Comic Strip Center (벨기에 만화센터) | Brussels | Belgium | 유럽 | ❌ 수집불가 (Centre belge de la bande dessinee (M…) |
-| 5 | Billy Ireland Cartoon Library (OSU) | Columbus | USA | 북미 | ❌ 수집불가 (Both candidate sources fail the copy…) |
-| 6 | Charles M. Schulz Museum | Santa Rosa | USA | 북미 | ❌ 수집불가 (Charles M. Schulz Museum DOES have a…) |
-| 7 | Musée Hergé (에르제) | Louvain-la-Neuve | Belgium | 유럽 | ❌ 수집불가 (Musée Hergé (Louvain-la-Neuve) has N…) |
-| 8 | Cartoon Art Museum | San Francisco | USA | 북미 | ❌ 수집불가 (No per-object online collection cata…) |
-| 9 | Museum Wilhelm Busch (카리커처·만화) | Hannover | Germany | 유럽 | 🔄 시도중 |
-| 10 | Cartoonmuseum Basel | Basel | Switzerland | 유럽 | ❌ 수집불가 (소규모 전시공간) |
-
-## 🎞 애니메이션 (Animation) — 보유 0/10 ⚠️ 거의 전부 스튜디오 저작권 잠금
-
-셀화(animation cels)·배경화·설정화(concept/character design)·스토리보드 등. **대부분 디즈니·지브리 등 스튜디오 소유 저작권으로 공개 다운로드 불가** — 만화와 별개로 시도.
-
-| # | 미술관 | 도시 | 국가 | 대륙 | ARMIN |
-|---|---|---|---|---|---|
-| 1 | 三鷹の森ジブリ美術館 (지브리 미술관) | Mitaka | Japan | 아시아 | ❌ 수집불가 (No online collection catalogue. Home…) |
-| 2 | 手塚治虫記念館 (데즈카 오사무 기념관) | Takarazuka | Japan | 아시아 | ❌ 수집불가 (403 차단) |
-| 3 | Walt Disney Animation Research Library | Burbank | USA | 북미 | ⚪ 미시도 (비공개 추정·스튜디오 저작권) |
-| 4 | 東映アニメーションミュージアム (도에이) | Tokyo | Japan | 아시아 | ⚪ 미시도 |
-| 5 | 杉並アニメーションミュージアム (스기나미) | Tokyo | Japan | 아시아 | ⚪ 미시도 |
-| 6 | Cinémathèque québécoise (애니 컬렉션) | Montreal | Canada | 북미 | ❌ 수집불가 (La Cinematheque francaise has a larg…) |
-| 7 | National Film Board of Canada (NFB) | Montreal | Canada | 북미 | ⚪ 미시도 |
-| 8 | Museum of the Moving Image | New York | USA | 북미 | ❌ 수집불가 (Cloudflare 차단) |
-| 9 | CITIA / 안시 애니메이션 (Musée du film d'animation) | Annecy | France | 유럽 | ⚪ 미시도 |
-| 10 | ASIFA-Hollywood Animation Archive | Los Angeles | USA | 북미 | ⚪ 미시도 |
+| 5 | 三鷹の森ジブリ美術館 (지브리) | Mitaka | Japan | 아시아 | ❌ 수집불가 (No online collection catalogue. Home…) |
+| 6 | 手塚治虫記念館 (데즈카 오사무) | Takarazuka | Japan | 아시아 | ❌ 수집불가 (403 차단) |
+| 7 | Billy Ireland Cartoon Library (OSU) | Columbus | USA | 북미 | ❌ 수집불가 (Both candidate sources fail the copy…) |
+| 8 | Musée Hergé (에르제) | Louvain-la-Neuve | Belgium | 유럽 | ❌ 수집불가 (Musée Hergé (Louvain-la-Neuve) has N…) |
+| 9 | CITIA / 안시 애니메이션 (Annecy) | Annecy | France | 유럽 | ⚪ 시도중 |
+| 10 | Cartoon Art Museum | San Francisco | USA | 북미 | ❌ 수집불가 (No per-object online collection cata…) |
 
 ## 🌐 동시대미술 (Contemporary Art) — 보유 10/10 ✅ 완벽
 
@@ -169,13 +152,13 @@
 | 9 | Museo Reina Sofía | Madrid | Spain | 유럽 | ✅ `museo-reina-sofia` |
 | 10 | The Broad | Los Angeles | USA | 북미 | ✅ `thebroad` |
 
-## 🏛 건축 (Architecture) — 보유 7/10
+## 🏛 건축 (Architecture) — 보유 8/10
 
 건축 드로잉·도면·렌더링·스케치 + 건축사진 등 **평면작만** (3D 모형·건물 자체는 스코프 외). 회화처럼 단독 미술관보다 종합관의 A&D 부서가 많아, 보유 4곳은 등록된 종합관의 건축 부서.
 
 | # | 미술관 | 도시 | 국가 | 대륙 | ARMIN |
 |---|---|---|---|---|---|
-| 1 | Canadian Centre for Architecture (CCA) | Montreal | Canada | 북미 | 🔄 수집중 10,697/37,000 |
+| 1 | Canadian Centre for Architecture (CCA) | Montreal | Canada | 북미 | ✅ 보유 19,301점 |
 | 2 | MoMA — Architecture & Design | New York | USA | 북미 | ✅ 보유 (`moma-collection` 내) |
 | 3 | RIBA Collections (RIBApix) | London | UK | 유럽 | ⚪ 미시도 |
 | 4 | Centre Pompidou — Architecture | Paris | France | 유럽 | ✅ 보유 (`centre-pompidou` 내) |
@@ -210,7 +193,7 @@
 
 | Slug | 미술관 | 분야 | 상태 |
 |---|---|---|---|
-| `cooper-hewitt` | Cooper Hewitt | 디자인 | 🔄 수집중 **18,597**/16,000 |
+| `cooper-hewitt` | Cooper Hewitt | 디자인 | ✅ merged **18,597**점 |
 | `gestaltung-zurich` | Museum für Gestaltung | 포스터 | ✅ merged **21,321**점 |
 | `mak-vienna` | MAK | 디자인 | 🔄 스크립트 준비 (예상 21,000) |
 | `moravian-gallery` | Moravská galerie | 포스터 | ✅ merged **21,822**점 |

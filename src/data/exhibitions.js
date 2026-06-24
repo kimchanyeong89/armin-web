@@ -7489,6 +7489,24 @@ export const exhibitions = [
     exhibitions: []
   },
   {
+    id: "cca-montreal",
+    name_ko: "캐나다 건축센터",
+    name: "Canadian Centre for Architecture",
+    city: "Montreal",
+    country: "Canada",
+    latitude: 45.4889,
+    longitude: -73.5806,
+    description_ko: "1979년 필리스 램버트가 몬트리올에 세운, 건축을 공공의 관심사로 다루는 세계적 건축 미술관이자 연구소다. 르네상스부터 현대까지 건축 드로잉·도면·스케치·판화·사진을 아우르며, 제임스 스털링·알도 로시·세드릭 프라이스·피터 아이젠만·고든 마타클락 등의 주요 아카이브를 소장하고 있다.",
+    description: "A world-leading museum and research centre for architecture in Montréal, founded in 1979 by Phyllis Lambert. Its collection spans architectural drawings, plans, sketches, prints, and photographs documenting the built environment from the Renaissance to the present, with major fonds from architects such as James Stirling, Aldo Rossi, Cedric Price, Peter Eisenman, and Gordon Matta-Clark.",
+    representativeImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/cca-montreal-collection/192-d7c91e62-imageUrl.webp",
+    permanentExhibitions: [
+      { id: "cca-montreal-collection", name: "Collection", name_en: "Collection", title: "Canadian Centre for Architecture — Collection", title_en: "Canadian Centre for Architecture — Collection", description: "19,301점 — 드로잉9679·사진8316·회화1121·판화185.", description_en: "19,301 works — drawing, photograph, painting, print.", startDate: "Permanent", endDate: "Permanent", collectionFile: "cca-montreal-collection.json" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    exhibitions: []
+  },
+  {
     id: "cite-architecture",
     name_ko: "건축·문화유산 박물관 (시테 드 라르시텍튀르)",
     name: "Cité de l'architecture et du patrimoine",
