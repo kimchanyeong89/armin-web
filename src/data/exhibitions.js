@@ -7255,6 +7255,24 @@ export const exhibitions = [
     exhibitions: []
   },
   {
+    id: "mak-vienna",
+    name_ko: "MAK 빈 응용미술관",
+    name: "MAK – Museum of Applied Arts",
+    city: "Vienna",
+    country: "Austria",
+    latitude: 48.2078,
+    longitude: 16.3819,
+    description_ko: "빈 슈투벤링에 자리한 응용미술 전문 미술관. 요제프 호프만과 콜로만 모저의 빈 공방 도안, 세기말 포스터, 우키요에 판화까지 그래픽 컬렉션의 깊이로 손꼽히는 곳이다.",
+    description: "Vienna's museum of applied arts on the Stubenring, holding one of the world's great graphic collections — Secession-era posters, Wiener Werkstätte design drawings by Josef Hoffmann and Koloman Moser, and a major ukiyo-e print holding.",
+    representativeImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/mak-vienna-collection/mak-vienna-64677-d8c2bec7-imageUrl.webp",
+    permanentExhibitions: [
+      { id: "mak-vienna-collection", name: "Collection", name_en: "Collection", title: "MAK – Museum of Applied Arts — Collection", title_en: "MAK – Museum of Applied Arts — Collection", description: "23,848점 — 드로잉17626·poster4452·판화1761·사진9.", description_en: "23,848 works — drawing, poster, print, photograph.", startDate: "Permanent", endDate: "Permanent", collectionFile: "mak-vienna-collection.json" }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: [],
+    exhibitions: []
+  },
+  {
     id: "kupferstichkabinett",
     name_ko: "베를린 동판화관 (쿠퍼슈티히카비네트)",
     name: "Kupferstichkabinett (Staatliche Museen zu Berlin)",
