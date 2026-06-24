@@ -86,7 +86,7 @@ export default function SearchPage() {
           <GlobalSearchBar inlineMode forceWidth="100%" museums={museums as any} />
         </div>
 
-        <GenreMuseumBrowse isMobile={isMobileLayout} />
+        <GenreMuseumBrowse isMobile={isMobileLayout} museums={museums as any} />
       </div>
     </div>
   );
