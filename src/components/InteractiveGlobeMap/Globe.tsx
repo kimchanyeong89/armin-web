@@ -480,7 +480,20 @@ export function Globe({
     museumPointsRef.current = points;
   }, [cities]);
   const selectedRef = useRef(selectedCity);
-  useEffect(() => { selectedRef.current = selectedCity; wakeGlobeRef.current?.(); }, [selectedCity]);
+  useEffect(() => {
+    selectedRef.current = selectedCity;
+    // Focus the globe on the newly-selected city (e.g. deep-linked from the Search tab genre
+    // browse): rotate to the city and zoom in, mirroring the country-click focus animation.
+    const coords = selectedCity?.coordinates as [number, number] | undefined;
+    if (selectedCity && Array.isArray(coords) && typeof coords[0] === "number" && typeof coords[1] === "number") {
+      targetRotRef.current = [-coords[0], -coords[1], 0];
+      const country = countriesRef.current.find((c: any) => COUNTRY_NAMES[String(c.id)] === selectedCity.country);
+      const cityZoom = country ? calcCountryZoom(country) : CONTINENT_FOCUS_ZOOM;
+      if (cityZoom > targetScaleRef.current) targetScaleRef.current = cityZoom;
+      velocityRef.current = [0, 0];
+    }
+    wakeGlobeRef.current?.();
+  }, [selectedCity]);
 
   const getActiveContinentForView = useCallback((rot: [number, number, number], countryClusterMode: boolean) => {
     if (!countryClusterMode) return null;
@@ -551,30 +564,40 @@ export function Globe({
       }
     };
 
-    fetch("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json")
-      .then((r) => r.json())
-      .then((data: any) => {
-        let landObj = feature(data, data.objects.land) as any;
-        if (d3.geoArea(landObj) > 6) fixWinding(landObj);
-        landRef.current = { ...landObj, _smoothed: { ...landObj, geometry: smoothGeometry(landObj.geometry) } };
+    // Land geometry: load from the app's OWN copy first (same-origin, reliable) so the continents
+    // ALWAYS render. The old code fetched only from the jsdelivr CDN — a single CDN hiccup (with no
+    // retry) left the globe as a bare black circle with just the dots/labels. Now: local → CDN fallback.
+    const processLand = (data: any) => {
+      let landObj = feature(data, data.objects.land) as any;
+      if (d3.geoArea(landObj) > 6) fixWinding(landObj);
+      landRef.current = { ...landObj, _smoothed: { ...landObj, geometry: smoothGeometry(landObj.geometry) } };
 
-        let bordersObj = mesh(data, data.objects.countries, (a: any, b: any) => a !== b) as any;
-        bordersRef.current = { ...bordersObj, _smoothed: smoothGeometry(bordersObj) };
+      let bordersObj = mesh(data, data.objects.countries, (a: any, b: any) => a !== b) as any;
+      bordersRef.current = { ...bordersObj, _smoothed: smoothGeometry(bordersObj) };
 
-        const fc = feature(data, data.objects.countries);
-        countriesRef.current = (fc as any).features.map((f: any) => {
-          let fCopy = { ...f, geometry: JSON.parse(JSON.stringify(f.geometry)) };
-          if (d3.geoArea(fCopy) > 6) {
-            fixWinding(fCopy);
-          }
-          return {
-            ...fCopy,
-            _smoothed: { ...fCopy, geometry: smoothGeometry(fCopy.geometry) }
-          };
+      const fc = feature(data, data.objects.countries);
+      countriesRef.current = (fc as any).features.map((f: any) => {
+        let fCopy = { ...f, geometry: JSON.parse(JSON.stringify(f.geometry)) };
+        if (d3.geoArea(fCopy) > 6) {
+          fixWinding(fCopy);
+        }
+        return {
+          ...fCopy,
+          _smoothed: { ...fCopy, geometry: smoothGeometry(fCopy.geometry) }
+        };
+      });
+      setIsLoading(false);
+    };
+    const loadLand = (url: string, isFallback: boolean): void => {
+      fetch(url)
+        .then((r) => { if (!r.ok) throw new Error(String(r.status)); return r.json(); })
+        .then(processLand)
+        .catch(() => {
+          if (!isFallback) loadLand("https://cdn.jsdelivr.net/npm/world-atlas@2/countries-110m.json", true);
+          else setIsLoading(false);
         });
-        setIsLoading(false);
-      })
-      .catch(() => setIsLoading(false));
+    };
+    loadLand("/atlas/countries-110m.json", false);
   }, []);
 
   // ─── Canvas, resize, animation ────────────────────
