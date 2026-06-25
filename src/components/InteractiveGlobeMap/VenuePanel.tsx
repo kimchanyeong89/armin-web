@@ -852,6 +852,17 @@ export function VenuePanel({ city, theme, onClose, onOpenExhibition, initialVenu
   });
   const [hoveredVenueIdx, setHoveredVenueIdx] = useState<number | null>(null);
   const [coverByExhibitionId, setCoverByExhibitionId] = useState<Record<string, string>>({});
+  // Pre-baked first-image-per-collection map (public/data/collection-covers.json) — lets a
+  // sub-collection thumbnail render instantly instead of fetching the whole collection JSON.
+  const [collectionCovers, setCollectionCovers] = useState<Record<string, string>>({});
+  useEffect(() => {
+    let alive = true;
+    fetch("/data/collection-covers.json")
+      .then((r) => (r.ok ? r.json() : {}))
+      .then((d) => { if (alive) setCollectionCovers(d || {}); })
+      .catch(() => {});
+    return () => { alive = false; };
+  }, []);
   const [viewportWidth, setViewportWidth] = useState<number>(() =>
     typeof window !== "undefined" ? window.innerWidth : 1024,
   );
@@ -923,13 +934,22 @@ export function VenuePanel({ city, theme, onClose, onOpenExhibition, initialVenu
           .map(normalizeCollectionPath)
           .filter(Boolean);
 
-        // Permanent exhibitions → always load first artwork from collection (skip coverImage)
-        // Temporary exhibitions → use coverImage first, fall back to collection
-        const isPermanent = ex.type === "permanent";
-        if (!isPermanent) {
-          const cover = normalizeImageUrl(matchedSub?.coverImage || matchedSub?.representativeImage || original?.representativeImage || "");
-          if (cover) { nextCovers[ex.id] = cover; continue; }
+        // Pre-baked per-collection cover (first image of that exact collection file) — instant,
+        // no fetch. Highest priority so each sub-collection shows its OWN cover.
+        let baked = "";
+        for (const cand of candidateFiles) {
+          const fn = String(cand).split("/").pop() || "";
+          if (collectionCovers[fn]) { baked = collectionCovers[fn]; break; }
         }
+        if (baked) { nextCovers[ex.id] = baked; continue; }
+
+        // Prefer a STORED cover so the thumbnail appears instantly instead of fetching the
+        // (possibly multi-MB) collection JSON at runtime — that fetch is what left cards sitting on
+        // an empty/broken state. Per-collection coverImage first (baked first-artwork image), then
+        // the museum's representative image as an immediate fallback; the collection fetch below
+        // only runs when nothing at all is stored.
+        const stored = normalizeImageUrl(matchedSub?.coverImage || matchedSub?.representativeImage || original?.representativeImage || "");
+        if (stored) { nextCovers[ex.id] = stored; continue; }
 
         let cover = "";
         for (const candidate of candidateFiles) {
@@ -977,7 +997,7 @@ export function VenuePanel({ city, theme, onClose, onOpenExhibition, initialVenu
 
     loadCovers();
     return () => abortController.abort();
-  }, [selectedVenue, exhibitions]);
+  }, [selectedVenue, exhibitions, collectionCovers]);
 
   return (
     <>
@@ -1326,7 +1346,10 @@ export function VenuePanel({ city, theme, onClose, onOpenExhibition, initialVenu
                                   <img
                                     src={coverByExhibitionId[ex.id] || selectedVenue?.originalExhibition?.representativeImage || ''}
                                     alt={ex.title}
-                                    style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                                    loading="lazy"
+                                    style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0, transition: 'opacity 0.35s ease' }}
+                                    onLoad={e => { (e.target as HTMLImageElement).style.opacity = '1'; }}
+                                    onError={e => { (e.target as HTMLImageElement).style.display = 'none'; }}
                                   />
                                 )}
                               </div>

@@ -2,14 +2,15 @@
   "museum": "Nam June Paik Art Center",
   "collection": "Collection",
   "website": "https://njpart.ggcf.kr/collections",
-  "scraped_date": "2026-06-11",
-  "total_count": 172,
+  "scraped_date": "2026-06-25",
+  "total_count": 240,
   "source_type": "html",
   "category_breakdown": {
     "painting": 48,
     "photograph": 113,
-    "drawing": 8,
-    "video": 3
+    "mixed_media_2d": 10,
+    "video": 61,
+    "drawing": 8
   },
   "artworks": [
     {
@@ -263,6 +264,27 @@
         "classifications": "photography"
       },
       "original_imageUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/08/yuRncl7VGTBYDwFHBhfryGa9ugvXbBH7oU5QSkGC.jpg"
+    },
+    {
+      "id": "njpac-28",
+      "objectNumber": "240",
+      "title": "Deck, A Fluxgame",
+      "artist": "George Brecht",
+      "date": "1966(1969)",
+      "year": 1966,
+      "medium": "64 printed playing cards",
+      "dimensions": "9×6cm(×64개)",
+      "category": "mixed_media_2d",
+      "description": "Following the idea of the ‘Fluxkit’ that George Maciunas conceived in 1964, Fluxus artists produced multiple editions of kits encompassing a selection of miscellaneous objects and paper as graphic scores for the user to read or manipulate, as with interactive games. The kits were packed together in a small attaché case for sale, which was first advertised in the fourth Fluxus newspaper, FLuxus cc fiVe ThReE that also contained Nam June Paik’s essay, Afterlude to the Exposition of Experimental Television (1964). Deck, A Fluxgame is by George Brecht. Consisting of 64 playing cards, various…",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/njpac-collection/njpac-28-c028f4a1-imageUrl.webp",
+      "thumbnailUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/08/GrpWuQLSG8kkuERb9auIyfqIVoPt56cdnN4xqGhf.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://njpart.ggcf.kr/collections/28",
+      "metadata": {
+        "classifications": "object"
+      },
+      "original_imageUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/08/GrpWuQLSG8kkuERb9auIyfqIVoPt56cdnN4xqGhf.jpg"
     },
     {
       "id": "njpac-29",
@@ -559,6 +581,27 @@
       "original_imageUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/08/mtgWtia5RiST1XPeBJlQa6t4NPGMLe2E8ukUuElC.jpg"
     },
     {
+      "id": "njpac-44",
+      "objectNumber": "244",
+      "title": "Homecoming",
+      "artist": "Nam June Paik",
+      "date": "1992",
+      "year": 1992,
+      "medium": "fan; painting on paper",
+      "dimensions": "95×60cm",
+      "category": "mixed_media_2d",
+      "description": "When John Cage passed away in 1992, Nam June Paik organized a memorial exhibition at Gallery Won and left a short message of remembrance on a fan handcrafted by Lee Han-kyu, the fan artisan of Seocheon. On the large black fan, Paik wrote a Chinese phrase meaning “homecoming after one resigns from government service.” In addition to this fan, Paik created calligraphic works of Korean phrases such as “Coming, Going, Again” and “The Wind, the Wind,” as well as other related pieces. Paik wrote how influential Cage was in his life, noting that his life before meeting Cage was B.C. (Before…",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/njpac-collection/njpac-44-15399f72-imageUrl.webp",
+      "thumbnailUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/08/5ZZ0S78y5GWmjAzNzBWdq5I9w6NhRm1F3zEew068.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://njpart.ggcf.kr/collections/44",
+      "metadata": {
+        "classifications": "object"
+      },
+      "original_imageUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/08/5ZZ0S78y5GWmjAzNzBWdq5I9w6NhRm1F3zEew068.jpg"
+    },
+    {
       "id": "njpac-45",
       "objectNumber": "104",
       "title": "Hommage à Jean-Pierre Wilhelm, Dusseldorf",
@@ -725,6 +768,27 @@
         "classifications": "photography"
       },
       "original_imageUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/08/8BTeYjB3VV7Z3KifG4GjOnbjckgPemjy1Kx3lNQ1.jpg"
+    },
+    {
+      "id": "njpac-54",
+      "objectNumber": "174",
+      "title": "Cooking Pot (with Korean Recipe)",
+      "artist": "Nam June Paik",
+      "date": "1985",
+      "year": 1985,
+      "medium": "colored cooking pot",
+      "dimensions": "지름25×11cm",
+      "category": "video",
+      "description": "The surface of a saucepan is caked with white paint and on its bottom is a list of traditional medicinal herbs and materials that Nam June Paik wrote in Chinese characters from left to the right, in vertical writing: garden rhubarb, five-flavor berry, Anemarrhena, dwarf lilyturf, Rehmannia glutinosa, figwort, aconite, deer antler, and milkwort. These herbs are considered to invigorate one’s health. Paik’s use of everyday objects in a Fluxus way can be found in his earliest works such as Zen for Contact, in which the artist attached various items to a sieve that made diverse sounds.",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/njpac-collection/njpac-54-72cfc665-imageUrl.webp",
+      "thumbnailUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/08/nt0OFQuM5jOleqbioOboNa08x8S0yOI5p1avuKSG.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://njpart.ggcf.kr/collections/54",
+      "metadata": {
+        "classifications": "object"
+      },
+      "original_imageUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/08/nt0OFQuM5jOleqbioOboNa08x8S0yOI5p1avuKSG.jpg"
     },
     {
       "id": "njpac-55",
@@ -956,6 +1020,27 @@
         "classifications": "photography"
       },
       "original_imageUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/08/acOy7jzbx1AHFZZ2T3lQmJ22c6KAyphI1Xki7SHd.jpg"
+    },
+    {
+      "id": "njpac-66",
+      "objectNumber": "178",
+      "title": "Untitled",
+      "artist": "Nam June Paik",
+      "date": "1984",
+      "year": 1984,
+      "medium": "Blaupunkt TV frame, acrylic on plexiglass",
+      "dimensions": "37×57cm",
+      "category": "video",
+      "description": "Untitled presents a television frame with the profile of a seemingly talking person drawn inside the screen area. Blaupunkt is a manufacturer in Germany renowned for its audio equipment. Nam June Paik’s ideas upon television, a one-way medium that the artist strived to transform into a reciprocal communication system, is presented in this work.",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/njpac-collection/njpac-66-f09e1169-imageUrl.webp",
+      "thumbnailUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/08/pDZpEsJsLN5h4hNne8xEGNQqfKp4kliCI4KF8Tbh.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://njpart.ggcf.kr/collections/66",
+      "metadata": {
+        "classifications": "object"
+      },
+      "original_imageUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/08/pDZpEsJsLN5h4hNne8xEGNQqfKp4kliCI4KF8Tbh.jpg"
     },
     {
       "id": "njpac-67",
@@ -1231,6 +1316,27 @@
       "original_imageUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/hUaUg7VLggoNHCibRad5oDFnKfAoDHRTod1DuPtZ.jpg"
     },
     {
+      "id": "njpac-81",
+      "objectNumber": "175",
+      "title": "Colored Chair, Black & White Chair",
+      "artist": "Nam June Paik",
+      "date": "1984",
+      "year": 1984,
+      "medium": "1 colored chair, 1 chair",
+      "dimensions": "colored chair 46×47×92cm, black & white chair 45×46×85cm",
+      "category": "video",
+      "description": "Two ordinary wooden chairs comprise Colored Chair, Black & White Chair. One chair bears tangled lines often found in Nam June Paik’s drawings, and only two legs are left, making it impossible to stand alone. The other chair has most of its black paint peeled off, revealing the wooden base in patches, yet the legs are in place, and below the seat writes, “Made in Neuss.” The two chairs are often stacked together when on display. From 1968, Paik produced a series of works combining televisions with chairs. The artist would transform television into a seat or install a monitor below a chair…",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/njpac-collection/njpac-81-f29b7319-imageUrl.webp",
+      "thumbnailUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/JOLmHttVNj0lh44z9mhXC7v6zMaWNwTNXOnqRd8P.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://njpart.ggcf.kr/collections/81",
+      "metadata": {
+        "classifications": "object"
+      },
+      "original_imageUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/JOLmHttVNj0lh44z9mhXC7v6zMaWNwTNXOnqRd8P.jpg"
+    },
+    {
       "id": "njpac-82",
       "objectNumber": "154",
       "title": "Random Access, Exposition of Music — Electronic Television, Galerie Parnass, Wuppertal",
@@ -1355,6 +1461,27 @@
         "classifications": "painting"
       },
       "original_imageUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/t4wW8rHZqbxon6dVTqr15xD6cO8aaw16MbMJZvFE.jpg"
+    },
+    {
+      "id": "njpac-89",
+      "objectNumber": "231",
+      "title": "In Memoriam George Maciunas",
+      "artist": "Nam June Paik; Joseph Beuys",
+      "date": "1982",
+      "year": 1982,
+      "medium": "1 wooden box, Urklavier, felt wedge, 2 vinyl records",
+      "dimensions": "41×62×13.6cm",
+      "category": "video",
+      "description": "In Memoriam George Maciunas was created by Joseph Beuys and Nam June Paik while remembering their performance when Maciunas, the master figure of Fluxus, had passed away. The piece is, therefore, a union of Paik, Beuys, Maciunas, and Fluxus. The work consists of Urklavier, a small piano made out of tree sticks, and Beuys’s legendary felt wedge, along with an LP of Beuys and Paik’s duet performance.",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/njpac-collection/njpac-89-fedd8f7b-imageUrl.webp",
+      "thumbnailUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/dZYRwFZLdRurHluI7Zl7SlhSUjt0vPbpS3MlpbKt.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://njpart.ggcf.kr/collections/89",
+      "metadata": {
+        "classifications": "object"
+      },
+      "original_imageUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/dZYRwFZLdRurHluI7Zl7SlhSUjt0vPbpS3MlpbKt.jpg"
     },
     {
       "id": "njpac-90",
@@ -1609,6 +1736,27 @@
       "original_imageUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/32JPdiPPD9Pn6QupKOyDfrTAwkGUqKEHIkD9jTVS.jpg"
     },
     {
+      "id": "njpac-103",
+      "objectNumber": "180",
+      "title": "2 1/2 TV",
+      "artist": "Nam June Paik",
+      "date": "1978",
+      "year": 1978,
+      "medium": "ink on wood",
+      "dimensions": "17×62×1.9cm",
+      "category": "video",
+      "description": "Nam June Paik often painted a TV set with simple squares, not only on the canvas but also on found objects such as papers, newspapers, and wooden panels. Entitled, 2 1/2 TV, this work uses a piece of wood in the form of a rightward arrow, on which Paik drew two and a half rectangles. Paik’s design-like paintings result from a process of artistically expanding and poetically expressing his exploration of television as an artistic medium.",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/njpac-collection/njpac-103-0d1be6a3-imageUrl.webp",
+      "thumbnailUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/DcGUU9FDMuKfZ5zmj1gZZJBFBoznvU7UBSxjZ6yW.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://njpart.ggcf.kr/collections/103",
+      "metadata": {
+        "classifications": "object"
+      },
+      "original_imageUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/DcGUU9FDMuKfZ5zmj1gZZJBFBoznvU7UBSxjZ6yW.jpg"
+    },
+    {
       "id": "njpac-104",
       "objectNumber": "169",
       "title": "Zen for Walking, Exposition of Music ― Electronic Television, Galerie Parnass, Wuppertal",
@@ -1796,6 +1944,27 @@
         "classifications": "photography, performance"
       },
       "original_imageUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/jVh2AiDaJgpB1TWyjI2VZQ6A79R4C9HKjLDTo7t2.jpg"
+    },
+    {
+      "id": "njpac-113",
+      "objectNumber": "179",
+      "title": "First Portable TV",
+      "artist": "Nam June Paik",
+      "date": "1973",
+      "year": 1973,
+      "medium": "wooden bakeware, ink",
+      "dimensions": "7.5×32×2cm",
+      "category": "video",
+      "description": "During his career as a professor in Dusseldorf, Nam June Paik divided his time between New York and Germany. Erik Andersch, a close friend of Paik, collected and recorded Paik’s works while the artist stayed in Germany. First Portable TV is one of the most representative works that the Nam June Paik Art Center had purchased from Andersch in 2009. With its title First Portable TV, this small work reveals Paik’s vision on the media and is full of his Fluxus-like sense of humor.",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/njpac-collection/njpac-113-ea19be7e-imageUrl.webp",
+      "thumbnailUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/GmFNTwhyddrbVEDDnDR7tHzanTv2D9ArFbhCnqLv.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://njpart.ggcf.kr/collections/113",
+      "metadata": {
+        "classifications": "object"
+      },
+      "original_imageUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/GmFNTwhyddrbVEDDnDR7tHzanTv2D9ArFbhCnqLv.jpg"
     },
     {
       "id": "njpac-114",
@@ -1987,6 +2156,27 @@
       "original_imageUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/qze8PUIty4dY8jtuTVxWrSD6L5NSbpDUPwjeUa7l.jpg"
     },
     {
+      "id": "njpac-125",
+      "objectNumber": "222",
+      "title": "Eclipse",
+      "artist": "Shuya Abe",
+      "date": "2009",
+      "year": 2009,
+      "medium": "1 vacuum-tube TV case, 1 LCD TV set, 1 controller",
+      "dimensions": "43×44×24cm",
+      "category": "video",
+      "description": "Eclipse is a work by Shuya Abe. After removing the inner parts of an antique television with a round-shaped screen, Abe recreated an eclipse of the sun on the newly-equipped quadrangular screen by manipulating the inner PCB and the scanning lines. Abe, an engineer who had worked with Nam June Paik, expresses Paik’s world that he realized during his collaboration with Paik.",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/njpac-collection/njpac-125-e5de9e3b-imageUrl.webp",
+      "thumbnailUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/z2RmtzZlPfCKAIVukzoZDMd70Lu8emNwjExo2XW7.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://njpart.ggcf.kr/collections/125",
+      "metadata": {
+        "classifications": "sculpture·installation, television"
+      },
+      "original_imageUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/z2RmtzZlPfCKAIVukzoZDMd70Lu8emNwjExo2XW7.jpg"
+    },
+    {
       "id": "njpac-126",
       "objectNumber": "216",
       "title": "Nam June Paik’s Wheelchair",
@@ -2111,6 +2301,48 @@
         "classifications": "photography, performance"
       },
       "original_imageUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/M3BtHfZrKhZtfKbAGbn1H69A2hgLQP832AyXQHMo.jpg"
+    },
+    {
+      "id": "njpac-135",
+      "objectNumber": "251",
+      "title": "TV Cello",
+      "artist": "Nam June Paik",
+      "date": "2002",
+      "year": 2002,
+      "medium": "3 TV sets, 1 video distributor, plexiglass, cello head, cello tailpiece, cello strings, 2-channel video, color, silent, DVD",
+      "dimensions": "48×51×145cm",
+      "category": "video",
+      "description": "TV Cello is a video sculpture of three stacked TV monitors—each encased in plexiglass—with the cello head, tail-piece, and strings attached to form the shape of a cello. Nam June Paik first created TV Cello in 1971 for a performance with Charlotte Moorman, and the early version of the work could be played by Moorman. The instrument was designed to make an electronic sound whenever the string was struck, which influenced the image displayed on the monitor. Moorman would sometimes play by plucking the string with her fingers or tapping on the plexiglass box. Paik produced several TV Cellos,…",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/njpac-collection/njpac-135-ec0dc544-imageUrl.webp",
+      "thumbnailUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/PUTdaq76mpUANTPxghSeHr4SqO2S4qCdH81tRaE3.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://njpart.ggcf.kr/collections/135",
+      "metadata": {
+        "classifications": "sculpture·installation, video"
+      },
+      "original_imageUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/PUTdaq76mpUANTPxghSeHr4SqO2S4qCdH81tRaE3.jpg"
+    },
+    {
+      "id": "njpac-137",
+      "objectNumber": "239",
+      "title": "Closed on Mondays, A Fluxgame",
+      "artist": "George Brecht",
+      "date": "1969",
+      "year": 1969,
+      "medium": "1 plastic box",
+      "dimensions": "9.3×12×2.6cm",
+      "category": "video",
+      "description": "Following the idea of the ‘Fluxkit’ that George Maciunas conceived in 1964, Fluxus artists produced multiple editions of kits encompassing a selection of miscellaneous objects and paper as graphic scores for the user to read or manipulate, as with interactive games. The kits were packed together in a small attaché case for sale, which was first advertised in the fourth Fluxus newspaper, FLuxus cc fiVe ThReE that also contained Nam June Paik’s essay, Afterlude to the Exposition of Experimental Television (1964). Closed on Mondays, A Fluxgame is by George Brecht. The box is firmly glued so…",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/njpac-collection/njpac-137-ef20a35f-imageUrl.webp",
+      "thumbnailUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/A4lan8GCxnsct1c0EQorfd89SLtNmAjo4Lt5EKKi.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://njpart.ggcf.kr/collections/137",
+      "metadata": {
+        "classifications": "object"
+      },
+      "original_imageUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/A4lan8GCxnsct1c0EQorfd89SLtNmAjo4Lt5EKKi.jpg"
     },
     {
       "id": "njpac-138",
@@ -2279,6 +2511,48 @@
         "classifications": "painting"
       },
       "original_imageUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/vWhWfAdigqjhD03w4QZFqHsxfgZ4mWqfvZEXPrSz.jpg"
+    },
+    {
+      "id": "njpac-147",
+      "objectNumber": "250",
+      "title": "I Wrote it in Tokyo in 1954",
+      "artist": "Nam June Paik",
+      "date": "1994",
+      "year": 1994,
+      "medium": "wooden TV cabinet, 1 CRT TV set, 1 CCTV camera, incandescent light bulb, Reuge music box",
+      "dimensions": "49.5×48.3×47.6cm",
+      "category": "video",
+      "description": "I Wrote it in Tokyo in 1954 is based on Paik’s composition produced during his freshman year in college. The piece consists of 144 notes that comprise a single movement. Paik incorporated the movement into his 1994 work, and the piece was played by an antique musical instrument made in the 18th century. The composition was then displayed on an old TV set from the 1950s. The hypnotic image on the screen showed a revolving music box. The image, however, is not an actual mechanical device but an image captured and projected in real-time by a camera installed inside the TV set. Paik combined…",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/njpac-collection/njpac-147-d33baa6e-imageUrl.webp",
+      "thumbnailUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/bPU8PEm4DNFdiVgSR874cCuuJj7ET40QCCzftKsQ.png",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://njpart.ggcf.kr/collections/147",
+      "metadata": {
+        "classifications": "sculpture·installation, television"
+      },
+      "original_imageUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/bPU8PEm4DNFdiVgSR874cCuuJj7ET40QCCzftKsQ.png"
+    },
+    {
+      "id": "njpac-148",
+      "objectNumber": "172",
+      "title": "Random Access – Medieval Musical Notation",
+      "artist": "Nam June Paik",
+      "date": "1968",
+      "year": 1968,
+      "medium": "print on paper",
+      "dimensions": "51.5×40cm",
+      "category": "mixed_media_2d",
+      "description": "This is one of the Gregorian chants, titled In Solemnity of St. Stephen the Protomartyr , written in the medieval musical notation: square neumes on a staff with four lines. In this notation, a square symbol marks a note in a melody, and sometimes a group of squares are sung to a single syllable. This system of neumes only represents an overall movement of the melody, and does not designate a specific pitch in absolute terms, so it depends on a singer which note to begin with, and which tune to follow. In this respect, it seems that the shape and structure of the medieval musical score,…",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/njpac-collection/njpac-148-5696d484-imageUrl.webp",
+      "thumbnailUrl": "https://njpart.ggcf.kr/storage/upload/2024/01/23/boq6LbON36gBFD7DzjythYoXSk5ShoxX64wqJkea.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://njpart.ggcf.kr/collections/148",
+      "metadata": {
+        "classifications": "object"
+      },
+      "original_imageUrl": "https://njpart.ggcf.kr/storage/upload/2024/01/23/boq6LbON36gBFD7DzjythYoXSk5ShoxX64wqJkea.jpg"
     },
     {
       "id": "njpac-149",
@@ -2470,6 +2744,48 @@
       "original_imageUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/0Wi1DKNil1t1FhcqiPmcjcnv4K2jUIy0SrXb74W8.jpg"
     },
     {
+      "id": "njpac-158",
+      "objectNumber": "023",
+      "title": "Elephant Cart",
+      "artist": "Nam June Paik",
+      "date": "2001",
+      "year": 2001,
+      "medium": "cart, elephant statue, limestone sitting Buddha statue, 22 CRT TV sets, telephone, phonograph, 4 dollies, umbrella, video distributor, wires, 2-channel video, color, silent, DVD",
+      "dimensions": "293×633×153cm",
+      "category": "video",
+      "description": "Elephant Cart is composed of a wooden elephant, a Buddha sculpture, and a red cart filled with stacks of TV sets, radios, gramophone speakers, etc. Each of the elephant’s four legs is placed on a four-wheeled dolly and the Buddha sitting in a plastic chair is holding an Adidas white-and-yellow umbrella. The elephant is tethered with red electric cords to the cart, and the antique television monitor at the rear end shows a video of the Surin Elephant Round-up. The cart filled with TV sets and radios appears to show diffusing information that is headed toward the direction of the elephant’s…",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/njpac-collection/njpac-158-f4ceb366-imageUrl.webp",
+      "thumbnailUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/KmaSD2xeB0jkY0HzmXmQGrcCEpuOLa3UPDn8qKiX.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://njpart.ggcf.kr/collections/158",
+      "metadata": {
+        "classifications": "sculpture·installation, video"
+      },
+      "original_imageUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/KmaSD2xeB0jkY0HzmXmQGrcCEpuOLa3UPDn8qKiX.jpg"
+    },
+    {
+      "id": "njpac-159",
+      "objectNumber": "235",
+      "title": "Living Fluxsculpture",
+      "artist": "Ben Vautier",
+      "date": "1966",
+      "year": 1966,
+      "medium": "1 plastic box",
+      "dimensions": "12×9.3×1.6cm",
+      "category": "video",
+      "description": "Following the idea of the ‘Fluxkit’ that George Maciunas conceived in 1964, Fluxus artists produced multiple editions of kits encompassing a selection of miscellaneous objects and paper as graphic scores for the user to read or manipulate, as with interactive games. The kits were packed together in a small attaché case for sale, which was first advertised in the fourth Fluxus newspaper, FLuxus cc fiVe ThReE that also contained Nam June Paik’s essay, Afterlude to the Exposition of Experimental Television (1964).",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/njpac-collection/njpac-159-1d34e9a9-imageUrl.webp",
+      "thumbnailUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/2Y9xbHsZwTkzxHjZwbSqiII9hXSwstvQuQ8OMNmB.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://njpart.ggcf.kr/collections/159",
+      "metadata": {
+        "classifications": "object"
+      },
+      "original_imageUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/2Y9xbHsZwTkzxHjZwbSqiII9hXSwstvQuQ8OMNmB.jpg"
+    },
+    {
       "id": "njpac-160",
       "objectNumber": "265",
       "title": "The Thing I’ll Be Doing For The Rest Of My Life",
@@ -2659,6 +2975,69 @@
       "original_imageUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/0bd7ttuP8qktH5g5FCVyutoonM4MAXChIKgcArB9.jpg"
     },
     {
+      "id": "njpac-169",
+      "objectNumber": "022",
+      "title": "Transmission Tower",
+      "artist": "Nam June Paik",
+      "date": "2002",
+      "year": 2002,
+      "medium": "1 Steel-framed tower, steel-framed mini towers, lasers, 52 solid neon tubes, 52 neon convertors, 32 crackle neon tubes, par lights, computer, mirrors",
+      "dimensions": "variable – 800x400x400cm (main tower), 550x85x85cm (mini tower)",
+      "category": "video",
+      "description": "Transmission Tower is a laser work by Nam June Paik, which was shown at the exhibition Nam June Paik: Transmission held at the Rockefeller Center, New York, from June 26th to September 2nd, 2002. Laser, as a medium utilizing broad-spectrum frequencies, represents the essence of communication media in Nam June Paik's media art. In order to implement the laser aspect of the artwork, Nam June Paik collaborated with Norman Ballard. In this piece, Ballard visualized the trajectories of communication waves using lasers and neon. The work comprises one main tower, measuring 8 meters in height and…",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/njpac-collection/njpac-169-d424a673-imageUrl.webp",
+      "thumbnailUrl": "https://njpart.ggcf.kr/storage/upload/2024/02/07/6xCKzOJjXYrzPQJq38E944JYjN2g8lhrXsJNwghi.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://njpart.ggcf.kr/collections/169",
+      "metadata": {
+        "classifications": "sculpture·installation, laser"
+      },
+      "original_imageUrl": "https://njpart.ggcf.kr/storage/upload/2024/02/07/6xCKzOJjXYrzPQJq38E944JYjN2g8lhrXsJNwghi.jpg"
+    },
+    {
+      "id": "njpac-170",
+      "objectNumber": "013",
+      "title": "Yulgok",
+      "artist": "Nam June Paik",
+      "date": "2002",
+      "year": 2002,
+      "medium": "4 CRT TV sets, 3 LCD TV sets, 3 vacuum-tube TV cases, 4 vacuum-tube radio cases, 2 video distributors, 1-channel video, color, silent, DVD",
+      "dimensions": "165×189×48cm",
+      "category": "video",
+      "description": "Yulgok is one of Nam June Paik’s robot series that are based on Korean figures. The robot represents the 16th-century Confucian scholar and politician Yi I whose pen name is Yulgok. The head is made with a monitor of an old vacuum tube television; the chest and belly contain monitors; two ball-shaped antennae hang from its two arms. Rounded-edge radios are placed on both sides as two legs so that the robot looks like sitting with its legs crossed. The robot overall takes on a stable and well-balanced shape. Paik’s sense of sculpting is demonstrated in his use of the visual forms of…",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/njpac-collection/njpac-170-03db2c96-imageUrl.webp",
+      "thumbnailUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/I7lOwTyn5UO7ffJC4fkBTW1zWR1eM2UwiCsiAL7G.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://njpart.ggcf.kr/collections/170",
+      "metadata": {
+        "classifications": "robot, video"
+      },
+      "original_imageUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/I7lOwTyn5UO7ffJC4fkBTW1zWR1eM2UwiCsiAL7G.jpg"
+    },
+    {
+      "id": "njpac-171",
+      "objectNumber": "221",
+      "title": "Rabbit Inhabits the Moon",
+      "artist": "Nam June Paik",
+      "date": "1996",
+      "year": 1996,
+      "medium": "1 wooden rabbit statue, 1 CRT TV set, 1-channel video, color, silent, DVD",
+      "dimensions": "variable",
+      "category": "video",
+      "description": "Among Paik’s works that regard television and the moon together as information media is Rabbit Inhabits the Moon . It consists of a TV set and a wooden statue of rabbit watching the television. Often called a “jade rabbit,” the rabbit in the moon pounding with a mortar under a laurel tree, is a mythical figure in the Buddhist tale and in the Far Eastern folklore. The Korean children’ song, Bandal , meaning a half moon, also contains lyrics “On the Milky Way in the blue sky / Glides a little white boat / With a laurel tree and a rabbit.” In Paik’s work, the rabbit is looking at the TV…",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/njpac-collection/njpac-171-83c7ce6e-imageUrl.webp",
+      "thumbnailUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/RbWmFTqMSeAcuKccvY97CRAwtyCJ9JtkHxC3qKlB.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://njpart.ggcf.kr/collections/171",
+      "metadata": {
+        "classifications": "sculpture·installation, video"
+      },
+      "original_imageUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/RbWmFTqMSeAcuKccvY97CRAwtyCJ9JtkHxC3qKlB.jpg"
+    },
+    {
       "id": "njpac-172",
       "objectNumber": "245",
       "title": "Key to the Highway (Rosetta Stone)",
@@ -2680,6 +3059,27 @@
       "original_imageUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/4lBr9WZuk2dp8m2NHXKu8FVCZEVJnqkSd8ZOImGF.jpg"
     },
     {
+      "id": "njpac-173",
+      "objectNumber": "238",
+      "title": "Bead Puzzle",
+      "artist": "George Brecht",
+      "date": "1965",
+      "year": 1965,
+      "medium": "1 plastic box, 5 wooden beads, screw, instruction card",
+      "dimensions": "9.3×12×1cm",
+      "category": "mixed_media_2d",
+      "description": "Following the idea of the ‘Fluxkit’ that George Maciunas conceived in 1964, Fluxus artists produced multiple editions of kits encompassing a selection of miscellaneous objects and paper as graphic scores for the user to read or manipulate, as with interactive games. The kits were packed together in a small attaché case for sale, which was first advertised in the fourth Fluxus newspaper, FLuxus cc fiVe ThReE that also contained Nam June Paik’s essay, Afterlude to the Exposition of Experimental Television (1964). Bead Puzzle by George Brecht contains five colorful beads, a screw, and an…",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/njpac-collection/njpac-173-f189fee3-imageUrl.webp",
+      "thumbnailUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/QG2hCFKo69oPrlUOxvWqp5oq9UaK5pIO5WAegMok.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://njpart.ggcf.kr/collections/173",
+      "metadata": {
+        "classifications": "object"
+      },
+      "original_imageUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/QG2hCFKo69oPrlUOxvWqp5oq9UaK5pIO5WAegMok.jpg"
+    },
+    {
       "id": "njpac-174",
       "objectNumber": "248",
       "title": "Think Loud",
@@ -2699,6 +3099,27 @@
         "classifications": "photography, sculpture·installation"
       },
       "original_imageUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/8xTnOafu7yKyvCKZ3gjXVVGnW2Zo0I4mUISSihmp.jpg"
+    },
+    {
+      "id": "njpac-175",
+      "objectNumber": "247",
+      "title": "Message to Nam June Paik",
+      "artist": "Benjamin Patterson",
+      "date": "2010",
+      "year": 2010,
+      "medium": "score, drawing panel, video documentation of performance",
+      "dimensions": "30.8×22.7cm(score), 61×90.5cm(panel)",
+      "category": "video",
+      "description": "Celebrating Nam June Paik’s 78th birthday in 2010, Benjamin Patterson created Message to Nam June Paik and visited the Nam June Paik Art Center in July to perform the piece with the audience. Participants were led to leave a message to Paik through a recorder. The message, however, was composed of words allocated randomly according to the alphabet initials of the participant’s name, thus sounding like an incantation. Patterson wrote “RADIO NJP” on a drawing panel and used the cover image of the Beatles’ eighth album for the score’s cover. The cover had been designed by pop artists Peter…",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/njpac-collection/njpac-175-c93985f5-imageUrl.webp",
+      "thumbnailUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/s335xqpVjhjND5thVlnYo7vCQvmR0eXdxWUPClHO.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://njpart.ggcf.kr/collections/175",
+      "metadata": {
+        "classifications": "object, video"
+      },
+      "original_imageUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/s335xqpVjhjND5thVlnYo7vCQvmR0eXdxWUPClHO.jpg"
     },
     {
       "id": "njpac-176",
@@ -2827,6 +3248,69 @@
       "original_imageUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/PcBLYrzpIzvOJMn2izYNSxmfrSG50Onm1OENTXoq.jpg"
     },
     {
+      "id": "njpac-182",
+      "objectNumber": "017",
+      "title": "Real Fish / Live Fish",
+      "artist": "Nam June Paik",
+      "date": "1982(1999)",
+      "year": 1982,
+      "medium": "1 black & white Philco TV set, 1 Philco TV case, 1 fish tank, 1 CCTV camera, live fish",
+      "dimensions": "variable",
+      "category": "video",
+      "description": "Two television sets are displayed side by side; one set contains a fish tank with a real swimming fish, and the other set shows a video of the swimming fish. A CCTV camera is shooting the real fish inside the TV set and displays it in real-time on the set next to the filmed set. The fish tank, where the filmed fish swims around, replaces the cathode-ray tube, and the real fish is presented live on the other monitor. The two TV sets operate as both transmitter and receiver, and viewers can compare the differences in light and color, as well as experience the poetic impression of its…",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/njpac-collection/njpac-182-7be618cf-imageUrl.webp",
+      "thumbnailUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/rLhioxIJIgp3nzXy8toVYZnkKV02T4vczKUUUmZw.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://njpart.ggcf.kr/collections/182",
+      "metadata": {
+        "classifications": "sculpture·installation, television"
+      },
+      "original_imageUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/rLhioxIJIgp3nzXy8toVYZnkKV02T4vczKUUUmZw.jpg"
+    },
+    {
+      "id": "njpac-183",
+      "objectNumber": "199",
+      "title": "6 Drawings on Beer Tabs",
+      "artist": "Nam June Paik",
+      "date": "1980",
+      "year": 1980,
+      "medium": "6 beer mats",
+      "dimensions": "9.3×9.3cm(×6ea)",
+      "category": "video",
+      "description": "6 Drawings on Beer Tabs is a set of drawings on both sides of six Hannen Alt beer mats, which shows Nam June Paik’s way of sketching out his ideas instantly. Paik’s typical antenna-clad televisions are illustrated with female legs with genitals at the center of the screen, and some are depicted with eyes and eyebrows only. On another coaster, two women are dancing behind what looks like scanning lines with the title “global groove” written below. Also, repeated words and sentences such as “Tony Stoss—perhaps a typo of the Swiss art historian Toni Stooss,” as well as “for free,” “and…",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/njpac-collection/njpac-183-f87e2fbb-imageUrl.webp",
+      "thumbnailUrl": "https://njpart.ggcf.kr/storage/upload/2023/05/16/rJ0hQkrui2SdH3BQ5H8ZdyCJTA5ALFLqxfW3e6RL.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://njpart.ggcf.kr/collections/183",
+      "metadata": {
+        "classifications": "object"
+      },
+      "original_imageUrl": "https://njpart.ggcf.kr/storage/upload/2023/05/16/rJ0hQkrui2SdH3BQ5H8ZdyCJTA5ALFLqxfW3e6RL.jpg"
+    },
+    {
+      "id": "njpac-184",
+      "objectNumber": "237",
+      "title": "Flux Rain Machine",
+      "artist": "Ay-o",
+      "date": "1965",
+      "year": 1965,
+      "medium": "1 plastic box",
+      "dimensions": "12×9.2×2.6cm",
+      "category": "video",
+      "description": "Following the idea of the ‘Fluxkit’ that George Maciunas conceived in 1964, Fluxus artists produced multiple editions of kits encompassing a selection of miscellaneous objects and paper as graphic scores for the user to read or manipulate, as with interactive games. The kits were packed together in a small attaché case for sale, which was first advertised in the fourth Fluxus newspaper, FLuxus cc fiVe ThReE that also contained Nam June Paik’s essay, Afterlude to the Exposition of Experimental Television (1964). The Flux Rain Machine is by Ay-o (Takao Iijima), nicknamed “the Rainbow Man.”…",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/njpac-collection/njpac-184-c89cf641-imageUrl.webp",
+      "thumbnailUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/gwaW74eGoRnfUWWOoIbPoLFN0ReAGfrrohw2faim.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://njpart.ggcf.kr/collections/184",
+      "metadata": {
+        "classifications": "object"
+      },
+      "original_imageUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/gwaW74eGoRnfUWWOoIbPoLFN0ReAGfrrohw2faim.jpg"
+    },
+    {
       "id": "njpac-185",
       "objectNumber": "184",
       "title": "Untitled",
@@ -2953,6 +3437,111 @@
       "original_imageUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/QtidixudZ29V9i6nr52dc8CCvAwSPMvuMRPoFWJq.jpg"
     },
     {
+      "id": "njpac-192",
+      "objectNumber": "024",
+      "title": "Burma Chest",
+      "artist": "Nam June Paik",
+      "date": "1995",
+      "year": 1995,
+      "medium": "1 wooden drawer, 8 LCD TV sets, 5 projectors, sponge robot, steel robot, bronze reclining Buddha statue, notes, photographs, ornaments, 2-channel video, color, silent, LD",
+      "dimensions": "240×183×140cm",
+      "category": "video",
+      "description": "The main element of Burma Chest is an ornamental Myanmar-style chest. Its lower part is a three-tier cabinet with drawers and the upper part is a cabinet with double doors as high as the lower one. The legs of the chest are carved, and the cabinets have elaborate flower patterns engraved. The drawer knobs have circular ceramic balls attached on, which look like white petals. Both sides of the swing doors have splendid decorations and carvings similar to the pattern on the lower cabinet. The bottom two tiers of the lower cabinet have three drawers each, which contain assorted metal…",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/njpac-collection/njpac-192-c9665564-imageUrl.webp",
+      "thumbnailUrl": "https://njpart.ggcf.kr/storage/upload/2024/02/15/zBEVxH4Y82O51z0Yg62gWcGy6xaHPfrNF8qTeNhv.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://njpart.ggcf.kr/collections/192",
+      "metadata": {
+        "classifications": "sculpture·installation, video"
+      },
+      "original_imageUrl": "https://njpart.ggcf.kr/storage/upload/2024/02/15/zBEVxH4Y82O51z0Yg62gWcGy6xaHPfrNF8qTeNhv.jpg"
+    },
+    {
+      "id": "njpac-193",
+      "objectNumber": "014",
+      "title": "TV Clock",
+      "artist": "Nam June Paik",
+      "date": "1977(1991)",
+      "year": 1977,
+      "medium": "24 manipulated CRT TV sets",
+      "dimensions": "variable",
+      "category": "video",
+      "description": "As one of the early TV installations by Nam June Paik, TV Clock consists of 24 TV monitors. 24 TV monitors represent 24 hours of the day, with each monitor showing the time of the day through different angles of the line. This was made possible by removing the vertical deflection circuit of the television tube, thus visualizing time through the collapsed image of the screen into a single line of electric ray. Comprised of 24 color TV monitors, this work conveys the passage of time in a serene, meditative mood. &emsp;",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/njpac-collection/njpac-193-8b63f00f-imageUrl.webp",
+      "thumbnailUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/7Av8KvQJlEVQJbUtPG24IMqTSgzIop2pPGw2cCPh.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://njpart.ggcf.kr/collections/193",
+      "metadata": {
+        "classifications": "sculpture·installation, television"
+      },
+      "original_imageUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/7Av8KvQJlEVQJbUtPG24IMqTSgzIop2pPGw2cCPh.jpg"
+    },
+    {
+      "id": "njpac-195",
+      "objectNumber": "219",
+      "title": "Video Chandelier No. 1",
+      "artist": "Nam June Paik",
+      "date": "1989",
+      "year": 1989,
+      "medium": "38 Telestar black & white CRT TV sets, Christmas lights, wires, video distributor, 1-channel video, color, silent, LD",
+      "dimensions": "variable",
+      "category": "video",
+      "description": "Video Chandelier No. 1 is the first work among a series of small monitors suspended from the ceiling in the form of a chandelier. Unlike the later works, monitors in this version are all black and white, which is rare among the Chandelier series. While the cables and monitors are tangled, the piece takes the form of a beautiful chandelier. The kinetic composition from top to bottom, moving images on the screens, and light bulbs connected to the cables overwhelm the space and provide the audience standing below with a new experience of “spectatorship.”",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/njpac-collection/njpac-195-51c7b9e6-imageUrl.webp",
+      "thumbnailUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/ioDO9UyxpS1Uw6WrEGziqGQFkPQJQ9FVN2yyLd6A.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://njpart.ggcf.kr/collections/195",
+      "metadata": {
+        "classifications": "sculpture·installation, video"
+      },
+      "original_imageUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/ioDO9UyxpS1Uw6WrEGziqGQFkPQJQ9FVN2yyLd6A.jpg"
+    },
+    {
+      "id": "njpac-196",
+      "objectNumber": "234",
+      "title": "Instruction No. 2",
+      "artist": "Benjamin Patterson",
+      "date": "1965",
+      "year": 1965,
+      "medium": "1 plastic box, soap, paper towels, printed paper",
+      "dimensions": "12×9.3×2.6cm",
+      "category": "mixed_media_2d",
+      "description": "Following the idea of the ‘Fluxkit’ that George Maciunas conceived in 1964, Fluxus artists produced multiple editions of kits encompassing a selection of miscellaneous objects and paper as graphic scores for the user to read or manipulate, as with interactive games. The kits were packed together in a small attaché case for sale, which was first advertised in the fourth Fluxus newspaper, FLuxus cc fiVe ThReE that also contained Nam June Paik’s essay, Afterlude to the Exposition of Experimental Television (1964).",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/njpac-collection/njpac-196-cdc97d26-imageUrl.webp",
+      "thumbnailUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/mXYoSoypjm957NcIzlQvgUzTd7NcyuMnKku4Vesk.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://njpart.ggcf.kr/collections/196",
+      "metadata": {
+        "classifications": "object"
+      },
+      "original_imageUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/mXYoSoypjm957NcIzlQvgUzTd7NcyuMnKku4Vesk.jpg"
+    },
+    {
+      "id": "njpac-197",
+      "objectNumber": "200",
+      "title": "Piano & Letters",
+      "artist": "Nam June Paik; Mary Bauermeister",
+      "date": "1960 (Piano) / 1962-1980 (Letters)",
+      "year": 1960,
+      "medium": "dismantled piano, copies of documents, images, letters from Nam June Paik",
+      "dimensions": "variable",
+      "category": "video",
+      "description": "Mary Bauermeister was Nam June Paik’s close colleague and a Fluxus artist. Piano & Letters consists of written correspondences between the two artists, and scenes from a concert that took place in the early 1960s at Bauermeister’s studio. The piano, decked with paper and photographs, is also part of the actual object that was used at the concert. Along with Paik’s piece Klavier Intégral, which was introduced at Exposition of Music — Electronic Television, the destroyed piano shows the experimental spirit of the artists at the time, who expressed new concepts of art such as viewer…",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/njpac-collection/njpac-197-ecf43604-imageUrl.webp",
+      "thumbnailUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/ZO0gZo0A3NAyNl7Ys5M1uTeFoKo5z0EgAPyEgd60.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://njpart.ggcf.kr/collections/197",
+      "metadata": {
+        "classifications": "sculpture·installation"
+      },
+      "original_imageUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/ZO0gZo0A3NAyNl7Ys5M1uTeFoKo5z0EgAPyEgd60.jpg"
+    },
+    {
       "id": "njpac-198",
       "objectNumber": "205",
       "title": "Untitled",
@@ -2972,6 +3561,27 @@
         "classifications": "painting"
       },
       "original_imageUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/fe1FmmOKqvrLoBpGO842B37zswzKwVMW17f3KOED.jpg"
+    },
+    {
+      "id": "njpac-199",
+      "objectNumber": "197",
+      "title": "MS-Fluxussus (Symphony No. 7)",
+      "artist": "Nam June Paik",
+      "date": "1980",
+      "year": 1980,
+      "medium": "1 prepared violin with engine, 1 remote controller",
+      "dimensions": "violin 21×59.8×11.8cm",
+      "category": "video",
+      "description": "MS-Fluxussus (Symphony No. 7) is a performance in which Nam June Paik manipulates a radio-controlled violin set afloat. A flyer for the performance states that it is an “Omaggio a Joe Jones,” a fellow Fluxus musician and collaborator known for his music machines made from found instruments. Paik’s performance is given a title that evokes the naming of a machine. First performed in Dusseldorf, the violin was fished out and played by other musicians. Paik later performed the piece with other musicians under the title “Aqua Quartette” at Museum Island Hombroich, in Neuss, 1986.",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/njpac-collection/njpac-199-4bb6d76f-imageUrl.webp",
+      "thumbnailUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/iR8c57v2BwvM0tTRu5clVWAfT76AfGUKFX188zlm.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://njpart.ggcf.kr/collections/199",
+      "metadata": {
+        "classifications": "object, performance"
+      },
+      "original_imageUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/iR8c57v2BwvM0tTRu5clVWAfT76AfGUKFX188zlm.jpg"
     },
     {
       "id": "njpac-200",
@@ -3058,6 +3668,69 @@
       "original_imageUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/vUAsPXqUrQWbQN3B2IXOUbQG0cbdan0Aht3ZLzNy.jpg"
     },
     {
+      "id": "njpac-204",
+      "objectNumber": "012",
+      "title": "Charlie Chaplin",
+      "artist": "Nam June Paik",
+      "date": "2002",
+      "year": 2002,
+      "medium": "4 CRT TV sets, 1 LCD TV set, 3 vacuum-tube TV cases, 4 vacuum-tube radio cases, 2 video distributor, 1-channel video, color, silent, DVD",
+      "dimensions": "185×152×56cm",
+      "category": "video",
+      "description": "With movies such as The Gold Rush, Modern Times and The Great Dictator, Charlie Chaplin as a comic actor and a movie director continuously commented on the issue of recovering humanity in the age of materialism. In his masterpiece Modern Times, Chaplin depicted a society dominated by capitalism and machine civilization, and criticized the loss of humanity in his typical way of lyrical satire. Nam June Paik was also preoccupied with the issues of humanized technology and the harmony of humans and technologies; therefore it was natural for Paik to represent Chaplin in his robot sculpture.…",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/njpac-collection/njpac-204-0220483e-imageUrl.webp",
+      "thumbnailUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/XLTh30fNtqAtXqbwRsz1c54rxyB0jxA9TqRVxIXd.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://njpart.ggcf.kr/collections/204",
+      "metadata": {
+        "classifications": "robot, video"
+      },
+      "original_imageUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/XLTh30fNtqAtXqbwRsz1c54rxyB0jxA9TqRVxIXd.jpg"
+    },
+    {
+      "id": "njpac-205",
+      "objectNumber": "008",
+      "title": "TV Buddha",
+      "artist": "Nam June Paik",
+      "date": "1974(2002)",
+      "year": 1974,
+      "medium": "1 limestone Buddha statue, 1 CRT TV set, 1 CCTV camera",
+      "dimensions": "variable",
+      "category": "video",
+      "description": "Nam June Paik produced several versions of his work titled TV Buddha, which shows a Buddha statue watching TV. In this installation housed by the Nam June Paik Art Center, Buddha is watching his own real-time image on a TV screen taken by a closed-circuit camera. The fact that Buddha—the truth seeker representing oriental wisdom—is watching TV—a symbol of mass media representing modern civilization—may appear humorous at first glance, along with the impression that he seems to sink into narcissism fascinated by his own image on the screen. Nevertheless, this work shows Buddha reflecting on…",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/njpac-collection/njpac-205-c2568399-imageUrl.webp",
+      "thumbnailUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/bnsjMxzDZoowPFWzxjYYQ3TwdVV3kyLOT3lg6TlI.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://njpart.ggcf.kr/collections/205",
+      "metadata": {
+        "classifications": "sculpture·installation, television"
+      },
+      "original_imageUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/bnsjMxzDZoowPFWzxjYYQ3TwdVV3kyLOT3lg6TlI.jpg"
+    },
+    {
+      "id": "njpac-206",
+      "objectNumber": "218",
+      "title": "Safety Cone",
+      "artist": "Dennis Oppenheim",
+      "date": "2008",
+      "year": 2008,
+      "medium": "orange blaze cast glass fiber",
+      "dimensions": "549×274×274cm(×3ea.)",
+      "category": "video",
+      "description": "Safety Cone is the work of Dennis Oppenheim, an American conceptual artist who explored various media and forms such as earth art, performance, installation, and public art. Oppenheim has transformed the scale of objects that can be easily seen in everyday life or made sculptures placed in unfamiliar layout, one of which is Safety Cone . The cone is intended to change the landscape of the street and awaken viewers' consciousness by expanding the size of the safety cone to over 5 meters on the road and placing it in public places on an architectural level. At present, three Safety Cones are…",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/njpac-collection/njpac-206-bfe99a98-imageUrl.webp",
+      "thumbnailUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/4YrF32ykW9OgdXuvxRfQ7rn56twRBvl73ZPlDTko.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://njpart.ggcf.kr/collections/206",
+      "metadata": {
+        "classifications": "sculpture·installation"
+      },
+      "original_imageUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/4YrF32ykW9OgdXuvxRfQ7rn56twRBvl73ZPlDTko.jpg"
+    },
+    {
       "id": "njpac-207",
       "objectNumber": "206",
       "title": "Untitled",
@@ -3121,6 +3794,48 @@
       "original_imageUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/HLz3flmnYtDSbLRDggaTUbu5w9WUL3XCG7L45hAz.jpg"
     },
     {
+      "id": "njpac-210",
+      "objectNumber": "232",
+      "title": "Name Kit",
+      "artist": "George Brecht",
+      "date": "1965",
+      "year": 1965,
+      "medium": "1 plastic box, 5 small dices, 2 rubber stamps, instruction card",
+      "dimensions": "9.3×12×2.6cm",
+      "category": "mixed_media_2d",
+      "description": "Following the idea of the ‘Fluxkit’ that George Maciunas conceived in 1964, Fluxus artists produced multiple editions of kits encompassing a selection of miscellaneous objects and paper as graphic scores for the user to read or manipulate, as with interactive games. The kits were packed together in a small attaché case for sale, which was first advertised in the fourth Fluxus newspaper, FLuxus cc fiVe ThReE that also contained Nam June Paik’s essay, Afterlude to the Exposition of Experimental Television (1964). This Fluxkit is one of George Brecht’s Games and Puzzles entitled Name Kit.…",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/njpac-collection/njpac-210-91873329-imageUrl.webp",
+      "thumbnailUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/eFvD4s1H0dYJjmFB9BryB3T2KiJts4uAN16EFlHN.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://njpart.ggcf.kr/collections/210",
+      "metadata": {
+        "classifications": "object"
+      },
+      "original_imageUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/eFvD4s1H0dYJjmFB9BryB3T2KiJts4uAN16EFlHN.jpg"
+    },
+    {
+      "id": "njpac-211",
+      "objectNumber": "220",
+      "title": "Chronicle of a Beautiful Dancer",
+      "artist": "Eun-mee Ahn",
+      "date": "2009",
+      "year": 2009,
+      "medium": "12 photographs, 1 wedding dress, performance video of Paik’s Rhapsody, piano debris",
+      "dimensions": "diasec 103×235cm, frame 117×248cm",
+      "category": "video",
+      "description": "Eun-mee Ahn is a dancer and choreographer who juxtapose Korean traditional dance with modern aesthetics. Ahn is often inspired by traditional stories, from which she reinterprets and creates a performance by combining choreography with ornate costumes and unique music. Ahn was awarded the first Nam June Paik Art Center Prize in 2009 and produced Chronicle of a Beautiful Dancer in celebration of the prize. Parodying Chronicle of a Beautiful Paintress, the score dedicated to Alison Knowles by Nam June Paik, Ahn’s work comprises of 12 photographs of Ahn in a wedding dress, along with remnants…",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/njpac-collection/njpac-211-488e2541-imageUrl.webp",
+      "thumbnailUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/I8JAtRWlLcFG4bqZ6f2kPAdnTCiIvYyR9JtAEKit.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://njpart.ggcf.kr/collections/211",
+      "metadata": {
+        "classifications": "object, video"
+      },
+      "original_imageUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/I8JAtRWlLcFG4bqZ6f2kPAdnTCiIvYyR9JtAEKit.jpg"
+    },
+    {
       "id": "njpac-212",
       "objectNumber": "073",
       "title": "Cœur (Heart for Percussion), Contre-Festival zum Kölner IGNM-Fest, Mary Bauermeister’s atelier, Cologne",
@@ -3161,6 +3876,111 @@
         "classifications": "photography, performance"
       },
       "original_imageUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/qf8pqi7pBm0TcWsi1E7RCSgvbAq7UKYyfMGqTuVE.jpg"
+    },
+    {
+      "id": "njpac-214",
+      "objectNumber": "025",
+      "title": "Fontainebleau",
+      "artist": "Nam June Paik",
+      "date": "1988",
+      "year": 1988,
+      "medium": "20 Quasar CRT TV sets, metal grid, gold-painted wooden frame, RF distributor, 2-channel video, color, silent, DVD",
+      "dimensions": "195×235×4cm",
+      "category": "video",
+      "description": "In a magnificent antique wooden frame painted in gold, twenty color (2-channel) monitors show rapidly-changing colorful abstract images. The title “Fontainebleau” appears to be taken from the Palace of Fontainebleau in France; the palace is not only the magnificent residence of French monarchs including Napoleon but also a place where the prototype of the ‘gallery’ that hung paintings side by side is located. The Gallery of Francis I, in particular, displayed paintings on the walls surrounded by splendid gold decorations. This work represents Paik’s idea of the following: “As the collage…",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/njpac-collection/njpac-214-9bdb3235-imageUrl.webp",
+      "thumbnailUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/CsMh4AzVZXYNxf9gVbkSc92DPoUAvZNP9na26NOh.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://njpart.ggcf.kr/collections/214",
+      "metadata": {
+        "classifications": "sculpture·installation, video"
+      },
+      "original_imageUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/CsMh4AzVZXYNxf9gVbkSc92DPoUAvZNP9na26NOh.jpg"
+    },
+    {
+      "id": "njpac-215",
+      "objectNumber": "015",
+      "title": "Moon is the Oldest TV",
+      "artist": "Nam June Paik",
+      "date": "1965(2000)",
+      "year": 1965,
+      "medium": "13 CRT TV sets, 12-channel video, color, silent, LD; E-Moon, 1-channel video, color, sound, DVD",
+      "dimensions": "variable",
+      "category": "video",
+      "description": "Nam June Paik enjoyed playing with time parameters in a spatial coordinate through video. In this work, Paik shows the moon, one of the oldest sources of light in the history of humanity, through the television monitor. Twelve different stages of the moon from the crescent to the full moon are embodied in twelve televisions. When this work was first on display at Galeria Bonino, New York, in 1965, an early model of the vacuum-tube television was used. Paik produced different images that looked like the cycle of the moon, simply by fixing a magnet in the tubes and thereby interfering with…",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/njpac-collection/njpac-215-8005eb76-imageUrl.webp",
+      "thumbnailUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/jt9RVv59cipOSWtTscLBaLSpC82wUw6lx3gEl9pc.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://njpart.ggcf.kr/collections/215",
+      "metadata": {
+        "classifications": "sculpture·installation, television"
+      },
+      "original_imageUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/jt9RVv59cipOSWtTscLBaLSpC82wUw6lx3gEl9pc.jpg"
+    },
+    {
+      "id": "njpac-216",
+      "objectNumber": "011",
+      "title": "Bob Hope",
+      "artist": "Nam June Paik",
+      "date": "2002",
+      "year": 2002,
+      "medium": "2 CRT TV sets, 3 LCD TV sets, 3 vacuum-tube TV cases, 3 vacuum-tube radio cases, 1 video distributor, 1-channel video, color, silent, DVD",
+      "dimensions": "141×116×33cm",
+      "category": "video",
+      "description": "Bob Hope was a popular comedian, actor, singer, dancer and author, who made appearances in diverse fields including radio, television programs, movies and theaters. Nam June Paik made a series of works featuring such celebrities as Humphrey Bogart, David Bowie, Lauran Bacall and Marilyn Monroe as well as Hope. This is derived from Paik’s consistent interest from the 1970s in the power of mass media, the media consumption of images, and the boundary between high art and popular art. In 1984, a broadcast program produced by the artists’ collective ‘Cable Soho’ in New York showed artist Jaime…",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/njpac-collection/njpac-216-735d25f8-imageUrl.webp",
+      "thumbnailUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/MvxbULgxUHvKzoseMmlTezaQfulKG8mwihBzAtJi.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://njpart.ggcf.kr/collections/216",
+      "metadata": {
+        "classifications": "robot, video"
+      },
+      "original_imageUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/MvxbULgxUHvKzoseMmlTezaQfulKG8mwihBzAtJi.jpg"
+    },
+    {
+      "id": "njpac-217",
+      "objectNumber": "005",
+      "title": "Swiss Clock",
+      "artist": "Nam June Paik",
+      "date": "1988",
+      "year": 1988,
+      "medium": "3 CRT TV sets, 1 CCTV camera, 1 pendulum clock, video distributor",
+      "dimensions": "variable",
+      "category": "video",
+      "description": "A CCTV camera displays the movement of a striking clock’s pendulum, through three television monitors in real time. On the monitors that are placed in three different directions, the motion of the same pendulum is shown from three different angles. This work manifests the circular relationship between image and reality within the operation of a closed-circuit TV. Also, by showing the clock’s movement this way, the work visu&not;ally embodies the abstract flows of time. Swiss Clock therefore expresses Nam June Paik’s interest in “non-linear time.”",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/njpac-collection/njpac-217-02102c1b-imageUrl.webp",
+      "thumbnailUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/cGydtKdnWSSyvxY2H1wJKIbt0ZtcwlTWcPSXFXYs.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://njpart.ggcf.kr/collections/217",
+      "metadata": {
+        "classifications": "sculpture·installation, television"
+      },
+      "original_imageUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/cGydtKdnWSSyvxY2H1wJKIbt0ZtcwlTWcPSXFXYs.jpg"
+    },
+    {
+      "id": "njpac-218",
+      "objectNumber": "171",
+      "title": "Hommage à John Cage: Music for Tapes and Piano",
+      "artist": "Nam June Paik",
+      "date": "1958 – 1962",
+      "year": 1958,
+      "medium": "4 audiotape reels, wooden frame",
+      "dimensions": "50×36×3cm",
+      "category": "video",
+      "description": "Deeply inspired by his acquaintance with John Cage, Nam June Paik performed Hommage &agrave; John Cage: Music for Tapes and Piano at the Galerie 22, Dusseldorf, in 1959. Upon his performance, Paik also produced a frame of the reel tapes that recorded collages of various sounds under the same title as the performance. The reel tapes contained an edited recording of classical music as well as daily noise; Beethoven’s Symphony No. 5, German Lieder, Rachmaninoff’s Piano Concerto No. 2, screaming sounds, glass shattering to pieces, pebbles rumbling in a tin box, crowing roosters, news and…",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/njpac-collection/njpac-218-c22fdafb-imageUrl.webp",
+      "thumbnailUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/9kQSmpeqa0ggY5xYHajtpgwQdPcLbJoV15tx1eDZ.png",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://njpart.ggcf.kr/collections/218",
+      "metadata": {
+        "classifications": "object, performance"
+      },
+      "original_imageUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/9kQSmpeqa0ggY5xYHajtpgwQdPcLbJoV15tx1eDZ.png"
     },
     {
       "id": "njpac-219",
@@ -3226,6 +4046,27 @@
       "original_imageUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/CokMgFC7lDMRBHNmv9JYSAyMamlF5DWrAPKyma3v.jpg"
     },
     {
+      "id": "njpac-223",
+      "objectNumber": "249",
+      "title": "Beuys Vox",
+      "artist": "Nam June Paik",
+      "date": "1988",
+      "year": 1988,
+      "medium": "mixed media",
+      "dimensions": "variable",
+      "category": "video",
+      "description": "Beuys Vox was produced by Nam June Paik to honor Joseph Beuys after his death, and the work reflects the in-depth relationship between the two artists. Apparent from the title, “Beuys’ voice,” this work is composed of various works by Beuys. Highlights of Beuys Vox include: a photograph that captured both artists at the Zero group exhibition in 1961 when the two did not know each other very well; a memo with “Josef” written in Paik’s book (1962); photographs of the 24 Hours performance in 1965, which both artists participated; and photographs and LP Records of their joint performance, In…",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/njpac-collection/njpac-223-de47cbc0-imageUrl.webp",
+      "thumbnailUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/ANHfpLyyQ5JR82wAcyRB7FGhAQIqytBfUREzlix3.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://njpart.ggcf.kr/collections/223",
+      "metadata": {
+        "classifications": "sculpture·installation"
+      },
+      "original_imageUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/ANHfpLyyQ5JR82wAcyRB7FGhAQIqytBfUREzlix3.jpg"
+    },
+    {
       "id": "njpac-224",
       "objectNumber": "118",
       "title": "Klavier Intégral, Exposition of Music — Electronic Television, Galerie Parnass, Wuppertal",
@@ -3289,6 +4130,69 @@
       "original_imageUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/q0SAHcC5UTvKEUIy71VbVQjdPQMpJv8cx4SdXKe1.jpg"
     },
     {
+      "id": "njpac-227",
+      "objectNumber": "010",
+      "title": "Schubert",
+      "artist": "Nam June Paik",
+      "date": "2002",
+      "year": 2002,
+      "medium": "3 LCD TV sets, 9 vacuum-tube radio cases, 1 gramophone speaker, 1 video distributor, 1-channel video, color, silent, DVD",
+      "dimensions": "183×108×61cm",
+      "category": "video",
+      "description": "Schubert is a representation of the Austrian composer Franz Schubert constructed with nine old vacuum-tube radios in various shapes. The robot wears a red cone hat, which is a gramophone’s speaker. The visual elements of the radio parts, such as the horizontal and vertical lines of speakers, circular dials, frequency numbers, and attached clocks, all contribute to the overall composition of the sculpture. Three of the radios have small monitors inserted inside, showing the same video in three different directions. The first monitor is placed in a normal upright position, the second one is…",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/njpac-collection/njpac-227-6774d200-imageUrl.webp",
+      "thumbnailUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/NzuYxKYQfNNgfwYwvquZoDUlbXd7uadpQsDMU9eF.png",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://njpart.ggcf.kr/collections/227",
+      "metadata": {
+        "classifications": "robot, video"
+      },
+      "original_imageUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/NzuYxKYQfNNgfwYwvquZoDUlbXd7uadpQsDMU9eF.png"
+    },
+    {
+      "id": "njpac-228",
+      "objectNumber": "007",
+      "title": "TV Fish (Video Fish)",
+      "artist": "Nam June Paik",
+      "date": "1975(1997)",
+      "year": 1975,
+      "medium": "24 CRT TV sets, 24 fish tanks, live fishes, video distributor, 3-channel video, color, silent, LD",
+      "dimensions": "variable",
+      "category": "video",
+      "description": "Twenty-four television sets are placed behind a row of twenty-four fish tanks. Live fish swim around inside the fish tanks while a series of moving images are played on the TV monitors, such as dancing Merce Cunningham, swimming fish in the sea, and a flying airplane in the sky. By overlapping the fish tank with a television monitor, real fish and the image of fish merge into a single space and time. Cunningham is dancing with a fish; the fish is swimming in the sky; and an airplane is floating in the sea. The visual composition, in which a fish tank becomes a monitor and vice versa, leads…",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/njpac-collection/njpac-228-46cee40e-imageUrl.webp",
+      "thumbnailUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/5ZKSGNW3W3YJKcN4uxB0jCogMxJpp5qdSJ0hsjKC.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://njpart.ggcf.kr/collections/228",
+      "metadata": {
+        "classifications": "sculpture·installation, video"
+      },
+      "original_imageUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/5ZKSGNW3W3YJKcN4uxB0jCogMxJpp5qdSJ0hsjKC.jpg"
+    },
+    {
+      "id": "njpac-229",
+      "objectNumber": "003",
+      "title": "TV Crown",
+      "artist": "Nam June Paik",
+      "date": "1965(1999)",
+      "year": 1965,
+      "medium": "1 manipulated CRT TV set, 2 audio generators, 1 temperature controller, 2 amplifiers",
+      "dimensions": "variable",
+      "category": "video",
+      "description": "TV Crown, one of Nam June Paik’s experimental televisions, conveys generated and amplified signals to a TV to manipulate its internal circuits. A variety of oscillating patterns are made when the electric signals of the circuit-manipulated TV are distorted. Paik once said that these “dancing” patterns are the foundation of his works, along with Magnet TV (1965). Manipulating the internal circuits of televisions by using audio signals is a technique that was later used in video synthesizers, which is a basic method of forming patterns that frequently appear in Paik’s videos.",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/njpac-collection/njpac-229-39a734b5-imageUrl.webp",
+      "thumbnailUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/HvJIu6F2HkV2qqc3hP4fG8LEvCHi0IWmgmU672V9.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://njpart.ggcf.kr/collections/229",
+      "metadata": {
+        "classifications": "sculpture·installation, television"
+      },
+      "original_imageUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/HvJIu6F2HkV2qqc3hP4fG8LEvCHi0IWmgmU672V9.jpg"
+    },
+    {
       "id": "njpac-230",
       "objectNumber": "183",
       "title": "Small Notebook",
@@ -3310,6 +4214,27 @@
       "original_imageUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/3Ff8PCxQRBZ1RfHSanxwUmIze2oZ7ggUo9C4hczv.jpg"
     },
     {
+      "id": "njpac-231",
+      "objectNumber": "236",
+      "title": "Events",
+      "artist": "Robert Watts",
+      "date": "1964",
+      "year": 1964,
+      "medium": "1 plastic box, 71 instruction cards, 1 set of postage stamps",
+      "dimensions": "13×18.1×3cm",
+      "category": "mixed_media_2d",
+      "description": "Following the idea of the ‘Fluxkit’ that George Maciunas conceived in 1964, Fluxus artists produced multiple editions of kits encompassing a selection of miscellaneous objects and paper as graphic scores for the user to read or manipulate, as with interactive games. The kits were packed together in a small attaché case for sale, which was first advertised in the fourth Fluxus newspaper, FLuxus cc fiVe ThReE that also contained Nam June Paik’s essay, Afterlude to the Exposition of Experimental Television (1964). This Fluxkit is Events by Robert Watts. The box contains 71 instruction cards…",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/njpac-collection/njpac-231-8eaa0bc4-imageUrl.webp",
+      "thumbnailUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/Z1EaNbzKN6JTNZQTdb4UceZ64mLqB3avO7s3Qdsk.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://njpart.ggcf.kr/collections/231",
+      "metadata": {
+        "classifications": "object"
+      },
+      "original_imageUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/Z1EaNbzKN6JTNZQTdb4UceZ64mLqB3avO7s3Qdsk.jpg"
+    },
+    {
       "id": "njpac-232",
       "objectNumber": "150",
       "title": "Record Schallplatten Schaschlik, Exposition of Music — Electronic Television, Galerie Parnass, Wuppertal",
@@ -3329,6 +4254,48 @@
         "classifications": "photography"
       },
       "original_imageUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/Uq3lMSC7oCTi2d0I1rrVQu0VeZbBIRNa4xylwE7b.jpg"
+    },
+    {
+      "id": "njpac-233",
+      "objectNumber": "217",
+      "title": "Ideas You Believe are Absurd Ultimately Lead to Success",
+      "artist": "Bik Van der Pol",
+      "date": "2008",
+      "year": 2008,
+      "medium": "neon tubes",
+      "dimensions": "35×750cm",
+      "category": "video",
+      "description": "Bik Van der Pol is a group made by two Dutch artists Liesbeth Bik and Jos van der Pol, in 1995, presenting insights into the distribution and communication of information. We are living in a deluge of information, within which meanings of objects and events are ever-changing. Bik Van der Pol provides a new discourse of how we interpret surrounding environments, posing questions of knowledge, history, and reconstitution of memories. This work presents the sentence, “ridiculous ideas will finally succeed.”",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/njpac-collection/njpac-233-5c767180-imageUrl.webp",
+      "thumbnailUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/asXH53WSDNVkgSjM4ipyRkKt2Jp02L1dmANprDj4.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://njpart.ggcf.kr/collections/233",
+      "metadata": {
+        "classifications": "sculpture·installation"
+      },
+      "original_imageUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/asXH53WSDNVkgSjM4ipyRkKt2Jp02L1dmANprDj4.jpg"
+    },
+    {
+      "id": "njpac-234",
+      "objectNumber": "246",
+      "title": "12 Piano Compositions for Nam June Paik",
+      "artist": "Benjamin Patterson",
+      "date": "2010",
+      "year": 2010,
+      "medium": "instruction cards, several objects, video documentation of performance",
+      "dimensions": "Dimensions",
+      "category": "video",
+      "description": "Benjamin Patterson visited Nam June Paik Art Center in 2010 and performed 12 Piano Compositions for Nam June Paik, initially written by George Maciunas in 1962. What was left from the performance was acquired by Nam June Paik Art Center: Patterson’s copy of the score with Korean annotations, and objects used in the performance including a neon-orange spray, detergent and sponge, a vase, a bucket, rubber gloves, polish and cloth, etc. Maciunas’ original score is as follows: 1. Let piano movers carry piano into the stage. 2. Tune the piano. 3. Paint with orange paint patterns over the piano.…",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/njpac-collection/njpac-234-54970013-imageUrl.webp",
+      "thumbnailUrl": "https://njpart.ggcf.kr/storage/upload/2023/05/16/JLSCNJzVmHwDS9FGBSxGXCI91R6eWgDAYpVVaNEZ.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://njpart.ggcf.kr/collections/234",
+      "metadata": {
+        "classifications": "video, object"
+      },
+      "original_imageUrl": "https://njpart.ggcf.kr/storage/upload/2023/05/16/JLSCNJzVmHwDS9FGBSxGXCI91R6eWgDAYpVVaNEZ.jpg"
     },
     {
       "id": "njpac-235",
@@ -3371,6 +4338,174 @@
         "classifications": "photography, performance"
       },
       "original_imageUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/JqugAsTdPHDPZwC5xGEkfjMxpiZ2YtWntdnwVTD6.jpg"
+    },
+    {
+      "id": "njpac-237",
+      "objectNumber": "021",
+      "title": "Three Elements: Triangle",
+      "artist": "Nam June Paik",
+      "date": "1999",
+      "year": 1999,
+      "medium": "1 laser, wooden frame, mirror, one-way mirror plexiglass, optical system, 2 prisms, 2 motors, power supply, fog machine",
+      "dimensions": "325×375×122cm",
+      "category": "video",
+      "description": "Three Elements refers to Nam June Paik’s three laser works, Circle , Square , and Triangle , created over three years since 1997. As Paik had often stated his wish to visualize the idea of “ cheon-ji-in (Heaven, Earth, and Man)” with lasers, one may assume that the three geometric forms symbolize won-bang-gak (circle, square, and triangle) that represents cheon-ji-in in traditional Korean culture. Three Elements displays the respective forms of a circular, square, and triangular wooden frame with mirrors attached. The interior is visible as the front plane is a glass mirror. A colored…",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/njpac-collection/njpac-237-37dc3af7-imageUrl.webp",
+      "thumbnailUrl": "https://njpart.ggcf.kr/storage/upload/2024/02/07/za3Y6ia2gOypORhTauLtMhz5479svALgaZNgmuQc.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://njpart.ggcf.kr/collections/237",
+      "metadata": {
+        "classifications": "sculpture·installation, laser"
+      },
+      "original_imageUrl": "https://njpart.ggcf.kr/storage/upload/2024/02/07/za3Y6ia2gOypORhTauLtMhz5479svALgaZNgmuQc.jpg"
+    },
+    {
+      "id": "njpac-238",
+      "objectNumber": "020",
+      "title": "Three Elements: Square",
+      "artist": "Nam June Paik",
+      "date": "1999",
+      "year": 1999,
+      "medium": "2 lasers, wooden frame, mirror, one-way mirror plexiglass, optical system, 3 prisms, 3 motors, power supply, fog machine",
+      "dimensions": "309×246×122cm",
+      "category": "video",
+      "description": "Three Elements refers to Nam June Paik’s three laser works, Circle , Square , and Triangle , created over three years since 1997. As Paik had often stated his wish to visualize the idea of “ cheon-ji-in (Heaven, Earth, and Man)” with lasers, one may assume that the three geometric forms symbolize won-bang-gak (circle, square, and triangle) that represents cheon-ji-in in traditional Korean culture. Three Elements displays the respective forms of a circular, square, and triangular wooden frame with mirrors attached. The interior is visible as the front plane is a glass mirror. A colored…",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/njpac-collection/njpac-238-0026ebe4-imageUrl.webp",
+      "thumbnailUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/UoGNMtQWq7bgbNv0TXVzJVXLCuWvfT1X5nEoR6CC.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://njpart.ggcf.kr/collections/238",
+      "metadata": {
+        "classifications": "sculpture·installation, laser"
+      },
+      "original_imageUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/UoGNMtQWq7bgbNv0TXVzJVXLCuWvfT1X5nEoR6CC.jpg"
+    },
+    {
+      "id": "njpac-239",
+      "objectNumber": "019",
+      "title": "Three Elements: Circle",
+      "artist": "Nam June Paik",
+      "date": "1999",
+      "year": 1999,
+      "medium": "1 laser, wooden frame, mirror, one-way mirror plexiglass, optical system, 2 prisms, 2 motors, power supply, fog machine",
+      "dimensions": "287×234×122cm",
+      "category": "video",
+      "description": "Three Elements refers to Nam June Paik’s three laser works, Circle , Square , and Triangle , created over three years since 1997. As Paik had often stated his wish to visualize the idea of “ cheon-ji-in (Heaven, Earth, and Man)” with lasers, one may assume that the three geometric forms symbolize won-bang-gak (circle, square, and triangle) that represents cheon-ji-in in traditional Korean culture. Three Elements displays the respective forms of a circular, square, and triangular wooden frame with mirrors attached. The interior is visible as the front plane is a glass mirror. A colored…",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/njpac-collection/njpac-239-f6991562-imageUrl.webp",
+      "thumbnailUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/RIh5sGNrOb3AgZI5W7iinldfKLX0Gl2BQJzpsy0A.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://njpart.ggcf.kr/collections/239",
+      "metadata": {
+        "classifications": "sculpture·installation, laser"
+      },
+      "original_imageUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/RIh5sGNrOb3AgZI5W7iinldfKLX0Gl2BQJzpsy0A.jpg"
+    },
+    {
+      "id": "njpac-240",
+      "objectNumber": "006",
+      "title": "TV Garden",
+      "artist": "Nam June Paik",
+      "date": "1974(2002)",
+      "year": 1974,
+      "medium": "CRT TV sets, LCD TV sets, live plants, amplifiers, video distributor, speakers, 1-channel video, Global Groove, color, sound",
+      "dimensions": "variable",
+      "category": "video",
+      "description": "Televisions lie around as if blossoming, in this dense garden of real plants and bushes. Global Groove (1973) is played on the monitors, which consists of dazzling sequences of music and dance from different parts of the world, from diverse types of art and culture, born out of Nam June Paik’s typical style of editing. Without a master narrative that weaves the disparate elements, this video seems to recommend a simple and intuitive viewing. TV monitors in TV Garden reveal their presence by being placed at an unusual angle. Viewers are led to look downward at the television monitors facing…",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/njpac-collection/njpac-240-b3182485-imageUrl.webp",
+      "thumbnailUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/POnY5yWWeXPlxY9OPAxUqyZMnPrJIb5frKKr85wY.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://njpart.ggcf.kr/collections/240",
+      "metadata": {
+        "classifications": "sculpture·installation, video"
+      },
+      "original_imageUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/POnY5yWWeXPlxY9OPAxUqyZMnPrJIb5frKKr85wY.jpg"
+    },
+    {
+      "id": "njpac-241",
+      "objectNumber": "001",
+      "title": "Magnet TV",
+      "artist": "Nam June Paik",
+      "date": "1965(1969)",
+      "year": 1965,
+      "medium": "1 CRT TV set, 1 magnet",
+      "dimensions": "TV 32×43×40cm, 자석 4×14×4cm",
+      "category": "video",
+      "description": "Magnet TV was displayed in Nam June Paik’s first solo exhibition in America, Nam June Paik: Cybernetic Arts and Music in 1965. The audience was able to alter the images on the TV screen by moving a magnet. The strong magnetic field interferes with and distorts the TV’s electronic signals so that the audience can involve themselves in developing beautiful abstract patterns on the screen, as Paik intended. By exemplifying a process of simple manipulation of a screen to create wonderful images, this work predicts the future of video art.",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/njpac-collection/njpac-241-69aa15a5-imageUrl.webp",
+      "thumbnailUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/SxfW9s71MlH0ZAAmvbEgWsi5DH1mhATT0oFQjaTF.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://njpart.ggcf.kr/collections/241",
+      "metadata": {
+        "classifications": "sculpture·installation, television"
+      },
+      "original_imageUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/SxfW9s71MlH0ZAAmvbEgWsi5DH1mhATT0oFQjaTF.jpg"
+    },
+    {
+      "id": "njpac-242",
+      "objectNumber": "182",
+      "title": "Symphony No. 6",
+      "artist": "Nam June Paik",
+      "date": "1980",
+      "year": 1980,
+      "medium": "violin fragments, 3-sheet score, wooden frame",
+      "dimensions": "52×72×7.5cm",
+      "category": "mixed_media_2d",
+      "description": "Three scores and fragments of a broken violin, the remnants of Nam June Paik’s Symphony No. 6 performance, is framed and given the same title as the performance. The symphony was a relay performance; one performer plays a single note with a violin and passes the bow to the next performer, who plays another note, and passes the bow to the next person, and so forth. Prior to this work, Paik composed a series of Fluxus scores called the Symphony. The first symphony was Young Penis Symphony, written in 1962 and published in Décollage Vol. 2. Symphony for Twenty Rooms written the year before,…",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/njpac-collection/njpac-242-1eb40b24-imageUrl.webp",
+      "thumbnailUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/HG1LGg0KJGobm2Jjzoi28GX88abjo6hwLD1m3IUr.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://njpart.ggcf.kr/collections/242",
+      "metadata": {
+        "classifications": "object, performance"
+      },
+      "original_imageUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/HG1LGg0KJGobm2Jjzoi28GX88abjo6hwLD1m3IUr.jpg"
+    },
+    {
+      "id": "njpac-243",
+      "objectNumber": "230",
+      "title": "Rehabilitation of Genghis Khan",
+      "artist": "Nam June Paik",
+      "date": "1993",
+      "year": 1993,
+      "medium": "1 CRT TV set, 10 steel CRT TV cases, neon tube, bicycle, diving helmet, fuel dispenser, plastic pipes, cape, ropes, 1-channel video, color, silent, LD",
+      "dimensions": "217×110×211cm",
+      "category": "video",
+      "description": "Rehabilitation of Genghis Khan was exhibited at the Venice Biennale 1993, which materialized the concept of a new Silk Road that connects the East and West that had been substituted with a broadband electronic highway. This Genghis Khan of the 20th century is riding a bike instead of a horse, wearing a diving helmet. His body is made of a steel fuel dispenser, and his arms are made with plastic pipes. The back of his bike is loaded with television cases, filled with symbols and characters created by neon lights. The neon symbols suggest a possibility of condensed delivery of complicated…",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/njpac-collection/njpac-243-d8d18b8c-imageUrl.webp",
+      "thumbnailUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/2Q13jPXRQclBBibRh2P5b3XH74wSwu3IjYK35KXW.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://njpart.ggcf.kr/collections/243",
+      "metadata": {
+        "classifications": "robot, video"
+      },
+      "original_imageUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/2Q13jPXRQclBBibRh2P5b3XH74wSwu3IjYK35KXW.jpg"
+    },
+    {
+      "id": "njpac-245",
+      "objectNumber": "233",
+      "title": "Events",
+      "artist": "Takehisa Kosugi",
+      "date": "1964",
+      "year": 1964,
+      "medium": "1 plastic box, 13 instruction cards",
+      "dimensions": "12×9.5×1.3cm",
+      "category": "mixed_media_2d",
+      "description": "Following the idea of the ‘Fluxkit’ that George Maciunas conceived in 1964, Fluxus artists produced multiple editions of kits encompassing a selection of miscellaneous objects and paper as graphic scores for the user to read or manipulate, as with interactive games. The kits were packed together in a small attaché case for sale, which was first advertised in the fourth Fluxus newspaper, FLuxus cc fiVe ThReE that also contained Nam June Paik’s essay, Afterlude to the Exposition of Experimental Television (1964). The plastic box of this Fluxkit contains thirteen offset cards of Takehisa…",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/njpac-collection/njpac-245-85f83356-imageUrl.webp",
+      "thumbnailUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/gljRsRFapPkETl5xRTuKDgO1tJqIsNldWP8EP7rv.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://njpart.ggcf.kr/collections/245",
+      "metadata": {
+        "classifications": "object"
+      },
+      "original_imageUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/gljRsRFapPkETl5xRTuKDgO1tJqIsNldWP8EP7rv.jpg"
     },
     {
       "id": "njpac-246",
@@ -3434,6 +4569,111 @@
         "classifications": "photography, performance"
       },
       "original_imageUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/mdvIkc96elMsehL5B5g7MsX9Hs4IKSBmeSJVEvQB.jpg"
+    },
+    {
+      "id": "njpac-249",
+      "objectNumber": "018",
+      "title": "Paik-Abe Video Synthesizer",
+      "artist": "Nam June Paik; Shuya Abe",
+      "date": "1969(1972)",
+      "year": 1969,
+      "medium": "2 CRT TV sets, 2 enamel coils, 2 CCTV cameras, 1 amplifier, 5 audio generators, control board",
+      "dimensions": "168×64×114cm",
+      "category": "video",
+      "description": "Nam June Paik strived to move beyond manipulating the television that enabled two-way feedback, toward creating a machine that ultimately everyone could play with as if playing the piano. Following this aim from 1964, the Paik-Abe Video Synthesizer was produced in 1969 for the first time in collaboration with the Japanese engineer Shuya Abe. The synthesizer could receive external sources such as from the camera, and edit the color and shape of video images in real-time. The synthesizer was later used in Video Commune: Beatles from beginning to end, a live broadcast on WGBH in Boston in…",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/njpac-collection/njpac-249-05faf7ac-imageUrl.webp",
+      "thumbnailUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/CQ4mR6zrc9Kv7n961aNTZnDZfqlkROx2OwQmkluv.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://njpart.ggcf.kr/collections/249",
+      "metadata": {
+        "classifications": "machinery"
+      },
+      "original_imageUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/CQ4mR6zrc9Kv7n961aNTZnDZfqlkROx2OwQmkluv.jpg"
+    },
+    {
+      "id": "njpac-250",
+      "objectNumber": "016",
+      "title": "Candle TV",
+      "artist": "Nam June Paik",
+      "date": "1975(1999)",
+      "year": 1975,
+      "medium": "1 candle, 1 steel TV case",
+      "dimensions": "34×36×41cm",
+      "category": "video",
+      "description": "Candle TV is a single candle lit in an empty steel casing of an old television. The candle illuminating the dark and empty space of the television case produces a sense of divinity and holiness of meditation, evoking powerful poetic associations that contrast technology. At the same time, showing the process of the candle creating light by burning matter and eventually dying out emphasizes television’s electric and immaterial nature. Also, by switching the electrical light of the television to candlelight, the work forms an “interactive loop,” as wholly burnt candles should be constantly…",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/njpac-collection/njpac-250-72710f60-imageUrl.webp",
+      "thumbnailUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/ouxvtcLKcN1xRgcPwByK01aTTThIEIReOAP0Oysd.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://njpart.ggcf.kr/collections/250",
+      "metadata": {
+        "classifications": "object, television"
+      },
+      "original_imageUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/ouxvtcLKcN1xRgcPwByK01aTTThIEIReOAP0Oysd.jpg"
+    },
+    {
+      "id": "njpac-251",
+      "objectNumber": "009",
+      "title": "Robot K-456",
+      "artist": "Nam June Paik",
+      "date": "1964(1996)",
+      "year": 1964,
+      "medium": "PCB, servomotor, sensor, amplifier, battery, remote controller, pan, steel structures",
+      "dimensions": "185×70×55cm",
+      "category": "video",
+      "description": "First exhibited in the Second Annual Avant-Garde Festival of New York in 1964, Robot K-456 is Nam June Paik’s first work that took the shape of a robot. Produced in collaboration with Japanese engineers, this work was a 20-channel remote-controlled robot, and was named Mozart’s Piano Concerto No. 18 in B-flat Major, Köchel’s number 456. The robot could walk around the street. Its mouth played a recording of President John F. Kennedy’s speech, and its bottom dropped peas as if defecating. Robot K-456 participated in a number of performances with Paik. In 1982, as part of Paik’s…",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/njpac-collection/njpac-251-f2a996c6-imageUrl.webp",
+      "thumbnailUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/JvibpMliRNxdDseVMSJJDOFPcTJjM6679FC1pvfI.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://njpart.ggcf.kr/collections/251",
+      "metadata": {
+        "classifications": "robot"
+      },
+      "original_imageUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/JvibpMliRNxdDseVMSJJDOFPcTJjM6679FC1pvfI.jpg"
+    },
+    {
+      "id": "njpac-252",
+      "objectNumber": "004",
+      "title": "Participation TV",
+      "artist": "Nam June Paik",
+      "date": "1963(1998)",
+      "year": 1963,
+      "medium": "1 limestone Buddha statue, 1 CRT TV set, 1 CCTV camera",
+      "dimensions": "variable",
+      "category": "video",
+      "description": "Participation TV is one of the 13 experimental televisions shown in Nam June Paik’s first solo exhibition Exposition of Music — Electronic Television, which was held in Wuppertal, Germany in 1963. Its earlier form was sheer acoustic, while the later version of Participation TV visualized the amplification of sound. When the viewer makes a sound into the microphone, the monitor shows several images. The work housed by the Nam June Paik Art Center was created in 1998. When someone makes a sound into the microphone, the acoustic signals are transformed into fine electronic signals, which are…",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/njpac-collection/njpac-252-a1179a24-imageUrl.webp",
+      "thumbnailUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/M7GhEX2P7iHplzpZN43WmjHNfMGrCXrxfHJG9Mhc.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://njpart.ggcf.kr/collections/252",
+      "metadata": {
+        "classifications": "sculpture·installation, television"
+      },
+      "original_imageUrl": "https://njpart.ggcf.kr/storage/upload/2023/02/09/M7GhEX2P7iHplzpZN43WmjHNfMGrCXrxfHJG9Mhc.jpg"
+    },
+    {
+      "id": "njpac-255",
+      "objectNumber": "002",
+      "title": "Nixon",
+      "artist": "Nam June Paik",
+      "date": "1965(2002)",
+      "year": 1965,
+      "medium": "2 CRT TV sets, 2 enamel coils, 1 audio generator, 1 McIntosh amplifier, 2 condensers, 1 video distributor, 1 switcher box, 1-channel video, color, silent, VHS tape",
+      "dimensions": "variable",
+      "category": "video",
+      "description": "Nixon is one of Nam June Paik’s earliest experimental televisions. Signals created from the generator are amplified by the amp, and electric currents flow through the coils installed on the two monitors. The currents flow on each coil one after another through a switch, which distorts the electric signals of the screen, creating comical images of former American president Richard Nixon. Nixon was defeated by John F. Kennedy as he failed to utilize the media in the famous TV debate with Kennedy in 1960. Paik created this work by witnessing the turning point in the effects of media.&emsp;",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/njpac-collection/njpac-255-8f600256-imageUrl.webp",
+      "thumbnailUrl": "https://njpart.ggcf.kr/storage/upload/2022/12/26/sGRMeKQ8xZ2LBGFrQ8h47BzooUXYPW4M8IHQMGzQ.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://njpart.ggcf.kr/collections/255",
+      "metadata": {
+        "classifications": "sculpture·installation, video"
+      },
+      "original_imageUrl": "https://njpart.ggcf.kr/storage/upload/2022/12/26/sGRMeKQ8xZ2LBGFrQ8h47BzooUXYPW4M8IHQMGzQ.jpg"
     },
     {
       "id": "njpac-264",
@@ -3541,6 +4781,69 @@
       "original_imageUrl": "https://njpart.ggcf.kr/storage/upload/2024/02/06/cvHDBWtsvdA72ZQNacToSA7Sgye22OvvNJDaMU1N.jpg"
     },
     {
+      "id": "njpac-272",
+      "objectNumber": "267",
+      "title": "Utopian Extraction",
+      "artist": "Unmake Lab",
+      "date": "2020",
+      "year": 2020,
+      "medium": "3-channel video, stones, webcam, computer, real-time object detection AI system",
+      "dimensions": "variable",
+      "category": "video",
+      "description": "Utopian Extraction consists of Ecosystem , Sisyphus Dataset , and an installation called Fresh Stone , along with a video of the same title. Utopian Extraction is a 32 minute video documenting the sites, such as the vast sand mountain created by the Four Major Rivers Restoration Project and the Saemangeum Haechang Stone Mountain, which was dug up to procure soil and stones for reclamation. Unmake Lab roamed the sites of nature, which eventually changed into a similar shape as it was extracted and transformed according to human purposes. Then it brought stones with broken outlines from…",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/njpac-collection/njpac-272-99a8a982-imageUrl.webp",
+      "thumbnailUrl": "https://njpart.ggcf.kr/storage/upload/2024/02/06/MXu6TVbqxe4wVmqTbVae8MC6izu38LdtEQijX5dR.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://njpart.ggcf.kr/collections/272",
+      "metadata": {
+        "classifications": "video, sculpture·installation"
+      },
+      "original_imageUrl": "https://njpart.ggcf.kr/storage/upload/2024/02/06/MXu6TVbqxe4wVmqTbVae8MC6izu38LdtEQijX5dR.jpg"
+    },
+    {
+      "id": "njpac-273",
+      "objectNumber": "268",
+      "title": "Nocturne No.20/Counterpoint",
+      "artist": "Ahn Kyuchul",
+      "date": "2013(2020)",
+      "year": 2013,
+      "medium": "piano, pencil on printed paper (111 pieces)",
+      "dimensions": "variable – 29×21cm(drawing)",
+      "category": "mixed_media_2d",
+      "description": "Ahn Kyuchul’s Nocturne No. 20/Counterpoint is a duet created by a pianist who plays the same piece at a specific time and a tuner who randomly removes one of the 88 hammers of the piano after each performance. The performance consists of each independent action performed by the pianist and the tuner. Each time the note on the piano keyboard decreases one by one, the performance disintegrates gradually and finally approaches the silence. The time of the performance annihilates ‘sound’ and creates random noise. The independent performers and the constantly changing piano and performance are…",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/njpac-collection/njpac-273-68f83f41-imageUrl.webp",
+      "thumbnailUrl": "https://njpart.ggcf.kr/storage/upload/2024/02/06/XXUwrsEplPyQQCUzVOpWz56t42YX2zPM82A6vJns.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://njpart.ggcf.kr/collections/273",
+      "metadata": {
+        "classifications": "performance, sculpture·installation"
+      },
+      "original_imageUrl": "https://njpart.ggcf.kr/storage/upload/2024/02/06/XXUwrsEplPyQQCUzVOpWz56t42YX2zPM82A6vJns.jpg"
+    },
+    {
+      "id": "njpac-274",
+      "objectNumber": "269",
+      "title": "An Evolving GAIA",
+      "artist": "Jinah Roh",
+      "date": "2017",
+      "year": 2017,
+      "medium": "A.I. robotics sculpture, resin, wood, interactive system",
+      "dimensions": "350×300×200cm",
+      "category": "video",
+      "description": "Jinah Roh has continued to work on artificial intelligence and mechanical systems out of her ongoing interest in the co-evolution of humans and machines. An Evolving GAIA is a work in which a mechanical doll, GAIA, who wants to become a human, recognizes the audience’s questions as voice information through sensors, and answers them. It simultaneously deals with the expectations and fears about incomplete artificial intelligence. Gaia refers to the mother of the Earth, the self-controlling and interactive Earth. The Gaia theory sees the Earth as an organism with a self-controlling ability,…",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/njpac-collection/njpac-274-92eec2e4-imageUrl.webp",
+      "thumbnailUrl": "https://njpart.ggcf.kr/storage/upload/2024/02/06/ccSrkPn89vjQAiLbg3T843ESNZlgvMkA4fyTuWhP.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://njpart.ggcf.kr/collections/274",
+      "metadata": {
+        "classifications": "robot, sculpture·installation"
+      },
+      "original_imageUrl": "https://njpart.ggcf.kr/storage/upload/2024/02/06/ccSrkPn89vjQAiLbg3T843ESNZlgvMkA4fyTuWhP.jpg"
+    },
+    {
       "id": "njpac-275",
       "objectNumber": "270",
       "title": "Architecture of Mushroom",
@@ -3560,6 +4863,69 @@
         "classifications": "video"
       },
       "original_imageUrl": "https://njpart.ggcf.kr/storage/upload/2024/02/06/rdcgMMb8aVS9nnHGpw0vv7XHho0IvEOghkZJGmtz.jpg"
+    },
+    {
+      "id": "njpac-276",
+      "objectNumber": "271",
+      "title": "The Ordinary Day",
+      "artist": "Seungwon Park",
+      "date": "2020",
+      "year": 2020,
+      "medium": "2-channel video, color, silent, 17-inch LCD monitor, 43-inch LED monitor",
+      "dimensions": "variable",
+      "category": "video",
+      "description": "Seungwon Park’s The Ordinary Day is a two-channel video installation. On two monitors, he shows two videos of a head shaking from side to side and the legs lifted while lying down. However, the legs raised toward the sky are displayed like standing on the ground. The contrast between the nude monitor, whose circuit board came out, showing the head hanging upside down, and the black monitor showing the trembling legs, visualizes turmoil and silence. The head and legs are very ordinary body parts displayed on the monitors separately while showing irregular movements. It resonates with our…",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/njpac-collection/njpac-276-7d1662a4-imageUrl.webp",
+      "thumbnailUrl": "https://njpart.ggcf.kr/storage/upload/2024/02/06/7BxD1Ol56f9qCcNEcFuSIE22oZGNY5RhQZh6EAaf.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://njpart.ggcf.kr/collections/276",
+      "metadata": {
+        "classifications": "video, sculpture·installation"
+      },
+      "original_imageUrl": "https://njpart.ggcf.kr/storage/upload/2024/02/06/7BxD1Ol56f9qCcNEcFuSIE22oZGNY5RhQZh6EAaf.jpg"
+    },
+    {
+      "id": "njpac-277",
+      "objectNumber": "272",
+      "title": "Drawing Video Installation",
+      "artist": "Sung Hwan Kim",
+      "date": "2008(2021)",
+      "year": 2008,
+      "medium": "2-channel video, color, b&w, sound, pen on tissue paper, chalk and acrylic on paper",
+      "dimensions": "variable – 49×74cm (pushing against the air 05) 42×29.5cm (Untitled) 42×29.5cm (Untitled)",
+      "category": "video",
+      "description": "Drawing Video Installation is a video installation work consisting of three drawings and two videos, Drawing Video and Cove r. Drawing Video , the main work, contains the record of Sung Hwan Kim’s live drawing performance at pushing against the air , in which Sung Hwan Kim, Byungjun Kwon, and David Michael DiGregorio participated together in 2007. pushing against the air was an ‘interview concert’ in which three artists from different cultural backgrounds talked about the music and culture they experienced. And Kim’s live drawing performance was part of it. pushing against the air was held…",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/njpac-collection/njpac-277-a8a58a96-imageUrl.webp",
+      "thumbnailUrl": "https://njpart.ggcf.kr/storage/upload/2024/02/06/ciARentrPspOqNbAC1MGIRJcju2fbLg8oIDz2mSE.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://njpart.ggcf.kr/collections/277",
+      "metadata": {
+        "classifications": "video, sculpture·installation"
+      },
+      "original_imageUrl": "https://njpart.ggcf.kr/storage/upload/2024/02/06/ciARentrPspOqNbAC1MGIRJcju2fbLg8oIDz2mSE.jpg"
+    },
+    {
+      "id": "njpac-278",
+      "objectNumber": "273",
+      "title": "Something that Might Not Exist between the Restored and the Transformed - A Conversation with K",
+      "artist": "Shiu Jin",
+      "date": "2016",
+      "year": 2016,
+      "medium": "bench, mice sculpture, 1-channel video, color, silent",
+      "dimensions": "variable - 96x34x51cm(bench) 11x4x3cm(mice sculpture)",
+      "category": "video",
+      "description": "This is an installation work composed of a single-channel video and objects. The video is a textual composition of the conversation between K, an audience member, and the artist, Shiu Jin. K persuades the artist to restore the damaged work and make it available for exhibition again. Then, the artist tells the process from the creation of the work to the state after it was damaged and his point of view on restoration. The objects installed along with the video are the subjects of conversation in the video. They consist of a broken wooden chair and a sculpture in the shape of a mouse that…",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/njpac-collection/njpac-278-1d271437-imageUrl.webp",
+      "thumbnailUrl": "https://njpart.ggcf.kr/storage/upload/2024/02/06/Zgv6XwdLnJ9fMLy1RXzXKdFZJ6UhzkGKgaIqaSq4.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://njpart.ggcf.kr/collections/278",
+      "metadata": {
+        "classifications": "video, sculpture·installation"
+      },
+      "original_imageUrl": "https://njpart.ggcf.kr/storage/upload/2024/02/06/Zgv6XwdLnJ9fMLy1RXzXKdFZJ6UhzkGKgaIqaSq4.jpg"
     },
     {
       "id": "njpac-279",
@@ -3623,6 +4989,69 @@
         "classifications": "video"
       },
       "original_imageUrl": "https://njpart.ggcf.kr/storage/upload/2024/02/06/ftReHCgtLH2w6xekDvQ1xFaLX1N5O9Niqtm56kOj.jpg"
+    },
+    {
+      "id": "njpac-282",
+      "objectNumber": "277",
+      "title": "Gulliver",
+      "artist": "Nam June Paik",
+      "date": "2001",
+      "year": 2001,
+      "medium": "11 CRT TV sets, 11 vacuum-tube TV cases, 1 vacuum-tube radio case, 18 Lilliputian robots(LCD monitors), 3 wooden ladders, 4 video distributors, 4-channel video, color, silent, DVD",
+      "dimensions": "59 x 432 x 371 cm",
+      "category": "video",
+      "description": "Gulliver ’s motif comes from Gulliver’s Travels , a 1726 book by Jonathan Swift. Lying on the ground, the giant Gulliver is a massive robot stretching for over four meters in length. His body consists of a total of 11 old TV cases and radio case and similar items, while two videos are shown on 11 cathode-ray televisions. One shows a cyborg striding over a high-tech media environment, along with images of self-driving and electronic highway travel rendered in computer graphics. The other alternately shows Robot K-456 , landscapes from around the world, and computer graphics. As its videos…",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/njpac-collection/njpac-282-49b26e3c-imageUrl.webp",
+      "thumbnailUrl": "https://njpart.ggcf.kr/storage/upload/2024/02/06/LitcpWt5N35qCHpglRz99L6c8yWRm7uYzkR0nApk.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://njpart.ggcf.kr/collections/282",
+      "metadata": {
+        "classifications": "robot, video"
+      },
+      "original_imageUrl": "https://njpart.ggcf.kr/storage/upload/2024/02/06/LitcpWt5N35qCHpglRz99L6c8yWRm7uYzkR0nApk.jpg"
+    },
+    {
+      "id": "njpac-283",
+      "objectNumber": "278",
+      "title": "Random Access Audio Tape",
+      "artist": "Nam June Paik",
+      "date": "1963(1975)",
+      "year": 1963,
+      "medium": "chipboard, plastic foil, audio tape strips, portable cassette player, magnetic tape head",
+      "dimensions": "variable - 71x130cm(chipboard), 14x25x8cm(portable cassette player)",
+      "category": "video",
+      "description": "Nam June Paik presented Random Access in his solo exhibition at Galerie Parnass, Wuppertal in 1963. Fragments of magnetic tapes unwound from a spool were attached to the wall, and visitors with a metal tape-head separated from playback equipment could scrape the point they wanted to listen to. Later, for the exhibition, Sehen um zu hören , at the Städtische Kunsthalle, Dusseldorf in 1975, Paik reconstructed this work and called it Random Access Audio Tape . This work consists of a chipboard to which magnetic tapes were attached, instead of a wall, and a playback head connected to a…",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/njpac-collection/njpac-283-8ceec450-imageUrl.webp",
+      "thumbnailUrl": "https://njpart.ggcf.kr/storage/upload/2024/02/06/tRihb4ZFoPUFne3MkqSUTGEzIe4FMMhs4MlC2hqv.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://njpart.ggcf.kr/collections/283",
+      "metadata": {
+        "classifications": "object, sculpture·installation"
+      },
+      "original_imageUrl": "https://njpart.ggcf.kr/storage/upload/2024/02/06/tRihb4ZFoPUFne3MkqSUTGEzIe4FMMhs4MlC2hqv.jpg"
+    },
+    {
+      "id": "njpac-284",
+      "objectNumber": "279",
+      "title": "Audio Tape Head with Extension",
+      "artist": "Nam June Paik",
+      "date": "1964-1965",
+      "year": 1964,
+      "medium": "magnetic audio tape head with extension, circuit board, head phone, battery cable, plastic cover for audio or video tape, wooden box",
+      "dimensions": "30x30x5cm",
+      "category": "video",
+      "description": "Nam June Paik presented Random Access in his solo exhibition at Galerie Parnass, Wuppertal in 1963. Fragments of magnetic tapes unwound from a spool were attached to the wall, and visitors with a metal tape-head separated from playback equipment could scrape the point they wanted to listen to. After this exhibition, the playback head was lost and Paik reproduced it in 1964. The reproduced playback head, battery cable, and headphone connected to circuit board are assembled in a wooden box.",
+      "imageUrl": "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/njpac-collection/njpac-284-a2176e5c-imageUrl.webp",
+      "thumbnailUrl": "https://njpart.ggcf.kr/storage/upload/2024/02/06/WAQBlidYFoRtX6SVV2TWFp7HfZmpurLcuh8nF5Oq.jpg",
+      "onDisplay": false,
+      "displayLocation": "",
+      "sourceUrl": "https://njpart.ggcf.kr/collections/284",
+      "metadata": {
+        "classifications": "object"
+      },
+      "original_imageUrl": "https://njpart.ggcf.kr/storage/upload/2024/02/06/WAQBlidYFoRtX6SVV2TWFp7HfZmpurLcuh8nF5Oq.jpg"
     }
   ]
 }
