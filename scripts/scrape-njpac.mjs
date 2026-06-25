@@ -141,25 +141,22 @@ function parseDetail(html, rowId) {
 }
 
 // ---------- scope / category mapping (museum's own Classifications tags) ----------
-const TAGS_3D = ['machinery', 'laser', 'robot', 'object', 'sculpture·installation', 'sculpture', 'installation', 'television'];
+// NJPAC (Nam June Paik Art Center) is a MEDIA-ART museum — per the user we collect EVERYTHING
+// here (Paik's TV sculptures, video installations, robots, objects), not just flat works. Every
+// record gets a category (never skipped) and is shown by its documentation image.
 function classify(d) {
   const tags = d.classifications;
   const has = (t) => tags.includes(t);
-  const has3D = tags.some((t) => TAGS_3D.some((x) => t.includes(x)));
   const m = d.medium.toLowerCase();
   if (has('painting')) {
     return /\b(pencil|charcoal|crayon|pastel|graphite|pen on|ink on paper|drawing)\b/.test(m) ? 'drawing' : 'painting';
   }
   if (has('photography')) return 'photograph';
-  if (has('video')) return has3D ? null : 'video'; // video+sculpture = TV sculpture -> skip
-  if (has('performance')) {
-    if (has3D) return null;
-    if (/video|channel|film|dvd/.test(m)) return 'video';
-    if (/photo|gelatin|c-print|chromogenic/.test(m)) return 'photograph';
-    if (/paper|poster|score|card|flyer|print/.test(m)) return 'mixed_media_2d';
-    return null;
-  }
-  return null; // pure 3D / unknown
+  if (has('video')) return 'video';
+  if (/video|channel|film|dvd|tv|monitor|laser/.test(m)) return 'video';
+  if (/photo|gelatin|c-print|chromogenic/.test(m)) return 'photograph';
+  if (/paper|poster|score|card|flyer|print|drawing|lithograph|etching/.test(m)) return 'mixed_media_2d';
+  return 'video'; // sculpture / installation / robot / object / performance → media-art
 }
 
 // ---------- B&W reproductive-print gate (policy: prints ONLY; photo/drawing/video never gated) ----------
