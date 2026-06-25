@@ -5759,25 +5759,6 @@ export const exhibitions = [
     pastExhibitions: []
   },
   {
-    id: "egyptian-museum-cairo",
-    name_ko: "카이로 이집트 박물관",
-    description_ko: "카이로 타흐리르 광장에 자리한, 세계에서 가장 중요한 고대 이집트 유물 컬렉션을 갖춘 박물관이다. 투탕카멘의 황금 마스크를 비롯해 여러 왕조에 걸친 미라와 조각, 파피루스 등 방대한 유물을 소장한다.",
-    slug: "egyptian-museum-cairo",
-    name: "The Egyptian Museum in Cairo",
-    location: "Cairo, Egypt",
-    description: "The Egyptian Museum in Cairo holds one of the world's most important collections of ancient Egyptian antiquities, with major artefacts spanning multiple dynasties.",
-    latitude: 30.0478,
-    longitude: 31.2336,
-    country: "Egypt",
-    region: "Cairo Governorate",
-    representativeImage: "https://egyptianmuseumcairo.eg/wp-content/uploads/2023/01/egyptian-museum-cairo.jpg",
-    permanentExhibitions: [
-      { id: "egyptian-museum-cairo-collection", name: "Permanent Collection", title: "Permanent Collection", startDate: "Permanent", endDate: "Permanent", collectionFile: "egyptian-museum-cairo-collection.json" }
-    ],
-    temporaryExhibitions: [],
-    pastExhibitions: []
-  },
-  {
     id: "nmec",
     name_ko: "이집트 문명 박물관",
     description_ko: "선사시대부터 근현대까지 이집트 문명 전체를 통사적으로 보여 주는 카이로의 박물관이다. 역대 파라오의 미라를 모신 '왕실 미라관'으로 특히 유명하다.",

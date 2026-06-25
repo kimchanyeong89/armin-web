@@ -85,7 +85,8 @@ export function GlobeExhibitionPanel({ exhibition, theme, onClose, onViewCollect
               src={item.image}
               alt={item.name}
               loading="lazy"
-              style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+              style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block', opacity: 0, transition: 'opacity 0.35s ease' }}
+              onLoad={e => { (e.target as HTMLImageElement).style.opacity = '1'; }}
               onError={e => { (e.target as HTMLImageElement).style.display = 'none'; }}
             />
           </div>
@@ -188,8 +189,9 @@ export function GlobeExhibitionPanel({ exhibition, theme, onClose, onViewCollect
               src={imgSrc}
               alt={exhibition.name}
               loading="lazy"
-              style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain', display: 'block' }}
+              style={{ maxWidth: '100%', maxHeight: '100%', objectFit: 'contain', display: 'block', opacity: 0, transition: 'opacity 0.35s ease' }}
               referrerPolicy="no-referrer"
+              onLoad={e => { (e.target as HTMLImageElement).style.opacity = '1'; }}
               onError={e => { (e.target as HTMLImageElement).parentElement!.style.display = 'none'; }}
             />
           </div>
