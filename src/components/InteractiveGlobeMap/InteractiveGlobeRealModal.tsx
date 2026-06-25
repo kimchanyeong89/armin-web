@@ -529,7 +529,9 @@ export function InteractiveGlobeRealModal({
       setDetailArtworkOverride(null);
       setDetailArtworkOrigin(null);
       setActiveFilter(null);
-      setSortBy("default");
+      // photography museums default to newest-first (user request); others keep curatorial default
+      const PHOTO_MUSEUMS = new Set(["icp-ny", "foam-amsterdam", "niepce-chalon", "maison-europeenne-de-la-photographie", "huis-marseille", "fomu-antwerp"]);
+      setSortBy(PHOTO_MUSEUMS.has(String(exhibition?.id || "")) ? "year_desc" : "default");
       setSearchQuery("");
       setDebouncedQuery("");
       setVisibleCount(INITIAL_VISIBLE_ARTWORKS);

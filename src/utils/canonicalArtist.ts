@@ -183,6 +183,9 @@ export const getCanonicalName = (name: string | undefined | null): string => {
 export const prettifyArtistName = (raw?: string): string => {
     let name = String(raw || '').replace(/\s+/g, ' ').trim();
     if (!name) return name;
+    // strip bio-year parens ("(1900-1989)", "(French, 1887-1985)") — display noise, not a qualifier
+    name = name.replace(/\s*\([^)]*\d{4}[^)]*\)/g, '').replace(/\s+/g, ' ').trim();
+    if (!name) return name;
     // "Surname, Given" → "Given Surname". Skip multi-artist ("A & B" / "A and B")
     // and anonymous/role designations whose comma is NOT a name inversion
     // ("Anonymous Italian, Florentine", "Unknown Painter, mid-18th century").
