@@ -54,8 +54,12 @@ function isMiniByMedium(a) {
   const m = (a.medium || '').trim();
   if (/vellum\s+paper/i.test(m)) return false;
   if (m.length > 55) return false;
-  if (!/^(water\s?colou?r|gouache|tempera|oil|bodycolour|painted|enamel|miniature)\b/i.test(m)) return false;
-  if (!/\b(ivory|vellum|enamel)\b/i.test(m)) return false;
+  if (!/\b(ivory|vellum|enamel|tortoiseshell)\b/i.test(m)) return false;
+  // paint-led medium, OR already classified as a 2D painting/drawing on that support
+  // (Ashmolean lists the bare support e.g. medium:"ivory" for many minis — category catches them)
+  const paintLed = /^(water\s?colou?r|gouache|tempera|oil|bodycolour|painted|enamel|miniature)\b/i.test(m);
+  const paintCat = /^(painting|drawing)$/i.test(String(a.category || ""));
+  if (!paintLed && !paintCat) return false;
   const cm = maxCm(a.dimensions);
   return cm == null || cm <= MAX_CM;
 }
