@@ -23,12 +23,13 @@
 - 조각, 설치, 가구, 도예, 공예, 의류, 무기, 화석, 자연사 표본
 - 단, 작가가 평면 작품의 일환으로 만든 **부조(relief)·소형 오브제**는 포함 가능 (큐레이터 판단)
 - **포트레이트 미니어처** (펜던트·로켓에 넣는 상아/에나멜/벨럼 장식 초상) — 기술적으로는 회화지만 시각 그리드·SigLIP을 오염시키므로 **수집하지 않는다**. 주력 컬렉션(예: Wallace·Fitzwilliam)이라도 예외 없음.
-  - **감지**: 소스가 `category: miniature`로 분류한 것이 가장 정확(미술관 자체 분류). 분류가 없으면 휴리스틱 — medium에 `ivory|enamel|vellum` + 최대변 ≤14cm.
+  - **감지**: 소스가 `category: miniature`로 분류한 것이 가장 정확(미술관 자체 분류). 분류가 없으면 휴리스틱 — (a) medium에 `ivory|enamel|vellum` + 최대변 ≤14cm, **또는** (b) `category: painting`인데 최대변 ≤12cm. ⚠️ medium이 지지체만(`"ivory"`, 물감 접두어 없음)이거나 아예 없어도 그 크기의 "painting"은 사실상 전부 미니어처 — Ashmolean이 이 케이스(소형 초상 251점이 ivory/enamel 아닌 oil on copper·watercolour on card 등). `remove-miniatures.mjs`의 `isMiniByMedium`이 (a), `category=painting + ≤12cm` 별도 필터가 (b)를 처리.
   - **제거(가역적)**: 수집 후 `node scripts/remove-miniatures.mjs <slug> --apply` → 제거분은 `{slug}.miniatures-removed.json`로 백업, `--restore`로 복구. R2 이미지는 그대로 둠(고아 객체, 무해).
 - **흑백(단색) 복제판화** — `category: print`이면서 이미지가 단색(흑백·세피아 단색 인쇄)인 것은 **수집하지 않는다** (저가치 대량 복제판화가 컬렉션을 지배하는 것 방지; boijmans에서 판화 81%가 해당). **드로잉은 흑백이어도 무조건 유지** — 카테고리로 보호. 색 판화(우키요에 등)는 유지.
   - **스크랩 단계 감지(권장)**: 이미지 다운로드 직후 Hasler-Süsstrunk colorfulness < 20 이면 skip (R2 업로드·레코드 모두 생략). sharp로 80×80 리사이즈 후 `sqrt(std(R-G)² + std(0.5(R+G)-B)²) + 0.3·sqrt(mean²…)` — 구현 예: `scripts/audit/curate-grayscale-prints.mjs`의 `colorfulness()`.
   - **수집 후 제거(가역적)**: `node scripts/audit/curate-grayscale-prints.mjs <slug> --apply` → `{slug}.grayscale-prints-removed.json` 백업, `--restore` 복구.
-- **플레이스홀더 이미지** — 소스가 "image not available" 그래픽을 정상 URL로 줄 수 있음(boijmans 2,021건). 같은 바이트의 이미지가 다수 작품에 반복되면 의심. 수집 후 `node scripts/audit/detect-placeholder-images.mjs <slug> --apply` (R2 ETag 클러스터링)로 검출·제거.
+- **플레이스홀더 이미지** — 소스가 "image not available" 그래픽을 정상 URL로 줄 수 있음(boijmans 2,021건). 메타데이터 필터로는 못 잡음(이미지 자체에 텍스트가 구워진 경우, 예: MALI "Imagen no disponible por derechos APSAV" 104건). 같은 바이트의 이미지가 다수 작품에 반복되면 의심. 수집 후 `node scripts/audit/detect-placeholder-images.mjs <slug> --apply` (R2 ETag 클러스터링)로 검출·제거.
+- **사진(photograph) 기본 정책** — 사진 카테고리는 **1920년 이후만 수집**(초기/빈티지 사진은 시각 그리드 가치가 낮음; ICP 1,707건·Folkwang 53건 제거). ⚠️ **초기사진 전문관은 예외** — Niépce(니엡스, 19세기 사진사 자체가 본질)처럼 컬렉션이 곧 초기사진인 곳은 적용하지 않는다. 제거: `category=photograph && year<1920` 필터. **표시 정렬**: 사진 우세 미술관은 기본 정렬을 **최신순(year_desc)** — `InteractiveGlobeRealModal.tsx`의 `PHOTO_MUSEUMS` 세트로 지정.
 
 ---
 
