@@ -50,6 +50,26 @@ export function createFirebaseWebPort(): FirebasePort {
       async removeLikedArtwork(uid: string, artworkId: string): Promise<void> {
         await deleteDoc(doc(db, `users/${uid}/liked_artworks/${sanitizeDocId(artworkId)}`));
       },
+      async listLikedMuseumIds(uid: string): Promise<string[]> {
+        const snap = await getDocs(collection(db, `users/${uid}/liked_museums`));
+        return snap.docs.map((d) => d.id);
+      },
+      async setLikedMuseum(uid: string, museumId: string, payload: Record<string, unknown>): Promise<void> {
+        await setDoc(doc(db, `users/${uid}/liked_museums/${sanitizeDocId(museumId)}`), payload, { merge: true });
+      },
+      async removeLikedMuseum(uid: string, museumId: string): Promise<void> {
+        await deleteDoc(doc(db, `users/${uid}/liked_museums/${sanitizeDocId(museumId)}`));
+      },
+      async listLikedExhibitionIds(uid: string): Promise<string[]> {
+        const snap = await getDocs(collection(db, `users/${uid}/liked_exhibitions`));
+        return snap.docs.map((d) => d.id);
+      },
+      async setLikedExhibition(uid: string, exhibitionId: string, payload: Record<string, unknown>): Promise<void> {
+        await setDoc(doc(db, `users/${uid}/liked_exhibitions/${sanitizeDocId(exhibitionId)}`), payload, { merge: true });
+      },
+      async removeLikedExhibition(uid: string, exhibitionId: string): Promise<void> {
+        await deleteDoc(doc(db, `users/${uid}/liked_exhibitions/${sanitizeDocId(exhibitionId)}`));
+      },
     },
   };
 }

@@ -427,6 +427,7 @@ export function InteractiveGlobeRealModal({
   const [searchQuery, setSearchQuery] = useState("");
   const [debouncedQuery, setDebouncedQuery] = useState("");
   const [likedArtworks, setLikedArtworks] = useState<Set<string>>(new Set());
+  const [likedMuseumIds, setLikedMuseumIds] = useState<Set<string>>(new Set());
   const [currentUser, setCurrentUser] = useState<any>(null);
   const [productArtwork, setProductArtwork] = useState<ProductArtwork | null>(null);
   const [commentArtworkId, setCommentArtworkId] = useState<string | null>(null);
@@ -565,7 +566,10 @@ export function InteractiveGlobeRealModal({
   useEffect(() => {
     const unsub = onAuthStateChanged(auth, (user) => {
       setCurrentUser(user);
-      if (!user) setLikedArtworks(new Set());
+      if (!user) {
+        setLikedArtworks(new Set());
+        setLikedMuseumIds(new Set());
+      }
     });
     return () => unsub();
   }, []);
@@ -585,6 +589,25 @@ export function InteractiveGlobeRealModal({
       setLikedArtworks(next);
     }, (error) => {
       console.warn("[InteractiveGlobeRealModal] Failed to subscribe likes:", error);
+    });
+    return () => unsub();
+  }, [currentUser]);
+
+  useEffect(() => {
+    if (!currentUser) return;
+    const museumLikesRef = collection(db, `users/${currentUser.uid}/liked_museums`);
+    const unsub = onSnapshot(museumLikesRef, (snap) => {
+      const next = new Set<string>();
+      snap.forEach((docSnap) => {
+        const data = docSnap.data() as any;
+        const originalId = typeof data.museumId === "string" && data.museumId.trim().length > 0
+          ? data.museumId.trim()
+          : docSnap.id;
+        next.add(originalId);
+      });
+      setLikedMuseumIds(next);
+    }, (error) => {
+      console.warn("[InteractiveGlobeRealModal] Failed to subscribe museum likes:", error);
     });
     return () => unsub();
   }, [currentUser]);
@@ -1105,6 +1128,75 @@ export function InteractiveGlobeRealModal({
     }
   }, [artworkIdFrom, currentUser, exhibition, likedArtworks, venueName]);
 
+  const toggleMuseumLike = useCallback(async (e: React.MouseEvent) => {
+    e.stopPropagation();
+    e.preventDefault();
+
+    let userToUse = currentUser;
+
+    if (!currentUser || currentUser.isAnonymous) {
+      try {
+        if (isMobileAppContainer()) {
+          window.dispatchEvent(new Event("auth:request-login"));
+          return;
+        }
+
+        const provider = new GoogleAuthProvider();
+        provider.setCustomParameters({ prompt: "select_account" });
+        const result = await signInWithPopup(auth, provider);
+        userToUse = result.user;
+      } catch (err) {
+        console.error("[InteractiveGlobeRealModal] Login failed:", err);
+        return;
+      }
+    }
+
+    if (!userToUse) return;
+
+    const museumId = String(exhibition.id || "").trim();
+    if (!museumId) return;
+
+    const sanitizedId = museumId.replace(/\//g, "__");
+    const isLiked = likedMuseumIds.has(museumId) || likedMuseumIds.has(sanitizedId);
+    const likeRef = doc(db, `users/${userToUse.uid}/liked_museums/${sanitizedId}`);
+
+    const museumImage =
+      normalizeImageUrl((exhibition as any).representativeImage || "") ||
+      (mappedArtworks.length > 0 ? (mappedArtworks[0].image || mappedArtworks[0].lowImage) : "") ||
+      "";
+
+    try {
+      if (isLiked) {
+        setLikedMuseumIds((prev) => {
+          const next = new Set(prev);
+          next.delete(museumId);
+          next.delete(sanitizedId);
+          return next;
+        });
+        await deleteDoc(likeRef);
+      } else {
+        setLikedMuseumIds((prev) => {
+          const next = new Set(prev);
+          next.add(museumId);
+          return next;
+        });
+        await setDoc(likeRef, {
+          likedAt: serverTimestamp(),
+          museumId,
+          id: museumId,
+          slug: String((exhibition as any).slug || museumId),
+          name: venueName,
+          image: museumImage,
+          imageUrl: museumImage,
+          city: String((exhibition as any).city || ""),
+          country: String((exhibition as any).country || ""),
+        }, { merge: true });
+      }
+    } catch (error) {
+      console.error("[InteractiveGlobeRealModal] Failed to toggle museum like:", error);
+    }
+  }, [currentUser, exhibition, likedMuseumIds, mappedArtworks, venueName]);
+
   const categoryCounts = useMemo(() => {
     const counts = new Map<string, number>();
     mappedArtworks.forEach((artwork) => {
@@ -1574,10 +1666,51 @@ export function InteractiveGlobeRealModal({
             <span style={{ padding: '4px 10px', fontSize: '8px', letterSpacing: '0.15em', textTransform: 'uppercase', backgroundColor: t ? "rgba(255,255,255,0.75)" : "rgba(0,0,0,0.55)", color: typeColor(mappedType, t), backdropFilter: 'blur(8px)', pointerEvents: 'auto' }}>{getExhibitionTypeLabel(mappedType, language)}</span>
           </div>
           {/* Title overlay */}
-          <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: `0 ${pad} 8px` }}>
+          <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, padding: `0 ${pad} 8px`, display: 'flex', alignItems: 'flex-end', justifyContent: 'space-between', gap: '16px' }}>
             <h1 style={{ fontSize: 'clamp(24px, 4vw, 40px)', color: fgHigh, lineHeight: 1.15, letterSpacing: '0.02em', margin: 0, maxWidth: '720px' }}>
               {exhibition.title || exhibition.name}
             </h1>
+            {(() => {
+              const museumId = String(exhibition.id || "").trim();
+              const isMuseumLiked = !!museumId && (likedMuseumIds.has(museumId) || likedMuseumIds.has(museumId.replace(/\//g, "__")));
+              return (
+                <button
+                  onClick={toggleMuseumLike}
+                  title={isMuseumLiked ? L('관심 저장 해제', 'Unsave') : L('관심 저장', 'Save museum')}
+                  aria-label={isMuseumLiked ? L('관심 저장 해제', 'Unsave') : L('관심 저장', 'Save museum')}
+                  aria-pressed={isMuseumLiked}
+                  style={{
+                    flexShrink: 0,
+                    cursor: 'pointer',
+                    width: isMobile ? 40 : 44,
+                    height: isMobile ? 40 : 44,
+                    borderRadius: '50%',
+                    border: 'none',
+                    background: t ? 'rgba(255,255,255,0.78)' : 'rgba(0,0,0,0.56)',
+                    color: t ? '#000' : '#fff',
+                    display: 'flex',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    padding: 0,
+                    backdropFilter: 'blur(8px)',
+                    WebkitBackdropFilter: 'blur(8px)',
+                    touchAction: 'manipulation',
+                    WebkitTapHighlightColor: 'transparent',
+                    transition: 'transform 0.15s',
+                  }}
+                  onMouseDown={(ev) => { (ev.currentTarget as HTMLButtonElement).style.transform = 'scale(0.92)'; }}
+                  onMouseUp={(ev) => { (ev.currentTarget as HTMLButtonElement).style.transform = 'scale(1)'; }}
+                  onMouseLeave={(ev) => { (ev.currentTarget as HTMLButtonElement).style.transform = 'scale(1)'; }}
+                >
+                  <Heart
+                    size={isMobile ? 18 : 20}
+                    strokeWidth={2.2}
+                    fill={isMuseumLiked ? limeColor : 'none'}
+                    color={isMuseumLiked ? limeColor : (t ? '#000' : '#fff')}
+                  />
+                </button>
+              );
+            })()}
           </div>
         </div>
 
