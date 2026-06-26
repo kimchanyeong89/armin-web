@@ -5584,6 +5584,7 @@ export const exhibitions = [
     region: "Los Angeles",
     representativeImage: "https://www.getty.edu/favicon.ico",
     permanentExhibitions: [
+      { id: "getty-photography", name: "Photography Collection", name_en: "Photography Collection", name_ko: "사진 컬렉션", title: "Getty — Photography (open content)", title_en: "Getty — Photography (open content)", description: "1,739 open-content photographs (1920s+) — Stieglitz, Atget, Coburn, Blossfeldt.", description_en: "1,739 open-content photographs (1920s onward).", startDate: "Permanent", endDate: "Permanent", collectionFile: "getty-photography-collection.json" },
       {
         id: "getty-collection",
         name: "Paintings (With Images)",
