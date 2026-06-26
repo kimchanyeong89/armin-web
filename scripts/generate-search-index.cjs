@@ -255,11 +255,16 @@ async function loadDynamicMappings() {
                 if (exhibitionsList && Array.isArray(exhibitionsList)) {
                     for (const exh of exhibitionsList) {
                         if (exh.collectionFile) {
-                            const key = exh.collectionFile.replace('.json', '');
+                            // collectionFile may be a full R2 URL (large collections are hosted off
+                            // Pages to dodge the 24MB asset limit). The search index reads the LOCAL
+                            // public/data files, so key + whitelist on the bare filename, not the URL —
+                            // otherwise those collections silently drop out of the index (and the count).
+                            const filename = String(exh.collectionFile).split('/').pop();
+                            const key = filename.replace('.json', '');
                             DYNAMIC_MAPPINGS.set(key, {
                                 museumName: museum.name,
                                 exhibitionId: exh.id,
-                                fullFilename: exh.collectionFile
+                                fullFilename: filename
                             });
                         }
                     }
