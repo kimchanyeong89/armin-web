@@ -93,7 +93,7 @@ const COUNTRY_NAMES: Record<string, string> = {
   "862": "Venezuela", "887": "Yemen", "894": "Zambia", "-99": "N. Cyprus",
 };
 
-const CONTINENT_MAP: Record<string, string> = {
+export const CONTINENT_MAP: Record<string, string> = {
   "Afghanistan": "Asia", "Albania": "Europe", "Algeria": "Africa", "Angola": "Africa",
   "Argentina": "South America", "Australia": "Oceania", "Austria": "Europe", "Bangladesh": "Asia",
   "Belgium": "Europe", "Bhutan": "Asia", "Bolivia": "South America", "Bosnia and Herzegovina": "Europe",

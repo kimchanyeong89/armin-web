@@ -1,7 +1,7 @@
 import { useState, useMemo, useEffect, useRef, useCallback } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { useNavigate, useLocation } from "react-router-dom";
-import { Globe } from "./Globe";
+import { Globe, CONTINENT_MAP } from "./Globe";
 import { VenuePanel } from "./VenuePanel";
 import { InteractiveGlobeRealModal } from "./InteractiveGlobeRealModal";
 import { useLanguage } from "../../contexts/LanguageContext";
@@ -479,6 +479,11 @@ export default function InteractiveGlobeMap({ exhibitions, onSelectExhibition, o
 
           unresolvedRouteExhibitionIdRef.current = null;
           setSelectedCity(cityMarker);
+        // Drill continent + country too, so navigating from Search reads as
+        // World > Continent > Country > City (the user sees WHERE the museum is),
+        // not just a zoomed-in dot. Same continent the focus zoom lands on → no conflict.
+        setDrilledContinent(CONTINENT_MAP[cityMarker.country] || null);
+        setDrilledCountry(cityMarker.country);
           setSelectedRealExhibition((prev) => {
             // ONLY clear if we just navigated to the museum explicitly.
             // If prev evaluates to true, we return null to clear it safely.
@@ -498,6 +503,11 @@ export default function InteractiveGlobeMap({ exhibitions, onSelectExhibition, o
         unresolvedRouteExhibitionIdRef.current = null;
 
         setSelectedCity(cityMarker);
+        // Drill continent + country too, so navigating from Search reads as
+        // World > Continent > Country > City (the user sees WHERE the museum is),
+        // not just a zoomed-in dot. Same continent the focus zoom lands on → no conflict.
+        setDrilledContinent(CONTINENT_MAP[cityMarker.country] || null);
+        setDrilledCountry(cityMarker.country);
         setSelectedRealExhibition((prev) => {
           const currentId = String(prev?._selectedExhibitionId || prev?.id || '');
           if (currentId === matched.id) return prev;
@@ -612,7 +622,11 @@ export default function InteractiveGlobeMap({ exhibitions, onSelectExhibition, o
   }, [selectedRealExhibition]);
 
   const handleHoverDataChange = useCallback((next: { level: string; label: string; count: number } | null) => {
-    if (selectedRealExhibition) return;
+    // NOTE: do NOT gate this on selectedRealExhibition. Doing so froze the top-center hover
+    // label at whatever value it held when a panel/modal opened — and because the Globe only
+    // re-emits on *change* (lastHoverReportRef), it never re-synced after close, leaving the
+    // label stuck (e.g. on "Hungary"). The label sits behind the full modal anyway, so always
+    // syncing is harmless and keeps hover live whenever the globe is visible.
     setHoverData((prev) => {
       if (!prev && !next) return prev;
       if (
@@ -626,7 +640,7 @@ export default function InteractiveGlobeMap({ exhibitions, onSelectExhibition, o
       }
       return next;
     });
-  }, [selectedRealExhibition]);
+  }, []);
 
   const handleRealModalReady = useCallback(() => {
     setIsOpeningExhibition(false);
