@@ -1837,7 +1837,10 @@ export function InteractiveGlobeRealModal({
           </div>
 
           <div style={{ padding: isMobile ? '6px 0' : '12px 20px', borderLeft: isMobile ? 'none' : `2px solid ${inspectedArt ? limeColor : 'transparent'}`, minHeight: isMobile ? 0 : '92px', transition: 'border-color 0.2s' }}>
+            {/* Fixed-height reserve: the metadata grid (~76px) and the "hover to see details"
+                placeholder differ in height — without this the grid below jumps as you hover. */}
             {!isMobile && (
+              <div style={{ height: '88px' }}>
               <AnimatePresence mode="wait">
                 {inspectedArt ? (
                   <motion.div key={inspectedArt.title + inspectedArt.inventoryNo} initial={{ opacity: 0, x: 6 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -6 }} transition={{ duration: 0.12 }}>
@@ -1860,13 +1863,14 @@ export function InteractiveGlobeRealModal({
                     </div>
                   </motion.div>
                 ) : (
-                  <motion.div key="empty" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.12 }} style={{ display: 'flex', alignItems: 'center', minHeight: '56px' }}>
+                  <motion.div key="empty" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.12 }} style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
                     <span style={{ fontSize: '10px', color: fgFaint, letterSpacing: '0.12em' }}>
                       {isLoading ? L("작품 불러오는 중...", "Loading artworks...") : L("작품에 마우스를 올리면 정보가 표시됩니다", "Hover over a work to see details")}
                     </span>
                   </motion.div>
                 )}
               </AnimatePresence>
+              </div>
             )}
 
             <div style={{ display: 'flex', alignItems: isMobile ? 'stretch' : 'center', justifyContent: 'space-between', gap: isMobile ? '8px' : '16px', marginTop: isMobile ? '0' : '14px', paddingTop: isMobile ? '0' : '12px', borderTop: isMobile ? 'none' : `1px solid ${dividerColor}`, flexWrap: isMobile ? 'wrap' : 'nowrap' }}>
