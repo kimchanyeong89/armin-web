@@ -1458,6 +1458,7 @@ export const exhibitions = [
     permanentExhibitions: [
       {
         id: "hayward-gallery-collection",
+        collectionFile: "hayward-gallery-collection.json",
         name: "The Collection",
         title: "The Collection",
         description: "Explore the Hayward Gallery's collection featuring 1045 works from renowned contemporary artists including Bridget Riley, Tracey Emin, Wolfgang Tillmans, and many more.",
@@ -2169,7 +2170,8 @@ export const exhibitions = [
     description: "세계 최대의 회화관. '모나리자'를 포함한 서양 고전 회화의 절대 성지.",
     representativeImage: "images/louvre-logo.svg",
     permanentExhibitions: [
-      { id: "louvre-painting-collection", name: "Painting Collection", title: "Musée du Louvre Painting Collection", description: "Over 10,000 paintings from the world's largest art museum, featuring masterpieces from the Renaissance to the 19th century including the Mona Lisa, Winged Victory, and Venus de Milo.", startDate: "Permanent", endDate: "Permanent" }
+      { id: "louvre-painting-collection",
+        collectionFile: "louvre-painting-collection.json", name: "Painting Collection", title: "Musée du Louvre Painting Collection", description: "Over 10,000 paintings from the world's largest art museum, featuring masterpieces from the Renaissance to the 19th century including the Mona Lisa, Winged Victory, and Venus de Milo.", startDate: "Permanent", endDate: "Permanent" }
     ],
     temporaryExhibitions: [],
     pastExhibitions: [],
@@ -2191,7 +2193,8 @@ export const exhibitions = [
     representativeImage: "images/musee-dorsay-logo.svg",
     floorPlan: "",
     permanentExhibitions: [
-      { id: "orsay-collection", name: "Orsay Collection", title: "Musée d'Orsay Permanent Collection", description: "Masterpieces of Impressionism and Post-Impressionism including works by Monet, Van Gogh, Renoir, Degas, Cézanne, and more.", startDate: "Permanent", endDate: "Permanent" }
+      { id: "orsay-collection",
+        collectionFile: "orsay-collection.json", name: "Orsay Collection", title: "Musée d'Orsay Permanent Collection", description: "Masterpieces of Impressionism and Post-Impressionism including works by Monet, Van Gogh, Renoir, Degas, Cézanne, and more.", startDate: "Permanent", endDate: "Permanent" }
     ],
     temporaryExhibitions: [],
     pastExhibitions: [],
@@ -2252,7 +2255,8 @@ export const exhibitions = [
     description: "파리 시립 미술관. 중세부터 20세기까지의 방대한 유화 및 판화 컬렉션.",
     representativeImage: "images/petit-palais-logo.png",
     permanentExhibitions: [
-      { id: "petit-palais-collection", name: "Permanent Collection", title: "Petit Palais - Musée des Beaux-Arts de la Ville de Paris", description: "고대부터 아르누보까지, 회화·드로잉·판화 컬렉션 400점. 쿠르베, 르누아르, 들라크루아 등 프랑스 미술의 정수.", startDate: "Permanent", endDate: "Permanent" }
+      { id: "petit-palais-collection",
+        collectionFile: "petit-palais-collection.json", name: "Permanent Collection", title: "Petit Palais - Musée des Beaux-Arts de la Ville de Paris", description: "고대부터 아르누보까지, 회화·드로잉·판화 컬렉션 400점. 쿠르베, 르누아르, 들라크루아 등 프랑스 미술의 정수.", startDate: "Permanent", endDate: "Permanent" }
     ],
     temporaryExhibitions: [],
     pastExhibitions: [],
@@ -2288,7 +2292,8 @@ export const exhibitions = [
     representativeImage: "images/bourse-de-commerce-pinault-collection-logo.svg",
     floorPlan: "",
     permanentExhibitions: [
-      { id: "pinault-collection", name: "Pinault Collection", title: "Pinault Collection Artworks", description: "François Pinault's world-renowned contemporary art collection featuring works by leading artists of our time.", startDate: "Permanent", endDate: "Permanent" }
+      { id: "pinault-collection",
+        collectionFile: "pinault-collection.json", name: "Pinault Collection", title: "Pinault Collection Artworks", description: "François Pinault's world-renowned contemporary art collection featuring works by leading artists of our time.", startDate: "Permanent", endDate: "Permanent" }
     ],
     temporaryExhibitions: [],
     pastExhibitions: [],
@@ -2322,7 +2327,8 @@ export const exhibitions = [
     description: "모네의 '인상, 일출' 소장처. 인상주의 연구의 핵심적인 갤러리.",
     representativeImage: "images/musee-marmottan-monet-logo.svg",
     permanentExhibitions: [
-      { id: "marmottan-collection", name: "Collection", title: "Musée Marmottan Monet Collection", description: "Home to Monet's 'Impression, Sunrise' and masterpieces by Berthe Morisot and other Impressionists.", startDate: "Permanent", endDate: "Permanent" }
+      { id: "marmottan-collection",
+        collectionFile: "marmottan-collection.json", name: "Collection", title: "Musée Marmottan Monet Collection", description: "Home to Monet's 'Impression, Sunrise' and masterpieces by Berthe Morisot and other Impressionists.", startDate: "Permanent", endDate: "Permanent" }
     ],
     temporaryExhibitions: [],
     pastExhibitions: [],
