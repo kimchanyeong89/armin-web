@@ -5530,6 +5530,7 @@ export const exhibitions = [
     region: "New York",
     representativeImage: "https://www.moma.org/media/W1siZiIsIjUyNzk1OSJdLFsicCIsImNvbnZlcnQiLCItcmVzaXplIDEwMjR4MTAyNFx1MDAzZSJdXQ.jpg?sha=5e9dcd73303fc973",
     permanentExhibitions: [
+      { id: "moma-photography", name: "Photography Collection", name_en: "Photography Collection", name_ko: "사진 컬렉션", title: "MoMA — Photography (1920s onward)", title_en: "MoMA — Photography (1920s onward)", description: "21,047 photographs (1920s+) — Atget, Evans, Arbus, Stieglitz, Hujar.", description_en: "21,047 photographs (1920s onward).", startDate: "Permanent", endDate: "Permanent", collectionFile: "moma-photography-collection.json" },
       {
         id: "moma-highlights",
         name: "Collection Highlights",
