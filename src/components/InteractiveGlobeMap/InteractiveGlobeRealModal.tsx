@@ -1841,9 +1841,12 @@ export function InteractiveGlobeRealModal({
                 placeholder differ in height — without this the grid below jumps as you hover. */}
             {!isMobile && (
               <div style={{ height: '88px' }}>
-              <AnimatePresence mode="wait">
-                {inspectedArt ? (
-                  <motion.div key={inspectedArt.title + inspectedArt.inventoryNo} initial={{ opacity: 0, x: 6 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: -6 }} transition={{ duration: 0.12 }}>
+              {/* No AnimatePresence/mode="wait" here: with real rapid hovering it can get stuck
+                  waiting on an interrupted exit animation, freezing the header on one work
+                  ("hover other works, same content"). A plain keyed motion.div — fade-in on key
+                  change, no exit — updates reliably on every hover. */}
+              {inspectedArt ? (
+                  <motion.div key={inspectedArt.title + inspectedArt.inventoryNo} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.12 }}>
                     <div style={{ display: 'grid', gridTemplateColumns: isNarrowMobile ? 'repeat(1, minmax(0, 1fr))' : isMobile ? 'repeat(2, minmax(0, 1fr))' : 'repeat(3, minmax(0, 1fr))', columnGap: isMobile ? '12px' : '24px', rowGap: isMobile ? '6px' : '8px' }}>
                       {[
                         { label: L("제목", "Title"), value: inspectedArt.title },
@@ -1863,13 +1866,12 @@ export function InteractiveGlobeRealModal({
                     </div>
                   </motion.div>
                 ) : (
-                  <motion.div key="empty" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.12 }} style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
+                  <div style={{ display: 'flex', alignItems: 'center', height: '100%' }}>
                     <span style={{ fontSize: '10px', color: fgFaint, letterSpacing: '0.12em' }}>
                       {isLoading ? L("작품 불러오는 중...", "Loading artworks...") : L("작품에 마우스를 올리면 정보가 표시됩니다", "Hover over a work to see details")}
                     </span>
-                  </motion.div>
+                  </div>
                 )}
-              </AnimatePresence>
               </div>
             )}
 
