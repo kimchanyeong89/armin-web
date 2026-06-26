@@ -4239,7 +4239,7 @@ export const exhibitions = [
     representativeImage: "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/Albertina_Wien_2008.jpg/1200px-Albertina_Wien_2008.jpg",
     floorPlan: "",
     permanentExhibitions: [
-      { id: "albertina-permanent-collection", name: "Permanent Collection", title: "ALBERTINA — Permanent Collection", description: "Highlights from the ALBERTINA's permanent collection spanning paintings, sculptures, drawings, prints, and objects & media art.", startDate: "Permanent", endDate: "Permanent" , collectionFile: "albertina-permanent-collection.json" }
+      { id: "albertina-permanent-collection", name: "Permanent Collection", title: "ALBERTINA — Permanent Collection", description: "Highlights from the ALBERTINA's permanent collection spanning paintings, sculptures, drawings, prints, and objects & media art.", startDate: "Permanent", endDate: "Permanent" , collectionFile: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/collections/albertina-permanent-collection.json" }
     ],
     temporaryExhibitions: [],
     pastExhibitions: [],
@@ -5563,7 +5563,7 @@ export const exhibitions = [
         description: "Highlights from the Art Institute of Chicago, featuring paintings, drawings, watercolors, and photography.",
         startDate: "Permanent",
         endDate: "Permanent",
-        collectionFile: "aic-collection.json"
+        collectionFile: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/collections/aic-collection.json"
       }
     ],
     temporaryExhibitions: [],
@@ -5725,7 +5725,7 @@ export const exhibitions = [
         description: "Complete artworks dataset from MCA collection index, including detail metadata, medium-derived category, and on-display status.",
         startDate: "Permanent",
         endDate: "Permanent",
-        collectionFile: "mca-collection.json"
+        collectionFile: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/collections/mca-collection.json"
       }
     ],
     temporaryExhibitions: [],
@@ -5752,7 +5752,7 @@ export const exhibitions = [
         description: "Artworks with images from selected categories (Assemblage, Painting, Print, Drawing), including detailed metadata and on-display status.",
         startDate: "Permanent",
         endDate: "Permanent",
-        collectionFile: "qagoma-collection.json"
+        collectionFile: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/collections/qagoma-collection.json"
       }
     ],
     temporaryExhibitions: [],
@@ -5840,7 +5840,7 @@ export const exhibitions = [
         description: "A comprehensive collection of paintings and drawings from the National Museum of New Zealand.",
         startDate: "Permanent",
         endDate: "Permanent",
-        collectionFile: "tepapa-collection.json"
+        collectionFile: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/collections/tepapa-collection.json"
       }
     ],
     temporaryExhibitions: [],
@@ -7269,7 +7269,7 @@ export const exhibitions = [
     description: "Vienna's museum of applied arts on the Stubenring, holding one of the world's great graphic collections — Secession-era posters, Wiener Werkstätte design drawings by Josef Hoffmann and Koloman Moser, and a major ukiyo-e print holding.",
     representativeImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/mak-vienna-collection/mak-vienna-64677-d8c2bec7-imageUrl.webp",
     permanentExhibitions: [
-      { id: "mak-vienna-collection", name: "Collection", name_en: "Collection", title: "MAK – Museum of Applied Arts — Collection", title_en: "MAK – Museum of Applied Arts — Collection", description: "23,848점 — 드로잉17626·poster4452·판화1761·사진9.", description_en: "23,848 works — drawing, poster, print, photograph.", startDate: "Permanent", endDate: "Permanent", collectionFile: "mak-vienna-collection.json" }
+      { id: "mak-vienna-collection", name: "Collection", name_en: "Collection", title: "MAK – Museum of Applied Arts — Collection", title_en: "MAK – Museum of Applied Arts — Collection", description: "23,848점 — 드로잉17626·poster4452·판화1761·사진9.", description_en: "23,848 works — drawing, poster, print, photograph.", startDate: "Permanent", endDate: "Permanent", collectionFile: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/collections/mak-vienna-collection.json" }
     ],
     temporaryExhibitions: [],
     pastExhibitions: [],

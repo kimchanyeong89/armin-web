@@ -135,8 +135,7 @@ export default function GenreMuseumBrowse({ isMobile, museums }: { isMobile: boo
                     style={{
                       background: "none",
                       border: "none",
-                      borderBottom: "1px solid transparent",
-                      padding: "0 0 2px",
+                      padding: 0,
                       margin: 0,
                       cursor: "pointer",
                       fontFamily: "inherit",
@@ -144,15 +143,18 @@ export default function GenreMuseumBrowse({ isMobile, museums }: { isMobile: boo
                       fontWeight: 450,
                       lineHeight: 1.15,
                       color: "rgba(240,240,240,0.56)",
-                      transition: "color 0.18s ease, border-color 0.18s ease",
+                      letterSpacing: "0",
+                      transition: "color 0.22s ease, letter-spacing 0.22s ease",
                     }}
                     onMouseEnter={(e) => {
+                      // Minimal editorial hover: brighten to gold + a hair of letter-spacing.
+                      // (Replaces the old gold underline that read like a tray/shelf edge.)
                       e.currentTarget.style.color = "#eccd86";
-                      e.currentTarget.style.borderBottomColor = `rgba(${GOLD},0.7)`;
+                      e.currentTarget.style.letterSpacing = "0.02em";
                     }}
                     onMouseLeave={(e) => {
                       e.currentTarget.style.color = "rgba(240,240,240,0.56)";
-                      e.currentTarget.style.borderBottomColor = "transparent";
+                      e.currentTarget.style.letterSpacing = "0";
                     }}
                   >
                     {nameOf(id)}
