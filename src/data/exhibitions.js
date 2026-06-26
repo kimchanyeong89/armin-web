@@ -952,6 +952,7 @@ export const exhibitions = [
     representativeImage: "images/tate-modern-logo.svg",
     floorPlan: "",
     permanentExhibitions: [
+      { id: "tate-media-art", name: "Media Art Collection", name_en: "Media Art Collection", name_ko: "미디어아트 컬렉션", title: "Tate — Time-based & Media Art", title_en: "Tate — Time-based & Media Art", description: "189 time-based / media artworks — Viola, Nauman, McQueen, Hiller.", description_en: "189 time-based / media artworks.", startDate: "Permanent", endDate: "Permanent", collectionFile: "tate-media-collection.json" },
       {
         id: "tm-perm-1",
         name: "Tate Modern Collection",
