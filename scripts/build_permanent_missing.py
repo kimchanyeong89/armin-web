@@ -21,7 +21,7 @@ from pathlib import Path
 ROOT = Path('/Users/kietzsche/armin-web-main')
 EXH_FILE = ROOT / 'src/data/exhibitions.js'
 DATA_DIR = ROOT / 'public/data'
-PROCESSED = ROOT / 'siglip_processed_ids.txt'
+PROCESSED = ROOT / os.environ.get('EMBED_PROCESSED', 'siglip_processed_ids.txt')
 OVERRIDES = ROOT / 'public/semantic-id-overrides.json'
 
 # ── 1. Load processed IDs (the source of truth)
@@ -233,8 +233,8 @@ md_lines += [
     '`{"id": ..., "e": exhibition_id, "i": image_url}`).',
 ]
 
-(ROOT / 'PERMANENT_MISSING.md').write_text('\n'.join(md_lines))
-with open(ROOT / 'permanent_missing_pending.jsonl', 'w') as f:
+(ROOT / os.environ.get('EMBED_MD', 'PERMANENT_MISSING.md')).write_text('\n'.join(md_lines))
+with open(ROOT / os.environ.get('EMBED_PENDING', 'permanent_missing_pending.jsonl'), 'w') as f:
     for r in pending_records:
         f.write(json.dumps(r, ensure_ascii=False) + '\n')
 
