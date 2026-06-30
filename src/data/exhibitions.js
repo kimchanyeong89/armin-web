@@ -1058,6 +1058,7 @@ export const exhibitions = [
     country: "United Kingdom",
     region: "London",
     permanentExhibitions: [
+      { id: "vam-photography", name: "Photography Collection", name_en: "Photography Collection", name_ko: "사진 컬렉션", title: "V&A — Photography (1920s onward)", title_en: "V&A — Photography (1920s onward)", description: "8,517 photographs (1920s+) from the V&A.", description_en: "8,517 photographs (1920s onward).", startDate: "Permanent", endDate: "Permanent", collectionFile: "vam-photography-collection.json" },
       {
         id: "vam-permanent",
         name: "Collection (Permanent)",
@@ -5434,7 +5435,7 @@ export const exhibitions = [
         description: "A merged collection of paintings and downloadable drawings from the National Gallery of Art.",
         startDate: "Permanent",
         endDate: "Permanent",
-        collectionFile: "nga-collection.json"
+        collectionFile: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/collections/nga-collection.json"
       }
     ],
     temporaryExhibitions: [],
