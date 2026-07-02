@@ -2806,6 +2806,7 @@ export const exhibitions = [
     description: "One of the world's most extraordinary house museums, preserved exactly as architect Sir John Soane left it in 1837, featuring paintings by Hogarth, Turner, and Canaletto.",
     representativeImage: "images/soane-museum-logo.svg",
     permanentExhibitions: [
+      { id: "soane-architecture", name: "Architecture & Drawings", name_en: "Architecture & Drawings", name_ko: "건축 드로잉", title: "Sir John Soane — Architectural Drawings", title_en: "Sir John Soane — Architectural Drawings", description: "10,195 architectural drawings — Soane, Adam & Dance office schemes.", description_en: "10,195 architectural drawings.", startDate: "Permanent", endDate: "Permanent", collectionFile: "soane-architecture-collection.json" },
       { id: "soane-paintings", name: "Paintings Collection", title: "Paintings and Framed Works", description: "Over 400 paintings, watercolours and prints including Hogarth's A Rake's Progress and The Election series.", startDate: "Permanent", endDate: "Permanent", collectionFile: "soane-paintings.json" }
     ],
     temporaryExhibitions: [],
