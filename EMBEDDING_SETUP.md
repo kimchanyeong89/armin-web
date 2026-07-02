@@ -8,7 +8,9 @@ and (for Jina) create the Vectorize index. Nothing else to wire up.
 | | Encoder | Dim | Queue file | Count | Runner |
 |---|---|---|---|---|---|
 | **SigLIP** | `google/siglip-base-patch16-224` | 768 | `permanent_missing_pending.jsonl` | **413,989** (the new gap) | `scripts/run_siglip_missing_permanent.py` |
-| **Jina-CLIP** | `jinaai/jina-clip-v2` | 1024 | `jina_missing_pending.jsonl` | **976,629** (full corpus — Jina has 0 yet) | `scripts/run_jina_clip_missing_permanent.py` |
+| **Jina-CLIP** | `jinaai/jina-clip-v2` | 1024 | `jina_missing_pending.jsonl` | **462,919** (48,965 old modal_embed remaining + 413,954 new) | `scripts/run_jina_clip_missing_permanent.py` |
+
+Jina already embedded ~565k via `scripts/modal_embed/` (Modal); this queue is ONLY the gap (its leftover `remaining.jsonl` + the new collections), NOT the full corpus.
 
 Both queues are one JSON object per line: `{"id", "e": exhibition_id, "i": image_url}`.
 Regenerate any time after new scrapes:
@@ -16,9 +18,8 @@ Regenerate any time after new scrapes:
 ```bash
 # SigLIP gap (cross-refs siglip_processed_ids.txt)
 python3 scripts/build_permanent_missing.py
-# Jina full list (cross-refs jina_processed_ids.txt — empty → everything)
-EMBED_PROCESSED=jina_processed_ids.txt EMBED_PENDING=jina_missing_pending.jsonl \
-  EMBED_MD=JINA_MISSING.md python3 scripts/build_permanent_missing.py
+# Jina gap = modal_embed/remaining.jsonl (old) + permanent_missing_pending.jsonl (new).
+# Jina's ~565k done live in scripts/modal_embed/ (Modal pipeline), not jina_processed_ids.txt.
 ```
 
 Both runners share the same safety guarantees: vector → disk **before** the id is
@@ -59,7 +60,7 @@ Tunables (env): `JINA_DIM` (Matryoshka truncate, default 1024), `JINA_GPU_BATCH`
 `JINA_UPLOAD_BATCH` (50), `JINA_PENDING` (queue file), `JINA_MODEL_ID`.
 
 ### Notes
-- **Scale:** 976k Jina images is a large pass. To match SigLIP's scope first
+- **Scale:** 462,919 Jina images is the remaining gap. To match SigLIP's scope first
   (just the new works), run with `JINA_PENDING=permanent_missing_pending.jsonl`
   (413,989) and expand to the full corpus later.
 - **Modality gap (both encoders):** text→image queries must be caption-wrapped
