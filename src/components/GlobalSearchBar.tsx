@@ -441,7 +441,13 @@ const normalizeLookupText = (value?: string) =>
         .toLowerCase()
         .normalize('NFD')
         .replace(/[\u0300-\u036f]/g, '')
-        .replace(/[^a-z0-9]+/g, ' ')
+        // Re-compose Hangul (NFD splits syllables into jamo) and keep ALL
+        // Unicode letters/numbers. The old [^a-z0-9] class normalized every
+        // Korean/CJK name to '' \u2014 so \ud55c\uae00 \uc791\uac00 (e.g. \uae40\ud0dc) never got a merge
+        // key and vanished from artist suggestions, and '' === '' comparisons
+        // silently cross-matched unrelated Korean names.
+        .normalize('NFC')
+        .replace(/[^\p{L}\p{N}]+/gu, ' ')
         .trim();
 
 /**
