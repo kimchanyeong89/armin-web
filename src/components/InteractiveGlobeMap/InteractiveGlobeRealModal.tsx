@@ -168,6 +168,12 @@ const normalizeSearchText = (value?: string): string =>
     .toLowerCase()
     .normalize("NFD")
     .replace(/[\u0300-\u036f]/g, "")
+    // NFD decomposes Hangul syllables (\uac00-\ud7a3) into conjoining jamo (U+1100\u201311FF),
+    // which the allow-list below doesn't cover \u2014 so re-compose to NFC first.
+    // Without this, any Korean query/haystack normalized to "" and the search
+    // filter was silently skipped (all works shown). Latin diacritic-stripping
+    // above is preserved (caf\u00e9 \u2192 cafe).
+    .normalize("NFC")
     .replace(/[^a-z0-9\u00c0-\u024f\u0400-\u04ff\u0370-\u03ff\u4e00-\u9fff\u3040-\u30ff\uac00-\ud7af]+/g, " ")
     .trim();
 

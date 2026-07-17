@@ -817,6 +817,8 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
     const [isAIMode, setIsAIMode] = useState(false);
     // AI 모드 안의 정밀 검색 토글 (Jina CLIP v2 한국어 native). 기본 OFF = SigLIP+번역.
     const [isPrecisionMode, setIsPrecisionMode] = useState(false);
+    // 검색 페이지: 엔진(빠름/정밀) 선택 드롭다운 열림 상태. AI 버튼에 통합.
+    const [engineMenuOpen, setEngineMenuOpen] = useState(false);
     const [aiPulsing, setAiPulsing] = useState(false);
     const [aiResults, setAiResults] = useState<SearchableArtwork[]>([]);
     const [isAILoading, setIsAILoading] = useState(false);
@@ -3557,8 +3559,32 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
         setIsAIMode((prev) => !prev);
         setAiResults([]);
         setIsRecommendMode(false);
+        setEngineMenuOpen(false);
         setAiPulsing(true);
         setTimeout(() => setAiPulsing(false), 600);
+    }, []);
+
+    // Search-page AI button: when AI is off → turn it on; when on → open the
+    // engine menu (빠름/정밀 선택 + 일반검색으로 끄기) instead of a separate pill.
+    const handleAIButtonClick = useCallback((e: React.MouseEvent<HTMLButtonElement>) => {
+        if (isSearchPageMode && isAIMode) {
+            e.stopPropagation();
+            preloadEncoder();
+            setEngineMenuOpen((prev) => !prev);
+            return;
+        }
+        handleToggleAIMode(e);
+    }, [isSearchPageMode, isAIMode, handleToggleAIMode]);
+
+    // Pick an engine from the AI-button menu (false = 빠름/SigLIP, true = 정밀/Jina).
+    const selectEngine = useCallback((precise: boolean) => {
+        setEngineMenuOpen(false);
+        setIsPrecisionMode((prev) => {
+            if (prev === precise) return prev;
+            semanticSearchRequestSeqRef.current += 1;
+            setAiResults([]);
+            return precise;
+        });
     }, []);
 
     const handleImageError = useCallback((e: React.SyntheticEvent<HTMLImageElement, Event>) => {
@@ -3838,9 +3864,12 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
 
                     {(isExpanded || !inlineMode) && (
                         <>
-                            {/* AI Mode Toggle moved to left side */}
+                            {/* AI Mode Toggle — on the search page the engine (빠름/정밀)
+                                selector is integrated INTO this button as a dropdown,
+                                instead of a separate pill outside the input. */}
+                            <div style={{ position: 'relative', flexShrink: 0, display: 'inline-flex' }}>
                             <button
-                                onClick={handleToggleAIMode}
+                                onClick={handleAIButtonClick}
                                 style={isSearchPageMode ? {
                                     background: isAIMode
                                         ? 'linear-gradient(135deg, #D4A547 0%, #A88735 100%)'
@@ -3943,17 +3972,100 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                                             <path d="M4 17v2" />
                                             <path d="M5 18H3" />
                                         </svg>
-                                        <span style={{ position: 'relative', zIndex: 1 }}>AI</span>
+                                        <span style={{ position: 'relative', zIndex: 1 }}>
+                                            {isAIMode ? t({ ko: isPrecisionMode ? '정밀' : '빠름', en: isPrecisionMode ? 'Precise' : 'Fast' }) : 'AI'}
+                                        </span>
+                                        {isAIMode && (
+                                            <svg width="9" height="9" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" style={{ position: 'relative', zIndex: 1, marginLeft: -1, opacity: 0.85, transform: engineMenuOpen ? 'rotate(180deg)' : 'none', transition: 'transform 0.2s ease' }}>
+                                                <path d="M6 9l6 6 6-6" />
+                                            </svg>
+                                        )}
                                     </>
                                 ) : (
                                     drawingSkin ? 'A.I' : 'AI'
                                 )}
                             </button>
+                            {isSearchPageMode && isAIMode && engineMenuOpen && (
+                                <>
+                                    <div onClick={(e) => { e.stopPropagation(); setEngineMenuOpen(false); }} style={{ position: 'fixed', inset: 0, zIndex: 60 }} />
+                                    <div
+                                        role="menu"
+                                        onClick={(e) => e.stopPropagation()}
+                                        style={{
+                                            position: 'absolute', top: 'calc(100% + 8px)', left: 0, zIndex: 61,
+                                            minWidth: 210, padding: 6, borderRadius: 14,
+                                            background: isNavDark ? 'rgba(20,18,15,0.98)' : 'rgba(255,255,255,0.99)',
+                                            border: `1px solid ${isNavDark ? 'rgba(212,165,71,0.25)' : 'rgba(0,0,0,0.10)'}`,
+                                            boxShadow: '0 14px 44px rgba(0,0,0,0.5)',
+                                            backdropFilter: 'blur(20px)', WebkitBackdropFilter: 'blur(20px)',
+                                            animation: 'search-result-reveal 0.16s ease-out',
+                                        }}
+                                    >
+                                        {[
+                                            { precise: false, label: t({ ko: '빠름', en: 'Fast' }), sub: t({ ko: '영어 기반 · 빠른 응답', en: 'English-based · fast' }) },
+                                            { precise: true, label: t({ ko: '정밀', en: 'Precise' }), sub: t({ ko: '한국어 native · 조금 느림', en: 'Korean-native · slower' }) },
+                                        ].map((opt) => {
+                                            const active = isPrecisionMode === opt.precise;
+                                            return (
+                                                <button
+                                                    key={opt.label}
+                                                    role="menuitemradio"
+                                                    aria-checked={active}
+                                                    onClick={(e) => { e.stopPropagation(); selectEngine(opt.precise); }}
+                                                    style={{
+                                                        display: 'flex', alignItems: 'center', gap: 10, width: '100%',
+                                                        padding: '9px 10px', borderRadius: 10, border: 'none', cursor: 'pointer',
+                                                        background: active ? (isNavDark ? 'rgba(212,165,71,0.14)' : 'rgba(184,148,56,0.12)') : 'transparent',
+                                                        textAlign: 'left', transition: 'background 0.15s ease',
+                                                    }}
+                                                    onMouseEnter={(e) => { if (!active) e.currentTarget.style.background = isNavDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.04)'; }}
+                                                    onMouseLeave={(e) => { if (!active) e.currentTarget.style.background = 'transparent'; }}
+                                                >
+                                                    <span style={{ width: 16, display: 'grid', placeItems: 'center', flexShrink: 0, color: active ? '#D4A547' : (isNavDark ? 'rgba(255,255,255,0.5)' : 'rgba(0,0,0,0.45)') }}>
+                                                        {opt.precise ? (
+                                                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.937A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .962 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.582a.5.5 0 0 1 0 .962L15.5 14.063A2 2 0 0 0 14.063 15.5l-1.582 6.135a.5.5 0 0 1-.962 0z" /></svg>
+                                                        ) : (
+                                                            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" /></svg>
+                                                        )}
+                                                    </span>
+                                                    <span style={{ flex: 1, minWidth: 0 }}>
+                                                        <span style={{ display: 'block', fontSize: 13, fontWeight: 700, color: isNavDark ? '#f0ede6' : '#1a1a1a', fontFamily: "'Space Grotesk','Pretendard',sans-serif" }}>{opt.label}</span>
+                                                        <span style={{ display: 'block', fontSize: 10.5, color: isNavDark ? 'rgba(255,255,255,0.45)' : 'rgba(0,0,0,0.45)', marginTop: 1 }}>{opt.sub}</span>
+                                                    </span>
+                                                    {active && (
+                                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#D4A547" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" style={{ flexShrink: 0 }}><path d="M20 6L9 17l-5-5" /></svg>
+                                                    )}
+                                                </button>
+                                            );
+                                        })}
+                                        <div style={{ height: 1, background: isNavDark ? 'rgba(255,255,255,0.08)' : 'rgba(0,0,0,0.07)', margin: '4px 6px' }} />
+                                        <button
+                                            role="menuitem"
+                                            onClick={(e) => { e.stopPropagation(); setEngineMenuOpen(false); handleToggleAIMode(e); }}
+                                            style={{
+                                                display: 'flex', alignItems: 'center', gap: 10, width: '100%',
+                                                padding: '9px 10px', borderRadius: 10, border: 'none', cursor: 'pointer',
+                                                background: 'transparent', textAlign: 'left', transition: 'background 0.15s ease',
+                                            }}
+                                            onMouseEnter={(e) => { e.currentTarget.style.background = isNavDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.04)'; }}
+                                            onMouseLeave={(e) => { e.currentTarget.style.background = 'transparent'; }}
+                                        >
+                                            <span style={{ width: 16, display: 'grid', placeItems: 'center', flexShrink: 0, color: isNavDark ? 'rgba(255,255,255,0.5)' : 'rgba(0,0,0,0.45)' }}>
+                                                <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="11" cy="11" r="8" /><line x1="21" y1="21" x2="16.65" y2="16.65" /></svg>
+                                            </span>
+                                            <span style={{ flex: 1, fontSize: 13, fontWeight: 600, color: isNavDark ? 'rgba(255,255,255,0.75)' : 'rgba(0,0,0,0.7)', fontFamily: "'Space Grotesk','Pretendard',sans-serif" }}>{t({ ko: '일반 검색', en: 'Text search' })}</span>
+                                        </button>
+                                    </div>
+                                </>
+                            )}
+                            </div>
 
                             {/* 정밀 검색 토글 (AI 모드 활성 시에만 표시).
                                 기본 OFF = SigLIP (빠름, 영어 모델 + 번역)
-                                ON = Jina v2 (한국어 native, 5초 정도 더 걸림) */}
-                            {isAIMode && (isExpanded || !inlineMode) && (
+                                ON = Jina v2 (한국어 native, 5초 정도 더 걸림)
+                                검색 페이지에서는 입력창 폭 확보를 위해 이 인라인 토글 대신
+                                AI 힌트 라인의 세그먼트 컨트롤(아래)로 옮긴다. */}
+                            {isAIMode && (isExpanded || !inlineMode) && !isSearchPageMode && (
                                 <button
                                     onClick={(e) => {
                                         e.stopPropagation();
@@ -4145,8 +4257,10 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                             )}
                             {/* KR|EN switch lives inside the bar on the search page (where the
                                 full bar is always present); App.tsx hides its floating copy on
-                                /search to avoid two switches stacking in the corner. */}
-                            {isSearchPageMode && (
+                                /search to avoid two switches stacking in the corner.
+                                On mobile it's hidden here — the pill stole ~88px of a 375px row
+                                and crushed the input; language switching stays on the desktop bar. */}
+                            {isSearchPageMode && !isMobile && (
                                 <div onClick={(e) => e.stopPropagation()} style={{ flexShrink: 0, display: 'flex', alignItems: 'center', marginLeft: 6 }}>
                                     <LanguageToggle light={!isNavDark} layoutId="language-toggle-pill-search" />
                                 </div>
@@ -4166,19 +4280,11 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                             pointerEvents: 'none',
                         }}
                     >
-                        <div
-                            style={{
-                            display: 'flex',
-                            alignItems: 'center',
-                            gap: 6,
-                            paddingTop: 8,
-                            color: isNavDark ? 'rgba(255,255,255,0.36)' : 'rgba(0,0,0,0.36)',
-                            }}
-                        >
+                        <div style={{ display: 'flex', alignItems: 'center', gap: 6, paddingTop: 8, color: isNavDark ? 'rgba(255,255,255,0.36)' : 'rgba(0,0,0,0.36)' }}>
                             <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke={isNavDark ? '#D4A547' : '#8A6B1F'} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                                 <path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.937A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .962 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.582a.5.5 0 0 1 0 .962L15.5 14.063A2 2 0 0 0 14.063 15.5l-1.582 6.135a.5.5 0 0 1-.962 0z" />
                             </svg>
-                            <span style={{ fontSize: 11 }}>AI 검색 모드 활성화 - 자연어로 자유롭게 검색하세요</span>
+                            <span style={{ fontSize: 11 }}>{t({ ko: 'AI 검색 모드 — 자연어로 자유롭게 검색하세요', en: 'AI mode — ask in natural language' })}</span>
                         </div>
                     </div>
                 )}
