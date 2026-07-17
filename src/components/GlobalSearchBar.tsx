@@ -1825,7 +1825,7 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
             .filter(Boolean)
             .join(' · ');
         const countLabel = artistGallery.artworks.length.toLocaleString();
-        let base = `${artistGallery.artist}의 작품 ${countLabel}점이 아르민 라이브러리에 등록되어 있습니다.`;
+        let base = `${artistGallery.artist}의 작품 ${countLabel}점이 콜리 라이브러리에 등록되어 있습니다.`;
         if (highlights) {
             base += ` 대표 작품: ${highlights}.`;
         }

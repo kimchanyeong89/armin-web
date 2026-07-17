@@ -626,7 +626,7 @@ const Login: React.FC = () => {
           <div style={{ display: "flex", alignItems: "center", gap: 7, marginBottom: 10 }}>
             <span style={{ width: 6, height: 6, borderRadius: 999, background: "#D4A547", display: "inline-block" }} />
             <span style={{ fontSize: 10, letterSpacing: "0.22em", color: "rgba(255,255,255,0.46)", textTransform: language === "ko" ? "none" : "uppercase" }}>
-              {t({ ko: "아르민 계정", en: "Armin Account" })}
+              {t({ ko: "콜리 계정", en: "Colly Account" })}
             </span>
           </div>
 
