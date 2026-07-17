@@ -88,7 +88,7 @@ export default function SubscribeModal({ open, onClose, triggerContext = 'archiv
       await tossPayments.requestPayment('카드', {
         amount: MONTHLY_PRICE_KRW,
         orderId,
-        orderName: 'ARMIN Weekly+ 구독 (1개월)',
+        orderName: 'COLLY Weekly+ 구독 (1개월)',
         successUrl: `${window.location.origin}/payment/success?type=weekly-subscription`,
         failUrl: `${window.location.origin}/payment/fail`,
       } as any);
@@ -110,7 +110,7 @@ export default function SubscribeModal({ open, onClose, triggerContext = 'archiv
     <div
       role="dialog"
       aria-modal="true"
-      aria-label="Subscribe to ARMIN Weekly+"
+      aria-label="Subscribe to COLLY Weekly+"
       onClick={onClose}
       style={{
         position: 'fixed',
@@ -183,7 +183,7 @@ export default function SubscribeModal({ open, onClose, triggerContext = 'archiv
           margin: '0 0 8px 0',
           letterSpacing: '-0.01em',
         }}>
-          ARMIN Weekly<span style={{ color: ACCENT }}>+</span>
+          COLLY Weekly<span style={{ color: ACCENT }}>+</span>
         </h2>
         <p style={{
           ...LABEL,

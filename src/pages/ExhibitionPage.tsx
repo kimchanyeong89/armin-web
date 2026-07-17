@@ -667,7 +667,7 @@ export default function ExhibitionPage({ exhibitions }: { exhibitions: Exhibitio
       {/* ══ INTERACTIVE MODE ══ */}
       {!isDrawingMode && !activeItem && (
         <section className="ep-hero">
-          <div className="ep-hero-label">ARMIN · INTERACTIVE</div>
+          <div className="ep-hero-label">COLLY · INTERACTIVE</div>
           <h1 className="ep-hero-name">{museumName}</h1>
           <div className="ep-hero-row">
             {museumLocation && <span className="ep-hero-loc">{museumLocation}</span>}
@@ -721,7 +721,7 @@ export default function ExhibitionPage({ exhibitions }: { exhibitions: Exhibitio
           {/* Museum hero */}
           <div className="dg-hero">
             <div className="dg-hero-eyebrow">
-              <span className="dg-hero-tag">ARMIN · DRAWING MAP</span>
+              <span className="dg-hero-tag">COLLY · DRAWING MAP</span>
               {typeof museum.latitude === 'number' && typeof museum.longitude === 'number' && (
                 <span className="dg-hero-coords">
                   {Math.abs(museum.latitude).toFixed(2)}°{museum.latitude >= 0 ? 'N' : 'S'}&nbsp;
