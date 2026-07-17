@@ -218,7 +218,9 @@ function isMeaningfulArtistSuggestion(name: string): boolean {
         if (hintMatches > 0) return false;
     }
 
-    const alphaTokens = tokens.filter((token) => /[a-z]/.test(token));
+    // Any Unicode letter counts — [a-z] alone silently dropped every
+    // non-Latin artist name (e.g. 김태), hiding them from artist results.
+    const alphaTokens = tokens.filter((token) => /\p{L}/u.test(token));
     if (alphaTokens.length === 0) return false;
     if (alphaTokens.every((token) => token.length === 1)) return false;
 
