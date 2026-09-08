@@ -7664,5 +7664,166 @@ export const exhibitions = [
     pastExhibitions: [],
     exhibitions: []
   },
-
+  {
+    id: "faam-fukuoka",
+    description_ko: "아시아 근현대미술만 체계적으로 모으는 세계에서 드문 미술관이다. 23개 나라와 지역의 작품을 다루며, 김환기·윤형근·박서보·김창열 등 한국 작가의 회화도 폭넓게 소장한다.",
+    slug: "faam-fukuoka",
+    name: "Fukuoka Asian Art Museum",
+    name_ko: "후쿠오카 아시아미술관",
+    location: "Fukuoka, Japan",
+    description: "The only museum in the world that systematically collects and exhibits modern and contemporary Asian art, covering 23 countries and regions.",
+    latitude: 33.5966,
+    longitude: 130.4103,
+    country: "Japan",
+    region: "Fukuoka",
+    representativeImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/museums/faam-fukuoka-representative.webp",
+    permanentExhibitions: [
+      {
+        id: "faam-fukuoka-collection",
+        name: "Asian Modern and Contemporary Art",
+        title: "Asian Modern and Contemporary Art",
+        description: "Modern and contemporary art from across Asia, including Korean, Chinese, Indian and Southeast Asian painting.",
+        startDate: "Permanent",
+        endDate: "Permanent",
+        collectionFile: "faam-fukuoka-collection.json"
+      }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: []
+  },
+  {
+    id: "aichi-pmoa",
+    description_ko: "나고야 사카에의 아이치예술문화센터 안에 있다. 클림트·피카소·보나르·에른스트 같은 20세기 서양미술과 일본 근대회화를 함께 갖췄다.",
+    slug: "aichi-pmoa",
+    name: "Aichi Prefectural Museum of Art",
+    name_ko: "아이치현미술관",
+    location: "Nagoya, Japan",
+    description: "Located in the Aichi Arts Center in central Nagoya, with a collection strong in twentieth-century Western and Japanese art.",
+    latitude: 35.1729,
+    longitude: 136.9098,
+    country: "Japan",
+    region: "Nagoya",
+    representativeImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/museums/aichi-pmoa-representative.webp",
+    permanentExhibitions: [
+      {
+        id: "aichi-pmoa-collection",
+        name: "Collection",
+        title: "Collection",
+        description: "Twentieth-century Western and Japanese painting, prints and photography.",
+        startDate: "Permanent",
+        endDate: "Permanent",
+        collectionFile: "aichi-pmoa-collection.json"
+      }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: []
+  },
+  {
+    id: "momas-saitama",
+    description_ko: "기타우라와 공원에 구로카와 기쇼가 설계한 건물로 서 있다. 모네·피카소·샤갈과 일본 근대미술을 소장하며, 앉아볼 수 있는 디자이너 의자 컬렉션으로도 알려져 있다.",
+    slug: "momas-saitama",
+    name: "The Museum of Modern Art, Saitama",
+    name_ko: "사이타마현립근대미술관",
+    location: "Saitama, Japan",
+    description: "A Kisho Kurokawa building in Kitaurawa Park, holding modern Japanese and European painting alongside a noted collection of designer chairs.",
+    latitude: 35.9077,
+    longitude: 139.648,
+    country: "Japan",
+    region: "Saitama",
+    representativeImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/museums/momas-saitama-representative.webp",
+    permanentExhibitions: [
+      {
+        id: "momas-saitama-collection",
+        name: "Collection",
+        title: "Collection",
+        description: "Modern Japanese and European painting, drawings and prints.",
+        startDate: "Permanent",
+        endDate: "Permanent",
+        collectionFile: "momas-saitama-collection.json"
+      }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: []
+  },
+  {
+    id: "kyoto-national-museum",
+    description_ko: "1897년에 문을 연 일본 4대 국립박물관 가운데 하나다. 헤이안부터 에도까지의 회화와 서예, 불교미술을 소장하고, 가타야마 도쿠마가 설계한 메이지 시대 벽돌 건물이 그대로 남아 있다.",
+    slug: "kyoto-national-museum",
+    name: "Kyoto National Museum",
+    name_ko: "교토국립박물관",
+    location: "Kyoto, Japan",
+    description: "Opened in 1897, one of Japan's four national museums, holding painting, calligraphy and Buddhist art from the Heian to the Edo period.",
+    latitude: 34.9899,
+    longitude: 135.7728,
+    country: "Japan",
+    region: "Kyoto",
+    representativeImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/museums/kyoto-national-museum-representative.webp",
+    permanentExhibitions: [
+      {
+        id: "kyoto-national-museum-collection",
+        name: "Painting and Calligraphy",
+        title: "Painting and Calligraphy",
+        description: "Japanese and East Asian painting and calligraphy from the Heian through Edo periods.",
+        startDate: "Permanent",
+        endDate: "Permanent",
+        collectionFile: "kyoto-national-museum-collection.json"
+      }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: []
+  },
+  {
+    id: "barnes-foundation",
+    description_ko: "앨버트 반스가 모은 후기인상주의·초기 근대회화를 그가 직접 짠 벽면 배치 그대로 건다. 르누아르 181점, 세잔 69점, 마티스 59점을 소장해 한 화가를 한자리에서 깊이 볼 수 있다.",
+    slug: "barnes-foundation",
+    name: "The Barnes Foundation",
+    name_ko: "반스 재단",
+    location: "Philadelphia, USA",
+    description: "Albert Barnes's collection of post-impressionist and early modern painting, hung in the dense ensembles he arranged himself, with 181 Renoirs, 69 Cézannes and 59 Matisses.",
+    latitude: 39.9656,
+    longitude: -75.173,
+    country: "USA",
+    region: "Pennsylvania",
+    representativeImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/museums/barnes-foundation-representative.webp",
+    permanentExhibitions: [
+      {
+        id: "barnes-foundation-collection",
+        name: "Collection",
+        title: "Collection",
+        description: "Post-impressionist and early modern painting, drawings and prints from the Barnes ensembles.",
+        startDate: "Permanent",
+        endDate: "Permanent",
+        collectionFile: "barnes-foundation-collection.json"
+      }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: []
+  },
+  {
+    id: "mimoca",
+    description_ko: "마루가메역 앞에 다니구치 요시오가 설계했다. 화가 이노쿠마 겐이치로가 기증한 2만여 점을 중심으로 하며, 역과 미술관이 광장으로 바로 이어진다.",
+    slug: "mimoca",
+    name: "Marugame Genichiro-Inokuma Museum of Contemporary Art",
+    name_ko: "마루가메시 이노쿠마 겐이치로 현대미술관",
+    location: "Marugame, Kagawa, Japan",
+    description: "A Yoshio Taniguchi building facing Marugame Station, built around some 20,000 works donated by the painter Genichiro Inokuma.",
+    latitude: 34.2894,
+    longitude: 133.7986,
+    country: "Japan",
+    region: "Kagawa",
+    representativeImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/museums/mimoca-representative.webp",
+    permanentExhibitions: [
+      {
+        id: "mimoca-collection",
+        name: "Collection",
+        title: "Collection",
+        description: "Works by Genichiro Inokuma and postwar Japanese contemporary art.",
+        startDate: "Permanent",
+        endDate: "Permanent",
+        collectionFile: "mimoca-collection.json"
+      }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: []
+  }
 ];
