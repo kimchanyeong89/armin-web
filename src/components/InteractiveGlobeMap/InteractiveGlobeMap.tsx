@@ -3,11 +3,20 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useNavigate, useLocation } from "react-router-dom";
 import { Globe, CONTINENT_MAP } from "./Globe";
 import { VenuePanel } from "./VenuePanel";
-import { InteractiveGlobeRealModal } from "./InteractiveGlobeRealModal";
+import {
+  InteractiveGlobeRealModal,
+  type GlobeDetailIntroduction,
+} from "./InteractiveGlobeRealModal";
 import { useLanguage } from "../../contexts/LanguageContext";
 import { localizeCityName, localizeContinentName, localizeCountryName, localizeGeoLabel } from "../../i18n/geoLocalization";
 
 import type { CityMarker, Theme, Venue, InteractiveExhibition } from "./types";
+import type { GlobeVisualPresetId } from "./globeVisualPresets";
+import type { CountryBoundaryStyle } from "./globeCanvasStyles";
+import type { MobileChromeTweakId } from "../mobileChromeTweaks";
+import type { GlobeGlassTweakId } from "./globeGlassTweaks";
+import type { CollyGlobeVariantSlug } from "../../globe-lab/model";
+import { resolveCollyGlobeVariantProfile } from "./collyGlobeVariants";
 import type { Exhibition } from "../../types/Exhibition";
 import "./InteractiveGlobe.css"; // Ensure new CSS is imported
 
@@ -51,6 +60,9 @@ const normalizeCityName = (name: string): string => {
   // Vatican City is a 0.5 km² enclave inside Rome — fold it into the Rome cluster
   // so the Vatican Museums show up as a dot on Rome's minimap.
   if (/^vatican/i.test(trimmed)) return 'Rome';
+  // "Washington, D.C." (Hirshhorn 의 city 필드) 와 "Washington" (region 경로) 이
+  // 서로 다른 클러스터로 갈라져 한쪽만 한국어로 나왔다. 하나로 접는다.
+  if (/^washington(\s*,?\s*d\.?\s*c\.?)?$/i.test(trimmed)) return 'Washington';
   return trimmed;
 };
 
@@ -211,19 +223,46 @@ interface InteractiveGlobeMapProps {
   onSelectExhibition?: (ex: Exhibition) => void;
   onExit?: () => void;
   onSwitchToDrawing?: () => void;
+  visualPreset?: GlobeVisualPresetId;
+  globeVisualPreset?: GlobeVisualPresetId;
+  collyVariant?: CollyGlobeVariantSlug;
+  routeBase?: string;
+  initialTheme?: Theme;
+  countryBoundaryStyle?: CountryBoundaryStyle;
+  mobileChromeTweak?: MobileChromeTweakId;
+  glassTweak?: GlobeGlassTweakId;
+  mapIntroduction?: GlobeDetailIntroduction;
+  detailIntroduction?: GlobeDetailIntroduction;
 }
 
-export default function InteractiveGlobeMap({ exhibitions, onSelectExhibition, onExit, onSwitchToDrawing }: InteractiveGlobeMapProps) {
+export default function InteractiveGlobeMap({
+  exhibitions,
+  onSelectExhibition,
+  onExit,
+  onSwitchToDrawing,
+  visualPreset,
+  globeVisualPreset,
+  collyVariant,
+  routeBase,
+  initialTheme,
+  countryBoundaryStyle,
+  mobileChromeTweak,
+  glassTweak,
+  mapIntroduction,
+  detailIntroduction,
+}: InteractiveGlobeMapProps) {
   const navigate = useNavigate();
   const location = useLocation();
   const { language, t: tt } = useLanguage();
   const [theme, setTheme] = useState<Theme>(() => {
+    if (initialTheme) return initialTheme;
     try { return localStorage.getItem('homeTheme') === 'light' ? 'light' : 'dark'; } catch { return 'light'; }
   });
 
   // Sync with home page dark/light toggle
   useEffect(() => {
     const handleThemeChange = () => {
+      if (initialTheme) return;
       try {
         const isDark = localStorage.getItem('homeTheme') !== 'light';
         setTheme(isDark ? 'dark' : 'light');
@@ -231,7 +270,7 @@ export default function InteractiveGlobeMap({ exhibitions, onSelectExhibition, o
     };
     window.addEventListener('theme-changed', handleThemeChange);
     return () => window.removeEventListener('theme-changed', handleThemeChange);
-  }, []);
+  }, [initialTheme]);
   const [selectedCity, setSelectedCity] = useState<CityMarker | null>(null);
   const [drilledContinent, setDrilledContinent] = useState<string | null>(null);
   const [drilledCountry, setDrilledCountry] = useState<string | null>(null);
@@ -241,7 +280,7 @@ export default function InteractiveGlobeMap({ exhibitions, onSelectExhibition, o
   
   const [selectedRealExhibition, setSelectedRealExhibition] = useState<any | null>(null);
   const [isOpeningExhibition, setIsOpeningExhibition] = useState(false);
-  const [openingExhibitionLabel, setOpeningExhibitionLabel] = useState<string>(tt({ ko: "전시 여는 중...", en: "Opening Exhibition..." }));
+  const [openingExhibitionLabel, setOpeningExhibitionLabel] = useState<string>(tt({ ko: "전시 여는 중…", en: "Opening Exhibition…" }));
   const closingExhibitionIdRef = useRef<string | null>(null);
   const unresolvedRouteExhibitionIdRef = useRef<string | null>(null);
   const [artworkCounts, setArtworkCounts] = useState<Record<string, number>>({});
@@ -252,6 +291,7 @@ export default function InteractiveGlobeMap({ exhibitions, onSelectExhibition, o
   const lastZoomUpdateRef = useRef<{ zoom: number; ts: number }>({ zoom: 1, ts: 0 });
 
   const buildInteractivePath = (exhibitionLike: any): string => {
+    if (routeBase) return routeBase;
     const exhibitionId = String(exhibitionLike?._selectedExhibitionId || exhibitionLike?.id || "").trim();
     if (!exhibitionId) return "/interactive";
 
@@ -311,7 +351,7 @@ export default function InteractiveGlobeMap({ exhibitions, onSelectExhibition, o
       if (Array.isArray(ex.permanentExhibitions)) {
         ex.permanentExhibitions.forEach(e => {
           interactiveExhibitions.push({ id: e.id, title: e.title || e.name || '', period: 'Permanent', type: "permanent" });
-          if (year === "Unknown" && e.startDate) year = e.startDate.split('-')[0];
+          if (year === "Unknown" && /^\d{4}/.test(e.startDate || "")) year = e.startDate.split('-')[0];
         });
       }
       if (Array.isArray(ex.temporaryExhibitions)) {
@@ -333,7 +373,7 @@ export default function InteractiveGlobeMap({ exhibitions, onSelectExhibition, o
           const s = fmtD(e.startDate); const en = fmtD(e.endDate);
           const period = s && en ? `${s} ~ ${en}` : s || en || e.startDate?.slice(0,4) || '';
           interactiveExhibitions.push({ id: e.id, title: e.title || e.name || '', period, type: exType });
-          if (year === "Unknown" && e.startDate) year = e.startDate.split('-')[0];
+          if (year === "Unknown" && /^\d{4}/.test(e.startDate || "")) year = e.startDate.split('-')[0];
         });
       }
       if (Array.isArray(ex.pastExhibitions)) {
@@ -347,7 +387,7 @@ export default function InteractiveGlobeMap({ exhibitions, onSelectExhibition, o
           const s = fmtD(e.startDate); const en = fmtD(e.endDate);
           const period = s && en ? `${s} ~ ${en}` : s || en || e.startDate?.slice(0,4) || '';
           interactiveExhibitions.push({ id: e.id, title: e.title || e.name || '', period, type: "past" });
-          if (year === "Unknown" && e.startDate) year = e.startDate.split('-')[0];
+          if (year === "Unknown" && /^\d{4}/.test(e.startDate || "")) year = e.startDate.split('-')[0];
         });
       }
 
@@ -584,6 +624,14 @@ export default function InteractiveGlobeMap({ exhibitions, onSelectExhibition, o
     setSelectedCity(city);
   };
 
+  // Same flag the nearby sheet raises: fixed app chrome (the language switch)
+  // sits above this layer's stacking context, so it steps aside for the panel.
+  useEffect(() => {
+    if (!selectedCity) return;
+    document.documentElement.dataset.overlayPanel = "1";
+    return () => { delete document.documentElement.dataset.overlayPanel; };
+  }, [selectedCity]);
+
   const handleRotationChange = useCallback((next: [number, number]) => {
     if (selectedRealExhibition) return;
     const now = Date.now();
@@ -687,9 +735,22 @@ export default function InteractiveGlobeMap({ exhibitions, onSelectExhibition, o
   const cFg08 = t ? "rgba(0,0,0,0.09)" : "rgba(255,255,255,0.15)";
   const cFg06 = t ? "rgba(0,0,0,0.07)" : "rgba(255,255,255,0.12)";
 
+  const activeCollyTechnique = visualPreset === "colly-evolved"
+    ? resolveCollyGlobeVariantProfile(collyVariant).technique
+    : undefined;
+  const activeMapVisualPreset = globeVisualPreset ?? visualPreset;
+  const usesProductionAtlasIndex = !visualPreset
+    && activeMapVisualPreset === "colly-evolved"
+    && resolveCollyGlobeVariantProfile(collyVariant).technique === "atlas-index";
   return (
     <div
-      className="ig-container"
+      className={`ig-container${visualPreset ? ` ig-container--${visualPreset}` : ""}`}
+      data-globe-visual-preset={visualPreset}
+      data-colly-globe-variant={visualPreset === "colly-evolved" ? (collyVariant ?? "atlas-index") : undefined}
+      data-colly-map-technique={activeCollyTechnique}
+      data-production-atlas-index={usesProductionAtlasIndex ? "true" : undefined}
+      data-city-detail-open={selectedCity ? "true" : undefined}
+      data-mobile-chrome-tweak={mobileChromeTweak}
       style={{
         fontFamily: "'Inter', 'Space Grotesk', 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif",
         backgroundColor: t ? "#FAFAFA" : "#0c0c0a",
@@ -700,6 +761,10 @@ export default function InteractiveGlobeMap({ exhibitions, onSelectExhibition, o
       <Globe
         cities={cities}
         theme={theme}
+        visualPreset={activeMapVisualPreset}
+        collyVariant={collyVariant}
+        glassTweak={glassTweak}
+        countryBoundaryStyle={countryBoundaryStyle}
         language={language}
         selectedCity={selectedCity}
         onSelectCity={handleSelectCity}
@@ -712,10 +777,32 @@ export default function InteractiveGlobeMap({ exhibitions, onSelectExhibition, o
         onHoverData={handleHoverDataChange}
         />
 
+      <AnimatePresence>
+        {usesProductionAtlasIndex && mapIntroduction && !selectedCity && (
+          <motion.aside
+            key="atlas-statement"
+            className="ig-atlas-statement"
+            aria-labelledby="ig-atlas-statement-title"
+            initial={{ opacity: 0, x: -16 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -12 }}
+            transition={{ duration: 0.32, ease: [0.16, 1, 0.3, 1] }}
+          >
+            <div className="ig-atlas-statement__meta">{mapIntroduction.eyebrow}</div>
+            <h1 id="ig-atlas-statement-title">{mapIntroduction.headline}</h1>
+            <p>{mapIntroduction.summary}</p>
+            <footer>
+              <span aria-hidden="true">↗</span>
+              <span>{mapIntroduction.instruction}</span>
+            </footer>
+          </motion.aside>
+        )}
+      </AnimatePresence>
+
       {/* ── Header (top-left) ──
            Two mutually-exclusive states:
              • Not drilled  → just the COLLY brand logo
-             • Drilled      → BACK button + breadcrumb, COLLY hidden
+             • Drilled      → breadcrumb context, COLLY hidden
            `flex-direction: column` so children stack vertically and don't
            collide with each other on the same baseline. */}
       <header
@@ -732,27 +819,6 @@ export default function InteractiveGlobeMap({ exhibitions, onSelectExhibition, o
               transition={{ duration: 0.2 }}
               style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', gap: '12px' }}
             >
-              <motion.button
-                style={{
-                  cursor: "pointer", display: "inline-flex", alignItems: "center", gap: "6px",
-                  background: "none", border: "none", outline: "none", padding: 0,
-                }}
-                onClick={() => {
-                  // "Back to MAP" means back to the full globe view in one
-                  // press — clear every drill level at once. Stepping up one
-                  // level at a time was forcing 2-3 taps to reach COLLY.
-                  setSelectedCity(null);
-                  setDrilledCountry(null);
-                  setDrilledContinent(null);
-                }}
-                whileHover={{ opacity: 0.7 }}
-              >
-                <span style={{ color: cFg25, fontSize: "14px", lineHeight: 1 }}>&larr;</span>
-                <span className="ig-tracking-12" style={{ color: cFg25, fontSize: "10px", textTransform: 'uppercase', fontWeight: 500 }}>
-                   {tt({ ko: "지도로 돌아가기", en: "BACK TO MAP" })}
-                </span>
-              </motion.button>
-
               <div
                 style={{
                   color: cFg50, fontSize: "14px", fontWeight: 600, letterSpacing: "0.05em",
@@ -762,13 +828,12 @@ export default function InteractiveGlobeMap({ exhibitions, onSelectExhibition, o
                 {[drilledContinentLabel, drilledCountryLabel, selectedCity ? localizeCityName(selectedCity.city, language) : null].filter(Boolean).join(' > ')}
               </div>
             </motion.div>
-          ) : (
+          ) : visualPreset ? null : (
             <motion.div
               key="brand-logo"
               initial={{ opacity: 0, x: -10 }}
               animate={{ opacity: 1, x: 0 }}
               exit={{ opacity: 0, x: -10 }}
-              transition={{ duration: 0.2 }}
               className="ig-home-logo"
               style={{
                 cursor: "pointer",
@@ -780,7 +845,7 @@ export default function InteractiveGlobeMap({ exhibitions, onSelectExhibition, o
                 position: "relative",
                 display: "inline-block"
               }}
-              onClick={() => navigate("/")}
+              onClick={() => navigate(routeBase || "/")}
               whileHover={{ letterSpacing: "0.25em" }}
               transition={{ type: "spring", stiffness: 300, damping: 25 }}
             >
@@ -789,82 +854,6 @@ export default function InteractiveGlobeMap({ exhibitions, onSelectExhibition, o
           )}
         </AnimatePresence>
       </header>
-
-      {/* ── Region filter pills (from Globe Proposals · Option B) ──
-           Surfaces continent drill-down as a visible UI element so the user
-           doesn't have to find continent labels on the globe itself. Mobile:
-           horizontally scrollable. Web: same row, fits 6 continents + All. */}
-      {!selectedCity && !drilledCountry && (
-        <div
-          className="ig-region-pills"
-          style={{
-            position: 'absolute',
-            top: 'calc(env(safe-area-inset-top, 0px) + 60px)',
-            left: '50%',
-            transform: 'translateX(-50%)',
-            zIndex: 12,
-            display: 'flex',
-            gap: 6,
-            padding: '4px 12px',
-            maxWidth: 'calc(100vw - 32px)',
-            overflowX: 'auto',
-            scrollbarWidth: 'none',
-            WebkitOverflowScrolling: 'touch',
-          }}
-        >
-          {[null, "Europe", "Asia", "North America", "South America", "Africa", "Oceania"].map((c) => {
-            const isActive = drilledContinent === c;
-            const labelKo: Record<string, string> = {
-              "Europe": "유럽", "Asia": "아시아",
-              "North America": "북미", "South America": "남미",
-              "Africa": "아프리카", "Oceania": "오세아니아",
-            };
-            const labelEn: Record<string, string> = {
-              "Europe": "Europe", "Asia": "Asia",
-              "North America": "N. America", "South America": "S. America",
-              "Africa": "Africa", "Oceania": "Oceania",
-            };
-            const label = c === null
-              ? (language === 'ko' ? '전체' : 'All')
-              : (language === 'ko' ? labelKo[c] : labelEn[c]);
-            const accent = t ? '#8A6B1F' : '#D4A547';
-            return (
-              <button
-                key={c ?? 'all'}
-                onClick={() => {
-                  // Dispatch via window event — pure setDrilledContinent
-                  // cascades through page-level useEffects that synchronously
-                  // reset it back to null on /interactive root. The window
-                  // event is handled in Globe.tsx and mutates internal refs
-                  // directly, then re-emits the state via onDrillContinent.
-                  window.dispatchEvent(new CustomEvent('armin:drill-continent', { detail: c }));
-                }}
-                style={{
-                  flexShrink: 0,
-                  padding: '6px 13px',
-                  fontFamily: "'Space Mono', monospace",
-                  fontWeight: 700,
-                  fontSize: 11,
-                  letterSpacing: '0.14em',
-                  textTransform: 'uppercase',
-                  border: `0.5px solid ${isActive ? accent : (t ? 'rgba(0,0,0,0.10)' : 'rgba(244,241,234,0.12)')}`,
-                  background: isActive
-                    ? (t ? 'rgba(138,107,31,0.10)' : 'rgba(212,165,71,0.10)')
-                    : (t ? 'rgba(255,255,255,0.65)' : 'rgba(244,241,234,0.04)'),
-                  color: isActive ? accent : (t ? 'rgba(0,0,0,0.70)' : 'rgba(244,241,234,0.78)'),
-                  cursor: 'pointer',
-                  backdropFilter: 'blur(8px)',
-                  borderRadius: 2,
-                  transition: 'all 0.15s',
-                  whiteSpace: 'nowrap',
-                }}
-              >
-                {label}
-              </button>
-            );
-          })}
-        </div>
-      )}
 
       {/* Legacy dock disabled: main app navigator is now the single bottom nav. */}
       {false && (() => {
@@ -1032,6 +1021,9 @@ export default function InteractiveGlobeMap({ exhibitions, onSelectExhibition, o
             key={selectedCity.city}
             city={selectedCity}
             theme={theme}
+            placement={usesProductionAtlasIndex
+              ? "atlas-statement-slot"
+              : visualPreset === "colly-evolved" ? "statement-slot" : "default"}
             onClose={() => setSelectedCity(null)}
             onOpenExhibition={(ex) => {
               closingExhibitionIdRef.current = null;
@@ -1057,6 +1049,7 @@ export default function InteractiveGlobeMap({ exhibitions, onSelectExhibition, o
             theme={theme}
             onClose={closeRealModal}
             onReady={handleRealModalReady}
+            detailIntroduction={detailIntroduction}
           />
         )}
       </AnimatePresence>
@@ -1144,7 +1137,7 @@ export default function InteractiveGlobeMap({ exhibitions, onSelectExhibition, o
               className="ig-bottom-center-hint"
             >
               <p className="ig-tracking-15 ig-nowrap ig-italic" style={{ color: cFg06, fontSize: "10px" }}>
-                {tt({ ko: '"적게, 그러나 더 좋게" · 디터 람스', en: '"Weniger, aber besser" — Dieter Rams' })}
+                {tt({ ko: '“적게, 그러나 더 좋게” · 디터 람스', en: '“Weniger, aber besser” - Dieter Rams' })}
               </p>
             </motion.div>
           )
@@ -1152,7 +1145,7 @@ export default function InteractiveGlobeMap({ exhibitions, onSelectExhibition, o
       </AnimatePresence>
 
       {/* ── Top center count (HOVER DATA) ── */}
-      <div className="ig-top-center-hint">
+      <div className="ig-top-center-hint" aria-live="polite" aria-atomic="true">
         <div className="ig-flex-center ig-gap-4">
           <div className="ig-line-h" style={{ backgroundColor: lineBg }} />
           <AnimatePresence mode="wait">

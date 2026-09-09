@@ -6475,7 +6475,7 @@ export const exhibitions = [
     latitude: 52.2002,
     longitude: 0.1196,
     country: "United Kingdom",
-    region: "England",
+    region: "Cambridge",
     representativeImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/artworks/fitzwilliam-collection/object-1027-b66b667c-imageUrl.webp",
     permanentExhibitions: [
       {
@@ -7795,6 +7795,87 @@ export const exhibitions = [
         startDate: "Permanent",
         endDate: "Permanent",
         collectionFile: "mimoca-collection.json"
+      }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: []
+  },
+  {
+    id: "chiba-city-art",
+    description_ko: "우키요에 판화 소장으로 이름난 곳이다. 호쿠사이와 히로시게의 도카이도 연작, 에도 회화, 근대 판화를 아우른다. 공개 이미지가 2,560픽셀로 일본 미술관 가운데 화질이 가장 좋다.",
+    slug: "chiba-city-art",
+    name: "Chiba City Museum of Art",
+    name_ko: "지바시립미술관",
+    location: "Chiba, Japan",
+    description: "Known for one of Japan's strongest ukiyo-e print holdings, including Hokusai and Hiroshige, alongside Edo painting and modern Japanese prints.",
+    latitude: 35.6073,
+    longitude: 140.1233,
+    country: "Japan",
+    region: "Chiba",
+    representativeImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/museums/chiba-city-art-representative.webp",
+    permanentExhibitions: [
+      {
+        id: "chiba-city-art-collection",
+        name: "Ukiyo-e and Japanese Painting",
+        title: "Ukiyo-e and Japanese Painting",
+        description: "Ukiyo-e prints, Edo painting and modern Japanese prints.",
+        startDate: "Permanent",
+        endDate: "Permanent",
+        collectionFile: "chiba-city-art-collection.json"
+      }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: []
+  },
+  {
+    id: "pola-museum",
+    description_ko: "하코네 숲속에 지어 건물 절반이 지하에 묻혀 있다. 스즈키 쓰네시가 모은 프랑스 인상주의와 근대회화를 소장하며, 모네·르누아르·세잔·드가를 한자리에서 볼 수 있다.",
+    slug: "pola-museum",
+    name: "Pola Museum of Art",
+    name_ko: "폴라미술관",
+    location: "Hakone, Kanagawa, Japan",
+    description: "Set in the forest of Hakone, holding French impressionist and modern painting — Monet, Renoir, Cezanne, Degas — collected by Suzuki Tsuneshi.",
+    latitude: 35.2447,
+    longitude: 139.0122,
+    country: "Japan",
+    region: "Hakone",
+    representativeImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/museums/pola-museum-representative.webp",
+    permanentExhibitions: [
+      {
+        id: "pola-museum-collection",
+        name: "Collection",
+        title: "Collection",
+        description: "French impressionist and modern painting, Japanese Western-style painting, drawings and photographs.",
+        startDate: "Permanent",
+        endDate: "Permanent",
+        collectionFile: "pola-museum-collection.json"
+      }
+    ],
+    temporaryExhibitions: [],
+    pastExhibitions: []
+  },
+  {
+    id: "wellcome-collection",
+    description_ko: "런던 유스턴로드에 있는 무료 미술관이자 도서관이다. 의학과 인간의 몸을 주제로 모은 회화와 드로잉, 20세기 공중보건 포스터를 소장하며, 이미지를 CC BY 4.0으로 공개한다.",
+    slug: "wellcome-collection",
+    name: "Wellcome Collection",
+    name_ko: "웰컴 컬렉션",
+    location: "London, United Kingdom",
+    description: "A free London museum and library exploring health and human experience, with painting, drawing and public-health poster collections released under CC BY 4.0.",
+    latitude: 51.5256,
+    longitude: -0.1336,
+    country: "United Kingdom",
+    region: "London",
+    representativeImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/museums/wellcome-collection-representative.webp",
+    permanentExhibitions: [
+      {
+        id: "wellcome-collection-collection",
+        name: "Paintings, Drawings and Posters",
+        title: "Paintings, Drawings and Posters",
+        description: "Paintings, drawings and public-health posters from the Wellcome collection, released under CC BY 4.0.",
+        startDate: "Permanent",
+        endDate: "Permanent",
+        collectionFile: "wellcome-collection-collection.json"
       }
     ],
     temporaryExhibitions: [],

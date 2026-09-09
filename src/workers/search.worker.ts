@@ -759,7 +759,12 @@ async function search(query: string, requestId?: string) {
             if (strongArtistMatches >= strongArtistTokens.length) {
                 score += 30;
             }
-        } else if (strongArtistTokens.length > 0) {
+        } else if (strongArtistTokens.length > 0 && nameTokenMatches === 0) {
+            // 작가명으로도, 제목으로도 안 맞는 항목만 강하게 눌러 작가 검색의
+            // 정확도를 지킨다.
+            // ⚠️ 예전에는 제목이 맞아도 -80 을 먹여서, 4글자 이상 제목 단어를
+            //    검색하면 결과가 통째로 사라졌다("skiff" -40, "sunflowers" -10
+            //    → score > 0 문턱 미달). 제목이 맞으면 페널티를 주지 않는다.
             score -= 80;
         }
 
