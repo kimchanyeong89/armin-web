@@ -7691,33 +7691,7 @@ export const exhibitions = [
     temporaryExhibitions: [],
     pastExhibitions: []
   },
-  {
-    id: "aichi-pmoa",
-    description_ko: "나고야 사카에의 아이치예술문화센터 안에 있다. 클림트·피카소·보나르·에른스트 같은 20세기 서양미술과 일본 근대회화를 함께 갖췄다.",
-    slug: "aichi-pmoa",
-    name: "Aichi Prefectural Museum of Art",
-    name_ko: "아이치현미술관",
-    location: "Nagoya, Japan",
-    description: "Located in the Aichi Arts Center in central Nagoya, with a collection strong in twentieth-century Western and Japanese art.",
-    latitude: 35.1729,
-    longitude: 136.9098,
-    country: "Japan",
-    region: "Nagoya",
-    representativeImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/museums/aichi-pmoa-representative.webp",
-    permanentExhibitions: [
-      {
-        id: "aichi-pmoa-collection",
-        name: "Collection",
-        title: "Collection",
-        description: "Twentieth-century Western and Japanese painting, prints and photography.",
-        startDate: "Permanent",
-        endDate: "Permanent",
-        collectionFile: "aichi-pmoa-collection.json"
-      }
-    ],
-    temporaryExhibitions: [],
-    pastExhibitions: []
-  },
+
   {
     id: "momas-saitama",
     description_ko: "기타우라와 공원에 구로카와 기쇼가 설계한 건물로 서 있다. 모네·피카소·샤갈과 일본 근대미술을 소장하며, 앉아볼 수 있는 디자이너 의자 컬렉션으로도 알려져 있다.",
@@ -7747,12 +7721,12 @@ export const exhibitions = [
   },
   {
     id: "kyoto-national-museum",
-    description_ko: "1897년에 문을 연 일본 4대 국립박물관 가운데 하나다. 헤이안부터 에도까지의 회화와 서예, 불교미술을 소장하고, 가타야마 도쿠마가 설계한 메이지 시대 벽돌 건물이 그대로 남아 있다.",
+    description_ko: "1897년에 문을 연 일본 4대 국립박물관 가운데 하나다. 헤이안부터 에도까지의 일본·동아시아 회화를 소장하고, 가타야마 도쿠마가 설계한 메이지 시대 벽돌 건물이 그대로 남아 있다.",
     slug: "kyoto-national-museum",
     name: "Kyoto National Museum",
     name_ko: "교토국립박물관",
     location: "Kyoto, Japan",
-    description: "Opened in 1897, one of Japan's four national museums, holding painting, calligraphy and Buddhist art from the Heian to the Edo period.",
+    description: "Opened in 1897, one of Japan's four national museums, holding Japanese and East Asian painting from the Heian to the Edo period.",
     latitude: 34.9899,
     longitude: 135.7728,
     country: "Japan",
@@ -7761,9 +7735,9 @@ export const exhibitions = [
     permanentExhibitions: [
       {
         id: "kyoto-national-museum-collection",
-        name: "Painting and Calligraphy",
-        title: "Painting and Calligraphy",
-        description: "Japanese and East Asian painting and calligraphy from the Heian through Edo periods.",
+        name: "Painting",
+        title: "Painting",
+        description: "Japanese and East Asian painting from the Heian through Edo periods.",
         startDate: "Permanent",
         endDate: "Permanent",
         collectionFile: "kyoto-national-museum-collection.json"

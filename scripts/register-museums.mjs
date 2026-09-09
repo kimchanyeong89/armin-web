@@ -28,18 +28,10 @@ const MUSEUMS = [
     collectionName: 'Asian Modern and Contemporary Art',
     collectionDesc: 'Modern and contemporary art from across Asia, including Korean, Chinese, Indian and Southeast Asian painting.',
   },
-  {
-    id: 'aichi-pmoa',
-    name: 'Aichi Prefectural Museum of Art',
-    name_ko: '아이치현미술관',
-    location: 'Nagoya, Japan',
-    latitude: 35.1729, longitude: 136.9098,
-    country: 'Japan', region: 'Nagoya',
-    description: 'Located in the Aichi Arts Center in central Nagoya, with a collection strong in twentieth-century Western and Japanese art.',
-    description_ko: '나고야 사카에의 아이치예술문화센터 안에 있다. 클림트·피카소·보나르·에른스트 같은 20세기 서양미술과 일본 근대회화를 함께 갖췄다.',
-    collectionName: 'Collection',
-    collectionDesc: 'Twentieth-century Western and Japanese painting, prints and photography.',
-  },
+  // 愛知県美術館 은 제거했다(2026-09-09). 공개 이미지가 작품 재현이 아니라 자료 촬영본이라
+  // 전시장 벽·컬러 캘리브레이션 차트·마운트 테이프가 프레임에 그대로 들어온다.
+  // 해상도(1200px)와 색은 통과해서 자동 필터로는 안 잡히고, 눈으로 봐야 드러난다.
+
   {
     id: 'momas-saitama',
     name: 'The Museum of Modern Art, Saitama',
@@ -59,10 +51,10 @@ const MUSEUMS = [
     location: 'Kyoto, Japan',
     latitude: 34.9899, longitude: 135.7728,
     country: 'Japan', region: 'Kyoto',
-    description: 'Opened in 1897, one of Japan\'s four national museums, holding painting, calligraphy and Buddhist art from the Heian to the Edo period.',
-    description_ko: '1897년에 문을 연 일본 4대 국립박물관 가운데 하나다. 헤이안부터 에도까지의 회화와 서예, 불교미술을 소장하고, 가타야마 도쿠마가 설계한 메이지 시대 벽돌 건물이 그대로 남아 있다.',
-    collectionName: 'Painting and Calligraphy',
-    collectionDesc: 'Japanese and East Asian painting and calligraphy from the Heian through Edo periods.',
+    description: 'Opened in 1897, one of Japan\'s four national museums, holding Japanese and East Asian painting from the Heian to the Edo period.',
+    description_ko: '1897년에 문을 연 일본 4대 국립박물관 가운데 하나다. 헤이안부터 에도까지의 일본·동아시아 회화를 소장하고, 가타야마 도쿠마가 설계한 메이지 시대 벽돌 건물이 그대로 남아 있다.',
+    collectionName: 'Painting',
+    collectionDesc: 'Japanese and East Asian painting from the Heian through Edo periods.',
   },
   {
     id: 'barnes-foundation',

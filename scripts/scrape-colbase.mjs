@@ -35,11 +35,14 @@ const PUBLIC_BASE = 'https://pub-396fad1f96754c2f816f260faf970e63.r2.dev';
 // 소스가 동시 요청을 조이는 것이므로 동시성을 낮추고 재시도를 붙인다.
 const CONCURRENCY = 2;
 
-/** ColBase bunrui → canonical. 회화/서예만 스코프 안. */
+/**
+ * ColBase bunrui → canonical.
+ * ⚠️ 서예(calligraphy)는 제외한다 — 교토국립박물관 632점을 실제로 보니 흑백 사경·와카
+ * 단자쿠가 대부분이라 시각 그리드에서 구분이 안 되고 SigLIP 유사도도 의미가 없었다.
+ */
 function toCategory(bunrui) {
   const s = (bunrui || '').toLowerCase();
   if (/painting/.test(s)) return 'painting';
-  if (/calligraphy|writing/.test(s)) return 'calligraphy';
   if (/print|ukiyo/.test(s)) return 'print';
   return null;
 }
@@ -125,7 +128,7 @@ async function main() {
     for (let page = 1; ; page++) {
       const q = new URLSearchParams({
         locale, limit: '100', page: String(page), with_image_file: '1', only_parent: '0',
-        bunrui: locale === 'en' ? 'Painting,Asian Painting,Calligraphy' : '絵画,東洋絵画,書跡',
+        bunrui: locale === 'en' ? 'Painting,Asian Painting' : '絵画,東洋絵画',
         organization_id: String(O.orgId),
       });
       const r = await fetch(`${API}?${q}`, { headers: HEADERS, signal: AbortSignal.timeout(45000) });
@@ -237,7 +240,7 @@ async function main() {
 
   if (LIMIT === Infinity) {
     fs.writeFileSync(OUT, JSON.stringify({
-      museum: O.name, museum_ko: O.name_ko, collection: 'Painting and Calligraphy',
+      museum: O.name, museum_ko: O.name_ko, collection: 'Painting',
       website: O.site, scraped_date: new Date().toISOString().slice(0, 10),
       total_count: artworks.length, source_type: 'api', artworks,
     }, null, 2));
