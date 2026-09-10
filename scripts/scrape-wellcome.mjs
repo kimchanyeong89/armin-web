@@ -18,6 +18,9 @@ import { S3Client, PutObjectCommand } from '@aws-sdk/client-s3';
 import pLimit from 'p-limit';
 import dotenv from 'dotenv';
 import { judgeImage, toWebp, IN_SCOPE, isPreModernPhoto } from './lib/scope-filter.mjs';
+// Wellcome 의 contributors 는 MARC 표기라 생몰년·active 연도가 이름에 붙어 나온다.
+// 그대로 두면 화면에 "Margetson, William Henry, active 1901." 처럼 노출된다.
+import { cleanArtist } from './clean-wellcome-artists.mjs';
 
 const ROOT = path.join(path.dirname(fileURLToPath(import.meta.url)), '..');
 dotenv.config({ path: path.join(ROOT, '.env.local'), quiet: true });
@@ -73,7 +76,7 @@ function shortTitle(t) {
  */
 function artistOf(w) {
   const c = (w.contributors || []).map(x => x.agent?.label).filter(Boolean);
-  if (c.length) return c.join('; ');
+  if (c.length) return cleanArtist(c.join('; '));
   const m = String(w.title || '').match(/\bby\s+([^,.;]{3,60})/i);
   if (!m) return 'Unknown';
   const cand = m[1].trim();
@@ -248,4 +251,7 @@ async function main() {
   }
 }
 
-main().catch(e => { console.error(e); process.exit(1); });
+// import 만 해도 수집이 시작되면 곤란하다(다른 스크립트가 MUSEUM 을 참조할 수 있다).
+if (process.argv[1] === fileURLToPath(import.meta.url)) {
+  main().catch(e => { console.error(e); process.exit(1); });
+}

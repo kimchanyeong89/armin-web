@@ -1,5 +1,5 @@
 import React, { useState, useMemo, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
 import type { CityMarker, Venue, Theme } from "./types";
 import { MiniCityMap } from "./MiniCityMap";
 import { useLanguage } from "../../contexts/LanguageContext";
@@ -837,19 +837,56 @@ function resolveArtworkImage(item: any): string {
 interface VenuePanelProps {
   city: CityMarker;
   theme: Theme;
+  placement?: "default" | "statement-slot" | "atlas-statement-slot";
   onClose: () => void;
   onOpenExhibition?: (exhibition: any) => void;
   initialVenueId?: string | null;
 }
 
-export function VenuePanel({ city, theme, onClose, onOpenExhibition, initialVenueId }: VenuePanelProps) {
+export function VenuePanel({ city, theme, placement = "default", onClose, onOpenExhibition, initialVenueId }: VenuePanelProps) {
   const { language, t: tt } = useLanguage();
+  const prefersReducedMotion = useReducedMotion();
   // Museum name for display: reads name_ko from the venue's source museum object.
   // venue.name itself stays English so it remains a stable React key / route id.
   const venueName = (v: Venue) => getMuseumDisplayName((v.originalExhibition as any) ?? { name: v.name }, language);
+
+  // 목록을 표시 이름 기준으로 정렬한다 — 한국어면 가나다순, 영어면 ABC순.
+  // 원본 city.venues 는 등록 순서라 새로 추가한 미술관이 늘 맨 끝으로 밀렸다.
+  // localeCompare 에 언어를 넘겨야 한글 자모 순서가 제대로 잡힌다.
+  const sortedVenues = React.useMemo(() => {
+    const collator = new Intl.Collator(language === 'ko' ? 'ko-KR' : 'en', {
+      sensitivity: 'base',
+      numeric: true,
+      ignorePunctuation: true,
+    });
+    return [...city.venues].sort((a, b) => collator.compare(venueName(a), venueName(b)));
+  }, [city.venues, language]);
+
   const [selectedVenue, setSelectedVenue] = useState<Venue | null>(() => {
     return initialVenueId ? (city.venues.find(v => v.id === initialVenueId || (v.originalExhibition as any)?.id === initialVenueId) || null) : null;
   });
+  // The detail list must open at its top; scroll can otherwise be inherited
+  // or nudged by late image loads.
+  const detailScrollRef = React.useRef<HTMLDivElement | null>(null);
+  React.useEffect(() => {
+    detailScrollRef.current?.scrollTo({ top: 0 });
+  }, [selectedVenue?.id]);
+
+  // The route can swap the museum while the city stays the same — picking a
+  // poster in the nearby-exhibitions sheet does exactly that. The panel is
+  // keyed by city, so it does NOT remount and the initializer above never
+  // re-runs: sync the selection from the prop instead. Guarded by a ref so
+  // that only a genuine prop change applies, otherwise the BACK button
+  // (which clears the selection) would be undone on the next render.
+  const appliedVenueIdRef = React.useRef(initialVenueId);
+  React.useEffect(() => {
+    if (!initialVenueId || initialVenueId === appliedVenueIdRef.current) return;
+    appliedVenueIdRef.current = initialVenueId;
+    const next = city.venues.find(
+      v => v.id === initialVenueId || (v.originalExhibition as any)?.id === initialVenueId,
+    );
+    if (next) setSelectedVenue(next);
+  }, [initialVenueId, city]);
   const [hoveredVenueIdx, setHoveredVenueIdx] = useState<number | null>(null);
   const [coverByExhibitionId, setCoverByExhibitionId] = useState<Record<string, string>>({});
   // Pre-baked first-image-per-collection map (public/data/collection-covers.json) — lets a
@@ -888,8 +925,16 @@ export function VenuePanel({ city, theme, onClose, onOpenExhibition, initialVenu
   const displayCityName = localizeCityName(city.city, language);
   const displayCountryName = localizeCountryName(city.country, language);
   const isMobileViewport = viewportWidth < 768;
-  const mapExpandedHeight = isMobileViewport ? 212 : 300;
-  const mapCollapsedHeight = isMobileViewport ? 108 : 168;
+  // Was 900: below that the panel fell back to the right-anchored default, so
+  // narrowing the window flipped it across the screen. It now keeps the same
+  // left placement down to tablet width.
+  const usesStatementSlot = placement !== "default" && viewportWidth >= 480;
+  const usesProductionStatementSlot = placement === "atlas-statement-slot" && viewportWidth >= 480;
+  // Transparency belongs to the map style, not to the width: tying it to the
+  // slot made the panel snap to solid black the moment the window narrowed.
+  const isAtlasPanel = placement === "atlas-statement-slot";
+  const mapExpandedHeight = isMobileViewport ? 212 : usesStatementSlot ? 168 : 300;
+  const mapCollapsedHeight = isMobileViewport ? 108 : usesStatementSlot ? 92 : 168;
   const mapShrinkThreshold = isMobileViewport ? 150 : 220;
   const mapShrinkProgress = clampNumber(venueListScrollTop / mapShrinkThreshold, 0, 1);
   const mapHeight = Math.round(
@@ -1002,16 +1047,31 @@ export function VenuePanel({ city, theme, onClose, onOpenExhibition, initialVenu
   return (
     <>
       <motion.div
-        initial={{ opacity: 0, x: 24 }}
+        className={usesProductionStatementSlot ? "ig-venue-panel ig-venue-panel--atlas-swap" : usesStatementSlot ? "ig-venue-panel ig-venue-panel--statement-slot" : undefined}
+        data-placement={usesProductionStatementSlot ? "atlas-statement-slot" : usesStatementSlot ? "statement-slot" : "default"}
+        initial={{ opacity: 0, x: prefersReducedMotion ? 0 : usesStatementSlot ? -18 : 24 }}
         animate={{ opacity: 1, x: 0 }}
-        exit={{ opacity: 0, x: 24 }}
-        transition={{ duration: 0.25, ease: "easeOut" }}
+        exit={{ opacity: 0, x: prefersReducedMotion ? 0 : usesStatementSlot ? -12 : 24 }}
+        transition={{ duration: prefersReducedMotion ? 0 : 0.32, ease: [0.16, 1, 0.3, 1] }}
         style={{
           position: 'absolute',
-          top: 0, right: 0, bottom: 0,
-          width: isMobileViewport ? '100vw' : '540px',
-          maxWidth: isMobileViewport ? '100vw' : '96vw',
-          zIndex: 30,
+          // Full-bleed, exactly like the original right-hand panel: flush to the
+          // top, the bottom and its own side. Insets tied to the globe frame
+          // (5.6rem top / 5.8rem bottom / a left gutter) left slivers of bare
+          // map along the edges that never lined up at every window size.
+          top: 0,
+          right: usesStatementSlot ? 'auto' : 0,
+          bottom: 0,
+          left: usesStatementSlot ? 0 : 'auto',
+          width: usesStatementSlot
+            ? 'clamp(17.5rem, 38vw, 30rem)'
+            : isMobileViewport ? '100vw' : '540px',
+          maxWidth: usesStatementSlot ? 'none' : isMobileViewport ? '100vw' : '96vw',
+          // .ig-venue-panel carries `max-height: 90vh` in CSS. With the panel
+          // now spanning top:0 → bottom:0 that cap would win and leave a 10vh
+          // gap at the bottom, so lift it for the full-bleed placements.
+          maxHeight: usesStatementSlot ? 'none' : undefined,
+          zIndex: 80,
           // Solid panel background (no backdrop-filter): on Android Chrome
           // WebView, `backdrop-filter: blur(...)` creates a sticky GPU
           // compositor layer that survives even after a sibling modal
@@ -1019,7 +1079,8 @@ export function VenuePanel({ city, theme, onClose, onOpenExhibition, initialVenu
           // the modal as a faint dim/hexagon ghost. A solid background
           // matches the dark theme aesthetics anyway.
           background: t ? 'rgb(248,248,248)' : 'rgb(12,12,12)',
-          borderLeft: `1px solid ${cBorder}`,
+          borderLeft: usesStatementSlot ? 'none' : `1px solid ${cBorder}`,
+          borderRight: isAtlasPanel ? '1px solid rgba(212,165,71,0.25)' : undefined,
           display: 'flex',
           flexDirection: 'column',
           // Match the Globe header's BACK Y-coordinate exactly:
@@ -1027,8 +1088,8 @@ export function VenuePanel({ city, theme, onClose, onOpenExhibition, initialVenu
           //   Panel container paddingTop    = safe-area  (no extra +34)
           //   Panel inner header padding    = 24px       (set below)
           // → BACK button lands at `safe-area + 24px` in both views.
-          paddingTop: 'env(safe-area-inset-top, 0px)',
-          paddingBottom: 'env(safe-area-inset-bottom, 0px)',
+          paddingTop: usesStatementSlot ? 'env(safe-area-inset-top, 0px)' : 'calc(env(safe-area-inset-top, 0px) + 6px)',
+          paddingBottom: usesStatementSlot ? 0 : 'env(safe-area-inset-bottom, 0px)',
           overflow: 'hidden',
           fontFamily: "'Space Grotesk', sans-serif",
         }}
@@ -1046,7 +1107,7 @@ export function VenuePanel({ city, theme, onClose, onOpenExhibition, initialVenu
               onScroll={(event: React.UIEvent<HTMLDivElement>) => isMobileViewport && setVenueListScrollTop(event.currentTarget.scrollTop)}
             >
               {/* Header */}
-              <div style={{ padding: '24px 24px 0', flexShrink: 0, position: 'relative', zIndex: 2 }}>
+              <div style={{ padding: '18px 10px 0', flexShrink: 0, position: 'relative', zIndex: 2 }}>
                 {/* Top bar: BACK on the left, close (×) on the right.
                     Sits at the very top of the panel — first thing the user
                     sees, easiest to reach with thumb. */}
@@ -1111,7 +1172,11 @@ export function VenuePanel({ city, theme, onClose, onOpenExhibition, initialVenu
               </div>
 
               {/* ── Mini City Map ── */}
-              <div
+              <motion.div
+                className="ig-venue-panel__minimap-reveal"
+                initial={prefersReducedMotion ? false : { opacity: 0, y: 12, scaleY: 0.96 }}
+                animate={{ opacity: 1, y: 0, scaleY: 1 }}
+                transition={{ duration: prefersReducedMotion ? 0 : 0.46, delay: prefersReducedMotion ? 0 : 0.08, ease: [0.16, 1, 0.3, 1] }}
                 style={{
                   flexShrink: 0,
                   position: 'relative',
@@ -1123,7 +1188,7 @@ export function VenuePanel({ city, theme, onClose, onOpenExhibition, initialVenu
               >
                 <MiniCityMap
                   cityName={displayCityName}
-                  venues={city.venues.map((v) => {
+                  venues={sortedVenues.map((v) => {
                     const museumCity = (v.museumCity || (v.originalExhibition as any)?.city || city.city).trim();
                     return {
                       name: venueName(v),
@@ -1136,19 +1201,23 @@ export function VenuePanel({ city, theme, onClose, onOpenExhibition, initialVenu
                   })}
                   hoveredIdx={hoveredVenueIdx}
                   onHoverIdx={setHoveredVenueIdx}
-                  onSelectIdx={(idx) => setSelectedVenue(city.venues[idx])}
+                  onSelectIdx={(idx) => setSelectedVenue(sortedVenues[idx])}
                   theme={theme}
                   height={mapHeight}
                 />
-              </div>
+              </motion.div>
 
               {/* Venue list */}
               <div
                 className="venue-panel-scroll"
                 style={{
+                  // 하단 네비게이터(BottomPageNavigator)는 position:fixed 로 떠 있어서
+                  // 스크롤 영역이 그 아래까지 이어진다. 여백이 없으면 마지막 미술관이
+                  // 통째로 가려진다(런던 25관 중 웰컴 컬렉션이 안 보이던 원인).
+                  // 모바일은 이미 108px, 데스크톱은 12px 뿐이었다.
                   padding: isMobileViewport
                     ? '12px 12px calc(108px + env(safe-area-inset-bottom, 0px))'
-                    : '12px',
+                    : '12px 12px calc(96px + env(safe-area-inset-bottom, 0px))',
                   flex: isMobileViewport ? 'none' : 1,
                   overflowY: isMobileViewport ? 'visible' : 'auto',
                   scrollbarWidth: 'thin',
@@ -1156,11 +1225,23 @@ export function VenuePanel({ city, theme, onClose, onOpenExhibition, initialVenu
                 }}
                 onScroll={(event) => !isMobileViewport && setVenueListScrollTop(event.currentTarget.scrollTop)}
               >
-                {city.venues.map((v, idx) => {
+                {sortedVenues.map((v, idx) => {
                   const isHL = hoveredVenueIdx === idx;
                   return (
-                    <button
+                    <motion.button
+                      className="ig-venue-panel__venue-row"
                       key={v.name}
+                      // layout: KO/EN 전환으로 정렬 순서가 통째로 바뀔 때 각 행이 옛 위치에서
+                      // 새 위치로 미끄러진다(FLIP). key 가 v.name 으로 안정적이라 그대로 동작한다.
+                      layout={prefersReducedMotion ? false : 'position'}
+                      initial={prefersReducedMotion ? false : { opacity: 0, y: 10 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{
+                        duration: prefersReducedMotion ? 0 : 0.32,
+                        delay: prefersReducedMotion ? 0 : 0.18 + Math.min(idx, 8) * 0.032,
+                        ease: [0.16, 1, 0.3, 1],
+                        layout: { duration: prefersReducedMotion ? 0 : 0.42, ease: [0.16, 1, 0.3, 1] },
+                      }}
                       onClick={() => setSelectedVenue(v)}
                       onMouseEnter={() => setHoveredVenueIdx(idx)}
                       onMouseLeave={() => setHoveredVenueIdx(null)}
@@ -1208,7 +1289,7 @@ export function VenuePanel({ city, theme, onClose, onOpenExhibition, initialVenu
                       >
                         &rsaquo;
                       </span>
-                    </button>
+                    </motion.button>
                   );
                 })}
               </div>
@@ -1224,7 +1305,7 @@ export function VenuePanel({ city, theme, onClose, onOpenExhibition, initialVenu
               style={{ display: 'flex', flexDirection: 'column', height: '100%' }}
             >
               {/* Back */}
-              <div style={{ padding: isMobileViewport ? '24px 24px 0' : '14px 24px 0', flexShrink: 0, position: 'relative', zIndex: 2 }}>
+              <div style={{ padding: isMobileViewport ? '18px 10px 0' : '12px 10px 0', flexShrink: 0, position: 'relative', zIndex: 2 }}>
                 <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
                   <button
                     onClick={() => setSelectedVenue(null)}
@@ -1257,7 +1338,7 @@ export function VenuePanel({ city, theme, onClose, onOpenExhibition, initialVenu
               </div>
 
               {/* Venue info */}
-              <div style={{ padding: '24px 24px 0', flexShrink: 0 }}>
+              <div style={{ padding: '18px 10px 0', flexShrink: 0 }}>
                 <div style={{ display: 'flex', alignItems: 'flex-start', gap: '12px' }}>
                   <div
                     style={{
@@ -1272,7 +1353,7 @@ export function VenuePanel({ city, theme, onClose, onOpenExhibition, initialVenu
                   </div>
                 </div>
 
-                <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginTop: '16px', marginLeft: '19px' }}>
+                <div style={{ display: 'flex', alignItems: 'center', gap: '16px', marginTop: '16px', marginLeft: '8px' }}>
                   <span style={{ color: cFg20, fontFamily: "'Space Mono', monospace", fontSize: '12px' }}>
                     {selectedVenue.year}
                   </span>
@@ -1290,10 +1371,12 @@ export function VenuePanel({ city, theme, onClose, onOpenExhibition, initialVenu
               {/* Exhibitions section */}
               <div
                 className="venue-panel-scroll"
+                ref={detailScrollRef}
                 style={{
                   flex: 1,
+                  overflowAnchor: 'none',
                   overflowY: 'auto',
-                  padding: '20px 20px 24px',
+                  padding: '16px 10px 22px',
                   scrollbarWidth: 'thin',
                   scrollbarColor: `${scrollbarThumb} ${scrollbarTrack}`,
                 }}
@@ -1314,7 +1397,9 @@ export function VenuePanel({ city, theme, onClose, onOpenExhibition, initialVenu
                               ...(origEx.temporaryExhibitions || []),
                               ...((origEx as any).pastExhibitions || []),
                             ];
-                            const sub = allSubs.find(s => s.id === ex.id) || allSubs[0] || null;
+                            const sub = allSubs.find(s => s.id === ex.id)
+                              || allSubs.find(s => s.title && s.title === ex.title)
+                              || null;
                             const rawFile = sub ? (sub as any).collectionFile : undefined;
                             const colFile = normalizeCollectionPath(rawFile);
                             const localizedExhibitionTitle = sub ? getExhibitionDisplayTitle(sub as any, language) : ex.title;
@@ -1429,7 +1514,7 @@ export function VenuePanel({ city, theme, onClose, onOpenExhibition, initialVenu
               </div>
 
               {/* Footer */}
-              <div style={{ flexShrink: 0, padding: '16px 24px', borderTop: `1px solid ${cBorder}` }}>
+              <div style={{ flexShrink: 0, padding: '14px 10px', borderTop: `1px solid ${cBorder}` }}>
                 <span style={{ color: cFg12, fontFamily: "'Space Mono', monospace", fontSize: '9px' }}>
                   {formatCoord(city.coordinates[1], city.coordinates[0])}
                 </span>
