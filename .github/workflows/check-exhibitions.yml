@@ -1,0 +1,117 @@
+name: 전시 수집 점검 (dry-run)
+
+# 스크래퍼가 살아 있는지 확인하는 검증 전용 워크플로.
+# 파일을 전혀 쓰지 않고, 미술관별 수집 건수와 실패 사유만 리포트한다.
+# 미술관 사이트 개편으로 어댑터가 깨지면 머지 전에 잡는다.
+
+on:
+  pull_request:
+    paths:
+      - 'scripts/exhibitions/**'
+      - '.github/workflows/check-exhibitions.yml'
+  # 머지 전 작업 브랜치에서 '실제 반영'을 확인하기 위한 경로.
+  # 커밋 메시지에 [apply-exhibitions] 가 있을 때만 실제로 파일을 고쳐 브랜치에 되돌려 커밋한다.
+  # (머지 후에는 sync-exhibitions.yml 이 매일 이 일을 한다)
+  push:
+    branches:
+      - 'claude/**'
+    paths:
+      - 'scripts/exhibitions/**'
+      - '.github/workflows/check-exhibitions.yml'
+  workflow_dispatch:
+    inputs:
+      source:
+        description: '특정 소스만 점검 (예: mmca, sema). 비우면 전체'
+        type: string
+        default: ''
+
+permissions:
+  contents: write
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 체크아웃
+        uses: actions/checkout@v4
+
+      - name: Node 설치
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: 파이프라인 자체 점검
+        run: node scripts/exhibitions/test.mjs
+
+      # 커밋 메시지에 [apply-exhibitions] 가 있으면 실제로 파일을 고치고 포스터도 R2 에 올린다.
+      - name: 실행 모드 판별
+        id: mode
+        # 커밋 메시지는 env 로만 넘긴다. 셸에 직접 끼워 넣으면 줄바꿈·따옴표에
+        # 구문이 깨지고, 커밋 메시지로 명령을 주입할 수 있다.
+        env:
+          COMMIT_MSG: ${{ github.event.head_commit.message }}
+        run: |
+          if printf '%s' "$COMMIT_MSG" | grep -q '\[apply-exhibitions\]'; then
+            echo "apply=true" >> "$GITHUB_OUTPUT"
+            echo "flag=" >> "$GITHUB_OUTPUT"
+            echo "실제 반영 모드"
+          else
+            echo "apply=false" >> "$GITHUB_OUTPUT"
+            echo "flag=--dry-run" >> "$GITHUB_OUTPUT"
+            echo "점검 모드 (파일 안 씀)"
+          fi
+
+      - name: 전시 수집
+        id: sync
+        run: |
+          mkdir -p /tmp/exh
+          ARGS=""
+          if [ -n "${{ inputs.source }}" ]; then ARGS="--source ${{ inputs.source }}"; fi
+          set +e
+          node scripts/exhibitions/sync.mjs ${{ steps.mode.outputs.flag }} $ARGS \
+            --report /tmp/exh/check.json --summary /tmp/exh/check.md 2>&1 | tee /tmp/exh/console.log
+          echo "exit=${PIPESTATUS[0]}" >> "$GITHUB_OUTPUT"
+
+      - name: 반영 결과를 브랜치에 커밋
+        if: steps.mode.outputs.apply == 'true'
+        run: |
+          if git diff --quiet -- src/data/exhibitions.js; then
+            echo "변경 없음"
+            exit 0
+          fi
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/data/exhibitions.js
+          git commit -m "data(exhibitions): 수도권 미술관 전시 실수집 반영 ($(TZ=Asia/Seoul date +%Y-%m-%d))"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
+
+      - name: 결과 요약
+        if: always()
+        run: |
+          {
+            cat /tmp/exh/check.md 2>/dev/null || echo '_리포트 생성 실패_'
+            echo
+            echo '<details><summary>실행 로그</summary>'
+            echo
+            echo '```'
+            cat /tmp/exh/console.log 2>/dev/null || true
+            echo '```'
+            echo
+            echo '</details>'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: 리포트 업로드
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: exhibition-check-report
+          path: /tmp/exh/
+          retention-days: 14
+
+      # 전 소스 실패(2)면 파이프라인이 아무 구실도 못 하는 상태라 막는다.
+      # 일부 미술관만 실패한 경우는 통과시키되 위 요약에 남는다.
+      - name: 전 소스 실패 시 실패 처리
+        if: steps.sync.outputs.exit == '2'
+        run: |
+          echo "::error::모든 미술관 소스에서 전시를 수집하지 못했습니다."
+          exit 1

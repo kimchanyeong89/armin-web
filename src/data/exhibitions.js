@@ -3540,6 +3540,19 @@ export const exhibitions = [
     ],
     temporaryExhibitions: [
       {
+        id: "mmca-2026-detective",
+        title: "MMCA 다원예술 2026: 탐정의 시간",
+        titleEn: "MMCA Multidisciplinary Arts 2026: Detective's Time",
+        description: "AI의 효율성에 대비하여, 탐정처럼 미세한 단서를 쫓으며 인간 고유의 깊고 느린 시간을 감각하는 다원예술 프로젝트.",
+        startDate: "2026-04-01",
+        endDate: "2026-12-06",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/mmca-202601060002024.gif",
+        officialUrl: "https://www.mmca.go.kr/exhibitions/progressList.do",
+        status: "ongoing"
+      }
+    ],
+    pastExhibitions: [
+      {
         id: "mmca-2026-hirst",
         title: "데이미언 허스트",
         titleEn: "Damien Hirst",
@@ -3548,7 +3561,7 @@ export const exhibitions = [
         endDate: "2026-06-28",
         coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/mmca-202601060002023.png",
         officialUrl: "https://www.mmca.go.kr/exhibitions/progressList.do",
-        status: "ongoing"
+        status: "past"
       },
       {
         id: "mmca-2026-hirst-yba",
@@ -3559,18 +3572,7 @@ export const exhibitions = [
         endDate: "2026-06-06",
         coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/mmca-202601060002025.png",
         officialUrl: "https://www.mmca.go.kr/exhibitions/progressList.do",
-        status: "ongoing"
-      },
-      {
-        id: "mmca-2026-detective",
-        title: "MMCA 다원예술 2026: 탐정의 시간",
-        titleEn: "MMCA Multidisciplinary Arts 2026: Detective's Time",
-        description: "AI의 효율성에 대비하여, 탐정처럼 미세한 단서를 쫓으며 인간 고유의 깊고 느린 시간을 감각하는 다원예술 프로젝트.",
-        startDate: "2026-04-01",
-        endDate: "2026-12-06",
-        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/mmca-202601060002024.gif",
-        officialUrl: "https://www.mmca.go.kr/exhibitions/progressList.do",
-        status: "ongoing"
+        status: "past"
       },
       {
         id: "mmca-2026-dissolution",
@@ -3581,10 +3583,9 @@ export const exhibitions = [
         endDate: "2026-05-03",
         coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/mmca-202511280002008.gif",
         officialUrl: "https://www.mmca.go.kr/exhibitions/progressList.do",
-        status: "ongoing"
+        status: "past"
       }
     ],
-    pastExhibitions: [],
     rooms: {}
   },
   // South Korea - National Museum of Korea
@@ -3610,16 +3611,52 @@ export const exhibitions = [
     ],
     temporaryExhibitions: [
       {
-        id: "nmk-2026-bongjeongsa",
-        title: "깨달음으로 이끄는 부처: 안동 봉정사 괘불",
-        titleEn: "Large Buddhist Hanging Scroll from Bongjeongsa Temple, Andong",
-        description: "국립중앙박물관의 20번째 괘불전. 1710년에 제작된 봉정사 괘불은 세로 8m 이상, 가로 6m에 달하는 대형 불화로 영산회상 장면을 묘사한다.",
-        startDate: "2026-04-07",
-        endDate: "2026-06-21",
-        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/nmk-2026-bongjeongsa.jpg",
-        officialUrl: "https://www.museum.go.kr/MUSEUM/contents/M0202010000.do?menuId=current",
+        id: "national-museum-korea-2026-6240813a",
+        title: "[지역 공립박물관 순회전시] 국보순회전, 우리 동네에서 만나는 보물",
+        startDate: "2026-05-19",
+        endDate: "2026-11-29",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/national-museum-korea-2026-6240813a-4c69bae8.png",
+        officialUrl: "https://www.museum.go.kr/MUSEUM/contents/M0202010000.do?schM=view&menuId=current&exhiSpThemId=3549792&listType=list",
         status: "ongoing"
       },
+      {
+        id: "national-museum-korea-2026-45a4d3ff",
+        title: "분청사기·백자실 주제전시 <사계절 푸른 대나무, 도자기에 담다>",
+        startDate: "2026-06-23",
+        endDate: "2027-01-31",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/national-museum-korea-2026-45a4d3ff-4c69bae8.png",
+        officialUrl: "https://www.museum.go.kr/MUSEUM/contents/M0202010000.do?schM=view&menuId=current&exhiSpThemId=3588283&listType=list",
+        status: "ongoing"
+      },
+      {
+        id: "national-museum-korea-2026-fd445870",
+        title: "우리들의 밥상",
+        startDate: "2026-07-01",
+        endDate: "2026-10-25",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/national-museum-korea-2026-fd445870-4c69bae8.png",
+        officialUrl: "https://www.museum.go.kr/MUSEUM/contents/M0202010000.do?schM=view&menuId=current&exhiSpThemId=3529713&listType=list",
+        status: "ongoing"
+      },
+      {
+        id: "national-museum-korea-2026-a1b2813f",
+        title: "아름다움을 나누는 마음-새로 맞이한 기증유물전 2",
+        startDate: "2026-07-27",
+        endDate: "2026-11-15",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/national-museum-korea-2026-a1b2813f-4c69bae8.png",
+        officialUrl: "https://www.museum.go.kr/MUSEUM/contents/M0202010000.do?schM=view&menuId=current&exhiSpThemId=3692100&listType=list",
+        status: "ongoing"
+      },
+      {
+        id: "national-museum-korea-2026-a7d00314",
+        title: "추사 김정희와 그의 동반자",
+        startDate: "2026-08-11",
+        endDate: "2026-11-22",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/national-museum-korea-2026-a7d00314-4c69bae8.png",
+        officialUrl: "https://www.museum.go.kr/MUSEUM/contents/M0202010000.do?schM=view&menuId=current&exhiSpThemId=3672087&listType=list",
+        status: "ongoing"
+      }
+    ],
+    pastExhibitions: [
       {
         id: "nmk-2026-conservation",
         title: "보존과학, 새로운 시작 함께하는 미래",
@@ -3629,7 +3666,18 @@ export const exhibitions = [
         endDate: "2026-06-30",
         coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/nmk-2026-conservation.jpg",
         officialUrl: "https://www.museum.go.kr/MUSEUM/contents/M0202010000.do?menuId=current",
-        status: "ongoing"
+        status: "past"
+      },
+      {
+        id: "nmk-2026-bongjeongsa",
+        title: "깨달음으로 이끄는 부처: 안동 봉정사 괘불",
+        titleEn: "Large Buddhist Hanging Scroll from Bongjeongsa Temple, Andong",
+        description: "국립중앙박물관의 20번째 괘불전. 1710년에 제작된 봉정사 괘불은 세로 8m 이상, 가로 6m에 달하는 대형 불화로 영산회상 장면을 묘사한다.",
+        startDate: "2026-04-07",
+        endDate: "2026-06-21",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/nmk-2026-bongjeongsa.jpg",
+        officialUrl: "https://www.museum.go.kr/MUSEUM/contents/M0202010000.do?menuId=current",
+        status: "past"
       },
       {
         id: "nmk-2026-baekja",
@@ -3640,10 +3688,9 @@ export const exhibitions = [
         endDate: "2026-06-21",
         coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/nmk-2026-baekja.jpg",
         officialUrl: "https://www.museum.go.kr/MUSEUM/contents/M0202010000.do?menuId=current",
-        status: "ongoing"
+        status: "past"
       }
     ],
-    pastExhibitions: [],
     rooms: {}
   },
   // South Korea - Jeonju National Museum
@@ -3714,7 +3761,8 @@ export const exhibitions = [
     permanentExhibitions: [
       { id: "folk-collection", name: "국립민속박물관 회화 컬렉션", name_en: "National Folk Museum Paintings", title: "국립민속박물관 회화 컬렉션", title_en: "National Folk Museum Paintings Collection", description: "국립민속박물관 소장 회화 컬렉션 (927점)", description_en: "National Folk Museum paintings collection (927 items)", startDate: "Permanent", endDate: "Permanent", collectionFile: "folk-museum.json" }
     ],
-    temporaryExhibitions: [
+    temporaryExhibitions: [],
+    pastExhibitions: [
       {
         id: "nfm-2025-childbirth",
         title: "출산, 모두의 잔치",
@@ -3722,12 +3770,10 @@ export const exhibitions = [
         description: "선사시대부터 현대까지 한국의 출산 풍습과 의례를 조명하는 특별전. 출산 관련 유물 328점을 통해 생명 탄생을 둘러싼 공동체의 기원과 축하 문화를 살펴본다.",
         startDate: "2025-12-03",
         endDate: "2026-05-10",
-        coverImage: "",
         officialUrl: "https://www.nfm.go.kr/home/exhibition/current.do",
-        status: "ongoing"
+        status: "past"
       }
     ],
-    pastExhibitions: [],
     rooms: {}
   },
   // South Korea - Busan Museum
@@ -3795,7 +3841,7 @@ export const exhibitions = [
         endDate: "2026-10-18",
         coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/sema-2026-yooyoungkuk.jpg",
         officialUrl: "https://sema.seoul.go.kr",
-        status: "upcoming"
+        status: "ongoing"
       },
       {
         id: "sema-2026-hershman",
@@ -5894,7 +5940,9 @@ export const exhibitions = [
         coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/mmca-202508210001995.gif",
         officialUrl: "https://www.mmca.go.kr/exhibitions/progressList.do",
         status: "ongoing"
-      },
+      }
+    ],
+    pastExhibitions: [
       {
         id: "mmca-gwacheon-2026-artbank",
         title: "미술은행 20주년 특별전 «돌아온 미래: 형태와 생각의 발현»",
@@ -5904,7 +5952,7 @@ export const exhibitions = [
         endDate: "2026-06-30",
         coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/mmca-202508060001987.png",
         officialUrl: "https://www.mmca.go.kr/exhibitions/progressList.do",
-        status: "ongoing"
+        status: "past"
       },
       {
         id: "mmca-gwacheon-2026-drawing",
@@ -5915,10 +5963,9 @@ export const exhibitions = [
         endDate: "2026-06-30",
         coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/mmca-202507100001975.png",
         officialUrl: "https://www.mmca.go.kr/exhibitions/progressList.do",
-        status: "ongoing"
+        status: "past"
       }
-    ],
-    pastExhibitions: []
+    ]
   },
 
   {
@@ -5935,17 +5982,6 @@ export const exhibitions = [
     representativeImage: "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8b/Leeum_Museum_of_Art_Itaewon_Seoul_Korea.jpg/1280px-Leeum_Museum_of_Art_Itaewon_Seoul_Korea.jpg",
     permanentExhibitions: [],
     temporaryExhibitions: [
-      {
-        id: "leeum-2026-sehgal",
-        title: "티노 세갈 개인전",
-        titleEn: "Tino Sehgal",
-        description: "독일-영국 작가 티노 세갈의 국내 첫 개인전. 훈련된 인터프리터가 관객과 직접 상호작용하는 '구성된 상황(Constructed Situations)'으로 유명하다. 25년 작업 세계의 신작과 리움 컬렉션을 활성화하는 라이브 아트를 선보인다.",
-        startDate: "2026-03-03",
-        endDate: "2026-06-28",
-        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/leeum-2026-sehgal.jpg",
-        officialUrl: "https://www.leeumhoam.org/leeum/exhibition",
-        status: "ongoing"
-      },
       {
         id: "leeum-2026-orozco",
         title: "가브리엘 오로스코: 정원",
@@ -5966,10 +6002,32 @@ export const exhibitions = [
         endDate: "2026-12-27",
         coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/leeum-2026-koojunga.jpg",
         officialUrl: "https://www.leeumhoam.org/leeum/exhibition",
-        status: "upcoming"
+        status: "ongoing"
       }
     ],
-    pastExhibitions: []
+    pastExhibitions: [
+      {
+        id: "leeum-2026-sehgal",
+        title: "티노 세갈 개인전",
+        titleEn: "Tino Sehgal",
+        description: "독일-영국 작가 티노 세갈의 국내 첫 개인전. 훈련된 인터프리터가 관객과 직접 상호작용하는 '구성된 상황(Constructed Situations)'으로 유명하다. 25년 작업 세계의 신작과 리움 컬렉션을 활성화하는 라이브 아트를 선보인다.",
+        startDate: "2026-03-03",
+        endDate: "2026-06-28",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/leeum-2026-sehgal.jpg",
+        officialUrl: "https://www.leeumhoam.org/leeum/exhibition",
+        status: "past"
+      },
+      {
+        id: "leeum-museum-2026-20d4d279",
+        title: "구정아: 우스모스",
+        description: "리움미술관 홈페이지입니다.",
+        startDate: "2026-05-05",
+        endDate: "2026-05-05",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/leeum-museum-2026-20d4d279-f9e71f2c.jpg",
+        officialUrl: "https://www.leeumhoam.org/leeum",
+        status: "past"
+      }
+    ]
   },
 
   {
@@ -5984,7 +6042,8 @@ export const exhibitions = [
     region: "Seoul",
     representativeImage: "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Amorepacific_Corporation_Headquarters.jpg/1280px-Amorepacific_Corporation_Headquarters.jpg",
     permanentExhibitions: [],
-    temporaryExhibitions: [
+    temporaryExhibitions: [],
+    pastExhibitions: [
       {
         id: "apma-2026-chapter5",
         title: "APMA, CHAPTER FIVE",
@@ -5994,7 +6053,7 @@ export const exhibitions = [
         endDate: "2026-08-02",
         coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/apma-2026-chapter5.jpg",
         officialUrl: "https://apma.amorepacific.com/contents/exhibition/index.do",
-        status: "ongoing"
+        status: "past"
       },
       {
         id: "apma-2026-bradford",
@@ -6005,10 +6064,9 @@ export const exhibitions = [
         endDate: "2026-02-28",
         coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/apma-2026-bradford.jpg",
         officialUrl: "https://apma.amorepacific.com/contents/exhibition/index.do",
-        status: "ongoing"
+        status: "past"
       }
-    ],
-    pastExhibitions: []
+    ]
   },
 
   {
@@ -6057,6 +6115,18 @@ export const exhibitions = [
     permanentExhibitions: [],
     temporaryExhibitions: [
       {
+        id: "hoam-museum-2026-4c064f9a",
+        title: "2026 아트스펙트럼 《방이있고모든라디오가각기다른주파수를향하고있다》",
+        description: "호암미술관 홈페이지입니다.",
+        startDate: "2026-09-01",
+        endDate: "2026-12-27",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/hoam-museum-2026-4c064f9a-5bd4d19e.jpg",
+        officialUrl: "https://www.leeumhoam.org/hoam",
+        status: "ongoing"
+      }
+    ],
+    pastExhibitions: [
+      {
         id: "hoam-2026-kimyunshin",
         title: "김윤신: 합이합일 분이분일",
         titleEn: "Kim Yun Shin: Combine to Make One, Divide to Make One",
@@ -6065,21 +6135,9 @@ export const exhibitions = [
         endDate: "2026-06-28",
         coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/hoam-2026-kimyunshin.jpg",
         officialUrl: "https://www.leeumhoam.org/hoam/exhibition",
-        status: "ongoing"
-      },
-      {
-        id: "hoam-2026-artspectrum",
-        title: "아트 스펙트럼 2026",
-        titleEn: "Art Spectrum 2026",
-        description: "팔레 드 도쿄(유럽 최대 현대미술 센터)와 공동 기획한 아트 스펙트럼의 실험적 새 버전. 현대미술·영화·디자인·건축·실험음악을 아우르는 복합 프로그램으로, 처음으로 리움이 아닌 호암에서 개최된다.",
-        startDate: "2026-09-01",
-        endDate: "2026-12-31",
-        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/hoam-2026-artspectrum.jpg",
-        officialUrl: "https://www.leeumhoam.org/hoam/exhibition",
-        status: "upcoming"
+        status: "past"
       }
-    ],
-    pastExhibitions: []
+    ]
   },
 
   {
@@ -6203,6 +6261,261 @@ export const exhibitions = [
     permanentExhibitions: [],
     temporaryExhibitions: [
       {
+        id: "hangaram-art-museum-2026-78112",
+        title: "와일드스미스 그림책 원화展",
+        description: "2026-07-07(화) ~ 2026-10-16(금) 10:00 ~ 19:00 (※ 매주 월요일 휴관) 서울서예박물관 제2전시실",
+        venue: "서울서예박물관 제2전시실",
+        startDate: "2026-07-07",
+        endDate: "2026-10-16",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/hangaram-art-museum-2026-78112-e43d2292.jpg",
+        officialUrl: "https://www.sac.or.kr/site/main/show/show_view?SN=78112",
+        status: "ongoing",
+        sourceId: "78112"
+      },
+      {
+        id: "hangaram-art-museum-2026-78093",
+        title: "자비 솔라 특별전",
+        description: "2026-07-10(금) ~ 2026-10-17(토) 10:00 ~ 19:00 (※ 매주 월요일 휴관) 서울서예박물관 제1전시실",
+        venue: "서울서예박물관 제1전시실",
+        startDate: "2026-07-10",
+        endDate: "2026-10-17",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/hangaram-art-museum-2026-78093-8884fc71.jpg",
+        officialUrl: "https://www.sac.or.kr/site/main/show/show_view?SN=78093",
+        status: "ongoing",
+        sourceId: "78093"
+      },
+      {
+        id: "hangaram-art-museum-2026-76454",
+        title: "이완 - 나는 쓴다",
+        description: "2026-07-17(금) ~ 2026-09-27(일) 10:00 ~ 19:00 (※ 매주 월요일 휴관) 서울서예박물관 제3전시실",
+        venue: "서울서예박물관 제3전시실",
+        startDate: "2026-07-17",
+        endDate: "2026-09-27",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/hangaram-art-museum-2026-76454-92b18f62.jpg",
+        officialUrl: "https://www.sac.or.kr/site/main/show/show_view?SN=76454",
+        status: "ongoing",
+        sourceId: "76454"
+      },
+      {
+        id: "hangaram-2026-spain",
+        title: "스페인 미술 500년",
+        titleEn: "500 Years of Spanish Art",
+        description: "엘 그레코부터 피카소, 달리, 미로까지 스페인 미술 500년의 흐름을 조망하는 대형 기획전. 스페인 주요 미술관 소장품을 포함한 원화 100여 점을 선보인다.",
+        venue: "한가람디자인미술관 제1전시실, 제2전시실, 제3전시실",
+        startDate: "2026-09-22",
+        endDate: "2027-01-20",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/hangaram-art-museum-2026-77679-8ae849ba.jpg",
+        officialUrl: "https://www.sac.or.kr/site/main/show/show_view?SN=77679",
+        status: "upcoming",
+        sourceId: "77679"
+      },
+      {
+        id: "hangaram-art-museum-2026-78092",
+        title: "[유연홍 개인전] 추억, 그리고 그리움",
+        description: "2026-10-03(토) ~ 2026-10-16(금) 10:00 ~ 19:00 (※ 매주 월요일 휴관) 서울서예박물관 제3전시실",
+        venue: "서울서예박물관 제3전시실",
+        startDate: "2026-10-03",
+        endDate: "2026-10-16",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/hangaram-art-museum-2026-78092-27566c5c.gif",
+        officialUrl: "https://www.sac.or.kr/site/main/show/show_view?SN=78092",
+        status: "upcoming",
+        sourceId: "78092"
+      },
+      {
+        id: "hangaram-art-museum-2026-77212",
+        title: "제34회 대한민국서예전람회(현대부문) 및 2026년 한국서가협회 초대작가전",
+        description: "2026-10-22(목) ~ 2026-11-01(일) 10:00 ~ 19:00 (※ 매주 월요일 휴관) 서울서예박물관 제1전시실, 제2전시실, 제3전시실",
+        venue: "서울서예박물관 제1전시실, 제2전시실, 제3전시실",
+        startDate: "2026-10-22",
+        endDate: "2026-11-01",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/hangaram-art-museum-2026-77212-27566c5c.gif",
+        officialUrl: "https://www.sac.or.kr/site/main/show/show_view?SN=77212",
+        status: "upcoming",
+        sourceId: "77212"
+      },
+      {
+        id: "hangaram-art-museum-2026-77609",
+        title: "2026아시안캘리그라피축제Ⅵ",
+        description: "2026-11-05(목) ~ 2026-11-14(토) 10:00 ~ 19:00 (※ 매주 월요일 휴관) 서울서예박물관 제1전시실, 제2전시실, 제3전시실",
+        venue: "서울서예박물관 제1전시실, 제2전시실, 제3전시실",
+        startDate: "2026-11-05",
+        endDate: "2026-11-14",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/hangaram-art-museum-2026-77609-27566c5c.gif",
+        officialUrl: "https://www.sac.or.kr/site/main/show/show_view?SN=77609",
+        status: "upcoming",
+        sourceId: "77609"
+      },
+      {
+        id: "hangaram-art-museum-2026-77340",
+        title: "한국서도초대작가전",
+        description: "2026-11-18(수) ~ 2026-11-26(목) 10:00 ~ 19:00 (※ 매주 월요일 휴관) 서울서예박물관 제1전시실, 제2전시실, 제3전시실",
+        venue: "서울서예박물관 제1전시실, 제2전시실, 제3전시실",
+        startDate: "2026-11-18",
+        endDate: "2026-11-26",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/hangaram-art-museum-2026-77340-27566c5c.gif",
+        officialUrl: "https://www.sac.or.kr/site/main/show/show_view?SN=77340",
+        status: "upcoming",
+        sourceId: "77340"
+      },
+      {
+        id: "hangaram-art-museum-2026-78073",
+        title: "미라, 봉인된 신비",
+        description: "2026-12-11(금) ~ 2027-04-11(일) 10:00 ~ 19:00 (※ 매주 월요일 휴관) 서울서예박물관 제1전시실, 제2전시실, 제3전시실",
+        venue: "서울서예박물관 제1전시실, 제2전시실, 제3전시실",
+        startDate: "2026-12-11",
+        endDate: "2027-04-11",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/hangaram-art-museum-2026-78073-27566c5c.gif",
+        officialUrl: "https://www.sac.or.kr/site/main/show/show_view?SN=78073",
+        status: "upcoming",
+        sourceId: "78073"
+      },
+      {
+        id: "hangaram-art-museum-2027-77272",
+        title: "피카소 by 폴 스미스",
+        description: "2027-02-23(화) ~ 2027-06-27(일) 10:00 ~ 19:00 (※ 매주 월요일 휴관) 한가람디자인미술관 제1전시실, 제2전시실, 제3전시실",
+        venue: "한가람디자인미술관 제1전시실, 제2전시실, 제3전시실",
+        startDate: "2027-02-23",
+        endDate: "2027-06-27",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/hangaram-art-museum-2027-77272-27566c5c.gif",
+        officialUrl: "https://www.sac.or.kr/site/main/show/show_view?SN=77272",
+        status: "upcoming",
+        sourceId: "77272"
+      },
+      {
+        id: "hangaram-art-museum-2027-85452",
+        title: "제23회 대한민국 동양서예대전",
+        description: "2027-04-21(수) ~ 2027-04-29(목) 10:00 ~ 19:00 (※ 매주 월요일 휴관) 서울서예박물관",
+        venue: "서울서예박물관",
+        startDate: "2027-04-21",
+        endDate: "2027-04-29",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/hangaram-art-museum-2027-85452-27566c5c.gif",
+        officialUrl: "https://www.sac.or.kr/site/main/show/show_view?SN=85452",
+        status: "upcoming",
+        sourceId: "85452"
+      },
+      {
+        id: "hangaram-art-museum-2027-85245",
+        title: "잔치(宴), 20th Anniversary",
+        description: "2027-05-02(일) ~ 2027-05-13(목) 10:00 ~ 19:00 (※ 매주 월요일 휴관) 서울서예박물관",
+        venue: "서울서예박물관",
+        startDate: "2027-05-02",
+        endDate: "2027-05-13",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/hangaram-art-museum-2027-85245-27566c5c.gif",
+        officialUrl: "https://www.sac.or.kr/site/main/show/show_view?SN=85245",
+        status: "upcoming",
+        sourceId: "85245"
+      },
+      {
+        id: "hangaram-art-museum-2027-85372",
+        title: "이상원 특별전",
+        description: "2027-05-07(금) ~ 2027-09-19(일) 10:00 ~ 19:00 (※ 매주 월요일 휴관) 한가람미술관",
+        venue: "한가람미술관",
+        startDate: "2027-05-07",
+        endDate: "2027-09-19",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/hangaram-art-museum-2027-85372-27566c5c.gif",
+        officialUrl: "https://www.sac.or.kr/site/main/show/show_view?SN=85372",
+        status: "upcoming",
+        sourceId: "85372"
+      },
+      {
+        id: "hangaram-art-museum-2027-84524",
+        title: "방의걸, 90년의 붓",
+        description: "2027-05-19(수) ~ 2027-06-13(일) 10:00 ~ 19:00 (※ 매주 월요일 휴관) 서울서예박물관",
+        venue: "서울서예박물관",
+        startDate: "2027-05-19",
+        endDate: "2027-06-13",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/hangaram-art-museum-2027-84524-27566c5c.gif",
+        officialUrl: "https://www.sac.or.kr/site/main/show/show_view?SN=84524",
+        status: "upcoming",
+        sourceId: "84524"
+      },
+      {
+        id: "hangaram-art-museum-2027-85472",
+        title: "제33회 대한민국서도대전",
+        description: "2027-06-19(토) ~ 2027-06-27(일) 10:00 ~ 19:00 (※ 매주 월요일 휴관) 서울서예박물관",
+        venue: "서울서예박물관",
+        startDate: "2027-06-19",
+        endDate: "2027-06-27",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/hangaram-art-museum-2027-85472-27566c5c.gif",
+        officialUrl: "https://www.sac.or.kr/site/main/show/show_view?SN=85472",
+        status: "upcoming",
+        sourceId: "85472"
+      },
+      {
+        id: "hangaram-art-museum-2027-85238",
+        title: "제35회 대한민국서예전람회(전통)",
+        description: "2027-07-01(목) ~ 2027-07-18(일) 10:00 ~ 19:00 (※ 매주 월요일 휴관) 서울서예박물관",
+        venue: "서울서예박물관",
+        startDate: "2027-07-01",
+        endDate: "2027-07-18",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/hangaram-art-museum-2027-85238-27566c5c.gif",
+        officialUrl: "https://www.sac.or.kr/site/main/show/show_view?SN=85238",
+        status: "upcoming",
+        sourceId: "85238"
+      },
+      {
+        id: "hangaram-art-museum-2027-84745",
+        title: "2027아시안캘리그라피축제Ⅶ",
+        description: "2027-10-22(금) ~ 2027-10-31(일) 10:00 ~ 19:00 (※ 매주 월요일 휴관) 서울서예박물관",
+        venue: "서울서예박물관",
+        startDate: "2027-10-22",
+        endDate: "2027-10-31",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/hangaram-art-museum-2027-84745-27566c5c.gif",
+        officialUrl: "https://www.sac.or.kr/site/main/show/show_view?SN=84745",
+        status: "upcoming",
+        sourceId: "84745"
+      },
+      {
+        id: "hangaram-art-museum-2027-85159",
+        title: "2027년 한중서예순회전 등",
+        description: "2027-11-04(목) ~ 2027-11-14(일) 10:00 ~ 19:00 (※ 매주 월요일 휴관) 서울서예박물관",
+        venue: "서울서예박물관",
+        startDate: "2027-11-04",
+        endDate: "2027-11-14",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/hangaram-art-museum-2027-85159-27566c5c.gif",
+        officialUrl: "https://www.sac.or.kr/site/main/show/show_view?SN=85159",
+        status: "upcoming",
+        sourceId: "85159"
+      },
+      {
+        id: "hangaram-art-museum-2027-85432",
+        title: "제22회 소목장 박명배와 그의 제자전",
+        description: "2027-11-12(금) ~ 2027-11-21(일) 10:00 ~ 19:00 (※ 매주 월요일 휴관) 한가람미술관",
+        venue: "한가람미술관",
+        startDate: "2027-11-12",
+        endDate: "2027-11-21",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/hangaram-art-museum-2027-85432-27566c5c.gif",
+        officialUrl: "https://www.sac.or.kr/site/main/show/show_view?SN=85432",
+        status: "upcoming",
+        sourceId: "85432"
+      },
+      {
+        id: "hangaram-art-museum-2027-84744",
+        title: "2027년 한국서도초대작가전",
+        description: "2027-11-18(목) ~ 2027-11-26(금) 10:00 ~ 19:00 (※ 매주 월요일 휴관) 서울서예박물관",
+        venue: "서울서예박물관",
+        startDate: "2027-11-18",
+        endDate: "2027-11-26",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/hangaram-art-museum-2027-84744-27566c5c.gif",
+        officialUrl: "https://www.sac.or.kr/site/main/show/show_view?SN=84744",
+        status: "upcoming",
+        sourceId: "84744"
+      },
+      {
+        id: "hangaram-art-museum-2027-85712",
+        title: "장 줄리앙",
+        description: "2027-12-15(수) ~ 2028-04-02(일) 10:00 ~ 19:00 (※ 매주 월요일 휴관) 한가람미술관",
+        venue: "한가람미술관",
+        startDate: "2027-12-15",
+        endDate: "2028-04-02",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/hangaram-art-museum-2027-85712-27566c5c.gif",
+        officialUrl: "https://www.sac.or.kr/site/main/show/show_view?SN=85712",
+        status: "upcoming",
+        sourceId: "85712"
+      }
+    ],
+    pastExhibitions: [
+      {
         id: "hangaram-2026-botero",
         title: "페르난도 보테로: 형태의 미학",
         titleEn: "Fernando Botero: The Aesthetics of Form",
@@ -6211,21 +6524,9 @@ export const exhibitions = [
         endDate: "2026-08-30",
         coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/hangaram-2026-botero.jpg",
         officialUrl: "https://www.sac.or.kr/site/main/show/show_view?SN=76470",
-        status: "ongoing"
-      },
-      {
-        id: "hangaram-2026-spain",
-        title: "스페인 미술 500년",
-        titleEn: "500 Years of Spanish Art",
-        description: "엘 그레코부터 피카소, 달리, 미로까지 스페인 미술 500년의 흐름을 조망하는 대형 기획전. 스페인 주요 미술관 소장품을 포함한 원화 100여 점을 선보인다.",
-        startDate: "2026-09-22",
-        endDate: "2027-01-20",
-        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/hangaram-2026-botero.jpg",
-        officialUrl: "https://www.sac.or.kr/site/main/show/show_view?SN=77679",
-        status: "upcoming"
+        status: "past"
       }
     ],
-    pastExhibitions: [],
     rooms: {}
   },
 
@@ -6248,16 +6549,34 @@ export const exhibitions = [
     permanentExhibitions: [],
     temporaryExhibitions: [
       {
-        id: "ddp-2026-offcourse",
-        title: "OFF COURSE CLUB",
-        titleEn: "OFF COURSE CLUB",
-        description: "DDP 전시.",
-        startDate: "2026-04-03",
-        endDate: "2026-04-26",
-        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/ddp-2026-offcourse.jpg",
-        officialUrl: "https://ddp.or.kr/index.html?menuno=240",
+        id: "ddp-gallery-2026-35f08742",
+        title: "BtheB 뷰티기획전<BEAUTY, TRANSLATED>",
+        startDate: "2026-06-13",
+        endDate: "2026-09-27",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/ddp-gallery-2026-35f08742-102013fd.jpg",
+        officialUrl: "https://www.ddp.or.kr/index.html?menuno=240",
         status: "ongoing"
       },
+      {
+        id: "ddp-gallery-2026-0c0ec93a",
+        title: "아기상어 비밀 초대장: 비커밍 샤크",
+        startDate: "2026-06-18",
+        endDate: "2026-12-19",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/ddp-gallery-2026-0c0ec93a-dae68855.jpg",
+        officialUrl: "https://www.ddp.or.kr/index.html?menuno=240",
+        status: "ongoing"
+      },
+      {
+        id: "ddp-gallery-2026-54d6036f",
+        title: "LALARECIPE x MeME : Happiness Recipe for Every Skin",
+        startDate: "2026-08-01",
+        endDate: "2026-09-30",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/ddp-gallery-2026-54d6036f-388a01f3.jpg",
+        officialUrl: "https://www.ddp.or.kr/index.html?menuno=240",
+        status: "ongoing"
+      }
+    ],
+    pastExhibitions: [
       {
         id: "ddp-2026-btheb",
         title: "BtheB 뷰티기획전 <Beauty For All>",
@@ -6267,7 +6586,7 @@ export const exhibitions = [
         endDate: "2026-06-07",
         coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/ddp-2026-btheb.jpg",
         officialUrl: "https://ddp.or.kr/index.html?menuno=240",
-        status: "ongoing"
+        status: "past"
       },
       {
         id: "ddp-2026-ultra",
@@ -6278,10 +6597,20 @@ export const exhibitions = [
         endDate: "2026-05-10",
         coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/ddp-2026-ultra.jpg",
         officialUrl: "https://ddp.or.kr/index.html?menuno=240",
-        status: "ongoing"
+        status: "past"
+      },
+      {
+        id: "ddp-2026-offcourse",
+        title: "OFF COURSE CLUB",
+        titleEn: "OFF COURSE CLUB",
+        description: "DDP 전시.",
+        startDate: "2026-04-03",
+        endDate: "2026-04-26",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/ddp-2026-offcourse.jpg",
+        officialUrl: "https://ddp.or.kr/index.html?menuno=240",
+        status: "past"
       }
     ],
-    pastExhibitions: [],
     rooms: {}
   },
 
@@ -6317,22 +6646,21 @@ export const exhibitions = [
     ],
     pastExhibitions: [
       {
+        id: "daelim-2025-petra",
+        title: "페트라 콜린스: fangirl",
+        titleEn: "Petra Collins: fangirl",
+        startDate: "2025-08-29",
+        endDate: "2026-02-15",
+        officialUrl: "https://www.daelimmuseum.org/exhibition/past",
+        status: "past"
+      },
+      {
         id: "daelim-2024-tanaami",
         title: "Keiichi Tanaami: I'M THE ORIGIN",
         titleEn: "Keiichi Tanaami: I'M THE ORIGIN",
         startDate: "2024-12-14",
         endDate: "2025-06-29",
         coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/daelim-tanaami.jpg",
-        officialUrl: "https://www.daelimmuseum.org/exhibition/past",
-        status: "past"
-      },
-      {
-        id: "daelim-2025-petra",
-        title: "페트라 콜린스: fangirl",
-        titleEn: "Petra Collins: fangirl",
-        startDate: "2025-08-29",
-        endDate: "2026-02-15",
-        coverImage: "",
         officialUrl: "https://www.daelimmuseum.org/exhibition/past",
         status: "past"
       }
@@ -6356,17 +6684,6 @@ export const exhibitions = [
     permanentExhibitions: [],
     temporaryExhibitions: [
       {
-        id: "groundseesaw-2026-max",
-        title: "맥스 시덴토프 개인전",
-        titleEn: "Max Siedentopf: NOT SERIOUS",
-        description: "독일 출신 사진작가 겸 감독 맥스 시덴토프의 국내 첫 개인전. 유머와 부조리함으로 가득한 그의 작업 세계를 통해 일상과 예술의 경계를 탐구한다.",
-        startDate: "2026-03-27",
-        endDate: "2026-08-30",
-        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/groundseesaw-2026-max.jpg",
-        officialUrl: "https://www.groundseesaw.co.kr",
-        status: "ongoing"
-      },
-      {
         id: "groundseesaw-2026-sungryul",
         title: "성률 기획전: 여름을 닮은 우리",
         titleEn: "Seongryul: Summer Like Us",
@@ -6375,7 +6692,30 @@ export const exhibitions = [
         endDate: "2026-09-27",
         coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/groundseesaw-2026-sungryul.jpg",
         officialUrl: "https://www.groundseesaw.co.kr",
-        status: "upcoming"
+        status: "ongoing"
+      },
+      {
+        id: "groundseesaw-2026-798b76d1",
+        title: "장바구니",
+        description: "groundseesaw",
+        startDate: "2026-07-17",
+        endDate: "2026-11-29",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/groundseesaw-2026-798b76d1-d9a3fa92.jpg",
+        officialUrl: "https://www.groundseesaw.co.kr/shopinfo/visit.html",
+        status: "ongoing"
+      }
+    ],
+    pastExhibitions: [
+      {
+        id: "groundseesaw-2026-max",
+        title: "맥스 시덴토프 개인전",
+        titleEn: "Max Siedentopf: NOT SERIOUS",
+        description: "독일 출신 사진작가 겸 감독 맥스 시덴토프의 국내 첫 개인전. 유머와 부조리함으로 가득한 그의 작업 세계를 통해 일상과 예술의 경계를 탐구한다.",
+        startDate: "2026-03-27",
+        endDate: "2026-08-30",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/groundseesaw-2026-max.jpg",
+        officialUrl: "https://www.groundseesaw.co.kr",
+        status: "past"
       },
       {
         id: "groundseesaw-2026-roomforwonder",
@@ -6386,10 +6726,8 @@ export const exhibitions = [
         endDate: "2026-06-07",
         coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/groundseesaw-2026-roomforwonder.jpg",
         officialUrl: "https://www.groundseesaw.co.kr",
-        status: "ongoing"
-      }
-    ],
-    pastExhibitions: [
+        status: "past"
+      },
       {
         id: "groundseesaw-2025-himuro",
         title: "히무로 유리: 오늘의 기쁨",
@@ -6998,7 +7336,35 @@ export const exhibitions = [
     permanentExhibitions: [
       { id: "njpac-collection", name: "Collection", name_en: "Collection", title: "Nam June Paik Art Center — Collection", title_en: "Nam June Paik Art Center — Collection", description: "172점 — 사진113·회화48·드로잉8·영상3.", description_en: "172 works — photograph, painting, drawing, video.", startDate: "Permanent", endDate: "Permanent", collectionFile: "njpac-collection.json" }
     ],
-    temporaryExhibitions: [],
+    temporaryExhibitions: [
+      {
+        id: "njpac-2026-4dd8818e",
+        title: "달들",
+        startDate: "2026-07-16",
+        endDate: "2026-10-04",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/njpac-2026-4dd8818e-a1eee063.png",
+        officialUrl: "https://njp.ggcf.kr/exhibitions?tag=%EC%A0%84%EC%8B%9C",
+        status: "ongoing"
+      },
+      {
+        id: "njpac-2026-316787a6",
+        title: "별, 괘卦",
+        startDate: "2026-07-16",
+        endDate: "2027-02-14",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/njpac-2026-316787a6-c266eb0b.jpg",
+        officialUrl: "https://njp.ggcf.kr/exhibitions?tag=%EC%A0%84%EC%8B%9C",
+        status: "ongoing"
+      },
+      {
+        id: "njpac-2026-d654199f",
+        title: "NJP 라운지 2. 장윤영",
+        startDate: "2026-07-23",
+        endDate: "2026-11-11",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/njpac-2026-d654199f-42c2c891.jpg",
+        officialUrl: "https://njp.ggcf.kr/exhibitions?tag=%EC%A0%84%EC%8B%9C",
+        status: "ongoing"
+      }
+    ],
     pastExhibitions: [],
     exhibitions: []
   },
