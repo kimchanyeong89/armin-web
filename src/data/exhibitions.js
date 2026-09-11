@@ -6123,17 +6123,6 @@ export const exhibitions = [
         coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/hoam-museum-2026-4c064f9a-5bd4d19e.jpg",
         officialUrl: "https://www.leeumhoam.org/hoam",
         status: "ongoing"
-      },
-      {
-        id: "hoam-2026-artspectrum",
-        title: "아트 스펙트럼 2026",
-        titleEn: "Art Spectrum 2026",
-        description: "팔레 드 도쿄(유럽 최대 현대미술 센터)와 공동 기획한 아트 스펙트럼의 실험적 새 버전. 현대미술·영화·디자인·건축·실험음악을 아우르는 복합 프로그램으로, 처음으로 리움이 아닌 호암에서 개최된다.",
-        startDate: "2026-09-01",
-        endDate: "2026-12-31",
-        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/hoam-2026-artspectrum.jpg",
-        officialUrl: "https://www.leeumhoam.org/hoam/exhibition",
-        status: "ongoing"
       }
     ],
     pastExhibitions: [
@@ -7372,15 +7361,6 @@ export const exhibitions = [
         startDate: "2026-07-23",
         endDate: "2026-11-11",
         coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/njpac-2026-d654199f-42c2c891.jpg",
-        officialUrl: "https://njp.ggcf.kr/exhibitions?tag=%EC%A0%84%EC%8B%9C",
-        status: "ongoing"
-      },
-      {
-        id: "njpac-2026-e016112e",
-        title: "서울라이트 DDP 2026 가을",
-        startDate: "2026-09-03",
-        endDate: "2026-09-13",
-        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/njpac-2026-e016112e-efa2dea2.jpg",
         officialUrl: "https://njp.ggcf.kr/exhibitions?tag=%EC%A0%84%EC%8B%9C",
         status: "ongoing"
       }

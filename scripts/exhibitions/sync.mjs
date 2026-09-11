@@ -68,6 +68,36 @@ function withId(card) {
   return { ...card, id: card.id || makeExhibitionId(card, hash) };
 }
 
+/**
+ * 다른 기관 행사가 섞여 들어온 카드를 걸러낸다.
+ * 경기문화재단(njp.ggcf.kr)처럼 한 사이트가 여러 기관 소식을 함께 싣는 경우
+ * "서울라이트 DDP" 같은 항목이 백남준아트센터 전시로 잡힌다.
+ */
+const VENUE_MARKERS = [
+  { pattern: /서울라이트|DDP|동대문디자인플라자/i, museumId: 'ddp-gallery' },
+  { pattern: /국립현대미술관|MMCA/i, museumId: 'mmca-seoul' },
+  { pattern: /국립중앙박물관/, museumId: 'national-museum-korea' },
+  { pattern: /서울시립미술관|SeMA/i, museumId: 'seoul-museum-of-art' },
+  { pattern: /리움/, museumId: 'leeum-museum' },
+  { pattern: /호암미술관/, museumId: 'hoam-museum' },
+  { pattern: /백남준/, museumId: 'njpac' },
+  { pattern: /예술의전당|한가람/, museumId: 'hangaram-art-museum' },
+];
+
+function dropForeignVenues(cards, report) {
+  return cards.filter((card) => {
+    const hit = VENUE_MARKERS.find((v) => v.pattern.test(card.title));
+    // 제목이 '다른' 기관을 명시하면 이 미술관 전시가 아니다.
+    // MMCA 는 서울/과천을 함께 쓰므로 접두사로 비교한다.
+    if (hit && hit.museumId !== card.museumId && !card.museumId.startsWith(hit.museumId.split('-')[0])) {
+      report.foreignVenue.push({ museumId: card.museumId, title: card.title, looksLike: hit.museumId });
+      log(`  · 다른 기관 행사로 판단해 제외 [${card.museumId}] ${card.title.slice(0, 34)}`);
+      return false;
+    }
+    return true;
+  });
+}
+
 /** 같은 미술관 안에서 제목+시작일이 겹치는 카드를 제거한다. */
 function dedupe(cards) {
   const seen = new Set();
@@ -299,13 +329,15 @@ async function main() {
     sources: [],
     museums: [],
     details: { enriched: [], failed: [], genericDropped: 0 },
+    foreignVenue: [],
     posters: { uploaded: [], cached: [], failed: [], missing: [] },
     changes: [],
     incomplete: [],
   };
 
-  const { cards, sourceStatus } = await collect();
+  const { cards: collected, sourceStatus } = await collect();
   report.sources = sourceStatus;
+  const cards = dropForeignVenues(collected, report);
   log(`\n📦 총 ${cards.length}건 수집됨`);
 
   if (!NO_DETAILS) await enrichDetails(cards, report);

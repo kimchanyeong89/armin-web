@@ -27,7 +27,7 @@ import {
 } from './lib/parse.mjs';
 import { extractCards, isNoiseTitle } from './lib/extract.mjs';
 import { parseMuseumBlocks, findArrayRange, replaceExhibitionArray } from './lib/patch.mjs';
-import { findExisting, findMissingFields, mergeMuseum, normalizeTitle } from './lib/merge.mjs';
+import { findExisting, findMissingFields, mergeMuseum, normalizeTitle, titleSimilarity } from './lib/merge.mjs';
 import { coverKey, isR2Url } from './lib/images.mjs';
 import { MANAGED_MUSEUMS, MUSEUM_LABELS, SOURCES } from './sources/index.mjs';
 
@@ -221,6 +221,14 @@ function testMerge() {
   eq(bad.temporary[0].coverImage, '', '미술관 CDN URL 은 coverImage 로 쓰지 않음');
 
   check(!!findExisting(existingTemp, { title: '가나아트컬렉션 기술의 저변 경계에 선 장면들' }), '문장부호 무시 매칭');
+
+  // 공식 전체 제목과 줄여 쓴 제목이 따로 등록돼 같은 전시가 둘로 보이던 문제
+  const hoam = [{ id: 'h1', title: '아트 스펙트럼 2026', startDate: '2026-09-01', endDate: '2026-12-31' }];
+  const full = { title: '2026 아트스펙트럼 《방이있고모든라디오가각기다른주파수를향하고있다》', startDate: '2026-09-01' };
+  eq(findExisting(hoam, full)?.id, 'h1', '축약 제목 ↔ 공식 제목 동일 전시로 매칭');
+  check(!findExisting(hoam, { title: '전혀 다른 전시', startDate: '2026-09-01' }), '시작일만 같은 다른 전시는 매칭 안 됨');
+  check(titleSimilarity('아트스펙트럼2026', '2026아트스펙트럼방이있고') > 0.5, '유사도 계산');
+  check(titleSimilarity('', 'abc') === 0, '빈 문자열 유사도 0');
   eq(normalizeTitle('《유영국》: 산은 내 안에'), normalizeTitle('유영국 산은 내 안에'), '괄호 정규화');
   check(findMissingFields({ title: 'a', startDate: '2026-01-01' }).includes('coverImage(포스터)'), '누락 필드 감지');
   eq(findMissingFields({ title: 'a', startDate: '2026-01-01', endDate: '2026-02-01', coverImage: 'c', description: 'd', officialUrl: 'u' }).length, 0, '완전한 레코드 통과');

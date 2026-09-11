@@ -35,14 +35,39 @@ export function findExisting(existing, card) {
   if (byTitle) return byTitle;
 
   // 3) 한쪽이 다른 쪽을 포함 + 시작일 동일 (부제 유무 차이 흡수)
+  const byContains = existing.find((e) => {
+    const t = normalizeTitle(e.title);
+    if (!t || t.length < 4 || target.length < 4) return false;
+    const contains = t.includes(target) || target.includes(t);
+    return contains && e.startDate && e.startDate === card.startDate;
+  });
+  if (byContains) return byContains;
+
+  // 4) 시작일이 같고 제목이 충분히 비슷하면 같은 전시로 본다.
+  //    공식 전체 제목과 줄여 쓴 제목이 함께 잡히는 경우를 흡수한다
+  //    (예: "아트 스펙트럼 2026" ↔ "2026 아트스펙트럼 《방이있고…》").
   return (
     existing.find((e) => {
-      const t = normalizeTitle(e.title);
-      if (!t || t.length < 4 || target.length < 4) return false;
-      const contains = t.includes(target) || target.includes(t);
-      return contains && e.startDate && e.startDate === card.startDate;
+      if (!e.startDate || e.startDate !== card.startDate) return false;
+      return titleSimilarity(normalizeTitle(e.title), target) >= 0.5;
     }) || null
   );
+}
+
+/** 두 문자열의 2-gram 자카드 유사도 (짧은 쪽 기준 포함률). */
+export function titleSimilarity(a, b) {
+  const grams = (s) => {
+    const out = new Set();
+    for (let i = 0; i + 2 <= s.length; i++) out.add(s.slice(i, i + 2));
+    return out;
+  };
+  const ga = grams(a);
+  const gb = grams(b);
+  if (!ga.size || !gb.size) return 0;
+  const [small, big] = ga.size <= gb.size ? [ga, gb] : [gb, ga];
+  let hit = 0;
+  for (const g of small) if (big.has(g)) hit++;
+  return hit / small.size;
 }
 
 /** 자동 생성 전시 id (재실행해도 같은 값이 나와야 한다). */
