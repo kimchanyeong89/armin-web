@@ -17,6 +17,30 @@ const R2 = 'https://pub-396fad1f96754c2f816f260faf970e63.r2.dev';
 // 한국어 소개는 번역투를 피하고 네이티브 문장으로 쓴다(memory: feedback_korean_natively).
 const MUSEUMS = [
   {
+    id: 'artsmia',
+    name: 'Minneapolis Institute of Art',
+    name_ko: '미니애폴리스 미술관',
+    location: 'Minneapolis, USA',
+    latitude: 44.9585, longitude: -93.2736,
+    country: 'USA', region: 'Minnesota',
+    description: 'An encyclopedic museum of about 90,000 works spanning 5,000 years, with an unusually deep collection of works on paper and Asian art.',
+    description_ko: '5천 년을 아우르는 9만여 점을 소장한 종합 미술관이다. 특히 종이에 그린 작품과 아시아 미술이 두텁고, 소장품 데이터를 CC0 로 공개해 왔다.',
+    collectionName: 'Permanent Collection',
+    collectionDesc: 'Paintings and drawings from the museum open-access collection.',
+  },
+  {
+    id: 'tokyo-fuji-art',
+    name: 'Tokyo Fuji Art Museum',
+    name_ko: '도쿄후지미술관',
+    location: 'Hachioji, Japan',
+    latitude: 35.6647, longitude: 139.3236,
+    country: 'Japan', region: 'Tokyo',
+    description: 'A museum in western Tokyo holding some 30,000 works, strongest in European painting from the Renaissance onward and in Japanese woodblock prints.',
+    description_ko: '도쿄 서쪽 하치오지에 있는 미술관으로 3만여 점을 소장한다. 르네상스 이후 유럽 회화와 일본 목판화가 특히 두텁다.',
+    collectionName: 'Permanent Collection',
+    collectionDesc: 'European painting and Japanese prints from the permanent collection.',
+  },
+  {
     id: 'faam-fukuoka',
     name: 'Fukuoka Asian Art Museum',
     name_ko: '후쿠오카 아시아미술관',

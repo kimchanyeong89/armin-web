@@ -21766,7 +21766,7 @@
     {
       "id": "momas-saitama-3512",
       "objectNumber": "",
-      "title": "湖の孤独",
+      "title": "Solitude of the Lake",
       "artist": "NAMBATA Fumio",
       "date": "1970",
       "year": 1970,
@@ -21780,7 +21780,8 @@
       "displayLocation": "",
       "sourceUrl": "https://jmapps.ne.jp/momas/det.html?data_id=3512",
       "metadata": {
-        "artist_ja": "難波田史男 NAMBATA Fumio"
+        "artist_ja": "難波田史男 NAMBATA Fumio",
+        "title_ja": "湖の孤独"
       },
       "original_imageUrl": "https://ibmuseum.mapps.ne.jp/files/momas/media_files/large/3325.jpg",
       "title_ko": "호수의 고독"
@@ -22877,7 +22878,7 @@
     {
       "id": "momas-saitama-3751",
       "objectNumber": "",
-      "title": "ふすまとジャンパー",
+      "title": "Fusuma and Jumper",
       "artist": "SHIMA Kuniichi",
       "date": "1974",
       "year": 1974,
@@ -22891,7 +22892,8 @@
       "displayLocation": "",
       "sourceUrl": "https://jmapps.ne.jp/momas/det.html?data_id=3751",
       "metadata": {
-        "artist_ja": "島州一 SHIMA Kuniichi"
+        "artist_ja": "島州一 SHIMA Kuniichi",
+        "title_ja": "ふすまとジャンパー"
       },
       "original_imageUrl": "https://ibmuseum.mapps.ne.jp/files/momas/media_files/large/3728.jpg",
       "title_ko": "맹장지와 점퍼"
@@ -22921,7 +22923,7 @@
     {
       "id": "momas-saitama-3752",
       "objectNumber": "",
-      "title": "ジーンズ",
+      "title": "Jeans",
       "artist": "SHIMA Kuniichi",
       "date": "1974",
       "year": 1974,
@@ -22935,7 +22937,8 @@
       "displayLocation": "",
       "sourceUrl": "https://jmapps.ne.jp/momas/det.html?data_id=3752",
       "metadata": {
-        "artist_ja": "島州一 SHIMA Kuniichi"
+        "artist_ja": "島州一 SHIMA Kuniichi",
+        "title_ja": "ジーンズ"
       },
       "original_imageUrl": "https://ibmuseum.mapps.ne.jp/files/momas/media_files/large/3729.jpg",
       "title_ko": "청바지"
@@ -24583,7 +24586,7 @@
     {
       "id": "momas-saitama-3962",
       "objectNumber": "",
-      "title": "雪の旭岳",
+      "title": "Mt. Asahi in Snow",
       "artist": "ONO Momoki",
       "date": "",
       "year": null,
@@ -24597,7 +24600,8 @@
       "displayLocation": "",
       "sourceUrl": "https://jmapps.ne.jp/momas/det.html?data_id=3962",
       "metadata": {
-        "artist_ja": "大野百樹 ONO Momoki"
+        "artist_ja": "大野百樹 ONO Momoki",
+        "title_ja": "雪の旭岳"
       },
       "original_imageUrl": "https://ibmuseum.mapps.ne.jp/files/momas/media_files/large/3970.jpg",
       "title_ko": "눈 덮인 아사히다케"

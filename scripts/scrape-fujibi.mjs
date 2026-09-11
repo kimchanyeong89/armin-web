@@ -36,14 +36,24 @@ const PUBLIC_BASE = 'https://pub-396fad1f96754c2f816f260faf970e63.r2.dev';
 const PREFIX = `artworks/${MUSEUM.id}-collection`;
 const PAGES = 4;   // 동시에 여는 탭 수. 브라우저 메모리와 사이트 부하의 균형.
 
-/** 技法 텍스트 → canonical. 조각·공예는 스코프 밖. */
+/**
+ * 技法 텍스트 → canonical. 조각·공예는 스코프 밖.
+ * ⚠️ 이 컬렉션은 재료를 일본어로도 영어로도 쓴다("Color woodblock print",
+ *    "Color on silk, hanging scroll"). 일본어만 보던 초판은 우키요에 판화와
+ *    동아시아 회화를 스코프밖으로 버렸다.
+ */
 function toCategory(medium) {
   const s = String(medium || '');
-  if (/ブロンズ|大理石|石膏|木彫|鋳造|陶|磁|漆|ガラス|金工|彫刻/.test(s)) return null;
+  if (/ブロンズ|大理石|石膏|木彫|鋳造|陶|磁|漆|ガラス|金工|彫刻|木製/.test(s)) return null;
+  if (/Bronze|Marble|Plaster|Ceramic|Porcelain|Lacquer|Glass|Iron|Wood carving/i.test(s)) return null;
   if (/リトグラフ|石版|木版|銅版|エッチング|シルクスクリーン|版画|ドライポイント|アクアチント/.test(s)) return 'print';
+  if (/woodblock|lithograph|etching|engraving|screenprint|woodcut|aquatint|drypoint|print/i.test(s)) return 'print';
   if (/写真|ゼラチン|印画紙/.test(s)) return 'photograph';
-  if (/素描|デッサン|鉛筆|木炭|パステル|コンテ|ペン|インク|水彩/.test(s)) return 'drawing';
-  if (/油彩|油絵|テンペラ|アクリル|岩絵具|絹本|紙本|着色|カンヴァ|画布|板|紙/.test(s)) return 'painting';
+  if (/photograph|gelatin silver|albumen/i.test(s)) return 'photograph';
+  if (/素描|デッサン|鉛筆|木炭|パステル|コンテ|ペン|インク/.test(s)) return 'drawing';
+  if (/drawing|pencil|charcoal|pastel|chalk|crayon/i.test(s)) return 'drawing';
+  if (/油彩|油絵|テンペラ|アクリル|岩絵具|絹本|紙本|着色|カンヴァ|画布|板|紙|水彩/.test(s)) return 'painting';
+  if (/oil|tempera|acrylic|canvas|color on silk|color on paper|ink on silk|ink on paper|watercolor|gouache/i.test(s)) return 'painting';
   return undefined;
 }
 
@@ -64,40 +74,41 @@ const sha8 = s => crypto.createHash('sha256').update(s).digest('hex').slice(0, 8
  * 처럼 이어지므로 "연도／재료" "숫자×숫자cm" 패턴으로 끊는다.
  */
 function parseBody(text) {
-  const t = String(text || '').replace(/\s+/g, ' ');
-  const start = t.indexOf('収蔵品詳細');
-  const body = start >= 0 ? t.slice(start + 6) : t;
-  const seg = body.replace(/^.*?HOME\s*/, '').trim();
+  const raw = String(text || '');
+  const i = raw.indexOf('収蔵品詳細');
+  // 본문은 줄 단위로 오고 순서가 일정하다:
+  //   … | HOME <일본어제목> | <일본어제목> | <영문제목> | (빈줄) | <연대>／<재료> | (빈줄) | <치수>
+  // innerText 의 줄바꿈을 살려서 읽어야 제목·연대·재료 경계가 흐트러지지 않는다.
+  const lines = (i >= 0 ? raw.slice(i) : raw).split('\n').map(s => s.trim()).filter(Boolean);
 
-  const dim = (seg.match(/([\d.]+\s*[×x]\s*[\d.]+(?:\s*[×x]\s*[\d.]+)?\s*cm)/) || [])[1] || '';
-  const dateMedium = (seg.match(/((?:明治|大正|昭和|平成|令和)?\s*[\d]+\s*年?(?:（\d{4}）)?\s*／\s*[^0-9]{1,40})/) || [])[1] || '';
-  const [dateRaw, mediumRaw] = dateMedium.split('／').map(s => (s || '').trim());
+  const homeIdx = lines.findIndex(l => l.startsWith('HOME'));
+  const head = lines.slice(homeIdx >= 0 ? homeIdx : 0);
+  if (homeIdx >= 0) head[0] = head[0].replace(/^HOME\s*/, '');
 
-  // 제목은 본문 맨 앞. 일본어 제목이 두 번 반복된 뒤 영문이 오는 형태가 흔하다.
-  const head = seg.split(/(?:明治|大正|昭和|平成|令和)?\s*[\d]+\s*年?(?:（\d{4}）)?\s*／/)[0].trim();
-  const latin = (head.match(/[A-Za-zÀ-ɏ][A-Za-zÀ-ɏ0-9 ,.'’()\-:;&]*$/) || [])[0];
-  const titleEn = latin && latin.replace(/[^A-Za-zÀ-ɏ]/g, '').length >= 3 ? latin.trim() : '';
-  const titleJa = titleEn ? head.slice(0, head.length - titleEn.length).trim() : head;
-  // 일본어 제목이 두 번 반복되면 하나로 줄인다
-  const half = titleJa.slice(0, Math.floor(titleJa.length / 2)).trim();
-  const titleJaClean = half && titleJa.endsWith(half) && half.length > 1 ? half : titleJa;
+  // "연대／재료" 줄과 "…cm" 줄을 찾는다
+  const dmIdx = head.findIndex(l => l.includes('／'));
+  const dimIdx = head.findIndex(l => /[\d.]+\s*[×x]\s*[\d.]+\s*cm|径[\d.]+cm|高[\d.]+cm/.test(l));
+  const [dateRaw, mediumRaw] = dmIdx >= 0
+    ? head[dmIdx].split('／').map(s => s.trim())
+    : ['', ''];
+  const dim = dimIdx >= 0 ? head[dimIdx] : '';
 
-  // 작가는 "ARTIST 作家解説 海老原喜之助 Ebihara Kinosuke 1904-1970 <약력…>" 구간에 있다.
-  // 한국 사용자와 앱의 작가 매칭을 위해 로마자 표기를 우선한다(다른 일본 컬렉션과 동일 규칙).
+  // 제목 줄들 = HOME 이후 ~ 연대 줄 이전
+  const titleLines = head.slice(0, dmIdx >= 0 ? dmIdx : 3).filter(Boolean);
+  // 일본어 제목이 두 번 반복되고 그 뒤에 영문이 오는 형태가 표준이다
+  const titleEn = titleLines.find(l => /^[A-Za-zÀ-ɏ][^\u3000-\u9fff]*$/.test(l) && l.replace(/[^A-Za-zÀ-ɏ]/g, '').length >= 3) || '';
+  const titleJa = titleLines.find(l => /[\u3000-\u9fff\u3040-\u30ff]/.test(l)) || '';
+
+  // 작가: "ARTIST | 作家解説 | <일본어명> | <로마자명> | <생몰년>"
   let artist = '', artistJa = '';
-  const am = t.match(/ARTIST\s*作家解説\s*(.+?)(?:\s*\d{4}\s*[-–]\s*\d{0,4}|\s*同じ作家|\s*収蔵品データベース)/);
-  if (am) {
-    const chunk = am[1].trim();
-    const lat = chunk.match(/[A-Za-zÀ-ɏ][A-Za-zÀ-ɏ.'’\- ]*$/);
-    if (lat && lat[0].replace(/[^A-Za-zÀ-ɏ]/g, '').length >= 3) {
-      artist = lat[0].trim();
-      artistJa = chunk.slice(0, chunk.length - lat[0].length).trim();
-    } else {
-      artistJa = chunk;
-    }
+  const aIdx = head.findIndex(l => l === '作家解説');
+  if (aIdx >= 0) {
+    const after = head.slice(aIdx + 1, aIdx + 4);
+    artistJa = after.find(l => /[\u3000-\u9fff\u3040-\u30ff]/.test(l)) || '';
+    artist = after.find(l => /^[A-Za-zÀ-ɏ][A-Za-zÀ-ɏ.'\u2019\- ]*$/.test(l) && l.replace(/[^A-Za-zÀ-ɏ]/g, '').length >= 3) || '';
   }
 
-  return { titleEn, titleJa: titleJaClean, date: dateRaw, medium: mediumRaw, dimensions: dim, artist, artistJa };
+  return { titleEn, titleJa, date: dateRaw, medium: mediumRaw, dimensions: dim, artist, artistJa };
 }
 
 async function main() {
@@ -138,10 +149,23 @@ async function main() {
 
   const done = RESUME && fs.existsSync(PROGRESS)
     ? new Map(Object.entries(JSON.parse(fs.readFileSync(PROGRESS, 'utf8')))) : new Map();
+  // 브라우저를 강제 종료하면 그때 열려 있던 탭이 전부 render-error 로 기록된다.
+  // 실제 실패가 아니라 중단의 부산물이므로 재개할 때 항상 되돌린다.
+  {
+    let r = 0;
+    for (const [k, v] of done) if (v.skip && /render-error/.test(v.skip)) { done.delete(k); r++; }
+    if (r) console.log(`[fujibi] 중단으로 생긴 render-error ${r}건 자동 회수`);
+  }
   if (args.includes('--retry-failed')) {
     let r = 0;
     for (const [k, v] of done) if (v.skip && /fetch-failed|error:|render/.test(v.skip)) { done.delete(k); r++; }
     console.log(`[fujibi] 일시적 실패 ${r}건 복구`);
+  }
+  if (args.includes('--retry-scope')) {
+    // 분류 규칙을 고쳤을 때 쓴다. 예전 규칙으로 스코프밖 판정된 것을 되돌려 다시 본다.
+    let r = 0;
+    for (const [k, v] of done) if (v.skip === 'out-of-scope') { done.delete(k); r++; }
+    console.log(`[fujibi] 스코프밖 ${r}건 재판정 대상으로 복구`);
   }
   const rejects = fs.createWriteStream(REJECT, { flags: RESUME ? 'a' : 'w' });
 

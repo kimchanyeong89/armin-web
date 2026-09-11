@@ -38,15 +38,36 @@ const PUBLIC_BASE = 'https://pub-396fad1f96754c2f816f260faf970e63.r2.dev';
 const PREFIX = `artworks/${MUSEUM.id}-collection`;
 const PAGES = 4;
 
-/** Mia classification → canonical. 스코프 밖이면 null, 판단 불가면 undefined. */
+/**
+ * Mia classification → canonical.
+ * ⚠️ 미술관 자체 분류(classification)가 재료 문자열보다 권위 있다. 먼저 본다.
+ *    합쳐서 순서대로 검사했더니 classification="Paintings" + medium="Ink on paper" 인
+ *    동아시아 수묵화 3,141건이 medium 의 "Ink" 에 걸려 drawing 으로 새어 나갔다.
+ */
 function toCategory(cls, medium) {
-  const s = `${cls || ''} ${medium || ''}`;
-  if (/Sculpture|Ceramic|Furniture|Textile|Metalwork|Jewelry|Glass|Costume|Arms|Vessel|Tools|Lighting|Jade|Lacquer/i.test(s)) return null;
-  if (/Print|Woodblock|Lithograph|Etching|Engraving|Screenprint|Ukiyo/i.test(s)) return 'print';
-  if (/Photograph|Gelatin silver|Albumen|Daguerreotype/i.test(s)) return 'photograph';
-  if (/Video|Film|Time-based/i.test(s)) return 'video';
-  if (/Drawing|Watercolor|Pastel|Charcoal|Graphite|Chalk|Ink/i.test(s)) return 'drawing';
-  if (/Painting|Oil|Tempera|Acrylic|Canvas|Panel/i.test(s)) return 'painting';
+  const c = String(cls || '');
+  // ⚠️ 분류는 쉼표로 나열되고 **첫 항목이 그 작품의 성격**이다.
+  //    "Paintings, Calligraphy" 는 그림에 화제가 달린 동아시아 서화라 회화지만
+  //    "Calligraphy, Paintings" 는 글씨가 주다. 전체 문자열로 테스트하면 둘이 같아져
+  //    순수 서예 348건이 소묘로 새어 들어왔다(서예는 수집 대상이 아니다).
+  const primary = c.split(',')[0].trim();
+  if (/^(Calligraphy|Reproductions?|Casts and Copies|Woodwork|Basketry|Leatherwork|Ceremonial Objects|Funerary Goods|Judaica|Architecture|Printing Matrices|Dolls)\b/i.test(primary)) return null;
+  // 복제·위작은 어느 자리에 적혀 있든 원작이 아니다
+  if (/Fakes and Forgeries|Reproductions|Casts and Copies/i.test(c)) return null;
+  if (/Sculpture|Ceramic|Furniture|Textile|Metalwork|Jewelry|Glass|Costume|Arms|Vessel|Tools|Lighting|Jade|Lacquer|Dolls|Accessories|Clothing/i.test(c)) return null;
+  if (/Painting/i.test(c)) return 'painting';
+  if (/Drawing/i.test(c)) return 'drawing';
+  if (/Print|Woodblock|Ukiyo/i.test(c)) return 'print';
+  if (/Photograph/i.test(c)) return 'photograph';
+  if (/Video|Film|Time-based/i.test(c)) return 'video';
+
+  // 분류가 없거나 애매할 때만 재료로 추론한다
+  const m = String(medium || '');
+  if (/Bronze|Marble|Plaster|Wood carving|Ceramic|Porcelain|Lacquer|Glass|Silver|Gold|Iron/i.test(m)) return null;
+  if (/Lithograph|Etching|Engraving|Screenprint|Woodcut|Woodblock|Aquatint|Drypoint/i.test(m)) return 'print';
+  if (/Gelatin silver|Albumen|Daguerreotype|Photograph/i.test(m)) return 'photograph';
+  if (/Oil|Tempera|Acrylic|Canvas|Panel|Fresco|Gouache/i.test(m)) return 'painting';
+  if (/Watercolor|Pastel|Charcoal|Graphite|Chalk|Crayon|Ink/i.test(m)) return 'drawing';
   return undefined;
 }
 
@@ -106,14 +127,38 @@ async function main() {
   // 회화 → 드로잉 → 판화 → 사진 순으로 처리한다. 중간에 멈춰도 가치 높은 것부터 남는다.
   const ORDER = { painting: 0, drawing: 1, print: 2, photograph: 3, video: 4 };
   candidates.sort((a, b) => (ORDER[a.category] ?? 9) - (ORDER[b.category] ?? 9));
+
+  // --only painting,drawing 처럼 카테고리를 한정한다.
+  // Mia 는 판화 2.8만·사진 2.1만이라 전부 받으면 하루가 걸리는데, 판화는 흑백 복제가
+  // 많아 필터에서 대부분 걸러지고 사진도 1920년 이전이 많아 시간 대비 얻는 게 적다.
+  const onlyIdx = args.indexOf('--only');
+  if (onlyIdx >= 0 && args[onlyIdx + 1]) {
+    const want = new Set(args[onlyIdx + 1].split(',').map(s => s.trim()));
+    const before = candidates.length;
+    for (let i = candidates.length - 1; i >= 0; i--) if (!want.has(candidates[i].category)) candidates.splice(i, 1);
+    console.log(`[mia] --only ${[...want].join(',')} → ${before} → ${candidates.length}건`);
+  }
   console.log(`[mia] 스코프밖 ${pre.outOfScope} · id없음 ${pre.noId} → 후보 ${candidates.length}건`);
 
   const done = RESUME && fs.existsSync(PROGRESS)
     ? new Map(Object.entries(JSON.parse(fs.readFileSync(PROGRESS, 'utf8')))) : new Map();
+  // 브라우저를 강제 종료하면 그때 열려 있던 탭이 전부 render-error 로 기록된다.
+  // 실제 실패가 아니라 중단의 부산물이므로 재개할 때 항상 되돌린다.
+  {
+    let r = 0;
+    for (const [k, v] of done) if (v.skip && /render-error/.test(v.skip)) { done.delete(k); r++; }
+    if (r) console.log(`[mia] 중단으로 생긴 render-error ${r}건 자동 회수`);
+  }
   if (args.includes('--retry-failed')) {
     let r = 0;
     for (const [k, v] of done) if (v.skip && /fetch-failed|error:|render/.test(v.skip)) { done.delete(k); r++; }
     console.log(`[mia] 일시적 실패 ${r}건 복구`);
+  }
+  if (args.includes('--retry-scope')) {
+    // 분류 규칙을 고쳤을 때 쓴다. 예전 규칙으로 스코프밖 판정된 것을 되돌려 다시 본다.
+    let r = 0;
+    for (const [k, v] of done) if (v.skip === 'out-of-scope') { done.delete(k); r++; }
+    console.log(`[mia] 스코프밖 ${r}건 재판정 대상으로 복구`);
   }
   const rejects = fs.createWriteStream(REJECT, { flags: RESUME ? 'a' : 'w' });
 

@@ -1,0 +1,362 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>COLLY 수집 대장</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans+KR:wght@300;400;500;600&family=Nanum+Myeongjo:wght@400;700;800&display=swap">
+<style>
+:root{
+  --ink:#0E100B; --ink-2:#15180F; --ink-3:#1C2014;
+  --rule:#262A1D; --rule-soft:#1E2216;
+  --paper:#E9EBE0; --muted:#878D74; --faint:#5C6150;
+  --accent:#CCFF00;
+  --c1:#CCFF00; --c2:#A5CE12; --c3:#7E9E1E; --c4:#5C7222; --c5:#47561F;
+  --decline:#55583F; --decline-2:#3E4235; --stop:#C9553D;
+  --gutter:clamp(16px,4vw,44px);
+}
+*{box-sizing:border-box}
+html{background:var(--ink)}
+body{
+  margin:0; background:var(--ink); color:var(--paper);
+  font-family:"IBM Plex Sans KR","Apple SD Gothic Neo",system-ui,sans-serif;
+  font-weight:300; -webkit-font-smoothing:antialiased;
+}
+.mono{font-family:"IBM Plex Mono",ui-monospace,SFMono-Regular,Menlo,monospace;font-variant-numeric:tabular-nums}
+.wrap{max-width:1080px;margin:0 auto;padding:0 var(--gutter) 96px}
+
+/* ── 대장 표제 ───────────────────────────────── */
+.masthead{padding:44px 0 0}
+.eyebrow{
+  font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--faint);margin:0 0 14px
+}
+.title{
+  font-family:"Nanum Myeongjo",serif;font-weight:800;
+  font-size:clamp(30px,5.2vw,50px);line-height:1.06;letter-spacing:-.01em;
+  margin:0;text-wrap:balance
+}
+.title em{font-style:normal;color:var(--accent)}
+.lede{
+  margin:16px 0 0;max-width:56ch;font-size:14.5px;line-height:1.7;color:var(--muted)
+}
+
+/* ── 총계 한 줄 ─────────────────────────────── */
+.totals{
+  display:flex;flex-wrap:wrap;gap:0 32px;align-items:baseline;
+  margin-top:30px;padding:16px 0;
+  border-top:1px solid var(--rule);border-bottom:1px solid var(--rule)
+}
+.tot{display:flex;align-items:baseline;gap:9px}
+.tot dt{font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--faint);margin:0;
+  font-family:"IBM Plex Mono",monospace}
+.tot dd{margin:0;font-family:"IBM Plex Mono",monospace;font-weight:500;font-size:19px;font-variant-numeric:tabular-nums}
+.tot dd small{font-size:12px;color:var(--muted);font-weight:400;margin-left:3px}
+
+/* ── 항목(미술관) ───────────────────────────── */
+.entries{display:flex;flex-direction:column;gap:0;margin-top:8px}
+.entry{
+  display:grid;grid-template-columns:88px 1fr;gap:0 22px;
+  padding:26px 0;border-bottom:1px solid var(--rule-soft)
+}
+.entry:last-child{border-bottom:0}
+
+.rail{display:flex;flex-direction:column;gap:8px;padding-top:3px}
+.state{
+  display:inline-flex;align-items:center;gap:6px;align-self:start;
+  font-family:"IBM Plex Mono",monospace;font-size:10.5px;letter-spacing:.12em;
+  text-transform:uppercase;padding:3px 7px 3px 6px;border:1px solid currentColor;border-radius:2px
+}
+.state[data-s="running"]{color:var(--accent)}
+.state[data-s="stopped"]{color:var(--muted)}
+.state[data-s="idle"]{color:var(--faint)}
+.dot{width:5px;height:5px;border-radius:50%;background:currentColor;flex:none}
+.state[data-s="running"] .dot{animation:pulse 1.9s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.25}}
+.rate{font-family:"IBM Plex Mono",monospace;font-size:11px;color:var(--faint);line-height:1.5}
+.rate b{display:block;color:var(--muted);font-weight:500;font-size:13px}
+
+.head{display:flex;flex-wrap:wrap;align-items:baseline;gap:0 12px;margin-bottom:4px}
+.name{font-family:"Nanum Myeongjo",serif;font-weight:700;font-size:21px;letter-spacing:-.005em;margin:0}
+.name-en{font-family:"IBM Plex Mono",monospace;font-size:11.5px;color:var(--faint);letter-spacing:.01em}
+.count{
+  margin:2px 0 14px;font-family:"IBM Plex Mono",monospace;font-size:13px;color:var(--muted);
+  font-variant-numeric:tabular-nums
+}
+.count b{color:var(--paper);font-weight:600;font-size:17px}
+.count .of{color:var(--faint)}
+
+/* ── 수집/제외 비례 막대 ────────────────────── */
+.bar{display:flex;height:9px;width:100%;border-radius:1px;overflow:hidden;background:var(--ink-3)}
+.bar span{display:block;height:100%;min-width:1px}
+.bar span+span{border-left:1px solid var(--ink)}
+
+/* ── 내역 ───────────────────────────────────── */
+.detail{display:grid;grid-template-columns:repeat(auto-fill,minmax(196px,1fr));gap:3px 26px;margin-top:16px}
+.grp-label{
+  grid-column:1/-1;font-family:"IBM Plex Mono",monospace;font-size:10px;letter-spacing:.18em;
+  text-transform:uppercase;color:var(--faint);margin:12px 0 5px;
+  padding-bottom:5px;border-bottom:1px solid var(--rule-soft)
+}
+.grp-label:first-child{margin-top:0}
+.li{display:flex;align-items:baseline;gap:8px;padding:3px 0;font-size:13px}
+.sw{width:7px;height:7px;flex:none;border-radius:1px;transform:translateY(-1px)}
+.li .k{color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:0 1 auto}
+/* 장부의 점선 리더 — 항목과 수치가 멀어져도 눈이 줄을 놓치지 않는다 */
+.li .lead{flex:1 1 12px;min-width:12px;height:1px;align-self:center;
+  background:repeating-linear-gradient(90deg,var(--rule) 0 1px,transparent 1px 4px)}
+.li .v{font-family:"IBM Plex Mono",monospace;font-variant-numeric:tabular-nums;color:var(--paper);font-weight:500}
+.li[data-fail="1"] .v{color:var(--stop)}
+
+/* ── 바닥 ───────────────────────────────────── */
+.foot{
+  display:flex;flex-wrap:wrap;align-items:center;gap:14px 20px;
+  margin-top:34px;padding-top:16px;border-top:1px solid var(--rule);
+  font-family:"IBM Plex Mono",monospace;font-size:11.5px;color:var(--faint)
+}
+.foot .grow{flex:1 1 auto}
+button{
+  font-family:"IBM Plex Mono",monospace;font-size:11px;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--muted);background:transparent;border:1px solid var(--rule);border-radius:2px;
+  padding:6px 12px;cursor:pointer
+}
+button:hover{color:var(--accent);border-color:var(--accent)}
+button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.err{
+  margin-top:20px;padding:14px 16px;border:1px solid var(--stop);border-radius:2px;
+  color:var(--stop);font-size:13px;line-height:1.6
+}
+.err b{font-weight:600}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+@media (max-width:620px){
+  .entry{grid-template-columns:1fr;gap:12px}
+  .rail{flex-direction:row;align-items:center;gap:14px}
+}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="masthead">
+  <p class="eyebrow">COLLY · Collection Intake</p>
+  <h1 class="title">수집 <em>대장</em></h1>
+  <p class="lede">지금 돌고 있는 수집기가 무엇을 담고 무엇을 되돌려보내는지 기록한다.
+    제외 사유는 우리 수집 규칙 그대로다 — 이미지 없음, 색 없는 판화, 1920년 이전 사진, 범위 밖.
+    10초마다 스스로 갱신한다.</p>
+
+  <dl class="totals" id="totals">
+    <div class="tot"><dt>등록 미술관</dt><dd id="t-museums">—</dd></div>
+    <div class="tot"><dt>검색 색인</dt><dd id="t-indexed">—<small>점</small></dd></div>
+    <div class="tot"><dt>색인 시각</dt><dd id="t-indexed-at" style="font-size:14px">—</dd></div>
+  </dl>
+</header>
+
+<main class="entries" id="entries"></main>
+<div id="error-slot"></div>
+
+<footer class="foot">
+  <span id="f-generated">—</span>
+  <span class="grow"></span>
+  <span id="f-next">—</span>
+  <button type="button" id="refresh">지금 새로고침</button>
+</footer>
+
+</div>
+
+<script>
+(function(){
+  'use strict';
+
+  // 두 곳을 순서대로 시도한다. vite 는 서버가 뜬 뒤 생긴 public/ 파일에
+  // 404 대신 SPA fallback HTML 을 주기 때문에, 상태코드가 아니라
+  // "JSON 으로 파싱되는가" 로 판정해야 한다.
+  var SOURCES = ['/status.json', 'http://localhost:5188/status.json', '/data/scrape-status.json'];
+  var POLL_MS = 10000;
+
+  // 수집 분류 — 막대는 강조색 계열로, 제외는 조용한 올리브/회색으로.
+  // 실패만 붉은색이라 눈에 먼저 들어온다.
+  var CATEGORY = {
+    painting:      { ko: '회화',     c: 'var(--c1)' },
+    drawing:       { ko: '소묘',     c: 'var(--c2)' },
+    print:         { ko: '판화',     c: 'var(--c3)' },
+    photograph:    { ko: '사진',     c: 'var(--c4)' },
+    video:         { ko: '영상',     c: 'var(--c5)' },
+    mixed_media_2d:{ ko: '혼합매체', c: 'var(--c5)' },
+    calligraphy:   { ko: '서예',     c: 'var(--c5)' },
+    manuscript:    { ko: '필사본',   c: 'var(--c5)' }
+  };
+  var SKIP = {
+    'no-image':           { ko: '이미지 없음',            c: 'var(--decline-2)' },
+    'out-of-scope':       { ko: '수집 범위 밖',           c: 'var(--decline)'   },
+    'grayscale-print':    { ko: '색 없는 판화',           c: 'var(--decline)'   },
+    'photo-pre-1920':     { ko: '1920년 이전 사진',       c: 'var(--decline)'   },
+    'small-image':        { ko: '해상도 미달 (400px 미만)', c: 'var(--decline)' },
+    'image-fetch-failed': { ko: '이미지 내려받기 실패',   c: 'var(--stop)', fail: 1 },
+    'page-failed':        { ko: '페이지 열기 실패',       c: 'var(--stop)', fail: 1 },
+    'render-error':       { ko: '렌더 실패',              c: 'var(--stop)', fail: 1 },
+    'image-failed':       { ko: '이미지 실패',            c: 'var(--stop)', fail: 1 },
+    'error':              { ko: '오류',                   c: 'var(--stop)', fail: 1 },
+    'no-image':           { ko: '이미지 없음',            c: 'var(--decline-2)' },
+    'page-failed':        { ko: '페이지 열기 실패',       c: 'var(--stop)', fail: 1 }
+  };
+  var STATE_KO = { running: '수집 중', stopped: '멈춤', idle: '대기', reading: '읽는 중' };
+
+  var nf = new Intl.NumberFormat('ko-KR');
+  function n(v){ return nf.format(Math.round(Number(v) || 0)); }
+  function esc(s){ return String(s == null ? '' : s).replace(/[&<>"]/g, function(m){
+    return { '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;' }[m];
+  }); }
+  function clock(d){
+    if (!d || isNaN(+d)) return '—';
+    return new Intl.DateTimeFormat('ko-KR', { hour:'2-digit', minute:'2-digit', second:'2-digit', hour12:false }).format(d);
+  }
+  function ago(ms){
+    if (!ms) return '';
+    var s = Math.max(0, Math.round((Date.now() - ms) / 1000));
+    if (s < 60) return s + '초 전';
+    if (s < 3600) return Math.round(s / 60) + '분 전';
+    return Math.round(s / 3600) + '시간 전';
+  }
+
+  // 창을 연 뒤의 표본만 모아 분당 수집 속도를 낸다. 서버는 이력을 갖고 있지 않다.
+  var history = {};
+  function rateOf(id, kept, at){
+    var h = history[id] || (history[id] = []);
+    var last = h[h.length - 1];
+    if (!last || last.kept !== kept || at - last.at > 60000) h.push({ kept: kept, at: at });
+    if (h.length > 60) h.shift();
+    if (h.length < 2) return null;
+    var a = h[0], b = h[h.length - 1];
+    var mins = (b.at - a.at) / 60000;
+    if (mins < 0.5) return null;
+    return (b.kept - a.kept) / mins;
+  }
+
+  function renderJob(job){
+    var kept = job.kept || 0, processed = job.processed || 0;
+    var cats = job.byCategory || {}, skips = job.bySkip || {};
+
+    // 막대 한 줄에 담은 것과 되돌려보낸 것을 그대로 비례로 싣는다.
+    var repair = job.kind === 'repair';
+    var segs = [];
+    // 교정 작업엔 작품 분류가 없다. 교체한 것 · 원래 맞았던 것 · 못 고친 것으로 나눈다.
+    if (repair) {
+      if (kept) segs.push({ v: kept, c: 'var(--c1)', t: '교체 ' + n(kept) });
+      if (job.alreadyOk) segs.push({ v: job.alreadyOk, c: 'var(--c4)', t: '이미 정상 ' + n(job.alreadyOk) });
+    }
+    if (!repair) Object.keys(cats).sort(function(a,b){ return cats[b]-cats[a]; }).forEach(function(k){
+      segs.push({ v: cats[k], c: (CATEGORY[k] || {}).c || 'var(--c5)', t: ((CATEGORY[k]||{}).ko || k) + ' ' + n(cats[k]) });
+    });
+    Object.keys(skips).sort(function(a,b){ return skips[b]-skips[a]; }).forEach(function(k){
+      segs.push({ v: skips[k], c: (SKIP[k] || {}).c || 'var(--decline)', t: ((SKIP[k]||{}).ko || k) + ' ' + n(skips[k]) });
+    });
+    var sum = segs.reduce(function(a,s){ return a + s.v; }, 0) || 1;
+    var bar = segs.map(function(s){
+      return '<span style="width:' + (s.v / sum * 100).toFixed(3) + '%;background:' + s.c + '" title="' + esc(s.t) + '"></span>';
+    }).join('');
+
+    function list(map, dict, fallbackColor){
+      var keys = Object.keys(map).sort(function(a,b){ return map[b]-map[a]; });
+      if (!keys.length) return '<div class="li"><span class="k">없음</span></div>';
+      return keys.map(function(k){
+        var d = dict[k] || {};
+        return '<div class="li"' + (d.fail ? ' data-fail="1"' : '') + '>' +
+          '<i class="sw" style="background:' + (d.c || fallbackColor) + '"></i>' +
+          '<span class="k">' + esc(d.ko || k) + '</span><i class="lead"></i>' +
+          '<span class="v">' + n(map[k]) + '</span></div>';
+      }).join('');
+    }
+
+    // 분모가 실제로 있는 작업만 퍼센트를 쓴다. 총량을 모르는 작업에 가짜 진행률을 그리지 않는다.
+    var of = repair
+      ? ' <span class="of">건 교체 · ' + n(processed) + '건 검토 ' + (job.total ? '(' + Math.round(processed / job.total * 100) + '%)' : '') + '</span>'
+      : job.total
+        ? ' <span class="of">/ ' + n(job.total) + '건 · ' + Math.round(processed / job.total * 100) + '%</span>'
+        : ' <span class="of">건 수집 · ' + n(processed) + '건 검토</span>';
+
+    var r = rateOf(job.id, kept, Date.now());
+    // 진행 파일은 200건마다 flush 된다 — 마지막 기록 시각을 같이 보여줘야
+    // 숫자가 잠깐 멈춰 있는 게 고장이 아니라는 걸 안다.
+    var rateHtml = job.state === 'running'
+      ? '<div class="rate"><b>' + (r == null ? '측정 중' : n(r) + '점') + '</b>' + (r == null ? '표본 수집' : '분당') + '<br>기록 ' + esc(ago(job.updatedAt)) + '</div>'
+      : '<div class="rate">' + esc(ago(job.updatedAt)) + '</div>';
+
+    return '<article class="entry">' +
+      '<div class="rail">' +
+        '<span class="state" data-s="' + esc(job.state) + '"><i class="dot"></i>' + esc(STATE_KO[job.state] || job.state) + '</span>' +
+        rateHtml +
+      '</div>' +
+      '<div class="body">' +
+        '<div class="head"><h2 class="name">' + esc(job.ko) + '</h2><span class="name-en">' + esc(job.en) + '</span></div>' +
+        '<p class="count"><b>' + n(kept) + '</b>' + of + '</p>' +
+        '<div class="bar">' + bar + '</div>' +
+        '<div class="detail">' +
+          (repair
+            ? '<p class="grp-label">고친 것</p>' + list({ '이미지 교체': kept, '원래 맞았음': job.alreadyOk || 0 }, {
+                '이미지 교체': { ko: '이미지 교체', c: 'var(--c1)' },
+                '원래 맞았음': { ko: '원래 맞았음 — 손댈 필요 없었음', c: 'var(--c4)' },
+              }, 'var(--c5)')
+            : '<p class="grp-label">담은 것 — ' + n(kept) + '점</p>' + list(cats, CATEGORY, 'var(--c5)')) +
+          '<p class="grp-label">' + (repair ? '못 고친 것' : '되돌려보낸 것') + ' — ' + n(job.skipped || 0) + '건</p>' + list(skips, SKIP, 'var(--decline)') +
+        '</div>' +
+      '</div>' +
+    '</article>';
+  }
+
+  var elEntries = document.getElementById('entries');
+  var elErr = document.getElementById('error-slot');
+  var elNext = document.getElementById('f-next');
+  var nextAt = 0;
+
+  function paint(data){
+    var app = data.app || {};
+    document.getElementById('t-museums').textContent = app.museums == null ? '—' : n(app.museums) + '관';
+    document.getElementById('t-indexed').innerHTML = (app.indexed == null ? '—' : n(app.indexed)) + '<small>점</small>';
+    document.getElementById('t-indexed-at').textContent =
+      app.indexedAt ? clock(new Date(app.indexedAt)) + ' · ' + ago(+new Date(app.indexedAt)) : '—';
+
+    elEntries.innerHTML = (data.jobs || []).map(renderJob).join('');
+    document.getElementById('f-generated').textContent =
+      '기록 ' + clock(new Date(data.generatedAt)) + ' · ' + ago(+new Date(data.generatedAt));
+    elErr.innerHTML = '';
+  }
+
+  function fail(msg){
+    elErr.innerHTML = '<div class="err"><b>현황 파일을 읽지 못했다.</b><br>' + esc(msg) +
+      '<br>기록기가 꺼졌을 수 있다. 터미널에서 <code>node scripts/write-scrape-status.mjs --watch</code> 를 다시 띄우면 된다.</div>';
+  }
+
+  var goodSource = null;
+  function tryLoad(i){
+    var list = goodSource ? [goodSource] : SOURCES;
+    if (i >= list.length) return Promise.reject(new Error("현황을 주는 곳이 없다"));
+    return fetch(list[i] + '?t=' + Date.now(), { cache: 'no-store' })
+      .then(function(r){ return r.text(); })
+      .then(function(t){
+        var d = JSON.parse(t);        // HTML 이 오면 여기서 던진다 → 다음 후보로
+        if (!d || !d.jobs) throw new Error("모양이 다르다");
+        goodSource = list[i];
+        return d;
+      })
+      .catch(function(){ goodSource = null; return tryLoad(i + 1); });
+  }
+  function load(){
+    tryLoad(0)
+      .then(paint)
+      .catch(function(e){ fail(e.message); })
+      .then(function(){ nextAt = Date.now() + POLL_MS; });
+  }
+
+  document.getElementById('refresh').addEventListener('click', load);
+  setInterval(load, POLL_MS);
+  setInterval(function(){
+    var s = Math.max(0, Math.ceil((nextAt - Date.now()) / 1000));
+    elNext.textContent = '다음 갱신 ' + s + '초';
+  }, 250);
+  load();
+})();
+</script>
+</body>
+</html>

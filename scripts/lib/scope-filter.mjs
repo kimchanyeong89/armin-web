@@ -60,9 +60,21 @@ export function isPreModernPhoto(category, year) {
   return category === 'photograph' && Number.isFinite(year) && year < 1920;
 }
 
+/**
+ * R2 에 올릴 WebP 로 변환한다.
+ *
+ * ⚠️ 품질을 **축소 여부에 맞춘다.** 4000px 원본을 1600px 로 줄이면 다운샘플링
+ *    자체가 노이즈를 걸러내서 q80 으로 충분하다. 그런데 원본이 이미 1600px
+ *    이하면 줄일 게 없어서 q80 이 그대로 화질을 깎는다.
+ *    후쿠오카(긴변 1200px 고정 파생본)가 이 경우였다 — 140KB JPEG(0.17 B/px)이
+ *    41KB WebP(0.05 B/px)가 되어 눈에 띄게 뭉갰다. q92 면 0.12 B/px 로 회복된다.
+ */
 export async function toWebp(buf) {
-  return sharp(buf, { limitInputPixels: false })
+  const img = sharp(buf, { limitInputPixels: false });
+  const { width = 0, height = 0 } = await img.metadata();
+  const downscaling = Math.max(width, height) > 1600;
+  return img
     .resize(1600, 1600, { fit: 'inside', withoutEnlargement: true })
-    .webp({ quality: 80 })
+    .webp({ quality: downscaling ? 80 : 92 })
     .toBuffer();
 }
