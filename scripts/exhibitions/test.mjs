@@ -85,6 +85,12 @@ function testNoise() {
   check(isNoiseTitle('대관 안내'), '대관 안내 제외');
   check(isNoiseTitle('${item.name}'), '템플릿 리터럴 제외');
   check(isNoiseTitle('관람료 안내'), '관람료 제외');
+  check(isNoiseTitle('리움·호암미술관 사칭 주의 안내'), '사칭 주의 안내 제외');
+  check(isNoiseTitle('옛돌정원 휴장 안내'), '휴장 안내 제외');
+  check(isNoiseTitle('리움-호암 셔틀버스 운행 안내'), '셔틀버스 안내 제외');
+  check(isNoiseTitle('DDP 안내'), '기관 안내 제외');
+  check(isNoiseTitle('예정 전시'), '구역 제목 제외');
+  check(isNoiseTitle('M2 2층 〈드림 하우스〉 단축 관람 안내 : 9. 5.(토)'), '단축 관람 안내 제외');
   check(!isNoiseTitle('추사 김정희와 그의 동반자'), '정상 전시 통과');
   check(!isNoiseTitle('미라, 봉인된 신비'), '쉼표 포함 제목 통과');
   check(!isNoiseTitle('유영국: 산은 내 안에 있다'), '콜론 포함 제목 통과');

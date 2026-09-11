@@ -9,6 +9,15 @@ on:
     paths:
       - 'scripts/exhibitions/**'
       - '.github/workflows/check-exhibitions.yml'
+  # 머지 전 작업 브랜치에서 '실제 반영'을 확인하기 위한 경로.
+  # 커밋 메시지에 [apply-exhibitions] 가 있을 때만 실제로 파일을 고쳐 브랜치에 되돌려 커밋한다.
+  # (머지 후에는 sync-exhibitions.yml 이 매일 이 일을 한다)
+  push:
+    branches:
+      - 'claude/**'
+    paths:
+      - 'scripts/exhibitions/**'
+      - '.github/workflows/check-exhibitions.yml'
   workflow_dispatch:
     inputs:
       source:
@@ -17,7 +26,7 @@ on:
         default: ''
 
 permissions:
-  contents: read
+  contents: write
 
 jobs:
   check:
@@ -34,16 +43,43 @@ jobs:
       - name: 파이프라인 자체 점검
         run: node scripts/exhibitions/test.mjs
 
-      - name: 전시 수집 (dry-run — 파일 안 씀)
+      # 커밋 메시지에 [apply-exhibitions] 가 있으면 실제로 파일을 고치고 포스터도 R2 에 올린다.
+      - name: 실행 모드 판별
+        id: mode
+        run: |
+          if printf '%s' "${{ github.event.head_commit.message }}" | grep -q '\[apply-exhibitions\]'; then
+            echo "apply=true" >> "$GITHUB_OUTPUT"
+            echo "flag=" >> "$GITHUB_OUTPUT"
+            echo "실제 반영 모드"
+          else
+            echo "apply=false" >> "$GITHUB_OUTPUT"
+            echo "flag=--dry-run" >> "$GITHUB_OUTPUT"
+            echo "점검 모드 (파일 안 씀)"
+          fi
+
+      - name: 전시 수집
         id: sync
         run: |
           mkdir -p /tmp/exh
           ARGS=""
           if [ -n "${{ inputs.source }}" ]; then ARGS="--source ${{ inputs.source }}"; fi
           set +e
-          node scripts/exhibitions/sync.mjs --dry-run $ARGS \
+          node scripts/exhibitions/sync.mjs ${{ steps.mode.outputs.flag }} $ARGS \
             --report /tmp/exh/check.json --summary /tmp/exh/check.md 2>&1 | tee /tmp/exh/console.log
           echo "exit=${PIPESTATUS[0]}" >> "$GITHUB_OUTPUT"
+
+      - name: 반영 결과를 브랜치에 커밋
+        if: steps.mode.outputs.apply == 'true'
+        run: |
+          if git diff --quiet -- src/data/exhibitions.js; then
+            echo "변경 없음"
+            exit 0
+          fi
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/data/exhibitions.js
+          git commit -m "data(exhibitions): 수도권 미술관 전시 실수집 반영 ($(TZ=Asia/Seoul date +%Y-%m-%d))"
+          git push origin "HEAD:${GITHUB_REF_NAME}"
 
       - name: 결과 요약
         if: always()
