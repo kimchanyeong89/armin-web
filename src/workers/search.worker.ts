@@ -1,5 +1,11 @@
 
-import { normalizeSearchText } from "../utils/textNormalize";
+import { normalizeSearchText, looksNonEnglish } from "../utils/textNormalize";
+import { searchTextServer } from "../utils/serverKeywordSearch";
+import { SEARCH_TEXT_MAX_LIMIT as SEARCH_TEXT_CANDIDATES } from "../../workers/semantic-search/src/searchText";
+
+// 개발 서버에선 로딩 전 후보를 로컬 데이터로 만든 검색 DB(scripts/vite-local-search.ts)에서 받는다.
+// 프로덕션 D1 은 지난 배포 시점 데이터라, 로컬에서 고친 게 처음 목록에 안 보였다(옛 르누아르).
+const SEARCH_TEXT_ENDPOINT = import.meta.env.DEV ? '/__search-text' : undefined;
 
 // Web Worker for handling search operations off the main thread
 
@@ -230,45 +236,61 @@ function isMeaningfulArtistSuggestion(name: string): boolean {
 let artistVariantCounts = new Map<string, Map<string, number>>();
 
 // Helper to process data items
-function processChunk(items: any[]) {
+/**
+ * 색인 레코드(n/a/i/m/e/…) → 검색 항목. 제외 대상이면 null.
+ *
+ * ⚠️ 로컬 청크와 서버(D1) 후보가 **반드시 이 함수 하나**를 거쳐야 한다. 같은 변환·
+ *    같은 점수를 받아야 색인 로딩 전(서버 후보)과 후(전체)의 목록이 똑같이 나온다.
+ */
+function toSearchItem(art: any): any | null {
+    const museumName = art.m || '';
+    const exhibitionId = art.e || '';
+    const museumLower = museumName.toLowerCase();
+    const exhibitionLower = exhibitionId.toLowerCase();
+    if (EXCLUDED_MUSEUMS.some(name => museumLower.includes(name))) return null;
+    if (EXCLUDED_EXHIBITION_IDS.some(id => exhibitionLower.includes(id))) return null;
+
+    const rawArtist = art.a || 'Unknown';
+    const artist = isLowQualityArtistLabel(rawArtist) ? 'Unknown' : rawArtist;
+    let image = art.i || '';
+    // Double check for blocked images that might have slipped through
+    if (image && (image.includes('no-image') || image.includes('placeholder') || image.includes('defaut') || image.includes('missing'))) {
+        image = '';
+    }
+    return {
+        id: art.id,
+        name: art.n || '',
+        artist,
+        image,
+        date: art.d || '',
+        museumName,
+        exhibitionId,
+        category: art.c || '',
+        sourceUrl: art.u || '',
+        searchName: normalizeSearchText(art.n || ''),
+        searchArtist: artist === 'Unknown' ? '' : normalizeSearchText(artist),
+    };
+}
+
+// 청크 처리(res.json() 뒤 processChunk)는 전부 마이크로태스크라, 쉬지 않으면 여러 청크가
+// 연달아 돌며 검색 메시지·서버 응답(매크로태스크)을 몇 초씩 굶긴다 — 첫 결과가 4.5초
+// 걸렸다. 40ms 넘게 일했을 때만 한 번 양보한다(매번 양보하면 로딩이 느려진다).
+let lastYieldAt = 0;
+async function yieldIfBusy(): Promise<void> {
+    if (performance.now() - lastYieldAt < 40) return;
+    await new Promise<void>((resolve) => setTimeout(resolve, 0));
+    lastYieldAt = performance.now();
+}
+
+async function processChunk(items: any[]): Promise<void> {
     // Flatten if necessary
     const flat = (items.length > 0 && Array.isArray(items[0])) ? items.flat() : items;
 
-    // Parse optimized
-    const parsed = flat.map((art: any) => {
-        const rawArtist = art.a || 'Unknown';
-        const artist = isLowQualityArtistLabel(rawArtist) ? 'Unknown' : rawArtist;
-        return {
-            id: art.id,
-            name: art.n || '',
-            artist,
-            image: art.i || '',
-            date: art.d || '',
-            museumName: art.m || '',
-            exhibitionId: art.e || '',
-            category: art.c || '',
-            sourceUrl: art.u || '',
-            searchName: normalizeSearchText(art.n || ''),
-            searchArtist: artist === 'Unknown' ? '' : normalizeSearchText(artist),
-        };
-    }).map((item: any) => {
-        // Double check for blocked images that might have slipped through
-        if (item.image && (item.image.includes('no-image') || item.image.includes('placeholder') || item.image.includes('defaut') || item.image.includes('missing'))) {
-            item.image = '';
-        }
-        return item;
-    });
-
     // Add to buffer
-    for (const p of parsed) {
-        const museumName = (p.museumName || '').toLowerCase();
-        const exhibitionId = (p.exhibitionId || '').toLowerCase();
-        if (EXCLUDED_MUSEUMS.some(name => museumName.includes(name))) {
-            continue;
-        }
-        if (EXCLUDED_EXHIBITION_IDS.some(id => exhibitionId.includes(id))) {
-            continue;
-        }
+    for (let i = 0; i < flat.length; i++) {
+        if (i % 500 === 0) await yieldIfBusy();
+        const p = toSearchItem(flat[i]);
+        if (!p) continue;
         allArtworks.push(p);
         if (p.id) {
             const existing = idMap.get(p.id);
@@ -362,7 +384,7 @@ async function loadData() {
             const res = await fetch(withCacheBust('/data/search-index.json'), fetchInit());
             if (res.ok) {
                 const data = await res.json();
-                processChunk(data.a || []);
+                await processChunk(data.a || []);
                 finalizeArtists();
                 indexLoadComplete = true;
                 self.postMessage({ type: 'LOAD_COMPLETE', count: allArtworks.length });
@@ -371,6 +393,9 @@ async function loadData() {
         }
 
         const manifest = await manifestRes.json();
+        // 방금 받은 manifest 를 '확인'으로 친다. 안 그러면 첫 검색이 maybeRefreshData 에서
+        // 같은 manifest 를 또 받느라, 로딩 중인 워커 뒤에 줄을 한 번 더 선다.
+        lastManifestCheckAt = Date.now();
         const manifestToken = manifest?.t ? String(manifest.t) : '';
         if (manifestToken) {
             loadedManifestToken = manifestToken;
@@ -384,7 +409,7 @@ async function loadData() {
             const res = await fetch(chunkUrl, fetchInit());
             if (!res.ok) throw new Error(`HTTP ${res.status}`);
             const items = await res.json();
-            processChunk(items);
+            await processChunk(items);
             self.postMessage({ type: 'LOAD_PROGRESS', count: allArtworks.length });
         };
 
@@ -660,7 +685,12 @@ async function search(query: string, requestId?: string) {
     }
 
     const warm = searchWarm(query);
-    if (warm.results.length > 0 || warm.artists.length > 0) {
+    // warm 은 색인이 없을 때의 임시 답이다. 곧 더 나은 답(서버 후보·전체 검색)이 올 땐 먼저
+    // 그리지 않는다 — 흔한 단어("portrait")는 warm 12점이 떴다가 30점으로, 로딩이 끝나면
+    // 다시 12점 → 30점으로 목록이 두 번 흔들렸다. 모바일은 전체 색인이 없어 warm 이 본 답이다.
+    const willAskServer = !indexLoadComplete && !IS_MOBILE_WORKER && !looksNonEnglish(query);
+    const postWarmFirst = IS_MOBILE_WORKER || (!indexLoadComplete && !willAskServer);
+    if (postWarmFirst && (warm.results.length > 0 || warm.artists.length > 0)) {
         self.postMessage({
             type: 'RESULTS',
             query,
@@ -681,16 +711,34 @@ async function search(query: string, requestId?: string) {
         // File unavailable → fall through to the normal index path.
     }
 
-    // Until the full index has finished loading, return warm results only.
-    // A partial scan here would post incomplete results and a too-low artist
-    // work-count that then jump when the rest of the index arrives — the
-    // "sequential loading / keeps reloading" the user sees. The component
-    // re-runs this search once on LOAD_COMPLETE.
+    // 색인이 다 올라오기 전(데스크톱 ~20초)에는 서버(D1)에서 후보만 받아 와
+    // **아래 전체 검색과 똑같은 변환·점수 함수**로 정렬한다. D1 은 이 색인에서
+    // 만들어지므로(scripts/sync-d1.mjs) 같은 작품·같은 필드이고, 로딩이 끝나
+    // 재검색해도 목록이 그대로다.
+    // ⚠️ 예전엔 컴포넌트가 서버 결과를 따로 받아 D1 순서대로 붙였다가 20초 뒤
+    //    로컬 결과로 통째로 갈아엎었다. 틀린 목록이 먼저 뜨고 나중에 바뀌었다.
+    // 모바일(IS_MOBILE_WORKER)은 청크를 아예 안 받고, 비라틴 질의는 번역이
+    // 필요해서 둘 다 컴포넌트의 서버 보강 경로를 그대로 쓴다.
+    let pool: any[] = allArtworks;
+    let fromServer = false;
     if (allArtworks.length === 0 || !indexLoadComplete) {
-        if (warm.results.length === 0 && warm.artists.length === 0) {
-            self.postMessage({ type: 'RESULTS', query, results: [], artists: [], pending: !indexLoadComplete, source: 'warm', ...(requestId ? { requestId } : {}) });
+        const rows = willAskServer ? await searchTextServer(query, SEARCH_TEXT_CANDIDATES, undefined, SEARCH_TEXT_ENDPOINT) : [];
+        if (rows.length === 0) {
+            // 서버가 비었으면(오류·백오프) 그때 warm 으로 답한다. 이미 warm 을 보냈으면 다시 안 보낸다.
+            if (willAskServer || (warm.results.length === 0 && warm.artists.length === 0)) {
+                self.postMessage({ type: 'RESULTS', query, results: willAskServer ? warm.results : [], artists: willAskServer ? warm.artists : [], pending: !indexLoadComplete, source: 'warm', ...(requestId ? { requestId } : {}) });
+            }
+            return;
         }
-        return;
+        const seen = new Set<string>();
+        pool = [];
+        for (const row of rows) {
+            const item = toSearchItem(row);
+            if (!item || !item.id || seen.has(item.id)) continue;
+            seen.add(item.id);
+            pool.push(item);
+        }
+        fromServer = true;
     }
     const results = [];
     const queryTokens = tokenizeQueryForMatch(q);
@@ -711,8 +759,8 @@ async function search(query: string, requestId?: string) {
         previewImage: string;
     }>();
 
-    for (let i = 0; i < allArtworks.length; i++) {
-        const art = allArtworks[i];
+    for (let i = 0; i < pool.length; i++) {
+        const art = pool[i];
         let score = 0;
 
         const nameMatch = art.searchName.includes(q);
@@ -822,7 +870,14 @@ async function search(query: string, requestId?: string) {
     }
 
     // Sort results by score
-    results.sort((a, b) => b.score - a.score);
+    // ⚠️ 동점 순서를 입력 순서에 맡기면 안 된다. 서버 후보(D1 FTS 순)와 전체 색인(id 순)은
+    //    들어오는 순서가 달라서, 같은 작품·같은 점수여도 안정 정렬이 서로 다른 순서를
+    //    남겼다 — 색인 로딩이 끝나면 목록이 뒤섞였다("Deux skiffs" 4번째 → 9번째).
+    //    점수 → 짧은 제목(더 가까운 일치) → id 로 고정한다.
+    results.sort((a, b) =>
+        (b.score - a.score) ||
+        (a.item.searchName.length - b.item.searchName.length) ||
+        (String(a.item.id) < String(b.item.id) ? -1 : String(a.item.id) > String(b.item.id) ? 1 : 0));
     const topArtworks = results.slice(0, 100).map(r => r.item);
 
     // Get top artists: use the most frequent variant name as display name
@@ -897,7 +952,9 @@ async function search(query: string, requestId?: string) {
         .slice(0, 12)
         .map(({ artist, count, image }) => ({ artist, count, image }));
 
-    self.postMessage({ type: 'RESULTS', query, results: topArtworks, artists: topArtists, pending: false, source: 'full', ...(requestId ? { requestId } : {}) });
+    // 서버 후보일 땐 작가 목록을 warm 것으로 둔다. 로딩 중엔 작가별 작품 수가
+    // 부분 집계라, 여기서 만들면 로딩이 끝날 때 숫자가 튄다.
+    self.postMessage({ type: 'RESULTS', query, results: topArtworks, artists: fromServer ? warm.artists : topArtists, pending: fromServer ? !indexLoadComplete : false, source: fromServer ? 'server' : 'full', ...(requestId ? { requestId } : {}) });
 }
 
 function getRandomArtworkResults(limit: number, onlyWithImage: boolean): any[] {

@@ -2305,7 +2305,9 @@ export default function GlobalSearchBar({ forceWidth, onOpenLightbox, onNavigate
                 const activeQuery = normalizeLookupText(queryRef.current || '');
                 if (incomingQuery && incomingQuery !== activeQuery) return;
                 // A 'full' message is the definitive result — end the loading state.
-                if (String(e.data?.source || '') === 'full') setSearchPending(false);
+                // 'server' 도 마찬가지다: 색인 로딩 전에 워커가 서버 후보를 전체 검색과
+                // 같은 점수 함수로 정렬해 보낸 것이라, 로딩 뒤 'full' 과 같은 목록이다.
+                if (['full', 'server'].includes(String(e.data?.source || ''))) setSearchPending(false);
 
                 const preciseResults = (results || [])
                     .map((art: SearchableArtwork) => ({

@@ -1,3 +1,4 @@
+import { looksNonEnglish } from './textNormalize';
 /**
  * Armin Gallery — SigLIP 시맨틱 검색 유틸
  *
@@ -26,9 +27,8 @@ const IS_MOBILE_DEVICE = typeof navigator !== 'undefined' && (
  * 자동 번역 후 인코딩)보다 빨리 race를 이기면 사용자는 무의미한 결과를 본다.
  * 따라서 비영어 쿼리는 Tier 1을 건너뛰고 서버에만 맡긴다.
  */
-export function looksNonEnglish(text: string): boolean {
-    return /[ㄱ-ㆎ가-힣぀-ゟ゠-ヿ一-鿿Ѐ-ӿ؀-ۿऀ-ॿ฀-๿֐-׿]/.test(text);
-}
+// 워커도 쓰므로 textNormalize 로 옮겼다. 이 파일도 직접 쓰고, 기존 import 경로도 살린다.
+export { looksNonEnglish };
 
 /**
  * Wrap a query in a minimal caption so SigLIP's text encoder (trained on

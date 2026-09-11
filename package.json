@@ -70,7 +70,7 @@
     "build:urban-topo": "node ./scripts/generate-urban-topo.mjs",
     "build:simplified-geo": "node ./scripts/build-simplified-geo.mjs",
     "build:admin-lines": "node ./scripts/build-simplified-admin-lines.mjs",
-    "deploy": "npm run build && npx wrangler pages deploy dist --project-name=armin-web",
+    "deploy": "npm run build && npx wrangler pages deploy dist --project-name=armin-web && node scripts/sync-d1.mjs --apply",
     "deploy:firebase": "npm run build && npx firebase deploy --only hosting",
     "fetch:ng": "node ./scripts/fetch-national-gallery.js",
     "update:ng-image": "node ./scripts/update-national-gallery-image.js",

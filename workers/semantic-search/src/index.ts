@@ -1,3 +1,4 @@
+import { buildFtsQuery, SEARCH_TEXT_SQL, SEARCH_TEXT_MAX_LIMIT } from './searchText';
 /**
  * Armin Semantic Search Worker — SigLIP 768D 버전
  *
@@ -329,16 +330,6 @@ async function translateToEnglish(text: string, env: Env): Promise<string | null
     }
 }
 
-/** FTS5 키워드 토큰화: 연산자·제어 문자 제거 → 소문자 → 공백 분리 → 2자 이상만 남김 */
-function ftsTokenize(text: string): string[] {
-    return text
-        .toLowerCase()
-        .replace(/["'()\\]/g, ' ')
-        .replace(/[ -]/g, ' ')
-        .split(/\s+/)
-        .map((t) => t.trim())
-        .filter((t) => t.length >= 2);
-}
 
 // ============================================================
 // SigLIP 텍스트 인코딩
@@ -734,22 +725,55 @@ async function queryWithMetadata(
 // ============================================================
 export default {
     /**
-     * 매 4분마다 Cloud Run Jina 인코더에 /warmup 호출 → cold start 회피.
-     * Cloud Run min=0 (비용 절감)이라 idle 시 컨테이너 종료 → 첫 요청 cold.
-     * scheduled 으로 항상-warm 유지. CF Workers scheduled = 무료 무제한.
+     * 매 4분마다 인코더 두 개를 모두 warm 유지 → cold start 회피.
+     *  - Jina (Cloud Run/Modal, min=0): /warmup
+     *  - SigLIP (self-host, SIGLIP_ENDPOINT_URL): 실제 /encode 한 번.
+     *
+     * 이전엔 Jina만 warm 시켰다. 그래서 SigLIP(기본 "빠름" 엔진)은 idle 시
+     * 컨테이너가 잠들고, 첫 검색이 30~60초 cold start → 클라이언트 12초 타임아웃을
+     * 넘겨 "결과 없음"으로 보였다. Jina(정밀)는 warm이라 정상 동작 → "정밀만 됨"
+     * 증상의 원인. 두 인코더를 함께 데워 SigLIP도 항상 빠르게 응답하도록 한다.
+     * CF Workers scheduled = 무료 무제한이라 비용 0.
      */
-    async scheduled(_event: ScheduledEvent, env: Env, ctx: ExecutionContext): Promise<void> {
-        const url = env.JINA_TEXT_ENCODER_URL;
-        if (!url) return;
-        try {
-            const ctl = new AbortController();
-            const timer = setTimeout(() => ctl.abort(), 25000);
-            const r = await fetch(`${url}/warmup`, { signal: ctl.signal });
-            clearTimeout(timer);
-            console.log(`[warmup] HTTP ${r.status}`);
-        } catch (err: any) {
-            console.warn(`[warmup] failed: ${err.message}`);
-        }
+    async scheduled(_event: ScheduledEvent, env: Env, _ctx: ExecutionContext): Promise<void> {
+        const warmJina = async () => {
+            const url = env.JINA_TEXT_ENCODER_URL;
+            if (!url) return;
+            try {
+                const ctl = new AbortController();
+                const timer = setTimeout(() => ctl.abort(), 25000);
+                const r = await fetch(`${url}/warmup`, { signal: ctl.signal });
+                clearTimeout(timer);
+                console.log(`[warmup:jina] HTTP ${r.status}`);
+            } catch (err: any) {
+                console.warn(`[warmup:jina] failed: ${err.message}`);
+            }
+        };
+
+        // A real /encode keeps the model hot (a bare health check may not touch
+        // the model), which is what the search path actually needs warm.
+        const warmSigLIP = async () => {
+            const base = env.SIGLIP_ENDPOINT_URL;
+            if (!base) return;
+            try {
+                const headers: Record<string, string> = { 'Content-Type': 'application/json' };
+                if (env.SIGLIP_ENDPOINT_TOKEN) headers['Authorization'] = `Bearer ${env.SIGLIP_ENDPOINT_TOKEN}`;
+                const ctl = new AbortController();
+                const timer = setTimeout(() => ctl.abort(), 25000);
+                const r = await fetch(`${base.replace(/\/+$/, '')}/encode`, {
+                    method: 'POST',
+                    headers,
+                    body: JSON.stringify({ text: 'warm' }),
+                    signal: ctl.signal,
+                });
+                clearTimeout(timer);
+                console.log(`[warmup:siglip] HTTP ${r.status}`);
+            } catch (err: any) {
+                console.warn(`[warmup:siglip] failed: ${err.message}`);
+            }
+        };
+
+        await Promise.all([warmJina(), warmSigLIP()]);
     },
 
     async fetch(request: Request, env: Env, ctx: ExecutionContext): Promise<Response> {
@@ -1393,7 +1417,7 @@ export default {
                 catch { return Response.json({ error: 'Invalid JSON' }, { status: 400, headers: corsHeaders }); }
 
                 const rawQuery = String(body?.query || '').trim();
-                const limit = Math.max(1, Math.min(100, Number(body?.limit) || 50));
+                const limit = Math.max(1, Math.min(SEARCH_TEXT_MAX_LIMIT, Number(body?.limit) || 50));
 
                 if (!rawQuery || rawQuery.length < 2) {
                     return Response.json({ results: [], query: rawQuery }, { headers: corsHeaders });
@@ -1413,35 +1437,13 @@ export default {
 
                 // FTS5 쿼리: 그룹 내부는 implicit AND(모든 토큰 매칭),
                 // 원문 그룹과 번역 그룹 사이는 OR — 어느 쪽이든 맞으면 매칭.
-                const ftsGroups: string[] = [];
-                const origTokens = ftsTokenize(rawQuery);
-                if (origTokens.length) {
-                    ftsGroups.push('(' + origTokens.map((t) => `"${t}"*`).join(' ') + ')');
-                }
-                if (translatedQuery) {
-                    const trTokens = ftsTokenize(translatedQuery);
-                    if (trTokens.length) {
-                        ftsGroups.push('(' + trTokens.map((t) => `"${t}"*`).join(' ') + ')');
-                    }
-                }
-
-                if (ftsGroups.length === 0) {
+                const ftsQuery = buildFtsQuery(rawQuery, translatedQuery);
+                if (!ftsQuery) {
                     return Response.json({ results: [], query: rawQuery }, { headers: corsHeaders });
                 }
 
-                const ftsQuery = ftsGroups.join(' OR ');
-
                 try {
-                    const stmt = env.DB.prepare(
-                        `SELECT a.id AS id, a.name AS n, a.artist AS a, a.museum AS m,
-                                a.exhibition_id AS e, a.image AS i, a.date AS d, a.source_url AS u,
-                                a.category AS c, fts.rank AS rank
-                         FROM artworks_fts fts
-                         JOIN artworks a ON a.rowid = fts.rowid
-                         WHERE artworks_fts MATCH ?
-                         ORDER BY fts.rank
-                         LIMIT ?`
-                    ).bind(ftsQuery, limit);
+                    const stmt = env.DB.prepare(SEARCH_TEXT_SQL).bind(ftsQuery, limit);
                     const result = await stmt.all();
                     return Response.json(
                         {

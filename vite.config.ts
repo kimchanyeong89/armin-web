@@ -1,5 +1,8 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
+import path from 'node:path'
+import { fileURLToPath } from 'node:url'
+import { localSearchText } from './scripts/vite-local-search'
 // Cesium plugin disabled (Cesium removed)
 
 // Large files are served from R2 and removed from dist after build
@@ -10,7 +13,9 @@ export default defineConfig({
   // Use relative base so assets and public/ resolve under sub-paths and file://
   base: '/',
 
-  plugins: [react()],
+  // localSearchText: 개발 서버에서 색인 로딩 전 검색 후보를 로컬 데이터로 답한다(POST /__search-text).
+  // 프로덕션 D1 은 지난 배포 시점 데이터라, 로컬에서 고친 게 처음 목록에 안 보였다.
+  plugins: [react(), localSearchText(path.dirname(fileURLToPath(import.meta.url)))],
   // Exclude large files from public folder copy (they're served from R2)
   publicDir: 'public',
   build: {
@@ -30,6 +35,7 @@ export default defineConfig({
         '**/siglip_state.json',
         '**/EMBEDDING_PROGRESS.md',
         '**/logs/**',
+        '**/workers/semantic-search/.local-search.sqlite*',
       ],
     },
     proxy: {

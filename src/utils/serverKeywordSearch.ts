@@ -9,6 +9,9 @@
 
 const WORKER_URL = 'https://armin-semantic-search.armin-art.workers.dev';
 const SEARCH_TIMEOUT_MS = 4000;
+// 여러 미술관이 같은 id 를 쓰면 D1 은 두 번째부터 키에 "␟전시id" 를 붙여 둔다
+// (scripts/sync-d1.mjs 의 ID_SEP 와 같아야 한다). 앱이 보는 id 는 원래 것이어야 한다.
+const D1_ID_SEP = '\u241F';
 
 export interface ServerKeywordResult {
     id: string;
@@ -50,6 +53,8 @@ export async function searchTextServer(
     query: string,
     limit = 50,
     signal?: AbortSignal,
+    // 개발 서버에선 검색 워커가 로컬 데이터용 '/__search-text' 를 넘긴다(scripts/vite-local-search.ts).
+    endpoint = `${WORKER_URL}/search-text`,
 ): Promise<ServerKeywordResult[]> {
     const trimmed = query?.trim?.() ?? '';
     if (trimmed.length < 2) return [];
@@ -61,7 +66,7 @@ export async function searchTextServer(
     signal?.addEventListener('abort', onAbort, { once: true });
 
     try {
-        const res = await fetch(`${WORKER_URL}/search-text`, {
+        const res = await fetch(endpoint, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             credentials: 'omit',
@@ -80,7 +85,12 @@ export async function searchTextServer(
 
         const data = await res.json() as { results?: ServerKeywordResult[] };
         markHealthy();
-        return Array.isArray(data?.results) ? data.results : [];
+        const rows = Array.isArray(data?.results) ? data.results : [];
+        for (const r of rows) {
+            const cut = typeof r.id === 'string' ? r.id.indexOf(D1_ID_SEP) : -1;
+            if (cut >= 0) r.id = r.id.slice(0, cut);
+        }
+        return rows;
     } catch (err: any) {
         // Network error / timeout / aborted. Don't permanently mark unhealthy
         // for transient failures; just return empty so caller falls back.

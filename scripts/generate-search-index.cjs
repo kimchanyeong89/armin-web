@@ -545,7 +545,7 @@ async function generateSearchIndex() {
 
     console.log(`Found ${collectionFiles.length} collection files\n`);
 
-    const allArtworks = [];
+    let allArtworks = [];
     const artistCounts = new Map();
     const processedIds = new Set();
     const processedContent = new Set(); // content hash (title + artist + image)
@@ -607,6 +607,20 @@ async function generateSearchIndex() {
             console.log(`✅ ${file}: ${addedCount.toLocaleString()} artworks${dupMsg}`);
         }
     }
+
+    // MoMA 사진 컬렉션(moma-photography, id=moma-photo-N) 1.8만 점 중 약 9천 점은
+    // MoMA 본 컬렉션(moma-highlights, id=N)과 같은 작품이다. R2 이미지 키가 달라
+    // 위의 content hash(제목|작가|이미지 끝 20자)로는 안 걸려, 검색에 같은 작품이
+    // 두 번 떴다("White Skiff" ×2). 본 컬렉션 쪽을 남긴다.
+    // 전시 페이지는 컬렉션 JSON 을 직접 읽으므로 사진 전시에는 그대로 나온다.
+    const momaMainTitles = new Map();
+    for (const a of allArtworks) if (a.e === 'moma-highlights') momaMainTitles.set(String(a.id), a.n);
+    const beforeMomaDedupe = allArtworks.length;
+    allArtworks = allArtworks.filter((a) => {
+        const m = /^moma-photo-(.+)$/.exec(String(a.id));
+        return !(m && momaMainTitles.get(m[1]) === a.n);
+    });
+    console.log(`\n🧹 MoMA 사진·본 컬렉션 중복 ${(beforeMomaDedupe - allArtworks.length).toLocaleString()}점 제거`);
 
     // Sort strictly by ID to ensure deterministic chunking
     allArtworks.sort((a, b) => (a.id > b.id ? 1 : -1));

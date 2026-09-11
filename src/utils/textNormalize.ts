@@ -104,3 +104,13 @@ export const normalizeSearchText = (value?: string): string => {
 
 export const normalizeSearchToken = (value?: string): string =>
   normalizeSearchText(value).replace(/[^\p{L}\p{N}]+/gu, '');
+
+/**
+ * 한글·가나·한자·키릴·아랍·데바나가리·태국·히브리 문자가 섞였는지.
+ * 로컬 색인은 영문 코퍼스라 이런 질의는 서버 번역 경로로 보낸다.
+ * (siglipSearch.ts 에 있었는데 검색 워커도 쓰게 되어 여기로 옮겼다 —
+ *  siglipSearch.ts 는 인코더 워커를 new URL() 로 참조해서 워커에서 import 하면 딸려 번들된다.)
+ */
+export function looksNonEnglish(text: string): boolean {
+    return /[ㄱ-ㆎ가-힣぀-ゟ゠-ヿ一-鿿Ѐ-ӿ؀-ۿऀ-ॿ฀-๿֐-׿]/.test(text);
+}

@@ -148,3 +148,6 @@ public/data/weekly-proposals/
 
 # D1 seed dump — too large for GitHub (200MB+); regenerate from source
 workers/semantic-search/d1-seed.sql
+workers/semantic-search/d1-sync.sql
+workers/semantic-search/d1-snapshot.json
+workers/semantic-search/.local-search.sqlite*
