@@ -304,7 +304,9 @@ async function putCachedTranslation(env: Env, original: string, translated: stri
 async function translateToEnglish(text: string, env: Env): Promise<string | null> {
     if (!env.AI) return null;
     try {
-        const result = await env.AI.run('@cf/meta/llama-3.1-8b-instruct', {
+        // 접미사 없는 llama-3.1-8b-instruct 는 2026-05-30 에 폐기됐다(AiError 5028). 그 뒤로 번역이
+        // 전부 실패해 한국어 검색이 번역 없이 돌았다 — 같은 모델의 fp8 판을 쓴다.
+        const result = await env.AI.run('@cf/meta/llama-3.1-8b-instruct-fp8', {
             messages: [
                 {
                     role: 'system',
