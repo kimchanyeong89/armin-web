@@ -28,8 +28,11 @@ export default {
   async fetch({ log }) {
     const { cards } = await tryUrls(
       [
+        `${BASE}/kr/whatson/exhibition`,
         `${BASE}/kr/whatson/exhibition/list?status=ING`,
         `${BASE}/kr/whatson/exhibition/list`,
+        `${BASE}/kr/exhibition`,
+        `${BASE}/kr/whatson`,
         `${BASE}/kr/exhibition/exhibitionList.do`,
       ],
       (html, url) => genericParse(html, url),

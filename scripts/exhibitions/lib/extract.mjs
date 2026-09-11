@@ -30,6 +30,38 @@ const DEFAULT_BLOCK_PATTERNS = [
 /** 제목으로 쓰기엔 부적절한 잡음 텍스트 */
 const NOISE = /^(?:더보기|more|자세히|바로가기|이전|다음|목록|prev|next|view|상세보기)$/i;
 
+/**
+ * 전시가 아닌 항목을 걸러낸다.
+ * 미술관 목록 페이지에는 공지·인증서·대관 안내가 전시 카드와 같은 마크업으로 섞여 있고,
+ * 인라인 스크립트가 만든 템플릿 문자열(' + r.title + ')이 잡히기도 한다.
+ */
+export function isNoiseTitle(title = '') {
+  const t = String(title).trim();
+  if (t.length < 2) return true;
+
+  // 자바스크립트 조각이 새어 들어온 경우
+  if (/[+]\s*\w+\.\w+|\$\{|\bfunction\b|\bvar\s|\breturn\b|<\/?\w+>/.test(t)) return true;
+
+  // 전시가 아닌 게시물
+  if (
+    /인증서|휴관|공지사항|채용|모집|입찰|대관\s*안내|주차|관람료|오시는\s*길|이용\s*안내|개인정보|저작권|사이트맵|운영\s*시간|예약\s*안내|자원봉사|후원|뉴스레터/.test(
+      t
+    )
+  ) {
+    return true;
+  }
+  return false;
+}
+
+/** script/style/noscript 를 제거한다. 블록 분할 전에 반드시 거쳐야 한다. */
+function stripInertTags(html = '') {
+  return String(html)
+    .replace(/<script[\s\S]*?<\/script>/gi, ' ')
+    .replace(/<style[\s\S]*?<\/style>/gi, ' ')
+    .replace(/<noscript[\s\S]*?<\/noscript>/gi, ' ')
+    .replace(/<!--[\s\S]*?-->/g, ' ');
+}
+
 /** 블록 안에서 제목으로 가장 그럴듯한 문자열을 고른다. */
 function pickTitle(block) {
   // 1) 제목 성격의 태그/클래스 우선
@@ -76,8 +108,10 @@ function pickDates(block) {
  * @param {number} [opts.minCards] 이 개수 이상 나와야 유효한 분할로 본다
  * @returns {Array<{title,startDate,endDate,openEnded,posterUrl,officialUrl}>}
  */
-export function extractCards(html, baseUrl, opts = {}) {
+export function extractCards(rawHtml, baseUrl, opts = {}) {
   const { blockPatterns = DEFAULT_BLOCK_PATTERNS, minCards = 1 } = opts;
+  // 인라인 스크립트가 만든 HTML 템플릿 문자열이 카드로 잡히는 것을 막는다
+  const html = stripInertTags(rawHtml);
 
   for (const pattern of blockPatterns) {
     let blocks;
@@ -91,7 +125,7 @@ export function extractCards(html, baseUrl, opts = {}) {
     const cards = [];
     for (const block of blocks) {
       const title = pickTitle(block);
-      if (!title || title.length < 2) continue;
+      if (!title || isNoiseTitle(title)) continue;
       const { startDate, endDate, openEnded } = pickDates(block);
       if (!startDate) continue; // 기간 없는 블록은 전시 카드가 아니다
       const posterUrl = firstImage(block, baseUrl);
@@ -124,7 +158,7 @@ export function cardsFromJsonLd(html, baseUrl) {
     const types = [].concat(node['@type'] || []);
     if (!types.some((t) => /Event|Exhibition/i.test(String(t)))) continue;
     const title = cleanText(node.name || '');
-    if (!title) continue;
+    if (!title || isNoiseTitle(title)) continue;
     const image = Array.isArray(node.image) ? node.image[0] : node.image;
     out.push({
       title,

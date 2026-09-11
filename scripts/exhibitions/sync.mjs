@@ -9,6 +9,7 @@
  *   node scripts/exhibitions/sync.mjs --museum leeum-museum
  *   node scripts/exhibitions/sync.mjs --no-images     # 포스터 업로드 생략 (파싱 점검용)
  *   node scripts/exhibitions/sync.mjs --no-new       # 기존 전시 갱신만 (신규 추가 보류)
+ *   node scripts/exhibitions/sync.mjs --no-details   # 상세 페이지 보강 생략 (빠른 점검용)
  *   node scripts/exhibitions/sync.mjs --report out.json --summary out.md
  *
  * 안전 규칙:
@@ -23,6 +24,8 @@ import { tmpdir } from 'node:os';
 import { join, resolve } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 
+import { detailsFromHtml } from './lib/extract.mjs';
+import { getHtml } from './lib/http.mjs';
 import { ensurePoster } from './lib/images.mjs';
 import { findMissingFields, makeExhibitionId, mergeMuseum } from './lib/merge.mjs';
 import { todayKST } from './lib/parse.mjs';
@@ -47,6 +50,7 @@ const NO_IMAGES = hasFlag('no-images');
 const ONLY_SOURCE = getOpt('source');
 const ONLY_MUSEUM = getOpt('museum');
 const NO_NEW = hasFlag('no-new');
+const NO_DETAILS = hasFlag('no-details');
 const REPORT_PATH = getOpt('report');
 const SUMMARY_PATH = getOpt('summary');
 const TODAY = getOpt('today') || todayKST();
@@ -99,6 +103,61 @@ async function collect() {
   }
 
   return { cards: dedupe(all.map(withId)), sourceStatus };
+}
+
+// ── 상세 보강 ───────────────────────────────────────────────────
+
+/** 배열을 제한된 동시성으로 처리한다. */
+async function mapPool(items, limit, fn) {
+  const queue = [...items];
+  const workers = Array.from({ length: Math.min(limit, queue.length) }, async () => {
+    while (queue.length) await fn(queue.shift());
+  });
+  await Promise.all(workers);
+}
+
+/**
+ * 목록에 없는 소개문·포스터를 상세 페이지에서 보강한다.
+ *
+ * 주의: officialUrl 이 상세가 아니라 목록 페이지를 가리키면 사이트 공통 소개문이
+ * 딸려 온다. 그래서 보강 후 같은 미술관 안에서 중복되는 소개문은 지운다.
+ */
+async function enrichDetails(cards, report) {
+  const targets = cards.filter((c) => c.officialUrl && (!c.description || !c.posterUrl));
+  if (!targets.length) return;
+
+  log(`\n🔎 상세 페이지 보강 (${targets.length}건)...`);
+  await mapPool(targets, Number(process.env.ARMIN_DETAIL_CONCURRENCY || 4), async (card) => {
+    try {
+      const html = await getHtml(card.officialUrl, { referer: card.posterReferer, retries: 1 });
+      const d = detailsFromHtml(html, card.officialUrl);
+      if (!card.description && d.description) card.description = d.description;
+      if (!card.posterUrl && d.posterUrl) card.posterUrl = d.posterUrl;
+      if (!card.endDate && d.endDate) card.endDate = d.endDate;
+      report.details.enriched.push({ museumId: card.museumId, title: card.title });
+    } catch (err) {
+      report.details.failed.push({ museumId: card.museumId, title: card.title, error: err.message });
+    }
+  });
+
+  // 미술관별로 중복되는 소개문은 사이트 공통 문구로 보고 버린다
+  const byMuseum = new Map();
+  for (const c of cards) {
+    if (!c.description) continue;
+    if (!byMuseum.has(c.museumId)) byMuseum.set(c.museumId, new Map());
+    const counts = byMuseum.get(c.museumId);
+    counts.set(c.description, (counts.get(c.description) || 0) + 1);
+  }
+  let dropped = 0;
+  for (const c of cards) {
+    if (!c.description) continue;
+    if (byMuseum.get(c.museumId)?.get(c.description) > 1) {
+      c.description = '';
+      dropped++;
+    }
+  }
+  if (dropped) log(`  · 사이트 공통 문구로 판단해 소개문 ${dropped}건 제거`);
+  report.details.genericDropped = dropped;
 }
 
 // ── 포스터 ──────────────────────────────────────────────────────
@@ -234,6 +293,7 @@ async function main() {
     mode: NO_NEW ? 'update-only' : 'full',
     sources: [],
     museums: [],
+    details: { enriched: [], failed: [], genericDropped: 0 },
     posters: { uploaded: [], cached: [], failed: [], missing: [] },
     changes: [],
     incomplete: [],
@@ -242,6 +302,8 @@ async function main() {
   const { cards, sourceStatus } = await collect();
   report.sources = sourceStatus;
   log(`\n📦 총 ${cards.length}건 수집됨`);
+
+  if (!NO_DETAILS) await enrichDetails(cards, report);
 
   log('\n🖼  포스터 확보 중...');
   await attachPosters(cards, report);

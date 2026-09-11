@@ -25,6 +25,7 @@ import {
   splitBlocks,
   stripTags,
 } from './lib/parse.mjs';
+import { extractCards, isNoiseTitle } from './lib/extract.mjs';
 import { parseMuseumBlocks, findArrayRange, replaceExhibitionArray } from './lib/patch.mjs';
 import { findExisting, findMissingFields, mergeMuseum, normalizeTitle } from './lib/merge.mjs';
 import { coverKey } from './lib/images.mjs';
@@ -73,6 +74,31 @@ function testParse() {
   eq(firstImage('<img src="/blank.gif"><img data-src="/a/b.jpg">', 'https://m.kr'), 'https://m.kr/a/b.jpg', '빈 이미지 건너뛰기');
   eq(splitBlocks('<li class="ex">A</li><li class="ex">B</li>', '<li class="ex">').length, 2, '블록 분할');
   eq(attr('<img alt="전시 제목" src="a.jpg">', 'alt'), '전시 제목', '속성 추출');
+}
+
+// ── 잡음 제거 ────────────────────────────────────────────────────
+function testNoise() {
+  // 실제 수집에서 전시로 잘못 잡혔던 값들
+  check(isNoiseTitle('환경경영시스템 인증서'), '인증서 제외');
+  check(isNoiseTitle("' + r.title +'"), '스크립트 조각 제외');
+  check(isNoiseTitle('3전시 임시 휴관 안내(7.5.)'), '휴관 안내 제외');
+  check(isNoiseTitle('대관 안내'), '대관 안내 제외');
+  check(isNoiseTitle('${item.name}'), '템플릿 리터럴 제외');
+  check(isNoiseTitle('관람료 안내'), '관람료 제외');
+  check(!isNoiseTitle('추사 김정희와 그의 동반자'), '정상 전시 통과');
+  check(!isNoiseTitle('미라, 봉인된 신비'), '쉼표 포함 제목 통과');
+  check(!isNoiseTitle('유영국: 산은 내 안에 있다'), '콜론 포함 제목 통과');
+
+  // <script> 안의 HTML 템플릿이 카드로 잡히면 안 된다
+  const html = `
+    <script>var h = '<li class="item"><strong>' + r.title + '</strong><span>2026.01.01 ~ 2026.12.31</span></li>';</script>
+    <li class="item"><strong>진짜 전시</strong><span>2026.04.16 ~ 2026.11.22</span>
+      <img src="/p.jpg"><a href="/d/1">보기</a></li>`;
+  const cards = extractCards(html, 'https://m.kr');
+  eq(cards.length, 1, '스크립트 블록은 카드로 잡히지 않음');
+  eq(cards[0].title, '진짜 전시', '실제 전시만 추출');
+  eq(cards[0].startDate, '2026-04-16', '기간 추출');
+  eq(cards[0].posterUrl, 'https://m.kr/p.jpg', '포스터 추출');
 }
 
 // ── exhibitions.js 패치 ─────────────────────────────────────────
@@ -214,6 +240,7 @@ async function testRegistry() {
 // ── 실행 ────────────────────────────────────────────────────────
 console.log('전시 동기화 파이프라인 점검\n');
 testParse();
+testNoise();
 await testPatch();
 testMerge();
 await testRegistry();

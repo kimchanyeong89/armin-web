@@ -19,6 +19,12 @@ const DEFAULT_RETRIES = Number(process.env.ARMIN_HTTP_RETRIES ?? 3);
 /** 재시도할 가치가 있는 오류인지 (일시적 네트워크/서버 장애) */
 function isRetryable(err, status) {
   if (status) return status === 408 || status === 429 || status >= 500;
+
+  // 도메인이 없거나 연결이 거부되면 다시 걸어도 결과가 같다.
+  // (사라진 미술관 도메인에 재시도 3회를 쓰면 실행이 100초씩 늘어난다)
+  const code = err?.cause?.code || err?.code || '';
+  if (/ENOTFOUND|ECONNREFUSED|ERR_TLS_CERT_ALTNAME_INVALID|CERT_/i.test(String(code))) return false;
+
   const msg = String(err?.message || err);
   return /timeout|aborted|ECONNRESET|ETIMEDOUT|EAI_AGAIN|socket hang up|fetch failed/i.test(msg);
 }

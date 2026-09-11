@@ -25,7 +25,9 @@ export default {
 
     // 1) dataList API
     try {
-      const today = new Date().toISOString().slice(0, 10).replace(/-/g, '');
+      // BEGIN_DATE 를 오늘로 두면 '오늘 이후 시작하는' 전시만 걸려 이미 진행중인 전시를 놓친다.
+      // 1년 전부터 1년 뒤까지를 훑고, 종료된 전시는 뒤에서 걸러낸다.
+      const today = new Date(Date.now() - 365 * 864e5).toISOString().slice(0, 10).replace(/-/g, '');
       const until = new Date(Date.now() + 365 * 864e5).toISOString().slice(0, 10).replace(/-/g, '');
       const data = await getJson(
         `${BASE}/site/main/show/dataList?cp=1&PAGE_SIZE=40&BEGIN_DATE=${today}&END_DATE=${until}&catePriArr=6`,
@@ -74,6 +76,8 @@ export default {
       }
     }
 
-    return out.filter((c) => c.startDate);
+    // 이미 끝난 전시는 버린다 (조회 창을 과거까지 넓혔기 때문)
+    const today = new Date(Date.now() + 9 * 3600 * 1000).toISOString().slice(0, 10);
+    return out.filter((c) => c.startDate && (!c.endDate || c.endDate >= today));
   },
 };

@@ -16,9 +16,12 @@ export default {
   async fetch({ log }) {
     const { cards } = await tryUrls(
       [
-        `${BASE}/kor/exhibition/current-exhibition.do`,
         `${BASE}/contents/exhibition/index.do`,
-        `${BASE}/kor/exhibition/index.do`,
+        `${BASE}/kor/exhibition/exhibitionList.do`,
+        `${BASE}/exhibition`,
+        `${BASE}/kor/exhibition`,
+        `${BASE}/contents/exhibition/list.do`,
+        `${BASE}/`,
       ],
       (html, url) => genericParse(html, url),
       { referer: `${BASE}/`, log }
