@@ -81,7 +81,19 @@ export async function ensurePoster(srcUrl, { exhibitionId, referer, dryRun = fal
   if (!ok || !data?.success) {
     throw new Error(`R2 업로드 실패 (HTTP ${status}): ${data?.error || '알 수 없는 오류'}`);
   }
-  return { url: data.url || publicUrl, cached: Boolean(data.cached) };
+
+  // 워커가 배포 시점에 따라 다른 공개 호스트를 돌려줄 수 있다
+  // (wrangler.toml 의 R2_PUBLIC_URL 과 코드의 상수가 다르다).
+  // 키는 우리가 정하므로 canonical URL 이 접근 가능하면 그것을 쓰고,
+  // 아니면 워커가 준 URL 을 그대로 쓴다.
+  const returned = typeof data.url === 'string' ? data.url : '';
+  if (await existsOnR2(r2Key)) {
+    return { url: publicUrl, cached: Boolean(data.cached) };
+  }
+  if (returned) {
+    return { url: returned, cached: Boolean(data.cached), host: new URL(returned).host };
+  }
+  return { url: publicUrl, cached: Boolean(data.cached) };
 }
 
 /**
@@ -89,5 +101,14 @@ export async function ensurePoster(srcUrl, { exhibitionId, referer, dryRun = fal
  * exhibitions.js 의 기존 coverImage 를 유지할지 판단할 때 쓴다.
  */
 export function isR2Url(url) {
-  return typeof url === 'string' && url.startsWith(R2_PUBLIC_BASE);
+  if (typeof url !== 'string' || !url) return false;
+  if (url.startsWith(R2_PUBLIC_BASE)) return true;
+  // 같은 버킷을 가리키는 다른 r2.dev 공개 호스트도 허용한다.
+  // 여기서 막으면 업로드는 성공했는데 coverImage 가 비어 앱에서 전시가 사라진다.
+  try {
+    const { protocol, host } = new URL(url);
+    return protocol === 'https:' && /(^|\.)r2\.dev$/.test(host);
+  } catch {
+    return false;
+  }
 }

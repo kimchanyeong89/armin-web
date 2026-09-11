@@ -26,7 +26,7 @@ import { fileURLToPath, pathToFileURL } from 'node:url';
 
 import { detailsFromHtml } from './lib/extract.mjs';
 import { getHtml } from './lib/http.mjs';
-import { ensurePoster } from './lib/images.mjs';
+import { ensurePoster, isR2Url } from './lib/images.mjs';
 import { findMissingFields, makeExhibitionId, mergeMuseum } from './lib/merge.mjs';
 import { todayKST } from './lib/parse.mjs';
 import { replaceExhibitionArray } from './lib/patch.mjs';
@@ -178,6 +178,11 @@ async function attachPosters(cards, report) {
         referer: card.posterReferer,
         dryRun: DRY_RUN,
       });
+      // 업로드는 됐는데 URL 을 우리가 못 받아들이면 coverImage 가 비고,
+      // 앱은 포스터 없는 전시를 아예 표시하지 않는다. 조용히 넘기면 안 된다.
+      if (!isR2Url(url)) {
+        throw new Error(`업로드는 됐으나 허용되지 않는 URL: ${url}`);
+      }
       card.coverImage = url;
       report.posters[cached ? 'cached' : 'uploaded'].push({ museumId: card.museumId, title: card.title, url });
     } catch (err) {

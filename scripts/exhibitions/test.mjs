@@ -28,7 +28,7 @@ import {
 import { extractCards, isNoiseTitle } from './lib/extract.mjs';
 import { parseMuseumBlocks, findArrayRange, replaceExhibitionArray } from './lib/patch.mjs';
 import { findExisting, findMissingFields, mergeMuseum, normalizeTitle } from './lib/merge.mjs';
-import { coverKey } from './lib/images.mjs';
+import { coverKey, isR2Url } from './lib/images.mjs';
 import { MANAGED_MUSEUMS, MUSEUM_LABELS, SOURCES } from './sources/index.mjs';
 
 const ROOT = resolve(fileURLToPath(import.meta.url), '../../..');
@@ -240,6 +240,14 @@ async function testRegistry() {
   }
   // 포스터 키는 같은 입력에 대해 항상 같아야 한다 (재실행 시 중복 업로드 방지)
   eq(coverKey('mmca-seoul-2026-x', 'https://a/b.jpg'), coverKey('mmca-seoul-2026-x', 'https://a/b.jpg'), '포스터 키 안정성');
+
+  // 워커가 다른 r2.dev 공개 호스트를 돌려줘도 받아들여야 한다.
+  // 여기서 거부하면 업로드 성공에도 coverImage 가 비고, 앱에서 전시가 통째로 사라진다.
+  check(isR2Url('https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/a.jpg'), '표준 R2 호스트 허용');
+  check(isR2Url('https://pub-6ce5ae60b244951ac36ffd277fd6ef76.r2.dev/exhibitions/covers/a.jpg'), '다른 r2.dev 호스트도 허용');
+  check(!isR2Url('https://www.sac.or.kr/img/x.jpg'), '미술관 CDN 거부');
+  check(!isR2Url('https://evil.com/r2.dev/x.jpg'), '호스트 위장 거부');
+  check(!isR2Url(''), '빈 값 거부');
   check(coverKey('x', 'https://a/1.jpg') !== coverKey('x', 'https://a/2.jpg'), '원본이 바뀌면 포스터 키도 변경');
 }
 
