@@ -1,10 +1,21 @@
 # 전시 업데이트 가이드
 
+> **수도권(서울·경기) 미술관 14곳은 매일 자동 동기화됩니다.**
+> 이 문서의 수동 절차를 따를 필요가 없습니다 →
+> [`scripts/exhibitions/README.md`](exhibitions/README.md)
+>
+> 자동화 대상: 국립현대미술관 서울·과천, 국립중앙박물관, 국립민속박물관,
+> 서울시립미술관, 리움, 호암, 아모레퍼시픽, 대림미술관, 디뮤지엄,
+> 예술의전당 한가람미술관, DDP, 그라운드시소, 백남준아트센터
+>
+> 아래 내용은 **부산·제주 등 수도권 밖 미술관**의 수동 갱신 절차입니다.
+
 ## 파일 구조
 
 ```
 scripts/
-  sync-exhibitions.mjs         ← 메인 스크래퍼 (미술관별 전시 수집 + R2 이미지 업로드)
+  exhibitions/                 ← 수도권 14곳 일일 자동 동기화 (권장)
+  sync-exhibitions.mjs         ← 수동 스크래퍼 (수집 결과 출력 전용, 반영은 손으로)
   EXHIBITION_UPDATE_GUIDE.md   ← 이 파일
 src/data/exhibitions.js        ← 전시 데이터 원본
 ```

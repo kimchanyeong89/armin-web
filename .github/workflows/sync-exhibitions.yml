@@ -1,0 +1,175 @@
+name: 수도권 미술관 전시 일일 동기화
+
+# 매일 아침 서울·경기 주요 미술관의 진행/예정 전시를 수집해 반영한다.
+#
+# 2단계 전략:
+#   1단계 (--no-new) — 기존 전시의 기간·상태·포스터 갱신, 종료 전시 보관.
+#                      사람이 검토할 필요가 없는 변경이라 main 에 바로 커밋한다.
+#   2단계 (전체)     — 새로 발견한 전시 추가. 제목·소개문이 사이트에서 긁힌 그대로라
+#                      draft PR 로 올려 검토를 받는다.
+
+on:
+  schedule:
+    # 06:00 KST = 21:00 UTC (전날)
+    - cron: '0 21 * * *'
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: '파일을 쓰지 않고 수집 결과만 확인'
+        type: boolean
+        default: false
+      source:
+        description: '특정 소스만 실행 (예: mmca, sema, leeumhoam). 비우면 전체'
+        type: string
+        default: ''
+
+concurrency:
+  group: sync-exhibitions
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  pull-requests: write
+  actions: write
+
+env:
+  NEW_BRANCH: bot/new-exhibitions
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 체크아웃
+        uses: actions/checkout@v4
+        with:
+          ref: main
+
+      - name: Node 설치
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      # 패치 로직이 깨진 채로 돌면 데이터 파일이 손상되므로 먼저 점검한다.
+      - name: 파이프라인 자체 점검
+        run: node scripts/exhibitions/test.mjs
+
+      - name: 실행 옵션 구성
+        id: opts
+        run: |
+          ARGS=""
+          if [ "${{ inputs.dry_run }}" = "true" ]; then ARGS="$ARGS --dry-run"; fi
+          if [ -n "${{ inputs.source }}" ]; then ARGS="$ARGS --source ${{ inputs.source }}"; fi
+          echo "args=$ARGS" >> "$GITHUB_OUTPUT"
+          mkdir -p /tmp/exh
+
+      - name: 1단계 — 기존 전시 갱신 (신규 제외)
+        id: update
+        run: |
+          set +e
+          node scripts/exhibitions/sync.mjs --no-new ${{ steps.opts.outputs.args }} \
+            --report /tmp/exh/update.json --summary /tmp/exh/update.md
+          echo "exit=$?" >> "$GITHUB_OUTPUT"
+
+      - name: 갱신분 main 에 커밋
+        id: commit
+        if: ${{ inputs.dry_run != true }}
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          if git diff --quiet -- src/data/exhibitions.js; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            echo "갱신할 내용 없음"
+          else
+            git add src/data/exhibitions.js
+            git commit -m "chore(exhibitions): 수도권 미술관 전시 정보 일일 갱신 ($(TZ=Asia/Seoul date +%Y-%m-%d))"
+            git push origin main
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      # GITHUB_TOKEN 으로 push 한 커밋은 다른 워크플로를 트리거하지 않는다.
+      # (workflow_dispatch 는 예외라서 배포를 명시적으로 호출한다)
+      - name: Firebase 배포 실행
+        if: steps.commit.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: gh workflow run deploy-firebase.yml --ref main
+
+      - name: 2단계 — 신규 전시 수집
+        id: discover
+        if: ${{ inputs.dry_run != true }}
+        run: |
+          set +e
+          node scripts/exhibitions/sync.mjs ${{ steps.opts.outputs.args }} \
+            --report /tmp/exh/new.json --summary /tmp/exh/new.md
+          echo "exit=$?" >> "$GITHUB_OUTPUT"
+          if git diff --quiet -- src/data/exhibitions.js; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+          else
+            echo "changed=true" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: 신규 전시 draft PR 생성/갱신
+        if: steps.discover.outputs.changed == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          set -euo pipefail
+          TODAY=$(TZ=Asia/Seoul date +%Y-%m-%d)
+
+          # 항상 최신 main 위에서 브랜치를 다시 만든다 (봇 전용 브랜치).
+          # --force-with-lease 가 remote-tracking ref 를 필요로 하므로 먼저 가져온다.
+          git fetch origin "$NEW_BRANCH" || true
+          git checkout -B "$NEW_BRANCH"
+          git add src/data/exhibitions.js
+          git commit -m "feat(exhibitions): 신규 전시 추가 ($TODAY)"
+          git push --force-with-lease origin "$NEW_BRANCH"
+
+          BODY_FILE=/tmp/exh/pr-body.md
+          {
+            echo "자동 수집으로 **새로 발견된 전시**입니다. 제목·소개문이 미술관 사이트에서 그대로 수집된 값이라 표현을 다듬은 뒤 머지해 주세요."
+            echo
+            cat /tmp/exh/new.md
+            echo
+            echo "---"
+            echo "_이 브랜치는 매일 최신 main 기준으로 다시 만들어집니다._"
+          } > "$BODY_FILE"
+
+          EXISTING=$(gh pr list --head "$NEW_BRANCH" --state open --json number --jq '.[0].number // empty')
+          if [ -n "$EXISTING" ]; then
+            gh pr edit "$EXISTING" --title "신규 전시 반영 ($TODAY)" --body-file "$BODY_FILE"
+            echo "기존 PR #$EXISTING 갱신"
+          else
+            gh pr create --draft --base main --head "$NEW_BRANCH" \
+              --title "신규 전시 반영 ($TODAY)" --body-file "$BODY_FILE"
+          fi
+
+      - name: 실행 요약 기록
+        if: always()
+        run: |
+          {
+            echo "# 전시 동기화 결과"
+            echo
+            echo "## 1단계 — 기존 전시 갱신"
+            cat /tmp/exh/update.md 2>/dev/null || echo "_리포트 없음_"
+            if [ -f /tmp/exh/new.md ]; then
+              echo
+              echo "## 2단계 — 신규 전시 탐색"
+              cat /tmp/exh/new.md
+            fi
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: 리포트 업로드
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: exhibition-sync-report
+          path: /tmp/exh/
+          retention-days: 14
+
+      # 모든 소스가 실패하면(종료코드 2) 사이트 구조 변경이나 차단을 의심해야 하므로
+      # 워크플로를 실패로 남겨 알림이 가도록 한다.
+      - name: 전 소스 실패 시 경고
+        if: steps.update.outputs.exit == '2'
+        run: |
+          echo "::error::모든 미술관 소스에서 전시를 수집하지 못했습니다. 사이트 구조 변경 또는 차단 여부를 확인하세요."
+          exit 1

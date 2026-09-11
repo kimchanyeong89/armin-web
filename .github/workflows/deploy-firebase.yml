@@ -5,6 +5,9 @@ on:
     branches:
       - deploy/vercel-automate
       - main
+  # 전시 동기화 워크플로가 main 에 커밋한 뒤 배포를 직접 호출한다.
+  # (GITHUB_TOKEN 으로 push 한 커밋은 push 이벤트를 트리거하지 않기 때문)
+  workflow_dispatch:
 
 jobs:
   build-and-deploy:
