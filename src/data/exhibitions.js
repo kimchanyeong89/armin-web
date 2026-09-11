@@ -3615,6 +3615,7 @@ export const exhibitions = [
         title: "[지역 공립박물관 순회전시] 국보순회전, 우리 동네에서 만나는 보물",
         startDate: "2026-05-19",
         endDate: "2026-11-29",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/national-museum-korea-2026-6240813a-4c69bae8.png",
         officialUrl: "https://www.museum.go.kr/MUSEUM/contents/M0202010000.do?schM=view&menuId=current&exhiSpThemId=3549792&listType=list",
         status: "ongoing"
       },
@@ -3623,6 +3624,7 @@ export const exhibitions = [
         title: "분청사기·백자실 주제전시 <사계절 푸른 대나무, 도자기에 담다>",
         startDate: "2026-06-23",
         endDate: "2027-01-31",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/national-museum-korea-2026-45a4d3ff-4c69bae8.png",
         officialUrl: "https://www.museum.go.kr/MUSEUM/contents/M0202010000.do?schM=view&menuId=current&exhiSpThemId=3588283&listType=list",
         status: "ongoing"
       },
@@ -3631,6 +3633,7 @@ export const exhibitions = [
         title: "우리들의 밥상",
         startDate: "2026-07-01",
         endDate: "2026-10-25",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/national-museum-korea-2026-fd445870-4c69bae8.png",
         officialUrl: "https://www.museum.go.kr/MUSEUM/contents/M0202010000.do?schM=view&menuId=current&exhiSpThemId=3529713&listType=list",
         status: "ongoing"
       },
@@ -3639,6 +3642,7 @@ export const exhibitions = [
         title: "아름다움을 나누는 마음-새로 맞이한 기증유물전 2",
         startDate: "2026-07-27",
         endDate: "2026-11-15",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/national-museum-korea-2026-a1b2813f-4c69bae8.png",
         officialUrl: "https://www.museum.go.kr/MUSEUM/contents/M0202010000.do?schM=view&menuId=current&exhiSpThemId=3692100&listType=list",
         status: "ongoing"
       },
@@ -3647,6 +3651,7 @@ export const exhibitions = [
         title: "추사 김정희와 그의 동반자",
         startDate: "2026-08-11",
         endDate: "2026-11-22",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/national-museum-korea-2026-a7d00314-4c69bae8.png",
         officialUrl: "https://www.museum.go.kr/MUSEUM/contents/M0202010000.do?schM=view&menuId=current&exhiSpThemId=3672087&listType=list",
         status: "ongoing"
       }
@@ -6018,6 +6023,7 @@ export const exhibitions = [
         description: "리움미술관 홈페이지입니다.",
         startDate: "2026-05-05",
         endDate: "2026-05-05",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/leeum-museum-2026-20d4d279-f9e71f2c.jpg",
         officialUrl: "https://www.leeumhoam.org/leeum",
         status: "past"
       }
@@ -6114,6 +6120,7 @@ export const exhibitions = [
         description: "호암미술관 홈페이지입니다.",
         startDate: "2026-09-01",
         endDate: "2026-12-27",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/hoam-museum-2026-4c064f9a-5bd4d19e.jpg",
         officialUrl: "https://www.leeumhoam.org/hoam",
         status: "ongoing"
       },
@@ -6271,6 +6278,7 @@ export const exhibitions = [
         venue: "서울서예박물관 제2전시실",
         startDate: "2026-07-07",
         endDate: "2026-10-16",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/hangaram-art-museum-2026-78112-e43d2292.jpg",
         officialUrl: "https://www.sac.or.kr/site/main/show/show_view?SN=78112",
         status: "ongoing",
         sourceId: "78112"
@@ -6282,6 +6290,7 @@ export const exhibitions = [
         venue: "서울서예박물관 제1전시실",
         startDate: "2026-07-10",
         endDate: "2026-10-17",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/hangaram-art-museum-2026-78093-8884fc71.jpg",
         officialUrl: "https://www.sac.or.kr/site/main/show/show_view?SN=78093",
         status: "ongoing",
         sourceId: "78093"
@@ -6293,6 +6302,7 @@ export const exhibitions = [
         venue: "서울서예박물관 제3전시실",
         startDate: "2026-07-17",
         endDate: "2026-09-27",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/hangaram-art-museum-2026-76454-92b18f62.jpg",
         officialUrl: "https://www.sac.or.kr/site/main/show/show_view?SN=76454",
         status: "ongoing",
         sourceId: "76454"
@@ -6305,7 +6315,7 @@ export const exhibitions = [
         venue: "한가람디자인미술관 제1전시실, 제2전시실, 제3전시실",
         startDate: "2026-09-22",
         endDate: "2027-01-20",
-        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/hangaram-2026-botero.jpg",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/hangaram-art-museum-2026-77679-8ae849ba.jpg",
         officialUrl: "https://www.sac.or.kr/site/main/show/show_view?SN=77679",
         status: "upcoming",
         sourceId: "77679"
@@ -6317,6 +6327,7 @@ export const exhibitions = [
         venue: "서울서예박물관 제3전시실",
         startDate: "2026-10-03",
         endDate: "2026-10-16",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/hangaram-art-museum-2026-78092-27566c5c.gif",
         officialUrl: "https://www.sac.or.kr/site/main/show/show_view?SN=78092",
         status: "upcoming",
         sourceId: "78092"
@@ -6328,6 +6339,7 @@ export const exhibitions = [
         venue: "서울서예박물관 제1전시실, 제2전시실, 제3전시실",
         startDate: "2026-10-22",
         endDate: "2026-11-01",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/hangaram-art-museum-2026-77212-27566c5c.gif",
         officialUrl: "https://www.sac.or.kr/site/main/show/show_view?SN=77212",
         status: "upcoming",
         sourceId: "77212"
@@ -6339,6 +6351,7 @@ export const exhibitions = [
         venue: "서울서예박물관 제1전시실, 제2전시실, 제3전시실",
         startDate: "2026-11-05",
         endDate: "2026-11-14",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/hangaram-art-museum-2026-77609-27566c5c.gif",
         officialUrl: "https://www.sac.or.kr/site/main/show/show_view?SN=77609",
         status: "upcoming",
         sourceId: "77609"
@@ -6350,6 +6363,7 @@ export const exhibitions = [
         venue: "서울서예박물관 제1전시실, 제2전시실, 제3전시실",
         startDate: "2026-11-18",
         endDate: "2026-11-26",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/hangaram-art-museum-2026-77340-27566c5c.gif",
         officialUrl: "https://www.sac.or.kr/site/main/show/show_view?SN=77340",
         status: "upcoming",
         sourceId: "77340"
@@ -6361,6 +6375,7 @@ export const exhibitions = [
         venue: "서울서예박물관 제1전시실, 제2전시실, 제3전시실",
         startDate: "2026-12-11",
         endDate: "2027-04-11",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/hangaram-art-museum-2026-78073-27566c5c.gif",
         officialUrl: "https://www.sac.or.kr/site/main/show/show_view?SN=78073",
         status: "upcoming",
         sourceId: "78073"
@@ -6372,6 +6387,7 @@ export const exhibitions = [
         venue: "한가람디자인미술관 제1전시실, 제2전시실, 제3전시실",
         startDate: "2027-02-23",
         endDate: "2027-06-27",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/hangaram-art-museum-2027-77272-27566c5c.gif",
         officialUrl: "https://www.sac.or.kr/site/main/show/show_view?SN=77272",
         status: "upcoming",
         sourceId: "77272"
@@ -6383,6 +6399,7 @@ export const exhibitions = [
         venue: "서울서예박물관",
         startDate: "2027-04-21",
         endDate: "2027-04-29",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/hangaram-art-museum-2027-85452-27566c5c.gif",
         officialUrl: "https://www.sac.or.kr/site/main/show/show_view?SN=85452",
         status: "upcoming",
         sourceId: "85452"
@@ -6394,6 +6411,7 @@ export const exhibitions = [
         venue: "서울서예박물관",
         startDate: "2027-05-02",
         endDate: "2027-05-13",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/hangaram-art-museum-2027-85245-27566c5c.gif",
         officialUrl: "https://www.sac.or.kr/site/main/show/show_view?SN=85245",
         status: "upcoming",
         sourceId: "85245"
@@ -6405,6 +6423,7 @@ export const exhibitions = [
         venue: "한가람미술관",
         startDate: "2027-05-07",
         endDate: "2027-09-19",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/hangaram-art-museum-2027-85372-27566c5c.gif",
         officialUrl: "https://www.sac.or.kr/site/main/show/show_view?SN=85372",
         status: "upcoming",
         sourceId: "85372"
@@ -6416,6 +6435,7 @@ export const exhibitions = [
         venue: "서울서예박물관",
         startDate: "2027-05-19",
         endDate: "2027-06-13",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/hangaram-art-museum-2027-84524-27566c5c.gif",
         officialUrl: "https://www.sac.or.kr/site/main/show/show_view?SN=84524",
         status: "upcoming",
         sourceId: "84524"
@@ -6427,6 +6447,7 @@ export const exhibitions = [
         venue: "서울서예박물관",
         startDate: "2027-06-19",
         endDate: "2027-06-27",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/hangaram-art-museum-2027-85472-27566c5c.gif",
         officialUrl: "https://www.sac.or.kr/site/main/show/show_view?SN=85472",
         status: "upcoming",
         sourceId: "85472"
@@ -6438,6 +6459,7 @@ export const exhibitions = [
         venue: "서울서예박물관",
         startDate: "2027-07-01",
         endDate: "2027-07-18",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/hangaram-art-museum-2027-85238-27566c5c.gif",
         officialUrl: "https://www.sac.or.kr/site/main/show/show_view?SN=85238",
         status: "upcoming",
         sourceId: "85238"
@@ -6449,6 +6471,7 @@ export const exhibitions = [
         venue: "서울서예박물관",
         startDate: "2027-10-22",
         endDate: "2027-10-31",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/hangaram-art-museum-2027-84745-27566c5c.gif",
         officialUrl: "https://www.sac.or.kr/site/main/show/show_view?SN=84745",
         status: "upcoming",
         sourceId: "84745"
@@ -6460,6 +6483,7 @@ export const exhibitions = [
         venue: "서울서예박물관",
         startDate: "2027-11-04",
         endDate: "2027-11-14",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/hangaram-art-museum-2027-85159-27566c5c.gif",
         officialUrl: "https://www.sac.or.kr/site/main/show/show_view?SN=85159",
         status: "upcoming",
         sourceId: "85159"
@@ -6471,6 +6495,7 @@ export const exhibitions = [
         venue: "한가람미술관",
         startDate: "2027-11-12",
         endDate: "2027-11-21",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/hangaram-art-museum-2027-85432-27566c5c.gif",
         officialUrl: "https://www.sac.or.kr/site/main/show/show_view?SN=85432",
         status: "upcoming",
         sourceId: "85432"
@@ -6482,6 +6507,7 @@ export const exhibitions = [
         venue: "서울서예박물관",
         startDate: "2027-11-18",
         endDate: "2027-11-26",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/hangaram-art-museum-2027-84744-27566c5c.gif",
         officialUrl: "https://www.sac.or.kr/site/main/show/show_view?SN=84744",
         status: "upcoming",
         sourceId: "84744"
@@ -6493,6 +6519,7 @@ export const exhibitions = [
         venue: "한가람미술관",
         startDate: "2027-12-15",
         endDate: "2028-04-02",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/hangaram-art-museum-2027-85712-27566c5c.gif",
         officialUrl: "https://www.sac.or.kr/site/main/show/show_view?SN=85712",
         status: "upcoming",
         sourceId: "85712"
@@ -6537,6 +6564,7 @@ export const exhibitions = [
         title: "BtheB 뷰티기획전<BEAUTY, TRANSLATED>",
         startDate: "2026-06-13",
         endDate: "2026-09-27",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/ddp-gallery-2026-35f08742-102013fd.jpg",
         officialUrl: "https://www.ddp.or.kr/index.html?menuno=240",
         status: "ongoing"
       },
@@ -6545,6 +6573,7 @@ export const exhibitions = [
         title: "아기상어 비밀 초대장: 비커밍 샤크",
         startDate: "2026-06-18",
         endDate: "2026-12-19",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/ddp-gallery-2026-0c0ec93a-dae68855.jpg",
         officialUrl: "https://www.ddp.or.kr/index.html?menuno=240",
         status: "ongoing"
       },
@@ -6553,6 +6582,7 @@ export const exhibitions = [
         title: "LALARECIPE x MeME : Happiness Recipe for Every Skin",
         startDate: "2026-08-01",
         endDate: "2026-09-30",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/ddp-gallery-2026-54d6036f-388a01f3.jpg",
         officialUrl: "https://www.ddp.or.kr/index.html?menuno=240",
         status: "ongoing"
       }
@@ -6681,6 +6711,7 @@ export const exhibitions = [
         description: "groundseesaw",
         startDate: "2026-07-17",
         endDate: "2026-11-29",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/groundseesaw-2026-798b76d1-d9a3fa92.jpg",
         officialUrl: "https://www.groundseesaw.co.kr/shopinfo/visit.html",
         status: "ongoing"
       }
@@ -7322,6 +7353,7 @@ export const exhibitions = [
         title: "달들",
         startDate: "2026-07-16",
         endDate: "2026-10-04",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/njpac-2026-4dd8818e-a1eee063.png",
         officialUrl: "https://njp.ggcf.kr/exhibitions?tag=%EC%A0%84%EC%8B%9C",
         status: "ongoing"
       },
@@ -7330,6 +7362,7 @@ export const exhibitions = [
         title: "별, 괘卦",
         startDate: "2026-07-16",
         endDate: "2027-02-14",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/njpac-2026-316787a6-c266eb0b.jpg",
         officialUrl: "https://njp.ggcf.kr/exhibitions?tag=%EC%A0%84%EC%8B%9C",
         status: "ongoing"
       },
@@ -7338,6 +7371,7 @@ export const exhibitions = [
         title: "NJP 라운지 2. 장윤영",
         startDate: "2026-07-23",
         endDate: "2026-11-11",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/njpac-2026-d654199f-42c2c891.jpg",
         officialUrl: "https://njp.ggcf.kr/exhibitions?tag=%EC%A0%84%EC%8B%9C",
         status: "ongoing"
       },
@@ -7346,6 +7380,7 @@ export const exhibitions = [
         title: "서울라이트 DDP 2026 가을",
         startDate: "2026-09-03",
         endDate: "2026-09-13",
+        coverImage: "https://pub-396fad1f96754c2f816f260faf970e63.r2.dev/exhibitions/covers/njpac-2026-e016112e-efa2dea2.jpg",
         officialUrl: "https://njp.ggcf.kr/exhibitions?tag=%EC%A0%84%EC%8B%9C",
         status: "ongoing"
       }
