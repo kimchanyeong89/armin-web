@@ -46,8 +46,12 @@ jobs:
       # 커밋 메시지에 [apply-exhibitions] 가 있으면 실제로 파일을 고치고 포스터도 R2 에 올린다.
       - name: 실행 모드 판별
         id: mode
+        # 커밋 메시지는 env 로만 넘긴다. 셸에 직접 끼워 넣으면 줄바꿈·따옴표에
+        # 구문이 깨지고, 커밋 메시지로 명령을 주입할 수 있다.
+        env:
+          COMMIT_MSG: ${{ github.event.head_commit.message }}
         run: |
-          if printf '%s' "${{ github.event.head_commit.message }}" | grep -q '\[apply-exhibitions\]'; then
+          if printf '%s' "$COMMIT_MSG" | grep -q '\[apply-exhibitions\]'; then
             echo "apply=true" >> "$GITHUB_OUTPUT"
             echo "flag=" >> "$GITHUB_OUTPUT"
             echo "실제 반영 모드"
