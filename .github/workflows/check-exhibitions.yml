@@ -1,0 +1,77 @@
+name: 전시 수집 점검 (dry-run)
+
+# 스크래퍼가 살아 있는지 확인하는 검증 전용 워크플로.
+# 파일을 전혀 쓰지 않고, 미술관별 수집 건수와 실패 사유만 리포트한다.
+# 미술관 사이트 개편으로 어댑터가 깨지면 머지 전에 잡는다.
+
+on:
+  pull_request:
+    paths:
+      - 'scripts/exhibitions/**'
+      - '.github/workflows/check-exhibitions.yml'
+  workflow_dispatch:
+    inputs:
+      source:
+        description: '특정 소스만 점검 (예: mmca, sema). 비우면 전체'
+        type: string
+        default: ''
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 체크아웃
+        uses: actions/checkout@v4
+
+      - name: Node 설치
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: 파이프라인 자체 점검
+        run: node scripts/exhibitions/test.mjs
+
+      - name: 전시 수집 (dry-run — 파일 안 씀)
+        id: sync
+        run: |
+          mkdir -p /tmp/exh
+          ARGS=""
+          if [ -n "${{ inputs.source }}" ]; then ARGS="--source ${{ inputs.source }}"; fi
+          set +e
+          node scripts/exhibitions/sync.mjs --dry-run $ARGS \
+            --report /tmp/exh/check.json --summary /tmp/exh/check.md 2>&1 | tee /tmp/exh/console.log
+          echo "exit=${PIPESTATUS[0]}" >> "$GITHUB_OUTPUT"
+
+      - name: 결과 요약
+        if: always()
+        run: |
+          {
+            cat /tmp/exh/check.md 2>/dev/null || echo '_리포트 생성 실패_'
+            echo
+            echo '<details><summary>실행 로그</summary>'
+            echo
+            echo '```'
+            cat /tmp/exh/console.log 2>/dev/null || true
+            echo '```'
+            echo
+            echo '</details>'
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      - name: 리포트 업로드
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: exhibition-check-report
+          path: /tmp/exh/
+          retention-days: 14
+
+      # 전 소스 실패(2)면 파이프라인이 아무 구실도 못 하는 상태라 막는다.
+      # 일부 미술관만 실패한 경우는 통과시키되 위 요약에 남는다.
+      - name: 전 소스 실패 시 실패 처리
+        if: steps.sync.outputs.exit == '2'
+        run: |
+          echo "::error::모든 미술관 소스에서 전시를 수집하지 못했습니다."
+          exit 1
