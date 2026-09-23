@@ -12,7 +12,7 @@ import { Clock, Navigation, Heart } from "lucide-react";
 import { getFirestore, collection, doc, setDoc, deleteDoc, onSnapshot, serverTimestamp } from "firebase/firestore";
 import { getAuth, onAuthStateChanged } from "firebase/auth";
 import NearbyExhibitionModal from "./NearbyExhibitionModal";
-import { bookingFor, type BookingSite } from "../data/exhibitionBooking";
+import { bookingFor, type BookingChannel } from "../data/exhibitionBooking";
 import RatingEmblems from "./Ratings/RatingEmblems";
 import { averageRating, subjectKey } from "../features/ratings/ratingWrites";
 import { useAllRatingStats } from "../features/ratings/useRatings";
@@ -43,8 +43,8 @@ interface NearbyItem {
   tasteMatch?: number;
   officialUrl: string;
   detailUrl: string;
-  /** where to book it, when that is known (data/exhibitionBooking) */
-  booking: BookingSite | null;
+  /** where to book it, cheapest listed first (data/exhibitionBooking); empty when unknown */
+  bookings: BookingChannel[];
   description: string;
 }
 
@@ -194,7 +194,7 @@ export default function NearbyExhibitions({
               startedAt,
               officialUrl: e.officialUrl || e.url || "",
               detailUrl: resolveExhibitionDetailUrl(localizedMuseum, localizedTitle, e.officialUrl || e.url || ""),
-              booking: bookingFor(String(m.id || ""), String(e.id || ""), e.officialUrl || e.url || ""),
+              bookings: bookingFor(String(m.id || ""), String(e.id || ""), e.officialUrl || e.url || ""),
               description: localizedDescription,
             });
           }

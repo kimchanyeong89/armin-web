@@ -4,7 +4,7 @@ import { ArrowRight, ArrowUpRight, Heart, X } from "lucide-react";
 import { ReviewPanel } from "./Ratings/ReviewPanel";
 import { useCloseOnEscape } from "./Ratings/useMyRating";
 import { NO_IMAGE_PLACEHOLDER_DARK } from "../utils/noImagePlaceholder";
-import type { BookingSite } from "../data/exhibitionBooking";
+import { cheapestOf, type BookingChannel } from "../data/exhibitionBooking";
 import "./collyGlass.css";
 import "./nearbyExhibitionModal.css";
 
@@ -21,8 +21,8 @@ export interface ExhibitionDetail {
   tasteMatch?: number;
   description: string;
   detailUrl: string;
-  /** the booking site, when one is known; the button leads with it */
-  booking?: BookingSite | null;
+  /** the places to book it, cheapest listed first; the first one leads */
+  bookings?: BookingChannel[];
 }
 
 /**
@@ -52,6 +52,11 @@ export default function NearbyExhibitionModal({
   // A portal still bubbles React events to the card that opened it.
   const keep = (event: SyntheticEvent) => event.stopPropagation();
   const light = isLight || undefined;
+  const bookings = ex.bookings ?? [];
+  const lead = bookings[0];
+  const cheapest = cheapestOf(bookings);
+  const won = (price: number) => (language === "ko" ? `${price.toLocaleString("ko-KR")}원` : `₩${price.toLocaleString("en-US")}`);
+  const checkedOn = bookings.find((b) => b.checked)?.checked;
 
   return createPortal(
     <div
@@ -115,10 +120,10 @@ export default function NearbyExhibitionModal({
                 {/* Booking leads: it is what someone opening a current exhibition
                     most often wants next. The button names who takes the booking,
                     so leaving the app for another site is never a surprise. */}
-                {ex.booking && (
-                  <a className="nem-book" href={ex.booking.url} target="_blank" rel="noopener noreferrer">
-                    <span>{ex.booking.reserve ? tr({ ko: "예약하기", en: "Reserve" }) : tr({ ko: "예매하기", en: "Book" })}</span>
-                    <small>{tr(ex.booking.site)}</small>
+                {lead && (
+                  <a className="nem-book" href={lead.url} target="_blank" rel="noopener noreferrer">
+                    <span>{lead.reserve ? tr({ ko: "예약하기", en: "Reserve" }) : tr({ ko: "예매하기", en: "Book" })}</span>
+                    <small>{tr(lead.site)}</small>
                     <ArrowUpRight size={15} strokeWidth={1.9} />
                   </a>
                 )}
@@ -130,7 +135,7 @@ export default function NearbyExhibitionModal({
                     {tr({ ko: "미술관으로 이동하기", en: "Go to the museum" })}
                   </button>
                 )}
-                {ex.detailUrl && ex.detailUrl !== ex.booking?.url && (
+                {ex.detailUrl && !bookings.some((b) => b.url === ex.detailUrl) && (
                   <button
                     type="button"
                     className="nem-link"
@@ -152,6 +157,39 @@ export default function NearbyExhibitionModal({
               </div>
             </div>
           </div>
+
+          {bookings.length > 1 && (
+            <section className="nem-where" aria-label={tr({ ko: "예매처 비교", en: "Where to book" })}>
+              <header>
+                <h3>{tr({ ko: "예매처 비교", en: "Where to book" })}</h3>
+                {checkedOn && (
+                  <p>
+                    {tr({
+                      ko: `${Number(checkedOn.slice(5, 7))}월 ${Number(checkedOn.slice(8, 10))}일에 확인한 성인 가격이에요. 결제 전 예매처에서 다시 확인하세요.`,
+                      en: `Adult prices as listed on ${checkedOn}. Check on the site before paying.`,
+                    })}
+                  </p>
+                )}
+              </header>
+              <ol>
+                {bookings.map((b) => (
+                  <li key={b.url}>
+                    <a href={b.url} target="_blank" rel="noopener noreferrer">
+                      <span className="nem-where__site">
+                        {tr(b.site)}
+                        {b === cheapest && <em>{tr({ ko: "최저가", en: "Lowest" })}</em>}
+                      </span>
+                      <span className="nem-where__price">
+                        {b.price !== undefined ? won(b.price) : tr({ ko: "가격은 예매처에서", en: "Price on site" })}
+                        {b.deal && <small>{tr(b.deal)}</small>}
+                      </span>
+                      <ArrowUpRight size={14} strokeWidth={1.8} aria-hidden="true" />
+                    </a>
+                  </li>
+                ))}
+              </ol>
+            </section>
+          )}
 
           <div className="nem-ratings">
             <ReviewPanel subject={{ kind: "exhibition", id: ex.id }} isLight={isLight} />
