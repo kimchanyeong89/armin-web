@@ -88,3 +88,10 @@ new_sqlite_classes = ["DailyBudget"]
 binding = "DB"
 database_name = "armin-text-search"
 database_id = "6e99c748-1ee0-49ee-89d7-dda9595aa032"
+
+# 검색어 집계("실시간 인기 검색"). 검색 색인 DB(armin-text-search)는 용량 한도에
+# 닿아 있어 따로 둔다. 스키마: schema-stats.sql
+[[d1_databases]]
+binding = "STATS"
+database_name = "armin-search-stats"
+database_id = "4d95950e-4b15-4d5d-95c4-8c9b77c10ca9"

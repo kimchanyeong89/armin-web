@@ -46,16 +46,3 @@ END;
 -- Helpful indexes for ORDER BY rank and for narrowed queries.
 CREATE INDEX IF NOT EXISTS artworks_artist_idx ON artworks(artist);
 CREATE INDEX IF NOT EXISTS artworks_museum_idx ON artworks(museum);
-
--- What people search for, counted by day (Korea time), for the "trending now"
--- board on the search page. `key` is the search normalised (lower-case, one
--- space between words) so "Van Gogh" and "van gogh" are one line; `term` is
--- how it was last typed, which is how the board shows it.
-CREATE TABLE IF NOT EXISTS search_hits (
-  key TEXT NOT NULL,
-  day TEXT NOT NULL,
-  term TEXT NOT NULL,
-  count INTEGER NOT NULL DEFAULT 0,
-  PRIMARY KEY (key, day)
-);
-CREATE INDEX IF NOT EXISTS search_hits_day_idx ON search_hits(day);

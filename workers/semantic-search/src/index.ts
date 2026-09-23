@@ -55,6 +55,9 @@ interface Env {
      *  Created via:  npx wrangler d1 create armin-text-search
      *  Schema seeded from workers/semantic-search/schema.sql + d1-seed.sql */
     DB?: D1Database;
+    /** D1 database for search counts (the trending board), apart from the text index.
+     *  Schema: workers/semantic-search/schema-stats.sql */
+    STATS?: D1Database;
     /** Optional: full URL to a self-hosted SigLIP encoder (e.g. HF Space FastAPI).
      *  Expected: POST {url}/encode  → { vector: number[768] } or { embeddings: [[768D]] }
      *  When set, this is tried FIRST. Falls back to HF Inference Providers afterwards.
@@ -1705,7 +1708,7 @@ export default {
             // most-searched terms of the past week, each with where it stood
             // the week before. Days are Korea time, as the daily budget's are.
             if (url.pathname === '/search-hit' && request.method === 'POST') {
-                if (!env.DB) return Response.json({ ok: false }, { status: 503, headers: corsHeaders });
+                if (!env.STATS) return Response.json({ ok: false }, { status: 503, headers: corsHeaders });
                 const perIp = await ipLimited(request, env);
                 if (perIp) return perIp;
                 let body: { term?: string };
@@ -1716,7 +1719,7 @@ export default {
                 if (key.length < 2) return Response.json({ ok: false }, { headers: corsHeaders });
                 const day = new Date(Date.now() + 9 * 3600_000).toISOString().slice(0, 10);
                 ctx.waitUntil(
-                    env.DB.prepare(
+                    env.STATS.prepare(
                         'INSERT INTO search_hits (key, day, term, count) VALUES (?1, ?2, ?3, 1) ' +
                         'ON CONFLICT(key, day) DO UPDATE SET count = count + 1, term = ?3',
                     ).bind(key, day, term).run().catch((err: any) => console.warn(`[search-hit] ${err?.message}`)),
@@ -1725,9 +1728,9 @@ export default {
             }
 
             if (url.pathname === '/trending' && request.method === 'GET') {
-                if (!env.DB) return Response.json({ terms: [] }, { headers: corsHeaders });
+                if (!env.STATS) return Response.json({ terms: [] }, { headers: corsHeaders });
                 const dayOf = (daysAgo: number) => new Date(Date.now() + 9 * 3600_000 - daysAgo * 86_400_000).toISOString().slice(0, 10);
-                const top = (from: string, to: string, limit: number) => env.DB!.prepare(
+                const top = (from: string, to: string, limit: number) => env.STATS!.prepare(
                     'SELECT key, MAX(term) AS term, SUM(count) AS hits FROM search_hits ' +
                     'WHERE day BETWEEN ?1 AND ?2 GROUP BY key ORDER BY hits DESC, key LIMIT ?3',
                 ).bind(from, to, limit).all() as Promise<{ results?: Array<{ key: string; term: string; hits: number }> }>;
